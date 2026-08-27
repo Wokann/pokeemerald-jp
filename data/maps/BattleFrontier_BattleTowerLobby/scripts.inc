@@ -649,326 +649,263 @@ BattleFrontier_BattleTowerLobby_Movement_UnusedEnterElevator:
 	step_end
 
 BattleFrontier_BattleTowerLobby_EventScript_BufferModeText::
-	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_BufferTextSingle
-	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_BufferTextDouble
-	compare_var_to_value 0x40CE, 0x2
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_BufferTextMulti
-	compare_var_to_value 0x40CE, 0x3
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_BufferTextLinkMulti
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleTowerLobby_EventScript_BufferTextSingle
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleTowerLobby_EventScript_BufferTextDouble
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_MULTIS, BattleFrontier_BattleTowerLobby_EventScript_BufferTextMulti
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_LINK_MULTIS, BattleFrontier_BattleTowerLobby_EventScript_BufferTextLinkMulti
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_BufferTextSingle::
-	bufferstdstring 0x0, 0x13
+	bufferstdstring STR_VAR_1, STDSTRING_SINGLE
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_BufferTextDouble::
-	bufferstdstring 0x0, 0x14
+	bufferstdstring STR_VAR_1, STDSTRING_DOUBLE
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_BufferTextMulti::
-	bufferstdstring 0x0, 0x15
+	bufferstdstring STR_VAR_1, STDSTRING_MULTI
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_BufferTextLinkMulti::
-	bufferstdstring 0x0, 0x16
+	bufferstdstring STR_VAR_1, STDSTRING_MULTI_LINK
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_SetAttendantTalkedTo::
-	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TalkedToSinglesAttendant
-	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TalkedToDoublesAttendant
-	compare_var_to_value 0x40CE, 0x2
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TalkedToMultisAttendant
-	compare_var_to_value 0x40CE, 0x3
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TalkedToLinkMultisAttendant
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleTowerLobby_EventScript_TalkedToSinglesAttendant
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleTowerLobby_EventScript_TalkedToDoublesAttendant
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_MULTIS, BattleFrontier_BattleTowerLobby_EventScript_TalkedToMultisAttendant
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_LINK_MULTIS, BattleFrontier_BattleTowerLobby_EventScript_TalkedToLinkMultisAttendant
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_TalkedToSinglesAttendant::
-	setvar 0x800F, 0x1
+	setvar VAR_LAST_TALKED, LOCALID_TOWER_ATTENDANT_SINGLES
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_TalkedToDoublesAttendant::
-	setvar 0x800F, 0x7
+	setvar VAR_LAST_TALKED, LOCALID_TOWER_ATTENDANT_DOUBLES
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_TalkedToMultisAttendant::
-	setvar 0x800F, 0x8
+	setvar VAR_LAST_TALKED, LOCALID_TOWER_ATTENDANT_MULTIS
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_TalkedToLinkMultisAttendant::
-	setvar 0x800F, 0x9
+	setvar VAR_LAST_TALKED, LOCALID_TOWER_ATTENDANT_LINK_MULTIS
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoord::
-	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordSingles
-	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordDoubles
-	compare_var_to_value 0x40CE, 0x2
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordMultis
-	compare_var_to_value 0x40CE, 0x3
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordLinkMultis
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordSingles
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordDoubles
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_MULTIS, BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordMultis
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_LINK_MULTIS, BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordLinkMultis
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordSingles::
-	setvar 0x8004, 0x6
+	setvar VAR_0x8004, 6
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordDoubles::
-	setvar 0x8004, 0xA
+	setvar VAR_0x8004, 10
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordMultis::
-	setvar 0x8004, 0xE
+	setvar VAR_0x8004, 14
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordLinkMultis::
-	setvar 0x8004, 0x12
+	setvar VAR_0x8004, 18
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_GetPartySize::
-	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetSinglesPartySize
-	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetDoublesPartySize
-	compare_var_to_value 0x40CE, 0x2
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetMultisPartySize
-	compare_var_to_value 0x40CE, 0x3
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetLinkMultisPartySize
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleTowerLobby_EventScript_GetSinglesPartySize
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleTowerLobby_EventScript_GetDoublesPartySize
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_MULTIS, BattleFrontier_BattleTowerLobby_EventScript_GetMultisPartySize
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_LINK_MULTIS, BattleFrontier_BattleTowerLobby_EventScript_GetLinkMultisPartySize
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_GetSinglesPartySize::
-	setvar 0x8005, 0x3
+	setvar VAR_0x8005, FRONTIER_PARTY_SIZE
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_GetDoublesPartySize::
-	setvar 0x8005, 0x4
+	setvar VAR_0x8005, FRONTIER_DOUBLES_PARTY_SIZE
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_GetMultisPartySize::
-	setvar 0x8005, 0x2
+	setvar VAR_0x8005, FRONTIER_MULTI_PARTY_SIZE
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_GetLinkMultisPartySize::
-	setvar 0x8005, 0x2
+	setvar VAR_0x8005, FRONTIER_MULTI_PARTY_SIZE
 	return
 
 BattleFrontier_EventScript_GetLvlMode::
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	special CallFrontierUtilFunc
+	frontier_get FRONTIER_DATA_LVL_MODE
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_TryCableLink::
-	setvar 0x8004, 0x9
+	setvar VAR_0x8004, USING_BATTLE_TOWER
 	message 0x08247C79
 	waitmessage
-	setvar 0x8005, 0x0
+	setvar VAR_0x8005, 0
 	special TryBattleLinkup
+	@ JP waits for link setup before inspecting VAR_RESULT.
 	waitstate
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CableLinkSuccessful
-	compare_var_to_value 0x800D, 0x2
-	goto_if 0x1, 0x08246FBE
-	compare_var_to_value 0x800D, 0x3
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_AbortLinkDifferentSelections
-	compare_var_to_value 0x800D, 0x4
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_AbortLinkIncorrectNumberOfPlayers
-	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
-	compare_var_to_value 0x800D, 0x6
-	goto_if 0x1, 0x08246FB1
-	compare_var_to_value 0x800D, 0xB
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_AbortLink
+	goto_if_eq VAR_RESULT, LINKUP_SUCCESS, BattleFrontier_BattleTowerLobby_EventScript_CableLinkSuccessful
+	goto_if_eq VAR_RESULT, LINKUP_SOMEONE_NOT_READY, 0x08246FBE
+	goto_if_eq VAR_RESULT, LINKUP_DIFF_SELECTIONS, BattleFrontier_BattleTowerLobby_EventScript_AbortLinkDifferentSelections
+	goto_if_eq VAR_RESULT, LINKUP_WRONG_NUM_PLAYERS, BattleFrontier_BattleTowerLobby_EventScript_AbortLinkIncorrectNumberOfPlayers
+	goto_if_eq VAR_RESULT, LINKUP_FAILED, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
+	goto_if_eq VAR_RESULT, LINKUP_CONNECTION_ERROR, 0x08246FB1
+	goto_if_eq VAR_RESULT, LINKUP_FAILED_BATTLE_TOWER, BattleFrontier_BattleTowerLobby_EventScript_AbortLink
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_AbortLinkDifferentSelections::
 	special CloseLink
-	compare_var_to_value 0x8005, 0x3
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_FriendDifferentSelection
-	loadword 0x0, 0x08247D84
-	callstd 0x4
+	goto_if_eq VAR_0x8005, 3, BattleFrontier_BattleTowerLobby_EventScript_FriendDifferentSelection
+	msgbox 0x08247D84, MSGBOX_DEFAULT
 	release
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_FriendDifferentSelection::
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_FriendChoseDifferentLvlMode
-	callstd 0x4
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ChooseDifferentMonsMatchLvlMode
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerLobby_Text_FriendChoseDifferentLvlMode, MSGBOX_DEFAULT
+	msgbox BattleFrontier_BattleTowerLobby_Text_ChooseDifferentMonsMatchLvlMode, MSGBOX_DEFAULT
 	release
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_AbortLinkIncorrectNumberOfPlayers::
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_LinkMultiOnlyForTwoPlayers
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerLobby_Text_LinkMultiOnlyForTwoPlayers, MSGBOX_DEFAULT
 	special CloseLink
-	loadword 0x0, 0x08247DAF
-	callstd 0x4
+	msgbox 0x08247DAF, MSGBOX_DEFAULT
 	release
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_AbortLink::
 	special CloseLink
-	compare_var_to_value 0x8005, 0x0
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_FriendChoseDifferentLvlMode
-	compare_var_to_value 0x8005, 0x1
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_FriendAlsoSelectedMon
-	compare_var_to_value 0x8005, 0x2
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_FriendAlsoSelectedMons
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ChooseDifferentMonsMatchLvlMode
-	callstd 0x4
+	call_if_eq VAR_0x8005, 0, BattleFrontier_BattleTowerLobby_EventScript_FriendChoseDifferentLvlMode
+	call_if_eq VAR_0x8005, 1, BattleFrontier_BattleTowerLobby_EventScript_FriendAlsoSelectedMon
+	call_if_eq VAR_0x8005, 2, BattleFrontier_BattleTowerLobby_EventScript_FriendAlsoSelectedMons
+	msgbox BattleFrontier_BattleTowerLobby_Text_ChooseDifferentMonsMatchLvlMode, MSGBOX_DEFAULT
 	release
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_FriendChoseDifferentLvlMode::
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_FriendChoseDifferentLvlMode
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerLobby_Text_FriendChoseDifferentLvlMode, MSGBOX_DEFAULT
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_FriendAlsoSelectedMon::
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_FriendAlsoSelectedMon
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerLobby_Text_FriendAlsoSelectedMon, MSGBOX_DEFAULT
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_FriendAlsoSelectedMons::
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_FriendAlsoSelectedMons
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerLobby_Text_FriendAlsoSelectedMons, MSGBOX_DEFAULT
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_CableLinkSuccessful::
-	incrementgamestat 0x1E
-	setvar 0x40BC, 0x0
+	incrementgamestat GAME_STAT_ENTERED_BATTLE_TOWER
+	setvar VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, FALSE
 	message BattleFrontier_BattleTowerLobby_Text_SaveGameBeforeShowingIn
 	waitmessage
-	setvar 0x8004, 0x6
-	setvar 0x8005, 0x1
-	special sub_08161E88
+	tower_save CHALLENGE_STATUS_SAVING
 	special sub_080A0194
+	@ JP waits for the link-save special before continuing.
 	waitstate
-	playse 0x37
+	playse SE_SAVE
 	waitse
 	special TrySetBattleTowerLinkType
 	goto BattleFrontier_BattleTowerLobby_EventScript_EnterElevator
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_ExplainLinkMultisChallenge::
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ExplainLinkMultisChallenge
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerLobby_Text_ExplainLinkMultisChallenge, MSGBOX_DEFAULT
 	goto BattleFrontier_BattleTowerLobby_EventScript_AskEnterLinkMultisChallenge
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_TryWirelessLink::
-	setvar 0x8004, 0x14
+	setvar VAR_0x8004, LINK_GROUP_BATTLE_TOWER
 	goto BattleFrontier_BattleTowerLobby_EventScript_ChooseLeader
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_ChooseLeader::
 	message 0x082485D7
 	waitmessage
-	multichoice 0x10, 0x6, 0x51, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TryJoinGroup
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TryBecomeLeader
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
+	multichoice 16, 6, MULTI_LINK_LEADER, FALSE
+	switch VAR_RESULT
+	case 0, BattleFrontier_BattleTowerLobby_EventScript_TryJoinGroup
+	case 1, BattleFrontier_BattleTowerLobby_EventScript_TryBecomeLeader
+	case 2, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_TryBecomeLeader::
 	call 0x0824780F
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_WirelessLinkSuccessful
-	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ChooseLeader
-	compare_var_to_value 0x800D, 0x8
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TryBecomeLeader
-	compare_var_to_value 0x800D, 0xB
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_AbortLink
+	goto_if_eq VAR_RESULT, LINKUP_SUCCESS, BattleFrontier_BattleTowerLobby_EventScript_WirelessLinkSuccessful
+	goto_if_eq VAR_RESULT, LINKUP_FAILED, BattleFrontier_BattleTowerLobby_EventScript_ChooseLeader
+	goto_if_eq VAR_RESULT, LINKUP_RETRY_ROLE_ASSIGN, BattleFrontier_BattleTowerLobby_EventScript_TryBecomeLeader
+	goto_if_eq VAR_RESULT, LINKUP_FAILED_BATTLE_TOWER, BattleFrontier_BattleTowerLobby_EventScript_AbortLink
 	release
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_TryJoinGroup::
 	call 0x08247814
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_WirelessLinkSuccessful
-	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ChooseLeader
-	compare_var_to_value 0x800D, 0x8
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TryJoinGroup
-	compare_var_to_value 0x800D, 0xB
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_AbortLink
+	goto_if_eq VAR_RESULT, LINKUP_SUCCESS, BattleFrontier_BattleTowerLobby_EventScript_WirelessLinkSuccessful
+	goto_if_eq VAR_RESULT, LINKUP_FAILED, BattleFrontier_BattleTowerLobby_EventScript_ChooseLeader
+	goto_if_eq VAR_RESULT, LINKUP_RETRY_ROLE_ASSIGN, BattleFrontier_BattleTowerLobby_EventScript_TryJoinGroup
+	goto_if_eq VAR_RESULT, LINKUP_FAILED_BATTLE_TOWER, BattleFrontier_BattleTowerLobby_EventScript_AbortLink
 	release
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_WirelessLinkSuccessful::
-	incrementgamestat 0x1E
-	setvar 0x40BC, 0x0
+	incrementgamestat GAME_STAT_ENTERED_BATTLE_TOWER
+	setvar VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, FALSE
 	message BattleFrontier_BattleTowerLobby_Text_SaveGameBeforeShowingIn
 	waitmessage
-	setvar 0x8004, 0x6
-	setvar 0x8005, 0x1
-	special sub_08161E88
+	tower_save CHALLENGE_STATUS_SAVING
 	special sub_080A0194
+	@ JP waits for the link-save special before continuing.
 	waitstate
-	playse 0x37
+	playse SE_SAVE
 	waitse
 	goto BattleFrontier_BattleTowerLobby_EventScript_EnterElevator
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_RulesBoard::
 	lockall
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_RulesAreListed
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerLobby_Text_RulesAreListed, MSGBOX_DEFAULT
 	goto BattleFrontier_BattleTowerLobby_EventScript_ReadRulesBoard
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_ReadRulesBoard::
 	message BattleFrontier_BattleTowerLobby_Text_ReadWhichHeading
 	waitmessage
-	multichoice 0x11, 0x2, 0x61, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_RulesTower
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_RulesMons
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_RulesSalon
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_RulesMultiLink
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ExitRules
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ExitRules
+	multichoice 17, 2, MULTI_BATTLE_TOWER_RULES, FALSE
+	switch VAR_RESULT
+	case 0, BattleFrontier_BattleTowerLobby_EventScript_RulesTower
+	case 1, BattleFrontier_BattleTowerLobby_EventScript_RulesMons
+	case 2, BattleFrontier_BattleTowerLobby_EventScript_RulesSalon
+	case 3, BattleFrontier_BattleTowerLobby_EventScript_RulesMultiLink
+	case 4, BattleFrontier_BattleTowerLobby_EventScript_ExitRules
+	case MULTI_B_PRESSED, BattleFrontier_BattleTowerLobby_EventScript_ExitRules
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_RulesTower::
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ExplainTowerRules
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerLobby_Text_ExplainTowerRules, MSGBOX_DEFAULT
 	goto BattleFrontier_BattleTowerLobby_EventScript_ReadRulesBoard
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_RulesMons::
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ExplainMonRules
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerLobby_Text_ExplainMonRules, MSGBOX_DEFAULT
 	goto BattleFrontier_BattleTowerLobby_EventScript_ReadRulesBoard
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_RulesSalon::
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ExplainSalonRules
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerLobby_Text_ExplainSalonRules, MSGBOX_DEFAULT
 	goto BattleFrontier_BattleTowerLobby_EventScript_ReadRulesBoard
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_RulesMultiLink::
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ExplainMultiLinkRules
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerLobby_Text_ExplainMultiLinkRules, MSGBOX_DEFAULT
 	goto BattleFrontier_BattleTowerLobby_EventScript_ReadRulesBoard
 	end
 
@@ -976,6 +913,7 @@ BattleFrontier_BattleTowerLobby_EventScript_ExitRules::
 	releaseall
 	end
 
+@ Unused
 BattleFrontier_BattleTowerLobby_Text_DirectYouToBattleRoom: @ 0x0822059B
 	.string "それでは　バトルルームへ\n"
 	.string "ごあんない　します！$"
