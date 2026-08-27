@@ -175,7 +175,27 @@ gJPText_00275660: @ 0x08275660
 	.string "ざんねんですが\n"
 	.string "ちょうせんは　むこうと　なります！$"
 
-	.incbin "baserom_jp.gba", 0x2756a9, 0x1391
+	.incbin "baserom_jp.gba", 0x2756a9, 0x6fc
+
+FarawayIsland_Entrance_Text_SailorReturn: @ 0x08275DA5
+	.string "まったく　ハギ　せんちょうの\n"
+	.string "きまぐれにも　まいるよなあ⋯⋯\p"
+	.string "もう　ミナモへ　かえるのかい？$"
+
+	.incbin "baserom_jp.gba", 0x275dd4, 0x105
+
+FarawayIsland_Entrance_Text_Sign: @ 0x08275ED9
+	.string "なんねんも　まえに　かかれたような\n"
+	.string "ふるい　かきおきが　ある⋯⋯\p"
+	.string "⋯⋯がつ　6か\n"
+	.string "ここに　たちいる　にんげ⋯⋯が\l"
+	.string "ふたたび　⋯⋯らわれると　すれば\l"
+	.string "こころ　やさし⋯⋯で　あらんことを\p"
+	.string "⋯⋯こに　その　ねがいを　しるし\n"
+	.string "この　⋯⋯を　あとにする\p"
+	.string "⋯⋯ジ$"
+
+	.incbin "baserom_jp.gba", 0x275f57, 0xae3
 
 	.globl FortreeCity_House2_EventScript_SleepTalkTutor
 FortreeCity_House2_EventScript_SleepTalkTutor: @ 0x08276A3A
