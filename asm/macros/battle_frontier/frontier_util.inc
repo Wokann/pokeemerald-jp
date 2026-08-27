@@ -106,6 +106,13 @@
 	special CallFrontierUtilFunc
 	.endm
 
+	@ TRUE if the given battleType is set in gBattleTypeFlags, FALSE otherwise.
+	.macro frontier_isbattletype battleType:req
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_CHECK_BATTLE_TYPE
+	setvar VAR_0x8005, \battleType
+	special CallFrontierUtilFunc
+	.endm
+
 	@ Load the selected party mons into the Frontier battle party.
 	.macro frontier_setpartyorder partySize:req
 	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_SET_PARTY_ORDER

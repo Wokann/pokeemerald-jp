@@ -1,130 +1,729 @@
-@ BattleFrontier_BattlePyramidFloor scripts (JP map g26 m26 @ 0x0822D4FC)
-
 BattleFrontier_BattlePyramidFloor_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, BattleFrontier_BattlePyramidFloor_EventScript_0022D56B
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattlePyramidFloor_MapScriptTable_0022D50C
-	map_script MAP_SCRIPT_ON_TRANSITION, BattleFrontier_BattlePyramidFloor_EventScript_0022D693
+	map_script MAP_SCRIPT_ON_RESUME, BattleFrontier_BattlePyramidFloor_OnResume
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattlePyramidFloor_OnFrame
+	map_script MAP_SCRIPT_ON_TRANSITION, BattleFrontier_BattlePyramidFloor_OnTransition
 	.byte 0
 
-BattleFrontier_BattlePyramidFloor_MapScriptTable_0022D50C::
-	map_script_2 0x400D, 0x1, BattleFrontier_BattlePyramidFloor_EventScript_0022D526
-	map_script_2 0x400E, 0x0, BattleFrontier_BattlePyramidFloor_EventScript_0022D561
-	map_script_2 0x400F, 0x1, BattleFrontier_BattlePyramidFloor_EventScript_0022D558
+BattleFrontier_BattlePyramidFloor_OnFrame:
+	map_script_2 VAR_TEMP_D, 1, BattleFrontier_BattlePyramidFloor_EventScript_UpdateLight
+	map_script_2 VAR_TEMP_PLAYING_PYRAMID_MUSIC, 0, BattleFrontier_BattlePyramidFloor_EventScript_PlayPyramidMusic
+	map_script_2 VAR_TEMP_F, 1, BattleFrontier_BattlePyramidFloor_EventScript_ShowMapName
 	.2byte 0
 
-BattleFrontier_BattlePyramidFloor_EventScript_0022D526::
+BattleFrontier_BattlePyramidFloor_EventScript_UpdateLight::
 	lockall
-	setvar 0x8004, 0xD
-	setvar 0x8005, 0x4
-	setvar 0x8006, 0x1
-	setvar 0x8007, 0x37
-	setvar 0x800D, 0x0
-
-BattleFrontier_BattlePyramidFloor_EventScript_0022D540::
+	@ pyramid_updatelight, cant use macro because it straddles the loop
+	setvar VAR_0x8004, BATTLE_PYRAMID_FUNC_UPDATE_LIGHT
+	setvar VAR_0x8005, 4
+	setvar VAR_0x8006, PYRAMID_LIGHT_INCR_RADIUS
+	setvar VAR_0x8007, SE_SAVE
+	setvar VAR_RESULT, 0
+BattleFrontier_BattlePyramidFloor_EventScript_UpdateLightLoop::
 	special CallBattlePyramidFunction
-	delay 0x2
-	compare_var_to_value 0x800D, 0x2
-	goto_if 0x5, BattleFrontier_BattlePyramidFloor_EventScript_0022D540
-	setvar 0x400D, 0x0
+	delay 2
+	goto_if_ne VAR_RESULT, 2, BattleFrontier_BattlePyramidFloor_EventScript_UpdateLightLoop
+	setvar VAR_TEMP_D, 0
 	releaseall
 	end
 
-BattleFrontier_BattlePyramidFloor_EventScript_0022D558::
+BattleFrontier_BattlePyramidFloor_EventScript_ShowMapName::
 	special ShowMapNamePopup
-	setvar 0x400F, 0x0
+	setvar VAR_TEMP_F, 0
 	end
 
-BattleFrontier_BattlePyramidFloor_EventScript_0022D561::
-	playbgm 0x1CD, 0x0
-	setvar 0x400E, 0x1
+BattleFrontier_BattlePyramidFloor_EventScript_PlayPyramidMusic::
+	playbgm MUS_B_PYRAMID, FALSE
+	setvar VAR_TEMP_PLAYING_PYRAMID_MUSIC, 1
 	end
 
-BattleFrontier_BattlePyramidFloor_EventScript_0022D56B::
-	setvar 0x8004, 0xF
-	special CallBattlePyramidFunction
-	setvar 0x8004, 0x0
-	special CallFrontierUtilFunc
-	copyvar 0x8000, 0x4000
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattlePyramidFloor_EventScript_0022D656
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattlePyramidFloor_EventScript_0022D62F
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattlePyramidFloor_EventScript_0022D656
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x5
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x4
-	goto_if 0x1, BattleFrontier_BattlePyramidFloor_EventScript_0022D602
-	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, BattleFrontier_BattlePyramidFloor_EventScript_0022D602
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattlePyramidFloor_EventScript_0022D602
-	compare_var_to_value 0x800D, 0x2
-	goto_if 0x1, BattleFrontier_BattlePyramidFloor_EventScript_0022D60B
-	compare_var_to_value 0x800D, 0x3
-	goto_if 0x1, BattleFrontier_BattlePyramidFloor_EventScript_0022D60B
-	compare_var_to_value 0x800D, 0x9
-	goto_if 0x1, BattleFrontier_BattlePyramidFloor_EventScript_0022D60B
-	setvar 0x8004, 0xE
-	setvar 0x8005, 0x8
-	special CallFrontierUtilFunc
-	setvar 0x400D, 0x1
-
-BattleFrontier_BattlePyramidFloor_EventScript_0022D602::
-	setvar 0x8004, 0x11
-	special CallBattlePyramidFunction
+BattleFrontier_BattlePyramidFloor_OnResume:
+	pyramid_setfloorpal
+	frontier_getstatus
+	switch VAR_TEMP_CHALLENGE_STATUS
+	case 0, BattleFrontier_BattlePyramidFloor_EventScript_ReadyChallenge
+	case CHALLENGE_STATUS_SAVING, BattleFrontier_BattlePyramid_EventScript_WarpToLobby
+	case CHALLENGE_STATUS_PAUSED, BattleFrontier_BattlePyramidFloor_EventScript_ReadyChallenge
+	frontier_get FRONTIER_DATA_BATTLE_OUTCOME
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, BattleFrontier_BattlePyramidFloor_EventScript_ResetParty
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, BattleFrontier_BattlePyramidFloor_EventScript_ResetParty
+	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattlePyramidFloor_EventScript_ResetParty
+	goto_if_eq VAR_RESULT, B_OUTCOME_LOST, BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost
+	goto_if_eq VAR_RESULT, B_OUTCOME_DREW, BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost
+	goto_if_eq VAR_RESULT, B_OUTCOME_FORFEITED, BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost
+	frontier_isbattletype BATTLE_TYPE_TRAINER  @ VAR_RESULT seems to be ignored here
+	setvar VAR_TEMP_D, 1
+BattleFrontier_BattlePyramidFloor_EventScript_ResetParty::
+	pyramid_resetparty
 	end
 
-BattleFrontier_BattlePyramidFloor_EventScript_0022D60B::
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x4
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x7
-	setvar 0x8006, 0xFF
-	special CallBattlePyramidFunction
-
-BattleFrontier_BattlePyramidFloor_EventScript_0022D62F::
-	setvar 0x8004, 0xD
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special CallBattlePyramidFunction
-	setvar 0x8004, 0xE
-	special CallBattlePyramidFunction
+BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost::
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST
+	pyramid_set PYRAMID_DATA_TRAINER_FLAGS, 255
+BattleFrontier_BattlePyramid_EventScript_WarpToLobby::
+	pyramid_updatelight 0, PYRAMID_LIGHT_SET_RADIUS
+	pyramid_clearhelditems
 	special HealPlayerParty
-	warpsilent 0x1A19, 0xFF, 0x7, 0xD
+	warpsilent MAP_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY, 7, 13
 	waitstate
 	end
 
-BattleFrontier_BattlePyramidFloor_EventScript_0022D656::
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x1
-	special CallBattlePyramidFunction
+BattleFrontier_BattlePyramidFloor_EventScript_ReadyChallenge::
+	pyramid_save CHALLENGE_STATUS_SAVING
 	special SavePlayerParty
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x9
-	special CallBattlePyramidFunction
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x3
-	special CallFrontierUtilFunc
-	setvar 0x400F, 0x1
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	pyramid_settrainers
+	frontier_setpartyorder FRONTIER_PARTY_SIZE
+	setvar VAR_TEMP_F, 1
 	end
 
-BattleFrontier_BattlePyramidFloor_EventScript_0022D693::
-	call BattleFrontier_BattlePyramidFloor_EventScript_0022D69E
-	setvar 0x400F, 0x1
+BattleFrontier_BattlePyramidFloor_OnTransition:
+	call BattleFrontier_BattlePyramidFloor_EventScript_SetLightRadius
+	setvar VAR_TEMP_F, 1
 	end
 
-BattleFrontier_BattlePyramidFloor_EventScript_0022D69E::
-	setvar 0x8004, 0xD
-	setvar 0x8005, 0x20
-	setvar 0x8006, 0x0
-	special CallBattlePyramidFunction
+BattleFrontier_BattlePyramidFloor_EventScript_SetLightRadius::
+	pyramid_updatelight 32, PYRAMID_LIGHT_SET_RADIUS
 	return
 
-BattlePyramid_WarpToNextFloor:: @ 0x0822D6B1
+BattlePyramid_WarpToNextFloor::
+	call BattleFrontier_EventScript_IncrementWinStreak
+	frontier_get FRONTIER_DATA_BATTLE_NUM  @ Floor number
+	addvar VAR_RESULT, 1
+	frontier_set FRONTIER_DATA_BATTLE_NUM, VAR_RESULT
+	goto_if_eq VAR_RESULT, 7, BattlePyramid_WarpToTop
+	pyramid_seedfloor
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	setvar VAR_RESULT, 0
+	warp MAP_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR, 1, 1
+	waitstate
+	end
+
+BattlePyramid_WarpToTop::
+	warp MAP_BATTLE_FRONTIER_BATTLE_PYRAMID_TOP, 17, 17
+	waitstate
+	end
+
+@ TRAINER_PHILLIP is used as a placeholder
+BattlePyramid_TrainerBattle::
+	trainerbattle TRAINER_BATTLE_PYRAMID, TRAINER_PHILLIP, LOCALID_NONE, BattleFacility_TrainerBattle_PlaceholderText, BattleFacility_TrainerBattle_PlaceholderText
+	pyramid_showhint
+	waitmessage
+	waitbuttonpress
+	closemessage
+	releaseall
+	end
+
+BattlePyramid_FindItemBall::
+	pyramid_setitem
+	callstd STD_FIND_ITEM
+	goto_if_eq VAR_0x8007, 0, BattlePyramid_FindItemBallEnd
+	pyramid_hideitem
+BattlePyramid_FindItemBallEnd::
+	end
+
+BattlePyramid_Retire::
+	goto BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost
+
+@ Also used by Trainer Hill
+BattleFacility_TrainerBattle_PlaceholderText:
+	.string "テストメッセージ　です$"
+
+gText_BattlePyramidConfirmRest::
+	.string "バトルピラミッドの　できごとを\n"
+	.string "レポートに　かいて　ちゅうだん　します\l"
+	.string "よろしいですか？$"
+
+gText_BattlePyramidConfirmRetire::
+	.string "バトルピラミッドの　ちょうせんを\n"
+	.string "やめて　ほんとうに　よろしいですか？$"
+
+BattlePyramid_Text_ExitHintUp1::
+	.string "この　だんの　でぐちは\n"
+	.string "{UP_ARROW}の　ほうこうに　あるんだよ$"
+
+BattlePyramid_Text_ExitHintLeft1::
+	.string "この　だんの　でぐちは\n"
+	.string "{LEFT_ARROW}の　ほうこうに　あるんだよ$"
+
+BattlePyramid_Text_ExitHintRight1::
+	.string "この　だんの　でぐちは\n"
+	.string "{RIGHT_ARROW}の　ほうこうに　あるんだよ$"
+
+BattlePyramid_Text_ExitHintDown1::
+	.string "この　だんの　でぐちは\n"
+	.string "{DOWN_ARROW}の　ほうこうに　あるんだよ$"
+
+BattlePyramid_Text_ExitHintUp2::
+	.string "この　だんの　でぐちは\n"
+	.string "{UP_ARROW}の　ほうこうに　あるの$"
+
+BattlePyramid_Text_ExitHintLeft2::
+	.string "この　だんの　でぐちは\n"
+	.string "{LEFT_ARROW}の　ほうこうに　あるの$"
+
+BattlePyramid_Text_ExitHintRight2::
+	.string "この　だんの　でぐちは\n"
+	.string "{RIGHT_ARROW}の　ほうこうに　あるの$"
+
+BattlePyramid_Text_ExitHintDown2::
+	.string "この　だんの　でぐちは\n"
+	.string "{DOWN_ARROW}の　ほうこうに　あるの$"
+
+BattlePyramid_Text_ExitHintUp3::
+	.string "でぐちは\n"
+	.string "{UP_ARROW}の　ほうこうに　あるよ$"
+
+BattlePyramid_Text_ExitHintLeft3::
+	.string "でぐちは\n"
+	.string "{LEFT_ARROW}の　ほうこうに　あるよ$"
+
+BattlePyramid_Text_ExitHintRight3::
+	.string "でぐちは\n"
+	.string "{RIGHT_ARROW}の　ほうこうに　あるよ$"
+
+BattlePyramid_Text_ExitHintDown3::
+	.string "でぐちは\n"
+	.string "{DOWN_ARROW}の　ほうこうに　あるよ$"
+
+BattlePyramid_Text_ExitHintUp4::
+	.string "この　だんの　でぐちは\n"
+	.string "{UP_ARROW}の　ほうこうの　どこかに　あるわ$"
+
+BattlePyramid_Text_ExitHintLeft4::
+	.string "この　だんの　でぐちは\n"
+	.string "{LEFT_ARROW}の　ほうこうの　どこかに　あるわ$"
+
+BattlePyramid_Text_ExitHintRight4::
+	.string "この　だんの　でぐちは\n"
+	.string "{RIGHT_ARROW}の　ほうこうの　どこかに　あるわ$"
+
+BattlePyramid_Text_ExitHintDown4::
+	.string "この　だんの　でぐちは\n"
+	.string "{DOWN_ARROW}の　ほうこうの　どこかに　あるわ$"
+
+BattlePyramid_Text_ExitHintUp5::
+	.string "でぐちは\n"
+	.string "{UP_ARROW}の　ほうこうに　あるぞ$"
+
+BattlePyramid_Text_ExitHintLeft5::
+	.string "でぐちは\n"
+	.string "{LEFT_ARROW}の　ほうこうに　あるぞ$"
+
+BattlePyramid_Text_ExitHintRight5::
+	.string "でぐちは\n"
+	.string "{RIGHT_ARROW}の　ほうこうに　あるぞ$"
+
+BattlePyramid_Text_ExitHintDown5::
+	.string "でぐちは\n"
+	.string "{DOWN_ARROW}の　ほうこうに　あるぞ$"
+
+BattlePyramid_Text_ExitHintUp6::
+	.string "でぐちは\n"
+	.string "{UP_ARROW}の　ほうこうに　あるわね$"
+
+BattlePyramid_Text_ExitHintLeft6::
+	.string "でぐちは\n"
+	.string "{LEFT_ARROW}の　ほうこうに　あるわね$"
+
+BattlePyramid_Text_ExitHintRight6::
+	.string "でぐちは\n"
+	.string "{RIGHT_ARROW}の　ほうこうに　あるわね$"
+
+BattlePyramid_Text_ExitHintDown6::
+	.string "でぐちは\n"
+	.string "{DOWN_ARROW}の　ほうこうに　あるわね$"
+
+BattlePyramid_Text_EightItemsRemaining1::
+	.string "どうぐを　さがしているの？\p"
+	.string "どうぐは\n"
+	.string "あと　8つ　おちているんだよ！$"
+
+BattlePyramid_Text_SevenItemsRemaining1::
+	.string "どうぐを　さがしているの？\p"
+	.string "どうぐは\n"
+	.string "あと　7つ　おちているんだよ！$"
+
+BattlePyramid_Text_SixItemsRemaining1::
+	.string "どうぐを　さがしているの？\p"
+	.string "どうぐは\n"
+	.string "あと　6つ　おちているんだよ！$"
+
+BattlePyramid_Text_FiveItemsRemaining1::
+	.string "どうぐを　さがしているの？\p"
+	.string "どうぐは\n"
+	.string "あと　5つ　おちているんだよ！$"
+
+BattlePyramid_Text_FourItemsRemaining1::
+	.string "どうぐを　さがしているの？\p"
+	.string "どうぐは\n"
+	.string "あと　4つ　おちているんだよ！$"
+
+BattlePyramid_Text_ThreeItemsRemaining1::
+	.string "どうぐを　さがしているの？\p"
+	.string "どうぐは\n"
+	.string "あと　3つ　おちているんだよ！$"
+
+BattlePyramid_Text_TwoItemsRemaining1::
+	.string "どうぐを　さがしているの？\p"
+	.string "どうぐは\n"
+	.string "あと　2つ　おちているんだよ！$"
+
+BattlePyramid_Text_OneItemRemaining1::
+	.string "どうぐを　さがしているの？\p"
+	.string "どうぐは\n"
+	.string "あと　1つ　おちているんだよ！$"
+
+BattlePyramid_Text_ZeroItemsRemaining1::
+	.string "どうぐを　さがしているの？\p"
+	.string "どうぐは\n"
+	.string "もう　おちていないんだよ！$"
+
+BattlePyramid_Text_EightItemsRemaining2::
+	.string "かった　ごほうびに\n"
+	.string "ヒミツを　おしえて　あげちゃう！\p"
+	.string "ここには　どうぐが\n"
+	.string "あと　8つ　おちているの$"
+
+BattlePyramid_Text_SevenItemsRemaining2::
+	.string "かった　ごほうびに\n"
+	.string "ヒミツを　おしえて　あげちゃう！\p"
+	.string "ここには　どうぐが\n"
+	.string "あと　7つ　おちているの$"
+
+BattlePyramid_Text_SixItemsRemaining2::
+	.string "かった　ごほうびに\n"
+	.string "ヒミツを　おしえて　あげちゃう！\p"
+	.string "ここには　どうぐが\n"
+	.string "あと　6つ　おちているの$"
+
+BattlePyramid_Text_FiveItemsRemaining2::
+	.string "かった　ごほうびに\n"
+	.string "ヒミツを　おしえて　あげちゃう！\p"
+	.string "ここには　どうぐが\n"
+	.string "あと　5つ　おちているの$"
+
+BattlePyramid_Text_FourItemsRemaining2::
+	.string "かった　ごほうびに\n"
+	.string "ヒミツを　おしえて　あげちゃう！\p"
+	.string "ここには　どうぐが\n"
+	.string "あと　4つ　おちているの$"
+
+BattlePyramid_Text_ThreeItemsRemaining2::
+	.string "かった　ごほうびに\n"
+	.string "ヒミツを　おしえて　あげちゃう！\p"
+	.string "ここには　どうぐが\n"
+	.string "あと　3つ　おちているの$"
+
+BattlePyramid_Text_TwoItemsRemaining2::
+	.string "かった　ごほうびに\n"
+	.string "ヒミツを　おしえて　あげちゃう！\p"
+	.string "ここには　どうぐが\n"
+	.string "あと　2つ　おちているの$"
+
+BattlePyramid_Text_OneItemRemaining2::
+	.string "かった　ごほうびに\n"
+	.string "ヒミツを　おしえて　あげちゃう！\p"
+	.string "ここには　どうぐが\n"
+	.string "あと　1つ　おちているの$"
+
+BattlePyramid_Text_ZeroItemsRemaining2::
+	.string "かった　ごほうびに\n"
+	.string "ヒミツを　おしえて　あげちゃう！\p"
+	.string "ここには　どうぐが\n"
+	.string "もう　おちていないの$"
+
+BattlePyramid_Text_EightItemsRemaining3::
+	.string "どうぐは　たりている？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　8つほど　あるそうだよ！$"
+
+BattlePyramid_Text_SevenItemsRemaining3::
+	.string "どうぐは　たりている？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　7つほど　あるそうだよ！$"
+
+BattlePyramid_Text_SixItemsRemaining3::
+	.string "どうぐは　たりている？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　6つほど　あるそうだよ！$"
+
+BattlePyramid_Text_FiveItemsRemaining3::
+	.string "どうぐは　たりている？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　5つほど　あるそうだよ！$"
+
+BattlePyramid_Text_FourItemsRemaining3::
+	.string "どうぐは　たりている？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　4つほど　あるそうだよ！$"
+
+BattlePyramid_Text_ThreeItemsRemaining3::
+	.string "どうぐは　たりている？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　3つほど　あるそうだよ！$"
+
+BattlePyramid_Text_TwoItemsRemaining3::
+	.string "どうぐは　たりている？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　2つほど　あるそうだよ！$"
+
+BattlePyramid_Text_OneItemRemaining3::
+	.string "どうぐは　たりている？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　1つだけ　あるそうだよ！$"
+
+BattlePyramid_Text_ZeroItemsRemaining3::
+	.string "どうぐは　たりている？\p"
+	.string "この　だんには\n"
+	.string "もう　どうぐが　ないらしいから\l"
+	.string "きを　つけてね！$"
+
+BattlePyramid_Text_EightItemsRemaining4::
+	.string "つよい　あなたに　ヒントを　あげる！\p"
+	.string "どうぐは\n"
+	.string "あと　8つ　おちているらしいわ！$"
+
+BattlePyramid_Text_SevenItemsRemaining4::
+	.string "つよい　あなたに　ヒントを　あげる！\p"
+	.string "どうぐは\n"
+	.string "あと　7つ　おちているらしいわ！$"
+
+BattlePyramid_Text_SixItemsRemaining4::
+	.string "つよい　あなたに　ヒントを　あげる！\p"
+	.string "どうぐは\n"
+	.string "あと　6つ　おちているらしいわ！$"
+
+BattlePyramid_Text_FiveItemsRemaining4::
+	.string "つよい　あなたに　ヒントを　あげる！\p"
+	.string "どうぐは\n"
+	.string "あと　5つ　おちているらしいわ！$"
+
+BattlePyramid_Text_FourItemsRemaining4::
+	.string "つよい　あなたに　ヒントを　あげる！\p"
+	.string "どうぐは\n"
+	.string "あと　4つ　おちているらしいわ！$"
+
+BattlePyramid_Text_ThreeItemsRemaining4::
+	.string "つよい　あなたに　ヒントを　あげる！\p"
+	.string "どうぐは\n"
+	.string "あと　3つ　おちているらしいわ！$"
+
+BattlePyramid_Text_TwoItemsRemaining4::
+	.string "つよい　あなたに　ヒントを　あげる！\p"
+	.string "どうぐは\n"
+	.string "あと　2つ　おちているらしいわ！$"
+
+BattlePyramid_Text_OneItemRemaining4::
+	.string "つよい　あなたに　ヒントを　あげる！\p"
+	.string "どうぐは\n"
+	.string "あと　1つ　おちているらしいわ！$"
+
+BattlePyramid_Text_ZeroItemsRemaining4::
+	.string "つよい　あなたに　ヒントを　あげる！\p"
+	.string "どうぐは\n"
+	.string "もう　1つも　おちてないらしいわ！$"
+
+BattlePyramid_Text_EightItemsRemaining5::
+	.string "ピラミッドの　この　だんには\n"
+	.string "どうぐが　8つは　あるそうだ⋯⋯$"
+
+BattlePyramid_Text_SevenItemsRemaining5::
+	.string "ピラミッドの　この　だんには\n"
+	.string "どうぐが　7つは　あるそうだ⋯⋯$"
+
+BattlePyramid_Text_SixItemsRemaining5::
+	.string "ピラミッドの　この　だんには\n"
+	.string "どうぐが　6つは　あるそうだ⋯⋯$"
+
+BattlePyramid_Text_FiveItemsRemaining5::
+	.string "ピラミッドの　この　だんには\n"
+	.string "どうぐが　5つは　あるそうだ⋯⋯$"
+
+BattlePyramid_Text_FourItemsRemaining5::
+	.string "ピラミッドの　この　だんには\n"
+	.string "どうぐが　4つは　あるそうだ⋯⋯$"
+
+BattlePyramid_Text_ThreeItemsRemaining5::
+	.string "ピラミッドの　この　だんには\n"
+	.string "どうぐが　3つは　あるそうだ⋯⋯$"
+
+BattlePyramid_Text_TwoItemsRemaining5::
+	.string "ピラミッドの　この　だんには\n"
+	.string "どうぐが　2つは　あるそうだ⋯⋯$"
+
+BattlePyramid_Text_OneItemRemaining5::
+	.string "ピラミッドの　この　だんには\n"
+	.string "どうぐが　1つは　あるそうだ⋯⋯$"
+
+BattlePyramid_Text_ZeroItemsRemaining5::
+	.string "ピラミッドの　この　だんには\n"
+	.string "どうぐは　ないそうだ⋯⋯$"
+
+BattlePyramid_Text_EightItemsRemaining6::
+	.string "どうぐは　もっているかい？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　8つは　あるそうだよ$"
+
+BattlePyramid_Text_SevenItemsRemaining6::
+	.string "どうぐは　もっているかい？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　7つは　あるそうだよ$"
+
+BattlePyramid_Text_SixItemsRemaining6::
+	.string "どうぐは　もっているかい？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　6つは　あるそうだよ$"
+
+BattlePyramid_Text_FiveItemsRemaining6::
+	.string "どうぐは　もっているかい？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　5つは　あるそうだよ$"
+
+BattlePyramid_Text_FourItemsRemaining6::
+	.string "どうぐは　もっているかい？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　4つは　あるそうだよ$"
+
+BattlePyramid_Text_ThreeItemsRemaining6::
+	.string "どうぐは　もっているかい？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　3つは　あるそうだよ$"
+
+BattlePyramid_Text_TwoItemsRemaining6::
+	.string "どうぐは　もっているかい？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　2つは　あるそうだよ$"
+
+BattlePyramid_Text_OneItemRemaining6::
+	.string "どうぐは　もっているかい？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　あと　1つは　あるそうだよ$"
+
+BattlePyramid_Text_ZeroItemsRemaining6::
+	.string "どうぐは　もっているかい？\p"
+	.string "この　だんには\n"
+	.string "どうぐが　もう　ないそうだよ$"
+
+BattlePyramid_Text_SevenTrainersRemaining1::
+	.string "とっても　つよかったよー！！\p"
+	.string "でも　つよい　トレーナーは\n"
+	.string "まだまだ　7にんも　いるからねー！$"
+
+BattlePyramid_Text_SixTrainersRemaining1::
+	.string "とっても　つよかったよー！！\p"
+	.string "でも　つよい　トレーナーは\n"
+	.string "まだまだ　6にんも　いるからねー！$"
+
+BattlePyramid_Text_FiveTrainersRemaining1::
+	.string "とっても　つよかったよー！！\p"
+	.string "でも　つよい　トレーナーは\n"
+	.string "まだまだ　5にんも　いるからねー！$"
+
+BattlePyramid_Text_FourTrainersRemaining1::
+	.string "とっても　つよかったよー！！\p"
+	.string "でも　つよい　トレーナーは\n"
+	.string "まだまだ　4にんも　いるからねー！$"
+
+BattlePyramid_Text_ThreeTrainersRemaining1::
+	.string "とっても　つよかったよー！！\p"
+	.string "でも　つよい　トレーナーは\n"
+	.string "まだまだ　3にんも　いるからねー！$"
+
+BattlePyramid_Text_TwoTrainersRemaining1::
+	.string "とっても　つよかったよー！！\p"
+	.string "でも　つよい　トレーナーは\n"
+	.string "まだ　2にん　いるからねー！$"
+
+BattlePyramid_Text_OneTrainersRemaining1::
+	.string "とっても　つよかったよー！！\p"
+	.string "でも　つよい　トレーナーは\n"
+	.string "まだ　1にん　いるからねー！$"
+
+BattlePyramid_Text_ZeroTrainersRemaining1::
+	.string "とっても　つよかったよー！！\p"
+	.string "もう　だれも\n"
+	.string "かてる　ひとは　いないよー！！$"
+
+BattlePyramid_Text_SevenTrainersRemaining2::
+	.string "くやしいー！\p"
+	.string "でも　あと　7にん　いる　トレーナーが\n"
+	.string "きっと　たおしてくれるわ$"
+
+BattlePyramid_Text_SixTrainersRemaining2::
+	.string "くやしいー！\p"
+	.string "でも　あと　6にん　いる　トレーナーが\n"
+	.string "きっと　たおしてくれるわ$"
+
+BattlePyramid_Text_FiveTrainersRemaining2::
+	.string "くやしいー！\p"
+	.string "でも　あと　5にん　いる　トレーナーが\n"
+	.string "きっと　たおしてくれるわ$"
+
+BattlePyramid_Text_FourTrainersRemaining2::
+	.string "くやしいー！\p"
+	.string "でも　あと　4にん　いる　トレーナーが\n"
+	.string "きっと　たおしてくれるわ$"
+
+BattlePyramid_Text_ThreeTrainersRemaining2::
+	.string "くやしいー！\p"
+	.string "でも　あと　3にん　いる　トレーナーが\n"
+	.string "きっと　たおしてくれるわ$"
+
+BattlePyramid_Text_TwoTrainersRemaining2::
+	.string "くやしいー！\p"
+	.string "でも　あと　2にん　いる　トレーナーが\n"
+	.string "きっと　たおしてくれるわ$"
+
+BattlePyramid_Text_OneTrainersRemaining2::
+	.string "くやしいー！\p"
+	.string "でも　あと　1にん　いる　トレーナーが\n"
+	.string "きっと　たおしてくれるわ$"
+
+BattlePyramid_Text_ZeroTrainersRemaining2::
+	.string "くやしいー！\p"
+	.string "でも　もう　たたかえる\n"
+	.string "トレーナーが　いないのー$"
+
+BattlePyramid_Text_SevenTrainersRemaining3::
+	.string "やるねー！\p"
+	.string "でも　この　だんに　あと　7にんも　いる\n"
+	.string "トレーナーを　たおせるかな？$"
+
+BattlePyramid_Text_SixTrainersRemaining3::
+	.string "やるねー！\p"
+	.string "でも　この　だんに　あと　6にんも　いる\n"
+	.string "トレーナーを　たおせるかな？$"
+
+BattlePyramid_Text_FiveTrainersRemaining3::
+	.string "やるねー！\p"
+	.string "でも　この　だんに　あと　5にんも　いる\n"
+	.string "トレーナーを　たおせるかな？$"
+
+BattlePyramid_Text_FourTrainersRemaining3::
+	.string "やるねー！\p"
+	.string "でも　この　だんに　あと　4にん　いる\n"
+	.string "トレーナーを　たおせるかな？$"
+
+BattlePyramid_Text_ThreeTrainersRemaining3::
+	.string "やるねー！\p"
+	.string "でも　この　だんに　あと　3にん　いる\n"
+	.string "トレーナーを　たおせるかな？$"
+
+BattlePyramid_Text_TwoTrainersRemaining3::
+	.string "やるねー！\p"
+	.string "でも　この　だんに　あと　2にん　いる\n"
+	.string "トレーナーを　たおせるかな？$"
+
+BattlePyramid_Text_OneTrainersRemaining3::
+	.string "やるねー！\p"
+	.string "でも　この　だんに　あと　1にん　いる\n"
+	.string "トレーナーを　たおせるかな？$"
+
+BattlePyramid_Text_ZeroTrainersRemaining3::
+	.string "やるねー！\p"
+	.string "この　だんには　たたかえる　トレーナーは\n"
+	.string "もう　だれも　いないよ$"
+
+BattlePyramid_Text_SevenTrainersRemaining4::
+	.string "あなたなら　まだ　たたかっていない\n"
+	.string "7にんの　トレーナーを　たおせるかも⋯⋯$"
+
+BattlePyramid_Text_SixTrainersRemaining4::
+	.string "あなたなら　まだ　たたかっていない\n"
+	.string "6にんの　トレーナーを　たおせるかも⋯⋯$"
+
+BattlePyramid_Text_FiveTrainersRemaining4::
+	.string "あなたなら　まだ　たたかっていない\n"
+	.string "5にんの　トレーナーを　たおせるかも⋯⋯$"
+
+BattlePyramid_Text_FourTrainersRemaining4::
+	.string "あなたなら　まだ　たたかっていない\n"
+	.string "4にんの　トレーナーを　たおせるかも⋯⋯$"
+
+BattlePyramid_Text_ThreeTrainersRemaining4::
+	.string "あなたなら　まだ　たたかっていない\n"
+	.string "3にんの　トレーナーを　たおせるかも⋯⋯$"
+
+BattlePyramid_Text_TwoTrainersRemaining4::
+	.string "あなたなら　まだ　たたかっていない\n"
+	.string "2にんの　トレーナーを　たおせるかも⋯⋯$"
+
+BattlePyramid_Text_OneTrainersRemaining4::
+	.string "あなたなら　まだ　たたかっていない\n"
+	.string "1にんの　トレーナーを　たおせるかも⋯⋯$"
+
+BattlePyramid_Text_ZeroTrainersRemaining4::
+	.string "あなたを　たおせる　トレーナーは\n"
+	.string "もう　だれも　いないわ⋯⋯$"
+
+BattlePyramid_Text_SevenTrainersRemaining5::
+	.string "きみならば\n"
+	.string "あと　7にん　いる　すごうで　トレーナーを\l"
+	.string "たおせるかも　しれないな$"
+
+BattlePyramid_Text_SixTrainersRemaining5::
+	.string "きみならば\n"
+	.string "あと　6にん　いる　すごうで　トレーナーを\l"
+	.string "たおせるかも　しれないな$"
+
+BattlePyramid_Text_FiveTrainersRemaining5::
+	.string "きみならば\n"
+	.string "あと　5にん　いる　すごうで　トレーナーを\l"
+	.string "たおせるかも　しれないな$"
+
+BattlePyramid_Text_FourTrainersRemaining5::
+	.string "きみならば\n"
+	.string "あと　4にん　いる　すごうで　トレーナーを\l"
+	.string "たおせるかも　しれないな$"
+
+BattlePyramid_Text_ThreeTrainersRemaining5::
+	.string "きみならば\n"
+	.string "あと　3にん　いる　すごうで　トレーナーを\l"
+	.string "たおせるかも　しれないな$"
+
+BattlePyramid_Text_TwoTrainersRemaining5::
+	.string "きみならば\n"
+	.string "あと　2にん　いる　すごうで　トレーナーを\l"
+	.string "たおせるかも　しれないな$"
+
+BattlePyramid_Text_OneTrainersRemaining5::
+	.string "きみならば\n"
+	.string "あと　1にん　いる　すごうで　トレーナーを\l"
+	.string "たおせるかも　しれないな$"
+
+BattlePyramid_Text_ZeroTrainersRemaining5::
+	.string "きみは　ほんとうに　つよい\p"
+	.string "もう　ここには　どこにも\n"
+	.string "きみを　たおせる　トレーナーは　おらんよ$"
+
+BattlePyramid_Text_SevenTrainersRemaining6::
+	.string "のこり　7にんの\n"
+	.string "トレーナーを　たおせるかい？$"
+
+BattlePyramid_Text_SixTrainersRemaining6::
+	.string "のこり　6にんの\n"
+	.string "トレーナーを　たおせるかい？$"
+
+BattlePyramid_Text_FiveTrainersRemaining6::
+	.string "のこり　5にんの\n"
+	.string "トレーナーを　たおせるかい？$"
+
+BattlePyramid_Text_FourTrainersRemaining6::
+	.string "のこり　4にんの\n"
+	.string "トレーナーを　たおせるかい？$"
+
+BattlePyramid_Text_ThreeTrainersRemaining6::
+	.string "のこり　3にんの\n"
+	.string "トレーナーを　たおせるかい？$"
+
+BattlePyramid_Text_TwoTrainersRemaining6::
+	.string "のこり　2にんの\n"
+	.string "トレーナーを　たおせるかい？$"
+
+BattlePyramid_Text_OneTrainersRemaining6::
+	.string "のこり　1にんの\n"
+	.string "トレーナーを　たおせるかい？$"
+
+BattlePyramid_Text_ZeroTrainersRemaining6::
+	.string "ここには　あんたと　たたかえる\n"
+	.string "トレーナーは　もう　いないよ⋯⋯$"

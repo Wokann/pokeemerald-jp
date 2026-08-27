@@ -853,7 +853,6 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.string "しっぱい　すると　なくなって　しまいます$"
 
 	.include "data/maps/BattleFrontier_BattlePyramidFloor/scripts.inc"
-	.incbin "baserom_jp.gba", 0x22d6b1, 0x12f1
 	.include "data/maps/BattleFrontier_BattlePyramidTop/scripts.inc"
 	.incbin "baserom_jp.gba", 0x22ecfe, 0x4cb
 	.include "data/maps/BattleFrontier_BattleArenaLobby/scripts.inc"
