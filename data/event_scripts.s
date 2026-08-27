@@ -901,7 +901,7 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/Route123_BerryMastersHouse/scripts.inc"
 	.include "data/maps/Route119_WeatherInstitute_1F/scripts.inc"
 	.include "data/maps/Route119_WeatherInstitute_2F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x241bd0, 0x7f
+	.include "data/maps/Route119_House/scripts.inc"
 	.include "data/maps/Route124_DivingTreasureHuntersHouse/scripts.inc"
 	.incbin "baserom_jp.gba", 0x242193, 0x21c
 Std_MsgboxNPC: @ 0x82423AF
