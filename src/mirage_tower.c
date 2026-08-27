@@ -73,6 +73,7 @@ static void DoMirageTowerDisintegration(u8);
 static void InitMirageTowerShake(u8);
 static void Task_FossilFallAndSink(u8);
 void SpriteCB_FallingFossil(struct Sprite *);
+void UpdateDisintegrationEffect(u8 *, u16, u8, u8, bool8);
 
 static const ALIGNED(2) u8 sMirageTower_Gfx[] = INCBIN_U8("graphics/mirage_tower/sMirageTower_Gfx.bin");
 static const u16 sMirageTowerTilemap[] = INCBIN_U16("graphics/mirage_tower/sMirageTowerTilemap.bin");
@@ -256,177 +257,62 @@ extern struct FallAnim_Fossil *sFallingFossil;   // 0x0203CBD8
 extern struct FallAnim_Tower *sFallingTower;     // 0x0203CBDC
 extern struct BgRegOffsets *sBgShakeOffsets;     // 0x0203CBE0
 extern struct MirageTowerPulseBlend *sMirageTowerPulseBlend; // 0x0203CBE4
+extern u16 gUnknown_30012A0[8];                  // 0x030012A0
 
-__attribute__((naked)) void SpriteCB_FallingFossil(struct Sprite *sprite)
+void SpriteCB_FallingFossil(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, lr}\n\t"
-        "sub sp, #4\n\t"
-        "adds r5, r0, #0\n\t"
-        "ldr r0, _081BEEFC\n\t"
-        "ldr r0, [r0]\n\t"
-        "ldrh r0, [r0, #0x10]\n\t"
-        "cmp r0, #0xff\n\t"
-        "bls _081BEF04\n\t"
-        "ldr r0, _081BEF00\n\t"
-        "str r0, [r5, #0x1c]\n\t"
-        "b _081BEF4C\n\t"
-        ".align 2, 0\n\t"
-        "_081BEEFC: .4byte sFallingFossil\n\t"
-        "_081BEF00: .4byte SpriteCallbackDummy + 1\n\t"
-        "_081BEF04:\n\t"
-        "ldrh r1, [r5, #0x22]\n\t"
-        "movs r2, #0x22\n\t"
-        "ldrsh r0, [r5, r2]\n\t"
-        "cmp r0, #0x5f\n\t"
-        "ble _081BEF48\n\t"
-        "movs r4, #0\n\t"
-        "_081BEF10:\n\t"
-        "ldr r0, _081BEF44\n\t"
-        "ldr r3, [r0]\n\t"
-        "ldr r0, [r3]\n\t"
-        "ldrh r1, [r3, #0x10]\n\t"
-        "adds r2, r1, #1\n\t"
-        "strh r2, [r3, #0x10]\n\t"
-        "lsls r1, r1, #0x10\n\t"
-        "ldr r2, [r3, #0xc]\n\t"
-        "lsrs r1, r1, #0xf\n\t"
-        "adds r1, r1, r2\n\t"
-        "ldrh r1, [r1]\n\t"
-        "movs r2, #0\n\t"
-        "str r2, [sp]\n\t"
-        "movs r3, #0x10\n\t"
-        "bl UpdateDisintegrationEffect\n\t"
-        "adds r0, r4, #1\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r4, r0, #0x18\n\t"
-        "cmp r4, #1\n\t"
-        "bls _081BEF10\n\t"
-        "adds r0, r5, #0\n\t"
-        "movs r1, #0\n\t"
-        "bl StartSpriteAnim\n\t"
-        "b _081BEF4C\n\t"
-        ".align 2, 0\n\t"
-        "_081BEF44: .4byte sFallingFossil\n\t"
-        "_081BEF48:\n\t"
-        "adds r0, r1, #1\n\t"
-        "strh r0, [r5, #0x22]\n\t"
-        "_081BEF4C:\n\t"
-        "add sp, #4\n\t"
-        "pop {r4, r5}\n\t"
-        "pop {r0}\n\t"
-        "bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sFallingFossil->disintegrateIdx >= FOSSIL_DISINTEGRATE_LENGTH)
+    {
+        sprite->callback = SpriteCallbackDummy;
+    }
+    else if (sprite->y >= 96)
+    {
+        u8 i;
+
+        for (i = 0; i < 2; i++)
+            UpdateDisintegrationEffect(sFallingFossil->frameImageTiles, sFallingFossil->disintegrateRand[sFallingFossil->disintegrateIdx++], 0, 16, 0);
+
+        StartSpriteAnim(sprite, 0);
+    }
+    else
+    {
+        sprite->y++;
+    }
 }
 
-__attribute__((naked)) void UpdateDisintegrationEffect(u8 *dest, u16 counter, u8 bits, u8 size, bool8 mask)
+void UpdateDisintegrationEffect(u8 *dest, u16 counter, u8 bits, u8 size, bool8 mask)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, r6, r7, lr}\n\t"
-        "mov r7, sl\n\t"
-        "mov r6, sb\n\t"
-        "mov r5, r8\n\t"
-        "push {r5, r6, r7}\n\t"
-        "sub sp, #8\n\t"
-        "str r0, [sp]\n\t"
-        "mov sl, r1\n\t"
-        "adds r6, r2, #0\n\t"
-        "mov r8, r3\n\t"
-        "ldr r0, [sp, #0x28]\n\t"
-        "mov sb, r0\n\t"
-        "lsls r1, r1, #0x10\n\t"
-        "lsrs r1, r1, #0x10\n\t"
-        "mov sl, r1\n\t"
-        "lsls r6, r6, #0x18\n\t"
-        "lsrs r6, r6, #0x18\n\t"
-        "mov r0, r8\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "mov r8, r0\n\t"
-        "lsrs r7, r0, #0x18\n\t"
-        "mov r1, sb\n\t"
-        "lsls r1, r1, #0x18\n\t"
-        "lsrs r1, r1, #0x18\n\t"
-        "mov sb, r1\n\t"
-        "mov r0, sl\n\t"
-        "adds r1, r7, #0\n\t"
-        "bl __divsi3\n\t"
-        "adds r5, r0, #0\n\t"
-        "lsls r5, r5, #0x18\n\t"
-        "lsrs r4, r5, #0x18\n\t"
-        "ldr r3, _081BF01C\n\t"
-        "strh r4, [r3]\n\t"
-        "mov r0, sl\n\t"
-        "adds r1, r7, #0\n\t"
-        "str r3, [sp, #4]\n\t"
-        "bl __modsi3\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r2, r0, #0x18\n\t"
-        "ldr r3, [sp, #4]\n\t"
-        "strh r2, [r3, #2]\n\t"
-        "movs r1, #7\n\t"
-        "ands r4, r1\n\t"
-        "ands r2, r1\n\t"
-        "strh r4, [r3, #4]\n\t"
-        "strh r2, [r3, #6]\n\t"
-        "lsrs r0, r0, #0x1b\n\t"
-        "lsrs r5, r5, #0x1b\n\t"
-        "strh r0, [r3, #8]\n\t"
-        "strh r5, [r3, #0xa]\n\t"
-        "mov r1, r8\n\t"
-        "lsrs r1, r1, #0x1b\n\t"
-        "lsls r1, r1, #6\n\t"
-        "mov r8, r1\n\t"
-        "mov r1, r8\n\t"
-        "muls r1, r5, r1\n\t"
-        "lsls r0, r0, #6\n\t"
-        "adds r1, r1, r0\n\t"
-        "lsls r1, r1, #0x10\n\t"
-        "lsrs r1, r1, #0x10\n\t"
-        "strh r1, [r3, #0xc]\n\t"
-        "lsls r4, r4, #3\n\t"
-        "adds r4, r4, r2\n\t"
-        "adds r1, r1, r4\n\t"
-        "lsls r4, r1, #0x10\n\t"
-        "lsrs r4, r4, #0x11\n\t"
-        "strh r1, [r3, #0xe]\n\t"
-        "movs r1, #1\n\t"
-        "mov r0, sl\n\t"
-        "ands r1, r0\n\t"
-        "movs r2, #1\n\t"
-        "eors r1, r2\n\t"
-        "lsls r0, r1, #2\n\t"
-        "lsls r6, r0\n\t"
-        "eors r1, r2\n\t"
-        "lsls r1, r1, #2\n\t"
-        "movs r0, #0xf\n\t"
-        "lsls r0, r1\n\t"
-        "orrs r6, r0\n\t"
-        "lsls r6, r6, #0x18\n\t"
-        "lsrs r6, r6, #0x18\n\t"
-        "mov r1, sb\n\t"
-        "lsls r1, r1, #5\n\t"
-        "mov sb, r1\n\t"
-        "add sb, r4\n\t"
-        "ldr r1, [sp]\n\t"
-        "add r1, sb\n\t"
-        "ldrb r0, [r1]\n\t"
-        "ands r6, r0\n\t"
-        "strb r6, [r1]\n\t"
-        "add sp, #8\n\t"
-        "pop {r3, r4, r5}\n\t"
-        "mov r8, r3\n\t"
-        "mov sb, r4\n\t"
-        "mov sl, r5\n\t"
-        "pop {r4, r5, r6, r7}\n\t"
-        "pop {r0}\n\t"
-        "bx r0\n\t"
-        ".align 2, 0\n\t"
-        "_081BF01C: .4byte gUnknown_30012A0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 heightTiles, height, widthTiles, width;
+    u16 var, baseOffset;
+    u8 col, row;
+    u8 flag, tileMask;
+
+    height = counter / size;
+    gUnknown_30012A0[0] = height;
+
+    width = counter % size;
+    gUnknown_30012A0[1] = width;
+
+    row = height & 7;
+    col = width & 7;
+    gUnknown_30012A0[2] = height & 7;
+    gUnknown_30012A0[3] = width & 7;
+
+    widthTiles = width / 8;
+    heightTiles = height / 8;
+    gUnknown_30012A0[4] = width / 8;
+    gUnknown_30012A0[5] = height / 8;
+
+    var = (size / 8) * (heightTiles * 64) + (widthTiles * 64);
+    gUnknown_30012A0[6] = var;
+
+    baseOffset = var + ((row * 8) + col);
+    baseOffset /= 2;
+    gUnknown_30012A0[7] = var + ((row * 8) + col);
+
+    flag = ((counter % 2) ^ 1);
+    tileMask = (bits << (flag << 2)) | 15 << (((flag ^ 1) << 2));
+    dest[baseOffset + (mask * 32)] &= tileMask;
 }
 
 bool8 IsMirageTowerVisible(void)
