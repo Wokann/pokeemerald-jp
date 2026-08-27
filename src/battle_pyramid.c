@@ -2145,7 +2145,7 @@ __attribute__((naked)) u8 CurrentBattlePyramidLocation()
         "	b _081A9BDE\n\t"
         "	.align 2, 0\n\t"
         "_081A9BC8: .4byte gMapHeader\n\t"
-        "_081A9BCC: .4byte SPECIAL_sub_0818D6EC\n\t"
+        "_081A9BCC: .4byte 0x169\n\t"
         "_081A9BD0:\n\t"
         "	movs r0, #0xbd\n\t"
         "	lsls r0, r0, #1\n\t"
@@ -2185,7 +2185,7 @@ __attribute__((naked)) bool8 InBattlePyramid_()
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081A9C00: .4byte gMapHeader\n\t"
-        "_081A9C04: .4byte SPECIAL_sub_0818D6EC\n\t"
+        "_081A9C04: .4byte 0x169\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2619,7 +2619,7 @@ __attribute__((naked)) void GenerateBattlePyramidFloorLayout(u16 *backupMapData,
         "	ldr r3, [r6]\n\t"
         "	b _081A9F0E\n\t"
         "	.align 2, 0\n\t"
-        "_081A9EF0: .4byte SPECIAL_sub_0818D6EC\n\t"
+        "_081A9EF0: .4byte 0x169\n\t"
         "_081A9EF4: .4byte gUnknown_845A1F4\n\t"
         "_081A9EF8: .4byte gBackupMapLayout\n\t"
         "_081A9EFC: .4byte gSaveBlock1Ptr\n\t"

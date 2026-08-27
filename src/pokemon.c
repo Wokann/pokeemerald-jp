@@ -5298,7 +5298,7 @@ __attribute__((naked)) s32 CalculateBaseDamage(struct BattlePokemon *attacker, s
         "_080695B8: .4byte gBattleTypeFlags\n\t"
         "_080695BC: .4byte 0x003F0100\n\t"
         "_080695C0: .4byte 0xFFFFFE69\n\t"
-        "_080695C4: .4byte SPECIAL_sub_0818DBE8\n\t"
+        "_080695C4: .4byte 0x175\n\t"
         "_080695C8: .4byte gBattleMovePower\n\t"
         "_080695CC: .4byte gBattleMoves\n\t"
         "_080695D0: .4byte gCurrentMove\n\t"
@@ -16925,7 +16925,7 @@ __attribute__((naked)) bool8 HasTwoFramesAnimation(u16 species)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0806EB84: .4byte SPECIAL_sub_0818E03C\n\t"
+        "_0806EB84: .4byte 0x181\n\t"
         ".syntax divided\n\t"
     );
 }

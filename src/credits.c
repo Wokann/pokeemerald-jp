@@ -4281,7 +4281,7 @@ __attribute__((naked)) void DeterminePokemonToShow(void)
         "	b _081772C2\n\t"
         "	.align 2, 0\n\t"
         "_081772AC: .4byte 0x00004023\n\t"
-        "_081772B0: .4byte SPECIAL_sub_0818E03C\n\t"
+        "_081772B0: .4byte 0x181\n\t"
         "_081772B4: .4byte gUnknown_203B9B4\n\t"
         "_081772B8: .4byte 0x00000382\n\t"
         "_081772BC:\n\t"

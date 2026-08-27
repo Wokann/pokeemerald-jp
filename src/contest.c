@@ -5020,7 +5020,7 @@ __attribute__((naked)) void sub_080D8334(void)
         "	bl PlayFanfare\n\t"
         "	b _080D9436\n\t"
         "	.align 2, 0\n\t"
-        "_080D93DC: .4byte SPECIAL_sub_0818E16C\n\t"
+        "_080D93DC: .4byte 0x187\n\t"
         "_080D93E0:\n\t"
         "	mov r1, sb\n\t"
         "	ldr r0, [r1]\n\t"

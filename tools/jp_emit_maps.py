@@ -12551,9 +12551,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08264373: 'LilycoveCity_PokemonCenter_1F_EventScript_LilycoveLady',
             0x082649CF: 'LilycoveCity_PokemonCenter_1F_EventScript_ContestLadyMon',
         },
-        'specials': {
-            'sub_0818D6EC': 'SetLilycoveLadyGfx',
-        },
         'symbols': {
             'flags': {
                 0x03E1: 'FLAG_HIDE_LILYCOVE_POKEMON_CENTER_CONTEST_LADY_MON',

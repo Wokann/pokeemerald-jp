@@ -3481,7 +3481,7 @@ __attribute__((naked)) void SpeciesToPikeMonId(void)
         "	movs r1, #0\n\t"
         "	b _081A86AA\n\t"
         "	.align 2, 0\n\t"
-        "_081A869C: .4byte SPECIAL_sub_0818DF64\n\t"
+        "_081A869C: .4byte 0x17B\n\t"
         "_081A86A0:\n\t"
         "	ldr r0, _081A86B0\n\t"
         "	movs r1, #2\n\t"

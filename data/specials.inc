@@ -383,51 +383,47 @@ gSpecials::
 	def_special SetSecretBaseSecretsTvFlags_LargeDecorationSpot
 	def_special SetSecretBaseSecretsTvFlags_SmallDecorationSpot
 	def_special SetSecretBaseSecretsTvFlags_Poster
-	def_special sub_0818D6EC
-	@ Retain the JP implementation symbol while scripts use the matching
-	@ pokeemerald special name for the Lilycove Lady selector.
-	.set SPECIAL_SetLilycoveLadyGfx, SPECIAL_sub_0818D6EC
-	.set SPECIAL_WAITSTATE_SetLilycoveLadyGfx, SPECIAL_WAITSTATE_sub_0818D6EC
-	def_special sub_0818D818
+	def_special SetLilycoveLadyGfx
+	def_special Script_GetLilycoveLadyId
 	def_special sub_0818D914
-	def_special sub_0818D958
+	def_special BufferFavorLadyRequest
 	def_special sub_0818D98C
-	def_special sub_0818D9E4
+	def_special BufferFavorLadyItemName
 	def_special sub_0818DA30
-	def_special sub_0818DA60
-	def_special sub_0818DA84
-	def_special sub_0818DB50
-	def_special sub_0818DB68
-	def_special sub_0818DBAC
-	def_special sub_0818DBE8
+	def_special DidFavorLadyLikeItem
+	def_special Script_FavorLadyOpenBagMenu
+	def_special Script_DoesFavorLadyLikeItem
+	def_special IsFavorLadyThresholdMet
+	def_special FavorLadyGetPrize
+	def_special SetFavorLadyState_Complete
 	def_special sub_0818DD44
 	def_special sub_0818DD78
-	def_special sub_0818DF34
+	def_special IsQuizLadyWaitingForChallenger
 	def_special sub_0811B0A8
-	def_special sub_0818DF58
-	def_special sub_0818DF64
-	def_special sub_0818DFB4
+	def_special QuizLadyGetPlayerAnswer
+	def_special IsQuizAnswerCorrect
+	def_special BufferQuizPrizeItem
 	def_special sub_0818DFD8
-	def_special sub_0818DEF4
-	def_special sub_0818DFF8
-	def_special sub_0818E018
-	def_special sub_0818E03C
-	def_special sub_0818E08C
-	def_special sub_0818E0D8
-	def_special sub_0818E0EC
+	def_special BufferQuizAuthorNameAndCheckIfLady
+	def_special SetQuizLadyState_GivePrize
+	def_special ClearQuizLadyPlayerAnswer
+	def_special Script_QuizLadyOpenBagMenu
+	def_special ClearQuizLadyQuestionAndAnswer
+	def_special QuizLadySetCustomQuestion
+	def_special QuizLadyTakePrizeForCustomQuiz
 	def_special sub_081398CC
-	def_special sub_0818E100
-	def_special sub_0818E16C
-	def_special sub_0818E194
-	def_special sub_0818DED0
-	def_special sub_0818E048
-	def_special sub_0818E53C
+	def_special QuizLadyRecordCustomQuizData
+	def_special QuizLadySetWaitingForChallenger
+	def_special BufferQuizCorrectAnswer
+	def_special BufferQuizPrizeName
+	def_special QuizLadyPickNewQuestion
+	def_special ShouldContestLadyShowGoOnAir
 	def_special sub_0818E510
-	def_special sub_0818E570
-	def_special sub_0818E588
+	def_special Script_BufferContestLadyCategoryAndMonName
+	def_special OpenPokeblockCaseForContestLady
 	def_special sub_0818E59C
-	def_special sub_0818E5BC
-	def_special sub_0818E5EC
+	def_special GetContestLadyMonSpecies
+	def_special GetContestLadyCategory
 	def_special PutLilycoveContestLadyShowOnTheAir
 	def_special sub_0813B8B8
 	def_special CallApprenticeFunction

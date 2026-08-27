@@ -991,7 +991,7 @@ __attribute__((naked)) void StartRainSpriteFall(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080AC464: .4byte SPECIAL_sub_0818D6EC\n\t"
+        "_080AC464: .4byte 0x169\n\t"
         "_080AC468: .4byte 0x41C64E6D\n\t"
         "_080AC46C: .4byte 0x00003039\n\t"
         "_080AC470: .4byte gUnknown_852A8E8\n\t"

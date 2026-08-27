@@ -1330,7 +1330,7 @@ __attribute__((naked)) void CB2_EggHatch_1(void)
         "_0807167C: .4byte gStringVar1\n\t"
         "_08071680: .4byte gStringVar4\n\t"
         "_08071684: .4byte gUnknown_85CC874\n\t"
-        "_08071688: .4byte SPECIAL_sub_0818DB68\n\t"
+        "_08071688: .4byte 0x173\n\t"
         "_0807168C:\n\t"
         "	bl IsFanfareTaskInactive\n\t"
         "	lsls r0, r0, #0x18\n\t"

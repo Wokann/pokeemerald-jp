@@ -2058,7 +2058,7 @@ __attribute__((naked)) void DetermineEggSpeciesAndParentSlots(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0807031C: .4byte SPECIAL_sub_0818E0D8\n\t"
+        "_0807031C: .4byte 0x183\n\t"
         ".syntax divided\n\t"
     );
 }

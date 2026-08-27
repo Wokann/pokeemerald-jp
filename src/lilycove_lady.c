@@ -18,7 +18,7 @@ __attribute__((naked)) u8 GetLilycoveLadyId()
     );
 }
 
-__attribute__((naked)) void sub_0818D6EC(void)
+__attribute__((naked)) void SetLilycoveLadyGfx(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -193,7 +193,7 @@ __attribute__((naked)) void InitLilycoveLadyRandomly(void)
     );
 }
 
-__attribute__((naked)) void sub_0818D818(void)
+__attribute__((naked)) void Script_GetLilycoveLadyId(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -399,7 +399,7 @@ __attribute__((naked)) void sub_0818D948(void)
     );
 }
 
-__attribute__((naked)) void sub_0818D958(void)
+__attribute__((naked)) void BufferFavorLadyRequest(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -484,7 +484,7 @@ __attribute__((naked)) void sub_0818D9C8(void)
     );
 }
 
-__attribute__((naked)) void sub_0818D9E4(void)
+__attribute__((naked)) void BufferFavorLadyItemName(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -558,7 +558,7 @@ __attribute__((naked)) void sub_0818DA30(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DA60(void)
+__attribute__((naked)) void DidFavorLadyLikeItem(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -581,7 +581,7 @@ __attribute__((naked)) void sub_0818DA60(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DA84(void)
+__attribute__((naked)) void Script_FavorLadyOpenBagMenu(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -691,7 +691,7 @@ __attribute__((naked)) void sub_0818DA90(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DB50(void)
+__attribute__((naked)) void Script_DoesFavorLadyLikeItem(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -709,7 +709,7 @@ __attribute__((naked)) void sub_0818DB50(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DB68(void)
+__attribute__((naked)) void IsFavorLadyThresholdMet(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -755,7 +755,7 @@ __attribute__((naked)) void sub_0818DB94(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DBAC(void)
+__attribute__((naked)) void FavorLadyGetPrize(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -789,7 +789,7 @@ __attribute__((naked)) void sub_0818DBAC(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DBE8(void)
+__attribute__((naked)) void SetFavorLadyState_Complete(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1222,7 +1222,7 @@ __attribute__((naked)) void sub_0818DEB4(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DED0(void)
+__attribute__((naked)) void BufferQuizPrizeName(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1245,7 +1245,7 @@ __attribute__((naked)) void sub_0818DED0(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DEF4(void)
+__attribute__((naked)) void BufferQuizAuthorNameAndCheckIfLady(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1283,7 +1283,7 @@ __attribute__((naked)) void sub_0818DEF4(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DF34(void)
+__attribute__((naked)) void IsQuizLadyWaitingForChallenger(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1306,7 +1306,7 @@ __attribute__((naked)) void sub_0818DF34(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DF58(void)
+__attribute__((naked)) void QuizLadyGetPlayerAnswer(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1319,7 +1319,7 @@ __attribute__((naked)) void sub_0818DF58(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DF64(void)
+__attribute__((naked)) void IsQuizAnswerCorrect(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1361,7 +1361,7 @@ __attribute__((naked)) void sub_0818DF64(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DFB4(void)
+__attribute__((naked)) void BufferQuizPrizeItem(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1405,7 +1405,7 @@ __attribute__((naked)) void sub_0818DFD8(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DFF8(void)
+__attribute__((naked)) void SetQuizLadyState_GivePrize(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1426,7 +1426,7 @@ __attribute__((naked)) void sub_0818DFF8(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E018(void)
+__attribute__((naked)) void ClearQuizLadyPlayerAnswer(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1448,7 +1448,7 @@ __attribute__((naked)) void sub_0818E018(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E03C(void)
+__attribute__((naked)) void Script_QuizLadyOpenBagMenu(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1461,7 +1461,7 @@ __attribute__((naked)) void sub_0818E03C(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E048(void)
+__attribute__((naked)) void QuizLadyPickNewQuestion(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1472,7 +1472,7 @@ __attribute__((naked)) void sub_0818E048(void)
         "	ldr r1, _0818E074\n\t"
         "	adds r0, r0, r1\n\t"
         "	str r0, [r4]\n\t"
-        "	bl sub_0818DEF4\n\t"
+        "	bl BufferQuizAuthorNameAndCheckIfLady\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0818E078\n\t"
@@ -1501,7 +1501,7 @@ __attribute__((naked)) void sub_0818E048(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E08C(void)
+__attribute__((naked)) void ClearQuizLadyQuestionAndAnswer(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1545,7 +1545,7 @@ __attribute__((naked)) void sub_0818E08C(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E0D8(void)
+__attribute__((naked)) void QuizLadySetCustomQuestion(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1562,7 +1562,7 @@ __attribute__((naked)) void sub_0818E0D8(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E0EC(void)
+__attribute__((naked)) void QuizLadyTakePrizeForCustomQuiz(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1579,7 +1579,7 @@ __attribute__((naked)) void sub_0818E0EC(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E100(void)
+__attribute__((naked)) void QuizLadyRecordCustomQuizData(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1636,7 +1636,7 @@ __attribute__((naked)) void sub_0818E100(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E16C(void)
+__attribute__((naked)) void QuizLadySetWaitingForChallenger(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1660,7 +1660,7 @@ __attribute__((naked)) void sub_0818E16C(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E194(void)
+__attribute__((naked)) void BufferQuizCorrectAnswer(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2209,7 +2209,7 @@ __attribute__((naked)) void sub_0818E510(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E53C(void)
+__attribute__((naked)) void ShouldContestLadyShowGoOnAir(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2242,7 +2242,7 @@ __attribute__((naked)) void sub_0818E53C(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E570(void)
+__attribute__((naked)) void Script_BufferContestLadyCategoryAndMonName(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2259,7 +2259,7 @@ __attribute__((naked)) void sub_0818E570(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E588(void)
+__attribute__((naked)) void OpenPokeblockCaseForContestLady(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2296,7 +2296,7 @@ __attribute__((naked)) void sub_0818E59C(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E5BC(void)
+__attribute__((naked)) void GetContestLadyMonSpecies(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2324,7 +2324,7 @@ __attribute__((naked)) void sub_0818E5BC(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E5EC(void)
+__attribute__((naked)) void GetContestLadyCategory(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

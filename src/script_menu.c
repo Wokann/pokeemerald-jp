@@ -1328,7 +1328,7 @@ __attribute__((naked)) void sub_080E1A70(void)
         "_080E1C9C: .4byte SPECIAL_SpawnCameraObject\n\t"
         "_080E1CA0: .4byte 0x000008B3\n\t"
         "_080E1CA4: .4byte SPECIAL_sub_0813AEEC\n\t"
-        "_080E1CA8: .4byte SPECIAL_sub_0818DB68\n\t"
+        "_080E1CA8: .4byte 0x173\n\t"
         "_080E1CAC: .4byte 0x000008D5\n\t"
         "_080E1CB0: .4byte SPECIAL_sub_08139DD4\n\t"
         "_080E1CB4: .4byte 0x000008D6\n\t"

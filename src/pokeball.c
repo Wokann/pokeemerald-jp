@@ -1999,7 +1999,7 @@ __attribute__((naked)) void SpriteCB_BallThrow_CaptureMon(void)
         "	b _08075B9E\n\t"
         "	.align 2, 0\n\t"
         "_08075B30: .4byte gUnknown_202415D\n\t"
-        "_08075B34: .4byte SPECIAL_sub_0818DB68\n\t"
+        "_08075B34: .4byte 0x173\n\t"
         "_08075B38:\n\t"
         "	ldr r0, _08075BA4\n\t"
         "	cmp r1, r0\n\t"
