@@ -771,7 +771,7 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/Underwater_Route134/scripts.inc"
 	.include "data/maps/Underwater_SealedChamber/scripts.inc"
 	.include "data/maps/SealedChamber_OuterRoom/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21bb3c, 0x9a
+	.include "data/maps/SealedChamber_InnerRoom/scripts.inc"
 	.include "data/maps/ScorchedSlab/scripts.inc"
 	.include "data/maps/AquaHideout_UnusedRubyMap1/scripts.inc"
 	.include "data/maps/AquaHideout_UnusedRubyMap2/scripts.inc"
@@ -1064,15 +1064,11 @@ EventScript_PC: @ 0x8242E1E
 	.set Common_EventScript_SetGymTrainers, 0x08242FCF
 	.globl Common_EventScript_NopReturn
 	.set Common_EventScript_NopReturn, 0x08244178
-	@ Desert Ruins references these retained shared event and braille owners.
-	.globl gText_BigHoleInTheWall
-	.set gText_BigHoleInTheWall, 0x08243CDA
+	@ Desert Ruins references these retained shared event owners.
 	.globl Common_EventScript_RemoveStaticPokemon
 	.set Common_EventScript_RemoveStaticPokemon, 0x08244197
 	.globl Common_EventScript_LegendaryFlewAway
 	.set Common_EventScript_LegendaryFlewAway, 0x082441A0
-	.globl DesertRuins_Braille_UseRockSmash
-	.set DesertRuins_Braille_UseRockSmash, 0x08263753
 	.globl Common_EventScript_BagIsFull
 	.set Common_EventScript_BagIsFull, 0x082430EA
 	.globl Common_EventScript_ShowNoRoomForDecor

@@ -1,100 +1,86 @@
 @ AncientTomb scripts (JP map g24 m68 @ 0x0821B8F8)
 
 AncientTomb_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, AncientTomb_EventScript_0021B908
-	map_script MAP_SCRIPT_ON_LOAD, AncientTomb_EventScript_0021B937
-	map_script MAP_SCRIPT_ON_TRANSITION, AncientTomb_EventScript_0021B926
+	map_script MAP_SCRIPT_ON_RESUME, AncientTomb_OnResume
+	map_script MAP_SCRIPT_ON_LOAD, AncientTomb_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, AncientTomb_OnTransition
 	.byte 0
 
-AncientTomb_EventScript_0021B908::
-	checkflag 0x8C1
-	call_if 0x1, AncientTomb_EventScript_0021B912
+AncientTomb_OnResume: @ 0x0821B908
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, AncientTomb_EventScript_TryRemoveRegisteel
 	end
 
-AncientTomb_EventScript_0021B912::
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x7
-	goto_if 0x5, 0x08244178
-	removeobject 0x800F
+AncientTomb_EventScript_TryRemoveRegisteel:: @ 0x0821B912
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
+	removeobject VAR_LAST_TALKED
 	return
 
-AncientTomb_EventScript_0021B926::
-	setflag 0x8B9
-	checkflag 0x1BD
-	call_if 0x0, AncientTomb_EventScript_0021B933
+AncientTomb_OnTransition: @ 0x0821B926
+	setflag FLAG_LANDMARK_ANCIENT_TOMB
+	call_if_unset FLAG_DEFEATED_REGISTEEL, AncientTomb_EventScript_ShowRegisteel
 	end
 
-AncientTomb_EventScript_0021B933::
-	clearflag 0x3A9
+AncientTomb_EventScript_ShowRegisteel:: @ 0x0821B933
+	clearflag FLAG_HIDE_REGISTEEL
 	return
 
-AncientTomb_EventScript_0021B937::
-	checkflag 0x8B2
-	call_if 0x0, AncientTomb_EventScript_0021B941
+AncientTomb_OnLoad: @ 0x0821B937
+	call_if_unset FLAG_SYS_REGISTEEL_PUZZLE_COMPLETED, AncientTomb_EventScript_HideRegiEntrance
 	end
 
-AncientTomb_EventScript_0021B941::
-	setmetatile 0x7, 0x13, 0x229, 0x1
-	setmetatile 0x8, 0x13, 0x229, 0x1
-	setmetatile 0x9, 0x13, 0x229, 0x1
-	setmetatile 0x7, 0x14, 0x235, 0x1
-	setmetatile 0x8, 0x14, 0x235, 0x1
-	setmetatile 0x9, 0x14, 0x235, 0x1
+AncientTomb_EventScript_HideRegiEntrance:: @ 0x0821B941
+	setmetatile 7, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 8, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 9, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 7, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
+	setmetatile 8, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
+	setmetatile 9, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
 	return
 
-AncientTomb_EventScript_0021B978::
+AncientTomb_EventScript_CaveEntranceMiddle:: @ 0x0821B978
 	lockall
-	checkflag 0x8B2
-	goto_if 0x1, AncientTomb_EventScript_0021B98B
-	braillemessage 0x08263799
-	waitbuttonpress
-	mossdeepgym4
+	goto_if_set FLAG_SYS_REGISTEEL_PUZZLE_COMPLETED, AncientTomb_EventScript_BigHoleInWall
+	braillemsgbox AncientTomb_Braille_ShineInTheMiddle
 	releaseall
 	end
 
-AncientTomb_EventScript_0021B98B::
-	loadword 0x0, 0x08243CDA
-	callstd 0x4
+AncientTomb_EventScript_BigHoleInWall:: @ 0x0821B98B
+	msgbox gText_BigHoleInTheWall, MSGBOX_DEFAULT
 	releaseall
 	end
 
-AncientTomb_EventScript_0021B995::
+AncientTomb_EventScript_CaveEntranceSide:: @ 0x0821B995
 	lockall
-	braillemessage 0x08263799
-	waitbuttonpress
-	mossdeepgym4
+	braillemsgbox AncientTomb_Braille_ShineInTheMiddle
 	releaseall
 	end
 
-AncientTomb_EventScript_0021B99F::
+AncientTomb_EventScript_Registeel:: @ 0x0821B99F
 	lock
 	faceplayer
 	waitse
-	playmoncry 0x193, 0x2
-	delay 0x28
-	waitdooranim
-	setwildbattle 0x193, 0x28, 0x0
-	setflag 0x8C1
+	playmoncry SPECIES_REGISTEEL, CRY_MODE_ENCOUNTER
+	delay 40
+	waitmoncry_jp
+	setwildbattle SPECIES_REGISTEEL, 40
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special StartRegiBattle
-	clearflag 0x8C1
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, AncientTomb_EventScript_0021B9E6
-	compare_var_to_value 0x800D, 0x4
-	goto_if 0x1, AncientTomb_EventScript_0021B9EF
-	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, AncientTomb_EventScript_0021B9EF
-	setflag 0x1BD
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, AncientTomb_EventScript_DefeatedRegisteel
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, AncientTomb_EventScript_RanFromRegisteel
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, AncientTomb_EventScript_RanFromRegisteel
+	setflag FLAG_DEFEATED_REGISTEEL
 	release
 	end
 
-AncientTomb_EventScript_0021B9E6::
-	setflag 0x1BD
-	goto 0x08244197
+AncientTomb_EventScript_DefeatedRegisteel:: @ 0x0821B9E6
+	setflag FLAG_DEFEATED_REGISTEEL
+	goto Common_EventScript_RemoveStaticPokemon
 	end
 
-AncientTomb_EventScript_0021B9EF::
-	setvar 0x8004, 0x193
-	goto 0x082441A0
+AncientTomb_EventScript_RanFromRegisteel:: @ 0x0821B9EF
+	setvar VAR_0x8004, SPECIES_REGISTEEL
+	goto Common_EventScript_LegendaryFlewAway
 	end
-

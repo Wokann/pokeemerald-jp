@@ -1,122 +1,119 @@
 @ IslandCave scripts (JP map g24 m67 @ 0x0821B76F)
 
 IslandCave_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, IslandCave_EventScript_0021B77F
-	map_script MAP_SCRIPT_ON_LOAD, IslandCave_EventScript_0021B79D
-	map_script MAP_SCRIPT_ON_TRANSITION, IslandCave_EventScript_0021B7DE
+	map_script MAP_SCRIPT_ON_RESUME, IslandCave_OnResume
+	map_script MAP_SCRIPT_ON_LOAD, IslandCave_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, IslandCave_OnTransition
 	.byte 0
 
-IslandCave_EventScript_0021B77F::
-	checkflag 0x8C1
-	call_if 0x1, IslandCave_EventScript_0021B789
+IslandCave_OnResume: @ 0x0821B77F
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, IslandCave_EventScript_TryRemoveRegice
 	end
 
-IslandCave_EventScript_0021B789::
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x7
-	goto_if 0x5, 0x08244178
-	removeobject 0x800F
+IslandCave_EventScript_TryRemoveRegice:: @ 0x0821B789
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
+	removeobject VAR_LAST_TALKED
 	return
 
-IslandCave_EventScript_0021B79D::
-	checkflag 0x8B1
-	call_if 0x0, IslandCave_EventScript_0021B7A7
+IslandCave_OnLoad: @ 0x0821B79D
+	call_if_unset FLAG_SYS_BRAILLE_REGICE_COMPLETED, IslandCave_EventScript_HideRegiEntrance
 	end
 
-IslandCave_EventScript_0021B7A7::
-	setmetatile 0x7, 0x13, 0x229, 0x1
-	setmetatile 0x8, 0x13, 0x229, 0x1
-	setmetatile 0x9, 0x13, 0x229, 0x1
-	setmetatile 0x7, 0x14, 0x235, 0x1
-	setmetatile 0x8, 0x14, 0x235, 0x1
-	setmetatile 0x9, 0x14, 0x235, 0x1
+IslandCave_EventScript_HideRegiEntrance:: @ 0x0821B7A7
+	setmetatile 7, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 8, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 9, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 7, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
+	setmetatile 8, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
+	setmetatile 9, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
 	return
 
-IslandCave_EventScript_0021B7DE::
-	setflag 0x8B5
-	call IslandCave_EventScript_0021B88A
-	checkflag 0x1BC
-	call_if 0x0, IslandCave_EventScript_0021B7F0
+IslandCave_OnTransition: @ 0x0821B7DE
+	setflag FLAG_LANDMARK_ISLAND_CAVE
+	call IslandCave_EventScript_ClearSteps
+	call_if_unset FLAG_DEFEATED_REGICE, IslandCave_EventScript_ShowRegice
 	end
 
-IslandCave_EventScript_0021B7F0::
-	clearflag 0x3A8
+IslandCave_EventScript_ShowRegice:: @ 0x0821B7F0
+	clearflag FLAG_HIDE_REGICE
 	return
 
 IslandCave_EventScript_OpenRegiEntrance:: @ 0x0821B7F4
-	.incbin "baserom_jp.gba", 0x21b7f4, 0x40
-IslandCave_EventScript_0021B834::
-	lockall
-	checkflag 0x3
-	call_if 0x1, IslandCave_EventScript_0021B88A
-	checkflag 0x8B1
-	goto_if 0x1, IslandCave_EventScript_0021B858
-	braillemessage 0x0826377A
-	setflag 0x2
-	special ShouldDoBrailleRegicePuzzle
-	goto IslandCave_EventScript_0021B886
+	setmetatile 7, 19, METATILE_Cave_SealedChamberEntrance_TopLeft, TRUE
+	setmetatile 8, 19, METATILE_Cave_SealedChamberEntrance_TopMid, TRUE
+	setmetatile 9, 19, METATILE_Cave_SealedChamberEntrance_TopRight, TRUE
+	setmetatile 7, 20, METATILE_Cave_SealedChamberEntrance_BottomLeft, TRUE
+	setmetatile 8, 20, METATILE_Cave_SealedChamberEntrance_BottomMid, FALSE
+	setmetatile 9, 20, METATILE_Cave_SealedChamberEntrance_BottomRight, TRUE
+	special DrawWholeMapView
+	playse SE_BANG
+	setflag FLAG_SYS_BRAILLE_REGICE_COMPLETED
 	end
 
-IslandCave_EventScript_0021B858::
-	loadword 0x0, 0x08243CDA
-	callstd 0x4
+IslandCave_EventScript_CaveEntranceMiddle:: @ 0x0821B834
+	lockall
+	call_if_set FLAG_TEMP_REGICE_PUZZLE_FAILED, IslandCave_EventScript_ClearSteps
+	goto_if_set FLAG_SYS_BRAILLE_REGICE_COMPLETED, IslandCave_EventScript_BigHoleInWall
+	braillemessage IslandCave_Braille_RunLapAroundWall
+	setflag FLAG_TEMP_REGICE_PUZZLE_STARTED
+	special ShouldDoBrailleRegicePuzzle
+	goto IslandCave_EventScript_CloseBrailleMsg
+	end
+
+IslandCave_EventScript_BigHoleInWall:: @ 0x0821B858
+	msgbox gText_BigHoleInTheWall, MSGBOX_DEFAULT
 	releaseall
 	end
 
-IslandCave_EventScript_0021B862::
+IslandCave_EventScript_CaveEntranceSide:: @ 0x0821B862
 	lockall
-	checkflag 0x3
-	call_if 0x1, IslandCave_EventScript_0021B88A
-	braillemessage 0x0826377A
-	checkflag 0x8B1
-	goto_if 0x1, IslandCave_EventScript_0021B886
-	setflag 0x2
+	call_if_set FLAG_TEMP_REGICE_PUZZLE_FAILED, IslandCave_EventScript_ClearSteps
+	braillemessage IslandCave_Braille_RunLapAroundWall
+	goto_if_set FLAG_SYS_BRAILLE_REGICE_COMPLETED, IslandCave_EventScript_CloseBrailleMsg
+	setflag FLAG_TEMP_REGICE_PUZZLE_STARTED
 	special ShouldDoBrailleRegicePuzzle
-	goto IslandCave_EventScript_0021B886
+	goto IslandCave_EventScript_CloseBrailleMsg
 	end
 
-IslandCave_EventScript_0021B886::
+IslandCave_EventScript_CloseBrailleMsg:: @ 0x0821B886
 	waitbuttonpress
-	mossdeepgym4
+	closebraillemessage
 	releaseall
 	end
 
-IslandCave_EventScript_0021B88A::
-	setvar 0x403B, 0x0
-	setvar 0x403C, 0x0
-	setvar 0x403D, 0x0
-	clearflag 0x3
+IslandCave_EventScript_ClearSteps:: @ 0x0821B88A
+	setvar VAR_REGICE_STEPS_1, 0
+	setvar VAR_REGICE_STEPS_2, 0
+	setvar VAR_REGICE_STEPS_3, 0
+	clearflag FLAG_TEMP_REGICE_PUZZLE_FAILED
 	return
 
-IslandCave_EventScript_0021B89D::
+IslandCave_EventScript_Regice:: @ 0x0821B89D
 	lock
 	faceplayer
 	waitse
-	playmoncry 0x192, 0x2
-	delay 0x28
-	waitdooranim
-	setwildbattle 0x192, 0x28, 0x0
-	setflag 0x8C1
+	playmoncry SPECIES_REGICE, CRY_MODE_ENCOUNTER
+	delay 40
+	waitmoncry_jp
+	setwildbattle SPECIES_REGICE, 40
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special StartRegiBattle
-	clearflag 0x8C1
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, IslandCave_EventScript_0021B8E4
-	compare_var_to_value 0x800D, 0x4
-	goto_if 0x1, IslandCave_EventScript_0021B8ED
-	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, IslandCave_EventScript_0021B8ED
-	setflag 0x1BC
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, IslandCave_EventScript_DefeatedRegice
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, IslandCave_EventScript_RanFromRegice
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, IslandCave_EventScript_RanFromRegice
+	setflag FLAG_DEFEATED_REGICE
 	release
 	end
 
-IslandCave_EventScript_0021B8E4::
-	setflag 0x1BC
-	goto 0x08244197
+IslandCave_EventScript_DefeatedRegice:: @ 0x0821B8E4
+	setflag FLAG_DEFEATED_REGICE
+	goto Common_EventScript_RemoveStaticPokemon
 	end
 
-IslandCave_EventScript_0021B8ED::
-	setvar 0x8004, 0x192
-	goto 0x082441A0
+IslandCave_EventScript_RanFromRegice:: @ 0x0821B8ED
+	setvar VAR_0x8004, SPECIES_REGICE
+	goto Common_EventScript_LegendaryFlewAway
 	end
-

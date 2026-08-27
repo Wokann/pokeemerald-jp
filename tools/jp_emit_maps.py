@@ -28,6 +28,14 @@ MAP_SOURCE_REGION_ENDS = {
     # Meteor Falls 1F 1R owns its scripts, movements, and ten adjacent text
     # records. The next owner is Meteor Falls 1F 2R at 0x08213079.
     'MeteorFalls_1F_1R': 0x08213079,
+    # The Inner Room header is not yet visible to the legacy map metadata
+    # reader, so the natural successor of the Outer Room skips its 0x9A-byte
+    # owner. Keep this physical end explicit rather than appending it as raw
+    # data to the Outer Room source.
+    'SealedChamber_OuterRoom': 0x0821BB3C,
+    # Likewise, the next raw owner begins immediately after this one map
+    # script table; it must not be absorbed by a full --write regeneration.
+    'ScorchedSlab': 0x0821BBE0,
 }
 
 # These maps have had their JP and US map-local script entry sequences checked
@@ -19915,6 +19923,263 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
     'VictoryRoad_1F': {
         0x08219537: 'VictoryRoad_1F_Movement_WallyApproachPlayer1',
         0x08219543: 'VictoryRoad_1F_Movement_WallyApproachPlayer2',
+    },
+})
+
+# The Regi puzzle maps are the next contiguous script_data family after the
+# Abandoned Ship range.  Their JP roots were checked against the corresponding
+# US sources in physical ROM order before enabling semantic labels.
+MAP_US_LABEL_SEQUENCE_COUNTS.update({
+    'IslandCave': 15,
+    'AncientTomb': 12,
+    'Underwater_Route134': 1,
+    'Underwater_SealedChamber': 4,
+    'SealedChamber_OuterRoom': 17,
+    'SealedChamber_InnerRoom': 8,
+    'ScorchedSlab': 1,
+})
+
+MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS.update({
+    'IslandCave': ('OnResume', 'OnLoad'),
+    'AncientTomb': ('OnResume', 'OnLoad'),
+    'Underwater_Route134': ('OnResume',),
+    'Underwater_SealedChamber': ('OnDive',),
+    'SealedChamber_OuterRoom': ('OnResume', 'OnLoad'),
+})
+
+# OpenRegiEntrance is reached only by the local puzzle control flow, rather
+# than an event-table pointer, but remains an explicit map-owned US source
+# entry between the Island Cave hooks and object scripts.
+MAP_AUXILIARY_SCRIPT_ADDRESSES.update({
+    'IslandCave': (0x0821B7F4,),
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'IslandCave': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'local_scripts': (0x0821B77F, 0x0821B79D, 0x0821B7DE),
+        'external_texts': {
+            0x08243CDA: 'gText_BigHoleInTheWall',
+            0x0826377A: 'IslandCave_Braille_RunLapAroundWall',
+        },
+        'external_labels': {
+            0x08244178: 'Common_EventScript_NopReturn',
+            0x08244197: 'Common_EventScript_RemoveStaticPokemon',
+            0x082441A0: 'Common_EventScript_LegendaryFlewAway',
+        },
+        'command_aliases': {
+            0x0821B89D: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'flags': {
+                0x0002: 'FLAG_TEMP_REGICE_PUZZLE_STARTED',
+                0x0003: 'FLAG_TEMP_REGICE_PUZZLE_FAILED',
+                0x01BC: 'FLAG_DEFEATED_REGICE',
+                0x03A8: 'FLAG_HIDE_REGICE',
+                0x08B1: 'FLAG_SYS_BRAILLE_REGICE_COMPLETED',
+                0x08B5: 'FLAG_LANDMARK_ISLAND_CAVE',
+                0x08C1: 'FLAG_SYS_CTRL_OBJ_DELETE',
+            },
+            'vars': {
+                0x403B: 'VAR_REGICE_STEPS_1',
+                0x403C: 'VAR_REGICE_STEPS_2',
+                0x403D: 'VAR_REGICE_STEPS_3',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'var_values': {
+                0x403B: {0x00: '0'},
+                0x403C: {0x00: '0'},
+                0x403D: {0x00: '0'},
+                0x800D: {
+                    0x01: 'B_OUTCOME_WON',
+                    0x04: 'B_OUTCOME_RAN',
+                    0x05: 'B_OUTCOME_PLAYER_TELEPORTED',
+                    0x07: 'B_OUTCOME_CAUGHT',
+                },
+            },
+            'script_var_values': {
+                0x0821B8ED: {0x8004: {0x0192: 'SPECIES_REGICE'}},
+            },
+            'species': {0x0192: 'SPECIES_REGICE'},
+            'cry_modes': {0x02: 'CRY_MODE_ENCOUNTER'},
+            'metatiles': {
+                0x0229: 'METATILE_Cave_EntranceCover',
+                0x0235: 'METATILE_Cave_SealedChamberBraille_Mid',
+                0x022A: 'METATILE_Cave_SealedChamberEntrance_TopLeft',
+                0x022B: 'METATILE_Cave_SealedChamberEntrance_TopMid',
+                0x022C: 'METATILE_Cave_SealedChamberEntrance_TopRight',
+                0x0232: 'METATILE_Cave_SealedChamberEntrance_BottomLeft',
+                0x0233: 'METATILE_Cave_SealedChamberEntrance_BottomMid',
+                0x0234: 'METATILE_Cave_SealedChamberEntrance_BottomRight',
+            },
+            'sounds': {0x14: 'SE_BANG'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {
+                'delay': (0,),
+                'setmetatile': (0, 1),
+                'setwildbattle': (1,),
+            },
+        },
+    },
+    'AncientTomb': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'local_scripts': (0x0821B908, 0x0821B926, 0x0821B937),
+        'external_texts': {
+            0x08243CDA: 'gText_BigHoleInTheWall',
+            0x08263799: 'AncientTomb_Braille_ShineInTheMiddle',
+        },
+        'external_labels': {
+            0x08244178: 'Common_EventScript_NopReturn',
+            0x08244197: 'Common_EventScript_RemoveStaticPokemon',
+            0x082441A0: 'Common_EventScript_LegendaryFlewAway',
+        },
+        'command_aliases': {
+            0x0821B99F: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'flags': {
+                0x01BD: 'FLAG_DEFEATED_REGISTEEL',
+                0x03A9: 'FLAG_HIDE_REGISTEEL',
+                0x08B2: 'FLAG_SYS_REGISTEEL_PUZZLE_COMPLETED',
+                0x08B9: 'FLAG_LANDMARK_ANCIENT_TOMB',
+                0x08C1: 'FLAG_SYS_CTRL_OBJ_DELETE',
+            },
+            'vars': {
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'var_values': {
+                0x800D: {
+                    0x01: 'B_OUTCOME_WON',
+                    0x04: 'B_OUTCOME_RAN',
+                    0x05: 'B_OUTCOME_PLAYER_TELEPORTED',
+                    0x07: 'B_OUTCOME_CAUGHT',
+                },
+            },
+            'script_var_values': {
+                0x0821B9EF: {0x8004: {0x0193: 'SPECIES_REGISTEEL'}},
+            },
+            'species': {0x0193: 'SPECIES_REGISTEEL'},
+            'cry_modes': {0x02: 'CRY_MODE_ENCOUNTER'},
+            'metatiles': {
+                0x0229: 'METATILE_Cave_EntranceCover',
+                0x0235: 'METATILE_Cave_SealedChamberBraille_Mid',
+                0x022A: 'METATILE_Cave_SealedChamberEntrance_TopLeft',
+                0x022B: 'METATILE_Cave_SealedChamberEntrance_TopMid',
+                0x022C: 'METATILE_Cave_SealedChamberEntrance_TopRight',
+                0x0232: 'METATILE_Cave_SealedChamberEntrance_BottomLeft',
+                0x0233: 'METATILE_Cave_SealedChamberEntrance_BottomMid',
+                0x0234: 'METATILE_Cave_SealedChamberEntrance_BottomRight',
+            },
+            'sounds': {0x14: 'SE_BANG'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {
+                'delay': (0,),
+                'setmetatile': (0, 1),
+                'setwildbattle': (1,),
+            },
+        },
+    },
+    'Underwater_Route134': {
+        'preserve_region_script_aliases': False,
+        'local_scripts': (0x0821BA00,),
+        'symbols': {
+            'maps': {0x0031: 'MAP_ROUTE134'},
+            'decimal_arguments': {'setdivewarp': (2, 3)},
+        },
+    },
+    'Underwater_SealedChamber': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'local_scripts': (0x0821BA0F,),
+        'external_texts': {
+            0x082635D2: 'Underwater_SealedChamber_Braille_GoUpHere',
+        },
+        'symbols': {
+            'vars': {0x8004: 'VAR_0x8004', 0x8005: 'VAR_0x8005'},
+            'maps': {
+                0x0031: 'MAP_ROUTE134',
+                0x1847: 'MAP_SEALED_CHAMBER_OUTER_ROOM',
+            },
+            'decimal_arguments': {
+                'compare_var_to_value': (1,),
+                'setdivewarp': (2, 3),
+            },
+        },
+    },
+    'SealedChamber_OuterRoom': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'local_scripts': (0x0821BA5B, 0x0821BA6C, 0x0821BA70),
+        'external_texts': {
+            0x08243CDA: 'gText_BigHoleInTheWall',
+            0x082635E2: 'SealedChamber_OuterRoom_Braille_ABC',
+            0x082635EE: 'SealedChamber_OuterRoom_Braille_GHI',
+            0x082635FA: 'SealedChamber_OuterRoom_Braille_MNO',
+            0x08263606: 'SealedChamber_OuterRoom_Braille_TUV',
+            0x08263612: 'SealedChamber_OuterRoom_Braille_DEF',
+            0x0826361E: 'SealedChamber_OuterRoom_Braille_JKL',
+            0x0826362A: 'SealedChamber_OuterRoom_Braille_PQRS',
+            0x08263636: 'SealedChamber_OuterRoom_Braille_Period',
+            0x08263640: 'SealedChamber_OuterRoom_Braille_WXYZ',
+            0x0826364C: 'SealedChamber_OuterRoom_Braille_Comma',
+            0x08263656: 'SealedChamber_OuterRoom_Braille_DigHere',
+        },
+        'symbols': {
+            'flags': {
+                0x08AF: 'FLAG_SYS_BRAILLE_DIG',
+                0x08BC: 'FLAG_LANDMARK_SEALED_CHAMBER',
+            },
+            'maps': {0x1846: 'MAP_UNDERWATER_SEALED_CHAMBER'},
+            'metatiles': {
+                0x0229: 'METATILE_Cave_EntranceCover',
+                0x0235: 'METATILE_Cave_SealedChamberBraille_Mid',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {
+                'setdivewarp': (2, 3),
+                'setescapewarp': (2, 3),
+                'setmetatile': (0, 1),
+            },
+        },
+    },
+    'SealedChamber_InnerRoom': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_texts': {
+            0x08243CBE: 'gText_DoorOpenedFarAway',
+            0x08263668: 'SealedChamber_InnerRoom_Braille_FirstWailordLastRelicanth',
+            0x08263698: 'SealedChamber_InnerRoom_Braille_InThisCaveWeHaveLived',
+            0x082636C3: 'SealedChamber_InnerRoom_Braille_WeOweAllToThePokemon',
+            0x082636DD: 'SealedChamber_InnerRoom_Braille_ButWeSealedThePokemonAway',
+            0x08263700: 'SealedChamber_InnerRoom_Braille_WeFearedIt',
+            0x0826370F: 'SealedChamber_InnerRoom_Braille_ThoseWithCourageHope',
+            0x0826372E: 'SealedChamber_InnerRoom_Braille_OpenDoorEternalPokemonWaits',
+        },
+        'symbols': {
+            'flags': {0x00E4: 'FLAG_REGI_DOORS_OPENED'},
+            'vars': {0x800D: 'VAR_RESULT'},
+            'var_values': {0x800D: {0x00: 'FALSE'}},
+            'sounds': {0x31: 'SE_TRUCK_MOVE', 0x08: 'SE_DOOR'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {
+                'delay': (0,),
+                'fadeoutbgm': (0,),
+                'fadeinbgm': (0,),
+            },
+        },
+    },
+    'ScorchedSlab': {
+        'preserve_region_script_aliases': False,
+        'local_scripts': (0x0821BBDC,),
+        'symbols': {
+            'flags': {0x08B8: 'FLAG_LANDMARK_SCORCHED_SLAB'},
+        },
     },
 })
 

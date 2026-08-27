@@ -396,6 +396,8 @@ AbandonedShip_HiddenFloorRooms_EventScript_ItemTMRainDance:: @ 0x08256FF9
 	finditem ITEM_TM_RAIN_DANCE
 	end
 
+	.globl ScorchedSlab_EventScript_ItemTMSunnyDay
+ScorchedSlab_EventScript_ItemTMSunnyDay: @ 0x08257006
 	.incbin "baserom_jp.gba", 0x257006, 0xea
 
 Route119_EventScript_ItemNugget:: @ 0x082570F0

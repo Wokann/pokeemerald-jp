@@ -3620,7 +3620,22 @@ gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_2F: @ 0x084292C0
 	.4byte gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_2F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4292d8, 0x2b04
+	.incbin "baserom_jp.gba", 0x4292d8, 0xd6c
+	.globl gMapLayout_ISLAND_CAVE
+gMapLayout_ISLAND_CAVE: @ 0x0842A044
+	.incbin "baserom_jp.gba", 0x42a044, 0x484
+	.globl gMapLayout_ANCIENT_TOMB
+gMapLayout_ANCIENT_TOMB: @ 0x0842A4C8
+	.incbin "baserom_jp.gba", 0x42a4c8, 0x188
+	.globl gMapLayout_UNDERWATER_ROUTE134
+gMapLayout_UNDERWATER_ROUTE134: @ 0x0842A650
+	.incbin "baserom_jp.gba", 0x42a650, 0x860
+	.globl gMapLayout_UNDERWATER_SEALED_CHAMBER
+gMapLayout_UNDERWATER_SEALED_CHAMBER: @ 0x0842AEB0
+	.incbin "baserom_jp.gba", 0x42aeb0, 0x3e8
+	.globl gMapLayout_SEALED_CHAMBER_OUTER_ROOM
+gMapLayout_SEALED_CHAMBER_OUTER_ROOM: @ 0x0842B298
+	.incbin "baserom_jp.gba", 0x42b298, 0xb44
 	.globl gMapLayout_VICTORY_ROAD_B1F
 gMapLayout_VICTORY_ROAD_B1F: @ 0x0842BDDC
 	.incbin "baserom_jp.gba", 0x42bddc, 0x18
@@ -3779,7 +3794,10 @@ gMapLayout_MT_PYRE_SUMMIT: @ 0x08431560
 	.4byte gMapLayout_MT_PYRE_SUMMIT_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x431578, 0x3e8
+	.incbin "baserom_jp.gba", 0x431578, 0x3d0
+	.globl gMapLayout_SEALED_CHAMBER_INNER_ROOM
+gMapLayout_SEALED_CHAMBER_INNER_ROOM: @ 0x08431948
+	.incbin "baserom_jp.gba", 0x431948, 0x18
 gMapLayout_MOSSDEEP_CITY_GAME_CORNER_1F_Border:
 	.incbin "data/layouts/MossdeepCity_GameCorner_1F/border.bin"
 gMapLayout_MOSSDEEP_CITY_GAME_CORNER_1F_Blockdata:
@@ -3843,7 +3861,10 @@ gMapLayout_SOOTOPOLIS_CITY_HOUSE3: @ 0x08431D00
 	.incbin "baserom_jp.gba", 0x431d18, 0x530
 	.globl gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_ROOMS
 gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_ROOMS: @ 0x08432248
-	.incbin "baserom_jp.gba", 0x432248, 0x584
+	.incbin "baserom_jp.gba", 0x432248, 0x278
+	.globl gMapLayout_SCORCHED_SLAB
+gMapLayout_SCORCHED_SLAB: @ 0x084324C0
+	.incbin "baserom_jp.gba", 0x4324c0, 0x30c
 gMapLayout_RUSTBORO_CITY_FLAT1_1F_Border:
 	.incbin "data/layouts/RustboroCity_Flat1_1F/border.bin"
 gMapLayout_RUSTBORO_CITY_FLAT1_1F_Blockdata:
@@ -6184,7 +6205,21 @@ gUnknown_845C660: @ 0x0845C660
 	.include "data/maps/AbandonedShip_HiddenFloorCorridors/header.inc"
 	@ MAP_ABANDONED_SHIP_HIDDEN_FLOOR_ROOMS (g24 m66)
 	.include "data/maps/AbandonedShip_HiddenFloorRooms/header.inc"
-	.incbin "baserom_jp.gba", 0x45ca34, 0x1f64
+	@ MAP_ISLAND_CAVE (g24 m67)
+	.include "data/maps/IslandCave/header.inc"
+	@ MAP_ANCIENT_TOMB (g24 m68)
+	.include "data/maps/AncientTomb/header.inc"
+	@ MAP_UNDERWATER_ROUTE134 (g24 m69)
+	.include "data/maps/Underwater_Route134/header.inc"
+	@ MAP_UNDERWATER_SEALED_CHAMBER (g24 m70)
+	.include "data/maps/Underwater_SealedChamber/header.inc"
+	@ MAP_SEALED_CHAMBER_OUTER_ROOM (g24 m71)
+	.include "data/maps/SealedChamber_OuterRoom/header.inc"
+	@ MAP_SEALED_CHAMBER_INNER_ROOM (g24 m72)
+	.include "data/maps/SealedChamber_InnerRoom/header.inc"
+	@ MAP_SCORCHED_SLAB (g24 m73)
+	.include "data/maps/ScorchedSlab/header.inc"
+	.incbin "baserom_jp.gba", 0x45caf8, 0x1ea0
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

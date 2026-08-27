@@ -1,30 +1,25 @@
 @ Underwater_SealedChamber scripts (JP map g24 m70 @ 0x0821BA09)
 
 Underwater_SealedChamber_MapScripts::
-	map_script MAP_SCRIPT_ON_DIVE_WARP, Underwater_SealedChamber_EventScript_0021BA0F
+	map_script MAP_SCRIPT_ON_DIVE_WARP, Underwater_SealedChamber_OnDive
 	.byte 0
 
-Underwater_SealedChamber_EventScript_0021BA0F::
-	getplayerxy 0x8004, 0x8005
-	compare_var_to_value 0x8004, 0xC
-	goto_if 0x5, Underwater_SealedChamber_EventScript_0021BA2F
-	compare_var_to_value 0x8005, 0x2C
-	goto_if 0x5, Underwater_SealedChamber_EventScript_0021BA2F
-	goto Underwater_SealedChamber_EventScript_0021BA38
+Underwater_SealedChamber_OnDive: @ 0x0821BA0F
+	getplayerxy VAR_0x8004, VAR_0x8005
+	goto_if_ne VAR_0x8004, 12, Underwater_SealedChamber_EventScript_SurfaceRoute134
+	goto_if_ne VAR_0x8005, 44, Underwater_SealedChamber_EventScript_SurfaceRoute134
+	goto Underwater_SealedChamber_EventScript_SurfaceSealedChamber
 
-Underwater_SealedChamber_EventScript_0021BA2F::
-	setdivewarp 0x31, 0xFF, 0x3C, 0x1F
+Underwater_SealedChamber_EventScript_SurfaceRoute134:: @ 0x0821BA2F
+	setdivewarp MAP_ROUTE134, 60, 31
 	end
 
-Underwater_SealedChamber_EventScript_0021BA38::
-	setdivewarp 0x1847, 0xFF, 0xA, 0x13
+Underwater_SealedChamber_EventScript_SurfaceSealedChamber:: @ 0x0821BA38
+	setdivewarp MAP_SEALED_CHAMBER_OUTER_ROOM, 10, 19
 	end
 
-Underwater_SealedChamber_EventScript_0021BA41::
+Underwater_SealedChamber_EventScript_Braille:: @ 0x0821BA41
 	lockall
-	braillemessage 0x082635D2
-	waitbuttonpress
-	mossdeepgym4
+	braillemsgbox Underwater_SealedChamber_Braille_GoUpHere
 	releaseall
 	end
-

@@ -3,7 +3,8 @@
 	gotostd 0x13
 	.incbin "baserom_jp.gba", 0x263174, 0x25
 	.include "data/text/lottery_corner.inc"
-	.incbin "baserom_jp.gba", 0x263476, 0x34c
+	.incbin "baserom_jp.gba", 0x263476, 0x15c
+	.include "data/text/braille.inc"
 PetalburgCity_Gym_Text_GiveEnigmaBerry: @ 0x082637C2
 	.string "パパ“やあ　{PLAYER}！\p"
 	.string "めずらしい　きのみを　てに　いれたから\n"

@@ -62,7 +62,14 @@ gJPText_00243CAE: @ 0x08243CAE
 	.string "{B_COPY_VAR_1}は\n"
 	.string "なみのりを　つかった！$"
 
-	.incbin "baserom_jp.gba", 0x243cbe, 0x230
+	.globl gText_DoorOpenedFarAway
+gText_DoorOpenedFarAway: @ 0x08243CBE
+	.incbin "baserom_jp.gba", 0x243cbe, 0x1c
+
+	.globl gText_BigHoleInTheWall
+gText_BigHoleInTheWall: @ 0x08243CDA
+	.incbin "baserom_jp.gba", 0x243cda, 0x14
+	.incbin "baserom_jp.gba", 0x243cee, 0x200
 	.globl gJPText_00243EEE
 gJPText_00243EEE: @ 0x08243EEE
 	.string "アンケートようの　メモようしが　ある\n"

@@ -263,6 +263,8 @@ JP_STRUCTURED_MAPS += AbandonedShip_Deck AbandonedShip_Corridors_1F AbandonedShi
 	AbandonedShip_Rooms_B1F AbandonedShip_Rooms2_B1F AbandonedShip_Underwater1 AbandonedShip_Room_B1F \
 	AbandonedShip_Rooms2_1F AbandonedShip_CaptainsOffice AbandonedShip_Underwater2 \
 	AbandonedShip_HiddenFloorCorridors AbandonedShip_HiddenFloorRooms
+JP_STRUCTURED_MAPS += IslandCave AncientTomb Underwater_SealedChamber \
+	SealedChamber_OuterRoom SealedChamber_InnerRoom ScorchedSlab
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
@@ -279,6 +281,8 @@ JP_STRUCTURED_MAP_METADATA_MAPS += AbandonedShip_Deck AbandonedShip_Corridors_1F
 	AbandonedShip_Rooms_B1F AbandonedShip_Rooms2_B1F AbandonedShip_Underwater1 AbandonedShip_Room_B1F \
 	AbandonedShip_Rooms2_1F AbandonedShip_CaptainsOffice AbandonedShip_Underwater2 \
 	AbandonedShip_HiddenFloorCorridors AbandonedShip_HiddenFloorRooms
+JP_STRUCTURED_MAP_METADATA_MAPS += IslandCave AncientTomb Underwater_Route134 Underwater_SealedChamber \
+	SealedChamber_OuterRoom SealedChamber_InnerRoom ScorchedSlab
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)
