@@ -67,7 +67,7 @@ BattleFrontier_BattlePalaceLobby_EventScript_00229E18::
 	callstd 0x4
 	setvar 0x8004, 0xB
 	special CallFrontierUtilFunc
-	loadword 0x0, gJPText_0022189E
+	loadword 0x0, BattleFrontier_Text_ObtainedXBattlePoints
 	callstd 0x9
 	message gJPText_0022A72D
 	waitmessage

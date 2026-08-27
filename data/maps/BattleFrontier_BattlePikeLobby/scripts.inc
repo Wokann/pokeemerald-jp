@@ -71,7 +71,7 @@ BattleFrontier_BattlePikeLobby_EventScript_00233164::
 	callstd 0x4
 	setvar 0x8004, 0xB
 	special CallFrontierUtilFunc
-	loadword 0x0, gJPText_0022189E
+	loadword 0x0, BattleFrontier_Text_ObtainedXBattlePoints
 	callstd 0x9
 	setvar 0x8004, 0x8
 	special CallFrontierUtilFunc

@@ -67,7 +67,7 @@ BattleFrontier_BattleArenaLobby_EventScript_0022F28B::
 	callstd 0x4
 	setvar 0x8004, 0xB
 	special CallFrontierUtilFunc
-	loadword 0x0, gJPText_0022189E
+	loadword 0x0, BattleFrontier_Text_ObtainedXBattlePoints
 	callstd 0x9
 	message gJPText_0022FB3C
 	waitmessage
@@ -461,4 +461,3 @@ gJPText_00230023: @ 0x08230023
 gJPText_00230058: @ 0x08230058
 	.string "おきゃくじんの　ふくつの　とうしを　たたえ\n"
 	.string "バトルポイントを　さしあげましょう！$"
-
