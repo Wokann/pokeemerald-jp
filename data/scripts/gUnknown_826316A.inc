@@ -69,7 +69,52 @@ LilycoveCity_Text_PokeblocksSuitPokemon: @ 0x08263ABA
 	.string "やっぱり\p"
 	.string "わたしに　シンプルさが　にあうように\n"
 	.string "ポケモンには　ポロックが　にあうな$"
-	.incbin "baserom_jp.gba", 0x263ae4, 0x44f
+
+Route123_BerryMastersHouse_Text_YoureDeservingOfBerry: @ 0x08263AE4
+	.string "わしは　きのみめいじんと　よばれておる\p"
+	.string "わしは　せかいじゅうを　うつくしい　はなで\n"
+	.string "うめつくそうと　きのみを　そだてて\l"
+	.string "そして　くばり　まくって　おるのじゃ\p"
+	.string "きみにも　きのみを　わけて　あげよう！$"
+
+Route123_BerryMastersHouse_Text_WhyBeStingyTakeAnother: @ 0x08263B47
+	.string "ほれ　えんりょ　せずに　もう　ひとつ！$"
+
+Route123_BerryMastersHouse_Text_VisitPrettyPetalFlowerShop: @ 0x08263B5B
+	.string "カナズミの　ちかくにある　サン·トウカという\n"
+	.string "フラワーショップも　よろしくの\p"
+	.string "せかいに　はなを　さかせましょう！$"
+
+Route123_BerryMastersHouse_Text_DoneForToday: @ 0x08263B94
+	.string "きょうは　もう　おしまいじゃ\n"
+	.string "また　おいで\p"
+	.string "せかいに　はなを　さかせましょう！$"
+
+Route123_BerryMastersHouse_Text_HeardAGoodSayingLately: @ 0x08263BBC
+	.string "じいさんの　きのみの　そだてかたは\n"
+	.string "そりゃあ　せかいいちじゃ\p"
+	.string "わしも　はなが　たかいわい\p"
+	.string "ところで　あんた\n"
+	.string "いい　ことばを　きいたことが　ないかい？$"
+
+Route123_BerryMastersHouse_Text_InspirationalTakeThis: @ 0x08263C07
+	.string "おお！　とても　よい　ことばじゃ！\n"
+	.string "かんどう　したわい\p"
+	.string "ほれ　これを　もっていきなされ$"
+
+Route123_BerryMastersHouse_Text_GoodSayingTakeThis: @ 0x08263C33
+	.string "おお！　なかなか　よい　ことばじゃ\n"
+	.string "あんたも　たいしたもんじゃ\p"
+	.string "ほれ　これを　もっていきなされ$"
+
+Route123_BerryMastersHouse_Text_JoyNeverGoesOutOfMyLife: @ 0x08263C63
+	.string "まごたち　4にんも　じいさんを　しのぐ\n"
+	.string "おおものに　なるじゃろうて\p"
+	.string "じんせい　たのしいことが　つきんのう！$"
+
+Route123_BerryMastersHouse_Text_Ah: @ 0x08263C99
+	.string "ほう⋯⋯$"
+	.incbin "baserom_jp.gba", 0x263c9e, 0x295
 	@ Pretty Petal Flower Shop's berry dialogue remains physically owned by
 	@ this later shared text block until that full data range is structured.
 	.globl Route104_PrettyPetalFlowerShop_Text_ThisIsPrettyPetalFlowerShop

@@ -1,185 +1,130 @@
-@ Route123_BerryMastersHouse scripts (JP map g31 m0 @ 0x08240F98)
-
 Route123_BerryMastersHouse_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, Route123_BerryMastersHouse_EventScript_00240F9E
+	map_script MAP_SCRIPT_ON_TRANSITION, Route123_BerryMastersHouse_OnTransition
 	.byte 0
 
-Route123_BerryMastersHouse_EventScript_00240F9E::
-	setflag 0x8C3
+Route123_BerryMastersHouse_OnTransition:
+	setflag FLAG_LANDMARK_BERRY_MASTERS_HOUSE
 	end
 
-Route123_BerryMastersHouse_EventScript_00240FA2::
+Route123_BerryMastersHouse_EventScript_BerryMaster::
 	lock
 	faceplayer
 	dotimebasedevents
-	checkflag 0x92D
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_00241013
-	loadword 0x0, 0x08263AE4
-	callstd 0x4
-	random 0xA
-	addvar 0x800D, 0x14
-	addvar 0x800D, 0x85
-	setorcopyvar 0x8000, 0x800D
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0x92D
-	loadword 0x0, 0x08263B47
-	callstd 0x4
-	random 0xA
-	addvar 0x800D, 0x14
-	addvar 0x800D, 0x85
-	setorcopyvar 0x8000, 0x800D
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	loadword 0x0, 0x08263B5B
-	callstd 0x4
+	goto_if_set FLAG_DAILY_BERRY_MASTER_RECEIVED_BERRY, Route123_BerryMastersHouse_EventScript_ReceivedBerryToday
+	msgbox Route123_BerryMastersHouse_Text_YoureDeservingOfBerry, MSGBOX_DEFAULT
+	random NUM_BERRY_MASTER_BERRIES
+	addvar VAR_RESULT, NUM_BERRY_MASTER_BERRIES_SKIPPED
+	addvar VAR_RESULT, FIRST_BERRY_INDEX
+	giveitem VAR_RESULT
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_DAILY_BERRY_MASTER_RECEIVED_BERRY
+	msgbox Route123_BerryMastersHouse_Text_WhyBeStingyTakeAnother, MSGBOX_DEFAULT
+	random NUM_BERRY_MASTER_BERRIES
+	addvar VAR_RESULT, NUM_BERRY_MASTER_BERRIES_SKIPPED
+	addvar VAR_RESULT, FIRST_BERRY_INDEX
+	giveitem VAR_RESULT
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	msgbox Route123_BerryMastersHouse_Text_VisitPrettyPetalFlowerShop, MSGBOX_DEFAULT
 	release
 	end
 
-Route123_BerryMastersHouse_EventScript_00241013::
-	loadword 0x0, 0x08263B94
-	callstd 0x4
+Route123_BerryMastersHouse_EventScript_ReceivedBerryToday::
+	msgbox Route123_BerryMastersHouse_Text_DoneForToday, MSGBOX_DEFAULT
 	release
 	end
 
-Route123_BerryMastersHouse_EventScript_0024101D::
+Route123_BerryMastersHouse_EventScript_BerryMastersWife::
 	lock
 	faceplayer
 	dotimebasedevents
-	checkflag 0x931
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_002411CC
-	loadword 0x0, 0x08263BBC
-	callstd 0x4
-	setvar 0x8004, 0xD
-	call 0x08242F08
+	goto_if_set FLAG_DAILY_BERRY_MASTERS_WIFE, Route123_BerryMastersHouse_EventScript_ReceivedWifeBerryToday
+	msgbox Route123_BerryMastersHouse_Text_HeardAGoodSayingLately, MSGBOX_DEFAULT
+	setvar VAR_0x8004, EASY_CHAT_TYPE_GOOD_SAYING
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_00241066
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_00241054
+	goto_if_eq VAR_RESULT, TRUE, Route123_BerryMastersHouse_EventScript_GavePhrase
+	goto_if_eq VAR_RESULT, FALSE, Route123_BerryMastersHouse_EventScript_CancelPhrase
 	end
 
-Route123_BerryMastersHouse_EventScript_00241054::
-	loadword 0x0, 0x08263C99
-	callstd 0x4
-	loadword 0x0, 0x08263C63
-	callstd 0x4
+Route123_BerryMastersHouse_EventScript_CancelPhrase::
+	msgbox Route123_BerryMastersHouse_Text_Ah, MSGBOX_DEFAULT
+	msgbox Route123_BerryMastersHouse_Text_JoyNeverGoesOutOfMyLife, MSGBOX_DEFAULT
 	release
 	end
 
-Route123_BerryMastersHouse_EventScript_00241066::
-	compare_var_to_value 0x8004, 0x0
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_002410A9
-	compare_var_to_value 0x8004, 0x1
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_002410D7
-	compare_var_to_value 0x8004, 0x2
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_00241108
-	compare_var_to_value 0x8004, 0x3
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_00241139
-	compare_var_to_value 0x8004, 0x4
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_0024116A
-	compare_var_to_value 0x8004, 0x5
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_0024119B
+Route123_BerryMastersHouse_EventScript_GavePhrase::
+	goto_if_eq VAR_0x8004, NOT_SPECIAL_PHRASE, Route123_BerryMastersHouse_EventScript_GiveNormalBerry
+	goto_if_eq VAR_0x8004, PHRASE_GREAT_BATTLE, Route123_BerryMastersHouse_EventScript_GiveSpelonBerry
+	goto_if_eq VAR_0x8004, PHRASE_CHALLENGE_CONTEST, Route123_BerryMastersHouse_EventScript_GivePamtreBerry
+	goto_if_eq VAR_0x8004, PHRASE_OVERWHELMING_LATIAS, Route123_BerryMastersHouse_EventScript_GiveWatmelBerry
+	goto_if_eq VAR_0x8004, PHRASE_COOL_LATIOS, Route123_BerryMastersHouse_EventScript_GiveDurinBerry
+	goto_if_eq VAR_0x8004, PHRASE_SUPER_HUSTLE, Route123_BerryMastersHouse_EventScript_GiveBelueBerry
 	end
 
-Route123_BerryMastersHouse_EventScript_002410A9::
-	loadword 0x0, 0x08263C33
-	callstd 0x4
-	random 0xA
-	addvar 0x800D, 0x85
-	setorcopyvar 0x8000, 0x800D
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	goto Route123_BerryMastersHouse_EventScript_002411D6
-
-	.incbin "baserom_jp.gba", 0x2410d5, 0x2
-Route123_BerryMastersHouse_EventScript_002410D7::
-	checkflag 0xF8
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_002410A9
-	loadword 0x0, 0x08263C07
-	callstd 0x4
-	setorcopyvar 0x8000, 0xA3
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0xF8
-	goto Route123_BerryMastersHouse_EventScript_002411D6
-	end
-
-Route123_BerryMastersHouse_EventScript_00241108::
-	checkflag 0xF9
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_002410A9
-	loadword 0x0, 0x08263C07
-	callstd 0x4
-	setorcopyvar 0x8000, 0xA4
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0xF9
-	goto Route123_BerryMastersHouse_EventScript_002411D6
-	end
-
-Route123_BerryMastersHouse_EventScript_00241139::
-	checkflag 0xFA
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_002410A9
-	loadword 0x0, 0x08263C07
-	callstd 0x4
-	setorcopyvar 0x8000, 0xA5
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0xFA
-	goto Route123_BerryMastersHouse_EventScript_002411D6
-	end
-
-Route123_BerryMastersHouse_EventScript_0024116A::
-	checkflag 0xFB
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_002410A9
-	loadword 0x0, 0x08263C07
-	callstd 0x4
-	setorcopyvar 0x8000, 0xA6
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0xFB
-	goto Route123_BerryMastersHouse_EventScript_002411D6
-	end
-
-Route123_BerryMastersHouse_EventScript_0024119B::
-	checkflag 0xFC
-	goto_if 0x1, Route123_BerryMastersHouse_EventScript_002410A9
-	loadword 0x0, 0x08263C07
-	callstd 0x4
-	setorcopyvar 0x8000, 0xA7
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0xFC
-	goto Route123_BerryMastersHouse_EventScript_002411D6
-	end
-
-Route123_BerryMastersHouse_EventScript_002411CC::
-	loadword 0x0, 0x08263C63
-	callstd 0x4
+Route123_BerryMastersHouse_EventScript_GiveNormalBerry::
+	msgbox Route123_BerryMastersHouse_Text_GoodSayingTakeThis, MSGBOX_DEFAULT
+	random NUM_BERRY_MASTER_WIFE_BERRIES
+	addvar VAR_RESULT, FIRST_BERRY_INDEX
+	giveitem VAR_RESULT
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	goto Route123_BerryMastersHouse_EventScript_GaveBerry
 	release
 	end
 
-Route123_BerryMastersHouse_EventScript_002411D6::
-	setflag 0x931
-	loadword 0x0, 0x08263C63
-	callstd 0x4
+Route123_BerryMastersHouse_EventScript_GiveSpelonBerry::
+	goto_if_set FLAG_RECEIVED_SPELON_BERRY, Route123_BerryMastersHouse_EventScript_GiveNormalBerry
+	msgbox Route123_BerryMastersHouse_Text_InspirationalTakeThis, MSGBOX_DEFAULT
+	giveitem ITEM_SPELON_BERRY
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_SPELON_BERRY
+	goto Route123_BerryMastersHouse_EventScript_GaveBerry
+	end
+
+Route123_BerryMastersHouse_EventScript_GivePamtreBerry::
+	goto_if_set FLAG_RECEIVED_PAMTRE_BERRY, Route123_BerryMastersHouse_EventScript_GiveNormalBerry
+	msgbox Route123_BerryMastersHouse_Text_InspirationalTakeThis, MSGBOX_DEFAULT
+	giveitem ITEM_PAMTRE_BERRY
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_PAMTRE_BERRY
+	goto Route123_BerryMastersHouse_EventScript_GaveBerry
+	end
+
+Route123_BerryMastersHouse_EventScript_GiveWatmelBerry::
+	goto_if_set FLAG_RECEIVED_WATMEL_BERRY, Route123_BerryMastersHouse_EventScript_GiveNormalBerry
+	msgbox Route123_BerryMastersHouse_Text_InspirationalTakeThis, MSGBOX_DEFAULT
+	giveitem ITEM_WATMEL_BERRY
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_WATMEL_BERRY
+	goto Route123_BerryMastersHouse_EventScript_GaveBerry
+	end
+
+Route123_BerryMastersHouse_EventScript_GiveDurinBerry::
+	goto_if_set FLAG_RECEIVED_DURIN_BERRY, Route123_BerryMastersHouse_EventScript_GiveNormalBerry
+	msgbox Route123_BerryMastersHouse_Text_InspirationalTakeThis, MSGBOX_DEFAULT
+	giveitem ITEM_DURIN_BERRY
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_DURIN_BERRY
+	goto Route123_BerryMastersHouse_EventScript_GaveBerry
+	end
+
+Route123_BerryMastersHouse_EventScript_GiveBelueBerry::
+	goto_if_set FLAG_RECEIVED_BELUE_BERRY, Route123_BerryMastersHouse_EventScript_GiveNormalBerry
+	msgbox Route123_BerryMastersHouse_Text_InspirationalTakeThis, MSGBOX_DEFAULT
+	giveitem ITEM_BELUE_BERRY
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_BELUE_BERRY
+	goto Route123_BerryMastersHouse_EventScript_GaveBerry
+	end
+
+Route123_BerryMastersHouse_EventScript_ReceivedWifeBerryToday::
+	msgbox Route123_BerryMastersHouse_Text_JoyNeverGoesOutOfMyLife, MSGBOX_DEFAULT
+	release
+	end
+
+Route123_BerryMastersHouse_EventScript_GaveBerry::
+	setflag FLAG_DAILY_BERRY_MASTERS_WIFE
+	msgbox Route123_BerryMastersHouse_Text_JoyNeverGoesOutOfMyLife, MSGBOX_DEFAULT
 	release
 	end
 
