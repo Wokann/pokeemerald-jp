@@ -1,114 +1,92 @@
 @ ShoalCave_LowTideEntranceRoom scripts (JP map g24 m46 @ 0x08219E85)
 
 ShoalCave_LowTideEntranceRoom_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, ShoalCave_LowTideEntranceRoom_EventScript_00219E8B
+	map_script MAP_SCRIPT_ON_TRANSITION, ShoalCave_LowTideEntranceRoom_OnTransition
 	.byte 0
 
-ShoalCave_LowTideEntranceRoom_EventScript_00219E8B::
+ShoalCave_LowTideEntranceRoom_OnTransition:: @ 0x08219E8B
 	special UpdateShoalTideFlag
-	checkflag 0x89A
-	goto_if 0x1, ShoalCave_LowTideEntranceRoom_EventScript_00219E9C
-	goto ShoalCave_LowTideEntranceRoom_EventScript_00219EA0
+	goto_if_set FLAG_SYS_SHOAL_TIDE, ShoalCave_LowTideEntranceRoom_EventScript_SetHighTide
+	goto ShoalCave_LowTideEntranceRoom_EventScript_SetLowTide
 
-ShoalCave_LowTideEntranceRoom_EventScript_00219E9C::
-	setmaplayoutindex 0xA8
+ShoalCave_LowTideEntranceRoom_EventScript_SetHighTide:: @ 0x08219E9C
+	setmaplayoutindex LAYOUT_SHOAL_CAVE_HIGH_TIDE_ENTRANCE_ROOM
 	end
 
-ShoalCave_LowTideEntranceRoom_EventScript_00219EA0::
-	setmaplayoutindex 0xA4
+ShoalCave_LowTideEntranceRoom_EventScript_SetLowTide:: @ 0x08219EA0
+	setmaplayoutindex LAYOUT_SHOAL_CAVE_LOW_TIDE_ENTRANCE_ROOM
 	end
 
-ShoalCave_LowTideEntranceRoom_EventScript_00219EA4::
+ShoalCave_LowTideEntranceRoom_EventScript_ShellBellExpert:: @ 0x08219EA4
 	lock
 	faceplayer
 	dotimebasedevents
-	checkflag 0x8BF
-	call_if 0x1, ShoalCave_LowTideEntranceRoom_EventScript_00219FA4
-	checkitem 0x2E, 0x4
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, ShoalCave_LowTideEntranceRoom_EventScript_00219F66
-	checkitem 0x2F, 0x4
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, ShoalCave_LowTideEntranceRoom_EventScript_00219F66
-	loadword 0x0, 0x08264111
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, ShoalCave_LowTideEntranceRoom_EventScript_00219F9A
-	checkitemspace 0xDB, 0x1
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, ShoalCave_LowTideEntranceRoom_EventScript_00219F34
-	compare_var_to_value 0x800D, 0x2
-	goto_if 0x1, ShoalCave_LowTideEntranceRoom_EventScript_00219F5C
-	loadword 0x0, 0x0826414B
-	callstd 0x4
-	removeitem 0x2E, 0x4
-	removeitem 0x2F, 0x4
-	setorcopyvar 0x8000, 0xDB
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	loadword 0x0, 0x0826417E
-	callstd 0x4
-	setflag 0x2
+	call_if_set FLAG_SYS_SHOAL_ITEM, ShoalCave_LowTideEntranceRoom_EventScript_ResetShoalItems
+	checkitem ITEM_SHOAL_SALT, 4
+	goto_if_eq VAR_RESULT, FALSE, ShoalCave_LowTideEntranceRoom_EventScript_NotEnoughShoalSaltOrShells
+	checkitem ITEM_SHOAL_SHELL, 4
+	goto_if_eq VAR_RESULT, FALSE, ShoalCave_LowTideEntranceRoom_EventScript_NotEnoughShoalSaltOrShells
+	msgbox ShoalCave_LowTideEntranceRoom_Text_WouldYouLikeShellBell, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, ShoalCave_LowTideEntranceRoom_EventScript_DeclineShellBell
+	checkitemspace ITEM_SHELL_BELL
+	call_if_eq VAR_RESULT, FALSE, ShoalCave_LowTideEntranceRoom_EventScript_CheckSpaceWillBeFreed
+	goto_if_eq VAR_RESULT, 2, ShoalCave_LowTideEntranceRoom_EventScript_NoRoomForShellBell
+	msgbox ShoalCave_LowTideEntranceRoom_Text_MakeShellBellRightAway, MSGBOX_DEFAULT
+	removeitem ITEM_SHOAL_SALT, 4
+	removeitem ITEM_SHOAL_SHELL, 4
+	giveitem ITEM_SHELL_BELL
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	msgbox ShoalCave_LowTideEntranceRoom_Text_ExplainShellBell, MSGBOX_DEFAULT
+	setflag FLAG_TEMP_2
 	release
 	end
 
-ShoalCave_LowTideEntranceRoom_EventScript_00219F34::
-	checkitem 0x2E, 0x5
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, ShoalCave_LowTideEntranceRoom_EventScript_00219F45
+ShoalCave_LowTideEntranceRoom_EventScript_CheckSpaceWillBeFreed:: @ 0x08219F34
+	checkitem ITEM_SHOAL_SALT, 5
+	goto_if_eq VAR_RESULT, TRUE, ShoalCave_LowTideEntranceRoom_EventScript_CheckSpaceWillBeFreedShells
 	return
 
-ShoalCave_LowTideEntranceRoom_EventScript_00219F45::
-	checkitem 0x2F, 0x5
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, ShoalCave_LowTideEntranceRoom_EventScript_00219F56
+ShoalCave_LowTideEntranceRoom_EventScript_CheckSpaceWillBeFreedShells:: @ 0x08219F45
+	checkitem ITEM_SHOAL_SHELL, 5
+	goto_if_eq VAR_RESULT, TRUE, ShoalCave_LowTideEntranceRoom_EventScript_NoSpaceWillBeFreed
 	return
 
-ShoalCave_LowTideEntranceRoom_EventScript_00219F56::
-	setvar 0x800D, 0x2
+ShoalCave_LowTideEntranceRoom_EventScript_NoSpaceWillBeFreed:: @ 0x08219F56
+	setvar VAR_RESULT, 2
 	return
 
-ShoalCave_LowTideEntranceRoom_EventScript_00219F5C::
-	loadword 0x0, 0x082641FE
-	callstd 0x4
+ShoalCave_LowTideEntranceRoom_EventScript_NoRoomForShellBell:: @ 0x08219F5C
+	msgbox ShoalCave_LowTideEntranceRoom_Text_NoSpaceInYourBag, MSGBOX_DEFAULT
 	release
 	end
 
-ShoalCave_LowTideEntranceRoom_EventScript_00219F66::
-	checkitem 0x2E, 0x1
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, ShoalCave_LowTideEntranceRoom_EventScript_00219F90
-	checkitem 0x2F, 0x1
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, ShoalCave_LowTideEntranceRoom_EventScript_00219F90
-	loadword 0x0, 0x0826406F
-	callstd 0x4
+ShoalCave_LowTideEntranceRoom_EventScript_NotEnoughShoalSaltOrShells:: @ 0x08219F66
+	checkitem ITEM_SHOAL_SALT
+	goto_if_eq VAR_RESULT, TRUE, ShoalCave_LowTideEntranceRoom_EventScript_HasSomeShoalSaltOrShell
+	checkitem ITEM_SHOAL_SHELL
+	goto_if_eq VAR_RESULT, TRUE, ShoalCave_LowTideEntranceRoom_EventScript_HasSomeShoalSaltOrShell
+	msgbox ShoalCave_LowTideEntranceRoom_Text_AreYouPlanningOnGoingInThere, MSGBOX_DEFAULT
 	release
 	end
 
-ShoalCave_LowTideEntranceRoom_EventScript_00219F90::
-	loadword 0x0, 0x082640C5
-	callstd 0x4
+ShoalCave_LowTideEntranceRoom_EventScript_HasSomeShoalSaltOrShell:: @ 0x08219F90
+	msgbox ShoalCave_LowTideEntranceRoom_Text_BringMe4ShoalSaltAndShells, MSGBOX_DEFAULT
 	release
 	end
 
-ShoalCave_LowTideEntranceRoom_EventScript_00219F9A::
-	loadword 0x0, 0x082641E5
-	callstd 0x4
+ShoalCave_LowTideEntranceRoom_EventScript_DeclineShellBell:: @ 0x08219F9A
+	msgbox ShoalCave_LowTideEntranceRoom_Text_WantedToMakeShellBell, MSGBOX_DEFAULT
 	release
 	end
 
-ShoalCave_LowTideEntranceRoom_EventScript_00219FA4::
-	clearflag 0x3B8
-	clearflag 0x3B9
-	clearflag 0x3BA
-	clearflag 0x3BB
-	clearflag 0x3BC
-	clearflag 0x3BD
-	clearflag 0x3BE
-	clearflag 0x3BF
-	clearflag 0x8BF
+ShoalCave_LowTideEntranceRoom_EventScript_ResetShoalItems:: @ 0x08219FA4
+	clearflag FLAG_RECEIVED_SHOAL_SALT_1
+	clearflag FLAG_RECEIVED_SHOAL_SALT_2
+	clearflag FLAG_RECEIVED_SHOAL_SALT_3
+	clearflag FLAG_RECEIVED_SHOAL_SALT_4
+	clearflag FLAG_RECEIVED_SHOAL_SHELL_1
+	clearflag FLAG_RECEIVED_SHOAL_SHELL_2
+	clearflag FLAG_RECEIVED_SHOAL_SHELL_3
+	clearflag FLAG_RECEIVED_SHOAL_SHELL_4
+	clearflag FLAG_SYS_SHOAL_ITEM
 	return
-

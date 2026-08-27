@@ -749,7 +749,6 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/ShoalCave_LowTideInnerRoom/scripts.inc"
 	.include "data/maps/ShoalCave_LowTideStairsRoom/scripts.inc"
 	.include "data/maps/ShoalCave_LowTideLowerRoom/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21a2b6, 0x6e
 	.include "data/maps/ShoalCave_HighTideEntranceRoom/scripts.inc"
 	.include "data/maps/ShoalCave_HighTideInnerRoom/scripts.inc"
 	.include "data/maps/NewMauville_Entrance/scripts.inc"
@@ -1764,10 +1763,8 @@ EventScript_FailSweetScent: @ 0x8256A14
 	@ owner; export the reviewed map-event name without moving that range.
 	.globl JaggedPass_EventScript_ItemBurnHeal
 	.set JaggedPass_EventScript_ItemBurnHeal, 0x08256EDB
-	@ Fiery Path's boulder and item entries remain in shared field/item owners.
-	@ Export the reviewed map-event names without moving those ranges early.
-	.globl EventScript_StrengthBoulder
-	.set EventScript_StrengthBoulder, 0x08256754
+	@ Fiery Path's item entries remain in the later shared item owner.
+	@ Their map-event names remain exported here until that owner is split.
 	.globl FieryPath_EventScript_ItemFireStone
 	.set FieryPath_EventScript_ItemFireStone, 0x08256EE8
 	.globl FieryPath_EventScript_ItemTMToxic

@@ -1263,7 +1263,11 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/VictoryRoad_1F/events.inc"
 	.include "data/maps/VictoryRoad_B1F/events.inc"
 	.include "data/maps/VictoryRoad_B2F/events.inc"
-	.incbin "baserom_jp.gba", 0x50E9A8, 0xAC8
+	.include "data/maps/ShoalCave_LowTideEntranceRoom/events.inc"
+	.include "data/maps/ShoalCave_LowTideInnerRoom/events.inc"
+	.include "data/maps/ShoalCave_LowTideStairsRoom/events.inc"
+	.include "data/maps/ShoalCave_LowTideLowerRoom/events.inc"
+	.incbin "baserom_jp.gba", 0x50EB78, 0x8F8
 	.include "data/maps/Underwater_Route134/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE134
 	.set gMapEvents_UNDERWATER_ROUTE134, Underwater_Route134_MapEvents

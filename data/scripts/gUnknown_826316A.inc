@@ -121,7 +121,7 @@ SootopolisCity_Text_OhDoesntMatter: @ 0x0826404E
 	.string "そっか⋯\n"
 	.string "かんけいないのか⋯\p"
 	.string "しりたいことって　たくさんあるなー$"
-	.incbin "baserom_jp.gba", 0x26406f, 0x1fc
+	.include "data/text/shoal_cave.inc"
 	.globl gJPText_0026426B
 gJPText_0026426B: @ 0x0826426B
 	.string "ポケモンえほんが　そろってる！$"

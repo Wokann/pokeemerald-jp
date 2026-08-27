@@ -340,7 +340,21 @@ Route119_EventScript_ItemNugget:: @ 0x082570F0
 	finditem ITEM_NUGGET
 	end
 
-	.incbin "baserom_jp.gba", 0x2570fd, 0x5b
+	.incbin "baserom_jp.gba", 0x2570fd, 0x1a
+
+ShoalCave_LowTideEntranceRoom_EventScript_ItemBigPearl:: @ 0x08257117
+	finditem ITEM_BIG_PEARL
+	end
+
+ShoalCave_LowTideInnerRoom_EventScript_ItemRareCandy:: @ 0x08257124
+	finditem ITEM_RARE_CANDY
+	end
+
+ShoalCave_LowTideStairsRoom_EventScript_ItemIceHeal:: @ 0x08257131
+	finditem ITEM_ICE_HEAL
+	end
+
+	.incbin "baserom_jp.gba", 0x25713e, 0x1a
 
 SeafloorCavern_Room9_EventScript_ItemTMEarthquake:: @ 0x08257158
 	finditem ITEM_TM_EARTHQUAKE

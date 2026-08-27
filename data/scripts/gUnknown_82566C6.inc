@@ -29,4 +29,7 @@
 	setrespawn 0x7359
 	bufferleadmonspeciesname 0x19
 	nop
-	.incbin "baserom_jp.gba", 0x256716, 0x81
+	.incbin "baserom_jp.gba", 0x256716, 0x3e
+
+EventScript_StrengthBoulder:: @ 0x08256754
+	.incbin "baserom_jp.gba", 0x256754, 0x43

@@ -6951,6 +6951,222 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Shoal Cave's four low-tide rooms form the next contiguous source-order
+# family after Victory Road.  Their event-script and map-event entries were
+# checked against the matching US maps before enabling semantic regeneration.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'ShoalCave_LowTideEntranceRoom': {
+        'scripts': {
+            0x08219E8B: 'ShoalCave_LowTideEntranceRoom_OnTransition',
+            0x08219E9C: 'ShoalCave_LowTideEntranceRoom_EventScript_SetHighTide',
+            0x08219EA0: 'ShoalCave_LowTideEntranceRoom_EventScript_SetLowTide',
+            0x08219EA4: 'ShoalCave_LowTideEntranceRoom_EventScript_ShellBellExpert',
+            0x08219F34: 'ShoalCave_LowTideEntranceRoom_EventScript_CheckSpaceWillBeFreed',
+            0x08219F45: 'ShoalCave_LowTideEntranceRoom_EventScript_CheckSpaceWillBeFreedShells',
+            0x08219F56: 'ShoalCave_LowTideEntranceRoom_EventScript_NoSpaceWillBeFreed',
+            0x08219F5C: 'ShoalCave_LowTideEntranceRoom_EventScript_NoRoomForShellBell',
+            0x08219F66: 'ShoalCave_LowTideEntranceRoom_EventScript_NotEnoughShoalSaltOrShells',
+            0x08219F90: 'ShoalCave_LowTideEntranceRoom_EventScript_HasSomeShoalSaltOrShell',
+            0x08219F9A: 'ShoalCave_LowTideEntranceRoom_EventScript_DeclineShellBell',
+            0x08219FA4: 'ShoalCave_LowTideEntranceRoom_EventScript_ResetShoalItems',
+        },
+        'external_texts': {
+            0x0826406F: 'ShoalCave_LowTideEntranceRoom_Text_AreYouPlanningOnGoingInThere',
+            0x082640C5: 'ShoalCave_LowTideEntranceRoom_Text_BringMe4ShoalSaltAndShells',
+            0x08264111: 'ShoalCave_LowTideEntranceRoom_Text_WouldYouLikeShellBell',
+            0x0826414B: 'ShoalCave_LowTideEntranceRoom_Text_MakeShellBellRightAway',
+            0x0826417E: 'ShoalCave_LowTideEntranceRoom_Text_ExplainShellBell',
+            0x082641E5: 'ShoalCave_LowTideEntranceRoom_Text_WantedToMakeShellBell',
+            0x082641FE: 'ShoalCave_LowTideEntranceRoom_Text_NoSpaceInYourBag',
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+        },
+        'result_condition_values': {
+            0x08219EA4: {
+                'ShoalCave_LowTideEntranceRoom_EventScript_NoRoomForShellBell': {0x02: '2'},
+            },
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x0002: 'FLAG_TEMP_2',
+                0x03B8: 'FLAG_RECEIVED_SHOAL_SALT_1',
+                0x03B9: 'FLAG_RECEIVED_SHOAL_SALT_2',
+                0x03BA: 'FLAG_RECEIVED_SHOAL_SALT_3',
+                0x03BB: 'FLAG_RECEIVED_SHOAL_SALT_4',
+                0x03BC: 'FLAG_RECEIVED_SHOAL_SHELL_1',
+                0x03BD: 'FLAG_RECEIVED_SHOAL_SHELL_2',
+                0x03BE: 'FLAG_RECEIVED_SHOAL_SHELL_3',
+                0x03BF: 'FLAG_RECEIVED_SHOAL_SHELL_4',
+                0x089A: 'FLAG_SYS_SHOAL_TIDE',
+                0x08BF: 'FLAG_SYS_SHOAL_ITEM',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {
+                0x002E: 'ITEM_SHOAL_SALT',
+                0x002F: 'ITEM_SHOAL_SHELL',
+                0x00DB: 'ITEM_SHELL_BELL',
+            },
+            'layouts': {
+                0x00A4: 'LAYOUT_SHOAL_CAVE_LOW_TIDE_ENTRANCE_ROOM',
+                0x00A8: 'LAYOUT_SHOAL_CAVE_HIGH_TIDE_ENTRANCE_ROOM',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {
+                'checkitem': (1,),
+                'removeitem': (1,),
+                'setvar': (1,),
+            },
+        },
+    },
+    'ShoalCave_LowTideInnerRoom': {
+        'scripts': {
+            0x08219FCB: 'ShoalCave_LowTideInnerRoom_OnTransition',
+            0x08219FD9: 'ShoalCave_LowTideInnerRoom_EventScript_SetHighTide',
+            0x08219FDD: 'ShoalCave_LowTideInnerRoom_EventScript_SetLowTide',
+            0x08219FE1: 'ShoalCave_LowTideInnerRoom_OnLoad',
+            0x08219FE7: 'ShoalCave_LowTideInnerRoom_EventScript_SetShoalItemMetatiles',
+            0x0821A008: 'ShoalCave_LowTideInnerRoom_EventScript_SetShoalItemMetatiles2',
+            0x0821A029: 'ShoalCave_LowTideInnerRoom_EventScript_SetShoalItemMetatiles3',
+            0x0821A041: 'ShoalCave_LowTideInnerRoom_EventScript_SetShoalItemMetatiles4',
+            0x0821A059: 'ShoalCave_LowTideInnerRoom_EventScript_SetShoalItemMetatiles5',
+            0x0821A071: 'ShoalCave_LowTideInnerRoom_EventScript_SetShoalItemMetatiles6',
+            0x0821A084: 'ShoalCave_LowTideInnerRoom_EventScript_SetShoalItemMetatilesEnd',
+            0x0821A085: 'ShoalCave_LowTideInnerRoom_EventScript_ShoalShell1',
+            0x0821A0B7: 'ShoalCave_LowTideInnerRoom_EventScript_ReceivedShoalShell',
+            0x0821A0C1: 'ShoalCave_LowTideInnerRoom_EventScript_ShoalShell2',
+            0x0821A0F3: 'ShoalCave_LowTideInnerRoom_EventScript_ShoalShell3',
+            0x0821A125: 'ShoalCave_LowTideInnerRoom_EventScript_ShoalShell4',
+            0x0821A157: 'ShoalCave_LowTideInnerRoom_EventScript_ShoalSalt1',
+            0x0821A189: 'ShoalCave_LowTideInnerRoom_EventScript_ReceivedShoalSalt',
+            0x0821A193: 'ShoalCave_LowTideInnerRoom_EventScript_ShoalSalt2',
+        },
+        'external_texts': {
+            0x0826422C: 'ShoalCave_Text_WasShoalSaltNowNothing',
+            0x0826424A: 'ShoalCave_Text_WasShoallShellNowNothing',
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x03B8: 'FLAG_RECEIVED_SHOAL_SALT_1',
+                0x03B9: 'FLAG_RECEIVED_SHOAL_SALT_2',
+                0x03BC: 'FLAG_RECEIVED_SHOAL_SHELL_1',
+                0x03BD: 'FLAG_RECEIVED_SHOAL_SHELL_2',
+                0x03BE: 'FLAG_RECEIVED_SHOAL_SHELL_3',
+                0x03BF: 'FLAG_RECEIVED_SHOAL_SHELL_4',
+                0x089A: 'FLAG_SYS_SHOAL_TIDE',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {
+                0x002E: 'ITEM_SHOAL_SALT',
+                0x002F: 'ITEM_SHOAL_SHELL',
+            },
+            'layouts': {
+                0x00A5: 'LAYOUT_SHOAL_CAVE_LOW_TIDE_INNER_ROOM',
+                0x00A9: 'LAYOUT_SHOAL_CAVE_HIGH_TIDE_INNER_ROOM',
+            },
+            'metatiles': {
+                0x0358: 'METATILE_Cave_ShoalCave_DirtPile_Large',
+                0x0359: 'METATILE_Cave_ShoalCave_BlueStone_Large',
+                0x035A: 'METATILE_Cave_ShoalCave_DirtPile_Small',
+                0x035B: 'METATILE_Cave_ShoalCave_BlueStone_Small',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {'setmetatile': (0, 1)},
+        },
+    },
+    'ShoalCave_LowTideStairsRoom': {
+        'scripts': {
+            0x0821A1CB: 'ShoalCave_LowTideStairsRoom_OnLoad',
+            0x0821A1D1: 'ShoalCave_LowTideStairsRoom_EventScript_SetShoalItemMetatiles',
+            0x0821A1E4: 'ShoalCave_LowTideStairsRoom_EventScript_SetShoalItemMetatilesEnd',
+            0x0821A1E5: 'ShoalCave_LowTideStairsRoom_EventScript_ShoalSalt3',
+            0x0821A217: 'ShoalCave_LowTideStairsRoom_EventScript_ReceivedShoalSalt',
+        },
+        'external_texts': {
+            0x0826422C: 'ShoalCave_Text_WasShoalSaltNowNothing',
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {0x03BA: 'FLAG_RECEIVED_SHOAL_SALT_3'},
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {0x002E: 'ITEM_SHOAL_SALT'},
+            'metatiles': {
+                0x0358: 'METATILE_Cave_ShoalCave_DirtPile_Large',
+                0x035A: 'METATILE_Cave_ShoalCave_DirtPile_Small',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {'setmetatile': (0, 1)},
+        },
+    },
+    'ShoalCave_LowTideLowerRoom': {
+        'scripts': {
+            0x0821A227: 'ShoalCave_LowTideLowerRoom_OnLoad',
+            0x0821A22D: 'ShoalCave_LowTideLowerRoom_EventScript_SetShoalItemMetatiles',
+            0x0821A240: 'ShoalCave_LowTideLowerRoom_EventScript_SetShoalItemMetatilesEnd',
+            0x0821A241: 'ShoalCave_LowTideLowerRoom_EventScript_ShoalSalt4',
+            0x0821A273: 'ShoalCave_LowTideLowerRoom_EventScript_ReceivedShoalSalt',
+            0x0821A27D: 'ShoalCave_LowTideLowerRoom_EventScript_BlackBelt',
+            0x0821A2AC: 'ShoalCave_LowTideLowerRoom_EventScript_ReceivedFocusBand',
+        },
+        'texts': {
+            0x0821A2B6: 'ShoalCave_LowTideLowerRoom_Text_CanOvercomeColdWithFocus',
+            0x0821A312: 'ShoalCave_LowTideLowerRoom_Text_EverythingStartsWithFocus',
+        },
+        'external_texts': {
+            0x0826422C: 'ShoalCave_Text_WasShoalSaltNowNothing',
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x011B: 'FLAG_RECEIVED_FOCUS_BAND',
+                0x03BB: 'FLAG_RECEIVED_SHOAL_SALT_4',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {
+                0x002E: 'ITEM_SHOAL_SALT',
+                0x00C4: 'ITEM_FOCUS_BAND',
+            },
+            'metatiles': {
+                0x0358: 'METATILE_Cave_ShoalCave_DirtPile_Large',
+                0x035A: 'METATILE_Cave_ShoalCave_DirtPile_Small',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {'setmetatile': (0, 1)},
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     'DewfordTown_Hall': {
         0x081F3A8F: 'DewfordTown_Hall_Movement_PsychicWalkInPlaceLeft',
