@@ -282,7 +282,7 @@ CableClub_EventScript_Colosseum::
 	end
 
 CableClub_EventScript_SelectBattleMode::
-	message 0x08248500 @ CableClub_Text_PlayWhichBattleMode
+	message CableClub_Text_PlayWhichBattleMode
 	waitmessage
 	multichoice 0, 0, MULTI_BATTLE_MODE, FALSE
 	switch VAR_RESULT
@@ -295,7 +295,7 @@ CableClub_EventScript_SelectBattleMode::
 	end
 
 CableClub_EventScript_BattleModeInfo::
-	msgbox 0x08248531, MSGBOX_DEFAULT @ CableClub_Text_ExplainBattleModes
+	msgbox CableClub_Text_ExplainBattleModes, MSGBOX_DEFAULT
 	goto CableClub_EventScript_SelectBattleMode
 	end
 
@@ -342,7 +342,7 @@ CableClub_EventScript_EnterColosseum::
 	special SavePlayerParty
 	special LoadPlayerBag
 	copyvar VAR_CABLE_CLUB_STATE, VAR_0x8004
-	messageautoscroll 0x08247D16 @ CableClub_Text_PleaseEnter
+	messageautoscroll CableClub_Text_PleaseEnter
 	waitmessage
 	call CableClub_EventScript_OpenDirectCornerBarrier
 	special DrawWholeMapView
@@ -391,25 +391,25 @@ CableClub_EventScript_AbortLinkIncorrectNumberOfBattlers::
 
 CableClub_EventScript_AbortLinkNeedFourPlayers::
 	special CloseLink
-	msgbox 0x08247E02, MSGBOX_DEFAULT @ CableClub_Text_NeedFourPlayers
+	msgbox CableClub_Text_NeedFourPlayers, MSGBOX_DEFAULT
 	goto CableClub_EventScript_ConfirmNumberAndRestart
 	end
 
 CableClub_EventScript_AbortLinkWrongNumberForDoubleBattle::
 	special CloseLink
-	msgbox 0x08247DE5, MSGBOX_DEFAULT @ CableClub_Text_CantDoubleBattleWithXPlayers
+	msgbox CableClub_Text_CantDoubleBattleWithXPlayers, MSGBOX_DEFAULT
 	goto CableClub_EventScript_ConfirmNumberAndRestart
 	end
 
 CableClub_EventScript_AbortLinkWrongNumberForSingleBattle::
 	special CloseLink
-	msgbox 0x08247DC8, MSGBOX_DEFAULT @ CableClub_Text_CantSingleBattleWithXPlayers
+	msgbox CableClub_Text_CantSingleBattleWithXPlayers, MSGBOX_DEFAULT
 	goto CableClub_EventScript_ConfirmNumberAndRestart
 	end
 
 CableClub_EventScript_ConfirmNumberAndRestart::
 	special CloseLink @ Redundant
-	msgbox 0x08247E27, MSGBOX_DEFAULT @ CableClub_Text_PleaseConfirmNumberAndRestart
+	msgbox CableClub_Text_PleaseConfirmNumberAndRestart, MSGBOX_DEFAULT
 	release
 	end
 
@@ -436,7 +436,7 @@ CableClub_EventScript_TradeCenter::
 CableClub_EventScript_EnterTradeCenter::
 	setvar VAR_0x8004, USING_TRADE_CENTER
 	copyvar VAR_CABLE_CLUB_STATE, VAR_0x8004
-	messageautoscroll 0x08247D16 @ CableClub_Text_PleaseEnter
+	messageautoscroll CableClub_Text_PleaseEnter
 	waitmessage
 	call CableClub_EventScript_OpenDirectCornerBarrier
 	special DrawWholeMapView
@@ -498,7 +498,7 @@ CableClub_EventScript_RecordCorner::
 CableClub_EventScript_EnterRecordCorner::
 	setvar VAR_0x8004, USING_RECORD_CORNER
 	copyvar VAR_CABLE_CLUB_STATE, VAR_0x8004
-	messageautoscroll 0x08247D16 @ CableClub_Text_PleaseEnter
+	messageautoscroll CableClub_Text_PleaseEnter
 	waitmessage
 	call CableClub_EventScript_OpenDirectCornerBarrier
 	special DrawWholeMapView
@@ -525,13 +525,13 @@ CableClub_EventScript_EnterRecordCorner::
 
 CableClub_EventScript_AbortLinkPlayerNotReady::
 	special CloseLink
-	msgbox 0x08247F3C, MSGBOX_DEFAULT @ CableClub_Text_NotSetUpForFarAwayRegion
+	msgbox CableClub_Text_NotSetUpForFarAwayRegion, MSGBOX_DEFAULT
 	release
 	end
 
 CableClub_EventScript_AbortLinkOtherTrainerNotReady::
 	special CloseLink
-	msgbox 0x08247F78, MSGBOX_DEFAULT @ CableClub_Text_OtherTrainerNotReady
+	msgbox CableClub_Text_OtherTrainerNotReady, MSGBOX_DEFAULT
 	release
 	end
 
@@ -543,25 +543,25 @@ CableClub_EventScript_AbortLinkConnectionError::
 
 CableClub_EventScript_AbortLinkSomeoneNotReady::
 	special CloseLink
-	msgbox 0x08247D35, MSGBOX_DEFAULT @ Text_SomeoneIsNotReadyToLink
+	msgbox Text_SomeoneIsNotReadyToLink, MSGBOX_DEFAULT
 	release
 	end
 
 CableClub_EventScript_AbortLinkDifferentSelections::
 	special CloseLink
-	msgbox 0x08247D84, MSGBOX_DEFAULT @ Text_PlayersMadeDifferentSelections
+	msgbox Text_PlayersMadeDifferentSelections, MSGBOX_DEFAULT
 	release
 	end
 
 CableClub_EventScript_AbortLink::
 	special CloseLink
-	msgbox 0x08247D9F, MSGBOX_DEFAULT @ CableClub_Text_PleaseVisitAgain
+	msgbox CableClub_Text_PleaseVisitAgain, MSGBOX_DEFAULT
 	release
 	end
 
 MossdeepCity_GameCorner_1F_EventScript_AbortMinigame::
 	special CloseLink
-	msgbox 0x08248356, MSGBOX_DEFAULT @ MossdeepCity_GameCorner_1F_Text_ComeAgain
+	msgbox MossdeepCity_GameCorner_1F_Text_ComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
@@ -574,13 +574,13 @@ CableClub_EventScript_CableClubWarp::
 
 CableClub_EventScript_AbortLinkIncorrectNumberOfParticipants::
 	special CloseLink
-	msgbox 0x08247DAF, MSGBOX_DEFAULT @ CableClub_Text_IncorrectNumberOfParticipants
+	msgbox CableClub_Text_IncorrectNumberOfParticipants, MSGBOX_DEFAULT
 	release
 	end
 
 CableClub_EventScript_AbortLinkPlayerHasBadEgg::
 	special CloseLink
-	msgbox 0x08247F8B, MSGBOX_DEFAULT @ CableClub_Text_YouHaveAMonThatCantBeTaken
+	msgbox CableClub_Text_YouHaveAMonThatCantBeTaken, MSGBOX_DEFAULT
 	release
 	end
 
@@ -747,14 +747,14 @@ EventScript_RecordCenter_Spot3::
 
 RecordCorner_EventScript_ReceivedGiftItem::
 	bufferitemname STR_VAR_2, VAR_TEMP_RECORD_MIX_GIFT_ITEM
-	message 0x08247FB9 @ RecordCorner_Text_PlayerSentOverOneX
+	message RecordCorner_Text_PlayerSentOverOneX
 	waitmessage
 	waitbuttonpress
 	releaseall
 	end
 
 CableClub_EventScript_ReadTrainerCard::
-	msgbox 0x08247E95, MSGBOX_DEFAULT @ CableClub_Text_GotToLookAtTrainerCard
+	msgbox CableClub_Text_GotToLookAtTrainerCard, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
 	special Script_ShowLinkTrainerCard
 	@ JP waits for the trainer-card screen before ending this script.
@@ -762,27 +762,27 @@ CableClub_EventScript_ReadTrainerCard::
 	end
 
 CableClub_EventScript_ReadTrainerCardColored::
-	msgbox 0x08247EAC, MSGBOX_DEFAULT @ CableClub_Text_GotToLookAtColoredTrainerCard
+	msgbox CableClub_Text_GotToLookAtColoredTrainerCard, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
 	special Script_ShowLinkTrainerCard
 	waitstate
 	end
 
 CableClub_EventScript_TooBusyToNotice::
-	msgbox 0x08247E87, MSGBOX_DEFAULT @ CableClub_Text_TooBusyToNotice
+	msgbox CableClub_Text_TooBusyToNotice, MSGBOX_DEFAULT
 	closemessage
 	end
 
 BattleColosseum_2P_EventScript_Attendant::
 	special Script_FacePlayer
-	msgbox 0x08247ECC, MSGBOX_DEFAULT @ BattleColosseum_2P_Text_TakePlaceStartBattle
+	msgbox BattleColosseum_2P_Text_TakePlaceStartBattle, MSGBOX_DEFAULT
 	special Script_ClearHeldMovement
 	closemessage
 	end
 
 TradeCenter_EventScript_Attendant::
 	special Script_FacePlayer
-	msgbox 0x08247EEA, MSGBOX_DEFAULT @ TradeCenter_Text_TakeSeatStartTrade
+	msgbox TradeCenter_Text_TakeSeatStartTrade, MSGBOX_DEFAULT
 	special Script_ClearHeldMovement
 	closemessage
 	end
@@ -790,7 +790,7 @@ TradeCenter_EventScript_Attendant::
 RecordCorner_EventScript_Attendant::
 	goto_if_ne VAR_TEMP_MIXED_RECORDS, 0, RecordCorner_EventScript_AlreadyMixed
 	special Script_FacePlayer
-	message 0x08247FA2 @ RecordCorner_Text_TakeSeatAndWait
+	message RecordCorner_Text_TakeSeatAndWait
 	waitmessage
 	waitbuttonpress
 	special Script_ClearHeldMovement
@@ -799,7 +799,7 @@ RecordCorner_EventScript_Attendant::
 
 RecordCorner_EventScript_AlreadyMixed::
 	special Script_FacePlayer
-	message 0x08247F08 @ RecordCorner_Text_ThanksForComing
+	message RecordCorner_Text_ThanksForComing
 	waitmessage
 	waitbuttonpress
 	special Script_ClearHeldMovement
@@ -807,7 +807,7 @@ RecordCorner_EventScript_AlreadyMixed::
 	end
 
 EventScript_ConfirmLeaveCableClubRoom::
-	msgbox 0x08247E4B, MSGBOX_YESNO @ Text_TerminateLinkConfirmation
+	msgbox Text_TerminateLinkConfirmation, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, EventScript_TerminateLink
 	@ JP redraws the whole text box here rather than using erasebox.
 	drawboxtext 0, 0, 29, 19
@@ -815,7 +815,7 @@ EventScript_ConfirmLeaveCableClubRoom::
 	end
 
 EventScript_TerminateLink::
-	messageautoscroll 0x08247E69 @ Text_TerminateLinkPleaseWait
+	messageautoscroll Text_TerminateLinkPleaseWait
 	waitmessage
 	special ExitLinkRoom
 	end
@@ -837,7 +837,7 @@ CableClub_EventScript_UnionRoomAttendant::
 	copyvar VAR_0x8007, VAR_LAST_TALKED
 	specialvar VAR_RESULT, IsWirelessAdapterConnected
 	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_UnionRoomAdapterNotConnected
-	message 0x08248690 @ CableClub_Text_WelcomeUnionRoomEnter
+	message CableClub_Text_WelcomeUnionRoomEnter
 	waitmessage
 	goto CableClub_EventScript_UnionRoomSelect
 	end
@@ -852,7 +852,7 @@ CableClub_EventScript_UnionRoomSelect::
 	end
 
 CableClub_EventScript_UnionRoomInfo::
-	message 0x082486D6 @ CableClub_Text_UnionRoomInfo
+	message CableClub_Text_UnionRoomInfo
 	waitmessage
 	goto CableClub_EventScript_UnionRoomSelect
 	end
@@ -862,7 +862,7 @@ CableClub_EventScript_EnterUnionRoom::
 	goto_if_eq VAR_RESULT, 0, CableClub_EventScript_AbortLink
 	call Common_EventScript_SaveGame
 	goto_if_eq VAR_RESULT, 0, CableClub_EventScript_AbortLink
-	msgbox 0x0824877D, MSGBOX_DEFAULT @ CableClub_Text_EnjoyUnionRoom
+	msgbox CableClub_Text_EnjoyUnionRoom, MSGBOX_DEFAULT
 	closemessage
 	special HealPlayerParty
 	setvar VAR_0x8004, USING_UNION_ROOM
@@ -899,17 +899,17 @@ CableClub_EventScript_CheckPartyUnionRoomRequirements::
 	return
 
 CableClub_EventScript_NeedTwoMonsForUnionRoom::
-	msgbox 0x082480DF, MSGBOX_DEFAULT @ CableClub_Text_NeedTwoMonsForUnionRoom
+	msgbox CableClub_Text_NeedTwoMonsForUnionRoom, MSGBOX_DEFAULT
 	goto EventScript_CableClub_SetVarResult0
 	end
 
 CableClub_EventScript_NoEnigmaBerryInUnionRoom::
-	msgbox 0x0824810A, MSGBOX_DEFAULT @ CableClub_Text_NoEnigmaBerryInUnionRoom
+	msgbox CableClub_Text_NoEnigmaBerryInUnionRoom, MSGBOX_DEFAULT
 	goto EventScript_CableClub_SetVarResult0
 	end
 
 CableClub_EventScript_UnionRoomAdapterNotConnected::
-	msgbox 0x08248137, MSGBOX_DEFAULT @ CableClub_Text_UnionRoomAdapterNotConnected
+	msgbox CableClub_Text_UnionRoomAdapterNotConnected, MSGBOX_DEFAULT
 	release
 	return
 
@@ -917,14 +917,14 @@ CableClub_EventScript_WirelessClubAttendant::
 	lock
 	faceplayer
 	goto_if_unset FLAG_SYS_POKEDEX_GET, CableClub_EventScript_WirelessClubAdjustements
-	msgbox 0x08248916, MSGBOX_YESNO @ CableClub_Text_AskAboutLinking
+	msgbox CableClub_Text_AskAboutLinking, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CableClub_EventScript_DontAskAboutLinking
-	msgbox 0x08248951, MSGBOX_DEFAULT @ CableClub_Text_ExplainWirelessClub
+	msgbox CableClub_Text_ExplainWirelessClub, MSGBOX_DEFAULT
 	release
 	return
 
 CableClub_EventScript_DontAskAboutLinking::
-	msgbox 0x08248AD9, MSGBOX_DEFAULT @ CableClub_Text_HopeYouEnjoyWirelessSystem
+	msgbox CableClub_Text_HopeYouEnjoyWirelessSystem, MSGBOX_DEFAULT
 	release
 	return
 
@@ -937,7 +937,7 @@ CableClub_EventScript_DirectCornerAttendant::
 	goto_if_eq VAR_RESULT, TRUE, CableClub_EventScript_AbortLinkPlayerHasBadEgg
 	specialvar VAR_RESULT, IsWirelessAdapterConnected
 	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_WelcomeToCableClub
-	message 0x082484A8 @ CableClub_Text_WelcomeWhichDirectCornerRoom
+	message CableClub_Text_WelcomeWhichDirectCornerRoom
 	waitmessage
 	delay 28
 	goto CableClub_EventScript_DirectCornerSelectService
@@ -988,7 +988,7 @@ CableClub_EventScript_DirectCornerHasRecordMix::
 	end
 
 CableClub_EventScript_WirelessTrade::
-	msgbox 0x082484F4, MSGBOX_YESNO @ CableClub_Text_TradePokemon
+	msgbox CableClub_Text_TradePokemon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CableClub_EventScript_AbortLink
 	call CableClub_EventScript_CheckPartyTradeRequirements
 	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_AbortLink
@@ -997,7 +997,7 @@ CableClub_EventScript_WirelessTrade::
 	end
 
 CableClub_EventScript_WirelessBattleSelect::
-	message 0x08248500 @ CableClub_Text_PlayWhichBattleMode
+	message CableClub_Text_PlayWhichBattleMode
 	waitmessage
 	multichoice 0, 0, MULTI_BATTLE_MODE, FALSE
 	switch VAR_RESULT
@@ -1032,19 +1032,19 @@ CableClub_EventScript_WirelessMultiBattle::
 	end
 
 CableClub_EventScript_WirelessBattleInfo::
-	msgbox 0x08248531, MSGBOX_DEFAULT @ CableClub_Text_ExplainBattleModes
+	msgbox CableClub_Text_ExplainBattleModes, MSGBOX_DEFAULT
 	goto CableClub_EventScript_WirelessBattleSelect
 	end
 
 CableClub_EventScript_WirelessRecordMix::
-	msgbox 0x08248511, MSGBOX_YESNO @ CableClub_Text_AccessRecordCorner
+	msgbox CableClub_Text_AccessRecordCorner, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CableClub_EventScript_AbortLink
 	setvar VAR_0x8004, LINK_GROUP_RECORD_CORNER
 	goto CableClub_EventScript_SaveAndChooseLinkLeader
 	end
 
 CableClub_EventScript_WirelessBerryCrush::
-	msgbox 0x08248521, MSGBOX_YESNO @ CableClub_Text_UseBerryCrush
+	msgbox CableClub_Text_UseBerryCrush, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CableClub_EventScript_AbortLink
 	special HasAtLeastOneBerry
 	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_NeedBerryForBerryCrush
@@ -1053,7 +1053,7 @@ CableClub_EventScript_WirelessBerryCrush::
 	end
 
 CableClub_EventScript_NeedBerryForBerryCrush::
-	msgbox 0x082480C1, MSGBOX_DEFAULT @ CableClub_Text_NeedBerryForBerryCrush
+	msgbox CableClub_Text_NeedBerryForBerryCrush, MSGBOX_DEFAULT
 	goto CableClub_EventScript_DirectCornerSelectService
 	end
 
@@ -1070,7 +1070,7 @@ CableClub_EventScript_SaveAndChooseLinkLeader::
 	end
 
 CableClub_EventScript_ChooseLinkLeaderFrom2::
-	message 0x082485D7 @ CableClub_Text_ChooseGroupLeaderOfTwo
+	message CableClub_Text_ChooseGroupLeaderOfTwo
 	waitmessage
 	multichoice 16, 6, MULTI_LINK_LEADER, FALSE
 	switch VAR_RESULT
@@ -1097,7 +1097,7 @@ CableClub_EventScript_TryJoinGroup2Players::
 	return
 
 CableClub_EventScript_ChooseLinkLeaderFrom4::
-	message 0x08248611 @ CableClub_Text_ChooseGroupLeaderOfFour
+	message CableClub_Text_ChooseGroupLeaderOfFour
 	waitmessage
 	multichoice 16, 6, MULTI_LINK_LEADER, FALSE
 	switch VAR_RESULT
@@ -1124,7 +1124,7 @@ CableClub_EventScript_TryJoinGroup4Players::
 	return
 
 CableClub_EventScript_ChooseLinkLeader::
-	message 0x08248651 @ CableClub_Text_ChooseGroupLeader
+	message CableClub_Text_ChooseGroupLeader
 	waitmessage
 	multichoice 16, 6, MULTI_LINK_LEADER, FALSE
 	switch VAR_RESULT
@@ -1161,7 +1161,7 @@ CableClub_EventScript_TryJoinLinkGroup::
 	return
 
 CableClub_EventScript_EnterWirelessLinkRoom::
-	messageautoscroll 0x08247D23 @ CableClub_Text_DirectYouToYourRoom
+	messageautoscroll CableClub_Text_DirectYouToYourRoom
 	waitmessage
 	delay 60
 	closemessage
@@ -1195,12 +1195,12 @@ EventScript_WirelessBoxResults::
 	special ShowWirelessCommunicationScreen
 	@ JP keeps the status-screen wait explicit.
 	waitstate
-	msgbox 0x08247FE3, MSGBOX_DEFAULT @ CableClub_Text_ParticipantsStepUpToCounter
+	msgbox CableClub_Text_ParticipantsStepUpToCounter, MSGBOX_DEFAULT
 	releaseall
 	end
 
 CableClub_EventScript_AdapterNotConnected::
-	msgbox 0x08247FCD, MSGBOX_DEFAULT @ CableClub_Text_AdapterNotConnected
+	msgbox CableClub_Text_AdapterNotConnected, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -1241,7 +1241,7 @@ CableClub_OnResume:
 MossdeepCity_GameCorner_1F_EventScript_InfoMan2::
 	lock
 	faceplayer
-	message 0x082481AB @ MossdeepCity_GameCorner_1F_Text_DescribeWhichGame
+	message MossdeepCity_GameCorner_1F_Text_DescribeWhichGame
 	waitmessage
 	multichoice 0, 0, MULTI_WIRELESS_MINIGAME, FALSE
 	switch VAR_RESULT
@@ -1252,29 +1252,29 @@ MossdeepCity_GameCorner_1F_EventScript_InfoMan2::
 	end
 
 MossdeepCity_GameCorner_1F_EventScript_PokemonJumpInfo::
-	msgbox 0x082481D0, MSGBOX_DEFAULT @ MossdeepCity_GameCorner_1F_Text_PokemonJumpInfo
+	msgbox MossdeepCity_GameCorner_1F_Text_PokemonJumpInfo, MSGBOX_DEFAULT
 	release
 	end
 
 MossdeepCity_GameCorner_1F_EventScript_DodrioBerryPickingInfo::
-	msgbox 0x08248292, MSGBOX_DEFAULT @ MossdeepCity_GameCorner_1F_Text_DodrioBerryPickingInfo
+	msgbox MossdeepCity_GameCorner_1F_Text_DodrioBerryPickingInfo, MSGBOX_DEFAULT
 	release
 	end
 
 MossdeepCity_GameCorner_1F_EventScript_MinigameInfoExit::
-	msgbox 0x08248314, MSGBOX_DEFAULT @ MossdeepCity_GameCorner_1F_Text_TalkToOldManToPlay
+	msgbox MossdeepCity_GameCorner_1F_Text_TalkToOldManToPlay, MSGBOX_DEFAULT
 	release
 	end
 
 MossdeepCity_GameCorner_1F_EventScript_OldMan2::
 	lock
 	faceplayer
-	message 0x08248330 @ MossdeepCity_GameCorner_1F_Text_WelcomeCanYouWait
+	message MossdeepCity_GameCorner_1F_Text_WelcomeCanYouWait
 	waitmessage
 	specialvar VAR_RESULT, IsWirelessAdapterConnected
 	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_GameCorner_1F_EventScript_AdapterNotConnected
 	delay 60
-	message 0x08248378 @ MossdeepCity_GameCorner_1F_Text_PlayWhichGame
+	message MossdeepCity_GameCorner_1F_Text_PlayWhichGame
 	waitmessage
 	multichoice 0, 0, MULTI_WIRELESS_MINIGAME, FALSE
 	switch VAR_RESULT
@@ -1288,7 +1288,7 @@ MossdeepCity_GameCorner_1F_EventScript_PlayPokemonJump::
 	setvar VAR_0x8005, 0
 	special IsPokemonJumpSpeciesInParty
 	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_GameCorner_1F_EventScript_DontHaveRequiredMon
-	msgbox 0x0824838C, MSGBOX_DEFAULT @ MossdeepCity_GameCorner_1F_Text_EnterWhichPokemon
+	msgbox MossdeepCity_GameCorner_1F_Text_EnterWhichPokemon, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
 	setvar VAR_0x8005, 0
 	special ChooseMonForWirelessMinigame
@@ -1305,7 +1305,7 @@ MossdeepCity_GameCorner_1F_EventScript_PlayDodrioBerryPicking::
 	setvar VAR_0x8005, 1
 	special IsDodrioInParty
 	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_GameCorner_1F_EventScript_DontHaveRequiredMon
-	msgbox 0x0824838C, MSGBOX_DEFAULT @ MossdeepCity_GameCorner_1F_Text_EnterWhichPokemon
+	msgbox MossdeepCity_GameCorner_1F_Text_EnterWhichPokemon, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
 	setvar VAR_0x8005, 1
 	special ChooseMonForWirelessMinigame
@@ -1319,7 +1319,7 @@ MossdeepCity_GameCorner_1F_EventScript_PlayDodrioBerryPicking::
 	end
 
 MossdeepCity_GameCorner_1F_EventScript_ChooseLinkLeader::
-	message 0x08248651 @ CableClub_Text_ChooseGroupLeader
+	message CableClub_Text_ChooseGroupLeader
 	waitmessage
 	multichoice 16, 6, MULTI_LINK_LEADER, FALSE
 	switch VAR_RESULT
@@ -1346,7 +1346,7 @@ MossdeepCity_GameCorner_1F_EventScript_TryJoinLinkGroup::
 	return
 
 MossdeepCity_GameCorner_1F_EventScript_EnterMinigameRoom::
-	messageautoscroll 0x082483A1 @ MossdeepCity_GameCorner_1F_Text_AllGoodToGo
+	messageautoscroll MossdeepCity_GameCorner_1F_Text_AllGoodToGo
 	waitmessage
 	delay 60
 	closemessage
@@ -1367,12 +1367,12 @@ MossdeepCity_GameCorner_1F_EventScript_EnterMinigameRoom::
 
 MossdeepCity_GameCorner_1F_EventScript_AdapterNotConnected::
 	@ Unlike US, the JP script displays this message without a delay.
-	msgbox 0x0824835E, MSGBOX_DEFAULT @ MossdeepCity_GameCorner_1F_Text_AdapterNotConnected
+	msgbox MossdeepCity_GameCorner_1F_Text_AdapterNotConnected, MSGBOX_DEFAULT
 	release
 	end
 
 MossdeepCity_GameCorner_1F_EventScript_DontHaveRequiredMon::
-	msgbox 0x082483D0, MSGBOX_YESNO @ MossdeepCity_GameCorner_1F_Text_ExplainRequiredMon
+	msgbox MossdeepCity_GameCorner_1F_Text_ExplainRequiredMon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MossdeepCity_GameCorner_1F_EventScript_AbortMinigame
 	call_if_eq VAR_0x8005, 0, MossdeepCity_GameCorner_1F_EventScript_ExplainPokemonJumpRequirements
 	call_if_eq VAR_0x8005, 1, MossdeepCity_GameCorner_1F_EventScript_ExplainDodrioBerryPickingRequirements
@@ -1380,11 +1380,11 @@ MossdeepCity_GameCorner_1F_EventScript_DontHaveRequiredMon::
 	end
 
 MossdeepCity_GameCorner_1F_EventScript_ExplainPokemonJumpRequirements::
-	msgbox 0x08248406, MSGBOX_DEFAULT @ MossdeepCity_GameCorner_1F_Text_ShortJumpingPokemonAllowed
+	msgbox MossdeepCity_GameCorner_1F_Text_ShortJumpingPokemonAllowed, MSGBOX_DEFAULT
 	return
 
 MossdeepCity_GameCorner_1F_EventScript_ExplainDodrioBerryPickingRequirements::
-	msgbox 0x08248462, MSGBOX_DEFAULT @ MossdeepCity_GameCorner_1F_Text_OnlyDodrioAllowed
+	msgbox MossdeepCity_GameCorner_1F_Text_OnlyDodrioAllowed, MSGBOX_DEFAULT
 	return
 
 MossdeepCity_GameCorner_1F_EventScript_PokemonJumpRecords::
