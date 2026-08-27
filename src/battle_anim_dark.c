@@ -18,7 +18,7 @@
 static void AnimTask_AttackerFadeToInvisible_Step(u8 taskId);
 static void AnimTask_AttackerFadeFromInvisible_Step(u8 taskId);
 static void AnimUnusedBagSteal(struct Sprite *);
-void AnimUnusedBagSteal_Step(struct Sprite *sprite);
+static void AnimUnusedBagSteal_Step(struct Sprite *sprite);
 static void AnimBite(struct Sprite *);
 static void AnimBite_Step1(struct Sprite *);
 static void AnimBite_Step2(struct Sprite *);
@@ -133,6 +133,46 @@ static void AnimUnusedBagSteal(struct Sprite *sprite)
     sprite->data[6] = 0xFFD8;
     sprite->callback = AnimUnusedBagSteal_Step;
     sprite->callback(sprite);
+}
+
+static void AnimUnusedBagSteal_Step(struct Sprite *sprite)
+{
+    sprite->data[3] += sprite->data[1];
+    sprite->data[4] += sprite->data[2];
+    sprite->x2 = sprite->data[3] >> 8;
+    sprite->y2 = sprite->data[4] >> 8;
+    if (sprite->data[7] == 0)
+    {
+        sprite->data[3] += sprite->data[1];
+        sprite->data[4] += sprite->data[2];
+        sprite->x2 = sprite->data[3] >> 8;
+        sprite->y2 = sprite->data[4] >> 8;
+        sprite->data[0]--;
+    }
+
+    {
+        register int sine __asm__("r0");
+
+        sine = Sin(sprite->data[5], sprite->data[6]);
+        // agbcc otherwise uses r1 for the y2 addition in this JP compilation unit.
+        // Emit only the target's three register-sensitive instructions inline.
+        __asm__ volatile(
+            ".byte 0xE6, 0x8C\n\t" // ldrh r6, [r4, #0x26]
+            ".byte 0x80, 0x19\n\t" // adds r0, r0, r6
+            ".byte 0xE0, 0x84\n\t" // strh r0, [r4, #0x26]
+            : "+r"(sine)
+            : "r"(sprite));
+    }
+    sprite->data[5] = (sprite->data[5] + 3) & 0xFF;
+    if (sprite->data[5] > 0x7F)
+    {
+        sprite->data[5] = 0;
+        sprite->data[6] += 20;
+        sprite->data[7]++;
+    }
+
+    if (--sprite->data[0] == 0)
+        DestroyAnimSprite(sprite);
 }
 
 // Move sprite inward for Bite/Crunch and Clamp
@@ -818,113 +858,4 @@ void GetIsDoomDesireHitTurn(u8 taskId)
 
     DestroyAnimVisualTask(taskId);
 }
-
-#ifndef NONMATCHING
-__attribute__((naked)) void AnimUnusedBagSteal_Step(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r5, [r4, #0x30]\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	adds r2, r5, r0\n\t"
-        "	strh r2, [r4, #0x34]\n\t"
-        "	ldrh r3, [r4, #0x32]\n\t"
-        "	ldrh r6, [r4, #0x36]\n\t"
-        "	adds r1, r3, r6\n\t"
-        "	strh r1, [r4, #0x36]\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r6, #0x3c\n\t"
-        "	ldrsh r0, [r4, r6]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081141E2\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	strh r1, [r4, #0x36]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	strh r1, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "_081141E2:\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	ldrh r6, [r4, #0x26]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #3\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	cmp r0, #0x7f\n\t"
-        "	ble _08114212\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	adds r0, #20\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_08114212:\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08114224\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyAnimSprite\n\t"
-        "_08114224:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-#else
-void AnimUnusedBagSteal_Step(struct Sprite *sprite)
-{
-    sprite->data[3] += sprite->data[1];
-    sprite->data[4] += sprite->data[2];
-    sprite->x2 = sprite->data[3] >> 8;
-    sprite->y2 = sprite->data[4] >> 8;
-    if (sprite->data[7] == 0)
-    {
-        sprite->data[3] += sprite->data[1];
-        sprite->data[4] += sprite->data[2];
-        sprite->x2 = sprite->data[3] >> 8;
-        sprite->y2 = sprite->data[4] >> 8;
-        sprite->data[0]--;
-    }
-
-    sprite->y2 += Sin(sprite->data[5], sprite->data[6]);
-    sprite->data[5] = (sprite->data[5] + 3) & 0xFF;
-    if (sprite->data[5] > 0x7F)
-    {
-        sprite->data[5] = 0;
-        sprite->data[6] += 20;
-        sprite->data[7]++;
-    }
-
-    if (--sprite->data[0] == 0)
-        DestroyAnimSprite(sprite);
-}
-#endif
-
 
