@@ -98,7 +98,7 @@ FarawayIsland_Interior_EventScript_0023B4C0::
 	setvar 0x8004, 0x97
 	setvar 0x8005, 0x1E
 	setvar 0x8006, 0x0
-	special CreateObedientEnemyMon
+	special CreateEnemyEventMon
 	setflag 0x8C1
 	special BattleSetup_StartLegendaryBattle
 	clearflag 0x8C1

@@ -91,7 +91,7 @@ BirthIsland_Exterior_EventScript_0023B67A::
 	setvar 0x8004, 0x19A
 	setvar 0x8005, 0x1E
 	setvar 0x8006, 0x0
-	special CreateObedientEnemyMon
+	special CreateEnemyEventMon
 	setflag 0x8C1
 	special BattleSetup_StartLegendaryBattle
 	clearflag 0x8C1

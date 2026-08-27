@@ -65,7 +65,7 @@ NavelRock_Top_EventScript_0023C17E::
 	setvar 0x8004, 0xFA
 	setvar 0x8005, 0x46
 	setvar 0x8006, 0x0
-	special CreateObedientEnemyMon
+	special CreateEnemyEventMon
 	setflag 0x8C1
 	special BattleSetup_StartLegendaryBattle
 	clearflag 0x8C1

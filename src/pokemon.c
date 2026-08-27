@@ -3458,7 +3458,7 @@ __attribute__((naked)) void sub_080686F0(void)
     );
 }
 
-__attribute__((naked)) void CreateObedientEnemyMon(void)
+__attribute__((naked)) void CreateEnemyEventMon(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -15190,7 +15190,7 @@ __attribute__((naked)) u16 GetBattleBGM()
         "	ldr r0, _0806DEEC\n\t"
         "	b _0806E0D2\n\t"
         "	.align 2, 0\n\t"
-        "_0806DEEC: .4byte SPECIAL_CreateObedientEnemyMon\n\t"
+        "_0806DEEC: .4byte SPECIAL_CreateEnemyEventMon\n\t"
         "_0806DEF0:\n\t"
         "	ldr r0, _0806DF1C\n\t"
         "	ands r0, r1\n\t"

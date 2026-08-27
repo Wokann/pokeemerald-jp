@@ -123,12 +123,12 @@ SouthernIsland_Interior_EventScript_00222941::
 	setvar 0x8004, 0x198
 	setvar 0x8005, 0x32
 	setvar 0x8006, 0xBF
-	special CreateObedientEnemyMon
+	special CreateEnemyEventMon
 	return
 
 SouthernIsland_Interior_EventScript_00222954::
 	setvar 0x8004, 0x197
 	setvar 0x8005, 0x32
 	setvar 0x8006, 0xBF
-	special CreateObedientEnemyMon
+	special CreateEnemyEventMon
 	return

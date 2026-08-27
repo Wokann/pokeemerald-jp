@@ -512,7 +512,7 @@ gSpecials::
 	def_special sub_0813AF80
 	def_special DoDeoxysRockInteraction, waitstate=1
 	def_special sub_0813B208
-	def_special CreateObedientEnemyMon
+	def_special CreateEnemyEventMon
 	def_special StartMirageTowerDisintegration, waitstate=1
 	def_special StartMirageTowerFossilFallAndSink, waitstate=1
 	def_special StartMirageTowerShake, waitstate=1
