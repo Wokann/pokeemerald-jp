@@ -885,22 +885,141 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/Route104_PrototypePrettyPetalFlowerShop/scripts.inc"
 	.include "data/maps/Route109_SeashoreHouse/scripts.inc"
 	.include "data/maps/Route110_TrickHouseEntrance/scripts.inc"
-	.incbin "baserom_jp.gba", 0x23d478, 0x248
 	.include "data/maps/Route110_TrickHouseEnd/scripts.inc"
 	.incbin "baserom_jp.gba", 0x23da9a, 0x42f
 	.include "data/maps/Route110_TrickHouseCorridor/scripts.inc"
 	.include "data/maps/Route110_TrickHousePuzzle1/scripts.inc"
-	.incbin "baserom_jp.gba", 0x23df0e, 0x141
+	.incbin "baserom_jp.gba", 0x23df0e, 0x45
+
+Route110_TrickHousePuzzle1_Text_WroteSecretCodeLockOpened:
+	.string "{PLAYER}は　あいことばを\n"
+	.string "とびらに　かきつけた！\p"
+	.string "‘カラクリだいおう　さま　すてき’\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "かぎの　はずれる　おとがした！$"
+
+	.incbin "baserom_jp.gba", 0x23df95, 0xba
 	.include "data/maps/Route110_TrickHousePuzzle2/scripts.inc"
-	.incbin "baserom_jp.gba", 0x23e151, 0x183
+	.incbin "baserom_jp.gba", 0x23e151, 0x45
+
+Route110_TrickHousePuzzle2_Text_WroteSecretCodeLockOpened:
+	.string "{PLAYER}は　あいことばを\n"
+	.string "とびらに　かきつけた！\p"
+	.string "‘カラクリだいおう　さま　かしこい’\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "かぎの　はずれる　おとがした！$"
+
+	.incbin "baserom_jp.gba", 0x23e1d9, 0xfb
 	.include "data/maps/Route110_TrickHousePuzzle3/scripts.inc"
-	.incbin "baserom_jp.gba", 0x23e9c0, 0x321
+	.incbin "baserom_jp.gba", 0x23e9c0, 0x45
+
+Route110_TrickHousePuzzle3_Text_WroteSecretCodeLockOpened:
+	.string "{PLAYER}は　あいことばを\n"
+	.string "とびらに　かきつけた！\p"
+	.string "‘カラクリだいおう　さま　あこがれ’\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "かぎの　はずれる　おとがした！$"
+
+	.incbin "baserom_jp.gba", 0x23ea48, 0x15d
+
+Route110_TrickHousePuzzle4_Text_WroteSecretCodeLockOpened:
+	.string "{PLAYER}は　あいことばを\n"
+	.string "とびらに　かきつけた！\p"
+	.string "‘カラクリだいおう　さま　かっこいい’\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "かぎの　はずれる　おとがした！$"
+
+	.incbin "baserom_jp.gba", 0x23ebe9, 0xf8
 	.include "data/maps/Route110_TrickHousePuzzle5/scripts.inc"
-	.incbin "baserom_jp.gba", 0x23f7fb, 0x505
+	.incbin "baserom_jp.gba", 0x23f7fb, 0x28
+
+Route110_TrickHousePuzzle5_Movement_MechadollShake:
+	face_left
+	delay_2
+	face_right
+	delay_2
+	face_left
+	delay_2
+	face_right
+	delay_2
+	face_left
+	delay_2
+	face_right
+	delay_2
+	face_left
+	delay_2
+	face_right
+	delay_2
+	face_left
+	delay_2
+	face_right
+	delay_2
+	face_left
+	delay_2
+	face_right
+	delay_2
+	face_left
+	delay_2
+	face_right
+	delay_2
+	face_left
+	delay_2
+	face_right
+	delay_2
+	face_left
+	delay_2
+	face_right
+	delay_2
+	face_left
+	delay_2
+	face_right
+	delay_2
+	face_left
+	delay_2
+	face_right
+	delay_2
+	face_down
+	step_end
+
+Route110_TrickHousePuzzle5_Text_WroteSecretCodeLockOpened:
+	.string "{PLAYER}は　あいことばを\n"
+	.string "とびらに　かきつけた！\p"
+	.string "‘カラクリだいおう　さま　てんさい’\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "かぎの　はずれる　おとがした！$"
+
+	.incbin "baserom_jp.gba", 0x23f894, 0x46c
 	.include "data/maps/Route110_TrickHousePuzzle6/scripts.inc"
-	.incbin "baserom_jp.gba", 0x23fd3a, 0x182
+	.incbin "baserom_jp.gba", 0x23fd3a, 0x45
+
+Route110_TrickHousePuzzle6_Text_WroteSecretCodeLockOpened:
+	.string "{PLAYER}は　あいことばを\n"
+	.string "とびらに　かきつけた！\p"
+	.string "‘カラクリだいおう　さま　いのち’\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "かぎの　はずれる　おとがした！$"
+
+	.incbin "baserom_jp.gba", 0x23fdc1, 0xfb
 	.include "data/maps/Route110_TrickHousePuzzle7/scripts.inc"
-	.incbin "baserom_jp.gba", 0x240018, 0x6aa
+	.incbin "baserom_jp.gba", 0x240018, 0x226
+
+Route110_TrickHousePuzzle7_Text_WroteSecretCodeLockOpened:
+	.string "{PLAYER}は　あいことばを\n"
+	.string "とびらに　かきつけた！\p"
+	.string "‘カラクリだいおう　さま　だきしめたい’\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "かぎの　はずれる　おとがした！$"
+
+	.incbin "baserom_jp.gba", 0x240283, 0x23b
+
+Route110_TrickHousePuzzle8_Text_WroteSecretCodeLockOpened:
+	.string "{PLAYER}は　あいことばを\n"
+	.string "とびらに　かきつけた！\p"
+	.string "‘カラクリだいおう　さま　あいしてる’\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "かぎの　はずれる　おとがした！$"
+
+	.incbin "baserom_jp.gba", 0x240502, 0x1c0
 	.include "data/maps/Route110_SeasideCyclingRoadNorthEntrance/scripts.inc"
 	.incbin "baserom_jp.gba", 0x240744, 0x73
 	.include "data/maps/Route113_GlassWorkshop/scripts.inc"
