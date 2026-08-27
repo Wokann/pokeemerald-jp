@@ -1206,18 +1206,15 @@ EventScript_CableClub_SetVarResult0::
 	return
 
 Common_EventScript_UnionRoomAttendant::
-	@ The JP Cable Club attendant target is not yet structurally labeled.
-	call 0x082471FA
+	call CableClub_EventScript_UnionRoomAttendant
 	end
 
 Common_EventScript_WirelessClubAttendant::
-	@ The JP Cable Club attendant target is not yet structurally labeled.
-	call 0x08247351
+	call CableClub_EventScript_WirelessClubAttendant
 	end
 
 Common_EventScript_DirectCornerAttendant::
-	@ The JP Cable Club attendant target is not yet structurally labeled.
-	call 0x08247383
+	call CableClub_EventScript_DirectCornerAttendant
 	end
 
 Common_EventScript_RemoveStaticPokemon::
@@ -1264,9 +1261,9 @@ Common_EventScript_LegendaryFlewAway::
 	@ 0x082467CD
 	.include "data/scripts/cable_club.inc"
 
-CableClub_EventScript_UnionRoomAttendant:: @ 0x082471FA
-	@ 0x082471FA-0x08247869 remains unstructured Cable Club script data.
-	.incbin "baserom_jp.gba", 0x2471FA, 0x66F
+CableClub_EventScript_DirectCornerAttendant:: @ 0x08247383
+	@ 0x08247383-0x08247869 remains unstructured Cable Club script data.
+	.incbin "baserom_jp.gba", 0x247383, 0x4E6
 
 	.globl EventScript_WirelessBoxResults
 EventScript_WirelessBoxResults: @ 0x8247869

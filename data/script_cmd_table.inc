@@ -224,7 +224,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_CE ScrCmd_checkmonobedience @ 0xCE
 	script_cmd_table_entry SCR_OP_CF ScrCmd_gotoram @ 0xCF
 	script_cmd_table_entry SCR_OP_SETWORLDMAPFLAG ScrCmd_nop1 @ 0xD0
-	script_cmd_table_entry SCR_OP_D1 ScrCmd_warpD1 @ 0xD1
+	script_cmd_table_entry SCR_OP_WARPSPINENTER ScrCmd_warpspinenter @ 0xD1
 	script_cmd_table_entry SCR_OP_SETMONMETLOCATION ScrCmd_setmonmetlocation @ 0xD2
 	@ These five retained JP handler names implement the canonical Emerald
 	@ rotating-tile / Mossdeep Gym commands named in script_commands.h.

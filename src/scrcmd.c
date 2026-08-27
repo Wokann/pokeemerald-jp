@@ -2217,7 +2217,7 @@ bool8 ScrCmd_gotoram(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_warpD1(struct ScriptContext *ctx)
+bool8 ScrCmd_warpspinenter(struct ScriptContext *ctx)
 {
     s8 mapGroup = *ctx->scriptPtr++;
     s8 mapNum = *ctx->scriptPtr++;

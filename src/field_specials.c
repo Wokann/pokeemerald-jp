@@ -3059,7 +3059,7 @@ __attribute__((naked)) void BufferTMHMMoveName(void)
     );
 }
 
-__attribute__((naked)) void sub_08139980(void)
+__attribute__((naked)) void IsBadEggInParty(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

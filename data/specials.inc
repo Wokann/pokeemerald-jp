@@ -443,8 +443,8 @@ gSpecials::
 	def_special BufferUnionRoomPlayerName
 	def_special WonderNews_GetRewardInfo
 	def_special ChooseMonForWirelessMinigame
-	def_special sub_08017B4C
-	def_special sub_08139980
+	def_special Script_ResetUnionRoomTrade
+	def_special IsBadEggInParty
 	def_special ValidateSavedWonderCard
 	def_special HasAtLeastOneBerry
 	def_special sub_0802C614

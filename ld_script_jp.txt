@@ -798,7 +798,6 @@ Menu_LoadStdPal = sub_08197680;
 BerryBlenderLinkBecomeLeader = TryBecomeLinkLeader;
 BerryBlenderLinkJoinGroup = TryJoinLinkGroup;
 CB2_LinkTrade = CB2_LinkTrade;
-sub_08017B4C = Script_ResetUnionRoomTrade;
 GetUnionRoomTrainerClass = sub_080686F0;
 AddTextPrinterToWindow1 = MG_AddMessageTextPrinter;
 MG_PrintTextOnWindow1AndWaitButton = PrintMysteryGiftMenuMessage;

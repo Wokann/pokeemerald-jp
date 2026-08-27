@@ -826,3 +826,104 @@ EventScript_DoLinkRoomExit::
 	@ JP waits for the return callback before ending the script.
 	waitstate
 	end
+
+CableClub_EventScript_UnionRoomAttendant::
+	lock
+	faceplayer
+	setvar VAR_FRONTIER_FACILITY, FACILITY_UNION_ROOM
+	goto_if_unset FLAG_SYS_POKEDEX_GET, CableClub_EventScript_WirelessClubAdjustements
+	specialvar VAR_RESULT, IsBadEggInParty
+	goto_if_eq VAR_RESULT, TRUE, CableClub_EventScript_AbortLinkPlayerHasBadEgg
+	copyvar VAR_0x8007, VAR_LAST_TALKED
+	specialvar VAR_RESULT, IsWirelessAdapterConnected
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_UnionRoomAdapterNotConnected
+	message 0x08248690 @ CableClub_Text_WelcomeUnionRoomEnter
+	waitmessage
+	goto CableClub_EventScript_UnionRoomSelect
+	end
+
+CableClub_EventScript_UnionRoomSelect::
+	multichoice 17, 6, MULTI_YESNOINFO, FALSE
+	switch VAR_RESULT
+	case 0, CableClub_EventScript_EnterUnionRoom
+	case 1, CableClub_EventScript_AbortLink
+	case 2, CableClub_EventScript_UnionRoomInfo
+	case MULTI_B_PRESSED, CableClub_EventScript_AbortLink
+	end
+
+CableClub_EventScript_UnionRoomInfo::
+	message 0x082486D6 @ CableClub_Text_UnionRoomInfo
+	waitmessage
+	goto CableClub_EventScript_UnionRoomSelect
+	end
+
+CableClub_EventScript_EnterUnionRoom::
+	call CableClub_EventScript_CheckPartyUnionRoomRequirements
+	goto_if_eq VAR_RESULT, 0, CableClub_EventScript_AbortLink
+	call Common_EventScript_SaveGame
+	goto_if_eq VAR_RESULT, 0, CableClub_EventScript_AbortLink
+	msgbox 0x0824877D, MSGBOX_DEFAULT @ CableClub_Text_EnjoyUnionRoom
+	closemessage
+	special HealPlayerParty
+	setvar VAR_0x8004, USING_UNION_ROOM
+	copyvar VAR_CABLE_CLUB_STATE, VAR_0x8004
+	call 0x0824789D @ CableClub_EventScript_OpenUnionRoomBarrier
+	special DrawWholeMapView
+	playse SE_CLICK
+	delay 60
+	applymovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
+	waitmovement 0
+	opendoor 5, 1
+	waitdooranim_jp
+	applymovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
+	waitmovement 0
+	hideplayer
+	closedoor 5, 1
+	waitdooranim_jp
+	special Script_ResetUnionRoomTrade
+	special SetCableClubWarp
+	warpspinenter MAP_UNION_ROOM, 7, 11
+	waitstate
+	special RunUnionRoom
+	waitstate
+	end
+
+CableClub_EventScript_CheckPartyUnionRoomRequirements::
+	specialvar VAR_RESULT, CountPartyNonEggMons
+	goto_if_lt VAR_RESULT, 2, CableClub_EventScript_NeedTwoMonsForUnionRoom
+	specialvar VAR_RESULT, DoesPartyHaveEnigmaBerry
+	goto_if_eq VAR_RESULT, TRUE, CableClub_EventScript_NoEnigmaBerryInUnionRoom
+	setvar VAR_RESULT, TRUE
+	return
+
+CableClub_EventScript_NeedTwoMonsForUnionRoom::
+	msgbox 0x082480DF, MSGBOX_DEFAULT @ CableClub_Text_NeedTwoMonsForUnionRoom
+	goto EventScript_CableClub_SetVarResult0
+	end
+
+CableClub_EventScript_NoEnigmaBerryInUnionRoom::
+	msgbox 0x0824810A, MSGBOX_DEFAULT @ CableClub_Text_NoEnigmaBerryInUnionRoom
+	goto EventScript_CableClub_SetVarResult0
+	end
+
+CableClub_EventScript_UnionRoomAdapterNotConnected::
+	msgbox 0x08248137, MSGBOX_DEFAULT @ CableClub_Text_UnionRoomAdapterNotConnected
+	release
+	return
+
+CableClub_EventScript_WirelessClubAttendant::
+	lock
+	faceplayer
+	goto_if_unset FLAG_SYS_POKEDEX_GET, CableClub_EventScript_WirelessClubAdjustements
+	msgbox 0x08248916, MSGBOX_YESNO @ CableClub_Text_AskAboutLinking
+	goto_if_eq VAR_RESULT, NO, CableClub_EventScript_DontAskAboutLinking
+	msgbox 0x08248951, MSGBOX_DEFAULT @ CableClub_Text_ExplainWirelessClub
+	release
+	return
+
+CableClub_EventScript_DontAskAboutLinking::
+	msgbox 0x08248AD9, MSGBOX_DEFAULT @ CableClub_Text_HopeYouEnjoyWirelessSystem
+	release
+	return
