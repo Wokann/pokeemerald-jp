@@ -3943,7 +3943,7 @@ __attribute__((naked)) void sub_080EF7F0(void)
     );
 }
 
-__attribute__((naked)) void sub_080EF814(void)
+__attribute__((naked)) void IncrementDailyPlantedBerries(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3966,7 +3966,7 @@ __attribute__((naked)) void sub_080EF814(void)
     );
 }
 
-__attribute__((naked)) void sub_080EF838(void)
+__attribute__((naked)) void IncrementDailyPickedBerries(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

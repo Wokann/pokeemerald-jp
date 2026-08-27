@@ -1251,13 +1251,13 @@ Common_EventScript_LegendaryFlewAway::
 
 	.include "data/scripts/trainer_script.inc"
 
-	.globl BerryTreeScript
-	.globl BerryTreeScript
-	.globl BerryTree_EventScript_CheckBerryTree
 	.include "data/scripts/berry_tree.inc"
-.globl gUnknown_8244ED8
-gUnknown_8244ED8: @ 0x8244ED8
-	.include "data/scripts/gUnknown_8244ED8.inc"
+
+	@ 0x08244F02
+	.include "data/text/berry_tree.inc"
+
+	@ 0x0824506B-0x0824516F remains unstructured shared data.
+	.incbin "baserom_jp.gba", 0x24506b, 0x104
 
 	.globl gUnknown_824516F
 gUnknown_824516F: @ 0x824516F

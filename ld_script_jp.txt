@@ -6256,8 +6256,8 @@ SECTIONS {
         src/tv.o(.text.sub_080EF7A8);
         src/tv.o(.text.sub_080EF7CC);
         src/tv.o(.text.sub_080EF7F0);
-        src/tv.o(.text.sub_080EF814);
-        src/tv.o(.text.sub_080EF838);
+        src/tv.o(.text.IncrementDailyPlantedBerries);
+        src/tv.o(.text.IncrementDailyPickedBerries);
         src/tv.o(.text.sub_080EF864);
         src/tv.o(.text.sub_080EF88C);
         src/tv.o(.text.sub_080EF934);

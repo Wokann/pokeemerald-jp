@@ -1103,7 +1103,7 @@ __attribute__((naked)) struct BerryTree *GetBerryTreeInfo(u8 id)
     );
 }
 
-__attribute__((naked)) void EventObjectInteractionWaterBerryTree(void)
+__attribute__((naked)) bool32 ObjectEventInteractionWaterBerryTree(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1206,7 +1206,7 @@ __attribute__((naked)) bool8 TryToWaterBerryTree()
         "	ldr r1, _080E0CD4\n\t"
         "	cmp r0, r1\n\t"
         "	bne _080E0CD8\n\t"
-        "	bl EventObjectInteractionWaterBerryTree\n\t"
+        "	bl ObjectEventInteractionWaterBerryTree\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	b _080E0CDA\n\t"
@@ -1843,7 +1843,7 @@ __attribute__((naked)) void GetStageDurationByBerryType(void)
     );
 }
 
-__attribute__((naked)) void EventObjectInteractionGetBerryTreeData(void)
+__attribute__((naked)) void ObjectEventInteractionGetBerryTreeData(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1928,7 +1928,7 @@ __attribute__((naked)) void Bag_ChooseBerry()
     );
 }
 
-__attribute__((naked)) void EventObjectInteractionPlantBerryTree(void)
+__attribute__((naked)) void ObjectEventInteractionPlantBerryTree(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1948,7 +1948,7 @@ __attribute__((naked)) void EventObjectInteractionPlantBerryTree(void)
         "	movs r2, #1\n\t"
         "	movs r3, #1\n\t"
         "	bl PlantBerryTree\n\t"
-        "	bl EventObjectInteractionGetBerryTreeData\n\t"
+        "	bl ObjectEventInteractionGetBerryTreeData\n\t"
         "	pop {r4}\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
@@ -1959,7 +1959,7 @@ __attribute__((naked)) void EventObjectInteractionPlantBerryTree(void)
     );
 }
 
-__attribute__((naked)) void EventObjectInteractionPickBerryTree(void)
+__attribute__((naked)) void ObjectEventInteractionPickBerryTree(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1999,7 +1999,7 @@ __attribute__((naked)) void EventObjectInteractionPickBerryTree(void)
     );
 }
 
-__attribute__((naked)) void EventObjectInteractionRemoveBerryTree(void)
+__attribute__((naked)) void ObjectEventInteractionRemoveBerryTree(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

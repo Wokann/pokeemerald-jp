@@ -59,12 +59,12 @@ gSpecials::
 	def_special LoadPlayerParty
 	def_special ChooseHalfPartyForBattle, waitstate=1
 	def_special Script_ShowLinkTrainerCard
-	def_special EventObjectInteractionGetBerryTreeData
+	def_special ObjectEventInteractionGetBerryTreeData
 	def_special Bag_ChooseBerry, waitstate=1
-	def_special EventObjectInteractionPlantBerryTree
-	def_special EventObjectInteractionPickBerryTree
-	def_special EventObjectInteractionRemoveBerryTree
-	def_special EventObjectInteractionWaterBerryTree
+	def_special ObjectEventInteractionPlantBerryTree
+	def_special ObjectEventInteractionPickBerryTree
+	def_special ObjectEventInteractionRemoveBerryTree
+	def_special ObjectEventInteractionWaterBerryTree
 	def_special PlayerHasBerries
 	def_special IsEnigmaBerryValid
 	def_special GetTrainerBattleMode
@@ -369,8 +369,8 @@ gSpecials::
 	.set SPECIAL_WAITSTATE_ShouldHideFanClubInterviewer, SPECIAL_WAITSTATE_sub_080EF2D8
 	def_special nullsub_55
 	def_special PutFanClubSpecialOnTheAir
-	def_special sub_080EF814
-	def_special sub_080EF838
+	def_special IncrementDailyPlantedBerries
+	def_special IncrementDailyPickedBerries
 	def_special sub_080EBD4C
 	def_special SetSecretBaseSecretsTvFlags_SandOrnament
 	def_special sub_080EBEA0

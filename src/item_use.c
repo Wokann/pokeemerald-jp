@@ -1893,7 +1893,7 @@ __attribute__((naked)) void sub_080FE5C8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE5F0: .4byte gSpecialVar_ItemId\n\t"
-        "_080FE5F4: .4byte BerryTree_EventScript_CheckBerryTree\n\t"
+        "_080FE5F4: .4byte BerryTree_EventScript_ItemUsePlantBerry\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1969,7 +1969,7 @@ __attribute__((naked)) void sub_080FE65C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FE67C: .4byte gUnknown_8244ED8\n\t"
+        "_080FE67C: .4byte BerryTree_EventScript_ItemUseWailmerPail\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3362,4 +3362,3 @@ __attribute__((naked)) void ItemUseOutOfBattle_CannotUse(u8 taskId)
         ".syntax divided\n\t"
     );
 }
-
