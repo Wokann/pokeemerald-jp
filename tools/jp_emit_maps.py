@@ -13335,7 +13335,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'sub_08139BD4': 'ShowDeptStoreElevatorFloorSelect',
             'sub_08139A68': 'GetDeptStoreDefaultFloorChoice',
             'sub_08139C4C': 'CloseDeptStoreElevatorWindow',
-            'ShakeScreenInElevator': 'MoveElevator',
             'SetDepartmentStoreFloorVar': 'SetDeptStoreFloor',
         },
         'symbols': {

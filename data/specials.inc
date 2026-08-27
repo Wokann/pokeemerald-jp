@@ -293,7 +293,7 @@ gSpecials::
 	def_special LookThroughPorthole, waitstate=1
 	def_special DoSoftReset
 	def_special GameClear, waitstate=1
-	def_special ShakeScreenInElevator
+	def_special MoveElevator, waitstate=1
 	def_special nullsub_55
 	def_special SpawnCameraObject
 	def_special RemoveCameraObject
@@ -478,7 +478,7 @@ gSpecials::
 	.set SPECIAL_ShowScrollableMultichoice, SPECIAL_sub_0813A164
 	.set SPECIAL_WAITSTATE_ShowScrollableMultichoice, 1
 	def_special sub_0813A638
-	def_special sub_0813A0BC
+	def_special BufferBattleTowerElevatorFloors
 	def_special sub_081C62AC
 	def_special sub_081C472C
 	def_special DoBattlePyramidMonsHaveHeldItem
@@ -576,8 +576,6 @@ gSpecials::
 	@ while allowing map scripts to use the matching pokeemerald names.
 	.set SPECIAL_SetDeptStoreFloor, SPECIAL_SetDepartmentStoreFloorVar
 	.set SPECIAL_WAITSTATE_SetDeptStoreFloor, SPECIAL_WAITSTATE_SetDepartmentStoreFloorVar
-	.set SPECIAL_MoveElevator, SPECIAL_ShakeScreenInElevator
-	.set SPECIAL_WAITSTATE_MoveElevator, SPECIAL_WAITSTATE_ShakeScreenInElevator
 	.set SPECIAL_ShowDeptStoreElevatorFloorSelect, SPECIAL_sub_08139BD4
 	.set SPECIAL_WAITSTATE_ShowDeptStoreElevatorFloorSelect, SPECIAL_WAITSTATE_sub_08139BD4
 	.set SPECIAL_GetDeptStoreDefaultFloorChoice, SPECIAL_sub_08139A68

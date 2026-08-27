@@ -3279,7 +3279,7 @@ __attribute__((naked)) void sub_08139A68(void)
     );
 }
 
-__attribute__((naked)) void ShakeScreenInElevator(void)
+__attribute__((naked)) void MoveElevator(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4042,7 +4042,7 @@ __attribute__((naked)) void sub_08139F5C(void)
     );
 }
 
-__attribute__((naked)) void sub_0813A0BC(void)
+__attribute__((naked)) void BufferBattleTowerElevatorFloors(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

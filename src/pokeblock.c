@@ -1139,7 +1139,7 @@ __attribute__((naked)) void sub_08135DF8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08135E48: .4byte SPECIAL_ShakeScreenInElevator\n\t"
+        "_08135E48: .4byte SPECIAL_MoveElevator\n\t"
         "_08135E4C: .4byte gUnknown_85C97BD + 0x81\n\t"
         "_08135E50: .4byte gUnknown_85C97BD + 0x85\n\t"
         "_08135E54: .4byte gUnknown_85C97BD + 0x89\n\t"
