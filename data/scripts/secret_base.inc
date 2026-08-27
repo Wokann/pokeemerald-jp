@@ -1,3 +1,27 @@
+SecretBase_Text_TreeCanBeClimbed:
+	.string "ツルを　おとせば　うえに　のぼれそう$"
+
+SecretBase_Text_TreeUseSecretPower:
+	.string "ツルを　おとせば　うえに　のぼれそう\p"
+	.string "ひみつのちからを　つかいますか？$"
+
+SecretBase_Text_VineDroppedDown:
+	.string "ふといツルが　おちてきた！$"
+
+SecretBase_Text_ClumpOfGrass:
+	.string "くさのかたまりを　どければ\n"
+	.string "なかへ　はいれそう$"
+
+SecretBase_Text_ClumpUseSecretPower:
+	.string "くさのかたまりを　どければ\n"
+	.string "なかへ　はいれそう\p"
+	.string "ひみつのちからを　つかいますか？$"
+
+SecretBase_Text_DiscoveredSmallEntrance:
+	.string "ちいさな　いりぐちを　はっけん！$"
+
+	.include "data/text/secret_base_trainers.inc"
+
 SecretBase_EventScript_CheckEntrance: @ 0x8245AA0
 	special GetSecretBaseTypeInFrontOfPlayer
 	special CheckPlayerHasSecretBase
@@ -245,4 +269,3 @@ SecretBase_EventScript_EnterSecretBase: @ 0x8245DCE
 	end 
 	special sub_08127DEC
 	end 
-

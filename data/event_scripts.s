@@ -1256,50 +1256,7 @@ Common_EventScript_LegendaryFlewAway::
 	@ 0x08244F02
 	.include "data/text/berry_tree.inc"
 
-	@ 0x0824506B-0x0824516F remains unstructured shared data.
-	.incbin "baserom_jp.gba", 0x24506b, 0x104
-
-	.globl gUnknown_824516F
-gUnknown_824516F: @ 0x824516F
-	.include "data/scripts/gUnknown_824516F.inc"
-
-	.globl gUnknown_824526D
-gUnknown_824526D: @ 0x824526D
-	.include "data/scripts/gUnknown_824526D.inc"
-
-	.globl gUnknown_8245374
-gUnknown_8245374: @ 0x8245374
-	.include "data/scripts/gUnknown_8245374.inc"
-
-	.globl gUnknown_8245455
-gUnknown_8245455: @ 0x8245455
-	.include "data/scripts/gUnknown_8245455.inc"
-
-	.globl gUnknown_8245550
-gUnknown_8245550: @ 0x8245550
-	.include "data/scripts/gUnknown_8245550.inc"
-
-	.globl gUnknown_824565C
-gUnknown_824565C: @ 0x824565C
-	.include "data/scripts/gUnknown_824565C.inc"
-
-	.globl gUnknown_824573E
-gUnknown_824573E: @ 0x824573E
-	.include "data/scripts/gUnknown_824573E.inc"
-
-	.globl gUnknown_8245819
-gUnknown_8245819: @ 0x8245819
-	.include "data/scripts/gUnknown_8245819.inc"
-
-	.globl gUnknown_82458F4
-gUnknown_82458F4: @ 0x82458F4
-	.include "data/scripts/gUnknown_82458F4.inc"
-
-	.globl gUnknown_8245A06
-gUnknown_8245A06: @ 0x8245A06
-	.include "data/scripts/gUnknown_8245A06.inc"
-
-	.globl SecretBase_EventScript_CheckEntrance
+	@ 0x0824506B
 	.globl SecretBase_EventScript_CheckEntrance
 	.globl SecretBase_EventScript_Tree
 	.globl SecretBase_EventScript_Shrub
