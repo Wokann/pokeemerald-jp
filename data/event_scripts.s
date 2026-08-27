@@ -1264,52 +1264,9 @@ Common_EventScript_LegendaryFlewAway::
 	@ 0x082467CD
 	.include "data/scripts/cable_club.inc"
 
-	.globl EventScript_CableBoxResults
-EventScript_CableBoxResults: @ 0x8247044
-	.include "data/scripts/EventScript_CableBoxResults.inc"
-
-	.globl Colosseum_PlayerSpot0
-	.globl Colosseum_PlayerSpot1
-	.globl Colosseum_ChooseHalfParty0
-	.globl Colosseum_ChooseHalfParty1
-	.globl Colosseum_ChooseHalfParty2
-	.globl Colosseum_ChooseHalfParty3
-	.include "data/scripts/colosseum.inc"
-	.globl EventScript_MixRecordsSpot0
-	.globl EventScript_MixRecordsSpot1
-	.globl EventScript_MixRecordsSpot2
-	.globl EventScript_MixRecordsSpot3
-	.globl EventScript_TradeCenter_Chair0
-EventScript_TradeCenter_Chair0: @ 0x82470D4
-	.include "data/scripts/EventScript_TradeCenter_Chair0.inc"
-
-	.globl EventScript_TradeCenter_Chair1
-EventScript_TradeCenter_Chair1: @ 0x82470DE
-	.include "data/scripts/EventScript_TradeCenter_Chair1.inc"
-.globl gUnknown_824715D
-
-	.include "data/scripts/record_mix.inc"
-gUnknown_824715D: @ 0x824715D
-	.include "data/scripts/gUnknown_824715D.inc"
-
-	.globl gUnknown_824716C
-gUnknown_824716C: @ 0x824716C
-	.include "data/scripts/gUnknown_824716C.inc"
-
-	.globl gUnknown_824717B
-gUnknown_824717B: @ 0x824717B
-	.include "data/scripts/gUnknown_824717B.inc"
-
-	.globl gUnknown_82471CE
-gUnknown_82471CE: @ 0x82471CE
-	.include "data/scripts/gUnknown_82471CE.inc"
-
-EventScript_TerminateLink:: @ 0x82471E8
-	.include "data/scripts/EventScript_TerminateLink.inc"
-
-	.globl gUnknown_82471F2
-gUnknown_82471F2: @ 0x82471F2
-	.include "data/scripts/gUnknown_82471F2.inc"
+CableClub_EventScript_UnionRoomAttendant:: @ 0x082471FA
+	@ 0x082471FA-0x08247869 remains unstructured Cable Club script data.
+	.incbin "baserom_jp.gba", 0x2471FA, 0x66F
 
 	.globl EventScript_WirelessBoxResults
 EventScript_WirelessBoxResults: @ 0x8247869

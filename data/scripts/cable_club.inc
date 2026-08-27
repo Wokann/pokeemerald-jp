@@ -644,3 +644,185 @@ Movement_PlayerEnterMinigameRoom:
 	walk_up
 	walk_up
 	step_end
+
+EventScript_CableBoxResults::
+	lockall
+	setvar VAR_0x8004, 0
+	special ShowLinkBattleRecords
+	waitbuttonpress
+	special RemoveRecordsWindow
+	releaseall
+	end
+
+EventScript_BattleColosseum_2P_PlayerSpot0::
+	setvar VAR_0x8005, 0
+	special ColosseumPlayerSpotTriggered
+	end
+
+EventScript_BattleColosseum_2P_PlayerSpot1::
+	setvar VAR_0x8005, 1
+	special ColosseumPlayerSpotTriggered
+	end
+
+EventScript_BattleColosseum_4P_PlayerSpot0::
+	fadescreen FADE_TO_BLACK
+	special ChooseHalfPartyForBattle
+	goto_if_eq VAR_RESULT, 0, EventScript_BattleColosseum_4P_CancelSpotTrigger
+	setvar VAR_0x8005, 0
+	special ColosseumPlayerSpotTriggered
+	end
+
+EventScript_BattleColosseum_4P_PlayerSpot1::
+	fadescreen FADE_TO_BLACK
+	special ChooseHalfPartyForBattle
+	goto_if_eq VAR_RESULT, 0, EventScript_BattleColosseum_4P_CancelSpotTrigger
+	setvar VAR_0x8005, 1
+	special ColosseumPlayerSpotTriggered
+	end
+
+EventScript_BattleColosseum_4P_PlayerSpot2::
+	fadescreen FADE_TO_BLACK
+	special ChooseHalfPartyForBattle
+	goto_if_eq VAR_RESULT, 0, EventScript_BattleColosseum_4P_CancelSpotTrigger
+	setvar VAR_0x8005, 2
+	special ColosseumPlayerSpotTriggered
+	end
+
+EventScript_BattleColosseum_4P_PlayerSpot3::
+	fadescreen FADE_TO_BLACK
+	special ChooseHalfPartyForBattle
+	goto_if_eq VAR_RESULT, 0, EventScript_BattleColosseum_4P_CancelSpotTrigger
+	setvar VAR_0x8005, 3
+	special ColosseumPlayerSpotTriggered
+	end
+
+EventScript_BattleColosseum_4P_CancelSpotTrigger::
+	end
+
+EventScript_TradeCenter_Chair0::
+	setvar VAR_0x8005, 0
+	special PlayerEnteredTradeSeat
+	end
+
+EventScript_TradeCenter_Chair1::
+	setvar VAR_0x8005, 1
+	special PlayerEnteredTradeSeat
+	end
+
+@ Never used
+EventScript_TradeCenter_Chair2::
+	setvar VAR_0x8005, 2
+	special PlayerEnteredTradeSeat
+	end
+
+@ Never used
+EventScript_TradeCenter_Chair3::
+	setvar VAR_0x8005, 3
+	special PlayerEnteredTradeSeat
+	end
+
+EventScript_RecordCenter_Spot0::
+	setvar VAR_0x8005, 0
+	special RecordMixingPlayerSpotTriggered
+	goto_if_ne VAR_TEMP_RECORD_MIX_GIFT_ITEM, ITEM_NONE, RecordCorner_EventScript_ReceivedGiftItem
+	end
+
+EventScript_RecordCenter_Spot1::
+	setvar VAR_0x8005, 1
+	special RecordMixingPlayerSpotTriggered
+	goto_if_ne VAR_TEMP_RECORD_MIX_GIFT_ITEM, ITEM_NONE, RecordCorner_EventScript_ReceivedGiftItem
+	end
+
+EventScript_RecordCenter_Spot2::
+	setvar VAR_0x8005, 2
+	special RecordMixingPlayerSpotTriggered
+	goto_if_ne VAR_TEMP_RECORD_MIX_GIFT_ITEM, ITEM_NONE, RecordCorner_EventScript_ReceivedGiftItem
+	end
+
+EventScript_RecordCenter_Spot3::
+	setvar VAR_0x8005, 3
+	special RecordMixingPlayerSpotTriggered
+	goto_if_ne VAR_TEMP_RECORD_MIX_GIFT_ITEM, ITEM_NONE, RecordCorner_EventScript_ReceivedGiftItem
+	end
+
+RecordCorner_EventScript_ReceivedGiftItem::
+	bufferitemname STR_VAR_2, VAR_TEMP_RECORD_MIX_GIFT_ITEM
+	message 0x08247FB9 @ RecordCorner_Text_PlayerSentOverOneX
+	waitmessage
+	waitbuttonpress
+	releaseall
+	end
+
+CableClub_EventScript_ReadTrainerCard::
+	msgbox 0x08247E95, MSGBOX_DEFAULT @ CableClub_Text_GotToLookAtTrainerCard
+	fadescreen FADE_TO_BLACK
+	special Script_ShowLinkTrainerCard
+	@ JP waits for the trainer-card screen before ending this script.
+	waitstate
+	end
+
+CableClub_EventScript_ReadTrainerCardColored::
+	msgbox 0x08247EAC, MSGBOX_DEFAULT @ CableClub_Text_GotToLookAtColoredTrainerCard
+	fadescreen FADE_TO_BLACK
+	special Script_ShowLinkTrainerCard
+	waitstate
+	end
+
+CableClub_EventScript_TooBusyToNotice::
+	msgbox 0x08247E87, MSGBOX_DEFAULT @ CableClub_Text_TooBusyToNotice
+	closemessage
+	end
+
+BattleColosseum_2P_EventScript_Attendant::
+	special Script_FacePlayer
+	msgbox 0x08247ECC, MSGBOX_DEFAULT @ BattleColosseum_2P_Text_TakePlaceStartBattle
+	special Script_ClearHeldMovement
+	closemessage
+	end
+
+TradeCenter_EventScript_Attendant::
+	special Script_FacePlayer
+	msgbox 0x08247EEA, MSGBOX_DEFAULT @ TradeCenter_Text_TakeSeatStartTrade
+	special Script_ClearHeldMovement
+	closemessage
+	end
+
+RecordCorner_EventScript_Attendant::
+	goto_if_ne VAR_TEMP_MIXED_RECORDS, 0, RecordCorner_EventScript_AlreadyMixed
+	special Script_FacePlayer
+	message 0x08247FA2 @ RecordCorner_Text_TakeSeatAndWait
+	waitmessage
+	waitbuttonpress
+	special Script_ClearHeldMovement
+	closemessage
+	end
+
+RecordCorner_EventScript_AlreadyMixed::
+	special Script_FacePlayer
+	message 0x08247F08 @ RecordCorner_Text_ThanksForComing
+	waitmessage
+	waitbuttonpress
+	special Script_ClearHeldMovement
+	closemessage
+	end
+
+EventScript_ConfirmLeaveCableClubRoom::
+	msgbox 0x08247E4B, MSGBOX_YESNO @ Text_TerminateLinkConfirmation
+	goto_if_eq VAR_RESULT, YES, EventScript_TerminateLink
+	@ JP redraws the whole text box here rather than using erasebox.
+	drawboxtext 0, 0, 29, 19
+	releaseall
+	end
+
+EventScript_TerminateLink::
+	messageautoscroll 0x08247E69 @ Text_TerminateLinkPleaseWait
+	waitmessage
+	special ExitLinkRoom
+	end
+
+EventScript_DoLinkRoomExit::
+	special CleanupLinkRoomState
+	special ReturnFromLinkRoom
+	@ JP waits for the return callback before ending the script.
+	waitstate
+	end

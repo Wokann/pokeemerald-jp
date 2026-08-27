@@ -4258,7 +4258,7 @@ __attribute__((naked)) void Task_HandleRayTakesFlight(void)
         "	bl BeginNormalPaletteFade\n\t"
         "	b _081D7A96\n\t"
         "	.align 2, 0\n\t"
-        "_081D7A5C: .4byte SPECIAL_sub_08097F24\n\t"
+        "_081D7A5C: .4byte SPECIAL_Script_ClearHeldMovement\n\t"
         "_081D7A60:\n\t"
         "	ldrh r0, [r4, #4]\n\t"
         "	adds r0, #0x10\n\t"
