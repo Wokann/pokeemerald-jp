@@ -1044,13 +1044,6 @@ EventScript_PC: @ 0x8242E1E
 	.set Common_EventScript_ReadyPetalburgGymForBattle, 0x08242F10
 	.globl Common_EventScript_SetGymTrainers
 	.set Common_EventScript_SetGymTrainers, 0x08242FCF
-	.globl Common_EventScript_NopReturn
-	.set Common_EventScript_NopReturn, 0x08244178
-	@ Desert Ruins references these retained shared event owners.
-	.globl Common_EventScript_RemoveStaticPokemon
-	.set Common_EventScript_RemoveStaticPokemon, 0x08244197
-	.globl Common_EventScript_LegendaryFlewAway
-	.set Common_EventScript_LegendaryFlewAway, 0x082441A0
 	.globl Common_EventScript_BagIsFull
 	.set Common_EventScript_BagIsFull, 0x082430EA
 	.globl Common_EventScript_ShowNoRoomForDecor

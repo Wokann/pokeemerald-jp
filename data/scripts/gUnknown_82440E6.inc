@@ -43,6 +43,8 @@
 	special SetCB2WhiteOut
 	waitstate 
 	end 
+
+Common_EventScript_NopReturn::
 	return 
 	setvar 0x800D, 0x1
 	return 
@@ -54,15 +56,19 @@
 	end 
 	call 0x8247383
 	end 
-	fadescreenswapbuffers 0x1
-	removeobject 0x800F
-	fadescreenswapbuffers 0x0
+
+Common_EventScript_RemoveStaticPokemon::
+	fadescreenswapbuffers FADE_TO_BLACK
+	removeobject VAR_LAST_TALKED
+	fadescreenswapbuffers FADE_FROM_BLACK
 	release 
 	end 
-	fadescreenswapbuffers 0x1
-	removeobject 0x800F
-	fadescreenswapbuffers 0x0
-	bufferspeciesname 0x0, 0x8004
+
+Common_EventScript_LegendaryFlewAway::
+	fadescreenswapbuffers FADE_TO_BLACK
+	removeobject VAR_LAST_TALKED
+	fadescreenswapbuffers FADE_FROM_BLACK
+	bufferspeciesname STR_VAR_1, VAR_0x8004
 	loadword 0x0, 0x8243DF4
 	callstd 0x4
 	release 
