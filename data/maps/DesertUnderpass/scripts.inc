@@ -1,35 +1,39 @@
 @ DesertUnderpass scripts (JP map g24 m98 @ 0x0821CF6B)
 
 DesertUnderpass_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, DesertUnderpass_EventScript_0021CF71
+	map_script MAP_SCRIPT_ON_TRANSITION, DesertUnderpass_OnTransition
 	.byte 0
 
-DesertUnderpass_EventScript_0021CF71::
-	setflag 0x8DE
+DesertUnderpass_OnTransition::
+	setflag FLAG_LANDMARK_DESERT_UNDERPASS
 	end
 
-DesertUnderpass_EventScript_0021CF75::
+DesertUnderpass_EventScript_Fossil::
 	lock
 	faceplayer
-	checkflag 0x14F
-	goto_if 0x1, DesertUnderpass_EventScript_0021CF8B
-	checkflag 0x150
-	goto_if 0x1, DesertUnderpass_EventScript_0021CF9C
+	goto_if_set FLAG_CHOSE_ROOT_FOSSIL, DesertUnderpass_EventScript_GiveClawFossil
+	goto_if_set FLAG_CHOSE_CLAW_FOSSIL, DesertUnderpass_EventScript_GiveRootFossil
 	release
 	end
 
-DesertUnderpass_EventScript_0021CF8B::
-	setorcopyvar 0x8000, 0x11F
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	removeobject 0x1
+DesertUnderpass_EventScript_GiveClawFossil::
+	giveitem ITEM_CLAW_FOSSIL
+	removeobject LOCALID_UNDERPASS_FOSSIL
 	release
 	end
 
-DesertUnderpass_EventScript_0021CF9C::
-	setorcopyvar 0x8000, 0x11E
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	removeobject 0x1
+DesertUnderpass_EventScript_GiveRootFossil::
+	giveitem ITEM_ROOT_FOSSIL
+	removeobject LOCALID_UNDERPASS_FOSSIL
 	release
 	end
+
+@ Unused
+DesertUnderpass_Text_FoundRootFossil::
+	.string "{PLAYER}は\n"
+	.string "ねっこのカセキを　みつけた！$"
+
+@ Unused
+DesertUnderpass_Text_FoundClawFossil::
+	.string "{PLAYER}は\n"
+	.string "ツメのカセキを　みつけた！$"
