@@ -752,9 +752,7 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/ShoalCave_HighTideEntranceRoom/scripts.inc"
 	.include "data/maps/ShoalCave_HighTideInnerRoom/scripts.inc"
 	.include "data/maps/NewMauville_Entrance/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21a3fb, 0x37
 	.include "data/maps/NewMauville_Inside/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21a8f1, 0x81
 	.include "data/maps/AbandonedShip_Deck/scripts.inc"
 	.incbin "baserom_jp.gba", 0x21a97c, 0x274
 	.include "data/maps/AbandonedShip_Corridors_B1F/scripts.inc"

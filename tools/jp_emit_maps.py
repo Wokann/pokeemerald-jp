@@ -7167,6 +7167,210 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# New Mauville's entrance and generator interior immediately follow Shoal
+# Cave in script_data.  Their scripts, local text, map events, and shared
+# item-ball targets have been checked against the corresponding US maps.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'NewMauville_Entrance': {
+        'scripts': {
+            0x0821A331: 'NewMauville_Entrance_OnLoad',
+            0x0821A33D: 'NewMauville_Entrance_EventScript_CloseDoor',
+            0x0821A374: 'NewMauville_Entrance_OnTransition',
+            0x0821A378: 'NewMauville_Entrance_EventScript_Door',
+            0x0821A3F9: 'NewMauville_Entrance_EventScript_DontOpenDoor',
+        },
+        'texts': {
+            0x0821A3FB: 'NewMauville_Entrance_Text_DoorIsLocked',
+            0x0821A407: 'NewMauville_Entrance_Text_UseBasementKey',
+            0x0821A416: 'NewMauville_Entrance_Text_UsedBasementKey',
+        },
+        'field_placeholders': {
+            0x0821A416: {0x01: 'PLAYER'},
+        },
+        'external_labels': {
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x08A0: 'FLAG_LANDMARK_NEW_MAUVILLE',
+            },
+            'vars': {
+                0x40BA: 'VAR_NEW_MAUVILLE_STATE',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {
+                0x010F: 'ITEM_BASEMENT_KEY',
+            },
+            'local_ids': {
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'metatiles': {
+                0x02C3: 'METATILE_Facility_NewMauvilleDoor_Open_Tile0',
+                0x02C4: 'METATILE_Facility_NewMauvilleDoor_Open_Tile1',
+                0x02C5: 'METATILE_Facility_NewMauvilleDoor_Open_Tile2',
+                0x02CB: 'METATILE_Facility_NewMauvilleDoor_Open_Tile3',
+                0x02CC: 'METATILE_Facility_NewMauvilleDoor_Open_Tile4',
+                0x02CD: 'METATILE_Facility_NewMauvilleDoor_Open_Tile5',
+                0x0314: 'METATILE_Facility_NewMauvilleDoor_Closed_Tile0',
+                0x0315: 'METATILE_Facility_NewMauvilleDoor_Closed_Tile1',
+                0x0316: 'METATILE_Facility_NewMauvilleDoor_Closed_Tile2',
+                0x031C: 'METATILE_Facility_NewMauvilleDoor_Closed_Tile3',
+                0x031D: 'METATILE_Facility_NewMauvilleDoor_Closed_Tile4',
+                0x031E: 'METATILE_Facility_NewMauvilleDoor_Closed_Tile5',
+            },
+            'sounds': {
+                0x14: 'SE_BANG',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'var_values': {
+                0x40BA: {0x00: '0', 0x01: '1'},
+            },
+            'decimal_arguments': {
+                'setmetatile': (0, 1),
+            },
+        },
+    },
+    'NewMauville_Inside': {
+        'scripts': {
+            0x0821A442: 'NewMauville_Inside_OnResume',
+            0x0821A462: 'NewMauville_Inside_EventScript_TryRemoveVoltorb',
+            0x0821A476: 'NewMauville_Inside_OnTransition',
+            0x0821A49C: 'NewMauville_Inside_EventScript_ShowVoltorb1',
+            0x0821A4A0: 'NewMauville_Inside_EventScript_ShowVoltorb2',
+            0x0821A4A4: 'NewMauville_Inside_EventScript_ShowVoltorb3',
+            0x0821A4A8: 'NewMauville_Inside_OnLoad',
+            0x0821A4B4: 'NewMauville_Inside_EventScript_BlueButton',
+            0x0821A4CC: 'NewMauville_Inside_EventScript_GreenButton',
+            0x0821A4E4: 'NewMauville_Inside_EventScript_SetBarrierStateBlueButton',
+            0x0821A632: 'NewMauville_Inside_EventScript_SetBarrierStateGreenButton',
+            0x0821A780: 'NewMauville_Inside_EventScript_RedButton',
+            0x0821A795: 'NewMauville_Inside_EventScript_SetGeneratorOffMetatiles',
+            0x0821A7EA: 'NewMauville_Inside_EventScript_Generator',
+            0x0821A800: 'NewMauville_Inside_EventScript_GeneratorOff',
+            0x0821A80A: 'NewMauville_Inside_EventScript_Voltorb1',
+            0x0821A84E: 'NewMauville_Inside_EventScript_DefeatedVoltorb1',
+            0x0821A857: 'NewMauville_Inside_EventScript_Voltorb2',
+            0x0821A89B: 'NewMauville_Inside_EventScript_DefeatedVoltorb2',
+            0x0821A8A4: 'NewMauville_Inside_EventScript_Voltorb3',
+            0x0821A8E8: 'NewMauville_Inside_EventScript_DefeatedVoltorb3',
+        },
+        'texts': {
+            0x0821A8F1: 'NewMauville_Inside_Text_GeneratorRadiatingHeat',
+            0x0821A923: 'NewMauville_Inside_Text_GeneratorQuietedDown',
+            0x0821A935: 'NewMauville_Inside_Text_SteppedOnSwitchGeneratorStopped',
+        },
+        'field_placeholders': {
+            0x0821A935: {0x01: 'PLAYER'},
+        },
+        'external_labels': {
+            0x08244178: 'Common_EventScript_NopReturn',
+            0x08244197: 'Common_EventScript_RemoveStaticPokemon',
+        },
+        'command_aliases': {
+            # JP opcode 0xC5 is the matching Pokémon-cry wait in these
+            # scripts, even though the JP command-table name is swapped.
+            0x0821A80A: {'waitdooranim': 'waitmoncry_jp'},
+            0x0821A857: {'waitdooranim': 'waitmoncry_jp'},
+            0x0821A8A4: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x01C1: 'FLAG_DEFEATED_VOLTORB_1_NEW_MAUVILLE',
+                0x01C2: 'FLAG_DEFEATED_VOLTORB_2_NEW_MAUVILLE',
+                0x01C3: 'FLAG_DEFEATED_VOLTORB_3_NEW_MAUVILLE',
+                0x03CE: 'FLAG_HIDE_NEW_MAUVILLE_VOLTORB_1',
+                0x03CF: 'FLAG_HIDE_NEW_MAUVILLE_VOLTORB_2',
+                0x03D0: 'FLAG_HIDE_NEW_MAUVILLE_VOLTORB_3',
+                0x08C1: 'FLAG_SYS_CTRL_OBJ_DELETE',
+            },
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x4002: 'VAR_TEMP_2',
+                0x40BA: 'VAR_NEW_MAUVILLE_STATE',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'metatiles': {
+                0x022E: 'METATILE_BikeShop_Button_Green',
+                0x0236: 'METATILE_BikeShop_Button_Blue',
+                0x024F: 'METATILE_BikeShop_Button_Pressed',
+                0x0269: 'METATILE_BikeShop_Barrier_Hidden_Top',
+                0x026D: 'METATILE_BikeShop_Floor_Shadow_Top',
+                0x0271: 'METATILE_BikeShop_Barrier_Hidden_Bottom',
+                0x0281: 'METATILE_BikeShop_Wall_Edge_Top',
+                0x02B6: 'METATILE_BikeShop_Barrier_Green_Top',
+                0x02B7: 'METATILE_BikeShop_Barrier_Blue_Top',
+                0x02BE: 'METATILE_BikeShop_Barrier_Green_TopMid',
+                0x02BF: 'METATILE_BikeShop_Barrier_Blue_TopMid',
+                0x02C6: 'METATILE_BikeShop_Barrier_Green_BottomMid',
+                0x02C7: 'METATILE_BikeShop_Barrier_Blue_BottomMid',
+                0x02CE: 'METATILE_BikeShop_Barrier_Green_Bottom',
+                0x02CF: 'METATILE_BikeShop_Barrier_Blue_Bottom',
+                0x02F0: 'METATILE_BikeShop_Generator_Off_Tile0',
+                0x02F1: 'METATILE_BikeShop_Generator_Off_Tile1',
+                0x02F2: 'METATILE_BikeShop_Generator_Off_Tile2',
+                0x02F3: 'METATILE_BikeShop_Generator_Off_Tile3',
+                0x02F4: 'METATILE_BikeShop_Generator_Off_Tile4',
+                0x02F5: 'METATILE_BikeShop_Generator_Off_Tile5',
+                0x02F6: 'METATILE_BikeShop_Generator_Off_Tile6',
+                0x02F7: 'METATILE_BikeShop_Generator_Off_Tile7',
+            },
+            'species': {
+                0x0064: 'SPECIES_VOLTORB',
+            },
+            'cry_modes': {
+                0x02: 'CRY_MODE_ENCOUNTER',
+            },
+            'sounds': {
+                0x15: 'SE_PIN',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'var_values': {
+                0x4001: {0x00: '0', 0x01: '1'},
+                0x4002: {0x00: '0', 0x01: '1'},
+                0x40BA: {0x00: '0', 0x01: '1', 0x02: '2'},
+            },
+            'script_var_values': {
+                0x0821A462: {
+                    0x800D: {
+                        0x07: 'B_OUTCOME_CAUGHT',
+                    },
+                },
+                0x0821A80A: {
+                    0x800D: {
+                        0x01: 'B_OUTCOME_WON',
+                        0x04: 'B_OUTCOME_RAN',
+                        0x05: 'B_OUTCOME_PLAYER_TELEPORTED',
+                    },
+                },
+                0x0821A857: {
+                    0x800D: {
+                        0x01: 'B_OUTCOME_WON',
+                        0x04: 'B_OUTCOME_RAN',
+                        0x05: 'B_OUTCOME_PLAYER_TELEPORTED',
+                    },
+                },
+                0x0821A8A4: {
+                    0x800D: {
+                        0x01: 'B_OUTCOME_WON',
+                        0x04: 'B_OUTCOME_RAN',
+                        0x05: 'B_OUTCOME_PLAYER_TELEPORTED',
+                    },
+                },
+            },
+            'decimal_arguments': {
+                'delay': (0,),
+                'setmetatile': (0, 1),
+                'setwildbattle': (1,),
+            },
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     'DewfordTown_Hall': {
         0x081F3A8F: 'DewfordTown_Hall_Movement_PsychicWalkInPlaceLeft',

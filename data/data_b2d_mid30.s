@@ -3406,7 +3406,15 @@ gMapLayout_SHOAL_CAVE_HIGH_TIDE_ENTRANCE_ROOM: @ 0x08415CF4
 	.globl gMapLayout_SHOAL_CAVE_HIGH_TIDE_INNER_ROOM
 gMapLayout_SHOAL_CAVE_HIGH_TIDE_INNER_ROOM: @ 0x08416ABC
 	.incbin "baserom_jp.gba", 0x416abc, 0x18
-	.incbin "baserom_jp.gba", 0x416ad4, 0xa528
+	.incbin "baserom_jp.gba", 0x416ad4, 0x2a4
+	.globl gMapLayout_NEW_MAUVILLE_ENTRANCE
+gMapLayout_NEW_MAUVILLE_ENTRANCE: @ 0x08416D78
+	.incbin "baserom_jp.gba", 0x416d78, 0x18
+	.incbin "baserom_jp.gba", 0x416d90, 0xd2c
+	.globl gMapLayout_NEW_MAUVILLE_INSIDE
+gMapLayout_NEW_MAUVILLE_INSIDE: @ 0x08417ABC
+	.incbin "baserom_jp.gba", 0x417abc, 0x18
+	.incbin "baserom_jp.gba", 0x417ad4, 0x9528
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Border:
 	.incbin "data/layouts/FortreeCity_DecorationShop/border.bin"
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata:
@@ -6107,7 +6115,11 @@ gUnknown_845C660: @ 0x0845C660
 	.include "data/maps/ShoalCave_HighTideEntranceRoom/header.inc"
 	@ MAP_SHOAL_CAVE_HIGH_TIDE_INNER_ROOM (g24 m51)
 	.include "data/maps/ShoalCave_HighTideInnerRoom/header.inc"
-	.incbin "baserom_jp.gba", 0x45c890, 0x2108
+	@ MAP_NEW_MAUVILLE_ENTRANCE (g24 m52)
+	.include "data/maps/NewMauville_Entrance/header.inc"
+	@ MAP_NEW_MAUVILLE_INSIDE (g24 m53)
+	.include "data/maps/NewMauville_Inside/header.inc"
+	.incbin "baserom_jp.gba", 0x45c8c8, 0x20d0
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

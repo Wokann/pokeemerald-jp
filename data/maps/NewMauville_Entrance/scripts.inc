@@ -1,55 +1,60 @@
 @ NewMauville_Entrance scripts (JP map g24 m52 @ 0x0821A326)
 
 NewMauville_Entrance_MapScripts::
-	map_script MAP_SCRIPT_ON_LOAD, NewMauville_Entrance_EventScript_0021A331
-	map_script MAP_SCRIPT_ON_TRANSITION, NewMauville_Entrance_EventScript_0021A374
+	map_script MAP_SCRIPT_ON_LOAD, NewMauville_Entrance_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, NewMauville_Entrance_OnTransition
 	.byte 0
 
-NewMauville_Entrance_EventScript_0021A331::
-	compare_var_to_value 0x40BA, 0x0
-	call_if 0x1, NewMauville_Entrance_EventScript_0021A33D
+NewMauville_Entrance_OnLoad:: @ 0x0821A331
+	call_if_eq VAR_NEW_MAUVILLE_STATE, 0, NewMauville_Entrance_EventScript_CloseDoor
 	end
 
-NewMauville_Entrance_EventScript_0021A33D::
-	setmetatile 0x3, 0x0, 0x314, 0x1
-	setmetatile 0x4, 0x0, 0x315, 0x1
-	setmetatile 0x5, 0x0, 0x316, 0x1
-	setmetatile 0x3, 0x1, 0x31C, 0x1
-	setmetatile 0x4, 0x1, 0x31D, 0x1
-	setmetatile 0x5, 0x1, 0x31E, 0x1
+NewMauville_Entrance_EventScript_CloseDoor:: @ 0x0821A33D
+	setmetatile 3, 0, METATILE_Facility_NewMauvilleDoor_Closed_Tile0, TRUE
+	setmetatile 4, 0, METATILE_Facility_NewMauvilleDoor_Closed_Tile1, TRUE
+	setmetatile 5, 0, METATILE_Facility_NewMauvilleDoor_Closed_Tile2, TRUE
+	setmetatile 3, 1, METATILE_Facility_NewMauvilleDoor_Closed_Tile3, TRUE
+	setmetatile 4, 1, METATILE_Facility_NewMauvilleDoor_Closed_Tile4, TRUE
+	setmetatile 5, 1, METATILE_Facility_NewMauvilleDoor_Closed_Tile5, TRUE
 	return
 
-NewMauville_Entrance_EventScript_0021A374::
-	setflag 0x8A0
+NewMauville_Entrance_OnTransition:: @ 0x0821A374
+	setflag FLAG_LANDMARK_NEW_MAUVILLE
 	end
 
-NewMauville_Entrance_EventScript_0021A378::
+NewMauville_Entrance_EventScript_Door:: @ 0x0821A378
 	lockall
-	applymovement 0xFF, 0x08243629
-	waitmovement 0x0
-	loadword 0x0, 0x0821A3FB
-	callstd 0x4
-	checkitem 0x10F, 0x1
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, NewMauville_Entrance_EventScript_0021A3F9
-	loadword 0x0, 0x0821A407
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, NewMauville_Entrance_EventScript_0021A3F9
-	loadword 0x0, 0x0821A416
-	callstd 0x4
-	setmetatile 0x3, 0x0, 0x2C3, 0x0
-	setmetatile 0x4, 0x0, 0x2C4, 0x0
-	setmetatile 0x5, 0x0, 0x2C5, 0x0
-	setmetatile 0x3, 0x1, 0x2CB, 0x1
-	setmetatile 0x4, 0x1, 0x2CC, 0x0
-	setmetatile 0x5, 0x1, 0x2CD, 0x1
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	msgbox NewMauville_Entrance_Text_DoorIsLocked, MSGBOX_DEFAULT
+	checkitem ITEM_BASEMENT_KEY
+	goto_if_eq VAR_RESULT, FALSE, NewMauville_Entrance_EventScript_DontOpenDoor
+	msgbox NewMauville_Entrance_Text_UseBasementKey, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, NewMauville_Entrance_EventScript_DontOpenDoor
+	msgbox NewMauville_Entrance_Text_UsedBasementKey, MSGBOX_DEFAULT
+	setmetatile 3, 0, METATILE_Facility_NewMauvilleDoor_Open_Tile0, FALSE
+	setmetatile 4, 0, METATILE_Facility_NewMauvilleDoor_Open_Tile1, FALSE
+	setmetatile 5, 0, METATILE_Facility_NewMauvilleDoor_Open_Tile2, FALSE
+	setmetatile 3, 1, METATILE_Facility_NewMauvilleDoor_Open_Tile3, TRUE
+	setmetatile 4, 1, METATILE_Facility_NewMauvilleDoor_Open_Tile4, FALSE
+	setmetatile 5, 1, METATILE_Facility_NewMauvilleDoor_Open_Tile5, TRUE
 	special DrawWholeMapView
-	playse 0x14
-	setvar 0x40BA, 0x1
+	playse SE_BANG
+	setvar VAR_NEW_MAUVILLE_STATE, 1
 	releaseall
 	end
 
-NewMauville_Entrance_EventScript_0021A3F9::
+NewMauville_Entrance_EventScript_DontOpenDoor:: @ 0x0821A3F9
 	releaseall
 	end
+
+NewMauville_Entrance_Text_DoorIsLocked: @ 0x0821A3FB
+	.string "とびらは　しまっている$"
+
+NewMauville_Entrance_Text_UseBasementKey: @ 0x0821A407
+	.string "ちかのカギを　つかいますか？$"
+
+NewMauville_Entrance_Text_UsedBasementKey: @ 0x0821A416
+	.string "{PLAYER}は\n"
+	.string "ちかのカギを　つかった！\p"
+	.string "とびらは　ひらいた！$"

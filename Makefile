@@ -258,7 +258,7 @@ JP_STRUCTURED_MAPS += Route119
 JP_STRUCTURED_MAPS += Route120
 JP_STRUCTURED_MAPS += Route121
 JP_STRUCTURED_MAPS += Route122
-JP_STRUCTURED_MAPS += ShoalCave_LowTideEntranceRoom ShoalCave_LowTideInnerRoom ShoalCave_LowTideStairsRoom ShoalCave_LowTideLowerRoom ShoalCave_HighTideEntranceRoom ShoalCave_HighTideInnerRoom
+JP_STRUCTURED_MAPS += ShoalCave_LowTideEntranceRoom ShoalCave_LowTideInnerRoom ShoalCave_LowTideStairsRoom ShoalCave_LowTideLowerRoom ShoalCave_HighTideEntranceRoom ShoalCave_HighTideInnerRoom NewMauville_Entrance NewMauville_Inside
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
@@ -270,7 +270,7 @@ $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tool
 JP_STRUCTURED_MAP_METADATA_MAPS := CaveOfOrigin_B1F VictoryRoad_1F VictoryRoad_B1F VictoryRoad_B2F Underwater_Route124 Underwater_Route126 \
 	Underwater_Route127 Underwater_Route128 Underwater_Route129 \
 	Underwater_Route105 Underwater_Route125
-JP_STRUCTURED_MAP_METADATA_MAPS += ShoalCave_LowTideEntranceRoom ShoalCave_LowTideInnerRoom ShoalCave_LowTideStairsRoom ShoalCave_LowTideLowerRoom ShoalCave_HighTideEntranceRoom ShoalCave_HighTideInnerRoom
+JP_STRUCTURED_MAP_METADATA_MAPS += ShoalCave_LowTideEntranceRoom ShoalCave_LowTideInnerRoom ShoalCave_LowTideStairsRoom ShoalCave_LowTideLowerRoom ShoalCave_HighTideEntranceRoom ShoalCave_HighTideInnerRoom NewMauville_Entrance NewMauville_Inside
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

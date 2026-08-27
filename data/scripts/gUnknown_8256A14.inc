@@ -334,7 +334,29 @@ MossdeepCity_EventScript_ItemNetBall:: @ 0x08256E4C
 	finditem ITEM_NET_BALL
 	end
 
-	.incbin "baserom_jp.gba", 0x256e59, 0x297
+	.incbin "baserom_jp.gba", 0x256e59, 0xea
+
+NewMauville_Inside_EventScript_ItemUltraBall:: @ 0x08256F43
+	finditem ITEM_ULTRA_BALL
+	end
+
+NewMauville_Inside_EventScript_ItemEscapeRope:: @ 0x08256F50
+	finditem ITEM_ESCAPE_ROPE
+	end
+
+NewMauville_Inside_EventScript_ItemThunderStone:: @ 0x08256F5D
+	finditem ITEM_THUNDER_STONE
+	end
+
+NewMauville_Inside_EventScript_ItemFullHeal:: @ 0x08256F6A
+	finditem ITEM_FULL_HEAL
+	end
+
+NewMauville_Inside_EventScript_ItemParalyzeHeal:: @ 0x08256F77
+	finditem ITEM_PARALYZE_HEAL
+	end
+
+	.incbin "baserom_jp.gba", 0x256f84, 0x16c
 
 Route119_EventScript_ItemNugget:: @ 0x082570F0
 	finditem ITEM_NUGGET
