@@ -786,7 +786,11 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/SkyPillar_5F/scripts.inc"
 	.include "data/maps/SkyPillar_Top/scripts.inc"
 	.include "data/maps/MagmaHideout_1F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21c286, 0xb3e
+	.include "data/maps/MagmaHideout_2F_1R/scripts.inc"
+	.include "data/maps/MagmaHideout_2F_2R/scripts.inc"
+	.include "data/maps/MagmaHideout_3F_1R/scripts.inc"
+	.include "data/maps/MagmaHideout_3F_2R/scripts.inc"
+	.include "data/maps/MagmaHideout_4F/scripts.inc"
 	.include "data/maps/MagmaHideout_3F_3R/scripts.inc"
 	.include "data/maps/MagmaHideout_2F_3R/scripts.inc"
 	.include "data/maps/MirageTower_1F/scripts.inc"
