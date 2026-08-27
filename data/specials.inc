@@ -453,7 +453,7 @@ gSpecials::
 	def_special sub_0802786C
 	def_special OffsetCameraForBattle
 	def_special sub_08139A68
-	def_special sub_08139DD4
+	def_special BufferVarsForIVRater
 	def_special sub_080F98EC
 	def_special GetWirelessCommType
 	def_special sub_080F996C

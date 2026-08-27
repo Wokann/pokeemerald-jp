@@ -3671,7 +3671,7 @@ __attribute__((naked)) void MoveElevatorWindowLights(void)
     );
 }
 
-__attribute__((naked)) void sub_08139DD4(void)
+__attribute__((naked)) void BufferVarsForIVRater(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

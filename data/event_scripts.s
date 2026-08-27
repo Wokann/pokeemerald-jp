@@ -841,7 +841,8 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/BattleFrontier_BattlePikeRoomFinal/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePikeRoomWildMons/scripts.inc"
 	.include "data/maps/BattleFrontier_RankingHall/scripts.inc"
-	.incbin "baserom_jp.gba", 0x23554b, 0x4ce1
+	.include "data/maps/BattleFrontier_Lounge1/scripts.inc"
+	.incbin "baserom_jp.gba", 0x235afe, 0x472e
 	.include "data/maps/BattleFrontier_ReceptionGate/scripts.inc"
 	.incbin "baserom_jp.gba", 0x23a755, 0x9de
 	.include "data/maps/BattleFrontier_Lounge9/scripts.inc"
