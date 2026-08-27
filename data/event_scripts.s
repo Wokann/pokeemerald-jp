@@ -859,7 +859,7 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/FarawayIsland_Entrance/scripts.inc"
 	.include "data/maps/FarawayIsland_Interior/scripts.inc"
 	.include "data/maps/BirthIsland_Exterior/scripts.inc"
-	.incbin "baserom_jp.gba", 0x23b70d, 0x58
+	.incbin "baserom_jp.gba", 0x23b715, 0x50
 	.include "data/maps/TrainerHill_Entrance/scripts.inc"
 	.include "data/maps/TrainerHill_1F/scripts.inc"
 	.include "data/maps/TrainerHill_2F/scripts.inc"

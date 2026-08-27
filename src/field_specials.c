@@ -6327,7 +6327,7 @@ void IncrementBirthIslandRockStepCount(void)
     }
 }
 
-__attribute__((naked)) void sub_0813B208(void)
+__attribute__((naked)) void SetDeoxysRockPalette(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

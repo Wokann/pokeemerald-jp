@@ -1,118 +1,114 @@
-@ BirthIsland_Exterior scripts (JP map g26 m58 @ 0x0823B5CE)
-
 BirthIsland_Exterior_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, BirthIsland_Exterior_EventScript_0023B5E2
-	map_script MAP_SCRIPT_ON_RESUME, BirthIsland_Exterior_EventScript_0023B61E
-	map_script MAP_SCRIPT_ON_RETURN_TO_FIELD, BirthIsland_Exterior_EventScript_0023B5DE
+	map_script MAP_SCRIPT_ON_TRANSITION, BirthIsland_Exterior_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, BirthIsland_Exterior_OnResume
+	map_script MAP_SCRIPT_ON_RETURN_TO_FIELD, BirthIsland_Exterior_OnReturnToField
 	.byte 0
 
-BirthIsland_Exterior_EventScript_0023B5DE::
-	special sub_0813B208
+BirthIsland_Exterior_OnReturnToField:
+	special SetDeoxysRockPalette
 	end
 
-BirthIsland_Exterior_EventScript_0023B5E2::
-	setflag 0x8D3
-	setvar 0x4010, 0x64
-	setvar 0x4034, 0x0
-	setvar 0x4035, 0x0
-	checkflag 0x1AD
-	call_if 0x1, BirthIsland_Exterior_EventScript_0023B607
-	checkflag 0x1AD
-	call_if 0x0, BirthIsland_Exterior_EventScript_0023B60E
+BirthIsland_Exterior_OnTransition:
+	setflag FLAG_MAP_SCRIPT_CHECKED_DEOXYS
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL
+	setvar VAR_DEOXYS_ROCK_STEP_COUNT, 0
+	setvar VAR_DEOXYS_ROCK_LEVEL, 0
+	call_if_set FLAG_BATTLED_DEOXYS, BirthIsland_Exterior_EventScript_HideDeoxysAndPuzzle
+	call_if_unset FLAG_BATTLED_DEOXYS, BirthIsland_Exterior_EventScript_TryShowDeoxysPuzzle
 	end
 
-BirthIsland_Exterior_EventScript_0023B607::
-	setflag 0x2FB
-	setflag 0x2FC
+BirthIsland_Exterior_EventScript_HideDeoxysAndPuzzle::
+	setflag FLAG_HIDE_DEOXYS
+	setflag FLAG_HIDE_BIRTH_ISLAND_DEOXYS_TRIANGLE
 	return
 
-BirthIsland_Exterior_EventScript_0023B60E::
-	checkflag 0x1AC
-	goto_if 0x1, 0x08244178
-	clearflag 0x2FC
-	clearflag 0x8D4
+BirthIsland_Exterior_EventScript_TryShowDeoxysPuzzle::
+	goto_if_set FLAG_DEFEATED_DEOXYS, Common_EventScript_NopReturn
+	clearflag FLAG_HIDE_BIRTH_ISLAND_DEOXYS_TRIANGLE
+	clearflag FLAG_DEOXYS_ROCK_COMPLETE
 	return
 
-BirthIsland_Exterior_EventScript_0023B61E::
-	checkflag 0x8C1
-	call_if 0x1, BirthIsland_Exterior_EventScript_0023B628
+BirthIsland_Exterior_OnResume:
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, BirthIsland_Exterior_EventScript_TryRemoveDeoxys
 	end
 
-BirthIsland_Exterior_EventScript_0023B628::
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x7
-	goto_if 0x5, 0x08244178
-	removeobject 0x2
+BirthIsland_Exterior_EventScript_TryRemoveDeoxys::
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
+	removeobject LOCALID_BIRTH_ISLAND_DEOXYS
 	return
 
-BirthIsland_Exterior_EventScript_0023B63C::
+BirthIsland_Exterior_EventScript_Triangle::
 	lock
 	faceplayer
 	special DoDeoxysRockInteraction
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BirthIsland_Exterior_EventScript_0023B674
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BirthIsland_Exterior_EventScript_0023B676
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BirthIsland_Exterior_EventScript_0023B67A
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BirthIsland_Exterior_EventScript_0023B678
+	switch VAR_RESULT
+	case DEOXYS_ROCK_FAILED,     BirthIsland_Exterior_EventScript_Failed
+	case DEOXYS_ROCK_PROGRESSED, BirthIsland_Exterior_EventScript_Progressed
+	case DEOXYS_ROCK_SOLVED,     BirthIsland_Exterior_EventScript_Deoxys
+	case DEOXYS_ROCK_COMPLETE,   BirthIsland_Exterior_EventScript_Complete
 	end
 
-BirthIsland_Exterior_EventScript_0023B674::
+@ The actual rock triangle movement is handled by DoDeoxysRockInteraction.
+@ Unless the player has solved the puzzle and needs to encounter Deoxys,
+@ there's nothing else the script needs to do.
+BirthIsland_Exterior_EventScript_Failed::
 	release
 	end
 
-BirthIsland_Exterior_EventScript_0023B676::
+BirthIsland_Exterior_EventScript_Progressed::
 	release
 	end
 
-BirthIsland_Exterior_EventScript_0023B678::
+BirthIsland_Exterior_EventScript_Complete::
 	release
 	end
 
-BirthIsland_Exterior_EventScript_0023B67A::
+BirthIsland_Exterior_EventScript_Deoxys::
 	waitse
-	setfieldeffectarg 0x0, 0x1
-	setfieldeffectarg 0x1, 0x3A
-	setfieldeffectarg 0x2, 0x1A
-	dofieldeffect 0x41
-	playbgm 0x22B, 0x0
-	waitfieldeffect 0x41
-	addobject 0x2
-	applymovement 0x2, 0x0823B70D
-	waitmovement 0x0
+	setfieldeffectargument 0, LOCALID_BIRTH_ISLAND_EXTERIOR_ROCK
+	setfieldeffectargument 1, MAP_NUM(MAP_BIRTH_ISLAND_EXTERIOR)
+	setfieldeffectargument 2, MAP_GROUP(MAP_BIRTH_ISLAND_EXTERIOR)
+	dofieldeffect FLDEFF_DESTROY_DEOXYS_ROCK
+	playbgm MUS_RG_ENCOUNTER_DEOXYS, FALSE
+	waitfieldeffect FLDEFF_DESTROY_DEOXYS_ROCK
+	addobject LOCALID_BIRTH_ISLAND_DEOXYS
+	applymovement LOCALID_BIRTH_ISLAND_DEOXYS, BirthIsland_Exterior_Movement_DeoxysApproach
+	waitmovement 0
 	waitse
-	playmoncry 0x19A, 0x2
-	delay 0x28
-	waitdooranim
-	setvar 0x800F, 0x2
-	setvar 0x8004, 0x19A
-	setvar 0x8005, 0x1E
-	setvar 0x8006, 0x0
-	special CreateEnemyEventMon
-	setflag 0x8C1
+	playmoncry SPECIES_DEOXYS, CRY_MODE_ENCOUNTER
+	delay 40
+	waitmoncry_jp
+	setvar VAR_LAST_TALKED, LOCALID_BIRTH_ISLAND_DEOXYS
+	seteventmon SPECIES_DEOXYS, 30
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
-	clearflag 0x8C1
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BirthIsland_Exterior_EventScript_0023B6F4
-	compare_var_to_value 0x800D, 0x4
-	goto_if 0x1, BirthIsland_Exterior_EventScript_0023B702
-	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, BirthIsland_Exterior_EventScript_0023B702
-	setflag 0x1AD
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, BirthIsland_Exterior_EventScript_DefeatedDeoxys
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, BirthIsland_Exterior_EventScript_RanFromDeoxys
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, BirthIsland_Exterior_EventScript_RanFromDeoxys
+	setflag FLAG_BATTLED_DEOXYS
 	release
 	end
 
-BirthIsland_Exterior_EventScript_0023B6F4::
-	setflag 0x1AC
-	setvar 0x8004, 0x19A
-	goto 0x082441A0
+BirthIsland_Exterior_EventScript_DefeatedDeoxys::
+	setflag FLAG_DEFEATED_DEOXYS
+	setvar VAR_0x8004, SPECIES_DEOXYS
+	goto Common_EventScript_LegendaryFlewAway
 	end
 
-BirthIsland_Exterior_EventScript_0023B702::
-	setvar 0x8004, 0x19A
-	goto 0x082441A0
+BirthIsland_Exterior_EventScript_RanFromDeoxys::
+	setvar VAR_0x8004, SPECIES_DEOXYS
+	goto Common_EventScript_LegendaryFlewAway
 	end
+
+BirthIsland_Exterior_Movement_DeoxysApproach:
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	step_end

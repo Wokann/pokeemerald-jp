@@ -506,7 +506,7 @@ gSpecials::
 	def_special GetBattleFrontierTutorMoveIndex
 	def_special ScrollableMultichoice_ClosePersistentMenu
 	def_special DoDeoxysRockInteraction, waitstate=1
-	def_special sub_0813B208
+	def_special SetDeoxysRockPalette
 	def_special CreateEnemyEventMon
 	def_special StartMirageTowerDisintegration, waitstate=1
 	def_special StartMirageTowerFossilFallAndSink, waitstate=1
