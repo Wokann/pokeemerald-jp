@@ -72,6 +72,19 @@
 	special CallFrontierUtilFunc
 	.endm
 
+	@ Buffer gTrainerBattleOpponent_A's name to STR_VAR_1 (0) or STR_VAR_2 (1).
+	.macro frontier_gettrainername stringVar:req
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_BUFFER_TRAINER_NAME
+	.if \stringVar == STR_VAR_1
+		setvar VAR_0x8005, 0
+	.elseif \stringVar == STR_VAR_2
+		setvar VAR_0x8005, 1
+	.else
+		setvar VAR_0x8005, \stringVar
+	.endif
+	special CallFrontierUtilFunc
+	.endm
+
 	@ Get a FRONTIER_DATA_* value into VAR_RESULT.
 	.macro frontier_get data:req
 	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_GET_DATA

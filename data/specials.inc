@@ -520,7 +520,7 @@ gSpecials::
 	def_special get_unknown_box_id
 	def_special sub_0813B254
 	def_special SetMatchCallRegisteredFlag
-	def_special sub_08175184
+	def_special DoDomeConfetti
 	def_special CreateUnusualWeatherEvent
 	def_special GetUnusualWeatherMapNameAndType
 	def_special sub_0813B4C8

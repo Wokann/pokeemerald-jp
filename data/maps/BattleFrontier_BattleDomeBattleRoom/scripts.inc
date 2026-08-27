@@ -1,1000 +1,1066 @@
-@ BattleFrontier_BattleDomeBattleRoom scripts (JP map g26 m21 @ 0x08228828)
+@ On this map the player will automatically walk into the room, but the camera is supposed to remain still.
+@ To do this GF sets the player (LOCALID_PLAYER) invisible and creates a fake player object (LOCALID_DOME_PLAYER).
+@ The graphics of this fake player object are represented with VAR_OBJ_GFX_ID_1.
+@ The graphics of the opponent are represented with VAR_OBJ_GFX_ID_0, which will ultimately be set by dome_setopponentgfx.
+
+.set NO_DRAW,       0
+.set DRAW_TRAINER,  1
+.set DRAW_TUCKER,   2
 
 BattleFrontier_BattleDomeBattleRoom_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, BattleFrontier_BattleDomeBattleRoom_EventScript_0022883D
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleDomeBattleRoom_MapScriptTable_0022888C
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattleDomeBattleRoom_MapScriptTable_0022900D
-	map_script MAP_SCRIPT_ON_RESUME, BattleFrontier_BattleDomeBattleRoom_EventScript_0022907C
+	map_script MAP_SCRIPT_ON_TRANSITION, BattleFrontier_BattleDomeBattleRoom_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleDomeBattleRoom_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattleDomeBattleRoom_OnWarp
+	map_script MAP_SCRIPT_ON_RESUME, BattleFrontier_BattleDomeBattleRoom_OnResume
 	.byte 0
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_0022883D::
-	setvar 0x8004, 0xA
-	special sub_0818E608
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x2
-	special CallFrontierUtilFunc
-	copyvar 0x400F, 0x800D
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_002294A5
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_00228868
+BattleFrontier_BattleDomeBattleRoom_OnTransition:
+	dome_setopponentgfx
+	frontier_get FRONTIER_DATA_BATTLE_NUM
+	copyvar VAR_TEMP_F, VAR_RESULT
+	call_if_eq VAR_RESULT, DOME_ROUND1, BattleFrontier_BattleDomeBattleRoom_EventScript_SetWalkingAudienceMemberPos
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_SetPlayerGfx
 	end
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228868::
+BattleFrontier_BattleDomeBattleRoom_EventScript_SetPlayerGfx::
 	checkplayergender
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228880
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228886
+	goto_if_eq VAR_RESULT, MALE, BattleFrontier_BattleDomeBattleRoom_EventScript_SetPlayerGfxMale
+	goto_if_eq VAR_RESULT, FEMALE, BattleFrontier_BattleDomeBattleRoom_EventScript_SetPlayerGfxFemale
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228880::
-	setvar 0x4011, 0x64
+BattleFrontier_BattleDomeBattleRoom_EventScript_SetPlayerGfxMale::
+	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228886::
-	setvar 0x4011, 0x69
+BattleFrontier_BattleDomeBattleRoom_EventScript_SetPlayerGfxFemale::
+	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_RIVAL_MAY_NORMAL
 	return
 
-BattleFrontier_BattleDomeBattleRoom_MapScriptTable_0022888C::
-	map_script_2 0x4000, 0x0, BattleFrontier_BattleDomeBattleRoom_EventScript_00228896
+BattleFrontier_BattleDomeBattleRoom_OnFrame:
+	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleDomeBattleRoom_EventScript_EnterRoom
 	.2byte 0
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228896::
+BattleFrontier_BattleDomeBattleRoom_EventScript_EnterRoom::
 	lockall
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_00228D49
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_002294C4
-	applymovement 0x1, 0x08243637
-	waitmovement 0x0
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_00228B61
-	loadword 0x0, gJPText_002294FC
-	callstd 0x4
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_GetRoundNum
+	call_if_eq VAR_RESULT, DOME_ROUND1, BattleFrontier_BattleDomeBattleRoom_EventScript_TryDoAudienceMemberWalkToSeat
+	applymovement LOCALID_DOME_ANNOUNCER, Common_Movement_WalkInPlaceDown
+	waitmovement 0
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayer
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_PlayerHasEnteredDome, MSGBOX_DEFAULT
 	closemessage
-	showobject_at 0xD, 0x1A15
-	compare_var_to_value 0x400F, 0x3
-	goto_if 0x5, BattleFrontier_BattleDomeBattleRoom_EventScript_002288DA
-	compare_var_to_value 0x400E, 0x0
-	goto_if 0x5, BattleFrontier_BattleDomeBattleRoom_EventScript_002288E6
+	showobjectat LOCALID_DOME_PLAYER, MAP_BATTLE_FRONTIER_BATTLE_DOME_BATTLE_ROOM
+	goto_if_ne VAR_TEMP_F, DOME_FINAL, BattleFrontier_BattleDomeBattleRoom_EventScript_PlayerEnter
+	goto_if_ne VAR_TEMP_E, FRONTIER_BRAIN_NOT_READY, BattleFrontier_BattleDomeBattleRoom_EventScript_PlayerEnterForTucker
+BattleFrontier_BattleDomeBattleRoom_EventScript_PlayerEnter::
+	applymovement LOCALID_DOME_PLAYER, BattleFrontier_BattleDomeBattleRoom_Movement_PlayerEnter
+	goto BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceReactToPlayer
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_002288DA::
-	applymovement 0xD, 0x08229301
-	goto BattleFrontier_BattleDomeBattleRoom_EventScript_002288ED
-
-BattleFrontier_BattleDomeBattleRoom_EventScript_002288E6::
-	applymovement 0xD, 0x0822930B
-
-BattleFrontier_BattleDomeBattleRoom_EventScript_002288ED::
-	playse 0xDF
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_002293BA
-	waitmovement 0x0
-	compare_var_to_value 0x400F, 0x3
-	goto_if 0x5, BattleFrontier_BattleDomeBattleRoom_EventScript_0022890E
-	compare_var_to_value 0x400E, 0x0
-	goto_if 0x5, BattleFrontier_BattleDomeBattleRoom_EventScript_00228D57
-
-BattleFrontier_BattleDomeBattleRoom_EventScript_0022890E::
-	setvar 0x8004, 0x4
-	special sub_0818E608
-	loadword 0x0, gJPText_0022950D
-	callstd 0x4
+BattleFrontier_BattleDomeBattleRoom_EventScript_PlayerEnterForTucker::
+	applymovement LOCALID_DOME_PLAYER, BattleFrontier_BattleDomeBattleRoom_Movement_PlayerEnterForTucker
+BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceReactToPlayer::
+	playse SE_M_ENCORE2
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceLookAround
+	waitmovement 0
+	goto_if_ne VAR_TEMP_F, DOME_FINAL, BattleFrontier_BattleDomeBattleRoom_EventScript_BattleOpponent
+	goto_if_ne VAR_TEMP_E, FRONTIER_BRAIN_NOT_READY, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnounceTucker
+BattleFrontier_BattleDomeBattleRoom_EventScript_BattleOpponent::
+	dome_getopponentname
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_PlayerVersusTrainer, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xD, 0x08229307
-	applymovement 0xF, 0x08229315
-	waitmovement 0x0
-	setvar 0x8004, 0x7
-	setvar 0x8005, 0x0
-	special sub_08161E88
-	loadword 0x0, 0x2021C7C
-	callstd 0x4
+	applymovement LOCALID_DOME_PLAYER, BattleFrontier_BattleDomeBattleRoom_Movement_PlayerStepForward
+	applymovement LOCALID_DOME_OPPONENT, BattleFrontier_BattleDomeBattleRoom_Movement_OpponentStepForward
+	waitmovement 0
+	tower_getopponentintro 0
+	msgbox gStringVar4, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x8004, 0x5
-	special sub_0818E608
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_00228FCC
-	setvar 0x4002, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228A6C
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_002289DB
-	compare_var_to_value 0x8000, 0x9
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_002289DB
-	setvar 0x4002, 0x1
-
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228983::
-	loadword 0x0, gJPText_002295B8
-	callstd 0x4
+	dome_initopponentparty
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_DoDomeBattle
+	setvar VAR_TEMP_2, NO_DRAW
+	switch VAR_RESULT
+	case B_OUTCOME_WON, BattleFrontier_BattleDomeBattleRoom_EventScript_DefeatedOpponent
+	case B_OUTCOME_LOST, BattleFrontier_BattleDomeBattleRoom_EventScript_LostToOpponent
+	case B_OUTCOME_FORFEITED, BattleFrontier_BattleDomeBattleRoom_EventScript_LostToOpponent
+	setvar VAR_TEMP_2, DRAW_TRAINER
+BattleFrontier_BattleDomeBattleRoom_EventScript_Draw::
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_RefereeDecisionPleaseWait, MSGBOX_DEFAULT
 	closemessage
-	playse 0xDF
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_002293BA
-	delay 0x3C
-	applymovement 0x9, 0x082294F0
-	waitmovement 0x0
-	applymovement 0x1, 0x082294F5
-	waitmovement 0x0
-	delay 0xB4
-	applymovement 0x9, 0x082294F7
-	waitmovement 0x0
-	compare_var_to_value 0x4002, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_002289DB
-	setvar 0x8004, 0x13
-	special sub_0818E608
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228A6C
-
-BattleFrontier_BattleDomeBattleRoom_EventScript_002289DB::
-	applymovement 0x1, 0x08243637
-	waitmovement 0x0
-	setvar 0x8004, 0x4
-	special sub_0818E608
-	compare_var_to_value 0x4002, 0x0
-	call_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228A3D
-	compare_var_to_value 0x4002, 0x1
-	call_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228A51
-	compare_var_to_value 0x4002, 0x2
-	call_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228A65
-	playse 0xDF
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_002293BA
-	delay 0x3C
-
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228A19::
-	setvar 0x8004, 0xC
-	setvar 0x8005, 0x2
-	special sub_0818E608
+	playse SE_M_ENCORE2
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceLookAround
+	delay 60
+	applymovement LOCALID_DOME_REFEREE, BattleFrontier_BattleDomeBattleRoom_Movement_RefereeEnter
+	waitmovement 0
+	applymovement LOCALID_DOME_ANNOUNCER, BattleFrontier_BattleDomeBattleRoom_Movement_AnnouncerFaceLeft
+	waitmovement 0
+	delay 180
+	applymovement LOCALID_DOME_REFEREE, BattleFrontier_BattleDomeBattleRoom_Movement_RefereeExit
+	waitmovement 0
+	goto_if_eq VAR_TEMP_2, DRAW_TUCKER, BattleFrontier_BattleDomeBattleRoom_EventScript_LostToOpponent @ Tucker always wins on a draw
+	dome_compareseeds
+	switch VAR_RESULT
+	case 1, BattleFrontier_BattleDomeBattleRoom_EventScript_DefeatedOpponent
+BattleFrontier_BattleDomeBattleRoom_EventScript_LostToOpponent::
+	applymovement LOCALID_DOME_ANNOUNCER, Common_Movement_WalkInPlaceDown
+	waitmovement 0
+	dome_getopponentname
+	call_if_eq VAR_TEMP_2, NO_DRAW, BattleFrontier_BattleDomeBattleRoom_EventScript_OpponentWon
+	call_if_eq VAR_TEMP_2, DRAW_TRAINER, BattleFrontier_BattleDomeBattleRoom_EventScript_OpponentWonDraw
+	call_if_eq VAR_TEMP_2, DRAW_TUCKER, BattleFrontier_BattleDomeBattleRoom_EventScript_TuckerWonDraw
+	playse SE_M_ENCORE2
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceLookAround
+	delay 60
+BattleFrontier_BattleDomeBattleRoom_EventScript_LostTourney::
+	dome_resolvewinners DOME_PLAYER_LOST_MATCH
 BattleFrontier_BattleDomeBattleRoom_EventScript_WarpToLobbyLost::
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x4
-	special CallFrontierUtilFunc
-	goto BattleFrontier_BattleDomeBattleRoom_EventScript_00229481
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST
+	goto BattleFrontier_BattleDomeBattleRoom_EventScript_WarpToLobby
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228A3D::
-	setvar 0x8004, 0x14
-	setvar 0x8005, 0x1
-	special CallFrontierUtilFunc
-	message gJPText_00229547
+BattleFrontier_BattleDomeBattleRoom_EventScript_OpponentWon::
+	frontier_gettrainername STR_VAR_2
+	message BattleFrontier_BattleDomeBattleRoom_Text_TrainerIsWinner
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228A51::
-	setvar 0x8004, 0x14
-	setvar 0x8005, 0x0
-	special CallFrontierUtilFunc
-	message gJPText_00229608
+BattleFrontier_BattleDomeBattleRoom_EventScript_OpponentWonDraw::
+	frontier_gettrainername STR_VAR_1
+	message BattleFrontier_BattleDomeBattleRoom_Text_RefereesDecidedWinnerTrainer
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228A65::
-	message gJPText_00229CE6
+BattleFrontier_BattleDomeBattleRoom_EventScript_TuckerWonDraw::
+	message BattleFrontier_BattleDomeBattleRoom_Text_RefereesDecidedWinnerTucker
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228A6C::
-	applymovement 0x1, 0x08243637
-	waitmovement 0x0
-	compare_var_to_value 0x4002, 0x0
-	call_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228B4F
-	compare_var_to_value 0x4002, 0x1
-	call_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228B58
-	playse 0xDF
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_002293BA
-	delay 0x3C
-	setvar 0x8004, 0x3
-	special sub_0818E608
-	setvar 0x8004, 0xC
-	setvar 0x8005, 0x1
-	special sub_0818E608
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x2
-	special CallFrontierUtilFunc
-	addvar 0x800D, 0x1
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x2
-	copyvar 0x8006, 0x800D
-	special CallFrontierUtilFunc
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228AEE
-	setvar 0x8006, 0x1
-	warp 0x1A14, 0xFF, 0x5, 0x3
+BattleFrontier_BattleDomeBattleRoom_EventScript_DefeatedOpponent::
+	applymovement LOCALID_DOME_ANNOUNCER, Common_Movement_WalkInPlaceDown
+	waitmovement 0
+	call_if_eq VAR_TEMP_2, NO_DRAW, BattleFrontier_BattleDomeBattleRoom_EventScript_PlayerWon
+	call_if_eq VAR_TEMP_2, DRAW_TRAINER, BattleFrontier_BattleDomeBattleRoom_EventScript_PlayerWonDraw
+	playse SE_M_ENCORE2
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceLookAround
+	delay 60
+	dome_getroundtext
+	dome_resolvewinners DOME_PLAYER_WON_MATCH
+	frontier_get FRONTIER_DATA_BATTLE_NUM
+	addvar VAR_RESULT, 1
+	frontier_set FRONTIER_DATA_BATTLE_NUM, VAR_RESULT
+	switch VAR_RESULT
+	case DOME_ROUNDS_COUNT, BattleFrontier_BattleDomeBattleRoom_EventScript_WonTourney
+	setvar VAR_0x8006, 1
+	warp MAP_BATTLE_FRONTIER_BATTLE_DOME_PRE_BATTLE_ROOM, 5, 3
 	waitstate
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228AEE::
-	applymovement 0xD, 0x08229309
-	waitmovement 0x0
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	special CallFrontierUtilFunc
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228B22
-	loadword 0x0, gJPText_0022955F
-	callstd 0x4
-	goto BattleFrontier_BattleDomeBattleRoom_EventScript_00228B2A
+BattleFrontier_BattleDomeBattleRoom_EventScript_WonTourney::
+	applymovement LOCALID_DOME_PLAYER, BattleFrontier_BattleDomeBattleRoom_Movement_PlayerApproachAudience
+	waitmovement 0
+	frontier_get FRONTIER_DATA_LVL_MODE
+	switch VAR_RESULT
+	case FRONTIER_LVL_OPEN, BattleFrontier_BattleDomeBattleRoom_EventScript_WonLvOpenTourney
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_PlayerIsLv50Champ, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleDomeBattleRoom_EventScript_CelebrateWin
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228B22::
-	loadword 0x0, gJPText_0022958C
-	callstd 0x4
+BattleFrontier_BattleDomeBattleRoom_EventScript_WonLvOpenTourney::
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_PlayerIsLvOpenChamp, MSGBOX_DEFAULT
+BattleFrontier_BattleDomeBattleRoom_EventScript_CelebrateWin::
+	special DoDomeConfetti
+	playse SE_M_ENCORE2
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceLookAround
+	delay 60
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_WON
+	goto BattleFrontier_BattleDomeBattleRoom_EventScript_WarpToLobby
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228B2A::
-	special sub_08175184
-	playse 0xDF
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_002293BA
-	delay 0x3C
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x3
-	special CallFrontierUtilFunc
-	goto BattleFrontier_BattleDomeBattleRoom_EventScript_00229481
-
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228B4F::
-	loadword 0x0, gJPText_0022952F
-	callstd 0x4
+BattleFrontier_BattleDomeBattleRoom_EventScript_PlayerWon::
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_PlayerIsWinner, MSGBOX_DEFAULT
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228B58::
-	loadword 0x0, gJPText_0022964E
-	callstd 0x4
+BattleFrontier_BattleDomeBattleRoom_EventScript_PlayerWonDraw::
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_RefereesDecidedWinnerPlayer, MSGBOX_DEFAULT
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228B61::
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x6
-	special sub_0818E608
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228BAF
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x7
-	special sub_0818E608
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228C02
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	special sub_0818E608
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228CF6
-	goto BattleFrontier_BattleDomeBattleRoom_EventScript_00228C55
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayer::
+	dome_get DOME_DATA_ATTEMPTED_CHALLENGE
+	goto_if_eq VAR_RESULT, FALSE, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerFirstAttempt
+	dome_get DOME_DATA_HAS_WON_CHALLENGE
+	goto_if_eq VAR_RESULT, FALSE, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerNeverWon
+	dome_get DOME_DATA_WIN_STREAK_ACTIVE
+	goto_if_eq VAR_RESULT, FALSE, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerBrokenStreak
+	goto BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerChampion
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228BAF::
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_00228D49
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228BE6
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228BED
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228BF4
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228BFB
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerFirstAttempt::
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_GetRoundNum
+	switch VAR_RESULT
+	case DOME_ROUND1, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerFirstAttemptRound1
+	case DOME_ROUND2, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerFirstAttemptRound2
+	case DOME_SEMIFINAL, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerFirstAttemptSemifinal
+	case DOME_FINAL, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerFirstAttemptFinal
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228BE6::
-	message gJPText_00229694
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerFirstAttemptRound1::
+	message BattleFrontier_BattleDomeBattleRoom_Text_BrightNewHope
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228BED::
-	message gJPText_002296A5
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerFirstAttemptRound2::
+	message BattleFrontier_BattleDomeBattleRoom_Text_RisingStar
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228BF4::
-	message gJPText_002296B5
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerFirstAttemptSemifinal::
+	message BattleFrontier_BattleDomeBattleRoom_Text_WillTheyRaceToChampionship
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228BFB::
-	message gJPText_002296D6
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerFirstAttemptFinal::
+	message BattleFrontier_BattleDomeBattleRoom_Text_CanAchieveChampionFirstTry
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228C02::
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_00228D49
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228C39
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228C40
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228C47
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228C4E
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerNeverWon::
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_GetRoundNum
+	switch VAR_RESULT
+	case DOME_ROUND1, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerNeverWonRound1
+	case DOME_ROUND2, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerNeverWonRound2
+	case DOME_SEMIFINAL, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerNeverWonSemifinal
+	case DOME_FINAL, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerNeverWonFinal
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228C39::
-	message gJPText_002296F9
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerNeverWonRound1::
+	message BattleFrontier_BattleDomeBattleRoom_Text_CanLossBeAvenged
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228C40::
-	message gJPText_0022970A
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerNeverWonRound2::
+	message BattleFrontier_BattleDomeBattleRoom_Text_OnFireForChampionship
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228C47::
-	message gJPText_00229724
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerNeverWonSemifinal::
+	message BattleFrontier_BattleDomeBattleRoom_Text_WinHereAdvancesToFinal
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228C4E::
-	message gJPText_00229742
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerNeverWonFinal::
+	message BattleFrontier_BattleDomeBattleRoom_Text_WillLongHeldDreamComeTrue
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228C55::
-	compare_var_to_value 0x400F, 0x3
-	goto_if 0x5, BattleFrontier_BattleDomeBattleRoom_EventScript_00228C91
-	copyvar 0x8000, 0x400E
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228CE4
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228CED
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228CE4
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228CED
-
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228C91::
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_00228D49
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228CC8
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228CCF
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228CD6
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228CDD
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerChampion::
+	goto_if_ne VAR_TEMP_F, DOME_FINAL, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerChampionNoTucker
+	switch VAR_TEMP_E
+	case FRONTIER_BRAIN_SILVER, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerPreTuckerSilver
+	case FRONTIER_BRAIN_GOLD, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerPreTuckerGold
+	case FRONTIER_BRAIN_STREAK, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerPreTuckerSilver
+	case FRONTIER_BRAIN_STREAK_LONG, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerPreTuckerGold
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerChampionNoTucker::
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_GetRoundNum
+	switch VAR_RESULT
+	case DOME_ROUND1, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerChampionRound1
+	case DOME_ROUND2, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerChampionRound2
+	case DOME_SEMIFINAL, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerChampionSemifinal
+	case DOME_FINAL, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerChampionFinal
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228CC8::
-	message gJPText_00229756
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerChampionRound1::
+	message BattleFrontier_BattleDomeBattleRoom_Text_TheInvincibleChampion
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228CCF::
-	message gJPText_00229764
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerChampionRound2::
+	message BattleFrontier_BattleDomeBattleRoom_Text_CanAnyoneHopeToBeatTrainer
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228CD6::
-	message gJPText_00229787
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerChampionSemifinal::
+	message BattleFrontier_BattleDomeBattleRoom_Text_DoBattlesExistSolelyForTrainer
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228CDD::
-	message gJPText_002297A7
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerChampionFinal::
+	message BattleFrontier_BattleDomeBattleRoom_Text_CurrentChampAimingToRetainTitle
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228CE4::
-	loadword 0x0, gJPText_0022981A
-	callstd 0x4
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerPreTuckerSilver::
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_FeelGlowOfTrueMaster, MSGBOX_DEFAULT
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228CED::
-	loadword 0x0, gJPText_00229A4A
-	callstd 0x4
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerPreTuckerGold::
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_CanWinStreakBeStretched, MSGBOX_DEFAULT
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228CF6::
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_00228D49
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228D2D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228D34
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228D3B
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228D42
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerBrokenStreak::
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_GetRoundNum
+	switch VAR_RESULT
+	case DOME_ROUND1, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerBrokenStreakRound1
+	case DOME_ROUND2, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerBrokenStreakRound2
+	case DOME_SEMIFINAL, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerBrokenStreakSemifinal
+	case DOME_FINAL, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerBrokenStreakFinal
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228D2D::
-	message gJPText_002297B7
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerBrokenStreakRound1::
+	message BattleFrontier_BattleDomeBattleRoom_Text_FormerChampHasReturned
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228D34::
-	message gJPText_002297CD
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerBrokenStreakRound2::
+	message BattleFrontier_BattleDomeBattleRoom_Text_FormerToughnessReturned
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228D3B::
-	message gJPText_002297E0
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerBrokenStreakSemifinal::
+	message BattleFrontier_BattleDomeBattleRoom_Text_WillDoExpectedAdvanceToFinals
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228D42::
-	message gJPText_00229803
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnouncePlayerBrokenStreakFinal::
+	message BattleFrontier_BattleDomeBattleRoom_Text_WillFormerChampRegainGlory
 	waitmessage
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228D49::
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x2
-	special CallFrontierUtilFunc
+BattleFrontier_BattleDomeBattleRoom_EventScript_GetRoundNum::
+	frontier_get FRONTIER_DATA_BATTLE_NUM
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228D57::
-	copyvar 0x8000, 0x400E
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228D88
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228D95
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228D88
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228D95
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnounceTucker::
+	switch VAR_TEMP_E
+	case FRONTIER_BRAIN_SILVER, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnounceTuckerSilver
+	case FRONTIER_BRAIN_GOLD, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnounceTuckerGold
+	case FRONTIER_BRAIN_STREAK, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnounceTuckerSilver
+	case FRONTIER_BRAIN_STREAK_LONG, BattleFrontier_BattleDomeBattleRoom_EventScript_AnnounceTuckerGold
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228D88::
-	loadword 0x0, gJPText_0022982B
-	callstd 0x4
-	goto BattleFrontier_BattleDomeBattleRoom_EventScript_00228D9D
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnounceTuckerSilver::
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_MakeWayForDomeAceTucker, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleDomeBattleRoom_EventScript_TuckerEnter
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228D95::
-	loadword 0x0, gJPText_00229A6B
-	callstd 0x4
-
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228D9D::
+BattleFrontier_BattleDomeBattleRoom_EventScript_AnnounceTuckerGold::
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_LegendHasReturnedDomeAceTucker, MSGBOX_DEFAULT
+BattleFrontier_BattleDomeBattleRoom_EventScript_TuckerEnter::
 	closemessage
-	applymovement 0x2, 0x082294D7
-	applymovement 0x1, 0x08229385
-	applymovement 0xF, 0x0822931A
-	playse 0xDF
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_002293BA
+	applymovement LOCALID_DOME_AUDIENCE_TWIN, BattleFrontier_BattleDomeBattleRoom_Movement_AudienceTwinJump
+	applymovement LOCALID_DOME_ANNOUNCER, BattleFrontier_BattleDomeBattleRoom_Movement_AnnouncerMoveForTuckerEntrance
+	applymovement LOCALID_DOME_OPPONENT, BattleFrontier_BattleDomeBattleRoom_Movement_TuckerEnterAndDance
+	playse SE_M_ENCORE2
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceLookAround
 	waitse
-	playse 0xDF
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_002293BA
+	playse SE_M_ENCORE2
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceLookAround
 	waitse
-	playse 0xDF
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_002293BA
+	playse SE_M_ENCORE2
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceLookAround
 	waitse
-	playse 0xDF
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_002293BA
+	playse SE_M_ENCORE2
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceLookAround
 	waitse
-	playse 0xDF
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_002293BA
+	playse SE_M_ENCORE2
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceLookAround
 	waitse
-	waitmovement 0x0
-	message gJPText_0022988B
+	waitmovement 0
+	message BattleFrontier_BattleDomeBattleRoom_Text_SpectatorTuckerChant
 	waitmessage
-	playse 0xDF
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_002293BA
+	playse SE_M_ENCORE2
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceLookAround
 	waitse
-	copyvar 0x8000, 0x400E
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228ED2
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228E45
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228EFF
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x7
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattleDomeBattleRoom_EventScript_00228E45
-	loadword 0x0, gJPText_002298B4
-	callstd 0x4
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x7
-	special CallFrontierUtilFunc
-
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228E45::
-	loadword 0x0, gJPText_00229973
-	callstd 0x4
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_00228F8C
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228FAC
-	compare_var_to_value 0x8000, 0x9
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228FAC
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228FC2
-	loadword 0x0, gJPText_00229988
-	callstd 0x4
-	setvar 0x8004, 0xC
-	setvar 0x8005, 0x1
-	special sub_0818E608
-	setvar 0x8004, 0xC
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattleDomeBattleRoom_EventScript_00228AEE
+	switch VAR_TEMP_E
+	case FRONTIER_BRAIN_GOLD, BattleFrontier_BattleDomeBattleRoom_EventScript_TuckerGoldIntro
+	case FRONTIER_BRAIN_STREAK, BattleFrontier_BattleDomeBattleRoom_EventScript_BattleTuckerSilver
+	case FRONTIER_BRAIN_STREAK_LONG, BattleFrontier_BattleDomeBattleRoom_EventScript_BattleTuckerGold
+	frontier_get FRONTIER_DATA_HEARD_BRAIN_SPEECH
+	goto_if_ne VAR_RESULT, FALSE, BattleFrontier_BattleDomeBattleRoom_EventScript_BattleTuckerSilver
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_TuckerSilverIntro, MSGBOX_DEFAULT
+	frontier_set FRONTIER_DATA_HEARD_BRAIN_SPEECH
+BattleFrontier_BattleDomeBattleRoom_EventScript_BattleTuckerSilver::
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_LetsSeeYourStrategy, MSGBOX_DEFAULT
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_DoTuckerBattle
+	switch VAR_RESULT
+	case B_OUTCOME_LOST, BattleFrontier_BattleDomeBattleRoom_EventScript_LostToTucker
+	case B_OUTCOME_FORFEITED, BattleFrontier_BattleDomeBattleRoom_EventScript_LostToTucker
+	case B_OUTCOME_DREW, BattleFrontier_BattleDomeBattleRoom_EventScript_TuckerDraw
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_IncredibleVictorIsPlayer, MSGBOX_DEFAULT
+	dome_resolvewinners DOME_PLAYER_WON_MATCH
+	frontier_getsymbols
+	goto_if_ne VAR_RESULT, 0, BattleFrontier_BattleDomeBattleRoom_EventScript_WonTourney
 	closemessage
-	applymovement 0xF, 0x082293B7
-	waitmovement 0x0
-	loadword 0x0, gJPText_002299DB
-	callstd 0x4
-	playfanfare 0x1D2
-	message gJPText_002299FF
+	applymovement LOCALID_DOME_OPPONENT, BattleFrontier_BattleDomeBattleRoom_Movement_TuckerApproachPlayer
+	waitmovement 0
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_SeeYourFrontierPass, MSGBOX_DEFAULT
+	playfanfare MUS_OBTAIN_SYMBOL
+	message BattleFrontier_BattleDomeBattleRoom_Text_ReceivedTacticsSymbol
 	waitmessage
 	waitfanfare
-	setvar 0x8004, 0xD
-	special CallFrontierUtilFunc
-	loadword 0x0, gJPText_00229A1C
-	callstd 0x4
-	goto BattleFrontier_BattleDomeBattleRoom_EventScript_00228AEE
+	frontier_givesymbol
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_WontUnderestimateYouNextTime, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleDomeBattleRoom_EventScript_WonTourney
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228ED2::
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x7
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattleDomeBattleRoom_EventScript_00228EFF
-	loadword 0x0, gJPText_00229AD4
-	callstd 0x4
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x7
-	special CallFrontierUtilFunc
-
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228EFF::
-	loadword 0x0, gJPText_00229B82
-	callstd 0x4
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_00228F8C
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228FAC
-	compare_var_to_value 0x8000, 0x9
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228FAC
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228FC2
-	loadword 0x0, gJPText_00229988
-	callstd 0x4
-	setvar 0x8004, 0xC
-	setvar 0x8005, 0x1
-	special sub_0818E608
-	setvar 0x8004, 0xC
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00228AEE
+BattleFrontier_BattleDomeBattleRoom_EventScript_TuckerGoldIntro::
+	frontier_get FRONTIER_DATA_HEARD_BRAIN_SPEECH
+	goto_if_ne VAR_RESULT, FALSE, BattleFrontier_BattleDomeBattleRoom_EventScript_BattleTuckerGold
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_TuckerGoldIntro, MSGBOX_DEFAULT
+	frontier_set FRONTIER_DATA_HEARD_BRAIN_SPEECH
+BattleFrontier_BattleDomeBattleRoom_EventScript_BattleTuckerGold::
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_UnleashAllPowerIPossess, MSGBOX_DEFAULT
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_DoTuckerBattle
+	switch VAR_RESULT
+	case B_OUTCOME_LOST, BattleFrontier_BattleDomeBattleRoom_EventScript_LostToTucker
+	case B_OUTCOME_FORFEITED, BattleFrontier_BattleDomeBattleRoom_EventScript_LostToTucker
+	case B_OUTCOME_DREW, BattleFrontier_BattleDomeBattleRoom_EventScript_TuckerDraw
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_IncredibleVictorIsPlayer, MSGBOX_DEFAULT
+	dome_resolvewinners DOME_PLAYER_WON_MATCH
+	frontier_getsymbols
+	goto_if_eq VAR_RESULT, 2, BattleFrontier_BattleDomeBattleRoom_EventScript_WonTourney
 	closemessage
-	applymovement 0xF, 0x082293B7
-	waitmovement 0x0
-	loadword 0x0, gJPText_00229BA1
-	callstd 0x4
-	playfanfare 0x1D2
-	message gJPText_00229BEE
+	applymovement LOCALID_DOME_OPPONENT, BattleFrontier_BattleDomeBattleRoom_Movement_TuckerApproachPlayer
+	waitmovement 0
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_NeverLostWhenPowerUnleashed, MSGBOX_DEFAULT
+	playfanfare MUS_OBTAIN_SYMBOL
+	message BattleFrontier_BattleDomeBattleRoom_Text_TacticsSymbolTookGoldenShine
 	waitmessage
 	waitfanfare
-	setvar 0x8004, 0xD
-	special CallFrontierUtilFunc
-	loadword 0x0, gJPText_00229C07
-	callstd 0x4
-	goto BattleFrontier_BattleDomeBattleRoom_EventScript_00228AEE
+	frontier_givesymbol
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_LookForwardToNextEncounter, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleDomeBattleRoom_EventScript_WonTourney
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228F8C::
-	loadword 0x0, gJPText_00229CB7
-	callstd 0x4
+BattleFrontier_BattleDomeBattleRoom_EventScript_DoTuckerBattle::
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_PlayerVersusTucker, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xD, 0x08229313
-	applymovement 0xF, 0x082293B5
-	waitmovement 0x0
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_00228FCC
+	applymovement LOCALID_DOME_PLAYER, BattleFrontier_BattleDomeBattleRoom_Movement_PlayerStepForward2
+	applymovement LOCALID_DOME_OPPONENT, BattleFrontier_BattleDomeBattleRoom_Movement_TuckerStepForward
+	waitmovement 0
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_DoDomeBattle
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228FAC::
-	loadword 0x0, gJPText_002299B0
-	callstd 0x4
-	playse 0xDF
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_002293BA
+BattleFrontier_BattleDomeBattleRoom_EventScript_LostToTucker::
+	msgbox BattleFrontier_BattleDomeBattleRoom_Text_WinnerIsTucker, MSGBOX_DEFAULT
+	playse SE_M_ENCORE2
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceLookAround
 	waitse
-	goto BattleFrontier_BattleDomeBattleRoom_EventScript_00228A19
+	goto BattleFrontier_BattleDomeBattleRoom_EventScript_LostTourney
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228FC2::
-	setvar 0x4002, 0x2
-	goto BattleFrontier_BattleDomeBattleRoom_EventScript_00228983
+BattleFrontier_BattleDomeBattleRoom_EventScript_TuckerDraw::
+	setvar VAR_TEMP_2, DRAW_TUCKER
+	goto BattleFrontier_BattleDomeBattleRoom_EventScript_Draw
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00228FCC::
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x6
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
+BattleFrontier_BattleDomeBattleRoom_EventScript_DoDomeBattle::
+	frontier_set FRONTIER_DATA_RECORD_DISABLED, FALSE
 	special HealPlayerParty
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x0
-	setvar 0x4009, 0x1
+	setvar VAR_0x8004, SPECIAL_BATTLE_DOME
+	setvar VAR_0x8005, 0
+	setvar VAR_TEMP_9, 1
 	special DoSpecialTrainerBattle
-	setvar 0x4009, 0x0
-	setvar 0x8004, 0x11
-	special sub_0818E608
+	setvar VAR_TEMP_9, 0
+	dome_restorehelditems
 	special HealPlayerParty
-	setvar 0x8004, 0x10
-	special sub_0818E608
+	dome_resetsketch
 	return
 
-BattleFrontier_BattleDomeBattleRoom_MapScriptTable_0022900D::
-	map_script_2 0x4001, 0x0, BattleFrontier_BattleDomeBattleRoom_EventScript_00229017
+BattleFrontier_BattleDomeBattleRoom_OnWarp:
+	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleDomeBattleRoom_EventScript_SetUpObjects
 	.2byte 0
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00229017::
-	hideobject_at 0xD, 0x1A15
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_0022908E
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_00228868
-	setvar 0x4001, 0x1
-	applymovement 0xFF, 0x082292FF
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x2
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x3
-	goto_if 0x5, BattleFrontier_BattleDomeBattleRoom_EventScript_0022907B
-	setvar 0x8004, 0x9
-	special CallFrontierUtilFunc
-	copyvar 0x400E, 0x800D
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_0022907B
-	call 0x08222264
-	setobjectxyperm 0xF, 0xD, 0x9
-	removeobject 0xF
-	addobject 0xF
-	applymovement 0xF, 0x08229317
-
-BattleFrontier_BattleDomeBattleRoom_EventScript_0022907B::
+BattleFrontier_BattleDomeBattleRoom_EventScript_SetUpObjects::
+	hideobjectat LOCALID_DOME_PLAYER, MAP_BATTLE_FRONTIER_BATTLE_DOME_BATTLE_ROOM
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AddAudience
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_SetPlayerGfx
+	setvar VAR_TEMP_1, 1
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleDomeBattleRoom_Movement_SetInvisible
+	frontier_get FRONTIER_DATA_BATTLE_NUM
+	goto_if_ne VAR_RESULT, DOME_FINAL, BattleFrontier_BattleDomeBattleRoom_EventScript_EndSetUpObjects
+	frontier_getbrainstatus
+	copyvar VAR_TEMP_E, VAR_RESULT
+	goto_if_eq VAR_RESULT, FRONTIER_BRAIN_NOT_READY, BattleFrontier_BattleDomeBattleRoom_EventScript_EndSetUpObjects
+	call BattleFrontier_EventScript_SetBrainObjectGfx
+	setobjectxyperm LOCALID_DOME_OPPONENT, 13, 9
+	removeobject LOCALID_DOME_OPPONENT
+	addobject LOCALID_DOME_OPPONENT
+	applymovement LOCALID_DOME_OPPONENT, BattleFrontier_BattleDomeBattleRoom_Movement_SetInvisibleFacingUp
+BattleFrontier_BattleDomeBattleRoom_EventScript_EndSetUpObjects::
 	end
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_0022907C::
-	compare_var_to_value 0x4009, 0x1
-	call_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00229088
+BattleFrontier_BattleDomeBattleRoom_OnResume:
+	call_if_eq VAR_TEMP_9, 1, BattleFrontier_BattleDomeBattleRoom_EventScript_CallAddAudience
 	end
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00229088::
-	call BattleFrontier_BattleDomeBattleRoom_EventScript_0022908E
+BattleFrontier_BattleDomeBattleRoom_EventScript_CallAddAudience::
+	call BattleFrontier_BattleDomeBattleRoom_EventScript_AddAudience
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_0022908E::
-	compare_var_to_value 0x400F, 0x0
-	call_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_002290BB
-	compare_var_to_value 0x400F, 0x1
-	call_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_002290BC
-	compare_var_to_value 0x400F, 0x2
-	call_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_00229120
-	compare_var_to_value 0x400F, 0x3
-	call_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_002291DE
+@ Add audience members to supplement the permanent object event audience
+BattleFrontier_BattleDomeBattleRoom_EventScript_AddAudience::
+	call_if_eq VAR_TEMP_F, DOME_ROUND1, BattleFrontier_BattleDomeBattleRoom_EventScript_AddRound1Audience
+	call_if_eq VAR_TEMP_F, DOME_ROUND2, BattleFrontier_BattleDomeBattleRoom_EventScript_AddRound2Audience
+	call_if_eq VAR_TEMP_F, DOME_SEMIFINAL, BattleFrontier_BattleDomeBattleRoom_EventScript_AddSemifinalAudience
+	call_if_eq VAR_TEMP_F, DOME_FINAL, BattleFrontier_BattleDomeBattleRoom_EventScript_AddFinalAudience
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_002290BB::
+BattleFrontier_BattleDomeBattleRoom_EventScript_AddRound1Audience::
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_002290BC::
-	createvobject 0x2E, 0x1, 0x3, 0x0, 0x3, 0x1
-	createvobject 0x16, 0x4, 0x6, 0x0, 0x3, 0x1
-	createvobject 0x5, 0x6, 0x8, 0x0, 0x3, 0x1
-	createvobject 0xC, 0x9, 0xB, 0x0, 0x3, 0x1
-	createvobject 0x2E, 0xB, 0xD, 0x0, 0x3, 0x1
-	createvobject 0x42, 0xD, 0xF, 0x0, 0x3, 0x1
-	createvobject 0x2D, 0x13, 0x7, 0x1, 0x3, 0x1
-	createvobject 0x22, 0x16, 0xB, 0x1, 0x3, 0x1
-	createvobject 0xB, 0x19, 0xF, 0x1, 0x3, 0x1
-	createvobject 0x23, 0x1A, 0x2, 0x2, 0x3, 0x1
-	createvobject 0x26, 0x1D, 0x5, 0x1, 0x3, 0x1
+BattleFrontier_BattleDomeBattleRoom_EventScript_AddRound2Audience::
+	createvobject OBJ_EVENT_GFX_SCIENTIST_1, 1, 3, 0
+	createvobject OBJ_EVENT_GFX_EXPERT_F, 4, 6, 0
+	createvobject OBJ_EVENT_GFX_NINJA_BOY, 6, 8, 0
+	createvobject OBJ_EVENT_GFX_LITTLE_GIRL, 9, 11, 0
+	createvobject OBJ_EVENT_GFX_SCIENTIST_1, 11, 13, 0
+	createvobject OBJ_EVENT_GFX_MAN_5, 13, 15, 0
+	createvobject OBJ_EVENT_GFX_BEAUTY, 19, 7, 1
+	createvobject OBJ_EVENT_GFX_WOMAN_5, 22, 11, 1
+	createvobject OBJ_EVENT_GFX_LITTLE_BOY, 25, 15, 1
+	createvobject OBJ_EVENT_GFX_YOUNGSTER, 26, 2, 2
+	createvobject OBJ_EVENT_GFX_SCHOOL_KID_M, 29, 5, 1
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00229120::
-	createvobject 0x2E, 0x1, 0x3, 0x0, 0x3, 0x1
-	createvobject 0x16, 0x4, 0x6, 0x0, 0x3, 0x1
-	createvobject 0x5, 0x6, 0x8, 0x0, 0x3, 0x1
-	createvobject 0x14, 0x7, 0x9, 0x0, 0x3, 0x1
-	createvobject 0xC, 0x9, 0xB, 0x0, 0x3, 0x1
-	createvobject 0x2F, 0xA, 0xC, 0x0, 0x3, 0x1
-	createvobject 0x2E, 0xB, 0xD, 0x0, 0x3, 0x1
-	createvobject 0x42, 0xD, 0xF, 0x0, 0x3, 0x1
-	createvobject 0x30, 0xF, 0x2, 0x1, 0x3, 0x1
-	createvobject 0x5, 0x10, 0x3, 0x1, 0x3, 0x1
-	createvobject 0x14, 0x11, 0x4, 0x1, 0x3, 0x1
-	createvobject 0x2D, 0x13, 0x7, 0x1, 0x3, 0x1
-	createvobject 0x16, 0x14, 0x9, 0x1, 0x3, 0x1
-	createvobject 0x22, 0x16, 0xB, 0x1, 0x3, 0x1
-	createvobject 0x2E, 0x17, 0xD, 0x1, 0x3, 0x1
-	createvobject 0xB, 0x19, 0xF, 0x1, 0x3, 0x1
-	createvobject 0x23, 0x1A, 0x2, 0x2, 0x3, 0x1
-	createvobject 0x28, 0x1C, 0x5, 0x2, 0x3, 0x1
-	createvobject 0x26, 0x1D, 0x5, 0x1, 0x3, 0x1
-	createvobject 0x53, 0x1E, 0x6, 0x2, 0x3, 0x1
-	createvobject 0x22, 0x1F, 0x8, 0x2, 0x3, 0x1
+BattleFrontier_BattleDomeBattleRoom_EventScript_AddSemifinalAudience::
+	createvobject OBJ_EVENT_GFX_SCIENTIST_1, 1, 3, 0
+	createvobject OBJ_EVENT_GFX_EXPERT_F, 4, 6, 0
+	createvobject OBJ_EVENT_GFX_NINJA_BOY, 6, 8, 0
+	createvobject OBJ_EVENT_GFX_WOMAN_2, 7, 9, 0
+	createvobject OBJ_EVENT_GFX_LITTLE_GIRL, 9, 11, 0
+	createvobject OBJ_EVENT_GFX_LASS, 10, 12, 0
+	createvobject OBJ_EVENT_GFX_SCIENTIST_1, 11, 13, 0
+	createvobject OBJ_EVENT_GFX_MAN_5, 13, 15, 0
+	createvobject OBJ_EVENT_GFX_GENTLEMAN, 15, 2, 1
+	createvobject OBJ_EVENT_GFX_NINJA_BOY, 16, 3, 1
+	createvobject OBJ_EVENT_GFX_WOMAN_2, 17, 4, 1
+	createvobject OBJ_EVENT_GFX_BEAUTY, 19, 7, 1
+	createvobject OBJ_EVENT_GFX_EXPERT_F, 20, 9, 1
+	createvobject OBJ_EVENT_GFX_WOMAN_5, 22, 11, 1
+	createvobject OBJ_EVENT_GFX_SCIENTIST_1, 23, 13, 1
+	createvobject OBJ_EVENT_GFX_LITTLE_BOY, 25, 15, 1
+	createvobject OBJ_EVENT_GFX_YOUNGSTER, 26, 2, 2
+	createvobject OBJ_EVENT_GFX_HEX_MANIAC, 28, 5, 2
+	createvobject OBJ_EVENT_GFX_SCHOOL_KID_M, 29, 5, 1
+	createvobject OBJ_EVENT_GFX_MART_EMPLOYEE, 30, 6, 2
+	createvobject OBJ_EVENT_GFX_WOMAN_5, 31, 8, 2
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_002291DE::
-	createvobject 0x5, 0x0, 0x2, 0x0, 0x3, 0x1
-	createvobject 0x2E, 0x1, 0x3, 0x0, 0x3, 0x1
-	createvobject 0x2D, 0x2, 0xF, 0x0, 0x3, 0x1
-	createvobject 0x42, 0x3, 0x5, 0x0, 0x3, 0x1
-	createvobject 0x16, 0x4, 0x6, 0x0, 0x3, 0x1
-	createvobject 0x2E, 0x5, 0x7, 0x0, 0x3, 0x1
-	createvobject 0x5, 0x6, 0x8, 0x0, 0x3, 0x1
-	createvobject 0x14, 0x7, 0x9, 0x0, 0x3, 0x1
-	createvobject 0x18, 0x8, 0xA, 0x0, 0x3, 0x1
-	createvobject 0xC, 0x9, 0xB, 0x0, 0x3, 0x1
-	createvobject 0x2F, 0xA, 0xC, 0x0, 0x3, 0x1
-	createvobject 0x2E, 0xB, 0xD, 0x0, 0x3, 0x1
-	createvobject 0x2D, 0xC, 0xE, 0x0, 0x3, 0x1
-	createvobject 0x42, 0xD, 0xF, 0x2, 0x3, 0x1
-	createvobject 0x37, 0xE, 0xC, 0x2, 0x3, 0x1
-	createvobject 0x30, 0xF, 0x2, 0x1, 0x3, 0x1
-	createvobject 0x5, 0x10, 0x3, 0x1, 0x3, 0x1
-	createvobject 0x14, 0x11, 0x4, 0x1, 0x3, 0x1
-	createvobject 0x18, 0x12, 0x6, 0x1, 0x3, 0x1
-	createvobject 0x2D, 0x13, 0x7, 0x1, 0x3, 0x1
-	createvobject 0x16, 0x14, 0x9, 0x1, 0x3, 0x1
-	createvobject 0x17, 0x15, 0xA, 0x1, 0x3, 0x1
-	createvobject 0x22, 0x16, 0xB, 0x1, 0x3, 0x1
-	createvobject 0x2E, 0x17, 0xD, 0x1, 0x3, 0x1
-	createvobject 0x30, 0x18, 0xE, 0x1, 0x3, 0x1
-	createvobject 0xB, 0x19, 0xF, 0x1, 0x3, 0x1
-	createvobject 0x23, 0x1A, 0x2, 0x2, 0x3, 0x1
-	createvobject 0x11, 0x1B, 0x3, 0x2, 0x3, 0x1
-	createvobject 0x28, 0x1C, 0x5, 0x2, 0x3, 0x1
-	createvobject 0x26, 0x1D, 0x5, 0x1, 0x3, 0x1
-	createvobject 0x53, 0x1E, 0x6, 0x2, 0x3, 0x1
-	createvobject 0x22, 0x1F, 0x8, 0x2, 0x3, 0x1
+BattleFrontier_BattleDomeBattleRoom_EventScript_AddFinalAudience::
+	createvobject OBJ_EVENT_GFX_NINJA_BOY, 0, 2, 0
+	createvobject OBJ_EVENT_GFX_SCIENTIST_1, 1, 3, 0
+	createvobject OBJ_EVENT_GFX_BEAUTY, 2, 15, 0
+	createvobject OBJ_EVENT_GFX_MAN_5, 3, 5, 0
+	createvobject OBJ_EVENT_GFX_EXPERT_F, 4, 6, 0
+	createvobject OBJ_EVENT_GFX_SCIENTIST_1, 5, 7, 0
+	createvobject OBJ_EVENT_GFX_NINJA_BOY, 6, 8, 0
+	createvobject OBJ_EVENT_GFX_WOMAN_2, 7, 9, 0
+	createvobject OBJ_EVENT_GFX_WOMAN_3, 8, 10, 0
+	createvobject OBJ_EVENT_GFX_LITTLE_GIRL, 9, 11, 0
+	createvobject OBJ_EVENT_GFX_LASS, 10, 12, 0
+	createvobject OBJ_EVENT_GFX_SCIENTIST_1, 11, 13, 0
+	createvobject OBJ_EVENT_GFX_BEAUTY, 12, 14, 0
+	createvobject OBJ_EVENT_GFX_MAN_5, 13, 15, 2
+	createvobject OBJ_EVENT_GFX_HIKER, 14, 12, 2
+	createvobject OBJ_EVENT_GFX_GENTLEMAN, 15, 2, 1
+	createvobject OBJ_EVENT_GFX_NINJA_BOY, 16, 3, 1
+	createvobject OBJ_EVENT_GFX_WOMAN_2, 17, 4, 1
+	createvobject OBJ_EVENT_GFX_WOMAN_3, 18, 6, 1
+	createvobject OBJ_EVENT_GFX_BEAUTY, 19, 7, 1
+	createvobject OBJ_EVENT_GFX_EXPERT_F, 20, 9, 1
+	createvobject OBJ_EVENT_GFX_MAN_2, 21, 10, 1
+	createvobject OBJ_EVENT_GFX_WOMAN_5, 22, 11, 1
+	createvobject OBJ_EVENT_GFX_SCIENTIST_1, 23, 13, 1
+	createvobject OBJ_EVENT_GFX_GENTLEMAN, 24, 14, 1
+	createvobject OBJ_EVENT_GFX_LITTLE_BOY, 25, 15, 1
+	createvobject OBJ_EVENT_GFX_YOUNGSTER, 26, 2, 2
+	createvobject OBJ_EVENT_GFX_FAT_MAN, 27, 3, 2
+	createvobject OBJ_EVENT_GFX_HEX_MANIAC, 28, 5, 2
+	createvobject OBJ_EVENT_GFX_SCHOOL_KID_M, 29, 5, 1
+	createvobject OBJ_EVENT_GFX_MART_EMPLOYEE, 30, 6, 2
+	createvobject OBJ_EVENT_GFX_WOMAN_5, 31, 8, 2
 	return
 
-	.incbin "baserom_jp.gba", 0x2292ff, 0xbb
-BattleFrontier_BattleDomeBattleRoom_EventScript_002293BA::
-	turnvobject 0x0, 0x4
-	turnvobject 0x2, 0x4
-	turnvobject 0x4, 0x4
-	turnvobject 0x6, 0x4
-	turnvobject 0x8, 0x4
-	turnvobject 0xA, 0x3
-	turnvobject 0xC, 0x3
-	turnvobject 0xE, 0x3
-	turnvobject 0x10, 0x3
-	turnvobject 0x12, 0x3
-	turnvobject 0x14, 0x4
-	turnvobject 0x16, 0x4
-	turnvobject 0x18, 0x4
-	turnvobject 0x1A, 0x4
-	turnvobject 0x1C, 0x4
-	turnvobject 0x1E, 0x4
-	delay 0x14
-	turnvobject 0x0, 0x1
-	turnvobject 0x2, 0x1
-	turnvobject 0x4, 0x1
-	turnvobject 0x6, 0x1
-	turnvobject 0x8, 0x1
-	turnvobject 0xA, 0x1
-	turnvobject 0xC, 0x1
-	turnvobject 0xE, 0x1
-	turnvobject 0x10, 0x1
-	turnvobject 0x12, 0x1
-	turnvobject 0x14, 0x1
-	turnvobject 0x16, 0x1
-	turnvobject 0x18, 0x1
-	turnvobject 0x1A, 0x1
-	turnvobject 0x1C, 0x1
-	turnvobject 0x1E, 0x1
-	delay 0x14
-	turnvobject 0x1, 0x4
-	turnvobject 0x3, 0x4
-	turnvobject 0x5, 0x4
-	turnvobject 0x7, 0x4
-	turnvobject 0x9, 0x4
-	turnvobject 0xB, 0x3
-	turnvobject 0xD, 0x3
-	turnvobject 0xF, 0x3
-	turnvobject 0x11, 0x3
-	turnvobject 0x13, 0x3
-	turnvobject 0x15, 0x4
-	turnvobject 0x17, 0x4
-	turnvobject 0x19, 0x4
-	turnvobject 0x1B, 0x3
-	turnvobject 0x1F, 0x3
-	delay 0x14
-	turnvobject 0x1, 0x1
-	turnvobject 0x3, 0x1
-	turnvobject 0x5, 0x1
-	turnvobject 0x7, 0x1
-	turnvobject 0x9, 0x1
-	turnvobject 0xB, 0x1
-	turnvobject 0xD, 0x1
-	turnvobject 0xF, 0x1
-	turnvobject 0x11, 0x1
-	turnvobject 0x13, 0x1
-	turnvobject 0x15, 0x1
-	turnvobject 0x17, 0x1
-	turnvobject 0x19, 0x1
-	turnvobject 0x1B, 0x1
-	turnvobject 0x1F, 0x1
-	delay 0x14
+BattleFrontier_BattleDomeBattleRoom_Movement_SetInvisible:
+	set_invisible
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_Movement_PlayerEnter:
+	set_visible
+	delay_16
+	walk_up
+	walk_up
+	walk_up
+	walk_right
+BattleFrontier_BattleDomeBattleRoom_Movement_PlayerStepForward:
+	walk_right
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_Movement_PlayerApproachAudience:
+	walk_up
+	step_end
+
+@ Identical to Movement_PlayerEnter
+BattleFrontier_BattleDomeBattleRoom_Movement_PlayerEnterForTucker:
+	set_visible
+	delay_16
+	walk_up
+	walk_up
+	walk_up
+	walk_right
+	walk_right
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_Movement_PlayerStepForward2:
+	walk_right
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_Movement_OpponentStepForward:
+	walk_left
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_Movement_SetInvisibleFacingUp:
+	face_up
+	set_invisible
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_Movement_TuckerEnterAndDance:
+	set_visible
+	walk_up
+	walk_up
+	walk_up
+	face_left
+	delay_8
+	delay_4
+	face_down
+	delay_8
+	delay_4
+	face_right
+	delay_8
+	delay_4
+	face_up
+	delay_8
+	delay_4
+	face_left
+	delay_16
+	walk_fast_up
+	walk_fast_up
+	face_left
+	delay_8
+	delay_4
+	face_down
+	delay_8
+	delay_4
+	face_right
+	delay_8
+	delay_4
+	face_up
+	delay_8
+	delay_4
+	face_left
+	jump_2_left
+	unlock_facing_direction
+	face_up
+	lock_facing_direction
+	jump_2_left
+	jump_2_left
+	unlock_facing_direction
+	face_right
+	lock_facing_direction
+	jump_2_left
+	unlock_facing_direction
+	face_down
+	delay_2
+	face_left
+	delay_8
+	delay_4
+	face_up
+	delay_8
+	delay_4
+	face_right
+	delay_8
+	delay_4
+	face_down
+	delay_8
+	delay_4
+	face_left
+	delay_4
+	face_up
+	delay_4
+	face_right
+	delay_4
+	face_down
+	delay_4
+	face_left
+	delay_2
+	face_up
+	delay_2
+	face_right
+	delay_2
+	face_down
+	delay_2
+	face_left
+	lock_facing_direction
+	walk_right
+	walk_slow_right
+	walk_right
+	walk_slow_right
+	unlock_facing_direction
+	face_up
+	delay_16
+	jump_in_place_up
+	jump_in_place_up
+	delay_16
+	walk_right
+	walk_right
+	walk_right
+	jump_in_place_up
+	delay_16
+	walk_right
+	walk_down
+	walk_down
+	face_left
+	delay_2
+	face_up
+	delay_2
+	face_right
+	delay_2
+	face_down
+	delay_2
+	face_left
+	delay_4
+	walk_left
+	walk_left
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_Movement_AnnouncerMoveForTuckerEntrance:
+	delay_16
+	delay_16
+	walk_left
+	walk_left
+	walk_in_place_faster_right
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	walk_right
+	walk_right
+	walk_in_place_faster_down
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_Movement_TuckerStepForward:
+	walk_left
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_Movement_TuckerApproachPlayer:
+	walk_left
+	walk_left
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_EventScript_AudienceLookAround::
+	turnvobject 0, DIR_EAST
+	turnvobject 2, DIR_EAST
+	turnvobject 4, DIR_EAST
+	turnvobject 6, DIR_EAST
+	turnvobject 8, DIR_EAST
+	turnvobject 10, DIR_WEST
+	turnvobject 12, DIR_WEST
+	turnvobject 14, DIR_WEST
+	turnvobject 16, DIR_WEST
+	turnvobject 18, DIR_WEST
+	turnvobject 20, DIR_EAST
+	turnvobject 22, DIR_EAST
+	turnvobject 24, DIR_EAST
+	turnvobject 26, DIR_EAST
+	turnvobject 28, DIR_EAST
+	turnvobject 30, DIR_EAST
+	delay 20
+	turnvobject 0, DIR_SOUTH
+	turnvobject 2, DIR_SOUTH
+	turnvobject 4, DIR_SOUTH
+	turnvobject 6, DIR_SOUTH
+	turnvobject 8, DIR_SOUTH
+	turnvobject 10, DIR_SOUTH
+	turnvobject 12, DIR_SOUTH
+	turnvobject 14, DIR_SOUTH
+	turnvobject 16, DIR_SOUTH
+	turnvobject 18, DIR_SOUTH
+	turnvobject 20, DIR_SOUTH
+	turnvobject 22, DIR_SOUTH
+	turnvobject 24, DIR_SOUTH
+	turnvobject 26, DIR_SOUTH
+	turnvobject 28, DIR_SOUTH
+	turnvobject 30, DIR_SOUTH
+	delay 20
+	turnvobject 1, DIR_EAST
+	turnvobject 3, DIR_EAST
+	turnvobject 5, DIR_EAST
+	turnvobject 7, DIR_EAST
+	turnvobject 9, DIR_EAST
+	turnvobject 11, DIR_WEST
+	turnvobject 13, DIR_WEST
+	turnvobject 15, DIR_WEST
+	turnvobject 17, DIR_WEST
+	turnvobject 19, DIR_WEST
+	turnvobject 21, DIR_EAST
+	turnvobject 23, DIR_EAST
+	turnvobject 25, DIR_EAST
+	turnvobject 27, DIR_WEST
+	turnvobject 31, DIR_WEST
+	delay 20
+	turnvobject 1, DIR_SOUTH
+	turnvobject 3, DIR_SOUTH
+	turnvobject 5, DIR_SOUTH
+	turnvobject 7, DIR_SOUTH
+	turnvobject 9, DIR_SOUTH
+	turnvobject 11, DIR_SOUTH
+	turnvobject 13, DIR_SOUTH
+	turnvobject 15, DIR_SOUTH
+	turnvobject 17, DIR_SOUTH
+	turnvobject 19, DIR_SOUTH
+	turnvobject 21, DIR_SOUTH
+	turnvobject 23, DIR_SOUTH
+	turnvobject 25, DIR_SOUTH
+	turnvobject 27, DIR_SOUTH
+	turnvobject 31, DIR_SOUTH
+	delay 20
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_00229481::
-	copyvar 0x800D, 0x40CE
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeBattleRoom_EventScript_0022949B
-	warp 0x1A12, 0xFF, 0x5, 0xB
+BattleFrontier_BattleDomeBattleRoom_EventScript_WarpToLobby::
+	copyvar VAR_RESULT, VAR_FRONTIER_BATTLE_MODE
+	goto_if_eq VAR_RESULT, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleDomePreBattleRoom_EventScript_WarpToLobbyDoubles
+	warp MAP_BATTLE_FRONTIER_BATTLE_DOME_LOBBY, 5, 11
 	waitstate
 	end
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_0022949B::
-	warp 0x1A12, 0xFF, 0x11, 0xB
+BattleFrontier_BattleDomePreBattleRoom_EventScript_WarpToLobbyDoubles::
+	warp MAP_BATTLE_FRONTIER_BATTLE_DOME_LOBBY, 17, 11
 	waitstate
 	end
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_002294A5::
-	random 0x2
-	copyvar 0x400D, 0x800D
-	compare_var_to_value 0x400D, 0x0
-	goto_if 0x1, 0x08244178
-	setobjectxyperm 0x6, 0x2, 0x0
-	setobjectmovementtype 0x6, 0xA
+@ On round 1 there's a 50% chance that a specific audience member will walk to his seat
+BattleFrontier_BattleDomeBattleRoom_EventScript_SetWalkingAudienceMemberPos::
+	random 2
+	copyvar VAR_TEMP_D, VAR_RESULT
+	goto_if_eq VAR_TEMP_D, 0, Common_EventScript_NopReturn
+	setobjectxyperm LOCALID_DOME_AUDIENCE_WALKING, 2, 0
+	setobjectmovementtype LOCALID_DOME_AUDIENCE_WALKING, MOVEMENT_TYPE_FACE_RIGHT
 	return
 
-BattleFrontier_BattleDomeBattleRoom_EventScript_002294C4::
-	compare_var_to_value 0x400D, 0x0
-	goto_if 0x1, 0x08244178
-	applymovement 0x6, 0x082294EA
+BattleFrontier_BattleDomeBattleRoom_EventScript_TryDoAudienceMemberWalkToSeat::
+	goto_if_eq VAR_TEMP_D, 0, Common_EventScript_NopReturn
+	applymovement LOCALID_DOME_AUDIENCE_WALKING, BattleFrontier_BattleDomeBattleRoom_Movement_AudienceMemberWalkToSeat
 	return
 
-	.incbin "baserom_jp.gba", 0x2294d7, 0x25
-	.globl gJPText_002294FC
-gJPText_002294FC: @ 0x082294FC
-	.string "{MUS_RG_VS_TRAINER}さんの\n"
+BattleFrontier_BattleDomeBattleRoom_Movement_AudienceTwinJump:
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_8
+	disable_jump_landing_ground_effect
+	jump_in_place_down
+	delay_4
+	jump_in_place_down
+	enable_jump_landing_ground_effect
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_Movement_AudienceMemberWalkToSeat:
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	walk_in_place_faster_down
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_Movement_RefereeEnter:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_Movement_AnnouncerFaceLeft:
+	walk_in_place_faster_left
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_Movement_RefereeExit:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+BattleFrontier_BattleDomeBattleRoom_Text_PlayerHasEnteredDome:
+	.string "{PLAYER}さんの\n"
 	.string "にゅうじょう　です！$"
 
-	.globl gJPText_0022950D
-gJPText_0022950D: @ 0x0822950D
-	.string "{B_COPY_VAR_1}せん！\p"
-	.string "{MUS_RG_VS_TRAINER}さん　VS\n"
-	.string "{B_COPY_VAR_2}さん\p"
+BattleFrontier_BattleDomeBattleRoom_Text_PlayerVersusTrainer:
+	.string "{STR_VAR_1}せん！\p"
+	.string "{PLAYER}さん　VS\n"
+	.string "{STR_VAR_2}さん\p"
 	.string "ただいま　より　はじめます！$"
 
-	.globl gJPText_0022952F
-gJPText_0022952F: @ 0x0822952F
-	.string "{MUS_RG_VS_TRAINER}さんの　かちです\n"
+BattleFrontier_BattleDomeBattleRoom_Text_PlayerIsWinner:
+	.string "{PLAYER}さんの　かちです\n"
 	.string "おめでとう　ございます！$"
 
-	.globl gJPText_00229547
-gJPText_00229547: @ 0x08229547
-	.string "{B_COPY_VAR_2}さんの　かちです\n"
+BattleFrontier_BattleDomeBattleRoom_Text_TrainerIsWinner:
+	.string "{STR_VAR_2}さんの　かちです\n"
 	.string "おめでとう　ございます！$"
 
-	.globl gJPText_0022955F
-gJPText_0022955F: @ 0x0822955F
+BattleFrontier_BattleDomeBattleRoom_Text_PlayerIsLv50Champ:
 	.string "バトルトーナメント　レベル50\n"
-	.string "ゆうしょうは　{MUS_RG_VS_TRAINER}さん　です！\l"
+	.string "ゆうしょうは　{PLAYER}さん　です！\l"
 	.string "おめでとう　ございます！$"
 
-	.globl gJPText_0022958C
-gJPText_0022958C: @ 0x0822958C
+BattleFrontier_BattleDomeBattleRoom_Text_PlayerIsLvOpenChamp:
 	.string "バトルトーナメント　オープンレベル\n"
-	.string "ゆうしょうは　{MUS_RG_VS_TRAINER}さん！\l"
+	.string "ゆうしょうは　{PLAYER}さん！\l"
 	.string "おめでとう　ございます！$"
 
-	.globl gJPText_002295B8
-gJPText_002295B8: @ 0x082295B8
+BattleFrontier_BattleDomeBattleRoom_Text_RefereeDecisionPleaseWait:
 	.string "たいへんな　ことに　なりました！\p"
 	.string "ダブルノックアウトの　ばあい\n"
 	.string "バトルトーナメントの　ルールに　のっとり\l"
 	.string "はんていと　なります\p"
 	.string "しばらく　おまちください⋯⋯！$"
 
-	.globl gJPText_00229608
-gJPText_00229608: @ 0x08229608
+BattleFrontier_BattleDomeBattleRoom_Text_RefereesDecidedWinnerTrainer:
 	.string "しんぱんいん　より\n"
 	.string "はんていの　けっかが　でました！\p"
 	.string "しょうしゃは\n"
 	.string "なんと！　なんと！　なんと！\l"
-	.string "{B_COPY_VAR_1}さん　です！\l"
+	.string "{STR_VAR_1}さん　です！\l"
 	.string "おめでとうございます！$"
 
-	.globl gJPText_0022964E
-gJPText_0022964E: @ 0x0822964E
+BattleFrontier_BattleDomeBattleRoom_Text_RefereesDecidedWinnerPlayer:
 	.string "しんぱんいん　より\n"
 	.string "はんていの　けっかが　でました！\p"
 	.string "しょうしゃは\n"
 	.string "なんと！　なんと！　なんと！\l"
-	.string "{MUS_RG_VS_TRAINER}さん　です！\l"
+	.string "{PLAYER}さん　です！\l"
 	.string "おめでとうございます！$"
 
-	.globl gJPText_00229694
-gJPText_00229694: @ 0x08229694
+BattleFrontier_BattleDomeBattleRoom_Text_BrightNewHope:
 	.string "きたいの　おおがた　しんじん！\p"
 	.string "$"
 
-	.globl gJPText_002296A5
-gJPText_002296A5: @ 0x082296A5
+BattleFrontier_BattleDomeBattleRoom_Text_RisingStar:
 	.string "さらなる　うえを　めざして！\p"
 	.string "$"
 
-	.globl gJPText_002296B5
-gJPText_002296B5: @ 0x082296B5
+BattleFrontier_BattleDomeBattleRoom_Text_WillTheyRaceToChampionship:
 	.string "いっきに　ゆうしょうまで\n"
 	.string "のぼりつめて　しまうのでしょうか！？\p"
 	.string "$"
 
-	.globl gJPText_002296D6
-gJPText_002296D6: @ 0x082296D6
+BattleFrontier_BattleDomeBattleRoom_Text_CanAchieveChampionFirstTry:
 	.string "はつしゅつじょう　はつゆうしょうの\n"
 	.string "いぎょう　たっせい　なるか！？\p"
 	.string "$"
 
-	.globl gJPText_002296F9
-gJPText_002296F9: @ 0x082296F9
+BattleFrontier_BattleDomeBattleRoom_Text_CanLossBeAvenged:
 	.string "ぜんかいの　リベンジなるか！？\p"
 	.string "$"
 
-	.globl gJPText_0022970A
-gJPText_0022970A: @ 0x0822970A
+BattleFrontier_BattleDomeBattleRoom_Text_OnFireForChampionship:
 	.string "はじめての　ゆうしょうへ　むけて\n"
 	.string "もえています！\p"
 	.string "$"
 
-	.globl gJPText_00229724
-gJPText_00229724: @ 0x08229724
+BattleFrontier_BattleDomeBattleRoom_Text_WinHereAdvancesToFinal:
 	.string "この　しあいに　かてば\n"
 	.string "いよいよ　けっしょうせん　です！\p"
 	.string "$"
 
-	.globl gJPText_00229742
-gJPText_00229742: @ 0x08229742
+BattleFrontier_BattleDomeBattleRoom_Text_WillLongHeldDreamComeTrue:
 	.string "ひがんの　はつゆうしょう　なるか！？\p"
 	.string "$"
 
-	.globl gJPText_00229756
-gJPText_00229756: @ 0x08229756
+BattleFrontier_BattleDomeBattleRoom_Text_TheInvincibleChampion:
 	.string "むてきの　チャンピオン！\p"
 	.string "$"
 
-	.globl gJPText_00229764
-gJPText_00229764: @ 0x08229764
+BattleFrontier_BattleDomeBattleRoom_Text_CanAnyoneHopeToBeatTrainer:
 	.string "この　ひとに　かてる　トレーナーは\n"
 	.string "はたして　いるのでしょうか！？\p"
 	.string "$"
 
-	.globl gJPText_00229787
-gJPText_00229787: @ 0x08229787
+BattleFrontier_BattleDomeBattleRoom_Text_DoBattlesExistSolelyForTrainer:
 	.string "この　ひとの　ために\n"
 	.string "この　たいかいは　あるのでしょうか！？\p"
 	.string "$"
 
-	.globl gJPText_002297A7
-gJPText_002297A7: @ 0x082297A7
+BattleFrontier_BattleDomeBattleRoom_Text_CurrentChampAimingToRetainTitle:
 	.string "はたして　れんぱ　なるか！？\p"
 	.string "$"
 
-	.globl gJPText_002297B7
-gJPText_002297B7: @ 0x082297B7
+BattleFrontier_BattleDomeBattleRoom_Text_FormerChampHasReturned:
 	.string "かえってきました！\n"
 	.string "もと　チャンピオン！\p"
 	.string "$"
 
-	.globl gJPText_002297CD
-gJPText_002297CD: @ 0x082297CD
+BattleFrontier_BattleDomeBattleRoom_Text_FormerToughnessReturned:
 	.string "あの　つよさが　もどってきました！\p"
 	.string "$"
 
-	.globl gJPText_002297E0
-gJPText_002297E0: @ 0x082297E0
+BattleFrontier_BattleDomeBattleRoom_Text_WillDoExpectedAdvanceToFinals:
 	.string "けっしょうに　すすむのは\n"
 	.string "やっぱり　この　ひと　なんでしょうか！？\p"
 	.string "$"
 
-	.globl gJPText_00229803
-gJPText_00229803: @ 0x08229803
+BattleFrontier_BattleDomeBattleRoom_Text_WillFormerChampRegainGlory:
 	.string "みごとに　ふっかつ　ゆうしょう　なるか！？\p"
 	.string "$"
 
-	.globl gJPText_0022981A
-gJPText_0022981A: @ 0x0822981A
+BattleFrontier_BattleDomeBattleRoom_Text_FeelGlowOfTrueMaster:
 	.string "おうじゃの　ふうかく　ただよう！$"
 
-	.globl gJPText_0022982B
-gJPText_0022982B: @ 0x0822982B
-	.string "そして⋯⋯　{MUS_RG_VS_TRAINER}さんの\n"
+BattleFrontier_BattleDomeBattleRoom_Text_MakeWayForDomeAceTucker:
+	.string "そして⋯⋯　{PLAYER}さんの\n"
 	.string "きろくを　はばむ　トレーナーは⋯⋯\p"
 	.string "そう⋯⋯　そのなは！！\n"
 	.string "バトルドームの　コミッショナーに　して！！\l"
 	.string "われらが　ドームスーパースター！！\l"
 	.string "ヒース　だぁーーーーーー！$"
 
-	.globl gJPText_0022988B
-gJPText_0022988B: @ 0x0822988B
+BattleFrontier_BattleDomeBattleRoom_Text_SpectatorTuckerChant:
 	.string "かんきゃく“ヒースっ！！　ヒースっ！！\n"
 	.string "ヒースっ！！　ヒースっ！！　ヒースっ！！$"
 
-	.globl gJPText_002298B4
-gJPText_002298B4: @ 0x082298B4
+BattleFrontier_BattleDomeBattleRoom_Text_TuckerSilverIntro:
 	.string "ヒース“アッハッハッ！！\p"
 	.string "きこえるっ？　この　だいかんせい！\n"
 	.string "わたしたちの　しあいを　まえに\l"
@@ -1008,45 +1074,37 @@ gJPText_002298B4: @ 0x082298B4
 	.string "ドームスーパースター　ヒースの　かがやきで\l"
 	.string "きみを　てらして　あげる　からっ！！$"
 
-	.globl gJPText_00229973
-gJPText_00229973: @ 0x08229973
+BattleFrontier_BattleDomeBattleRoom_Text_LetsSeeYourStrategy:
 	.string "キミの　せんりゃく！　みせて　ごらんっ！$"
 
-	.globl gJPText_00229988
-gJPText_00229988: @ 0x08229988
+BattleFrontier_BattleDomeBattleRoom_Text_IncredibleVictorIsPlayer:
 	.string "なんとーーー！　なんとーーーっ！\n"
 	.string "たたかいに　かったのは\l"
-	.string "{MUS_RG_VS_TRAINER}さんだぁーーー！$"
+	.string "{PLAYER}さんだぁーーー！$"
 
-	.globl gJPText_002299B0
-gJPText_002299B0: @ 0x082299B0
+BattleFrontier_BattleDomeBattleRoom_Text_WinnerIsTucker:
 	.string "ドームスーパースター！！\n"
 	.string "ヒースの　しょうりです！\p"
 	.string "おめでとうーーーー！　ヒース！！$"
 
-	.globl gJPText_002299DB
-gJPText_002299DB: @ 0x082299DB
+BattleFrontier_BattleDomeBattleRoom_Text_SeeYourFrontierPass:
 	.string "ヒース“きまり　だからねっ！\n"
 	.string "キミの　フロンティアパスを　かしてっ！！$"
 
-	.globl gJPText_002299FF
-gJPText_002299FF: @ 0x082299FF
+BattleFrontier_BattleDomeBattleRoom_Text_ReceivedTacticsSymbol:
 	.string "フロンティアパスに\n"
 	.string "タクティクスシンボルが　きざまれた！$"
 
-	.globl gJPText_00229A1C
-gJPText_00229A1C: @ 0x08229A1C
+BattleFrontier_BattleDomeBattleRoom_Text_WontUnderestimateYouNextTime:
 	.string "⋯⋯　⋯⋯　⋯⋯\p"
 	.string "わたしは　キミを　ごかい　してたよ\n"
 	.string "つぎは　こうは　いかない　からね⋯⋯$"
 
-	.globl gJPText_00229A4A
-gJPText_00229A4A: @ 0x08229A4A
+BattleFrontier_BattleDomeBattleRoom_Text_CanWinStreakBeStretched:
 	.string "どこまで　かちつづける　つもり　なのか？\n"
 	.string "かんろく　じゅうぶん！$"
 
-	.globl gJPText_00229A6B
-gJPText_00229A6B: @ 0x08229A6B
+BattleFrontier_BattleDomeBattleRoom_Text_LegendHasReturnedDomeAceTucker:
 	.string "⋯⋯　そして　みなさーーーーん！！\p"
 	.string "ついに！　ついに　あのトレーナーが\n"
 	.string "かえって　きたぞーーー！\p"
@@ -1054,8 +1112,7 @@ gJPText_00229A6B: @ 0x08229A6B
 	.string "われらが　ドームスーパースターーーー！！\l"
 	.string "ヒース　だぁーーーーーー！$"
 
-	.globl gJPText_00229AD4
-gJPText_00229AD4: @ 0x08229AD4
+BattleFrontier_BattleDomeBattleRoom_Text_TuckerGoldIntro:
 	.string "ヒース“われるような　かんせい⋯⋯\n"
 	.string "むせかえる　ような　ねっき⋯⋯\l"
 	.string "やっぱり　ここは　すばらしいよ⋯⋯\p"
@@ -1066,41 +1123,46 @@ gJPText_00229AD4: @ 0x08229AD4
 	.string "ここに　やってくる　すべての　ひとびとを\l"
 	.string "てらさなければ　いけないっ！！$"
 
-	.globl gJPText_00229B82
-gJPText_00229B82: @ 0x08229B82
+BattleFrontier_BattleDomeBattleRoom_Text_UnleashAllPowerIPossess:
 	.string "さあっ！　わたしの　すべてっ！\n"
 	.string "ここに　ひろう　するよっ！！$"
 
-	.globl gJPText_00229BA1
-gJPText_00229BA1: @ 0x08229BA1
+BattleFrontier_BattleDomeBattleRoom_Text_NeverLostWhenPowerUnleashed:
 	.string "ヒース“ほーんと　ステキっ！　キミはっ！！\p"
 	.string "すべてを　だしきった　わたしが\n"
 	.string "かなわない　なんて　はじめてっ！！\p"
 	.string "さあっ！　キミの　フロンティアパスを！！$"
 
-	.globl gJPText_00229BEE
-gJPText_00229BEE: @ 0x08229BEE
+BattleFrontier_BattleDomeBattleRoom_Text_TacticsSymbolTookGoldenShine:
 	.string "タクティクスシンボルが\n"
 	.string "きんいろに　かがやいた！$"
 
-	.globl gJPText_00229C07
-gJPText_00229C07: @ 0x08229C07
+BattleFrontier_BattleDomeBattleRoom_Text_LookForwardToNextEncounter:
 	.string "つよく！　なにより　かわいい　キミっ！！\p"
 	.string "キミには　わたしの　ような\n"
 	.string "スーパースターに　なれる\l"
 	.string "かのうせいを　かんじるよっ！\l"
 	.string "また　あえるときを　たのしみに　しようっ！！$"
 
-	.incbin "baserom_jp.gba", 0x229c5d, 0x5a
-	.globl gJPText_00229CB7
-gJPText_00229CB7: @ 0x08229CB7
+@ Unused
+BattleFrontier_BattleDomeBattleRoom_Text_PlayerIsLv50Champ2:
+	.string "バトルトーナメント　レベル50\n"
+	.string "ゆうしょうは　{PLAYER}さんっ！\p"
+	.string "おめでとう　ございます！！$"
+
+@ Unused
+BattleFrontier_BattleDomeBattleRoom_Text_PlayerIsLvOpenChamp2:
+	.string "バトルトーナメント　オープンレベル\n"
+	.string "ゆうしょうは　{PLAYER}さんっ！\p"
+	.string "おめでとう　ございます！！$"
+
+BattleFrontier_BattleDomeBattleRoom_Text_PlayerVersusTucker:
 	.string "けっしょうせん！\p"
-	.string "{MUS_RG_VS_TRAINER}さん　VS\n"
+	.string "{PLAYER}さん　VS\n"
 	.string "ドームスーパースター　ヒース\p"
 	.string "ただいま　より　はじめます！$"
 
-	.globl gJPText_00229CE6
-gJPText_00229CE6: @ 0x08229CE6
+BattleFrontier_BattleDomeBattleRoom_Text_RefereesDecidedWinnerTucker:
 	.string "しんぱんいん　より\n"
 	.string "はんていの　けっかが　でました！\p"
 	.string "しょうしゃは\n"
@@ -1108,4 +1170,3 @@ gJPText_00229CE6: @ 0x08229CE6
 	.string "われらの　スーパースター！　ヒース　です！\p"
 	.string "おめでとう！　そして　ありがとう！！\n"
 	.string "われらの　ドームスーパースター　ヒース！！$"
-

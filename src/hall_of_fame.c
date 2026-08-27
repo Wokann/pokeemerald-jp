@@ -4116,7 +4116,7 @@ __attribute__((naked)) void sub_08175100(void)
     );
 }
 
-__attribute__((naked)) void sub_08175184(void)
+__attribute__((naked)) void DoDomeConfetti(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
