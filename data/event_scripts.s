@@ -796,7 +796,7 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/MirageTower_1F/scripts.inc"
 	.include "data/maps/MirageTower_2F/scripts.inc"
 	.include "data/maps/MirageTower_3F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21ce0c, 0x15f
+	.include "data/maps/MirageTower_4F/scripts.inc"
 	.include "data/maps/DesertUnderpass/scripts.inc"
 	.incbin "baserom_jp.gba", 0x21cfad, 0x25
 	.include "data/maps/ArtisanCave_B1F/scripts.inc"
