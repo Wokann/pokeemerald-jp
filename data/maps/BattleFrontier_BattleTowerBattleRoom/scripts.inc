@@ -4,64 +4,48 @@ BattleFrontier_BattleTowerBattleRoom_MapScripts::
 	.byte 0
 
 BattleFrontier_BattleTowerBattleRoom_OnWarp:
-	map_script_2 0x4001, 0x0, BattleFrontier_BattleTowerBattleRoom_EventScript_SetUpObjects
+	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleTowerBattleRoom_EventScript_SetUpObjects
 	.2byte 0
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_SetUpObjects::
-	setvar 0x4001, 0x1
+	setvar VAR_TEMP_1, 1
 	applymovement LOCALID_TOWER_BATTLE_ATTENDANT_2, BattleFrontier_BattleTowerBattleRoom_Movement_SetInvisible
 	end
 
 BattleFrontier_BattleTowerBattleRoom_OnFrame:
-	map_script_2 0x4000, 0x0, BattleFrontier_BattleTowerBattleRoom_EventScript_EnterRoom
+	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleTowerBattleRoom_EventScript_EnterRoom
 	.2byte 0
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_EnterRoom::
-	setvar 0x4000, 0x1
+	setvar VAR_TEMP_0, 1
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerBattleRoom_Movement_PlayerEnter
-	waitmovement 0x0
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x2
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_OpponentEnter
+	waitmovement 0
+	frontier_get FRONTIER_DATA_BATTLE_NUM
+	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattleTowerBattleRoom_EventScript_OpponentEnter
 	applymovement LOCALID_TOWER_BATTLE_ATTENDANT_1, BattleFrontier_BattleTowerBattleRoom_Movement_AttendantApproachPlayer
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerBattleRoom_Movement_PlayerFaceAttendant
-	waitmovement 0x0
-	setvar 0x4002, 0x1
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x6
-	setvar 0x8006, 0x1
-	special CallFrontierUtilFunc
+	waitmovement 0
+	setvar VAR_TEMP_2, 1
+	frontier_set FRONTIER_DATA_RECORD_DISABLED, TRUE
 	goto BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_OpponentEnter::
-	setvar 0x8004, 0x3
-	special sub_08161E88
-	addobject 0x1
+	tower_setopponent
+	addobject LOCALID_TOWER_BATTLE_OPPONENT
 	applymovement LOCALID_TOWER_BATTLE_OPPONENT, BattleFrontier_BattleTowerBattleRoom_Movement_OpponentEnter
-	waitmovement 0x0
-	setvar 0x8004, 0x7
-	setvar 0x8005, 0x0
-	special sub_08161E88
-	loadword 0x0, 0x2021C7C
-	callstd 0x4
+	waitmovement 0
+	tower_getopponentintro 0
+	msgbox gStringVar4, MSGBOX_DEFAULT
 	waitmessage
 	call BattleFrontier_BattleTowerBattleRoom_EventScript_DoTowerBattle
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_DefeatedOpponent
+	copyvar VAR_0x8000, VAR_RESULT
+	goto_if_eq VAR_0x8000, B_OUTCOME_WON, BattleFrontier_BattleTowerBattleRoom_EventScript_DefeatedOpponent
 
 BattleFrontier_BattleTower_EventScript_WarpToLobbyLost::
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x4
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x3
-	special sub_08161E88
-	setvar 0x8004, 0x3
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST
+	tower_set TOWER_DATA_LVL_MODE
+	setvar VAR_0x8004, FANCOUNTER_USED_BATTLE_TOWER
 	special Script_TryGainNewFanFromCounter
 	goto BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobby
 

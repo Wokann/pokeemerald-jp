@@ -13,11 +13,13 @@
 	special sub_08161E88
 	.endm
 
-	@ Set a TOWER_DATA_* entry to a literal value.
-	.macro tower_set data:req, val:req
+	@ Set a TOWER_DATA_* entry. Some data types obtain their value directly.
+	.macro tower_set data:req, val=0xFFFF
 	setvar VAR_0x8004, BATTLE_TOWER_FUNC_SET_DATA
 	setvar VAR_0x8005, \data
+	.if \val != 0xFFFF
 	setvar VAR_0x8006, \val
+	.endif
 	special sub_08161E88
 	.endm
 
@@ -25,6 +27,13 @@
 	@ entry sub_08161E88, while the US project calls it CallBattleTowerFunc.
 	.macro tower_setopponent
 	setvar VAR_0x8004, BATTLE_TOWER_FUNC_SET_OPPONENT
+	special sub_08161E88
+	.endm
+
+	@ Buffer the opponent easy-chat introduction to STR_VAR_4.
+	.macro tower_getopponentintro opponent:req
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_GET_OPPONENT_INTRO
+	setvar VAR_0x8005, \opponent
 	special sub_08161E88
 	.endm
 
