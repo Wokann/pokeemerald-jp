@@ -854,7 +854,6 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 
 	.include "data/maps/BattleFrontier_BattlePyramidFloor/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePyramidTop/scripts.inc"
-	.incbin "baserom_jp.gba", 0x22ecfe, 0x4cb
 	.include "data/maps/BattleFrontier_BattleArenaLobby/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleArenaCorridor/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleArenaBattleRoom/scripts.inc"

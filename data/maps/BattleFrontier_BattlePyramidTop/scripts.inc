@@ -1,255 +1,325 @@
-@ BattleFrontier_BattlePyramidTop scripts (JP map g26 m27 @ 0x0822E9A2)
-
 BattleFrontier_BattlePyramidTop_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, BattleFrontier_BattlePyramidTop_EventScript_0022E9F5
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattlePyramidTop_MapScriptTable_0022EA6F
-	map_script MAP_SCRIPT_ON_TRANSITION, BattleFrontier_BattlePyramidTop_EventScript_0022E9B7
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattlePyramidTop_MapScriptTable_0022E9CF
+	map_script MAP_SCRIPT_ON_RESUME, BattleFrontier_BattlePyramidTop_OnResume
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattlePyramidTop_OnFrame
+	map_script MAP_SCRIPT_ON_TRANSITION, BattleFrontier_BattlePyramidTop_OnTransition
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattlePyramidTop_OnWarp
 	.byte 0
 
-BattleFrontier_BattlePyramidTop_EventScript_0022E9B7::
-	setvar 0x8004, 0xD
-	setvar 0x8005, 0xC8
-	setvar 0x8006, 0x0
-	special CallBattlePyramidFunction
-	setvar 0x400F, 0x1
+BattleFrontier_BattlePyramidTop_OnTransition:
+	pyramid_updatelight 200, PYRAMID_LIGHT_SET_RADIUS
+	setvar VAR_TEMP_F, 1
 	end
 
-BattleFrontier_BattlePyramidTop_MapScriptTable_0022E9CF::
-	map_script_2 0x4001, 0x0, BattleFrontier_BattlePyramidTop_EventScript_0022E9D9
+BattleFrontier_BattlePyramidTop_OnWarp:
+	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattlePyramidTop_EventScript_SetUpObjects
 	.2byte 0
 
-BattleFrontier_BattlePyramidTop_EventScript_0022E9D9::
-	setvar 0x4001, 0x1
-	turnobject 0xFF, 0x2
-	compare_var_to_value 0x400C, 0x0
-	goto_if 0x5, BattleFrontier_BattlePyramidTop_EventScript_0022E9F4
-	setobjectxyperm 0x2, 0x0, 0x0
-
-BattleFrontier_BattlePyramidTop_EventScript_0022E9F4::
+BattleFrontier_BattlePyramidTop_EventScript_SetUpObjects::
+	setvar VAR_TEMP_1, 1
+	turnobject LOCALID_PLAYER, DIR_NORTH
+	goto_if_ne VAR_TEMP_C, 0, BattleFrontier_BattlePyramidTop_EventScript_EndSetUpObjects
+	setobjectxyperm LOCALID_BRANDON, 0, 0
+BattleFrontier_BattlePyramidTop_EventScript_EndSetUpObjects::
 	end
 
-BattleFrontier_BattlePyramidTop_EventScript_0022E9F5::
-	setvar 0x8004, 0x9
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattlePyramidTop_EventScript_0022EA0D
-	call 0x08222264
-
-BattleFrontier_BattlePyramidTop_EventScript_0022EA0D::
-	copyvar 0x400C, 0x800D
-	setvar 0x8004, 0x0
-	special CallFrontierUtilFunc
-	copyvar 0x8000, 0x4000
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattlePyramidTop_EventScript_0022EA94
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, 0x0822D62F
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattlePyramidTop_EventScript_0022EA94
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x5
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x2
-	goto_if 0x1, 0x0822D60B
-	compare_var_to_value 0x800D, 0x3
-	goto_if 0x1, 0x0822D60B
-	compare_var_to_value 0x800D, 0x9
-	goto_if 0x1, 0x0822D60B
+BattleFrontier_BattlePyramidTop_OnResume:
+	frontier_getbrainstatus
+	goto_if_eq VAR_RESULT, FRONTIER_BRAIN_NOT_READY, BattleFrontier_BattlePyramidTop_EventScript_CheckChallengeStatus
+	call BattleFrontier_EventScript_SetBrainObjectGfx
+BattleFrontier_BattlePyramidTop_EventScript_CheckChallengeStatus::
+	copyvar VAR_TEMP_C, VAR_RESULT
+	frontier_getstatus
+	switch VAR_TEMP_CHALLENGE_STATUS
+	case 0, BattleFrontier_BattlePyramidTop_EventScript_ReadyChallenge
+	case CHALLENGE_STATUS_SAVING, BattleFrontier_BattlePyramid_EventScript_WarpToLobby
+	case CHALLENGE_STATUS_PAUSED, BattleFrontier_BattlePyramidTop_EventScript_ReadyChallenge
+	frontier_get FRONTIER_DATA_BATTLE_OUTCOME
+	goto_if_eq VAR_RESULT, B_OUTCOME_LOST, BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost
+	goto_if_eq VAR_RESULT, B_OUTCOME_DREW, BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost
+	goto_if_eq VAR_RESULT, B_OUTCOME_FORFEITED, BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost
 	end
 
-BattleFrontier_BattlePyramidTop_MapScriptTable_0022EA6F::
-	map_script_2 0x400E, 0x0, BattleFrontier_BattlePyramidTop_EventScript_0022EA81
-	map_script_2 0x400F, 0x1, BattleFrontier_BattlePyramidTop_EventScript_0022EA8B
+BattleFrontier_BattlePyramidTop_OnFrame:
+	map_script_2 VAR_TEMP_PLAYING_PYRAMID_MUSIC, 0, BattleFrontier_BattlePyramidTop_EventScript_PlayPyramidMusic
+	map_script_2 VAR_TEMP_F, 1, BattleFrontier_BattlePyramidTop_EventScript_ShowMapName
 	.2byte 0
 
-BattleFrontier_BattlePyramidTop_EventScript_0022EA81::
-	playbgm 0x1CE, 0x0
-	setvar 0x400E, 0x1
+BattleFrontier_BattlePyramidTop_EventScript_PlayPyramidMusic::
+	playbgm MUS_B_PYRAMID_TOP, FALSE
+	setvar VAR_TEMP_PLAYING_PYRAMID_MUSIC, 1
 	end
 
-BattleFrontier_BattlePyramidTop_EventScript_0022EA8B::
+BattleFrontier_BattlePyramidTop_EventScript_ShowMapName::
 	special ShowMapNamePopup
-	setvar 0x400F, 0x0
+	setvar VAR_TEMP_F, 0
 	end
 
-BattleFrontier_BattlePyramidTop_EventScript_0022EA94::
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x1
-	special CallBattlePyramidFunction
+BattleFrontier_BattlePyramidTop_EventScript_ReadyChallenge::
+	pyramid_save CHALLENGE_STATUS_SAVING
 	special SavePlayerParty
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x9
-	special CallBattlePyramidFunction
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x3
-	special CallFrontierUtilFunc
-	setvar 0x400F, 0x1
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	pyramid_settrainers
+	frontier_setpartyorder FRONTIER_PARTY_SIZE
+	setvar VAR_TEMP_F, 1
 	end
 
-BattleFrontier_BattlePyramidTop_EventScript_0022EAD1::
+BattleFrontier_BattlePyramidTop_EventScript_Attendant::
 	lock
 	faceplayer
-	compare_var_to_value 0x400D, 0x0
-	goto_if 0x5, BattleFrontier_BattlePyramidTop_EventScript_0022EB37
-	compare_var_to_value 0x400C, 0x0
-	goto_if 0x5, BattleFrontier_BattlePyramidTop_EventScript_0022EB41
-	loadword 0x0, 0x0822ED11
-	callstd 0x4
+	goto_if_ne VAR_TEMP_D, 0, BattleFrontier_BattlePyramidTop_EventScript_StepForwardWhenReady
+	goto_if_ne VAR_TEMP_C, FRONTIER_BRAIN_NOT_READY, BattleFrontier_BattlePyramidTop_EventScript_BrandonHereMoveAside
+	msgbox BattleFrontier_BattlePyramidTop_Text_ReachedSummitUpYouGo, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x1, 0x0822ECFE
-	waitmovement 0x0
-	applymovement 0xFF, 0x0822ED04
-	waitmovement 0x0
-	applymovement 0x1, 0x0822ED01
-	waitmovement 0x0
-	message 0x0822ED8A
+	applymovement LOCALID_PYRAMID_TOP_ATTENDANT, BattleFrontier_BattlePyramidTop_Movement_AttendantMoveAside
+	waitmovement 0
+	applymovement LOCALID_PLAYER, BattleFrontier_BattlePyramidTop_Movement_PlayerClimbToTop
+	waitmovement 0
+	applymovement LOCALID_PYRAMID_TOP_ATTENDANT, BattleFrontier_BattlePyramidTop_Movement_AttendantBlockPath
+	waitmovement 0
+	message BattleFrontier_BattlePyramidTop_Text_PlayerConqueredPyramid
 	waitmessage
-	playfanfare 0x1CB
+	playfanfare MUS_OBTAIN_B_POINTS
 	waitfanfare
 	closemessage
-
-BattleFrontier_BattlePyramidTop_EventScript_0022EB1B::
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x3
-	special CallFrontierUtilFunc
-	warp 0x1A19, 0xFF, 0x7, 0xD
+BattleFrontier_BattlePyramidTop_EventScript_WarpToLobbyWon::
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_WON
+	warp MAP_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY, 7, 13
 	waitstate
 	end
 
-BattleFrontier_BattlePyramidTop_EventScript_0022EB37::
-	loadword 0x0, 0x0822F1A5
-	callstd 0x4
+BattleFrontier_BattlePyramidTop_EventScript_StepForwardWhenReady::
+	msgbox BattleFrontier_BattlePyramidTop_Text_StepForwardWhenReady, MSGBOX_DEFAULT
 	closemessage
 	end
 
-BattleFrontier_BattlePyramidTop_EventScript_0022EB41::
-	loadword 0x0, 0x0822EDA6
-	callstd 0x4
-	applymovement 0x1, 0x0822ECFE
-	setvar 0x400D, 0x1
+BattleFrontier_BattlePyramidTop_EventScript_BrandonHereMoveAside::
+	msgbox BattleFrontier_BattlePyramidTop_Text_ChiefBeatYouHere, MSGBOX_DEFAULT
+	applymovement LOCALID_PYRAMID_TOP_ATTENDANT, BattleFrontier_BattlePyramidTop_Movement_AttendantMoveAside
+	setvar VAR_TEMP_D, 1
 	closemessage
 	end
 
-BattleFrontier_BattlePyramidTop_EventScript_0022EB57::
+BattleFrontier_BattlePyramidTop_EventScript_BattleBrandon::
 	lockall
-	copyvar 0x8000, 0x400C
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattlePyramidTop_EventScript_0022EC36
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattlePyramidTop_EventScript_0022EBD1
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, BattleFrontier_BattlePyramidTop_EventScript_0022EC89
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x7
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattlePyramidTop_EventScript_0022EBD1
+	switch VAR_TEMP_C
+	case FRONTIER_BRAIN_GOLD, BattleFrontier_BattlePyramidTop_EventScript_BrandonIntroGold
+	case FRONTIER_BRAIN_STREAK, BattleFrontier_BattlePyramidTop_EventScript_BrandonHeardSilverSpeech
+	case FRONTIER_BRAIN_STREAK_LONG, BattleFrontier_BattlePyramidTop_EventScript_BrandonHeardGoldSpeech
+	frontier_get FRONTIER_DATA_HEARD_BRAIN_SPEECH
+	goto_if_ne VAR_RESULT, FALSE, BattleFrontier_BattlePyramidTop_EventScript_BrandonHeardSilverSpeech
 	special SpawnCameraObject
-	applymovement 0x7F, 0x0822ED0D
-	waitmovement 0x0
-	loadword 0x0, 0x0822EE63
-	callstd 0x4
+	applymovement LOCALID_CAMERA, BattleFrontier_BattlePyramidTop_Movement_CameraPanUp
+	waitmovement 0
+	msgbox BattleFrontier_BattlePyramidTop_Text_ExplorationsAreGrandestAdventure, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x7
-	special CallFrontierUtilFunc
-	applymovement 0x2, 0x0822ED0B
-	waitmovement 0x0
-	loadword 0x0, 0x0822EECD
-	callstd 0x4
-	goto BattleFrontier_BattlePyramidTop_EventScript_0022EBDB
+	frontier_set FRONTIER_DATA_HEARD_BRAIN_SPEECH
+	applymovement LOCALID_BRANDON, BattleFrontier_BattlePyramidTop_Movement_BrandonApproachPlayer
+	waitmovement 0
+	msgbox BattleFrontier_BattlePyramidTop_Text_ImPyramidKingBrandon, MSGBOX_DEFAULT
+	goto BattleFrontier_BattlePyramidTop_EventScript_BattleBrandonSilver
 	end
 
-BattleFrontier_BattlePyramidTop_EventScript_0022EBD1::
-	applymovement 0x2, 0x0822ED0B
-	waitmovement 0x0
+BattleFrontier_BattlePyramidTop_EventScript_BrandonHeardSilverSpeech::
+	applymovement LOCALID_BRANDON, BattleFrontier_BattlePyramidTop_Movement_BrandonApproachPlayer
+	waitmovement 0
+BattleFrontier_BattlePyramidTop_EventScript_BattleBrandonSilver::
+	msgbox BattleFrontier_BattlePyramidTop_Text_BringCourageToOurBattle, MSGBOX_DEFAULT
+	call BattleFrontier_BattlePyramidTop_EventScript_DoBrandonBattle
+	playbgm MUS_B_PYRAMID_TOP, FALSE
+	goto_if_eq VAR_RESULT, 1, BattleFrontier_BattlePyramidTop_EventScript_DefeatedBrandonSilver
+	goto BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost
 
-BattleFrontier_BattlePyramidTop_EventScript_0022EBDB::
-	loadword 0x0, 0x0822EF6A
-	callstd 0x4
-	call BattleFrontier_BattlePyramidTop_EventScript_0022ECEE
-	playbgm 0x1CE, 0x0
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattlePyramidTop_EventScript_0022EBFC
-	goto 0x0822D60B
-
-BattleFrontier_BattlePyramidTop_EventScript_0022EBFC::
-	setvar 0x8004, 0xC
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattlePyramidTop_EventScript_0022EB1B
-	loadword 0x0, 0x0822EF86
-	callstd 0x4
-	playfanfare 0x1D2
-	message 0x0822EFC9
+BattleFrontier_BattlePyramidTop_EventScript_DefeatedBrandonSilver::
+	frontier_getsymbols
+	goto_if_ne VAR_RESULT, 0, BattleFrontier_BattlePyramidTop_EventScript_WarpToLobbyWon
+	msgbox BattleFrontier_BattlePyramidTop_Text_BrandonFrontierPassPlease, MSGBOX_DEFAULT
+	playfanfare MUS_OBTAIN_SYMBOL
+	message BattleFrontier_BattlePyramidTop_Text_ReceivedBraveSymbol
 	waitmessage
 	waitfanfare
-	setvar 0x8004, 0xD
-	special CallFrontierUtilFunc
-	loadword 0x0, 0x0822EFE4
-	callstd 0x4
-	goto BattleFrontier_BattlePyramidTop_EventScript_0022EB1B
+	frontier_givesymbol
+	msgbox BattleFrontier_BattlePyramidTop_Text_LookForwardToNextMeeting, MSGBOX_DEFAULT
+	goto BattleFrontier_BattlePyramidTop_EventScript_WarpToLobbyWon
 
-BattleFrontier_BattlePyramidTop_EventScript_0022EC36::
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x7
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattlePyramidTop_EventScript_0022EC89
+BattleFrontier_BattlePyramidTop_EventScript_BrandonIntroGold::
+	frontier_get FRONTIER_DATA_HEARD_BRAIN_SPEECH
+	goto_if_ne VAR_RESULT, FALSE, BattleFrontier_BattlePyramidTop_EventScript_BrandonHeardGoldSpeech
 	special SpawnCameraObject
-	applymovement 0x7F, 0x0822ED0D
-	waitmovement 0x0
-	loadword 0x0, 0x0822F005
-	callstd 0x4
+	applymovement LOCALID_CAMERA, BattleFrontier_BattlePyramidTop_Movement_CameraPanUp
+	waitmovement 0
+	msgbox BattleFrontier_BattlePyramidTop_Text_BrandonYouveReturned, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x7
-	special CallFrontierUtilFunc
-	applymovement 0x2, 0x0822ED0B
-	waitmovement 0x0
-	loadword 0x0, 0x0822F0B0
-	callstd 0x4
-	goto BattleFrontier_BattlePyramidTop_EventScript_0022EC93
+	frontier_set FRONTIER_DATA_HEARD_BRAIN_SPEECH
+	applymovement LOCALID_BRANDON, BattleFrontier_BattlePyramidTop_Movement_BrandonApproachPlayer
+	waitmovement 0
+	msgbox BattleFrontier_BattlePyramidTop_Text_MyCourageIsOffMeter, MSGBOX_DEFAULT
+	goto BattleFrontier_BattlePyramidTop_EventScript_BattleBrandonGold
 	end
 
-BattleFrontier_BattlePyramidTop_EventScript_0022EC89::
-	applymovement 0x2, 0x0822ED0B
-	waitmovement 0x0
+BattleFrontier_BattlePyramidTop_EventScript_BrandonHeardGoldSpeech::
+	applymovement LOCALID_BRANDON, BattleFrontier_BattlePyramidTop_Movement_BrandonApproachPlayer
+	waitmovement 0
+BattleFrontier_BattlePyramidTop_EventScript_BattleBrandonGold::
+	msgbox BattleFrontier_BattlePyramidTop_Text_EverythingYouHave, MSGBOX_DEFAULT
+	call BattleFrontier_BattlePyramidTop_EventScript_DoBrandonBattle
+	playbgm MUS_B_PYRAMID_TOP, FALSE
+	goto_if_eq VAR_RESULT, 1, BattleFrontier_BattlePyramidTop_EventScript_DefeatedBrandonGold
+	goto BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost
 
-BattleFrontier_BattlePyramidTop_EventScript_0022EC93::
-	loadword 0x0, 0x0822F0D1
-	callstd 0x4
-	call BattleFrontier_BattlePyramidTop_EventScript_0022ECEE
-	playbgm 0x1CE, 0x0
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattlePyramidTop_EventScript_0022ECB4
-	goto 0x0822D60B
-
-BattleFrontier_BattlePyramidTop_EventScript_0022ECB4::
-	setvar 0x8004, 0xC
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x2
-	goto_if 0x1, BattleFrontier_BattlePyramidTop_EventScript_0022EB1B
-	loadword 0x0, 0x0822F0EE
-	callstd 0x4
-	playfanfare 0x1D2
-	message 0x0822F14D
+BattleFrontier_BattlePyramidTop_EventScript_DefeatedBrandonGold::
+	frontier_getsymbols
+	goto_if_eq VAR_RESULT, 2, BattleFrontier_BattlePyramidTop_EventScript_WarpToLobbyWon
+	msgbox BattleFrontier_BattlePyramidTop_Text_BrandonRemarkableHaveThis, MSGBOX_DEFAULT
+	playfanfare MUS_OBTAIN_SYMBOL
+	message BattleFrontier_BattlePyramidTop_Text_BraveSymbolTookGoldenShine
 	waitmessage
 	waitfanfare
-	setvar 0x8004, 0xD
-	special CallFrontierUtilFunc
-	loadword 0x0, 0x0822F164
-	callstd 0x4
-	goto BattleFrontier_BattlePyramidTop_EventScript_0022EB1B
+	frontier_givesymbol
+	msgbox BattleFrontier_BattlePyramidTop_Text_FarewellForNow, MSGBOX_DEFAULT
+	goto BattleFrontier_BattlePyramidTop_EventScript_WarpToLobbyWon
 
-BattleFrontier_BattlePyramidTop_EventScript_0022ECEE::
+BattleFrontier_BattlePyramidTop_EventScript_DoBrandonBattle::
 	closemessage
-	setvar 0x8004, 0xA
-	setvar 0x8005, 0x0
+	setvar VAR_0x8004, SPECIAL_BATTLE_PYRAMID
+	setvar VAR_0x8005, 0
 	special DoSpecialTrainerBattle
 	return
+
+BattleFrontier_BattlePyramidTop_Movement_AttendantMoveAside:
+	walk_right
+	walk_in_place_faster_left
+	step_end
+
+BattleFrontier_BattlePyramidTop_Movement_AttendantBlockPath:
+	walk_left
+	walk_in_place_faster_up
+	step_end
+
+BattleFrontier_BattlePyramidTop_Movement_PlayerClimbToTop:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+BattleFrontier_BattlePyramidTop_Movement_BrandonApproachPlayer:
+	walk_fast_down
+	step_end
+
+BattleFrontier_BattlePyramidTop_Movement_CameraPanUp:
+	walk_slow_up
+	walk_slow_up
+	delay_16
+	step_end
+
+BattleFrontier_BattlePyramidTop_Text_ReachedSummitUpYouGo:
+	.string "よくぞ　まいられましたぞ！\n"
+	.string "ここは　バトルピラミッドの　ちょうじょう！\p"
+	.string "この　うえに　あるのが\n"
+	.string "ピラミッドのいただき　ですぞ！\p"
+	.string "バトルピラミッドを　せいはした　もののみ\n"
+	.string "この　うえに　たつことが　できるのですぞ！\p"
+	.string "さあ！　のぼってくだされ！$"
+
+BattleFrontier_BattlePyramidTop_Text_PlayerConqueredPyramid:
+	.string "あらたなる　ピラミッド　せいはしゃ！\n"
+	.string "そのなは　{PLAYER}！$"
+
+BattleFrontier_BattlePyramidTop_Text_ChiefBeatYouHere:
+	.string "よくぞ　まいられましたぞ！\p"
+	.string "⋯⋯　⋯⋯　と　いいたい　ところ　ですが\n"
+	.string "わずかに　おそかった　ですな！！\p"
+	.string "すでに　われらが　たいちょうが\n"
+	.string "ピラミッドを　せいは　されましたぞ！！\p"
+	.string "しかし　ぼうけんしゃよ！\p"
+	.string "あなたも　トレーナー　ならば\n"
+	.string "その　ちからで　たいちょうから\l"
+	.string "えいこうの　いただきを　かちとるのです！\p"
+	.string "さあ！　じゅんびが　できたら\n"
+	.string "ゆうきの　いっぽを　ふみだすの　ですぞ！$"
+
+BattleFrontier_BattlePyramidTop_Text_ExplorationsAreGrandestAdventure:
+	.string "わかき　ぼうけんしゃよ⋯⋯\n"
+	.string "ぼうけんとは　いいもの　だな⋯⋯\p"
+	.string "おのれの　ちえ！\p"
+	.string "おのれの　ちから！\p"
+	.string "おのれの　ポケモン！\p"
+	.string "そして　なにより\n"
+	.string "おのれの　ゆうきを　ふりしぼって\l"
+	.string "みちなる　せかいへと　つきすすむ⋯⋯$"
+
+BattleFrontier_BattlePyramidTop_Text_ImPyramidKingBrandon:
+	.string "いやぁー　じつに　たまらない！\n"
+	.string "たまらないじゃ　ないか！　なあっ！？\p"
+	.string "わたしは　ジンダイ！\p"
+	.string "ここの　せきにんしゃで　ある\n"
+	.string "ピラミッドキングだが　みんなには\l"
+	.string "たいちょうと　よばれて　いるぞ！\p"
+	.string "きみも　ここまで　きたと　いうことは\n"
+	.string "それなりの　じしんが　あるの　だろう？\l"
+	.string "はっはっは！　いやぁー　じつに　たのしみだ！$"
+
+BattleFrontier_BattlePyramidTop_Text_BringCourageToOurBattle:
+	.string "さあ！　きみの　あつい　ゆうきを\n"
+	.string "ぶつけて　きたまえ！$"
+
+BattleFrontier_BattlePyramidTop_Text_BrandonFrontierPassPlease:
+	.string "ジンダイ“はっはっは！\n"
+	.string "いやぁー　じつに　すばらしい！\p"
+	.string "いいぞ！　きみを　みとめようじゃ　ないか！！\n"
+	.string "フロンティアパスを　かすんだ！$"
+
+BattleFrontier_BattlePyramidTop_Text_ReceivedBraveSymbol:
+	.string "フロンティアパスに\n"
+	.string "ブレイブシンボルが　きざまれた！$"
+
+BattleFrontier_BattlePyramidTop_Text_LookForwardToNextMeeting:
+	.string "わかき　ぼうけんしゃよ！\n"
+	.string "また　あえる　ときを　まっているぞ！！$"
+
+BattleFrontier_BattlePyramidTop_Text_BrandonYouveReturned:
+	.string "ジンダイ“⋯⋯　ここまで　たどりついたか\n"
+	.string "わかき　ぼうけんしゃよ⋯⋯\p"
+	.string "きみは　ほんとうに　こころから\n"
+	.string "ぼうけんを　あいして　いるようだな⋯⋯\p"
+	.string "そう⋯⋯　まるで　わかき　ひの\n"
+	.string "わたし　そっくりじゃ　ないか⋯⋯\p"
+	.string "⋯⋯　⋯⋯　⋯⋯　おお⋯⋯\p"
+	.string "あつく！！\p"
+	.string "きけんで！！\p"
+	.string "くるしい！！\p"
+	.string "あの　いのちがけの　ぼうけんの　ひびが\n"
+	.string "よみがえって　きたぞ⋯⋯$"
+
+BattleFrontier_BattlePyramidTop_Text_MyCourageIsOffMeter:
+	.string "よーーーしっ！！\p"
+	.string "わたしの　ゆうきセンサーも\n"
+	.string "ぜっこうちょう！！$"
+
+BattleFrontier_BattlePyramidTop_Text_EverythingYouHave:
+	.string "きみの　すべて！\n"
+	.string "わたしが　うけとめよう　じゃないか！！$"
+
+BattleFrontier_BattlePyramidTop_Text_BrandonRemarkableHaveThis:
+	.string "ジンダイ“はっはっはっ！\n"
+	.string "いやぁー　じつに　すばらしい！\l"
+	.string "まったく　さいこうじゃ　ないか！！\p"
+	.string "わかき　ぼうけんしゃよ！！\p"
+	.string "きみには　かんぱい　だよ！\n"
+	.string "さあ！　こいつを　うけとって　くれ！！$"
+
+BattleFrontier_BattlePyramidTop_Text_BraveSymbolTookGoldenShine:
+	.string "ブレイブシンボルが\n"
+	.string "きんいろに　かがやいた！$"
+
+BattleFrontier_BattlePyramidTop_Text_FarewellForNow:
+	.string "いやぁー　わたしも\n"
+	.string "まだまだと　いうこと　らしいな！！\p"
+	.string "えんが　あったら　また　あおう！\n"
+	.string "さらばだ！　わかき　ぼうけんしゃよ！！$"
+
+BattleFrontier_BattlePyramidTop_Text_StepForwardWhenReady:
+	.string "さあ！　じゅんびが　できたら\n"
+	.string "ゆうきの　いっぽを　ふみだすの　ですぞ！$"
