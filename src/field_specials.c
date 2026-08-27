@@ -1786,7 +1786,7 @@ void CableCarWarp(void)
         SetWarpDestination(MAP_GROUP(MAP_MT_CHIMNEY_CABLE_CAR_STATION), MAP_NUM(MAP_MT_CHIMNEY_CABLE_CAR_STATION), WARP_ID_NONE, 6, 4);
 }
 
-__attribute__((naked)) void SetFlagInVar(void)
+__attribute__((naked)) void SetHiddenItemFlag(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

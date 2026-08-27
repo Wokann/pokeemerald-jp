@@ -6231,7 +6231,7 @@ SECTIONS {
         src/tv.o(.text.sub_080EE5A0);
         src/tv.o(.text.sub_080EE664);
         src/tv.o(.text.sub_080EE780);
-        src/tv.o(.text.sub_080EE808);
+        src/tv.o(.text.TryPutTreasureInvestigatorsOnAir);
         src/tv.o(.text.TryPutFindThatGamerOnAir);
         src/tv.o(.text.AlertTVThatPlayerPlayedSlotMachine);
         src/tv.o(.text.AlertTVThatPlayerPlayedRoulette);

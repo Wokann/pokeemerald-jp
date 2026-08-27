@@ -166,7 +166,7 @@ gSpecials::
 	def_special GetPlayerTrainerIdOnesDigit
 	def_special GetPlayerBigGuyGirlString
 	def_special GetRivalSonDaughterString
-	def_special SetFlagInVar
+	def_special SetHiddenItemFlag
 	def_special CableCarWarp
 	def_special CableCar, waitstate=1
 	def_special Overworld_PlaySpecialMapMusic
@@ -357,7 +357,7 @@ gSpecials::
 	def_special sub_080F9C00
 	def_special GenerateContestRand
 	def_special SetChampionSaveWarp
-	def_special sub_080EE808
+	def_special TryPutTreasureInvestigatorsOnAir
 	def_special sub_080EEDEC
 	.set SPECIAL_TryPutLotteryWinnerReportOnAir, SPECIAL_sub_080EEDEC
 	.set SPECIAL_WAITSTATE_TryPutLotteryWinnerReportOnAir, SPECIAL_WAITSTATE_sub_080EEDEC

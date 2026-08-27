@@ -917,16 +917,8 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/scripts/white_out.inc"
 
 	.include "data/scripts/pkmn_center_nurse.inc"
-Std_ObtainItem:: @ 0x8242B6D
-	.include "data/scripts/gUnknown_8242B6D.inc"
-Std_ObtainDecoration:: @ 0x8242C4F
-	.include "data/scripts/gUnknown_8242C4F.inc"
-Std_FindItem:: @ 0x8242C95
-	.include "data/scripts/gUnknown_8242C95.inc"
-
-	.globl EventScript_HiddenItemScript
-EventScript_HiddenItemScript: @ 0x8242D49
-	.include "data/scripts/gUnknown_8242D49.inc"
+	.include "data/scripts/obtain_item.inc"
+	.include "data/scripts/record_mix_prompt.inc"
 
 	.globl EventScript_PC
 EventScript_PC: @ 0x8242E1E

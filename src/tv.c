@@ -6082,7 +6082,7 @@ __attribute__((naked)) void sub_080EE780(void)
     );
 }
 
-__attribute__((naked)) void sub_080EE808(void)
+__attribute__((naked)) void TryPutTreasureInvestigatorsOnAir(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
