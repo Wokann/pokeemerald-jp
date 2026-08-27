@@ -1249,12 +1249,7 @@ Common_EventScript_LegendaryFlewAway::
 	@ 0x0824433D
 	.include "data/scripts/abnormal_weather.inc"
 
-Std_RegisteredInMatchCall:: @ 0x8244CF3
-	.include "data/scripts/gUnknown_8244CF3.inc"
-
-	.globl EventScript_TryGetTrainerScript
-EventScript_TryGetTrainerScript: @ 0x8244D10
-	.include "data/scripts/EventScript_TryGetTrainerScript.inc"
+	.include "data/scripts/trainer_script.inc"
 
 	.globl BerryTreeScript
 	.globl BerryTreeScript
