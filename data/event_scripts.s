@@ -1161,8 +1161,11 @@ gText_SelectWithoutRegisteredItem:: @ 0x08243A80
 	.string "バッグに　いれてある　どうぐを\n"
 	.string "べんりボタンに　とうろく　できます$"
 
-	@ 0x08243AA2-0x08243B7F remains unstructured shared text data.
-	.incbin "baserom_jp.gba", 0x243aa2, 0xdd
+	@ 0x08243AA2-0x08243B4E remains unstructured shared text data.
+	.incbin "baserom_jp.gba", 0x243aa2, 0xac
+
+gText_PlayerWhitedOut:: @ 0x08243B4E
+	.incbin "baserom_jp.gba", 0x243b4e, 0x31
 
 gText_RegisteredTrainerinPokeNav:: @ 0x08243B7F
 	.string "{B_COPY_VAR_1}の　{B_COPY_VAR_2}を\n"
@@ -1205,13 +1208,57 @@ Questionnaire_Text_FillOut:: @ 0x08243EEE
 	@ 0x082440BC
 	.include "data/text/abnormal_weather.inc"
 
-	.globl gUnknown_82440DD
-gUnknown_82440DD: @ 0x82440DD
-	.include "data/scripts/gUnknown_82440DD.inc"
+EventScript_SelectWithoutRegisteredItem:: @ 0x082440DD
+	msgbox gText_SelectWithoutRegisteredItem, MSGBOX_SIGN
+	end
 
-	.globl EventScript_FieldPoison
-EventScript_FieldPoison: @ 0x82440E6
-	.include "data/scripts/gUnknown_82440E6.inc"
+	.include "data/scripts/field_poison.inc"
+
+Common_EventScript_NopReturn::
+	return
+
+@ Unused
+EventScript_CableClub_SetVarResult1::
+	setvar VAR_RESULT, TRUE
+	return
+
+EventScript_CableClub_SetVarResult0::
+	setvar VAR_RESULT, FALSE
+	return
+
+Common_EventScript_UnionRoomAttendant::
+	@ The JP Cable Club attendant target is not yet structurally labeled.
+	call 0x082471FA
+	end
+
+Common_EventScript_WirelessClubAttendant::
+	@ The JP Cable Club attendant target is not yet structurally labeled.
+	call 0x08247351
+	end
+
+Common_EventScript_DirectCornerAttendant::
+	@ The JP Cable Club attendant target is not yet structurally labeled.
+	call 0x08247383
+	end
+
+Common_EventScript_RemoveStaticPokemon::
+	fadescreenswapbuffers FADE_TO_BLACK
+	removeobject VAR_LAST_TALKED
+	fadescreenswapbuffers FADE_FROM_BLACK
+	release
+	end
+
+Common_EventScript_LegendaryFlewAway::
+	fadescreenswapbuffers FADE_TO_BLACK
+	removeobject VAR_LAST_TALKED
+	fadescreenswapbuffers FADE_FROM_BLACK
+	bufferspeciesname STR_VAR_1, VAR_0x8004
+	msgbox gText_LegendaryFlewAway, MSGBOX_DEFAULT
+	release
+	end
+
+Common_EventScript_GetGiftMonPartySlot:: @ 0x082441B5
+	.include "data/scripts/gUnknown_82441B5.inc"
 
 	.globl EventScript_Questionnaire
 EventScript_Questionnaire: @ 0x8244245

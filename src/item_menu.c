@@ -5580,7 +5580,7 @@ __attribute__((naked)) bool8 UseRegisteredKeyItemOnField()
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081AD3D0: .4byte gUnknown_82440DD\n\t"
+        "_081AD3D0: .4byte EventScript_SelectWithoutRegisteredItem\n\t"
         ".syntax divided\n\t"
     );
 }
