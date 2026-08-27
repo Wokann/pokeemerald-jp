@@ -813,8 +813,6 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/RecordCorner/scripts.inc"
 	.include "data/maps/BattleColosseum_4P/scripts.inc"
 	.include "data/maps/ContestHall/scripts.inc"
-LilycoveCity_ContestLobby_EventScript_SetPlayerGfx: @ 0x0821DD5F
-	.incbin "baserom_jp.gba", 0x21dd5f, 0x24
 	.include "data/maps/InsideOfTruck/scripts.inc"
 	.incbin "baserom_jp.gba", 0x21de1e, 0x28
 	.include "data/maps/SSTidalCorridor/scripts.inc"

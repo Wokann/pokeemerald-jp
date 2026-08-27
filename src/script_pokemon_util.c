@@ -1,6 +1,6 @@
 #include "global.h"
 #include "script_pokemon_util.h"
-__attribute__((naked)) void ScriptGetMultiplayerId(void)
+__attribute__((naked)) void GetContestMultiplayerId(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -43,7 +43,7 @@ __attribute__((naked)) void ScriptGetMultiplayerId(void)
     );
 }
 
-__attribute__((naked)) void ScriptRandom(void)
+__attribute__((naked)) void GenerateContestRand(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -266,7 +266,7 @@ __attribute__((naked)) void sub_080F99C4(void)
     );
 }
 
-__attribute__((naked)) void sub_080F99E4(void)
+__attribute__((naked)) void ClearLinkContestFlags(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -280,7 +280,7 @@ __attribute__((naked)) void sub_080F99E4(void)
     );
 }
 
-__attribute__((naked)) void sub_080F99F0(void)
+__attribute__((naked)) void IsWirelessContest(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

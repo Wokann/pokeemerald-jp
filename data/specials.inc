@@ -345,7 +345,7 @@ gSpecials::
 	def_special BattleSetup_StartLatiBattle, waitstate=1
 	def_special SetRoute119Weather
 	def_special SetRoute123Weather
-	def_special ScriptGetMultiplayerId
+	def_special GetContestMultiplayerId
 	def_special ScriptGetPartyMonSpecies
 	def_special IsSelectedMonEgg
 	def_special nullsub_54
@@ -359,7 +359,7 @@ gSpecials::
 	def_special BufferLottoTicketNumber
 	def_special sub_08165248
 	def_special sub_080F9C00
-	def_special ScriptRandom
+	def_special GenerateContestRand
 	def_special SetChampionSaveWarp
 	def_special sub_080EE808
 	def_special sub_080EEDEC
@@ -466,12 +466,12 @@ gSpecials::
 	def_special GetWirelessCommType
 	def_special sub_080F996C
 	def_special sub_080F999C
-	def_special sub_080F99F0
+	def_special IsWirelessContest
 	def_special ShowRankingHallRecordsWindow
 	def_special ScrollRankingHallRecordsWindow
 	def_special sub_08139F5C
 	def_special sub_080F99C4
-	def_special sub_080F99E4
+	def_special ClearLinkContestFlags
 	def_special TryContestEModeLinkup
 	def_special sub_0813A164
 	@ Same compatibility treatment for the retained JP C symbol above.
@@ -557,7 +557,7 @@ gSpecials::
 	def_special TryGetWallpaperWithWaldaPhrase
 	def_special sub_08139F0C
 	def_special sub_0813B9A0
-	def_special sub_080F9424
+	def_special LoadLinkContestPlayerPalettes
 	def_special ShowTrainerHillRecords, waitstate=1
 	def_special PlayerFaceTrainerAfterBattle
 	def_special sub_0813B9D8
@@ -614,8 +614,6 @@ gSpecials::
 	.set SPECIAL_WAITSTATE_SaveMuseumContestPainting, SPECIAL_WAITSTATE_sub_080F916C
 	.set SPECIAL_CountPlayerMuseumPaintings, SPECIAL_CountPlayerContestPaintings
 	.set SPECIAL_WAITSTATE_CountPlayerMuseumPaintings, SPECIAL_WAITSTATE_CountPlayerContestPaintings
-	.set SPECIAL_ClearLinkContestFlags, SPECIAL_sub_080F99E4
-	.set SPECIAL_WAITSTATE_ClearLinkContestFlags, SPECIAL_WAITSTATE_sub_080F99E4
 	.set SPECIAL_TryBecomeLinkLeader, SPECIAL_BerryBlenderLinkBecomeLeader
 	.set SPECIAL_WAITSTATE_TryBecomeLinkLeader, SPECIAL_WAITSTATE_BerryBlenderLinkBecomeLeader
 	.set SPECIAL_TryJoinLinkGroup, SPECIAL_BerryBlenderLinkJoinGroup

@@ -12278,7 +12278,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'sub_080F916C': 'SaveMuseumContestPainting',
             'sub_080F938C': 'SetLinkContestPlayerGfx',
             'sub_080F95B4': 'IsContestDebugActive',
-            'sub_080F99E4': 'ClearLinkContestFlags',
             'sub_080F87C0': 'TryEnterContestMon',
             'CountPlayerContestPaintings': 'CountPlayerMuseumPaintings',
             'BerryBlenderLinkBecomeLeader': 'TryBecomeLinkLeader',

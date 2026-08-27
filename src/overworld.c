@@ -1957,7 +1957,7 @@ __attribute__((naked)) u16 GetLocationMusic(struct WarpData *warp)
         "	ldr r0, _08085008\n\t"
         "	b _08085036\n\t"
         "	.align 2, 0\n\t"
-        "_08085008: .4byte SPECIAL_sub_080F99E4\n\t"
+        "_08085008: .4byte SPECIAL_ClearLinkContestFlags\n\t"
         "_0808500C:\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl IsInfiltratedWeatherInstitute\n\t"

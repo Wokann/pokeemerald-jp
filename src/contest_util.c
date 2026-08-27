@@ -7014,7 +7014,7 @@ __attribute__((naked)) void sub_080F938C(void)
     );
 }
 
-__attribute__((naked)) void sub_080F9424(void)
+__attribute__((naked)) void LoadLinkContestPlayerPalettes(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
