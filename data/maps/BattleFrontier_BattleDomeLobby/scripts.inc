@@ -1,622 +1,682 @@
-@ BattleFrontier_BattleDomeLobby scripts (JP map g26 m18 @ 0x08226D8C)
-
 BattleFrontier_BattleDomeLobby_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, BattleFrontier_BattleDomeLobby_EventScript_00226D9C
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleDomeLobby_MapScriptTable_00226DB9
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattleDomeLobby_MapScriptTable_00226DA5
+	map_script MAP_SCRIPT_ON_RESUME, BattleFrontier_BattleDomeLobby_OnResume
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleDomeLobby_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattleDomeLobby_OnWarp
 	.byte 0
 
-BattleFrontier_BattleDomeLobby_EventScript_00226D9C::
-	setvar 0x8004, 0x15
-	special sub_0818E608
+BattleFrontier_BattleDomeLobby_OnResume:
+	dome_initresultstree
 	end
 
-BattleFrontier_BattleDomeLobby_MapScriptTable_00226DA5::
-	map_script_2 0x4001, 0x0, BattleFrontier_BattleDomeLobby_EventScript_00226DAF
+BattleFrontier_BattleDomeLobby_OnWarp:
+	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleDomeLobby_EventScript_TurnPlayerNorth
 	.2byte 0
 
-BattleFrontier_BattleDomeLobby_EventScript_00226DAF::
-	setvar 0x4001, 0x1
-	turnobject 0xFF, 0x2
+BattleFrontier_BattleDomeLobby_EventScript_TurnPlayerNorth::
+	setvar VAR_TEMP_1, 1
+	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
-BattleFrontier_BattleDomeLobby_MapScriptTable_00226DB9::
-	map_script_2 0x4000, 0x0, BattleFrontier_BattleDomeLobby_EventScript_00226DE3
-	map_script_2 0x4000, 0x1, BattleFrontier_BattleDomeLobby_EventScript_00226DEC
-	map_script_2 0x4000, 0x2, BattleFrontier_BattleDomeLobby_EventScript_00226FA3
-	map_script_2 0x4000, 0x3, BattleFrontier_BattleDomeLobby_EventScript_00226E45
-	map_script_2 0x4000, 0x4, BattleFrontier_BattleDomeLobby_EventScript_00226EEA
+BattleFrontier_BattleDomeLobby_OnFrame:
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0, BattleFrontier_BattleDomeLobby_EventScript_GetChallengeStatus
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING, BattleFrontier_BattleDomeLobby_EventScript_QuitWithoutSaving
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_PAUSED, BattleFrontier_BattleDomeLobby_EventScript_ResumeChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_WON, BattleFrontier_BattleDomeLobby_EventScript_WonChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST, BattleFrontier_BattleDomeLobby_EventScript_LostChallenge
 	.2byte 0
 
-BattleFrontier_BattleDomeLobby_EventScript_00226DE3::
-	setvar 0x8004, 0x0
-	special CallFrontierUtilFunc
+BattleFrontier_BattleDomeLobby_EventScript_GetChallengeStatus::
+	frontier_getstatus
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_00226DEC::
+BattleFrontier_BattleDomeLobby_EventScript_QuitWithoutSaving::
 	lockall
-	loadword 0x0, gJPText_002277D7
-	callstd 0x4
+	msgbox BattleFrontier_BattleDomeLobby_Text_DidntSaveBeforeQuitting, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special sub_0818E608
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x0
-	special sub_0818E608
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x6
-	setvar 0x8006, 0x1
-	special sub_0818E608
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x4000, 0xFF
+	dome_set DOME_DATA_WIN_STREAK, 0
+	dome_set DOME_DATA_WIN_STREAK_ACTIVE, FALSE
+	dome_set DOME_DATA_ATTEMPTED_CHALLENGE, TRUE
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_00226E45::
-	call 0x08221FB3
+BattleFrontier_BattleDomeLobby_EventScript_WonChallenge::
+	call BattleFrontier_EventScript_IncrementWinStreak
 	lockall
-	setvar 0x8004, 0xA
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_00226E6B
-	loadword 0x0, gJPText_00227828
-	callstd 0x4
-	goto BattleFrontier_BattleDomeLobby_EventScript_00226E73
+	frontier_isbrain
+	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattleDomeLobby_EventScript_DefeatedAce
+	msgbox BattleFrontier_BattleDomeLobby_Text_CongratsForWinningTourney, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleDomeLobby_EventScript_GiveBattlePoints
 
-BattleFrontier_BattleDomeLobby_EventScript_00226E6B::
-	loadword 0x0, gJPText_00227CCA
-	callstd 0x4
-
-BattleFrontier_BattleDomeLobby_EventScript_00226E73::
-	loadword 0x0, gJPText_00227D04
-	callstd 0x4
-	setvar 0x8004, 0xB
-	special CallFrontierUtilFunc
-	loadword 0x0, BattleFrontier_Text_ObtainedXBattlePoints
-	callstd 0x9
-	message gJPText_002278A7
+BattleFrontier_BattleDomeLobby_EventScript_DefeatedAce::
+	msgbox BattleFrontier_BattleDomeLobby_Text_CongratsDefeatedTucker, MSGBOX_DEFAULT
+BattleFrontier_BattleDomeLobby_EventScript_GiveBattlePoints::
+	msgbox BattleFrontier_BattleDomeLobby_Text_AwardTheseBattlePoints, MSGBOX_DEFAULT
+	frontier_givepoints
+	msgbox BattleFrontier_Text_ObtainedXBattlePoints, MSGBOX_GETPOINTS
+	message BattleFrontier_BattleDomeLobby_Text_RecordWillBeSaved
 	waitmessage
 	special LoadPlayerParty
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x3
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x8
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x6
-	setvar 0x8006, 0x1
-	special sub_0818E608
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x7
-	setvar 0x8006, 0x1
-	special sub_0818E608
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x1
-	special sub_0818E608
+	frontier_setpartyorder FRONTIER_PARTY_SIZE
+	frontier_checkairshow
+	dome_set DOME_DATA_ATTEMPTED_CHALLENGE, TRUE
+	dome_set DOME_DATA_HAS_WON_CHALLENGE, TRUE
+	dome_set DOME_DATA_WIN_STREAK_ACTIVE, TRUE
 	special LoadPlayerParty
 	special HealPlayerParty
-	goto BattleFrontier_BattleDomeLobby_EventScript_00226F3B
+	goto BattleFrontier_BattleDomeLobby_EventScript_AskRecordBattle
 
-BattleFrontier_BattleDomeLobby_EventScript_00226EEA::
+BattleFrontier_BattleDomeLobby_EventScript_LostChallenge::
 	lockall
-	loadword 0x0, gJPText_0022789C
-	callstd 0x4
-	message gJPText_002278A7
+	msgbox BattleFrontier_BattleDomeLobby_Text_ThankYouForPlaying, MSGBOX_DEFAULT
+	message BattleFrontier_BattleDomeLobby_Text_RecordWillBeSaved
 	waitmessage
 	special LoadPlayerParty
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x3
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x8
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x0
-	special sub_0818E608
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x6
-	setvar 0x8006, 0x1
-	special sub_0818E608
+	frontier_setpartyorder FRONTIER_PARTY_SIZE
+	frontier_checkairshow
+	dome_set DOME_DATA_WIN_STREAK_ACTIVE, FALSE
+	dome_set DOME_DATA_ATTEMPTED_CHALLENGE, TRUE
 	special LoadPlayerParty
 	special HealPlayerParty
-
-BattleFrontier_BattleDomeLobby_EventScript_00226F3B::
-	setvar 0x8004, 0xD
-	setvar 0x8005, 0x0
-	special sub_0818E608
-	playse 0x37
+BattleFrontier_BattleDomeLobby_EventScript_AskRecordBattle::
+	dome_save 0
+	playse SE_SAVE
 	waitse
-	call 0x0821F921
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_00226F93
-	message gJPText_00227D2E
+	call BattleFrontier_EventScript_GetCantRecordBattle
+	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattleDomeLobby_EventScript_EndChallenge
+	message BattleFrontier_BattleDomeLobby_Text_RecordLastMatch
 	waitmessage
-	multichoicedefault 0x14, 0x8, 0x5E, 0x1, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_00226F93
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_00226F8E
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_00226F93
+	multichoicedefault 20, 8, MULTI_YESNO, 1, FALSE
+	switch VAR_RESULT
+	case 1, BattleFrontier_BattleDomeLobby_EventScript_EndChallenge
+	case 0, BattleFrontier_BattleDomeLobby_EventScript_RecordBattle
+	case MULTI_B_PRESSED, BattleFrontier_BattleDomeLobby_EventScript_EndChallenge
 
-BattleFrontier_BattleDomeLobby_EventScript_00226F8E::
-	call 0x0821F8F5
-
-BattleFrontier_BattleDomeLobby_EventScript_00226F93::
-	loadword 0x0, gJPText_002274C6
-	callstd 0x4
+BattleFrontier_BattleDomeLobby_EventScript_RecordBattle::
+	call BattleFrontier_EventScript_SaveBattle
+BattleFrontier_BattleDomeLobby_EventScript_EndChallenge::
+	msgbox BattleFrontier_BattleDomeLobby_Text_HopeToSeeYouAgain, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x4000, 0xFF
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_00226FA3::
+BattleFrontier_BattleDomeLobby_EventScript_ResumeChallenge::
 	lockall
-	loadword 0x0, gJPText_002278C2
-	callstd 0x4
-	message gJPText_002278CE
+	msgbox BattleFrontier_BattleDomeLobby_Text_WeveBeenWaitingForYou, MSGBOX_DEFAULT
+	message BattleFrontier_BattleDomeLobby_Text_OkayToSaveBeforeChallenge2
 	waitmessage
-	setvar 0x8004, 0xD
-	setvar 0x8005, 0x1
-	special sub_0818E608
-	playse 0x37
+	dome_save CHALLENGE_STATUS_SAVING
+	playse SE_SAVE
 	waitse
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x3
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x4000, 0xFF
-	goto BattleFrontier_BattleDomeLobby_EventScript_0022716C
+	frontier_set FRONTIER_DATA_PAUSED, FALSE
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	goto BattleFrontier_BattleDomeLobby_EventScript_EnterChallenge
 
-BattleFrontier_BattleDomeLobby_EventScript_00226FDF::
+BattleFrontier_BattleDomeLobby_EventScript_SinglesAttendant::
 	lock
 	faceplayer
-	setvar 0x40CF, 0x1
-	setvar 0x40CE, 0x0
-	goto BattleFrontier_BattleDomeLobby_EventScript_00227003
+	setvar VAR_FRONTIER_FACILITY, FRONTIER_FACILITY_DOME
+	setvar VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES
+	goto BattleFrontier_BattleDomeLobby_EventScript_AttendantWelcome
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_00226FF1::
+BattleFrontier_BattleDomeLobby_EventScript_DoublesAttendant::
 	lock
 	faceplayer
-	setvar 0x40CF, 0x1
-	setvar 0x40CE, 0x1
-	goto BattleFrontier_BattleDomeLobby_EventScript_00227003
+	setvar VAR_FRONTIER_FACILITY, FRONTIER_FACILITY_DOME
+	setvar VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES
+	goto BattleFrontier_BattleDomeLobby_EventScript_AttendantWelcome
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_00227003::
+BattleFrontier_BattleDomeLobby_EventScript_AttendantWelcome::
 	special SavePlayerParty
-	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002272A7
-	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002272B0
-
-BattleFrontier_BattleDomeLobby_EventScript_0022701C::
-	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002272B9
-	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002272BF
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleDomeLobby_EventScript_WelcomeSingles
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleDomeLobby_EventScript_WelcomeDoubles
+BattleFrontier_BattleDomeLobby_EventScript_AskTakeChallenge::
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleDomeLobby_EventScript_TakeSinglesChallenge
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleDomeLobby_EventScript_TakeDoublesChallenge
 	waitmessage
-	multichoice 0x11, 0x6, 0x17, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_00227069
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002271A4
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_0022720E
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_0022720E
+	multichoice 17, 6, MULTI_CHALLENGEINFO, FALSE
+	switch VAR_RESULT
+	case 0, BattleFrontier_BattleDomeLobby_EventScript_TryEnterChallenge
+	case 1, BattleFrontier_BattleDomeLobby_EventScript_ExplainChallenge
+	case 2, BattleFrontier_BattleDomeLobby_EventScript_CancelChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattleDomeLobby_EventScript_CancelChallenge
 
-BattleFrontier_BattleDomeLobby_EventScript_00227069::
-	message 0x0822764D
+BattleFrontier_BattleDomeLobby_EventScript_TryEnterChallenge::
+	message BattleFrontier_BattleDomeLobby_Text_WhichLevelMode
 	waitmessage
-	multichoice 0x11, 0x6, 0x18, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_0022720E
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_0022720E
-	setvar 0x8004, 0xF
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x8004, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002271BF
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	copyvar 0x8006, 0x800D
-	special CallFrontierUtilFunc
-	loadword 0x0, 0x0822767D
-	callstd 0x4
-	fadescreen 0x1
-	call 0x082202F8
-	copyvar 0x8004, 0x800D
-	setvar 0x8005, 0x3
-	special sub_080F9D20
-	waitstate
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_0022720B
-	loadword 0x0, 0x08227624
-	callstd 0x5
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_0022720B
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_0022710A
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_0022720B
+	multichoice 17, 6, MULTI_LEVEL_MODE, FALSE
+	switch VAR_RESULT
+	case FRONTIER_LVL_TENT, BattleFrontier_BattleDomeLobby_EventScript_CancelChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattleDomeLobby_EventScript_CancelChallenge
+	frontier_checkineligible
+	goto_if_eq VAR_0x8004, TRUE, BattleFrontier_BattleDomeLobby_EventScript_NotEnoughValidMons
+	frontier_set FRONTIER_DATA_LVL_MODE, VAR_RESULT
+	msgbox BattleFrontier_BattleDomeLobby_Text_SelectThreeMons, MSGBOX_DEFAULT
+	fadescreen FADE_TO_BLACK
+	call BattleFrontier_EventScript_GetLvlMode
+	copyvar VAR_0x8004, VAR_RESULT
+	setvar VAR_0x8005, FRONTIER_PARTY_SIZE
+	special ChoosePartyForBattleFrontier
+	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattleDomeLobby_EventScript_LoadPartyCancelChallenge
+	msgbox BattleFrontier_BattleDomeLobby_Text_OkayToSaveBeforeChallenge, MSGBOX_YESNO
+	switch VAR_RESULT
+	case NO, BattleFrontier_BattleDomeLobby_EventScript_LoadPartyCancelChallenge
+	case YES, BattleFrontier_BattleDomeLobby_EventScript_SaveBeforeChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattleDomeLobby_EventScript_LoadPartyCancelChallenge
 
-BattleFrontier_BattleDomeLobby_EventScript_0022710A::
-	setvar 0x4000, 0x0
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x4
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x0
-	special sub_0818E608
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x1
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x3
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
+BattleFrontier_BattleDomeLobby_EventScript_SaveBeforeChallenge::
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
+	frontier_set FRONTIER_DATA_SELECTED_MON_ORDER
+	dome_init
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING
+	frontier_set FRONTIER_DATA_PAUSED, FALSE
 	special LoadPlayerParty
 	closemessage
-	delay 0x2
-	call 0x082423E9
-	setvar 0x4000, 0xFF
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002271F4
-	setvar 0x8004, 0x16
-	special sub_0818E608
-
-BattleFrontier_BattleDomeLobby_EventScript_0022716C::
+	delay 2
+	call Common_EventScript_SaveGame
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattleDomeLobby_EventScript_CancelChallengeSaveFailed
+	dome_inittrainers
+BattleFrontier_BattleDomeLobby_EventScript_EnterChallenge::
 	special SavePlayerParty
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x3
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0xF
-	special sub_0818E608
-	loadword 0x0, gJPText_002277BF
-	callstd 0x4
+	frontier_setpartyorder FRONTIER_PARTY_SIZE
+	dome_settrainers
+	msgbox BattleFrontier_BattleDomeLobby_Text_ShowYouToBattleDome, MSGBOX_DEFAULT
 	closemessage
-	call BattleFrontier_BattleDomeLobby_EventScript_00227218
+	call BattleFrontier_BattleDomeLobby_EventScript_WalkToDoor
 	special HealPlayerParty
-	warp 0x1A13, 0xFF, 0x17, 0x6
-	setvar 0x4000, 0x0
+	warp MAP_BATTLE_FRONTIER_BATTLE_DOME_CORRIDOR, 23, 6
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
 	waitstate
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_002271A4::
-	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002272C5
-	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002272CE
-	goto BattleFrontier_BattleDomeLobby_EventScript_0022701C
+BattleFrontier_BattleDomeLobby_EventScript_ExplainChallenge::
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleDomeLobby_EventScript_ExplainSinglesChallenge
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleDomeLobby_EventScript_ExplainDoublesChallenge
+	goto BattleFrontier_BattleDomeLobby_EventScript_AskTakeChallenge
 
-BattleFrontier_BattleDomeLobby_EventScript_002271BF::
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002271DA
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002271E7
+BattleFrontier_BattleDomeLobby_EventScript_NotEnoughValidMons::
+	switch VAR_RESULT
+	case FRONTIER_LVL_50, BattleFrontier_BattleDomeLobby_EventScript_NotEnoughValidMonsLv50
+	case FRONTIER_LVL_OPEN, BattleFrontier_BattleDomeLobby_EventScript_NotEnoughValidMonsLvOpen
 
-BattleFrontier_BattleDomeLobby_EventScript_002271DA::
-	loadword 0x0, 0x08227711
-	callstd 0x4
-	goto BattleFrontier_BattleDomeLobby_EventScript_00227216
+BattleFrontier_BattleDomeLobby_EventScript_NotEnoughValidMonsLv50::
+	msgbox BattleFrontier_BattleDomeLobby_Text_NotEnoughValidMonsLv50, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleDomeLobby_EventScript_EndCancelChallenge
 
-BattleFrontier_BattleDomeLobby_EventScript_002271E7::
-	loadword 0x0, 0x0822769C
-	callstd 0x4
-	goto BattleFrontier_BattleDomeLobby_EventScript_00227216
+BattleFrontier_BattleDomeLobby_EventScript_NotEnoughValidMonsLvOpen::
+	msgbox BattleFrontier_BattleDomeLobby_Text_NotEnoughValidMonsLvOpen, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleDomeLobby_EventScript_EndCancelChallenge
 
-BattleFrontier_BattleDomeLobby_EventScript_002271F4::
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	goto BattleFrontier_BattleDomeLobby_EventScript_0022720E
+BattleFrontier_BattleDomeLobby_EventScript_CancelChallengeSaveFailed::
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	goto BattleFrontier_BattleDomeLobby_EventScript_CancelChallenge
 
-BattleFrontier_BattleDomeLobby_EventScript_0022720B::
+BattleFrontier_BattleDomeLobby_EventScript_LoadPartyCancelChallenge::
 	special LoadPlayerParty
-
-BattleFrontier_BattleDomeLobby_EventScript_0022720E::
-	loadword 0x0, gJPText_002274C6
-	callstd 0x4
-
-BattleFrontier_BattleDomeLobby_EventScript_00227216::
+BattleFrontier_BattleDomeLobby_EventScript_CancelChallenge::
+	msgbox BattleFrontier_BattleDomeLobby_Text_HopeToSeeYouAgain, MSGBOX_DEFAULT
+BattleFrontier_BattleDomeLobby_EventScript_EndCancelChallenge::
 	release
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_00227218::
-	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_00227287
-	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_0022728F
-	applymovement 0xFF, 0x082272EF
-	waitmovement 0x0
-	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002272D7
-	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002272DD
-	waitmoncry
-	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_00227297
-	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_0022729F
-	applymovement 0xFF, 0x082272F8
-	waitmovement 0x0
-	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002272E3
-	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_002272E9
-	waitmoncry
+BattleFrontier_BattleDomeLobby_EventScript_WalkToDoor::
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleDomeLobby_EventScript_SinglesAttendantWalkToDoor
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleDomeLobby_EventScript_DoublesAttendantWalkToDoor
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleDomeLobby_Movement_WalkToDoor
+	waitmovement 0
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleDomeLobby_EventScript_OpenSinglesDoor
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleDomeLobby_EventScript_OpenDoublesDoor
+	waitdooranim_jp
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleDomeLobby_EventScript_SinglesAttendantEnterDoor
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleDomeLobby_EventScript_DoublesAttendantEnterDoor
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleDomeLobby_Movement_PlayerEnterDoor
+	waitmovement 0
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleDomeLobby_EventScript_CloseSinglesDoor
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleDomeLobby_EventScript_CloseDoublesDoor
+	waitdooranim_jp
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_00227287::
-	applymovement 0x1, 0x082272EF
+BattleFrontier_BattleDomeLobby_EventScript_SinglesAttendantWalkToDoor::
+	applymovement LOCALID_DOME_ATTENDANT_SINGLES, BattleFrontier_BattleDomeLobby_Movement_WalkToDoor
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_0022728F::
-	applymovement 0x6, 0x082272EF
+BattleFrontier_BattleDomeLobby_EventScript_DoublesAttendantWalkToDoor::
+	applymovement LOCALID_DOME_ATTENDANT_DOUBLES, BattleFrontier_BattleDomeLobby_Movement_WalkToDoor
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_00227297::
-	applymovement 0x1, 0x082272F5
+BattleFrontier_BattleDomeLobby_EventScript_SinglesAttendantEnterDoor::
+	applymovement LOCALID_DOME_ATTENDANT_SINGLES, BattleFrontier_BattleDomeLobby_Movement_AttendantEnterDoor
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_0022729F::
-	applymovement 0x6, 0x082272F5
+BattleFrontier_BattleDomeLobby_EventScript_DoublesAttendantEnterDoor::
+	applymovement LOCALID_DOME_ATTENDANT_DOUBLES, BattleFrontier_BattleDomeLobby_Movement_AttendantEnterDoor
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_002272A7::
-	loadword 0x0, 0x08227461
-	callstd 0x4
+BattleFrontier_BattleDomeLobby_EventScript_WelcomeSingles::
+	msgbox BattleFrontier_BattleDomeLobby_Text_WelcomeSingleBattle, MSGBOX_DEFAULT
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_002272B0::
-	loadword 0x0, 0x082278F7
-	callstd 0x4
+BattleFrontier_BattleDomeLobby_EventScript_WelcomeDoubles::
+	msgbox BattleFrontier_BattleDomeLobby_Text_WelcomeDoubleBattle, MSGBOX_DEFAULT
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_002272B9::
-	message 0x082274AA
+BattleFrontier_BattleDomeLobby_EventScript_TakeSinglesChallenge::
+	message BattleFrontier_BattleDomeLobby_Text_TakeSinglesChallenge
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_002272BF::
-	message 0x0822793F
+BattleFrontier_BattleDomeLobby_EventScript_TakeDoublesChallenge::
+	message BattleFrontier_BattleDomeLobby_Text_TakeDoublesChallenge
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_002272C5::
-	loadword 0x0, 0x082274DB
-	callstd 0x4
+BattleFrontier_BattleDomeLobby_EventScript_ExplainSinglesChallenge::
+	msgbox BattleFrontier_BattleDomeLobby_Text_ExplainSinglesChallenge, MSGBOX_DEFAULT
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_002272CE::
-	loadword 0x0, 0x0822795A
-	callstd 0x4
+BattleFrontier_BattleDomeLobby_EventScript_ExplainDoublesChallenge::
+	msgbox BattleFrontier_BattleDomeLobby_Text_ExplainDoublesChallenge, MSGBOX_DEFAULT
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_002272D7::
-	opendoor 0x5, 0x4
+BattleFrontier_BattleDomeLobby_EventScript_OpenSinglesDoor::
+	opendoor 5, 4
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_002272DD::
-	opendoor 0x11, 0x4
+BattleFrontier_BattleDomeLobby_EventScript_OpenDoublesDoor::
+	opendoor 17, 4
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_002272E3::
-	closedoor 0x5, 0x4
+BattleFrontier_BattleDomeLobby_EventScript_CloseSinglesDoor::
+	closedoor 5, 4
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_002272E9::
-	closedoor 0x11, 0x4
+BattleFrontier_BattleDomeLobby_EventScript_CloseDoublesDoor::
+	closedoor 17, 4
 	return
 
-	.incbin "baserom_jp.gba", 0x2272ef, 0xd
-BattleFrontier_BattleDomeLobby_EventScript_002272FC::
+BattleFrontier_BattleDomeLobby_Movement_WalkToDoor:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+BattleFrontier_BattleDomeLobby_Movement_AttendantEnterDoor:
+	walk_up
+	set_invisible
+	step_end
+
+BattleFrontier_BattleDomeLobby_Movement_PlayerEnterDoor:
+	walk_up
+	walk_up
+	set_invisible
+	step_end
+
+BattleFrontier_BattleDomeLobby_EventScript_ShowSinglesResults::
 	lockall
-	setvar 0x8004, 0x7
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
+	frontier_results FRONTIER_FACILITY_DOME, FRONTIER_MODE_SINGLES
 	waitbuttonpress
 	special RemoveRecordsWindow
 	releaseall
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_00227315::
+BattleFrontier_BattleDomeLobby_EventScript_ShowDoublesResults::
 	lockall
-	setvar 0x8004, 0x7
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x1
-	special CallFrontierUtilFunc
+	frontier_results FRONTIER_FACILITY_DOME, FRONTIER_MODE_DOUBLES
 	waitbuttonpress
 	special RemoveRecordsWindow
 	releaseall
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_0022732E::
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x9
-	special sub_0818E608
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_00227373
-	compare_var_to_value 0x800D, 0x1
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_0022737C
-	compare_var_to_value 0x800D, 0x2
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_00227385
-	compare_var_to_value 0x800D, 0x3
-	call_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_0022738E
-	fadescreen 0x1
-	setvar 0x8004, 0x8
-	special sub_0818E608
+BattleFrontier_BattleDomeLobby_EventScript_ShowPrevTourneyTree::
+	dome_get DOME_DATA_PREV_TOURNEY_TYPE
+	call_if_eq VAR_RESULT, 0, BattleFrontier_BattleDomeLobby_EventScript_PrevTourneyResultsSinglesLv50
+	call_if_eq VAR_RESULT, 1, BattleFrontier_BattleDomeLobby_EventScript_PrevTourneyResultsDoublesLv50
+	call_if_eq VAR_RESULT, 2, BattleFrontier_BattleDomeLobby_EventScript_PrevTourneyResultsSinglesLvOpen
+	call_if_eq VAR_RESULT, 3, BattleFrontier_BattleDomeLobby_EventScript_PrevTourneyResultsDoublesLvOpen
+	fadescreen FADE_TO_BLACK
+	dome_showprevtourneytree
 	waitstate
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_00227373::
-	loadword 0x0, 0x08227AB0
-	callstd 0x3
+BattleFrontier_BattleDomeLobby_EventScript_PrevTourneyResultsSinglesLv50::
+	msgbox BattleFrontier_BattleDomeLobby_Text_PrevTourneyResultsSinglesLv50, MSGBOX_SIGN
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_0022737C::
-	loadword 0x0, 0x08227AD8
-	callstd 0x3
+BattleFrontier_BattleDomeLobby_EventScript_PrevTourneyResultsDoublesLv50::
+	msgbox BattleFrontier_BattleDomeLobby_Text_PrevTourneyResultsDoublesLv50, MSGBOX_SIGN
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_00227385::
-	loadword 0x0, 0x08227AFF
-	callstd 0x3
+BattleFrontier_BattleDomeLobby_EventScript_PrevTourneyResultsSinglesLvOpen::
+	msgbox BattleFrontier_BattleDomeLobby_Text_PrevTourneyResultsSinglesLvOpen, MSGBOX_SIGN
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_0022738E::
-	loadword 0x0, 0x08227B29
-	callstd 0x3
+BattleFrontier_BattleDomeLobby_EventScript_PrevTourneyResultsDoublesLvOpen::
+	msgbox BattleFrontier_BattleDomeLobby_Text_PrevTourneyResultsDoublesLvOpen, MSGBOX_SIGN
 	return
 
-BattleFrontier_BattleDomeLobby_EventScript_00227397::
-	setvar 0x8004, 0x14
-	special sub_0818E608
-	loadword 0x0, 0x08227B52
-	callstd 0x2
+BattleFrontier_BattleDomeLobby_EventScript_Maniac::
+	dome_getwinnersname
+	msgbox BattleFrontier_BattleDomeLobby_Text_LastWinnerWasTough, MSGBOX_NPC
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_002273A8::
-	loadword 0x0, 0x08227BF7
-	callstd 0x2
+BattleFrontier_BattleDomeLobby_EventScript_Lass::
+	msgbox BattleFrontier_BattleDomeLobby_Text_WinnersGainReputation, MSGBOX_NPC
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_002273B1::
-	loadword 0x0, 0x08227C4A
-	callstd 0x2
+BattleFrontier_BattleDomeLobby_EventScript_FatMan::
+	msgbox BattleFrontier_BattleDomeLobby_Text_TrashedInFirstRound, MSGBOX_NPC
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_002273BA::
-	loadword 0x0, 0x08227C79
-	callstd 0x2
+BattleFrontier_BattleDomeLobby_EventScript_Man::
+	msgbox BattleFrontier_BattleDomeLobby_Text_NeedToCheckOpponentCarefully, MSGBOX_NPC
 	end
 
-	.incbin "baserom_jp.gba", 0x2273c3, 0x1b
-BattleFrontier_BattleDomeLobby_EventScript_002273DE::
+@ A few OutsideWest event scripts are inserted here instead, two of which are unused
+BattleFrontier_OutsideWest_EventScript_Man3::
+	msgbox BattleFrontier_OutsideWest_Text_LongDreamedAboutBattleFrontier, MSGBOX_NPC
+	end
+
+@ Unused
+BattleFrontier_OutsideWest_EventScript_BattleDomeSign2::
+	msgbox BattleFrontier_OutsideWest_Text_BattleDomeSign2, MSGBOX_NPC
+	end
+
+@ Unused
+BattleFrontier_OutsideWest_EventScript_UnderConstructionSign::
+	msgbox BattleFrontier_OutsideWest_Text_QuestionMarkUnderConstruction, MSGBOX_NPC
+	end
+
+BattleFrontier_BattleDomeLobby_EventScript_RulesBoard::
 	lockall
-	loadword 0x0, 0x08227D5C
-	callstd 0x4
-	goto BattleFrontier_BattleDomeLobby_EventScript_002273ED
+	msgbox BattleFrontier_BattleDomeLobby_Text_RulesAreListed, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleDomeLobby_EventScript_ReadRulesBoard
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_002273ED::
-	message 0x08227D74
+BattleFrontier_BattleDomeLobby_EventScript_ReadRulesBoard::
+	message BattleFrontier_BattleDomeLobby_Text_ReadWhichHeading
 	waitmessage
-	multichoice 0x11, 0x4, 0x62, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_00227435
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_00227443
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_00227451
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_0022745F
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleDomeLobby_EventScript_0022745F
+	multichoice 17, 4, MULTI_BATTLE_DOME_RULES, FALSE
+	switch VAR_RESULT
+	case 0, BattleFrontier_BattleDomeLobby_EventScript_RulesMatchup
+	case 1, BattleFrontier_BattleDomeLobby_EventScript_RulesTourneyTree
+	case 2, BattleFrontier_BattleDomeLobby_EventScript_RulesDoubleKO
+	case 3, BattleFrontier_BattleDomeLobby_EventScript_ExitRules
+	case MULTI_B_PRESSED, BattleFrontier_BattleDomeLobby_EventScript_ExitRules
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_00227435::
-	loadword 0x0, 0x08227D84
-	callstd 0x4
-	goto BattleFrontier_BattleDomeLobby_EventScript_002273ED
+BattleFrontier_BattleDomeLobby_EventScript_RulesMatchup::
+	msgbox BattleFrontier_BattleDomeLobby_Text_ExplainMatchupRules, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleDomeLobby_EventScript_ReadRulesBoard
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_00227443::
-	loadword 0x0, 0x08227DDA
-	callstd 0x4
-	goto BattleFrontier_BattleDomeLobby_EventScript_002273ED
+BattleFrontier_BattleDomeLobby_EventScript_RulesTourneyTree::
+	msgbox BattleFrontier_BattleDomeLobby_Text_ExplainTourneyTree, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleDomeLobby_EventScript_ReadRulesBoard
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_00227451::
-	loadword 0x0, 0x08227E6C
-	callstd 0x4
-	goto BattleFrontier_BattleDomeLobby_EventScript_002273ED
+BattleFrontier_BattleDomeLobby_EventScript_RulesDoubleKO::
+	msgbox BattleFrontier_BattleDomeLobby_Text_ExplainDoubleKORules, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleDomeLobby_EventScript_ReadRulesBoard
 	end
 
-BattleFrontier_BattleDomeLobby_EventScript_0022745F::
+BattleFrontier_BattleDomeLobby_EventScript_ExitRules::
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x227461, 0x65
-	.globl gJPText_002274C6
-gJPText_002274C6: @ 0x082274C6
+BattleFrontier_BattleDomeLobby_Text_WelcomeSingleBattle:
+	.string "トレーナーの　せんりゃくを　ためす　ばしょ！\n"
+	.string "バトルドームへ　ようこそ！\p"
+	.string "こちらでは\n"
+	.string "シングル　バトルトーナメントの\l"
+	.string "ごあんないを　しております$"
+
+BattleFrontier_BattleDomeLobby_Text_TakeSinglesChallenge:
+	.string "シングル　バトルトーナメントに\n"
+	.string "ちょうせん　しますか？$"
+
+BattleFrontier_BattleDomeLobby_Text_HopeToSeeYouAgain:
 	.string "またの　ごりようを　おまちして　おります$"
 
-	.incbin "baserom_jp.gba", 0x2274db, 0x2e4
-	.globl gJPText_002277BF
-gJPText_002277BF: @ 0x082277BF
+BattleFrontier_BattleDomeLobby_Text_ExplainSinglesChallenge:
+	.string "シングル　バトルトーナメントは\n"
+	.string "シングルバトルで　おこなわれる\l"
+	.string "トーナメントたいかい　です\p"
+	.string "さんかする　かたには　しゅつじょう　させる\n"
+	.string "ポケモンを　3ひき　えらんで　いただきます\p"
+	.string "しあいでは　3ひきの　てもち　ポケモンから\n"
+	.string "1ひきを　ひかえにして\l"
+	.string "2ひきずつで　たいせんを　おこないます\p"
+	.string "だす　ポケモンは　たいせん　あいての\n"
+	.string "ポケモンを　よくみて　えらんで　くださいね\p"
+	.string "トーナメントを　4かい　かちすすむと\n"
+	.string "みごと　ゆうしょうと　なります\p"
+	.string "バトルポイントが　もらえますので\n"
+	.string "がんばって　くださいね！\p"
+	.string "また　とちゅうで　ちょうせんを\n"
+	.string "ちゅうだんしたい　ばあいは\l"
+	.string "ちゃんと　レポートを　かかないと\l"
+	.string "つづけて　ちょうせんが　できないので\l"
+	.string "きをつけて　くださいね！$"
+
+BattleFrontier_BattleDomeLobby_Text_OkayToSaveBeforeChallenge:
+	.string "バトルドームへ　ごあんないする　まえに\n"
+	.string "レポートを　かきますが　よろしいですか？$"
+
+BattleFrontier_BattleDomeLobby_Text_WhichLevelMode:
+	.string "トーナメントには\n"
+	.string "レベル50と　オープンレベルと　ありますが\l"
+	.string "どちらに　ちょうせん　しますか？$"
+
+BattleFrontier_BattleDomeLobby_Text_SelectThreeMons:
+	.string "それでは　さんかする　ポケモンを\n"
+	.string "3ひき　おえらび　ください$"
+
+BattleFrontier_BattleDomeLobby_Text_NotEnoughValidMonsLvOpen:
+	.string "おきゃくさま！\p"
+	.string "さんかできる　ポケモンが　3ひき　いません！\p"
+	.string "また　もたせる　どうぐも\n"
+	.string "すべて　ちがう　どうぐに　してください！\p"
+	.string "なお　タマゴ{STR_VAR_1}さんか　させる　ことは　できません！\p"
+	.string "じゅんびが　できましたら\n"
+	.string "また　おこし　ください$"
+
+BattleFrontier_BattleDomeLobby_Text_NotEnoughValidMonsLv50:
+	.string "おきゃくさま！\p"
+	.string "さんかできる　ポケモンが　3ひき　いません！\p"
+	.string "さんかする　ためには　レベルが　50いかで\n"
+	.string "すべて　ちがう　しゅるいの　ポケモンを\l"
+	.string "3ひき　よういして　ください\p"
+	.string "また　もたせる　どうぐも\n"
+	.string "すべて　ちがう　どうぐに　してください！\p"
+	.string "なお　タマゴ{STR_VAR_1}さんか　させる　ことは　できません！\p"
+	.string "じゅんびが　できましたら\n"
+	.string "また　おこし　ください$"
+
+BattleFrontier_BattleDomeLobby_Text_ShowYouToBattleDome:
 	.string "それでは　バトルドームへ\n"
 	.string "ごあんない　します！$"
 
-	.globl gJPText_002277D7
-gJPText_002277D7: @ 0x082277D7
+BattleFrontier_BattleDomeLobby_Text_DidntSaveBeforeQuitting:
 	.string "おきゃくさま！\p"
 	.string "ぜんかい　ちゃんと　レポートを　かいて\n"
 	.string "しゅうりょう　しませんでしたね？\p"
 	.string "もうしわけ　ありませんが　そのばあい\n"
 	.string "ちょうせんは　むこうと　なります$"
 
-	.globl gJPText_00227828
-gJPText_00227828: @ 0x08227828
+BattleFrontier_BattleDomeLobby_Text_CongratsForWinningTourney:
 	.string "バトルトーナメント　ゆうしょう\n"
 	.string "おめでとう　ございます！$"
 
-	.incbin "baserom_jp.gba", 0x227845, 0x20
-	.globl gJPText_00227865
-gJPText_00227865: @ 0x08227865
-	.string "{MUS_RG_VS_TRAINER}は\n"
-	.string "{B_COPY_VAR_1}を　もらった！$"
+@ Unused
+BattleFrontier_BattleDomeLobby_Text_HereIsYourPrize:
+	.string "ゆうしょう　されましたので\n"
+	.string "この　しょうひんを　さしあげます！$"
 
-	.incbin "baserom_jp.gba", 0x227873, 0x29
-	.globl gJPText_0022789C
-gJPText_0022789C: @ 0x0822789C
+@ Used by Verdanturf Tent
+BattleFrontier_BattleDomeLobby_Text_ReceivedPrize:
+	.string "{PLAYER}は\n"
+	.string "{STR_VAR_1}を　もらった！$"
+
+@ Unused
+BattleFrontier_BattleDomeLobby_Text_BagFullMakeRoom:
+	.string "⋯⋯あら　どうぐが　いっぱいですね\p"
+	.string "どうぐを　せいりしてから\n"
+	.string "またおこしください$"
+
+BattleFrontier_BattleDomeLobby_Text_ThankYouForPlaying:
 	.string "おつかれさまでした！$"
 
-	.globl gJPText_002278A7
-gJPText_002278A7: @ 0x082278A7
+BattleFrontier_BattleDomeLobby_Text_RecordWillBeSaved:
 	.string "せいせきを　レポートに　かきますので\n"
 	.string "おまちください$"
 
-	.globl gJPText_002278C2
-gJPText_002278C2: @ 0x082278C2
+BattleFrontier_BattleDomeLobby_Text_WeveBeenWaitingForYou:
 	.string "おまちしておりました！$"
 
-	.globl gJPText_002278CE
-gJPText_002278CE: @ 0x082278CE
+BattleFrontier_BattleDomeLobby_Text_OkayToSaveBeforeChallenge2:
 	.string "バトルドームに　ごあんないする　まえに\n"
 	.string "レポートを　かきますので　おまちください$"
 
-	.incbin "baserom_jp.gba", 0x2278f7, 0x3d3
-	.globl gJPText_00227CCA
-gJPText_00227CCA: @ 0x08227CCA
+BattleFrontier_BattleDomeLobby_Text_WelcomeDoubleBattle:
+	.string "トレーナーの　せんりゃくを　ためす　ばしょ！\n"
+	.string "バトルドームへ　ようこそ！\p"
+	.string "こちらでは\n"
+	.string "ダブル　バトルトーナメントの\l"
+	.string "ごあんないを　しております$"
+
+BattleFrontier_BattleDomeLobby_Text_TakeDoublesChallenge:
+	.string "ダブル　バトルトーナメントに\n"
+	.string "ちょうせん　しますか？$"
+
+BattleFrontier_BattleDomeLobby_Text_ExplainDoublesChallenge:
+	.string "ダブル　バトルトーナメントは\n"
+	.string "ダブルバトルで　おこなわれる\l"
+	.string "トーナメントたいかい　です\p"
+	.string "さんかする　かたには　しゅつじょう　させる\n"
+	.string "ポケモンを　3ひき　えらんで　いただきます\p"
+	.string "しあいでは　3ひきの　てもち　ポケモンから\n"
+	.string "1ひきを　ひかえにして\l"
+	.string "2ひきによる　ダブルバトルの\l"
+	.string "たいせんを　おこないます\p"
+	.string "だす　ポケモンは　たいせん　あいての\n"
+	.string "ポケモンを　よくみて　えらんで　くださいね\p"
+	.string "トーナメントを　4かい　かちすすむと\n"
+	.string "みごと　ゆうしょうと　なります\p"
+	.string "ゆうしょうされると　バトルポイントが\n"
+	.string "もらえますので　がんばってください！\p"
+	.string "また　とちゅうで　ちょうせんを\n"
+	.string "ちゅうだんしたい　ばあいは\l"
+	.string "ちゃんと　レポートを　かかないと\l"
+	.string "つづけて　ちょうせんが　できないので\l"
+	.string "きをつけて　くださいね$"
+
+BattleFrontier_BattleDomeLobby_Text_PrevTourneyResultsSinglesLv50:
+	.string "ぜんかい　おこなわれた　レベル50\n"
+	.string "シングル　バトルトーナメントの　けっかだ！$"
+
+BattleFrontier_BattleDomeLobby_Text_PrevTourneyResultsDoublesLv50:
+	.string "ぜんかい　おこなわれた　レベル50\n"
+	.string "ダブル　バトルトーナメントの　けっかだ！$"
+
+BattleFrontier_BattleDomeLobby_Text_PrevTourneyResultsSinglesLvOpen:
+	.string "ぜんかい　おこなわれた　オープンレベル\n"
+	.string "シングル　バトルトーナメントの　けっかだ！$"
+
+BattleFrontier_BattleDomeLobby_Text_PrevTourneyResultsDoublesLvOpen:
+	.string "ぜんかい　おこなわれた　オープンレベル\n"
+	.string "ダブル　バトルトーナメントの　けっかだ！$"
+
+BattleFrontier_BattleDomeLobby_Text_LastWinnerWasTough:
+	.string "きみは　みた？\n"
+	.string "ぜんかいの　バトルトーナメント！\p"
+	.string "ゆうしょう　した\n"
+	.string "{STR_VAR_1}は　ほんと　つよかったんだよ\p"
+	.string "パソコンの　よこに　ある　モニターで\n"
+	.string "けっかを　みてみると　いいよ$"
+
+BattleFrontier_OutsideWest_Text_LongDreamedAboutBattleFrontier:
+	.string "バトルフロンティア⋯⋯\n"
+	.string "わたしの　ゆめ　だった⋯⋯$"
+
+@ Functionally unused
+BattleFrontier_OutsideWest_Text_BattleDomeSign2:
+	.string "ここは　バトルドーム\n"
+	.string "めざせ　むてきの　スーパースター！$"
+
+@ Functionally unused
+BattleFrontier_OutsideWest_Text_QuestionMarkUnderConstruction:
+	.string "ここは　？？？？？？\n"
+	.string "ただいま　けんせつちゅう！$"
+
+BattleFrontier_BattleDomeLobby_Text_WinnersGainReputation:
+	.string "バトルドームで　れんぱを　つづけていくと\n"
+	.string "その　うわさを　ききつけて\l"
+	.string "つよい　トレーナーが　あつまって　くるの\p"
+	.string "れんぱを　つづけてこそ\n"
+	.string "しんの　スーパースター　ね！$"
+
+BattleFrontier_BattleDomeLobby_Text_TrashedInFirstRound:
+	.string "1かいせんで　いきなり\n"
+	.string "ゆうしょうこうほと　あたっちゃって\l"
+	.string "もう　ボコボコに　やられたよ⋯⋯$"
+
+BattleFrontier_BattleDomeLobby_Text_NeedToCheckOpponentCarefully:
+	.string "この　ポケモンを　ひかえに　していれば\n"
+	.string "かてたんだよなー\p"
+	.string "しあいに　だす　ポケモン　えらびは\n"
+	.string "あいての　ポケモンを　よく　みることが\l"
+	.string "ほんとうに　たいせつだよ！$"
+
+BattleFrontier_BattleDomeLobby_Text_CongratsDefeatedTucker:
 	.string "おめでとう　ございます！\p"
 	.string "みごと　ドームスーパースターを　たおし\n"
 	.string "バトルトーナメントに\l"
 	.string "ゆうしょう　されましたね！$"
 
-	.globl gJPText_00227D04
-gJPText_00227D04: @ 0x08227D04
+BattleFrontier_BattleDomeLobby_Text_AwardTheseBattlePoints:
 	.string "おきゃくさまの\n"
 	.string "うつくしい　せんりゃくを　たたえ\l"
 	.string "バトルポイントを　さしあげます！$"
 
-	.globl gJPText_00227D2E
-gJPText_00227D2E: @ 0x08227D2E
+BattleFrontier_BattleDomeLobby_Text_RecordLastMatch:
 	.string "バトルドームで\n"
 	.string "さいごに　おこなった　たたかいを\l"
 	.string "フロンティアパスに　きろく　されますか？$"
+
+BattleFrontier_BattleDomeLobby_Text_RulesAreListed:
+	.string "バトルトーナメントの\n"
+	.string "ルールが　かかれている！$"
+
+BattleFrontier_BattleDomeLobby_Text_ReadWhichHeading:
+	.string "どの　せつめいを　よみますか？$"
+
+BattleFrontier_BattleDomeLobby_Text_ExplainMatchupRules:
+	.string "トーナメントの　くみあわせは\n"
+	.string "トレーナーが　つれている\l"
+	.string "ポケモンの　ちからを　みて　つくられます\p"
+	.string "さいしょから　つよい　トレーナーどうしは\n"
+	.string "あたらないように　なっています$"
+
+BattleFrontier_BattleDomeLobby_Text_ExplainTourneyTree:
+	.string "トーナメントひょうは\n"
+	.string "しあいまえの　ひかえしつで\l"
+	.string "かかりいんが　みせてくれます\p"
+	.string "トーナメントひょう　には\n"
+	.string "‘ぜんかいの　しあいけっか'\p"
+	.string "‘トレーナーの　もっている\n"
+	.string "　ポケモンの　じょうほう'\p"
+	.string "‘トレーナーの　たたかいかた'\p"
+	.string "⋯⋯などの　じょうほうが　かかれているので\n"
+	.string "しっかりと　みましょう$"
+
+BattleFrontier_BattleDomeLobby_Text_ExplainDoubleKORules:
+	.string "トーナメントの　しあいで\n"
+	.string "おなじターンで　どうじに　たおれて\l"
+	.string "ダブルノックアウトに　なった　ときは\l"
+	.string "しあいを　みていた　しんぱんだんに　よる\l"
+	.string "はんていで　しょうしゃを　けってい　します$"

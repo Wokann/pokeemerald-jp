@@ -838,7 +838,6 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/BattleFrontier_BattleTowerMultiCorridor/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleTowerMultiBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleDomeLobby/scripts.inc"
-	.incbin "baserom_jp.gba", 0x227d5c, 0x16d
 	.include "data/maps/BattleFrontier_BattleDomeCorridor/scripts.inc"
 	.incbin "baserom_jp.gba", 0x227f6c, 0x58
 	.include "data/maps/BattleFrontier_BattleDomePreBattleRoom/scripts.inc"
