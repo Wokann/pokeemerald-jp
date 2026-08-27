@@ -9,8 +9,7 @@
 	releaseall
 	end
 	fadescreen 0x1
-	special sub_08135958
-	waitstate
+	special OpenPokeblockCaseOnFeeder
 	compare_var_to_value 0x800D, 0xFFFF
 	goto_if 0x5, 0x8262440
 	end

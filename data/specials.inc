@@ -224,7 +224,7 @@ gSpecials::
 	def_special EnterSafariMode
 	def_special ExitSafariMode
 	def_special GetPokeblockFeederInFront
-	def_special sub_08135958
+	def_special OpenPokeblockCaseOnFeeder, waitstate=1
 	def_special IsMirageIslandPresent
 	def_special UpdateShoalTideFlag
 	def_special InitBirchState

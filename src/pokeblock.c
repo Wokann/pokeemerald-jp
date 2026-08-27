@@ -521,7 +521,7 @@ __attribute__((naked)) void sub_08135944(void)
     );
 }
 
-__attribute__((naked)) void sub_08135958(void)
+__attribute__((naked)) void OpenPokeblockCaseOnFeeder(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -10501,7 +10501,7 @@ fldeff_rocksmash.s
 pokeblock.spokeblock.s
 08135850 sub_08135850 OpenPokeblockCase
 08135944 sub_08135944 CB2_OpenPokeblockFromBag
-08135958 sub_08135958 OpenPokeblockCaseInBattle
+08135958 OpenPokeblockCaseOnFeeder OpenPokeblockCaseOnFeeder
 0813596c sub_0813596C CB2_BerryTagScreen
 08135988 sub_08135988 sub_08135988
 0813599c sub_0813599C CB2_InitPokeblockMenu
