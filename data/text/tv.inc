@@ -565,3 +565,63 @@ gTVRecentHappeningsText05::
 	.string "きざみ　こまれましたよ\p"
 	.string "それでは　また　じかいの\n"
 	.string "ほうそうで　おあいしましょう$"
+
+gTVMassOutbreakText00::
+	.string "こんにちは\n"
+	.string "“ポケモン　ニュース”の　じかんです\p"
+	.string "たいへん　めずらしい　ニュースが\n"
+	.string "はいって　きました\p"
+	.string "{B_COPY_VAR_1}で\n"
+	.string "{B_COPY_VAR_2}が　たいりょうはっせい　した\l"
+	.string "という　ほうこくが　ありました！\p"
+	.string "{B_COPY_VAR_2}と　いえば\n"
+	.string "なかなか　みつけることが　むずかしい\l"
+	.string "ポケモンとしても　ゆうめい　ですね\p"
+	.string "あなたも　このしんぴてきな\n"
+	.string "{B_COPY_VAR_2}の　たいりょうはっせいを\l"
+	.string "みにいっては　いかが　でしょうか？\p"
+	.string "いじょう\n"
+	.string "“ポケモン　ニュース”でした$"
+
+gTV3CheersForPokeblocksText00::
+	.string "しかい“ごきげん　いかがですか？\n"
+	.string "“ポロック　バンザイ！”の　おじかんです\p"
+	.string "きょうの　ポロックは\n"
+	.string "{B_COPY_VAR_1}さんと　その　おなかまが\l"
+	.string "ブレンドした　ポロックです\p"
+	.string "さっそく　わたしの　グルメな　ポケモン\n"
+	.string "ゴクリンちゃんに　たべさせて　みましょう！\p"
+	.string "⋯⋯　⋯⋯　⋯⋯　⋯⋯\n"
+	.string "⋯⋯　⋯⋯　⋯⋯　⋯⋯$"
+
+gTV3CheersForPokeblocksText01::
+	.string "ゴクリン“グビィ！　グビィ！\p"
+	.string "しかい“おお！　とっても　{B_COPY_VAR_1}くて\n"
+	.string "‘{B_COPY_VAR_2}！'と　いってますね\p"
+	.string "きっと　これは　{B_COPY_VAR_3}さんが\n"
+	.string "がんばって　まわした　おかげですね！\p"
+	.string "{B_COPY_VAR_3}さん！\n"
+	.string "ごちそうさま　でした！$"
+
+gTV3CheersForPokeblocksText02::
+	.string "こんかい　いまいち　だった\n"
+	.string "{B_COPY_VAR_1}さんが\l"
+	.string "もっと　じょうずに　まわすことが　できれば\l"
+	.string "さらに　おいしく　なるかも　しれませんよ！$"
+
+gTV3CheersForPokeblocksText03::
+	.string "ゴクリン“グビィ！　グビィ！\p"
+	.string "しかい“うーん⋯⋯　ちょっと　{B_COPY_VAR_1}すぎて\n"
+	.string "‘{B_COPY_VAR_2}！'と　いってますね⋯⋯\p"
+	.string "やっぱり　{B_COPY_VAR_3}さんの　しっぱいが\n"
+	.string "いたかった　ですね⋯⋯$"
+
+gTV3CheersForPokeblocksText04::
+	.string "こんかい　いちばん　がんばっていた\n"
+	.string "{B_COPY_VAR_1}さんが　かわいそうです⋯⋯\p"
+	.string "⋯⋯{B_COPY_VAR_2}さん！\n"
+	.string "つぎは　がんばって　ください！$"
+
+gTV3CheersForPokeblocksText05::
+	.string "では　また　おあいしましょう！\n"
+	.string "あいことばは　“ポロック　バンザイ！”$"
