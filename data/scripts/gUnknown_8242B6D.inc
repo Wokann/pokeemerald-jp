@@ -42,9 +42,9 @@
 	compare_var_to_value 0x8007, 0x1
 	call_if 0x1, 0x8242C47
 	return 
-	message 0x824393C
+	message gText_ObtainedTheItem
 	waitfanfare 
-	loadword 0x0, 0x8243953
+	loadword 0x0, gText_PutItemInPocket
 	callstd 0x4
 	setvar 0x800D, 0x1
 	return 

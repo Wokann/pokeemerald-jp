@@ -265,14 +265,6 @@
 	.set gText_PokemonTrainerSchoolEmail, 0x08243AA2
 	.globl gText_PlayerHouseBootPC
 	.set gText_PlayerHouseBootPC, 0x08243B10
-	@ Slateport's shared bag and Secret Power text still belongs to the
-	@ retained JP text block.  Export the pokeemerald spellings for map scripts.
-	.globl gText_TheBagIsFull
-	.set gText_TheBagIsFull, 0x08243947
-	.globl gText_PutItemInPocket
-	.set gText_PutItemInPocket, 0x08243953
-	.globl gText_WhichFloorWouldYouLike
-	.set gText_WhichFloorWouldYouLike, 0x08243A47
 	@ The Rooftop event table points to the retained Substitute tutor script.
 	.globl LilycoveCity_DepartmentStoreRooftop_EventScript_SubstituteTutor
 	.set LilycoveCity_DepartmentStoreRooftop_EventScript_SubstituteTutor, 0x08276AA2

@@ -29,7 +29,7 @@
 	special CallBattlePyramidFunction
 	compare_var_to_value 0x800D, 0x1
 	goto_if 0x1, 0x8242D1A
-	loadword 0x0, 0x8243953
+	loadword 0x0, gText_PutItemInPocket
 	callstd 0x4
 	return 
 	loadword 0x0, 0x824398A
@@ -40,7 +40,7 @@
 	return 
 	message 0x8243969
 	return 
-	loadword 0x0, 0x824393C
+	loadword 0x0, gText_ObtainedTheItem
 	callstd 0x4
 	loadword 0x0, 0x8243977
 	callstd 0x4

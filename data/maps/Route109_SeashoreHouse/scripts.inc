@@ -85,7 +85,7 @@ Route109_SeashoreHouse_EventScript_0023C4D7::
 	end
 
 Route109_SeashoreHouse_EventScript_0023C4E4::
-	loadword 0x0, gJPText_00243977
+	loadword 0x0, gText_TooBadBagIsFull
 	callstd 0x4
 	hidemoneybox
 	release

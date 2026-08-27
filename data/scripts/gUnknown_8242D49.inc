@@ -29,7 +29,7 @@
 	waitfanfare 
 	bufferitemname 0x1, 0x8004
 	copyvar 0x8004, 0x8008
-	loadword 0x0, 0x8243953
+	loadword 0x0, gText_PutItemInPocket
 	callstd 0x4
 	special sub_080EE808
 	special SetFlagInVar

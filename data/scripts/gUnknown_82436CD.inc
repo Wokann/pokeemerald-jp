@@ -20,21 +20,36 @@ gText_HowMayIServeYou: @ 0x0824390F
 gText_PleaseComeAgain: @ 0x08243920
 	.string "またどうぞ！$"
 
-	.incbin "baserom_jp.gba", 0x243927, 0x50
-	.globl gText_PlayerWhatCanIDoForYou
-	.set gText_PlayerWhatCanIDoForYou, 0x08243927
-	.globl gJPText_00243977
-gJPText_00243977: @ 0x08243977
+gText_PlayerWhatCanIDoForYou:: @ 0x08243927
+	.string "{PLAYER}{KUN}　いらっしゃい！\p"
+	.string "おかいものね！$"
+
+gText_ObtainedTheItem:: @ 0x0824393C
+	.string "{STR_VAR_2}を　てにいれた！$"
+
+gText_TheBagIsFull:: @ 0x08243947
+	.string "バッグが　いっぱいだ！$"
+
+gText_PutItemInPocket:: @ 0x08243953
+	.string "{PLAYER}は　{STR_VAR_2}を\n"
+	.string "{STR_VAR_3}ポケットに　しまった！$"
+
+gText_PlayerFoundOneItem:: @ 0x08243969
+	.string "{PLAYER}は　{STR_VAR_2}を\n"
+	.string "みつけた！$"
+
+gText_TooBadBagIsFull:: @ 0x08243977
 	.string "ざんねん！\n"
 	.string "バッグが　いっぱいだ⋯⋯$"
-
-	.globl gText_TooBadBagIsFull
-	.set gText_TooBadBagIsFull, gJPText_00243977
 
 	.incbin "baserom_jp.gba", 0x24398a, 0x1e
 	.globl gText_NoRoomLeftForAnother
 gText_NoRoomLeftForAnother: @ 0x082439A8
-	.incbin "baserom_jp.gba", 0x2439a8, 0xbc
+	.incbin "baserom_jp.gba", 0x2439a8, 0x9f
+
+gText_WhichFloorWouldYouLike:: @ 0x08243A47
+	.string "ミナモ　デパートへ　ようこそ！\p"
+	.string "なんかいへ　いきますか？$"
 
 gText_SandstormIsVicious:: @ 0x08243A64
 	.string "さばくの　すなあらしが　ひどくて\n"

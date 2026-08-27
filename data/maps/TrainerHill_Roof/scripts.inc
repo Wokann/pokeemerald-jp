@@ -1,90 +1,61 @@
-@ TrainerHill_Roof scripts (JP map g26 m65 @ 0x0823BFB6)
-
 TrainerHill_Roof_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, 0x08276C52
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, 0x08276C9D
+	map_script MAP_SCRIPT_ON_RESUME, TrainerHill_OnResume
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, TrainerHill_OnFrame
 	.byte 0
 
-TrainerHill_Roof_EventScript_0023BFC1::
-	setvar 0x8004, 0xC
-	special CallTrainerHillFunction
+TrainerHill_Roof_EventScript_Owner::
+	trainerhill_settrainerflags
 	lock
 	faceplayer
-	setvar 0x8004, 0x1
-	special CallTrainerHillFunction
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, TrainerHill_Roof_EventScript_0023BFF9
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, TrainerHill_Roof_EventScript_0023C001
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, TrainerHill_Roof_EventScript_0023C0B7
-
-TrainerHill_Roof_EventScript_0023BFF9::
-	loadword 0x0, 0x0823BD13
-	callstd 0x4
-
-TrainerHill_Roof_EventScript_0023C001::
-	setvar 0x8004, 0x2
-	special CallTrainerHillFunction
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, TrainerHill_Roof_EventScript_0023C02F
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, TrainerHill_Roof_EventScript_0023C046
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, TrainerHill_Roof_EventScript_0023C063
-
-TrainerHill_Roof_EventScript_0023C02F::
-	loadword 0x0, 0x0823BDB3
-	callstd 0x4
-	playfanfare 0x16F
-	message 0x0824393C
+	trainerhill_getownerstate
+	switch VAR_RESULT
+	case 0, TrainerHill_Roof_EventScript_Arrived
+	case 1, TrainerHill_Roof_EventScript_GivePrize
+	case 2, TrainerHill_Roof_EventScript_AlreadyReceivedPrize
+TrainerHill_Roof_EventScript_Arrived::
+	msgbox TrainerHill_Roof_Text_YouFinallyCameBravo, MSGBOX_DEFAULT
+TrainerHill_Roof_EventScript_GivePrize::
+	trainerhill_giveprize
+	switch VAR_RESULT
+	case 0, TrainerHill_Roof_EventScript_ReceivePrize
+	case 1, TrainerHill_Roof_EventScript_NoRoomForPrize
+	case 2, TrainerHill_Roof_EventScript_CheckFinalTime
+TrainerHill_Roof_EventScript_ReceivePrize::
+	msgbox TrainerHill_Roof_Text_HaveTheMostMarvelousGift, MSGBOX_DEFAULT
+	playfanfare MUS_LEVEL_UP
+	message gText_ObtainedTheItem
 	waitfanfare
 	waitmessage
-	goto TrainerHill_Roof_EventScript_0023C063
+	goto TrainerHill_Roof_EventScript_CheckFinalTime
 
-TrainerHill_Roof_EventScript_0023C046::
-	loadword 0x0, 0x0823BDB3
-	callstd 0x4
-	loadword 0x0, 0x08243947
-	callstd 0x4
-	loadword 0x0, 0x0823BDCF
-	callstd 0x4
-	goto TrainerHill_Roof_EventScript_0023C063
+TrainerHill_Roof_EventScript_NoRoomForPrize::
+	msgbox TrainerHill_Roof_Text_HaveTheMostMarvelousGift, MSGBOX_DEFAULT
+	msgbox gText_TheBagIsFull, MSGBOX_DEFAULT
+	msgbox TrainerHill_Roof_Text_FullUpBeBackLaterForThis, MSGBOX_DEFAULT
+	goto TrainerHill_Roof_EventScript_CheckFinalTime
 
-TrainerHill_Roof_EventScript_0023C063::
-	setvar 0x8004, 0x3
-	special CallTrainerHillFunction
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, TrainerHill_Roof_EventScript_0023C091
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, TrainerHill_Roof_EventScript_0023C09F
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, TrainerHill_Roof_EventScript_0023C0AD
-
-TrainerHill_Roof_EventScript_0023C091::
-	loadword 0x0, 0x0823BDE9
-	callstd 0x4
-	goto TrainerHill_Roof_EventScript_0023C0AD
+TrainerHill_Roof_EventScript_CheckFinalTime::
+	trainerhill_finaltime
+	switch VAR_RESULT
+	case 0, TrainerHill_Roof_EventScript_NewRecord
+	case 1, TrainerHill_Roof_EventScript_NoNewRecord
+	case 2, TrainerHill_Roof_EventScript_EndSpeakToOwner
+TrainerHill_Roof_EventScript_NewRecord::
+	msgbox TrainerHill_Roof_Text_GotHereMarvelouslyQuickly, MSGBOX_DEFAULT
+	goto TrainerHill_Roof_EventScript_EndSpeakToOwner
 	end
 
-TrainerHill_Roof_EventScript_0023C09F::
-	loadword 0x0, 0x0823BE51
-	callstd 0x4
-	goto TrainerHill_Roof_EventScript_0023C0AD
+TrainerHill_Roof_EventScript_NoNewRecord::
+	msgbox TrainerHill_Roof_Text_YouWerentVeryQuick, MSGBOX_DEFAULT
+	goto TrainerHill_Roof_EventScript_EndSpeakToOwner
 	end
 
-TrainerHill_Roof_EventScript_0023C0AD::
-	loadword 0x0, 0x0823BE69
-	callstd 0x4
+TrainerHill_Roof_EventScript_EndSpeakToOwner::
+	msgbox TrainerHill_Roof_Text_ArriveZippierNextTime, MSGBOX_DEFAULT
 	release
 	end
 
-TrainerHill_Roof_EventScript_0023C0B7::
-	loadword 0x0, 0x0823BE69
-	callstd 0x4
+TrainerHill_Roof_EventScript_AlreadyReceivedPrize::
+	msgbox TrainerHill_Roof_Text_ArriveZippierNextTime, MSGBOX_DEFAULT
 	release
 	end
-
