@@ -1063,8 +1063,6 @@ EventScript_PC: @ 0x8242E1E
 	.set Roulette_EventScript_Table2, 0x08262CC0
 	.globl Common_EventScript_PlayerHandedOverTheItem
 	.set Common_EventScript_PlayerHandedOverTheItem, 0x08243467
-	.globl Common_EventScript_FerryDepart
-	.set Common_EventScript_FerryDepart, 0x08243265
 	.globl Common_EventScript_PlayGymBadgeFanfare
 	.set Common_EventScript_PlayGymBadgeFanfare, 0x0824310A
 	@ The Kecleon reveal movement remains in the retained shared event block.

@@ -33,7 +33,7 @@ FarawayIsland_Entrance_EventScript_0023B370::
 	delay 0x1E
 	hideobject_at 0x1, 0x1A38
 	setvar 0x8004, 0x2
-	call 0x082432D3
+	call Common_EventScript_FerryDepartIsland
 	warp 0xD0A, 0xFF, 0x8, 0xB
 	waitstate
 	release
@@ -49,4 +49,3 @@ FarawayIsland_Entrance_EventScript_0023B3BF::
 	loadword 0x0, 0x08275ED9
 	callstd 0x3
 	end
-

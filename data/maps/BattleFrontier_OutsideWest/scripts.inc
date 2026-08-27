@@ -65,7 +65,7 @@ BattleFrontier_OutsideWest_EventScript_BoardFerry::
 	delay 30
 	hideobjectat LOCALID_FRONTIER_FERRY_ATTENDANT, MAP_BATTLE_FRONTIER_OUTSIDE_WEST
 	setvar VAR_0x8004, LOCALID_FRONTIER_SS_TIDAL
-	call 0x082432D3
+	call Common_EventScript_FerryDepartIsland
 	return
 
 BattleFrontier_OutsideWest_EventScript_CancelFerrySelect::

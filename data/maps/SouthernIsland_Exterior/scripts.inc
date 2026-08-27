@@ -35,9 +35,26 @@ SouthernIsland_Exterior_EventScript_002227B4::
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x2227be, 0x1b
+Ferry_EventScript_DepartIslandSouth:
+	applymovement LOCALID_PLAYER, Ferry_Movement_DepartIslandBoardSouth
+	waitmovement 0
+	return
+
+Ferry_EventScript_DepartIslandWest:
+	applymovement LOCALID_PLAYER, Ferry_Movement_DepartIslandBoardWest
+	waitmovement 0
+	return
+
+Ferry_Movement_DepartIslandBoardSouth:
+	walk_down
+	step_end
+
+Ferry_Movement_DepartIslandBoardWest:
+	walk_left
+	walk_in_place_faster_down
+	step_end
+
 SouthernIsland_Exterior_EventScript_002227D9::
 	loadword 0x0, 0x082635AF
 	callstd 0x3
 	end
-
