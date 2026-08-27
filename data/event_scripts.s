@@ -1276,8 +1276,8 @@ Common_EventScript_LegendaryFlewAway::
 @ 0x0824C585
 	.include "data/text/tv.inc"
 
-@ 0x0824E687
-	.incbin "baserom_jp.gba", 0x24e687, 0x57ea
+@ 0x0824E938
+	.incbin "baserom_jp.gba", 0x24e938, 0x5539
 	.globl LilycoveCity_ContestLobby_EventScript_Reporter
 LilycoveCity_ContestLobby_EventScript_Reporter: @ 0x08253E71
 	.incbin "baserom_jp.gba", 0x253e71, 0xd2
