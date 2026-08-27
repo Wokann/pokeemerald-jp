@@ -267,3 +267,92 @@ BravoTrainerBattleTower_Text_Outro::
 	.string "きたい　したいねぇ！\p"
 	.string "それじゃあ　また　じかいの\n"
 	.string "ほうそうで　あいましょー！$"
+
+SlateportCity_PokemonFanClub_Text_InterviewRequestHasName:
+	.string "わあ！\p"
+	.string "きみ　その　{B_COPY_VAR_1}を　とても\n"
+	.string "だいじに　している　みたいね！\p"
+	.string "{B_COPY_VAR_2}　って　いうんだ⋯⋯\p"
+	.string "そうだ！\p"
+	.string "いま　わたし　テレビの　しゅざいで\n"
+	.string "ポケモンの　アンケートを　してるんだけど\p"
+	.string "すこしだけ　しつもんに\n"
+	.string "こたえて　くれないかな？$"
+
+SlateportCity_PokemonFanClub_Text_HereGoesQuickAnswers:
+	.string "ありがとう！\p"
+	.string "じゃあ　きくね\n"
+	.string "ずばり　ひとことで　こたえて！$"
+
+SlateportCity_PokemonFanClub_Text_DescribeFeelingsFirstMetMon:
+	.string "きみが　{B_COPY_VAR_1}と\n"
+	.string "であったときって\p"
+	.string "なにか　かんじた？\n"
+	.string "どう　おもったか　おしえて！$"
+
+SlateportCity_PokemonFanClub_Text_LikenMonToSomethingYouLike:
+	.string "きみの　かわいがってる　{B_COPY_VAR_1}！\p"
+	.string "もし　なにか　すきなものに　たとえると\n"
+	.string "すれば　なんだと　おもう？$"
+
+SlateportCity_PokemonFanClub_Text_WhatAttractedYouAboutMon:
+	.string "きみの　かわいがってる　{B_COPY_VAR_1}！\p"
+	.string "きみは　{B_COPY_VAR_1}の　どこに\n"
+	.string "ひかれたの？$"
+
+SlateportCity_PokemonFanClub_Text_WhatDoPokemonMeanToYou:
+	.string "うーん　なるほどね\p"
+	.string "じゃあ　つぎは　ちょっと\n"
+	.string "むずかしい　しつもんを　するね！\p"
+	.string "じゃあ⋯⋯\p"
+	.string "きみに　とって　ポケモンって\n"
+	.string "ひとことで　いうと　なんだと　おもう？$"
+
+SlateportCity_PokemonFanClub_Text_ThatsAllForInterview:
+	.string "なるほどー！\p"
+	.string "ふむふむ⋯⋯\p"
+	.string "あ！\n"
+	.string "きょうりょく　ありがとうね！\p"
+	.string "いろいろ　はなしが　きけて\n"
+	.string "おもしろ　かったよ\p"
+	.string "このはなし　もしかしたら　テレビで\n"
+	.string "ながすかも　しれないから　きたい　しててね\p"
+	.string "じゃあね\n"
+	.string "バイバイ！$"
+
+SlateportCity_PokemonFanClub_Text_HereIfYouGetUrgeToTellMe:
+	.string "そっか⋯⋯\p"
+	.string "じゃあ　また　ポケモンの　ことを\n"
+	.string "はなしたく　なったら　いつでも　きてね$"
+
+SlateportCity_PokemonFanClub_Text_EnjoyDoingInterviews:
+	.string "ここに　いると　いろんな　ポケモンの\n"
+	.string "はなしが　きけるから　おもしろいわ$"
+
+SlateportCity_PokemonFanClub_Text_InterviewRequest:
+	.string "きみの　その　{B_COPY_VAR_1}と\n"
+	.string "とても　なかが　よさそうね\p"
+	.string "そうだ！　いま　わたし\n"
+	.string "テレビの　しゅざいで\p"
+	.string "いろんな　ポケモンの　はなしを\n"
+	.string "きいて　まわってるんだけど\p"
+	.string "よかったら　きみの　{B_COPY_VAR_1}の\n"
+	.string "はなしを　きかせて　くれないかな？$"
+
+SlateportCity_PokemonFanClub_Text_TellMeAnythingAboutYourMon:
+	.string "わあ！\n"
+	.string "ありがとう！\p"
+	.string "じゃあ　{B_COPY_VAR_1}の　はなし\n"
+	.string "なんでも　いいので　きかせてよ！$"
+
+SlateportCity_PokemonFanClub_Text_ThatsAllForInterview2:
+	.string "へー⋯⋯\n"
+	.string "おもしろい　はなし　だね！\p"
+	.string "きみは　ほんとうに　{B_COPY_VAR_1}と\n"
+	.string "なかが　いいんだね\p"
+	.string "うーん　なんか　このはなしで\n"
+	.string "いい　ばんぐみが　できそうな　よかん！\p"
+	.string "きっと　おもしろい　ばんぐみに\n"
+	.string "するから　たのしみに　まっててね\p"
+	.string "じゃあ　ありがとうね\n"
+	.string "バイバイ！$"
