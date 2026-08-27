@@ -1735,7 +1735,7 @@ __attribute__((naked)) void sub_0807FA20(void)
         "	.align 2, 0\n\t"
         "_0807FF84: .4byte gUnknown_2031F44\n\t"
         "_0807FF88: .4byte sub_080812B4 + 1\n\t"
-        "_0807FF8C: .4byte SPECIAL_sub_0813B8B8\n\t"
+        "_0807FF8C: .4byte SPECIAL_CloseBattlePikeCurtain\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2801,7 +2801,7 @@ __attribute__((naked)) void sub_080802F0(void)
         "_08080804: .4byte gUnknown_830F8DC\n\t"
         "_08080808: .4byte gSpecialVar_0x8004\n\t"
         "_0808080C: .4byte gUnknown_2031F44\n\t"
-        "_08080810: .4byte SPECIAL_sub_0813B8B8\n\t"
+        "_08080810: .4byte SPECIAL_CloseBattlePikeCurtain\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -7249,7 +7249,7 @@ __attribute__((naked)) void sub_0813B85C(void)
     );
 }
 
-__attribute__((naked)) void sub_0813B8B8(void)
+__attribute__((naked)) void CloseBattlePikeCurtain(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7273,13 +7273,13 @@ __attribute__((naked)) void sub_0813B8B8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813B8E0: .4byte sub_0813B8E8 + 1\n\t"
+        "_0813B8E0: .4byte Task_CloseBattlePikeCurtain + 1\n\t"
         "_0813B8E4: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_0813B8E8(void)
+__attribute__((naked)) void Task_CloseBattlePikeCurtain(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

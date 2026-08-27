@@ -425,7 +425,7 @@ gSpecials::
 	def_special GetContestLadyMonSpecies
 	def_special GetContestLadyCategory
 	def_special PutLilycoveContestLadyShowOnTheAir
-	def_special sub_0813B8B8
+	def_special CloseBattlePikeCurtain, waitstate=1
 	def_special CallApprenticeFunction
 	def_special ShouldTryGetTrainerScript
 	def_special ShowMapNamePopup
