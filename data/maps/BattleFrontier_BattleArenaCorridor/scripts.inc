@@ -1,35 +1,89 @@
-@ BattleFrontier_BattleArenaCorridor scripts (JP map g26 m29 @ 0x08230081)
-
 BattleFrontier_BattleArenaCorridor_MapScripts::
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleArenaCorridor_MapScriptTable_00230087
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleArenaCorridor_OnFrame
 	.byte 0
 
-BattleFrontier_BattleArenaCorridor_MapScriptTable_00230087::
-	map_script_2 0x4000, 0x0, BattleFrontier_BattleArenaCorridor_EventScript_00230091
+BattleFrontier_BattleArenaCorridor_OnFrame:
+	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleArenaCorridor_EventScript_WalkToBattleRoom
 	.2byte 0
 
-BattleFrontier_BattleArenaCorridor_EventScript_00230091::
-	delay 0x10
-	setvar 0x4000, 0x1
-	applymovement 0x1, 0x082300F7
-	applymovement 0xFF, 0x082300DF
-	waitmovement 0x0
-	applymovement 0x1, 0x0823010C
-	waitmovement 0x0
-	loadword 0x0, gJPText_00230111
-	callstd 0x3
-	applymovement 0x1, 0x0823010E
-	waitmovement 0x0
-	applymovement 0xFF, 0x082300F4
-	waitmovement 0x0
-	setvar 0x8006, 0x0
-	warp 0x1A1E, 0xFF, 0x7, 0x5
+BattleFrontier_BattleArenaCorridor_EventScript_WalkToBattleRoom::
+	delay 16
+	setvar VAR_TEMP_0, 1
+	applymovement LOCALID_ARENA_CORRIDOR_ATTENDANT, BattleFrontier_BattleArenaCorridor_Movement_AttendantWalkToDoor
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleArenaCorridor_Movement_PlayerWalkToDoor
+	waitmovement 0
+	applymovement LOCALID_ARENA_CORRIDOR_ATTENDANT, BattleFrontier_BattleArenaCorridor_Movement_AttendantFacePlayer
+	waitmovement 0
+	msgbox BattleFrontier_BattleArenaCorridor_Text_PleaseStepIn, MSGBOX_SIGN
+	applymovement LOCALID_ARENA_CORRIDOR_ATTENDANT, BattleFrontier_BattleArenaCorridor_Movement_AttendantMoveOutOfWay
+	waitmovement 0
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleArenaCorridor_Movement_PlayerEnterDoor
+	waitmovement 0
+	setvar VAR_0x8006, 0
+	warp MAP_BATTLE_FRONTIER_BATTLE_ARENA_BATTLE_ROOM, 7, 5
 	waitstate
 	end
 
-	.incbin "baserom_jp.gba", 0x2300df, 0x32
-	.globl gJPText_00230111
-gJPText_00230111: @ 0x08230111
+BattleFrontier_BattleArenaCorridor_Movement_PlayerWalkToDoor:
+	walk_up
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+BattleFrontier_BattleArenaCorridor_Movement_PlayerEnterDoor:
+	walk_right
+	set_invisible
+	step_end
+
+BattleFrontier_BattleArenaCorridor_Movement_AttendantWalkToDoor:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+BattleFrontier_BattleArenaCorridor_Movement_AttendantFacePlayer:
+	walk_in_place_faster_left
+	step_end
+
+BattleFrontier_BattleArenaCorridor_Movement_AttendantMoveOutOfWay:
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+BattleFrontier_BattleArenaCorridor_Text_PleaseStepIn:
 	.string "このさきが　たいせんの　へやと　なりますぞ！\n"
 	.string "どうぞ　おはいり　くだされ！$"
-
