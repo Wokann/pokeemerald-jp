@@ -742,6 +742,133 @@ def parse_baserom_incbin_ranges(text: str) -> list[dict[str, object]]:
     return ranges
 
 
+def event_script_include_context(text: str) -> list[dict[str, object]]:
+    """Record every top-level include with a separate map-owner interpretation.
+
+    A map ``scripts.inc`` include identifies a structural map boundary.  Other
+    includes remain visible as physical context, but never become map owners.
+    """
+    includes = []
+    for line_number, line in enumerate(text.splitlines(), 1):
+        if not (match := ASM_INCLUDE_RE.match(line)):
+            continue
+        path = match.group(1)
+        map_match = MAP_NAME_RE.match(line)
+        includes.append({
+            "line": line_number,
+            "path": path,
+            "map_owner": map_match.group(1) if map_match else None,
+        })
+    return includes
+
+
+def map_artifact_state(root: Path, name: str) -> dict[str, bool]:
+    """Return structural artifacts without treating them as semantic review."""
+    directory = root / "data" / "maps" / name
+    return {
+        "map_json": (directory / "map.json").is_file(),
+        "scripts_inc": (directory / "scripts.inc").is_file(),
+        "events_inc": (directory / "events.inc").is_file(),
+        "header_inc": (directory / "header.inc").is_file(),
+    }
+
+
+def us_map_candidates_between(
+        before: str | None, after: str | None, us_map_order: list[str]) -> tuple[list[str], str]:
+    """Use US map order only as a candidate list between JP map anchors."""
+    positions = {name: index for index, name in enumerate(us_map_order)}
+    if before is None or after is None:
+        return [], "missing_jp_map_anchor"
+    if before not in positions or after not in positions:
+        return [], "jp_anchor_missing_from_us_order"
+    start, end = positions[before] + 1, positions[after]
+    if start > end:
+        return [], "us_anchor_order_conflict"
+    candidates = us_map_order[start:end]
+    return candidates, ("single_us_map_owner_candidate" if len(candidates) == 1 else
+                        "no_us_map_owner_between_anchors" if not candidates else
+                        "multiple_us_map_owner_candidates")
+
+
+def top_level_event_script_raw_manifest(
+        root: Path, us_root: Path, text: str, us_text: str,
+        us_script_data_objects: list[str]) -> dict[str, object]:
+    """Describe raw top-level EventScript spans without inventing byte owners.
+
+    The direct JP facts are the raw range and nearest includes.  The optional
+    US candidate list is an order-only comparison; it cannot determine which
+    bytes belong to a map, shared script, or map text in the JP ROM.
+    """
+    ranges = parse_baserom_incbin_ranges(text)
+    jp_includes = event_script_include_context(text)
+    us_map_order = [item["map_owner"] for item in event_script_include_context(us_text)
+                    if item["map_owner"]]
+    raw_records = []
+    for raw in ranges:
+        previous = next((item for item in reversed(jp_includes)
+                         if item["line"] < raw["line"]), None)
+        following = next((item for item in jp_includes if item["line"] > raw["line"]), None)
+        previous_map = next((item["map_owner"] for item in reversed(jp_includes)
+                             if item["line"] < raw["line"] and item["map_owner"]), None)
+        following_map = next((item["map_owner"] for item in jp_includes
+                              if item["line"] > raw["line"] and item["map_owner"]), None)
+        candidates, classification = us_map_candidates_between(
+            previous_map, following_map, us_map_order)
+        raw_records.append({
+            **raw,
+            "owner_status": "top_level_raw_unstructured",
+            "previous_include": previous,
+            "next_include": following,
+            "previous_map_owner": previous_map,
+            "next_map_owner": following_map,
+            "us_map_owner_candidates": [{
+                "name": name,
+                "jp_artifacts": map_artifact_state(root, name),
+                "us_artifacts": map_artifact_state(us_root, name),
+                "semantic_review": "not_recorded",
+            } for name in candidates],
+            "map_owner_classification": classification,
+            "us_script_data_owner": (
+                "data/event_scripts.o" if "data/event_scripts.o" in us_script_data_objects else None),
+            "us_script_data_owner_evidence": (
+                "US linker object only; it does not attribute JP raw bytes to a map or text owner."),
+        })
+
+    runs = []
+    for record in raw_records:
+        start, end = int(record["rom_start"], 16), int(record["rom_end"], 16)
+        if runs and runs[-1]["end"] == start and not any(
+                item["line"] > runs[-1]["last_line"] and item["line"] < record["line"]
+                for item in jp_includes):
+            runs[-1]["ranges"].append(record["line"])
+            runs[-1]["end"] = end
+            runs[-1]["last_line"] = record["line"]
+            continue
+        runs.append({
+            "start": start,
+            "end": end,
+            "ranges": [record["line"]],
+            "last_line": record["line"],
+        })
+    raw_runs = [{
+        "rom_start": "0x%08X" % run["start"],
+        "rom_end": "0x%08X" % run["end"],
+        "size": "0x%X" % (run["end"] - run["start"]),
+        "raw_range_lines": run["ranges"],
+        "owner_status": "top_level_raw_unstructured",
+    } for run in runs]
+    return {
+        "method": {
+            "jp_role": "ROM ranges and physical include neighbors",
+            "us_role": "script_data source ownership and map-order candidates only",
+            "rule": "Existing scripts.inc artifacts never establish raw-byte or semantic ownership.",
+        },
+        "raw_ranges": raw_records,
+        "raw_runs": raw_runs,
+        "first_unstructured_raw_run": raw_runs[0] if raw_runs else None,
+    }
+
+
 def script_data_progress(root: Path, us_root: Path) -> dict[str, object]:
     """Join US owner order with JP's actual linked ``script_data`` evidence.
 
@@ -823,6 +950,11 @@ def script_data_progress(root: Path, us_root: Path) -> dict[str, object]:
         },
         "anchors": anchors,
         "event_scripts_raw_baserom_ranges": parse_baserom_incbin_ranges(event_scripts_text),
+        "top_level_event_script_raw_owners": top_level_event_script_raw_manifest(
+            root, us_root, event_scripts_text,
+            (us_root / "data/event_scripts.s").read_text(encoding="utf-8", errors="replace")
+            if (us_root / "data/event_scripts.s").is_file() else "",
+            us_linker_objects),
         "candidate_splits": candidate_splits,
         "semantic_review": {
             "status": "not_recorded",

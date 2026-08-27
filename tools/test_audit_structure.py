@@ -374,6 +374,44 @@ class StructureAuditTests(unittest.TestCase):
         self.assertEqual(progress["method"]["us_role"], "owner_order_and_source_structure_only")
         self.assertEqual(linked_progress["candidate_splits"][0]["status"], "linked_as_named_owner")
 
+    def test_top_level_raw_eventscript_manifest_keeps_map_candidates_separate(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "jp"
+            us_root = Path(temporary) / "us"
+            for directory in (root / "data/maps/Missing", us_root / "data/maps/Missing"):
+                directory.mkdir(parents=True)
+            (root / "data/maps/Missing/map.json").write_text("{}", encoding="utf-8")
+            (us_root / "data/maps/Missing/scripts.inc").write_text("", encoding="utf-8")
+            (us_root / "data/maps/Missing/events.inc").write_text("", encoding="utf-8")
+            jp_text = (
+                '.include "data/maps/Before/scripts.inc"\n'
+                '.incbin "baserom_jp.gba", 0x100, 0x4\n'
+                '.incbin "baserom_jp.gba", 0x104, 0x2\n'
+                '.include "data/maps/After/scripts.inc"\n'
+                '.incbin "baserom_jp.gba", 0x200, 0x2\n')
+            us_text = (
+                '.include "data/maps/Before/scripts.inc"\n'
+                '.include "data/maps/Missing/scripts.inc"\n'
+                '.include "data/maps/After/scripts.inc"\n')
+            manifest = audit.top_level_event_script_raw_manifest(
+                root, us_root, jp_text, us_text, ["data/event_scripts.o"])
+        first = manifest["raw_ranges"][0]
+        self.assertEqual(first["previous_include"]["path"], "data/maps/Before/scripts.inc")
+        self.assertEqual(first["next_include"]["path"], "data/maps/After/scripts.inc")
+        self.assertEqual(first["map_owner_classification"], "single_us_map_owner_candidate")
+        self.assertEqual(first["us_map_owner_candidates"][0]["name"], "Missing")
+        self.assertTrue(first["us_map_owner_candidates"][0]["jp_artifacts"]["map_json"])
+        self.assertFalse(first["us_map_owner_candidates"][0]["jp_artifacts"]["scripts_inc"])
+        self.assertEqual(first["owner_status"], "top_level_raw_unstructured")
+        self.assertEqual(first["us_script_data_owner"], "data/event_scripts.o")
+        self.assertEqual(manifest["raw_runs"][0], {
+            "rom_start": "0x08000100", "rom_end": "0x08000106", "size": "0x6",
+            "raw_range_lines": [2, 3], "owner_status": "top_level_raw_unstructured",
+        })
+        self.assertEqual(manifest["first_unstructured_raw_run"], manifest["raw_runs"][0])
+        self.assertEqual(manifest["raw_ranges"][2]["map_owner_classification"],
+                         "missing_jp_map_anchor")
+
     def test_markdown_report_contains_snapshot_definitions_and_reproduction(self):
         report = audit.build_report(audit.ROOT, audit.DEFAULT_US_ROOT)
         rendered = audit.render_markdown_report(report)
