@@ -696,7 +696,6 @@ gText_LinkStandby3 = gUnknown_8226D53;
 gText_RecordBattleToPass = gUnknown_85AC0DD;
 gText_BattleYesNoChoice = gUnknown_85ABBC9;
 gText_BattleRecordedOnPass = gUnknown_85AC0FB;
-BattleFrontier_BattleTowerBattleRoom_Text_RecordCouldntBeSaved = gUnknown_822247E;
 RelocateBattleBgPal = sub_080A3FE8;
 sub_080A63F8 = GetBattleAnimBg1Data;
 sub_080A6458 = GetBattleAnimBgData;

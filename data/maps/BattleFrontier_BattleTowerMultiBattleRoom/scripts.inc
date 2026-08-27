@@ -150,7 +150,7 @@ BattleFrontier_BattleTowerMultiBattleRoom_EventScript_00226760::
 	waitmovement 0x0
 	compare_var_to_value 0x40CE, 0x3
 	goto_if 0x1, BattleFrontier_BattleTowerMultiBattleRoom_EventScript_002267CE
-	loadword 0x0, gJPText_0022230B
+	loadword 0x0, BattleFrontier_BattleTowerBattleRoom_Text_RestoreMonsToFullHealth
 	callstd 0x4
 	goto BattleFrontier_BattleTowerMultiBattleRoom_EventScript_002267D7
 
@@ -206,7 +206,7 @@ BattleFrontier_BattleTowerMultiBattleRoom_EventScript_00226867::
 	goto_if 0x1, BattleFrontier_BattleTowerMultiBattleRoom_EventScript_002267F9
 
 BattleFrontier_BattleTowerMultiBattleRoom_EventScript_0022689D::
-	message gJPText_002223F2
+	message BattleFrontier_BattleTowerBattleRoom_Text_RecordYourBattle
 	waitmessage
 	multichoicedefault 0x14, 0x8, 0x5E, 0x1, 0x0
 	copyvar 0x8000, 0x800D
@@ -222,7 +222,7 @@ BattleFrontier_BattleTowerMultiBattleRoom_EventScript_002268CF::
 	goto BattleFrontier_BattleTowerMultiBattleRoom_EventScript_002267F9
 
 BattleFrontier_BattleTowerMultiBattleRoom_EventScript_002268D9::
-	loadword 0x0, gJPText_0022242F
+	loadword 0x0, BattleFrontier_BattleTowerBattleRoom_Text_SaveAndQuitGame
 	callstd 0x5
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
@@ -233,7 +233,7 @@ BattleFrontier_BattleTowerMultiBattleRoom_EventScript_002268D9::
 	goto_if 0x1, BattleFrontier_BattleTowerMultiBattleRoom_EventScript_002267F9
 
 BattleFrontier_BattleTowerMultiBattleRoom_EventScript_00226907::
-	message gJPText_00222464
+	message BattleFrontier_BattleTowerBattleRoom_Text_CancelYourChallenge
 	waitmessage
 	multichoicedefault 0x14, 0x8, 0x5E, 0x1, 0x0
 	copyvar 0x8000, 0x800D
@@ -269,7 +269,7 @@ BattleFrontier_BattleTowerMultiBattleRoom_EventScript_00226965::
 	goto 0x082222AC
 
 BattleFrontier_BattleTowerMultiBattleRoom_EventScript_00226991::
-	message gJPText_00222446
+	message BattleFrontier_BattleTowerBattleRoom_Text_SavingPleaseWait
 	waitmessage
 	setvar 0x8004, 0x6
 	setvar 0x8005, 0x2
@@ -425,7 +425,7 @@ BattleFrontier_BattleTowerMultiBattleRoom_EventScript_00226B39::
 	end
 
 BattleFrontier_BattleTowerMultiBattleRoom_EventScript_00226B5E::
-	message gJPText_002223F2
+	message BattleFrontier_BattleTowerBattleRoom_Text_RecordYourBattle
 	waitmessage
 	multichoicedefault 0x14, 0x8, 0x5E, 0x1, 0x0
 	copyvar 0x8000, 0x800D
@@ -439,7 +439,7 @@ BattleFrontier_BattleTowerMultiBattleRoom_EventScript_00226B5E::
 	end
 
 BattleFrontier_BattleTowerMultiBattleRoom_EventScript_00226B93::
-	message gJPText_00222464
+	message BattleFrontier_BattleTowerBattleRoom_Text_CancelYourChallenge
 	waitmessage
 	multichoicedefault 0x14, 0x8, 0x5E, 0x1, 0x0
 	compare_var_to_value 0x800D, 0x0
