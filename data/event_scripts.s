@@ -851,7 +851,7 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/BattleFrontier_Lounge6/scripts.inc"
 	.include "data/maps/BattleFrontier_Lounge7/scripts.inc"
 	.include "data/maps/BattleFrontier_ReceptionGate/scripts.inc"
-	.incbin "baserom_jp.gba", 0x23a755, 0x9de
+	.incbin "baserom_jp.gba", 0x23afd2, 0x161
 	.include "data/maps/BattleFrontier_Lounge9/scripts.inc"
 	.include "data/maps/BattleFrontier_PokemonCenter_1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x23b17f, 0xa4
