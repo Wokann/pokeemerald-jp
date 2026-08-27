@@ -3414,7 +3414,40 @@ gMapLayout_NEW_MAUVILLE_ENTRANCE: @ 0x08416D78
 	.globl gMapLayout_NEW_MAUVILLE_INSIDE
 gMapLayout_NEW_MAUVILLE_INSIDE: @ 0x08417ABC
 	.incbin "baserom_jp.gba", 0x417abc, 0x18
-	.incbin "baserom_jp.gba", 0x417ad4, 0x9528
+	.incbin "baserom_jp.gba", 0x417ad4, 0x3d0
+	.globl gMapLayout_ABANDONED_SHIP_DECK
+gMapLayout_ABANDONED_SHIP_DECK: @ 0x08417EA4
+	.incbin "baserom_jp.gba", 0x417ea4, 0x1d0
+	.globl gMapLayout_ABANDONED_SHIP_CORRIDORS_1F
+gMapLayout_ABANDONED_SHIP_CORRIDORS_1F: @ 0x08418074
+	.incbin "baserom_jp.gba", 0x418074, 0x284
+	.globl gMapLayout_ABANDONED_SHIP_ROOMS_1F
+gMapLayout_ABANDONED_SHIP_ROOMS_1F: @ 0x084182F8
+	.incbin "baserom_jp.gba", 0x4182f8, 0x124
+	.globl gMapLayout_ABANDONED_SHIP_CORRIDORS_B1F
+gMapLayout_ABANDONED_SHIP_CORRIDORS_B1F: @ 0x0841841C
+	.incbin "baserom_jp.gba", 0x41841c, 0x1d0
+	.globl gMapLayout_ABANDONED_SHIP_ROOMS_B1F
+gMapLayout_ABANDONED_SHIP_ROOMS_B1F: @ 0x084185EC
+	.incbin "baserom_jp.gba", 0x4185ec, 0x140
+	.globl gMapLayout_ABANDONED_SHIP_ROOMS2_B1F
+gMapLayout_ABANDONED_SHIP_ROOMS2_B1F: @ 0x0841872C
+	.incbin "baserom_jp.gba", 0x41872c, 0xa0
+	.globl gMapLayout_ABANDONED_SHIP_UNDERWATER1
+gMapLayout_ABANDONED_SHIP_UNDERWATER1: @ 0x084187CC
+	.incbin "baserom_jp.gba", 0x4187cc, 0xb0
+	.globl gMapLayout_ABANDONED_SHIP_ROOM_B1F
+gMapLayout_ABANDONED_SHIP_ROOM_B1F: @ 0x0841887C
+	.incbin "baserom_jp.gba", 0x41887c, 0x154
+	.globl gMapLayout_ABANDONED_SHIP_ROOMS2_1F
+gMapLayout_ABANDONED_SHIP_ROOMS2_1F: @ 0x084189D0
+	.incbin "baserom_jp.gba", 0x4189d0, 0xa0
+	.globl gMapLayout_ABANDONED_SHIP_CAPTAINS_OFFICE
+gMapLayout_ABANDONED_SHIP_CAPTAINS_OFFICE: @ 0x08418A70
+	.incbin "baserom_jp.gba", 0x418a70, 0x148
+	.globl gMapLayout_ABANDONED_SHIP_UNDERWATER2
+gMapLayout_ABANDONED_SHIP_UNDERWATER2: @ 0x08418BB8
+	.incbin "baserom_jp.gba", 0x418bb8, 0x8444
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Border:
 	.incbin "data/layouts/FortreeCity_DecorationShop/border.bin"
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata:
@@ -3608,7 +3641,10 @@ gMapLayout_GRANITE_CAVE_STEVENS_ROOM: @ 0x0842CB08
 	.4byte gMapLayout_GRANITE_CAVE_STEVENS_ROOM_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42cb20, 0xe4c
+	.incbin "baserom_jp.gba", 0x42cb20, 0x128
+	.globl gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_CORRIDORS
+gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_CORRIDORS: @ 0x0842CC48
+	.incbin "baserom_jp.gba", 0x42cc48, 0xd24
 gMapLayout_JAGGED_PASS_Border:
 	.incbin "data/layouts/JaggedPass/border.bin"
 gMapLayout_JAGGED_PASS_Blockdata:
@@ -3804,7 +3840,10 @@ gMapLayout_SOOTOPOLIS_CITY_HOUSE3: @ 0x08431D00
 	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE3_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x431d18, 0xab4
+	.incbin "baserom_jp.gba", 0x431d18, 0x530
+	.globl gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_ROOMS
+gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_ROOMS: @ 0x08432248
+	.incbin "baserom_jp.gba", 0x432248, 0x584
 gMapLayout_RUSTBORO_CITY_FLAT1_1F_Border:
 	.incbin "data/layouts/RustboroCity_Flat1_1F/border.bin"
 gMapLayout_RUSTBORO_CITY_FLAT1_1F_Blockdata:
@@ -6119,7 +6158,33 @@ gUnknown_845C660: @ 0x0845C660
 	.include "data/maps/NewMauville_Entrance/header.inc"
 	@ MAP_NEW_MAUVILLE_INSIDE (g24 m53)
 	.include "data/maps/NewMauville_Inside/header.inc"
-	.incbin "baserom_jp.gba", 0x45c8c8, 0x20d0
+	@ MAP_ABANDONED_SHIP_DECK (g24 m54)
+	.include "data/maps/AbandonedShip_Deck/header.inc"
+	@ MAP_ABANDONED_SHIP_CORRIDORS_1F (g24 m55)
+	.include "data/maps/AbandonedShip_Corridors_1F/header.inc"
+	@ MAP_ABANDONED_SHIP_ROOMS_1F (g24 m56)
+	.include "data/maps/AbandonedShip_Rooms_1F/header.inc"
+	@ MAP_ABANDONED_SHIP_CORRIDORS_B1F (g24 m57)
+	.include "data/maps/AbandonedShip_Corridors_B1F/header.inc"
+	@ MAP_ABANDONED_SHIP_ROOMS_B1F (g24 m58)
+	.include "data/maps/AbandonedShip_Rooms_B1F/header.inc"
+	@ MAP_ABANDONED_SHIP_ROOMS2_B1F (g24 m59)
+	.include "data/maps/AbandonedShip_Rooms2_B1F/header.inc"
+	@ MAP_ABANDONED_SHIP_UNDERWATER1 (g24 m60)
+	.include "data/maps/AbandonedShip_Underwater1/header.inc"
+	@ MAP_ABANDONED_SHIP_ROOM_B1F (g24 m61)
+	.include "data/maps/AbandonedShip_Room_B1F/header.inc"
+	@ MAP_ABANDONED_SHIP_ROOMS2_1F (g24 m62)
+	.include "data/maps/AbandonedShip_Rooms2_1F/header.inc"
+	@ MAP_ABANDONED_SHIP_CAPTAINS_OFFICE (g24 m63)
+	.include "data/maps/AbandonedShip_CaptainsOffice/header.inc"
+	@ MAP_ABANDONED_SHIP_UNDERWATER2 (g24 m64)
+	.include "data/maps/AbandonedShip_Underwater2/header.inc"
+	@ MAP_ABANDONED_SHIP_HIDDEN_FLOOR_CORRIDORS (g24 m65)
+	.include "data/maps/AbandonedShip_HiddenFloorCorridors/header.inc"
+	@ MAP_ABANDONED_SHIP_HIDDEN_FLOOR_ROOMS (g24 m66)
+	.include "data/maps/AbandonedShip_HiddenFloorRooms/header.inc"
+	.incbin "baserom_jp.gba", 0x45ca34, 0x1f64
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

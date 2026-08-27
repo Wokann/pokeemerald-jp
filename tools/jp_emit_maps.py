@@ -225,9 +225,25 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Room4 follows with its two Aqua grunt trainer scripts in the same
     # reviewed US source order.
     'SeafloorCavern_Room4': 2,
-    # Room9 follows the empty Room5-8 map-script records with Archie’s
+    # Room9 follows the empty Room5-8 map-script records with Archie's
     # Kyogre-awakening sequence.
     'SeafloorCavern_Room9': 1,
+    # The complete Abandoned Ship family follows New Mauville in one
+    # contiguous script_data span. Each JP entry count matches the current
+    # US map source before semantic labels are emitted.
+    'AbandonedShip_Deck': 1,
+    'AbandonedShip_Corridors_1F': 2,
+    'AbandonedShip_Rooms_1F': 5,
+    'AbandonedShip_Corridors_B1F': 9,
+    'AbandonedShip_Rooms_B1F': 2,
+    'AbandonedShip_Rooms2_B1F': 1,
+    'AbandonedShip_Underwater1': 1,
+    'AbandonedShip_Room_B1F': 0,
+    'AbandonedShip_Rooms2_1F': 8,
+    'AbandonedShip_CaptainsOffice': 3,
+    'AbandonedShip_Underwater2': 1,
+    'AbandonedShip_HiddenFloorCorridors': 19,
+    'AbandonedShip_HiddenFloorRooms': 17,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -255,6 +271,11 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'EverGrandeCity_DrakesRoom': ('OnLoad', 'OnWarp'),
     'EverGrandeCity_ChampionsRoom': ('OnWarp',),
     'EverGrandeCity_HallOfFame': ('OnWarp',),
+    'AbandonedShip_Corridors_B1F': ('OnResume', 'OnLoad'),
+    'AbandonedShip_Rooms_B1F': ('OnResume',),
+    'AbandonedShip_Underwater1': ('OnResume',),
+    'AbandonedShip_Underwater2': ('OnResume',),
+    'AbandonedShip_HiddenFloorCorridors': ('OnResume', 'OnLoad'),
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -368,6 +389,14 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'SeafloorCavern_Room4': 6,
     # Room9 owns Archie and Maxie's fifteen contiguous story text records.
     'SeafloorCavern_Room9': 15,
+    'AbandonedShip_Corridors_1F': 4,
+    'AbandonedShip_Rooms_1F': 11,
+    'AbandonedShip_Rooms_B1F': 1,
+    'AbandonedShip_Rooms2_B1F': 1,
+    'AbandonedShip_Rooms2_1F': 23,
+    'AbandonedShip_CaptainsOffice': 3,
+    'AbandonedShip_HiddenFloorCorridors': 5,
+    'AbandonedShip_HiddenFloorRooms': 1,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7366,6 +7395,261 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 'delay': (0,),
                 'setmetatile': (0, 1),
                 'setwildbattle': (1,),
+            },
+        },
+    },
+})
+
+# Abandoned Ship is the next contiguous script_data family after New Mauville.
+# These thirteen maps cover the entire JP interval 0x0821A972-0x0821B76F;
+# labels, constants, and text controls below were checked against the matching
+# canonical US map sources before allowing generation to replace raw bytes.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'AbandonedShip_Deck': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x089E: 'FLAG_LANDMARK_ABANDONED_SHIP',
+            },
+        },
+    },
+    'AbandonedShip_Corridors_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'trainers': {
+                0x0042: 'TRAINER_CHARLIE',
+            },
+        },
+    },
+    'AbandonedShip_Rooms_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'trainers': {
+                0x0090: 'TRAINER_THALIA_1',
+                0x0177: 'TRAINER_DEMETRIUS',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {
+                'waitmovement': (0,),
+            },
+        },
+    },
+    'AbandonedShip_Corridors_B1F': {
+        'texts': {
+            0x0821AC96: 'AbandonedShip_Corridors_B1F_Text_DuncanIntro',
+            0x0821ACC7: 'AbandonedShip_Corridors_B1F_Text_DuncanDefeat',
+            0x0821ACD0: 'AbandonedShip_Corridors_B1F_Text_DuncanPostBattle',
+            0x0821AD11: 'AbandonedShip_Corridors_B1F_Text_YayItsAShip',
+            0x0821AD1E: 'AbandonedShip_Corridors_B1F_Text_DoorIsLocked',
+            0x0821AD3C: 'AbandonedShip_Corridors_B1F_Text_InsertedStorageKey',
+            0x0821AD6C: 'AbandonedShip_Text_TheDoorIsOpen',
+        },
+        'field_placeholders': {
+            0x0821AD3C: {0x01: 'PLAYER'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x00EF: 'FLAG_USED_STORAGE_KEY',
+            },
+            'vars': {
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {
+                0x011D: 'ITEM_STORAGE_KEY',
+            },
+            'trainers': {
+                0x01F0: 'TRAINER_DUNCAN',
+            },
+            'maps': {
+                0x183C: 'MAP_ABANDONED_SHIP_UNDERWATER1',
+            },
+            'metatiles': {
+                0x022B: 'METATILE_InsideShip_IntactDoor_Bottom_Unlocked',
+                0x0233: 'METATILE_InsideShip_IntactDoor_Bottom_Locked',
+            },
+            'sounds': {
+                0x0015: 'SE_PIN',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {
+                'setdivewarp': (2, 3),
+                'setmetatile': (0, 1),
+            },
+        },
+    },
+    'AbandonedShip_Rooms_B1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'maps': {
+                0x1840: 'MAP_ABANDONED_SHIP_UNDERWATER2',
+            },
+            'decimal_arguments': {
+                'setdivewarp': (2, 3),
+            },
+        },
+    },
+    'AbandonedShip_Rooms2_B1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+    'AbandonedShip_Underwater1': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'maps': {
+                0x1841: 'MAP_ABANDONED_SHIP_HIDDEN_FLOOR_CORRIDORS',
+            },
+            'decimal_arguments': {
+                'setdivewarp': (2, 3),
+            },
+        },
+    },
+    'AbandonedShip_Room_B1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+    'AbandonedShip_Rooms2_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'trainers': {
+                0x01A2: 'TRAINER_JANI',
+                0x0223: 'TRAINER_GARRISON',
+                0x0282: 'TRAINER_KIRA_AND_DAN_1',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+    'AbandonedShip_CaptainsOffice': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x0126: 'FLAG_EXCHANGED_SCANNER',
+                0x0436: 'FLAG_ITEM_ABANDONED_SHIP_HIDDEN_FLOOR_ROOM_2_SCANNER',
+            },
+            'vars': {
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {
+                0x0116: 'ITEM_SCANNER',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+    'AbandonedShip_Underwater2': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'maps': {
+                0x183A: 'MAP_ABANDONED_SHIP_ROOMS_B1F',
+            },
+            'decimal_arguments': {
+                'setdivewarp': (2, 3),
+            },
+        },
+    },
+    'AbandonedShip_HiddenFloorCorridors': {
+        'external_texts': {
+            0x0821AD6C: 'AbandonedShip_Text_TheDoorIsOpen',
+        },
+        'field_placeholders': {
+            0x0821B577: {0x01: 'PLAYER'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x00F0: 'FLAG_USED_ROOM_1_KEY',
+                0x00F1: 'FLAG_USED_ROOM_2_KEY',
+                0x00F2: 'FLAG_USED_ROOM_4_KEY',
+                0x00F3: 'FLAG_USED_ROOM_6_KEY',
+            },
+            'vars': {
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {
+                0x0119: 'ITEM_ROOM_1_KEY',
+                0x011A: 'ITEM_ROOM_2_KEY',
+                0x011B: 'ITEM_ROOM_4_KEY',
+                0x011C: 'ITEM_ROOM_6_KEY',
+            },
+            'maps': {
+                0x183C: 'MAP_ABANDONED_SHIP_UNDERWATER1',
+            },
+            'metatiles': {
+                0x021A: 'METATILE_InsideShip_DoorIndent_Unlocked',
+                0x022B: 'METATILE_InsideShip_IntactDoor_Bottom_Unlocked',
+                0x0233: 'METATILE_InsideShip_IntactDoor_Bottom_Locked',
+                0x0234: 'METATILE_InsideShip_DoorIndent_Locked',
+            },
+            'sounds': {
+                0x0015: 'SE_PIN',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {
+                'setdivewarp': (2, 3),
+                'setmetatile': (0, 1),
+            },
+        },
+    },
+    'AbandonedShip_HiddenFloorRooms': {
+        'field_effect_macros': True,
+        'result_condition_values': {
+            0x0821B63D: {
+                'AbandonedShip_HiddenFloorRooms_EventScript_Rm4KeySparkle': 'FALSE',
+            },
+            0x0821B667: {
+                'AbandonedShip_HiddenFloorRooms_EventScript_Rm3NoSparkle': {0x01: 'TRUE'},
+                'AbandonedShip_HiddenFloorRooms_EventScript_Rm1KeySparkle': 'FALSE',
+            },
+            0x0821B68D: {
+                'AbandonedShip_HiddenFloorRooms_EventScript_Rm6KeySparkle': 'FALSE',
+            },
+            0x0821B6C5: {
+                'AbandonedShip_HiddenFloorRooms_EventScript_Rm2KeySparkle': 'FALSE',
+            },
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x4002: 'VAR_TEMP_2',
+                0x4003: 'VAR_TEMP_3',
+                0x4004: 'VAR_TEMP_4',
+                0x8000: 'VAR_0x8000',
+                0x800D: 'VAR_RESULT',
+            },
+            'field_effects': {
+                0x0036: 'FLDEFF_SPARKLE',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'map_script_values': {
+                0x4001: {0x00: '0'},
+            },
+            'decimal_arguments': {
+                'addvar': (1,),
+                'compare_var_to_value': (1,),
+                'delay': (0,),
+                'setfieldeffectargument': (0, 1),
+                'setvar': (1,),
             },
         },
     },
@@ -15750,6 +16034,44 @@ def collapse_register_matchcall_macros(lines):
     return out
 
 
+def collapse_dofieldeffectsparkle_macros(lines, enabled=False):
+    """Restore verified sparkle-effect macro sequences.
+
+    ``dofieldeffectsparkle`` is a four-command macro in the canonical US
+    source.  Keep this opt-in so a reviewed map must explicitly prove that
+    its JP byte sequence is the same field-effect argument pattern.
+    """
+    if not enabled:
+        return lines
+
+    out = []
+    index = 0
+    while index < len(lines):
+        if index + 3 < len(lines):
+            first, second, third, fourth = lines[index:index + 4]
+            first_args = [part.strip() for part in first[1].split(',')]
+            second_args = [part.strip() for part in second[1].split(',')]
+            third_args = [part.strip() for part in third[1].split(',')]
+            fourth_args = [part.strip() for part in fourth[1].split(',')]
+            if (first[0] == 'setfieldeffectargument'
+                    and second[0] == 'setfieldeffectargument'
+                    and third[0] == 'setfieldeffectargument'
+                    and fourth[0] == 'dofieldeffect'
+                    and len(first_args) == len(second_args) == len(third_args) == 2
+                    and len(fourth_args) == 1
+                    and first_args[0] in ('0', '0x0')
+                    and second_args[0] in ('1', '0x1')
+                    and third_args[0] in ('2', '0x2')
+                    and fourth_args[0] in ('FLDEFF_SPARKLE', '0x36', '54')):
+                out.append(('dofieldeffectsparkle', ', '.join((
+                    first_args[1], second_args[1], third_args[1]))))
+                index += 4
+                continue
+        out.append(lines[index])
+        index += 1
+    return out
+
+
 def collapse_condition_macros(lines):
     """Restore exact two-instruction comparison and flag-test macros."""
     out = []
@@ -17268,6 +17590,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             decoded_lines = collapse_braillemsgbox_macros(decoded_lines)
             decoded_lines = collapse_trainerbattle_macros(decoded_lines)
             decoded_lines = collapse_register_matchcall_macros(decoded_lines)
+            decoded_lines = collapse_dofieldeffectsparkle_macros(
+                decoded_lines, semantic.get('field_effect_macros', False))
             decoded_lines = collapse_condition_macros(decoded_lines)
             switch_values = dict(semantic.get('symbols', {}).get('switch_values', {}))
             switch_values.update(

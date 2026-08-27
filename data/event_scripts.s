@@ -754,18 +754,18 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/NewMauville_Entrance/scripts.inc"
 	.include "data/maps/NewMauville_Inside/scripts.inc"
 	.include "data/maps/AbandonedShip_Deck/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21a97c, 0x274
+	.include "data/maps/AbandonedShip_Corridors_1F/scripts.inc"
+	.include "data/maps/AbandonedShip_Rooms_1F/scripts.inc"
 	.include "data/maps/AbandonedShip_Corridors_B1F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21ac7f, 0xf9
 	.include "data/maps/AbandonedShip_Rooms_B1F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21ad90, 0x7a
+	.include "data/maps/AbandonedShip_Rooms2_B1F/scripts.inc"
 	.include "data/maps/AbandonedShip_Underwater1/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21ae19, 0x518
+	.include "data/maps/AbandonedShip_Room_B1F/scripts.inc"
+	.include "data/maps/AbandonedShip_Rooms2_1F/scripts.inc"
+	.include "data/maps/AbandonedShip_CaptainsOffice/scripts.inc"
 	.include "data/maps/AbandonedShip_Underwater2/scripts.inc"
 	.include "data/maps/AbandonedShip_HiddenFloorCorridors/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21b4fb, 0xa8
 	.include "data/maps/AbandonedShip_HiddenFloorRooms/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21b758, 0x17
 	.include "data/maps/IslandCave/scripts.inc"
 	.include "data/maps/AncientTomb/scripts.inc"
 	.include "data/maps/Underwater_Route134/scripts.inc"

@@ -259,6 +259,10 @@ JP_STRUCTURED_MAPS += Route120
 JP_STRUCTURED_MAPS += Route121
 JP_STRUCTURED_MAPS += Route122
 JP_STRUCTURED_MAPS += ShoalCave_LowTideEntranceRoom ShoalCave_LowTideInnerRoom ShoalCave_LowTideStairsRoom ShoalCave_LowTideLowerRoom ShoalCave_HighTideEntranceRoom ShoalCave_HighTideInnerRoom NewMauville_Entrance NewMauville_Inside
+JP_STRUCTURED_MAPS += AbandonedShip_Deck AbandonedShip_Corridors_1F AbandonedShip_Rooms_1F AbandonedShip_Corridors_B1F \
+	AbandonedShip_Rooms_B1F AbandonedShip_Rooms2_B1F AbandonedShip_Underwater1 AbandonedShip_Room_B1F \
+	AbandonedShip_Rooms2_1F AbandonedShip_CaptainsOffice AbandonedShip_Underwater2 \
+	AbandonedShip_HiddenFloorCorridors AbandonedShip_HiddenFloorRooms
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
@@ -271,6 +275,10 @@ JP_STRUCTURED_MAP_METADATA_MAPS := CaveOfOrigin_B1F VictoryRoad_1F VictoryRoad_B
 	Underwater_Route127 Underwater_Route128 Underwater_Route129 \
 	Underwater_Route105 Underwater_Route125
 JP_STRUCTURED_MAP_METADATA_MAPS += ShoalCave_LowTideEntranceRoom ShoalCave_LowTideInnerRoom ShoalCave_LowTideStairsRoom ShoalCave_LowTideLowerRoom ShoalCave_HighTideEntranceRoom ShoalCave_HighTideInnerRoom NewMauville_Entrance NewMauville_Inside
+JP_STRUCTURED_MAP_METADATA_MAPS += AbandonedShip_Deck AbandonedShip_Corridors_1F AbandonedShip_Rooms_1F AbandonedShip_Corridors_B1F \
+	AbandonedShip_Rooms_B1F AbandonedShip_Rooms2_B1F AbandonedShip_Underwater1 AbandonedShip_Room_B1F \
+	AbandonedShip_Rooms2_1F AbandonedShip_CaptainsOffice AbandonedShip_Underwater2 \
+	AbandonedShip_HiddenFloorCorridors AbandonedShip_HiddenFloorRooms
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

@@ -1271,7 +1271,20 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/ShoalCave_HighTideInnerRoom/events.inc"
 	.include "data/maps/NewMauville_Entrance/events.inc"
 	.include "data/maps/NewMauville_Inside/events.inc"
-	.incbin "baserom_jp.gba", 0x50EDB0, 0x6C0
+	.include "data/maps/AbandonedShip_Deck/events.inc"
+	.include "data/maps/AbandonedShip_Corridors_1F/events.inc"
+	.include "data/maps/AbandonedShip_Rooms_1F/events.inc"
+	.include "data/maps/AbandonedShip_Corridors_B1F/events.inc"
+	.include "data/maps/AbandonedShip_Rooms_B1F/events.inc"
+	.include "data/maps/AbandonedShip_Rooms2_B1F/events.inc"
+	.include "data/maps/AbandonedShip_Underwater1/events.inc"
+	.include "data/maps/AbandonedShip_Room_B1F/events.inc"
+	.include "data/maps/AbandonedShip_Rooms2_1F/events.inc"
+	.include "data/maps/AbandonedShip_CaptainsOffice/events.inc"
+	.include "data/maps/AbandonedShip_Underwater2/events.inc"
+	.include "data/maps/AbandonedShip_HiddenFloorCorridors/events.inc"
+	.include "data/maps/AbandonedShip_HiddenFloorRooms/events.inc"
+	.incbin "baserom_jp.gba", 0x50F3A0, 0xD0
 	.include "data/maps/Underwater_Route134/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE134
 	.set gMapEvents_UNDERWATER_ROUTE134, Underwater_Route134_MapEvents

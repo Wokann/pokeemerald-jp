@@ -356,7 +356,47 @@ NewMauville_Inside_EventScript_ItemParalyzeHeal:: @ 0x08256F77
 	finditem ITEM_PARALYZE_HEAL
 	end
 
-	.incbin "baserom_jp.gba", 0x256f84, 0x16c
+AbandonedShip_Rooms_1F_EventScript_ItemHarborMail:: @ 0x08256F84
+	finditem ITEM_HARBOR_MAIL
+	end
+
+AbandonedShip_Rooms_B1F_EventScript_ItemEscapeRope:: @ 0x08256F91
+	finditem ITEM_ESCAPE_ROPE
+	end
+
+AbandonedShip_Rooms2_B1F_EventScript_ItemDiveBall:: @ 0x08256F9E
+	finditem ITEM_DIVE_BALL
+	end
+
+AbandonedShip_Room_B1F_EventScript_ItemTMIceBeam:: @ 0x08256FAB
+	finditem ITEM_TM_ICE_BEAM
+	end
+
+AbandonedShip_Rooms2_1F_EventScript_ItemRevive:: @ 0x08256FB8
+	finditem ITEM_REVIVE
+	end
+
+AbandonedShip_CaptainsOffice_EventScript_ItemStorageKey:: @ 0x08256FC5
+	finditem ITEM_STORAGE_KEY
+	end
+
+AbandonedShip_HiddenFloorRooms_EventScript_ItemLuxuryBall:: @ 0x08256FD2
+	finditem ITEM_LUXURY_BALL
+	end
+
+AbandonedShip_HiddenFloorRooms_EventScript_ItemScanner:: @ 0x08256FDF
+	finditem ITEM_SCANNER
+	end
+
+AbandonedShip_HiddenFloorRooms_EventScript_ItemWaterStone:: @ 0x08256FEC
+	finditem ITEM_WATER_STONE
+	end
+
+AbandonedShip_HiddenFloorRooms_EventScript_ItemTMRainDance:: @ 0x08256FF9
+	finditem ITEM_TM_RAIN_DANCE
+	end
+
+	.incbin "baserom_jp.gba", 0x257006, 0xea
 
 Route119_EventScript_ItemNugget:: @ 0x082570F0
 	finditem ITEM_NUGGET
