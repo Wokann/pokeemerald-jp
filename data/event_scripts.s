@@ -1274,7 +1274,19 @@ Common_EventScript_LegendaryFlewAway::
 	.include "data/scripts/tv.inc"
 
 @ 0x0824C585
-	.include "data/text/tv.inc"
+	.include "data/text/tv/contest_interview.inc"
+	.include "data/text/tv/battle_tower_broadcast.inc"
+	.include "data/text/tv/pokemon_fan_club.inc"
+	.include "data/text/tv/recent_happenings.inc"
+	.include "data/text/tv/mass_outbreak.inc"
+	.include "data/text/tv/three_cheers_for_pokeblocks.inc"
+	.include "data/text/tv/trainer_fan_club.inc"
+	.include "data/text/tv/name_rater.inc"
+	.include "data/text/tv/pokemon_angler.inc"
+	.include "data/text/tv/pokemon_today.inc"
+	.include "data/text/tv/smart_shopper.inc"
+	.include "data/text/tv/world_of_masters.inc"
+	.include "data/text/tv/todays_rival_trainer.inc"
 
 @ 0x0824F86A
 	.incbin "baserom_jp.gba", 0x24f86a, 0x4607
