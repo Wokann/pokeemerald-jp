@@ -1840,7 +1840,7 @@ __attribute__((naked)) void RegistryMenu_OnCursorMove(void)
     );
 }
 
-__attribute__((naked)) void DeleteRegistry_Yes(void)
+__attribute__((naked)) void CopyCurSecretBaseOwnerName_StrVar1(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5273,7 +5273,7 @@ __attribute__((naked)) void ClearJapaneseSecretBases(struct SecretBase *bases)
     );
 }
 
-__attribute__((naked)) void sub_080EBD4C(void)
+__attribute__((naked)) void InitSecretBaseVars(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5637,7 +5637,7 @@ __attribute__((naked)) void DrewSecretBaseBattle(void)
     );
 }
 
-__attribute__((naked)) void SetSecretBaseSecretsTvFlags_Poster(void)
+__attribute__((naked)) void CheckInteractedWithFriendsPosterDecor(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5722,7 +5722,7 @@ __attribute__((naked)) void SetSecretBaseSecretsTvFlags_Poster(void)
     );
 }
 
-__attribute__((naked)) void SetSecretBaseSecretsTvFlags_MiscFurnature(void)
+__attribute__((naked)) void CheckInteractedWithFriendsFurnitureBottom(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6073,7 +6073,7 @@ __attribute__((naked)) void SetSecretBaseSecretsTvFlags_MiscFurnature(void)
     );
 }
 
-__attribute__((naked)) void SetSecretBaseSecretsTvFlags_LargeDecorationSpot(void)
+__attribute__((naked)) void CheckInteractedWithFriendsFurnitureMiddle(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6187,7 +6187,7 @@ __attribute__((naked)) void SetSecretBaseSecretsTvFlags_LargeDecorationSpot(void
     );
 }
 
-__attribute__((naked)) void SetSecretBaseSecretsTvFlags_SmallDecorationSpot(void)
+__attribute__((naked)) void CheckInteractedWithFriendsFurnitureTop(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6448,7 +6448,7 @@ __attribute__((naked)) void SetSecretBaseSecretsTvFlags_SmallDecorationSpot(void
     );
 }
 
-__attribute__((naked)) void SetSecretBaseSecretsTvFlags_SandOrnament(void)
+__attribute__((naked)) void CheckInteractedWithFriendsSandOrnament(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

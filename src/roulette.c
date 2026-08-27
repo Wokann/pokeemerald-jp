@@ -6305,7 +6305,7 @@ __attribute__((naked)) void sub_0814334C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081433D0: .4byte gUnknown_203A854\n\t"
-        "_081433D4: .4byte SPECIAL_SetSecretBaseSecretsTvFlags_SmallDecorationSpot\n\t"
+        "_081433D4: .4byte SPECIAL_CheckInteractedWithFriendsFurnitureTop\n\t"
         "_081433D8: .4byte 0xFFFFFE98\n\t"
         "_081433DC: .4byte gOamMatrices\n\t"
         ".syntax divided\n\t"

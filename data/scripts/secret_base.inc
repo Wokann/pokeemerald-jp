@@ -189,15 +189,15 @@ SecretBase_EventScript_AlreadyHasSecretBase::
 	setorcopyvar VAR_0x8004, VAR_RESULT
 	lockall
 	special GetSecretBaseNearbyMapName
-	msgbox 0x08246782, MSGBOX_YESNO
+	msgbox SecretBase_Text_WouldYouLikeToMoveBases, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_CancelOnEntrance
-	msgbox 0x082465BD, MSGBOX_YESNO
+	msgbox SecretBase_Text_AllDecorationsWillBeReturned, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_CancelOnEntrance
 	fadescreenswapbuffers FADE_TO_BLACK
 	special MoveOutOfSecretBaseFromOutside
 	closemessage
 	fadescreenswapbuffers FADE_FROM_BLACK
-	msgbox 0x082467B0, MSGBOX_YESNO
+	msgbox SecretBase_Text_MovingCompletedUseSecretPower, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_CancelOnEntrance
 	bufferpartymonnick STR_VAR_1, VAR_0x8004
 	buffermovename STR_VAR_2, MOVE_SECRET_POWER

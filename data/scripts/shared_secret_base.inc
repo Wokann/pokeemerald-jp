@@ -1,5 +1,5 @@
 @ Shared Secret Base scripts (JP @ 0x0821D372).
-@ The referenced text records remain in their later physical JP owners.
+@ Their text is physically emitted later in data/text/shared_secret_base.inc.
 
 SecretBase_MapScripts::
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, SecretBase_OnWarp
@@ -15,11 +15,11 @@ SecretBase_OnWarp::
 SecretBase_OnTransition::
 	call SecretBase_EventScript_SetDecorationFlags
 	special SetSecretBaseOwnerGfxId
-	special sub_080EBD4C
+	special InitSecretBaseVars
 	end
 
 SecretBase_OnFrame::
-	map_script_2 VAR_INIT_SECRET_BASE, 0, 0x08245C30
+	map_script_2 VAR_INIT_SECRET_BASE, 0, SecretBase_EventScript_FirstEntrance
 	.2byte 0
 
 SecretBase_OnResume::
@@ -29,7 +29,7 @@ SecretBase_OnResume::
 SecretBase_EventScript_PC::
 	lockall
 	playse SE_PC_LOGIN
-	message 0x08246669
+	message SecretBase_Text_BootUpPC
 	dofieldeffect FLDEFF_PCTURN_ON
 	waitstate
 	waitmessage
@@ -39,7 +39,7 @@ SecretBase_EventScript_PC::
 	end
 
 SecretBase_EventScript_PCShowMainMenu::
-	message 0x0824667E
+	message SecretBase_Text_WhatWouldYouLikeToDo
 	waitmessage
 	goto_if_set FLAG_SECRET_BASE_REGISTRY_ENABLED, SecretBase_EventScript_PCMainMenuWithRegister
 	goto SecretBase_EventScript_PCMainMenuWithoutRegister
@@ -52,27 +52,26 @@ SecretBase_EventScript_PCCancel::
 
 SecretBase_EventScript_PCMainMenuWithRegister::
 	multichoice 0, 0, MULTI_BASE_PC_WITH_REGISTRY, FALSE
-	copyvar VAR_0x8000, VAR_RESULT
-	goto_if_eq VAR_0x8000, 0, SecretBase_EventScript_PCDecorationMenu
-	goto_if_eq VAR_0x8000, 1, SecretBase_EventScript_PCPackUp
-	goto_if_eq VAR_0x8000, 2, SecretBase_EventScript_PCRegistryMenu
-	goto_if_eq VAR_0x8000, 3, SecretBase_EventScript_PCTurnOff
-	goto_if_eq VAR_0x8000, MULTI_B_PRESSED, SecretBase_EventScript_PCTurnOff
+	switch VAR_RESULT
+	case 0, SecretBase_EventScript_PCDecorationMenu
+	case 1, SecretBase_EventScript_PCPackUp
+	case 2, SecretBase_EventScript_PCRegistryMenu
+	case 3, SecretBase_EventScript_PCTurnOff
+	case MULTI_B_PRESSED, SecretBase_EventScript_PCTurnOff
 	end
 
 SecretBase_EventScript_PCMainMenuWithoutRegister::
 	multichoice 0, 0, MULTI_BASE_PC_NO_REGISTRY, FALSE
-	copyvar VAR_0x8000, VAR_RESULT
-	goto_if_eq VAR_0x8000, 0, SecretBase_EventScript_PCDecorationMenu
-	goto_if_eq VAR_0x8000, 1, SecretBase_EventScript_PCPackUp
-	goto_if_eq VAR_0x8000, 2, SecretBase_EventScript_PCTurnOff
-	goto_if_eq VAR_0x8000, MULTI_B_PRESSED, SecretBase_EventScript_PCTurnOff
+	switch VAR_RESULT
+	case 0, SecretBase_EventScript_PCDecorationMenu
+	case 1, SecretBase_EventScript_PCPackUp
+	case 2, SecretBase_EventScript_PCTurnOff
+	case MULTI_B_PRESSED, SecretBase_EventScript_PCTurnOff
 	end
 
 SecretBase_EventScript_PCPackUp::
-	loadword 0, 0x082465BD
-	callstd 5
-	goto_if_eq VAR_RESULT, FALSE, SecretBase_EventScript_PCShowMainMenu
+	msgbox SecretBase_Text_AllDecorationsWillBeReturned, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_PCShowMainMenu
 	closemessage
 	special MoveOutOfSecretBase
 	releaseall
@@ -88,7 +87,7 @@ SecretBase_EventScript_PCRegistryMenu::
 
 SecretBase_EventScript_RecordMixingPC::
 	lockall
-	message 0x08246669
+	message SecretBase_Text_BootUpPC
 	playse SE_PC_LOGIN
 	dofieldeffect FLDEFF_PCTURN_ON
 	waitstate
@@ -99,15 +98,15 @@ SecretBase_EventScript_RecordMixingPC::
 	end
 
 SecretBase_EventScript_PCRegisterMenu::
-	message 0x0824667E
+	message SecretBase_Text_WhatWouldYouLikeToDo
 	waitmessage
 	multichoice 0, 0, MULTI_REGISTER_MENU, FALSE
-	copyvar VAR_0x8000, VAR_RESULT
-	goto_if_eq VAR_0x8000, 0, SecretBase_EventScript_PCRegister
-	goto_if_eq VAR_0x8000, 1, SecretBase_EventScript_PCRegistryMenu
-	goto_if_eq VAR_0x8000, 2, SecretBase_EventScript_PCRegistryInfo
-	goto_if_eq VAR_0x8000, 3, SecretBase_EventScript_PCTurnOff
-	goto_if_eq VAR_0x8000, MULTI_B_PRESSED, SecretBase_EventScript_PCTurnOff
+	switch VAR_RESULT
+	case 0, SecretBase_EventScript_PCRegister
+	case 1, SecretBase_EventScript_PCRegistryMenu
+	case 2, SecretBase_EventScript_PCRegistryInfo
+	case 3, SecretBase_EventScript_PCTurnOff
+	case MULTI_B_PRESSED, SecretBase_EventScript_PCTurnOff
 	end
 
 SecretBase_EventScript_ShowRegisterMenu::
@@ -119,40 +118,33 @@ SecretBase_EventScript_PCRegister::
 	special GetCurSecretBaseRegistrationValidity
 	goto_if_eq VAR_RESULT, 1, SecretBase_EventScript_AlreadyRegistered
 	goto_if_eq VAR_RESULT, 2, SecretBase_EventScript_CantRegisterTooManyBases
-	@ JP special-table slot for the US CopyCurSecretBaseOwnerName_StrVar1 behavior.
-	special DeleteRegistry_Yes
-	loadword 0, 0x082465E7
-	callstd 5
-	goto_if_eq VAR_RESULT, FALSE, SecretBase_EventScript_PCRegisterMenu
-	loadword 0, 0x0824664D
-	callstd 3
+	special CopyCurSecretBaseOwnerName_StrVar1
+	msgbox SecretBase_Text_WantToRegisterSecretBase, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_PCRegisterMenu
+	msgbox SecretBase_Text_RegistrationCompleted, MSGBOX_SIGN
 	special ToggleCurSecretBaseRegistry
 	special DoSecretBasePCTurnOffEffect
 	releaseall
 	end
 
 SecretBase_EventScript_AlreadyRegistered::
-	loadword 0, 0x082465FD
-	callstd 5
-	goto_if_eq VAR_RESULT, FALSE, SecretBase_EventScript_PCRegisterMenu
-	loadword 0, 0x08246658
-	callstd 3
+	msgbox SecretBase_Text_AlreadyRegisteredDelete, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_PCRegisterMenu
+	msgbox SecretBase_Text_DataUnregistered, MSGBOX_SIGN
 	special ToggleCurSecretBaseRegistry
 	special DoSecretBasePCTurnOffEffect
 	releaseall
 	end
 
 SecretBase_EventScript_CantRegisterTooManyBases::
-	loadword 0, 0x0824661D
-	callstd 3
+	msgbox SecretBase_Text_TooManyBasesDeleteSome, MSGBOX_SIGN
 	special DoSecretBasePCTurnOffEffect
 	closemessage
 	releaseall
 	end
 
 SecretBase_EventScript_PCRegistryInfo::
-	loadword 0, 0x08246688
-	callstd 4
+	msgbox SecretBase_Text_RegistryInfo, MSGBOX_DEFAULT
 	goto SecretBase_EventScript_PCRegisterMenu
 	end
 
@@ -164,32 +156,32 @@ SecretBase_EventScript_PCTurnOff::
 
 @ Unused
 SecretBase_EventScript_Poster::
-	special SetSecretBaseSecretsTvFlags_Poster
+	special CheckInteractedWithFriendsPosterDecor
 	end
 
 @ Unused
 SecretBase_EventScript_FurnitureBottom::
-	special SetSecretBaseSecretsTvFlags_MiscFurnature
+	special CheckInteractedWithFriendsFurnitureBottom
 	end
 
 @ Unused
 SecretBase_EventScript_FurnitureMiddle::
-	special SetSecretBaseSecretsTvFlags_LargeDecorationSpot
+	special CheckInteractedWithFriendsFurnitureMiddle
 	end
 
 @ Unused
 SecretBase_EventScript_FurnitureTop::
-	special SetSecretBaseSecretsTvFlags_SmallDecorationSpot
+	special CheckInteractedWithFriendsFurnitureTop
 	end
 
 SecretBase_EventScript_SandOrnament::
-	special SetSecretBaseSecretsTvFlags_SandOrnament
+	special CheckInteractedWithFriendsSandOrnament
 	dofieldeffect FLDEFF_SAND_PILLAR
 	waitstate
 	end
 
 SecretBase_EventScript_ShieldOrToyTV::
-	special GetShieldToyTVDecorationInfo
+	special InteractWithShieldOrTVDecoration
 	goto_if_eq VAR_RESULT, 0, SecretBase_EventScript_BattleTowerShield
 	goto_if_eq VAR_RESULT, 1, SecretBase_EventScript_ToyTV
 	goto_if_eq VAR_RESULT, 2, SecretBase_EventScript_SeedotTV
@@ -197,23 +189,19 @@ SecretBase_EventScript_ShieldOrToyTV::
 	end
 
 SecretBase_EventScript_BattleTowerShield::
-	loadword 0, 0x082466F5
-	callstd 3
+	msgbox SecretBase_Text_BattleTowerShield, MSGBOX_SIGN
 	end
 
 SecretBase_EventScript_ToyTV::
-	loadword 0, 0x08246714
-	callstd 3
+	msgbox SecretBase_Text_ToyTV, MSGBOX_SIGN
 	end
 
 SecretBase_EventScript_SeedotTV::
-	loadword 0, 0x0824673E
-	callstd 3
+	msgbox SecretBase_Text_SeedotTV, MSGBOX_SIGN
 	end
 
 SecretBase_EventScript_SkittyTV::
-	loadword 0, 0x08246761
-	callstd 3
+	msgbox SecretBase_Text_SkittyTV, MSGBOX_SIGN
 	end
 
 SecretBase_Text_SmallIndentInWall::

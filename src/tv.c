@@ -3650,7 +3650,7 @@ __attribute__((naked)) void sub_080EF588(void)
         "	ldr r0, _080EF654\n\t"
         "	bl VarGet\n\t"
         "	strh r0, [r5, #2]\n\t"
-        "	bl DeleteRegistry_Yes\n\t"
+        "	bl CopyCurSecretBaseOwnerName_StrVar1\n\t"
         "	adds r0, r5, #4\n\t"
         "	ldr r1, _080EF658\n\t"
         "	bl StringCopy\n\t"

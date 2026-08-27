@@ -318,11 +318,11 @@ gSpecials::
 	def_special DoContestHallWarp
 	def_special LoadWallyZigzagoon
 	def_special IsStarterInParty
-	def_special DeleteRegistry_Yes
+	def_special CopyCurSecretBaseOwnerName_StrVar1
 	def_special ScriptCheckFreePokemonStorageSpace
 	def_special DoSealedChamberShakingEffect1
 	def_special sub_08139BD4
-	def_special GetShieldToyTVDecorationInfo
+	def_special InteractWithShieldOrTVDecoration
 	def_special IsPokerusInParty
 	def_special SetSootopolisGymCrackedIceMetatiles
 	def_special ShakeCamera
@@ -371,18 +371,18 @@ gSpecials::
 	def_special PutFanClubSpecialOnTheAir
 	def_special IncrementDailyPlantedBerries
 	def_special IncrementDailyPickedBerries
-	def_special sub_080EBD4C
-	def_special SetSecretBaseSecretsTvFlags_SandOrnament
+	def_special InitSecretBaseVars
+	def_special CheckInteractedWithFriendsSandOrnament
 	def_special DeclinedSecretBaseBattle
 	def_special DrewSecretBaseBattle
 	def_special WonSecretBaseBattle
 	def_special LostSecretBaseBattle
 	def_special CheckInteractedWithFriendsDollDecor
 	def_special CheckInteractedWithFriendsCushionDecor
-	def_special SetSecretBaseSecretsTvFlags_MiscFurnature
-	def_special SetSecretBaseSecretsTvFlags_LargeDecorationSpot
-	def_special SetSecretBaseSecretsTvFlags_SmallDecorationSpot
-	def_special SetSecretBaseSecretsTvFlags_Poster
+	def_special CheckInteractedWithFriendsFurnitureBottom
+	def_special CheckInteractedWithFriendsFurnitureMiddle
+	def_special CheckInteractedWithFriendsFurnitureTop
+	def_special CheckInteractedWithFriendsPosterDecor
 	def_special SetLilycoveLadyGfx
 	def_special Script_GetLilycoveLadyId
 	def_special sub_0818D914

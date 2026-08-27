@@ -1260,9 +1260,11 @@ Common_EventScript_LegendaryFlewAway::
 	@ 0x08246378
 	.include "data/scripts/secret_power_tm.inc"
 
-	compare_local_to_local 0x20, 0x12
-	@ 0x082465C0-0x08247044 remains unstructured script data.
-	.incbin "baserom_jp.gba", 0x2465C0, 0xA84
+	@ 0x082465BD
+	.include "data/text/shared_secret_base.inc"
+
+	@ 0x082467CD-0x08247044 remains unstructured script data.
+	.incbin "baserom_jp.gba", 0x2467CD, 0x877
 
 	.globl EventScript_CableBoxResults
 EventScript_CableBoxResults: @ 0x8247044
