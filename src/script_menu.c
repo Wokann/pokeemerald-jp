@@ -1320,7 +1320,7 @@ __attribute__((naked)) void sub_080E1A70(void)
         "	ldr r1, _080E1C98\n\t"
         "	movs r0, #0xb\n\t"
         "	strh r0, [r1]\n\t"
-        "	bl sub_0813A164\n\t"
+        "	bl ShowScrollableMultichoice\n\t"
         "	b _080E1D54\n\t"
         "	.align 2, 0\n\t"
         "_080E1C94: .4byte gUnknown_3001124\n\t"

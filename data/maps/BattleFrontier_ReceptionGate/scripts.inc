@@ -95,7 +95,7 @@ BattleFrontier_ReceptionGate_EventScript_0023A372::
 	message 0x0823A782
 	waitmessage
 	setvar 0x8004, 0x8
-	special sub_0813A164
+	special ShowScrollableMultichoice
 	waitstate
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0

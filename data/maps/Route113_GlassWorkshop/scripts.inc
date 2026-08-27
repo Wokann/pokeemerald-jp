@@ -62,7 +62,7 @@ Route113_GlassWorkshop_EventScript_00240851::
 Route113_GlassWorkshop_EventScript_0024085B::
 	setvar 0x8009, 0x0
 	setvar 0x8004, 0x1
-	special sub_0813A164
+	special ShowScrollableMultichoice
 	waitstate
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0

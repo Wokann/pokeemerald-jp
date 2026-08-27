@@ -4128,7 +4128,7 @@ __attribute__((naked)) void BufferBattleTowerElevatorFloors(void)
     );
 }
 
-__attribute__((naked)) void sub_0813A164(void)
+__attribute__((naked)) void ShowScrollableMultichoice(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5143,7 +5143,7 @@ __attribute__((naked)) void sub_0813A880(void)
     );
 }
 
-__attribute__((naked)) void sub_0813A904(void)
+__attribute__((naked)) void ShowBattlePointsWindow(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5208,7 +5208,7 @@ __attribute__((naked)) void sub_0813A904(void)
     );
 }
 
-__attribute__((naked)) void sub_0813A98C(void)
+__attribute__((naked)) void UpdateBattlePointsWindow(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5247,7 +5247,7 @@ __attribute__((naked)) void sub_0813A98C(void)
     );
 }
 
-__attribute__((naked)) void sub_0813A9D4(void)
+__attribute__((naked)) void CloseBattlePointsWindow(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5267,7 +5267,7 @@ __attribute__((naked)) void sub_0813A9D4(void)
     );
 }
 
-__attribute__((naked)) void sub_0813A9F0(void)
+__attribute__((naked)) void TakeFrontierBattlePoints(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5330,7 +5330,7 @@ __attribute__((naked)) void sub_0813AA1C(void)
     );
 }
 
-__attribute__((naked)) void sub_0813AA50(void)
+__attribute__((naked)) void GetFrontierBattlePoints(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5347,7 +5347,7 @@ __attribute__((naked)) void sub_0813AA50(void)
     );
 }
 
-__attribute__((naked)) void sub_0813AA64(void)
+__attribute__((naked)) void ShowFrontierExchangeCornerItemIconWindow(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5372,7 +5372,7 @@ __attribute__((naked)) void sub_0813AA64(void)
     );
 }
 
-__attribute__((naked)) void sub_0813AA90(void)
+__attribute__((naked)) void CloseFrontierExchangeCornerItemIconWindow(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

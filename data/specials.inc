@@ -465,10 +465,7 @@ gSpecials::
 	def_special sub_080F99C4
 	def_special ClearLinkContestFlags
 	def_special TryContestEModeLinkup
-	def_special sub_0813A164
-	@ Same compatibility treatment for the retained JP C symbol above.
-	.set SPECIAL_ShowScrollableMultichoice, SPECIAL_sub_0813A164
-	.set SPECIAL_WAITSTATE_ShowScrollableMultichoice, 1
+	def_special ShowScrollableMultichoice, waitstate=1
 	def_special sub_0813A638
 	def_special BufferBattleTowerElevatorFloors
 	def_special sub_081C62AC
@@ -483,14 +480,14 @@ gSpecials::
 	def_special BattlePyramidChooseMonHeldItems, waitstate=1
 	def_special sub_0813A774
 	def_special sub_0813A7C0
-	def_special sub_0813A904
-	def_special sub_0813A98C
-	def_special sub_0813A9D4
+	def_special ShowBattlePointsWindow
+	def_special UpdateBattlePointsWindow
+	def_special CloseBattlePointsWindow
 	def_special sub_0813AA1C
-	def_special sub_0813A9F0
-	def_special sub_0813AA50
-	def_special sub_0813AA64
-	def_special sub_0813AA90
+	def_special TakeFrontierBattlePoints
+	def_special GetFrontierBattlePoints
+	def_special ShowFrontierExchangeCornerItemIconWindow
+	def_special CloseFrontierExchangeCornerItemIconWindow
 	def_special DisplayBerryPowderVendorMenu
 	def_special RemoveBerryPowderVendorMenu
 	def_special HasEnoughBerryPowder
