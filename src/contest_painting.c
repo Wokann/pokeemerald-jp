@@ -490,7 +490,7 @@ __attribute__((naked)) void PrintContestPaintingCaption(void)
         "_081301C8: .4byte gUnknown_3005F00\n\t"
         "_081301CC: .4byte gStringVar1\n\t"
         "_081301D0: .4byte gUnknown_858F5D0\n\t"
-        "_081301D4: .4byte gUnknown_824C200\n\t"
+        "_081301D4: .4byte gContestPaintingContest\n\t"
         "_081301D8: .4byte gUnknown_85C941F\n\t"
         "_081301DC: .4byte gUnknown_858F5E4\n\t"
         "_081301E0: .4byte gStringVar2\n\t"
