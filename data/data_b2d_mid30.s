@@ -1555,6 +1555,8 @@ gTileset_MOSSDEEP_CITY_GYM_SECONDARY: @ 0x083B804C
 	.4byte gTileset_MOSSDEEP_CITY_GYM_SECONDARY_Metatiles  @ metatiles
 	.4byte gTileset_MOSSDEEP_CITY_GYM_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
+	.globl gTileset_ABANDONED_SHIP_SECONDARY
+gTileset_ABANDONED_SHIP_SECONDARY: @ 0x083B8064
 	.incbin "baserom_jp.gba", 0x3B8064, 0x30
 
 	.globl gUnknown_83B8094

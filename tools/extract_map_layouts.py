@@ -25,6 +25,7 @@ Usage:
 import argparse
 import json
 import re
+import struct
 import sys
 from pathlib import Path
 
@@ -43,6 +44,7 @@ PAT_LABEL = re.compile(r"^(\w+)::?$")
 PAT_LAYOUT_RESOURCE = re.compile(
     r'\s*\.incbin\s+"(data/layouts/[^"/]+/(?:border|map)\.bin)"\s*$'
 )
+PAT_SYMBOL = re.compile(r"^([A-Za-z_]\w*):\s*@\s*0x([0-9A-Fa-f]+)$")
 
 
 def to_camel(name):
@@ -72,7 +74,61 @@ def parse_layout_resource_labels(lines):
     return resources
 
 
-def parse_layouts(lines):
+def parse_raw_layout_struct(name, addr, idx, lines, rom):
+    """Parse one still-raw MapLayout struct, if its complete struct is incbinned."""
+    if idx + 1 >= len(lines):
+        return None
+    incbin = PAT_INC.match(lines[idx + 1])
+    if incbin is None:
+        return None
+
+    struct_off = addr - 0x08000000
+    inc_off = int(incbin.group(1), 16)
+    inc_size = int(incbin.group(2), 16)
+    if inc_off != struct_off or inc_size < 0x18:
+        return None
+
+    width, height, border, map_, primary, secondary = struct.unpack_from(
+        "<6I", rom, struct_off
+    )
+    if width == 0 or height == 0 or border < 0x08000000 or map_ != border + 8:
+        return None
+
+    border_off = border - 0x08000000
+    map_off = map_ - 0x08000000
+    map_size = width * height * 2
+    gap = struct_off - (map_off + map_size)
+    if gap not in (0, 2):
+        return None
+
+    return {
+        "name": name,
+        "addr": addr,
+        "w": width,
+        "h": height,
+        "border_off": border_off,
+        "map_off": map_off,
+        "gap": gap,
+        "primary": primary,
+        "secondary": secondary,
+        "idx": idx,
+        "struct_line": idx + 1,
+        "pointer_mode": "raw_struct",
+    }
+
+
+def load_address_labels():
+    """Return exact source labels for addresses needed by raw MapLayout fields."""
+    labels = {}
+    for path in (ROOT / "data" / "data_b2d_mid30.s", S_PATH):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            match = PAT_SYMBOL.match(line)
+            if match is not None:
+                labels.setdefault(int(match.group(2), 16), match.group(1))
+    return labels
+
+
+def parse_layouts(lines, rom):
     entries = []
     raw_layouts = []
     for i, line in enumerate(lines):
@@ -88,10 +144,14 @@ def parse_layouts(lines):
                 defs[mm.group(2)] = mm.group(1)
         required = {"width", "height", "border", "map"}
         if not required.issubset(defs):
-            # This label still owns a raw 0x18-byte MapLayout struct rather than
-            # a decomposed layout definition. It is deliberately not treated as
-            # an extracted resource pair.
-            raw_layouts.append({"name": name, "addr": addr, "idx": i})
+            raw = parse_raw_layout_struct(name, addr, i, lines, rom)
+            if raw is None:
+                # This label still owns a raw layout-shaped region, but the
+                # region has not yet been proven to contain a complete
+                # MapLayout struct. Do not infer resources from it.
+                raw_layouts.append({"name": name, "addr": addr, "idx": i})
+            else:
+                raw_layouts.append(raw)
             continue
 
         inc = PAT_INC.match(lines[i + 7] if i + 7 < len(lines) else "")
@@ -131,6 +191,129 @@ def parse_layouts(lines):
     return entries, raw_layouts
 
 
+def validate_raw_layouts(raw_layouts, rom, area_names, address_labels, problems):
+    """Validate raw structs and resolve every field needed for their rewrite."""
+    for layout in raw_layouts:
+        if layout.get("pointer_mode") != "raw_struct":
+            problems.append(
+                f"{layout['name']}: raw layout label is not a complete MapLayout struct"
+            )
+            continue
+
+        if layout["map_off"] != layout["border_off"] + 8:
+            problems.append(
+                f"{layout['name']}: border/map gap "
+                f"{layout['map_off'] - layout['border_off']}"
+            )
+        map_size = layout["w"] * layout["h"] * 2
+        if layout["map_off"] + map_size + layout["gap"] != layout["addr"] - 0x08000000:
+            problems.append(f"{layout['name']}: map data does not end at raw struct")
+        if layout["gap"] and rom[
+            layout["map_off"] + map_size : layout["map_off"] + map_size + layout["gap"]
+        ] != b"\x00" * layout["gap"]:
+            problems.append(f"{layout['name']}: non-zero raw layout alignment gap")
+
+        area = area_names.get(layout["name"])
+        if area is None:
+            problems.append(f"{layout['name']}: no exact US layout owner")
+        else:
+            layout["area"] = area
+
+        for field in ("primary", "secondary"):
+            label = address_labels.get(layout[field])
+            if label is None:
+                problems.append(
+                    f"{layout['name']}: unresolved {field} tileset "
+                    f"0x{layout[field]:08X}"
+                )
+            else:
+                layout[f"{field}_label"] = label
+
+
+def raw_incbin_spans(lines):
+    spans = []
+    for idx, line in enumerate(lines):
+        match = PAT_INC.match(line)
+        if match is None:
+            continue
+        start = int(match.group(1), 16)
+        size = int(match.group(2), 16)
+        spans.append({"idx": idx, "start": start, "end": start + size, "events": []})
+    return spans
+
+
+def emit_raw_incbin(start, end):
+    if start == end:
+        return []
+    return [f'\t.incbin "baserom_jp.gba", 0x{start:X}, 0x{end - start:X}']
+
+
+def emit_raw_layout_struct(layout):
+    return [
+        f"\t.4byte {layout['w']}  @ width",
+        f"\t.4byte {layout['h']}  @ height",
+        f"\t.4byte gMapLayout_{layout['name']}_Border  @ border",
+        f"\t.4byte gMapLayout_{layout['name']}_Blockdata  @ map",
+        f"\t.4byte {layout['primary_label']}  @ primaryTileset",
+        f"\t.4byte {layout['secondary_label']}  @ secondaryTileset",
+    ]
+
+
+def emit_raw_layout_resources(layout):
+    lines = [
+        f"gMapLayout_{layout['name']}_Border:",
+        f'\t.incbin "data/layouts/{layout["area"]}/border.bin"',
+        f"gMapLayout_{layout['name']}_Blockdata:",
+        f'\t.incbin "data/layouts/{layout["area"]}/map.bin"',
+    ]
+    if layout["gap"]:
+        lines.append("\t.byte 0x00, 0x00")
+    return lines
+
+
+def raw_layout_replacements(lines, raw_layouts):
+    """Build line replacements that preserve every byte around raw layouts."""
+    spans = raw_incbin_spans(lines)
+    problems = []
+    for layout in raw_layouts:
+        struct_start = layout["addr"] - 0x08000000
+        events = (
+            (layout["border_off"], struct_start, "resources", layout),
+            (struct_start, struct_start + 0x18, "struct", layout),
+        )
+        for start, end, kind, event_layout in events:
+            owners = [span for span in spans if span["start"] <= start and end <= span["end"]]
+            if len(owners) != 1:
+                problems.append(
+                    f"{layout['name']}: {kind} 0x{start:X}-0x{end:X} "
+                    f"is covered by {len(owners)} raw incbins"
+                )
+                continue
+            owners[0]["events"].append((start, end, kind, event_layout))
+
+    replacements = {}
+    for span in spans:
+        if not span["events"]:
+            continue
+        cursor = span["start"]
+        pieces = []
+        for start, end, kind, layout in sorted(span["events"]):
+            if start < cursor:
+                problems.append(
+                    f"raw incbin 0x{span['start']:X}: overlapping layout events"
+                )
+                continue
+            pieces.extend(emit_raw_incbin(cursor, start))
+            if kind == "resources":
+                pieces.extend(emit_raw_layout_resources(layout))
+            else:
+                pieces.extend(emit_raw_layout_struct(layout))
+            cursor = end
+        pieces.extend(emit_raw_incbin(cursor, span["end"]))
+        replacements[span["idx"]] = "\n".join(pieces)
+    return replacements, problems
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true", help="verify only, no writes")
@@ -143,14 +326,19 @@ def main():
     lines = text.split("\r\n") if crlf else text.split("\n")
 
     area_names = load_us_area_names()
-    entries, raw_layouts = parse_layouts(lines)
+    entries, raw_layouts = parse_layouts(lines, rom)
     resources = parse_layout_resource_labels(lines)
+    address_labels = load_address_labels()
+    raw_structs = [
+        layout for layout in raw_layouts if layout.get("pointer_mode") == "raw_struct"
+    ]
     print(
         f"layouts: {len(entries) + len(raw_layouts)} "
         f"({len(entries)} structured, {len(raw_layouts)} raw structs)"
     )
 
     problems = []
+    validate_raw_layouts(raw_layouts, rom, area_names, address_labels, problems)
     for e in entries:
         if e["pointer_mode"] == "invalid":
             problems.append(
@@ -197,6 +385,8 @@ def main():
                     problems.append(f"{e['name']}: missing {actual_path}")
                 elif path.read_bytes() != expected_data:
                     problems.append(f"{e['name']}: {actual_path} differs from baserom")
+    raw_replacements, raw_replacement_problems = raw_layout_replacements(lines, raw_structs)
+    problems.extend(raw_replacement_problems)
     if problems:
         print("PROBLEMS:")
         for p in problems[:20]:
@@ -212,7 +402,21 @@ def main():
 
     new_lines = list(lines)
     extracted = 0
+    extracted_raw_structs = 0
     verified = 0
+    if not args.check:
+        for idx, replacement in raw_replacements.items():
+            new_lines[idx] = replacement
+        for layout in raw_structs:
+            out_dir = OUT_BASE / layout["area"]
+            border_data = rom[layout["border_off"] : layout["border_off"] + 8]
+            map_data = rom[
+                layout["map_off"] : layout["map_off"] + layout["w"] * layout["h"] * 2
+            ]
+            out_dir.mkdir(parents=True, exist_ok=True)
+            (out_dir / "border.bin").write_bytes(border_data)
+            (out_dir / "map.bin").write_bytes(map_data)
+        extracted_raw_structs = len(raw_structs)
     for e in entries:
         if e["pointer_mode"] == "named":
             verified += 1
@@ -294,11 +498,12 @@ def main():
     if args.check:
         print(
             f"Check: {verified} named resource layouts, {extracted} raw-pointer layouts, "
-            f"{len(raw_layouts)} raw layout structs"
+            f"{len(raw_structs)} raw layout structs ready for extraction"
         )
     else:
         print(
-            f"Extracted: {extracted} raw-pointer layouts; "
+            f"Extracted: {extracted} raw-pointer layouts and {extracted_raw_structs} "
+            f"raw layout structs; "
             f"verified {verified} named resource layouts -> {OUT_BASE}"
         )
 
