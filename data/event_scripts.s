@@ -1182,12 +1182,11 @@ gText_LegendaryFlewAway:: @ 0x08243DF4
 	@ 0x08243E08
 	.include "data/text/pc_transfer.inc"
 
-Questionnaire_Text_FillOut:: @ 0x08243EEE
-	.string "アンケートようの　メモようしが　ある\n"
-	.string "アンケートに　なにか　かきますか？$"
+	@ 0x08243EEE
+	.include "data/text/questionnaire.inc"
 
-	@ 0x08243F13-0x082440BC remains unstructured shared text data.
-	.incbin "baserom_jp.gba", 0x243f13, 0x1a9
+	@ 0x08244040-0x082440BC remains unstructured shared text data.
+	.incbin "baserom_jp.gba", 0x244040, 0x7c
 
 	@ 0x082440BC
 	.include "data/text/abnormal_weather.inc"
@@ -1244,9 +1243,11 @@ Common_EventScript_LegendaryFlewAway::
 	@ 0x082441B5
 	.include "data/scripts/pc_transfer.inc"
 
-	.globl EventScript_Questionnaire
-EventScript_Questionnaire: @ 0x8244245
-	.include "data/scripts/gUnknown_8244245.inc"
+	@ 0x08244245
+	.include "data/scripts/questionnaire.inc"
+
+	@ 0x0824433D
+	.include "data/scripts/abnormal_weather.inc"
 
 	.globl AbnormalWeather_EventScript_EndEventAndCleanup_1
 AbnormalWeather_EventScript_EndEventAndCleanup_1: @ 0x8244749
