@@ -1,5 +1,3 @@
-@ BattleFrontier_BattleTowerLobby scripts (JP map g26 m5 @ 0x0821F6BC)
-
 BattleFrontier_BattleTowerLobby_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, BattleFrontier_BattleTowerLobby_OnResume
 	map_script MAP_SCRIPT_ON_TRANSITION, BattleFrontier_BattleTowerLobby_OnTransition
@@ -7,228 +5,163 @@ BattleFrontier_BattleTowerLobby_MapScripts::
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattleTowerLobby_OnWarp
 	.byte 0
 
-BattleFrontier_BattleTowerLobby_OnResume::
+BattleFrontier_BattleTowerLobby_OnResume:
 	special sub_08165248
 	end
 
-BattleFrontier_BattleTowerLobby_OnTransition::
+BattleFrontier_BattleTowerLobby_OnTransition:
 	call 0x0825409C
-	setvar 0x8004, 0xA
-	special CallApprenticeFunction
-	compare_var_to_value 0x8004, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ShowApprentice
-	checkflag 0x934
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_HideApprentice
-
+	apprentice_shouldcheckgone
+	goto_if_eq VAR_0x8004, FALSE, BattleFrontier_BattleTowerLobby_EventScript_ShowApprentice  @ VAR_0x8004 always TRUE here
+	goto_if_set FLAG_DAILY_APPRENTICE_LEAVES, BattleFrontier_BattleTowerLobby_EventScript_HideApprentice
 BattleFrontier_BattleTowerLobby_EventScript_ShowApprentice::
-	clearflag 0x2BD
-	setvar 0x8004, 0x17
-	special CallApprenticeFunction
-
+	clearflag FLAG_HIDE_APPRENTICE
+	apprentice_setgfx
 BattleFrontier_BattleTowerLobby_EventScript_EndShowOrHideApprentice::
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_HideApprentice::
-	setflag 0x2BD
+	setflag FLAG_HIDE_APPRENTICE
 	goto BattleFrontier_BattleTowerLobby_EventScript_EndShowOrHideApprentice
 
-BattleFrontier_BattleTowerLobby_OnWarp::
-	map_script_2 0x4001, 0x0, BattleFrontier_BattleTowerLobby_EventScript_PlayerFaceNorth
+BattleFrontier_BattleTowerLobby_OnWarp:
+	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleTowerLobby_EventScript_PlayerFaceNorth
 	.2byte 0
 
 BattleFrontier_BattleTowerLobby_EventScript_PlayerFaceNorth::
-	setvar 0x4001, 0x1
-	turnobject 0xFF, 0x2
+	setvar VAR_TEMP_1, 1
+	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
-BattleFrontier_BattleTowerLobby_OnFrame::
-	map_script_2 0x4000, 0x0, BattleFrontier_BattleTowerLobby_EventScript_GetChallengeStatus
-	map_script_2 0x4000, 0x1, BattleFrontier_BattleTowerLobby_EventScript_QuitWithoutSaving
-	map_script_2 0x4000, 0x2, BattleFrontier_BattleTowerLobby_EventScript_ResumeChallenge
-	map_script_2 0x4000, 0x3, BattleFrontier_BattleTowerLobby_EventScript_WonChallenge
-	map_script_2 0x4000, 0x4, BattleFrontier_BattleTowerLobby_EventScript_LostChallenge
+BattleFrontier_BattleTowerLobby_OnFrame:
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0, BattleFrontier_BattleTowerLobby_EventScript_GetChallengeStatus
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING, BattleFrontier_BattleTowerLobby_EventScript_QuitWithoutSaving
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_PAUSED, BattleFrontier_BattleTowerLobby_EventScript_ResumeChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_WON, BattleFrontier_BattleTowerLobby_EventScript_WonChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST, BattleFrontier_BattleTowerLobby_EventScript_LostChallenge
 	.2byte 0
 
 BattleFrontier_BattleTowerLobby_EventScript_GetChallengeStatus::
-	setvar 0x8004, 0x0
-	special CallFrontierUtilFunc
+	frontier_getstatus
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_QuitWithoutSaving::
 	lock
 	faceplayer
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_DidntSaveBeforeQuitting
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerLobby_Text_DidntSaveBeforeQuitting, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x0
-	special sub_08161E88
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x2
-	setvar 0x8006, 0x0
-	special sub_08161E88
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x4000, 0xFF
+	tower_set TOWER_DATA_WIN_STREAK, 0
+	tower_set TOWER_DATA_WIN_STREAK_ACTIVE, FALSE
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	release
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_WonChallenge::
 	lock
 	faceplayer
-	setvar 0x8004, 0xA
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_DefeatedMaiden
+	frontier_isbrain
+	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattleTowerLobby_EventScript_DefeatedMaiden
 	message BattleFrontier_BattleTowerLobby_Text_CongratsBeatenSeven
 	waitmessage
 	goto BattleFrontier_BattleTowerLobby_EventScript_GiveRibbons
 
 BattleFrontier_BattleTowerLobby_EventScript_DefeatedMaiden::
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_CongratsDefeatedMaiden
-	callstd 0x4
-
+	msgbox BattleFrontier_BattleTowerLobby_Text_CongratsDefeatedMaiden, MSGBOX_DEFAULT
 BattleFrontier_BattleTowerLobby_EventScript_GiveRibbons::
-	setvar 0x8004, 0x5
-	special sub_08161E88
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GiveBattlePoints
+	tower_giveribbons
+	goto_if_eq VAR_RESULT, FALSE, BattleFrontier_BattleTowerLobby_EventScript_GiveBattlePoints
 	message BattleFrontier_BattleTowerLobby_Text_HereAreSomeRibbons
 	waitmessage
-	playfanfare 0x172
+	playfanfare MUS_OBTAIN_ITEM
 	waitfanfare
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_PutRibbonOnMons
-	callstd 0x4
-
+	msgbox BattleFrontier_BattleTowerLobby_Text_PutRibbonOnMons, MSGBOX_DEFAULT
 BattleFrontier_BattleTowerLobby_EventScript_GiveBattlePoints::
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_AwardYouTheseBattlePoints
-	callstd 0x4
-	setvar 0x8004, 0xB
-	special CallFrontierUtilFunc
-	loadword 0x0, BattleFrontier_Text_ObtainedXBattlePoints
-	callstd 0x9
+	msgbox BattleFrontier_BattleTowerLobby_Text_AwardYouTheseBattlePoints, MSGBOX_DEFAULT
+	frontier_givepoints
+	msgbox BattleFrontier_Text_ObtainedXBattlePoints, MSGBOX_GETPOINTS
 	call BattleFrontier_BattleTowerLobby_EventScript_AskSaveBattle
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	special sub_08161E88
-	compare_var_to_value 0x800D, 0x31
-	goto_if 0x5, BattleFrontier_BattleTowerLobby_EventScript_LookForwardToChallenge
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_AboutToFace50thTrainer
-	callstd 0x4
-
+	tower_get TOWER_DATA_WIN_STREAK
+	goto_if_ne VAR_RESULT, 49, BattleFrontier_BattleTowerLobby_EventScript_LookForwardToChallenge
+	msgbox BattleFrontier_BattleTowerLobby_Text_AboutToFace50thTrainer, MSGBOX_DEFAULT
 BattleFrontier_BattleTowerLobby_EventScript_LookForwardToChallenge::
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_LookForwardToAnotherChallenge
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerLobby_Text_LookForwardToAnotherChallenge, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x4000, 0xFF
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	release
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_LostChallenge::
-	compare_var_to_value 0x40CE, 0x2
-	goto_if 0x5, BattleFrontier_BattleTowerLobby_EventScript_CancelWinStreak
-	checkflag 0x152
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelWinStreak
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	special sub_08161E88
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattleTowerLobby_EventScript_LostThanksForPlaying
-
+	goto_if_ne VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_MULTIS, BattleFrontier_BattleTowerLobby_EventScript_CancelWinStreak
+	goto_if_set FLAG_CHOSEN_MULTI_BATTLE_NPC_PARTNER, BattleFrontier_BattleTowerLobby_EventScript_CancelWinStreak
+	tower_get TOWER_DATA_WIN_STREAK
+	goto_if_ne VAR_RESULT, 0, BattleFrontier_BattleTowerLobby_EventScript_LostThanksForPlaying
 BattleFrontier_BattleTowerLobby_EventScript_CancelWinStreak::
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x2
-	setvar 0x8006, 0x0
-	special sub_08161E88
-
+	tower_set TOWER_DATA_WIN_STREAK_ACTIVE, FALSE
 BattleFrontier_BattleTowerLobby_EventScript_LostThanksForPlaying::
 	lock
 	faceplayer
 	message BattleFrontier_BattleTowerLobby_Text_ThankYouForPlaying
 	waitmessage
 	call BattleFrontier_BattleTowerLobby_EventScript_AskSaveBattle
-	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_LookForwardToAnotherChallenge
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerLobby_Text_LookForwardToAnotherChallenge, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x4000, 0xFF
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	release
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_AskSaveBattle::
 	message BattleFrontier_BattleTowerLobby_Text_RecordWillBeSaved
 	waitmessage
-	setvar 0x8004, 0x8
-	special CallFrontierUtilFunc
+	frontier_checkairshow
 	special LoadPlayerParty
 	special HealPlayerParty
-	setvar 0x8004, 0x6
-	setvar 0x8005, 0x0
-	special sub_08161E88
-	playse 0x37
+	tower_save 0
+	playse SE_SAVE
 	waitse
 	call BattleFrontier_EventScript_GetCantRecordBattle
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle
+	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle
 	message BattleFrontier_BattleTowerLobby_Text_RecordLastMatch
 	waitmessage
-	multichoicedefault 0x14, 0x8, 0x5E, 0x1, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_EventScript_SaveBattle
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle
+	multichoicedefault 20, 8, MULTI_YESNO, 1, FALSE
+	switch VAR_RESULT
+	case 1, BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle
+	case 0, BattleFrontier_EventScript_SaveBattle
+	case MULTI_B_PRESSED, BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle
 
 BattleFrontier_EventScript_SaveBattle::
-	setvar 0x8004, 0x13
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_EventScript_BattleSaveFailed
-	playse 0x37
-	loadword 0x0, 0x08222412
-	callstd 0x4
+	frontier_savebattle
+	goto_if_eq VAR_RESULT, FALSE, BattleFrontier_EventScript_BattleSaveFailed
+	playse SE_SAVE
+	msgbox 0x08222412, MSGBOX_DEFAULT
 	goto BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle
 
 BattleFrontier_EventScript_BattleSaveFailed::
-	loadword 0x0, 0x0822247E
-	callstd 0x4
-
+	msgbox 0x0822247E, MSGBOX_DEFAULT
 BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle::
 	return
 
 BattleFrontier_EventScript_GetCantRecordBattle::
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x6
-	special CallFrontierUtilFunc
+	frontier_get FRONTIER_DATA_RECORD_DISABLED
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_ResumeChallenge::
 	lock
 	faceplayer
-	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_SetBravoTrainerOn
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleTowerLobby_EventScript_SetBravoTrainerOn
 	message BattleFrontier_BattleTowerLobby_Text_WeveBeenWaitingForYou
 	waitmessage
 	message BattleFrontier_BattleTowerLobby_Text_ProgressWillBeSaved
 	waitmessage
-	setvar 0x8004, 0x6
-	setvar 0x8005, 0x1
-	special sub_08161E88
-	playse 0x37
+	tower_save CHALLENGE_STATUS_SAVING
+	playse SE_SAVE
 	waitse
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x3
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
+	frontier_set FRONTIER_DATA_PAUSED, FALSE
 	goto BattleFrontier_BattleTowerLobby_EventScript_EnterElevator
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_SetBravoTrainerOn::
-	setvar 0x40BC, 0x1
+	setvar VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, TRUE
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_SinglesAttendant::

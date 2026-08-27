@@ -7,6 +7,7 @@
 	.include "asm/macros/map.inc"
 	.include "asm/macros/field_effect_script.inc"
 	.include "asm/macros/battle_tent.inc"
+	.include "asm/macros/battle_frontier/apprentice.inc"
 	.include "asm/macros/battle_frontier/battle_arena.inc"
 	.include "asm/macros/battle_frontier/battle_factory.inc"
 	.include "asm/macros/battle_frontier/battle_tower.inc"

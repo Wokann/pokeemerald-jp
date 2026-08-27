@@ -6,6 +6,30 @@
 	special CallFrontierUtilFunc
 	.endm
 
+	@ Check whether the Battle Frontier TV special should air.
+	.macro frontier_checkairshow
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_CHECK_AIR_TV_SHOW
+	special CallFrontierUtilFunc
+	.endm
+
+	@ TRUE if the current opponent is a Frontier Brain.
+	.macro frontier_isbrain
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_IS_BRAIN
+	special CallFrontierUtilFunc
+	.endm
+
+	@ Award Battle Points for the current Frontier challenge.
+	.macro frontier_givepoints
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_GIVE_BATTLE_POINTS
+	special CallFrontierUtilFunc
+	.endm
+
+	@ Save the recorded Frontier battle. VAR_RESULT is TRUE on success.
+	.macro frontier_savebattle
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_SAVE_BATTLE
+	special CallFrontierUtilFunc
+	.endm
+
 	@ Get a FRONTIER_DATA_* value into VAR_RESULT.
 	.macro frontier_get data:req
 	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_GET_DATA
