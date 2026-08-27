@@ -884,7 +884,6 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/Route104_Prototype/scripts.inc"
 	.include "data/maps/Route104_PrototypePrettyPetalFlowerShop/scripts.inc"
 	.include "data/maps/Route109_SeashoreHouse/scripts.inc"
-	.incbin "baserom_jp.gba", 0x23c4f1, 0x330
 	.include "data/maps/Route110_TrickHouseEntrance/scripts.inc"
 	.incbin "baserom_jp.gba", 0x23d478, 0x248
 	.include "data/maps/Route110_TrickHouseEnd/scripts.inc"
