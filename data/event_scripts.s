@@ -809,7 +809,49 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/BattleFrontier_BattlePalaceCorridor/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePalaceBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePyramidLobby/scripts.inc"
-	.incbin "baserom_jp.gba", 0x22d31a, 0x1e2
+	@ Battle Pyramid Lobby rule-board texts are physically stored after the map range.
+BattleFrontier_BattlePyramidLobby_Text_RulesAreListed:
+	.string "バトルアドベンチャーの\n"
+	.string "ルールが　かかれている！$"
+
+BattleFrontier_BattlePyramidLobby_Text_ReadWhichHeading:
+	.string "どの　せつめいを　よみますか？$"
+
+BattleFrontier_BattlePyramidLobby_Text_ExplainMonRules:
+	.string "ピラミッドの　なかで　でてくる\n"
+	.string "やせい　ポケモンは\l"
+	.string "ピラミッドを　せいはすると　かわります\p"
+	.string "どんな　ポケモンが　でてくるのかは\n"
+	.string "じっさいに　ぼうけんして　おぼえましょう$"
+
+BattleFrontier_BattlePyramidLobby_Text_ExplainTrainerRules:
+	.string "ピラミッドの　なかには\n"
+	.string "トレーナーが　まちかまえて　います\p"
+	.string "1つの　だんには　さいこうで\n"
+	.string "8にんの　トレーナーが　います\p"
+	.string "また　トレーナーに　かつと\n"
+	.string "ちょっと　ぼうけんに　やくだつ\l"
+	.string "ヒントが　もらえます$"
+
+BattleFrontier_BattlePyramidLobby_Text_ExplainMazeRules:
+	.string "ピラミッドの　めいろは\n"
+	.string "はいる　たびに　かわります\p"
+	.string "なかは　とても　くらく　なっているので\n"
+	.string "しんちょうに　すすみましょう\p"
+	.string "また　やせいポケモンや　トレーナーとの\n"
+	.string "たたかいに　かつと\l"
+	.string "ちょっとだけ　まわりが　あかるくなります$"
+
+BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
+	.string "バトルバッグは　ピラミッドに　いる　あいだ\n"
+	.string "つかうことが　できます\p"
+	.string "レベル50と　オープンレベルの\n"
+	.string "バッグが　それぞれ　ようい　されていて\l"
+	.string "10しゅるいの　どうぐを\l"
+	.string "99こ　まで　いれることが　できます\p"
+	.string "また　バッグの　なかみは　ぼうけんに\n"
+	.string "しっぱい　すると　なくなって　しまいます$"
+
 	.include "data/maps/BattleFrontier_BattlePyramidFloor/scripts.inc"
 	.incbin "baserom_jp.gba", 0x22d6b1, 0x12f1
 	.include "data/maps/BattleFrontier_BattlePyramidTop/scripts.inc"
