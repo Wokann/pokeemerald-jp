@@ -248,3 +248,351 @@ gContestMoveTypeSmartText::
 
 gContestMoveTypeToughText::
 	.string "たくましい$"
+
+gText_AppealNumWhichMoveWillBePlayed::
+	.string "かいめの　アピール！\n"
+	.string "どの　わざを　だす？$"
+
+gText_AppealNumButItCantParticipate::
+	.string "かいめの　アピール！\n"
+	.string "しかし　さんか　できない！$"
+
+gText_MonAppealedWithMove::
+	.string "{B_COPY_VAR_1}は\n{B_COPY_VAR_2}で　アピール！$"
+
+gText_MonWasWatchingOthers::
+	.string "{B_COPY_VAR_1}は\n"
+	.string "みんなを　みていた！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_AllOutOfAppealTime::
+	.string "アピールタイム　しゅうりょう！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+@ Unused appeal result texts
+
+gText_ButAppealWasJammed::
+	.string "しかし　じゃまを　された！$"
+
+gText_FollowedAnotherMonsLead::
+	.string "ほかの　ポケモンに　つられた！$"
+
+gText_ButItMessedUp::
+	.string "しかし　しっぱいして\n"
+	.string "しまった！$"
+
+gText_WentBetterThanUsual::
+	.string "いつもより　うまく　いった！$"
+
+gText_JudgeLookedAwayForSomeReason::
+	.string "しんさいんが　なぜか\n"
+	.string "めを　そらした！$"
+
+gText_WorkedHardToBuildOnPastMistakes::
+	.string "これまでの　しっぱいを\n"
+	.string "いかして　がんばってみた！$"
+
+gText_CantMakeAnyMoreMoves::
+	.string "これいじょう　わざを\n"
+	.string "だせなくなった！$"
+
+gText_WorkedFrighteninglyWell::
+	.string "こわいくらい　うまく　いった！$"
+
+gText_WorkedHardAsStandoutMon::
+	.string "めだっている　ポケモンと\n"
+	.string "おなじくらい　がんばった！$"
+
+gText_JudgedLookedOnExpectantly::
+	.string "しんさいんが　きたいを\n"
+	.string "こめた　めで　みつめた！$"
+
+gText_WorkedRatherWell::
+	.string "かなり　うまく　いった！$"
+
+gText_WorkedLittleBetterThanUsual::
+	.string "ふつうより　ちょっと\n"
+	.string "うまく　いった！$"
+
+@ Round result texts
+
+gText_MonFailedToStandOutAtAll::
+	.string "{B_COPY_VAR_1}は\n"
+	.string "ぜんぜん　めだたなかった⋯{PAUSE_UNTIL_PRESS}$"
+
+gText_MonDidntStandOutVeryMuch::
+	.string "{B_COPY_VAR_1}は\n"
+	.string "あんまり　めだたなかった⋯{PAUSE_UNTIL_PRESS}$"
+
+gText_MonCaughtALittleAttention::
+	.string "{B_COPY_VAR_1}は\n"
+	.string "まあまあ　めだった！{PAUSE_UNTIL_PRESS}$"
+
+gText_MonAttractedALotOfAttention::
+	.string "{B_COPY_VAR_1}は\n"
+	.string "かなり　めだった！{PAUSE_UNTIL_PRESS}$"
+
+gText_MonCommandedTotalAttention::
+	.string "{B_COPY_VAR_1}は\n"
+	.string "ものすごく　めだった！{PAUSE_UNTIL_PRESS}$"
+
+gText_MonHasntMadeItsAppeal::
+	.string "{B_COPY_VAR_1}は\n"
+	.string "アピール　していない！{PAUSE_UNTIL_PRESS}$"
+
+@ Unused
+
+gText_AnticipationSwelledForMonsAppealNext2::
+	.string "つぎの　{B_COPY_VAR_1}の　アピールに\n"
+	.string "きたいが　たかまった！$"
+
+gText_EmptyContestString::
+	.string "$"
+
+gText_JudgesViewsOnMonHeldFirm::
+	.string "しんさいんの　{B_COPY_VAR_1}への\n"
+	.string "いんしょうは　かわらない！$"
+
+gText_MonsXChangedPerceptions::
+	.string "{B_COPY_VAR_1}の　{B_COPY_VAR_3}は\n"
+	.string "いんしょうを　はねかえした！$"
+
+gText_MonsAppealEffectWoreOff::
+	.string "{B_COPY_VAR_1}の\n"
+	.string "アピールこうかが　なくなった！$"
+
+gText_SpecialAppealsEffectWoreOff::
+	.string "スペシャル　アピールの\n"
+	.string "こうかが　なくなった！$"
+
+gText_EveryonesAppealsMadeToLookSame::
+	.string "ぜんいんの　アピールを\n"
+	.string "おなじくらいに　みせた！$"
+
+gText_CheapenedMonsAppeal::
+	.string "{B_COPY_VAR_2}の\n"
+	.string "アピールを　ひくくみせた！$"
+
+gText_CheapenedAppealOfThoseAhead::
+	.string "{B_COPY_VAR_1}より　めだつ\n"
+	.string "アピールを　ひくくみせた！$"
+
+gText_StoleAttentionAwayFromMon::
+	.string "{B_COPY_VAR_2}の\n"
+	.string "ちゅうもくを　うばった！$"
+
+gText_CheapenedMonsAppeal2::
+	.string "{B_COPY_VAR_2}の\n"
+	.string "アピールを　ひくくみせた！$"
+
+gText_SeverelyCheapenedOtherAppeals::
+	.string "みんなの　アピールを\n"
+	.string "おおはばに　ひくくみせた！$"
+
+gText_AnticipationSwelledForMonsAppealNext::
+	.string "つぎの　{B_COPY_VAR_1}の　アピールに\n"
+	.string "きたいが　たかまった！$"
+
+gText_CheapenedAppealOfThoseAhead2::
+	.string "{B_COPY_VAR_1}より　めだっている\n"
+	.string "アピールを　ひくくみせた！$"
+
+gText_CheapenedJudgesFavoriteAppeal::
+	.string "しんさいんの　すきなアピールを\n"
+	.string "いつもより　ひくくみせた！$"
+
+gText_AppealsOfOthersCheapenedByHalf::
+	.string "じぶんいがいの　アピールを\n"
+	.string "はんぶんの　できにみせた！$"
+
+gText_StoodOutToMakeUpForBeingJammed::
+	.string "いままで　じゃまされた\n"
+	.string "うっぷんを　はらして　めだった！$"
+
+gText_CantParticipateInAppealsAnyMore::
+	.string "もう　アピールに\n"
+	.string "さんか　できなくなった！$"
+
+gText_TouchedJudgeForFantasticAppeal::
+	.string "しんさいんの　こころに　うったえ\n"
+	.string "すごい　アピールになった！$"
+
+gText_AnticipationRoseForUpcomingAppeals::
+	.string "つぎからの　アピールに\n"
+	.string "すこし　きたいが　たかまった！$"
+
+gText_StoodOutAsMuchAsSpecialAppeals::
+	.string "スペシャル　アピールがある\n"
+	.string "かずだけ　めだった！$"
+
+gText_StoodOutAsMuchAsMon::
+	.string "{B_COPY_VAR_1}と\n"
+	.string "おなじくらい　めだった！$"
+
+gText_JammedAppealsMadeEvenLessNoticeable::
+	.string "じゃまされた　アピールを\n"
+	.string "さらに　めだたなくした！$"
+
+gText_EveryonesAppealsMadeSame::
+	.string "ぜんいんの　アピールと\n"
+	.string "おなじくらいに　みせた！$"
+
+@ Appeal result texts
+
+gText_BecameMoreConsciousOfOtherMons::
+	.string "ほかの　ポケモンが　いつもより\n"
+	.string "きに　なって　きた！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonCantMakeAnAppealAfterThis::
+	.string "{B_COPY_VAR_1}は　このあと\n"
+	.string "アピール　できなく　なった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_SettledDownJustLittleBit::
+	.string "ちょっと　だけ\n"
+	.string "きもちが　おちついた！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_BecameObliviousToOtherMons::
+	.string "ほかの　ポケモンが　ぜんぜん\n"
+	.string "きに　ならなく　なった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_BecameLessAwareOfOtherMons::
+	.string "ほかの　ポケモンが　あまり\n"
+	.string "きに　ならなく　なった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_StoppedCaringAboutOtherMons::
+	.string "ほかの　ポケモンを　あまり\n"
+	.string "きに　しないように　なった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_TriedToStartleOtherMons::
+	.string "ほかの　ポケモンを\n"
+	.string "びっくり　させようと　した！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_TriedToDazzleOthers::
+	.string "みんなの　めを\n"
+	.string "くらませようと　した！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_JudgeLookedAwayFromMon::
+	.string "しんさいんは　{B_COPY_VAR_1}から\n"
+	.string "めを　そらして　しまった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_TriedToUnnerveNextMon::
+	.string "つぎに　まっている　ポケモンを\n"
+	.string "きんちょう　させようと　した！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonBecameNervous::
+	.string "{B_COPY_VAR_1}は\n"
+	.string "きんちょう　してしまった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_AppealTriedToUnnerveWaitingMons::
+	.string "アピールが　まだの　ポケモンを\n"
+	.string "きんちょう　させようと　した！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_TauntedMonsDoingWell::
+	.string "ちょうしが　いい　ポケモンを\n"
+	.string "からかってみた！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonRegainedItsForm::
+	.string "{B_COPY_VAR_1}の　ちょうしが\n"
+	.string "もとに　もどって　しまった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_TriedToJamMonDoingWell::
+	.string "ちょうしが　いい　ポケモンの\n"
+	.string "じゃまを　しようと　した！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_StandoutMonHustledEvenMore::
+	.string "めだっている　{B_COPY_VAR_1}は\n"
+	.string "さらに　はりきった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_LargelyUnnoticedMonWorkedHard::
+	.string "めだっていない　{B_COPY_VAR_1}は\n"
+	.string "がんばりまくった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_WorkedAsMuchAsMonBefore::
+	.string "まえの　ポケモンたちに\n"
+	.string "まけないくらい　はりきった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsAppealDidNotGoWell::
+	.string "{B_COPY_VAR_1}は　アピールを\n"
+	.string "うまく　みせられなかった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_WorkedAsMuchAsPrecedingMon::
+	.string "まえの　ポケモンと\n"
+	.string "おなじくらい　はりきった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsAppealDidNotGoWell2::
+	.string "{B_COPY_VAR_1}の　アピールは\n"
+	.string "うまく　みせられなかった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsAppealDidNotGoWell3::
+	.string "{B_COPY_VAR_1}の　アピールは\n"
+	.string "うまく　みせられなかった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsAppealWentSlightlyWell::
+	.string "{B_COPY_VAR_1}の　アピールは\n"
+	.string "すこし　うまく　いった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsAppealWentPrettyWell::
+	.string "{B_COPY_VAR_1}の　アピールは\n"
+	.string "まあまあ　うまく　いった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsAppealWentExcellently::
+	.string "{B_COPY_VAR_1}の　アピールは\n"
+	.string "とても　うまく　いった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsAppealWasDud::
+	.string "{B_COPY_VAR_1}の　アピールは\n"
+	.string "しっぱい　して　しまった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsAppealDidNotWorkVeryWell::
+	.string "{B_COPY_VAR_1}の　アピールは\n"
+	.string "あまり　うまく　いかなかった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsAppealWentSlightlyWell2::
+	.string "{B_COPY_VAR_1}の　アピールは\n"
+	.string "すこし　うまく　いった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsAppealWentPrettyWell2::
+	.string "{B_COPY_VAR_1}の　アピールは\n"
+	.string "まあまあ　うまく　いった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsAppealWentVeryWell::
+	.string "{B_COPY_VAR_1}の　アピールは\n"
+	.string "かなり　うまく　いった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsAppealWentExcellently2::
+	.string "{B_COPY_VAR_1}の　アピールは\n"
+	.string "とても　うまく　いった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_SameTypeAsOneBeforeGood::
+	.string "まえの　ポケモンと\n"
+	.string "おなじタイプで　きにいられた！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_NotSameTypeAsOneBeforeGood::
+	.string "まえの　ポケモンと\n"
+	.string "ちがうタイプで　きにいられた！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_StoodOutMuchMoreThanMonBefore::
+	.string "まえの　ポケモンより\n"
+	.string "だいぶ　めだった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_DidntDoAsWellAsMonBefore::
+	.string "まえの　ポケモンより\n"
+	.string "うまく　できなかった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsConditionRoseAboveUsual::
+	.string "{B_COPY_VAR_1}の　ちょうしが\n"
+	.string "いつもより　あがった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsHotStatusMadeGreatAppeal::
+	.string "{B_COPY_VAR_1}は　ちょうしが　よくて\n"
+	.string "ぜっこうの　アピールに　なった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MovedUpInLineForNextAppeal::
+	.string "つぎの　アピールを　はやく\n"
+	.string "しようと　まえに　でた！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MovedBackInLineForNextAppeal::
+	.string "つぎの　アピールを　おそく\n"
+	.string "しようと　1ぽ　さがった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_ScrambledUpOrderForNextTurn::
+	.string "つぎの　ターンの　じゅんばんを\n"
+	.string "おかしく　した！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"

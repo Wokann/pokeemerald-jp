@@ -1257,21 +1257,6 @@ Common_EventScript_LegendaryFlewAway::
 
 	.include "data/text/contest_strings.inc"
 
-gText_AppealNumWhichMoveWillBePlayed:: @ 0x824B317
-	.include "data/scripts/gUnknown_824B317.inc"
-
-gText_AppealNumButItCantParticipate:: @ 0x824B32D
-	.include "data/scripts/gUnknown_824B32D.inc"
-
-gText_MonAppealedWithMove:: @ 0x824B346
-	.string "{B_COPY_VAR_1}は\n{B_COPY_VAR_2}で　アピール！$"
-
-gText_MonWasWatchingOthers:: @ 0x824B354
-	.include "data/scripts/gUnknown_824B354.inc"
-
-gText_AllOutOfAppealTime:: @ 0x824B36F
-	.include "data/scripts/gUnknown_824B36F.inc"
-
 	.globl gUnknown_824BCCF
 gUnknown_824BCCF: @ 0x824BCCF
 	.include "data/scripts/gUnknown_824BCCF.inc"
