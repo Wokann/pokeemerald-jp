@@ -952,6 +952,19 @@ EventScript_BackupMrBrineyLocation::
 	setvar VAR_BRINEY_LOCATION, 0
 	return
 
+	.include "data/scripts/surf.inc"
+	.include "data/scripts/rival_graphics.inc"
+
+	@ Remaining shared field scripts at 0x08242FCF-0x0824311B.
+	.incbin "baserom_jp.gba", 0x242FCF, 0x14C
+	@ These targets remain inside the unstructured shared field-script range.
+	.globl Common_EventScript_ShowBagIsFull
+	.set Common_EventScript_ShowBagIsFull, 0x082430E0
+	.globl Common_EventScript_SetAbnormalWeather
+	.set Common_EventScript_SetAbnormalWeather, 0x08243106
+	.globl Common_EventScript_OutOfCenterPartyHeal
+	.set Common_EventScript_OutOfCenterPartyHeal, 0x0824310F
+
 	@ These Fan Club interview strings remain in the later shared TV-text raw
 	@ owner. Export semantic aliases until that physical text owner is split.
 	.globl LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer
@@ -1010,10 +1023,6 @@ EventScript_BackupMrBrineyLocation::
 	@ The Fallarbor Mart event table references the shared Metronome tutor script.
 	.globl FallarborTown_Mart_EventScript_MetronomeTutor
 	.set FallarborTown_Mart_EventScript_MetronomeTutor, 0x082769D2
-
-	.globl EventScript_UseSurf
-EventScript_UseSurf: @ 0x8242F2C
-	.include "data/scripts/gUnknown_8242F2C.inc"
 
 	.globl EventScript_RegionMap
 EventScript_RegionMap: @ 0x824311B
