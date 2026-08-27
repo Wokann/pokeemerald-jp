@@ -3382,7 +3382,7 @@ gMapLayout_CAVE_OF_ORIGIN_B1F: @ 0x0841255C
 	.globl gMapLayout_VICTORY_ROAD_1F
 gMapLayout_VICTORY_ROAD_1F: @ 0x084135A8
 	.incbin "baserom_jp.gba", 0x4135a8, 0x18
-	.incbin "baserom_jp.gba", 0x4135c0, 0xda3c
+	.incbin "baserom_jp.gba", 0x4135c0, 0xda38
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Border:
 	.incbin "data/layouts/FortreeCity_DecorationShop/border.bin"
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata:
