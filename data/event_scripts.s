@@ -895,9 +895,8 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/Route110_TrickHousePuzzle6/scripts.inc"
 	.include "data/maps/Route110_TrickHousePuzzle7/scripts.inc"
 	.include "data/maps/Route110_TrickHousePuzzle8/scripts.inc"
-	.incbin "baserom_jp.gba", 0x240605, 0xbd
+	.include "data/maps/Route110_SeasideCyclingRoadSouthEntrance/scripts.inc"
 	.include "data/maps/Route110_SeasideCyclingRoadNorthEntrance/scripts.inc"
-	.incbin "baserom_jp.gba", 0x240744, 0x73
 	.include "data/maps/Route113_GlassWorkshop/scripts.inc"
 	.incbin "baserom_jp.gba", 0x240c51, 0x347
 	.include "data/maps/Route123_BerryMastersHouse/scripts.inc"
