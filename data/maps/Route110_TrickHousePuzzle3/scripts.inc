@@ -1,304 +1,345 @@
-@ Route110_TrickHousePuzzle3 scripts (JP map g29 m5 @ 0x0823E2D4)
-
 Route110_TrickHousePuzzle3_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, Route110_TrickHousePuzzle3_EventScript_0023E2DF
-	map_script MAP_SCRIPT_ON_TRANSITION, Route110_TrickHousePuzzle3_EventScript_0023E2FB
+	map_script MAP_SCRIPT_ON_RESUME, Route110_TrickHousePuzzle3_OnResume
+	map_script MAP_SCRIPT_ON_TRANSITION, Route110_TrickHousePuzzle3_OnTransition
 	.byte 0
 
-Route110_TrickHousePuzzle3_EventScript_0023E2DF::
-	call Route110_TrickHousePuzzle3_EventScript_0023E31A
-	compare_var_to_value 0x4009, 0x0
-	call_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E393
-	compare_var_to_value 0x4009, 0x1
-	call_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E62E
+Route110_TrickHousePuzzle3_OnResume:
+	call Route110_TrickHousePuzzle3_EventScript_UpdateButtonMetatiles
+	call_if_eq VAR_TEMP_9, 0, Route110_TrickHousePuzzle3_EventScript_SetDoorsState0
+	call_if_eq VAR_TEMP_9, 1, Route110_TrickHousePuzzle3_EventScript_SetDoorsState1
 	end
 
-Route110_TrickHousePuzzle3_EventScript_0023E2FB::
-	setvar 0x4001, 0x0
-	setvar 0x4002, 0x0
-	setvar 0x4003, 0x0
-	setvar 0x4004, 0x0
-	setvar 0x4008, 0x0
-	setvar 0x4009, 0x0
+Route110_TrickHousePuzzle3_OnTransition:
+	setvar VAR_TEMP_1, 0
+	setvar VAR_TEMP_2, 0
+	setvar VAR_TEMP_3, 0
+	setvar VAR_TEMP_4, 0
+	setvar VAR_TEMP_8, 0
+	setvar VAR_TEMP_9, 0
 	end
 
-Route110_TrickHousePuzzle3_EventScript_0023E31A::
-	setmetatile 0x4, 0xE, 0x258, 0x0
-	setmetatile 0x3, 0xB, 0x258, 0x0
-	setmetatile 0xC, 0x5, 0x258, 0x0
-	setmetatile 0x8, 0x2, 0x258, 0x0
-	compare_var_to_value 0x4008, 0x1
-	call_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E36B
-	compare_var_to_value 0x4008, 0x2
-	call_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E375
-	compare_var_to_value 0x4008, 0x3
-	call_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E37F
-	compare_var_to_value 0x4008, 0x4
-	call_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E389
+Route110_TrickHousePuzzle3_EventScript_UpdateButtonMetatiles::
+	setmetatile 4, 14, METATILE_TrickHousePuzzle_Button_Up, FALSE
+	setmetatile 3, 11, METATILE_TrickHousePuzzle_Button_Up, FALSE
+	setmetatile 12, 5, METATILE_TrickHousePuzzle_Button_Up, FALSE
+	setmetatile 8, 2, METATILE_TrickHousePuzzle_Button_Up, FALSE
+	call_if_eq VAR_TEMP_8, 1, Route110_TrickHousePuzzle3_EventScript_PressedButton1Metatile
+	call_if_eq VAR_TEMP_8, 2, Route110_TrickHousePuzzle3_EventScript_PressedButton2Metatile
+	call_if_eq VAR_TEMP_8, 3, Route110_TrickHousePuzzle3_EventScript_PressedButton3Metatile
+	call_if_eq VAR_TEMP_8, 4, Route110_TrickHousePuzzle3_EventScript_PressedButton4Metatile
 	return
 
-Route110_TrickHousePuzzle3_EventScript_0023E36B::
-	setmetatile 0x4, 0xE, 0x259, 0x0
+Route110_TrickHousePuzzle3_EventScript_PressedButton1Metatile::
+	setmetatile 4, 14, METATILE_TrickHousePuzzle_Button_Pressed, FALSE
 	return
 
-Route110_TrickHousePuzzle3_EventScript_0023E375::
-	setmetatile 0x3, 0xB, 0x259, 0x0
+Route110_TrickHousePuzzle3_EventScript_PressedButton2Metatile::
+	setmetatile 3, 11, METATILE_TrickHousePuzzle_Button_Pressed, FALSE
 	return
 
-Route110_TrickHousePuzzle3_EventScript_0023E37F::
-	setmetatile 0xC, 0x5, 0x259, 0x0
+Route110_TrickHousePuzzle3_EventScript_PressedButton3Metatile::
+	setmetatile 12, 5, METATILE_TrickHousePuzzle_Button_Pressed, FALSE
 	return
 
-Route110_TrickHousePuzzle3_EventScript_0023E389::
-	setmetatile 0x8, 0x2, 0x259, 0x0
+Route110_TrickHousePuzzle3_EventScript_PressedButton4Metatile::
+	setmetatile 8, 2, METATILE_TrickHousePuzzle_Button_Pressed, FALSE
 	return
 
-Route110_TrickHousePuzzle3_EventScript_0023E393::
-	setmetatile 0x1, 0x6, 0x24B, 0x0
-	setmetatile 0x2, 0x6, 0x24C, 0x0
-	setmetatile 0x1, 0x7, 0x253, 0x0
-	setmetatile 0x2, 0x7, 0x254, 0x0
-	setmetatile 0x1, 0x9, 0x24B, 0x0
-	setmetatile 0x2, 0x9, 0x24C, 0x0
-	setmetatile 0x1, 0xA, 0x253, 0x0
-	setmetatile 0x2, 0xA, 0x254, 0x0
-	setmetatile 0x4, 0xF, 0x24B, 0x0
-	setmetatile 0x5, 0xF, 0x24C, 0x0
-	setmetatile 0x4, 0x10, 0x253, 0x0
-	setmetatile 0x5, 0x10, 0x254, 0x0
-	setmetatile 0xD, 0x9, 0x24B, 0x0
-	setmetatile 0xE, 0x9, 0x24C, 0x0
-	setmetatile 0xD, 0xA, 0x253, 0x0
-	setmetatile 0xE, 0xA, 0x254, 0x0
-	setmetatile 0xD, 0xF, 0x24B, 0x0
-	setmetatile 0xE, 0xF, 0x24C, 0x0
-	setmetatile 0xD, 0x10, 0x253, 0x0
-	setmetatile 0xE, 0x10, 0x254, 0x0
-	setmetatile 0x3, 0x7, 0x24D, 0x1
-	setmetatile 0x3, 0x8, 0x255, 0x0
-	setmetatile 0x3, 0xD, 0x24D, 0x1
-	setmetatile 0x3, 0xE, 0x255, 0x0
-	setmetatile 0x6, 0x4, 0x24D, 0x1
-	setmetatile 0x6, 0x5, 0x255, 0x0
-	setmetatile 0x9, 0x10, 0x24D, 0x1
-	setmetatile 0x9, 0x11, 0x255, 0x0
-	setmetatile 0xC, 0x7, 0x24D, 0x1
-	setmetatile 0xC, 0x8, 0x255, 0x0
-	setmetatile 0x1, 0x3, 0x238, 0x0
-	setmetatile 0x2, 0x3, 0x239, 0x0
-	setmetatile 0x1, 0x4, 0x240, 0x1
-	setmetatile 0x2, 0x4, 0x241, 0x1
-	setmetatile 0x1, 0xC, 0x238, 0x0
-	setmetatile 0x2, 0xC, 0x239, 0x0
-	setmetatile 0x1, 0xD, 0x240, 0x1
-	setmetatile 0x2, 0xD, 0x241, 0x1
-	setmetatile 0x4, 0x6, 0x238, 0x0
-	setmetatile 0x5, 0x6, 0x239, 0x0
-	setmetatile 0x4, 0x7, 0x240, 0x1
-	setmetatile 0x5, 0x7, 0x241, 0x1
-	setmetatile 0x4, 0xC, 0x238, 0x0
-	setmetatile 0x5, 0xC, 0x239, 0x0
-	setmetatile 0x4, 0xD, 0x240, 0x1
-	setmetatile 0x5, 0xD, 0x241, 0x1
-	setmetatile 0x4, 0x12, 0x238, 0x0
-	setmetatile 0x5, 0x12, 0x239, 0x0
-	setmetatile 0x4, 0x13, 0x240, 0x1
-	setmetatile 0x5, 0x13, 0x241, 0x1
-	setmetatile 0x7, 0x9, 0x238, 0x0
-	setmetatile 0x8, 0x9, 0x239, 0x0
-	setmetatile 0x7, 0xA, 0x240, 0x1
-	setmetatile 0x8, 0xA, 0x241, 0x1
-	setmetatile 0xA, 0x6, 0x238, 0x0
-	setmetatile 0xB, 0x6, 0x239, 0x0
-	setmetatile 0xA, 0x7, 0x240, 0x1
-	setmetatile 0xB, 0x7, 0x241, 0x1
-	setmetatile 0xA, 0xC, 0x238, 0x0
-	setmetatile 0xB, 0xC, 0x239, 0x0
-	setmetatile 0xA, 0xD, 0x240, 0x1
-	setmetatile 0xB, 0xD, 0x241, 0x1
-	setmetatile 0xA, 0x12, 0x238, 0x0
-	setmetatile 0xB, 0x12, 0x239, 0x0
-	setmetatile 0xA, 0x13, 0x240, 0x1
-	setmetatile 0xB, 0x13, 0x241, 0x1
-	setmetatile 0xD, 0x3, 0x238, 0x0
-	setmetatile 0xE, 0x3, 0x239, 0x0
-	setmetatile 0xD, 0x4, 0x240, 0x1
-	setmetatile 0xE, 0x4, 0x241, 0x1
-	setmetatile 0x3, 0x10, 0x23A, 0x1
-	setmetatile 0x3, 0x11, 0x242, 0x1
-	setmetatile 0x9, 0x4, 0x23A, 0x1
-	setmetatile 0x9, 0x5, 0x242, 0x1
+Route110_TrickHousePuzzle3_EventScript_SetDoorsState0::
+	setmetatile 1, 6, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile0, FALSE
+	setmetatile 2, 6, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile1, FALSE
+	setmetatile 1, 7, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile2, FALSE
+	setmetatile 2, 7, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile3, FALSE
+	setmetatile 1, 9, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile0, FALSE
+	setmetatile 2, 9, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile1, FALSE
+	setmetatile 1, 10, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile2, FALSE
+	setmetatile 2, 10, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile3, FALSE
+	setmetatile 4, 15, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile0, FALSE
+	setmetatile 5, 15, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile1, FALSE
+	setmetatile 4, 16, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile2, FALSE
+	setmetatile 5, 16, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile3, FALSE
+	setmetatile 13, 9, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile0, FALSE
+	setmetatile 14, 9, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile1, FALSE
+	setmetatile 13, 10, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile2, FALSE
+	setmetatile 14, 10, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile3, FALSE
+	setmetatile 13, 15, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile0, FALSE
+	setmetatile 14, 15, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile1, FALSE
+	setmetatile 13, 16, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile2, FALSE
+	setmetatile 14, 16, METATILE_TrickHousePuzzle_BlueDoorH_Open_Tile3, FALSE
+	setmetatile 3, 7, METATILE_TrickHousePuzzle_BlueDoorV_Retracted, TRUE
+	setmetatile 3, 8, METATILE_TrickHousePuzzle_Floor_ShadowTop, FALSE
+	setmetatile 3, 13, METATILE_TrickHousePuzzle_BlueDoorV_Retracted, TRUE
+	setmetatile 3, 14, METATILE_TrickHousePuzzle_Floor_ShadowTop, FALSE
+	setmetatile 6, 4, METATILE_TrickHousePuzzle_BlueDoorV_Retracted, TRUE
+	setmetatile 6, 5, METATILE_TrickHousePuzzle_Floor_ShadowTop, FALSE
+	setmetatile 9, 16, METATILE_TrickHousePuzzle_BlueDoorV_Retracted, TRUE
+	setmetatile 9, 17, METATILE_TrickHousePuzzle_Floor_ShadowTop, FALSE
+	setmetatile 12, 7, METATILE_TrickHousePuzzle_BlueDoorV_Retracted, TRUE
+	setmetatile 12, 8, METATILE_TrickHousePuzzle_Floor_ShadowTop, FALSE
+	setmetatile 1, 3, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile0, FALSE
+	setmetatile 2, 3, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile1, FALSE
+	setmetatile 1, 4, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile2, TRUE
+	setmetatile 2, 4, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile3, TRUE
+	setmetatile 1, 12, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile0, FALSE
+	setmetatile 2, 12, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile1, FALSE
+	setmetatile 1, 13, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile2, TRUE
+	setmetatile 2, 13, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile3, TRUE
+	setmetatile 4, 6, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile0, FALSE
+	setmetatile 5, 6, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile1, FALSE
+	setmetatile 4, 7, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile2, TRUE
+	setmetatile 5, 7, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile3, TRUE
+	setmetatile 4, 12, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile0, FALSE
+	setmetatile 5, 12, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile1, FALSE
+	setmetatile 4, 13, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile2, TRUE
+	setmetatile 5, 13, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile3, TRUE
+	setmetatile 4, 18, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile0, FALSE
+	setmetatile 5, 18, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile1, FALSE
+	setmetatile 4, 19, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile2, TRUE
+	setmetatile 5, 19, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile3, TRUE
+	setmetatile 7, 9, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile0, FALSE
+	setmetatile 8, 9, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile1, FALSE
+	setmetatile 7, 10, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile2, TRUE
+	setmetatile 8, 10, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile3, TRUE
+	setmetatile 10, 6, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile0, FALSE
+	setmetatile 11, 6, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile1, FALSE
+	setmetatile 10, 7, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile2, TRUE
+	setmetatile 11, 7, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile3, TRUE
+	setmetatile 10, 12, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile0, FALSE
+	setmetatile 11, 12, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile1, FALSE
+	setmetatile 10, 13, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile2, TRUE
+	setmetatile 11, 13, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile3, TRUE
+	setmetatile 10, 18, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile0, FALSE
+	setmetatile 11, 18, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile1, FALSE
+	setmetatile 10, 19, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile2, TRUE
+	setmetatile 11, 19, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile3, TRUE
+	setmetatile 13, 3, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile0, FALSE
+	setmetatile 14, 3, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile1, FALSE
+	setmetatile 13, 4, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile2, TRUE
+	setmetatile 14, 4, METATILE_TrickHousePuzzle_RedDoorH_Closed_Tile3, TRUE
+	setmetatile 3, 16, METATILE_TrickHousePuzzle_RedDoorV_Open0, TRUE
+	setmetatile 3, 17, METATILE_TrickHousePuzzle_RedDoorV_Open1, TRUE
+	setmetatile 9, 4, METATILE_TrickHousePuzzle_RedDoorV_Open0, TRUE
+	setmetatile 9, 5, METATILE_TrickHousePuzzle_RedDoorV_Open1, TRUE
 	return
 
-Route110_TrickHousePuzzle3_EventScript_0023E62E::
-	setmetatile 0x1, 0x6, 0x23B, 0x0
-	setmetatile 0x2, 0x6, 0x23C, 0x0
-	setmetatile 0x1, 0x7, 0x243, 0x1
-	setmetatile 0x2, 0x7, 0x244, 0x1
-	setmetatile 0x1, 0x9, 0x23B, 0x0
-	setmetatile 0x2, 0x9, 0x23C, 0x0
-	setmetatile 0x1, 0xA, 0x243, 0x1
-	setmetatile 0x2, 0xA, 0x244, 0x1
-	setmetatile 0x4, 0xF, 0x23B, 0x0
-	setmetatile 0x5, 0xF, 0x23C, 0x0
-	setmetatile 0x4, 0x10, 0x243, 0x1
-	setmetatile 0x5, 0x10, 0x244, 0x1
-	setmetatile 0xD, 0x9, 0x23B, 0x0
-	setmetatile 0xE, 0x9, 0x23C, 0x0
-	setmetatile 0xD, 0xA, 0x243, 0x1
-	setmetatile 0xE, 0xA, 0x244, 0x1
-	setmetatile 0xD, 0xF, 0x23B, 0x0
-	setmetatile 0xE, 0xF, 0x23C, 0x0
-	setmetatile 0xD, 0x10, 0x243, 0x1
-	setmetatile 0xE, 0x10, 0x244, 0x1
-	setmetatile 0x3, 0x7, 0x23D, 0x1
-	setmetatile 0x3, 0x8, 0x245, 0x1
-	setmetatile 0x3, 0xD, 0x23D, 0x1
-	setmetatile 0x3, 0xE, 0x245, 0x1
-	setmetatile 0x6, 0x4, 0x23D, 0x1
-	setmetatile 0x6, 0x5, 0x245, 0x1
-	setmetatile 0x9, 0x10, 0x23D, 0x1
-	setmetatile 0x9, 0x11, 0x245, 0x1
-	setmetatile 0xC, 0x7, 0x23D, 0x1
-	setmetatile 0xC, 0x8, 0x245, 0x1
-	setmetatile 0x1, 0x3, 0x248, 0x0
-	setmetatile 0x2, 0x3, 0x249, 0x0
-	setmetatile 0x1, 0x4, 0x250, 0x0
-	setmetatile 0x2, 0x4, 0x251, 0x0
-	setmetatile 0x1, 0xC, 0x248, 0x0
-	setmetatile 0x2, 0xC, 0x249, 0x0
-	setmetatile 0x1, 0xD, 0x250, 0x0
-	setmetatile 0x2, 0xD, 0x251, 0x0
-	setmetatile 0x4, 0x6, 0x248, 0x0
-	setmetatile 0x5, 0x6, 0x249, 0x0
-	setmetatile 0x4, 0x7, 0x250, 0x0
-	setmetatile 0x5, 0x7, 0x251, 0x0
-	setmetatile 0x4, 0xC, 0x248, 0x0
-	setmetatile 0x5, 0xC, 0x249, 0x0
-	setmetatile 0x4, 0xD, 0x250, 0x0
-	setmetatile 0x5, 0xD, 0x251, 0x0
-	setmetatile 0x4, 0x12, 0x248, 0x0
-	setmetatile 0x5, 0x12, 0x249, 0x0
-	setmetatile 0x4, 0x13, 0x250, 0x0
-	setmetatile 0x5, 0x13, 0x251, 0x0
-	setmetatile 0x7, 0x9, 0x248, 0x0
-	setmetatile 0x8, 0x9, 0x249, 0x0
-	setmetatile 0x7, 0xA, 0x250, 0x0
-	setmetatile 0x8, 0xA, 0x251, 0x0
-	setmetatile 0xA, 0x6, 0x248, 0x0
-	setmetatile 0xB, 0x6, 0x249, 0x0
-	setmetatile 0xA, 0x7, 0x250, 0x0
-	setmetatile 0xB, 0x7, 0x251, 0x0
-	setmetatile 0xA, 0xC, 0x248, 0x0
-	setmetatile 0xB, 0xC, 0x249, 0x0
-	setmetatile 0xA, 0xD, 0x250, 0x0
-	setmetatile 0xB, 0xD, 0x251, 0x0
-	setmetatile 0xA, 0x12, 0x248, 0x0
-	setmetatile 0xB, 0x12, 0x249, 0x0
-	setmetatile 0xA, 0x13, 0x250, 0x0
-	setmetatile 0xB, 0x13, 0x251, 0x0
-	setmetatile 0xD, 0x3, 0x248, 0x0
-	setmetatile 0xE, 0x3, 0x249, 0x0
-	setmetatile 0xD, 0x4, 0x250, 0x0
-	setmetatile 0xE, 0x4, 0x251, 0x0
-	setmetatile 0x3, 0x10, 0x24A, 0x1
-	setmetatile 0x3, 0x11, 0x252, 0x0
-	setmetatile 0x9, 0x4, 0x24A, 0x1
-	setmetatile 0x9, 0x5, 0x252, 0x0
+Route110_TrickHousePuzzle3_EventScript_SetDoorsState1::
+	setmetatile 1, 6, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile0, FALSE
+	setmetatile 2, 6, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile1, FALSE
+	setmetatile 1, 7, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile2, TRUE
+	setmetatile 2, 7, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile3, TRUE
+	setmetatile 1, 9, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile0, FALSE
+	setmetatile 2, 9, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile1, FALSE
+	setmetatile 1, 10, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile2, TRUE
+	setmetatile 2, 10, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile3, TRUE
+	setmetatile 4, 15, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile0, FALSE
+	setmetatile 5, 15, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile1, FALSE
+	setmetatile 4, 16, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile2, TRUE
+	setmetatile 5, 16, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile3, TRUE
+	setmetatile 13, 9, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile0, FALSE
+	setmetatile 14, 9, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile1, FALSE
+	setmetatile 13, 10, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile2, TRUE
+	setmetatile 14, 10, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile3, TRUE
+	setmetatile 13, 15, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile0, FALSE
+	setmetatile 14, 15, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile1, FALSE
+	setmetatile 13, 16, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile2, TRUE
+	setmetatile 14, 16, METATILE_TrickHousePuzzle_BlueDoorH_Closed_Tile3, TRUE
+	setmetatile 3, 7, METATILE_TrickHousePuzzle_BlueDoorV_Open0, TRUE
+	setmetatile 3, 8, METATILE_TrickHousePuzzle_BlueDoorV_Open1, TRUE
+	setmetatile 3, 13, METATILE_TrickHousePuzzle_BlueDoorV_Open0, TRUE
+	setmetatile 3, 14, METATILE_TrickHousePuzzle_BlueDoorV_Open1, TRUE
+	setmetatile 6, 4, METATILE_TrickHousePuzzle_BlueDoorV_Open0, TRUE
+	setmetatile 6, 5, METATILE_TrickHousePuzzle_BlueDoorV_Open1, TRUE
+	setmetatile 9, 16, METATILE_TrickHousePuzzle_BlueDoorV_Open0, TRUE
+	setmetatile 9, 17, METATILE_TrickHousePuzzle_BlueDoorV_Open1, TRUE
+	setmetatile 12, 7, METATILE_TrickHousePuzzle_BlueDoorV_Open0, TRUE
+	setmetatile 12, 8, METATILE_TrickHousePuzzle_BlueDoorV_Open1, TRUE
+	setmetatile 1, 3, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile0, FALSE
+	setmetatile 2, 3, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile1, FALSE
+	setmetatile 1, 4, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile2, FALSE
+	setmetatile 2, 4, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile3, FALSE
+	setmetatile 1, 12, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile0, FALSE
+	setmetatile 2, 12, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile1, FALSE
+	setmetatile 1, 13, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile2, FALSE
+	setmetatile 2, 13, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile3, FALSE
+	setmetatile 4, 6, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile0, FALSE
+	setmetatile 5, 6, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile1, FALSE
+	setmetatile 4, 7, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile2, FALSE
+	setmetatile 5, 7, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile3, FALSE
+	setmetatile 4, 12, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile0, FALSE
+	setmetatile 5, 12, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile1, FALSE
+	setmetatile 4, 13, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile2, FALSE
+	setmetatile 5, 13, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile3, FALSE
+	setmetatile 4, 18, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile0, FALSE
+	setmetatile 5, 18, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile1, FALSE
+	setmetatile 4, 19, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile2, FALSE
+	setmetatile 5, 19, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile3, FALSE
+	setmetatile 7, 9, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile0, FALSE
+	setmetatile 8, 9, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile1, FALSE
+	setmetatile 7, 10, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile2, FALSE
+	setmetatile 8, 10, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile3, FALSE
+	setmetatile 10, 6, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile0, FALSE
+	setmetatile 11, 6, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile1, FALSE
+	setmetatile 10, 7, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile2, FALSE
+	setmetatile 11, 7, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile3, FALSE
+	setmetatile 10, 12, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile0, FALSE
+	setmetatile 11, 12, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile1, FALSE
+	setmetatile 10, 13, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile2, FALSE
+	setmetatile 11, 13, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile3, FALSE
+	setmetatile 10, 18, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile0, FALSE
+	setmetatile 11, 18, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile1, FALSE
+	setmetatile 10, 19, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile2, FALSE
+	setmetatile 11, 19, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile3, FALSE
+	setmetatile 13, 3, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile0, FALSE
+	setmetatile 14, 3, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile1, FALSE
+	setmetatile 13, 4, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile2, FALSE
+	setmetatile 14, 4, METATILE_TrickHousePuzzle_RedDoorH_Open_Tile3, FALSE
+	setmetatile 3, 16, METATILE_TrickHousePuzzle_RedDoorV_Retracted, TRUE
+	setmetatile 3, 17, METATILE_TrickHousePuzzle_Floor_ShadowTop_Alt, FALSE
+	setmetatile 9, 4, METATILE_TrickHousePuzzle_RedDoorV_Retracted, TRUE
+	setmetatile 9, 5, METATILE_TrickHousePuzzle_Floor_ShadowTop_Alt, FALSE
 	return
 
-Route110_TrickHousePuzzle3_EventScript_0023E8C9::
+Route110_TrickHousePuzzle3_EventScript_Button1::
 	lockall
-	setvar 0x4008, 0x1
-	goto Route110_TrickHousePuzzle3_EventScript_0023E8F9
+	setvar VAR_TEMP_8, 1
+	goto Route110_TrickHousePuzzle3_EventScript_PressButton
 	end
 
-Route110_TrickHousePuzzle3_EventScript_0023E8D5::
+Route110_TrickHousePuzzle3_EventScript_Button2::
 	lockall
-	setvar 0x4008, 0x2
-	goto Route110_TrickHousePuzzle3_EventScript_0023E8F9
+	setvar VAR_TEMP_8, 2
+	goto Route110_TrickHousePuzzle3_EventScript_PressButton
 	end
 
-Route110_TrickHousePuzzle3_EventScript_0023E8E1::
+Route110_TrickHousePuzzle3_EventScript_Button3::
 	lockall
-	setvar 0x4008, 0x3
-	goto Route110_TrickHousePuzzle3_EventScript_0023E8F9
+	setvar VAR_TEMP_8, 3
+	goto Route110_TrickHousePuzzle3_EventScript_PressButton
 	end
 
-Route110_TrickHousePuzzle3_EventScript_0023E8ED::
+Route110_TrickHousePuzzle3_EventScript_Button4::
 	lockall
-	setvar 0x4008, 0x4
-	goto Route110_TrickHousePuzzle3_EventScript_0023E8F9
+	setvar VAR_TEMP_8, 4
+	goto Route110_TrickHousePuzzle3_EventScript_PressButton
 	end
 
-Route110_TrickHousePuzzle3_EventScript_0023E8F9::
-	call Route110_TrickHousePuzzle3_EventScript_0023E90C
-	playse 0x15
-	call Route110_TrickHousePuzzle3_EventScript_0023E31A
-	goto Route110_TrickHousePuzzle3_EventScript_0023E965
+Route110_TrickHousePuzzle3_EventScript_PressButton::
+	call Route110_TrickHousePuzzle3_EventScript_SetButton
+	playse SE_PIN
+	call Route110_TrickHousePuzzle3_EventScript_UpdateButtonMetatiles
+	goto Route110_TrickHousePuzzle3_EventScript_AlternateDoors
 	end
 
-Route110_TrickHousePuzzle3_EventScript_0023E90C::
-	setvar 0x4001, 0x0
-	setvar 0x4002, 0x0
-	setvar 0x4003, 0x0
-	setvar 0x4004, 0x0
-	compare_var_to_value 0x4008, 0x1
-	call_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E94D
-	compare_var_to_value 0x4008, 0x2
-	call_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E953
-	compare_var_to_value 0x4008, 0x3
-	call_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E959
-	compare_var_to_value 0x4008, 0x4
-	call_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E95F
+Route110_TrickHousePuzzle3_EventScript_SetButton::
+	setvar VAR_TEMP_1, 0
+	setvar VAR_TEMP_2, 0
+	setvar VAR_TEMP_3, 0
+	setvar VAR_TEMP_4, 0
+	call_if_eq VAR_TEMP_8, 1, Route110_TrickHousePuzzle3_EventScript_SetButton1
+	call_if_eq VAR_TEMP_8, 2, Route110_TrickHousePuzzle3_EventScript_SetButton2
+	call_if_eq VAR_TEMP_8, 3, Route110_TrickHousePuzzle3_EventScript_SetButton3
+	call_if_eq VAR_TEMP_8, 4, Route110_TrickHousePuzzle3_EventScript_SetButton4
 	return
 
-Route110_TrickHousePuzzle3_EventScript_0023E94D::
-	setvar 0x4001, 0x1
+Route110_TrickHousePuzzle3_EventScript_SetButton1::
+	setvar VAR_TEMP_1, 1
 	return
 
-Route110_TrickHousePuzzle3_EventScript_0023E953::
-	setvar 0x4002, 0x1
+Route110_TrickHousePuzzle3_EventScript_SetButton2::
+	setvar VAR_TEMP_2, 1
 	return
 
-Route110_TrickHousePuzzle3_EventScript_0023E959::
-	setvar 0x4003, 0x1
+Route110_TrickHousePuzzle3_EventScript_SetButton3::
+	setvar VAR_TEMP_3, 1
 	return
 
-Route110_TrickHousePuzzle3_EventScript_0023E95F::
-	setvar 0x4004, 0x1
+Route110_TrickHousePuzzle3_EventScript_SetButton4::
+	setvar VAR_TEMP_4, 1
 	return
 
-Route110_TrickHousePuzzle3_EventScript_0023E965::
-	compare_var_to_value 0x4009, 0x1
-	call_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E393
-	compare_var_to_value 0x4009, 0x0
-	call_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E62E
+Route110_TrickHousePuzzle3_EventScript_AlternateDoors::
+	call_if_eq VAR_TEMP_9, 1, Route110_TrickHousePuzzle3_EventScript_SetDoorsState0
+	call_if_eq VAR_TEMP_9, 0, Route110_TrickHousePuzzle3_EventScript_SetDoorsState1
 	special DrawWholeMapView
-	compare_var_to_value 0x4009, 0x1
-	goto_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E995
-	compare_var_to_value 0x4009, 0x0
-	goto_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E99C
+	goto_if_eq VAR_TEMP_9, 1, Route110_TrickHousePuzzle3_EventScript_ClearAltDoorState
+	goto_if_eq VAR_TEMP_9, 0, Route110_TrickHousePuzzle3_EventScript_SetAltDoorState
 	end
 
-Route110_TrickHousePuzzle3_EventScript_0023E995::
-	setvar 0x4009, 0x0
+Route110_TrickHousePuzzle3_EventScript_ClearAltDoorState::
+	setvar VAR_TEMP_9, 0
 	releaseall
 	end
 
-Route110_TrickHousePuzzle3_EventScript_0023E99C::
-	setvar 0x4009, 0x1
+Route110_TrickHousePuzzle3_EventScript_SetAltDoorState::
+	setvar VAR_TEMP_9, 1
 	releaseall
 	end
 
-Route110_TrickHousePuzzle3_EventScript_0023E9A3::
+Route110_TrickHousePuzzle3_EventScript_Scroll::
 	lockall
-	compare_var_to_value 0x40AD, 0x0
-	goto_if 0x1, Route110_TrickHousePuzzle3_EventScript_0023E9B5
-	goto 0x0823D1AC
+	goto_if_eq VAR_TRICK_HOUSE_PUZZLE_3_STATE, 0, Route110_TrickHousePuzzle3_EventScript_FoundScroll
+	goto Route110_TrickHousePuzzle_EventScript_ReadScrollAgain
 	end
 
-Route110_TrickHousePuzzle3_EventScript_0023E9B5::
-	setvar 0x40AD, 0x1
-	goto 0x0823D1B6
+Route110_TrickHousePuzzle3_EventScript_FoundScroll::
+	setvar VAR_TRICK_HOUSE_PUZZLE_3_STATE, 1
+	goto Route110_TrickHousePuzzle_EventScript_FoundScroll
 	end
+
+Route110_TrickHousePuzzle3_EventScript_Justin::
+	trainerbattle_single TRAINER_JUSTIN, Route110_TrickHousePuzzle3_Text_JustinIntro, Route110_TrickHousePuzzle3_Text_JustinDefeat
+	msgbox Route110_TrickHousePuzzle3_Text_JustinPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route110_TrickHousePuzzle3_EventScript_Martha::
+	trainerbattle_single TRAINER_MARTHA, Route110_TrickHousePuzzle3_Text_MarthaIntro, Route110_TrickHousePuzzle3_Text_MarthaDefeat
+	msgbox Route110_TrickHousePuzzle3_Text_MarthaPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route110_TrickHousePuzzle3_EventScript_Alan::
+	trainerbattle_single TRAINER_ALAN, Route110_TrickHousePuzzle3_Text_AlanIntro, Route110_TrickHousePuzzle3_Text_AlanDefeat
+	msgbox Route110_TrickHousePuzzle3_Text_AlanPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route110_TrickHousePuzzle3_Text_WroteSecretCodeLockOpened:
+	.string "{STRING 0x01}は　あいことばを\n"
+	.string "とびらに　かきつけた！\p"
+	.string "‘カラクリだいおう　さま　あこがれ’\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "かぎの　はずれる　おとがした！$"
+
+Route110_TrickHousePuzzle3_Text_JustinIntro:
+	.string "なんども　おなじ　ところに\n"
+	.string "もどって　きちゃうよー！$"
+
+Route110_TrickHousePuzzle3_Text_JustinDefeat:
+	.string "ぼくが　こまってるのに\n"
+	.string "ダメおしで　かつなんて　ひどいよー！$"
+
+Route110_TrickHousePuzzle3_Text_JustinPostBattle:
+	.string "とびら　だらけで\n"
+	.string "せまくて　こわいよー！$"
+
+Route110_TrickHousePuzzle3_Text_MarthaIntro:
+	.string "なにが　なんだか　わからなくて\n"
+	.string "かなしく　なってきたわ⋯⋯$"
+
+Route110_TrickHousePuzzle3_Text_MarthaDefeat:
+	.string "ひっ　ひどいわ⋯⋯$"
+
+Route110_TrickHousePuzzle3_Text_MarthaPostBattle:
+	.string "どうせ　あたしは　よわいし\n"
+	.string "ほうこうおんちよー！$"
+
+Route110_TrickHousePuzzle3_Text_AlanIntro:
+	.string "いったい　なんの　ために\n"
+	.string "こんな　やしきが　あるんだろう⋯⋯？$"
+
+Route110_TrickHousePuzzle3_Text_AlanDefeat:
+	.string "いったい　なぜ\n"
+	.string "わしは　まけて　しまったんだろう⋯⋯？$"
+
+Route110_TrickHousePuzzle3_Text_AlanPostBattle:
+	.string "いったい　どれくらいの　しかけが\n"
+	.string "この　やしきに　あるんだろう⋯？\p"
+	.string "きみなら　わかるかもな$"

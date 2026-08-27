@@ -890,16 +890,7 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/Route110_TrickHousePuzzle1/scripts.inc"
 	.include "data/maps/Route110_TrickHousePuzzle2/scripts.inc"
 	.include "data/maps/Route110_TrickHousePuzzle3/scripts.inc"
-	.incbin "baserom_jp.gba", 0x23e9c0, 0x45
-
-Route110_TrickHousePuzzle3_Text_WroteSecretCodeLockOpened:
-	.string "{PLAYER}は　あいことばを\n"
-	.string "とびらに　かきつけた！\p"
-	.string "‘カラクリだいおう　さま　あこがれ’\p"
-	.string "⋯⋯　⋯⋯　⋯⋯\p"
-	.string "かぎの　はずれる　おとがした！$"
-
-	.incbin "baserom_jp.gba", 0x23ea48, 0x15d
+	.incbin "baserom_jp.gba", 0x23eb42, 0x63
 
 Route110_TrickHousePuzzle4_Text_WroteSecretCodeLockOpened:
 	.string "{PLAYER}は　あいことばを\n"
