@@ -69,7 +69,12 @@ gText_DoorOpenedFarAway: @ 0x08243CBE
 	.globl gText_BigHoleInTheWall
 gText_BigHoleInTheWall: @ 0x08243CDA
 	.incbin "baserom_jp.gba", 0x243cda, 0x14
-	.incbin "baserom_jp.gba", 0x243cee, 0x106
+	.incbin "baserom_jp.gba", 0x243cee, 0xd8
+
+gText_Sudowoodo_Attacked::
+	.string "おかしな　きは\n"
+	.string "ホエルコじょうろを　いやがっている！\p"
+	.string "おかしな　きが　おそいかかってきた！$"
 
 gText_LegendaryFlewAway:: @ 0x08243DF4
 	.string "{B_COPY_VAR_1}は\n"
