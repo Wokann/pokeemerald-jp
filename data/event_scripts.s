@@ -954,9 +954,10 @@ EventScript_BackupMrBrineyLocation::
 
 	.include "data/scripts/surf.inc"
 	.include "data/scripts/rival_graphics.inc"
+	.include "data/scripts/set_gym_trainers.inc"
 
-	@ Remaining shared field scripts at 0x08242FCF-0x0824311B.
-	.incbin "baserom_jp.gba", 0x242FCF, 0x14C
+	@ Remaining shared field scripts at 0x082430E0-0x0824311B.
+	.incbin "baserom_jp.gba", 0x2430E0, 0x3B
 	@ These targets remain inside the unstructured shared field-script range.
 	.globl Common_EventScript_ShowBagIsFull
 	.set Common_EventScript_ShowBagIsFull, 0x082430E0
@@ -995,8 +996,6 @@ EventScript_BackupMrBrineyLocation::
 	.set EventTicket_Text_OddTicketGetOnBoard, 0x08275D2A
 	.globl EventTicket_Text_OddTicketsWhereTo
 	.set EventTicket_Text_OddTicketsWhereTo, 0x08275DF2
-	.globl Common_EventScript_SetGymTrainers
-	.set Common_EventScript_SetGymTrainers, 0x08242FCF
 	.globl Common_EventScript_BagIsFull
 	.set Common_EventScript_BagIsFull, 0x082430EA
 	.globl Common_EventScript_ShowNoRoomForDecor
