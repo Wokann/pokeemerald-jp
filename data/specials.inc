@@ -175,7 +175,7 @@ gSpecials::
 	def_special ChooseStarter, waitstate=1
 	def_special StartWallyTutorialBattle, waitstate=1
 	def_special ChangePokemonNickname, waitstate=1
-	def_special ChoosePartyMon
+	def_special ChoosePartyMon, waitstate=1
 	def_special sub_08136F64
 	def_special DoBerryBlending, waitstate=1
 	def_special PlayRoulette, waitstate=1
@@ -479,7 +479,7 @@ gSpecials::
 	def_special DoBattlePyramidMonsHaveHeldItem
 	def_special BattlePyramidChooseMonHeldItems, waitstate=1
 	def_special sub_0813A774
-	def_special sub_0813A7C0
+	def_special ShowNatureGirlMessage
 	def_special ShowBattlePointsWindow
 	def_special UpdateBattlePointsWindow
 	def_special CloseBattlePointsWindow

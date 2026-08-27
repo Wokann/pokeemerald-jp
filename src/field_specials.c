@@ -4985,7 +4985,7 @@ __attribute__((naked)) void sub_0813A774(void)
     );
 }
 
-__attribute__((naked)) void sub_0813A7C0(void)
+__attribute__((naked)) void ShowNatureGirlMessage(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
