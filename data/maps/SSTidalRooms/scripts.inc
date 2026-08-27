@@ -1,0 +1,175 @@
+SSTidalRooms_MapScripts::
+	.byte 0
+
+SSTidalRooms_EventScript_SnatchGiver::
+	lock
+	faceplayer
+	goto_if_set FLAG_RECEIVED_TM_SNATCH, SSTidalRooms_EventScript_ExplainSnatch
+	msgbox SSTidalRooms_Text_NotSuspiciousTakeThis, MSGBOX_DEFAULT
+	giveitem ITEM_TM_SNATCH
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_TM_SNATCH
+	msgbox SSTidalRooms_Text_ExplainSnatch, MSGBOX_DEFAULT
+	release
+	end
+
+SSTidalRooms_EventScript_ExplainSnatch::
+	msgbox SSTidalRooms_Text_ExplainSnatch, MSGBOX_DEFAULT
+	release
+	end
+
+SSTidalRooms_EventScript_Bed::
+	lockall
+	msgbox SSTidalRooms_Text_TakeRestOnBed, MSGBOX_DEFAULT
+	closemessage
+	call Common_EventScript_OutOfCenterPartyHeal
+	call SSTidalRooms_EventScript_ProgessCruiseAfterBed
+	releaseall
+	end
+
+SSTidalRooms_EventScript_Colton::
+	trainerbattle_single TRAINER_COLTON, SSTidalRooms_Text_ColtonIntro, SSTidalRooms_Text_ColtonDefeat
+	msgbox SSTidalRooms_Text_ColtonPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+SSTidalRooms_EventScript_Micah::
+	trainerbattle_single TRAINER_MICAH, SSTidalRooms_Text_MicahIntro, SSTidalRooms_Text_MicahDefeat
+	msgbox SSTidalRooms_Text_MicahPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+SSTidalRooms_EventScript_Thomas::
+	trainerbattle_single TRAINER_THOMAS, SSTidalRooms_Text_ThomasIntro, SSTidalRooms_Text_ThomasDefeat
+	msgbox SSTidalRooms_Text_ThomasPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+SSTidalRooms_EventScript_Jed::
+	trainerbattle_double TRAINER_LEA_AND_JED, SSTidalRooms_Text_JedIntro, SSTidalRooms_Text_JedDefeat, SSTidalRooms_Text_JedNotEnoughMons
+	msgbox SSTidalRooms_Text_JedPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+SSTidalRooms_EventScript_Lea::
+	trainerbattle_double TRAINER_LEA_AND_JED, SSTidalRooms_Text_LeaIntro, SSTidalRooms_Text_LeaDefeat, SSTidalRooms_Text_LeaNotEnoughMons
+	msgbox SSTidalRooms_Text_LeaPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+SSTidalRooms_EventScript_Garret::
+	trainerbattle_single TRAINER_GARRET, SSTidalRooms_Text_GarretIntro, SSTidalRooms_Text_GarretDefeat
+	msgbox SSTidalRooms_Text_GarretPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+SSTidalRooms_EventScript_Naomi::
+	trainerbattle_single TRAINER_NAOMI, SSTidalRooms_Text_NaomiIntro, SSTidalRooms_Text_NaomiDefeat
+	msgbox SSTidalRooms_Text_NaomiPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+SSTidalRooms_Text_TakeRestOnBed:
+	.string "ベッドが　ある⋯⋯\n"
+	.string "やすんでいこう$"
+
+SSTidalRooms_Text_ColtonIntro:
+	.string "ミナモシティには　よく　いくんだ\p"
+	.string "コンテストの　けんがくが\n"
+	.string "わたしの　たのしみ　なんだよ$"
+
+SSTidalRooms_Text_ColtonDefeat:
+	.string "たのしい　しょうぶ　だったよ$"
+
+SSTidalRooms_Text_ColtonPostBattle:
+	.string "つぎの　コンテストには\n"
+	.string "どんな　ポケモンが　でるのか\l"
+	.string "たのしみで　たまらないよ$"
+
+SSTidalRooms_Text_MicahIntro:
+	.string "きみの　ともだちは　つよいのかね？$"
+
+SSTidalRooms_Text_MicahDefeat:
+	.string "つよい　ともだち　だね！$"
+
+SSTidalRooms_Text_MicahPostBattle:
+	.string "にんげん　だけが　ともだち　じゃない\n"
+	.string "わたしに　とっては　ポケモンが\l"
+	.string "たいせつな　ともだち　なんだよ！$"
+
+SSTidalRooms_Text_ThomasIntro:
+	.string "おきゃくさん\n"
+	.string "ノックは　したかね？$"
+
+SSTidalRooms_Text_ThomasDefeat:
+	.string "まけても\n"
+	.string "あわてず　さわがず$"
+
+SSTidalRooms_Text_ThomasPostBattle:
+	.string "どんな　ときでも　とりみださないのが\n"
+	.string "しんしの　みだしなみ　だよ$"
+
+SSTidalRooms_Text_JedIntro:
+	.string "ジン“ちょっと　はずかしいけど\n"
+	.string "ぼくたちの　ラブラブ　パワー　みせようかな$"
+
+SSTidalRooms_Text_JedDefeat:
+	.string "ジン“はぁ⋯⋯$"
+
+SSTidalRooms_Text_JedPostBattle:
+	.string "ジン“ぼくたちの　ラブラブ　パワーでも\n"
+	.string "かてないのは　はじめて　だよ！\l"
+	.string "きみは　すごい　トレーナー　なんだね！$"
+
+SSTidalRooms_Text_JedNotEnoughMons:
+	.string "ジン“ポケモン　いっぴき？\n"
+	.string "それだと　さみしくないか？$"
+
+SSTidalRooms_Text_LeaIntro:
+	.string "カホ“ちょっと　はずかしいけど\n"
+	.string "ふたりの　ラブラブ　パワー　みせてあげる！$"
+
+SSTidalRooms_Text_LeaDefeat:
+	.string "カホ“やん！$"
+
+SSTidalRooms_Text_LeaPostBattle:
+	.string "カホ“ふたりの　ラブラブ　パワーでも\n"
+	.string "かてない　だなんて\l"
+	.string "あなた　すごい　トレーナー　なのね！$"
+
+SSTidalRooms_Text_LeaNotEnoughMons:
+	.string "カホ“しょうぶ　したかったのに⋯⋯\n"
+	.string "ポケモン　2ひき　いないのね⋯⋯$"
+
+SSTidalRooms_Text_GarretIntro:
+	.string "キミ　ちょうど　いいところに　きたね！\p"
+	.string "ボク　たいくつで　たまらないんだ\n"
+	.string "ちょっと　たのしませて　くれよ$"
+
+SSTidalRooms_Text_GarretDefeat:
+	.string "⋯⋯もう　いいよ$"
+
+SSTidalRooms_Text_GarretPostBattle:
+	.string "パパに　たのんで　ボク　せんようの\n"
+	.string "ヨットを　かってもらおうかな？\l"
+	.string "ポケモンと　いっしょに　のれる　ヨット！$"
+
+SSTidalRooms_Text_NaomiIntro:
+	.string "あら　かわいい　トレーナーさん\n"
+	.string "おちゃに　なさる？\l"
+	.string "それとも　しょうぶ　かしら？$"
+
+SSTidalRooms_Text_NaomiDefeat:
+	.string "かっぱつで　いらっしゃるのね$"
+
+SSTidalRooms_Text_NaomiPostBattle:
+	.string "ゆうがな　きゃくせんで\n"
+	.string "せかい　いっしゅうも　よろしいけど⋯⋯\p"
+	.string "れんらくせんで　のんびり\n"
+	.string "ホウエンを　みるのも　すてき　ですわ$"
+
+SSTidalRooms_Text_NotSuspiciousTakeThis:
+	.string "わたし　あやしく　ないです！\n"
+	.string "だから　これを　あなたに　あげます！\p"
+	.string "べつに　だれか　から\n"
+	.string "よこどりした　モノじゃ　ないです！\l"
+	.string "あんしん　して　つかって　ください！$"
+
+SSTidalRooms_Text_ExplainSnatch:
+	.string "よこどり　という　わざは\n"
+	.string "あいてが　つかおうとする　わざを\l"
+	.string "じぶんで　つかって　しまうのです！$"
+

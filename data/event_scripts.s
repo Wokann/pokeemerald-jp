@@ -816,7 +816,7 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/InsideOfTruck/scripts.inc"
 	.include "data/maps/SSTidalCorridor/scripts.inc"
 	.include "data/maps/SSTidalLowerDeck/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21e4e8, 0x47d
+	.include "data/maps/SSTidalRooms/scripts.inc"
 	.include "data/maps/BattlePyramidSquare01/scripts.inc"
 	.include "data/maps/UnionRoom/scripts.inc"
 	.incbin "baserom_jp.gba", 0x21ea00, 0x9
