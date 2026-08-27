@@ -25,7 +25,7 @@ TrainerHill_Elevator_EventScript_0023C384::
 	applymovement 0x1, 0x0823C3FD
 	waitmovement 0x0
 	lockall
-	loadword 0x0, gJPText_0023BF72
+	loadword 0x0, TrainerHill_Elevator_Text_ReturnToReception
 	callstd 0x5
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, TrainerHill_Elevator_EventScript_0023C36F

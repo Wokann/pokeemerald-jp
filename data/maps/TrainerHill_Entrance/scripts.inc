@@ -1,325 +1,326 @@
-@ TrainerHill_Entrance scripts (JP map g26 m60 @ 0x0823B765)
-
 TrainerHill_Entrance_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, TrainerHill_Entrance_EventScript_0023B789
-	map_script MAP_SCRIPT_ON_RETURN_TO_FIELD, TrainerHill_Entrance_EventScript_0023B7D4
-	map_script MAP_SCRIPT_ON_TRANSITION, TrainerHill_Entrance_EventScript_0023B77F
-	map_script MAP_SCRIPT_ON_LOAD, TrainerHill_Entrance_EventScript_0023B7E1
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, TrainerHill_Entrance_MapScriptTable_0023B7F7
+	map_script MAP_SCRIPT_ON_RESUME, TrainerHill_Entrance_OnResume
+	map_script MAP_SCRIPT_ON_RETURN_TO_FIELD, TrainerHill_Entrance_OnReturn
+	map_script MAP_SCRIPT_ON_TRANSITION, TrainerHill_Entrance_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, TrainerHill_Entrance_OnLoad
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, TrainerHill_Entrance_OnFrame
 	.byte 0
 
-TrainerHill_Entrance_EventScript_0023B77F::
-	setflag 0x8E2
-	getplayerxy 0x400D, 0x800D
+TrainerHill_Entrance_OnTransition:
+	setflag FLAG_LANDMARK_TRAINER_HILL
+	getplayerxy VAR_TEMP_D, VAR_RESULT
 	end
 
-	.incbin "baserom_jp.gba", 0x23b788, 0x1
-TrainerHill_Entrance_EventScript_0023B789::
-	setvar 0x8004, 0x4
-	special CallTrainerHillFunction
-	setvar 0x4000, 0x0
-	setvar 0x8004, 0x9
-	special CallTrainerHillFunction
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, TrainerHill_Entrance_EventScript_0023B7B8
-	setobjectxy 0xFF, 0x9, 0x6
-	applymovement 0xFF, 0x0823B9ED
+@ Unused
+TrainerHill_Entrance_OnWarp:
 	end
 
-TrainerHill_Entrance_EventScript_0023B7B8::
-	setvar 0x8004, 0x10
-	special CallTrainerHillFunction
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, TrainerHill_Entrance_EventScript_0023B7D3
-	applymovement 0xFF, 0x0823B9ED
+TrainerHill_Entrance_OnResume:
+	trainerhill_resumetimer
+	setvar VAR_TEMP_0, 0
+	trainerhill_getusingereader
+	goto_if_eq VAR_RESULT, FALSE, TrainerHill_Entrance_EventScript_TryFaceAttendant
+	setobjectxy LOCALID_PLAYER, 9, 6
+	applymovement LOCALID_PLAYER, TrainerHill_Entrance_Movement_PlayerFaceAttendant
 	end
 
-TrainerHill_Entrance_EventScript_0023B7D3::
+TrainerHill_Entrance_EventScript_TryFaceAttendant::
+	trainerhill_getwon
+	goto_if_eq VAR_RESULT, TRUE, TrainerHill_Entrance_EventScript_PlayerDontFaceAttendant
+	applymovement LOCALID_PLAYER, TrainerHill_Entrance_Movement_PlayerFaceAttendant
 	end
 
-TrainerHill_Entrance_EventScript_0023B7D4::
-	addobject 0x2
-	addobject 0x1
-	addobject 0x5
-	addobject 0x4
+TrainerHill_Entrance_EventScript_PlayerDontFaceAttendant::
 	end
 
-TrainerHill_Entrance_EventScript_0023B7E1::
-	compare_var_to_value 0x400D, 0x11
-	call_if 0x1, TrainerHill_Entrance_EventScript_0023B7ED
+TrainerHill_Entrance_OnReturn:
+	addobject LOCALID_TRAINER_HILL_NURSE
+	addobject LOCALID_TRAINER_HILL_ATTENDANT
+	addobject LOCALID_TRAINER_HILL_MAN
+	addobject LOCALID_TRAINER_HILL_GIRL
 	end
 
-TrainerHill_Entrance_EventScript_0023B7ED::
-	setmetatile 0x11, 0xA, 0x307, 0x0
+TrainerHill_Entrance_OnLoad:
+	call_if_eq VAR_TEMP_D, 17, TrainerHill_Entrance_EventScript_OpenCounterDoor
+	end
+
+TrainerHill_Entrance_EventScript_OpenCounterDoor::
+	setmetatile 17, 10, METATILE_TrainerHill_GreenFloorTile, FALSE
 	return
 
-TrainerHill_Entrance_MapScriptTable_0023B7F7::
-	map_script_2 0x4000, 0x0, TrainerHill_Entrance_EventScript_0023B83B
-	map_script_2 0x400D, 0x11, TrainerHill_Entrance_EventScript_0023B819
-	map_script_2 0x4005, 0x1, TrainerHill_Entrance_EventScript_0023B8E2
-	map_script_2 0x4001, 0x1, 0x08276CFB
+TrainerHill_Entrance_OnFrame:
+	map_script_2 VAR_TEMP_0, 0, TrainerHill_Entrance_EventScript_ExitChallenge
+	map_script_2 VAR_TEMP_D, 17, TrainerHill_Entrance_EventScript_ExitElevator
+	map_script_2 VAR_TEMP_5, 1, TrainerHill_Entrance_EventScript_EntryTrigger
+	@ The shared JP warp script has not yet been given a source label.
+	map_script_2 VAR_TEMP_1, 1, 0x08276CFB
 	.2byte 0
 
-TrainerHill_Entrance_EventScript_0023B819::
+TrainerHill_Entrance_EventScript_ExitElevator::
 	lockall
-	applymovement 0xFF, 0x0823B9F3
-	waitmovement 0x0
-	setmetatile 0x11, 0xA, 0x334, 0x1
+	applymovement LOCALID_PLAYER, TrainerHill_Entrance_Movement_PlayerExitElevator
+	waitmovement 0
+	setmetatile 17, 10, METATILE_TrainerHill_CounterDoor, TRUE
 	special DrawWholeMapView
-	playse 0x24
+	playse SE_CLICK
 	waitse
-	setvar 0x400D, 0x0
+	setvar VAR_TEMP_D, 0
 	releaseall
 	end
 
-TrainerHill_Entrance_EventScript_0023B83B::
-	setvar 0x4000, 0x1
-	setvar 0x8004, 0x6
-	special CallTrainerHillFunction
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, TrainerHill_Entrance_EventScript_0023B86E
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, TrainerHill_Entrance_EventScript_0023B883
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, TrainerHill_Entrance_EventScript_0023B8A7
+TrainerHill_Entrance_EventScript_ExitChallenge::
+	setvar VAR_TEMP_0, 1
+	trainerhill_getstatus
+	switch VAR_RESULT
+	case TRAINER_HILL_PLAYER_STATUS_LOST, TrainerHill_Entrance_EventScript_ExitChallengeLost
+	case TRAINER_HILL_PLAYER_STATUS_ECARD_SCANNED, TrainerHill_Entrance_EventScript_ExitChallengeECard
+	case TRAINER_HILL_PLAYER_STATUS_NORMAL, TrainerHill_Entrance_EventScript_EndExitChallenge
 
-TrainerHill_Entrance_EventScript_0023B86E::
+TrainerHill_Entrance_EventScript_ExitChallengeLost::
 	lockall
-	applymovement 0xFF, 0x0823B9ED
-	loadword 0x0, gJPText_0023BBAB
-	callstd 0x4
-	goto TrainerHill_Entrance_EventScript_0023B893
+	applymovement LOCALID_PLAYER, TrainerHill_Entrance_Movement_PlayerFaceAttendant
+	msgbox TrainerHill_Entrance_Text_TooBadTremendousEffort, MSGBOX_DEFAULT
+	goto TrainerHill_Entrance_EventScript_PlayerExitChallenge
 
-TrainerHill_Entrance_EventScript_0023B883::
+TrainerHill_Entrance_EventScript_ExitChallengeECard::
 	lockall
-	applymovement 0xFF, 0x0823B9ED
-	loadword 0x0, gJPText_0023BBE6
-	callstd 0x4
+	applymovement LOCALID_PLAYER, TrainerHill_Entrance_Movement_PlayerFaceAttendant
+	msgbox TrainerHill_Entrance_Text_MovedReceptionHereForSwitch, MSGBOX_DEFAULT
 
-TrainerHill_Entrance_EventScript_0023B893::
+TrainerHill_Entrance_EventScript_PlayerExitChallenge::
 	closemessage
-	applymovement 0xFF, 0x0823B9EF
-	waitmovement 0x0
-	setvar 0x40D6, 0x0
+	applymovement LOCALID_PLAYER, TrainerHill_Entrance_Movement_PushPlayerBackFromCounter
+	waitmovement 0
+	setvar VAR_TRAINER_HILL_IS_ACTIVE, 0
 	special HealPlayerParty
 	releaseall
 
-TrainerHill_Entrance_EventScript_0023B8A7::
+TrainerHill_Entrance_EventScript_EndExitChallenge::
 	end
 
-TrainerHill_Entrance_EventScript_0023B8A8::
-	setvar 0x800B, 0x2
-	call 0x082429B8
+TrainerHill_Entrance_EventScript_Nurse::
+	setvar VAR_0x800B, LOCALID_TRAINER_HILL_NURSE
+	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress
 	release
 	end
 
-TrainerHill_Entrance_EventScript_0023B8B6::
+TrainerHill_Entrance_EventScript_Attendant::
 	lock
 	faceplayer
-	setvar 0x8004, 0xA
-	special CallTrainerHillFunction
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, TrainerHill_Entrance_EventScript_0023B8D8
-	loadword 0x0, 0x0823BBDA
-	callstd 0x4
-	goto TrainerHill_Entrance_EventScript_0023B8E0
+	trainerhill_inchallenge
+	goto_if_eq VAR_RESULT, FALSE, TrainerHill_Entrance_EventScript_ThanksForPlaying
+	msgbox TrainerHill_Entrance_Text_HopeYouGiveItYourBest, MSGBOX_DEFAULT
+	goto TrainerHill_Entrance_EventScript_AttendantEnd
 
-TrainerHill_Entrance_EventScript_0023B8D8::
-	loadword 0x0, 0x0823BC1D
-	callstd 0x4
+TrainerHill_Entrance_EventScript_ThanksForPlaying::
+	msgbox TrainerHill_Entrance_Text_ThankYouForPlaying, MSGBOX_DEFAULT
 
-TrainerHill_Entrance_EventScript_0023B8E0::
+TrainerHill_Entrance_EventScript_AttendantEnd::
 	release
 	end
 
-TrainerHill_Entrance_EventScript_0023B8E2::
+TrainerHill_Entrance_EventScript_EntryTrigger::
 	lockall
-	applymovement 0xFF, 0x0823B9ED
-	loadword 0x0, gJPText_0023BA7C
-	callstd 0x4
-	setvar 0x8004, 0xD
-	special CallTrainerHillFunction
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, TrainerHill_Entrance_EventScript_0023B9B1
-	setvar 0x8004, 0x8
-	special CallTrainerHillFunction
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, TrainerHill_Entrance_EventScript_0023B925
-	loadword 0x0, gJPText_0023BAEE
-	callstd 0x4
-	goto TrainerHill_Entrance_EventScript_0023B92D
+	applymovement LOCALID_PLAYER, TrainerHill_Entrance_Movement_PlayerFaceAttendant
+	msgbox TrainerHill_Entrance_Text_WelcomeToTrainerHill, MSGBOX_DEFAULT
+	trainerhill_getsaved
+	call_if_eq VAR_RESULT, FALSE, TrainerHill_Entrance_EventScript_SaveGame
+	trainerhill_allfloorsused
+	goto_if_eq VAR_RESULT, TRUE, TrainerHill_Entrance_EventScript_AllFloorsUsed
+	msgbox TrainerHill_Entrance_Text_TrainersUpToFloorX, MSGBOX_DEFAULT
+	goto TrainerHill_Entrance_EventScript_AskChallengeTrainers
 
-TrainerHill_Entrance_EventScript_0023B925::
-	loadword 0x0, gJPText_0023BB16
-	callstd 0x4
+TrainerHill_Entrance_EventScript_AllFloorsUsed::
+	msgbox TrainerHill_Entrance_Text_TrainersInEveryRoom, MSGBOX_DEFAULT
 
-TrainerHill_Entrance_EventScript_0023B92D::
-	message gJPText_0023BB51
+TrainerHill_Entrance_EventScript_AskChallengeTrainers::
+	message TrainerHill_Entrance_Text_LikeToChallengeTrainers
 	waitmessage
-	multichoice 0xF, 0x6, 0x11, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, TrainerHill_Entrance_EventScript_0023B978
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, TrainerHill_Entrance_EventScript_0023B997
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, TrainerHill_Entrance_EventScript_0023B96A
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, TrainerHill_Entrance_EventScript_0023B997
+	multichoice 15, 6, MULTI_YESNOINFO, FALSE
+	switch VAR_RESULT
+	case 0, TrainerHill_Entrance_EventScript_ChooseChallenge
+	case 1, TrainerHill_Entrance_EventScript_CancelEntry
+	case 2, TrainerHill_Entrance_EventScript_Info
+	case MULTI_B_PRESSED, TrainerHill_Entrance_EventScript_CancelEntry
 	end
 
-TrainerHill_Entrance_EventScript_0023B96A::
-	loadword 0x0, gJPText_0023BC28
-	callstd 0x4
-	goto TrainerHill_Entrance_EventScript_0023B92D
+TrainerHill_Entrance_EventScript_Info::
+	msgbox TrainerHill_Entrance_Text_ExplainTrainerHill, MSGBOX_DEFAULT
+	goto TrainerHill_Entrance_EventScript_AskChallengeTrainers
 	end
 
-TrainerHill_Entrance_EventScript_0023B978::
-	setvar 0x40D6, 0x1
-	setvar 0x4005, 0x0
+TrainerHill_Entrance_EventScript_ChooseChallenge::
+	setvar VAR_TRAINER_HILL_IS_ACTIVE, 1
+	setvar VAR_TEMP_5, 0
 	special HealPlayerParty
-	loadword 0x0, gJPText_0023BB67
-	callstd 0x4
-	setvar 0x8004, 0x0
-	special CallTrainerHillFunction
+	msgbox TrainerHill_Entrance_Text_TimeProgessGetSetGo, MSGBOX_DEFAULT
+	trainerhill_start
 	releaseall
 	end
 
-TrainerHill_Entrance_EventScript_0023B997::
-	setvar 0x4005, 0x0
-	loadword 0x0, gJPText_0023BB9E
-	callstd 0x4
+TrainerHill_Entrance_EventScript_CancelEntry::
+	setvar VAR_TEMP_5, 0
+	msgbox TrainerHill_Entrance_Text_PleaseVisitUsAgain, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xFF, 0x0823B9EF
-	waitmovement 0x0
+	applymovement LOCALID_PLAYER, TrainerHill_Entrance_Movement_PushPlayerBackFromCounter
+	waitmovement 0
 	releaseall
 	end
 
-TrainerHill_Entrance_EventScript_0023B9B1::
-	loadword 0x0, gJPText_0023BAB9
-	callstd 0x4
-	setvar 0x8004, 0xE
-	special CallTrainerHillFunction
-	setvar 0x4005, 0x1
-	call 0x082423E9
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, TrainerHill_Entrance_EventScript_0023B9DF
-	setvar 0x8004, 0xE
-	special CallTrainerHillFunction
+TrainerHill_Entrance_EventScript_SaveGame::
+	msgbox TrainerHill_Entrance_Text_SaveGameBeforeEnter, MSGBOX_DEFAULT
+	trainerhill_setsaved
+	setvar VAR_TEMP_5, 1
+	call Common_EventScript_SaveGame
+	goto_if_eq VAR_RESULT, FALSE, TrainerHill_Entrance_EventScript_SaveFailed
+	trainerhill_setsaved
 	return
 
-TrainerHill_Entrance_EventScript_0023B9DF::
-	setvar 0x8004, 0xF
-	special CallTrainerHillFunction
-	goto TrainerHill_Entrance_EventScript_0023B997
+TrainerHill_Entrance_EventScript_SaveFailed::
+	trainerhill_clearsaved
+	goto TrainerHill_Entrance_EventScript_CancelEntry
 	end
 
-	.incbin "baserom_jp.gba", 0x23b9ed, 0x9
-TrainerHill_Entrance_EventScript_0023B9F6::
+TrainerHill_Entrance_Movement_PlayerFaceAttendant:
+	face_right
+	step_end
+
+TrainerHill_Entrance_Movement_PushPlayerBackFromCounter:
+	walk_down
+	step_end
+
+@ Unused
+TrainerHill_Entrance_Movement_FaceUp:
+	face_up
+	step_end
+
+TrainerHill_Entrance_Movement_PlayerExitElevator:
+	walk_down
+	walk_down
+	step_end
+
+TrainerHill_Entrance_EventScript_Records::
 	lockall
-	fadescreen 0x1
+	fadescreen FADE_TO_BLACK
 	special ShowTrainerHillRecords
 	releaseall
 	end
 
-TrainerHill_Entrance_EventScript_0023B9FF::
-	loadword 0x0, 0x0823BEFA
-	callstd 0x2
+TrainerHill_Entrance_EventScript_Man::
+	msgbox TrainerHill_Entrance_Text_WhatSortOfTrainersAreAhead, MSGBOX_NPC
 	end
 
-TrainerHill_Entrance_EventScript_0023BA08::
-	loadword 0x0, 0x0823BF2E
-	callstd 0x2
+TrainerHill_Entrance_EventScript_Girl::
+	msgbox TrainerHill_Entrance_Text_FriendsTryingToReachTimeBoardTop, MSGBOX_NPC
 	end
 
-TrainerHill_Entrance_EventScript_0023BA11::
+TrainerHill_Entrance_EventScript_Clerk::
 	lock
 	faceplayer
-	message 0x0824390F
+	message gText_HowMayIServeYou
 	waitmessage
-	checkflag 0x864
-	goto_if 0x1, TrainerHill_Entrance_EventScript_0023BA4E
-	pokemart 0x0823BA34
-	loadword 0x0, 0x08243920
-	callstd 0x4
+	goto_if_set FLAG_SYS_GAME_CLEAR, TrainerHill_Entrance_EventScript_ExpandedPokemart
+	pokemart TrainerHill_Entrance_Pokemart_Basic
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x23ba31, 0x1d
-TrainerHill_Entrance_EventScript_0023BA4E::
-	pokemart 0x0823BA60
-	loadword 0x0, 0x08243920
-	callstd 0x4
+	.align 2
+TrainerHill_Entrance_Pokemart_Basic:
+	.2byte ITEM_SUPER_POTION
+	.2byte ITEM_ANTIDOTE
+	.2byte ITEM_PARALYZE_HEAL
+	.2byte ITEM_AWAKENING
+	.2byte ITEM_X_SPEED
+	.2byte ITEM_X_SPECIAL
+	.2byte ITEM_X_ATTACK
+	.2byte ITEM_X_DEFEND
+	.2byte ITEM_DIRE_HIT
+	.2byte ITEM_GUARD_SPEC
+	.2byte ITEM_X_ACCURACY
+	pokemartlistend
+
+TrainerHill_Entrance_EventScript_ExpandedPokemart::
+	pokemart TrainerHill_Entrance_Pokemart_Expanded
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x23ba5d, 0x1f
-	.globl gJPText_0023BA7C
-gJPText_0023BA7C: @ 0x0823BA7C
+	.align 2
+TrainerHill_Entrance_Pokemart_Expanded:
+	.2byte ITEM_HYPER_POTION
+	.2byte ITEM_MAX_POTION
+	.2byte ITEM_FULL_RESTORE
+	.2byte ITEM_FULL_HEAL
+	.2byte ITEM_REVIVE
+	.2byte ITEM_X_SPEED
+	.2byte ITEM_X_SPECIAL
+	.2byte ITEM_X_ATTACK
+	.2byte ITEM_X_DEFEND
+	.2byte ITEM_DIRE_HIT
+	.2byte ITEM_GUARD_SPEC
+	.2byte ITEM_X_ACCURACY
+	pokemartlistend
+
+TrainerHill_Entrance_Text_WelcomeToTrainerHill:
 	.string "ようこそ　いらっしゃいました！\p"
 	.string "ここは　さまざまな　トレーナーさんとの\n"
 	.string "タッグバトルが　たのしめる\l"
 	.string "トレーナーヒルです！$"
 
-	.globl gJPText_0023BAB9
-gJPText_0023BAB9: @ 0x0823BAB9
+TrainerHill_Entrance_Text_SaveGameBeforeEnter:
 	.string "はじめて　ごりようになる\n"
 	.string "トレーナーさん　ですね\p"
 	.string "ごりように　なるまえに　レポートを\n"
 	.string "おかきくださいませ$"
 
-	.globl gJPText_0023BAEE
-gJPText_0023BAEE: @ 0x0823BAEE
+TrainerHill_Entrance_Text_TrainersUpToFloorX:
 	.string "ただいま　あつまっている\n"
 	.string "トレーナーさんは　⋯⋯\p"
-	.string "{B_COPY_VAR_1}かい　までの　ようですね$"
+	.string "{STR_VAR_1}かい　までの　ようですね$"
 
-	.globl gJPText_0023BB16
-gJPText_0023BB16: @ 0x0823BB16
+TrainerHill_Entrance_Text_TrainersInEveryRoom:
 	.string "ただいま　あつまっている\n"
 	.string "トレーナーさんは　⋯⋯\p"
 	.string "すべての　へやに　トレーナーさんが\n"
 	.string "あつまっている　みたいですね！$"
 
-	.globl gJPText_0023BB51
-gJPText_0023BB51: @ 0x0823BB51
+TrainerHill_Entrance_Text_LikeToChallengeTrainers:
 	.string "トレーナーさんたちと\n"
 	.string "しょうぶ　しますか？$"
 
-	.globl gJPText_0023BB67
-gJPText_0023BB67: @ 0x0823BB67
+TrainerHill_Entrance_Text_TimeProgessGetSetGo:
 	.string "それでは　じかんを　はかりますので\n"
 	.string "がんばってくださいね！\p"
 	.string "いちについて⋯⋯⋯⋯⋯⋯⋯\p"
 	.string "ようい⋯⋯\p"
 	.string "ドン！！$"
 
-	.globl gJPText_0023BB9E
-gJPText_0023BB9E: @ 0x0823BB9E
+TrainerHill_Entrance_Text_PleaseVisitUsAgain:
 	.string "また　おこしくださいね！$"
 
-	.globl gJPText_0023BBAB
-gJPText_0023BBAB: @ 0x0823BBAB
+TrainerHill_Entrance_Text_TooBadTremendousEffort:
 	.string "ざんねん　でしたね！\p"
 	.string "とっても　いい　しょうぶ\n"
 	.string "だったと　おもいます\p"
 	.string "また　きてくださいね！$"
 
-	.incbin "baserom_jp.gba", 0x23bbda, 0xc
-	.globl gJPText_0023BBE6
-gJPText_0023BBE6: @ 0x0823BBE6
+TrainerHill_Entrance_Text_HopeYouGiveItYourBest:
+	.string "がんばってくださいね！$"
+
+TrainerHill_Entrance_Text_MovedReceptionHereForSwitch:
 	.string "トレーナーさんたちが　いれかわって\n"
 	.string "あぶないので\p"
 	.string "こちらに　いどう　させて\n"
 	.string "いただきました！\p"
 	.string "ごめんなさい！$"
 
-	.incbin "baserom_jp.gba", 0x23bc1d, 0xb
-	.globl gJPText_0023BC28
-gJPText_0023BC28: @ 0x0823BC28
+TrainerHill_Entrance_Text_ThankYouForPlaying:
+	.string "おつかれさまでした！$"
+
+TrainerHill_Entrance_Text_ExplainTrainerHill:
 	.string "ここ　トレーナーヒルでは\n"
 	.string "タイムアタックという　きょうぎが\l"
 	.string "おこなわれます\p"
@@ -333,8 +334,76 @@ gJPText_0023BC28: @ 0x0823BC28
 	.string "かっても　けいけんちや　おかねの\l"
 	.string "やりとりは　おこなわれません$"
 
-	.incbin "baserom_jp.gba", 0x23bcda, 0x298
-	.globl gJPText_0023BF72
-gJPText_0023BF72: @ 0x0823BF72
-	.string "うけつけに　もどりますか？$"
+TrainerHill_Entrance_Text_NeedAtLeastTwoPokemon:
+	.string "おや？\n"
+	.string "てもちが　1ぴきしか　いないようですね\p"
+	.string "てもちを　2ひき　いじょうに　してから\n"
+	.string "またおこし　くださいませ$"
 
+TrainerHill_Roof_Text_YouFinallyCameBravo:
+	.string "ムム！\p"
+	.string "ついに　きたね！\n"
+	.string "きてしまったね！\p"
+	.string "ンー　わかっているさー！\n"
+	.string "なんで　きみが　こんなところまで\l"
+	.string "ひとりで　きてしまったのか！\p"
+	.string "ここの　オーナーである\n"
+	.string "この　わたくしと⋯⋯\p"
+	.string "タッグを　くみにきたんだろー！\n"
+	.string "ワオ！\p"
+	.string "⋯⋯あ\n"
+	.string "ちがうの？\p"
+	.string "いや　きみの　たたかい　みせてもらったよ\n"
+	.string "じつに　すばらしかった！　ブラボー！$"
+
+TrainerHill_Roof_Text_HaveTheMostMarvelousGift:
+	.string "そんな　すばらしい　キミには\n"
+	.string "これを　プレゼントだー！$"
+
+TrainerHill_Roof_Text_FullUpBeBackLaterForThis:
+	.string "もちものが　いっぱいだねー\n"
+	.string "あとで　とりにきてー！$"
+
+TrainerHill_Roof_Text_GotHereMarvelouslyQuickly:
+	.string "オー！　もしかして　すごく　はやく\n"
+	.string "ここまで　きたんじゃないー！？\p"
+	.string "この　わたくしに　あうために　そんなに\n"
+	.string "がんばって　くれたんだねー！\p"
+	.string "うれしすぎるから　うけつけの\n"
+	.string "タイムボードに　きろく　しておくぜー！$"
+
+TrainerHill_Roof_Text_YouWerentVeryQuick:
+	.string "オー⋯⋯\n"
+	.string "でも　あんまり　はやく　なかったねー$"
+
+TrainerHill_Roof_Text_ArriveZippierNextTime:
+	.string "つぎは　もっと　はやく　このわたくしに\n"
+	.string "あいにきてくれると　いいかもね！\p"
+	.string "そしたら　こんどこそ\n"
+	.string "タッグを　くもうなー！\p"
+	.string "じゃあ　またな！　アミーゴ！$"
+
+TrainerHill_Roof_Text_BuiltTrainerHillToFindPartner:
+	.string "このわたくしと　タッグを　くんでくれる\n"
+	.string "パートナーを　みつけるため\p"
+	.string "この　トレーナーヒルを\n"
+	.string "つくったんだぜい！$"
+
+TrainerHill_Entrance_Text_ChallengeTime:
+	.string "{STR_VAR_1}ふん　{STR_VAR_2}びょう　{STR_VAR_3}$"
+
+TrainerHill_Entrance_Text_WhatSortOfTrainersAreAhead:
+	.string "どんな　くみあわせの　トレーナーが\n"
+	.string "まっているのか！\p"
+	.string "どんな　やつがきても\n"
+	.string "おれが　たおしてみせるぜ！$"
+
+TrainerHill_Entrance_Text_FriendsTryingToReachTimeBoardTop:
+	.string "あそこに　タイムボードが\n"
+	.string "あるでしょ？\p"
+	.string "わたしは　ともだちと　どっちがはやく\n"
+	.string "いちばん　うえまで　いけるか\l"
+	.string "タイムを　きそってるのよ！$"
+
+TrainerHill_Elevator_Text_ReturnToReception:
+	.string "うけつけに　もどりますか？$"
