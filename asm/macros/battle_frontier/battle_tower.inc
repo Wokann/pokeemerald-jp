@@ -67,3 +67,9 @@
 	setvar VAR_0x8004, BATTLE_TOWER_FUNC_LOAD_LINK_OPPONENTS
 	special sub_08161E88
 	.endm
+
+	@ Attempt to close the link connection at the end of a Link Multi challenge.
+	.macro tower_closelink
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_TRY_CLOSE_LINK
+	special sub_08161E88
+	.endm

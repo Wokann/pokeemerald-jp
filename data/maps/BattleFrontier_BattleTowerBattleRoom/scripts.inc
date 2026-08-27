@@ -409,36 +409,32 @@ BattleFrontier_BattleTowerBattleRoom_Movement_AnabelEnter:
 	step_end
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobby::
-	copyvar 0x800D, 0x40CE
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyDoubles
-	compare_var_to_value 0x800D, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyMultis
-	compare_var_to_value 0x800D, 0x3
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyLinkMultis
-	warp 0x1A05, 0xFF, 0x6, 0x6
+	copyvar VAR_RESULT, VAR_FRONTIER_BATTLE_MODE
+	goto_if_eq VAR_RESULT, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyDoubles
+	goto_if_eq VAR_RESULT, FRONTIER_MODE_MULTIS, BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyMultis
+	goto_if_eq VAR_RESULT, FRONTIER_MODE_LINK_MULTIS, BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyLinkMultis
+	warp MAP_BATTLE_FRONTIER_BATTLE_TOWER_LOBBY, 6, 6
 	waitstate
 	end
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyDoubles::
-	warp 0x1A05, 0xFF, 0xA, 0x6
+	warp MAP_BATTLE_FRONTIER_BATTLE_TOWER_LOBBY, 10, 6
 	waitstate
 	end
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyMultis::
-	warp 0x1A05, 0xFF, 0xE, 0x6
+	warp MAP_BATTLE_FRONTIER_BATTLE_TOWER_LOBBY, 14, 6
 	waitstate
 	end
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyLinkMultis::
-	setvar 0x8004, 0xD
-	special sub_08161E88
-	warp 0x1A05, 0xFF, 0x12, 0x6
+	tower_closelink
+	warp MAP_BATTLE_FRONTIER_BATTLE_TOWER_LOBBY, 18, 6
 	waitstate
 	end
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_RetireChallenge::
-	setflag 0x77
+	setflag FLAG_CANCEL_BATTLE_ROOM_CHALLENGE
 	goto BattleFrontier_BattleTower_EventScript_WarpToLobbyLost
 	end
 
