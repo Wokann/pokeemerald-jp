@@ -195,7 +195,10 @@ FarawayIsland_Entrance_Text_Sign: @ 0x08275ED9
 	.string "この　⋯⋯を　あとにする\p"
 	.string "⋯⋯ジ$"
 
-	.incbin "baserom_jp.gba", 0x275f57, 0xae3
+FarawayIsland_Interior_Text_Mew: @ 0x08275F57
+	.string "ミュー⋯⋯$"
+
+	.incbin "baserom_jp.gba", 0x275f5d, 0xadd
 
 	.globl FortreeCity_House2_EventScript_SleepTalkTutor
 FortreeCity_House2_EventScript_SleepTalkTutor: @ 0x08276A3A

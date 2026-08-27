@@ -1,149 +1,186 @@
-@ FarawayIsland_Interior scripts (JP map g26 m57 @ 0x0823B3C8)
-
 FarawayIsland_Interior_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, FarawayIsland_Interior_EventScript_0023B422
-	map_script MAP_SCRIPT_ON_TRANSITION, FarawayIsland_Interior_EventScript_0023B440
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, FarawayIsland_Interior_MapScriptTable_0023B466
-	map_script MAP_SCRIPT_ON_RETURN_TO_FIELD, FarawayIsland_Interior_EventScript_0023B3DD
+	map_script MAP_SCRIPT_ON_RESUME, FarawayIsland_Interior_OnResume
+	map_script MAP_SCRIPT_ON_TRANSITION, FarawayIsland_Interior_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, FarawayIsland_Interior_OnFrame
+	map_script MAP_SCRIPT_ON_RETURN_TO_FIELD, FarawayIsland_Interior_OnReturnToField
 	.byte 0
 
-FarawayIsland_Interior_EventScript_0023B3DD::
-	checkflag 0x8C1
-	call_if 0x1, FarawayIsland_Interior_EventScript_0023B3E7
+FarawayIsland_Interior_OnReturnToField:
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, FarawayIsland_Interior_EventScript_TrySetMewAboveGrass
 	end
 
-FarawayIsland_Interior_EventScript_0023B3E7::
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, FarawayIsland_Interior_EventScript_0023B419
-	compare_var_to_value 0x800D, 0x4
-	goto_if 0x1, FarawayIsland_Interior_EventScript_0023B419
-	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, FarawayIsland_Interior_EventScript_0023B419
-	compare_var_to_value 0x800D, 0xA
-	goto_if 0x1, FarawayIsland_Interior_EventScript_0023B419
+FarawayIsland_Interior_EventScript_TrySetMewAboveGrass::
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, FarawayIsland_Interior_EventScript_SetMewAboveGrass
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, FarawayIsland_Interior_EventScript_SetMewAboveGrass
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, FarawayIsland_Interior_EventScript_SetMewAboveGrass
+	goto_if_eq VAR_RESULT, B_OUTCOME_MON_TELEPORTED, FarawayIsland_Interior_EventScript_SetMewAboveGrass
 	return
 
-FarawayIsland_Interior_EventScript_0023B419::
-	setvar 0x8004, 0x1
+FarawayIsland_Interior_EventScript_SetMewAboveGrass::
+	setvar VAR_0x8004, 1
 	special SetMewAboveGrass
 	return
 
-FarawayIsland_Interior_EventScript_0023B422::
-	checkflag 0x8C1
-	call_if 0x1, FarawayIsland_Interior_EventScript_0023B42C
+FarawayIsland_Interior_OnResume:
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, FarawayIsland_Interior_EventScript_TryRemoveMew
 	end
 
-FarawayIsland_Interior_EventScript_0023B42C::
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x7
-	goto_if 0x5, 0x08244178
-	removeobject 0x800F
+FarawayIsland_Interior_EventScript_TryRemoveMew::
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
+	removeobject VAR_LAST_TALKED
 	return
 
-FarawayIsland_Interior_EventScript_0023B440::
-	setvar 0x403A, 0x0
-	setvar 0x4001, 0x1
-	checkflag 0x1CA
-	call_if 0x0, FarawayIsland_Interior_EventScript_0023B454
+FarawayIsland_Interior_OnTransition:
+	setvar VAR_FARAWAY_ISLAND_STEP_COUNTER, 0
+	setvar VAR_TEMP_1, 1
+	call_if_unset FLAG_CAUGHT_MEW, FarawayIsland_Interior_EventScript_TryShowMew
 	end
 
-FarawayIsland_Interior_EventScript_0023B454::
-	checkflag 0x1C7
-	goto_if 0x1, 0x08244178
-	clearflag 0x2CE
-	setvar 0x4001, 0x0
+FarawayIsland_Interior_EventScript_TryShowMew::
+	goto_if_set FLAG_DEFEATED_MEW, Common_EventScript_NopReturn
+	clearflag FLAG_HIDE_MEW
+	setvar VAR_TEMP_1, 0
 	return
 
-FarawayIsland_Interior_MapScriptTable_0023B466::
-	map_script_2 0x4001, 0x0, FarawayIsland_Interior_EventScript_0023B470
+FarawayIsland_Interior_OnFrame:
+	map_script_2 VAR_TEMP_1, 0, FarawayIsland_Interior_EventScript_FindMew
 	.2byte 0
 
-FarawayIsland_Interior_EventScript_0023B470::
+FarawayIsland_Interior_EventScript_FindMew::
 	lockall
-	playse 0x15
-	applymovement 0x1, 0x0824361B
-	waitmovement 0x0
-	applymovement 0x1, 0x0824361D
-	waitmovement 0x0
-	applymovement 0x1, 0x0823B49C
-	waitmovement 0x0
-	moveobjectoffscreen 0x1
-	setvar 0x4001, 0x1
+	playse SE_PIN
+	applymovement LOCALID_FARAWAY_ISLAND_MEW, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_FARAWAY_ISLAND_MEW, Common_Movement_Delay48
+	waitmovement 0
+	applymovement LOCALID_FARAWAY_ISLAND_MEW, FarawayIsland_Interior_Movement_MewMoveAndHide
+	waitmovement 0
+	copyobjectxytoperm LOCALID_FARAWAY_ISLAND_MEW
+	setvar VAR_TEMP_1, 1
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x23b49c, 0x24
-FarawayIsland_Interior_EventScript_0023B4C0::
+FarawayIsland_Interior_Movement_MewMoveAndHide:
+	walk_up
+	walk_up
+	walk_up
+	walk_in_place_faster_down
+	set_invisible
+	step_end
+
+FarawayIsland_Interior_Movement_MewAppear:
+	set_visible
+	step_end
+
+FarawayIsland_Interior_Movement_MewFloatUpNorth:
+	lock_facing_direction
+	walk_fast_up
+	walk_fast_up
+	unlock_facing_direction
+	walk_in_place_down
+	walk_in_place_down
+	step_end
+
+FarawayIsland_Interior_Movement_MewFloatUpSouth:
+	lock_facing_direction
+	walk_fast_up
+	walk_fast_up
+	unlock_facing_direction
+	walk_in_place_up
+	walk_in_place_up
+	step_end
+
+FarawayIsland_Interior_Movement_MewFloatUpWest:
+	lock_facing_direction
+	walk_fast_up
+	walk_fast_up
+	unlock_facing_direction
+	walk_in_place_right
+	walk_in_place_right
+	step_end
+
+FarawayIsland_Interior_Movement_MewFloatUpEast:
+	lock_facing_direction
+	walk_fast_up
+	walk_fast_up
+	unlock_facing_direction
+	walk_in_place_left
+	walk_in_place_left
+	step_end
+
+FarawayIsland_Interior_EventScript_Mew::
 	lock
 	faceplayer
-	applymovement 0x1, 0x0823B4A2
-	waitmovement 0x0
-	setvar 0x8004, 0x0
+	applymovement LOCALID_FARAWAY_ISLAND_MEW, FarawayIsland_Interior_Movement_MewAppear
+	waitmovement 0
+	setvar VAR_0x8004, 0
 	special SetMewAboveGrass
-	message 0x08275F57
+	message FarawayIsland_Interior_Text_Mew
 	waitse
-	playmoncry 0x97, 0x2
-	compare_var_to_value 0x800C, 0x2
-	call_if 0x1, FarawayIsland_Interior_EventScript_0023B57D
-	compare_var_to_value 0x800C, 0x1
-	call_if 0x1, FarawayIsland_Interior_EventScript_0023B588
-	compare_var_to_value 0x800C, 0x3
-	call_if 0x1, FarawayIsland_Interior_EventScript_0023B593
-	compare_var_to_value 0x800C, 0x4
-	call_if 0x1, FarawayIsland_Interior_EventScript_0023B59E
+	playmoncry SPECIES_MEW, CRY_MODE_ENCOUNTER
+	call_if_eq VAR_FACING, DIR_NORTH, FarawayIsland_Interior_EventScript_FoundMewNorth
+	call_if_eq VAR_FACING, DIR_SOUTH, FarawayIsland_Interior_EventScript_FoundMewSouth
+	call_if_eq VAR_FACING, DIR_WEST, FarawayIsland_Interior_EventScript_FoundMewWest
+	call_if_eq VAR_FACING, DIR_EAST, FarawayIsland_Interior_EventScript_FoundMewEast
 	special DestroyMewEmergingGrassSprite
-	delay 0x28
-	waitdooranim
-	setvar 0x8004, 0x97
-	setvar 0x8005, 0x1E
-	setvar 0x8006, 0x0
-	special CreateEnemyEventMon
-	setflag 0x8C1
+	delay 40
+	waitmoncry_jp
+	seteventmon SPECIES_MEW, 30
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
-	clearflag 0x8C1
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, FarawayIsland_Interior_EventScript_0023B564
-	compare_var_to_value 0x800D, 0x4
-	goto_if 0x1, FarawayIsland_Interior_EventScript_0023B572
-	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, FarawayIsland_Interior_EventScript_0023B572
-	compare_var_to_value 0x800D, 0xA
-	goto_if 0x1, FarawayIsland_Interior_EventScript_0023B572
-	setflag 0x1CA
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, FarawayIsland_Interior_EventScript_MewDefeated
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, FarawayIsland_Interior_EventScript_PlayerOrMewRan
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, FarawayIsland_Interior_EventScript_PlayerOrMewRan
+	goto_if_eq VAR_RESULT, B_OUTCOME_MON_TELEPORTED, FarawayIsland_Interior_EventScript_PlayerOrMewRan
+	setflag FLAG_CAUGHT_MEW
 	release
 	end
 
-FarawayIsland_Interior_EventScript_0023B564::
-	setflag 0x1C7
-	setvar 0x8004, 0x97
-	goto 0x082441A0
+FarawayIsland_Interior_EventScript_MewDefeated::
+	setflag FLAG_DEFEATED_MEW
+	setvar VAR_0x8004, SPECIES_MEW
+	goto Common_EventScript_LegendaryFlewAway
 	end
 
-FarawayIsland_Interior_EventScript_0023B572::
-	setvar 0x8004, 0x97
-	goto 0x082441A0
+FarawayIsland_Interior_EventScript_PlayerOrMewRan::
+	setvar VAR_0x8004, SPECIES_MEW
+	goto Common_EventScript_LegendaryFlewAway
 	end
 
-FarawayIsland_Interior_EventScript_0023B57D::
-	applymovement 0x1, 0x0823B4A4
-	waitmovement 0x0
+FarawayIsland_Interior_EventScript_FoundMewNorth::
+	applymovement LOCALID_FARAWAY_ISLAND_MEW, FarawayIsland_Interior_Movement_MewFloatUpNorth
+	waitmovement 0
 	return
 
-FarawayIsland_Interior_EventScript_0023B588::
-	applymovement 0x1, 0x0823B4AB
-	waitmovement 0x0
+FarawayIsland_Interior_EventScript_FoundMewSouth::
+	applymovement LOCALID_FARAWAY_ISLAND_MEW, FarawayIsland_Interior_Movement_MewFloatUpSouth
+	waitmovement 0
 	return
 
-FarawayIsland_Interior_EventScript_0023B593::
-	applymovement 0x1, 0x0823B4B2
-	waitmovement 0x0
+FarawayIsland_Interior_EventScript_FoundMewWest::
+	applymovement LOCALID_FARAWAY_ISLAND_MEW, FarawayIsland_Interior_Movement_MewFloatUpWest
+	waitmovement 0
 	return
 
-FarawayIsland_Interior_EventScript_0023B59E::
-	applymovement 0x1, 0x0823B4B9
-	waitmovement 0x0
+FarawayIsland_Interior_EventScript_FoundMewEast::
+	applymovement LOCALID_FARAWAY_ISLAND_MEW, FarawayIsland_Interior_Movement_MewFloatUpEast
+	waitmovement 0
 	return
 
-FarawayIsland_Interior_EventScript_HideMewWhenGrassCut:: @ 0x0823B5A9
+FarawayIsland_Interior_EventScript_HideMewWhenGrassCut::
+	lockall
+	fadescreenswapbuffers FADE_TO_BLACK
+	setflag FLAG_HIDE_MEW
+	removeobject LOCALID_FARAWAY_ISLAND_MEW
+	fadescreenswapbuffers FADE_FROM_BLACK
+	msgbox FarawayIsland_Interior_Text_TheFeelingOfBeingWatchedFaded, MSGBOX_DEFAULT
+	closemessage
+	releaseall
+	end
+
+FarawayIsland_Interior_Text_TheFeelingOfBeingWatchedFaded:
+	.string "けはいが　きえてしまった⋯⋯$"
