@@ -73,16 +73,6 @@
 	@ or duplicating any ROM bytes.
 	@ Verdanturf Battle Tent Lobby shares these retained JP text/script blocks.
 	@ The local map source therefore keeps the pokeemerald semantic labels.
-	@ The Elite Four room scripts remain in their retained JP owner block.
-	@ Export their reviewed pokeemerald names for map-local source references.
-	.globl PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles
-	.set PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles, 0x0824347B
-	.globl PokemonLeague_EliteFour_EventScript_WalkInCloseDoor
-	.set PokemonLeague_EliteFour_EventScript_WalkInCloseDoor, 0x082434F8
-	.globl PokemonLeague_EliteFour_EventScript_ResetAdvanceToNextRoom
-	.set PokemonLeague_EliteFour_EventScript_ResetAdvanceToNextRoom, 0x0824353F
-	.globl PokemonLeague_EliteFour_EventScript_CloseDoor
-	.set PokemonLeague_EliteFour_EventScript_CloseDoor, 0x082435E2
 	@ Mauville's dynamic old-man interaction remains in its retained JP owner.
 	@ Expose the map-local pokeemerald label for generated object events.
 	.globl MauvilleCity_PokemonCenter_1F_EventScript_MauvilleOldMan
@@ -257,8 +247,6 @@
 	@ The four-step shared player approach remains in the retained movement block.
 	.globl Common_Movement_WalkUp4
 	.set Common_Movement_WalkUp4, 0x08243644
-	.globl Common_EventScript_NameReceivedPartyMon
-	.set Common_EventScript_NameReceivedPartyMon, 0x08243460
 	.globl gText_PokemonTrainerSchoolEmail
 	.set gText_PokemonTrainerSchoolEmail, 0x08243AA2
 	.globl gText_PlayerHouseBootPC
@@ -1025,12 +1013,6 @@ Common_EventScript_OutOfCenterPartyHeal::
 	.set Roulette_EventScript_Table1, 0x08262C92
 	.globl Roulette_EventScript_Table2
 	.set Roulette_EventScript_Table2, 0x08262CC0
-	.globl Common_EventScript_PlayerHandedOverTheItem
-	.set Common_EventScript_PlayerHandedOverTheItem, 0x08243467
-	@ The Kecleon reveal movement remains in the retained shared event block.
-	@ Its JP byte stream is the same set-visible / blink sequence used upstream.
-	.globl Movement_KecleonAppears
-	.set Movement_KecleonAppears, 0x0824344A
 	.globl EventScript_GotoTrainerScript
 	.set EventScript_GotoTrainerScript, 0x08244D20
 	@ The Lavaridge House event table references the shared Mimic tutor script.
@@ -1123,9 +1105,25 @@ Common_EventScript_FerryDepartIsland::
 	.include "data/scripts/cave_of_origin.inc"
 	.include "data/scripts/kecleon.inc"
 
-	@ Unstructured shared movement scripts at 0x08243460-0x0824361B.
-	.incbin "baserom_jp.gba", 0x243460, 0x1BB
-	.include "data/scripts/gUnknown_824361B.inc"
+Common_EventScript_NameReceivedPartyMon::
+	fadescreen FADE_TO_BLACK
+	special ChangePokemonNickname
+	@ The JP nickname screen script waits for the special task here.
+	waitstate
+	return
+
+Common_EventScript_PlayerHandedOverTheItem::
+	bufferitemname STR_VAR_1, VAR_0x8004
+	playfanfare MUS_OBTAIN_TMHM
+	@ The JP text data remains in its later physical owner at 0x08243D82.
+	message 0x08243D82
+	waitmessage
+	waitfanfare
+	removeitem VAR_0x8004
+	return
+
+	.include "data/scripts/elite_four.inc"
+	.include "data/scripts/movement.inc"
 
 	.globl EventScript_PictureBookShelf
 EventScript_PictureBookShelf: @ 0x8243651
