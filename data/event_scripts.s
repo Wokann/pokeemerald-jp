@@ -305,8 +305,6 @@
 	.set CableClub_EventScript_RecordCorner, 0x08246ED6
 	.globl CableClub_OnResume
 	.set CableClub_OnResume, 0x0824790F
-	.globl SecretBase_EventScript_SetDecorationFlags
-	.set SecretBase_EventScript_SetDecorationFlags, 0x08245D90
 	.globl PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
 	.set PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet, 0x08257EE8
 	.globl PlayersHouse_1F_EventScript_EnterHouseMovingIn
@@ -1257,13 +1255,6 @@ Common_EventScript_LegendaryFlewAway::
 	.include "data/text/berry_tree.inc"
 
 	@ 0x0824506B
-	.globl SecretBase_EventScript_CheckEntrance
-	.globl SecretBase_EventScript_Tree
-	.globl SecretBase_EventScript_Shrub
-	.globl SecretBase_EventScript_Cave
-	.globl SecretBase_EventScript_EnterPlayersBase
-	.globl SecretBase_EventScript_InitDecorations
-	.globl SecretBase_EventScript_EnterSecretBase
 	.include "data/scripts/secret_base.inc"
 .globl gUnknown_8245DDD
 gUnknown_8245DDD: @ 0x8245DDD

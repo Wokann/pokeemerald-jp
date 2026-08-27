@@ -9950,7 +9950,7 @@ decoration.s
 08127b04 GetDecorationElevation GetDecorationElevation
 08127b40 decoration.s ShowDecorationOnMap_
 08127d08 decoration.s ShowDecorationOnMap
-08127dec sub_08127DEC_jp SetDecoration
+08127dec SetDecoration SetDecoration
 08127f0c HasDecorationSpace HasDecorationSpace
 08127f3c DecorationItemsMenuAction_AttemptPlace DecorationItemsMenuAction_AttemptPlace
 08128034 Task_PlaceDecoration Task_PlaceDecoration

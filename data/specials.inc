@@ -35,7 +35,7 @@ gSpecials::
 	def_special PrepSecretBaseBattleFlags
 	def_special GetSecretBaseOwnerInteractionState
 	def_special InitSecretBaseDecorationSprites
-	def_special sub_08127DEC
+	def_special SetDecoration
 	def_special sub_08129798
 	def_special GetSecretBaseTypeInFrontOfPlayer
 	def_special SetSecretBaseOwnerGfxId

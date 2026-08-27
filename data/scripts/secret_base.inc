@@ -22,250 +22,241 @@ SecretBase_Text_DiscoveredSmallEntrance:
 
 	.include "data/text/secret_base_trainers.inc"
 
-SecretBase_EventScript_CheckEntrance: @ 0x8245AA0
+SecretBase_EventScript_CheckEntrance::
 	special GetSecretBaseTypeInFrontOfPlayer
 	special CheckPlayerHasSecretBase
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, 0x8245C97
-	checkpartymove 0x122
-	setfieldeffectarg 0x0, 0x800D
-	buffermovename 0x1, 0x122
-	compare_var_to_value 0x8007, 0x1
-	goto_if 0x1, 0x8245AFF
-	compare_var_to_value 0x8007, 0x2
-	goto_if 0x1, 0x8245AFF
-	compare_var_to_value 0x8007, 0x3
-	goto_if 0x1, 0x8245AFF
-	compare_var_to_value 0x8007, 0x4
-	goto_if 0x1, 0x8245AFF
-	compare_var_to_value 0x8007, 0x5
-	goto_if 0x1, 0x8245B58
-	compare_var_to_value 0x8007, 0x6
-	goto_if 0x1, 0x8245BB1
-	end 
-	lockall 
-	compare_var_to_value 0x800D, 0x6
-	goto_if 0x1, 0x8245B40
-	bufferpartymonnick 0x0, 0x800D
-	loadword 0x0, 0x821D5E0
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x8245D8D
-	loadword 0x0, 0x825665C
-	callstd 0x4
-	closemessage 
-	dofieldeffect 0xB
-	waitstate 
-	goto 0x8245B4A
-	end 
+	goto_if_eq VAR_RESULT, TRUE, SecretBase_EventScript_AlreadyHasSecretBase
+	checkpartymove MOVE_SECRET_POWER
+	setfieldeffectargument 0, VAR_RESULT
+	buffermovename STR_VAR_2, MOVE_SECRET_POWER
+	goto_if_eq VAR_0x8007, SECRET_BASE_RED_CAVE, SecretBase_EventScript_Cave
+	goto_if_eq VAR_0x8007, SECRET_BASE_BROWN_CAVE, SecretBase_EventScript_Cave
+	goto_if_eq VAR_0x8007, SECRET_BASE_BLUE_CAVE, SecretBase_EventScript_Cave
+	goto_if_eq VAR_0x8007, SECRET_BASE_YELLOW_CAVE, SecretBase_EventScript_Cave
+	goto_if_eq VAR_0x8007, SECRET_BASE_TREE, SecretBase_EventScript_Tree
+	goto_if_eq VAR_0x8007, SECRET_BASE_SHRUB, SecretBase_EventScript_Shrub
+	end
 
-SecretBase_EventScript_Tree: @ 0x8245B35
-	lockall 
-	dofieldeffect 0xB
-	waitstate 
-	goto 0x8245B4A
-	end 
-	loadword 0x0, 0x821D5CF
-	callstd 0x4
-	releaseall 
-	end 
-	loadword 0x0, 0x821D602
-	callstd 0x4
-	goto 0x8245C0A
-	end 
-	lockall 
-	compare_var_to_value 0x800D, 0x6
-	goto_if 0x1, 0x8245B99
-	bufferpartymonnick 0x0, 0x800D
-	loadword 0x0, 0x824507E
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x8245D8D
-	loadword 0x0, 0x825665C
-	callstd 0x4
-	closemessage 
-	dofieldeffect 0x1A
-	waitstate 
-	goto 0x8245BA3
-	end 
+SecretBase_EventScript_Cave::
+	lockall
+	goto_if_eq VAR_RESULT, PARTY_SIZE, SecretBase_EventScript_CaveNoSecretPower
+	bufferpartymonnick STR_VAR_1, VAR_RESULT
+	msgbox SecretBase_Text_IndentUseSecretPower, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_CancelOnEntrance
+	msgbox 0x0825665C, MSGBOX_DEFAULT
+	closemessage
+	dofieldeffect FLDEFF_USE_SECRET_POWER_CAVE
+	waitstate
+	goto SecretBase_EventScript_CaveEnter
+	end
 
-SecretBase_EventScript_Shrub: @ 0x8245B8E
-	lockall 
-	dofieldeffect 0x1A
-	waitstate 
-	goto 0x8245BA3
-	end 
-	loadword 0x0, 0x824506B
-	callstd 0x4
-	releaseall 
-	end 
-	loadword 0x0, 0x82450A2
-	callstd 0x4
-	goto 0x8245C0A
-	end 
-	lockall 
-	compare_var_to_value 0x800D, 0x6
-	goto_if 0x1, 0x8245BF2
-	bufferpartymonnick 0x0, 0x800D
-	loadword 0x0, 0x82450C8
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x8245D8D
-	loadword 0x0, 0x825665C
-	callstd 0x4
-	closemessage 
-	dofieldeffect 0x1B
-	waitstate 
-	goto 0x8245BFC
-	end 
+SecretBase_EventScript_CaveUseSecretPower::
+	lockall
+	dofieldeffect FLDEFF_USE_SECRET_POWER_CAVE
+	waitstate
+	goto SecretBase_EventScript_CaveEnter
+	end
 
-SecretBase_EventScript_Cave: @ 0x8245BE7
-	lockall 
-	dofieldeffect 0x1B
-	waitstate 
-	goto 0x8245BFC
-	end 
-	loadword 0x0, 0x82450B0
-	callstd 0x4
-	releaseall 
-	end 
-	loadword 0x0, 0x82450F1
-	callstd 0x4
-	goto 0x8245C0A
-	end 
-	closemessage 
-	playse 0x9
-	setvar 0x4097, 0x0
-	setflag 0xAD
+SecretBase_EventScript_CaveNoSecretPower::
+	msgbox SecretBase_Text_SmallIndentInWall, MSGBOX_DEFAULT
+	releaseall
+	end
+
+SecretBase_EventScript_CaveEnter::
+	msgbox SecretBase_Text_DiscoveredSmallCavern, MSGBOX_DEFAULT
+	goto SecretBase_EventScript_InitSecretBase
+	end
+
+SecretBase_EventScript_Tree::
+	lockall
+	goto_if_eq VAR_RESULT, PARTY_SIZE, SecretBase_EventScript_TreeNoSecretPower
+	bufferpartymonnick STR_VAR_1, VAR_RESULT
+	msgbox SecretBase_Text_TreeUseSecretPower, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_CancelOnEntrance
+	msgbox 0x0825665C, MSGBOX_DEFAULT
+	closemessage
+	dofieldeffect FLDEFF_USE_SECRET_POWER_TREE
+	waitstate
+	goto SecretBase_EventScript_TreeEnter
+	end
+
+SecretBase_EventScript_TreeUseSecretPower::
+	lockall
+	dofieldeffect FLDEFF_USE_SECRET_POWER_TREE
+	waitstate
+	goto SecretBase_EventScript_TreeEnter
+	end
+
+SecretBase_EventScript_TreeNoSecretPower::
+	msgbox SecretBase_Text_TreeCanBeClimbed, MSGBOX_DEFAULT
+	releaseall
+	end
+
+SecretBase_EventScript_TreeEnter::
+	msgbox SecretBase_Text_VineDroppedDown, MSGBOX_DEFAULT
+	goto SecretBase_EventScript_InitSecretBase
+	end
+
+SecretBase_EventScript_Shrub::
+	lockall
+	goto_if_eq VAR_RESULT, PARTY_SIZE, SecretBase_EventScript_ShrubNoSecretPower
+	bufferpartymonnick STR_VAR_1, VAR_RESULT
+	msgbox SecretBase_Text_ClumpUseSecretPower, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_CancelOnEntrance
+	msgbox 0x0825665C, MSGBOX_DEFAULT
+	closemessage
+	dofieldeffect FLDEFF_USE_SECRET_POWER_SHRUB
+	waitstate
+	goto SecretBase_EventScript_ShrubEnter
+	end
+
+SecretBase_EventScript_ShrubUseSecretPower::
+	lockall
+	dofieldeffect FLDEFF_USE_SECRET_POWER_SHRUB
+	waitstate
+	goto SecretBase_EventScript_ShrubEnter
+	end
+
+SecretBase_EventScript_ShrubNoSecretPower::
+	msgbox SecretBase_Text_ClumpOfGrass, MSGBOX_DEFAULT
+	releaseall
+	end
+
+SecretBase_EventScript_ShrubEnter::
+	msgbox SecretBase_Text_DiscoveredSmallEntrance, MSGBOX_DEFAULT
+	goto SecretBase_EventScript_InitSecretBase
+	end
+
+SecretBase_EventScript_InitSecretBase::
+	closemessage
+	playse SE_EXIT
+	setvar VAR_INIT_SECRET_BASE, 0
+	setflag FLAG_HIDE_SECRET_BASE_TRAINER
 	special SetPlayerSecretBase
 	special EnterSecretBase
-	setvar 0x8004, 0x0
-	setvar 0x8005, 0x0
+	setvar VAR_0x8004, 0
+	setvar VAR_0x8005, 0
 	special InitSecretBaseDecorationSprites
-	setvar 0x4089, 0x1
-	waitstate 
-	end 
-	applymovement 0xFF, 0x8245C63
-	waitmovement 0x0
-	setvar 0x4097, 0x1
-	loadword 0x0, 0x821D613
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, 0x8245C5A
-	closemessage 
-	playse 0x9
+	setvar VAR_SECRET_BASE_INITIALIZED, 1
+	waitstate
+	end
+
+SecretBase_EventScript_FirstEntrance::
+	applymovement LOCALID_PLAYER, SecretBase_Movement_EnterBase
+	waitmovement 0
+	setvar VAR_INIT_SECRET_BASE, 1
+	msgbox SecretBase_Text_WantToMakeYourSecretBaseHere, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, SecretBase_EventScript_SetAsBase
+	closemessage
+	playse SE_EXIT
 	special ClearAndLeaveSecretBase
-	end 
-	closemessage 
-	setflag 0x60
+	end
+
+SecretBase_EventScript_SetAsBase::
+	closemessage
+	setflag FLAG_RECEIVED_SECRET_POWER
 	special EnterNewlyCreatedSecretBase
-	end 
-	callstd 0x9
-	.byte 0xFE
+	end
 
-SecretBase_EventScript_EnterPlayersBase: @ 0x8245C66
-	lockall 
-	setvar 0x4097, 0x1
-	playse 0x9
+SecretBase_Movement_EnterBase:
+	walk_up
+	walk_up
+	step_end
+
+SecretBase_EventScript_Enter::
+	lockall
+	setvar VAR_INIT_SECRET_BASE, 1
+	playse SE_EXIT
 	special IsCurSecretBaseOwnedByAnotherPlayer
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x8245C8A
-	clearflag 0xAD
+	goto_if_eq VAR_RESULT, FALSE, SecretBase_EventScript_EnterPlayersBase
+	clearflag FLAG_HIDE_SECRET_BASE_TRAINER
 	special EnterSecretBase
-	setvar 0x4089, 0x0
-	waitstate 
-	end 
-	setflag 0xAD
+	setvar VAR_SECRET_BASE_INITIALIZED, 0
+	waitstate
+	end
+
+SecretBase_EventScript_EnterPlayersBase::
+	setflag FLAG_HIDE_SECRET_BASE_TRAINER
 	special EnterSecretBase
-	setvar 0x4089, 0x0
-	waitstate 
-	end 
-	checkpartymove 0x122
-	compare_var_to_value 0x800D, 0x6
-	goto_if 0x1, 0x8245D49
-	setfieldeffectarg 0x0, 0x800D
-	setorcopyvar 0x8004, 0x800D
-	lockall 
+	setvar VAR_SECRET_BASE_INITIALIZED, 0
+	waitstate
+	end
+
+SecretBase_EventScript_AlreadyHasSecretBase::
+	checkpartymove MOVE_SECRET_POWER
+	goto_if_eq VAR_RESULT, PARTY_SIZE, SecretBase_EventScript_NoSecretPower
+	setfieldeffectargument 0, VAR_RESULT
+	setorcopyvar VAR_0x8004, VAR_RESULT
+	lockall
 	special GetSecretBaseNearbyMapName
-	loadword 0x0, 0x8246782
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x8245D8D
-	loadword 0x0, 0x82465BD
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x8245D8D
-	fadescreenswapbuffers 0x1
+	msgbox 0x08246782, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_CancelOnEntrance
+	msgbox 0x082465BD, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_CancelOnEntrance
+	fadescreenswapbuffers FADE_TO_BLACK
 	special MoveOutOfSecretBaseFromOutside
-	closemessage 
-	fadescreenswapbuffers 0x0
-	loadword 0x0, 0x82467B0
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x8245D8D
-	bufferpartymonnick 0x0, 0x8004
-	buffermovename 0x1, 0x122
-	loadword 0x0, 0x825665C
-	callstd 0x4
-	closemessage 
-	closemessage 
-	compare_var_to_value 0x8007, 0x1
-	goto_if 0x1, 0x8245B35
-	compare_var_to_value 0x8007, 0x2
-	goto_if 0x1, 0x8245B35
-	compare_var_to_value 0x8007, 0x3
-	goto_if 0x1, 0x8245B35
-	compare_var_to_value 0x8007, 0x4
-	goto_if 0x1, 0x8245B35
-	compare_var_to_value 0x8007, 0x5
-	goto_if 0x1, 0x8245B8E
-	compare_var_to_value 0x8007, 0x6
-	goto_if 0x1, 0x8245BE7
-	releaseall 
-	end 
-	lockall 
-	compare_var_to_value 0x8007, 0x1
-	goto_if 0x1, 0x8245B40
-	compare_var_to_value 0x8007, 0x2
-	goto_if 0x1, 0x8245B40
-	compare_var_to_value 0x8007, 0x3
-	goto_if 0x1, 0x8245B40
-	compare_var_to_value 0x8007, 0x4
-	goto_if 0x1, 0x8245B40
-	compare_var_to_value 0x8007, 0x5
-	goto_if 0x1, 0x8245B99
-	compare_var_to_value 0x8007, 0x6
-	goto_if 0x1, 0x8245BF2
-	end 
-	closemessage 
-	releaseall 
-	end 
-	setflag 0xAE
-	setflag 0xAF
-	setflag 0xB0
-	setflag 0xB1
-	setflag 0xB2
-	setflag 0xB3
-	setflag 0xB4
-	setflag 0xB5
-	setflag 0xB6
-	setflag 0xB7
-	setflag 0xB8
-	setflag 0xB9
-	setflag 0xBA
-	setflag 0xBB
-	return 
+	closemessage
+	fadescreenswapbuffers FADE_FROM_BLACK
+	msgbox 0x082467B0, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_CancelOnEntrance
+	bufferpartymonnick STR_VAR_1, VAR_0x8004
+	buffermovename STR_VAR_2, MOVE_SECRET_POWER
+	msgbox 0x0825665C, MSGBOX_DEFAULT
+	closemessage
+	closemessage
+	goto_if_eq VAR_0x8007, SECRET_BASE_RED_CAVE, SecretBase_EventScript_CaveUseSecretPower
+	goto_if_eq VAR_0x8007, SECRET_BASE_BROWN_CAVE, SecretBase_EventScript_CaveUseSecretPower
+	goto_if_eq VAR_0x8007, SECRET_BASE_BLUE_CAVE, SecretBase_EventScript_CaveUseSecretPower
+	goto_if_eq VAR_0x8007, SECRET_BASE_YELLOW_CAVE, SecretBase_EventScript_CaveUseSecretPower
+	goto_if_eq VAR_0x8007, SECRET_BASE_TREE, SecretBase_EventScript_TreeUseSecretPower
+	goto_if_eq VAR_0x8007, SECRET_BASE_SHRUB, SecretBase_EventScript_ShrubUseSecretPower
+	releaseall
+	end
 
-SecretBase_EventScript_InitDecorations: @ 0x8245DBB
-	setvar 0x8004, 0x0
-	setvar 0x8005, 0x0
+SecretBase_EventScript_NoSecretPower::
+	lockall
+	goto_if_eq VAR_0x8007, SECRET_BASE_RED_CAVE, SecretBase_EventScript_CaveNoSecretPower
+	goto_if_eq VAR_0x8007, SECRET_BASE_BROWN_CAVE, SecretBase_EventScript_CaveNoSecretPower
+	goto_if_eq VAR_0x8007, SECRET_BASE_BLUE_CAVE, SecretBase_EventScript_CaveNoSecretPower
+	goto_if_eq VAR_0x8007, SECRET_BASE_YELLOW_CAVE, SecretBase_EventScript_CaveNoSecretPower
+	goto_if_eq VAR_0x8007, SECRET_BASE_TREE, SecretBase_EventScript_TreeNoSecretPower
+	goto_if_eq VAR_0x8007, SECRET_BASE_SHRUB, SecretBase_EventScript_ShrubNoSecretPower
+	end
+
+SecretBase_EventScript_CancelOnEntrance::
+	closemessage
+	releaseall
+	end
+
+SecretBase_EventScript_SetDecorationFlags::
+	setflag FLAG_DECORATION_1
+	setflag FLAG_DECORATION_2
+	setflag FLAG_DECORATION_3
+	setflag FLAG_DECORATION_4
+	setflag FLAG_DECORATION_5
+	setflag FLAG_DECORATION_6
+	setflag FLAG_DECORATION_7
+	setflag FLAG_DECORATION_8
+	setflag FLAG_DECORATION_9
+	setflag FLAG_DECORATION_10
+	setflag FLAG_DECORATION_11
+	setflag FLAG_DECORATION_12
+	setflag FLAG_DECORATION_13
+	setflag FLAG_DECORATION_14
+	return
+
+SecretBase_EventScript_InitDecorations::
+	setvar VAR_0x8004, 0
+	setvar VAR_0x8005, 0
 	special InitSecretBaseDecorationSprites
-	setvar 0x4089, 0x1
-	end 
+	setvar VAR_SECRET_BASE_INITIALIZED, 1
+	end
 
-SecretBase_EventScript_EnterSecretBase: @ 0x8245DCE
-	setvar 0x8005, 0x0
-	goto 0x8245DD9
-	end 
-	special sub_08127DEC
-	end 
+SecretBase_EventScript_SetDecoration::
+	setvar VAR_0x8005, 0
+	goto SecretBase_EventScript_SetDecoration2
+	end
+
+SecretBase_EventScript_SetDecoration2::
+	special SetDecoration
+	end

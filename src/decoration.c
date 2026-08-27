@@ -2873,7 +2873,7 @@ __attribute__((naked)) void ShowDecorationOnMap(u16 mapX, u16 mapY, u16 decorati
     );
 }
 
-__attribute__((naked)) void sub_08127DEC(void)
+__attribute__((naked)) void SetDecoration(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4524,7 +4524,7 @@ __attribute__((naked)) void sub_081289CC(void)
         "_08128A70: .4byte gUnknown_203A700\n\t"
         "_08128A74: .4byte gTasks\n\t"
         "_08128A78: .4byte gUnknown_203A702\n\t"
-        "_08128A7C: .4byte SecretBase_EventScript_EnterSecretBase\n\t"
+        "_08128A7C: .4byte SecretBase_EventScript_SetDecoration\n\t"
         "_08128A80: .4byte gSprites\n\t"
         "_08128A84: .4byte gUnknown_203A704\n\t"
         "_08128A88: .4byte gMapHeader\n\t"
@@ -8227,4 +8227,3 @@ __attribute__((naked)) void sub_0812A488(void)
         ".syntax divided\n\t"
     );
 }
-

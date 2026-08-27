@@ -1626,7 +1626,7 @@ __attribute__((naked)) void WarpIntoSecretBase(const struct MapPosition *positio
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080EA31C: .4byte SecretBase_EventScript_EnterPlayersBase\n\t"
+        "_080EA31C: .4byte SecretBase_EventScript_Enter\n\t"
         ".syntax divided\n\t"
     );
 }

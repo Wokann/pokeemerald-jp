@@ -66,9 +66,9 @@ static void SpriteCB_SandPillar_End(struct Sprite *sprite);
 extern void FieldCallback_SecretBaseCave(void);
 extern void FieldCallback_SecretBaseTree(void);
 extern void FieldCallback_SecretBaseShrub(void);
-extern const u8 SecretBase_EventScript_Cave[];
-extern const u8 SecretBase_EventScript_Tree[];
-extern const u8 SecretBase_EventScript_Shrub[];
+extern const u8 SecretBase_EventScript_CaveUseSecretPower[];
+extern const u8 SecretBase_EventScript_TreeUseSecretPower[];
+extern const u8 SecretBase_EventScript_ShrubUseSecretPower[];
 
 #include "fldeff_misc.h"
 
@@ -343,7 +343,7 @@ bool8 SetUpFieldMove_SecretPower(void)
 void FieldCallback_SecretBaseCave(void)
 {
     gFieldEffectArguments[0] = (u8)GetCursorSelectionMonId();
-    ScriptContext_SetupScript(SecretBase_EventScript_Tree);
+    ScriptContext_SetupScript(SecretBase_EventScript_CaveUseSecretPower);
 }
 
 
@@ -572,7 +572,7 @@ void CaveEntranceSpriteCallbackEnd(struct Sprite *sprite)
 void FieldCallback_SecretBaseShrub(void)
 {
     gFieldEffectArguments[0] = (u8)GetCursorSelectionMonId();
-    ScriptContext_SetupScript(SecretBase_EventScript_Shrub);
+    ScriptContext_SetupScript(SecretBase_EventScript_TreeUseSecretPower);
 }
 
 
@@ -649,7 +649,7 @@ void TreeEntranceSpriteCallbackEnd(struct Sprite *sprite)
 void FieldCallback_SecretBaseTree(void)
 {
     gFieldEffectArguments[0] = (u8)GetCursorSelectionMonId();
-    ScriptContext_SetupScript(SecretBase_EventScript_Cave);
+    ScriptContext_SetupScript(SecretBase_EventScript_ShrubUseSecretPower);
 }
 
 
