@@ -9,11 +9,30 @@ import jp_map_metadata
 
 ROOT = Path(__file__).resolve().parents[1]
 MAPS = (
+    "CaveOfOrigin_B1F",
+    "VictoryRoad_1F",
+    "VictoryRoad_B1F",
+    "VictoryRoad_B2F",
     "Underwater_Route124",
     "Underwater_Route126",
     "Underwater_Route127",
     "Underwater_Route128",
     "Underwater_Route129",
+)
+
+CONNECTED_MAPS = (
+    "Underwater_Route124",
+    "Underwater_Route126",
+    "Underwater_Route127",
+    "Underwater_Route128",
+    "Underwater_Route129",
+)
+
+NULL_CONNECTION_MAPS = (
+    "CaveOfOrigin_B1F",
+    "VictoryRoad_1F",
+    "VictoryRoad_B1F",
+    "VictoryRoad_B2F",
 )
 
 
@@ -40,19 +59,20 @@ class MapMetadataTests(unittest.TestCase):
             self.assertNotIn(".set ", text)
 
     def test_connections_use_real_map_labels(self):
-        for map_name in MAPS:
+        for map_name in CONNECTED_MAPS:
             text = (ROOT / "data" / "maps" / map_name / "connections.inc").read_text(encoding="utf-8")
             self.assertIn(f"{map_name}_MapConnections:", text)
             self.assertNotIn(".set ", text)
 
     def test_null_connections_match_us_map_json_style(self):
-        data = jp_map_metadata.load_map(ROOT / "data" / "maps" / "CaveOfOrigin_B1F" / "map.json")
-        self.assertIsNone(data["connections"])
-        self.assertIn("\t.4byte NULL\n", jp_map_metadata.render_header(data))
-        self.assertEqual(
-            jp_map_metadata.render_connections(data),
-            jp_map_metadata.warning("CaveOfOrigin_B1F"),
-        )
+        for map_name in NULL_CONNECTION_MAPS:
+            data = jp_map_metadata.load_map(ROOT / "data" / "maps" / map_name / "map.json")
+            self.assertIsNone(data["connections"])
+            self.assertIn("\t.4byte NULL\n", jp_map_metadata.render_header(data))
+            self.assertEqual(
+                jp_map_metadata.render_connections(data),
+                jp_map_metadata.warning(map_name),
+            )
 
 
 if __name__ == "__main__":

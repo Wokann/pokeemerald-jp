@@ -346,7 +346,29 @@ SeafloorCavern_Room9_EventScript_ItemTMEarthquake:: @ 0x08257158
 	finditem ITEM_TM_EARTHQUAKE
 	end
 
-	.incbin "baserom_jp.gba", 0x257165, 0x57c
+	.incbin "baserom_jp.gba", 0x257165, 0x75
+
+VictoryRoad_1F_EventScript_ItemMaxElixir:: @ 0x082571DA
+	finditem ITEM_MAX_ELIXIR
+	end
+
+VictoryRoad_1F_EventScript_ItemPPUp:: @ 0x082571E7
+	finditem ITEM_PP_UP
+	end
+
+VictoryRoad_B1F_EventScript_ItemTMPsychic:: @ 0x082571F4
+	finditem ITEM_TM_PSYCHIC
+	end
+
+VictoryRoad_B1F_EventScript_ItemFullRestore:: @ 0x08257201
+	finditem ITEM_FULL_RESTORE
+	end
+
+VictoryRoad_B2F_EventScript_ItemFullHeal:: @ 0x0825720E
+	finditem ITEM_FULL_HEAL
+	end
+
+	.incbin "baserom_jp.gba", 0x25721b, 0x4c6
 
 @ This is Route117's Day Care Man entry at the start of the still-raw
 @ shared day-care script owner. Use the physical label, not a .set alias.

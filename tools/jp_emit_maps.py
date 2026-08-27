@@ -18987,6 +18987,194 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
 })
 
 
+# Victory Road 1F, B1F, and B2F are the next contiguous source-order family
+# after Cave of Origin B1F. Their scripts, movement streams, trainer records,
+# and text records are aligned one-for-one with the corresponding US sources.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'VictoryRoad_1F': {
+        'scripts': {
+            0x082194A2: 'VictoryRoad_1F_OnTransition',
+            0x082194B9: 'VictoryRoad_1F_EventScript_SetEntranceWallyPos1',
+            0x082194C5: 'VictoryRoad_1F_EventScript_SetEntranceWallyPos2',
+            0x082194D1: 'VictoryRoad_1F_EventScript_WallyBattleTrigger1',
+            0x082194EA: 'VictoryRoad_1F_EventScript_WallyBattleTrigger2',
+            0x08219503: 'VictoryRoad_1F_EventScript_WallyEntranceBattle',
+            0x0821954E: 'VictoryRoad_1F_EventScript_EntranceWally',
+            0x08219557: 'VictoryRoad_1F_EventScript_ExitWally',
+            0x0821957E: 'VictoryRoad_1F_EventScript_RematchWally',
+            0x08219595: 'VictoryRoad_1F_EventScript_Edgar',
+            0x082195AC: 'VictoryRoad_1F_EventScript_Albert',
+            0x082195C3: 'VictoryRoad_1F_EventScript_Hope',
+            0x082195DA: 'VictoryRoad_1F_EventScript_Quincy',
+            0x082195F1: 'VictoryRoad_1F_EventScript_Katelynn',
+        },
+        'texts': {
+            0x08219608: 'VictoryRoad_1F_Text_WallyNotGoingToLoseAnymore',
+            0x082196B4: 'VictoryRoad_1F_Text_WallyEntranceDefeat',
+            0x082196CA: 'VictoryRoad_1F_Text_WallyPostEntranceBattle',
+            0x082196FD: 'VictoryRoad_1F_Text_WallyIntro',
+            0x08219743: 'VictoryRoad_1F_Text_WallyDefeat',
+            0x08219759: 'VictoryRoad_1F_Text_WallyPostBattle',
+            0x0821979B: 'VictoryRoad_1F_Text_EdgarIntro',
+            0x082197BE: 'VictoryRoad_1F_Text_EdgarDefeat',
+            0x082197CA: 'VictoryRoad_1F_Text_EdgarPostBattle',
+            0x082197F2: 'VictoryRoad_1F_Text_AlbertIntro',
+            0x08219815: 'VictoryRoad_1F_Text_AlbertDefeat',
+            0x08219824: 'VictoryRoad_1F_Text_AlbertPostBattle',
+            0x08219856: 'VictoryRoad_1F_Text_HopeIntro',
+            0x0821987F: 'VictoryRoad_1F_Text_HopeDefeat',
+            0x08219890: 'VictoryRoad_1F_Text_HopePostBattle',
+            0x082198B0: 'VictoryRoad_1F_Text_QuincyIntro',
+            0x082198D0: 'VictoryRoad_1F_Text_QuincyDefeat',
+            0x082198DA: 'VictoryRoad_1F_Text_QuincyPostBattle',
+            0x08219928: 'VictoryRoad_1F_Text_KatelynnIntro',
+            0x08219949: 'VictoryRoad_1F_Text_KatelynnDefeat',
+            0x08219952: 'VictoryRoad_1F_Text_KatelynnPostBattle',
+        },
+        'field_placeholders': {
+            0x08219608: {0x01: 'PLAYER'},
+            0x082196B4: {0x01: 'PLAYER'},
+            0x082196CA: {0x01: 'PLAYER'},
+            0x082196FD: {0x01: 'PLAYER'},
+            0x08219743: {0x01: 'PLAYER'},
+            0x08219759: {0x01: 'PLAYER'},
+        },
+        'external_labels': {
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x007E: 'FLAG_DEFEATED_WALLY_VICTORY_ROAD',
+                0x035A: 'FLAG_HIDE_VICTORY_ROAD_ENTRANCE_WALLY',
+            },
+            'vars': {
+                0x40C3: 'VAR_VICTORY_ROAD_1F_STATE',
+                0x8008: 'VAR_0x8008',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {
+                0x40C3: {0x01: '1', 0x02: '2'},
+                0x8008: {0x01: '1', 0x02: '2'},
+                0x800D: {0x01: 'TRUE'},
+            },
+            'trainers': {
+                0x004F: 'TRAINER_EDGAR',
+                0x0050: 'TRAINER_ALBERT',
+                0x0060: 'TRAINER_HOPE',
+                0x0144: 'TRAINER_QUINCY',
+                0x0145: 'TRAINER_KATELYNN',
+                0x0207: 'TRAINER_WALLY_VR_1',
+                0x0291: 'TRAINER_WALLY_VR_2',
+            },
+            'local_ids': {
+                0x04: 'LOCALID_VICTORY_ROAD_ENTRANCE_WALLY',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {
+                'setobjectxyperm': (1, 2),
+            },
+            'script_literal_values': {
+                0x082194B9: {
+                    'setobjectmovementtype': {1: {0x08: 'MOVEMENT_TYPE_FACE_DOWN'}},
+                },
+                0x082194C5: {
+                    'setobjectmovementtype': {1: {0x08: 'MOVEMENT_TYPE_FACE_DOWN'}},
+                },
+            },
+        },
+    },
+    'VictoryRoad_B1F': {
+        'scripts': {
+            0x0821996F: 'VictoryRoad_B1F_EventScript_Samuel',
+            0x08219986: 'VictoryRoad_B1F_EventScript_Shannon',
+            0x0821999D: 'VictoryRoad_B1F_EventScript_Michelle',
+            0x082199B4: 'VictoryRoad_B1F_EventScript_Mitchell',
+            0x082199CB: 'VictoryRoad_B1F_EventScript_Halle',
+        },
+        'texts': {
+            0x082199E2: 'VictoryRoad_B1F_Text_SamuelIntro',
+            0x08219A0B: 'VictoryRoad_B1F_Text_SamuelDefeat',
+            0x08219A18: 'VictoryRoad_B1F_Text_SamuelPostBattle',
+            0x08219A3A: 'VictoryRoad_B1F_Text_ShannonIntro',
+            0x08219A5F: 'VictoryRoad_B1F_Text_ShannonDefeat',
+            0x08219A70: 'VictoryRoad_B1F_Text_ShannonPostBattle',
+            0x08219AA3: 'VictoryRoad_B1F_Text_MichelleIntro',
+            0x08219AC4: 'VictoryRoad_B1F_Text_MichelleDefeat',
+            0x08219ACD: 'VictoryRoad_B1F_Text_MichellePostBattle',
+            0x08219AF4: 'VictoryRoad_B1F_Text_MitchellIntro',
+            0x08219B09: 'VictoryRoad_B1F_Text_MitchellDefeat',
+            0x08219B1D: 'VictoryRoad_B1F_Text_MitchellPostBattle',
+            0x08219B48: 'VictoryRoad_B1F_Text_HalleIntro',
+            0x08219B6A: 'VictoryRoad_B1F_Text_HalleDefeat',
+            0x08219B71: 'VictoryRoad_B1F_Text_HallePostBattle',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'trainers': {
+                0x0051: 'TRAINER_SAMUEL',
+                0x0061: 'TRAINER_SHANNON',
+                0x0062: 'TRAINER_MICHELLE',
+                0x021C: 'TRAINER_MITCHELL',
+                0x0222: 'TRAINER_HALLE',
+            },
+        },
+    },
+    'VictoryRoad_B2F': {
+        'scripts': {
+            0x08219BA1: 'VictoryRoad_B2F_EventScript_Vito',
+            0x08219BB8: 'VictoryRoad_B2F_EventScript_Owen',
+            0x08219BCF: 'VictoryRoad_B2F_EventScript_Caroline',
+            0x08219BE6: 'VictoryRoad_B2F_EventScript_Julie',
+            0x08219BFD: 'VictoryRoad_B2F_EventScript_Felix',
+            0x08219C14: 'VictoryRoad_B2F_EventScript_Dianne',
+        },
+        'texts': {
+            0x08219C2B: 'VictoryRoad_B2F_Text_VitoIntro',
+            0x08219C55: 'VictoryRoad_B2F_Text_VitoDefeat',
+            0x08219C75: 'VictoryRoad_B2F_Text_VitoPostBattle',
+            0x08219CBE: 'VictoryRoad_B2F_Text_OwenIntro',
+            0x08219CE1: 'VictoryRoad_B2F_Text_OwenDefeat',
+            0x08219CEB: 'VictoryRoad_B2F_Text_OwenPostBattle',
+            0x08219D19: 'VictoryRoad_B2F_Text_CarolineIntro',
+            0x08219D29: 'VictoryRoad_B2F_Text_CarolineDefeat',
+            0x08219D37: 'VictoryRoad_B2F_Text_CarolinePostBattle',
+            0x08219D68: 'VictoryRoad_B2F_Text_JulieIntro',
+            0x08219D98: 'VictoryRoad_B2F_Text_JulieDefeat',
+            0x08219DA6: 'VictoryRoad_B2F_Text_JuliePostBattle',
+            0x08219DCF: 'VictoryRoad_B2F_Text_FelixIntro',
+            0x08219DED: 'VictoryRoad_B2F_Text_FelixDefeat',
+            0x08219DF6: 'VictoryRoad_B2F_Text_FelixPostBattle',
+            0x08219E31: 'VictoryRoad_B2F_Text_DianneIntro',
+            0x08219E56: 'VictoryRoad_B2F_Text_DianneDefeat',
+            0x08219E68: 'VictoryRoad_B2F_Text_DiannePostBattle',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'trainers': {
+                0x0026: 'TRAINER_FELIX',
+                0x0052: 'TRAINER_VITO',
+                0x0053: 'TRAINER_OWEN',
+                0x0063: 'TRAINER_CAROLINE',
+                0x0064: 'TRAINER_JULIE',
+                0x01A1: 'TRAINER_DIANNE',
+            },
+        },
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'VictoryRoad_1F': {
+        0x08219537: 'VictoryRoad_1F_Movement_WallyApproachPlayer1',
+        0x08219543: 'VictoryRoad_1F_Movement_WallyApproachPlayer2',
+    },
+})
+
+
 def main():
     do_write = '--write' in sys.argv
     include_empty = '--include-empty' in sys.argv

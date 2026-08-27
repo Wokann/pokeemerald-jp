@@ -3378,7 +3378,11 @@ gMapLayout_SEAFLOOR_CAVERN_ROOM4: @ 0x0840F798
 	.globl gMapLayout_CAVE_OF_ORIGIN_B1F
 gMapLayout_CAVE_OF_ORIGIN_B1F: @ 0x0841255C
 	.incbin "baserom_jp.gba", 0x41255c, 0x18
-	.incbin "baserom_jp.gba", 0x412574, 0xea88
+	.incbin "baserom_jp.gba", 0x412574, 0x1034
+	.globl gMapLayout_VICTORY_ROAD_1F
+gMapLayout_VICTORY_ROAD_1F: @ 0x084135A8
+	.incbin "baserom_jp.gba", 0x4135a8, 0x18
+	.incbin "baserom_jp.gba", 0x4135c0, 0xda3c
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Border:
 	.incbin "data/layouts/FortreeCity_DecorationShop/border.bin"
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata:
@@ -3551,7 +3555,15 @@ gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_2F: @ 0x084292C0
 	.4byte gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_2F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4292d8, 0x3684
+	.incbin "baserom_jp.gba", 0x4292d8, 0x2b04
+	.globl gMapLayout_VICTORY_ROAD_B1F
+gMapLayout_VICTORY_ROAD_B1F: @ 0x0842BDDC
+	.incbin "baserom_jp.gba", 0x42bddc, 0x18
+	.incbin "baserom_jp.gba", 0x42bdf4, 0xb2c
+	.globl gMapLayout_VICTORY_ROAD_B2F
+gMapLayout_VICTORY_ROAD_B2F: @ 0x0842C920
+	.incbin "baserom_jp.gba", 0x42c920, 0x18
+	.incbin "baserom_jp.gba", 0x42c938, 0x24
 gMapLayout_GRANITE_CAVE_STEVENS_ROOM_Border:
 	.incbin "data/layouts/GraniteCave_StevensRoom/border.bin"
 gMapLayout_GRANITE_CAVE_STEVENS_ROOM_Blockdata:
@@ -6053,7 +6065,13 @@ gUnknown_845C660: @ 0x0845C660
 	.incbin "baserom_jp.gba", 0x45c660, 0x118
 	@ MAP_CAVE_OF_ORIGIN_B1F (g24 m42)
 	.include "data/maps/CaveOfOrigin_B1F/header.inc"
-	.incbin "baserom_jp.gba", 0x45c794, 0x2204
+	@ MAP_VICTORY_ROAD_1F (g24 m43)
+	.include "data/maps/VictoryRoad_1F/header.inc"
+	@ MAP_VICTORY_ROAD_B1F (g24 m44)
+	.include "data/maps/VictoryRoad_B1F/header.inc"
+	@ MAP_VICTORY_ROAD_B2F (g24 m45)
+	.include "data/maps/VictoryRoad_B2F/header.inc"
+	.incbin "baserom_jp.gba", 0x45c7e8, 0x21b0
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
