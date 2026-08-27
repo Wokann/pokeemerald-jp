@@ -210,10 +210,6 @@
 	.set SlateportCity_PokemonFanClub_EventScript_SwaggerTutor, 0x08276832
 	.globl BattleFrontier_BattleTowerLobby_Text_ReceivedPrize
 	.set BattleFrontier_BattleTowerLobby_Text_ReceivedPrize, 0x0822064B
-	.globl BattleFrontier_BattleFactoryLobby_Text_RulesAreListed
-	.set BattleFrontier_BattleFactoryLobby_Text_RulesAreListed, 0x08231A91
-	.globl BattleFrontier_BattleFactoryLobby_Text_ReadWhichHeading
-	.set BattleFrontier_BattleFactoryLobby_Text_ReadWhichHeading, 0x08231AA7
 	.globl BattleFrontier_BattleDomeLobby_Text_ReceivedPrize
 	.set BattleFrontier_BattleDomeLobby_Text_ReceivedPrize, 0x08227865
 	.globl BattleTentLobby_Text_ExplainLevelRules
@@ -836,7 +832,6 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/BattleFrontier_BattleArenaCorridor/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleArenaBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleFactoryLobby/scripts.inc"
-	.incbin "baserom_jp.gba", 0x2318bc, 0x3ec
 	.include "data/maps/BattleFrontier_BattleFactoryPreBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePikeLobby/scripts.inc"
