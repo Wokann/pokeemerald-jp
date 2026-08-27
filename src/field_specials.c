@@ -7516,7 +7516,7 @@ __attribute__((naked)) void TryLoseFansFromPlayTimeAfterLinkBattle(void)
     );
 }
 
-__attribute__((naked)) void sub_0813BA98(void)
+__attribute__((naked)) void UpdateTrainerFanClubGameClear(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

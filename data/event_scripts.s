@@ -910,21 +910,14 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.globl EventScript_TryDoRematchBattle
 	.globl EventScript_TryDoDoubleRematchBattle
 	.include "data/scripts/trainer_battle.inc"
-Std_MsgboxAutoclose:: @ 0x824252E
-	.include "data/scripts/gUnknown_824252E.inc"
+	.include "data/scripts/std_msgbox_autoclose.inc"
+	.include "data/scripts/new_game.inc"
+	.include "data/scripts/hall_of_fame.inc"
 
-	.globl EventScript_ResetAllMapFlags
-EventScript_ResetAllMapFlags: @ 0x8242678
-	.include "data/scripts/EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags.inc"
-	.globl EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags
-	.set EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags, 0x0824285B
-
-	.globl gUnknown_82428F1
-gUnknown_82428F1: @ 0x82428F1
-	.include "data/scripts/gUnknown_82428F1.inc"
+	.include "data/scripts/white_out.inc"
 
 	.globl Common_EventScript_PkmnCenterNurse
-Common_EventScript_PkmnCenterNurse: @ 0x82428FC
+Common_EventScript_PkmnCenterNurse: @ 0x82429B8
 	.include "data/scripts/Common_EventScript_PkmnCenterNurse.inc"
 Std_ObtainItem:: @ 0x8242B6D
 	.include "data/scripts/gUnknown_8242B6D.inc"

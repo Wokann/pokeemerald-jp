@@ -48,7 +48,7 @@ __attribute__((naked)) void DoWhiteOut(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08083FE0: .4byte gUnknown_82428F1\n\t"
+        "_08083FE0: .4byte EventScript_WhiteOut\n\t"
         "_08083FE4: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
@@ -108,7 +108,7 @@ __attribute__((naked)) void Overworld_ResetStateAfterTeleport(void)
         "_0808405C: .4byte 0x0000088C\n\t"
         "_08084060: .4byte 0x00000889\n\t"
         "_08084064: .4byte 0x00000888\n\t"
-        "_08084068: .4byte Common_EventScript_PkmnCenterNurse\n\t"
+        "_08084068: .4byte EventScript_ResetMrBriney\n\t"
         ".syntax divided\n\t"
     );
 }

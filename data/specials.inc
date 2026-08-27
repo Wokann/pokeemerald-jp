@@ -185,7 +185,7 @@ gSpecials::
 	def_special TryLoseFansFromPlayTimeAfterLinkBattle
 	def_special TryLoseFansFromPlayTime
 	def_special sub_0813BF84
-	def_special sub_0813BA98
+	def_special UpdateTrainerFanClubGameClear
 	def_special Script_TryGainNewFanFromCounter
 	def_special RockSmashWildEncounter
 	def_special GabbyAndTyGetBattleNum
