@@ -1,0 +1,93 @@
+gTVInSearchOfTrainersText00::
+	.string "“トレーナーを　もとめて”\p"
+	.string "マリ“はーい　わたしは　いま\n"
+	.string "{STR_VAR_1}に　きています！\p"
+	.string "きょうは　ここで　あたらしい　さいのうを\n"
+	.string "はっくつ　しようと　おもいます！\p"
+	.string "きょう　わたしが　ちゅうもく　した\n"
+	.string "トレーナーは　{PLAYER}さん！\p"
+	.string "わたしは　この　トレーナーに\n"
+	.string "なにかを　かんじます！$"
+
+gTVInSearchOfTrainersText01::
+	.string "{PLAYER}さんとは　まえに\n"
+	.string "たたかった　ことが　あるのですが\p"
+	.string "かくじつに　まえより\n"
+	.string "つよく　なっている　かんじが　します！\p"
+	.string "さっすが　わたしの\n"
+	.string "ちゅうもく　した　トレーナー！$"
+
+gTVInSearchOfTrainersText02::
+	.string "さて　トレーナーの　じつりょくを\n"
+	.string "みるには⋯\p"
+	.string "たたかって　みるのが　いちばん　はやい！\n"
+	.string "さっそく　ちょうさを　かいし　します！\p"
+	.string "⋯⋯\p"
+	.string "と　いうわけで\n"
+	.string "たたかって　みたの　ですが\p"
+	.string "みごとに　ボコボコに　されました！\n"
+	.string "{PLAYER}さん　やたら　つよいですね⋯⋯\p"
+	.string "で　たたかった　かんそうを\n"
+	.string "いわせて　もらいますと$"
+
+gTVInSearchOfTrainersText03::
+	.string "{STR_VAR_1}と　{STR_VAR_3}の\n"
+	.string "コンビが　さいこう　でしたね！\p"
+	.string "{STR_VAR_1}と　{STR_VAR_3}が　おたがい\n"
+	.string "たすけあって　たたかう　すがた⋯⋯\p"
+	.string "あぁ　なんて\n"
+	.string "すばらしいんでしょう！\p"
+	.string "わたしたちとの　しょうぶで\n"
+	.string "さいごに　つかった　‘{STR_VAR_2}'も\p"
+	.string "{STR_VAR_1}と　{STR_VAR_3}の　ゆうじょうの\n"
+	.string "‘{STR_VAR_2}'なんですね！$"
+
+gTVInSearchOfTrainersText04::
+	.string "⋯⋯わたくし　じしんを\n"
+	.string "なくして　しまいました\p"
+	.string "いっかいも　こうげきする　ひまもなく\n"
+	.string "すぐに　まけて　しまいました\l"
+	.string "ああ　グスン⋯⋯\p"
+	.string "でも　{PLAYER}さんの　たたかいは\n"
+	.string "いっけんのかち　あり　です！\p"
+	.string "じしんの　ある　トレーナーは　いちど\n"
+	.string "たたかって　みることを　おすすめ　しますよ！$"
+
+gTVInSearchOfTrainersText05::
+	.string "トレーナーと　たたかって　いるときは\n"
+	.string "モンスターボールを　なげるな！\l"
+	.string "という　ことです\p"
+	.string "{PLAYER}さん　しょうぶは　つよいのに\n"
+	.string "きほんが　なって　ませんよ！\p"
+	.string "もう　テレビを　みてる　みんな！\p"
+	.string "{PLAYER}さんに　あったら\n"
+	.string "ちゅういして　やってね！$"
+
+gTVInSearchOfTrainersText06::
+	.string "{PLAYER}さん　あいての　こうどうを\n"
+	.string "よむのが　とても　うまいです！\p"
+	.string "どうぐを　つかう　タイミング　なんか\n"
+	.string "なかなかの　ものでしたよ！$"
+
+gTVInSearchOfTrainersText07::
+	.string "しょうじき　わたしも　なかなか\n"
+	.string "つよいかも　と　おもっちゃい　ましたー！\p"
+	.string "さいごは　けっきょく　まけちゃった　けど\n"
+	.string "いい　しあい　だったなー\p"
+	.string "でも　わたしに　くせん　してるようじゃ\n"
+	.string "まだまだ　ですよ　{PLAYER}さん！$"
+
+gTVInSearchOfTrainersText08::
+	.string "たいせんの　あと　{PLAYER}さんに\n"
+	.string "いまの　たいせんの　かんそうを　きくと\p"
+	.string "‘{STR_VAR_1}'って\n"
+	.string "こたえて　くれました\p"
+	.string "{PLAYER}さんの　ポケモンの\n"
+	.string "{STR_VAR_2}と　{STR_VAR_3}\l"
+	.string "そして　‘{STR_VAR_1}'⋯⋯\p"
+	.string "んー！！\n"
+	.string "なんか　いみのふかい　ことば　よね！\p"
+	.string "やはり　いい　トレーナーは\n"
+	.string "いいことを　いって　くれますね\p"
+	.string "さて　それじゃあ　また\n"
+	.string "じかいの　ほうそうで　おあい　しましょう！$"

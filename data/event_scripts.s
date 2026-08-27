@@ -1338,7 +1338,27 @@ Common_EventScript_LegendaryFlewAway::
 	.include "data/text/tv/todays_rival_trainer.inc"
 
 @ 0x0824F86A
-	.incbin "baserom_jp.gba", 0x24f86a, 0x4607
+	.include "data/text/tv/trend_watcher.inc"
+	.include "data/text/tv/hoenn_treasure_investigators.inc"
+	.include "data/text/tv/find_that_gamer.inc"
+	.include "data/text/tv/breaking_news.inc"
+	.include "data/text/tv/secret_base_visit.inc"
+	.include "data/text/tv/pokemon_lottery.inc"
+	.include "data/text/tv/pokemon_battle_seminar.inc"
+	.include "data/text/tv/trainer_fan_club_special.inc"
+	.include "data/text/tv/spot_the_cuties.inc"
+	.include "data/text/tv/battle_frontier_news.inc"
+	.include "data/text/tv/whats_no1_in_hoenn_today.inc"
+	.include "data/text/tv/secret_base_secrets.inc"
+	.include "data/text/tv/safari_fan_club.inc"
+	.include "data/text/tv/contest_live_updates.inc"
+	.include "data/text/tv/pokemon_battle_update.inc"
+	.include "data/text/tv/gabby_and_ty.inc"
+	.include "data/text/tv/in_search_of_trainers.inc"
+	.include "data/text/tv/contest_lady_show.inc"
+
+	@ 0x08253C01-0x08253E71 remains unstructured interview script data.
+	.incbin "baserom_jp.gba", 0x253c01, 0x270
 	.globl LilycoveCity_ContestLobby_EventScript_Reporter
 LilycoveCity_ContestLobby_EventScript_Reporter: @ 0x08253E71
 	.incbin "baserom_jp.gba", 0x253e71, 0xd2

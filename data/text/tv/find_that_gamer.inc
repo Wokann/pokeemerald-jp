@@ -1,0 +1,42 @@
+gTVFindThatGamerText00::
+	.string "“ギャンブラーを　さがせー！”\p"
+	.string "みなさーん！\n"
+	.string "{STR_VAR_2}　ガンガン　まわしてますかー？\p"
+	.string "さあ　きょうも　ゲームコーナーで\n"
+	.string "すごかった　トレーナーさんを\l"
+	.string "はっぴょう　させて　いただきますよ！\p"
+	.string "きょうの　ナンバー1　ギャンブラーは⋯⋯\l"
+	.string "{STR_VAR_1}さん　です！$"
+
+gTVFindThatGamerText01::
+	.string "{STR_VAR_1}さんは　{STR_VAR_2}で\n"
+	.string "なんと　{STR_VAR_3}まいも\l"
+	.string "コインを　だした　そうです！\p"
+	.string "‘{STR_VAR_1}さんが　きたら\n"
+	.string "　あかじ　かくご！'\p"
+	.string "⋯⋯という　ことばが　てんいんたちの\n"
+	.string "あいだで　ささやかれた　そうです！\p"
+	.string "テレビの　まえの　みなさんも\n"
+	.string "{STR_VAR_1}さんの　ように　{STR_VAR_2}で\l"
+	.string "あそんで　みては　いかがでしょうか？\p"
+	.string "いじょう\n"
+	.string "ホウエン　いち　ドキドキの　スポット！\l"
+	.string "ゲームコーナー　より　おおくりしました$"
+
+gTVFindThatGamerText02::
+	.string "{STR_VAR_1}さんは　{STR_VAR_2}で\n"
+	.string "なんと　{STR_VAR_3}まいも\l"
+	.string "まけてしまった　そうです！\p"
+	.string "‘{STR_VAR_1}さんが　きたら\n"
+	.string "　うりあげ　2ばい！'\p"
+	.string "⋯⋯という　ことばが　てんいんたちの\n"
+	.string "あいだで　ささやかれた　そうです$"
+
+gTVFindThatGamerText03::
+	.string "テレビの　まえの　みなさんは\n"
+	.string "{STR_VAR_1}さん　みたいに　ならないように\l"
+	.string "{STR_VAR_2}で　あそんでみては\l"
+	.string "いかがで　しょうか？\p"
+	.string "いじょう\n"
+	.string "ホウエン　いち　ドキドキの　スポット！\l"
+	.string "ゲームコーナー　より　おおくりしました$"
