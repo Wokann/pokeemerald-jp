@@ -8525,7 +8525,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x082430E0: 'Common_EventScript_ShowBagIsFull',
         },
         'specials': {
-            'sub_080F9D20': 'ChoosePartyForBattleFrontier',
             'sub_0813A164': 'ShowScrollableMultichoice',
         },
         'field_placeholders': {

@@ -177,7 +177,7 @@ BattleFrontier_BattlePikeLobby_EventScript_00233292::
 	call 0x082202F8
 	copyvar 0x8004, 0x800D
 	setvar 0x8005, 0x3
-	special sub_080F9D20
+	special ChoosePartyForBattleFrontier
 	waitstate
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, BattleFrontier_BattlePikeLobby_EventScript_0023344A

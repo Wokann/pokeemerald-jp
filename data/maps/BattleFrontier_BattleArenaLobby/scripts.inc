@@ -1,413 +1,436 @@
-@ BattleFrontier_BattleArenaLobby scripts (JP map g26 m28 @ 0x0822F1C9)
-
 BattleFrontier_BattleArenaLobby_MapScripts::
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleArenaLobby_MapScriptTable_0022F1E8
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattleArenaLobby_MapScriptTable_0022F1D4
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleArenaLobby_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattleArenaLobby_OnWarp
 	.byte 0
 
-BattleFrontier_BattleArenaLobby_MapScriptTable_0022F1D4::
-	map_script_2 0x4001, 0x0, BattleFrontier_BattleArenaLobby_EventScript_0022F1DE
+BattleFrontier_BattleArenaLobby_OnWarp:
+	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleArenaLobby_EventScript_TurnPlayerNorth
 	.2byte 0
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F1DE::
-	setvar 0x4001, 0x1
-	turnobject 0xFF, 0x2
+BattleFrontier_BattleArenaLobby_EventScript_TurnPlayerNorth::
+	setvar VAR_TEMP_1, 1
+	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
-BattleFrontier_BattleArenaLobby_MapScriptTable_0022F1E8::
-	map_script_2 0x4000, 0x0, BattleFrontier_BattleArenaLobby_EventScript_0022F212
-	map_script_2 0x4000, 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F21B
-	map_script_2 0x4000, 0x2, BattleFrontier_BattleArenaLobby_EventScript_0022F353
-	map_script_2 0x4000, 0x3, BattleFrontier_BattleArenaLobby_EventScript_0022F262
-	map_script_2 0x4000, 0x4, BattleFrontier_BattleArenaLobby_EventScript_0022F2BE
+BattleFrontier_BattleArenaLobby_OnFrame:
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0, BattleFrontier_BattleArenaLobby_EventScript_GetChallengeStatus
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING, BattleFrontier_BattleArenaLobby_EventScript_QuitWithoutSaving
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_PAUSED, BattleFrontier_BattleArenaLobby_EventScript_ResumeChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_WON, BattleFrontier_BattleArenaLobby_EventScript_WonChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST, BattleFrontier_BattleArenaLobby_EventScript_LostChallenge
 	.2byte 0
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F212::
-	setvar 0x8004, 0x0
-	special CallFrontierUtilFunc
+BattleFrontier_BattleArenaLobby_EventScript_GetChallengeStatus::
+	frontier_getstatus
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F21B::
+BattleFrontier_BattleArenaLobby_EventScript_QuitWithoutSaving::
 	lockall
-	loadword 0x0, gJPText_0022FAC1
-	callstd 0x4
+	msgbox BattleFrontier_BattleArenaLobby_Text_DidntSaveBeforeShuttingDown, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x0
-	special CallBattleArenaFunction
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x2
-	setvar 0x8006, 0x0
-	special CallBattleArenaFunction
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x4000, 0xFF
+	arena_set ARENA_DATA_WIN_STREAK, 0
+	arena_set ARENA_DATA_WIN_STREAK_ACTIVE, FALSE
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F262::
+BattleFrontier_BattleArenaLobby_EventScript_WonChallenge::
 	lockall
-	setvar 0x8004, 0xA
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F283
-	loadword 0x0, gJPText_0022FB23
-	callstd 0x4
-	goto BattleFrontier_BattleArenaLobby_EventScript_0022F28B
+	frontier_isbrain
+	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattleArenaLobby_EventScript_DefeatedTycoon
+	msgbox BattleFrontier_BattleArenaLobby_Text_CongratsOnSevenWins, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleArenaLobby_EventScript_GiveBattlePoints
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F283::
-	loadword 0x0, gJPText_00230023
-	callstd 0x4
-
-BattleFrontier_BattleArenaLobby_EventScript_0022F28B::
-	loadword 0x0, gJPText_00230058
-	callstd 0x4
-	setvar 0x8004, 0xB
-	special CallFrontierUtilFunc
-	loadword 0x0, BattleFrontier_Text_ObtainedXBattlePoints
-	callstd 0x9
-	message gJPText_0022FB3C
+BattleFrontier_BattleArenaLobby_EventScript_DefeatedTycoon::
+	msgbox BattleFrontier_BattleArenaLobby_Text_CongratsOnDefeatingTycoon, MSGBOX_DEFAULT
+BattleFrontier_BattleArenaLobby_EventScript_GiveBattlePoints::
+	msgbox BattleFrontier_BattleArenaLobby_Text_PleaseAcceptBattlePoints, MSGBOX_DEFAULT
+	frontier_givepoints
+	msgbox BattleFrontier_Text_ObtainedXBattlePoints, MSGBOX_GETPOINTS
+	message BattleFrontier_BattleArenaLobby_Text_RecordAchievement
 	waitmessage
-	call BattleFrontier_BattleArenaLobby_EventScript_0022F2EC
-	loadword 0x0, gJPText_0022FBE9
-	callstd 0x4
+	call BattleFrontier_BattleArenaLobby_EventScript_SaveAfterChallenge
+	msgbox BattleFrontier_BattleArenaLobby_Text_AwaitAnotherChallenge2, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x4000, 0xFF
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F2BE::
+BattleFrontier_BattleArenaLobby_EventScript_LostChallenge::
 	lockall
-	message gJPText_0022FBC2
+	message BattleFrontier_BattleArenaLobby_Text_ThankYouWaitWhileSave
 	waitmessage
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x2
-	setvar 0x8006, 0x0
-	special CallBattleArenaFunction
-	call BattleFrontier_BattleArenaLobby_EventScript_0022F2EC
-	loadword 0x0, gJPText_0022FBE9
-	callstd 0x4
+	arena_set ARENA_DATA_WIN_STREAK_ACTIVE, FALSE
+	call BattleFrontier_BattleArenaLobby_EventScript_SaveAfterChallenge
+	msgbox BattleFrontier_BattleArenaLobby_Text_AwaitAnotherChallenge2, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x4000, 0xFF
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F2EC::
-	setvar 0x8004, 0x8
-	special CallFrontierUtilFunc
+BattleFrontier_BattleArenaLobby_EventScript_SaveAfterChallenge::
+	frontier_checkairshow
 	special LoadPlayerParty
 	special HealPlayerParty
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x0
-	special CallBattleArenaFunction
-	playse 0x37
+	arena_save 0
+	playse SE_SAVE
 	waitse
-	call 0x0821F921
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F352
-	message gJPText_0022FC36
+	call BattleFrontier_EventScript_GetCantRecordBattle
+	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattleArenaLobby_EventScript_EndSaveAfterChallenge
+	message BattleFrontier_BattleArenaLobby_Text_RecordLastMatch
 	waitmessage
-	multichoicedefault 0x14, 0x8, 0x5E, 0x1, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F352
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F34D
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F352
+	multichoicedefault 20, 8, MULTI_YESNO, 1, FALSE
+	switch VAR_RESULT
+	case 1, BattleFrontier_BattleArenaLobby_EventScript_EndSaveAfterChallenge
+	case 0, BattleFrontier_BattleArenaLobby_EventScript_RecordMatch
+	case MULTI_B_PRESSED, BattleFrontier_BattleArenaLobby_EventScript_EndSaveAfterChallenge
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F34D::
-	call 0x0821F8F5
-
-BattleFrontier_BattleArenaLobby_EventScript_0022F352::
+BattleFrontier_BattleArenaLobby_EventScript_RecordMatch::
+	call BattleFrontier_EventScript_SaveBattle
+BattleFrontier_BattleArenaLobby_EventScript_EndSaveAfterChallenge::
 	return
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F353::
+BattleFrontier_BattleArenaLobby_EventScript_ResumeChallenge::
 	lockall
-	message gJPText_0022FC01
+	message BattleFrontier_BattleArenaLobby_Text_LookingForwardToArrivalSaveGame
 	waitmessage
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x1
-	special CallBattleArenaFunction
-	playse 0x37
+	arena_save CHALLENGE_STATUS_SAVING
+	playse SE_SAVE
 	waitse
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x3
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x4000, 0xFF
-	goto BattleFrontier_BattleArenaLobby_EventScript_0022F4E7
+	frontier_set FRONTIER_DATA_PAUSED, FALSE
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	goto BattleFrontier_BattleArenaLobby_EventScript_EnterChallenge
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F387::
+BattleFrontier_BattleArenaLobby_EventScript_Attendant::
 	lock
 	faceplayer
-	setvar 0x40CF, 0x3
-	setvar 0x40CE, 0x0
+	setvar VAR_FRONTIER_FACILITY, FRONTIER_FACILITY_ARENA
+	setvar VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES
 	special SavePlayerParty
-	loadword 0x0, 0x0822F6F9
-	callstd 0x4
-
-BattleFrontier_BattleArenaLobby_EventScript_0022F39E::
-	message 0x0822F747
+	msgbox BattleFrontier_BattleArenaLobby_Text_WelcomeToBattleArena, MSGBOX_DEFAULT
+BattleFrontier_BattleArenaLobby_EventScript_AskTakeChallenge::
+	message BattleFrontier_BattleArenaLobby_Text_WishToTakeChallenge
 	waitmessage
-	multichoice 0x11, 0x6, 0x17, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F3DA
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F532
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F58E
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F58E
+	multichoice 17, 6, MULTI_CHALLENGEINFO, FALSE
+	switch VAR_RESULT
+	case 0, BattleFrontier_BattleArenaLobby_EventScript_TryEnterChallenge
+	case 1, BattleFrontier_BattleArenaLobby_EventScript_ExplainChallenge
+	case 2, BattleFrontier_BattleArenaLobby_EventScript_CancelChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattleArenaLobby_EventScript_CancelChallenge
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F3DA::
-	message 0x0822F904
+BattleFrontier_BattleArenaLobby_EventScript_TryEnterChallenge::
+	message BattleFrontier_BattleArenaLobby_Text_WhichLevelMode
 	waitmessage
-	multichoice 0x11, 0x6, 0x18, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F58E
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F58E
-	setvar 0x8004, 0xF
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x8004, 0x1
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F53F
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	copyvar 0x8006, 0x800D
-	special CallFrontierUtilFunc
-	loadword 0x0, 0x0822F933
-	callstd 0x4
-	fadescreen 0x1
-	call 0x082202F8
-	copyvar 0x8004, 0x800D
-	setvar 0x8005, 0x3
-	special sub_080F9D20
-	waitstate
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F58B
-	loadword 0x0, 0x0822F8DB
-	callstd 0x5
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F58B
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F47B
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F58B
+	multichoice 17, 6, MULTI_LEVEL_MODE, FALSE
+	switch VAR_RESULT
+	case FRONTIER_LVL_TENT, BattleFrontier_BattleArenaLobby_EventScript_CancelChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattleArenaLobby_EventScript_CancelChallenge
+	frontier_checkineligible
+	goto_if_eq VAR_0x8004, TRUE, BattleFrontier_BattleArenaLobby_EventScript_NotEnoughValidMons
+	frontier_set FRONTIER_DATA_LVL_MODE, VAR_RESULT
+	msgbox BattleFrontier_BattleArenaLobby_Text_SelectThreeMons, MSGBOX_DEFAULT
+	fadescreen FADE_TO_BLACK
+	call BattleFrontier_EventScript_GetLvlMode
+	copyvar VAR_0x8004, VAR_RESULT
+	setvar VAR_0x8005, FRONTIER_PARTY_SIZE
+	special ChoosePartyForBattleFrontier
+	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattleArenaLobby_EventScript_LoadPartyAndCancelChallenge
+	msgbox BattleFrontier_BattleArenaLobby_Text_OkayToSave, MSGBOX_YESNO
+	switch VAR_RESULT
+	case NO, BattleFrontier_BattleArenaLobby_EventScript_LoadPartyAndCancelChallenge
+	case YES, BattleFrontier_BattleArenaLobby_EventScript_SaveBeforeChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattleArenaLobby_EventScript_LoadPartyAndCancelChallenge
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F47B::
-	setvar 0x4000, 0x0
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x4
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x0
-	special CallBattleArenaFunction
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x2
-	setvar 0x8006, 0x1
-	special CallBattleArenaFunction
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x1
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x3
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
+BattleFrontier_BattleArenaLobby_EventScript_SaveBeforeChallenge::
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
+	frontier_set FRONTIER_DATA_SELECTED_MON_ORDER
+	arena_init
+	arena_set ARENA_DATA_WIN_STREAK_ACTIVE, TRUE
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING
+	frontier_set FRONTIER_DATA_PAUSED, FALSE
 	special LoadPlayerParty
 	closemessage
-	delay 0x2
-	call 0x082423E9
-	setvar 0x4000, 0xFF
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F574
-
-BattleFrontier_BattleArenaLobby_EventScript_0022F4E7::
+	delay 2
+	call Common_EventScript_SaveGame
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattleArenaLobby_EventScript_CancelChallengeSaveFailed
+BattleFrontier_BattleArenaLobby_EventScript_EnterChallenge::
 	special SavePlayerParty
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x3
-	special CallFrontierUtilFunc
-	loadword 0x0, gJPText_0022FAAA
-	callstd 0x4
+	frontier_setpartyorder FRONTIER_PARTY_SIZE
+	msgbox BattleFrontier_BattleArenaLobby_Text_GuideYouToArena, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F598
-	compare_var_to_value 0x800D, 0x1
-	call_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F5E3
-	warp 0x1A1D, 0xFF, 0x9, 0xD
-	setvar 0x4000, 0x0
+	frontier_get FRONTIER_DATA_LVL_MODE
+	call_if_eq VAR_RESULT, FRONTIER_LVL_50, BattleFrontier_BattleArenaLobby_EventScript_WalkToDoorLv50
+	call_if_eq VAR_RESULT, FRONTIER_LVL_OPEN, BattleFrontier_BattleArenaLobby_EventScript_WalkToDoorLvOpen
+	warp MAP_BATTLE_FRONTIER_BATTLE_ARENA_CORRIDOR, 9, 13
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
 	waitstate
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F532::
-	loadword 0x0, 0x0822F776
-	callstd 0x4
-	goto BattleFrontier_BattleArenaLobby_EventScript_0022F39E
+BattleFrontier_BattleArenaLobby_EventScript_ExplainChallenge::
+	msgbox BattleFrontier_BattleArenaLobby_Text_ExplainChallenge, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleArenaLobby_EventScript_AskTakeChallenge
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F53F::
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F55A
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F567
+BattleFrontier_BattleArenaLobby_EventScript_NotEnoughValidMons::
+	switch VAR_RESULT
+	case FRONTIER_LVL_50, BattleFrontier_BattleArenaLobby_EventScript_NotEnoughValidMonsLv50
+	case FRONTIER_LVL_OPEN, BattleFrontier_BattleArenaLobby_EventScript_NotEnoughValidMonsLvOpen
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F55A::
-	loadword 0x0, 0x0822F9F8
-	callstd 0x4
-	goto BattleFrontier_BattleArenaLobby_EventScript_0022F596
+BattleFrontier_BattleArenaLobby_EventScript_NotEnoughValidMonsLv50::
+	msgbox BattleFrontier_BattleArenaLobby_Text_NotEnoughValidMonsLv50, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleArenaLobby_EventScript_EndCancelChallenge
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F567::
-	loadword 0x0, 0x0822F951
-	callstd 0x4
-	goto BattleFrontier_BattleArenaLobby_EventScript_0022F596
+BattleFrontier_BattleArenaLobby_EventScript_NotEnoughValidMonsLvOpen::
+	msgbox BattleFrontier_BattleArenaLobby_Text_NotEnoughValidMonsLvOpen, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleArenaLobby_EventScript_EndCancelChallenge
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F574::
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	goto BattleFrontier_BattleArenaLobby_EventScript_0022F58E
+BattleFrontier_BattleArenaLobby_EventScript_CancelChallengeSaveFailed::
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	goto BattleFrontier_BattleArenaLobby_EventScript_CancelChallenge
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F58B::
+BattleFrontier_BattleArenaLobby_EventScript_LoadPartyAndCancelChallenge::
 	special LoadPlayerParty
-
-BattleFrontier_BattleArenaLobby_EventScript_0022F58E::
-	loadword 0x0, 0x0822F75E
-	callstd 0x4
-
-BattleFrontier_BattleArenaLobby_EventScript_0022F596::
+BattleFrontier_BattleArenaLobby_EventScript_CancelChallenge::
+	msgbox BattleFrontier_BattleArenaLobby_Text_AwaitAnotherChallenge, MSGBOX_DEFAULT
+BattleFrontier_BattleArenaLobby_EventScript_EndCancelChallenge::
 	release
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F598::
-	applymovement 0x1, 0x0822F5C7
-	applymovement 0xFF, 0x0822F5D4
-	waitmovement 0x0
-	opendoor 0x2, 0x2
-	waitmoncry
-	applymovement 0x1, 0x0822F5D1
-	applymovement 0xFF, 0x0822F5DF
-	waitmovement 0x0
-	closedoor 0x2, 0x2
-	waitmoncry
+BattleFrontier_BattleArenaLobby_EventScript_WalkToDoorLv50::
+	applymovement LOCALID_ARENA_ATTENDANT, BattleFrontier_BattleArenaLobby_Movement_AttendantWalkToLeftDoor
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleArenaLobby_Movement_PlayerWalkToLeftDoor
+	waitmovement 0
+	opendoor 2, 2
+	waitdooranim_jp
+	applymovement LOCALID_ARENA_ATTENDANT, BattleFrontier_BattleArenaLobby_Movement_AttendantEnterDoor
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleArenaLobby_Movement_PlayerEnterDoor
+	waitmovement 0
+	closedoor 2, 2
+	waitdooranim_jp
 	return
 
-	.incbin "baserom_jp.gba", 0x22f5c7, 0x1c
-BattleFrontier_BattleArenaLobby_EventScript_0022F5E3::
-	applymovement 0x1, 0x0822F612
-	applymovement 0xFF, 0x0822F61B
-	waitmovement 0x0
-	opendoor 0xB, 0x2
-	waitmoncry
-	applymovement 0x1, 0x0822F5D1
-	applymovement 0xFF, 0x0822F5DF
-	waitmovement 0x0
-	closedoor 0xB, 0x2
-	waitmoncry
+BattleFrontier_BattleArenaLobby_Movement_AttendantWalkToLeftDoor:
+	walk_up
+	walk_up
+	walk_up
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	step_end
+
+BattleFrontier_BattleArenaLobby_Movement_AttendantEnterDoor:
+	walk_up
+	set_invisible
+	step_end
+
+BattleFrontier_BattleArenaLobby_Movement_PlayerWalkToLeftDoor:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_in_place_faster_up
+	step_end
+
+BattleFrontier_BattleArenaLobby_Movement_PlayerEnterDoor:
+	walk_up
+	walk_up
+	set_invisible
+	step_end
+
+BattleFrontier_BattleArenaLobby_EventScript_WalkToDoorLvOpen::
+	applymovement LOCALID_ARENA_ATTENDANT, BattleFrontier_BattleArenaLobby_Movement_AttendantWalkToRightDoor
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleArenaLobby_Movement_PlayerWalkToRightDoor
+	waitmovement 0
+	opendoor 11, 2
+	waitdooranim_jp
+	applymovement LOCALID_ARENA_ATTENDANT, BattleFrontier_BattleArenaLobby_Movement_AttendantEnterDoor
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleArenaLobby_Movement_PlayerEnterDoor
+	waitmovement 0
+	closedoor 11, 2
+	waitdooranim_jp
 	return
 
-	.incbin "baserom_jp.gba", 0x22f612, 0x13
-BattleFrontier_BattleArenaLobby_EventScript_0022F625::
+BattleFrontier_BattleArenaLobby_Movement_AttendantWalkToRightDoor:
+	walk_up
+	walk_up
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_up
+	step_end
+
+BattleFrontier_BattleArenaLobby_Movement_PlayerWalkToRightDoor:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_in_place_faster_up
+	step_end
+
+BattleFrontier_BattleArenaLobby_EventScript_ShowResults::
 	lockall
-	setvar 0x8004, 0x7
-	setvar 0x8005, 0x3
-	special CallFrontierUtilFunc
+	frontier_results FRONTIER_FACILITY_ARENA
 	waitbuttonpress
 	special RemoveRecordsWindow
 	releaseall
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F639::
-	loadword 0x0, 0x0822FC66
-	callstd 0x2
+BattleFrontier_BattleArenaLobby_EventScript_Youngster::
+	msgbox BattleFrontier_BattleArenaLobby_Text_BadIdeaToNotAttack, MSGBOX_NPC
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F642::
-	loadword 0x0, 0x0822FC95
-	callstd 0x2
+BattleFrontier_BattleArenaLobby_EventScript_Man::
+	msgbox BattleFrontier_BattleArenaLobby_Text_LandingHitsWorked, MSGBOX_NPC
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F64B::
-	loadword 0x0, 0x0822FCC3
-	callstd 0x2
+BattleFrontier_BattleArenaLobby_EventScript_Camper::
+	msgbox BattleFrontier_BattleArenaLobby_Text_MatchWasDeclaredDraw, MSGBOX_NPC
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F654::
-	loadword 0x0, 0x0822FD06
-	callstd 0x2
+BattleFrontier_BattleArenaLobby_EventScript_Woman::
+	msgbox BattleFrontier_BattleArenaLobby_Text_OrderOfMonsImportant, MSGBOX_NPC
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F65D::
+BattleFrontier_BattleArenaLobby_EventScript_RulesBoard::
 	lockall
-	loadword 0x0, 0x0822FD87
-	callstd 0x4
-	goto BattleFrontier_BattleArenaLobby_EventScript_0022F66C
+	msgbox BattleFrontier_BattleArenaLobby_Text_RulesAreListed, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleArenaLobby_EventScript_ReadRulesBoard
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F66C::
-	message 0x0822FDA0
+BattleFrontier_BattleArenaLobby_EventScript_ReadRulesBoard::
+	message BattleFrontier_BattleArenaLobby_Text_ReadWhichHeading
 	waitmessage
-	multichoice 0x11, 0x2, 0x60, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F6BF
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F6CD
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F6DB
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F6E9
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F6F7
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleArenaLobby_EventScript_0022F6F7
+	multichoice 17, 2, MULTI_BATTLE_ARENA_RULES, FALSE
+	switch VAR_RESULT
+	case 0, BattleFrontier_BattleArenaLobby_EventScript_BattleRules
+	case 1, BattleFrontier_BattleArenaLobby_EventScript_MindRules
+	case 2, BattleFrontier_BattleArenaLobby_EventScript_SkillRules
+	case 3, BattleFrontier_BattleArenaLobby_EventScript_BodyRules
+	case 4, BattleFrontier_BattleArenaLobby_EventScript_ExitRules
+	case MULTI_B_PRESSED, BattleFrontier_BattleArenaLobby_EventScript_ExitRules
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F6BF::
-	loadword 0x0, 0x0822FDB0
-	callstd 0x4
-	goto BattleFrontier_BattleArenaLobby_EventScript_0022F66C
+BattleFrontier_BattleArenaLobby_EventScript_BattleRules::
+	msgbox BattleFrontier_BattleArenaLobby_Text_ExplainBattleRules, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleArenaLobby_EventScript_ReadRulesBoard
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F6CD::
-	loadword 0x0, 0x0822FE72
-	callstd 0x4
-	goto BattleFrontier_BattleArenaLobby_EventScript_0022F66C
+BattleFrontier_BattleArenaLobby_EventScript_MindRules::
+	msgbox BattleFrontier_BattleArenaLobby_Text_ExplainMindRules, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleArenaLobby_EventScript_ReadRulesBoard
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F6DB::
-	loadword 0x0, 0x0822FECB
-	callstd 0x4
-	goto BattleFrontier_BattleArenaLobby_EventScript_0022F66C
+BattleFrontier_BattleArenaLobby_EventScript_SkillRules::
+	msgbox BattleFrontier_BattleArenaLobby_Text_ExplainSkillRules, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleArenaLobby_EventScript_ReadRulesBoard
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F6E9::
-	loadword 0x0, 0x0822FFB6
-	callstd 0x4
-	goto BattleFrontier_BattleArenaLobby_EventScript_0022F66C
+BattleFrontier_BattleArenaLobby_EventScript_BodyRules::
+	msgbox BattleFrontier_BattleArenaLobby_Text_ExplainBodyRules, MSGBOX_DEFAULT
+	goto BattleFrontier_BattleArenaLobby_EventScript_ReadRulesBoard
 	end
 
-BattleFrontier_BattleArenaLobby_EventScript_0022F6F7::
+BattleFrontier_BattleArenaLobby_EventScript_ExitRules::
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x22f6f9, 0x3b1
-	.globl gJPText_0022FAAA
-gJPText_0022FAAA: @ 0x0822FAAA
+BattleFrontier_BattleArenaLobby_Text_WelcomeToBattleArena:
+	.string "トレーナーの　とうしを　ためす　ばしょ！！\p"
+	.string "バトルアリーナへ\n"
+	.string "ようこそ　おいでなされた！\p"
+	.string "こちらでは　かちぬきチームバトルの\n"
+	.string "あんないを　しておりますぞ！$"
+
+BattleFrontier_BattleArenaLobby_Text_WishToTakeChallenge:
+	.string "バトルアリーナに\n"
+	.string "ちょうせん　されますかな？$"
+
+BattleFrontier_BattleArenaLobby_Text_AwaitAnotherChallenge:
+	.string "またの　ちょうせんを\n"
+	.string "おまちして　おりますぞ！$"
+
+BattleFrontier_BattleArenaLobby_Text_ExplainChallenge:
+	.string "バトルアリーナは　かちぬきチームバトルを\n"
+	.string "おこなう　しせつですぞ！\p"
+	.string "さんかする　かたには　しゅつじょう　させる\n"
+	.string "3ひきの　ポケモンと　たたかいに　だす\l"
+	.string "じゅんばんを　きめて　いただきますぞ！\p"
+	.string "たたかいの　あいだは\n"
+	.string "この　じゅんばん　どおりに\l"
+	.string "ポケモンを　だすことに　なりますな！\p"
+	.string "たたかいに　いちど　だした　ポケモンは\n"
+	.string "けっちゃくが　つくまで\l"
+	.string "こうたい　させる　ことが　できませぬ！\p"
+	.string "さらに　3ターン　いないに\n"
+	.string "たたかいの　けっちゃくが　つかなければ\l"
+	.string "はんていと　なりますぞ！\p"
+	.string "また　とちゅうで　ちょうせんを\n"
+	.string "ちゅうだんしたい　ばあいは\l"
+	.string "レポートを　かかないと\l"
+	.string "つづけて　ちょうせんが　できないので\l"
+	.string "おきをつけ　くだされ！\p"
+	.string "みごと　7にんぬきを　なされた　あかつきには\n"
+	.string "バトルポイントを　おおくり　いたしますぞ！$"
+
+BattleFrontier_BattleArenaLobby_Text_OkayToSave:
+	.string "バトルアリーナへ　おつれする　まえに\n"
+	.string "レポートを　かきますが　よろしいですかな？$"
+
+BattleFrontier_BattleArenaLobby_Text_WhichLevelMode:
+	.string "バトルアリーナには\n"
+	.string "レベル50と　オープンレベルと　ありますが\l"
+	.string "どちらに　まいられますかな？$"
+
+BattleFrontier_BattleArenaLobby_Text_SelectThreeMons:
+	.string "では　さんかする　ポケモンを\n"
+	.string "3ひき　おえらび　くだされ！$"
+
+BattleFrontier_BattleArenaLobby_Text_NotEnoughValidMonsLvOpen:
+	.string "おきゃくじん！！\p"
+	.string "さんかできる　ポケモンが\n"
+	.string "3ひき　おりませぬ！\p"
+	.string "さんかする　ためには\n"
+	.string "すべて　ちがう　しゅるいの　ポケモンを\l"
+	.string "3ひき　よういして　くだされ！\p"
+	.string "また　もたせる　どうぐも\n"
+	.string "すべて　ちがう　どうぐに　してくだされ！\p"
+	.string "なお　タマゴ{STR_VAR_1}さんか　させる　ことは　できませぬ！\p"
+	.string "じゅんびが　できましたら\n"
+	.string "また　おこし　くだされ！$"
+
+BattleFrontier_BattleArenaLobby_Text_NotEnoughValidMonsLv50:
+	.string "おきゃくじん！！\p"
+	.string "さんかできる　ポケモンが\n"
+	.string "3ひき　おりませぬ！\p"
+	.string "さんかする　ためには　レベルが　50いかで\n"
+	.string "すべて　ちがう　しゅるいの　ポケモンを\l"
+	.string "3ひき　よういして　くだされ！\p"
+	.string "また　もたせる　どうぐも\n"
+	.string "すべて　ちがう　どうぐに　してくだされ！\p"
+	.string "なお　タマゴ{STR_VAR_1}さんか　させる　ことは　できませぬ！\p"
+	.string "じゅんびが　できましたら\n"
+	.string "また　おこし　くだされ！$"
+
+BattleFrontier_BattleArenaLobby_Text_GuideYouToArena:
 	.string "では　バトルアリーナへ\n"
 	.string "おつれいたしますぞ！$"
 
-	.globl gJPText_0022FAC1
-gJPText_0022FAC1: @ 0x0822FAC1
+BattleFrontier_BattleArenaLobby_Text_DidntSaveBeforeShuttingDown:
 	.string "おきゃくじん！\p"
 	.string "ぜんかい　レポートを　かいて\n"
 	.string "しゅうりょう　しませんでしたな？\p"
@@ -416,48 +439,133 @@ gJPText_0022FAC1: @ 0x0822FAC1
 	.string "また　はじめから\n"
 	.string "ちょうせん　してくだされ！！$"
 
-	.globl gJPText_0022FB23
-gJPText_0022FB23: @ 0x0822FB23
+BattleFrontier_BattleArenaLobby_Text_CongratsOnSevenWins:
 	.string "7にんぬき　たっせい\n"
 	.string "おみごとで　ございました！$"
 
-	.globl gJPText_0022FB3C
-gJPText_0022FB3C: @ 0x0822FB3C
+BattleFrontier_BattleArenaLobby_Text_RecordAchievement:
 	.string "せいせきを　レポートに　かきますので\n"
 	.string "おまちくだされ！$"
 
-	.incbin "baserom_jp.gba", 0x22fb58, 0x6a
-	.globl gJPText_0022FBC2
-gJPText_0022FBC2: @ 0x0822FBC2
+@ Unused
+BattleFrontier_BattleArenaLobby_Text_PresentYouWithPrize:
+	.string "7にんぬきを　たっせい　されましたので\n"
+	.string "この　しょうひんを　おうけとり　くだされ！$"
+
+@ Unused
+BattleFrontier_BattleArenaLobby_Text_ReceivedPrize:
+	.string "{PLAYER}は\n"
+	.string "{STR_VAR_1}を　もらった！$"
+
+@ Unused
+BattleFrontier_BattleArenaLobby_Text_BagFullReturnForPrize:
+	.string "⋯⋯おおっ！\n"
+	.string "どうぐが　いっぱいの　ようですな！\p"
+	.string "どうぐを　せいりしてから\n"
+	.string "また　おこしくだされ！$"
+
+BattleFrontier_BattleArenaLobby_Text_ThankYouWaitWhileSave:
 	.string "おつかれさまでした！\p"
 	.string "せいせきを　レポートに　かきますので\n"
 	.string "おまちくだされ！$"
 
-	.globl gJPText_0022FBE9
-gJPText_0022FBE9: @ 0x0822FBE9
+BattleFrontier_BattleArenaLobby_Text_AwaitAnotherChallenge2:
 	.string "またの　ちょうせんを\n"
 	.string "おまちして　おりますぞ！$"
 
-	.globl gJPText_0022FC01
-gJPText_0022FC01: @ 0x0822FC01
+BattleFrontier_BattleArenaLobby_Text_LookingForwardToArrivalSaveGame:
 	.string "おまちしておりました！\p"
 	.string "バトルアリーナに　おつれする　まえに\n"
 	.string "レポートを　かきますので　おまちくだされ！$"
 
-	.globl gJPText_0022FC36
-gJPText_0022FC36: @ 0x0822FC36
+BattleFrontier_BattleArenaLobby_Text_RecordLastMatch:
 	.string "バトルアリーナで\n"
 	.string "さいごに　おこなった　たたかいを\l"
 	.string "フロンティアパスに　きろく　されますかな？$"
 
-	.incbin "baserom_jp.gba", 0x22fc66, 0x3bd
-	.globl gJPText_00230023
-gJPText_00230023: @ 0x08230023
+BattleFrontier_BattleArenaLobby_Text_BadIdeaToNotAttack:
+	.string "はんていで　まけちゃった⋯⋯\p"
+	.string "まもる　ばっかりで\n"
+	.string "せめなかったのが　よくなかった　みたい⋯⋯$"
+
+BattleFrontier_BattleArenaLobby_Text_LandingHitsWorked:
+	.string "はんていで　かったぜ！\p"
+	.string "あいての　ポケモンに\n"
+	.string "わざを　かくじつに　あてたのが　よかったぜ！$"
+
+BattleFrontier_BattleArenaLobby_Text_MatchWasDeclaredDraw:
+	.string "はんていで　ひきわけ　だったよ\p"
+	.string "じかんぎれに　なったときに\n"
+	.string "あいて　ポケモンと　のこりの　HPが\l"
+	.string "おなじ　くらい　だったからねぇ⋯⋯$"
+
+BattleFrontier_BattleArenaLobby_Text_OrderOfMonsImportant:
+	.string "バトルアリーナでは　ポケモンの　じゅんばんが\n"
+	.string "とっても　だいじ　なのよ！\p"
+	.string "たとえば　1ばんめの　ポケモンの\n"
+	.string "じゃくてん　となる　タイプに　たいして\p"
+	.string "こうかばつぐんの　わざを　もっている\n"
+	.string "ポケモンを　2ばんめに　いれておけば\l"
+	.string "いいチームに　なると　おもうわ！$"
+
+BattleFrontier_BattleArenaLobby_Text_RulesAreListed:
+	.string "かちぬきチームバトルの\n"
+	.string "ルールが　かかれている！$"
+
+BattleFrontier_BattleArenaLobby_Text_ReadWhichHeading:
+	.string "どの　せつめいを　よみますか？$"
+
+BattleFrontier_BattleArenaLobby_Text_ExplainBattleRules:
+	.string "かちぬきチームバトルは　ふつうの　たたかいと\n"
+	.string "ちがい　とくべつな　ルールが　あります\p"
+	.string "まず　1かいの　たたかいは\n"
+	.string "3ターンで　しゅうりょうと　なります\p"
+	.string "3ターンで　しょうぶが　つかないときは\n"
+	.string "しんぱんに　よる　はんていに　なります\p"
+	.string "はんていは　ポケモンの　たたかいかたを\n"
+	.string "みて　しょうはいを　けってい　します\p"
+	.string "また　しょうぶの　けっちゃくが　つくまで\n"
+	.string "ポケモンの　こうたいは　できません$"
+
+BattleFrontier_BattleArenaLobby_Text_ExplainMindRules:
+	.string "1つめの　はんてい　ポイントである\n"
+	.string "‘こころ’は\l"
+	.string "せめる　きもちを　みられます\p"
+	.string "どれだけ　トレーナーが　こうげきする　わざを\n"
+	.string "めいれい　したかに　よって\l"
+	.string "ひょうかが　かわります$"
+
+BattleFrontier_BattleArenaLobby_Text_ExplainSkillRules:
+	.string "2つめの　はんてい　ポイントである\n"
+	.string "‘わざ’は　ポケモンの　わざが\l"
+	.string "うまく　できたかを　みられます\p"
+	.string "わざが　せいこう　すると\n"
+	.string "ひょうかは　あがります\p"
+	.string "わざが　しっぱい　すると\n"
+	.string "ひょうかは　さがります\p"
+	.string "さらに　あいてに　わざを　あてたときは\n"
+	.string "‘こうかはばつぐん’で　あがり\l"
+	.string "‘こうかはいまひとつ’などで　さがります\p"
+	.string "また　‘まもる’や　‘みきり’は\n"
+	.string "だしても　ひょうかは　あがりません\p"
+	.string "あいての　‘まもる’や　‘みきり’で\n"
+	.string "わざを　だせなくても\l"
+	.string "ひょうかは　さがりません$"
+
+BattleFrontier_BattleArenaLobby_Text_ExplainBodyRules:
+	.string "3つめの　はんてい　ポイントである\n"
+	.string "‘からだ’は　たいせん　したあとの\l"
+	.string "ポケモンの　HPを　みられます\p"
+	.string "たいせんが　はじまる　まえの\n"
+	.string "HPと　くらべて\l"
+	.string "たいせんごの　HPが　どれだけ　あるかで\l"
+	.string "ひょうかが　かわります$"
+
+BattleFrontier_BattleArenaLobby_Text_CongratsOnDefeatingTycoon:
 	.string "アリーナキャプテンからの　きんぼし！\n"
 	.string "ならびに　7にんぬき　たっせい！\l"
 	.string "まこと　みごとで　ございました！$"
 
-	.globl gJPText_00230058
-gJPText_00230058: @ 0x08230058
+BattleFrontier_BattleArenaLobby_Text_PleaseAcceptBattlePoints:
 	.string "おきゃくじんの　ふくつの　とうしを　たたえ\n"
 	.string "バトルポイントを　さしあげましょう！$"

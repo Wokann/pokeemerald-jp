@@ -261,11 +261,7 @@ gSpecials::
 	def_special CallVerdanturfTentFunction
 	def_special CallFallarborTentFunction
 	def_special CallSlateportTentFunction
-	def_special sub_080F9D20
-	@ Preserve the JP C symbol for existing scripts, while new scripts use the
-	@ pokeemerald semantic name and receive its implicit waitstate.
-	.set SPECIAL_ChoosePartyForBattleFrontier, SPECIAL_sub_080F9D20
-	.set SPECIAL_WAITSTATE_ChoosePartyForBattleFrontier, 1
+	def_special ChoosePartyForBattleFrontier, waitstate=1
 	def_special ValidateEReaderTrainer
 	def_special GetBestBattleTowerStreak
 	def_special ReducePlayerPartyToSelectedMons

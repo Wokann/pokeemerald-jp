@@ -753,7 +753,7 @@ __attribute__((naked)) void CB2_ReturnFromChooseHalfParty(void)
     );
 }
 
-__attribute__((naked)) void sub_080F9D20(void)
+__attribute__((naked)) void ChoosePartyForBattleFrontier(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
