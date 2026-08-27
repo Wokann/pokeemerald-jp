@@ -40,3 +40,9 @@
 	setvar VAR_0x8005, \challengeStatus
 	special sub_08161E88
 	.endm
+
+	@ Load the opponent data for a Link Multi Battle. VAR_RESULT is 6 when complete.
+	.macro tower_loadlinkopponents
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_LOAD_LINK_OPPONENTS
+	special sub_08161E88
+	.endm
