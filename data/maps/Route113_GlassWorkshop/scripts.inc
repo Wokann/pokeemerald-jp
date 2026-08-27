@@ -1,352 +1,377 @@
-@ Route113_GlassWorkshop scripts (JP map g30 m0 @ 0x082407B7)
-
 Route113_GlassWorkshop_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, Route113_GlassWorkshop_EventScript_002407BD
+	map_script MAP_SCRIPT_ON_TRANSITION, Route113_GlassWorkshop_OnTransition
 	.byte 0
 
-Route113_GlassWorkshop_EventScript_002407BD::
-	setflag 0x8A4
-	compare_var_to_value 0x40BE, 0x1
-	call_if 0x1, Route113_GlassWorkshop_EventScript_002407CC
+	.set BLUE_FLUTE_PRICE,   250
+	.set YELLOW_FLUTE_PRICE, 500
+	.set RED_FLUTE_PRICE,    500
+	.set WHITE_FLUTE_PRICE,  1000
+	.set BLACK_FLUTE_PRICE,  1000
+	.set PRETTY_CHAIR_PRICE, 6000
+	.set PRETTY_DESK_PRICE,  8000
+	.set LOWEST_ASH_PRICE,   BLUE_FLUTE_PRICE
+
+Route113_GlassWorkshop_OnTransition:
+	setflag FLAG_LANDMARK_GLASS_WORKSHOP
+	call_if_eq VAR_GLASS_WORKSHOP_STATE, 1, Route113_GlassWorkshop_EventScript_ReenterWorkshopAfterSootSack
 	end
 
-Route113_GlassWorkshop_EventScript_002407CC::
-	setvar 0x40BE, 0x2
+Route113_GlassWorkshop_EventScript_ReenterWorkshopAfterSootSack::
+	setvar VAR_GLASS_WORKSHOP_STATE, 2
 	return
 
-Route113_GlassWorkshop_EventScript_002407D2::
+Route113_GlassWorkshop_EventScript_GlassWorker::
 	lock
 	faceplayer
-	compare_var_to_value 0x40BE, 0xA
-	goto_if 0x4, Route113_GlassWorkshop_EventScript_00240B44
-	compare_var_to_value 0x40BE, 0x2
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240822
-	compare_var_to_value 0x40BE, 0x1
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240818
-	loadword 0x0, 0x08240C51
-	callstd 0x4
-	setorcopyvar 0x8000, 0x10E
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	setvar 0x40BE, 0x1
-	loadword 0x0, 0x08240CB6
-	callstd 0x4
+	goto_if_ge VAR_GLASS_WORKSHOP_STATE, 10, Route113_GlassWorkshop_EventScript_GiveItemAfterNoRoom
+	goto_if_eq VAR_GLASS_WORKSHOP_STATE, 2, Route113_GlassWorkshop_EventScript_CheckCollectedAsh
+	goto_if_eq VAR_GLASS_WORKSHOP_STATE, 1, Route113_GlassWorkshop_EventScript_ExplainSootSack
+	msgbox Route113_GlassWorkshop_Text_GoCollectAshWithThis, MSGBOX_DEFAULT
+	giveitem ITEM_SOOT_SACK
+	setvar VAR_GLASS_WORKSHOP_STATE, 1
+	msgbox Route113_GlassWorkshop_Text_ExplainSootSack, MSGBOX_DEFAULT
 	release
 	end
 
-Route113_GlassWorkshop_EventScript_00240818::
-	loadword 0x0, 0x08240CB6
-	callstd 0x4
+Route113_GlassWorkshop_EventScript_ExplainSootSack::
+	msgbox Route113_GlassWorkshop_Text_ExplainSootSack, MSGBOX_DEFAULT
 	release
 	end
 
-Route113_GlassWorkshop_EventScript_00240822::
-	checkitem 0x10E, 0x1
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240851
-	loadword 0x0, 0x08240D28
-	callstd 0x4
-	compare_var_to_value 0x4048, 0xFA
-	goto_if 0x0, Route113_GlassWorkshop_EventScript_00240A8A
-	message 0x08240D99
+Route113_GlassWorkshop_EventScript_CheckCollectedAsh::
+	checkitem ITEM_SOOT_SACK
+	goto_if_eq VAR_RESULT, FALSE, Route113_GlassWorkshop_EventScript_SootSackNotInBag
+	msgbox Route113_GlassWorkshop_Text_LetsSeeCollectedAshes, MSGBOX_DEFAULT
+	goto_if_lt VAR_ASH_GATHER_COUNT, LOWEST_ASH_PRICE, Route113_GlassWorkshop_EventScript_NotEnoughAsh
+	message Route113_GlassWorkshop_Text_WhichGlassItemWoudYouLike
 	waitmessage
-	goto Route113_GlassWorkshop_EventScript_0024085B
+	goto Route113_GlassWorkshop_EventScript_ChooseGlassItem
 	end
 
-Route113_GlassWorkshop_EventScript_00240851::
-	loadword 0x0, 0x08240F39
-	callstd 0x4
+Route113_GlassWorkshop_EventScript_SootSackNotInBag::
+	msgbox Route113_GlassWorkshop_Text_HaventGotYourSootSack, MSGBOX_DEFAULT
 	release
 	end
 
-Route113_GlassWorkshop_EventScript_0024085B::
-	setvar 0x8009, 0x0
-	setvar 0x8004, 0x1
+Route113_GlassWorkshop_EventScript_ChooseGlassItem::
+	setvar VAR_0x8009, 0
+	setvar VAR_0x8004, SCROLL_MULTI_GLASS_WORKSHOP_VENDOR
 	special ShowScrollableMultichoice
-	waitstate
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_002408D2
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_0024090E
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_0024094A
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240986
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_002409C2
-	compare_var_to_value 0x8000, 0x5
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_002409FE
-	compare_var_to_value 0x8000, 0x6
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240A3F
-	compare_var_to_value 0x8000, 0x7
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240A80
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240A80
+	switch VAR_RESULT
+	case 0, Route113_GlassWorkshop_EventScript_BlueFlute
+	case 1, Route113_GlassWorkshop_EventScript_YellowFlute
+	case 2, Route113_GlassWorkshop_EventScript_RedFlute
+	case 3, Route113_GlassWorkshop_EventScript_WhiteFlute
+	case 4, Route113_GlassWorkshop_EventScript_BlackFlute
+	case 5, Route113_GlassWorkshop_EventScript_PrettyChair
+	case 6, Route113_GlassWorkshop_EventScript_PrettyDesk
+	case 7, Route113_GlassWorkshop_EventScript_CancelGlassItemSelect
+	case MULTI_B_PRESSED, Route113_GlassWorkshop_EventScript_CancelGlassItemSelect
 	end
 
-Route113_GlassWorkshop_EventScript_002408D2::
-	setvar 0x8008, 0x27
-	bufferitemname 0x0, 0x8008
-	setvar 0x800A, 0xFA
-	compare_var_to_value 0x4048, 0xFA
-	goto_if 0x0, Route113_GlassWorkshop_EventScript_00240AA2
-	loadword 0x0, 0x08240DD2
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240AB7
-	setvar 0x40BE, 0xA
-	subvar 0x4048, 0xFA
-	goto Route113_GlassWorkshop_EventScript_00240AC3
+Route113_GlassWorkshop_EventScript_BlueFlute::
+	setvar VAR_0x8008, ITEM_BLUE_FLUTE
+	bufferitemname STR_VAR_1, VAR_0x8008
+	setvar VAR_0x800A, BLUE_FLUTE_PRICE
+	goto_if_lt VAR_ASH_GATHER_COUNT, BLUE_FLUTE_PRICE, Route113_GlassWorkshop_EventScript_NotEnoughAshForItem
+	msgbox Route113_GlassWorkshop_Text_IsThatTheItemForYou, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route113_GlassWorkshop_EventScript_ChooseDifferentItem
+	setvar VAR_GLASS_WORKSHOP_STATE, 10
+	subvar VAR_ASH_GATHER_COUNT, BLUE_FLUTE_PRICE
+	goto Route113_GlassWorkshop_EventScript_MakeGlassItem
 	end
 
-Route113_GlassWorkshop_EventScript_0024090E::
-	setvar 0x8008, 0x28
-	bufferitemname 0x0, 0x8008
-	setvar 0x800A, 0x1F4
-	compare_var_to_value 0x4048, 0x1F4
-	goto_if 0x0, Route113_GlassWorkshop_EventScript_00240AA2
-	loadword 0x0, 0x08240DD2
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240AB7
-	setvar 0x40BE, 0xB
-	subvar 0x4048, 0x1F4
-	goto Route113_GlassWorkshop_EventScript_00240AC3
+Route113_GlassWorkshop_EventScript_YellowFlute::
+	setvar VAR_0x8008, ITEM_YELLOW_FLUTE
+	bufferitemname STR_VAR_1, VAR_0x8008
+	setvar VAR_0x800A, YELLOW_FLUTE_PRICE
+	goto_if_lt VAR_ASH_GATHER_COUNT, YELLOW_FLUTE_PRICE, Route113_GlassWorkshop_EventScript_NotEnoughAshForItem
+	msgbox Route113_GlassWorkshop_Text_IsThatTheItemForYou, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route113_GlassWorkshop_EventScript_ChooseDifferentItem
+	setvar VAR_GLASS_WORKSHOP_STATE, 11
+	subvar VAR_ASH_GATHER_COUNT, YELLOW_FLUTE_PRICE
+	goto Route113_GlassWorkshop_EventScript_MakeGlassItem
 	end
 
-Route113_GlassWorkshop_EventScript_0024094A::
-	setvar 0x8008, 0x29
-	bufferitemname 0x0, 0x8008
-	setvar 0x800A, 0x1F4
-	compare_var_to_value 0x4048, 0x1F4
-	goto_if 0x0, Route113_GlassWorkshop_EventScript_00240AA2
-	loadword 0x0, 0x08240DD2
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240AB7
-	setvar 0x40BE, 0xC
-	subvar 0x4048, 0x1F4
-	goto Route113_GlassWorkshop_EventScript_00240AC3
+Route113_GlassWorkshop_EventScript_RedFlute::
+	setvar VAR_0x8008, ITEM_RED_FLUTE
+	bufferitemname STR_VAR_1, VAR_0x8008
+	setvar VAR_0x800A, RED_FLUTE_PRICE
+	goto_if_lt VAR_ASH_GATHER_COUNT, RED_FLUTE_PRICE, Route113_GlassWorkshop_EventScript_NotEnoughAshForItem
+	msgbox Route113_GlassWorkshop_Text_IsThatTheItemForYou, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route113_GlassWorkshop_EventScript_ChooseDifferentItem
+	setvar VAR_GLASS_WORKSHOP_STATE, 12
+	subvar VAR_ASH_GATHER_COUNT, RED_FLUTE_PRICE
+	goto Route113_GlassWorkshop_EventScript_MakeGlassItem
 	end
 
-Route113_GlassWorkshop_EventScript_00240986::
-	setvar 0x8008, 0x2B
-	bufferitemname 0x0, 0x8008
-	setvar 0x800A, 0x3E8
-	compare_var_to_value 0x4048, 0x3E8
-	goto_if 0x0, Route113_GlassWorkshop_EventScript_00240AA2
-	loadword 0x0, 0x08240DD2
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240AB7
-	setvar 0x40BE, 0xD
-	subvar 0x4048, 0x3E8
-	goto Route113_GlassWorkshop_EventScript_00240AC3
+Route113_GlassWorkshop_EventScript_WhiteFlute::
+	setvar VAR_0x8008, ITEM_WHITE_FLUTE
+	bufferitemname STR_VAR_1, VAR_0x8008
+	setvar VAR_0x800A, WHITE_FLUTE_PRICE
+	goto_if_lt VAR_ASH_GATHER_COUNT, WHITE_FLUTE_PRICE, Route113_GlassWorkshop_EventScript_NotEnoughAshForItem
+	msgbox Route113_GlassWorkshop_Text_IsThatTheItemForYou, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route113_GlassWorkshop_EventScript_ChooseDifferentItem
+	setvar VAR_GLASS_WORKSHOP_STATE, 13
+	subvar VAR_ASH_GATHER_COUNT, WHITE_FLUTE_PRICE
+	goto Route113_GlassWorkshop_EventScript_MakeGlassItem
 	end
 
-Route113_GlassWorkshop_EventScript_002409C2::
-	setvar 0x8008, 0x2A
-	bufferitemname 0x0, 0x8008
-	setvar 0x800A, 0x3E8
-	compare_var_to_value 0x4048, 0x3E8
-	goto_if 0x0, Route113_GlassWorkshop_EventScript_00240AA2
-	loadword 0x0, 0x08240DD2
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240AB7
-	setvar 0x40BE, 0xE
-	subvar 0x4048, 0x3E8
-	goto Route113_GlassWorkshop_EventScript_00240AC3
+Route113_GlassWorkshop_EventScript_BlackFlute::
+	setvar VAR_0x8008, ITEM_BLACK_FLUTE
+	bufferitemname STR_VAR_1, VAR_0x8008
+	setvar VAR_0x800A, BLACK_FLUTE_PRICE
+	goto_if_lt VAR_ASH_GATHER_COUNT, BLACK_FLUTE_PRICE, Route113_GlassWorkshop_EventScript_NotEnoughAshForItem
+	msgbox Route113_GlassWorkshop_Text_IsThatTheItemForYou, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route113_GlassWorkshop_EventScript_ChooseDifferentItem
+	setvar VAR_GLASS_WORKSHOP_STATE, 14
+	subvar VAR_ASH_GATHER_COUNT, BLACK_FLUTE_PRICE
+	goto Route113_GlassWorkshop_EventScript_MakeGlassItem
 	end
 
-Route113_GlassWorkshop_EventScript_002409FE::
-	setvar 0x8009, 0x1
-	setvar 0x8008, 0xD
-	bufferdecorationname 0x0, 0x8008
-	setvar 0x800A, 0x1770
-	compare_var_to_value 0x4048, 0x1770
-	goto_if 0x0, Route113_GlassWorkshop_EventScript_00240AA2
-	loadword 0x0, 0x08240DD2
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240AB7
-	setvar 0x40BE, 0xF
-	subvar 0x4048, 0x1770
-	goto Route113_GlassWorkshop_EventScript_00240AC3
+Route113_GlassWorkshop_EventScript_PrettyChair::
+	setvar VAR_0x8009, 1
+	setvar VAR_0x8008, DECOR_PRETTY_CHAIR
+	bufferdecorationname STR_VAR_1, VAR_0x8008
+	setvar VAR_0x800A, PRETTY_CHAIR_PRICE
+	goto_if_lt VAR_ASH_GATHER_COUNT, PRETTY_CHAIR_PRICE, Route113_GlassWorkshop_EventScript_NotEnoughAshForItem
+	msgbox Route113_GlassWorkshop_Text_IsThatTheItemForYou, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route113_GlassWorkshop_EventScript_ChooseDifferentItem
+	setvar VAR_GLASS_WORKSHOP_STATE, 15
+	subvar VAR_ASH_GATHER_COUNT, PRETTY_CHAIR_PRICE
+	goto Route113_GlassWorkshop_EventScript_MakeGlassItem
 	end
 
-Route113_GlassWorkshop_EventScript_00240A3F::
-	setvar 0x8009, 0x1
-	setvar 0x8008, 0x6
-	bufferdecorationname 0x0, 0x8008
-	setvar 0x800A, 0x1F40
-	compare_var_to_value 0x4048, 0x1F40
-	goto_if 0x0, Route113_GlassWorkshop_EventScript_00240AA2
-	loadword 0x0, 0x08240DD2
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240AB7
-	setvar 0x40BE, 0x10
-	subvar 0x4048, 0x1F40
-	goto Route113_GlassWorkshop_EventScript_00240AC3
+Route113_GlassWorkshop_EventScript_PrettyDesk::
+	setvar VAR_0x8009, 1
+	setvar VAR_0x8008, DECOR_PRETTY_DESK
+	bufferdecorationname STR_VAR_1, VAR_0x8008
+	setvar VAR_0x800A, PRETTY_DESK_PRICE
+	goto_if_lt VAR_ASH_GATHER_COUNT, PRETTY_DESK_PRICE, Route113_GlassWorkshop_EventScript_NotEnoughAshForItem
+	msgbox Route113_GlassWorkshop_Text_IsThatTheItemForYou, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route113_GlassWorkshop_EventScript_ChooseDifferentItem
+	setvar VAR_GLASS_WORKSHOP_STATE, 16
+	subvar VAR_ASH_GATHER_COUNT, PRETTY_DESK_PRICE
+	goto Route113_GlassWorkshop_EventScript_MakeGlassItem
 	end
 
-Route113_GlassWorkshop_EventScript_00240A80::
-	loadword 0x0, 0x08240E97
-	callstd 0x4
+Route113_GlassWorkshop_EventScript_CancelGlassItemSelect::
+	msgbox Route113_GlassWorkshop_Text_AllThatAshButDontWantAnything, MSGBOX_DEFAULT
 	release
 	end
 
-Route113_GlassWorkshop_EventScript_00240A8A::
-	setvar 0x800A, 0xFA
-	subvar 0x800A, 0x4048
-	buffernumberstring 0x0, 0x800A
-	loadword 0x0, 0x08240D4C
-	callstd 0x4
+Route113_GlassWorkshop_EventScript_NotEnoughAsh::
+	setvar VAR_0x800A, LOWEST_ASH_PRICE
+	subvar VAR_0x800A, VAR_ASH_GATHER_COUNT
+	buffernumberstring STR_VAR_1, VAR_0x800A
+	msgbox Route113_GlassWorkshop_Text_NotEnoughAshNeedX, MSGBOX_DEFAULT
 	release
 	end
 
-Route113_GlassWorkshop_EventScript_00240AA2::
-	subvar 0x800A, 0x4048
-	buffernumberstring 0x1, 0x800A
-	message 0x08240E35
+Route113_GlassWorkshop_EventScript_NotEnoughAshForItem::
+	subvar VAR_0x800A, VAR_ASH_GATHER_COUNT
+	buffernumberstring STR_VAR_2, VAR_0x800A
+	message Route113_GlassWorkshop_Text_NotEnoughAshToMakeItem
 	waitmessage
-	goto Route113_GlassWorkshop_EventScript_0024085B
+	goto Route113_GlassWorkshop_EventScript_ChooseGlassItem
 	end
 
-Route113_GlassWorkshop_EventScript_00240AB7::
-	message 0x08240DF4
+Route113_GlassWorkshop_EventScript_ChooseDifferentItem::
+	message Route113_GlassWorkshop_Text_WhichWouldYouLike
 	waitmessage
-	goto Route113_GlassWorkshop_EventScript_0024085B
+	goto Route113_GlassWorkshop_EventScript_ChooseGlassItem
 	end
 
-Route113_GlassWorkshop_EventScript_00240AC3::
-	loadword 0x0, 0x08240E02
-	callstd 0x4
+Route113_GlassWorkshop_EventScript_MakeGlassItem::
+	msgbox Route113_GlassWorkshop_Text_IllMakeItemForYou, MSGBOX_DEFAULT
 	closemessage
-	fadescreen 0x1
-	playse 0x5
-	delay 0x1E
-	fadescreen 0x0
-	loadword 0x0, 0x08240EBF
-	callstd 0x4
-	compare_var_to_value 0x8009, 0x0
-	call_if 0x1, Route113_GlassWorkshop_EventScript_00240AFB
-	compare_var_to_value 0x8009, 0x1
-	call_if 0x1, Route113_GlassWorkshop_EventScript_00240B13
-	setvar 0x40BE, 0x2
+	fadescreen FADE_TO_BLACK
+	playse SE_SELECT
+	delay 30
+	fadescreen FADE_FROM_BLACK
+	msgbox Route113_GlassWorkshop_Text_IveFinishedGlassItem, MSGBOX_DEFAULT
+	call_if_eq VAR_0x8009, 0, Route113_GlassWorkshop_EventScript_GiveGlassFlute
+	call_if_eq VAR_0x8009, 1, Route113_GlassWorkshop_EventScript_GiveGlassDecor
+	setvar VAR_GLASS_WORKSHOP_STATE, 2
 	release
 	end
 
-Route113_GlassWorkshop_EventScript_00240AFB::
-	setorcopyvar 0x8000, 0x8008
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240B26
+Route113_GlassWorkshop_EventScript_GiveGlassFlute::
+	giveitem VAR_0x8008
+	goto_if_eq VAR_RESULT, FALSE, Route113_GlassWorkshop_EventScript_NoRoomForFlute
 	return
 
-Route113_GlassWorkshop_EventScript_00240B13::
-	setorcopyvar 0x8000, 0x8008
-	callstd 0x7
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240B35
+Route113_GlassWorkshop_EventScript_GiveGlassDecor::
+	givedecoration VAR_0x8008
+	goto_if_eq VAR_RESULT, FALSE, Route113_GlassWorkshop_EventScript_NoRoomForDecor
 	return
 
-Route113_GlassWorkshop_EventScript_00240B26::
-	call 0x082430EA
-	loadword 0x0, 0x08240EDA
-	callstd 0x4
+Route113_GlassWorkshop_EventScript_NoRoomForFlute::
+	call Common_EventScript_BagIsFull
+	msgbox Route113_GlassWorkshop_Text_NoRoomInBag, MSGBOX_DEFAULT
 	release
 	end
 
-Route113_GlassWorkshop_EventScript_00240B35::
-	call 0x082430FD
-	loadword 0x0, 0x08240F09
-	callstd 0x4
+Route113_GlassWorkshop_EventScript_NoRoomForDecor::
+	call Common_EventScript_NoRoomForDecor
+	msgbox Route113_GlassWorkshop_Text_NoRoomInPC, MSGBOX_DEFAULT
 	release
 	end
 
-Route113_GlassWorkshop_EventScript_00240B44::
-	copyvar 0x8000, 0x40BE
-	compare_var_to_value 0x8000, 0xA
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240B97
-	compare_var_to_value 0x8000, 0xB
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240BAB
-	compare_var_to_value 0x8000, 0xC
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240BBF
-	compare_var_to_value 0x8000, 0xD
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240BD3
-	compare_var_to_value 0x8000, 0xE
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240BE7
-	compare_var_to_value 0x8000, 0xF
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240BFB
-	compare_var_to_value 0x8000, 0x10
-	goto_if 0x1, Route113_GlassWorkshop_EventScript_00240C0F
+Route113_GlassWorkshop_EventScript_GiveItemAfterNoRoom::
+	switch VAR_GLASS_WORKSHOP_STATE
+	case 10, Route113_GlassWorkshop_EventScript_GiveBlueFlute
+	case 11, Route113_GlassWorkshop_EventScript_GiveYellowFlute
+	case 12, Route113_GlassWorkshop_EventScript_GiveRedFlute
+	case 13, Route113_GlassWorkshop_EventScript_GiveWhiteFlute
+	case 14, Route113_GlassWorkshop_EventScript_GiveBlackFlute
+	case 15, Route113_GlassWorkshop_EventScript_GivePrettyChair
+	case 16, Route113_GlassWorkshop_EventScript_GivePrettyDesk
 	end
 
-Route113_GlassWorkshop_EventScript_00240B97::
-	setvar 0x8009, 0x0
-	setvar 0x8008, 0x27
-	bufferitemname 0x0, 0x8008
-	goto Route113_GlassWorkshop_EventScript_00240C23
+Route113_GlassWorkshop_EventScript_GiveBlueFlute::
+	setvar VAR_0x8009, 0
+	setvar VAR_0x8008, ITEM_BLUE_FLUTE
+	bufferitemname STR_VAR_1, VAR_0x8008
+	goto Route113_GlassWorkshop_EventScript_TryGiveItemAgain
 	end
 
-Route113_GlassWorkshop_EventScript_00240BAB::
-	setvar 0x8009, 0x0
-	setvar 0x8008, 0x28
-	bufferitemname 0x0, 0x8008
-	goto Route113_GlassWorkshop_EventScript_00240C23
+Route113_GlassWorkshop_EventScript_GiveYellowFlute::
+	setvar VAR_0x8009, 0
+	setvar VAR_0x8008, ITEM_YELLOW_FLUTE
+	bufferitemname STR_VAR_1, VAR_0x8008
+	goto Route113_GlassWorkshop_EventScript_TryGiveItemAgain
 	end
 
-Route113_GlassWorkshop_EventScript_00240BBF::
-	setvar 0x8009, 0x0
-	setvar 0x8008, 0x29
-	bufferitemname 0x0, 0x8008
-	goto Route113_GlassWorkshop_EventScript_00240C23
+Route113_GlassWorkshop_EventScript_GiveRedFlute::
+	setvar VAR_0x8009, 0
+	setvar VAR_0x8008, ITEM_RED_FLUTE
+	bufferitemname STR_VAR_1, VAR_0x8008
+	goto Route113_GlassWorkshop_EventScript_TryGiveItemAgain
 	end
 
-Route113_GlassWorkshop_EventScript_00240BD3::
-	setvar 0x8009, 0x0
-	setvar 0x8008, 0x2B
-	bufferitemname 0x0, 0x8008
-	goto Route113_GlassWorkshop_EventScript_00240C23
+Route113_GlassWorkshop_EventScript_GiveWhiteFlute::
+	setvar VAR_0x8009, 0
+	setvar VAR_0x8008, ITEM_WHITE_FLUTE
+	bufferitemname STR_VAR_1, VAR_0x8008
+	goto Route113_GlassWorkshop_EventScript_TryGiveItemAgain
 	end
 
-Route113_GlassWorkshop_EventScript_00240BE7::
-	setvar 0x8009, 0x0
-	setvar 0x8008, 0x2A
-	bufferitemname 0x0, 0x8008
-	goto Route113_GlassWorkshop_EventScript_00240C23
+Route113_GlassWorkshop_EventScript_GiveBlackFlute::
+	setvar VAR_0x8009, 0
+	setvar VAR_0x8008, ITEM_BLACK_FLUTE
+	bufferitemname STR_VAR_1, VAR_0x8008
+	goto Route113_GlassWorkshop_EventScript_TryGiveItemAgain
 	end
 
-Route113_GlassWorkshop_EventScript_00240BFB::
-	setvar 0x8009, 0x1
-	setvar 0x8008, 0xD
-	bufferdecorationname 0x0, 0xD
-	goto Route113_GlassWorkshop_EventScript_00240C23
+Route113_GlassWorkshop_EventScript_GivePrettyChair::
+	setvar VAR_0x8009, 1
+	setvar VAR_0x8008, DECOR_PRETTY_CHAIR
+	bufferdecorationname STR_VAR_1, DECOR_PRETTY_CHAIR
+	goto Route113_GlassWorkshop_EventScript_TryGiveItemAgain
 	end
 
-Route113_GlassWorkshop_EventScript_00240C0F::
-	setvar 0x8009, 0x1
-	setvar 0x8008, 0x6
-	bufferdecorationname 0x0, 0x6
-	goto Route113_GlassWorkshop_EventScript_00240C23
+Route113_GlassWorkshop_EventScript_GivePrettyDesk::
+	setvar VAR_0x8009, 1
+	setvar VAR_0x8008, DECOR_PRETTY_DESK
+	bufferdecorationname STR_VAR_1, DECOR_PRETTY_DESK
+	goto Route113_GlassWorkshop_EventScript_TryGiveItemAgain
 	end
 
-Route113_GlassWorkshop_EventScript_00240C23::
-	loadword 0x0, 0x08240EBF
-	callstd 0x4
-	compare_var_to_value 0x8009, 0x0
-	call_if 0x1, Route113_GlassWorkshop_EventScript_00240AFB
-	compare_var_to_value 0x8009, 0x1
-	call_if 0x1, Route113_GlassWorkshop_EventScript_00240B13
-	setvar 0x40BE, 0x2
+Route113_GlassWorkshop_EventScript_TryGiveItemAgain::
+	msgbox Route113_GlassWorkshop_Text_IveFinishedGlassItem, MSGBOX_DEFAULT
+	call_if_eq VAR_0x8009, 0, Route113_GlassWorkshop_EventScript_GiveGlassFlute
+	call_if_eq VAR_0x8009, 1, Route113_GlassWorkshop_EventScript_GiveGlassDecor
+	setvar VAR_GLASS_WORKSHOP_STATE, 2
 	release
 	end
 
-Route113_GlassWorkshop_EventScript_00240C48::
-	loadword 0x0, 0x08240F6C
-	callstd 0x2
+Route113_GlassWorkshop_EventScript_NinjaBoy::
+	msgbox Route113_GlassWorkshop_Text_FunToBlowGlassFlute, MSGBOX_NPC
 	end
+
+Route113_GlassWorkshop_Text_GoCollectAshWithThis:
+	.string "この　あたりは\n"
+	.string "かざんばい　だらけ　ペコペコ！\p"
+	.string "わたし　すごいよ　ペコペコ\p"
+	.string "かざんばいを　ガラスに　してね\n"
+	.string "それで　どうぐ　つくるよ　ペコペコ！\p"
+	.string "きみも　これで\n"
+	.string "かざんばいを　あつめなさい　ペコペコ！$"
+
+Route113_GlassWorkshop_Text_ExplainSootSack:
+	.string "その　ふくろを　もって\n"
+	.string "はいの　つもった　ところを　あるくと\l"
+	.string "あら　ふしぎ！\p"
+	.string "ふくろの　なかに　かざんばいが\n"
+	.string "どんどん　たまっていくよ　ペコペコ！\p"
+	.string "かざんばいが　たまったと　おもったら\n"
+	.string "わたしの　ところに　きなさい　ペコペコ！$"
+
+Route113_GlassWorkshop_Text_LetsSeeCollectedAshes:
+	.string "かざんばい　あるのかね　ペコペコ！\n"
+	.string "どれどれ　みせてごらん　ペコポコ！$"
+
+Route113_GlassWorkshop_Text_NotEnoughAshNeedX:
+	.string "うーん⋯⋯\n"
+	.string "かざんばいが　すくないよ　ペコペコ！\l"
+	.string "ガラスのどうぐ　できないよ　ペコペコ！\p"
+	.string "あと　{STRING 0x02}ほ　あるけば\n"
+	.string "あおいビードロ　つくれるよ　ペコペコ！$"
+
+Route113_GlassWorkshop_Text_WhichGlassItemWoudYouLike:
+	.string "おほっ\n"
+	.string "かざんばい　あつまってるよ　ペコペコ！\l"
+	.string "ガラスのどうぐ　つくるよ　ペコペコ！\p"
+	.string "どれが　いいかね　ペコペコ$"
+
+Route113_GlassWorkshop_Text_IsThatTheItemForYou:
+	.string "{STRING 0x02}　だね　ペコペコ！\n"
+	.string "ほんとうに　それで　いいんだね？　ペコペコ$"
+
+Route113_GlassWorkshop_Text_WhichWouldYouLike:
+	.string "どれが　いいかね　ペコペコ$"
+
+Route113_GlassWorkshop_Text_IllMakeItemForYou:
+	.string "{STRING 0x02}　だね　ペコペコ！\p"
+	.string "よしっ！　どうぐを　つくるよ　ペコペコ！\n"
+	.string "ちょっと　まってなさいよ　ペコペコ$"
+
+Route113_GlassWorkshop_Text_NotEnoughAshToMakeItem:
+	.string "{STRING 0x02}　だね　ペコペコ！\p"
+	.string "だけど　それを　つくるには\n"
+	.string "かざんばいが　たりないよ　ペコペコ！\p"
+	.string "かざんばいの　つもっている　ところを\n"
+	.string "あと　{STRING 0x03}ほ　あるかないと　ペコペコ！\p"
+	.string "どれが　いいかね　ペコペコ$"
+
+Route113_GlassWorkshop_Text_AllThatAshButDontWantAnything:
+	.string "せっかく　かざんばいを　あつめたのに\n"
+	.string "ほしい　ものは　ないのかね　ペコペコ⋯⋯$"
+
+Route113_GlassWorkshop_Text_IveFinishedGlassItem:
+	.string "おお　{STRING 0x02}　できたよ\n"
+	.string "もって　いきなさいよ　ペコペコ$"
+
+Route113_GlassWorkshop_Text_NoRoomInBag:
+	.string "あら？\n"
+	.string "それいじょう　もてないよ　ペコペコ\p"
+	.string "あずかって　おくから\n"
+	.string "こんど　きなさい　ペコペコ$"
+
+Route113_GlassWorkshop_Text_NoRoomInPC:
+	.string "あら？\n"
+	.string "パソコン　いっぱい　なのか　ペコペコ\p"
+	.string "あずかって　おくから\n"
+	.string "こんど　きなさい　ペコペコ$"
+
+Route113_GlassWorkshop_Text_HaventGotYourSootSack:
+	.string "あら？\n"
+	.string "はいぶくろ　もっていないのか　ペコペコ\p"
+	.string "もちあるかないと\n"
+	.string "かざんばい　たまらないよ　ペコペコ$"
+
+Route113_GlassWorkshop_Text_FunToBlowGlassFlute:
+	.string "おやかたが　はなすのに　あわせて\n"
+	.string "ビードロ　ふくと　たのしか！\p"
+	.string "ペコペコ！　ペコポコ！$"
