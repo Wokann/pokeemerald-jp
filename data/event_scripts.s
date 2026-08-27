@@ -919,17 +919,39 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/scripts/pkmn_center_nurse.inc"
 	.include "data/scripts/obtain_item.inc"
 	.include "data/scripts/record_mix_prompt.inc"
+	.include "data/scripts/pc.inc"
 
-	.globl EventScript_PC
-EventScript_PC: @ 0x8242E1E
-	.include "data/scripts/EventScript_PC.inc"
+Common_EventScript_ShowPokemartSign::
+	@ The JP text data remains in its later physical owner at 0x082439D6.
+	msgbox 0x082439D6, MSGBOX_SIGN
+	end
 
-	.globl Common_EventScript_ShowPokemartSign
-	.set Common_EventScript_ShowPokemartSign, 0x08242EF6
-	.globl Common_EventScript_ShowPokemonCenterSign
-	.set Common_EventScript_ShowPokemonCenterSign, 0x08242EFF
-	.globl Common_ShowEasyChatScreen
-	.set Common_ShowEasyChatScreen, 0x08242F08
+Common_EventScript_ShowPokemonCenterSign::
+	msgbox 0x082439F5, MSGBOX_SIGN
+	end
+
+Common_ShowEasyChatScreen::
+	fadescreen FADE_TO_BLACK
+	special ShowEasyChatScreen
+	fadescreen FADE_FROM_BLACK
+	return
+
+Common_EventScript_ReadyPetalburgGymForBattle::
+	clearflag FLAG_HIDE_PETALBURG_GYM_GREETER
+	setflag FLAG_PETALBURG_MART_EXPANDED_ITEMS
+	return
+
+Common_EventScript_BufferTrendyPhrase::
+	dotimebasedevents
+	setvar VAR_0x8004, 0
+	special BufferTrendyPhraseString
+	return
+
+EventScript_BackupMrBrineyLocation::
+	copyvar VAR_0x8008, VAR_BRINEY_LOCATION
+	setvar VAR_BRINEY_LOCATION, 0
+	return
+
 	@ These Fan Club interview strings remain in the later shared TV-text raw
 	@ owner. Export semantic aliases until that physical text owner is split.
 	.globl LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer
@@ -960,12 +982,6 @@ EventScript_PC: @ 0x8242E1E
 	.set EventTicket_Text_OddTicketGetOnBoard, 0x08275D2A
 	.globl EventTicket_Text_OddTicketsWhereTo
 	.set EventTicket_Text_OddTicketsWhereTo, 0x08275DF2
-	.globl Common_EventScript_BufferTrendyPhrase
-	.set Common_EventScript_BufferTrendyPhrase, 0x08242F17
-	.globl EventScript_BackupMrBrineyLocation
-	.set EventScript_BackupMrBrineyLocation, 0x08242F21
-	.globl Common_EventScript_ReadyPetalburgGymForBattle
-	.set Common_EventScript_ReadyPetalburgGymForBattle, 0x08242F10
 	.globl Common_EventScript_SetGymTrainers
 	.set Common_EventScript_SetGymTrainers, 0x08242FCF
 	.globl Common_EventScript_BagIsFull
