@@ -1249,11 +1249,6 @@ Common_EventScript_LegendaryFlewAway::
 	@ 0x0824433D
 	.include "data/scripts/abnormal_weather.inc"
 
-	.globl AbnormalWeather_EventScript_EndEventAndCleanup_1
-AbnormalWeather_EventScript_EndEventAndCleanup_1: @ 0x8244749
-	.globl AbnormalWeather_Underwater_SetupEscapeWarp
-	.set AbnormalWeather_Underwater_SetupEscapeWarp, 0x08244C4D
-	.include "data/scripts/gUnknown_8244749.inc"
 Std_RegisteredInMatchCall:: @ 0x8244CF3
 	.include "data/scripts/gUnknown_8244CF3.inc"
 
