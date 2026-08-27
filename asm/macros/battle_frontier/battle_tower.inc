@@ -42,6 +42,12 @@
 	special sub_08161E88
 	.endm
 
+	@ Set the gfx id of the selected multi partner.
+	.macro tower_setpartnergfx
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_SET_PARTNER_GFX
+	special sub_08161E88
+	.endm
+
 	@ Load the parties, gfx, and other data for the multi partner candidates.
 	.macro tower_loadpartners
 	setvar VAR_0x8004, BATTLE_TOWER_FUNC_LOAD_PARTNERS
