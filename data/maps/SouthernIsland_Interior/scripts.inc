@@ -1,134 +1,145 @@
-@ SouthernIsland_Interior scripts (JP map g26 m10 @ 0x082227E2)
-
 SouthernIsland_Interior_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, SouthernIsland_Interior_EventScript_002227ED
-	map_script MAP_SCRIPT_ON_TRANSITION, SouthernIsland_Interior_EventScript_0022280B
+	map_script MAP_SCRIPT_ON_RESUME, SouthernIsland_Interior_OnResume
+	map_script MAP_SCRIPT_ON_TRANSITION, SouthernIsland_Interior_OnTransition
 	.byte 0
 
-SouthernIsland_Interior_EventScript_002227ED::
-	checkflag 0x8C1
-	call_if 0x1, SouthernIsland_Interior_EventScript_002227F7
+SouthernIsland_Interior_OnResume:
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, SouthernIsland_Interior_EventScript_TryRemoveLati
 	end
 
-SouthernIsland_Interior_EventScript_002227F7::
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x7
-	goto_if 0x5, 0x08244178
-	removeobject 0x2
+SouthernIsland_Interior_EventScript_TryRemoveLati::
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
+	removeobject LOCALID_SOUTHERN_ISLAND_LATI
 	return
 
-SouthernIsland_Interior_EventScript_0022280B::
-	compare_var_to_value 0x40D5, 0x0
-	call_if 0x1, SouthernIsland_Interior_EventScript_00222827
-	compare_var_to_value 0x40D5, 0x0
-	call_if 0x5, SouthernIsland_Interior_EventScript_00222832
-	call SouthernIsland_Interior_EventScript_0022283D
+SouthernIsland_Interior_OnTransition:
+	call_if_eq VAR_ROAMER_POKEMON, 0, SouthernIsland_Interior_EventScript_SetUpLatios
+	call_if_ne VAR_ROAMER_POKEMON, 0, SouthernIsland_Interior_EventScript_SetUpLatias
+	call SouthernIsland_Interior_EventScript_SetUpPlayerGfx
 	end
 
-SouthernIsland_Interior_EventScript_00222827::
-	setvar 0x4011, 0xBC
-	setvar 0x4004, 0x198
+SouthernIsland_Interior_EventScript_SetUpLatios::
+	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_LATIOS
+	setvar VAR_TEMP_4, SPECIES_LATIOS
 	return
 
-SouthernIsland_Interior_EventScript_00222832::
-	setvar 0x4011, 0xBB
-	setvar 0x4004, 0x197
+SouthernIsland_Interior_EventScript_SetUpLatias::
+	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_LATIAS
+	setvar VAR_TEMP_4, SPECIES_LATIAS
 	return
 
-SouthernIsland_Interior_EventScript_0022283D::
+SouthernIsland_Interior_EventScript_SetUpPlayerGfx::
 	checkplayergender
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, SouthernIsland_Interior_EventScript_00222855
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, SouthernIsland_Interior_EventScript_0022285B
+	goto_if_eq VAR_RESULT, MALE, SouthernIsland_Interior_EventScript_SetBrendanGfx
+	goto_if_eq VAR_RESULT, FEMALE, SouthernIsland_Interior_EventScript_SetMayGfx
 	end
 
-SouthernIsland_Interior_EventScript_00222855::
-	setvar 0x4010, 0x64
+SouthernIsland_Interior_EventScript_SetBrendanGfx::
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL
 	return
 
-SouthernIsland_Interior_EventScript_0022285B::
-	setvar 0x4010, 0x69
+SouthernIsland_Interior_EventScript_SetMayGfx::
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_RIVAL_MAY_NORMAL
 	return
 
-SouthernIsland_Interior_EventScript_00222861::
+SouthernIsland_Interior_EventScript_TryLatiEncounter::
 	lockall
-	setvar 0x8008, 0xC
-	goto SouthernIsland_Interior_EventScript_0022286D
+	setvar VAR_0x8008, 12  @ Player's Y coordinate. Not read
+	goto SouthernIsland_Interior_EventScript_Lati
 	end
 
-SouthernIsland_Interior_EventScript_0022286D::
-	checkflag 0x2
-	goto_if 0x1, SouthernIsland_Interior_EventScript_00222937
-	checkflag 0x1C8
-	goto_if 0x1, SouthernIsland_Interior_EventScript_00222937
-	checkflag 0x1C9
-	goto_if 0x1, SouthernIsland_Interior_EventScript_00222937
-	checkflag 0x8B3
-	goto_if 0x0, SouthernIsland_Interior_EventScript_00222937
-	setflag 0xCE
-	setflag 0x2
+SouthernIsland_Interior_EventScript_Lati::
+	goto_if_set FLAG_TEMP_2, SouthernIsland_Interior_EventScript_Sign
+	goto_if_set FLAG_DEFEATED_LATIAS_OR_LATIOS, SouthernIsland_Interior_EventScript_Sign
+	goto_if_set FLAG_CAUGHT_LATIAS_OR_LATIOS, SouthernIsland_Interior_EventScript_Sign
+	goto_if_unset FLAG_ENABLE_SHIP_SOUTHERN_ISLAND, SouthernIsland_Interior_EventScript_Sign
+	setflag FLAG_ENCOUNTERED_LATIAS_OR_LATIOS
+	setflag FLAG_TEMP_2
 	special SpawnCameraObject
-	applymovement 0x7F, 0x08222967
-	waitmovement 0x0
-	delay 0x32
+	applymovement LOCALID_CAMERA, SouthernIsland_Interior_Movement_CameraPanUp
+	waitmovement 0
+	delay 50
 	waitse
-	playmoncry 0x4004, 0x0
-	delay 0x1E
-	waitdooranim
-	addobject 0x2
-	delay 0x1E
-	applymovement 0x7F, 0x0822296B
-	applymovement 0x2, 0x08222977
-	waitmovement 0x0
-	delay 0x32
+	playmoncry VAR_TEMP_4, CRY_MODE_NORMAL
+	delay 30
+	@ JP encodes this cry wait with SCR_OP_WAITDOORANIM.
+	waitmoncry_jp
+	addobject LOCALID_SOUTHERN_ISLAND_LATI
+	delay 30
+	applymovement LOCALID_CAMERA, SouthernIsland_Interior_Movement_CameraPanDown
+	applymovement LOCALID_SOUTHERN_ISLAND_LATI, SouthernIsland_Interior_Movement_LatiApproach
+	waitmovement 0
+	delay 50
 	special RemoveCameraObject
-	setvar 0x800F, 0x2
-	compare_var_to_value 0x40D5, 0x0
-	call_if 0x1, SouthernIsland_Interior_EventScript_00222941
-	compare_var_to_value 0x40D5, 0x0
-	call_if 0x5, SouthernIsland_Interior_EventScript_00222954
-	setflag 0x8C1
+	setvar VAR_LAST_TALKED, LOCALID_SOUTHERN_ISLAND_LATI
+	call_if_eq VAR_ROAMER_POKEMON, 0, SouthernIsland_Interior_EventScript_SetLatiosBattleVars
+	call_if_ne VAR_ROAMER_POKEMON, 0, SouthernIsland_Interior_EventScript_SetLatiasBattleVars
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLatiBattle
-	clearflag 0x8C1
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, SouthernIsland_Interior_EventScript_0022291E
-	compare_var_to_value 0x800D, 0x4
-	goto_if 0x1, SouthernIsland_Interior_EventScript_0022292C
-	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, SouthernIsland_Interior_EventScript_0022292C
-	setflag 0x1C9
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, SouthernIsland_Interior_EventScript_LatiDefeated
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, SouthernIsland_Interior_EventScript_RanFromLati
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, SouthernIsland_Interior_EventScript_RanFromLati
+	setflag FLAG_CAUGHT_LATIAS_OR_LATIOS
 	releaseall
 	end
 
-SouthernIsland_Interior_EventScript_0022291E::
-	setflag 0x1C8
-	copyvar 0x8004, 0x4004
-	goto 0x082441A0
+SouthernIsland_Interior_EventScript_LatiDefeated::
+	setflag FLAG_DEFEATED_LATIAS_OR_LATIOS
+	copyvar VAR_0x8004, VAR_TEMP_4
+	goto Common_EventScript_LegendaryFlewAway
 	end
 
-SouthernIsland_Interior_EventScript_0022292C::
-	copyvar 0x8004, 0x4004
-	goto 0x082441A0
+SouthernIsland_Interior_EventScript_RanFromLati::
+	copyvar VAR_0x8004, VAR_TEMP_4
+	goto Common_EventScript_LegendaryFlewAway
 	end
 
-SouthernIsland_Interior_EventScript_00222937::
-	loadword 0x0, 0x0826358B
-	callstd 0x4
+SouthernIsland_Interior_EventScript_Sign::
+	msgbox SouthernIsland_Interior_Text_Sign, MSGBOX_DEFAULT
 	releaseall
 	end
 
-SouthernIsland_Interior_EventScript_00222941::
-	setvar 0x8004, 0x198
-	setvar 0x8005, 0x32
-	setvar 0x8006, 0xBF
-	special CreateEnemyEventMon
+SouthernIsland_Interior_EventScript_SetLatiosBattleVars::
+	seteventmon SPECIES_LATIOS, 50, ITEM_SOUL_DEW
 	return
 
-SouthernIsland_Interior_EventScript_00222954::
-	setvar 0x8004, 0x197
-	setvar 0x8005, 0x32
-	setvar 0x8006, 0xBF
-	special CreateEnemyEventMon
+SouthernIsland_Interior_EventScript_SetLatiasBattleVars::
+	seteventmon SPECIES_LATIAS, 50, ITEM_SOUL_DEW
 	return
+
+SouthernIsland_Interior_Movement_CameraPanUp:
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+SouthernIsland_Interior_Movement_CameraPanDown:
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	walk_down
+	walk_down
+	walk_down
+	walk_in_place_faster_up
+	step_end
+
+SouthernIsland_Interior_Movement_LatiApproach:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	delay_16
+	delay_16
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end

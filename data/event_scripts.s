@@ -830,7 +830,6 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/BattleFrontier_BattleTowerBattleRoom/scripts.inc"
 	.include "data/maps/SouthernIsland_Exterior/scripts.inc"
 	.include "data/maps/SouthernIsland_Interior/scripts.inc"
-	.incbin "baserom_jp.gba", 0x222967, 0x1c
 	.include "data/maps/SafariZone_RestHouse/scripts.inc"
 	.include "data/maps/SafariZone_Northeast/scripts.inc"
 	.include "data/maps/SafariZone_Southeast/scripts.inc"
