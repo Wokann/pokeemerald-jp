@@ -267,28 +267,12 @@
 	@ This shared movement stream remains in the retained JP movement block.
 	.globl Common_Movement_QuestionMark
 	.set Common_Movement_QuestionMark, 0x08243619
-	.globl gText_NicknameThisPokemon
-	.set gText_NicknameThisPokemon, 0x08243EDB
 	.globl Common_EventScript_UpdateBrineyLocation
 	.set Common_EventScript_UpdateBrineyLocation, 0x08242978
 	.globl Common_EventScript_PkmnCenterNurse
 	.set Common_EventScript_PkmnCenterNurse, 0x082429B8
 	.globl ProfileMan_EventScript_Man
 	.set ProfileMan_EventScript_Man, 0x08257290
-	.globl Common_EventScript_GetGiftMonPartySlot
-	.set Common_EventScript_GetGiftMonPartySlot, 0x082441B5
-	.globl Common_EventScript_NameReceivedBoxMon
-	.set Common_EventScript_NameReceivedBoxMon, 0x082441C1
-	.globl Common_EventScript_TransferredToPC
-	.set Common_EventScript_TransferredToPC, 0x082441CA
-	.globl Common_EventScript_NoMoreRoomForPokemon
-	.set Common_EventScript_NoMoreRoomForPokemon, 0x0824423B
-	.globl Common_EventScript_UnionRoomAttendant
-	.set Common_EventScript_UnionRoomAttendant, 0x08244185
-	.globl Common_EventScript_WirelessClubAttendant
-	.set Common_EventScript_WirelessClubAttendant, 0x0824418B
-	.globl Common_EventScript_DirectCornerAttendant
-	.set Common_EventScript_DirectCornerAttendant, 0x08244191
 	.globl CableClub_OnTransition
 	.set CableClub_OnTransition, 0x082467CD
 	.globl CableClub_OnWarp
@@ -1195,8 +1179,8 @@ gText_LegendaryFlewAway:: @ 0x08243DF4
 	.string "{B_COPY_VAR_1}は\n"
 	.string "どこかへ　とびさって　いった！$"
 
-	@ 0x08243E08-0x08243EEE remains unstructured shared text data.
-	.incbin "baserom_jp.gba", 0x243e08, 0xe6
+	@ 0x08243E08
+	.include "data/text/pc_transfer.inc"
 
 Questionnaire_Text_FillOut:: @ 0x08243EEE
 	.string "アンケートようの　メモようしが　ある\n"
@@ -1257,8 +1241,8 @@ Common_EventScript_LegendaryFlewAway::
 	release
 	end
 
-Common_EventScript_GetGiftMonPartySlot:: @ 0x082441B5
-	.include "data/scripts/gUnknown_82441B5.inc"
+	@ 0x082441B5
+	.include "data/scripts/pc_transfer.inc"
 
 	.globl EventScript_Questionnaire
 EventScript_Questionnaire: @ 0x8244245
