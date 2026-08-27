@@ -1120,8 +1120,7 @@ Common_EventScript_FerryDepartIsland::
 	call Common_EventScript_FerryDepart
 	return
 
-	@ Unstructured shared scripts at 0x082432F7-0x0824335E.
-	.incbin "baserom_jp.gba", 0x2432F7, 0x67
+	.include "data/scripts/cave_of_origin.inc"
 	.include "data/scripts/gUnknown_824335E.inc"
 
 	.globl EventScript_PictureBookShelf
