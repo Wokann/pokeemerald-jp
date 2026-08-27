@@ -1813,13 +1813,13 @@ bool8 ScrCmd_dotrainerbattle(struct ScriptContext *ctx)
     return TRUE;
 }
 
-bool8 ScrCmd_gotobeatenscript(struct ScriptContext *ctx)
+bool8 ScrCmd_gotopostbattlescript(struct ScriptContext *ctx)
 {
     ctx->scriptPtr = BattleSetup_GetScriptAddrAfterBattle();
     return FALSE;
 }
 
-bool8 ScrCmd_gotopostbattlescript(struct ScriptContext *ctx)
+bool8 ScrCmd_gotobeatenscript(struct ScriptContext *ctx)
 {
     ctx->scriptPtr = BattleSetup_GetTrainerPostBattleScript();
     return FALSE;
@@ -2168,7 +2168,7 @@ bool8 ScrCmd_buffercontesttype(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_cmdD8(struct ScriptContext *ctx)
+bool8 ScrCmd_selectapproachingtrainer(struct ScriptContext *ctx)
 {
     gSelectedObjectEvent = GetCurrentApproachingTrainerEventObjectId();
     return FALSE;

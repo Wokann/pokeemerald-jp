@@ -559,9 +559,7 @@ sub_080B0B04 = TryUpdateGymLeaderRematchFromWild;
 sub_080B0B20 = TryUpdateGymLeaderRematchFromTrainer;
 sub_080B1680 = IsRematchForbidden;
 BattleSetup_GetTerrainId = BattleSetup_GetEnvironmentId;
-SetUpTrainerEncounterMusic = PlayTrainerEncounterMusic;
 sub_080B3CD0 = SetBuriedTrainerMovement;
-EndTrainerApproach = DoTrainerApproach;
 sub_080B3F60 = PlayerFaceTrainerAfterBattle;
 ObjectEventClearHeldMovement = EventObjectClearHeldMovement;
 GetObjectEventScriptPointerByObjectEventId = GetEventObjectScriptPointerByEventObjectId;
@@ -5083,7 +5081,7 @@ SECTIONS {
         src/battle_setup.o(.text.ConfigureTwoTrainersBattle);
         src/battle_setup.o(.text.SetUpTwoTrainersBattle);
         src/battle_setup.o(.text.GetTrainerFlagFromScriptPointer);
-        src/battle_setup.o(.text.SetUpTrainerMovement);
+        src/battle_setup.o(.text.SetTrainerFacingDirection);
         src/battle_setup.o(.text.GetTrainerBattleMode);
         src/battle_setup.o(.text.GetTrainerFlag);
         src/battle_setup.o(.text.SetBattledTrainersFlags);

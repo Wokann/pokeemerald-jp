@@ -1771,7 +1771,7 @@ u16 CountBattledRematchTeams(u16 trainerId)
 
 extern bool8 sub_080FB730(void);
 
-void SetUpTrainerMovement(void)
+void SetTrainerFacingDirection(void)
 {
     struct ObjectEvent *objectEvent = &gObjectEvents[gSelectedObjectEvent];
     SetTrainerMovementType(objectEvent, GetTrainerFacingDirectionMovementType(objectEvent->facingDirection));

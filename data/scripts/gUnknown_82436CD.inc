@@ -1,5 +1,5 @@
 	removeitem 0x190A, 0x9B00
-	gotopostbattlescript
+	gotobeatenscript
 	faceplayer
 	bufferleadmonspeciesname 0x16
 	nop

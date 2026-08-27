@@ -9,9 +9,9 @@
 	adddecoration 0x8C19
 	nop 
 	showcoinsbox 0xE, 0x3B
-	gotopostbattlescript 
+	gotobeatenscript
 	delay 0x508
 	setmysteryeventstatus 0x66
-	gotopostbattlescript 
+	gotobeatenscript
 	delay 0x508
 	.byte 0x08

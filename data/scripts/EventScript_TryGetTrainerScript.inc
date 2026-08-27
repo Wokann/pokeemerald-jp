@@ -3,6 +3,6 @@
 	goto_if 0x1, 0x8244D20
 	releaseall 
 	end 
-	gotopostbattlescript 
+	gotobeatenscript
 	releaseall 
 	end 

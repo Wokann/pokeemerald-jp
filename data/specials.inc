@@ -71,8 +71,8 @@ gSpecials::
 	def_special ShowTrainerIntroSpeech
 	def_special ShowTrainerCantBattleSpeech
 	def_special GetTrainerFlag
-	def_special EndTrainerApproach
-	def_special SetUpTrainerEncounterMusic
+	def_special DoTrainerApproach
+	def_special PlayTrainerEncounterMusic
 	def_special ShouldTryRematchBattle
 	def_special IsTrainerReadyForRematch
 	def_special BattleSetup_StartRematchBattle, waitstate=1
@@ -329,7 +329,7 @@ gSpecials::
 	def_special StartGroudonKyogreBattle
 	def_special BattleSetup_StartLegendaryBattle, waitstate=1
 	def_special StartRegiBattle, waitstate=1
-	def_special SetUpTrainerMovement
+	def_special SetTrainerFacingDirection
 	def_special DoSealedChamberShakingEffect2
 	def_special FoundBlackGlasses
 	def_special StartDroughtWeatherBlend

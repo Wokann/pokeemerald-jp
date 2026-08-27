@@ -2188,7 +2188,7 @@
 	.endm
 
 	.macro cmdD8
-	.byte SCR_OP_D8
+	selectapproachingtrainer
 	.endm
 
 	.macro cmdD9

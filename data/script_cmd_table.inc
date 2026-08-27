@@ -109,8 +109,8 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_TURNOBJECT ScrCmd_turnobject @ 0x5B
 	script_cmd_table_entry SCR_OP_TRAINERBATTLE ScrCmd_trainerbattle @ 0x5C
 	script_cmd_table_entry SCR_OP_DOTRAINERBATTLE ScrCmd_dotrainerbattle @ 0x5D
-	script_cmd_table_entry SCR_OP_GOTOBEATENSCRIPT ScrCmd_gotobeatenscript @ 0x5E
-	script_cmd_table_entry SCR_OP_GOTOPOSTBATTLESCRIPT ScrCmd_gotopostbattlescript @ 0x5F
+	script_cmd_table_entry SCR_OP_GOTOPOSTBATTLESCRIPT ScrCmd_gotopostbattlescript @ 0x5E
+	script_cmd_table_entry SCR_OP_GOTOBEATENSCRIPT ScrCmd_gotobeatenscript @ 0x5F
 	script_cmd_table_entry SCR_OP_CHECKTRAINERFLAG ScrCmd_checktrainerflag @ 0x60
 	script_cmd_table_entry SCR_OP_SETTRAINERFLAG ScrCmd_settrainerflag @ 0x61
 	script_cmd_table_entry SCR_OP_CLEARTRAINERFLAG ScrCmd_cleartrainerflag @ 0x62
@@ -233,7 +233,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_INITROTATINGTILEPUZZLE ScrCmd_mossdeepgym3 @ 0xD5
 	script_cmd_table_entry SCR_OP_FREEROTATINGTILEPUZZLE ScrCmd_buffercontesttype @ 0xD6
 	script_cmd_table_entry SCR_OP_WARPMOSSDEEPGYM ScrCmd_warpD7 @ 0xD7
-	script_cmd_table_entry SCR_OP_D8 ScrCmd_cmdD8 @ 0xD8
+	script_cmd_table_entry SCR_OP_SELECTAPPROACHINGTRAINER ScrCmd_selectapproachingtrainer @ 0xD8
 	script_cmd_table_entry SCR_OP_LOCKFORTRAINER ScrCmd_lockfortrainer @ 0xD9
 	script_cmd_table_entry SCR_OP_CLOSEBRAILLEMESSAGE ScrCmd_mossdeepgym4 @ 0xDA
 	script_cmd_table_entry SCR_OP_MESSAGEINSTANT ScrCmd_cmdDB @ 0xDB
