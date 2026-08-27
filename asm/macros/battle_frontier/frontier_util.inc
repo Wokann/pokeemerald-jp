@@ -6,6 +6,36 @@
 	special CallFrontierUtilFunc
 	.endm
 
+	@ Get the number of facility symbols the player has.
+	.macro frontier_getsymbols
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_GET_FACILITY_SYMBOLS
+	special CallFrontierUtilFunc
+	.endm
+
+	@ Award the facility symbol for the current Frontier challenge.
+	.macro frontier_givesymbol
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_GIVE_FACILITY_SYMBOL
+	special CallFrontierUtilFunc
+	.endm
+
+	@ Restore held items that were present before entering the challenge.
+	.macro frontier_restorehelditems
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_RESTORE_HELD_ITEMS
+	special CallFrontierUtilFunc
+	.endm
+
+	@ Restore moves changed by Sketch during the challenge.
+	.macro frontier_resetsketch
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_RESET_SKETCH_MOVES
+	special CallFrontierUtilFunc
+	.endm
+
+	@ Set the current Frontier Brain object graphics.
+	.macro frontier_setbrainobj
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_SET_BRAIN_OBJECT
+	special CallFrontierUtilFunc
+	.endm
+
 	@ Increment the current Frontier win streak.
 	.macro frontier_incrementstreak
 	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_INCREMENT_STREAK

@@ -6,6 +6,12 @@
 	special sub_08161E88
 	.endm
 
+	@ Set the data used for the post-challenge Battle Tower interview.
+	.macro tower_setinterviewdata
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_SET_INTERVIEW_DATA
+	special sub_08161E88
+	.endm
+
 	@ Increment the battle number after a win and return the new value.
 	.macro tower_setbattlewon
 	setvar VAR_0x8004, BATTLE_TOWER_FUNC_SET_BATTLE_WON

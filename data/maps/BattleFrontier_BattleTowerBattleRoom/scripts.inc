@@ -237,124 +237,86 @@ BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabel::
 	call BattleFrontier_EventScript_SetBrainObjectGfx
 	closemessage
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerBattleRoom_Movement_PlayerFaceBattle
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_TOWER_BATTLE_ATTENDANT_1, BattleFrontier_BattleTowerBattleRoom_Movement_AttendantReturnToPos
-	waitmovement 0x0
-	addobject 0x1
+	waitmovement 0
+	addobject LOCALID_TOWER_BATTLE_OPPONENT
 	applymovement LOCALID_TOWER_BATTLE_OPPONENT, BattleFrontier_BattleTowerBattleRoom_Movement_AnabelEnter
-	waitmovement 0x0
-	copyvar 0x8000, 0x400F
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AnabelGoldIntro
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabelSilver
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabelGold
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x7
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabelSilver
-	loadword 0x0, BattleFrontier_BattleTowerBattleRoom_Text_GreetingsImAnabel
-	callstd 0x4
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x7
-	special CallFrontierUtilFunc
+	waitmovement 0
+	switch VAR_TEMP_F
+	case FRONTIER_BRAIN_GOLD, BattleFrontier_BattleTowerBattleRoom_EventScript_AnabelGoldIntro
+	case FRONTIER_BRAIN_STREAK, BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabelSilver
+	case FRONTIER_BRAIN_STREAK_LONG, BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabelGold
+	frontier_get FRONTIER_DATA_HEARD_BRAIN_SPEECH
+	goto_if_ne VAR_RESULT, FALSE, BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabelSilver
+	msgbox BattleFrontier_BattleTowerBattleRoom_Text_GreetingsImAnabel, MSGBOX_DEFAULT
+	frontier_set FRONTIER_DATA_HEARD_BRAIN_SPEECH
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabelSilver::
-	loadword 0x0, BattleFrontier_BattleTowerBattleRoom_Text_LetMeSeeYourTalent
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerBattleRoom_Text_LetMeSeeYourTalent, MSGBOX_DEFAULT
 	call BattleFrontier_BattleTowerBattleRoom_EventScript_DoTowerBattle
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_DefeatedAnabelSilver
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, BattleFrontier_BattleTowerBattleRoom_EventScript_DefeatedAnabelSilver
 	goto BattleFrontier_BattleTower_EventScript_WarpToLobbyLost
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_DefeatedAnabelSilver::
 	call BattleFrontier_EventScript_IncrementWinStreak
-	setvar 0x8004, 0xC
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyWon
-	loadword 0x0, BattleFrontier_BattleTowerBattleRoom_Text_AnabelTalentShallBeRecognized
-	callstd 0x4
-	playfanfare 0x1D2
+	frontier_getsymbols
+	goto_if_ne VAR_RESULT, 0, BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyWon
+	msgbox BattleFrontier_BattleTowerBattleRoom_Text_AnabelTalentShallBeRecognized, MSGBOX_DEFAULT
+	playfanfare MUS_OBTAIN_SYMBOL
 	message BattleFrontier_BattleTowerBattleRoom_Text_ReceivedAbilitySymbol
 	waitmessage
 	waitfanfare
-	setvar 0x8004, 0xD
-	special CallFrontierUtilFunc
-	loadword 0x0, BattleFrontier_BattleTowerBattleRoom_Text_UntilNextTime
-	callstd 0x4
+	frontier_givesymbol
+	msgbox BattleFrontier_BattleTowerBattleRoom_Text_UntilNextTime, MSGBOX_DEFAULT
 	goto BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyWon
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_AnabelGoldIntro::
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x7
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabelGold
-	loadword 0x0, BattleFrontier_BattleTowerBattleRoom_Text_AnabelYouCameBack
-	callstd 0x4
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x7
-	special CallFrontierUtilFunc
+	frontier_get FRONTIER_DATA_HEARD_BRAIN_SPEECH
+	goto_if_ne VAR_RESULT, FALSE, BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabelGold
+	msgbox BattleFrontier_BattleTowerBattleRoom_Text_AnabelYouCameBack, MSGBOX_DEFAULT
+	frontier_set FRONTIER_DATA_HEARD_BRAIN_SPEECH
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabelGold::
-	loadword 0x0, BattleFrontier_BattleTowerBattleRoom_Text_LetsBeginShallWe
-	callstd 0x4
+	msgbox BattleFrontier_BattleTowerBattleRoom_Text_LetsBeginShallWe, MSGBOX_DEFAULT
 	call BattleFrontier_BattleTowerBattleRoom_EventScript_DoTowerBattle
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_DefeatedAnabelGold
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, BattleFrontier_BattleTowerBattleRoom_EventScript_DefeatedAnabelGold
 	goto BattleFrontier_BattleTower_EventScript_WarpToLobbyLost
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_DefeatedAnabelGold::
 	call BattleFrontier_EventScript_IncrementWinStreak
-	setvar 0x8004, 0xC
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyWon
-	loadword 0x0, BattleFrontier_BattleTowerBattleRoom_Text_AnabelCongratsYourPassPlease
-	callstd 0x4
-	playfanfare 0x1D2
+	frontier_getsymbols
+	goto_if_eq VAR_RESULT, 2, BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyWon
+	msgbox BattleFrontier_BattleTowerBattleRoom_Text_AnabelCongratsYourPassPlease, MSGBOX_DEFAULT
+	playfanfare MUS_OBTAIN_SYMBOL
 	message BattleFrontier_BattleTowerBattleRoom_Text_AbilitySymbolTookGoldenShine
 	waitmessage
 	waitfanfare
-	setvar 0x8004, 0xD
-	special CallFrontierUtilFunc
-	loadword 0x0, BattleFrontier_BattleTowerBattleRoom_Text_WishICouldBattleYouAgain
-	callstd 0x4
+	frontier_givesymbol
+	msgbox BattleFrontier_BattleTowerBattleRoom_Text_WishICouldBattleYouAgain, MSGBOX_DEFAULT
 	goto BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyWon
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_DoTowerBattle::
 	closemessage
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x6
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
+	@ JP does not clear VAR_TEMP_2 before starting the battle.
+	frontier_set FRONTIER_DATA_RECORD_DISABLED, FALSE
 	special HealPlayerParty
-	setvar 0x8004, 0x0
-	setvar 0x8005, 0x0
+	setvar VAR_0x8004, SPECIAL_BATTLE_TOWER
+	setvar VAR_0x8005, 0
 	special DoSpecialTrainerBattle
-	copyvar 0x8004, 0x40CE
-	compare_var_to_value 0x8004, 0x3
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_EndTowerBattle
-	setvar 0x8004, 0x12
-	special CallFrontierUtilFunc
+	copyvar VAR_0x8004, VAR_FRONTIER_BATTLE_MODE
+	goto_if_eq VAR_0x8004, FRONTIER_MODE_LINK_MULTIS, BattleFrontier_BattleTowerBattleRoom_EventScript_EndTowerBattle
+	frontier_restorehelditems
 	special HealPlayerParty
-	setvar 0x8004, 0x15
-	special CallFrontierUtilFunc
+	frontier_resetsketch
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_EndTowerBattle::
-	setvar 0x8004, 0xF
-	special sub_08161E88
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x5
-	special CallFrontierUtilFunc
+	tower_setinterviewdata
+	frontier_get FRONTIER_DATA_BATTLE_OUTCOME
 	return
 
 BattleFrontier_EventScript_SetBrainObjectGfx::
-	setvar 0x8004, 0x16
-	special CallFrontierUtilFunc
+	frontier_setbrainobj
 	return
 
 BattleFrontier_BattleTowerBattleRoom_Movement_PlayerEnter:
