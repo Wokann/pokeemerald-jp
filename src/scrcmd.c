@@ -1923,7 +1923,7 @@ bool8 ScrCmd_getpricereduction(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_showcontestresults(struct ScriptContext *ctx)
+bool8 ScrCmd_choosecontestmon(struct ScriptContext *ctx)
 {
     ChooseContestMon();
     ScriptContext_Stop();
@@ -1937,7 +1937,7 @@ bool8 ScrCmd_startcontest(struct ScriptContext *ctx)
     return TRUE;
 }
 
-bool8 ScrCmd_choosecontestmon(struct ScriptContext *ctx)
+bool8 ScrCmd_showcontestresults(struct ScriptContext *ctx)
 {
     ShowContestResults();
     ScriptContext_Stop();

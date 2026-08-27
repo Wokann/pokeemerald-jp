@@ -154,9 +154,9 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_POKEMARTDECORATION2 ScrCmd_pokemartdecoration2 @ 0x88
 	script_cmd_table_entry SCR_OP_PLAYSLOTMACHINE ScrCmd_playslotmachine @ 0x89
 	script_cmd_table_entry SCR_OP_SETBERRYTREE ScrCmd_setberrytree @ 0x8A
-	script_cmd_table_entry SCR_OP_SHOWCONTESTRESULTS ScrCmd_showcontestresults @ 0x8B
+	script_cmd_table_entry SCR_OP_CHOOSECONTESTMON ScrCmd_choosecontestmon @ 0x8B
 	script_cmd_table_entry SCR_OP_STARTCONTEST ScrCmd_startcontest @ 0x8C
-	script_cmd_table_entry SCR_OP_CHOOSECONTESTMON ScrCmd_choosecontestmon @ 0x8D
+	script_cmd_table_entry SCR_OP_SHOWCONTESTRESULTS ScrCmd_showcontestresults @ 0x8D
 	script_cmd_table_entry SCR_OP_CONTESTLINKTRANSFER ScrCmd_contestlinktransfer @ 0x8E
 	script_cmd_table_entry SCR_OP_RANDOM ScrCmd_random @ 0x8F
 	script_cmd_table_entry SCR_OP_90 ScrCmd_givemoney @ 0x90

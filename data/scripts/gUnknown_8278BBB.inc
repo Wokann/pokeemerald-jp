@@ -5,7 +5,7 @@
 	jp_raw_01_u16 0xC0C
 	gotostd 0x11
 	.byte 0xD4
-	showcontestresults
+	choosecontestmon
 	waitstate
 	gotostd 0x45
 	startcontest

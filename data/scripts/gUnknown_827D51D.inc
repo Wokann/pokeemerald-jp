@@ -5,7 +5,7 @@
 	end
 	addvar 0x20A, 0x90C
 	gotostd 0x3
-	choosecontestmon
+	showcontestresults
 	bufferstdstring 0xA, 0x208
 	end
 	nop

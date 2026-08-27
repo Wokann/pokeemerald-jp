@@ -5231,7 +5231,7 @@ __attribute__((naked)) void sub_080F8760(void)
     );
 }
 
-__attribute__((naked)) void sub_080F87C0(void)
+__attribute__((naked)) void TryEnterContestMon(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5271,7 +5271,7 @@ __attribute__((naked)) void sub_080F87C0(void)
     );
 }
 
-__attribute__((naked)) void sub_080F880C(void)
+__attribute__((naked)) void HasMonWonThisContestBefore(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5340,7 +5340,7 @@ __attribute__((naked)) void sub_080F880C(void)
     );
 }
 
-__attribute__((naked)) void sub_080F888C(void)
+__attribute__((naked)) void GiveMonContestRibbon(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5676,7 +5676,7 @@ __attribute__((naked)) void sub_080F8B18(void)
     );
 }
 
-__attribute__((naked)) void sub_080F8B3C(void)
+__attribute__((naked)) void GetContestMonConditionRanking(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5719,7 +5719,7 @@ __attribute__((naked)) void sub_080F8B3C(void)
     );
 }
 
-__attribute__((naked)) void sub_080F8B84(void)
+__attribute__((naked)) void GetContestMonCondition(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5740,7 +5740,7 @@ __attribute__((naked)) void sub_080F8B84(void)
     );
 }
 
-__attribute__((naked)) void sub_080F8BA4(void)
+__attribute__((naked)) void GetContestWinnerId(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5772,7 +5772,7 @@ __attribute__((naked)) void sub_080F8BA4(void)
     );
 }
 
-__attribute__((naked)) void sub_080F8BD4(void)
+__attribute__((naked)) void BufferContestWinnerTrainerName(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5810,7 +5810,7 @@ __attribute__((naked)) void sub_080F8BD4(void)
     );
 }
 
-__attribute__((naked)) void sub_080F8C14(void)
+__attribute__((naked)) void BufferContestWinnerMonName(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5990,7 +5990,7 @@ __attribute__((naked)) void sub_080F8D08(void)
     );
 }
 
-__attribute__((naked)) void sub_080F8D34(void)
+__attribute__((naked)) void GetContestPlayerId(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6494,7 +6494,7 @@ __attribute__((naked)) void SetContestTrainerGfxIds(void)
     );
 }
 
-__attribute__((naked)) void sub_080F90A4(void)
+__attribute__((naked)) void GetNpcContestantLocalId(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6537,7 +6537,7 @@ __attribute__((naked)) void sub_080F90A4(void)
     );
 }
 
-__attribute__((naked)) void sub_080F90E0(void)
+__attribute__((naked)) void BufferContestTrainerAndMonNames(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6619,7 +6619,7 @@ __attribute__((naked)) void sub_080F90F4(void)
     );
 }
 
-__attribute__((naked)) void sub_080F916C(void)
+__attribute__((naked)) void SaveMuseumContestPainting(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6632,7 +6632,7 @@ __attribute__((naked)) void sub_080F916C(void)
     );
 }
 
-__attribute__((naked)) void sub_080F9178(void)
+__attribute__((naked)) void ShouldReadyContestArtist(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6679,7 +6679,7 @@ __attribute__((naked)) void sub_080F9178(void)
     );
 }
 
-__attribute__((naked)) void CountPlayerContestPaintings(void)
+__attribute__((naked)) void CountPlayerMuseumPaintings(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6712,7 +6712,7 @@ __attribute__((naked)) void CountPlayerContestPaintings(void)
     );
 }
 
-__attribute__((naked)) void sub_080F9200(void)
+__attribute__((naked)) void GetContestantNamesAtRank(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6936,7 +6936,7 @@ __attribute__((naked)) void ShowContestWinner(void)
     );
 }
 
-__attribute__((naked)) void sub_080F938C(void)
+__attribute__((naked)) void SetLinkContestPlayerGfx(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7215,7 +7215,7 @@ __attribute__((naked)) void GiveMonArtistRibbon(void)
     );
 }
 
-__attribute__((naked)) void sub_080F95B4(void)
+__attribute__((naked)) void IsContestDebugActive(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7415,7 +7415,7 @@ __attribute__((naked)) void ShowContestEntryMonPic(void)
     );
 }
 
-__attribute__((naked)) void sub_080F9748(void)
+__attribute__((naked)) void HideContestEntryMonPic(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

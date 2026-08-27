@@ -19,7 +19,7 @@
 	end 
 	nop 
 	addpcitem 0x0, 0x5528
-	choosecontestmon 
+	showcontestresults
 	delay 0x1008
 	.byte 0x95
 	nop 

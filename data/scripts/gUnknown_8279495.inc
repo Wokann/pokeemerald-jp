@@ -4,7 +4,7 @@
 	gotostd_if 0x1, 0xC
 	returnram
 	gotostd 0x19
-	showcontestresults
+	choosecontestmon
 	nop
 	showcoinsbox 0x2, 0xA0
 	resetobjectsubpriority 0x855, 0x205

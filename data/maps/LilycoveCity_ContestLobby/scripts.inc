@@ -702,7 +702,7 @@ LilycoveCity_ContestLobby_EventScript_CancelLinkContest:: @ 0x0820703F
 LilycoveCity_ContestLobby_EventScript_ChooseLinkContestMon:: @ 0x0820704C
 	msgbox LilycoveCity_ContestLobby_Text_EnterWhichPokemon3, MSGBOX_DEFAULT
 	setvar VAR_CONTEST_RANK, 0
-	showcontestresults
+	choosecontestmon
 	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, LilycoveCity_ContestLobby_EventScript_CancelLinkContest
 	special TryEnterContestMon
 	goto_if_eq VAR_RESULT, CANT_ENTER_CONTEST, LilycoveCity_ContestLobby_EventScript_LinkCantEnterLowRank

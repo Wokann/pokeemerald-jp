@@ -92,21 +92,21 @@ gSpecials::
 	def_special CheckForBigMovieOrEmergencyNewsOnTV
 	def_special GetMomOrDadStringForTVMessage
 	def_special ResetTVShowState
-	def_special sub_080F8BA4
-	def_special sub_080F8D34
-	def_special sub_080F90A4
-	def_special sub_080F8BD4
-	def_special sub_080F8C14
-	def_special sub_080F90E0
-	def_special sub_080F8B3C
+	def_special GetContestWinnerId
+	def_special GetContestPlayerId
+	def_special GetNpcContestantLocalId
+	def_special BufferContestWinnerTrainerName
+	def_special BufferContestWinnerMonName
+	def_special BufferContestTrainerAndMonNames
+	def_special GetContestMonConditionRanking
 	def_special SetContestTrainerGfxIds
-	def_special sub_080F87C0
-	def_special sub_080F9200
-	def_special sub_080F938C
-	def_special sub_080F8B84
-	def_special sub_080F880C
-	def_special sub_080F888C
-	def_special sub_080F95B4
+	def_special TryEnterContestMon
+	def_special GetContestantNamesAtRank
+	def_special SetLinkContestPlayerGfx
+	def_special GetContestMonCondition
+	def_special HasMonWonThisContestBefore
+	def_special GiveMonContestRibbon
+	def_special IsContestDebugActive
 	def_special GiveMonArtistRibbon
 	def_special TryContestGModeLinkup
 	def_special SaveGame, waitstate=1
@@ -150,10 +150,10 @@ gSpecials::
 	def_special CalculatePlayerPartyCount
 	def_special CountPartyNonEggMons
 	def_special CountPartyAliveNonEggMons_IgnoreVar0x8004Slot
-	def_special sub_080F9178
-	def_special sub_080F916C
+	def_special ShouldReadyContestArtist
+	def_special SaveMuseumContestPainting
 	def_special sub_080F90F4
-	def_special CountPlayerContestPaintings
+	def_special CountPlayerMuseumPaintings
 	def_special ShowContestWinner
 	def_special MauvilleGymSetDefaultBarriers
 	def_special MauvilleGymPressSwitch
@@ -336,7 +336,7 @@ gSpecials::
 	def_special DoDiveWarp
 	def_special DoFallWarp, waitstate=1
 	def_special ShowContestEntryMonPic
-	def_special sub_080F9748
+	def_special HideContestEntryMonPic
 	def_special SetEReaderTrainerGfxId
 	def_special BattleSetup_StartLatiBattle, waitstate=1
 	def_special SetRoute119Weather
@@ -454,15 +454,15 @@ gSpecials::
 	def_special OffsetCameraForBattle
 	def_special sub_08139A68
 	def_special BufferVarsForIVRater
-	def_special sub_080F98EC
+	def_special LinkContestWaitForConnection, waitstate=1
 	def_special GetWirelessCommType
-	def_special sub_080F996C
-	def_special sub_080F999C
+	def_special LinkContestTryShowWirelessIndicator
+	def_special LinkContestTryHideWirelessIndicator
 	def_special IsWirelessContest
 	def_special ShowRankingHallRecordsWindow
 	def_special ScrollRankingHallRecordsWindow
 	def_special ShowFrontierManiacMessage
-	def_special sub_080F99C4
+	def_special IsContestWithRSPlayer
 	def_special ClearLinkContestFlags
 	def_special TryContestEModeLinkup
 	def_special ShowScrollableMultichoice, waitstate=1
@@ -589,22 +589,3 @@ gSpecials::
 	.set SPECIAL_WAITSTATE_IsMonOTIDNotPlayers, SPECIAL_WAITSTATE_TV_CheckMonOTIDEqualsPlayerID
 	.set SPECIAL_MonOTNameNotPlayer, SPECIAL_MonOTNameMatchesPlayer
 	.set SPECIAL_WAITSTATE_MonOTNameNotPlayer, SPECIAL_WAITSTATE_MonOTNameMatchesPlayer
-
-	@ Lilycove City Contest Lobby semantic aliases.  These retain the verified
-	@ JP special-table slots while allowing scripts to use pokeemerald-style names.
-	@ The JP scripts keep their explicit waitstate commands, so these aliases
-	@ deliberately inherit the current table metadata.
-	.set SPECIAL_BufferContestWinnerMonName, SPECIAL_sub_080F8C14
-	.set SPECIAL_WAITSTATE_BufferContestWinnerMonName, SPECIAL_WAITSTATE_sub_080F8C14
-	.set SPECIAL_GetContestPlayerId, SPECIAL_sub_080F8D34
-	.set SPECIAL_WAITSTATE_GetContestPlayerId, SPECIAL_WAITSTATE_sub_080F8D34
-	.set SPECIAL_TryEnterContestMon, SPECIAL_sub_080F87C0
-	.set SPECIAL_WAITSTATE_TryEnterContestMon, SPECIAL_WAITSTATE_sub_080F87C0
-	.set SPECIAL_SetLinkContestPlayerGfx, SPECIAL_sub_080F938C
-	.set SPECIAL_WAITSTATE_SetLinkContestPlayerGfx, SPECIAL_WAITSTATE_sub_080F938C
-	.set SPECIAL_IsContestDebugActive, SPECIAL_sub_080F95B4
-	.set SPECIAL_WAITSTATE_IsContestDebugActive, SPECIAL_WAITSTATE_sub_080F95B4
-	.set SPECIAL_SaveMuseumContestPainting, SPECIAL_sub_080F916C
-	.set SPECIAL_WAITSTATE_SaveMuseumContestPainting, SPECIAL_WAITSTATE_sub_080F916C
-	.set SPECIAL_CountPlayerMuseumPaintings, SPECIAL_CountPlayerContestPaintings
-	.set SPECIAL_WAITSTATE_CountPlayerMuseumPaintings, SPECIAL_WAITSTATE_CountPlayerContestPaintings

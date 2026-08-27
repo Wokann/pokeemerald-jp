@@ -109,7 +109,7 @@ __attribute__((naked)) void sub_080F98CC(void)
     );
 }
 
-__attribute__((naked)) void sub_080F98EC(void)
+__attribute__((naked)) void LinkContestWaitForConnection(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -186,7 +186,7 @@ __attribute__((naked)) void sub_080F9918(void)
     );
 }
 
-__attribute__((naked)) void sub_080F996C(void)
+__attribute__((naked)) void LinkContestTryShowWirelessIndicator(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -215,7 +215,7 @@ __attribute__((naked)) void sub_080F996C(void)
     );
 }
 
-__attribute__((naked)) void sub_080F999C(void)
+__attribute__((naked)) void LinkContestTryHideWirelessIndicator(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -241,7 +241,7 @@ __attribute__((naked)) void sub_080F999C(void)
     );
 }
 
-__attribute__((naked)) void sub_080F99C4(void)
+__attribute__((naked)) void IsContestWithRSPlayer(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
