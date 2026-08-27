@@ -596,3 +596,174 @@ gText_MovedBackInLineForNextAppeal::
 gText_ScrambledUpOrderForNextTurn::
 	.string "つぎの　ターンの　じゅんばんを\n"
 	.string "おかしく　した！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_JudgeLookedAtMonExpectantly::
+	.string "しんさいんが　きたいして\n"
+	.string "{B_COPY_VAR_1}を　みつめた！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_AppealComboWentOverWell::
+	.string "アピールの　くみあわせが\n"
+	.string "きに　いって　もらえた！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_AppealComboWentOverVeryWell::
+	.string "アピールの　くみあわせが\n"
+	.string "かなり　きに　いられた！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_AppealComboWentOverExcellently::
+	.string "アピールの　くみあわせが\n"
+	.string "ものすごく　きに　いられた！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonManagedToAvertGaze::
+	.string "{B_COPY_VAR_1}は　なんとか\n"
+	.string "めを　そらした！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonManagedToAvoidSeeingIt::
+	.string "{B_COPY_VAR_1}は\n"
+	.string "そっちを　みずに　すんだ！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonIsntFazedByThatSortOfThing::
+	.string "{B_COPY_VAR_1}は\n"
+	.string "このくらいは　へいきだった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonBecameALittleDistracted::
+	.string "{B_COPY_VAR_1}は　ちょっと\n"
+	.string "きを　とられて　しまった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_TriedToStartleOtherPokemon::
+	.string "ほかの　ポケモンを\n"
+	.string "びっくり　させようと　した！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonLookedDownOutOfDistraction::
+	.string "{B_COPY_VAR_1}は　きを　とられて\n"
+	.string "したを　むいて　しまった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonTurnedBackOutOfDistraction::
+	.string "{B_COPY_VAR_1}は　きを　とられて\n"
+	.string "ふりかえって　しまった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonCouldntHelpUtteringCry::
+	.string "{B_COPY_VAR_1}は　おもわず\n"
+	.string "こえを　あげて　しまった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonCouldntHelpLeapingUp::
+	.string "{B_COPY_VAR_1}は　おもわず\n"
+	.string "とびあがって　しまった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonTrippedOutOfDistraction::
+	.string "{B_COPY_VAR_1}は　きを　とられて\n"
+	.string "ひっくり　かえって　しまった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonWasTooNervousToMove::
+	.string "{B_COPY_VAR_1}は　きんちょうして\n"
+	.string "アピールが　できなかった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_ButItMessedUp2::
+	.string "でも　しっぱい　してしまった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_ButItFailedToMakeTargetNervous::
+	.string "でも　きんちょう\n"
+	.string "させられなかった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_ButItFailedToMakeAnyoneNervous::
+	.string "でも　だれも\n"
+	.string "きんちょう　しなかった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_ButItWasIgnored::
+	.string "でも　むし　されて　しまった⋯{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_CouldntImproveItsCondition::
+	.string "でも　ちょうしは\n"
+	.string "あがらなかった⋯{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_BadConditionResultedInWeakAppeal::
+	.string "ちょうしが　よく　なくて\n"
+	.string "あまり　うまく　できなかった⋯{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonWasUnaffected::
+	.string "{B_COPY_VAR_1}は\n"
+	.string "へいき　だった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_RepeatedAppeal::
+	.string "{B_COPY_VAR_1}は　おなじアピールを\n"
+	.string "つづけて　がっかり　された！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsXWentOverGreat::
+	.string "{B_COPY_VAR_1}の　{B_COPY_VAR_3}が\n"
+	.string "まわりに　とても　うけた！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsXDidntGoOverWell::
+	.string "{B_COPY_VAR_1}の　{B_COPY_VAR_3}は\n"
+	.string "ここでは　うけなかった⋯{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsXGotTheCrowdGoing::
+	.string "{B_COPY_VAR_1}の　{B_COPY_VAR_3}に\n"
+	.string "まわりが　もりあがった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonCantAppealNextTurn::
+	.string "{B_COPY_VAR_1}は　つぎの　アピールに\n"
+	.string "さんか　できなくなった！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_AttractedCrowdsAttention::
+	.string "かんきゃくの\n"
+	.string "ちゅうもくを　あつめた！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_CrowdContinuesToWatchMon::
+	.string "かんきゃくは\n"
+	.string "{B_COPY_VAR_3}を　みつづけている！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_MonsMoveIsIgnored::
+	.string "{B_COPY_VAR_1}の　{B_COPY_VAR_2}は\n"
+	.string "めを　むけられなかった⋯{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_Contest_Shyness::
+	.string "モジモジ$"
+
+gText_Contest_Anxiety::
+	.string "ドキドキ$"
+
+gText_Contest_Laziness::
+	.string "デレデレ$"
+
+gText_Contest_Hesitancy::
+	.string "オロオロ$"
+
+gText_Contest_Fear::
+	.string "ビクビク$"
+
+gText_Contest_Coolness::
+	.string "かっこよさ$"
+
+gText_Contest_Beauty::
+	.string "うつくしさ$"
+
+gText_Contest_Cuteness::
+	.string "かわいさ$"
+
+gText_Contest_Smartness::
+	.string "かしこさ$"
+
+gText_Contest_Toughness::
+	.string "たくましさ$"
+
+@ Unused
+
+gText_Tension::
+	.string "テンション$"
+
+gText_CoolMove::
+	.string "かっこいい　わざ$"
+
+gText_BeautyMove::
+	.string "うつくしい　わざ$"
+
+gText_CuteMove::
+	.string "かわいい　わざ$"
+
+gText_SmartMove::
+	.string "かしこい　わざ$"
+
+gText_ToughMove::
+	.string "たくましい　わざ$"
+
+gText_3QuestionMarks::
+	.string "？？？$"

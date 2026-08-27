@@ -1,5 +1,0 @@
-	.byte 0xFD
-	end
-	setorcopyvar 0x700, 0x112E
-	fadenewbgm 0xC03
-	.incbin "baserom_jp.gba", 0x24BECB, 0xF3

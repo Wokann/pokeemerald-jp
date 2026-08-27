@@ -1257,73 +1257,8 @@ Common_EventScript_LegendaryFlewAway::
 
 	.include "data/text/contest_strings.inc"
 
-	.globl gUnknown_824BCCF
-gUnknown_824BCCF: @ 0x824BCCF
-	.include "data/scripts/gUnknown_824BCCF.inc"
-
-	.globl gUnknown_824BCF2
-gUnknown_824BCF2: @ 0x824BCF2
-	.include "data/scripts/gUnknown_824BCF2.inc"
-
-	.globl gUnknown_824BD18
-gUnknown_824BD18: @ 0x824BD18
-	.include "data/scripts/gUnknown_824BD18.inc"
-
-	.globl gUnknown_824BD3E
-gUnknown_824BD3E: @ 0x824BD3E
-	.include "data/scripts/gUnknown_824BD3E.inc"
-
-	.globl gUnknown_824BEC1
-gUnknown_824BEC1: @ 0x824BEC1
-	.include "data/scripts/gUnknown_824BEC1.inc"
-
-	.globl gUnknown_824BFBE
-gUnknown_824BFBE: @ 0x824BFBE
-	.include "data/scripts/gUnknown_824BFBE.inc"
-
-	.globl gUnknown_824BFE6
-gUnknown_824BFE6: @ 0x824BFE6
-	.include "data/scripts/gUnknown_824BFE6.inc"
-
-	.globl gUnknown_824C008
-gUnknown_824C008: @ 0x824C008
-	.include "data/scripts/gUnknown_824C008.inc"
-
-	.globl gUnknown_824C029
-gUnknown_824C029: @ 0x824C029
-	.include "data/scripts/gUnknown_824C029.inc"
-
-	.globl gUnknown_824C04A
-gUnknown_824C04A: @ 0x824C04A
-	.include "data/scripts/gUnknown_824C04A.inc"
-
-	.globl gUnknown_824C091
-gUnknown_824C091: @ 0x824C091
-	.include "data/scripts/gUnknown_824C091.inc"
-
-	.globl gUnknown_824C0B1
-gUnknown_824C0B1: @ 0x824C0B1
-	.include "data/scripts/gUnknown_824C0B1.inc"
-
-	.globl gUnknown_824C0D2
-gUnknown_824C0D2: @ 0x824C0D2
-	.include "data/scripts/gUnknown_824C0D2.inc"
-
-	.globl gUnknown_824C0D7
-gUnknown_824C0D7: @ 0x824C0D7
-	.string "ドキドキ$"
-
-	.globl gUnknown_824C0DC
-gUnknown_824C0DC: @ 0x824C0DC
-	.string "デレデレ$"
-
-	.globl gUnknown_824C0E1
-gUnknown_824C0E1: @ 0x824C0E1
-	.string "オロオロ$"
-
-	.globl gUnknown_824C0E6
-gUnknown_824C0E6: @ 0x824C0E6
-	.include "data/scripts/gUnknown_824C0E6.inc"
+gUnknown_824C13C: @ 0x824C13C
+	.incbin "baserom_jp.gba", 0x24c13c, 0x4
 
 	.globl gUnknown_824C140
 gUnknown_824C140: @ 0x824C140
