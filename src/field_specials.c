@@ -3838,7 +3838,7 @@ __attribute__((naked)) void warp0_in_pokecenter(void)
     );
 }
 
-__attribute__((naked)) void sub_08139F0C(void)
+__attribute__((naked)) void PlayerNotAtTrainerHillEntrance(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

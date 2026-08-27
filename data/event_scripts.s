@@ -916,9 +916,7 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 
 	.include "data/scripts/white_out.inc"
 
-	.globl Common_EventScript_PkmnCenterNurse
-Common_EventScript_PkmnCenterNurse: @ 0x82429B8
-	.include "data/scripts/Common_EventScript_PkmnCenterNurse.inc"
+	.include "data/scripts/pkmn_center_nurse.inc"
 Std_ObtainItem:: @ 0x8242B6D
 	.include "data/scripts/gUnknown_8242B6D.inc"
 Std_ObtainDecoration:: @ 0x8242C4F

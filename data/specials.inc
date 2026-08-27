@@ -550,7 +550,7 @@ gSpecials::
 	def_special TryBufferWaldaPhrase
 	def_special DoWaldaNamingScreen, waitstate=1
 	def_special TryGetWallpaperWithWaldaPhrase
-	def_special sub_08139F0C
+	def_special PlayerNotAtTrainerHillEntrance
 	def_special sub_0813B9A0
 	@ Battle Pyramid's JP hint selector keeps its original C symbol.
 	.set SPECIAL_GetBattlePyramidHint, SPECIAL_sub_0813B9A0
