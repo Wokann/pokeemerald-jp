@@ -1,218 +1,257 @@
-@ SSTidalCorridor scripts (JP map g25 m41 @ 0x0821DE46)
-
 SSTidalCorridor_MapScripts::
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, SSTidalCorridor_MapScriptTable_0021DE4C
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, SSTidalCorridor_OnFrame
 	.byte 0
 
-SSTidalCorridor_MapScriptTable_0021DE4C::
-	map_script_2 0x40D4, 0x0, SSTidalCorridor_EventScript_0021E090
-	map_script_2 0x40B4, 0x1, SSTidalCorridor_EventScript_0021DE76
-	map_script_2 0x40B4, 0x5, SSTidalCorridor_EventScript_0021DE8C
-	map_script_2 0x40B4, 0x9, SSTidalCorridor_EventScript_0021DEDE
-	map_script_2 0x40B4, 0xA, SSTidalCorridor_EventScript_0021DEF4
+SSTidalCorridor_OnFrame:
+	map_script_2 VAR_SS_TIDAL_SCOTT_STATE, 0, SSTidalCorridor_EventScript_ScottScene
+	map_script_2 VAR_SS_TIDAL_STATE, SS_TIDAL_BOARD_SLATEPORT, SSTidalCorridor_EventScript_DepartSlateportForLilycove
+	map_script_2 VAR_SS_TIDAL_STATE, SS_TIDAL_BOARD_LILYCOVE, SSTidalCorridor_EventScript_DepartLilycoveForSlateport
+	map_script_2 VAR_SS_TIDAL_STATE, SS_TIDAL_EXIT_CURRENTS_RIGHT, SSTidalCorridor_EventScript_HalfwayToLilycove
+	map_script_2 VAR_SS_TIDAL_STATE, SS_TIDAL_EXIT_CURRENTS_LEFT, SSTidalCorridor_EventScript_ArrivedInSlateport
 	.2byte 0
 
-SSTidalCorridor_EventScript_0021DE76::
+SSTidalCorridor_EventScript_DepartSlateportForLilycove::
 	special SetSSTidalFlag
-	setvar 0x40B4, 0x2
+	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_DEPART_SLATEPORT
 	lockall
-	playse 0x49
-	loadword 0x0, gJPText_0021E201
-	callstd 0x4
+	playse SE_DING_DONG
+	msgbox SSTidal_Text_FastCurrentsHopeYouEnjoyVoyage, MSGBOX_DEFAULT
 	releaseall
 	end
 
-SSTidalCorridor_EventScript_0021DE8C::
-	setvar 0x40B4, 0x6
+SSTidalCorridor_EventScript_DepartLilycoveForSlateport::
+	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_DEPART_LILYCOVE
 	lockall
-	playse 0x49
-	loadword 0x0, gJPText_0021E227
-	callstd 0x4
+	playse SE_DING_DONG
+	msgbox SSTidal_Text_HopeYouEnjoyVoyage, MSGBOX_DEFAULT
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x21de9f, 0x3f
-SSTidalCorridor_EventScript_0021DEDE::
+SSTidalRooms_EventScript_HalfwayToSlateport::
+	special SetSSTidalFlag
+	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_HALFWAY_SLATEPORT
+	playse SE_DING_DONG
+	msgbox SSTidal_Text_FastCurrentsHopeYouEnjoyVoyage, MSGBOX_DEFAULT
+	return
+
+SSTidalRooms_EventScript_ArrivedInLilycove::
 	special ResetSSTidalFlag
-	setvar 0x40B4, 0x3
-	lockall
-	playse 0x49
-	loadword 0x0, gJPText_0021E227
-	callstd 0x4
-	releaseall
+	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_LAND_LILYCOVE
+	playse SE_DING_DONG
+	msgbox SSTidal_Text_MadeLandInLilycove, MSGBOX_DEFAULT
+	return
+
+SSTidalCorridor_EventScript_ReachedStepCount::
+	goto_if_eq VAR_SS_TIDAL_STATE, SS_TIDAL_DEPART_SLATEPORT, SSTidalCorridor_EventScript_HalfwayToLilycove
+	goto_if_eq VAR_SS_TIDAL_STATE, SS_TIDAL_HALFWAY_SLATEPORT, SSTidalCorridor_EventScript_ArrivedInSlateport
 	end
 
-SSTidalCorridor_EventScript_0021DEF4::
+SSTidalCorridor_EventScript_HalfwayToLilycove::
 	special ResetSSTidalFlag
-	setvar 0x40B4, 0x8
+	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_HALFWAY_LILYCOVE
 	lockall
-	playse 0x49
-	loadword 0x0, gJPText_0021E248
-	callstd 0x4
+	playse SE_DING_DONG
+	msgbox SSTidal_Text_HopeYouEnjoyVoyage, MSGBOX_DEFAULT
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x21df0a, 0x46
-SSTidalCorridor_EventScript_0021DF50::
-	loadword 0x0, 0x0821E350
-	callstd 0x2
+SSTidalCorridor_EventScript_ArrivedInSlateport::
+	special ResetSSTidalFlag
+	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_LAND_SLATEPORT
+	lockall
+	playse SE_DING_DONG
+	msgbox SSTidal_Text_MadeLandInSlateport, MSGBOX_DEFAULT
+	releaseall
 	end
 
-SSTidalCorridor_EventScript_0021DF59::
+SSTidalRooms_EventScript_ArrivedInSlateport::
+	special ResetSSTidalFlag
+	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_LAND_SLATEPORT
+	playse SE_DING_DONG
+	msgbox SSTidal_Text_MadeLandInSlateport, MSGBOX_DEFAULT
+	return
+
+SSTidalRooms_EventScript_ProgessCruiseAfterBed::
+	switch VAR_SS_TIDAL_STATE
+	case SS_TIDAL_DEPART_SLATEPORT, SSTidalRooms_EventScript_ArrivedInLilycove
+	case SS_TIDAL_HALFWAY_LILYCOVE, SSTidalRooms_EventScript_ArrivedInLilycove
+	case SS_TIDAL_DEPART_LILYCOVE, SSTidalRooms_EventScript_HalfwayToSlateport
+	case SS_TIDAL_HALFWAY_SLATEPORT, SSTidalRooms_EventScript_ArrivedInSlateport
+	return
+
+SSTidalCorridor_EventScript_Briney::
+	msgbox SSTidalCorridor_Text_BrineyWelcomeAboard, MSGBOX_NPC
+	end
+
+SSTidalCorridor_EventScript_Peeko::
 	lock
 	faceplayer
 	waitse
-	playmoncry 0x135, 0x0
-	loadword 0x0, 0x0821E3B8
-	callstd 0x4
-	waitdooranim
+	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
+	msgbox SSTidalCorridor_Text_Peeko, MSGBOX_DEFAULT
+	waitmoncry_jp
 	release
 	end
 
-SSTidalCorridor_EventScript_0021DF6C::
-	loadword 0x0, 0x0821E3C9
-	callstd 0x3
+SSTidalCorridor_EventScript_Cabin1Sign::
+	msgbox SSTidalCorridor_Text_Cabin1, MSGBOX_SIGN
 	end
 
-SSTidalCorridor_EventScript_0021DF75::
-	loadword 0x0, 0x0821E3CF
-	callstd 0x3
+SSTidalCorridor_EventScript_Cabin2Sign::
+	msgbox SSTidalCorridor_Text_Cabin2, MSGBOX_SIGN
 	end
 
-SSTidalCorridor_EventScript_0021DF7E::
-	loadword 0x0, 0x0821E3D5
-	callstd 0x3
+SSTidalCorridor_EventScript_Cabin3Sign::
+	msgbox SSTidalCorridor_Text_Cabin3, MSGBOX_SIGN
 	end
 
-SSTidalCorridor_EventScript_0021DF87::
-	loadword 0x0, 0x0821E3DB
-	callstd 0x3
+SSTidalCorridor_EventScript_Cabin4Sign::
+	msgbox SSTidalCorridor_Text_Cabin4, MSGBOX_SIGN
 	end
 
-SSTidalCorridor_EventScript_0021DF90::
+SSTidalCorridor_EventScript_ExitSailor::
 	lock
 	faceplayer
-	compare_var_to_value 0x40B4, 0x4
-	goto_if 0x1, SSTidalCorridor_EventScript_0021DFB2
-	compare_var_to_value 0x40B4, 0x8
-	goto_if 0x1, SSTidalCorridor_EventScript_0021DFD1
-	loadword 0x0, 0x0821E28A
-	callstd 0x4
+	goto_if_eq VAR_SS_TIDAL_STATE, SS_TIDAL_LAND_LILYCOVE, SSTidalCorridor_EventScript_ExitLilycove
+	goto_if_eq VAR_SS_TIDAL_STATE, SS_TIDAL_LAND_SLATEPORT, SSTidalCorridor_EventScript_ExitSlateport
+	msgbox SSTidalCorridor_Text_CanRestInCabin2, MSGBOX_DEFAULT
 	release
 	end
 
-SSTidalCorridor_EventScript_0021DFB2::
-	setrespawn 0x8
-	loadword 0x0, 0x0821E2E5
-	callstd 0x4
-	checkflag 0x104
-	call_if 0x1, SSTidalCorridor_EventScript_0021DFF0
-	warp 0xD0A, 0xFF, 0x8, 0xB
+SSTidalCorridor_EventScript_ExitLilycove::
+	setrespawn HEAL_LOCATION_LILYCOVE_CITY
+	msgbox SSTidalCorridor_Text_WeveArrived, MSGBOX_DEFAULT
+	call_if_set FLAG_RECEIVED_TM_SNATCH, SSTidalCorridor_EventScript_HideSnatchGiver
+	warp MAP_LILYCOVE_CITY_HARBOR, 8, 11
 	waitstate
 	release
 	end
 
-SSTidalCorridor_EventScript_0021DFD1::
-	setrespawn 0x4
-	loadword 0x0, 0x0821E2E5
-	callstd 0x4
-	checkflag 0x104
-	call_if 0x1, SSTidalCorridor_EventScript_0021DFF0
-	warp 0x909, 0xFF, 0x8, 0xB
+SSTidalCorridor_EventScript_ExitSlateport::
+	setrespawn HEAL_LOCATION_SLATEPORT_CITY
+	msgbox SSTidalCorridor_Text_WeveArrived, MSGBOX_DEFAULT
+	call_if_set FLAG_RECEIVED_TM_SNATCH, SSTidalCorridor_EventScript_HideSnatchGiver
+	warp MAP_SLATEPORT_CITY_HARBOR, 8, 11
 	waitstate
 	release
 	end
 
-SSTidalCorridor_EventScript_0021DFF0::
-	setflag 0x3B7
+SSTidalCorridor_EventScript_HideSnatchGiver::
+	setflag FLAG_HIDE_SS_TIDAL_ROOMS_SNATCH_GIVER
 	return
 
-SSTidalCorridor_EventScript_0021DFF4::
+SSTidalCorridor_EventScript_Porthole::
 	lockall
-	compare_var_to_value 0x40B4, 0x2
-	goto_if 0x1, SSTidalCorridor_EventScript_0021E015
-	compare_var_to_value 0x40B4, 0x7
-	goto_if 0x1, SSTidalCorridor_EventScript_0021E015
-	loadword 0x0, 0x0821E336
-	callstd 0x4
+	goto_if_eq VAR_SS_TIDAL_STATE, SS_TIDAL_DEPART_SLATEPORT, SSTidalCorridor_EventScript_LookThroughPorthole
+	goto_if_eq VAR_SS_TIDAL_STATE, SS_TIDAL_HALFWAY_SLATEPORT, SSTidalCorridor_EventScript_LookThroughPorthole
+	msgbox SSTidalCorridor_Text_HorizonSpreadsBeyondPorthole, MSGBOX_DEFAULT
 	releaseall
 	end
 
-SSTidalCorridor_EventScript_0021E015::
-	special sub_080FC014
-	waitstate
+SSTidalCorridor_EventScript_LookThroughPorthole::
+	special LookThroughPorthole
 	end
 
-SSTidalCorridor_EventScript_0021E01A::
+SSTidalCorridor_EventScript_Sailor::
 	lock
 	faceplayer
-	checkflag 0xF7
-	goto_if 0x1, SSTidalCorridor_EventScript_0021E034
-	call SSTidalCorridor_EventScript_0021E03E
-	loadword 0x0, 0x0821E2F0
-	callstd 0x4
+	goto_if_set FLAG_DEFEATED_SS_TIDAL_TRAINERS, SSTidalCorridor_EventScript_EnjoyYourCruise
+	call SSTidalCorridor_EventScript_CheckIfTrainersDefeated
+	msgbox SSTidalCorridor_Text_VisitOtherCabins, MSGBOX_DEFAULT
 	release
 	end
 
-SSTidalCorridor_EventScript_0021E034::
-	loadword 0x0, 0x0821E324
-	callstd 0x4
+SSTidalCorridor_EventScript_EnjoyYourCruise::
+	msgbox SSTidalCorridor_Text_EnjoyYourCruise, MSGBOX_DEFAULT
 	release
 	end
 
-SSTidalCorridor_EventScript_0021E03E::
-	checktrainerflag 0x1EE
-	goto_if 0x0, SSTidalCorridor_EventScript_0021E08F
-	checktrainerflag 0x1EF
-	goto_if 0x0, SSTidalCorridor_EventScript_0021E08F
-	checktrainerflag 0x126
-	goto_if 0x0, SSTidalCorridor_EventScript_0021E08F
-	checktrainerflag 0xFF
-	goto_if 0x0, SSTidalCorridor_EventScript_0021E08F
-	checktrainerflag 0x100
-	goto_if 0x0, SSTidalCorridor_EventScript_0021E08F
-	checktrainerflag 0x281
-	goto_if 0x0, SSTidalCorridor_EventScript_0021E08F
-	checktrainerflag 0x8A
-	goto_if 0x0, SSTidalCorridor_EventScript_0021E08F
-	checktrainerflag 0x77
-	goto_if 0x0, SSTidalCorridor_EventScript_0021E08F
-	setflag 0xF7
-	goto SSTidalCorridor_EventScript_0021E034
+SSTidalCorridor_EventScript_CheckIfTrainersDefeated::
+	goto_if_not_defeated TRAINER_PHILLIP, SSTidalCorridor_EventScript_TrainerNotDefeated
+	goto_if_not_defeated TRAINER_LEONARD, SSTidalCorridor_EventScript_TrainerNotDefeated
+	goto_if_not_defeated TRAINER_COLTON, SSTidalCorridor_EventScript_TrainerNotDefeated
+	goto_if_not_defeated TRAINER_MICAH, SSTidalCorridor_EventScript_TrainerNotDefeated
+	goto_if_not_defeated TRAINER_THOMAS, SSTidalCorridor_EventScript_TrainerNotDefeated
+	goto_if_not_defeated TRAINER_LEA_AND_JED, SSTidalCorridor_EventScript_TrainerNotDefeated
+	goto_if_not_defeated TRAINER_GARRET, SSTidalCorridor_EventScript_TrainerNotDefeated
+	goto_if_not_defeated TRAINER_NAOMI, SSTidalCorridor_EventScript_TrainerNotDefeated
+	setflag FLAG_DEFEATED_SS_TIDAL_TRAINERS
+	goto SSTidalCorridor_EventScript_EnjoyYourCruise
 	return
 
-SSTidalCorridor_EventScript_0021E08F::
+SSTidalCorridor_EventScript_TrainerNotDefeated::
 	return
 
-SSTidalCorridor_EventScript_0021E090::
+SSTidalCorridor_EventScript_ScottScene::
 	lockall
-	applymovement 0x5, 0x0821E0E4
-	waitmovement 0x0
-	applymovement 0xFF, 0x0824362B
-	waitmovement 0x0
-	loadword 0x0, gJPText_0021E106
-	callstd 0x4
+	applymovement LOCALID_SS_TIDAL_SCOTT, SSTidalCorridor_Movement_ScottApproachPlayer
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	msgbox SSTidalCorridor_Text_ScottBattleFrontierInvite, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xFF, 0x0821E0F4
-	applymovement 0x1, 0x0821E0FB
-	applymovement 0x5, 0x0821E0EC
-	waitmovement 0x0
-	playse 0x9
+	applymovement LOCALID_PLAYER, SSTidalCorridor_Movement_PlayerWatchScottExit
+	applymovement LOCALID_SS_TIDAL_EXIT_SAILOR, SSTidalCorridor_Movement_SailorMoveForScott
+	applymovement LOCALID_SS_TIDAL_SCOTT, SSTidalCorridor_Movement_ScottExit
+	waitmovement 0
+	playse SE_EXIT
 	waitse
-	removeobject 0x5
-	applymovement 0x1, 0x0821E102
-	waitmovement 0x0
-	delay 0x1E
-	setflag 0x1D0
-	setvar 0x40D4, 0x1
+	removeobject LOCALID_SS_TIDAL_SCOTT
+	applymovement LOCALID_SS_TIDAL_EXIT_SAILOR, SSTidalCorridor_Movement_SailorReturn
+	waitmovement 0
+	delay 30
+	setflag FLAG_MET_SCOTT_ON_SS_TIDAL
+	setvar VAR_SS_TIDAL_SCOTT_STATE, 1
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x21e0e4, 0x22
-	.globl gJPText_0021E106
-gJPText_0021E106: @ 0x0821E106
+SSTidalCorridor_Movement_ScottApproachPlayer:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+SSTidalCorridor_Movement_ScottExit:
+	walk_in_place_faster_down
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	walk_down
+	walk_left
+	step_end
+
+SSTidalCorridor_Movement_PlayerWatchScottExit:
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_8
+	walk_in_place_faster_down
+	step_end
+
+SSTidalCorridor_Movement_SailorMoveForScott:
+	delay_16
+	walk_right
+	walk_right
+	walk_in_place_faster_up
+	delay_16
+	walk_in_place_faster_left
+	step_end
+
+SSTidalCorridor_Movement_SailorReturn:
+	walk_left
+	walk_left
+	walk_in_place_faster_up
+	step_end
+
+SSTidalCorridor_Text_ScottBattleFrontierInvite:
 	.string "エニシダ“やあ　やあ　やあ\n"
-	.string "{MUS_RG_VS_TRAINER}{B_PLAYER_MON1_NAME}　{MUS_RG_VS_TRAINER}{B_PLAYER_MON1_NAME}！\p"
+	.string "{PLAYER}{KUN}　{PLAYER}{KUN}！\p"
 	.string "わたしは　ようじが　あって\n"
 	.string "もう　ふねを　おりるんだけど\l"
 	.string "あえて　よかったよ！\p"
@@ -226,20 +265,67 @@ gJPText_0021E106: @ 0x0821E106
 	.string "はなしを　しておいた　から⋯⋯\l"
 	.string "つぎから　ふねに　のるときは\l"
 	.string "バトルフロンティアに　いける　はずだよ！\p"
-	.string "じゃあね　{MUS_RG_VS_TRAINER}{B_PLAYER_MON1_NAME}\n"
+	.string "じゃあね　{PLAYER}{KUN}\n"
 	.string "バトルフロンティアで　まっているよ！$"
 
-	.globl gJPText_0021E201
-gJPText_0021E201: @ 0x0821E201
+SSTidal_Text_FastCurrentsHopeYouEnjoyVoyage:
 	.string "かいりゅうを　ものともせず　すすむ\n"
 	.string "れんらくせんを　どうぞ　ごらんください$"
 
-	.globl gJPText_0021E227
-gJPText_0021E227: @ 0x0821E227
+SSTidal_Text_HopeYouEnjoyVoyage:
 	.string "それでは　れんらくせんに　よる\n"
 	.string "ふなたびを　おたのしみ　ください$"
 
-	.globl gJPText_0021E248
-gJPText_0021E248: @ 0x0821E248
+SSTidal_Text_MadeLandInSlateport:
 	.string "おつかれさまです　ただいま\n"
 	.string "カイナシティに　とうちゃく　しました$"
+
+SSTidal_Text_MadeLandInLilycove:
+	.string "おつかれさまです　ただいま\n"
+	.string "ミナモシティに　とうちゃく　しました$"
+
+SSTidalCorridor_Text_CanRestInCabin2:
+	.string "とうちゃくまで　まだまだ　だな\p"
+	.string "じぶんの　へやに　もどって　やすんでいなよ\n"
+	.string "たしか　きみの　へやは\l"
+	.string "2ごうしつ　だったな\p"
+	.string "あの　へやの　ベッドは\n"
+	.string "ふかふか　していて　きもちいいぞ！$"
+
+SSTidalCorridor_Text_WeveArrived:
+	.string "とうちゃく　したぞ！$"
+
+SSTidalCorridor_Text_VisitOtherCabins:
+	.string "ふなたびに　あきちゃって\n"
+	.string "きゃくしつで　ポケモンで　しょうぶを\l"
+	.string "したがっている　トレーナーも　いるぞ！$"
+
+SSTidalCorridor_Text_EnjoyYourCruise:
+	.string "まっ　ふなたびを　たのしんでくれよ$"
+
+SSTidalCorridor_Text_HorizonSpreadsBeyondPorthole:
+	.string "まどの　むこうに\n"
+	.string "すいへいせんが　ひろがっている！$"
+
+SSTidalCorridor_Text_BrineyWelcomeAboard:
+	.string "ハギ“ようこそ！　{PLAYER}{KUN}！\p"
+	.string "わしが　この　タイドリップごうの\n"
+	.string "めいよ　せんちょう　ハギ　じゃよ！\p"
+	.string "いやぁ　いちどは　いんたい　したが\n"
+	.string "こんな　すごい　ふねを　みてしまうと\l"
+	.string "ふなのりの　ちが　さわぐのう！！$"
+
+SSTidalCorridor_Text_Peeko:
+	.string "ピーコ“ピひょ　ピひょひょ⋯⋯！$"
+
+SSTidalCorridor_Text_Cabin1:
+	.string "1ごうしつ$"
+
+SSTidalCorridor_Text_Cabin2:
+	.string "2ごうしつ$"
+
+SSTidalCorridor_Text_Cabin3:
+	.string "3ごうしつ$"
+
+SSTidalCorridor_Text_Cabin4:
+	.string "4ごうしつ$"

@@ -542,7 +542,6 @@ FreezeObjectEventsExceptTwo = sub_080979FC;
 GetTruckBoxMovement = GetTruckBoxYMovement;
 sub_080FBE0C = TrySetPortholeWarpDestination;
 sub_080FBF5C = ShowSSTidalWhileSailing;
-sub_080FC014 = LookThroughPorthole;
 SetObjectEventSpritePosByLocalIdAndMap = sub_0808E19C;
 sub_0818D388 = LoadPicSpriteInWindow;
 sub_0818D3F8 = CreateTrainerCardSprite;
