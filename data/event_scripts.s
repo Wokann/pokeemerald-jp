@@ -823,7 +823,6 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/SafariZone_North/scripts.inc"
 	.include "data/maps/SafariZone_Southwest/scripts.inc"
 	.include "data/maps/SafariZone_South/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21eb6b, 0x36
 	.include "data/maps/BattleFrontier_OutsideWest/scripts.inc"
 	.incbin "baserom_jp.gba", 0x21eeb7, 0x805
 	.include "data/maps/BattleFrontier_BattleTowerLobby/scripts.inc"
