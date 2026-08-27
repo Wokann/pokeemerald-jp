@@ -5669,7 +5669,7 @@ __attribute__((naked)) void sub_0813AC90(void)
     );
 }
 
-__attribute__((naked)) void sub_0813ACC8(void)
+__attribute__((naked)) void BufferBattleFrontierTutorMoveName(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5827,7 +5827,7 @@ __attribute__((naked)) void sub_0813AD6C(void)
     );
 }
 
-__attribute__((naked)) void sub_0813ADF0(void)
+__attribute__((naked)) void CloseBattleFrontierTutorWindow(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5847,7 +5847,7 @@ __attribute__((naked)) void sub_0813ADF0(void)
     );
 }
 
-__attribute__((naked)) void sub_0813AE0C(void)
+__attribute__((naked)) void ScrollableMultichoice_RedrawPersistentMenu(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5957,7 +5957,7 @@ __attribute__((naked)) void sub_0813AE0C(void)
     );
 }
 
-__attribute__((naked)) void sub_0813AEEC(void)
+__attribute__((naked)) void GetBattleFrontierTutorMoveIndex(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6035,7 +6035,7 @@ __attribute__((naked)) void sub_0813AEEC(void)
     );
 }
 
-__attribute__((naked)) void sub_0813AF80(void)
+__attribute__((naked)) void ScrollableMultichoice_ClosePersistentMenu(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -849,7 +849,7 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/BattleFrontier_ScottsHouse/scripts.inc"
 	.include "data/maps/BattleFrontier_Lounge5/scripts.inc"
 	.include "data/maps/BattleFrontier_Lounge6/scripts.inc"
-	.incbin "baserom_jp.gba", 0x239778, 0xab4
+	.include "data/maps/BattleFrontier_Lounge7/scripts.inc"
 	.include "data/maps/BattleFrontier_ReceptionGate/scripts.inc"
 	.incbin "baserom_jp.gba", 0x23a755, 0x9de
 	.include "data/maps/BattleFrontier_Lounge9/scripts.inc"

@@ -499,12 +499,12 @@ gSpecials::
 	def_special OpenPokenavForTutorial
 	def_special ScriptMenu_CreateStartMenuForPokenavTutorial, waitstate=1
 	def_special CountPlayerTrainerStars
-	def_special sub_0813ACC8
-	def_special sub_0813ADF0
-	def_special sub_0813AE0C
-	def_special ChooseMonForMoveTutor
-	def_special sub_0813AEEC
-	def_special sub_0813AF80
+	def_special BufferBattleFrontierTutorMoveName
+	def_special CloseBattleFrontierTutorWindow
+	def_special ScrollableMultichoice_RedrawPersistentMenu
+	def_special ChooseMonForMoveTutor, waitstate=1
+	def_special GetBattleFrontierTutorMoveIndex
+	def_special ScrollableMultichoice_ClosePersistentMenu
 	def_special DoDeoxysRockInteraction, waitstate=1
 	def_special sub_0813B208
 	def_special CreateEnemyEventMon
