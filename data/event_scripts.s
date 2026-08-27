@@ -785,7 +785,6 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/ShoalCave_LowTideIceRoom/scripts.inc"
 	.include "data/maps/SkyPillar_5F/scripts.inc"
 	.include "data/maps/SkyPillar_Top/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21c0aa, 0x49
 	.include "data/maps/MagmaHideout_1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x21c0ff, 0xcc5
 	.include "data/maps/MagmaHideout_3F_3R/scripts.inc"

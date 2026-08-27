@@ -69,7 +69,13 @@ gText_DoorOpenedFarAway: @ 0x08243CBE
 	.globl gText_BigHoleInTheWall
 gText_BigHoleInTheWall: @ 0x08243CDA
 	.incbin "baserom_jp.gba", 0x243cda, 0x14
-	.incbin "baserom_jp.gba", 0x243cee, 0x200
+	.incbin "baserom_jp.gba", 0x243cee, 0x106
+
+gText_LegendaryFlewAway:: @ 0x08243DF4
+	.string "{B_COPY_VAR_1}は\n"
+	.string "どこかへ　とびさって　いった！$"
+
+	.incbin "baserom_jp.gba", 0x243e08, 0xe6
 	.globl gJPText_00243EEE
 gJPText_00243EEE: @ 0x08243EEE
 	.string "アンケートようの　メモようしが　ある\n"
