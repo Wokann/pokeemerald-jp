@@ -1,334 +1,367 @@
-@ BattleFrontier_BattlePikeThreePathRoom scripts (JP map g26 m36 @ 0x08233CB9)
-
 BattleFrontier_BattlePikeThreePathRoom_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, 0x082746C7
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattlePikeThreePathRoom_MapScriptTable_00233CC9
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattlePikeThreePathRoom_MapScriptTable_00233CF3
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattlePikeThreePathRoom_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattlePikeThreePathRoom_OnWarp
 	.byte 0
 
-BattleFrontier_BattlePikeThreePathRoom_MapScriptTable_00233CC9::
-	map_script_2 0x4000, 0x0, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233D07
-	map_script_2 0x4000, 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233D10
-	map_script_2 0x4000, 0x2, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233D1A
-	map_script_2 0x4005, 0x0, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233EEE
-	map_script_2 0x4005, 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233F0D
+BattleFrontier_BattlePikeThreePathRoom_OnFrame:
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0, BattleFrontier_BattlePikeThreePathRoom_EventScript_GetChallengeStatus
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING, BattleFrontier_BattlePikeThreePathRoom_EventScript_WarpToLobby
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_PAUSED, BattleFrontier_BattlePikeThreePathRoom_EventScript_ResumeChallenge
+	map_script_2 VAR_TEMP_5, 0, BattleFrontier_BattlePikeThreePathRoom_EventScript_SetHintRoom
+	map_script_2 VAR_TEMP_5, 1, BattleFrontier_BattlePikeThreePathRoom_EventScript_GivePikeQueenHint
 	.2byte 0
 
-BattleFrontier_BattlePikeThreePathRoom_MapScriptTable_00233CF3::
-	map_script_2 0x4004, 0x0, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233CFD
+BattleFrontier_BattlePikeThreePathRoom_OnWarp:
+	map_script_2 VAR_TEMP_4, 0, BattleFrontier_BattlePikeThreePathRoom_EventScript_TurnPlayerNorth
 	.2byte 0
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233CFD::
-	setvar 0x4004, 0x1
-	turnobject 0xFF, 0x2
+BattleFrontier_BattlePikeThreePathRoom_EventScript_TurnPlayerNorth::
+	setvar VAR_TEMP_4, 1
+	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233D07::
-	setvar 0x8004, 0x0
-	special CallFrontierUtilFunc
+BattleFrontier_BattlePikeThreePathRoom_EventScript_GetChallengeStatus::
+	frontier_getstatus
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233D10::
-	warp 0x1A22, 0xFF, 0x5, 0x6
+BattleFrontier_BattlePikeThreePathRoom_EventScript_WarpToLobby::
+	warp MAP_BATTLE_FRONTIER_BATTLE_PIKE_LOBBY, 5, 6
 	waitstate
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233D1A::
+BattleFrontier_BattlePikeThreePathRoom_EventScript_ResumeChallenge::
 	lockall
-	message gJPText_00234176
+	message BattleFrontier_BattlePikeThreePathRoom_Text_AwaitingReturnSaveBeforeResume
 	waitmessage
-	setvar 0x8004, 0x8
-	setvar 0x8005, 0x1
-	special CallBattlePikeFunction
-	playse 0x37
+	pike_save CHALLENGE_STATUS_SAVING
+	playse SE_SAVE
 	waitse
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x3
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x4000, 0xFF
+	frontier_set FRONTIER_DATA_PAUSED, FALSE
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	special SavePlayerParty
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x3
-	special CallFrontierUtilFunc
-	loadword 0x0, gJPText_002341A6
-	callstd 0x4
+	frontier_setpartyorder FRONTIER_PARTY_SIZE
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_PleaseEnjoyChallenge, MSGBOX_DEFAULT
 	closemessage
 	releaseall
-	setvar 0x8004, 0x5
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x63
-	special CallFrontierUtilFunc
+	frontier_settrainers
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 99
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233D7E::
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x2
-	special CallFrontierUtilFunc
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233DDE
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233DEE
-	compare_var_to_value 0x8000, 0x5
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233DFE
-	compare_var_to_value 0x8000, 0x7
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E0E
-	compare_var_to_value 0x8000, 0x9
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E1E
-	compare_var_to_value 0x8000, 0xB
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E2E
-	compare_var_to_value 0x8000, 0xD
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E3E
+BattleFrontier_BattlePikeThreePathRoom_EventScript_Attendant::
+	frontier_get FRONTIER_DATA_BATTLE_NUM  @ Room number
+	switch VAR_RESULT
+	case 1, BattleFrontier_BattlePikeThreePathRoom_EventScript_AttendantRoom1
+	case 3, BattleFrontier_BattlePikeThreePathRoom_EventScript_AttendantRoom3
+	case 5, BattleFrontier_BattlePikeThreePathRoom_EventScript_AttendantRoom5
+	case 7, BattleFrontier_BattlePikeThreePathRoom_EventScript_AttendantRoom7
+	case 9, BattleFrontier_BattlePikeThreePathRoom_EventScript_AttendantRoom9
+	case 11, BattleFrontier_BattlePikeThreePathRoom_EventScript_AttendantRoom11
+	case 13, BattleFrontier_BattlePikeThreePathRoom_EventScript_AttendantRoom13
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233DDE::
+BattleFrontier_BattlePikeThreePathRoom_EventScript_AttendantRoom1::
 	lock
 	faceplayer
-	loadword 0x0, 0x08234053
-	callstd 0x4
-	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E4E
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_CurrentlyInRoom1, MSGBOX_DEFAULT
+	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_AskContinueChallenge
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233DEE::
+BattleFrontier_BattlePikeThreePathRoom_EventScript_AttendantRoom3::
 	lock
 	faceplayer
-	loadword 0x0, 0x08234071
-	callstd 0x4
-	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E4E
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_CurrentlyInRoom3, MSGBOX_DEFAULT
+	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_AskContinueChallenge
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233DFE::
+BattleFrontier_BattlePikeThreePathRoom_EventScript_AttendantRoom5::
 	lock
 	faceplayer
-	loadword 0x0, 0x0823408F
-	callstd 0x4
-	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E4E
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_CurrentlyInRoom5, MSGBOX_DEFAULT
+	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_AskContinueChallenge
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E0E::
+BattleFrontier_BattlePikeThreePathRoom_EventScript_AttendantRoom7::
 	lock
 	faceplayer
-	loadword 0x0, 0x082340AD
-	callstd 0x4
-	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E4E
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_CurrentlyInRoom7, MSGBOX_DEFAULT
+	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_AskContinueChallenge
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E1E::
+BattleFrontier_BattlePikeThreePathRoom_EventScript_AttendantRoom9::
 	lock
 	faceplayer
-	loadword 0x0, 0x082340CB
-	callstd 0x4
-	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E4E
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_CurrentlyInRoom9, MSGBOX_DEFAULT
+	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_AskContinueChallenge
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E2E::
+BattleFrontier_BattlePikeThreePathRoom_EventScript_AttendantRoom11::
 	lock
 	faceplayer
-	loadword 0x0, 0x082340E9
-	callstd 0x4
-	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E4E
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_CurrentlyInRoom11, MSGBOX_DEFAULT
+	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_AskContinueChallenge
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E3E::
+BattleFrontier_BattlePikeThreePathRoom_EventScript_AttendantRoom13::
 	lock
 	faceplayer
-	loadword 0x0, 0x08234108
-	callstd 0x4
-	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E4E
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_CurrentlyInRoom13, MSGBOX_DEFAULT
+	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_AskContinueChallenge
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E4E::
-	loadword 0x0, 0x08234127
-	callstd 0x5
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233EA0
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233EA0
+BattleFrontier_BattlePikeThreePathRoom_EventScript_AskContinueChallenge::
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_ContinueWithChallenge, MSGBOX_YESNO
+	switch VAR_RESULT
+	case NO, BattleFrontier_BattlePikeThreePathRoom_EventScript_AskSaveChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattlePikeThreePathRoom_EventScript_AskSaveChallenge
 	release
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E73::
-	setvar 0x8004, 0x6
-	special CallFrontierUtilFunc
-	message 0x082341C3
+BattleFrontier_BattlePikeThreePathRoom_EventScript_PauseChallenge::
+	frontier_saveparty
+	message BattleFrontier_BattlePikeThreePathRoom_Text_SavingYourData
 	waitmessage
 	special LoadPlayerParty
-	setvar 0x8004, 0x8
-	setvar 0x8005, 0x2
-	special CallBattlePikeFunction
-	playse 0x37
+	pike_save CHALLENGE_STATUS_PAUSED
+	playse SE_SAVE
 	waitse
-	fadescreen 0x1
-	setvar 0x8004, 0x4
-	special CallFrontierUtilFunc
+	fadescreen FADE_TO_BLACK
+	frontier_reset
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233EA0::
-	loadword 0x0, 0x0823413D
-	callstd 0x5
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233E73
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233ED0
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233ED0
+BattleFrontier_BattlePikeThreePathRoom_EventScript_AskSaveChallenge::
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_SaveChallengeAndQuit, MSGBOX_YESNO
+	switch VAR_RESULT
+	case YES, BattleFrontier_BattlePikeThreePathRoom_EventScript_PauseChallenge
+	case NO, BattleFrontier_BattlePikeThreePathRoom_EventScript_AskRetireChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattlePikeThreePathRoom_EventScript_AskRetireChallenge
 	release
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233ED0::
-	message 0x08234158
+BattleFrontier_BattlePikeThreePathRoom_EventScript_AskRetireChallenge::
+	message BattleFrontier_BattlePikeThreePathRoom_Text_RetireFromChallenge
 	waitmessage
-	multichoicedefault 0x14, 0x8, 0x5E, 0x1, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, 0x082746AB
+	multichoicedefault 20, 8, MULTI_YESNO, 1, FALSE
+	switch VAR_RESULT
+	case 0, 0x082746AB
 	release
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233EEE::
-	setvar 0x8004, 0x11
-	special CallBattlePikeFunction
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233F07
-	setvar 0x4005, 0xFF
+BattleFrontier_BattlePikeThreePathRoom_EventScript_SetHintRoom::
+	pike_sethintroom
+	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattlePikeThreePathRoom_EventScript_SetPikeQueenHint
+	setvar VAR_TEMP_5, 255
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233F07::
-	setvar 0x4005, 0x1
+BattleFrontier_BattlePikeThreePathRoom_EventScript_SetPikeQueenHint::
+	setvar VAR_TEMP_5, 1
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233F0D::
-	applymovement 0x2, 0x08234044
-	waitmovement 0x0
+BattleFrontier_BattlePikeThreePathRoom_EventScript_GivePikeQueenHint::
+	applymovement LOCALID_PIKE_HINT_GIVER, BattleFrontier_BattlePikeThreePathRoom_Movement_HintGiverApproachPlayer
+	waitmovement 0
 	lockall
-	loadword 0x0, gJPText_0023433C
-	callstd 0x4
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_TerrifyingEvent, MSGBOX_DEFAULT
 	releaseall
-	applymovement 0x2, 0x0823404B
-	waitmovement 0x0
-	setvar 0x4005, 0xFF
+	applymovement LOCALID_PIKE_HINT_GIVER, BattleFrontier_BattlePikeThreePathRoom_Movement_HintGiverReturnToPos
+	waitmovement 0
+	setvar VAR_TEMP_5, 255
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233F31::
-	setvar 0x8004, 0x13
-	special CallBattlePikeFunction
-	compare_var_to_value 0x800D, 0x4
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00234038
+BattleFrontier_BattlePikeThreePathRoom_EventScript_HintGiver::
+	pike_gethint
+	goto_if_eq VAR_RESULT, PIKE_HINT_BRAIN, BattleFrontier_BattlePikeThreePathRoom_EventScript_GiveBrainHint
 	lock
 	faceplayer
-	loadword 0x0, 0x08234201
-	callstd 0x5
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233F80
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233F76
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233F76
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_FindingItDifficultToChoose, MSGBOX_YESNO
+	switch VAR_RESULT
+	case YES, BattleFrontier_BattlePikeThreePathRoom_EventScript_AcceptHint
+	case NO, BattleFrontier_BattlePikeThreePathRoom_EventScript_DeclineHint
+	case MULTI_B_PRESSED, BattleFrontier_BattlePikeThreePathRoom_EventScript_DeclineHint
 	release
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233F76::
-	loadword 0x0, 0x08234234
-	callstd 0x4
+BattleFrontier_BattlePikeThreePathRoom_EventScript_DeclineHint::
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_ApologizeForImpertinence, MSGBOX_DEFAULT
 	release
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233F80::
-	setvar 0x8004, 0x12
-	special CallBattlePikeFunction
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233FAF
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233FBC
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00233FC9
+BattleFrontier_BattlePikeThreePathRoom_EventScript_AcceptHint::
+	pike_gethintroomid
+	switch VAR_RESULT
+	case PIKE_ROOM_LEFT, BattleFrontier_BattlePikeThreePathRoom_EventScript_GiveLeftRoomHint
+	case PIKE_ROOM_CENTER, BattleFrontier_BattlePikeThreePathRoom_EventScript_GiveCenterRoomHint
+	case PIKE_ROOM_RIGHT, BattleFrontier_BattlePikeThreePathRoom_EventScript_GiveRightRoomHint
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233FAF::
-	loadword 0x0, 0x0823428F
-	callstd 0x4
-	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_00233FD6
+BattleFrontier_BattlePikeThreePathRoom_EventScript_GiveLeftRoomHint::
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_SomethingAboutLeftPath, MSGBOX_DEFAULT
+	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_GiveHint
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233FBC::
-	loadword 0x0, 0x08234271
-	callstd 0x4
-	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_00233FD6
+BattleFrontier_BattlePikeThreePathRoom_EventScript_GiveCenterRoomHint::
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_SomethingAboutCenterPath, MSGBOX_DEFAULT
+	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_GiveHint
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233FC9::
-	loadword 0x0, 0x08234253
-	callstd 0x4
-	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_00233FD6
+BattleFrontier_BattlePikeThreePathRoom_EventScript_GiveRightRoomHint::
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_SomethingAboutRightPath, MSGBOX_DEFAULT
+	goto BattleFrontier_BattlePikeThreePathRoom_EventScript_GiveHint
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00233FD6::
-	setvar 0x8004, 0x13
-	special CallBattlePikeFunction
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00234010
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_0023401A
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_00234024
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattlePikeThreePathRoom_EventScript_0023402E
+BattleFrontier_BattlePikeThreePathRoom_EventScript_GiveHint::
+	pike_gethint
+	switch VAR_RESULT
+	case PIKE_HINT_NOSTALGIA, BattleFrontier_BattlePikeThreePathRoom_EventScript_HintNostalgia
+	case PIKE_HINT_WHISPERING, BattleFrontier_BattlePikeThreePathRoom_EventScript_HintWhispering
+	case PIKE_HINT_POKEMON, BattleFrontier_BattlePikeThreePathRoom_EventScript_HintPokemon
+	case PIKE_HINT_PEOPLE, BattleFrontier_BattlePikeThreePathRoom_EventScript_HintPeople
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00234010::
-	loadword 0x0, 0x08234318
-	callstd 0x4
+BattleFrontier_BattlePikeThreePathRoom_EventScript_HintNostalgia::
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_WaveOfNostaliga, MSGBOX_DEFAULT
 	release
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_0023401A::
-	loadword 0x0, 0x082342F8
-	callstd 0x4
+BattleFrontier_BattlePikeThreePathRoom_EventScript_HintWhispering::
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_HeardWhispering, MSGBOX_DEFAULT
 	release
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00234024::
-	loadword 0x0, 0x082342AE
-	callstd 0x4
+BattleFrontier_BattlePikeThreePathRoom_EventScript_HintPokemon::
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_AromaOfPokemon, MSGBOX_DEFAULT
 	release
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_0023402E::
-	loadword 0x0, 0x082342D2
-	callstd 0x4
+BattleFrontier_BattlePikeThreePathRoom_EventScript_HintPeople::
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_PresenceOfPeople, MSGBOX_DEFAULT
 	release
 	end
 
-BattleFrontier_BattlePikeThreePathRoom_EventScript_00234038::
+BattleFrontier_BattlePikeThreePathRoom_EventScript_GiveBrainHint::
 	lock
 	faceplayer
-	loadword 0x0, 0x08234384
-	callstd 0x4
+	msgbox BattleFrontier_BattlePikeThreePathRoom_Text_DreadfulPresence, MSGBOX_DEFAULT
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x234044, 0x132
-	.globl gJPText_00234176
-gJPText_00234176: @ 0x08234176
+BattleFrontier_BattlePikeThreePathRoom_Movement_HintGiverApproachPlayer:
+	walk_left
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+BattleFrontier_BattlePikeThreePathRoom_Movement_HintGiverReturnToPos:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_right
+	walk_right
+	face_down
+	step_end
+
+BattleFrontier_BattlePikeThreePathRoom_Text_CurrentlyInRoom1:
+	.string "げんざい　おきゃくさまは\n"
+	.string "1へやめに　いらっしゃいます⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_CurrentlyInRoom3:
+	.string "げんざい　おきゃくさまは\n"
+	.string "3へやめに　いらっしゃいます⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_CurrentlyInRoom5:
+	.string "げんざい　おきゃくさまは\n"
+	.string "5へやめに　いらっしゃいます⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_CurrentlyInRoom7:
+	.string "げんざい　おきゃくさまは\n"
+	.string "7へやめに　いらっしゃいます⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_CurrentlyInRoom9:
+	.string "げんざい　おきゃくさまは\n"
+	.string "9へやめに　いらっしゃいます⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_CurrentlyInRoom11:
+	.string "げんざい　おきゃくさまは\n"
+	.string "11へやめに　いらっしゃいます⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_CurrentlyInRoom13:
+	.string "げんざい　おきゃくさまは\n"
+	.string "13へやめに　いらっしゃいます⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_ContinueWithChallenge:
+	.string "このまま　ちょうせんを　つづけられますか？$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_SaveChallengeAndQuit:
+	.string "レポートを　かいて\n"
+	.string "しゅうりょう　なさいますか⋯⋯？$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_RetireFromChallenge:
+	.string "バトルゲームの　ちょうせんを\n"
+	.string "ちゅうし　なさいますか⋯⋯？$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_AwaitingReturnSaveBeforeResume:
 	.string "おまちして　おりました⋯⋯\p"
 	.string "バトルゲームを　さいかいする　まえに\n"
 	.string "レポートを　かきましょう⋯⋯$"
 
-	.globl gJPText_002341A6
-gJPText_002341A6: @ 0x082341A6
+BattleFrontier_BattlePikeThreePathRoom_Text_PleaseEnjoyChallenge:
 	.string "それでは　ひきつづき\n"
 	.string "ゲームを　おたのしみ　ください⋯⋯$"
 
-	.incbin "baserom_jp.gba", 0x2341c3, 0x179
-	.globl gJPText_0023433C
-gJPText_0023433C: @ 0x0823433C
+BattleFrontier_BattlePikeThreePathRoom_Text_SavingYourData:
+	.string "レポートを　かいています⋯⋯\n"
+	.string "しょうしょう　おまち　ください⋯⋯$"
+
+BattleFrontier_BattlePike_Text_PathBlockedNoTurningBack:
+	.string "みちが　とざされている！\n"
+	.string "ひきかえすことは　できない⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_FindingItDifficultToChoose:
+	.string "⋯⋯　おきゃくさま⋯⋯\p"
+	.string "しつれいですが　どのみちに　すすむか\n"
+	.string "まよって　いらっしゃるの　ですか⋯⋯？$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_ApologizeForImpertinence:
+	.string "さようで　ございますか⋯⋯\n"
+	.string "これは　しつれいを　しました⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_SomethingAboutRightPath:
+	.string "そうですね⋯⋯\n"
+	.string "⋯⋯　わたくしは　みぎがわの　みちから⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_SomethingAboutCenterPath:
+	.string "そうですね⋯⋯\n"
+	.string "⋯⋯　わたくしは　まんなかの　みちから⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_SomethingAboutLeftPath:
+	.string "そうですね⋯⋯\n"
+	.string "⋯⋯　わたくしは　ひだりがわの　みちから⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_AromaOfPokemon:
+	.string "ポケモンの　においが\n"
+	.string "ただよってくる　ような\l"
+	.string "きが　するの　ですが⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_PresenceOfPeople:
+	.string "トレーナー⋯⋯　でしょうか⋯⋯？\n"
+	.string "ひとの　けはいを　かんじるの　ですが⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_HeardWhispering:
+	.string "なにかが　ささやく　ような　ものおとが\n"
+	.string "きこえたの　ですが⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_WaveOfNostaliga:
+	.string "なぜだか　すこし　だけ　なつかしい\n"
+	.string "ふんいきを　かんじるの　ですが⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_TerrifyingEvent:
 	.string "おきゃくさま⋯⋯\p"
 	.string "このさき　たいへんに\n"
 	.string "おそろしい　できごとが　おきゃくさまを\l"
 	.string "まちうけている　でしょう⋯⋯\p"
 	.string "かくごして　おいて　ください⋯⋯$"
+
+BattleFrontier_BattlePikeThreePathRoom_Text_DreadfulPresence:
+	.string "⋯⋯　どの　みちの　さきからも\n"
+	.string "おそろしい　けはいを　かんじます⋯⋯$"
