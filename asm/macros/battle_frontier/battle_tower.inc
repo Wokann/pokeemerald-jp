@@ -42,6 +42,19 @@
 	special sub_08161E88
 	.endm
 
+	@ Load the parties, gfx, and other data for the multi partner candidates.
+	.macro tower_loadpartners
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_LOAD_PARTNERS
+	special sub_08161E88
+	.endm
+
+	@ Print a potential multi partner message. msgId is any PARTNER_MSGID_*.
+	.macro tower_dopartnermsg msgId:req
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_PARTNER_MSG
+	setvar VAR_0x8005, \msgId
+	special sub_08161E88
+	.endm
+
 	@ Buffer the opponent easy-chat introduction to STR_VAR_4.
 	.macro tower_getopponentintro opponent:req
 	setvar VAR_0x8004, BATTLE_TOWER_FUNC_GET_OPPONENT_INTRO
