@@ -1,49 +1,86 @@
-@ TrainerHill_Elevator scripts (JP map g26 m88 @ 0x0823C35E)
-
 TrainerHill_Elevator_MapScripts::
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, TrainerHill_Elevator_MapScriptTable_0023C364
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, TrainerHill_Elevator_OnFrame
 	.byte 0
 
-TrainerHill_Elevator_MapScriptTable_0023C364::
-	map_script_2 0x4004, 0x0, TrainerHill_Elevator_EventScript_0023C384
+TrainerHill_Elevator_OnFrame:
+	map_script_2 VAR_TEMP_4, 0, TrainerHill_Elevator_EventScript_EnterElevator
 	.2byte 0
 
-TrainerHill_Elevator_EventScript_0023C36E::
+TrainerHill_Elevator_EventScript_Attendant::
 	end
 
-TrainerHill_Elevator_EventScript_0023C36F::
-	applymovement 0xFF, 0x0823C3FA
-	waitmovement 0x0
+TrainerHill_Elevator_EventScript_ExitToRoof::
+	applymovement LOCALID_PLAYER, TrainerHill_Elevator_Movement_PlayerExitElevatorToRoof
+	waitmovement 0
 	releaseall
-	warp 0x1A41, 0xFF, 0xF, 0x5
+	warp MAP_TRAINER_HILL_ROOF, 15, 5
 	waitstate
 	end
 
-TrainerHill_Elevator_EventScript_0023C384::
-	applymovement 0xFF, 0x0823C3F3
-	waitmovement 0x0
-	applymovement 0x1, 0x0823C3FD
-	waitmovement 0x0
+TrainerHill_Elevator_EventScript_EnterElevator::
+	applymovement LOCALID_PLAYER, TrainerHill_Elevator_Movement_PlayerApproachAttendant
+	waitmovement 0
+	applymovement LOCALID_TRAINER_HILL_ELEVATOR_ATTENDANT, TrainerHill_Elevator_Movement_AttendantFacePlayer
+	waitmovement 0
 	lockall
-	loadword 0x0, TrainerHill_Elevator_Text_ReturnToReception
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, TrainerHill_Elevator_EventScript_0023C36F
+	msgbox TrainerHill_Elevator_Text_ReturnToReception, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, TrainerHill_Elevator_EventScript_ExitToRoof
 	releaseall
-	applymovement 0x1, 0x0823C3FF
-	waitmovement 0x0
-	applymovement 0xFF, 0x0823C3EE
-	waitmovement 0x0
-	call TrainerHill_Elevator_EventScript_0023C3E8
-	delay 0x19
-	applymovement 0xFF, 0x0823C3F6
-	waitmovement 0x0
-	warp 0x1A3C, 0xFF, 0x11, 0x8
+	applymovement LOCALID_TRAINER_HILL_ELEVATOR_ATTENDANT, TrainerHill_Elevator_Movement_AttendantFaceDown
+	waitmovement 0
+	applymovement LOCALID_PLAYER, TrainerHill_Elevator_Movement_PlayerMoveToCenterOfElevator
+	waitmovement 0
+	call TrainerHill_Elevator_EventScript_MoveElevator
+	delay 25
+	applymovement LOCALID_PLAYER, TrainerHill_Elevator_Movement_PlayerExitElevator
+	waitmovement 0
+	warp MAP_TRAINER_HILL_ENTRANCE, 17, 8
 	waitstate
 	end
 
-	.incbin "baserom_jp.gba", 0x23c3dd, 0xb
-TrainerHill_Elevator_EventScript_0023C3E8::
+@ Unused
+TrainerHill_Elevator_EventScript_ExitFloorSelect::
+	goto TrainerHill_Elevator_EventScript_CloseFloorSelect
+	end
+
+@ Functionally unused
+TrainerHill_Elevator_EventScript_CloseFloorSelect::
+	special CloseDeptStoreElevatorWindow
+	releaseall
+	end
+
+TrainerHill_Elevator_EventScript_MoveElevator::
 	waitse
 	special MoveElevator
 	return
+
+TrainerHill_Elevator_Movement_PlayerMoveToCenterOfElevator:
+	walk_up
+	walk_up
+	walk_right
+	face_down
+	step_end
+
+TrainerHill_Elevator_Movement_PlayerApproachAttendant:
+	delay_16
+	walk_left
+	step_end
+
+TrainerHill_Elevator_Movement_PlayerExitElevator:
+	delay_16
+	walk_down
+	walk_down
+	step_end
+
+TrainerHill_Elevator_Movement_PlayerExitElevatorToRoof:
+	face_down
+	delay_16
+	step_end
+
+TrainerHill_Elevator_Movement_AttendantFacePlayer:
+	face_right
+	step_end
+
+TrainerHill_Elevator_Movement_AttendantFaceDown:
+	face_down
+	step_end

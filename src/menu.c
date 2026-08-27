@@ -1010,7 +1010,7 @@ __attribute__((naked)) void WindowFunc_DrawDialogueFrame(void)
         "_08197560: .4byte SPECIAL_TrySetBattleTowerLinkType\n\t"
         "_08197564: .4byte SPECIAL_RemoveRecordsWindow\n\t"
         "_08197568: .4byte 0x0000060B\n\t"
-        "_0819756C: .4byte SPECIAL_sub_08139C4C\n\t"
+        "_0819756C: .4byte SPECIAL_CloseDeptStoreElevatorWindow\n\t"
         "_08197570: .4byte 0x00000A07\n\t"
         "_08197574: .4byte 0x00000A0D\n\t"
         "_08197578: .4byte 0x00000A0B\n\t"

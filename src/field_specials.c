@@ -3458,7 +3458,7 @@ __attribute__((naked)) void sub_08139BD4(void)
     );
 }
 
-__attribute__((naked)) void sub_08139C4C(void)
+__attribute__((naked)) void CloseDeptStoreElevatorWindow(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
