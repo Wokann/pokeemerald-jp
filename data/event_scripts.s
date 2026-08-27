@@ -838,7 +838,6 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/BattleFrontier_BattlePikeCorridor/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePikeThreePathRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.inc"
-	.incbin "baserom_jp.gba", 0x23521c, 0x3d
 	.include "data/maps/BattleFrontier_BattlePikeRoomFinal/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePikeRoomWildMons/scripts.inc"
 	.incbin "baserom_jp.gba", 0x235360, 0x4ecc
