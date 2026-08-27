@@ -1134,9 +1134,76 @@ gJPText_002436B8: @ 0x082436B8
 	.string "{MUS_RG_VS_TRAINER}は\n"
 	.string "パソコンの　スイッチを　いれた！$"
 
-	.globl gUnknown_82436CD
-gUnknown_82436CD: @ 0x82436CD
-	.include "data/scripts/gUnknown_82436CD.inc"
+gUnknown_82436CD:: @ 0x082436CD
+	@ 0x082436CD-0x0824390F remains unstructured shared text data.
+	.incbin "baserom_jp.gba", 0x2436cd, 0x242
+
+	@ 0x0824390F
+	.include "data/text/mart_clerk.inc"
+	@ 0x0824393C
+	.include "data/text/obtain_item.inc"
+
+	@ 0x0824398A-0x082439A8 remains unstructured shared text data.
+	.incbin "baserom_jp.gba", 0x24398a, 0x1e
+
+gText_NoRoomLeftForAnother:: @ 0x082439A8
+	.incbin "baserom_jp.gba", 0x2439a8, 0x9f
+
+gText_WhichFloorWouldYouLike:: @ 0x08243A47
+	.string "ミナモ　デパートへ　ようこそ！\p"
+	.string "なんかいへ　いきますか？$"
+
+gText_SandstormIsVicious:: @ 0x08243A64
+	.string "さばくの　すなあらしが　ひどくて\n"
+	.string "さきに　すすめない！$"
+
+gText_SelectWithoutRegisteredItem:: @ 0x08243A80
+	.string "バッグに　いれてある　どうぐを\n"
+	.string "べんりボタンに　とうろく　できます$"
+
+	@ 0x08243AA2-0x08243B7F remains unstructured shared text data.
+	.incbin "baserom_jp.gba", 0x243aa2, 0xdd
+
+gText_RegisteredTrainerinPokeNav:: @ 0x08243B7F
+	.string "{B_COPY_VAR_1}の　{B_COPY_VAR_2}を\n"
+	.string "ポケナビに　とうろく　した！$"
+
+	@ 0x08243B96-0x08243C8B remains unstructured shared text data.
+	.incbin "baserom_jp.gba", 0x243b96, 0xf5
+
+	@ 0x08243C8B
+	.include "data/text/surf.inc"
+
+gText_DoorOpenedFarAway:: @ 0x08243CBE
+	.incbin "baserom_jp.gba", 0x243cbe, 0x1c
+
+gText_BigHoleInTheWall:: @ 0x08243CDA
+	.incbin "baserom_jp.gba", 0x243cda, 0x14
+
+	@ 0x08243CEE-0x08243DC6 remains unstructured shared text data.
+	.incbin "baserom_jp.gba", 0x243cee, 0xd8
+
+gText_Sudowoodo_Attacked:: @ 0x08243DC6
+	.string "おかしな　きは\n"
+	.string "ホエルコじょうろを　いやがっている！\p"
+	.string "おかしな　きが　おそいかかってきた！$"
+
+gText_LegendaryFlewAway:: @ 0x08243DF4
+	.string "{B_COPY_VAR_1}は\n"
+	.string "どこかへ　とびさって　いった！$"
+
+	@ 0x08243E08-0x08243EEE remains unstructured shared text data.
+	.incbin "baserom_jp.gba", 0x243e08, 0xe6
+
+Questionnaire_Text_FillOut:: @ 0x08243EEE
+	.string "アンケートようの　メモようしが　ある\n"
+	.string "アンケートに　なにか　かきますか？$"
+
+	@ 0x08243F13-0x082440BC remains unstructured shared text data.
+	.incbin "baserom_jp.gba", 0x243f13, 0x1a9
+
+	@ 0x082440BC
+	.include "data/text/abnormal_weather.inc"
 
 	.globl gUnknown_82440DD
 gUnknown_82440DD: @ 0x82440DD
