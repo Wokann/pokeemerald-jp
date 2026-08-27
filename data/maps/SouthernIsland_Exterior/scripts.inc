@@ -1,37 +1,31 @@
-@ SouthernIsland_Exterior scripts (JP map g26 m9 @ 0x08222765)
-
 SouthernIsland_Exterior_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, SouthernIsland_Exterior_EventScript_0022276B
+	map_script MAP_SCRIPT_ON_TRANSITION, SouthernIsland_Exterior_OnTransition
 	.byte 0
 
-SouthernIsland_Exterior_EventScript_0022276B::
-	setflag 0x8A9
+SouthernIsland_Exterior_OnTransition:
+	setflag FLAG_LANDMARK_SOUTHERN_ISLAND
 	end
 
-SouthernIsland_Exterior_EventScript_0022276F::
+SouthernIsland_Exterior_EventScript_Sailor::
 	lock
 	faceplayer
-	loadword 0x0, 0x0826354C
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, SouthernIsland_Exterior_EventScript_002227B4
-	loadword 0x0, 0x0826356A
-	callstd 0x4
+	msgbox EventTicket_Text_SouthernIslandSailBack, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SouthernIsland_Exterior_EventScript_AsYouLike
+	msgbox EventTicket_Text_SailHome, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x800F, 0x0824362D
-	waitmovement 0x0
-	delay 0x1E
-	hideobject_at 0x1, 0x1A09
-	setvar 0x8004, 0x2
-	call 0x082432D3
-	warp 0xD0A, 0xFF, 0x8, 0xB
+	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	delay 30
+	hideobjectat LOCALID_SOUTHERN_ISLAND_SAILOR, MAP_SOUTHERN_ISLAND_EXTERIOR
+	setvar VAR_0x8004, LOCALID_SOUTHERN_ISLAND_SS_TIDAL
+	call Common_EventScript_FerryDepartIsland
+	warp MAP_LILYCOVE_CITY_HARBOR, 8, 11
 	waitstate
 	release
 	end
 
-SouthernIsland_Exterior_EventScript_002227B4::
-	loadword 0x0, 0x08263578
-	callstd 0x4
+SouthernIsland_Exterior_EventScript_AsYouLike::
+	msgbox EventTicket_Text_AsYouLike, MSGBOX_DEFAULT
 	release
 	end
 
@@ -54,7 +48,6 @@ Ferry_Movement_DepartIslandBoardWest:
 	walk_in_place_faster_down
 	step_end
 
-SouthernIsland_Exterior_EventScript_002227D9::
-	loadword 0x0, 0x082635AF
-	callstd 0x3
+SouthernIsland_Exterior_EventScript_Sign::
+	msgbox SouthernIsland_Exterior_Text_Sign, MSGBOX_SIGN
 	end
