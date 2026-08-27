@@ -1,60 +1,60 @@
 @ BattleFrontier_BattleTowerLobby scripts (JP map g26 m5 @ 0x0821F6BC)
 
 BattleFrontier_BattleTowerLobby_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, BattleFrontier_BattleTowerLobby_EventScript_0021F6D1
-	map_script MAP_SCRIPT_ON_TRANSITION, BattleFrontier_BattleTowerLobby_EventScript_0021F6D5
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleTowerLobby_MapScriptTable_0021F71E
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattleTowerLobby_MapScriptTable_0021F70A
+	map_script MAP_SCRIPT_ON_RESUME, BattleFrontier_BattleTowerLobby_OnResume
+	map_script MAP_SCRIPT_ON_TRANSITION, BattleFrontier_BattleTowerLobby_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleTowerLobby_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattleTowerLobby_OnWarp
 	.byte 0
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F6D1::
+BattleFrontier_BattleTowerLobby_OnResume::
 	special sub_08165248
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F6D5::
+BattleFrontier_BattleTowerLobby_OnTransition::
 	call 0x0825409C
 	setvar 0x8004, 0xA
 	special CallApprenticeFunction
 	compare_var_to_value 0x8004, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021F6F6
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ShowApprentice
 	checkflag 0x934
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021F702
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_HideApprentice
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F6F6::
+BattleFrontier_BattleTowerLobby_EventScript_ShowApprentice::
 	clearflag 0x2BD
 	setvar 0x8004, 0x17
 	special CallApprenticeFunction
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F701::
+BattleFrontier_BattleTowerLobby_EventScript_EndShowOrHideApprentice::
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F702::
+BattleFrontier_BattleTowerLobby_EventScript_HideApprentice::
 	setflag 0x2BD
-	goto BattleFrontier_BattleTowerLobby_EventScript_0021F701
+	goto BattleFrontier_BattleTowerLobby_EventScript_EndShowOrHideApprentice
 
-BattleFrontier_BattleTowerLobby_MapScriptTable_0021F70A::
-	map_script_2 0x4001, 0x0, BattleFrontier_BattleTowerLobby_EventScript_0021F714
+BattleFrontier_BattleTowerLobby_OnWarp::
+	map_script_2 0x4001, 0x0, BattleFrontier_BattleTowerLobby_EventScript_PlayerFaceNorth
 	.2byte 0
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F714::
+BattleFrontier_BattleTowerLobby_EventScript_PlayerFaceNorth::
 	setvar 0x4001, 0x1
 	turnobject 0xFF, 0x2
 	end
 
-BattleFrontier_BattleTowerLobby_MapScriptTable_0021F71E::
-	map_script_2 0x4000, 0x0, BattleFrontier_BattleTowerLobby_EventScript_0021F748
-	map_script_2 0x4000, 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021F751
-	map_script_2 0x4000, 0x2, BattleFrontier_BattleTowerLobby_EventScript_0021F92F
-	map_script_2 0x4000, 0x3, BattleFrontier_BattleTowerLobby_EventScript_0021F799
-	map_script_2 0x4000, 0x4, BattleFrontier_BattleTowerLobby_EventScript_0021F833
+BattleFrontier_BattleTowerLobby_OnFrame::
+	map_script_2 0x4000, 0x0, BattleFrontier_BattleTowerLobby_EventScript_GetChallengeStatus
+	map_script_2 0x4000, 0x1, BattleFrontier_BattleTowerLobby_EventScript_QuitWithoutSaving
+	map_script_2 0x4000, 0x2, BattleFrontier_BattleTowerLobby_EventScript_ResumeChallenge
+	map_script_2 0x4000, 0x3, BattleFrontier_BattleTowerLobby_EventScript_WonChallenge
+	map_script_2 0x4000, 0x4, BattleFrontier_BattleTowerLobby_EventScript_LostChallenge
 	.2byte 0
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F748::
+BattleFrontier_BattleTowerLobby_EventScript_GetChallengeStatus::
 	setvar 0x8004, 0x0
 	special CallFrontierUtilFunc
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F751::
+BattleFrontier_BattleTowerLobby_EventScript_QuitWithoutSaving::
 	lock
 	faceplayer
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_DidntSaveBeforeQuitting
@@ -76,26 +76,26 @@ BattleFrontier_BattleTowerLobby_EventScript_0021F751::
 	release
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F799::
+BattleFrontier_BattleTowerLobby_EventScript_WonChallenge::
 	lock
 	faceplayer
 	setvar 0x8004, 0xA
 	special CallFrontierUtilFunc
 	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021F7B9
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_DefeatedMaiden
 	message BattleFrontier_BattleTowerLobby_Text_CongratsBeatenSeven
 	waitmessage
-	goto BattleFrontier_BattleTowerLobby_EventScript_0021F7C1
+	goto BattleFrontier_BattleTowerLobby_EventScript_GiveRibbons
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F7B9::
+BattleFrontier_BattleTowerLobby_EventScript_DefeatedMaiden::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_CongratsDefeatedMaiden
 	callstd 0x4
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F7C1::
+BattleFrontier_BattleTowerLobby_EventScript_GiveRibbons::
 	setvar 0x8004, 0x5
 	special sub_08161E88
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021F7E6
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GiveBattlePoints
 	message BattleFrontier_BattleTowerLobby_Text_HereAreSomeRibbons
 	waitmessage
 	playfanfare 0x172
@@ -103,23 +103,23 @@ BattleFrontier_BattleTowerLobby_EventScript_0021F7C1::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_PutRibbonOnMons
 	callstd 0x4
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F7E6::
+BattleFrontier_BattleTowerLobby_EventScript_GiveBattlePoints::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_AwardYouTheseBattlePoints
 	callstd 0x4
 	setvar 0x8004, 0xB
 	special CallFrontierUtilFunc
 	loadword 0x0, BattleFrontier_Text_ObtainedXBattlePoints
 	callstd 0x9
-	call BattleFrontier_BattleTowerLobby_EventScript_0021F88E
+	call BattleFrontier_BattleTowerLobby_EventScript_AskSaveBattle
 	setvar 0x8004, 0x1
 	setvar 0x8005, 0x1
 	special sub_08161E88
 	compare_var_to_value 0x800D, 0x31
-	goto_if 0x5, BattleFrontier_BattleTowerLobby_EventScript_0021F823
+	goto_if 0x5, BattleFrontier_BattleTowerLobby_EventScript_LookForwardToChallenge
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_AboutToFace50thTrainer
 	callstd 0x4
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F823::
+BattleFrontier_BattleTowerLobby_EventScript_LookForwardToChallenge::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_LookForwardToAnotherChallenge
 	callstd 0x4
 	closemessage
@@ -127,29 +127,29 @@ BattleFrontier_BattleTowerLobby_EventScript_0021F823::
 	release
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F833::
+BattleFrontier_BattleTowerLobby_EventScript_LostChallenge::
 	compare_var_to_value 0x40CE, 0x2
-	goto_if 0x5, BattleFrontier_BattleTowerLobby_EventScript_0021F85F
+	goto_if 0x5, BattleFrontier_BattleTowerLobby_EventScript_CancelWinStreak
 	checkflag 0x152
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021F85F
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelWinStreak
 	setvar 0x8004, 0x1
 	setvar 0x8005, 0x1
 	special sub_08161E88
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattleTowerLobby_EventScript_0021F871
+	goto_if 0x5, BattleFrontier_BattleTowerLobby_EventScript_LostThanksForPlaying
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F85F::
+BattleFrontier_BattleTowerLobby_EventScript_CancelWinStreak::
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x2
 	setvar 0x8006, 0x0
 	special sub_08161E88
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F871::
+BattleFrontier_BattleTowerLobby_EventScript_LostThanksForPlaying::
 	lock
 	faceplayer
 	message BattleFrontier_BattleTowerLobby_Text_ThankYouForPlaying
 	waitmessage
-	call BattleFrontier_BattleTowerLobby_EventScript_0021F88E
+	call BattleFrontier_BattleTowerLobby_EventScript_AskSaveBattle
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_LookForwardToAnotherChallenge
 	callstd 0x4
 	closemessage
@@ -157,7 +157,7 @@ BattleFrontier_BattleTowerLobby_EventScript_0021F871::
 	release
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F88E::
+BattleFrontier_BattleTowerLobby_EventScript_AskSaveBattle::
 	message BattleFrontier_BattleTowerLobby_Text_RecordWillBeSaved
 	waitmessage
 	setvar 0x8004, 0x8
@@ -169,48 +169,48 @@ BattleFrontier_BattleTowerLobby_EventScript_0021F88E::
 	special sub_08161E88
 	playse 0x37
 	waitse
-	call BattleFrontier_BattleTowerLobby_EventScript_0021F921
+	call BattleFrontier_EventScript_GetCantRecordBattle
 	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021F920
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle
 	message BattleFrontier_BattleTowerLobby_Text_RecordLastMatch
 	waitmessage
 	multichoicedefault 0x14, 0x8, 0x5E, 0x1, 0x0
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021F920
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021F8F5
+	goto_if 0x1, BattleFrontier_EventScript_SaveBattle
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021F920
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F8F5::
+BattleFrontier_EventScript_SaveBattle::
 	setvar 0x8004, 0x13
 	special CallFrontierUtilFunc
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021F918
+	goto_if 0x1, BattleFrontier_EventScript_BattleSaveFailed
 	playse 0x37
 	loadword 0x0, 0x08222412
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_0021F920
+	goto BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F918::
+BattleFrontier_EventScript_BattleSaveFailed::
 	loadword 0x0, 0x0822247E
 	callstd 0x4
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F920::
+BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle::
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F921::
+BattleFrontier_EventScript_GetCantRecordBattle::
 	setvar 0x8004, 0x1
 	setvar 0x8005, 0x6
 	special CallFrontierUtilFunc
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F92F::
+BattleFrontier_BattleTowerLobby_EventScript_ResumeChallenge::
 	lock
 	faceplayer
 	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021F971
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_SetBravoTrainerOn
 	message BattleFrontier_BattleTowerLobby_Text_WeveBeenWaitingForYou
 	waitmessage
 	message BattleFrontier_BattleTowerLobby_Text_ProgressWillBeSaved
@@ -224,14 +224,14 @@ BattleFrontier_BattleTowerLobby_EventScript_0021F92F::
 	setvar 0x8005, 0x3
 	setvar 0x8006, 0x0
 	special CallFrontierUtilFunc
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220134
+	goto BattleFrontier_BattleTowerLobby_EventScript_EnterElevator
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F971::
+BattleFrontier_BattleTowerLobby_EventScript_SetBravoTrainerOn::
 	setvar 0x40BC, 0x1
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F977::
+BattleFrontier_BattleTowerLobby_EventScript_SinglesAttendant::
 	lock
 	faceplayer
 	setvar 0x40CF, 0x0
@@ -239,34 +239,34 @@ BattleFrontier_BattleTowerLobby_EventScript_0021F977::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_WelcomSingleBattle
 	callstd 0x4
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F989::
+BattleFrontier_BattleTowerLobby_EventScript_AskEnterSinglesChallenge::
 	message BattleFrontier_BattleTowerLobby_Text_TakeSinglesChallenge
 	waitmessage
 	multichoice 0x11, 0x6, 0x17, 0x0
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021F9C5
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TryEnterSinglesChallenge
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FAD2
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ExplainSinglesChallenge
 	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 
-BattleFrontier_BattleTowerLobby_EventScript_0021F9C5::
+BattleFrontier_BattleTowerLobby_EventScript_TryEnterSinglesChallenge::
 	setvar 0x40CE, 0x0
 	message BattleFrontier_BattleTowerLobby_Text_WhichLevelMode
 	waitmessage
 	multichoice 0x11, 0x6, 0x18, 0x0
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	setvar 0x8004, 0xF
 	special CallFrontierUtilFunc
 	compare_var_to_value 0x8004, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0022006C
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMons
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x1
 	copyvar 0x8006, 0x800D
@@ -274,24 +274,24 @@ BattleFrontier_BattleTowerLobby_EventScript_0021F9C5::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_SelectThreeMons
 	callstd 0x4
 	fadescreen 0x1
-	call BattleFrontier_BattleTowerLobby_EventScript_002202F8
+	call BattleFrontier_EventScript_GetLvlMode
 	copyvar 0x8004, 0x800D
 	setvar 0x8005, 0x3
 	special sub_080F9D20
 	waitstate
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220124
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_LoadPartyCancelChallenge
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_OkayToSaveBeforeEntering
 	callstd 0x5
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220124
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_LoadPartyCancelChallenge
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FA6B
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_SaveBeforeSinglesChallenge
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220124
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_LoadPartyCancelChallenge
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FA6B::
+BattleFrontier_BattleTowerLobby_EventScript_SaveBeforeSinglesChallenge::
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x4
 	special CallFrontierUtilFunc
@@ -312,19 +312,19 @@ BattleFrontier_BattleTowerLobby_EventScript_0021FA6B::
 	call 0x082423E9
 	setvar 0x4000, 0xFF
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220111
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallengeSaveFailed
 	incrementgamestat 0x1E
 	setvar 0x40BC, 0x1
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220134
+	goto BattleFrontier_BattleTowerLobby_EventScript_EnterElevator
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FAD2::
+BattleFrontier_BattleTowerLobby_EventScript_ExplainSinglesChallenge::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ExplainSinglesChallenge
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_0021F989
+	goto BattleFrontier_BattleTowerLobby_EventScript_AskEnterSinglesChallenge
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FAE0::
+BattleFrontier_BattleTowerLobby_EventScript_DoublesAttendant::
 	lock
 	faceplayer
 	setvar 0x40CF, 0x0
@@ -332,34 +332,34 @@ BattleFrontier_BattleTowerLobby_EventScript_0021FAE0::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_WelcomeDoubleBattle
 	callstd 0x4
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FAF2::
+BattleFrontier_BattleTowerLobby_EventScript_AskEnterDoublesChallenge::
 	message BattleFrontier_BattleTowerLobby_Text_TakeDoublesChallenge
 	waitmessage
 	multichoice 0x11, 0x6, 0x17, 0x0
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FB2E
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TryEnterDoublesChallenge
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FC3B
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ExplainDoublesChallenge
 	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FB2E::
+BattleFrontier_BattleTowerLobby_EventScript_TryEnterDoublesChallenge::
 	setvar 0x40CE, 0x1
 	message BattleFrontier_BattleTowerLobby_Text_WhichLevelMode
 	waitmessage
 	multichoice 0x11, 0x6, 0x18, 0x0
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	setvar 0x8004, 0xF
 	special CallFrontierUtilFunc
 	compare_var_to_value 0x8004, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0022006C
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMons
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x1
 	copyvar 0x8006, 0x800D
@@ -367,24 +367,24 @@ BattleFrontier_BattleTowerLobby_EventScript_0021FB2E::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_PleaseSelectFourMons
 	callstd 0x4
 	fadescreen 0x1
-	call BattleFrontier_BattleTowerLobby_EventScript_002202F8
+	call BattleFrontier_EventScript_GetLvlMode
 	copyvar 0x8004, 0x800D
 	setvar 0x8005, 0x4
 	special sub_080F9D20
 	waitstate
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220124
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_LoadPartyCancelChallenge
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_OkayToSaveBeforeEntering
 	callstd 0x5
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220124
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_LoadPartyCancelChallenge
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FBD4
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_SaveBeforeDoublesChallenge
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220124
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_LoadPartyCancelChallenge
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FBD4::
+BattleFrontier_BattleTowerLobby_EventScript_SaveBeforeDoublesChallenge::
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x4
 	special CallFrontierUtilFunc
@@ -405,19 +405,19 @@ BattleFrontier_BattleTowerLobby_EventScript_0021FBD4::
 	call 0x082423E9
 	setvar 0x4000, 0xFF
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220111
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallengeSaveFailed
 	incrementgamestat 0x1E
 	setvar 0x40BC, 0x0
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220134
+	goto BattleFrontier_BattleTowerLobby_EventScript_EnterElevator
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FC3B::
+BattleFrontier_BattleTowerLobby_EventScript_ExplainDoublesChallenge::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ExplainDoublesChallenge
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_0021FAF2
+	goto BattleFrontier_BattleTowerLobby_EventScript_AskEnterDoublesChallenge
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FC49::
+BattleFrontier_BattleTowerLobby_EventScript_MultisAttendant::
 	lock
 	faceplayer
 	setvar 0x40CF, 0x0
@@ -426,34 +426,34 @@ BattleFrontier_BattleTowerLobby_EventScript_0021FC49::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_WelcomeMultiBattle
 	callstd 0x4
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FC5E::
+BattleFrontier_BattleTowerLobby_EventScript_AskEnterMultisChallenge::
 	message BattleFrontier_BattleTowerLobby_Text_TakeMultisChallenge
 	waitmessage
 	multichoice 0x11, 0x6, 0x17, 0x0
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FC9A
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TryEnterMultisChallenge
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FDA7
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ExplainMultisChallenge
 	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FC9A::
+BattleFrontier_BattleTowerLobby_EventScript_TryEnterMultisChallenge::
 	setvar 0x40CE, 0x2
 	message BattleFrontier_BattleTowerLobby_Text_WhichLevelMode
 	waitmessage
 	multichoice 0x11, 0x6, 0x18, 0x0
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	setvar 0x8004, 0xF
 	special CallFrontierUtilFunc
 	compare_var_to_value 0x8004, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0022006C
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMons
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x1
 	copyvar 0x8006, 0x800D
@@ -461,24 +461,24 @@ BattleFrontier_BattleTowerLobby_EventScript_0021FC9A::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_PleaseSelectTwoMons
 	callstd 0x4
 	fadescreen 0x1
-	call BattleFrontier_BattleTowerLobby_EventScript_002202F8
+	call BattleFrontier_EventScript_GetLvlMode
 	copyvar 0x8004, 0x800D
 	setvar 0x8005, 0x2
 	special sub_080F9D20
 	waitstate
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220124
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_LoadPartyCancelChallenge
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_OkayToSaveBeforeEntering
 	callstd 0x5
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220124
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_LoadPartyCancelChallenge
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FD40
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_SaveBeforeMultisChallenge
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220124
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_LoadPartyCancelChallenge
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FD40::
+BattleFrontier_BattleTowerLobby_EventScript_SaveBeforeMultisChallenge::
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x4
 	special CallFrontierUtilFunc
@@ -499,19 +499,19 @@ BattleFrontier_BattleTowerLobby_EventScript_0021FD40::
 	call 0x082423E9
 	setvar 0x4000, 0xFF
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220111
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallengeSaveFailed
 	incrementgamestat 0x1E
 	setvar 0x40BC, 0x0
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220134
+	goto BattleFrontier_BattleTowerLobby_EventScript_EnterElevator
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FDA7::
+BattleFrontier_BattleTowerLobby_EventScript_ExplainMultisChallenge::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ExplainMultisChallenge
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_0021FC5E
+	goto BattleFrontier_BattleTowerLobby_EventScript_AskEnterMultisChallenge
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FDB5::
+BattleFrontier_BattleTowerLobby_EventScript_LinkMultisAttendant::
 	lock
 	faceplayer
 	setvar 0x40CF, 0x0
@@ -519,34 +519,34 @@ BattleFrontier_BattleTowerLobby_EventScript_0021FDB5::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_WelcomeLinkMultiBattle
 	callstd 0x4
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FDC7::
+BattleFrontier_BattleTowerLobby_EventScript_AskEnterLinkMultisChallenge::
 	message BattleFrontier_BattleTowerLobby_Text_TakeLinkMultisChallenge
 	waitmessage
 	multichoice 0x11, 0x6, 0x17, 0x0
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FE03
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TryEnterLinkMultisChallenge
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0022041B
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ExplainLinkMultisChallenge
 	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FE03::
+BattleFrontier_BattleTowerLobby_EventScript_TryEnterLinkMultisChallenge::
 	setvar 0x40CE, 0x3
 	message BattleFrontier_BattleTowerLobby_Text_WhichLevelMode
 	waitmessage
 	multichoice 0x11, 0x6, 0x18, 0x0
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	setvar 0x8004, 0xF
 	special CallFrontierUtilFunc
 	compare_var_to_value 0x8004, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0022006C
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMons
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x1
 	copyvar 0x8006, 0x800D
@@ -554,24 +554,24 @@ BattleFrontier_BattleTowerLobby_EventScript_0021FE03::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_PleaseSelectTwoMons2
 	callstd 0x4
 	fadescreen 0x1
-	call BattleFrontier_BattleTowerLobby_EventScript_002202F8
+	call BattleFrontier_EventScript_GetLvlMode
 	copyvar 0x8004, 0x800D
 	setvar 0x8005, 0x2
 	special sub_080F9D20
 	waitstate
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220124
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_LoadPartyCancelChallenge
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_OkayToSaveBeforeEntering
 	callstd 0x5
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220124
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_LoadPartyCancelChallenge
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FEA9
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_SaveBeforeLinkMultisChallenge
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220124
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_LoadPartyCancelChallenge
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FEA9::
+BattleFrontier_BattleTowerLobby_EventScript_SaveBeforeLinkMultisChallenge::
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x4
 	special CallFrontierUtilFunc
@@ -595,15 +595,15 @@ BattleFrontier_BattleTowerLobby_EventScript_0021FEA9::
 	call 0x082423E9
 	setvar 0x4000, 0xFF
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220111
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallengeSaveFailed
 	incrementgamestat 0x1E
 	specialvar 0x800D, IsWirelessAdapterConnected
 	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220429
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220306
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TryWirelessLink
+	goto BattleFrontier_BattleTowerLobby_EventScript_TryCableLink
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FF28::
+BattleFrontier_BattleTowerLobby_EventScript_FeelingsMan::
 	lock
 	faceplayer
 	message BattleFrontier_BattleTowerLobby_Text_DescribeFeelingsAboutBattleTower
@@ -611,84 +611,84 @@ BattleFrontier_BattleTowerLobby_EventScript_0021FF28::
 	multichoice 0x10, 0x4, 0x6D, 0x0
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FF73
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_FeelingsBattleNow
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FF8D
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_FeelingsIWon
 	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FFA7
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_FeelingsILost
 	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FFC1
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_FeelingsWontTell
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FFC1
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_FeelingsWontTell
 	release
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FF73::
+BattleFrontier_BattleTowerLobby_EventScript_FeelingsBattleNow::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_FeelWhatWhenYouBegin
 	callstd 0x4
 	setvar 0x8004, 0x1
 	call 0x08242F08
 	lock
 	faceplayer
-	goto BattleFrontier_BattleTowerLobby_EventScript_0021FFCB
+	goto BattleFrontier_BattleTowerLobby_EventScript_CheckFeelings
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FF8D::
+BattleFrontier_BattleTowerLobby_EventScript_FeelingsIWon::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_FeelWhatWhenYouveWon
 	callstd 0x4
 	setvar 0x8004, 0x2
 	call 0x08242F08
 	lock
 	faceplayer
-	goto BattleFrontier_BattleTowerLobby_EventScript_0021FFCB
+	goto BattleFrontier_BattleTowerLobby_EventScript_CheckFeelings
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FFA7::
+BattleFrontier_BattleTowerLobby_EventScript_FeelingsILost::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_FeelWhatWhenYouveLost
 	callstd 0x4
 	setvar 0x8004, 0x3
 	call 0x08242F08
 	lock
 	faceplayer
-	goto BattleFrontier_BattleTowerLobby_EventScript_0021FFCB
+	goto BattleFrontier_BattleTowerLobby_EventScript_CheckFeelings
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FFC1::
+BattleFrontier_BattleTowerLobby_EventScript_FeelingsWontTell::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_DontThinkMuchAboutIt
 	callstd 0x4
 	release
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FFCB::
+BattleFrontier_BattleTowerLobby_EventScript_CheckFeelings::
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FFE2
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CanceledEasyChat
 	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0021FFEC
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_SubmittedFeelings
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FFE2::
+BattleFrontier_BattleTowerLobby_EventScript_CanceledEasyChat::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ChangedYourMind
 	callstd 0x4
 	release
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FFEC::
+BattleFrontier_BattleTowerLobby_EventScript_SubmittedFeelings::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ThatsHowYouFeel
 	callstd 0x4
 	release
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FFF6::
+BattleFrontier_BattleTowerLobby_EventScript_Woman::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_WinsInRowRecorded
 	callstd 0x2
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0021FFFF::
+BattleFrontier_BattleTowerLobby_EventScript_Boy::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_CanLeaveUntilLossOrSevenWins
 	callstd 0x2
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220008::
+BattleFrontier_BattleTowerLobby_EventScript_ShowSinglesResults::
 	lockall
 	setvar 0x8004, 0x7
 	setvar 0x8005, 0x0
@@ -699,7 +699,7 @@ BattleFrontier_BattleTowerLobby_EventScript_00220008::
 	releaseall
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220021::
+BattleFrontier_BattleTowerLobby_EventScript_ShowDoublesResults::
 	lockall
 	setvar 0x8004, 0x7
 	setvar 0x8005, 0x0
@@ -710,7 +710,7 @@ BattleFrontier_BattleTowerLobby_EventScript_00220021::
 	releaseall
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0022003A::
+BattleFrontier_BattleTowerLobby_EventScript_ShowMultisResults::
 	lockall
 	setvar 0x8004, 0x7
 	setvar 0x8005, 0x0
@@ -721,7 +721,7 @@ BattleFrontier_BattleTowerLobby_EventScript_0022003A::
 	releaseall
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220053::
+BattleFrontier_BattleTowerLobby_EventScript_ShowLinkMultisResults::
 	lockall
 	setvar 0x8004, 0x7
 	setvar 0x8005, 0x0
@@ -732,115 +732,115 @@ BattleFrontier_BattleTowerLobby_EventScript_00220053::
 	releaseall
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0022006C::
+BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMons::
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220087
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMonsLv50
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002200CC
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMonsLvOpen
 
-BattleFrontier_BattleTowerLobby_EventScript_00220087::
+BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMonsLv50::
 	copyvar 0x8000, 0x40CE
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002200B0
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMonsLv50Singles
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002200BE
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMonsLv50Doubles
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_NotEnoughValidMonsLv50Multis
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220132
+	goto BattleFrontier_BattleTowerLobby_EventScript_EndCancelChallenge
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_002200B0::
+BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMonsLv50Singles::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_NotEnoughValidMonsLv50Singles
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220132
+	goto BattleFrontier_BattleTowerLobby_EventScript_EndCancelChallenge
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_002200BE::
+BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMonsLv50Doubles::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_NotEnoughValidMonsLv50Doubles
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220132
+	goto BattleFrontier_BattleTowerLobby_EventScript_EndCancelChallenge
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_002200CC::
+BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMonsLvOpen::
 	copyvar 0x8000, 0x40CE
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002200F5
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMonsLvOpenSingles
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220103
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMonsLvOpenDoubles
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_NotEnoughValidMonsLvOpenMultis
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220132
+	goto BattleFrontier_BattleTowerLobby_EventScript_EndCancelChallenge
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_002200F5::
+BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMonsLvOpenSingles::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_NotEnoughValidMonsLvOpenSingles
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220132
+	goto BattleFrontier_BattleTowerLobby_EventScript_EndCancelChallenge
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220103::
+BattleFrontier_BattleTowerLobby_EventScript_NotEnoughValidMonsLvOpenDoubles::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_NotEnoughValidMonsLvOpenDoubles
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220132
+	goto BattleFrontier_BattleTowerLobby_EventScript_EndCancelChallenge
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220111::
+BattleFrontier_BattleTowerLobby_EventScript_CancelChallengeSaveFailed::
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x0
 	special CallFrontierUtilFunc
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220124::
+BattleFrontier_BattleTowerLobby_EventScript_LoadPartyCancelChallenge::
 	special LoadPlayerParty
 
-BattleFrontier_BattleTowerLobby_EventScript_00220127::
+BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge::
 	special CloseLink
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_LookForwardToAnotherChallenge
 	callstd 0x4
 
-BattleFrontier_BattleTowerLobby_EventScript_00220132::
+BattleFrontier_BattleTowerLobby_EventScript_EndCancelChallenge::
 	release
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220134::
+BattleFrontier_BattleTowerLobby_EventScript_EnterElevator::
 	special SavePlayerParty
 	setvar 0x8004, 0x3
-	call BattleFrontier_BattleTowerLobby_EventScript_002202B3
+	call BattleFrontier_BattleTowerLobby_EventScript_GetPartySize
 	special CallFrontierUtilFunc
 	setvar 0x800D, 0x0
 
-BattleFrontier_BattleTowerLobby_EventScript_00220149::
+BattleFrontier_BattleTowerLobby_EventScript_WaitForLinkOpponentLoad::
 	setvar 0x8004, 0xC
 	special sub_08161E88
 	delay 0x1
 	compare_var_to_value 0x800D, 0x6
-	goto_if 0x5, BattleFrontier_BattleTowerLobby_EventScript_00220149
-	call BattleFrontier_BattleTowerLobby_EventScript_00220176
+	goto_if 0x5, BattleFrontier_BattleTowerLobby_EventScript_WaitForLinkOpponentLoad
+	call BattleFrontier_BattleTowerLobby_EventScript_ShowYouToBattleRoom
 	clearflag 0x77
 	warp 0x1A06, 0xFF, 0x1, 0x6
 	setvar 0x4000, 0x0
 	waitstate
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220176::
-	call BattleFrontier_BattleTowerLobby_EventScript_002201E8
+BattleFrontier_BattleTowerLobby_EventScript_ShowYouToBattleRoom::
+	call BattleFrontier_BattleTowerLobby_EventScript_BufferModeText
 	compare_var_to_value 0x40CE, 0x3
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220193
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ShowYouToLinkMultiBattleRoom
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ShowYouToBattleRoom
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_0022019C
+	goto BattleFrontier_BattleTowerLobby_EventScript_WalkToElevator
 
-BattleFrontier_BattleTowerLobby_EventScript_00220193::
+BattleFrontier_BattleTowerLobby_EventScript_ShowYouToLinkMultiBattleRoom::
 	messageautoscroll BattleFrontier_BattleTowerLobby_Text_ShowYouToBattleRoom
 	waitmessage
 	delay 0x30
 
-BattleFrontier_BattleTowerLobby_EventScript_0022019C::
+BattleFrontier_BattleTowerLobby_EventScript_WalkToElevator::
 	closemessage
-	call BattleFrontier_BattleTowerLobby_EventScript_00220229
-	call BattleFrontier_BattleTowerLobby_EventScript_0022026E
+	call BattleFrontier_BattleTowerLobby_EventScript_SetAttendantTalkedTo
+	call BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoord
 	applymovement 0x800F, BattleFrontier_BattleTowerLobby_Movement_WalkToElevator
 	applymovement 0xFF, BattleFrontier_BattleTowerLobby_Movement_WalkToElevator
 	waitmovement 0x0
@@ -879,121 +879,121 @@ BattleFrontier_BattleTowerLobby_Movement_UnusedEnterElevator:
 	walk_fast_up
 	set_invisible
 	step_end
-BattleFrontier_BattleTowerLobby_EventScript_002201E8::
+BattleFrontier_BattleTowerLobby_EventScript_BufferModeText::
 	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220215
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_BufferTextSingle
 	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0022021A
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_BufferTextDouble
 	compare_var_to_value 0x40CE, 0x2
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0022021F
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_BufferTextMulti
 	compare_var_to_value 0x40CE, 0x3
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220224
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_BufferTextLinkMulti
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_00220215::
+BattleFrontier_BattleTowerLobby_EventScript_BufferTextSingle::
 	bufferstdstring 0x0, 0x13
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_0022021A::
+BattleFrontier_BattleTowerLobby_EventScript_BufferTextDouble::
 	bufferstdstring 0x0, 0x14
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_0022021F::
+BattleFrontier_BattleTowerLobby_EventScript_BufferTextMulti::
 	bufferstdstring 0x0, 0x15
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_00220224::
+BattleFrontier_BattleTowerLobby_EventScript_BufferTextLinkMulti::
 	bufferstdstring 0x0, 0x16
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_00220229::
+BattleFrontier_BattleTowerLobby_EventScript_SetAttendantTalkedTo::
 	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220256
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TalkedToSinglesAttendant
 	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0022025C
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TalkedToDoublesAttendant
 	compare_var_to_value 0x40CE, 0x2
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220262
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TalkedToMultisAttendant
 	compare_var_to_value 0x40CE, 0x3
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220268
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TalkedToLinkMultisAttendant
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_00220256::
+BattleFrontier_BattleTowerLobby_EventScript_TalkedToSinglesAttendant::
 	setvar 0x800F, 0x1
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_0022025C::
+BattleFrontier_BattleTowerLobby_EventScript_TalkedToDoublesAttendant::
 	setvar 0x800F, 0x7
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_00220262::
+BattleFrontier_BattleTowerLobby_EventScript_TalkedToMultisAttendant::
 	setvar 0x800F, 0x8
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_00220268::
+BattleFrontier_BattleTowerLobby_EventScript_TalkedToLinkMultisAttendant::
 	setvar 0x800F, 0x9
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_0022026E::
+BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoord::
 	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0022029B
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordSingles
 	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002202A1
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordDoubles
 	compare_var_to_value 0x40CE, 0x2
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002202A7
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordMultis
 	compare_var_to_value 0x40CE, 0x3
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002202AD
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordLinkMultis
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_0022029B::
+BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordSingles::
 	setvar 0x8004, 0x6
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_002202A1::
+BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordDoubles::
 	setvar 0x8004, 0xA
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_002202A7::
+BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordMultis::
 	setvar 0x8004, 0xE
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_002202AD::
+BattleFrontier_BattleTowerLobby_EventScript_GetDoorXCoordLinkMultis::
 	setvar 0x8004, 0x12
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_002202B3::
+BattleFrontier_BattleTowerLobby_EventScript_GetPartySize::
 	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002202E0
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetSinglesPartySize
 	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002202E6
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetDoublesPartySize
 	compare_var_to_value 0x40CE, 0x2
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002202EC
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetMultisPartySize
 	compare_var_to_value 0x40CE, 0x3
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002202F2
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_GetLinkMultisPartySize
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_002202E0::
+BattleFrontier_BattleTowerLobby_EventScript_GetSinglesPartySize::
 	setvar 0x8005, 0x3
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_002202E6::
+BattleFrontier_BattleTowerLobby_EventScript_GetDoublesPartySize::
 	setvar 0x8005, 0x4
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_002202EC::
+BattleFrontier_BattleTowerLobby_EventScript_GetMultisPartySize::
 	setvar 0x8005, 0x2
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_002202F2::
+BattleFrontier_BattleTowerLobby_EventScript_GetLinkMultisPartySize::
 	setvar 0x8005, 0x2
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_002202F8::
+BattleFrontier_EventScript_GetLvlMode::
 	setvar 0x8004, 0x1
 	setvar 0x8005, 0x1
 	special CallFrontierUtilFunc
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_00220306::
+BattleFrontier_BattleTowerLobby_EventScript_TryCableLink::
 	setvar 0x8004, 0x9
 	message 0x08247C79
 	waitmessage
@@ -1001,31 +1001,31 @@ BattleFrontier_BattleTowerLobby_EventScript_00220306::
 	special TryBattleLinkup
 	waitstate
 	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002203F0
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CableLinkSuccessful
 	compare_var_to_value 0x800D, 0x2
 	goto_if 0x1, 0x08246FBE
 	compare_var_to_value 0x800D, 0x3
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220368
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_AbortLinkDifferentSelections
 	compare_var_to_value 0x800D, 0x4
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220392
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_AbortLinkIncorrectNumberOfPlayers
 	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	compare_var_to_value 0x800D, 0x6
 	goto_if 0x1, 0x08246FB1
 	compare_var_to_value 0x800D, 0xB
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002203A7
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_AbortLink
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220368::
+BattleFrontier_BattleTowerLobby_EventScript_AbortLinkDifferentSelections::
 	special CloseLink
 	compare_var_to_value 0x8005, 0x3
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220380
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_FriendDifferentSelection
 	loadword 0x0, 0x08247D84
 	callstd 0x4
 	release
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220380::
+BattleFrontier_BattleTowerLobby_EventScript_FriendDifferentSelection::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_FriendChoseDifferentLvlMode
 	callstd 0x4
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ChooseDifferentMonsMatchLvlMode
@@ -1033,7 +1033,7 @@ BattleFrontier_BattleTowerLobby_EventScript_00220380::
 	release
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220392::
+BattleFrontier_BattleTowerLobby_EventScript_AbortLinkIncorrectNumberOfPlayers::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_LinkMultiOnlyForTwoPlayers
 	callstd 0x4
 	special CloseLink
@@ -1042,35 +1042,35 @@ BattleFrontier_BattleTowerLobby_EventScript_00220392::
 	release
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_002203A7::
+BattleFrontier_BattleTowerLobby_EventScript_AbortLink::
 	special CloseLink
 	compare_var_to_value 0x8005, 0x0
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002203D5
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_FriendChoseDifferentLvlMode
 	compare_var_to_value 0x8005, 0x1
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002203DE
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_FriendAlsoSelectedMon
 	compare_var_to_value 0x8005, 0x2
-	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002203E7
+	call_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_FriendAlsoSelectedMons
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ChooseDifferentMonsMatchLvlMode
 	callstd 0x4
 	release
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_002203D5::
+BattleFrontier_BattleTowerLobby_EventScript_FriendChoseDifferentLvlMode::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_FriendChoseDifferentLvlMode
 	callstd 0x4
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_002203DE::
+BattleFrontier_BattleTowerLobby_EventScript_FriendAlsoSelectedMon::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_FriendAlsoSelectedMon
 	callstd 0x4
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_002203E7::
+BattleFrontier_BattleTowerLobby_EventScript_FriendAlsoSelectedMons::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_FriendAlsoSelectedMons
 	callstd 0x4
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_002203F0::
+BattleFrontier_BattleTowerLobby_EventScript_CableLinkSuccessful::
 	incrementgamestat 0x1E
 	setvar 0x40BC, 0x0
 	message BattleFrontier_BattleTowerLobby_Text_SaveGameBeforeShowingIn
@@ -1083,62 +1083,62 @@ BattleFrontier_BattleTowerLobby_EventScript_002203F0::
 	playse 0x37
 	waitse
 	special TrySetBattleTowerLinkType
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220134
+	goto BattleFrontier_BattleTowerLobby_EventScript_EnterElevator
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0022041B::
+BattleFrontier_BattleTowerLobby_EventScript_ExplainLinkMultisChallenge::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ExplainLinkMultisChallenge
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_0021FDC7
+	goto BattleFrontier_BattleTowerLobby_EventScript_AskEnterLinkMultisChallenge
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220429::
+BattleFrontier_BattleTowerLobby_EventScript_TryWirelessLink::
 	setvar 0x8004, 0x14
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220434
+	goto BattleFrontier_BattleTowerLobby_EventScript_ChooseLeader
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220434::
+BattleFrontier_BattleTowerLobby_EventScript_ChooseLeader::
 	message 0x082485D7
 	waitmessage
 	multichoice 0x10, 0x6, 0x51, 0x0
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002204A4
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TryJoinGroup
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220471
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TryBecomeLeader
 	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220127
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220471::
+BattleFrontier_BattleTowerLobby_EventScript_TryBecomeLeader::
 	call 0x0824780F
 	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002204D7
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_WirelessLinkSuccessful
 	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220434
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ChooseLeader
 	compare_var_to_value 0x800D, 0x8
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220471
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TryBecomeLeader
 	compare_var_to_value 0x800D, 0xB
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002203A7
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_AbortLink
 	release
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_002204A4::
+BattleFrontier_BattleTowerLobby_EventScript_TryJoinGroup::
 	call 0x08247814
 	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002204D7
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_WirelessLinkSuccessful
 	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220434
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ChooseLeader
 	compare_var_to_value 0x800D, 0x8
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002204A4
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_TryJoinGroup
 	compare_var_to_value 0x800D, 0xB
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002203A7
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_AbortLink
 	release
 	return
 
-BattleFrontier_BattleTowerLobby_EventScript_002204D7::
+BattleFrontier_BattleTowerLobby_EventScript_WirelessLinkSuccessful::
 	incrementgamestat 0x1E
 	setvar 0x40BC, 0x0
 	message BattleFrontier_BattleTowerLobby_Text_SaveGameBeforeShowingIn
@@ -1150,60 +1150,60 @@ BattleFrontier_BattleTowerLobby_EventScript_002204D7::
 	waitstate
 	playse 0x37
 	waitse
-	goto BattleFrontier_BattleTowerLobby_EventScript_00220134
+	goto BattleFrontier_BattleTowerLobby_EventScript_EnterElevator
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_002204FF::
+BattleFrontier_BattleTowerLobby_EventScript_RulesBoard::
 	lockall
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_RulesAreListed
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_0022050E
+	goto BattleFrontier_BattleTowerLobby_EventScript_ReadRulesBoard
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0022050E::
+BattleFrontier_BattleTowerLobby_EventScript_ReadRulesBoard::
 	message BattleFrontier_BattleTowerLobby_Text_ReadWhichHeading
 	waitmessage
 	multichoice 0x11, 0x2, 0x61, 0x0
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220561
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_RulesTower
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0022056F
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_RulesMons
 	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0022057D
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_RulesSalon
 	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_0022058B
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_RulesMultiLink
 	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220599
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ExitRules
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_00220599
+	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_ExitRules
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220561::
+BattleFrontier_BattleTowerLobby_EventScript_RulesTower::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ExplainTowerRules
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_0022050E
+	goto BattleFrontier_BattleTowerLobby_EventScript_ReadRulesBoard
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0022056F::
+BattleFrontier_BattleTowerLobby_EventScript_RulesMons::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ExplainMonRules
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_0022050E
+	goto BattleFrontier_BattleTowerLobby_EventScript_ReadRulesBoard
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0022057D::
+BattleFrontier_BattleTowerLobby_EventScript_RulesSalon::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ExplainSalonRules
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_0022050E
+	goto BattleFrontier_BattleTowerLobby_EventScript_ReadRulesBoard
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_0022058B::
+BattleFrontier_BattleTowerLobby_EventScript_RulesMultiLink::
 	loadword 0x0, BattleFrontier_BattleTowerLobby_Text_ExplainMultiLinkRules
 	callstd 0x4
-	goto BattleFrontier_BattleTowerLobby_EventScript_0022050E
+	goto BattleFrontier_BattleTowerLobby_EventScript_ReadRulesBoard
 	end
 
-BattleFrontier_BattleTowerLobby_EventScript_00220599::
+BattleFrontier_BattleTowerLobby_EventScript_ExitRules::
 	releaseall
 	end
 
