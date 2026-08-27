@@ -5026,7 +5026,7 @@ void UpdateFrontierGambler(u16 daysSince)
     *var %= 12;
 }
 
-__attribute__((naked)) void sub_0813A828(void)
+__attribute__((naked)) void ShowFrontierGamblerLookingMessage(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5055,7 +5055,7 @@ __attribute__((naked)) void sub_0813A828(void)
     );
 }
 
-__attribute__((naked)) void sub_0813A85C(void)
+__attribute__((naked)) void ShowFrontierGamblerGoMessage(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5297,7 +5297,7 @@ __attribute__((naked)) void TakeFrontierBattlePoints(void)
     );
 }
 
-__attribute__((naked)) void sub_0813AA1C(void)
+__attribute__((naked)) void GiveFrontierBattlePoints(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

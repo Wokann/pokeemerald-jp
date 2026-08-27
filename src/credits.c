@@ -575,7 +575,7 @@ __attribute__((naked)) void CB2_StartCreditsSequence(void)
         "_0817562C: .4byte 0x0000FFFC\n\t"
         "_08175630: .4byte Task_UpdatePage + 1\n\t"
         "_08175634: .4byte 0x081753CD\n\t"
-        "_08175638: .4byte SPECIAL_sub_0813AA1C\n\t"
+        "_08175638: .4byte SPECIAL_GiveFrontierBattlePoints\n\t"
         "_0817563C: .4byte CB2_Credits + 1\n\t"
         "_08175640: .4byte gUnknown_203B9B1\n\t"
         "_08175644: .4byte gUnknown_203B9B4\n\t"

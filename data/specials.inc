@@ -483,7 +483,7 @@ gSpecials::
 	def_special ShowBattlePointsWindow
 	def_special UpdateBattlePointsWindow
 	def_special CloseBattlePointsWindow
-	def_special sub_0813AA1C
+	def_special GiveFrontierBattlePoints
 	def_special TakeFrontierBattlePoints
 	def_special GetFrontierBattlePoints
 	def_special ShowFrontierExchangeCornerItemIconWindow
@@ -493,8 +493,8 @@ gSpecials::
 	def_special HasEnoughBerryPowder
 	def_special TakeBerryPowder
 	def_special PrintPlayerBerryPowderAmount
-	def_special sub_0813A828
-	def_special sub_0813A85C
+	def_special ShowFrontierGamblerLookingMessage
+	def_special ShowFrontierGamblerGoMessage
 	def_special Script_DoRayquazaScene, waitstate=1
 	def_special OpenPokenavForTutorial
 	def_special ScriptMenu_CreateStartMenuForPokenavTutorial, waitstate=1
