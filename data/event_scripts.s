@@ -803,7 +803,6 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/Underwater_MarineCave/scripts.inc"
 	.include "data/maps/MarineCave_Entrance/scripts.inc"
 	.include "data/maps/MarineCave_End/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21d0c2, 0x9
 	.include "data/maps/TerraCave_Entrance/scripts.inc"
 	.include "data/maps/TerraCave_End/scripts.inc"
 	.incbin "baserom_jp.gba", 0x21d193, 0x9
