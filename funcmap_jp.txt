@@ -11963,7 +11963,7 @@ roamer.s
 08161e60 SetRoamerInactive SetRoamerInactive
 08161e78 GetRoamerLocation GetRoamerLocation
 battle_tower.s
-08161e88 battle_tower.s sub_08161E88_jp
+08161e88 CallBattleTowerFunc CallBattleTowerFunc
 08161e9c battle_tower.s nullsub_61
 08161ea8 InitTowerChallenge InitTowerChallenge
 08161f68 GetTowerData GetTowerData

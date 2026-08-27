@@ -38,8 +38,7 @@ BattleFrontier_BattleTowerMultiCorridor_EventScript_SetUpObjects::
 	hideobjectat LOCALID_PLAYER, MAP_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR
 	hideobjectat LOCALID_TOWER_MULTI_CORRIDOR_PLAYER, MAP_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR
 	hideobjectat LOCALID_TOWER_MULTI_CORRIDOR_PARTNER, MAP_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR
-	@ The JP special table still names OffsetCameraForBattle sub_081399F4.
-	special sub_081399F4
+	special OffsetCameraForBattle
 	end
 
 BattleFrontier_BattleTowerMultiCorridor_OnFrame:

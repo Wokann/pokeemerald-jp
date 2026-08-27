@@ -414,7 +414,7 @@ static void (*const sBattleTowerFuncs[])(void) BATTLE_TOWER_FUNCS_DATA =
     [BATTLE_TOWER_FUNC_SET_INTERVIEW_DATA]  = sub_08164CE4,
 };
 
-__attribute__((naked)) void sub_08161E88(void)
+__attribute__((naked)) void CallBattleTowerFunc(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

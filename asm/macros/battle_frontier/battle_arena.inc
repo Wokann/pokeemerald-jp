@@ -6,6 +6,12 @@
 	special CallBattleArenaFunction
 	.endm
 
+	@ Buffer the opponent's name to STR_VAR_1.
+	.macro arena_gettrainername
+	setvar VAR_0x8004, BATTLE_ARENA_FUNC_GET_TRAINER_NAME
+	special CallBattleArenaFunction
+	.endm
+
 	@ Get an ARENA_DATA_* value into VAR_RESULT.
 	.macro arena_get data:req
 	setvar VAR_0x8004, BATTLE_ARENA_FUNC_GET_DATA

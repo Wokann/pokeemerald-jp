@@ -3133,7 +3133,7 @@ __attribute__((naked)) bool8 InMultiPartnerRoom(void)
     );
 }
 
-__attribute__((naked)) void sub_081399F4(void)
+__attribute__((naked)) void OffsetCameraForBattle(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

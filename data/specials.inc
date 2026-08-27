@@ -248,7 +248,7 @@ gSpecials::
 	def_special UpdateCyclingRoadState
 	def_special GetLeadMonFriendshipScore
 	def_special CallFrontierUtilFunc
-	def_special sub_08161E88
+	def_special CallBattleTowerFunc
 	def_special sub_0818E608
 	def_special CallBattlePalaceFunction
 	def_special CopyEReaderTrainerGreeting
@@ -455,7 +455,7 @@ gSpecials::
 	def_special sub_0802E0BC
 	def_special sub_0802781C
 	def_special sub_0802786C
-	def_special sub_081399F4
+	def_special OffsetCameraForBattle
 	def_special sub_08139A68
 	def_special sub_08139DD4
 	def_special sub_080F98EC
