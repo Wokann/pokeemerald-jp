@@ -1257,16 +1257,11 @@ Common_EventScript_LegendaryFlewAway::
 
 	.include "data/text/contest_strings.inc"
 
-gUnknown_824C13C: @ 0x824C13C
-	.incbin "baserom_jp.gba", 0x24c13c, 0x4
+@ 0x0824C13C
+	.include "data/text/contest_link.inc"
 
-	.globl gUnknown_824C140
-gUnknown_824C140: @ 0x824C140
-	.include "data/scripts/gUnknown_824C140.inc"
-
-	.globl gUnknown_824C1F5
-gUnknown_824C1F5: @ 0x824C1F5
-	.include "data/scripts/gUnknown_824C1F5.inc"
+@ 0x0824C1F5
+	.include "data/text/contest_painting.inc"
 
 	.globl gUnknown_824C200
 gUnknown_824C200: @ 0x824C200

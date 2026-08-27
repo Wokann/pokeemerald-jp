@@ -496,7 +496,7 @@ __attribute__((naked)) void PrintContestPaintingCaption(void)
         "_081301E0: .4byte gStringVar2\n\t"
         "_081301E4: .4byte gStringVar3\n\t"
         "_081301E8: .4byte gStringVar4\n\t"
-        "_081301EC: .4byte gUnknown_824C1F5\n\t"
+        "_081301EC: .4byte gContestHallPaintingCaption\n\t"
         "_081301F0: .4byte gUnknown_30011F7\n\t"
         "_081301F4:\n\t"
         "	ldr r0, _08130234\n\t"
@@ -1400,4 +1400,3 @@ __attribute__((naked)) void sub_081308DC(void)
         ".syntax divided\n\t"
     );
 }
-

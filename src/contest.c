@@ -9886,7 +9886,7 @@ __attribute__((naked)) void ContestPrintLinkStandby(void)
         "	.align 2, 0\n\t"
         "_080DB6E8: .4byte gBattle_BG0_Y\n\t"
         "_080DB6EC: .4byte gBattle_BG2_Y\n\t"
-        "_080DB6F0: .4byte gUnknown_824C140\n\t"
+        "_080DB6F0: .4byte gText_LinkStandby4\n\t"
         ".syntax divided\n\t"
     );
 }
