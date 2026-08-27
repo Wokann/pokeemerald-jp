@@ -211,6 +211,48 @@ class StructureAuditTests(unittest.TestCase):
         self.assertEqual(progress["semantic_review"]["status"], "not_recorded")
         self.assertEqual(progress["semantic_review"]["reviewed_map_names"], [])
 
+    def test_map_headers_keeps_direct_header_fields(self):
+        headers = audit.map_headers(
+            "@ MAP_DIRECT (g1 m2)\n"
+            "\t.4byte gMapLayout_Direct @ mapLayout\n"
+            "\t.4byte Direct_MapEvents @ events\n"
+            "\t.4byte Direct_MapScripts @ mapScripts\n"
+            "\t.4byte NULL @ connections\n"
+        )
+        self.assertEqual(headers["MAP_DIRECT"], {
+            "id": "MAP_DIRECT", "group": 1, "number": 2,
+            "mapLayout": "gMapLayout_Direct", "events": "Direct_MapEvents",
+            "mapScripts": "Direct_MapScripts", "connections": "NULL",
+        })
+
+    def test_map_convergence_inlines_map_header_include(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            map_dir = root / "data/maps/Included"
+            map_dir.mkdir(parents=True)
+            (map_dir / "map.json").write_text(
+                '{"id":"MAP_INCLUDED","layout":"LAYOUT_INCLUDED"}', encoding="utf-8")
+            (map_dir / "scripts.inc").write_text("", encoding="utf-8")
+            (map_dir / "events.inc").write_text("", encoding="utf-8")
+            (map_dir / "header.inc").write_text(
+                '\t.4byte gMapLayout_INCLUDED\n'
+                '\t.4byte Included_MapEvents\n'
+                '\t.4byte Included_MapScripts\n'
+                '\t.4byte NULL\n', encoding="utf-8")
+            (root / "data/event_scripts.s").write_text(
+                '.include "data/maps/Included/scripts.inc"\n', encoding="utf-8")
+            (root / "data/data_b2d_mid26.s").write_text(
+                '.include "data/maps/Included/events.inc"\n', encoding="utf-8")
+            (root / "data/data_b2d_mid30.s").write_text(
+                '@ MAP_INCLUDED (g1 m2)\n'
+                '.include "data/maps/Included/header.inc"\n', encoding="utf-8")
+            progress = audit.map_convergence_progress(root)
+        record = progress["records"][0]
+        self.assertEqual(progress["header_records"], 1)
+        self.assertEqual(record["events"]["status"], "direct")
+        self.assertEqual(record["scripts"]["status"], "direct")
+        self.assertEqual(record["layout"]["status"], "direct")
+
     def test_map_entries_uses_requested_us_root_not_emitter_default(self):
         class FakeEmitter:
             US_JSON = Path("hard-coded.json")

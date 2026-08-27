@@ -52,6 +52,8 @@ MAP_EVENTS_RE = re.compile(r'^\s*\.include\s+"data/maps/([^/]+)/events\.inc"\s*$
 MAP_HEADER_RE = re.compile(r'^\s*@ (MAP_[A-Z0-9_]+) \(g(\d+) m(\d+)\)\s*$')
 MAP_HEADER_FIELD_RE = re.compile(
     r'^\s*\.4byte\s+([^,\s]+).*@\s+(mapLayout|events|mapScripts|connections)\s*$')
+MAP_HEADER_VALUE_RE = re.compile(r'^\s*\.4byte\s+([^,\s]+)\s*$')
+ASM_INCLUDE_RE = re.compile(r'^\s*\.include\s+"([^"]+)"\s*$')
 MAP_EVENT_ALIAS_RE = re.compile(
     r'^\s*\.set\s+(gMapEvents_[A-Z0-9_]+)\s*,\s*([A-Za-z_]\w*_MapEvents)\s*$')
 ASM_LABEL_RE = re.compile(r'^\s*([A-Za-z_]\w*)::?\s*(?:@.*)?$')
@@ -520,11 +522,51 @@ def map_includes(path: Path, pattern: re.Pattern[str]) -> list[str]:
             if (match := pattern.match(line))]
 
 
-def map_headers(text: str) -> dict[str, dict[str, object]]:
-    """Read the annotated map-header pointer chain from data_b2d_mid30.s."""
+def inline_asm_includes(text: str, root: Path, included: frozenset[Path] = frozenset(),
+                        inside_header: bool = False) -> list[str]:
+    """Return assembly lines with repository-local ``.include`` files inlined.
+
+    Map headers may be written directly in ``data_b2d_mid30.s`` or delegated
+    to a map's ``header.inc``.  The audit needs the same pointer view in both
+    cases.  Includes outside ``root``, missing files, and recursive includes
+    are ignored deterministically: they cannot contribute a header field.
+    """
+    resolved_root = root.resolve()
+    lines: list[str] = []
+    for line in text.splitlines():
+        match = ASM_INCLUDE_RE.match(line)
+        if not match:
+            lines.append(line)
+            continue
+        candidate = (resolved_root / match.group(1)).resolve()
+        if not inside_header and candidate.name != "header.inc":
+            lines.append(line)
+            continue
+        if candidate in included or not candidate.is_file():
+            continue
+        try:
+            candidate.relative_to(resolved_root)
+        except ValueError:
+            continue
+        included_text = candidate.read_text(encoding="utf-8", errors="replace")
+        lines.extend(inline_asm_includes(included_text, resolved_root, included | {candidate}, True))
+    return lines
+
+
+def map_headers(text: str, root: Path | None = None) -> dict[str, dict[str, object]]:
+    """Read annotated map-header fields, including repository-local headers.
+
+    ``root`` is optional so callers with directly expanded assembly retain the
+    original text-only behavior.  When supplied, map ``header.inc`` files are
+    inlined recursively before their fields are associated with the preceding
+    ``@ MAP_*`` annotation.  Generated ``header.inc`` files use the fixed
+    MapHeader pointer order without field comments, while older direct headers
+    retain comments; accept both forms.
+    """
     records: dict[str, dict[str, object]] = {}
     current: dict[str, object] | None = None
-    for line in text.splitlines():
+    lines = inline_asm_includes(text, root) if root is not None else text.splitlines()
+    for line in lines:
         if match := MAP_HEADER_RE.match(line):
             current = {
                 "id": match.group(1),
@@ -535,6 +577,12 @@ def map_headers(text: str) -> dict[str, dict[str, object]]:
             continue
         if current and (match := MAP_HEADER_FIELD_RE.match(line)):
             current[match.group(2)] = match.group(1)
+            continue
+        if current and (match := MAP_HEADER_VALUE_RE.match(line)):
+            for field in ("mapLayout", "events", "mapScripts", "connections"):
+                if field not in current:
+                    current[field] = match.group(1)
+                    break
     return records
 
 
@@ -801,7 +849,7 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
         if map_data_path.is_file() else ""
     script_order = map_includes(event_scripts_path, MAP_NAME_RE)
     event_order = map_includes(events_path, MAP_EVENTS_RE)
-    headers = map_headers(map_data_text)
+    headers = map_headers(map_data_text, root)
     aliases = map_event_aliases(events_text)
     blocks = asm_label_blocks(map_data_text)
 
