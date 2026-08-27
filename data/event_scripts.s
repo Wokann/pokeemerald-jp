@@ -1076,17 +1076,12 @@ Common_EventScript_PlayerHandedOverTheItem::
 	.include "data/scripts/movement.inc"
 	.include "data/scripts/check_furniture.inc"
 
-	@ 0x08243690-0x082436B8 is still unstructured shared script data.
-	.incbin "baserom_jp.gba", 0x243690, 0x28
-
-	.globl gJPText_002436B8
-gJPText_002436B8: @ 0x082436B8
-	.string "{MUS_RG_VS_TRAINER}は\n"
-	.string "パソコンの　スイッチを　いれた！$"
-
-gUnknown_82436CD:: @ 0x082436CD
-	@ 0x082436CD-0x0824390F remains unstructured shared text data.
-	.incbin "baserom_jp.gba", 0x2436cd, 0x242
+	@ 0x08243690
+	.include "data/text/record_mix.inc"
+	@ 0x082436B8
+	.include "data/text/pc.inc"
+	@ 0x0824373C
+	.include "data/text/pkmn_center_nurse.inc"
 
 	@ 0x0824390F
 	.include "data/text/mart_clerk.inc"

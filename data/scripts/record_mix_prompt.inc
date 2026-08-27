@@ -3,7 +3,7 @@
 EventScript_MixRecordsPrompt::
 	lock
 	faceplayer
-	msgbox 0x08243690, MSGBOX_YESNO
+	msgbox Text_WouldYouLikeToMixRecords, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, EventScript_MixRecords
 	goto_if_eq VAR_RESULT, NO, EventScript_EndMixRecords
 	goto EventScript_EndMixRecords
@@ -13,7 +13,7 @@ EventScript_MixRecords::
 	lock
 	faceplayer
 EventScript_EndMixRecords::
-	message 0x082436A4
+	message Text_WeHopeToSeeYouAgain
 	waitmessage
 	waitbuttonpress
 	release

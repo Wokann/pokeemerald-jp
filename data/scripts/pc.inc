@@ -3,13 +3,12 @@ EventScript_PC::
 	setvar VAR_0x8004, PC_LOCATION_OTHER
 	special DoPCTurnOnEffect
 	playse SE_PC_ON
-	@ The JP text data remains in its later physical owner at 0x082436B8.
-	msgbox 0x082436B8, MSGBOX_DEFAULT
+	msgbox Text_BootUpPC, MSGBOX_DEFAULT
 	goto EventScript_PCMainMenu
 	end
 
 EventScript_PCMainMenu::
-	message 0x082436CD
+	message gText_WhichPCShouldBeAccessed
 	waitmessage
 	special ScriptMenu_CreatePCMultichoice
 	@ The JP menu script waits for its PC menu task here.
@@ -29,7 +28,7 @@ EventScript_AccessPC::
 
 EventScript_AccessPlayersPC::
 	playse SE_PC_LOGIN
-	msgbox 0x08243716, MSGBOX_DEFAULT
+	msgbox gText_AccessedPlayersPC, MSGBOX_DEFAULT
 	special PlayerPC
 	goto EventScript_PCMainMenu
 	end
@@ -38,17 +37,17 @@ EventScript_AccessPokemonStorage::
 	playse SE_PC_LOGIN
 	call_if_unset FLAG_SYS_PC_LANETTE, EventScript_AccessSomeonesPC
 	call_if_set FLAG_SYS_PC_LANETTE, EventScript_AccessLanettesPC
-	msgbox 0x082436FE, MSGBOX_DEFAULT
+	msgbox gText_StorageSystemOpened, MSGBOX_DEFAULT
 	special ShowPokemonStorageSystemPC
 	goto EventScript_PCMainMenu
 	end
 
 EventScript_AccessSomeonesPC::
-	msgbox 0x082436EA, MSGBOX_DEFAULT
+	msgbox gText_AccessedSomeonesPC, MSGBOX_DEFAULT
 	return
 
 EventScript_AccessLanettesPC::
-	msgbox 0x08243728, MSGBOX_DEFAULT
+	msgbox gText_AccessedLanettesPC, MSGBOX_DEFAULT
 	return
 
 EventScript_TurnOffPC::

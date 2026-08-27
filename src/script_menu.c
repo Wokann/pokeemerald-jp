@@ -1018,7 +1018,7 @@ __attribute__((naked)) void ScriptMenu_DisplayPCStartupPrompt()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E1A3C: .4byte gUnknown_82436CD\n\t"
+        "_080E1A3C: .4byte gText_WhichPCShouldBeAccessed\n\t"
         ".syntax divided\n\t"
     );
 }
