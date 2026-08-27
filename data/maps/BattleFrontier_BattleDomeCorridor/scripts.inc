@@ -1,48 +1,149 @@
-@ BattleFrontier_BattleDomeCorridor scripts (JP map g26 m19 @ 0x08227EC9)
-
 BattleFrontier_BattleDomeCorridor_MapScripts::
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleDomeCorridor_MapScriptTable_00227ECF
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleDomeCorridor_OnFrame
 	.byte 0
 
-BattleFrontier_BattleDomeCorridor_MapScriptTable_00227ECF::
-	map_script_2 0x4000, 0x0, BattleFrontier_BattleDomeCorridor_EventScript_00227ED9
+BattleFrontier_BattleDomeCorridor_OnFrame:
+	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleDomeCorridor_EventScript_EnterCorridor
 	.2byte 0
 
-BattleFrontier_BattleDomeCorridor_EventScript_00227ED9::
-	delay 0x10
-	setvar 0x4000, 0x1
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleDomeCorridor_EventScript_00227F2C
-	applymovement 0x1, 0x08227F7D
-	applymovement 0xFF, 0x08227F6C
-	waitmovement 0x0
-	opendoor 0xD, 0x3
-	waitmoncry
-	applymovement 0x1, 0x08227F89
-	applymovement 0xFF, 0x08227F79
-	waitmovement 0x0
-	closedoor 0xD, 0x3
-	waitmoncry
-	goto BattleFrontier_BattleDomeCorridor_EventScript_00227F5A
+BattleFrontier_BattleDomeCorridor_EventScript_EnterCorridor::
+	delay 16
+	setvar VAR_TEMP_0, 1
+	frontier_get FRONTIER_DATA_LVL_MODE
+	goto_if_eq VAR_RESULT, FRONTIER_LVL_OPEN, BattleFrontier_BattleDomeCorridor_EventScript_WalkToBattleRoomLvOpen
+	applymovement LOCALID_DOME_CORRIDOR_ATTENDANT, BattleFrontier_BattleDomeCorridor_Movement_AttendantWalkToDoorLv50
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleDomeCorridor_Movement_PlayerWalkToDoorLv50
+	waitmovement 0
+	opendoor 13, 3
+	waitdooranim_jp
+	applymovement LOCALID_DOME_CORRIDOR_ATTENDANT, BattleFrontier_BattleDomeCorridor_Movement_AttendantEnterDoorLv50
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleDomeCorridor_Movement_PlayerEnterDoorLv50
+	waitmovement 0
+	closedoor 13, 3
+	waitdooranim_jp
+	goto BattleFrontier_BattleDomeCorridor_EventScript_WarpToPreBattleRoom
 
-BattleFrontier_BattleDomeCorridor_EventScript_00227F2C::
-	applymovement 0x1, 0x08227FA1
-	applymovement 0xFF, 0x08227F8C
-	waitmovement 0x0
-	opendoor 0x25, 0x3
-	waitmoncry
-	applymovement 0x1, 0x08227FB1
-	applymovement 0xFF, 0x08227F9D
-	waitmovement 0x0
-	closedoor 0x25, 0x3
-	waitmoncry
-
-BattleFrontier_BattleDomeCorridor_EventScript_00227F5A::
-	waitmovement 0x0
-	setvar 0x8006, 0x0
-	warp 0x1A14, 0xFF, 0x5, 0x7
+BattleFrontier_BattleDomeCorridor_EventScript_WalkToBattleRoomLvOpen::
+	applymovement LOCALID_DOME_CORRIDOR_ATTENDANT, BattleFrontier_BattleDomeCorridor_Movement_AttendantWalkToDoorLvOpen
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleDomeCorridor_Movement_PlayerWalkToDoorLvOpen
+	waitmovement 0
+	opendoor 37, 3
+	waitdooranim_jp
+	applymovement LOCALID_DOME_CORRIDOR_ATTENDANT, BattleFrontier_BattleDomeCorridor_Movement_AttendantEnterDoorLvOpen
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleDomeCorridor_Movement_PlayerEnterDoorLvOpen
+	waitmovement 0
+	closedoor 37, 3
+	waitdooranim_jp
+BattleFrontier_BattleDomeCorridor_EventScript_WarpToPreBattleRoom::
+	waitmovement 0
+	setvar VAR_0x8006, 0
+	warp MAP_BATTLE_FRONTIER_BATTLE_DOME_PRE_BATTLE_ROOM, 5, 7
 	waitstate
 	end
+
+BattleFrontier_BattleDomeCorridor_Movement_PlayerWalkToDoorLv50:
+	walk_up
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_in_place_faster_up
+	step_end
+
+BattleFrontier_BattleDomeCorridor_Movement_PlayerEnterDoorLv50:
+	walk_up
+	walk_up
+	set_invisible
+	step_end
+
+BattleFrontier_BattleDomeCorridor_Movement_AttendantWalkToDoorLv50:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	step_end
+
+BattleFrontier_BattleDomeCorridor_Movement_AttendantEnterDoorLv50:
+	walk_up
+	set_invisible
+	step_end
+
+BattleFrontier_BattleDomeCorridor_Movement_PlayerWalkToDoorLvOpen:
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_in_place_faster_up
+	step_end
+
+BattleFrontier_BattleDomeCorridor_Movement_PlayerEnterDoorLvOpen:
+	walk_up
+	walk_up
+	set_invisible
+	step_end
+
+BattleFrontier_BattleDomeCorridor_Movement_AttendantWalkToDoorLvOpen:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_up
+	step_end
+
+BattleFrontier_BattleDomeCorridor_Movement_AttendantEnterDoorLvOpen:
+	walk_up
+	set_invisible
+	step_end
+
+@ Unused
+BattleFrontier_BattleDomeCorridor_Movement_WalkToBattleRoomMidRight:
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_up
+	walk_up
+	set_invisible
+	step_end
