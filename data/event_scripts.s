@@ -1252,30 +1252,9 @@ Common_EventScript_LegendaryFlewAway::
 	@ 0x08247B80
 	.include "data/text/cable_club.inc"
 
-	.globl gUnknown_8247C79
-gUnknown_8247C79: @ 0x8247C79
-	.include "data/scripts/gUnknown_8247C79.inc"
-
-	.globl gText_PleaseWaitForLink
-	.set gText_PleaseWaitForLink, gUnknown_8247C79
-
-	.globl gUnknown_8247C97
-gUnknown_8247C97: @ 0x8247C97
-	.include "data/scripts/gUnknown_8247C97.inc"
-
-	.globl gUnknown_8247CB5
-gUnknown_8247CB5: @ 0x8247CB5
-	.include "data/scripts/gUnknown_8247CB5.inc"
-
 	.globl gUnknown_8247CDA
 gUnknown_8247CDA: @ 0x8247CDA
 	.include "data/scripts/gUnknown_8247CDA.inc"
-
-	.globl gText_ConfirmLinkWhenPlayersReady
-	.set gText_ConfirmLinkWhenPlayersReady, gUnknown_8247C97
-
-	.globl gText_ConfirmStartLinkWithXPlayers
-	.set gText_ConfirmStartLinkWithXPlayers, gUnknown_8247CB5
 
 	.globl gText_AwaitingLinkup
 	.set gText_AwaitingLinkup, gUnknown_8247CDA

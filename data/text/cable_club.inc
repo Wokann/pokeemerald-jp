@@ -33,3 +33,15 @@ CableClub_Text_NeedTwoMonsToTrade:
 CableClub_Text_CantTradeEnigmaBerry:
 	.string "{STR_VAR_1}のみを　もっている\n"
 	.string "ポケモンは　こうかん　できません！$"
+
+gText_PleaseWaitForLink::
+	.string "しょうしょう　おまち　ください\n"
+	.string "⋯⋯Bボタンで　キャンセル$"
+
+gText_ConfirmLinkWhenPlayersReady::
+	.string "そろったら　Aボタンで　すすむ\n"
+	.string "⋯⋯Bボタンで　キャンセル$"
+
+gText_ConfirmStartLinkWithXPlayers::
+	.string "{STR_VAR_1}にんで　つうしんを　はじめます\n"
+	.string "Aボタン⋯けってい　Bボタン⋯もどる$"

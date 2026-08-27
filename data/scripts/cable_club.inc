@@ -324,7 +324,7 @@ CableClub_EventScript_MultiBattleMode::
 CableClub_EventScript_TryEnterColosseum::
 	call Common_EventScript_SaveGame
 	goto_if_eq VAR_RESULT, 0, CableClub_EventScript_AbortLink
-	message 0x08247C79 @ gText_PleaseWaitForLink
+	message gText_PleaseWaitForLink
 	waitmessage
 	special TryBattleLinkup
 	@ JP retains an explicit waitstate after each wired-link attempt.
@@ -419,7 +419,7 @@ CableClub_EventScript_TradeCenter::
 	goto_if_eq VAR_RESULT, 0, CableClub_EventScript_AbortLink
 	call Common_EventScript_SaveGame
 	goto_if_eq VAR_RESULT, 0, CableClub_EventScript_AbortLink
-	message 0x08247C79 @ gText_PleaseWaitForLink
+	message gText_PleaseWaitForLink
 	waitmessage
 	special TryTradeLinkup
 	waitstate
@@ -483,7 +483,7 @@ CableClub_EventScript_RecordCorner::
 	copyvar VAR_0x8007, VAR_LAST_TALKED
 	call Common_EventScript_SaveGame
 	goto_if_eq VAR_RESULT, 0, CableClub_EventScript_AbortLink
-	message 0x08247C79 @ gText_PleaseWaitForLink
+	message gText_PleaseWaitForLink
 	waitmessage
 	special TryRecordMixLinkup
 	waitstate
