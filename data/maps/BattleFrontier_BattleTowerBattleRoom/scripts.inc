@@ -147,20 +147,14 @@ BattleFrontier_BattleTowerBattleRoom_EventScript_PauseChallenge::
 	end
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyForOpponent::
-	copyvar 0x400F, 0x800D
-	copyvar 0x8000, 0x400F
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyFor2ndOpponent
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyFor3rdOpponent
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyFor4thOpponent
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyFor5thOpponent
-	compare_var_to_value 0x8000, 0x5
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyFor6thOpponent
-	compare_var_to_value 0x8000, 0x6
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyFor7thOpponent
+	copyvar VAR_TEMP_F, VAR_RESULT
+	switch VAR_TEMP_F
+	case 1, BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyFor2ndOpponent
+	case 2, BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyFor3rdOpponent
+	case 3, BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyFor4thOpponent
+	case 4, BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyFor5thOpponent
+	case 5, BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyFor6thOpponent
+	case 6, BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyFor7thOpponent
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyFor2ndOpponent::
 	message BattleFrontier_BattleTowerBattleRoom_Text_ReadyFor2ndOpponent
@@ -193,25 +187,24 @@ BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyFor7thOpponent::
 	return
 
 BattleFrontier_EventScript_IncrementWinStreak::
-	setvar 0x8004, 0x11
-	special CallFrontierUtilFunc
+	frontier_incrementstreak
 	return
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_SecondAttendantEnter::
 	applymovement LOCALID_TOWER_BATTLE_ATTENDANT_2, BattleFrontier_BattleTowerBattleRoom_Movement_SecondAttendantEnter
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_TOWER_BATTLE_ATTENDANT_2, Common_Movement_WalkInPlaceLeft
-	waitmovement 0x0
-	playse 0x15
+	waitmovement 0
+	playse SE_PIN
 	applymovement LOCALID_TOWER_BATTLE_ATTENDANT_1, Common_Movement_ExclamationMark
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_TOWER_BATTLE_ATTENDANT_1, Common_Movement_Delay48
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_TOWER_BATTLE_ATTENDANT_2, BattleFrontier_BattleTowerBattleRoom_Movement_SecondAttendantDelay
 	applymovement LOCALID_TOWER_BATTLE_ATTENDANT_1, BattleFrontier_BattleTowerBattleRoom_Movement_AttendantFaceSecondAttendant
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_TOWER_BATTLE_ATTENDANT_2, BattleFrontier_BattleTowerBattleRoom_Movement_SecondAttendantExit
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_MaidenUpNext::

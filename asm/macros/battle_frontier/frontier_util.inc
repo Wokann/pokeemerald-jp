@@ -6,6 +6,12 @@
 	special CallFrontierUtilFunc
 	.endm
 
+	@ Increment the current Frontier win streak.
+	.macro frontier_incrementstreak
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_INCREMENT_STREAK
+	special CallFrontierUtilFunc
+	.endm
+
 	@ Get the current Frontier Brain status into VAR_RESULT.
 	.macro frontier_getbrainstatus
 	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_GET_BRAIN_STATUS
