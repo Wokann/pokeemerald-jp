@@ -461,7 +461,7 @@ gSpecials::
 	def_special IsWirelessContest
 	def_special ShowRankingHallRecordsWindow
 	def_special ScrollRankingHallRecordsWindow
-	def_special sub_08139F5C
+	def_special ShowFrontierManiacMessage
 	def_special sub_080F99C4
 	def_special ClearLinkContestFlags
 	def_special TryContestEModeLinkup

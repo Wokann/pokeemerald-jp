@@ -3871,7 +3871,7 @@ void UpdateFrontierManiac(u16 daysSince)
     *var %= 10;
 }
 
-__attribute__((naked)) void sub_08139F5C(void)
+__attribute__((naked)) void ShowFrontierManiacMessage(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
