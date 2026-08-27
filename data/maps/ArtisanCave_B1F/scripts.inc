@@ -1,9 +1,9 @@
 @ ArtisanCave_B1F scripts (JP map g24 m99 @ 0x0821CFD2)
 
 ArtisanCave_B1F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, ArtisanCave_B1F_EventScript_0021CFD8
+	map_script MAP_SCRIPT_ON_TRANSITION, ArtisanCave_B1F_OnTransition
 	.byte 0
 
-ArtisanCave_B1F_EventScript_0021CFD8::
-	setflag 0x8DF
+ArtisanCave_B1F_OnTransition::
+	setflag FLAG_LANDMARK_ARTISAN_CAVE
 	end
