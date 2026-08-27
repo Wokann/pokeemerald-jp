@@ -1,93 +1,114 @@
-@ NavelRock_Top scripts (JP map g26 m75 @ 0x0823C122)
-
 NavelRock_Top_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, NavelRock_Top_EventScript_0023C12D
-	map_script MAP_SCRIPT_ON_RESUME, NavelRock_Top_EventScript_0023C160
+	map_script MAP_SCRIPT_ON_TRANSITION, NavelRock_Top_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, NavelRock_Top_OnResume
 	.byte 0
 
-NavelRock_Top_EventScript_0023C12D::
-	checkflag 0x92
-	call_if 0x1, NavelRock_Top_EventScript_0023C140
-	checkflag 0x92
-	call_if 0x0, NavelRock_Top_EventScript_0023C149
+NavelRock_Top_OnTransition:
+	call_if_set FLAG_CAUGHT_HO_OH, NavelRock_Top_EventScript_HideHoOh
+	call_if_unset FLAG_CAUGHT_HO_OH, NavelRock_Top_EventScript_TryShowHoOh
 	end
 
-NavelRock_Top_EventScript_0023C140::
-	setvar 0x4001, 0x1
-	setflag 0x321
+NavelRock_Top_EventScript_HideHoOh::
+	setvar VAR_TEMP_1, 1
+	setflag FLAG_HIDE_HO_OH
 	return
 
-NavelRock_Top_EventScript_0023C149::
-	setvar 0x4001, 0x1
-	checkflag 0x1DC
-	goto_if 0x1, 0x08244178
-	setvar 0x4001, 0x0
-	clearflag 0x321
+NavelRock_Top_EventScript_TryShowHoOh::
+	setvar VAR_TEMP_1, 1
+	goto_if_set FLAG_DEFEATED_HO_OH, Common_EventScript_NopReturn
+	setvar VAR_TEMP_1, 0
+	clearflag FLAG_HIDE_HO_OH
 	return
 
-NavelRock_Top_EventScript_0023C160::
-	checkflag 0x8C1
-	call_if 0x1, NavelRock_Top_EventScript_0023C16A
+NavelRock_Top_OnResume:
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, NavelRock_Top_EventScript_TryRemoveHoOh
 	end
 
-NavelRock_Top_EventScript_0023C16A::
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x7
-	goto_if 0x5, 0x08244178
-	removeobject 0x1
+NavelRock_Top_EventScript_TryRemoveHoOh::
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
+	removeobject LOCALID_NAVEL_ROCK_HO_OH
 	return
 
-NavelRock_Top_EventScript_0023C17E::
+NavelRock_Top_EventScript_HoOh::
 	lockall
-	setvar 0x4001, 0x1
+	setvar VAR_TEMP_1, 1
 	special SpawnCameraObject
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x23
-	special sub_0813B844
-	applymovement 0x1, 0x0823C252
-	applymovement 0x7F, 0x0823C23F
-	waitmovement 0x0
-	delay 0x32
-	setweather 0x0
+	setvar VAR_0x8004, 3  @ num loops
+	setvar VAR_0x8005, 35 @ delay
+	special LoopWingFlapSE
+	applymovement LOCALID_NAVEL_ROCK_HO_OH, NavelRock_Top_Movement_HoOhAppear
+	applymovement LOCALID_CAMERA, NavelRock_Top_Movement_CameraPanUp
+	waitmovement 0
+	delay 50
+	setweather WEATHER_NONE
 	resetweather
 	waitse
-	playmoncry 0xFA, 0x2
-	delay 0x1E
-	waitdooranim
-	delay 0x3C
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x23
-	special sub_0813B844
-	applymovement 0x7F, 0x0823C243
-	applymovement 0x1, 0x0823C249
-	waitmovement 0x0
+	playmoncry SPECIES_HO_OH, CRY_MODE_ENCOUNTER
+	delay 30
+	waitmoncry_jp
+	delay 60
+	setvar VAR_0x8004, 3  @ num loops
+	setvar VAR_0x8005, 35 @ delay
+	special LoopWingFlapSE
+	applymovement LOCALID_CAMERA, NavelRock_Top_Movement_CameraPanDown
+	applymovement LOCALID_NAVEL_ROCK_HO_OH, NavelRock_Top_Movement_HoOhApproach
+	waitmovement 0
 	special RemoveCameraObject
-	setvar 0x8004, 0xFA
-	setvar 0x8005, 0x46
-	setvar 0x8006, 0x0
-	special CreateEnemyEventMon
-	setflag 0x8C1
+	seteventmon SPECIES_HO_OH, 70
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
-	clearflag 0x8C1
-	setvar 0x800F, 0x1
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, NavelRock_Top_EventScript_0023C226
-	compare_var_to_value 0x800D, 0x4
-	goto_if 0x1, NavelRock_Top_EventScript_0023C234
-	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, NavelRock_Top_EventScript_0023C234
-	setflag 0x92
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	setvar VAR_LAST_TALKED, LOCALID_NAVEL_ROCK_HO_OH
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, NavelRock_Top_EventScript_DefeatedHoOh
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, NavelRock_Top_EventScript_RanFromHoOh
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, NavelRock_Top_EventScript_RanFromHoOh
+	setflag FLAG_CAUGHT_HO_OH
 	releaseall
 	end
 
-NavelRock_Top_EventScript_0023C226::
-	setflag 0x1DC
-	setvar 0x8004, 0xFA
-	goto 0x082441A0
+NavelRock_Top_EventScript_DefeatedHoOh::
+	setflag FLAG_DEFEATED_HO_OH
+	setvar VAR_0x8004, SPECIES_HO_OH
+	goto Common_EventScript_LegendaryFlewAway
 	end
 
-NavelRock_Top_EventScript_0023C234::
-	setvar 0x8004, 0xFA
-	goto 0x082441A0
+NavelRock_Top_EventScript_RanFromHoOh::
+	setvar VAR_0x8004, SPECIES_HO_OH
+	goto Common_EventScript_LegendaryFlewAway
 	end
+
+NavelRock_Top_Movement_CameraPanUp:
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+NavelRock_Top_Movement_CameraPanDown:
+	delay_16
+	delay_16
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+NavelRock_Top_Movement_HoOhApproach:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_in_place_down
+	delay_16
+	delay_16
+	step_end
+
+NavelRock_Top_Movement_HoOhAppear:
+	delay_16
+	delay_16
+	walk_in_place_down
+	walk_in_place_down
+	walk_in_place_down
+	walk_in_place_down
+	step_end

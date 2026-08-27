@@ -7180,7 +7180,7 @@ __attribute__((naked)) void Script_DoRayquazaScene(void)
     );
 }
 
-__attribute__((naked)) void sub_0813B844(void)
+__attribute__((naked)) void LoopWingFlapSE(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7193,12 +7193,12 @@ __attribute__((naked)) void sub_0813B844(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813B858: .4byte sub_0813B85C + 1\n\t"
+        "_0813B858: .4byte Task_LoopWingFlapSE + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_0813B85C(void)
+__attribute__((naked)) void Task_LoopWingFlapSE(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

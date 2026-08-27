@@ -868,7 +868,6 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/NavelRock_Up3/scripts.inc"
 	.include "data/maps/NavelRock_Up4/scripts.inc"
 	.include "data/maps/NavelRock_Top/scripts.inc"
-	.incbin "baserom_jp.gba", 0x23c23f, 0x1a
 	.include "data/maps/NavelRock_Down01/scripts.inc"
 	.include "data/maps/NavelRock_Down02/scripts.inc"
 	.include "data/maps/NavelRock_Down03/scripts.inc"
