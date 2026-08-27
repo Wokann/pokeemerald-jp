@@ -182,7 +182,11 @@ FarawayIsland_Entrance_Text_SailorReturn: @ 0x08275DA5
 	.string "きまぐれにも　まいるよなあ⋯⋯\p"
 	.string "もう　ミナモへ　かえるのかい？$"
 
-	.incbin "baserom_jp.gba", 0x275dd4, 0x105
+BirthIsland_Harbor_Text_SailorReturn: @ 0x08275DD4
+	.string "ふしぎな　かたちの　しまだなあ\n"
+	.string "もう　ミナモへ　かえるか？$"
+
+	.incbin "baserom_jp.gba", 0x275df2, 0xe7
 
 FarawayIsland_Entrance_Text_Sign: @ 0x08275ED9
 	.string "なんねんも　まえに　かかれたような\n"
