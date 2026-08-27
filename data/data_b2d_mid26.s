@@ -1267,7 +1267,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/ShoalCave_LowTideInnerRoom/events.inc"
 	.include "data/maps/ShoalCave_LowTideStairsRoom/events.inc"
 	.include "data/maps/ShoalCave_LowTideLowerRoom/events.inc"
-	.incbin "baserom_jp.gba", 0x50EB78, 0x8F8
+	.include "data/maps/ShoalCave_HighTideEntranceRoom/events.inc"
+	.include "data/maps/ShoalCave_HighTideInnerRoom/events.inc"
+	.incbin "baserom_jp.gba", 0x50EBA0, 0x8D0
 	.include "data/maps/Underwater_Route134/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE134
 	.set gMapEvents_UNDERWATER_ROUTE134, Underwater_Route134_MapEvents

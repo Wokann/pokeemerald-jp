@@ -3398,7 +3398,15 @@ gMapLayout_SHOAL_CAVE_LOW_TIDE_STAIRS_ROOM: @ 0x08414FBC
 	.globl gMapLayout_SHOAL_CAVE_LOW_TIDE_LOWER_ROOM
 gMapLayout_SHOAL_CAVE_LOW_TIDE_LOWER_ROOM: @ 0x08415340
 	.incbin "baserom_jp.gba", 0x415340, 0x18
-	.incbin "baserom_jp.gba", 0x415358, 0xbca4
+	.incbin "baserom_jp.gba", 0x415358, 0x99c
+	.globl gMapLayout_SHOAL_CAVE_HIGH_TIDE_ENTRANCE_ROOM
+gMapLayout_SHOAL_CAVE_HIGH_TIDE_ENTRANCE_ROOM: @ 0x08415CF4
+	.incbin "baserom_jp.gba", 0x415cf4, 0x18
+	.incbin "baserom_jp.gba", 0x415d0c, 0xdb0
+	.globl gMapLayout_SHOAL_CAVE_HIGH_TIDE_INNER_ROOM
+gMapLayout_SHOAL_CAVE_HIGH_TIDE_INNER_ROOM: @ 0x08416ABC
+	.incbin "baserom_jp.gba", 0x416abc, 0x18
+	.incbin "baserom_jp.gba", 0x416ad4, 0xa528
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Border:
 	.incbin "data/layouts/FortreeCity_DecorationShop/border.bin"
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata:
@@ -6095,7 +6103,11 @@ gUnknown_845C660: @ 0x0845C660
 	.include "data/maps/ShoalCave_LowTideStairsRoom/header.inc"
 	@ MAP_SHOAL_CAVE_LOW_TIDE_LOWER_ROOM (g24 m49)
 	.include "data/maps/ShoalCave_LowTideLowerRoom/header.inc"
-	.incbin "baserom_jp.gba", 0x45c858, 0x2140
+	@ MAP_SHOAL_CAVE_HIGH_TIDE_ENTRANCE_ROOM (g24 m50)
+	.include "data/maps/ShoalCave_HighTideEntranceRoom/header.inc"
+	@ MAP_SHOAL_CAVE_HIGH_TIDE_INNER_ROOM (g24 m51)
+	.include "data/maps/ShoalCave_HighTideInnerRoom/header.inc"
+	.incbin "baserom_jp.gba", 0x45c890, 0x2108
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
