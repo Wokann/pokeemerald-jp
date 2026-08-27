@@ -900,7 +900,6 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/Route113_GlassWorkshop/scripts.inc"
 	.include "data/maps/Route123_BerryMastersHouse/scripts.inc"
 	.include "data/maps/Route119_WeatherInstitute_1F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x241286, 0x25f
 	.include "data/maps/Route119_WeatherInstitute_2F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x241763, 0x4ec
 	.include "data/maps/Route124_DivingTreasureHuntersHouse/scripts.inc"
