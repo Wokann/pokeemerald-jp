@@ -1,92 +1,143 @@
-@ Route110_TrickHousePuzzle2 scripts (JP map g29 m4 @ 0x0823E04F)
-
 Route110_TrickHousePuzzle2_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, Route110_TrickHousePuzzle2_EventScript_0023E05A
-	map_script MAP_SCRIPT_ON_TRANSITION, Route110_TrickHousePuzzle2_EventScript_0023E087
+	map_script MAP_SCRIPT_ON_RESUME, Route110_TrickHousePuzzle2_OnResume
+	map_script MAP_SCRIPT_ON_TRANSITION, Route110_TrickHousePuzzle2_OnTransition
 	.byte 0
 
-Route110_TrickHousePuzzle2_EventScript_0023E05A::
-	compare_var_to_value 0x4001, 0x1
-	call_if 0x1, Route110_TrickHousePuzzle2_EventScript_0023E105
-	compare_var_to_value 0x4002, 0x1
-	call_if 0x1, Route110_TrickHousePuzzle2_EventScript_0023E118
-	compare_var_to_value 0x4003, 0x1
-	call_if 0x1, Route110_TrickHousePuzzle2_EventScript_0023E12B
-	compare_var_to_value 0x4004, 0x1
-	call_if 0x1, Route110_TrickHousePuzzle2_EventScript_0023E13E
+Route110_TrickHousePuzzle2_OnResume:
+	call_if_eq VAR_TEMP_1, 1, Route110_TrickHousePuzzle2_EventScript_PressButton1
+	call_if_eq VAR_TEMP_2, 1, Route110_TrickHousePuzzle2_EventScript_PressButton2
+	call_if_eq VAR_TEMP_3, 1, Route110_TrickHousePuzzle2_EventScript_PressButton3
+	call_if_eq VAR_TEMP_4, 1, Route110_TrickHousePuzzle2_EventScript_PressButton4
 	end
 
-Route110_TrickHousePuzzle2_EventScript_0023E087::
-	setvar 0x4001, 0x0
-	setvar 0x4002, 0x0
-	setvar 0x4003, 0x0
-	setvar 0x4004, 0x0
+Route110_TrickHousePuzzle2_OnTransition:
+	setvar VAR_TEMP_1, 0
+	setvar VAR_TEMP_2, 0
+	setvar VAR_TEMP_3, 0
+	setvar VAR_TEMP_4, 0
 	end
 
-Route110_TrickHousePuzzle2_EventScript_0023E09C::
+Route110_TrickHousePuzzle2_EventScript_Scroll::
 	lockall
-	compare_var_to_value 0x40AC, 0x0
-	goto_if 0x1, Route110_TrickHousePuzzle2_EventScript_0023E0AE
-	goto 0x0823D1AC
+	goto_if_eq VAR_TRICK_HOUSE_PUZZLE_2_STATE, 0, Route110_TrickHousePuzzle2_EventScript_FoundScroll
+	goto Route110_TrickHousePuzzle_EventScript_ReadScrollAgain
 	end
 
-Route110_TrickHousePuzzle2_EventScript_0023E0AE::
-	setvar 0x40AC, 0x1
-	goto 0x0823D1B6
+Route110_TrickHousePuzzle2_EventScript_FoundScroll::
+	setvar VAR_TRICK_HOUSE_PUZZLE_2_STATE, 1
+	goto Route110_TrickHousePuzzle_EventScript_FoundScroll
 	end
 
-Route110_TrickHousePuzzle2_EventScript_0023E0B9::
+Route110_TrickHousePuzzle2_EventScript_Button1::
 	lockall
-	setvar 0x4001, 0x1
-	playse 0x15
-	call Route110_TrickHousePuzzle2_EventScript_0023E105
+	setvar VAR_TEMP_1, 1
+	playse SE_PIN
+	call Route110_TrickHousePuzzle2_EventScript_PressButton1
 	special DrawWholeMapView
 	releaseall
 	end
 
-Route110_TrickHousePuzzle2_EventScript_0023E0CC::
+Route110_TrickHousePuzzle2_EventScript_Button2::
 	lockall
-	setvar 0x4002, 0x1
-	playse 0x15
-	call Route110_TrickHousePuzzle2_EventScript_0023E118
+	setvar VAR_TEMP_2, 1
+	playse SE_PIN
+	call Route110_TrickHousePuzzle2_EventScript_PressButton2
 	special DrawWholeMapView
 	releaseall
 	end
 
-Route110_TrickHousePuzzle2_EventScript_0023E0DF::
+Route110_TrickHousePuzzle2_EventScript_Button3::
 	lockall
-	setvar 0x4003, 0x1
-	playse 0x15
-	call Route110_TrickHousePuzzle2_EventScript_0023E12B
+	setvar VAR_TEMP_3, 1
+	playse SE_PIN
+	call Route110_TrickHousePuzzle2_EventScript_PressButton3
 	special DrawWholeMapView
 	releaseall
 	end
 
-Route110_TrickHousePuzzle2_EventScript_0023E0F2::
+Route110_TrickHousePuzzle2_EventScript_Button4::
 	lockall
-	setvar 0x4004, 0x1
-	playse 0x15
-	call Route110_TrickHousePuzzle2_EventScript_0023E13E
+	setvar VAR_TEMP_4, 1
+	playse SE_PIN
+	call Route110_TrickHousePuzzle2_EventScript_PressButton4
 	special DrawWholeMapView
 	releaseall
 	end
 
-Route110_TrickHousePuzzle2_EventScript_0023E105::
-	setmetatile 0xB, 0xC, 0x259, 0x0
-	setmetatile 0x1, 0xD, 0x26A, 0x0
+Route110_TrickHousePuzzle2_EventScript_PressButton1::
+	setmetatile 11, 12, METATILE_TrickHousePuzzle_Button_Pressed, FALSE
+	setmetatile 1, 13, METATILE_TrickHousePuzzle_Door_Shuttered, FALSE
 	return
 
-Route110_TrickHousePuzzle2_EventScript_0023E118::
-	setmetatile 0x0, 0x4, 0x259, 0x0
-	setmetatile 0x5, 0x6, 0x26A, 0x0
+Route110_TrickHousePuzzle2_EventScript_PressButton2::
+	setmetatile 0, 4, METATILE_TrickHousePuzzle_Button_Pressed, FALSE
+	setmetatile 5, 6, METATILE_TrickHousePuzzle_Door_Shuttered, FALSE
 	return
 
-Route110_TrickHousePuzzle2_EventScript_0023E12B::
-	setmetatile 0xE, 0x5, 0x259, 0x0
-	setmetatile 0x7, 0xF, 0x26A, 0x0
+Route110_TrickHousePuzzle2_EventScript_PressButton3::
+	setmetatile 14, 5, METATILE_TrickHousePuzzle_Button_Pressed, FALSE
+	setmetatile 7, 15, METATILE_TrickHousePuzzle_Door_Shuttered, FALSE
 	return
 
-Route110_TrickHousePuzzle2_EventScript_0023E13E::
-	setmetatile 0x7, 0xB, 0x259, 0x0
-	setmetatile 0xE, 0xC, 0x26A, 0x0
+Route110_TrickHousePuzzle2_EventScript_PressButton4::
+	setmetatile 7, 11, METATILE_TrickHousePuzzle_Button_Pressed, FALSE
+	setmetatile 14, 12, METATILE_TrickHousePuzzle_Door_Shuttered, FALSE
 	return
+
+Route110_TrickHousePuzzle2_EventScript_Ted::
+	trainerbattle_single TRAINER_TED, Route110_TrickHousePuzzle2_Text_TedIntro, Route110_TrickHousePuzzle2_Text_TedDefeat
+	msgbox Route110_TrickHousePuzzle2_Text_TedPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route110_TrickHousePuzzle2_EventScript_Paul::
+	trainerbattle_single TRAINER_PAUL, Route110_TrickHousePuzzle2_Text_PaulIntro, Route110_TrickHousePuzzle2_Text_PaulDefeat
+	msgbox Route110_TrickHousePuzzle2_Text_PaulPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route110_TrickHousePuzzle2_EventScript_Georgia::
+	trainerbattle_single TRAINER_GEORGIA, Route110_TrickHousePuzzle2_Text_GeorgiaIntro, Route110_TrickHousePuzzle2_Text_GeorgiaDefeat
+	msgbox Route110_TrickHousePuzzle2_Text_GeorgiaPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route110_TrickHousePuzzle2_Text_WroteSecretCodeLockOpened:
+	.string "{STRING 0x01}は　あいことばを\n"
+	.string "とびらに　かきつけた！\p"
+	.string "‘カラクリだいおう　さま　かしこい’\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "かぎの　はずれる　おとがした！$"
+
+Route110_TrickHousePuzzle2_Text_TedIntro:
+	.string "どの　スイッチで\n"
+	.string "どの　あなが　ふさがるんだ？$"
+
+Route110_TrickHousePuzzle2_Text_TedDefeat:
+	.string "しょうぶ　してたら\n"
+	.string "よけい　わかんなくなった！$"
+
+Route110_TrickHousePuzzle2_Text_TedPostBattle:
+	.string "きみ　ぼくの　かわりに\n"
+	.string "スイッチ　ぜんぶ　おしてきてよ！$"
+
+Route110_TrickHousePuzzle2_Text_PaulIntro:
+	.string "おっ！　カラクリやしき\n"
+	.string "2どめの　チャレンジだね！$"
+
+Route110_TrickHousePuzzle2_Text_PaulDefeat:
+	.string "ポケモンしょうぶも\n"
+	.string "そんなに　つよいの？$"
+
+Route110_TrickHousePuzzle2_Text_PaulPostBattle:
+	.string "カラクリだいおうが　ひとりで\n"
+	.string "この　しかけを　つくってるんだって！$"
+
+Route110_TrickHousePuzzle2_Text_GeorgiaIntro:
+	.string "いつか　わたしの　ジムを　つくりたくて\n"
+	.string "しかけを　けんきゅうしてるの！$"
+
+Route110_TrickHousePuzzle2_Text_GeorgiaDefeat:
+	.string "ポケモンしょうぶは\n"
+	.string "けんきゅう　ぶそく　だったわーっ！$"
+
+Route110_TrickHousePuzzle2_Text_GeorgiaPostBattle:
+	.string "あなた　つよいのね⋯\n"
+	.string "ジムリーダーに　なれるんじゃない？$"
