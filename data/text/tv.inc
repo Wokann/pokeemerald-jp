@@ -426,3 +426,60 @@ gTVFanClubOpinionsText04::
 	.string "さいごに　もういちど\n"
 	.string "みんなで　さけびましょう！\p"
 	.string "‘{B_COPY_VAR_3}！！'$"
+
+gTVFanClubText00::
+	.string "“ぼくたち！\n"
+	.string "ポケモン　だいすきクラブ！”\p"
+	.string "はい　はじまりました！\p"
+	.string "じゃあ　きょうは　ポケモンアンケートの\n"
+	.string "コーナーから！\p"
+	.string "かずある　ポケモンと　トレーナーの\n"
+	.string "はなしの　なかから\p"
+	.string "きょうは　どんな　はなしが\n"
+	.string "とびだして　くるのでしょうか！？\l"
+	.string "さて　きょうの　はなしは？\p"
+	.string "んー⋯⋯\p"
+	.string "これだ！\p"
+	.string "では　てがみの　しょうかい　から！！\p"
+	.string "{B_COPY_VAR_2}の　ことに　ついて\n"
+	.string "{B_COPY_VAR_1}さん　からの　おてがみだー\p"
+	.string "では　どれだけ　{B_COPY_VAR_2}への\n"
+	.string "あつい　いけんが　かいてあるか\l"
+	.string "よませて　もらいましょう！\l"
+	.string "えーと⋯⋯$"
+
+gTVFanClubText01::
+	.string "おー！！\n"
+	.string "なんて　すばらしい　てがみなんだ！！$"
+
+gTVFanClubText02::
+	.string "きにいったから　もういちど！$"
+
+gTVFanClubText03::
+	.string "いい　てがみは\n"
+	.string "なんど　きいても　いいねー！！$"
+
+gTVFanClubText04::
+	.string "‘{B_COPY_VAR_3}'　っていう　ことばの\n"
+	.string "おかげで　グッと　こころに　つたわってくる\l"
+	.string "いい　てがみに　なっているねー！！$"
+
+gTVFanClubText05::
+	.string "とくに‘{B_COPY_VAR_3}'って　ところ！\p"
+	.string "‘{B_COPY_VAR_3}'っていう　ところが\n"
+	.string "きにいったぞー！$"
+
+gTVFanClubText06::
+	.string "ところで　あんまり　かんけい　ないけど\n"
+	.string "‘{B_COPY_VAR_3}'って　いいことば　だよね\p"
+	.string "じつは　おれも　‘{B_COPY_VAR_3}'って\n"
+	.string "ことば　さいきん　よく　つかうんだよね$"
+
+gTVFanClubText07::
+	.string "このてがみ　じぶんてきには\n"
+	.string "{B_COPY_VAR_3}てん　ていう　かんじかなー！\p"
+	.string "つぎは　もっと　いい　てがみを\n"
+	.string "きたい　してるよ！　{B_COPY_VAR_1}さん！！\p"
+	.string "おっと　もう　こんなじかんだ！\n"
+	.string "それでは　また　じかい\l"
+	.string "みなさま　おあい　しましょう！！$"
