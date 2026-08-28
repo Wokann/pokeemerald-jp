@@ -25,7 +25,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_DOUBLE_SLAP                    @ MOVE_DOUBLE_SLAP
 	.4byte Move_COMET_PUNCH                  @ MOVE_COMET_PUNCH
 	.4byte Move_MEGA_PUNCH                   @ MOVE_MEGA_PUNCH
-	.4byte gUnknown_8279E41                  @ 006
+	.4byte Move_PAY_DAY                      @ MOVE_PAY_DAY
 	.4byte gUnknown_8281204                  @ 007
 	.4byte gUnknown_827DC85                  @ 008
 	.4byte gUnknown_827E01B                  @ 009
@@ -1880,8 +1880,23 @@ Move_GUILLOTINE: @ 0x08279DB5
 	waitbgfadein
 	end
 
-gUnknown_8279E41: @ 0x08279E41
-	.incbin "baserom_jp.gba", 0x279e41, 0x53
+Move_PAY_DAY: @ 0x08279E41
+	loadspritegfx ANIM_TAG_COIN
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
+	createsprite gCoinThrowSpriteTemplate, ANIM_ATTACKER, 2, 20, 0, 0, 0, 1152
+	waitforvisualfinish
+	playsewithpan SE_M_PAY_DAY, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 1, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createsprite gFallingCoinSpriteTemplate, ANIM_ATTACKER, 2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 1, 0, 6, 1
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_8279E94: @ 0x08279E94
 	.incbin "baserom_jp.gba", 0x279e94, 0x19b

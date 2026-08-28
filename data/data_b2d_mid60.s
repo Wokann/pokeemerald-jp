@@ -1331,7 +1331,17 @@ gScreechRingSpriteTemplate: @ 0x856F024
 sVoidLinesSpriteTemplate: @ 0x856F084
 	.hword 0x27C2, 0x27C2
 	.4byte 0x084FD148, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08104839
-	.incbin "baserom_jp.gba", 0x56f09c, 0xd8
+	.incbin "baserom_jp.gba", 0x56f09c, 0x20
+
+	.globl gCoinThrowSpriteTemplate
+gCoinThrowSpriteTemplate: @ 0x856F0BC
+	.incbin "baserom_jp.gba", 0x56f0bc, 0x18
+
+	.globl gFallingCoinSpriteTemplate
+gFallingCoinSpriteTemplate: @ 0x856F0D4
+	.incbin "baserom_jp.gba", 0x56f0d4, 0x18
+
+	.incbin "baserom_jp.gba", 0x56f0ec, 0x88
 
 	.globl gViceGripSpriteTemplate
 gViceGripSpriteTemplate: @ 0x856F174
