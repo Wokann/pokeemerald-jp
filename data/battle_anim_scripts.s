@@ -41,7 +41,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828056D                  @ 019
 	.4byte gUnknown_828164F                  @ 020
 	.4byte Move_SLAM                         @ MOVE_SLAM
-	.4byte gUnknown_827951D                  @ 022
+	.4byte Move_VINE_WHIP                    @ MOVE_VINE_WHIP
 	.4byte Move_STOMP                        @ MOVE_STOMP
 	.4byte gUnknown_82807E8                  @ 024
 	.4byte Move_MEGA_KICK                    @ MOVE_MEGA_KICK
@@ -1510,8 +1510,16 @@ Move_SLAM:
 	blendoff
 	end
 
-gUnknown_827951D: @ 0x0827951D
-	.incbin "baserom_jp.gba", 0x27951d, 0x37
+Move_VINE_WHIP:
+	loadspritegfx ANIM_TAG_WHIP_HIT
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 6
+	delay 6
+	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
+	createsprite gVineWhipSpriteTemplate, ANIM_TARGET, 2, 0, 0
+	delay 6
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 6, 1
+	end
 
 gUnknown_8279554: @ 0x08279554
 	.incbin "baserom_jp.gba", 0x279554, 0x59
