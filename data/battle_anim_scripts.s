@@ -224,7 +224,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827F7CE                  @ 202
 	.4byte Move_ENDURE                        @ MOVE_ENDURE
 	.4byte Move_CHARM                         @ MOVE_CHARM
-	.4byte gUnknown_827BCEA                  @ 205
+	.4byte Move_ROLLOUT                       @ MOVE_ROLLOUT
 	.4byte gUnknown_827BD2B                  @ 206
 	.4byte gUnknown_827BDB2                  @ 207
 	.4byte gUnknown_827BDFA                  @ 208
@@ -3242,8 +3242,22 @@ Move_CHARM:: @ 0x0827BCA7
 	waitforvisualfinish
 	end
 
-gUnknown_827BCEA: @ 0x0827BCEA
-	.incbin "baserom_jp.gba", 0x27bcea, 0x41
+Move_ROLLOUT:: @ 0x0827BCEA
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_MUD_SAND
+	loadspritegfx ANIM_TAG_ROCKS
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	createvisualtask AnimTask_Rollout, 2
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 30, 1, 0
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 4, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_827BD2B: @ 0x0827BD2B
 	.incbin "baserom_jp.gba", 0x27bd2b, 0x87
