@@ -1,7 +1,7 @@
 @ SkyPillar_2F scripts (JP map g24 m80 @ 0x0821BE9B)
 
 SkyPillar_2F_MapScripts::
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, 0x0826432F
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, CaveHole_CheckFallDownHole
 	map_script MAP_SCRIPT_ON_TRANSITION, SkyPillar_2F_EventScript_0021BEAB
 	map_script MAP_SCRIPT_ON_RESUME, SkyPillar_2F_EventScript_0021BEC0
 	.byte 0
@@ -20,4 +20,3 @@ SkyPillar_2F_EventScript_0021BEC0::
 	setstepcallback 0x7
 	setholewarp 0x184F, 0xFF, 0x0, 0x0
 	end
-

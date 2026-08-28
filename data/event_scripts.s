@@ -1336,12 +1336,6 @@ Common_EventScript_LegendaryFlewAway::
 
 	.include "data/scripts/day_care.inc"
 
-	@ The cracked-floor hooks remain in their later shared physical owner.
-	.globl CaveHole_CheckFallDownHole
-	.set CaveHole_CheckFallDownHole, 0x0826432F
-	.globl CaveHole_FixCrackedGround
-	.set CaveHole_FixCrackedGround, 0x08264339
-
 	.globl EventScript_EggHatch
 EventScript_EggHatch: @ 0x8257A89
 	lockall
@@ -1471,16 +1465,8 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/text/berries.inc"
 	.include "data/text/shoal_cave.inc"
 	.include "data/text/check_furniture.inc"
-
-	.incbin "baserom_jp.gba", 0x26432f, 0x10
-
-	.globl EventScript_FallDownHole
-EventScript_FallDownHole: @ 0x826433F
-	.include "data/scripts/gUnknown_826433F.inc"
-
-	.globl EventScript_FallDownHoleMtPyre
-EventScript_FallDownHoleMtPyre: @ 0x8264358
-	.include "data/scripts/gUnknown_8264358.inc"
+	.include "data/scripts/cave_hole.inc"
+	.include "data/scripts/gUnknown_8264373.inc"
 
 	.globl EventScript_TrainerHillTimer
 EventScript_TrainerHillTimer: @ 0x8276CAF
