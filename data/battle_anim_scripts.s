@@ -202,7 +202,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SPITE                        @ MOVE_SPITE
 	.4byte gUnknown_827F245                  @ 181
 	.4byte Move_PROTECT                       @ MOVE_PROTECT
-	.4byte gUnknown_827BAF1                  @ 183
+	.4byte Move_MACH_PUNCH                   @ MOVE_MACH_PUNCH
 	.4byte gUnknown_82824F0                  @ 184
 	.4byte gUnknown_827E7EC                  @ 185
 	.4byte gUnknown_8282553                  @ 186
@@ -3132,8 +3132,37 @@ Move_SPITE:: @ 0x0827BAC2
 	clearmonbg ANIM_TARGET
 	end
 
-gUnknown_827BAF1: @ 0x0827BAF1
-	.incbin "baserom_jp.gba", 0x27baf1, 0x88
+Move_MACH_PUNCH:: @ 0x0827BAF1
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	monbg ANIM_ATK_PARTNER
+	createvisualtask AnimTask_GetAttackerSide, 2
+	jumprettrue MachPunchAgainstPlayer
+	fadetobg BG_HIGHSPEED_OPPONENT
+MachPunchContinue:
+	waitbgfadeout
+	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 0, 1, -1
+	waitbgfadein
+	delay 0
+	setalpha 9, 8
+	createvisualtask AnimTask_AttackerPunchWithTrace, 2, RGB(8, 9, 28), 10
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	delay 6
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	create_fist_sprite ANIM_TARGET, 4, x=0, y=0, duration=8
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	restorebg
+	waitbgfadeout
+	setarg 7, 0xFFFF
+	waitbgfadein
+	end
+MachPunchAgainstPlayer:
+	fadetobg BG_HIGHSPEED_PLAYER
+	goto MachPunchContinue
 
 gUnknown_827BB79: @ 0x0827BB79
 	.incbin "baserom_jp.gba", 0x27bb79, 0x3f
