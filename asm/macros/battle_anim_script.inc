@@ -425,12 +425,16 @@
 	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, \priority, \battler, TRUE
 	.endm
 
-	.macro splitbgprio battler:req
+.macro splitbgprio battler:req
 	.byte 0x28
 	.byte \battler
-	.endm
+.endm
 
-	.macro splitbgprio_foes battler:req
+.macro splitbgprio_all
+	.byte 0x29
+.endm
+
+.macro splitbgprio_foes battler:req
 	.byte 0x2a
 	.byte \battler
-	.endm
+.endm

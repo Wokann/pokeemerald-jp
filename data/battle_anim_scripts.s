@@ -307,7 +307,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SKILL_SWAP                   @ MOVE_SKILL_SWAP
 	.4byte Move_IMPRISON                     @ MOVE_IMPRISON
 	.4byte gUnknown_8283592                  @ 287
-	.4byte gUnknown_827C9F2                  @ 288
+	.4byte Move_GRUDGE                       @ MOVE_GRUDGE
 	.4byte gUnknown_8284AAA                  @ 289
 	.4byte gUnknown_8285557                  @ 290
 	.4byte gUnknown_8284AC4                  @ 291
@@ -3868,8 +3868,23 @@ Move_IMPRISON:: @ 0x0827C9AF
 	call UnsetPsychicBackground
 	end
 
-gUnknown_827C9F2: @ 0x0827C9F2
-	.incbin "baserom_jp.gba", 0x27c9f2, 0x28
+Move_GRUDGE:: @ 0x0827C9F2
+	loadspritegfx ANIM_TAG_PURPLE_FLAME
+	monbg ANIM_ATTACKER
+	splitbgprio_all
+	fadetobg BG_GHOST
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	waitbgfadein
+	createvisualtask AnimTask_GrudgeFlames, 3
+	loopsewithpan SE_M_EMBER, SOUND_PAN_ATTACKER, 16, 4
+	delay 10
+	delay 80
+	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
+	waitforvisualfinish
+	restorebg
+	waitbgfadein
+	clearmonbg ANIM_ATTACKER
+	end
 
 gUnknown_827CA1A: @ 0x0827CA1A
 	.incbin "baserom_jp.gba", 0x27ca1a, 0x46
