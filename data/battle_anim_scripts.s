@@ -322,7 +322,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MUD_SPORT                    @ MOVE_MUD_SPORT
 	.4byte gUnknown_828582B                  @ 301
 	.4byte Move_NEEDLE_ARM                   @ MOVE_NEEDLE_ARM
-	.4byte gUnknown_827D06B                  @ 303
+	.4byte Move_SLACK_OFF                    @ MOVE_SLACK_OFF
 	.4byte gUnknown_828365D                  @ 304
 	.4byte gUnknown_8283D4F                  @ 305
 	.4byte gUnknown_827D083                  @ 306
@@ -4115,8 +4115,14 @@ Move_NEEDLE_ARM: @ 0x0827CEBB
 	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_TARGET, 2, 1, 1, -17, -17, 10
 	end
 
-gUnknown_827D06B: @ 0x0827D06B
-	.incbin "baserom_jp.gba", 0x27d06b, 0x18
+Move_SLACK_OFF: @ 0x0827D06B
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	createvisualtask AnimTask_SlackOffSquish, 2, ANIM_ATTACKER
+	playsewithpan SE_M_YAWN, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	call HealingEffect
+	waitforvisualfinish
+	end
 
 gUnknown_827D083: @ 0x0827D083
 	.incbin "baserom_jp.gba", 0x27d083, 0x6f
