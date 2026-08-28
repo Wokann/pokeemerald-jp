@@ -105,7 +105,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8279222                  @ 083
 	.4byte Move_THUNDER_SHOCK                @ MOVE_THUNDER_SHOCK
 	.4byte Move_THUNDERBOLT                  @ MOVE_THUNDERBOLT
-	.4byte gUnknown_8278B4C                  @ 086
+	.4byte Move_THUNDER_WAVE                 @ MOVE_THUNDER_WAVE
 	.4byte gUnknown_827DEC1                  @ 087
 	.4byte gUnknown_827A4EB                  @ 088
 	.4byte gUnknown_827B0BD                  @ 089
@@ -1117,8 +1117,26 @@ Move_THUNDERBOLT: @ 0x08278996
 	waitforvisualfinish
 	end
 
-gUnknown_8278B4C: @ 0x08278B4C
-	.incbin "baserom_jp.gba", 0x278b4c, 0x6f
+Move_THUNDER_WAVE: @ 0x08278B4C
+	loadspritegfx ANIM_TAG_SPARK
+	loadspritegfx ANIM_TAG_SPARK_2
+	loadspritegfx ANIM_TAG_SPARK_H
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 0, 0, 6, RGB_BLACK
+	waitforvisualfinish
+	delay 10
+	createvisualtask AnimTask_ElectricBolt, 5, 0, -48, 0
+	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_TARGET
+	delay 20
+	loopsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_TARGET, 10, 4
+	createsprite gThunderWaveSpriteTemplate, ANIM_TARGET, 2, -16, -16
+	delay 4
+	createsprite gThunderWaveSpriteTemplate, ANIM_TARGET, 2, -16, 0
+	delay 4
+	createsprite gThunderWaveSpriteTemplate, ANIM_TARGET, 2, -16, 16
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 0, 6, 0, RGB_BLACK
+	waitforvisualfinish
+	end
 
 gUnknown_8278BBB: @ 0x08278BBB
 	.incbin "baserom_jp.gba", 0x278bbb, 0xfb
