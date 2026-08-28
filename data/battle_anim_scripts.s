@@ -52,8 +52,8 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827ACA6                  @ 030
 	.4byte gUnknown_827AD13                  @ 031
 	.4byte gUnknown_827AD90                  @ 032
-	.4byte gUnknown_8277E82                  @ 033
-	.4byte gUnknown_8277EC0                  @ 034
+	.4byte Move_TACKLE                         @ MOVE_TACKLE
+	.4byte Move_BODY_SLAM                      @ MOVE_BODY_SLAM
 	.4byte gUnknown_8281689                  @ 035
 	.4byte gUnknown_8278276                  @ 036
 	.4byte gUnknown_827AF0D                  @ 037
@@ -89,7 +89,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827B060                  @ 067
 	.4byte gUnknown_82809A9                  @ 068
 	.4byte gUnknown_8285087                  @ 069
-	.4byte gUnknown_8277DEE                  @ 070
+	.4byte Move_STRENGTH                       @ MOVE_STRENGTH
 	.4byte gUnknown_827F526                  @ 071
 	.4byte gUnknown_827F63E                  @ 072
 	.4byte gUnknown_827860F                  @ 073
@@ -547,14 +547,71 @@ Move_SWIFT: @ 0x08277D35
 	blendoff
 	end
 
-gUnknown_8277DEE: @ 0x08277DEE
-	.incbin "baserom_jp.gba", 0x277dee, 0x94
+Move_STRENGTH: @ 0x08277DEE
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_ShakeAndSinkMon, 5, ANIM_ATTACKER, 2, 0, 96, 30
+	waitforvisualfinish
+	delay 10
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 4
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_TARGET, 18, 6, 2, 4
+	delay 4
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=16, y=12, relative_to=ANIM_TARGET, animation=1
+	delay 4
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=-16, y=-12, relative_to=ANIM_TARGET, animation=1
+	delay 4
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=3, y=4, relative_to=ANIM_TARGET, animation=1
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
-gUnknown_8277E82: @ 0x08277E82
-	.incbin "baserom_jp.gba", 0x277e82, 0x3e
+Move_TACKLE: @ 0x08277E82
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 4
+	delay 6
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
-gUnknown_8277EC0: @ 0x08277EC0
-	.incbin "baserom_jp.gba", 0x277ec0, 0x8d
+Move_BODY_SLAM: @ 0x08277EC0
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	createsprite gVerticalDipSpriteTemplate, ANIM_ATTACKER, 2, 6, 1, ANIM_ATTACKER
+	waitforvisualfinish
+	delay 11
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 26, 0, 0, 5
+	delay 6
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 4, x=-10, y=0, relative_to=ANIM_TARGET, animation=0
+	loopsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET, 10, 2
+	delay 1
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 1, -28, 0, 0, 3
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_TARGET, 4, 0, 12, 1
+	waitforvisualfinish
+	delay 10
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 6
+	delay 5
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 1, 0, 6
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_8277F4D: @ 0x08277F4D
 	.incbin "baserom_jp.gba", 0x277f4d, 0x58

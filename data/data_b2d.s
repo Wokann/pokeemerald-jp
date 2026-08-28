@@ -210,7 +210,23 @@ gUnknown_85C9742: @ 0x85C9742
 
 	.section .rodata.mid57_gap
 
-	.incbin "baserom_jp.gba", 0x55a958, 0x78
+	.globl gHorizontalLungeSpriteTemplate
+gHorizontalLungeSpriteTemplate: @ 0x855A958
+	.incbin "baserom_jp.gba", 0x55a958, 0x18
+
+	.globl gVerticalDipSpriteTemplate
+gVerticalDipSpriteTemplate: @ 0x855A970
+	.incbin "baserom_jp.gba", 0x55a970, 0x18
+
+	.globl gSlideMonToOriginalPosSpriteTemplate
+gSlideMonToOriginalPosSpriteTemplate: @ 0x855A988
+	.incbin "baserom_jp.gba", 0x55a988, 0x18
+
+	.globl gSlideMonToOffsetSpriteTemplate
+gSlideMonToOffsetSpriteTemplate: @ 0x855A9A0
+	.incbin "baserom_jp.gba", 0x55a9a0, 0x18
+
+	.incbin "baserom_jp.gba", 0x55a9b8, 0x18
 
 
 	.section .rodata.mid97
