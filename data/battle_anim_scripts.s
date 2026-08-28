@@ -332,7 +332,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828503F                  @ 310
 	.4byte gUnknown_82859FA                  @ 311
 	.4byte Move_AROMATHERAPY                 @ MOVE_AROMATHERAPY
-	.4byte gUnknown_827D254                  @ 313
+	.4byte Move_FAKE_TEARS                   @ MOVE_FAKE_TEARS
 	.4byte gUnknown_827D2E4                  @ 314
 	.4byte gUnknown_8284C1B                  @ 315
 	.4byte gUnknown_827D346                  @ 316
@@ -4184,8 +4184,28 @@ Move_AROMATHERAPY: @ 0x0827D0F2
 	waitforvisualfinish
 	end
 
-gUnknown_827D254: @ 0x0827D254
-	.incbin "baserom_jp.gba", 0x27d254, 0x90
+Move_FAKE_TEARS: @ 0x0827D254
+	loadspritegfx ANIM_TAG_SMALL_BUBBLES
+	loadspritegfx ANIM_TAG_THOUGHT_BUBBLE
+	loadspritegfx ANIM_TAG_MUSIC_NOTES
+	createvisualtask AnimTask_BlendParticle, 5, ANIM_TAG_SMALL_BUBBLES, 0, 4, 4, RGB(12, 11, 31)
+	waitforvisualfinish
+	createvisualtask AnimTask_RockMonBackAndForth, 5, ANIM_ATTACKER, 2, 1
+	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 12, 4
+	delay 8
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=0
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=1
+	delay 8
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=2
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=3
+	delay 8
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=0
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=1
+	delay 8
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=2
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=3
+	waitforvisualfinish
+	end
 
 gUnknown_827D2E4: @ 0x0827D2E4
 	.incbin "baserom_jp.gba", 0x27d2e4, 0x62
