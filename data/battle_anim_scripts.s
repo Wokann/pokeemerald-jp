@@ -102,7 +102,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8280DA3                  @ 080
 	.4byte gUnknown_8281D95                  @ 081
 	.4byte gUnknown_827E9B9                  @ 082
-	.4byte gUnknown_8279222                  @ 083
+	.4byte Move_FIRE_SPIN                    @ MOVE_FIRE_SPIN
 	.4byte Move_THUNDER_SHOCK                @ MOVE_THUNDER_SHOCK
 	.4byte Move_THUNDERBOLT                  @ MOVE_THUNDERBOLT
 	.4byte Move_THUNDER_WAVE                 @ MOVE_THUNDER_WAVE
@@ -1391,8 +1391,30 @@ DizzyPunchLunge:
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 7, 1
 	return
 
-gUnknown_8279222: @ 0x08279222
-	.incbin "baserom_jp.gba", 0x279222, 0xb4
+Move_FIRE_SPIN:
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	playsewithpan SE_M_SACRED_FIRE2, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 2, 47, 1
+	call FireSpinEffect
+	call FireSpinEffect
+	call FireSpinEffect
+	waitforvisualfinish
+	end
+
+FireSpinEffect:
+	createsprite gFireSpinSpriteTemplate, ANIM_TARGET, 2, 0, 28, 528, 30, 13, 50, ANIM_TARGET
+	delay 2
+	createsprite gFireSpinSpriteTemplate, ANIM_TARGET, 2, 0, 32, 480, 20, 16, -46, ANIM_TARGET
+	delay 2
+	createsprite gFireSpinSpriteTemplate, ANIM_TARGET, 2, 0, 33, 576, 20, 8, 42, ANIM_TARGET
+	delay 2
+	createsprite gFireSpinSpriteTemplate, ANIM_TARGET, 2, 0, 31, 400, 25, 11, -42, ANIM_TARGET
+	delay 2
+	createsprite gFireSpinSpriteTemplate, ANIM_TARGET, 2, 0, 28, 512, 25, 16, 46, ANIM_TARGET
+	delay 2
+	createsprite gFireSpinSpriteTemplate, ANIM_TARGET, 2, 0, 33, 464, 30, 15, -50, ANIM_TARGET
+	delay 2
+	return
 
 gUnknown_82792D6: @ 0x082792D6
 	.incbin "baserom_jp.gba", 0x2792d6, 0xcf
