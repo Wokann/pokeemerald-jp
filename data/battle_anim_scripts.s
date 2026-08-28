@@ -22,7 +22,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_NONE                             @ MOVE_NONE
 	.4byte Move_POUND                            @ MOVE_POUND
 	.4byte gUnknown_828063A                  @ 002
-	.4byte gUnknown_8277955                  @ 003
+	.4byte Move_DOUBLE_SLAP                    @ MOVE_DOUBLE_SLAP
 	.4byte gUnknown_827884F                  @ 004
 	.4byte gUnknown_82786D9                  @ 005
 	.4byte gUnknown_8279E41                  @ 006
@@ -96,9 +96,9 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827A33F                  @ 074
 	.4byte gUnknown_8280EDB                  @ 075
 	.4byte gUnknown_827EE64                  @ 076
-	.4byte gUnknown_82779A8                  @ 077
-	.4byte gUnknown_8277AD9                  @ 078
-	.4byte gUnknown_8277C07                  @ 079
+	.4byte Move_POISON_POWDER                  @ MOVE_POISON_POWDER
+	.4byte Move_STUN_SPORE                     @ MOVE_STUN_SPORE
+	.4byte Move_SLEEP_POWDER                   @ MOVE_SLEEP_POWDER
 	.4byte gUnknown_8280DA3                  @ 080
 	.4byte gUnknown_8281D95                  @ 081
 	.4byte gUnknown_827E9B9                  @ 082
@@ -148,7 +148,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82784E1                  @ 126
 	.4byte gUnknown_82795AD                  @ 127
 	.4byte gUnknown_827EBEF                  @ 128
-	.4byte gUnknown_8277D35                  @ 129
+	.4byte Move_SWIFT                          @ MOVE_SWIFT
 	.4byte gUnknown_827B51B                  @ 130
 	.4byte gUnknown_8278F7D                  @ 131
 	.4byte gUnknown_8282111                  @ 132
@@ -428,20 +428,124 @@ Move_POUND:
 	blendoff
 	end
 
-gUnknown_8277955: @ 0x08277955
-	.incbin "baserom_jp.gba", 0x277955, 0x53
+Move_DOUBLE_SLAP: @ 0x08277955
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	choosetwoturnanim DoubleSlapLeft, DoubleSlapRight
+DoubleSlapContinue:
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
+DoubleSlapLeft:
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=-8, y=0, relative_to=ANIM_TARGET, animation=2
+	goto DoubleSlapContinue
+DoubleSlapRight:
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=8, y=0, relative_to=ANIM_TARGET, animation=2
+	goto DoubleSlapContinue
 
-gUnknown_82779A8: @ 0x082779A8
-	.incbin "baserom_jp.gba", 0x2779a8, 0x131
+Move_POISON_POWDER: @ 0x082779A8
+	loadspritegfx ANIM_TAG_POISON_POWDER
+	loadspritegfx ANIM_TAG_POISON_BUBBLE
+	loopsewithpan SE_M_POISON_POWDER, SOUND_PAN_TARGET, 10, 6
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=-30, y=-22, duration=117, y_velocity=80/256, wave_amplitude=5, wave_speed=1
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=10, y=-22, duration=117, y_velocity=80/256, wave_amplitude=-5, wave_speed=1
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=-25, y=-22, duration=117, y_velocity=112/256, wave_amplitude=5, wave_speed=3
+	delay 15
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=-5, y=-22, duration=117, y_velocity=80/256, wave_amplitude=-5, wave_speed=1
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=5, y=-22, duration=117, y_velocity=96/256, wave_amplitude=5, wave_speed=1
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=0, y=-22, duration=117, y_velocity=69/256, wave_amplitude=-5, wave_speed=1
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=-15, y=-22, duration=117, y_velocity=112/256, wave_amplitude=5, wave_speed=2
+	delay 30
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=-15, y=-22, duration=117, y_velocity=112/256, wave_amplitude=5, wave_speed=2
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=15, y=-22, duration=117, y_velocity=80/256, wave_amplitude=-5, wave_speed=1
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=-10, y=-22, duration=117, y_velocity=96/256, wave_amplitude=7, wave_speed=2
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=-5, y=-22, duration=117, y_velocity=90/256, wave_amplitude=-8, wave_speed=0
+	delay 20
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=-10, y=-22, duration=117, y_velocity=80/256, wave_amplitude=-5, wave_speed=1
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=0, y=-22, duration=117, y_velocity=89/256, wave_amplitude=5, wave_speed=2
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=20, y=-22, duration=117, y_velocity=112/256, wave_amplitude=-8, wave_speed=2
+	create_poison_powder_particle_sprite ANIM_TARGET, 2, x=5, y=-22, duration=117, y_velocity=80/256, wave_amplitude=5, wave_speed=1
+	waitforvisualfinish
+	end
 
-gUnknown_8277AD9: @ 0x08277AD9
-	.incbin "baserom_jp.gba", 0x277ad9, 0x12e
+Move_STUN_SPORE: @ 0x08277AD9
+	loadspritegfx ANIM_TAG_STUN_SPORE
+	loopsewithpan SE_M_POISON_POWDER, SOUND_PAN_TARGET, 10, 6
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=-30, y=-22, duration=117, y_velocity=80/256, wave_amplitude=5, wave_speed=1
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=10, y=-22, duration=117, y_velocity=80/256, wave_amplitude=-5, wave_speed=1
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=-25, y=-22, duration=117, y_velocity=112/256, wave_amplitude=5, wave_speed=3
+	delay 15
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=-5, y=-22, duration=117, y_velocity=80/256, wave_amplitude=-5, wave_speed=1
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=5, y=-22, duration=117, y_velocity=96/256, wave_amplitude=5, wave_speed=1
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=0, y=-22, duration=117, y_velocity=69/256, wave_amplitude=-5, wave_speed=1
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=-15, y=-22, duration=117, y_velocity=112/256, wave_amplitude=5, wave_speed=2
+	delay 30
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=-15, y=-22, duration=117, y_velocity=112/256, wave_amplitude=5, wave_speed=2
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=15, y=-22, duration=117, y_velocity=80/256, wave_amplitude=-5, wave_speed=1
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=-10, y=-22, duration=117, y_velocity=96/256, wave_amplitude=7, wave_speed=2
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=-5, y=-22, duration=117, y_velocity=90/256, wave_amplitude=-8, wave_speed=0
+	delay 20
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=-10, y=-22, duration=117, y_velocity=80/256, wave_amplitude=-5, wave_speed=1
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=0, y=-22, duration=117, y_velocity=89/256, wave_amplitude=5, wave_speed=2
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=20, y=-22, duration=117, y_velocity=112/256, wave_amplitude=-8, wave_speed=2
+	create_stun_spore_particle_sprite ANIM_TARGET, 2, x=5, y=-22, duration=117, y_velocity=80/256, wave_amplitude=5, wave_speed=1
+	waitforvisualfinish
+	end
 
-gUnknown_8277C07: @ 0x08277C07
-	.incbin "baserom_jp.gba", 0x277c07, 0x12e
+Move_SLEEP_POWDER: @ 0x08277C07
+	loadspritegfx ANIM_TAG_SLEEP_POWDER
+	loopsewithpan SE_M_POISON_POWDER, SOUND_PAN_TARGET, 10, 6
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=-30, y=-22, duration=117, y_velocity=80/256, wave_amplitude=5, wave_speed=1
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=10, y=-22, duration=117, y_velocity=80/256, wave_amplitude=-5, wave_speed=1
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=-25, y=-22, duration=117, y_velocity=112/256, wave_amplitude=5, wave_speed=3
+	delay 15
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=-5, y=-22, duration=117, y_velocity=80/256, wave_amplitude=-5, wave_speed=1
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=5, y=-22, duration=117, y_velocity=96/256, wave_amplitude=5, wave_speed=1
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=0, y=-22, duration=117, y_velocity=69/256, wave_amplitude=-5, wave_speed=1
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=-15, y=-22, duration=117, y_velocity=112/256, wave_amplitude=5, wave_speed=2
+	delay 30
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=-15, y=-22, duration=117, y_velocity=112/256, wave_amplitude=5, wave_speed=2
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=15, y=-22, duration=117, y_velocity=80/256, wave_amplitude=-5, wave_speed=1
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=-10, y=-22, duration=117, y_velocity=96/256, wave_amplitude=7, wave_speed=2
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=-5, y=-22, duration=117, y_velocity=90/256, wave_amplitude=-8, wave_speed=0
+	delay 20
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=-10, y=-22, duration=117, y_velocity=80/256, wave_amplitude=-5, wave_speed=1
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=0, y=-22, duration=117, y_velocity=89/256, wave_amplitude=5, wave_speed=2
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=20, y=-22, duration=117, y_velocity=112/256, wave_amplitude=-8, wave_speed=2
+	create_sleep_powder_particle_sprite ANIM_TARGET, 2, x=5, y=-22, duration=117, y_velocity=80/256, wave_amplitude=5, wave_speed=1
+	waitforvisualfinish
+	end
 
-gUnknown_8277D35: @ 0x08277D35
-	.incbin "baserom_jp.gba", 0x277d35, 0xb9
+Move_SWIFT: @ 0x08277D35
+	loadspritegfx ANIM_TAG_YELLOW_STAR
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
+	create_swift_star_sprite ANIM_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=0, duration=22, wave_amplitude=20, target_both=TRUE
+	delay 5
+	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
+	create_swift_star_sprite ANIM_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=5, duration=22, wave_amplitude=-18, target_both=TRUE
+	delay 5
+	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
+	create_swift_star_sprite ANIM_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=-10, duration=22, wave_amplitude=15, target_both=TRUE
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 18, 1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_DEF_PARTNER, 2, 0, 18, 1
+	delay 5
+	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
+	create_swift_star_sprite ANIM_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=0, duration=22, wave_amplitude=-20, target_both=TRUE
+	delay 5
+	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
+	create_swift_star_sprite ANIM_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=0, duration=22, wave_amplitude=12, target_both=TRUE
+	delay 5
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_8277DEE: @ 0x08277DEE
 	.incbin "baserom_jp.gba", 0x277dee, 0x94

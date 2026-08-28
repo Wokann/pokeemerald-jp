@@ -558,7 +558,21 @@ gUnknown_856DCC8: @ 0x856DCC8
 
 	.globl gUnknown_856DCCC
 gUnknown_856DCCC: @ 0x856DCCC
-	.incbin "baserom_jp.gba", 0x56dccc, 0x128
+	.incbin "baserom_jp.gba", 0x56dccc, 0x30
+
+	.globl gSleepPowderParticleSpriteTemplate
+gSleepPowderParticleSpriteTemplate: @ 0x856DCFC
+	.incbin "baserom_jp.gba", 0x56dcfc, 0x18
+
+	.globl gStunSporeParticleSpriteTemplate
+gStunSporeParticleSpriteTemplate: @ 0x856DD14
+	.incbin "baserom_jp.gba", 0x56dd14, 0x18
+
+	.globl gPoisonPowderParticleSpriteTemplate
+gPoisonPowderParticleSpriteTemplate: @ 0x856DD2C
+	.incbin "baserom_jp.gba", 0x56dd2c, 0x18
+
+	.incbin "baserom_jp.gba", 0x56dd44, 0xb0
 
 	.globl gSolarBeamSmallOrbSpriteTemplate
 gSolarBeamSmallOrbSpriteTemplate: @ 0x856DDF4
@@ -708,6 +722,7 @@ gSwiftStarAffineAnimCmds: @ 0x856DFD4
 gSwiftStarAffineAnimTable: @ 0x856DFE4
 	.4byte 0x0856DFD4
 
+	.globl gSwiftStarSpriteTemplate
 gSwiftStarSpriteTemplate: @ 0x856DFE8
 	.hword 0x27BE, 0x27BE
 	.4byte 0x084FD080, gDummySpriteAnimTable
