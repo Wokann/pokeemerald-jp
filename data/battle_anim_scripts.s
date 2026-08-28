@@ -56,7 +56,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_BODY_SLAM                      @ MOVE_BODY_SLAM
 	.4byte gUnknown_8281689                  @ 035
 	.4byte Move_TAKE_DOWN                    @ MOVE_TAKE_DOWN
-	.4byte gUnknown_827AF0D                  @ 037
+	.4byte Move_THRASH                       @ MOVE_THRASH
 	.4byte Move_DOUBLE_EDGE                  @ MOVE_DOUBLE_EDGE
 	.4byte Move_TAIL_WHIP                     @ MOVE_TAIL_WHIP
 	.4byte Move_POISON_STING                 @ MOVE_POISON_STING
@@ -2534,8 +2534,23 @@ HornDrillInContest:
 	createvisualtask AnimTask_StartSlidingBg, 5, 2304, 768, 0, -1
 	goto HornDrillContinue
 
-gUnknown_827AF0D: @ 0x0827AF0D
-	.incbin "baserom_jp.gba", 0x27af0d, 0x7f
+Move_THRASH:: @ 0x0827AF0D
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	createvisualtask AnimTask_ThrashMoveMonHorizontal, 2
+	createvisualtask AnimTask_ThrashMoveMonVertical, 2
+	createsprite gFistFootRandomPosSpriteTemplate, ANIM_TARGET, 3, 1, 10, 0
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_TARGET, 4, 0, 7, 1
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	delay 28
+	createsprite gFistFootRandomPosSpriteTemplate, ANIM_TARGET, 3, 1, 10, 1
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_TARGET, 4, 0, 7, 1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	delay 28
+	createsprite gFistFootRandomPosSpriteTemplate, ANIM_TARGET, 3, 1, 10, 3
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_TARGET, 8, 0, 16, 1
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	end
 
 gUnknown_827AF8C: @ 0x0827AF8C
 	.incbin "baserom_jp.gba", 0x27af8c, 0xd4
