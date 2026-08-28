@@ -1,5 +1,11 @@
 #include "global.h"
 #include "malloc.h"
+#include "decompress.h"
+#include "overworld.h"
+#include "script.h"
+#include "battle_tower.h"
+#include "mystery_gift.h"
+#include "mystery_event_script.h"
 #include "mystery_gift_client.h"
 
 enum
@@ -161,230 +167,113 @@ u32 Client_Send(void *data)
     return 1;
 }
 
-// JP byte-exact mystery-gift client state machines (kept as naked asm).
-
-__attribute__((naked)) u32 mainseq_4(void *data)
+u32 mainseq_4(void *data)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, lr}\n\t"
-        "adds r4, r0, #0\n\t"
-        "ldr r0, [r4, #0x10]\n\t"
-        "lsls r2, r0, #3\n\t"
-        "ldr r1, [r4, #0x1c]\n\t"
-        "adds r2, r1, r2\n\t"
-        "adds r0, #1\n\t"
-        "str r0, [r4, #0x10]\n\t"
-        "ldr r0, [r2]\n\t"
-        "cmp r0, #0x15\n\t"
-        "bls _0801D464\n\t"
-        "b _0801D614\n\t"
-        "_0801D464:\n\t"
-        "lsls r0, r0, #2\n\t"
-        "ldr r1, _0801D470\n\t"
-        "adds r0, r0, r1\n\t"
-        "ldr r0, [r0]\n\t"
-        "mov pc, r0\n\t"
-        ".align 2, 0\n\t"
-        "_0801D470: .4byte 0x0801D474\n\t"
-        "_0801D474: @ jump table\n\t"
-        ".4byte _0801D614 @ case 0\n\t"
-        ".4byte _0801D4CC @ case 1\n\t"
-        ".4byte _0801D4D4 @ case 2\n\t"
-        ".4byte _0801D4E4 @ case 3\n\t"
-        ".4byte _0801D51E @ case 4\n\t"
-        ".4byte _0801D526 @ case 5\n\t"
-        ".4byte _0801D50E @ case 6\n\t"
-        ".4byte _0801D518 @ case 7\n\t"
-        ".4byte _0801D574 @ case 8\n\t"
-        ".4byte _0801D5A0 @ case 9\n\t"
-        ".4byte _0801D598 @ case 10\n\t"
-        ".4byte _0801D53C @ case 11\n\t"
-        ".4byte _0801D552 @ case 12\n\t"
-        ".4byte _0801D568 @ case 13\n\t"
-        ".4byte _0801D58C @ case 14\n\t"
-        ".4byte _0801D5C8 @ case 15\n\t"
-        ".4byte _0801D5CC @ case 16\n\t"
-        ".4byte _0801D5D4 @ case 17\n\t"
-        ".4byte _0801D5E0 @ case 18\n\t"
-        ".4byte _0801D4FA @ case 19\n\t"
-        ".4byte _0801D4E8 @ case 20\n\t"
-        ".4byte _0801D600 @ case 21\n\t"
-        "_0801D4CC:\n\t"
-        "ldr r0, [r2, #4]\n\t"
-        "str r0, [r4, #4]\n\t"
-        "movs r0, #1\n\t"
-        "b _0801D60E\n\t"
-        "_0801D4D4:\n\t"
-        "adds r0, r4, #0\n\t"
-        "adds r0, #0x24\n\t"
-        "ldr r1, [r2, #4]\n\t"
-        "ldr r2, [r4, #0x18]\n\t"
-        "bl MysteryGiftLink_InitRecv\n\t"
-        "movs r0, #2\n\t"
-        "b _0801D60E\n\t"
-        "_0801D4E4:\n\t"
-        "movs r0, #3\n\t"
-        "b _0801D60E\n\t"
-        "_0801D4E8:\n\t"
-        "adds r0, r4, #0\n\t"
-        "adds r0, #0x24\n\t"
-        "ldr r2, [r4, #0x14]\n\t"
-        "movs r1, #0x14\n\t"
-        "movs r3, #0\n\t"
-        "bl MysteryGiftLink_InitSend\n\t"
-        "movs r0, #3\n\t"
-        "b _0801D60E\n\t"
-        "_0801D4FA:\n\t"
-        "ldrb r0, [r2, #4]\n\t"
-        "bl GetGameStat\n\t"
-        "adds r2, r0, #0\n\t"
-        "adds r0, r4, #0\n\t"
-        "movs r1, #0x12\n\t"
-        "bl mevent_client_send_word\n\t"
-        "movs r0, #3\n\t"
-        "b _0801D60E\n\t"
-        "_0801D50E:\n\t"
-        "ldr r0, [r4, #4]\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0801D516\n\t"
-        "b _0801D614\n\t"
-        "_0801D516:\n\t"
-        "b _0801D51E\n\t"
-        "_0801D518:\n\t"
-        "ldr r0, [r4, #4]\n\t"
-        "cmp r0, #1\n\t"
-        "bne _0801D614\n\t"
-        "_0801D51E:\n\t"
-        "adds r0, r4, #0\n\t"
-        "bl mevent_client_jmp_buffer\n\t"
-        "b _0801D614\n\t"
-        "_0801D526:\n\t"
-        "ldr r0, [r4, #0x20]\n\t"
-        "ldr r1, [r4, #0x18]\n\t"
-        "movs r2, #0x40\n\t"
-        "bl memcpy\n\t"
-        "movs r0, #5\n\t"
-        "str r0, [r4, #8]\n\t"
-        "movs r0, #0\n\t"
-        "str r0, [r4, #0xc]\n\t"
-        "movs r0, #2\n\t"
-        "b _0801D616\n\t"
-        "_0801D53C:\n\t"
-        "ldr r0, [r4, #0x20]\n\t"
-        "ldr r1, [r4, #0x18]\n\t"
-        "movs r2, #0x40\n\t"
-        "bl memcpy\n\t"
-        "movs r0, #5\n\t"
-        "str r0, [r4, #8]\n\t"
-        "movs r0, #0\n\t"
-        "str r0, [r4, #0xc]\n\t"
-        "movs r0, #3\n\t"
-        "b _0801D616\n\t"
-        "_0801D552:\n\t"
-        "ldr r0, [r4, #0x20]\n\t"
-        "ldr r1, [r4, #0x18]\n\t"
-        "movs r2, #0x40\n\t"
-        "bl memcpy\n\t"
-        "movs r0, #5\n\t"
-        "str r0, [r4, #8]\n\t"
-        "movs r0, #0\n\t"
-        "str r0, [r4, #0xc]\n\t"
-        "movs r0, #5\n\t"
-        "b _0801D616\n\t"
-        "_0801D568:\n\t"
-        "movs r0, #5\n\t"
-        "str r0, [r4, #8]\n\t"
-        "movs r0, #0\n\t"
-        "str r0, [r4, #0xc]\n\t"
-        "movs r0, #4\n\t"
-        "b _0801D616\n\t"
-        "_0801D574:\n\t"
-        "ldr r0, [r4, #0x14]\n\t"
-        "ldr r1, [r4, #0x4c]\n\t"
-        "bl MysteryGift_LoadLinkGameData\n\t"
-        "adds r0, r4, #0\n\t"
-        "adds r0, #0x24\n\t"
-        "ldr r2, [r4, #0x14]\n\t"
-        "movs r1, #0x11\n\t"
-        "movs r3, #0x64\n\t"
-        "bl MysteryGiftLink_InitSend\n\t"
-        "b _0801D614\n\t"
-        "_0801D58C:\n\t"
-        "ldr r2, [r4, #4]\n\t"
-        "adds r0, r4, #0\n\t"
-        "movs r1, #0x13\n\t"
-        "bl mevent_client_send_word\n\t"
-        "b _0801D614\n\t"
-        "_0801D598:\n\t"
-        "ldr r0, [r4, #0x18]\n\t"
-        "bl SaveWonderCard\n\t"
-        "b _0801D614\n\t"
-        "_0801D5A0:\n\t"
-        "ldr r0, [r4, #0x18]\n\t"
-        "bl IsWonderNewsSameAsSaved\n\t"
-        "cmp r0, #0\n\t"
-        "bne _0801D5BC\n\t"
-        "ldr r0, [r4, #0x18]\n\t"
-        "bl SaveWonderNews\n\t"
-        "adds r0, r4, #0\n\t"
-        "movs r1, #0x13\n\t"
-        "movs r2, #0\n\t"
-        "bl mevent_client_send_word\n\t"
-        "b _0801D614\n\t"
-        "_0801D5BC:\n\t"
-        "adds r0, r4, #0\n\t"
-        "movs r1, #0x13\n\t"
-        "movs r2, #1\n\t"
-        "bl mevent_client_send_word\n\t"
-        "b _0801D614\n\t"
-        "_0801D5C8:\n\t"
-        "movs r0, #6\n\t"
-        "b _0801D60E\n\t"
-        "_0801D5CC:\n\t"
-        "ldr r0, [r4, #0x18]\n\t"
-        "bl MysteryGift_TrySaveStamp\n\t"
-        "b _0801D614\n\t"
-        "_0801D5D4:\n\t"
-        "ldr r0, [r4, #0x18]\n\t"
-        "movs r1, #0xfa\n\t"
-        "lsls r1, r1, #2\n\t"
-        "bl InitRamScript_NoObjectEvent\n\t"
-        "b _0801D614\n\t"
-        "_0801D5E0:\n\t"
-        "ldr r0, _0801D5F8\n\t"
-        "ldr r0, [r0]\n\t"
-        "ldr r1, _0801D5FC\n\t"
-        "adds r0, r0, r1\n\t"
-        "ldr r1, [r4, #0x18]\n\t"
-        "movs r2, #0xbc\n\t"
-        "bl memcpy\n\t"
-        "bl ValidateEReaderTrainer\n\t"
-        "b _0801D614\n\t"
-        ".align 2, 0\n\t"
-        "_0801D5F8: .4byte gSaveBlock2Ptr\n\t"
-        "_0801D5FC: .4byte 0x00000BEC\n\t"
-        "_0801D600:\n\t"
-        "ldr r0, _0801D61C\n\t"
-        "ldr r1, [r4, #0x18]\n\t"
-        "movs r2, #0x80\n\t"
-        "lsls r2, r2, #3\n\t"
-        "bl memcpy\n\t"
-        "movs r0, #7\n\t"
-        "_0801D60E:\n\t"
-        "str r0, [r4, #8]\n\t"
-        "movs r0, #0\n\t"
-        "str r0, [r4, #0xc]\n\t"
-        "_0801D614:\n\t"
-        "movs r0, #1\n\t"
-        "_0801D616:\n\t"
-        "pop {r4}\n\t"
-        "pop {r1}\n\t"
-        "bx r1\n\t"
-        ".align 2, 0\n\t"
-        "_0801D61C: .4byte gDecompressionBuffer\n\t"
-        ".syntax divided\n\t"
-    );
+    struct MeventClientData *cli = data;
+    struct MysteryGiftClientCmd *cmd = &((struct MysteryGiftClientCmd *)cli->unk1C)[cli->unk10];
+
+    cli->unk10++;
+    switch (cmd->instr)
+    {
+    case CLI_NONE:
+        break;
+    case CLI_RETURN:
+        cli->result = cmd->parameter;
+        cli->unk8 = FUNC_DONE;
+        cli->unkC = 0;
+        break;
+    case CLI_RECV:
+        MysteryGiftLink_InitRecv(&cli->sub, cmd->parameter, cli->unk18);
+        cli->unk8 = FUNC_RECV;
+        cli->unkC = 0;
+        break;
+    case CLI_SEND_LOADED:
+        cli->unk8 = FUNC_SEND;
+        cli->unkC = 0;
+        break;
+    case CLI_SEND_READY_END:
+        MysteryGiftLink_InitSend(&cli->sub, 0x14, cli->unk14, 0);
+        cli->unk8 = FUNC_SEND;
+        cli->unkC = 0;
+        break;
+    case CLI_SEND_STAT:
+        mevent_client_send_word(cli, 0x12, GetGameStat(cmd->parameter));
+        cli->unk8 = FUNC_SEND;
+        cli->unkC = 0;
+        break;
+    case CLI_COPY_RECV_IF_N:
+        if (cli->result == FALSE)
+            mevent_client_jmp_buffer(cli);
+        break;
+    case CLI_COPY_RECV_IF:
+        if (cli->result == TRUE)
+            mevent_client_jmp_buffer(cli);
+        break;
+    case CLI_COPY_RECV:
+        mevent_client_jmp_buffer(cli);
+        break;
+    case CLI_YES_NO:
+        memcpy(cli->unk20, cli->unk18, 0x40);
+        cli->unk8 = FUNC_WAIT;
+        cli->unkC = 0;
+        return CLI_RET_YES_NO;
+    case CLI_PRINT_MSG:
+        memcpy(cli->unk20, cli->unk18, 0x40);
+        cli->unk8 = FUNC_WAIT;
+        cli->unkC = 0;
+        return CLI_RET_PRINT_MSG;
+    case CLI_COPY_MSG:
+        memcpy(cli->unk20, cli->unk18, 0x40);
+        cli->unk8 = FUNC_WAIT;
+        cli->unkC = 0;
+        return CLI_RET_COPY_MSG;
+    case CLI_ASK_TOSS:
+        cli->unk8 = FUNC_WAIT;
+        cli->unkC = 0;
+        return CLI_RET_ASK_TOSS;
+    case CLI_LOAD_GAME_DATA:
+        MysteryGift_LoadLinkGameData(cli->unk14, cli->unk4C);
+        MysteryGiftLink_InitSend(&cli->sub, 0x11, cli->unk14, 0x64);
+        break;
+    case CLI_LOAD_TOSS_RESPONSE:
+        mevent_client_send_word(cli, 0x13, cli->result);
+        break;
+    case CLI_SAVE_CARD:
+        SaveWonderCard(cli->unk18);
+        break;
+    case CLI_SAVE_NEWS:
+        if (!IsWonderNewsSameAsSaved(cli->unk18))
+        {
+            SaveWonderNews(cli->unk18);
+            mevent_client_send_word(cli, 0x13, FALSE);
+        }
+        else
+        {
+            mevent_client_send_word(cli, 0x13, TRUE);
+        }
+        break;
+    case CLI_RUN_MEVENT_SCRIPT:
+        cli->unk8 = FUNC_RUN_MEVENT;
+        cli->unkC = 0;
+        break;
+    case CLI_SAVE_STAMP:
+        MysteryGift_TrySaveStamp(cli->unk18);
+        break;
+    case CLI_SAVE_RAM_SCRIPT:
+        InitRamScript_NoObjectEvent(cli->unk18, sizeof(struct RamScriptData));
+        break;
+    case CLI_RECV_EREADER_TRAINER:
+        memcpy(&gSaveBlock2Ptr->frontier.ereaderTrainer, cli->unk18, sizeof(gSaveBlock2Ptr->frontier.ereaderTrainer));
+        ValidateEReaderTrainer();
+        break;
+    case CLI_RUN_BUFFER_SCRIPT:
+        memcpy(gDecompressionBuffer, cli->unk18, 0x400);
+        cli->unk8 = FUNC_RUN_BUFFER;
+        cli->unkC = 0;
+        break;
+    }
+
+    return CLI_RET_ACTIVE;
 }
 
 u32 Client_Wait(struct MysteryGiftClient *client)
@@ -397,73 +286,38 @@ u32 Client_Wait(struct MysteryGiftClient *client)
     return CLI_RET_ACTIVE;
 }
 
-__attribute__((naked)) u32 mainseq_6(void *data)
+u32 mainseq_6(void *data)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, lr}\n\t"
-        "adds r4, r0, #0\n\t"
-        "ldr r0, [r4, #0xc]\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0801D648\n\t"
-        "cmp r0, #1\n\t"
-        "beq _0801D656\n\t"
-        "b _0801D668\n\t"
-        "_0801D648:\n\t"
-        "ldr r0, [r4, #0x18]\n\t"
-        "bl sub_081537AC\n\t"
-        "ldr r0, [r4, #0xc]\n\t"
-        "adds r0, #1\n\t"
-        "str r0, [r4, #0xc]\n\t"
-        "b _0801D668\n\t"
-        "_0801D656:\n\t"
-        "adds r0, r4, #4\n\t"
-        "bl sub_081537C0\n\t"
-        "adds r1, r0, #0\n\t"
-        "cmp r1, #0\n\t"
-        "bne _0801D668\n\t"
-        "movs r0, #4\n\t"
-        "str r0, [r4, #8]\n\t"
-        "str r1, [r4, #0xc]\n\t"
-        "_0801D668:\n\t"
-        "movs r0, #1\n\t"
-        "pop {r4}\n\t"
-        "pop {r1}\n\t"
-        "bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct MeventClientData *cli = data;
+
+    switch (cli->unkC)
+    {
+    case 0:
+        InitMysteryEventScriptContext(cli->unk18);
+        cli->unkC++;
+        break;
+    case 1:
+        if (!RunMysteryEventScriptContextCommand(&cli->result))
+        {
+            cli->unk8 = FUNC_RUN;
+            cli->unkC = 0;
+        }
+        break;
+    }
+    return CLI_RET_ACTIVE;
 }
 
-__attribute__((naked)) u32 mainseq_7(void *data)
+u32 mainseq_7(void *data)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, lr}\n\t"
-        "adds r4, r0, #0\n\t"
-        "ldr r3, _0801D698\n\t"
-        "adds r0, r4, #4\n\t"
-        "ldr r1, _0801D69C\n\t"
-        "ldr r1, [r1]\n\t"
-        "ldr r2, _0801D6A0\n\t"
-        "ldr r2, [r2]\n\t"
-        "bl _call_via_r3\n\t"
-        "cmp r0, #1\n\t"
-        "bne _0801D690\n\t"
-        "movs r0, #4\n\t"
-        "str r0, [r4, #8]\n\t"
-        "movs r0, #0\n\t"
-        "str r0, [r4, #0xc]\n\t"
-        "_0801D690:\n\t"
-        "movs r0, #1\n\t"
-        "pop {r4}\n\t"
-        "pop {r1}\n\t"
-        "bx r1\n\t"
-        ".align 2, 0\n\t"
-        "_0801D698: .4byte gDecompressionBuffer\n\t"
-        "_0801D69C: .4byte gSaveBlock2Ptr\n\t"
-        "_0801D6A0: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    struct MeventClientData *cli = data;
+    u32 (*func)(u32 *, struct SaveBlock2 *, struct SaveBlock1 *) = (void *)gDecompressionBuffer;
+
+    if (func(&cli->result, gSaveBlock2Ptr, gSaveBlock1Ptr) == 1)
+    {
+        cli->unk8 = FUNC_RUN;
+        cli->unkC = 0;
+    }
+    return CLI_RET_ACTIVE;
 }
 
 u32 mevent_client_exec(void *data)
