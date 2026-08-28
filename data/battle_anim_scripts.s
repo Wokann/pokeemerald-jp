@@ -225,7 +225,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ENDURE                        @ MOVE_ENDURE
 	.4byte Move_CHARM                         @ MOVE_CHARM
 	.4byte Move_ROLLOUT                       @ MOVE_ROLLOUT
-	.4byte gUnknown_827BD2B                  @ 206
+	.4byte Move_FALSE_SWIPE                   @ MOVE_FALSE_SWIPE
 	.4byte gUnknown_827BDB2                  @ 207
 	.4byte gUnknown_827BDFA                  @ 208
 	.4byte Move_SPARK                        @ MOVE_SPARK
@@ -3259,8 +3259,32 @@ Move_ROLLOUT:: @ 0x0827BCEA
 	blendoff
 	end
 
-gUnknown_827BD2B: @ 0x0827BD2B
-	.incbin "baserom_jp.gba", 0x27bd2b, 0x87
+Move_FALSE_SWIPE:: @ 0x0827BD2B
+	loadspritegfx ANIM_TAG_SLASH_2
+	loadspritegfx ANIM_TAG_IMPACT
+	createsprite gFalseSwipeSliceSpriteTemplate, ANIM_TARGET, 2
+	playsewithpan SE_M_VITAL_THROW, SOUND_PAN_TARGET
+	delay 16
+	createsprite gFalseSwipePositionedSliceSpriteTemplate, ANIM_TARGET, 2, 0
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_TARGET
+	delay 2
+	createsprite gFalseSwipePositionedSliceSpriteTemplate, ANIM_TARGET, 2, 16
+	delay 2
+	createsprite gFalseSwipePositionedSliceSpriteTemplate, ANIM_TARGET, 2, 32
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_TARGET
+	delay 2
+	createsprite gFalseSwipePositionedSliceSpriteTemplate, ANIM_TARGET, 2, 48
+	delay 2
+	createsprite gFalseSwipePositionedSliceSpriteTemplate, ANIM_TARGET, 2, 64
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_TARGET
+	delay 2
+	createsprite gFalseSwipePositionedSliceSpriteTemplate, ANIM_TARGET, 2, 80
+	delay 2
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 6, 1
+	create_basic_hitsplat_sprite ANIM_TARGET, 4, x=0, y=0, relative_to=ANIM_TARGET, animation=3
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	end
 
 gUnknown_827BDB2: @ 0x0827BDB2
 	.incbin "baserom_jp.gba", 0x27bdb2, 0x48
