@@ -316,7 +316,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_TAIL_GLOW                    @ MOVE_TAIL_GLOW
 	.4byte Move_LUSTER_PURGE                 @ MOVE_LUSTER_PURGE
 	.4byte Move_MIST_BALL                    @ MOVE_MIST_BALL
-	.4byte gUnknown_827CC49                  @ 297
+	.4byte Move_FEATHER_DANCE                @ MOVE_FEATHER_DANCE
 	.4byte gUnknown_827CD19                  @ 298
 	.4byte gUnknown_82835D5                  @ 299
 	.4byte gUnknown_827CD84                  @ 300
@@ -3983,8 +3983,27 @@ Move_MIST_BALL:: @ 0x0827CBBA
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 16, 0, RGB_WHITE
 	end
 
-gUnknown_827CC49: @ 0x0827CC49
-	.incbin "baserom_jp.gba", 0x27cc49, 0xd0
+Move_FEATHER_DANCE:: @ 0x0827CC49
+	loadspritegfx ANIM_TAG_WHITE_FEATHER
+	monbg ANIM_DEF_PARTNER
+	splitbgprio_all
+	playsewithpan SE_M_PETAL_DANCE, SOUND_PAN_TARGET
+	delay 0
+	createsprite gFallingFeatherSpriteTemplate, ANIM_TARGET, 0, 0, -16, 64, 2, 104, 11304, 32, 1
+	delay 6
+	createsprite gFallingFeatherSpriteTemplate, ANIM_TARGET, 0, 0, -16, 32, 2, 104, 11304, 32, 1
+	createsprite gFallingFeatherSpriteTemplate, ANIM_TARGET, 0, 0, -16, 0, 2, 104, 11304, 32, 1
+	delay 6
+	createsprite gFallingFeatherSpriteTemplate, ANIM_TARGET, 0, 0, -16, 224, 2, 104, 11304, 32, 1
+	createsprite gFallingFeatherSpriteTemplate, ANIM_TARGET, 0, 0, -16, 128, 2, 104, 11304, 32, 1
+	delay 6
+	createsprite gFallingFeatherSpriteTemplate, ANIM_TARGET, 0, 0, -16, 192, 2, 104, 11304, 32, 1
+	createsprite gFallingFeatherSpriteTemplate, ANIM_TARGET, 0, 0, -16, 160, 2, 104, 11304, 32, 1
+	delay 6
+	createsprite gFallingFeatherSpriteTemplate, ANIM_TARGET, 0, 0, -16, 96, 2, 104, 11304, 32, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
 
 gUnknown_827CD19: @ 0x0827CD19
 	.incbin "baserom_jp.gba", 0x27cd19, 0x6b
