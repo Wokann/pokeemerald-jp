@@ -1,3 +1,45 @@
+SafariZone_EventScript_OutOfBallsMidBattle:: @ 0x082623AA
+	setvar VAR_SAFARI_ZONE_STATE, 1
+	special ExitSafariMode
+	setwarp MAP_ROUTE121_SAFARI_ZONE_ENTRANCE, 2, 5
+	end
+
+SafariZone_EventScript_Exit:: @ 0x082623BA
+	setvar VAR_SAFARI_ZONE_STATE, 1
+	special ExitSafariMode
+	warp MAP_ROUTE121_SAFARI_ZONE_ENTRANCE, 2, 5
+	waitstate
+	end
+
+SafariZone_EventScript_RetirePrompt:: @ 0x082623CD
+	lockall
+	msgbox SafariZone_Text_WouldYouLikeToExit, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, SafariZone_EventScript_Retire
+	releaseall
+	end
+
+SafariZone_EventScript_Retire:: @ 0x082623E6
+	goto SafariZone_EventScript_Exit
+
+SafariZone_EventScript_TimesUp:: @ 0x082623E8
+	lockall
+	playse SE_DING_DONG
+	message SafariZone_Text_TimesUp
+	waitmessage
+	waitbuttonpress
+	releaseall
+	goto SafariZone_EventScript_Exit
+
+SafariZone_EventScript_OutOfBalls:: @ 0x082623F9
+	lockall
+	playse SE_DING_DONG
+	message SafariZone_Text_OutOfBalls
+	waitmessage
+	waitbuttonpress
+	releaseall
+	goto SafariZone_EventScript_Exit
+
+EventScript_PokeBlockFeeder:: @ 0x0826240A
 	lockall
 	special GetPokeblockFeederInFront
 	goto_if_ne VAR_RESULT, 0xFFFF, SafariZone_EventScript_PokeblockPresent

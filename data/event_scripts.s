@@ -1465,24 +1465,6 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 
 	.include "data/scripts/repel.inc"
 
-	.globl SafariZone_EventScript_OutOfBallsMidBattle
-SafariZone_EventScript_OutOfBallsMidBattle: @ 0x82623AA
-	.include "data/scripts/SafariZone_EventScript_Exit.inc"
-
-	.globl SafariZone_EventScript_RetirePrompt
-SafariZone_EventScript_RetirePrompt: @ 0x82623CD
-	.include "data/scripts/gUnknown_82623CD.inc"
-
-	.globl SafariZone_EventScript_TimesUp
-SafariZone_EventScript_TimesUp: @ 0x82623E8
-	.include "data/scripts/gUnknown_82623E8.inc"
-
-	.globl SafariZone_EventScript_OutOfBalls
-SafariZone_EventScript_OutOfBalls: @ 0x82623F9
-	.include "data/scripts/gUnknown_82623F9.inc"
-
-	.globl EventScript_PokeBlockFeeder
-EventScript_PokeBlockFeeder: @ 0x826240A
 	.include "data/scripts/safari_zone.inc"
 	.incbin "baserom_jp.gba", 0x262C92, 0x61
 
