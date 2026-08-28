@@ -49,7 +49,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ROLLING_KICK                 @ MOVE_ROLLING_KICK
 	.4byte gUnknown_827E873                  @ 028
 	.4byte Move_HEADBUTT                     @ MOVE_HEADBUTT
-	.4byte gUnknown_827ACA6                  @ 030
+	.4byte Move_HORN_ATTACK                  @ MOVE_HORN_ATTACK
 	.4byte gUnknown_827AD13                  @ 031
 	.4byte gUnknown_827AD90                  @ 032
 	.4byte Move_TACKLE                         @ MOVE_TACKLE
@@ -2425,8 +2425,23 @@ Move_HEADBUTT:: @ 0x0827AC49
 	waitforvisualfinish
 	end
 
-gUnknown_827ACA6: @ 0x0827ACA6
-	.incbin "baserom_jp.gba", 0x27aca6, 0x6d
+Move_HORN_ATTACK:: @ 0x0827ACA6
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HORN_HIT
+	createsprite gBowMonSpriteTemplate, ANIM_ATTACKER, 2, 0
+	playsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	delay 2
+	createsprite gBowMonSpriteTemplate, ANIM_ATTACKER, 2, 1
+	createsprite gHornHitSpriteTemplate, ANIM_TARGET, 4, 0, 0, 10
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_ATTACKER, 2, 0, 4, 1
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 6, 1
+	createsprite gBowMonSpriteTemplate, ANIM_ATTACKER, 2, 2
+	create_flashing_hitsplat_sprite ANIM_TARGET, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
+	waitforvisualfinish
+	end
 
 gUnknown_827AD13: @ 0x0827AD13
 	.incbin "baserom_jp.gba", 0x27ad13, 0x7d

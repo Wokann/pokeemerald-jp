@@ -1151,6 +1151,7 @@ gHealingBlueStarSpriteTemplate: @ 0x856EB10
 	.4byte 0x084FD020, 0x0856EB0C
 	.4byte 0x00000000, gDummySpriteAffineAnimTable, 0x080A7091
 
+	.globl gHornHitSpriteTemplate
 gHornHitSpriteTemplate: @ 0x856EB28
 	.hword 0x2724, 0x2724
 	.4byte 0x084FD020, gDummySpriteAnimTable
