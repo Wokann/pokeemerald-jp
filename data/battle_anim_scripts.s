@@ -61,7 +61,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8278CFD                  @ 039
 	.4byte gUnknown_8278419                  @ 040
 	.4byte gUnknown_827846E                  @ 041
-	.4byte gUnknown_82780EC                  @ 042
+	.4byte Move_PIN_MISSILE                  @ MOVE_PIN_MISSILE
 	.4byte gUnknown_8281317                  @ 043
 	.4byte gUnknown_827EAE1                  @ 044
 	.4byte gUnknown_827E4A8                  @ 045
@@ -352,7 +352,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8283883                  @ 330
 	.4byte gUnknown_8283895                  @ 331
 	.4byte gUnknown_827D5E0                  @ 332
-	.4byte gUnknown_82781B1                  @ 333
+	.4byte Move_ICICLE_SPEAR                 @ MOVE_ICICLE_SPEAR
 	.4byte gUnknown_827D64A                  @ 334
 	.4byte gUnknown_827D674                  @ 335
 	.4byte gUnknown_827D683                  @ 336
@@ -692,11 +692,63 @@ FlameWheel1: @ Unused
 	delay 4
 	return
 
-gUnknown_82780EC: @ 0x082780EC
-	.incbin "baserom_jp.gba", 0x2780ec, 0xc5
+Move_PIN_MISSILE: @ 0x082780EC
+	loadspritegfx ANIM_TAG_NEEDLE
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	create_pin_missile_sprite ANIM_ATTACKER, 2, 20, -8, -8, -8, 20, -32
+	delay 15
+	create_pin_missile_sprite ANIM_ATTACKER, 2, 20, -8, 8, 8, 20, -40
+	delay 4
+	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, -8, -8, ANIM_TARGET, 2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 2, 1
+	delay 9
+	create_pin_missile_sprite ANIM_ATTACKER, 2, 20, -8, 0, 0, 20, -32
+	delay 4
+	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, 8, 8, ANIM_TARGET, 2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 2, 1
+	delay 14
+	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, 0, 0, ANIM_TARGET, 2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 2, 1
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
-gUnknown_82781B1: @ 0x082781B1
-	.incbin "baserom_jp.gba", 0x2781b1, 0xc5
+Move_ICICLE_SPEAR: @ 0x082781B1
+	loadspritegfx ANIM_TAG_ICICLE_SPEAR
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_ATTACKER
+	createsprite gIcicleSpearSpriteTemplate, ANIM_ATTACKER, 2, 20, -8, -8, -8, 20, -32
+	delay 15
+	createsprite gIcicleSpearSpriteTemplate, ANIM_ATTACKER, 2, 20, -8, 8, 8, 20, -40
+	delay 4
+	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, -8, -8, ANIM_TARGET, 2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 2, 1
+	delay 9
+	createsprite gIcicleSpearSpriteTemplate, ANIM_ATTACKER, 2, 20, -8, 0, 0, 20, -32
+	delay 4
+	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, 8, 8, ANIM_TARGET, 2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 2, 1
+	delay 14
+	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, 0, 0, ANIM_TARGET, 2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 2, 1
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_8278276: @ 0x08278276
 	.incbin "baserom_jp.gba", 0x278276, 0x90
