@@ -110,7 +110,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ROCK_THROW                   @ MOVE_ROCK_THROW
 	.4byte Move_EARTHQUAKE                   @ MOVE_EARTHQUAKE
 	.4byte Move_FISSURE                      @ MOVE_FISSURE
-	.4byte gUnknown_827B22D                  @ 091
+	.4byte Move_DIG                          @ MOVE_DIG
 	.4byte gUnknown_827FA82                  @ 092
 	.4byte gUnknown_827DDB0                  @ 093
 	.4byte gUnknown_827DE11                  @ 094
@@ -2654,8 +2654,53 @@ FissureDirtPlumeClose:
 	playsewithpan SE_M_DIG, SOUND_PAN_TARGET
 	return
 
-gUnknown_827B22D: @ 0x0827B22D
-	.incbin "baserom_jp.gba", 0x27b22d, 0x11c
+Move_DIG:: @ 0x0827B22D
+	choosetwoturnanim DigSetUp, DigUnleash
+DigEnd:
+	end
+DigSetUp:
+	loadspritegfx ANIM_TAG_MUD_SAND
+	loadspritegfx ANIM_TAG_DIRT_MOUND
+	createsprite gDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 0, 180
+	createsprite gDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 1, 180
+	monbg_static ANIM_ATTACKER
+	delay 1
+	createvisualtask AnimTask_DigDownMovement, 2, FALSE
+	delay 6
+	call DigThrowDirt
+	call DigThrowDirt
+	call DigThrowDirt
+	call DigThrowDirt
+	call DigThrowDirt
+	waitforvisualfinish
+	clearmonbg_static ANIM_ATTACKER
+	delay 1
+	createvisualtask AnimTask_DigDownMovement, 2, TRUE
+	goto DigEnd
+DigUnleash:
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_DIRT_MOUND
+	createvisualtask AnimTask_DigUpMovement, 2, FALSE
+	waitforvisualfinish
+	monbg ANIM_ATTACKER
+	createsprite gDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 0, 48
+	createsprite gDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 1, 48
+	delay 1
+	createvisualtask AnimTask_DigUpMovement, 2, TRUE
+	delay 16
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=-8, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 6, 1
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_ATTACKER
+	clearmonbg ANIM_ATTACKER
+	goto DigEnd
+DigThrowDirt:
+	createsprite gDirtPlumeSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 12, 4, -16, 18
+	createsprite gDirtPlumeSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 16, 4, -10, 18
+	createsprite gDirtPlumeSpriteTemplate, ANIM_ATTACKER, 2, 0, 1, 14, 4, -18, 18
+	createsprite gDirtPlumeSpriteTemplate, ANIM_ATTACKER, 2, 0, 1, 12, 4, -16, 18
+	playsewithpan SE_M_DIG, SOUND_PAN_ATTACKER
+	delay 32
+	return
 
 gUnknown_827B349: @ 0x0827B349
 	.incbin "baserom_jp.gba", 0x27b349, 0x1d

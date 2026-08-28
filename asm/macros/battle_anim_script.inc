@@ -207,7 +207,17 @@
 	.byte \battler
 	.endm
 
+	.macro monbg_static battler:req
+	.byte 0x22
+	.byte \battler
+	.endm
+
 	.macro clearmonbg_23 battler:req
+	.byte 0x23
+	.byte \battler
+	.endm
+
+	.macro clearmonbg_static battler:req
 	.byte 0x23
 	.byte \battler
 	.endm
