@@ -109,7 +109,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827DEC1                  @ 087
 	.4byte Move_ROCK_THROW                   @ MOVE_ROCK_THROW
 	.4byte Move_EARTHQUAKE                   @ MOVE_EARTHQUAKE
-	.4byte gUnknown_827B10A                  @ 090
+	.4byte Move_FISSURE                      @ MOVE_FISSURE
 	.4byte gUnknown_827B22D                  @ 091
 	.4byte gUnknown_827FA82                  @ 092
 	.4byte gUnknown_827DDB0                  @ 093
@@ -2611,8 +2611,48 @@ Move_EARTHQUAKE:: @ 0x0827B0BD
 	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=14, color2=RGB_WHITE, blend_y2=14
 	end
 
-gUnknown_827B10A: @ 0x0827B10A
-	.incbin "baserom_jp.gba", 0x27b10a, 0x123
+Move_FISSURE:: @ 0x0827B10A
+	loadspritegfx ANIM_TAG_MUD_SAND
+	createvisualtask AnimTask_HorizontalShake, 3, (MAX_BATTLERS_COUNT + 1), 10, 50
+	createvisualtask AnimTask_HorizontalShake, 3, ANIM_TARGET, 10, 50
+	playsewithpan SE_M_EARTHQUAKE, SOUND_PAN_TARGET
+	delay 8
+	call FissureDirtPlumeFar
+	delay 15
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=14, color2=RGB_WHITE, blend_y2=14
+	delay 15
+	call FissureDirtPlumeClose
+	delay 15
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=14, color2=RGB_WHITE, blend_y2=14
+	delay 15
+	call FissureDirtPlumeFar
+	delay 50
+	fadetobg BG_FISSURE
+	waitbgfadeout
+	createvisualtask AnimTask_PositionFissureBgOnBattler, 5, ANIM_TARGET, 5, -1
+	waitbgfadein
+	delay 40
+	restorebg
+	waitbgfadeout
+	setarg 7, -1
+	waitbgfadein
+	end
+
+FissureDirtPlumeFar:
+	createsprite gDirtPlumeSpriteTemplate, ANIM_TARGET, 2, 1, 0, 12, -48, -16, 24
+	createsprite gDirtPlumeSpriteTemplate, ANIM_TARGET, 2, 1, 0, 16, -16, -10, 24
+	createsprite gDirtPlumeSpriteTemplate, ANIM_TARGET, 2, 1, 1, 14, -52, -18, 24
+	createsprite gDirtPlumeSpriteTemplate, ANIM_TARGET, 2, 1, 1, 12, -32, -16, 24
+	playsewithpan SE_M_DIG, SOUND_PAN_TARGET
+	return
+
+FissureDirtPlumeClose:
+	createsprite gDirtPlumeSpriteTemplate, ANIM_TARGET, 2, 1, 0, 12, -24, -16, 24
+	createsprite gDirtPlumeSpriteTemplate, ANIM_TARGET, 2, 1, 0, 16, -38, -10, 24
+	createsprite gDirtPlumeSpriteTemplate, ANIM_TARGET, 2, 1, 1, 14, -20, -18, 24
+	createsprite gDirtPlumeSpriteTemplate, ANIM_TARGET, 2, 1, 1, 12, -36, -16, 24
+	playsewithpan SE_M_DIG, SOUND_PAN_TARGET
+	return
 
 gUnknown_827B22D: @ 0x0827B22D
 	.incbin "baserom_jp.gba", 0x27b22d, 0x11c
