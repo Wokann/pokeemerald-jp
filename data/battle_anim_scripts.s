@@ -185,7 +185,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SLASH                        @ MOVE_SLASH
 	.4byte gUnknown_8283D8E                  @ 164
 	.4byte Move_STRUGGLE                     @ MOVE_STRUGGLE
-	.4byte gUnknown_827BA07                  @ 166
+	.4byte Move_SKETCH                       @ MOVE_SKETCH
 	.4byte gUnknown_828081A                  @ 167
 	.4byte Move_THIEF                        @ MOVE_THIEF
 	.4byte gUnknown_8281E67                  @ 169
@@ -3069,8 +3069,16 @@ Move_STRUGGLE:: @ 0x0827B9A1
 	blendoff
 	end
 
-gUnknown_827BA07: @ 0x0827BA07
-	.incbin "baserom_jp.gba", 0x27ba07, 0x28
+Move_SKETCH:: @ 0x0827BA07
+	loadspritegfx ANIM_TAG_PENCIL
+	monbg ANIM_TARGET
+	createvisualtask AnimTask_SketchDrawMon, 2
+	createsprite gPencilSpriteTemplate, ANIM_TARGET, 2
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	createvisualtask AnimTask_Splash, 2, 0, 2
+	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 38, 2
+	end
 
 gUnknown_827BA2F: @ 0x0827BA2F
 	.incbin "baserom_jp.gba", 0x27ba2f, 0x56
