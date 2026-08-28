@@ -1,7 +1,3 @@
-@ JP trainer text begins at 0x0825941F.  Preserve unreviewed text as raw
-@ data while progressively moving verified map families to US-aligned labels.
-	.incbin "baserom_jp.gba", 0x25941f, 0xf8
-
 Route102_Text_CalvinIntro: @ 0x08259517
 	.string "ポケモン　つれていれば\n"
 	.string "キミも　りっぱな　ポケモントレーナー！\l"

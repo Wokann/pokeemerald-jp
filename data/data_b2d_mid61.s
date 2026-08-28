@@ -121,13 +121,17 @@ sAnims_MarkingCombo: @ 0x857ABC8
 gUnknown_857AC08: @ 0x857AC08
 	.incbin "baserom_jp.gba", 0x57ac08, 0xc
 
-	.globl gUnknown_857AC14
-gUnknown_857AC14: @ 0x857AC14
-	.incbin "baserom_jp.gba", 0x57ac14, 0x20
+	.globl sGiddyAdjectives
+sGiddyAdjectives: @ 0x857AC14
+	.4byte GiddyText_SoPretty, GiddyText_SoDarling, GiddyText_SoRelaxed, GiddyText_SoSunny
+	.4byte GiddyText_SoDesirable, GiddyText_SoExciting, GiddyText_SoAmusing, GiddyText_SoMagical
 
-	.globl gUnknown_857AC34
-gUnknown_857AC34: @ 0x857AC34
-	.incbin "baserom_jp.gba", 0x57ac34, 0x20
+	.globl sGiddyQuestions
+sGiddyQuestions: @ 0x857AC34
+	.4byte GiddyText_ISoWantToGoOnAVacation, GiddyText_IBoughtCrayonsWith120Colors
+	.4byte GiddyText_WouldntItBeNiceIfWeCouldFloat, GiddyText_WhenYouWriteOnASandyBeach
+	.4byte GiddyText_WhatsTheBottomOfTheSeaLike, GiddyText_WhenYouSeeTheSettingSunDoesIt
+	.4byte GiddyText_LyingBackInTheGreenGrass, GiddyText_SecretBasesAreSoWonderful
 
 	.globl gUnknown_857AC54
 gUnknown_857AC54: @ 0x857AC54

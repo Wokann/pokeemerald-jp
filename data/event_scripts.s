@@ -1460,15 +1460,7 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/scripts/players_house.inc"
 
 	.include "data/scripts/berry_blender.inc"
-	@ Unstructured tail of the Berry Blender physical owner.
-	.incbin "baserom_jp.gba", 0x2593c5, 0x57
-
-	.globl gUnknown_825941C
-gUnknown_825941C: @ 0x825941C
-	.string "って$"
-
-	.globl gUnknown_825941F
-gUnknown_825941F: @ 0x825941F
+	.include "data/text/mauville_man.inc"
 	.include "data/text/trainers.inc"
 
 	.globl EventScript_RepelWoreOff
