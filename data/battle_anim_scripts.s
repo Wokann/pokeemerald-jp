@@ -303,7 +303,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_YAWN                         @ MOVE_YAWN
 	.4byte gUnknown_828536A                  @ 282
 	.4byte Move_ENDEAVOR                     @ MOVE_ENDEAVOR
-	.4byte gUnknown_827C897                  @ 284
+	.4byte Move_ERUPTION                     @ MOVE_ERUPTION
 	.4byte gUnknown_827C964                  @ 285
 	.4byte gUnknown_827C9AF                  @ 286
 	.4byte gUnknown_8283592                  @ 287
@@ -3813,8 +3813,30 @@ Move_ENDEAVOR:: @ 0x0827C822
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	end
 
-gUnknown_827C897: @ 0x0827C897
-	.incbin "baserom_jp.gba", 0x27c897, 0xcd
+Move_ERUPTION:: @ 0x0827C897
+	loadspritegfx ANIM_TAG_WARM_ROCK
+	simple_palette_blend selector=F_PAL_BG | F_PAL_BATTLERS, delay=2, initial_blend_y=0, target_blend_y=4, color=RGB_RED
+	waitforvisualfinish
+	createvisualtask AnimTask_EruptionLaunchRocks, 2
+	waitplaysewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER, 60
+	waitforvisualfinish
+	createvisualtask AnimTask_EruptionLaunchRocks, 2
+	waitplaysewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER, 60
+	waitforvisualfinish
+	delay 30
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_ATTACKER, 40, 200, -32, 0, 100, 0
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_ATTACKER, 40, 30, -32, 16, 90, 1
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_ATTACKER, 40, 150, -32, 32, 60, 2
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_ATTACKER, 40, 90, -32, 48, 80, 3
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_ATTACKER, 40, 110, -32, 64, 50, 0
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_ATTACKER, 40, 60, -32, 80, 70, 1
+	delay 22
+	createvisualtask AnimTask_HorizontalShake, 5, (MAX_BATTLERS_COUNT + 1), 8, 60
+	createvisualtask AnimTask_HorizontalShake, 5, MAX_BATTLERS_COUNT, 8, 60
+	loopsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET, 16, 12
+	delay 80
+	simple_palette_blend unused_subpriority_offset=40, selector=F_PAL_BG | F_PAL_BATTLERS, delay=4, initial_blend_y=4, target_blend_y=0, color=RGB_RED
+	end
 
 gUnknown_827C964: @ 0x0827C964
 	.incbin "baserom_jp.gba", 0x27c964, 0x4b
