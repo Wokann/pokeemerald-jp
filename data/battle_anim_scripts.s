@@ -34,7 +34,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8279DB5                  @ 012
 	.4byte gUnknown_8281F08                  @ 013
 	.4byte gUnknown_8279030                  @ 014
-	.4byte gUnknown_8278D16                  @ 015
+	.4byte Move_CUT                           @ MOVE_CUT
 	.4byte gUnknown_827FF98                  @ 016
 	.4byte gUnknown_827FFE9                  @ 017
 	.4byte gUnknown_827A375                  @ 018
@@ -58,7 +58,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_TAKE_DOWN                    @ MOVE_TAKE_DOWN
 	.4byte gUnknown_827AF0D                  @ 037
 	.4byte Move_DOUBLE_EDGE                  @ MOVE_DOUBLE_EDGE
-	.4byte gUnknown_8278CFD                  @ 039
+	.4byte Move_TAIL_WHIP                     @ MOVE_TAIL_WHIP
 	.4byte Move_POISON_STING                 @ MOVE_POISON_STING
 	.4byte Move_TWINEEDLE                    @ MOVE_TWINEEDLE
 	.4byte Move_PIN_MISSILE                  @ MOVE_PIN_MISSILE
@@ -1188,11 +1188,25 @@ Move_STOMP: @ 0x08278CB6
 	blendoff
 	end
 
-gUnknown_8278CFD: @ 0x08278CFD
-	.incbin "baserom_jp.gba", 0x278cfd, 0x19
+Move_TAIL_WHIP:
+	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 24, 3
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 12, 4, 2, 3
+	waitforvisualfinish
+	end
 
-gUnknown_8278D16: @ 0x08278D16
-	.incbin "baserom_jp.gba", 0x278d16, 0x32
+Move_CUT:
+	loadspritegfx ANIM_TAG_CUT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_CUT, SOUND_PAN_TARGET
+	createsprite gCuttingSliceSpriteTemplate, ANIM_ATTACKER, 2, 40, -32, 0
+	delay 5
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 3, 10, 1
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	waitforvisualfinish
+	end
 
 gUnknown_8278D48: @ 0x08278D48
 	.incbin "baserom_jp.gba", 0x278d48, 0xe9
