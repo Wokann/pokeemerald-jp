@@ -284,7 +284,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MEMENTO                      @ MOVE_MEMENTO
 	.4byte Move_FACADE                       @ MOVE_FACADE
 	.4byte gUnknown_8283F8E                  @ 264
-	.4byte gUnknown_827C2E2                  @ 265
+	.4byte Move_SMELLING_SALT                @ MOVE_SMELLING_SALT
 	.4byte gUnknown_827C33D                  @ 266
 	.4byte gUnknown_8280FE2                  @ 267
 	.4byte gUnknown_827C35C                  @ 268
@@ -3551,8 +3551,20 @@ Move_FACADE:: @ 0x0827C2C2
 	loopsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER, 24, 3
 	end
 
-gUnknown_827C2E2: @ 0x0827C2E2
-	.incbin "baserom_jp.gba", 0x27c2e2, 0x5b
+Move_SMELLING_SALT:: @ 0x0827C2E2
+	loadspritegfx ANIM_TAG_TAG_HAND
+	loadspritegfx ANIM_TAG_SMELLINGSALT_EFFECT
+	createsprite gSmellingSaltsHandSpriteTemplate, ANIM_TARGET, 2, ANIM_TARGET, 0, 2
+	createsprite gSmellingSaltsHandSpriteTemplate, ANIM_TARGET, 2, ANIM_TARGET, 1, 2
+	delay 32
+	createvisualtask AnimTask_SmellingSaltsSquish, 3, ANIM_TARGET, 2
+	loopsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET, 12, 2
+	waitforvisualfinish
+	delay 4
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 6, 2
+	createsprite gSmellingSaltExclamationSpriteTemplate, ANIM_TARGET, 2, ANIM_TARGET, 8, 3
+	loopsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET, 16, 3
+	end
 
 gUnknown_827C33D: @ 0x0827C33D
 	.incbin "baserom_jp.gba", 0x27c33d, 0x1f
