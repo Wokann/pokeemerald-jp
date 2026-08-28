@@ -40,7 +40,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827A375                  @ 018
 	.4byte gUnknown_828056D                  @ 019
 	.4byte gUnknown_828164F                  @ 020
-	.4byte gUnknown_8279495                  @ 021
+	.4byte Move_SLAM                         @ MOVE_SLAM
 	.4byte gUnknown_827951D                  @ 022
 	.4byte Move_STOMP                        @ MOVE_STOMP
 	.4byte gUnknown_82807E8                  @ 024
@@ -1486,8 +1486,29 @@ SelfDestructExplode:
 	delay 6
 	return
 
-gUnknown_8279495: @ 0x08279495
-	.incbin "baserom_jp.gba", 0x279495, 0x88
+Move_SLAM:
+	loadspritegfx ANIM_TAG_SLAM_HIT
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_ATTACKER
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, 3, 0, 4
+	delay 1
+	createsprite gSlamHitSpriteTemplate, ANIM_ATTACKER, 2, 0, 0
+	delay 3
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 1, -12, 10, 0, 3
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 5
+	delay 3
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_TARGET, 0, 3, 6, 1
+	waitforvisualfinish
+	delay 5
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 1, 0, 6
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_827951D: @ 0x0827951D
 	.incbin "baserom_jp.gba", 0x27951d, 0x37
