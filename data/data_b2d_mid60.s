@@ -1216,6 +1216,7 @@ gWavyMusicNotesAffineAnimCmds: @ 0x856EBD0
 gMusicNotesAffineAnimTable: @ 0x856EBE8
 	.4byte 0x0856EBD0
 
+	.globl gWavyMusicNotesSpriteTemplate
 gWavyMusicNotesSpriteTemplate: @ 0x856EBEC
 	.hword 0x2758, 0x2758
 	.4byte 0x084FD0D8, 0x0856EBB0

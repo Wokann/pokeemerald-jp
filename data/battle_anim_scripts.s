@@ -66,7 +66,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827EAE1                  @ 044
 	.4byte gUnknown_827E4A8                  @ 045
 	.4byte gUnknown_827E411                  @ 046
-	.4byte gUnknown_827AF8C                  @ 047
+	.4byte Move_SING                         @ MOVE_SING
 	.4byte Move_SUPERSONIC                     @ MOVE_SUPERSONIC
 	.4byte Move_SONIC_BOOM                   @ MOVE_SONIC_BOOM
 	.4byte gUnknown_8281FEE                  @ 050
@@ -2552,8 +2552,41 @@ Move_THRASH:: @ 0x0827AF0D
 	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
 	end
 
-gUnknown_827AF8C: @ 0x0827AF8C
-	.incbin "baserom_jp.gba", 0x27af8c, 0xd4
+Move_SING:: @ 0x0827AF8C
+	loadspritegfx ANIM_TAG_MUSIC_NOTES
+	monbg ANIM_DEF_PARTNER
+	createvisualtask AnimTask_MusicNotesRainbowBlend, 2
+	waitforvisualfinish
+	panse SE_M_SING, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 7, 0, 12
+	delay 5
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 6, 1, 12
+	delay 5
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 1, 2, 12
+	delay 5
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 2, 3, 12
+	delay 5
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 3, 0, 12
+	delay 4
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 2, 1, 12
+	delay 4
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 5, 2, 12
+	delay 4
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 6, 3, 12
+	delay 4
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 2, 0, 12
+	delay 4
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 2, 1, 12
+	delay 4
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 1, 2, 12
+	delay 4
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 5, 3, 12
+	delay 4
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	createvisualtask AnimTask_MusicNotesClearRainbowBlend, 2
+	waitforvisualfinish
+	end
 
 gUnknown_827B060: @ 0x0827B060
 	.incbin "baserom_jp.gba", 0x27b060, 0x5d
