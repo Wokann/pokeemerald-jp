@@ -44,7 +44,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827951D                  @ 022
 	.4byte gUnknown_8278CB6                  @ 023
 	.4byte gUnknown_82807E8                  @ 024
-	.4byte gUnknown_82787B3                  @ 025
+	.4byte Move_MEGA_KICK                    @ MOVE_MEGA_KICK
 	.4byte gUnknown_82806F5                  @ 026
 	.4byte gUnknown_827ABC6                  @ 027
 	.4byte gUnknown_827E873                  @ 028
@@ -975,8 +975,30 @@ SetImpactContestsBG:
 	changebg BG_IMPACT_CONTESTS
 	goto SetImpactBackgroundRet
 
-gUnknown_82787B3: @ 0x082787B3
-	.incbin "baserom_jp.gba", 0x2787b3, 0x9c
+Move_MEGA_KICK: @ 0x082787B3
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	monbg ANIM_TARGET
+	delay 2
+	simple_palette_blend selector=F_PAL_BG, delay=0, initial_blend_y=0, target_blend_y=16, color=RGB_BLACK
+	setalpha 12, 8
+	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_TARGET
+	createsprite gMegaPunchKickSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 1, 50
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 7, RGB_WHITE
+	delay 50
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	call SetImpactBackground
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=0
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 22, 1
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 0, RGB_WHITE
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=8, color2=RGB_BLACK, blend_y2=0
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	delay 2
+	restorebg
+	waitbgfadein
+	end
 
 gUnknown_827884F: @ 0x0827884F
 	.incbin "baserom_jp.gba", 0x27884f, 0x78
