@@ -14,7 +14,23 @@ LilycoveCity_PokemonCenter_1F_EventScript_LilycoveLady:: @ 0x08264373
 LilycoveCity_PokemonCenter_1F_EventScript_ContestLadyMon:: @ 0x082649CF
 	.incbin "baserom_jp.gba", 0x2649cf, 0xfd36
 BerryBlender_Text_BlendWithTheBlendMaster: @ 0x08274705
-	.incbin "baserom_jp.gba", 0x274705, 0x256
+	.incbin "baserom_jp.gba", 0x274705, 0x39
+BerryBlender_Text_SeeMyMasteryInAction: @ 0x0827473E
+	.incbin "baserom_jp.gba", 0x27473e, 0x25
+BerryBlender_Text_TooBusyNowIsee: @ 0x08274763
+	.incbin "baserom_jp.gba", 0x274763, 0x4a
+BerryBlender_Text_BlendMasterNoBerries: @ 0x082747AD
+	.incbin "baserom_jp.gba", 0x2747ad, 0x44
+BerryBlender_Text_BlendMasterKnowHowToMakePokeblocks: @ 0x082747F1
+	.incbin "baserom_jp.gba", 0x2747f1, 0x3a
+BerryBlender_Text_BlendMasterExplainBerryBlending: @ 0x0827482B
+	.incbin "baserom_jp.gba", 0x27482b, 0x66
+BerryBlender_Text_BlendMasterLetsBerryBlender: @ 0x08274891
+	.incbin "baserom_jp.gba", 0x274891, 0x29
+BerryBlender_Text_BlendMasterNoPokeblockCase: @ 0x082748BA
+	.incbin "baserom_jp.gba", 0x2748ba, 0x54
+BerryBlender_Text_BlendMasterPokeblockCaseFull: @ 0x0827490E
+	.incbin "baserom_jp.gba", 0x27490e, 0x4d
 BerryBlender_Text_WhoaAwesome: @ 0x0827495B
 	.incbin "baserom_jp.gba", 0x27495b, 0x6
 BerryBlender_Text_WickedlyFast: @ 0x08274961
