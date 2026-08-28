@@ -229,7 +229,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827BDB2                  @ 207
 	.4byte gUnknown_827BDFA                  @ 208
 	.4byte gUnknown_827A02F                  @ 209
-	.4byte gUnknown_82792D6                  @ 210
+	.4byte Move_FURY_CUTTER                   @ MOVE_FURY_CUTTER
 	.4byte gUnknown_8281904                  @ 211
 	.4byte gUnknown_827A4A6                  @ 212
 	.4byte gUnknown_827A246                  @ 213
@@ -1416,8 +1416,43 @@ FireSpinEffect:
 	delay 2
 	return
 
-gUnknown_82792D6: @ 0x082792D6
-	.incbin "baserom_jp.gba", 0x2792d6, 0xcf
+Move_FURY_CUTTER:
+	loadspritegfx ANIM_TAG_CUT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	createvisualtask AnimTask_IsFuryCutterHitRight, 2
+	jumpretfalse FuryCutterLeft
+	goto FuryCutterRight
+FuryCutterContinue:
+	createvisualtask AnimTask_GetFuryCutterHitCount, 2
+	jumpreteq 1, FuryCutterContinue2
+	jumpreteq 2, FuryCutterMedium
+	jumpreteq 3, FuryCutterStrong
+	goto FuryCutterStrongest
+FuryCutterContinue2:
+	delay 5
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 3, 10, 1
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	waitforvisualfinish
+	end
+FuryCutterLeft:
+	createsprite gCuttingSliceSpriteTemplate, ANIM_ATTACKER, 2, 40, -32, 0
+	goto FuryCutterContinue
+FuryCutterRight:
+	createsprite gCuttingSliceSpriteTemplate, ANIM_ATTACKER, 2, 40, -32, 1
+	goto FuryCutterContinue
+FuryCutterMedium:
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=1, color1=RGB(9, 8, 10), blend_y1=4, color2=RGB_BLACK, blend_y2=0
+	goto FuryCutterContinue2
+FuryCutterStrong:
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=3, color1=RGB(9, 8, 10), blend_y1=4, color2=RGB_BLACK, blend_y2=0
+	goto FuryCutterContinue2
+FuryCutterStrongest:
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=3, color1=RGB(9, 8, 10), blend_y1=4, color2=RGB_BLACK, blend_y2=0
+	goto FuryCutterContinue2
 
 gUnknown_82793A5: @ 0x082793A5
 	.incbin "baserom_jp.gba", 0x2793a5, 0xf0
