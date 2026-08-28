@@ -179,7 +179,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ROCK_SLIDE                   @ MOVE_ROCK_SLIDE
 	.4byte gUnknown_8282AB5                  @ 158
 	.4byte gUnknown_827B8DA                  @ 159
-	.4byte gUnknown_827A995                  @ 160
+	.4byte Move_CONVERSION                   @ MOVE_CONVERSION
 	.4byte gUnknown_8282B1C                  @ 161
 	.4byte gUnknown_827B8E6                  @ 162
 	.4byte gUnknown_827B967                  @ 163
@@ -2290,8 +2290,57 @@ Move_SMOKESCREEN:: @ 0x0827A89C
 	waitforvisualfinish
 	end
 
-gUnknown_827A995: @ 0x0827A995
-	.incbin "baserom_jp.gba", 0x27a995, 0x115
+Move_CONVERSION:: @ 0x0827A995
+	loadspritegfx ANIM_TAG_CONVERSION
+	monbg ANIM_ATK_PARTNER
+	splitbgprio ANIM_ATTACKER
+	setalpha 16, 0
+	delay 0
+	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -24, -24
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -8, -24
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 8, -24
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 24, -24
+	delay 3
+	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -24, -8
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -8, -8
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 8, -8
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 24, -8
+	delay 3
+	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -24, 8
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -8, 8
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 8, 8
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 24, 8
+	delay 3
+	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -24, 24
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -8, 24
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 8, 24
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 24, 24
+	delay 20
+	playsewithpan SE_M_BARRIER, SOUND_PAN_ATTACKER
+	flash_anim_tag_with_color tag=ANIM_TAG_CONVERSION, delay=1, num_blends=1, color1=RGB(31, 31, 13), blend_y1=12, color2=RGB_BLACK, blend_y2=0
+	delay 6
+	createvisualtask AnimTask_ConversionAlphaBlend, 5
+	waitforvisualfinish
+	delay 1
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	end
 
 gUnknown_827AAAA: @ 0x0827AAAA
 	.incbin "baserom_jp.gba", 0x27aaaa, 0x11c
