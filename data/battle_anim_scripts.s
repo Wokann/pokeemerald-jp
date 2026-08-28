@@ -344,7 +344,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82844E4                  @ 322
 	.4byte Move_WATER_SPOUT                  @ MOVE_WATER_SPOUT
 	.4byte gUnknown_827F43E                  @ 324
-	.4byte gUnknown_827D51D                  @ 325
+	.4byte Move_SHADOW_PUNCH                 @ MOVE_SHADOW_PUNCH
 	.4byte gUnknown_827D578                  @ 326
 	.4byte gUnknown_828545E                  @ 327
 	.4byte gUnknown_82836F1                  @ 328
@@ -4316,8 +4316,26 @@ Move_WATER_SPOUT: @ 0x0827D4EF
 	blendoff
 	end
 
-gUnknown_827D51D: @ 0x0827D51D
-	.incbin "baserom_jp.gba", 0x27d51d, 0x5b
+Move_SHADOW_PUNCH: @ 0x0827D51D
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	fadetobg BG_GHOST
+	waitbgfadein
+	monbg ANIM_ATK_PARTNER
+	setalpha 9, 8
+	createvisualtask AnimTask_AttackerPunchWithTrace, 2, RGB_BLACK, 13
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	delay 6
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	create_fist_sprite ANIM_TARGET, 4, x=0, y=0, duration=8
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	restorebg
+	waitbgfadein
+	end
 
 gUnknown_827D578: @ 0x0827D578
 	.incbin "baserom_jp.gba", 0x27d578, 0x68
