@@ -150,7 +150,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827EBEF                  @ 128
 	.4byte Move_SWIFT                          @ MOVE_SWIFT
 	.4byte gUnknown_827B51B                  @ 130
-	.4byte gUnknown_8278F7D                  @ 131
+	.4byte Move_SPIKE_CANNON                  @ MOVE_SPIKE_CANNON
 	.4byte gUnknown_8282111                  @ 132
 	.4byte gUnknown_827B5E1                  @ 133
 	.4byte gUnknown_827B605                  @ 134
@@ -1295,8 +1295,29 @@ PursuitOnSwitchout:
 	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, FALSE, 1, 6, 1, 0
 	goto PursuitContinue
 
-gUnknown_8278F7D: @ 0x08278F7D
-	.incbin "baserom_jp.gba", 0x278f7d, 0xb3
+Move_SPIKE_CANNON:
+	loadspritegfx ANIM_TAG_NEEDLE
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	createvisualtask AnimTask_WindUpLunge, 5, ANIM_ATTACKER, -4, 0, 4, 6, 8, 4
+	waitforvisualfinish
+	loopsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER, 5, 3
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 5
+	create_linear_stinger_sprite ANIM_ATTACKER, 2, initial_x=10, initial_y=-8, target_x=-8, target_y=-8, duration=20
+	create_linear_stinger_sprite ANIM_ATTACKER, 2, initial_x=18, initial_y=0, target_x=0, target_y=0, duration=20
+	create_linear_stinger_sprite ANIM_ATTACKER, 2, initial_x=26, initial_y=8, target_x=8, target_y=8, duration=20
+	waitforvisualfinish
+	create_handle_invert_hitsplat_sprite ANIM_ATTACKER, 3, x=-8, y=-8, relative_to=ANIM_TARGET, animation=2
+	create_handle_invert_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	create_handle_invert_hitsplat_sprite ANIM_ATTACKER, 3, x=8, y=8, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 7, 1
+	loopsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 5, 3
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_8279030: @ 0x08279030
 	.incbin "baserom_jp.gba", 0x279030, 0x46
