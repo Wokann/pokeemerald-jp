@@ -182,7 +182,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_CONVERSION                   @ MOVE_CONVERSION
 	.4byte gUnknown_8282B1C                  @ 161
 	.4byte Move_SUPER_FANG                   @ MOVE_SUPER_FANG
-	.4byte gUnknown_827B967                  @ 163
+	.4byte Move_SLASH                        @ MOVE_SLASH
 	.4byte gUnknown_8283D8E                  @ 164
 	.4byte gUnknown_827B9A1                  @ 165
 	.4byte gUnknown_827BA07                  @ 166
@@ -3040,8 +3040,16 @@ Move_SUPER_FANG:: @ 0x0827B8E6
 	blendoff
 	end
 
-gUnknown_827B967: @ 0x0827B967
-	.incbin "baserom_jp.gba", 0x27b967, 0x3a
+Move_SLASH:: @ 0x0827B967
+	loadspritegfx ANIM_TAG_SLASH
+	createsprite gSlashSliceSpriteTemplate, ANIM_TARGET, 2, 1, -8, 0
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gSlashSliceSpriteTemplate, ANIM_TARGET, 2, 1, 8, 0
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 18, 1
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	waitforvisualfinish
+	end
 
 gUnknown_827B9A1: @ 0x0827B9A1
 	.incbin "baserom_jp.gba", 0x27b9a1, 0x66
