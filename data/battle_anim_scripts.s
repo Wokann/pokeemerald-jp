@@ -130,7 +130,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827A89C                  @ 108
 	.4byte gUnknown_827A41D                  @ 109
 	.4byte gUnknown_827ED83                  @ 110
-	.4byte gUnknown_8279908                  @ 111
+	.4byte Move_DEFENSE_CURL                  @ MOVE_DEFENSE_CURL
 	.4byte gUnknown_827E67E                  @ 112
 	.4byte gUnknown_827E579                  @ 113
 	.4byte gUnknown_82811D1                  @ 114
@@ -1655,8 +1655,17 @@ Explosion1:
 	delay 6
 	return
 
-gUnknown_8279908: @ 0x08279908
-	.incbin "baserom_jp.gba", 0x279908, 0x39
+Move_DEFENSE_CURL:
+	loadspritegfx ANIM_TAG_ECLIPSING_ORB
+	loopsewithpan SE_M_TRI_ATTACK, SOUND_PAN_ATTACKER, 18, 3
+	set_grayscale_pal battler=ANIM_ATTACKER
+	createvisualtask AnimTask_DefenseCurlDeformMon, 5
+	waitforvisualfinish
+	createsprite gEclipsingOrbSpriteTemplate, ANIM_ATTACKER, 2, 0, 6, 0, 1
+	waitforvisualfinish
+	set_original_pal battler=ANIM_ATTACKER
+	waitforvisualfinish
+	end
 
 gUnknown_8279941: @ 0x08279941
 	.incbin "baserom_jp.gba", 0x279941, 0x1d

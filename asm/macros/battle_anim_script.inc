@@ -344,6 +344,15 @@
 	createsprite gSwiftStarSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \target_x, \target_y, \duration, \wave_amplitude, \target_both
 	.endm
 
+@ createvisualtask wrappers
+	.macro set_grayscale_pal priority=5, battler:req
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, \priority, \battler, FALSE
+	.endm
+
+	.macro set_original_pal priority=5, battler:req
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, \priority, \battler, TRUE
+	.endm
+
 	.macro splitbgprio battler:req
 	.byte 0x28
 	.byte \battler
