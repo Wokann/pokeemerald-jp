@@ -46,8 +46,7 @@ ProfBirch_EventScript_AskRatePokedex::
 	end
 
 ProfBirch_EventScript_DeclineRating::
-	@ The JP cancellation text remains in its later physical owner at 0x08262E1D.
-	msgbox 0x08262E1D, MSGBOX_DEFAULT
+	msgbox gBirchDexRatingText_Cancel, MSGBOX_DEFAULT
 	release
 	end
 

@@ -821,27 +821,27 @@ sBadgeFlags: @ 0x85D7AA0
 
 	.globl sBirchDexRatingTexts
 sBirchDexRatingTexts: @ 0x85D7AB0
-	.4byte 0x08262E5F @ gBirchDexRatingText_LessThan10
-	.4byte 0x08262E81 @ gBirchDexRatingText_LessThan20
-	.4byte gBirchDexRatingText_LessThan30 @ gBirchDexRatingText_LessThan30
-	.4byte 0x08262ECF @ gBirchDexRatingText_LessThan40
-	.4byte 0x08262EF5 @ gBirchDexRatingText_LessThan50
-	.4byte gBirchDexRatingText_LessThan60 @ gBirchDexRatingText_LessThan60
-	.4byte 0x08262F3F @ gBirchDexRatingText_LessThan70
-	.4byte 0x08262F61 @ gBirchDexRatingText_LessThan80
-	.4byte gBirchDexRatingText_LessThan90 @ gBirchDexRatingText_LessThan90
-	.4byte 0x08262FAD @ gBirchDexRatingText_LessThan100
-	.4byte 0x08262FE1 @ gBirchDexRatingText_LessThan110
-	.4byte gBirchDexRatingText_LessThan120 @ gBirchDexRatingText_LessThan120
-	.4byte gBirchDexRatingText_LessThan130 @ gBirchDexRatingText_LessThan130
-	.4byte gBirchDexRatingText_LessThan140 @ gBirchDexRatingText_LessThan140
-	.4byte gBirchDexRatingText_LessThan150 @ gBirchDexRatingText_LessThan150
-	.4byte 0x08263095 @ gBirchDexRatingText_LessThan160
-	.4byte 0x082630C7 @ gBirchDexRatingText_LessThan170
-	.4byte gBirchDexRatingText_LessThan180 @ gBirchDexRatingText_LessThan180
-	.4byte gBirchDexRatingText_LessThan190 @ gBirchDexRatingText_LessThan190
-	.4byte 0x0826312D @ gBirchDexRatingText_LessThan200
-	.4byte 0x0826314F @ gBirchDexRatingText_LessThan210
+	.4byte gBirchDexRatingText_LessThan10
+	.4byte gBirchDexRatingText_LessThan20
+	.4byte gBirchDexRatingText_LessThan30
+	.4byte gBirchDexRatingText_LessThan40
+	.4byte gBirchDexRatingText_LessThan50
+	.4byte gBirchDexRatingText_LessThan60
+	.4byte gBirchDexRatingText_LessThan70
+	.4byte gBirchDexRatingText_LessThan80
+	.4byte gBirchDexRatingText_LessThan90
+	.4byte gBirchDexRatingText_LessThan100
+	.4byte gBirchDexRatingText_LessThan110
+	.4byte gBirchDexRatingText_LessThan120
+	.4byte gBirchDexRatingText_LessThan130
+	.4byte gBirchDexRatingText_LessThan140
+	.4byte gBirchDexRatingText_LessThan150
+	.4byte gBirchDexRatingText_LessThan160
+	.4byte gBirchDexRatingText_LessThan170
+	.4byte gBirchDexRatingText_LessThan180
+	.4byte gBirchDexRatingText_LessThan190
+	.4byte gBirchDexRatingText_LessThan200
+	.4byte gBirchDexRatingText_DexCompleted
 
 	.globl gStandardMenuPalette
 gStandardMenuPalette: @ 0x85D7B04

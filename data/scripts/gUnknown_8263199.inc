@@ -1,7 +1,3 @@
-	compare_local_to_value 0x21, 0x1C
-	compare_var_to_value 0x3F00, 0xA2E
-	gotostd 0x13
-	.incbin "baserom_jp.gba", 0x263174, 0x25
 	.include "data/text/lottery_corner.inc"
 	.include "data/text/event_ticket_1.inc"
 	.include "data/text/braille.inc"

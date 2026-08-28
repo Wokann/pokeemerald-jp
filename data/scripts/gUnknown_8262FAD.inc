@@ -1,2 +1,0 @@
-	turnobject 0x7F6C, 0x78
-	.incbin "baserom_jp.gba", 0x262FB1, 0x30

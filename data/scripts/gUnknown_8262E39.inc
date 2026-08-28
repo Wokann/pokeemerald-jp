@@ -1,3 +1,0 @@
-	compare_local_to_value 0x21, 0x1C
-	compare_var_to_value 0xB0B0, 0x20FB
-	.incbin "baserom_jp.gba", 0x262E41, 0x1E

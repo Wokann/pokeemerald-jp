@@ -1,5 +1,0 @@
-	goto 0x3144422
-	turnvobject 0xAB, 0xFE
-	setrespawn 0x7359
-	bufferleadmonspeciesname 0x3E
-	.incbin "baserom_jp.gba", 0x26315C, 0xE
