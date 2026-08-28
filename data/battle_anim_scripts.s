@@ -84,7 +84,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827ED90                  @ 062
 	.4byte gUnknown_82832F7                  @ 063
 	.4byte gUnknown_8280086                  @ 064
-	.4byte gUnknown_8279554                  @ 065
+	.4byte Move_DRILL_PECK                   @ MOVE_DRILL_PECK
 	.4byte gUnknown_8280BEB                  @ 066
 	.4byte gUnknown_827B060                  @ 067
 	.4byte gUnknown_82809A9                  @ 068
@@ -1521,8 +1521,24 @@ Move_VINE_WHIP:
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 6, 1
 	end
 
-gUnknown_8279554: @ 0x08279554
-	.incbin "baserom_jp.gba", 0x279554, 0x59
+Move_DRILL_PECK:
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_WHIRLWIND_LINES
+	createsprite gBowMonSpriteTemplate, ANIM_ATTACKER, 2, 0
+	playsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	delay 2
+	createsprite gBowMonSpriteTemplate, ANIM_ATTACKER, 2, 1
+	delay 2
+	loopsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 4, 8
+	createvisualtask AnimTask_DrillPeckHitSplats, 5
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 18, 1
+	waitforvisualfinish
+	createsprite gBowMonSpriteTemplate, ANIM_ATTACKER, 2, 2
+	waitforvisualfinish
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 6
+	waitforvisualfinish
+	end
 
 gUnknown_82795AD: @ 0x082795AD
 	.incbin "baserom_jp.gba", 0x2795ad, 0x254
