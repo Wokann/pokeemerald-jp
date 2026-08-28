@@ -71,12 +71,6 @@
 	@ inside retained JP blocks.  Keeping these aliases in the owning event
 	@ object lets map sources use the same names as pokeemerald without moving
 	@ or duplicating any ROM bytes.
-	@ Verdanturf Battle Tent Lobby shares these retained JP text/script blocks.
-	@ The local map source therefore keeps the pokeemerald semantic labels.
-	@ The Rollout tutor remains in the retained shared move-tutor byte block.
-	@ Export its pokeemerald map-event label without relocating the JP bytes.
-	.globl MauvilleCity_EventScript_RolloutTutor
-	.set MauvilleCity_EventScript_RolloutTutor, 0x0827689A
 	.globl BattleFrontier_BattleArenaLobby_Text_RulesAreListed
 	.set BattleFrontier_BattleArenaLobby_Text_RulesAreListed, 0x0822FD87
 	.globl BattleFrontier_BattleArenaLobby_Text_ReadWhichHeading
@@ -111,21 +105,10 @@
 	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_RightThisWay, 0x0823287D
 	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_SavingDataPleaseWait
 	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_SavingDataPleaseWait, 0x0823288B
-	.globl SlateportCity_PokemonFanClub_EventScript_SwaggerTutor
-	.set SlateportCity_PokemonFanClub_EventScript_SwaggerTutor, 0x08276832
 	.globl BattleFrontier_BattleTowerLobby_Text_ReceivedPrize
 	.set BattleFrontier_BattleTowerLobby_Text_ReceivedPrize, 0x0822064B
 	.globl BattleFrontier_BattleDomeLobby_Text_ReceivedPrize
 	.set BattleFrontier_BattleDomeLobby_Text_ReceivedPrize, 0x08227865
-	@ The Verdanturf Pokémon Center references the retained Fury Cutter tutor.
-	.globl VerdanturfTown_PokemonCenter_1F_EventScript_FuryCutterTutor
-	.set VerdanturfTown_PokemonCenter_1F_EventScript_FuryCutterTutor, 0x08276902
-	@ The Pacifidlog Pokémon Center references the retained Explosion tutor.
-	.globl PacifidlogTown_PokemonCenter_1F_EventScript_ExplosionTutor
-	.set PacifidlogTown_PokemonCenter_1F_EventScript_ExplosionTutor, 0x08276BDA
-	@ The Mossdeep event table references the retained DynamicPunch tutor script.
-	.globl MossdeepCity_EventScript_DynamicPunchTutor
-	.set MossdeepCity_EventScript_DynamicPunchTutor, 0x08276B0A
 	.globl ProfBirch_EventScript_RatePokedexOrRegister
 	.set ProfBirch_EventScript_RatePokedexOrRegister, 0x082431CD
 	@ Champion-room story code calls this retained standalone Pokédex rating branch.
@@ -134,12 +117,6 @@
 	@ The four-step shared player approach remains in the retained movement block.
 	.globl Common_Movement_WalkUp4
 	.set Common_Movement_WalkUp4, 0x08243644
-	@ The Rooftop event table points to the retained Substitute tutor script.
-	.globl LilycoveCity_DepartmentStoreRooftop_EventScript_SubstituteTutor
-	.set LilycoveCity_DepartmentStoreRooftop_EventScript_SubstituteTutor, 0x08276AA2
-	@ The Sootopolis Center event table points to the retained Double-Edge tutor script.
-	.globl SootopolisCity_PokemonCenter_1F_EventScript_DoubleEdgeTutor
-	.set SootopolisCity_PokemonCenter_1F_EventScript_DoubleEdgeTutor, 0x08276B72
 	@ This shared movement stream remains in the retained JP movement block.
 	.globl Common_Movement_QuestionMark
 	.set Common_Movement_QuestionMark, 0x08243619
@@ -797,12 +774,6 @@ Common_EventScript_OutOfCenterPartyHeal::
 	.set LilycoveCity_PokemonTrainerFanClub_HopeYouCatchTVSpecial, 0x0824DF29
 	.globl EventScript_GotoTrainerScript
 	.set EventScript_GotoTrainerScript, 0x08244D20
-	@ The Lavaridge House event table references the shared Mimic tutor script.
-	.globl LavaridgeTown_House_EventScript_MimicTutor
-	.set LavaridgeTown_House_EventScript_MimicTutor, 0x0827696A
-	@ The Fallarbor Mart event table references the shared Metronome tutor script.
-	.globl FallarborTown_Mart_EventScript_MetronomeTutor
-	.set FallarborTown_Mart_EventScript_MetronomeTutor, 0x082769D2
 
 EventScript_RegionMap::
 	lockall
@@ -1352,11 +1323,7 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/text/battle_tent.inc"
 	.include "data/text/event_ticket_2.inc"
 	.include "data/text/move_tutors.inc"
-	.incbin "baserom_jp.gba", 0x276832, 0x208
-
-	.globl FortreeCity_House2_EventScript_SleepTalkTutor
-FortreeCity_House2_EventScript_SleepTalkTutor: @ 0x08276A3A
-	.incbin "baserom_jp.gba", 0x276a3a, 0x218
+	.include "data/scripts/move_tutors.inc"
 
 TrainerHill_OnResume:
 	setvar VAR_TEMP_2, 0
