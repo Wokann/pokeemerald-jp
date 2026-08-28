@@ -1267,6 +1267,7 @@ gMetronomeFingerAffineAnimCmds2_2: @ 0x856ED50
 gMetronomeFingerAffineAnimTable: @ 0x856ED98
 	.4byte 0x0856ED10, 0x0856ED28
 
+	.globl gMetronomeFingerSpriteTemplate
 gMetronomeFingerSpriteTemplate: @ 0x856EDA0
 	.hword 0x2750, 0x2750
 	.4byte 0x084FD0E0, gDummySpriteAnimTable

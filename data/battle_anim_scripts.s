@@ -137,7 +137,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827E62B                  @ 115
 	.4byte gUnknown_8281C56                  @ 116
 	.4byte gUnknown_8281C96                  @ 117
-	.4byte gUnknown_827B4F1                  @ 118
+	.4byte Move_METRONOME                    @ MOVE_METRONOME
 	.4byte Move_MIRROR_MOVE                      @ MOVE_MIRROR_MOVE
 	.4byte Move_SELF_DESTRUCT                 @ MOVE_SELF_DESTRUCT
 	.4byte gUnknown_8281B52                  @ 121
@@ -2815,8 +2815,17 @@ Move_MINIMIZE:: @ 0x0827B4DE
 	blendoff
 	end
 
-gUnknown_827B4F1: @ 0x0827B4F1
-	.incbin "baserom_jp.gba", 0x27b4f1, 0x2a
+Move_METRONOME:: @ 0x0827B4F1
+	loadspritegfx ANIM_TAG_FINGER
+	loadspritegfx ANIM_TAG_THOUGHT_BUBBLE
+	createsprite gThoughtBubbleSpriteTemplate, ANIM_ATTACKER, 11, 0, 100
+	playsewithpan SE_M_METRONOME, SOUND_PAN_ATTACKER
+	delay 6
+	createsprite gMetronomeFingerSpriteTemplate, ANIM_ATTACKER, 12, 0
+	delay 24
+	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 22, 3
+	waitforvisualfinish
+	end
 
 gUnknown_827B51B: @ 0x0827B51B
 	.incbin "baserom_jp.gba", 0x27b51b, 0xc6
