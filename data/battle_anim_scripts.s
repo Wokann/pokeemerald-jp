@@ -340,7 +340,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8284892                  @ 318
 	.4byte gUnknown_8283F3E                  @ 319
 	.4byte Move_GRASS_WHISTLE                @ MOVE_GRASS_WHISTLE
-	.4byte gUnknown_827D483                  @ 321
+	.4byte Move_TICKLE                       @ MOVE_TICKLE
 	.4byte gUnknown_82844E4                  @ 322
 	.4byte gUnknown_827D4EF                  @ 323
 	.4byte gUnknown_827F43E                  @ 324
@@ -4281,8 +4281,23 @@ Move_GRASS_WHISTLE: @ 0x0827D390
 	waitforvisualfinish
 	end
 
-gUnknown_827D483: @ 0x0827D483
-	.incbin "baserom_jp.gba", 0x27d483, 0x6c
+Move_TICKLE: @ 0x0827D483
+	loadspritegfx ANIM_TAG_EYE_SPARKLE
+	simple_palette_blend selector=F_PAL_ATTACKER, delay=0, initial_blend_y=0, target_blend_y=16, color=RGB_BLACK
+	waitforvisualfinish
+	createsprite gEyeSparkleSpriteTemplate, ANIM_ATTACKER, 0, -16, -8
+	createsprite gEyeSparkleSpriteTemplate, ANIM_ATTACKER, 0, 16, -8
+	playsewithpan SE_M_DETECT, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_ATTACKER, delay=0, initial_blend_y=16, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	delay 20
+	createvisualtask AnimTask_SwayMon, 3, 0, 6, 1280, 3, ANIM_ATTACKER
+	delay 12
+	createvisualtask AnimTask_RockMonBackAndForth, 3, ANIM_TARGET, 6, 2
+	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_TARGET, 8, 8
+	waitforvisualfinish
+	end
 
 gUnknown_827D4EF: @ 0x0827D4EF
 	.incbin "baserom_jp.gba", 0x27d4ef, 0x2e
