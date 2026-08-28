@@ -278,7 +278,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82830B5                  @ 256
 	.4byte Move_HEAT_WAVE                    @ MOVE_HEAT_WAVE
 	.4byte Move_HAIL                         @ MOVE_HAIL
-	.4byte gUnknown_827C23A                  @ 259
+	.4byte Move_TORMENT                      @ MOVE_TORMENT
 	.4byte gUnknown_8283439                  @ 260
 	.4byte gUnknown_8282C90                  @ 261
 	.4byte gUnknown_827C27E                  @ 262
@@ -3507,8 +3507,18 @@ Move_HAIL:: @ 0x0827C202
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 3, 6, 0, RGB_BLACK
 	end
 
-gUnknown_827C23A: @ 0x0827C23A
-	.incbin "baserom_jp.gba", 0x27c23a, 0x44
+Move_TORMENT:: @ 0x0827C23A
+	loadspritegfx ANIM_TAG_ANGER
+	loadspritegfx ANIM_TAG_THOUGHT_BUBBLE
+	createvisualtask AnimTask_TormentAttacker, 2
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_TARGET, RGB_RED, 10, 1, 1
+	createsprite gAngerMarkSpriteTemplate, ANIM_TARGET, 2, 1, -20, -28
+	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
+	delay 20
+	createsprite gAngerMarkSpriteTemplate, ANIM_TARGET, 2, 1, 20, -28
+	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
+	end
 
 gUnknown_827C27E: @ 0x0827C27E
 	.incbin "baserom_jp.gba", 0x27c27e, 0x44
