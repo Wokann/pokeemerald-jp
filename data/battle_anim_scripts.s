@@ -304,7 +304,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828536A                  @ 282
 	.4byte Move_ENDEAVOR                     @ MOVE_ENDEAVOR
 	.4byte Move_ERUPTION                     @ MOVE_ERUPTION
-	.4byte gUnknown_827C964                  @ 285
+	.4byte Move_SKILL_SWAP                   @ MOVE_SKILL_SWAP
 	.4byte gUnknown_827C9AF                  @ 286
 	.4byte gUnknown_8283592                  @ 287
 	.4byte gUnknown_827C9F2                  @ 288
@@ -3838,8 +3838,18 @@ Move_ERUPTION:: @ 0x0827C897
 	simple_palette_blend unused_subpriority_offset=40, selector=F_PAL_BG | F_PAL_BATTLERS, delay=4, initial_blend_y=4, target_blend_y=0, color=RGB_RED
 	end
 
-gUnknown_827C964: @ 0x0827C964
-	.incbin "baserom_jp.gba", 0x27c964, 0x4b
+Move_SKILL_SWAP:: @ 0x0827C964
+	loadspritegfx ANIM_TAG_BLUEGREEN_ORB
+	call SetPsychicBackground
+	createvisualtask AnimTask_SkillSwap, 3, ANIM_TARGET
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_TARGET, RGB_WHITE, 12, 3, 1
+	loopsewithpan SE_M_REVERSAL, SOUND_PAN_ATTACKER, 24, 3
+	delay 16
+	createvisualtask AnimTask_SkillSwap, 3, ANIM_ATTACKER
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_ATTACKER, RGB_WHITE, 12, 3, 1
+	waitforvisualfinish
+	call UnsetPsychicBackground
+	end
 
 gUnknown_827C9AF: @ 0x0827C9AF
 	.incbin "baserom_jp.gba", 0x27c9af, 0x43
