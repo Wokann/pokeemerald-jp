@@ -218,7 +218,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827A7DC                  @ 196
 	.4byte Move_DETECT                        @ MOVE_DETECT
 	.4byte gUnknown_827FE09                  @ 198
-	.4byte gUnknown_827A470                  @ 199
+	.4byte Move_LOCK_ON                      @ MOVE_LOCK_ON
 	.4byte Move_OUTRAGE                      @ MOVE_OUTRAGE
 	.4byte gUnknown_8280402                  @ 201
 	.4byte gUnknown_827F7CE                  @ 202
@@ -2071,8 +2071,17 @@ Move_CONFUSE_RAY: @ 0x0827A41D
 	waitbgfadein
 	end
 
-gUnknown_827A470: @ 0x0827A470
-	.incbin "baserom_jp.gba", 0x27a470, 0x36
+Move_LOCK_ON: @ 0x0827A470
+	loadspritegfx ANIM_TAG_LOCK_ON
+	createsprite gLockOnTargetSpriteTemplate, ANIM_ATTACKER, 40
+	createsprite gLockOnMoveTargetSpriteTemplate, ANIM_ATTACKER, 40, 1
+	createsprite gLockOnMoveTargetSpriteTemplate, ANIM_ATTACKER, 40, 2
+	createsprite gLockOnMoveTargetSpriteTemplate, ANIM_ATTACKER, 40, 3
+	createsprite gLockOnMoveTargetSpriteTemplate, ANIM_ATTACKER, 40, 4
+	delay 120
+	setarg 7, 0xFFFF
+	waitforvisualfinish
+	end
 
 gUnknown_827A4A6: @ 0x0827A4A6
 	.incbin "baserom_jp.gba", 0x27a4a6, 0x45
