@@ -92,7 +92,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_STRENGTH                       @ MOVE_STRENGTH
 	.4byte gUnknown_827F526                  @ 071
 	.4byte gUnknown_827F63E                  @ 072
-	.4byte gUnknown_827860F                  @ 073
+	.4byte Move_LEECH_SEED                   @ MOVE_LEECH_SEED
 	.4byte gUnknown_827A33F                  @ 074
 	.4byte gUnknown_8280EDB                  @ 075
 	.4byte gUnknown_827EE64                  @ 076
@@ -896,8 +896,20 @@ FireBlastCross:
 	createsprite gFireBlastCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 15, 2, 2
 	return
 
-gUnknown_827860F: @ 0x0827860F
-	.incbin "baserom_jp.gba", 0x27860f, 0x56
+Move_LEECH_SEED: @ 0x0827860F
+	loadspritegfx ANIM_TAG_SEED
+	playsewithpan SE_M_POISON_POWDER, SOUND_PAN_ATTACKER
+	createleechseedsprite ANIM_TARGET, 2, 15, 0, 0, 24, 35, -32
+	delay 8
+	playsewithpan SE_M_POISON_POWDER, SOUND_PAN_ATTACKER
+	createleechseedsprite ANIM_TARGET, 2, 15, 0, -16, 24, 35, -40
+	delay 8
+	playsewithpan SE_M_POISON_POWDER, SOUND_PAN_ATTACKER
+	createleechseedsprite ANIM_TARGET, 2, 15, 0, 16, 24, 35, -37
+	delay 12
+	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_TARGET, 10, 8
+	waitforvisualfinish
+	end
 
 gUnknown_8278665: @ 0x08278665
 	.incbin "baserom_jp.gba", 0x278665, 0x74

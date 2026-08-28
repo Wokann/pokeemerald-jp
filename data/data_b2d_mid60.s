@@ -623,6 +623,7 @@ gLeechSeedAnimCmds2: @ 0x856DE8C
 gLeechSeedAnimTable: @ 0x856DE98
 	.4byte 0x0856DE84, 0x0856DE8C
 
+	.globl gLeechSeedSpriteTemplate
 gLeechSeedSpriteTemplate: @ 0x856DEA0
 	.hword 0x2716, 0x2716
 	.4byte 0x084FD018, 0x0856DE98
