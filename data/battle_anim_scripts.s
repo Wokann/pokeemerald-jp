@@ -335,7 +335,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_FAKE_TEARS                   @ MOVE_FAKE_TEARS
 	.4byte Move_AIR_CUTTER                   @ MOVE_AIR_CUTTER
 	.4byte gUnknown_8284C1B                  @ 315
-	.4byte gUnknown_827D346                  @ 316
+	.4byte Move_ODOR_SLEUTH                  @ MOVE_ODOR_SLEUTH
 	.4byte gUnknown_82847AB                  @ 317
 	.4byte gUnknown_8284892                  @ 318
 	.4byte gUnknown_8283F3E                  @ 319
@@ -4228,8 +4228,21 @@ Move_AIR_CUTTER: @ 0x0827D2E4
 	delay 0
 	end
 
-gUnknown_827D346: @ 0x0827D346
-	.incbin "baserom_jp.gba", 0x27d346, 0x4a
+Move_ODOR_SLEUTH: @ 0x0827D346
+	monbg ANIM_TARGET
+	createvisualtask AnimTask_OdorSleuthMovement, 5
+	delay 24
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 3, 4
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
+	delay 6
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 3, 4
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	delay 1
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG, delay=3, num_blends=1, color1=RGB_WHITEALPHA, blend_y1=16, color2=RGB_WHITEALPHA, blend_y2=0
+	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
+	end
 
 gUnknown_827D390: @ 0x0827D390
 	.incbin "baserom_jp.gba", 0x27d390, 0xf3
