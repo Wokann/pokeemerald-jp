@@ -1463,9 +1463,7 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/text/mauville_man.inc"
 	.include "data/text/trainers.inc"
 
-	.globl EventScript_RepelWoreOff
-EventScript_RepelWoreOff: @ 0x8262393
-	.include "data/scripts/gUnknown_8262393.inc"
+	.include "data/scripts/repel.inc"
 
 	.globl SafariZone_EventScript_OutOfBallsMidBattle
 SafariZone_EventScript_OutOfBallsMidBattle: @ 0x82623AA
