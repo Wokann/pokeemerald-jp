@@ -1326,7 +1326,7 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/scripts/move_tutors.inc"
 	.include "data/scripts/trainer_hill.inc"
 	.include "data/scripts/test_signpost.inc"
-	.incbin "baserom_jp.gba", 0x276D46, 0x212
+	.include "data/text/frontier_brain.inc"
 
 	.globl gUnknown_8276F58
 gUnknown_8276F58: @ 0x8276F58
