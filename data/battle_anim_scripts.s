@@ -305,7 +305,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ENDEAVOR                     @ MOVE_ENDEAVOR
 	.4byte Move_ERUPTION                     @ MOVE_ERUPTION
 	.4byte Move_SKILL_SWAP                   @ MOVE_SKILL_SWAP
-	.4byte gUnknown_827C9AF                  @ 286
+	.4byte Move_IMPRISON                     @ MOVE_IMPRISON
 	.4byte gUnknown_8283592                  @ 287
 	.4byte gUnknown_827C9F2                  @ 288
 	.4byte gUnknown_8284AAA                  @ 289
@@ -3851,8 +3851,22 @@ Move_SKILL_SWAP:: @ 0x0827C964
 	call UnsetPsychicBackground
 	end
 
-gUnknown_827C9AF: @ 0x0827C9AF
-	.incbin "baserom_jp.gba", 0x27c9af, 0x43
+Move_IMPRISON:: @ 0x0827C9AF
+	loadspritegfx ANIM_TAG_HOLLOW_ORB
+	loadspritegfx ANIM_TAG_X_SIGN
+	call SetPsychicBackground
+	monbg ANIM_DEF_PARTNER
+	createvisualtask AnimTask_ImprisonOrbs, 5
+	delay 8
+	loopsewithpan SE_M_HORN_ATTACK, SOUND_PAN_ATTACKER, 8, 5
+	waitforvisualfinish
+	delay 4
+	createsprite gRedXSpriteTemplate, ANIM_ATTACKER, 5, ANIM_ATTACKER, 40
+	createvisualtask AnimTask_HorizontalShake, 5, MAX_BATTLERS_COUNT, 1, 10
+	playsewithpan SE_M_HYPER_BEAM, SOUND_PAN_ATTACKER
+	clearmonbg ANIM_DEF_PARTNER
+	call UnsetPsychicBackground
+	end
 
 gUnknown_827C9F2: @ 0x0827C9F2
 	.incbin "baserom_jp.gba", 0x27c9f2, 0x28
