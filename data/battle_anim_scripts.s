@@ -195,7 +195,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827E4E9                  @ 173
 	.4byte gUnknown_8282179                  @ 174
 	.4byte gUnknown_827BA85                  @ 175
-	.4byte gUnknown_827AAAA                  @ 176
+	.4byte Move_CONVERSION_2                 @ MOVE_CONVERSION_2
 	.4byte gUnknown_82800AD                  @ 177
 	.4byte gUnknown_8280CE4                  @ 178
 	.4byte Move_REVERSAL                      @ MOVE_REVERSAL
@@ -2342,8 +2342,50 @@ Move_CONVERSION:: @ 0x0827A995
 	blendoff
 	end
 
-gUnknown_827AAAA: @ 0x0827AAAA
-	.incbin "baserom_jp.gba", 0x27aaaa, 0x11c
+Move_CONVERSION_2:: @ 0x0827AAAA
+	loadspritegfx ANIM_TAG_CONVERSION
+	monbg ANIM_DEF_PARTNER
+	splitbgprio_foes ANIM_TARGET
+	setalpha 0, 16
+	delay 0
+	playsewithpan SE_M_BARRIER, SOUND_PAN_TARGET
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -24, -24, 60
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -8, -24, 65
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 8, -24, 70
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 24, -24, 75
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -24, -8, 80
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -8, -8, 85
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 8, -8, 90
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 24, -8, 95
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -24, 8, 100
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -8, 8, 105
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 8, 8, 110
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 24, 8, 115
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -24, 24, 120
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -8, 24, 125
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 8, 24, 130
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 24, 24, 135
+	createvisualtask AnimTask_Conversion2AlphaBlend, 5
+	delay 60
+	playsewithpan SE_M_SWIFT, SOUND_PAN_TARGET
+	delay 10
+	playsewithpan SE_M_SWIFT, SOUND_PAN_TARGET
+	delay 10
+	playsewithpan SE_M_SWIFT, SOUND_PAN_TARGET
+	delay 10
+	playsewithpan SE_M_SWIFT, SOUND_PAN_TARGET
+	delay 10
+	playsewithpan SE_M_SWIFT, SOUND_PAN_TARGET
+	delay 10
+	playsewithpan SE_M_SWIFT, SOUND_PAN_TARGET
+	delay 10
+	playsewithpan SE_M_SWIFT, SOUND_PAN_TARGET
+	delay 10
+	playsewithpan SE_M_SWIFT, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_827ABC6: @ 0x0827ABC6
 	.incbin "baserom_jp.gba", 0x27abc6, 0x83
