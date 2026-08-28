@@ -339,7 +339,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82847AB                  @ 317
 	.4byte gUnknown_8284892                  @ 318
 	.4byte gUnknown_8283F3E                  @ 319
-	.4byte gUnknown_827D390                  @ 320
+	.4byte Move_GRASS_WHISTLE                @ MOVE_GRASS_WHISTLE
 	.4byte gUnknown_827D483                  @ 321
 	.4byte gUnknown_82844E4                  @ 322
 	.4byte gUnknown_827D4EF                  @ 323
@@ -4244,8 +4244,42 @@ Move_ODOR_SLEUTH: @ 0x0827D346
 	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
 	end
 
-gUnknown_827D390: @ 0x0827D390
-	.incbin "baserom_jp.gba", 0x27d390, 0xf3
+Move_GRASS_WHISTLE: @ 0x0827D390
+	loadspritegfx ANIM_TAG_MUSIC_NOTES
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=4, color=RGB(18, 31, 12)
+	waitforvisualfinish
+	createvisualtask AnimTask_MusicNotesRainbowBlend, 2
+	waitforvisualfinish
+	panse SE_M_GRASSWHISTLE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 7, 1, 0
+	delay 5
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 6, 1, 0
+	delay 5
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 1, 1, 0
+	delay 5
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 2, 1, 0
+	delay 5
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 3, 1, 0
+	delay 4
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 2, 1, 0
+	delay 4
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 5, 1, 0
+	delay 4
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 6, 1, 0
+	delay 4
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 2, 1, 0
+	delay 4
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 2, 1, 0
+	delay 4
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 1, 1, 0
+	delay 4
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_TARGET, 2, 5, 1, 0
+	delay 4
+	waitforvisualfinish
+	createvisualtask AnimTask_MusicNotesClearRainbowBlend, 2
+	simple_palette_blend selector=F_PAL_BG, delay=4, initial_blend_y=4, target_blend_y=0, color=RGB(18, 31, 12)
+	waitforvisualfinish
+	end
 
 gUnknown_827D483: @ 0x0827D483
 	.incbin "baserom_jp.gba", 0x27d483, 0x6c
