@@ -300,7 +300,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_RECYCLE                      @ MOVE_RECYCLE
 	.4byte gUnknown_8283CB8                  @ 279
 	.4byte Move_BRICK_BREAK                  @ MOVE_BRICK_BREAK
-	.4byte gUnknown_827C7DF                  @ 281
+	.4byte Move_YAWN                         @ MOVE_YAWN
 	.4byte gUnknown_828536A                  @ 282
 	.4byte gUnknown_827C822                  @ 283
 	.4byte gUnknown_827C897                  @ 284
@@ -3781,8 +3781,21 @@ BrickBreakShatteredWall:
 	clearmonbg ANIM_TARGET
 	end
 
-gUnknown_827C7DF: @ 0x0827C7DF
-	.incbin "baserom_jp.gba", 0x27c7df, 0x43
+Move_YAWN:: @ 0x0827C7DF
+	loadspritegfx ANIM_TAG_PINK_CLOUD
+	createvisualtask AnimTask_DeepInhale, 2, ANIM_ATTACKER
+	playsewithpan SE_M_YAWN, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createsprite gYawnCloudSpriteTemplate, ANIM_TARGET, 5, 2
+	playsewithpan SE_M_SPIT_UP, SOUND_PAN_ATTACKER
+	delay 4
+	createsprite gYawnCloudSpriteTemplate, ANIM_TARGET, 5, 1
+	delay 4
+	createsprite gYawnCloudSpriteTemplate, ANIM_TARGET, 5, 0
+	waitforvisualfinish
+	createvisualtask AnimTask_DeepInhale, 2, ANIM_TARGET
+	playsewithpan SE_M_YAWN, SOUND_PAN_TARGET
+	end
 
 gUnknown_827C822: @ 0x0827C822
 	.incbin "baserom_jp.gba", 0x27c822, 0x75
