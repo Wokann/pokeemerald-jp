@@ -145,7 +145,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827E771                  @ 123
 	.4byte gUnknown_827FAF1                  @ 124
 	.4byte gUnknown_827FDA7                  @ 125
-	.4byte gUnknown_82784E1                  @ 126
+	.4byte Move_FIRE_BLAST                   @ MOVE_FIRE_BLAST
 	.4byte gUnknown_82795AD                  @ 127
 	.4byte gUnknown_827EBEF                  @ 128
 	.4byte Move_SWIFT                          @ MOVE_SWIFT
@@ -846,8 +846,55 @@ Move_TWINEEDLE: @ 0x0827846E
 	blendoff
 	end
 
-gUnknown_82784E1: @ 0x082784E1
-	.incbin "baserom_jp.gba", 0x2784e1, 0x12e
+Move_FIRE_BLAST: @ 0x082784E1
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	createsoundtask SoundTask_FireBlast, SE_M_FLAME_WHEEL, SE_M_FLAME_WHEEL2
+	call FireBlastRing
+	call FireBlastRing
+	call FireBlastRing
+	delay 24
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 3, 0, 8, RGB_BLACK
+	waitforvisualfinish
+	delay 19
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 20, 1
+	call FireBlastCross
+	delay 3
+	call FireBlastCross
+	delay 3
+	call FireBlastCross
+	delay 3
+	call FireBlastCross
+	delay 3
+	call FireBlastCross
+	delay 3
+	call FireBlastCross
+	delay 3
+	call FireBlastCross
+	delay 3
+	call FireBlastCross
+	delay 3
+	call FireBlastCross
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 2, 8, 0, RGB_BLACK
+	waitforvisualfinish
+	end
+
+FireBlastRing:
+	createsprite gFireBlastRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0
+	createsprite gFireBlastRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 51
+	createsprite gFireBlastRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 102
+	createsprite gFireBlastRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 153
+	createsprite gFireBlastRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 204
+	delay 5
+	return
+
+FireBlastCross:
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 10, 0, -2
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 13, -2, 0
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 13, 2, 0
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 15, -2, 2
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 15, 2, 2
+	return
 
 gUnknown_827860F: @ 0x0827860F
 	.incbin "baserom_jp.gba", 0x27860f, 0x56
