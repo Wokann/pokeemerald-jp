@@ -302,7 +302,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_BRICK_BREAK                  @ MOVE_BRICK_BREAK
 	.4byte Move_YAWN                         @ MOVE_YAWN
 	.4byte gUnknown_828536A                  @ 282
-	.4byte gUnknown_827C822                  @ 283
+	.4byte Move_ENDEAVOR                     @ MOVE_ENDEAVOR
 	.4byte gUnknown_827C897                  @ 284
 	.4byte gUnknown_827C964                  @ 285
 	.4byte gUnknown_827C9AF                  @ 286
@@ -3797,8 +3797,21 @@ Move_YAWN:: @ 0x0827C7DF
 	playsewithpan SE_M_YAWN, SOUND_PAN_TARGET
 	end
 
-gUnknown_827C822: @ 0x0827C822
-	.incbin "baserom_jp.gba", 0x27c822, 0x75
+Move_ENDEAVOR:: @ 0x0827C822
+	loadspritegfx ANIM_TAG_SWEAT_DROP
+	loadspritegfx ANIM_TAG_IMPACT
+	createvisualtask AnimTask_SquishAndSweatDroplets, 2, ANIM_ATTACKER, 2
+	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 24, 2
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_ATTACKER, RGB(31, 21, 0), 12, 1, 2
+	delay 6
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, FALSE, 1, 8, 1, 0
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=12, y=-12, relative_to=ANIM_TARGET, animation=2
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	delay 24
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, FALSE, 1, 8, 1, 0
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=-12, y=12, relative_to=ANIM_TARGET, animation=2
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	end
 
 gUnknown_827C897: @ 0x0827C897
 	.incbin "baserom_jp.gba", 0x27c897, 0xcd
