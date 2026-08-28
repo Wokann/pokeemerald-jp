@@ -276,7 +276,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8282EBB                  @ 254
 	.4byte gUnknown_8282F72                  @ 255
 	.4byte gUnknown_82830B5                  @ 256
-	.4byte gUnknown_827C152                  @ 257
+	.4byte Move_HEAT_WAVE                    @ MOVE_HEAT_WAVE
 	.4byte gUnknown_827C202                  @ 258
 	.4byte gUnknown_827C23A                  @ 259
 	.4byte gUnknown_8283439                  @ 260
@@ -3472,8 +3472,29 @@ Move_UPROAR:: @ 0x0827C088
 	clearmonbg ANIM_DEF_PARTNER
 	end
 
-gUnknown_827C152: @ 0x0827C152
-	.incbin "baserom_jp.gba", 0x27c152, 0xb0
+Move_HEAT_WAVE:: @ 0x0827C152
+	loadspritegfx ANIM_TAG_FLYING_DIRT
+	createvisualtask AnimTask_BlendParticle, 5, ANIM_TAG_FLYING_DIRT, 0, 6, 6, RGB_RED
+	createvisualtask AnimTask_LoadSandstormBackground, 5, TRUE
+	createvisualtask AnimTask_BlendBackground, 6, 6, RGB_RED
+	panse SE_M_HEAT_WAVE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	delay 4
+	createvisualtask AnimTask_MoveHeatWaveTargets, 5
+	delay 12
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 10, 2304, 96, 1
+	delay 10
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 90, 2048, 96, 1
+	delay 10
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 50, 2560, 96, 1
+	delay 10
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 20, 2304, 96, 1
+	delay 10
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 70, 1984, 96, 1
+	delay 10
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 0, 2816, 96, 1
+	delay 10
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 60, 2560, 96, 1
+	end
 
 gUnknown_827C202: @ 0x0827C202
 	.incbin "baserom_jp.gba", 0x27c202, 0x38
