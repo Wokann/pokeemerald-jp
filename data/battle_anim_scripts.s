@@ -170,7 +170,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_FLASH                        @ MOVE_FLASH
 	.4byte gUnknown_8281799                  @ 149
 	.4byte Move_SPLASH                       @ MOVE_SPLASH
-	.4byte gUnknown_827B8C1                  @ 151
+	.4byte Move_ACID_ARMOR                   @ MOVE_ACID_ARMOR
 	.4byte gUnknown_8280257                  @ 152
 	.4byte Move_EXPLOSION                     @ MOVE_EXPLOSION
 	.4byte gUnknown_8282603                  @ 154
@@ -3003,8 +3003,16 @@ Move_SPLASH:: @ 0x0827B8AC
 	waitforvisualfinish
 	end
 
-gUnknown_827B8C1: @ 0x0827B8C1
-	.incbin "baserom_jp.gba", 0x27b8c1, 0x19
+Move_ACID_ARMOR:: @ 0x0827B8C1
+	monbg ANIM_ATTACKER
+	setalpha 15, 0
+	createvisualtask AnimTask_AcidArmor, 2, ANIM_ATTACKER
+	playsewithpan SE_M_ACID_ARMOR, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	blendoff
+	clearmonbg ANIM_ATTACKER
+	delay 1
+	end
 
 gUnknown_827B8DA: @ 0x0827B8DA
 	.incbin "baserom_jp.gba", 0x27b8da, 0xc
