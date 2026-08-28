@@ -23,7 +23,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_POUND                            @ MOVE_POUND
 	.4byte gUnknown_828063A                  @ 002
 	.4byte Move_DOUBLE_SLAP                    @ MOVE_DOUBLE_SLAP
-	.4byte gUnknown_827884F                  @ 004
+	.4byte Move_COMET_PUNCH                  @ MOVE_COMET_PUNCH
 	.4byte Move_MEGA_PUNCH                   @ MOVE_MEGA_PUNCH
 	.4byte gUnknown_8279E41                  @ 006
 	.4byte gUnknown_8281204                  @ 007
@@ -1000,8 +1000,27 @@ Move_MEGA_KICK: @ 0x082787B3
 	waitbgfadein
 	end
 
-gUnknown_827884F: @ 0x0827884F
-	.incbin "baserom_jp.gba", 0x27884f, 0x78
+Move_COMET_PUNCH: @ 0x0827884F
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	choosetwoturnanim CometPunchLeft, CometPunchRight
+CometPunchContinue:
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
+CometPunchLeft:
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=-8, y=-8, relative_to=ANIM_TARGET, animation=2
+	create_fist_sprite ANIM_ATTACKER, 3, x=-8, y=0, duration=8
+	goto CometPunchContinue
+CometPunchRight:
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=8, y=-8, relative_to=ANIM_TARGET, animation=2
+	create_fist_sprite ANIM_ATTACKER, 3, x=8, y=0, duration=8
+	goto CometPunchContinue
 
 gUnknown_82788C7: @ 0x082788C7
 	.incbin "baserom_jp.gba", 0x2788c7, 0x61
