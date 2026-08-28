@@ -1324,38 +1324,12 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/text/event_ticket_2.inc"
 	.include "data/text/move_tutors.inc"
 	.include "data/scripts/move_tutors.inc"
+	.include "data/scripts/trainer_hill.inc"
 
-TrainerHill_OnResume:
-	setvar VAR_TEMP_2, 0
-	trainerhill_resumetimer
-	frontier_get FRONTIER_DATA_BATTLE_OUTCOME
-	goto_if_eq VAR_RESULT, B_OUTCOME_LOST, TrainerHill_1F_EventScript_Lost
-	goto_if_eq VAR_RESULT, B_OUTCOME_DREW, TrainerHill_1F_EventScript_Lost
-	goto_if_eq VAR_RESULT, B_OUTCOME_FORFEITED, TrainerHill_1F_EventScript_Lost
-	end
-
-TrainerHill_OnWarp:
-	map_script_2 VAR_TEMP_3, 0, TrainerHill_1F_EventScript_DummyOnWarp
-	.2byte 0
-
-TrainerHill_1F_EventScript_DummyOnWarp::
-	setvar VAR_TEMP_3, 1
-#ifdef BUGFIX
-	end  @ Missing end. By chance, the next byte (0x02 of VAR_TEMP_2) is also the id for the end cmd
-#endif
-
-TrainerHill_OnFrame:
-	map_script_2 VAR_TEMP_2, 0, TrainerHill_1F_EventScript_DummyWarpToEntranceCounter
-	map_script_2 VAR_TEMP_1, 1, TrainerHill_EventScript_WarpToEntranceCounter
-	.2byte 0
-
-	.globl EventScript_TrainerHillTimer
-EventScript_TrainerHillTimer: @ 0x8276CAF
-	.include "data/scripts/gUnknown_8276CAF.inc"
-
-	.globl TrainerHill_EventScript_TrainerBattle
-TrainerHill_EventScript_TrainerBattle: @ 0x8276D0C
-	.include "data/scripts/gUnknown_8276D0C.inc"
+	.globl gJPText_00276D26
+gJPText_00276D26: @ 0x08276D26
+	.string "テストよう　メッセージです！\n"
+	.string "かんばん　です$"
 
 	.globl EventScript_TestSignpostMsg
 EventScript_TestSignpostMsg: @ 0x8276D3D
