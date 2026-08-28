@@ -1325,15 +1325,8 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/text/move_tutors.inc"
 	.include "data/scripts/move_tutors.inc"
 	.include "data/scripts/trainer_hill.inc"
-
-	.globl gJPText_00276D26
-gJPText_00276D26: @ 0x08276D26
-	.string "テストよう　メッセージです！\n"
-	.string "かんばん　です$"
-
-	.globl EventScript_TestSignpostMsg
-EventScript_TestSignpostMsg: @ 0x8276D3D
-	.include "data/scripts/gUnknown_8276D3D.inc"
+	.include "data/scripts/test_signpost.inc"
+	.incbin "baserom_jp.gba", 0x276D46, 0x212
 
 	.globl gUnknown_8276F58
 gUnknown_8276F58: @ 0x8276F58
