@@ -1,6 +1,3 @@
-	.include "data/text/lottery_corner.inc"
-	.include "data/text/event_ticket_1.inc"
-	.include "data/text/braille.inc"
 PetalburgCity_Gym_Text_GiveEnigmaBerry: @ 0x082637C2
 	.string "パパ“やあ　{PLAYER}！\p"
 	.string "めずらしい　きのみを　てに　いれたから\n"

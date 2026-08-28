@@ -1002,7 +1002,7 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
     # owner.  Its sole dynamic field is the player name, as in the matching
     # US Gym source, rather than a generic {STRING 0x01} placeholder.
     'PetalburgCity_Gym_EnigmaBerry': {
-        'source': 'data/scripts/gUnknown_8263199.inc',
+        'source': 'data/scripts/gUnknown_82637C2.inc',
         'start': 0x082637C2,
         'end': 0x082637EB,
         'labels': {
@@ -1016,7 +1016,7 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
     # owner rather than beside its map scripts. The two EOS-terminated strings
     # and their callers were checked against the Route104 US script order.
     'Route104_BerryMaster': {
-        'source': 'data/scripts/gUnknown_8263199.inc',
+        'source': 'data/scripts/gUnknown_82637C2.inc',
         'start': 0x082637EB,
         'end': 0x0826388C,
         'labels': {
@@ -1028,7 +1028,7 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
     # The three EOS records are contiguous and precede Route120's still-raw
     # text range, so only this proven prefix is extracted here.
     'Route114_BerryMan': {
-        'source': 'data/scripts/gUnknown_8263199.inc',
+        'source': 'data/scripts/gUnknown_82637C2.inc',
         'start': 0x08263908,
         'end': 0x0826398A,
         'labels': {
@@ -1038,7 +1038,7 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
         },
     },
     'LilycoveCity_BerryGentleman': {
-        'source': 'data/scripts/gUnknown_8263199.inc',
+        'source': 'data/scripts/gUnknown_82637C2.inc',
         'start': 0x08263A58,
         'end': 0x08263AE4,
         'labels': {
@@ -1048,7 +1048,7 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
         },
     },
     'SootopolisCity_Kiri': {
-        'source': 'data/scripts/gUnknown_8263199.inc',
+        'source': 'data/scripts/gUnknown_82637C2.inc',
         'start': 0x08263F33,
         'end': 0x0826406F,
         'labels': {
