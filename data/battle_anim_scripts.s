@@ -331,7 +331,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8283C31                  @ 309
 	.4byte gUnknown_828503F                  @ 310
 	.4byte gUnknown_82859FA                  @ 311
-	.4byte gUnknown_827D0F2                  @ 312
+	.4byte Move_AROMATHERAPY                 @ MOVE_AROMATHERAPY
 	.4byte gUnknown_827D254                  @ 313
 	.4byte gUnknown_827D2E4                  @ 314
 	.4byte gUnknown_8284C1B                  @ 315
@@ -4145,8 +4145,44 @@ Move_CRUSH_CLAW: @ 0x0827D083
 	clearmonbg ANIM_TARGET
 	end
 
-gUnknown_827D0F2: @ 0x0827D0F2
-	.incbin "baserom_jp.gba", 0x27d0f2, 0x162
+Move_AROMATHERAPY: @ 0x0827D0F2
+	playsewithpan SE_M_PETAL_DANCE, 0
+	loadspritegfx ANIM_TAG_FLOWER
+	loadspritegfx ANIM_TAG_THIN_RING
+	loadspritegfx ANIM_TAG_SPARKLE_2
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_BG, delay=0, initial_blend_y=0, target_blend_y=7, color=RGB(13, 31, 12)
+	delay 1
+	monbg ANIM_ATTACKER
+	delay 1
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_ATTACKER, 0, 24, 16, 0, 2, 2, 0, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_ATTACKER, 66, 64, 24, 0, 3, 1, 1, 0
+	createsprite gAromatherapyBigFlowerSpriteTemplate, ANIM_ATTACKER, 0, 16, 24, 0, 2, 1, 0, 0
+	delay 20
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_ATTACKER, 66, 48, 12, 0, 4, 3, 1, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_ATTACKER, 0, 100, 16, 0, 3, 2, 0, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_ATTACKER, 0, 74, 24, 180, 3, 2, 0, 0
+	delay 10
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_ATTACKER, 66, 80, 30, 0, 4, 1, 1, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_ATTACKER, 0, 128, 12, 0, 3, 3, 0, 0
+	createsprite gAromatherapyBigFlowerSpriteTemplate, ANIM_ATTACKER, 0, 90, 16, 0, 2, 1, 0, 0
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	delay 1
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_BG, delay=0, initial_blend_y=7, target_blend_y=0, color=RGB(13, 31, 12)
+	delay 1
+	playsewithpan SE_M_STAT_INCREASE, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_StatusClearedEffect, 2, 1
+	waitforvisualfinish
+	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER
+	createsprite gSparklingStarsSpriteTemplate, ANIM_ATTACKER, 16, -15, 0, 0, 0, 32, 60, 1
+	delay 8
+	createsprite gSparklingStarsSpriteTemplate, ANIM_ATTACKER, 16, 12, -5, 0, 0, 32, 60, 1
+	waitforvisualfinish
+	playsewithpan SE_SHINY, SOUND_PAN_ATTACKER
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_BG | F_PAL_ATK_SIDE | F_PAL_ANIM_1, delay=3, initial_blend_y=10, target_blend_y=0, color=RGB(13, 31, 12)
+	createsprite gBlendThinRingExpandingSpriteTemplate, ANIM_ATTACKER, 16, 0, 0, 0, 1
+	waitforvisualfinish
+	end
 
 gUnknown_827D254: @ 0x0827D254
 	.incbin "baserom_jp.gba", 0x27d254, 0x90
