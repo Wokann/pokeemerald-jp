@@ -1304,6 +1304,7 @@ gMetronomeFingerSpriteTemplate: @ 0x856EDA0
 	.4byte 0x084FD0E0, gDummySpriteAnimTable
 	.4byte 0x00000000, 0x0856ED98, 0x08103A59
 
+	.globl gFollowMeFingerSpriteTemplate
 gFollowMeFingerSpriteTemplate: @ 0x856EDB8
 	.hword 0x2750, 0x2750
 	.4byte 0x084FD080, gDummySpriteAnimTable

@@ -285,7 +285,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_FACADE                       @ MOVE_FACADE
 	.4byte gUnknown_8283F8E                  @ 264
 	.4byte Move_SMELLING_SALT                @ MOVE_SMELLING_SALT
-	.4byte gUnknown_827C33D                  @ 266
+	.4byte Move_FOLLOW_ME                    @ MOVE_FOLLOW_ME
 	.4byte gUnknown_8280FE2                  @ 267
 	.4byte gUnknown_827C35C                  @ 268
 	.4byte gUnknown_827C3F7                  @ 269
@@ -3566,8 +3566,15 @@ Move_SMELLING_SALT:: @ 0x0827C2E2
 	loopsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET, 16, 3
 	end
 
-gUnknown_827C33D: @ 0x0827C33D
-	.incbin "baserom_jp.gba", 0x27c33d, 0x1f
+Move_FOLLOW_ME:: @ 0x0827C33D
+	loadspritegfx ANIM_TAG_FINGER
+	createsprite gFollowMeFingerSpriteTemplate, ANIM_ATTACKER, 2, 0
+	playsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER
+	delay 18
+	playsewithpan SE_M_ATTRACT, SOUND_PAN_ATTACKER
+	delay 71
+	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 22, 3
+	end
 
 gUnknown_827C35C: @ 0x0827C35C
 	.incbin "baserom_jp.gba", 0x27c35c, 0x9b
