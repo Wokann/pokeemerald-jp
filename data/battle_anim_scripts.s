@@ -149,7 +149,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_WATERFALL                    @ MOVE_WATERFALL
 	.4byte gUnknown_827EBEF                  @ 128
 	.4byte Move_SWIFT                          @ MOVE_SWIFT
-	.4byte gUnknown_827B51B                  @ 130
+	.4byte Move_SKULL_BASH                   @ MOVE_SKULL_BASH
 	.4byte Move_SPIKE_CANNON                  @ MOVE_SPIKE_CANNON
 	.4byte gUnknown_8282111                  @ 132
 	.4byte gUnknown_827B5E1                  @ 133
@@ -2827,8 +2827,38 @@ Move_METRONOME:: @ 0x0827B4F1
 	waitforvisualfinish
 	end
 
-gUnknown_827B51B: @ 0x0827B51B
-	.incbin "baserom_jp.gba", 0x27b51b, 0xc6
+Move_SKULL_BASH:: @ 0x0827B51B
+	choosetwoturnanim SkullBashSetUp, SkullBashAttack
+SkullBashEnd:
+	end
+SkullBashSetUp:
+	call SkullBashSetUpHeadDown
+	call SkullBashSetUpHeadDown
+	waitforvisualfinish
+	goto SkullBashEnd
+SkullBashSetUpHeadDown:
+	createsprite gSlideMonToOffsetAndBackSpriteTemplate, ANIM_ATTACKER, 2, ANIM_ATTACKER, -24, 0, 0, 10, 0
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createvisualtask AnimTask_RotateMonSpriteToSide, 2, 16, 96, ANIM_ATTACKER, 2
+	waitforvisualfinish
+	createsprite gSlideMonToOffsetAndBackSpriteTemplate, ANIM_ATTACKER, 2, ANIM_ATTACKER, 24, 0, 0, 10, 1
+	waitforvisualfinish
+	return
+SkullBashAttack:
+	loadspritegfx ANIM_TAG_IMPACT
+	createvisualtask AnimTask_SkullBashPosition, 2, 0
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	playse SE_BANG
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=14, color2=RGB_WHITE, blend_y2=14
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_ATTACKER, 2, 0, 40, 1
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_TARGET, 10, 0, 40, 1
+	create_flashing_hitsplat_sprite ANIM_TARGET, 4, x=0, y=0, relative_to=ANIM_TARGET, animation=0
+	loopsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET, 8, 3
+	waitforvisualfinish
+	createvisualtask AnimTask_SkullBashPosition, 2, 1
+	goto SkullBashEnd
 
 gUnknown_827B5E1: @ 0x0827B5E1
 	.incbin "baserom_jp.gba", 0x27b5e1, 0x24

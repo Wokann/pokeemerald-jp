@@ -226,6 +226,8 @@ gSlideMonToOriginalPosSpriteTemplate: @ 0x855A988
 gSlideMonToOffsetSpriteTemplate: @ 0x855A9A0
 	.incbin "baserom_jp.gba", 0x55a9a0, 0x18
 
+	.globl gSlideMonToOffsetAndBackSpriteTemplate
+gSlideMonToOffsetAndBackSpriteTemplate: @ 0x855A9B8
 	.incbin "baserom_jp.gba", 0x55a9b8, 0x18
 
 
