@@ -108,7 +108,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_THUNDER_WAVE                 @ MOVE_THUNDER_WAVE
 	.4byte gUnknown_827DEC1                  @ 087
 	.4byte Move_ROCK_THROW                   @ MOVE_ROCK_THROW
-	.4byte gUnknown_827B0BD                  @ 089
+	.4byte Move_EARTHQUAKE                   @ MOVE_EARTHQUAKE
 	.4byte gUnknown_827B10A                  @ 090
 	.4byte gUnknown_827B22D                  @ 091
 	.4byte gUnknown_827FA82                  @ 092
@@ -2601,8 +2601,15 @@ Move_LOW_KICK:: @ 0x0827B060
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 1, 4
 	end
 
-gUnknown_827B0BD: @ 0x0827B0BD
-	.incbin "baserom_jp.gba", 0x27b0bd, 0x4d
+Move_EARTHQUAKE:: @ 0x0827B0BD
+	createvisualtask AnimTask_HorizontalShake, 5, (MAX_BATTLERS_COUNT + 1), 10, 50
+	createvisualtask AnimTask_HorizontalShake, 5, MAX_BATTLERS_COUNT, 10, 50
+	playsewithpan SE_M_EARTHQUAKE, 0
+	delay 10
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=14, color2=RGB_WHITE, blend_y2=14
+	delay 16
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=14, color2=RGB_WHITE, blend_y2=14
+	end
 
 gUnknown_827B10A: @ 0x0827B10A
 	.incbin "baserom_jp.gba", 0x27b10a, 0x123
