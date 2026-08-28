@@ -295,7 +295,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8282E73                  @ 273
 	.4byte Move_ASSIST                       @ MOVE_ASSIST
 	.4byte gUnknown_8282667                  @ 275
-	.4byte gUnknown_827C52F                  @ 276
+	.4byte Move_SUPERPOWER                   @ MOVE_SUPERPOWER
 	.4byte gUnknown_82851E4                  @ 277
 	.4byte gUnknown_827C5EA                  @ 278
 	.4byte gUnknown_8283CB8                  @ 279
@@ -3665,8 +3665,39 @@ Move_ASSIST:: @ 0x0827C4BE
 	playsewithpan SE_M_SCRATCH, 0
 	end
 
-gUnknown_827C52F: @ 0x0827C52F
-	.incbin "baserom_jp.gba", 0x27c52f, 0xbb
+Move_SUPERPOWER:: @ 0x0827C52F
+	loadspritegfx ANIM_TAG_CIRCLE_OF_LIGHT
+	loadspritegfx ANIM_TAG_METEOR
+	loadspritegfx ANIM_TAG_FLAT_ROCK
+	monbg ANIM_ATK_PARTNER
+	splitbgprio ANIM_ATTACKER
+	setalpha 12, 8
+	createsprite gSuperpowerOrbSpriteTemplate, ANIM_TARGET, 2, ANIM_ATTACKER
+	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER
+	delay 20
+	shake_mon_or_platform velocity=4, shake_timer=1, shake_duration=180, type=SHAKE_BG_Y
+	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_EARTHQUAKE, 0
+	delay 40
+	createsprite gSuperpowerRockSpriteTemplate, ANIM_ATTACKER, 41, 200, 96, 1, 120
+	delay 8
+	createsprite gSuperpowerRockSpriteTemplate, ANIM_ATTACKER, 41, 20, 248, 4, 112
+	delay 8
+	createsprite gSuperpowerRockSpriteTemplate, ANIM_ATTACKER, 41, 130, 160, 2, 104
+	delay 8
+	createsprite gSuperpowerRockSpriteTemplate, ANIM_ATTACKER, 41, 160, 192, 0, 96
+	delay 8
+	createsprite gSuperpowerRockSpriteTemplate, ANIM_ATTACKER, 41, 60, 288, 3, 88
+	delay 74
+	createsprite gSuperpowerFireballSpriteTemplate, ANIM_TARGET, 3, ANIM_ATTACKER
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
+	delay 16
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 8, 0, 16, 1
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	delay 1
+	end
 
 gUnknown_827C5EA: @ 0x0827C5EA
 	.incbin "baserom_jp.gba", 0x27c5ea, 0x34
