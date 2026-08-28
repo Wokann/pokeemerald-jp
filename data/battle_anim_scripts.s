@@ -213,7 +213,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827FE54                  @ 191
 	.4byte gUnknown_828181F                  @ 192
 	.4byte Move_FORESIGHT                    @ MOVE_FORESIGHT
-	.4byte gUnknown_827BBB8                  @ 194
+	.4byte Move_DESTINY_BOND                 @ MOVE_DESTINY_BOND
 	.4byte gUnknown_8282891                  @ 195
 	.4byte Move_ICY_WIND                     @ MOVE_ICY_WIND
 	.4byte Move_DETECT                        @ MOVE_DETECT
@@ -3183,8 +3183,25 @@ Move_FORESIGHT:: @ 0x0827BB79
 	clearmonbg ANIM_DEF_PARTNER
 	end
 
-gUnknown_827BBB8: @ 0x0827BBB8
-	.incbin "baserom_jp.gba", 0x27bbb8, 0x5b
+Move_DESTINY_BOND:: @ 0x0827BBB8
+	loadspritegfx ANIM_TAG_WHITE_SHADOW
+	fadetobg BG_GHOST
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	waitbgfadein
+	createvisualtask AnimTask_DestinyBondWhiteShadow, 5, 0, 48
+	playsewithpan SE_M_CONFUSE_RAY, SOUND_PAN_ATTACKER
+	delay 48
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_ATTACKER, 2, 0, 24, 1
+	createvisualtask AnimTask_BlendBattleAnimPalExclude, 2, 6, 1, 0, 12, RGB(29, 29, 29)
+	delay 24
+	createvisualtask AnimTask_BlendBattleAnimPalExclude, 2, 6, 1, 12, 0, RGB(29, 29, 29)
+	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
+	waitforvisualfinish
+	restorebg
+	waitbgfadein
+	blendoff
+	clearmonbg 5
+	end
 
 gUnknown_827BC13: @ 0x0827BC13
 	.incbin "baserom_jp.gba", 0x27bc13, 0x94
