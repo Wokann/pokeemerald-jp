@@ -1,675 +1,231 @@
 #include "global.h"
-#define ScanlineEffect_SetParams ScanlineEffect_SetParams_Prototype
+#include "battle.h"
+#include "data.h"
+#include "task.h"
+#include "trig.h"
 #include "scanline_effect.h"
-#undef ScanlineEffect_SetParams
-__attribute__((naked)) void ScanlineEffect_Stop(void)
+
+static void CopyValue16Bit(void);
+static void CopyValue32Bit(void);
+
+// This stop flag is owned by the JP EWRAM symbol layout.
+extern bool8 gUnknown_20397E4;
+
+void ScanlineEffect_Stop(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080B9740\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r4, #0x15]\n\t"
-        "	ldr r1, _080B9744\n\t"
-        "	ldrh r2, [r1, #0xa]\n\t"
-        "	ldr r0, _080B9748\n\t"
-        "	ands r0, r2\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	ldrh r2, [r1, #0xa]\n\t"
-        "	ldr r0, _080B974C\n\t"
-        "	ands r0, r2\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	ldrh r0, [r1, #0xa]\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _080B973A\n\t"
-        "	bl DestroyTask\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r4, #0x18]\n\t"
-        "_080B973A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9740: .4byte 0x020397C8\n\t"
-        "_080B9744: .4byte 0x040000B0\n\t"
-        "_080B9748: .4byte 0x0000C5FF\n\t"
-        "_080B974C: .4byte 0x00007FFF\n\t"
-        ".syntax divided\n\t"
-    );
+    gScanlineEffect.state = 0;
+    DmaStop(0);
+    if (gScanlineEffect.waveTaskId != TASK_NONE)
+    {
+        DestroyTask(gScanlineEffect.waveTaskId);
+        gScanlineEffect.waveTaskId = TASK_NONE;
+    }
 }
 
-__attribute__((naked)) void ScanlineEffect_Clear(void)
+void ScanlineEffect_Clear(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r4, #0\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r1, _080B9784\n\t"
-        "	ldr r2, _080B9788\n\t"
-        "	bl CpuSet\n\t"
-        "	ldr r0, _080B978C\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "	str r1, [r0, #4]\n\t"
-        "	str r1, [r0, #8]\n\t"
-        "	str r1, [r0, #0xc]\n\t"
-        "	strb r4, [r0, #0x14]\n\t"
-        "	strb r4, [r0, #0x15]\n\t"
-        "	strb r4, [r0, #0x16]\n\t"
-        "	strb r4, [r0, #0x17]\n\t"
-        "	movs r1, #0xff\n\t"
-        "	strb r1, [r0, #0x18]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9784: .4byte 0x020388C8\n\t"
-        "_080B9788: .4byte 0x01000780\n\t"
-        "_080B978C: .4byte 0x020397C8\n\t"
-        ".syntax divided\n\t"
-    );
+    CpuFill16(0, gScanlineEffectRegBuffers, sizeof(gScanlineEffectRegBuffers));
+    gScanlineEffect.dmaSrcBuffers[0] = NULL;
+    gScanlineEffect.dmaSrcBuffers[1] = NULL;
+    gScanlineEffect.dmaDest = NULL;
+    gScanlineEffect.dmaControl = 0;
+    gScanlineEffect.srcBuffer = 0;
+    gScanlineEffect.state = 0;
+    gScanlineEffect.unused16 = 0;
+    gScanlineEffect.unused17 = 0;
+    gScanlineEffect.waveTaskId = TASK_NONE;
 }
 
-__attribute__((naked)) void ScanlineEffect_SetParams()
+void ScanlineEffect_SetParams(struct ScanlineEffectParams params)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	ldr r0, _080B97B4\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080B97C4\n\t"
-        "	ldr r0, _080B97B8\n\t"
-        "	ldr r1, _080B97BC\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r2, #0xf0\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	str r1, [r0, #4]\n\t"
-        "	ldr r1, _080B97C0\n\t"
-        "	b _080B97D4\n\t"
-        "	.align 2, 0\n\t"
-        "_080B97B4: .4byte 0xA2600001\n\t"
-        "_080B97B8: .4byte 0x020397C8\n\t"
-        "_080B97BC: .4byte 0x020388CA\n\t"
-        "_080B97C0: .4byte 0x080B988D\n\t"
-        "_080B97C4:\n\t"
-        "	ldr r0, _080B97F4\n\t"
-        "	ldr r1, _080B97F8\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r2, #0xf0\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	str r1, [r0, #4]\n\t"
-        "	ldr r1, _080B97FC\n\t"
-        "_080B97D4:\n\t"
-        "	str r1, [r0, #0x10]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldr r0, [sp, #4]\n\t"
-        "	str r0, [r1, #0xc]\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	strb r0, [r1, #0x15]\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0, #9]\n\t"
-        "	strb r0, [r1, #0x16]\n\t"
-        "	strb r0, [r1, #0x17]\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B97F4: .4byte 0x020397C8\n\t"
-        "_080B97F8: .4byte 0x020388CC\n\t"
-        "_080B97FC: .4byte 0x080B98AD\n\t"
-        ".syntax divided\n\t"
-    );
+    if (params.dmaControl == SCANLINE_EFFECT_DMACNT_16BIT)
+    {
+        // The first DMA transfer occurs after the first scanline is drawn.
+        gScanlineEffect.dmaSrcBuffers[0] = (u16 *)gScanlineEffectRegBuffers[0] + 1;
+        gScanlineEffect.dmaSrcBuffers[1] = (u16 *)gScanlineEffectRegBuffers[1] + 1;
+        gScanlineEffect.setFirstScanlineReg = CopyValue16Bit;
+    }
+    else
+    {
+        gScanlineEffect.dmaSrcBuffers[0] = (u32 *)gScanlineEffectRegBuffers[0] + 1;
+        gScanlineEffect.dmaSrcBuffers[1] = (u32 *)gScanlineEffectRegBuffers[1] + 1;
+        gScanlineEffect.setFirstScanlineReg = CopyValue32Bit;
+    }
+
+    gScanlineEffect.dmaControl = params.dmaControl;
+    gScanlineEffect.dmaDest = params.dmaDest;
+    gScanlineEffect.state = params.initState;
+    gScanlineEffect.unused16 = params.unused9;
+    gScanlineEffect.unused17 = params.unused9;
 }
 
-__attribute__((naked)) void ScanlineEffect_InitHBlankDmaTransfer()
+void ScanlineEffect_InitHBlankDmaTransfer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080B9830\n\t"
-        "	ldrb r0, [r4, #0x15]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B987A\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080B9844\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r4, #0x15]\n\t"
-        "	ldr r1, _080B9834\n\t"
-        "	ldrh r2, [r1, #0xa]\n\t"
-        "	ldr r0, _080B9838\n\t"
-        "	ands r0, r2\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	ldrh r2, [r1, #0xa]\n\t"
-        "	ldr r0, _080B983C\n\t"
-        "	ands r0, r2\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	ldrh r0, [r1, #0xa]\n\t"
-        "	ldr r1, _080B9840\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080B987A\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9830: .4byte gScanlineEffect\n\t"
-        "_080B9834: .4byte 0x040000B0\n\t"
-        "_080B9838: .4byte 0x0000C5FF\n\t"
-        "_080B983C: .4byte 0x00007FFF\n\t"
-        "_080B9840: .4byte gUnknown_20397E4\n\t"
-        "_080B9844:\n\t"
-        "	ldr r1, _080B9880\n\t"
-        "	ldrh r2, [r1, #0xa]\n\t"
-        "	ldr r0, _080B9884\n\t"
-        "	ands r0, r2\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	ldrh r2, [r1, #0xa]\n\t"
-        "	ldr r0, _080B9888\n\t"
-        "	ands r0, r2\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	ldrh r0, [r1, #0xa]\n\t"
-        "	ldrb r0, [r4, #0x14]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, [r4, #8]\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	ldr r0, [r4, #0xc]\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	ldr r0, [r4, #0x10]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	ldrb r0, [r4, #0x14]\n\t"
-        "	movs r1, #1\n\t"
-        "	eors r0, r1\n\t"
-        "	strb r0, [r4, #0x14]\n\t"
-        "_080B987A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9880: .4byte 0x040000B0\n\t"
-        "_080B9884: .4byte 0x0000C5FF\n\t"
-        "_080B9888: .4byte 0x00007FFF\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gScanlineEffect.state == 0)
+    {
+        return;
+    }
+    else if (gScanlineEffect.state == 3)
+    {
+        gScanlineEffect.state = 0;
+        DmaStop(0);
+        gUnknown_20397E4 = TRUE;
+    }
+    else
+    {
+        DmaStop(0);
+        DmaSet(0, gScanlineEffect.dmaSrcBuffers[gScanlineEffect.srcBuffer], gScanlineEffect.dmaDest, gScanlineEffect.dmaControl);
+        gScanlineEffect.setFirstScanlineReg();
+        gScanlineEffect.srcBuffer ^= 1;
+    }
 }
 
-__attribute__((naked)) void CopyValue16Bit(void)
+static void CopyValue16Bit(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080B98A4\n\t"
-        "	ldr r2, [r0, #8]\n\t"
-        "	ldrb r1, [r0, #0x14]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	ldr r1, _080B98A8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r2]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080B98A4: .4byte gScanlineEffect\n\t"
-        "_080B98A8: .4byte gScanlineEffectRegBuffers\n\t"
-        ".syntax divided\n\t"
-    );
+    vu16 *dest = (vu16 *)gScanlineEffect.dmaDest;
+    vu16 *src = (vu16 *)&gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer];
+
+    *dest = *src;
 }
 
-__attribute__((naked)) void CopyValue32Bit(void)
+static void CopyValue32Bit(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080B98C4\n\t"
-        "	ldr r2, [r0, #8]\n\t"
-        "	ldrb r1, [r0, #0x14]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	ldr r1, _080B98C8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r2]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080B98C4: .4byte gScanlineEffect\n\t"
-        "_080B98C8: .4byte gScanlineEffectRegBuffers\n\t"
-        ".syntax divided\n\t"
-    );
+    vu32 *dest = (vu32 *)gScanlineEffect.dmaDest;
+    vu32 *src = (vu32 *)&gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer];
+
+    *dest = *src;
 }
 
-__attribute__((naked)) void TaskFunc_UpdateWavePerFrame(void)
+#define tStartLine            data[0]
+#define tEndLine              data[1]
+#define tWaveLength           data[2]
+#define tSrcBufferOffset      data[3]
+#define tFramesUntilMove      data[4]
+#define tDelayInterval        data[5]
+#define tRegOffset            data[6]
+#define tApplyBattleBgOffsets data[7]
+
+static void TaskFunc_UpdateWavePerFrame(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov ip, r0\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r0, _080B98F4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B98FC\n\t"
-        "	mov r0, ip\n\t"
-        "	bl DestroyTask\n\t"
-        "	ldr r1, _080B98F8\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r1, #0x18]\n\t"
-        "	b _080B9A7C\n\t"
-        "	.align 2, 0\n\t"
-        "_080B98F4: .4byte gUnknown_20397E4\n\t"
-        "_080B98F8: .4byte gScanlineEffect\n\t"
-        "_080B98FC:\n\t"
-        "	ldr r1, _080B9928\n\t"
-        "	mov r0, ip\n\t"
-        "	lsls r2, r0, #2\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r3, r0, r1\n\t"
-        "	movs r4, #0x16\n\t"
-        "	ldrsh r0, [r3, r4]\n\t"
-        "	mov sl, r1\n\t"
-        "	mov sb, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B99A8\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r3, r1]\n\t"
-        "	cmp r0, #0xe\n\t"
-        "	bhi _080B99A8\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B992C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9928: .4byte gTasks\n\t"
-        "_080B992C: .4byte _080B9930\n\t"
-        "_080B9930:\n\t"
-        "	.4byte _080B996C\n\t"
-        "	.4byte _080B99A8\n\t"
-        "	.4byte _080B9974\n\t"
-        "	.4byte _080B99A8\n\t"
-        "	.4byte _080B997C\n\t"
-        "	.4byte _080B99A8\n\t"
-        "	.4byte _080B9984\n\t"
-        "	.4byte _080B99A8\n\t"
-        "	.4byte _080B998C\n\t"
-        "	.4byte _080B99A8\n\t"
-        "	.4byte _080B9994\n\t"
-        "	.4byte _080B99A8\n\t"
-        "	.4byte _080B999C\n\t"
-        "	.4byte _080B99A8\n\t"
-        "	.4byte _080B99A4\n\t"
-        "_080B996C:\n\t"
-        "	ldr r0, _080B9970\n\t"
-        "	b _080B99A6\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9970: .4byte gBattle_BG0_X\n\t"
-        "_080B9974:\n\t"
-        "	ldr r0, _080B9978\n\t"
-        "	b _080B99A6\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9978: .4byte gBattle_BG0_Y\n\t"
-        "_080B997C:\n\t"
-        "	ldr r0, _080B9980\n\t"
-        "	b _080B99A6\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9980: .4byte gBattle_BG1_X\n\t"
-        "_080B9984:\n\t"
-        "	ldr r0, _080B9988\n\t"
-        "	b _080B99A6\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9988: .4byte gBattle_BG1_Y\n\t"
-        "_080B998C:\n\t"
-        "	ldr r0, _080B9990\n\t"
-        "	b _080B99A6\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9990: .4byte gBattle_BG2_X\n\t"
-        "_080B9994:\n\t"
-        "	ldr r0, _080B9998\n\t"
-        "	b _080B99A6\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9998: .4byte gBattle_BG2_Y\n\t"
-        "_080B999C:\n\t"
-        "	ldr r0, _080B99A0\n\t"
-        "	b _080B99A6\n\t"
-        "	.align 2, 0\n\t"
-        "_080B99A0: .4byte gBattle_BG3_X\n\t"
-        "_080B99A4:\n\t"
-        "	ldr r0, _080B9A08\n\t"
-        "_080B99A6:\n\t"
-        "	ldrh r6, [r0]\n\t"
-        "_080B99A8:\n\t"
-        "	mov r0, sb\n\t"
-        "	add r0, ip\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	mov r2, sl\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrh r2, [r1, #0x10]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B9A14\n\t"
-        "	subs r0, r2, #1\n\t"
-        "	strh r0, [r1, #0x10]\n\t"
-        "	movs r4, #0xe\n\t"
-        "	ldrsh r0, [r1, r4]\n\t"
-        "	movs r3, #0xa0\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r2, r0, r3\n\t"
-        "	movs r4, #8\n\t"
-        "	ldrsh r3, [r1, r4]\n\t"
-        "	movs r4, #0xa\n\t"
-        "	ldrsh r0, [r1, r4]\n\t"
-        "	cmp r3, r0\n\t"
-        "	bge _080B9A7C\n\t"
-        "	ldr r5, _080B9A0C\n\t"
-        "	ldr r0, _080B9A10\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r4, r0, r5\n\t"
-        "_080B99E2:\n\t"
-        "	lsls r2, r3, #1\n\t"
-        "	mov r0, r8\n\t"
-        "	ldrb r1, [r0, #0x14]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r4, #2\n\t"
-        "	adds r3, #1\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r7, r1]\n\t"
-        "	cmp r3, r0\n\t"
-        "	blt _080B99E2\n\t"
-        "	b _080B9A7C\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9A08: .4byte gBattle_BG3_Y\n\t"
-        "_080B9A0C: .4byte gScanlineEffectRegBuffers\n\t"
-        "_080B9A10: .4byte gScanlineEffect\n\t"
-        "_080B9A14:\n\t"
-        "	ldrh r0, [r1, #0x12]\n\t"
-        "	strh r0, [r1, #0x10]\n\t"
-        "	movs r2, #0xe\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	movs r3, #0xa0\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r2, r0, r3\n\t"
-        "	movs r4, #8\n\t"
-        "	ldrsh r3, [r1, r4]\n\t"
-        "	movs r4, #0xa\n\t"
-        "	ldrsh r0, [r1, r4]\n\t"
-        "	cmp r3, r0\n\t"
-        "	bge _080B9A5C\n\t"
-        "	ldr r5, _080B9A8C\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r4, r0, r5\n\t"
-        "	ldr r0, _080B9A90\n\t"
-        "	mov r8, r0\n\t"
-        "_080B9A3A:\n\t"
-        "	lsls r2, r3, #1\n\t"
-        "	mov r0, r8\n\t"
-        "	ldrb r1, [r0, #0x14]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r4, #2\n\t"
-        "	adds r3, #1\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r7, r1]\n\t"
-        "	cmp r3, r0\n\t"
-        "	blt _080B9A3A\n\t"
-        "_080B9A5C:\n\t"
-        "	mov r0, sb\n\t"
-        "	add r0, ip\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	mov r3, sl\n\t"
-        "	adds r2, r0, r3\n\t"
-        "	ldrh r0, [r2, #0xe]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2, #0xe]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r4, #0xc\n\t"
-        "	ldrsh r1, [r2, r4]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _080B9A7C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2, #0xe]\n\t"
-        "_080B9A7C:\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9A8C: .4byte gScanlineEffectRegBuffers\n\t"
-        "_080B9A90: .4byte gScanlineEffect\n\t"
-        ".syntax divided\n\t"
-    );
+    int value = 0;
+    int i;
+    int offset;
+
+    if (gUnknown_20397E4)
+    {
+        DestroyTask(taskId);
+        gScanlineEffect.waveTaskId = TASK_NONE;
+    }
+    else
+    {
+        if (gTasks[taskId].tApplyBattleBgOffsets)
+        {
+            switch (gTasks[taskId].tRegOffset)
+            {
+            case SCANLINE_EFFECT_REG_BG0HOFS:
+                value = gBattle_BG0_X;
+                break;
+            case SCANLINE_EFFECT_REG_BG0VOFS:
+                value = gBattle_BG0_Y;
+                break;
+            case SCANLINE_EFFECT_REG_BG1HOFS:
+                value = gBattle_BG1_X;
+                break;
+            case SCANLINE_EFFECT_REG_BG1VOFS:
+                value = gBattle_BG1_Y;
+                break;
+            case SCANLINE_EFFECT_REG_BG2HOFS:
+                value = gBattle_BG2_X;
+                break;
+            case SCANLINE_EFFECT_REG_BG2VOFS:
+                value = gBattle_BG2_Y;
+                break;
+            case SCANLINE_EFFECT_REG_BG3HOFS:
+                value = gBattle_BG3_X;
+                break;
+            case SCANLINE_EFFECT_REG_BG3VOFS:
+                value = gBattle_BG3_Y;
+                break;
+            }
+        }
+        if (gTasks[taskId].tFramesUntilMove != 0)
+        {
+            gTasks[taskId].tFramesUntilMove--;
+            offset = gTasks[taskId].tSrcBufferOffset + 320;
+            for (i = gTasks[taskId].tStartLine; i < gTasks[taskId].tEndLine; i++)
+            {
+                gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer][i] = gScanlineEffectRegBuffers[0][offset] + value;
+                offset++;
+            }
+        }
+        else
+        {
+            gTasks[taskId].tFramesUntilMove = gTasks[taskId].tDelayInterval;
+            offset = gTasks[taskId].tSrcBufferOffset + 320;
+            for (i = gTasks[taskId].tStartLine; i < gTasks[taskId].tEndLine; i++)
+            {
+                gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer][i] = gScanlineEffectRegBuffers[0][offset] + value;
+                offset++;
+            }
+
+            gTasks[taskId].tSrcBufferOffset++;
+            if (gTasks[taskId].tSrcBufferOffset == gTasks[taskId].tWaveLength)
+                gTasks[taskId].tSrcBufferOffset = 0;
+        }
+    }
 }
 
-__attribute__((naked)) void GenerateWave(void)
+static void GenerateWave(u16 *buffer, u8 frequency, u8 amplitude, u8 unused)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r4, r2, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r0, _080B9AD8\n\t"
-        "	mov ip, r0\n\t"
-        "_080B9AA8:\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r3, r0, r6\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	add r0, ip\n\t"
-        "	movs r7, #0\n\t"
-        "	ldrsh r0, [r0, r7]\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080B9ABC\n\t"
-        "	adds r0, #0xff\n\t"
-        "_080B9ABC:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	strh r0, [r3]\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	cmp r1, #0xff\n\t"
-        "	bls _080B9AA8\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9AD8: .4byte gSineTable\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = 0;
+    u8 theta = 0;
+
+    while (i < 256)
+    {
+        buffer[i] = (gSineTable[theta] * amplitude) / 256;
+        theta += frequency;
+        i++;
+    }
 }
 
-__attribute__((naked)) u8 ScanlineEffect_InitWave(u8 startLine, u8 endLine, u8 frequency, u8 amplitude, u8 delayInterval, u8 regOffset, bool8 applyBattleBgOffsets)
+u8 ScanlineEffect_InitWave(u8 startLine, u8 endLine, u8 frequency, u8 amplitude, u8 delayInterval, u8 regOffset, bool8 applyBattleBgOffsets)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x20\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	str r1, [sp, #0x10]\n\t"
-        "	ldr r0, [sp, #0x40]\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r1, [sp, #0x44]\n\t"
-        "	mov sb, r1\n\t"
-        "	ldr r0, [sp, #0x48]\n\t"
-        "	mov sl, r0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r1, [sp, #0x10]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	str r1, [sp, #0x14]\n\t"
-        "	lsrs r0, r1, #0x18\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	lsls r1, r2, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	str r1, [sp, #0x18]\n\t"
-        "	lsls r2, r3, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	str r2, [sp, #0x1c]\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov r8, r1\n\t"
-        "	mov r3, sb\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	mov sb, r3\n\t"
-        "	mov r0, sl\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	bl ScanlineEffect_Clear\n\t"
-        "	ldr r0, _080B9BE8\n\t"
-        "	add r0, sb\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _080B9BEC\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	mov r1, sp\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1, #8]\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0, #9]\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	ldr r1, [sp, #4]\n\t"
-        "	ldr r2, [sp, #8]\n\t"
-        "	bl ScanlineEffect_SetParams\n\t"
-        "	ldr r0, _080B9BF0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r0, _080B9BF4\n\t"
-        "	lsls r4, r7, #2\n\t"
-        "	adds r4, r4, r7\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	strh r5, [r4, #8]\n\t"
-        "	mov r3, sp\n\t"
-        "	ldrh r3, [r3, #0xc]\n\t"
-        "	strh r3, [r4, #0xa]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ldr r1, [sp, #0x18]\n\t"
-        "	bl __divsi3\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r1, [r4, #0x10]\n\t"
-        "	strh r1, [r4, #0x12]\n\t"
-        "	mov r3, sb\n\t"
-        "	strh r3, [r4, #0x14]\n\t"
-        "	mov r0, sl\n\t"
-        "	strh r0, [r4, #0x16]\n\t"
-        "	ldr r0, _080B9BF8\n\t"
-        "	strb r7, [r0, #0x18]\n\t"
-        "	ldr r0, _080B9BFC\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r4, _080B9C00\n\t"
-        "	ldr r3, [sp, #0xc]\n\t"
-        "	subs r6, r3, r5\n\t"
-        "	lsls r3, r6, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	ldr r1, [sp, #0x18]\n\t"
-        "	ldr r2, [sp, #0x1c]\n\t"
-        "	bl GenerateWave\n\t"
-        "	ldr r0, [sp, #0xc]\n\t"
-        "	cmp r5, r0\n\t"
-        "	bge _080B9BD6\n\t"
-        "	ldr r1, _080B9C04\n\t"
-        "	adds r2, r4, r1\n\t"
-        "	lsls r1, r5, #1\n\t"
-        "	movs r3, #0xf0\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	adds r3, r0, r2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r5, r6, #0\n\t"
-        "_080B9BC2:\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	strh r0, [r3]\n\t"
-        "	adds r2, #2\n\t"
-        "	adds r3, #2\n\t"
-        "	adds r1, #2\n\t"
-        "	subs r5, #1\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _080B9BC2\n\t"
-        "_080B9BD6:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	add sp, #0x20\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9BE8: .4byte 0x04000010\n\t"
-        "_080B9BEC: .4byte 0xA2600001\n\t"
-        "_080B9BF0: .4byte TaskFunc_UpdateWavePerFrame + 1\n\t"
-        "_080B9BF4: .4byte gTasks\n\t"
-        "_080B9BF8: .4byte gScanlineEffect\n\t"
-        "_080B9BFC: .4byte gUnknown_20397E4\n\t"
-        "_080B9C00: .4byte gUnknown_2038B48\n\t"
-        "_080B9C04: .4byte 0xFFFFFD80\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    int i;
+    int offset;
+    struct ScanlineEffectParams params;
+    u8 taskId;
 
+    ScanlineEffect_Clear();
+
+    params.dmaDest = (void *)(REG_ADDR_BG0HOFS + regOffset);
+    params.dmaControl = SCANLINE_EFFECT_DMACNT_16BIT;
+    params.initState = 1;
+    params.unused9 = 0;
+    ScanlineEffect_SetParams(params);
+
+    taskId = CreateTask(TaskFunc_UpdateWavePerFrame, 0);
+
+    gTasks[taskId].tStartLine = startLine;
+    gTasks[taskId].tEndLine = endLine;
+    gTasks[taskId].tWaveLength = 256 / frequency;
+    gTasks[taskId].tSrcBufferOffset = 0;
+    gTasks[taskId].tFramesUntilMove = delayInterval;
+    gTasks[taskId].tDelayInterval = delayInterval;
+    gTasks[taskId].tRegOffset = regOffset;
+    gTasks[taskId].tApplyBattleBgOffsets = applyBattleBgOffsets;
+
+    gScanlineEffect.waveTaskId = taskId;
+    gUnknown_20397E4 = FALSE;
+
+    GenerateWave(&gScanlineEffectRegBuffers[0][320], frequency, amplitude, endLine - startLine);
+
+    offset = 320;
+    for (i = startLine; i < endLine; i++)
+    {
+        gScanlineEffectRegBuffers[0][i] = gScanlineEffectRegBuffers[0][offset];
+        gScanlineEffectRegBuffers[1][i] = gScanlineEffectRegBuffers[0][offset];
+        offset++;
+    }
+
+    return taskId;
+}
