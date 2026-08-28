@@ -315,7 +315,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_CAMOUFLAGE                   @ MOVE_CAMOUFLAGE
 	.4byte Move_TAIL_GLOW                    @ MOVE_TAIL_GLOW
 	.4byte Move_LUSTER_PURGE                 @ MOVE_LUSTER_PURGE
-	.4byte gUnknown_827CBBA                  @ 296
+	.4byte Move_MIST_BALL                    @ MOVE_MIST_BALL
 	.4byte gUnknown_827CC49                  @ 297
 	.4byte gUnknown_827CD19                  @ 298
 	.4byte gUnknown_82835D5                  @ 299
@@ -3963,8 +3963,25 @@ Move_LUSTER_PURGE:: @ 0x0827CAA3
 	call UnsetPsychicBackground
 	end
 
-gUnknown_827CBBA: @ 0x0827CBBA
-	.incbin "baserom_jp.gba", 0x27cbba, 0x8f
+Move_MIST_BALL:: @ 0x0827CBBA
+	loadspritegfx ANIM_TAG_SMALL_BUBBLES
+	loadspritegfx ANIM_TAG_WHITE_FEATHER
+	delay 0
+	playsewithpan SE_M_STRING_SHOT, SOUND_PAN_ATTACKER
+	createsprite gMistBallSpriteTemplate, ANIM_TARGET, 0, 0, 0, 0, 0, 30, 0
+	waitforvisualfinish
+	playsewithpan SE_M_SAND_ATTACK, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 10, 0
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=0, selector=F_PAL_BG, delay=1, num_blends=1, color1=RGB(23, 16, 31), blend_y1=16, color2=RGB_WHITE, blend_y2=16
+	delay 0
+	playsewithpan SE_M_HAZE, 0
+	createvisualtask AnimTask_MistBallFog, 5
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 3, 0, 16, RGB_WHITE
+	delay 8
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 4, 0, 70, 0
+	delay 70
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 16, 0, RGB_WHITE
+	end
 
 gUnknown_827CC49: @ 0x0827CC49
 	.incbin "baserom_jp.gba", 0x27cc49, 0xd0
