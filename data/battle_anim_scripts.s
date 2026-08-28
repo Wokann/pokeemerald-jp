@@ -312,7 +312,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8285557                  @ 290
 	.4byte gUnknown_8284AC4                  @ 291
 	.4byte gUnknown_82837EE                  @ 292
-	.4byte gUnknown_827CA1A                  @ 293
+	.4byte Move_CAMOUFLAGE                   @ MOVE_CAMOUFLAGE
 	.4byte gUnknown_827CA60                  @ 294
 	.4byte gUnknown_827CAA3                  @ 295
 	.4byte gUnknown_827CBBA                  @ 296
@@ -3886,8 +3886,23 @@ Move_GRUDGE:: @ 0x0827C9F2
 	clearmonbg ANIM_ATTACKER
 	end
 
-gUnknown_827CA1A: @ 0x0827CA1A
-	.incbin "baserom_jp.gba", 0x27ca1a, 0x46
+Move_CAMOUFLAGE:: @ 0x0827CA1A
+	monbg ANIM_ATK_PARTNER
+	splitbgprio ANIM_ATTACKER
+	setalpha 16, 0
+	createvisualtask AnimTask_SetCamouflageBlend, 5, F_PAL_ATTACKER, 3, 0, 14
+	delay 16
+	attacker_fade_to_invisible step_delay=4
+	playsewithpan SE_M_FAINT_ATTACK, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	delay 8
+	createvisualtask AnimTask_SetCamouflageBlend, 5, F_PAL_ATTACKER, 0, 0, 0
+	waitforvisualfinish
+	attacker_fade_from_invisible step_delay=1
+	waitforvisualfinish
+	blendoff
+	clearmonbg ANIM_ATK_PARTNER
+	end
 
 gUnknown_827CA60: @ 0x0827CA60
 	.incbin "baserom_jp.gba", 0x27ca60, 0x43
