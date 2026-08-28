@@ -1477,9 +1477,9 @@ Text_EggHatchHuh: @ 0x08257E82
 Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.incbin "baserom_jp.gba", 0x257E87, 0x5B
 
-	.globl EventScript_UseFlash
-EventScript_UseFlash: @ 0x8257EE2
-	.include "data/scripts/gUnknown_8257EE2.inc"
+	.include "data/scripts/flash.inc"
+
+	.include "data/scripts/gUnknown_8257EE8.inc"
 
 	.globl EventScript_RunningShoesManual
 EventScript_RunningShoesManual: @ 0x82585CF
