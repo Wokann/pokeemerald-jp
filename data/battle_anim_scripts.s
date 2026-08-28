@@ -119,7 +119,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_AGILITY                      @ MOVE_AGILITY
 	.4byte Move_QUICK_ATTACK                 @ MOVE_QUICK_ATTACK
 	.4byte Move_RAGE                         @ MOVE_RAGE
-	.4byte gUnknown_827B47E                  @ 100
+	.4byte Move_TELEPORT                     @ MOVE_TELEPORT
 	.4byte gUnknown_8281B0A                  @ 101
 	.4byte gUnknown_82820C6                  @ 102
 	.4byte Move_SCREECH                        @ MOVE_SCREECH
@@ -2771,8 +2771,14 @@ Move_RAGE:: @ 0x0827B408
 	clearmonbg ANIM_TARGET
 	end
 
-gUnknown_827B47E: @ 0x0827B47E
-	.incbin "baserom_jp.gba", 0x27b47e, 0x19
+Move_TELEPORT:: @ 0x0827B47E
+	call SetPsychicBackground
+	createvisualtask AnimTask_Teleport, 2
+	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
+	delay 15
+	call UnsetPsychicBackground
+	waitforvisualfinish
+	end
 
 gUnknown_827B497: @ 0x0827B497
 	.incbin "baserom_jp.gba", 0x27b497, 0x47
