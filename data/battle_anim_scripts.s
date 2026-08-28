@@ -126,7 +126,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_DOUBLE_TEAM                  @ MOVE_DOUBLE_TEAM
 	.4byte gUnknown_828201C                  @ 105
 	.4byte gUnknown_827DA50                  @ 106
-	.4byte gUnknown_827B4DE                  @ 107
+	.4byte Move_MINIMIZE                     @ MOVE_MINIMIZE
 	.4byte Move_SMOKESCREEN                  @ MOVE_SMOKESCREEN
 	.4byte Move_CONFUSE_RAY                  @ MOVE_CONFUSE_RAY
 	.4byte gUnknown_827ED83                  @ 110
@@ -2807,8 +2807,13 @@ Move_DOUBLE_TEAM:: @ 0x0827B497
 	delay 1
 	end
 
-gUnknown_827B4DE: @ 0x0827B4DE
-	.incbin "baserom_jp.gba", 0x27b4de, 0x13
+Move_MINIMIZE:: @ 0x0827B4DE
+	setalpha 10, 8
+	createvisualtask AnimTask_Minimize, 2
+	loopsewithpan SE_M_MINIMIZE, SOUND_PAN_ATTACKER, 34, 3
+	waitforvisualfinish
+	blendoff
+	end
 
 gUnknown_827B4F1: @ 0x0827B4F1
 	.incbin "baserom_jp.gba", 0x27b4f1, 0x2a
