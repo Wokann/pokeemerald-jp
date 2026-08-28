@@ -299,7 +299,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82851E4                  @ 277
 	.4byte Move_RECYCLE                      @ MOVE_RECYCLE
 	.4byte gUnknown_8283CB8                  @ 279
-	.4byte gUnknown_827C61E                  @ 280
+	.4byte Move_BRICK_BREAK                  @ MOVE_BRICK_BREAK
 	.4byte gUnknown_827C7DF                  @ 281
 	.4byte gUnknown_828536A                  @ 282
 	.4byte gUnknown_827C822                  @ 283
@@ -3715,8 +3715,71 @@ Move_RECYCLE:: @ 0x0827C5EA
 	delay 1
 	end
 
-gUnknown_827C61E: @ 0x0827C61E
-	.incbin "baserom_jp.gba", 0x27c61e, 0x1c1
+Move_BRICK_BREAK:: @ 0x0827C61E
+	loadspritegfx ANIM_TAG_BLUE_LIGHT_WALL
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_TORN_METAL
+	choosetwoturnanim BrickBreakNormal, BrickBreakShatteredWall
+
+BrickBreakNormal:
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 3, 8
+	delay 4
+	delay 1
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=-18, y=-18, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_VITAL_THROW, SOUND_PAN_TARGET
+	delay 20
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 3, 8
+	delay 5
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=18, y=18, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_VITAL_THROW, SOUND_PAN_TARGET
+	delay 20
+	createvisualtask AnimTask_WindUpLunge, 2, ANIM_ATTACKER, -24, 0, 24, 10, 24, 3
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=6, color=RGB_BLACK
+	delay 37
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	create_fist_sprite ANIM_ATTACKER, 4, x=0, y=0, duration=10
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=6, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	end
+
+BrickBreakShatteredWall:
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 3, 8
+	delay 4
+	createsprite gBrickBreakWallSpriteTemplate, ANIM_ATTACKER, 3, ANIM_TARGET, 0, 0, 90, 10
+	delay 1
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=-18, y=-18, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_VITAL_THROW, SOUND_PAN_TARGET
+	delay 20
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 3, 8
+	delay 5
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=18, y=18, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_VITAL_THROW, SOUND_PAN_TARGET
+	delay 20
+	createvisualtask AnimTask_WindUpLunge, 2, ANIM_ATTACKER, -24, 0, 24, 10, 24, 3
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=6, color=RGB_BLACK
+	delay 37
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	create_fist_sprite ANIM_ATTACKER, 4, x=0, y=0, duration=10
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createsprite gBrickBreakWallShardSpriteTemplate, ANIM_ATTACKER, 2, ANIM_TARGET, 0, -8, -12
+	createsprite gBrickBreakWallShardSpriteTemplate, ANIM_ATTACKER, 2, ANIM_TARGET, 1, 8, -12
+	createsprite gBrickBreakWallShardSpriteTemplate, ANIM_ATTACKER, 2, ANIM_TARGET, 2, -8, 12
+	createsprite gBrickBreakWallShardSpriteTemplate, ANIM_ATTACKER, 2, ANIM_TARGET, 3, 8, 12
+	playsewithpan SE_M_BRICK_BREAK, SOUND_PAN_TARGET
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=6, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	end
 
 gUnknown_827C7DF: @ 0x0827C7DF
 	.incbin "baserom_jp.gba", 0x27c7df, 0x43
