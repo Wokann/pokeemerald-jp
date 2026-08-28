@@ -919,10 +919,6 @@ Common_EventScript_OutOfCenterPartyHeal::
 	.set EventTicket_Text_OddTicketGetOnBoard, 0x08275D2A
 	.globl EventTicket_Text_OddTicketsWhereTo
 	.set EventTicket_Text_OddTicketsWhereTo, 0x08275DF2
-	.globl Roulette_EventScript_Table1
-	.set Roulette_EventScript_Table1, 0x08262C92
-	.globl Roulette_EventScript_Table2
-	.set Roulette_EventScript_Table2, 0x08262CC0
 	.globl EventScript_GotoTrainerScript
 	.set EventScript_GotoTrainerScript, 0x08244D20
 	@ The Lavaridge House event table references the shared Mimic tutor script.
@@ -1466,55 +1462,7 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/scripts/repel.inc"
 
 	.include "data/scripts/safari_zone.inc"
-	.incbin "baserom_jp.gba", 0x262C92, 0x61
-
-	.globl gUnknown_8262CF3
-gUnknown_8262CF3: @ 0x8262CF3
-	.include "data/scripts/gUnknown_8262CF3.inc"
-
-	.globl gUnknown_8262D18
-gUnknown_8262D18: @ 0x8262D18
-	.include "data/scripts/gUnknown_8262D18.inc"
-
-	.globl gUnknown_8262D23
-gUnknown_8262D23: @ 0x8262D23
-	.include "data/scripts/gUnknown_8262D23.inc"
-
-	.globl gUnknown_8262D3F
-gUnknown_8262D3F: @ 0x8262D3F
-	.include "data/scripts/gUnknown_8262D3F.inc"
-
-	.globl gUnknown_8262D66
-gUnknown_8262D66: @ 0x8262D66
-	.string "あたりー！$"
-
-	.globl gUnknown_8262D6C
-gUnknown_8262D6C: @ 0x8262D6C
-	.include "data/scripts/gUnknown_8262D6C.inc"
-
-	.globl gUnknown_8262D74
-gUnknown_8262D74: @ 0x8262D74
-	.include "data/scripts/gUnknown_8262D74.inc"
-
-	.globl gUnknown_8262D79
-gUnknown_8262D79: @ 0x8262D79
-	.include "data/scripts/gUnknown_8262D79.inc"
-
-	.globl gUnknown_8262D96
-gUnknown_8262D96: @ 0x8262D96
-	.include "data/scripts/gUnknown_8262D96.inc"
-
-	.globl gUnknown_8262DA3
-gUnknown_8262DA3: @ 0x8262DA3
-	.string "つづけて　あそびますか？$"
-
-	.globl gUnknown_8262DB0
-gUnknown_8262DB0: @ 0x8262DB0
-	.include "data/scripts/gUnknown_8262DB0.inc"
-
-	.globl gUnknown_8262DD5
-gUnknown_8262DD5: @ 0x8262DD5
-	.include "data/scripts/gUnknown_8262DD5.inc"
+	.include "data/scripts/roulette.inc"
 
 	.globl gBirchDexRatingText_AreYouCurious
 gBirchDexRatingText_AreYouCurious: @ 0x8262DF5

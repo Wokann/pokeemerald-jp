@@ -1,8 +1,0 @@
-	compare_addr_to_local 0x123D2E, 0xA
-	copyvar 0x241, 0x1A44
-	.byte 0xFE
-	giveegg 0x64AE
-	nop
-	waitmovement 0x9DA0
-	nop
-	.incbin "baserom_jp.gba", 0x262D37, 0x8

@@ -1,1 +1,0 @@
-	setorcopyvar 0x2A3E, 0xFFAE
