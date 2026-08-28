@@ -244,11 +244,6 @@
 	@ The Sootopolis Center event table points to the retained Double-Edge tutor script.
 	.globl SootopolisCity_PokemonCenter_1F_EventScript_DoubleEdgeTutor
 	.set SootopolisCity_PokemonCenter_1F_EventScript_DoubleEdgeTutor, 0x08276B72
-	@ Space Center 2F's post-battle calls target retained Match Call text.
-	.globl MatchCall_Text_MayRayquazaCall
-	.set MatchCall_Text_MayRayquazaCall, 0x0826AB1B
-	.globl MatchCall_Text_BrendanRayquazaCall
-	.set MatchCall_Text_BrendanRayquazaCall, 0x0826ABC8
 	@ This shared movement stream remains in the retained JP movement block.
 	.globl Common_Movement_QuestionMark
 	.set Common_Movement_QuestionMark, 0x08243619
@@ -256,11 +251,6 @@
 	.set Common_EventScript_UpdateBrineyLocation, 0x08242978
 	.globl Common_EventScript_PkmnCenterNurse
 	.set Common_EventScript_PkmnCenterNurse, 0x082429B8
-	.globl MatchCall_Text_BirchRegisterCall
-	.set MatchCall_Text_BirchRegisterCall, 0x0826C1AF
-	.globl MatchCall_Text_RegisteredBirch
-	.set MatchCall_Text_RegisteredBirch, 0x0826C23E
-
 	.set ALLOCATE_SCRIPT_CMD_TABLE, 1
 	.include "data/script_cmd_table.inc"
 
@@ -1467,7 +1457,8 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/text/check_furniture.inc"
 	.include "data/scripts/cave_hole.inc"
 	.include "data/scripts/lilycove_lady.inc"
-	.include "data/scripts/gUnknown_82651E4.inc"
+	.include "data/text/match_call.inc"
+	.include "data/scripts/gUnknown_826C765.inc"
 
 	.globl EventScript_TrainerHillTimer
 EventScript_TrainerHillTimer: @ 0x8276CAF
