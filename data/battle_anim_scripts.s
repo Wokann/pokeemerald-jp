@@ -228,7 +228,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827BD2B                  @ 206
 	.4byte gUnknown_827BDB2                  @ 207
 	.4byte gUnknown_827BDFA                  @ 208
-	.4byte gUnknown_827A02F                  @ 209
+	.4byte Move_SPARK                        @ MOVE_SPARK
 	.4byte Move_FURY_CUTTER                   @ MOVE_FURY_CUTTER
 	.4byte gUnknown_8281904                  @ 211
 	.4byte gUnknown_827A4A6                  @ 212
@@ -1944,8 +1944,51 @@ OutrageFlames:
 	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=-5, y_velocity=-3, flicker_duration=3
 	return
 
-gUnknown_827A02F: @ 0x0827A02F
-	.incbin "baserom_jp.gba", 0x27a02f, 0x217
+Move_SPARK: @ 0x0827A02F
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_SPARK_2
+	delay 0
+	blend_color_cycle priority=2, selector=F_PAL_BG | F_PAL_ATTACKER, delay=-31, num_blends=1, initial_blend_y=5, target_blend_y=5, color=RGB(31, 31, 22)
+	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
+	createsprite gSparkElectricitySpriteTemplate, ANIM_ATTACKER, 0, 32, 24, 190, 12, ANIM_ATTACKER, 1, 0
+	delay 0
+	createsprite gSparkElectricitySpriteTemplate, ANIM_ATTACKER, 0, 80, 24, 22, 12, ANIM_ATTACKER, 1, 0
+	createsprite gSparkElectricitySpriteTemplate, ANIM_ATTACKER, 0, 156, 24, 121, 13, ANIM_ATTACKER, 1, 1
+	delay 0
+	blend_color_cycle priority=2, selector=F_PAL_BG | F_PAL_ATTACKER, delay=-31, num_blends=1, initial_blend_y=0, target_blend_y=0, color=RGB(31, 31, 22)
+	delay 10
+	blend_color_cycle priority=2, selector=F_PAL_BG | F_PAL_ATTACKER, delay=-31, num_blends=1, initial_blend_y=5, target_blend_y=5, color=RGB(31, 31, 22)
+	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
+	createsprite gSparkElectricitySpriteTemplate, ANIM_ATTACKER, 0, 100, 24, 60, 10, ANIM_ATTACKER, 1, 0
+	createsprite gSparkElectricitySpriteTemplate, ANIM_ATTACKER, 0, 170, 24, 42, 11, ANIM_ATTACKER, 1, 1
+	delay 0
+	createsprite gSparkElectricitySpriteTemplate, ANIM_ATTACKER, 0, 238, 24, 165, 10, ANIM_ATTACKER, 1, 1
+	delay 0
+	blend_color_cycle priority=2, selector=F_PAL_BG | F_PAL_ATTACKER, delay=-31, num_blends=1, initial_blend_y=0, target_blend_y=0, color=RGB(31, 31, 22)
+	delay 20
+	blend_color_cycle priority=2, selector=F_PAL_BG | F_PAL_ATTACKER, delay=-31, num_blends=1, initial_blend_y=7, target_blend_y=7, color=RGB(31, 31, 22)
+	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 32, 12, 0, 20, 0, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 32, 12, 64, 20, 1, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 32, 12, 128, 20, 0, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 32, 12, 192, 20, 2, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 16, 12, 32, 20, 0, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 16, 12, 96, 20, 1, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 16, 12, 160, 20, 0, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 16, 12, 224, 20, 2, 0
+	delay 4
+	waitforvisualfinish
+	blend_color_cycle priority=2, selector=F_PAL_BG | F_PAL_ATTACKER, delay=-31, num_blends=1, initial_blend_y=0, target_blend_y=0, color=RGB(31, 31, 22)
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 4
+	delay 4
+	playsewithpan SE_M_HYPER_BEAM, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	waitforvisualfinish
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=-31, num_blends=2, initial_blend_y=0, target_blend_y=6, color=RGB(31, 31, 22)
+	call ElectricityEffect
+	waitforvisualfinish
+	end
 
 gUnknown_827A246: @ 0x0827A246
 	.incbin "baserom_jp.gba", 0x27a246, 0xf9
