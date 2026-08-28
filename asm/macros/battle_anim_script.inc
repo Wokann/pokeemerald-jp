@@ -303,6 +303,14 @@
 	jumpreteq FALSE, \ptr
 	.endm
 
+	.macro attacker_fade_to_invisible priority=2, step_delay:req
+	createvisualtask AnimTask_AttackerFadeToInvisible, \priority, \step_delay
+	.endm
+
+	.macro attacker_fade_from_invisible priority=2, step_delay:req
+	createvisualtask AnimTask_AttackerFadeFromInvisible, \priority, \step_delay
+	.endm
+
 	.macro create_basic_hitsplat_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, relative_to:req, animation:req
 	createsprite gBasicHitSplatSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \relative_to, \animation
 	.endm

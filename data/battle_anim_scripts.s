@@ -162,7 +162,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_BARRAGE                      @ MOVE_BARRAGE
 	.4byte gUnknown_827F9D6                  @ 141
 	.4byte gUnknown_82825BC                  @ 142
-	.4byte gUnknown_827B707                  @ 143
+	.4byte Move_SKY_ATTACK                   @ MOVE_SKY_ATTACK
 	.4byte gUnknown_8283161                  @ 144
 	.4byte gUnknown_827E69B                  @ 145
 	.4byte Move_DIZZY_PUNCH                  @ MOVE_DIZZY_PUNCH
@@ -2920,8 +2920,75 @@ Move_BARRAGE:: @ 0x0827B6BF
 	loopsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET, 8, 2
 	end
 
-gUnknown_827B707: @ 0x0827B707
-	.incbin "baserom_jp.gba", 0x27b707, 0x198
+Move_SKY_ATTACK:: @ 0x0827B707
+	choosetwoturnanim SkyAttackSetUp, SkyAttackUnleash
+SkyAttackEnd:
+	end
+
+SkyAttackSetUp:
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 11
+	createvisualtask AnimTask_GetTargetIsAttackerPartner, 5, ARG_RET_ID
+	jumpretfalse SkyAttackSetUpAgainstOpponent
+	goto SkyAttackSetUpAgainstPartner
+
+SkyAttackSetUpAgainstOpponent:
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_ATK_SIDE | F_PAL_DEF_PARTNER, 1, 0, 12, RGB_BLACK
+	waitforvisualfinish
+	delay 12
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 1, 8, 0, RGB_BLACK
+	createvisualtask AnimTask_HorizontalShake, 5, ANIM_ATTACKER, 2, 16
+	loopsewithpan SE_M_STAT_INCREASE, SOUND_PAN_ATTACKER, 4, 8
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 1, 0, 15, RGB_WHITE
+	delay 20
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 1, 15, 0, RGB_WHITE
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_ATK_PARTNER | F_PAL_DEF_PARTNER, 1, 8, 0, RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	goto SkyAttackEnd
+
+SkyAttackSetUpAgainstPartner:
+	createvisualtask AnimTask_BlendBattleAnimPalExclude, 10, ANIM_TARGET, 1, 0, 12, RGB_BLACK
+	waitforvisualfinish
+	delay 12
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 1, 8, 0, RGB_BLACK
+	createvisualtask AnimTask_HorizontalShake, 5, ANIM_ATTACKER, 2, 16
+	playsewithpan SE_M_STAT_INCREASE, SOUND_PAN_ATTACKER
+	delay 8
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 1, 0, 15, RGB_WHITE
+	delay 20
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 1, 15, 0, RGB_WHITE
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPalExclude, 10, 4, 1, 8, 0, RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	goto SkyAttackEnd
+
+SkyAttackUnleash:
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_BIRD
+	call SetSkyBg
+	monbg ANIM_ATTACKER
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 0, 0, 16, RGB_WHITE
+	delay 4
+	attacker_fade_to_invisible priority=5, step_delay=0
+	waitforvisualfinish
+	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_SKY_UPPERCUT, SOUND_PAN_ATTACKER
+	createsprite gSkyAttackBirdSpriteTemplate, ANIM_TARGET, 2
+	delay 14
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 10, 0, 18, 1
+	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	delay 20
+	attacker_fade_from_invisible priority=5, step_delay=1
+	delay 2
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 0, 15, 0, RGB_WHITE
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	call UnsetSkyBg
+	goto SkyAttackEnd
 
 gUnknown_827B89F: @ 0x0827B89F
 	.incbin "baserom_jp.gba", 0x27b89f, 0xd
@@ -3712,8 +3779,14 @@ SetPsychicBackground: @ 0x08286258
 UnsetPsychicBackground: @ 0x08286264
 	.incbin "baserom_jp.gba", 0x286264, 0x8
 
-gUnknown_828626C: @ 0x0828626C
-	.incbin "baserom_jp.gba", 0x28626c, 0x75
+SetSkyBg: @ 0x0828626C
+	.incbin "baserom_jp.gba", 0x28626c, 0x30
+
+UnsetSkyBg: @ 0x0828629C
+	.incbin "baserom_jp.gba", 0x28629c, 0x8
+
+gUnknown_82862A4: @ 0x082862A4
+	.incbin "baserom_jp.gba", 0x2862a4, 0x3d
 
 gUnknown_82862E1: @ 0x082862E1
 	.incbin "baserom_jp.gba", 0x2862e1, 0x2b
