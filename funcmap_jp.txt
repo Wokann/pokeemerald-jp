@@ -1161,7 +1161,7 @@ berry_crush.s
 080222b4 HideTimer HideTimer
 080222e8 sub_080222E8_jp CreatePlayerNameWindows
 08022360 sub_08022360_jp DrawPlayerNameWindows
-08022434 sub_08022434_jp CopyPlayerNameWindowGfxToBg
+08022434 CopyPlayerNameWindowGfxToBg CopyPlayerNameWindowGfxToBg
 08022494 sub_08022494_jp CreateGameSprites
 080226c4 sub_080226C4_jp DestroyGameSprites
 08022784 berry_crush.s sub_08022784_jp

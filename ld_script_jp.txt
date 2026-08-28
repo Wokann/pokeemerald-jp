@@ -1242,7 +1242,6 @@ sub_0802691C = GetActiveBerryColumns;
 Task_ShowRankings = sub_08021FC0;
 sub_08022230 = ShowBerryCrushRankings;
 ChooseBerryForMachine = sub_081AA968;
-CopyPlayerNameWindowGfxToBg = sub_08022434;
 InitTextBoxGfxAndPrinters = sub_08196DF4;
 sub_08020918 = GetBerryCrushGame;
 sub_08020924 = QuitBerryCrush;
@@ -2165,7 +2164,7 @@ SECTIONS {
         src/berry_crush.o(.text.HideTimer);
         src/berry_crush.o(.text.CreatePlayerNameWindows);
         src/berry_crush.o(.text.DrawPlayerNameWindows);
-        src/berry_crush.o(.text.sub_08022434);
+        src/berry_crush.o(.text.CopyPlayerNameWindowGfxToBg);
         src/berry_crush.o(.text.CreateGameSprites);
         src/berry_crush.o(.text.DestroyGameSprites);
         src/berry_crush.o(.text.SpriteCB_Impact);

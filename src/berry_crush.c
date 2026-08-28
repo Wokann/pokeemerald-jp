@@ -2681,109 +2681,66 @@ __attribute__((naked)) void sub_08021FC0(void)
 }
 
 
-__attribute__((naked)) void sub_08022434(void)
+void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *game)
 {
-    __asm__(".syntax unified\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r0, _08022448\n\t"
-        "	ldr r4, _0802244C\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl LZ77UnCompWram\n\t"
-        "	b _0802247E\n\t"
-        "	.align 2, 0\n\t"
-        "_08022448: .4byte sPlayerNameWindowGfx\n\t"
-        "_0802244C: .4byte gDecompressionBuffer\n\t"
-        "_08022450:\n\t"
-        "	lsls r1, r5, #2\n\t"
-        "	movs r2, #0x98\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r6, r2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	ldrb r2, [r3, #1]\n\t"
-        "	ldrb r3, [r3, #2]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #3\n\t"
-        "	bl CopyToBgTilemapBufferRect\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "_0802247E:\n\t"
-        "	ldrb r0, [r6, #9]\n\t"
-        "	cmp r5, r0\n\t"
-        "	blo _08022450\n\t"
-        "	movs r0, #3\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i = 0;
+    u8 *windowGfx;
+
+    LZ77UnCompWram(sPlayerNameWindowGfx, gDecompressionBuffer);
+
+    for (windowGfx = gDecompressionBuffer; i < game->playerCount; i++)
+    {
+        CopyToBgTilemapBufferRect(
+            3,
+            &windowGfx[game->gfx.playerCoords[i]->playerId * 40],
+            game->gfx.playerCoords[i]->windowGfxX,
+            game->gfx.playerCoords[i]->windowGfxY,
+            10,
+            2
+        );
+    }
+    CopyBgTilemapBufferToVram(3);
 }
 
 
-__attribute__((naked)) u32 Cmd_BeginNormalPaletteFade(struct BerryCrushGame *game, u8 *args)
+u32 Cmd_BeginNormalPaletteFade(struct BerryCrushGame *game, u8 *args)
 {
-    __asm__(".syntax unified\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	ldrb r3, [r1, #1]\n\t"
-        "	lsls r3, r3, #8\n\t"
-        "	orrs r2, r3\n\t"
-        "	ldrb r3, [r1, #2]\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	orrs r2, r3\n\t"
-        "	ldrb r3, [r1, #3]\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	orrs r0, r3\n\t"
-        "	ldrb r2, [r1, #9]\n\t"
-        "	strb r2, [r1]\n\t"
-        "	ldrb r4, [r1, #8]\n\t"
-        "	lsls r4, r4, #8\n\t"
-        "	ldrb r2, [r1, #7]\n\t"
-        "	orrs r4, r2\n\t"
-        "	ldr r5, _08022A10\n\t"
-        "	ldrb r3, [r5, #8]\n\t"
-        "	movs r2, #0x7f\n\t"
-        "	ands r2, r3\n\t"
-        "	strb r2, [r5, #8]\n\t"
-        "	movs r5, #4\n\t"
-        "	ldrsb r5, [r1, r5]\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	ldrb r3, [r1, #6]\n\t"
-        "	str r4, [sp]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r6, #0xe]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08022A10: .4byte gPaletteFade\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    // args points to packed values:
+    // bytes 0-3: selectedPals (bitfield)
+    // byte 4: delay
+    // byte 5: startY
+    // byte 6: stopY
+    // bytes 7-8: fade color
+    // byte 9: if TRUE, communicate on fade complete
 
+    u16 color;
+    u32 selectedPals[2];
+
+    selectedPals[0] = (u32)args[0];
+    selectedPals[1] = (u32)args[1];
+    selectedPals[1] <<= 8;
+
+    selectedPals[0] |= selectedPals[1];
+    selectedPals[1] = (u32)args[2];
+    selectedPals[1] <<= 16;
+
+    selectedPals[0] |= selectedPals[1];
+    selectedPals[1] = (u32)args[3];
+    selectedPals[1] <<= 24;
+
+    selectedPals[0] |= selectedPals[1];
+    args[0] = args[9];
+
+    color = args[8];
+    color <<= 8;
+    color |= args[7];
+
+    gPaletteFade.bufferTransferDisabled = FALSE;
+    BeginNormalPaletteFade(selectedPals[0], args[4], args[5], args[6], color);
+    UpdatePaletteFade();
+    game->nextCmd = CMD_WAIT_FADE;
+    return 0;
+}
 
 __attribute__((naked)) u32 Cmd_TabulateResults(struct BerryCrushGame *game, u8 *args)
 {
