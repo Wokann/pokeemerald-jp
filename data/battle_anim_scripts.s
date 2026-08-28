@@ -184,7 +184,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SUPER_FANG                   @ MOVE_SUPER_FANG
 	.4byte Move_SLASH                        @ MOVE_SLASH
 	.4byte gUnknown_8283D8E                  @ 164
-	.4byte gUnknown_827B9A1                  @ 165
+	.4byte Move_STRUGGLE                     @ MOVE_STRUGGLE
 	.4byte gUnknown_827BA07                  @ 166
 	.4byte gUnknown_828081A                  @ 167
 	.4byte Move_THIEF                        @ MOVE_THIEF
@@ -3051,8 +3051,23 @@ Move_SLASH:: @ 0x0827B967
 	waitforvisualfinish
 	end
 
-gUnknown_827B9A1: @ 0x0827B9A1
-	.incbin "baserom_jp.gba", 0x27b9a1, 0x66
+Move_STRUGGLE:: @ 0x0827B9A1
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_MOVEMENT_WAVES
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_ATTACKER, 3, 0, 12, 4
+	createsprite gMovementWavesSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 2
+	createsprite gMovementWavesSpriteTemplate, ANIM_ATTACKER, 2, 0, 1, 2
+	loopsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER, 12, 4
+	waitforvisualfinish
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_TARGET, 3, 0, 6, 1
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_827BA07: @ 0x0827BA07
 	.incbin "baserom_jp.gba", 0x27ba07, 0x28
