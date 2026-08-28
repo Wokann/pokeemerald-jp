@@ -1,656 +1,193 @@
 #include "global.h"
+#include "confetti_util.h"
+#include "malloc.h"
+#include "main.h"
+#include "digit_obj_util.h"
 
-__attribute__((naked)) void sub_0815219C(void)
+struct ConfettiUtilWork
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _081521DA\n\t"
-        "	cmp r4, #0x40\n\t"
-        "	bls _081521B2\n\t"
-        "	movs r4, #0x40\n\t"
-        "_081521B2:\n\t"
-        "	ldr r6, _081521E0\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r6]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081521DA\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	bl AllocZeroed\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081521E4\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r6]\n\t"
-        "_081521DA:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08152220\n\t"
-        "	.align 2, 0\n\t"
-        "_081521E0: .4byte gUnknown_203A884\n\t"
-        "_081521E4:\n\t"
-        "	strb r4, [r1]\n\t"
-        "	cmp r5, r4\n\t"
-        "	bhs _0815221E\n\t"
-        "	adds r3, r6, #0\n\t"
-        "	ldr r0, _0815222C\n\t"
-        "	mov ip, r0\n\t"
-        "	movs r2, #4\n\t"
-        "	mov r8, r2\n\t"
-        "_081521F4:\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r2, [r0, #4]\n\t"
-        "	lsls r1, r5, #1\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r2, r1, r2\n\t"
-        "	mov r0, ip\n\t"
-        "	ldm r0!, {r6, r7}\n\t"
-        "	stm r2!, {r6, r7}\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1, #0x19]\n\t"
-        "	mov r2, r8\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #0x19]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, r4\n\t"
-        "	blo _081521F4\n\t"
-        "_0815221E:\n\t"
-        "	movs r0, #1\n\t"
-        "_08152220:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0815222C: .4byte gDummyOamData\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 count;
+    struct ConfettiUtil *array;
+};
+
+extern struct ConfettiUtilWork *gUnknown_203A884;
+
+#define sWork gUnknown_203A884
+
+bool32 ConfettiUtil_Init(u8 count)
+{
+    u8 i = 0;
+
+    if (count == 0)
+        return FALSE;
+    if (count > 64)
+        count = 64;
+
+    sWork = AllocZeroed(sizeof(*sWork));
+    if (sWork == NULL)
+        return FALSE;
+    sWork->array = AllocZeroed(count * sizeof(struct ConfettiUtil));
+    if (sWork->array == NULL)
+    {
+        FREE_AND_SET_NULL(sWork);
+        return FALSE;
+    }
+
+    sWork->count = count;
+    for (i = 0; i < count; i++)
+    {
+        memcpy(&sWork->array[i].oam, &gDummyOamData, sizeof(struct OamData));
+        sWork->array[i].dummied = TRUE;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_08152230(void)
+bool32 ConfettiUtil_Free(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, _08152244\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _08152248\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081522A0\n\t"
-        "	.align 2, 0\n\t"
-        "_08152244: .4byte gUnknown_203A884\n\t"
-        "_08152248:\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	cmp r3, r2\n\t"
-        "	bhs _0815226E\n\t"
-        "	ldr r0, _081522A8\n\t"
-        "	mov ip, r0\n\t"
-        "	ldr r4, _081522AC\n\t"
-        "	adds r2, r5, #0\n\t"
-        "_08152256:\n\t"
-        "	lsls r1, r3, #3\n\t"
-        "	add r1, ip\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	ldm r0!, {r6, r7}\n\t"
-        "	stm r1!, {r6, r7}\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r3, r0\n\t"
-        "	blo _08152256\n\t"
-        "_0815226E:\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r2, r0, #1\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r0, [r1, #4]\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	movs r1, #0\n\t"
-        "	bl memset\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	bl Free\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [r0, #4]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	bl memset\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	bl Free\n\t"
-        "	str r4, [r5]\n\t"
-        "	movs r0, #1\n\t"
-        "_081522A0:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081522A8: .4byte gUnknown_3002598\n\t"
-        "_081522AC: .4byte gDummyOamData\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i = 0;
+
+    if (sWork == NULL)
+        return FALSE;
+
+    for (i = 0; i < sWork->count; i++)
+        memcpy(&gMain.oamBuffer[i + 64], &gDummyOamData, sizeof(struct OamData));
+
+    memset(sWork->array, 0, sWork->count * sizeof(struct ConfettiUtil));
+    FREE_AND_SET_NULL(sWork->array);
+    memset(sWork, 0, sizeof(*sWork));
+    FREE_AND_SET_NULL(sWork);
+
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_081522B0(void)
+bool32 ConfettiUtil_Update(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r0, _081522CC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081522C8\n\t"
-        "	ldr r0, [r1, #4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081522D0\n\t"
-        "_081522C8:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081523AE\n\t"
-        "	.align 2, 0\n\t"
-        "_081522CC: .4byte gUnknown_203A884\n\t"
-        "_081522D0:\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	cmp r6, r1\n\t"
-        "	bhs _081523AC\n\t"
-        "	adds r7, r3, #0\n\t"
-        "	movs r0, #3\n\t"
-        "	mov r8, r0\n\t"
-        "_081522DC:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	lsls r0, r6, #1\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r5, r0, #4\n\t"
-        "	adds r2, r5, r1\n\t"
-        "	ldrb r1, [r2, #0x19]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _0815239E\n\t"
-        "	ldr r1, [r2, #0x2c]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081522FE\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "_081522FE:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	adds r2, r5, r0\n\t"
-        "	ldrb r1, [r2, #0x19]\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08152324\n\t"
-        "	lsls r0, r6, #3\n\t"
-        "	ldr r1, _0815231C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08152320\n\t"
-        "	ldm r1!, {r2, r3}\n\t"
-        "	stm r0!, {r2, r3}\n\t"
-        "	b _0815239C\n\t"
-        "	.align 2, 0\n\t"
-        "_0815231C: .4byte gUnknown_3002598\n\t"
-        "_08152320: .4byte gDummyOamData\n\t"
-        "_08152324:\n\t"
-        "	ldrb r0, [r2, #0xe]\n\t"
-        "	ldrb r4, [r2, #0xa]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r4, [r7]\n\t"
-        "	ldr r3, [r4, #4]\n\t"
-        "	adds r3, r5, r3\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r2, [r3, r0]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r3, r1]\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r1, _081523B8\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ands r2, r0\n\t"
-        "	ldrh r0, [r3, #2]\n\t"
-        "	ldr r1, _081523BC\n\t"
-        "	mov ip, r1\n\t"
-        "	mov r1, ip\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strh r0, [r3, #2]\n\t"
-        "	ldr r3, [r4, #4]\n\t"
-        "	adds r3, r5, r3\n\t"
-        "	ldrb r0, [r3, #0x19]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	mov r2, r8\n\t"
-        "	ands r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldrb r1, [r3, #5]\n\t"
-        "	movs r4, #0xd\n\t"
-        "	rsbs r4, r4, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r3, #5]\n\t"
-        "	ldr r4, [r7]\n\t"
-        "	ldr r2, [r4, #4]\n\t"
-        "	adds r2, r5, r2\n\t"
-        "	ldrh r3, [r2, #0x14]\n\t"
-        "	ldr r1, _081523C0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	mov ip, r1\n\t"
-        "	ldrh r0, [r2, #4]\n\t"
-        "	ldr r3, _081523C4\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	mov r1, ip\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2, #4]\n\t"
-        "	lsls r1, r6, #3\n\t"
-        "	ldr r2, _081523C8\n\t"
-        "	ldr r0, [r4, #4]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldm r0!, {r2, r3}\n\t"
-        "	stm r1!, {r2, r3}\n\t"
-        "_0815239C:\n\t"
-        "	ldr r3, _081523CC\n\t"
-        "_0815239E:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	blo _081522DC\n\t"
-        "_081523AC:\n\t"
-        "	movs r0, #1\n\t"
-        "_081523AE:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081523B8: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_081523BC: .4byte 0xFFFFFE00\n\t"
-        "_081523C0: .4byte 0x000003FF\n\t"
-        "_081523C4: .4byte 0xFFFFFC00\n\t"
-        "_081523C8: .4byte gUnknown_3002598\n\t"
-        "_081523CC: .4byte gUnknown_203A884\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i = 0;
+
+    if (sWork == NULL || sWork->array == NULL)
+        return FALSE;
+
+    for (i = 0; i < sWork->count; i++)
+    {
+        if (sWork->array[i].active && sWork->array[i].allowUpdates)
+        {
+            if (sWork->array[i].callback != NULL)
+                sWork->array[i].callback(&sWork->array[i]);
+
+            if (sWork->array[i].dummied)
+            {
+                memcpy(&gMain.oamBuffer[i + 64], &gDummyOamData, sizeof(struct OamData));
+            }
+            else
+            {
+                sWork->array[i].oam.y = sWork->array[i].y + sWork->array[i].yDelta;
+                sWork->array[i].oam.x = sWork->array[i].x + sWork->array[i].xDelta;
+                sWork->array[i].oam.priority = sWork->array[i].priority;
+                sWork->array[i].oam.tileNum = sWork->array[i].tileNum;
+                memcpy(&gMain.oamBuffer[i + 64], &sWork->array[i], sizeof(struct OamData));
+            }
+        }
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_081523D0(void)
+static bool32 SetAnimAndTileNum(struct ConfettiUtil *structPtr, u8 animNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _0815240C\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	bl GetSpriteTileStartByTag\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	ldr r0, _08152408\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _0815240C\n\t"
-        "	strb r6, [r4, #0x18]\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	lsrs r0, r0, #6\n\t"
-        "	ldrb r1, [r4, #3]\n\t"
-        "	lsrs r1, r1, #6\n\t"
-        "	bl GetTilesPerImage\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0815240E\n\t"
-        "	.align 2, 0\n\t"
-        "_08152408: .4byte 0x0000FFFF\n\t"
-        "_0815240C:\n\t"
-        "	movs r0, #0\n\t"
-        "_0815240E:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 tileStart;
+
+    if (structPtr == NULL)
+        return FALSE;
+
+    tileStart = GetSpriteTileStartByTag(structPtr->tileTag);
+    if (tileStart == 0xFFFF)
+        return FALSE;
+
+    structPtr->animNum = animNum;
+    structPtr->tileNum = (GetTilesPerImage(structPtr->oam.shape, structPtr->oam.size) * animNum) + tileStart;
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_08152414(void)
+u8 ConfettiUtil_SetCallback(u8 id, void (*func)(struct ConfettiUtil *))
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r0, _08152444\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08152448\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	cmp r2, r1\n\t"
-        "	bhs _08152448\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r3, r0, r1\n\t"
-        "	ldrb r1, [r3, #0x19]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08152448\n\t"
-        "	str r4, [r3, #0x2c]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	b _0815244A\n\t"
-        "	.align 2, 0\n\t"
-        "_08152444: .4byte gUnknown_203A884\n\t"
-        "_08152448:\n\t"
-        "	movs r0, #0xff\n\t"
-        "_0815244A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sWork == NULL || id >= sWork->count)
+        return 0xFF;
+    else if (!sWork->array[id].active)
+        return 0xFF;
+
+    sWork->array[id].callback = func;
+    return id;
 }
 
-__attribute__((naked)) void sub_08152450(void)
+u8 ConfettiUtil_SetData(u8 id, u8 dataArrayId, s16 dataValue)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r5, r2, #0x10\n\t"
-        "	ldr r0, _08152488\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08152484\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	cmp r3, r1\n\t"
-        "	bhs _08152484\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	lsls r0, r3, #1\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	ldrb r1, [r2, #0x19]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08152484\n\t"
-        "	cmp r4, #7\n\t"
-        "	bls _0815248C\n\t"
-        "_08152484:\n\t"
-        "	movs r0, #0xff\n\t"
-        "	b _08152498\n\t"
-        "	.align 2, 0\n\t"
-        "_08152488: .4byte gUnknown_203A884\n\t"
-        "_0815248C:\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x1a\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r5, [r0]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "_08152498:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sWork == NULL || id >= sWork->count)
+        return 0xFF;
+    else if (!sWork->array[id].active || dataArrayId > ARRAY_COUNT(sWork->array[id].data) - 1) // - 1 b/c last slot is reserved for taskId
+        return 0xFF;
+
+    sWork->array[id].data[dataArrayId] = dataValue;
+    return id;
 }
 
-__attribute__((naked)) void sub_081524A0(void)
+u8 ConfettiUtil_AddNew(const struct OamData *oam, u16 tileTag, u16 palTag, s16 x, s16 y, u8 animNum, u8 priority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r0, [sp, #0x30]\n\t"
-        "	ldr r4, [sp, #0x34]\n\t"
-        "	ldr r5, [sp, #0x38]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	str r1, [sp]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	mov r8, r2\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	str r3, [sp, #4]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	str r4, [sp, #0xc]\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	mov sl, r5\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r0, _081524EC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0815253A\n\t"
-        "	mov r1, sb\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0815250C\n\t"
-        "	b _0815253A\n\t"
-        "	.align 2, 0\n\t"
-        "_081524EC: .4byte gUnknown_203A884\n\t"
-        "_081524F0:\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x30\n\t"
-        "	bl memset\n\t"
-        "	strb r4, [r5, #0x16]\n\t"
-        "	ldrb r0, [r5, #0x19]\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r5, #0x19]\n\t"
-        "	b _08152536\n\t"
-        "_0815250C:\n\t"
-        "	movs r4, #0\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	cmp r5, r1\n\t"
-        "	bhs _08152536\n\t"
-        "	ldr r6, [r0, #4]\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	movs r7, #1\n\t"
-        "_0815251A:\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r2, r0, r6\n\t"
-        "	ldrb r1, [r2, #0x19]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081524F0\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, r3\n\t"
-        "	blo _0815251A\n\t"
-        "_08152536:\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0815253E\n\t"
-        "_0815253A:\n\t"
-        "	movs r0, #0xff\n\t"
-        "	b _0815259C\n\t"
-        "_0815253E:\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r0, sb\n\t"
-        "	ldm r0!, {r2, r3}\n\t"
-        "	stm r1!, {r2, r3}\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r5, #0x10]\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r1, [r5, #0x12]\n\t"
-        "	mov r2, sp\n\t"
-        "	ldrh r2, [r2, #4]\n\t"
-        "	strh r2, [r5, #8]\n\t"
-        "	mov r3, sp\n\t"
-        "	ldrh r3, [r3, #8]\n\t"
-        "	strh r3, [r5, #0xa]\n\t"
-        "	mov r0, r8\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	ldrb r1, [r5, #5]\n\t"
-        "	movs r4, #0xf\n\t"
-        "	ands r4, r1\n\t"
-        "	orrs r4, r0\n\t"
-        "	strb r4, [r5, #5]\n\t"
-        "	mov r0, sl\n\t"
-        "	cmp r0, #3\n\t"
-        "	bhi _08152592\n\t"
-        "	movs r1, #3\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r3, r1, #3\n\t"
-        "	ldrb r2, [r5, #0x19]\n\t"
-        "	movs r0, #0x19\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r3\n\t"
-        "	strb r0, [r5, #0x19]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r4, r0\n\t"
-        "	orrs r4, r1\n\t"
-        "	strb r4, [r5, #5]\n\t"
-        "_08152592:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ldr r1, [sp, #0xc]\n\t"
-        "	bl sub_081523D0\n\t"
-        "	ldrb r0, [r5, #0x16]\n\t"
-        "_0815259C:\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ConfettiUtil *structPtr = NULL;
+    u8 i;
+
+    if (sWork == NULL || oam == NULL)
+        return 0xFF;
+
+    for (i = 0; i < sWork->count; i++)
+    {
+        if (!sWork->array[i].active)
+        {
+            structPtr = &sWork->array[i];
+            memset(structPtr, 0, sizeof(*structPtr));
+            structPtr->id = i;
+            structPtr->active = TRUE;
+            structPtr->allowUpdates = TRUE;
+            break;
+        }
+    }
+
+    if (structPtr == NULL)
+        return 0xFF;
+
+    memcpy(&structPtr->oam, oam, sizeof(*oam));
+    structPtr->tileTag = tileTag;
+    structPtr->palTag = palTag;
+    structPtr->x = x;
+    structPtr->y = y;
+    structPtr->oam.paletteNum = IndexOfSpritePaletteTag(palTag);
+    if (priority < 4)
+    {
+        structPtr->priority = priority;
+        structPtr->oam.priority = priority;
+    }
+    SetAnimAndTileNum(structPtr, animNum);
+
+    return structPtr->id;
 }
 
-__attribute__((naked)) void sub_081525AC(void)
+u8 ConfettiUtil_Remove(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r6, _081525D4\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081525CE\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	lsls r0, r5, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r2, r4, r1\n\t"
-        "	ldrb r1, [r2, #0x19]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081525D8\n\t"
-        "_081525CE:\n\t"
-        "	movs r0, #0xff\n\t"
-        "	b _08152618\n\t"
-        "	.align 2, 0\n\t"
-        "_081525D4: .4byte gUnknown_203A884\n\t"
-        "_081525D8:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x30\n\t"
-        "	bl memset\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	ldr r2, [r3, #4]\n\t"
-        "	adds r2, r4, r2\n\t"
-        "	ldrh r1, [r2, #2]\n\t"
-        "	ldr r0, _08152620\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2, #2]\n\t"
-        "	ldr r1, [r3, #4]\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	ldrb r0, [r1, #0x19]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #0x19]\n\t"
-        "	lsls r1, r5, #3\n\t"
-        "	ldr r0, _08152624\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _08152628\n\t"
-        "	ldm r0!, {r2, r3}\n\t"
-        "	stm r1!, {r2, r3}\n\t"
-        "	adds r0, r5, #0\n\t"
-        "_08152618:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08152620: .4byte 0xFFFFFE00\n\t"
-        "_08152624: .4byte gUnknown_3002598\n\t"
-        "_08152628: .4byte gDummyOamData\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sWork == NULL || !sWork->array[id].active)
+        return 0xFF;
+
+    memset(&sWork->array[id], 0, sizeof(struct ConfettiUtil));
+    sWork->array[id].oam.y = DISPLAY_HEIGHT;
+    sWork->array[id].oam.x = DISPLAY_WIDTH;
+    sWork->array[id].dummied = TRUE;
+    memcpy(&gMain.oamBuffer[id + 64], &gDummyOamData, sizeof(struct OamData));
+    return id;
 }
+
+bool32 sub_0815219C(u8 count) __attribute__((alias("ConfettiUtil_Init")));
+bool32 sub_08152230(void) __attribute__((alias("ConfettiUtil_Free")));
+bool32 sub_081522B0(void) __attribute__((alias("ConfettiUtil_Update")));
+u8 sub_08152414(u8 id, void (*func)(struct ConfettiUtil *)) __attribute__((alias("ConfettiUtil_SetCallback")));
+u8 sub_08152450(u8 id, u8 dataArrayId, s16 dataValue) __attribute__((alias("ConfettiUtil_SetData")));
+u8 sub_081524A0(const struct OamData *oam, u16 tileTag, u16 palTag, s16 x, s16 y, u8 animNum, u8 priority) __attribute__((alias("ConfettiUtil_AddNew")));
+u8 sub_081525AC(u8 id) __attribute__((alias("ConfettiUtil_Remove")));
