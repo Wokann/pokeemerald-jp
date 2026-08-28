@@ -297,7 +297,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8282667                  @ 275
 	.4byte Move_SUPERPOWER                   @ MOVE_SUPERPOWER
 	.4byte gUnknown_82851E4                  @ 277
-	.4byte gUnknown_827C5EA                  @ 278
+	.4byte Move_RECYCLE                      @ MOVE_RECYCLE
 	.4byte gUnknown_8283CB8                  @ 279
 	.4byte gUnknown_827C61E                  @ 280
 	.4byte gUnknown_827C7DF                  @ 281
@@ -3699,8 +3699,21 @@ Move_SUPERPOWER:: @ 0x0827C52F
 	delay 1
 	end
 
-gUnknown_827C5EA: @ 0x0827C5EA
-	.incbin "baserom_jp.gba", 0x27c5ea, 0x34
+Move_RECYCLE:: @ 0x0827C5EA
+	loadspritegfx ANIM_TAG_RECYCLE
+	monbg ANIM_ATTACKER
+	setalpha 0, 16
+	delay 1
+	createsprite gRecycleSpriteTemplate, ANIM_ATTACKER, 2
+	loopsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER, 24, 3
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_ATTACKER, RGB_WHITE, 12, 2, 1
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	blendoff
+	clearmonbg ANIM_ATTACKER
+	delay 1
+	end
 
 gUnknown_827C61E: @ 0x0827C61E
 	.incbin "baserom_jp.gba", 0x27c61e, 0x1c1
