@@ -198,7 +198,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827AAAA                  @ 176
 	.4byte gUnknown_82800AD                  @ 177
 	.4byte gUnknown_8280CE4                  @ 178
-	.4byte gUnknown_8278E31                  @ 179
+	.4byte Move_REVERSAL                      @ MOVE_REVERSAL
 	.4byte gUnknown_827BAC2                  @ 180
 	.4byte gUnknown_827F245                  @ 181
 	.4byte gUnknown_8279941                  @ 182
@@ -1238,8 +1238,33 @@ Move_HIDDEN_POWER:
 	createsprite gHiddenPowerOrbScatterSpriteTemplate, ANIM_TARGET, 2, 224
 	end
 
-gUnknown_8278E31: @ 0x08278E31
-	.incbin "baserom_jp.gba", 0x278e31, 0xdb
+Move_REVERSAL:
+	loadspritegfx ANIM_TAG_BLUE_ORB
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_IMPACT
+	playsewithpan SE_M_DETECT, SOUND_PAN_ATTACKER
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=3, color1=RGB_WHITE, blend_y1=8, color2=RGB_BLACK, blend_y2=0
+	waitforvisualfinish
+	delay 30
+	blend_color_cycle priority=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=2, initial_blend_y=0, target_blend_y=10, color=RGB_WHITE
+	delay 10
+	playsewithpan SE_M_REVERSAL, SOUND_PAN_ATTACKER
+	createsprite gReversalOrbSpriteTemplate, ANIM_ATTACKER, 2, 26, 0
+	createsprite gReversalOrbSpriteTemplate, ANIM_ATTACKER, 2, 26, 42
+	createsprite gReversalOrbSpriteTemplate, ANIM_ATTACKER, 2, 26, 84
+	createsprite gReversalOrbSpriteTemplate, ANIM_ATTACKER, 2, 26, 126
+	createsprite gReversalOrbSpriteTemplate, ANIM_ATTACKER, 2, 26, 168
+	createsprite gReversalOrbSpriteTemplate, ANIM_ATTACKER, 2, 26, 210
+	waitforvisualfinish
+	delay 20
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 6, 4
+	delay 8
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=1, color1=RGB_WHITE, blend_y1=8, color2=RGB_BLACK, blend_y2=0
+	create_fist_sprite ANIM_TARGET, 4, x=0, y=0, duration=10
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, FALSE, 1, 8, 1, 0
+	end
 
 gUnknown_8278F0C: @ 0x08278F0C
 	.incbin "baserom_jp.gba", 0x278f0c, 0x71
