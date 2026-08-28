@@ -167,7 +167,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827E69B                  @ 145
 	.4byte Move_DIZZY_PUNCH                  @ MOVE_DIZZY_PUNCH
 	.4byte gUnknown_8280D3E                  @ 147
-	.4byte gUnknown_827B89F                  @ 148
+	.4byte Move_FLASH                        @ MOVE_FLASH
 	.4byte gUnknown_8281799                  @ 149
 	.4byte gUnknown_827B8AC                  @ 150
 	.4byte gUnknown_827B8C1                  @ 151
@@ -2990,8 +2990,11 @@ SkyAttackUnleash:
 	call UnsetSkyBg
 	goto SkyAttackEnd
 
-gUnknown_827B89F: @ 0x0827B89F
-	.incbin "baserom_jp.gba", 0x27b89f, 0xd
+Move_FLASH:: @ 0x0827B89F
+	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_Flash, 2
+	waitforvisualfinish
+	end
 
 gUnknown_827B8AC: @ 0x0827B8AC
 	.incbin "baserom_jp.gba", 0x27b8ac, 0x15
