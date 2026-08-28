@@ -2717,7 +2717,11 @@ gWaterHitSplatSpriteTemplate: @ 0x8572F6C
 gRandomPosHitSplatSpriteTemplate: @ 0x8572F84
 	.incbin "baserom_jp.gba", 0x572f84, 0x18
 
-	.incbin "baserom_jp.gba", 0x572f9c, 0x30
+	.globl gMonEdgeHitSplatSpriteTemplate
+gMonEdgeHitSplatSpriteTemplate: @ 0x8572F9C
+	.hword 0x2797, 0x2797
+	.4byte 0x084FD1A0, 0x082BF304, 0, 0x08572F2C, 0x08116D41
+	.incbin "baserom_jp.gba", 0x572fb4, 0x18
 
 	.globl gFlashingHitSplatSpriteTemplate
 gFlashingHitSplatSpriteTemplate: @ 0x8572FCC

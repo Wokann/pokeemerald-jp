@@ -264,7 +264,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827EB3F                  @ 242
 	.4byte gUnknown_827E605                  @ 243
 	.4byte Move_PSYCH_UP                     @ MOVE_PSYCH_UP
-	.4byte gUnknown_827BFCA                  @ 245
+	.4byte Move_EXTREME_SPEED                @ MOVE_EXTREME_SPEED
 	.4byte gUnknown_8280FE2                  @ 246
 	.4byte gUnknown_8281BEC                  @ 247
 	.4byte gUnknown_827DE74                  @ 248
@@ -3399,8 +3399,53 @@ Move_MOONLIGHT:: @ 0x0827BF3A
 	waitforvisualfinish
 	end
 
-gUnknown_827BFCA: @ 0x0827BFCA
-	.incbin "baserom_jp.gba", 0x27bfca, 0xbe
+Move_EXTREME_SPEED:: @ 0x0827BFCA
+	loadspritegfx ANIM_TAG_SPEED_DUST
+	loadspritegfx ANIM_TAG_IMPACT
+	createvisualtask AnimTask_GetAttackerSide, 2
+	jumprettrue ExtremeSpeedAgainstPlayer
+	fadetobg BG_HIGHSPEED_OPPONENT
+ExtremeSpeedContinue:
+	waitbgfadeout
+	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 0, 1, -1
+	waitbgfadein
+	createvisualtask AnimTask_AttackerStretchAndDisappear, 2
+	loopsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER, 8, 3
+	waitforvisualfinish
+	delay 1
+	createvisualtask AnimTask_SetAttackerInvisibleWaitForSignal, 2
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	delay 18
+	createvisualtask AnimTask_ExtremeSpeedImpact, 2
+	delay 2
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_mon_edge_hitsplat_sprite ANIM_TARGET, 2, relative_to=ANIM_TARGET, x=0, y=-12, animation=3
+	delay 10
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_mon_edge_hitsplat_sprite ANIM_TARGET, 2, relative_to=ANIM_TARGET, x=0, y=12, animation=3
+	delay 10
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	create_mon_edge_hitsplat_sprite ANIM_TARGET, 2, relative_to=ANIM_TARGET, x=0, y=0, animation=3
+	waitforvisualfinish
+	createvisualtask AnimTask_SpeedDust, 2
+	delay 10
+	createvisualtask AnimTask_ExtremeSpeedMonReappear, 2
+	loopsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER, 8, 4
+	waitforvisualfinish
+	restorebg
+	waitbgfadeout
+	setarg 7, 0xFFFF
+	waitbgfadein
+	clearmonbg ANIM_TARGET
+	blendoff
+	delay 1
+	setarg 7, 0x1000
+	delay 1
+	end
+ExtremeSpeedAgainstPlayer:
+	fadetobg BG_HIGHSPEED_PLAYER
+	goto ExtremeSpeedContinue
 
 gUnknown_827C088: @ 0x0827C088
 	.incbin "baserom_jp.gba", 0x27c088, 0xca

@@ -384,6 +384,10 @@
 	.endif
 	.endm
 
+	.macro create_mon_edge_hitsplat_sprite anim_battler:req, subpriority_offset:req, relative_to:req, x:req, y:req, animation:req
+	createsprite gMonEdgeHitSplatSpriteTemplate, \anim_battler, \subpriority_offset, \relative_to, \x, \y, \animation
+	.endm
+
 	.macro createleechseedsprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req, target_x:req, target_y:req, duration:req, wave_amplitude:req
 	createsprite gLeechSeedSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \target_x, \target_y, \duration, \wave_amplitude
 	.endm
