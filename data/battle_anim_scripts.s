@@ -169,7 +169,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8280D3E                  @ 147
 	.4byte Move_FLASH                        @ MOVE_FLASH
 	.4byte gUnknown_8281799                  @ 149
-	.4byte gUnknown_827B8AC                  @ 150
+	.4byte Move_SPLASH                       @ MOVE_SPLASH
 	.4byte gUnknown_827B8C1                  @ 151
 	.4byte gUnknown_8280257                  @ 152
 	.4byte Move_EXPLOSION                     @ MOVE_EXPLOSION
@@ -2996,8 +2996,12 @@ Move_FLASH:: @ 0x0827B89F
 	waitforvisualfinish
 	end
 
-gUnknown_827B8AC: @ 0x0827B8AC
-	.incbin "baserom_jp.gba", 0x27b8ac, 0x15
+Move_SPLASH:: @ 0x0827B8AC
+	createvisualtask AnimTask_Splash, 2, 0, 3
+	delay 8
+	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 38, 3
+	waitforvisualfinish
+	end
 
 gUnknown_827B8C1: @ 0x0827B8C1
 	.incbin "baserom_jp.gba", 0x27b8c1, 0x19
