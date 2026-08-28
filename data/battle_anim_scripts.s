@@ -231,7 +231,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SPARK                        @ MOVE_SPARK
 	.4byte Move_FURY_CUTTER                   @ MOVE_FURY_CUTTER
 	.4byte gUnknown_8281904                  @ 211
-	.4byte gUnknown_827A4A6                  @ 212
+	.4byte Move_MEAN_LOOK                    @ MOVE_MEAN_LOOK
 	.4byte Move_ATTRACT                      @ MOVE_ATTRACT
 	.4byte gUnknown_82829FA                  @ 214
 	.4byte gUnknown_82822BB                  @ 215
@@ -2083,8 +2083,20 @@ Move_LOCK_ON: @ 0x0827A470
 	waitforvisualfinish
 	end
 
-gUnknown_827A4A6: @ 0x0827A4A6
-	.incbin "baserom_jp.gba", 0x27a4a6, 0x45
+Move_MEAN_LOOK: @ 0x0827A4A6
+	loadspritegfx ANIM_TAG_EYE
+	monbg ANIM_DEF_PARTNER
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=16, color=RGB_BLACK
+	loopsewithpan SE_M_CONFUSE_RAY, SOUND_PAN_TARGET, 15, 4
+	waitplaysewithpan SE_M_LEER, SOUND_PAN_TARGET, 85
+	createsprite gMeanLookEyeSpriteTemplate, ANIM_ATTACKER, 2
+	delay 120
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=16, target_blend_y=0, color=RGB_BLACK
+	delay 30
+	clearmonbg ANIM_DEF_PARTNER
+	waitforvisualfinish
+	end
 
 gUnknown_827A4EB: @ 0x0827A4EB
 	.incbin "baserom_jp.gba", 0x27a4eb, 0x8c
