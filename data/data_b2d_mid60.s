@@ -1337,7 +1337,11 @@ sVoidLinesSpriteTemplate: @ 0x856F084
 gViceGripSpriteTemplate: @ 0x856F174
 	.incbin "baserom_jp.gba", 0x56f174, 0x18
 
-	.incbin "baserom_jp.gba", 0x56f18c, 0x40
+	.incbin "baserom_jp.gba", 0x56f18c, 0x28
+
+	.globl gGuillotineSpriteTemplate
+gGuillotineSpriteTemplate: @ 0x856F1B4
+	.incbin "baserom_jp.gba", 0x56f1b4, 0x18
 
 	.globl gSplashEffectAffineAnimCmds
 gSplashEffectAffineAnimCmds: @ 0x856F1CC

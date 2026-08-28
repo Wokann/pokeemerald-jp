@@ -31,7 +31,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827E01B                  @ 009
 	.4byte gUnknown_827E2CB                  @ 010
 	.4byte Move_VICE_GRIP                    @ MOVE_VICE_GRIP
-	.4byte gUnknown_8279DB5                  @ 012
+	.4byte Move_GUILLOTINE                   @ MOVE_GUILLOTINE
 	.4byte gUnknown_8281F08                  @ 013
 	.4byte Move_SWORDS_DANCE                  @ MOVE_SWORDS_DANCE
 	.4byte Move_CUT                           @ MOVE_CUT
@@ -1855,8 +1855,30 @@ Move_VICE_GRIP: @ 0x08279D6D
 	blendoff
 	end
 
-gUnknown_8279DB5: @ 0x08279DB5
-	.incbin "baserom_jp.gba", 0x279db5, 0x8c
+Move_GUILLOTINE: @ 0x08279DB5
+	loadspritegfx ANIM_TAG_CUT
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	fadetobgfromset BG_GUILLOTINE_OPPONENT, BG_GUILLOTINE_PLAYER, BG_GUILLOTINE_CONTESTS
+	waitbgfadein
+	playsewithpan SE_M_VICEGRIP, SOUND_PAN_TARGET
+	createsprite gGuillotineSpriteTemplate, ANIM_ATTACKER, 2, 0
+	createsprite gGuillotineSpriteTemplate, ANIM_ATTACKER, 2, 1
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 16, RGB_BLACK
+	delay 9
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 2, 0, 23, 1
+	delay 46
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 4, 0, 8, 1
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=0
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=8, color2=RGB_BLACK, blend_y2=0
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	restorebg
+	waitbgfadein
+	end
 
 gUnknown_8279E41: @ 0x08279E41
 	.incbin "baserom_jp.gba", 0x279e41, 0x53
