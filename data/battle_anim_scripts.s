@@ -215,7 +215,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827BB79                  @ 193
 	.4byte gUnknown_827BBB8                  @ 194
 	.4byte gUnknown_8282891                  @ 195
-	.4byte gUnknown_827A7DC                  @ 196
+	.4byte Move_ICY_WIND                     @ MOVE_ICY_WIND
 	.4byte Move_DETECT                        @ MOVE_DETECT
 	.4byte gUnknown_827FE09                  @ 198
 	.4byte Move_LOCK_ON                      @ MOVE_LOCK_ON
@@ -2229,8 +2229,42 @@ BubblebeamCreateBubbles:
 	delay 3
 	return
 
-gUnknown_827A7DC: @ 0x0827A7DC
-	.incbin "baserom_jp.gba", 0x27a7dc, 0xc0
+Move_ICY_WIND:: @ 0x0827A7DC
+	loadspritegfx ANIM_TAG_ICE_CRYSTALS
+	loadspritegfx ANIM_TAG_ICE_SPIKES
+	monbg ANIM_DEF_PARTNER
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_ATK_SIDE, 4, 0, 4, RGB_BLACK
+	fadetobg BG_ICE
+	waitbgfadeout
+	playsewithpan SE_M_ICY_WIND, 0
+	waitbgfadein
+	waitforvisualfinish
+	panse SE_M_GUST, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	call IcyWindSwirlingSnowballs
+	delay 5
+	call IcyWindSwirlingSnowballs
+	playsewithpan SE_M_GUST2, SOUND_PAN_TARGET
+	delay 55
+	call IceSpikesEffectLong
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	restorebg
+	waitbgfadeout
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_ATK_SIDE, 4, 4, 0, RGB_BLACK
+	waitbgfadein
+	end
+
+IcyWindSwirlingSnowballs:
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_TARGET, 40, 0, 0, 0, 0, 72, 1
+	delay 5
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_TARGET, 40, 0, 10, 0, 10, 72, 1
+	delay 5
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_TARGET, 40, 0, -10, 0, -10, 72, 1
+	delay 5
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_TARGET, 40, 0, 15, 0, 15, 72, 1
+	delay 5
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_TARGET, 40, 0, -5, 0, -5, 72, 1
+	return
 
 gUnknown_827A89C: @ 0x0827A89C
 	.incbin "baserom_jp.gba", 0x27a89c, 0xf9
@@ -3085,7 +3119,10 @@ gUnknown_82859FA: @ 0x082859FA
 	.incbin "baserom_jp.gba", 0x2859fa, 0x27c
 
 gUnknown_8285C76: @ 0x08285C76
-	.incbin "baserom_jp.gba", 0x285c76, 0x382
+	.incbin "baserom_jp.gba", 0x285c76, 0x209
+
+IceSpikesEffectLong: @ 0x08285E7F
+	.incbin "baserom_jp.gba", 0x285e7f, 0x179
 
 PoisonBubblesEffect: @ 0x08285FF8
 	.incbin "baserom_jp.gba", 0x285ff8, 0x71

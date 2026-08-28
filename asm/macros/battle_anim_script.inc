@@ -144,6 +144,15 @@
 	.byte \pan
 	.endm
 
+	.macro panse se:req, currentPan:req, targetPan:req, incrementPan:req, delay:req
+	.byte 0x1b
+	.2byte \se
+	.byte \currentPan
+	.byte \targetPan
+	.byte \incrementPan
+	.byte \delay
+	.endm
+
 	.macro panse_1B se:req, param1:req, param2:req, param3:req, param4:req
 	.byte 0x1b
 	.2byte \se
