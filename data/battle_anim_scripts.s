@@ -115,7 +115,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827DDB0                  @ 093
 	.4byte gUnknown_827DE11                  @ 094
 	.4byte gUnknown_8281739                  @ 095
-	.4byte gUnknown_827B349                  @ 096
+	.4byte Move_MEDITATE                     @ MOVE_MEDITATE
 	.4byte gUnknown_827B366                  @ 097
 	.4byte gUnknown_827B3B0                  @ 098
 	.4byte gUnknown_827B408                  @ 099
@@ -2702,8 +2702,15 @@ DigThrowDirt:
 	delay 32
 	return
 
-gUnknown_827B349: @ 0x0827B349
-	.incbin "baserom_jp.gba", 0x27b349, 0x1d
+Move_MEDITATE:: @ 0x0827B349
+	call SetPsychicBackground
+	createvisualtask AnimTask_MeditateStretchAttacker, 2
+	playsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER
+	delay 16
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	call UnsetPsychicBackground
+	end
 
 gUnknown_827B366: @ 0x0827B366
 	.incbin "baserom_jp.gba", 0x27b366, 0x4a
@@ -3525,7 +3532,16 @@ WaterBubblesEffectShort: @ 0x08286069
 	.incbin "baserom_jp.gba", 0x286069, 0x108
 
 ElectricityEffect: @ 0x08286171
-	.incbin "baserom_jp.gba", 0x286171, 0x170
+	.incbin "baserom_jp.gba", 0x286171, 0xe7
+
+SetPsychicBackground: @ 0x08286258
+	.incbin "baserom_jp.gba", 0x286258, 0xc
+
+UnsetPsychicBackground: @ 0x08286264
+	.incbin "baserom_jp.gba", 0x286264, 0x8
+
+gUnknown_828626C: @ 0x0828626C
+	.incbin "baserom_jp.gba", 0x28626c, 0x75
 
 gUnknown_82862E1: @ 0x082862E1
 	.incbin "baserom_jp.gba", 0x2862e1, 0x2b
