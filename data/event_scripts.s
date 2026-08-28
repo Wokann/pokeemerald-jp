@@ -256,28 +256,6 @@
 	.set Common_EventScript_UpdateBrineyLocation, 0x08242978
 	.globl Common_EventScript_PkmnCenterNurse
 	.set Common_EventScript_PkmnCenterNurse, 0x082429B8
-	.globl PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
-	.set PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet, 0x08257EE8
-	.globl PlayersHouse_1F_EventScript_EnterHouseMovingIn
-	.set PlayersHouse_1F_EventScript_EnterHouseMovingIn, 0x08257EEE
-	.globl PlayersHouse_1F_EventScript_MomGoSeeRoom
-	.set PlayersHouse_1F_EventScript_MomGoSeeRoom, 0x08257F4F
-	.globl LittlerootTown_BrendansHouse_2F_EventScript_WallClock
-	.set LittlerootTown_BrendansHouse_2F_EventScript_WallClock, 0x08257F6B
-	.globl LittlerootTown_MaysHouse_2F_EventScript_WallClock
-	.set LittlerootTown_MaysHouse_2F_EventScript_WallClock, 0x08257F77
-	.globl PlayersHouse_1F_EventScript_PetalburgGymReportMale
-	.set PlayersHouse_1F_EventScript_PetalburgGymReportMale, 0x08258057
-	.globl PlayersHouse_1F_EventScript_PetalburgGymReportFemale
-	.set PlayersHouse_1F_EventScript_PetalburgGymReportFemale, 0x082580C6
-	.globl PlayersHouse_1F_EventScript_Mom
-	.set PlayersHouse_1F_EventScript_Mom, 0x082581AF
-	.globl PlayersHouse_1F_EventScript_Vigoroth1
-	.set PlayersHouse_1F_EventScript_Vigoroth1, 0x082582A4
-	.globl PlayersHouse_1F_EventScript_Vigoroth2
-	.set PlayersHouse_1F_EventScript_Vigoroth2, 0x082582B7
-	.globl PlayersHouse_1F_EventScript_GetSSTicketAndSeeLatiTV
-	.set PlayersHouse_1F_EventScript_GetSSTicketAndSeeLatiTV, 0x082582DC
 	.globl MatchCall_Text_BirchRegisterCall
 	.set MatchCall_Text_BirchRegisterCall, 0x0826C1AF
 	.globl MatchCall_Text_RegisteredBirch
@@ -1479,7 +1457,7 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 
 	.include "data/scripts/flash.inc"
 
-	.include "data/scripts/gUnknown_8257EE8.inc"
+	.include "data/scripts/players_house.inc"
 
 	.globl EventScript_RunningShoesManual
 EventScript_RunningShoesManual: @ 0x82585CF
