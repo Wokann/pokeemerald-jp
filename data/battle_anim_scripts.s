@@ -239,7 +239,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8282718                  @ 217
 	.4byte Move_FRUSTRATION                   @ MOVE_FRUSTRATION
 	.4byte Move_SAFEGUARD                     @ MOVE_SAFEGUARD
-	.4byte gUnknown_8279CC5                  @ 220
+	.4byte Move_PAIN_SPLIT                   @ MOVE_PAIN_SPLIT
 	.4byte gUnknown_827E0E4                  @ 221
 	.4byte gUnknown_827BE3C                  @ 222
 	.4byte gUnknown_82808E1                  @ 223
@@ -1815,8 +1815,29 @@ Move_SAFEGUARD:
 	blendoff
 	end
 
-gUnknown_8279CC5: @ 0x08279CC5
-	.incbin "baserom_jp.gba", 0x279cc5, 0xa8
+Move_PAIN_SPLIT: @ 0x08279CC5
+	loadspritegfx ANIM_TAG_PAIN_SPLIT
+	createsprite gPainSplitProjectileSpriteTemplate, ANIM_ATTACKER, 2, -8, -42, ANIM_ATTACKER
+	createsprite gPainSplitProjectileSpriteTemplate, ANIM_TARGET, 2, -8, -42, ANIM_TARGET
+	delay 10
+	playsewithpan SE_M_SWAGGER2, 0
+	createvisualtask AnimTask_PainSplitMovement, 2, ANIM_ATTACKER, 0
+	createvisualtask AnimTask_PainSplitMovement, 2, ANIM_TARGET, 0
+	waitforvisualfinish
+	createsprite gPainSplitProjectileSpriteTemplate, ANIM_ATTACKER, 2, -24, -42, ANIM_ATTACKER
+	createsprite gPainSplitProjectileSpriteTemplate, ANIM_TARGET, 2, -24, -42, ANIM_TARGET
+	delay 10
+	playsewithpan SE_M_SWAGGER2, 0
+	createvisualtask AnimTask_PainSplitMovement, 2, ANIM_ATTACKER, 1
+	createvisualtask AnimTask_PainSplitMovement, 2, ANIM_TARGET, 1
+	waitforvisualfinish
+	createsprite gPainSplitProjectileSpriteTemplate, ANIM_ATTACKER, 2, 8, -42, ANIM_ATTACKER
+	createsprite gPainSplitProjectileSpriteTemplate, ANIM_TARGET, 2, 8, -42, ANIM_TARGET
+	delay 10
+	playsewithpan SE_M_SWAGGER2, 0
+	createvisualtask AnimTask_PainSplitMovement, 2, ANIM_ATTACKER, 2
+	createvisualtask AnimTask_PainSplitMovement, 2, ANIM_TARGET, 2
+	end
 
 gUnknown_8279D6D: @ 0x08279D6D
 	.incbin "baserom_jp.gba", 0x279d6d, 0x48
