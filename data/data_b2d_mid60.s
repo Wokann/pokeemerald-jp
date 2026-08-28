@@ -2395,7 +2395,18 @@ gRedXSpriteTemplate: @ 0x572390
 gSkillSwapOrbSpriteTemplate: @ 0x572448
 	.hword 0x280B, 0x280B
 	.4byte 0x084FD078, 0x082BF304, 0, 0x08572438, 0x08110641
-	.incbin "baserom_jp.gba", 0x572460, 0xa4
+
+sAffineAnim_LusterPurgeCircle: @ 0x572460
+	.incbin "baserom_jp.gba", 0x572460, 0x18
+
+sAffineAnims_LusterPurgeCircle: @ 0x572478
+	.4byte sAffineAnim_LusterPurgeCircle
+
+	.globl gLusterPurgeCircleSpriteTemplate
+gLusterPurgeCircleSpriteTemplate: @ 0x57247C
+	.hword 0x281B, 0x281B
+	.4byte 0x084FD208, gDummySpriteAnimTable, 0, sAffineAnims_LusterPurgeCircle, AnimSpriteOnMonPos
+	.incbin "baserom_jp.gba", 0x572494, 0x70
 
 	.globl gPsychoBoostOrbSpriteTemplate
 gPsychoBoostOrbSpriteTemplate: @ 0x572504
