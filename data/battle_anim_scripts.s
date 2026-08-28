@@ -153,7 +153,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SPIKE_CANNON                  @ MOVE_SPIKE_CANNON
 	.4byte gUnknown_8282111                  @ 132
 	.4byte Move_AMNESIA                      @ MOVE_AMNESIA
-	.4byte gUnknown_827B605                  @ 134
+	.4byte Move_KINESIS                      @ MOVE_KINESIS
 	.4byte gUnknown_8282239                  @ 135
 	.4byte gUnknown_8280752                  @ 136
 	.4byte gUnknown_827B656                  @ 137
@@ -2872,8 +2872,24 @@ Move_AMNESIA:: @ 0x0827B5E1
 	call UnsetPsychicBackground
 	end
 
-gUnknown_827B605: @ 0x0827B605
-	.incbin "baserom_jp.gba", 0x27b605, 0x51
+Move_KINESIS:: @ 0x0827B605
+	loadspritegfx ANIM_TAG_ALERT
+	loadspritegfx ANIM_TAG_BENT_SPOON
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	call SetPsychicBackground
+	createsprite gBentSpoonSpriteTemplate, ANIM_ATTACKER, 20
+	createsprite gKinesisZapEnergySpriteTemplate, ANIM_ATTACKER, 19, 32, -8, 0
+	createsprite gKinesisZapEnergySpriteTemplate, ANIM_ATTACKER, 19, 32, 16, 1
+	loopsewithpan SE_M_CONFUSE_RAY, SOUND_PAN_ATTACKER, 21, 2
+	delay 60
+	playsewithpan SE_M_DIZZY_PUNCH, SOUND_PAN_ATTACKER
+	delay 30
+	loopsewithpan SE_M_DIZZY_PUNCH, SOUND_PAN_ATTACKER, 20, 2
+	delay 70
+	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	call UnsetPsychicBackground
+	end
 
 gUnknown_827B656: @ 0x0827B656
 	.incbin "baserom_jp.gba", 0x27b656, 0x69

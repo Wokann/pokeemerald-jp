@@ -1315,7 +1315,11 @@ gTauntFingerSpriteTemplate: @ 0x856EE30
 	.4byte 0x00000000, gDummySpriteAffineAnimTable, 0x08103BE1
 
 gUnknown_56EE48: @ 0x56EE48
-	.incbin "baserom_jp.gba", 0x56ee48, 0x11c
+	.incbin "baserom_jp.gba", 0x56ee48, 0xe0
+
+	.globl gKinesisZapEnergySpriteTemplate
+gKinesisZapEnergySpriteTemplate: @ 0x856EF28
+	.incbin "baserom_jp.gba", 0x56ef28, 0x3c
 
 	.globl gSwordsDanceBladeSpriteTemplate
 gSwordsDanceBladeSpriteTemplate: @ 0x856EF64
