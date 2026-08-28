@@ -1034,7 +1034,7 @@ __attribute__((naked)) void GabbyAndTyGetLastBattleTrivia(void)
     );
 }
 
-__attribute__((naked)) void GabbyAndTySetScriptVarsToEventObjectLocalIds(void)
+__attribute__((naked)) void GetGabbyAndTyLocalIds(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

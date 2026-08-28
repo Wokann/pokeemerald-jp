@@ -6173,7 +6173,7 @@ SECTIONS {
         src/tv.o(.text.IsGabbyAndTyShowOnTheAir);
         src/tv.o(.text.GabbyAndTyGetLastQuote);
         src/tv.o(.text.GabbyAndTyGetLastBattleTrivia);
-        src/tv.o(.text.GabbyAndTySetScriptVarsToEventObjectLocalIds);
+        src/tv.o(.text.GetGabbyAndTyLocalIds);
         src/tv.o(.text.InterviewAfter);
         src/tv.o(.text.PutPokemonTodayCaughtOnAir);
         src/tv.o(.text.UpdateWorldOfMastersAndPutItOnTheAir);
