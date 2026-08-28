@@ -1358,8 +1358,7 @@ Common_EventScript_LegendaryFlewAway::
 
 	.include "data/scripts/item_ball_scripts.inc"
 
-ProfileMan_EventScript_Man:: @ 0x08257290
-	.incbin "baserom_jp.gba", 0x257290, 0x451
+	.include "data/scripts/profile_man.inc"
 
 @ This is Route117's Day Care Man entry at the start of the still-raw
 @ shared day-care script owner. Use the physical label, not a .set alias.

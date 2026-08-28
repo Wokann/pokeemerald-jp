@@ -112,7 +112,7 @@ gSpecials::
 	def_special SaveGame, waitstate=1
 	def_special DoWateringBerryTreeAnim, waitstate=1
 	def_special ShowEasyChatScreen
-	def_special sub_0811F3AC
+	def_special ShowEasyChatProfile
 	def_special Script_GetCurrentMauvilleMan
 	def_special HasBardSongBeenChanged
 	def_special SaveBardSongLyrics

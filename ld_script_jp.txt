@@ -291,7 +291,6 @@ sub_0811F0C0 = IsEasyChatWordInvalid;
 sub_0811F2A4 = CanPhraseFitInXRowsYCols;
 sub_0811F318 = GetRandomEasyChatWordFromGroup;
 sub_0811F370 = GetRandomEasyChatWordFromUnlockedGroup;
-sub_0811F3AC = ShowEasyChatProfile;
 sub_0811F44C = BufferDeepLinkPhrase;
 sub_0811F478 = IsTrendySayingUnlocked;
 sub_0811F4A0 = UnlockTrendySaying;
