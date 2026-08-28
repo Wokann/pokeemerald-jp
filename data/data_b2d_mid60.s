@@ -1544,11 +1544,13 @@ gWaterGunDropletSpriteTemplate: @ 0x570E04
 	.4byte 0x084FD1F8, 0x08570DE8
 	.4byte 0, 0x08571DEC, 0x081080E5
 
+	.globl gSmallBubblePairSpriteTemplate
 gSmallBubblePairSpriteTemplate: @ 0x570E1C
 	.hword 0x279D, 0x279D
 	.4byte 0x084FD010, 0x0857169C
 	.4byte 0, gDummySpriteAffineAnimTable, 0x08108121
 
+	.globl gSmallDriftingBubblesSpriteTemplate
 gSmallDriftingBubblesSpriteTemplate: @ 0x570E34
 	.hword 0x27AB, 0x27AB
 	.4byte 0x084FD010, gDummySpriteAnimTable
