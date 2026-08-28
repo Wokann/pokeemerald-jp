@@ -68,7 +68,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827E411                  @ 046
 	.4byte gUnknown_827AF8C                  @ 047
 	.4byte Move_SUPERSONIC                     @ MOVE_SUPERSONIC
-	.4byte gUnknown_82788C7                  @ 049
+	.4byte Move_SONIC_BOOM                   @ MOVE_SONIC_BOOM
 	.4byte gUnknown_8281FEE                  @ 050
 	.4byte gUnknown_827FC59                  @ 051
 	.4byte Move_EMBER                        @ MOVE_EMBER
@@ -1022,8 +1022,30 @@ CometPunchRight:
 	create_fist_sprite ANIM_ATTACKER, 3, x=8, y=0, duration=8
 	goto CometPunchContinue
 
-gUnknown_82788C7: @ 0x082788C7
-	.incbin "baserom_jp.gba", 0x2788c7, 0x61
+Move_SONIC_BOOM: @ 0x082788C7
+	loadspritegfx ANIM_TAG_AIR_WAVE
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	call SonicBoomProjectile
+	call SonicBoomProjectile
+	call SonicBoomProjectile
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 10, 1
+	call SonicBoomHit
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+SonicBoomProjectile:
+	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
+	createsprite gSonicBoomSpriteTemplate, ANIM_TARGET, 2, 16, 0, 0, 0, 15
+	delay 4
+	return
+SonicBoomHit:
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	delay 4
+	return
 
 gUnknown_8278928: @ 0x08278928
 	.incbin "baserom_jp.gba", 0x278928, 0x6e
