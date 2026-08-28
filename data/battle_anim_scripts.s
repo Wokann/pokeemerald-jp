@@ -194,7 +194,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_FLAME_WHEEL                   @ MOVE_FLAME_WHEEL
 	.4byte gUnknown_827E4E9                  @ 173
 	.4byte gUnknown_8282179                  @ 174
-	.4byte gUnknown_827BA85                  @ 175
+	.4byte Move_FLAIL                        @ MOVE_FLAIL
 	.4byte Move_CONVERSION_2                 @ MOVE_CONVERSION_2
 	.4byte gUnknown_82800AD                  @ 177
 	.4byte gUnknown_8280CE4                  @ 178
@@ -3103,8 +3103,20 @@ NightmareInContest:
 	waitbgfadein
 	end
 
-gUnknown_827BA85: @ 0x0827BA85
-	.incbin "baserom_jp.gba", 0x27ba85, 0x3d
+Move_FLAIL:: @ 0x0827BA85
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	createvisualtask AnimTask_FlailMovement, 2, ANIM_ATTACKER
+	loopsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER, 8, 2
+	waitforvisualfinish
+	create_random_pos_hitsplat_sprite ANIM_TARGET, 3, ANIM_TARGET, 3
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 30, 1, 0
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_827BAC2: @ 0x0827BAC2
 	.incbin "baserom_jp.gba", 0x27bac2, 0x2f
