@@ -293,7 +293,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8282DF5                  @ 271
 	.4byte gUnknown_8283535                  @ 272
 	.4byte gUnknown_8282E73                  @ 273
-	.4byte gUnknown_827C4BE                  @ 274
+	.4byte Move_ASSIST                       @ MOVE_ASSIST
 	.4byte gUnknown_8282667                  @ 275
 	.4byte gUnknown_827C52F                  @ 276
 	.4byte gUnknown_82851E4                  @ 277
@@ -3648,8 +3648,22 @@ Move_HELPING_HAND:: @ 0x0827C44B
 	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_ATK_PARTNER, RGB_YELLOW, 12, 1, 1
 	end
 
-gUnknown_827C4BE: @ 0x0827C4BE
-	.incbin "baserom_jp.gba", 0x27c4be, 0x71
+Move_ASSIST:: @ 0x0827C4BE
+	loadspritegfx ANIM_TAG_PAW_PRINT
+	createsprite gAssistPawprintSpriteTemplate, ANIM_ATTACKER, 50, 112, -16, 140, 128, 36
+	delay 2
+	createsprite gAssistPawprintSpriteTemplate, ANIM_ATTACKER, 50, 208, 128, -16, 48, 36
+	playsewithpan SE_M_SCRATCH, 0
+	delay 2
+	createsprite gAssistPawprintSpriteTemplate, ANIM_ATTACKER, 50, -16, 112, 256, -16, 36
+	playsewithpan SE_M_SCRATCH, 0
+	delay 2
+	createsprite gAssistPawprintSpriteTemplate, ANIM_ATTACKER, 50, 108, 128, 84, -16, 36
+	playsewithpan SE_M_SCRATCH, 0
+	delay 2
+	createsprite gAssistPawprintSpriteTemplate, ANIM_ATTACKER, 50, -16, 56, 256, 56, 36
+	playsewithpan SE_M_SCRATCH, 0
+	end
 
 gUnknown_827C52F: @ 0x0827C52F
 	.incbin "baserom_jp.gba", 0x27c52f, 0xbb
