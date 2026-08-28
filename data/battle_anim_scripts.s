@@ -46,7 +46,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82807E8                  @ 024
 	.4byte Move_MEGA_KICK                    @ MOVE_MEGA_KICK
 	.4byte gUnknown_82806F5                  @ 026
-	.4byte gUnknown_827ABC6                  @ 027
+	.4byte Move_ROLLING_KICK                 @ MOVE_ROLLING_KICK
 	.4byte gUnknown_827E873                  @ 028
 	.4byte gUnknown_827AC49                  @ 029
 	.4byte gUnknown_827ACA6                  @ 030
@@ -2387,8 +2387,27 @@ Move_CONVERSION_2:: @ 0x0827AAAA
 	blendoff
 	end
 
-gUnknown_827ABC6: @ 0x0827ABC6
-	.incbin "baserom_jp.gba", 0x27abc6, 0x83
+Move_ROLLING_KICK:: @ 0x0827ABC6
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 18, 6, 1, 4
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	delay 6
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, 0, 0, 4
+	createsprite gSlidingKickSpriteTemplate, ANIM_ATTACKER, 2, -24, 0, 48, 10, 160, 0
+	delay 5
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=-8, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 6, 1
+	waitforvisualfinish
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 1, 8
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_827AC49: @ 0x0827AC49
 	.incbin "baserom_jp.gba", 0x27ac49, 0x5d
