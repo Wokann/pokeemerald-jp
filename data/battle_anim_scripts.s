@@ -128,7 +128,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827DA50                  @ 106
 	.4byte gUnknown_827B4DE                  @ 107
 	.4byte gUnknown_827A89C                  @ 108
-	.4byte gUnknown_827A41D                  @ 109
+	.4byte Move_CONFUSE_RAY                  @ MOVE_CONFUSE_RAY
 	.4byte gUnknown_827ED83                  @ 110
 	.4byte Move_DEFENSE_CURL                  @ MOVE_DEFENSE_CURL
 	.4byte gUnknown_827E67E                  @ 112
@@ -2051,8 +2051,25 @@ Move_WHIRLWIND: @ 0x0827A375
 	waitforvisualfinish
 	end
 
-gUnknown_827A41D: @ 0x0827A41D
-	.incbin "baserom_jp.gba", 0x27a41d, 0x53
+Move_CONFUSE_RAY: @ 0x0827A41D
+	loadspritegfx ANIM_TAG_YELLOW_BALL
+	monbg ANIM_DEF_PARTNER
+	fadetobg BG_GHOST
+	waitbgfadein
+	createvisualtask SoundTask_AdjustPanningVar, 2, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
+	blend_color_cyclebytag tag=ANIM_TAG_YELLOW_BALL, delay=0, num_blends=6, initial_blend_y=0, target_blend_y=14, color=RGB(31, 10, 0)
+	createsprite gConfuseRayBallBounceSpriteTemplate, ANIM_TARGET, 2, 28, 0, 288
+	waitforvisualfinish
+	setalpha 8, 8
+	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
+	createsprite gConfuseRayBallSpiralSpriteTemplate, ANIM_TARGET, 2, 0, -16
+	waitforvisualfinish
+	delay 0
+	blendoff
+	clearmonbg ANIM_DEF_PARTNER
+	restorebg
+	waitbgfadein
+	end
 
 gUnknown_827A470: @ 0x0827A470
 	.incbin "baserom_jp.gba", 0x27a470, 0x36
