@@ -241,7 +241,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SAFEGUARD                     @ MOVE_SAFEGUARD
 	.4byte Move_PAIN_SPLIT                   @ MOVE_PAIN_SPLIT
 	.4byte gUnknown_827E0E4                  @ 221
-	.4byte gUnknown_827BE3C                  @ 222
+	.4byte Move_MAGNITUDE                    @ MOVE_MAGNITUDE
 	.4byte gUnknown_82808E1                  @ 223
 	.4byte gUnknown_827FEAB                  @ 224
 	.4byte gUnknown_827E2FD                  @ 225
@@ -3325,8 +3325,33 @@ Move_MILK_DRINK:: @ 0x0827BDFA
 	waitforvisualfinish
 	end
 
-gUnknown_827BE3C: @ 0x0827BE3C
-	.incbin "baserom_jp.gba", 0x27be3c, 0x91
+Move_MAGNITUDE:: @ 0x0827BE3C
+	createvisualtask AnimTask_IsPowerOver99, 2
+	waitforvisualfinish
+.ifdef UBFIX
+	jumpreteq FALSE, MagnitudeRegular
+	jumpreteq TRUE, MagnitudeIntense
+.else
+	jumpargeq 15, FALSE, MagnitudeRegular
+	jumpargeq 15, TRUE, MagnitudeIntense
+.endif
+
+MagnitudeEnd:
+	end
+MagnitudeRegular:
+	createvisualtask AnimTask_HorizontalShake, 5, (MAX_BATTLERS_COUNT + 1), 0, 50
+	createvisualtask AnimTask_HorizontalShake, 5, MAX_BATTLERS_COUNT, 0, 50
+	loopsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET, 8, 10
+	goto MagnitudeEnd
+MagnitudeIntense:
+	createvisualtask AnimTask_HorizontalShake, 5, (MAX_BATTLERS_COUNT + 1), 0, 50
+	createvisualtask AnimTask_HorizontalShake, 5, MAX_BATTLERS_COUNT, 0, 50
+	loopsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET, 8, 10
+	delay 10
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=14, color2=RGB_WHITE, blend_y2=14
+	delay 16
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=14, color2=RGB_WHITE, blend_y2=14
+	goto MagnitudeEnd
 
 gUnknown_827BECD: @ 0x0827BECD
 	.incbin "baserom_jp.gba", 0x27becd, 0x6d
