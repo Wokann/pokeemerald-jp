@@ -165,7 +165,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827B707                  @ 143
 	.4byte gUnknown_8283161                  @ 144
 	.4byte gUnknown_827E69B                  @ 145
-	.4byte gUnknown_82790E8                  @ 146
+	.4byte Move_DIZZY_PUNCH                  @ MOVE_DIZZY_PUNCH
 	.4byte gUnknown_8280D3E                  @ 147
 	.4byte gUnknown_827B89F                  @ 148
 	.4byte gUnknown_8281799                  @ 149
@@ -1353,8 +1353,43 @@ Move_PSYCH_UP:
 	waitforvisualfinish
 	end
 
-gUnknown_82790E8: @ 0x082790E8
-	.incbin "baserom_jp.gba", 0x2790e8, 0x13a
+Move_DIZZY_PUNCH:
+	loadspritegfx ANIM_TAG_DUCK
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	call DizzyPunchLunge
+	create_fist_sprite ANIM_TARGET, 5, x=16, y=8, duration=20
+	create_basic_hitsplat_sprite ANIM_TARGET, 4, x=16, y=0, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 16, 8, 160, -32
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 16, 8, -256, -40
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 16, 8, 128, -16
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 16, 8, 416, -38
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 16, 8, -128, -22
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 16, 8, -384, -31
+	delay 10
+	call DizzyPunchLunge
+	create_fist_sprite ANIM_TARGET, 5, x=-16, y=-8, duration=20
+	create_basic_hitsplat_sprite ANIM_TARGET, 4, x=-16, y=-16, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, -16, -8, 160, -32
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, -16, -8, -256, -40
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, -16, -8, 128, -16
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, -16, -8, 416, -38
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, -16, -8, -128, -22
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, -16, -8, -384, -31
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
+
+DizzyPunchLunge:
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 6, 4
+	delay 6
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 7, 1
+	return
 
 gUnknown_8279222: @ 0x08279222
 	.incbin "baserom_jp.gba", 0x279222, 0xb4
