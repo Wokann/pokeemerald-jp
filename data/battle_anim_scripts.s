@@ -287,7 +287,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SMELLING_SALT                @ MOVE_SMELLING_SALT
 	.4byte Move_FOLLOW_ME                    @ MOVE_FOLLOW_ME
 	.4byte gUnknown_8280FE2                  @ 267
-	.4byte gUnknown_827C35C                  @ 268
+	.4byte Move_CHARGE                       @ MOVE_CHARGE
 	.4byte gUnknown_827C3F7                  @ 269
 	.4byte gUnknown_827C44B                  @ 270
 	.4byte gUnknown_8282DF5                  @ 271
@@ -3576,8 +3576,40 @@ Move_FOLLOW_ME:: @ 0x0827C33D
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 22, 3
 	end
 
-gUnknown_827C35C: @ 0x0827C35C
-	.incbin "baserom_jp.gba", 0x27c35c, 0x9b
+Move_CHARGE:: @ 0x0827C35C
+	loadspritegfx ANIM_TAG_ELECTRIC_ORBS
+	loadspritegfx ANIM_TAG_CIRCLE_OF_LIGHT
+	loadspritegfx ANIM_TAG_ELECTRICITY
+	monbg ANIM_ATTACKER
+	setalpha 12, 8
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=4, color=RGB_BLACK
+	waitforvisualfinish
+	createvisualtask AnimTask_ElectricChargingParticles, 2, ANIM_ATTACKER, 60, 2, 12
+	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
+	delay 30
+	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
+	delay 30
+	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
+	createsprite gGrowingChargeOrbSpriteTemplate, ANIM_ATTACKER, 2, 0
+	delay 25
+	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
+	delay 20
+	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
+	delay 15
+	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
+	delay 10
+	delay 6
+	loopsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER, 6, 5
+	waitforvisualfinish
+	create_electric_puff_sprite ANIM_ATTACKER, 2, relative_to=0, x=16, y=16
+	delay 2
+	create_electric_puff_sprite ANIM_ATTACKER, 2, relative_to=0, x=-16, y=-16
+	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=4, initial_blend_y=4, target_blend_y=0, color=RGB_BLACK
+	clearmonbg ANIM_ATTACKER
+	blendoff
+	end
 
 gUnknown_827C3F7: @ 0x0827C3F7
 	.incbin "baserom_jp.gba", 0x27c3f7, 0x54
