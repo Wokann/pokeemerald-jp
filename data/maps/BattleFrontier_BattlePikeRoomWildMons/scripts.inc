@@ -30,7 +30,7 @@ BattleFrontier_BattlePikeRoomWildMons_EventScript_TurnPlayerNorth::
 	end
 
 BattleFrontier_BattlePikeRoomWildMons_OnResume:
-	call 0x082746FA
+	call BattleFrontier_BattlePikeRoom_EventScript_ResetSketchedMoves
 	frontier_get FRONTIER_DATA_BATTLE_OUTCOME
 	goto_if_eq VAR_RESULT, B_OUTCOME_LOST, BattleFrontier_BattlePikeRoomWildMons_EventScript_SetLost
 	goto_if_eq VAR_RESULT, B_OUTCOME_DREW, BattleFrontier_BattlePikeRoomWildMons_EventScript_SetLost

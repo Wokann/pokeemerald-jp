@@ -28,8 +28,7 @@ EventScript_FrontierFieldWhiteOut::
 	waitmessage
 	waitbuttonpress
 	pike_inchallenge
-	@ The JP Battle Pike retirement target is not yet structurally labeled.
-	goto_if_eq VAR_RESULT, TRUE, 0x082746AB
+	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattlePike_EventScript_Retire
 	pyramid_getlocation
 	goto_if_eq VAR_RESULT, PYRAMID_LOCATION_FLOOR, BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost
 	goto_if_eq VAR_RESULT, PYRAMID_LOCATION_TOP, BattleFrontier_BattlePyramid_EventScript_WarpToLobbyLost

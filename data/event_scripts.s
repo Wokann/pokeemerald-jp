@@ -1461,7 +1461,7 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/scripts/apprentice.inc"
 	.include "data/text/apprentice.inc"
 	.include "data/text/battle_dome.inc"
-	.incbin "baserom_jp.gba", 0x2742ae, 0x457
+	.include "data/scripts/battle_pike.inc"
 	.include "data/scripts/gUnknown_8274705.inc"
 
 	.globl EventScript_TrainerHillTimer
