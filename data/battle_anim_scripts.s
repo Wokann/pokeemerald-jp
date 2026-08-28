@@ -152,7 +152,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SKULL_BASH                   @ MOVE_SKULL_BASH
 	.4byte Move_SPIKE_CANNON                  @ MOVE_SPIKE_CANNON
 	.4byte gUnknown_8282111                  @ 132
-	.4byte gUnknown_827B5E1                  @ 133
+	.4byte Move_AMNESIA                      @ MOVE_AMNESIA
 	.4byte gUnknown_827B605                  @ 134
 	.4byte gUnknown_8282239                  @ 135
 	.4byte gUnknown_8280752                  @ 136
@@ -2860,8 +2860,17 @@ SkullBashAttack:
 	createvisualtask AnimTask_SkullBashPosition, 2, 1
 	goto SkullBashEnd
 
-gUnknown_827B5E1: @ 0x0827B5E1
-	.incbin "baserom_jp.gba", 0x27b5e1, 0x24
+Move_AMNESIA:: @ 0x0827B5E1
+	loadspritegfx ANIM_TAG_AMNESIA
+	call SetPsychicBackground
+	delay 8
+	createsprite gQuestionMarkSpriteTemplate, ANIM_ATTACKER, 20
+	playsewithpan SE_M_METRONOME, SOUND_PAN_ATTACKER
+	delay 54
+	loopsewithpan SE_M_METRONOME, SOUND_PAN_ATTACKER, 16, 3
+	waitforvisualfinish
+	call UnsetPsychicBackground
+	end
 
 gUnknown_827B605: @ 0x0827B605
 	.incbin "baserom_jp.gba", 0x27b605, 0x51
