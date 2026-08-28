@@ -1580,7 +1580,13 @@ gUnknown_856F860: @ 0x856F860
 gRainDropSpriteTemplate: @ 0x570C04
 	.hword 0x2783, 0x2783
 	.4byte 0x084FD060, 0x08570C00, 0, gDummySpriteAffineAnimTable, 0x08107A6D
-	.incbin "baserom_jp.gba", 0x570c1c, 0x1c8
+	.incbin "baserom_jp.gba", 0x570c1c, 0x30
+
+	.globl gWaterBubbleProjectileSpriteTemplate
+gWaterBubbleProjectileSpriteTemplate: @ 0x570C4C
+	.incbin "baserom_jp.gba", 0x570c4c, 0x18
+
+	.incbin "baserom_jp.gba", 0x570c64, 0x180
 
 	.globl gAnims_WaterBubble
 gAnims_WaterBubble: @ 0x570DE4

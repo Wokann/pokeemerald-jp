@@ -80,7 +80,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827EC4C                  @ 058
 	.4byte gUnknown_827F0B9                  @ 059
 	.4byte gUnknown_828169F                  @ 060
-	.4byte gUnknown_827A6FF                  @ 061
+	.4byte Move_BUBBLE_BEAM                  @ MOVE_BUBBLE_BEAM
 	.4byte gUnknown_827ED90                  @ 062
 	.4byte gUnknown_82832F7                  @ 063
 	.4byte gUnknown_8280086                  @ 064
@@ -2190,8 +2190,44 @@ Move_THIEF:: @ 0x0827A6B8
 	waitbgfadein
 	end
 
-gUnknown_827A6FF: @ 0x0827A6FF
-	.incbin "baserom_jp.gba", 0x27a6ff, 0xdd
+Move_BUBBLE_BEAM:: @ 0x0827A6FF
+	loadspritegfx ANIM_TAG_BUBBLE
+	loadspritegfx ANIM_TAG_SMALL_BUBBLES
+	monbg ANIM_TARGET
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	delay 1
+	call BubblebeamCreateBubbles
+	createvisualtask AnimTask_SwayMon, 5, 0, 3, 3072, 8, ANIM_TARGET
+	call BubblebeamCreateBubbles
+	call BubblebeamCreateBubbles
+	waitforvisualfinish
+	call WaterBubblesEffectShort
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
+
+BubblebeamCreateBubbles:
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_ATTACKER, 2, 18, 0, 35, 70, 0, 256, 50
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
+	delay 3
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_ATTACKER, 2, 18, 0, 20, 40, -10, 256, 50
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
+	delay 3
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_ATTACKER, 2, 18, 0, 10, -60, 0, 256, 50
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
+	delay 3
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_ATTACKER, 2, 18, 0, 15, -15, 10, 256, 50
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
+	delay 3
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_ATTACKER, 2, 18, 0, 30, 10, -10, 256, 50
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
+	delay 3
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_ATTACKER, 2, 18, 0, 25, -30, 10, 256, 50
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
+	delay 3
+	return
 
 gUnknown_827A7DC: @ 0x0827A7DC
 	.incbin "baserom_jp.gba", 0x27a7dc, 0xc0
@@ -3052,9 +3088,10 @@ gUnknown_8285C76: @ 0x08285C76
 	.incbin "baserom_jp.gba", 0x285c76, 0x382
 
 PoisonBubblesEffect: @ 0x08285FF8
-	.incbin "baserom_jp.gba", 0x285ff8, 0x73
+	.incbin "baserom_jp.gba", 0x285ff8, 0x71
 
-	.incbin "baserom_jp.gba", 0x28606b, 0x106
+WaterBubblesEffectShort: @ 0x08286069
+	.incbin "baserom_jp.gba", 0x286069, 0x108
 
 ElectricityEffect: @ 0x08286171
 	.incbin "baserom_jp.gba", 0x286171, 0x170
