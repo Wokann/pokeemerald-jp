@@ -272,7 +272,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828048A                  @ 250
 	.4byte Move_BEAT_UP                      @ MOVE_BEAT_UP
 	.4byte gUnknown_82824B5                  @ 252
-	.4byte gUnknown_827C088                  @ 253
+	.4byte Move_UPROAR                       @ MOVE_UPROAR
 	.4byte gUnknown_8282EBB                  @ 254
 	.4byte gUnknown_8282F72                  @ 255
 	.4byte gUnknown_82830B5                  @ 256
@@ -3447,8 +3447,30 @@ ExtremeSpeedAgainstPlayer:
 	fadetobg BG_HIGHSPEED_PLAYER
 	goto ExtremeSpeedContinue
 
-gUnknown_827C088: @ 0x0827C088
-	.incbin "baserom_jp.gba", 0x27c088, 0xca
+Move_UPROAR:: @ 0x0827C088
+	loadspritegfx ANIM_TAG_JAGGED_MUSIC_NOTE
+	loadspritegfx ANIM_TAG_THIN_RING
+	monbg ANIM_DEF_PARTNER
+	createvisualtask AnimTask_UproarDistortion, 2, 0
+	createsprite gUproarRingSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 0, 0, 31, 8
+	playsewithpan SE_M_UPROAR, SOUND_PAN_ATTACKER
+	createsprite gJaggedMusicNoteSpriteTemplate, ANIM_ATTACKER, 2, 0, 29, -12, 0
+	createsprite gJaggedMusicNoteSpriteTemplate, ANIM_ATTACKER, 2, 0, -12, -29, 1
+	delay 16
+	createvisualtask AnimTask_UproarDistortion, 2, 0
+	createsprite gUproarRingSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 0, 0, 31, 8
+	playsewithpan SE_M_UPROAR, SOUND_PAN_ATTACKER
+	createsprite gJaggedMusicNoteSpriteTemplate, ANIM_ATTACKER, 2, 0, 12, -29, 1
+	createsprite gJaggedMusicNoteSpriteTemplate, ANIM_ATTACKER, 2, 0, -29, -12, 0
+	delay 16
+	createvisualtask AnimTask_UproarDistortion, 2, 0
+	createsprite gUproarRingSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 0, 0, 31, 8
+	playsewithpan SE_M_UPROAR, SOUND_PAN_ATTACKER
+	createsprite gJaggedMusicNoteSpriteTemplate, ANIM_ATTACKER, 2, 0, 24, -24, 1
+	createsprite gJaggedMusicNoteSpriteTemplate, ANIM_ATTACKER, 2, 0, -24, -24, 0
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
 
 gUnknown_827C152: @ 0x0827C152
 	.incbin "baserom_jp.gba", 0x27c152, 0xb0
