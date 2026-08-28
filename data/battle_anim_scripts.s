@@ -107,7 +107,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_THUNDERBOLT                  @ MOVE_THUNDERBOLT
 	.4byte Move_THUNDER_WAVE                 @ MOVE_THUNDER_WAVE
 	.4byte gUnknown_827DEC1                  @ 087
-	.4byte gUnknown_827A4EB                  @ 088
+	.4byte Move_ROCK_THROW                   @ MOVE_ROCK_THROW
 	.4byte gUnknown_827B0BD                  @ 089
 	.4byte gUnknown_827B10A                  @ 090
 	.4byte gUnknown_827B22D                  @ 091
@@ -2098,8 +2098,26 @@ Move_MEAN_LOOK: @ 0x0827A4A6
 	waitforvisualfinish
 	end
 
-gUnknown_827A4EB: @ 0x0827A4EB
-	.incbin "baserom_jp.gba", 0x27a4eb, 0x8c
+Move_ROCK_THROW:: @ 0x0827A4EB
+	loadspritegfx ANIM_TAG_ROCKS
+	shake_mon_or_platform unused_anim_battler=ANIM_TARGET, velocity=6, shake_timer=1, shake_duration=15, type=SHAKE_BG_Y
+	createsprite gFallingRockSpriteTemplate, ANIM_TARGET, 2, 0, 1, 0, 0
+	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
+	delay 6
+	createsprite gFallingRockSpriteTemplate, ANIM_TARGET, 2, 19, 1, 10, 0
+	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
+	delay 6
+	createsprite gFallingRockSpriteTemplate, ANIM_TARGET, 2, -23, 2, -10, 0
+	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 5, 20, 1
+	delay 6
+	createsprite gFallingRockSpriteTemplate, ANIM_TARGET, 2, -15, 1, -10, 0
+	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
+	delay 6
+	createsprite gFallingRockSpriteTemplate, ANIM_TARGET, 2, 23, 2, 10, 0
+	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
+	waitforvisualfinish
+	end
 
 gUnknown_827A577: @ 0x0827A577
 	.incbin "baserom_jp.gba", 0x27a577, 0x141

@@ -2614,7 +2614,13 @@ gSimplePaletteBlendSpriteTemplate: @ 0x8572E58
 gComplexPaletteBlendSpriteTemplate: @ 0x8572E70
 	.incbin "baserom_jp.gba", 0x572e70, 0x18
 
-	.incbin "baserom_jp.gba", 0x572e88, 0xb4
+	.incbin "baserom_jp.gba", 0x572e88, 0x34
+
+	.globl gShakeMonOrPlatformSpriteTemplate
+gShakeMonOrPlatformSpriteTemplate: @ 0x8572EBC
+	.incbin "baserom_jp.gba", 0x572ebc, 0x18
+
+	.incbin "baserom_jp.gba", 0x572ed4, 0x68
 
 
 	.globl gBasicHitSplatSpriteTemplate

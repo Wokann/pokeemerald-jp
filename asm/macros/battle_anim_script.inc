@@ -300,6 +300,23 @@
 	createsprite gComplexPaletteBlendSpriteTemplate, \unused_anim_battler, \unused_subpriority_offset, \selector, \delay, \num_blends, \color1, \blend_y1, \color2, \blend_y2
 	.endm
 
+	.macro shake_mon_or_platform unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, velocity:req, shake_timer:req, shake_duration:req, type:req, battler_selector
+	.if \type == SHAKE_MON_X || \type == SHAKE_MON_Y
+	.ifb \battler_selector
+	.error "battler_selector required for SHAKE_MON_X or SHAKE_MON_Y"
+	.endif
+	.else
+	.ifnb \battler_selector
+	.warning "unused battler_selector in shake_mon_or_platform"
+	.endif
+	.endif
+	.ifb \battler_selector
+	createsprite gShakeMonOrPlatformSpriteTemplate, \unused_anim_battler, \unused_subpriority_offset, \velocity, \shake_timer, \shake_duration, \type
+	.else
+	createsprite gShakeMonOrPlatformSpriteTemplate, \unused_anim_battler, \unused_subpriority_offset, \velocity, \shake_timer, \shake_duration, \type, \battler_selector
+	.endif
+	.endm
+
 	.macro blend_color_cycle priority=2, selector:req, delay:req, num_blends:req, initial_blend_y:req, target_blend_y:req, color:req
 	createvisualtask AnimTask_BlendColorCycle, \priority, \selector, \delay, \num_blends, \initial_blend_y, \target_blend_y, \color
 	.endm
