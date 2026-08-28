@@ -67,7 +67,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827E4A8                  @ 045
 	.4byte gUnknown_827E411                  @ 046
 	.4byte gUnknown_827AF8C                  @ 047
-	.4byte gUnknown_8277F4D                  @ 048
+	.4byte Move_SUPERSONIC                     @ MOVE_SUPERSONIC
 	.4byte gUnknown_82788C7                  @ 049
 	.4byte gUnknown_8281FEE                  @ 050
 	.4byte gUnknown_827FC59                  @ 051
@@ -122,7 +122,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827B47E                  @ 100
 	.4byte gUnknown_8281B0A                  @ 101
 	.4byte gUnknown_82820C6                  @ 102
-	.4byte gUnknown_8277FA5                  @ 103
+	.4byte Move_SCREECH                        @ MOVE_SCREECH
 	.4byte gUnknown_827B497                  @ 104
 	.4byte gUnknown_828201C                  @ 105
 	.4byte gUnknown_827DA50                  @ 106
@@ -613,11 +613,42 @@ Move_BODY_SLAM: @ 0x08277EC0
 	blendoff
 	end
 
-gUnknown_8277F4D: @ 0x08277F4D
-	.incbin "baserom_jp.gba", 0x277f4d, 0x58
+Move_SUPERSONIC: @ 0x08277F4D
+	loadspritegfx ANIM_TAG_GOLD_RING
+	monbg ANIM_ATK_PARTNER
+	splitbgprio_foes ANIM_ATTACKER
+	setalpha 12, 8
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 2, 0, 8, 1
+	call SupersonicRing
+	call SupersonicRing
+	call SupersonicRing
+	call SupersonicRing
+	call SupersonicRing
+	call SupersonicRing
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	end
+SupersonicRing:
+	playsewithpan SE_M_SUPERSONIC, SOUND_PAN_ATTACKER
+	createsprite gSupersonicRingSpriteTemplate, ANIM_TARGET, 2, 16, 0, 0, 0, 30, 0
+	delay 2
+	return
 
-gUnknown_8277FA5: @ 0x08277FA5
-	.incbin "baserom_jp.gba", 0x277fa5, 0x4d
+Move_SCREECH: @ 0x08277FA5
+	loadspritegfx ANIM_TAG_PURPLE_RING
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 3, 0, 2, 1
+	call ScreechRing
+	call ScreechRing
+	delay 16
+	createvisualtask AnimTask_SwayMon, 5, 0, 6, 2048, 2, ANIM_TARGET
+	waitforvisualfinish
+	end
+ScreechRing:
+	playsewithpan SE_M_SCREECH, SOUND_PAN_ATTACKER
+	createsprite gScreechRingSpriteTemplate, ANIM_TARGET, 2, 16, 0, 0, 0, 30, 0
+	delay 2
+	return
 
 gUnknown_8277FF2: @ 0x08277FF2
 	.incbin "baserom_jp.gba", 0x277ff2, 0xfa

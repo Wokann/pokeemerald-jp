@@ -1281,7 +1281,17 @@ gUnknown_56EE48: @ 0x56EE48
 gAirWaveProjectileSpriteTemplate: @ 0x856EF94
 	.hword 0x2713, 0x2713
 	.4byte 0x084FD160, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x081042F5
-	.incbin "baserom_jp.gba", 0x56efac, 0xd8
+	.incbin "baserom_jp.gba", 0x56efac, 0x60
+
+	.globl gSupersonicRingSpriteTemplate
+gSupersonicRingSpriteTemplate: @ 0x856F00C
+	.incbin "baserom_jp.gba", 0x56f00c, 0x18
+
+	.globl gScreechRingSpriteTemplate
+gScreechRingSpriteTemplate: @ 0x856F024
+	.incbin "baserom_jp.gba", 0x56f024, 0x18
+
+	.incbin "baserom_jp.gba", 0x56f03c, 0x48
 
 	.globl sVoidLinesSpriteTemplate
 sVoidLinesSpriteTemplate: @ 0x856F084
