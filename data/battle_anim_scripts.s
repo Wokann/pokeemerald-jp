@@ -317,7 +317,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_LUSTER_PURGE                 @ MOVE_LUSTER_PURGE
 	.4byte Move_MIST_BALL                    @ MOVE_MIST_BALL
 	.4byte Move_FEATHER_DANCE                @ MOVE_FEATHER_DANCE
-	.4byte gUnknown_827CD19                  @ 298
+	.4byte Move_TEETER_DANCE                 @ MOVE_TEETER_DANCE
 	.4byte gUnknown_82835D5                  @ 299
 	.4byte gUnknown_827CD84                  @ 300
 	.4byte gUnknown_828582B                  @ 301
@@ -4005,8 +4005,25 @@ Move_FEATHER_DANCE:: @ 0x0827CC49
 	clearmonbg ANIM_DEF_PARTNER
 	end
 
-gUnknown_827CD19: @ 0x0827CD19
-	.incbin "baserom_jp.gba", 0x27cd19, 0x6b
+Move_TEETER_DANCE: @ 0x0827CD19
+	loadspritegfx ANIM_TAG_MUSIC_NOTES
+	loadspritegfx ANIM_TAG_DUCK
+	createvisualtask AnimTask_TeeterDanceMovement, 5
+	createsprite gFastFlyingMusicNotesSpriteTemplate, ANIM_ATTACKER, 2, 0, 16, -2
+	playsewithpan SE_M_TEETER_DANCE, SOUND_PAN_ATTACKER
+	delay 24
+	createsprite gFastFlyingMusicNotesSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, -2
+	playsewithpan SE_M_TEETER_DANCE, SOUND_PAN_ATTACKER
+	delay 24
+	createsprite gFastFlyingMusicNotesSpriteTemplate, ANIM_ATTACKER, 2, 0, -16, -2
+	playsewithpan SE_M_TEETER_DANCE, SOUND_PAN_ATTACKER
+	delay 24
+	createsprite gFastFlyingMusicNotesSpriteTemplate, ANIM_ATTACKER, 2, 1, -8, -2
+	playsewithpan SE_M_TEETER_DANCE, SOUND_PAN_ATTACKER
+	delay 24
+	createsprite gFastFlyingMusicNotesSpriteTemplate, ANIM_ATTACKER, 2, 2, 8, -2
+	playsewithpan SE_M_TEETER_DANCE, SOUND_PAN_ATTACKER
+	end
 
 gUnknown_827CD84: @ 0x0827CD84
 	.incbin "baserom_jp.gba", 0x27cd84, 0x137
