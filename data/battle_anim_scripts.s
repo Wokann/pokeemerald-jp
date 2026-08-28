@@ -219,7 +219,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_DETECT                        @ MOVE_DETECT
 	.4byte gUnknown_827FE09                  @ 198
 	.4byte gUnknown_827A470                  @ 199
-	.4byte gUnknown_8279E94                  @ 200
+	.4byte Move_OUTRAGE                      @ MOVE_OUTRAGE
 	.4byte gUnknown_8280402                  @ 201
 	.4byte gUnknown_827F7CE                  @ 202
 	.4byte gUnknown_827BC13                  @ 203
@@ -1898,8 +1898,51 @@ Move_PAY_DAY: @ 0x08279E41
 	blendoff
 	end
 
-gUnknown_8279E94: @ 0x08279E94
-	.incbin "baserom_jp.gba", 0x279e94, 0x19b
+Move_OUTRAGE: @ 0x08279E94
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	loopsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER, 8, 3
+	blend_color_cycle priority=2, selector=F_PAL_BG | F_PAL_ATTACKER | F_PAL_TARGET, delay=2, num_blends=5, initial_blend_y=3, target_blend_y=8, color=RGB(14, 13, 0)
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 12, 6, 5, 4
+	delay 0
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=5, y_velocity=0, flicker_duration=3
+	delay 0
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=-5, y_velocity=0, flicker_duration=3
+	delay 0
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=0, y_velocity=5, flicker_duration=3
+	delay 0
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=0, y_velocity=-5, flicker_duration=3
+	delay 0
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 40, 1
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=5, y_velocity=3, flicker_duration=3
+	delay 0
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=-5, y_velocity=3, flicker_duration=3
+	delay 0
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=5, y_velocity=-3, flicker_duration=3
+	delay 0
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=-5, y_velocity=-3, flicker_duration=3
+	delay 0
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=5, y_velocity=0, flicker_duration=3
+	call OutrageFlames
+	call OutrageFlames
+	waitforvisualfinish
+	end
+
+OutrageFlames:
+	delay 3
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=-5, y_velocity=0, flicker_duration=3
+	delay 0
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=0, y_velocity=5, flicker_duration=3
+	delay 0
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=0, y_velocity=-5, flicker_duration=3
+	delay 0
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=5, y_velocity=3, flicker_duration=3
+	delay 0
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=-5, y_velocity=3, flicker_duration=3
+	delay 0
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=5, y_velocity=-3, flicker_duration=3
+	delay 0
+	create_outrage_flame_sprite ANIM_TARGET, 2, x=0, y=0, duration=30, x_velocity=-5, y_velocity=-3, flicker_duration=3
+	return
 
 gUnknown_827A02F: @ 0x0827A02F
 	.incbin "baserom_jp.gba", 0x27a02f, 0x217
