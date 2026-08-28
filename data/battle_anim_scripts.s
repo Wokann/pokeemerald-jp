@@ -270,7 +270,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827DE74                  @ 248
 	.4byte gUnknown_8280AF3                  @ 249
 	.4byte gUnknown_828048A                  @ 250
-	.4byte gUnknown_8278BBB                  @ 251
+	.4byte Move_BEAT_UP                      @ MOVE_BEAT_UP
 	.4byte gUnknown_82824B5                  @ 252
 	.4byte gUnknown_827C088                  @ 253
 	.4byte gUnknown_8282EBB                  @ 254
@@ -1138,8 +1138,39 @@ Move_THUNDER_WAVE: @ 0x08278B4C
 	waitforvisualfinish
 	end
 
-gUnknown_8278BBB: @ 0x08278BBB
-	.incbin "baserom_jp.gba", 0x278bbb, 0xfb
+Move_BEAT_UP: @ 0x08278BBB
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	choosetwoturnanim BeatUpLeft, BeatUpRight
+BeatUpContinue:
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
+BeatUpLeft:
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=-20, y=-20, relative_to=ANIM_TARGET, animation=2
+	create_fist_sprite ANIM_TARGET, 3, x=-20, y=-12, duration=8
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	delay 8
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=8, y=0, relative_to=ANIM_TARGET, animation=2
+	create_fist_sprite ANIM_TARGET, 3, x=8, y=8, duration=8
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	goto BeatUpContinue
+BeatUpRight:
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=12, y=-20, relative_to=ANIM_TARGET, animation=2
+	create_fist_sprite ANIM_TARGET, 3, x=12, y=-12, duration=8
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	delay 8
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=-12, y=0, relative_to=ANIM_TARGET, animation=2
+	create_fist_sprite ANIM_TARGET, 3, x=-12, y=8, duration=8
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	goto BeatUpContinue
 
 gUnknown_8278CB6: @ 0x08278CB6
 	.incbin "baserom_jp.gba", 0x278cb6, 0x47
