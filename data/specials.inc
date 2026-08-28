@@ -202,16 +202,16 @@ gSpecials::
 	def_special RejectEggFromDayCare
 	def_special GiveEggFromDaycare
 	def_special SetDaycareCompatibilityString
-	def_special GetSelectedMonNickAndSpecies
+	def_special GetSelectedMonNicknameAndSpecies
 	def_special StoreSelectedPokemonInDaycare
 	def_special ChooseSendDaycareMon, waitstate=1
 	def_special ShowDaycareLevelMenu, waitstate=1
 	def_special GetNumLevelsGainedFromDaycare
-	def_special GetDaycareCost
+	def_special GetDaycareCostAndPrepareString
 	def_special TakePokemonFromDaycare
 	def_special ScriptHatchMon
 	def_special EggHatch, waitstate=1
-	def_special sub_0807101C
+	def_special CheckDaycareMonReceivedMail
 	def_special ShowLinkBattleRecords
 	def_special IsEnoughForCostInVar0x8005
 	def_special SubtractMoneyFromVar0x8005
@@ -564,7 +564,7 @@ gSpecials::
 	.set SPECIAL_ResetHealLocationFromDewford, SPECIAL_sub_0813B9D8
 	.set SPECIAL_WAITSTATE_ResetHealLocationFromDewford, SPECIAL_WAITSTATE_sub_0813B9D8
 	def_special IsLastMonThatKnowsSurf
-	def_special sub_08071CF0
+	def_special CountPartyAliveNonEggMons
 	def_special TryPrepareSecondApproachingTrainer
 	def_special RemoveRecordsWindow
 	def_special CloseDeptStoreElevatorWindow

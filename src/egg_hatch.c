@@ -565,7 +565,7 @@ __attribute__((naked)) void sub_08070FA4(void)
     );
 }
 
-__attribute__((naked)) void sub_0807101C(void)
+__attribute__((naked)) bool8 CheckDaycareMonReceivedMail(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2199,7 +2199,7 @@ __attribute__((naked)) void GetEggStepsToSubtract(void)
     );
 }
 
-__attribute__((naked)) void sub_08071CF0(void)
+__attribute__((naked)) u16 CountPartyAliveNonEggMons(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

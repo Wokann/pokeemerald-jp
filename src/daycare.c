@@ -664,7 +664,7 @@ __attribute__((naked)) void PrepareDaycareCostStringForMon(void)
 
 
 
-__attribute__((naked)) void GetDaycareCost(void)
+__attribute__((naked)) void GetDaycareCostAndPrepareString(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2506,7 +2506,7 @@ __attribute__((naked)) void _GetDaycareMonNicknames(void)
     );
 }
 
-__attribute__((naked)) void GetSelectedMonNickAndSpecies(void)
+__attribute__((naked)) u16 GetSelectedMonNicknameAndSpecies(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
