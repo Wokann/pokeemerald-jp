@@ -201,7 +201,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_REVERSAL                      @ MOVE_REVERSAL
 	.4byte gUnknown_827BAC2                  @ 180
 	.4byte gUnknown_827F245                  @ 181
-	.4byte gUnknown_8279941                  @ 182
+	.4byte Move_PROTECT                       @ MOVE_PROTECT
 	.4byte gUnknown_827BAF1                  @ 183
 	.4byte gUnknown_82824F0                  @ 184
 	.4byte gUnknown_827E7EC                  @ 185
@@ -1667,8 +1667,15 @@ Move_DEFENSE_CURL:
 	waitforvisualfinish
 	end
 
-gUnknown_8279941: @ 0x08279941
-	.incbin "baserom_jp.gba", 0x279941, 0x1d
+Move_PROTECT:
+	loadspritegfx ANIM_TAG_PROTECT
+	monbg ANIM_ATK_PARTNER
+	splitbgprio ANIM_ATTACKER
+	waitplaysewithpan SE_M_REFLECT, SOUND_PAN_ATTACKER, 16
+	createsprite gProtectSpriteTemplate, ANIM_ATTACKER, 2, 24, 0, 90
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	end
 
 gUnknown_827995E: @ 0x0827995E
 	.incbin "baserom_jp.gba", 0x27995e, 0x5e
