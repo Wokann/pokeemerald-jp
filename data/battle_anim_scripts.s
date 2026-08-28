@@ -116,7 +116,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827DE11                  @ 094
 	.4byte gUnknown_8281739                  @ 095
 	.4byte Move_MEDITATE                     @ MOVE_MEDITATE
-	.4byte gUnknown_827B366                  @ 097
+	.4byte Move_AGILITY                      @ MOVE_AGILITY
 	.4byte gUnknown_827B3B0                  @ 098
 	.4byte gUnknown_827B408                  @ 099
 	.4byte gUnknown_827B47E                  @ 100
@@ -2712,8 +2712,26 @@ Move_MEDITATE:: @ 0x0827B349
 	call UnsetPsychicBackground
 	end
 
-gUnknown_827B366: @ 0x0827B366
-	.incbin "baserom_jp.gba", 0x27b366, 0x4a
+Move_AGILITY:: @ 0x0827B366
+	monbg ANIM_ATK_PARTNER
+	setalpha 12, 8
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 24, 6, 4, 4
+	createvisualtask AnimTask_TraceMonBlended, 2, 0, 4, 7, 10
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	delay 12
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	delay 12
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	delay 12
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	delay 12
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	delay 12
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	delay 1
+	end
 
 gUnknown_827B3B0: @ 0x0827B3B0
 	.incbin "baserom_jp.gba", 0x27b3b0, 0x58
