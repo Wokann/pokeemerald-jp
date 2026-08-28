@@ -50,7 +50,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827E873                  @ 028
 	.4byte Move_HEADBUTT                     @ MOVE_HEADBUTT
 	.4byte Move_HORN_ATTACK                  @ MOVE_HORN_ATTACK
-	.4byte gUnknown_827AD13                  @ 031
+	.4byte Move_FURY_ATTACK                  @ MOVE_FURY_ATTACK
 	.4byte gUnknown_827AD90                  @ 032
 	.4byte Move_TACKLE                         @ MOVE_TACKLE
 	.4byte Move_BODY_SLAM                      @ MOVE_BODY_SLAM
@@ -2443,8 +2443,29 @@ Move_HORN_ATTACK:: @ 0x0827ACA6
 	waitforvisualfinish
 	end
 
-gUnknown_827AD13: @ 0x0827AD13
-	.incbin "baserom_jp.gba", 0x27ad13, 0x7d
+Move_FURY_ATTACK:: @ 0x0827AD13
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HORN_HIT
+	createvisualtask AnimTask_RotateMonSpriteToSide, 2, 4, 256, ANIM_ATTACKER, 2
+	choosetwoturnanim FuryAttackRight, FuryAttackLeft
+FuryAttackContinue:
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 6, 1
+	waitforvisualfinish
+	end
+
+FuryAttackRight:
+	createsprite gHornHitSpriteTemplate, ANIM_TARGET, 4, 8, 8, 10
+	waitforvisualfinish
+	create_flashing_hitsplat_sprite ANIM_TARGET, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
+	goto FuryAttackContinue
+
+FuryAttackLeft:
+	createsprite gHornHitSpriteTemplate, ANIM_TARGET, 4, -8, -8, 10
+	waitforvisualfinish
+	create_flashing_hitsplat_sprite ANIM_TARGET, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
+	goto FuryAttackContinue
 
 gUnknown_827AD90: @ 0x0827AD90
 	.incbin "baserom_jp.gba", 0x27ad90, 0x17d
