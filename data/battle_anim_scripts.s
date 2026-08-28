@@ -226,7 +226,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_CHARM                         @ MOVE_CHARM
 	.4byte Move_ROLLOUT                       @ MOVE_ROLLOUT
 	.4byte Move_FALSE_SWIPE                   @ MOVE_FALSE_SWIPE
-	.4byte gUnknown_827BDB2                  @ 207
+	.4byte Move_SWAGGER                       @ MOVE_SWAGGER
 	.4byte gUnknown_827BDFA                  @ 208
 	.4byte Move_SPARK                        @ MOVE_SPARK
 	.4byte Move_FURY_CUTTER                   @ MOVE_FURY_CUTTER
@@ -3286,8 +3286,23 @@ Move_FALSE_SWIPE:: @ 0x0827BD2B
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	end
 
-gUnknown_827BDB2: @ 0x0827BDB2
-	.incbin "baserom_jp.gba", 0x27bdb2, 0x48
+Move_SWAGGER:: @ 0x0827BDB2
+	loadspritegfx ANIM_TAG_BREATH
+	loadspritegfx ANIM_TAG_ANGER
+	createvisualtask AnimTask_GrowAndShrink, 2
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createsprite gBreathPuffSpriteTemplate, ANIM_ATTACKER, 2
+	loopsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER, 4, 2
+	waitforvisualfinish
+	delay 24
+	createsprite gAngerMarkSpriteTemplate, ANIM_TARGET, 2, 1, -20, -28
+	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
+	delay 12
+	createsprite gAngerMarkSpriteTemplate, ANIM_TARGET, 2, 1, 20, -28
+	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	end
 
 gUnknown_827BDFA: @ 0x0827BDFA
 	.incbin "baserom_jp.gba", 0x27bdfa, 0x42
