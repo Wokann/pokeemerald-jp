@@ -189,11 +189,6 @@
 	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_RightThisWay, 0x0823287D
 	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_SavingDataPleaseWait
 	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_SavingDataPleaseWait, 0x0823288B
-	@ These Fan Club object scripts remain in their existing shared JP owners.
-	.globl SlateportCity_PokemonFanClub_EventScript_Reporter
-	.set SlateportCity_PokemonFanClub_EventScript_Reporter, 0x08253D5B
-	.globl SlateportCity_OceanicMuseum_1F_EventScript_Reporter
-	.set SlateportCity_OceanicMuseum_1F_EventScript_Reporter, 0x08253C9B
 	.globl SlateportCity_PokemonFanClub_EventScript_SwaggerTutor
 	.set SlateportCity_PokemonFanClub_EventScript_SwaggerTutor, 0x08276832
 	.globl BattleFrontier_BattleTowerLobby_Text_ReceivedPrize
@@ -1357,13 +1352,7 @@ Common_EventScript_LegendaryFlewAway::
 	.include "data/text/tv/in_search_of_trainers.inc"
 	.include "data/text/tv/contest_lady_show.inc"
 
-	@ 0x08253C01-0x08253E71 remains unstructured interview script data.
-	.incbin "baserom_jp.gba", 0x253c01, 0x270
-	.globl LilycoveCity_ContestLobby_EventScript_Reporter
-LilycoveCity_ContestLobby_EventScript_Reporter: @ 0x08253E71
-	.incbin "baserom_jp.gba", 0x253e71, 0xd2
-LilycoveCity_ContestLobby_EventScript_TryShowContestReporter: @ 0x08253F43
-	.incbin "baserom_jp.gba", 0x253f43, 0x19c
+	.include "data/scripts/interview.inc"
 
 GabbyAndTy_EventScript_UpdateLocation:: @ 0x082540DF
 	.incbin "baserom_jp.gba", 0x2540df, 0x10f

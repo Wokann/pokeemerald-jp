@@ -7713,7 +7713,7 @@ __attribute__((naked)) void sub_080F0390(void)
     );
 }
 
-__attribute__((naked)) void sub_080F03E4(void)
+__attribute__((naked)) void IsLeadMonNicknamedOrNotEnglish(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
