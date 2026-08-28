@@ -415,6 +415,15 @@ extern EWRAM_DATA struct StatusBar *sStatusBar;
 extern void sub_08028268(struct Sprite *sprite); // DoDodrioMissedAnim
 extern void sub_080282D8(struct Sprite *sprite); // DoDodrioIntroAnim
 extern const struct WindowTemplate sRecordsWindowTemplate;
+extern const u8 gUnknown_85CCA7C[];
+extern const u8 sRecordDigitCounts[];
+extern const u8 *const sRecordsLabels[];
+extern const u16 sRecordLabelYs[];
+extern const u16 sRecordValueYs[];
+extern const u16 sBerryResultsInit[MAX_RFU_PLAYERS][BERRY_PRIZE];
+extern const u8 *const sPlayerNames[MAX_RFU_PLAYERS];
+extern const u8 sCloudDurations[];
+extern const struct BgTemplate sDodrioBgTemplates[];
 void LoadDodrioGfx(void);
 void SetDodrioInvisibility(bool8 invisible, u8 id);
 void SetAllDodrioInvisibility(bool8 invisible, u8 count);
@@ -3941,425 +3950,86 @@ void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
     }
 }
 
-__attribute__((naked)) void sub_0802792C(u8 windowId)
+void sub_0802792C(u8 windowId)
 {
-    __asm__(".syntax unified\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x1c\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r0, _08027A28\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r2, #0x84\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	subs r2, #4\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "	ldr r0, _08027A2C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	str r0, [sp, #0x14]\n\t"
-        "	ldr r4, _08027A30\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0xd0\n\t"
-        "	bl LoadUserWindowBorderGfx_\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0xd\n\t"
-        "	bl DrawTextBorderOuter\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r2, _08027A34\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r2, _08027A38\n\t"
-        "	mov r8, r2\n\t"
-        "	movs r0, #0xff\n\t"
-        "	mov sl, r0\n\t"
-        "	mov sb, r6\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r2, #0xc\n\t"
-        "	str r2, [sp, #0x18]\n\t"
-        "_080279A2:\n\t"
-        "	lsls r4, r6, #2\n\t"
-        "	ldr r0, [sp, #0x18]\n\t"
-        "	ldm r0!, {r1}\n\t"
-        "	str r0, [sp, #0x18]\n\t"
-        "	ldr r0, _08027A3C\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	movs r0, #1\n\t"
-        "	mov r1, r8\n\t"
-        "	movs r2, #1\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	bl GetStringWidth\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r0, _08027A40\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r0, _08027A44\n\t"
-        "	lsls r4, r6, #1\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r0, sl\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	mov r0, sb\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	movs r3, #0xa0\n\t"
-        "	subs r3, r3, r5\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldr r0, _08027A48\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r2, sl\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	mov r0, sb\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	mov r2, r8\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #2\n\t"
-        "	ble _080279A2\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	add sp, #0x1c\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08027A28: .4byte gSaveBlock2Ptr\n\t"
-        "_08027A2C: .4byte 0x00000212\n\t"
-        "_08027A30: .4byte 0x0000021D\n\t"
-        "_08027A34: .4byte gUnknown_85CCA7C + 0x279\n\t"
-        "_08027A38: .4byte gStringVar1\n\t"
-        "_08027A3C: .4byte sRecordDigitCounts\n\t"
-        "_08027A40: .4byte sRecordsLabels\n\t"
-        "_08027A44: .4byte sRecordLabelYs\n\t"
-        "_08027A48: .4byte sRecordValueYs\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i, x, numWidth;
+    s32 recordNums[3];
+    const u16 *yp;
+
+    recordNums[0] = gSaveBlock2Ptr->berryPick.berriesPicked;
+    recordNums[1] = gSaveBlock2Ptr->berryPick.bestScore;
+    recordNums[2] = gSaveBlock2Ptr->berryPick.berriesPickedInRow;
+
+    LoadUserWindowBorderGfx_(windowId, 0x21D, 0xD0);
+    DrawTextBorderOuter(windowId, 0x21D, 13);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gUnknown_85CCA7C + 0x279, 0, 2, TEXT_SKIP_DRAW, NULL);
+    for (i = 0; i < 3; i++)
+    {
+        ConvertIntToDecimalStringN(gStringVar1, recordNums[i], STR_CONV_MODE_LEFT_ALIGN, sRecordDigitCounts[i]);
+        numWidth = GetStringWidth(FONT_NORMAL, gStringVar1, -1);
+        AddTextPrinterParameterized(windowId, FONT_NORMAL, sRecordsLabels[i], 0, *(const u8 *)(yp = &sRecordLabelYs[0], yp + i), TEXT_SKIP_DRAW, NULL);
+        x = 160 - numWidth;
+        AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar1, x, *(const u8 *)(yp = &sRecordValueYs[0], yp + i), TEXT_SKIP_DRAW, NULL);
+    }
+    PutWindowTilemap(windowId);
+}
+void Debug_SetPlayerNamesAndResults(void)
+{
+    u8 i;
+    u8 playerId;
+
+    for (playerId = sGame->numPlayers; playerId < ARRAY_COUNT(sPlayerNames); playerId++)
+        StringCopy(gLinkPlayers[playerId].name, sPlayerNames[playerId]);
+
+    sGame->numPlayers = MAX_RFU_PLAYERS;
+    for (i = 0; i < BERRY_PRIZE; i++)
+    {
+        for (playerId = 0; playerId < sGame->numPlayers; playerId++)
+            sGame->berryResults[playerId][i] = sBerryResultsInit[playerId][i];
+    }
+}
+void SpriteCB_Cloud(struct Sprite *sprite)
+{
+    u8 i;
+
+    if (sprite->data[10] != TRUE)
+    {
+        for (i = 0; i < NUM_CLOUDS; i++)
+        {
+            if (++sCloudSpriteIds[i][1] > sCloudDurations[i])
+            {
+                sprite->x--;
+                sCloudSpriteIds[i][1] = 0;
+            }
+        }
+    }
 }
 
 
-__attribute__((naked)) void Debug_SetPlayerNamesAndResults(void)
+void InitBgs(void)
 {
-    __asm__(".syntax unified\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	ldr r0, _08027AEC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x24\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	cmp r4, #4\n\t"
-        "	bhi _08027A92\n\t"
-        "	ldr r5, _08027AF0\n\t"
-        "_08027A74:\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	subs r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08027AF4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl StringCopy\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08027A74\n\t"
-        "_08027A92:\n\t"
-        "	ldr r0, _08027AEC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x24\n\t"
-        "	movs r2, #5\n\t"
-        "	strb r2, [r1]\n\t"
-        "	movs r1, #0\n\t"
-        "	mov ip, r0\n\t"
-        "_08027AA0:\n\t"
-        "	movs r4, #0\n\t"
-        "	mov r2, ip\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x24\n\t"
-        "	adds r5, r1, #1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r4, r0\n\t"
-        "	bhs _08027ADE\n\t"
-        "	ldr r7, _08027AEC\n\t"
-        "	lsls r3, r1, #1\n\t"
-        "	ldr r6, _08027AF8\n\t"
-        "_08027AB6:\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x4a\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r2, #0x24\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	cmp r4, r2\n\t"
-        "	blo _08027AB6\n\t"
-        "_08027ADE:\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #3\n\t"
-        "	bls _08027AA0\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08027AEC: .4byte sDodrioGame\n\t"
-        "_08027AF0: .4byte sPlayerNames\n\t"
-        "_08027AF4: .4byte gUnknown_20226A8\n\t"
-        "_08027AF8: .4byte sBerryResultsInit\n\t"
-        ".syntax divided\n\t"
-    );
+    DmaClearLarge16(3, (void *)VRAM, VRAM_SIZE, 0x1000);
+    DmaClear32(3, (void *)OAM, OAM_SIZE);
+    DmaClear16(3, (void *)PLTT, PLTT_SIZE);
+    SetGpuReg(REG_OFFSET_DISPCNT, 0);
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, sDodrioBgTemplates, 4);
+    ChangeBgX(0, 0, 0);
+    ChangeBgY(0, 0, 0);
+    ChangeBgX(1, 0, 0);
+    ChangeBgY(1, 0, 0);
+    ChangeBgX(2, 0, 0);
+    ChangeBgY(2, 0, 0);
+    ChangeBgX(3, 0, 0);
+    ChangeBgY(3, 0, 0);
+    InitStandardTextBoxWindows();
+    InitTextBoxGfxAndPrinters();
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+    SetBgTilemapBuffer(3, sGfx->tilemapBuffers[0]);
+    SetBgTilemapBuffer(1, sGfx->tilemapBuffers[1]);
+    SetBgTilemapBuffer(2, sGfx->tilemapBuffers[2]);
 }
-
-
-__attribute__((naked)) void SpriteCB_Cloud(void)
-{
-    __asm__(".syntax unified\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r0, #0x42\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08028A62\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r7, _08028A68\n\t"
-        "	ldr r6, _08028A6C\n\t"
-        "	movs r5, #0\n\t"
-        "_08028A36:\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r2, r0, r6\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldrh r0, [r1, #2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	adds r1, r3, r7\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bls _08028A58\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	strh r5, [r0, #2]\n\t"
-        "_08028A58:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #1\n\t"
-        "	bls _08028A36\n\t"
-        "_08028A62:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08028A68: .4byte sCloudDurations\n\t"
-        "_08028A6C: .4byte sCloudSpriteIds\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) void InitBgs(void)
-{
-    __asm__(".syntax unified\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	movs r3, #0xc0\n\t"
-        "	lsls r3, r3, #0x13\n\t"
-        "	movs r4, #0xc0\n\t"
-        "	lsls r4, r4, #9\n\t"
-        "	add r0, sp, #4\n\t"
-        "	mov r8, r0\n\t"
-        "	mov r2, sp\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r1, _0802A5CC\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #5\n\t"
-        "	ldr r7, _0802A5D0\n\t"
-        "	movs r0, #0x81\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	mov ip, r0\n\t"
-        "_0802A4C2:\n\t"
-        "	strh r6, [r2]\n\t"
-        "	mov r0, sp\n\t"
-        "	str r0, [r1]\n\t"
-        "	str r3, [r1, #4]\n\t"
-        "	str r7, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	adds r3, r3, r5\n\t"
-        "	subs r4, r4, r5\n\t"
-        "	cmp r4, r5\n\t"
-        "	bhi _0802A4C2\n\t"
-        "	strh r6, [r2]\n\t"
-        "	mov r2, sp\n\t"
-        "	str r2, [r1]\n\t"
-        "	str r3, [r1, #4]\n\t"
-        "	lsrs r0, r4, #1\n\t"
-        "	mov r2, ip\n\t"
-        "	orrs r0, r2\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	movs r0, #0xe0\n\t"
-        "	lsls r0, r0, #0x13\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	ldr r2, _0802A5CC\n\t"
-        "	mov r1, r8\n\t"
-        "	str r1, [r2]\n\t"
-        "	str r0, [r2, #4]\n\t"
-        "	lsrs r0, r3, #2\n\t"
-        "	movs r1, #0x85\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r2, #8]\n\t"
-        "	ldr r0, [r2, #8]\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r4, [r0]\n\t"
-        "	str r0, [r2]\n\t"
-        "	str r1, [r2, #4]\n\t"
-        "	lsrs r3, r3, #1\n\t"
-        "	movs r0, #0x81\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	orrs r3, r0\n\t"
-        "	str r3, [r2, #8]\n\t"
-        "	ldr r0, [r2, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ResetBgsAndClearDma3BusyFlags\n\t"
-        "	ldr r1, _0802A5D4\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	bl InitBgsFromTemplates\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	bl InitStandardTextBoxWindows\n\t"
-        "	bl sub_08196DF4\n\t"
-        "	movs r1, #0x82\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r4, _0802A5D8\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #3\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #6\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #2\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0802A5CC: .4byte 0x040000D4\n\t"
-        "_0802A5D0: .4byte 0x81000800\n\t"
-        "_0802A5D4: .4byte sDodrioBgTemplates\n\t"
-        "_0802A5D8: .4byte sGfx\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
 __attribute__((naked)) void sub_080295A4(void)
 {
     __asm__(".syntax unified\n\t"
