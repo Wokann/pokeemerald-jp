@@ -30,7 +30,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827DC85                  @ 008
 	.4byte gUnknown_827E01B                  @ 009
 	.4byte gUnknown_827E2CB                  @ 010
-	.4byte gUnknown_8279D6D                  @ 011
+	.4byte Move_VICE_GRIP                    @ MOVE_VICE_GRIP
 	.4byte gUnknown_8279DB5                  @ 012
 	.4byte gUnknown_8281F08                  @ 013
 	.4byte Move_SWORDS_DANCE                  @ MOVE_SWORDS_DANCE
@@ -1839,8 +1839,21 @@ Move_PAIN_SPLIT: @ 0x08279CC5
 	createvisualtask AnimTask_PainSplitMovement, 2, ANIM_TARGET, 2
 	end
 
-gUnknown_8279D6D: @ 0x08279D6D
-	.incbin "baserom_jp.gba", 0x279d6d, 0x48
+Move_VICE_GRIP: @ 0x08279D6D
+	loadspritegfx ANIM_TAG_CUT
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_VICEGRIP, SOUND_PAN_TARGET
+	createsprite gViceGripSpriteTemplate, ANIM_ATTACKER, 2, 0
+	createsprite gViceGripSpriteTemplate, ANIM_ATTACKER, 2, 1
+	delay 9
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 1, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 2, 0, 5, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_8279DB5: @ 0x08279DB5
 	.incbin "baserom_jp.gba", 0x279db5, 0x8c
