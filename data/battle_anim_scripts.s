@@ -351,7 +351,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82837C9                  @ 329
 	.4byte gUnknown_8283883                  @ 330
 	.4byte gUnknown_8283895                  @ 331
-	.4byte gUnknown_827D5E0                  @ 332
+	.4byte Move_AERIAL_ACE                   @ MOVE_AERIAL_ACE
 	.4byte Move_ICICLE_SPEAR                 @ MOVE_ICICLE_SPEAR
 	.4byte gUnknown_827D64A                  @ 334
 	.4byte gUnknown_827D674                  @ 335
@@ -4358,8 +4358,22 @@ Move_EXTRASENSORY: @ 0x0827D578
 	call UnsetPsychicBackground
 	end
 
-gUnknown_827D5E0: @ 0x0827D5E0
-	.incbin "baserom_jp.gba", 0x27d5e0, 0x6a
+Move_AERIAL_ACE: @ 0x0827D5E0
+	loadspritegfx ANIM_TAG_CUT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 24, 6, 1, 5
+	createvisualtask AnimTask_TraceMonBlended, 2, 0, 4, 7, 3
+	createsprite gCuttingSliceSpriteTemplate, ANIM_ATTACKER, 2, 40, -32, 0
+	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
+	delay 5
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 3, 10, 1
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=10, color2=RGB_BLACK, blend_y2=0
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_827D64A: @ 0x0827D64A
 	.incbin "baserom_jp.gba", 0x27d64a, 0x2a
