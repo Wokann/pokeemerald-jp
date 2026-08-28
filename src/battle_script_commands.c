@@ -1770,7 +1770,6 @@ void Cmd_confuseifrepeatingattackends(void);
 void Cmd_setmultihitcounter(void);
 void Cmd_initmultihitstring(void);
 bool8 TryDoForceSwitchOut(void);
-void sub_081B8B20(u8 battler, u8 slot, u8 slot2); // JP SwitchPartyOrderLinkMulti
 void Cmd_forcerandomswitch(void);
 void Cmd_tryconversiontypechange(void);
 void Cmd_givepaydaymoney(void);
@@ -6965,8 +6964,8 @@ void Cmd_forcerandomswitch(void)
                 || (gBattleTypeFlags & BATTLE_TYPE_RECORDED_LINK && gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
                 || (gBattleTypeFlags & BATTLE_TYPE_RECORDED_LINK && gBattleTypeFlags & BATTLE_TYPE_MULTI))
             {
-                sub_081B8B20(gBattlerTarget, i, 0);
-                sub_081B8B20(BATTLE_PARTNER(gBattlerTarget), i, 1);
+                SwitchPartyOrderLinkMulti(gBattlerTarget, i, 0);
+                SwitchPartyOrderLinkMulti(BATTLE_PARTNER(gBattlerTarget), i, 1);
             }
 
             if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER)

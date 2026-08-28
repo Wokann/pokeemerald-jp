@@ -6098,106 +6098,44 @@ static void BufferBattlePartyOrderBySide(u8 *partyBattleOrder, u8 flankId, u8 ba
         partyBattleOrder[i] = (partyIndexes[0 + (i * 2)] << 4) | partyIndexes[1 + (i * 2)];
 }
 
-__attribute__((naked)) void sub_081B8B20(void)
+void SwitchPartyOrderLinkMulti(u8 battler, u8 slot, u8 slot2)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r6, r2, #0x18\n\t"
-        "	movs r7, #0\n\t"
-        "	bl IsMultiBattle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B8BCE\n\t"
-        "	ldr r0, _081B8B84\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	adds r1, #0x60\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r2, #0\n\t"
-        "	add r6, sp\n\t"
-        "	mov ip, r6\n\t"
-        "	movs r6, #0xf\n\t"
-        "	mov r3, sp\n\t"
-        "_081B8B52:\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	strb r0, [r3]\n\t"
-        "	adds r3, #1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	adds r3, #1\n\t"
-        "	adds r2, #1\n\t"
-        "	cmp r2, #2\n\t"
-        "	ble _081B8B52\n\t"
-        "	mov r0, ip\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	movs r2, #0\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _081B8B88\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r7, [r0]\n\t"
-        "	strb r3, [r0]\n\t"
-        "	b _081B8B9C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8B84: .4byte gBattleStruct\n\t"
-        "_081B8B88:\n\t"
-        "	adds r2, #1\n\t"
-        "	cmp r2, #5\n\t"
-        "	bgt _081B8B9C\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _081B8B88\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	strb r3, [r1]\n\t"
-        "_081B8B9C:\n\t"
-        "	cmp r2, #6\n\t"
-        "	beq _081B8BCE\n\t"
-        "	mov r0, ip\n\t"
-        "	strb r7, [r0]\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrb r1, [r1, #1]\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0, #2]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrb r1, [r1, #3]\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrb r1, [r1, #5]\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "_081B8BCE:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 partyIds[PARTY_SIZE];
+    u8 tempSlot = 0;
+    s32 i;
+    s32 j;
+    u8 *partyBattleOrder;
+    u8 partyIdBuffer;
+
+    if ((u8)IsMultiBattle())
+    {
+        partyBattleOrder = gBattleStruct->battlerPartyOrders[battler];
+        for (i = j = 0; i < PARTY_SIZE / 2; j++, i++)
+        {
+            partyIds[j] = partyBattleOrder[i] >> 4;
+            j++;
+            partyIds[j] = partyBattleOrder[i] & 0xF;
+        }
+
+        partyIdBuffer = partyIds[slot2];
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (partyIds[i] == slot)
+            {
+                tempSlot = partyIds[i];
+                partyIds[i] = partyIdBuffer;
+                break;
+            }
+        }
+
+        if (i != PARTY_SIZE)
+        {
+            partyIds[slot2] = tempSlot;
+            partyBattleOrder[0] = (partyIds[0] << 4) | partyIds[1];
+            partyBattleOrder[1] = (partyIds[2] << 4) | partyIds[3];
+            partyBattleOrder[2] = (partyIds[4] << 4) | partyIds[5];
+        }
+    }
 }
 
 static u8 GetPartyIdFromBattleSlot(u8 slot)

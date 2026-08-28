@@ -8932,7 +8932,7 @@ SECTIONS {
         src/party_menu.o(.text.BufferBattlePartyOrder);
         src/party_menu.o(.text.BufferBattlePartyCurrentOrderBySide);
         src/party_menu.o(.text.BufferBattlePartyOrderBySide);
-        src/party_menu.o(.text.sub_081B8B20);
+        src/party_menu.o(.text.SwitchPartyOrderLinkMulti);
         src/party_menu.o(.text.GetPartyIdFromBattleSlot);
         src/party_menu.o(.text.SetPartyIdAtBattleSlot);
         src/party_menu.o(.text.SwitchPartyMonSlots);
