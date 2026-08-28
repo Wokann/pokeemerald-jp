@@ -123,7 +123,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8281B0A                  @ 101
 	.4byte gUnknown_82820C6                  @ 102
 	.4byte Move_SCREECH                        @ MOVE_SCREECH
-	.4byte gUnknown_827B497                  @ 104
+	.4byte Move_DOUBLE_TEAM                  @ MOVE_DOUBLE_TEAM
 	.4byte gUnknown_828201C                  @ 105
 	.4byte gUnknown_827DA50                  @ 106
 	.4byte gUnknown_827B4DE                  @ 107
@@ -2780,8 +2780,32 @@ Move_TELEPORT:: @ 0x0827B47E
 	waitforvisualfinish
 	end
 
-gUnknown_827B497: @ 0x0827B497
-	.incbin "baserom_jp.gba", 0x27b497, 0x47
+Move_DOUBLE_TEAM:: @ 0x0827B497
+	createvisualtask AnimTask_DoubleTeam, 2
+	setalpha 12, 8
+	monbg ANIM_ATK_PARTNER
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	delay 32
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	delay 24
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	delay 16
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	delay 8
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	delay 8
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	delay 8
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	delay 8
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	delay 8
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	delay 1
+	end
 
 gUnknown_827B4DE: @ 0x0827B4DE
 	.incbin "baserom_jp.gba", 0x27b4de, 0x13
