@@ -103,7 +103,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8281D95                  @ 081
 	.4byte gUnknown_827E9B9                  @ 082
 	.4byte gUnknown_8279222                  @ 083
-	.4byte gUnknown_8278928                  @ 084
+	.4byte Move_THUNDER_SHOCK                @ MOVE_THUNDER_SHOCK
 	.4byte gUnknown_8278996                  @ 085
 	.4byte gUnknown_8278B4C                  @ 086
 	.4byte gUnknown_827DEC1                  @ 087
@@ -1047,8 +1047,26 @@ SonicBoomHit:
 	delay 4
 	return
 
-gUnknown_8278928: @ 0x08278928
-	.incbin "baserom_jp.gba", 0x278928, 0x6e
+Move_THUNDER_SHOCK: @ 0x08278928
+	loadspritegfx ANIM_TAG_SPARK
+	loadspritegfx ANIM_TAG_SPARK_2
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 0, 0, 6, RGB_BLACK
+	waitforvisualfinish
+	delay 10
+	createvisualtask AnimTask_ElectricBolt, 5, 0, -44, 0
+	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
+	delay 9
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 0, 0, 13, RGB_BLACK
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 0, 13, 0, RGB_BLACK
+	waitforvisualfinish
+	delay 20
+	call ElectricityEffect
+	waitforvisualfinish
+	delay 20
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 0, 6, 0, RGB_BLACK
+	waitforvisualfinish
+	end
 
 gUnknown_8278996: @ 0x08278996
 	.incbin "baserom_jp.gba", 0x278996, 0x1b6
@@ -2037,7 +2055,10 @@ gUnknown_8285C76: @ 0x08285C76
 PoisonBubblesEffect: @ 0x08285FF8
 	.incbin "baserom_jp.gba", 0x285ff8, 0x73
 
-	.incbin "baserom_jp.gba", 0x28606b, 0x276
+	.incbin "baserom_jp.gba", 0x28606b, 0x106
+
+ElectricityEffect: @ 0x08286171
+	.incbin "baserom_jp.gba", 0x286171, 0x170
 
 gUnknown_82862E1: @ 0x082862E1
 	.incbin "baserom_jp.gba", 0x2862e1, 0x2b
