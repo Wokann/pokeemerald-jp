@@ -342,7 +342,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_GRASS_WHISTLE                @ MOVE_GRASS_WHISTLE
 	.4byte Move_TICKLE                       @ MOVE_TICKLE
 	.4byte gUnknown_82844E4                  @ 322
-	.4byte gUnknown_827D4EF                  @ 323
+	.4byte Move_WATER_SPOUT                  @ MOVE_WATER_SPOUT
 	.4byte gUnknown_827F43E                  @ 324
 	.4byte gUnknown_827D51D                  @ 325
 	.4byte gUnknown_827D578                  @ 326
@@ -4299,8 +4299,22 @@ Move_TICKLE: @ 0x0827D483
 	waitforvisualfinish
 	end
 
-gUnknown_827D4EF: @ 0x0827D4EF
-	.incbin "baserom_jp.gba", 0x27d4ef, 0x2e
+Move_WATER_SPOUT: @ 0x0827D4EF
+	loadspritegfx ANIM_TAG_GLOWY_BLUE_ORB
+	loadspritegfx ANIM_TAG_WATER_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	createvisualtask AnimTask_WaterSpoutLaunch, 5
+	playsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER
+	delay 44
+	playsewithpan SE_M_DIVE, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	delay 16
+	createvisualtask AnimTask_WaterSpoutRain, 5
+	playsewithpan SE_M_SURF, SOUND_PAN_TARGET
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_827D51D: @ 0x0827D51D
 	.incbin "baserom_jp.gba", 0x27d51d, 0x5b
