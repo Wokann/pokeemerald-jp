@@ -118,7 +118,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MEDITATE                     @ MOVE_MEDITATE
 	.4byte Move_AGILITY                      @ MOVE_AGILITY
 	.4byte Move_QUICK_ATTACK                 @ MOVE_QUICK_ATTACK
-	.4byte gUnknown_827B408                  @ 099
+	.4byte Move_RAGE                         @ MOVE_RAGE
 	.4byte gUnknown_827B47E                  @ 100
 	.4byte gUnknown_8281B0A                  @ 101
 	.4byte gUnknown_82820C6                  @ 102
@@ -2750,8 +2750,26 @@ Move_QUICK_ATTACK:: @ 0x0827B3B0
 	waitforvisualfinish
 	end
 
-gUnknown_827B408: @ 0x0827B408
-	.incbin "baserom_jp.gba", 0x27b408, 0x76
+Move_RAGE:: @ 0x0827B408
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_ANGER
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	createvisualtask AnimTask_BlendMonInAndOut, 3, ANIM_ATTACKER, RGB_RED, 10, 0, 2
+	createsprite gAngerMarkSpriteTemplate, ANIM_ATTACKER, 2, 0, -20, -28
+	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
+	delay 20
+	createsprite gAngerMarkSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, -28
+	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 6
+	delay 4
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, TRUE, 1, 10, 1, 0
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	end
 
 gUnknown_827B47E: @ 0x0827B47E
 	.incbin "baserom_jp.gba", 0x27b47e, 0x19
