@@ -187,7 +187,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827B9A1                  @ 165
 	.4byte gUnknown_827BA07                  @ 166
 	.4byte gUnknown_828081A                  @ 167
-	.4byte gUnknown_827A6B8                  @ 168
+	.4byte Move_THIEF                        @ MOVE_THIEF
 	.4byte gUnknown_8281E67                  @ 169
 	.4byte gUnknown_827DB4D                  @ 170
 	.4byte gUnknown_827BA2F                  @ 171
@@ -2170,8 +2170,25 @@ RockSlideRocks:
 	delay 2
 	return
 
-gUnknown_827A6B8: @ 0x0827A6B8
-	.incbin "baserom_jp.gba", 0x27a6b8, 0x47
+Move_THIEF:: @ 0x0827A6B8
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	delay 1
+	fadetobg BG_DARK
+	waitbgfadein
+	setalpha 12, 8
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 6, 4
+	delay 6
+	playsewithpan SE_M_VITAL_THROW, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 1, 0, 8, 1
+	waitforvisualfinish
+	delay 20
+	clearmonbg ANIM_TARGET
+	blendoff
+	restorebg
+	waitbgfadein
+	end
 
 gUnknown_827A6FF: @ 0x0827A6FF
 	.incbin "baserom_jp.gba", 0x27a6ff, 0xdd
