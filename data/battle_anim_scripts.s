@@ -289,7 +289,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8280FE2                  @ 267
 	.4byte Move_CHARGE                       @ MOVE_CHARGE
 	.4byte Move_TAUNT                        @ MOVE_TAUNT
-	.4byte gUnknown_827C44B                  @ 270
+	.4byte Move_HELPING_HAND                 @ MOVE_HELPING_HAND
 	.4byte gUnknown_8282DF5                  @ 271
 	.4byte gUnknown_8283535                  @ 272
 	.4byte gUnknown_8282E73                  @ 273
@@ -3631,8 +3631,22 @@ Move_TAUNT:: @ 0x0827C3F7
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
 	end
 
-gUnknown_827C44B: @ 0x0827C44B
-	.incbin "baserom_jp.gba", 0x27c44b, 0x73
+Move_HELPING_HAND:: @ 0x0827C44B
+	loadspritegfx ANIM_TAG_TAG_HAND
+	createvisualtask AnimTask_HelpingHandAttackerMovement, 5
+	createsprite gHelpingHandClapSpriteTemplate, ANIM_ATTACKER, 40, 0
+	createsprite gHelpingHandClapSpriteTemplate, ANIM_ATTACKER, 40, 1
+	delay 19
+	playsewithpan SE_M_ENCORE, 0
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATK_PARTNER, 2, 0, 5, 1
+	delay 14
+	playsewithpan SE_M_ENCORE, 0
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATK_PARTNER, 2, 0, 5, 1
+	delay 20
+	playsewithpan SE_M_ENCORE, 0
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATK_PARTNER, 3, 0, 10, 1
+	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_ATK_PARTNER, RGB_YELLOW, 12, 1, 1
+	end
 
 gUnknown_827C4BE: @ 0x0827C4BE
 	.incbin "baserom_jp.gba", 0x27c4be, 0x71
