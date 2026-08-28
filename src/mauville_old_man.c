@@ -207,7 +207,7 @@ __attribute__((naked)) u8 GetCurrentMauvilleOldMan()
     );
 }
 
-__attribute__((naked)) void ScrSpecial_GetCurrentMauvilleMan(void)
+__attribute__((naked)) void Script_GetCurrentMauvilleMan(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -226,7 +226,7 @@ __attribute__((naked)) void ScrSpecial_GetCurrentMauvilleMan(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_HasBardSongBeenChanged(void)
+__attribute__((naked)) void HasBardSongBeenChanged(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -246,7 +246,7 @@ __attribute__((naked)) void ScrSpecial_HasBardSongBeenChanged(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_SaveBardSongLyrics(void)
+__attribute__((naked)) void SaveBardSongLyrics(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -374,7 +374,7 @@ __attribute__((naked)) void PrepareSongText(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_PlayBardSong(void)
+__attribute__((naked)) void PlayBardSong(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -391,7 +391,7 @@ __attribute__((naked)) void ScrSpecial_PlayBardSong(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_GetHipsterSpokenFlag(void)
+__attribute__((naked)) void HasHipsterTaughtWord(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -411,7 +411,7 @@ __attribute__((naked)) void ScrSpecial_GetHipsterSpokenFlag(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_SetHipsterSpokenFlag(void)
+__attribute__((naked)) void SetHipsterTaughtWord(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -429,7 +429,7 @@ __attribute__((naked)) void ScrSpecial_SetHipsterSpokenFlag(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_HipsterTeachWord(void)
+__attribute__((naked)) void HipsterTryTeachWord(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -462,7 +462,7 @@ __attribute__((naked)) void ScrSpecial_HipsterTeachWord(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_GiddyShouldTellAnotherTale(void)
+__attribute__((naked)) void GiddyShouldTellAnotherTale(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -496,7 +496,7 @@ __attribute__((naked)) void ScrSpecial_GiddyShouldTellAnotherTale(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_GenerateGiddyLine(void)
+__attribute__((naked)) void GenerateGiddyLine(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -935,7 +935,7 @@ __attribute__((naked)) void BardSong_TextSubPrinter(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_StorytellerDisplayStory(void)
+__attribute__((naked)) void DrawSongTextWindow(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1008,7 +1008,7 @@ __attribute__((naked)) void Task_BardSong(void)
         "_08120C70:\n\t"
         "	bl PrepareSongText\n\t"
         "	ldr r0, _08120C90\n\t"
-        "	bl ScrSpecial_StorytellerDisplayStory\n\t"
+        "	bl DrawSongTextWindow\n\t"
         "	movs r0, #0\n\t"
         "	strh r0, [r4, #0xa]\n\t"
         "	strh r0, [r4, #0xc]\n\t"
@@ -1244,7 +1244,7 @@ __attribute__((naked)) void SetMauvilleOldManObjEventGfx(void)
     );
 }
 
-__attribute__((naked)) void StorytellerDisplayStory(void)
+__attribute__((naked)) void SanitizeReceivedEmeraldOldMan(union OldMan *oldMan, u32 version, u32 language)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1924,7 +1924,7 @@ __attribute__((naked)) void StorytellerInitializeRandomStat(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_StorytellerGetFreeStorySlot(void)
+__attribute__((naked)) void StorytellerDisplayStory(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2141,7 +2141,7 @@ __attribute__((naked)) void Task_StoryListMenu(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_StorytellerStoryListMenu(void)
+__attribute__((naked)) void StorytellerStoryListMenu(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2157,14 +2157,14 @@ __attribute__((naked)) void ScrSpecial_StorytellerStoryListMenu(void)
     );
 }
 
-__attribute__((naked)) void sub_0812148C(void)
+__attribute__((naked)) void Script_StorytellerDisplayStory(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
         "	ldr r0, _0812149C\n\t"
         "	ldrb r0, [r0]\n\t"
-        "	bl ScrSpecial_StorytellerGetFreeStorySlot\n\t"
+        "	bl StorytellerDisplayStory\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
@@ -2173,7 +2173,7 @@ __attribute__((naked)) void sub_0812148C(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_StorytellerInitializeRandomStat(void)
+__attribute__((naked)) void StorytellerGetFreeStorySlot(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2197,7 +2197,7 @@ __attribute__((naked)) void ScrSpecial_StorytellerInitializeRandomStat(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_StorytellerUpdateStat(void)
+__attribute__((naked)) void StorytellerUpdateStat(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2238,7 +2238,7 @@ __attribute__((naked)) void ScrSpecial_StorytellerUpdateStat(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_HasStorytellerAlreadyRecorded(void)
+__attribute__((naked)) void HasStorytellerAlreadyRecorded(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2268,7 +2268,7 @@ __attribute__((naked)) void ScrSpecial_HasStorytellerAlreadyRecorded(void)
     );
 }
 
-__attribute__((naked)) void SanitizeReceivedEmeraldOldMan(union OldMan *oldMan, u32 version, u32 language)
+__attribute__((naked)) void Script_StorytellerInitializeRandomStat(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

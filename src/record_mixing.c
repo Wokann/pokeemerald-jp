@@ -205,7 +205,7 @@ __attribute__((naked)) void PrepareExchangePacketForRubySapphire(void)
         "	movs r2, #0x40\n\t"
         "	bl memcpy\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl StorytellerDisplayStory\n\t"
+        "	bl SanitizeReceivedEmeraldOldMan\n\t"
         "	ldr r1, _080E65EC\n\t"
         "	adds r0, r5, r1\n\t"
         "	ldr r1, _080E65F0\n\t"

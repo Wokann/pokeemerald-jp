@@ -73,10 +73,6 @@
 	@ or duplicating any ROM bytes.
 	@ Verdanturf Battle Tent Lobby shares these retained JP text/script blocks.
 	@ The local map source therefore keeps the pokeemerald semantic labels.
-	@ Mauville's dynamic old-man interaction remains in its retained JP owner.
-	@ Expose the map-local pokeemerald label for generated object events.
-	.globl MauvilleCity_PokemonCenter_1F_EventScript_MauvilleOldMan
-	.set MauvilleCity_PokemonCenter_1F_EventScript_MauvilleOldMan, 0x08254D6B
 	@ The Rollout tutor remains in the retained shared move-tutor byte block.
 	@ Export its pokeemerald map-event label without relocating the JP bytes.
 	.globl MauvilleCity_EventScript_RolloutTutor
@@ -1358,8 +1354,7 @@ Common_EventScript_LegendaryFlewAway::
 
 	.include "data/text/tv/pokemon_news.inc"
 
-	@ 0x08254D6B-0x082565C8 remains unstructured script_data.
-	.incbin "baserom_jp.gba", 0x254d6b, 0x185d
+	.include "data/scripts/mauville_man.inc"
 
 EventScript_CutTree:: @ 0x082565C8
 	.incbin "baserom_jp.gba", 0x2565c8, 0x4a
