@@ -1327,34 +1327,7 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/scripts/trainer_hill.inc"
 	.include "data/scripts/test_signpost.inc"
 	.include "data/text/frontier_brain.inc"
-
-	.globl gUnknown_8276F58
-gUnknown_8276F58: @ 0x8276F58
-	.include "data/scripts/gUnknown_8276F58.inc"
-
-	.globl gUnknown_8276F77
-gUnknown_8276F77: @ 0x8276F77
-	.include "data/scripts/gUnknown_8276F77.inc"
-
-	.globl gUnknown_8276F97
-gUnknown_8276F97: @ 0x8276F97
-	.include "data/scripts/gUnknown_8276F97.inc"
-
-	.globl gUnknown_8276FBB
-gUnknown_8276FBB: @ 0x8276FBB
-	.include "data/scripts/gUnknown_8276FBB.inc"
-
-	.globl gUnknown_8276FD3
-gUnknown_8276FD3: @ 0x8276FD3
-	.include "data/scripts/gUnknown_8276FD3.inc"
-
-	.globl gUnknown_8277048
-gUnknown_8277048: @ 0x8277048
-	.include "data/scripts/gUnknown_8277048.inc"
-
-	.globl gText_SavingDontTurnOffPower
-gText_SavingDontTurnOffPower: @ 0x8277071
-	.include "data/scripts/gUnknown_8277071.inc"
+	.include "data/text/save.inc"
 
 	.globl gUnknown_8277095
 gUnknown_8277095: @ 0x8277095

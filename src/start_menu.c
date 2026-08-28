@@ -1858,7 +1858,7 @@ __attribute__((naked)) void SaveConfirmSaveCallback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809F9BC: .4byte gUnknown_8276F58\n\t"
+        "_0809F9BC: .4byte gText_ConfirmSave\n\t"
         "_0809F9C0: .4byte SaveConfirmOverwriteCallback + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -1964,7 +1964,7 @@ __attribute__((naked)) void SaveFileExistsCallback(void)
         "	b _0809FA7C\n\t"
         "	.align 2, 0\n\t"
         "_0809FA68: .4byte gDifferentSaveFile\n\t"
-        "_0809FA6C: .4byte gUnknown_8276FD3\n\t"
+        "_0809FA6C: .4byte gText_DifferentSaveFile\n\t"
         "_0809FA70: .4byte BattlePyramidRetireYesNoCallback + 1\n\t"
         "_0809FA74:\n\t"
         "	ldr r0, _0809FA84\n\t"
@@ -1975,7 +1975,7 @@ __attribute__((naked)) void SaveFileExistsCallback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809FA84: .4byte gUnknown_8276F77\n\t"
+        "_0809FA84: .4byte gText_AlreadySavedFile\n\t"
         "_0809FA88: .4byte SaveYesNoCallback + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -2076,7 +2076,7 @@ __attribute__((naked)) void SaveSavingMessageCallback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809FB1C: .4byte gUnknown_8276F97\n\t"
+        "_0809FB1C: .4byte gText_SavingDontTurnOff\n\t"
         "_0809FB20: .4byte SaveDoSaveCallback + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -2116,7 +2116,7 @@ __attribute__((naked)) void SaveDoSaveCallback(void)
         "	bl ShowSaveMessage\n\t"
         "	b _0809FB74\n\t"
         "	.align 2, 0\n\t"
-        "_0809FB64: .4byte gUnknown_8276FBB\n\t"
+        "_0809FB64: .4byte gText_PlayerSavedGame\n\t"
         "_0809FB68: .4byte SaveSuccessCallback + 1\n\t"
         "_0809FB6C:\n\t"
         "	ldr r0, _0809FB80\n\t"
@@ -2129,7 +2129,7 @@ __attribute__((naked)) void SaveDoSaveCallback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809FB80: .4byte gUnknown_8277048\n\t"
+        "_0809FB80: .4byte gText_SaveError\n\t"
         "_0809FB84: .4byte SaveErrorCallback + 1\n\t"
         ".syntax divided\n\t"
     );
