@@ -252,7 +252,7 @@ Route104_Text_GinaDefeat: @ 0x08259CE7
 	.string "ナオ“まけて　すごく　くやしいです$"
 
 Route104_Text_GinaPostBattle: @ 0x08259CF9
-	.string "ナオ“うわー　{STRING 0x02}　つよいです！\n"
+	.string "ナオ“うわー　{STR_VAR_1}　つよいです！\n"
 	.string "あたしたち　もっと　しゅぎょう　するです$"
 
 Route104_Text_GinaNotEnoughMons: @ 0x08259D1F
@@ -271,7 +271,7 @@ Route104_Text_MiaDefeat: @ 0x08259D9B
 
 Route104_Text_MiaPostBattle: @ 0x08259DB8
 	.string "ミオ“もっと　ポケモン　そだてて\n"
-	.string "{STRING 0x02}　みたいに　つよく　なるです！$"
+	.string "{STR_VAR_1}　みたいに　つよく　なるです！$"
 
 Route104_Text_MiaNotEnoughMons: @ 0x08259DDB
 	.string "ミオ“あたしたちと　たたかうですか？\p"
