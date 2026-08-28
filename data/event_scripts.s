@@ -1361,9 +1361,10 @@ gUnknown_827722D: @ 0x827722D
 gUnknown_8277265: @ 0x8277265
 	.include "data/scripts/gUnknown_8277265.inc"
 
-	.globl gUnknown_82772F0
-gUnknown_82772F0: @ 0x82772F0
-	.include "data/scripts/gUnknown_82772F0.inc"
+@ This JP-located table is consumed by the battle animation script engine.
+	.align 2
+gMovesWithQuietBGM::
+	.2byte MOVE_SING, MOVE_PERISH_SONG, MOVE_GRASS_WHISTLE, 0xFFFF
 
 	.globl gUnknown_82772F8
 gUnknown_82772F8: @ 0x82772F8

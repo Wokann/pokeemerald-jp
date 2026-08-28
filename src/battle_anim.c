@@ -299,7 +299,7 @@ __attribute__((naked)) void LaunchBattleAnimation(const u8 *const animsTable[], 
         "_080A3460: .4byte gUnknown_203809C\n\t"
         "_080A3464: .4byte 0x0000FFFF\n\t"
         "_080A3468: .4byte gUnknown_20380AA\n\t"
-        "_080A346C: .4byte gUnknown_82772F0\n\t"
+        "_080A346C: .4byte gMovesWithQuietBGM\n\t"
         "_080A3470:\n\t"
         "	adds r4, #1\n\t"
         "_080A3472:\n\t"
