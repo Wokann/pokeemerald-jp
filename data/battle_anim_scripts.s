@@ -191,7 +191,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8281E67                  @ 169
 	.4byte gUnknown_827DB4D                  @ 170
 	.4byte gUnknown_827BA2F                  @ 171
-	.4byte gUnknown_8277FF2                  @ 172
+	.4byte Move_FLAME_WHEEL                   @ MOVE_FLAME_WHEEL
 	.4byte gUnknown_827E4E9                  @ 173
 	.4byte gUnknown_8282179                  @ 174
 	.4byte gUnknown_827BA85                  @ 175
@@ -650,8 +650,47 @@ ScreechRing:
 	delay 2
 	return
 
-gUnknown_8277FF2: @ 0x08277FF2
-	.incbin "baserom_jp.gba", 0x277ff2, 0xfa
+Move_FLAME_WHEEL: @ 0x08277FF2
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	monbg ANIM_DEF_PARTNER
+	splitbgprio_foes ANIM_TARGET
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 56, 0
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
+	delay 2
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 56, 4
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
+	delay 2
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 56, 8
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
+	delay 2
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 56, 12
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
+	delay 2
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 56, 16
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
+	delay 2
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 56, 20
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
+	delay 2
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 56, 24
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 24, 0, 0, 6
+	delay 4
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 8, 1
+	createvisualtask AnimTask_BlendMonInAndOut, 3, ANIM_TARGET, RGB_RED, 12, 1, 1
+	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET
+	call FireSpreadEffect
+	delay 7
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 9
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
+
+FlameWheel1: @ Unused
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 50
+	delay 4
+	return
 
 gUnknown_82780EC: @ 0x082780EC
 	.incbin "baserom_jp.gba", 0x2780ec, 0xc5
@@ -1389,7 +1428,10 @@ gUnknown_82811D1: @ 0x082811D1
 	.incbin "baserom_jp.gba", 0x2811d1, 0x33
 
 gUnknown_8281204: @ 0x08281204
-	.incbin "baserom_jp.gba", 0x281204, 0x113
+	.incbin "baserom_jp.gba", 0x281204, 0x9b
+
+FireSpreadEffect: @ 0x0828129F
+	.incbin "baserom_jp.gba", 0x28129f, 0x78
 
 gUnknown_8281317: @ 0x08281317
 	.incbin "baserom_jp.gba", 0x281317, 0x57
