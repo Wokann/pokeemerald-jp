@@ -190,7 +190,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_THIEF                        @ MOVE_THIEF
 	.4byte gUnknown_8281E67                  @ 169
 	.4byte gUnknown_827DB4D                  @ 170
-	.4byte gUnknown_827BA2F                  @ 171
+	.4byte Move_NIGHTMARE                    @ MOVE_NIGHTMARE
 	.4byte Move_FLAME_WHEEL                   @ MOVE_FLAME_WHEEL
 	.4byte gUnknown_827E4E9                  @ 173
 	.4byte gUnknown_8282179                  @ 174
@@ -3080,8 +3080,28 @@ Move_SKETCH:: @ 0x0827BA07
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 38, 2
 	end
 
-gUnknown_827BA2F: @ 0x0827BA2F
-	.incbin "baserom_jp.gba", 0x27ba2f, 0x56
+Move_NIGHTMARE:: @ 0x0827BA2F
+	fadetobg BG_GHOST
+	waitbgfadein
+	jumpifcontest NightmareInContest
+	monbg ANIM_DEF_PARTNER
+	createvisualtask AnimTask_NightmareClone, 2
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 40, 1
+	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	restorebg
+	waitbgfadein
+	end
+
+NightmareInContest:
+	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_ATTACKER, RGB_WHITE, 10, 2, 1
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_ATTACKER, 3, 0, 32, 1
+	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
+	waitforvisualfinish
+	restorebg
+	waitbgfadein
+	end
 
 gUnknown_827BA85: @ 0x0827BA85
 	.incbin "baserom_jp.gba", 0x27ba85, 0x3d
