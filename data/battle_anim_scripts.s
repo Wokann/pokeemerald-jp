@@ -232,7 +232,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_FURY_CUTTER                   @ MOVE_FURY_CUTTER
 	.4byte gUnknown_8281904                  @ 211
 	.4byte gUnknown_827A4A6                  @ 212
-	.4byte gUnknown_827A246                  @ 213
+	.4byte Move_ATTRACT                      @ MOVE_ATTRACT
 	.4byte gUnknown_82829FA                  @ 214
 	.4byte gUnknown_82822BB                  @ 215
 	.4byte gUnknown_8284055                  @ 216
@@ -1990,8 +1990,34 @@ Move_SPARK: @ 0x0827A02F
 	waitforvisualfinish
 	end
 
-gUnknown_827A246: @ 0x0827A246
-	.incbin "baserom_jp.gba", 0x27a246, 0xf9
+Move_ATTRACT: @ 0x0827A246
+	loadspritegfx ANIM_TAG_RED_HEART
+	loopsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER, 12, 3
+	createvisualtask AnimTask_SwayMon, 5, 0, 12, 4096, 4, ANIM_ATTACKER
+	delay 15
+	createsprite gRedHeartProjectileSpriteTemplate, ANIM_TARGET, 3, 20, -8
+	waitforvisualfinish
+	playsewithpan SE_M_ATTRACT, SOUND_PAN_TARGET
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, 160, -32
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, -256, -40
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, 128, -16
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, 416, -38
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, -128, -22
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, -384, -31
+	waitforvisualfinish
+	waitplaysewithpan SE_M_ATTRACT2, 0, 15
+	createvisualtask AnimTask_HeartsBackground, 5
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 16, 256, 0
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 224, 240, 15
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 126, 272, 30
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 80, 224, 45
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 170, 272, 60
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 40, 256, 75
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 112, 256, 90
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 200, 272, 90
+	delay 75
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=4, num_blends=4, initial_blend_y=0, target_blend_y=10, color=RGB(31, 25, 27)
+	end
 
 gUnknown_827A33F: @ 0x0827A33F
 	.incbin "baserom_jp.gba", 0x27a33f, 0x36

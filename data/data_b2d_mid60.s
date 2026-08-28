@@ -1485,7 +1485,21 @@ sMusicNotePaletteTagsTable: @ 0x856F534
 
 	.globl sAffineAnims_StretchBattlerUp
 sAffineAnims_StretchBattlerUp: @ 0x856F56C
-	.incbin "baserom_jp.gba", 0x56f56c, 0x7c
+	.incbin "baserom_jp.gba", 0x56f56c, 0x18
+
+	.globl gRedHeartProjectileSpriteTemplate
+gRedHeartProjectileSpriteTemplate: @ 0x856F584
+	.incbin "baserom_jp.gba", 0x56f584, 0x18
+
+	.globl gRedHeartBurstSpriteTemplate
+gRedHeartBurstSpriteTemplate: @ 0x856F59C
+	.incbin "baserom_jp.gba", 0x56f59c, 0x18
+
+	.globl gRedHeartRisingSpriteTemplate
+gRedHeartRisingSpriteTemplate: @ 0x856F5B4
+	.incbin "baserom_jp.gba", 0x56f5b4, 0x18
+
+	.incbin "baserom_jp.gba", 0x56f5cc, 0x1c
 
 	.globl gHiddenPowerOrbSpriteTemplate
 gHiddenPowerOrbSpriteTemplate: @ 0x856F5E8
