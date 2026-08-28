@@ -227,7 +227,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ROLLOUT                       @ MOVE_ROLLOUT
 	.4byte Move_FALSE_SWIPE                   @ MOVE_FALSE_SWIPE
 	.4byte Move_SWAGGER                       @ MOVE_SWAGGER
-	.4byte gUnknown_827BDFA                  @ 208
+	.4byte Move_MILK_DRINK                   @ MOVE_MILK_DRINK
 	.4byte Move_SPARK                        @ MOVE_SPARK
 	.4byte Move_FURY_CUTTER                   @ MOVE_FURY_CUTTER
 	.4byte gUnknown_8281904                  @ 211
@@ -3304,8 +3304,26 @@ Move_SWAGGER:: @ 0x0827BDB2
 	waitforvisualfinish
 	end
 
-gUnknown_827BDFA: @ 0x0827BDFA
-	.incbin "baserom_jp.gba", 0x27bdfa, 0x42
+Move_MILK_DRINK:: @ 0x0827BDFA
+	loadspritegfx ANIM_TAG_MILK_BOTTLE
+	loadspritegfx ANIM_TAG_THIN_RING
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	monbg ANIM_TARGET
+	createsprite gMilkBottleSpriteTemplate, ANIM_ATTACKER, 2
+	delay 40
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_ATTACKER
+	delay 12
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_ATTACKER
+	delay 20
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createsprite gThinRingExpandingSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 1, 0
+	playsewithpan SE_M_MILK_DRINK, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	call HealingEffect2
+	waitforvisualfinish
+	end
 
 gUnknown_827BE3C: @ 0x0827BE3C
 	.incbin "baserom_jp.gba", 0x27be3c, 0x91
@@ -4019,7 +4037,19 @@ gUnknown_8285C76: @ 0x08285C76
 	.incbin "baserom_jp.gba", 0x285c76, 0x209
 
 IceSpikesEffectLong: @ 0x08285E7F
-	.incbin "baserom_jp.gba", 0x285e7f, 0x179
+	.incbin "baserom_jp.gba", 0x285e7f, 0x130
+
+HealingEffect2: @ 0x08285FAF
+	playsewithpan SE_M_ABSORB_2, SOUND_PAN_TARGET
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_TARGET, 2, 0, -5, 1, 0
+	delay 7
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_TARGET, 2, -15, 10, 1, 0
+	delay 7
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_TARGET, 2, -15, -15, 1, 0
+	delay 7
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_TARGET, 2, 10, -5, 1, 0
+	delay 7
+	return
 
 PoisonBubblesEffect: @ 0x08285FF8
 	.incbin "baserom_jp.gba", 0x285ff8, 0x71
