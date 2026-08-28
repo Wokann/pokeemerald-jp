@@ -237,7 +237,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82822BB                  @ 215
 	.4byte gUnknown_8284055                  @ 216
 	.4byte gUnknown_8282718                  @ 217
-	.4byte gUnknown_82799BC                  @ 218
+	.4byte Move_FRUSTRATION                   @ MOVE_FRUSTRATION
 	.4byte gUnknown_8279C83                  @ 219
 	.4byte gUnknown_8279CC5                  @ 220
 	.4byte gUnknown_827E0E4                  @ 221
@@ -1692,8 +1692,110 @@ Move_DETECT:
 	waitforvisualfinish
 	end
 
-gUnknown_82799BC: @ 0x082799BC
-	.incbin "baserom_jp.gba", 0x2799bc, 0x2c7
+Move_FRUSTRATION:
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_ANGER
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	createvisualtask AnimTask_GetFrustrationPowerLevel, 1
+	jumpreteq 0, Frustration_Strongest
+	jumpreteq 1, Frustration_Strong
+	jumpreteq 2, Frustration_Medium
+	goto Frustration_Weak
+Frustration_Continue:
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+Frustration_Strongest:
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_ATTACKER, 1, 0, 15, 1
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 3, 0, 9, RGB_RED
+	waitforvisualfinish
+	delay 20
+	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
+	createsprite gAngerMarkSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, -28
+	waitforvisualfinish
+	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
+	createsprite gAngerMarkSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, -28
+	waitforvisualfinish
+	delay 10
+	createvisualtask AnimTask_SwayMon, 5, 0, 16, 6144, 8, ANIM_ATTACKER
+	delay 5
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 4, 0, 30, 1
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=0
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	delay 5
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=24, y=8, relative_to=ANIM_TARGET, animation=0
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	delay 5
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=-24, y=-16, relative_to=ANIM_TARGET, animation=0
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	delay 5
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=8, y=4, relative_to=ANIM_TARGET, animation=0
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	delay 5
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=-16, y=19, relative_to=ANIM_TARGET, animation=0
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	delay 5
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=18, y=-18, relative_to=ANIM_TARGET, animation=0
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 3, 9, 0, RGB_RED
+	goto Frustration_Continue
+Frustration_Strong:
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_ATTACKER, 1, 0, 15, 1
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 3, 0, 9, RGB_RED
+	waitforvisualfinish
+	delay 20
+	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
+	createsprite gAngerMarkSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, -28
+	waitforvisualfinish
+	delay 5
+	createvisualtask AnimTask_StrongFrustrationGrowAndShrink, 5
+	delay 7
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=8, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 4, 0, 6, 1
+	delay 14
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=12, y=-6, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 4, 0, 6, 1
+	delay 14
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=-12, y=-6, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 4, 0, 6, 1
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 3, 9, 0, RGB_RED
+	goto Frustration_Continue
+Frustration_Medium:
+	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
+	createsprite gAngerMarkSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, -28
+	waitforvisualfinish
+	delay 5
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 4
+	delay 6
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=10, y=4, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 6, 1
+	waitforvisualfinish
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 4
+	delay 6
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=-10, y=-4, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 6, 1
+	goto Frustration_Continue
+Frustration_Weak:
+	createsprite gWeakFrustrationAngerMarkSpriteTemplate, ANIM_ATTACKER, 2, 20, -28
+	waitforvisualfinish
+	delay 10
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 10, 2
+	delay 12
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 1, 0, 6, 1
+	goto Frustration_Continue
 
 gUnknown_8279C83: @ 0x08279C83
 	.incbin "baserom_jp.gba", 0x279c83, 0x42
