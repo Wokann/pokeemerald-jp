@@ -42,7 +42,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828164F                  @ 020
 	.4byte gUnknown_8279495                  @ 021
 	.4byte gUnknown_827951D                  @ 022
-	.4byte gUnknown_8278CB6                  @ 023
+	.4byte Move_STOMP                        @ MOVE_STOMP
 	.4byte gUnknown_82807E8                  @ 024
 	.4byte Move_MEGA_KICK                    @ MOVE_MEGA_KICK
 	.4byte gUnknown_82806F5                  @ 026
@@ -1172,8 +1172,21 @@ BeatUpRight:
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	goto BeatUpContinue
 
-gUnknown_8278CB6: @ 0x08278CB6
-	.incbin "baserom_jp.gba", 0x278cb6, 0x47
+Move_STOMP: @ 0x08278CB6
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_TARGET
+	createsprite gStompFootSpriteTemplate, ANIM_ATTACKER, 3, 0, -32, 15
+	delay 19
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=-8, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 4, 9, 1
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_8278CFD: @ 0x08278CFD
 	.incbin "baserom_jp.gba", 0x278cfd, 0x19
