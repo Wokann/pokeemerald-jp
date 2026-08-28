@@ -86,7 +86,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8280086                  @ 064
 	.4byte Move_DRILL_PECK                   @ MOVE_DRILL_PECK
 	.4byte gUnknown_8280BEB                  @ 066
-	.4byte gUnknown_827B060                  @ 067
+	.4byte Move_LOW_KICK                     @ MOVE_LOW_KICK
 	.4byte gUnknown_82809A9                  @ 068
 	.4byte gUnknown_8285087                  @ 069
 	.4byte Move_STRENGTH                       @ MOVE_STRENGTH
@@ -2588,8 +2588,18 @@ Move_SING:: @ 0x0827AF8C
 	waitforvisualfinish
 	end
 
-gUnknown_827B060: @ 0x0827B060
-	.incbin "baserom_jp.gba", 0x27b060, 0x5d
+Move_LOW_KICK:: @ 0x0827B060
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_IMPACT
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, 0, 0, 4
+	createsprite gSlidingKickSpriteTemplate, ANIM_TARGET, 2, -24, 28, 40, 8, 160, 0
+	delay 4
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=-8, y=8, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_RotateMonSpriteToSide, 2, 6, 384, ANIM_TARGET, 2
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 1, 4
+	end
 
 gUnknown_827B0BD: @ 0x0827B0BD
 	.incbin "baserom_jp.gba", 0x27b0bd, 0x4d
