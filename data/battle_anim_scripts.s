@@ -212,7 +212,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828110A                  @ 190
 	.4byte gUnknown_827FE54                  @ 191
 	.4byte gUnknown_828181F                  @ 192
-	.4byte gUnknown_827BB79                  @ 193
+	.4byte Move_FORESIGHT                    @ MOVE_FORESIGHT
 	.4byte gUnknown_827BBB8                  @ 194
 	.4byte gUnknown_8282891                  @ 195
 	.4byte Move_ICY_WIND                     @ MOVE_ICY_WIND
@@ -3164,8 +3164,24 @@ MachPunchAgainstPlayer:
 	fadetobg BG_HIGHSPEED_PLAYER
 	goto MachPunchContinue
 
-gUnknown_827BB79: @ 0x0827BB79
-	.incbin "baserom_jp.gba", 0x27bb79, 0x3f
+Move_FORESIGHT:: @ 0x0827BB79
+	loadspritegfx ANIM_TAG_MAGNIFYING_GLASS
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 16, 0
+	createsprite gForesightMagnifyingGlassSpriteTemplate, ANIM_TARGET, 2, ANIM_TARGET
+	delay 17
+	loopsewithpan SE_M_SKETCH, SOUND_PAN_TARGET, 16, 4
+	delay 48
+	delay 24
+	playsewithpan SE_M_SKETCH, SOUND_PAN_TARGET
+	delay 10
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_TARGET, RGB_WHITE, 12, 2, 1
+	playsewithpan SE_M_DETECT, SOUND_PAN_TARGET
+	waitforvisualfinish
+	blendoff
+	clearmonbg ANIM_DEF_PARTNER
+	end
 
 gUnknown_827BBB8: @ 0x0827BBB8
 	.incbin "baserom_jp.gba", 0x27bbb8, 0x5b
