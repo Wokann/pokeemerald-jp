@@ -24,7 +24,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828063A                  @ 002
 	.4byte Move_DOUBLE_SLAP                    @ MOVE_DOUBLE_SLAP
 	.4byte gUnknown_827884F                  @ 004
-	.4byte gUnknown_82786D9                  @ 005
+	.4byte Move_MEGA_PUNCH                   @ MOVE_MEGA_PUNCH
 	.4byte gUnknown_8279E41                  @ 006
 	.4byte gUnknown_8281204                  @ 007
 	.4byte gUnknown_827DC85                  @ 008
@@ -931,8 +931,49 @@ EmberFireHit:
 	delay 4
 	return
 
-gUnknown_82786D9: @ 0x082786D9
-	.incbin "baserom_jp.gba", 0x2786d9, 0xda
+Move_MEGA_PUNCH: @ 0x082786D9
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	monbg ANIM_TARGET
+	delay 2
+	simple_palette_blend selector=F_PAL_BG, delay=0, initial_blend_y=0, target_blend_y=16, color=RGB_BLACK
+	setalpha 12, 8
+	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_TARGET
+	createsprite gMegaPunchKickSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 0, 50
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 7, RGB_WHITE
+	delay 50
+	call SetImpactBackground
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=0
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 22, 1
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 0, RGB_WHITE
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=8, color2=RGB_BLACK, blend_y2=0
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	delay 2
+	restorebg
+	waitbgfadein
+	end
+
+SetImpactBackground:
+	delay 2
+	createvisualtask AnimTask_IsContest, 2
+	jumprettrue SetImpactContestsBG
+	createvisualtask AnimTask_IsTargetPlayerSide, 2
+	jumpretfalse SetImpactOpponentBG
+	jumprettrue SetImpactPlayerBG
+SetImpactBackgroundRet:
+	return
+SetImpactOpponentBG:
+	changebg BG_IMPACT_OPPONENT
+	goto SetImpactBackgroundRet
+SetImpactPlayerBG:
+	changebg BG_IMPACT_PLAYER
+	goto SetImpactBackgroundRet
+SetImpactContestsBG:
+	changebg BG_IMPACT_CONTESTS
+	goto SetImpactBackgroundRet
 
 gUnknown_82787B3: @ 0x082787B3
 	.incbin "baserom_jp.gba", 0x2787b3, 0x9c
