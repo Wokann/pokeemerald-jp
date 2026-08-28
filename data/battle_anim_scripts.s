@@ -172,7 +172,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827B8AC                  @ 150
 	.4byte gUnknown_827B8C1                  @ 151
 	.4byte gUnknown_8280257                  @ 152
-	.4byte gUnknown_8279801                  @ 153
+	.4byte Move_EXPLOSION                     @ MOVE_EXPLOSION
 	.4byte gUnknown_8282603                  @ 154
 	.4byte gUnknown_827FD53                  @ 155
 	.4byte gUnknown_827DD70                  @ 156
@@ -1621,8 +1621,39 @@ RisingWaterHitEffect:
 	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_ATTACKER, 4, 0, -20
 	return
 
-gUnknown_8279801: @ 0x08279801
-	.incbin "baserom_jp.gba", 0x279801, 0x107
+Move_EXPLOSION:
+	loadspritegfx ANIM_TAG_EXPLOSION
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG, delay=8, num_blends=9, color1=RGB(26, 8, 8), blend_y1=8, color2=RGB_BLACK, blend_y2=8
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_PLAYER_LEFT, 8, 0, 40, 1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_PLAYER_RIGHT, 8, 0, 40, 1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_OPPONENT_LEFT, 8, 0, 40, 1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_OPPONENT_RIGHT, 8, 0, 40, 1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_ATTACKER_FORCE, 8, 0, 40, 1
+	call Explosion1
+	call Explosion1
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 1, 16, 16, RGB_WHITE
+	delay 50
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 3, 16, 0, RGB_WHITE
+	end
+
+Explosion1:
+	playsewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 0, 1
+	delay 6
+	playsewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, 24, -24, 0, 1
+	delay 6
+	playsewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, -16, 16, 0, 1
+	delay 6
+	playsewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, -24, -12, 0, 1
+	delay 6
+	playsewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, 16, 16, 0, 1
+	delay 6
+	return
 
 gUnknown_8279908: @ 0x08279908
 	.incbin "baserom_jp.gba", 0x279908, 0x39
