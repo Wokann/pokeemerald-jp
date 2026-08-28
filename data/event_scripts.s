@@ -1470,7 +1470,9 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/text/braille.inc"
 	.include "data/text/berries.inc"
 	.include "data/text/shoal_cave.inc"
-	.include "data/scripts/gUnknown_826426B.inc"
+	.include "data/text/check_furniture.inc"
+
+	.incbin "baserom_jp.gba", 0x26432f, 0x10
 
 	.globl EventScript_FallDownHole
 EventScript_FallDownHole: @ 0x826433F
