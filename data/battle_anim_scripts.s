@@ -282,7 +282,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8283439                  @ 260
 	.4byte gUnknown_8282C90                  @ 261
 	.4byte Move_MEMENTO                      @ MOVE_MEMENTO
-	.4byte gUnknown_827C2C2                  @ 263
+	.4byte Move_FACADE                       @ MOVE_FACADE
 	.4byte gUnknown_8283F8E                  @ 264
 	.4byte gUnknown_827C2E2                  @ 265
 	.4byte gUnknown_827C33D                  @ 266
@@ -3544,8 +3544,12 @@ Move_MEMENTO:: @ 0x0827C27E
 	delay 1
 	end
 
-gUnknown_827C2C2: @ 0x0827C2C2
-	.incbin "baserom_jp.gba", 0x27c2c2, 0x20
+Move_FACADE:: @ 0x0827C2C2
+	loadspritegfx ANIM_TAG_SWEAT_DROP
+	createvisualtask AnimTask_SquishAndSweatDroplets, 2, ANIM_ATTACKER, 3
+	createvisualtask AnimTask_FacadeColorBlend, 2, ANIM_ATTACKER, 72
+	loopsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER, 24, 3
+	end
 
 gUnknown_827C2E2: @ 0x0827C2E2
 	.incbin "baserom_jp.gba", 0x27c2e2, 0x5b
