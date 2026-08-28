@@ -199,7 +199,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82800AD                  @ 177
 	.4byte gUnknown_8280CE4                  @ 178
 	.4byte Move_REVERSAL                      @ MOVE_REVERSAL
-	.4byte gUnknown_827BAC2                  @ 180
+	.4byte Move_SPITE                        @ MOVE_SPITE
 	.4byte gUnknown_827F245                  @ 181
 	.4byte Move_PROTECT                       @ MOVE_PROTECT
 	.4byte gUnknown_827BAF1                  @ 183
@@ -3118,8 +3118,19 @@ Move_FLAIL:: @ 0x0827BA85
 	blendoff
 	end
 
-gUnknown_827BAC2: @ 0x0827BAC2
-	.incbin "baserom_jp.gba", 0x27bac2, 0x2f
+Move_SPITE:: @ 0x0827BAC2
+	fadetobg BG_GHOST
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	waitbgfadein
+	monbg ANIM_DEF_PARTNER
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=2, num_blends=6, initial_blend_y=0, target_blend_y=8, color=RGB_WHITE
+	createvisualtask AnimTask_SpiteTargetShadow, 2
+	loopsewithpan SE_M_PSYBEAM, SOUND_PAN_TARGET, 20, 3
+	waitforvisualfinish
+	restorebg
+	waitbgfadein
+	clearmonbg ANIM_TARGET
+	end
 
 gUnknown_827BAF1: @ 0x0827BAF1
 	.incbin "baserom_jp.gba", 0x27baf1, 0x88
