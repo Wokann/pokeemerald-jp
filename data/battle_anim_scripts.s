@@ -93,7 +93,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827F526                  @ 071
 	.4byte gUnknown_827F63E                  @ 072
 	.4byte Move_LEECH_SEED                   @ MOVE_LEECH_SEED
-	.4byte gUnknown_827A33F                  @ 074
+	.4byte Move_GROWTH                       @ MOVE_GROWTH
 	.4byte gUnknown_8280EDB                  @ 075
 	.4byte gUnknown_827EE64                  @ 076
 	.4byte Move_POISON_POWDER                  @ MOVE_POISON_POWDER
@@ -2019,8 +2019,18 @@ Move_ATTRACT: @ 0x0827A246
 	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=4, num_blends=4, initial_blend_y=0, target_blend_y=10, color=RGB(31, 25, 27)
 	end
 
-gUnknown_827A33F: @ 0x0827A33F
-	.incbin "baserom_jp.gba", 0x27a33f, 0x36
+Move_GROWTH: @ 0x0827A33F
+	call GrowthEffect
+	waitforvisualfinish
+	call GrowthEffect
+	waitforvisualfinish
+	end
+
+GrowthEffect:
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=0, num_blends=2, initial_blend_y=0, target_blend_y=8, color=RGB_WHITE
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -3, -3, 16, ANIM_ATTACKER, 0
+	return
 
 gUnknown_827A375: @ 0x0827A375
 	.incbin "baserom_jp.gba", 0x27a375, 0xa8
