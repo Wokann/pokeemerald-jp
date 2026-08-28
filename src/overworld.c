@@ -2122,7 +2122,7 @@ __attribute__((naked)) void Overworld_PlaySpecialMapMusic(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085158: .4byte SPECIAL_sub_0818D98C\n\t"
+        "_08085158: .4byte SPECIAL_HasAnotherPlayerGivenFavorLadyItem\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2190,7 +2190,7 @@ __attribute__((naked)) void TransitionMapMusic(void)
         "_080851E0: .4byte SPECIAL_ShowScrollableMultichoice\n\t"
         "_080851E4: .4byte 0x0000FFFF\n\t"
         "_080851E8: .4byte SPECIAL_BufferTMHMMoveName\n\t"
-        "_080851EC: .4byte SPECIAL_sub_0818D98C\n\t"
+        "_080851EC: .4byte SPECIAL_HasAnotherPlayerGivenFavorLadyItem\n\t"
         "_080851F0:\n\t"
         "	adds r0, r4, #0\n\t"
         "	movs r1, #8\n\t"
@@ -2308,7 +2308,7 @@ __attribute__((naked)) void TryFadeOutOldMapMusic(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080852EC: .4byte 0x00004001\n\t"
-        "_080852F0: .4byte SPECIAL_sub_0818D98C\n\t"
+        "_080852F0: .4byte SPECIAL_HasAnotherPlayerGivenFavorLadyItem\n\t"
         "_080852F4: .4byte 0x000040CA\n\t"
         "_080852F8: .4byte gSaveBlock1Ptr\n\t"
         "_080852FC: .4byte 0x0000FFFF\n\t"

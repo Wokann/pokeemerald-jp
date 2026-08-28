@@ -5020,7 +5020,7 @@ __attribute__((naked)) void sub_080295A4(void)
         "	bl DynamicPlaceholderTextUtil_ExpandPlaceholders\n\t"
         "	b _08029BC4\n\t"
         "	.align 2, 0\n\t"
-        "_08029B94: .4byte SPECIAL_sub_0818DA30\n\t"
+        "_08029B94: .4byte SPECIAL_BufferFavorLadyPlayerName\n\t"
         "_08029B98: .4byte sGfx\n\t"
         "_08029B9C: .4byte 0x00003008\n\t"
         "_08029BA0: .4byte 0x00003009\n\t"

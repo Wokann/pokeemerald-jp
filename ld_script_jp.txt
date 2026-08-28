@@ -200,7 +200,6 @@ sub_0811AD20 = ExitEasyChatScreen;
 sub_0811B0B8 = GetQuizLadyScreenByFuncId;
 sub_0811B0DC = IsFuncIdForQuizLadyScreen;
 sub_0811B0F4 = EnterQuizLadyScreen;
-sub_0811B0A8 = QuizLadyShowQuizQuestion;
 sub_0811B614 = HandleEasyChatInput_Keyboard;
 sub_0811B2EC = HandleEasyChatInput;
 sub_0811BB38 = DeleteSelectedWord;

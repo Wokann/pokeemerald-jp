@@ -1466,7 +1466,8 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/text/shoal_cave.inc"
 	.include "data/text/check_furniture.inc"
 	.include "data/scripts/cave_hole.inc"
-	.include "data/scripts/gUnknown_8264373.inc"
+	.include "data/scripts/lilycove_lady.inc"
+	.include "data/scripts/gUnknown_82651E4.inc"
 
 	.globl EventScript_TrainerHillTimer
 EventScript_TrainerHillTimer: @ 0x8276CAF

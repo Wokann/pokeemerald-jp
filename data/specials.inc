@@ -385,31 +385,31 @@ gSpecials::
 	def_special CheckInteractedWithFriendsPosterDecor
 	def_special SetLilycoveLadyGfx
 	def_special Script_GetLilycoveLadyId
-	def_special sub_0818D914
+	def_special GetFavorLadyState
 	def_special BufferFavorLadyRequest
-	def_special sub_0818D98C
+	def_special HasAnotherPlayerGivenFavorLadyItem
 	def_special BufferFavorLadyItemName
-	def_special sub_0818DA30
+	def_special BufferFavorLadyPlayerName
 	def_special DidFavorLadyLikeItem
-	def_special Script_FavorLadyOpenBagMenu
+	def_special Script_FavorLadyOpenBagMenu, waitstate=1
 	def_special Script_DoesFavorLadyLikeItem
 	def_special IsFavorLadyThresholdMet
 	def_special FavorLadyGetPrize
 	def_special SetFavorLadyState_Complete
-	def_special sub_0818DD44
-	def_special sub_0818DD78
+	def_special GetQuizLadyState
+	def_special GetQuizAuthor
 	def_special IsQuizLadyWaitingForChallenger
-	def_special sub_0811B0A8
-	def_special QuizLadyGetPlayerAnswer
+	def_special QuizLadyShowQuizQuestion, waitstate=1
+	def_special QuizLadyGetPlayerAnswer, waitstate=1
 	def_special IsQuizAnswerCorrect
 	def_special BufferQuizPrizeItem
-	def_special sub_0818DFD8
+	def_special SetQuizLadyState_Complete
 	def_special BufferQuizAuthorNameAndCheckIfLady
 	def_special SetQuizLadyState_GivePrize
 	def_special ClearQuizLadyPlayerAnswer
-	def_special Script_QuizLadyOpenBagMenu
+	def_special Script_QuizLadyOpenBagMenu, waitstate=1
 	def_special ClearQuizLadyQuestionAndAnswer
-	def_special QuizLadySetCustomQuestion
+	def_special QuizLadySetCustomQuestion, waitstate=1
 	def_special QuizLadyTakePrizeForCustomQuiz
 	def_special sub_081398CC
 	def_special QuizLadyRecordCustomQuizData
@@ -418,10 +418,10 @@ gSpecials::
 	def_special BufferQuizPrizeName
 	def_special QuizLadyPickNewQuestion
 	def_special ShouldContestLadyShowGoOnAir
-	def_special sub_0818E510
+	def_special HasPlayerGivenContestLadyPokeblock
 	def_special Script_BufferContestLadyCategoryAndMonName
-	def_special OpenPokeblockCaseForContestLady
-	def_special sub_0818E59C
+	def_special OpenPokeblockCaseForContestLady, waitstate=1
+	def_special SetContestLadyGivenPokeblock
 	def_special GetContestLadyMonSpecies
 	def_special GetContestLadyCategory
 	def_special PutLilycoveContestLadyShowOnTheAir

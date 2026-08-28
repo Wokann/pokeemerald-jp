@@ -7107,7 +7107,7 @@ __attribute__((naked)) u8 FldEff_UseSurf(void)
         "_080B84CC: .4byte Task_SurfFieldEffect + 1\n\t"
         "_080B84D0: .4byte gTasks\n\t"
         "_080B84D4: .4byte gFieldEffectArguments\n\t"
-        "_080B84D8: .4byte SPECIAL_sub_0818D98C\n\t"
+        "_080B84D8: .4byte SPECIAL_HasAnotherPlayerGivenFavorLadyItem\n\t"
         ".syntax divided\n\t"
     );
 }

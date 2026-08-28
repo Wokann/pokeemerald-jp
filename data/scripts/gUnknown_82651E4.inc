@@ -1,8 +1,4 @@
-LilycoveCity_PokemonCenter_1F_EventScript_LilycoveLady:: @ 0x08264373
-	.incbin "baserom_jp.gba", 0x264373, 0x65c
-
-LilycoveCity_PokemonCenter_1F_EventScript_ContestLadyMon:: @ 0x082649CF
-	.incbin "baserom_jp.gba", 0x2649cf, 0xfd36
+	.incbin "baserom_jp.gba", 0x2651e4, 0xf521
 BerryBlender_Text_BlendWithTheBlendMaster: @ 0x08274705
 	.incbin "baserom_jp.gba", 0x274705, 0x39
 BerryBlender_Text_SeeMyMasteryInAction: @ 0x0827473E

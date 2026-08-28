@@ -1101,7 +1101,7 @@ __attribute__((naked)) void Task_EggHatchPlayBGM(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08071490: .4byte gTasks\n\t"
-        "_08071494: .4byte SPECIAL_sub_0811B0A8\n\t"
+        "_08071494: .4byte SPECIAL_QuizLadyShowQuizQuestion\n\t"
         ".syntax divided\n\t"
     );
 }

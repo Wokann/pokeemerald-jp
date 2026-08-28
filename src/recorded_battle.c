@@ -1390,7 +1390,7 @@ __attribute__((naked)) bool32 MoveRecordedBattleToSaveData()
         "_081856CC: .4byte 0x00000739\n\t"
         "_081856D0: .4byte 0x0000050C\n\t"
         "_081856D4: .4byte gTrainerBattleOpponent_A\n\t"
-        "_081856D8: .4byte SPECIAL_sub_0818E59C\n\t"
+        "_081856D8: .4byte SPECIAL_SetContestLadyGivenPokeblock\n\t"
         "_081856DC: .4byte 0xFFFFFE70\n\t"
         "_081856E0: .4byte 0x0000050D\n\t"
         "_081856E4: .4byte 0x0000050E\n\t"

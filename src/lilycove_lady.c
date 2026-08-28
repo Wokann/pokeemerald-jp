@@ -348,7 +348,7 @@ __attribute__((naked)) void sub_0818D8F0(void)
     );
 }
 
-__attribute__((naked)) void sub_0818D914(void)
+__attribute__((naked)) void GetFavorLadyState(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -428,7 +428,7 @@ __attribute__((naked)) void BufferFavorLadyRequest(void)
     );
 }
 
-__attribute__((naked)) void sub_0818D98C(void)
+__attribute__((naked)) void HasAnotherPlayerGivenFavorLadyItem(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -531,7 +531,7 @@ __attribute__((naked)) void sub_0818DA10(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DA30(void)
+__attribute__((naked)) void BufferFavorLadyPlayerName(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -989,7 +989,7 @@ __attribute__((naked)) void sub_0818DD10(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DD44(void)
+__attribute__((naked)) void GetQuizLadyState(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1024,7 +1024,7 @@ __attribute__((naked)) void sub_0818DD44(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DD78(void)
+__attribute__((naked)) void GetQuizAuthor(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1384,7 +1384,7 @@ __attribute__((naked)) void BufferQuizPrizeItem(void)
     );
 }
 
-__attribute__((naked)) void sub_0818DFD8(void)
+__attribute__((naked)) void SetQuizLadyState_Complete(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2179,7 +2179,7 @@ __attribute__((naked)) void sub_0818E4DC(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E510(void)
+__attribute__((naked)) void HasPlayerGivenContestLadyPokeblock(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2275,7 +2275,7 @@ __attribute__((naked)) void OpenPokeblockCaseForContestLady(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E59C(void)
+__attribute__((naked)) void SetContestLadyGivenPokeblock(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2372,4 +2372,3 @@ __attribute__((naked)) void sub_0818E61C(void)
         ".syntax divided\n\t"
     );
 }
-

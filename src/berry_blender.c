@@ -9260,7 +9260,7 @@ __attribute__((naked)) void sub_080838C4(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08083910: .4byte gTasks\n\t"
-        "_08083914: .4byte SPECIAL_sub_0818DA30\n\t"
+        "_08083914: .4byte SPECIAL_BufferFavorLadyPlayerName\n\t"
         "_08083918: .4byte gUnknown_2031F44\n\t"
         ".syntax divided\n\t"
     );
