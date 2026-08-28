@@ -281,7 +281,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_TORMENT                      @ MOVE_TORMENT
 	.4byte gUnknown_8283439                  @ 260
 	.4byte gUnknown_8282C90                  @ 261
-	.4byte gUnknown_827C27E                  @ 262
+	.4byte Move_MEMENTO                      @ MOVE_MEMENTO
 	.4byte gUnknown_827C2C2                  @ 263
 	.4byte gUnknown_8283F8E                  @ 264
 	.4byte gUnknown_827C2E2                  @ 265
@@ -3520,8 +3520,29 @@ Move_TORMENT:: @ 0x0827C23A
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
 	end
 
-gUnknown_827C27E: @ 0x0827C27E
-	.incbin "baserom_jp.gba", 0x27c27e, 0x44
+Move_MEMENTO:: @ 0x0827C27E
+	setalpha 0, 16
+	delay 1
+	createvisualtask AnimTask_InitMementoShadow, 2
+	delay 1
+	createvisualtask AnimTask_MoveAttackerMementoShadow, 5
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	delay 48
+	playsewithpan SE_M_PSYBEAM2, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createvisualtask AnimTask_MementoHandleBg, 2
+	delay 12
+	setalpha 0, 16
+	delay 1
+	monbg_static ANIM_TARGET
+	createvisualtask AnimTask_MoveTargetMementoShadow, 5
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg_static ANIM_TARGET
+	delay 1
+	blendoff
+	delay 1
+	end
 
 gUnknown_827C2C2: @ 0x0827C2C2
 	.incbin "baserom_jp.gba", 0x27c2c2, 0x20
