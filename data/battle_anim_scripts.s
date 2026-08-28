@@ -156,7 +156,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_KINESIS                      @ MOVE_KINESIS
 	.4byte gUnknown_8282239                  @ 135
 	.4byte gUnknown_8280752                  @ 136
-	.4byte gUnknown_827B656                  @ 137
+	.4byte Move_GLARE                        @ MOVE_GLARE
 	.4byte gUnknown_828136E                  @ 138
 	.4byte gUnknown_8281571                  @ 139
 	.4byte gUnknown_827B6BF                  @ 140
@@ -2891,8 +2891,23 @@ Move_KINESIS:: @ 0x0827B605
 	call UnsetPsychicBackground
 	end
 
-gUnknown_827B656: @ 0x0827B656
-	.incbin "baserom_jp.gba", 0x27b656, 0x69
+Move_GLARE:: @ 0x0827B656
+	loadspritegfx ANIM_TAG_SMALL_RED_EYE
+	loadspritegfx ANIM_TAG_EYE_SPARKLE
+	createvisualtask AnimTask_GlareEyeDots, 5, 0
+	playsewithpan SE_M_PSYBEAM2, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, F_PAL_BG, 0, 0, 16, RGB_BLACK
+	waitforvisualfinish
+	createsprite gEyeSparkleSpriteTemplate, ANIM_ATTACKER, 0, -16, -8
+	createsprite gEyeSparkleSpriteTemplate, ANIM_ATTACKER, 0, 16, -8
+	createvisualtask AnimTask_ScaryFace, 5
+	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
+	delay 2
+	createvisualtask AnimTask_ShakeTargetInPattern, 3, 20, 1, FALSE
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, F_PAL_BG, 0, 16, 0, RGB_BLACK
+	end
 
 gUnknown_827B6BF: @ 0x0827B6BF
 	.incbin "baserom_jp.gba", 0x27b6bf, 0x48

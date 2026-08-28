@@ -1528,7 +1528,19 @@ gHiddenPowerOrbSpriteTemplate: @ 0x856F5E8
 gHiddenPowerOrbScatterSpriteTemplate: @ 0x856F600
 	.incbin "baserom_jp.gba", 0x56f600, 0x18
 
-	.incbin "baserom_jp.gba", 0x56f618, 0x164
+	.incbin "baserom_jp.gba", 0x56f618, 0x34
+
+gEyeSparkleAnimCmds: @ 0x856F64C
+	.incbin "baserom_jp.gba", 0x56f64c, 0x18
+
+gEyeSparkleAnimTable: @ 0x856F664
+	.4byte gEyeSparkleAnimCmds
+
+	.globl gEyeSparkleSpriteTemplate
+gEyeSparkleSpriteTemplate: @ 0x856F668
+	.incbin "baserom_jp.gba", 0x56f668, 0x18
+
+	.incbin "baserom_jp.gba", 0x56f680, 0xfc
 
 	.globl sAffineAnims_UproarDistortion
 sAffineAnims_UproarDistortion: @ 0x856F77C
