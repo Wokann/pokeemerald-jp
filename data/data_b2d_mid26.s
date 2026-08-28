@@ -1291,7 +1291,13 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/SealedChamber_OuterRoom/events.inc"
 	.include "data/maps/SealedChamber_InnerRoom/events.inc"
 	.include "data/maps/ScorchedSlab/events.inc"
-	.incbin "baserom_jp.gba", 0x50F6E8, 0x7FB4
+	.incbin "baserom_jp.gba", 0x50F6E8, 0x7EE0
+
+	.globl gSpinningSparkleSpriteTemplate
+gSpinningSparkleSpriteTemplate: @ 0x85175C8
+	.incbin "baserom_jp.gba", 0x5175C8, 0x18
+
+	.incbin "baserom_jp.gba", 0x5175E0, 0xBC
 
 	.globl sFrozenIceCubeSubspriteTable
 sFrozenIceCubeSubspriteTable: @ 0x851769C

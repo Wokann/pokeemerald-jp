@@ -216,7 +216,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827BBB8                  @ 194
 	.4byte gUnknown_8282891                  @ 195
 	.4byte gUnknown_827A7DC                  @ 196
-	.4byte gUnknown_827995E                  @ 197
+	.4byte Move_DETECT                        @ MOVE_DETECT
 	.4byte gUnknown_827FE09                  @ 198
 	.4byte gUnknown_827A470                  @ 199
 	.4byte gUnknown_8279E94                  @ 200
@@ -1677,8 +1677,20 @@ Move_PROTECT:
 	clearmonbg ANIM_ATK_PARTNER
 	end
 
-gUnknown_827995E: @ 0x0827995E
-	.incbin "baserom_jp.gba", 0x27995e, 0x5e
+Move_DETECT:
+	loadspritegfx ANIM_TAG_SPARKLE_4
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=9, color=RGB_BLACK
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 1, 0, 9, RGB_WHITE
+	delay 18
+	playsewithpan SE_M_DETECT, SOUND_PAN_ATTACKER
+	createsprite gSpinningSparkleSpriteTemplate, ANIM_ATTACKER, 13, 20, -20
+	waitforvisualfinish
+	delay 10
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=9, target_blend_y=0, color=RGB_BLACK
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 2, 9, 0, RGB_WHITE
+	waitforvisualfinish
+	end
 
 gUnknown_82799BC: @ 0x082799BC
 	.incbin "baserom_jp.gba", 0x2799bc, 0x2c7
