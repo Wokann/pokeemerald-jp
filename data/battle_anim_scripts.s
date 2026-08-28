@@ -288,7 +288,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_FOLLOW_ME                    @ MOVE_FOLLOW_ME
 	.4byte gUnknown_8280FE2                  @ 267
 	.4byte Move_CHARGE                       @ MOVE_CHARGE
-	.4byte gUnknown_827C3F7                  @ 269
+	.4byte Move_TAUNT                        @ MOVE_TAUNT
 	.4byte gUnknown_827C44B                  @ 270
 	.4byte gUnknown_8282DF5                  @ 271
 	.4byte gUnknown_8283535                  @ 272
@@ -3611,8 +3611,25 @@ Move_CHARGE:: @ 0x0827C35C
 	blendoff
 	end
 
-gUnknown_827C3F7: @ 0x0827C3F7
-	.incbin "baserom_jp.gba", 0x27c3f7, 0x54
+Move_TAUNT:: @ 0x0827C3F7
+	loadspritegfx ANIM_TAG_FINGER_2
+	loadspritegfx ANIM_TAG_THOUGHT_BUBBLE
+	loadspritegfx ANIM_TAG_ANGER
+	createsprite gThoughtBubbleSpriteTemplate, ANIM_ATTACKER, 11, 0, 45
+	playsewithpan SE_M_METRONOME, SOUND_PAN_ATTACKER
+	delay 6
+	createsprite gTauntFingerSpriteTemplate, ANIM_ATTACKER, 12, 0
+	delay 4
+	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 16, 2
+	waitforvisualfinish
+	delay 8
+	createsprite gAngerMarkSpriteTemplate, ANIM_TARGET, 2, 1, -20, -28
+	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	delay 12
+	createsprite gAngerMarkSpriteTemplate, ANIM_TARGET, 2, 1, 20, -28
+	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
+	end
 
 gUnknown_827C44B: @ 0x0827C44B
 	.incbin "baserom_jp.gba", 0x27c44b, 0x73

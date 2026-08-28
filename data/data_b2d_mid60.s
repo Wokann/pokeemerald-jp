@@ -1341,6 +1341,7 @@ gTauntFingerAnimCmds4: @ 0x856EE00
 gTauntFingerAnimTable: @ 0x856EE20
 	.4byte 0x0856EDD0, 0x0856EDD8, 0x0856EDE0, 0x0856EE00
 
+	.globl gTauntFingerSpriteTemplate
 gTauntFingerSpriteTemplate: @ 0x856EE30
 	.hword 0x27E6, 0x27E6
 	.4byte 0x084FD020, 0x0856EE20
