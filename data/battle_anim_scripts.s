@@ -247,7 +247,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827E2FD                  @ 225
 	.4byte gUnknown_828286F                  @ 226
 	.4byte gUnknown_8282D4E                  @ 227
-	.4byte gUnknown_8278F0C                  @ 228
+	.4byte Move_PURSUIT                       @ MOVE_PURSUIT
 	.4byte gUnknown_827BECD                  @ 229
 	.4byte gUnknown_828320D                  @ 230
 	.4byte gUnknown_82819B3                  @ 231
@@ -1266,8 +1266,34 @@ Move_REVERSAL:
 	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, FALSE, 1, 8, 1, 0
 	end
 
-gUnknown_8278F0C: @ 0x08278F0C
-	.incbin "baserom_jp.gba", 0x278f0c, 0x71
+Move_PURSUIT:
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	fadetobg BG_DARK
+	waitbgfadein
+	delay 0
+	setalpha 12, 8
+	choosetwoturnanim PursuitNormal, PursuitOnSwitchout
+PursuitContinue:
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	delay 0
+	restorebg
+	waitbgfadein
+	end
+
+PursuitNormal:
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, FALSE, 1, 6, 1, 0
+	goto PursuitContinue
+
+PursuitOnSwitchout:
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, FALSE, 1, 6, 1, 0
+	goto PursuitContinue
 
 gUnknown_8278F7D: @ 0x08278F7D
 	.incbin "baserom_jp.gba", 0x278f7d, 0xb3
