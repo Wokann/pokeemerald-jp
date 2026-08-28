@@ -33,7 +33,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8279D6D                  @ 011
 	.4byte gUnknown_8279DB5                  @ 012
 	.4byte gUnknown_8281F08                  @ 013
-	.4byte gUnknown_8279030                  @ 014
+	.4byte Move_SWORDS_DANCE                  @ MOVE_SWORDS_DANCE
 	.4byte Move_CUT                           @ MOVE_CUT
 	.4byte gUnknown_827FF98                  @ 016
 	.4byte gUnknown_827FFE9                  @ 017
@@ -1319,8 +1319,20 @@ Move_SPIKE_CANNON:
 	blendoff
 	end
 
-gUnknown_8279030: @ 0x08279030
-	.incbin "baserom_jp.gba", 0x279030, 0x46
+Move_SWORDS_DANCE:
+	loadspritegfx ANIM_TAG_SWORD
+	monbg ANIM_ATTACKER
+	setalpha 12, 8
+	playsewithpan SE_M_SWORDS_DANCE, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 16, 6, 1, 4
+	createsprite gSwordsDanceBladeSpriteTemplate, ANIM_ATTACKER, 2, 0, 0
+	delay 22
+	flash_anim_tag_with_color tag=ANIM_TAG_SWORD, delay=2, num_blends=2, color1=RGB(18, 31, 31), blend_y1=16, color2=RGB_BLACK, blend_y2=0
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	blendoff
+	delay 1 @ JP-specific post-blend delay
+	end
 
 gUnknown_8279076: @ 0x08279076
 	.incbin "baserom_jp.gba", 0x279076, 0x72
