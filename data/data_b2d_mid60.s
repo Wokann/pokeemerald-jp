@@ -1170,6 +1170,7 @@ gSuperFangAnimCmds: @ 0x856EB40
 gSuperFangAnimTable: @ 0x856EB54
 	.4byte 0x0856EB40
 
+	.globl gSuperFangSpriteTemplate
 gSuperFangSpriteTemplate: @ 0x856EB58
 	.hword 0x27D0, 0x27D0
 	.4byte 0x084FD020, 0x0856EB54

@@ -181,7 +181,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SHARPEN                      @ MOVE_SHARPEN
 	.4byte Move_CONVERSION                   @ MOVE_CONVERSION
 	.4byte gUnknown_8282B1C                  @ 161
-	.4byte gUnknown_827B8E6                  @ 162
+	.4byte Move_SUPER_FANG                   @ MOVE_SUPER_FANG
 	.4byte gUnknown_827B967                  @ 163
 	.4byte gUnknown_8283D8E                  @ 164
 	.4byte gUnknown_827B9A1                  @ 165
@@ -3020,8 +3020,25 @@ Move_SHARPEN:: @ 0x0827B8DA
 	waitforvisualfinish
 	end
 
-gUnknown_827B8E6: @ 0x0827B8E6
-	.incbin "baserom_jp.gba", 0x27b8e6, 0x81
+Move_SUPER_FANG:: @ 0x0827B8E6
+	loadspritegfx ANIM_TAG_FANG_ATTACK
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_ATTACKER, 1, 0, 20, 1
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_ATTACKER, 3, 0, 48, 1
+	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_ATTACKER, RGB(31, 6, 1), 12, 4, 1
+	waitforvisualfinish
+	delay 20
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 4
+	delay 4
+	createsprite gSuperFangSpriteTemplate, ANIM_TARGET, 2
+	playsewithpan SE_M_BITE, SOUND_PAN_TARGET
+	delay 8
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG, delay=3, num_blends=1, color1=RGB(31, 2, 2), blend_y1=14, color2=RGB_WHITE, blend_y2=14
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 7, 12, 1
+	waitforvisualfinish
+	blendoff
+	end
 
 gUnknown_827B967: @ 0x0827B967
 	.incbin "baserom_jp.gba", 0x27b967, 0x3a
