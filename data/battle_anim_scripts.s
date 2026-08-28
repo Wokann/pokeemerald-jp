@@ -238,7 +238,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8284055                  @ 216
 	.4byte gUnknown_8282718                  @ 217
 	.4byte Move_FRUSTRATION                   @ MOVE_FRUSTRATION
-	.4byte gUnknown_8279C83                  @ 219
+	.4byte Move_SAFEGUARD                     @ MOVE_SAFEGUARD
 	.4byte gUnknown_8279CC5                  @ 220
 	.4byte gUnknown_827E0E4                  @ 221
 	.4byte gUnknown_827BE3C                  @ 222
@@ -1797,8 +1797,23 @@ Frustration_Weak:
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 1, 0, 6, 1
 	goto Frustration_Continue
 
-gUnknown_8279C83: @ 0x08279C83
-	.incbin "baserom_jp.gba", 0x279c83, 0x42
+Move_SAFEGUARD:
+	loadspritegfx ANIM_TAG_GUARD_RING
+	monbg ANIM_ATK_PARTNER
+	setalpha 8, 8
+	playsewithpan SE_M_MILK_DRINK, SOUND_PAN_ATTACKER
+	createsprite gGuardRingSpriteTemplate, ANIM_ATTACKER, 2
+	delay 4
+	createsprite gGuardRingSpriteTemplate, ANIM_ATTACKER, 2
+	delay 4
+	createsprite gGuardRingSpriteTemplate, ANIM_ATTACKER, 2
+	waitforvisualfinish
+	playsewithpan SE_SHINY, SOUND_PAN_ATTACKER
+	blend_color_cycle priority=2, selector=F_PAL_ATK_SIDE, delay=0, num_blends=2, initial_blend_y=0, target_blend_y=10, color=RGB_WHITE
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	end
 
 gUnknown_8279CC5: @ 0x08279CC5
 	.incbin "baserom_jp.gba", 0x279cc5, 0xa8

@@ -1524,6 +1524,7 @@ gGuardRingAffineAnimCmds2: @ 0x856F830
 gGuardRingAffineAnimTable: @ 0x856F840
 	.4byte gGuardRingAffineAnimCmds1, gGuardRingAffineAnimCmds2
 
+	.globl gGuardRingSpriteTemplate
 gGuardRingSpriteTemplate: @ 0x856F848
 	.hword 0x2804, 0x2804
 	.4byte 0x084FD228, gDummySpriteAnimTable
