@@ -255,7 +255,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8280A78                  @ 233
 	.4byte gUnknown_8283179                  @ 234
 	.4byte gUnknown_827FA58                  @ 235
-	.4byte gUnknown_827BF3A                  @ 236
+	.4byte Move_MOONLIGHT                    @ MOVE_MOONLIGHT
 	.4byte Move_HIDDEN_POWER                  @ MOVE_HIDDEN_POWER
 	.4byte gUnknown_828068C                  @ 238
 	.4byte gUnknown_82855AB                  @ 239
@@ -3372,8 +3372,32 @@ Move_RAPID_SPIN:: @ 0x0827BECD
 	clearmonbg ANIM_ATTACKER
 	end
 
-gUnknown_827BF3A: @ 0x0827BF3A
-	.incbin "baserom_jp.gba", 0x27bf3a, 0x90
+Move_MOONLIGHT:: @ 0x0827BF3A
+	loadspritegfx ANIM_TAG_MOON
+	loadspritegfx ANIM_TAG_GREEN_SPARKLE
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	setalpha 0, 16
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=16, color=RGB_BLACK
+	waitforvisualfinish
+	createsprite gMoonSpriteTemplate, ANIM_ATTACKER, 2, 120, 56
+	createvisualtask AnimTask_AlphaFadeIn, 3, 0, 16, 16, 0, 1
+	playsewithpan SE_M_MOONLIGHT, 0
+	delay 30
+	createsprite gMoonlightSparkleSpriteTemplate, ANIM_ATTACKER, 40, -12, 0
+	delay 30
+	createsprite gMoonlightSparkleSpriteTemplate, ANIM_ATTACKER, 40, -24, 0
+	delay 30
+	createsprite gMoonlightSparkleSpriteTemplate, ANIM_ATTACKER, 40, 21, 0
+	delay 30
+	createsprite gMoonlightSparkleSpriteTemplate, ANIM_ATTACKER, 40, 0, 0
+	delay 30
+	createsprite gMoonlightSparkleSpriteTemplate, ANIM_ATTACKER, 40, 10, 0
+	delay 20
+	createvisualtask AnimTask_MoonlightEndFade, 2
+	waitforvisualfinish
+	call HealingEffect
+	waitforvisualfinish
+	end
 
 gUnknown_827BFCA: @ 0x0827BFCA
 	.incbin "baserom_jp.gba", 0x27bfca, 0xbe
@@ -4078,7 +4102,19 @@ gUnknown_8285C76: @ 0x08285C76
 	.incbin "baserom_jp.gba", 0x285c76, 0x209
 
 IceSpikesEffectLong: @ 0x08285E7F
-	.incbin "baserom_jp.gba", 0x285e7f, 0x130
+	.incbin "baserom_jp.gba", 0x285e7f, 0xe7
+
+HealingEffect: @ 0x08285F66
+	playsewithpan SE_M_ABSORB_2, SOUND_PAN_ATTACKER
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_ATTACKER, 2, 0, -5, 0, 0
+	delay 7
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_ATTACKER, 2, -15, 10, 0, 0
+	delay 7
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_ATTACKER, 2, -15, -15, 0, 0
+	delay 7
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_ATTACKER, 2, 10, -5, 0, 0
+	delay 7
+	return
 
 HealingEffect2: @ 0x08285FAF
 	playsewithpan SE_M_ABSORB_2, SOUND_PAN_TARGET
