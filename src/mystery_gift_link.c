@@ -45,6 +45,14 @@ struct MeventServerSub
     u32 (*recvFunc)(void *sub);     // 0x20
     u32 (*sendFunc)(void *sub);     // 0x24
 };
+
+struct MeventBlockHeader
+{
+    u16 ident;
+    u16 crc;
+    u16 size;
+};
+
 bool32 mevent_receive_func(void *data);
 bool32 mevent_send_func(void *data);
 
@@ -115,255 +123,132 @@ void mevent_reset_recv(u8 block)
     ResetBlockReceivedFlag(block);
 }
 
-
-__attribute__((naked)) bool32 mevent_receive_func(void *data)
+bool32 mevent_receive_func(void *data)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, r6, lr}\n\t"
-        "sub sp, #8\n\t"
-        "adds r5, r0, #0\n\t"
-        "ldr r6, [r5]\n\t"
-        "cmp r6, #1\n\t"
-        "beq _0801D7FC\n\t"
-        "cmp r6, #1\n\t"
-        "bgt _0801D7AE\n\t"
-        "cmp r6, #0\n\t"
-        "beq _0801D7B4\n\t"
-        "b _0801D862\n\t"
-        "_0801D7AE:\n\t"
-        "cmp r6, #2\n\t"
-        "beq _0801D848\n\t"
-        "b _0801D862\n\t"
-        "_0801D7B4:\n\t"
-        "ldrb r0, [r5, #5]\n\t"
-        "bl mevent_has_received\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0801D862\n\t"
-        "ldrb r0, [r5, #5]\n\t"
-        "mov r4, sp\n\t"
-        "mov r1, sp\n\t"
-        "movs r2, #8\n\t"
-        "bl mevent_recv_block\n\t"
-        "ldrh r1, [r4, #4]\n\t"
-        "strh r1, [r5, #0xc]\n\t"
-        "ldrh r0, [r4, #2]\n\t"
-        "strh r0, [r5, #0xa]\n\t"
-        "lsls r1, r1, #0x10\n\t"
-        "movs r0, #0x80\n\t"
-        "lsls r0, r0, #0x13\n\t"
-        "cmp r1, r0\n\t"
-        "bls _0801D7E2\n\t"
-        "_0801D7DC:\n\t"
-        "bl LinkRfu_FatalError\n\t"
-        "b _0801D862\n\t"
-        "_0801D7E2:\n\t"
-        "mov r1, sp\n\t"
-        "ldrh r0, [r5, #6]\n\t"
-        "ldrh r1, [r1]\n\t"
-        "cmp r0, r1\n\t"
-        "bne _0801D7DC\n\t"
-        "strh r6, [r5, #8]\n\t"
-        "ldrb r0, [r5, #5]\n\t"
-        "bl mevent_reset_recv\n\t"
-        "ldr r0, [r5]\n\t"
-        "adds r0, #1\n\t"
-        "str r0, [r5]\n\t"
-        "b _0801D862\n\t"
-        "_0801D7FC:\n\t"
-        "ldrb r0, [r5, #5]\n\t"
-        "bl mevent_has_received\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0801D862\n\t"
-        "ldrh r0, [r5, #8]\n\t"
-        "lsls r1, r0, #6\n\t"
-        "subs r1, r1, r0\n\t"
-        "lsls r3, r1, #2\n\t"
-        "ldrh r0, [r5, #0xc]\n\t"
-        "subs r2, r0, r3\n\t"
-        "cmp r2, #0xfc\n\t"
-        "bhi _0801D82E\n\t"
-        "ldrb r0, [r5, #5]\n\t"
-        "ldr r1, [r5, #0x18]\n\t"
-        "adds r1, r1, r3\n\t"
-        "bl mevent_recv_block\n\t"
-        "ldrh r0, [r5, #8]\n\t"
-        "adds r0, #1\n\t"
-        "strh r0, [r5, #8]\n\t"
-        "ldr r0, [r5]\n\t"
-        "adds r0, #1\n\t"
-        "str r0, [r5]\n\t"
-        "b _0801D840\n\t"
-        "_0801D82E:\n\t"
-        "ldrb r0, [r5, #5]\n\t"
-        "ldr r1, [r5, #0x18]\n\t"
-        "adds r1, r1, r3\n\t"
-        "movs r2, #0xfc\n\t"
-        "bl mevent_recv_block\n\t"
-        "ldrh r0, [r5, #8]\n\t"
-        "adds r0, #1\n\t"
-        "strh r0, [r5, #8]\n\t"
-        "_0801D840:\n\t"
-        "ldrb r0, [r5, #5]\n\t"
-        "bl mevent_reset_recv\n\t"
-        "b _0801D862\n\t"
-        "_0801D848:\n\t"
-        "ldr r0, [r5, #0x18]\n\t"
-        "ldrh r1, [r5, #0xc]\n\t"
-        "bl CalcCRC16WithTable\n\t"
-        "lsls r0, r0, #0x10\n\t"
-        "lsrs r0, r0, #0x10\n\t"
-        "ldrh r1, [r5, #0xa]\n\t"
-        "cmp r0, r1\n\t"
-        "bne _0801D7DC\n\t"
-        "movs r0, #0\n\t"
-        "str r0, [r5]\n\t"
-        "movs r0, #1\n\t"
-        "b _0801D864\n\t"
-        "_0801D862:\n\t"
-        "movs r0, #0\n\t"
-        "_0801D864:\n\t"
-        "add sp, #8\n\t"
-        "pop {r4, r5, r6}\n\t"
-        "pop {r1}\n\t"
-        "bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct MeventServerSub *sub = data;
+    struct MeventBlockHeader header;
+
+    switch (sub->unk0)
+    {
+    case 0:
+        if (mevent_has_received(sub->unk5))
+        {
+            mevent_recv_block(sub->unk5, &header, sizeof(header));
+            sub->unkC = header.size;
+            sub->unkA = header.crc;
+            if (sub->unkC > ME_SEND_BUF_SIZE)
+            {
+                LinkRfu_FatalError();
+                return FALSE;
+            }
+            else if (sub->unk6 != header.ident)
+            {
+                LinkRfu_FatalError();
+                return FALSE;
+            }
+            else
+            {
+                sub->unk8 = 0;
+                mevent_reset_recv(sub->unk5);
+                sub->unk0++;
+            }
+        }
+        break;
+    case 1:
+        if (mevent_has_received(sub->unk5))
+        {
+            u32 blockSize = sub->unk8 * 252;
+
+            if (sub->unkC - blockSize <= 252)
+            {
+                mevent_recv_block(sub->unk5, sub->unk18 + blockSize, sub->unkC - blockSize);
+                sub->unk8++;
+                sub->unk0++;
+            }
+            else
+            {
+                mevent_recv_block(sub->unk5, sub->unk18 + blockSize, 252);
+                sub->unk8++;
+            }
+            mevent_reset_recv(sub->unk5);
+        }
+        break;
+    case 2:
+        if (CalcCRC16WithTable(sub->unk18, sub->unkC) != sub->unkA)
+        {
+            LinkRfu_FatalError();
+            return FALSE;
+        }
+        else
+        {
+            sub->unk0 = 0;
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) bool32 mevent_send_func(void *data)
+bool32 mevent_send_func(void *data)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, lr}\n\t"
-        "sub sp, #8\n\t"
-        "adds r4, r0, #0\n\t"
-        "ldr r5, [r4]\n\t"
-        "cmp r5, #1\n\t"
-        "beq _0801D8D8\n\t"
-        "cmp r5, #1\n\t"
-        "bgt _0801D882\n\t"
-        "cmp r5, #0\n\t"
-        "beq _0801D88C\n\t"
-        "b _0801D96E\n\t"
-        "_0801D882:\n\t"
-        "cmp r5, #2\n\t"
-        "beq _0801D92C\n\t"
-        "cmp r5, #3\n\t"
-        "beq _0801D956\n\t"
-        "b _0801D96E\n\t"
-        "_0801D88C:\n\t"
-        "bl IsLinkTaskFinished\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0801D96E\n\t"
-        "ldrh r1, [r4, #0xe]\n\t"
-        "ldr r2, _0801D8D0\n\t"
-        "ldr r0, [sp]\n\t"
-        "ands r0, r2\n\t"
-        "orrs r0, r1\n\t"
-        "str r0, [sp]\n\t"
-        "ldrh r1, [r4, #0x14]\n\t"
-        "ldr r0, [sp, #4]\n\t"
-        "ands r0, r2\n\t"
-        "orrs r0, r1\n\t"
-        "str r0, [sp, #4]\n\t"
-        "ldr r0, [r4, #0x1c]\n\t"
-        "bl CalcCRC16WithTable\n\t"
-        "lsls r0, r0, #0x10\n\t"
-        "ldr r2, _0801D8D4\n\t"
-        "ldr r1, [sp]\n\t"
-        "ands r1, r2\n\t"
-        "orrs r1, r0\n\t"
-        "str r1, [sp]\n\t"
-        "lsrs r1, r1, #0x10\n\t"
-        "strh r1, [r4, #0x12]\n\t"
-        "strh r5, [r4, #0x10]\n\t"
-        "movs r0, #0\n\t"
-        "mov r1, sp\n\t"
-        "movs r2, #8\n\t"
-        "bl SendBlock\n\t"
-        "b _0801D94E\n\t"
-        ".align 2, 0\n\t"
-        "_0801D8D0: .4byte 0xFFFF0000\n\t"
-        "_0801D8D4: .4byte 0x0000FFFF\n\t"
-        "_0801D8D8:\n\t"
-        "bl IsLinkTaskFinished\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0801D96E\n\t"
-        "ldrb r0, [r4, #4]\n\t"
-        "bl mevent_has_received\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0801D96E\n\t"
-        "ldrb r0, [r4, #4]\n\t"
-        "bl mevent_reset_recv\n\t"
-        "ldrh r1, [r4, #0x10]\n\t"
-        "lsls r0, r1, #6\n\t"
-        "subs r0, r0, r1\n\t"
-        "lsls r3, r0, #2\n\t"
-        "ldrh r0, [r4, #0x14]\n\t"
-        "subs r0, r0, r3\n\t"
-        "cmp r0, #0xfc\n\t"
-        "bhi _0801D918\n\t"
-        "ldr r1, [r4, #0x1c]\n\t"
-        "adds r1, r1, r3\n\t"
-        "lsls r2, r0, #0x10\n\t"
-        "lsrs r2, r2, #0x10\n\t"
-        "movs r0, #0\n\t"
-        "bl SendBlock\n\t"
-        "ldrh r0, [r4, #0x10]\n\t"
-        "adds r0, #1\n\t"
-        "strh r0, [r4, #0x10]\n\t"
-        "b _0801D94E\n\t"
-        "_0801D918:\n\t"
-        "ldr r1, [r4, #0x1c]\n\t"
-        "adds r1, r1, r3\n\t"
-        "movs r0, #0\n\t"
-        "movs r2, #0xfc\n\t"
-        "bl SendBlock\n\t"
-        "ldrh r0, [r4, #0x10]\n\t"
-        "adds r0, #1\n\t"
-        "strh r0, [r4, #0x10]\n\t"
-        "b _0801D96E\n\t"
-        "_0801D92C:\n\t"
-        "bl IsLinkTaskFinished\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0801D96E\n\t"
-        "ldr r0, [r4, #0x1c]\n\t"
-        "ldrh r1, [r4, #0x14]\n\t"
-        "bl CalcCRC16WithTable\n\t"
-        "lsls r0, r0, #0x10\n\t"
-        "lsrs r0, r0, #0x10\n\t"
-        "ldrh r1, [r4, #0x12]\n\t"
-        "cmp r0, r1\n\t"
-        "beq _0801D94E\n\t"
-        "bl LinkRfu_FatalError\n\t"
-        "b _0801D96E\n\t"
-        "_0801D94E:\n\t"
-        "ldr r0, [r4]\n\t"
-        "adds r0, #1\n\t"
-        "str r0, [r4]\n\t"
-        "b _0801D96E\n\t"
-        "_0801D956:\n\t"
-        "ldrb r0, [r4, #4]\n\t"
-        "bl mevent_has_received\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0801D96E\n\t"
-        "ldrb r0, [r4, #4]\n\t"
-        "bl mevent_reset_recv\n\t"
-        "movs r0, #0\n\t"
-        "str r0, [r4]\n\t"
-        "movs r0, #1\n\t"
-        "b _0801D970\n\t"
-        "_0801D96E:\n\t"
-        "movs r0, #0\n\t"
-        "_0801D970:\n\t"
-        "add sp, #8\n\t"
-        "pop {r4, r5}\n\t"
-        "pop {r1}\n\t"
-        "bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct MeventServerSub *sub = data;
+    struct MeventBlockHeader header;
+
+    switch (sub->unk0)
+    {
+    case 0:
+        if (IsLinkTaskFinished())
+        {
+            header.ident = sub->unkE;
+            header.size = sub->unk14;
+            header.crc = CalcCRC16WithTable(sub->unk1C, sub->unk14);
+            sub->unk12 = header.crc;
+            sub->unk10 = 0;
+            SendBlock(0, &header, sizeof(header));
+            sub->unk0++;
+        }
+        break;
+    case 1:
+        if (IsLinkTaskFinished())
+        {
+            if (mevent_has_received(sub->unk4))
+            {
+                u32 blockSize;
+
+                mevent_reset_recv(sub->unk4);
+                blockSize = sub->unk10 * 252;
+                if (sub->unk14 - blockSize <= 252)
+                {
+                    SendBlock(0, sub->unk1C + blockSize, sub->unk14 - blockSize);
+                    sub->unk10++;
+                    sub->unk0++;
+                }
+                else
+                {
+                    SendBlock(0, sub->unk1C + blockSize, 252);
+                    sub->unk10++;
+                }
+            }
+        }
+        break;
+    case 2:
+        if (IsLinkTaskFinished())
+        {
+            if (CalcCRC16WithTable(sub->unk1C, sub->unk14) != sub->unk12)
+                LinkRfu_FatalError();
+            else
+                sub->unk0++;
+        }
+        break;
+    case 3:
+        if (mevent_has_received(sub->unk4))
+        {
+            mevent_reset_recv(sub->unk4);
+            sub->unk0 = 0;
+            return TRUE;
+        }
+        break;
+    }
+
+    return FALSE;
 }
