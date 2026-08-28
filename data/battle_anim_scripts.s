@@ -71,7 +71,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82788C7                  @ 049
 	.4byte gUnknown_8281FEE                  @ 050
 	.4byte gUnknown_827FC59                  @ 051
-	.4byte gUnknown_8278665                  @ 052
+	.4byte Move_EMBER                        @ MOVE_EMBER
 	.4byte gUnknown_8280365                  @ 053
 	.4byte gUnknown_8281170                  @ 054
 	.4byte gUnknown_82801CA                  @ 055
@@ -911,8 +911,25 @@ Move_LEECH_SEED: @ 0x0827860F
 	waitforvisualfinish
 	end
 
-gUnknown_8278665: @ 0x08278665
-	.incbin "baserom_jp.gba", 0x278665, 0x74
+Move_EMBER: @ 0x08278665
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	loopsewithpan SE_M_EMBER, SOUND_PAN_ATTACKER, 5, 2
+	createsprite gEmberSpriteTemplate, ANIM_TARGET, 2, 20, 0, -16, 24, 20, 1
+	delay 4
+	createsprite gEmberSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 24, 20, 1
+	delay 4
+	createsprite gEmberSpriteTemplate, ANIM_TARGET, 2, 20, 0, 16, 24, 20, 1
+	delay 16
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
+	call EmberFireHit
+	call EmberFireHit
+	call EmberFireHit
+	end
+
+EmberFireHit:
+	createsprite gEmberFlareSpriteTemplate, ANIM_TARGET, 2, -24, 24, 24, 24, 20, ANIM_TARGET, 1
+	delay 4
+	return
 
 gUnknown_82786D9: @ 0x082786D9
 	.incbin "baserom_jp.gba", 0x2786d9, 0xda

@@ -1559,7 +1559,11 @@ gFirePlumeSpriteTemplate: @ 0x57100C
 gSunlightRaySpriteTemplate: @ 0x571084
 	.hword 0x27AD, 0x27AD
 	.4byte 0x084FD1A0, 0x082BF304, 0, 0x08571080, 0x081099BD
-	.incbin "baserom_jp.gba", 0x57109c, 0x34
+	.incbin "baserom_jp.gba", 0x57109c, 0x1c
+
+	.globl gEmberSpriteTemplate
+gEmberSpriteTemplate: @ 0x5710B8
+	.incbin "baserom_jp.gba", 0x5710b8, 0x18
 
 	.globl gEmberFlareSpriteTemplate
 gEmberFlareSpriteTemplate: @ 0x5710D0
