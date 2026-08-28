@@ -1458,7 +1458,10 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/scripts/cave_hole.inc"
 	.include "data/scripts/lilycove_lady.inc"
 	.include "data/text/match_call.inc"
-	.include "data/scripts/gUnknown_826C765.inc"
+	.include "data/scripts/apprentice.inc"
+	.include "data/text/apprentice.inc"
+	.incbin "baserom_jp.gba", 0x273952, 0xdb3
+	.include "data/scripts/gUnknown_8274705.inc"
 
 	.globl EventScript_TrainerHillTimer
 EventScript_TrainerHillTimer: @ 0x8276CAF

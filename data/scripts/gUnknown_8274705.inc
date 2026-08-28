@@ -1,4 +1,3 @@
-	.incbin "baserom_jp.gba", 0x26c765, 0x7fa0
 BerryBlender_Text_BlendWithTheBlendMaster: @ 0x08274705
 	.incbin "baserom_jp.gba", 0x274705, 0x39
 BerryBlender_Text_SeeMyMasteryInAction: @ 0x0827473E
