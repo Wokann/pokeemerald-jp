@@ -130,7 +130,7 @@ __attribute__((naked)) void DoMoveAnim(u16 move)
         "_080A3300: .4byte gBattlerAttacker\n\t"
         "_080A3304: .4byte gBattleAnimTarget\n\t"
         "_080A3308: .4byte gBattlerTarget\n\t"
-        "_080A330C: .4byte gUnknown_82772F8\n\t"
+        "_080A330C: .4byte gBattleAnims_Moves\n\t"
         ".syntax divided\n\t"
     );
 }

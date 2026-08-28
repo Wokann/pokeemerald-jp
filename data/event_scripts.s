@@ -1336,8 +1336,8 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 gMovesWithQuietBGM::
 	.2byte MOVE_SING, MOVE_PERISH_SONG, MOVE_GRASS_WHISTLE, 0xFFFF
 
-	.globl gUnknown_82772F8
-gUnknown_82772F8: @ 0x82772F8
+@ These JP-located dispatch tables remain in event_scripts.o to preserve script_data ROM order.
+gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8277924                  @ 000
 	.4byte gUnknown_8277924                  @ 001
 	.4byte gUnknown_828063A                  @ 002
@@ -1695,8 +1695,7 @@ gUnknown_82772F8: @ 0x82772F8
 	.4byte gUnknown_82852F6                  @ 354
 	.4byte gUnknown_8285C76                  @ 355
 
-	.globl gBattleAnims_StatusConditions
-gBattleAnims_StatusConditions: @ 0x8277888
+gBattleAnims_StatusConditions:: @ 0x8277888
 	.4byte gUnknown_82862E1                  @ 000
 	.4byte gUnknown_828630C                  @ 001
 	.4byte gUnknown_8286315                  @ 002
@@ -1707,8 +1706,7 @@ gBattleAnims_StatusConditions: @ 0x8277888
 	.4byte gUnknown_82863DB                  @ 007
 	.4byte gUnknown_8286400                  @ 008
 
-	.globl gUnknown_82778AC
-gUnknown_82778AC: @ 0x82778AC
+gBattleAnims_General:: @ 0x82778AC
 	.4byte gUnknown_8286425                  @ 000
 	.4byte gUnknown_828645B                  @ 001
 	.4byte gUnknown_8286464                  @ 002
@@ -1733,8 +1731,7 @@ gUnknown_82778AC: @ 0x82778AC
 	.4byte gUnknown_8286AAA                  @ 021
 	.4byte gUnknown_8286AED                  @ 022
 
-	.globl gUnknown_8277908
-gUnknown_8277908: @ 0x8277908
+gBattleAnims_Special:: @ 0x8277908
 	.4byte 0x08286B6A, 0x08286B8B, 0x08286B9C, 0x08286BAD, 0x08286C01, 0x08286C1A, 0x08286C24
 gUnknown_8277924: @ 0x8277924
 	.include "data/scripts/gUnknown_8277924.inc"
