@@ -117,7 +117,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8281739                  @ 095
 	.4byte Move_MEDITATE                     @ MOVE_MEDITATE
 	.4byte Move_AGILITY                      @ MOVE_AGILITY
-	.4byte gUnknown_827B3B0                  @ 098
+	.4byte Move_QUICK_ATTACK                 @ MOVE_QUICK_ATTACK
 	.4byte gUnknown_827B408                  @ 099
 	.4byte gUnknown_827B47E                  @ 100
 	.4byte gUnknown_8281B0A                  @ 101
@@ -2733,8 +2733,22 @@ Move_AGILITY:: @ 0x0827B366
 	delay 1
 	end
 
-gUnknown_827B3B0: @ 0x0827B3B0
-	.incbin "baserom_jp.gba", 0x27b3b0, 0x58
+Move_QUICK_ATTACK:: @ 0x0827B3B0
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_ATK_PARTNER
+	setalpha 12, 8
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 24, 6, 1, 5
+	createvisualtask AnimTask_TraceMonBlended, 2, 0, 4, 7, 3
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	delay 4
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 6, 1
+	create_basic_hitsplat_sprite ANIM_TARGET, 4, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	waitforvisualfinish
+	end
 
 gUnknown_827B408: @ 0x0827B408
 	.incbin "baserom_jp.gba", 0x27b408, 0x76
