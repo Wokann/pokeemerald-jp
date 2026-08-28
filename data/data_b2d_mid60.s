@@ -1518,7 +1518,11 @@ gSpeedDustPosTable: @ 0x856F4D8
 
 	.globl sMusicNotePaletteTagsTable
 sMusicNotePaletteTagsTable: @ 0x856F534
-	.incbin "baserom_jp.gba", 0x56f534, 0x38
+	.incbin "baserom_jp.gba", 0x56f534, 0x20
+
+	.globl gMagentaHeartSpriteTemplate
+gMagentaHeartSpriteTemplate: @ 0x856F554
+	.incbin "baserom_jp.gba", 0x56f554, 0x18
 
 	.globl sAffineAnims_StretchBattlerUp
 sAffineAnims_StretchBattlerUp: @ 0x856F56C

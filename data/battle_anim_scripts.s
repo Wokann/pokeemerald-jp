@@ -223,7 +223,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8280402                  @ 201
 	.4byte gUnknown_827F7CE                  @ 202
 	.4byte Move_ENDURE                        @ MOVE_ENDURE
-	.4byte gUnknown_827BCA7                  @ 204
+	.4byte Move_CHARM                         @ MOVE_CHARM
 	.4byte gUnknown_827BCEA                  @ 205
 	.4byte gUnknown_827BD2B                  @ 206
 	.4byte gUnknown_827BDB2                  @ 207
@@ -3228,8 +3228,19 @@ EndureEffect:
 	createsprite gEndureEnergySpriteTemplate, ANIM_ATTACKER, 2, 0, -12, 0, 1
 	return
 
-gUnknown_827BCA7: @ 0x0827BCA7
-	.incbin "baserom_jp.gba", 0x27bca7, 0x43
+Move_CHARM:: @ 0x0827BCA7
+	loadspritegfx ANIM_TAG_MAGENTA_HEART
+	createvisualtask AnimTask_RockMonBackAndForth, 5, ANIM_ATTACKER, 2, 0
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, 0, 20
+	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
+	delay 15
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, -20, 20
+	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
+	delay 15
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, 20, 20
+	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	end
 
 gUnknown_827BCEA: @ 0x0827BCEA
 	.incbin "baserom_jp.gba", 0x27bcea, 0x41
