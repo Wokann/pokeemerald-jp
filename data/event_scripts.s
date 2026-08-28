@@ -1351,7 +1351,8 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/text/blend_master.inc"
 	.include "data/text/battle_tent.inc"
 	.include "data/text/event_ticket_2.inc"
-	.incbin "baserom_jp.gba", 0x275f5d, 0xadd
+	.include "data/text/move_tutors.inc"
+	.incbin "baserom_jp.gba", 0x276832, 0x208
 
 	.globl FortreeCity_House2_EventScript_SleepTalkTutor
 FortreeCity_House2_EventScript_SleepTalkTutor: @ 0x08276A3A
