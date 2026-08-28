@@ -2518,6 +2518,9 @@ gComplexPaletteBlendSpriteTemplate: @ 0x8572E70
 gBasicHitSplatSpriteTemplate: @ 0x8572F3C
 	.hword 0x2797, 0x2797
 	.4byte 0x084FD1A0, 0x082BF304, 0, 0x08572F2C, 0x08116BD9
+
+	.globl gHandleInvertHitSplatSpriteTemplate
+gHandleInvertHitSplatSpriteTemplate: @ 0x8572F54
 	.incbin "baserom_jp.gba", 0x572f54, 0x18
 
 	.globl gWaterHitSplatSpriteTemplate

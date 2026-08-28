@@ -59,8 +59,8 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827AF0D                  @ 037
 	.4byte Move_DOUBLE_EDGE                  @ MOVE_DOUBLE_EDGE
 	.4byte gUnknown_8278CFD                  @ 039
-	.4byte gUnknown_8278419                  @ 040
-	.4byte gUnknown_827846E                  @ 041
+	.4byte Move_POISON_STING                 @ MOVE_POISON_STING
+	.4byte Move_TWINEEDLE                    @ MOVE_TWINEEDLE
 	.4byte Move_PIN_MISSILE                  @ MOVE_PIN_MISSILE
 	.4byte gUnknown_8281317                  @ 043
 	.4byte gUnknown_827EAE1                  @ 044
@@ -806,11 +806,45 @@ Move_DOUBLE_EDGE: @ 0x08278306
 	waitforvisualfinish
 	end
 
-gUnknown_8278419: @ 0x08278419
-	.incbin "baserom_jp.gba", 0x278419, 0x55
+Move_POISON_STING: @ 0x08278419
+	loadspritegfx ANIM_TAG_NEEDLE
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_POISON_BUBBLE
+	monbg ANIM_TARGET
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
+	create_linear_stinger_sprite ANIM_TARGET, 2, 20, 0, -8, 0, 20
+	waitforvisualfinish
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, 0, 0, ANIM_TARGET, 2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 5, 1
+	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
+	waitforvisualfinish
+	call PoisonBubblesEffect
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
-gUnknown_827846E: @ 0x0827846E
-	.incbin "baserom_jp.gba", 0x27846e, 0x73
+Move_TWINEEDLE: @ 0x0827846E
+	loadspritegfx ANIM_TAG_NEEDLE
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	loopsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER, 6, 2
+	create_linear_stinger_sprite ANIM_TARGET, 2, 10, -4, 0, -4, 20
+	create_linear_stinger_sprite ANIM_TARGET, 2, 20, 12, 10, 12, 20
+	delay 20
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 5, 1
+	create_handle_invert_hitsplat_sprite ANIM_ATTACKER, 3, 0, -4, ANIM_TARGET, 3
+	loopsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 5, 2
+	delay 1
+	create_handle_invert_hitsplat_sprite ANIM_ATTACKER, 3, 10, 12, ANIM_TARGET, 3
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_82784E1: @ 0x082784E1
 	.incbin "baserom_jp.gba", 0x2784e1, 0x12e
@@ -1818,7 +1852,12 @@ gUnknown_82859FA: @ 0x082859FA
 	.incbin "baserom_jp.gba", 0x2859fa, 0x27c
 
 gUnknown_8285C76: @ 0x08285C76
-	.incbin "baserom_jp.gba", 0x285c76, 0x66b
+	.incbin "baserom_jp.gba", 0x285c76, 0x382
+
+PoisonBubblesEffect: @ 0x08285FF8
+	.incbin "baserom_jp.gba", 0x285ff8, 0x73
+
+	.incbin "baserom_jp.gba", 0x28606b, 0x276
 
 gUnknown_82862E1: @ 0x082862E1
 	.incbin "baserom_jp.gba", 0x2862e1, 0x2b
