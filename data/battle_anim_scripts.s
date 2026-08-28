@@ -48,7 +48,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82806F5                  @ 026
 	.4byte Move_ROLLING_KICK                 @ MOVE_ROLLING_KICK
 	.4byte gUnknown_827E873                  @ 028
-	.4byte gUnknown_827AC49                  @ 029
+	.4byte Move_HEADBUTT                     @ MOVE_HEADBUTT
 	.4byte gUnknown_827ACA6                  @ 030
 	.4byte gUnknown_827AD13                  @ 031
 	.4byte gUnknown_827AD90                  @ 032
@@ -2409,8 +2409,21 @@ Move_ROLLING_KICK:: @ 0x0827ABC6
 	blendoff
 	end
 
-gUnknown_827AC49: @ 0x0827AC49
-	.incbin "baserom_jp.gba", 0x27ac49, 0x5d
+Move_HEADBUTT:: @ 0x0827AC49
+	loadspritegfx ANIM_TAG_IMPACT
+	createsprite gBowMonSpriteTemplate, ANIM_ATTACKER, 2, 0
+	playsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	delay 2
+	createsprite gBowMonSpriteTemplate, ANIM_ATTACKER, 2, 1
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_ATTACKER, 2, 0, 4, 1
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 6, 1
+	createsprite gBowMonSpriteTemplate, ANIM_ATTACKER, 2, 2
+	create_flashing_hitsplat_sprite ANIM_TARGET, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	end
 
 gUnknown_827ACA6: @ 0x0827ACA6
 	.incbin "baserom_jp.gba", 0x27aca6, 0x6d
