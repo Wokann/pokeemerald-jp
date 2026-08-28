@@ -1328,38 +1328,8 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/scripts/test_signpost.inc"
 	.include "data/text/frontier_brain.inc"
 	.include "data/text/save.inc"
-
-	.globl gUnknown_8277095
-gUnknown_8277095: @ 0x8277095
-	.include "data/scripts/gUnknown_8277095.inc"
-
-	.globl gUnknown_8277102
-gUnknown_8277102: @ 0x8277102
-	.include "data/scripts/gUnknown_8277102.inc"
-
-	.globl gUnknown_82771F4
-gUnknown_82771F4: @ 0x82771F4
-	.include "data/scripts/gUnknown_82771F4.inc"
-
-	.globl gUnknown_8277200
-gUnknown_8277200: @ 0x8277200
-	.include "data/scripts/gUnknown_8277200.inc"
-
-	.globl gUnknown_8277213
-gUnknown_8277213: @ 0x8277213
-	.include "data/scripts/gUnknown_8277213.inc"
-
-	.globl gText_Birch_SoItsPlayer
-gText_Birch_SoItsPlayer: @ 0x8277224
-	.string "{MUS_RG_VS_TRAINER}{B_PLAYER_MON1_NAME}　だね？$"
-
-	.globl gUnknown_827722D
-gUnknown_827722D: @ 0x827722D
-	.include "data/scripts/gUnknown_827722D.inc"
-
-	.globl gUnknown_8277265
-gUnknown_8277265: @ 0x8277265
-	.include "data/scripts/gUnknown_8277265.inc"
+	.include "data/text/birch_speech.inc"
+	.incbin "baserom_jp.gba", 0x2772ef, 0x1
 
 @ This JP-located table is consumed by the battle animation script engine.
 	.align 2
