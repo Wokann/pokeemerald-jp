@@ -313,7 +313,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8284AC4                  @ 291
 	.4byte gUnknown_82837EE                  @ 292
 	.4byte Move_CAMOUFLAGE                   @ MOVE_CAMOUFLAGE
-	.4byte gUnknown_827CA60                  @ 294
+	.4byte Move_TAIL_GLOW                    @ MOVE_TAIL_GLOW
 	.4byte gUnknown_827CAA3                  @ 295
 	.4byte gUnknown_827CBBA                  @ 296
 	.4byte gUnknown_827CC49                  @ 297
@@ -3904,8 +3904,21 @@ Move_CAMOUFLAGE:: @ 0x0827CA1A
 	clearmonbg ANIM_ATK_PARTNER
 	end
 
-gUnknown_827CA60: @ 0x0827CA60
-	.incbin "baserom_jp.gba", 0x27ca60, 0x43
+Move_TAIL_GLOW:: @ 0x0827CA60
+	loadspritegfx ANIM_TAG_CIRCLE_OF_LIGHT
+	monbg ANIM_ATTACKER
+	setalpha 12, 8
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=4, color=RGB_BLACK
+	waitforvisualfinish
+	create_tail_glow_orb_sprite ANIM_ATTACKER, 66, relative_to=ANIM_ATTACKER
+	delay 18
+	loopsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER, 16, 6
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=4, initial_blend_y=4, target_blend_y=0, color=RGB_BLACK
+	clearmonbg ANIM_ATTACKER
+	blendoff
+	delay 1
+	end
 
 gUnknown_827CAA3: @ 0x0827CAA3
 	.incbin "baserom_jp.gba", 0x27caa3, 0x117
