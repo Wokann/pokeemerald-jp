@@ -222,7 +222,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_OUTRAGE                      @ MOVE_OUTRAGE
 	.4byte gUnknown_8280402                  @ 201
 	.4byte gUnknown_827F7CE                  @ 202
-	.4byte gUnknown_827BC13                  @ 203
+	.4byte Move_ENDURE                        @ MOVE_ENDURE
 	.4byte gUnknown_827BCA7                  @ 204
 	.4byte gUnknown_827BCEA                  @ 205
 	.4byte gUnknown_827BD2B                  @ 206
@@ -3203,8 +3203,30 @@ Move_DESTINY_BOND:: @ 0x0827BBB8
 	clearmonbg 5
 	end
 
-gUnknown_827BC13: @ 0x0827BC13
-	.incbin "baserom_jp.gba", 0x27bc13, 0x94
+Move_ENDURE:: @ 0x0827BC13
+	loadspritegfx ANIM_TAG_FOCUS_ENERGY
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	call EndureEffect
+	delay 8
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=11, color=RGB_RED
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 1, 0, 32, 1
+	call EndureEffect
+	delay 8
+	call EndureEffect
+	waitforvisualfinish
+	end
+
+EndureEffect:
+	createsprite gEndureEnergySpriteTemplate, ANIM_ATTACKER, 2, 0, -24, 26, 2
+	delay 4
+	createsprite gEndureEnergySpriteTemplate, ANIM_ATTACKER, 2, 0, 14, 28, 1
+	delay 4
+	createsprite gEndureEnergySpriteTemplate, ANIM_ATTACKER, 2, 0, -5, 10, 2
+	delay 4
+	createsprite gEndureEnergySpriteTemplate, ANIM_ATTACKER, 2, 0, 28, 26, 3
+	delay 4
+	createsprite gEndureEnergySpriteTemplate, ANIM_ATTACKER, 2, 0, -12, 0, 1
+	return
 
 gUnknown_827BCA7: @ 0x0827BCA7
 	.incbin "baserom_jp.gba", 0x27bca7, 0x43
