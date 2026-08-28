@@ -325,7 +325,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SLACK_OFF                    @ MOVE_SLACK_OFF
 	.4byte gUnknown_828365D                  @ 304
 	.4byte gUnknown_8283D4F                  @ 305
-	.4byte gUnknown_827D083                  @ 306
+	.4byte Move_CRUSH_CLAW                   @ MOVE_CRUSH_CLAW
 	.4byte gUnknown_8284569                  @ 307
 	.4byte gUnknown_8284F0D                  @ 308
 	.4byte gUnknown_8283C31                  @ 309
@@ -4124,8 +4124,26 @@ Move_SLACK_OFF: @ 0x0827D06B
 	waitforvisualfinish
 	end
 
-gUnknown_827D083: @ 0x0827D083
-	.incbin "baserom_jp.gba", 0x27d083, 0x6f
+Move_CRUSH_CLAW: @ 0x0827D083
+	loadspritegfx ANIM_TAG_BLUE_LIGHT_WALL
+	loadspritegfx ANIM_TAG_CLAW_SLASH
+	loadspritegfx ANIM_TAG_TORN_METAL
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 6, 4
+	delay 4
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 18, 1
+	create_claw_slash_sprite ANIM_TARGET, 2, x=-10, y=-10, animation=0
+	create_claw_slash_sprite ANIM_TARGET, 2, x=-10, y=10, animation=0
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	delay 12
+	create_claw_slash_sprite ANIM_TARGET, 2, x=10, y=-10, animation=1
+	create_claw_slash_sprite ANIM_TARGET, 2, x=10, y=10, animation=1
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	waitforvisualfinish
+	blendoff
+	clearmonbg ANIM_TARGET
+	end
 
 gUnknown_827D0F2: @ 0x0827D0F2
 	.incbin "baserom_jp.gba", 0x27d0f2, 0x162
