@@ -1,3 +1,0 @@
-	nop
-	turnvobject 0x27, 0x0
-	.incbin "baserom_jp.gba", 0x27CBBE, 0x8B

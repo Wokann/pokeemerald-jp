@@ -1,4 +1,0 @@
-	nop
-	setobjectxy 0x227, 0x2E58, 0x857
-	end
-	.incbin "baserom_jp.gba", 0x279967, 0x55

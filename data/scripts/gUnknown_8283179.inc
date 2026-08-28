@@ -1,7 +1,0 @@
-	nop
-	jp_raw_01_u16 0x28
-	playse 0x327
-	hidecoinsbox 0xBA, 0x15
-	gotostd 0x5
-	nop
-	.incbin "baserom_jp.gba", 0x283186, 0x87

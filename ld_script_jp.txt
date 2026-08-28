@@ -9053,6 +9053,8 @@ SECTIONS {
     ALIGN(4)
     {
         data/event_scripts.o(script_data);
+        data/battle_anim_scripts.o(script_data);
+        data/script_data_tail.o(script_data);
         data/mystery_event_script_cmd_table.o(script_data);
     } =0
     libtext :

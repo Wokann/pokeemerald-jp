@@ -1,3 +1,0 @@
-	nop
-	removeitem 0x327, 0xD589
-	.incbin "baserom_jp.gba", 0x27D689, 0x1C

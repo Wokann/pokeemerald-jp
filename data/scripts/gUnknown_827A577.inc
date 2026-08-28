@@ -1,3 +1,0 @@
-	nop
-	checkpcitem 0xA27, 0x203
-	.incbin "baserom_jp.gba", 0x27A57D, 0x13B

@@ -1,4 +1,0 @@
-	nop
-	setptrbyte 0x27, 0x279A00
-	fadescreen 0x27
-	.incbin "baserom_jp.gba", 0x27D2ED, 0x59

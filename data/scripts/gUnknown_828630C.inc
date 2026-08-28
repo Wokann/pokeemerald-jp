@@ -1,3 +1,0 @@
-	nop 
-	hideobject_at 0xE27, 0xFC61
-	delay 0x808

@@ -1,9 +1,0 @@
-	nop
-	setmetatile 0x27, 0x27AB, 0x10A, 0x128
-	returnram
-	returnram
-	gotostd 0x4
-	jp_raw_01_u16 0x390E
-	setmaplayoutindex 0x827
-	return
-	.incbin "baserom_jp.gba", 0x27A714, 0xC8

@@ -1,4 +1,0 @@
-	nop
-	subvar 0x28, 0x2819
-	nop
-	.incbin "baserom_jp.gba", 0x27F445, 0xE1

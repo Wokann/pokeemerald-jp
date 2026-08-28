@@ -1,8 +1,0 @@
-	nop
-	animateflash 0x27
-	gotostd_if 0x1, 0xC
-	returnram
-	gotostd 0x3
-	takecoins 0xD50
-	gotostd 0x2
-	.incbin "baserom_jp.gba", 0x27D5EE, 0x5C

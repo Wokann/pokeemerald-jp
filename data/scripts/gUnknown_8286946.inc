@@ -1,6 +1,0 @@
-	return
-	settrainerflag 0x1187
-	gotostd 0x2
-	nop
-	gotostd_if 0x3, 0x19
-	.incbin "baserom_jp.gba", 0x286950, 0x55

@@ -1,7 +1,0 @@
-	nop
-	setrespawn 0x27
-	fadescreen 0x27
-	gotostd_if 0x1, 0xC
-	returnram
-	gotostd 0x19
-	.incbin "baserom_jp.gba", 0x278CC2, 0x3B

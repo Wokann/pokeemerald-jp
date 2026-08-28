@@ -1,3 +1,0 @@
-	nop
-	callstd_if 0x28, 0xE
-	.incbin "baserom_jp.gba", 0x27C968, 0x47

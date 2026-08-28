@@ -1,6 +1,0 @@
-	nop
-	fadescreen 0x27
-	compare_local_to_value 0x78, 0x0
-	showcoinsbox 0x1C, 0x2
-	return
-	.incbin "baserom_jp.gba", 0x2819BD, 0x54
