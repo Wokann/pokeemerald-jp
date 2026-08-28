@@ -178,7 +178,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827DD70                  @ 156
 	.4byte Move_ROCK_SLIDE                   @ MOVE_ROCK_SLIDE
 	.4byte gUnknown_8282AB5                  @ 158
-	.4byte gUnknown_827B8DA                  @ 159
+	.4byte Move_SHARPEN                      @ MOVE_SHARPEN
 	.4byte Move_CONVERSION                   @ MOVE_CONVERSION
 	.4byte gUnknown_8282B1C                  @ 161
 	.4byte gUnknown_827B8E6                  @ 162
@@ -3014,8 +3014,11 @@ Move_ACID_ARMOR:: @ 0x0827B8C1
 	delay 1
 	end
 
-gUnknown_827B8DA: @ 0x0827B8DA
-	.incbin "baserom_jp.gba", 0x27b8da, 0xc
+Move_SHARPEN:: @ 0x0827B8DA
+	loadspritegfx ANIM_TAG_SPHERE_TO_CUBE
+	createsprite gSharpenSphereSpriteTemplate, ANIM_ATTACKER, 2
+	waitforvisualfinish
+	end
 
 gUnknown_827B8E6: @ 0x0827B8E6
 	.incbin "baserom_jp.gba", 0x27b8e6, 0x81
