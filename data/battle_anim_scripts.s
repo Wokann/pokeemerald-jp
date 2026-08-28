@@ -333,7 +333,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82859FA                  @ 311
 	.4byte Move_AROMATHERAPY                 @ MOVE_AROMATHERAPY
 	.4byte Move_FAKE_TEARS                   @ MOVE_FAKE_TEARS
-	.4byte gUnknown_827D2E4                  @ 314
+	.4byte Move_AIR_CUTTER                   @ MOVE_AIR_CUTTER
 	.4byte gUnknown_8284C1B                  @ 315
 	.4byte gUnknown_827D346                  @ 316
 	.4byte gUnknown_82847AB                  @ 317
@@ -4207,8 +4207,26 @@ Move_FAKE_TEARS: @ 0x0827D254
 	waitforvisualfinish
 	end
 
-gUnknown_827D2E4: @ 0x0827D2E4
-	.incbin "baserom_jp.gba", 0x27d2e4, 0x62
+Move_AIR_CUTTER: @ 0x0827D2E4
+	loadspritegfx ANIM_TAG_AIR_WAVE
+	loadspritegfx ANIM_TAG_CUT
+	loadspritegfx ANIM_TAG_IMPACT
+	delay 0
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	delay 0
+	createvisualtask AnimTask_AirCutterProjectile, 2, 32, -24, 6 * 256, 2, 128
+	waitforvisualfinish
+	playsewithpan SE_M_CUT, SOUND_PAN_TARGET
+	createsprite gAirCutterSliceSpriteTemplate, ANIM_ATTACKER, 2, 40, -32, 0, 2
+	delay 5
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_DEF_PARTNER, 2, 0, 8, 1
+	waitforvisualfinish
+	blendoff
+	clearmonbg ANIM_DEF_PARTNER
+	delay 0
+	end
 
 gUnknown_827D346: @ 0x0827D346
 	.incbin "baserom_jp.gba", 0x27d346, 0x4a
