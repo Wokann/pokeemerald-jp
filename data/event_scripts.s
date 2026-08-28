@@ -795,16 +795,6 @@ Common_EventScript_OutOfCenterPartyHeal::
 	.set LilycoveCity_PokemonTrainerFanClub_Text_ThankYouIllShareThisInfo, 0x0824DEE0
 	.globl LilycoveCity_PokemonTrainerFanClub_HopeYouCatchTVSpecial
 	.set LilycoveCity_PokemonTrainerFanClub_HopeYouCatchTVSpecial, 0x0824DF29
-	.globl EventTicket_Text_OldSeaMapTooFar
-	.set EventTicket_Text_OldSeaMapTooFar, 0x08275C60
-	.globl EventTicket_Text_BrineyHoldOnASecond
-	.set EventTicket_Text_BrineyHoldOnASecond, 0x08275CB6
-	.globl EventTicket_Text_BrineyLetsSail
-	.set EventTicket_Text_BrineyLetsSail, 0x08275CDA
-	.globl EventTicket_Text_OddTicketGetOnBoard
-	.set EventTicket_Text_OddTicketGetOnBoard, 0x08275D2A
-	.globl EventTicket_Text_OddTicketsWhereTo
-	.set EventTicket_Text_OddTicketsWhereTo, 0x08275DF2
 	.globl EventScript_GotoTrainerScript
 	.set EventScript_GotoTrainerScript, 0x08244D20
 	@ The Lavaridge House event table references the shared Mimic tutor script.
@@ -1360,39 +1350,7 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/scripts/battle_pike.inc"
 	.include "data/text/blend_master.inc"
 	.include "data/text/battle_tent.inc"
-	.incbin "baserom_jp.gba", 0x275c60, 0x145
-
-FarawayIsland_Entrance_Text_SailorReturn: @ 0x08275DA5
-	.string "まったく　ハギ　せんちょうの\n"
-	.string "きまぐれにも　まいるよなあ⋯⋯\p"
-	.string "もう　ミナモへ　かえるのかい？$"
-
-BirthIsland_Harbor_Text_SailorReturn: @ 0x08275DD4
-	.string "ふしぎな　かたちの　しまだなあ\n"
-	.string "もう　ミナモへ　かえるか？$"
-
-	.incbin "baserom_jp.gba", 0x275df2, 0xa3
-
-NavelRock_Harbor_Text_SailorReturn: @ 0x08275E95
-	.string "な⋯⋯　なんか　おくふかくから\n"
-	.string "ひくい　うなりが　きこえたような⋯⋯\p"
-	.string "だ　だいじょうぶか？\n"
-	.string "もう　かえった　ほうが　いいんじゃないか？$"
-
-FarawayIsland_Entrance_Text_Sign: @ 0x08275ED9
-	.string "なんねんも　まえに　かかれたような\n"
-	.string "ふるい　かきおきが　ある⋯⋯\p"
-	.string "⋯⋯がつ　6か\n"
-	.string "ここに　たちいる　にんげ⋯⋯が\l"
-	.string "ふたたび　⋯⋯らわれると　すれば\l"
-	.string "こころ　やさし⋯⋯で　あらんことを\p"
-	.string "⋯⋯こに　その　ねがいを　しるし\n"
-	.string "この　⋯⋯を　あとにする\p"
-	.string "⋯⋯ジ$"
-
-FarawayIsland_Interior_Text_Mew: @ 0x08275F57
-	.string "ミュー⋯⋯$"
-
+	.include "data/text/event_ticket_2.inc"
 	.incbin "baserom_jp.gba", 0x275f5d, 0xadd
 
 	.globl FortreeCity_House2_EventScript_SleepTalkTutor
