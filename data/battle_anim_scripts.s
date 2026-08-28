@@ -127,7 +127,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828201C                  @ 105
 	.4byte gUnknown_827DA50                  @ 106
 	.4byte gUnknown_827B4DE                  @ 107
-	.4byte gUnknown_827A89C                  @ 108
+	.4byte Move_SMOKESCREEN                  @ MOVE_SMOKESCREEN
 	.4byte Move_CONFUSE_RAY                  @ MOVE_CONFUSE_RAY
 	.4byte gUnknown_827ED83                  @ 110
 	.4byte Move_DEFENSE_CURL                  @ MOVE_DEFENSE_CURL
@@ -2266,8 +2266,29 @@ IcyWindSwirlingSnowballs:
 	createsprite gSwirlingSnowballSpriteTemplate, ANIM_TARGET, 40, 0, -5, 0, -5, 72, 1
 	return
 
-gUnknown_827A89C: @ 0x0827A89C
-	.incbin "baserom_jp.gba", 0x27a89c, 0xf9
+Move_SMOKESCREEN:: @ 0x0827A89C
+	loadspritegfx ANIM_TAG_BLACK_SMOKE
+	loadspritegfx ANIM_TAG_BLACK_BALL
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	createsprite gBlackBallSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 35, -25
+	waitforvisualfinish
+	createvisualtask AnimTask_SmokescreenImpact, 2
+	delay 2
+	playsewithpan SE_M_SAND_ATTACK, SOUND_PAN_TARGET
+	createsprite gBlackSmokeSpriteTemplate, ANIM_TARGET, 4, 0, -12, 104, 0, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_TARGET, 4, 0, -12, 72, 1, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_TARGET, 4, 0, -6, 56, 1, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_TARGET, 4, 0, -6, 88, 0, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_TARGET, 4, 0, 0, 56, 0, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_TARGET, 4, 0, 0, 88, 1, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_TARGET, 4, 0, 6, 72, 0, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_TARGET, 4, 0, 6, 104, 1, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_TARGET, 4, 0, 12, 72, 0, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_TARGET, 4, 0, 12, 56, 1, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_TARGET, 4, 0, 18, 80, 0, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_TARGET, 4, 0, 18, 72, 1, 75
+	waitforvisualfinish
+	end
 
 gUnknown_827A995: @ 0x0827A995
 	.incbin "baserom_jp.gba", 0x27a995, 0x115
