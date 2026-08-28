@@ -277,7 +277,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8282F72                  @ 255
 	.4byte gUnknown_82830B5                  @ 256
 	.4byte Move_HEAT_WAVE                    @ MOVE_HEAT_WAVE
-	.4byte gUnknown_827C202                  @ 258
+	.4byte Move_HAIL                         @ MOVE_HAIL
 	.4byte gUnknown_827C23A                  @ 259
 	.4byte gUnknown_8283439                  @ 260
 	.4byte gUnknown_8282C90                  @ 261
@@ -3496,8 +3496,16 @@ Move_HEAT_WAVE:: @ 0x0827C152
 	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 60, 2560, 96, 1
 	end
 
-gUnknown_827C202: @ 0x0827C202
-	.incbin "baserom_jp.gba", 0x27c202, 0x38
+Move_HAIL:: @ 0x0827C202
+	loadspritegfx ANIM_TAG_HAIL
+	loadspritegfx ANIM_TAG_ICE_CRYSTALS
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 3, 0, 6, RGB_BLACK
+	waitforvisualfinish
+	createvisualtask AnimTask_Hail, 5
+	loopsewithpan SE_M_HAIL, 0, 8, 10
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 3, 6, 0, RGB_BLACK
+	end
 
 gUnknown_827C23A: @ 0x0827C23A
 	.incbin "baserom_jp.gba", 0x27c23a, 0x44
