@@ -1468,7 +1468,9 @@ Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
 	.include "data/text/lottery_corner.inc"
 	.include "data/text/event_ticket_1.inc"
 	.include "data/text/braille.inc"
-	.include "data/scripts/gUnknown_82637C2.inc"
+	.include "data/text/berries.inc"
+	.include "data/text/shoal_cave.inc"
+	.include "data/scripts/gUnknown_826426B.inc"
 
 	.globl EventScript_FallDownHole
 EventScript_FallDownHole: @ 0x826433F
