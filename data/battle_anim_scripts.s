@@ -263,7 +263,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8280C8E                  @ 241
 	.4byte gUnknown_827EB3F                  @ 242
 	.4byte gUnknown_827E605                  @ 243
-	.4byte gUnknown_8279076                  @ 244
+	.4byte Move_PSYCH_UP                     @ MOVE_PSYCH_UP
 	.4byte gUnknown_827BFCA                  @ 245
 	.4byte gUnknown_8280FE2                  @ 246
 	.4byte gUnknown_8281BEC                  @ 247
@@ -1334,8 +1334,24 @@ Move_SWORDS_DANCE:
 	delay 1 @ JP-specific post-blend delay
 	end
 
-gUnknown_8279076: @ 0x08279076
-	.incbin "baserom_jp.gba", 0x279076, 0x72
+Move_PSYCH_UP:
+	loadspritegfx ANIM_TAG_SPIRAL
+	monbg ANIM_ATK_PARTNER
+	blend_color_cycleexclude unk0=1, delay=2, num_blends=6, initial_blend_y=1, target_blend_y=11, color=RGB_BLACK
+	setalpha 12, 8
+	loopsewithpan SE_M_PSYBEAM2, SOUND_PAN_ATTACKER, 5, 10
+	createsprite gPsychUpSpiralSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 0, 0
+	createvisualtask AnimTask_SwayMon, 5, 0, 5, 2560, 8, ANIM_ATTACKER
+	delay 127
+	delay 4
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -5, -5, 10, ANIM_ATTACKER, 1
+	createvisualtask AnimTask_BlendBattleAnimPal, 9, F_PAL_ATTACKER, 2, 10, 0, RGB_YELLOW
+	delay 30
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	waitforvisualfinish
+	end
 
 gUnknown_82790E8: @ 0x082790E8
 	.incbin "baserom_jp.gba", 0x2790e8, 0x13a

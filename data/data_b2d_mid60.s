@@ -2155,7 +2155,11 @@ gSprayWaterDropletSpriteTemplate: @ 0x5720C8
 gSkyAttackBirdSpriteTemplate: @ 0x5720F8
 	.hword 0x282C, 0x282C
 	.4byte 0x084FD0E8, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x0810F8D5
-	.incbin "baserom_jp.gba", 0x572110, 0x34
+	.incbin "baserom_jp.gba", 0x572110, 0x1c
+
+	.globl gPsychUpSpiralSpriteTemplate
+gPsychUpSpiralSpriteTemplate: @ 0x57212C
+	.incbin "baserom_jp.gba", 0x57212c, 0x18
 
 	.globl gLightScreenWallSpriteTemplate
 gLightScreenWallSpriteTemplate: @ 0x572144
