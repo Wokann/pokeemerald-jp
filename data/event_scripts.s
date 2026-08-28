@@ -1356,8 +1356,10 @@ Common_EventScript_LegendaryFlewAway::
 
 	.include "data/scripts/gabby_and_ty.inc"
 
-	@ 0x08254510-0x082565C8 remains unstructured script_data.
-	.incbin "baserom_jp.gba", 0x254510, 0x20b8
+	.include "data/text/tv/pokemon_news.inc"
+
+	@ 0x08254D6B-0x082565C8 remains unstructured script_data.
+	.incbin "baserom_jp.gba", 0x254d6b, 0x185d
 
 EventScript_CutTree:: @ 0x082565C8
 	.incbin "baserom_jp.gba", 0x2565c8, 0x4a
