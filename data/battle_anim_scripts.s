@@ -345,7 +345,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_WATER_SPOUT                  @ MOVE_WATER_SPOUT
 	.4byte gUnknown_827F43E                  @ 324
 	.4byte Move_SHADOW_PUNCH                 @ MOVE_SHADOW_PUNCH
-	.4byte gUnknown_827D578                  @ 326
+	.4byte Move_EXTRASENSORY                 @ MOVE_EXTRASENSORY
 	.4byte gUnknown_828545E                  @ 327
 	.4byte gUnknown_82836F1                  @ 328
 	.4byte gUnknown_82837C9                  @ 329
@@ -4337,8 +4337,26 @@ Move_SHADOW_PUNCH: @ 0x0827D51D
 	waitbgfadein
 	end
 
-gUnknown_827D578: @ 0x0827D578
-	.incbin "baserom_jp.gba", 0x27d578, 0x68
+Move_EXTRASENSORY: @ 0x0827D578
+	call SetPsychicBackground
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_ATTACKER, RGB(27, 27, 0), 12, 1, 1
+	createvisualtask AnimTask_ExtrasensoryDistortion, 5, 0
+	playsewithpan SE_M_BIND, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_ATTACKER, RGB(27, 27, 0), 12, 1, 1
+	createvisualtask AnimTask_ExtrasensoryDistortion, 5, 1
+	playsewithpan SE_M_BIND, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_TransparentCloneGrowAndShrink, 5, ANIM_ATTACKER
+	createvisualtask AnimTask_ExtrasensoryDistortion, 5, 2
+	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	blendoff
+	clearmonbg ANIM_DEF_PARTNER
+	call UnsetPsychicBackground
+	end
 
 gUnknown_827D5E0: @ 0x0827D5E0
 	.incbin "baserom_jp.gba", 0x27d5e0, 0x6a
