@@ -159,7 +159,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_GLARE                        @ MOVE_GLARE
 	.4byte gUnknown_828136E                  @ 138
 	.4byte gUnknown_8281571                  @ 139
-	.4byte gUnknown_827B6BF                  @ 140
+	.4byte Move_BARRAGE                      @ MOVE_BARRAGE
 	.4byte gUnknown_827F9D6                  @ 141
 	.4byte gUnknown_82825BC                  @ 142
 	.4byte gUnknown_827B707                  @ 143
@@ -2909,8 +2909,16 @@ Move_GLARE:: @ 0x0827B656
 	createvisualtask AnimTask_BlendBattleAnimPal, 5, F_PAL_BG, 0, 16, 0, RGB_BLACK
 	end
 
-gUnknown_827B6BF: @ 0x0827B6BF
-	.incbin "baserom_jp.gba", 0x27b6bf, 0x48
+Move_BARRAGE:: @ 0x0827B6BF
+	loadspritegfx ANIM_TAG_RED_BALL
+	createvisualtask AnimTask_BarrageBall, 3
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
+	delay 24
+	shake_mon_or_platform velocity=8, shake_timer=1, shake_duration=40, type=SHAKE_BG_Y
+	createvisualtask AnimTask_ShakeMon, 3, ANIM_TARGET, 0, 4, 20, 1
+	createvisualtask AnimTask_ShakeMon, 3, ANIM_DEF_PARTNER, 0, 4, 20, 1
+	loopsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET, 8, 2
+	end
 
 gUnknown_827B707: @ 0x0827B707
 	.incbin "baserom_jp.gba", 0x27b707, 0x198
