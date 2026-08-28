@@ -248,7 +248,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828286F                  @ 226
 	.4byte gUnknown_8282D4E                  @ 227
 	.4byte Move_PURSUIT                       @ MOVE_PURSUIT
-	.4byte gUnknown_827BECD                  @ 229
+	.4byte Move_RAPID_SPIN                   @ MOVE_RAPID_SPIN
 	.4byte gUnknown_828320D                  @ 230
 	.4byte gUnknown_82819B3                  @ 231
 	.4byte gUnknown_8281A77                  @ 232
@@ -3353,8 +3353,24 @@ MagnitudeIntense:
 	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=14, color2=RGB_WHITE, blend_y2=14
 	goto MagnitudeEnd
 
-gUnknown_827BECD: @ 0x0827BECD
-	.incbin "baserom_jp.gba", 0x27becd, 0x6d
+Move_RAPID_SPIN:: @ 0x0827BECD
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_RAPID_SPIN
+	monbg ANIM_ATTACKER
+	createsprite gRapidSpinSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 32, -32, 40, -2
+	createvisualtask AnimTask_RapinSpinMonElevation, 2, 0, 2, 0
+	loopsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER, 8, 4
+	waitforvisualfinish
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 10, 1, 0
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	waitforvisualfinish
+	delay 8
+	createvisualtask AnimTask_RapinSpinMonElevation, 2, 0, 2, 1
+	loopsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER, 8, 4
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	end
 
 gUnknown_827BF3A: @ 0x0827BF3A
 	.incbin "baserom_jp.gba", 0x27bf3a, 0x90
