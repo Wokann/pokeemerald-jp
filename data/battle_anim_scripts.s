@@ -296,7 +296,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ASSIST                       @ MOVE_ASSIST
 	.4byte Move_INGRAIN                      @ MOVE_INGRAIN
 	.4byte Move_SUPERPOWER                   @ MOVE_SUPERPOWER
-	.4byte gUnknown_82851E4                  @ 277
+	.4byte Move_MAGIC_COAT                   @ MOVE_MAGIC_COAT
 	.4byte Move_RECYCLE                      @ MOVE_RECYCLE
 	.4byte Move_REVENGE                      @ MOVE_REVENGE
 	.4byte Move_BRICK_BREAK                  @ MOVE_BRICK_BREAK
@@ -9530,8 +9530,15 @@ SeismicTossRockScatter2:
 	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, 12, 30, 4, 3
 	return
 
-gUnknown_82851E4: @ 0x082851E4
-	.incbin "baserom_jp.gba", 0x2851e4, 0x1d
+Move_MAGIC_COAT: @ 0x082851E4
+	loadspritegfx ANIM_TAG_ORANGE_LIGHT_WALL
+	setalpha 0, 16
+	waitplaysewithpan SE_M_BARRIER, SOUND_PAN_ATTACKER, 15
+	createsprite gMagicCoatWallSpriteTemplate, ANIM_ATTACKER, 3, 40, 0, ANIM_TAG_ORANGE_LIGHT_WALL
+	waitforvisualfinish
+	delay 1
+	blendoff
+	end
 
 gUnknown_8285201: @ 0x08285201
 	.incbin "baserom_jp.gba", 0x285201, 0xf5
