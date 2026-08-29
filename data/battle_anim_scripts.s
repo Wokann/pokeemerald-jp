@@ -90,7 +90,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82809A9                  @ 068
 	.4byte gUnknown_8285087                  @ 069
 	.4byte Move_STRENGTH                       @ MOVE_STRENGTH
-	.4byte gUnknown_827F526                  @ 071
+	.4byte Move_ABSORB                       @ MOVE_ABSORB
 	.4byte gUnknown_827F63E                  @ 072
 	.4byte Move_LEECH_SEED                   @ MOVE_LEECH_SEED
 	.4byte Move_GROWTH                       @ MOVE_GROWTH
@@ -5715,8 +5715,58 @@ SignalBeamOrbs:
 	delay 1
 	return
 
-gUnknown_827F526: @ 0x0827F526
-	.incbin "baserom_jp.gba", 0x27f526, 0x118
+Move_ABSORB:: @ 0x0827F526
+	loadspritegfx ANIM_TAG_ORBS
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	splitbgprio_foes ANIM_TARGET
+	setalpha 12, 8
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=4, color=RGB(13, 31, 12)
+	waitforvisualfinish
+	playsewithpan SE_M_ABSORB, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	delay 2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 5, 5, 1
+	waitforvisualfinish
+	delay 3
+	call AbsorbEffect
+	waitforvisualfinish
+	delay 15
+	call HealingEffect
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=4, target_blend_y=0, color=RGB(13, 31, 12)
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
+AbsorbEffect:
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	delay 4
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=10, y=-5, wave_amplitude=-8, wave_period=26
+	delay 4
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-5, y=15, wave_amplitude=16, wave_period=33
+	delay 4
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=-15, wave_amplitude=-16, wave_period=36
+	delay 4
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	delay 4
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=10, y=-5, wave_amplitude=-8, wave_period=26
+	delay 4
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-10, y=20, wave_amplitude=20, wave_period=39
+	delay 4
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=5, y=-18, wave_amplitude=-20, wave_period=35
+	delay 4
+	return
 
 gUnknown_827F63E: @ 0x0827F63E
 	.incbin "baserom_jp.gba", 0x27f63e, 0x190

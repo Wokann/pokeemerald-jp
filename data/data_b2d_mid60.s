@@ -609,6 +609,7 @@ gAbsorptionOrbAffineAnimCmds: @ 0x856DE40
 gAbsorptionOrbAffineAnimTable: @ 0x856DE50
 	.4byte 0x0856DE40
 
+	.globl gAbsorptionOrbSpriteTemplate
 gAbsorptionOrbSpriteTemplate: @ 0x856DE54
 	.hword 0x27A3, 0x27A3
 	.4byte 0x084FD198, 0x0856DDAC
