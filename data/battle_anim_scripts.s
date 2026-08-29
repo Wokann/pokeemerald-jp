@@ -64,7 +64,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_PIN_MISSILE                  @ MOVE_PIN_MISSILE
 	.4byte gUnknown_8281317                  @ 043
 	.4byte gUnknown_827EAE1                  @ 044
-	.4byte gUnknown_827E4A8                  @ 045
+	.4byte Move_GROWL                        @ MOVE_GROWL
 	.4byte Move_ROAR                         @ MOVE_ROAR
 	.4byte Move_SING                         @ MOVE_SING
 	.4byte Move_SUPERSONIC                     @ MOVE_SUPERSONIC
@@ -4992,10 +4992,26 @@ Move_ROAR: @ 0x0827E411
 	end
 
 RoarEffect: @ 0x0827E457
-	.incbin "baserom_jp.gba", 0x27e457, 0x51
+	createsprite gRoarNoiseLineSpriteTemplate, ANIM_ATTACKER, 2, 24, -8, 0
+	createsprite gRoarNoiseLineSpriteTemplate, ANIM_ATTACKER, 2, 24, 0, 2
+	createsprite gRoarNoiseLineSpriteTemplate, ANIM_ATTACKER, 2, 24, 8, 1
+	delay 15
+	createsprite gRoarNoiseLineSpriteTemplate, ANIM_ATTACKER, 2, 24, -8, 0
+	createsprite gRoarNoiseLineSpriteTemplate, ANIM_ATTACKER, 2, 24, 0, 2
+	createsprite gRoarNoiseLineSpriteTemplate, ANIM_ATTACKER, 2, 24, 8, 1
+	return
 
-gUnknown_827E4A8: @ 0x0827E4A8
-	.incbin "baserom_jp.gba", 0x27e4a8, 0x41
+Move_GROWL: @ 0x0827E49C
+	loadspritegfx ANIM_TAG_NOISE_LINE
+	createvisualtask SoundTask_PlayDoubleCry, 2, ANIM_ATTACKER, DOUBLE_CRY_GROWL
+	call RoarEffect
+	delay 10
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 1, 0, 9, 1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_DEF_PARTNER, 1, 0, 9, 1
+	waitforvisualfinish
+	createvisualtask SoundTask_WaitForCry, 5
+	waitforvisualfinish
+	end
 
 gUnknown_827E4E9: @ 0x0827E4E9
 	.incbin "baserom_jp.gba", 0x27e4e9, 0x90
