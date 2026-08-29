@@ -349,7 +349,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828545E                  @ 327
 	.4byte Move_SAND_TOMB                    @ MOVE_SAND_TOMB
 	.4byte Move_SHEER_COLD                   @ MOVE_SHEER_COLD
-	.4byte gUnknown_8283883                  @ 330
+	.4byte Move_MUDDY_WATER                  @ MOVE_MUDDY_WATER
 	.4byte gUnknown_8283895                  @ 331
 	.4byte Move_AERIAL_ACE                   @ MOVE_AERIAL_ACE
 	.4byte Move_ICICLE_SPEAR                 @ MOVE_ICICLE_SPEAR
@@ -8627,8 +8627,11 @@ ArmThrustLeft:
 	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=-8, y=0, relative_to=ANIM_TARGET, animation=2
 	goto ArmThrustContinue
 
-gUnknown_8283883: @ 0x08283883
-	.incbin "baserom_jp.gba", 0x283883, 0x12
+Move_MUDDY_WATER: @ 0x08283883
+	panse SE_M_WHIRLPOOL, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	create_surf_wave palette=ANIM_SURF_PAL_MUDDY_WATER
+	waitforvisualfinish
+	end
 
 gUnknown_8283895: @ 0x08283895
 	.incbin "baserom_jp.gba", 0x283895, 0x96
