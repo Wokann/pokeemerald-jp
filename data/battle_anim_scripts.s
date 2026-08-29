@@ -47,7 +47,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MEGA_KICK                    @ MOVE_MEGA_KICK
 	.4byte gUnknown_82806F5                  @ 026
 	.4byte Move_ROLLING_KICK                 @ MOVE_ROLLING_KICK
-	.4byte gUnknown_827E873                  @ 028
+	.4byte Move_SAND_ATTACK                  @ MOVE_SAND_ATTACK
 	.4byte Move_HEADBUTT                     @ MOVE_HEADBUTT
 	.4byte Move_HORN_ATTACK                  @ MOVE_HORN_ATTACK
 	.4byte Move_FURY_ATTACK                  @ MOVE_FURY_ATTACK
@@ -5202,8 +5202,34 @@ Move_FAINT_ATTACK: @ 0x0827E7EC
 	waitbgfadein
 	end
 
-gUnknown_827E873: @ 0x0827E873
-	.incbin "baserom_jp.gba", 0x27e873, 0xa8
+Move_SAND_ATTACK: @ 0x0827E873
+	loadspritegfx ANIM_TAG_MUD_SAND
+	monbg ANIM_ATK_PARTNER
+	splitbgprio ANIM_ATTACKER
+	setalpha 12, 8
+	playsewithpan SE_M_SAND_ATTACK, SOUND_PAN_ATTACKER
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, -10, 0, 0, 3
+	waitforvisualfinish
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 2
+	call SandAttackDirt
+	call SandAttackDirt
+	call SandAttackDirt
+	call SandAttackDirt
+	call SandAttackDirt
+	call SandAttackDirt
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	end
+
+SandAttackDirt:
+	createsprite gSandAttackDirtSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, 0, 0
+	createsprite gSandAttackDirtSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, 10, 10
+	createsprite gSandAttackDirtSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, -10, -10
+	createsprite gSandAttackDirtSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, 20, 5
+	createsprite gSandAttackDirtSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, -20, -5
+	delay 2
+	return
 
 gUnknown_827E91B: @ 0x0827E91B
 	.incbin "baserom_jp.gba", 0x27e91b, 0x9e
