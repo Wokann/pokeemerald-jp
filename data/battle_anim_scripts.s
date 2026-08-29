@@ -133,7 +133,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_DEFENSE_CURL                  @ MOVE_DEFENSE_CURL
 	.4byte Move_BARRIER                      @ MOVE_BARRIER
 	.4byte Move_LIGHT_SCREEN                 @ MOVE_LIGHT_SCREEN
-	.4byte gUnknown_82811D1                  @ 114
+	.4byte Move_HAZE                         @ MOVE_HAZE
 	.4byte Move_REFLECT                      @ MOVE_REFLECT
 	.4byte gUnknown_8281C56                  @ 116
 	.4byte gUnknown_8281C96                  @ 117
@@ -6964,8 +6964,15 @@ MistCloud:
 	delay 7
 	return
 
-gUnknown_82811D1: @ 0x082811D1
-	.incbin "baserom_jp.gba", 0x2811d1, 0x33
+Move_HAZE: @ 0x082811D1
+	waitforvisualfinish
+	playsewithpan SE_M_HAZE, 0
+	createvisualtask AnimTask_HazeScrollingFog, 5
+	delay 30
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BATTLERS_2, 2, 0, 16, RGB_BLACK
+	delay 90
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BATTLERS_2, 1, 16, 0, RGB_BLACK
+	end
 
 gUnknown_8281204: @ 0x08281204
 	.incbin "baserom_jp.gba", 0x281204, 0x9b
