@@ -359,7 +359,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828392B                  @ 337
 	.4byte gUnknown_8283D9A                  @ 338
 	.4byte Move_BULK_UP                      @ MOVE_BULK_UP
-	.4byte gUnknown_82805D7                  @ 340
+	.4byte Move_BOUNCE                        @ MOVE_BOUNCE
 	.4byte gUnknown_8283B94                  @ 341
 	.4byte gUnknown_8281A11                  @ 342
 	.4byte Move_COVET                        @ MOVE_COVET
@@ -6440,8 +6440,31 @@ FlyUnleash:
 	blendoff
 	goto FlyEnd
 
-gUnknown_82805D7: @ 0x082805D7
-	.incbin "baserom_jp.gba", 0x2805d7, 0x63
+Move_BOUNCE: @ 0x082805D7
+	loadspritegfx ANIM_TAG_ROUND_SHADOW
+	loadspritegfx ANIM_TAG_IMPACT
+	choosetwoturnanim BounceSetUp, BounceUnleash
+BounceEnd:
+	end
+
+BounceSetUp:
+	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
+	createsprite gBounceBallShrinkSpriteTemplate, ANIM_ATTACKER, 2, 0, 0
+	goto BounceEnd
+
+BounceUnleash:
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
+	createsprite gBounceBallLandSpriteTemplate, ANIM_TARGET, 3
+	delay 7
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=0
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 5, 11, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	goto BounceEnd
 
 gUnknown_828063A: @ 0x0828063A
 	.incbin "baserom_jp.gba", 0x28063a, 0x52
