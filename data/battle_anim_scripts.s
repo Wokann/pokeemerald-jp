@@ -252,7 +252,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828320D                  @ 230
 	.4byte gUnknown_82819B3                  @ 231
 	.4byte gUnknown_8281A77                  @ 232
-	.4byte gUnknown_8280A78                  @ 233
+	.4byte Move_VITAL_THROW                  @ MOVE_VITAL_THROW
 	.4byte gUnknown_8283179                  @ 234
 	.4byte Move_SYNTHESIS                    @ MOVE_SYNTHESIS
 	.4byte Move_MOONLIGHT                    @ MOVE_MOONLIGHT
@@ -6657,8 +6657,28 @@ Move_COUNTER: @ 0x082809A9
 	blendoff
 	end
 
-gUnknown_8280A78: @ 0x08280A78
-	.incbin "baserom_jp.gba", 0x280a78, 0x7b
+Move_VITAL_THROW: @ 0x08280A78
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_VITAL_THROW, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 12, 4, 1, 2
+	waitforvisualfinish
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, 0, 0, 4
+	delay 2
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	delay 1
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 1, -24, 0, 0, 4
+	waitforvisualfinish
+	delay 3
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 7
+	delay 11
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 1, 0, 10
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_8280AF3: @ 0x08280AF3
 	.incbin "baserom_jp.gba", 0x280af3, 0xf8
