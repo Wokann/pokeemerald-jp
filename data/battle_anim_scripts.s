@@ -370,7 +370,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_LEAF_BLADE                   @ MOVE_LEAF_BLADE
 	.4byte Move_DRAGON_DANCE                 @ MOVE_DRAGON_DANCE
 	.4byte gUnknown_8284B7E                  @ 350
-	.4byte gUnknown_827D9AE                  @ 351
+	.4byte Move_SHOCK_WAVE                   @ MOVE_SHOCK_WAVE
 	.4byte gUnknown_8285201                  @ 352
 	.4byte gUnknown_82853FA                  @ 353
 	.4byte gUnknown_82852F6                  @ 354
@@ -4557,8 +4557,35 @@ Move_DRAGON_DANCE:
 	delay 1
 	end
 
-gUnknown_827D9AE: @ 0x0827D9AE
-	.incbin "baserom_jp.gba", 0x27d9ae, 0xa2
+Move_SHOCK_WAVE:
+	loadspritegfx ANIM_TAG_ELECTRIC_ORBS
+	loadspritegfx ANIM_TAG_CIRCLE_OF_LIGHT
+	loadspritegfx ANIM_TAG_SPARK
+	loadspritegfx ANIM_TAG_LIGHTNING
+	monbg ANIM_ATTACKER
+	setalpha 12, 8
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=4, color=RGB_BLACK
+	waitforvisualfinish
+	createvisualtask AnimTask_ElectricChargingParticles, 2, ANIM_ATTACKER, 20, 0, 2
+	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
+	delay 12
+	createsprite gGrowingShockWaveOrbSpriteTemplate, ANIM_ATTACKER, 2
+	delay 30
+	createvisualtask AnimTask_ShockWaveProgressingBolt, 5
+	delay 12
+	waitforvisualfinish
+	createvisualtask AnimTask_ShockWaveLightning, 5
+	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 6, 18, 1
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, F_PAL_BG, 3, 16, 0, RGB_WHITE
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, F_PAL_TARGET, 0, 16, 16, RGB_BLACK
+	delay 4
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, F_PAL_TARGET, 0, 0, 0, RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	blendoff
+	end
 
 gUnknown_827DA50: @ 0x0827DA50
 	.incbin "baserom_jp.gba", 0x27da50, 0x15
