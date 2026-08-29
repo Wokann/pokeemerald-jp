@@ -83,7 +83,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_BUBBLE_BEAM                  @ MOVE_BUBBLE_BEAM
 	.4byte Move_AURORA_BEAM                  @ MOVE_AURORA_BEAM
 	.4byte gUnknown_82832F7                  @ 063
-	.4byte gUnknown_8280086                  @ 064
+	.4byte Move_PECK                         @ MOVE_PECK
 	.4byte Move_DRILL_PECK                   @ MOVE_DRILL_PECK
 	.4byte gUnknown_8280BEB                  @ 066
 	.4byte Move_LOW_KICK                     @ MOVE_LOW_KICK
@@ -6209,8 +6209,13 @@ Move_WING_ATTACK: @ 0x0827FFE9
 	blendoff
 	end
 
-gUnknown_8280086: @ 0x08280086
-	.incbin "baserom_jp.gba", 0x280086, 0x27
+Move_PECK: @ 0x08280086
+	loadspritegfx ANIM_TAG_IMPACT
+	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
+	createvisualtask AnimTask_RotateMonToSideAndRestore, 2, 3, -768, ANIM_TARGET, 2
+	create_flashing_hitsplat_sprite ANIM_TARGET, 3, x=-12, y=0, relative_to=ANIM_TARGET, animation=3
+	waitforvisualfinish
+	end
 
 gUnknown_82800AD: @ 0x082800AD
 	.incbin "baserom_jp.gba", 0x2800ad, 0x11d
