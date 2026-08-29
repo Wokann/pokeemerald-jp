@@ -910,6 +910,7 @@ gPresentHealParticleSpriteTemplate: @ 0x856E23C
 	.4byte 0x084FD018, 0x0856E238
 	.4byte 0x00000000, gDummySpriteAffineAnimTable, 0x081004C1
 
+	.globl gItemStealSpriteTemplate
 gItemStealSpriteTemplate: @ 0x856E254
 	.hword 0x27F0, 0x27F0
 	.4byte 0x084FD080, 0x0856E190

@@ -404,8 +404,8 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_Hail                       @ 013
 	.4byte General_LeechSeedDrain             @ 014
 	.4byte General_MonHit                     @ 015
-	.4byte gUnknown_82868C3                  @ 016
-	.4byte gUnknown_82868E8                  @ 017
+	.4byte General_ItemSteal                  @ 016
+	.4byte General_SnatchMove                 @ 017
 	.4byte gUnknown_8286946                  @ 018
 	.4byte gUnknown_82869A5                  @ 019
 	.4byte gUnknown_8286A6A                  @ 020
@@ -10589,11 +10589,36 @@ General_MonHit: @ 0x08286892
 	blendoff
 	end
 
-gUnknown_82868C3: @ 0x082868C3
-	.incbin "baserom_jp.gba", 0x2868c3, 0x25
+General_ItemSteal: @ 0x082868C3
+	loadspritegfx ANIM_TAG_ITEM_BAG
+	createvisualtask AnimTask_SetAnimAttackerAndTargetForEffectAtk, 2
+	createvisualtask AnimTask_SetTargetToEffectBattler, 2  @ Redundant with above
+	delay 1
+	create_item_steal_sprite ANIM_ATTACKER, 2, initial_x=0, initial_y=-5, unk2=10, unk3=2, unk4=-1
+	end
 
-gUnknown_82868E8: @ 0x082868E8
-	.incbin "baserom_jp.gba", 0x2868e8, 0x5e
+General_SnatchMove: @ 0x082868E8
+	loadspritegfx ANIM_TAG_ITEM_BAG
+	createvisualtask AnimTask_SetAnimAttackerAndTargetForEffectTgt, 2
+	call SnatchMoveTrySwapFromSubstitute
+	delay 1
+	createvisualtask AnimTask_SwayMon, 2, 0, 5, 5120, 4, ANIM_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_IsTargetSameSide, 2
+	jumpretfalse SnatchOpposingMonMove
+	goto SnatchPartnerMonMove
+SnatchMoveContinue: @ 0x0828691F
+	waitforvisualfinish
+	call SnatchMoveTrySwapToSubstitute
+	end
+SnatchOpposingMonMove: @ 0x08286926
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_SnatchOpposingMonMove, 2
+	goto SnatchMoveContinue
+SnatchPartnerMonMove: @ 0x08286936
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_SnatchPartnerMove, 2
+	goto SnatchMoveContinue
 
 gUnknown_8286946: @ 0x08286946
 	.incbin "baserom_jp.gba", 0x286946, 0x5f
@@ -10608,4 +10633,28 @@ gUnknown_8286AAA: @ 0x08286AAA
 	.incbin "baserom_jp.gba", 0x286aaa, 0x43
 
 gUnknown_8286AED: @ 0x08286AED
-	.incbin "baserom_jp.gba", 0x286aed, 0x143
+	.incbin "baserom_jp.gba", 0x286aed, 0x3d
+
+SnatchMoveTrySwapFromSubstitute: @ 0x08286B2A
+	createvisualtask AnimTask_IsAttackerBehindSubstitute, 2
+	jumprettrue SnatchMoveSwapSubstituteForMon
+SnatchMoveTrySwapFromSubstituteEnd:
+	waitforvisualfinish
+	return
+SnatchMoveSwapSubstituteForMon:
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, TRUE
+	waitforvisualfinish
+	goto SnatchMoveTrySwapFromSubstituteEnd
+
+SnatchMoveTrySwapToSubstitute: @ 0x08286B4A
+	createvisualtask AnimTask_IsAttackerBehindSubstitute, 2
+	jumprettrue SnatchMoveSwapMonForSubstitute
+SnatchMoveTrySwapToSubstituteEnd:
+	waitforvisualfinish
+	return
+SnatchMoveSwapMonForSubstitute:
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, FALSE
+	waitforvisualfinish
+	goto SnatchMoveTrySwapToSubstituteEnd
+
+	.incbin "baserom_jp.gba", 0x286b6a, 0xc6

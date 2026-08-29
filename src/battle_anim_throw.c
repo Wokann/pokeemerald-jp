@@ -5961,7 +5961,7 @@ __attribute__((naked)) void AnimTask_IsAttackerBehindSubstitute(void)
     );
 }
 
-__attribute__((naked)) void AnimTask_TargetToEffectBattler(void)
+__attribute__((naked)) void AnimTask_SetTargetToEffectBattler(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
