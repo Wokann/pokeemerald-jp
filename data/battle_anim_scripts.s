@@ -163,7 +163,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_LEECH_LIFE                   @ MOVE_LEECH_LIFE
 	.4byte Move_LOVELY_KISS                  @ MOVE_LOVELY_KISS
 	.4byte Move_SKY_ATTACK                   @ MOVE_SKY_ATTACK
-	.4byte gUnknown_8283161                  @ 144
+	.4byte Move_TRANSFORM                    @ MOVE_TRANSFORM
 	.4byte Move_BUBBLE                       @ MOVE_BUBBLE
 	.4byte Move_DIZZY_PUNCH                  @ MOVE_DIZZY_PUNCH
 	.4byte Move_SPORE                        @ MOVE_SPORE
@@ -8305,8 +8305,14 @@ SwallowBest:
 	call SwallowEffect
 	goto SwallowContinue
 
-gUnknown_8283161: @ 0x08283161
-	.incbin "baserom_jp.gba", 0x283161, 0x18
+Move_TRANSFORM: @ 0x08283161
+	monbg ANIM_ATTACKER
+	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_MINIMIZE, SOUND_PAN_ATTACKER, 48
+	createvisualtask AnimTask_TransformMon, 2, 0
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	end
 
 gUnknown_8283179: @ 0x08283179
 	.incbin "baserom_jp.gba", 0x283179, 0x94
