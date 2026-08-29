@@ -120,7 +120,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_QUICK_ATTACK                 @ MOVE_QUICK_ATTACK
 	.4byte Move_RAGE                         @ MOVE_RAGE
 	.4byte Move_TELEPORT                     @ MOVE_TELEPORT
-	.4byte gUnknown_8281B0A                  @ 101
+	.4byte Move_NIGHT_SHADE                  @ MOVE_NIGHT_SHADE
 	.4byte gUnknown_82820C6                  @ 102
 	.4byte Move_SCREECH                        @ MOVE_SCREECH
 	.4byte Move_DOUBLE_TEAM                  @ MOVE_DOUBLE_TEAM
@@ -7327,8 +7327,24 @@ Move_METAL_CLAW: @ 0x08281A77
 	waitforvisualfinish
 	end
 
-gUnknown_8281B0A: @ 0x08281B0A
-	.incbin "baserom_jp.gba", 0x281b0a, 0x48
+Move_NIGHT_SHADE: @ 0x08281B0A
+	monbg ANIM_ATTACKER
+	splitbgprio ANIM_ATTACKER
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	fadetobg BG_GHOST
+	waitbgfadein
+	delay 10
+	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_NightShadeClone, 5, 85
+	delay 70
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 12, 1
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=0, num_blends=2, initial_blend_y=0, target_blend_y=13, color=RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	delay 1
+	restorebg
+	waitbgfadein
+	end
 
 gUnknown_8281B52: @ 0x08281B52
 	.incbin "baserom_jp.gba", 0x281b52, 0x9a
