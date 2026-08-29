@@ -67,12 +67,8 @@
 	.include "constants/gba_constants.inc"
 	.include "constants/global.inc"
 
-@ Transitional owner for the remaining JP script_data bytes after battle_anim_scripts.
+@ Transitional owner for the remaining JP script_data bytes after battle_scripts_1.
 @ This file shrinks in physical-address order as final US-aligned owners are extracted.
-
-	.globl gBattleScriptsForMoveEffects
-gBattleScriptsForMoveEffects: @ 0x8286C30
-	.incbin "baserom_jp.gba", 0x286c30, 0x388
 
 	.globl BattleScript_HitFromCritCalc
 BattleScript_HitFromCritCalc: @ 0x8286FB8
