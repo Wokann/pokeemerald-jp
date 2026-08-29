@@ -211,7 +211,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MUD_SLAP                     @ MOVE_MUD_SLAP
 	.4byte Move_OCTAZOOKA                    @ MOVE_OCTAZOOKA
 	.4byte Move_SPIKES                       @ MOVE_SPIKES
-	.4byte gUnknown_828181F                  @ 192
+	.4byte Move_ZAP_CANNON                   @ MOVE_ZAP_CANNON
 	.4byte Move_FORESIGHT                    @ MOVE_FORESIGHT
 	.4byte Move_DESTINY_BOND                 @ MOVE_DESTINY_BOND
 	.4byte gUnknown_8282891                  @ 195
@@ -7218,8 +7218,26 @@ PsywaveRings:
 	delay 4
 	return
 
-gUnknown_828181F: @ 0x0828181F
-	.incbin "baserom_jp.gba", 0x28181f, 0xe5
+Move_ZAP_CANNON: @ 0x0828181F
+	loadspritegfx ANIM_TAG_BLACK_BALL_2
+	loadspritegfx ANIM_TAG_SPARK_2
+	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_ATTACKER
+	createsprite gZapCannonBallSpriteTemplate, ANIM_TARGET, 3, 10, 0, 0, 0, 30, 0
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 16, 30, 0, 40, 0
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 16, 30, 64, 40, 1
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 16, 30, 128, 40, 0
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 16, 30, 192, 40, 2
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 8, 30, 32, 40, 0
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 8, 30, 96, 40, 1
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 8, 30, 160, 40, 0
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 8, 30, 224, 40, 2
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 5, 1
+	delay 15
+	waitplaysewithpan SE_M_THUNDERBOLT2, SOUND_PAN_TARGET, 19
+	call ElectricityEffect
+	waitforvisualfinish
+	end
 
 gUnknown_8281904: @ 0x08281904
 	.incbin "baserom_jp.gba", 0x281904, 0xaf
