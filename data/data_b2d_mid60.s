@@ -1755,11 +1755,13 @@ gPerishSongMusicNoteAffineAnimCmds3: @ 0x856F7D4
 gPerishSongMusicNoteAffineAnimTable: @ 0x856F7E4
 	.4byte gPerishSongMusicNoteAffineAnimCmds1, gPerishSongMusicNoteAffineAnimCmds2, gPerishSongMusicNoteAffineAnimCmds3
 
+	.globl gPerishSongMusicNoteSpriteTemplate
 gPerishSongMusicNoteSpriteTemplate: @ 0x856F7F0
 	.hword 0x27DE, 0x27DE
 	.4byte 0x084FD078, gMusicNotesAnimTable
 	.4byte 0, gPerishSongMusicNoteAffineAnimTable, 0x081077B1
 
+	.globl gPerishSongMusicNote2SpriteTemplate
 gPerishSongMusicNote2SpriteTemplate: @ 0x856F808
 	.hword 0x27DE, 0x27DE
 	.4byte 0x084FD078, gMusicNotesAnimTable

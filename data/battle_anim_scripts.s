@@ -214,7 +214,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ZAP_CANNON                   @ MOVE_ZAP_CANNON
 	.4byte Move_FORESIGHT                    @ MOVE_FORESIGHT
 	.4byte Move_DESTINY_BOND                 @ MOVE_DESTINY_BOND
-	.4byte gUnknown_8282891                  @ 195
+	.4byte Move_PERISH_SONG                  @ MOVE_PERISH_SONG
 	.4byte Move_ICY_WIND                     @ MOVE_ICY_WIND
 	.4byte Move_DETECT                        @ MOVE_DETECT
 	.4byte Move_BONE_RUSH                    @ MOVE_BONE_RUSH
@@ -7949,8 +7949,41 @@ Move_BATON_PASS: @ 0x0828286F
 	createsprite gBatonPassPokeballSpriteTemplate, ANIM_ATTACKER, 2
 	end
 
-gUnknown_8282891: @ 0x08282891
-	.incbin "baserom_jp.gba", 0x282891, 0x169
+Move_PERISH_SONG: @ 0x08282891
+	loadspritegfx ANIM_TAG_MUSIC_NOTES_2
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 0
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 1, 1, 16
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 2, 1, 32
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 3, 2, 48
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 4, 2, 64
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 5, 0, 80
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 6, 0, 96
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 7, 1, 112
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 8, 2, 128
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 9, 0, 144
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 10, 2, 160
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 11, 0, 176
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 12, 1, 192
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 13, 3, 208
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 14, 3, 224
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_ATTACKER, 4, 15, 0, 240
+	createsprite gPerishSongMusicNote2SpriteTemplate, ANIM_ATTACKER, 4, 15, 0, 0
+	delay 20
+	panse SE_M_PERISH_SONG, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	delay 80
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=0, target_blend_y=16, color=RGB_BLACK
+	set_grayscale_pal battler=ANIM_PLAYER_LEFT
+	set_grayscale_pal battler=ANIM_PLAYER_RIGHT
+	set_grayscale_pal battler=ANIM_OPPONENT_LEFT
+	set_grayscale_pal battler=ANIM_OPPONENT_RIGHT
+	delay 100
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=16, target_blend_y=0, color=RGB_BLACK
+	set_original_pal battler=ANIM_PLAYER_LEFT
+	set_original_pal battler=ANIM_PLAYER_RIGHT
+	set_original_pal battler=ANIM_OPPONENT_LEFT
+	set_original_pal battler=ANIM_OPPONENT_RIGHT
+	waitforvisualfinish
+	end
 
 gUnknown_82829FA: @ 0x082829FA
 	.incbin "baserom_jp.gba", 0x2829fa, 0xbb
