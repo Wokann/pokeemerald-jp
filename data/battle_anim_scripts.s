@@ -174,7 +174,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8280257                  @ 152
 	.4byte Move_EXPLOSION                     @ MOVE_EXPLOSION
 	.4byte gUnknown_8282603                  @ 154
-	.4byte gUnknown_827FD53                  @ 155
+	.4byte Move_BONEMERANG                   @ MOVE_BONEMERANG
 	.4byte Move_REST                         @ MOVE_REST
 	.4byte Move_ROCK_SLIDE                   @ MOVE_ROCK_SLIDE
 	.4byte gUnknown_8282AB5                  @ 158
@@ -6053,8 +6053,25 @@ Move_ACID:: @ 0x0827FC59
 	clearmonbg ANIM_DEF_PARTNER
 	end
 
-gUnknown_827FD53: @ 0x0827FD53
-	.incbin "baserom_jp.gba", 0x27fd53, 0x54
+Move_BONEMERANG:: @ 0x0827FD53
+	loadspritegfx ANIM_TAG_BONE
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_BONEMERANG, SOUND_PAN_ATTACKER
+	createsprite gBonemerangSpriteTemplate, ANIM_ATTACKER, 2
+	delay 20
+	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 5, 0, 5, 1
+	delay 17
+	playsewithpan SE_M_VITAL_THROW, SOUND_PAN_ATTACKER
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 6, -4
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_827FDA7: @ 0x0827FDA7
 	.incbin "baserom_jp.gba", 0x27fda7, 0x62
