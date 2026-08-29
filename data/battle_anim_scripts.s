@@ -242,7 +242,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_PAIN_SPLIT                   @ MOVE_PAIN_SPLIT
 	.4byte Move_SACRED_FIRE                   @ MOVE_SACRED_FIRE
 	.4byte Move_MAGNITUDE                    @ MOVE_MAGNITUDE
-	.4byte gUnknown_82808E1                  @ 223
+	.4byte Move_DYNAMIC_PUNCH                @ MOVE_DYNAMIC_PUNCH
 	.4byte Move_MEGAHORN                     @ MOVE_MEGAHORN
 	.4byte Move_DRAGON_BREATH                @ MOVE_DRAGON_BREATH
 	.4byte gUnknown_828286F                  @ 226
@@ -6591,8 +6591,39 @@ TripleKickCenter:
 	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 6, 0, 8, 1
 	goto TripleKickContinue
 
-gUnknown_82808E1: @ 0x082808E1
-	.incbin "baserom_jp.gba", 0x2808e1, 0xc8
+Move_DYNAMIC_PUNCH: @ 0x082808E1
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_EXPLOSION
+	loadspritegfx ANIM_TAG_EXPLOSION_6
+	delay 1
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	create_fist_sprite ANIM_TARGET, 3, x=0, y=0, duration=20
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=0
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 5, 0, 7, 1
+	delay 1
+	waitsound
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 5, 0, 28, 1
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 1, 1
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, 24, -24, 1, 1
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, -16, 16, 1, 1
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, -24, -12, 1, 1
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, 16, 16, 1, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_82809A9: @ 0x082809A9
 	.incbin "baserom_jp.gba", 0x2809a9, 0xcf
