@@ -306,7 +306,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ERUPTION                     @ MOVE_ERUPTION
 	.4byte Move_SKILL_SWAP                   @ MOVE_SKILL_SWAP
 	.4byte Move_IMPRISON                     @ MOVE_IMPRISON
-	.4byte gUnknown_8283592                  @ 287
+	.4byte Move_REFRESH                      @ MOVE_REFRESH
 	.4byte Move_GRUDGE                       @ MOVE_GRUDGE
 	.4byte gUnknown_8284AAA                  @ 289
 	.4byte gUnknown_8285557                  @ 290
@@ -8498,8 +8498,19 @@ Move_ROLE_PLAY: @ 0x08283535
 	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=10, target_blend_y=0, color=RGB_BLACK
 	end
 
-gUnknown_8283592: @ 0x08283592
-	.incbin "baserom_jp.gba", 0x283592, 0x43
+Move_REFRESH: @ 0x08283592
+	loadspritegfx ANIM_TAG_THIN_RING
+	loadspritegfx ANIM_TAG_SPARKLE_2
+	playsewithpan SE_M_STAT_INCREASE, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_StatusClearedEffect, 2, 0
+	waitforvisualfinish
+	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER
+	call GrantingStarsEffect
+	waitforvisualfinish
+	playsewithpan SE_SHINY, SOUND_PAN_ATTACKER
+	simple_palette_blend selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, initial_blend_y=10, target_blend_y=0, color=RGB(12, 24, 30)
+	createsprite gThinRingExpandingSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 0, 0
+	end
 
 gUnknown_82835D5: @ 0x082835D5
 	.incbin "baserom_jp.gba", 0x2835d5, 0x88
