@@ -5582,7 +5582,7 @@ __attribute__((naked)) void sub_08172974(void)
     );
 }
 
-__attribute__((naked)) void sub_081729D4(void)
+__attribute__((naked)) void AnimTask_SwapMonSpriteToFromSubstitute(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5802,7 +5802,7 @@ __attribute__((naked)) void sub_081729D4(void)
     );
 }
 
-__attribute__((naked)) void sub_08172B7C(void)
+__attribute__((naked)) void AnimTask_SubstituteFadeToInvisible(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

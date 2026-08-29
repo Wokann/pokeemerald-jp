@@ -388,10 +388,10 @@ gBattleAnims_StatusConditions:: @ 0x8277888
 	.4byte Status_Nightmare                  @ B_ANIM_STATUS_NIGHTMARE
 
 gBattleAnims_General:: @ 0x82778AC
-	.4byte gUnknown_8286425                  @ 000
-	.4byte gUnknown_828645B                  @ 001
-	.4byte gUnknown_8286464                  @ 002
-	.4byte gUnknown_82864A1                  @ 003
+	.4byte General_CastformChange             @ 000
+	.4byte General_StatsChange                @ 001
+	.4byte General_SubstituteFade             @ 002
+	.4byte General_SubstituteAppear           @ 003
 	.4byte gUnknown_82864A9                  @ 004
 	.4byte gUnknown_82864F1                  @ 005
 	.4byte gUnknown_82864FC                  @ 006
@@ -10344,17 +10344,43 @@ Status_Nightmare: @ 0x08286400
 	clearmonbg ANIM_DEF_PARTNER
 	end
 
-gUnknown_8286425: @ 0x08286425
-	.incbin "baserom_jp.gba", 0x286425, 0x36
+General_CastformChange: @ 0x08286425
+	createvisualtask AnimTask_IsMonInvisible, 2
+	jumpreteq TRUE, CastformChangeSkipAnim
+	goto CastformChangeContinue
+CastformChangeContinue:
+	monbg ANIM_ATTACKER
+	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_MINIMIZE, SOUND_PAN_ATTACKER, 48
+	createvisualtask AnimTask_TransformMon, 2, 1
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	end
+CastformChangeSkipAnim:
+	createvisualtask AnimTask_CastformGfxDataChange, 2, 1
+	end
 
-gUnknown_828645B: @ 0x0828645B
-	.incbin "baserom_jp.gba", 0x28645b, 0x9
+General_StatsChange: @ 0x0828645B
+	createvisualtask AnimTask_StatsChange, 5
+	waitforvisualfinish
+	end
 
-gUnknown_8286464: @ 0x08286464
-	.incbin "baserom_jp.gba", 0x286464, 0x3d
+General_SubstituteFade: @ 0x08286464
+	monbg ANIM_ATTACKER
+	createvisualtask AnimTask_SubstituteFadeToInvisible, 5
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 0, 0, 16, RGB_WHITE
+	waitforvisualfinish
+	delay 1
+	clearmonbg ANIM_ATTACKER
+	delay 2
+	blendoff
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 0, 0, 0, RGB_WHITE
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, TRUE
+	end
 
-gUnknown_82864A1: @ 0x082864A1
-	.incbin "baserom_jp.gba", 0x2864a1, 0x8
+General_SubstituteAppear: @ 0x082864A1
+	createvisualtask AnimTask_MonToSubstitute, 2
+	end
 
 gUnknown_82864A9: @ 0x082864A9
 	.incbin "baserom_jp.gba", 0x2864a9, 0x48
