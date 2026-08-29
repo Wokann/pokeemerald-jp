@@ -2449,7 +2449,10 @@ gReflectSparkleSpriteTemplate: @ 0x5721D8
 gSpecialScreenSparkleSpriteTemplate: @ 0x572208
 	.hword 0x2756, 0x2756
 	.4byte 0x084FD018, 0x08572204, 0, gDummySpriteAffineAnimTable, 0x0810FDDD
-	.incbin "baserom_jp.gba", 0x572220, 0xa0
+	.globl gGoldRingSpriteTemplate
+gGoldRingSpriteTemplate: @ 0x572220
+	.incbin "baserom_jp.gba", 0x572220, 0x18
+	.incbin "baserom_jp.gba", 0x572238, 0x88
 
 	.globl gBentSpoonSpriteTemplate
 gBentSpoonSpriteTemplate: @ 0x5722C0

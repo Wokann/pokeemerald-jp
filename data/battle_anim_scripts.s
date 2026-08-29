@@ -79,7 +79,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SURF                         @ MOVE_SURF
 	.4byte Move_ICE_BEAM                     @ MOVE_ICE_BEAM
 	.4byte Move_BLIZZARD                     @ MOVE_BLIZZARD
-	.4byte gUnknown_828169F                  @ 060
+	.4byte Move_PSYBEAM                      @ MOVE_PSYBEAM
 	.4byte Move_BUBBLE_BEAM                  @ MOVE_BUBBLE_BEAM
 	.4byte Move_AURORA_BEAM                  @ MOVE_AURORA_BEAM
 	.4byte gUnknown_82832F7                  @ 063
@@ -7149,8 +7149,32 @@ Move_WRAP: @ 0x08281689
 	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 6, 4, 2, 4
 	goto BindWrap
 
-gUnknown_828169F: @ 0x0828169F
-	.incbin "baserom_jp.gba", 0x28169f, 0x9a
+Move_PSYBEAM: @ 0x0828169F
+	loadspritegfx ANIM_TAG_GOLD_RING
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	call SetPsychicBackground
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_PSYBEAM2, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 3, 4, 0, 15
+	call PsybeamRings
+	call PsybeamRings
+	createvisualtask AnimTask_SwayMon, 5, 0, 6, 2048, 4, ANIM_TARGET
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB(31, 18, 31)
+	call PsybeamRings
+	call PsybeamRings
+	call PsybeamRings
+	call PsybeamRings
+	call PsybeamRings
+	call PsybeamRings
+	call PsybeamRings
+	call PsybeamRings
+	call PsybeamRings
+	waitforvisualfinish
+	delay 1
+	call UnsetPsychicBackground
+	end
+PsybeamRings:
+	createsprite gGoldRingSpriteTemplate, ANIM_TARGET, 2, 16, 0, 0, 0, 13, 0
+	delay 4
+	return
 
 gUnknown_8281739: @ 0x08281739
 	.incbin "baserom_jp.gba", 0x281739, 0x60
