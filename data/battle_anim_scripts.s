@@ -408,7 +408,7 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_SnatchMove                 @ 017
 	.4byte General_FutureSightHit             @ 018
 	.4byte General_DoomDesireHit              @ 019
-	.4byte gUnknown_8286A6A                  @ 020
+	.4byte General_FocusPunchSetUp            @ 020
 	.4byte gUnknown_8286AAA                  @ 021
 	.4byte gUnknown_8286AED                  @ 022
 
@@ -10674,8 +10674,18 @@ General_DoomDesireHit: @ 0x082869A5
 	waitforvisualfinish
 	end
 
-gUnknown_8286A6A: @ 0x08286A6A
-	.incbin "baserom_jp.gba", 0x286a6a, 0x40
+General_FocusPunchSetUp: @ 0x08286A6A
+	loadspritegfx ANIM_TAG_FOCUS_ENERGY
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	call EndureEffect
+	delay 8
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=11, color=RGB_RED
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 1, 0, 32, 1
+	call EndureEffect
+	delay 8
+	call EndureEffect
+	waitforvisualfinish
+	end
 
 gUnknown_8286AAA: @ 0x08286AAA
 	.incbin "baserom_jp.gba", 0x286aaa, 0x43
