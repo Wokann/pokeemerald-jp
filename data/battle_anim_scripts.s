@@ -254,7 +254,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8281A77                  @ 232
 	.4byte gUnknown_8280A78                  @ 233
 	.4byte gUnknown_8283179                  @ 234
-	.4byte gUnknown_827FA58                  @ 235
+	.4byte Move_SYNTHESIS                    @ MOVE_SYNTHESIS
 	.4byte Move_MOONLIGHT                    @ MOVE_MOONLIGHT
 	.4byte Move_HIDDEN_POWER                  @ MOVE_HIDDEN_POWER
 	.4byte gUnknown_828068C                  @ 238
@@ -5928,8 +5928,16 @@ Move_LEECH_LIFE:: @ 0x0827F9D6
 	blendoff
 	end
 
-gUnknown_827FA58: @ 0x0827FA58
-	.incbin "baserom_jp.gba", 0x27fa58, 0x2a
+Move_SYNTHESIS:: @ 0x0827FA58
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	loadspritegfx ANIM_TAG_SPARKLE_2
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=16, color=RGB(27, 31, 18)
+	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER
+	call GrantingStarsEffect
+	waitforvisualfinish
+	call HealingEffect
+	waitforvisualfinish
+	end
 
 gUnknown_827FA82: @ 0x0827FA82
 	.incbin "baserom_jp.gba", 0x27fa82, 0x6f
@@ -6352,7 +6360,10 @@ IceCrystalEffectLong: @ 0x08285D2B
 	.incbin "baserom_jp.gba", 0x285d2b, 0x154
 
 IceSpikesEffectLong: @ 0x08285E7F
-	.incbin "baserom_jp.gba", 0x285e7f, 0xe7
+	.incbin "baserom_jp.gba", 0x285e7f, 0xbc
+
+GrantingStarsEffect: @ 0x08285F3B
+	.incbin "baserom_jp.gba", 0x285f3b, 0x2b
 
 HealingEffect: @ 0x08285F66
 	playsewithpan SE_M_ABSORB_2, SOUND_PAN_ATTACKER
