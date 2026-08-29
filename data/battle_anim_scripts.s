@@ -173,7 +173,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ACID_ARMOR                   @ MOVE_ACID_ARMOR
 	.4byte Move_CRABHAMMER                   @ MOVE_CRABHAMMER
 	.4byte Move_EXPLOSION                     @ MOVE_EXPLOSION
-	.4byte gUnknown_8282603                  @ 154
+	.4byte Move_FURY_SWIPES                  @ MOVE_FURY_SWIPES
 	.4byte Move_BONEMERANG                   @ MOVE_BONEMERANG
 	.4byte Move_REST                         @ MOVE_REST
 	.4byte Move_ROCK_SLIDE                   @ MOVE_ROCK_SLIDE
@@ -7837,8 +7837,20 @@ Move_LOVELY_KISS: @ 0x082825BC
 	createsprite gPinkHeartSpriteTemplate, ANIM_TARGET, 3, -128, -22
 	end
 
-gUnknown_8282603: @ 0x08282603
-	.incbin "baserom_jp.gba", 0x282603, 0x64
+Move_FURY_SWIPES: @ 0x08282603
+	loadspritegfx ANIM_TAG_SWIPE
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 5, 5
+	delay 4
+	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
+	createsprite gFurySwipesSpriteTemplate, ANIM_TARGET, 2, 16, 0, 1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 5, 1
+	delay 10
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_TARGET, 2, 5, 5
+	delay 4
+	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
+	createsprite gFurySwipesSpriteTemplate, ANIM_TARGET, 2, -16, 0, 0
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 7, 1
+	end
 
 gUnknown_8282667: @ 0x08282667
 	.incbin "baserom_jp.gba", 0x282667, 0xb1
