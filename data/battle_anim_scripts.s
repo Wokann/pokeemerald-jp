@@ -81,7 +81,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827F0B9                  @ 059
 	.4byte gUnknown_828169F                  @ 060
 	.4byte Move_BUBBLE_BEAM                  @ MOVE_BUBBLE_BEAM
-	.4byte gUnknown_827ED90                  @ 062
+	.4byte Move_AURORA_BEAM                  @ MOVE_AURORA_BEAM
 	.4byte gUnknown_82832F7                  @ 063
 	.4byte gUnknown_8280086                  @ 064
 	.4byte Move_DRILL_PECK                   @ MOVE_DRILL_PECK
@@ -5414,8 +5414,42 @@ Move_WITHDRAW: @ 0x0827ED83
 	waitforvisualfinish
 	end
 
-gUnknown_827ED90: @ 0x0827ED90
-	.incbin "baserom_jp.gba", 0x27ed90, 0xd4
+Move_AURORA_BEAM: @ 0x0827ED90
+	loadspritegfx ANIM_TAG_RAINBOW_RINGS
+	fadetobg BG_AURORA
+	waitbgfadein
+	playsewithpan SE_M_BUBBLE_BEAM, SOUND_PAN_ATTACKER
+	setarg 7, 0
+	createvisualtask AnimTask_RotateAuroraRingColors, 10, 130
+	call AuroraBeamCreateRings
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 1, 0, 17, 1
+	call AuroraBeamCreateRings
+	call AuroraBeamCreateRings
+	call AuroraBeamCreateRings
+	setarg 7, 0xFFFF
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_BUBBLE_BEAM2, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 3, 6, 0, 10
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 2, 0, 40, 1
+	call AuroraBeamCreateRings
+	call AuroraBeamCreateRings
+	call AuroraBeamCreateRings
+	call AuroraBeamCreateRings
+	call AuroraBeamCreateRings
+	call AuroraBeamCreateRings
+	waitforvisualfinish
+	restorebg
+	waitbgfadein
+	end
+
+AuroraBeamCreateRings:
+	createsprite gAuroraBeamRingSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 17
+	delay 1
+	createsprite gAuroraBeamRingSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 17
+	delay 1
+	createsprite gAuroraBeamRingSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 17
+	delay 1
+	createsprite gAuroraBeamRingSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 17
+	delay 1
+	return
 
 gUnknown_827EE64: @ 0x0827EE64
 	.incbin "baserom_jp.gba", 0x27ee64, 0x255

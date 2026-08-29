@@ -1713,7 +1713,13 @@ gRainDropSpriteTemplate: @ 0x570C04
 gWaterBubbleProjectileSpriteTemplate: @ 0x570C4C
 	.incbin "baserom_jp.gba", 0x570c4c, 0x18
 
-	.incbin "baserom_jp.gba", 0x570c64, 0x180
+	.incbin "baserom_jp.gba", 0x570c64, 0x34
+
+	.globl gAuroraBeamRingSpriteTemplate
+gAuroraBeamRingSpriteTemplate: @ 0x570C98
+	.incbin "baserom_jp.gba", 0x570c98, 0x18
+
+	.incbin "baserom_jp.gba", 0x570cb0, 0x134
 
 	.globl gAnims_WaterBubble
 gAnims_WaterBubble: @ 0x570DE4
