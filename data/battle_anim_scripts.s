@@ -250,7 +250,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_PURSUIT                       @ MOVE_PURSUIT
 	.4byte Move_RAPID_SPIN                   @ MOVE_RAPID_SPIN
 	.4byte gUnknown_828320D                  @ 230
-	.4byte gUnknown_82819B3                  @ 231
+	.4byte Move_IRON_TAIL                    @ MOVE_IRON_TAIL
 	.4byte gUnknown_8281A77                  @ 232
 	.4byte Move_VITAL_THROW                  @ MOVE_VITAL_THROW
 	.4byte gUnknown_8283179                  @ 234
@@ -7266,8 +7266,24 @@ Move_STEEL_WING: @ 0x08281904
 	blendoff
 	end
 
-gUnknown_82819B3: @ 0x082819B3
-	.incbin "baserom_jp.gba", 0x2819b3, 0x5e
+Move_IRON_TAIL: @ 0x082819B3
+	loadspritegfx ANIM_TAG_IMPACT
+	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
+	metallic_shine permanent=TRUE
+	waitforvisualfinish
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 4
+	delay 6
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	set_original_pal battler=ANIM_ATTACKER
+	clearmonbg ANIM_TARGET
+	blendoff
+	waitforvisualfinish
+	end
 
 gUnknown_8281A11: @ 0x08281A11
 	.incbin "baserom_jp.gba", 0x281a11, 0x66
