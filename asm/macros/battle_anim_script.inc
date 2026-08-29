@@ -428,6 +428,10 @@
 	createsprite gSwiftStarSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \target_x, \target_y, \duration, \wave_amplitude, \target_both
 	.endm
 
+	.macro create_dragon_dance_orb_sprite anim_battler:req, subpriority_offset:req, angle:req
+	createsprite gDragonDanceOrbSpriteTemplate, \anim_battler, \subpriority_offset, 256 * \angle
+	.endm
+
 	.macro create_outrage_flame_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req, x_velocity:req, y_velocity:req, flicker_duration:req
 	createsprite gOutrageFlameSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration, 256 * \x_velocity, 256 * \y_velocity, \flicker_duration
 	.endm

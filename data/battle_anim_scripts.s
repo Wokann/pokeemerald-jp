@@ -368,7 +368,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_WATER_SPORT                  @ MOVE_WATER_SPORT
 	.4byte Move_CALM_MIND                    @ MOVE_CALM_MIND
 	.4byte Move_LEAF_BLADE                   @ MOVE_LEAF_BLADE
-	.4byte gUnknown_827D93F                  @ 349
+	.4byte Move_DRAGON_DANCE                 @ MOVE_DRAGON_DANCE
 	.4byte gUnknown_8284B7E                  @ 350
 	.4byte gUnknown_827D9AE                  @ 351
 	.4byte gUnknown_8285201                  @ 352
@@ -4533,8 +4533,29 @@ Move_LEAF_BLADE:
 	blendoff
 	end
 
-gUnknown_827D93F: @ 0x0827D93F
-	.incbin "baserom_jp.gba", 0x27d93f, 0x6f
+Move_DRAGON_DANCE:
+	loadspritegfx ANIM_TAG_HOLLOW_ORB
+	monbg ANIM_ATTACKER
+	splitbgprio ANIM_ATTACKER
+	delay 1
+	createvisualtask AnimTask_DragonDanceWaver, 5
+	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
+	delay 8
+	createvisualtask AnimTask_BlendPalInAndOutByTag, 5, ANIM_TAG_HOLLOW_ORB, RGB(0, 0, 19), 14, 0, 3
+	create_dragon_dance_orb_sprite ANIM_ATTACKER, 2, angle=0/360
+	create_dragon_dance_orb_sprite ANIM_ATTACKER, 2, angle=61/360
+	create_dragon_dance_orb_sprite ANIM_ATTACKER, 2, angle=120/360
+	create_dragon_dance_orb_sprite ANIM_ATTACKER, 2, angle=180/360
+	create_dragon_dance_orb_sprite ANIM_ATTACKER, 2, angle=240/360
+	create_dragon_dance_orb_sprite ANIM_ATTACKER, 2, angle=300/360
+	delay 30
+	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
+	delay 30
+	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	delay 1
+	end
 
 gUnknown_827D9AE: @ 0x0827D9AE
 	.incbin "baserom_jp.gba", 0x27d9ae, 0xa2
