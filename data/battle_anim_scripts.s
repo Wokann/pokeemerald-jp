@@ -268,7 +268,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8280FE2                  @ 246
 	.4byte gUnknown_8281BEC                  @ 247
 	.4byte Move_FUTURE_SIGHT                  @ MOVE_FUTURE_SIGHT
-	.4byte gUnknown_8280AF3                  @ 249
+	.4byte Move_ROCK_SMASH                   @ MOVE_ROCK_SMASH
 	.4byte Move_WHIRLPOOL                    @ MOVE_WHIRLPOOL
 	.4byte Move_BEAT_UP                      @ MOVE_BEAT_UP
 	.4byte gUnknown_82824B5                  @ 252
@@ -6680,8 +6680,32 @@ Move_VITAL_THROW: @ 0x08280A78
 	blendoff
 	end
 
-gUnknown_8280AF3: @ 0x08280AF3
-	.incbin "baserom_jp.gba", 0x280af3, 0xf8
+Move_ROCK_SMASH: @ 0x08280AF3
+	loadspritegfx ANIM_TAG_ROCKS
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	delay 1
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	create_fist_sprite ANIM_ATTACKER, 2, x=0, y=0, duration=8
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 5, 1
+	waitforvisualfinish
+	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
+	createsprite gRockFragmentSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 20, 24, 14, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_ATTACKER, 2, 5, 0, -20, 24, 14, 1
+	createsprite gRockFragmentSpriteTemplate, ANIM_ATTACKER, 2, 0, 5, 20, -24, 14, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_ATTACKER, 2, -5, 0, -20, -24, 14, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_ATTACKER, 2, 0, -5, 30, 18, 8, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 30, -18, 8, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, -30, 18, 8, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, -30, -18, 8, 2
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 3, 7, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_8280BEB: @ 0x08280BEB
 	.incbin "baserom_jp.gba", 0x280beb, 0xa3
