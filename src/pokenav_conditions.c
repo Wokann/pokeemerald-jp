@@ -436,7 +436,8 @@ void sub_081CCD0C(u8 *dest, const u8 *src, u16 count)
 }
 #endif
 
-
+// The direct US C form is only 0x200 bytes while this JP routine is 0x220;
+// its agbcc register/allocation shape is not yet byte-matchable.
 __attribute__((naked)) void sub_081CCD64(u8 *dest, u16 boxId, u8 unused)
 {
     __asm__(".syntax unified\n\t"
@@ -713,169 +714,37 @@ __attribute__((naked)) void sub_081CCD64(u8 *dest, u16 boxId, u8 unused)
             ".syntax divided");
 }
 
-__attribute__((naked)) void CopyMonNameGenderLocation(s16 listId, u8 loadId)
+static void CopyMonNameGenderLocation(s16 listId, u8 loadId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, r8\n\t"
-            "push {r7}\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r0, r0, #0x10\n\t"
-            "mov r8, r0\n\t"
-            "lsls r1, r1, #0x18\n\t"
-            "lsrs r6, r1, #0x18\n\t"
-            "movs r0, #0xb\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "movs r0, #0x12\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r7, r0, #0\n\t"
-            "mov r1, r8\n\t"
-            "lsls r0, r1, #0x10\n\t"
-            "asrs r4, r0, #0x10\n\t"
-            "bl IsConditionMenuSearchMode\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CCFBA\n\t"
-            "ldrh r2, [r7]\n\t"
-            "cmp r4, r2\n\t"
-            "bne _081CCFC2\n\t"
-            "b _081CD060\n\t"
-            "_081CCFBA:\n\t"
-            "ldrh r0, [r7]\n\t"
-            "subs r0, #1\n\t"
-            "cmp r4, r0\n\t"
-            "beq _081CD060\n\t"
-            "_081CCFC2:\n\t"
-            "lsls r0, r6, #6\n\t"
-            "ldr r1, _081CD024\n\t"
-            "adds r0, r0, r1\n\t"
-            "adds r0, r5, r0\n\t"
-            "mov r2, r8\n\t"
-            "lsls r4, r2, #0x10\n\t"
-            "lsrs r1, r4, #0x10\n\t"
-            "movs r2, #0\n\t"
-            "bl sub_081CCD64\n\t"
-            "asrs r4, r4, #0xe\n\t"
-            "adds r4, r7, r4\n\t"
-            "ldrb r3, [r4, #4]\n\t"
-            "lsls r0, r6, #1\n\t"
-            "adds r0, r0, r6\n\t"
-            "lsls r4, r0, #3\n\t"
-            "ldr r1, _081CD028\n\t"
-            "adds r0, r5, r1\n\t"
-            "adds r0, r0, r4\n\t"
-            "movs r2, #0\n\t"
-            "movs r1, #0xfc\n\t"
-            "strb r1, [r0]\n\t"
-            "ldr r1, _081CD02C\n\t"
-            "adds r0, r5, r1\n\t"
-            "adds r0, r0, r4\n\t"
-            "movs r1, #4\n\t"
-            "strb r1, [r0]\n\t"
-            "ldr r1, _081CD030\n\t"
-            "adds r0, r5, r1\n\t"
-            "adds r0, r0, r4\n\t"
-            "movs r1, #8\n\t"
-            "strb r1, [r0]\n\t"
-            "ldr r1, _081CD034\n\t"
-            "adds r0, r5, r1\n\t"
-            "adds r0, r0, r4\n\t"
-            "strb r2, [r0]\n\t"
-            "ldr r2, _081CD038\n\t"
-            "adds r0, r5, r2\n\t"
-            "adds r0, r0, r4\n\t"
-            "movs r1, #9\n\t"
-            "strb r1, [r0]\n\t"
-            "cmp r3, #0xe\n\t"
-            "bne _081CD044\n\t"
-            "adds r0, r4, r5\n\t"
-            "ldr r1, _081CD03C\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r1, _081CD040\n\t"
-            "b _081CD054\n\t"
-            ".align 2, 0\n\t"
-            "_081CD024: .4byte 0x00006368\n\t"
-            "_081CD028: .4byte 0x00006320\n\t"
-            "_081CD02C: .4byte 0x00006321\n\t"
-            "_081CD030: .4byte 0x00006322\n\t"
-            "_081CD034: .4byte 0x00006323\n\t"
-            "_081CD038: .4byte 0x00006324\n\t"
-            "_081CD03C: .4byte 0x00006325\n\t"
-            "_081CD040: .4byte gText_InParty\n\t"
-            "_081CD044:\n\t"
-            "adds r4, r4, r5\n\t"
-            "ldr r2, _081CD05C\n\t"
-            "adds r4, r4, r2\n\t"
-            "adds r0, r3, #0\n\t"
-            "bl GetBoxNamePtr\n\t"
-            "adds r1, r0, #0\n\t"
-            "adds r0, r4, #0\n\t"
-            "_081CD054:\n\t"
-            "movs r2, #8\n\t"
-            "bl sub_081CCD0C\n\t"
-            "b _081CD0BC\n\t"
-            ".align 2, 0\n\t"
-            "_081CD05C: .4byte 0x00006325\n\t"
-            "_081CD060:\n\t"
-            "movs r1, #0\n\t"
-            "lsls r4, r6, #6\n\t"
-            "lsls r0, r6, #1\n\t"
-            "mov r8, r0\n\t"
-            "adds r3, r4, #0\n\t"
-            "ldr r0, _081CD0C8\n\t"
-            "adds r2, r5, r0\n\t"
-            "movs r7, #0\n\t"
-            "_081CD070:\n\t"
-            "adds r0, r1, r3\n\t"
-            "adds r0, r2, r0\n\t"
-            "strb r7, [r0]\n\t"
-            "adds r0, r1, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r1, r0, #0x10\n\t"
-            "cmp r1, #0xb\n\t"
-            "bls _081CD070\n\t"
-            "adds r1, r1, r4\n\t"
-            "ldr r2, _081CD0C8\n\t"
-            "adds r0, r5, r2\n\t"
-            "adds r0, r0, r1\n\t"
-            "movs r1, #0xff\n\t"
-            "strb r1, [r0]\n\t"
-            "movs r1, #0\n\t"
-            "mov r2, r8\n\t"
-            "adds r0, r2, r6\n\t"
-            "lsls r3, r0, #3\n\t"
-            "ldr r0, _081CD0CC\n\t"
-            "adds r2, r5, r0\n\t"
-            "movs r4, #0\n\t"
-            "_081CD09A:\n\t"
-            "adds r0, r1, r3\n\t"
-            "adds r0, r2, r0\n\t"
-            "strb r4, [r0]\n\t"
-            "adds r0, r1, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r1, r0, #0x10\n\t"
-            "cmp r1, #7\n\t"
-            "bls _081CD09A\n\t"
-            "mov r2, r8\n\t"
-            "adds r0, r2, r6\n\t"
-            "lsls r0, r0, #3\n\t"
-            "adds r0, r1, r0\n\t"
-            "ldr r2, _081CD0CC\n\t"
-            "adds r1, r5, r2\n\t"
-            "adds r1, r1, r0\n\t"
-            "movs r0, #0xff\n\t"
-            "strb r0, [r1]\n\t"
-            "_081CD0BC:\n\t"
-            "pop {r3}\n\t"
-            "mov r8, r3\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081CD0C8: .4byte 0x00006368\n\t"
-            "_081CD0CC: .4byte 0x00006320\n\t"
-            ".syntax divided");
+    u16 boxId, i;
+    struct Pokenav_ConditionMenu *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU);
+    struct PokenavMonList *monListPtr = GetSubstructPtr(POKENAV_SUBSTRUCT_MON_LIST);
+
+    if (listId != (IsConditionMenuSearchMode() ? monListPtr->listCount : monListPtr->listCount - 1))
+    {
+        sub_081CCD64(menu->nameText[loadId], listId, FALSE);
+        boxId = monListPtr->monData[listId].boxId;
+        menu->locationText[loadId][0] = EXT_CTRL_CODE_BEGIN;
+        menu->locationText[loadId][1] = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+        menu->locationText[loadId][2] = TEXT_COLOR_BLUE;
+        menu->locationText[loadId][3] = TEXT_COLOR_TRANSPARENT;
+        menu->locationText[loadId][4] = TEXT_COLOR_LIGHT_BLUE;
+        if (boxId == TOTAL_BOXES_COUNT)
+            sub_081CCD0C(&menu->locationText[loadId][5], gText_InParty, BOX_NAME_LENGTH);
+        else
+            sub_081CCD0C(&menu->locationText[loadId][5], GetBoxNamePtr(boxId), BOX_NAME_LENGTH);
+    }
+    else
+    {
+        // The JP condition list reserves the original 12-byte display field.
+        for (i = 0; i < 12; i++)
+            menu->nameText[loadId][i] = CHAR_SPACE;
+        menu->nameText[loadId][i] = EOS;
+
+        for (i = 0; i < BOX_NAME_LENGTH; i++)
+            menu->locationText[loadId][i] = CHAR_SPACE;
+        menu->locationText[loadId][i] = EOS;
+    }
 }
 
 static void InitPartyConditionListParameters(void)
