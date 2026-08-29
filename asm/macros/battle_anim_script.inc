@@ -323,6 +323,14 @@
 	createsprite gClampJawSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \animation, 256 * \x_velocity, 256 * \y_velocity, \half_duration
 	.endm
 
+	.macro create_power_absorption_orb_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req
+	createsprite gPowerAbsorptionOrbSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration
+	.endm
+
+	.macro create_solar_beam_big_orb_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req, animation:req
+	createsprite gSolarBeamBigOrbSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration, \animation
+	.endm
+
 	.macro create_flashing_hitsplat_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, relative_to:req, animation:req
 	createsprite gFlashingHitSplatSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \relative_to, \animation
 	.endm

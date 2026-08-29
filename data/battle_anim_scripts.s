@@ -95,7 +95,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_LEECH_SEED                   @ MOVE_LEECH_SEED
 	.4byte Move_GROWTH                       @ MOVE_GROWTH
 	.4byte gUnknown_8280EDB                  @ 075
-	.4byte gUnknown_827EE64                  @ 076
+	.4byte Move_SOLAR_BEAM                   @ MOVE_SOLAR_BEAM
 	.4byte Move_POISON_POWDER                  @ MOVE_POISON_POWDER
 	.4byte Move_STUN_SPORE                     @ MOVE_STUN_SPORE
 	.4byte Move_SLEEP_POWDER                   @ MOVE_SLEEP_POWDER
@@ -5451,8 +5451,94 @@ AuroraBeamCreateRings:
 	delay 1
 	return
 
-gUnknown_827EE64: @ 0x0827EE64
-	.incbin "baserom_jp.gba", 0x27ee64, 0x255
+Move_SOLAR_BEAM: @ 0x0827EE64
+	loadspritegfx ANIM_TAG_ORBS
+	choosetwoturnanim SolarBeamSetUp, SolarBeamUnleash
+SolarBeamEnd:
+	waitforvisualfinish
+	end
+SolarBeamSetUp:
+	monbg ANIM_ATK_PARTNER
+	setalpha 12, 8
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=1, num_blends=4, initial_blend_y=0, target_blend_y=11, color=RGB(31, 31, 11)
+	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER
+	call SolarBeamAbsorbEffect
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	goto SolarBeamEnd
+SolarBeamAbsorbEffect:
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=40, y=40, duration=16
+	delay 2
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=-40, y=-40, duration=16
+	delay 2
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=0, y=40, duration=16
+	delay 2
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=0, y=-40, duration=16
+	delay 2
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=40, y=-20, duration=16
+	delay 2
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=40, y=20, duration=16
+	delay 2
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=-40, y=-20, duration=16
+	delay 2
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=-40, y=20, duration=16
+	delay 2
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=-20, y=30, duration=16
+	delay 2
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=20, y=-30, duration=16
+	delay 2
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=-20, y=-30, duration=16
+	delay 2
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=20, y=30, duration=16
+	delay 2
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=-40, y=0, duration=16
+	delay 2
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=40, y=0, duration=16
+	delay 2
+	return
+SolarBeamUnleash:
+	call SetSolarBeamBg
+	panse SE_M_SOLAR_BEAM, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	createvisualtask AnimTask_CreateSmallSolarBeamOrbs, 5
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=0
+	delay 4
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=1
+	delay 4
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 1, 0, 10, RGB(25, 31, 0)
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=2
+	delay 4
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 2, 0, 65, 1
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=3
+	delay 4
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=4
+	delay 4
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=5
+	delay 4
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=6
+	delay 4
+	call SolarBeamUnleash1
+	call SolarBeamUnleash1
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 1, 10, 0, RGB(25, 31, 0)
+	call UnsetSolarBeamBg
+	goto SolarBeamEnd
+SolarBeamUnleash1:
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=0
+	delay 4
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=1
+	delay 4
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=2
+	delay 4
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=3
+	delay 4
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=4
+	delay 4
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=5
+	delay 4
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=6
+	delay 4
+	return
 
 gUnknown_827F0B9: @ 0x0827F0B9
 	.incbin "baserom_jp.gba", 0x27f0b9, 0x18c
@@ -5949,8 +6035,29 @@ SetSkyBg: @ 0x0828626C
 UnsetSkyBg: @ 0x0828629C
 	.incbin "baserom_jp.gba", 0x28629c, 0x8
 
-gUnknown_82862A4: @ 0x082862A4
-	.incbin "baserom_jp.gba", 0x2862a4, 0x3d
+SetSolarBeamBg: @ 0x082862A4
+	createvisualtask AnimTask_IsContest, 2
+	jumprettrue SetSolarBeamBgContest
+	createvisualtask AnimTask_IsTargetPlayerSide, 2
+	jumpretfalse SetSolarBeamBgOpponent
+	goto SetSolarBeamBgPlayer
+SetSolarBeamBgContinue:
+	waitbgfadein
+	return
+SetSolarBeamBgContest:
+	fadetobg BG_SOLAR_BEAM_CONTESTS
+	goto SetSolarBeamBgContinue
+SetSolarBeamBgPlayer:
+	fadetobg BG_SOLAR_BEAM_PLAYER
+	goto SetSolarBeamBgContinue
+SetSolarBeamBgOpponent:
+	fadetobg BG_SOLAR_BEAM_OPPONENT
+	goto SetSolarBeamBgContinue
+
+UnsetSolarBeamBg:
+	restorebg
+	waitbgfadein
+	return
 
 gUnknown_82862E1: @ 0x082862E1
 	.incbin "baserom_jp.gba", 0x2862e1, 0x2b

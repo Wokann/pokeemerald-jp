@@ -572,7 +572,15 @@ gStunSporeParticleSpriteTemplate: @ 0x856DD14
 gPoisonPowderParticleSpriteTemplate: @ 0x856DD2C
 	.incbin "baserom_jp.gba", 0x56dd2c, 0x18
 
-	.incbin "baserom_jp.gba", 0x56dd44, 0xb0
+	.incbin "baserom_jp.gba", 0x56dd44, 0x80
+
+	.globl gPowerAbsorptionOrbSpriteTemplate
+gPowerAbsorptionOrbSpriteTemplate: @ 0x856DDC4
+	.incbin "baserom_jp.gba", 0x56ddc4, 0x18
+
+	.globl gSolarBeamBigOrbSpriteTemplate
+gSolarBeamBigOrbSpriteTemplate: @ 0x856DDDC
+	.incbin "baserom_jp.gba", 0x56dddc, 0x18
 
 	.globl gSolarBeamSmallOrbSpriteTemplate
 gSolarBeamSmallOrbSpriteTemplate: @ 0x856DDF4
