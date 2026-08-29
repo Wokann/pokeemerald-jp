@@ -125,7 +125,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SCREECH                        @ MOVE_SCREECH
 	.4byte Move_DOUBLE_TEAM                  @ MOVE_DOUBLE_TEAM
 	.4byte gUnknown_828201C                  @ 105
-	.4byte gUnknown_827DA50                  @ 106
+	.4byte Move_HARDEN                       @ MOVE_HARDEN
 	.4byte Move_MINIMIZE                     @ MOVE_MINIMIZE
 	.4byte Move_SMOKESCREEN                  @ MOVE_SMOKESCREEN
 	.4byte Move_CONFUSE_RAY                  @ MOVE_CONFUSE_RAY
@@ -4587,8 +4587,11 @@ Move_SHOCK_WAVE:
 	blendoff
 	end
 
-gUnknown_827DA50: @ 0x0827DA50
-	.incbin "baserom_jp.gba", 0x27da50, 0x15
+Move_HARDEN:
+	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
+	metallic_shine permanent=FALSE
+	waitforvisualfinish
+	end
 
 gUnknown_827DA65: @ 0x0827DA65
 	.incbin "baserom_jp.gba", 0x27da65, 0xe8
