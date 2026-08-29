@@ -85,7 +85,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82832F7                  @ 063
 	.4byte Move_PECK                         @ MOVE_PECK
 	.4byte Move_DRILL_PECK                   @ MOVE_DRILL_PECK
-	.4byte gUnknown_8280BEB                  @ 066
+	.4byte Move_SUBMISSION                   @ MOVE_SUBMISSION
 	.4byte Move_LOW_KICK                     @ MOVE_LOW_KICK
 	.4byte Move_COUNTER                      @ MOVE_COUNTER
 	.4byte gUnknown_8285087                  @ 069
@@ -6707,8 +6707,38 @@ Move_ROCK_SMASH: @ 0x08280AF3
 	blendoff
 	end
 
-gUnknown_8280BEB: @ 0x08280BEB
-	.incbin "baserom_jp.gba", 0x280beb, 0xa3
+Move_SUBMISSION: @ 0x08280BEB
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET, 10
+	waitplaysewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER, 20
+	waitplaysewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET, 30
+	waitplaysewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER, 40
+	waitplaysewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET, 50
+	waitplaysewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER, 60
+	waitplaysewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET, 70
+	waitplaysewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER, 80
+	waitplaysewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET, 90
+	createvisualtask AnimTask_TranslateMonElliptical, 2, 0, -18, 6, 6, 4
+	createvisualtask AnimTask_TranslateMonElliptical, 2, 1, 18, 6, 6, 4
+	call SubmissionHit
+	call SubmissionHit
+	call SubmissionHit
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
+SubmissionHit:
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=-12, relative_to=ANIM_TARGET, animation=1
+	delay 8
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=-12, y=8, relative_to=ANIM_TARGET, animation=1
+	delay 8
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=12, y=0, relative_to=ANIM_TARGET, animation=1
+	delay 8
+	return
 
 gUnknown_8280C8E: @ 0x08280C8E
 	.incbin "baserom_jp.gba", 0x280c8e, 0x56
