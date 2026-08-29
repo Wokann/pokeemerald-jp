@@ -320,6 +320,10 @@
 	createvisualtask AnimTask_AttackerFadeFromInvisible, \priority, \step_delay
 	.endm
 
+	.macro shrink_target_copy priority=5, unk0:req, unk1:req
+	createvisualtask AnimTask_ShrinkTargetCopy, \priority, \unk0, \unk1
+	.endm
+
 	.macro create_basic_hitsplat_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, relative_to:req, animation:req
 	createsprite gBasicHitSplatSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \relative_to, \animation
 	.endm
@@ -334,6 +338,10 @@
 
 	.macro create_clamp_jaw_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, animation:req, x_velocity:req, y_velocity:req, half_duration:req
 	createsprite gClampJawSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \animation, 256 * \x_velocity, 256 * \y_velocity, \half_duration
+	.endm
+
+	.macro create_mimic_orb_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req
+	createsprite gMimicOrbSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y
 	.endm
 
 	.macro create_power_absorption_orb_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req

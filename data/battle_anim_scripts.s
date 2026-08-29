@@ -121,7 +121,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_RAGE                         @ MOVE_RAGE
 	.4byte Move_TELEPORT                     @ MOVE_TELEPORT
 	.4byte Move_NIGHT_SHADE                  @ MOVE_NIGHT_SHADE
-	.4byte gUnknown_82820C6                  @ 102
+	.4byte Move_MIMIC                        @ MOVE_MIMIC
 	.4byte Move_SCREECH                        @ MOVE_SCREECH
 	.4byte Move_DOUBLE_TEAM                  @ MOVE_DOUBLE_TEAM
 	.4byte Move_RECOVER                      @ MOVE_RECOVER
@@ -7620,8 +7620,24 @@ RecoverAbsorbEffect:
 	delay 3
 	return
 
-gUnknown_82820C6: @ 0x082820C6
-	.incbin "baserom_jp.gba", 0x2820c6, 0x4b
+Move_MIMIC: @ 0x082820C6
+	loadspritegfx ANIM_TAG_ORBS
+	setalpha 11, 5
+	monbg_static ANIM_DEF_PARTNER
+	splitbgprio_all
+	panse SE_M_MINIMIZE, SOUND_PAN_TARGET, SOUND_PAN_ATTACKER, -3, 0
+	shrink_target_copy unk0=128, unk1=24
+	delay 15
+	create_mimic_orb_sprite ANIM_TARGET, 2, initial_x=-12, initial_y=24
+	delay 10
+	setarg 7, 0xFFFF
+	waitforvisualfinish
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=0, num_blends=2, initial_blend_y=0, target_blend_y=11, color=RGB_WHITE
+	waitforvisualfinish
+	clearmonbg_static ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_8282111: @ 0x08282111
 	.incbin "baserom_jp.gba", 0x282111, 0x68
