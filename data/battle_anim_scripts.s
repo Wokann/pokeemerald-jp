@@ -70,7 +70,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SUPERSONIC                     @ MOVE_SUPERSONIC
 	.4byte Move_SONIC_BOOM                   @ MOVE_SONIC_BOOM
 	.4byte gUnknown_8281FEE                  @ 050
-	.4byte gUnknown_827FC59                  @ 051
+	.4byte Move_ACID                         @ MOVE_ACID
 	.4byte Move_EMBER                        @ MOVE_EMBER
 	.4byte gUnknown_8280365                  @ 053
 	.4byte gUnknown_8281170                  @ 054
@@ -6020,8 +6020,38 @@ SludgeBombProjectile:
 	delay 3
 	return
 
-gUnknown_827FC59: @ 0x0827FC59
-	.incbin "baserom_jp.gba", 0x27fc59, 0xfa
+Move_ACID:: @ 0x0827FC59
+	loadspritegfx ANIM_TAG_POISON_BUBBLE
+	monbg ANIM_DEF_PARTNER
+	createsprite gAcidPoisonBubbleSpriteTemplate, ANIM_TARGET, 2, 20, 0, 40, 1, 0, 0
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
+	delay 5
+	createsprite gAcidPoisonBubbleSpriteTemplate, ANIM_TARGET, 2, 20, 0, 40, 1, 24, 0
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
+	delay 5
+	createsprite gAcidPoisonBubbleSpriteTemplate, ANIM_TARGET, 2, 20, 0, 40, 1, -24, 0
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
+	delay 15
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 2, 0, 10, 1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_DEF_PARTNER, 2, 0, 10, 1
+	blend_color_cycle priority=2, selector=F_PAL_DEF_SIDE, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB(30, 0, 31)
+	createsprite gAcidPoisonDropletSpriteTemplate, ANIM_TARGET, 2, 0, -22, 0, 15, 55
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_TARGET
+	delay 10
+	createsprite gAcidPoisonDropletSpriteTemplate, ANIM_TARGET, 2, -26, -24, 0, 15, 55
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_TARGET
+	delay 10
+	createsprite gAcidPoisonDropletSpriteTemplate, ANIM_TARGET, 2, 15, -27, 0, 15, 50
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_TARGET
+	delay 10
+	createsprite gAcidPoisonDropletSpriteTemplate, ANIM_TARGET, 2, -15, -17, 0, 10, 45
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_TARGET
+	delay 10
+	createsprite gAcidPoisonDropletSpriteTemplate, ANIM_TARGET, 2, 27, -22, 0, 15, 50
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
 
 gUnknown_827FD53: @ 0x0827FD53
 	.incbin "baserom_jp.gba", 0x27fd53, 0x54
