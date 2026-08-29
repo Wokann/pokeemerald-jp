@@ -147,7 +147,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827FDA7                  @ 125
 	.4byte Move_FIRE_BLAST                   @ MOVE_FIRE_BLAST
 	.4byte Move_WATERFALL                    @ MOVE_WATERFALL
-	.4byte gUnknown_827EBEF                  @ 128
+	.4byte Move_CLAMP                        @ MOVE_CLAMP
 	.4byte Move_SWIFT                          @ MOVE_SWIFT
 	.4byte Move_SKULL_BASH                   @ MOVE_SKULL_BASH
 	.4byte Move_SPIKE_CANNON                  @ MOVE_SPIKE_CANNON
@@ -5346,8 +5346,22 @@ Move_CRUNCH: @ 0x0827EB3F
 	waitbgfadein
 	end
 
-gUnknown_827EBEF: @ 0x0827EBEF
-	.incbin "baserom_jp.gba", 0x27ebef, 0x5d
+Move_CLAMP: @ 0x0827EBEF
+	loadspritegfx ANIM_TAG_CLAMP
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_VICEGRIP, SOUND_PAN_TARGET
+	create_clamp_jaw_sprite ANIM_ATTACKER, 2, x=-32, y=0, animation=2, x_velocity=32/10, y_velocity=0, half_duration=10
+	create_clamp_jaw_sprite ANIM_ATTACKER, 2, x=32, y=0, animation=6, x_velocity=-32/10, y_velocity=0, half_duration=10
+	delay 10
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 3, 0, 5, 1
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	waitforvisualfinish
+	end
 
 gUnknown_827EC4C: @ 0x0827EC4C
 	.incbin "baserom_jp.gba", 0x27ec4c, 0x137
