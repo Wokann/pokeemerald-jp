@@ -372,7 +372,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ROCK_BLAST                   @ MOVE_ROCK_BLAST
 	.4byte Move_SHOCK_WAVE                   @ MOVE_SHOCK_WAVE
 	.4byte Move_WATER_PULSE                  @ MOVE_WATER_PULSE
-	.4byte gUnknown_82853FA                  @ 353
+	.4byte Move_DOOM_DESIRE                  @ MOVE_DOOM_DESIRE
 	.4byte Move_PSYCHO_BOOST                 @ MOVE_PSYCHO_BOOST
 	.4byte gUnknown_8285C76                  @ 355
 
@@ -9619,8 +9619,24 @@ Move_KNOCK_OFF: @ 0x0828536A
 	waitforvisualfinish
 	end
 
-gUnknown_82853FA: @ 0x082853FA
-	.incbin "baserom_jp.gba", 0x2853fa, 0x64
+Move_DOOM_DESIRE: @ 0x082853FA
+	createvisualtask GetIsDoomDesireHitTurn, 2
+	delay 1
+	monbg ANIM_ATK_PARTNER
+	set_grayscale_pal battler=ANIM_TARGET
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=4, color=RGB_BLACK
+	waitforvisualfinish
+	setalpha 8, 8
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -4, -4, 15, ANIM_ATTACKER, 1
+	waitforvisualfinish
+	delay 20
+	set_original_pal battler=ANIM_TARGET
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=4, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	end
 
 gUnknown_828545E: @ 0x0828545E
 	.incbin "baserom_jp.gba", 0x28545e, 0xf9
