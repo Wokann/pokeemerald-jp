@@ -124,7 +124,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82820C6                  @ 102
 	.4byte Move_SCREECH                        @ MOVE_SCREECH
 	.4byte Move_DOUBLE_TEAM                  @ MOVE_DOUBLE_TEAM
-	.4byte gUnknown_828201C                  @ 105
+	.4byte Move_RECOVER                      @ MOVE_RECOVER
 	.4byte Move_HARDEN                       @ MOVE_HARDEN
 	.4byte Move_MINIMIZE                     @ MOVE_MINIMIZE
 	.4byte Move_SMOKESCREEN                  @ MOVE_SMOKESCREEN
@@ -7585,8 +7585,40 @@ Move_DISABLE: @ 0x08281FEE
 	blendoff
 	end
 
-gUnknown_828201C: @ 0x0828201C
-	.incbin "baserom_jp.gba", 0x28201c, 0xaa
+Move_RECOVER: @ 0x0828201C
+	loadspritegfx ANIM_TAG_ORBS
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	monbg ANIM_ATK_PARTNER
+	setalpha 12, 8
+	loopsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER, 13, 3
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=0, num_blends=6, initial_blend_y=0, target_blend_y=11, color=RGB(31, 31, 11)
+	call RecoverAbsorbEffect
+	call RecoverAbsorbEffect
+	call RecoverAbsorbEffect
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	delay 1
+	call HealingEffect
+	waitforvisualfinish
+	end
+
+RecoverAbsorbEffect:
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=40, y=-10, duration=13
+	delay 3
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=-35, y=-10, duration=13
+	delay 3
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=15, y=-40, duration=13
+	delay 3
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=-10, y=-32, duration=13
+	delay 3
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=25, y=-20, duration=13
+	delay 3
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=-40, y=-20, duration=13
+	delay 3
+	create_power_absorption_orb_sprite ANIM_ATTACKER, 2, x=5, y=-40, duration=13
+	delay 3
+	return
 
 gUnknown_82820C6: @ 0x082820C6
 	.incbin "baserom_jp.gba", 0x2820c6, 0x4b
