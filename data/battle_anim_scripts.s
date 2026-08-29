@@ -292,7 +292,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_HELPING_HAND                 @ MOVE_HELPING_HAND
 	.4byte Move_TRICK                        @ MOVE_TRICK
 	.4byte gUnknown_8283535                  @ 272
-	.4byte gUnknown_8282E73                  @ 273
+	.4byte Move_WISH                         @ MOVE_WISH
 	.4byte Move_ASSIST                       @ MOVE_ASSIST
 	.4byte Move_INGRAIN                      @ MOVE_INGRAIN
 	.4byte Move_SUPERPOWER                   @ MOVE_SUPERPOWER
@@ -8171,8 +8171,21 @@ Move_TRICK: @ 0x08282DF5
 	waitforvisualfinish
 	end
 
-gUnknown_8282E73: @ 0x08282E73
-	.incbin "baserom_jp.gba", 0x282e73, 0x48
+Move_WISH: @ 0x08282E73
+	loadspritegfx ANIM_TAG_GOLD_STARS
+	loadspritegfx ANIM_TAG_SPARKLE_2
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=0, target_blend_y=10, color=RGB_BLACK
+	waitforvisualfinish
+	panse_adjustall SE_M_REFLECT, SOUND_PAN_TARGET, SOUND_PAN_ATTACKER, -3, 0
+	createsprite gWishStarSpriteTemplate, ANIM_ATTACKER, 40
+	waitforvisualfinish
+	delay 60
+	loopsewithpan SE_M_HEAL_BELL, SOUND_PAN_ATTACKER, 16, 3
+	call GrantingStarsEffect
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=10, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	end
 
 gUnknown_8282EBB: @ 0x08282EBB
 	.incbin "baserom_jp.gba", 0x282ebb, 0xb7
