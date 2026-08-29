@@ -407,7 +407,7 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_ItemSteal                  @ 016
 	.4byte General_SnatchMove                 @ 017
 	.4byte General_FutureSightHit             @ 018
-	.4byte gUnknown_82869A5                  @ 019
+	.4byte General_DoomDesireHit              @ 019
 	.4byte gUnknown_8286A6A                  @ 020
 	.4byte gUnknown_8286AAA                  @ 021
 	.4byte gUnknown_8286AED                  @ 022
@@ -10640,8 +10640,39 @@ General_FutureSightHit: @ 0x08286946
 	call UnsetPsychicBackground
 	end
 
-gUnknown_82869A5: @ 0x082869A5
-	.incbin "baserom_jp.gba", 0x2869a5, 0xc5
+General_DoomDesireHit: @ 0x082869A5
+	createvisualtask AnimTask_SetAnimTargetToBattlerTarget, 2
+	loadspritegfx ANIM_TAG_EXPLOSION
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=0, target_blend_y=16, color=RGB_WHITE
+	waitforvisualfinish
+	delay 10
+	createvisualtask AnimTask_DoomDesireLightBeam, 5
+	delay 9
+	playsewithpan SE_M_CONFUSE_RAY, SOUND_PAN_ATTACKER
+	delay 9
+	playsewithpan SE_M_CONFUSE_RAY, 0
+	delay 9
+	playsewithpan SE_M_CONFUSE_RAY, SOUND_PAN_TARGET
+	delay 25
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_TARGET, 10, 0, 20, 1
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 1, 1
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, 24, -24, 1, 1
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, -16, 16, 1, 1
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, -24, -12, 1, 1
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionSpriteTemplate, ANIM_ATTACKER, 3, 16, 16, 1, 1
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=16, target_blend_y=0, color=RGB_WHITE
+	waitforvisualfinish
+	end
 
 gUnknown_8286A6A: @ 0x08286A6A
 	.incbin "baserom_jp.gba", 0x286a6a, 0x40
