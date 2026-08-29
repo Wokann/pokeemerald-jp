@@ -330,7 +330,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_HYDRO_CANNON                 @ MOVE_HYDRO_CANNON
 	.4byte Move_METEOR_MASH                  @ MOVE_METEOR_MASH
 	.4byte Move_ASTONISH                     @ MOVE_ASTONISH
-	.4byte gUnknown_82859FA                  @ 311
+	.4byte Move_WEATHER_BALL                 @ MOVE_WEATHER_BALL
 	.4byte Move_AROMATHERAPY                 @ MOVE_AROMATHERAPY
 	.4byte Move_FAKE_TEARS                   @ MOVE_FAKE_TEARS
 	.4byte Move_AIR_CUTTER                   @ MOVE_AIR_CUTTER
@@ -374,7 +374,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_WATER_PULSE                  @ MOVE_WATER_PULSE
 	.4byte Move_DOOM_DESIRE                  @ MOVE_DOOM_DESIRE
 	.4byte Move_PSYCHO_BOOST                 @ MOVE_PSYCHO_BOOST
-	.4byte gUnknown_8285C76                  @ 355
+	.4byte Move_COUNT                        @ cannot be reached, because last move is Psycho Boost
 
 gBattleAnims_StatusConditions:: @ 0x8277888
 	.4byte gUnknown_82862E1                  @ 000
@@ -9875,11 +9875,111 @@ IceBallImpactShard:
 	createsprite gIceBallImpactShardSpriteTemplate, ANIM_TARGET, 4, -12, -16
 	return
 
-gUnknown_82859FA: @ 0x082859FA
-	.incbin "baserom_jp.gba", 0x2859fa, 0x27c
+Move_WEATHER_BALL: @ 0x082859FA
+	loadspritegfx ANIM_TAG_WEATHER_BALL
+	createsprite gVerticalDipSpriteTemplate, ANIM_ATTACKER, 2, 8, 1, ANIM_ATTACKER
+	delay 8
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
+	createsprite gWeatherBallUpSpriteTemplate, ANIM_ATTACKER, 2
+	waitforvisualfinish
+	delay 15
+	playsewithpan SE_M_DETECT, 0
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=5, num_blends=1, color1=RGB_WHITE, blend_y1=10, color2=RGB_BLACK, blend_y2=0
+	waitforvisualfinish
+	createvisualtask AnimTask_GetWeather, 2
+	delay 1
+	jumpreteq ANIM_WEATHER_NONE, WeatherBallNormal
+	jumpreteq ANIM_WEATHER_SUN, WeatherBallFire
+	jumpreteq ANIM_WEATHER_RAIN, WeatherBallWater
+	jumpreteq ANIM_WEATHER_SANDSTORM, WeatherBallSandstorm
+	jumpreteq ANIM_WEATHER_HAIL, WeatherBallIce
+WeatherBallNormal:
+	loadspritegfx ANIM_TAG_IMPACT
+	createsprite gWeatherBallNormalDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, 0, 0
+	waitforvisualfinish
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 4, x=-10, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 3, 8, 1
+	waitforvisualfinish
+	end
+WeatherBallFire:
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	createsprite gWeatherBallFireDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, 40, 10
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
+	delay 10
+	createsprite gWeatherBallFireDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, -40, 20
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
+	delay 10
+	createsprite gWeatherBallFireDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, 0, 0
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
+	waitforvisualfinish
+	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 3, 8, 1
+	waitforvisualfinish
+	end
+WeatherBallWater:
+	loadspritegfx ANIM_TAG_SMALL_BUBBLES
+	createsprite gWeatherBallWaterDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, 50, 10
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
+	delay 8
+	createsprite gWeatherBallWaterDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, -20, 20
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
+	delay 13
+	createsprite gWeatherBallWaterDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, 0, 0
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 3, 8, 1
+	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_TARGET
+	waitforvisualfinish
+	end
+WeatherBallSandstorm:
+	loadspritegfx ANIM_TAG_ROCKS
+	createsprite gWeatherBallRockDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, 30, 0
+	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
+	delay 5
+	createsprite gWeatherBallRockDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, -40, 20
+	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
+	delay 14
+	createsprite gWeatherBallRockDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, 0, 0
+	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
+	waitforvisualfinish
+	playsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, -12, 27, 2, 3
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, 8, 28, 3, 4
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, -4, 30, 2, 3
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, 12, 25, 4, 4
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	waitforvisualfinish
+	end
+WeatherBallIce:
+	loadspritegfx ANIM_TAG_HAIL
+	loadspritegfx ANIM_TAG_ICE_CRYSTALS
+	createsprite gWeatherBallIceDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, -40, 20
+	playsewithpan SE_M_HAIL, SOUND_PAN_TARGET
+	delay 10
+	createsprite gWeatherBallIceDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, 40, 0
+	playsewithpan SE_M_HAIL, SOUND_PAN_TARGET
+	delay 10
+	createsprite gWeatherBallIceDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, 0, 0
+	playsewithpan SE_M_HAIL, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	call IceCrystalEffectShort
+	waitforvisualfinish
+	end
 
-gUnknown_8285C76: @ 0x08285C76
-	.incbin "baserom_jp.gba", 0x285c76, 0x31
+Move_COUNT: @ 0x08285C76
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 IceCrystalEffectShort: @ 0x08285CA7
 	.incbin "baserom_jp.gba", 0x285ca7, 0x84

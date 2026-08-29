@@ -1918,7 +1918,12 @@ gWaterPulseBubbleSpriteTemplate: @ 0x8570EDC
 gWaterPulseRingBubbleSpriteTemplate: @ 0x570EF4
 	.hword 0x27AB, 0x27AB
 	.4byte 0x084FD070, 0x08570E7C, 0, 0x08570ED0, 0x081094A5
-	.incbin "baserom_jp.gba", 0x570f0c, 0x40
+
+	.globl gWeatherBallWaterDownSpriteTemplate
+gWeatherBallWaterDownSpriteTemplate: @ 0x8570F0C
+	.incbin "baserom_jp.gba", 0x570F0C, 0x18
+
+	.incbin "baserom_jp.gba", 0x570F24, 0x28
 
 	.globl gFireSpiralInwardSpriteTemplate
 gFireSpiralInwardSpriteTemplate: @ 0x570F4C
@@ -1982,6 +1987,9 @@ gFireBlastCrossSpriteTemplate: @ 0x571150
 gFireSpiralOutwardSpriteTemplate: @ 0x571168
 	.hword 0x272D, 0x272D
 	.4byte 0x084FD020, 0x085710B4, 0, gDummySpriteAffineAnimTable, 0x08109BF5
+
+	.globl gWeatherBallFireDownSpriteTemplate
+gWeatherBallFireDownSpriteTemplate: @ 0x8571180
 	.incbin "baserom_jp.gba", 0x571180, 0x18
 
 
@@ -2288,7 +2296,12 @@ sAffineAnims_HailParticle: @ 0x571900
 gHailParticleSpriteTemplate: @ 0x571910
 	.hword 0x2817, 0x2817
 	.4byte 0x084FD078, 0x082BF304, 0, 0x08571900, 0x0810D3A9
-	.incbin "baserom_jp.gba", 0x571928, 0xa0
+
+	.globl gWeatherBallIceDownSpriteTemplate
+gWeatherBallIceDownSpriteTemplate: @ 0x8571928
+	.incbin "baserom_jp.gba", 0x571928, 0x18
+
+	.incbin "baserom_jp.gba", 0x571940, 0x88
 
 	.globl gIceBallChunkSpriteTemplate
 gIceBallChunkSpriteTemplate: @ 0x5719C8
@@ -2774,7 +2787,12 @@ gRockScatterSpriteTemplate: @ 0x572894
 gTwisterRockSpriteTemplate: @ 0x5728AC
 	.hword 0x274A, 0x274A
 	.4byte 0x084FD020, 0x085727EC, 0, 0x08572874, 0x080FFAB9
-	.incbin "baserom_jp.gba", 0x5728c4, 0x34
+
+	.globl gWeatherBallRockDownSpriteTemplate
+gWeatherBallRockDownSpriteTemplate: @ 0x85728C4
+	.incbin "baserom_jp.gba", 0x5728C4, 0x18
+
+	.incbin "baserom_jp.gba", 0x5728DC, 0x1C
 
 	.globl gConfuseRayBallBounceSpriteTemplate
 gConfuseRayBallBounceSpriteTemplate: @ 0x5728F8
