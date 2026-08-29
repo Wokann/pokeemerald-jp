@@ -357,7 +357,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_BLOCK                        @ MOVE_BLOCK
 	.4byte Move_HOWL                         @ MOVE_HOWL
 	.4byte Move_DRAGON_CLAW                  @ MOVE_DRAGON_CLAW
-	.4byte gUnknown_8283D9A                  @ 338
+	.4byte Move_FRENZY_PLANT                 @ MOVE_FRENZY_PLANT
 	.4byte Move_BULK_UP                      @ MOVE_BULK_UP
 	.4byte Move_BOUNCE                        @ MOVE_BOUNCE
 	.4byte Move_MUD_SHOT                     @ MOVE_MUD_SHOT
@@ -8824,8 +8824,65 @@ Move_SUBSTITUTE: @ 0x08283D8E
 	createvisualtask AnimTask_MonToSubstitute, 2
 	end
 
-gUnknown_8283D9A: @ 0x08283D9A
-	.incbin "baserom_jp.gba", 0x283d9a, 0x1a4
+Move_FRENZY_PLANT: @ 0x08283D9A
+	loadspritegfx ANIM_TAG_ROOTS
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=5, color=RGB_BLACK
+	waitforvisualfinish
+	create_frenzy_plant_root_sprite ANIM_ATTACKER, 2, interpolate_percent=10, offset_x=8, offset_y=2, subpriority=30, animation=0, duration=100
+	playsewithpan SE_M_SCRATCH, SOUND_PAN_ATTACKER
+	delay 5
+	create_frenzy_plant_root_sprite ANIM_ATTACKER, 2, interpolate_percent=20, offset_x=-8, offset_y=-2, subpriority=30, animation=1, duration=95
+	playsewithpan SE_M_SCRATCH, -43
+	delay 5
+	create_frenzy_plant_root_sprite ANIM_ATTACKER, 2, interpolate_percent=30, offset_x=8, offset_y=-4, subpriority=30, animation=0, duration=90
+	playsewithpan SE_M_SCRATCH, -22
+	delay 5
+	create_frenzy_plant_root_sprite ANIM_ATTACKER, 2, interpolate_percent=40, offset_x=-8, offset_y=4, subpriority=30, animation=1, duration=85
+	playsewithpan SE_M_SCRATCH, 0
+	delay 5
+	create_frenzy_plant_root_sprite ANIM_ATTACKER, 2, interpolate_percent=50, offset_x=8, offset_y=0, subpriority=30, animation=0, duration=85
+	playsewithpan SE_M_SCRATCH, +21
+	delay 5
+	create_frenzy_plant_root_sprite ANIM_ATTACKER, 2, interpolate_percent=60, offset_x=-8, offset_y=-2, subpriority=30, animation=1, duration=85
+	playsewithpan SE_M_SCRATCH, +42
+	delay 5
+	create_frenzy_plant_root_sprite ANIM_ATTACKER, 2, interpolate_percent=75, offset_x=8, offset_y=0, subpriority=30, animation=0, duration=85
+	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
+	delay 5
+	create_frenzy_plant_root_sprite ANIM_ATTACKER, 2, interpolate_percent=85, offset_x=16, offset_y=6, subpriority=30, animation=3, duration=80
+	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
+	delay 5
+	create_frenzy_plant_root_sprite ANIM_ATTACKER, 2, interpolate_percent=85, offset_x=-16, offset_y=-6, subpriority=30, animation=2, duration=75
+	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
+	delay 5
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=-10, y=-10, relative_to=ANIM_TARGET, animation=3
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 3, ANIM_TARGET, 8, 0, 20, 1
+	delay 3
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=10, y=8, relative_to=ANIM_TARGET, animation=3
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	delay 3
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=10, y=-3, relative_to=ANIM_TARGET, animation=2
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	delay 3
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=-3, y=1, relative_to=ANIM_TARGET, animation=2
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	delay 2
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=-10, y=1, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	delay 2
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=10, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	waitforvisualfinish
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_BG, delay=2, initial_blend_y=5, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_8283F3E: @ 0x08283F3E
 	.incbin "baserom_jp.gba", 0x283f3e, 0x50

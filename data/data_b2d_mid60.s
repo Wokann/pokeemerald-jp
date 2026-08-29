@@ -836,6 +836,7 @@ gIngrainRootSpriteTemplate: @ 0x856E130
 	.4byte 0x084FD020, 0x0856E120
 	.4byte 0x00000000, gDummySpriteAffineAnimTable, 0x080FFFB9
 
+	.globl gFrenzyPlantRootSpriteTemplate
 gFrenzyPlantRootSpriteTemplate: @ 0x856E148
 	.hword 0x27EF, 0x27EF
 	.4byte 0x084FD020, 0x0856E120
