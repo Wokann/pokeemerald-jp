@@ -143,7 +143,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8281B52                  @ 121
 	.4byte gUnknown_8281C2F                  @ 122
 	.4byte Move_SMOG                         @ MOVE_SMOG
-	.4byte gUnknown_827FAF1                  @ 124
+	.4byte Move_SLUDGE                       @ MOVE_SLUDGE
 	.4byte gUnknown_827FDA7                  @ 125
 	.4byte Move_FIRE_BLAST                   @ MOVE_FIRE_BLAST
 	.4byte Move_WATERFALL                    @ MOVE_WATERFALL
@@ -5965,8 +5965,16 @@ ToxicBubbles:
 	delay 15
 	return
 
-gUnknown_827FAF1: @ 0x0827FAF1
-	.incbin "baserom_jp.gba", 0x27faf1, 0x42
+Move_SLUDGE:: @ 0x0827FAF1
+	loadspritegfx ANIM_TAG_POISON_BUBBLE
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
+	createsprite gSludgeProjectileSpriteTemplate, ANIM_TARGET, 2, 20, 0, 40, 0
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 3, 0, 5, 1
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=1, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB(30, 0, 31)
+	call PoisonBubblesEffect
+	waitforvisualfinish
+	end
 
 gUnknown_827FB33: @ 0x0827FB33
 	.incbin "baserom_jp.gba", 0x27fb33, 0x126
