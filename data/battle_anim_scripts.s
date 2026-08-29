@@ -308,7 +308,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_IMPRISON                     @ MOVE_IMPRISON
 	.4byte Move_REFRESH                      @ MOVE_REFRESH
 	.4byte Move_GRUDGE                       @ MOVE_GRUDGE
-	.4byte gUnknown_8284AAA                  @ 289
+	.4byte Move_SNATCH                       @ MOVE_SNATCH
 	.4byte gUnknown_8285557                  @ 290
 	.4byte gUnknown_8284AC4                  @ 291
 	.4byte Move_ARM_THRUST                   @ MOVE_ARM_THRUST
@@ -9259,8 +9259,10 @@ SilverWindOnPlayer:
 	createvisualtask AnimTask_StartSlidingBg, 5, -1536, 0, 0, -1
 	goto SilverWindContinue
 
-gUnknown_8284AAA: @ 0x08284AAA
-	.incbin "baserom_jp.gba", 0x284aaa, 0x1a
+Move_SNATCH: @ 0x08284AAA
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_WindUpLunge, 5, ANIM_ATTACKER, -12, 4, 10, 10, 12, 6
+	end
 
 gUnknown_8284AC4: @ 0x08284AC4
 	.incbin "baserom_jp.gba", 0x284ac4, 0xba
