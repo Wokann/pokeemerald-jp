@@ -1455,6 +1455,8 @@ gScreechRingSpriteTemplate: @ 0x856F024
 gMetalSoundSpriteTemplate: @ 0x856F03C
 	.incbin "baserom_jp.gba", 0x56f03c, 0x18
 
+	.globl gWaterPulseRingSpriteTemplate
+gWaterPulseRingSpriteTemplate: @ 0x856F054
 	.incbin "baserom_jp.gba", 0x56f054, 0x18
 
 	.globl gEggThrowSpriteTemplate
@@ -1904,7 +1906,11 @@ gSmallDriftingBubblesSpriteTemplate: @ 0x570E34
 gSmallWaterOrbSpriteTemplate: @ 0x8570E4C
 	.hword 0x281C, 0x281C
 	.4byte 0x084FD010, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08108D6D
-	.incbin "baserom_jp.gba", 0x570e64, 0x90
+	.incbin "baserom_jp.gba", 0x570e64, 0x78
+
+	.globl gWaterPulseBubbleSpriteTemplate
+gWaterPulseBubbleSpriteTemplate: @ 0x8570EDC
+	.incbin "baserom_jp.gba", 0x570edc, 0x18
 
 	.globl gWaterPulseRingBubbleSpriteTemplate
 	.globl gWaterPulseRingBubbleSpriteTemplate

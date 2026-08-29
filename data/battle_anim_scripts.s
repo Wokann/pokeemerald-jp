@@ -371,7 +371,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_DRAGON_DANCE                 @ MOVE_DRAGON_DANCE
 	.4byte Move_ROCK_BLAST                   @ MOVE_ROCK_BLAST
 	.4byte Move_SHOCK_WAVE                   @ MOVE_SHOCK_WAVE
-	.4byte gUnknown_8285201                  @ 352
+	.4byte Move_WATER_PULSE                  @ MOVE_WATER_PULSE
 	.4byte gUnknown_82853FA                  @ 353
 	.4byte gUnknown_82852F6                  @ 354
 	.4byte gUnknown_8285C76                  @ 355
@@ -9540,8 +9540,36 @@ Move_MAGIC_COAT: @ 0x082851E4
 	blendoff
 	end
 
-gUnknown_8285201: @ 0x08285201
-	.incbin "baserom_jp.gba", 0x285201, 0xf5
+Move_WATER_PULSE: @ 0x08285201
+	loadspritegfx ANIM_TAG_SMALL_BUBBLES
+	loadspritegfx ANIM_TAG_BLUE_RING_2
+	monbg ANIM_TARGET
+	splitbgprio ANIM_TARGET
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
+	simple_palette_blend selector=F_PAL_BG, delay=0, initial_blend_y=0, target_blend_y=7, color=RGB(0, 25, 28)
+	delay 10
+	createsprite gWaterPulseBubbleSpriteTemplate, ANIM_ATTACKER, 66, 100, 100, 8, 1, 20, 40, 0
+	createsprite gWaterPulseBubbleSpriteTemplate, ANIM_ATTACKER, 66, 20, 100, 16, 2, 10, 35, 1
+	createsprite gWaterPulseBubbleSpriteTemplate, ANIM_ATTACKER, 66, 200, 80, 8, 1, 40, 20, 0
+	createsprite gWaterPulseBubbleSpriteTemplate, ANIM_ATTACKER, 66, 80, 60, 10, 3, 20, 50, 0
+	createsprite gWaterPulseBubbleSpriteTemplate, ANIM_ATTACKER, 66, 140, 100, 16, 1, 20, 30, 1
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	waitforvisualfinish
+	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_ATTACKER
+	createsprite gWaterPulseRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 40, 15
+	delay 5
+	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_ATTACKER
+	createsprite gWaterPulseRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 40, 15
+	delay 5
+	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_ATTACKER
+	createsprite gWaterPulseRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 40, 15
+	delay 13
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 8, 18, 1
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=7, target_blend_y=0, color=RGB(0, 25, 28)
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
 
 gUnknown_82852F6: @ 0x082852F6
 	.incbin "baserom_jp.gba", 0x2852f6, 0x74
