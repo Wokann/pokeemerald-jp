@@ -275,7 +275,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_UPROAR                       @ MOVE_UPROAR
 	.4byte Move_STOCKPILE                    @ MOVE_STOCKPILE
 	.4byte Move_SPIT_UP                      @ MOVE_SPIT_UP
-	.4byte gUnknown_82830B5                  @ 256
+	.4byte Move_SWALLOW                      @ MOVE_SWALLOW
 	.4byte Move_HEAT_WAVE                    @ MOVE_HEAT_WAVE
 	.4byte Move_HAIL                         @ MOVE_HAIL
 	.4byte Move_TORMENT                      @ MOVE_TORMENT
@@ -8266,8 +8266,44 @@ SpitUpStrongest:
 	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 240
 	goto SpitUpContinue
 
-gUnknown_82830B5: @ 0x082830B5
-	.incbin "baserom_jp.gba", 0x2830b5, 0xac
+Move_SWALLOW: @ 0x082830B5
+	loadspritegfx ANIM_TAG_BLUE_ORB
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_SwallowDeformMon, 5
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 1, 0, 8, 2
+	delay 38
+	playsewithpan SE_M_SPIT_UP, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 2, 0, 12, 1
+	call SwallowEffect
+	jumpifmoveturn 2, SwallowGood
+	jumpifmoveturn 3, SwallowBest
+SwallowContinue:
+	waitforvisualfinish
+	call HealingEffect
+	end
+
+SwallowEffect:
+	createsprite gSwallowBlueOrbSpriteTemplate, ANIM_ATTACKER, 2, 0, -8
+	delay 1
+	createsprite gSwallowBlueOrbSpriteTemplate, ANIM_ATTACKER, 2, -24, -8
+	delay 1
+	createsprite gSwallowBlueOrbSpriteTemplate, ANIM_ATTACKER, 2, 16, -8
+	delay 1
+	createsprite gSwallowBlueOrbSpriteTemplate, ANIM_ATTACKER, 2, -16, -8
+	delay 1
+	createsprite gSwallowBlueOrbSpriteTemplate, ANIM_ATTACKER, 2, 24, -8
+	delay 1
+	return
+
+SwallowGood:
+	call SwallowEffect
+	goto SwallowContinue
+
+SwallowBest:
+	call SwallowEffect
+	call SwallowEffect
+	goto SwallowContinue
 
 gUnknown_8283161: @ 0x08283161
 	.incbin "baserom_jp.gba", 0x283161, 0x18
