@@ -129,7 +129,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MINIMIZE                     @ MOVE_MINIMIZE
 	.4byte Move_SMOKESCREEN                  @ MOVE_SMOKESCREEN
 	.4byte Move_CONFUSE_RAY                  @ MOVE_CONFUSE_RAY
-	.4byte gUnknown_827ED83                  @ 110
+	.4byte Move_WITHDRAW                     @ MOVE_WITHDRAW
 	.4byte Move_DEFENSE_CURL                  @ MOVE_DEFENSE_CURL
 	.4byte Move_BARRIER                      @ MOVE_BARRIER
 	.4byte Move_LIGHT_SCREEN                 @ MOVE_LIGHT_SCREEN
@@ -5408,8 +5408,11 @@ IceBeamCreateCrystals:
 	delay 1
 	return
 
-gUnknown_827ED83: @ 0x0827ED83
-	.incbin "baserom_jp.gba", 0x27ed83, 0xd
+Move_WITHDRAW: @ 0x0827ED83
+	playsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_Withdraw, 5
+	waitforvisualfinish
+	end
 
 gUnknown_827ED90: @ 0x0827ED90
 	.incbin "baserom_jp.gba", 0x27ed90, 0xd4
