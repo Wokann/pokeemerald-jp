@@ -46,7 +46,7 @@ __attribute__((naked)) u32 FieldEffectStart(u8 id)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B52B0: .4byte gUnknown_8289F5C\n\t"
+        "_080B52B0: .4byte gFieldEffectScriptPointers\n\t"
         "_080B52B4: .4byte gFieldEffectScriptFuncs\n\t"
 
         ".syntax divided\n\t"

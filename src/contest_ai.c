@@ -193,7 +193,7 @@ __attribute__((naked)) void ContestAI_DoAIProcessing(void)
         "_08156344: .4byte gContestResources\n\t"
         "_08156348: .4byte gUnknown_203A804\n\t"
         "_0815634C: .4byte gUnknown_2039ABE\n\t"
-        "_08156350: .4byte gUnknown_828C8D8\n\t"
+        "_08156350: .4byte gContestAI_ScriptsTable\n\t"
         "_08156354:\n\t"
         "	strh r1, [r2, #2]\n\t"
         "_08156356:\n\t"

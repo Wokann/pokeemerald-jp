@@ -918,7 +918,7 @@ __attribute__((naked)) void BattleAI_DoAIProcessing(void)
         "	.align 2, 0\n\t"
         "_08130FF4: .4byte gBattleResources\n\t"
         "_08130FF8: .4byte gUnknown_203A804\n\t"
-        "_08130FFC: .4byte gUnknown_828A480\n\t"
+        "_08130FFC: .4byte gBattleAI_ScriptsTable\n\t"
         "_08131000: .4byte gBattleMons\n\t"
         "_08131004: .4byte gUnknown_203A808\n\t"
         "_08131008:\n\t"
