@@ -566,6 +566,10 @@
 	createvisualtask AnimTask_CreateSurfWave, \priority, \palette
 	.endm
 
+	.macro shake_battle_platforms priority=2, x_offset:req, y_offset:req, shakes:req, delay:req
+	createvisualtask AnimTask_ShakeBattlePlatforms, \priority, \x_offset, \y_offset, \shakes, \delay
+	.endm
+
 	.macro metallic_shine priority=5, permanent:req, color
 	.ifb \color
 	createvisualtask AnimTask_MetallicShine, \priority, \permanent, FALSE, RGB_BLACK

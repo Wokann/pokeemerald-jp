@@ -323,7 +323,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828582B                  @ 301
 	.4byte Move_NEEDLE_ARM                   @ MOVE_NEEDLE_ARM
 	.4byte Move_SLACK_OFF                    @ MOVE_SLACK_OFF
-	.4byte gUnknown_828365D                  @ 304
+	.4byte Move_HYPER_VOICE                  @ MOVE_HYPER_VOICE
 	.4byte gUnknown_8283D4F                  @ 305
 	.4byte Move_CRUSH_CLAW                   @ MOVE_CRUSH_CLAW
 	.4byte gUnknown_8284569                  @ 307
@@ -8533,8 +8533,26 @@ Move_BLAZE_KICK: @ 0x082835D5
 	blendoff
 	end
 
-gUnknown_828365D: @ 0x0828365D
-	.incbin "baserom_jp.gba", 0x28365d, 0x94
+Move_HYPER_VOICE: @ 0x0828365D
+	loadspritegfx ANIM_TAG_THIN_RING
+	createvisualtask SoundTask_PlayCryWithEcho, 5, FALSE
+	call HyperVoiceEffect
+	waitforvisualfinish
+	delay 8
+	createvisualtask SoundTask_PlayCryWithEcho, 5, TRUE
+	call HyperVoiceEffect
+	waitforvisualfinish
+	end
+
+HyperVoiceEffect:
+	simple_palette_blend selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, initial_blend_y=8, target_blend_y=0, color=RGB_YELLOW
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -5, -5, 5, ANIM_ATTACKER, 0
+	createsprite gHyperVoiceRingSpriteTemplate, ANIM_ATTACKER, 0, 45, 0, 0, 0, 0, 0, 1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 1, 0, 6, 1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_DEF_PARTNER, 1, 0, 6, 1
+	shake_battle_platforms x_offset=1, y_offset=0, shakes=6, delay=1
+	createvisualtask SoundTask_WaitForCry, 5
+	return
 
 gUnknown_82836F1: @ 0x082836F1
 	.incbin "baserom_jp.gba", 0x2836f1, 0xd8
