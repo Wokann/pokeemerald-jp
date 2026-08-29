@@ -73,7 +73,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ACID                         @ MOVE_ACID
 	.4byte Move_EMBER                        @ MOVE_EMBER
 	.4byte Move_FLAMETHROWER                 @ MOVE_FLAMETHROWER
-	.4byte gUnknown_8281170                  @ 054
+	.4byte Move_MIST                         @ MOVE_MIST
 	.4byte Move_WATER_GUN                    @ MOVE_WATER_GUN
 	.4byte Move_HYDRO_PUMP                   @ MOVE_HYDRO_PUMP
 	.4byte Move_SURF                         @ MOVE_SURF
@@ -6940,8 +6940,29 @@ Move_OCTAZOOKA: @ 0x0828110A
 	waitforvisualfinish
 	end
 
-gUnknown_8281170: @ 0x08281170
-	.incbin "baserom_jp.gba", 0x281170, 0x61
+Move_MIST: @ 0x08281170
+	loadspritegfx ANIM_TAG_MIST_CLOUD
+	monbg ANIM_ATK_PARTNER
+	setalpha 12, 8
+	loopsewithpan SE_M_MIST, SOUND_PAN_ATTACKER, 20, 15
+	call MistCloud
+	call MistCloud
+	call MistCloud
+	call MistCloud
+	call MistCloud
+	call MistCloud
+	call MistCloud
+	delay 32
+	blend_color_cycle priority=2, selector=F_PAL_ATK_SIDE, delay=8, num_blends=2, initial_blend_y=0, target_blend_y=14, color=RGB_WHITE
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	end
+
+MistCloud:
+	createsprite gMistCloudSpriteTemplate, ANIM_ATTACKER, 2, 0, -24, 48, 240, 0, 1
+	delay 7
+	return
 
 gUnknown_82811D1: @ 0x082811D1
 	.incbin "baserom_jp.gba", 0x2811d1, 0x33
