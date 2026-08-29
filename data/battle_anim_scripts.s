@@ -36,7 +36,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SWORDS_DANCE                  @ MOVE_SWORDS_DANCE
 	.4byte Move_CUT                           @ MOVE_CUT
 	.4byte Move_GUST                         @ MOVE_GUST
-	.4byte gUnknown_827FFE9                  @ 017
+	.4byte Move_WING_ATTACK                  @ MOVE_WING_ATTACK
 	.4byte Move_WHIRLWIND                    @ MOVE_WHIRLWIND
 	.4byte gUnknown_828056D                  @ 019
 	.4byte gUnknown_828164F                  @ 020
@@ -6185,8 +6185,29 @@ Move_GUST: @ 0x0827FF98
 	blendoff
 	end
 
-gUnknown_827FFE9: @ 0x0827FFE9
-	.incbin "baserom_jp.gba", 0x27ffe9, 0x9d
+Move_WING_ATTACK: @ 0x0827FFE9
+	loadspritegfx ANIM_TAG_GUST
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	loopsewithpan SE_M_WING_ATTACK, SOUND_PAN_ATTACKER, 20, 2
+	createvisualtask AnimTask_TranslateMonElliptical, 2, 0, 12, 4, 1, 4
+	createvisualtask AnimTask_AnimateGustTornadoPalette, 5, 1, 70
+	createsprite gGustToTargetSpriteTemplate, ANIM_ATTACKER, 2, -25, 0, 0, 0, 20
+	createsprite gGustToTargetSpriteTemplate, ANIM_ATTACKER, 2, 25, 0, 0, 0, 20
+	delay 24
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 24, 0, 0, 9
+	delay 17
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=16, y=0, relative_to=ANIM_TARGET, animation=1
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=-16, y=0, relative_to=ANIM_TARGET, animation=1
+	loopsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET, 5, 2
+	waitforvisualfinish
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 11
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_8280086: @ 0x08280086
 	.incbin "baserom_jp.gba", 0x280086, 0x27
