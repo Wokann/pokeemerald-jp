@@ -100,7 +100,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_STUN_SPORE                     @ MOVE_STUN_SPORE
 	.4byte Move_SLEEP_POWDER                   @ MOVE_SLEEP_POWDER
 	.4byte Move_PETAL_DANCE                  @ MOVE_PETAL_DANCE
-	.4byte gUnknown_8281D95                  @ 081
+	.4byte Move_STRING_SHOT                  @ MOVE_STRING_SHOT
 	.4byte Move_DRAGON_RAGE                  @ MOVE_DRAGON_RAGE
 	.4byte Move_FIRE_SPIN                    @ MOVE_FIRE_SPIN
 	.4byte Move_THUNDER_SHOCK                @ MOVE_THUNDER_SHOCK
@@ -7449,8 +7449,50 @@ BideUnleash:
 	blendoff
 	end
 
-gUnknown_8281D95: @ 0x08281D95
-	.incbin "baserom_jp.gba", 0x281d95, 0xd2
+Move_STRING_SHOT: @ 0x08281D95
+	loadspritegfx ANIM_TAG_STRING
+	loadspritegfx ANIM_TAG_WEB_THREAD
+	monbg ANIM_DEF_PARTNER
+	delay 0
+	simple_palette_blend unused_subpriority_offset=5, selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=9, color=RGB_BLACK
+	waitforvisualfinish
+	loopsewithpan SE_M_STRING_SHOT, SOUND_PAN_ATTACKER, 9, 6
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	waitforvisualfinish
+	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
+	create_string_wrap_sprite ANIM_TARGET, 2, x=0, y=10
+	delay 4
+	create_string_wrap_sprite ANIM_TARGET, 2, x=0, y=-2
+	delay 4
+	create_string_wrap_sprite ANIM_TARGET, 2, x=0, y=22
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	delay 1
+	waitforvisualfinish
+	simple_palette_blend unused_subpriority_offset=5, selector=F_PAL_BG, delay=2, initial_blend_y=9, target_blend_y=0, color=RGB_BLACK
+	end
+
+StringShotThread:
+	create_web_thread_sprite ANIM_TARGET, 2, x=20, y=0, unk2=512, amplitude=20, targets_both=TRUE
+	delay 1
+	return
 
 gUnknown_8281E67: @ 0x08281E67
 	.incbin "baserom_jp.gba", 0x281e67, 0xa1
