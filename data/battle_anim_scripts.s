@@ -273,7 +273,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_BEAT_UP                      @ MOVE_BEAT_UP
 	.4byte Move_FAKE_OUT                     @ MOVE_FAKE_OUT
 	.4byte Move_UPROAR                       @ MOVE_UPROAR
-	.4byte gUnknown_8282EBB                  @ 254
+	.4byte Move_STOCKPILE                    @ MOVE_STOCKPILE
 	.4byte gUnknown_8282F72                  @ 255
 	.4byte gUnknown_82830B5                  @ 256
 	.4byte Move_HEAT_WAVE                    @ MOVE_HEAT_WAVE
@@ -8187,8 +8187,35 @@ Move_WISH: @ 0x08282E73
 	waitforvisualfinish
 	end
 
-gUnknown_8282EBB: @ 0x08282EBB
-	.incbin "baserom_jp.gba", 0x282ebb, 0xb7
+Move_STOCKPILE: @ 0x08282EBB
+	loadspritegfx ANIM_TAG_GRAY_ORB
+	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=8, num_blends=1, initial_blend_y=0, target_blend_y=12, color=RGB_WHITE
+	createvisualtask AnimTask_StockpileDeformMon, 5
+	call StockpileAbsorb
+	call StockpileAbsorb
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_ATTACKER, delay=0, initial_blend_y=12, target_blend_y=0, color=RGB_WHITE
+	end
+
+StockpileAbsorb:
+	create_stockpile_absorption_orb_sprite ANIM_ATTACKER, 2, x=55, y=55, duration=13
+	delay 1
+	create_stockpile_absorption_orb_sprite ANIM_ATTACKER, 2, x=-55, y=-55, duration=13
+	delay 1
+	create_stockpile_absorption_orb_sprite ANIM_ATTACKER, 2, x=0, y=55, duration=13
+	delay 1
+	create_stockpile_absorption_orb_sprite ANIM_ATTACKER, 2, x=0, y=-55, duration=13
+	delay 1
+	create_stockpile_absorption_orb_sprite ANIM_ATTACKER, 2, x=55, y=-34, duration=13
+	delay 1
+	create_stockpile_absorption_orb_sprite ANIM_ATTACKER, 2, x=55, y=34, duration=13
+	delay 1
+	create_stockpile_absorption_orb_sprite ANIM_ATTACKER, 2, x=-55, y=-34, duration=13
+	delay 1
+	create_stockpile_absorption_orb_sprite ANIM_ATTACKER, 2, x=-55, y=34, duration=13
+	delay 1
+	return
 
 gUnknown_8282F72: @ 0x08282F72
 	.incbin "baserom_jp.gba", 0x282f72, 0x143

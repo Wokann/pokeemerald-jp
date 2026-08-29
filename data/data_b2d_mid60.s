@@ -597,6 +597,7 @@ gStockpileAbsorptionOrbAffineCmds: @ 0x856DE0C
 gStockpileAbsorptionOrbAffineAnimTable: @ 0x856DE24
 	.4byte 0x0856DE0C
 
+	.globl gStockpileAbsorptionOrbSpriteTemplate
 gStockpileAbsorptionOrbSpriteTemplate: @ 0x856DE28
 	.hword 0x27FB, 0x27FB
 	.4byte 0x084FD0D0, gDummySpriteAnimTable

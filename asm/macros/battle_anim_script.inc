@@ -372,6 +372,10 @@
 	createsprite gPowerAbsorptionOrbSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration
 	.endm
 
+	.macro create_stockpile_absorption_orb_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req
+	createsprite gStockpileAbsorptionOrbSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration
+	.endm
+
 	.macro create_solar_beam_big_orb_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req, animation:req
 	createsprite gSolarBeamBigOrbSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration, \animation
 	.endm
