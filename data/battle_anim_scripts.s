@@ -10205,16 +10205,39 @@ ConfusionEffect: @ 0x082861FC
 	return
 
 SetPsychicBackground: @ 0x08286258
-	.incbin "baserom_jp.gba", 0x286258, 0xc
+	fadetobg BG_PSYCHIC
+	waitbgfadeout
+	createvisualtask AnimTask_SetPsychicBackground, 5
+	waitbgfadein
+	return
 
 UnsetPsychicBackground: @ 0x08286264
-	.incbin "baserom_jp.gba", 0x286264, 0x8
+	restorebg
+	waitbgfadeout
+	setarg 7, 0xFFFF
+	waitbgfadein
+	return
 
 SetSkyBg: @ 0x0828626C
-	.incbin "baserom_jp.gba", 0x28626c, 0x30
+	jumpifcontest SetSkyBgContest
+	fadetobg BG_SKY
+	waitbgfadeout
+	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 768, 1, -1
+SetSkyBgContinue:
+	waitbgfadein
+	return
+SetSkyBgContest:
+	fadetobg BG_SKY_CONTESTS
+	waitbgfadeout
+	createvisualtask AnimTask_StartSlidingBg, 5, 2304, 768, 0, -1
+	goto SetSkyBgContinue
 
 UnsetSkyBg: @ 0x0828629C
-	.incbin "baserom_jp.gba", 0x28629c, 0x8
+	restorebg
+	waitbgfadeout
+	setarg 7, 0xFFFF
+	waitbgfadein
+	return
 
 SetSolarBeamBg: @ 0x082862A4
 	createvisualtask AnimTask_IsContest, 2
