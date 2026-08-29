@@ -29,7 +29,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8281204                  @ 007
 	.4byte Move_ICE_PUNCH                    @ MOVE_ICE_PUNCH
 	.4byte Move_THUNDER_PUNCH                @ MOVE_THUNDER_PUNCH
-	.4byte gUnknown_827E2CB                  @ 010
+	.4byte Move_SCRATCH                      @ MOVE_SCRATCH
 	.4byte Move_VICE_GRIP                    @ MOVE_VICE_GRIP
 	.4byte Move_GUILLOTINE                   @ MOVE_GUILLOTINE
 	.4byte gUnknown_8281F08                  @ 013
@@ -4926,8 +4926,18 @@ Move_SACRED_FIRE: @ 0x0827E0E4
 	waitforvisualfinish
 	end
 
-gUnknown_827E2CB: @ 0x0827E2CB
-	.incbin "baserom_jp.gba", 0x27e2cb, 0x32
+Move_SCRATCH: @ 0x0827E2CB
+	loadspritegfx ANIM_TAG_SCRATCH
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
+	createsprite gScratchSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 1, 0
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	waitforvisualfinish
+	end
 
 gUnknown_827E2FD: @ 0x0827E2FD
 	.incbin "baserom_jp.gba", 0x27e2fd, 0x114
