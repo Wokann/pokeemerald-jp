@@ -183,7 +183,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_TRI_ATTACK                   @ MOVE_TRI_ATTACK
 	.4byte Move_SUPER_FANG                   @ MOVE_SUPER_FANG
 	.4byte Move_SLASH                        @ MOVE_SLASH
-	.4byte gUnknown_8283D8E                  @ 164
+	.4byte Move_SUBSTITUTE                   @ MOVE_SUBSTITUTE
 	.4byte Move_STRUGGLE                     @ MOVE_STRUGGLE
 	.4byte Move_SKETCH                       @ MOVE_SKETCH
 	.4byte Move_TRIPLE_KICK                  @ MOVE_TRIPLE_KICK
@@ -8819,8 +8819,10 @@ Move_POISON_FANG: @ 0x08283D4F
 	waitforvisualfinish
 	end
 
-gUnknown_8283D8E: @ 0x08283D8E
-	.incbin "baserom_jp.gba", 0x283d8e, 0xc
+Move_SUBSTITUTE: @ 0x08283D8E
+	playsewithpan SE_M_ATTRACT, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_MonToSubstitute, 2
+	end
 
 gUnknown_8283D9A: @ 0x08283D9A
 	.incbin "baserom_jp.gba", 0x283d9a, 0x1a4
