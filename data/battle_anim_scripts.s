@@ -350,7 +350,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SAND_TOMB                    @ MOVE_SAND_TOMB
 	.4byte Move_SHEER_COLD                   @ MOVE_SHEER_COLD
 	.4byte Move_MUDDY_WATER                  @ MOVE_MUDDY_WATER
-	.4byte gUnknown_8283895                  @ 331
+	.4byte Move_BULLET_SEED                  @ MOVE_BULLET_SEED
 	.4byte Move_AERIAL_ACE                   @ MOVE_AERIAL_ACE
 	.4byte Move_ICICLE_SPEAR                 @ MOVE_ICICLE_SPEAR
 	.4byte Move_IRON_DEFENSE                 @ MOVE_IRON_DEFENSE
@@ -8633,8 +8633,30 @@ Move_MUDDY_WATER: @ 0x08283883
 	waitforvisualfinish
 	end
 
-gUnknown_8283895: @ 0x08283895
-	.incbin "baserom_jp.gba", 0x283895, 0x96
+Move_BULLET_SEED: @ 0x08283895
+	loadspritegfx ANIM_TAG_SEED
+	createsprite gBulletSeedSpriteTemplate, ANIM_TARGET, 2, 20, 0
+	delay 5
+	createsprite gBulletSeedSpriteTemplate, ANIM_TARGET, 2, 20, 0
+	delay 5
+	createsprite gBulletSeedSpriteTemplate, ANIM_TARGET, 2, 20, 0
+	delay 5
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 30, 1
+	createsprite gBulletSeedSpriteTemplate, ANIM_TARGET, 2, 20, 0
+	delay 5
+	createsprite gBulletSeedSpriteTemplate, ANIM_TARGET, 2, 20, 0
+	delay 5
+	createsprite gBulletSeedSpriteTemplate, ANIM_TARGET, 2, 20, 0
+	delay 5
+	createsprite gBulletSeedSpriteTemplate, ANIM_TARGET, 2, 20, 0
+	delay 5
+	createsprite gBulletSeedSpriteTemplate, ANIM_TARGET, 2, 20, 0
+	delay 5
+	createsprite gBulletSeedSpriteTemplate, ANIM_TARGET, 2, 20, 0
+	delay 5
+	createsprite gBulletSeedSpriteTemplate, ANIM_TARGET, 2, 20, 0
+	waitforvisualfinish
+	end
 
 gUnknown_828392B: @ 0x0828392B
 	.incbin "baserom_jp.gba", 0x28392b, 0x269

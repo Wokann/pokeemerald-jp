@@ -1463,7 +1463,13 @@ gCoinThrowSpriteTemplate: @ 0x856F0BC
 gFallingCoinSpriteTemplate: @ 0x856F0D4
 	.incbin "baserom_jp.gba", 0x56f0d4, 0x18
 
-	.incbin "baserom_jp.gba", 0x56f0ec, 0x48
+	.incbin "baserom_jp.gba", 0x56f0ec, 0x14
+
+	.globl gBulletSeedSpriteTemplate
+gBulletSeedSpriteTemplate: @ 0x856F100
+	.incbin "baserom_jp.gba", 0x56f100, 0x18
+
+	.incbin "baserom_jp.gba", 0x56f118, 0x1c
 
 	.globl gRazorWindTornadoSpriteTemplate
 gRazorWindTornadoSpriteTemplate: @ 0x856F134
