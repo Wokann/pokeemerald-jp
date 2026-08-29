@@ -35,7 +35,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8281F08                  @ 013
 	.4byte Move_SWORDS_DANCE                  @ MOVE_SWORDS_DANCE
 	.4byte Move_CUT                           @ MOVE_CUT
-	.4byte gUnknown_827FF98                  @ 016
+	.4byte Move_GUST                         @ MOVE_GUST
 	.4byte gUnknown_827FFE9                  @ 017
 	.4byte Move_WHIRLWIND                    @ MOVE_WHIRLWIND
 	.4byte gUnknown_828056D                  @ 019
@@ -6167,8 +6167,23 @@ MegahornInContest:
 	createvisualtask AnimTask_StartSlidingBg, 5, 2304, 768, 0, -1
 	goto MegahornContinue
 
-gUnknown_827FF98: @ 0x0827FF98
-	.incbin "baserom_jp.gba", 0x27ff98, 0x51
+Move_GUST: @ 0x0827FF98
+	loadspritegfx ANIM_TAG_GUST
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_GUST, SOUND_PAN_TARGET
+	createsprite gEllipticalGustSpriteTemplate, ANIM_ATTACKER, 2, 0, -16
+	createvisualtask AnimTask_AnimateGustTornadoPalette, 5, 1, 70
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 1, 0, 7, 1
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	playsewithpan SE_M_GUST2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_827FFE9: @ 0x0827FFE9
 	.incbin "baserom_jp.gba", 0x27ffe9, 0x9d
