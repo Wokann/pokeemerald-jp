@@ -279,7 +279,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_HEAT_WAVE                    @ MOVE_HEAT_WAVE
 	.4byte Move_HAIL                         @ MOVE_HAIL
 	.4byte Move_TORMENT                      @ MOVE_TORMENT
-	.4byte gUnknown_8283439                  @ 260
+	.4byte Move_FLATTER                      @ MOVE_FLATTER
 	.4byte Move_WILL_O_WISP                  @ MOVE_WILL_O_WISP
 	.4byte Move_MEMENTO                      @ MOVE_MEMENTO
 	.4byte Move_FACADE                       @ MOVE_FACADE
@@ -8437,8 +8437,51 @@ HyperBeamOrbs:
 	delay 1
 	return
 
-gUnknown_8283439: @ 0x08283439
-	.incbin "baserom_jp.gba", 0x283439, 0xfc
+Move_FLATTER: @ 0x08283439
+	loadspritegfx ANIM_TAG_SPOTLIGHT
+	loadspritegfx ANIM_TAG_CONFETTI
+	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_ENCORE2, SOUND_PAN_TARGET
+	createvisualtask AnimTask_CreateSpotlight, 2
+	createvisualtask AnimTask_HardwarePaletteFade, 2, 0xF8, 3, 0, 10, FALSE
+	waitforvisualfinish
+	createsprite gFlatterSpotlightSpriteTemplate, ANIM_TARGET, 2, 0, -8, 80
+	delay 0
+	createsprite gVerticalDipSpriteTemplate, ANIM_ATTACKER, 2, 5, 2, ANIM_TARGET
+	delay 10
+	createsprite gVerticalDipSpriteTemplate, ANIM_ATTACKER, 2, 5, 2, ANIM_TARGET
+	delay 0
+	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_FLATTER, SOUND_PAN_ATTACKER
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	delay 5
+	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_FLATTER, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_HardwarePaletteFade, 2, 0xF8, 3, 10, 0, TRUE
+	waitforvisualfinish
+	createvisualtask AnimTask_RemoveSpotlight, 2
+	end
+
+CreateFlatterConfetti:
+	createsprite gFlatterConfettiSpriteTemplate, ANIM_ATTACKER, 40, ANIM_ATTACKER
+	createsprite gFlatterConfettiSpriteTemplate, ANIM_ATTACKER, 40, ANIM_TARGET
+	return
 
 gUnknown_8283535: @ 0x08283535
 	.incbin "baserom_jp.gba", 0x283535, 0x5d
