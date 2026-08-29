@@ -271,7 +271,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ROCK_SMASH                   @ MOVE_ROCK_SMASH
 	.4byte Move_WHIRLPOOL                    @ MOVE_WHIRLPOOL
 	.4byte Move_BEAT_UP                      @ MOVE_BEAT_UP
-	.4byte gUnknown_82824B5                  @ 252
+	.4byte Move_FAKE_OUT                     @ MOVE_FAKE_OUT
 	.4byte Move_UPROAR                       @ MOVE_UPROAR
 	.4byte gUnknown_8282EBB                  @ 254
 	.4byte gUnknown_8282F72                  @ 255
@@ -7776,8 +7776,16 @@ HealBellRing:
 	playsewithpan SE_M_HEAL_BELL, SOUND_PAN_ATTACKER
 	return
 
-gUnknown_82824B5: @ 0x082824B5
-	.incbin "baserom_jp.gba", 0x2824b5, 0x3b
+Move_FAKE_OUT: @ 0x082824B5
+	playsewithpan SE_M_FLATTER, 0
+	createvisualtask AnimTask_FakeOut, 5
+	waitforvisualfinish
+	playsewithpan SE_M_SKETCH, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 5, 1
+	createvisualtask AnimTask_StretchTargetUp, 3
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=16, target_blend_y=0, color=RGB_WHITE
+	end
 
 gUnknown_82824F0: @ 0x082824F0
 	.incbin "baserom_jp.gba", 0x2824f0, 0x63
