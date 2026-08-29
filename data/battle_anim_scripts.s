@@ -318,7 +318,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MIST_BALL                    @ MOVE_MIST_BALL
 	.4byte Move_FEATHER_DANCE                @ MOVE_FEATHER_DANCE
 	.4byte Move_TEETER_DANCE                 @ MOVE_TEETER_DANCE
-	.4byte gUnknown_82835D5                  @ 299
+	.4byte Move_BLAZE_KICK                   @ MOVE_BLAZE_KICK
 	.4byte Move_MUD_SPORT                    @ MOVE_MUD_SPORT
 	.4byte gUnknown_828582B                  @ 301
 	.4byte Move_NEEDLE_ARM                   @ MOVE_NEEDLE_ARM
@@ -8512,8 +8512,26 @@ Move_REFRESH: @ 0x08283592
 	createsprite gThinRingExpandingSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 0, 0
 	end
 
-gUnknown_82835D5: @ 0x082835D5
-	.incbin "baserom_jp.gba", 0x2835d5, 0x88
+Move_BLAZE_KICK: @ 0x082835D5
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
+	createsprite gSpinningHandOrFootSpriteTemplate, ANIM_TARGET, 3, 0, 0, 1, 30
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 7, RGB_WHITE
+	delay 30
+	playsewithpan SE_M_FIRE_PUNCH, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=0
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 14, 1
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 0, RGB_WHITE
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=8, color2=RGB_BLACK, blend_y2=0
+	call FireSpreadEffect
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_828365D: @ 0x0828365D
 	.incbin "baserom_jp.gba", 0x28365d, 0x94
