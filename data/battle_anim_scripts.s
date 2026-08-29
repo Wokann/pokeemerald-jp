@@ -88,7 +88,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SUBMISSION                   @ MOVE_SUBMISSION
 	.4byte Move_LOW_KICK                     @ MOVE_LOW_KICK
 	.4byte Move_COUNTER                      @ MOVE_COUNTER
-	.4byte gUnknown_8285087                  @ 069
+	.4byte Move_SEISMIC_TOSS                 @ MOVE_SEISMIC_TOSS
 	.4byte Move_STRENGTH                       @ MOVE_STRENGTH
 	.4byte Move_ABSORB                       @ MOVE_ABSORB
 	.4byte Move_MEGA_DRAIN                   @ MOVE_MEGA_DRAIN
@@ -9463,8 +9463,72 @@ Move_ASTONISH: @ 0x0828503F
 	waitforvisualfinish
 	end
 
-gUnknown_8285087: @ 0x08285087
-	.incbin "baserom_jp.gba", 0x285087, 0x15d
+Move_SEISMIC_TOSS: @ 0x08285087
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_ROCKS
+	setarg 7, 0
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	waitforvisualfinish
+	createvisualtask AnimTask_GetSeismicTossDamageLevel, 3
+	delay 1
+	fadetobg BG_IN_AIR
+	waitbgfadeout
+	createvisualtask AnimTask_MoveSeismicTossBg, 3
+	playsewithpan SE_M_SKY_UPPERCUT, 0
+	waitbgfadein
+	waitforvisualfinish
+	createvisualtask AnimTask_SeismicTossBgAccelerateDownAtEnd, 3
+	jumpreteq 0, SeismicTossWeak
+	jumpreteq 1, SeismicTossMedium
+	jumpreteq 2, SeismicTossStrong
+SeismicTossContinue:
+	restorebg
+	waitbgfadeout
+	setarg 7, 0xFFF
+	waitbgfadein
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+SeismicTossWeak:
+	call SeismicTossRockScatter1
+	delay 16
+	call SeismicTossRockScatter2
+	goto SeismicTossContinue
+SeismicTossMedium:
+	call SeismicTossRockScatter1
+	delay 14
+	call SeismicTossRockScatter2
+	delay 14
+	call SeismicTossRockScatter1
+	goto SeismicTossContinue
+SeismicTossStrong:
+	call SeismicTossRockScatter2
+	delay 10
+	call SeismicTossRockScatter1
+	delay 10
+	call SeismicTossRockScatter2
+	delay 10
+	call SeismicTossRockScatter1
+	goto SeismicTossContinue
+SeismicTossRockScatter1:
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=-10, y=-8, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 3, 5, 1
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, -12, 27, 2, 3
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, 8, 28, 3, 4
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, -4, 30, 2, 3
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, 12, 25, 4, 4
+	return
+SeismicTossRockScatter2:
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=10, y=-8, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 3, 5, 1
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, -12, 32, 3, 4
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, 8, 31, 2, 2
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, -4, 28, 2, 3
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, 12, 30, 4, 3
+	return
 
 gUnknown_82851E4: @ 0x082851E4
 	.incbin "baserom_jp.gba", 0x2851e4, 0x1d
