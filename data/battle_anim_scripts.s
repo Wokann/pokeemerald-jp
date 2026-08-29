@@ -261,7 +261,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82855AB                  @ 239
 	.4byte Move_RAIN_DANCE                  @ MOVE_RAIN_DANCE
 	.4byte gUnknown_8280C8E                  @ 241
-	.4byte gUnknown_827EB3F                  @ 242
+	.4byte Move_CRUNCH                       @ MOVE_CRUNCH
 	.4byte Move_MIRROR_COAT                  @ MOVE_MIRROR_COAT
 	.4byte Move_PSYCH_UP                     @ MOVE_PSYCH_UP
 	.4byte Move_EXTREME_SPEED                @ MOVE_EXTREME_SPEED
@@ -5318,8 +5318,33 @@ Move_BITE: @ 0x0827EAE1
 	delay 1
 	end
 
-gUnknown_827EB3F: @ 0x0827EB3F
-	.incbin "baserom_jp.gba", 0x27eb3f, 0xb0
+Move_CRUNCH: @ 0x0827EB3F
+	loadspritegfx ANIM_TAG_SHARP_TEETH
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	fadetobg BG_DARK
+	waitbgfadein
+	setalpha 12, 8
+	playsewithpan SE_M_BITE, SOUND_PAN_TARGET
+	create_sharp_teeth_sprite ANIM_ATTACKER, 2, x=-32, y=-32, animation=1, x_velocity=32/10, y_velocity=32/10, half_duration=10
+	create_sharp_teeth_sprite ANIM_ATTACKER, 2, x=32, y=32, animation=5, x_velocity=-32/10, y_velocity=-32/10, half_duration=10
+	delay 10
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=-8, y=0, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 7, 5, 2
+	waitforvisualfinish
+	playsewithpan SE_M_BITE, SOUND_PAN_TARGET
+	create_sharp_teeth_sprite ANIM_ATTACKER, 2, x=32, y=-32, animation=7, x_velocity=-32/10, y_velocity=32/10, half_duration=10
+	create_sharp_teeth_sprite ANIM_ATTACKER, 2, x=-32, y=32, animation=3, x_velocity=32/10, y_velocity=-32/10, half_duration=10
+	delay 10
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=8, y=0, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 8, 4, 2
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	delay 1
+	restorebg
+	waitbgfadein
+	end
 
 gUnknown_827EBEF: @ 0x0827EBEF
 	.incbin "baserom_jp.gba", 0x27ebef, 0x5d
