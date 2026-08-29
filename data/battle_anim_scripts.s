@@ -245,7 +245,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_DYNAMIC_PUNCH                @ MOVE_DYNAMIC_PUNCH
 	.4byte Move_MEGAHORN                     @ MOVE_MEGAHORN
 	.4byte Move_DRAGON_BREATH                @ MOVE_DRAGON_BREATH
-	.4byte gUnknown_828286F                  @ 226
+	.4byte Move_BATON_PASS                   @ MOVE_BATON_PASS
 	.4byte gUnknown_8282D4E                  @ 227
 	.4byte Move_PURSUIT                       @ MOVE_PURSUIT
 	.4byte Move_RAPID_SPIN                   @ MOVE_RAPID_SPIN
@@ -7942,8 +7942,12 @@ PresentHeal:
 	call HealingEffect2
 	end
 
-gUnknown_828286F: @ 0x0828286F
-	.incbin "baserom_jp.gba", 0x28286f, 0x22
+Move_BATON_PASS: @ 0x0828286F
+	loadspritegfx ANIM_TAG_POKEBALL
+	playsewithpan SE_M_BATON_PASS, SOUND_PAN_ATTACKER
+	blend_color_cycle priority=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=1, num_blends=2, initial_blend_y=0, target_blend_y=11, color=RGB(31, 22, 30)
+	createsprite gBatonPassPokeballSpriteTemplate, ANIM_ATTACKER, 2
+	end
 
 gUnknown_8282891: @ 0x08282891
 	.incbin "baserom_jp.gba", 0x282891, 0x169
