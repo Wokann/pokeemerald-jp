@@ -171,7 +171,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8281799                  @ 149
 	.4byte Move_SPLASH                       @ MOVE_SPLASH
 	.4byte Move_ACID_ARMOR                   @ MOVE_ACID_ARMOR
-	.4byte gUnknown_8280257                  @ 152
+	.4byte Move_CRABHAMMER                   @ MOVE_CRABHAMMER
 	.4byte Move_EXPLOSION                     @ MOVE_EXPLOSION
 	.4byte gUnknown_8282603                  @ 154
 	.4byte Move_BONEMERANG                   @ MOVE_BONEMERANG
@@ -6282,8 +6282,42 @@ Move_WATER_GUN: @ 0x082801CA
 	blendoff
 	end
 
-gUnknown_8280257: @ 0x08280257
-	.incbin "baserom_jp.gba", 0x280257, 0xfa
+Move_CRABHAMMER: @ 0x08280257
+	loadspritegfx ANIM_TAG_ICE_CRYSTALS
+	loadspritegfx ANIM_TAG_WATER_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, ANIM_TARGET, 0
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	delay 1
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=1, color1=RGB(13, 21, 31), blend_y1=10, color2=RGB_BLACK, blend_y2=0
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 1, -24, 0, 0, 4
+	waitforvisualfinish
+	delay 8
+	waitforvisualfinish
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 1, 0, 4
+	waitforvisualfinish
+	loopsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET, 20, 3
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 4, 8, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, 10, 10, 20, ANIM_TARGET
+	delay 4
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, 20, -20, 20, ANIM_TARGET
+	delay 4
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, -15, 15, 20, ANIM_TARGET
+	delay 4
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 20, ANIM_TARGET
+	delay 4
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, -10, -20, 20, ANIM_TARGET
+	delay 4
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, 16, -8, 20, ANIM_TARGET
+	delay 4
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, 5, 8, 20, ANIM_TARGET
+	delay 4
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, -16, 0, 20, ANIM_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_8280351: @ 0x08280351
 	.incbin "baserom_jp.gba", 0x280351, 0x14
