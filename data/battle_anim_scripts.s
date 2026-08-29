@@ -158,7 +158,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_HI_JUMP_KICK                  @ MOVE_HI_JUMP_KICK
 	.4byte Move_GLARE                        @ MOVE_GLARE
 	.4byte Move_DREAM_EATER                  @ MOVE_DREAM_EATER
-	.4byte gUnknown_8281571                  @ 139
+	.4byte Move_POISON_GAS                   @ MOVE_POISON_GAS
 	.4byte Move_BARRAGE                      @ MOVE_BARRAGE
 	.4byte Move_LEECH_LIFE                   @ MOVE_LEECH_LIFE
 	.4byte gUnknown_82825BC                  @ 142
@@ -7096,8 +7096,39 @@ DreamEaterAbsorb:
 	delay 4
 	return
 
-gUnknown_8281571: @ 0x08281571
-	.incbin "baserom_jp.gba", 0x281571, 0xde
+Move_POISON_GAS: @ 0x08281571
+	loadspritegfx ANIM_TAG_PURPLE_GAS_CLOUD
+	loadspritegfx ANIM_TAG_POISON_BUBBLE
+	delay 0
+	monbg ANIM_DEF_PARTNER
+	splitbgprio_all
+	setalpha 12, 8
+	delay 0
+	playsewithpan SE_M_MIST, SOUND_PAN_ATTACKER
+	createsprite gPoisonGasCloudSpriteTemplate, ANIM_TARGET, 0, 64, 0, 0, -32, -6, 4192, 1072, 0
+	delay 4
+	playsewithpan SE_M_MIST, SOUND_PAN_ATTACKER
+	createsprite gPoisonGasCloudSpriteTemplate, ANIM_TARGET, 0, 64, 0, 0, -32, -6, 4192, 1072, 0
+	delay 4
+	playsewithpan SE_M_MIST, SOUND_PAN_ATTACKER
+	createsprite gPoisonGasCloudSpriteTemplate, ANIM_TARGET, 0, 64, 0, 0, -32, -6, 4192, 1072, 0
+	delay 4
+	playsewithpan SE_M_MIST, SOUND_PAN_ATTACKER
+	createsprite gPoisonGasCloudSpriteTemplate, ANIM_TARGET, 0, 64, 0, 0, -32, -6, 4192, 1072, 0
+	delay 4
+	playsewithpan SE_M_MIST, SOUND_PAN_ATTACKER
+	createsprite gPoisonGasCloudSpriteTemplate, ANIM_TARGET, 0, 64, 0, 0, -32, -6, 4192, 1072, 0
+	delay 4
+	playsewithpan SE_M_MIST, SOUND_PAN_ATTACKER
+	createsprite gPoisonGasCloudSpriteTemplate, ANIM_TARGET, 0, 64, 0, 0, -32, -6, 4192, 1072, 0
+	delay 40
+	loopsewithpan SE_M_MIST, SOUND_PAN_TARGET, 28, 6
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=6, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB(26, 0, 26)
+	waitforvisualfinish
+	blendoff
+	clearmonbg ANIM_DEF_PARTNER
+	delay 0
+	end
 
 gUnknown_828164F: @ 0x0828164F
 	.incbin "baserom_jp.gba", 0x28164f, 0x3a
