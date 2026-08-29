@@ -354,7 +354,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_AERIAL_ACE                   @ MOVE_AERIAL_ACE
 	.4byte Move_ICICLE_SPEAR                 @ MOVE_ICICLE_SPEAR
 	.4byte Move_IRON_DEFENSE                 @ MOVE_IRON_DEFENSE
-	.4byte gUnknown_827D674                  @ 335
+	.4byte Move_BLOCK                        @ MOVE_BLOCK
 	.4byte gUnknown_827D683                  @ 336
 	.4byte gUnknown_828392B                  @ 337
 	.4byte gUnknown_8283D9A                  @ 338
@@ -4382,8 +4382,11 @@ Move_IRON_DEFENSE: @ 0x0827D64A
 	waitforvisualfinish
 	end
 
-gUnknown_827D674: @ 0x0827D674
-	.incbin "baserom_jp.gba", 0x27d674, 0xf
+Move_BLOCK: @ 0x0827D674
+	loadspritegfx ANIM_TAG_X_SIGN
+	createsprite gBlockXSpriteTemplate, ANIM_TARGET, 66
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
+	end
 
 gUnknown_827D683: @ 0x0827D683
 	.incbin "baserom_jp.gba", 0x27d683, 0x22
