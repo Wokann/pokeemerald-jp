@@ -267,7 +267,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_EXTREME_SPEED                @ MOVE_EXTREME_SPEED
 	.4byte gUnknown_8280FE2                  @ 246
 	.4byte gUnknown_8281BEC                  @ 247
-	.4byte gUnknown_827DE74                  @ 248
+	.4byte Move_FUTURE_SIGHT                  @ MOVE_FUTURE_SIGHT
 	.4byte gUnknown_8280AF3                  @ 249
 	.4byte gUnknown_828048A                  @ 250
 	.4byte Move_BEAT_UP                      @ MOVE_BEAT_UP
@@ -4758,8 +4758,25 @@ Move_PSYCHIC: @ 0x0827DE11
 	call UnsetPsychicBackground
 	end
 
-gUnknown_827DE74: @ 0x0827DE74
-	.incbin "baserom_jp.gba", 0x27de74, 0x4d
+Move_FUTURE_SIGHT: @ 0x0827DE74
+	goto FutureSight
+FutureSightContinue:
+	waitforvisualfinish
+	delay 1
+	call UnsetPsychicBackground
+	end
+FutureSight:
+	monbg ANIM_ATK_PARTNER
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	call SetPsychicBackground
+	setalpha 8, 8
+	playsewithpan SE_M_SUPERSONIC, SOUND_PAN_ATTACKER
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=0, num_blends=2, initial_blend_y=0, target_blend_y=8, color=RGB_WHITE
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -4, -4, 15, ANIM_ATTACKER, 1
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	goto FutureSightContinue
 
 gUnknown_827DEC1: @ 0x0827DEC1
 	.incbin "baserom_jp.gba", 0x27dec1, 0x15a
