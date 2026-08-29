@@ -369,7 +369,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_CALM_MIND                    @ MOVE_CALM_MIND
 	.4byte Move_LEAF_BLADE                   @ MOVE_LEAF_BLADE
 	.4byte Move_DRAGON_DANCE                 @ MOVE_DRAGON_DANCE
-	.4byte gUnknown_8284B7E                  @ 350
+	.4byte Move_ROCK_BLAST                   @ MOVE_ROCK_BLAST
 	.4byte Move_SHOCK_WAVE                   @ MOVE_SHOCK_WAVE
 	.4byte gUnknown_8285201                  @ 352
 	.4byte gUnknown_82853FA                  @ 353
@@ -9309,8 +9309,23 @@ DiveAttackWaterDroplets:
 	createsprite gSprayWaterDropletSpriteTemplate, ANIM_TARGET, 5, 1, 1
 	return
 
-gUnknown_8284B7E: @ 0x08284B7E
-	.incbin "baserom_jp.gba", 0x284b7e, 0x9d
+Move_ROCK_BLAST: @ 0x08284B7E
+	loadspritegfx ANIM_TAG_ROCKS
+	loadspritegfx ANIM_TAG_IMPACT
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 6
+	delay 3
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
+	createsprite gRockBlastRockSpriteTemplate, ANIM_TARGET, 2, 16, 0, 0, 0, 25, 257
+	waitforvisualfinish
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
+	createsprite gRockFragmentSpriteTemplate, ANIM_TARGET, 2, 0, 0, 20, 24, 14, 2
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 5, 1
+	createsprite gRockFragmentSpriteTemplate, ANIM_TARGET, 2, 5, 0, -20, 24, 14, 1
+	createsprite gRockFragmentSpriteTemplate, ANIM_TARGET, 2, 0, 5, 20, -24, 14, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_TARGET, 2, -5, 0, -20, -24, 14, 2
+	waitforvisualfinish
+	end
 
 gUnknown_8284C1B: @ 0x08284C1B
 	.incbin "baserom_jp.gba", 0x284c1b, 0x2f2
