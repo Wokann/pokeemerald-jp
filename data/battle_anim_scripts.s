@@ -309,7 +309,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_REFRESH                      @ MOVE_REFRESH
 	.4byte Move_GRUDGE                       @ MOVE_GRUDGE
 	.4byte Move_SNATCH                       @ MOVE_SNATCH
-	.4byte gUnknown_8285557                  @ 290
+	.4byte Move_SECRET_POWER                 @ MOVE_SECRET_POWER
 	.4byte Move_DIVE                         @ MOVE_DIVE
 	.4byte Move_ARM_THRUST                   @ MOVE_ARM_THRUST
 	.4byte Move_CAMOUFLAGE                   @ MOVE_CAMOUFLAGE
@@ -364,7 +364,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_POISON_TAIL                  @ MOVE_POISON_TAIL
 	.4byte Move_COVET                        @ MOVE_COVET
 	.4byte Move_VOLT_TACKLE                  @ MOVE_VOLT_TACKLE
-	.4byte gUnknown_828570A                  @ 345
+	.4byte Move_MAGICAL_LEAF                 @ MOVE_MAGICAL_LEAF
 	.4byte Move_WATER_SPORT                  @ MOVE_WATER_SPORT
 	.4byte Move_CALM_MIND                    @ MOVE_CALM_MIND
 	.4byte Move_LEAF_BLADE                   @ MOVE_LEAF_BLADE
@@ -9682,13 +9682,23 @@ Move_SKY_UPPERCUT: @ 0x0828545E
 	waitbgfadein
 	end
 
-gUnknown_8285557: @ 0x08285557
-	.incbin "baserom_jp.gba", 0x285557, 0x54
+Move_SECRET_POWER: @ 0x08285557
+	createvisualtask AnimTask_GetBattleEnvironment, 5
+	jumpargeq 0, BATTLE_ENVIRONMENT_GRASS,      Move_NEEDLE_ARM
+	jumpargeq 0, BATTLE_ENVIRONMENT_LONG_GRASS, Move_MAGICAL_LEAF
+	jumpargeq 0, BATTLE_ENVIRONMENT_SAND,       Move_MUD_SHOT
+	jumpargeq 0, BATTLE_ENVIRONMENT_UNDERWATER, Move_WATERFALL
+	jumpargeq 0, BATTLE_ENVIRONMENT_WATER,      Move_SURF
+	jumpargeq 0, BATTLE_ENVIRONMENT_POND,       Move_BUBBLE_BEAM
+	jumpargeq 0, BATTLE_ENVIRONMENT_MOUNTAIN,   Move_ROCK_THROW
+	jumpargeq 0, BATTLE_ENVIRONMENT_CAVE,       Move_BITE
+	jumpargeq 0, BATTLE_ENVIRONMENT_BUILDING,   Move_STRENGTH
+	goto Move_SLAM
 
 gUnknown_82855AB: @ 0x082855AB
 	.incbin "baserom_jp.gba", 0x2855ab, 0x15f
 
-gUnknown_828570A: @ 0x0828570A
+Move_MAGICAL_LEAF: @ 0x0828570A
 	.incbin "baserom_jp.gba", 0x28570a, 0x121
 
 gUnknown_828582B: @ 0x0828582B
