@@ -196,7 +196,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8282179                  @ 174
 	.4byte Move_FLAIL                        @ MOVE_FLAIL
 	.4byte Move_CONVERSION_2                 @ MOVE_CONVERSION_2
-	.4byte gUnknown_82800AD                  @ 177
+	.4byte Move_AEROBLAST                    @ MOVE_AEROBLAST
 	.4byte gUnknown_8280CE4                  @ 178
 	.4byte Move_REVERSAL                      @ MOVE_REVERSAL
 	.4byte Move_SPITE                        @ MOVE_SPITE
@@ -6217,8 +6217,46 @@ Move_PECK: @ 0x08280086
 	waitforvisualfinish
 	end
 
-gUnknown_82800AD: @ 0x082800AD
-	.incbin "baserom_jp.gba", 0x2800ad, 0x11d
+Move_AEROBLAST: @ 0x082800AD
+	loadspritegfx ANIM_TAG_AIR_WAVE_2
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	call SetSkyBg
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	call AeroblastBeam
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 5, 0, 50, 1
+	call AeroblastBeam
+	call AeroblastBeam
+	call AeroblastBeam
+	call AeroblastBeam
+	waitforvisualfinish
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=0
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	delay 0
+	call UnsetSkyBg
+	end
+AeroblastBeam:
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_ATTACKER, 2, 14, -12, 0, -12, 15, 0, 0
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_ATTACKER, 2, 26, 8, 12, 8, 15, 0, 0
+	delay 3
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_ATTACKER, 2, 14, -12, 0, -12, 15, 1, 0
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_ATTACKER, 2, 26, 8, 12, 8, 15, 1, 0
+	delay 3
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_ATTACKER, 2, 14, -12, 0, -12, 15, 2, 0
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_ATTACKER, 2, 26, 8, 12, 8, 15, 2, 0
+	delay 3
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_ATTACKER, 2, 14, -12, 0, -12, 15, 3, 0
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_ATTACKER, 2, 26, 8, 12, 8, 15, 3, 0
+	delay 3
+	return
 
 gUnknown_82801CA: @ 0x082801CA
 	.incbin "baserom_jp.gba", 0x2801ca, 0x8d
