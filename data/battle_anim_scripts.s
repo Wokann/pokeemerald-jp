@@ -406,7 +406,7 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_MonHit                     @ 015
 	.4byte General_ItemSteal                  @ 016
 	.4byte General_SnatchMove                 @ 017
-	.4byte gUnknown_8286946                  @ 018
+	.4byte General_FutureSightHit             @ 018
 	.4byte gUnknown_82869A5                  @ 019
 	.4byte gUnknown_8286A6A                  @ 020
 	.4byte gUnknown_8286AAA                  @ 021
@@ -10620,8 +10620,25 @@ SnatchPartnerMonMove: @ 0x08286936
 	createvisualtask AnimTask_SnatchPartnerMove, 2
 	goto SnatchMoveContinue
 
-gUnknown_8286946: @ 0x08286946
-	.incbin "baserom_jp.gba", 0x286946, 0x5f
+General_FutureSightHit: @ 0x08286946
+	createvisualtask AnimTask_SetAnimTargetToBattlerTarget, 2
+	monbg ANIM_DEF_PARTNER
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	call SetPsychicBackground
+	setalpha 8, 8
+	playsewithpan SE_M_SUPERSONIC, SOUND_PAN_TARGET
+	waitplaysewithpan SE_M_SUPERSONIC, SOUND_PAN_TARGET, 8
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 4, 0, 15, 1
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -5, -5, 15, ANIM_TARGET, 1
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 4, 0, 24, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	waitforvisualfinish
+	delay 1
+	call UnsetPsychicBackground
+	end
 
 gUnknown_82869A5: @ 0x082869A5
 	.incbin "baserom_jp.gba", 0x2869a5, 0xc5
