@@ -142,7 +142,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SELF_DESTRUCT                 @ MOVE_SELF_DESTRUCT
 	.4byte gUnknown_8281B52                  @ 121
 	.4byte gUnknown_8281C2F                  @ 122
-	.4byte gUnknown_827E771                  @ 123
+	.4byte Move_SMOG                         @ MOVE_SMOG
 	.4byte gUnknown_827FAF1                  @ 124
 	.4byte gUnknown_827FDA7                  @ 125
 	.4byte Move_FIRE_BLAST                   @ MOVE_FIRE_BLAST
@@ -5138,8 +5138,33 @@ Move_BUBBLE: @ 0x0827E69B
 	blendoff
 	end
 
-gUnknown_827E771: @ 0x0827E771
-	.incbin "baserom_jp.gba", 0x27e771, 0x7b
+Move_SMOG: @ 0x0827E771
+	loadspritegfx ANIM_TAG_PURPLE_GAS_CLOUD
+	monbg ANIM_DEF_PARTNER
+	splitbgprio_all
+	setalpha 12, 8
+	loopsewithpan SE_M_MIST, SOUND_PAN_TARGET, 17, 10
+	call SmogCloud
+	call SmogCloud
+	call SmogCloud
+	call SmogCloud
+	call SmogCloud
+	call SmogCloud
+	call SmogCloud
+	delay 120
+	loopsewithpan SE_M_TOXIC, SOUND_PAN_TARGET, 18, 2
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB(26, 0, 26)
+	delay 10
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 15, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
+SmogCloud:
+	createsprite gSmogCloudSpriteTemplate, ANIM_ATTACKER, 2, 0, -24, 48, 240, 1, 0
+	delay 7
+	return
 
 gUnknown_827E7EC: @ 0x0827E7EC
 	.incbin "baserom_jp.gba", 0x27e7ec, 0x87
