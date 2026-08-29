@@ -38,7 +38,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_GUST                         @ MOVE_GUST
 	.4byte Move_WING_ATTACK                  @ MOVE_WING_ATTACK
 	.4byte Move_WHIRLWIND                    @ MOVE_WHIRLWIND
-	.4byte gUnknown_828056D                  @ 019
+	.4byte Move_FLY                           @ MOVE_FLY
 	.4byte gUnknown_828164F                  @ 020
 	.4byte Move_SLAM                         @ MOVE_SLAM
 	.4byte Move_VINE_WHIP                    @ MOVE_VINE_WHIP
@@ -6413,8 +6413,32 @@ WhirlpoolEffect:
 	delay 2
 	return
 
-gUnknown_828056D: @ 0x0828056D
-	.incbin "baserom_jp.gba", 0x28056d, 0x6a
+Move_FLY: @ 0x0828056D
+	loadspritegfx ANIM_TAG_ROUND_SHADOW
+	loadspritegfx ANIM_TAG_IMPACT
+	choosetwoturnanim FlySetUp, FlyUnleash
+FlyEnd:
+	waitforvisualfinish
+	end
+
+FlySetUp:
+	playsewithpan SE_M_FLY, SOUND_PAN_ATTACKER
+	createsprite gFlyBallUpSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 13, 336
+	goto FlyEnd
+
+FlyUnleash:
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	createsprite gFlyBallAttackSpriteTemplate, ANIM_ATTACKER, 2, 20
+	delay 20
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=0
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 6, 0, 8, 1
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	goto FlyEnd
 
 gUnknown_82805D7: @ 0x082805D7
 	.incbin "baserom_jp.gba", 0x2805d7, 0x63
