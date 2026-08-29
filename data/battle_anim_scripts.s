@@ -291,7 +291,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_TAUNT                        @ MOVE_TAUNT
 	.4byte Move_HELPING_HAND                 @ MOVE_HELPING_HAND
 	.4byte Move_TRICK                        @ MOVE_TRICK
-	.4byte gUnknown_8283535                  @ 272
+	.4byte Move_ROLE_PLAY                    @ MOVE_ROLE_PLAY
 	.4byte Move_WISH                         @ MOVE_WISH
 	.4byte Move_ASSIST                       @ MOVE_ASSIST
 	.4byte Move_INGRAIN                      @ MOVE_INGRAIN
@@ -8483,8 +8483,20 @@ CreateFlatterConfetti:
 	createsprite gFlatterConfettiSpriteTemplate, ANIM_ATTACKER, 40, ANIM_TARGET
 	return
 
-gUnknown_8283535: @ 0x08283535
-	.incbin "baserom_jp.gba", 0x283535, 0x5d
+Move_ROLE_PLAY: @ 0x08283535
+	monbg ANIM_ATK_PARTNER
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 16, RGB_WHITE
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=10, color=RGB_BLACK
+	waitforvisualfinish
+	playsewithpan SE_M_TRI_ATTACK, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_DETECT, SOUND_PAN_ATTACKER, 30
+	createvisualtask AnimTask_RolePlaySilhouette, 2
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 16, 0, RGB_WHITE
+	delay 8
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=10, target_blend_y=0, color=RGB_BLACK
+	end
 
 gUnknown_8283592: @ 0x08283592
 	.incbin "baserom_jp.gba", 0x283592, 0x43
