@@ -113,7 +113,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_DIG                          @ MOVE_DIG
 	.4byte gUnknown_827FA82                  @ 092
 	.4byte Move_CONFUSION                    @ MOVE_CONFUSION
-	.4byte gUnknown_827DE11                  @ 094
+	.4byte Move_PSYCHIC                      @ MOVE_PSYCHIC
 	.4byte gUnknown_8281739                  @ 095
 	.4byte Move_MEDITATE                     @ MOVE_MEDITATE
 	.4byte Move_AGILITY                      @ MOVE_AGILITY
@@ -4741,8 +4741,22 @@ Move_CONFUSION: @ 0x0827DDB0
 	call UnsetPsychicBackground
 	end
 
-gUnknown_827DE11: @ 0x0827DE11
-	.incbin "baserom_jp.gba", 0x27de11, 0x63
+Move_PSYCHIC: @ 0x0827DE11
+	monbg ANIM_DEF_PARTNER
+	call SetPsychicBackground
+	setalpha 8, 8
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 1, 0, 10, 1
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=0, num_blends=2, initial_blend_y=0, target_blend_y=8, color=RGB(31, 23, 0)
+	waitforvisualfinish
+	loopsewithpan SE_M_SUPERSONIC, SOUND_PAN_TARGET, 10, 3
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 15, 1
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -6, -6, 15, ANIM_TARGET, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	delay 1
+	call UnsetPsychicBackground
+	end
 
 gUnknown_827DE74: @ 0x0827DE74
 	.incbin "baserom_jp.gba", 0x27de74, 0x4d
