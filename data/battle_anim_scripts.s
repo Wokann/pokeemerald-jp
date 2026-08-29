@@ -294,7 +294,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8283535                  @ 272
 	.4byte gUnknown_8282E73                  @ 273
 	.4byte Move_ASSIST                       @ MOVE_ASSIST
-	.4byte gUnknown_8282667                  @ 275
+	.4byte Move_INGRAIN                      @ MOVE_INGRAIN
 	.4byte Move_SUPERPOWER                   @ MOVE_SUPERPOWER
 	.4byte gUnknown_82851E4                  @ 277
 	.4byte Move_RECYCLE                      @ MOVE_RECYCLE
@@ -7852,8 +7852,35 @@ Move_FURY_SWIPES: @ 0x08282603
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 7, 1
 	end
 
-gUnknown_8282667: @ 0x08282667
-	.incbin "baserom_jp.gba", 0x282667, 0xb1
+Move_INGRAIN: @ 0x08282667
+	loadspritegfx ANIM_TAG_ROOTS
+	loadspritegfx ANIM_TAG_ORBS
+	create_ingrain_root_sprite ANIM_ATTACKER, 2, offset_x=16, offset_y=26, subpriority=29, animation=2, duration=150
+	playsewithpan SE_M_SCRATCH, SOUND_PAN_ATTACKER
+	delay 10
+	create_ingrain_root_sprite ANIM_ATTACKER, 2, offset_x=-32, offset_y=20, subpriority=31, animation=1, duration=140
+	playsewithpan SE_M_SCRATCH, SOUND_PAN_ATTACKER
+	delay 10
+	create_ingrain_root_sprite ANIM_ATTACKER, 2, offset_x=32, offset_y=22, subpriority=31, animation=0, duration=130
+	playsewithpan SE_M_SCRATCH, SOUND_PAN_ATTACKER
+	delay 10
+	create_ingrain_root_sprite ANIM_ATTACKER, 2, offset_x=-16, offset_y=25, subpriority=29, animation=3, duration=120
+	playsewithpan SE_M_SCRATCH, SOUND_PAN_ATTACKER
+	delay 40
+	create_ingrain_orb_sprite ANIM_ATTACKER, 3, initial_x=32, initial_y=26, velocity_x=-1, wave_amplitude=3, duration=30
+	delay 5
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
+	delay 5
+	create_ingrain_orb_sprite ANIM_ATTACKER, 3, initial_x=-48, initial_y=20, velocity_x=1, wave_amplitude=2, duration=30
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
+	delay 5
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
+	delay 5
+	create_ingrain_orb_sprite ANIM_ATTACKER, 3, initial_x=48, initial_y=26, velocity_x=-2, wave_amplitude=3, duration=18
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
+	delay 10
+	waitforvisualfinish
+	end
 
 gUnknown_8282718: @ 0x08282718
 	.incbin "baserom_jp.gba", 0x282718, 0x157

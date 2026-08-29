@@ -828,6 +828,7 @@ gIngrainRootAnimCmds4: @ 0x856E110
 gIngrainRootAnimTable: @ 0x856E120
 	.4byte gIngrainRootAnimCmds1, gIngrainRootAnimCmds2, gIngrainRootAnimCmds3, gIngrainRootAnimCmds4
 
+	.globl gIngrainRootSpriteTemplate
 gIngrainRootSpriteTemplate: @ 0x856E130
 	.hword 0x27EF, 0x27EF
 	.4byte 0x084FD020, 0x0856E120
@@ -846,6 +847,7 @@ gIngrainOrbAnimCmds: @ 0x856E160
 gIngrainOrbAnimTable: @ 0x856E16C
 	.4byte 0x0856E160
 
+	.globl gIngrainOrbSpriteTemplate
 gIngrainOrbSpriteTemplate: @ 0x856E170
 	.hword 0x27A3, 0x27A3
 	.4byte 0x084FD010, 0x0856E16C

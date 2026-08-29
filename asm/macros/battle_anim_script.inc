@@ -348,6 +348,14 @@
 	createsprite gMimicOrbSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y
 	.endm
 
+	.macro create_ingrain_root_sprite anim_battler:req, subpriority_offset:req, offset_x:req, offset_y:req, subpriority:req, animation:req, duration:req
+	createsprite gIngrainRootSpriteTemplate, \anim_battler, \subpriority_offset, \offset_x, \offset_y, \subpriority - 30, \animation, \duration
+	.endm
+
+	.macro create_ingrain_orb_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req, velocity_x:req, wave_amplitude:req, duration:req
+	createsprite gIngrainOrbSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \velocity_x, \wave_amplitude, \duration
+	.endm
+
 	.macro create_power_absorption_orb_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req
 	createsprite gPowerAbsorptionOrbSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration
 	.endm
