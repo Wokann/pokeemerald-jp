@@ -711,6 +711,7 @@ gRazorLeafParticleSpriteTemplate: @ 0x856DF74
 	.4byte 0x084FD018, 0x0856DF6C
 	.4byte 0x00000000, gDummySpriteAffineAnimTable, 0x080FF84D
 
+	.globl gTwisterLeafSpriteTemplate
 gTwisterLeafSpriteTemplate: @ 0x856DF8C
 	.hword 0x274F, 0x274F
 	.4byte 0x084FD018, 0x0856DF6C
@@ -2768,7 +2769,12 @@ gRockBlastRockSpriteTemplate: @ 0x57287C
 gRockScatterSpriteTemplate: @ 0x572894
 	.hword 0x274A, 0x274A
 	.4byte 0x084FD080, 0x085727DC, 0, 0x08572874, 0x08111C95
-	.incbin "baserom_jp.gba", 0x5728ac, 0x4c
+
+	.globl gTwisterRockSpriteTemplate
+gTwisterRockSpriteTemplate: @ 0x5728AC
+	.hword 0x274A, 0x274A
+	.4byte 0x084FD020, 0x085727EC, 0, 0x08572874, 0x080FFAB9
+	.incbin "baserom_jp.gba", 0x5728c4, 0x34
 
 	.globl gConfuseRayBallBounceSpriteTemplate
 gConfuseRayBallBounceSpriteTemplate: @ 0x5728F8

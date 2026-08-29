@@ -258,7 +258,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MOONLIGHT                    @ MOVE_MOONLIGHT
 	.4byte Move_HIDDEN_POWER                  @ MOVE_HIDDEN_POWER
 	.4byte Move_CROSS_CHOP                    @ MOVE_CROSS_CHOP
-	.4byte gUnknown_82855AB                  @ 239
+	.4byte Move_TWISTER                      @ MOVE_TWISTER
 	.4byte Move_RAIN_DANCE                  @ MOVE_RAIN_DANCE
 	.4byte Move_SUNNY_DAY                    @ MOVE_SUNNY_DAY
 	.4byte Move_CRUNCH                       @ MOVE_CRUNCH
@@ -9695,8 +9695,51 @@ Move_SECRET_POWER: @ 0x08285557
 	jumpargeq 0, BATTLE_ENVIRONMENT_BUILDING,   Move_STRENGTH
 	goto Move_SLAM
 
-gUnknown_82855AB: @ 0x082855AB
-	.incbin "baserom_jp.gba", 0x2855ab, 0x15f
+Move_TWISTER: @ 0x082855AB
+	loadspritegfx ANIM_TAG_LEAF
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_ROCKS
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	playsewithpan SE_M_TWISTER, SOUND_PAN_TARGET
+	create_twister_leaf_sprite ANIM_TARGET, 2, duration=120, distance_y=70, wave_period=5, wave_amplitude=70, speed_up_on_frame=30
+	delay 1
+	create_twister_leaf_sprite ANIM_TARGET, 2, duration=115, distance_y=55, wave_period=6, wave_amplitude=60, speed_up_on_frame=25
+	delay 1
+	create_twister_leaf_sprite ANIM_TARGET, 2, duration=115, distance_y=60, wave_period=7, wave_amplitude=60, speed_up_on_frame=30
+	create_twister_leaf_sprite ANIM_TARGET, 2, duration=115, distance_y=55, wave_period=10, wave_amplitude=60, speed_up_on_frame=30
+	delay 3
+	createsprite gTwisterRockSpriteTemplate, ANIM_TARGET, 2, 100, 50, 4, 50, 26
+	delay 1
+	create_twister_leaf_sprite ANIM_TARGET, 2, duration=105, distance_y=25, wave_period=8, wave_amplitude=60, speed_up_on_frame=20
+	delay 1
+	create_twister_leaf_sprite ANIM_TARGET, 2, duration=115, distance_y=40, wave_period=10, wave_amplitude=48, speed_up_on_frame=30
+	delay 3
+	createsprite gTwisterRockSpriteTemplate, ANIM_TARGET, 2, 120, 30, 6, 45, 25
+	create_twister_leaf_sprite ANIM_TARGET, 2, duration=115, distance_y=35, wave_period=10, wave_amplitude=60, speed_up_on_frame=30
+	delay 3
+	createsprite gTwisterRockSpriteTemplate, ANIM_TARGET, 2, 105, 20, 8, 40, 0
+	delay 3
+	create_twister_leaf_sprite ANIM_TARGET, 2, duration=20, distance_y=255, wave_period=15, wave_amplitude=32, speed_up_on_frame=0
+	create_twister_leaf_sprite ANIM_TARGET, 2, duration=110, distance_y=10, wave_period=8, wave_amplitude=32, speed_up_on_frame=20
+	waitforvisualfinish
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=-32, y=-16, relative_to=ANIM_TARGET, animation=3
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_TARGET, 3, 0, 12, 1
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_DEF_PARTNER, 3, 0, 12, 1
+	delay 4
+	create_random_pos_hitsplat_sprite ANIM_TARGET, 3, relative_to=ANIM_TARGET, animation=3
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	delay 4
+	create_random_pos_hitsplat_sprite ANIM_TARGET, 3, relative_to=ANIM_TARGET, animation=3
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	delay 4
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=32, y=20, relative_to=ANIM_TARGET, animation=3
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 Move_MAGICAL_LEAF: @ 0x0828570A
 	.incbin "baserom_jp.gba", 0x28570a, 0x121
