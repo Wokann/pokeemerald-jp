@@ -329,7 +329,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_BLAST_BURN                   @ MOVE_BLAST_BURN
 	.4byte Move_HYDRO_CANNON                 @ MOVE_HYDRO_CANNON
 	.4byte Move_METEOR_MASH                  @ MOVE_METEOR_MASH
-	.4byte gUnknown_828503F                  @ 310
+	.4byte Move_ASTONISH                     @ MOVE_ASTONISH
 	.4byte gUnknown_82859FA                  @ 311
 	.4byte Move_AROMATHERAPY                 @ MOVE_AROMATHERAPY
 	.4byte Move_FAKE_TEARS                   @ MOVE_FAKE_TEARS
@@ -9450,8 +9450,18 @@ HydroCannonBeam:
 	createsprite gHydroCannonBeamSpriteTemplate, ANIM_TARGET, 2, 10, -10, 0, 0, 15, 257
 	return
 
-gUnknown_828503F: @ 0x0828503F
-	.incbin "baserom_jp.gba", 0x28503f, 0x48
+Move_ASTONISH: @ 0x0828503F
+	loadspritegfx ANIM_TAG_SWEAT_BEAD
+	playsewithpan SE_M_ENCORE, SOUND_PAN_ATTACKER
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 6
+	delay 25
+	createsprite gSprayWaterDropletSpriteTemplate, ANIM_TARGET, 5, 0, 1
+	playsewithpan SE_M_SKETCH, SOUND_PAN_TARGET
+	createsprite gSprayWaterDropletSpriteTemplate, ANIM_TARGET, 5, 1, 1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 5, 1
+	createvisualtask AnimTask_StretchTargetUp, 3
+	waitforvisualfinish
+	end
 
 gUnknown_8285087: @ 0x08285087
 	.incbin "baserom_jp.gba", 0x285087, 0x15d
