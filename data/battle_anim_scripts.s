@@ -283,7 +283,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_WILL_O_WISP                  @ MOVE_WILL_O_WISP
 	.4byte Move_MEMENTO                      @ MOVE_MEMENTO
 	.4byte Move_FACADE                       @ MOVE_FACADE
-	.4byte gUnknown_8283F8E                  @ 264
+	.4byte Move_FOCUS_PUNCH                  @ MOVE_FOCUS_PUNCH
 	.4byte Move_SMELLING_SALT                @ MOVE_SMELLING_SALT
 	.4byte Move_FOLLOW_ME                    @ MOVE_FOLLOW_ME
 	.4byte Move_NATURE_POWER                  @ MOVE_NATURE_POWER
@@ -8905,8 +8905,57 @@ MetalSoundRings:
 	delay 2
 	return
 
-gUnknown_8283F8E: @ 0x08283F8E
-	.incbin "baserom_jp.gba", 0x283f8e, 0xc7
+Move_FOCUS_PUNCH: @ 0x08283F8E
+	goto FocusPunch
+FocusPunchEnd:
+	waitforvisualfinish
+	end
+
+FocusPunch:
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	delay 1
+	createvisualtask AnimTask_IsContest, 2
+	jumprettrue FocusPunchInContest
+	createvisualtask AnimTask_IsTargetPlayerSide, 2
+	jumpretfalse FocusPunchOnOpponent
+	jumprettrue FocusPunchOnPlayer
+FocusPunchContinue:
+	waitbgfadein
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
+	createsprite gFocusPunchFistSpriteTemplate, ANIM_TARGET, 2
+	delay 10
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=-10, y=-8, relative_to=ANIM_TARGET, animation=0
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 8, 0, 24, 1
+	delay 8
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=10, y=2, relative_to=ANIM_TARGET, animation=0
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	delay 8
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=10, y=-6, relative_to=ANIM_TARGET, animation=0
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	delay 8
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=8, relative_to=ANIM_TARGET, animation=0
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	restorebg
+	waitbgfadein
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	goto FocusPunchEnd
+
+FocusPunchOnOpponent:
+	fadetobg BG_IMPACT_OPPONENT
+	goto FocusPunchContinue
+
+FocusPunchOnPlayer:
+	fadetobg BG_IMPACT_PLAYER
+	goto FocusPunchContinue
+
+FocusPunchInContest:
+	fadetobg BG_IMPACT_CONTESTS
+	goto FocusPunchContinue
 
 gUnknown_8284055: @ 0x08284055
 	.incbin "baserom_jp.gba", 0x284055, 0x48f
