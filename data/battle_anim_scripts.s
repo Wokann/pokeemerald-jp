@@ -134,7 +134,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827E67E                  @ 112
 	.4byte Move_LIGHT_SCREEN                 @ MOVE_LIGHT_SCREEN
 	.4byte gUnknown_82811D1                  @ 114
-	.4byte gUnknown_827E62B                  @ 115
+	.4byte Move_REFLECT                      @ MOVE_REFLECT
 	.4byte gUnknown_8281C56                  @ 116
 	.4byte gUnknown_8281C96                  @ 117
 	.4byte Move_METRONOME                    @ MOVE_METRONOME
@@ -5075,8 +5075,22 @@ Move_MIRROR_COAT: @ 0x0827E605
 	blendoff
 	end
 
-gUnknown_827E62B: @ 0x0827E62B
-	.incbin "baserom_jp.gba", 0x27e62b, 0x53
+Move_REFLECT: @ 0x0827E62B
+	loadspritegfx ANIM_TAG_SPARKLE_4
+	loadspritegfx ANIM_TAG_BLUE_LIGHT_WALL
+	setalpha 0, 16
+	waitplaysewithpan SE_M_REFLECT, SOUND_PAN_ATTACKER, 15
+	createsprite gReflectWallSpriteTemplate, ANIM_ATTACKER, 1, 40, 0, ANIM_TAG_BLUE_LIGHT_WALL
+	delay 20
+	createsprite gReflectSparkleSpriteTemplate, ANIM_ATTACKER, 2, 30, 0, ANIM_ATTACKER, TRUE
+	delay 7
+	createsprite gReflectSparkleSpriteTemplate, ANIM_ATTACKER, 2, 19, -12, ANIM_ATTACKER, TRUE
+	delay 7
+	createsprite gReflectSparkleSpriteTemplate, ANIM_ATTACKER, 2, 10, 20, ANIM_ATTACKER, TRUE
+	waitforvisualfinish
+	delay 1
+	blendoff
+	end
 
 gUnknown_827E67E: @ 0x0827E67E
 	.incbin "baserom_jp.gba", 0x27e67e, 0x1d
