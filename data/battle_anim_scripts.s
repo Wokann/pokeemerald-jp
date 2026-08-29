@@ -280,7 +280,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_HAIL                         @ MOVE_HAIL
 	.4byte Move_TORMENT                      @ MOVE_TORMENT
 	.4byte gUnknown_8283439                  @ 260
-	.4byte gUnknown_8282C90                  @ 261
+	.4byte Move_WILL_O_WISP                  @ MOVE_WILL_O_WISP
 	.4byte Move_MEMENTO                      @ MOVE_MEMENTO
 	.4byte Move_FACADE                       @ MOVE_FACADE
 	.4byte gUnknown_8283F8E                  @ 264
@@ -8092,8 +8092,36 @@ Move_TRI_ATTACK: @ 0x08282B1C
 	waitforvisualfinish
 	end
 
-gUnknown_8282C90: @ 0x08282C90
-	.incbin "baserom_jp.gba", 0x282c90, 0xbe
+Move_WILL_O_WISP: @ 0x08282C90
+	loadspritegfx ANIM_TAG_WISP_FIRE
+	loadspritegfx ANIM_TAG_WISP_ORB
+	monbg ANIM_DEF_PARTNER
+	splitbgprio_foes ANIM_TARGET
+	playsewithpan SE_M_EMBER, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_EMBER, SOUND_PAN_ATTACKER, 10
+	createvisualtask SoundTask_AdjustPanningVar, 2, SOUND_PAN_ATTACKER, SOUND_PAN_ATTACKER, 1, 0
+	createsprite gWillOWispOrbSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 0
+	delay 3
+	createsprite gWillOWispOrbSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 1
+	delay 3
+	createsprite gWillOWispOrbSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 2
+	delay 3
+	createsprite gWillOWispOrbSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 3
+	delay 40
+	createvisualtask SoundTask_AdjustPanningVar, 2, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
+	waitforvisualfinish
+	splitbgprio_all
+	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 13, 1
+	createsprite gWillOWispFireSpriteTemplate, ANIM_ATTACKER, 2, 0
+	createsprite gWillOWispFireSpriteTemplate, ANIM_ATTACKER, 2, 42
+	createsprite gWillOWispFireSpriteTemplate, ANIM_ATTACKER, 2, 84
+	createsprite gWillOWispFireSpriteTemplate, ANIM_ATTACKER, 2, 126
+	createsprite gWillOWispFireSpriteTemplate, ANIM_ATTACKER, 2, 168
+	createsprite gWillOWispFireSpriteTemplate, ANIM_ATTACKER, 2, 210
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
 
 gUnknown_8282D4E: @ 0x08282D4E
 	.incbin "baserom_jp.gba", 0x282d4e, 0xa7
