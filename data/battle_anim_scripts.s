@@ -101,7 +101,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SLEEP_POWDER                   @ MOVE_SLEEP_POWDER
 	.4byte gUnknown_8280DA3                  @ 080
 	.4byte gUnknown_8281D95                  @ 081
-	.4byte gUnknown_827E9B9                  @ 082
+	.4byte Move_DRAGON_RAGE                  @ MOVE_DRAGON_RAGE
 	.4byte Move_FIRE_SPIN                    @ MOVE_FIRE_SPIN
 	.4byte Move_THUNDER_SHOCK                @ MOVE_THUNDER_SHOCK
 	.4byte Move_THUNDERBOLT                  @ MOVE_THUNDERBOLT
@@ -5255,8 +5255,37 @@ MudSlapMud:
 	delay 2
 	return
 
-gUnknown_827E9B9: @ 0x0827E9B9
-	.incbin "baserom_jp.gba", 0x27e9b9, 0xdd
+Move_DRAGON_RAGE: @ 0x0827E9B9
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	loadspritegfx ANIM_TAG_FIRE_PLUME
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_ATTACKER, 0, 2, 40, 1
+	waitforvisualfinish
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_TARGET, 2, 0, 15, 0, 0, 4
+	waitforvisualfinish
+	create_dragon_rage_fire_spit_sprite ANIM_TARGET, 2, initial_x=30, initial_y=15, target_x=0, target_y=10, duration=10
+	waitforvisualfinish
+	loopsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET, 11, 3
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 3, 25, 1
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 66, relative_to=ANIM_TARGET, x=5, y=0
+	delay 1
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 66, relative_to=ANIM_TARGET, x=-10, y=-15
+	delay 1
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 2, relative_to=ANIM_TARGET, x=0, y=25
+	delay 1
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 66, relative_to=ANIM_TARGET, x=15, y=5
+	delay 1
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 66, relative_to=ANIM_TARGET, x=-25, y=0
+	delay 1
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 2, relative_to=ANIM_TARGET, x=30, y=30
+	delay 1
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 2, relative_to=ANIM_TARGET, x=-27, y=25
+	delay 1
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 66, relative_to=ANIM_TARGET, x=0, y=8
+	waitforvisualfinish
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_TARGET, 66, 0, 0, 4
+	waitforvisualfinish
+	end
 
 gUnknown_827EA96: @ 0x0827EA96
 	.incbin "baserom_jp.gba", 0x27ea96, 0x4b
