@@ -262,7 +262,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827EA96                  @ 240
 	.4byte gUnknown_8280C8E                  @ 241
 	.4byte gUnknown_827EB3F                  @ 242
-	.4byte gUnknown_827E605                  @ 243
+	.4byte Move_MIRROR_COAT                  @ MOVE_MIRROR_COAT
 	.4byte Move_PSYCH_UP                     @ MOVE_PSYCH_UP
 	.4byte Move_EXTREME_SPEED                @ MOVE_EXTREME_SPEED
 	.4byte gUnknown_8280FE2                  @ 246
@@ -5062,8 +5062,18 @@ SpecialScreenSparkle:
 	createsprite gSpecialScreenSparkleSpriteTemplate, ANIM_ATTACKER, 2, 10, 18, ANIM_ATTACKER, TRUE
 	return
 
-gUnknown_827E605: @ 0x0827E605
-	.incbin "baserom_jp.gba", 0x27e605, 0x26
+Move_MIRROR_COAT: @ 0x0827E605
+	loadspritegfx ANIM_TAG_SPARKLE_3
+	loadspritegfx ANIM_TAG_RED_LIGHT_WALL
+	setalpha 0, 16
+	createsprite gMirrorCoatWallSpriteTemplate, ANIM_ATTACKER, 1, 40, 0, ANIM_TAG_RED_LIGHT_WALL
+	delay 10
+	playsewithpan SE_M_REFLECT, SOUND_PAN_ATTACKER
+	call SpecialScreenSparkle
+	waitforvisualfinish
+	delay 1
+	blendoff
+	end
 
 gUnknown_827E62B: @ 0x0827E62B
 	.incbin "baserom_jp.gba", 0x27e62b, 0x53
