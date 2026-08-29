@@ -888,6 +888,7 @@ gPresentSpriteTemplate: @ 0x856E1F4
 	.4byte 0x084FD080, 0x0856E190
 	.4byte 0x00000000, 0x0856E1EC, 0x08100369
 
+	.globl gKnockOffItemSpriteTemplate
 gKnockOffItemSpriteTemplate: @ 0x856E20C
 	.hword 0x27F0, 0x27F0
 	.4byte 0x084FD080, 0x0856E190

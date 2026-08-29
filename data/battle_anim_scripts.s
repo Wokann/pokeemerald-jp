@@ -393,7 +393,7 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_SubstituteFade             @ 002
 	.4byte General_SubstituteAppear           @ 003
 	.4byte General_PokeblockThrow             @ 004
-	.4byte gUnknown_82864F1                  @ 005
+	.4byte General_ItemKnockoff               @ 005
 	.4byte gUnknown_82864FC                  @ 006
 	.4byte gUnknown_828668F                  @ 007
 	.4byte gUnknown_8286703                  @ 008
@@ -10395,8 +10395,10 @@ General_PokeblockThrow: @ 0x082864A9
 	createvisualtask AnimTask_FreePokeblockGfx, 2
 	end
 
-gUnknown_82864F1: @ 0x082864F1
-	.incbin "baserom_jp.gba", 0x2864f1, 0xb
+General_ItemKnockoff: @ 0x082864F1
+	loadspritegfx ANIM_TAG_ITEM_BAG
+	createsprite gKnockOffItemSpriteTemplate, ANIM_TARGET, 2
+	end
 
 gUnknown_82864FC: @ 0x082864FC
 	.incbin "baserom_jp.gba", 0x2864fc, 0x193
