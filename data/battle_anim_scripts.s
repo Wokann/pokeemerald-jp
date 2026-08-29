@@ -348,7 +348,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_EXTRASENSORY                 @ MOVE_EXTRASENSORY
 	.4byte gUnknown_828545E                  @ 327
 	.4byte Move_SAND_TOMB                    @ MOVE_SAND_TOMB
-	.4byte gUnknown_82837C9                  @ 329
+	.4byte Move_SHEER_COLD                   @ MOVE_SHEER_COLD
 	.4byte gUnknown_8283883                  @ 330
 	.4byte gUnknown_8283895                  @ 331
 	.4byte Move_AERIAL_ACE                   @ MOVE_AERIAL_ACE
@@ -8582,8 +8582,23 @@ SandTombSwirlingDirt:
 	delay 2
 	return
 
-gUnknown_82837C9: @ 0x082837C9
-	.incbin "baserom_jp.gba", 0x2837c9, 0x25
+Move_SHEER_COLD: @ 0x082837C9
+	fadetobg BG_ICE
+	waitbgfadeout
+	playsewithpan SE_M_ICY_WIND, 0
+	waitbgfadein
+	loadspritegfx ANIM_TAG_ICE_CUBE
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	createvisualtask AnimTask_FrozenIceCube, 2
+	waitplaysewithpan SE_M_HAIL, SOUND_PAN_TARGET, 17
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	restorebg
+	waitbgfadein
+	end
 
 gUnknown_82837EE: @ 0x082837EE
 	.incbin "baserom_jp.gba", 0x2837ee, 0x95
