@@ -259,7 +259,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_HIDDEN_POWER                  @ MOVE_HIDDEN_POWER
 	.4byte gUnknown_828068C                  @ 238
 	.4byte gUnknown_82855AB                  @ 239
-	.4byte gUnknown_827EA96                  @ 240
+	.4byte Move_RAIN_DANCE                  @ MOVE_RAIN_DANCE
 	.4byte gUnknown_8280C8E                  @ 241
 	.4byte gUnknown_827EB3F                  @ 242
 	.4byte Move_MIRROR_COAT                  @ MOVE_MIRROR_COAT
@@ -5287,8 +5287,19 @@ Move_DRAGON_RAGE: @ 0x0827E9B9
 	waitforvisualfinish
 	end
 
-gUnknown_827EA96: @ 0x0827EA96
-	.incbin "baserom_jp.gba", 0x27ea96, 0x4b
+Move_RAIN_DANCE: @ 0x0827EA96
+	loadspritegfx ANIM_TAG_RAIN_DROPS
+	playsewithpan SE_M_RAIN_DANCE, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_BATTLERS_2, 2, 0, 4, RGB_BLACK
+	waitforvisualfinish
+	createvisualtask AnimTask_CreateRaindrops, 2, 0, 3, 120
+	createvisualtask AnimTask_CreateRaindrops, 2, 0, 3, 120
+	delay 120
+	delay 30
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_BATTLERS_2, 2, 4, 0, RGB_BLACK
+	waitforvisualfinish
+	end
 
 gUnknown_827EAE1: @ 0x0827EAE1
 	.incbin "baserom_jp.gba", 0x27eae1, 0x5e
