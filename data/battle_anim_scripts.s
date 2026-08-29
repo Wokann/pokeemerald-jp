@@ -265,7 +265,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MIRROR_COAT                  @ MOVE_MIRROR_COAT
 	.4byte Move_PSYCH_UP                     @ MOVE_PSYCH_UP
 	.4byte Move_EXTREME_SPEED                @ MOVE_EXTREME_SPEED
-	.4byte gUnknown_8280FE2                  @ 246
+	.4byte Move_ANCIENT_POWER                 @ MOVE_ANCIENT_POWER
 	.4byte gUnknown_8281BEC                  @ 247
 	.4byte Move_FUTURE_SIGHT                  @ MOVE_FUTURE_SIGHT
 	.4byte Move_ROCK_SMASH                   @ MOVE_ROCK_SMASH
@@ -286,7 +286,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8283F8E                  @ 264
 	.4byte Move_SMELLING_SALT                @ MOVE_SMELLING_SALT
 	.4byte Move_FOLLOW_ME                    @ MOVE_FOLLOW_ME
-	.4byte gUnknown_8280FE2                  @ 267
+	.4byte Move_NATURE_POWER                  @ MOVE_NATURE_POWER
 	.4byte Move_CHARGE                       @ MOVE_CHARGE
 	.4byte Move_TAUNT                        @ MOVE_TAUNT
 	.4byte Move_HELPING_HAND                 @ MOVE_HELPING_HAND
@@ -6887,8 +6887,41 @@ Move_RAZOR_LEAF: @ 0x08280EDB
 	blendoff
 	end
 
-gUnknown_8280FE2: @ 0x08280FE2
-	.incbin "baserom_jp.gba", 0x280fe2, 0x128
+Move_NATURE_POWER:
+	@ No actual animation, uses the animation of a move from sNaturePowerMoves
+
+Move_ANCIENT_POWER: @ 0x08280FE2
+	loadspritegfx ANIM_TAG_ROCKS
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	shake_mon_or_platform velocity=4, shake_timer=1, shake_duration=10, type=SHAKE_BG_Y
+	createsprite gAncientPowerRockSpriteTemplate, ANIM_ATTACKER, 2, 20, 32, -48, 50, 2
+	createsprite gAncientPowerRockSpriteTemplate, ANIM_ATTACKER, 2, 0, 32, -38, 25, 5
+	createsprite gAncientPowerRockSpriteTemplate, ANIM_ATTACKER, 2, 32, 32, -28, 40, 3
+	createsprite gAncientPowerRockSpriteTemplate, ANIM_ATTACKER, 2, -20, 32, -48, 50, 2
+	createsprite gAncientPowerRockSpriteTemplate, ANIM_ATTACKER, 2, 20, 32, -28, 60, 1
+	createsprite gAncientPowerRockSpriteTemplate, ANIM_ATTACKER, 2, 0, 32, -28, 30, 4
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 1, 0, 30, 1
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	delay 10
+	createsprite gAncientPowerRockSpriteTemplate, ANIM_ATTACKER, 2, 15, 32, -48, 25, 5
+	createsprite gAncientPowerRockSpriteTemplate, ANIM_ATTACKER, 2, -10, 32, -42, 30, 4
+	delay 10
+	createsprite gAncientPowerRockSpriteTemplate, ANIM_ATTACKER, 2, 0, 32, -42, 25, 5
+	createsprite gAncientPowerRockSpriteTemplate, ANIM_ATTACKER, 2, -25, 32, -48, 30, 4
+	waitforvisualfinish
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 16, 0, 0, 4
+	delay 3
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 6, 1
+	waitforvisualfinish
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 7
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_828110A: @ 0x0828110A
 	.incbin "baserom_jp.gba", 0x28110a, 0x66
