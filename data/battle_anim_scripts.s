@@ -234,7 +234,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MEAN_LOOK                    @ MOVE_MEAN_LOOK
 	.4byte Move_ATTRACT                      @ MOVE_ATTRACT
 	.4byte gUnknown_82829FA                  @ 214
-	.4byte gUnknown_82822BB                  @ 215
+	.4byte Move_HEAL_BELL                    @ MOVE_HEAL_BELL
 	.4byte gUnknown_8284055                  @ 216
 	.4byte gUnknown_8282718                  @ 217
 	.4byte Move_FRUSTRATION                   @ MOVE_FRUSTRATION
@@ -7724,8 +7724,57 @@ Move_SOFT_BOILED: @ 0x08282239
 	call HealingEffect2
 	end
 
-gUnknown_82822BB: @ 0x082822BB
-	.incbin "baserom_jp.gba", 0x2822bb, 0x1fa
+Move_HEAL_BELL: @ 0x082822BB
+	loadspritegfx ANIM_TAG_BELL
+	loadspritegfx ANIM_TAG_MUSIC_NOTES_2
+	loadspritegfx ANIM_TAG_THIN_RING
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATK_SIDE, 0, 0, 10, RGB_WHITE
+	waitforvisualfinish
+	createvisualtask AnimTask_LoadMusicNotesPals, 5
+	createsprite gBellSpriteTemplate, ANIM_ATTACKER, 2, 0, -24, 0, 1
+	delay 12
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, 48, -18, 35, 0, 0
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, -48, 20, 30, 1, 1
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, -38, -29, 30, 2, 2
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, 36, 18, 30, 3, 3
+	call HealBellRing
+	delay 33
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, 19, 26, 35, 4, 4
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, -34, -12, 30, 5, 5
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, 41, -20, 34, 6, 2
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, -15, 26, 32, 7, 0
+	call HealBellRing
+	delay 33
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, -48, 18, 31, 0, 2
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, 48, -20, 30, 2, 5
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, 38, 29, 33, 4, 3
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, -36, -18, 30, 6, 1
+	call HealBellRing
+	waitforvisualfinish
+	createvisualtask AnimTask_FreeMusicNotesPals, 5
+	waitforvisualfinish
+	unloadspritegfx ANIM_TAG_BELL
+	unloadspritegfx ANIM_TAG_MUSIC_NOTES_2
+	unloadspritegfx ANIM_TAG_THIN_RING
+	loadspritegfx ANIM_TAG_SPARKLE_2
+	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER
+	createsprite gSparklingStarsSpriteTemplate, ANIM_ATTACKER, 16, -15, 0, 0, 0, 32, 60, 1
+	delay 8
+	createsprite gSparklingStarsSpriteTemplate, ANIM_ATTACKER, 16, 12, -5, 0, 0, 32, 60, 1
+	waitforvisualfinish
+	unloadspritegfx ANIM_TAG_SPARKLE_2
+	loadspritegfx ANIM_TAG_THIN_RING
+	playsewithpan SE_SHINY, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_BlendBattleAnimPalExclude, 10, 4, 3, 10, 0, RGB(12, 24, 30)
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATK_SIDE, 3, 10, 0, RGB_WHITE
+	createsprite gBlendThinRingExpandingSpriteTemplate, ANIM_ATTACKER, 16, 0, 0, 0, 1
+	end
+HealBellRing:
+	createvisualtask AnimTask_BlendBattleAnimPalExclude, 10, 4, 3, 8, 0, RGB(12, 24, 30)
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATK_SIDE, 3, 2, 10, RGB_WHITE
+	createsprite gThinRingExpandingSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, 0, 1
+	playsewithpan SE_M_HEAL_BELL, SOUND_PAN_ATTACKER
+	return
 
 gUnknown_82824B5: @ 0x082824B5
 	.incbin "baserom_jp.gba", 0x2824b5, 0x3b
