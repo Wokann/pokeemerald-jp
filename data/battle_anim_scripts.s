@@ -336,7 +336,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_AIR_CUTTER                   @ MOVE_AIR_CUTTER
 	.4byte gUnknown_8284C1B                  @ 315
 	.4byte Move_ODOR_SLEUTH                  @ MOVE_ODOR_SLEUTH
-	.4byte gUnknown_82847AB                  @ 317
+	.4byte Move_ROCK_TOMB                    @ MOVE_ROCK_TOMB
 	.4byte gUnknown_8284892                  @ 318
 	.4byte Move_METAL_SOUND                  @ MOVE_METAL_SOUND
 	.4byte Move_GRASS_WHISTLE                @ MOVE_GRASS_WHISTLE
@@ -9169,8 +9169,37 @@ Move_BLAST_BURN: @ 0x08284569
 	blendoff
 	end
 
-gUnknown_82847AB: @ 0x082847AB
-	.incbin "baserom_jp.gba", 0x2847ab, 0xe7
+Move_ROCK_TOMB: @ 0x082847AB
+	loadspritegfx ANIM_TAG_X_SIGN
+	loadspritegfx ANIM_TAG_ROCKS
+	shake_battle_platforms x_offset=2, y_offset=0, shakes=10, delay=1
+	waitforvisualfinish
+	createsprite gRockTombRockSpriteTemplate, ANIM_TARGET, 2, 20, 12, 64, 114, 0
+	delay 8
+	shake_battle_platforms x_offset=0, y_offset=2, shakes=3, delay=1
+	playsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET
+	delay 8
+	createsprite gRockTombRockSpriteTemplate, ANIM_TARGET, 2, -20, 12, 64, 98, 0
+	delay 8
+	shake_battle_platforms x_offset=0, y_offset=2, shakes=3, delay=1
+	playsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET
+	delay 8
+	createsprite gRockTombRockSpriteTemplate, ANIM_TARGET, 66, 3, 6, 64, 82, 0
+	delay 8
+	shake_battle_platforms x_offset=0, y_offset=2, shakes=3, delay=1
+	playsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET
+	delay 8
+	createsprite gRockTombRockSpriteTemplate, ANIM_TARGET, 2, -3, 13, 64, 66, 0
+	delay 8
+	shake_battle_platforms x_offset=0, y_offset=2, shakes=3, delay=1
+	playsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET
+	delay 24
+	playsewithpan SE_M_HYPER_BEAM, SOUND_PAN_TARGET
+	createsprite gRedXSpriteTemplate, ANIM_TARGET, 5, ANIM_TARGET, 50
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 3, 0, 20, 1
+	shake_battle_platforms x_offset=2, y_offset=0, shakes=10, delay=1
+	waitforvisualfinish
+	end
 
 gUnknown_8284892: @ 0x08284892
 	.incbin "baserom_jp.gba", 0x284892, 0x218
