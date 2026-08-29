@@ -1000,16 +1000,19 @@ gSilverWindMediumSparkAffineAnimTable: @ 0x856E40C
 gSilverWindSmallSparkAffineAnimTable: @ 0x856E410
 	.4byte 0x0856E3F0
 
+	.globl gSilverWindBigSparkSpriteTemplate
 gSilverWindBigSparkSpriteTemplate: @ 0x856E414
 	.hword 0x281F, 0x281F
 	.4byte 0x084FD078, gDummySpriteAnimTable
 	.4byte 0x00000000, 0x0856E408, 0x08100E91
 
+	.globl gSilverWindMediumSparkSpriteTemplate
 gSilverWindMediumSparkSpriteTemplate: @ 0x856E42C
 	.hword 0x281F, 0x281F
 	.4byte 0x084FD078, gDummySpriteAnimTable
 	.4byte 0x00000000, 0x0856E40C, 0x08100E91
 
+	.globl gSilverWindSmallSparkSpriteTemplate
 gSilverWindSmallSparkSpriteTemplate: @ 0x856E444
 	.hword 0x281F, 0x281F
 	.4byte 0x084FD078, gDummySpriteAnimTable
