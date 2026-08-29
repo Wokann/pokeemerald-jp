@@ -141,7 +141,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MIRROR_MOVE                      @ MOVE_MIRROR_MOVE
 	.4byte Move_SELF_DESTRUCT                 @ MOVE_SELF_DESTRUCT
 	.4byte Move_EGG_BOMB                     @ MOVE_EGG_BOMB
-	.4byte gUnknown_8281C2F                  @ 122
+	.4byte Move_LICK                         @ MOVE_LICK
 	.4byte Move_SMOG                         @ MOVE_SMOG
 	.4byte Move_SLUDGE                       @ MOVE_SLUDGE
 	.4byte Move_BONE_CLUB                    @ MOVE_BONE_CLUB
@@ -7386,8 +7386,14 @@ Move_SHADOW_BALL: @ 0x08281BEC
 	waitbgfadein
 	end
 
-gUnknown_8281C2F: @ 0x08281C2F
-	.incbin "baserom_jp.gba", 0x281c2f, 0x27
+Move_LICK: @ 0x08281C2F
+	loadspritegfx ANIM_TAG_LICK
+	delay 15
+	playsewithpan SE_M_LICK, SOUND_PAN_TARGET
+	createsprite gLickSpriteTemplate, ANIM_TARGET, 2, 0, 0
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 1, 0, 16, 1
+	waitforvisualfinish
+	end
 
 gUnknown_8281C56: @ 0x08281C56
 	.incbin "baserom_jp.gba", 0x281c56, 0x40
