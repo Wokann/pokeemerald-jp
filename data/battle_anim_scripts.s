@@ -397,7 +397,7 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_TurnTrap                   @ 006
 	.4byte General_HeldItemEffect             @ 007
 	.4byte General_SmokeballEscape             @ 008
-	.4byte gUnknown_82867DF                  @ 009
+	.4byte General_FocusBand                  @ 009
 	.4byte gUnknown_828682C                  @ 010
 	.4byte gUnknown_8286875                  @ 011
 	.4byte gUnknown_828687A                  @ 012
@@ -10539,8 +10539,16 @@ General_SmokeballEscape: @ 0x08286703
 	blendoff
 	end
 
-gUnknown_82867DF: @ 0x082867DF
-	.incbin "baserom_jp.gba", 0x2867df, 0x4d
+General_FocusBand: @ 0x082867DF
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_ATTACKER, delay=7, initial_blend_y=0, target_blend_y=9, color=RGB_RED
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_SlideMonForFocusBand, 5, 30, 128, 0, 1, 2, 0, 1
+	waitforvisualfinish
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_ATTACKER, delay=4, initial_blend_y=9, target_blend_y=0, color=RGB_RED
+	waitforvisualfinish
+	delay 6
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 0, 0, 0, 15
+	end
 
 gUnknown_828682C: @ 0x0828682C
 	.incbin "baserom_jp.gba", 0x28682c, 0x49
