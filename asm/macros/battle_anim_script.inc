@@ -457,6 +457,14 @@
 	createsprite gSporeParticleSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \wave_offset, \duration, \blend
 	.endm
 
+	.macro create_petal_dance_big_flower_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req, target_y:req, duration:req
+	createsprite gPetalDanceBigFlowerSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \target_y, \duration
+	.endm
+
+	.macro create_petal_dance_small_flower_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req, target_y:req, duration:req
+	createsprite gPetalDanceSmallFlowerSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \target_y, \duration
+	.endm
+
 	.macro create_dragon_breath_fire_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req, target_x:req, target_y:req, duration:req
 	createsprite gDragonBreathFireSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \target_x, \target_y, \duration
 	.endm

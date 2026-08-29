@@ -669,11 +669,13 @@ gPetalDanceBigFlowerAnimTable: @ 0x856DEF8
 gPetalDanceSmallFlowerAnimTable: @ 0x856DEFC
 	.4byte 0x0856DEF0
 
+	.globl gPetalDanceBigFlowerSpriteTemplate
 gPetalDanceBigFlowerSpriteTemplate: @ 0x856DF00
 	.hword 0x27AF, 0x27AF
 	.4byte 0x084FD018, 0x0856DEF8
 	.4byte 0x00000000, gDummySpriteAffineAnimTable, 0x080FF6C9
 
+	.globl gPetalDanceSmallFlowerSpriteTemplate
 gPetalDanceSmallFlowerSpriteTemplate: @ 0x856DF18
 	.hword 0x27AF, 0x27AF
 	.4byte 0x084FD010, 0x0856DEFC
