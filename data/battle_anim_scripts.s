@@ -206,7 +206,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82824F0                  @ 184
 	.4byte gUnknown_827E7EC                  @ 185
 	.4byte gUnknown_8282553                  @ 186
-	.4byte gUnknown_827DA65                  @ 187
+	.4byte Move_BELLY_DRUM                   @ MOVE_BELLY_DRUM
 	.4byte gUnknown_827FB33                  @ 188
 	.4byte gUnknown_827E91B                  @ 189
 	.4byte gUnknown_828110A                  @ 190
@@ -4593,8 +4593,48 @@ Move_HARDEN:
 	waitforvisualfinish
 	end
 
-gUnknown_827DA65: @ 0x0827DA65
-	.incbin "baserom_jp.gba", 0x27da65, 0xe8
+Move_BELLY_DRUM:
+	loadspritegfx ANIM_TAG_MUSIC_NOTES
+	loadspritegfx ANIM_TAG_PURPLE_HAND_OUTLINE
+	createvisualtask AnimTask_MusicNotesRainbowBlend, 2
+	waitforvisualfinish
+	call BellyDrumRight
+	createsprite gSlowFlyingMusicNotesSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 0, 0
+	playsewithpan SE_M_BELLY_DRUM, SOUND_PAN_ATTACKER
+	delay 15
+	call BellyDrumLeft
+	createsprite gSlowFlyingMusicNotesSpriteTemplate, ANIM_ATTACKER, 2, 1, 1, 1, 0
+	playsewithpan SE_M_BELLY_DRUM, SOUND_PAN_ATTACKER
+	delay 15
+	call BellyDrumRight
+	createsprite gSlowFlyingMusicNotesSpriteTemplate, ANIM_ATTACKER, 2, 0, 3, 3, 128
+	playsewithpan SE_M_BELLY_DRUM, SOUND_PAN_ATTACKER
+	delay 7
+	call BellyDrumLeft
+	createsprite gSlowFlyingMusicNotesSpriteTemplate, ANIM_ATTACKER, 2, 1, 2, 0, 128
+	playsewithpan SE_M_BELLY_DRUM, SOUND_PAN_ATTACKER
+	delay 7
+	call BellyDrumRight
+	createsprite gSlowFlyingMusicNotesSpriteTemplate, ANIM_ATTACKER, 2, 0, 1, 1, 0
+	playsewithpan SE_M_BELLY_DRUM, SOUND_PAN_ATTACKER
+	delay 7
+	call BellyDrumLeft
+	createsprite gSlowFlyingMusicNotesSpriteTemplate, ANIM_ATTACKER, 2, 1, 0, 3, 0
+	playsewithpan SE_M_BELLY_DRUM, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createvisualtask AnimTask_MusicNotesClearRainbowBlend, 2
+	waitforvisualfinish
+	end
+
+BellyDrumLeft:
+	createsprite gBellyDrumHandSpriteTemplate, ANIM_ATTACKER, 3, 0
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_ATTACKER, 0, 8, 2, 1
+	return
+
+BellyDrumRight:
+	createsprite gBellyDrumHandSpriteTemplate, ANIM_ATTACKER, 3, 1
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_ATTACKER, 0, 8, 2, 1
+	return
 
 gUnknown_827DB4D: @ 0x0827DB4D
 	.incbin "baserom_jp.gba", 0x27db4d, 0x138
