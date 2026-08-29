@@ -208,7 +208,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8282553                  @ 186
 	.4byte Move_BELLY_DRUM                   @ MOVE_BELLY_DRUM
 	.4byte gUnknown_827FB33                  @ 188
-	.4byte gUnknown_827E91B                  @ 189
+	.4byte Move_MUD_SLAP                     @ MOVE_MUD_SLAP
 	.4byte gUnknown_828110A                  @ 190
 	.4byte gUnknown_827FE54                  @ 191
 	.4byte gUnknown_828181F                  @ 192
@@ -5231,8 +5231,29 @@ SandAttackDirt:
 	delay 2
 	return
 
-gUnknown_827E91B: @ 0x0827E91B
-	.incbin "baserom_jp.gba", 0x27e91b, 0x9e
+Move_MUD_SLAP: @ 0x0827E91B
+	loadspritegfx ANIM_TAG_MUD_SAND
+	playsewithpan SE_M_SAND_ATTACK, SOUND_PAN_ATTACKER
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, -10, 0, 0, 3
+	waitforvisualfinish
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 2
+	call MudSlapMud
+	call MudSlapMud
+	call MudSlapMud
+	call MudSlapMud
+	call MudSlapMud
+	call MudSlapMud
+	waitforvisualfinish
+	end
+
+MudSlapMud:
+	createsprite gMudSlapMudSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, 0, 0
+	createsprite gMudSlapMudSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, 10, 5
+	createsprite gMudSlapMudSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, -10, -5
+	createsprite gMudSlapMudSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, 20, 10
+	createsprite gMudSlapMudSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, -20, -10
+	delay 2
+	return
 
 gUnknown_827E9B9: @ 0x0827E9B9
 	.incbin "baserom_jp.gba", 0x27e9b9, 0xdd
