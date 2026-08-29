@@ -1444,7 +1444,11 @@ gSupersonicRingSpriteTemplate: @ 0x856F00C
 gScreechRingSpriteTemplate: @ 0x856F024
 	.incbin "baserom_jp.gba", 0x56f024, 0x18
 
-	.incbin "baserom_jp.gba", 0x56f03c, 0x30
+	.globl gMetalSoundSpriteTemplate
+gMetalSoundSpriteTemplate: @ 0x856F03C
+	.incbin "baserom_jp.gba", 0x56f03c, 0x18
+
+	.incbin "baserom_jp.gba", 0x56f054, 0x18
 
 	.globl gEggThrowSpriteTemplate
 gEggThrowSpriteTemplate: @ 0x856F06C

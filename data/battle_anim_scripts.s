@@ -338,7 +338,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ODOR_SLEUTH                  @ MOVE_ODOR_SLEUTH
 	.4byte gUnknown_82847AB                  @ 317
 	.4byte gUnknown_8284892                  @ 318
-	.4byte gUnknown_8283F3E                  @ 319
+	.4byte Move_METAL_SOUND                  @ MOVE_METAL_SOUND
 	.4byte Move_GRASS_WHISTLE                @ MOVE_GRASS_WHISTLE
 	.4byte Move_TICKLE                       @ MOVE_TICKLE
 	.4byte gUnknown_82844E4                  @ 322
@@ -8884,8 +8884,26 @@ Move_FRENZY_PLANT: @ 0x08283D9A
 	blendoff
 	end
 
-gUnknown_8283F3E: @ 0x08283F3E
-	.incbin "baserom_jp.gba", 0x283f3e, 0x50
+Move_METAL_SOUND: @ 0x08283F3E
+	loadspritegfx ANIM_TAG_METAL_SOUND_WAVES
+	monbg ANIM_DEF_PARTNER
+	splitbgprio_foes ANIM_TARGET
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 2, 0, 8, 1
+	call MetalSoundRings
+	call MetalSoundRings
+	call MetalSoundRings
+	call MetalSoundRings
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	delay 0
+	waitforvisualfinish
+	end
+
+MetalSoundRings:
+	panse SE_M_SCREECH, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	createsprite gMetalSoundSpriteTemplate, ANIM_TARGET, 2, 16, 0, 0, 0, 30, 0
+	delay 2
+	return
 
 gUnknown_8283F8E: @ 0x08283F8E
 	.incbin "baserom_jp.gba", 0x283f8e, 0xc7
