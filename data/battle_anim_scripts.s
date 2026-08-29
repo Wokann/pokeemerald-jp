@@ -396,7 +396,7 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_ItemKnockoff               @ 005
 	.4byte General_TurnTrap                   @ 006
 	.4byte General_HeldItemEffect             @ 007
-	.4byte gUnknown_8286703                  @ 008
+	.4byte General_SmokeballEscape             @ 008
 	.4byte gUnknown_82867DF                  @ 009
 	.4byte gUnknown_828682C                  @ 010
 	.4byte gUnknown_8286875                  @ 011
@@ -10501,8 +10501,43 @@ General_HeldItemEffect: @ 0x0828668F
 	waitforvisualfinish
 	end
 
-gUnknown_8286703: @ 0x08286703
-	.incbin "baserom_jp.gba", 0x286703, 0xdc
+General_SmokeballEscape: @ 0x08286703
+	loadspritegfx ANIM_TAG_PINK_CLOUD
+	monbg ANIM_ATTACKER
+	setalpha 12, 4
+	delay 0
+	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_TARGET, 0, 0, 32, 28, 30
+	delay 4
+	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_ATTACKER, 127, 2, 12, 20, 30
+	delay 12
+	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_ATTACKER, 126, 2, -28, 4, 30
+	delay 12
+	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_ATTACKER, 124, 2, 14, -20, 30
+	delay 4
+	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
+	attacker_fade_to_invisible step_delay=2
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_ATTACKER, 123, 3, 4, 4, 30
+	delay 14
+	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_ATTACKER, 122, 3, -14, 18, 46
+	delay 0
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_ATTACKER, 121, 3, 14, -14, 46
+	delay 0
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_ATTACKER, 120, 3, -12, -10, 46
+	delay 0
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_ATTACKER, 119, 3, 14, 14, 46
+	delay 0
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_ATTACKER, 118, 3, 0, 0, 46
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	invisible ANIM_ATTACKER
+	delay 0
+	blendoff
+	end
 
 gUnknown_82867DF: @ 0x082867DF
 	.incbin "baserom_jp.gba", 0x2867df, 0x4d
