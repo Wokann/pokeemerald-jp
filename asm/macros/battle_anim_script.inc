@@ -335,6 +335,10 @@
 	createsprite gAbsorptionOrbSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \wave_amplitude, \wave_period
 	.endm
 
+	.macro create_leech_life_needle_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req
+	createsprite gLeechLifeNeedleSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration
+	.endm
+
 	.macro create_flashing_hitsplat_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, relative_to:req, animation:req
 	createsprite gFlashingHitSplatSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \relative_to, \animation
 	.endm

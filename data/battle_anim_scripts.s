@@ -160,7 +160,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828136E                  @ 138
 	.4byte gUnknown_8281571                  @ 139
 	.4byte Move_BARRAGE                      @ MOVE_BARRAGE
-	.4byte gUnknown_827F9D6                  @ 141
+	.4byte Move_LEECH_LIFE                   @ MOVE_LEECH_LIFE
 	.4byte gUnknown_82825BC                  @ 142
 	.4byte Move_SKY_ATTACK                   @ MOVE_SKY_ATTACK
 	.4byte gUnknown_8283161                  @ 144
@@ -5898,8 +5898,35 @@ GigaDrainAbsorbEffect:
 	delay 4
 	return
 
-gUnknown_827F9D6: @ 0x0827F9D6
-	.incbin "baserom_jp.gba", 0x27f9d6, 0x82
+Move_LEECH_LIFE:: @ 0x0827F9D6
+	loadspritegfx ANIM_TAG_NEEDLE
+	loadspritegfx ANIM_TAG_ORBS
+	delay 1
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	splitbgprio_foes ANIM_TARGET
+	setalpha 12, 8
+	delay 1
+	create_leech_life_needle_sprite ANIM_ATTACKER, 2, x=-20, y=15, duration=12
+	waitforvisualfinish
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	playsewithpan SE_M_ABSORB, SOUND_PAN_TARGET
+	delay 2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 5, 5, 1
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=7, color=RGB_BLACK
+	waitforvisualfinish
+	call AbsorbEffect
+	waitforvisualfinish
+	delay 15
+	call HealingEffect
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=7, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_827FA58: @ 0x0827FA58
 	.incbin "baserom_jp.gba", 0x27fa58, 0x2a
