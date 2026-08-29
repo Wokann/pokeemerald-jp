@@ -328,7 +328,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_CRUSH_CLAW                   @ MOVE_CRUSH_CLAW
 	.4byte gUnknown_8284569                  @ 307
 	.4byte gUnknown_8284F0D                  @ 308
-	.4byte gUnknown_8283C31                  @ 309
+	.4byte Move_METEOR_MASH                  @ MOVE_METEOR_MASH
 	.4byte gUnknown_828503F                  @ 310
 	.4byte gUnknown_82859FA                  @ 311
 	.4byte Move_AROMATHERAPY                 @ MOVE_AROMATHERAPY
@@ -8752,8 +8752,30 @@ MudShotOrbs:
 	delay 2
 	return
 
-gUnknown_8283C31: @ 0x08283C31
-	.incbin "baserom_jp.gba", 0x283c31, 0x87
+Move_METEOR_MASH: @ 0x08283C31
+	loadspritegfx ANIM_TAG_GOLD_STARS
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	panse SE_M_BARRIER, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +3, 0
+	fadetobg BG_COSMIC
+	waitbgfadein
+	waitforvisualfinish
+	createsprite gMeteorMashStarSpriteTemplate, ANIM_TARGET, 3, -48, -64, 72, 32, 30
+	delay 10
+	createsprite gMeteorMashStarSpriteTemplate, ANIM_TARGET, 3, -112, -64, 8, 32, 30
+	delay 40
+	createsprite gSpinningHandOrFootSpriteTemplate, ANIM_TARGET, 3, 0, 0, 0, 30
+	createsprite gMeteorMashStarSpriteTemplate, ANIM_TARGET, 3, -80, -64, 40, 32, 30
+	delay 20
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 5, 0, 20, 1
+	waitforvisualfinish
+	delay 10
+	restorebg
+	waitbgfadein
+	waitforvisualfinish
+	end
 
 gUnknown_8283CB8: @ 0x08283CB8
 	.incbin "baserom_jp.gba", 0x283cb8, 0x97
