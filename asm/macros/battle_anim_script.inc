@@ -481,6 +481,10 @@
 	createvisualtask AnimTask_LeafBlade, \priority
 	.endm
 
+	.macro create_surf_wave priority=2, palette:req
+	createvisualtask AnimTask_CreateSurfWave, \priority, \palette
+	.endm
+
 	.macro metallic_shine priority=5, permanent:req, color
 	.ifb \color
 	createvisualtask AnimTask_MetallicShine, \priority, \permanent, FALSE, RGB_BLACK

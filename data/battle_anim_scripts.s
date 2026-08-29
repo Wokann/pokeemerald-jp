@@ -76,7 +76,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8281170                  @ 054
 	.4byte Move_WATER_GUN                    @ MOVE_WATER_GUN
 	.4byte Move_HYDRO_PUMP                   @ MOVE_HYDRO_PUMP
-	.4byte gUnknown_8280351                  @ 057
+	.4byte Move_SURF                         @ MOVE_SURF
 	.4byte Move_ICE_BEAM                     @ MOVE_ICE_BEAM
 	.4byte Move_BLIZZARD                     @ MOVE_BLIZZARD
 	.4byte gUnknown_828169F                  @ 060
@@ -6319,8 +6319,12 @@ Move_CRABHAMMER: @ 0x08280257
 	blendoff
 	end
 
-gUnknown_8280351: @ 0x08280351
-	.incbin "baserom_jp.gba", 0x280351, 0x14
+Move_SURF: @ 0x08280351
+	create_surf_wave palette=ANIM_SURF_PAL_SURF
+	delay 24
+	panse SE_M_SURF, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	waitforvisualfinish
+	end
 
 gUnknown_8280365: @ 0x08280365
 	.incbin "baserom_jp.gba", 0x280365, 0x9d
