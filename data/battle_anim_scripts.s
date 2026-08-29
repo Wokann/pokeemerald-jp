@@ -324,7 +324,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_NEEDLE_ARM                   @ MOVE_NEEDLE_ARM
 	.4byte Move_SLACK_OFF                    @ MOVE_SLACK_OFF
 	.4byte Move_HYPER_VOICE                  @ MOVE_HYPER_VOICE
-	.4byte gUnknown_8283D4F                  @ 305
+	.4byte Move_POISON_FANG                  @ MOVE_POISON_FANG
 	.4byte Move_CRUSH_CLAW                   @ MOVE_CRUSH_CLAW
 	.4byte gUnknown_8284569                  @ 307
 	.4byte gUnknown_8284F0D                  @ 308
@@ -8806,8 +8806,18 @@ Move_REVENGE: @ 0x08283CB8
 	blendoff
 	end
 
-gUnknown_8283D4F: @ 0x08283D4F
-	.incbin "baserom_jp.gba", 0x283d4f, 0x3f
+Move_POISON_FANG: @ 0x08283D4F
+	loadspritegfx ANIM_TAG_FANG_ATTACK
+	loadspritegfx ANIM_TAG_POISON_BUBBLE
+	playsewithpan SE_M_BITE, SOUND_PAN_TARGET
+	createsprite gFangSpriteTemplate, ANIM_TARGET, 2
+	delay 10
+	createvisualtask AnimTask_ShakeMon, 3, ANIM_TARGET, 3, 0, 10, 1
+	waitforvisualfinish
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=0, num_blends=4, initial_blend_y=0, target_blend_y=12, color=RGB(26, 0, 26)
+	call PoisonBubblesEffect
+	waitforvisualfinish
+	end
 
 gUnknown_8283D8E: @ 0x08283D8E
 	.incbin "baserom_jp.gba", 0x283d8e, 0xc
