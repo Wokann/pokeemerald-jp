@@ -269,7 +269,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8281BEC                  @ 247
 	.4byte Move_FUTURE_SIGHT                  @ MOVE_FUTURE_SIGHT
 	.4byte gUnknown_8280AF3                  @ 249
-	.4byte gUnknown_828048A                  @ 250
+	.4byte Move_WHIRLPOOL                    @ MOVE_WHIRLPOOL
 	.4byte Move_BEAT_UP                      @ MOVE_BEAT_UP
 	.4byte gUnknown_82824B5                  @ 252
 	.4byte Move_UPROAR                       @ MOVE_UPROAR
@@ -6380,8 +6380,38 @@ Move_SANDSTORM: @ 0x08280402
 	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 60, 2560, 96, 0
 	end
 
-gUnknown_828048A: @ 0x0828048A
-	.incbin "baserom_jp.gba", 0x28048a, 0xe3
+Move_WHIRLPOOL: @ 0x0828048A
+	loadspritegfx ANIM_TAG_WATER_ORB
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	delay 0
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=0, target_blend_y=7, color=RGB(0, 13, 23)
+	playsewithpan SE_M_WHIRLPOOL, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 2, 50, 1
+	call WhirlpoolEffect
+	call WhirlpoolEffect
+	call WhirlpoolEffect
+	delay 12
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=7, target_blend_y=0, color=RGB(0, 13, 23)
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
+
+WhirlpoolEffect:
+	createsprite gWhirlpoolSpriteTemplate, ANIM_TARGET, 2, 0, 28, 384, 50, 8, 50, ANIM_TARGET
+	delay 2
+	createsprite gWhirlpoolSpriteTemplate, ANIM_TARGET, 2, 0, 32, 240, 40, 11, -46, ANIM_TARGET
+	delay 2
+	createsprite gWhirlpoolSpriteTemplate, ANIM_TARGET, 2, 0, 33, 416, 40, 4, 42, ANIM_TARGET
+	delay 2
+	createsprite gWhirlpoolSpriteTemplate, ANIM_TARGET, 2, 0, 31, 288, 45, 6, -42, ANIM_TARGET
+	delay 2
+	createsprite gWhirlpoolSpriteTemplate, ANIM_TARGET, 2, 0, 28, 448, 45, 11, 46, ANIM_TARGET
+	delay 2
+	createsprite gWhirlpoolSpriteTemplate, ANIM_TARGET, 2, 0, 33, 464, 50, 10, -50, ANIM_TARGET
+	delay 2
+	return
 
 gUnknown_828056D: @ 0x0828056D
 	.incbin "baserom_jp.gba", 0x28056d, 0x6a
