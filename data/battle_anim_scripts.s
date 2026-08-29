@@ -154,7 +154,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_CONSTRICT                    @ MOVE_CONSTRICT
 	.4byte Move_AMNESIA                      @ MOVE_AMNESIA
 	.4byte Move_KINESIS                      @ MOVE_KINESIS
-	.4byte gUnknown_8282239                  @ 135
+	.4byte Move_SOFT_BOILED                  @ MOVE_SOFT_BOILED
 	.4byte Move_HI_JUMP_KICK                  @ MOVE_HI_JUMP_KICK
 	.4byte Move_GLARE                        @ MOVE_GLARE
 	.4byte Move_DREAM_EATER                  @ MOVE_DREAM_EATER
@@ -7701,8 +7701,28 @@ CurseStats1:
 	blend_color_cycle priority=5, selector=F_PAL_ATTACKER, delay=4, num_blends=2, initial_blend_y=0, target_blend_y=10, color=RGB_RED
 	return
 
-gUnknown_8282239: @ 0x08282239
-	.incbin "baserom_jp.gba", 0x282239, 0x82
+Move_SOFT_BOILED: @ 0x08282239
+	loadspritegfx ANIM_TAG_BREAKING_EGG
+	loadspritegfx ANIM_TAG_THIN_RING
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	monbg ANIM_ATK_PARTNER
+	playsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_ATTACKER, 0, 2, 6, 1
+	createsprite gSoftBoiledEggSpriteTemplate, ANIM_ATTACKER, 4, 0, 16, 0
+	createsprite gSoftBoiledEggSpriteTemplate, ANIM_ATTACKER, 4, 0, 16, 1
+	delay 120
+	delay 7
+	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_ATTACKER
+	simple_palette_blend selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, initial_blend_y=10, target_blend_y=0, color=RGB(12, 24, 30)
+	createsprite gThinRingExpandingSpriteTemplate, ANIM_ATTACKER, 3, 31, 16, 0, 1
+	delay 8
+	createsprite gThinRingExpandingSpriteTemplate, ANIM_ATTACKER, 3, 31, 16, 0, 1
+	delay 60
+	setarg 7, 0xFFFF
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	call HealingEffect2
+	end
 
 gUnknown_82822BB: @ 0x082822BB
 	.incbin "baserom_jp.gba", 0x2822bb, 0x1fa
