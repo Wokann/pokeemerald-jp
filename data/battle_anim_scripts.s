@@ -78,7 +78,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827F33F                  @ 056
 	.4byte gUnknown_8280351                  @ 057
 	.4byte Move_ICE_BEAM                     @ MOVE_ICE_BEAM
-	.4byte gUnknown_827F0B9                  @ 059
+	.4byte Move_BLIZZARD                     @ MOVE_BLIZZARD
 	.4byte gUnknown_828169F                  @ 060
 	.4byte Move_BUBBLE_BEAM                  @ MOVE_BUBBLE_BEAM
 	.4byte Move_AURORA_BEAM                  @ MOVE_AURORA_BEAM
@@ -5540,8 +5540,57 @@ SolarBeamUnleash1:
 	delay 4
 	return
 
-gUnknown_827F0B9: @ 0x0827F0B9
-	.incbin "baserom_jp.gba", 0x27f0b9, 0x18c
+Move_BLIZZARD: @ 0x0827F0B9
+	loadspritegfx ANIM_TAG_ICE_CRYSTALS
+	monbg ANIM_DEF_PARTNER
+	createvisualtask AnimTask_GetAttackerSide, 2
+	jumprettrue BlizzardAgainstPlayer
+	fadetobg BG_HIGHSPEED_OPPONENT
+BlizzardContinue:
+	waitbgfadeout
+	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 0, 1, -1
+	waitbgfadein
+	waitforvisualfinish
+	panse SE_M_BLIZZARD, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	call BlizzardIceCrystals
+	call BlizzardIceCrystals
+	playsewithpan SE_M_BLIZZARD2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	call IceCrystalEffectLong
+	waitforvisualfinish
+	delay 20
+	restorebg
+	waitbgfadeout
+	setarg 7, 0xFFFF
+	waitbgfadein
+	clearmonbg ANIM_DEF_PARTNER
+	end
+BlizzardIceCrystals:
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -10, 0, -10, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_ATTACKER, 40, 0, 0, 0, 0, 80, 0, 0, 1
+	delay 3
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -15, 0, -15, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_ATTACKER, 40, 0, -10, 0, -10, 80, 0, 0, 1
+	delay 3
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -5, 0, -5, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_ATTACKER, 40, 0, 10, 0, 10, 80, 0, 0, 1
+	delay 3
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -10, 0, -10, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_ATTACKER, 40, 0, -20, 0, -20, 80, 0, 0, 1
+	delay 3
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -20, 0, -20, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_ATTACKER, 40, 0, 15, 0, 15, 80, 0, 0, 1
+	delay 3
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -15, 0, -15, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_ATTACKER, 40, 0, -20, 0, -20, 80, 0, 0, 1
+	delay 3
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -25, 0, -25, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_ATTACKER, 40, 0, 20, 0, 20, 80, 0, 0, 1
+	delay 3
+	return
+BlizzardAgainstPlayer:
+	fadetobg BG_HIGHSPEED_PLAYER
+	goto BlizzardContinue
 
 gUnknown_827F245: @ 0x0827F245
 	.incbin "baserom_jp.gba", 0x27f245, 0xfa
@@ -5982,7 +6031,10 @@ gUnknown_8285C76: @ 0x08285C76
 	.incbin "baserom_jp.gba", 0x285c76, 0x31
 
 IceCrystalEffectShort: @ 0x08285CA7
-	.incbin "baserom_jp.gba", 0x285ca7, 0x1d8
+	.incbin "baserom_jp.gba", 0x285ca7, 0x84
+
+IceCrystalEffectLong: @ 0x08285D2B
+	.incbin "baserom_jp.gba", 0x285d2b, 0x154
 
 IceSpikesEffectLong: @ 0x08285E7F
 	.incbin "baserom_jp.gba", 0x285e7f, 0xe7
