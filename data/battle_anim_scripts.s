@@ -240,7 +240,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_FRUSTRATION                   @ MOVE_FRUSTRATION
 	.4byte Move_SAFEGUARD                     @ MOVE_SAFEGUARD
 	.4byte Move_PAIN_SPLIT                   @ MOVE_PAIN_SPLIT
-	.4byte gUnknown_827E0E4                  @ 221
+	.4byte Move_SACRED_FIRE                   @ MOVE_SACRED_FIRE
 	.4byte Move_MAGNITUDE                    @ MOVE_MAGNITUDE
 	.4byte gUnknown_82808E1                  @ 223
 	.4byte gUnknown_827FEAB                  @ 224
@@ -4869,8 +4869,62 @@ Move_THUNDER_PUNCH: @ 0x0827E01B
 	blendoff
 	end
 
-gUnknown_827E0E4: @ 0x0827E0E4
-	.incbin "baserom_jp.gba", 0x27e0e4, 0x1e7
+Move_SACRED_FIRE: @ 0x0827E0E4
+	loadspritegfx ANIM_TAG_FIRE
+	loadspritegfx ANIM_TAG_FIRE_PLUME
+	loopsewithpan SE_M_SACRED_FIRE, SOUND_PAN_ATTACKER, 7, 5
+	createsprite gFirePlumeSpriteTemplate, ANIM_ATTACKER, 2, -32, 0, 50, 5, -2, 0
+	delay 1
+	createsprite gFirePlumeSpriteTemplate, ANIM_ATTACKER, 66, -20, -10, 50, 5, -1, -1
+	delay 1
+	createsprite gFirePlumeSpriteTemplate, ANIM_ATTACKER, 66, 0, -16, 50, 5, 0, -1
+	delay 1
+	createsprite gFirePlumeSpriteTemplate, ANIM_ATTACKER, 66, 20, -10, 50, 5, 1, -1
+	delay 1
+	createsprite gFirePlumeSpriteTemplate, ANIM_ATTACKER, 2, 32, 0, 50, 5, 2, 0
+	delay 1
+	createsprite gFirePlumeSpriteTemplate, ANIM_ATTACKER, 2, 20, 10, 50, 5, 1, 1
+	delay 1
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
+	delay 1
+	createsprite gFirePlumeSpriteTemplate, ANIM_ATTACKER, 2, 0, 16, 50, 5, 0, 1
+	delay 1
+	createsprite gFirePlumeSpriteTemplate, ANIM_ATTACKER, 2, -20, 10, 50, 5, -1, 1
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
+	delay 1
+	waitforvisualfinish
+	playsewithpan SE_M_SACRED_FIRE2, SOUND_PAN_TARGET
+	createsprite gLargeFlameSpriteTemplate, ANIM_TARGET, 2, -16, 0, 70, 16, 0, 1
+	delay 10
+	playsewithpan SE_M_SACRED_FIRE2, SOUND_PAN_TARGET
+	createsprite gLargeFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 70, 16, 0, 1
+	delay 10
+	playsewithpan SE_M_SACRED_FIRE2, SOUND_PAN_TARGET
+	createsprite gLargeFlameSpriteTemplate, ANIM_TARGET, 2, 16, 0, 80, 16, 0, 1
+	delay 1
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
+	delay 1
+	waitforvisualfinish
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
+	delay 1
+	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET
+	createsprite gLargeFlameScatterSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 30, -1, 0
+	delay 1
+	createsprite gLargeFlameScatterSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 30, 0, 1
+	delay 1
+	createsprite gLargeFlameScatterSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 30, -1, -1
+	delay 1
+	createsprite gLargeFlameScatterSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 30, 2, 1
+	delay 1
+	createsprite gLargeFlameScatterSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 30, 1, -1
+	delay 1
+	createsprite gLargeFlameScatterSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 30, -1, 1
+	delay 1
+	createsprite gLargeFlameScatterSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 30, 1, -2
+	delay 1
+	createsprite gLargeFlameScatterSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 30, 3, 1
+	waitforvisualfinish
+	end
 
 gUnknown_827E2CB: @ 0x0827E2CB
 	.incbin "baserom_jp.gba", 0x27e2cb, 0x32
