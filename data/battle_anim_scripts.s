@@ -166,7 +166,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8283161                  @ 144
 	.4byte Move_BUBBLE                       @ MOVE_BUBBLE
 	.4byte Move_DIZZY_PUNCH                  @ MOVE_DIZZY_PUNCH
-	.4byte gUnknown_8280D3E                  @ 147
+	.4byte Move_SPORE                        @ MOVE_SPORE
 	.4byte Move_FLASH                        @ MOVE_FLASH
 	.4byte gUnknown_8281799                  @ 149
 	.4byte Move_SPLASH                       @ MOVE_SPLASH
@@ -6785,8 +6785,29 @@ CreateCottonSpores:
 	delay 12
 	return
 
-gUnknown_8280D3E: @ 0x08280D3E
-	.incbin "baserom_jp.gba", 0x280d3e, 0x65
+Move_SPORE: @ 0x08280D3E
+	loadspritegfx ANIM_TAG_SPORE
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	createvisualtask AnimTask_SporeDoubleBattle, 2
+	loopsewithpan SE_M_POISON_POWDER, SOUND_PAN_TARGET, 16, 11
+	call CreateSpore
+	call CreateSpore
+	call CreateSpore
+	waitforvisualfinish
+	delay 1
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
+CreateSpore:
+	create_spore_particle_sprite ANIM_TARGET, 2, x=0, y=-20, wave_offset=85, duration=80, blend=TRUE
+	delay 12
+	create_spore_particle_sprite ANIM_TARGET, 2, x=0, y=-10, wave_offset=170, duration=80, blend=TRUE
+	delay 12
+	create_spore_particle_sprite ANIM_TARGET, 2, x=0, y=-15, wave_offset=0, duration=80, blend=TRUE
+	delay 12
+	return
 
 gUnknown_8280DA3: @ 0x08280DA3
 	.incbin "baserom_jp.gba", 0x280da3, 0x138
