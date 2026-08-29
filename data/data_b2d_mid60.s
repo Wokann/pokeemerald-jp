@@ -1701,7 +1701,17 @@ gEyeSparkleSpriteTemplate: @ 0x856F668
 gAngelSpriteTemplate: @ 0x856F68C
 	.incbin "baserom_jp.gba", 0x56f68c, 0x18
 
-	.incbin "baserom_jp.gba", 0x56f6a4, 0xc0
+	.globl gPinkHeartSpriteTemplate
+gPinkHeartSpriteTemplate: @ 0x856F6A4
+	.incbin "baserom_jp.gba", 0x56f6a4, 0x18
+
+	.incbin "baserom_jp.gba", 0x56f6bc, 0x18
+
+	.globl gDevilSpriteTemplate
+gDevilSpriteTemplate: @ 0x856F6D4
+	.incbin "baserom_jp.gba", 0x56f6d4, 0x18
+
+	.incbin "baserom_jp.gba", 0x56f6ec, 0x78
 
 	.globl gMovementWavesSpriteTemplate
 gMovementWavesSpriteTemplate: @ 0x856F764

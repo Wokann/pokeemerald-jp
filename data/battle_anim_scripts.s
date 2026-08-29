@@ -161,7 +161,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_POISON_GAS                   @ MOVE_POISON_GAS
 	.4byte Move_BARRAGE                      @ MOVE_BARRAGE
 	.4byte Move_LEECH_LIFE                   @ MOVE_LEECH_LIFE
-	.4byte gUnknown_82825BC                  @ 142
+	.4byte Move_LOVELY_KISS                  @ MOVE_LOVELY_KISS
 	.4byte Move_SKY_ATTACK                   @ MOVE_SKY_ATTACK
 	.4byte gUnknown_8283161                  @ 144
 	.4byte Move_BUBBLE                       @ MOVE_BUBBLE
@@ -7824,8 +7824,18 @@ Move_SWEET_KISS: @ 0x08282553
 	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, -384, -31
 	end
 
-gUnknown_82825BC: @ 0x082825BC
-	.incbin "baserom_jp.gba", 0x2825bc, 0x47
+Move_LOVELY_KISS: @ 0x082825BC
+	loadspritegfx ANIM_TAG_PINK_HEART
+	loadspritegfx ANIM_TAG_DEVIL
+	createsprite gDevilSpriteTemplate, ANIM_TARGET, 2, 0, -24
+	playsewithpan SE_M_PSYBEAM2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	playsewithpan SE_M_ATTRACT, SOUND_PAN_TARGET
+	createsprite gPinkHeartSpriteTemplate, ANIM_TARGET, 3, -256, -42
+	createsprite gPinkHeartSpriteTemplate, ANIM_TARGET, 3, 128, -14
+	createsprite gPinkHeartSpriteTemplate, ANIM_TARGET, 3, 416, -38
+	createsprite gPinkHeartSpriteTemplate, ANIM_TARGET, 3, -128, -22
+	end
 
 gUnknown_8282603: @ 0x08282603
 	.incbin "baserom_jp.gba", 0x282603, 0x64
