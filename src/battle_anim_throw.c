@@ -913,7 +913,7 @@ __attribute__((naked)) void sub_08170618(void)
     );
 }
 
-__attribute__((naked)) void sub_08170704(void)
+__attribute__((naked)) void AnimTask_LoadHealthboxPalsForLevelUp(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1019,7 +1019,7 @@ __attribute__((naked)) void sub_08170730(void)
     );
 }
 
-__attribute__((naked)) void sub_081707D0(void)
+__attribute__((naked)) void AnimTask_FreeHealthboxPalsForLevelUp(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1041,7 +1041,7 @@ __attribute__((naked)) void sub_081707D0(void)
     );
 }
 
-__attribute__((naked)) void sub_081707F0(void)
+__attribute__((naked)) void AnimTask_FlashHealthboxOnLevelUp(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1177,7 +1177,7 @@ __attribute__((naked)) void sub_0817081C(void)
     );
 }
 
-__attribute__((naked)) void sub_081708E8(void)
+__attribute__((naked)) void AnimTask_SwitchOutShrinkMon(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1268,7 +1268,7 @@ __attribute__((naked)) void sub_081708E8(void)
     );
 }
 
-__attribute__((naked)) void sub_08170994(void)
+__attribute__((naked)) void AnimTask_SwitchOutBallEffect(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1429,7 +1429,7 @@ __attribute__((naked)) void sub_08170994(void)
     );
 }
 
-__attribute__((naked)) void sub_08170AE0(void)
+__attribute__((naked)) void AnimTask_LoadBallGfx(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1454,7 +1454,7 @@ __attribute__((naked)) void sub_08170AE0(void)
     );
 }
 
-__attribute__((naked)) void sub_08170B08(void)
+__attribute__((naked)) void AnimTask_FreeBallGfx(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1587,7 +1587,7 @@ __attribute__((naked)) u8 ItemIdToBallId(u16 ballItem)
     );
 }
 
-__attribute__((naked)) void sub_08170BE8(void)
+__attribute__((naked)) void AnimTask_ThrowBall(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1735,7 +1735,7 @@ __attribute__((naked)) void sub_08170CD4(void)
     );
 }
 
-__attribute__((naked)) void sub_08170D10(void)
+__attribute__((naked)) void AnimTask_ThrowBall_StandingTrainer(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

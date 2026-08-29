@@ -413,7 +413,13 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_WishHeal                   @ 022
 
 gBattleAnims_Special:: @ 0x8277908
-	.4byte 0x08286B6A, 0x08286B8B, 0x08286B9C, 0x08286BAD, 0x08286C01, 0x08286C1A, 0x08286C24
+	.4byte Special_LevelUp                  @ 000
+	.4byte Special_SwitchOutPlayerMon       @ 001
+	.4byte Special_SwitchOutOpponentMon     @ 002
+	.4byte Special_BallThrow                @ 003
+	.4byte Special_BallThrowWithTrainer     @ 004
+	.4byte Special_SubstituteToMon           @ 005
+	.4byte Special_MonToSubstitute           @ 006
 Move_NONE:
 Move_MIRROR_MOVE:
 Move_POUND:
@@ -10742,4 +10748,66 @@ SnatchMoveSwapMonForSubstitute:
 	waitforvisualfinish
 	goto SnatchMoveTrySwapToSubstituteEnd
 
-	.incbin "baserom_jp.gba", 0x286b6a, 0xc6
+@ Healthbox blue flash effect on level up
+Special_LevelUp: @ 0x08286B6A
+	playsewithpan SE_EXP_MAX, 0
+	createvisualtask AnimTask_LoadHealthboxPalsForLevelUp, 2
+	delay 0
+	createvisualtask AnimTask_FlashHealthboxOnLevelUp, 5, 0, 0
+	waitforvisualfinish
+	createvisualtask AnimTask_FreeHealthboxPalsForLevelUp, 2
+	end
+
+Special_SwitchOutPlayerMon: @ 0x08286B8B
+	createvisualtask AnimTask_SwitchOutBallEffect, 2
+	delay 10
+	createvisualtask AnimTask_SwitchOutShrinkMon, 2
+	end
+
+Special_SwitchOutOpponentMon: @ 0x08286B9C
+	createvisualtask AnimTask_SwitchOutBallEffect, 2
+	delay 10
+	createvisualtask AnimTask_SwitchOutShrinkMon, 2
+	end
+
+Special_BallThrow: @ 0x08286BAD
+	createvisualtask AnimTask_LoadBallGfx, 2
+	delay 0
+	playsewithpan SE_BALL_THROW, 0
+	createvisualtask AnimTask_ThrowBall, 2
+	createvisualtask AnimTask_IsBallBlockedByTrainer, 2
+	jumpreteq -1, BallThrowTrainerBlock
+BallThrowEnd:
+	waitforvisualfinish
+	createvisualtask AnimTask_FreeBallGfx, 2
+	end
+BallThrowTrainerBlock:
+	loadspritegfx ANIM_TAG_IMPACT
+	delay 25
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	delay 0
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=-4, y=-20, relative_to=ANIM_TARGET, animation=2
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	goto BallThrowEnd
+
+Special_BallThrowWithTrainer: @ 0x08286C01
+	createvisualtask AnimTask_LoadBallGfx, 2
+	delay 0
+	createvisualtask AnimTask_ThrowBall_StandingTrainer, 2
+	waitforvisualfinish
+	createvisualtask AnimTask_FreeBallGfx, 2
+	end
+
+Special_SubstituteToMon: @ 0x08286C1A
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, TRUE
+	end
+
+Special_MonToSubstitute: @ 0x08286C24
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, FALSE
+	end
+
+	.align 2
