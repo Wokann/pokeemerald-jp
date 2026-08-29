@@ -45,7 +45,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_STOMP                        @ MOVE_STOMP
 	.4byte gUnknown_82807E8                  @ 024
 	.4byte Move_MEGA_KICK                    @ MOVE_MEGA_KICK
-	.4byte gUnknown_82806F5                  @ 026
+	.4byte Move_JUMP_KICK                     @ MOVE_JUMP_KICK
 	.4byte Move_ROLLING_KICK                 @ MOVE_ROLLING_KICK
 	.4byte Move_SAND_ATTACK                  @ MOVE_SAND_ATTACK
 	.4byte Move_HEADBUTT                     @ MOVE_HEADBUTT
@@ -6501,8 +6501,23 @@ Move_CROSS_CHOP: @ 0x0828068C
 	blendoff
 	end
 
-gUnknown_82806F5: @ 0x082806F5
-	.incbin "baserom_jp.gba", 0x2806f5, 0x5d
+Move_JUMP_KICK: @ 0x082806F5
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 4
+	delay 3
+	createsprite gJumpKickSpriteTemplate, ANIM_ATTACKER, 2, -16, 8, 0, 0, 10, ANIM_TARGET, 1, 1
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_TARGET
+	waitforvisualfinish
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 1, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 5, 0, 7, 1
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_8280752: @ 0x08280752
 	.incbin "baserom_jp.gba", 0x280752, 0x96
