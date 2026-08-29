@@ -703,6 +703,7 @@ gRazorLeafParticleAnimCmds2: @ 0x856DF5C
 gRazorLeafParticleAnimTable: @ 0x856DF6C
 	.4byte 0x0856DF30, 0x0856DF5C
 
+	.globl gRazorLeafParticleSpriteTemplate
 gRazorLeafParticleSpriteTemplate: @ 0x856DF74
 	.hword 0x274F, 0x274F
 	.4byte 0x084FD018, 0x0856DF6C
@@ -723,6 +724,7 @@ gRazorLeafCutterAnimCmds: @ 0x856DFA4
 gRazorLeafCutterAnimTable: @ 0x856DFB8
 	.4byte 0x0856DFA4
 
+	.globl gRazorLeafCutterSpriteTemplate
 gRazorLeafCutterSpriteTemplate: @ 0x856DFBC
 	.hword 0x27B0, 0x27B0
 	.4byte 0x084FD040, 0x0856DFB8

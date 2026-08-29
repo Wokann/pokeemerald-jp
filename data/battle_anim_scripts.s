@@ -94,7 +94,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MEGA_DRAIN                   @ MOVE_MEGA_DRAIN
 	.4byte Move_LEECH_SEED                   @ MOVE_LEECH_SEED
 	.4byte Move_GROWTH                       @ MOVE_GROWTH
-	.4byte gUnknown_8280EDB                  @ 075
+	.4byte Move_RAZOR_LEAF                   @ MOVE_RAZOR_LEAF
 	.4byte Move_SOLAR_BEAM                   @ MOVE_SOLAR_BEAM
 	.4byte Move_POISON_POWDER                  @ MOVE_POISON_POWDER
 	.4byte Move_STUN_SPORE                     @ MOVE_STUN_SPORE
@@ -6847,8 +6847,45 @@ Move_PETAL_DANCE: @ 0x08280DA3
 	blendoff
 	end
 
-gUnknown_8280EDB: @ 0x08280EDB
-	.incbin "baserom_jp.gba", 0x280edb, 0x107
+Move_RAZOR_LEAF: @ 0x08280EDB
+	loadspritegfx ANIM_TAG_LEAF
+	loadspritegfx ANIM_TAG_RAZOR_LEAF
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	delay 1
+	loopsewithpan SE_M_POISON_POWDER, SOUND_PAN_ATTACKER, 10, 5
+	create_razor_leaf_particle_sprite ANIM_ATTACKER, 2, upward_delta_x=-3, upward_delta_y=-2, upward_duration=10
+	delay 2
+	create_razor_leaf_particle_sprite ANIM_ATTACKER, 2, upward_delta_x=-1, upward_delta_y=-1, upward_duration=15
+	delay 2
+	create_razor_leaf_particle_sprite ANIM_ATTACKER, 2, upward_delta_x=-4, upward_delta_y=-4, upward_duration=7
+	delay 2
+	create_razor_leaf_particle_sprite ANIM_ATTACKER, 2, upward_delta_x=3, upward_delta_y=-3, upward_duration=11
+	delay 2
+	create_razor_leaf_particle_sprite ANIM_ATTACKER, 2, upward_delta_x=-1, upward_delta_y=-6, upward_duration=8
+	delay 2
+	create_razor_leaf_particle_sprite ANIM_ATTACKER, 2, upward_delta_x=2, upward_delta_y=-1, upward_duration=12
+	delay 2
+	create_razor_leaf_particle_sprite ANIM_ATTACKER, 2, upward_delta_x=-3, upward_delta_y=-4, upward_duration=13
+	delay 2
+	create_razor_leaf_particle_sprite ANIM_ATTACKER, 2, upward_delta_x=4, upward_delta_y=-5, upward_duration=7
+	delay 2
+	create_razor_leaf_particle_sprite ANIM_ATTACKER, 2, upward_delta_x=2, upward_delta_y=-6, upward_duration=11
+	delay 2
+	create_razor_leaf_particle_sprite ANIM_ATTACKER, 2, upward_delta_x=-3, upward_delta_y=-5, upward_duration=8
+	delay 60
+	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
+	create_razor_leaf_cutter_sprite ANIM_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=0, duration=22, wave_amplitude=20, target_both=TRUE
+	create_razor_leaf_cutter_sprite ANIM_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=0, duration=22, wave_amplitude=-20, target_both=TRUE
+	delay 20
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_DEF_PARTNER, 2, 0, 8, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_8280FE2: @ 0x08280FE2
 	.incbin "baserom_jp.gba", 0x280fe2, 0x128
