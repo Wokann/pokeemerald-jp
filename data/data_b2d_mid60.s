@@ -2769,6 +2769,9 @@ gRandomPosHitSplatSpriteTemplate: @ 0x8572F84
 gMonEdgeHitSplatSpriteTemplate: @ 0x8572F9C
 	.hword 0x2797, 0x2797
 	.4byte 0x084FD1A0, 0x082BF304, 0, 0x08572F2C, 0x08116D41
+
+	.globl gCrossImpactSpriteTemplate
+gCrossImpactSpriteTemplate: @ 0x8572FB4
 	.incbin "baserom_jp.gba", 0x572fb4, 0x18
 
 	.globl gFlashingHitSplatSpriteTemplate

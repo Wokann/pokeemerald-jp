@@ -367,7 +367,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_828570A                  @ 345
 	.4byte Move_WATER_SPORT                  @ MOVE_WATER_SPORT
 	.4byte Move_CALM_MIND                    @ MOVE_CALM_MIND
-	.4byte gUnknown_827D8BC                  @ 348
+	.4byte Move_LEAF_BLADE                   @ MOVE_LEAF_BLADE
 	.4byte gUnknown_827D93F                  @ 349
 	.4byte gUnknown_8284B7E                  @ 350
 	.4byte gUnknown_827D9AE                  @ 351
@@ -4508,8 +4508,30 @@ Move_CALM_MIND:
 	clearmonbg ANIM_ATK_PARTNER
 	end
 
-gUnknown_827D8BC: @ 0x0827D8BC
-	.incbin "baserom_jp.gba", 0x27d8bc, 0x83
+Move_LEAF_BLADE:
+	loadspritegfx ANIM_TAG_LEAF
+	loadspritegfx ANIM_TAG_CROSS_IMPACT
+	create_leaf_blade_task
+	delay 2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	playsewithpan SE_M_CUT, SOUND_PAN_TARGET
+	delay 50
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	playsewithpan SE_M_CUT, SOUND_PAN_TARGET
+	delay 50
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	playsewithpan SE_M_CUT, SOUND_PAN_TARGET
+	waitforvisualfinish
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	delay 12
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 8, 0, 18, 1
+	create_cross_impact_sprite ANIM_TARGET, 2, x=0, y=0, relative_to=ANIM_TARGET, duration=36
+	playsewithpan SE_M_LEER, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_827D93F: @ 0x0827D93F
 	.incbin "baserom_jp.gba", 0x27d93f, 0x6f
