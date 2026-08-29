@@ -62,7 +62,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_POISON_STING                 @ MOVE_POISON_STING
 	.4byte Move_TWINEEDLE                    @ MOVE_TWINEEDLE
 	.4byte Move_PIN_MISSILE                  @ MOVE_PIN_MISSILE
-	.4byte gUnknown_8281317                  @ 043
+	.4byte Move_LEER                         @ MOVE_LEER
 	.4byte Move_BITE                         @ MOVE_BITE
 	.4byte Move_GROWL                        @ MOVE_GROWL
 	.4byte Move_ROAR                         @ MOVE_ROAR
@@ -7010,8 +7010,24 @@ FireSpreadEffect: @ 0x0828129F
 	createsprite gFireSpreadSpriteTemplate, ANIM_TARGET, 1, 0, 10, 112, -128, 40
 	return
 
-gUnknown_8281317: @ 0x08281317
-	.incbin "baserom_jp.gba", 0x281317, 0x57
+Move_LEER: @ 0x08281317
+	loadspritegfx ANIM_TAG_LEER
+	monbg ANIM_ATTACKER
+	splitbgprio ANIM_ATTACKER
+	setalpha 8, 8
+	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
+	createsprite gLeerSpriteTemplate, ANIM_ATTACKER, 2, 24, -12
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -5, -5, 10, ANIM_ATTACKER, 1
+	waitforvisualfinish
+	delay 10
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 1, 0, 9, 1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_DEF_PARTNER, 1, 0, 9, 1
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	blendoff
+	delay 1
+	waitforvisualfinish
+	end
 
 gUnknown_828136E: @ 0x0828136E
 	.incbin "baserom_jp.gba", 0x28136e, 0x203
