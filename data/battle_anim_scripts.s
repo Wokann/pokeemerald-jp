@@ -10080,7 +10080,11 @@ IceSpikesEffectLong: @ 0x08285E7F
 	return
 
 GrantingStarsEffect: @ 0x08285F3B
-	.incbin "baserom_jp.gba", 0x285f3b, 0x2b
+	createsprite gGrantingStarsSpriteTemplate, ANIM_ATTACKER, 2, -15, 0, 0, 0, 32, 60
+	delay 8
+	createsprite gGrantingStarsSpriteTemplate, ANIM_ATTACKER, 2, 12, -5, 0, 0, 32, 60
+	delay 8
+	return
 
 HealingEffect: @ 0x08285F66
 	playsewithpan SE_M_ABSORB_2, SOUND_PAN_ATTACKER
@@ -10107,16 +10111,98 @@ HealingEffect2: @ 0x08285FAF
 	return
 
 PoisonBubblesEffect: @ 0x08285FF8
-	.incbin "baserom_jp.gba", 0x285ff8, 0x71
+	createsprite gPoisonBubbleSpriteTemplate, ANIM_TARGET, 2, 10, 10, 0
+	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
+	delay 6
+	createsprite gPoisonBubbleSpriteTemplate, ANIM_TARGET, 2, 20, -20, 0
+	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
+	delay 6
+	createsprite gPoisonBubbleSpriteTemplate, ANIM_TARGET, 2, -20, 15, 0
+	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
+	delay 6
+	createsprite gPoisonBubbleSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0
+	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
+	delay 6
+	createsprite gPoisonBubbleSpriteTemplate, ANIM_TARGET, 2, -20, -20, 0
+	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
+	delay 6
+	createsprite gPoisonBubbleSpriteTemplate, ANIM_TARGET, 2, 16, -8, 0
+	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
+	return
 
 WaterBubblesEffectShort: @ 0x08286069
-	.incbin "baserom_jp.gba", 0x286069, 0x71
+	createsprite gWaterBubbleSpriteTemplate, ANIM_ATTACKER, 2, 10, 10, 0
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	delay 6
+	createsprite gWaterBubbleSpriteTemplate, ANIM_ATTACKER, 2, 20, -20, 0
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	delay 6
+	createsprite gWaterBubbleSpriteTemplate, ANIM_ATTACKER, 2, -20, 15, 0
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	delay 6
+	createsprite gWaterBubbleSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 0
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	delay 6
+	createsprite gWaterBubbleSpriteTemplate, ANIM_ATTACKER, 2, -20, -20, 0
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	delay 6
+	createsprite gWaterBubbleSpriteTemplate, ANIM_ATTACKER, 2, 16, -8, 0
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	return
 
 WaterBubblesEffectLong: @ 0x082860DA
-	.incbin "baserom_jp.gba", 0x2860da, 0x97
+	createsprite gWaterBubbleSpriteTemplate, ANIM_ATTACKER, 2, 10, 10, 1
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	delay 6
+	createsprite gWaterBubbleSpriteTemplate, ANIM_ATTACKER, 2, -28, -10, 1
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	delay 6
+	createsprite gWaterBubbleSpriteTemplate, ANIM_ATTACKER, 2, 20, -20, 1
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	delay 6
+	createsprite gWaterBubbleSpriteTemplate, ANIM_ATTACKER, 2, -20, 15, 1
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	delay 6
+	createsprite gWaterBubbleSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 1
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	delay 6
+	createsprite gWaterBubbleSpriteTemplate, ANIM_ATTACKER, 2, 27, 8, 1
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	delay 6
+	createsprite gWaterBubbleSpriteTemplate, ANIM_ATTACKER, 2, -20, -20, 1
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	delay 6
+	createsprite gWaterBubbleSpriteTemplate, ANIM_ATTACKER, 2, 16, -8, 1
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
+	return
 
 ElectricityEffect: @ 0x08286171
-	.incbin "baserom_jp.gba", 0x286171, 0xe7
+	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_TARGET
+	createsprite gElectricitySpriteTemplate, ANIM_TARGET, 2, 5, 0, 5, 0
+	delay 2
+	createsprite gElectricitySpriteTemplate, ANIM_TARGET, 2, -5, 10, 5, 1
+	delay 2
+	createsprite gElectricitySpriteTemplate, ANIM_TARGET, 2, 15, 20, 5, 2
+	delay 2
+	createsprite gElectricitySpriteTemplate, ANIM_TARGET, 2, -15, -10, 5, 0
+	delay 2
+	createsprite gElectricitySpriteTemplate, ANIM_TARGET, 2, 25, 0, 5, 1
+	delay 2
+	createsprite gElectricitySpriteTemplate, ANIM_TARGET, 2, -8, 8, 5, 2
+	delay 2
+	createsprite gElectricitySpriteTemplate, ANIM_TARGET, 2, 2, -8, 5, 0
+	delay 2
+	createsprite gElectricitySpriteTemplate, ANIM_TARGET, 2, -20, 15, 5, 1
+	return
+
+ConfusionEffect: @ 0x082861FC
+	loopsewithpan SE_M_DIZZY_PUNCH, SOUND_PAN_TARGET, 13, 6
+	create_confusion_duck_sprite ANIM_TARGET, 2, x=0, y=-15, wave_offset=0, wave_period=3, duration=90
+	create_confusion_duck_sprite ANIM_TARGET, 2, x=0, y=-15, wave_offset=51, wave_period=3, duration=90
+	create_confusion_duck_sprite ANIM_TARGET, 2, x=0, y=-15, wave_offset=102, wave_period=3, duration=90
+	create_confusion_duck_sprite ANIM_TARGET, 2, x=0, y=-15, wave_offset=153, wave_period=3, duration=90
+	create_confusion_duck_sprite ANIM_TARGET, 2, x=0, y=-15, wave_offset=204, wave_period=3, duration=90
+	return
 
 SetPsychicBackground: @ 0x08286258
 	.incbin "baserom_jp.gba", 0x286258, 0xc

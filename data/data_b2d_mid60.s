@@ -2940,7 +2940,11 @@ gDirtPlumeSpriteTemplate: @ 0x572DE0
 gDirtMoundSpriteTemplate: @ 0x572DF8
 	.hword 0x2829, 0x2829
 	.4byte 0x084FD040, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08115A95
-	.incbin "baserom_jp.gba", 0x572e10, 0x48
+	.incbin "baserom_jp.gba", 0x572e10, 0x30
+
+	.globl gConfusionDuckSpriteTemplate
+gConfusionDuckSpriteTemplate: @ 0x8572E40
+	.incbin "baserom_jp.gba", 0x572e40, 0x18
 
 	.globl gSimplePaletteBlendSpriteTemplate
 gSimplePaletteBlendSpriteTemplate: @ 0x8572E58
