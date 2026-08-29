@@ -1695,7 +1695,13 @@ gEyeSparkleAnimTable: @ 0x856F664
 gEyeSparkleSpriteTemplate: @ 0x856F668
 	.incbin "baserom_jp.gba", 0x56f668, 0x18
 
-	.incbin "baserom_jp.gba", 0x56f680, 0xe4
+	.incbin "baserom_jp.gba", 0x56f680, 0xc
+
+	.globl gAngelSpriteTemplate
+gAngelSpriteTemplate: @ 0x856F68C
+	.incbin "baserom_jp.gba", 0x56f68c, 0x18
+
+	.incbin "baserom_jp.gba", 0x56f6a4, 0xc0
 
 	.globl gMovementWavesSpriteTemplate
 gMovementWavesSpriteTemplate: @ 0x856F764

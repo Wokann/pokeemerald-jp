@@ -205,7 +205,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MACH_PUNCH                   @ MOVE_MACH_PUNCH
 	.4byte Move_SCARY_FACE                   @ MOVE_SCARY_FACE
 	.4byte Move_FAINT_ATTACK                 @ MOVE_FAINT_ATTACK
-	.4byte gUnknown_8282553                  @ 186
+	.4byte Move_SWEET_KISS                   @ MOVE_SWEET_KISS
 	.4byte Move_BELLY_DRUM                   @ MOVE_BELLY_DRUM
 	.4byte Move_SLUDGE_BOMB                  @ MOVE_SLUDGE_BOMB
 	.4byte Move_MUD_SLAP                     @ MOVE_MUD_SLAP
@@ -7805,8 +7805,24 @@ Move_SCARY_FACE: @ 0x082824F0
 	waitforvisualfinish
 	end
 
-gUnknown_8282553: @ 0x08282553
-	.incbin "baserom_jp.gba", 0x282553, 0x69
+Move_SWEET_KISS: @ 0x08282553
+	loadspritegfx ANIM_TAG_RED_HEART
+	loadspritegfx ANIM_TAG_ANGEL
+	createsprite gAngelSpriteTemplate, ANIM_TARGET, 2, 16, -48
+	playsewithpan SE_M_HEAL_BELL, SOUND_PAN_TARGET
+	delay 23
+	playsewithpan SE_M_HEAL_BELL, SOUND_PAN_TARGET
+	delay 23
+	playsewithpan SE_M_HEAL_BELL, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, 160, -30
+	playsewithpan SE_M_ATTRACT, SOUND_PAN_TARGET
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, -256, -42
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, 128, -14
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, 416, -38
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, -128, -22
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, -384, -31
+	end
 
 gUnknown_82825BC: @ 0x082825BC
 	.incbin "baserom_jp.gba", 0x2825bc, 0x47
