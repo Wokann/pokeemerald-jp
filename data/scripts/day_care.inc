@@ -258,3 +258,154 @@ Route117_PokemonDayCare_EventScript_UnusedRetrieveMon::
 	msgbox Route117_PokemonDayCare_Text_ComeAgain, MSGBOX_DEFAULT
 	release
 	end
+
+@ Day-Care text is physically placed after the Egg Hatching script in the
+@ Japanese ROM. Keep the semantic owner together while retaining this order.
+EventScript_EggHatch:: @ 0x08257A89
+	lockall
+	msgbox Text_EggHatchHuh, MSGBOX_DEFAULT
+	special EggHatch
+	releaseall
+	end
+
+Route117_Text_SeeWifeIfYoudLikeMeToRaiseMon: @ 0x08257A98
+	.string "わしは　そだてや　じいさんじゃ\p"
+	.string "ここで　みんなの　だいじな　ポケモンの\n"
+	.string "めんどうを　みて　おるのじゃよ\p"
+	.string "なにか　そだてて　ほしければ\n"
+	.string "ばあさんに　たのんで　おくれ$"
+
+Route117_Text_DoYouWantEgg: @ 0x08257AEA
+	.string "おお！　あんたか\p"
+	.string "あずかっていた　ポケモンを\n"
+	.string "そだてていたら⋯⋯なんと！\p"
+	.string "ポケモンが　タマゴを\n"
+	.string "もっておったんじゃ！\p"
+	.string "どこから　もってきたか　わからんが\n"
+	.string "あんたの　ポケモンが　もってたんじゃ\p"
+	.string "やっぱり　ほしいじゃろ？$"
+
+Route117_Text_YourMonIsDoingFine: @ 0x08257B57
+	.string "おお　あんたか！　よくきたな\n"
+	.string "{STR_VAR_1}は　げんきじゃぞ$"
+
+Route117_Text_IllKeepIt: @ 0x08257B71
+	.string "それじゃ　わしが　もらおう\n"
+	.string "ありがとよ$"
+
+Route117_Text_YouHaveNoRoomForIt: @ 0x08257B85
+	.string "てもちが　いっぱいの　ようじゃな⋯\n"
+	.string "てもちを　せいりしてから　またきなさい$"
+
+Route117_Text_ReceivedEgg: @ 0x08257BAB
+	.string "{PLAYER}は　そだてや　じいさんから\n"
+	.string "タマゴを　もらった！$"
+
+Route117_Text_TakeGoodCareOfIt: @ 0x08257BC6
+	.string "だいじにそだてなさいよ！$"
+
+Route117_Text_FriendlyWithOtherTrainersMon: @ 0x08257BD3
+	.string "ところで　あんたの　{STR_VAR_1}じゃが\p"
+	.string "なんか　{STR_VAR_2}とこの　{STR_VAR_3}と\n"
+	.string "なかよく　あそんで　おったぞ\p"
+	.string "しかも　なにやら　メールを\n"
+	.string "もらっておった　ようじゃ$"
+
+@ Unused
+Route117_Text_SeeWifeIfYouWantToPickUpMon: @ 0x08257C1B
+	.string "ポケモンを　ひきとりたい　ときは\n"
+	.string "ばさんに　いって　おくれ$"
+
+Route117_Text_YourMonsAreDoingFine: @ 0x08257C39
+	.string "おお　あんたか！　よくきたな\n"
+	.string "{STR_VAR_1}と　{STR_VAR_2}は　げんきじゃぞ$"
+
+Route117_Text_IWillKeepDoYouWantIt: @ 0x08257C57
+	.string "わしが　もらってしまうぞ\n"
+	.string "ほんとうは　ほしいんじゃろ？$"
+
+Route117_PokemonDayCare_Text_WouldYouLikeUsToRaiseAMon: @ 0x08257C73
+	.string "わしは　そだてや　ばあさんじゃ\p"
+	.string "おまえさんの　かわりに　ポケモンを\n"
+	.string "そだてて　あげるよ\p"
+	.string "なにか　そだてて　ほしいのかい？$"
+
+Route117_PokemonDayCare_Text_WhichMonShouldWeRaise: @ 0x08257CB0
+	.string "どのこを　そだてて　みるかね？$"
+
+Route117_PokemonDayCare_Text_WellRaiseYourMon: @ 0x08257CC0
+	.string "それでは　{STR_VAR_1}を\n"
+	.string "しばらく　あずかるぞ\p"
+	.string "てきとうに　じかんが\n"
+	.string "たったら　またきなさい$"
+
+Route117_PokemonDayCare_Text_WeCanRaiseOneMore: @ 0x08257CEB
+	.string "2ひき　までなら　あずかれるけど\n"
+	.string "もう　1ぴき　そだててみるかい？$"
+
+Route117_PokemonDayCare_Text_HusbandWasLookingForYou: @ 0x08257D0D
+	.string "じいさんが　あんたを　さがして　おったぞ$"
+
+Route117_PokemonDayCare_Text_FineThenComeAgain: @ 0x08257D22
+	.string "そうかい　それじゃ　また　きておくれ$"
+
+Route117_PokemonDayCare_Text_NotEnoughMoney: @ 0x08257D35
+	.string "おかねが　たりない　ようじゃのう⋯$"
+
+Route117_PokemonDayCare_Text_TakeOtherOneBackToo: @ 0x08257D47
+	.string "もう　1ぴきも　ひきとるかい？$"
+
+Route117_PokemonDayCare_Text_ComeAgain: @ 0x08257D57
+	.string "それじゃ　また　きておくれ$"
+
+Route117_PokemonDayCare_Text_GoodToSeeYou: @ 0x08257D65
+	.string "おお　あんたか！　よくきたな\n"
+	.string "おまえさんの　ポケモンは　ゲンキじゃぞ$"
+
+Route117_PokemonDayCare_Text_YourMonHasGrownXLevels: @ 0x08257D88
+	.string "{STR_VAR_1}は　レベルで　いうと\n"
+	.string "{STR_VAR_2}くらい　そだって　おるぞ$"
+
+Route117_PokemonDayCare_Text_YourTeamIsFull: @ 0x08257DA4
+	.string "てもちの　ポケモンがいっぱいじゃよ！\n"
+	.string "ポケモンを　せいりしてから　きなさい$"
+
+@ Unused
+Route117_PokemonDayCare_Text_TakeBackWhichMon: @ 0x08257DCA
+	.string "どっちの　ポケモンを　ひきとるかい？$"
+
+Route117_PokemonDayCare_Text_ItWillCostX: @ 0x08257DDD
+	.string "{STR_VAR_1}を　ひきとるなら\n"
+	.string "りょうきんは　{STR_VAR_2}¥　だよ$"
+
+Route117_PokemonDayCare_Text_HeresYourMon: @ 0x08257DF6
+	.string "はいよ　たしかに！\n"
+	.string "じゃあ　ポケモンを　つれていきなさい！$"
+
+Route117_PokemonDayCare_Text_TookBackMon: @ 0x08257E14
+	.string "{PLAYER}は　そだてや　ばあさんから\n"
+	.string "{STR_VAR_1}を　ひきとった！$"
+
+Route117_PokemonDayCare_Text_YouHaveJustOneMon: @ 0x08257E2F
+	.string "おや？　ポケモンが\n"
+	.string "1ぴき　しか　いないようだな\p"
+	.string "また　きなさいよ$"
+
+Route117_PokemonDayCare_Text_TakeYourMonBack: @ 0x08257E51
+	.string "ポケモンを　ひきとるかい？$"
+
+Route117_PokemonDayCare_Text_WhatWillYouBattleWith: @ 0x08257E5F
+	.string "その　ポケモンを　あずけると\n"
+	.string "たたかえなく　なるぞ\p"
+	.string "また　きなさいよ$"
+
+Text_EggHatchHuh: @ 0x08257E82
+	.string "おや⋯？$"
+
+Route117_PokemonDayCare_Text_YoullBeLeftWithJustOne: @ 0x08257E87
+	.string "おや？　おまえさん\n"
+	.string "その　ポケモンを　あずけると\l"
+	.string "ぜんぶで　ポケモンが　1ぴき　だけに\l"
+	.string "なって　しまう　みたいじゃな\p"
+	.string "もうちょっと　たくさん　つかまえてから\n"
+	.string "きてみては　どうじゃ？$"
