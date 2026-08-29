@@ -177,7 +177,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_BONEMERANG                   @ MOVE_BONEMERANG
 	.4byte Move_REST                         @ MOVE_REST
 	.4byte Move_ROCK_SLIDE                   @ MOVE_ROCK_SLIDE
-	.4byte gUnknown_8282AB5                  @ 158
+	.4byte Move_HYPER_FANG                   @ MOVE_HYPER_FANG
 	.4byte Move_SHARPEN                      @ MOVE_SHARPEN
 	.4byte Move_CONVERSION                   @ MOVE_CONVERSION
 	.4byte gUnknown_8282B1C                  @ 161
@@ -8012,8 +8012,36 @@ Move_SLEEP_TALK: @ 0x082829FA
 	waitforvisualfinish
 	end
 
-gUnknown_8282AB5: @ 0x08282AB5
-	.incbin "baserom_jp.gba", 0x282ab5, 0x67
+Move_HYPER_FANG: @ 0x08282AB5
+	loadspritegfx ANIM_TAG_FANG_ATTACK
+	playsewithpan SE_M_BITE, SOUND_PAN_TARGET
+	delay 1
+	delay 2
+	createvisualtask AnimTask_IsContest, 2
+	jumprettrue HyperFangInContest
+	createvisualtask AnimTask_IsTargetPlayerSide, 2
+	jumpretfalse HyperFangOnOpponent
+	goto HyperFangOnPlayer
+HyperFangContinue:
+	waitbgfadeout
+	createsprite gFangSpriteTemplate, ANIM_TARGET, 2
+	waitbgfadein
+	createvisualtask AnimTask_ShakeMon, 3, ANIM_TARGET, 0, 10, 10, 1
+	playsewithpan SE_M_LEER, SOUND_PAN_TARGET
+	delay 20
+	restorebg
+	waitbgfadein
+	waitforvisualfinish
+	end
+HyperFangOnOpponent:
+	fadetobg BG_IMPACT_OPPONENT
+	goto HyperFangContinue
+HyperFangOnPlayer:
+	fadetobg BG_IMPACT_PLAYER
+	goto HyperFangContinue
+HyperFangInContest:
+	fadetobg BG_IMPACT_CONTESTS
+	goto HyperFangContinue
 
 gUnknown_8282B1C: @ 0x08282B1C
 	.incbin "baserom_jp.gba", 0x282b1c, 0x174
