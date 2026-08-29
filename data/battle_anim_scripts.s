@@ -75,7 +75,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8280365                  @ 053
 	.4byte gUnknown_8281170                  @ 054
 	.4byte gUnknown_82801CA                  @ 055
-	.4byte gUnknown_827F33F                  @ 056
+	.4byte Move_HYDRO_PUMP                   @ MOVE_HYDRO_PUMP
 	.4byte gUnknown_8280351                  @ 057
 	.4byte Move_ICE_BEAM                     @ MOVE_ICE_BEAM
 	.4byte Move_BLIZZARD                     @ MOVE_BLIZZARD
@@ -5626,8 +5626,52 @@ PowderSnowSnowballs:
 	delay 3
 	return
 
-gUnknown_827F33F: @ 0x0827F33F
-	.incbin "baserom_jp.gba", 0x27f33f, 0xff
+Move_HYDRO_PUMP: @ 0x0827F33F
+	loadspritegfx ANIM_TAG_WATER_ORB
+	loadspritegfx ANIM_TAG_WATER_IMPACT
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_ATTACKER, 0, 2, 40, 1
+	delay 6
+	panse SE_M_HYDRO_PUMP, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
+	call HydroPumpBeams
+	call HydroPumpBeams
+	call HydroPumpBeams
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 3, 0, 37, 1
+	call HydroPumpHitSplats
+	call HydroPumpBeams
+	call HydroPumpBeams
+	call HydroPumpHitSplats
+	call HydroPumpBeams
+	call HydroPumpBeams
+	call HydroPumpHitSplats
+	call HydroPumpBeams
+	call HydroPumpBeams
+	call HydroPumpHitSplats
+	call HydroPumpBeams
+	call HydroPumpBeams
+	call HydroPumpHitSplats
+	delay 1
+	delay 1
+	call HydroPumpHitSplats
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+HydroPumpBeams:
+	createsprite gHydroPumpOrbSpriteTemplate, ANIM_ATTACKER, 3, 10, 10, 0, 16
+	createsprite gHydroPumpOrbSpriteTemplate, ANIM_ATTACKER, 3, 10, 10, 0, -16
+	delay 1
+	createsprite gHydroPumpOrbSpriteTemplate, ANIM_ATTACKER, 3, 10, 10, 0, 16
+	createsprite gHydroPumpOrbSpriteTemplate, ANIM_ATTACKER, 3, 10, 10, 0, -16
+	delay 1
+	return
+HydroPumpHitSplats:
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_ATTACKER, 4, 0, 15, ANIM_TARGET, 1
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_ATTACKER, 4, 0, -15, ANIM_TARGET, 1
+	return
 
 gUnknown_827F43E: @ 0x0827F43E
 	.incbin "baserom_jp.gba", 0x27f43e, 0xe8

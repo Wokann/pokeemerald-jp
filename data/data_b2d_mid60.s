@@ -1727,7 +1727,13 @@ gWaterBubbleProjectileSpriteTemplate: @ 0x570C4C
 gAuroraBeamRingSpriteTemplate: @ 0x570C98
 	.incbin "baserom_jp.gba", 0x570c98, 0x18
 
-	.incbin "baserom_jp.gba", 0x570cb0, 0x134
+	.incbin "baserom_jp.gba", 0x570cb0, 0x18
+
+	.globl gHydroPumpOrbSpriteTemplate
+gHydroPumpOrbSpriteTemplate: @ 0x570CC8
+	.incbin "baserom_jp.gba", 0x570cc8, 0x18
+
+	.incbin "baserom_jp.gba", 0x570ce0, 0x104
 
 	.globl gAnims_WaterBubble
 gAnims_WaterBubble: @ 0x570DE4
