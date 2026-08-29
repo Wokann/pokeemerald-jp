@@ -253,7 +253,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_IRON_TAIL                    @ MOVE_IRON_TAIL
 	.4byte Move_METAL_CLAW                   @ MOVE_METAL_CLAW
 	.4byte Move_VITAL_THROW                  @ MOVE_VITAL_THROW
-	.4byte gUnknown_8283179                  @ 234
+	.4byte Move_MORNING_SUN                  @ MOVE_MORNING_SUN
 	.4byte Move_SYNTHESIS                    @ MOVE_SYNTHESIS
 	.4byte Move_MOONLIGHT                    @ MOVE_MOONLIGHT
 	.4byte Move_HIDDEN_POWER                  @ MOVE_HIDDEN_POWER
@@ -8314,8 +8314,38 @@ Move_TRANSFORM: @ 0x08283161
 	clearmonbg ANIM_ATTACKER
 	end
 
-gUnknown_8283179: @ 0x08283179
-	.incbin "baserom_jp.gba", 0x283179, 0x94
+Move_MORNING_SUN: @ 0x08283179
+	loadspritegfx ANIM_TAG_GREEN_STAR
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	createvisualtask AnimTask_MorningSunLightBeam, 5
+	delay 8
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_BATTLERS_2, 8, 0, 12, RGB_WHITE
+	delay 14
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_BATTLERS_2, 3, 12, 0, RGB_WHITE
+	waitforvisualfinish
+	waitsound
+	call HealingEffect
+	end
+
+MorningSunStar:
+	createsprite gGreenStarSpriteTemplate, ANIM_ATTACKER, 2, 30, 640
+	delay 5
+	return
 
 gUnknown_828320D: @ 0x0828320D
 	.incbin "baserom_jp.gba", 0x28320d, 0xea
