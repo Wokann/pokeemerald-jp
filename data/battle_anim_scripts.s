@@ -353,7 +353,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8283895                  @ 331
 	.4byte Move_AERIAL_ACE                   @ MOVE_AERIAL_ACE
 	.4byte Move_ICICLE_SPEAR                 @ MOVE_ICICLE_SPEAR
-	.4byte gUnknown_827D64A                  @ 334
+	.4byte Move_IRON_DEFENSE                 @ MOVE_IRON_DEFENSE
 	.4byte gUnknown_827D674                  @ 335
 	.4byte gUnknown_827D683                  @ 336
 	.4byte gUnknown_828392B                  @ 337
@@ -4375,8 +4375,12 @@ Move_AERIAL_ACE: @ 0x0827D5E0
 	blendoff
 	end
 
-gUnknown_827D64A: @ 0x0827D64A
-	.incbin "baserom_jp.gba", 0x27d64a, 0x2a
+Move_IRON_DEFENSE: @ 0x0827D64A
+	loopsewithpan SE_SHINY, SOUND_PAN_ATTACKER, 28, 2
+	metallic_shine permanent=FALSE
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG, delay=8, num_blends=2, color1=RGB_WHITEALPHA, blend_y1=14, color2=RGB_WHITEALPHA, blend_y2=0
+	waitforvisualfinish
+	end
 
 gUnknown_827D674: @ 0x0827D674
 	.incbin "baserom_jp.gba", 0x27d674, 0xf
