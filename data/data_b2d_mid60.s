@@ -1750,11 +1750,13 @@ gSignalBeamGreenOrbSpriteTemplate: @ 0x570D10
 gAnims_WaterBubble: @ 0x570DE4
 	.4byte 0x08570DD4, 0x08570DDC
 
+	.globl gWaterGunProjectileSpriteTemplate
 gWaterGunProjectileSpriteTemplate: @ 0x570DEC
 	.hword 0x27AB, 0x27AB
 	.4byte 0x084FD138, 0x08570DE4
 	.4byte 0, gDummySpriteAffineAnimTable, 0x080A7175
 
+	.globl gWaterGunDropletSpriteTemplate
 gWaterGunDropletSpriteTemplate: @ 0x570E04
 	.hword 0x27AB, 0x27AB
 	.4byte 0x084FD1F8, 0x08570DE8

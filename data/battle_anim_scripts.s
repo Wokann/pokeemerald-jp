@@ -74,7 +74,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_EMBER                        @ MOVE_EMBER
 	.4byte gUnknown_8280365                  @ 053
 	.4byte gUnknown_8281170                  @ 054
-	.4byte gUnknown_82801CA                  @ 055
+	.4byte Move_WATER_GUN                    @ MOVE_WATER_GUN
 	.4byte Move_HYDRO_PUMP                   @ MOVE_HYDRO_PUMP
 	.4byte gUnknown_8280351                  @ 057
 	.4byte Move_ICE_BEAM                     @ MOVE_ICE_BEAM
@@ -6258,8 +6258,29 @@ AeroblastBeam:
 	delay 3
 	return
 
-gUnknown_82801CA: @ 0x082801CA
-	.incbin "baserom_jp.gba", 0x2801ca, 0x8d
+Move_WATER_GUN: @ 0x082801CA
+	loadspritegfx ANIM_TAG_SMALL_BUBBLES
+	loadspritegfx ANIM_TAG_WATER_IMPACT
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	createsprite gWaterGunProjectileSpriteTemplate, ANIM_ATTACKER, 2, 20, 0, 0, 0, 40, -25
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 1, 0, 8, 1
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, ANIM_TARGET, 2
+	createsprite gWaterGunDropletSpriteTemplate, ANIM_ATTACKER, 2, 0, -15, 0, 15, 55
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
+	delay 10
+	createsprite gWaterGunDropletSpriteTemplate, ANIM_ATTACKER, 2, 15, -20, 0, 15, 50
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
+	delay 10
+	createsprite gWaterGunDropletSpriteTemplate, ANIM_ATTACKER, 2, -15, -10, 0, 10, 45
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_8280257: @ 0x08280257
 	.incbin "baserom_jp.gba", 0x280257, 0xfa
