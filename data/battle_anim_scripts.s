@@ -192,7 +192,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MIND_READER                  @ MOVE_MIND_READER
 	.4byte Move_NIGHTMARE                    @ MOVE_NIGHTMARE
 	.4byte Move_FLAME_WHEEL                   @ MOVE_FLAME_WHEEL
-	.4byte gUnknown_827E4E9                  @ 173
+	.4byte Move_SNORE                        @ MOVE_SNORE
 	.4byte gUnknown_8282179                  @ 174
 	.4byte Move_FLAIL                        @ MOVE_FLAIL
 	.4byte Move_CONVERSION_2                 @ MOVE_CONVERSION_2
@@ -5013,8 +5013,27 @@ Move_GROWL: @ 0x0827E49C
 	waitforvisualfinish
 	end
 
-gUnknown_827E4E9: @ 0x0827E4E9
-	.incbin "baserom_jp.gba", 0x27e4e9, 0x90
+Move_SNORE: @ 0x0827E4E9
+	loadspritegfx ANIM_TAG_SNORE_Z
+	monbg ANIM_ATK_PARTNER
+	setalpha 8, 8
+	call SnoreEffect
+	delay 30
+	call SnoreEffect
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	end
+
+SnoreEffect:
+	playsewithpan SE_M_SNORE, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -7, -7, 7, ANIM_ATTACKER, 1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 7, 1
+	shake_mon_or_platform velocity=6, shake_timer=1, shake_duration=14, type=SHAKE_BG_X, battler_selector=SHAKE_MON_ATTACKER
+	createsprite gSnoreZSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, -42, -38, 24, 0, 0
+	createsprite gSnoreZSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 0, -42, 24, 0, 0
+	createsprite gSnoreZSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 42, -38, 24, 0, 0
+	return
 
 gUnknown_827E579: @ 0x0827E579
 	.incbin "baserom_jp.gba", 0x27e579, 0x8c
