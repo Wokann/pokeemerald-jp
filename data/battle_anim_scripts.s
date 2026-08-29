@@ -43,7 +43,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SLAM                         @ MOVE_SLAM
 	.4byte Move_VINE_WHIP                    @ MOVE_VINE_WHIP
 	.4byte Move_STOMP                        @ MOVE_STOMP
-	.4byte gUnknown_82807E8                  @ 024
+	.4byte Move_DOUBLE_KICK                  @ MOVE_DOUBLE_KICK
 	.4byte Move_MEGA_KICK                    @ MOVE_MEGA_KICK
 	.4byte Move_JUMP_KICK                     @ MOVE_JUMP_KICK
 	.4byte Move_ROLLING_KICK                 @ MOVE_ROLLING_KICK
@@ -6545,8 +6545,18 @@ Move_HI_JUMP_KICK: @ 0x08280752
 	blendoff
 	end
 
-gUnknown_82807E8: @ 0x082807E8
-	.incbin "baserom_jp.gba", 0x2807e8, 0x32
+Move_DOUBLE_KICK: @ 0x082807E8
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	createsprite gFistFootRandomPosSpriteTemplate, ANIM_ATTACKER, 3, 1, 20, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 4, 0, 6, 1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_828081A: @ 0x0828081A
 	.incbin "baserom_jp.gba", 0x28081a, 0xc7
