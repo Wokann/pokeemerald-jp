@@ -363,7 +363,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8283B94                  @ 341
 	.4byte gUnknown_8281A11                  @ 342
 	.4byte Move_COVET                        @ MOVE_COVET
-	.4byte gUnknown_827D720                  @ 344
+	.4byte Move_VOLT_TACKLE                  @ MOVE_VOLT_TACKLE
 	.4byte gUnknown_828570A                  @ 345
 	.4byte gUnknown_827D818                  @ 346
 	.4byte gUnknown_827D83E                  @ 347
@@ -4425,8 +4425,52 @@ Move_COVET: @ 0x0827D6C3
 	loopsewithpan SE_M_DIZZY_PUNCH, SOUND_PAN_TARGET, 4, 3
 	end
 
-gUnknown_827D720: @ 0x0827D720
-	.incbin "baserom_jp.gba", 0x27d720, 0xf8
+Move_VOLT_TACKLE: @ 0x0827D720
+	loadspritegfx ANIM_TAG_SPARK
+	loadspritegfx ANIM_TAG_CIRCLE_OF_LIGHT
+	loadspritegfx ANIM_TAG_ELECTRICITY
+	monbg ANIM_ATTACKER
+	setalpha 12, 8
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 0, 0, 8, RGB_BLACK
+	waitforvisualfinish
+	createsprite gVoltTackleOrbSlideSpriteTemplate, ANIM_ATTACKER, 1
+	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	blendoff
+	delay 8
+	createvisualtask AnimTask_VoltTackleBolt, 5, 0
+	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createvisualtask AnimTask_VoltTackleBolt, 5, 1
+	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_VoltTackleBolt, 5, 2
+	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createvisualtask AnimTask_VoltTackleBolt, 5, 3
+	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_VoltTackleBolt, 5, 4
+	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_ATTACKER
+	delay 8
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 10, 0, 18, 1
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	create_electric_puff_sprite ANIM_ATTACKER, 2, relative_to=1, x=16, y=16
+	delay 2
+	create_electric_puff_sprite ANIM_ATTACKER, 2, relative_to=1, x=-16, y=-16
+	delay 8
+	createvisualtask AnimTask_VoltTackleAttackerReappear, 5
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 3, 0, 9, 1
+	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
+	create_electric_puff_sprite ANIM_ATTACKER, 2, relative_to=0, x=16, y=16
+	delay 2
+	create_electric_puff_sprite ANIM_ATTACKER, 2, relative_to=0, x=-16, y=-16
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 0, 8, 0, RGB_BLACK
+	waitforvisualfinish
+	end
 
 gUnknown_827D818: @ 0x0827D818
 	.incbin "baserom_jp.gba", 0x27d818, 0x26
