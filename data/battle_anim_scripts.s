@@ -301,7 +301,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_REVENGE                      @ MOVE_REVENGE
 	.4byte Move_BRICK_BREAK                  @ MOVE_BRICK_BREAK
 	.4byte Move_YAWN                         @ MOVE_YAWN
-	.4byte gUnknown_828536A                  @ 282
+	.4byte Move_KNOCK_OFF                    @ MOVE_KNOCK_OFF
 	.4byte Move_ENDEAVOR                     @ MOVE_ENDEAVOR
 	.4byte Move_ERUPTION                     @ MOVE_ERUPTION
 	.4byte Move_SKILL_SWAP                   @ MOVE_SKILL_SWAP
@@ -9598,8 +9598,26 @@ Move_PSYCHO_BOOST: @ 0x082852F6
 	call UnsetPsychicBackground
 	end
 
-gUnknown_828536A: @ 0x0828536A
-	.incbin "baserom_jp.gba", 0x28536a, 0x90
+Move_KNOCK_OFF: @ 0x0828536A
+	loadspritegfx ANIM_TAG_SLAM_HIT_2
+	loadspritegfx ANIM_TAG_IMPACT
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 6
+	delay 4
+	playsewithpan SE_M_VITAL_THROW, SOUND_PAN_TARGET
+	createsprite gKnockOffStrikeSpriteTemplate, ANIM_TARGET, 2, -16, -16
+	delay 8
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=5, num_blends=1, color1=RGB_WHITE, blend_y1=10, color2=RGB_BLACK, blend_y2=0
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 1, -12, 10, 0, 3
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 5
+	delay 3
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_TARGET, 0, 3, 6, 1
+	delay 5
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 1, 0, 6
+	delay 10
+	waitforvisualfinish
+	end
 
 gUnknown_82853FA: @ 0x082853FA
 	.incbin "baserom_jp.gba", 0x2853fa, 0x64
