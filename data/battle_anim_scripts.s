@@ -27,7 +27,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MEGA_PUNCH                   @ MOVE_MEGA_PUNCH
 	.4byte Move_PAY_DAY                      @ MOVE_PAY_DAY
 	.4byte gUnknown_8281204                  @ 007
-	.4byte gUnknown_827DC85                  @ 008
+	.4byte Move_ICE_PUNCH                    @ MOVE_ICE_PUNCH
 	.4byte gUnknown_827E01B                  @ 009
 	.4byte gUnknown_827E2CB                  @ 010
 	.4byte Move_VICE_GRIP                    @ MOVE_VICE_GRIP
@@ -4676,8 +4676,42 @@ MindReaderEyeSpikeEffect:
 	delay 2
 	return
 
-gUnknown_827DC85: @ 0x0827DC85
-	.incbin "baserom_jp.gba", 0x27dc85, 0xeb
+Move_ICE_PUNCH:
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	loadspritegfx ANIM_TAG_ICE_CRYSTALS
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=7, color=RGB_BLACK
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 9, RGB(12, 26, 31)
+	delay 20
+	playsewithpan SE_M_STRING_SHOT, SOUND_PAN_TARGET
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_ATTACKER, 2, 0
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_ATTACKER, 2, 64
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_ATTACKER, 2, 128
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_ATTACKER, 2, 192
+	delay 5
+	createsprite gIceCrystalSpiralInwardLarge, ANIM_ATTACKER, 2, 32
+	createsprite gIceCrystalSpiralInwardLarge, ANIM_ATTACKER, 2, 96
+	createsprite gIceCrystalSpiralInwardLarge, ANIM_ATTACKER, 2, 160
+	createsprite gIceCrystalSpiralInwardLarge, ANIM_ATTACKER, 2, 224
+	delay 17
+	create_fist_sprite ANIM_ATTACKER, 4, x=0, y=-10, duration=8
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=-10, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	delay 2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 5, 3, 1
+	waitforvisualfinish
+	delay 15
+	call IceCrystalEffectShort
+	delay 5
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 9, 0, RGB(12, 26, 31)
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=0, initial_blend_y=7, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_827DD70: @ 0x0827DD70
 	.incbin "baserom_jp.gba", 0x27dd70, 0x40
@@ -5211,7 +5245,10 @@ gUnknown_82859FA: @ 0x082859FA
 	.incbin "baserom_jp.gba", 0x2859fa, 0x27c
 
 gUnknown_8285C76: @ 0x08285C76
-	.incbin "baserom_jp.gba", 0x285c76, 0x209
+	.incbin "baserom_jp.gba", 0x285c76, 0x31
+
+IceCrystalEffectShort: @ 0x08285CA7
+	.incbin "baserom_jp.gba", 0x285ca7, 0x1d8
 
 IceSpikesEffectLong: @ 0x08285E7F
 	.incbin "baserom_jp.gba", 0x285e7f, 0xe7
