@@ -347,7 +347,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SHADOW_PUNCH                 @ MOVE_SHADOW_PUNCH
 	.4byte Move_EXTRASENSORY                 @ MOVE_EXTRASENSORY
 	.4byte gUnknown_828545E                  @ 327
-	.4byte gUnknown_82836F1                  @ 328
+	.4byte Move_SAND_TOMB                    @ MOVE_SAND_TOMB
 	.4byte gUnknown_82837C9                  @ 329
 	.4byte gUnknown_8283883                  @ 330
 	.4byte gUnknown_8283895                  @ 331
@@ -8554,8 +8554,33 @@ HyperVoiceEffect:
 	createvisualtask SoundTask_WaitForCry, 5
 	return
 
-gUnknown_82836F1: @ 0x082836F1
-	.incbin "baserom_jp.gba", 0x2836f1, 0xd8
+Move_SAND_TOMB: @ 0x082836F1
+	loadspritegfx ANIM_TAG_MUD_SAND
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=0, target_blend_y=7, color=RGB(19, 17, 0)
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 2, 43, 1
+	playsewithpan SE_M_SAND_TOMB, SOUND_PAN_TARGET
+	call SandTombSwirlingDirt
+	call SandTombSwirlingDirt
+	call SandTombSwirlingDirt
+	delay 22
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=7, target_blend_y=0, color=RGB(19, 17, 0)
+	waitforvisualfinish
+	end
+
+SandTombSwirlingDirt:
+	createsprite gSwirlingDirtSpriteTemplate, ANIM_TARGET, 2, 0, 32, 528, 30, 10, 50, ANIM_TARGET
+	delay 2
+	createsprite gSwirlingDirtSpriteTemplate, ANIM_TARGET, 2, 0, 36, 480, 20, 13, -46, ANIM_TARGET
+	delay 2
+	createsprite gSwirlingDirtSpriteTemplate, ANIM_TARGET, 2, 0, 37, 576, 20, 5, 42, ANIM_TARGET
+	delay 2
+	createsprite gSwirlingDirtSpriteTemplate, ANIM_TARGET, 2, 0, 35, 400, 25, 8, -42, ANIM_TARGET
+	delay 2
+	createsprite gSwirlingDirtSpriteTemplate, ANIM_TARGET, 2, 0, 32, 512, 25, 13, 46, ANIM_TARGET
+	delay 2
+	createsprite gSwirlingDirtSpriteTemplate, ANIM_TARGET, 2, 0, 37, 464, 30, 12, -50, ANIM_TARGET
+	delay 2
+	return
 
 gUnknown_82837C9: @ 0x082837C9
 	.incbin "baserom_jp.gba", 0x2837c9, 0x25
