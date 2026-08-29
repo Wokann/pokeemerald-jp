@@ -1744,7 +1744,13 @@ gSignalBeamRedOrbSpriteTemplate: @ 0x570CF8
 gSignalBeamGreenOrbSpriteTemplate: @ 0x570D10
 	.incbin "baserom_jp.gba", 0x570d10, 0x18
 
-	.incbin "baserom_jp.gba", 0x570d28, 0xbc
+	.incbin "baserom_jp.gba", 0x570d28, 0x14
+
+	.globl gFlamethrowerFlameSpriteTemplate
+gFlamethrowerFlameSpriteTemplate: @ 0x570D3C
+	.incbin "baserom_jp.gba", 0x570d3c, 0x18
+
+	.incbin "baserom_jp.gba", 0x570d54, 0x90
 
 	.globl gAnims_WaterBubble
 gAnims_WaterBubble: @ 0x570DE4

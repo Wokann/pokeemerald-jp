@@ -72,7 +72,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8281FEE                  @ 050
 	.4byte Move_ACID                         @ MOVE_ACID
 	.4byte Move_EMBER                        @ MOVE_EMBER
-	.4byte gUnknown_8280365                  @ 053
+	.4byte Move_FLAMETHROWER                 @ MOVE_FLAMETHROWER
 	.4byte gUnknown_8281170                  @ 054
 	.4byte Move_WATER_GUN                    @ MOVE_WATER_GUN
 	.4byte Move_HYDRO_PUMP                   @ MOVE_HYDRO_PUMP
@@ -6326,8 +6326,38 @@ Move_SURF: @ 0x08280351
 	waitforvisualfinish
 	end
 
-gUnknown_8280365: @ 0x08280365
-	.incbin "baserom_jp.gba", 0x280365, 0x9d
+Move_FLAMETHROWER: @ 0x08280365
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_ATTACKER, 0, 2, 46, 1
+	delay 6
+	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
+	panse SE_M_FLAMETHROWER, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 3, 0, 43, 1
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
+FlamethrowerCreateFlames:
+	createsprite gFlamethrowerFlameSpriteTemplate, ANIM_ATTACKER, 3, 10, 10, 0, 16
+	delay 2
+	createsprite gFlamethrowerFlameSpriteTemplate, ANIM_ATTACKER, 3, 10, 10, 0, 16
+	delay 2
+	return
 
 gUnknown_8280402: @ 0x08280402
 	.incbin "baserom_jp.gba", 0x280402, 0x88
