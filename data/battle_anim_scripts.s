@@ -373,7 +373,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SHOCK_WAVE                   @ MOVE_SHOCK_WAVE
 	.4byte Move_WATER_PULSE                  @ MOVE_WATER_PULSE
 	.4byte gUnknown_82853FA                  @ 353
-	.4byte gUnknown_82852F6                  @ 354
+	.4byte Move_PSYCHO_BOOST                 @ MOVE_PSYCHO_BOOST
 	.4byte gUnknown_8285C76                  @ 355
 
 gBattleAnims_StatusConditions:: @ 0x8277888
@@ -9571,8 +9571,32 @@ Move_WATER_PULSE: @ 0x08285201
 	clearmonbg ANIM_DEF_PARTNER
 	end
 
-gUnknown_82852F6: @ 0x082852F6
-	.incbin "baserom_jp.gba", 0x2852f6, 0x74
+Move_PSYCHO_BOOST: @ 0x082852F6
+	loadspritegfx ANIM_TAG_CIRCLE_OF_LIGHT
+	monbg ANIM_ATK_PARTNER
+	fadetobg BG_PSYCHIC
+	waitbgfadeout
+	createvisualtask AnimTask_FadeScreenToWhite, 5
+	waitbgfadein
+	delay 6
+	blend_color_cycle priority=2, selector=F_PAL_BG, delay=2, num_blends=8, initial_blend_y=0, target_blend_y=10, color=RGB_BLACK
+	delay 0
+	splitbgprio ANIM_ATTACKER
+	setalpha 8, 8
+	delay 10
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_ATTACKER, 3, 0, 240, 0
+	loopsewithpan SE_M_PSYBEAM2, SOUND_PAN_ATTACKER, 14, 10
+	createsprite gPsychoBoostOrbSpriteTemplate, ANIM_ATTACKER, 2
+	delay 110
+	loopsewithpan SE_M_PSYBEAM2, SOUND_PAN_ATTACKER, 7, 10
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, -8, 1, 24, 1
+	playsewithpan SE_M_LEER, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	call UnsetPsychicBackground
+	end
 
 gUnknown_828536A: @ 0x0828536A
 	.incbin "baserom_jp.gba", 0x28536a, 0x90
