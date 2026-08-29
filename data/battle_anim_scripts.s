@@ -77,7 +77,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82801CA                  @ 055
 	.4byte gUnknown_827F33F                  @ 056
 	.4byte gUnknown_8280351                  @ 057
-	.4byte gUnknown_827EC4C                  @ 058
+	.4byte Move_ICE_BEAM                     @ MOVE_ICE_BEAM
 	.4byte gUnknown_827F0B9                  @ 059
 	.4byte gUnknown_828169F                  @ 060
 	.4byte Move_BUBBLE_BEAM                  @ MOVE_BUBBLE_BEAM
@@ -5363,8 +5363,50 @@ Move_CLAMP: @ 0x0827EBEF
 	waitforvisualfinish
 	end
 
-gUnknown_827EC4C: @ 0x0827EC4C
-	.incbin "baserom_jp.gba", 0x27ec4c, 0x137
+Move_ICE_BEAM: @ 0x0827EC4C
+	monbg ANIM_TARGET
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	loadspritegfx ANIM_TAG_ICE_CRYSTALS
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=7, color=RGB_BLACK
+	waitforvisualfinish
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_BUBBLE_BEAM2, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 4, 4, 0, 10
+	createsprite gIceBeamOuterCrystalSpriteTemplate, ANIM_ATTACKER, 2, 20, 12, 0, 12, 20
+	createsprite gIceBeamOuterCrystalSpriteTemplate, ANIM_ATTACKER, 2, 20, -12, 0, -12, 20
+	delay 1
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	simple_palette_blend selector=F_PAL_TARGET, delay=-31, initial_blend_y=0, target_blend_y=7, color=RGB(0, 20, 31)
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 25, 1
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	createsprite gIceBeamInnerCrystalSpriteTemplate, ANIM_ATTACKER, 2, 20, 0, 0, 0, 11
+	delay 1
+	createsprite gIceBeamInnerCrystalSpriteTemplate, ANIM_ATTACKER, 2, 20, 0, 0, 0, 11
+	waitforvisualfinish
+	delay 20
+	call IceCrystalEffectShort
+	simple_palette_blend selector=F_PAL_TARGET, delay=5, initial_blend_y=7, target_blend_y=0, color=RGB(0, 20, 31)
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=0, initial_blend_y=7, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
+
+IceBeamCreateCrystals:
+	createsprite gIceBeamOuterCrystalSpriteTemplate, ANIM_ATTACKER, 2, 20, 12, 0, 12, 20
+	createsprite gIceBeamOuterCrystalSpriteTemplate, ANIM_ATTACKER, 2, 20, -12, 0, -12, 20
+	createsprite gIceBeamInnerCrystalSpriteTemplate, ANIM_ATTACKER, 2, 20, 0, 0, 0, 11
+	delay 1
+	return
 
 gUnknown_827ED83: @ 0x0827ED83
 	.incbin "baserom_jp.gba", 0x27ed83, 0xd
