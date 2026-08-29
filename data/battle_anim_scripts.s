@@ -39,7 +39,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_WING_ATTACK                  @ MOVE_WING_ATTACK
 	.4byte Move_WHIRLWIND                    @ MOVE_WHIRLWIND
 	.4byte Move_FLY                           @ MOVE_FLY
-	.4byte gUnknown_828164F                  @ 020
+	.4byte Move_BIND                         @ MOVE_BIND
 	.4byte Move_SLAM                         @ MOVE_SLAM
 	.4byte Move_VINE_WHIP                    @ MOVE_VINE_WHIP
 	.4byte Move_STOMP                        @ MOVE_STOMP
@@ -7130,8 +7130,20 @@ Move_POISON_GAS: @ 0x08281571
 	delay 0
 	end
 
-gUnknown_828164F: @ 0x0828164F
-	.incbin "baserom_jp.gba", 0x28164f, 0x3a
+Move_BIND: @ 0x0828164F
+	createvisualtask AnimTask_SwayMon, 5, 0, 6, 3328, 4, ANIM_ATTACKER
+	goto BindWrap
+
+BindWrap:
+	playsewithpan SE_M_BIND, SOUND_PAN_TARGET
+	call BindWrapSqueezeTarget
+	call BindWrapSqueezeTarget
+	waitforvisualfinish
+	end
+BindWrapSqueezeTarget:
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, 10, -5, 5, ANIM_TARGET, 0
+	delay 16
+	return
 
 gUnknown_8281689: @ 0x08281689
 	.incbin "baserom_jp.gba", 0x281689, 0x16
