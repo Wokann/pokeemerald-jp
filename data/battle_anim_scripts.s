@@ -343,7 +343,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_TICKLE                       @ MOVE_TICKLE
 	.4byte gUnknown_82844E4                  @ 322
 	.4byte Move_WATER_SPOUT                  @ MOVE_WATER_SPOUT
-	.4byte gUnknown_827F43E                  @ 324
+	.4byte Move_SIGNAL_BEAM                   @ MOVE_SIGNAL_BEAM
 	.4byte Move_SHADOW_PUNCH                 @ MOVE_SHADOW_PUNCH
 	.4byte Move_EXTRASENSORY                 @ MOVE_EXTRASENSORY
 	.4byte gUnknown_828545E                  @ 327
@@ -5673,8 +5673,47 @@ HydroPumpHitSplats:
 	createsprite gWaterHitSplatSpriteTemplate, ANIM_ATTACKER, 4, 0, -15, ANIM_TARGET, 1
 	return
 
-gUnknown_827F43E: @ 0x0827F43E
-	.incbin "baserom_jp.gba", 0x27f43e, 0xe8
+Move_SIGNAL_BEAM:: @ 0x0827F43E
+	loadspritegfx ANIM_TAG_GLOWY_RED_ORB
+	loadspritegfx ANIM_TAG_GLOWY_GREEN_ORB
+	loadspritegfx ANIM_TAG_DUCK
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_ATTACKER, 0, 2, 25, 1
+	delay 6
+	panse SE_M_BUBBLE_BEAM, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +1, 0
+	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 3, 0, 25, 1
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_TARGET, delay=8, num_blends=5, color1=RGB_RED, blend_y1=8, color2=RGB(1, 30, 0), blend_y2=8
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	waitforvisualfinish
+	end
+
+SignalBeamOrbs:
+	createsprite gSignalBeamRedOrbSpriteTemplate, ANIM_TARGET, 3, 10, 10, 0, 16
+	createsprite gSignalBeamGreenOrbSpriteTemplate, ANIM_TARGET, 3, 10, 10, 0, -16
+	delay 1
+	return
 
 gUnknown_827F526: @ 0x0827F526
 	.incbin "baserom_jp.gba", 0x27f526, 0x118

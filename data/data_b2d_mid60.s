@@ -1733,7 +1733,17 @@ gAuroraBeamRingSpriteTemplate: @ 0x570C98
 gHydroPumpOrbSpriteTemplate: @ 0x570CC8
 	.incbin "baserom_jp.gba", 0x570cc8, 0x18
 
-	.incbin "baserom_jp.gba", 0x570ce0, 0x104
+	.incbin "baserom_jp.gba", 0x570ce0, 0x18
+
+	.globl gSignalBeamRedOrbSpriteTemplate
+gSignalBeamRedOrbSpriteTemplate: @ 0x570CF8
+	.incbin "baserom_jp.gba", 0x570cf8, 0x18
+
+	.globl gSignalBeamGreenOrbSpriteTemplate
+gSignalBeamGreenOrbSpriteTemplate: @ 0x570D10
+	.incbin "baserom_jp.gba", 0x570d10, 0x18
+
+	.incbin "baserom_jp.gba", 0x570d28, 0xbc
 
 	.globl gAnims_WaterBubble
 gAnims_WaterBubble: @ 0x570DE4
