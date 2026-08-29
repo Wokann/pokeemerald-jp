@@ -361,7 +361,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_BULK_UP                      @ MOVE_BULK_UP
 	.4byte Move_BOUNCE                        @ MOVE_BOUNCE
 	.4byte gUnknown_8283B94                  @ 341
-	.4byte gUnknown_8281A11                  @ 342
+	.4byte Move_POISON_TAIL                  @ MOVE_POISON_TAIL
 	.4byte Move_COVET                        @ MOVE_COVET
 	.4byte Move_VOLT_TACKLE                  @ MOVE_VOLT_TACKLE
 	.4byte gUnknown_828570A                  @ 345
@@ -7285,8 +7285,26 @@ Move_IRON_TAIL: @ 0x082819B3
 	waitforvisualfinish
 	end
 
-gUnknown_8281A11: @ 0x08281A11
-	.incbin "baserom_jp.gba", 0x281a11, 0x66
+Move_POISON_TAIL: @ 0x08281A11
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_POISON_BUBBLE
+	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
+	metallic_shine permanent=TRUE, color=RGB(24, 6, 23)
+	waitforvisualfinish
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 4
+	delay 6
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	set_original_pal battler=ANIM_ATTACKER
+	clearmonbg ANIM_TARGET
+	blendoff
+	call PoisonBubblesEffect
+	waitforvisualfinish
+	end
 
 gUnknown_8281A77: @ 0x08281A77
 	.incbin "baserom_jp.gba", 0x281a77, 0x93
