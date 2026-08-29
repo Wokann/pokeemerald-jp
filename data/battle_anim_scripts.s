@@ -63,7 +63,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_TWINEEDLE                    @ MOVE_TWINEEDLE
 	.4byte Move_PIN_MISSILE                  @ MOVE_PIN_MISSILE
 	.4byte gUnknown_8281317                  @ 043
-	.4byte gUnknown_827EAE1                  @ 044
+	.4byte Move_BITE                         @ MOVE_BITE
 	.4byte Move_GROWL                        @ MOVE_GROWL
 	.4byte Move_ROAR                         @ MOVE_ROAR
 	.4byte Move_SING                         @ MOVE_SING
@@ -5301,8 +5301,22 @@ Move_RAIN_DANCE: @ 0x0827EA96
 	waitforvisualfinish
 	end
 
-gUnknown_827EAE1: @ 0x0827EAE1
-	.incbin "baserom_jp.gba", 0x27eae1, 0x5e
+Move_BITE: @ 0x0827EAE1
+	loadspritegfx ANIM_TAG_SHARP_TEETH
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_BITE, SOUND_PAN_TARGET
+	create_sharp_teeth_sprite ANIM_ATTACKER, 2, x=0, y=-32, animation=0, x_velocity=0, y_velocity=32/10, half_duration=10
+	create_sharp_teeth_sprite ANIM_ATTACKER, 2, x=0, y=32, animation=4, x_velocity=0, y_velocity=-32/10, half_duration=10
+	delay 10
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 4, 7, 1
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	delay 1
+	end
 
 gUnknown_827EB3F: @ 0x0827EB3F
 	.incbin "baserom_jp.gba", 0x27eb3f, 0xb0
