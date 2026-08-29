@@ -168,7 +168,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_DIZZY_PUNCH                  @ MOVE_DIZZY_PUNCH
 	.4byte Move_SPORE                        @ MOVE_SPORE
 	.4byte Move_FLASH                        @ MOVE_FLASH
-	.4byte gUnknown_8281799                  @ 149
+	.4byte Move_PSYWAVE                      @ MOVE_PSYWAVE
 	.4byte Move_SPLASH                       @ MOVE_SPLASH
 	.4byte Move_ACID_ARMOR                   @ MOVE_ACID_ARMOR
 	.4byte Move_CRABHAMMER                   @ MOVE_CRABHAMMER
@@ -7194,8 +7194,29 @@ HypnosisRings:
 	delay 6
 	return
 
-gUnknown_8281799: @ 0x08281799
-	.incbin "baserom_jp.gba", 0x281799, 0x86
+Move_PSYWAVE: @ 0x08281799
+	loadspritegfx ANIM_TAG_BLUE_RING
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	call SetPsychicBackground
+	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_TELEPORT, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 9, 0, 10
+	call PsywaveRings
+	call PsywaveRings
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=1, num_blends=4, initial_blend_y=0, target_blend_y=12, color=RGB(31, 18, 31)
+	call PsywaveRings
+	call PsywaveRings
+	call PsywaveRings
+	call PsywaveRings
+	waitforvisualfinish
+	delay 1
+	call UnsetPsychicBackground
+	end
+PsywaveRings:
+	createsprite gPsywaveRingSpriteTemplate, ANIM_TARGET, 3, 10, 10, 0, 16
+	delay 4
+	createsprite gPsywaveRingSpriteTemplate, ANIM_TARGET, 3, 10, 10, 0, 16
+	delay 4
+	return
 
 gUnknown_828181F: @ 0x0828181F
 	.incbin "baserom_jp.gba", 0x28181f, 0xe5
