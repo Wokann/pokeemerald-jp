@@ -320,7 +320,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_TEETER_DANCE                 @ MOVE_TEETER_DANCE
 	.4byte Move_BLAZE_KICK                   @ MOVE_BLAZE_KICK
 	.4byte Move_MUD_SPORT                    @ MOVE_MUD_SPORT
-	.4byte gUnknown_828582B                  @ 301
+	.4byte Move_ICE_BALL                     @ MOVE_ICE_BALL
 	.4byte Move_NEEDLE_ARM                   @ MOVE_NEEDLE_ARM
 	.4byte Move_SLACK_OFF                    @ MOVE_SLACK_OFF
 	.4byte Move_HYPER_VOICE                  @ MOVE_HYPER_VOICE
@@ -9785,8 +9785,95 @@ Move_MAGICAL_LEAF: @ 0x0828570A
 	blendoff
 	end
 
-gUnknown_828582B: @ 0x0828582B
-	.incbin "baserom_jp.gba", 0x28582b, 0x1cf
+Move_ICE_BALL: @ 0x0828582B
+	loadspritegfx ANIM_TAG_ICE_CHUNK
+	loadspritegfx ANIM_TAG_ICE_CRYSTALS
+	createvisualtask AnimTask_GetIceBallCounter, 5, 0
+	jumpargeq 0, 4, IceBallSetIceBg
+IceBallContinue:
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_ATTACKER
+	createsprite gIceBallChunkSpriteTemplate, ANIM_TARGET, 2, 15, 0, -12, -16, 30, -40
+	delay 28
+	playsewithpan SE_M_BRICK_BREAK, SOUND_PAN_TARGET
+	createvisualtask AnimTask_GetIceBallCounter, 5, 0
+	jumpargeq 0, 0, IceBallWeakest
+	jumpargeq 0, 1, IceBallWeak
+	jumpargeq 0, 2, IceBallMediun
+	jumpargeq 0, 3, IceBallStrong
+	jumpargeq 0, 4, IceBallStrongest
+IceBallContinue2:
+	createvisualtask AnimTask_GetIceBallCounter, 5, 0
+	jumpargeq 0, 4, IceBallUnsetIceBg
+IceBallEnd:
+	end
+IceBallSetIceBg:
+	fadetobg BG_ICE
+	goto IceBallContinue
+IceBallUnsetIceBg:
+	waitbgfadein
+	delay 45
+	restorebg
+	waitbgfadein
+	goto IceBallEnd
+IceBallWeakest:
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 8, 1, 0
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	goto IceBallContinue2
+IceBallWeak:
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 10, 1, 0
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	goto IceBallContinue2
+IceBallMediun:
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 14, 1, 0
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	goto IceBallContinue2
+IceBallStrong:
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 18, 1, 0
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	goto IceBallContinue2
+IceBallStrongest:
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 30, 1, 0
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	goto IceBallContinue2
+IceBallImpactShard:
+	createsprite gIceBallImpactShardSpriteTemplate, ANIM_TARGET, 4, -12, -16
+	return
 
 gUnknown_82859FA: @ 0x082859FA
 	.incbin "baserom_jp.gba", 0x2859fa, 0x27c
