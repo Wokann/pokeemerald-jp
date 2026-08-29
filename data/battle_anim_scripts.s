@@ -251,7 +251,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_RAPID_SPIN                   @ MOVE_RAPID_SPIN
 	.4byte gUnknown_828320D                  @ 230
 	.4byte Move_IRON_TAIL                    @ MOVE_IRON_TAIL
-	.4byte gUnknown_8281A77                  @ 232
+	.4byte Move_METAL_CLAW                   @ MOVE_METAL_CLAW
 	.4byte Move_VITAL_THROW                  @ MOVE_VITAL_THROW
 	.4byte gUnknown_8283179                  @ 234
 	.4byte Move_SYNTHESIS                    @ MOVE_SYNTHESIS
@@ -7306,8 +7306,26 @@ Move_POISON_TAIL: @ 0x08281A11
 	waitforvisualfinish
 	end
 
-gUnknown_8281A77: @ 0x08281A77
-	.incbin "baserom_jp.gba", 0x281a77, 0x93
+Move_METAL_CLAW: @ 0x08281A77
+	loadspritegfx ANIM_TAG_CLAW_SLASH
+	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
+	metallic_shine permanent=FALSE
+	waitforvisualfinish
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 6, 4
+	delay 2
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	create_claw_slash_sprite ANIM_TARGET, 2, x=-10, y=-10, animation=0
+	create_claw_slash_sprite ANIM_TARGET, 2, x=-10, y=10, animation=0
+	shake_mon_or_platform velocity=-4, shake_timer=1, shake_duration=10, type=SHAKE_MON_Y, battler_selector=SHAKE_MON_TARGET
+	delay 8
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 6, 4
+	delay 2
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	create_claw_slash_sprite ANIM_TARGET, 2, x=10, y=-10, animation=1
+	create_claw_slash_sprite ANIM_TARGET, 2, x=10, y=10, animation=1
+	shake_mon_or_platform velocity=-4, shake_timer=1, shake_duration=10, type=SHAKE_MON_Y, battler_selector=SHAKE_MON_TARGET
+	waitforvisualfinish
+	end
 
 gUnknown_8281B0A: @ 0x08281B0A
 	.incbin "baserom_jp.gba", 0x281b0a, 0x48
