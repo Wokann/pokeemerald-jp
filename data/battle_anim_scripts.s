@@ -249,7 +249,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ENCORE                       @ MOVE_ENCORE
 	.4byte Move_PURSUIT                       @ MOVE_PURSUIT
 	.4byte Move_RAPID_SPIN                   @ MOVE_RAPID_SPIN
-	.4byte gUnknown_828320D                  @ 230
+	.4byte Move_SWEET_SCENT                  @ MOVE_SWEET_SCENT
 	.4byte Move_IRON_TAIL                    @ MOVE_IRON_TAIL
 	.4byte Move_METAL_CLAW                   @ MOVE_METAL_CLAW
 	.4byte Move_VITAL_THROW                  @ MOVE_VITAL_THROW
@@ -8347,8 +8347,44 @@ MorningSunStar:
 	delay 5
 	return
 
-gUnknown_828320D: @ 0x0828320D
-	.incbin "baserom_jp.gba", 0x28320d, 0xea
+Move_SWEET_SCENT: @ 0x0828320D
+	loadspritegfx ANIM_TAG_PINK_PETAL
+	playsewithpan SE_M_SWEET_SCENT, SOUND_PAN_ATTACKER
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_ATTACKER, 2, 100, 0, 100
+	delay 25
+	setpan 0
+	call SweetScentEffect
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_ATTACKER, 2, 55, 0
+	setpan SOUND_PAN_TARGET
+	blend_color_cycle priority=2, selector=F_PAL_DEF_SIDE, delay=1, num_blends=5, initial_blend_y=5, target_blend_y=13, color=RGB(31, 21, 21)
+	call SweetScentEffect
+	waitforvisualfinish
+	end
+
+SweetScentEffect:
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_ATTACKER, 2, 70, 1, 64
+	delay 2
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_ATTACKER, 2, 60, 0, 64
+	delay 5
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_ATTACKER, 2, 80, 1, 64
+	delay 2
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_ATTACKER, 2, 58, 0, 120
+	delay 2
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_ATTACKER, 2, 100, 0, 120
+	delay 2
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_ATTACKER, 2, 90, 0, 64
+	delay 2
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_ATTACKER, 2, 48, 0, 64
+	delay 2
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_ATTACKER, 2, 95, 1, 80
+	delay 2
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_ATTACKER, 2, 100, 0, 120
+	delay 2
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_ATTACKER, 2, 75, 1, 64
+	delay 2
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_ATTACKER, 2, 85, 0, 120
+	delay 2
+	return
 
 gUnknown_82832F7: @ 0x082832F7
 	.incbin "baserom_jp.gba", 0x2832f7, 0x142
