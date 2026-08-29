@@ -243,7 +243,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SACRED_FIRE                   @ MOVE_SACRED_FIRE
 	.4byte Move_MAGNITUDE                    @ MOVE_MAGNITUDE
 	.4byte gUnknown_82808E1                  @ 223
-	.4byte gUnknown_827FEAB                  @ 224
+	.4byte Move_MEGAHORN                     @ MOVE_MEGAHORN
 	.4byte Move_DRAGON_BREATH                @ MOVE_DRAGON_BREATH
 	.4byte gUnknown_828286F                  @ 226
 	.4byte gUnknown_8282D4E                  @ 227
@@ -6124,8 +6124,48 @@ Move_SPIKES: @ 0x0827FE54
 	clearmonbg ANIM_DEF_PARTNER
 	end
 
-gUnknown_827FEAB: @ 0x0827FEAB
-	.incbin "baserom_jp.gba", 0x27feab, 0xed
+Move_MEGAHORN: @ 0x0827FEAB
+	loadspritegfx ANIM_TAG_HORN_HIT_2
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	jumpifcontest MegahornInContest
+	fadetobg BG_DRILL
+	waitbgfadeout
+	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 768, 1, -1
+MegahornContinue:
+	waitbgfadein
+	setalpha 12, 8
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_ATTACKER, 2, 0, 15, 1
+	waitforvisualfinish
+	delay 10
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 24, 0, 0, 6
+	delay 3
+	create_megahorn_horn_sprite ANIM_ATTACKER, 3, x1=-42, y1=25, x2=0, y2=0, duration=6
+	delay 4
+	playsewithpan SE_M_VICEGRIP, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=0
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 1, -16, 4, 1, 4
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_TARGET, -4, 1, 12, 1
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_ATTACKER | F_PAL_TARGET, delay=5, num_blends=1, color1=RGB_WHITE, blend_y1=10, color2=RGB_BLACK, blend_y2=0
+	delay 10
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 11
+	delay 3
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 1, 0, 7
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	restorebg
+	waitbgfadeout
+	setarg 7, 0xFFFF
+	waitbgfadein
+	end
+MegahornInContest:
+	fadetobg BG_DRILL_CONTESTS
+	waitbgfadeout
+	createvisualtask AnimTask_StartSlidingBg, 5, 2304, 768, 0, -1
+	goto MegahornContinue
 
 gUnknown_827FF98: @ 0x0827FF98
 	.incbin "baserom_jp.gba", 0x27ff98, 0x51
