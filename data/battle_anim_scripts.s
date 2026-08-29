@@ -260,7 +260,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_CROSS_CHOP                    @ MOVE_CROSS_CHOP
 	.4byte gUnknown_82855AB                  @ 239
 	.4byte Move_RAIN_DANCE                  @ MOVE_RAIN_DANCE
-	.4byte gUnknown_8280C8E                  @ 241
+	.4byte Move_SUNNY_DAY                    @ MOVE_SUNNY_DAY
 	.4byte Move_CRUNCH                       @ MOVE_CRUNCH
 	.4byte Move_MIRROR_COAT                  @ MOVE_MIRROR_COAT
 	.4byte Move_PSYCH_UP                     @ MOVE_PSYCH_UP
@@ -6740,8 +6740,29 @@ SubmissionHit:
 	delay 8
 	return
 
-gUnknown_8280C8E: @ 0x08280C8E
-	.incbin "baserom_jp.gba", 0x280c8e, 0x56
+@ Also used by Sunny weather
+Move_SUNNY_DAY: @ 0x08280C8E
+	loadspritegfx ANIM_TAG_SUNLIGHT
+	monbg ANIM_ATK_PARTNER
+	setalpha 13, 3
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_BATTLERS_2, 1, 0, 6, RGB_WHITE
+	waitforvisualfinish
+	panse_adjustnone SE_M_PETAL_DANCE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +1, 0
+	call SunnyDayLightRay
+	call SunnyDayLightRay
+	call SunnyDayLightRay
+	call SunnyDayLightRay
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_BATTLERS_2, 1, 6, 0, RGB_WHITE
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	end
+
+SunnyDayLightRay:
+	createsprite gSunlightRaySpriteTemplate, ANIM_ATTACKER, 40
+	delay 6
+	return
 
 gUnknown_8280CE4: @ 0x08280CE4
 	.incbin "baserom_jp.gba", 0x280ce4, 0x5a
