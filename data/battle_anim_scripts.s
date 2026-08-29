@@ -140,7 +140,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_METRONOME                    @ MOVE_METRONOME
 	.4byte Move_MIRROR_MOVE                      @ MOVE_MIRROR_MOVE
 	.4byte Move_SELF_DESTRUCT                 @ MOVE_SELF_DESTRUCT
-	.4byte gUnknown_8281B52                  @ 121
+	.4byte Move_EGG_BOMB                     @ MOVE_EGG_BOMB
 	.4byte gUnknown_8281C2F                  @ 122
 	.4byte Move_SMOG                         @ MOVE_SMOG
 	.4byte Move_SLUDGE                       @ MOVE_SLUDGE
@@ -7346,8 +7346,30 @@ Move_NIGHT_SHADE: @ 0x08281B0A
 	waitbgfadein
 	end
 
-gUnknown_8281B52: @ 0x08281B52
-	.incbin "baserom_jp.gba", 0x281b52, 0x9a
+Move_EGG_BOMB: @ 0x08281B52
+	loadspritegfx ANIM_TAG_EXPLOSION
+	loadspritegfx ANIM_TAG_LARGE_FRESH_EGG
+	playsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER
+	createsprite gEggThrowSpriteTemplate, ANIM_TARGET, 2, 10, 0, 0, 0, 25, -32
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 16, 1
+	createsprite gExplosionSpriteTemplate, ANIM_TARGET, 4, 6, 5, 1, 0
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	delay 3
+	createsprite gExplosionSpriteTemplate, ANIM_TARGET, 4, -16, -15, 1, 0
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	delay 3
+	createsprite gExplosionSpriteTemplate, ANIM_TARGET, 4, 16, -5, 1, 0
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	delay 3
+	createsprite gExplosionSpriteTemplate, ANIM_TARGET, 4, -12, 18, 1, 0
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	delay 3
+	createsprite gExplosionSpriteTemplate, ANIM_TARGET, 4, 0, 5, 1, 0
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	delay 3
+	waitforvisualfinish
+	end
 
 gUnknown_8281BEC: @ 0x08281BEC
 	.incbin "baserom_jp.gba", 0x281bec, 0x43
