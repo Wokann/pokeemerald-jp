@@ -394,7 +394,7 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_SubstituteAppear           @ 003
 	.4byte General_PokeblockThrow             @ 004
 	.4byte General_ItemKnockoff               @ 005
-	.4byte gUnknown_82864FC                  @ 006
+	.4byte General_TurnTrap                   @ 006
 	.4byte gUnknown_828668F                  @ 007
 	.4byte gUnknown_8286703                  @ 008
 	.4byte gUnknown_82867DF                  @ 009
@@ -10400,8 +10400,84 @@ General_ItemKnockoff: @ 0x082864F1
 	createsprite gKnockOffItemSpriteTemplate, ANIM_TARGET, 2
 	end
 
-gUnknown_82864FC: @ 0x082864FC
-	.incbin "baserom_jp.gba", 0x2864fc, 0x193
+General_TurnTrap: @ 0x082864FC
+	createvisualtask AnimTask_GetTrappedMoveAnimId, 5
+	jumpargeq 0, TRAP_ANIM_FIRE_SPIN, Status_FireSpin
+	jumpargeq 0, TRAP_ANIM_WHIRLPOOL, Status_Whirlpool
+	jumpargeq 0, TRAP_ANIM_CLAMP,     Status_Clamp
+	jumpargeq 0, TRAP_ANIM_SAND_TOMB, Status_SandTomb
+	goto Status_BindWrap
+Status_BindWrap: @ 0x08286529
+	loadspritegfx ANIM_TAG_TENDRILS
+	loopsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET, 6, 2
+	create_constrict_binding_sprite ANIM_TARGET, 4, initial_x=0, initial_y=16, affine_animation=0, squeezes=1
+	delay 7
+	create_constrict_binding_sprite ANIM_TARGET, 2, initial_x=0, initial_y=8, affine_animation=1, squeezes=1
+	delay 3
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	delay 20
+	setarg 7, 0xFFFF
+	playsewithpan SE_M_BIND, SOUND_PAN_TARGET
+	waitforvisualfinish
+	end
+
+Status_FireSpin: @ 0x08286570
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	playsewithpan SE_M_SACRED_FIRE2, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 2, 30, 1
+	call FireSpinEffect
+	call FireSpinEffect
+	waitforvisualfinish
+	stopsound
+	end
+
+Status_Whirlpool: @ 0x08286595
+	loadspritegfx ANIM_TAG_WATER_ORB
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	delay 0
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=0, target_blend_y=7, color=RGB(0, 13, 23)
+	playsewithpan SE_M_WHIRLPOOL, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 2, 30, 1
+	call WhirlpoolEffect
+	call WhirlpoolEffect
+	delay 12
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=7, target_blend_y=0, color=RGB(0, 13, 23)
+	waitforvisualfinish
+	stopsound
+	clearmonbg ANIM_DEF_PARTNER
+	end
+
+Status_Clamp: @ 0x082865E9
+	loadspritegfx ANIM_TAG_CLAMP
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_VICEGRIP, SOUND_PAN_TARGET
+	create_clamp_jaw_sprite ANIM_ATTACKER, 2, x=-32, y=0, animation=2, x_velocity=32/10, y_velocity=0, half_duration=10
+	create_clamp_jaw_sprite ANIM_ATTACKER, 2, x=32, y=0, animation=6, x_velocity=-32/10, y_velocity=0, half_duration=10
+	delay 10
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 3, 0, 5, 1
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	waitforvisualfinish
+	end
+
+Status_SandTomb: @ 0x08286646
+	loadspritegfx ANIM_TAG_MUD_SAND
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=0, target_blend_y=7, color=RGB(19, 17, 0)
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 2, 30, 1
+	playsewithpan SE_M_SAND_TOMB, SOUND_PAN_TARGET
+	call SandTombSwirlingDirt
+	call SandTombSwirlingDirt
+	delay 22
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=7, target_blend_y=0, color=RGB(19, 17, 0)
+	waitforvisualfinish
+	stopsound
+	end
 
 gUnknown_828668F: @ 0x0828668F
 	.incbin "baserom_jp.gba", 0x28668f, 0x74
