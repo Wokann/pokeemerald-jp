@@ -346,7 +346,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SIGNAL_BEAM                   @ MOVE_SIGNAL_BEAM
 	.4byte Move_SHADOW_PUNCH                 @ MOVE_SHADOW_PUNCH
 	.4byte Move_EXTRASENSORY                 @ MOVE_EXTRASENSORY
-	.4byte gUnknown_828545E                  @ 327
+	.4byte Move_SKY_UPPERCUT                 @ MOVE_SKY_UPPERCUT
 	.4byte Move_SAND_TOMB                    @ MOVE_SAND_TOMB
 	.4byte Move_SHEER_COLD                   @ MOVE_SHEER_COLD
 	.4byte Move_MUDDY_WATER                  @ MOVE_MUDDY_WATER
@@ -9638,8 +9638,49 @@ Move_DOOM_DESIRE: @ 0x082853FA
 	blendoff
 	end
 
-gUnknown_828545E: @ 0x0828545E
-	.incbin "baserom_jp.gba", 0x28545e, 0xf9
+Move_SKY_UPPERCUT: @ 0x0828545E
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	fadetobg BG_IN_AIR
+	waitbgfadeout
+	playsewithpan SE_M_SKY_UPPERCUT, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_MoveSkyUppercutBg, 5, 55
+	waitbgfadein
+	setalpha 12, 8
+	delay 38
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 28, 0, 0, 5
+	delay 4
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 6, 1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=-28, y=28, relative_to=ANIM_TARGET, animation=1
+	delay 1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=-15, y=8, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	delay 1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=-5, y=-12, relative_to=ANIM_TARGET, animation=1
+	delay 1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=0, y=-32, relative_to=ANIM_TARGET, animation=1
+	delay 1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=5, y=-52, relative_to=ANIM_TARGET, animation=1
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 1, -26, 16, 1, 4
+	delay 4
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_TARGET, 0, 3, 6, 1
+	delay 30
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 6
+	delay 4
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 1, 0, 6
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	restorebg
+	waitbgfadeout
+	setarg 7, 0xFFFF
+	waitbgfadein
+	end
 
 gUnknown_8285557: @ 0x08285557
 	.incbin "baserom_jp.gba", 0x285557, 0x54
