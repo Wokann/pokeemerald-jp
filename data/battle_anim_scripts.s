@@ -175,7 +175,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_EXPLOSION                     @ MOVE_EXPLOSION
 	.4byte gUnknown_8282603                  @ 154
 	.4byte gUnknown_827FD53                  @ 155
-	.4byte gUnknown_827DD70                  @ 156
+	.4byte Move_REST                         @ MOVE_REST
 	.4byte Move_ROCK_SLIDE                   @ MOVE_ROCK_SLIDE
 	.4byte gUnknown_8282AB5                  @ 158
 	.4byte Move_SHARPEN                      @ MOVE_SHARPEN
@@ -4713,8 +4713,16 @@ Move_ICE_PUNCH:
 	blendoff
 	end
 
-gUnknown_827DD70: @ 0x0827DD70
-	.incbin "baserom_jp.gba", 0x27dd70, 0x40
+Move_REST: @ 0x0827DD70
+	playsewithpan SE_M_SNORE, SOUND_PAN_ATTACKER
+	loadspritegfx ANIM_TAG_LETTER_Z
+	createsprite gSleepLetterZSpriteTemplate, ANIM_ATTACKER, 2, 4, -10, 16, 0, 0
+	delay 20
+	createsprite gSleepLetterZSpriteTemplate, ANIM_ATTACKER, 2, 4, -10, 16, 0, 0
+	delay 20
+	createsprite gSleepLetterZSpriteTemplate, ANIM_ATTACKER, 2, 4, -10, 16, 0, 0
+	waitforvisualfinish
+	end
 
 gUnknown_827DDB0: @ 0x0827DDB0
 	.incbin "baserom_jp.gba", 0x27ddb0, 0x61
