@@ -340,6 +340,10 @@
 	createsprite gClampJawSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \animation, 256 * \x_velocity, 256 * \y_velocity, \half_duration
 	.endm
 
+	.macro create_constrict_binding_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req, affine_animation:req, squeezes:req
+	createsprite gConstrictBindingSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \affine_animation, \squeezes
+	.endm
+
 	.macro create_mimic_orb_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req
 	createsprite gMimicOrbSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y
 	.endm

@@ -151,7 +151,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SWIFT                          @ MOVE_SWIFT
 	.4byte Move_SKULL_BASH                   @ MOVE_SKULL_BASH
 	.4byte Move_SPIKE_CANNON                  @ MOVE_SPIKE_CANNON
-	.4byte gUnknown_8282111                  @ 132
+	.4byte Move_CONSTRICT                    @ MOVE_CONSTRICT
 	.4byte Move_AMNESIA                      @ MOVE_AMNESIA
 	.4byte Move_KINESIS                      @ MOVE_KINESIS
 	.4byte gUnknown_8282239                  @ 135
@@ -7639,8 +7639,22 @@ Move_MIMIC: @ 0x082820C6
 	blendoff
 	end
 
-gUnknown_8282111: @ 0x08282111
-	.incbin "baserom_jp.gba", 0x282111, 0x68
+Move_CONSTRICT: @ 0x08282111
+	loadspritegfx ANIM_TAG_TENDRILS
+	loopsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET, 6, 4
+	create_constrict_binding_sprite ANIM_TARGET, 4, initial_x=0, initial_y=16, affine_animation=0, squeezes=2
+	delay 7
+	create_constrict_binding_sprite ANIM_TARGET, 3, initial_x=0, initial_y=0, affine_animation=0, squeezes=2
+	create_constrict_binding_sprite ANIM_TARGET, 2, initial_x=0, initial_y=8, affine_animation=1, squeezes=2
+	delay 7
+	create_constrict_binding_sprite ANIM_TARGET, 3, initial_x=0, initial_y=-8, affine_animation=1, squeezes=2
+	delay 8
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 6, 1
+	delay 20
+	playsewithpan SE_M_BIND, SOUND_PAN_TARGET
+	setarg 7, 0xFFFF
+	waitforvisualfinish
+	end
 
 gUnknown_8282179: @ 0x08282179
 	.incbin "baserom_jp.gba", 0x282179, 0xc0

@@ -775,6 +775,7 @@ sAffineAnim_ConstrictBinding_Flipped: @ 0x856E050
 sAffineAnims_ConstrictBinding: @ 0x856E070
 	.4byte 0x0856E030, 0x0856E050
 
+	.globl gConstrictBindingSpriteTemplate
 gConstrictBindingSpriteTemplate: @ 0x856E078
 	.hword 0x27CA, 0x27CA
 	.4byte 0x084FD0A8, 0x0856E028
