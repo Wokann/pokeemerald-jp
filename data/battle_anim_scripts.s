@@ -200,7 +200,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8280CE4                  @ 178
 	.4byte Move_REVERSAL                      @ MOVE_REVERSAL
 	.4byte Move_SPITE                        @ MOVE_SPITE
-	.4byte gUnknown_827F245                  @ 181
+	.4byte Move_POWDER_SNOW                  @ MOVE_POWDER_SNOW
 	.4byte Move_PROTECT                       @ MOVE_PROTECT
 	.4byte Move_MACH_PUNCH                   @ MOVE_MACH_PUNCH
 	.4byte gUnknown_82824F0                  @ 184
@@ -5592,8 +5592,39 @@ BlizzardAgainstPlayer:
 	fadetobg BG_HIGHSPEED_PLAYER
 	goto BlizzardContinue
 
-gUnknown_827F245: @ 0x0827F245
-	.incbin "baserom_jp.gba", 0x27f245, 0xfa
+Move_POWDER_SNOW: @ 0x0827F245
+	loadspritegfx ANIM_TAG_ICE_CRYSTALS
+	monbg ANIM_DEF_PARTNER
+	simple_palette_blend selector=F_PAL_BG | F_PAL_BATTLERS, delay=1, initial_blend_y=0, target_blend_y=3, color=RGB_BLACK
+	waitforvisualfinish
+	panse SE_M_GUST, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	call PowderSnowSnowballs
+	call PowderSnowSnowballs
+	playsewithpan SE_M_GUST2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	waitsound
+	call IceCrystalEffectLong
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	delay 20
+	simple_palette_blend selector=F_PAL_BG | F_PAL_BATTLERS, delay=1, initial_blend_y=3, target_blend_y=0, color=RGB_BLACK
+	end
+PowderSnowSnowballs:
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, 0, 0, 0, 56, 4, 4, 1
+	delay 3
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -10, 0, -10, 56, 4, 4, 1
+	delay 3
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, 10, 0, 10, 56, -4, 3, 1
+	delay 3
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -20, 0, -20, 56, -4, 5, 1
+	delay 3
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, 15, 0, 15, 56, 4, 4, 1
+	delay 3
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -20, 0, -20, 56, 4, 4, 1
+	delay 3
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, 20, 0, 20, 56, 4, 4, 1
+	delay 3
+	return
 
 gUnknown_827F33F: @ 0x0827F33F
 	.incbin "baserom_jp.gba", 0x27f33f, 0xff
