@@ -230,7 +230,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MILK_DRINK                   @ MOVE_MILK_DRINK
 	.4byte Move_SPARK                        @ MOVE_SPARK
 	.4byte Move_FURY_CUTTER                   @ MOVE_FURY_CUTTER
-	.4byte gUnknown_8281904                  @ 211
+	.4byte Move_STEEL_WING                   @ MOVE_STEEL_WING
 	.4byte Move_MEAN_LOOK                    @ MOVE_MEAN_LOOK
 	.4byte Move_ATTRACT                      @ MOVE_ATTRACT
 	.4byte gUnknown_82829FA                  @ 214
@@ -7239,8 +7239,32 @@ Move_ZAP_CANNON: @ 0x0828181F
 	waitforvisualfinish
 	end
 
-gUnknown_8281904: @ 0x08281904
-	.incbin "baserom_jp.gba", 0x281904, 0xaf
+Move_STEEL_WING: @ 0x08281904
+	loadspritegfx ANIM_TAG_GUST
+	loadspritegfx ANIM_TAG_IMPACT
+	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
+	metallic_shine permanent=FALSE
+	waitforvisualfinish
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	loopsewithpan SE_M_WING_ATTACK, SOUND_PAN_ATTACKER, 20, 2
+	createvisualtask AnimTask_TranslateMonElliptical, 2, 0, 12, 4, 1, 4
+	createvisualtask AnimTask_AnimateGustTornadoPalette, 5, 1, 70
+	createsprite gGustToTargetSpriteTemplate, ANIM_ATTACKER, 2, -25, 0, 0, 0, 20
+	createsprite gGustToTargetSpriteTemplate, ANIM_ATTACKER, 2, 25, 0, 0, 0, 20
+	delay 24
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 24, 0, 0, 9
+	delay 17
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=16, y=0, relative_to=ANIM_TARGET, animation=1
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=-16, y=0, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 11
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_82819B3: @ 0x082819B3
 	.incbin "baserom_jp.gba", 0x2819b3, 0x5e
