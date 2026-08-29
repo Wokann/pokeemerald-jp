@@ -111,7 +111,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_EARTHQUAKE                   @ MOVE_EARTHQUAKE
 	.4byte Move_FISSURE                      @ MOVE_FISSURE
 	.4byte Move_DIG                          @ MOVE_DIG
-	.4byte gUnknown_827FA82                  @ 092
+	.4byte Move_TOXIC                        @ MOVE_TOXIC
 	.4byte Move_CONFUSION                    @ MOVE_CONFUSION
 	.4byte Move_PSYCHIC                      @ MOVE_PSYCHIC
 	.4byte gUnknown_8281739                  @ 095
@@ -5939,8 +5939,31 @@ Move_SYNTHESIS:: @ 0x0827FA58
 	waitforvisualfinish
 	end
 
-gUnknown_827FA82: @ 0x0827FA82
-	.incbin "baserom_jp.gba", 0x27fa82, 0x6f
+Move_TOXIC:: @ 0x0827FA82
+	loadspritegfx ANIM_TAG_TOXIC_BUBBLE
+	loadspritegfx ANIM_TAG_POISON_BUBBLE
+	call ToxicBubbles
+	call ToxicBubbles
+	waitforvisualfinish
+	delay 15
+	call PoisonBubblesEffect
+	waitforvisualfinish
+	end
+
+ToxicBubbles:
+	createsprite gToxicBubbleSpriteTemplate, ANIM_TARGET, 2, -24, 16, 1, 1
+	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
+	delay 15
+	createsprite gToxicBubbleSpriteTemplate, ANIM_TARGET, 2, 8, 16, 1, 1
+	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
+	delay 15
+	createsprite gToxicBubbleSpriteTemplate, ANIM_TARGET, 2, -8, 16, 1, 1
+	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
+	delay 15
+	createsprite gToxicBubbleSpriteTemplate, ANIM_TARGET, 2, 24, 16, 1, 1
+	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
+	delay 15
+	return
 
 gUnknown_827FAF1: @ 0x0827FAF1
 	.incbin "baserom_jp.gba", 0x27faf1, 0x42
