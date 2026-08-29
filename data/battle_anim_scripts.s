@@ -65,7 +65,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8281317                  @ 043
 	.4byte gUnknown_827EAE1                  @ 044
 	.4byte gUnknown_827E4A8                  @ 045
-	.4byte gUnknown_827E411                  @ 046
+	.4byte Move_ROAR                         @ MOVE_ROAR
 	.4byte Move_SING                         @ MOVE_SING
 	.4byte Move_SUPERSONIC                     @ MOVE_SUPERSONIC
 	.4byte Move_SONIC_BOOM                   @ MOVE_SONIC_BOOM
@@ -4973,8 +4973,23 @@ Move_DRAGON_BREATH: @ 0x0827E2FD
 	clearmonbg ANIM_DEF_PARTNER
 	end
 
-gUnknown_827E411: @ 0x0827E411
-	.incbin "baserom_jp.gba", 0x27e411, 0x46
+Move_ROAR: @ 0x0827E411
+	loadspritegfx ANIM_TAG_NOISE_LINE
+	monbg ANIM_ATTACKER
+	splitbgprio ANIM_ATTACKER
+	setalpha 8, 8
+	createvisualtask SoundTask_PlayDoubleCry, 2, ANIM_ATTACKER, DOUBLE_CRY_ROAR
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -5, -5, 10, ANIM_ATTACKER, 1
+	call RoarEffect
+	delay 20
+	createvisualtask AnimTask_SlideOffScreen, 5, ANIM_TARGET, 2
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	blendoff
+	waitforvisualfinish
+	createvisualtask SoundTask_WaitForCry, 5
+	waitforvisualfinish
+	end
 
 RoarEffect: @ 0x0827E457
 	.incbin "baserom_jp.gba", 0x27e457, 0x51
