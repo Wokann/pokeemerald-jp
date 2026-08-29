@@ -204,7 +204,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_PROTECT                       @ MOVE_PROTECT
 	.4byte Move_MACH_PUNCH                   @ MOVE_MACH_PUNCH
 	.4byte gUnknown_82824F0                  @ 184
-	.4byte gUnknown_827E7EC                  @ 185
+	.4byte Move_FAINT_ATTACK                 @ MOVE_FAINT_ATTACK
 	.4byte gUnknown_8282553                  @ 186
 	.4byte Move_BELLY_DRUM                   @ MOVE_BELLY_DRUM
 	.4byte gUnknown_827FB33                  @ 188
@@ -5166,8 +5166,41 @@ SmogCloud:
 	delay 7
 	return
 
-gUnknown_827E7EC: @ 0x0827E7EC
-	.incbin "baserom_jp.gba", 0x27e7ec, 0x87
+Move_FAINT_ATTACK: @ 0x0827E7EC
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_ATTACKER
+	fadetobg BG_DARK
+	waitbgfadein
+	delay 0
+	playsewithpan SE_M_FAINT_ATTACK, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 18, 6, 1, 3
+	attacker_fade_to_invisible step_delay=1
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	invisible ANIM_ATTACKER
+	delay 1
+	createvisualtask AnimTask_SetAttackerInvisibleWaitForSignal, 2
+	setalpha 12, 8
+	monbg ANIM_TARGET
+	delay 1
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 9, 1
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	delay 1
+	setarg 7, 0x1000
+	delay 32
+	createvisualtask AnimTask_InitAttackerFadeFromInvisible, 2
+	monbg ANIM_ATTACKER
+	attacker_fade_from_invisible step_delay=1
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	delay 1
+	restorebg
+	waitbgfadein
+	end
 
 gUnknown_827E873: @ 0x0827E873
 	.incbin "baserom_jp.gba", 0x27e873, 0xa8
