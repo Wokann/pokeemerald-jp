@@ -131,7 +131,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_CONFUSE_RAY                  @ MOVE_CONFUSE_RAY
 	.4byte gUnknown_827ED83                  @ 110
 	.4byte Move_DEFENSE_CURL                  @ MOVE_DEFENSE_CURL
-	.4byte gUnknown_827E67E                  @ 112
+	.4byte Move_BARRIER                      @ MOVE_BARRIER
 	.4byte Move_LIGHT_SCREEN                 @ MOVE_LIGHT_SCREEN
 	.4byte gUnknown_82811D1                  @ 114
 	.4byte Move_REFLECT                      @ MOVE_REFLECT
@@ -5092,8 +5092,15 @@ Move_REFLECT: @ 0x0827E62B
 	blendoff
 	end
 
-gUnknown_827E67E: @ 0x0827E67E
-	.incbin "baserom_jp.gba", 0x27e67e, 0x1d
+Move_BARRIER: @ 0x0827E67E
+	loadspritegfx ANIM_TAG_GRAY_LIGHT_WALL
+	setalpha 0, 16
+	waitplaysewithpan SE_M_BARRIER, SOUND_PAN_ATTACKER, 15
+	createsprite gBarrierWallSpriteTemplate, ANIM_ATTACKER, 3, 40, 0, ANIM_TAG_GRAY_LIGHT_WALL
+	waitforvisualfinish
+	delay 1
+	blendoff
+	end
 
 gUnknown_827E69B: @ 0x0827E69B
 	.incbin "baserom_jp.gba", 0x27e69b, 0xd6
