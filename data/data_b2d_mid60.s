@@ -878,6 +878,7 @@ gFallingBagAffineAnimCmds2: @ 0x856E1B4
 gFallingBagAffineAnimTable: @ 0x856E1EC
 	.4byte 0x0856E194, 0x0856E1B4
 
+	.globl gPresentSpriteTemplate
 gPresentSpriteTemplate: @ 0x856E1F4
 	.hword 0x27F0, 0x27F0
 	.4byte 0x084FD080, 0x0856E190
@@ -898,6 +899,7 @@ gPresentHealParticleAnimCmds: @ 0x856E224
 gPresentHealParticleAnimTable: @ 0x856E238
 	.4byte 0x0856E224
 
+	.globl gPresentHealParticleSpriteTemplate
 gPresentHealParticleSpriteTemplate: @ 0x856E23C
 	.hword 0x27D3, 0x27D3
 	.4byte 0x084FD018, 0x0856E238

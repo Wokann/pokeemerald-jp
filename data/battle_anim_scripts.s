@@ -236,7 +236,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82829FA                  @ 214
 	.4byte Move_HEAL_BELL                    @ MOVE_HEAL_BELL
 	.4byte gUnknown_8284055                  @ 216
-	.4byte gUnknown_8282718                  @ 217
+	.4byte Move_PRESENT                      @ MOVE_PRESENT
 	.4byte Move_FRUSTRATION                   @ MOVE_FRUSTRATION
 	.4byte Move_SAFEGUARD                     @ MOVE_SAFEGUARD
 	.4byte Move_PAIN_SPLIT                   @ MOVE_PAIN_SPLIT
@@ -7882,8 +7882,65 @@ Move_INGRAIN: @ 0x08282667
 	waitforvisualfinish
 	end
 
-gUnknown_8282718: @ 0x08282718
-	.incbin "baserom_jp.gba", 0x282718, 0x157
+Move_PRESENT: @ 0x08282718
+	loadspritegfx ANIM_TAG_ITEM_BAG
+	createvisualtask AnimTask_IsHealingMove, 2
+	create_present_sprite ANIM_TARGET, 2, initial_x=0, initial_y=-5, unk2=10, unk3=2, unk4=-1
+	playsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER
+	delay 14
+	playsewithpan SE_M_BUBBLE2, SOUND_PAN_ATTACKER
+	delay 14
+	playsewithpan SE_M_BUBBLE2, 0
+	delay 20
+	playsewithpan SE_M_BUBBLE2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	jumpretfalse PresentDamage
+	jumprettrue PresentHeal
+	end
+
+PresentDamage:
+	loadspritegfx ANIM_TAG_EXPLOSION
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionSpriteTemplate, ANIM_TARGET, 3, 0, 0, 1, 1
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionSpriteTemplate, ANIM_TARGET, 3, 24, -24, 1, 1
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionSpriteTemplate, ANIM_TARGET, 3, -16, 16, 1, 1
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionSpriteTemplate, ANIM_TARGET, 3, -24, -12, 1, 1
+	delay 6
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gExplosionSpriteTemplate, ANIM_TARGET, 3, 16, 16, 1, 1
+	end
+
+PresentHeal:
+	loadspritegfx ANIM_TAG_GREEN_SPARKLE
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_TARGET
+	create_present_heal_particle_sprite ANIM_TARGET, 4, initial_x=-16, initial_y=32, velocity_y=-3
+	delay 3
+	create_present_heal_particle_sprite ANIM_TARGET, 4, initial_x=16, initial_y=32, velocity_y=-3, unused3=-1
+	delay 3
+	create_present_heal_particle_sprite ANIM_TARGET, 4, initial_x=32, initial_y=32, velocity_y=-3
+	delay 3
+	create_present_heal_particle_sprite ANIM_TARGET, 4, initial_x=-32, initial_y=32, velocity_y=-3
+	delay 3
+	create_present_heal_particle_sprite ANIM_TARGET, 4, initial_x=0, initial_y=32, velocity_y=-3
+	delay 3
+	create_present_heal_particle_sprite ANIM_TARGET, 4, initial_x=-8, initial_y=32, velocity_y=-3
+	delay 3
+	create_present_heal_particle_sprite ANIM_TARGET, 4, initial_x=-8, initial_y=32, velocity_y=-3
+	delay 3
+	create_present_heal_particle_sprite ANIM_TARGET, 4, initial_x=24, initial_y=32, velocity_y=-3
+	delay 3
+	create_present_heal_particle_sprite ANIM_TARGET, 4, initial_x=-24, initial_y=32, velocity_y=-3
+	waitforvisualfinish
+	waitsound
+	call HealingEffect2
+	end
 
 gUnknown_828286F: @ 0x0828286F
 	.incbin "baserom_jp.gba", 0x28286f, 0x22
