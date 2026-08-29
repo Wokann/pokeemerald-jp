@@ -253,6 +253,39 @@ class StructureAuditTests(unittest.TestCase):
         self.assertEqual(record["scripts"]["status"], "direct")
         self.assertEqual(record["layout"]["status"], "direct")
 
+    def test_map_convergence_accepts_canonical_layout_label(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            map_dir = root / "data/maps/Underwater_Route124"
+            map_dir.mkdir(parents=True)
+            (map_dir / "map.json").write_text(
+                '{"id":"MAP_UNDERWATER_ROUTE124","layout":"LAYOUT_UNDERWATER_ROUTE124"}',
+                encoding="utf-8")
+            (map_dir / "scripts.inc").write_text("", encoding="utf-8")
+            (map_dir / "events.inc").write_text("", encoding="utf-8")
+            (map_dir / "header.inc").write_text(
+                '\t.4byte Underwater_Route124_Layout\n'
+                '\t.4byte Underwater_Route124_MapEvents\n'
+                '\t.4byte Underwater_Route124_MapScripts\n'
+                '\t.4byte NULL\n', encoding="utf-8")
+            (root / "data/event_scripts.s").write_text(
+                '.include "data/maps/Underwater_Route124/scripts.inc"\n', encoding="utf-8")
+            (root / "data/data_b2d_mid26.s").write_text(
+                '.include "data/maps/Underwater_Route124/events.inc"\n', encoding="utf-8")
+            (root / "data/data_b2d_mid30.s").write_text(
+                '@ MAP_UNDERWATER_ROUTE124 (g1 m2)\n'
+                '.include "data/maps/Underwater_Route124/header.inc"\n', encoding="utf-8")
+            layouts_dir = root / "data/layouts"
+            layouts_dir.mkdir(parents=True)
+            (layouts_dir / "layouts.inc").write_text(
+                'Underwater_Route124_Layout::\n'
+                '\t.4byte 80 @ width\n', encoding="utf-8")
+            progress = audit.map_convergence_progress(root)
+        record = progress["records"][0]
+        self.assertEqual(record["layout"]["expected"], "Underwater_Route124_Layout")
+        self.assertEqual(record["layout"]["status"], "direct")
+        self.assertTrue(record["layout"]["resource_chain"]["layout_defined"])
+
     def test_map_entries_uses_requested_us_root_not_emitter_default(self):
         class FakeEmitter:
             US_JSON = Path("hard-coded.json")

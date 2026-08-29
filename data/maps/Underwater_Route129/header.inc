@@ -3,7 +3,7 @@
 @
 
 Underwater_Route129:
-	.4byte gMapLayout_UNDERWATER_ROUTE129
+	.4byte Underwater_Route129_Layout
 	.4byte Underwater_Route129_MapEvents
 	.4byte Underwater_Route129_MapScripts
 	.4byte Underwater_Route129_MapConnections

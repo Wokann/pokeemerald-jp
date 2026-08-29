@@ -2,9 +2,10 @@
 """Generate JP-local map header and connection sources from canonical map.json.
 
 The JP project has not yet migrated its complete layouts.json table.  This
-small companion to mapjson therefore emits direct references to the existing
-gMapLayout_* labels until that table is split by map.  It never derives data
-from the US checkout.
+small companion to mapjson therefore keeps legacy ``gMapLayout_*`` references
+for layouts which still use the centralized JP names, while emitting canonical
+map-local ``*_Layout`` symbols for reviewed migrated layouts.  It never
+derives data from the US checkout.
 """
 
 from __future__ import annotations
@@ -16,6 +17,19 @@ from typing import Any
 
 
 VALID_DIRECTIONS = {"down", "up", "left", "right", "dive", "emerge"}
+
+
+# These five layouts have map-local resources and canonical labels in
+# data/layouts/layouts.inc. Keep this explicit until the complete JP layout
+# table is migrated, so generation never guesses an owner for an unreviewed
+# layout.
+CANONICAL_LAYOUT_SYMBOLS = {
+    "LAYOUT_UNDERWATER_ROUTE124": "Underwater_Route124_Layout",
+    "LAYOUT_UNDERWATER_ROUTE126": "Underwater_Route126_Layout",
+    "LAYOUT_UNDERWATER_ROUTE127": "Underwater_Route127_Layout",
+    "LAYOUT_UNDERWATER_ROUTE128": "Underwater_Route128_Layout",
+    "LAYOUT_UNDERWATER_ROUTE129": "Underwater_Route129_Layout",
+}
 
 
 def require_string(data: dict[str, Any], key: str) -> str:
@@ -44,7 +58,10 @@ def warning(map_name: str) -> str:
 def layout_symbol(layout_id: str) -> str:
     if not layout_id.startswith("LAYOUT_"):
         raise ValueError(f"layout must begin with LAYOUT_: {layout_id}")
-    return "gMapLayout_" + layout_id.removeprefix("LAYOUT_")
+    return CANONICAL_LAYOUT_SYMBOLS.get(
+        layout_id,
+        "gMapLayout_" + layout_id.removeprefix("LAYOUT_"),
+    )
 
 
 def render_header(data: dict[str, Any]) -> str:

@@ -25,6 +25,11 @@ from collections import Counter, defaultdict
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
+try:
+    from jp_map_metadata import layout_symbol
+except ModuleNotFoundError:
+    from tools.jp_map_metadata import layout_symbol
+
 
 ROOT = Path(__file__).resolve().parents[1]
 US_ROOT_CANDIDATES = (ROOT.parent / "pokeemerald", ROOT.parent.parent / "pokeemerald")
@@ -974,16 +979,22 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
     event_scripts_path = root / "data/event_scripts.s"
     events_path = root / "data/data_b2d_mid26.s"
     map_data_path = root / "data/data_b2d_mid30.s"
+    layouts_path = root / "data/layouts/layouts.inc"
     event_scripts_text = event_scripts_path.read_text(encoding="utf-8", errors="replace") \
         if event_scripts_path.is_file() else ""
     events_text = events_path.read_text(encoding="utf-8", errors="replace") if events_path.is_file() else ""
     map_data_text = map_data_path.read_text(encoding="utf-8", errors="replace") \
         if map_data_path.is_file() else ""
+    layouts_text = layouts_path.read_text(encoding="utf-8", errors="replace") \
+        if layouts_path.is_file() else ""
     script_order = map_includes(event_scripts_path, MAP_NAME_RE)
     event_order = map_includes(events_path, MAP_EVENTS_RE)
     headers = map_headers(map_data_text, root)
     aliases = map_event_aliases(events_text)
-    blocks = asm_label_blocks(map_data_text)
+    # Headers remain in the legacy mid30 stream, while migrated layout owners
+    # live in data/layouts/layouts.inc. Combine their label blocks so a direct
+    # canonical header reference is not reported as an undefined layout.
+    blocks = asm_label_blocks(map_data_text + "\n" + layouts_text)
 
     map_root = root / "data/maps"
     metadata: dict[str, dict[str, object]] = {}
@@ -1007,8 +1018,7 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
         header = headers.get(map_id, {}) if isinstance(map_id, str) else {}
         expected_events = f"{name}_MapEvents"
         expected_scripts = f"{name}_MapScripts"
-        expected_layout = ("gMapLayout_" + layout.removeprefix("LAYOUT_")) \
-            if isinstance(layout, str) else None
+        expected_layout = layout_symbol(layout) if isinstance(layout, str) else None
         event_alias = ("gMapEvents_" + map_id.removeprefix("MAP_")) \
             if isinstance(map_id, str) else None
         actual_events = header.get("events")
@@ -1115,6 +1125,7 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
             "scripts": "data/event_scripts.s",
             "events": "data/data_b2d_mid26.s",
             "map_data": "data/data_b2d_mid30.s",
+            "layouts": "data/layouts/layouts.inc",
         },
         "script_stream_maps": len(script_order),
         "event_stream_maps": len(event_order),

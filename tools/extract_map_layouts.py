@@ -17,6 +17,9 @@ This script:
     gMapLayout_<NAME>_Border / gMapLayout_<NAME>_Blockdata labels
   - splits the mis-attributed incbins so the ROM byte order is unchanged
 
+Both legacy ``gMapLayout_*`` labels and reviewed canonical ``*_Layout``
+labels are accepted so partial source-tree migration remains auditable.
+
 Usage:
   python3 tools/extract_map_layouts.py            # extract + rewrite .s
   python3 tools/extract_map_layouts.py --check    # verify only
@@ -35,7 +38,10 @@ S_PATH = ROOT / "data" / "layouts" / "layouts.inc"
 OUT_BASE = ROOT / "data" / "layouts"
 US_LAYOUTS_JSON = Path("/home/kenny/pokeemerald/data/layouts/layouts.json")
 
-PAT_LAYOUT = re.compile(r"^gMapLayout_(\w+):\s*@\s*0x([0-9A-Fa-f]+)$")
+PAT_LAYOUT = re.compile(
+    r"^(?:gMapLayout_(?P<legacy>\w+)|(?P<canonical>[A-Za-z_]\w*_Layout))"
+    r"::?\s*@\s*0x(?P<addr>[0-9A-Fa-f]+)$"
+)
 PAT_INC = re.compile(
     r'\s*\.incbin\s+"baserom_jp\.gba",\s*0x([0-9A-Fa-f]+),\s*0x([0-9A-Fa-f]+)'
 )
@@ -44,7 +50,7 @@ PAT_LABEL = re.compile(r"^(\w+)::?$")
 PAT_LAYOUT_RESOURCE = re.compile(
     r'\s*\.incbin\s+"(data/layouts/[^"/]+/(?:border|map)\.bin)"\s*$'
 )
-PAT_SYMBOL = re.compile(r"^([A-Za-z_]\w*):\s*@\s*0x([0-9A-Fa-f]+)$")
+PAT_SYMBOL = re.compile(r"^([A-Za-z_]\w*)::?\s*@\s*0x([0-9A-Fa-f]+)$")
 
 
 def to_camel(name):
@@ -60,6 +66,16 @@ def load_us_area_names():
             jp_id = entry["id"].replace("LAYOUT_", "")
             area = entry["name"].replace("_Layout", "")
             names[jp_id] = area
+    return names
+
+
+def load_us_layout_names():
+    """Return canonical US layout symbol -> JP layout suffix mappings."""
+    names = {}
+    if US_LAYOUTS_JSON.exists():
+        us = json.loads(US_LAYOUTS_JSON.read_text(encoding="utf-8"))
+        for entry in us["layouts"]:
+            names[entry["name"]] = entry["id"].removeprefix("LAYOUT_")
     return names
 
 
@@ -128,15 +144,23 @@ def load_address_labels():
     return labels
 
 
-def parse_layouts(lines, rom):
+def parse_layouts(lines, rom, canonical_layout_names):
     entries = []
     raw_layouts = []
     for i, line in enumerate(lines):
         m = PAT_LAYOUT.match(line)
         if not m:
             continue
-        name = m.group(1)
-        addr = int(m.group(2), 16)
+        legacy_name = m.group("legacy")
+        if legacy_name is not None:
+            name = legacy_name
+            symbol = f"gMapLayout_{name}"
+        else:
+            symbol = m.group("canonical")
+            name = canonical_layout_names.get(symbol)
+            if name is None:
+                raise ValueError(f"no layout id for canonical symbol: {symbol}")
+        addr = int(m.group("addr"), 16)
         defs = {}
         for j in range(1, 7):
             mm = re.match(r"\s*\.4byte\s+(\S+)\s+@\s+(\w+)", lines[i + j])
@@ -157,8 +181,8 @@ def parse_layouts(lines, rom):
         inc = PAT_INC.match(lines[i + 7] if i + 7 < len(lines) else "")
         border_value = defs["border"]
         map_value = defs["map"]
-        expected_border = f"gMapLayout_{name}_Border"
-        expected_map = f"gMapLayout_{name}_Blockdata"
+        expected_border = f"{symbol}_Border"
+        expected_map = f"{symbol}_Blockdata"
         if border_value == expected_border and map_value == expected_map:
             pointer_mode = "named"
             map_size = int(defs["width"]) * int(defs["height"]) * 2
@@ -175,6 +199,7 @@ def parse_layouts(lines, rom):
         entries.append(
             {
                 "name": name,
+                "symbol": symbol,
                 "addr": addr,
                 "w": int(defs["width"]),
                 "h": int(defs["height"]),
@@ -326,7 +351,8 @@ def main():
     lines = text.split("\r\n") if crlf else text.split("\n")
 
     area_names = load_us_area_names()
-    entries, raw_layouts = parse_layouts(lines, rom)
+    canonical_layout_names = load_us_layout_names()
+    entries, raw_layouts = parse_layouts(lines, rom, canonical_layout_names)
     resources = parse_layout_resource_labels(lines)
     address_labels = load_address_labels()
     raw_structs = [

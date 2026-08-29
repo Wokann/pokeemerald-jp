@@ -35,6 +35,14 @@ NULL_CONNECTION_MAPS = (
     "VictoryRoad_B2F",
 )
 
+CANONICAL_LAYOUT_MAPS = (
+    "Underwater_Route124",
+    "Underwater_Route126",
+    "Underwater_Route127",
+    "Underwater_Route128",
+    "Underwater_Route129",
+)
+
 
 class MapMetadataTests(unittest.TestCase):
     def test_checked_metadata_matches_canonical_json(self):
@@ -54,9 +62,23 @@ class MapMetadataTests(unittest.TestCase):
         for map_name in MAPS:
             text = (ROOT / "data" / "maps" / map_name / "header.inc").read_text(encoding="utf-8")
             self.assertIn(f"{map_name}:", text)
-            self.assertIn("gMapLayout_", text)
+            if map_name in CANONICAL_LAYOUT_MAPS:
+                self.assertIn(f".4byte {map_name}_Layout\n", text)
+                self.assertNotIn("gMapLayout_", text)
+            else:
+                self.assertIn("gMapLayout_", text)
             self.assertIn("map_header_flags allow_cycling=", text)
             self.assertNotIn(".set ", text)
+
+    def test_layout_symbol_keeps_legacy_names_outside_reviewed_family(self):
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_UNDERWATER_ROUTE124"),
+            "Underwater_Route124_Layout",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_CAVE_OF_ORIGIN_B1F"),
+            "gMapLayout_CAVE_OF_ORIGIN_B1F",
+        )
 
     def test_connections_use_real_map_labels(self):
         for map_name in CONNECTED_MAPS:

@@ -587,40 +587,37 @@ gMapLayout_ROUTE134: @ 0x083F6224
 	.4byte gMapLayout_ROUTE134_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
-gMapLayout_UNDERWATER_ROUTE126_Border:
+Underwater_Route126_Layout_Border::
 	.incbin "data/layouts/Underwater_Route126/border.bin"
-gMapLayout_UNDERWATER_ROUTE126_Blockdata:
+Underwater_Route126_Layout_Blockdata::
 	.incbin "data/layouts/Underwater_Route126/map.bin"
-	.globl gMapLayout_UNDERWATER_ROUTE126
-gMapLayout_UNDERWATER_ROUTE126: @ 0x083F9444
+Underwater_Route126_Layout:: @ 0x083F9444
 	.4byte 80  @ width
 	.4byte 80  @ height
-	.4byte gMapLayout_UNDERWATER_ROUTE126_Border  @ border
-	.4byte gMapLayout_UNDERWATER_ROUTE126_Blockdata  @ map
+	.4byte Underwater_Route126_Layout_Border  @ border
+	.4byte Underwater_Route126_Layout_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
-gMapLayout_UNDERWATER_ROUTE127_Border:
+Underwater_Route127_Layout_Border::
 	.incbin "data/layouts/Underwater_Route127/border.bin"
-gMapLayout_UNDERWATER_ROUTE127_Blockdata:
+Underwater_Route127_Layout_Blockdata::
 	.incbin "data/layouts/Underwater_Route127/map.bin"
-	.globl gMapLayout_UNDERWATER_ROUTE127
-gMapLayout_UNDERWATER_ROUTE127: @ 0x083FC664
+Underwater_Route127_Layout:: @ 0x083FC664
 	.4byte 80  @ width
 	.4byte 80  @ height
-	.4byte gMapLayout_UNDERWATER_ROUTE127_Border  @ border
-	.4byte gMapLayout_UNDERWATER_ROUTE127_Blockdata  @ map
+	.4byte Underwater_Route127_Layout_Border  @ border
+	.4byte Underwater_Route127_Layout_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
-gMapLayout_UNDERWATER_ROUTE128_Border:
+Underwater_Route128_Layout_Border::
 	.incbin "data/layouts/Underwater_Route128/border.bin"
-gMapLayout_UNDERWATER_ROUTE128_Blockdata:
+Underwater_Route128_Layout_Blockdata::
 	.incbin "data/layouts/Underwater_Route128/map.bin"
-	.globl gMapLayout_UNDERWATER_ROUTE128
-gMapLayout_UNDERWATER_ROUTE128: @ 0x083FEC04
+Underwater_Route128_Layout:: @ 0x083FEC04
 	.4byte 120  @ width
 	.4byte 40  @ height
-	.4byte gMapLayout_UNDERWATER_ROUTE128_Border  @ border
-	.4byte gMapLayout_UNDERWATER_ROUTE128_Blockdata  @ map
+	.4byte Underwater_Route128_Layout_Border  @ border
+	.4byte Underwater_Route128_Layout_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
 gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_Border:
@@ -2164,16 +2161,15 @@ gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR: @ 0x08425DE0
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY  @ secondaryTileset
-gMapLayout_UNDERWATER_ROUTE124_Border:
+Underwater_Route124_Layout_Border::
 	.incbin "data/layouts/Underwater_Route124/border.bin"
-gMapLayout_UNDERWATER_ROUTE124_Blockdata:
+Underwater_Route124_Layout_Blockdata::
 	.incbin "data/layouts/Underwater_Route124/map.bin"
-	.globl gMapLayout_UNDERWATER_ROUTE124
-gMapLayout_UNDERWATER_ROUTE124: @ 0x08429000
+Underwater_Route124_Layout:: @ 0x08429000
 	.4byte 80  @ width
 	.4byte 80  @ height
-	.4byte gMapLayout_UNDERWATER_ROUTE124_Border  @ border
-	.4byte gMapLayout_UNDERWATER_ROUTE124_Blockdata  @ map
+	.4byte Underwater_Route124_Layout_Border  @ border
+	.4byte Underwater_Route124_Layout_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
 gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_1F_Border:
@@ -2671,16 +2667,15 @@ gMapLayout_UNDERWATER_ROUTE125: @ 0x08452818
 	.4byte gMapLayout_UNDERWATER_ROUTE125_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
-gMapLayout_UNDERWATER_ROUTE129_Border:
+Underwater_Route129_Layout_Border::
 	.incbin "data/layouts/Underwater_Route129/border.bin"
-gMapLayout_UNDERWATER_ROUTE129_Blockdata:
+Underwater_Route129_Layout_Blockdata::
 	.incbin "data/layouts/Underwater_Route129/map.bin"
-	.globl gMapLayout_UNDERWATER_ROUTE129
-gMapLayout_UNDERWATER_ROUTE129: @ 0x08454138
+Underwater_Route129_Layout:: @ 0x08454138
 	.4byte 80  @ width
 	.4byte 40  @ height
-	.4byte gMapLayout_UNDERWATER_ROUTE129_Border  @ border
-	.4byte gMapLayout_UNDERWATER_ROUTE129_Blockdata  @ map
+	.4byte Underwater_Route129_Layout_Border  @ border
+	.4byte Underwater_Route129_Layout_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
 	.incbin "baserom_jp.gba", 0x454150, 0x5e0c
