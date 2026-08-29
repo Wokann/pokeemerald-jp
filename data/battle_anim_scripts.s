@@ -409,8 +409,8 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_FutureSightHit             @ 018
 	.4byte General_DoomDesireHit              @ 019
 	.4byte General_FocusPunchSetUp            @ 020
-	.4byte gUnknown_8286AAA                  @ 021
-	.4byte gUnknown_8286AED                  @ 022
+	.4byte General_IngrainHeal                @ 021
+	.4byte General_WishHeal                   @ 022
 
 gBattleAnims_Special:: @ 0x8277908
 	.4byte 0x08286B6A, 0x08286B8B, 0x08286B9C, 0x08286BAD, 0x08286C01, 0x08286C1A, 0x08286C24
@@ -10687,11 +10687,38 @@ General_FocusPunchSetUp: @ 0x08286A6A
 	waitforvisualfinish
 	end
 
-gUnknown_8286AAA: @ 0x08286AAA
-	.incbin "baserom_jp.gba", 0x286aaa, 0x43
+General_IngrainHeal: @ 0x08286AAA
+	loadspritegfx ANIM_TAG_ORBS
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=4, color=RGB(13, 31, 12)
+	waitforvisualfinish
+	delay 3
+	call AbsorbEffect
+	waitforvisualfinish
+	delay 15
+	call HealingEffect
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=4, target_blend_y=0, color=RGB(13, 31, 12)
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
-gUnknown_8286AED: @ 0x08286AED
-	.incbin "baserom_jp.gba", 0x286aed, 0x3d
+General_WishHeal: @ 0x08286AED
+	loadspritegfx ANIM_TAG_SPARKLE_2
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=0, target_blend_y=10, color=RGB_BLACK
+	waitforvisualfinish
+	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER
+	call GrantingStarsEffect
+	waitforvisualfinish
+	unloadspritegfx ANIM_TAG_SPARKLE_2
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	call HealingEffect
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=10, target_blend_y=0, color=RGB_BLACK
+	end
 
 SnatchMoveTrySwapFromSubstitute: @ 0x08286B2A
 	createvisualtask AnimTask_IsAttackerBehindSubstitute, 2
