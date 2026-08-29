@@ -365,7 +365,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_COVET                        @ MOVE_COVET
 	.4byte Move_VOLT_TACKLE                  @ MOVE_VOLT_TACKLE
 	.4byte gUnknown_828570A                  @ 345
-	.4byte gUnknown_827D818                  @ 346
+	.4byte Move_WATER_SPORT                  @ MOVE_WATER_SPORT
 	.4byte gUnknown_827D83E                  @ 347
 	.4byte gUnknown_827D8BC                  @ 348
 	.4byte gUnknown_827D93F                  @ 349
@@ -4472,8 +4472,18 @@ Move_VOLT_TACKLE: @ 0x0827D720
 	waitforvisualfinish
 	end
 
-gUnknown_827D818: @ 0x0827D818
-	.incbin "baserom_jp.gba", 0x27d818, 0x26
+Move_WATER_SPORT: @ 0x0827D818
+	loadspritegfx ANIM_TAG_GLOWY_BLUE_ORB
+	createvisualtask AnimTask_WaterSport, 5
+	delay 8
+	playsewithpan SE_M_SURF, SOUND_PAN_ATTACKER
+	delay 44
+	playsewithpan SE_M_SURF, SOUND_PAN_ATTACKER
+	delay 44
+	playsewithpan SE_M_SURF, SOUND_PAN_ATTACKER
+	delay 44
+	panse SE_M_SURF, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	end
 
 gUnknown_827D83E: @ 0x0827D83E
 	.incbin "baserom_jp.gba", 0x27d83e, 0x7e
