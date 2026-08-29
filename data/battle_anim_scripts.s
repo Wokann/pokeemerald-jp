@@ -358,7 +358,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_HOWL                         @ MOVE_HOWL
 	.4byte gUnknown_828392B                  @ 337
 	.4byte gUnknown_8283D9A                  @ 338
-	.4byte gUnknown_827D6A5                  @ 339
+	.4byte Move_BULK_UP                      @ MOVE_BULK_UP
 	.4byte gUnknown_82805D7                  @ 340
 	.4byte gUnknown_8283B94                  @ 341
 	.4byte gUnknown_8281A11                  @ 342
@@ -4398,8 +4398,15 @@ Move_HOWL: @ 0x0827D683
 	delay 30
 	end
 
-gUnknown_827D6A5: @ 0x0827D6A5
-	.incbin "baserom_jp.gba", 0x27d6a5, 0x1e
+Move_BULK_UP: @ 0x0827D6A5
+	loadspritegfx ANIM_TAG_BREATH
+	createvisualtask AnimTask_GrowAndShrink, 2
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createsprite gBreathPuffSpriteTemplate, ANIM_ATTACKER, 2
+	loopsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER, 4, 2
+	waitforvisualfinish
+	end
 
 gUnknown_827D6C3: @ 0x0827D6C3
 	.incbin "baserom_jp.gba", 0x27d6c3, 0x5d
