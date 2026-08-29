@@ -298,7 +298,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SUPERPOWER                   @ MOVE_SUPERPOWER
 	.4byte gUnknown_82851E4                  @ 277
 	.4byte Move_RECYCLE                      @ MOVE_RECYCLE
-	.4byte gUnknown_8283CB8                  @ 279
+	.4byte Move_REVENGE                      @ MOVE_REVENGE
 	.4byte Move_BRICK_BREAK                  @ MOVE_BRICK_BREAK
 	.4byte Move_YAWN                         @ MOVE_YAWN
 	.4byte gUnknown_828536A                  @ 282
@@ -8777,8 +8777,34 @@ Move_METEOR_MASH: @ 0x08283C31
 	waitforvisualfinish
 	end
 
-gUnknown_8283CB8: @ 0x08283CB8
-	.incbin "baserom_jp.gba", 0x283cb8, 0x97
+Move_REVENGE: @ 0x08283CB8
+	loadspritegfx ANIM_TAG_PURPLE_SCRATCH
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	createsprite gRevengeSmallScratchSpriteTemplate, ANIM_ATTACKER, 2, 10, -10
+	waitforvisualfinish
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=0, num_blends=4, initial_blend_y=2, target_blend_y=8, color=RGB_RED
+	waitforvisualfinish
+	unloadspritegfx ANIM_TAG_PURPLE_SCRATCH
+	loadspritegfx ANIM_TAG_PURPLE_SWIPE
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 6, 4
+	delay 4
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
+	createsprite gRevengeBigScratchSpriteTemplate, ANIM_TARGET, 2, 10, -10
+	waitforvisualfinish
+	unloadspritegfx ANIM_TAG_PURPLE_SWIPE
+	loadspritegfx ANIM_TAG_IMPACT
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 10, 1
+	create_persist_hitsplat_sprite ANIM_TARGET, 3, x=-10, y=-8, relative_to=ANIM_TARGET, animation=1, duration=8
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	delay 8
+	create_persist_hitsplat_sprite ANIM_TARGET, 3, x=10, y=8, relative_to=ANIM_TARGET, animation=1, duration=8
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_8283D4F: @ 0x08283D4F
 	.incbin "baserom_jp.gba", 0x283d4f, 0x3f
