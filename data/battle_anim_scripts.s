@@ -310,7 +310,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_GRUDGE                       @ MOVE_GRUDGE
 	.4byte Move_SNATCH                       @ MOVE_SNATCH
 	.4byte gUnknown_8285557                  @ 290
-	.4byte gUnknown_8284AC4                  @ 291
+	.4byte Move_DIVE                         @ MOVE_DIVE
 	.4byte Move_ARM_THRUST                   @ MOVE_ARM_THRUST
 	.4byte Move_CAMOUFLAGE                   @ MOVE_CAMOUFLAGE
 	.4byte Move_TAIL_GLOW                    @ MOVE_TAIL_GLOW
@@ -9264,8 +9264,50 @@ Move_SNATCH: @ 0x08284AAA
 	createvisualtask AnimTask_WindUpLunge, 5, ANIM_ATTACKER, -12, 4, 10, 10, 12, 6
 	end
 
-gUnknown_8284AC4: @ 0x08284AC4
-	.incbin "baserom_jp.gba", 0x284ac4, 0xba
+Move_DIVE: @ 0x08284AC4
+	loadspritegfx ANIM_TAG_SPLASH
+	loadspritegfx ANIM_TAG_SWEAT_BEAD
+	choosetwoturnanim DiveSetUp, DiveAttack
+DiveSetUp:
+	loadspritegfx ANIM_TAG_ROUND_SHADOW
+	playsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER
+	createsprite gDiveBallSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 13, 336
+	waitforvisualfinish
+	playsewithpan SE_M_DIVE, SOUND_PAN_ATTACKER
+	createsprite gDiveWaterSplashSpriteTemplate, ANIM_ATTACKER, 3, 0
+	call DiveSetUpWaterDroplets
+	call DiveSetUpWaterDroplets
+	call DiveSetUpWaterDroplets
+	call DiveSetUpWaterDroplets
+	call DiveSetUpWaterDroplets
+	end
+DiveSetUpWaterDroplets:
+	createsprite gSprayWaterDropletSpriteTemplate, ANIM_ATTACKER, 5, 0, 0
+	createsprite gSprayWaterDropletSpriteTemplate, ANIM_ATTACKER, 5, 1, 0
+	return
+DiveAttack:
+	loadspritegfx ANIM_TAG_WATER_IMPACT
+	loadspritegfx ANIM_TAG_SMALL_BUBBLES
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_EXPLOSION, SOUND_PAN_TARGET
+	createsprite gDiveWaterSplashSpriteTemplate, ANIM_TARGET, 3, 1
+	call DiveAttackWaterDroplets
+	call DiveAttackWaterDroplets
+	call DiveAttackWaterDroplets
+	call DiveAttackWaterDroplets
+	call DiveAttackWaterDroplets
+	delay 12
+	call RisingWaterHitEffect
+	waitforvisualfinish
+	visible ANIM_ATTACKER
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+DiveAttackWaterDroplets:
+	createsprite gSprayWaterDropletSpriteTemplate, ANIM_TARGET, 5, 0, 1
+	createsprite gSprayWaterDropletSpriteTemplate, ANIM_TARGET, 5, 1, 1
+	return
 
 gUnknown_8284B7E: @ 0x08284B7E
 	.incbin "baserom_jp.gba", 0x284b7e, 0x9d
