@@ -217,7 +217,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8282891                  @ 195
 	.4byte Move_ICY_WIND                     @ MOVE_ICY_WIND
 	.4byte Move_DETECT                        @ MOVE_DETECT
-	.4byte gUnknown_827FE09                  @ 198
+	.4byte Move_BONE_RUSH                    @ MOVE_BONE_RUSH
 	.4byte Move_LOCK_ON                      @ MOVE_LOCK_ON
 	.4byte Move_OUTRAGE                      @ MOVE_OUTRAGE
 	.4byte gUnknown_8280402                  @ 201
@@ -6091,8 +6091,21 @@ Move_BONE_CLUB:: @ 0x0827FDA7
 	blendoff
 	end
 
-gUnknown_827FE09: @ 0x0827FE09
-	.incbin "baserom_jp.gba", 0x27fe09, 0x4b
+Move_BONE_RUSH: @ 0x0827FE09
+	loadspritegfx ANIM_TAG_BONE
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_BONEMERANG, SOUND_PAN_TARGET
+	createsprite gSpinningBoneSpriteTemplate, ANIM_ATTACKER, 2, -42, -25, 0, 0, 15
+	delay 12
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 3, 5, 1
+	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_827FE54: @ 0x0827FE54
 	.incbin "baserom_jp.gba", 0x27fe54, 0x57
