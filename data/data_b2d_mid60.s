@@ -1455,7 +1455,13 @@ gCoinThrowSpriteTemplate: @ 0x856F0BC
 gFallingCoinSpriteTemplate: @ 0x856F0D4
 	.incbin "baserom_jp.gba", 0x56f0d4, 0x18
 
-	.incbin "baserom_jp.gba", 0x56f0ec, 0x88
+	.incbin "baserom_jp.gba", 0x56f0ec, 0x48
+
+	.globl gRazorWindTornadoSpriteTemplate
+gRazorWindTornadoSpriteTemplate: @ 0x856F134
+	.incbin "baserom_jp.gba", 0x56f134, 0x18
+
+	.incbin "baserom_jp.gba", 0x56f14c, 0x28
 
 	.globl gViceGripSpriteTemplate
 gViceGripSpriteTemplate: @ 0x856F174

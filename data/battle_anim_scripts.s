@@ -32,7 +32,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SCRATCH                      @ MOVE_SCRATCH
 	.4byte Move_VICE_GRIP                    @ MOVE_VICE_GRIP
 	.4byte Move_GUILLOTINE                   @ MOVE_GUILLOTINE
-	.4byte gUnknown_8281F08                  @ 013
+	.4byte Move_RAZOR_WIND                   @ MOVE_RAZOR_WIND
 	.4byte Move_SWORDS_DANCE                  @ MOVE_SWORDS_DANCE
 	.4byte Move_CUT                           @ MOVE_CUT
 	.4byte Move_GUST                         @ MOVE_GUST
@@ -7531,8 +7531,43 @@ SpiderWebThread:
 	delay 1
 	return
 
-gUnknown_8281F08: @ 0x08281F08
-	.incbin "baserom_jp.gba", 0x281f08, 0xe6
+Move_RAZOR_WIND: @ 0x08281F08
+	choosetwoturnanim RazorWindSetUp, RazorWindUnleash
+RazorWindEnd:
+	waitforvisualfinish
+	end
+
+RazorWindSetUp:
+	loadspritegfx ANIM_TAG_GUST
+	playsewithpan SE_M_GUST, SOUND_PAN_ATTACKER
+	createsprite gRazorWindTornadoSpriteTemplate, ANIM_ATTACKER, 2, 32, 0, 16, 16, 0, 7, 40
+	createsprite gRazorWindTornadoSpriteTemplate, ANIM_ATTACKER, 2, 32, 0, 16, 16, 85, 7, 40
+	createsprite gRazorWindTornadoSpriteTemplate, ANIM_ATTACKER, 2, 32, 0, 16, 16, 170, 7, 40
+	waitforvisualfinish
+	playsewithpan SE_M_GUST2, SOUND_PAN_ATTACKER
+	goto RazorWindEnd
+
+RazorWindUnleash:
+	loadspritegfx ANIM_TAG_AIR_WAVE_2
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_ATTACKER, 2, 14, 8, 0, 0, 22, 2, 1
+	delay 2
+	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_ATTACKER, 2, 14, -8, 16, 14, 22, 1, 1
+	delay 2
+	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_ATTACKER, 2, 14, 12, -16, -14, 22, 0, 1
+	delay 17
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 10, 1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_DEF_PARTNER, 2, 0, 10, 1
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	goto RazorWindEnd
 
 gUnknown_8281FEE: @ 0x08281FEE
 	.incbin "baserom_jp.gba", 0x281fee, 0x2e
