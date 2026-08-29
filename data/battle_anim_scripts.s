@@ -362,7 +362,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82805D7                  @ 340
 	.4byte gUnknown_8283B94                  @ 341
 	.4byte gUnknown_8281A11                  @ 342
-	.4byte gUnknown_827D6C3                  @ 343
+	.4byte Move_COVET                        @ MOVE_COVET
 	.4byte gUnknown_827D720                  @ 344
 	.4byte gUnknown_828570A                  @ 345
 	.4byte gUnknown_827D818                  @ 346
@@ -4408,8 +4408,22 @@ Move_BULK_UP: @ 0x0827D6A5
 	waitforvisualfinish
 	end
 
-gUnknown_827D6C3: @ 0x0827D6C3
-	.incbin "baserom_jp.gba", 0x27d6c3, 0x5d
+Move_COVET: @ 0x0827D6C3
+	loadspritegfx ANIM_TAG_MAGENTA_HEART
+	loadspritegfx ANIM_TAG_ITEM_BAG
+	createvisualtask AnimTask_RockMonBackAndForth, 5, ANIM_ATTACKER, 2, 0
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, 0, 20
+	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
+	delay 15
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, -20, 20
+	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
+	delay 15
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, 20, 20
+	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	loopsewithpan SE_M_DIZZY_PUNCH, SOUND_PAN_TARGET, 4, 3
+	end
 
 gUnknown_827D720: @ 0x0827D720
 	.incbin "baserom_jp.gba", 0x27d720, 0xf8
