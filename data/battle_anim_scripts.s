@@ -114,7 +114,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_TOXIC                        @ MOVE_TOXIC
 	.4byte Move_CONFUSION                    @ MOVE_CONFUSION
 	.4byte Move_PSYCHIC                      @ MOVE_PSYCHIC
-	.4byte gUnknown_8281739                  @ 095
+	.4byte Move_HYPNOSIS                     @ MOVE_HYPNOSIS
 	.4byte Move_MEDITATE                     @ MOVE_MEDITATE
 	.4byte Move_AGILITY                      @ MOVE_AGILITY
 	.4byte Move_QUICK_ATTACK                 @ MOVE_QUICK_ATTACK
@@ -7176,8 +7176,23 @@ PsybeamRings:
 	delay 4
 	return
 
-gUnknown_8281739: @ 0x08281739
-	.incbin "baserom_jp.gba", 0x281739, 0x60
+Move_HYPNOSIS: @ 0x08281739
+	loadspritegfx ANIM_TAG_GOLD_RING
+	call SetPsychicBackground
+	call HypnosisRings
+	call HypnosisRings
+	call HypnosisRings
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB(31, 18, 31)
+	waitforvisualfinish
+	delay 1
+	call UnsetPsychicBackground
+	end
+HypnosisRings:
+	playsewithpan SE_M_SUPERSONIC, SOUND_PAN_ATTACKER
+	createsprite gGoldRingSpriteTemplate, ANIM_TARGET, 2, 0, 8, 0, 8, 27, 0
+	createsprite gGoldRingSpriteTemplate, ANIM_TARGET, 2, 16, -8, 0, -8, 27, 0
+	delay 6
+	return
 
 gUnknown_8281799: @ 0x08281799
 	.incbin "baserom_jp.gba", 0x281799, 0x86
