@@ -136,7 +136,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_HAZE                         @ MOVE_HAZE
 	.4byte Move_REFLECT                      @ MOVE_REFLECT
 	.4byte Move_FOCUS_ENERGY                 @ MOVE_FOCUS_ENERGY
-	.4byte gUnknown_8281C96                  @ 117
+	.4byte Move_BIDE                         @ MOVE_BIDE
 	.4byte Move_METRONOME                    @ MOVE_METRONOME
 	.4byte Move_MIRROR_MOVE                      @ MOVE_MIRROR_MOVE
 	.4byte Move_SELF_DESTRUCT                 @ MOVE_SELF_DESTRUCT
@@ -7408,8 +7408,46 @@ Move_FOCUS_ENERGY: @ 0x08281C56
 	waitforvisualfinish
 	end
 
-gUnknown_8281C96: @ 0x08281C96
-	.incbin "baserom_jp.gba", 0x281c96, 0xff
+Move_BIDE: @ 0x08281C96
+	choosetwoturnanim BideSetUp, BideUnleash
+	end
+
+BideSetUp:
+	loopsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER, 9, 2
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=11, color=RGB_RED
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 1, 0, 32, 1
+	waitforvisualfinish
+	end
+
+BideUnleash:
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	loopsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER, 9, 2
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 2, 0, 11, RGB_RED
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 1, 0, 32, 1
+	waitforvisualfinish
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 24, 0, 0, 4
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_ATTACKER, 2, 0, 12, 1
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 16, 1
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 1, x=18, y=-8, relative_to=ANIM_TARGET, animation=1
+	delay 5
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 1, x=-18, y=8, relative_to=ANIM_TARGET, animation=1
+	delay 5
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 1, x=-8, y=-5, relative_to=ANIM_TARGET, animation=1
+	waitforvisualfinish
+	delay 5
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 7
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 2, 11, 0, RGB_RED
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_8281D95: @ 0x08281D95
 	.incbin "baserom_jp.gba", 0x281d95, 0xd2
