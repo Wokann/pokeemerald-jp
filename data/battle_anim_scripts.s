@@ -157,7 +157,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8282239                  @ 135
 	.4byte Move_HI_JUMP_KICK                  @ MOVE_HI_JUMP_KICK
 	.4byte Move_GLARE                        @ MOVE_GLARE
-	.4byte gUnknown_828136E                  @ 138
+	.4byte Move_DREAM_EATER                  @ MOVE_DREAM_EATER
 	.4byte gUnknown_8281571                  @ 139
 	.4byte Move_BARRAGE                      @ MOVE_BARRAGE
 	.4byte Move_LEECH_LIFE                   @ MOVE_LEECH_LIFE
@@ -7029,8 +7029,72 @@ Move_LEER: @ 0x08281317
 	waitforvisualfinish
 	end
 
-gUnknown_828136E: @ 0x0828136E
-	.incbin "baserom_jp.gba", 0x28136e, 0x203
+Move_DREAM_EATER: @ 0x0828136E
+	loadspritegfx ANIM_TAG_ORBS
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	monbg ANIM_DEF_PARTNER
+	splitbgprio_foes ANIM_TARGET
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	call SetPsychicBackground
+	setalpha 8, 8
+	playsewithpan SE_M_MINIMIZE, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 15, 1
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, -6, -6, 15, ANIM_TARGET, 1
+	waitforvisualfinish
+	setalpha 12, 8
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 2, 25, 1
+	call DreamEaterAbsorb
+	waitforvisualfinish
+	delay 15
+	call HealingEffect
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	delay 1
+	call UnsetPsychicBackground
+	end
+DreamEaterAbsorb:
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=5, y=-18, wave_amplitude=-40, wave_period=35
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-10, y=20, wave_amplitude=20, wave_period=39
+	delay 4
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=28, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=10, y=-5, wave_amplitude=-8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-10, y=20, wave_amplitude=40, wave_period=39
+	delay 4
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=10, y=-5, wave_amplitude=-8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-5, y=15, wave_amplitude=16, wave_period=33
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=10, y=-5, wave_amplitude=-32, wave_period=26
+	delay 4
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=-15, wave_amplitude=-16, wave_period=36
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=10, y=-5, wave_amplitude=-8, wave_period=26
+	delay 4
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-5, y=15, wave_amplitude=16, wave_period=33
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=-15, wave_amplitude=-16, wave_period=36
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	delay 4
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-5, y=15, wave_amplitude=16, wave_period=33
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=10, y=-5, wave_amplitude=-40, wave_period=26
+	delay 4
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-5, y=15, wave_amplitude=36, wave_period=33
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=10, y=-5, wave_amplitude=-8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-10, y=20, wave_amplitude=20, wave_period=39
+	delay 4
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=5, y=-18, wave_amplitude=-20, wave_period=35
+	delay 4
+	return
 
 gUnknown_8281571: @ 0x08281571
 	.incbin "baserom_jp.gba", 0x281571, 0xde
