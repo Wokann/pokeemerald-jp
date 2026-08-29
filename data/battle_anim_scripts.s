@@ -220,7 +220,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_BONE_RUSH                    @ MOVE_BONE_RUSH
 	.4byte Move_LOCK_ON                      @ MOVE_LOCK_ON
 	.4byte Move_OUTRAGE                      @ MOVE_OUTRAGE
-	.4byte gUnknown_8280402                  @ 201
+	.4byte Move_SANDSTORM                    @ MOVE_SANDSTORM
 	.4byte Move_GIGA_DRAIN                   @ MOVE_GIGA_DRAIN
 	.4byte Move_ENDURE                        @ MOVE_ENDURE
 	.4byte Move_CHARM                         @ MOVE_CHARM
@@ -6359,8 +6359,26 @@ FlamethrowerCreateFlames:
 	delay 2
 	return
 
-gUnknown_8280402: @ 0x08280402
-	.incbin "baserom_jp.gba", 0x280402, 0x88
+@ Also used by Sandstorm weather
+Move_SANDSTORM: @ 0x08280402
+	loadspritegfx ANIM_TAG_FLYING_DIRT
+	playsewithpan SE_M_SANDSTORM, 0
+	createvisualtask AnimTask_LoadSandstormBackground, 5, FALSE
+	delay 16
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 10, 2304, 96, 0
+	delay 10
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 90, 2048, 96, 0
+	delay 10
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 50, 2560, 96, 0
+	delay 10
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 20, 2304, 96, 0
+	delay 10
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 70, 1984, 96, 0
+	delay 10
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 0, 2816, 96, 0
+	delay 10
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 60, 2560, 96, 0
+	end
 
 gUnknown_828048A: @ 0x0828048A
 	.incbin "baserom_jp.gba", 0x28048a, 0xe3
