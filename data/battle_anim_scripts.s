@@ -395,7 +395,7 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_PokeblockThrow             @ 004
 	.4byte General_ItemKnockoff               @ 005
 	.4byte General_TurnTrap                   @ 006
-	.4byte gUnknown_828668F                  @ 007
+	.4byte General_HeldItemEffect             @ 007
 	.4byte gUnknown_8286703                  @ 008
 	.4byte gUnknown_82867DF                  @ 009
 	.4byte gUnknown_828682C                  @ 010
@@ -10479,8 +10479,27 @@ Status_SandTomb: @ 0x08286646
 	stopsound
 	end
 
-gUnknown_828668F: @ 0x0828668F
-	.incbin "baserom_jp.gba", 0x28668f, 0x74
+General_HeldItemEffect: @ 0x0828668F
+	loadspritegfx ANIM_TAG_THIN_RING
+	loadspritegfx ANIM_TAG_SPARKLE_2
+	delay 0
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_RotateMonToSideAndRestore, 2, 16, 128, ANIM_ATTACKER, 2
+	waitforvisualfinish
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_RotateMonToSideAndRestore, 2, 16, 128, ANIM_ATTACKER, 2
+	waitforvisualfinish
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_RotateMonToSideAndRestore, 2, 16, 128, ANIM_ATTACKER, 2
+	waitforvisualfinish
+	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER
+	call GrantingStarsEffect
+	waitforvisualfinish
+	playsewithpan SE_SHINY, SOUND_PAN_ATTACKER
+	simple_palette_blend selector=F_PAL_ATTACKER, delay=3, initial_blend_y=7, target_blend_y=0, color=RGB(17, 31, 25)
+	createsprite gThinRingExpandingSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 0, 0
+	waitforvisualfinish
+	end
 
 gUnknown_8286703: @ 0x08286703
 	.incbin "baserom_jp.gba", 0x286703, 0xdc
