@@ -366,7 +366,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_VOLT_TACKLE                  @ MOVE_VOLT_TACKLE
 	.4byte gUnknown_828570A                  @ 345
 	.4byte Move_WATER_SPORT                  @ MOVE_WATER_SPORT
-	.4byte gUnknown_827D83E                  @ 347
+	.4byte Move_CALM_MIND                    @ MOVE_CALM_MIND
 	.4byte gUnknown_827D8BC                  @ 348
 	.4byte gUnknown_827D93F                  @ 349
 	.4byte gUnknown_8284B7E                  @ 350
@@ -4485,8 +4485,28 @@ Move_WATER_SPORT: @ 0x0827D818
 	panse SE_M_SURF, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
 	end
 
-gUnknown_827D83E: @ 0x0827D83E
-	.incbin "baserom_jp.gba", 0x27d83e, 0x7e
+Move_CALM_MIND:
+	loadspritegfx ANIM_TAG_THIN_RING
+	monbg ANIM_ATK_PARTNER
+	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, ANIM_ATTACKER, 0, 0, 16, RGB_BLACK
+	waitforvisualfinish
+	createvisualtask AnimTask_SetAllNonAttackersInvisiblity, 5, TRUE
+	waitforvisualfinish
+	createsprite gThinRingShrinkingSpriteTemplate, ANIM_ATTACKER, 40, 0, 0, 0, 0
+	playsewithpan SE_M_SUPERSONIC, SOUND_PAN_ATTACKER
+	delay 14
+	createsprite gThinRingShrinkingSpriteTemplate, ANIM_ATTACKER, 40, 0, 0, 0, 0
+	playsewithpan SE_M_SUPERSONIC, SOUND_PAN_ATTACKER
+	delay 14
+	createsprite gThinRingShrinkingSpriteTemplate, ANIM_ATTACKER, 40, 0, 0, 0, 0
+	playsewithpan SE_M_SUPERSONIC, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createvisualtask AnimTask_SetAllNonAttackersInvisiblity, 5, FALSE
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, ANIM_ATTACKER, 0, 16, 0, RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	end
 
 gUnknown_827D8BC: @ 0x0827D8BC
 	.incbin "baserom_jp.gba", 0x27d8bc, 0x83
