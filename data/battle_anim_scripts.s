@@ -360,7 +360,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8283D9A                  @ 338
 	.4byte Move_BULK_UP                      @ MOVE_BULK_UP
 	.4byte Move_BOUNCE                        @ MOVE_BOUNCE
-	.4byte gUnknown_8283B94                  @ 341
+	.4byte Move_MUD_SHOT                     @ MOVE_MUD_SHOT
 	.4byte Move_POISON_TAIL                  @ MOVE_POISON_TAIL
 	.4byte Move_COVET                        @ MOVE_COVET
 	.4byte Move_VOLT_TACKLE                  @ MOVE_VOLT_TACKLE
@@ -8719,8 +8719,38 @@ DragonClawFireSpiral:
 	return
 	end
 
-gUnknown_8283B94: @ 0x08283B94
-	.incbin "baserom_jp.gba", 0x283b94, 0x9d
+Move_MUD_SHOT: @ 0x08283B94
+	loadspritegfx ANIM_TAG_BROWN_ORB
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_ATTACKER, 0, 2, 46, 1
+	delay 6
+	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
+	panse SE_M_WHIRLPOOL, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +1, 0
+	call MudShotOrbs
+	call MudShotOrbs
+	call MudShotOrbs
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 3, 0, 43, 1
+	call MudShotOrbs
+	call MudShotOrbs
+	call MudShotOrbs
+	call MudShotOrbs
+	call MudShotOrbs
+	call MudShotOrbs
+	call MudShotOrbs
+	call MudShotOrbs
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
+MudShotOrbs:
+	createsprite gMudShotOrbSpriteTemplate, ANIM_ATTACKER, 3, 10, 10, 0, 16
+	delay 2
+	createsprite gMudShotOrbSpriteTemplate, ANIM_ATTACKER, 3, 10, 10, 0, 16
+	delay 2
+	return
 
 gUnknown_8283C31: @ 0x08283C31
 	.incbin "baserom_jp.gba", 0x283c31, 0x87

@@ -1826,6 +1826,8 @@ gAuroraBeamRingSpriteTemplate: @ 0x570C98
 gHydroPumpOrbSpriteTemplate: @ 0x570CC8
 	.incbin "baserom_jp.gba", 0x570cc8, 0x18
 
+	.globl gMudShotOrbSpriteTemplate
+gMudShotOrbSpriteTemplate: @ 0x570CE0
 	.incbin "baserom_jp.gba", 0x570ce0, 0x18
 
 	.globl gSignalBeamRedOrbSpriteTemplate
