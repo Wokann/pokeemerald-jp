@@ -26,7 +26,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_COMET_PUNCH                  @ MOVE_COMET_PUNCH
 	.4byte Move_MEGA_PUNCH                   @ MOVE_MEGA_PUNCH
 	.4byte Move_PAY_DAY                      @ MOVE_PAY_DAY
-	.4byte gUnknown_8281204                  @ 007
+	.4byte Move_FIRE_PUNCH                   @ MOVE_FIRE_PUNCH
 	.4byte Move_ICE_PUNCH                    @ MOVE_ICE_PUNCH
 	.4byte Move_THUNDER_PUNCH                @ MOVE_THUNDER_PUNCH
 	.4byte Move_SCRATCH                      @ MOVE_SCRATCH
@@ -6974,11 +6974,41 @@ Move_HAZE: @ 0x082811D1
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BATTLERS_2, 1, 16, 0, RGB_BLACK
 	end
 
-gUnknown_8281204: @ 0x08281204
-	.incbin "baserom_jp.gba", 0x281204, 0x9b
+Move_FIRE_PUNCH: @ 0x08281204
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 9, RGB_RED
+	createsprite gFireSpiralInwardSpriteTemplate, ANIM_TARGET, 1, 0
+	createsprite gFireSpiralInwardSpriteTemplate, ANIM_TARGET, 1, 64
+	createsprite gFireSpiralInwardSpriteTemplate, ANIM_TARGET, 1, 128
+	createsprite gFireSpiralInwardSpriteTemplate, ANIM_TARGET, 1, 196
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
+	waitforvisualfinish
+	create_fist_sprite ANIM_TARGET, 3, x=0, y=0, duration=8
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 3, 15, 1
+	call FireSpreadEffect
+	delay 4
+	playsewithpan SE_M_FIRE_PUNCH, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 0, 9, 0, RGB_RED
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 FireSpreadEffect: @ 0x0828129F
-	.incbin "baserom_jp.gba", 0x28129f, 0x78
+	createsprite gFireSpreadSpriteTemplate, ANIM_TARGET, 1, 0, 10, 192, 176, 40
+	createsprite gFireSpreadSpriteTemplate, ANIM_TARGET, 1, 0, 10, -192, 240, 40
+	createsprite gFireSpreadSpriteTemplate, ANIM_TARGET, 1, 0, 10, 192, -160, 40
+	createsprite gFireSpreadSpriteTemplate, ANIM_TARGET, 1, 0, 10, -192, -112, 40
+	createsprite gFireSpreadSpriteTemplate, ANIM_TARGET, 1, 0, 10, 160, 48, 40
+	createsprite gFireSpreadSpriteTemplate, ANIM_TARGET, 1, 0, 10, -224, -32, 40
+	createsprite gFireSpreadSpriteTemplate, ANIM_TARGET, 1, 0, 10, 112, -128, 40
+	return
 
 gUnknown_8281317: @ 0x08281317
 	.incbin "baserom_jp.gba", 0x281317, 0x57
