@@ -6711,7 +6711,7 @@ __attribute__((naked)) void sub_081731E4(void)
     );
 }
 
-__attribute__((naked)) void sub_08173240(void)
+__attribute__((naked)) void AnimTask_SetAttackerTargetLeftPos(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

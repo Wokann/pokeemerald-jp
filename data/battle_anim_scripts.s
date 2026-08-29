@@ -392,7 +392,7 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_StatsChange                @ 001
 	.4byte General_SubstituteFade             @ 002
 	.4byte General_SubstituteAppear           @ 003
-	.4byte gUnknown_82864A9                  @ 004
+	.4byte General_PokeblockThrow             @ 004
 	.4byte gUnknown_82864F1                  @ 005
 	.4byte gUnknown_82864FC                  @ 006
 	.4byte gUnknown_828668F                  @ 007
@@ -10382,8 +10382,18 @@ General_SubstituteAppear: @ 0x082864A1
 	createvisualtask AnimTask_MonToSubstitute, 2
 	end
 
-gUnknown_82864A9: @ 0x082864A9
-	.incbin "baserom_jp.gba", 0x2864a9, 0x48
+General_PokeblockThrow: @ 0x082864A9
+	createvisualtask AnimTask_SetAttackerTargetLeftPos, 2, 0
+	createvisualtask AnimTask_LoadPokeblockGfx, 2
+	delay 0
+	waitplaysewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER, 22
+	createsprite gPokeblockSpriteTemplate, ANIM_TARGET, 3, -18, 12, 0, 32
+	delay 50
+	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_TARGET, 19, 2
+	createvisualtask AnimTask_SwayMon, 5, 1, 8, 1536, 2, ANIM_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_FreePokeblockGfx, 2
+	end
 
 gUnknown_82864F1: @ 0x082864F1
 	.incbin "baserom_jp.gba", 0x2864f1, 0xb
