@@ -233,7 +233,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_STEEL_WING                   @ MOVE_STEEL_WING
 	.4byte Move_MEAN_LOOK                    @ MOVE_MEAN_LOOK
 	.4byte Move_ATTRACT                      @ MOVE_ATTRACT
-	.4byte gUnknown_82829FA                  @ 214
+	.4byte Move_SLEEP_TALK                   @ MOVE_SLEEP_TALK
 	.4byte Move_HEAL_BELL                    @ MOVE_HEAL_BELL
 	.4byte gUnknown_8284055                  @ 216
 	.4byte Move_PRESENT                      @ MOVE_PRESENT
@@ -7985,8 +7985,32 @@ Move_PERISH_SONG: @ 0x08282891
 	waitforvisualfinish
 	end
 
-gUnknown_82829FA: @ 0x082829FA
-	.incbin "baserom_jp.gba", 0x2829fa, 0xbb
+Move_SLEEP_TALK: @ 0x082829FA
+	loadspritegfx ANIM_TAG_LETTER_Z
+	createvisualtask AnimTask_SwayMon, 5, 0, 4, 4096, 2, ANIM_ATTACKER
+	delay 20
+	createsprite gLetterZSpriteTemplate, ANIM_TARGET, 2, 0, 20, 5, -1
+	playsewithpan SE_M_SNORE, SOUND_PAN_ATTACKER
+	delay 6
+	createsprite gLetterZSpriteTemplate, ANIM_TARGET, 2, 0, 20, 5, -1
+	delay 6
+	createsprite gLetterZSpriteTemplate, ANIM_TARGET, 2, 0, 20, 5, -1
+	delay 20
+	createsprite gLetterZSpriteTemplate, ANIM_TARGET, 2, 0, 20, 5, -5
+	playsewithpan SE_M_SNORE, SOUND_PAN_ATTACKER
+	delay 6
+	createsprite gLetterZSpriteTemplate, ANIM_TARGET, 2, 0, 20, 5, -5
+	delay 6
+	createsprite gLetterZSpriteTemplate, ANIM_TARGET, 2, 0, 20, 5, -5
+	delay 20
+	createsprite gLetterZSpriteTemplate, ANIM_TARGET, 2, 0, 20, 5, -3
+	playsewithpan SE_M_SNORE, SOUND_PAN_ATTACKER
+	delay 6
+	createsprite gLetterZSpriteTemplate, ANIM_TARGET, 2, 0, 20, 5, -3
+	delay 6
+	createsprite gLetterZSpriteTemplate, ANIM_TARGET, 2, 0, 20, 5, -3
+	waitforvisualfinish
+	end
 
 gUnknown_8282AB5: @ 0x08282AB5
 	.incbin "baserom_jp.gba", 0x282ab5, 0x67
