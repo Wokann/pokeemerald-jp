@@ -402,7 +402,7 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_Sun                        @ 011
 	.4byte General_Sandstorm                  @ 012
 	.4byte General_Hail                       @ 013
-	.4byte gUnknown_8286884                  @ 014
+	.4byte General_LeechSeedDrain             @ 014
 	.4byte gUnknown_8286892                  @ 015
 	.4byte gUnknown_82868C3                  @ 016
 	.4byte gUnknown_82868E8                  @ 017
@@ -10572,8 +10572,10 @@ General_Sandstorm: @ 0x0828687A
 General_Hail: @ 0x0828687F
 	goto Move_HAIL
 
-gUnknown_8286884: @ 0x08286884
-	.incbin "baserom_jp.gba", 0x286884, 0xe
+General_LeechSeedDrain: @ 0x08286884
+	createvisualtask AnimTask_GetBattlersFromArg, 5
+	delay 0
+	goto Move_ABSORB
 
 gUnknown_8286892: @ 0x08286892
 	.incbin "baserom_jp.gba", 0x286892, 0x31
