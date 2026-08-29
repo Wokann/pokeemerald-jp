@@ -403,7 +403,7 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_Sandstorm                  @ 012
 	.4byte General_Hail                       @ 013
 	.4byte General_LeechSeedDrain             @ 014
-	.4byte gUnknown_8286892                  @ 015
+	.4byte General_MonHit                     @ 015
 	.4byte gUnknown_82868C3                  @ 016
 	.4byte gUnknown_82868E8                  @ 017
 	.4byte gUnknown_8286946                  @ 018
@@ -10577,8 +10577,17 @@ General_LeechSeedDrain: @ 0x08286884
 	delay 0
 	goto Move_ABSORB
 
-gUnknown_8286892: @ 0x08286892
-	.incbin "baserom_jp.gba", 0x286892, 0x31
+General_MonHit: @ 0x08286892
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 6, 1
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_82868C3: @ 0x082868C3
 	.incbin "baserom_jp.gba", 0x2868c3, 0x25
