@@ -274,7 +274,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_FAKE_OUT                     @ MOVE_FAKE_OUT
 	.4byte Move_UPROAR                       @ MOVE_UPROAR
 	.4byte Move_STOCKPILE                    @ MOVE_STOCKPILE
-	.4byte gUnknown_8282F72                  @ 255
+	.4byte Move_SPIT_UP                      @ MOVE_SPIT_UP
 	.4byte gUnknown_82830B5                  @ 256
 	.4byte Move_HEAT_WAVE                    @ MOVE_HEAT_WAVE
 	.4byte Move_HAIL                         @ MOVE_HAIL
@@ -8217,8 +8217,54 @@ StockpileAbsorb:
 	delay 1
 	return
 
-gUnknown_8282F72: @ 0x08282F72
-	.incbin "baserom_jp.gba", 0x282f72, 0x143
+Move_SPIT_UP: @ 0x08282F72
+	loadspritegfx ANIM_TAG_RED_ORB_2
+	loadspritegfx ANIM_TAG_IMPACT
+	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_SpitUpDeformMon, 5
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 1, 0, 8, 2
+	delay 45
+	playsewithpan SE_M_SPIT_UP, SOUND_PAN_ATTACKER
+	delay 3
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 0, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 32, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 64, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 96, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 128, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 160, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 192, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 224, 12
+	delay 5
+	jumpifmoveturn 2, SpitUpStrong
+	jumpifmoveturn 3, SpitUpStrongest
+SpitUpContinue:
+	delay 5
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 8, 1, 0
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	create_flashing_hitsplat_sprite ANIM_TARGET, 3, x=-12, y=10, relative_to=ANIM_TARGET, animation=1
+	delay 5
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	create_flashing_hitsplat_sprite ANIM_TARGET, 3, x=12, y=-10, relative_to=ANIM_TARGET, animation=1
+	waitforvisualfinish
+	end
+
+SpitUpStrong:
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 16
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 80
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 144
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 208
+	goto SpitUpContinue
+
+SpitUpStrongest:
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 16
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 48
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 80
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 112
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 144
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 176
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 208
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 240
+	goto SpitUpContinue
 
 gUnknown_82830B5: @ 0x082830B5
 	.incbin "baserom_jp.gba", 0x2830b5, 0xac
