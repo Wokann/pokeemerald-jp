@@ -69,7 +69,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SING                         @ MOVE_SING
 	.4byte Move_SUPERSONIC                     @ MOVE_SUPERSONIC
 	.4byte Move_SONIC_BOOM                   @ MOVE_SONIC_BOOM
-	.4byte gUnknown_8281FEE                  @ 050
+	.4byte Move_DISABLE                      @ MOVE_DISABLE
 	.4byte Move_ACID                         @ MOVE_ACID
 	.4byte Move_EMBER                        @ MOVE_EMBER
 	.4byte Move_FLAMETHROWER                 @ MOVE_FLAMETHROWER
@@ -7569,8 +7569,21 @@ RazorWindUnleash:
 	blendoff
 	goto RazorWindEnd
 
-gUnknown_8281FEE: @ 0x08281FEE
-	.incbin "baserom_jp.gba", 0x281fee, 0x2e
+Move_DISABLE: @ 0x08281FEE
+	loadspritegfx ANIM_TAG_SPARKLE_4
+	monbg ANIM_TARGET
+	splitbgprio ANIM_TARGET
+	setalpha 8, 8
+	playsewithpan SE_M_DETECT, SOUND_PAN_ATTACKER
+	createsprite gSpinningSparkleSpriteTemplate, ANIM_ATTACKER, 13, 24, -16
+	waitforvisualfinish
+	createvisualtask AnimTask_GrowAndGrayscale, 5
+	loopsewithpan SE_M_BIND, SOUND_PAN_TARGET, 15, 4
+	waitforvisualfinish
+	delay 1
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_828201C: @ 0x0828201C
 	.incbin "baserom_jp.gba", 0x28201c, 0xaa
