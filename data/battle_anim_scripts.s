@@ -257,7 +257,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SYNTHESIS                    @ MOVE_SYNTHESIS
 	.4byte Move_MOONLIGHT                    @ MOVE_MOONLIGHT
 	.4byte Move_HIDDEN_POWER                  @ MOVE_HIDDEN_POWER
-	.4byte gUnknown_828068C                  @ 238
+	.4byte Move_CROSS_CHOP                    @ MOVE_CROSS_CHOP
 	.4byte gUnknown_82855AB                  @ 239
 	.4byte Move_RAIN_DANCE                  @ MOVE_RAIN_DANCE
 	.4byte gUnknown_8280C8E                  @ 241
@@ -6483,8 +6483,23 @@ Move_KARATE_CHOP: @ 0x0828063A
 	blendoff
 	end
 
-gUnknown_828068C: @ 0x0828068C
-	.incbin "baserom_jp.gba", 0x28068c, 0x69
+Move_CROSS_CHOP: @ 0x0828068C
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_CROSS_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_TARGET
+	createsprite gCrossChopHandSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 0
+	createsprite gCrossChopHandSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 1
+	delay 40
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=1, color1=RGB_WHITE, blend_y1=10, color2=RGB_BLACK, blend_y2=10
+	create_cross_impact_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, duration=20
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 7, 0, 9, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_82806F5: @ 0x082806F5
 	.incbin "baserom_jp.gba", 0x2806f5, 0x5d
