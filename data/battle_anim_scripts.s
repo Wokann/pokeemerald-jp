@@ -327,7 +327,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_POISON_FANG                  @ MOVE_POISON_FANG
 	.4byte Move_CRUSH_CLAW                   @ MOVE_CRUSH_CLAW
 	.4byte Move_BLAST_BURN                   @ MOVE_BLAST_BURN
-	.4byte gUnknown_8284F0D                  @ 308
+	.4byte Move_HYDRO_CANNON                 @ MOVE_HYDRO_CANNON
 	.4byte Move_METEOR_MASH                  @ MOVE_METEOR_MASH
 	.4byte gUnknown_828503F                  @ 310
 	.4byte gUnknown_82859FA                  @ 311
@@ -9408,8 +9408,47 @@ Move_OVERHEAT: @ 0x08284C1B
 	waitforvisualfinish
 	end
 
-gUnknown_8284F0D: @ 0x08284F0D
-	.incbin "baserom_jp.gba", 0x284f0d, 0x132
+Move_HYDRO_CANNON: @ 0x08284F0D
+	loadspritegfx ANIM_TAG_WATER_ORB
+	loadspritegfx ANIM_TAG_WATER_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_SURF, SOUND_PAN_ATTACKER
+	createsprite gHydroCannonChargeSpriteTemplate, ANIM_TARGET, 2
+	delay 10
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
+	delay 30
+	panse SE_M_HYDRO_PUMP, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	call HydroCannonBeam
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 10, 0, 40, 1
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_TARGET, 2, 0, 0, ANIM_TARGET, 0
+	call HydroCannonBeam
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_TARGET, 2, 0, 0, ANIM_TARGET, 0
+	call HydroCannonBeam
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_TARGET, 2, 0, 0, ANIM_TARGET, 0
+	call HydroCannonBeam
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_TARGET, 2, 0, 0, ANIM_TARGET, 0
+	call HydroCannonBeam
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_TARGET, 2, 0, 0, ANIM_TARGET, 0
+	call HydroCannonBeam
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_TARGET, 2, 0, 0, ANIM_TARGET, 0
+	waitforvisualfinish
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+HydroCannonBeam:
+	createsprite gHydroCannonBeamSpriteTemplate, ANIM_TARGET, 2, 10, -10, 0, 0, 15, 257
+	delay 1
+	createsprite gHydroCannonBeamSpriteTemplate, ANIM_TARGET, 2, 10, -10, 0, 0, 15, 257
+	delay 1
+	createsprite gHydroCannonBeamSpriteTemplate, ANIM_TARGET, 2, 10, -10, 0, 0, 15, 257
+	delay 1
+	createsprite gHydroCannonBeamSpriteTemplate, ANIM_TARGET, 2, 10, -10, 0, 0, 15, 257
+	delay 1
+	createsprite gHydroCannonBeamSpriteTemplate, ANIM_TARGET, 2, 10, -10, 0, 0, 15, 257
+	return
 
 gUnknown_828503F: @ 0x0828503F
 	.incbin "baserom_jp.gba", 0x28503f, 0x48

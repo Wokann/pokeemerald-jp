@@ -1859,7 +1859,17 @@ gFlamethrowerFlameSpriteTemplate: @ 0x570D3C
 	.globl gPsywaveRingSpriteTemplate
 gPsywaveRingSpriteTemplate: @ 0x570D54
 	.incbin "baserom_jp.gba", 0x570d54, 0x18
-	.incbin "baserom_jp.gba", 0x570d6c, 0x78
+	.incbin "baserom_jp.gba", 0x570d6c, 0x38
+
+	.globl gHydroCannonChargeSpriteTemplate
+gHydroCannonChargeSpriteTemplate: @ 0x570DA4
+	.incbin "baserom_jp.gba", 0x570da4, 0x18
+
+	.globl gHydroCannonBeamSpriteTemplate
+gHydroCannonBeamSpriteTemplate: @ 0x570DBC
+	.incbin "baserom_jp.gba", 0x570dbc, 0x18
+
+	.incbin "baserom_jp.gba", 0x570dd4, 0x10
 
 	.globl gAnims_WaterBubble
 gAnims_WaterBubble: @ 0x570DE4
