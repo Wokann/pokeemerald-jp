@@ -377,15 +377,15 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_COUNT                        @ cannot be reached, because last move is Psycho Boost
 
 gBattleAnims_StatusConditions:: @ 0x8277888
-	.4byte gUnknown_82862E1                  @ 000
-	.4byte gUnknown_828630C                  @ 001
-	.4byte gUnknown_8286315                  @ 002
-	.4byte gUnknown_8286345                  @ 003
-	.4byte gUnknown_828637A                  @ 004
-	.4byte gUnknown_82863A6                  @ 005
-	.4byte gUnknown_82863C0                  @ 006
-	.4byte gUnknown_82863DB                  @ 007
-	.4byte gUnknown_8286400                  @ 008
+	.4byte Status_Poison                     @ B_ANIM_STATUS_PSN
+	.4byte Status_Confusion                  @ B_ANIM_STATUS_CONFUSION
+	.4byte Status_Burn                       @ B_ANIM_STATUS_BRN
+	.4byte Status_Infatuation                @ B_ANIM_STATUS_INFATUATION
+	.4byte Status_Sleep                      @ B_ANIM_STATUS_SLP
+	.4byte Status_Paralysis                  @ B_ANIM_STATUS_PRZ
+	.4byte Status_Freeze                     @ B_ANIM_STATUS_FRZ
+	.4byte Status_Curse                      @ B_ANIM_STATUS_CURSED
+	.4byte Status_Nightmare                  @ B_ANIM_STATUS_NIGHTMARE
 
 gBattleAnims_General:: @ 0x82778AC
 	.4byte gUnknown_8286425                  @ 000
@@ -10263,32 +10263,86 @@ UnsetSolarBeamBg:
 	waitbgfadein
 	return
 
-gUnknown_82862E1: @ 0x082862E1
-	.incbin "baserom_jp.gba", 0x2862e1, 0x2b
+Status_Poison: @ 0x082862E1
+	loopsewithpan SE_M_TOXIC, SOUND_PAN_TARGET, 13, 6
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 1, 0, 18, 2
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB(30, 0, 31)
+	end
 
-gUnknown_828630C: @ 0x0828630C
-	.incbin "baserom_jp.gba", 0x28630c, 0x9
+Status_Confusion: @ 0x0828630C
+	loadspritegfx ANIM_TAG_DUCK
+	call ConfusionEffect
+	end
 
-gUnknown_8286315: @ 0x08286315
-	.incbin "baserom_jp.gba", 0x286315, 0x30
+Status_Burn: @ 0x08286315
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
+	call BurnFlame
+	call BurnFlame
+	call BurnFlame
+	waitforvisualfinish
+	end
+BurnFlame: @ 0x0828632D
+	createsprite gBurnFlameSpriteTemplate, ANIM_TARGET, 2, -24, 24, 24, 24, 20, 1, 1
+	delay 4
+	return
 
-gUnknown_8286345: @ 0x08286345
-	.incbin "baserom_jp.gba", 0x286345, 0x35
+Status_Infatuation: @ 0x08286345
+	loadspritegfx ANIM_TAG_MAGENTA_HEART
+	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, 0, 20
+	delay 15
+	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, -20, 20
+	delay 15
+	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, 20, 20
+	end
 
-gUnknown_828637A: @ 0x0828637A
-	.incbin "baserom_jp.gba", 0x28637a, 0x2c
+Status_Sleep: @ 0x0828637A
+	loadspritegfx ANIM_TAG_LETTER_Z
+	playsewithpan SE_M_SNORE, SOUND_PAN_ATTACKER
+	createsprite gSleepLetterZSpriteTemplate, ANIM_ATTACKER, 2, 4, -10, 16, 0, 0
+	delay 30
+	createsprite gSleepLetterZSpriteTemplate, ANIM_ATTACKER, 2, 4, -10, 16, 0, 0
+	end
 
-gUnknown_82863A6: @ 0x082863A6
-	.incbin "baserom_jp.gba", 0x2863a6, 0x1a
+Status_Paralysis: @ 0x082863A6
+	loadspritegfx ANIM_TAG_SPARK_2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 1, 0, 10, 1
+	call ElectricityEffect
+	end
 
-gUnknown_82863C0: @ 0x082863C0
-	.incbin "baserom_jp.gba", 0x2863c0, 0x1b
+Status_Freeze: @ 0x082863C0
+	playsewithpan SE_M_ICY_WIND, 0
+	loadspritegfx ANIM_TAG_ICE_CUBE
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	waitplaysewithpan SE_M_HAIL, SOUND_PAN_TARGET, 17
+	createvisualtask AnimTask_FrozenIceCube, 2
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
 
-gUnknown_82863DB: @ 0x082863DB
-	.incbin "baserom_jp.gba", 0x2863db, 0x25
+Status_Curse: @ 0x082863DB
+	loadspritegfx ANIM_TAG_GHOSTLY_SPIRIT
+	monbg ANIM_DEF_PARTNER
+	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
+	createsprite gCurseGhostSpriteTemplate, ANIM_TARGET, 2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 14, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
 
-gUnknown_8286400: @ 0x08286400
-	.incbin "baserom_jp.gba", 0x286400, 0x25
+Status_Nightmare: @ 0x08286400
+	loadspritegfx ANIM_TAG_DEVIL
+	monbg ANIM_DEF_PARTNER
+	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
+	createsprite gNightmareDevilSpriteTemplate, ANIM_TARGET, 2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 14, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
 
 gUnknown_8286425: @ 0x08286425
 	.incbin "baserom_jp.gba", 0x286425, 0x36
