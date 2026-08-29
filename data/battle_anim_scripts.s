@@ -28,7 +28,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_PAY_DAY                      @ MOVE_PAY_DAY
 	.4byte gUnknown_8281204                  @ 007
 	.4byte Move_ICE_PUNCH                    @ MOVE_ICE_PUNCH
-	.4byte gUnknown_827E01B                  @ 009
+	.4byte Move_THUNDER_PUNCH                @ MOVE_THUNDER_PUNCH
 	.4byte gUnknown_827E2CB                  @ 010
 	.4byte Move_VICE_GRIP                    @ MOVE_VICE_GRIP
 	.4byte Move_GUILLOTINE                   @ MOVE_GUILLOTINE
@@ -4836,8 +4836,38 @@ Move_THUNDER: @ 0x0827DEC1
 	waitbgfadein
 	end
 
-gUnknown_827E01B: @ 0x0827E01B
-	.incbin "baserom_jp.gba", 0x27e01b, 0xc9
+Move_THUNDER_PUNCH: @ 0x0827E01B
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_LIGHTNING
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=16, color=RGB_BLACK
+	waitforvisualfinish
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_fist_sprite ANIM_TARGET, 4, x=0, y=0, duration=8
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	delay 1
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
+	delay 1
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 0, -48
+	delay 1
+	createsprite gLightningSpriteTemplate, ANIM_ATTACKER, 2, 0, -16
+	delay 1
+	createsprite gLightningSpriteTemplate, ANIM_ATTACKER, 2, 0, 16
+	delay 1
+	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
+	delay 2
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 3, 15, 1
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	delay 1
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=16, target_blend_y=0, color=RGB_BLACK
+	delay 20
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_827E0E4: @ 0x0827E0E4
 	.incbin "baserom_jp.gba", 0x27e0e4, 0x1e7
