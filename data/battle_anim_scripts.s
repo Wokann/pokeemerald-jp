@@ -144,7 +144,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8281C2F                  @ 122
 	.4byte Move_SMOG                         @ MOVE_SMOG
 	.4byte Move_SLUDGE                       @ MOVE_SLUDGE
-	.4byte gUnknown_827FDA7                  @ 125
+	.4byte Move_BONE_CLUB                    @ MOVE_BONE_CLUB
 	.4byte Move_FIRE_BLAST                   @ MOVE_FIRE_BLAST
 	.4byte Move_WATERFALL                    @ MOVE_WATERFALL
 	.4byte Move_CLAMP                        @ MOVE_CLAMP
@@ -6073,8 +6073,23 @@ Move_BONEMERANG:: @ 0x0827FD53
 	blendoff
 	end
 
-gUnknown_827FDA7: @ 0x0827FDA7
-	.incbin "baserom_jp.gba", 0x27fda7, 0x62
+Move_BONE_CLUB:: @ 0x0827FDA7
+	loadspritegfx ANIM_TAG_BONE
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_BONEMERANG, SOUND_PAN_TARGET
+	createsprite gSpinningBoneSpriteTemplate, ANIM_ATTACKER, 2, -42, -25, 0, 0, 15
+	delay 12
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 5, 5, 1
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_ATTACKER | F_PAL_TARGET, delay=5, num_blends=1, color1=RGB_BLACK, blend_y1=10, color2=RGB_BLACK, blend_y2=0
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_827FE09: @ 0x0827FE09
 	.incbin "baserom_jp.gba", 0x27fe09, 0x4b
