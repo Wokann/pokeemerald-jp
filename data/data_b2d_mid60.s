@@ -927,6 +927,7 @@ gTrickBagAffineAnimCmds2: @ 0x856E27C
 gTrickBagAffineAnimTable: @ 0x856E2BC
 	.4byte 0x0856E26C, 0x0856E27C, 0x0856E194, 0x0856E1B4
 
+	.globl gTrickBagSpriteTemplate
 gTrickBagSpriteTemplate: @ 0x856E2CC
 	.hword 0x27F0, 0x27F0
 	.4byte 0x084FD080, 0x0856E190

@@ -290,7 +290,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_CHARGE                       @ MOVE_CHARGE
 	.4byte Move_TAUNT                        @ MOVE_TAUNT
 	.4byte Move_HELPING_HAND                 @ MOVE_HELPING_HAND
-	.4byte gUnknown_8282DF5                  @ 271
+	.4byte Move_TRICK                        @ MOVE_TRICK
 	.4byte gUnknown_8283535                  @ 272
 	.4byte gUnknown_8282E73                  @ 273
 	.4byte Move_ASSIST                       @ MOVE_ASSIST
@@ -8143,8 +8143,33 @@ Move_ENCORE: @ 0x08282D4E
 	createvisualtask AnimTask_RemoveSpotlight, 2
 	end
 
-gUnknown_8282DF5: @ 0x08282DF5
-	.incbin "baserom_jp.gba", 0x282df5, 0x7e
+Move_TRICK: @ 0x08282DF5
+	loadspritegfx ANIM_TAG_ITEM_BAG
+	loadspritegfx ANIM_TAG_SPEED_DUST
+	create_trick_bag_sprite ANIM_ATTACKER, 2, initial_y=-40, wave_offset=80
+	create_trick_bag_sprite ANIM_ATTACKER, 2, initial_y=-40, wave_offset=208
+	delay 16
+	playsewithpan SE_M_SKETCH, 0
+	createvisualtask AnimTask_StretchTargetUp, 3
+	createvisualtask AnimTask_StretchAttackerUp, 3
+	delay 30
+	playsewithpan SE_M_DOUBLE_TEAM, 0
+	delay 24
+	playsewithpan SE_M_DOUBLE_TEAM, 0
+	delay 16
+	playsewithpan SE_M_DOUBLE_TEAM, 0
+	delay 16
+	playsewithpan SE_M_DOUBLE_TEAM, 0
+	delay 16
+	playsewithpan SE_M_DOUBLE_TEAM, 0
+	delay 16
+	playsewithpan SE_M_DOUBLE_TEAM, 0
+	delay 16
+	playsewithpan SE_M_ATTRACT, 0
+	createvisualtask AnimTask_ShakeMon, 3, ANIM_ATTACKER, 5, 0, 7, 2
+	createvisualtask AnimTask_ShakeMon, 3, ANIM_TARGET, 5, 0, 7, 2
+	waitforvisualfinish
+	end
 
 gUnknown_8282E73: @ 0x08282E73
 	.incbin "baserom_jp.gba", 0x282e73, 0x48

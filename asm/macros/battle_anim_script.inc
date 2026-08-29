@@ -364,6 +364,10 @@
 	createsprite gPresentHealParticleSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \velocity_y, \unused3
 	.endm
 
+	.macro create_trick_bag_sprite anim_battler:req, subpriority_offset:req, initial_y:req, wave_offset:req
+	createsprite gTrickBagSpriteTemplate, \anim_battler, \subpriority_offset, \initial_y, \wave_offset
+	.endm
+
 	.macro create_power_absorption_orb_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req
 	createsprite gPowerAbsorptionOrbSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration
 	.endm
