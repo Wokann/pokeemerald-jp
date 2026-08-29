@@ -21,7 +21,7 @@ gMovesWithQuietBGM::
 gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_NONE                             @ MOVE_NONE
 	.4byte Move_POUND                            @ MOVE_POUND
-	.4byte gUnknown_828063A                  @ 002
+	.4byte Move_KARATE_CHOP                   @ MOVE_KARATE_CHOP
 	.4byte Move_DOUBLE_SLAP                    @ MOVE_DOUBLE_SLAP
 	.4byte Move_COMET_PUNCH                  @ MOVE_COMET_PUNCH
 	.4byte Move_MEGA_PUNCH                   @ MOVE_MEGA_PUNCH
@@ -6466,8 +6466,22 @@ BounceUnleash:
 	blendoff
 	goto BounceEnd
 
-gUnknown_828063A: @ 0x0828063A
-	.incbin "baserom_jp.gba", 0x28063a, 0x52
+Move_KARATE_CHOP: @ 0x0828063A
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_TARGET
+	createsprite gKarateChopSpriteTemplate, ANIM_ATTACKER, 2, -16, 0, 0, 0, 10, 1, 3, 0
+	waitforvisualfinish
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 4, 0, 6, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_828068C: @ 0x0828068C
 	.incbin "baserom_jp.gba", 0x28068c, 0x69
