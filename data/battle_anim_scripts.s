@@ -355,7 +355,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_ICICLE_SPEAR                 @ MOVE_ICICLE_SPEAR
 	.4byte Move_IRON_DEFENSE                 @ MOVE_IRON_DEFENSE
 	.4byte Move_BLOCK                        @ MOVE_BLOCK
-	.4byte gUnknown_827D683                  @ 336
+	.4byte Move_HOWL                         @ MOVE_HOWL
 	.4byte gUnknown_828392B                  @ 337
 	.4byte gUnknown_8283D9A                  @ 338
 	.4byte gUnknown_827D6A5                  @ 339
@@ -4388,8 +4388,15 @@ Move_BLOCK: @ 0x0827D674
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
 	end
 
-gUnknown_827D683: @ 0x0827D683
-	.incbin "baserom_jp.gba", 0x27d683, 0x22
+Move_HOWL: @ 0x0827D683
+	loadspritegfx ANIM_TAG_NOISE_LINE
+	createvisualtask AnimTask_DeepInhale, 2, ANIM_ATTACKER
+	delay 12
+	call RoarEffect
+	createvisualtask SoundTask_PlayCryHighPitch, 2, ANIM_ATTACKER, 3
+	waitforvisualfinish
+	delay 30
+	end
 
 gUnknown_827D6A5: @ 0x0827D6A5
 	.incbin "baserom_jp.gba", 0x27d6a5, 0x1e
@@ -4455,7 +4462,10 @@ gUnknown_827E2FD: @ 0x0827E2FD
 	.incbin "baserom_jp.gba", 0x27e2fd, 0x114
 
 gUnknown_827E411: @ 0x0827E411
-	.incbin "baserom_jp.gba", 0x27e411, 0x97
+	.incbin "baserom_jp.gba", 0x27e411, 0x46
+
+RoarEffect: @ 0x0827E457
+	.incbin "baserom_jp.gba", 0x27e457, 0x51
 
 gUnknown_827E4A8: @ 0x0827E4A8
 	.incbin "baserom_jp.gba", 0x27e4a8, 0x41
