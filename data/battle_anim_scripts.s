@@ -221,7 +221,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_LOCK_ON                      @ MOVE_LOCK_ON
 	.4byte Move_OUTRAGE                      @ MOVE_OUTRAGE
 	.4byte gUnknown_8280402                  @ 201
-	.4byte gUnknown_827F7CE                  @ 202
+	.4byte Move_GIGA_DRAIN                   @ MOVE_GIGA_DRAIN
 	.4byte Move_ENDURE                        @ MOVE_ENDURE
 	.4byte Move_CHARM                         @ MOVE_CHARM
 	.4byte Move_ROLLOUT                       @ MOVE_ROLLOUT
@@ -5829,8 +5829,74 @@ MegaDrainAbsorbEffect:
 	delay 4
 	return
 
-gUnknown_827F7CE: @ 0x0827F7CE
-	.incbin "baserom_jp.gba", 0x27f7ce, 0x208
+Move_GIGA_DRAIN:: @ 0x0827F7CE
+	loadspritegfx ANIM_TAG_ORBS
+	loadspritegfx ANIM_TAG_BLUE_STAR
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	splitbgprio_foes ANIM_TARGET
+	setalpha 12, 8
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=12, color=RGB(13, 31, 12)
+	waitforvisualfinish
+	playsewithpan SE_M_ABSORB, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=0, relative_to=ANIM_TARGET, animation=0
+	delay 2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 5, 5, 1
+	waitforvisualfinish
+	delay 3
+	call GigaDrainAbsorbEffect
+	waitforvisualfinish
+	delay 15
+	call HealingEffect
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=12, target_blend_y=0, color=RGB(13, 31, 12)
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
+GigaDrainAbsorbEffect:
+	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=5, y=-18, wave_amplitude=-40, wave_period=35
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-10, y=20, wave_amplitude=20, wave_period=39
+	delay 4
+	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=28, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=10, y=-5, wave_amplitude=-8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-10, y=20, wave_amplitude=40, wave_period=39
+	delay 4
+	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=10, y=-5, wave_amplitude=-8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-5, y=15, wave_amplitude=16, wave_period=33
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=10, y=-5, wave_amplitude=-32, wave_period=26
+	delay 4
+	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=-15, wave_amplitude=-16, wave_period=36
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=10, y=-5, wave_amplitude=-8, wave_period=26
+	delay 4
+	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-5, y=15, wave_amplitude=16, wave_period=33
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=-15, wave_amplitude=-16, wave_period=36
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	delay 4
+	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-5, y=15, wave_amplitude=16, wave_period=33
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=10, y=-5, wave_amplitude=-40, wave_period=26
+	delay 4
+	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-5, y=15, wave_amplitude=36, wave_period=33
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=10, y=-5, wave_amplitude=-8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=-10, y=20, wave_amplitude=20, wave_period=39
+	delay 4
+	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_TARGET
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_ATTACKER, 3, x=5, y=-18, wave_amplitude=-20, wave_period=35
+	delay 4
+	return
 
 gUnknown_827F9D6: @ 0x0827F9D6
 	.incbin "baserom_jp.gba", 0x27f9d6, 0x82
