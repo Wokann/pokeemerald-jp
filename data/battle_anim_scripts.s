@@ -9982,13 +9982,102 @@ Move_COUNT: @ 0x08285C76
 	end
 
 IceCrystalEffectShort: @ 0x08285CA7
-	.incbin "baserom_jp.gba", 0x285ca7, 0x84
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, -10, -10, 0
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 10, 20, 0
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, -5, 10, 0
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 17, -12, 0
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, -15, 15, 0
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, 20, 2, 0
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	return
 
 IceCrystalEffectLong: @ 0x08285D2B
-	.incbin "baserom_jp.gba", 0x285d2b, 0x154
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, -10, -10, 1
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 10, 20, 1
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, -29, 0, 1
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 29, -20, 1
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, -5, 10, 1
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 17, -12, 1
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, -20, 0, 1
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, -15, 15, 1
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 26, -5, 1
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 0, 0, 1
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, 20, 2, 1
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	return
+
+IceSpikesEffectShort: @ 0x08285DFB @ Unused
+	loopsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET, 6, 4
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 0, 24, 0
+	delay 4
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 8, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -8, 24, 0
+	delay 4
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 16, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -16, 24, 0
+	delay 4
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 24, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -24, 24, 0
+	delay 4
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 32, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -32, 24, 0
+	return
 
 IceSpikesEffectLong: @ 0x08285E7F
-	.incbin "baserom_jp.gba", 0x285e7f, 0xbc
+	loopsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET, 6, 4
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 0, 24, 1
+	delay 4
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 8, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -8, 24, 1
+	delay 4
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 16, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -16, 24, 1
+	delay 4
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 24, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -24, 24, 1
+	delay 4
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 32, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -32, 24, 1
+	delay 4
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 40, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -40, 24, 1
+	delay 4
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 48, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -48, 24, 1
+	return
 
 GrantingStarsEffect: @ 0x08285F3B
 	.incbin "baserom_jp.gba", 0x285f3b, 0x2b
