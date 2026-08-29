@@ -210,7 +210,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SLUDGE_BOMB                  @ MOVE_SLUDGE_BOMB
 	.4byte Move_MUD_SLAP                     @ MOVE_MUD_SLAP
 	.4byte gUnknown_828110A                  @ 190
-	.4byte gUnknown_827FE54                  @ 191
+	.4byte Move_SPIKES                       @ MOVE_SPIKES
 	.4byte gUnknown_828181F                  @ 192
 	.4byte Move_FORESIGHT                    @ MOVE_FORESIGHT
 	.4byte Move_DESTINY_BOND                 @ MOVE_DESTINY_BOND
@@ -6107,8 +6107,22 @@ Move_BONE_RUSH: @ 0x0827FE09
 	blendoff
 	end
 
-gUnknown_827FE54: @ 0x0827FE54
-	.incbin "baserom_jp.gba", 0x27fe54, 0x57
+Move_SPIKES: @ 0x0827FE54
+	loadspritegfx ANIM_TAG_SPIKES
+	monbg ANIM_DEF_PARTNER
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 28
+	createsprite gSpikesSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 24, 30
+	delay 10
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 28
+	createsprite gSpikesSpriteTemplate, ANIM_TARGET, 2, 20, 0, -24, 24, 30
+	delay 10
+	waitplaysewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 28
+	createsprite gSpikesSpriteTemplate, ANIM_TARGET, 2, 20, 0, 24, 24, 30
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
 
 gUnknown_827FEAB: @ 0x0827FEAB
 	.incbin "baserom_jp.gba", 0x27feab, 0xed
