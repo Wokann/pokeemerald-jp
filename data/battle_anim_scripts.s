@@ -193,7 +193,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_NIGHTMARE                    @ MOVE_NIGHTMARE
 	.4byte Move_FLAME_WHEEL                   @ MOVE_FLAME_WHEEL
 	.4byte Move_SNORE                        @ MOVE_SNORE
-	.4byte gUnknown_8282179                  @ 174
+	.4byte Move_CURSE                        @ MOVE_CURSE
 	.4byte Move_FLAIL                        @ MOVE_FLAIL
 	.4byte Move_CONVERSION_2                 @ MOVE_CONVERSION_2
 	.4byte Move_AEROBLAST                    @ MOVE_AEROBLAST
@@ -7656,8 +7656,50 @@ Move_CONSTRICT: @ 0x08282111
 	waitforvisualfinish
 	end
 
-gUnknown_8282179: @ 0x08282179
-	.incbin "baserom_jp.gba", 0x282179, 0xc0
+Move_CURSE: @ 0x08282179
+	choosetwoturnanim CurseGhost, CurseStats
+CurseGhost:
+	loadspritegfx ANIM_TAG_NAIL
+	loadspritegfx ANIM_TAG_GHOSTLY_SPIRIT
+	monbg ANIM_ATK_PARTNER
+	createvisualtask AnimTask_CurseStretchingBlackBg, 5
+	waitforvisualfinish
+	delay 20
+	createsprite gCurseNailSpriteTemplate, ANIM_ATTACKER, 2
+	delay 60
+	call CurseGhostShakeFromNail
+	delay 41
+	call CurseGhostShakeFromNail
+	delay 41
+	call CurseGhostShakeFromNail
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	delay 1
+	monbg ANIM_DEF_PARTNER
+	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
+	createsprite gCurseGhostSpriteTemplate, ANIM_TARGET, 2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 14, 1
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=16, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
+CurseGhostShakeFromNail:
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 4, 0, 10, 0
+	playsewithpan SE_M_BIND, SOUND_PAN_ATTACKER
+	return
+CurseStats:
+	createvisualtask AnimTask_SwayMon, 5, 0, 10, 1536, 3, ANIM_ATTACKER
+	waitforvisualfinish
+	delay 10
+	call CurseStats1
+	waitforvisualfinish
+	end
+CurseStats1:
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_DrawFallingWhiteLinesOnAttacker, 5
+	blend_color_cycle priority=5, selector=F_PAL_ATTACKER, delay=4, num_blends=2, initial_blend_y=0, target_blend_y=10, color=RGB_RED
+	return
 
 gUnknown_8282239: @ 0x08282239
 	.incbin "baserom_jp.gba", 0x282239, 0x82
