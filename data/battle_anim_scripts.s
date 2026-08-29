@@ -186,7 +186,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8283D8E                  @ 164
 	.4byte Move_STRUGGLE                     @ MOVE_STRUGGLE
 	.4byte Move_SKETCH                       @ MOVE_SKETCH
-	.4byte gUnknown_828081A                  @ 167
+	.4byte Move_TRIPLE_KICK                  @ MOVE_TRIPLE_KICK
 	.4byte Move_THIEF                        @ MOVE_THIEF
 	.4byte gUnknown_8281E67                  @ 169
 	.4byte Move_MIND_READER                  @ MOVE_MIND_READER
@@ -6558,8 +6558,38 @@ Move_DOUBLE_KICK: @ 0x082807E8
 	blendoff
 	end
 
-gUnknown_828081A: @ 0x0828081A
-	.incbin "baserom_jp.gba", 0x28081a, 0xc7
+Move_TRIPLE_KICK: @ 0x0828081A
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	jumpifmoveturn 0, TripleKickLeft
+	jumpifmoveturn 1, TripleKickRight
+	goto TripleKickCenter
+TripleKickContinue:
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
+TripleKickLeft:
+	create_wide_foot_sprite ANIM_TARGET, 4, x=-16, y=-8, duration=20
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=-16, y=-16, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 4, 0, 6, 1
+	goto TripleKickContinue
+
+TripleKickRight:
+	create_wide_foot_sprite ANIM_TARGET, 4, x=8, y=8, duration=20
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=8, y=0, relative_to=ANIM_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 4, 0, 6, 1
+	goto TripleKickContinue
+
+TripleKickCenter:
+	create_wide_foot_sprite ANIM_TARGET, 4, x=0, y=0, duration=20
+	create_basic_hitsplat_sprite ANIM_TARGET, 3, x=0, y=-8, relative_to=ANIM_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 6, 0, 8, 1
+	goto TripleKickContinue
 
 gUnknown_82808E1: @ 0x082808E1
 	.incbin "baserom_jp.gba", 0x2808e1, 0xc8

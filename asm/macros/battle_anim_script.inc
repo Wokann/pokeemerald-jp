@@ -351,6 +351,10 @@
 	createsprite gFistFootSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration, \initPosition, 0
 	.endm
 
+	.macro create_wide_foot_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req, initPosition=ANIM_TARGET
+	createsprite gFistFootSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration, \initPosition, 1
+	.endm
+
 	.macro create_tear_drop_sprite anim_battler:req, subpriority_offset:req, relative_to:req, type:req
 	createsprite gTearDropSpriteTemplate, \anim_battler, \subpriority_offset, \relative_to, \type
 	.endm
