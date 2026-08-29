@@ -135,7 +135,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_LIGHT_SCREEN                 @ MOVE_LIGHT_SCREEN
 	.4byte Move_HAZE                         @ MOVE_HAZE
 	.4byte Move_REFLECT                      @ MOVE_REFLECT
-	.4byte gUnknown_8281C56                  @ 116
+	.4byte Move_FOCUS_ENERGY                 @ MOVE_FOCUS_ENERGY
 	.4byte gUnknown_8281C96                  @ 117
 	.4byte Move_METRONOME                    @ MOVE_METRONOME
 	.4byte Move_MIRROR_MOVE                      @ MOVE_MIRROR_MOVE
@@ -7395,8 +7395,18 @@ Move_LICK: @ 0x08281C2F
 	waitforvisualfinish
 	end
 
-gUnknown_8281C56: @ 0x08281C56
-	.incbin "baserom_jp.gba", 0x281c56, 0x40
+Move_FOCUS_ENERGY: @ 0x08281C56
+	loadspritegfx ANIM_TAG_FOCUS_ENERGY
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	call EndureEffect
+	delay 8
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=11, color=RGB_WHITE
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 1, 0, 32, 1
+	call EndureEffect
+	delay 8
+	call EndureEffect
+	waitforvisualfinish
+	end
 
 gUnknown_8281C96: @ 0x08281C96
 	.incbin "baserom_jp.gba", 0x281c96, 0xff
