@@ -203,7 +203,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_POWDER_SNOW                  @ MOVE_POWDER_SNOW
 	.4byte Move_PROTECT                       @ MOVE_PROTECT
 	.4byte Move_MACH_PUNCH                   @ MOVE_MACH_PUNCH
-	.4byte gUnknown_82824F0                  @ 184
+	.4byte Move_SCARY_FACE                   @ MOVE_SCARY_FACE
 	.4byte Move_FAINT_ATTACK                 @ MOVE_FAINT_ATTACK
 	.4byte gUnknown_8282553                  @ 186
 	.4byte Move_BELLY_DRUM                   @ MOVE_BELLY_DRUM
@@ -7787,8 +7787,23 @@ Move_FAKE_OUT: @ 0x082824B5
 	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=16, target_blend_y=0, color=RGB_WHITE
 	end
 
-gUnknown_82824F0: @ 0x082824F0
-	.incbin "baserom_jp.gba", 0x2824f0, 0x63
+Move_SCARY_FACE: @ 0x082824F0
+	loadspritegfx ANIM_TAG_EYE_SPARKLE
+	simple_palette_blend selector=F_PAL_BG | F_PAL_ATK_SIDE | F_PAL_DEF_PARTNER, delay=3, initial_blend_y=0, target_blend_y=16, color=RGB_BLACK
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	delay 10
+	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_ScaryFace, 5
+	delay 13
+	createsprite gEyeSparkleSpriteTemplate, ANIM_ATTACKER, 0, -16, -8
+	createsprite gEyeSparkleSpriteTemplate, ANIM_ATTACKER, 0, 16, -8
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeTargetInPattern, 3, 20, 1, FALSE
+	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
+	simple_palette_blend selector=F_PAL_BG | F_PAL_ATK_SIDE | F_PAL_DEF_PARTNER, delay=3, initial_blend_y=16, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	end
 
 gUnknown_8282553: @ 0x08282553
 	.incbin "baserom_jp.gba", 0x282553, 0x69
