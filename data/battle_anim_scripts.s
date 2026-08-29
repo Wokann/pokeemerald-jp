@@ -341,7 +341,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_METAL_SOUND                  @ MOVE_METAL_SOUND
 	.4byte Move_GRASS_WHISTLE                @ MOVE_GRASS_WHISTLE
 	.4byte Move_TICKLE                       @ MOVE_TICKLE
-	.4byte gUnknown_82844E4                  @ 322
+	.4byte Move_COSMIC_POWER                 @ MOVE_COSMIC_POWER
 	.4byte Move_WATER_SPOUT                  @ MOVE_WATER_SPOUT
 	.4byte Move_SIGNAL_BEAM                   @ MOVE_SIGNAL_BEAM
 	.4byte Move_SHADOW_PUNCH                 @ MOVE_SHADOW_PUNCH
@@ -9099,8 +9099,30 @@ ReturnStrongestHit:
 	waitforvisualfinish
 	return
 
-gUnknown_82844E4: @ 0x082844E4
-	.incbin "baserom_jp.gba", 0x2844e4, 0x85
+Move_COSMIC_POWER: @ 0x082844E4
+	loadspritegfx ANIM_TAG_SPARKLE_2
+	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_COSMIC_POWER, 0
+	playsewithpan SE_M_COSMIC_POWER, 0
+	createvisualtask AnimTask_BlendNonAttackerPalettes, 2, 0, 0, 15, RGB_BLACK
+	waitforvisualfinish
+	fadetobg BG_COSMIC
+	waitbgfadeout
+	createvisualtask AnimTask_StartSlidingBg, 2, 0, 128, 0, -1
+	waitbgfadein
+	delay 70
+	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_MORNING_SUN, SOUND_PAN_ATTACKER
+	createsprite gGrantingStarsSpriteTemplate, ANIM_ATTACKER, 2, -15, 0, 0, 0, 32, 60
+	delay 8
+	createsprite gGrantingStarsSpriteTemplate, ANIM_ATTACKER, 2, 12, -5, 0, 0, 32, 60
+	delay 40
+	createvisualtask AnimTask_BlendNonAttackerPalettes, 2, 0, 15, 0, RGB_BLACK
+	waitforvisualfinish
+	restorebg
+	waitbgfadeout
+	setarg 7, 0xFFFF
+	waitbgfadein
+	waitforvisualfinish
+	end
 
 gUnknown_8284569: @ 0x08284569
 	.incbin "baserom_jp.gba", 0x284569, 0x242
