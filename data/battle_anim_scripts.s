@@ -246,7 +246,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_MEGAHORN                     @ MOVE_MEGAHORN
 	.4byte Move_DRAGON_BREATH                @ MOVE_DRAGON_BREATH
 	.4byte Move_BATON_PASS                   @ MOVE_BATON_PASS
-	.4byte gUnknown_8282D4E                  @ 227
+	.4byte Move_ENCORE                       @ MOVE_ENCORE
 	.4byte Move_PURSUIT                       @ MOVE_PURSUIT
 	.4byte Move_RAPID_SPIN                   @ MOVE_RAPID_SPIN
 	.4byte gUnknown_828320D                  @ 230
@@ -8123,8 +8123,25 @@ Move_WILL_O_WISP: @ 0x08282C90
 	clearmonbg ANIM_DEF_PARTNER
 	end
 
-gUnknown_8282D4E: @ 0x08282D4E
-	.incbin "baserom_jp.gba", 0x282d4e, 0xa7
+Move_ENCORE: @ 0x08282D4E
+	loadspritegfx ANIM_TAG_SPOTLIGHT
+	loadspritegfx ANIM_TAG_TAG_HAND
+	createvisualtask AnimTask_CreateSpotlight, 2
+	createvisualtask AnimTask_HardwarePaletteFade, 2, 0xF8, 3, 0, 10, FALSE
+	waitforvisualfinish
+	createsprite gSpotlightSpriteTemplate, ANIM_TARGET, 2, 0, -8
+	createsprite gClappingHandSpriteTemplate, ANIM_ATTACKER, 2, -2, 0, 0, 0, 9
+	createsprite gClappingHandSpriteTemplate, ANIM_ATTACKER, 2, 2, 0, 1, 0, 9
+	createsprite gClappingHand2SpriteTemplate, ANIM_ATTACKER, 3, -2, 0, 0, 0, 9
+	createsprite gClappingHand2SpriteTemplate, ANIM_ATTACKER, 3, 2, 0, 1, 0, 9
+	delay 16
+	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_ENCORE2, SOUND_PAN_TARGET
+	createvisualtask AnimTask_SwayMon, 5, 1, 8, 1536, 5, ANIM_TARGET
+	waitforvisualfinish
+	createvisualtask AnimTask_HardwarePaletteFade, 2, 0xF8, 3, 10, 0, TRUE
+	waitforvisualfinish
+	createvisualtask AnimTask_RemoveSpotlight, 2
+	end
 
 gUnknown_8282DF5: @ 0x08282DF5
 	.incbin "baserom_jp.gba", 0x282df5, 0x7e
