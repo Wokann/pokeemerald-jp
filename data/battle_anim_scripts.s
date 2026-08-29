@@ -54,7 +54,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_HORN_DRILL                   @ MOVE_HORN_DRILL
 	.4byte Move_TACKLE                         @ MOVE_TACKLE
 	.4byte Move_BODY_SLAM                      @ MOVE_BODY_SLAM
-	.4byte gUnknown_8281689                  @ 035
+	.4byte Move_WRAP                         @ MOVE_WRAP
 	.4byte Move_TAKE_DOWN                    @ MOVE_TAKE_DOWN
 	.4byte Move_THRASH                       @ MOVE_THRASH
 	.4byte Move_DOUBLE_EDGE                  @ MOVE_DOUBLE_EDGE
@@ -7145,8 +7145,9 @@ BindWrapSqueezeTarget:
 	delay 16
 	return
 
-gUnknown_8281689: @ 0x08281689
-	.incbin "baserom_jp.gba", 0x281689, 0x16
+Move_WRAP: @ 0x08281689
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 6, 4, 2, 4
+	goto BindWrap
 
 gUnknown_828169F: @ 0x0828169F
 	.incbin "baserom_jp.gba", 0x28169f, 0x9a
