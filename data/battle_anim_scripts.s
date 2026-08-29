@@ -164,7 +164,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_82825BC                  @ 142
 	.4byte Move_SKY_ATTACK                   @ MOVE_SKY_ATTACK
 	.4byte gUnknown_8283161                  @ 144
-	.4byte gUnknown_827E69B                  @ 145
+	.4byte Move_BUBBLE                       @ MOVE_BUBBLE
 	.4byte Move_DIZZY_PUNCH                  @ MOVE_DIZZY_PUNCH
 	.4byte gUnknown_8280D3E                  @ 147
 	.4byte Move_FLASH                        @ MOVE_FLASH
@@ -5102,8 +5102,41 @@ Move_BARRIER: @ 0x0827E67E
 	blendoff
 	end
 
-gUnknown_827E69B: @ 0x0827E69B
-	.incbin "baserom_jp.gba", 0x27e69b, 0xd6
+Move_BUBBLE: @ 0x0827E69B
+	loadspritegfx ANIM_TAG_BUBBLE
+	loadspritegfx ANIM_TAG_SMALL_BUBBLES
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	delay 1
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_ATTACKER, 2, 18, 0, 15, -15, 10, 128, 100
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_BUBBLE2, SOUND_PAN_TARGET, 100
+	delay 6
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_ATTACKER, 2, 18, 0, 35, 37, 40, 128, 100
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_BUBBLE2, SOUND_PAN_TARGET, 100
+	delay 6
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_ATTACKER, 2, 18, 0, 10, -37, 30, 128, 100
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_BUBBLE2, SOUND_PAN_TARGET, 100
+	delay 6
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_ATTACKER, 2, 18, 0, 30, 10, 15, 128, 100
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_BUBBLE2, SOUND_PAN_TARGET, 100
+	delay 6
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_ATTACKER, 2, 18, 0, 20, 33, 20, 128, 100
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_BUBBLE2, SOUND_PAN_TARGET, 100
+	delay 6
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_ATTACKER, 2, 18, 0, 25, -30, 10, 128, 100
+	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_BUBBLE2, SOUND_PAN_TARGET, 100
+	waitforvisualfinish
+	call WaterBubblesEffectLong
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
 
 gUnknown_827E771: @ 0x0827E771
 	.incbin "baserom_jp.gba", 0x27e771, 0x7b
@@ -5619,7 +5652,10 @@ PoisonBubblesEffect: @ 0x08285FF8
 	.incbin "baserom_jp.gba", 0x285ff8, 0x71
 
 WaterBubblesEffectShort: @ 0x08286069
-	.incbin "baserom_jp.gba", 0x286069, 0x108
+	.incbin "baserom_jp.gba", 0x286069, 0x71
+
+WaterBubblesEffectLong: @ 0x082860DA
+	.incbin "baserom_jp.gba", 0x2860da, 0x97
 
 ElectricityEffect: @ 0x08286171
 	.incbin "baserom_jp.gba", 0x286171, 0xe7
