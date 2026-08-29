@@ -87,7 +87,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_DRILL_PECK                   @ MOVE_DRILL_PECK
 	.4byte gUnknown_8280BEB                  @ 066
 	.4byte Move_LOW_KICK                     @ MOVE_LOW_KICK
-	.4byte gUnknown_82809A9                  @ 068
+	.4byte Move_COUNTER                      @ MOVE_COUNTER
 	.4byte gUnknown_8285087                  @ 069
 	.4byte Move_STRENGTH                       @ MOVE_STRENGTH
 	.4byte Move_ABSORB                       @ MOVE_ABSORB
@@ -6625,8 +6625,37 @@ Move_DYNAMIC_PUNCH: @ 0x082808E1
 	blendoff
 	end
 
-gUnknown_82809A9: @ 0x082809A9
-	.incbin "baserom_jp.gba", 0x2809a9, 0xcf
+Move_COUNTER: @ 0x082809A9
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 18, 6, 1, 4
+	playsewithpan SE_M_VITAL_THROW, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, 0, 0, 4
+	delay 4
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=-15, y=18, relative_to=ANIM_TARGET, animation=0
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	delay 1
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 25, 1
+	create_fist_sprite ANIM_ATTACKER, 3, x=-15, y=18, duration=8
+	delay 3
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=0, y=-4, relative_to=ANIM_TARGET, animation=0
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	delay 1
+	create_fist_sprite ANIM_ATTACKER, 3, x=0, y=-4, duration=8
+	delay 3
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 2, x=15, y=9, relative_to=ANIM_TARGET, animation=0
+	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
+	delay 1
+	create_fist_sprite ANIM_ATTACKER, 3, x=15, y=9, duration=8
+	delay 5
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 5
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
 
 gUnknown_8280A78: @ 0x08280A78
 	.incbin "baserom_jp.gba", 0x280a78, 0x7b
