@@ -311,7 +311,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_8284AAA                  @ 289
 	.4byte gUnknown_8285557                  @ 290
 	.4byte gUnknown_8284AC4                  @ 291
-	.4byte gUnknown_82837EE                  @ 292
+	.4byte Move_ARM_THRUST                   @ MOVE_ARM_THRUST
 	.4byte Move_CAMOUFLAGE                   @ MOVE_CAMOUFLAGE
 	.4byte Move_TAIL_GLOW                    @ MOVE_TAIL_GLOW
 	.4byte Move_LUSTER_PURGE                 @ MOVE_LUSTER_PURGE
@@ -8600,8 +8600,32 @@ Move_SHEER_COLD: @ 0x082837C9
 	waitbgfadein
 	end
 
-gUnknown_82837EE: @ 0x082837EE
-	.incbin "baserom_jp.gba", 0x2837ee, 0x95
+Move_ARM_THRUST: @ 0x082837EE
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_IMPACT
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	createvisualtask AnimTask_RotateMonSpriteToSide, 5, 8, 5, ANIM_ATTACKER, 0
+	delay 6
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 3
+	delay 4
+	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
+	createsprite gArmThrustHandSpriteTemplate, ANIM_TARGET, 2, 10, -8, 14, 3
+	waitforvisualfinish
+	createvisualtask AnimTask_RotateMonSpriteToSide, 5, 8, 5, ANIM_ATTACKER, 1
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	choosetwoturnanim ArmThrustRight, ArmThrustLeft
+ArmThrustContinue:
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 4, 0, 6, 1
+	waitforvisualfinish
+	blendoff
+	end
+ArmThrustRight:
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=8, y=0, relative_to=ANIM_TARGET, animation=2
+	goto ArmThrustContinue
+ArmThrustLeft:
+	create_basic_hitsplat_sprite ANIM_TARGET, 2, x=-8, y=0, relative_to=ANIM_TARGET, animation=2
+	goto ArmThrustContinue
 
 gUnknown_8283883: @ 0x08283883
 	.incbin "baserom_jp.gba", 0x283883, 0x12
