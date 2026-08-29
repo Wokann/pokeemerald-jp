@@ -266,7 +266,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_PSYCH_UP                     @ MOVE_PSYCH_UP
 	.4byte Move_EXTREME_SPEED                @ MOVE_EXTREME_SPEED
 	.4byte Move_ANCIENT_POWER                 @ MOVE_ANCIENT_POWER
-	.4byte gUnknown_8281BEC                  @ 247
+	.4byte Move_SHADOW_BALL                  @ MOVE_SHADOW_BALL
 	.4byte Move_FUTURE_SIGHT                  @ MOVE_FUTURE_SIGHT
 	.4byte Move_ROCK_SMASH                   @ MOVE_ROCK_SMASH
 	.4byte Move_WHIRLPOOL                    @ MOVE_WHIRLPOOL
@@ -7371,8 +7371,20 @@ Move_EGG_BOMB: @ 0x08281B52
 	waitforvisualfinish
 	end
 
-gUnknown_8281BEC: @ 0x08281BEC
-	.incbin "baserom_jp.gba", 0x281bec, 0x43
+Move_SHADOW_BALL: @ 0x08281BEC
+	loadspritegfx ANIM_TAG_SHADOW_BALL
+	fadetobg BG_GHOST
+	waitbgfadein
+	delay 15
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_MIST, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 5, 5, 0, 5
+	createsprite gShadowBallSpriteTemplate, ANIM_TARGET, 2, 16, 16, 8
+	waitforvisualfinish
+	playsewithpan SE_M_SAND_ATTACK, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 8, 1
+	waitforvisualfinish
+	restorebg
+	waitbgfadein
+	end
 
 gUnknown_8281C2F: @ 0x08281C2F
 	.incbin "baserom_jp.gba", 0x281c2f, 0x27
