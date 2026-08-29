@@ -106,7 +106,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_THUNDER_SHOCK                @ MOVE_THUNDER_SHOCK
 	.4byte Move_THUNDERBOLT                  @ MOVE_THUNDERBOLT
 	.4byte Move_THUNDER_WAVE                 @ MOVE_THUNDER_WAVE
-	.4byte gUnknown_827DEC1                  @ 087
+	.4byte Move_THUNDER                      @ MOVE_THUNDER
 	.4byte Move_ROCK_THROW                   @ MOVE_ROCK_THROW
 	.4byte Move_EARTHQUAKE                   @ MOVE_EARTHQUAKE
 	.4byte Move_FISSURE                      @ MOVE_FISSURE
@@ -4778,8 +4778,63 @@ FutureSight:
 	blendoff
 	goto FutureSightContinue
 
-gUnknown_827DEC1: @ 0x0827DEC1
-	.incbin "baserom_jp.gba", 0x27dec1, 0x15a
+Move_THUNDER: @ 0x0827DEC1
+	loadspritegfx ANIM_TAG_LIGHTNING
+	fadetobg BG_THUNDER
+	waitbgfadeout
+	createvisualtask AnimTask_StartSlidingBg, 5, -256, 0, 1, -1
+	waitbgfadein
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=16, color=RGB_BLACK
+	delay 16
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
+	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_TARGET
+	delay 1
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 16, -36
+	delay 1
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 16, -20
+	delay 1
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 16, 12
+	delay 20
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 6, -16, -32
+	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_TARGET
+	delay 1
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 6, -16, -16
+	delay 1
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 6, -16, 16
+	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_TARGET
+	delay 5
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
+	delay 1
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 24, -32
+	delay 1
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 24, -16
+	delay 1
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 24, 16
+	delay 30
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
+	delay 5
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
+	delay 1
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 0, -32
+	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
+	delay 1
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 0, -16
+	delay 1
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 0, 16
+	delay 10
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
+	delay 1
+	createvisualtask AnimTask_ShakeTargetInPattern, 2, 30, 3, TRUE, 0
+	delay 2
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
+	delay 1
+	simple_palette_blend unused_anim_battler=ANIM_TARGET, selector=F_PAL_BG, delay=2, initial_blend_y=16, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	restorebg
+	waitbgfadeout
+	setarg 7, 0xFFFF
+	waitbgfadein
+	end
 
 gUnknown_827E01B: @ 0x0827E01B
 	.incbin "baserom_jp.gba", 0x27e01b, 0xc9

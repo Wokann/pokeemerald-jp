@@ -457,6 +457,11 @@
 	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, \priority, \battler, TRUE
 	.endm
 
+	.macro invert_screen_color priority=2, scenery:req, attacker:req, target:req
+	@ These generate 0x000 or 0x101 to match, but the code checks for '& 0x100'.
+	createvisualtask AnimTask_InvertScreenColor, \priority, (\scenery << 8) | \scenery, (\attacker << 8) | \attacker, (\target << 8) | \target
+	.endm
+
 .macro splitbgprio battler:req
 	.byte 0x28
 	.byte \battler
