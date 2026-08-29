@@ -132,7 +132,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte gUnknown_827ED83                  @ 110
 	.4byte Move_DEFENSE_CURL                  @ MOVE_DEFENSE_CURL
 	.4byte gUnknown_827E67E                  @ 112
-	.4byte gUnknown_827E579                  @ 113
+	.4byte Move_LIGHT_SCREEN                 @ MOVE_LIGHT_SCREEN
 	.4byte gUnknown_82811D1                  @ 114
 	.4byte gUnknown_827E62B                  @ 115
 	.4byte gUnknown_8281C56                  @ 116
@@ -5035,8 +5035,32 @@ SnoreEffect:
 	createsprite gSnoreZSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 42, -38, 24, 0, 0
 	return
 
-gUnknown_827E579: @ 0x0827E579
-	.incbin "baserom_jp.gba", 0x27e579, 0x8c
+Move_LIGHT_SCREEN: @ 0x0827E579
+	loadspritegfx ANIM_TAG_SPARKLE_3
+	loadspritegfx ANIM_TAG_GREEN_LIGHT_WALL
+	setalpha 0, 16
+	waitplaysewithpan SE_M_REFLECT, SOUND_PAN_ATTACKER, 15
+	createsprite gLightScreenWallSpriteTemplate, ANIM_ATTACKER, 1, 40, 0, ANIM_TAG_GREEN_LIGHT_WALL
+	delay 10
+	call SpecialScreenSparkle
+	waitforvisualfinish
+	delay 1
+	blendoff
+	end
+
+SpecialScreenSparkle:
+	createsprite gSpecialScreenSparkleSpriteTemplate, ANIM_ATTACKER, 2, 23, 0, ANIM_ATTACKER, TRUE
+	delay 6
+	createsprite gSpecialScreenSparkleSpriteTemplate, ANIM_ATTACKER, 2, 31, -8, ANIM_ATTACKER, TRUE
+	delay 5
+	createsprite gSpecialScreenSparkleSpriteTemplate, ANIM_ATTACKER, 2, 30, 20, ANIM_ATTACKER, TRUE
+	delay 7
+	createsprite gSpecialScreenSparkleSpriteTemplate, ANIM_ATTACKER, 2, 10, -15, ANIM_ATTACKER, TRUE
+	delay 6
+	createsprite gSpecialScreenSparkleSpriteTemplate, ANIM_ATTACKER, 2, 20, 10, ANIM_ATTACKER, TRUE
+	delay 6
+	createsprite gSpecialScreenSparkleSpriteTemplate, ANIM_ATTACKER, 2, 10, 18, ANIM_ATTACKER, TRUE
+	return
 
 gUnknown_827E605: @ 0x0827E605
 	.incbin "baserom_jp.gba", 0x27e605, 0x26
