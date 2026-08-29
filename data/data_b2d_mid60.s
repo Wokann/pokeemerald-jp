@@ -649,6 +649,7 @@ gSporeParticleAnimCmds2: @ 0x856DEC0
 gSporeParticleAnimTable: @ 0x856DEC8
 	.4byte 0x0856DEB8, 0x0856DEC0
 
+	.globl gSporeParticleSpriteTemplate
 gSporeParticleSpriteTemplate: @ 0x856DED0
 	.hword 0x27AE, 0x27AE
 	.4byte 0x084FD018, 0x0856DEC8

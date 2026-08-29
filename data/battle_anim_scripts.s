@@ -197,7 +197,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_FLAIL                        @ MOVE_FLAIL
 	.4byte Move_CONVERSION_2                 @ MOVE_CONVERSION_2
 	.4byte Move_AEROBLAST                    @ MOVE_AEROBLAST
-	.4byte gUnknown_8280CE4                  @ 178
+	.4byte Move_COTTON_SPORE                 @ MOVE_COTTON_SPORE
 	.4byte Move_REVERSAL                      @ MOVE_REVERSAL
 	.4byte Move_SPITE                        @ MOVE_SPITE
 	.4byte Move_POWDER_SNOW                  @ MOVE_POWDER_SNOW
@@ -6764,8 +6764,26 @@ SunnyDayLightRay:
 	delay 6
 	return
 
-gUnknown_8280CE4: @ 0x08280CE4
-	.incbin "baserom_jp.gba", 0x280ce4, 0x5a
+Move_COTTON_SPORE: @ 0x08280CE4
+	loadspritegfx ANIM_TAG_SPORE
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	loopsewithpan SE_M_POISON_POWDER, SOUND_PAN_TARGET, 18, 10
+	call CreateCottonSpores
+	call CreateCottonSpores
+	call CreateCottonSpores
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
+
+CreateCottonSpores:
+	create_spore_particle_sprite ANIM_ATTACKER, 2, x=0, y=-20, wave_offset=85, duration=80, blend=FALSE
+	delay 12
+	create_spore_particle_sprite ANIM_ATTACKER, 2, x=0, y=-10, wave_offset=170, duration=80, blend=FALSE
+	delay 12
+	create_spore_particle_sprite ANIM_ATTACKER, 2, x=0, y=-15, wave_offset=0, duration=80, blend=FALSE
+	delay 12
+	return
 
 gUnknown_8280D3E: @ 0x08280D3E
 	.incbin "baserom_jp.gba", 0x280d3e, 0x65

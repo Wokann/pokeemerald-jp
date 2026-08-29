@@ -453,6 +453,10 @@
 	createsprite gLeechSeedSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \target_x, \target_y, \duration, \wave_amplitude
 	.endm
 
+	.macro create_spore_particle_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, wave_offset:req, duration:req, blend:req
+	createsprite gSporeParticleSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \wave_offset, \duration, \blend
+	.endm
+
 	.macro create_dragon_breath_fire_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req, target_x:req, target_y:req, duration:req
 	createsprite gDragonBreathFireSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \target_x, \target_y, \duration
 	.endm
