@@ -188,7 +188,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_SKETCH                       @ MOVE_SKETCH
 	.4byte Move_TRIPLE_KICK                  @ MOVE_TRIPLE_KICK
 	.4byte Move_THIEF                        @ MOVE_THIEF
-	.4byte gUnknown_8281E67                  @ 169
+	.4byte Move_SPIDER_WEB                   @ MOVE_SPIDER_WEB
 	.4byte Move_MIND_READER                  @ MOVE_MIND_READER
 	.4byte Move_NIGHTMARE                    @ MOVE_NIGHTMARE
 	.4byte Move_FLAME_WHEEL                   @ MOVE_FLAME_WHEEL
@@ -7494,8 +7494,42 @@ StringShotThread:
 	delay 1
 	return
 
-gUnknown_8281E67: @ 0x08281E67
-	.incbin "baserom_jp.gba", 0x281e67, 0xa1
+Move_SPIDER_WEB: @ 0x08281E67
+	loadspritegfx ANIM_TAG_SPIDER_WEB
+	loadspritegfx ANIM_TAG_WEB_THREAD
+	monbg ANIM_DEF_PARTNER
+	delay 0
+	simple_palette_blend unused_subpriority_offset=5, selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=9, color=RGB_BLACK
+	waitforvisualfinish
+	splitbgprio ANIM_TARGET
+	loopsewithpan SE_M_STRING_SHOT, SOUND_PAN_ATTACKER, 9, 6
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	waitforvisualfinish
+	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
+	createsprite gSpiderWebSpriteTemplate, ANIM_ATTACKER, 2
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	delay 1
+	simple_palette_blend unused_subpriority_offset=5, selector=F_PAL_BG, delay=2, initial_blend_y=9, target_blend_y=0, color=RGB_BLACK
+	end
+
+SpiderWebThread:
+	create_web_thread_sprite ANIM_TARGET, 2, x=20, y=0, unk2=512, amplitude=20, targets_both=FALSE
+	delay 1
+	return
 
 gUnknown_8281F08: @ 0x08281F08
 	.incbin "baserom_jp.gba", 0x281f08, 0xe6
