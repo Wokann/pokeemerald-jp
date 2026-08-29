@@ -384,6 +384,10 @@
 	createsprite gAbsorptionOrbSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \wave_amplitude, \wave_period
 	.endm
 
+	.macro create_hyper_beam_orb_sprite anim_battler:req, subpriority_offset:req
+	createsprite gHyperBeamOrbSpriteTemplate, \anim_battler, \subpriority_offset
+	.endm
+
 	.macro create_leech_life_needle_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req
 	createsprite gLeechLifeNeedleSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration
 	.endm

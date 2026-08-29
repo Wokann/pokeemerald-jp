@@ -82,7 +82,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_PSYBEAM                      @ MOVE_PSYBEAM
 	.4byte Move_BUBBLE_BEAM                  @ MOVE_BUBBLE_BEAM
 	.4byte Move_AURORA_BEAM                  @ MOVE_AURORA_BEAM
-	.4byte gUnknown_82832F7                  @ 063
+	.4byte Move_HYPER_BEAM                   @ MOVE_HYPER_BEAM
 	.4byte Move_PECK                         @ MOVE_PECK
 	.4byte Move_DRILL_PECK                   @ MOVE_DRILL_PECK
 	.4byte Move_SUBMISSION                   @ MOVE_SUBMISSION
@@ -8386,8 +8386,56 @@ SweetScentEffect:
 	delay 2
 	return
 
-gUnknown_82832F7: @ 0x082832F7
-	.incbin "baserom_jp.gba", 0x2832f7, 0x142
+Move_HYPER_BEAM: @ 0x082832F7
+	loadspritegfx ANIM_TAG_ORBS
+	simple_palette_blend selector=F_PAL_BG, delay=4, initial_blend_y=0, target_blend_y=16, color=RGB_BLACK
+	waitforvisualfinish
+	delay 10
+	playsewithpan SE_M_HYPER_BEAM, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 1, 0, 4, 1
+	waitforvisualfinish
+	delay 30
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_HYPER_BEAM2, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 1, 15, 0, 5
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_ATTACKER, 0, 4, 50, 1
+	flash_anim_tag_with_color tag=ANIM_TAG_ORBS, delay=1, num_blends=12, color1=RGB_RED, blend_y1=16, color2=RGB_BLACK, blend_y2=0
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 50, 1
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 11, RGB(25, 25, 25)
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 11, 0, RGB(25, 25, 25)
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=4, initial_blend_y=16, target_blend_y=0, color=RGB_BLACK
+	end
+
+HyperBeamOrbs:
+	create_hyper_beam_orb_sprite ANIM_TARGET, 2
+	create_hyper_beam_orb_sprite ANIM_TARGET, 2
+	delay 1
+	return
 
 gUnknown_8283439: @ 0x08283439
 	.incbin "baserom_jp.gba", 0x283439, 0xfc

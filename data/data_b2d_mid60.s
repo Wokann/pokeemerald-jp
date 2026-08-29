@@ -616,6 +616,7 @@ gAbsorptionOrbSpriteTemplate: @ 0x856DE54
 	.4byte 0x084FD198, 0x0856DDAC
 	.4byte 0x00000000, 0x0856DE50, 0x080FF329
 
+	.globl gHyperBeamOrbSpriteTemplate
 gHyperBeamOrbSpriteTemplate: @ 0x856DE6C
 	.hword 0x27A3, 0x27A3
 	.4byte 0x084FD010, 0x0856DD8C
