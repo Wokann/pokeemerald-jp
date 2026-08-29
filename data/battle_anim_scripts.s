@@ -398,10 +398,10 @@ gBattleAnims_General:: @ 0x82778AC
 	.4byte General_HeldItemEffect             @ 007
 	.4byte General_SmokeballEscape             @ 008
 	.4byte General_FocusBand                  @ 009
-	.4byte gUnknown_828682C                  @ 010
-	.4byte gUnknown_8286875                  @ 011
-	.4byte gUnknown_828687A                  @ 012
-	.4byte gUnknown_828687F                  @ 013
+	.4byte General_Rain                       @ 010
+	.4byte General_Sun                        @ 011
+	.4byte General_Sandstorm                  @ 012
+	.4byte General_Hail                       @ 013
 	.4byte gUnknown_8286884                  @ 014
 	.4byte gUnknown_8286892                  @ 015
 	.4byte gUnknown_82868C3                  @ 016
@@ -10550,17 +10550,27 @@ General_FocusBand: @ 0x082867DF
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 0, 0, 0, 15
 	end
 
-gUnknown_828682C: @ 0x0828682C
-	.incbin "baserom_jp.gba", 0x28682c, 0x49
+General_Rain: @ 0x0828682C
+	loadspritegfx ANIM_TAG_RAIN_DROPS
+	playsewithpan SE_M_RAIN_DANCE, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_BATTLERS_2, 2, 0, 4, RGB_BLACK
+	waitforvisualfinish
+	createvisualtask AnimTask_CreateRaindrops, 2, 0, 3, 60
+	createvisualtask AnimTask_CreateRaindrops, 2, 0, 3, 60
+	delay 50
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_BATTLERS_2, 2, 4, 0, RGB_BLACK
+	waitforvisualfinish
+	end
 
-gUnknown_8286875: @ 0x08286875
-	.incbin "baserom_jp.gba", 0x286875, 0x5
+General_Sun: @ 0x08286875
+	goto Move_SUNNY_DAY
 
-gUnknown_828687A: @ 0x0828687A
-	.incbin "baserom_jp.gba", 0x28687a, 0x5
+General_Sandstorm: @ 0x0828687A
+	goto Move_SANDSTORM
 
-gUnknown_828687F: @ 0x0828687F
-	.incbin "baserom_jp.gba", 0x28687f, 0x5
+General_Hail: @ 0x0828687F
+	goto Move_HAIL
 
 gUnknown_8286884: @ 0x08286884
 	.incbin "baserom_jp.gba", 0x286884, 0xe
