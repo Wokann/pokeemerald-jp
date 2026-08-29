@@ -209,7 +209,7 @@ gBattleAnims_Moves:: @ 0x82772F8
 	.4byte Move_BELLY_DRUM                   @ MOVE_BELLY_DRUM
 	.4byte Move_SLUDGE_BOMB                  @ MOVE_SLUDGE_BOMB
 	.4byte Move_MUD_SLAP                     @ MOVE_MUD_SLAP
-	.4byte gUnknown_828110A                  @ 190
+	.4byte Move_OCTAZOOKA                    @ MOVE_OCTAZOOKA
 	.4byte Move_SPIKES                       @ MOVE_SPIKES
 	.4byte gUnknown_828181F                  @ 192
 	.4byte Move_FORESIGHT                    @ MOVE_FORESIGHT
@@ -6923,8 +6923,22 @@ Move_ANCIENT_POWER: @ 0x08280FE2
 	blendoff
 	end
 
-gUnknown_828110A: @ 0x0828110A
-	.incbin "baserom_jp.gba", 0x28110a, 0x66
+Move_OCTAZOOKA: @ 0x0828110A
+	loadspritegfx ANIM_TAG_GRAY_SMOKE
+	loadspritegfx ANIM_TAG_BLACK_BALL
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_ATTACKER
+	createsprite gOctazookaBallSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 20, 0
+	waitforvisualfinish
+	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
+	createsprite gOctazookaSmokeSpriteTemplate, ANIM_TARGET, 2, 8, 8, 1, 0
+	delay 2
+	createsprite gOctazookaSmokeSpriteTemplate, ANIM_TARGET, 2, -8, -8, 1, 0
+	delay 2
+	createsprite gOctazookaSmokeSpriteTemplate, ANIM_TARGET, 2, 8, -8, 1, 0
+	delay 2
+	createsprite gOctazookaSmokeSpriteTemplate, ANIM_TARGET, 2, -8, 8, 1, 0
+	waitforvisualfinish
+	end
 
 gUnknown_8281170: @ 0x08281170
 	.incbin "baserom_jp.gba", 0x281170, 0x61
