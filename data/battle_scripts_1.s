@@ -1306,9 +1306,15 @@ BattleScript_IngrainTurnHeal:: @ 0x08289676
 BattleScript_PrintMonIsRooted:: @ 0x08289691
 	.incbin "baserom_jp.gba", 0x289691, 0xe
 
-	.globl BattleScript_AtkDefDown
-BattleScript_AtkDefDown: @ 0x828969F
-	.include "data/scripts/gUnknown_828969F.inc"
+@ Shared Attack-and-Defense stat reduction script and its two branch targets.
+BattleScript_AtkDefDown:: @ 0x0828969F
+	.incbin "baserom_jp.gba", 0x28969f, 0x2d
+
+BattleScript_AtkDefDown_TryDef:: @ 0x082896CC
+	.incbin "baserom_jp.gba", 0x2896cc, 0x23
+
+BattleScript_AtkDefDown_End:: @ 0x082896EF
+	.incbin "baserom_jp.gba", 0x2896ef, 0x1
 
 	.globl BattleScript_KnockedOff
 BattleScript_KnockedOff: @ 0x82896F0
