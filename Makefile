@@ -364,6 +364,11 @@ JP_STRUCTURED_MAP_METADATA_MAPS += LilycoveCity_CoveLilyMotel_1F LilycoveCity_Co
 	LilycoveCity_DepartmentStore_3F LilycoveCity_DepartmentStore_4F \
 	LilycoveCity_DepartmentStore_5F LilycoveCity_DepartmentStoreRooftop \
 	LilycoveCity_DepartmentStoreElevator
+JP_STRUCTURED_MAP_METADATA_MAPS += MossdeepCity_Gym MossdeepCity_House1 MossdeepCity_House2 \
+	MossdeepCity_PokemonCenter_1F MossdeepCity_PokemonCenter_2F MossdeepCity_Mart \
+	MossdeepCity_House3 MossdeepCity_StevensHouse MossdeepCity_House4 \
+	MossdeepCity_SpaceCenter_1F MossdeepCity_SpaceCenter_2F \
+	MossdeepCity_GameCorner_1F MossdeepCity_GameCorner_B1F
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

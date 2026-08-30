@@ -1987,109 +1987,31 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR (g13 m22)
 	.include "data/maps/LilycoveCity_DepartmentStoreElevator/header.inc"
 	@ MAP_MOSSDEEP_CITY_GYM (g14 m0)
-	.4byte gMapLayout_MOSSDEEP_CITY_GYM  @ mapLayout
-	.4byte gMapEvents_MOSSDEEP_CITY_GYM  @ events
-	.4byte MossdeepCity_Gym_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016C  @ music
-	.2byte 0x006C  @ mapLayoutId
-	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MossdeepCity_Gym/header.inc"
 	@ MAP_MOSSDEEP_CITY_HOUSE1 (g14 m1)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte gMapEvents_MOSSDEEP_CITY_HOUSE1  @ events
-	.4byte 0x0820C332  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x003C  @ mapLayoutId
-	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MossdeepCity_House1/header.inc"
 	@ MAP_MOSSDEEP_CITY_HOUSE2 (g14 m2)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte gMapEvents_MOSSDEEP_CITY_HOUSE2  @ events
-	.4byte 0x0820C3D2  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x003B  @ mapLayoutId
-	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MossdeepCity_House2/header.inc"
 	@ MAP_MOSSDEEP_CITY_POKEMON_CENTER_1F (g14 m3)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte gMapEvents_MOSSDEEP_CITY_POKEMON_CENTER_1F  @ events
-	.4byte MossdeepCity_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003D  @ mapLayoutId
-	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MossdeepCity_PokemonCenter_1F/header.inc"
 	@ MAP_MOSSDEEP_CITY_POKEMON_CENTER_2F (g14 m4)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte gMapEvents_MOSSDEEP_CITY_POKEMON_CENTER_2F  @ events
-	.4byte MossdeepCity_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MossdeepCity_PokemonCenter_2F/header.inc"
 	@ MAP_MOSSDEEP_CITY_MART (g14 m5)
-	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte gMapEvents_MOSSDEEP_CITY_MART  @ events
-	.4byte 0x0820C5B2  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x003F  @ mapLayoutId
-	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MossdeepCity_Mart/header.inc"
 	@ MAP_MOSSDEEP_CITY_HOUSE3 (g14 m6)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte gMapEvents_MOSSDEEP_CITY_HOUSE3  @ events
-	.4byte 0x0820C6FA  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x003C  @ mapLayoutId
-	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MossdeepCity_House3/header.inc"
 	@ MAP_MOSSDEEP_CITY_STEVENS_HOUSE (g14 m7)
-	.4byte gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE  @ mapLayout
-	.4byte gMapEvents_MOSSDEEP_CITY_STEVENS_HOUSE  @ events
-	.4byte MossdeepCity_StevensHouse_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0147  @ mapLayoutId
-	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MossdeepCity_StevensHouse/header.inc"
 	@ MAP_MOSSDEEP_CITY_HOUSE4 (g14 m8)
-	.4byte gMapLayout_PETALBURG_CITY_HOUSE2  @ mapLayout
-	.4byte gMapEvents_MOSSDEEP_CITY_HOUSE4  @ events
-	.4byte 0x0820CC5B  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0050  @ mapLayoutId
-	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MossdeepCity_House4/header.inc"
 	@ MAP_MOSSDEEP_CITY_SPACE_CENTER_1F (g14 m9)
-	.4byte gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_1F  @ mapLayout
-	.4byte gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_1F  @ events
-	.4byte MossdeepCity_SpaceCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0113  @ mapLayoutId
-	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MossdeepCity_SpaceCenter_1F/header.inc"
 	@ MAP_MOSSDEEP_CITY_SPACE_CENTER_2F (g14 m10)
-	.4byte gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_2F  @ mapLayout
-	.4byte gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_2F  @ events
-	.4byte MossdeepCity_SpaceCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0114  @ mapLayoutId
-	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MossdeepCity_SpaceCenter_2F/header.inc"
 	@ MAP_MOSSDEEP_CITY_GAME_CORNER_1F (g14 m11)
-	.4byte gMapLayout_MOSSDEEP_CITY_GAME_CORNER_1F  @ mapLayout
-	.4byte gMapEvents_MOSSDEEP_CITY_GAME_CORNER_1F  @ events
-	.4byte MossdeepCity_GameCorner_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0131  @ mapLayoutId
-	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MossdeepCity_GameCorner_1F/header.inc"
 	@ MAP_MOSSDEEP_CITY_GAME_CORNER_B1F (g14 m12)
-	.4byte gMapLayout_MOSSDEEP_CITY_GAME_CORNER_B1F  @ mapLayout
-	.4byte gMapEvents_MOSSDEEP_CITY_GAME_CORNER_B1F  @ events
-	.4byte 0x0820E223  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0132  @ mapLayoutId
-	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MossdeepCity_GameCorner_B1F/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_GYM_1F (g15 m0)
 	.4byte gMapLayout_SOOTOPOLIS_CITY_GYM_1F  @ mapLayout
 	.4byte gMapEvents_SOOTOPOLIS_CITY_GYM_1F  @ events

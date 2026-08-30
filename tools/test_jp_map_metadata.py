@@ -139,6 +139,19 @@ MAPS = (
     "LilycoveCity_DepartmentStore_5F",
     "LilycoveCity_DepartmentStoreRooftop",
     "LilycoveCity_DepartmentStoreElevator",
+    "MossdeepCity_Gym",
+    "MossdeepCity_House1",
+    "MossdeepCity_House2",
+    "MossdeepCity_PokemonCenter_1F",
+    "MossdeepCity_PokemonCenter_2F",
+    "MossdeepCity_Mart",
+    "MossdeepCity_House3",
+    "MossdeepCity_StevensHouse",
+    "MossdeepCity_House4",
+    "MossdeepCity_SpaceCenter_1F",
+    "MossdeepCity_SpaceCenter_2F",
+    "MossdeepCity_GameCorner_1F",
+    "MossdeepCity_GameCorner_B1F",
 )
 
 CONNECTED_MAPS = (
@@ -275,6 +288,19 @@ NULL_CONNECTION_MAPS = (
     "LilycoveCity_DepartmentStore_5F",
     "LilycoveCity_DepartmentStoreRooftop",
     "LilycoveCity_DepartmentStoreElevator",
+    "MossdeepCity_Gym",
+    "MossdeepCity_House1",
+    "MossdeepCity_House2",
+    "MossdeepCity_PokemonCenter_1F",
+    "MossdeepCity_PokemonCenter_2F",
+    "MossdeepCity_Mart",
+    "MossdeepCity_House3",
+    "MossdeepCity_StevensHouse",
+    "MossdeepCity_House4",
+    "MossdeepCity_SpaceCenter_1F",
+    "MossdeepCity_SpaceCenter_2F",
+    "MossdeepCity_GameCorner_1F",
+    "MossdeepCity_GameCorner_B1F",
 )
 
 CANONICAL_LAYOUT_MAPS = (

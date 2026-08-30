@@ -863,44 +863,18 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/LilycoveCity_DepartmentStoreRooftop/events.inc"
 	.include "data/maps/LilycoveCity_DepartmentStoreElevator/events.inc"
 	.include "data/maps/MossdeepCity_Gym/events.inc"
-	.globl gMapEvents_MOSSDEEP_CITY_GYM
-	.set gMapEvents_MOSSDEEP_CITY_GYM, MossdeepCity_Gym_MapEvents
 	.include "data/maps/MossdeepCity_House1/events.inc"
-	.globl gMapEvents_MOSSDEEP_CITY_HOUSE1
-	.set gMapEvents_MOSSDEEP_CITY_HOUSE1, MossdeepCity_House1_MapEvents
 	.include "data/maps/MossdeepCity_House2/events.inc"
-	.globl gMapEvents_MOSSDEEP_CITY_HOUSE2
-	.set gMapEvents_MOSSDEEP_CITY_HOUSE2, MossdeepCity_House2_MapEvents
 	.include "data/maps/MossdeepCity_PokemonCenter_1F/events.inc"
-	.globl gMapEvents_MOSSDEEP_CITY_POKEMON_CENTER_1F
-	.set gMapEvents_MOSSDEEP_CITY_POKEMON_CENTER_1F, MossdeepCity_PokemonCenter_1F_MapEvents
 	.include "data/maps/MossdeepCity_PokemonCenter_2F/events.inc"
-	.globl gMapEvents_MOSSDEEP_CITY_POKEMON_CENTER_2F
-	.set gMapEvents_MOSSDEEP_CITY_POKEMON_CENTER_2F, MossdeepCity_PokemonCenter_2F_MapEvents
 	.include "data/maps/MossdeepCity_Mart/events.inc"
-	.globl gMapEvents_MOSSDEEP_CITY_MART
-	.set gMapEvents_MOSSDEEP_CITY_MART, MossdeepCity_Mart_MapEvents
 	.include "data/maps/MossdeepCity_House3/events.inc"
-	.globl gMapEvents_MOSSDEEP_CITY_HOUSE3
-	.set gMapEvents_MOSSDEEP_CITY_HOUSE3, MossdeepCity_House3_MapEvents
 	.include "data/maps/MossdeepCity_StevensHouse/events.inc"
-	.globl gMapEvents_MOSSDEEP_CITY_STEVENS_HOUSE
-	.set gMapEvents_MOSSDEEP_CITY_STEVENS_HOUSE, MossdeepCity_StevensHouse_MapEvents
 	.include "data/maps/MossdeepCity_House4/events.inc"
-	.globl gMapEvents_MOSSDEEP_CITY_HOUSE4
-	.set gMapEvents_MOSSDEEP_CITY_HOUSE4, MossdeepCity_House4_MapEvents
 	.include "data/maps/MossdeepCity_SpaceCenter_1F/events.inc"
-	.globl gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_1F
-	.set gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_1F, MossdeepCity_SpaceCenter_1F_MapEvents
 	.include "data/maps/MossdeepCity_SpaceCenter_2F/events.inc"
-	.globl gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_2F
-	.set gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_2F, MossdeepCity_SpaceCenter_2F_MapEvents
 	.include "data/maps/MossdeepCity_GameCorner_1F/events.inc"
-	.globl gMapEvents_MOSSDEEP_CITY_GAME_CORNER_1F
-	.set gMapEvents_MOSSDEEP_CITY_GAME_CORNER_1F, MossdeepCity_GameCorner_1F_MapEvents
 	.include "data/maps/MossdeepCity_GameCorner_B1F/events.inc"
-	.globl gMapEvents_MOSSDEEP_CITY_GAME_CORNER_B1F
-	.set gMapEvents_MOSSDEEP_CITY_GAME_CORNER_B1F, MossdeepCity_GameCorner_B1F_MapEvents
 	.include "data/maps/SootopolisCity_Gym_1F/events.inc"
 	.globl gMapEvents_SOOTOPOLIS_CITY_GYM_1F
 	.set gMapEvents_SOOTOPOLIS_CITY_GYM_1F, SootopolisCity_Gym_1F_MapEvents
