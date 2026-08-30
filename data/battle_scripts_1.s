@@ -1207,23 +1207,21 @@ BattleScript_AllStatsUpSpDef:: @ 0x08289536
 BattleScript_AllStatsUpRet:: @ 0x0828954A
 	.incbin "baserom_jp.gba", 0x28954a, 0x1
 
-	.globl BattleScript_RapidSpinAway
-BattleScript_RapidSpinAway: @ 0x828954B
+@ Residual-effect cleanup scripts used by Rapid Spin: free wrapping,
+@ Leech Seed, and Spikes in physical JP order.
+BattleScript_RapidSpinAway:: @ 0x0828954B
 	.byte 0xBE @ rapidspinfree
 	.byte 0x3C @ return
 
-	.globl BattleScript_WrapFree
-BattleScript_WrapFree: @ 0x828954D
-	.include "data/scripts/gUnknown_828954D.inc"
+BattleScript_WrapFree:: @ 0x0828954D
+	.incbin "baserom_jp.gba", 0x28954d, 0x11
 
-	.globl BattleScript_LeechSeedFree
-BattleScript_LeechSeedFree: @ 0x828955E
+BattleScript_LeechSeedFree:: @ 0x0828955E
 	.byte 0x10, 0x9E, 0x00 @ printstring STRINGID_PKMNSHEDLEECHSEED
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3C @ return
 
-	.globl BattleScript_SpikesFree
-BattleScript_SpikesFree: @ 0x8289565
+BattleScript_SpikesFree:: @ 0x08289565
 	.byte 0x10, 0x9F, 0x00 @ printstring STRINGID_PKMNBLEWAWAYSPIKES
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3C @ return
