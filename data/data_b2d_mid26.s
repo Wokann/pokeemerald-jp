@@ -1169,7 +1169,15 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/ShoalCave_LowTideIceRoom/events.inc"
 	.include "data/maps/SkyPillar_5F/events.inc"
 	.include "data/maps/SkyPillar_Top/events.inc"
-	.incbin "baserom_jp.gba", 0x50F8F8, 0x7C84
+	.include "data/maps/MagmaHideout_1F/events.inc"
+	.include "data/maps/MagmaHideout_2F_1R/events.inc"
+	.include "data/maps/MagmaHideout_2F_2R/events.inc"
+	.include "data/maps/MagmaHideout_3F_1R/events.inc"
+	.include "data/maps/MagmaHideout_3F_2R/events.inc"
+	.include "data/maps/MagmaHideout_4F/events.inc"
+	.include "data/maps/MagmaHideout_3F_3R/events.inc"
+	.include "data/maps/MagmaHideout_2F_3R/events.inc"
+	.incbin "baserom_jp.gba", 0x50FD00, 0x787C
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
