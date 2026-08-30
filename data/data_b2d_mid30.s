@@ -2107,13 +2107,7 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_RUSTURF_TUNNEL (g24 m4)
 	.include "data/maps/RusturfTunnel/header.inc"
 	@ MAP_UNDERWATER_SOOTOPOLIS_CITY (g24 m5)
-	.4byte gMapLayout_UNDERWATER_SOOTOPOLIS_CITY  @ mapLayout
-	.4byte gMapEvents_UNDERWATER_SOOTOPOLIS_CITY  @ events
-	.4byte Underwater_SootopolisCity_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x019B  @ music
-	.2byte 0x0082  @ mapLayoutId
-	.byte 0x36, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Underwater_SootopolisCity/header.inc"
 	@ MAP_DESERT_RUINS (g24 m6)
 	.4byte gMapLayout_DESERT_RUINS  @ mapLayout
 	.4byte gMapEvents_DESERT_RUINS  @ events

@@ -923,8 +923,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/MeteorFalls_B1F_2R/events.inc"
 	.include "data/maps/RusturfTunnel/events.inc"
 	.include "data/maps/Underwater_SootopolisCity/events.inc"
-	.globl gMapEvents_UNDERWATER_SOOTOPOLIS_CITY
-	.set gMapEvents_UNDERWATER_SOOTOPOLIS_CITY, Underwater_SootopolisCity_MapEvents
 	.include "data/maps/DesertRuins/events.inc"
 	.globl gMapEvents_DESERT_RUINS
 	.set gMapEvents_DESERT_RUINS, DesertRuins_MapEvents
