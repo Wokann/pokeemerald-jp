@@ -122,6 +122,7 @@ JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route104_MrBrineysHous
 	PacifidlogTown_House5 \
 	PetalburgCity \
 	PetalburgCity_WallysHouse \
+	PetalburgCity_Gym \
 	PetalburgCity_House1 \
 	PetalburgCity_House2 \
 	PetalburgCity_PokemonCenter_1F \
