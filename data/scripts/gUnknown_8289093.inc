@@ -1,3 +1,0 @@
-	copylocal 0xAA, 0xB9
-	faceplayer 
-	gotostd 0x44

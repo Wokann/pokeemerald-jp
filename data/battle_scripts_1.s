@@ -970,60 +970,78 @@ BattleScript_TowerLinkBattleWonEnd:: @ 0x0828900B
 BattleScript_FrontierTrainerBattleWon:: @ 0x0828900F
 	.incbin "baserom_jp.gba", 0x28900f, 0x54
 
-	.globl BattleScript_SmokeBallEscape
-BattleScript_SmokeBallEscape: @ 0x8289063
-	.include "data/scripts/gUnknown_8289063.inc"
+@ Escape, switch, and level-up scripts. All visible JP entry points are
+@ named in physical order; opaque byte spans await macro conversion.
+BattleScript_SmokeBallEscape:: @ 0x08289063
+	.incbin "baserom_jp.gba", 0x289063, 0xe
 
-	.globl BattleScript_RanAwayUsingMonAbility
-BattleScript_RanAwayUsingMonAbility: @ 0x8289071
+BattleScript_RanAwayUsingMonAbility:: @ 0x08289071
 	.byte 0x10, 0x53, 0x01 @ printstring STRINGID_PKMNFLEDUSING
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3E @ end2
 
-	.globl BattleScript_GotAwaySafely
-BattleScript_GotAwaySafely: @ 0x8289078
+BattleScript_GotAwaySafely:: @ 0x08289078
 	.byte 0x10, 0xDF, 0x00 @ printstring STRINGID_GOTAWAYSAFELY
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3E @ end2
 
-	.globl BattleScript_WildMonFled
-BattleScript_WildMonFled: @ 0x828907F
+BattleScript_WildMonFled:: @ 0x0828907F
 	.byte 0x10, 0xE0, 0x00 @ printstring STRINGID_WILDPKMNFLED
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3E @ end2
 
-	.globl gUnknown_8289086
-gUnknown_8289086: @ 0x8289086
+BattleScript_PrintCantRunFromTrainer:: @ 0x08289086
 	.byte 0x10, 0xE1, 0x00 @ printstring STRINGID_NORUNNINGFROMTRAINERS
 	.byte 0x3E @ end2
 
-	.globl BattleScript_PrintFailedToRunString
-BattleScript_PrintFailedToRunString: @ 0x828908A
+BattleScript_PrintFailedToRunString:: @ 0x0828908A
 	.byte 0x13, 0xAA, 0xB9, 0x5A, 0x08 @ printfromtable 0x085AB9AA
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3E @ end2
 
-	.globl gUnknown_8289093
-gUnknown_8289093: @ 0x8289093
-	.include "data/scripts/gUnknown_8289093.inc"
+BattleScript_PrintCantEscapeFromBattle:: @ 0x08289093
+	.incbin "baserom_jp.gba", 0x289093, 0x6
 
-	.globl gUnknown_8289099
-gUnknown_8289099: @ 0x8289099
+BattleScript_PrintFullBox:: @ 0x08289099
 	.byte 0x11, 0x58, 0x01 @ printselectionstring STRINGID_BOXISFULL
 	.byte 0x44 @ endselectionscript
 
-	.globl BattleScript_ActionSwitch
-BattleScript_ActionSwitch: @ 0x828909D
-	.include "data/scripts/gUnknown_828909D.inc"
+BattleScript_ActionSwitch:: @ 0x0828909D
+	.incbin "baserom_jp.gba", 0x28909d, 0x20
 
-	.globl BattleScript_Pausex20
-BattleScript_Pausex20: @ 0x8289141
+BattleScript_PursuitSwitchDmgSetMultihit:: @ 0x082890BD
+	.incbin "baserom_jp.gba", 0x2890bd, 0x2
+
+BattleScript_PursuitSwitchDmgLoop:: @ 0x082890BF
+	.incbin "baserom_jp.gba", 0x2890bf, 0xd
+
+BattleScript_DoSwitchOut:: @ 0x082890CC
+	.incbin "baserom_jp.gba", 0x2890cc, 0x33
+
+BattleScript_PursuitDmgOnSwitchOut:: @ 0x082890FF
+	.incbin "baserom_jp.gba", 0x2890ff, 0x42
+
+BattleScript_Pausex20:: @ 0x08289141
 	.byte 0x39, 0x20, 0x00 @ pause 0x0020
 	.byte 0x3C @ return
 
-	.globl BattleScript_LevelUp
-BattleScript_LevelUp: @ 0x8289145
-	.include "data/scripts/gUnknown_8289145.inc"
+BattleScript_LevelUp:: @ 0x08289145
+	.incbin "baserom_jp.gba", 0x289145, 0x1c
+
+BattleScript_TryLearnMoveLoop:: @ 0x08289161
+	.incbin "baserom_jp.gba", 0x289161, 0xa
+
+BattleScript_AskToLearnMove:: @ 0x0828916B
+	.incbin "baserom_jp.gba", 0x28916b, 0x2d
+
+BattleScript_ForgotAndLearnedNewMove:: @ 0x08289198
+	.incbin "baserom_jp.gba", 0x289198, 0x9
+
+BattleScript_LearnedNewMove:: @ 0x082891A1
+	.incbin "baserom_jp.gba", 0x2891a1, 0x12
+
+BattleScript_LearnMoveReturn:: @ 0x082891B3
+	.incbin "baserom_jp.gba", 0x2891b3, 0x1
 
 	.globl BattleScript_RainContinuesOrEnds
 BattleScript_RainContinuesOrEnds: @ 0x82891B4
