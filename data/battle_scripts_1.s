@@ -876,47 +876,99 @@ BattleScript_EffectDragonDance:: @ 0x08288CB9
 BattleScript_EffectCamouflage:: @ 0x08288D1D
 	.incbin "baserom_jp.gba", 0x288d1d, 0x15
 
-	.globl BattleScript_FaintAttacker
-BattleScript_FaintAttacker: @ 0x8288D32
-	.include "data/scripts/gUnknown_8288D32.inc"
+@ Battle-end scripts. All visible JP entry points are named in their
+@ physical order; raw spans remain until their battle-script macro conversion.
+BattleScript_FaintAttacker:: @ 0x08288D32
+	.incbin "baserom_jp.gba", 0x288d32, 0xd
 
-	.globl BattleScript_FaintTarget
-BattleScript_FaintTarget: @ 0x8288D3F
-	.include "data/scripts/gUnknown_8288D3F.inc"
+BattleScript_FaintTarget:: @ 0x08288D3F
+	.incbin "baserom_jp.gba", 0x288d3f, 0xd
 
-	.globl BattleScript_GiveExp
-BattleScript_GiveExp: @ 0x8288D4C
-	.include "data/scripts/gUnknown_8288D4C.inc"
+BattleScript_GiveExp:: @ 0x08288D4C
+	.incbin "baserom_jp.gba", 0x288d4c, 0x9
 
-	.globl BattleScript_HandleFaintedMon
-BattleScript_HandleFaintedMon: @ 0x8288D55
-	.include "data/scripts/gUnknown_8288D55.inc"
+BattleScript_HandleFaintedMon:: @ 0x08288D55
+	.incbin "baserom_jp.gba", 0x288d55, 0x49
 
-	.globl BattleScript_LocalTrainerBattleWon
-BattleScript_LocalTrainerBattleWon: @ 0x8288EB5
-	.include "data/scripts/gUnknown_8288EB5.inc"
+BattleScript_FaintedMonTryChoose:: @ 0x08288D9E
+	.incbin "baserom_jp.gba", 0x288d9e, 0xba
 
-	.globl BattleScript_PayDayMoneyAndPickUpItems
-BattleScript_PayDayMoneyAndPickUpItems: @ 0x8288EF2
+BattleScript_FaintedMonSendOutNew:: @ 0x08288E58
+	.incbin "baserom_jp.gba", 0x288e58, 0x25
+
+BattleScript_FaintedMonEnd:: @ 0x08288E7D
+	.incbin "baserom_jp.gba", 0x288e7d, 0x1
+
+BattleScript_LinkHandleFaintedMonMultiple:: @ 0x08288E7E
+	.incbin "baserom_jp.gba", 0x288e7e, 0x6
+
+BattleScript_LinkHandleFaintedMonMultipleStart:: @ 0x08288E84
+	.incbin "baserom_jp.gba", 0x288e84, 0xc
+
+BattleScript_LinkHandleFaintedMonLoop:: @ 0x08288E90
+	.incbin "baserom_jp.gba", 0x288e90, 0x24
+
+BattleScript_LinkHandleFaintedMonMultipleEnd:: @ 0x08288EB4
+	.incbin "baserom_jp.gba", 0x288eb4, 0x1
+
+BattleScript_LocalTrainerBattleWon:: @ 0x08288EB5
+	.incbin "baserom_jp.gba", 0x288eb5, 0x16
+
+BattleScript_LocalTwoTrainersDefeated:: @ 0x08288ECB
+	.incbin "baserom_jp.gba", 0x288ecb, 0x3
+
+BattleScript_LocalBattleWonLoseTexts:: @ 0x08288ECE
+	.incbin "baserom_jp.gba", 0x288ece, 0x1d
+
+BattleScript_LocalBattleWonReward:: @ 0x08288EEB
+	.incbin "baserom_jp.gba", 0x288eeb, 0x7
+
+BattleScript_PayDayMoneyAndPickUpItems:: @ 0x08288EF2
 	.byte 0x91 @ givepaydaymoney
 	.byte 0xE5 @ pickup
 	.byte 0x3E @ end2
 
-	.globl BattleScript_LocalBattleLost
-BattleScript_LocalBattleLost: @ 0x8288EF5
-	.include "data/scripts/gUnknown_8288EF5.inc"
+BattleScript_LocalBattleLost:: @ 0x08288EF5
+	.incbin "baserom_jp.gba", 0x288ef5, 0x44
 
-	.globl BattleScript_FrontierLinkBattleLost
-BattleScript_FrontierLinkBattleLost: @ 0x8288F93
-	.include "data/scripts/gUnknown_8288F93.inc"
+BattleScript_LocalBattleLostPrintWhiteOut:: @ 0x08288F39
+	.incbin "baserom_jp.gba", 0x288f39, 0xc
 
-	.globl BattleScript_LinkBattleWonOrLost
-BattleScript_LinkBattleWonOrLost: @ 0x8288FBD
-	.include "data/scripts/gUnknown_8288FBD.inc"
+BattleScript_LocalBattleLostEnd:: @ 0x08288F45
+	.incbin "baserom_jp.gba", 0x288f45, 0x1
 
-	.globl BattleScript_FrontierTrainerBattleWon
-BattleScript_FrontierTrainerBattleWon: @ 0x828900F
-	.include "data/scripts/gUnknown_828900F.inc"
+BattleScript_CheckDomeDrew:: @ 0x08288F46
+	.incbin "baserom_jp.gba", 0x288f46, 0xb
+
+BattleScript_LocalBattleLostPrintTrainersWinText:: @ 0x08288F51
+	.incbin "baserom_jp.gba", 0x288f51, 0x38
+
+BattleScript_LocalBattleLostDoTrainer2WinText:: @ 0x08288F89
+	.incbin "baserom_jp.gba", 0x288f89, 0x9
+
+BattleScript_LocalBattleLostEnd_:: @ 0x08288F92
+	.incbin "baserom_jp.gba", 0x288f92, 0x1
+
+BattleScript_FrontierLinkBattleLost:: @ 0x08288F93
+	.incbin "baserom_jp.gba", 0x288f93, 0x26
+
+BattleScript_FrontierLinkBattleLostEnd:: @ 0x08288FB9
+	.incbin "baserom_jp.gba", 0x288fb9, 0x4
+
+BattleScript_LinkBattleWonOrLost:: @ 0x08288FBD
+	.incbin "baserom_jp.gba", 0x288fbd, 0x23
+
+BattleScript_LinkBattleWonOrLostWaitEnd:: @ 0x08288FE0
+	.incbin "baserom_jp.gba", 0x288fe0, 0x4
+
+BattleScript_TowerLinkBattleWon:: @ 0x08288FE4
+	.incbin "baserom_jp.gba", 0x288fe4, 0x27
+
+BattleScript_TowerLinkBattleWonEnd:: @ 0x0828900B
+	.incbin "baserom_jp.gba", 0x28900b, 0x4
+
+BattleScript_FrontierTrainerBattleWon:: @ 0x0828900F
+	.incbin "baserom_jp.gba", 0x28900f, 0x54
 
 	.globl BattleScript_SmokeBallEscape
 BattleScript_SmokeBallEscape: @ 0x8289063
