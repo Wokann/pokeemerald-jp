@@ -65,15 +65,15 @@ PetalburgCity_EventScript_WalkToWallyHouse::
 	setvar VAR_0x8004, 7
 	setvar VAR_0x8005, 5
 	opendoor VAR_0x8004, VAR_0x8005
-	@ JP opcode 0xAE is waitmoncry here; US uses waitdooranim at this scene.
-	waitmoncry
+	@ JP uses SCR_OP_WAITMONCRY (0xAE) for this door-animation wait.
+	waitdooranim_jp
 	applymovement LOCALID_PETALBURG_WALLYS_DAD, PetalburgCity_Movement_WalkInsideHouseWallysDad
 	applymovement LOCALID_PLAYER, PetalburgCity_Movement_WalkInsideHousePlayer
 	waitmovement 0
 	setflag FLAG_HIDE_PETALBURG_CITY_WALLYS_DAD
 	hideobjectat LOCALID_PLAYER, MAP_PETALBURG_CITY
 	closedoor VAR_0x8004, VAR_0x8005
-	waitmoncry
+	waitdooranim_jp
 	clearflag FLAG_HIDE_MAP_NAME_POPUP
 	fadedefaultbgm
 	clearflag FLAG_DONT_TRANSITION_MUSIC
