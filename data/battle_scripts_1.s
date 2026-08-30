@@ -1108,9 +1108,13 @@ BattleScript_BideAttack:: @ 0x08289304
 BattleScript_BideNoEnergyToAttack:: @ 0x0828934C
 	.incbin "baserom_jp.gba", 0x28934c, 0x14
 
-	.globl BattleScript_SuccessForceOut
-BattleScript_SuccessForceOut: @ 0x8289360
-	.include "data/scripts/gUnknown_8289360.inc"
+@ Forced-switch scripts. The trainer branch begins at its actual JP entry
+@ rather than remaining hidden inside a mixed EventScript container.
+BattleScript_SuccessForceOut:: @ 0x08289360
+	.incbin "baserom_jp.gba", 0x289360, 0x19
+
+BattleScript_TrainerBattleForceOut:: @ 0x08289379
+	.incbin "baserom_jp.gba", 0x289379, 0x12
 
 	.globl BattleScript_MistProtected
 BattleScript_MistProtected: @ 0x828938B
