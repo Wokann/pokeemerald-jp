@@ -2149,53 +2149,17 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_AQUA_HIDEOUT_B2F (g24 m25)
 	.include "data/maps/AquaHideout_B2F/header.inc"
 	@ MAP_UNDERWATER_SEAFLOOR_CAVERN (g24 m26)
-	.4byte gMapLayout_UNDERWATER_SEAFLOOR_CAVERN  @ mapLayout
-	.4byte gMapEvents_UNDERWATER_SEAFLOOR_CAVERN  @ events
-	.4byte Underwater_SeafloorCavern_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x019B  @ music
-	.2byte 0x0092  @ mapLayoutId
-	.byte 0x45, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Underwater_SeafloorCavern/header.inc"
 	@ MAP_SEAFLOOR_CAVERN_ENTRANCE (g24 m27)
-	.4byte gMapLayout_SEAFLOOR_CAVERN_ENTRANCE  @ mapLayout
-	.4byte gMapEvents_SEAFLOOR_CAVERN_ENTRANCE  @ events
-	.4byte SeafloorCavern_Entrance_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0196  @ music
-	.2byte 0x0093  @ mapLayoutId
-	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SeafloorCavern_Entrance/header.inc"
 	@ MAP_SEAFLOOR_CAVERN_ROOM1 (g24 m28)
-	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM1  @ mapLayout
-	.4byte gMapEvents_SEAFLOOR_CAVERN_ROOM1  @ events
-	.4byte 0x0821865E  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0196  @ music
-	.2byte 0x0094  @ mapLayoutId
-	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SeafloorCavern_Room1/header.inc"
 	@ MAP_SEAFLOOR_CAVERN_ROOM2 (g24 m29)
-	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM2  @ mapLayout
-	.4byte gMapEvents_SEAFLOOR_CAVERN_ROOM2  @ events
-	.4byte 0x0821873D  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0196  @ music
-	.2byte 0x0095  @ mapLayoutId
-	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SeafloorCavern_Room2/header.inc"
 	@ MAP_SEAFLOOR_CAVERN_ROOM3 (g24 m30)
-	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM3  @ mapLayout
-	.4byte gMapEvents_SEAFLOOR_CAVERN_ROOM3  @ events
-	.4byte 0x0821873E  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0196  @ music
-	.2byte 0x0096  @ mapLayoutId
-	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SeafloorCavern_Room3/header.inc"
 	@ MAP_SEAFLOOR_CAVERN_ROOM4 (g24 m31)
-	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM4  @ mapLayout
-	.4byte gMapEvents_SEAFLOOR_CAVERN_ROOM4  @ events
-	.4byte 0x0821892E  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0196  @ music
-	.2byte 0x0097  @ mapLayoutId
-	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SeafloorCavern_Room4/header.inc"
 	.globl gUnknown_845C660
 gUnknown_845C660: @ 0x0845C660
 	.incbin "baserom_jp.gba", 0x45c660, 0x118

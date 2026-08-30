@@ -401,6 +401,8 @@ JP_STRUCTURED_MAP_METADATA_MAPS += MtChimney JaggedPass FieryPath
 JP_STRUCTURED_MAP_METADATA_MAPS += MtPyre_1F MtPyre_2F MtPyre_3F MtPyre_4F MtPyre_5F \
 	MtPyre_6F MtPyre_Exterior MtPyre_Summit
 JP_STRUCTURED_MAP_METADATA_MAPS += AquaHideout_1F AquaHideout_B1F AquaHideout_B2F
+JP_STRUCTURED_MAP_METADATA_MAPS += Underwater_SeafloorCavern SeafloorCavern_Entrance \
+	SeafloorCavern_Room1 SeafloorCavern_Room2 SeafloorCavern_Room3 SeafloorCavern_Room4
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

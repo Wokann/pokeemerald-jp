@@ -944,23 +944,11 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/AquaHideout_B1F/events.inc"
 	.include "data/maps/AquaHideout_B2F/events.inc"
 	.include "data/maps/Underwater_SeafloorCavern/events.inc"
-	.globl gMapEvents_UNDERWATER_SEAFLOOR_CAVERN
-	.set gMapEvents_UNDERWATER_SEAFLOOR_CAVERN, Underwater_SeafloorCavern_MapEvents
 	.include "data/maps/SeafloorCavern_Entrance/events.inc"
-	.globl gMapEvents_SEAFLOOR_CAVERN_ENTRANCE
-	.set gMapEvents_SEAFLOOR_CAVERN_ENTRANCE, SeafloorCavern_Entrance_MapEvents
 	.include "data/maps/SeafloorCavern_Room1/events.inc"
-	.globl gMapEvents_SEAFLOOR_CAVERN_ROOM1
-	.set gMapEvents_SEAFLOOR_CAVERN_ROOM1, SeafloorCavern_Room1_MapEvents
 	.include "data/maps/SeafloorCavern_Room2/events.inc"
-	.globl gMapEvents_SEAFLOOR_CAVERN_ROOM2
-	.set gMapEvents_SEAFLOOR_CAVERN_ROOM2, SeafloorCavern_Room2_MapEvents
 	.include "data/maps/SeafloorCavern_Room3/events.inc"
-	.globl gMapEvents_SEAFLOOR_CAVERN_ROOM3
-	.set gMapEvents_SEAFLOOR_CAVERN_ROOM3, SeafloorCavern_Room3_MapEvents
 	.include "data/maps/SeafloorCavern_Room4/events.inc"
-	.globl gMapEvents_SEAFLOOR_CAVERN_ROOM4
-	.set gMapEvents_SEAFLOOR_CAVERN_ROOM4, SeafloorCavern_Room4_MapEvents
 	.include "data/maps/SeafloorCavern_Room5/events.inc"
 	.include "data/maps/SeafloorCavern_Room6/events.inc"
 	.include "data/maps/SeafloorCavern_Room7/events.inc"

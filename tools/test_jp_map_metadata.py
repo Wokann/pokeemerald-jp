@@ -220,6 +220,12 @@ MAPS = (
     "AquaHideout_1F",
     "AquaHideout_B1F",
     "AquaHideout_B2F",
+    "Underwater_SeafloorCavern",
+    "SeafloorCavern_Entrance",
+    "SeafloorCavern_Room1",
+    "SeafloorCavern_Room2",
+    "SeafloorCavern_Room3",
+    "SeafloorCavern_Room4",
 )
 
 CONNECTED_MAPS = (
@@ -437,6 +443,12 @@ NULL_CONNECTION_MAPS = (
     "AquaHideout_1F",
     "AquaHideout_B1F",
     "AquaHideout_B2F",
+    "Underwater_SeafloorCavern",
+    "SeafloorCavern_Entrance",
+    "SeafloorCavern_Room1",
+    "SeafloorCavern_Room2",
+    "SeafloorCavern_Room3",
+    "SeafloorCavern_Room4",
 )
 
 CANONICAL_LAYOUT_MAPS = (
