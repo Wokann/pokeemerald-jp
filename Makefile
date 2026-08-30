@@ -286,6 +286,7 @@ JP_STRUCTURED_MAPS += ArtisanCave_B1F ArtisanCave_1F
 JP_STRUCTURED_MAPS += Underwater_MarineCave MarineCave_Entrance MarineCave_End
 JP_STRUCTURED_MAPS += TerraCave_Entrance TerraCave_End
 JP_STRUCTURED_MAPS += AlteringCave
+JP_STRUCTURED_MAPS += MeteorFalls_StevensCave
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools

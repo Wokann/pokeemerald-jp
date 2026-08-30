@@ -1190,7 +1190,8 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/TerraCave_Entrance/events.inc"
 	.include "data/maps/TerraCave_End/events.inc"
 	.include "data/maps/AlteringCave/events.inc"
-	.incbin "baserom_jp.gba", 0x50FFDC, 0x75A0
+	.include "data/maps/MeteorFalls_StevensCave/events.inc"
+	.incbin "baserom_jp.gba", 0x510010, 0x756C
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
