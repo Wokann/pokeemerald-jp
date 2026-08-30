@@ -22,6 +22,7 @@
 #include "constants/decorations.h"
 #include "constants/easy_chat.h"
 #include "constants/event_objects.h"
+#include "constants/map_event_ids.h"
 #include "constants/event_object_movement.h"
 #include "constants/field_effects.h"
 #include "constants/field_poison.h"
