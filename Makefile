@@ -330,6 +330,9 @@ JP_STRUCTURED_MAP_METADATA_MAPS += VerdanturfTown_BattleTentLobby VerdanturfTown
 	VerdanturfTown_BattleTentBattleRoom VerdanturfTown_Mart VerdanturfTown_PokemonCenter_1F \
 	VerdanturfTown_PokemonCenter_2F VerdanturfTown_WandasHouse VerdanturfTown_FriendshipRatersHouse \
 	VerdanturfTown_House
+JP_STRUCTURED_MAP_METADATA_MAPS += PacifidlogTown_PokemonCenter_1F PacifidlogTown_PokemonCenter_2F \
+	PacifidlogTown_House1 PacifidlogTown_House2 PacifidlogTown_House3 PacifidlogTown_House4 \
+	PacifidlogTown_House5
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

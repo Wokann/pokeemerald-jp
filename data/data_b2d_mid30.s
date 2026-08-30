@@ -1815,61 +1815,19 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_VERDANTURF_TOWN_HOUSE (g6 m8)
 	.include "data/maps/VerdanturfTown_House/header.inc"
 	@ MAP_PACIFIDLOG_TOWN_POKEMON_CENTER_1F (g7 m0)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte PacifidlogTown_PokemonCenter_1F_MapEvents  @ events
-	.4byte PacifidlogTown_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003D  @ mapLayoutId
-	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PacifidlogTown_PokemonCenter_1F/header.inc"
 	@ MAP_PACIFIDLOG_TOWN_POKEMON_CENTER_2F (g7 m1)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte PacifidlogTown_PokemonCenter_2F_MapEvents  @ events
-	.4byte PacifidlogTown_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PacifidlogTown_PokemonCenter_2F/header.inc"
 	@ MAP_PACIFIDLOG_TOWN_HOUSE1 (g7 m2)
-	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE1  @ mapLayout
-	.4byte PacifidlogTown_House1_MapEvents  @ events
-	.4byte 0x081F793E  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x004D  @ mapLayoutId
-	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PacifidlogTown_House1/header.inc"
 	@ MAP_PACIFIDLOG_TOWN_HOUSE2 (g7 m3)
-	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE2  @ mapLayout
-	.4byte PacifidlogTown_House2_MapEvents  @ events
-	.4byte 0x081F79FF  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x004E  @ mapLayoutId
-	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PacifidlogTown_House2/header.inc"
 	@ MAP_PACIFIDLOG_TOWN_HOUSE3 (g7 m4)
-	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE1  @ mapLayout
-	.4byte PacifidlogTown_House3_MapEvents  @ events
-	.4byte 0x081F7D1A  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x004D  @ mapLayoutId
-	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PacifidlogTown_House3/header.inc"
 	@ MAP_PACIFIDLOG_TOWN_HOUSE4 (g7 m5)
-	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE2  @ mapLayout
-	.4byte PacifidlogTown_House4_MapEvents  @ events
-	.4byte 0x081F7F3D  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x004E  @ mapLayoutId
-	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PacifidlogTown_House4/header.inc"
 	@ MAP_PACIFIDLOG_TOWN_HOUSE5 (g7 m6)
-	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE1  @ mapLayout
-	.4byte PacifidlogTown_House5_MapEvents  @ events
-	.4byte 0x081F8055  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x004D  @ mapLayoutId
-	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PacifidlogTown_House5/header.inc"
 	@ MAP_PETALBURG_CITY_WALLYS_HOUSE (g8 m0)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
 	.4byte PetalburgCity_WallysHouse_MapEvents  @ events

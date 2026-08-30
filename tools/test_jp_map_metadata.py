@@ -53,6 +53,13 @@ MAPS = (
     "VerdanturfTown_WandasHouse",
     "VerdanturfTown_FriendshipRatersHouse",
     "VerdanturfTown_House",
+    "PacifidlogTown_PokemonCenter_1F",
+    "PacifidlogTown_PokemonCenter_2F",
+    "PacifidlogTown_House1",
+    "PacifidlogTown_House2",
+    "PacifidlogTown_House3",
+    "PacifidlogTown_House4",
+    "PacifidlogTown_House5",
 )
 
 CONNECTED_MAPS = (
@@ -103,6 +110,13 @@ NULL_CONNECTION_MAPS = (
     "VerdanturfTown_WandasHouse",
     "VerdanturfTown_FriendshipRatersHouse",
     "VerdanturfTown_House",
+    "PacifidlogTown_PokemonCenter_1F",
+    "PacifidlogTown_PokemonCenter_2F",
+    "PacifidlogTown_House1",
+    "PacifidlogTown_House2",
+    "PacifidlogTown_House3",
+    "PacifidlogTown_House4",
+    "PacifidlogTown_House5",
 )
 
 CANONICAL_LAYOUT_MAPS = (
