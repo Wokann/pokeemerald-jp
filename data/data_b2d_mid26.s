@@ -933,29 +933,13 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/JaggedPass/events.inc"
 	.include "data/maps/FieryPath/events.inc"
 	.include "data/maps/MtPyre_1F/events.inc"
-	.globl gMapEvents_MT_PYRE_1F
-	.set gMapEvents_MT_PYRE_1F, MtPyre_1F_MapEvents
 	.include "data/maps/MtPyre_2F/events.inc"
-	.globl gMapEvents_MT_PYRE_2F
-	.set gMapEvents_MT_PYRE_2F, MtPyre_2F_MapEvents
 	.include "data/maps/MtPyre_3F/events.inc"
-	.globl gMapEvents_MT_PYRE_3F
-	.set gMapEvents_MT_PYRE_3F, MtPyre_3F_MapEvents
 	.include "data/maps/MtPyre_4F/events.inc"
-	.globl gMapEvents_MT_PYRE_4F
-	.set gMapEvents_MT_PYRE_4F, MtPyre_4F_MapEvents
 	.include "data/maps/MtPyre_5F/events.inc"
-	.globl gMapEvents_MT_PYRE_5F
-	.set gMapEvents_MT_PYRE_5F, MtPyre_5F_MapEvents
 	.include "data/maps/MtPyre_6F/events.inc"
-	.globl gMapEvents_MT_PYRE_6F
-	.set gMapEvents_MT_PYRE_6F, MtPyre_6F_MapEvents
 	.include "data/maps/MtPyre_Exterior/events.inc"
-	.globl gMapEvents_MT_PYRE_EXTERIOR
-	.set gMapEvents_MT_PYRE_EXTERIOR, MtPyre_Exterior_MapEvents
 	.include "data/maps/MtPyre_Summit/events.inc"
-	.globl gMapEvents_MT_PYRE_SUMMIT
-	.set gMapEvents_MT_PYRE_SUMMIT, MtPyre_Summit_MapEvents
 	.include "data/maps/AquaHideout_1F/events.inc"
 	.globl gMapEvents_AQUA_HIDEOUT_1F
 	.set gMapEvents_AQUA_HIDEOUT_1F, AquaHideout_1F_MapEvents

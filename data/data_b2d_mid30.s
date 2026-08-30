@@ -2127,69 +2127,21 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_FIERY_PATH (g24 m14)
 	.include "data/maps/FieryPath/header.inc"
 	@ MAP_MT_PYRE_1F (g24 m15)
-	.4byte gMapLayout_MT_PYRE_1F  @ mapLayout
-	.4byte gMapEvents_MT_PYRE_1F  @ events
-	.4byte 0x08216119  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B0  @ music
-	.2byte 0x0089  @ mapLayoutId
-	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MtPyre_1F/header.inc"
 	@ MAP_MT_PYRE_2F (g24 m16)
-	.4byte gMapLayout_MT_PYRE_2F  @ mapLayout
-	.4byte gMapEvents_MT_PYRE_2F  @ events
-	.4byte MtPyre_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B0  @ music
-	.2byte 0x008A  @ mapLayoutId
-	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MtPyre_2F/header.inc"
 	@ MAP_MT_PYRE_3F (g24 m17)
-	.4byte gMapLayout_MT_PYRE_3F  @ mapLayout
-	.4byte gMapEvents_MT_PYRE_3F  @ events
-	.4byte 0x082165F1  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B0  @ music
-	.2byte 0x008B  @ mapLayoutId
-	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MtPyre_3F/header.inc"
 	@ MAP_MT_PYRE_4F (g24 m18)
-	.4byte gMapLayout_MT_PYRE_4F  @ mapLayout
-	.4byte gMapEvents_MT_PYRE_4F  @ events
-	.4byte 0x08216880  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B0  @ music
-	.2byte 0x008C  @ mapLayoutId
-	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MtPyre_4F/header.inc"
 	@ MAP_MT_PYRE_5F (g24 m19)
-	.4byte gMapLayout_MT_PYRE_5F  @ mapLayout
-	.4byte gMapEvents_MT_PYRE_5F  @ events
-	.4byte 0x082168FA  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B0  @ music
-	.2byte 0x008D  @ mapLayoutId
-	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MtPyre_5F/header.inc"
 	@ MAP_MT_PYRE_6F (g24 m20)
-	.4byte gMapLayout_MT_PYRE_6F  @ mapLayout
-	.4byte gMapEvents_MT_PYRE_6F  @ events
-	.4byte 0x08216986  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B0  @ music
-	.2byte 0x008E  @ mapLayoutId
-	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MtPyre_6F/header.inc"
 	@ MAP_MT_PYRE_EXTERIOR (g24 m21)
-	.4byte gMapLayout_MT_PYRE_EXTERIOR  @ mapLayout
-	.4byte gMapEvents_MT_PYRE_EXTERIOR  @ events
-	.4byte MtPyre_Exterior_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B2  @ music
-	.2byte 0x012E  @ mapLayoutId
-	.byte 0x41, 0x00, 0x00, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MtPyre_Exterior/header.inc"
 	@ MAP_MT_PYRE_SUMMIT (g24 m22)
-	.4byte gMapLayout_MT_PYRE_SUMMIT  @ mapLayout
-	.4byte gMapEvents_MT_PYRE_SUMMIT  @ events
-	.4byte MtPyre_Summit_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B2  @ music
-	.2byte 0x012F  @ mapLayoutId
-	.byte 0x41, 0x00, 0x06, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MtPyre_Summit/header.inc"
 	@ MAP_AQUA_HIDEOUT_1F (g24 m23)
 	.4byte gMapLayout_AQUA_HIDEOUT_1F  @ mapLayout
 	.4byte gMapEvents_AQUA_HIDEOUT_1F  @ events

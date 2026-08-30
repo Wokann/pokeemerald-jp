@@ -209,6 +209,14 @@ MAPS = (
     "MtChimney",
     "JaggedPass",
     "FieryPath",
+    "MtPyre_1F",
+    "MtPyre_2F",
+    "MtPyre_3F",
+    "MtPyre_4F",
+    "MtPyre_5F",
+    "MtPyre_6F",
+    "MtPyre_Exterior",
+    "MtPyre_Summit",
 )
 
 CONNECTED_MAPS = (
@@ -415,6 +423,14 @@ NULL_CONNECTION_MAPS = (
     "MtChimney",
     "JaggedPass",
     "FieryPath",
+    "MtPyre_1F",
+    "MtPyre_2F",
+    "MtPyre_3F",
+    "MtPyre_4F",
+    "MtPyre_5F",
+    "MtPyre_6F",
+    "MtPyre_Exterior",
+    "MtPyre_Summit",
 )
 
 CANONICAL_LAYOUT_MAPS = (
