@@ -1887,141 +1887,39 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_MAUVILLE_CITY_MART (g10 m7)
 	.include "data/maps/MauvilleCity_Mart/header.inc"
 	@ MAP_RUSTBORO_CITY_DEVON_CORP_1F (g11 m0)
-	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_1F  @ mapLayout
-	.4byte RustboroCity_DevonCorp_1F_MapEvents  @ events
-	.4byte RustboroCity_DevonCorp_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x005C  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_DevonCorp_1F/header.inc"
 	@ MAP_RUSTBORO_CITY_DEVON_CORP_2F (g11 m1)
-	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_2F  @ mapLayout
-	.4byte RustboroCity_DevonCorp_2F_MapEvents  @ events
-	.4byte RustboroCity_DevonCorp_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x005D  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_DevonCorp_2F/header.inc"
 	@ MAP_RUSTBORO_CITY_DEVON_CORP_3F (g11 m2)
-	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_3F  @ mapLayout
-	.4byte RustboroCity_DevonCorp_3F_MapEvents  @ events
-	.4byte RustboroCity_DevonCorp_3F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x010D  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_DevonCorp_3F/header.inc"
 	@ MAP_RUSTBORO_CITY_GYM (g11 m3)
-	.4byte gMapLayout_RUSTBORO_CITY_GYM  @ mapLayout
-	.4byte RustboroCity_Gym_MapEvents  @ events
-	.4byte RustboroCity_Gym_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016C  @ music
-	.2byte 0x005E  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_Gym/header.inc"
 	@ MAP_RUSTBORO_CITY_POKEMON_SCHOOL (g11 m4)
-	.4byte gMapLayout_RUSTBORO_CITY_POKEMON_SCHOOL  @ mapLayout
-	.4byte RustboroCity_PokemonSchool_MapEvents  @ events
-	.4byte RustboroCity_PokemonSchool_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B3  @ music
-	.2byte 0x005F  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_PokemonSchool/header.inc"
 	@ MAP_RUSTBORO_CITY_POKEMON_CENTER_1F (g11 m5)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte RustboroCity_PokemonCenter_1F_MapEvents  @ events
-	.4byte RustboroCity_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003D  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_PokemonCenter_1F/header.inc"
 	@ MAP_RUSTBORO_CITY_POKEMON_CENTER_2F (g11 m6)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte RustboroCity_PokemonCenter_2F_MapEvents  @ events
-	.4byte RustboroCity_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_PokemonCenter_2F/header.inc"
 	@ MAP_RUSTBORO_CITY_MART (g11 m7)
-	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte RustboroCity_Mart_MapEvents  @ events
-	.4byte RustboroCity_Mart_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x003F  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_Mart/header.inc"
 	@ MAP_RUSTBORO_CITY_FLAT1_1F (g11 m8)
-	.4byte gMapLayout_RUSTBORO_CITY_FLAT1_1F  @ mapLayout
-	.4byte RustboroCity_Flat1_1F_MapEvents  @ events
-	.4byte RustboroCity_Flat1_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0139  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_Flat1_1F/header.inc"
 	@ MAP_RUSTBORO_CITY_FLAT1_2F (g11 m9)
-	.4byte gMapLayout_RUSTBORO_CITY_FLAT1_2F  @ mapLayout
-	.4byte RustboroCity_Flat1_2F_MapEvents  @ events
-	.4byte RustboroCity_Flat1_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x013A  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_Flat1_2F/header.inc"
 	@ MAP_RUSTBORO_CITY_HOUSE1 (g11 m10)
-	.4byte gMapLayout_RUSTBORO_CITY_HOUSE1  @ mapLayout
-	.4byte RustboroCity_House1_MapEvents  @ events
-	.4byte RustboroCity_House1_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0061  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_House1/header.inc"
 	@ MAP_RUSTBORO_CITY_CUTTERS_HOUSE (g11 m11)
-	.4byte gMapLayout_RUSTBORO_CITY_CUTTERS_HOUSE  @ mapLayout
-	.4byte RustboroCity_CuttersHouse_MapEvents  @ events
-	.4byte RustboroCity_CuttersHouse_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0062  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_CuttersHouse/header.inc"
 	@ MAP_RUSTBORO_CITY_HOUSE2 (g11 m12)
-	.4byte gMapLayout_RUSTBORO_CITY_HOUSE2  @ mapLayout
-	.4byte RustboroCity_House2_MapEvents  @ events
-	.4byte RustboroCity_House2_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0060  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_House2/header.inc"
 	@ MAP_RUSTBORO_CITY_FLAT2_1F (g11 m13)
-	.4byte gMapLayout_RUSTBORO_CITY_FLAT2_1F  @ mapLayout
-	.4byte RustboroCity_Flat2_1F_MapEvents  @ events
-	.4byte RustboroCity_Flat2_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0126  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_Flat2_1F/header.inc"
 	@ MAP_RUSTBORO_CITY_FLAT2_2F (g11 m14)
-	.4byte gMapLayout_RUSTBORO_CITY_FLAT2_2F  @ mapLayout
-	.4byte RustboroCity_Flat2_2F_MapEvents  @ events
-	.4byte RustboroCity_Flat2_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0127  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_Flat2_2F/header.inc"
 	@ MAP_RUSTBORO_CITY_FLAT2_3F (g11 m15)
-	.4byte gMapLayout_RUSTBORO_CITY_FLAT2_3F  @ mapLayout
-	.4byte RustboroCity_Flat2_3F_MapEvents  @ events
-	.4byte RustboroCity_Flat2_3F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0128  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_Flat2_3F/header.inc"
 	@ MAP_RUSTBORO_CITY_HOUSE3 (g11 m16)
-	.4byte gMapLayout_RUSTBORO_CITY_HOUSE2  @ mapLayout
-	.4byte RustboroCity_House3_MapEvents  @ events
-	.4byte RustboroCity_House3_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0060  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity_House3/header.inc"
 	@ MAP_FORTREE_CITY_HOUSE1 (g12 m0)
 	.4byte gMapLayout_FORTREE_CITY_HOUSE1  @ mapLayout
 	.4byte FortreeCity_House1_MapEvents  @ events

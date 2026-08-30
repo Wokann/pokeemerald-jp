@@ -344,6 +344,12 @@ JP_STRUCTURED_MAP_METADATA_MAPS += SlateportCity_SternsShipyard_1F SlateportCity
 JP_STRUCTURED_MAP_METADATA_MAPS += MauvilleCity_Gym MauvilleCity_BikeShop MauvilleCity_House1 \
 	MauvilleCity_GameCorner MauvilleCity_House2 MauvilleCity_PokemonCenter_1F \
 	MauvilleCity_PokemonCenter_2F MauvilleCity_Mart
+JP_STRUCTURED_MAP_METADATA_MAPS += RustboroCity_DevonCorp_1F RustboroCity_DevonCorp_2F \
+	RustboroCity_DevonCorp_3F RustboroCity_Gym RustboroCity_PokemonSchool \
+	RustboroCity_PokemonCenter_1F RustboroCity_PokemonCenter_2F RustboroCity_Mart \
+	RustboroCity_Flat1_1F RustboroCity_Flat1_2F RustboroCity_House1 \
+	RustboroCity_CuttersHouse RustboroCity_House2 RustboroCity_Flat2_1F \
+	RustboroCity_Flat2_2F RustboroCity_Flat2_3F RustboroCity_House3
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)
