@@ -1182,7 +1182,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/MirageTower_3F/events.inc"
 	.include "data/maps/MirageTower_4F/events.inc"
 	.include "data/maps/DesertUnderpass/events.inc"
-	.incbin "baserom_jp.gba", 0x50FE34, 0x7748
+	.include "data/maps/ArtisanCave_B1F/events.inc"
+	.include "data/maps/ArtisanCave_1F/events.inc"
+	.incbin "baserom_jp.gba", 0x50FEDC, 0x76A0
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

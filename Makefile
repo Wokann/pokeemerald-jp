@@ -282,6 +282,7 @@ JP_STRUCTURED_MAPS += MagmaHideout_1F MagmaHideout_2F_1R MagmaHideout_2F_2R Magm
 	MagmaHideout_3F_2R MagmaHideout_4F MagmaHideout_3F_3R MagmaHideout_2F_3R
 JP_STRUCTURED_MAPS += MirageTower_1F MirageTower_2F MirageTower_3F MirageTower_4F
 JP_STRUCTURED_MAPS += DesertUnderpass
+JP_STRUCTURED_MAPS += ArtisanCave_B1F ArtisanCave_1F
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
