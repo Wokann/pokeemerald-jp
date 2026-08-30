@@ -760,23 +760,7 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/LavaridgeTown_PokemonCenter_1F/events.inc"
 	.include "data/maps/LavaridgeTown_PokemonCenter_2F/events.inc"
 	.include "data/maps/FallarborTown_Mart/events.inc"
-	.globl FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventObjects
-FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventObjects: @ 0x08506A9C
-	object_event 1, 44, 0, 6, 5, 3, 8, 1, 1, 0, 0, FallarborTown_BattleTentLobby_EventScript_Attendant, 0x0000
-	object_event 2, 55, 0, 1, 5, 3, 5, 1, 1, 0, 0, FallarborTown_BattleTentLobby_EventScript_Hiker, 0x0000
-	object_event 3, 11, 0, 12, 6, 3, 3, 1, 1, 0, 0, FallarborTown_BattleTentLobby_EventScript_LittleBoy, 0x0000
-	object_event 4, 47, 0, 10, 9, 3, 8, 1, 1, 0, 0, FallarborTown_BattleTentLobby_EventScript_Lass, 0x0000
-	object_event 5, 219, 0, 0, 7, 3, 10, 1, 1, 0, 0, FallarborTown_BattleTentLobby_EventScript_Scott, 0x02FF
-	.globl FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventWarps
-FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventWarps: @ 0x08506B14
-	warp_def 6, 9, 0, 1, MAP_FALLARBOR_TOWN
-	warp_def 7, 9, 0, 1, MAP_FALLARBOR_TOWN
-	.globl FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventBgEvents
-FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventBgEvents: @ 0x08506B24
-	bg_event 4, 5, 0, 0, FallarborTown_BattleTentLobby_EventScript_RulesBoard, 0, 0
-	.globl gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY
-gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
-	map_events FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventObjects, FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventWarps, 0, FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventBgEvents
+	.include "data/maps/FallarborTown_BattleTentLobby/events.inc"
 	.include "data/maps/FallarborTown_BattleTentCorridor/events.inc"
 	.include "data/maps/FallarborTown_BattleTentBattleRoom/events.inc"
 	.include "data/maps/FallarborTown_PokemonCenter_1F/events.inc"

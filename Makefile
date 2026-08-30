@@ -95,6 +95,7 @@ JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route104_MrBrineysHous
 	LavaridgeTown_PokemonCenter_2F \
 	FallarborTown \
 	FallarborTown_Mart \
+	FallarborTown_BattleTentLobby \
 	FallarborTown_BattleTentCorridor \
 	FallarborTown_BattleTentBattleRoom \
 	FallarborTown_PokemonCenter_1F \
