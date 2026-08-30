@@ -323,6 +323,9 @@ JP_STRUCTURED_MAP_METADATA_MAPS += DewfordTown_House1 DewfordTown_PokemonCenter_
 	DewfordTown_Gym DewfordTown_Hall DewfordTown_House2
 JP_STRUCTURED_MAP_METADATA_MAPS += LavaridgeTown_HerbShop LavaridgeTown_Gym_1F LavaridgeTown_Gym_B1F \
 	LavaridgeTown_House LavaridgeTown_Mart LavaridgeTown_PokemonCenter_1F LavaridgeTown_PokemonCenter_2F
+JP_STRUCTURED_MAP_METADATA_MAPS += FallarborTown_Mart FallarborTown_BattleTentLobby FallarborTown_BattleTentCorridor \
+	FallarborTown_BattleTentBattleRoom FallarborTown_PokemonCenter_1F FallarborTown_PokemonCenter_2F \
+	FallarborTown_CozmosHouse FallarborTown_MoveRelearnersHouse
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

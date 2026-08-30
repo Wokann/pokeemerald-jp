@@ -1781,69 +1781,21 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_LAVARIDGE_TOWN_POKEMON_CENTER_2F (g4 m6)
 	.include "data/maps/LavaridgeTown_PokemonCenter_2F/header.inc"
 	@ MAP_FALLARBOR_TOWN_MART (g5 m0)
-	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte FallarborTown_Mart_MapEvents  @ events
-	.4byte FallarborTown_Mart_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x003F  @ mapLayoutId
-	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FallarborTown_Mart/header.inc"
 	@ MAP_FALLARBOR_TOWN_BATTLE_TENT_LOBBY (g5 m1)
-	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY  @ mapLayout
-	.4byte FallarborTown_BattleTentLobby_MapEvents  @ events
-	.4byte FallarborTown_BattleTentLobby_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0180  @ music
-	.2byte 0x0180  @ mapLayoutId
-	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FallarborTown_BattleTentLobby/header.inc"
 	@ MAP_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR (g5 m2)
-	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR  @ mapLayout
-	.4byte FallarborTown_BattleTentCorridor_MapEvents  @ events
-	.4byte FallarborTown_BattleTentCorridor_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0180  @ music
-	.2byte 0x0181  @ mapLayoutId
-	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FallarborTown_BattleTentCorridor/header.inc"
 	@ MAP_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM (g5 m3)
-	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM  @ mapLayout
-	.4byte FallarborTown_BattleTentBattleRoom_MapEvents  @ events
-	.4byte FallarborTown_BattleTentBattleRoom_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0180  @ music
-	.2byte 0x0182  @ mapLayoutId
-	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FallarborTown_BattleTentBattleRoom/header.inc"
 	@ MAP_FALLARBOR_TOWN_POKEMON_CENTER_1F (g5 m4)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte FallarborTown_PokemonCenter_1F_MapEvents  @ events
-	.4byte FallarborTown_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003D  @ mapLayoutId
-	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FallarborTown_PokemonCenter_1F/header.inc"
 	@ MAP_FALLARBOR_TOWN_POKEMON_CENTER_2F (g5 m5)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte FallarborTown_PokemonCenter_2F_MapEvents  @ events
-	.4byte FallarborTown_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FallarborTown_PokemonCenter_2F/header.inc"
 	@ MAP_FALLARBOR_TOWN_COZMOS_HOUSE (g5 m6)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte FallarborTown_CozmosHouse_MapEvents  @ events
-	.4byte FallarborTown_CozmosHouse_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B5  @ music
-	.2byte 0x003B  @ mapLayoutId
-	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FallarborTown_CozmosHouse/header.inc"
 	@ MAP_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE (g5 m7)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte FallarborTown_MoveRelearnersHouse_MapEvents  @ events
-	.4byte FallarborTown_MoveRelearnersHouse_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B5  @ music
-	.2byte 0x003C  @ mapLayoutId
-	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FallarborTown_MoveRelearnersHouse/header.inc"
 	@ MAP_VERDANTURF_TOWN_BATTLE_TENT_LOBBY (g6 m0)
 	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY  @ mapLayout
 	.4byte VerdanturfTown_BattleTentLobby_MapEvents  @ events

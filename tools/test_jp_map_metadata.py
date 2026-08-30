@@ -36,6 +36,14 @@ MAPS = (
     "LavaridgeTown_Mart",
     "LavaridgeTown_PokemonCenter_1F",
     "LavaridgeTown_PokemonCenter_2F",
+    "FallarborTown_Mart",
+    "FallarborTown_BattleTentLobby",
+    "FallarborTown_BattleTentCorridor",
+    "FallarborTown_BattleTentBattleRoom",
+    "FallarborTown_PokemonCenter_1F",
+    "FallarborTown_PokemonCenter_2F",
+    "FallarborTown_CozmosHouse",
+    "FallarborTown_MoveRelearnersHouse",
 )
 
 CONNECTED_MAPS = (
@@ -69,6 +77,14 @@ NULL_CONNECTION_MAPS = (
     "LavaridgeTown_Mart",
     "LavaridgeTown_PokemonCenter_1F",
     "LavaridgeTown_PokemonCenter_2F",
+    "FallarborTown_Mart",
+    "FallarborTown_BattleTentLobby",
+    "FallarborTown_BattleTentCorridor",
+    "FallarborTown_BattleTentBattleRoom",
+    "FallarborTown_PokemonCenter_1F",
+    "FallarborTown_PokemonCenter_2F",
+    "FallarborTown_CozmosHouse",
+    "FallarborTown_MoveRelearnersHouse",
 )
 
 CANONICAL_LAYOUT_MAPS = (
@@ -144,6 +160,18 @@ class MapMetadataTests(unittest.TestCase):
         self.assertEqual(
             jp_map_metadata.layout_symbol("LAYOUT_HOUSE4"),
             "gMapLayout_DEWFORD_TOWN_HOUSE2",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_BATTLE_TENT_LOBBY"),
+            "gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_BATTLE_TENT_CORRIDOR"),
+            "gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_BATTLE_TENT_BATTLE_ROOM"),
+            "gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM",
         )
 
     def test_connections_use_real_map_labels(self):
