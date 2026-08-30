@@ -194,6 +194,10 @@ MAPS = (
     "Route116_TunnelersRestHouse",
     "Route117_PokemonDayCare",
     "Route121_SafariZoneEntrance",
+    "MeteorFalls_1F_1R",
+    "MeteorFalls_1F_2R",
+    "MeteorFalls_B1F_1R",
+    "MeteorFalls_B1F_2R",
 )
 
 CONNECTED_MAPS = (
@@ -385,6 +389,10 @@ NULL_CONNECTION_MAPS = (
     "Route116_TunnelersRestHouse",
     "Route117_PokemonDayCare",
     "Route121_SafariZoneEntrance",
+    "MeteorFalls_1F_1R",
+    "MeteorFalls_1F_2R",
+    "MeteorFalls_B1F_1R",
+    "MeteorFalls_B1F_2R",
 )
 
 CANONICAL_LAYOUT_MAPS = (

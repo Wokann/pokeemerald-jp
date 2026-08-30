@@ -918,17 +918,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route117_PokemonDayCare/events.inc"
 	.include "data/maps/Route121_SafariZoneEntrance/events.inc"
 	.include "data/maps/MeteorFalls_1F_1R/events.inc"
-	.globl gMapEvents_METEOR_FALLS_1F_1R
-	.set gMapEvents_METEOR_FALLS_1F_1R, MeteorFalls_1F_1R_MapEvents
 	.include "data/maps/MeteorFalls_1F_2R/events.inc"
-	.globl gMapEvents_METEOR_FALLS_1F_2R
-	.set gMapEvents_METEOR_FALLS_1F_2R, MeteorFalls_1F_2R_MapEvents
 	.include "data/maps/MeteorFalls_B1F_1R/events.inc"
-	.globl gMapEvents_METEOR_FALLS_B1F_1R
-	.set gMapEvents_METEOR_FALLS_B1F_1R, MeteorFalls_B1F_1R_MapEvents
 	.include "data/maps/MeteorFalls_B1F_2R/events.inc"
-	.globl gMapEvents_METEOR_FALLS_B1F_2R
-	.set gMapEvents_METEOR_FALLS_B1F_2R, MeteorFalls_B1F_2R_MapEvents
 	.include "data/maps/RusturfTunnel/events.inc"
 	.globl gMapEvents_RUSTURF_TUNNEL
 	.set gMapEvents_RUSTURF_TUNNEL, RusturfTunnel_MapEvents

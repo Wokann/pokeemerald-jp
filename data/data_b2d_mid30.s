@@ -2097,37 +2097,13 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_ROUTE121_SAFARI_ZONE_ENTRANCE (g23 m0)
 	.include "data/maps/Route121_SafariZoneEntrance/header.inc"
 	@ MAP_METEOR_FALLS_1F_1R (g24 m0)
-	.4byte gMapLayout_METEOR_FALLS_1F_1R  @ mapLayout
-	.4byte gMapEvents_METEOR_FALLS_1F_1R  @ events
-	.4byte MeteorFalls_1F_1R_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0182  @ music
-	.2byte 0x007D  @ mapLayoutId
-	.byte 0x3F, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MeteorFalls_1F_1R/header.inc"
 	@ MAP_METEOR_FALLS_1F_2R (g24 m1)
-	.4byte gMapLayout_METEOR_FALLS_1F_2R  @ mapLayout
-	.4byte gMapEvents_METEOR_FALLS_1F_2R  @ events
-	.4byte 0x08213079  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0182  @ music
-	.2byte 0x007E  @ mapLayoutId
-	.byte 0x3F, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MeteorFalls_1F_2R/header.inc"
 	@ MAP_METEOR_FALLS_B1F_1R (g24 m2)
-	.4byte gMapLayout_METEOR_FALLS_B1F_1R  @ mapLayout
-	.4byte gMapEvents_METEOR_FALLS_B1F_1R  @ events
-	.4byte 0x082135EE  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0182  @ music
-	.2byte 0x007F  @ mapLayoutId
-	.byte 0x3F, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MeteorFalls_B1F_1R/header.inc"
 	@ MAP_METEOR_FALLS_B1F_2R (g24 m3)
-	.4byte gMapLayout_METEOR_FALLS_B1F_2R  @ mapLayout
-	.4byte gMapEvents_METEOR_FALLS_B1F_2R  @ events
-	.4byte 0x082135EF  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0182  @ music
-	.2byte 0x0080  @ mapLayoutId
-	.byte 0x3F, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MeteorFalls_B1F_2R/header.inc"
 	@ MAP_RUSTURF_TUNNEL (g24 m4)
 	.4byte gMapLayout_RUSTURF_TUNNEL  @ mapLayout
 	.4byte gMapEvents_RUSTURF_TUNNEL  @ events
