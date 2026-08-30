@@ -1187,7 +1187,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Underwater_MarineCave/events.inc"
 	.include "data/maps/MarineCave_Entrance/events.inc"
 	.include "data/maps/MarineCave_End/events.inc"
-	.incbin "baserom_jp.gba", 0x50FF58, 0x7624
+	.include "data/maps/TerraCave_Entrance/events.inc"
+	.include "data/maps/TerraCave_End/events.inc"
+	.incbin "baserom_jp.gba", 0x50FFC0, 0x75BC
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
