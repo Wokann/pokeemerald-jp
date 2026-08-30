@@ -1639,61 +1639,19 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_EVER_GRANDE_CITY (g0 m8)
 	.include "data/maps/EverGrandeCity/header.inc"
 	@ MAP_LITTLEROOT_TOWN (g0 m9)
-	.4byte gMapLayout_LITTLEROOT_TOWN  @ mapLayout
-	.4byte LittlerootTown_MapEvents  @ events
-	.4byte LittlerootTown_MapScripts  @ mapScripts
-	.4byte gMapConnections_LITTLEROOT_TOWN  @ connections
-	.2byte 0x0195  @ music
-	.2byte 0x000A  @ mapLayoutId
-	.byte 0x00, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LittlerootTown/header.inc"
 	@ MAP_OLDALE_TOWN (g0 m10)
-	.4byte gMapLayout_OLDALE_TOWN  @ mapLayout
-	.4byte OldaleTown_MapEvents  @ events
-	.4byte OldaleTown_MapScripts  @ mapScripts
-	.4byte gMapConnections_OLDALE_TOWN  @ connections
-	.2byte 0x016B  @ music
-	.2byte 0x000B  @ mapLayoutId
-	.byte 0x01, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/OldaleTown/header.inc"
 	@ MAP_DEWFORD_TOWN (g0 m11)
-	.4byte gMapLayout_DEWFORD_TOWN  @ mapLayout
-	.4byte DewfordTown_MapEvents  @ events
-	.4byte DewfordTown_MapScripts  @ mapScripts
-	.4byte gMapConnections_DEWFORD_TOWN  @ connections
-	.2byte 0x01AB  @ music
-	.2byte 0x000C  @ mapLayoutId
-	.byte 0x02, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/DewfordTown/header.inc"
 	@ MAP_LAVARIDGE_TOWN (g0 m12)
-	.4byte gMapLayout_LAVARIDGE_TOWN  @ mapLayout
-	.4byte LavaridgeTown_MapEvents  @ events
-	.4byte LavaridgeTown_MapScripts  @ mapScripts
-	.4byte gMapConnections_LAVARIDGE_TOWN  @ connections
-	.2byte 0x016B  @ music
-	.2byte 0x000D  @ mapLayoutId
-	.byte 0x03, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LavaridgeTown/header.inc"
 	@ MAP_FALLARBOR_TOWN (g0 m13)
-	.4byte gMapLayout_FALLARBOR_TOWN  @ mapLayout
-	.4byte FallarborTown_MapEvents  @ events
-	.4byte FallarborTown_MapScripts  @ mapScripts
-	.4byte gMapConnections_FALLARBOR_TOWN  @ connections
-	.2byte 0x01B5  @ music
-	.2byte 0x000E  @ mapLayoutId
-	.byte 0x04, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FallarborTown/header.inc"
 	@ MAP_VERDANTURF_TOWN (g0 m14)
-	.4byte gMapLayout_VERDANTURF_TOWN  @ mapLayout
-	.4byte VerdanturfTown_MapEvents  @ events
-	.4byte VerdanturfTown_MapScripts  @ mapScripts
-	.4byte gMapConnections_VERDANTURF_TOWN  @ connections
-	.2byte 0x018E  @ music
-	.2byte 0x000F  @ mapLayoutId
-	.byte 0x05, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/VerdanturfTown/header.inc"
 	@ MAP_PACIFIDLOG_TOWN (g0 m15)
-	.4byte gMapLayout_PACIFIDLOG_TOWN  @ mapLayout
-	.4byte PacifidlogTown_MapEvents  @ events
-	.4byte PacifidlogTown_MapScripts  @ mapScripts
-	.4byte gMapConnections_PACIFIDLOG_TOWN  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x0010  @ mapLayoutId
-	.byte 0x06, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PacifidlogTown/header.inc"
 	@ MAP_ROUTE101 (g0 m16)
 	.4byte gMapLayout_ROUTE101  @ mapLayout
 	.4byte Route101_MapEvents  @ events
@@ -3760,87 +3718,13 @@ gUnknown_845E998: @ 0x0845E998
 	.incbin "baserom_jp.gba", 0x45E998, 0x88
 	.globl gMapGroups
 	.set gMapGroups, gUnknown_845E998
-	.globl LITTLEROOT_TOWN_MapConnections
-LITTLEROOT_TOWN_MapConnections: @ 0x0845EA20
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 16, 0x00, 0x00  @ mapGroup, mapNum (0x0010)
-	.globl gMapConnections_LITTLEROOT_TOWN
-gMapConnections_LITTLEROOT_TOWN: @ 0x0845EA2C
-	.4byte 1  @ count
-	.4byte LITTLEROOT_TOWN_MapConnections  @ connections
-	.globl OLDALE_TOWN_MapConnections
-OLDALE_TOWN_MapConnections: @ 0x0845EA34
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 18, 0x00, 0x00  @ mapGroup, mapNum (0x0012)
-	.byte 0x01, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 16, 0x00, 0x00  @ mapGroup, mapNum (0x0010)
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 17, 0x00, 0x00  @ mapGroup, mapNum (0x0011)
-	.globl gMapConnections_OLDALE_TOWN
-gMapConnections_OLDALE_TOWN: @ 0x0845EA58
-	.4byte 3  @ count
-	.4byte OLDALE_TOWN_MapConnections  @ connections
-	.globl DEWFORD_TOWN_MapConnections
-DEWFORD_TOWN_MapConnections: @ 0x0845EA60
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte -60  @ offset
-	.byte 0, 21, 0x00, 0x00  @ mapGroup, mapNum (0x0015)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 22, 0x00, 0x00  @ mapGroup, mapNum (0x0016)
-	.globl gMapConnections_DEWFORD_TOWN
-gMapConnections_DEWFORD_TOWN: @ 0x0845EA78
-	.4byte 2  @ count
-	.4byte DEWFORD_TOWN_MapConnections  @ connections
-	.globl LAVARIDGE_TOWN_MapConnections
-LAVARIDGE_TOWN_MapConnections: @ 0x0845EA80
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte -40  @ offset
-	.byte 0, 27, 0x00, 0x00  @ mapGroup, mapNum (0x001B)
-	.globl gMapConnections_LAVARIDGE_TOWN
-gMapConnections_LAVARIDGE_TOWN: @ 0x0845EA8C
-	.4byte 1  @ count
-	.4byte LAVARIDGE_TOWN_MapConnections  @ connections
-	.globl FALLARBOR_TOWN_MapConnections
-FALLARBOR_TOWN_MapConnections: @ 0x0845EA94
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 29, 0x00, 0x00  @ mapGroup, mapNum (0x001D)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 28, 0x00, 0x00  @ mapGroup, mapNum (0x001C)
-	.globl gMapConnections_FALLARBOR_TOWN
-gMapConnections_FALLARBOR_TOWN: @ 0x0845EAAC
-	.4byte 2  @ count
-	.4byte FALLARBOR_TOWN_MapConnections  @ connections
-	.globl VERDANTURF_TOWN_MapConnections
-VERDANTURF_TOWN_MapConnections: @ 0x0845EAB4
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte -80  @ offset
-	.byte 0, 31, 0x00, 0x00  @ mapGroup, mapNum (0x001F)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 32, 0x00, 0x00  @ mapGroup, mapNum (0x0020)
-	.globl gMapConnections_VERDANTURF_TOWN
-gMapConnections_VERDANTURF_TOWN: @ 0x0845EACC
-	.4byte 2  @ count
-	.4byte VERDANTURF_TOWN_MapConnections  @ connections
-	.globl PACIFIDLOG_TOWN_MapConnections
-PACIFIDLOG_TOWN_MapConnections: @ 0x0845EAD4
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 47, 0x00, 0x00  @ mapGroup, mapNum (0x002F)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 46, 0x00, 0x00  @ mapGroup, mapNum (0x002E)
-	.globl gMapConnections_PACIFIDLOG_TOWN
-gMapConnections_PACIFIDLOG_TOWN: @ 0x0845EAEC
-	.4byte 2  @ count
-	.4byte PACIFIDLOG_TOWN_MapConnections  @ connections
+	.include "data/maps/LittlerootTown/connections.inc"
+	.include "data/maps/OldaleTown/connections.inc"
+	.include "data/maps/DewfordTown/connections.inc"
+	.include "data/maps/LavaridgeTown/connections.inc"
+	.include "data/maps/FallarborTown/connections.inc"
+	.include "data/maps/VerdanturfTown/connections.inc"
+	.include "data/maps/PacifidlogTown/connections.inc"
 	.include "data/maps/PetalburgCity/connections.inc"
 	.include "data/maps/SlateportCity/connections.inc"
 	.include "data/maps/MauvilleCity/connections.inc"

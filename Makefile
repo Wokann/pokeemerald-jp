@@ -307,6 +307,8 @@ JP_STRUCTURED_MAP_METADATA_MAPS += IslandCave AncientTomb Underwater_Route134 Un
 	SealedChamber_OuterRoom SealedChamber_InnerRoom ScorchedSlab
 JP_STRUCTURED_MAP_METADATA_MAPS += PetalburgCity SlateportCity MauvilleCity RustboroCity FortreeCity \
 	LilycoveCity MossdeepCity SootopolisCity EverGrandeCity
+JP_STRUCTURED_MAP_METADATA_MAPS += LittlerootTown OldaleTown DewfordTown LavaridgeTown FallarborTown \
+	VerdanturfTown PacifidlogTown
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)
