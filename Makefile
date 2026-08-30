@@ -354,6 +354,16 @@ JP_STRUCTURED_MAP_METADATA_MAPS += FortreeCity_House1 FortreeCity_Gym \
 	FortreeCity_PokemonCenter_1F FortreeCity_PokemonCenter_2F FortreeCity_Mart \
 	FortreeCity_House2 FortreeCity_House3 FortreeCity_House4 FortreeCity_House5 \
 	FortreeCity_DecorationShop
+JP_STRUCTURED_MAP_METADATA_MAPS += LilycoveCity_CoveLilyMotel_1F LilycoveCity_CoveLilyMotel_2F \
+	LilycoveCity_LilycoveMuseum_1F LilycoveCity_LilycoveMuseum_2F \
+	LilycoveCity_ContestLobby LilycoveCity_ContestHall LilycoveCity_PokemonCenter_1F \
+	LilycoveCity_PokemonCenter_2F LilycoveCity_UnusedMart \
+	LilycoveCity_PokemonTrainerFanClub LilycoveCity_Harbor LilycoveCity_MoveDeletersHouse \
+	LilycoveCity_House1 LilycoveCity_House2 LilycoveCity_House3 LilycoveCity_House4 \
+	LilycoveCity_DepartmentStore_1F LilycoveCity_DepartmentStore_2F \
+	LilycoveCity_DepartmentStore_3F LilycoveCity_DepartmentStore_4F \
+	LilycoveCity_DepartmentStore_5F LilycoveCity_DepartmentStoreRooftop \
+	LilycoveCity_DepartmentStoreElevator
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

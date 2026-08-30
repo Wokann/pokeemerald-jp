@@ -1941,189 +1941,51 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_FORTREE_CITY_DECORATION_SHOP (g12 m9)
 	.include "data/maps/FortreeCity_DecorationShop/header.inc"
 	@ MAP_LILYCOVE_CITY_COVE_LILY_MOTEL_1F (g13 m0)
-	.4byte gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_1F  @ mapLayout
-	.4byte LilycoveCity_CoveLilyMotel_1F_MapEvents  @ events
-	.4byte LilycoveCity_CoveLilyMotel_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x012B  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_CoveLilyMotel_1F/header.inc"
 	@ MAP_LILYCOVE_CITY_COVE_LILY_MOTEL_2F (g13 m1)
-	.4byte gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_2F  @ mapLayout
-	.4byte LilycoveCity_CoveLilyMotel_2F_MapEvents  @ events
-	.4byte LilycoveCity_CoveLilyMotel_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x012C  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_CoveLilyMotel_2F/header.inc"
 	@ MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F (g13 m2)
-	.4byte gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F  @ mapLayout
-	.4byte LilycoveCity_LilycoveMuseum_1F_MapEvents  @ events
-	.4byte LilycoveCity_LilycoveMuseum_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0175  @ music
-	.2byte 0x0067  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_LilycoveMuseum_1F/header.inc"
 	@ MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F (g13 m3)
-	.4byte gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F  @ mapLayout
-	.4byte LilycoveCity_LilycoveMuseum_2F_MapEvents  @ events
-	.4byte LilycoveCity_LilycoveMuseum_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0175  @ music
-	.2byte 0x0068  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_LilycoveMuseum_2F/header.inc"
 	@ MAP_LILYCOVE_CITY_CONTEST_LOBBY (g13 m4)
-	.4byte gMapLayout_LILYCOVE_CITY_CONTEST_LOBBY  @ mapLayout
-	.4byte LilycoveCity_ContestLobby_MapEvents  @ events
-	.4byte LilycoveCity_ContestLobby_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01C4  @ music
-	.2byte 0x0069  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_ContestLobby/header.inc"
 	@ MAP_LILYCOVE_CITY_CONTEST_HALL (g13 m5)
-	.4byte gMapLayout_LILYCOVE_CITY_CONTEST_HALL  @ mapLayout
-	.4byte LilycoveCity_ContestHall_MapEvents  @ events
-	.4byte LilycoveCity_ContestHall_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01C4  @ music
-	.2byte 0x006A  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_ContestHall/header.inc"
 	@ MAP_LILYCOVE_CITY_POKEMON_CENTER_1F (g13 m6)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte LilycoveCity_PokemonCenter_1F_MapEvents  @ events
-	.4byte LilycoveCity_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003D  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_PokemonCenter_1F/header.inc"
 	@ MAP_LILYCOVE_CITY_POKEMON_CENTER_2F (g13 m7)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte LilycoveCity_PokemonCenter_2F_MapEvents  @ events
-	.4byte LilycoveCity_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_PokemonCenter_2F/header.inc"
 	@ MAP_LILYCOVE_CITY_UNUSED_MART (g13 m8)
-	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte LilycoveCity_UnusedMart_MapEvents  @ events
-	.4byte LilycoveCity_UnusedMart_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x003F  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_UnusedMart/header.inc"
 	@ MAP_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB (g13 m9)
-	.4byte gMapLayout_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB  @ mapLayout
-	.4byte LilycoveCity_PokemonTrainerFanClub_MapEvents  @ events
-	.4byte LilycoveCity_PokemonTrainerFanClub_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x006B  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_PokemonTrainerFanClub/header.inc"
 	@ MAP_LILYCOVE_CITY_HARBOR (g13 m10)
-	.4byte gMapLayout_SLATEPORT_CITY_HARBOR  @ mapLayout
-	.4byte LilycoveCity_Harbor_MapEvents  @ events
-	.4byte LilycoveCity_Harbor_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x0058  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_Harbor/header.inc"
 	@ MAP_LILYCOVE_CITY_MOVE_DELETERS_HOUSE (g13 m11)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte LilycoveCity_MoveDeletersHouse_MapEvents  @ events
-	.4byte LilycoveCity_MoveDeletersHouse_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x003C  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_MoveDeletersHouse/header.inc"
 	@ MAP_LILYCOVE_CITY_HOUSE1 (g13 m12)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte LilycoveCity_House1_MapEvents  @ events
-	.4byte LilycoveCity_House1_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x003B  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_House1/header.inc"
 	@ MAP_LILYCOVE_CITY_HOUSE2 (g13 m13)
-	.4byte gMapLayout_LILYCOVE_CITY_HOUSE2  @ mapLayout
-	.4byte LilycoveCity_House2_MapEvents  @ events
-	.4byte LilycoveCity_House2_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x004A  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_House2/header.inc"
 	@ MAP_LILYCOVE_CITY_HOUSE3 (g13 m14)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte LilycoveCity_House3_MapEvents  @ events
-	.4byte LilycoveCity_House3_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x003C  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_House3/header.inc"
 	@ MAP_LILYCOVE_CITY_HOUSE4 (g13 m15)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte LilycoveCity_House4_MapEvents  @ events
-	.4byte LilycoveCity_House4_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x003B  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_House4/header.inc"
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_1F (g13 m16)
-	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_1F  @ mapLayout
-	.4byte LilycoveCity_DepartmentStore_1F_MapEvents  @ events
-	.4byte LilycoveCity_DepartmentStore_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x0101  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_DepartmentStore_1F/header.inc"
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_2F (g13 m17)
-	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_2F  @ mapLayout
-	.4byte LilycoveCity_DepartmentStore_2F_MapEvents  @ events
-	.4byte LilycoveCity_DepartmentStore_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x0102  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_DepartmentStore_2F/header.inc"
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_3F (g13 m18)
-	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_3F  @ mapLayout
-	.4byte LilycoveCity_DepartmentStore_3F_MapEvents  @ events
-	.4byte LilycoveCity_DepartmentStore_3F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x0103  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_DepartmentStore_3F/header.inc"
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_4F (g13 m19)
-	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_4F  @ mapLayout
-	.4byte LilycoveCity_DepartmentStore_4F_MapEvents  @ events
-	.4byte LilycoveCity_DepartmentStore_4F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x0104  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_DepartmentStore_4F/header.inc"
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_5F (g13 m20)
-	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_5F  @ mapLayout
-	.4byte LilycoveCity_DepartmentStore_5F_MapEvents  @ events
-	.4byte LilycoveCity_DepartmentStore_5F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x0105  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_DepartmentStore_5F/header.inc"
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP (g13 m21)
-	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP  @ mapLayout
-	.4byte LilycoveCity_DepartmentStoreRooftop_MapEvents  @ events
-	.4byte LilycoveCity_DepartmentStoreRooftop_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x0106  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_DepartmentStoreRooftop/header.inc"
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR (g13 m22)
-	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR  @ mapLayout
-	.4byte gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR  @ events
-	.4byte 0x0820B18C  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x0111  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity_DepartmentStoreElevator/header.inc"
 	@ MAP_MOSSDEEP_CITY_GYM (g14 m0)
 	.4byte gMapLayout_MOSSDEEP_CITY_GYM  @ mapLayout
 	.4byte gMapEvents_MOSSDEEP_CITY_GYM  @ events

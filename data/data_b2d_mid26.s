@@ -862,8 +862,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/LilycoveCity_DepartmentStore_5F/events.inc"
 	.include "data/maps/LilycoveCity_DepartmentStoreRooftop/events.inc"
 	.include "data/maps/LilycoveCity_DepartmentStoreElevator/events.inc"
-	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR
-	.set gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR, LilycoveCity_DepartmentStoreElevator_MapEvents
 	.include "data/maps/MossdeepCity_Gym/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_GYM
 	.set gMapEvents_MOSSDEEP_CITY_GYM, MossdeepCity_Gym_MapEvents
