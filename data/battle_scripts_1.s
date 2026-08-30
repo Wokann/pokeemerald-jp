@@ -1249,48 +1249,48 @@ BattleScript_FutureAttackEnd:: @ 0x082895C7
 BattleScript_FutureAttackMiss:: @ 0x082895E0
 	.incbin "baserom_jp.gba", 0x2895e0, 0x1a
 
-	.globl BattleScript_NoMovesLeft
-BattleScript_NoMovesLeft: @ 0x82895FA
+@ Move-selection rejection scripts. Keep the distinct selection and in-battle
+@ paths explicit so the JP physical order matches the US script owner.
+BattleScript_NoMovesLeft:: @ 0x082895FA
 	.byte 0x11, 0xA8, 0x00 @ printselectionstring STRINGID_PKMNHASNOMOVESLEFT
 	.byte 0x44 @ endselectionscript
 
-	.globl BattleScript_SelectingMoveWithNoPP
-BattleScript_SelectingMoveWithNoPP: @ 0x82895FE
+BattleScript_SelectingMoveWithNoPP:: @ 0x082895FE
 	.byte 0x11, 0xFF, 0x00 @ printselectionstring STRINGID_NOPPLEFT
 	.byte 0x44 @ endselectionscript
 
-	.globl BattleScript_NoPPForMove
-BattleScript_NoPPForMove: @ 0x8289602
-	.include "data/scripts/gUnknown_8289602.inc"
+BattleScript_NoPPForMove:: @ 0x08289602
+	.byte 0x02 @ attackstring
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0x00, 0x01 @ printstring STRINGID_BUTNOPPLEFT
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
 
-	.globl BattleScript_SelectingTormentedMove
-BattleScript_SelectingTormentedMove: @ 0x8289611
+BattleScript_SelectingTormentedMove:: @ 0x08289611
 	.byte 0x11, 0xAA, 0x00 @ printselectionstring STRINGID_PKMNCANTUSEMOVETORMENT
 	.byte 0x44 @ endselectionscript
+
+BattleScript_MoveUsedIsTormented:: @ 0x08289615
 	.byte 0x10, 0xAA, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVETORMENT
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
 
-	.globl BattleScript_SelectingTormentedMoveInPalace
-BattleScript_SelectingTormentedMoveInPalace: @ 0x8289620
+BattleScript_SelectingTormentedMoveInPalace:: @ 0x08289620
 	.byte 0x10, 0xAA, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVETORMENT
-	.byte 0x28, 0xB5, 0x93, 0x28, 0x08 @ goto 0x082893B5
+	.byte 0x28, 0xB5, 0x93, 0x28, 0x08 @ goto BattleScript_SelectingUnusableMoveInPalace
 
-	.globl BattleScript_SelectingNotAllowedMoveTaunt
-BattleScript_SelectingNotAllowedMoveTaunt: @ 0x8289628
+BattleScript_SelectingNotAllowedMoveTaunt:: @ 0x08289628
 	.byte 0x11, 0xAD, 0x00 @ printselectionstring STRINGID_PKMNCANTUSEMOVETAUNT
 	.byte 0x44 @ endselectionscript
 
-	.globl BattleScript_MoveUsedIsTaunted
-BattleScript_MoveUsedIsTaunted: @ 0x828962C
+BattleScript_MoveUsedIsTaunted:: @ 0x0828962C
 	.byte 0x10, 0xAD, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVETAUNT
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
 
-	.globl BattleScript_SelectingNotAllowedMoveTauntInPalace
-BattleScript_SelectingNotAllowedMoveTauntInPalace: @ 0x8289637
+BattleScript_SelectingNotAllowedMoveTauntInPalace:: @ 0x08289637
 	.byte 0x10, 0xAD, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVETAUNT
-	.byte 0x28, 0xB5, 0x93, 0x28, 0x08 @ goto 0x082893B5
+	.byte 0x28, 0xB5, 0x93, 0x28, 0x08 @ goto BattleScript_SelectingUnusableMoveInPalace
 
 	.globl BattleScript_WishComesTrue
 BattleScript_WishComesTrue: @ 0x828963F
