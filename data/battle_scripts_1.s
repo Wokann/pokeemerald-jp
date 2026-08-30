@@ -1316,9 +1316,11 @@ BattleScript_AtkDefDown_TryDef:: @ 0x082896CC
 BattleScript_AtkDefDown_End:: @ 0x082896EF
 	.incbin "baserom_jp.gba", 0x2896ef, 0x1
 
-	.globl BattleScript_KnockedOff
-BattleScript_KnockedOff: @ 0x82896F0
-	.include "data/scripts/gUnknown_82896F0.inc"
+BattleScript_KnockedOff:: @ 0x082896F0
+	.byte 0x45, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_TARGET, B_ANIM_ITEM_KNOCKOFF
+	.byte 0x10, 0xB7, 0x00 @ printstring STRINGID_PKMNKNOCKEDOFF
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x3C @ return
 
 	.globl BattleScript_MoveUsedIsImprisoned
 BattleScript_MoveUsedIsImprisoned: @ 0x82896FE
