@@ -3052,7 +3052,30 @@ gMapLayout_DESERT_UNDERPASS: @ 0x084460B4
 	.4byte gMapLayout_DESERT_UNDERPASS_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4460CC, 0x9524
+	.incbin "baserom_jp.gba", 0x4460CC, 0x53DC
+gMapLayout_ARTISAN_CAVE_B1F_Border:
+	.incbin "data/layouts/ArtisanCave_B1F/border.bin"
+gMapLayout_ARTISAN_CAVE_B1F_Blockdata:
+	.incbin "data/layouts/ArtisanCave_B1F/map.bin"
+gMapLayout_ARTISAN_CAVE_B1F: @ 0x0844C818
+	.4byte 46  @ width
+	.4byte 54  @ height
+	.4byte gMapLayout_ARTISAN_CAVE_B1F_Border  @ border
+	.4byte gMapLayout_ARTISAN_CAVE_B1F_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+gMapLayout_ARTISAN_CAVE_1F_Border:
+	.incbin "data/layouts/ArtisanCave_1F/border.bin"
+gMapLayout_ARTISAN_CAVE_1F_Blockdata:
+	.incbin "data/layouts/ArtisanCave_1F/map.bin"
+gMapLayout_ARTISAN_CAVE_1F: @ 0x0844CBD4
+	.4byte 21  @ width
+	.4byte 22  @ height
+	.4byte gMapLayout_ARTISAN_CAVE_1F_Border  @ border
+	.4byte gMapLayout_ARTISAN_CAVE_1F_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x44CBEC, 0x2A04
 gMapLayout_UNDERWATER_ROUTE105_Border:
 	.incbin "data/layouts/Underwater_Route105/border.bin"
 gMapLayout_UNDERWATER_ROUTE105_Blockdata:

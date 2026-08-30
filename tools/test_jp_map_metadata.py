@@ -261,6 +261,8 @@ MAPS = (
     "MirageTower_3F",
     "MirageTower_4F",
     "DesertUnderpass",
+    "ArtisanCave_B1F",
+    "ArtisanCave_1F",
 )
 
 CONNECTED_MAPS = (
@@ -519,6 +521,8 @@ NULL_CONNECTION_MAPS = (
     "MirageTower_3F",
     "MirageTower_4F",
     "DesertUnderpass",
+    "ArtisanCave_B1F",
+    "ArtisanCave_1F",
 )
 
 CANONICAL_LAYOUT_MAPS = (
