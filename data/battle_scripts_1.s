@@ -1152,31 +1152,37 @@ BattleScript_EncoredNoMore:: @ 0x082893BF
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3E @ end2
 
-	.globl BattleScript_DestinyBondTakesLife
-BattleScript_DestinyBondTakesLife: @ 0x82893C6
-	.include "data/scripts/gUnknown_82893C6.inc"
+@ Delayed-faint scripts: Destiny Bond, Spikes, and Perish Song. Keep every
+@ branch at its actual JP address, including the shared Spikes print path.
+BattleScript_DestinyBondTakesLife:: @ 0x082893C6
+	.incbin "baserom_jp.gba", 0x2893c6, 0x1b
 
-	.globl BattleScript_SpikesOnAttacker
-BattleScript_SpikesOnAttacker: @ 0x82893E1
-	.include "data/scripts/gUnknown_82893E1.inc"
+BattleScript_SpikesOnAttacker:: @ 0x082893E1
+	.incbin "baserom_jp.gba", 0x2893e1, 0x21
 
-	.globl BattleScript_SpikesOnTarget
-BattleScript_SpikesOnTarget: @ 0x8289418
-	.include "data/scripts/gUnknown_8289418.inc"
+BattleScript_SpikesOnAttackerFainted:: @ 0x08289402
+	.incbin "baserom_jp.gba", 0x289402, 0x16
 
-	.globl BattleScript_SpikesOnFaintedBattler
-BattleScript_SpikesOnFaintedBattler: @ 0x828944F
-	.include "data/scripts/gUnknown_828944F.inc"
+BattleScript_SpikesOnTarget:: @ 0x08289418
+	.incbin "baserom_jp.gba", 0x289418, 0x21
 
-	.globl BattleScript_PerishSongTakesLife
-BattleScript_PerishSongTakesLife: @ 0x828948D
-	.include "data/scripts/gUnknown_828948D.inc"
+BattleScript_SpikesOnTargetFainted:: @ 0x08289439
+	.incbin "baserom_jp.gba", 0x289439, 0x16
 
-	.globl BattleScript_PerishSongCountGoesDown
-BattleScript_PerishSongCountGoesDown: @ 0x82894A8
-	.byte 0x10, 0x97, 0x00 @ printstring STRINGID_PKMNPERISHCOUNTFELL
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
+BattleScript_SpikesOnFaintedBattler:: @ 0x0828944F
+	.incbin "baserom_jp.gba", 0x28944f, 0x21
+
+BattleScript_SpikesOnFaintedBattlerFainted:: @ 0x08289470
+	.incbin "baserom_jp.gba", 0x289470, 0x16
+
+BattleScript_PrintHurtBySpikes:: @ 0x08289486
+	.incbin "baserom_jp.gba", 0x289486, 0x7
+
+BattleScript_PerishSongTakesLife:: @ 0x0828948D
+	.incbin "baserom_jp.gba", 0x28948d, 0x1b
+
+BattleScript_PerishSongCountGoesDown:: @ 0x082894A8
+	.incbin "baserom_jp.gba", 0x2894a8, 0x7
 
 	.globl BattleScript_AllStatsUp
 BattleScript_AllStatsUp: @ 0x82894AF
