@@ -9974,7 +9974,7 @@ __attribute__((naked)) void HandleTurnActionSelectionState(void)
         "_0803C350: .4byte gBattleBufferB\n\t"
         "_0803C354: .4byte gActiveBattler\n\t"
         "_0803C358: .4byte gSelectionBattleScripts\n\t"
-        "_0803C35C: .4byte gUnknown_8289F42\n\t"
+        "_0803C35C: .4byte BattleScript_AskIfWantsToForfeitMatch\n\t"
         "_0803C360: .4byte gBattleCommunication\n\t"
         "_0803C364:\n\t"
         "	ldr r0, [r3]\n\t"

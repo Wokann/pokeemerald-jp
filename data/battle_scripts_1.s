@@ -2193,20 +2193,123 @@ BattleScript_FlushMessageBox: @ 0x8289E05
 
 	.globl BattleScript_PalacePrintFlavorText
 BattleScript_PalacePrintFlavorText: @ 0x8289E09
-	.include "data/scripts/gUnknown_8289E09.inc"
+	.byte 0x2E, 0xD7, 0x3F, 0x02, 0x02, 0x00 @ setbyte gBattleCommunication + 1, 0
+BattleScript_PalaceTryBattlerFlavorText: @ 0x8289E0F
+	.byte 0x76, 0x01, 0x08 @ palaceflavortext BS_ATTACKER
+	.byte 0x29, 0x01, 0xD6, 0x3F, 0x02, 0x02, 0x01, 0x25, 0x9E, 0x28, 0x08 @ jumpifbyte CMP_NOT_EQUAL, gBattleCommunication, TRUE, BattleScript_PalaceEndFlavorText
+	.byte 0x13, 0xB4, 0xBE, 0x5A, 0x08 @ printfromtable gBattlePalaceFlavorTextTable
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+BattleScript_PalaceEndFlavorText: @ 0x8289E25
+	.byte 0x2F, 0xD7, 0x3F, 0x02, 0x02, 0x01 @ addbyte gBattleCommunication + 1, 1
+	.byte 0x2D, 0xD7, 0x3F, 0x02, 0x02, 0x10, 0x3D, 0x02, 0x02, 0x01, 0x0F, 0x9E, 0x28, 0x08 @ jumpifbytenotequal gBattleCommunication + 1, gBattlersCount, BattleScript_PalaceTryBattlerFlavorText
+	.byte 0x2E, 0xD6, 0x3F, 0x02, 0x02, 0x00 @ setbyte gBattleCommunication, 0
+	.byte 0x2E, 0xD7, 0x3F, 0x02, 0x02, 0x00 @ setbyte gBattleCommunication + 1, 0
+	.byte 0x3E @ end2
 
 	.globl BattleScript_ArenaTurnBeginning
 BattleScript_ArenaTurnBeginning: @ 0x8289E46
-	.include "data/scripts/gUnknown_8289E46.inc"
+	.byte 0x76, 0x01, 0x12 @ waitcry BS_ATTACKER
+	.byte 0x76, 0x01, 0x15 @ volumedown
+	.byte 0x54, 0x09, 0x01 @ playse SE_ARENA_TIMEUP1
+	.byte 0x39, 0x08, 0x00 @ pause 8
+	.byte 0x54, 0x09, 0x01 @ playse SE_ARENA_TIMEUP1
+	.byte 0x76, 0x01, 0x0E @ arenadrawreftextbox
+	.byte 0x76, 0x08, 0x10 @ arenajudgmentstring B_MSG_REF_COMMENCE_BATTLE
+	.byte 0x76, 0x08, 0x11 @ arenawaitmessage B_MSG_REF_COMMENCE_BATTLE
+	.byte 0x39, 0x40, 0x00 @ pause B_WAIT_TIME_LONG
+	.byte 0x76, 0x01, 0x0F @ arenaerasereftextbox
+	.byte 0x76, 0x01, 0x16 @ volumeup
+	.byte 0x3E @ end2
+
+@ Unused
+BattleScript_ArenaNothingDecided: @ 0x8289E68
+	.byte 0x54, 0x49, 0x00 @ playse SE_DING_DONG
+	.byte 0x76, 0x01, 0x0E @ arenadrawreftextbox
+	.byte 0x76, 0x00, 0x10 @ arenajudgmentstring B_MSG_REF_NOTHING_IS_DECIDED
+	.byte 0x76, 0x00, 0x11 @ arenawaitmessage B_MSG_REF_NOTHING_IS_DECIDED
+	.byte 0x39, 0x40, 0x00 @ pause B_WAIT_TIME_LONG
+	.byte 0x76, 0x01, 0x0F @ arenaerasereftextbox
+	.byte 0x3E @ end2
 
 	.globl BattleScript_ArenaDoJudgment
 BattleScript_ArenaDoJudgment: @ 0x8289E7B
-	.include "data/scripts/gUnknown_8289E7B.inc"
+	.byte 0x6F, 0x0B @ makevisible BS_PLAYER1
+	.byte 0x3A @ waitstate
+	.byte 0x6F, 0x0C @ makevisible BS_OPPONENT1
+	.byte 0x3A @ waitstate
+	.byte 0x76, 0x01, 0x15 @ volumedown
+	.byte 0x54, 0x09, 0x01 @ playse SE_ARENA_TIMEUP1
+	.byte 0x39, 0x08, 0x00 @ pause 8
+	.byte 0x54, 0x09, 0x01 @ playse SE_ARENA_TIMEUP1
+	.byte 0x39, 0x40, 0x00 @ pause B_WAIT_TIME_LONG
+	.byte 0x76, 0x01, 0x0E @ arenadrawreftextbox
+	.byte 0x76, 0x01, 0x10 @ arenajudgmentstring B_MSG_REF_THATS_IT
+	.byte 0x76, 0x01, 0x11 @ arenawaitmessage B_MSG_REF_THATS_IT
+	.byte 0x39, 0x40, 0x00 @ pause B_WAIT_TIME_LONG
+	.byte 0x2E, 0xD6, 0x3F, 0x02, 0x02, 0x00 @ setbyte gBattleCommunication, 0
+	.byte 0x76, 0x01, 0x09 @ arenajudgmentwindow
+	.byte 0x39, 0x40, 0x00 @ pause B_WAIT_TIME_LONG
+	.byte 0x76, 0x01, 0x09 @ arenajudgmentwindow
+	.byte 0x76, 0x02, 0x10 @ arenajudgmentstring B_MSG_REF_JUDGE_MIND
+	.byte 0x76, 0x02, 0x11 @ arenawaitmessage B_MSG_REF_JUDGE_MIND
+	.byte 0x76, 0x01, 0x09 @ arenajudgmentwindow
+	.byte 0x76, 0x03, 0x10 @ arenajudgmentstring B_MSG_REF_JUDGE_SKILL
+	.byte 0x76, 0x03, 0x11 @ arenawaitmessage B_MSG_REF_JUDGE_SKILL
+	.byte 0x76, 0x01, 0x09 @ arenajudgmentwindow
+	.byte 0x76, 0x04, 0x10 @ arenajudgmentstring B_MSG_REF_JUDGE_BODY
+	.byte 0x76, 0x04, 0x11 @ arenawaitmessage B_MSG_REF_JUDGE_BODY
+	.byte 0x76, 0x01, 0x09 @ arenajudgmentwindow
+	.byte 0x29, 0x00, 0xD7, 0x3F, 0x02, 0x02, 0x03, 0xFB, 0x9E, 0x28, 0x08 @ jumpifbyte CMP_EQUAL, gBattleCommunication + 1, ARENA_RESULT_PLAYER_LOST, BattleScript_ArenaJudgmentPlayerLoses
+	.byte 0x29, 0x00, 0xD7, 0x3F, 0x02, 0x02, 0x04, 0x1A, 0x9F, 0x28, 0x08 @ jumpifbyte CMP_EQUAL, gBattleCommunication + 1, ARENA_RESULT_TIE, BattleScript_ArenaJudgmentDraw
+	.byte 0x76, 0x05, 0x10 @ arenajudgmentstring B_MSG_REF_PLAYER_WON
+	.byte 0x76, 0x05, 0x11 @ arenawaitmessage B_MSG_REF_PLAYER_WON
+	.byte 0x76, 0x01, 0x09 @ arenajudgmentwindow
+	.byte 0x76, 0x01, 0x0F @ arenaerasereftextbox
+	.byte 0x10, 0x72, 0x01 @ printstring STRINGID_DEFEATEDOPPONENTBYREFEREE
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x56, 0x0C @ playfaintcry BS_OPPONENT1
+	.byte 0x76, 0x01, 0x12 @ waitcry BS_ATTACKER
+	.byte 0x1A, 0x0C @ dofaintanimation BS_OPPONENT1
+	.byte 0x1B, 0x0C @ cleareffectsonfaint BS_OPPONENT1
+	.byte 0x76, 0x01, 0x0A @ arenaopponentmonlost
+	.byte 0x3E @ end2
 
-	.globl gUnknown_8289F42
-gUnknown_8289F42: @ 0x8289F42
+BattleScript_ArenaJudgmentPlayerLoses: @ 0x8289EFB
+	.byte 0x76, 0x06, 0x10 @ arenajudgmentstring B_MSG_REF_OPPONENT_WON
+	.byte 0x76, 0x06, 0x11 @ arenawaitmessage B_MSG_REF_OPPONENT_WON
+	.byte 0x76, 0x01, 0x09 @ arenajudgmentwindow
+	.byte 0x76, 0x01, 0x0F @ arenaerasereftextbox
+	.byte 0x10, 0x73, 0x01 @ printstring STRINGID_LOSTTOOPPONENTBYREFEREE
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x56, 0x0B @ playfaintcry BS_PLAYER1
+	.byte 0x76, 0x01, 0x12 @ waitcry BS_ATTACKER
+	.byte 0x1A, 0x0B @ dofaintanimation BS_PLAYER1
+	.byte 0x1B, 0x0B @ cleareffectsonfaint BS_PLAYER1
+	.byte 0x76, 0x01, 0x0B @ arenaplayermonlost
+	.byte 0x3E @ end2
+
+BattleScript_ArenaJudgmentDraw: @ 0x8289F1A
+	.byte 0x76, 0x07, 0x10 @ arenajudgmentstring B_MSG_REF_DRAW
+	.byte 0x76, 0x07, 0x11 @ arenawaitmessage B_MSG_REF_DRAW
+	.byte 0x76, 0x01, 0x09 @ arenajudgmentwindow
+	.byte 0x76, 0x01, 0x0F @ arenaerasereftextbox
+	.byte 0x10, 0x74, 0x01 @ printstring STRINGID_TIEDOPPONENTBYREFEREE
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x56, 0x0B @ playfaintcry BS_PLAYER1
+	.byte 0x76, 0x01, 0x12 @ waitcry BS_ATTACKER
+	.byte 0x1A, 0x0B @ dofaintanimation BS_PLAYER1
+	.byte 0x1B, 0x0B @ cleareffectsonfaint BS_PLAYER1
+	.byte 0x56, 0x0C @ playfaintcry BS_OPPONENT1
+	.byte 0x76, 0x01, 0x12 @ waitcry BS_ATTACKER
+	.byte 0x1A, 0x0C @ dofaintanimation BS_OPPONENT1
+	.byte 0x1B, 0x0C @ cleareffectsonfaint BS_OPPONENT1
+	.byte 0x76, 0x01, 0x0C @ arenabothmonlost
+	.byte 0x3E @ end2
+
+	.globl BattleScript_AskIfWantsToForfeitMatch
+BattleScript_AskIfWantsToForfeitMatch: @ 0x8289F42
 	.byte 0x11, 0x75, 0x01 @ printselectionstring STRINGID_QUESTIONFORFEITMATCH
-	.byte 0x76, 0x01, 0x0D @ various 0x01, 0x0D
+	.byte 0x76, 0x01, 0x0D @ forfeityesnobox BS_ATTACKER
 	.byte 0x44 @ endselectionscript
 
 	.globl BattleScript_PrintPlayerForfeited
@@ -2217,4 +2320,9 @@ BattleScript_PrintPlayerForfeited: @ 0x8289F49
 
 	.globl BattleScript_PrintPlayerForfeitedLinkBattle
 BattleScript_PrintPlayerForfeitedLinkBattle: @ 0x8289F50
-	.include "data/scripts/gUnknown_8289F50.inc"
+	.byte 0x10, 0x76, 0x01 @ printstring STRINGID_FORFEITEDMATCH
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x57 @ endlinkbattle
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x3E @ end2
+	.byte 0x00 @ alignment padding
