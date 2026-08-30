@@ -205,6 +205,7 @@ MAPS = (
     "GraniteCave_B1F",
     "GraniteCave_B2F",
     "GraniteCave_StevensRoom",
+    "PetalburgWoods",
 )
 
 CONNECTED_MAPS = (
@@ -407,6 +408,7 @@ NULL_CONNECTION_MAPS = (
     "GraniteCave_B1F",
     "GraniteCave_B2F",
     "GraniteCave_StevensRoom",
+    "PetalburgWoods",
 )
 
 CANONICAL_LAYOUT_MAPS = (

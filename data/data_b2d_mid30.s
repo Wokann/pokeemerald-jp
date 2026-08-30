@@ -2119,13 +2119,7 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_GRANITE_CAVE_STEVENS_ROOM (g24 m10)
 	.include "data/maps/GraniteCave_StevensRoom/header.inc"
 	@ MAP_PETALBURG_WOODS (g24 m11)
-	.4byte gMapLayout_PETALBURG_WOODS  @ mapLayout
-	.4byte gMapEvents_PETALBURG_WOODS  @ events
-	.4byte 0x08214278  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016E  @ music
-	.2byte 0x0087  @ mapLayoutId
-	.byte 0x3B, 0x00, 0x0B, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PetalburgWoods/header.inc"
 	@ MAP_MT_CHIMNEY (g24 m12)
 	.4byte gMapLayout_MT_CHIMNEY  @ mapLayout
 	.4byte gMapEvents_MT_CHIMNEY  @ events

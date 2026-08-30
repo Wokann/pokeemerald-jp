@@ -929,8 +929,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/GraniteCave_B2F/events.inc"
 	.include "data/maps/GraniteCave_StevensRoom/events.inc"
 	.include "data/maps/PetalburgWoods/events.inc"
-	.globl gMapEvents_PETALBURG_WOODS
-	.set gMapEvents_PETALBURG_WOODS, PetalburgWoods_MapEvents
 	.include "data/maps/MtChimney/events.inc"
 	.globl gMapEvents_MT_CHIMNEY
 	.set gMapEvents_MT_CHIMNEY, MtChimney_MapEvents
