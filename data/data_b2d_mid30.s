@@ -1829,61 +1829,19 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_PACIFIDLOG_TOWN_HOUSE5 (g7 m6)
 	.include "data/maps/PacifidlogTown_House5/header.inc"
 	@ MAP_PETALBURG_CITY_WALLYS_HOUSE (g8 m0)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte PetalburgCity_WallysHouse_MapEvents  @ events
-	.4byte PetalburgCity_WallysHouse_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016A  @ music
-	.2byte 0x003C  @ mapLayoutId
-	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PetalburgCity_WallysHouse/header.inc"
 	@ MAP_PETALBURG_CITY_GYM (g8 m1)
-	.4byte gMapLayout_PETALBURG_CITY_GYM  @ mapLayout
-	.4byte PetalburgCity_Gym_MapEvents  @ events
-	.4byte PetalburgCity_Gym_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016C  @ music
-	.2byte 0x004F  @ mapLayoutId
-	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PetalburgCity_Gym/header.inc"
 	@ MAP_PETALBURG_CITY_HOUSE1 (g8 m2)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte PetalburgCity_House1_MapEvents  @ events
-	.4byte 0x081FA63D  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016A  @ music
-	.2byte 0x003B  @ mapLayoutId
-	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PetalburgCity_House1/header.inc"
 	@ MAP_PETALBURG_CITY_HOUSE2 (g8 m3)
-	.4byte gMapLayout_PETALBURG_CITY_HOUSE2  @ mapLayout
-	.4byte PetalburgCity_House2_MapEvents  @ events
-	.4byte 0x081FA720  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016A  @ music
-	.2byte 0x0050  @ mapLayoutId
-	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PetalburgCity_House2/header.inc"
 	@ MAP_PETALBURG_CITY_POKEMON_CENTER_1F (g8 m4)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte PetalburgCity_PokemonCenter_1F_MapEvents  @ events
-	.4byte PetalburgCity_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003D  @ mapLayoutId
-	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PetalburgCity_PokemonCenter_1F/header.inc"
 	@ MAP_PETALBURG_CITY_POKEMON_CENTER_2F (g8 m5)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte PetalburgCity_PokemonCenter_2F_MapEvents  @ events
-	.4byte PetalburgCity_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PetalburgCity_PokemonCenter_2F/header.inc"
 	@ MAP_PETALBURG_CITY_MART (g8 m6)
-	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte PetalburgCity_Mart_MapEvents  @ events
-	.4byte PetalburgCity_Mart_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x003F  @ mapLayoutId
-	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PetalburgCity_Mart/header.inc"
 	@ MAP_SLATEPORT_CITY_STERNS_SHIPYARD_1F (g9 m0)
 	.4byte gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_1F  @ mapLayout
 	.4byte SlateportCity_SternsShipyard_1F_MapEvents  @ events

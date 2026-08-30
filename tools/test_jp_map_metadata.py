@@ -60,6 +60,13 @@ MAPS = (
     "PacifidlogTown_House3",
     "PacifidlogTown_House4",
     "PacifidlogTown_House5",
+    "PetalburgCity_WallysHouse",
+    "PetalburgCity_Gym",
+    "PetalburgCity_House1",
+    "PetalburgCity_House2",
+    "PetalburgCity_PokemonCenter_1F",
+    "PetalburgCity_PokemonCenter_2F",
+    "PetalburgCity_Mart",
 )
 
 CONNECTED_MAPS = (
@@ -117,6 +124,13 @@ NULL_CONNECTION_MAPS = (
     "PacifidlogTown_House3",
     "PacifidlogTown_House4",
     "PacifidlogTown_House5",
+    "PetalburgCity_WallysHouse",
+    "PetalburgCity_Gym",
+    "PetalburgCity_House1",
+    "PetalburgCity_House2",
+    "PetalburgCity_PokemonCenter_1F",
+    "PetalburgCity_PokemonCenter_2F",
+    "PetalburgCity_Mart",
 )
 
 CANONICAL_LAYOUT_MAPS = (
