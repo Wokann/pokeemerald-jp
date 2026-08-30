@@ -963,59 +963,11 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/EverGrandeCity_ChampionsRoom/events.inc"
 	.globl gMapEvents_EVER_GRANDE_CITY_CHAMPIONS_ROOM
 	.set gMapEvents_EVER_GRANDE_CITY_CHAMPIONS_ROOM, EverGrandeCity_ChampionsRoom_MapEvents
-	.globl EVER_GRANDE_CITY_HALL1_EventObjects
-EVER_GRANDE_CITY_HALL1_EventObjects: @ 0x00000000
-	.globl EVER_GRANDE_CITY_HALL1_EventWarps
-EVER_GRANDE_CITY_HALL1_EventWarps: @ 0x0850BE98
-	warp_def 5, 12, 3, 1, MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM
-	warp_def 5, 2, 0, 0, MAP_EVER_GRANDE_CITY_PHOEBES_ROOM
-	warp_def 4, 12, 3, 1, MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM
-	warp_def 6, 12, 3, 1, MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM
-	.globl gMapEvents_EVER_GRANDE_CITY_HALL1
-gMapEvents_EVER_GRANDE_CITY_HALL1: @ 0x0850BEB8
-	map_events 0, EVER_GRANDE_CITY_HALL1_EventWarps, 0, 0
-	.globl EVER_GRANDE_CITY_HALL2_EventObjects
-EVER_GRANDE_CITY_HALL2_EventObjects: @ 0x00000000
-	.globl EVER_GRANDE_CITY_HALL2_EventWarps
-EVER_GRANDE_CITY_HALL2_EventWarps: @ 0x0850BECC
-	warp_def 5, 12, 3, 1, MAP_EVER_GRANDE_CITY_PHOEBES_ROOM
-	warp_def 5, 2, 0, 0, MAP_EVER_GRANDE_CITY_GLACIAS_ROOM
-	warp_def 4, 12, 3, 1, MAP_EVER_GRANDE_CITY_PHOEBES_ROOM
-	warp_def 6, 12, 3, 1, MAP_EVER_GRANDE_CITY_PHOEBES_ROOM
-	.globl gMapEvents_EVER_GRANDE_CITY_HALL2
-gMapEvents_EVER_GRANDE_CITY_HALL2: @ 0x0850BEEC
-	map_events 0, EVER_GRANDE_CITY_HALL2_EventWarps, 0, 0
-	.globl EVER_GRANDE_CITY_HALL3_EventObjects
-EVER_GRANDE_CITY_HALL3_EventObjects: @ 0x00000000
-	.globl EVER_GRANDE_CITY_HALL3_EventWarps
-EVER_GRANDE_CITY_HALL3_EventWarps: @ 0x0850BF00
-	warp_def 5, 12, 3, 1, MAP_EVER_GRANDE_CITY_GLACIAS_ROOM
-	warp_def 5, 2, 0, 0, MAP_EVER_GRANDE_CITY_DRAKES_ROOM
-	warp_def 4, 12, 3, 1, MAP_EVER_GRANDE_CITY_GLACIAS_ROOM
-	warp_def 6, 12, 3, 1, MAP_EVER_GRANDE_CITY_GLACIAS_ROOM
-	.globl gMapEvents_EVER_GRANDE_CITY_HALL3
-gMapEvents_EVER_GRANDE_CITY_HALL3: @ 0x0850BF20
-	map_events 0, EVER_GRANDE_CITY_HALL3_EventWarps, 0, 0
-	.globl EVER_GRANDE_CITY_HALL4_EventObjects
-EVER_GRANDE_CITY_HALL4_EventObjects: @ 0x00000000
-	.globl EVER_GRANDE_CITY_HALL4_EventWarps
-EVER_GRANDE_CITY_HALL4_EventWarps: @ 0x0850BF34
-	warp_def 5, 33, 3, 1, MAP_EVER_GRANDE_CITY_DRAKES_ROOM
-	warp_def 5, 2, 0, 0, MAP_EVER_GRANDE_CITY_CHAMPIONS_ROOM
-	.globl gMapEvents_EVER_GRANDE_CITY_HALL4
-gMapEvents_EVER_GRANDE_CITY_HALL4: @ 0x0850BF44
-	map_events 0, EVER_GRANDE_CITY_HALL4_EventWarps, 0, 0
-	.globl EVER_GRANDE_CITY_HALL5_EventObjects
-EVER_GRANDE_CITY_HALL5_EventObjects: @ 0x00000000
-	.globl EVER_GRANDE_CITY_HALL5_EventWarps
-EVER_GRANDE_CITY_HALL5_EventWarps: @ 0x0850BF58
-	warp_def 5, 12, 3, 2, MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F
-	warp_def 5, 2, 0, 0, MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM
-	warp_def 4, 12, 3, 2, MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F
-	warp_def 6, 12, 3, 2, MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F
-	.globl gMapEvents_EVER_GRANDE_CITY_HALL5
-gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
-	map_events 0, EVER_GRANDE_CITY_HALL5_EventWarps, 0, 0
+	.include "data/maps/EverGrandeCity_Hall1/events.inc"
+	.include "data/maps/EverGrandeCity_Hall2/events.inc"
+	.include "data/maps/EverGrandeCity_Hall3/events.inc"
+	.include "data/maps/EverGrandeCity_Hall4/events.inc"
+	.include "data/maps/EverGrandeCity_Hall5/events.inc"
 	.include "data/maps/EverGrandeCity_PokemonLeague_1F/events.inc"
 	.globl gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F
 	.set gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F, EverGrandeCity_PokemonLeague_1F_MapEvents

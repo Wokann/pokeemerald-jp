@@ -240,6 +240,11 @@ JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route104_MrBrineysHous
 	EverGrandeCity_GlaciasRoom \
 	EverGrandeCity_DrakesRoom \
 	EverGrandeCity_ChampionsRoom \
+	EverGrandeCity_Hall1 \
+	EverGrandeCity_Hall2 \
+	EverGrandeCity_Hall3 \
+	EverGrandeCity_Hall4 \
+	EverGrandeCity_Hall5 \
 	EverGrandeCity_PokemonLeague_1F \
 	EverGrandeCity_HallOfFame \
 	EverGrandeCity_PokemonCenter_1F \

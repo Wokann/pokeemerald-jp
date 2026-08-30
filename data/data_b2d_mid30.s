@@ -3308,7 +3308,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_HALL1 (g16 m5)
 	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_HALL1  @ events
+	.4byte EverGrandeCity_Hall1_MapEvents  @ events
 	.4byte EverGrandeCity_Hall1_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
@@ -3316,7 +3316,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_HALL2 (g16 m6)
 	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_HALL2  @ events
+	.4byte EverGrandeCity_Hall2_MapEvents  @ events
 	.4byte EverGrandeCity_Hall2_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
@@ -3324,7 +3324,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_HALL3 (g16 m7)
 	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_HALL3  @ events
+	.4byte EverGrandeCity_Hall3_MapEvents  @ events
 	.4byte EverGrandeCity_Hall3_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
@@ -3332,7 +3332,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_HALL4 (g16 m8)
 	.4byte gMapLayout_EVER_GRANDE_CITY_HALL4  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_HALL4  @ events
+	.4byte EverGrandeCity_Hall4_MapEvents  @ events
 	.4byte EverGrandeCity_Hall4_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
@@ -3340,7 +3340,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_HALL5 (g16 m9)
 	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_HALL5  @ events
+	.4byte EverGrandeCity_Hall5_MapEvents  @ events
 	.4byte EverGrandeCity_Hall5_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
