@@ -2013,125 +2013,35 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_MOSSDEEP_CITY_GAME_CORNER_B1F (g14 m12)
 	.include "data/maps/MossdeepCity_GameCorner_B1F/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_GYM_1F (g15 m0)
-	.4byte gMapLayout_SOOTOPOLIS_CITY_GYM_1F  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_GYM_1F  @ events
-	.4byte SootopolisCity_Gym_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016C  @ music
-	.2byte 0x006D  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_Gym_1F/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_GYM_B1F (g15 m1)
-	.4byte gMapLayout_SOOTOPOLIS_CITY_GYM_B1F  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_GYM_B1F  @ events
-	.4byte 0x0820EAC6  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016C  @ music
-	.2byte 0x006E  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_Gym_B1F/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_POKEMON_CENTER_1F (g15 m2)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_POKEMON_CENTER_1F  @ events
-	.4byte SootopolisCity_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003D  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_PokemonCenter_1F/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_POKEMON_CENTER_2F (g15 m3)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_POKEMON_CENTER_2F  @ events
-	.4byte SootopolisCity_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_PokemonCenter_2F/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_MART (g15 m4)
-	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_MART  @ events
-	.4byte 0x0820F1B7  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x003F  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_Mart/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_HOUSE1 (g15 m5)
-	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE1  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_HOUSE1  @ events
-	.4byte 0x0820F300  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01BD  @ music
-	.2byte 0x0133  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_House1/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_HOUSE2 (g15 m6)
-	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE2  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_HOUSE2  @ events
-	.4byte 0x0820F3C6  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01BD  @ music
-	.2byte 0x0134  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_House2/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_HOUSE3 (g15 m7)
-	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE3  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_HOUSE3  @ events
-	.4byte 0x0820F479  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01BD  @ music
-	.2byte 0x0135  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_House3/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_HOUSE4 (g15 m8)
-	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE1  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_HOUSE4  @ events
-	.4byte 0x0820F593  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01BD  @ music
-	.2byte 0x0133  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_House4/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_HOUSE5 (g15 m9)
-	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE2  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_HOUSE5  @ events
-	.4byte 0x0820F657  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01BD  @ music
-	.2byte 0x0134  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_House5/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_HOUSE6 (g15 m10)
-	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE3  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_HOUSE6  @ events
-	.4byte 0x0820F6D0  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01BD  @ music
-	.2byte 0x0135  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_House6/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_HOUSE7 (g15 m11)
-	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE1  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_HOUSE7  @ events
-	.4byte 0x0820F7BA  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01BD  @ music
-	.2byte 0x0133  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_House7/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE (g15 m12)
-	.4byte gMapLayout_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE  @ events
-	.4byte 0x0820F861  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01BD  @ music
-	.2byte 0x0129  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_LotadAndSeedotHouse/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F (g15 m13)
-	.4byte gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F  @ events
-	.4byte SootopolisCity_MysteryEventsHouse_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01BD  @ music
-	.2byte 0x01B7  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_MysteryEventsHouse_1F/header.inc"
 	@ MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F (g15 m14)
-	.4byte gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F  @ events
-	.4byte SootopolisCity_MysteryEventsHouse_B1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01BD  @ music
-	.2byte 0x01B8  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity_MysteryEventsHouse_B1F/header.inc"
 	@ MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM (g16 m0)
 	.4byte gMapLayout_EVER_GRANDE_CITY_SIDNEYS_ROOM  @ mapLayout
 	.4byte gMapEvents_EVER_GRANDE_CITY_SIDNEYS_ROOM  @ events

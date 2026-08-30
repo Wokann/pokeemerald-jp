@@ -876,50 +876,20 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/MossdeepCity_GameCorner_1F/events.inc"
 	.include "data/maps/MossdeepCity_GameCorner_B1F/events.inc"
 	.include "data/maps/SootopolisCity_Gym_1F/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_GYM_1F
-	.set gMapEvents_SOOTOPOLIS_CITY_GYM_1F, SootopolisCity_Gym_1F_MapEvents
 	.include "data/maps/SootopolisCity_Gym_B1F/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_GYM_B1F
-	.set gMapEvents_SOOTOPOLIS_CITY_GYM_B1F, SootopolisCity_Gym_B1F_MapEvents
 	.include "data/maps/SootopolisCity_PokemonCenter_1F/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_POKEMON_CENTER_1F
-	.set gMapEvents_SOOTOPOLIS_CITY_POKEMON_CENTER_1F, SootopolisCity_PokemonCenter_1F_MapEvents
 	.include "data/maps/SootopolisCity_PokemonCenter_2F/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_POKEMON_CENTER_2F
-	.set gMapEvents_SOOTOPOLIS_CITY_POKEMON_CENTER_2F, SootopolisCity_PokemonCenter_2F_MapEvents
 	.include "data/maps/SootopolisCity_Mart/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_MART
-	.set gMapEvents_SOOTOPOLIS_CITY_MART, SootopolisCity_Mart_MapEvents
 	.include "data/maps/SootopolisCity_House1/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE1
-	.set gMapEvents_SOOTOPOLIS_CITY_HOUSE1, SootopolisCity_House1_MapEvents
 	.include "data/maps/SootopolisCity_House2/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE2
-	.set gMapEvents_SOOTOPOLIS_CITY_HOUSE2, SootopolisCity_House2_MapEvents
 	.include "data/maps/SootopolisCity_House3/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE3
-	.set gMapEvents_SOOTOPOLIS_CITY_HOUSE3, SootopolisCity_House3_MapEvents
 	.include "data/maps/SootopolisCity_House4/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE4
-	.set gMapEvents_SOOTOPOLIS_CITY_HOUSE4, SootopolisCity_House4_MapEvents
 	.include "data/maps/SootopolisCity_House5/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE5
-	.set gMapEvents_SOOTOPOLIS_CITY_HOUSE5, SootopolisCity_House5_MapEvents
 	.include "data/maps/SootopolisCity_House6/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE6
-	.set gMapEvents_SOOTOPOLIS_CITY_HOUSE6, SootopolisCity_House6_MapEvents
 	.include "data/maps/SootopolisCity_House7/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE7
-	.set gMapEvents_SOOTOPOLIS_CITY_HOUSE7, SootopolisCity_House7_MapEvents
 	.include "data/maps/SootopolisCity_LotadAndSeedotHouse/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE
-	.set gMapEvents_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE, SootopolisCity_LotadAndSeedotHouse_MapEvents
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_1F/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F
-	.set gMapEvents_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F, SootopolisCity_MysteryEventsHouse_1F_MapEvents
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_B1F/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F
-	.set gMapEvents_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F, SootopolisCity_MysteryEventsHouse_B1F_MapEvents
 	.include "data/maps/EverGrandeCity_SidneysRoom/events.inc"
 	.globl gMapEvents_EVER_GRANDE_CITY_SIDNEYS_ROOM
 	.set gMapEvents_EVER_GRANDE_CITY_SIDNEYS_ROOM, EverGrandeCity_SidneysRoom_MapEvents

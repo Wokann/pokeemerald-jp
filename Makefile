@@ -369,6 +369,12 @@ JP_STRUCTURED_MAP_METADATA_MAPS += MossdeepCity_Gym MossdeepCity_House1 Mossdeep
 	MossdeepCity_House3 MossdeepCity_StevensHouse MossdeepCity_House4 \
 	MossdeepCity_SpaceCenter_1F MossdeepCity_SpaceCenter_2F \
 	MossdeepCity_GameCorner_1F MossdeepCity_GameCorner_B1F
+JP_STRUCTURED_MAP_METADATA_MAPS += SootopolisCity_Gym_1F SootopolisCity_Gym_B1F \
+	SootopolisCity_PokemonCenter_1F SootopolisCity_PokemonCenter_2F SootopolisCity_Mart \
+	SootopolisCity_House1 SootopolisCity_House2 SootopolisCity_House3 SootopolisCity_House4 \
+	SootopolisCity_House5 SootopolisCity_House6 SootopolisCity_House7 \
+	SootopolisCity_LotadAndSeedotHouse SootopolisCity_MysteryEventsHouse_1F \
+	SootopolisCity_MysteryEventsHouse_B1F
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)
