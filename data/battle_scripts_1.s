@@ -1075,17 +1075,25 @@ BattleScript_SunlightFaded:: @ 0x08289268
 BattleScript_OverworldWeatherStarts:: @ 0x0828926F
 	.incbin "baserom_jp.gba", 0x28926f, 0x13
 
-	.globl BattleScript_SideStatusWoreOff
-BattleScript_SideStatusWoreOff: @ 0x8289282
-	.include "data/scripts/gUnknown_8289282.inc"
+@ Turn-end side-status scripts. These physical entry points include the
+@ safeguard and Leech Seed branches; byte spans remain JP-exact for now.
+BattleScript_SideStatusWoreOff:: @ 0x08289282
+	.incbin "baserom_jp.gba", 0x289282, 0x7
 
-	.globl BattleScript_SafeguardEnds
-BattleScript_SafeguardEnds: @ 0x8289293
-	.include "data/scripts/gUnknown_8289293.inc"
+BattleScript_SafeguardProtected:: @ 0x08289289
+	.incbin "baserom_jp.gba", 0x289289, 0xa
 
-	.globl BattleScript_LeechSeedTurnDrain
-BattleScript_LeechSeedTurnDrain: @ 0x828929D
-	.include "data/scripts/gUnknown_828929D.inc"
+BattleScript_SafeguardEnds:: @ 0x08289293
+	.incbin "baserom_jp.gba", 0x289293, 0xa
+
+BattleScript_LeechSeedTurnDrain:: @ 0x0828929D
+	.incbin "baserom_jp.gba", 0x28929d, 0x32
+
+BattleScript_LeechSeedTurnPrintLiquidOoze:: @ 0x082892CF
+	.incbin "baserom_jp.gba", 0x2892cf, 0x6
+
+BattleScript_LeechSeedTurnPrintAndUpdateHp:: @ 0x082892D5
+	.incbin "baserom_jp.gba", 0x2892d5, 0x24
 
 	.globl BattleScript_BideStoringEnergy
 BattleScript_BideStoringEnergy: @ 0x82892F9
