@@ -1921,85 +1921,25 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_RUSTBORO_CITY_HOUSE3 (g11 m16)
 	.include "data/maps/RustboroCity_House3/header.inc"
 	@ MAP_FORTREE_CITY_HOUSE1 (g12 m0)
-	.4byte gMapLayout_FORTREE_CITY_HOUSE1  @ mapLayout
-	.4byte FortreeCity_House1_MapEvents  @ events
-	.4byte FortreeCity_House1_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x017E  @ music
-	.2byte 0x0063  @ mapLayoutId
-	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FortreeCity_House1/header.inc"
 	@ MAP_FORTREE_CITY_GYM (g12 m1)
-	.4byte gMapLayout_FORTREE_CITY_GYM  @ mapLayout
-	.4byte FortreeCity_Gym_MapEvents  @ events
-	.4byte FortreeCity_Gym_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016C  @ music
-	.2byte 0x0064  @ mapLayoutId
-	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FortreeCity_Gym/header.inc"
 	@ MAP_FORTREE_CITY_POKEMON_CENTER_1F (g12 m2)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte FortreeCity_PokemonCenter_1F_MapEvents  @ events
-	.4byte FortreeCity_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003D  @ mapLayoutId
-	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FortreeCity_PokemonCenter_1F/header.inc"
 	@ MAP_FORTREE_CITY_POKEMON_CENTER_2F (g12 m3)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte FortreeCity_PokemonCenter_2F_MapEvents  @ events
-	.4byte FortreeCity_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FortreeCity_PokemonCenter_2F/header.inc"
 	@ MAP_FORTREE_CITY_MART (g12 m4)
-	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte FortreeCity_Mart_MapEvents  @ events
-	.4byte FortreeCity_Mart_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x003F  @ mapLayoutId
-	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FortreeCity_Mart/header.inc"
 	@ MAP_FORTREE_CITY_HOUSE2 (g12 m5)
-	.4byte gMapLayout_FORTREE_CITY_HOUSE2  @ mapLayout
-	.4byte FortreeCity_House2_MapEvents  @ events
-	.4byte FortreeCity_House2_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x017E  @ music
-	.2byte 0x0065  @ mapLayoutId
-	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FortreeCity_House2/header.inc"
 	@ MAP_FORTREE_CITY_HOUSE3 (g12 m6)
-	.4byte gMapLayout_FORTREE_CITY_HOUSE1  @ mapLayout
-	.4byte FortreeCity_House3_MapEvents  @ events
-	.4byte FortreeCity_House3_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x017E  @ music
-	.2byte 0x0063  @ mapLayoutId
-	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FortreeCity_House3/header.inc"
 	@ MAP_FORTREE_CITY_HOUSE4 (g12 m7)
-	.4byte gMapLayout_FORTREE_CITY_HOUSE2  @ mapLayout
-	.4byte FortreeCity_House4_MapEvents  @ events
-	.4byte FortreeCity_House4_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x017E  @ music
-	.2byte 0x0065  @ mapLayoutId
-	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FortreeCity_House4/header.inc"
 	@ MAP_FORTREE_CITY_HOUSE5 (g12 m8)
-	.4byte gMapLayout_FORTREE_CITY_HOUSE1  @ mapLayout
-	.4byte FortreeCity_House5_MapEvents  @ events
-	.4byte FortreeCity_House5_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x017E  @ music
-	.2byte 0x0063  @ mapLayoutId
-	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FortreeCity_House5/header.inc"
 	@ MAP_FORTREE_CITY_DECORATION_SHOP (g12 m9)
-	.4byte gMapLayout_FORTREE_CITY_DECORATION_SHOP  @ mapLayout
-	.4byte FortreeCity_DecorationShop_MapEvents  @ events
-	.4byte FortreeCity_DecorationShop_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x017E  @ music
-	.2byte 0x00FF  @ mapLayoutId
-	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FortreeCity_DecorationShop/header.inc"
 	@ MAP_LILYCOVE_CITY_COVE_LILY_MOTEL_1F (g13 m0)
 	.4byte gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_1F  @ mapLayout
 	.4byte LilycoveCity_CoveLilyMotel_1F_MapEvents  @ events

@@ -350,6 +350,10 @@ JP_STRUCTURED_MAP_METADATA_MAPS += RustboroCity_DevonCorp_1F RustboroCity_DevonC
 	RustboroCity_Flat1_1F RustboroCity_Flat1_2F RustboroCity_House1 \
 	RustboroCity_CuttersHouse RustboroCity_House2 RustboroCity_Flat2_1F \
 	RustboroCity_Flat2_2F RustboroCity_Flat2_3F RustboroCity_House3
+JP_STRUCTURED_MAP_METADATA_MAPS += FortreeCity_House1 FortreeCity_Gym \
+	FortreeCity_PokemonCenter_1F FortreeCity_PokemonCenter_2F FortreeCity_Mart \
+	FortreeCity_House2 FortreeCity_House3 FortreeCity_House4 FortreeCity_House5 \
+	FortreeCity_DecorationShop
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

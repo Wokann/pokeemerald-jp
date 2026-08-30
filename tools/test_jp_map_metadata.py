@@ -106,6 +106,16 @@ MAPS = (
     "RustboroCity_Flat2_2F",
     "RustboroCity_Flat2_3F",
     "RustboroCity_House3",
+    "FortreeCity_House1",
+    "FortreeCity_Gym",
+    "FortreeCity_PokemonCenter_1F",
+    "FortreeCity_PokemonCenter_2F",
+    "FortreeCity_Mart",
+    "FortreeCity_House2",
+    "FortreeCity_House3",
+    "FortreeCity_House4",
+    "FortreeCity_House5",
+    "FortreeCity_DecorationShop",
 )
 
 CONNECTED_MAPS = (
@@ -209,6 +219,16 @@ NULL_CONNECTION_MAPS = (
     "RustboroCity_Flat2_2F",
     "RustboroCity_Flat2_3F",
     "RustboroCity_House3",
+    "FortreeCity_House1",
+    "FortreeCity_Gym",
+    "FortreeCity_PokemonCenter_1F",
+    "FortreeCity_PokemonCenter_2F",
+    "FortreeCity_Mart",
+    "FortreeCity_House2",
+    "FortreeCity_House3",
+    "FortreeCity_House4",
+    "FortreeCity_House5",
+    "FortreeCity_DecorationShop",
 )
 
 CANONICAL_LAYOUT_MAPS = (
