@@ -1095,19 +1095,18 @@ BattleScript_LeechSeedTurnPrintLiquidOoze:: @ 0x082892CF
 BattleScript_LeechSeedTurnPrintAndUpdateHp:: @ 0x082892D5
 	.incbin "baserom_jp.gba", 0x2892d5, 0x24
 
-	.globl BattleScript_BideStoringEnergy
-BattleScript_BideStoringEnergy: @ 0x82892F9
+@ Bide's charge and release scripts. The complete three-path family stays
+@ physically contiguous while its raw battle commands await conversion.
+BattleScript_BideStoringEnergy:: @ 0x082892F9
 	.byte 0x10, 0x78, 0x00 @ printstring STRINGID_PKMNSTORINGENERGY
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
 
-	.globl BattleScript_BideAttack
-BattleScript_BideAttack: @ 0x8289304
-	.include "data/scripts/gUnknown_8289304.inc"
+BattleScript_BideAttack:: @ 0x08289304
+	.incbin "baserom_jp.gba", 0x289304, 0x48
 
-	.globl BattleScript_BideNoEnergyToAttack
-BattleScript_BideNoEnergyToAttack: @ 0x828934C
-	.include "data/scripts/gUnknown_828934C.inc"
+BattleScript_BideNoEnergyToAttack:: @ 0x0828934C
+	.incbin "baserom_jp.gba", 0x28934c, 0x14
 
 	.globl BattleScript_SuccessForceOut
 BattleScript_SuccessForceOut: @ 0x8289360
