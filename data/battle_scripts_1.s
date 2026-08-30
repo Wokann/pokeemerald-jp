@@ -70,44 +70,811 @@
 @ This JP-located owner mirrors pokeemerald data/battle_scripts_1.s.
 @ Unconverted ranges remain visible here in physical ROM order.
 	.align 2
-	.globl gBattleScriptsForMoveEffects
-gBattleScriptsForMoveEffects: @ 0x8286C30
-	.incbin "baserom_jp.gba", 0x286c30, 0x388
-	.globl BattleScript_HitFromCritCalc
-BattleScript_HitFromCritCalc: @ 0x8286FB8
-	.include "data/scripts/gUnknown_8286FB8.inc"
+gBattleScriptsForMoveEffects:: @ 0x8286C30
+	.4byte BattleScript_EffectHit                    @ EFFECT_HIT
+	.4byte BattleScript_EffectSleep                  @ EFFECT_SLEEP
+	.4byte BattleScript_EffectPoisonHit              @ EFFECT_POISON_HIT
+	.4byte BattleScript_EffectAbsorb                 @ EFFECT_ABSORB
+	.4byte BattleScript_EffectBurnHit                @ EFFECT_BURN_HIT
+	.4byte BattleScript_EffectFreezeHit              @ EFFECT_FREEZE_HIT
+	.4byte BattleScript_EffectParalyzeHit            @ EFFECT_PARALYZE_HIT
+	.4byte BattleScript_EffectExplosion              @ EFFECT_EXPLOSION
+	.4byte BattleScript_EffectDreamEater             @ EFFECT_DREAM_EATER
+	.4byte BattleScript_EffectMirrorMove             @ EFFECT_MIRROR_MOVE
+	.4byte BattleScript_EffectAttackUp               @ EFFECT_ATTACK_UP
+	.4byte BattleScript_EffectDefenseUp              @ EFFECT_DEFENSE_UP
+	.4byte BattleScript_EffectHit                    @ EFFECT_SPEED_UP
+	.4byte BattleScript_EffectSpecialAttackUp        @ EFFECT_SPECIAL_ATTACK_UP
+	.4byte BattleScript_EffectHit                    @ EFFECT_SPECIAL_DEFENSE_UP
+	.4byte BattleScript_EffectHit                    @ EFFECT_ACCURACY_UP
+	.4byte BattleScript_EffectEvasionUp              @ EFFECT_EVASION_UP
+	.4byte BattleScript_EffectHit                    @ EFFECT_ALWAYS_HIT
+	.4byte BattleScript_EffectAttackDown             @ EFFECT_ATTACK_DOWN
+	.4byte BattleScript_EffectDefenseDown            @ EFFECT_DEFENSE_DOWN
+	.4byte BattleScript_EffectSpeedDown              @ EFFECT_SPEED_DOWN
+	.4byte BattleScript_EffectHit                    @ EFFECT_SPECIAL_ATTACK_DOWN
+	.4byte BattleScript_EffectHit                    @ EFFECT_SPECIAL_DEFENSE_DOWN
+	.4byte BattleScript_EffectAccuracyDown           @ EFFECT_ACCURACY_DOWN
+	.4byte BattleScript_EffectEvasionDown            @ EFFECT_EVASION_DOWN
+	.4byte BattleScript_EffectHaze                   @ EFFECT_HAZE
+	.4byte BattleScript_EffectBide                   @ EFFECT_BIDE
+	.4byte BattleScript_EffectRampage                @ EFFECT_RAMPAGE
+	.4byte BattleScript_EffectRoar                   @ EFFECT_ROAR
+	.4byte BattleScript_EffectMultiHit               @ EFFECT_MULTI_HIT
+	.4byte BattleScript_EffectConversion             @ EFFECT_CONVERSION
+	.4byte BattleScript_EffectFlinchHit              @ EFFECT_FLINCH_HIT
+	.4byte BattleScript_EffectRestoreHp              @ EFFECT_RESTORE_HP
+	.4byte BattleScript_EffectToxic                  @ EFFECT_TOXIC
+	.4byte BattleScript_EffectPayDay                 @ EFFECT_PAY_DAY
+	.4byte BattleScript_EffectLightScreen            @ EFFECT_LIGHT_SCREEN
+	.4byte BattleScript_EffectTriAttack              @ EFFECT_TRI_ATTACK
+	.4byte BattleScript_EffectRest                   @ EFFECT_REST
+	.4byte BattleScript_EffectOHKO                   @ EFFECT_OHKO
+	.4byte BattleScript_EffectRazorWind              @ EFFECT_RAZOR_WIND
+	.4byte BattleScript_EffectSuperFang              @ EFFECT_SUPER_FANG
+	.4byte BattleScript_EffectDragonRage             @ EFFECT_DRAGON_RAGE
+	.4byte BattleScript_EffectTrap                   @ EFFECT_TRAP
+	.4byte BattleScript_EffectHit                    @ EFFECT_HIGH_CRITICAL
+	.4byte BattleScript_EffectDoubleHit              @ EFFECT_DOUBLE_HIT
+	.4byte BattleScript_EffectRecoilIfMiss           @ EFFECT_RECOIL_IF_MISS
+	.4byte BattleScript_EffectMist                   @ EFFECT_MIST
+	.4byte BattleScript_EffectFocusEnergy            @ EFFECT_FOCUS_ENERGY
+	.4byte BattleScript_EffectRecoil                 @ EFFECT_RECOIL
+	.4byte BattleScript_EffectConfuse                @ EFFECT_CONFUSE
+	.4byte BattleScript_EffectAttackUp2              @ EFFECT_ATTACK_UP_2
+	.4byte BattleScript_EffectDefenseUp2             @ EFFECT_DEFENSE_UP_2
+	.4byte BattleScript_EffectSpeedUp2               @ EFFECT_SPEED_UP_2
+	.4byte BattleScript_EffectSpecialAttackUp2       @ EFFECT_SPECIAL_ATTACK_UP_2
+	.4byte BattleScript_EffectSpecialDefenseUp2      @ EFFECT_SPECIAL_DEFENSE_UP_2
+	.4byte BattleScript_EffectHit                    @ EFFECT_ACCURACY_UP_2
+	.4byte BattleScript_EffectHit                    @ EFFECT_EVASION_UP_2
+	.4byte BattleScript_EffectTransform              @ EFFECT_TRANSFORM
+	.4byte BattleScript_EffectAttackDown2            @ EFFECT_ATTACK_DOWN_2
+	.4byte BattleScript_EffectDefenseDown2           @ EFFECT_DEFENSE_DOWN_2
+	.4byte BattleScript_EffectSpeedDown2             @ EFFECT_SPEED_DOWN_2
+	.4byte BattleScript_EffectHit                    @ EFFECT_SPECIAL_ATTACK_DOWN_2
+	.4byte BattleScript_EffectSpecialDefenseDown2    @ EFFECT_SPECIAL_DEFENSE_DOWN_2
+	.4byte BattleScript_EffectHit                    @ EFFECT_ACCURACY_DOWN_2
+	.4byte BattleScript_EffectHit                    @ EFFECT_EVASION_DOWN_2
+	.4byte BattleScript_EffectReflect                @ EFFECT_REFLECT
+	.4byte BattleScript_EffectPoison                 @ EFFECT_POISON
+	.4byte BattleScript_EffectParalyze               @ EFFECT_PARALYZE
+	.4byte BattleScript_EffectAttackDownHit          @ EFFECT_ATTACK_DOWN_HIT
+	.4byte BattleScript_EffectDefenseDownHit         @ EFFECT_DEFENSE_DOWN_HIT
+	.4byte BattleScript_EffectSpeedDownHit           @ EFFECT_SPEED_DOWN_HIT
+	.4byte BattleScript_EffectSpecialAttackDownHit   @ EFFECT_SPECIAL_ATTACK_DOWN_HIT
+	.4byte BattleScript_EffectSpecialDefenseDownHit  @ EFFECT_SPECIAL_DEFENSE_DOWN_HIT
+	.4byte BattleScript_EffectAccuracyDownHit        @ EFFECT_ACCURACY_DOWN_HIT
+	.4byte BattleScript_EffectHit                    @ EFFECT_EVASION_DOWN_HIT
+	.4byte BattleScript_EffectSkyAttack              @ EFFECT_SKY_ATTACK
+	.4byte BattleScript_EffectConfuseHit             @ EFFECT_CONFUSE_HIT
+	.4byte BattleScript_EffectTwineedle              @ EFFECT_TWINEEDLE
+	.4byte BattleScript_EffectHit                    @ EFFECT_VITAL_THROW
+	.4byte BattleScript_EffectSubstitute             @ EFFECT_SUBSTITUTE
+	.4byte BattleScript_EffectRecharge               @ EFFECT_RECHARGE
+	.4byte BattleScript_EffectRage                   @ EFFECT_RAGE
+	.4byte BattleScript_EffectMimic                  @ EFFECT_MIMIC
+	.4byte BattleScript_EffectMetronome              @ EFFECT_METRONOME
+	.4byte BattleScript_EffectLeechSeed              @ EFFECT_LEECH_SEED
+	.4byte BattleScript_EffectSplash                 @ EFFECT_SPLASH
+	.4byte BattleScript_EffectDisable                @ EFFECT_DISABLE
+	.4byte BattleScript_EffectLevelDamage            @ EFFECT_LEVEL_DAMAGE
+	.4byte BattleScript_EffectPsywave                @ EFFECT_PSYWAVE
+	.4byte BattleScript_EffectCounter                @ EFFECT_COUNTER
+	.4byte BattleScript_EffectEncore                 @ EFFECT_ENCORE
+	.4byte BattleScript_EffectPainSplit              @ EFFECT_PAIN_SPLIT
+	.4byte BattleScript_EffectSnore                  @ EFFECT_SNORE
+	.4byte BattleScript_EffectConversion2            @ EFFECT_CONVERSION_2
+	.4byte BattleScript_EffectLockOn                 @ EFFECT_LOCK_ON
+	.4byte BattleScript_EffectSketch                 @ EFFECT_SKETCH
+	.4byte BattleScript_EffectHit                    @ EFFECT_UNUSED_60
+	.4byte BattleScript_EffectSleepTalk              @ EFFECT_SLEEP_TALK
+	.4byte BattleScript_EffectDestinyBond            @ EFFECT_DESTINY_BOND
+	.4byte BattleScript_EffectFlail                  @ EFFECT_FLAIL
+	.4byte BattleScript_EffectSpite                  @ EFFECT_SPITE
+	.4byte BattleScript_EffectHit                    @ EFFECT_FALSE_SWIPE
+	.4byte BattleScript_EffectHealBell               @ EFFECT_HEAL_BELL
+	.4byte BattleScript_EffectHit                    @ EFFECT_QUICK_ATTACK
+	.4byte BattleScript_EffectTripleKick             @ EFFECT_TRIPLE_KICK
+	.4byte BattleScript_EffectThief                  @ EFFECT_THIEF
+	.4byte BattleScript_EffectMeanLook               @ EFFECT_MEAN_LOOK
+	.4byte BattleScript_EffectNightmare              @ EFFECT_NIGHTMARE
+	.4byte BattleScript_EffectMinimize               @ EFFECT_MINIMIZE
+	.4byte BattleScript_EffectCurse                  @ EFFECT_CURSE
+	.4byte BattleScript_EffectHit                    @ EFFECT_UNUSED_6E
+	.4byte BattleScript_EffectProtect                @ EFFECT_PROTECT
+	.4byte BattleScript_EffectSpikes                 @ EFFECT_SPIKES
+	.4byte BattleScript_EffectForesight              @ EFFECT_FORESIGHT
+	.4byte BattleScript_EffectPerishSong             @ EFFECT_PERISH_SONG
+	.4byte BattleScript_EffectSandstorm              @ EFFECT_SANDSTORM
+	.4byte BattleScript_EffectEndure                 @ EFFECT_ENDURE
+	.4byte BattleScript_EffectRollout                @ EFFECT_ROLLOUT
+	.4byte BattleScript_EffectSwagger                @ EFFECT_SWAGGER
+	.4byte BattleScript_EffectFuryCutter             @ EFFECT_FURY_CUTTER
+	.4byte BattleScript_EffectAttract                @ EFFECT_ATTRACT
+	.4byte BattleScript_EffectReturn                 @ EFFECT_RETURN
+	.4byte BattleScript_EffectPresent                @ EFFECT_PRESENT
+	.4byte BattleScript_EffectFrustration            @ EFFECT_FRUSTRATION
+	.4byte BattleScript_EffectSafeguard              @ EFFECT_SAFEGUARD
+	.4byte BattleScript_EffectThawHit                @ EFFECT_THAW_HIT
+	.4byte BattleScript_EffectMagnitude              @ EFFECT_MAGNITUDE
+	.4byte BattleScript_EffectBatonPass              @ EFFECT_BATON_PASS
+	.4byte BattleScript_EffectHit                    @ EFFECT_PURSUIT
+	.4byte BattleScript_EffectRapidSpin              @ EFFECT_RAPID_SPIN
+	.4byte BattleScript_EffectSonicboom              @ EFFECT_SONICBOOM
+	.4byte BattleScript_EffectHit                    @ EFFECT_UNUSED_83
+	.4byte BattleScript_EffectMorningSun             @ EFFECT_MORNING_SUN
+	.4byte BattleScript_EffectSynthesis              @ EFFECT_SYNTHESIS
+	.4byte BattleScript_EffectMoonlight              @ EFFECT_MOONLIGHT
+	.4byte BattleScript_EffectHiddenPower            @ EFFECT_HIDDEN_POWER
+	.4byte BattleScript_EffectRainDance              @ EFFECT_RAIN_DANCE
+	.4byte BattleScript_EffectSunnyDay               @ EFFECT_SUNNY_DAY
+	.4byte BattleScript_EffectDefenseUpHit           @ EFFECT_DEFENSE_UP_HIT
+	.4byte BattleScript_EffectAttackUpHit            @ EFFECT_ATTACK_UP_HIT
+	.4byte BattleScript_EffectAllStatsUpHit          @ EFFECT_ALL_STATS_UP_HIT
+	.4byte BattleScript_EffectHit                    @ EFFECT_UNUSED_8D
+	.4byte BattleScript_EffectBellyDrum              @ EFFECT_BELLY_DRUM
+	.4byte BattleScript_EffectPsychUp                @ EFFECT_PSYCH_UP
+	.4byte BattleScript_EffectMirrorCoat             @ EFFECT_MIRROR_COAT
+	.4byte BattleScript_EffectSkullBash              @ EFFECT_SKULL_BASH
+	.4byte BattleScript_EffectTwister                @ EFFECT_TWISTER
+	.4byte BattleScript_EffectEarthquake             @ EFFECT_EARTHQUAKE
+	.4byte BattleScript_EffectFutureSight            @ EFFECT_FUTURE_SIGHT
+	.4byte BattleScript_EffectGust                   @ EFFECT_GUST
+	.4byte BattleScript_EffectStomp                  @ EFFECT_FLINCH_MINIMIZE_HIT
+	.4byte BattleScript_EffectSolarBeam              @ EFFECT_SOLAR_BEAM
+	.4byte BattleScript_EffectThunder                @ EFFECT_THUNDER
+	.4byte BattleScript_EffectTeleport               @ EFFECT_TELEPORT
+	.4byte BattleScript_EffectBeatUp                 @ EFFECT_BEAT_UP
+	.4byte BattleScript_EffectSemiInvulnerable       @ EFFECT_SEMI_INVULNERABLE
+	.4byte BattleScript_EffectDefenseCurl            @ EFFECT_DEFENSE_CURL
+	.4byte BattleScript_EffectSoftboiled             @ EFFECT_SOFTBOILED
+	.4byte BattleScript_EffectFakeOut                @ EFFECT_FAKE_OUT
+	.4byte BattleScript_EffectUproar                 @ EFFECT_UPROAR
+	.4byte BattleScript_EffectStockpile              @ EFFECT_STOCKPILE
+	.4byte BattleScript_EffectSpitUp                 @ EFFECT_SPIT_UP
+	.4byte BattleScript_EffectSwallow                @ EFFECT_SWALLOW
+	.4byte BattleScript_EffectHit                    @ EFFECT_UNUSED_A3
+	.4byte BattleScript_EffectHail                   @ EFFECT_HAIL
+	.4byte BattleScript_EffectTorment                @ EFFECT_TORMENT
+	.4byte BattleScript_EffectFlatter                @ EFFECT_FLATTER
+	.4byte BattleScript_EffectWillOWisp              @ EFFECT_WILL_O_WISP
+	.4byte BattleScript_EffectMemento                @ EFFECT_MEMENTO
+	.4byte BattleScript_EffectFacade                 @ EFFECT_FACADE
+	.4byte BattleScript_EffectFocusPunch             @ EFFECT_FOCUS_PUNCH
+	.4byte BattleScript_EffectSmellingsalt           @ EFFECT_SMELLINGSALT
+	.4byte BattleScript_EffectFollowMe               @ EFFECT_FOLLOW_ME
+	.4byte BattleScript_EffectNaturePower            @ EFFECT_NATURE_POWER
+	.4byte BattleScript_EffectCharge                 @ EFFECT_CHARGE
+	.4byte BattleScript_EffectTaunt                  @ EFFECT_TAUNT
+	.4byte BattleScript_EffectHelpingHand            @ EFFECT_HELPING_HAND
+	.4byte BattleScript_EffectTrick                  @ EFFECT_TRICK
+	.4byte BattleScript_EffectRolePlay               @ EFFECT_ROLE_PLAY
+	.4byte BattleScript_EffectWish                   @ EFFECT_WISH
+	.4byte BattleScript_EffectAssist                 @ EFFECT_ASSIST
+	.4byte BattleScript_EffectIngrain                @ EFFECT_INGRAIN
+	.4byte BattleScript_EffectSuperpower             @ EFFECT_SUPERPOWER
+	.4byte BattleScript_EffectMagicCoat              @ EFFECT_MAGIC_COAT
+	.4byte BattleScript_EffectRecycle                @ EFFECT_RECYCLE
+	.4byte BattleScript_EffectRevenge                @ EFFECT_REVENGE
+	.4byte BattleScript_EffectBrickBreak             @ EFFECT_BRICK_BREAK
+	.4byte BattleScript_EffectYawn                   @ EFFECT_YAWN
+	.4byte BattleScript_EffectKnockOff               @ EFFECT_KNOCK_OFF
+	.4byte BattleScript_EffectEndeavor               @ EFFECT_ENDEAVOR
+	.4byte BattleScript_EffectEruption               @ EFFECT_ERUPTION
+	.4byte BattleScript_EffectSkillSwap              @ EFFECT_SKILL_SWAP
+	.4byte BattleScript_EffectImprison               @ EFFECT_IMPRISON
+	.4byte BattleScript_EffectRefresh                @ EFFECT_REFRESH
+	.4byte BattleScript_EffectGrudge                 @ EFFECT_GRUDGE
+	.4byte BattleScript_EffectSnatch                 @ EFFECT_SNATCH
+	.4byte BattleScript_EffectLowKick                @ EFFECT_LOW_KICK
+	.4byte BattleScript_EffectSecretPower            @ EFFECT_SECRET_POWER
+	.4byte BattleScript_EffectDoubleEdge             @ EFFECT_DOUBLE_EDGE
+	.4byte BattleScript_EffectTeeterDance            @ EFFECT_TEETER_DANCE
+	.4byte BattleScript_EffectBurnHit                @ EFFECT_BLAZE_KICK
+	.4byte BattleScript_EffectMudSport               @ EFFECT_MUD_SPORT
+	.4byte BattleScript_EffectPoisonFang             @ EFFECT_POISON_FANG
+	.4byte BattleScript_EffectWeatherBall            @ EFFECT_WEATHER_BALL
+	.4byte BattleScript_EffectOverheat               @ EFFECT_OVERHEAT
+	.4byte BattleScript_EffectTickle                 @ EFFECT_TICKLE
+	.4byte BattleScript_EffectCosmicPower            @ EFFECT_COSMIC_POWER
+	.4byte BattleScript_EffectSkyUppercut            @ EFFECT_SKY_UPPERCUT
+	.4byte BattleScript_EffectBulkUp                 @ EFFECT_BULK_UP
+	.4byte BattleScript_EffectPoisonHit              @ EFFECT_POISON_TAIL
+	.4byte BattleScript_EffectWaterSport             @ EFFECT_WATER_SPORT
+	.4byte BattleScript_EffectCalmMind               @ EFFECT_CALM_MIND
+	.4byte BattleScript_EffectDragonDance            @ EFFECT_DRAGON_DANCE
+	.4byte BattleScript_EffectCamouflage             @ EFFECT_CAMOUFLAGE
 
-	.globl BattleScript_MoveEnd
-BattleScript_MoveEnd: @ 0x8286FD6
-	.include "data/scripts/gUnknown_8286FD6.inc"
+@ The 214 JP dispatcher entries below use their real effect labels.
+@ Each effect body remains a byte-exact raw span until its battle-script
+@ macro conversion is independently verified.
+BattleScript_EffectHit:: @ 0x08286F88
+	.incbin "baserom_jp.gba", 0x286f88, 0x30
 
-	.globl BattleScript_MoveMissedPause
-BattleScript_MoveMissedPause: @ 0x8286FE8
-	.include "data/scripts/gUnknown_8286FE8.inc"
+BattleScript_HitFromCritCalc:: @ 0x08286FB8
+	.incbin "baserom_jp.gba", 0x286fb8, 0x1e
 
-	.globl BattleScript_StatUp
-BattleScript_StatUp: @ 0x828725C
-	.include "data/scripts/gUnknown_828725C.inc"
+BattleScript_MoveEnd:: @ 0x08286FD6
+	.incbin "baserom_jp.gba", 0x286fd6, 0x12
 
-	.globl BattleScript_StatDown
-BattleScript_StatDown: @ 0x82872ED
-	.include "data/scripts/gUnknown_82872ED.inc"
+BattleScript_MoveMissedPause:: @ 0x08286FE8
+	.incbin "baserom_jp.gba", 0x286fe8, 0xd
 
-	.globl BattleScript_MoveUsedMustRecharge
-BattleScript_MoveUsedMustRecharge: @ 0x82879EA
-	.include "data/scripts/gUnknown_82879EA.inc"
+BattleScript_EffectSleep:: @ 0x08286FF5
+	.incbin "baserom_jp.gba", 0x286ff5, 0x72
 
-	.globl BattleScript_PresentHealTarget
-BattleScript_PresentHealTarget: @ 0x8288469
-	.include "data/scripts/gUnknown_8288469.inc"
+BattleScript_EffectPoisonHit:: @ 0x08287067
+	.incbin "baserom_jp.gba", 0x287067, 0xb
 
-	.globl BattleScript_AlreadyAtFullHp
-BattleScript_AlreadyAtFullHp: @ 0x8288483
-	.include "data/scripts/gUnknown_8288483.inc"
+BattleScript_EffectAbsorb:: @ 0x08287072
+	.incbin "baserom_jp.gba", 0x287072, 0x6e
 
-	.globl BattleScript_ButItFailed
-BattleScript_ButItFailed: @ 0x82884A4
-	.include "data/scripts/gUnknown_82884A4.inc"
+BattleScript_EffectBurnHit:: @ 0x082870E0
+	.incbin "baserom_jp.gba", 0x2870e0, 0xb
+
+BattleScript_EffectFreezeHit:: @ 0x082870EB
+	.incbin "baserom_jp.gba", 0x2870eb, 0xb
+
+BattleScript_EffectParalyzeHit:: @ 0x082870F6
+	.incbin "baserom_jp.gba", 0x2870f6, 0xb
+
+BattleScript_EffectExplosion:: @ 0x08287101
+	.incbin "baserom_jp.gba", 0x287101, 0x80
+
+BattleScript_EffectDreamEater:: @ 0x08287181
+	.incbin "baserom_jp.gba", 0x287181, 0x69
+
+BattleScript_EffectMirrorMove:: @ 0x082871EA
+	.incbin "baserom_jp.gba", 0x2871ea, 0x18
+
+BattleScript_EffectAttackUp:: @ 0x08287202
+	.incbin "baserom_jp.gba", 0x287202, 0xb
+
+BattleScript_EffectDefenseUp:: @ 0x0828720D
+	.incbin "baserom_jp.gba", 0x28720d, 0xb
+
+BattleScript_EffectSpecialAttackUp:: @ 0x08287218
+	.incbin "baserom_jp.gba", 0x287218, 0xb
+
+BattleScript_EffectEvasionUp:: @ 0x08287223
+	.incbin "baserom_jp.gba", 0x287223, 0x39
+
+BattleScript_StatUp:: @ 0x0828725C
+	.incbin "baserom_jp.gba", 0x28725c, 0x10
+
+BattleScript_EffectAttackDown:: @ 0x0828726C
+	.incbin "baserom_jp.gba", 0x28726c, 0xb
+
+BattleScript_EffectDefenseDown:: @ 0x08287277
+	.incbin "baserom_jp.gba", 0x287277, 0xb
+
+BattleScript_EffectSpeedDown:: @ 0x08287282
+	.incbin "baserom_jp.gba", 0x287282, 0xb
+
+BattleScript_EffectAccuracyDown:: @ 0x0828728D
+	.incbin "baserom_jp.gba", 0x28728d, 0xb
+
+BattleScript_EffectEvasionDown:: @ 0x08287298
+	.incbin "baserom_jp.gba", 0x287298, 0x55
+
+BattleScript_StatDown:: @ 0x082872ED
+	.incbin "baserom_jp.gba", 0x2872ed, 0x10
+
+BattleScript_EffectHaze:: @ 0x082872FD
+	.incbin "baserom_jp.gba", 0x2872fd, 0x11
+
+BattleScript_EffectBide:: @ 0x0828730E
+	.incbin "baserom_jp.gba", 0x28730e, 0x14
+
+BattleScript_EffectRampage:: @ 0x08287322
+	.incbin "baserom_jp.gba", 0x287322, 0x1a
+
+BattleScript_EffectRoar:: @ 0x0828733C
+	.incbin "baserom_jp.gba", 0x28733c, 0x36
+
+BattleScript_EffectMultiHit:: @ 0x08287372
+	.incbin "baserom_jp.gba", 0x287372, 0xc4
+
+BattleScript_EffectConversion:: @ 0x08287436
+	.incbin "baserom_jp.gba", 0x287436, 0x15
+
+BattleScript_EffectFlinchHit:: @ 0x0828744B
+	.incbin "baserom_jp.gba", 0x28744b, 0xb
+
+BattleScript_EffectRestoreHp:: @ 0x08287456
+	.incbin "baserom_jp.gba", 0x287456, 0x23
+
+BattleScript_EffectToxic:: @ 0x08287479
+	.incbin "baserom_jp.gba", 0x287479, 0x8c
+
+BattleScript_EffectPayDay:: @ 0x08287505
+	.incbin "baserom_jp.gba", 0x287505, 0xb
+
+BattleScript_EffectLightScreen:: @ 0x08287510
+	.incbin "baserom_jp.gba", 0x287510, 0x9
+
+BattleScript_EffectTriAttack:: @ 0x08287519
+	.incbin "baserom_jp.gba", 0x287519, 0xb
+
+BattleScript_EffectRest:: @ 0x08287524
+	.incbin "baserom_jp.gba", 0x287524, 0x4b
+
+BattleScript_EffectOHKO:: @ 0x0828756F
+	.incbin "baserom_jp.gba", 0x28756f, 0x31
+
+BattleScript_EffectRazorWind:: @ 0x082875A0
+	.incbin "baserom_jp.gba", 0x2875a0, 0x81
+
+BattleScript_EffectSuperFang:: @ 0x08287621
+	.incbin "baserom_jp.gba", 0x287621, 0x17
+
+BattleScript_EffectDragonRage:: @ 0x08287638
+	.incbin "baserom_jp.gba", 0x287638, 0x2f
+
+BattleScript_EffectTrap:: @ 0x08287667
+	.incbin "baserom_jp.gba", 0x287667, 0x31
+
+BattleScript_EffectDoubleHit:: @ 0x08287698
+	.incbin "baserom_jp.gba", 0x287698, 0x18
+
+BattleScript_EffectRecoilIfMiss:: @ 0x082876B0
+	.incbin "baserom_jp.gba", 0x2876b0, 0x51
+
+BattleScript_EffectMist:: @ 0x08287701
+	.incbin "baserom_jp.gba", 0x287701, 0x13
+
+BattleScript_EffectFocusEnergy:: @ 0x08287714
+	.incbin "baserom_jp.gba", 0x287714, 0x1d
+
+BattleScript_EffectRecoil:: @ 0x08287731
+	.incbin "baserom_jp.gba", 0x287731, 0x19
+
+BattleScript_EffectConfuse:: @ 0x0828774A
+	.incbin "baserom_jp.gba", 0x28774a, 0x50
+
+BattleScript_EffectAttackUp2:: @ 0x0828779A
+	.incbin "baserom_jp.gba", 0x28779a, 0xb
+
+BattleScript_EffectDefenseUp2:: @ 0x082877A5
+	.incbin "baserom_jp.gba", 0x2877a5, 0xb
+
+BattleScript_EffectSpeedUp2:: @ 0x082877B0
+	.incbin "baserom_jp.gba", 0x2877b0, 0xb
+
+BattleScript_EffectSpecialAttackUp2:: @ 0x082877BB
+	.incbin "baserom_jp.gba", 0x2877bb, 0xb
+
+BattleScript_EffectSpecialDefenseUp2:: @ 0x082877C6
+	.incbin "baserom_jp.gba", 0x2877c6, 0xb
+
+BattleScript_EffectTransform:: @ 0x082877D1
+	.incbin "baserom_jp.gba", 0x2877d1, 0x13
+
+BattleScript_EffectAttackDown2:: @ 0x082877E4
+	.incbin "baserom_jp.gba", 0x2877e4, 0xb
+
+BattleScript_EffectDefenseDown2:: @ 0x082877EF
+	.incbin "baserom_jp.gba", 0x2877ef, 0xb
+
+BattleScript_EffectSpeedDown2:: @ 0x082877FA
+	.incbin "baserom_jp.gba", 0x2877fa, 0xb
+
+BattleScript_EffectSpecialDefenseDown2:: @ 0x08287805
+	.incbin "baserom_jp.gba", 0x287805, 0xb
+
+BattleScript_EffectReflect:: @ 0x08287810
+	.incbin "baserom_jp.gba", 0x287810, 0x13
+
+BattleScript_EffectPoison:: @ 0x08287823
+	.incbin "baserom_jp.gba", 0x287823, 0x61
+
+BattleScript_EffectParalyze:: @ 0x08287884
+	.incbin "baserom_jp.gba", 0x287884, 0x80
+
+BattleScript_EffectAttackDownHit:: @ 0x08287904
+	.incbin "baserom_jp.gba", 0x287904, 0xb
+
+BattleScript_EffectDefenseDownHit:: @ 0x0828790F
+	.incbin "baserom_jp.gba", 0x28790f, 0xb
+
+BattleScript_EffectSpeedDownHit:: @ 0x0828791A
+	.incbin "baserom_jp.gba", 0x28791a, 0xb
+
+BattleScript_EffectSpecialAttackDownHit:: @ 0x08287925
+	.incbin "baserom_jp.gba", 0x287925, 0xb
+
+BattleScript_EffectSpecialDefenseDownHit:: @ 0x08287930
+	.incbin "baserom_jp.gba", 0x287930, 0xb
+
+BattleScript_EffectAccuracyDownHit:: @ 0x0828793B
+	.incbin "baserom_jp.gba", 0x28793b, 0xb
+
+BattleScript_EffectSkyAttack:: @ 0x08287946
+	.incbin "baserom_jp.gba", 0x287946, 0x28
+
+BattleScript_EffectConfuseHit:: @ 0x0828796E
+	.incbin "baserom_jp.gba", 0x28796e, 0xb
+
+BattleScript_EffectTwineedle:: @ 0x08287979
+	.incbin "baserom_jp.gba", 0x287979, 0x18
+
+BattleScript_EffectSubstitute:: @ 0x08287991
+	.incbin "baserom_jp.gba", 0x287991, 0x46
+
+BattleScript_EffectRecharge:: @ 0x082879D7
+	.incbin "baserom_jp.gba", 0x2879d7, 0x13
+
+BattleScript_MoveUsedMustRecharge:: @ 0x082879EA
+	.incbin "baserom_jp.gba", 0x2879ea, 0xb
+
+BattleScript_EffectRage:: @ 0x082879F5
+	.incbin "baserom_jp.gba", 0x2879f5, 0x27
+
+BattleScript_EffectMimic:: @ 0x08287A1C
+	.incbin "baserom_jp.gba", 0x287a1c, 0x26
+
+BattleScript_EffectMetronome:: @ 0x08287A42
+	.incbin "baserom_jp.gba", 0x287a42, 0x14
+
+BattleScript_EffectLeechSeed:: @ 0x08287A56
+	.incbin "baserom_jp.gba", 0x287a56, 0x27
+
+BattleScript_EffectSplash:: @ 0x08287A7D
+	.incbin "baserom_jp.gba", 0x287a7d, 0x12
+
+BattleScript_EffectDisable:: @ 0x08287A8F
+	.incbin "baserom_jp.gba", 0x287a8f, 0x1c
+
+BattleScript_EffectLevelDamage:: @ 0x08287AAB
+	.incbin "baserom_jp.gba", 0x287aab, 0x18
+
+BattleScript_EffectPsywave:: @ 0x08287AC3
+	.incbin "baserom_jp.gba", 0x287ac3, 0x18
+
+BattleScript_EffectCounter:: @ 0x08287ADB
+	.incbin "baserom_jp.gba", 0x287adb, 0x16
+
+BattleScript_EffectEncore:: @ 0x08287AF1
+	.incbin "baserom_jp.gba", 0x287af1, 0x1c
+
+BattleScript_EffectPainSplit:: @ 0x08287B0D
+	.incbin "baserom_jp.gba", 0x287b0d, 0x37
+
+BattleScript_EffectSnore:: @ 0x08287B44
+	.incbin "baserom_jp.gba", 0x287b44, 0x3a
+
+BattleScript_EffectConversion2:: @ 0x08287B7E
+	.incbin "baserom_jp.gba", 0x287b7e, 0x15
+
+BattleScript_EffectLockOn:: @ 0x08287B93
+	.incbin "baserom_jp.gba", 0x287b93, 0x22
+
+BattleScript_EffectSketch:: @ 0x08287BB5
+	.incbin "baserom_jp.gba", 0x287bb5, 0x1f
+
+BattleScript_EffectSleepTalk:: @ 0x08287BD4
+	.incbin "baserom_jp.gba", 0x287bd4, 0x42
+
+BattleScript_EffectDestinyBond:: @ 0x08287C16
+	.incbin "baserom_jp.gba", 0x287c16, 0x11
+
+BattleScript_EffectFlail:: @ 0x08287C27
+	.incbin "baserom_jp.gba", 0x287c27, 0x6
+
+BattleScript_EffectSpite:: @ 0x08287C2D
+	.incbin "baserom_jp.gba", 0x287c2d, 0x1c
+
+BattleScript_EffectHealBell:: @ 0x08287C49
+	.incbin "baserom_jp.gba", 0x287c49, 0x45
+
+BattleScript_EffectTripleKick:: @ 0x08287C8E
+	.incbin "baserom_jp.gba", 0x287c8e, 0xe3
+
+BattleScript_EffectThief:: @ 0x08287D71
+	.incbin "baserom_jp.gba", 0x287d71, 0xb
+
+BattleScript_EffectMeanLook:: @ 0x08287D7C
+	.incbin "baserom_jp.gba", 0x287d7c, 0x32
+
+BattleScript_EffectNightmare:: @ 0x08287DAE
+	.incbin "baserom_jp.gba", 0x287dae, 0x3a
+
+BattleScript_EffectMinimize:: @ 0x08287DE8
+	.incbin "baserom_jp.gba", 0x287de8, 0xd
+
+BattleScript_EffectCurse:: @ 0x08287DF5
+	.incbin "baserom_jp.gba", 0x287df5, 0xc9
+
+BattleScript_EffectProtect:: @ 0x08287EBE
+BattleScript_EffectEndure:: @ 0x08287EBE
+	.incbin "baserom_jp.gba", 0x287ebe, 0x13
+
+BattleScript_EffectSpikes:: @ 0x08287ED1
+	.incbin "baserom_jp.gba", 0x287ed1, 0x15
+
+BattleScript_EffectForesight:: @ 0x08287EE6
+	.incbin "baserom_jp.gba", 0x287ee6, 0x18
+
+BattleScript_EffectPerishSong:: @ 0x08287EFE
+	.incbin "baserom_jp.gba", 0x287efe, 0x41
+
+BattleScript_EffectSandstorm:: @ 0x08287F3F
+	.incbin "baserom_jp.gba", 0x287f3f, 0x9
+
+BattleScript_EffectRollout:: @ 0x08287F48
+	.incbin "baserom_jp.gba", 0x287f48, 0x1b
+
+BattleScript_EffectSwagger:: @ 0x08287F63
+	.incbin "baserom_jp.gba", 0x287f63, 0x5e
+
+BattleScript_EffectFuryCutter:: @ 0x08287FC1
+	.incbin "baserom_jp.gba", 0x287fc1, 0x1f
+
+BattleScript_EffectAttract:: @ 0x08287FE0
+	.incbin "baserom_jp.gba", 0x287fe0, 0x1c
+
+BattleScript_EffectReturn:: @ 0x08287FFC
+BattleScript_EffectFrustration:: @ 0x08287FFC
+	.incbin "baserom_jp.gba", 0x287ffc, 0xe
+
+BattleScript_EffectPresent:: @ 0x0828800A
+	.incbin "baserom_jp.gba", 0x28800a, 0xc
+
+BattleScript_EffectSafeguard:: @ 0x08288016
+	.incbin "baserom_jp.gba", 0x288016, 0x9
+
+BattleScript_EffectThawHit:: @ 0x0828801F
+	.incbin "baserom_jp.gba", 0x28801f, 0xb
+
+BattleScript_EffectMagnitude:: @ 0x0828802A
+	.incbin "baserom_jp.gba", 0x28802a, 0x13
+
+BattleScript_EffectBatonPass:: @ 0x0828803D
+	.incbin "baserom_jp.gba", 0x28803d, 0x3b
+
+BattleScript_EffectRapidSpin:: @ 0x08288078
+	.incbin "baserom_jp.gba", 0x288078, 0xb
+
+BattleScript_EffectSonicboom:: @ 0x08288083
+	.incbin "baserom_jp.gba", 0x288083, 0x2f
+
+BattleScript_EffectMorningSun:: @ 0x082880B2
+BattleScript_EffectSynthesis:: @ 0x082880B2
+BattleScript_EffectMoonlight:: @ 0x082880B2
+	.incbin "baserom_jp.gba", 0x2880b2, 0xd
+
+BattleScript_EffectHiddenPower:: @ 0x082880BF
+	.incbin "baserom_jp.gba", 0x2880bf, 0x6
+
+BattleScript_EffectRainDance:: @ 0x082880C5
+	.incbin "baserom_jp.gba", 0x2880c5, 0x18
+
+BattleScript_EffectSunnyDay:: @ 0x082880DD
+	.incbin "baserom_jp.gba", 0x2880dd, 0x9
+
+BattleScript_EffectDefenseUpHit:: @ 0x082880E6
+	.incbin "baserom_jp.gba", 0x2880e6, 0xb
+
+BattleScript_EffectAttackUpHit:: @ 0x082880F1
+	.incbin "baserom_jp.gba", 0x2880f1, 0xb
+
+BattleScript_EffectAllStatsUpHit:: @ 0x082880FC
+	.incbin "baserom_jp.gba", 0x2880fc, 0xb
+
+BattleScript_EffectBellyDrum:: @ 0x08288107
+	.incbin "baserom_jp.gba", 0x288107, 0x22
+
+BattleScript_EffectPsychUp:: @ 0x08288129
+	.incbin "baserom_jp.gba", 0x288129, 0x15
+
+BattleScript_EffectMirrorCoat:: @ 0x0828813E
+	.incbin "baserom_jp.gba", 0x28813e, 0x16
+
+BattleScript_EffectSkullBash:: @ 0x08288154
+	.incbin "baserom_jp.gba", 0x288154, 0x4f
+
+BattleScript_EffectTwister:: @ 0x082881A3
+	.incbin "baserom_jp.gba", 0x2881a3, 0x25
+
+BattleScript_EffectEarthquake:: @ 0x082881C8
+	.incbin "baserom_jp.gba", 0x2881c8, 0x84
+
+BattleScript_EffectFutureSight:: @ 0x0828824C
+	.incbin "baserom_jp.gba", 0x28824c, 0x17
+
+BattleScript_EffectGust:: @ 0x08288263
+	.incbin "baserom_jp.gba", 0x288263, 0x1f
+
+BattleScript_EffectStomp:: @ 0x08288282
+	.incbin "baserom_jp.gba", 0x288282, 0x16
+
+BattleScript_EffectSolarBeam:: @ 0x08288298
+	.incbin "baserom_jp.gba", 0x288298, 0x56
+
+BattleScript_EffectThunder:: @ 0x082882EE
+	.incbin "baserom_jp.gba", 0x2882ee, 0x14
+
+BattleScript_EffectTeleport:: @ 0x08288302
+	.incbin "baserom_jp.gba", 0x288302, 0x3a
+
+BattleScript_EffectBeatUp:: @ 0x0828833C
+	.incbin "baserom_jp.gba", 0x28833c, 0x57
+
+BattleScript_EffectSemiInvulnerable:: @ 0x08288393
+	.incbin "baserom_jp.gba", 0x288393, 0xab
+
+BattleScript_EffectDefenseCurl:: @ 0x0828843E
+	.incbin "baserom_jp.gba", 0x28843e, 0x22
+
+BattleScript_EffectSoftboiled:: @ 0x08288460
+	.incbin "baserom_jp.gba", 0x288460, 0x9
+
+BattleScript_PresentHealTarget:: @ 0x08288469
+	.incbin "baserom_jp.gba", 0x288469, 0x1a
+
+BattleScript_AlreadyAtFullHp:: @ 0x08288483
+	.incbin "baserom_jp.gba", 0x288483, 0xe
+
+BattleScript_EffectFakeOut:: @ 0x08288491
+	.incbin "baserom_jp.gba", 0x288491, 0x13
+
+BattleScript_ButItFailed:: @ 0x082884A4
+	.incbin "baserom_jp.gba", 0x2884a4, 0x24
+
+BattleScript_EffectUproar:: @ 0x082884C8
+	.incbin "baserom_jp.gba", 0x2884c8, 0x20
+
+BattleScript_EffectStockpile:: @ 0x082884E8
+	.incbin "baserom_jp.gba", 0x2884e8, 0x13
+
+BattleScript_EffectSpitUp:: @ 0x082884FB
+	.incbin "baserom_jp.gba", 0x2884fb, 0x42
+
+BattleScript_EffectSwallow:: @ 0x0828853D
+	.incbin "baserom_jp.gba", 0x28853d, 0x1d
+
+BattleScript_EffectHail:: @ 0x0828855A
+	.incbin "baserom_jp.gba", 0x28855a, 0x9
+
+BattleScript_EffectTorment:: @ 0x08288563
+	.incbin "baserom_jp.gba", 0x288563, 0x1c
+
+BattleScript_EffectFlatter:: @ 0x0828857F
+	.incbin "baserom_jp.gba", 0x28857f, 0x5e
+
+BattleScript_EffectWillOWisp:: @ 0x082885DD
+	.incbin "baserom_jp.gba", 0x2885dd, 0x77
+
+BattleScript_EffectMemento:: @ 0x08288654
+	.incbin "baserom_jp.gba", 0x288654, 0xa3
+
+BattleScript_EffectFacade:: @ 0x082886F7
+	.incbin "baserom_jp.gba", 0x2886f7, 0x1a
+
+BattleScript_EffectFocusPunch:: @ 0x08288711
+	.incbin "baserom_jp.gba", 0x288711, 0x12
+
+BattleScript_EffectSmellingsalt:: @ 0x08288723
+	.incbin "baserom_jp.gba", 0x288723, 0x2a
+
+BattleScript_EffectFollowMe:: @ 0x0828874D
+	.incbin "baserom_jp.gba", 0x28874d, 0x11
+
+BattleScript_EffectNaturePower:: @ 0x0828875E
+	.incbin "baserom_jp.gba", 0x28875e, 0xd
+
+BattleScript_EffectCharge:: @ 0x0828876B
+	.incbin "baserom_jp.gba", 0x28876b, 0x11
+
+BattleScript_EffectTaunt:: @ 0x0828877C
+	.incbin "baserom_jp.gba", 0x28877c, 0x1c
+
+BattleScript_EffectHelpingHand:: @ 0x08288798
+	.incbin "baserom_jp.gba", 0x288798, 0x15
+
+BattleScript_EffectTrick:: @ 0x082887AD
+	.incbin "baserom_jp.gba", 0x2887ad, 0x2e
+
+BattleScript_EffectRolePlay:: @ 0x082887DB
+	.incbin "baserom_jp.gba", 0x2887db, 0x1c
+
+BattleScript_EffectWish:: @ 0x082887F7
+	.incbin "baserom_jp.gba", 0x2887f7, 0x10
+
+BattleScript_EffectAssist:: @ 0x08288807
+	.incbin "baserom_jp.gba", 0x288807, 0x17
+
+BattleScript_EffectIngrain:: @ 0x0828881E
+	.incbin "baserom_jp.gba", 0x28881e, 0x15
+
+BattleScript_EffectSuperpower:: @ 0x08288833
+	.incbin "baserom_jp.gba", 0x288833, 0xb
+
+BattleScript_EffectMagicCoat:: @ 0x0828883E
+	.incbin "baserom_jp.gba", 0x28883e, 0x15
+
+BattleScript_EffectRecycle:: @ 0x08288853
+	.incbin "baserom_jp.gba", 0x288853, 0x15
+
+BattleScript_EffectRevenge:: @ 0x08288868
+	.incbin "baserom_jp.gba", 0x288868, 0x6
+
+BattleScript_EffectBrickBreak:: @ 0x0828886E
+	.incbin "baserom_jp.gba", 0x28886e, 0x51
+
+BattleScript_EffectYawn:: @ 0x082888BF
+	.incbin "baserom_jp.gba", 0x2888bf, 0x59
+
+BattleScript_EffectKnockOff:: @ 0x08288918
+	.incbin "baserom_jp.gba", 0x288918, 0xb
+
+BattleScript_EffectEndeavor:: @ 0x08288923
+	.incbin "baserom_jp.gba", 0x288923, 0x3b
+
+BattleScript_EffectEruption:: @ 0x0828895E
+	.incbin "baserom_jp.gba", 0x28895e, 0x6
+
+BattleScript_EffectSkillSwap:: @ 0x08288964
+	.incbin "baserom_jp.gba", 0x288964, 0x1c
+
+BattleScript_EffectImprison:: @ 0x08288980
+	.incbin "baserom_jp.gba", 0x288980, 0x15
+
+BattleScript_EffectRefresh:: @ 0x08288995
+	.incbin "baserom_jp.gba", 0x288995, 0x17
+
+BattleScript_EffectGrudge:: @ 0x082889AC
+	.incbin "baserom_jp.gba", 0x2889ac, 0x15
+
+BattleScript_EffectSnatch:: @ 0x082889C1
+	.incbin "baserom_jp.gba", 0x2889c1, 0x18
+
+BattleScript_EffectLowKick:: @ 0x082889D9
+	.incbin "baserom_jp.gba", 0x2889d9, 0x10
+
+BattleScript_EffectSecretPower:: @ 0x082889E9
+	.incbin "baserom_jp.gba", 0x2889e9, 0x6
+
+BattleScript_EffectDoubleEdge:: @ 0x082889EF
+	.incbin "baserom_jp.gba", 0x2889ef, 0xb
+
+BattleScript_EffectTeeterDance:: @ 0x082889FA
+	.incbin "baserom_jp.gba", 0x2889fa, 0xb7
+
+BattleScript_EffectMudSport:: @ 0x08288AB1
+BattleScript_EffectWaterSport:: @ 0x08288AB1
+	.incbin "baserom_jp.gba", 0x288ab1, 0x17
+
+BattleScript_EffectPoisonFang:: @ 0x08288AC8
+	.incbin "baserom_jp.gba", 0x288ac8, 0xb
+
+BattleScript_EffectWeatherBall:: @ 0x08288AD3
+	.incbin "baserom_jp.gba", 0x288ad3, 0x6
+
+BattleScript_EffectOverheat:: @ 0x08288AD9
+	.incbin "baserom_jp.gba", 0x288ad9, 0xb
+
+BattleScript_EffectTickle:: @ 0x08288AE4
+	.incbin "baserom_jp.gba", 0x288ae4, 0x87
+
+BattleScript_EffectCosmicPower:: @ 0x08288B6B
+	.incbin "baserom_jp.gba", 0x288b6b, 0x64
+
+BattleScript_EffectSkyUppercut:: @ 0x08288BCF
+	.incbin "baserom_jp.gba", 0x288bcf, 0xe
+
+BattleScript_EffectBulkUp:: @ 0x08288BDD
+	.incbin "baserom_jp.gba", 0x288bdd, 0x64
+
+BattleScript_EffectCalmMind:: @ 0x08288C41
+	.incbin "baserom_jp.gba", 0x288c41, 0x78
+
+BattleScript_EffectDragonDance:: @ 0x08288CB9
+	.incbin "baserom_jp.gba", 0x288cb9, 0x64
+
+BattleScript_EffectCamouflage:: @ 0x08288D1D
+	.incbin "baserom_jp.gba", 0x288d1d, 0x15
 
 	.globl BattleScript_FaintAttacker
 BattleScript_FaintAttacker: @ 0x8288D32
