@@ -1,55 +1,60 @@
 @ BattleFrontier_BattlePikeCorridor scripts (JP map g26 m35 @ 0x08233C01)
 
 BattleFrontier_BattlePikeCorridor_MapScripts::
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattlePikeCorridor_MapScriptTable_00233C0C
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattlePikeCorridor_MapScriptTable_00233C87
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattlePikeCorridor_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattlePikeCorridor_OnWarp
 	.byte 0
 
-BattleFrontier_BattlePikeCorridor_MapScriptTable_00233C0C::
-	map_script_2 0x4000, 0x0, BattleFrontier_BattlePikeCorridor_EventScript_00233C16
+BattleFrontier_BattlePikeCorridor_OnFrame::
+	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattlePikeCorridor_EventScript_EnterCorridor
 	.2byte 0
 
-BattleFrontier_BattlePikeCorridor_EventScript_00233C16::
-	delay 0x10
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x2
-	setvar 0x8006, 0x1
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x14
-	special CallBattlePikeFunction
-	setvar 0x8004, 0x18
-	setvar 0x8005, 0x1
-	special CallBattlePikeFunction
-	applymovement 0xFF, 0x08233C9B
-	applymovement 0x1, 0x08233CA2
+BattleFrontier_BattlePikeCorridor_EventScript_EnterCorridor::
+	delay 16
+	frontier_set FRONTIER_DATA_BATTLE_NUM, 1
+	pike_cleartrainerids
+	pike_nohealing TRUE
+	applymovement LOCALID_PLAYER, BattleFrontier_BattlePikeCorridor_Movement_PlayerEnterCorridor
+	applymovement LOCALID_PIKE_CORRIDOR_ATTENDANT, BattleFrontier_BattlePikeCorridor_Movement_AttendantEnterCorridor
 	waitmovement 0x0
 	lockall
-	loadword 0x0, gJPText_00233CA7
-	callstd 0x4
+	msgbox BattleFrontier_BattlePikeCorridor_Text_YourChallengeHasBegun, MSGBOX_DEFAULT
 	closemessage
 	releaseall
-	applymovement 0xFF, 0x08233C9E
+	applymovement LOCALID_PLAYER, BattleFrontier_BattlePikeCorridor_Movement_PlayerExitCorridor
 	waitmovement 0x0
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x63
-	special CallFrontierUtilFunc
-	call 0x08233520
-	warpsilent 0x1A24, 0xFF, 0x6, 0xA
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 99
+	call BattleFrontier_BattlePike_EventScript_CloseCurtain
+	warpsilent MAP_BATTLE_FRONTIER_BATTLE_PIKE_THREE_PATH_ROOM, 6, 10
 	waitstate
 	end
 
-BattleFrontier_BattlePikeCorridor_MapScriptTable_00233C87::
-	map_script_2 0x4001, 0x0, BattleFrontier_BattlePikeCorridor_EventScript_00233C91
+BattleFrontier_BattlePikeCorridor_OnWarp::
+	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattlePikeCorridor_EventScript_TurnPlayerNorth
 	.2byte 0
 
-BattleFrontier_BattlePikeCorridor_EventScript_00233C91::
-	setvar 0x4001, 0x1
-	turnobject 0xFF, 0x2
+BattleFrontier_BattlePikeCorridor_EventScript_TurnPlayerNorth::
+	setvar VAR_TEMP_1, 1
+	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
-	.incbin "baserom_jp.gba", 0x233c9b, 0xc
-	.globl gJPText_00233CA7
-gJPText_00233CA7: @ 0x08233CA7
-	.string "⋯⋯　バトルゲーム　スタートです！$"
+BattleFrontier_BattlePikeCorridor_Movement_PlayerEnterCorridor:: @ 0x08233C9B
+	walk_up
+	walk_up
+	step_end
 
+BattleFrontier_BattlePikeCorridor_Movement_PlayerExitCorridor:: @ 0x08233C9E
+	walk_up
+	walk_up
+	set_invisible
+	step_end
+
+BattleFrontier_BattlePikeCorridor_Movement_AttendantEnterCorridor:: @ 0x08233CA2
+	walk_up
+	walk_up
+	walk_left
+	face_down
+	step_end
+
+BattleFrontier_BattlePikeCorridor_Text_YourChallengeHasBegun:: @ 0x08233CA7
+	.string "⋯⋯　バトルゲーム　スタートです！$"
