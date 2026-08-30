@@ -231,6 +231,11 @@ MAPS = (
     "SeafloorCavern_Room7",
     "SeafloorCavern_Room8",
     "SeafloorCavern_Room9",
+    "CaveOfOrigin_Entrance",
+    "CaveOfOrigin_1F",
+    "CaveOfOrigin_UnusedRubySapphireMap1",
+    "CaveOfOrigin_UnusedRubySapphireMap2",
+    "CaveOfOrigin_UnusedRubySapphireMap3",
 )
 
 CONNECTED_MAPS = (
@@ -459,6 +464,11 @@ NULL_CONNECTION_MAPS = (
     "SeafloorCavern_Room7",
     "SeafloorCavern_Room8",
     "SeafloorCavern_Room9",
+    "CaveOfOrigin_Entrance",
+    "CaveOfOrigin_1F",
+    "CaveOfOrigin_UnusedRubySapphireMap1",
+    "CaveOfOrigin_UnusedRubySapphireMap2",
+    "CaveOfOrigin_UnusedRubySapphireMap3",
 )
 
 CANONICAL_LAYOUT_MAPS = (

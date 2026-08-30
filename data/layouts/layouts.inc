@@ -1821,7 +1821,70 @@ gMapLayout_SEAFLOOR_CAVERN_ROOM9: @ 0x08410F10
 	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM9_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x410F28, 0x1358
+gMapLayout_CAVE_OF_ORIGIN_ENTRANCE_Border:
+	.incbin "data/layouts/CaveOfOrigin_Entrance/border.bin"
+gMapLayout_CAVE_OF_ORIGIN_ENTRANCE_Blockdata:
+	.incbin "data/layouts/CaveOfOrigin_Entrance/map.bin"
+	.globl gMapLayout_CAVE_OF_ORIGIN_ENTRANCE
+gMapLayout_CAVE_OF_ORIGIN_ENTRANCE: @ 0x0841130C
+	.4byte 19  @ width
+	.4byte 26  @ height
+	.4byte gMapLayout_CAVE_OF_ORIGIN_ENTRANCE_Border  @ border
+	.4byte gMapLayout_CAVE_OF_ORIGIN_ENTRANCE_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+gMapLayout_CAVE_OF_ORIGIN_1F_Border:
+	.incbin "data/layouts/CaveOfOrigin_1F/border.bin"
+gMapLayout_CAVE_OF_ORIGIN_1F_Blockdata:
+	.incbin "data/layouts/CaveOfOrigin_1F/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_CAVE_OF_ORIGIN_1F
+gMapLayout_CAVE_OF_ORIGIN_1F: @ 0x08411750
+	.4byte 23  @ width
+	.4byte 23  @ height
+	.4byte gMapLayout_CAVE_OF_ORIGIN_1F_Border  @ border
+	.4byte gMapLayout_CAVE_OF_ORIGIN_1F_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP1_Border:
+	.incbin "data/layouts/CaveOfOrigin_UnusedRubySapphireMap1/border.bin"
+gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP1_Blockdata:
+	.incbin "data/layouts/CaveOfOrigin_UnusedRubySapphireMap1/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP1
+gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP1: @ 0x08411B94
+	.4byte 23  @ width
+	.4byte 23  @ height
+	.4byte gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP1_Border  @ border
+	.4byte gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP1_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP2_Border:
+	.incbin "data/layouts/CaveOfOrigin_UnusedRubySapphireMap2/border.bin"
+gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP2_Blockdata:
+	.incbin "data/layouts/CaveOfOrigin_UnusedRubySapphireMap2/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP2
+gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP2: @ 0x08411F28
+	.4byte 21  @ width
+	.4byte 21  @ height
+	.4byte gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP2_Border  @ border
+	.4byte gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP2_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP3_Border:
+	.incbin "data/layouts/CaveOfOrigin_UnusedRubySapphireMap3/border.bin"
+gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP3_Blockdata:
+	.incbin "data/layouts/CaveOfOrigin_UnusedRubySapphireMap3/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP3
+gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP3: @ 0x08412268
+	.4byte 19  @ width
+	.4byte 21  @ height
+	.4byte gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP3_Border  @ border
+	.4byte gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP3_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
 gMapLayout_CAVE_OF_ORIGIN_B1F_Border:
 	.incbin "data/layouts/CaveOfOrigin_B1F/border.bin"
 gMapLayout_CAVE_OF_ORIGIN_B1F_Blockdata:
