@@ -381,6 +381,7 @@ JP_STRUCTURED_MAP_METADATA_MAPS += EverGrandeCity_SidneysRoom EverGrandeCity_Pho
 	EverGrandeCity_Hall5 EverGrandeCity_PokemonLeague_1F EverGrandeCity_HallOfFame \
 	EverGrandeCity_PokemonCenter_1F EverGrandeCity_PokemonCenter_2F \
 	EverGrandeCity_PokemonLeague_2F
+JP_STRUCTURED_MAP_METADATA_MAPS += Route104_MrBrineysHouse Route104_PrettyPetalFlowerShop
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

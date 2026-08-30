@@ -2073,21 +2073,9 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F (g16 m14)
 	.include "data/maps/EverGrandeCity_PokemonLeague_2F/header.inc"
 	@ MAP_ROUTE104_MR_BRINEYS_HOUSE (g17 m0)
-	.4byte gMapLayout_ROUTE104_MR_BRINEYS_HOUSE  @ mapLayout
-	.4byte gMapEvents_ROUTE104_MR_BRINEYS_HOUSE  @ events
-	.4byte Route104_MrBrineysHouse_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016A  @ music
-	.2byte 0x0066  @ mapLayoutId
-	.byte 0x13, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route104_MrBrineysHouse/header.inc"
 	@ MAP_ROUTE104_PRETTY_PETAL_FLOWER_SHOP (g17 m1)
-	.4byte gMapLayout_ROUTE104_PRETTY_PETAL_FLOWER_SHOP  @ mapLayout
-	.4byte gMapEvents_ROUTE104_PRETTY_PETAL_FLOWER_SHOP  @ events
-	.4byte Route104_PrettyPetalFlowerShop_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016A  @ music
-	.2byte 0x0075  @ mapLayoutId
-	.byte 0x13, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route104_PrettyPetalFlowerShop/header.inc"
 	@ MAP_ROUTE111_WINSTRATE_FAMILYS_HOUSE (g18 m0)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
 	.4byte gMapEvents_ROUTE111_WINSTRATE_FAMILYS_HOUSE  @ events

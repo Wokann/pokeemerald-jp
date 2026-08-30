@@ -906,11 +906,7 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/EverGrandeCity_PokemonCenter_2F/events.inc"
 	.include "data/maps/EverGrandeCity_PokemonLeague_2F/events.inc"
 	.include "data/maps/Route104_MrBrineysHouse/events.inc"
-	.globl gMapEvents_ROUTE104_MR_BRINEYS_HOUSE
-	.set gMapEvents_ROUTE104_MR_BRINEYS_HOUSE, Route104_MrBrineysHouse_MapEvents
 	.include "data/maps/Route104_PrettyPetalFlowerShop/events.inc"
-	.globl gMapEvents_ROUTE104_PRETTY_PETAL_FLOWER_SHOP
-	.set gMapEvents_ROUTE104_PRETTY_PETAL_FLOWER_SHOP, Route104_PrettyPetalFlowerShop_MapEvents
 	.include "data/maps/Route111_WinstrateFamilysHouse/events.inc"
 	.globl gMapEvents_ROUTE111_WINSTRATE_FAMILYS_HOUSE
 	.set gMapEvents_ROUTE111_WINSTRATE_FAMILYS_HOUSE, Route111_WinstrateFamilysHouse_MapEvents
