@@ -1157,7 +1157,10 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/SealedChamber_OuterRoom/events.inc"
 	.include "data/maps/SealedChamber_InnerRoom/events.inc"
 	.include "data/maps/ScorchedSlab/events.inc"
-	.incbin "baserom_jp.gba", 0x50F6E8, 0x7E94
+	.include "data/maps/AquaHideout_UnusedRubyMap1/events.inc"
+	.include "data/maps/AquaHideout_UnusedRubyMap2/events.inc"
+	.include "data/maps/AquaHideout_UnusedRubyMap3/events.inc"
+	.incbin "baserom_jp.gba", 0x50F724, 0x7E58
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
