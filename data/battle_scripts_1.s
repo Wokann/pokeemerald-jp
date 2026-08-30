@@ -1379,13 +1379,21 @@ BattleScript_MoveUsedWokeUp:: @ 0x082897A8
 BattleScript_MonWokeUpInUproar:: @ 0x082897BC
 	.incbin "baserom_jp.gba", 0x2897bc, 0x9
 
-	.globl BattleScript_PoisonTurnDmg
-BattleScript_PoisonTurnDmg: @ 0x82897C5
-	.include "data/scripts/gUnknown_82897C5.inc"
+@ Poison and burn residual-damage paths with their shared status handlers.
+BattleScript_PoisonTurnDmg:: @ 0x082897C5
+	.incbin "baserom_jp.gba", 0x2897c5, 0x6
 
-	.globl BattleScript_BurnTurnDmg
-BattleScript_BurnTurnDmg: @ 0x82897E7
-	.include "data/scripts/gUnknown_82897E7.inc"
+BattleScript_DoStatusTurnDmg:: @ 0x082897CB
+	.incbin "baserom_jp.gba", 0x2897cb, 0x2
+
+BattleScript_DoTurnDmg:: @ 0x082897CD
+	.incbin "baserom_jp.gba", 0x2897cd, 0x19
+
+BattleScript_DoTurnDmgEnd:: @ 0x082897E6
+	.incbin "baserom_jp.gba", 0x2897e6, 0x1
+
+BattleScript_BurnTurnDmg:: @ 0x082897E7
+	.incbin "baserom_jp.gba", 0x2897e7, 0xb
 
 	.globl BattleScript_MoveUsedIsFrozen
 BattleScript_MoveUsedIsFrozen: @ 0x82897F2
