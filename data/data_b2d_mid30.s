@@ -1621,77 +1621,23 @@ gUnknown_845A1F4: @ 0x845A1F4
 gMapHeaders: @ 0x0845A8D8
 	@ struct MapHeader { mapLayout, events, mapScripts, connections, music, mapLayoutId, regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType }
 	@ MAP_PETALBURG_CITY (g0 m0)
-	.4byte gMapLayout_PETALBURG_CITY  @ mapLayout
-	.4byte PetalburgCity_MapEvents  @ events
-	.4byte PetalburgCity_MapScripts  @ mapScripts
-	.4byte gMapConnections_PETALBURG_CITY  @ connections
-	.2byte 0x016A  @ music
-	.2byte 0x0001  @ mapLayoutId
-	.byte 0x07, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/PetalburgCity/header.inc"
 	@ MAP_SLATEPORT_CITY (g0 m1)
-	.4byte gMapLayout_SLATEPORT_CITY  @ mapLayout
-	.4byte SlateportCity_MapEvents  @ events
-	.4byte SlateportCity_MapScripts  @ mapScripts
-	.4byte gMapConnections_SLATEPORT_CITY  @ connections
-	.2byte 0x01B1  @ music
-	.2byte 0x0002  @ mapLayoutId
-	.byte 0x08, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity/header.inc"
 	@ MAP_MAUVILLE_CITY (g0 m2)
-	.4byte gMapLayout_MAUVILLE_CITY  @ mapLayout
-	.4byte MauvilleCity_MapEvents  @ events
-	.4byte MauvilleCity_MapScripts  @ mapScripts
-	.4byte gMapConnections_MAUVILLE_CITY  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0003  @ mapLayoutId
-	.byte 0x09, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MauvilleCity/header.inc"
 	@ MAP_RUSTBORO_CITY (g0 m3)
-	.4byte gMapLayout_RUSTBORO_CITY  @ mapLayout
-	.4byte RustboroCity_MapEvents  @ events
-	.4byte RustboroCity_MapScripts  @ mapScripts
-	.4byte gMapConnections_RUSTBORO_CITY  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0004  @ mapLayoutId
-	.byte 0x0A, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RustboroCity/header.inc"
 	@ MAP_FORTREE_CITY (g0 m4)
-	.4byte gMapLayout_FORTREE_CITY  @ mapLayout
-	.4byte FortreeCity_MapEvents  @ events
-	.4byte FortreeCity_MapScripts  @ mapScripts
-	.4byte gMapConnections_FORTREE_CITY  @ connections
-	.2byte 0x017E  @ music
-	.2byte 0x0005  @ mapLayoutId
-	.byte 0x0B, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FortreeCity/header.inc"
 	@ MAP_LILYCOVE_CITY (g0 m5)
-	.4byte gMapLayout_LILYCOVE_CITY  @ mapLayout
-	.4byte LilycoveCity_MapEvents  @ events
-	.4byte LilycoveCity_MapScripts  @ mapScripts
-	.4byte gMapConnections_LILYCOVE_CITY  @ connections
-	.2byte 0x0198  @ music
-	.2byte 0x0006  @ mapLayoutId
-	.byte 0x0C, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LilycoveCity/header.inc"
 	@ MAP_MOSSDEEP_CITY (g0 m6)
-	.4byte gMapLayout_MOSSDEEP_CITY  @ mapLayout
-	.4byte MossdeepCity_MapEvents  @ events
-	.4byte MossdeepCity_MapScripts  @ mapScripts
-	.4byte gMapConnections_MOSSDEEP_CITY  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0007  @ mapLayoutId
-	.byte 0x0D, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MossdeepCity/header.inc"
 	@ MAP_SOOTOPOLIS_CITY (g0 m7)
-	.4byte gMapLayout_SOOTOPOLIS_CITY  @ mapLayout
-	.4byte SootopolisCity_MapEvents  @ events
-	.4byte SootopolisCity_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01BD  @ music
-	.2byte 0x0008  @ mapLayoutId
-	.byte 0x0E, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SootopolisCity/header.inc"
 	@ MAP_EVER_GRANDE_CITY (g0 m8)
-	.4byte gMapLayout_EVER_GRANDE_CITY  @ mapLayout
-	.4byte EverGrandeCity_MapEvents  @ events
-	.4byte EverGrandeCity_MapScripts  @ mapScripts
-	.4byte gMapConnections_EVER_GRANDE_CITY  @ connections
-	.2byte 0x01A6  @ music
-	.2byte 0x0009  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity/header.inc"
 	@ MAP_LITTLEROOT_TOWN (g0 m9)
 	.4byte gMapLayout_LITTLEROOT_TOWN  @ mapLayout
 	.4byte LittlerootTown_MapEvents  @ events
@@ -3895,115 +3841,15 @@ PACIFIDLOG_TOWN_MapConnections: @ 0x0845EAD4
 gMapConnections_PACIFIDLOG_TOWN: @ 0x0845EAEC
 	.4byte 2  @ count
 	.4byte PACIFIDLOG_TOWN_MapConnections  @ connections
-	.globl PETALBURG_CITY_MapConnections
-PETALBURG_CITY_MapConnections: @ 0x0845EAF4
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte -50  @ offset
-	.byte 0, 19, 0x00, 0x00  @ mapGroup, mapNum (0x0013)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte 10  @ offset
-	.byte 0, 17, 0x00, 0x00  @ mapGroup, mapNum (0x0011)
-	.globl gMapConnections_PETALBURG_CITY
-gMapConnections_PETALBURG_CITY: @ 0x0845EB0C
-	.4byte 2  @ count
-	.4byte PETALBURG_CITY_MapConnections  @ connections
-	.globl SLATEPORT_CITY_MapConnections
-SLATEPORT_CITY_MapConnections: @ 0x0845EB14
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 25, 0x00, 0x00  @ mapGroup, mapNum (0x0019)
-	.byte 0x01, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 24, 0x00, 0x00  @ mapGroup, mapNum (0x0018)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 49, 0x00, 0x00  @ mapGroup, mapNum (0x0031)
-	.globl gMapConnections_SLATEPORT_CITY
-gMapConnections_SLATEPORT_CITY: @ 0x0845EB38
-	.4byte 3  @ count
-	.4byte SLATEPORT_CITY_MapConnections  @ connections
-	.globl MAUVILLE_CITY_MapConnections
-MAUVILLE_CITY_MapConnections: @ 0x0845EB40
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 26, 0x00, 0x00  @ mapGroup, mapNum (0x001A)
-	.byte 0x01, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 25, 0x00, 0x00  @ mapGroup, mapNum (0x0019)
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 32, 0x00, 0x00  @ mapGroup, mapNum (0x0020)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 33, 0x00, 0x00  @ mapGroup, mapNum (0x0021)
-	.globl gMapConnections_MAUVILLE_CITY
-gMapConnections_MAUVILLE_CITY: @ 0x0845EB70
-	.4byte 4  @ count
-	.4byte MAUVILLE_CITY_MapConnections  @ connections
-	.globl RUSTBORO_CITY_MapConnections
-RUSTBORO_CITY_MapConnections: @ 0x0845EB78
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 30, 0x00, 0x00  @ mapGroup, mapNum (0x001E)
-	.byte 0x01, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 19, 0x00, 0x00  @ mapGroup, mapNum (0x0013)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 31, 0x00, 0x00  @ mapGroup, mapNum (0x001F)
-	.globl gMapConnections_RUSTBORO_CITY
-gMapConnections_RUSTBORO_CITY: @ 0x0845EB9C
-	.4byte 3  @ count
-	.4byte RUSTBORO_CITY_MapConnections  @ connections
-	.globl FORTREE_CITY_MapConnections
-FORTREE_CITY_MapConnections: @ 0x0845EBA4
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 34, 0x00, 0x00  @ mapGroup, mapNum (0x0022)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 35, 0x00, 0x00  @ mapGroup, mapNum (0x0023)
-	.globl gMapConnections_FORTREE_CITY
-gMapConnections_FORTREE_CITY: @ 0x0845EBBC
-	.4byte 2  @ count
-	.4byte FORTREE_CITY_MapConnections  @ connections
-	.globl LILYCOVE_CITY_MapConnections
-LILYCOVE_CITY_MapConnections: @ 0x0845EBC4
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte 10  @ offset
-	.byte 0, 36, 0x00, 0x00  @ mapGroup, mapNum (0x0024)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte -10  @ offset
-	.byte 0, 39, 0x00, 0x00  @ mapGroup, mapNum (0x0027)
-	.globl gMapConnections_LILYCOVE_CITY
-gMapConnections_LILYCOVE_CITY: @ 0x0845EBDC
-	.4byte 2  @ count
-	.4byte LILYCOVE_CITY_MapConnections  @ connections
-	.globl MOSSDEEP_CITY_MapConnections
-MOSSDEEP_CITY_MapConnections: @ 0x0845EBE4
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 40, 0x00, 0x00  @ mapGroup, mapNum (0x0028)
-	.byte 0x01, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 42, 0x00, 0x00  @ mapGroup, mapNum (0x002A)
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte -40  @ offset
-	.byte 0, 39, 0x00, 0x00  @ mapGroup, mapNum (0x0027)
-	.globl gMapConnections_MOSSDEEP_CITY
-gMapConnections_MOSSDEEP_CITY: @ 0x0845EC08
-	.4byte 3  @ count
-	.4byte MOSSDEEP_CITY_MapConnections  @ connections
+	.include "data/maps/PetalburgCity/connections.inc"
+	.include "data/maps/SlateportCity/connections.inc"
+	.include "data/maps/MauvilleCity/connections.inc"
+	.include "data/maps/RustboroCity/connections.inc"
+	.include "data/maps/FortreeCity/connections.inc"
+	.include "data/maps/LilycoveCity/connections.inc"
+	.include "data/maps/MossdeepCity/connections.inc"
 	.incbin "baserom_jp.gba", 0x45EC10, 0x8
-	.globl EVER_GRANDE_CITY_MapConnections
-EVER_GRANDE_CITY_MapConnections: @ 0x0845EC18
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte 40  @ offset
-	.byte 0, 43, 0x00, 0x00  @ mapGroup, mapNum (0x002B)
-	.globl gMapConnections_EVER_GRANDE_CITY
-gMapConnections_EVER_GRANDE_CITY: @ 0x0845EC24
-	.4byte 1  @ count
-	.4byte EVER_GRANDE_CITY_MapConnections  @ connections
+	.include "data/maps/EverGrandeCity/connections.inc"
 	.globl ROUTE101_MapConnections
 ROUTE101_MapConnections: @ 0x0845EC2C
 	.byte 0x02, 0x00, 0x00, 0x00  @ direction

@@ -305,6 +305,8 @@ JP_STRUCTURED_MAP_METADATA_MAPS += AbandonedShip_Deck AbandonedShip_Corridors_1F
 	AbandonedShip_HiddenFloorCorridors AbandonedShip_HiddenFloorRooms
 JP_STRUCTURED_MAP_METADATA_MAPS += IslandCave AncientTomb Underwater_Route134 Underwater_SealedChamber \
 	SealedChamber_OuterRoom SealedChamber_InnerRoom ScorchedSlab
+JP_STRUCTURED_MAP_METADATA_MAPS += PetalburgCity SlateportCity MauvilleCity RustboroCity FortreeCity \
+	LilycoveCity MossdeepCity SootopolisCity EverGrandeCity
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)
