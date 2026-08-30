@@ -1653,85 +1653,25 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_PACIFIDLOG_TOWN (g0 m15)
 	.include "data/maps/PacifidlogTown/header.inc"
 	@ MAP_ROUTE101 (g0 m16)
-	.4byte gMapLayout_ROUTE101  @ mapLayout
-	.4byte Route101_MapEvents  @ events
-	.4byte Route101_MapScripts  @ mapScripts
-	.4byte gMapConnections_ROUTE101  @ connections
-	.2byte 0x0167  @ music
-	.2byte 0x0011  @ mapLayoutId
-	.byte 0x10, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route101/header.inc"
 	@ MAP_ROUTE102 (g0 m17)
-	.4byte gMapLayout_ROUTE102  @ mapLayout
-	.4byte Route102_MapEvents  @ events
-	.4byte Route102_MapScripts  @ mapScripts
-	.4byte gMapConnections_ROUTE102  @ connections
-	.2byte 0x0167  @ music
-	.2byte 0x0012  @ mapLayoutId
-	.byte 0x11, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route102/header.inc"
 	@ MAP_ROUTE103 (g0 m18)
-	.4byte gMapLayout_ROUTE103  @ mapLayout
-	.4byte Route103_MapEvents  @ events
-	.4byte Route103_MapScripts  @ mapScripts
-	.4byte gMapConnections_ROUTE103  @ connections
-	.2byte 0x0167  @ music
-	.2byte 0x0013  @ mapLayoutId
-	.byte 0x12, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route103/header.inc"
 	@ MAP_ROUTE104 (g0 m19)
-	.4byte gMapLayout_ROUTE104  @ mapLayout
-	.4byte Route104_MapEvents  @ events
-	.4byte Route104_MapScripts  @ mapScripts
-	.4byte gMapConnections_ROUTE104  @ connections
-	.2byte 0x0191  @ music
-	.2byte 0x0014  @ mapLayoutId
-	.byte 0x13, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route104/header.inc"
 	@ MAP_ROUTE105 (g0 m20)
-	.4byte gMapLayout_ROUTE105  @ mapLayout
-	.4byte Route105_MapEvents  @ events
-	.4byte Route105_MapScripts  @ mapScripts
-	.4byte gMapConnections_ROUTE105  @ connections
-	.2byte 0x0191  @ music
-	.2byte 0x0015  @ mapLayoutId
-	.byte 0x14, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route105/header.inc"
 	@ MAP_ROUTE106 (g0 m21)
-	.4byte gMapLayout_ROUTE106  @ mapLayout
-	.4byte Route106_MapEvents  @ events
-	.4byte Route106_MapScripts  @ mapScripts
-	.4byte gMapConnections_ROUTE106  @ connections
-	.2byte 0x0191  @ music
-	.2byte 0x0016  @ mapLayoutId
-	.byte 0x15, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route106/header.inc"
 	@ MAP_ROUTE107 (g0 m22)
-	.4byte gMapLayout_ROUTE107  @ mapLayout
-	.4byte Route107_MapEvents  @ events
-	.4byte Route107_MapScripts  @ mapScripts
-	.4byte gMapConnections_ROUTE107  @ connections
-	.2byte 0x0191  @ music
-	.2byte 0x0017  @ mapLayoutId
-	.byte 0x16, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route107/header.inc"
 	@ MAP_ROUTE108 (g0 m23)
-	.4byte gMapLayout_ROUTE108  @ mapLayout
-	.4byte Route108_MapEvents  @ events
-	.4byte Route108_MapScripts  @ mapScripts
-	.4byte gMapConnections_ROUTE108  @ connections
-	.2byte 0x0191  @ music
-	.2byte 0x0018  @ mapLayoutId
-	.byte 0x17, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route108/header.inc"
 	@ MAP_ROUTE109 (g0 m24)
-	.4byte gMapLayout_ROUTE109  @ mapLayout
-	.4byte Route109_MapEvents  @ events
-	.4byte Route109_MapScripts  @ mapScripts
-	.4byte gMapConnections_ROUTE109  @ connections
-	.2byte 0x0191  @ music
-	.2byte 0x0019  @ mapLayoutId
-	.byte 0x18, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route109/header.inc"
 	@ MAP_ROUTE110 (g0 m25)
-	.4byte gMapLayout_ROUTE110  @ mapLayout
-	.4byte Route110_MapEvents  @ events
-	.4byte Route110_MapScripts  @ mapScripts
-	.4byte gMapConnections_ROUTE110  @ connections
-	.2byte 0x0168  @ music
-	.2byte 0x001A  @ mapLayoutId
-	.byte 0x19, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route110/header.inc"
 	@ MAP_ROUTE111 (g0 m26)
 	.4byte gMapLayout_ROUTE111  @ mapLayout
 	.4byte Route111_MapEvents  @ events
@@ -3734,135 +3674,16 @@ gUnknown_845E998: @ 0x0845E998
 	.include "data/maps/MossdeepCity/connections.inc"
 	.incbin "baserom_jp.gba", 0x45EC10, 0x8
 	.include "data/maps/EverGrandeCity/connections.inc"
-	.globl ROUTE101_MapConnections
-ROUTE101_MapConnections: @ 0x0845EC2C
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 10, 0x00, 0x00  @ mapGroup, mapNum (0x000A)
-	.byte 0x01, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 9, 0x00, 0x00  @ mapGroup, mapNum (0x0009)
-	.globl gMapConnections_ROUTE101
-gMapConnections_ROUTE101: @ 0x0845EC44
-	.4byte 2  @ count
-	.4byte ROUTE101_MapConnections  @ connections
-	.globl ROUTE102_MapConnections
-ROUTE102_MapConnections: @ 0x0845EC4C
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte -10  @ offset
-	.byte 0, 0, 0x00, 0x00  @ mapGroup, mapNum (0x0000)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 10, 0x00, 0x00  @ mapGroup, mapNum (0x000A)
-	.globl gMapConnections_ROUTE102
-gMapConnections_ROUTE102: @ 0x0845EC64
-	.4byte 2  @ count
-	.4byte ROUTE102_MapConnections  @ connections
-	.globl ROUTE103_MapConnections
-ROUTE103_MapConnections: @ 0x0845EC6C
-	.byte 0x01, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 10, 0x00, 0x00  @ mapGroup, mapNum (0x000A)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte -60  @ offset
-	.byte 0, 25, 0x00, 0x00  @ mapGroup, mapNum (0x0019)
-	.globl gMapConnections_ROUTE103
-gMapConnections_ROUTE103: @ 0x0845EC84
-	.4byte 2  @ count
-	.4byte ROUTE103_MapConnections  @ connections
-	.globl ROUTE104_MapConnections
-ROUTE104_MapConnections: @ 0x0845EC8C
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 3, 0x00, 0x00  @ mapGroup, mapNum (0x0003)
-	.byte 0x01, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 20, 0x00, 0x00  @ mapGroup, mapNum (0x0014)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte 50  @ offset
-	.byte 0, 0, 0x00, 0x00  @ mapGroup, mapNum (0x0000)
-	.globl gMapConnections_ROUTE104
-gMapConnections_ROUTE104: @ 0x0845ECB0
-	.4byte 3  @ count
-	.4byte ROUTE104_MapConnections  @ connections
-	.globl ROUTE105_MapConnections
-ROUTE105_MapConnections: @ 0x0845ECB8
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 19, 0x00, 0x00  @ mapGroup, mapNum (0x0013)
-	.byte 0x01, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 21, 0x00, 0x00  @ mapGroup, mapNum (0x0015)
-	.byte 0x05, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 55, 0x00, 0x00  @ mapGroup, mapNum (0x0037)
-	.globl gMapConnections_ROUTE105
-gMapConnections_ROUTE105: @ 0x0845ECDC
-	.4byte 3  @ count
-	.4byte ROUTE105_MapConnections  @ connections
-	.globl ROUTE106_MapConnections
-ROUTE106_MapConnections: @ 0x0845ECE4
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 20, 0x00, 0x00  @ mapGroup, mapNum (0x0014)
-	.byte 0x01, 0x00, 0x00, 0x00  @ direction
-	.4byte 60  @ offset
-	.byte 0, 11, 0x00, 0x00  @ mapGroup, mapNum (0x000B)
-	.globl gMapConnections_ROUTE106
-gMapConnections_ROUTE106: @ 0x0845ECFC
-	.4byte 2  @ count
-	.4byte ROUTE106_MapConnections  @ connections
-	.globl ROUTE107_MapConnections
-ROUTE107_MapConnections: @ 0x0845ED04
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 11, 0x00, 0x00  @ mapGroup, mapNum (0x000B)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 23, 0x00, 0x00  @ mapGroup, mapNum (0x0017)
-	.globl gMapConnections_ROUTE107
-gMapConnections_ROUTE107: @ 0x0845ED1C
-	.4byte 2  @ count
-	.4byte ROUTE107_MapConnections  @ connections
-	.globl ROUTE108_MapConnections
-ROUTE108_MapConnections: @ 0x0845ED24
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 22, 0x00, 0x00  @ mapGroup, mapNum (0x0016)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte -40  @ offset
-	.byte 0, 24, 0x00, 0x00  @ mapGroup, mapNum (0x0018)
-	.globl gMapConnections_ROUTE108
-gMapConnections_ROUTE108: @ 0x0845ED3C
-	.4byte 2  @ count
-	.4byte ROUTE108_MapConnections  @ connections
-	.globl ROUTE109_MapConnections
-ROUTE109_MapConnections: @ 0x0845ED44
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 1, 0x00, 0x00  @ mapGroup, mapNum (0x0001)
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte 40  @ offset
-	.byte 0, 23, 0x00, 0x00  @ mapGroup, mapNum (0x0017)
-	.globl gMapConnections_ROUTE109
-gMapConnections_ROUTE109: @ 0x0845ED5C
-	.4byte 2  @ count
-	.4byte ROUTE109_MapConnections  @ connections
-	.globl ROUTE110_MapConnections
-ROUTE110_MapConnections: @ 0x0845ED64
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 2, 0x00, 0x00  @ mapGroup, mapNum (0x0002)
-	.byte 0x01, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 1, 0x00, 0x00  @ mapGroup, mapNum (0x0001)
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte 60  @ offset
-	.byte 0, 18, 0x00, 0x00  @ mapGroup, mapNum (0x0012)
-	.globl gMapConnections_ROUTE110
-gMapConnections_ROUTE110: @ 0x0845ED88
-	.4byte 3  @ count
-	.4byte ROUTE110_MapConnections  @ connections
+	.include "data/maps/Route101/connections.inc"
+	.include "data/maps/Route102/connections.inc"
+	.include "data/maps/Route103/connections.inc"
+	.include "data/maps/Route104/connections.inc"
+	.include "data/maps/Route105/connections.inc"
+	.include "data/maps/Route106/connections.inc"
+	.include "data/maps/Route107/connections.inc"
+	.include "data/maps/Route108/connections.inc"
+	.include "data/maps/Route109/connections.inc"
+	.include "data/maps/Route110/connections.inc"
 	.globl ROUTE111_MapConnections
 ROUTE111_MapConnections: @ 0x0845ED90
 	.byte 0x01, 0x00, 0x00, 0x00  @ direction

@@ -309,6 +309,8 @@ JP_STRUCTURED_MAP_METADATA_MAPS += PetalburgCity SlateportCity MauvilleCity Rust
 	LilycoveCity MossdeepCity SootopolisCity EverGrandeCity
 JP_STRUCTURED_MAP_METADATA_MAPS += LittlerootTown OldaleTown DewfordTown LavaridgeTown FallarborTown \
 	VerdanturfTown PacifidlogTown
+JP_STRUCTURED_MAP_METADATA_MAPS += Route101 Route102 Route103 Route104 Route105 Route106 Route107 Route108 \
+	Route109 Route110
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)
