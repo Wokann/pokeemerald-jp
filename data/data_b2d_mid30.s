@@ -1843,117 +1843,33 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_PETALBURG_CITY_MART (g8 m6)
 	.include "data/maps/PetalburgCity_Mart/header.inc"
 	@ MAP_SLATEPORT_CITY_STERNS_SHIPYARD_1F (g9 m0)
-	.4byte gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_1F  @ mapLayout
-	.4byte SlateportCity_SternsShipyard_1F_MapEvents  @ events
-	.4byte SlateportCity_SternsShipyard_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B1  @ music
-	.2byte 0x0051  @ mapLayoutId
-	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity_SternsShipyard_1F/header.inc"
 	@ MAP_SLATEPORT_CITY_STERNS_SHIPYARD_2F (g9 m1)
-	.4byte gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_2F  @ mapLayout
-	.4byte SlateportCity_SternsShipyard_2F_MapEvents  @ events
-	.4byte SlateportCity_SternsShipyard_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B1  @ music
-	.2byte 0x0052  @ mapLayoutId
-	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity_SternsShipyard_2F/header.inc"
 	@ MAP_SLATEPORT_CITY_BATTLE_TENT_LOBBY (g9 m2)
-	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY  @ mapLayout
-	.4byte SlateportCity_BattleTentLobby_MapEvents  @ events
-	.4byte SlateportCity_BattleTentLobby_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0180  @ music
-	.2byte 0x0180  @ mapLayoutId
-	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity_BattleTentLobby/header.inc"
 	@ MAP_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR (g9 m3)
-	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR  @ mapLayout
-	.4byte SlateportCity_BattleTentCorridor_MapEvents  @ events
-	.4byte SlateportCity_BattleTentCorridor_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0180  @ music
-	.2byte 0x0181  @ mapLayoutId
-	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity_BattleTentCorridor/header.inc"
 	@ MAP_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM (g9 m4)
-	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM  @ mapLayout
-	.4byte SlateportCity_BattleTentBattleRoom_MapEvents  @ events
-	.4byte SlateportCity_BattleTentBattleRoom_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0180  @ music
-	.2byte 0x0182  @ mapLayoutId
-	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity_BattleTentBattleRoom/header.inc"
 	@ MAP_SLATEPORT_CITY_NAME_RATERS_HOUSE (g9 m5)
-	.4byte gMapLayout_PETALBURG_CITY_HOUSE2  @ mapLayout
-	.4byte SlateportCity_NameRatersHouse_MapEvents  @ events
-	.4byte 0x081FBD9D  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B1  @ music
-	.2byte 0x0050  @ mapLayoutId
-	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity_NameRatersHouse/header.inc"
 	@ MAP_SLATEPORT_CITY_POKEMON_FAN_CLUB (g9 m6)
-	.4byte gMapLayout_SLATEPORT_CITY_POKEMON_FAN_CLUB  @ mapLayout
-	.4byte SlateportCity_PokemonFanClub_MapEvents  @ events
-	.4byte 0x081FC027  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B1  @ music
-	.2byte 0x0055  @ mapLayoutId
-	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity_PokemonFanClub/header.inc"
 	@ MAP_SLATEPORT_CITY_OCEANIC_MUSEUM_1F (g9 m7)
-	.4byte gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_1F  @ mapLayout
-	.4byte SlateportCity_OceanicMuseum_1F_MapEvents  @ events
-	.4byte 0x081FCA3E  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0177  @ music
-	.2byte 0x0056  @ mapLayoutId
-	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity_OceanicMuseum_1F/header.inc"
 	@ MAP_SLATEPORT_CITY_OCEANIC_MUSEUM_2F (g9 m8)
-	.4byte gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_2F  @ mapLayout
-	.4byte SlateportCity_OceanicMuseum_2F_MapEvents  @ events
-	.4byte 0x081FD309  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0177  @ music
-	.2byte 0x0057  @ mapLayoutId
-	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity_OceanicMuseum_2F/header.inc"
 	@ MAP_SLATEPORT_CITY_HARBOR (g9 m9)
-	.4byte gMapLayout_SLATEPORT_CITY_HARBOR  @ mapLayout
-	.4byte SlateportCity_Harbor_MapEvents  @ events
-	.4byte SlateportCity_Harbor_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B1  @ music
-	.2byte 0x0058  @ mapLayoutId
-	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity_Harbor/header.inc"
 	@ MAP_SLATEPORT_CITY_HOUSE (g9 m10)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte SlateportCity_House_MapEvents  @ events
-	.4byte SlateportCity_House_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B1  @ music
-	.2byte 0x003C  @ mapLayoutId
-	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity_House/header.inc"
 	@ MAP_SLATEPORT_CITY_POKEMON_CENTER_1F (g9 m11)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte SlateportCity_PokemonCenter_1F_MapEvents  @ events
-	.4byte SlateportCity_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003D  @ mapLayoutId
-	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity_PokemonCenter_1F/header.inc"
 	@ MAP_SLATEPORT_CITY_POKEMON_CENTER_2F (g9 m12)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte SlateportCity_PokemonCenter_2F_MapEvents  @ events
-	.4byte SlateportCity_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity_PokemonCenter_2F/header.inc"
 	@ MAP_SLATEPORT_CITY_MART (g9 m13)
-	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte SlateportCity_Mart_MapEvents  @ events
-	.4byte SlateportCity_Mart_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x003F  @ mapLayoutId
-	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/SlateportCity_Mart/header.inc"
 	@ MAP_MAUVILLE_CITY_GYM (g10 m0)
 	.4byte gMapLayout_MAUVILLE_CITY_GYM  @ mapLayout
 	.4byte MauvilleCity_Gym_MapEvents  @ events

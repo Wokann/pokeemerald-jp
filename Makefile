@@ -336,6 +336,11 @@ JP_STRUCTURED_MAP_METADATA_MAPS += PacifidlogTown_PokemonCenter_1F PacifidlogTow
 JP_STRUCTURED_MAP_METADATA_MAPS += PetalburgCity_WallysHouse PetalburgCity_Gym PetalburgCity_House1 \
 	PetalburgCity_House2 PetalburgCity_PokemonCenter_1F PetalburgCity_PokemonCenter_2F \
 	PetalburgCity_Mart
+JP_STRUCTURED_MAP_METADATA_MAPS += SlateportCity_SternsShipyard_1F SlateportCity_SternsShipyard_2F \
+	SlateportCity_BattleTentLobby SlateportCity_BattleTentCorridor SlateportCity_BattleTentBattleRoom \
+	SlateportCity_NameRatersHouse SlateportCity_PokemonFanClub SlateportCity_OceanicMuseum_1F \
+	SlateportCity_OceanicMuseum_2F SlateportCity_Harbor SlateportCity_House \
+	SlateportCity_PokemonCenter_1F SlateportCity_PokemonCenter_2F SlateportCity_Mart
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

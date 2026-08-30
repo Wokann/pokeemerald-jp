@@ -67,6 +67,20 @@ MAPS = (
     "PetalburgCity_PokemonCenter_1F",
     "PetalburgCity_PokemonCenter_2F",
     "PetalburgCity_Mart",
+    "SlateportCity_SternsShipyard_1F",
+    "SlateportCity_SternsShipyard_2F",
+    "SlateportCity_BattleTentLobby",
+    "SlateportCity_BattleTentCorridor",
+    "SlateportCity_BattleTentBattleRoom",
+    "SlateportCity_NameRatersHouse",
+    "SlateportCity_PokemonFanClub",
+    "SlateportCity_OceanicMuseum_1F",
+    "SlateportCity_OceanicMuseum_2F",
+    "SlateportCity_Harbor",
+    "SlateportCity_House",
+    "SlateportCity_PokemonCenter_1F",
+    "SlateportCity_PokemonCenter_2F",
+    "SlateportCity_Mart",
 )
 
 CONNECTED_MAPS = (
@@ -131,6 +145,20 @@ NULL_CONNECTION_MAPS = (
     "PetalburgCity_PokemonCenter_1F",
     "PetalburgCity_PokemonCenter_2F",
     "PetalburgCity_Mart",
+    "SlateportCity_SternsShipyard_1F",
+    "SlateportCity_SternsShipyard_2F",
+    "SlateportCity_BattleTentLobby",
+    "SlateportCity_BattleTentCorridor",
+    "SlateportCity_BattleTentBattleRoom",
+    "SlateportCity_NameRatersHouse",
+    "SlateportCity_PokemonFanClub",
+    "SlateportCity_OceanicMuseum_1F",
+    "SlateportCity_OceanicMuseum_2F",
+    "SlateportCity_Harbor",
+    "SlateportCity_House",
+    "SlateportCity_PokemonCenter_1F",
+    "SlateportCity_PokemonCenter_2F",
+    "SlateportCity_Mart",
 )
 
 CANONICAL_LAYOUT_MAPS = (
