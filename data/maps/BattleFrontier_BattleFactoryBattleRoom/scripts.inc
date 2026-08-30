@@ -56,9 +56,9 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A54::
 	loadword 0x0, gJPText_00232DFB
 	callstd 0x4
 	closemessage
-	applymovement 0x2, 0x08232DA4
-	applymovement 0x8, 0x08232D94
-	applymovement 0xFF, 0x08232D94
+	applymovement 0x2, BattleFrontier_BattleFactoryBattleRoom_Movement_NolandMoveToBattle
+	applymovement 0x8, BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerEnterRoom
+	applymovement 0xFF, BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerEnterRoom
 	waitmovement 0x0
 	call BattleFrontier_BattleFactoryBattleRoom_EventScript_00232DCD
 	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_00232AC0
@@ -67,8 +67,8 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A54::
 BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A80::
 	compare_var_to_value 0x400F, 0x0
 	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A54
-	applymovement 0x8, 0x08232D94
-	applymovement 0xFF, 0x08232D94
+	applymovement 0x8, BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerEnterRoom
+	applymovement 0xFF, BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerEnterRoom
 	waitmovement 0x0
 	call BattleFrontier_BattleFactoryBattleRoom_EventScript_00232DCD
 	setvar 0x8004, 0xB
@@ -76,7 +76,7 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A80::
 	removeobject 0x2
 	setobjectxyperm 0x2, 0x7, 0x1
 	addobject 0x2
-	applymovement 0x2, 0x08232D9D
+	applymovement 0x2, BattleFrontier_BattleFactoryBattleRoom_Movement_OpponentEnter
 	waitmovement 0x0
 
 BattleFrontier_BattleFactoryBattleRoom_EventScript_00232AC0::
@@ -181,7 +181,7 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_00232C25::
 	loadword 0x0, gJPText_00232F2D
 	callstd 0x4
 	closemessage
-	applymovement 0x8, 0x08232D9B
+	applymovement 0x8, BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerApproachNoland
 	waitmovement 0x0
 	playfanfare 0x1D2
 	message gJPText_00232F44
@@ -221,7 +221,7 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_00232CB4::
 	loadword 0x0, gJPText_00233023
 	callstd 0x4
 	waitmessage
-	applymovement 0x8, 0x08232D9B
+	applymovement 0x8, BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerApproachNoland
 	waitmovement 0x0
 	playfanfare 0x1D2
 	message gJPText_0023305D
@@ -273,7 +273,34 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_00232D1E::
 	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B9E
 	end
 
-	.incbin "baserom_jp.gba", 0x232d94, 0x15
+BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerEnterRoom:: @ 0x08232D94
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	face_right
+	step_end
+
+BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerApproachNoland:: @ 0x08232D9B
+	walk_right
+	step_end
+
+BattleFrontier_BattleFactoryBattleRoom_Movement_OpponentEnter:: @ 0x08232D9D
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	face_left
+	step_end
+
+BattleFrontier_BattleFactoryBattleRoom_Movement_NolandMoveToBattle:: @ 0x08232DA4
+	walk_up
+	walk_up
+	walk_up
+	face_left
+	step_end
 BattleFrontier_BattleFactoryBattleRoom_EventScript_00232DA9::
 	copyvar 0x800D, 0x40CE
 	compare_var_to_value 0x800D, 0x1
@@ -371,4 +398,3 @@ gJPText_00233075: @ 0x08233075
 	.string "ちっくしょー！！\p"
 	.string "つぎは　ぜってぇに　まけねぇ　からな！\n"
 	.string "また　やろうぜっ！！$"
-
