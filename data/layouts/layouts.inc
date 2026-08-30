@@ -2853,7 +2853,98 @@ gMapLayout_SKY_PILLAR_TOP: @ 0x08437E20
 	.4byte gMapLayout_SKY_PILLAR_TOP_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x437E38, 0xC4E0
+	.incbin "baserom_jp.gba", 0x437E38, 0x850
+gMapLayout_MAGMA_HIDEOUT_1F_Border:
+	.incbin "data/layouts/MagmaHideout_1F/border.bin"
+gMapLayout_MAGMA_HIDEOUT_1F_Blockdata:
+	.incbin "data/layouts/MagmaHideout_1F/map.bin"
+gMapLayout_MAGMA_HIDEOUT_1F: @ 0x0843918C
+	.4byte 37  @ width
+	.4byte 38  @ height
+	.4byte gMapLayout_MAGMA_HIDEOUT_1F_Border  @ border
+	.4byte gMapLayout_MAGMA_HIDEOUT_1F_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
+gMapLayout_MAGMA_HIDEOUT_2F_1R_Border:
+	.incbin "data/layouts/MagmaHideout_2F_1R/border.bin"
+gMapLayout_MAGMA_HIDEOUT_2F_1R_Blockdata:
+	.incbin "data/layouts/MagmaHideout_2F_1R/map.bin"
+	.byte 0x00, 0x00
+gMapLayout_MAGMA_HIDEOUT_2F_1R: @ 0x08439BBC
+	.4byte 33  @ width
+	.4byte 39  @ height
+	.4byte gMapLayout_MAGMA_HIDEOUT_2F_1R_Border  @ border
+	.4byte gMapLayout_MAGMA_HIDEOUT_2F_1R_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
+gMapLayout_MAGMA_HIDEOUT_2F_2R_Border:
+	.incbin "data/layouts/MagmaHideout_2F_2R/border.bin"
+gMapLayout_MAGMA_HIDEOUT_2F_2R_Blockdata:
+	.incbin "data/layouts/MagmaHideout_2F_2R/map.bin"
+gMapLayout_MAGMA_HIDEOUT_2F_2R: @ 0x0843A694
+	.4byte 49  @ width
+	.4byte 28  @ height
+	.4byte gMapLayout_MAGMA_HIDEOUT_2F_2R_Border  @ border
+	.4byte gMapLayout_MAGMA_HIDEOUT_2F_2R_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
+gMapLayout_MAGMA_HIDEOUT_3F_1R_Border:
+	.incbin "data/layouts/MagmaHideout_3F_1R/border.bin"
+gMapLayout_MAGMA_HIDEOUT_3F_1R_Blockdata:
+	.incbin "data/layouts/MagmaHideout_3F_1R/map.bin"
+gMapLayout_MAGMA_HIDEOUT_3F_1R: @ 0x0843ABF4
+	.4byte 28  @ width
+	.4byte 24  @ height
+	.4byte gMapLayout_MAGMA_HIDEOUT_3F_1R_Border  @ border
+	.4byte gMapLayout_MAGMA_HIDEOUT_3F_1R_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
+gMapLayout_MAGMA_HIDEOUT_3F_2R_Border:
+	.incbin "data/layouts/MagmaHideout_3F_2R/border.bin"
+gMapLayout_MAGMA_HIDEOUT_3F_2R_Blockdata:
+	.incbin "data/layouts/MagmaHideout_3F_2R/map.bin"
+gMapLayout_MAGMA_HIDEOUT_3F_2R: @ 0x0843AF44
+	.4byte 24  @ width
+	.4byte 17  @ height
+	.4byte gMapLayout_MAGMA_HIDEOUT_3F_2R_Border  @ border
+	.4byte gMapLayout_MAGMA_HIDEOUT_3F_2R_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
+gMapLayout_MAGMA_HIDEOUT_4F_Border:
+	.incbin "data/layouts/MagmaHideout_4F/border.bin"
+gMapLayout_MAGMA_HIDEOUT_4F_Blockdata:
+	.incbin "data/layouts/MagmaHideout_4F/map.bin"
+gMapLayout_MAGMA_HIDEOUT_4F: @ 0x0843BC4C
+	.4byte 59  @ width
+	.4byte 28  @ height
+	.4byte gMapLayout_MAGMA_HIDEOUT_4F_Border  @ border
+	.4byte gMapLayout_MAGMA_HIDEOUT_4F_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x43BC64, 0x6E98
+gMapLayout_MAGMA_HIDEOUT_3F_3R_Border:
+	.incbin "data/layouts/MagmaHideout_3F_3R/border.bin"
+gMapLayout_MAGMA_HIDEOUT_3F_3R_Blockdata:
+	.incbin "data/layouts/MagmaHideout_3F_3R/map.bin"
+gMapLayout_MAGMA_HIDEOUT_3F_3R: @ 0x08443134
+	.4byte 33  @ width
+	.4byte 24  @ height
+	.4byte gMapLayout_MAGMA_HIDEOUT_3F_3R_Border  @ border
+	.4byte gMapLayout_MAGMA_HIDEOUT_3F_3R_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
+gMapLayout_MAGMA_HIDEOUT_2F_3R_Border:
+	.incbin "data/layouts/MagmaHideout_2F_3R/border.bin"
+gMapLayout_MAGMA_HIDEOUT_2F_3R_Blockdata:
+	.incbin "data/layouts/MagmaHideout_2F_3R/map.bin"
+gMapLayout_MAGMA_HIDEOUT_2F_3R: @ 0x08443A3C
+	.4byte 60  @ width
+	.4byte 19  @ height
+	.4byte gMapLayout_MAGMA_HIDEOUT_2F_3R_Border  @ border
+	.4byte gMapLayout_MAGMA_HIDEOUT_2F_3R_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x443A54, 0x8C4
 gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_Border:
 	.incbin "data/layouts/FallarborTownBattleTentLobby/border.bin"
 gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_Blockdata:

@@ -248,6 +248,14 @@ MAPS = (
     "ShoalCave_LowTideIceRoom",
     "SkyPillar_5F",
     "SkyPillar_Top",
+    "MagmaHideout_1F",
+    "MagmaHideout_2F_1R",
+    "MagmaHideout_2F_2R",
+    "MagmaHideout_3F_1R",
+    "MagmaHideout_3F_2R",
+    "MagmaHideout_4F",
+    "MagmaHideout_3F_3R",
+    "MagmaHideout_2F_3R",
 )
 
 CONNECTED_MAPS = (
@@ -493,6 +501,14 @@ NULL_CONNECTION_MAPS = (
     "ShoalCave_LowTideIceRoom",
     "SkyPillar_5F",
     "SkyPillar_Top",
+    "MagmaHideout_1F",
+    "MagmaHideout_2F_1R",
+    "MagmaHideout_2F_2R",
+    "MagmaHideout_3F_1R",
+    "MagmaHideout_3F_2R",
+    "MagmaHideout_4F",
+    "MagmaHideout_3F_3R",
+    "MagmaHideout_2F_3R",
 )
 
 CANONICAL_LAYOUT_MAPS = (

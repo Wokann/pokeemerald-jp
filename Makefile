@@ -414,6 +414,9 @@ JP_STRUCTURED_MAP_METADATA_MAPS += SkyPillar_Entrance SkyPillar_Outside SkyPilla
 	SkyPillar_2F SkyPillar_3F SkyPillar_4F
 JP_STRUCTURED_MAP_METADATA_MAPS += ShoalCave_LowTideIceRoom
 JP_STRUCTURED_MAP_METADATA_MAPS += SkyPillar_5F SkyPillar_Top
+JP_STRUCTURED_MAP_METADATA_MAPS += MagmaHideout_1F MagmaHideout_2F_1R MagmaHideout_2F_2R \
+	MagmaHideout_3F_1R MagmaHideout_3F_2R MagmaHideout_4F MagmaHideout_3F_3R \
+	MagmaHideout_2F_3R
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

@@ -2268,8 +2268,24 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/SkyPillar_5F/header.inc"
 	@ MAP_SKY_PILLAR_TOP (g24 m85)
 	.include "data/maps/SkyPillar_Top/header.inc"
-	@ MAP_MAGMA_HIDEOUT_1F through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45cc48, 0x1d50
+	@ MAP_MAGMA_HIDEOUT_1F (g24 m86)
+	.include "data/maps/MagmaHideout_1F/header.inc"
+	@ MAP_MAGMA_HIDEOUT_2F_1R (g24 m87)
+	.include "data/maps/MagmaHideout_2F_1R/header.inc"
+	@ MAP_MAGMA_HIDEOUT_2F_2R (g24 m88)
+	.include "data/maps/MagmaHideout_2F_2R/header.inc"
+	@ MAP_MAGMA_HIDEOUT_3F_1R (g24 m89)
+	.include "data/maps/MagmaHideout_3F_1R/header.inc"
+	@ MAP_MAGMA_HIDEOUT_3F_2R (g24 m90)
+	.include "data/maps/MagmaHideout_3F_2R/header.inc"
+	@ MAP_MAGMA_HIDEOUT_4F (g24 m91)
+	.include "data/maps/MagmaHideout_4F/header.inc"
+	@ MAP_MAGMA_HIDEOUT_3F_3R (g24 m92)
+	.include "data/maps/MagmaHideout_3F_3R/header.inc"
+	@ MAP_MAGMA_HIDEOUT_2F_3R (g24 m93)
+	.include "data/maps/MagmaHideout_2F_3R/header.inc"
+	@ MAP_MIRAGE_TOWER_1F through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45cd28, 0x1c70
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
