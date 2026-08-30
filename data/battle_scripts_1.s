@@ -1366,9 +1366,8 @@ BattleScript_SAtkDown2:: @ 0x0828975D
 BattleScript_SAtkDown2End:: @ 0x08289786
 	.incbin "baserom_jp.gba", 0x289786, 0x1
 
-	.globl BattleScript_FocusPunchSetUp
-BattleScript_FocusPunchSetUp: @ 0x8289787
-	.include "data/scripts/gUnknown_8289787.inc"
+BattleScript_FocusPunchSetUp:: @ 0x08289787
+	.incbin "baserom_jp.gba", 0x289787, 0x14
 
 	.globl BattleScript_MoveUsedIsAsleep
 BattleScript_MoveUsedIsAsleep: @ 0x828979B
