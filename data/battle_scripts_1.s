@@ -1322,24 +1322,21 @@ BattleScript_KnockedOff:: @ 0x082896F0
 	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
 	.byte 0x3C @ return
 
-	.globl BattleScript_MoveUsedIsImprisoned
-BattleScript_MoveUsedIsImprisoned: @ 0x82896FE
+@ Imprison and Grudge response paths.
+BattleScript_MoveUsedIsImprisoned:: @ 0x082896FE
 	.byte 0x10, 0xBA, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVESEALED
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
 
-	.globl BattleScript_SelectingImprisonedMove
-BattleScript_SelectingImprisonedMove: @ 0x8289709
+BattleScript_SelectingImprisonedMove:: @ 0x08289709
 	.byte 0x11, 0xBA, 0x00 @ printselectionstring STRINGID_PKMNCANTUSEMOVESEALED
 	.byte 0x44 @ endselectionscript
 
-	.globl BattleScript_SelectingImprisonedMoveInPalace
-BattleScript_SelectingImprisonedMoveInPalace: @ 0x828970D
+BattleScript_SelectingImprisonedMoveInPalace:: @ 0x0828970D
 	.byte 0x10, 0xBA, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVESEALED
-	.byte 0x28, 0xB5, 0x93, 0x28, 0x08 @ goto 0x082893B5
+	.byte 0x28, 0xB5, 0x93, 0x28, 0x08 @ goto BattleScript_SelectingUnusableMoveInPalace
 
-	.globl BattleScript_GrudgeTakesPP
-BattleScript_GrudgeTakesPP: @ 0x8289715
+BattleScript_GrudgeTakesPP:: @ 0x08289715
 	.byte 0x10, 0xBC, 0x00 @ printstring STRINGID_PKMNLOSTPPGRUDGE
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3C @ return
