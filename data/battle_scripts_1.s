@@ -1348,14 +1348,13 @@ BattleScript_MagicCoatBounce:: @ 0x0828971C
 BattleScript_SnatchedMove:: @ 0x08289734
 	.incbin "baserom_jp.gba", 0x289734, 0x1b
 
-	.globl BattleScript_EnduredMsg
-BattleScript_EnduredMsg: @ 0x828974F
+@ Battle result messages for Endure and a one-hit KO.
+BattleScript_EnduredMsg:: @ 0x0828974F
 	.byte 0x10, 0x99, 0x00 @ printstring STRINGID_PKMNENDUREDHIT
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3C @ return
 
-	.globl BattleScript_OneHitKOMsg
-BattleScript_OneHitKOMsg: @ 0x8289756
+BattleScript_OneHitKOMsg:: @ 0x08289756
 	.byte 0x10, 0xDA, 0x00 @ printstring STRINGID_ONEHITKO
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3C @ return
