@@ -198,6 +198,7 @@ MAPS = (
     "MeteorFalls_1F_2R",
     "MeteorFalls_B1F_1R",
     "MeteorFalls_B1F_2R",
+    "RusturfTunnel",
 )
 
 CONNECTED_MAPS = (
@@ -393,6 +394,7 @@ NULL_CONNECTION_MAPS = (
     "MeteorFalls_1F_2R",
     "MeteorFalls_B1F_1R",
     "MeteorFalls_B1F_2R",
+    "RusturfTunnel",
 )
 
 CANONICAL_LAYOUT_MAPS = (

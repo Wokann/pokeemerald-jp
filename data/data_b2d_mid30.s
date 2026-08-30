@@ -2105,13 +2105,7 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_METEOR_FALLS_B1F_2R (g24 m3)
 	.include "data/maps/MeteorFalls_B1F_2R/header.inc"
 	@ MAP_RUSTURF_TUNNEL (g24 m4)
-	.4byte gMapLayout_RUSTURF_TUNNEL  @ mapLayout
-	.4byte gMapEvents_RUSTURF_TUNNEL  @ events
-	.4byte RusturfTunnel_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016E  @ music
-	.2byte 0x0081  @ mapLayoutId
-	.byte 0x3C, 0x00, 0x06, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/RusturfTunnel/header.inc"
 	@ MAP_UNDERWATER_SOOTOPOLIS_CITY (g24 m5)
 	.4byte gMapLayout_UNDERWATER_SOOTOPOLIS_CITY  @ mapLayout
 	.4byte gMapEvents_UNDERWATER_SOOTOPOLIS_CITY  @ events
