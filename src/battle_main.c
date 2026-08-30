@@ -9427,7 +9427,7 @@ __attribute__((naked)) void HandleTurnActionSelectionState(void)
         "_0803BE9C: .4byte 0x021F0902\n\t"
         "_0803BEA0: .4byte gActiveBattler\n\t"
         "_0803BEA4: .4byte gSelectionBattleScripts\n\t"
-        "_0803BEA8: .4byte gUnknown_8289E01\n\t"
+        "_0803BEA8: .4byte BattleScript_ActionSelectionItemsCantBeUsed\n\t"
         "_0803BEAC:\n\t"
         "	ldr r5, _0803BF14\n\t"
         "	ldrb r0, [r5]\n\t"

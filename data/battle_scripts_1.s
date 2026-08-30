@@ -1994,89 +1994,147 @@ BattleScript_SubstituteFade: @ 0x8289C83
 
 	.globl BattleScript_BerryCurePrlzEnd2
 BattleScript_BerryCurePrlzEnd2: @ 0x8289C8E
-	.byte 0x41, 0x94, 0x9C, 0x28, 0x08 @ call 0x08289C94
+	.byte 0x41, 0x94, 0x9C, 0x28, 0x08 @ call BattleScript_BerryCureParRet
 	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryCureParRet
 BattleScript_BerryCureParRet: @ 0x8289C94
-	.include "data/scripts/gUnknown_8289C94.inc"
+	.byte 0x45, 0x0A, 0x07, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_SCRIPTING, B_ANIM_HELD_ITEM_EFFECT
+	.byte 0x10, 0x23, 0x01 @ printstring STRINGID_PKMNSITEMCUREDPARALYSIS
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x98, 0x0A @ updatestatusicon BS_SCRIPTING
+	.byte 0x6A, 0x0A @ removeitem BS_SCRIPTING
+	.byte 0x3C @ return
 
 	.globl BattleScript_BerryCurePsnEnd2
 BattleScript_BerryCurePsnEnd2: @ 0x8289CA6
-	.byte 0x41, 0xAC, 0x9C, 0x28, 0x08 @ call 0x08289CAC
+	.byte 0x41, 0xAC, 0x9C, 0x28, 0x08 @ call BattleScript_BerryCurePsnRet
 	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryCurePsnRet
 BattleScript_BerryCurePsnRet: @ 0x8289CAC
-	.include "data/scripts/gUnknown_8289CAC.inc"
+	.byte 0x45, 0x0A, 0x07, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_SCRIPTING, B_ANIM_HELD_ITEM_EFFECT
+	.byte 0x10, 0x24, 0x01 @ printstring STRINGID_PKMNSITEMCUREDPOISON
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x98, 0x0A @ updatestatusicon BS_SCRIPTING
+	.byte 0x6A, 0x0A @ removeitem BS_SCRIPTING
+	.byte 0x3C @ return
 
 	.globl BattleScript_BerryCureBrnEnd2
 BattleScript_BerryCureBrnEnd2: @ 0x8289CBE
-	.byte 0x41, 0xC4, 0x9C, 0x28, 0x08 @ call 0x08289CC4
+	.byte 0x41, 0xC4, 0x9C, 0x28, 0x08 @ call BattleScript_BerryCureBrnRet
 	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryCureBrnRet
 BattleScript_BerryCureBrnRet: @ 0x8289CC4
-	.include "data/scripts/gUnknown_8289CC4.inc"
+	.byte 0x45, 0x0A, 0x07, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_SCRIPTING, B_ANIM_HELD_ITEM_EFFECT
+	.byte 0x10, 0x25, 0x01 @ printstring STRINGID_PKMNSITEMHEALEDBURN
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x98, 0x0A @ updatestatusicon BS_SCRIPTING
+	.byte 0x6A, 0x0A @ removeitem BS_SCRIPTING
+	.byte 0x3C @ return
 
 	.globl BattleScript_BerryCureFrzEnd2
 BattleScript_BerryCureFrzEnd2: @ 0x8289CD6
-	.include "data/scripts/gUnknown_8289CD6.inc"
+	.byte 0x41, 0xDC, 0x9C, 0x28, 0x08 @ call BattleScript_BerryCureFrzRet
+	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryCureFrzRet
 BattleScript_BerryCureFrzRet: @ 0x8289CDC
-	.include "data/scripts/gUnknown_8289CDC.inc"
+	.byte 0x45, 0x0A, 0x07, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_SCRIPTING, B_ANIM_HELD_ITEM_EFFECT
+	.byte 0x10, 0x26, 0x01 @ printstring STRINGID_PKMNSITEMDEFROSTEDIT
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x98, 0x0A @ updatestatusicon BS_SCRIPTING
+	.byte 0x6A, 0x0A @ removeitem BS_SCRIPTING
+	.byte 0x3C @ return
 
 	.globl BattleScript_BerryCureSlpEnd2
 BattleScript_BerryCureSlpEnd2: @ 0x8289CEE
-	.byte 0x41, 0xF4, 0x9C, 0x28, 0x08 @ call 0x08289CF4
+	.byte 0x41, 0xF4, 0x9C, 0x28, 0x08 @ call BattleScript_BerryCureSlpRet
 	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryCureSlpRet
 BattleScript_BerryCureSlpRet: @ 0x8289CF4
-	.include "data/scripts/gUnknown_8289CF4.inc"
+	.byte 0x45, 0x0A, 0x07, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_SCRIPTING, B_ANIM_HELD_ITEM_EFFECT
+	.byte 0x10, 0x27, 0x01 @ printstring STRINGID_PKMNSITEMWOKEIT
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x98, 0x0A @ updatestatusicon BS_SCRIPTING
+	.byte 0x6A, 0x0A @ removeitem BS_SCRIPTING
+	.byte 0x3C @ return
 
 	.globl BattleScript_BerryCureConfusionEnd2
 BattleScript_BerryCureConfusionEnd2: @ 0x8289D06
-	.include "data/scripts/gUnknown_8289D06.inc"
+	.byte 0x41, 0x0C, 0x9D, 0x28, 0x08 @ call BattleScript_BerryCureConfusionRet
+	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryCureConfusionRet
 BattleScript_BerryCureConfusionRet: @ 0x8289D0C
-	.include "data/scripts/gUnknown_8289D0C.inc"
+	.byte 0x45, 0x0A, 0x07, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_SCRIPTING, B_ANIM_HELD_ITEM_EFFECT
+	.byte 0x10, 0x28, 0x01 @ printstring STRINGID_PKMNSITEMSNAPPEDOUT
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x6A, 0x0A @ removeitem BS_SCRIPTING
+	.byte 0x3C @ return
 
 	.globl BattleScript_BerryCureChosenStatusEnd2
 BattleScript_BerryCureChosenStatusEnd2: @ 0x8289D1C
-	.byte 0x41, 0x22, 0x9D, 0x28, 0x08 @ call 0x08289D22
+	.byte 0x41, 0x22, 0x9D, 0x28, 0x08 @ call BattleScript_BerryCureChosenStatusRet
 	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryCureChosenStatusRet
 BattleScript_BerryCureChosenStatusRet: @ 0x8289D22
-	.include "data/scripts/gUnknown_8289D22.inc"
+	.byte 0x45, 0x0A, 0x07, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_SCRIPTING, B_ANIM_HELD_ITEM_EFFECT
+	.byte 0x13, 0xC6, 0xBA, 0x5A, 0x08 @ printfromtable gBerryEffectStringIds
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x98, 0x0A @ updatestatusicon BS_SCRIPTING
+	.byte 0x6A, 0x0A @ removeitem BS_SCRIPTING
+	.byte 0x3C @ return
 
 	.globl BattleScript_WhiteHerbEnd2
 BattleScript_WhiteHerbEnd2: @ 0x8289D36
-	.include "data/scripts/gUnknown_8289D36.inc"
+	.byte 0x41, 0x3C, 0x9D, 0x28, 0x08 @ call BattleScript_WhiteHerbRet
+	.byte 0x3E @ end2
 
 	.globl BattleScript_WhiteHerbRet
 BattleScript_WhiteHerbRet: @ 0x8289D3C
-	.include "data/scripts/gUnknown_8289D3C.inc"
+	.byte 0x45, 0x0A, 0x07, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_SCRIPTING, B_ANIM_HELD_ITEM_EFFECT
+	.byte 0x10, 0x2C, 0x01 @ printstring STRINGID_PKMNSITEMRESTOREDSTATUS
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x6A, 0x0A @ removeitem BS_SCRIPTING
+	.byte 0x3C @ return
 
 	.globl BattleScript_ItemHealHP_RemoveItem
 BattleScript_ItemHealHP_RemoveItem: @ 0x8289D4C
-	.include "data/scripts/gUnknown_8289D4C.inc"
+	.byte 0x45, 0x01, 0x07, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_ATTACKER, B_ANIM_HELD_ITEM_EFFECT
+	.byte 0x10, 0x2A, 0x01 @ printstring STRINGID_PKMNSITEMRESTOREDHEALTH
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x35, 0x24, 0x3F, 0x02, 0x02, 0x00, 0x01, 0x00, 0x00 @ orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	.byte 0x0B, 0x01 @ healthbarupdate BS_ATTACKER
+	.byte 0x0C, 0x01 @ datahpupdate BS_ATTACKER
+	.byte 0x6A, 0x01 @ removeitem BS_ATTACKER
+	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryPPHealEnd2
 BattleScript_BerryPPHealEnd2: @ 0x8289D69
-	.include "data/scripts/gUnknown_8289D69.inc"
+	.byte 0x45, 0x01, 0x07, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_ATTACKER, B_ANIM_HELD_ITEM_EFFECT
+	.byte 0x10, 0x2B, 0x01 @ printstring STRINGID_PKMNSITEMRESTOREDPP
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x6A, 0x01 @ removeitem BS_ATTACKER
+	.byte 0x3E @ end2
 
 	.globl BattleScript_ItemHealHP_End2
 BattleScript_ItemHealHP_End2: @ 0x8289D79
-	.byte 0x41, 0x7F, 0x9D, 0x28, 0x08 @ call 0x08289D7F
+	.byte 0x41, 0x7F, 0x9D, 0x28, 0x08 @ call BattleScript_ItemHealHP_Ret
 	.byte 0x3E @ end2
 
 	.globl BattleScript_ItemHealHP_Ret
 BattleScript_ItemHealHP_Ret: @ 0x8289D7F
-	.include "data/scripts/gUnknown_8289D7F.inc"
+	.byte 0x45, 0x01, 0x07, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_ATTACKER, B_ANIM_HELD_ITEM_EFFECT
+	.byte 0x10, 0x2D, 0x01 @ printstring STRINGID_PKMNSITEMRESTOREDHPALITTLE
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x35, 0x24, 0x3F, 0x02, 0x02, 0x00, 0x01, 0x00, 0x00 @ orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	.byte 0x0B, 0x01 @ healthbarupdate BS_ATTACKER
+	.byte 0x0C, 0x01 @ datahpupdate BS_ATTACKER
+	.byte 0x3C @ return
 
 	.globl BattleScript_SelectingNotAllowedMoveChoiceItem
 BattleScript_SelectingNotAllowedMoveChoiceItem: @ 0x8289D9A
@@ -2085,22 +2143,46 @@ BattleScript_SelectingNotAllowedMoveChoiceItem: @ 0x8289D9A
 
 	.globl BattleScript_FocusBandActivates
 BattleScript_FocusBandActivates: @ 0x8289D9E
-	.include "data/scripts/gUnknown_8289D9E.inc"
+	.byte 0x45, 0x00, 0x09, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_TARGET, B_ANIM_FOCUS_BAND
+	.byte 0x10, 0x2F, 0x01 @ printstring STRINGID_PKMNHUNGONWITHX
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x3C @ return
 
 	.globl BattleScript_BerryConfuseHealEnd2
 BattleScript_BerryConfuseHealEnd2: @ 0x8289DAC
-	.include "data/scripts/gUnknown_8289DAC.inc"
+	.byte 0x45, 0x01, 0x07, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_ATTACKER, B_ANIM_HELD_ITEM_EFFECT
+	.byte 0x10, 0x2A, 0x01 @ printstring STRINGID_PKMNSITEMRESTOREDHEALTH
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x35, 0x24, 0x3F, 0x02, 0x02, 0x00, 0x01, 0x00, 0x00 @ orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	.byte 0x0B, 0x01 @ healthbarupdate BS_ATTACKER
+	.byte 0x0C, 0x01 @ datahpupdate BS_ATTACKER
+	.byte 0x10, 0x44, 0x01 @ printstring STRINGID_FORXCOMMAYZ
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x2E, 0xD9, 0x3F, 0x02, 0x02, 0x47 @ setbyte cEFFECT_CHOOSER, MOVE_EFFECT_CONFUSION | MOVE_EFFECT_AFFECTS_USER
+	.byte 0x16 @ seteffectprimary
+	.byte 0x6A, 0x01 @ removeitem BS_ATTACKER
+	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryStatRaiseEnd2
 BattleScript_BerryStatRaiseEnd2: @ 0x8289DD6
-	.include "data/scripts/gUnknown_8289DD6.inc"
+	.byte 0x45, 0x01, 0x07, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_ATTACKER, B_ANIM_HELD_ITEM_EFFECT
+	.byte 0x89, 0x41, 0xE3, 0x9D, 0x28, 0x08 @ statbuffchange MOVE_EFFECT_AFFECTS_USER | STAT_CHANGE_ALLOW_PTR, BattleScript_BerryStatRaiseDoStatUp
+BattleScript_BerryStatRaiseDoStatUp: @ 0x8289DE3
+	.byte 0x2E, 0xDB, 0x3F, 0x02, 0x02, 0x04 @ setbyte cMULTISTRING_CHOOSER, B_MSG_STAT_ROSE_ITEM
+	.byte 0x41, 0x5C, 0x72, 0x28, 0x08 @ call BattleScript_StatUp
+	.byte 0x6A, 0x01 @ removeitem BS_ATTACKER
+	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryFocusEnergyEnd2
 BattleScript_BerryFocusEnergyEnd2: @ 0x8289DF1
-	.include "data/scripts/gUnknown_8289DF1.inc"
+	.byte 0x45, 0x01, 0x07, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_ATTACKER, B_ANIM_HELD_ITEM_EFFECT
+	.byte 0x10, 0x46, 0x01 @ printstring STRINGID_PKMNUSEDXTOGETPUMPED
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x6A, 0x01 @ removeitem BS_ATTACKER
+	.byte 0x3E @ end2
 
-	.globl gUnknown_8289E01
-gUnknown_8289E01: @ 0x8289E01
+	.globl BattleScript_ActionSelectionItemsCantBeUsed
+BattleScript_ActionSelectionItemsCantBeUsed: @ 0x8289E01
 	.byte 0x11, 0x43, 0x01 @ printselectionstring STRINGID_ITEMSCANTBEUSEDNOW
 	.byte 0x44 @ endselectionscript
 
