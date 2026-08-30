@@ -2944,7 +2944,42 @@ gMapLayout_MAGMA_HIDEOUT_2F_3R: @ 0x08443A3C
 	.4byte gMapLayout_MAGMA_HIDEOUT_2F_3R_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x443A54, 0x8C4
+gMapLayout_MIRAGE_TOWER_1F_Border:
+	.incbin "data/layouts/MirageTower_1F/border.bin"
+gMapLayout_MIRAGE_TOWER_1F_Blockdata:
+	.incbin "data/layouts/MirageTower_1F/map.bin"
+	.byte 0x00, 0x00
+gMapLayout_MIRAGE_TOWER_1F: @ 0x08443D28
+	.4byte 21  @ width
+	.4byte 17  @ height
+	.4byte gMapLayout_MIRAGE_TOWER_1F_Border  @ border
+	.4byte gMapLayout_MIRAGE_TOWER_1F_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_MIRAGE_TOWER_SECONDARY  @ secondaryTileset
+gMapLayout_MIRAGE_TOWER_2F_Border:
+	.incbin "data/layouts/MirageTower_2F/border.bin"
+gMapLayout_MIRAGE_TOWER_2F_Blockdata:
+	.incbin "data/layouts/MirageTower_2F/map.bin"
+	.byte 0x00, 0x00
+gMapLayout_MIRAGE_TOWER_2F: @ 0x08444014
+	.4byte 21  @ width
+	.4byte 17  @ height
+	.4byte gMapLayout_MIRAGE_TOWER_2F_Border  @ border
+	.4byte gMapLayout_MIRAGE_TOWER_2F_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_MIRAGE_TOWER_SECONDARY  @ secondaryTileset
+gMapLayout_MIRAGE_TOWER_3F_Border:
+	.incbin "data/layouts/MirageTower_3F/border.bin"
+gMapLayout_MIRAGE_TOWER_3F_Blockdata:
+	.incbin "data/layouts/MirageTower_3F/map.bin"
+	.byte 0x00, 0x00
+gMapLayout_MIRAGE_TOWER_3F: @ 0x08444300
+	.4byte 21  @ width
+	.4byte 17  @ height
+	.4byte gMapLayout_MIRAGE_TOWER_3F_Border  @ border
+	.4byte gMapLayout_MIRAGE_TOWER_3F_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_MIRAGE_TOWER_SECONDARY  @ secondaryTileset
 gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_Border:
 	.incbin "data/layouts/FallarborTownBattleTentLobby/border.bin"
 gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_Blockdata:
@@ -2994,7 +3029,18 @@ gMapLayout_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM: @ 0x08444674
 	.4byte gMapLayout_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x44468c, 0xaf64
+gMapLayout_MIRAGE_TOWER_4F_Border:
+	.incbin "data/layouts/MirageTower_4F/border.bin"
+gMapLayout_MIRAGE_TOWER_4F_Blockdata:
+	.incbin "data/layouts/MirageTower_4F/map.bin"
+gMapLayout_MIRAGE_TOWER_4F: @ 0x08444798
+	.4byte 13  @ width
+	.4byte 10  @ height
+	.4byte gMapLayout_MIRAGE_TOWER_4F_Border  @ border
+	.4byte gMapLayout_MIRAGE_TOWER_4F_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_MIRAGE_TOWER_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x4447B0, 0xAE40
 gMapLayout_UNDERWATER_ROUTE105_Border:
 	.incbin "data/layouts/Underwater_Route105/border.bin"
 gMapLayout_UNDERWATER_ROUTE105_Blockdata:

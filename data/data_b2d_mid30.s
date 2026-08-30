@@ -1584,7 +1584,10 @@ gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY: @ 0x083B80B4
 	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_Metatiles  @ metatiles
 	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
-	.incbin "baserom_jp.gba", 0x3B80CC, 0xA8
+	.incbin "baserom_jp.gba", 0x3B80CC, 0x90
+	.globl gTileset_MIRAGE_TOWER_SECONDARY
+gTileset_MIRAGE_TOWER_SECONDARY: @ 0x083B815C
+	.incbin "baserom_jp.gba", 0x3B815C, 0x18
 	.globl gTileset_MOSSDEEP_CITY_GAME_CORNER_1F_SECONDARY
 gTileset_MOSSDEEP_CITY_GAME_CORNER_1F_SECONDARY: @ 0x083B8174
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -2284,8 +2287,16 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/MagmaHideout_3F_3R/header.inc"
 	@ MAP_MAGMA_HIDEOUT_2F_3R (g24 m93)
 	.include "data/maps/MagmaHideout_2F_3R/header.inc"
-	@ MAP_MIRAGE_TOWER_1F through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45cd28, 0x1c70
+	@ MAP_MIRAGE_TOWER_1F (g24 m94)
+	.include "data/maps/MirageTower_1F/header.inc"
+	@ MAP_MIRAGE_TOWER_2F (g24 m95)
+	.include "data/maps/MirageTower_2F/header.inc"
+	@ MAP_MIRAGE_TOWER_3F (g24 m96)
+	.include "data/maps/MirageTower_3F/header.inc"
+	@ MAP_MIRAGE_TOWER_4F (g24 m97)
+	.include "data/maps/MirageTower_4F/header.inc"
+	@ MAP_DESERT_UNDERPASS through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45CD98, 0x1C00
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

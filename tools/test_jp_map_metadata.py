@@ -256,6 +256,10 @@ MAPS = (
     "MagmaHideout_4F",
     "MagmaHideout_3F_3R",
     "MagmaHideout_2F_3R",
+    "MirageTower_1F",
+    "MirageTower_2F",
+    "MirageTower_3F",
+    "MirageTower_4F",
 )
 
 CONNECTED_MAPS = (
@@ -509,6 +513,10 @@ NULL_CONNECTION_MAPS = (
     "MagmaHideout_4F",
     "MagmaHideout_3F_3R",
     "MagmaHideout_2F_3R",
+    "MirageTower_1F",
+    "MirageTower_2F",
+    "MirageTower_3F",
+    "MirageTower_4F",
 )
 
 CANONICAL_LAYOUT_MAPS = (
