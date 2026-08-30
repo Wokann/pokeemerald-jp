@@ -1945,27 +1945,52 @@ BattleScript_AbilityCuredStatus: @ 0x8289C14
 
 	.globl BattleScript_IgnoresWhileAsleep
 BattleScript_IgnoresWhileAsleep: @ 0x8289C1D
-	.include "data/scripts/gUnknown_8289C1D.inc"
+	.byte 0x10, 0x13, 0x01 @ printstring STRINGID_PKMNIGNORESASLEEP
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x2E, 0x2C, 0x41, 0x02, 0x02, 0x00 @ setbyte sMOVEEND_STATE, 0
+	.byte 0x49, 0x02, 0x10 @ moveend 2, MOVEEND_NEXT_TARGET
+	.byte 0x3D @ end
 
 	.globl BattleScript_IgnoresAndUsesRandomMove
 BattleScript_IgnoresAndUsesRandomMove: @ 0x8289C2D
-	.include "data/scripts/gUnknown_8289C2D.inc"
+	.byte 0x10, 0x14, 0x01 @ printstring STRINGID_PKMNIGNOREDORDERS
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x63, 0x00 @ jumptocalledmove FALSE
 
 	.globl BattleScript_MoveUsedLoafingAround
 BattleScript_MoveUsedLoafingAround: @ 0x8289C35
-	.include "data/scripts/gUnknown_8289C35.inc"
+	.byte 0x29, 0x01, 0xDB, 0x3F, 0x02, 0x02, 0x04, 0x4F, 0x9C, 0x28, 0x08 @ jumpifbyte CMP_NOT_EQUAL, cMULTISTRING_CHOOSER, B_MSG_INCAPABLE_OF_POWER, BattleScript_MoveUsedLoafingAroundMsg
+	.byte 0x2E, 0xD6, 0x3F, 0x02, 0x02, 0x00 @ setbyte gBattleCommunication, 0
+	.byte 0x76, 0x01, 0x18 @ palacetryescapestatus BS_ATTACKER
+	.byte 0x2E, 0xDB, 0x3F, 0x02, 0x02, 0x04 @ setbyte cMULTISTRING_CHOOSER, B_MSG_INCAPABLE_OF_POWER
+BattleScript_MoveUsedLoafingAroundMsg: @ 0x8289C4F
+	.byte 0x13, 0xA6, 0xBA, 0x5A, 0x08 @ printfromtable gInobedientStringIds
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x2E, 0x2C, 0x41, 0x02, 0x02, 0x00 @ setbyte sMOVEEND_STATE, 0
+	.byte 0x49, 0x02, 0x10 @ moveend 2, MOVEEND_NEXT_TARGET
+	.byte 0x3D @ end
 
 	.globl BattleScript_IgnoresAndFallsAsleep
 BattleScript_IgnoresAndFallsAsleep: @ 0x8289C61
-	.include "data/scripts/gUnknown_8289C61.inc"
+	.byte 0x10, 0x15, 0x01 @ printstring STRINGID_PKMNBEGANTONAP
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x2E, 0xD9, 0x3F, 0x02, 0x02, 0x41 @ setbyte cEFFECT_CHOOSER, MOVE_EFFECT_SLEEP | MOVE_EFFECT_AFFECTS_USER
+	.byte 0x16 @ seteffectprimary
+	.byte 0x2E, 0x2C, 0x41, 0x02, 0x02, 0x00 @ setbyte sMOVEEND_STATE, 0
+	.byte 0x49, 0x02, 0x10 @ moveend 2, MOVEEND_NEXT_TARGET
+	.byte 0x3D @ end
 
 	.globl BattleScript_IgnoresAndHitsItself
 BattleScript_IgnoresAndHitsItself: @ 0x8289C78
-	.include "data/scripts/gUnknown_8289C78.inc"
+	.byte 0x10, 0x17, 0x01 @ printstring STRINGID_PKMNWONTOBEY
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0x5C, 0x98, 0x28, 0x08 @ goto BattleScript_DoSelfConfusionDmg
 
 	.globl BattleScript_SubstituteFade
 BattleScript_SubstituteFade: @ 0x8289C83
-	.include "data/scripts/gUnknown_8289C83.inc"
+	.byte 0x45, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_TARGET, B_ANIM_SUBSTITUTE_FADE
+	.byte 0x10, 0x81, 0x00 @ printstring STRINGID_PKMNSUBSTITUTEFADED
+	.byte 0x3C @ return
 
 	.globl BattleScript_BerryCurePrlzEnd2
 BattleScript_BerryCurePrlzEnd2: @ 0x8289C8E

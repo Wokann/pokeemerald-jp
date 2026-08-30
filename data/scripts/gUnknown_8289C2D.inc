@@ -1,2 +1,0 @@
-	loadbyte 0x14, 0x1
-	loadbytefromaddr 0x630040
