@@ -1167,7 +1167,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/SkyPillar_3F/events.inc"
 	.include "data/maps/SkyPillar_4F/events.inc"
 	.include "data/maps/ShoalCave_LowTideIceRoom/events.inc"
-	.incbin "baserom_jp.gba", 0x50F878, 0x7D04
+	.include "data/maps/SkyPillar_5F/events.inc"
+	.include "data/maps/SkyPillar_Top/events.inc"
+	.incbin "baserom_jp.gba", 0x50F8F8, 0x7C84
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
