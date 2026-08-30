@@ -1160,7 +1160,13 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/AquaHideout_UnusedRubyMap1/events.inc"
 	.include "data/maps/AquaHideout_UnusedRubyMap2/events.inc"
 	.include "data/maps/AquaHideout_UnusedRubyMap3/events.inc"
-	.incbin "baserom_jp.gba", 0x50F724, 0x7E58
+	.include "data/maps/SkyPillar_Entrance/events.inc"
+	.include "data/maps/SkyPillar_Outside/events.inc"
+	.include "data/maps/SkyPillar_1F/events.inc"
+	.include "data/maps/SkyPillar_2F/events.inc"
+	.include "data/maps/SkyPillar_3F/events.inc"
+	.include "data/maps/SkyPillar_4F/events.inc"
+	.incbin "baserom_jp.gba", 0x50F82C, 0x7D50
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
