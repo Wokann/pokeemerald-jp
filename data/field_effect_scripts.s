@@ -175,64 +175,85 @@ gFieldEffectScript_DeepSandFootprints: @ 0x828A134
 	field_eff_end
 
 gFieldEffectScript_PokeCenterHeal: @ 0x828A13E
-	.incbin "baserom_jp.gba", 0x28a13e, 0xf
+	field_eff_loadfadedpal gSpritePalette_PokeballGlow
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_PokecenterHeal
+	field_eff_end
 
 gFieldEffectScript_UseSecretPowerTree: @ 0x828A14D
-	.incbin "baserom_jp.gba", 0x28a14d, 0x6
+	field_eff_callnative FldEff_UseSecretPowerShrub
+	field_eff_end
 
 gFieldEffectScript_UseSecretPowerShrub: @ 0x828A153
-	.incbin "baserom_jp.gba", 0x28a153, 0x6
+	field_eff_callnative FldEff_UseSecretPowerTree
+	field_eff_end
 
 gFieldEffectScript_TreeDisguise: @ 0x828A159
-	.incbin "baserom_jp.gba", 0x28a159, 0x6
+	field_eff_callnative ShowTreeDisguiseFieldEffect
+	field_eff_end
 
 gFieldEffectScript_MountainDisguise: @ 0x828A15F
-	.incbin "baserom_jp.gba", 0x28a15f, 0x6
+	field_eff_callnative ShowMountainDisguiseFieldEffect
+	field_eff_end
 
 gFieldEffectScript_NPCUseFly: @ 0x828A165
-	.incbin "baserom_jp.gba", 0x28a165, 0x6
+	field_eff_callnative FldEff_NPCFlyOut
+	field_eff_end
 
 gFieldEffectScript_UseFly: @ 0x828A16B
-	.incbin "baserom_jp.gba", 0x28a16b, 0x6
+	field_eff_callnative FldEff_UseFly
+	field_eff_end
 
 gFieldEffectScript_FlyIn: @ 0x828A171
-	.incbin "baserom_jp.gba", 0x28a171, 0x6
+	field_eff_callnative FldEff_FlyIn
+	field_eff_end
 
 gFieldEffectScript_QuestionMarkIcon: @ 0x828A177
-	.incbin "baserom_jp.gba", 0x28a177, 0x6
+	field_eff_callnative FldEff_QuestionMarkIcon
+	field_eff_end
 
 gFieldEffectScript_FeetInFlowingWater: @ 0x828A17D
-	.incbin "baserom_jp.gba", 0x28a17d, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_FeetInFlowingWater
+	field_eff_end
 
 gFieldEffectScript_BikeTireTracks: @ 0x828A187
-	.incbin "baserom_jp.gba", 0x28a187, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_BikeTireTracks
+	field_eff_end
 
 gFieldEffectScript_SandDisguisePlaceholder: @ 0x828A191
-	.incbin "baserom_jp.gba", 0x28a191, 0x6
+	field_eff_callnative ShowSandDisguiseFieldEffect
+	field_eff_end
 
 gFieldEffectScript_UseRockSmash: @ 0x828A197
-	.incbin "baserom_jp.gba", 0x28a197, 0x6
+	field_eff_callnative FldEff_UseRockSmash
+	field_eff_end
 
 gFieldEffectScript_UseStrength: @ 0x828A19D
-	.incbin "baserom_jp.gba", 0x28a19d, 0x6
+	field_eff_callnative FldEff_UseStrength
+	field_eff_end
 
 gFieldEffectScript_UseDig: @ 0x828A1A3
-	.incbin "baserom_jp.gba", 0x28a1a3, 0x6
+	field_eff_callnative FldEff_UseDig
+	field_eff_end
 
 gFieldEffectScript_SandPile: @ 0x828A1A9
-	.incbin "baserom_jp.gba", 0x28a1a9, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_SandPile
+	field_eff_end
 
 gFieldEffectScript_ShortGrass: @ 0x828A1B3
-	.incbin "baserom_jp.gba", 0x28a1b3, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_ShortGrass
+	field_eff_end
 
 gFieldEffectScript_HotSpringsWater: @ 0x828A1BD
-	.incbin "baserom_jp.gba", 0x28a1bd, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_HotSpringsWater
+	field_eff_end
 
 gFieldEffectScript_UseWaterfall: @ 0x828A1C7
-	.incbin "baserom_jp.gba", 0x28a1c7, 0x6
+	field_eff_callnative FldEff_UseWaterfall
+	field_eff_end
 
 gFieldEffectScript_UseDive: @ 0x828A1CD
-	.incbin "baserom_jp.gba", 0x28a1cd, 0x6
+	field_eff_callnative FldEff_UseDive
+	field_eff_end
 
 gFieldEffectScript_PokeballTrail: @ 0x828A1D3
 	.incbin "baserom_jp.gba", 0x28a1d3, 0xb

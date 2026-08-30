@@ -2387,7 +2387,13 @@ gUnknown_8536EDC: @ 0x8536EDC
 
 	.globl gUnknown_8536EF0
 gUnknown_8536EF0: @ 0x8536EF0
-	.incbin "baserom_jp.gba", 0x536ef0, 0x68
+	.incbin "baserom_jp.gba", 0x536ef0, 0x18
+
+	.globl gSpritePalette_PokeballGlow
+gSpritePalette_PokeballGlow: @ 0x8536F08
+	.incbin "baserom_jp.gba", 0x536f08, 0x8
+
+	.incbin "baserom_jp.gba", 0x536f10, 0x48
 
 	.globl gUnknown_8536F58
 gUnknown_8536F58: @ 0x8536F58
