@@ -1116,39 +1116,38 @@ BattleScript_SuccessForceOut:: @ 0x08289360
 BattleScript_TrainerBattleForceOut:: @ 0x08289379
 	.incbin "baserom_jp.gba", 0x289379, 0x12
 
-	.globl BattleScript_MistProtected
-BattleScript_MistProtected: @ 0x828938B
-	.include "data/scripts/gUnknown_828938B.inc"
+@ Status-block and status-expiry response scripts. Preserve the Battle
+@ Palace selection branch as separate physical entries instead of a raw
+@ mixed container.
+BattleScript_MistProtected:: @ 0x0828938B
+	.incbin "baserom_jp.gba", 0x28938b, 0xa
 
-	.globl BattleScript_RageIsBuilding
-BattleScript_RageIsBuilding: @ 0x8289395
+BattleScript_RageIsBuilding:: @ 0x08289395
 	.byte 0x10, 0x83, 0x00 @ printstring STRINGID_PKMNRAGEBUILDING
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3C @ return
 
-	.globl BattleScript_MoveUsedIsDisabled
-BattleScript_MoveUsedIsDisabled: @ 0x828939C
+BattleScript_MoveUsedIsDisabled:: @ 0x0828939C
 	.byte 0x10, 0x85, 0x00 @ printstring STRINGID_PKMNMOVEISDISABLED
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
 
-	.globl BattleScript_SelectingDisabledMove
-BattleScript_SelectingDisabledMove: @ 0x82893A7
+BattleScript_SelectingDisabledMove:: @ 0x082893A7
 	.byte 0x11, 0x85, 0x00 @ printselectionstring STRINGID_PKMNMOVEISDISABLED
 	.byte 0x44 @ endselectionscript
 
-	.globl BattleScript_DisabledNoMore
-BattleScript_DisabledNoMore: @ 0x82893AB
+BattleScript_DisabledNoMore:: @ 0x082893AB
 	.byte 0x10, 0x86, 0x00 @ printstring STRINGID_PKMNMOVEDISABLEDNOMORE
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3E @ end2
 
-	.globl BattleScript_SelectingDisabledMoveInPalace
-BattleScript_SelectingDisabledMoveInPalace: @ 0x82893B2
-	.include "data/scripts/gUnknown_82893B2.inc"
+BattleScript_SelectingDisabledMoveInPalace:: @ 0x082893B2
+	.incbin "baserom_jp.gba", 0x2893b2, 0x3
 
-	.globl BattleScript_EncoredNoMore
-BattleScript_EncoredNoMore: @ 0x82893BF
+BattleScript_SelectingUnusableMoveInPalace:: @ 0x082893B5
+	.incbin "baserom_jp.gba", 0x2893b5, 0xa
+
+BattleScript_EncoredNoMore:: @ 0x082893BF
 	.byte 0x10, 0x88, 0x00 @ printstring STRINGID_PKMNENCOREENDED
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3E @ end2
