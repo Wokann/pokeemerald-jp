@@ -1395,17 +1395,15 @@ BattleScript_DoTurnDmgEnd:: @ 0x082897E6
 BattleScript_BurnTurnDmg:: @ 0x082897E7
 	.incbin "baserom_jp.gba", 0x2897e7, 0xb
 
-	.globl BattleScript_MoveUsedIsFrozen
-BattleScript_MoveUsedIsFrozen: @ 0x82897F2
-	.include "data/scripts/gUnknown_82897F2.inc"
+@ Frozen-status responses: unable to move, ordinary thaw, and fire thaw.
+BattleScript_MoveUsedIsFrozen:: @ 0x082897F2
+	.incbin "baserom_jp.gba", 0x2897f2, 0xd
 
-	.globl BattleScript_MoveUsedUnfroze
-BattleScript_MoveUsedUnfroze: @ 0x82897FF
-	.include "data/scripts/gUnknown_82897FF.inc"
+BattleScript_MoveUsedUnfroze:: @ 0x082897FF
+	.incbin "baserom_jp.gba", 0x2897ff, 0xb
 
-	.globl BattleScript_DefrostedViaFireMove
-BattleScript_DefrostedViaFireMove: @ 0x828980A
-	.include "data/scripts/gUnknown_828980A.inc"
+BattleScript_DefrostedViaFireMove:: @ 0x0828980A
+	.incbin "baserom_jp.gba", 0x28980a, 0x9
 
 	.globl BattleScript_MoveUsedIsParalyzed
 BattleScript_MoveUsedIsParalyzed: @ 0x8289813
