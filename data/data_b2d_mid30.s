@@ -2077,21 +2077,9 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_ROUTE104_PRETTY_PETAL_FLOWER_SHOP (g17 m1)
 	.include "data/maps/Route104_PrettyPetalFlowerShop/header.inc"
 	@ MAP_ROUTE111_WINSTRATE_FAMILYS_HOUSE (g18 m0)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte gMapEvents_ROUTE111_WINSTRATE_FAMILYS_HOUSE  @ events
-	.4byte 0x08211AF4  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x003C  @ mapLayoutId
-	.byte 0x1A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route111_WinstrateFamilysHouse/header.inc"
 	@ MAP_ROUTE111_OLD_LADYS_REST_STOP (g18 m1)
-	.4byte gMapLayout_DEWFORD_TOWN_HOUSE1  @ mapLayout
-	.4byte gMapEvents_ROUTE111_OLD_LADYS_REST_STOP  @ events
-	.4byte Route111_OldLadysRestStop_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x0040  @ mapLayoutId
-	.byte 0x1A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route111_OldLadysRestStop/header.inc"
 	@ MAP_ROUTE112_CABLE_CAR_STATION (g19 m0)
 	.4byte gMapLayout_ROUTE112_CABLE_CAR_STATION  @ mapLayout
 	.4byte gMapEvents_ROUTE112_CABLE_CAR_STATION  @ events

@@ -908,11 +908,7 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route104_MrBrineysHouse/events.inc"
 	.include "data/maps/Route104_PrettyPetalFlowerShop/events.inc"
 	.include "data/maps/Route111_WinstrateFamilysHouse/events.inc"
-	.globl gMapEvents_ROUTE111_WINSTRATE_FAMILYS_HOUSE
-	.set gMapEvents_ROUTE111_WINSTRATE_FAMILYS_HOUSE, Route111_WinstrateFamilysHouse_MapEvents
 	.include "data/maps/Route111_OldLadysRestStop/events.inc"
-	.globl gMapEvents_ROUTE111_OLD_LADYS_REST_STOP
-	.set gMapEvents_ROUTE111_OLD_LADYS_REST_STOP, Route111_OldLadysRestStop_MapEvents
 	.include "data/maps/Route112_CableCarStation/events.inc"
 	.globl gMapEvents_ROUTE112_CABLE_CAR_STATION
 	.set gMapEvents_ROUTE112_CABLE_CAR_STATION, Route112_CableCarStation_MapEvents

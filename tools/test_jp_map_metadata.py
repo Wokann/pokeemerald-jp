@@ -184,6 +184,8 @@ MAPS = (
     "EverGrandeCity_PokemonLeague_2F",
     "Route104_MrBrineysHouse",
     "Route104_PrettyPetalFlowerShop",
+    "Route111_WinstrateFamilysHouse",
+    "Route111_OldLadysRestStop",
 )
 
 CONNECTED_MAPS = (
@@ -365,6 +367,8 @@ NULL_CONNECTION_MAPS = (
     "EverGrandeCity_PokemonLeague_2F",
     "Route104_MrBrineysHouse",
     "Route104_PrettyPetalFlowerShop",
+    "Route111_WinstrateFamilysHouse",
+    "Route111_OldLadysRestStop",
 )
 
 CANONICAL_LAYOUT_MAPS = (
