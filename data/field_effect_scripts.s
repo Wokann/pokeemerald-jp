@@ -75,79 +75,104 @@ gFieldEffectScriptPointers: @ 0x8289F5C
 	.4byte gFieldEffectScript_MoveDeoxysRock @ FLDEFF_MOVE_DEOXYS_ROCK
 
 gFieldEffectScript_ExclamationMarkIcon1: @ 0x828A068
-	.incbin "baserom_jp.gba", 0x28a068, 0x6
+	field_eff_callnative FldEff_ExclamationMarkIcon
+	field_eff_end
 
 gFieldEffectScript_UseCutOnTallGrass: @ 0x828A06E
-	.incbin "baserom_jp.gba", 0x28a06e, 0x6
+	field_eff_callnative FldEff_UseCutOnGrass
+	field_eff_end
 
 gFieldEffectScript_UseCutOnTree: @ 0x828A074
-	.incbin "baserom_jp.gba", 0x28a074, 0x6
+	field_eff_callnative FldEff_UseCutOnTree
+	field_eff_end
 
 gFieldEffectScript_Shadow: @ 0x828A07A
-	.incbin "baserom_jp.gba", 0x28a07a, 0x6
+	field_eff_callnative FldEff_Shadow
+	field_eff_end
 
 gFieldEffectScript_TallGrass: @ 0x828A080
-	.incbin "baserom_jp.gba", 0x28a080, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_TallGrass
+	field_eff_end
 
 gFieldEffectScript_Ripple: @ 0x828A08A
-	.incbin "baserom_jp.gba", 0x28a08a, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_Ripple
+	field_eff_end
 
 gFieldEffectScript_FieldMoveShowMon: @ 0x828A094
-	.incbin "baserom_jp.gba", 0x28a094, 0x6
+	field_eff_callnative FldEff_FieldMoveShowMon
+	field_eff_end
 
 gFieldEffectScript_Ash: @ 0x828A09A
-	.incbin "baserom_jp.gba", 0x28a09a, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_Ash
+	field_eff_end
 
 gFieldEffectScript_SurfBlob: @ 0x828A0A4
-	.incbin "baserom_jp.gba", 0x28a0a4, 0x6
+	field_eff_callnative FldEff_SurfBlob
+	field_eff_end
 
 gFieldEffectScript_UseSurf: @ 0x828A0AA
-	.incbin "baserom_jp.gba", 0x28a0aa, 0x6
+	field_eff_callnative FldEff_UseSurf
+	field_eff_end
 
 gFieldEffectScript_GroundImpactDust: @ 0x828A0B0
-	.incbin "baserom_jp.gba", 0x28a0b0, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_Dust
+	field_eff_end
 
 gFieldEffectScript_UseSecretPowerCave: @ 0x828A0BA
-	.incbin "baserom_jp.gba", 0x28a0ba, 0x6
+	field_eff_callnative FldEff_UseSecretPowerCave
+	field_eff_end
 
 gFieldEffectScript_JumpTallGrass: @ 0x828A0C0
-	.incbin "baserom_jp.gba", 0x28a0c0, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_JumpTallGrass
+	field_eff_end
 
 gFieldEffectScript_SandFootprints: @ 0x828A0CA
-	.incbin "baserom_jp.gba", 0x28a0ca, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_SandFootprints
+	field_eff_end
 
 gFieldEffectScript_JumpBigSplash: @ 0x828A0D4
-	.incbin "baserom_jp.gba", 0x28a0d4, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_JumpBigSplash
+	field_eff_end
 
 gFieldEffectScript_Splash: @ 0x828A0DE
-	.incbin "baserom_jp.gba", 0x28a0de, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_Splash
+	field_eff_end
 
 gFieldEffectScript_JumpSmallSplash: @ 0x828A0E8
-	.incbin "baserom_jp.gba", 0x28a0e8, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_JumpSmallSplash
+	field_eff_end
 
 gFieldEffectScript_LongGrass: @ 0x828A0F2
-	.incbin "baserom_jp.gba", 0x28a0f2, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_LongGrass
+	field_eff_end
 
 gFieldEffectScript_JumpLongGrass: @ 0x828A0FC
-	.incbin "baserom_jp.gba", 0x28a0fc, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_JumpLongGrass
+	field_eff_end
 
 gFieldEffectScript_UnusedGrass: @ 0x828A106
-	.incbin "baserom_jp.gba", 0x28a106, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_UnusedGrass
+	field_eff_end
 
 gFieldEffectScript_UnusedGrass2: @ 0x828A110
-	.incbin "baserom_jp.gba", 0x28a110, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_UnusedGrass2
+	field_eff_end
 
 gFieldEffectScript_UnusedSand: @ 0x828A11A
-	.incbin "baserom_jp.gba", 0x28a11a, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_UnusedSand
+	field_eff_end
 
 gFieldEffectScript_WaterSurfacing: @ 0x828A124
-	.incbin "baserom_jp.gba", 0x28a124, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_WaterSurfacing
+	field_eff_end
 
 gFieldEffectScript_BerryTreeGrowthSparkle: @ 0x828A12E
-	.incbin "baserom_jp.gba", 0x28a12e, 0x6
+	field_eff_callnative FldEff_BerryTreeGrowthSparkle
+	field_eff_end
 
 gFieldEffectScript_DeepSandFootprints: @ 0x828A134
-	.incbin "baserom_jp.gba", 0x28a134, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_DeepSandFootprints
+	field_eff_end
 
 gFieldEffectScript_PokeCenterHeal: @ 0x828A13E
 	.incbin "baserom_jp.gba", 0x28a13e, 0xf
