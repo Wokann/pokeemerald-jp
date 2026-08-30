@@ -924,8 +924,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/RusturfTunnel/events.inc"
 	.include "data/maps/Underwater_SootopolisCity/events.inc"
 	.include "data/maps/DesertRuins/events.inc"
-	.globl gMapEvents_DESERT_RUINS
-	.set gMapEvents_DESERT_RUINS, DesertRuins_MapEvents
 	.include "data/maps/GraniteCave_1F/events.inc"
 	.globl gMapEvents_GRANITE_CAVE_1F
 	.set gMapEvents_GRANITE_CAVE_1F, GraniteCave_1F_MapEvents
