@@ -2393,7 +2393,11 @@ gUnknown_8536EF0: @ 0x8536EF0
 gSpritePalette_PokeballGlow: @ 0x8536F08
 	.incbin "baserom_jp.gba", 0x536f08, 0x8
 
-	.incbin "baserom_jp.gba", 0x536f10, 0x48
+	.globl gSpritePalette_HofMonitor
+gSpritePalette_HofMonitor: @ 0x8536F10
+	.incbin "baserom_jp.gba", 0x536f10, 0x8
+
+	.incbin "baserom_jp.gba", 0x536f18, 0x40
 
 	.globl gUnknown_8536F58
 gUnknown_8536F58: @ 0x8536F58

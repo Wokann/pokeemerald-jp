@@ -256,67 +256,92 @@ gFieldEffectScript_UseDive: @ 0x828A1CD
 	field_eff_end
 
 gFieldEffectScript_PokeballTrail: @ 0x828A1D3
-	.incbin "baserom_jp.gba", 0x28a1d3, 0xb
+	field_eff_loadpal gSpritePalette_Pokeball
+	field_eff_callnative FldEff_PokeballTrail
+	field_eff_end
 
 gFieldEffectScript_HeartIcon: @ 0x828A1DE
-	.incbin "baserom_jp.gba", 0x28a1de, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_HeartIcon
+	field_eff_end
 
 gFieldEffectScript_Nop47: @ 0x828A1E8
-	.incbin "baserom_jp.gba", 0x28a1e8, 0x6
+	field_eff_callnative FldEff_NopA700
+	field_eff_end
 
 gFieldEffectScript_Nop48: @ 0x828A1EE
-	.incbin "baserom_jp.gba", 0x28a1ee, 0x6
+	field_eff_callnative FldEff_NopA6FC
+	field_eff_end
 
 gFieldEffectScript_AshPuff: @ 0x828A1F4
-	.incbin "baserom_jp.gba", 0x28a1f4, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_Ash, FldEff_AshPuff
+	field_eff_end
 
 gFieldEffectScript_AshLaunch: @ 0x828A1FE
-	.incbin "baserom_jp.gba", 0x28a1fe, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_Ash, FldEff_AshLaunch
+	field_eff_end
 
 gFieldEffectScript_SweetScent: @ 0x828A208
-	.incbin "baserom_jp.gba", 0x28a208, 0x6
+	field_eff_callnative FldEff_SweetScent
+	field_eff_end
 
 gFieldEffectScript_SandPillar: @ 0x828A20E
-	.incbin "baserom_jp.gba", 0x28a20e, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_SandPillar, FldEff_SandPillar
+	field_eff_end
 
 gFieldEffectScript_Bubbles: @ 0x828A218
-	.incbin "baserom_jp.gba", 0x28a218, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_Bubbles
+	field_eff_end
 
 gFieldEffectScript_Sparkle: @ 0x828A222
-	.incbin "baserom_jp.gba", 0x28a222, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_SmallSparkle, FldEff_Sparkle
+	field_eff_end
 
 gFieldEffectScript_ShowSecretPowerCave: @ 0x828A22C
-	.incbin "baserom_jp.gba", 0x28a22c, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_SecretPower_Cave, FldEff_SecretPowerCave
+	field_eff_end
 
 gFieldEffectScript_ShowSecretPowerTree: @ 0x828A236
-	.incbin "baserom_jp.gba", 0x28a236, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_SecretPower_Plant, FldEff_SecretPowerTree
+	field_eff_end
 
 gFieldEffectScript_ShowSecretPowerShrub: @ 0x828A240
-	.incbin "baserom_jp.gba", 0x28a240, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_SecretPower_Plant, FldEff_SecretPowerShrub
+	field_eff_end
 
 gFieldEffectScript_ShowCutGrass: @ 0x828A24A
-	.incbin "baserom_jp.gba", 0x28a24a, 0xa
+	field_eff_loadfadedpal_callnative gSpritePalette_CutGrass, FldEff_CutGrass
+	field_eff_end
 
 gFieldEffectScript_FieldMoveShowMonInit: @ 0x828A254
-	.incbin "baserom_jp.gba", 0x28a254, 0x6
+	field_eff_callnative FldEff_FieldMoveShowMonInit
+	field_eff_end
 
 gFieldEffectScript_UsePuzzleEffect: @ 0x828A25A
-	.incbin "baserom_jp.gba", 0x28a25a, 0x6
+	field_eff_callnative FldEff_UsePuzzleEffect
+	field_eff_end
 
 gFieldEffectScript_SecretBaseBootPC: @ 0x828A260
-	.incbin "baserom_jp.gba", 0x28a260, 0x6
+	field_eff_callnative FldEff_SecretBasePCTurnOn
+	field_eff_end
 
 gFieldEffectScript_HallOfFameRecord: @ 0x828A266
-	.incbin "baserom_jp.gba", 0x28a266, 0xf
+	field_eff_loadfadedpal gSpritePalette_PokeballGlow
+	field_eff_loadfadedpal_callnative gSpritePalette_HofMonitor, FldEff_HallOfFameRecord
+	field_eff_end
 
 gFieldEffectScript_UseTeleport: @ 0x828A275
-	.incbin "baserom_jp.gba", 0x28a275, 0x6
+	field_eff_callnative FldEff_UseTeleport
+	field_eff_end
 
 gFieldEffectScript_RayquazaSpotlight: @ 0x828A27B
-	.incbin "baserom_jp.gba", 0x28a27b, 0x6
+	field_eff_callnative FldEff_RayquazaSpotlight
+	field_eff_end
 
 gFieldEffectScript_DestroyDeoxysRock: @ 0x828A281
-	.incbin "baserom_jp.gba", 0x28a281, 0x6
+	field_eff_callnative FldEff_DestroyDeoxysRock
+	field_eff_end
 
 gFieldEffectScript_MoveDeoxysRock: @ 0x828A287
-	.incbin "baserom_jp.gba", 0x28a287, 0x9
+	field_eff_callnative FldEff_MoveDeoxysRock
+	field_eff_end
+	.align 2, 0
