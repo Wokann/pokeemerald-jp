@@ -1292,13 +1292,19 @@ BattleScript_SelectingNotAllowedMoveTauntInPalace:: @ 0x08289637
 	.byte 0x10, 0xAD, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVETAUNT
 	.byte 0x28, 0xB5, 0x93, 0x28, 0x08 @ goto BattleScript_SelectingUnusableMoveInPalace
 
-	.globl BattleScript_WishComesTrue
-BattleScript_WishComesTrue: @ 0x828963F
-	.include "data/scripts/gUnknown_828963F.inc"
+@ Wish and Ingrain healing paths, including their physical fallback/status
+@ entries. Preserve JP command bytes while exposing the US-aligned labels.
+BattleScript_WishComesTrue:: @ 0x0828963F
+	.incbin "baserom_jp.gba", 0x28963f, 0x27
 
-	.globl BattleScript_IngrainTurnHeal
-BattleScript_IngrainTurnHeal: @ 0x8289676
-	.include "data/scripts/gUnknown_8289676.inc"
+BattleScript_WishButFullHp:: @ 0x08289666
+	.incbin "baserom_jp.gba", 0x289666, 0x10
+
+BattleScript_IngrainTurnHeal:: @ 0x08289676
+	.incbin "baserom_jp.gba", 0x289676, 0x1b
+
+BattleScript_PrintMonIsRooted:: @ 0x08289691
+	.incbin "baserom_jp.gba", 0x289691, 0xe
 
 	.globl BattleScript_AtkDefDown
 BattleScript_AtkDefDown: @ 0x828969F
