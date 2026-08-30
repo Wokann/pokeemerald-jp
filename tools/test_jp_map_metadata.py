@@ -191,6 +191,7 @@ MAPS = (
     "Route114_FossilManiacsHouse",
     "Route114_FossilManiacsTunnel",
     "Route114_LanettesHouse",
+    "Route116_TunnelersRestHouse",
 )
 
 CONNECTED_MAPS = (
@@ -379,6 +380,7 @@ NULL_CONNECTION_MAPS = (
     "Route114_FossilManiacsHouse",
     "Route114_FossilManiacsTunnel",
     "Route114_LanettesHouse",
+    "Route116_TunnelersRestHouse",
 )
 
 CANONICAL_LAYOUT_MAPS = (

@@ -915,8 +915,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route114_FossilManiacsTunnel/events.inc"
 	.include "data/maps/Route114_LanettesHouse/events.inc"
 	.include "data/maps/Route116_TunnelersRestHouse/events.inc"
-	.globl gMapEvents_ROUTE116_TUNNELERS_REST_HOUSE
-	.set gMapEvents_ROUTE116_TUNNELERS_REST_HOUSE, Route116_TunnelersRestHouse_MapEvents
 	.include "data/maps/Route117_PokemonDayCare/events.inc"
 	.globl gMapEvents_ROUTE117_POKEMON_DAY_CARE
 	.set gMapEvents_ROUTE117_POKEMON_DAY_CARE, Route117_PokemonDayCare_MapEvents
