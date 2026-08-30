@@ -1797,77 +1797,23 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE (g5 m7)
 	.include "data/maps/FallarborTown_MoveRelearnersHouse/header.inc"
 	@ MAP_VERDANTURF_TOWN_BATTLE_TENT_LOBBY (g6 m0)
-	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY  @ mapLayout
-	.4byte VerdanturfTown_BattleTentLobby_MapEvents  @ events
-	.4byte VerdanturfTown_BattleTentLobby_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0180  @ music
-	.2byte 0x0180  @ mapLayoutId
-	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/VerdanturfTown_BattleTentLobby/header.inc"
 	@ MAP_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR (g6 m1)
-	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR  @ mapLayout
-	.4byte VerdanturfTown_BattleTentCorridor_MapEvents  @ events
-	.4byte VerdanturfTown_BattleTentCorridor_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0180  @ music
-	.2byte 0x0181  @ mapLayoutId
-	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/VerdanturfTown_BattleTentCorridor/header.inc"
 	@ MAP_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM (g6 m2)
-	.4byte gMapLayout_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM  @ mapLayout
-	.4byte VerdanturfTown_BattleTentBattleRoom_MapEvents  @ events
-	.4byte VerdanturfTown_BattleTentBattleRoom_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0180  @ music
-	.2byte 0x0183  @ mapLayoutId
-	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/VerdanturfTown_BattleTentBattleRoom/header.inc"
 	@ MAP_VERDANTURF_TOWN_MART (g6 m3)
-	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte VerdanturfTown_Mart_MapEvents  @ events
-	.4byte 0x081F6F27  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x003F  @ mapLayoutId
-	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/VerdanturfTown_Mart/header.inc"
 	@ MAP_VERDANTURF_TOWN_POKEMON_CENTER_1F (g6 m4)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte VerdanturfTown_PokemonCenter_1F_MapEvents  @ events
-	.4byte VerdanturfTown_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003D  @ mapLayoutId
-	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/VerdanturfTown_PokemonCenter_1F/header.inc"
 	@ MAP_VERDANTURF_TOWN_POKEMON_CENTER_2F (g6 m5)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte VerdanturfTown_PokemonCenter_2F_MapEvents  @ events
-	.4byte VerdanturfTown_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/VerdanturfTown_PokemonCenter_2F/header.inc"
 	@ MAP_VERDANTURF_TOWN_WANDAS_HOUSE (g6 m6)
-	.4byte gMapLayout_VERDANTURF_TOWN_WANDAS_HOUSE  @ mapLayout
-	.4byte VerdanturfTown_WandasHouse_MapEvents  @ events
-	.4byte 0x081F7105  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018E  @ music
-	.2byte 0x004C  @ mapLayoutId
-	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/VerdanturfTown_WandasHouse/header.inc"
 	@ MAP_VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE (g6 m7)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte VerdanturfTown_FriendshipRatersHouse_MapEvents  @ events
-	.4byte 0x081F7556  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018E  @ music
-	.2byte 0x003C  @ mapLayoutId
-	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/VerdanturfTown_FriendshipRatersHouse/header.inc"
 	@ MAP_VERDANTURF_TOWN_HOUSE (g6 m8)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte VerdanturfTown_House_MapEvents  @ events
-	.4byte 0x081F777F  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018E  @ music
-	.2byte 0x003B  @ mapLayoutId
-	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/VerdanturfTown_House/header.inc"
 	@ MAP_PACIFIDLOG_TOWN_POKEMON_CENTER_1F (g7 m0)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
 	.4byte PacifidlogTown_PokemonCenter_1F_MapEvents  @ events

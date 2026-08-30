@@ -326,6 +326,10 @@ JP_STRUCTURED_MAP_METADATA_MAPS += LavaridgeTown_HerbShop LavaridgeTown_Gym_1F L
 JP_STRUCTURED_MAP_METADATA_MAPS += FallarborTown_Mart FallarborTown_BattleTentLobby FallarborTown_BattleTentCorridor \
 	FallarborTown_BattleTentBattleRoom FallarborTown_PokemonCenter_1F FallarborTown_PokemonCenter_2F \
 	FallarborTown_CozmosHouse FallarborTown_MoveRelearnersHouse
+JP_STRUCTURED_MAP_METADATA_MAPS += VerdanturfTown_BattleTentLobby VerdanturfTown_BattleTentCorridor \
+	VerdanturfTown_BattleTentBattleRoom VerdanturfTown_Mart VerdanturfTown_PokemonCenter_1F \
+	VerdanturfTown_PokemonCenter_2F VerdanturfTown_WandasHouse VerdanturfTown_FriendshipRatersHouse \
+	VerdanturfTown_House
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

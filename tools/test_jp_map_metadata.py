@@ -44,6 +44,15 @@ MAPS = (
     "FallarborTown_PokemonCenter_2F",
     "FallarborTown_CozmosHouse",
     "FallarborTown_MoveRelearnersHouse",
+    "VerdanturfTown_BattleTentLobby",
+    "VerdanturfTown_BattleTentCorridor",
+    "VerdanturfTown_BattleTentBattleRoom",
+    "VerdanturfTown_Mart",
+    "VerdanturfTown_PokemonCenter_1F",
+    "VerdanturfTown_PokemonCenter_2F",
+    "VerdanturfTown_WandasHouse",
+    "VerdanturfTown_FriendshipRatersHouse",
+    "VerdanturfTown_House",
 )
 
 CONNECTED_MAPS = (
@@ -85,6 +94,15 @@ NULL_CONNECTION_MAPS = (
     "FallarborTown_PokemonCenter_2F",
     "FallarborTown_CozmosHouse",
     "FallarborTown_MoveRelearnersHouse",
+    "VerdanturfTown_BattleTentLobby",
+    "VerdanturfTown_BattleTentCorridor",
+    "VerdanturfTown_BattleTentBattleRoom",
+    "VerdanturfTown_Mart",
+    "VerdanturfTown_PokemonCenter_1F",
+    "VerdanturfTown_PokemonCenter_2F",
+    "VerdanturfTown_WandasHouse",
+    "VerdanturfTown_FriendshipRatersHouse",
+    "VerdanturfTown_House",
 )
 
 CANONICAL_LAYOUT_MAPS = (
