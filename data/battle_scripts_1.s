@@ -1226,9 +1226,28 @@ BattleScript_SpikesFree:: @ 0x08289565
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3C @ return
 
-	.globl BattleScript_MonTookFutureAttack
-BattleScript_MonTookFutureAttack: @ 0x828956C
-	.include "data/scripts/gUnknown_828956C.inc"
+@ Future Sight / Doom Desire resolution. All hit, miss, animation, and
+@ return paths remain explicit at their physical JP entry points.
+BattleScript_MonTookFutureAttack:: @ 0x0828956C
+	.incbin "baserom_jp.gba", 0x28956c, 0x1d
+
+BattleScript_CheckDoomDesireMiss:: @ 0x08289589
+	.incbin "baserom_jp.gba", 0x289589, 0x7
+
+BattleScript_FutureAttackAnimate:: @ 0x08289590
+	.incbin "baserom_jp.gba", 0x289590, 0x18
+
+BattleScript_FutureHitAnimDoomDesire:: @ 0x082895A8
+	.incbin "baserom_jp.gba", 0x2895a8, 0x7
+
+BattleScript_DoFutureAttackHit:: @ 0x082895AF
+	.incbin "baserom_jp.gba", 0x2895af, 0x18
+
+BattleScript_FutureAttackEnd:: @ 0x082895C7
+	.incbin "baserom_jp.gba", 0x2895c7, 0x19
+
+BattleScript_FutureAttackMiss:: @ 0x082895E0
+	.incbin "baserom_jp.gba", 0x2895e0, 0x1a
 
 	.globl BattleScript_NoMovesLeft
 BattleScript_NoMovesLeft: @ 0x82895FA
