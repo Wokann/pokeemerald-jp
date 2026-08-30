@@ -2830,7 +2830,30 @@ gMapLayout_SHOAL_CAVE_LOW_TIDE_ICE_ROOM: @ 0x08437674
 	.4byte gMapLayout_SHOAL_CAVE_LOW_TIDE_ICE_ROOM_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x43768C, 0xCC8C
+	.incbin "baserom_jp.gba", 0x43768C, 0xD4
+gMapLayout_SKY_PILLAR_5F_Border:
+	.incbin "data/layouts/SkyPillar_5F/border.bin"
+gMapLayout_SKY_PILLAR_5F_Blockdata:
+	.incbin "data/layouts/SkyPillar_5F/map.bin"
+gMapLayout_SKY_PILLAR_5F: @ 0x084378F0
+	.4byte 14  @ width
+	.4byte 14  @ height
+	.4byte gMapLayout_SKY_PILLAR_5F_Border  @ border
+	.4byte gMapLayout_SKY_PILLAR_5F_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
+gMapLayout_SKY_PILLAR_TOP_Border:
+	.incbin "data/layouts/SkyPillar_Top/border.bin"
+gMapLayout_SKY_PILLAR_TOP_Blockdata:
+	.incbin "data/layouts/SkyPillar_Top/map.bin"
+gMapLayout_SKY_PILLAR_TOP: @ 0x08437E20
+	.4byte 27  @ width
+	.4byte 24  @ height
+	.4byte gMapLayout_SKY_PILLAR_TOP_Border  @ border
+	.4byte gMapLayout_SKY_PILLAR_TOP_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x437E38, 0xC4E0
 gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_Border:
 	.incbin "data/layouts/FallarborTownBattleTentLobby/border.bin"
 gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_Blockdata:

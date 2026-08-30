@@ -246,6 +246,8 @@ MAPS = (
     "SkyPillar_3F",
     "SkyPillar_4F",
     "ShoalCave_LowTideIceRoom",
+    "SkyPillar_5F",
+    "SkyPillar_Top",
 )
 
 CONNECTED_MAPS = (
@@ -489,6 +491,8 @@ NULL_CONNECTION_MAPS = (
     "SkyPillar_3F",
     "SkyPillar_4F",
     "ShoalCave_LowTideIceRoom",
+    "SkyPillar_5F",
+    "SkyPillar_Top",
 )
 
 CANONICAL_LAYOUT_MAPS = (

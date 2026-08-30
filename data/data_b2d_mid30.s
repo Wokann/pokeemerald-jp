@@ -2264,8 +2264,12 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/SkyPillar_4F/header.inc"
 	@ MAP_SHOAL_CAVE_LOW_TIDE_ICE_ROOM (g24 m83)
 	.include "data/maps/ShoalCave_LowTideIceRoom/header.inc"
-	@ MAP_SKY_PILLAR_5F through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45cc10, 0x1d88
+	@ MAP_SKY_PILLAR_5F (g24 m84)
+	.include "data/maps/SkyPillar_5F/header.inc"
+	@ MAP_SKY_PILLAR_TOP (g24 m85)
+	.include "data/maps/SkyPillar_Top/header.inc"
+	@ MAP_MAGMA_HIDEOUT_1F through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45cc48, 0x1d50
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
