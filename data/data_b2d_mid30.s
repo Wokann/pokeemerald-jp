@@ -2250,8 +2250,20 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/AquaHideout_UnusedRubyMap2/header.inc"
 	@ MAP_AQUA_HIDEOUT_UNUSED_RUBY_MAP3 (g24 m76)
 	.include "data/maps/AquaHideout_UnusedRubyMap3/header.inc"
-	@ MAP_SKY_PILLAR_ENTRANCE through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45cb4c, 0x1e4c
+	@ MAP_SKY_PILLAR_ENTRANCE (g24 m77)
+	.include "data/maps/SkyPillar_Entrance/header.inc"
+	@ MAP_SKY_PILLAR_OUTSIDE (g24 m78)
+	.include "data/maps/SkyPillar_Outside/header.inc"
+	@ MAP_SKY_PILLAR_1F (g24 m79)
+	.include "data/maps/SkyPillar_1F/header.inc"
+	@ MAP_SKY_PILLAR_2F (g24 m80)
+	.include "data/maps/SkyPillar_2F/header.inc"
+	@ MAP_SKY_PILLAR_3F (g24 m81)
+	.include "data/maps/SkyPillar_3F/header.inc"
+	@ MAP_SKY_PILLAR_4F (g24 m82)
+	.include "data/maps/SkyPillar_4F/header.inc"
+	@ MAP_SHOAL_CAVE_LOW_TIDE_ICE_ROOM through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45cbf4, 0x1da4
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

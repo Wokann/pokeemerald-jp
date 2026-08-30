@@ -2739,7 +2739,74 @@ gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP3: @ 0x084345B0
 	.4byte gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP3_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4345C8, 0x2B24
+	.incbin "baserom_jp.gba", 0x4345C8, 0x12E0
+gMapLayout_SKY_PILLAR_ENTRANCE_Border:
+	.incbin "data/layouts/SkyPillar_Entrance/border.bin"
+gMapLayout_SKY_PILLAR_ENTRANCE_Blockdata:
+	.incbin "data/layouts/SkyPillar_Entrance/map.bin"
+gMapLayout_SKY_PILLAR_ENTRANCE: @ 0x08435B38
+	.4byte 18  @ width
+	.4byte 18  @ height
+	.4byte gMapLayout_SKY_PILLAR_ENTRANCE_Border  @ border
+	.4byte gMapLayout_SKY_PILLAR_ENTRANCE_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+gMapLayout_SKY_PILLAR_OUTSIDE_Border:
+	.incbin "data/layouts/SkyPillar_Outside/border.bin"
+gMapLayout_SKY_PILLAR_OUTSIDE_Blockdata:
+	.incbin "data/layouts/SkyPillar_Outside/map.bin"
+gMapLayout_SKY_PILLAR_OUTSIDE: @ 0x08436060
+	.4byte 28  @ width
+	.4byte 23  @ height
+	.4byte gMapLayout_SKY_PILLAR_OUTSIDE_Border  @ border
+	.4byte gMapLayout_SKY_PILLAR_OUTSIDE_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
+gMapLayout_SKY_PILLAR_1F_Border:
+	.incbin "data/layouts/SkyPillar_1F/border.bin"
+gMapLayout_SKY_PILLAR_1F_Blockdata:
+	.incbin "data/layouts/SkyPillar_1F/map.bin"
+gMapLayout_SKY_PILLAR_1F: @ 0x08436208
+	.4byte 14  @ width
+	.4byte 14  @ height
+	.4byte gMapLayout_SKY_PILLAR_1F_Border  @ border
+	.4byte gMapLayout_SKY_PILLAR_1F_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
+gMapLayout_SKY_PILLAR_2F_Border:
+	.incbin "data/layouts/SkyPillar_2F/border.bin"
+gMapLayout_SKY_PILLAR_2F_Blockdata:
+	.incbin "data/layouts/SkyPillar_2F/map.bin"
+gMapLayout_SKY_PILLAR_2F: @ 0x084363B0
+	.4byte 14  @ width
+	.4byte 14  @ height
+	.4byte gMapLayout_SKY_PILLAR_2F_Border  @ border
+	.4byte gMapLayout_SKY_PILLAR_2F_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
+gMapLayout_SKY_PILLAR_3F_Border:
+	.incbin "data/layouts/SkyPillar_3F/border.bin"
+gMapLayout_SKY_PILLAR_3F_Blockdata:
+	.incbin "data/layouts/SkyPillar_3F/map.bin"
+gMapLayout_SKY_PILLAR_3F: @ 0x08436558
+	.4byte 14  @ width
+	.4byte 14  @ height
+	.4byte gMapLayout_SKY_PILLAR_3F_Border  @ border
+	.4byte gMapLayout_SKY_PILLAR_3F_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
+gMapLayout_SKY_PILLAR_4F_Border:
+	.incbin "data/layouts/SkyPillar_4F/border.bin"
+gMapLayout_SKY_PILLAR_4F_Blockdata:
+	.incbin "data/layouts/SkyPillar_4F/map.bin"
+gMapLayout_SKY_PILLAR_4F: @ 0x08436700
+	.4byte 14  @ width
+	.4byte 14  @ height
+	.4byte gMapLayout_SKY_PILLAR_4F_Border  @ border
+	.4byte gMapLayout_SKY_PILLAR_4F_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x436718, 0x9D4
 gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE_Border:
 	.incbin "data/layouts/MossdeepCity_StevensHouse/border.bin"
 gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE_Blockdata:

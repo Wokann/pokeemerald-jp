@@ -410,6 +410,8 @@ JP_STRUCTURED_MAP_METADATA_MAPS += CaveOfOrigin_Entrance CaveOfOrigin_1F \
 	CaveOfOrigin_UnusedRubySapphireMap3
 JP_STRUCTURED_MAP_METADATA_MAPS += AquaHideout_UnusedRubyMap1 AquaHideout_UnusedRubyMap2 \
 	AquaHideout_UnusedRubyMap3
+JP_STRUCTURED_MAP_METADATA_MAPS += SkyPillar_Entrance SkyPillar_Outside SkyPillar_1F \
+	SkyPillar_2F SkyPillar_3F SkyPillar_4F
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

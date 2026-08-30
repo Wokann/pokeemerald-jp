@@ -239,6 +239,12 @@ MAPS = (
     "AquaHideout_UnusedRubyMap1",
     "AquaHideout_UnusedRubyMap2",
     "AquaHideout_UnusedRubyMap3",
+    "SkyPillar_Entrance",
+    "SkyPillar_Outside",
+    "SkyPillar_1F",
+    "SkyPillar_2F",
+    "SkyPillar_3F",
+    "SkyPillar_4F",
 )
 
 CONNECTED_MAPS = (
@@ -475,6 +481,12 @@ NULL_CONNECTION_MAPS = (
     "AquaHideout_UnusedRubyMap1",
     "AquaHideout_UnusedRubyMap2",
     "AquaHideout_UnusedRubyMap3",
+    "SkyPillar_Entrance",
+    "SkyPillar_Outside",
+    "SkyPillar_1F",
+    "SkyPillar_2F",
+    "SkyPillar_3F",
+    "SkyPillar_4F",
 )
 
 CANONICAL_LAYOUT_MAPS = (
