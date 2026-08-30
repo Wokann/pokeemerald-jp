@@ -2703,7 +2703,43 @@ gMapLayout_EVER_GRANDE_CITY_HALL4: @ 0x08432CC0
 	.4byte gMapLayout_EVER_GRANDE_CITY_HALL4_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x432cd8, 0x4414
+gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP1_Border:
+	.incbin "data/layouts/AquaHideout_UnusedRubyMap1/border.bin"
+gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP1_Blockdata:
+	.incbin "data/layouts/AquaHideout_UnusedRubyMap1/map.bin"
+	.globl gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP1
+gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP1: @ 0x08433370
+	.4byte 28  @ width
+	.4byte 30  @ height
+	.4byte gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP1_Border  @ border
+	.4byte gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP1_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
+gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP2_Border:
+	.incbin "data/layouts/AquaHideout_UnusedRubyMap2/border.bin"
+gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP2_Blockdata:
+	.incbin "data/layouts/AquaHideout_UnusedRubyMap2/map.bin"
+	.globl gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP2
+gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP2: @ 0x08433F30
+	.4byte 62  @ width
+	.4byte 24  @ height
+	.4byte gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP2_Border  @ border
+	.4byte gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP2_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
+gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP3_Border:
+	.incbin "data/layouts/AquaHideout_UnusedRubyMap3/border.bin"
+gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP3_Blockdata:
+	.incbin "data/layouts/AquaHideout_UnusedRubyMap3/map.bin"
+	.globl gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP3
+gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP3: @ 0x084345B0
+	.4byte 34  @ width
+	.4byte 24  @ height
+	.4byte gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP3_Border  @ border
+	.4byte gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP3_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x4345C8, 0x2B24
 gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE_Border:
 	.incbin "data/layouts/MossdeepCity_StevensHouse/border.bin"
 gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE_Blockdata:

@@ -408,6 +408,8 @@ JP_STRUCTURED_MAP_METADATA_MAPS += SeafloorCavern_Room5 SeafloorCavern_Room6 \
 JP_STRUCTURED_MAP_METADATA_MAPS += CaveOfOrigin_Entrance CaveOfOrigin_1F \
 	CaveOfOrigin_UnusedRubySapphireMap1 CaveOfOrigin_UnusedRubySapphireMap2 \
 	CaveOfOrigin_UnusedRubySapphireMap3
+JP_STRUCTURED_MAP_METADATA_MAPS += AquaHideout_UnusedRubyMap1 AquaHideout_UnusedRubyMap2 \
+	AquaHideout_UnusedRubyMap3
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

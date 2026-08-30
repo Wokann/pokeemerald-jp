@@ -236,6 +236,9 @@ MAPS = (
     "CaveOfOrigin_UnusedRubySapphireMap1",
     "CaveOfOrigin_UnusedRubySapphireMap2",
     "CaveOfOrigin_UnusedRubySapphireMap3",
+    "AquaHideout_UnusedRubyMap1",
+    "AquaHideout_UnusedRubyMap2",
+    "AquaHideout_UnusedRubyMap3",
 )
 
 CONNECTED_MAPS = (
@@ -469,6 +472,9 @@ NULL_CONNECTION_MAPS = (
     "CaveOfOrigin_UnusedRubySapphireMap1",
     "CaveOfOrigin_UnusedRubySapphireMap2",
     "CaveOfOrigin_UnusedRubySapphireMap3",
+    "AquaHideout_UnusedRubyMap1",
+    "AquaHideout_UnusedRubyMap2",
+    "AquaHideout_UnusedRubyMap3",
 )
 
 CANONICAL_LAYOUT_MAPS = (

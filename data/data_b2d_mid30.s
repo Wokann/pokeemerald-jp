@@ -2244,7 +2244,14 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/SealedChamber_InnerRoom/header.inc"
 	@ MAP_SCORCHED_SLAB (g24 m73)
 	.include "data/maps/ScorchedSlab/header.inc"
-	.incbin "baserom_jp.gba", 0x45caf8, 0x1ea0
+	@ MAP_AQUA_HIDEOUT_UNUSED_RUBY_MAP1 (g24 m74)
+	.include "data/maps/AquaHideout_UnusedRubyMap1/header.inc"
+	@ MAP_AQUA_HIDEOUT_UNUSED_RUBY_MAP2 (g24 m75)
+	.include "data/maps/AquaHideout_UnusedRubyMap2/header.inc"
+	@ MAP_AQUA_HIDEOUT_UNUSED_RUBY_MAP3 (g24 m76)
+	.include "data/maps/AquaHideout_UnusedRubyMap3/header.inc"
+	@ MAP_SKY_PILLAR_ENTRANCE through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45cb4c, 0x1e4c
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
