@@ -100,7 +100,7 @@ Route111_OnWarp:: @ 0x081EA2EC
 	.2byte 0
 
 Route111_EventScript_HidePlayerForMirageTower:: @ 0x081EA2F6
-	hideobject_at LOCALID_PLAYER, MAP_LITTLEROOT_TOWN
+	hideobjectat LOCALID_PLAYER, MAP_LITTLEROOT_TOWN
 	end
 
 Route111_OnFrame:: @ 0x081EA2FC
@@ -115,7 +115,7 @@ Route111_EventScript_MirageTowerDisappear:: @ 0x081EA306
 	playse SE_FALL
 	addobject LOCALID_ROUTE111_PLAYER_FALLING
 	special StartPlayerDescendMirageTower
-	showobject_at LOCALID_PLAYER, MAP_LITTLEROOT_TOWN
+	showobjectat LOCALID_PLAYER, MAP_LITTLEROOT_TOWN
 	removeobject LOCALID_ROUTE111_PLAYER_FALLING
 	delay 16
 	turnobject LOCALID_PLAYER, DIR_NORTH
