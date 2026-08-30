@@ -276,6 +276,7 @@ JP_STRUCTURED_MAPS += CaveOfOrigin_1F CaveOfOrigin_UnusedRubySapphireMap1 \
 	CaveOfOrigin_UnusedRubySapphireMap2 CaveOfOrigin_UnusedRubySapphireMap3
 JP_STRUCTURED_MAPS += AquaHideout_UnusedRubyMap1 AquaHideout_UnusedRubyMap2 AquaHideout_UnusedRubyMap3
 JP_STRUCTURED_MAPS += SkyPillar_Entrance SkyPillar_Outside SkyPillar_1F SkyPillar_2F SkyPillar_3F SkyPillar_4F
+JP_STRUCTURED_MAPS += ShoalCave_LowTideIceRoom
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
