@@ -1341,13 +1341,12 @@ BattleScript_GrudgeTakesPP:: @ 0x08289715
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3C @ return
 
-	.globl BattleScript_MagicCoatBounce
-BattleScript_MagicCoatBounce: @ 0x828971C
-	.include "data/scripts/gUnknown_828971C.inc"
+@ Magic Coat and Snatch interception paths.
+BattleScript_MagicCoatBounce:: @ 0x0828971C
+	.incbin "baserom_jp.gba", 0x28971c, 0x18
 
-	.globl BattleScript_SnatchedMove
-BattleScript_SnatchedMove: @ 0x8289734
-	.include "data/scripts/gUnknown_8289734.inc"
+BattleScript_SnatchedMove:: @ 0x08289734
+	.incbin "baserom_jp.gba", 0x289734, 0x1b
 
 	.globl BattleScript_EnduredMsg
 BattleScript_EnduredMsg: @ 0x828974F
