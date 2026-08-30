@@ -28,8 +28,8 @@ BattleFrontier_BattleFactoryPreBattleRoom_EventScript_00231CE7::
 	compare_var_to_value 0x8006, 0x1
 	goto_if 0x1, BattleFrontier_BattleFactoryPreBattleRoom_EventScript_00231D93
 	setvar 0x4000, 0x1
-	applymovement 0x1, 0x08232397
-	applymovement 0xFF, 0x08232385
+	applymovement 0x1, BattleFrontier_BattleFactoryPreBattleRoom_Movement_AttendantEnterRoom
+	applymovement 0xFF, BattleFrontier_BattleFactoryPreBattleRoom_Movement_PlayerEnterRoom
 	waitmovement 0x0
 	compare_var_to_value 0x8006, 0x2
 	goto_if 0x1, BattleFrontier_BattleFactoryPreBattleRoom_EventScript_00232057
@@ -87,12 +87,12 @@ BattleFrontier_BattleFactoryPreBattleRoom_EventScript_00231D93::
 	loadword 0x0, gJPText_002328CF
 	callstd 0x4
 	closemessage
-	applymovement 0x1, 0x082323AA
+	applymovement 0x1, BattleFrontier_BattleFactoryPreBattleRoom_Movement_AttendantMoveToReceiveCall
 	waitmovement 0x0
 	loadword 0x0, gJPText_002328EC
 	callstd 0x4
 	closemessage
-	applymovement 0x1, 0x082323AE
+	applymovement 0x1, BattleFrontier_BattleFactoryPreBattleRoom_Movement_AttendantReturnToPlayer
 	waitmovement 0x0
 	loadword 0x0, gJPText_00232912
 	callstd 0x4
@@ -520,16 +520,76 @@ BattleFrontier_BattleFactoryPreBattleRoom_EventScript_00232331::
 	goto_if 0x1, BattleFrontier_BattleFactoryPreBattleRoom_EventScript_00231D62
 
 BattleFrontier_BattleFactoryPreBattleRoom_EventScript_00232367::
-	applymovement 0x1, 0x0823239E
-	applymovement 0xFF, 0x0823238B
+	applymovement 0x1, BattleFrontier_BattleFactoryPreBattleRoom_Movement_GuideWalkToBattleRoomLv50
+	applymovement 0xFF, BattleFrontier_BattleFactoryPreBattleRoom_Movement_PlayerWalkToBattleRoomLv50
 	return
 
 BattleFrontier_BattleFactoryPreBattleRoom_EventScript_00232376::
-	applymovement 0x1, 0x082323A4
-	applymovement 0xFF, 0x08232391
+	applymovement 0x1, BattleFrontier_BattleFactoryPreBattleRoom_Movement_GuideWalkToBattleRoomLvOpen
+	applymovement 0xFF, BattleFrontier_BattleFactoryPreBattleRoom_Movement_PlayerWalkToBattleRoomLvOpen
 	return
 
-	.incbin "baserom_jp.gba", 0x232385, 0x2e
+BattleFrontier_BattleFactoryPreBattleRoom_Movement_PlayerEnterRoom:: @ 0x08232385
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+BattleFrontier_BattleFactoryPreBattleRoom_Movement_PlayerWalkToBattleRoomLv50:: @ 0x0823238B
+	walk_up
+	walk_left
+	walk_left
+	walk_up
+	walk_up
+	step_end
+
+BattleFrontier_BattleFactoryPreBattleRoom_Movement_PlayerWalkToBattleRoomLvOpen:: @ 0x08232391
+	walk_up
+	walk_right
+	walk_right
+	walk_up
+	walk_up
+	step_end
+
+BattleFrontier_BattleFactoryPreBattleRoom_Movement_AttendantEnterRoom:: @ 0x08232397
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	face_down
+	step_end
+
+BattleFrontier_BattleFactoryPreBattleRoom_Movement_GuideWalkToBattleRoomLv50:: @ 0x0823239E
+	walk_left
+	walk_left
+	walk_up
+	walk_up
+	set_invisible
+	step_end
+
+BattleFrontier_BattleFactoryPreBattleRoom_Movement_GuideWalkToBattleRoomLvOpen:: @ 0x082323A4
+	walk_right
+	walk_right
+	walk_up
+	walk_up
+	set_invisible
+	step_end
+
+BattleFrontier_BattleFactoryPreBattleRoom_Movement_AttendantMoveToReceiveCall:: @ 0x082323AA
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+BattleFrontier_BattleFactoryPreBattleRoom_Movement_AttendantReturnToPlayer:: @ 0x082323AE
+	walk_right
+	walk_right
+	walk_right
+	face_down
+	step_end
 	.globl gJPText_002323B3
 gJPText_002323B3: @ 0x082323B3
 	.string "では　まず　おきゃくさまの\n"
@@ -776,4 +836,3 @@ gJPText_00232994: @ 0x08232994
 	.string "もうしわけ　ありませんが\n"
 	.string "ファクトリーヘッドに　ついての\l"
 	.string "じょうほうは　おおしえ　できません！$"
-
