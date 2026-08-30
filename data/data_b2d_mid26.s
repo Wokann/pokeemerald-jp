@@ -891,40 +891,20 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_1F/events.inc"
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_B1F/events.inc"
 	.include "data/maps/EverGrandeCity_SidneysRoom/events.inc"
-	.globl gMapEvents_EVER_GRANDE_CITY_SIDNEYS_ROOM
-	.set gMapEvents_EVER_GRANDE_CITY_SIDNEYS_ROOM, EverGrandeCity_SidneysRoom_MapEvents
 	.include "data/maps/EverGrandeCity_PhoebesRoom/events.inc"
-	.globl gMapEvents_EVER_GRANDE_CITY_PHOEBES_ROOM
-	.set gMapEvents_EVER_GRANDE_CITY_PHOEBES_ROOM, EverGrandeCity_PhoebesRoom_MapEvents
 	.include "data/maps/EverGrandeCity_GlaciasRoom/events.inc"
-	.globl gMapEvents_EVER_GRANDE_CITY_GLACIAS_ROOM
-	.set gMapEvents_EVER_GRANDE_CITY_GLACIAS_ROOM, EverGrandeCity_GlaciasRoom_MapEvents
 	.include "data/maps/EverGrandeCity_DrakesRoom/events.inc"
-	.globl gMapEvents_EVER_GRANDE_CITY_DRAKES_ROOM
-	.set gMapEvents_EVER_GRANDE_CITY_DRAKES_ROOM, EverGrandeCity_DrakesRoom_MapEvents
 	.include "data/maps/EverGrandeCity_ChampionsRoom/events.inc"
-	.globl gMapEvents_EVER_GRANDE_CITY_CHAMPIONS_ROOM
-	.set gMapEvents_EVER_GRANDE_CITY_CHAMPIONS_ROOM, EverGrandeCity_ChampionsRoom_MapEvents
 	.include "data/maps/EverGrandeCity_Hall1/events.inc"
 	.include "data/maps/EverGrandeCity_Hall2/events.inc"
 	.include "data/maps/EverGrandeCity_Hall3/events.inc"
 	.include "data/maps/EverGrandeCity_Hall4/events.inc"
 	.include "data/maps/EverGrandeCity_Hall5/events.inc"
 	.include "data/maps/EverGrandeCity_PokemonLeague_1F/events.inc"
-	.globl gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F
-	.set gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F, EverGrandeCity_PokemonLeague_1F_MapEvents
 	.include "data/maps/EverGrandeCity_HallOfFame/events.inc"
-	.globl gMapEvents_EVER_GRANDE_CITY_HALL_OF_FAME
-	.set gMapEvents_EVER_GRANDE_CITY_HALL_OF_FAME, EverGrandeCity_HallOfFame_MapEvents
 	.include "data/maps/EverGrandeCity_PokemonCenter_1F/events.inc"
-	.globl gMapEvents_EVER_GRANDE_CITY_POKEMON_CENTER_1F
-	.set gMapEvents_EVER_GRANDE_CITY_POKEMON_CENTER_1F, EverGrandeCity_PokemonCenter_1F_MapEvents
 	.include "data/maps/EverGrandeCity_PokemonCenter_2F/events.inc"
-	.globl gMapEvents_EVER_GRANDE_CITY_POKEMON_CENTER_2F
-	.set gMapEvents_EVER_GRANDE_CITY_POKEMON_CENTER_2F, EverGrandeCity_PokemonCenter_2F_MapEvents
 	.include "data/maps/EverGrandeCity_PokemonLeague_2F/events.inc"
-	.globl gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F
-	.set gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F, EverGrandeCity_PokemonLeague_2F_MapEvents
 	.include "data/maps/Route104_MrBrineysHouse/events.inc"
 	.globl gMapEvents_ROUTE104_MR_BRINEYS_HOUSE
 	.set gMapEvents_ROUTE104_MR_BRINEYS_HOUSE, Route104_MrBrineysHouse_MapEvents

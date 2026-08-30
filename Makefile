@@ -375,6 +375,12 @@ JP_STRUCTURED_MAP_METADATA_MAPS += SootopolisCity_Gym_1F SootopolisCity_Gym_B1F 
 	SootopolisCity_House5 SootopolisCity_House6 SootopolisCity_House7 \
 	SootopolisCity_LotadAndSeedotHouse SootopolisCity_MysteryEventsHouse_1F \
 	SootopolisCity_MysteryEventsHouse_B1F
+JP_STRUCTURED_MAP_METADATA_MAPS += EverGrandeCity_SidneysRoom EverGrandeCity_PhoebesRoom \
+	EverGrandeCity_GlaciasRoom EverGrandeCity_DrakesRoom EverGrandeCity_ChampionsRoom \
+	EverGrandeCity_Hall1 EverGrandeCity_Hall2 EverGrandeCity_Hall3 EverGrandeCity_Hall4 \
+	EverGrandeCity_Hall5 EverGrandeCity_PokemonLeague_1F EverGrandeCity_HallOfFame \
+	EverGrandeCity_PokemonCenter_1F EverGrandeCity_PokemonCenter_2F \
+	EverGrandeCity_PokemonLeague_2F
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

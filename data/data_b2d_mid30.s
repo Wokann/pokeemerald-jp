@@ -2043,125 +2043,35 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F (g15 m14)
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_B1F/header.inc"
 	@ MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM (g16 m0)
-	.4byte gMapLayout_EVER_GRANDE_CITY_SIDNEYS_ROOM  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_SIDNEYS_ROOM  @ events
-	.4byte EverGrandeCity_SidneysRoom_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AD  @ music
-	.2byte 0x006F  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x04  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_SidneysRoom/header.inc"
 	@ MAP_EVER_GRANDE_CITY_PHOEBES_ROOM (g16 m1)
-	.4byte gMapLayout_EVER_GRANDE_CITY_PHOEBES_ROOM  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_PHOEBES_ROOM  @ events
-	.4byte EverGrandeCity_PhoebesRoom_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AD  @ music
-	.2byte 0x0070  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x05  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_PhoebesRoom/header.inc"
 	@ MAP_EVER_GRANDE_CITY_GLACIAS_ROOM (g16 m2)
-	.4byte gMapLayout_EVER_GRANDE_CITY_GLACIAS_ROOM  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_GLACIAS_ROOM  @ events
-	.4byte EverGrandeCity_GlaciasRoom_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AD  @ music
-	.2byte 0x0071  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x06  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_GlaciasRoom/header.inc"
 	@ MAP_EVER_GRANDE_CITY_DRAKES_ROOM (g16 m3)
-	.4byte gMapLayout_EVER_GRANDE_CITY_DRAKES_ROOM  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_DRAKES_ROOM  @ events
-	.4byte EverGrandeCity_DrakesRoom_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AD  @ music
-	.2byte 0x0072  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x07  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_DrakesRoom/header.inc"
 	@ MAP_EVER_GRANDE_CITY_CHAMPIONS_ROOM (g16 m4)
-	.4byte gMapLayout_EVER_GRANDE_CITY_CHAMPIONS_ROOM  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_CHAMPIONS_ROOM  @ events
-	.4byte EverGrandeCity_ChampionsRoom_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AD  @ music
-	.2byte 0x0073  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_ChampionsRoom/header.inc"
 	@ MAP_EVER_GRANDE_CITY_HALL1 (g16 m5)
-	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1  @ mapLayout
-	.4byte EverGrandeCity_Hall1_MapEvents  @ events
-	.4byte EverGrandeCity_Hall1_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AD  @ music
-	.2byte 0x0074  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_Hall1/header.inc"
 	@ MAP_EVER_GRANDE_CITY_HALL2 (g16 m6)
-	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1  @ mapLayout
-	.4byte EverGrandeCity_Hall2_MapEvents  @ events
-	.4byte EverGrandeCity_Hall2_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AD  @ music
-	.2byte 0x0074  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_Hall2/header.inc"
 	@ MAP_EVER_GRANDE_CITY_HALL3 (g16 m7)
-	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1  @ mapLayout
-	.4byte EverGrandeCity_Hall3_MapEvents  @ events
-	.4byte EverGrandeCity_Hall3_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AD  @ music
-	.2byte 0x0074  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_Hall3/header.inc"
 	@ MAP_EVER_GRANDE_CITY_HALL4 (g16 m8)
-	.4byte gMapLayout_EVER_GRANDE_CITY_HALL4  @ mapLayout
-	.4byte EverGrandeCity_Hall4_MapEvents  @ events
-	.4byte EverGrandeCity_Hall4_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AD  @ music
-	.2byte 0x013B  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_Hall4/header.inc"
 	@ MAP_EVER_GRANDE_CITY_HALL5 (g16 m9)
-	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1  @ mapLayout
-	.4byte EverGrandeCity_Hall5_MapEvents  @ events
-	.4byte EverGrandeCity_Hall5_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AD  @ music
-	.2byte 0x0074  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_Hall5/header.inc"
 	@ MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F (g16 m10)
-	.4byte gMapLayout_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F  @ events
-	.4byte EverGrandeCity_PokemonLeague_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x010E  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_PokemonLeague_1F/header.inc"
 	@ MAP_EVER_GRANDE_CITY_HALL_OF_FAME (g16 m11)
-	.4byte gMapLayout_EVER_GRANDE_CITY_HALL_OF_FAME  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_HALL_OF_FAME  @ events
-	.4byte EverGrandeCity_HallOfFame_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01BF  @ music
-	.2byte 0x012A  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_HallOfFame/header.inc"
 	@ MAP_EVER_GRANDE_CITY_POKEMON_CENTER_1F (g16 m12)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_POKEMON_CENTER_1F  @ events
-	.4byte EverGrandeCity_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003D  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_PokemonCenter_1F/header.inc"
 	@ MAP_EVER_GRANDE_CITY_POKEMON_CENTER_2F (g16 m13)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_POKEMON_CENTER_2F  @ events
-	.4byte EverGrandeCity_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_PokemonCenter_2F/header.inc"
 	@ MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F (g16 m14)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F  @ events
-	.4byte EverGrandeCity_PokemonLeague_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/EverGrandeCity_PokemonLeague_2F/header.inc"
 	@ MAP_ROUTE104_MR_BRINEYS_HOUSE (g17 m0)
 	.4byte gMapLayout_ROUTE104_MR_BRINEYS_HOUSE  @ mapLayout
 	.4byte gMapEvents_ROUTE104_MR_BRINEYS_HOUSE  @ events
