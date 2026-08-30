@@ -1121,7 +1121,10 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/SeafloorCavern_Room8/events.inc"
 	.include "data/maps/SeafloorCavern_Room9/events.inc"
 	.include "data/maps/CaveOfOrigin_Entrance/events.inc"
-	.incbin "baserom_jp.gba", 0x50E46C, 0x90
+	.include "data/maps/CaveOfOrigin_1F/events.inc"
+	.include "data/maps/CaveOfOrigin_UnusedRubySapphireMap1/events.inc"
+	.include "data/maps/CaveOfOrigin_UnusedRubySapphireMap2/events.inc"
+	.include "data/maps/CaveOfOrigin_UnusedRubySapphireMap3/events.inc"
 	.include "data/maps/CaveOfOrigin_B1F/events.inc"
 	.include "data/maps/VictoryRoad_1F/events.inc"
 	.include "data/maps/VictoryRoad_B1F/events.inc"

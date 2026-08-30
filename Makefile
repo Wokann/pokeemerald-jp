@@ -272,6 +272,8 @@ JP_STRUCTURED_MAPS += AbandonedShip_Deck AbandonedShip_Corridors_1F AbandonedShi
 	AbandonedShip_HiddenFloorCorridors AbandonedShip_HiddenFloorRooms
 JP_STRUCTURED_MAPS += IslandCave AncientTomb Underwater_SealedChamber \
 	SealedChamber_OuterRoom SealedChamber_InnerRoom ScorchedSlab
+JP_STRUCTURED_MAPS += CaveOfOrigin_1F CaveOfOrigin_UnusedRubySapphireMap1 \
+	CaveOfOrigin_UnusedRubySapphireMap2 CaveOfOrigin_UnusedRubySapphireMap3
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
