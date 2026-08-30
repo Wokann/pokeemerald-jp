@@ -188,6 +188,9 @@ MAPS = (
     "Route111_OldLadysRestStop",
     "Route112_CableCarStation",
     "MtChimney_CableCarStation",
+    "Route114_FossilManiacsHouse",
+    "Route114_FossilManiacsTunnel",
+    "Route114_LanettesHouse",
 )
 
 CONNECTED_MAPS = (
@@ -373,6 +376,9 @@ NULL_CONNECTION_MAPS = (
     "Route111_OldLadysRestStop",
     "Route112_CableCarStation",
     "MtChimney_CableCarStation",
+    "Route114_FossilManiacsHouse",
+    "Route114_FossilManiacsTunnel",
+    "Route114_LanettesHouse",
 )
 
 CANONICAL_LAYOUT_MAPS = (

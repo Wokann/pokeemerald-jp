@@ -912,14 +912,8 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route112_CableCarStation/events.inc"
 	.include "data/maps/MtChimney_CableCarStation/events.inc"
 	.include "data/maps/Route114_FossilManiacsHouse/events.inc"
-	.globl gMapEvents_ROUTE114_FOSSIL_MANIACS_HOUSE
-	.set gMapEvents_ROUTE114_FOSSIL_MANIACS_HOUSE, Route114_FossilManiacsHouse_MapEvents
 	.include "data/maps/Route114_FossilManiacsTunnel/events.inc"
-	.globl gMapEvents_ROUTE114_FOSSIL_MANIACS_TUNNEL
-	.set gMapEvents_ROUTE114_FOSSIL_MANIACS_TUNNEL, Route114_FossilManiacsTunnel_MapEvents
 	.include "data/maps/Route114_LanettesHouse/events.inc"
-	.globl gMapEvents_ROUTE114_LANETTES_HOUSE
-	.set gMapEvents_ROUTE114_LANETTES_HOUSE, Route114_LanettesHouse_MapEvents
 	.include "data/maps/Route116_TunnelersRestHouse/events.inc"
 	.globl gMapEvents_ROUTE116_TUNNELERS_REST_HOUSE
 	.set gMapEvents_ROUTE116_TUNNELERS_REST_HOUSE, Route116_TunnelersRestHouse_MapEvents

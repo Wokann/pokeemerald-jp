@@ -2085,29 +2085,11 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_MT_CHIMNEY_CABLE_CAR_STATION (g19 m1)
 	.include "data/maps/MtChimney_CableCarStation/header.inc"
 	@ MAP_ROUTE114_FOSSIL_MANIACS_HOUSE (g20 m0)
-	.4byte gMapLayout_ROUTE114_FOSSIL_MANIACS_HOUSE  @ mapLayout
-	.4byte gMapEvents_ROUTE114_FOSSIL_MANIACS_HOUSE  @ events
-	.4byte Route114_FossilManiacsHouse_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B5  @ music
-	.2byte 0x0077  @ mapLayoutId
-	.byte 0x1D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route114_FossilManiacsHouse/header.inc"
 	@ MAP_ROUTE114_FOSSIL_MANIACS_TUNNEL (g20 m1)
-	.4byte gMapLayout_ROUTE114_FOSSIL_MANIACS_TUNNEL  @ mapLayout
-	.4byte gMapEvents_ROUTE114_FOSSIL_MANIACS_TUNNEL  @ events
-	.4byte Route114_FossilManiacsTunnel_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B5  @ music
-	.2byte 0x0078  @ mapLayoutId
-	.byte 0x1D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route114_FossilManiacsTunnel/header.inc"
 	@ MAP_ROUTE114_LANETTES_HOUSE (g20 m2)
-	.4byte gMapLayout_ROUTE114_LANETTES_HOUSE  @ mapLayout
-	.4byte gMapEvents_ROUTE114_LANETTES_HOUSE  @ events
-	.4byte Route114_LanettesHouse_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01B5  @ music
-	.2byte 0x0079  @ mapLayoutId
-	.byte 0x1D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route114_LanettesHouse/header.inc"
 	@ MAP_ROUTE116_TUNNELERS_REST_HOUSE (g21 m0)
 	.4byte gMapLayout_ROUTE116_TUNNELERS_REST_HOUSE  @ mapLayout
 	.4byte gMapEvents_ROUTE116_TUNNELERS_REST_HOUSE  @ events

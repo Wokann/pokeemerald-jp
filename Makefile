@@ -384,6 +384,8 @@ JP_STRUCTURED_MAP_METADATA_MAPS += EverGrandeCity_SidneysRoom EverGrandeCity_Pho
 JP_STRUCTURED_MAP_METADATA_MAPS += Route104_MrBrineysHouse Route104_PrettyPetalFlowerShop
 JP_STRUCTURED_MAP_METADATA_MAPS += Route111_WinstrateFamilysHouse Route111_OldLadysRestStop
 JP_STRUCTURED_MAP_METADATA_MAPS += Route112_CableCarStation MtChimney_CableCarStation
+JP_STRUCTURED_MAP_METADATA_MAPS += Route114_FossilManiacsHouse Route114_FossilManiacsTunnel \
+	Route114_LanettesHouse
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)
