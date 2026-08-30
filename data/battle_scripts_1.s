@@ -1369,17 +1369,15 @@ BattleScript_SAtkDown2End:: @ 0x08289786
 BattleScript_FocusPunchSetUp:: @ 0x08289787
 	.incbin "baserom_jp.gba", 0x289787, 0x14
 
-	.globl BattleScript_MoveUsedIsAsleep
-BattleScript_MoveUsedIsAsleep: @ 0x828979B
-	.include "data/scripts/gUnknown_828979B.inc"
+@ Sleep-status responses: still asleep, regular wake-up, and Uproar wake-up.
+BattleScript_MoveUsedIsAsleep:: @ 0x0828979B
+	.incbin "baserom_jp.gba", 0x28979b, 0xd
 
-	.globl BattleScript_MoveUsedWokeUp
-BattleScript_MoveUsedWokeUp: @ 0x82897A8
-	.include "data/scripts/gUnknown_82897A8.inc"
+BattleScript_MoveUsedWokeUp:: @ 0x082897A8
+	.incbin "baserom_jp.gba", 0x2897a8, 0x14
 
-	.globl BattleScript_MonWokeUpInUproar
-BattleScript_MonWokeUpInUproar: @ 0x82897BC
-	.include "data/scripts/gUnknown_82897BC.inc"
+BattleScript_MonWokeUpInUproar:: @ 0x082897BC
+	.incbin "baserom_jp.gba", 0x2897bc, 0x9
 
 	.globl BattleScript_PoisonTurnDmg
 BattleScript_PoisonTurnDmg: @ 0x82897C5
