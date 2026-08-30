@@ -2081,21 +2081,9 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_ROUTE111_OLD_LADYS_REST_STOP (g18 m1)
 	.include "data/maps/Route111_OldLadysRestStop/header.inc"
 	@ MAP_ROUTE112_CABLE_CAR_STATION (g19 m0)
-	.4byte gMapLayout_ROUTE112_CABLE_CAR_STATION  @ mapLayout
-	.4byte gMapEvents_ROUTE112_CABLE_CAR_STATION  @ events
-	.4byte Route112_CableCarStation_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0168  @ music
-	.2byte 0x0076  @ mapLayoutId
-	.byte 0x1B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route112_CableCarStation/header.inc"
 	@ MAP_MT_CHIMNEY_CABLE_CAR_STATION (g19 m1)
-	.4byte gMapLayout_ROUTE112_CABLE_CAR_STATION  @ mapLayout
-	.4byte gMapEvents_MT_CHIMNEY_CABLE_CAR_STATION  @ events
-	.4byte MtChimney_CableCarStation_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0168  @ music
-	.2byte 0x0076  @ mapLayoutId
-	.byte 0x38, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MtChimney_CableCarStation/header.inc"
 	@ MAP_ROUTE114_FOSSIL_MANIACS_HOUSE (g20 m0)
 	.4byte gMapLayout_ROUTE114_FOSSIL_MANIACS_HOUSE  @ mapLayout
 	.4byte gMapEvents_ROUTE114_FOSSIL_MANIACS_HOUSE  @ events

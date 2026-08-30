@@ -186,6 +186,8 @@ MAPS = (
     "Route104_PrettyPetalFlowerShop",
     "Route111_WinstrateFamilysHouse",
     "Route111_OldLadysRestStop",
+    "Route112_CableCarStation",
+    "MtChimney_CableCarStation",
 )
 
 CONNECTED_MAPS = (
@@ -369,6 +371,8 @@ NULL_CONNECTION_MAPS = (
     "Route104_PrettyPetalFlowerShop",
     "Route111_WinstrateFamilysHouse",
     "Route111_OldLadysRestStop",
+    "Route112_CableCarStation",
+    "MtChimney_CableCarStation",
 )
 
 CANONICAL_LAYOUT_MAPS = (
@@ -456,6 +460,10 @@ class MapMetadataTests(unittest.TestCase):
         self.assertEqual(
             jp_map_metadata.layout_symbol("LAYOUT_BATTLE_TENT_BATTLE_ROOM"),
             "gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_CABLE_CAR_STATION"),
+            "gMapLayout_ROUTE112_CABLE_CAR_STATION",
         )
 
     def test_connections_use_real_map_labels(self):

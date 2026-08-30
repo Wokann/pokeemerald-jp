@@ -910,11 +910,7 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route111_WinstrateFamilysHouse/events.inc"
 	.include "data/maps/Route111_OldLadysRestStop/events.inc"
 	.include "data/maps/Route112_CableCarStation/events.inc"
-	.globl gMapEvents_ROUTE112_CABLE_CAR_STATION
-	.set gMapEvents_ROUTE112_CABLE_CAR_STATION, Route112_CableCarStation_MapEvents
 	.include "data/maps/MtChimney_CableCarStation/events.inc"
-	.globl gMapEvents_MT_CHIMNEY_CABLE_CAR_STATION
-	.set gMapEvents_MT_CHIMNEY_CABLE_CAR_STATION, MtChimney_CableCarStation_MapEvents
 	.include "data/maps/Route114_FossilManiacsHouse/events.inc"
 	.globl gMapEvents_ROUTE114_FOSSIL_MANIACS_HOUSE
 	.set gMapEvents_ROUTE114_FOSSIL_MANIACS_HOUSE, Route114_FossilManiacsHouse_MapEvents
