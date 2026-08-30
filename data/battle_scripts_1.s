@@ -1043,33 +1043,37 @@ BattleScript_LearnedNewMove:: @ 0x082891A1
 BattleScript_LearnMoveReturn:: @ 0x082891B3
 	.incbin "baserom_jp.gba", 0x2891b3, 0x1
 
-	.globl BattleScript_RainContinuesOrEnds
-BattleScript_RainContinuesOrEnds: @ 0x82891B4
-	.include "data/scripts/gUnknown_82891B4.inc"
+@ Weather-turn scripts. The physical entry points and loop labels are
+@ retained explicitly; byte spans await battle-script macro conversion.
+BattleScript_RainContinuesOrEnds:: @ 0x082891B4
+	.incbin "baserom_jp.gba", 0x2891b4, 0x1a
 
-	.globl BattleScript_DamagingWeatherContinues
-BattleScript_DamagingWeatherContinues: @ 0x82891CF
-	.include "data/scripts/gUnknown_82891CF.inc"
+BattleScript_RainContinuesOrEndsEnd:: @ 0x082891CE
+	.incbin "baserom_jp.gba", 0x2891ce, 0x1
 
-	.globl BattleScript_SandStormHailEnds
-BattleScript_SandStormHailEnds: @ 0x8289251
-	.byte 0x13, 0xC8, 0xB9, 0x5A, 0x08 @ printfromtable 0x085AB9C8
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
+BattleScript_DamagingWeatherContinues:: @ 0x082891CF
+	.incbin "baserom_jp.gba", 0x2891cf, 0x18
 
-	.globl BattleScript_SunlightContinues
-BattleScript_SunlightContinues: @ 0x828925A
-	.include "data/scripts/gUnknown_828925A.inc"
+BattleScript_DamagingWeatherLoop:: @ 0x082891E7
+	.incbin "baserom_jp.gba", 0x2891e7, 0x41
 
-	.globl BattleScript_SunlightFaded
-BattleScript_SunlightFaded: @ 0x8289268
-	.byte 0x10, 0xF2, 0x00 @ printstring STRINGID_SUNLIGHTFADED
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
+BattleScript_DamagingWeatherLoopIncrement:: @ 0x08289228
+	.incbin "baserom_jp.gba", 0x289228, 0x1f
 
-	.globl BattleScript_OverworldWeatherStarts
-BattleScript_OverworldWeatherStarts: @ 0x828926F
-	.include "data/scripts/gUnknown_828926F.inc"
+BattleScript_DamagingWeatherContinuesEnd:: @ 0x08289247
+	.incbin "baserom_jp.gba", 0x289247, 0xa
+
+BattleScript_SandStormHailEnds:: @ 0x08289251
+	.incbin "baserom_jp.gba", 0x289251, 0x9
+
+BattleScript_SunlightContinues:: @ 0x0828925A
+	.incbin "baserom_jp.gba", 0x28925a, 0xe
+
+BattleScript_SunlightFaded:: @ 0x08289268
+	.incbin "baserom_jp.gba", 0x289268, 0x7
+
+BattleScript_OverworldWeatherStarts:: @ 0x0828926F
+	.incbin "baserom_jp.gba", 0x28926f, 0x13
 
 	.globl BattleScript_SideStatusWoreOff
 BattleScript_SideStatusWoreOff: @ 0x8289282
