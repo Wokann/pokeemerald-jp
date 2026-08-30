@@ -319,6 +319,8 @@ JP_STRUCTURED_MAP_METADATA_MAPS += LittlerootTown_BrendansHouse_1F LittlerootTow
 	LittlerootTown_MaysHouse_1F LittlerootTown_MaysHouse_2F LittlerootTown_ProfessorBirchsLab
 JP_STRUCTURED_MAP_METADATA_MAPS += OldaleTown_House1 OldaleTown_House2 OldaleTown_PokemonCenter_1F \
 	OldaleTown_PokemonCenter_2F OldaleTown_Mart
+JP_STRUCTURED_MAP_METADATA_MAPS += DewfordTown_House1 DewfordTown_PokemonCenter_1F DewfordTown_PokemonCenter_2F \
+	DewfordTown_Gym DewfordTown_Hall DewfordTown_House2
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

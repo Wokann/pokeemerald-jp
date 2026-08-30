@@ -23,6 +23,12 @@ MAPS = (
     "OldaleTown_PokemonCenter_1F",
     "OldaleTown_PokemonCenter_2F",
     "OldaleTown_Mart",
+    "DewfordTown_House1",
+    "DewfordTown_PokemonCenter_1F",
+    "DewfordTown_PokemonCenter_2F",
+    "DewfordTown_Gym",
+    "DewfordTown_Hall",
+    "DewfordTown_House2",
 )
 
 CONNECTED_MAPS = (
@@ -43,6 +49,12 @@ NULL_CONNECTION_MAPS = (
     "OldaleTown_PokemonCenter_1F",
     "OldaleTown_PokemonCenter_2F",
     "OldaleTown_Mart",
+    "DewfordTown_House1",
+    "DewfordTown_PokemonCenter_1F",
+    "DewfordTown_PokemonCenter_2F",
+    "DewfordTown_Gym",
+    "DewfordTown_Hall",
+    "DewfordTown_House2",
 )
 
 CANONICAL_LAYOUT_MAPS = (
@@ -110,6 +122,14 @@ class MapMetadataTests(unittest.TestCase):
         self.assertEqual(
             jp_map_metadata.layout_symbol("LAYOUT_MART"),
             "gMapLayout_OLDALE_TOWN_MART",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_HOUSE3"),
+            "gMapLayout_DEWFORD_TOWN_HOUSE1",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_HOUSE4"),
+            "gMapLayout_DEWFORD_TOWN_HOUSE2",
         )
 
     def test_connections_use_real_map_labels(self):

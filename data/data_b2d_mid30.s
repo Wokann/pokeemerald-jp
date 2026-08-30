@@ -1755,53 +1755,17 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_OLDALE_TOWN_MART (g2 m4)
 	.include "data/maps/OldaleTown_Mart/header.inc"
 	@ MAP_DEWFORD_TOWN_HOUSE1 (g3 m0)
-	.4byte gMapLayout_DEWFORD_TOWN_HOUSE1  @ mapLayout
-	.4byte DewfordTown_House1_MapEvents  @ events
-	.4byte DewfordTown_House1_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AB  @ music
-	.2byte 0x0040  @ mapLayoutId
-	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/DewfordTown_House1/header.inc"
 	@ MAP_DEWFORD_TOWN_POKEMON_CENTER_1F (g3 m1)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte DewfordTown_PokemonCenter_1F_MapEvents  @ events
-	.4byte DewfordTown_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003D  @ mapLayoutId
-	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/DewfordTown_PokemonCenter_1F/header.inc"
 	@ MAP_DEWFORD_TOWN_POKEMON_CENTER_2F (g3 m2)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte DewfordTown_PokemonCenter_2F_MapEvents  @ events
-	.4byte DewfordTown_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/DewfordTown_PokemonCenter_2F/header.inc"
 	@ MAP_DEWFORD_TOWN_GYM (g3 m3)
-	.4byte gMapLayout_DEWFORD_TOWN_GYM  @ mapLayout
-	.4byte DewfordTown_Gym_MapEvents  @ events
-	.4byte DewfordTown_Gym_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016C  @ music
-	.2byte 0x0041  @ mapLayoutId
-	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/DewfordTown_Gym/header.inc"
 	@ MAP_DEWFORD_TOWN_HALL (g3 m4)
-	.4byte gMapLayout_DEWFORD_TOWN_HALL  @ mapLayout
-	.4byte DewfordTown_Hall_MapEvents  @ events
-	.4byte DewfordTown_Hall_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AB  @ music
-	.2byte 0x0042  @ mapLayoutId
-	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/DewfordTown_Hall/header.inc"
 	@ MAP_DEWFORD_TOWN_HOUSE2 (g3 m5)
-	.4byte gMapLayout_DEWFORD_TOWN_HOUSE2  @ mapLayout
-	.4byte DewfordTown_House2_MapEvents  @ events
-	.4byte DewfordTown_House2_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AB  @ music
-	.2byte 0x0043  @ mapLayoutId
-	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/DewfordTown_House2/header.inc"
 	@ MAP_LAVARIDGE_TOWN_HERB_SHOP (g4 m0)
 	.4byte gMapLayout_LAVARIDGE_TOWN_HERB_SHOP  @ mapLayout
 	.4byte LavaridgeTown_HerbShop_MapEvents  @ events
