@@ -941,14 +941,8 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/MtPyre_Exterior/events.inc"
 	.include "data/maps/MtPyre_Summit/events.inc"
 	.include "data/maps/AquaHideout_1F/events.inc"
-	.globl gMapEvents_AQUA_HIDEOUT_1F
-	.set gMapEvents_AQUA_HIDEOUT_1F, AquaHideout_1F_MapEvents
 	.include "data/maps/AquaHideout_B1F/events.inc"
-	.globl gMapEvents_AQUA_HIDEOUT_B1F
-	.set gMapEvents_AQUA_HIDEOUT_B1F, AquaHideout_B1F_MapEvents
 	.include "data/maps/AquaHideout_B2F/events.inc"
-	.globl gMapEvents_AQUA_HIDEOUT_B2F
-	.set gMapEvents_AQUA_HIDEOUT_B2F, AquaHideout_B2F_MapEvents
 	.include "data/maps/Underwater_SeafloorCavern/events.inc"
 	.globl gMapEvents_UNDERWATER_SEAFLOOR_CAVERN
 	.set gMapEvents_UNDERWATER_SEAFLOOR_CAVERN, Underwater_SeafloorCavern_MapEvents

@@ -2143,29 +2143,11 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_MT_PYRE_SUMMIT (g24 m22)
 	.include "data/maps/MtPyre_Summit/header.inc"
 	@ MAP_AQUA_HIDEOUT_1F (g24 m23)
-	.4byte gMapLayout_AQUA_HIDEOUT_1F  @ mapLayout
-	.4byte gMapEvents_AQUA_HIDEOUT_1F  @ events
-	.4byte 0x08217935  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AE  @ music
-	.2byte 0x008F  @ mapLayoutId
-	.byte 0xC5, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x03  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/AquaHideout_1F/header.inc"
 	@ MAP_AQUA_HIDEOUT_B1F (g24 m24)
-	.4byte gMapLayout_AQUA_HIDEOUT_B1F  @ mapLayout
-	.4byte gMapEvents_AQUA_HIDEOUT_B1F  @ events
-	.4byte AquaHideout_B1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AE  @ music
-	.2byte 0x0090  @ mapLayoutId
-	.byte 0xC5, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x03  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/AquaHideout_B1F/header.inc"
 	@ MAP_AQUA_HIDEOUT_B2F (g24 m25)
-	.4byte gMapLayout_AQUA_HIDEOUT_B2F  @ mapLayout
-	.4byte gMapEvents_AQUA_HIDEOUT_B2F  @ events
-	.4byte AquaHideout_B2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AE  @ music
-	.2byte 0x0091  @ mapLayoutId
-	.byte 0xC5, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x03  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/AquaHideout_B2F/header.inc"
 	@ MAP_UNDERWATER_SEAFLOOR_CAVERN (g24 m26)
 	.4byte gMapLayout_UNDERWATER_SEAFLOOR_CAVERN  @ mapLayout
 	.4byte gMapEvents_UNDERWATER_SEAFLOOR_CAVERN  @ events

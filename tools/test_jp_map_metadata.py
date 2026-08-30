@@ -217,6 +217,9 @@ MAPS = (
     "MtPyre_6F",
     "MtPyre_Exterior",
     "MtPyre_Summit",
+    "AquaHideout_1F",
+    "AquaHideout_B1F",
+    "AquaHideout_B2F",
 )
 
 CONNECTED_MAPS = (
@@ -431,6 +434,9 @@ NULL_CONNECTION_MAPS = (
     "MtPyre_6F",
     "MtPyre_Exterior",
     "MtPyre_Summit",
+    "AquaHideout_1F",
+    "AquaHideout_B1F",
+    "AquaHideout_B2F",
 )
 
 CANONICAL_LAYOUT_MAPS = (
