@@ -1735,45 +1735,15 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_UNDERWATER_ROUTE125 (g0 m56)
 	.include "data/maps/Underwater_Route125/header.inc"
 	@ MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F (g1 m0)
-	.4byte gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F  @ mapLayout
-	.4byte LittlerootTown_BrendansHouse_1F_MapEvents  @ events
-	.4byte LittlerootTown_BrendansHouse_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0195  @ music
-	.2byte 0x0036  @ mapLayoutId
-	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LittlerootTown_BrendansHouse_1F/header.inc"
 	@ MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F (g1 m1)
-	.4byte gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F  @ mapLayout
-	.4byte LittlerootTown_BrendansHouse_2F_MapEvents  @ events
-	.4byte LittlerootTown_BrendansHouse_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0195  @ music
-	.2byte 0x0037  @ mapLayoutId
-	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LittlerootTown_BrendansHouse_2F/header.inc"
 	@ MAP_LITTLEROOT_TOWN_MAYS_HOUSE_1F (g1 m2)
-	.4byte gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_1F  @ mapLayout
-	.4byte LittlerootTown_MaysHouse_1F_MapEvents  @ events
-	.4byte LittlerootTown_MaysHouse_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0195  @ music
-	.2byte 0x0038  @ mapLayoutId
-	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LittlerootTown_MaysHouse_1F/header.inc"
 	@ MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F (g1 m3)
-	.4byte gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_2F  @ mapLayout
-	.4byte LittlerootTown_MaysHouse_2F_MapEvents  @ events
-	.4byte LittlerootTown_MaysHouse_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0195  @ music
-	.2byte 0x0039  @ mapLayoutId
-	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LittlerootTown_MaysHouse_2F/header.inc"
 	@ MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB (g1 m4)
-	.4byte gMapLayout_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB  @ mapLayout
-	.4byte LittlerootTown_ProfessorBirchsLab_MapEvents  @ events
-	.4byte LittlerootTown_ProfessorBirchsLab_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x017F  @ music
-	.2byte 0x003A  @ mapLayoutId
-	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LittlerootTown_ProfessorBirchsLab/header.inc"
 	@ MAP_OLDALE_TOWN_HOUSE1 (g2 m0)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
 	.4byte OldaleTown_House1_MapEvents  @ events
