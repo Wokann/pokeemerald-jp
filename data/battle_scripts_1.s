@@ -1359,9 +1359,12 @@ BattleScript_OneHitKOMsg:: @ 0x08289756
 	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
 	.byte 0x3C @ return
 
-	.globl BattleScript_SAtkDown2
-BattleScript_SAtkDown2: @ 0x828975D
-	.include "data/scripts/gUnknown_828975D.inc"
+@ Two-stage Special Attack reduction and its shared return target.
+BattleScript_SAtkDown2:: @ 0x0828975D
+	.incbin "baserom_jp.gba", 0x28975d, 0x29
+
+BattleScript_SAtkDown2End:: @ 0x08289786
+	.incbin "baserom_jp.gba", 0x289786, 0x1
 
 	.globl BattleScript_FocusPunchSetUp
 BattleScript_FocusPunchSetUp: @ 0x8289787
