@@ -1743,47 +1743,90 @@ BattleScript_IntimidatePrevented: @ 0x8289AA4
 
 	.globl BattleScript_DroughtActivates
 BattleScript_DroughtActivates: @ 0x8289AB2
-	.include "data/scripts/gUnknown_8289AB2.inc"
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0x4B, 0x01 @ printstring STRINGID_PKMNSXINTENSIFIEDSUN
+	.byte 0x3A @ waitstate
+	.byte 0x45, 0x07, 0x0B, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_BATTLER_0, B_ANIM_SUN_CONTINUES
+	.byte 0x41, 0x15, 0x9A, 0x28, 0x08 @ call BattleScript_WeatherFormChanges
+	.byte 0x3F @ end3
 
 	.globl BattleScript_TookAttack
 BattleScript_TookAttack: @ 0x8289AC6
-	.include "data/scripts/gUnknown_8289AC6.inc"
+	.byte 0x02 @ attackstring
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0x4E, 0x01 @ printstring STRINGID_PKMNSXTOOKATTACK
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x35, 0x24, 0x3F, 0x02, 0x02, 0x00, 0x04, 0x00, 0x00 @ orword gHitMarker, HITMARKER_ATTACKSTRING_PRINTED
+	.byte 0x3C @ return
 
 	.globl BattleScript_SturdyPreventsOHKO
 BattleScript_SturdyPreventsOHKO: @ 0x8289ADA
-	.include "data/scripts/gUnknown_8289ADA.inc"
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0xC3, 0x00 @ printstring STRINGID_PKMNPROTECTEDBY
+	.byte 0x39, 0x40, 0x00 @ pause B_WAIT_TIME_LONG
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
 
 	.globl BattleScript_DampStopsExplosion
 BattleScript_DampStopsExplosion: @ 0x8289AE8
-	.include "data/scripts/gUnknown_8289AE8.inc"
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0xC4, 0x00 @ printstring STRINGID_PKMNPREVENTSUSAGE
+	.byte 0x39, 0x40, 0x00 @ pause B_WAIT_TIME_LONG
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
 
 	.globl BattleScript_MoveHPDrain_PPLoss
 BattleScript_MoveHPDrain_PPLoss: @ 0x8289AF6
-	.include "data/scripts/gUnknown_8289AF6.inc"
+	.byte 0x03 @ ppreduce
 
 	.globl BattleScript_MoveHPDrain
 BattleScript_MoveHPDrain: @ 0x8289AF7
-	.include "data/scripts/gUnknown_8289AF7.inc"
+	.byte 0x02 @ attackstring
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x35, 0x24, 0x3F, 0x02, 0x02, 0x00, 0x01, 0x00, 0x00 @ orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	.byte 0x0B, 0x00 @ healthbarupdate BS_TARGET
+	.byte 0x0C, 0x00 @ datahpupdate BS_TARGET
+	.byte 0x10, 0xC5, 0x00 @ printstring STRINGID_PKMNRESTOREDHPUSING
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x33, 0x20, 0x3F, 0x02, 0x02, 0x08 @ orbyte gMoveResultFlags, MOVE_RESULT_DOESNT_AFFECT_FOE
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
 
 	.globl BattleScript_MonMadeMoveUseless_PPLoss
 BattleScript_MonMadeMoveUseless_PPLoss: @ 0x8289B19
-	.include "data/scripts/gUnknown_8289B19.inc"
+	.byte 0x03 @ ppreduce
 
 	.globl BattleScript_MonMadeMoveUseless
 BattleScript_MonMadeMoveUseless: @ 0x8289B1A
-	.include "data/scripts/gUnknown_8289B1A.inc"
+	.byte 0x02 @ attackstring
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0x47, 0x01 @ printstring STRINGID_PKMNSXMADEYUSELESS
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x33, 0x20, 0x3F, 0x02, 0x02, 0x08 @ orbyte gMoveResultFlags, MOVE_RESULT_DOESNT_AFFECT_FOE
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
 
 	.globl BattleScript_FlashFireBoost_PPLoss
 BattleScript_FlashFireBoost_PPLoss: @ 0x8289B2F
-	.include "data/scripts/gUnknown_8289B2F.inc"
+	.byte 0x03 @ ppreduce
 
 	.globl BattleScript_FlashFireBoost
 BattleScript_FlashFireBoost: @ 0x8289B30
-	.include "data/scripts/gUnknown_8289B30.inc"
+	.byte 0x02 @ attackstring
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x13, 0xE2, 0xBA, 0x5A, 0x08 @ printfromtable gFlashFireStringIds
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+
+	.globl BattleScript_AbilityPreventsPhasingOut
+BattleScript_AbilityPreventsPhasingOut: @ 0x8289B41
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0xCC, 0x00 @ printstring STRINGID_PKMNANCHORSITSELFWITH
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
 
 	.globl BattleScript_AbilityNoStatLoss
 BattleScript_AbilityNoStatLoss: @ 0x8289B4F
-	.include "data/scripts/gUnknown_8289B4F.inc"
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0xCE, 0x00 @ printstring STRINGID_PKMNPREVENTSSTATLOSSWITH
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x3C @ return
 
 	.globl BattleScript_BRNPrevention
 BattleScript_BRNPrevention: @ 0x8289B59
@@ -1808,19 +1851,41 @@ BattleScript_PSNPrevention: @ 0x8289B71
 
 	.globl BattleScript_ObliviousPreventsAttraction
 BattleScript_ObliviousPreventsAttraction: @ 0x8289B7D
-	.include "data/scripts/gUnknown_8289B7D.inc"
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0xC8, 0x00 @ printstring STRINGID_PKMNPREVENTSROMANCEWITH
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
 
 	.globl BattleScript_FlinchPrevention
 BattleScript_FlinchPrevention: @ 0x8289B8B
-	.include "data/scripts/gUnknown_8289B8B.inc"
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0x5B, 0x01 @ printstring STRINGID_PKMNSXPREVENTSFLINCHING
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+
+	.globl BattleScript_OwnTempoPrevents
+BattleScript_OwnTempoPrevents: @ 0x8289B99
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0xCA, 0x00 @ printstring STRINGID_PKMNPREVENTSCONFUSIONWITH
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
 
 	.globl BattleScript_SoundproofProtected
 BattleScript_SoundproofProtected: @ 0x8289BA7
-	.include "data/scripts/gUnknown_8289BA7.inc"
+	.byte 0x02 @ attackstring
+	.byte 0x03 @ ppreduce
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0x32, 0x01 @ printstring STRINGID_PKMNSXBLOCKSY
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
 
 	.globl BattleScript_AbilityNoSpecificStatLoss
 BattleScript_AbilityNoSpecificStatLoss: @ 0x8289BB7
-	.include "data/scripts/gUnknown_8289BB7.inc"
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0x35, 0x01 @ printstring STRINGID_PKMNSXPREVENTSYLOSS
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x2E, 0xDB, 0x3F, 0x02, 0x02, 0x03 @ setbyte cMULTISTRING_CHOOSER, B_MSG_STAT_FELL_EMPTY
+	.byte 0x3C @ return
 
 	.globl BattleScript_StickyHoldActivates
 BattleScript_StickyHoldActivates: @ 0x8289BC7
