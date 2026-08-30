@@ -1426,11 +1426,38 @@ BattleScript_PrintUproarOverTurns: @ 0x828982E
 
 	.globl BattleScript_ThrashConfuses
 BattleScript_ThrashConfuses: @ 0x8289837
-	.include "data/scripts/gUnknown_8289837.inc"
+	.byte 0x66, 0x01, 0x01, 0x07, 0x00, 0x00, 0x00 @ chosenstatus2animation BS_ATTACKER, STATUS2_CONFUSION
+	.byte 0x10, 0x7A, 0x00 @ printstring STRINGID_PKMNFATIGUECONFUSION
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x3E @ end2
 
 	.globl BattleScript_MoveUsedIsConfused
 BattleScript_MoveUsedIsConfused: @ 0x8289845
-	.include "data/scripts/gUnknown_8289845.inc"
+	.byte 0x10, 0x41, 0x00 @ printstring STRINGID_PKMNISCONFUSED
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x65, 0x01, 0x07, 0x00, 0x00, 0x00 @ status2animation BS_ATTACKER, STATUS2_CONFUSION
+	.byte 0x29, 0x00, 0xDB, 0x3F, 0x02, 0x02, 0x00, 0x87, 0x98, 0x28, 0x08 @ jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, FALSE, BattleScript_MoveUsedIsConfusedRet
+
+	.globl BattleScript_DoSelfConfusionDmg
+BattleScript_DoSelfConfusionDmg: @ 0x828985C
+	.byte 0x76, 0x01, 0x00 @ cancelmultiturnmoves BS_ATTACKER
+	.byte 0x08 @ adjustnormaldamage2
+	.byte 0x10, 0xE6, 0x00 @ printstring STRINGID_ITHURTCONFUSION
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x0E @ effectivenesssound
+	.byte 0x5C, 0x01 @ hitanimation BS_ATTACKER
+	.byte 0x3A @ waitstate
+	.byte 0x35, 0x24, 0x3F, 0x02, 0x02, 0x00, 0x01, 0x10, 0x00 @ orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	.byte 0x0B, 0x01 @ healthbarupdate BS_ATTACKER
+	.byte 0x0C, 0x01 @ datahpupdate BS_ATTACKER
+	.byte 0x0F @ resultmessage
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x19, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 @ tryfaintmon BS_ATTACKER
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+
+	.globl BattleScript_MoveUsedIsConfusedRet
+BattleScript_MoveUsedIsConfusedRet: @ 0x8289887
+	.byte 0x3C @ return
 
 	.globl BattleScript_MoveUsedIsConfusedNoMore
 BattleScript_MoveUsedIsConfusedNoMore: @ 0x8289888
@@ -1446,7 +1473,10 @@ BattleScript_PrintPayDayMoneyString: @ 0x828988F
 
 	.globl BattleScript_WrapTurnDmg
 BattleScript_WrapTurnDmg: @ 0x8289896
-	.include "data/scripts/gUnknown_8289896.inc"
+	.byte 0x45, 0x01, 0x06, 0x28, 0x41, 0x02, 0x02 @ playanimation BS_ATTACKER, B_ANIM_TURN_TRAP, sB_ANIM_ARG1
+	.byte 0x10, 0x5E, 0x00 @ printstring STRINGID_PKMNHURTBY
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0xCD, 0x97, 0x28, 0x08 @ goto BattleScript_DoTurnDmg
 
 	.globl BattleScript_WrapEnds
 BattleScript_WrapEnds: @ 0x82898A8
@@ -1456,7 +1486,10 @@ BattleScript_WrapEnds: @ 0x82898A8
 
 	.globl BattleScript_MoveUsedIsInLove
 BattleScript_MoveUsedIsInLove: @ 0x82898AF
-	.include "data/scripts/gUnknown_82898AF.inc"
+	.byte 0x10, 0x46, 0x00 @ printstring STRINGID_PKMNINLOVE
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x65, 0x01, 0x00, 0x00, 0x0F, 0x00 @ status2animation BS_ATTACKER, STATUS2_INFATUATION
+	.byte 0x3C @ return
 
 	.globl BattleScript_MoveUsedIsInLoveCantAttack
 BattleScript_MoveUsedIsInLoveCantAttack: @ 0x82898BC
@@ -1466,19 +1499,124 @@ BattleScript_MoveUsedIsInLoveCantAttack: @ 0x82898BC
 
 	.globl BattleScript_NightmareTurnDmg
 BattleScript_NightmareTurnDmg: @ 0x82898C7
-	.include "data/scripts/gUnknown_82898C7.inc"
+	.byte 0x10, 0x91, 0x00 @ printstring STRINGID_PKMNLOCKEDINNIGHTMARE
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x65, 0x01, 0x00, 0x00, 0x00, 0x08 @ status2animation BS_ATTACKER, STATUS2_NIGHTMARE
+	.byte 0x28, 0xCD, 0x97, 0x28, 0x08 @ goto BattleScript_DoTurnDmg
 
 	.globl BattleScript_CurseTurnDmg
 BattleScript_CurseTurnDmg: @ 0x82898D8
-	.include "data/scripts/gUnknown_82898D8.inc"
+	.byte 0x10, 0x93, 0x00 @ printstring STRINGID_PKMNAFFLICTEDBYCURSE
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x65, 0x01, 0x00, 0x00, 0x00, 0x10 @ status2animation BS_ATTACKER, STATUS2_CURSED
+	.byte 0x28, 0xCD, 0x97, 0x28, 0x08 @ goto BattleScript_DoTurnDmg
 
 	.globl BattleScript_TargetPRLZHeal
 BattleScript_TargetPRLZHeal: @ 0x82898E9
-	.include "data/scripts/gUnknown_82898E9.inc"
+	.byte 0x10, 0x3B, 0x00 @ printstring STRINGID_PKMNHEALEDPARALYSIS
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x98, 0x00 @ updatestatusicon BS_TARGET
+	.byte 0x3C @ return
+
+	.globl BattleScript_MoveEffectSleep
+BattleScript_MoveEffectSleep: @ 0x82898F2
+	.byte 0x64, 0x02 @ statusanimation BS_EFFECT_BATTLER
+	.byte 0x13, 0x50, 0xBA, 0x5A, 0x08 @ printfromtable gFellAsleepStringIds
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+
+	.globl BattleScript_UpdateEffectStatusIconRet
+BattleScript_UpdateEffectStatusIconRet: @ 0x82898FC
+	.byte 0x98, 0x02 @ updatestatusicon BS_EFFECT_BATTLER
+	.byte 0x3A @ waitstate
+	.byte 0x3C @ return
 
 	.globl BattleScript_YawnMakesAsleep
 BattleScript_YawnMakesAsleep: @ 0x8289900
-	.include "data/scripts/gUnknown_8289900.inc"
+	.byte 0x64, 0x02 @ statusanimation BS_EFFECT_BATTLER
+	.byte 0x10, 0x23, 0x00 @ printstring STRINGID_PKMNFELLASLEEP
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x98, 0x02 @ updatestatusicon BS_EFFECT_BATTLER
+	.byte 0x3A @ waitstate
+	.byte 0x6F, 0x02 @ makevisible BS_EFFECT_BATTLER
+	.byte 0x3E @ end2
+
+	.globl BattleScript_MoveEffectPoison
+BattleScript_MoveEffectPoison: @ 0x828990E
+	.byte 0x64, 0x02 @ statusanimation BS_EFFECT_BATTLER
+	.byte 0x13, 0x48, 0xBA, 0x5A, 0x08 @ printfromtable gGotPoisonedStringIds
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0xFC, 0x98, 0x28, 0x08 @ goto BattleScript_UpdateEffectStatusIconRet
+
+	.globl BattleScript_MoveEffectBurn
+BattleScript_MoveEffectBurn: @ 0x828991D
+	.byte 0x64, 0x02 @ statusanimation BS_EFFECT_BATTLER
+	.byte 0x13, 0x54, 0xBA, 0x5A, 0x08 @ printfromtable gGotBurnedStringIds
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0xFC, 0x98, 0x28, 0x08 @ goto BattleScript_UpdateEffectStatusIconRet
+
+	.globl BattleScript_MoveEffectFreeze
+BattleScript_MoveEffectFreeze: @ 0x828992C
+	.byte 0x64, 0x02 @ statusanimation BS_EFFECT_BATTLER
+	.byte 0x13, 0x58, 0xBA, 0x5A, 0x08 @ printfromtable gGotFrozenStringIds
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0xFC, 0x98, 0x28, 0x08 @ goto BattleScript_UpdateEffectStatusIconRet
+
+	.globl BattleScript_MoveEffectParalysis
+BattleScript_MoveEffectParalysis: @ 0x828993B
+	.byte 0x64, 0x02 @ statusanimation BS_EFFECT_BATTLER
+	.byte 0x13, 0x4C, 0xBA, 0x5A, 0x08 @ printfromtable gGotParalyzedStringIds
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0xFC, 0x98, 0x28, 0x08 @ goto BattleScript_UpdateEffectStatusIconRet
+
+	.globl BattleScript_MoveEffectUproar
+BattleScript_MoveEffectUproar: @ 0x828994A
+	.byte 0x10, 0x6F, 0x00 @ printstring STRINGID_PKMNCAUSEDUPROAR
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x3C @ return
+
+	.globl BattleScript_MoveEffectToxic
+BattleScript_MoveEffectToxic: @ 0x8289951
+	.byte 0x64, 0x02 @ statusanimation BS_EFFECT_BATTLER
+	.byte 0x10, 0x2C, 0x00 @ printstring STRINGID_PKMNBADLYPOISONED
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0xFC, 0x98, 0x28, 0x08 @ goto BattleScript_UpdateEffectStatusIconRet
+
+	.globl BattleScript_MoveEffectPayDay
+BattleScript_MoveEffectPayDay: @ 0x828995E
+	.byte 0x10, 0xFA, 0x00 @ printstring STRINGID_COINSSCATTERED
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x3C @ return
+
+	.globl BattleScript_MoveEffectWrap
+BattleScript_MoveEffectWrap: @ 0x8289965
+	.byte 0x13, 0x2C, 0xBA, 0x5A, 0x08 @ printfromtable gWrappedStringIds
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x3C @ return
+
+	.globl BattleScript_MoveEffectConfusion
+BattleScript_MoveEffectConfusion: @ 0x828996E
+	.byte 0x66, 0x02, 0x01, 0x07, 0x00, 0x00, 0x00 @ chosenstatus2animation BS_EFFECT_BATTLER, STATUS2_CONFUSION
+	.byte 0x10, 0x43, 0x00 @ printstring STRINGID_PKMNWASCONFUSED
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x3C @ return
+
+	.globl BattleScript_MoveEffectRecoil
+BattleScript_MoveEffectRecoil: @ 0x828997C
+	.byte 0x2A, 0x00, 0x8E, 0x3E, 0x02, 0x02, 0xA5, 0x00, 0x8F, 0x99, 0x28, 0x08 @ jumpifmove MOVE_STRUGGLE, BattleScript_DoRecoil
+	.byte 0x1E, 0x01, 0x45, 0xA9, 0x99, 0x28, 0x08 @ jumpifability BS_ATTACKER, ABILITY_ROCK_HEAD, BattleScript_RecoilEnd
+
+	.globl BattleScript_DoRecoil
+BattleScript_DoRecoil: @ 0x828998F
+	.byte 0x35, 0x24, 0x3F, 0x02, 0x02, 0x00, 0x01, 0x10, 0x00 @ orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	.byte 0x0B, 0x01 @ healthbarupdate BS_ATTACKER
+	.byte 0x0C, 0x01 @ datahpupdate BS_ATTACKER
+	.byte 0x10, 0x64, 0x00 @ printstring STRINGID_PKMNHITWITHRECOIL
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x19, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 @ tryfaintmon BS_ATTACKER
+
+	.globl BattleScript_RecoilEnd
+BattleScript_RecoilEnd: @ 0x82899A9
+	.byte 0x3C @ return
 
 	.globl BattleScript_ItemSteal
 BattleScript_ItemSteal: @ 0x82899AA

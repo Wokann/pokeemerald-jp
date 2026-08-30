@@ -1,8 +1,0 @@
-	loadbyte 0x91, 0x0
-	loadbytefromaddr 0x1650040
-	nop 
-	nop 
-	nop 
-	gotostd 0x28
-	setmonobedient 0x2897
-	.byte 0x08
