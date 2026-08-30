@@ -2295,8 +2295,10 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/MirageTower_3F/header.inc"
 	@ MAP_MIRAGE_TOWER_4F (g24 m97)
 	.include "data/maps/MirageTower_4F/header.inc"
-	@ MAP_DESERT_UNDERPASS through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45CD98, 0x1C00
+	@ MAP_DESERT_UNDERPASS (g24 m98)
+	.include "data/maps/DesertUnderpass/header.inc"
+	@ MAP_ARTISAN_CAVE_B1F through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45CDB4, 0x1BE4
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

@@ -3040,7 +3040,19 @@ gMapLayout_MIRAGE_TOWER_4F: @ 0x08444798
 	.4byte gMapLayout_MIRAGE_TOWER_4F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MIRAGE_TOWER_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4447B0, 0xAE40
+gMapLayout_DESERT_UNDERPASS_Border:
+	.incbin "data/layouts/DesertUnderpass/border.bin"
+gMapLayout_DESERT_UNDERPASS_Blockdata:
+	.incbin "data/layouts/DesertUnderpass/map.bin"
+	.byte 0x00, 0x00
+gMapLayout_DESERT_UNDERPASS: @ 0x084460B4
+	.4byte 139  @ width
+	.4byte 23  @ height
+	.4byte gMapLayout_DESERT_UNDERPASS_Border  @ border
+	.4byte gMapLayout_DESERT_UNDERPASS_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x4460CC, 0x9524
 gMapLayout_UNDERWATER_ROUTE105_Border:
 	.incbin "data/layouts/Underwater_Route105/border.bin"
 gMapLayout_UNDERWATER_ROUTE105_Blockdata:
