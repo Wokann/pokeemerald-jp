@@ -2093,13 +2093,7 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_ROUTE116_TUNNELERS_REST_HOUSE (g21 m0)
 	.include "data/maps/Route116_TunnelersRestHouse/header.inc"
 	@ MAP_ROUTE117_POKEMON_DAY_CARE (g22 m0)
-	.4byte gMapLayout_ROUTE117_POKEMON_DAY_CARE  @ mapLayout
-	.4byte gMapEvents_ROUTE117_POKEMON_DAY_CARE  @ events
-	.4byte Route117_PokemonDayCare_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x007B  @ mapLayoutId
-	.byte 0x20, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Route117_PokemonDayCare/header.inc"
 	@ MAP_ROUTE121_SAFARI_ZONE_ENTRANCE (g23 m0)
 	.4byte gMapLayout_ROUTE121_SAFARI_ZONE_ENTRANCE  @ mapLayout
 	.4byte gMapEvents_ROUTE121_SAFARI_ZONE_ENTRANCE  @ events
