@@ -2819,7 +2819,18 @@ gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE: @ 0x084371A4
 	.4byte gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4371bc, 0xd15c
+gMapLayout_SHOAL_CAVE_LOW_TIDE_ICE_ROOM_Border:
+	.incbin "data/layouts/ShoalCave_LowTideIceRoom/border.bin"
+gMapLayout_SHOAL_CAVE_LOW_TIDE_ICE_ROOM_Blockdata:
+	.incbin "data/layouts/ShoalCave_LowTideIceRoom/map.bin"
+gMapLayout_SHOAL_CAVE_LOW_TIDE_ICE_ROOM: @ 0x08437674
+	.4byte 20  @ width
+	.4byte 30  @ height
+	.4byte gMapLayout_SHOAL_CAVE_LOW_TIDE_ICE_ROOM_Border  @ border
+	.4byte gMapLayout_SHOAL_CAVE_LOW_TIDE_ICE_ROOM_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x43768C, 0xCC8C
 gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_Border:
 	.incbin "data/layouts/FallarborTownBattleTentLobby/border.bin"
 gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_Blockdata:
