@@ -206,6 +206,9 @@ MAPS = (
     "GraniteCave_B2F",
     "GraniteCave_StevensRoom",
     "PetalburgWoods",
+    "MtChimney",
+    "JaggedPass",
+    "FieryPath",
 )
 
 CONNECTED_MAPS = (
@@ -409,6 +412,9 @@ NULL_CONNECTION_MAPS = (
     "GraniteCave_B2F",
     "GraniteCave_StevensRoom",
     "PetalburgWoods",
+    "MtChimney",
+    "JaggedPass",
+    "FieryPath",
 )
 
 CANONICAL_LAYOUT_MAPS = (

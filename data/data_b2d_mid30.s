@@ -2121,29 +2121,11 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_PETALBURG_WOODS (g24 m11)
 	.include "data/maps/PetalburgWoods/header.inc"
 	@ MAP_MT_CHIMNEY (g24 m12)
-	.4byte gMapLayout_MT_CHIMNEY  @ mapLayout
-	.4byte gMapEvents_MT_CHIMNEY  @ events
-	.4byte MtChimney_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0196  @ music
-	.2byte 0x0088  @ mapLayoutId
-	.byte 0x38, 0x00, 0x07, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MtChimney/header.inc"
 	@ MAP_JAGGED_PASS (g24 m13)
-	.4byte gMapLayout_JAGGED_PASS  @ mapLayout
-	.4byte gMapEvents_JAGGED_PASS  @ events
-	.4byte JaggedPass_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016E  @ music
-	.2byte 0x0124  @ mapLayoutId
-	.byte 0x4C, 0x00, 0x00, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/JaggedPass/header.inc"
 	@ MAP_FIERY_PATH (g24 m14)
-	.4byte gMapLayout_FIERY_PATH  @ mapLayout
-	.4byte gMapEvents_FIERY_PATH  @ events
-	.4byte FieryPath_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016E  @ music
-	.2byte 0x0125  @ mapLayoutId
-	.byte 0x4A, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/FieryPath/header.inc"
 	@ MAP_MT_PYRE_1F (g24 m15)
 	.4byte gMapLayout_MT_PYRE_1F  @ mapLayout
 	.4byte gMapEvents_MT_PYRE_1F  @ events

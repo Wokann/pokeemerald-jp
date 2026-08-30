@@ -930,14 +930,8 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/GraniteCave_StevensRoom/events.inc"
 	.include "data/maps/PetalburgWoods/events.inc"
 	.include "data/maps/MtChimney/events.inc"
-	.globl gMapEvents_MT_CHIMNEY
-	.set gMapEvents_MT_CHIMNEY, MtChimney_MapEvents
 	.include "data/maps/JaggedPass/events.inc"
-	.globl gMapEvents_JAGGED_PASS
-	.set gMapEvents_JAGGED_PASS, JaggedPass_MapEvents
 	.include "data/maps/FieryPath/events.inc"
-	.globl gMapEvents_FIERY_PATH
-	.set gMapEvents_FIERY_PATH, FieryPath_MapEvents
 	.include "data/maps/MtPyre_1F/events.inc"
 	.globl gMapEvents_MT_PYRE_1F
 	.set gMapEvents_MT_PYRE_1F, MtPyre_1F_MapEvents
