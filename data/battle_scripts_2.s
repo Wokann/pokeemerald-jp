@@ -1,165 +1,222 @@
-
-#include "config.h"
-#include "constants/global.h"
-#include "constants/apprentice.h"
 #include "constants/battle.h"
-#include "constants/battle_arena.h"
-#include "constants/battle_dome.h"
-#include "constants/battle_factory.h"
-#include "constants/battle_frontier.h"
-#include "constants/battle_palace.h"
-#include "constants/battle_pike.h"
-#include "constants/battle_pyramid.h"
-#include "constants/battle_setup.h"
-#include "constants/battle_tent.h"
-#include "constants/battle_tower.h"
-#include "constants/berry.h"
-#include "constants/cable_club.h"
-#include "constants/coins.h"
-#include "constants/comparison_operators.h"
-#include "constants/contest.h"
-#include "constants/daycare.h"
-#include "constants/decorations.h"
-#include "constants/easy_chat.h"
-#include "constants/event_objects.h"
-#include "constants/event_object_movement.h"
-#include "constants/field_effects.h"
-#include "constants/field_poison.h"
-#include "constants/field_specials.h"
-#include "constants/field_tasks.h"
-#include "constants/field_weather.h"
-#include "constants/flags.h"
-#include "constants/frontier_util.h"
-#include "constants/game_stat.h"
-#include "constants/item.h"
+#include "constants/battle_script_commands.h"
+#include "constants/battle_anim.h"
+#include "constants/battle_string_ids.h"
 #include "constants/items.h"
-#include "constants/heal_locations.h"
-#include "constants/layouts.h"
-#include "constants/lilycove_lady.h"
-#include "constants/map_scripts.h"
-#include "constants/maps.h"
-#include "constants/mauville_old_man.h"
-#include "constants/metatile_labels.h"
-#include "constants/moves.h"
-#include "constants/party_menu.h"
-#include "constants/pokemon.h"
-#include "constants/pokemon_size_record.h"
-#include "constants/roulette.h"
-#include "constants/script_menu.h"
-#include "constants/secret_bases.h"
 #include "constants/songs.h"
-#include "constants/sound.h"
-#include "constants/species.h"
-#include "constants/trade.h"
-#include "constants/trainer_hill.h"
-#include "constants/trainers.h"
-#include "constants/tv.h"
-#include "constants/union_room.h"
-#include "constants/vars.h"
-#include "constants/weather.h"
+#include "constants/game_stat.h"
+	.include "asm/macros.inc"
+	.include "asm/macros/battle_script.inc"
+	.include "constants/constants.inc"
 
 	.section script_data, "aw", %progbits
-	.include "asm/macros.inc"
 
-#include "constants/tms_hms.inc"
-
-	.include "asm/macros/event.inc"
-	.include "constants/gba_constants.inc"
-	.include "constants/global.inc"
-
-@ This JP-located owner mirrors pokeemerald data/battle_scripts_2.s.
+@ Battle script tables and handlers at 0x0828A290.
+	.align 2
 	.globl gBattlescriptsForBallThrow
-gBattlescriptsForBallThrow: @ 0x828A290
-	.4byte gUnknown_828A2F0                  @ 000
-	.4byte gUnknown_828A2F0                  @ 001
-	.4byte gUnknown_828A2F0                  @ 002
-	.4byte gUnknown_828A2F0                  @ 003
-	.4byte gUnknown_828A2F0                  @ 004
-	.4byte gUnknown_828A306                  @ 005
-	.4byte gUnknown_828A2F0                  @ 006
-	.4byte gUnknown_828A2F0                  @ 007
-	.4byte gUnknown_828A2F0                  @ 008
-	.4byte gUnknown_828A2F0                  @ 009
-	.4byte gUnknown_828A2F0                  @ 010
-	.4byte gUnknown_828A2F0                  @ 011
-	.4byte gUnknown_828A2F0                  @ 012
+gBattlescriptsForBallThrow: @ 0x0828A290
+	.4byte BattleScript_BallThrow        @ ITEM_NONE
+	.4byte BattleScript_BallThrow        @ ITEM_MASTER_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_ULTRA_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_GREAT_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_POKE_BALL
+	.4byte BattleScript_SafariBallThrow  @ ITEM_SAFARI_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_NET_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_DIVE_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_NEST_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_REPEAT_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_TIMER_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_LUXURY_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_PREMIER_BALL
 
+	.align 2
 	.globl gBattlescriptsForUsingItem
-gBattlescriptsForUsingItem: @ 0x828A2C4
-	.4byte gUnknown_828A39A                  @ 000
-	.4byte gUnknown_828A3A4                  @ 001
-	.4byte gUnknown_828A3A4                  @ 002
-	.4byte gUnknown_828A3D3                  @ 003
-	.4byte gUnknown_828A3F7                  @ 004
-	.4byte gUnknown_828A419                  @ 005
+gBattlescriptsForUsingItem: @ 0x0828A2C4
+	.4byte BattleScript_PlayerUsesItem
+	.4byte BattleScript_OpponentUsesHealItem        @ AI_ITEM_FULL_RESTORE
+	.4byte BattleScript_OpponentUsesHealItem        @ AI_ITEM_HEAL_HP
+	.4byte BattleScript_OpponentUsesStatusCureItem  @ AI_ITEM_CURE_CONDITION
+	.4byte BattleScript_OpponentUsesXItem           @ AI_ITEM_X_STAT
+	.4byte BattleScript_OpponentUsesGuardSpec       @ AI_ITEM_GUARD_SPEC
 
+	.align 2
 	.globl gBattlescriptsForRunningByItem
-gBattlescriptsForRunningByItem: @ 0x828A2DC
-	.4byte gUnknown_828A43B                  @ 000
+gBattlescriptsForRunningByItem: @ 0x0828A2DC
+	.4byte BattleScript_RunByUsingItem
 
+	.align 2
 	.globl gBattlescriptsForSafariActions
-gBattlescriptsForSafariActions: @ 0x828A2E0
-	.4byte gUnknown_828A445 @ BattleScript_ActionWatchesCarefully
-	.4byte gUnknown_828A44C @ BattleScript_ActionGetNear
-	.4byte gUnknown_828A455 @ BattleScript_ActionThrowPokeblock
-	.4byte gUnknown_828A46B @ BattleScript_ActionWallyThrow
-gUnknown_828A2F0: @ 0x828A2F0
-	.include "data/scripts/gUnknown_828A2F0.inc"
-gUnknown_828A306: @ 0x828A306
-	.include "data/scripts/gUnknown_828A306.inc"
+gBattlescriptsForSafariActions: @ 0x0828A2E0
+	.4byte BattleScript_ActionWatchesCarefully
+	.4byte BattleScript_ActionGetNear
+	.4byte BattleScript_ActionThrowPokeblock
+	.4byte BattleScript_ActionWallyThrow
+
+	.globl BattleScript_BallThrow
+BattleScript_BallThrow: @ 0x0828A2F0
+	jumpifword CMP_COMMON_BITS, gBattleTypeFlags, BATTLE_TYPE_WALLY_TUTORIAL, BattleScript_BallThrowByWally
+	printstring STRINGID_PLAYERUSEDITEM
+	handleballthrow
+
+	.globl BattleScript_BallThrowByWally
+BattleScript_BallThrowByWally: @ 0x0828A306
+	printstring STRINGID_WALLYUSEDITEM
+	handleballthrow
+
+	.globl BattleScript_SafariBallThrow
+BattleScript_SafariBallThrow: @ 0x0828A30C
+	printstring STRINGID_PLAYERUSEDITEM
+	updatestatusicon BS_ATTACKER
+	handleballthrow
 
 	.globl BattleScript_SuccessBallThrow
-BattleScript_SuccessBallThrow: @ 0x828A30C
-	.include "data/scripts/gUnknown_828A30C.inc"
+BattleScript_SuccessBallThrow: @ 0x0828A352
+	jumpifhalfword CMP_EQUAL, gLastUsedItem, ITEM_SAFARI_BALL, BattleScript_PrintCaughtMonInfo
+	incrementgamestat GAME_STAT_POKEMON_CAPTURES
+BattleScript_PrintCaughtMonInfo:
+	printstring STRINGID_GOTCHAPKMNCAUGHTPLAYER
+	trysetcaughtmondexflags BattleScript_TryNicknameCaughtMon
+	printstring STRINGID_PKMNDATAADDEDTODEX
+	waitstate
+	setbyte gBattleCommunication, 0
+	displaydexinfo
+BattleScript_TryNicknameCaughtMon:
+	printstring STRINGID_GIVENICKNAMECAPTURED
+	waitstate
+	setbyte gBattleCommunication, 0
+	trygivecaughtmonnick BattleScript_GiveCaughtMonEnd
+	givecaughtmon
+	printfromtable gCaughtMonStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_SuccessBallThrowEnd
+BattleScript_GiveCaughtMonEnd:
+	givecaughtmon
+BattleScript_SuccessBallThrowEnd:
+	setbyte gBattleOutcome, B_OUTCOME_CAUGHT
+	finishturn
 
 	.globl BattleScript_WallyBallThrow
-BattleScript_WallyBallThrow: @ 0x828A352
-	.include "data/scripts/gUnknown_828A352.inc"
+BattleScript_WallyBallThrow: @ 0x0828A35C
+	printstring STRINGID_GOTCHAPKMNCAUGHTWALLY
+	setbyte gBattleOutcome, B_OUTCOME_CAUGHT
+	finishturn
 
 	.globl BattleScript_ShakeBallThrow
-BattleScript_ShakeBallThrow: @ 0x828A35C
-	.include "data/scripts/gUnknown_828A35C.inc"
+BattleScript_ShakeBallThrow: @ 0x0828A38A
+	printfromtable gBallEscapeStringIds
+	waitmessage B_WAIT_TIME_LONG
+	jumpifword CMP_NO_COMMON_BITS, gBattleTypeFlags, BATTLE_TYPE_SAFARI, BattleScript_ShakeBallThrowEnd
+	jumpifbyte CMP_NOT_EQUAL, gNumSafariBalls, 0, BattleScript_ShakeBallThrowEnd
+	printstring STRINGID_OUTOFSAFARIBALLS
+	waitmessage B_WAIT_TIME_LONG
+	setbyte gBattleOutcome, B_OUTCOME_NO_SAFARI_BALLS
+BattleScript_ShakeBallThrowEnd:
+	finishaction
 
 	.globl BattleScript_TrainerBallBlock
-BattleScript_TrainerBallBlock: @ 0x828A38A
-	.include "data/scripts/gUnknown_828A38A.inc"
-gUnknown_828A39A: @ 0x828A39A
-	.include "data/scripts/gUnknown_828A39A.inc"
-gUnknown_828A3A4: @ 0x828A3A4
-	.include "data/scripts/gUnknown_828A3A4.inc"
-gUnknown_828A3D3: @ 0x828A3D3
-	.include "data/scripts/gUnknown_828A3D3.inc"
-gUnknown_828A3F7: @ 0x828A3F7
-	.include "data/scripts/gUnknown_828A3F7.inc"
-gUnknown_828A419: @ 0x828A419
-	.include "data/scripts/gUnknown_828A419.inc"
-gUnknown_828A43B: @ 0x828A43B @ running-by-item script
-	.byte 0x54, 0x11, 0x00, 0x2E, 0xDE, 0x3F, 0x02, 0x02, 0x04, 0xF7
-gUnknown_828A445: @ 0x828A445 @ BattleScript_ActionWatchesCarefully
-	.byte 0x10, 0x1D, 0x01 @ printstring STRINGID_PKMNWATCHINGCAREFULLY
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
-gUnknown_828A44C: @ 0x828A44C @ BattleScript_ActionGetNear
-	.byte 0x13, 0xB0, 0xBA, 0x5A, 0x08 @ printfromtable 0x085ABAB0
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
-gUnknown_828A455: @ 0x828A455 @ BattleScript_ActionThrowPokeblock
-	.byte 0x10, 0x21, 0x01 @ printstring STRINGID_THREWPOKEBLOCKATPKMN
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x45, 0x01, 0x04, 0x00, 0x00, 0x00, 0x00 @ playanimation 0x01, 0x04, 0x00000000
-	.byte 0x13, 0xB4, 0xBA, 0x5A, 0x08 @ printfromtable 0x085ABAB4
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
-gUnknown_828A46B: @ 0x828A46B @ BattleScript_ActionWallyThrow
-	.byte 0x10, 0x02, 0x00 @ printstring STRINGID_RETURNMON
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x4B @ returnatktoball
-	.byte 0x3A @ waitstate
-	.byte 0x53, 0x00 @ trainerslidein 0x00
-	.byte 0x3A @ waitstate
-	.byte 0x10, 0x4D, 0x01 @ printstring STRINGID_YOUTHROWABALLNOWRIGHT
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
-	.byte 0x00 @ attackcanceler
-	.byte 0x00 @ attackcanceler
-	.byte 0x00 @ attackcanceler
+BattleScript_TrainerBallBlock: @ 0x0828A39A
+	waitmessage B_WAIT_TIME_LONG
+	printstring STRINGID_TRAINERBLOCKEDBALL
+	waitmessage B_WAIT_TIME_LONG
+	printstring STRINGID_DONTBEATHIEF
+	waitmessage B_WAIT_TIME_LONG
+	finishaction
+
+	.globl BattleScript_PlayerUsesItem
+BattleScript_PlayerUsesItem: @ 0x0828A3A4
+	moveendcase MOVEEND_MIRROR_MOVE
+	end
+
+	.globl BattleScript_OpponentUsesHealItem
+BattleScript_OpponentUsesHealItem: @ 0x0828A3D3
+	printstring STRINGID_EMPTYSTRING3
+	pause B_WAIT_TIME_MED
+	playse SE_USE_ITEM
+	printstring STRINGID_TRAINER1USEDITEM
+	waitmessage B_WAIT_TIME_LONG
+	useitemonopponent
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	printstring STRINGID_PKMNSITEMRESTOREDHEALTH
+	waitmessage B_WAIT_TIME_LONG
+	updatestatusicon BS_ATTACKER
+	moveendcase MOVEEND_MIRROR_MOVE
+	finishaction
+
+	.globl BattleScript_OpponentUsesStatusCureItem
+BattleScript_OpponentUsesStatusCureItem: @ 0x0828A3F7
+	printstring STRINGID_EMPTYSTRING3
+	pause B_WAIT_TIME_MED
+	playse SE_USE_ITEM
+	printstring STRINGID_TRAINER1USEDITEM
+	waitmessage B_WAIT_TIME_LONG
+	useitemonopponent
+	printfromtable gTrainerItemCuredStatusStringIds
+	waitmessage B_WAIT_TIME_LONG
+	updatestatusicon BS_ATTACKER
+	moveendcase MOVEEND_MIRROR_MOVE
+	finishaction
+
+	.globl BattleScript_OpponentUsesXItem
+BattleScript_OpponentUsesXItem: @ 0x0828A419
+	printstring STRINGID_EMPTYSTRING3
+	pause B_WAIT_TIME_MED
+	playse SE_USE_ITEM
+	printstring STRINGID_TRAINER1USEDITEM
+	waitmessage B_WAIT_TIME_LONG
+	useitemonopponent
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+	moveendcase MOVEEND_MIRROR_MOVE
+	finishaction
+
+	.globl BattleScript_OpponentUsesGuardSpec
+BattleScript_OpponentUsesGuardSpec: @ 0x0828A43B
+	printstring STRINGID_EMPTYSTRING3
+	pause B_WAIT_TIME_MED
+	playse SE_USE_ITEM
+	printstring STRINGID_TRAINER1USEDITEM
+	waitmessage B_WAIT_TIME_LONG
+	useitemonopponent
+	printfromtable gMistUsedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	moveendcase MOVEEND_MIRROR_MOVE
+	finishaction
+
+	.globl BattleScript_RunByUsingItem
+BattleScript_RunByUsingItem: @ 0x0828A445
+	playse SE_FLEE
+	setbyte gBattleOutcome, B_OUTCOME_RAN
+	finishturn
+
+BattleScript_ActionWatchesCarefully: @ 0x0828A44C
+	printstring STRINGID_PKMNWATCHINGCAREFULLY
+	waitmessage B_WAIT_TIME_LONG
+	end2
+
+BattleScript_ActionGetNear: @ 0x0828A455
+	printfromtable gSafariGetNearStringIds
+	waitmessage B_WAIT_TIME_LONG
+	end2
+
+BattleScript_ActionThrowPokeblock: @ 0x0828A45E
+	printstring STRINGID_THREWPOKEBLOCKATPKMN
+	waitmessage B_WAIT_TIME_LONG
+	playanimation BS_ATTACKER, B_ANIM_POKEBLOCK_THROW, NULL
+	printfromtable gSafariPokeblockResultStringIds
+	waitmessage B_WAIT_TIME_LONG
+	end2
+
+BattleScript_ActionWallyThrow: @ 0x0828A474
+	printstring STRINGID_RETURNMON
+	waitmessage B_WAIT_TIME_LONG
+	returnatktoball
+	waitstate
+	trainerslidein BS_TARGET
+	waitstate
+	printstring STRINGID_YOUTHROWABALLNOWRIGHT
+	waitmessage B_WAIT_TIME_LONG
+	end2
+
+	.align 2, 0
