@@ -1184,9 +1184,28 @@ BattleScript_PerishSongTakesLife:: @ 0x0828948D
 BattleScript_PerishSongCountGoesDown:: @ 0x082894A8
 	.incbin "baserom_jp.gba", 0x2894a8, 0x7
 
-	.globl BattleScript_AllStatsUp
-BattleScript_AllStatsUp: @ 0x82894AF
-	.include "data/scripts/gUnknown_82894AF.inc"
+@ All-stat boost script, split at each actual stat branch so the full
+@ chained flow is visible without retaining a gUnknown container.
+BattleScript_AllStatsUp:: @ 0x082894AF
+	.incbin "baserom_jp.gba", 0x2894af, 0x2d
+
+BattleScript_AllStatsUpAtk:: @ 0x082894DC
+	.incbin "baserom_jp.gba", 0x2894dc, 0x1e
+
+BattleScript_AllStatsUpDef:: @ 0x082894FA
+	.incbin "baserom_jp.gba", 0x2894fa, 0x14
+
+BattleScript_AllStatsUpSpeed:: @ 0x0828950E
+	.incbin "baserom_jp.gba", 0x28950e, 0x14
+
+BattleScript_AllStatsUpSpAtk:: @ 0x08289522
+	.incbin "baserom_jp.gba", 0x289522, 0x14
+
+BattleScript_AllStatsUpSpDef:: @ 0x08289536
+	.incbin "baserom_jp.gba", 0x289536, 0x14
+
+BattleScript_AllStatsUpRet:: @ 0x0828954A
+	.incbin "baserom_jp.gba", 0x28954a, 0x1
 
 	.globl BattleScript_RapidSpinAway
 BattleScript_RapidSpinAway: @ 0x828954B
