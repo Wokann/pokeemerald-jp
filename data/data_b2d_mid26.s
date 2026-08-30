@@ -1177,7 +1177,11 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/MagmaHideout_4F/events.inc"
 	.include "data/maps/MagmaHideout_3F_3R/events.inc"
 	.include "data/maps/MagmaHideout_2F_3R/events.inc"
-	.incbin "baserom_jp.gba", 0x50FD00, 0x787C
+	.include "data/maps/MirageTower_1F/events.inc"
+	.include "data/maps/MirageTower_2F/events.inc"
+	.include "data/maps/MirageTower_3F/events.inc"
+	.include "data/maps/MirageTower_4F/events.inc"
+	.incbin "baserom_jp.gba", 0x50FE00, 0x777C
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
