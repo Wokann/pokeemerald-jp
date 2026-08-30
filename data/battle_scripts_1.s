@@ -1889,7 +1889,10 @@ BattleScript_AbilityNoSpecificStatLoss: @ 0x8289BB7
 
 	.globl BattleScript_StickyHoldActivates
 BattleScript_StickyHoldActivates: @ 0x8289BC7
-	.include "data/scripts/gUnknown_8289BC7.inc"
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0x37, 0x01 @ printstring STRINGID_PKMNSXMADEYINEFFECTIVE
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
 
 	.globl BattleScript_ColorChangeActivates
 BattleScript_ColorChangeActivates: @ 0x8289BD5
@@ -1899,11 +1902,20 @@ BattleScript_ColorChangeActivates: @ 0x8289BD5
 
 	.globl BattleScript_RoughSkinActivates
 BattleScript_RoughSkinActivates: @ 0x8289BDC
-	.include "data/scripts/gUnknown_8289BDC.inc"
+	.byte 0x35, 0x24, 0x3F, 0x02, 0x02, 0x00, 0x01, 0x10, 0x00 @ orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	.byte 0x0B, 0x01 @ healthbarupdate BS_ATTACKER
+	.byte 0x0C, 0x01 @ datahpupdate BS_ATTACKER
+	.byte 0x10, 0xCF, 0x00 @ printstring STRINGID_PKMNHURTSWITH
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x19, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 @ tryfaintmon BS_ATTACKER
+	.byte 0x3C @ return
 
 	.globl BattleScript_CuteCharmActivates
 BattleScript_CuteCharmActivates: @ 0x8289BF7
-	.include "data/scripts/gUnknown_8289BF7.inc"
+	.byte 0x65, 0x01, 0x00, 0x00, 0x0F, 0x00 @ status2animation BS_ATTACKER, STATUS2_INFATUATION
+	.byte 0x10, 0x36, 0x01 @ printstring STRINGID_PKMNSXINFATUATEDY
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x3C @ return
 
 	.globl BattleScript_ApplySecondaryEffect
 BattleScript_ApplySecondaryEffect: @ 0x8289C04
@@ -1919,11 +1931,17 @@ BattleScript_SynchronizeActivates: @ 0x8289C07
 
 	.globl BattleScript_NoItemSteal
 BattleScript_NoItemSteal: @ 0x8289C0A
-	.include "data/scripts/gUnknown_8289C0A.inc"
+	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	.byte 0x10, 0x37, 0x01 @ printstring STRINGID_PKMNSXMADEYINEFFECTIVE
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x3C @ return
 
 	.globl BattleScript_AbilityCuredStatus
 BattleScript_AbilityCuredStatus: @ 0x8289C14
-	.include "data/scripts/gUnknown_8289C14.inc"
+	.byte 0x10, 0x64, 0x01 @ printstring STRINGID_PKMNSXCUREDITSYPROBLEM
+	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	.byte 0x98, 0x0A @ updatestatusicon BS_SCRIPTING
+	.byte 0x3C @ return
 
 	.globl BattleScript_IgnoresWhileAsleep
 BattleScript_IgnoresWhileAsleep: @ 0x8289C1D
