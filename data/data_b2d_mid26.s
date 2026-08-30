@@ -917,8 +917,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route116_TunnelersRestHouse/events.inc"
 	.include "data/maps/Route117_PokemonDayCare/events.inc"
 	.include "data/maps/Route121_SafariZoneEntrance/events.inc"
-	.globl gMapEvents_ROUTE121_SAFARI_ZONE_ENTRANCE
-	.set gMapEvents_ROUTE121_SAFARI_ZONE_ENTRANCE, Route121_SafariZoneEntrance_MapEvents
 	.include "data/maps/MeteorFalls_1F_1R/events.inc"
 	.globl gMapEvents_METEOR_FALLS_1F_1R
 	.set gMapEvents_METEOR_FALLS_1F_1R, MeteorFalls_1F_1R_MapEvents
