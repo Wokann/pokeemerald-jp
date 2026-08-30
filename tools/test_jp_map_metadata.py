@@ -18,6 +18,11 @@ MAPS = (
     "Underwater_Route127",
     "Underwater_Route128",
     "Underwater_Route129",
+    "OldaleTown_House1",
+    "OldaleTown_House2",
+    "OldaleTown_PokemonCenter_1F",
+    "OldaleTown_PokemonCenter_2F",
+    "OldaleTown_Mart",
 )
 
 CONNECTED_MAPS = (
@@ -33,6 +38,11 @@ NULL_CONNECTION_MAPS = (
     "VictoryRoad_1F",
     "VictoryRoad_B1F",
     "VictoryRoad_B2F",
+    "OldaleTown_House1",
+    "OldaleTown_House2",
+    "OldaleTown_PokemonCenter_1F",
+    "OldaleTown_PokemonCenter_2F",
+    "OldaleTown_Mart",
 )
 
 CANONICAL_LAYOUT_MAPS = (
@@ -78,6 +88,28 @@ class MapMetadataTests(unittest.TestCase):
         self.assertEqual(
             jp_map_metadata.layout_symbol("LAYOUT_CAVE_OF_ORIGIN_B1F"),
             "gMapLayout_CAVE_OF_ORIGIN_B1F",
+        )
+
+    def test_shared_layouts_use_their_real_jp_owners(self):
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_HOUSE1"),
+            "gMapLayout_OLDALE_TOWN_HOUSE1",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_HOUSE2"),
+            "gMapLayout_OLDALE_TOWN_HOUSE2",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_POKEMON_CENTER_1F"),
+            "gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_POKEMON_CENTER_2F"),
+            "gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_MART"),
+            "gMapLayout_OLDALE_TOWN_MART",
         )
 
     def test_connections_use_real_map_labels(self):

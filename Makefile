@@ -317,6 +317,8 @@ JP_STRUCTURED_MAP_METADATA_MAPS += Route121 Route122 Route123 Route124 Route125 
 JP_STRUCTURED_MAP_METADATA_MAPS += Route129 Route130 Route131 Route132 Route133 Route134
 JP_STRUCTURED_MAP_METADATA_MAPS += LittlerootTown_BrendansHouse_1F LittlerootTown_BrendansHouse_2F \
 	LittlerootTown_MaysHouse_1F LittlerootTown_MaysHouse_2F LittlerootTown_ProfessorBirchsLab
+JP_STRUCTURED_MAP_METADATA_MAPS += OldaleTown_House1 OldaleTown_House2 OldaleTown_PokemonCenter_1F \
+	OldaleTown_PokemonCenter_2F OldaleTown_Mart
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

@@ -31,6 +31,19 @@ CANONICAL_LAYOUT_SYMBOLS = {
     "LAYOUT_UNDERWATER_ROUTE129": "Underwater_Route129_Layout",
 }
 
+# The JP layout table has not yet adopted the US shared-layout labels for these
+# five resources.  Each US layout id still has one real, map-specific JP owner
+# in data/layouts/layouts.inc.  Keep the mapping explicit so generated headers
+# reference that owner directly instead of inventing undefined gMapLayout_* names
+# or relying on .set aliases.
+JP_LAYOUT_SYMBOL_OVERRIDES = {
+    "LAYOUT_HOUSE1": "gMapLayout_OLDALE_TOWN_HOUSE1",
+    "LAYOUT_HOUSE2": "gMapLayout_OLDALE_TOWN_HOUSE2",
+    "LAYOUT_POKEMON_CENTER_1F": "gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F",
+    "LAYOUT_POKEMON_CENTER_2F": "gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F",
+    "LAYOUT_MART": "gMapLayout_OLDALE_TOWN_MART",
+}
+
 
 def require_string(data: dict[str, Any], key: str) -> str:
     value = data.get(key)
@@ -60,7 +73,10 @@ def layout_symbol(layout_id: str) -> str:
         raise ValueError(f"layout must begin with LAYOUT_: {layout_id}")
     return CANONICAL_LAYOUT_SYMBOLS.get(
         layout_id,
-        "gMapLayout_" + layout_id.removeprefix("LAYOUT_"),
+        JP_LAYOUT_SYMBOL_OVERRIDES.get(
+            layout_id,
+            "gMapLayout_" + layout_id.removeprefix("LAYOUT_"),
+        ),
     )
 
 

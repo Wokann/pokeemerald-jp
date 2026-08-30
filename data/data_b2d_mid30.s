@@ -1745,45 +1745,15 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB (g1 m4)
 	.include "data/maps/LittlerootTown_ProfessorBirchsLab/header.inc"
 	@ MAP_OLDALE_TOWN_HOUSE1 (g2 m0)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte OldaleTown_House1_MapEvents  @ events
-	.4byte 0x081F28D3  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016B  @ music
-	.2byte 0x003B  @ mapLayoutId
-	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/OldaleTown_House1/header.inc"
 	@ MAP_OLDALE_TOWN_HOUSE2 (g2 m1)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte OldaleTown_House2_MapEvents  @ events
-	.4byte 0x081F2949  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016B  @ music
-	.2byte 0x003C  @ mapLayoutId
-	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/OldaleTown_House2/header.inc"
 	@ MAP_OLDALE_TOWN_POKEMON_CENTER_1F (g2 m2)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte OldaleTown_PokemonCenter_1F_MapEvents  @ events
-	.4byte OldaleTown_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003D  @ mapLayoutId
-	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/OldaleTown_PokemonCenter_1F/header.inc"
 	@ MAP_OLDALE_TOWN_POKEMON_CENTER_2F (g2 m3)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte OldaleTown_PokemonCenter_2F_MapEvents  @ events
-	.4byte OldaleTown_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/OldaleTown_PokemonCenter_2F/header.inc"
 	@ MAP_OLDALE_TOWN_MART (g2 m4)
-	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte OldaleTown_Mart_MapEvents  @ events
-	.4byte OldaleTown_Mart_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x003F  @ mapLayoutId
-	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/OldaleTown_Mart/header.inc"
 	@ MAP_DEWFORD_TOWN_HOUSE1 (g3 m0)
 	.4byte gMapLayout_DEWFORD_TOWN_HOUSE1  @ mapLayout
 	.4byte DewfordTown_House1_MapEvents  @ events
