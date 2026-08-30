@@ -226,6 +226,11 @@ MAPS = (
     "SeafloorCavern_Room2",
     "SeafloorCavern_Room3",
     "SeafloorCavern_Room4",
+    "SeafloorCavern_Room5",
+    "SeafloorCavern_Room6",
+    "SeafloorCavern_Room7",
+    "SeafloorCavern_Room8",
+    "SeafloorCavern_Room9",
 )
 
 CONNECTED_MAPS = (
@@ -449,6 +454,11 @@ NULL_CONNECTION_MAPS = (
     "SeafloorCavern_Room2",
     "SeafloorCavern_Room3",
     "SeafloorCavern_Room4",
+    "SeafloorCavern_Room5",
+    "SeafloorCavern_Room6",
+    "SeafloorCavern_Room7",
+    "SeafloorCavern_Room8",
+    "SeafloorCavern_Room9",
 )
 
 CANONICAL_LAYOUT_MAPS = (

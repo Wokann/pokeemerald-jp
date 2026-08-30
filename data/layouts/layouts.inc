@@ -1760,7 +1760,68 @@ gMapLayout_SEAFLOOR_CAVERN_ROOM4: @ 0x0840F798
 	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM4_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40F7B0, 0x2AD0
+gMapLayout_SEAFLOOR_CAVERN_ROOM5_Border:
+	.incbin "data/layouts/SeafloorCavern_Room5/border.bin"
+gMapLayout_SEAFLOOR_CAVERN_ROOM5_Blockdata:
+	.incbin "data/layouts/SeafloorCavern_Room5/map.bin"
+	.globl gMapLayout_SEAFLOOR_CAVERN_ROOM5
+gMapLayout_SEAFLOOR_CAVERN_ROOM5: @ 0x0840FAD8
+	.4byte 20  @ width
+	.4byte 20  @ height
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM5_Border  @ border
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM5_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+gMapLayout_SEAFLOOR_CAVERN_ROOM6_Border:
+	.incbin "data/layouts/SeafloorCavern_Room6/border.bin"
+gMapLayout_SEAFLOOR_CAVERN_ROOM6_Blockdata:
+	.incbin "data/layouts/SeafloorCavern_Room6/map.bin"
+	.globl gMapLayout_SEAFLOOR_CAVERN_ROOM6
+gMapLayout_SEAFLOOR_CAVERN_ROOM6: @ 0x0840FF48
+	.4byte 24  @ width
+	.4byte 23  @ height
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM6_Border  @ border
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM6_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
+gMapLayout_SEAFLOOR_CAVERN_ROOM7_Border:
+	.incbin "data/layouts/SeafloorCavern_Room7/border.bin"
+gMapLayout_SEAFLOOR_CAVERN_ROOM7_Blockdata:
+	.incbin "data/layouts/SeafloorCavern_Room7/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_SEAFLOOR_CAVERN_ROOM7
+gMapLayout_SEAFLOOR_CAVERN_ROOM7: @ 0x084103E8
+	.4byte 23  @ width
+	.4byte 25  @ height
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM7_Border  @ border
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM7_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
+gMapLayout_SEAFLOOR_CAVERN_ROOM8_Border:
+	.incbin "data/layouts/SeafloorCavern_Room8/border.bin"
+gMapLayout_SEAFLOOR_CAVERN_ROOM8_Blockdata:
+	.incbin "data/layouts/SeafloorCavern_Room8/map.bin"
+	.globl gMapLayout_SEAFLOOR_CAVERN_ROOM8
+gMapLayout_SEAFLOOR_CAVERN_ROOM8: @ 0x0841053C
+	.4byte 11  @ width
+	.4byte 14  @ height
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM8_Border  @ border
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM8_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+gMapLayout_SEAFLOOR_CAVERN_ROOM9_Border:
+	.incbin "data/layouts/SeafloorCavern_Room9/border.bin"
+gMapLayout_SEAFLOOR_CAVERN_ROOM9_Blockdata:
+	.incbin "data/layouts/SeafloorCavern_Room9/map.bin"
+	.globl gMapLayout_SEAFLOOR_CAVERN_ROOM9
+gMapLayout_SEAFLOOR_CAVERN_ROOM9: @ 0x08410F10
+	.4byte 27  @ width
+	.4byte 46  @ height
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM9_Border  @ border
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM9_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x410F28, 0x1358
 gMapLayout_CAVE_OF_ORIGIN_B1F_Border:
 	.incbin "data/layouts/CaveOfOrigin_B1F/border.bin"
 gMapLayout_CAVE_OF_ORIGIN_B1F_Blockdata:

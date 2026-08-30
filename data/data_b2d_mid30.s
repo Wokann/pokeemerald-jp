@@ -2160,9 +2160,18 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/SeafloorCavern_Room3/header.inc"
 	@ MAP_SEAFLOOR_CAVERN_ROOM4 (g24 m31)
 	.include "data/maps/SeafloorCavern_Room4/header.inc"
-	.globl gUnknown_845C660
-gUnknown_845C660: @ 0x0845C660
-	.incbin "baserom_jp.gba", 0x45c660, 0x118
+	@ MAP_SEAFLOOR_CAVERN_ROOM5 (g24 m32)
+	.include "data/maps/SeafloorCavern_Room5/header.inc"
+	@ MAP_SEAFLOOR_CAVERN_ROOM6 (g24 m33)
+	.include "data/maps/SeafloorCavern_Room6/header.inc"
+	@ MAP_SEAFLOOR_CAVERN_ROOM7 (g24 m34)
+	.include "data/maps/SeafloorCavern_Room7/header.inc"
+	@ MAP_SEAFLOOR_CAVERN_ROOM8 (g24 m35)
+	.include "data/maps/SeafloorCavern_Room8/header.inc"
+	@ MAP_SEAFLOOR_CAVERN_ROOM9 (g24 m36)
+	.include "data/maps/SeafloorCavern_Room9/header.inc"
+	@ MAP_CAVE_OF_ORIGIN_ENTRANCE through MAP_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP3 (g24 m37-m41)
+	.incbin "baserom_jp.gba", 0x45c6ec, 0x8c
 	@ MAP_CAVE_OF_ORIGIN_B1F (g24 m42)
 	.include "data/maps/CaveOfOrigin_B1F/header.inc"
 	@ MAP_VICTORY_ROAD_1F (g24 m43)
