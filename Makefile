@@ -321,6 +321,8 @@ JP_STRUCTURED_MAP_METADATA_MAPS += OldaleTown_House1 OldaleTown_House2 OldaleTow
 	OldaleTown_PokemonCenter_2F OldaleTown_Mart
 JP_STRUCTURED_MAP_METADATA_MAPS += DewfordTown_House1 DewfordTown_PokemonCenter_1F DewfordTown_PokemonCenter_2F \
 	DewfordTown_Gym DewfordTown_Hall DewfordTown_House2
+JP_STRUCTURED_MAP_METADATA_MAPS += LavaridgeTown_HerbShop LavaridgeTown_Gym_1F LavaridgeTown_Gym_B1F \
+	LavaridgeTown_House LavaridgeTown_Mart LavaridgeTown_PokemonCenter_1F LavaridgeTown_PokemonCenter_2F
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

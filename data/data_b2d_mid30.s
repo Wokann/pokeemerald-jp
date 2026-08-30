@@ -1767,61 +1767,19 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_DEWFORD_TOWN_HOUSE2 (g3 m5)
 	.include "data/maps/DewfordTown_House2/header.inc"
 	@ MAP_LAVARIDGE_TOWN_HERB_SHOP (g4 m0)
-	.4byte gMapLayout_LAVARIDGE_TOWN_HERB_SHOP  @ mapLayout
-	.4byte LavaridgeTown_HerbShop_MapEvents  @ events
-	.4byte LavaridgeTown_HerbShop_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016B  @ music
-	.2byte 0x0044  @ mapLayoutId
-	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LavaridgeTown_HerbShop/header.inc"
 	@ MAP_LAVARIDGE_TOWN_GYM_1F (g4 m1)
-	.4byte gMapLayout_LAVARIDGE_TOWN_GYM_1F  @ mapLayout
-	.4byte LavaridgeTown_Gym_1F_MapEvents  @ events
-	.4byte LavaridgeTown_Gym_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016C  @ music
-	.2byte 0x0045  @ mapLayoutId
-	.byte 0x03, 0x00, 0x06, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LavaridgeTown_Gym_1F/header.inc"
 	@ MAP_LAVARIDGE_TOWN_GYM_B1F (g4 m2)
-	.4byte gMapLayout_LAVARIDGE_TOWN_GYM_B1F  @ mapLayout
-	.4byte LavaridgeTown_Gym_B1F_MapEvents  @ events
-	.4byte LavaridgeTown_Gym_B1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016C  @ music
-	.2byte 0x0046  @ mapLayoutId
-	.byte 0x03, 0x00, 0x06, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LavaridgeTown_Gym_B1F/header.inc"
 	@ MAP_LAVARIDGE_TOWN_HOUSE (g4 m3)
-	.4byte gMapLayout_DEWFORD_TOWN_HOUSE1  @ mapLayout
-	.4byte LavaridgeTown_House_MapEvents  @ events
-	.4byte LavaridgeTown_House_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016B  @ music
-	.2byte 0x0040  @ mapLayoutId
-	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LavaridgeTown_House/header.inc"
 	@ MAP_LAVARIDGE_TOWN_MART (g4 m4)
-	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte LavaridgeTown_Mart_MapEvents  @ events
-	.4byte LavaridgeTown_Mart_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x003F  @ mapLayoutId
-	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LavaridgeTown_Mart/header.inc"
 	@ MAP_LAVARIDGE_TOWN_POKEMON_CENTER_1F (g4 m5)
-	.4byte gMapLayout_LAVARIDGE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte LavaridgeTown_PokemonCenter_1F_MapEvents  @ events
-	.4byte LavaridgeTown_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x0047  @ mapLayoutId
-	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LavaridgeTown_PokemonCenter_1F/header.inc"
 	@ MAP_LAVARIDGE_TOWN_POKEMON_CENTER_2F (g4 m6)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte LavaridgeTown_PokemonCenter_2F_MapEvents  @ events
-	.4byte LavaridgeTown_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/LavaridgeTown_PokemonCenter_2F/header.inc"
 	@ MAP_FALLARBOR_TOWN_MART (g5 m0)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
 	.4byte FallarborTown_Mart_MapEvents  @ events

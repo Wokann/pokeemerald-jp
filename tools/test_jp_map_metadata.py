@@ -29,6 +29,13 @@ MAPS = (
     "DewfordTown_Gym",
     "DewfordTown_Hall",
     "DewfordTown_House2",
+    "LavaridgeTown_HerbShop",
+    "LavaridgeTown_Gym_1F",
+    "LavaridgeTown_Gym_B1F",
+    "LavaridgeTown_House",
+    "LavaridgeTown_Mart",
+    "LavaridgeTown_PokemonCenter_1F",
+    "LavaridgeTown_PokemonCenter_2F",
 )
 
 CONNECTED_MAPS = (
@@ -55,6 +62,13 @@ NULL_CONNECTION_MAPS = (
     "DewfordTown_Gym",
     "DewfordTown_Hall",
     "DewfordTown_House2",
+    "LavaridgeTown_HerbShop",
+    "LavaridgeTown_Gym_1F",
+    "LavaridgeTown_Gym_B1F",
+    "LavaridgeTown_House",
+    "LavaridgeTown_Mart",
+    "LavaridgeTown_PokemonCenter_1F",
+    "LavaridgeTown_PokemonCenter_2F",
 )
 
 CANONICAL_LAYOUT_MAPS = (
