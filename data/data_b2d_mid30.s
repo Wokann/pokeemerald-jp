@@ -1871,69 +1871,21 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_SLATEPORT_CITY_MART (g9 m13)
 	.include "data/maps/SlateportCity_Mart/header.inc"
 	@ MAP_MAUVILLE_CITY_GYM (g10 m0)
-	.4byte gMapLayout_MAUVILLE_CITY_GYM  @ mapLayout
-	.4byte MauvilleCity_Gym_MapEvents  @ events
-	.4byte MauvilleCity_Gym_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016C  @ music
-	.2byte 0x0059  @ mapLayoutId
-	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MauvilleCity_Gym/header.inc"
 	@ MAP_MAUVILLE_CITY_BIKE_SHOP (g10 m1)
-	.4byte gMapLayout_MAUVILLE_CITY_BIKE_SHOP  @ mapLayout
-	.4byte MauvilleCity_BikeShop_MapEvents  @ events
-	.4byte MauvilleCity_BikeShop_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x005A  @ mapLayoutId
-	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MauvilleCity_BikeShop/header.inc"
 	@ MAP_MAUVILLE_CITY_HOUSE1 (g10 m2)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte MauvilleCity_House1_MapEvents  @ events
-	.4byte MauvilleCity_House1_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x003C  @ mapLayoutId
-	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MauvilleCity_House1/header.inc"
 	@ MAP_MAUVILLE_CITY_GAME_CORNER (g10 m3)
-	.4byte gMapLayout_MAUVILLE_CITY_GAME_CORNER  @ mapLayout
-	.4byte MauvilleCity_GameCorner_MapEvents  @ events
-	.4byte MauvilleCity_GameCorner_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x01AA  @ music
-	.2byte 0x005B  @ mapLayoutId
-	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MauvilleCity_GameCorner/header.inc"
 	@ MAP_MAUVILLE_CITY_HOUSE2 (g10 m4)
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte MauvilleCity_House2_MapEvents  @ events
-	.4byte MauvilleCity_House2_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x018F  @ music
-	.2byte 0x003B  @ mapLayoutId
-	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MauvilleCity_House2/header.inc"
 	@ MAP_MAUVILLE_CITY_POKEMON_CENTER_1F (g10 m5)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte MauvilleCity_PokemonCenter_1F_MapEvents  @ events
-	.4byte MauvilleCity_PokemonCenter_1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003D  @ mapLayoutId
-	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MauvilleCity_PokemonCenter_1F/header.inc"
 	@ MAP_MAUVILLE_CITY_POKEMON_CENTER_2F (g10 m6)
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte MauvilleCity_PokemonCenter_2F_MapEvents  @ events
-	.4byte MauvilleCity_PokemonCenter_2F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0190  @ music
-	.2byte 0x003E  @ mapLayoutId
-	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MauvilleCity_PokemonCenter_2F/header.inc"
 	@ MAP_MAUVILLE_CITY_MART (g10 m7)
-	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte MauvilleCity_Mart_MapEvents  @ events
-	.4byte MauvilleCity_Mart_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x0194  @ music
-	.2byte 0x003F  @ mapLayoutId
-	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/MauvilleCity_Mart/header.inc"
 	@ MAP_RUSTBORO_CITY_DEVON_CORP_1F (g11 m0)
 	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_1F  @ mapLayout
 	.4byte RustboroCity_DevonCorp_1F_MapEvents  @ events

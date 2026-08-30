@@ -81,6 +81,14 @@ MAPS = (
     "SlateportCity_PokemonCenter_1F",
     "SlateportCity_PokemonCenter_2F",
     "SlateportCity_Mart",
+    "MauvilleCity_Gym",
+    "MauvilleCity_BikeShop",
+    "MauvilleCity_House1",
+    "MauvilleCity_GameCorner",
+    "MauvilleCity_House2",
+    "MauvilleCity_PokemonCenter_1F",
+    "MauvilleCity_PokemonCenter_2F",
+    "MauvilleCity_Mart",
 )
 
 CONNECTED_MAPS = (
@@ -159,6 +167,14 @@ NULL_CONNECTION_MAPS = (
     "SlateportCity_PokemonCenter_1F",
     "SlateportCity_PokemonCenter_2F",
     "SlateportCity_Mart",
+    "MauvilleCity_Gym",
+    "MauvilleCity_BikeShop",
+    "MauvilleCity_House1",
+    "MauvilleCity_GameCorner",
+    "MauvilleCity_House2",
+    "MauvilleCity_PokemonCenter_1F",
+    "MauvilleCity_PokemonCenter_2F",
+    "MauvilleCity_Mart",
 )
 
 CANONICAL_LAYOUT_MAPS = (

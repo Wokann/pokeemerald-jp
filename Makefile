@@ -341,6 +341,9 @@ JP_STRUCTURED_MAP_METADATA_MAPS += SlateportCity_SternsShipyard_1F SlateportCity
 	SlateportCity_NameRatersHouse SlateportCity_PokemonFanClub SlateportCity_OceanicMuseum_1F \
 	SlateportCity_OceanicMuseum_2F SlateportCity_Harbor SlateportCity_House \
 	SlateportCity_PokemonCenter_1F SlateportCity_PokemonCenter_2F SlateportCity_Mart
+JP_STRUCTURED_MAP_METADATA_MAPS += MauvilleCity_Gym MauvilleCity_BikeShop MauvilleCity_House1 \
+	MauvilleCity_GameCorner MauvilleCity_House2 MauvilleCity_PokemonCenter_1F \
+	MauvilleCity_PokemonCenter_2F MauvilleCity_Mart
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)
