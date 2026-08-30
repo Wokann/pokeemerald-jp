@@ -201,6 +201,10 @@ MAPS = (
     "RusturfTunnel",
     "Underwater_SootopolisCity",
     "DesertRuins",
+    "GraniteCave_1F",
+    "GraniteCave_B1F",
+    "GraniteCave_B2F",
+    "GraniteCave_StevensRoom",
 )
 
 CONNECTED_MAPS = (
@@ -399,6 +403,10 @@ NULL_CONNECTION_MAPS = (
     "RusturfTunnel",
     "Underwater_SootopolisCity",
     "DesertRuins",
+    "GraniteCave_1F",
+    "GraniteCave_B1F",
+    "GraniteCave_B2F",
+    "GraniteCave_StevensRoom",
 )
 
 CANONICAL_LAYOUT_MAPS = (

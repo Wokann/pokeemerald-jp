@@ -2111,37 +2111,13 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_DESERT_RUINS (g24 m6)
 	.include "data/maps/DesertRuins/header.inc"
 	@ MAP_GRANITE_CAVE_1F (g24 m7)
-	.4byte gMapLayout_GRANITE_CAVE_1F  @ mapLayout
-	.4byte gMapEvents_GRANITE_CAVE_1F  @ events
-	.4byte 0x08213EE1  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016E  @ music
-	.2byte 0x0084  @ mapLayoutId
-	.byte 0x37, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/GraniteCave_1F/header.inc"
 	@ MAP_GRANITE_CAVE_B1F (g24 m8)
-	.4byte gMapLayout_GRANITE_CAVE_B1F  @ mapLayout
-	.4byte gMapEvents_GRANITE_CAVE_B1F  @ events
-	.4byte GraniteCave_B1F_MapScripts  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016E  @ music
-	.2byte 0x0085  @ mapLayoutId
-	.byte 0x37, 0x01, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/GraniteCave_B1F/header.inc"
 	@ MAP_GRANITE_CAVE_B2F (g24 m9)
-	.4byte gMapLayout_GRANITE_CAVE_B2F  @ mapLayout
-	.4byte gMapEvents_GRANITE_CAVE_B2F  @ events
-	.4byte 0x08214026  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016E  @ music
-	.2byte 0x0086  @ mapLayoutId
-	.byte 0x37, 0x01, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/GraniteCave_B2F/header.inc"
 	@ MAP_GRANITE_CAVE_STEVENS_ROOM (g24 m10)
-	.4byte gMapLayout_GRANITE_CAVE_STEVENS_ROOM  @ mapLayout
-	.4byte gMapEvents_GRANITE_CAVE_STEVENS_ROOM  @ events
-	.4byte 0x08214027  @ mapScripts
-	.4byte 0x00000000  @ connections
-	.2byte 0x016E  @ music
-	.2byte 0x0120  @ mapLayoutId
-	.byte 0x37, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/GraniteCave_StevensRoom/header.inc"
 	@ MAP_PETALBURG_WOODS (g24 m11)
 	.4byte gMapLayout_PETALBURG_WOODS  @ mapLayout
 	.4byte gMapEvents_PETALBURG_WOODS  @ events

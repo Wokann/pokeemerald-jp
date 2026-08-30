@@ -925,17 +925,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Underwater_SootopolisCity/events.inc"
 	.include "data/maps/DesertRuins/events.inc"
 	.include "data/maps/GraniteCave_1F/events.inc"
-	.globl gMapEvents_GRANITE_CAVE_1F
-	.set gMapEvents_GRANITE_CAVE_1F, GraniteCave_1F_MapEvents
 	.include "data/maps/GraniteCave_B1F/events.inc"
-	.globl gMapEvents_GRANITE_CAVE_B1F
-	.set gMapEvents_GRANITE_CAVE_B1F, GraniteCave_B1F_MapEvents
 	.include "data/maps/GraniteCave_B2F/events.inc"
-	.globl gMapEvents_GRANITE_CAVE_B2F
-	.set gMapEvents_GRANITE_CAVE_B2F, GraniteCave_B2F_MapEvents
 	.include "data/maps/GraniteCave_StevensRoom/events.inc"
-	.globl gMapEvents_GRANITE_CAVE_STEVENS_ROOM
-	.set gMapEvents_GRANITE_CAVE_STEVENS_ROOM, GraniteCave_StevensRoom_MapEvents
 	.include "data/maps/PetalburgWoods/events.inc"
 	.globl gMapEvents_PETALBURG_WOODS
 	.set gMapEvents_PETALBURG_WOODS, PetalburgWoods_MapEvents
