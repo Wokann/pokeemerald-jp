@@ -2548,7 +2548,8 @@ BattleScript_PrintAbilityMadeIneffective:: @ 0x0828890A
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectKnockOff:: @ 0x08288918
-	.incbin "baserom_jp.gba", 0x288918, 0xb
+	setmoveeffect MOVE_EFFECT_KNOCK_OFF
+	goto BattleScript_EffectHit
 
 BattleScript_EffectEndeavor:: @ 0x08288923
 	.incbin "baserom_jp.gba", 0x288923, 0x3b
