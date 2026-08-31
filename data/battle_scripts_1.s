@@ -4291,17 +4291,17 @@ BattleScript_TookAttack: @ 0x8289AC6
 
 	.globl BattleScript_SturdyPreventsOHKO
 BattleScript_SturdyPreventsOHKO: @ 0x8289ADA
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0xC3, 0x00 @ printstring STRINGID_PKMNPROTECTEDBY
-	.byte 0x39, 0x40, 0x00 @ pause B_WAIT_TIME_LONG
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNPROTECTEDBY
+	pause B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 	.globl BattleScript_DampStopsExplosion
 BattleScript_DampStopsExplosion: @ 0x8289AE8
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0xC4, 0x00 @ printstring STRINGID_PKMNPREVENTSUSAGE
-	.byte 0x39, 0x40, 0x00 @ pause B_WAIT_TIME_LONG
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNPREVENTSUSAGE
+	pause B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 	.globl BattleScript_MoveHPDrain_PPLoss
 BattleScript_MoveHPDrain_PPLoss: @ 0x8289AF6
