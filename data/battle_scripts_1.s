@@ -1902,10 +1902,52 @@ BattleScript_FlinchEffect:: @ 0x082881BD
 	goto BattleScript_EffectHit
 
 BattleScript_EffectEarthquake:: @ 0x082881C8
-	.incbin "baserom_jp.gba", 0x2881c8, 0x4
+	attackcanceler
+	attackstring
+	ppreduce
+	selectfirstvalidtarget
 
 BattleScript_HitsAllWithUndergroundBonusLoop:: @ 0x082881CC
-	.incbin "baserom_jp.gba", 0x2881cc, 0x80
+	movevaluescleanup
+	jumpifnostatus3 BS_TARGET, STATUS3_UNDERGROUND, BattleScript_HitsAllNoUndergroundBonus
+	orword gHitMarker, HITMARKER_IGNORE_UNDERGROUND
+	setbyte sDMG_MULTIPLIER, 2
+	goto BattleScript_DoHitAllWithUndergroundBonus
+BattleScript_HitsAllNoUndergroundBonus::
+	bicword gHitMarker, HITMARKER_IGNORE_UNDERGROUND
+	setbyte sDMG_MULTIPLIER, 1
+BattleScript_DoHitAllWithUndergroundBonus::
+	accuracycheck BattleScript_HitAllWithUndergroundBonusMissed, ACC_CURR_MOVE
+	critcalc
+	damagecalc
+	typecalc
+	adjustnormaldamage
+	attackanimation
+	waitanimation
+	effectivenesssound
+	hitanimation BS_TARGET
+	waitstate
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	critmessage
+	waitmessage B_WAIT_TIME_LONG
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	printstring STRINGID_EMPTYSTRING3
+	waitmessage 1
+	tryfaintmon BS_TARGET
+	moveendto MOVEEND_NEXT_TARGET
+	jumpifnexttargetvalid BattleScript_HitsAllWithUndergroundBonusLoop
+	end
+BattleScript_HitAllWithUndergroundBonusMissed::
+	pause B_WAIT_TIME_SHORT
+	typecalc
+	effectivenesssound
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	moveendto MOVEEND_NEXT_TARGET
+	jumpifnexttargetvalid BattleScript_HitsAllWithUndergroundBonusLoop
+	end
 
 BattleScript_EffectFutureSight:: @ 0x0828824C
 	.incbin "baserom_jp.gba", 0x28824c, 0x17
