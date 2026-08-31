@@ -1025,7 +1025,31 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/TerraCave_End/events.inc"
 	.include "data/maps/AlteringCave/events.inc"
 	.include "data/maps/MeteorFalls_StevensCave/events.inc"
-	.incbin "baserom_jp.gba", 0x510010, 0x756C
+	.include "data/maps/SecretBase_RedCave1/events.inc"
+	.include "data/maps/SecretBase_BrownCave1/events.inc"
+	.include "data/maps/SecretBase_BlueCave1/events.inc"
+	.include "data/maps/SecretBase_YellowCave1/events.inc"
+	.include "data/maps/SecretBase_Tree1/events.inc"
+	.include "data/maps/SecretBase_Shrub1/events.inc"
+	.include "data/maps/SecretBase_RedCave2/events.inc"
+	.include "data/maps/SecretBase_BrownCave2/events.inc"
+	.include "data/maps/SecretBase_BlueCave2/events.inc"
+	.include "data/maps/SecretBase_YellowCave2/events.inc"
+	.include "data/maps/SecretBase_Tree2/events.inc"
+	.include "data/maps/SecretBase_Shrub2/events.inc"
+	.include "data/maps/SecretBase_RedCave3/events.inc"
+	.include "data/maps/SecretBase_BrownCave3/events.inc"
+	.include "data/maps/SecretBase_BlueCave3/events.inc"
+	.include "data/maps/SecretBase_YellowCave3/events.inc"
+	.include "data/maps/SecretBase_Tree3/events.inc"
+	.include "data/maps/SecretBase_Shrub3/events.inc"
+	.include "data/maps/SecretBase_RedCave4/events.inc"
+	.include "data/maps/SecretBase_BrownCave4/events.inc"
+	.include "data/maps/SecretBase_BlueCave4/events.inc"
+	.include "data/maps/SecretBase_YellowCave4/events.inc"
+	.include "data/maps/SecretBase_Tree4/events.inc"
+	.include "data/maps/SecretBase_Shrub4/events.inc"
+	.incbin "baserom_jp.gba", 0x512470, 0x510C
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

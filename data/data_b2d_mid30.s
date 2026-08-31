@@ -1433,7 +1433,25 @@ gTileset_RUSTURF_TUNNEL_SECONDARY: @ 0x083B7E0C
 	.4byte gTileset_RUSTURF_TUNNEL_SECONDARY_Metatiles  @ metatiles
 	.4byte gTileset_RUSTURF_TUNNEL_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
-	.incbin "baserom_jp.gba", 0x3B7E24, 0xC0
+	.globl gTileset_SecretBaseBrownCave
+gTileset_SecretBaseBrownCave: @ 0x083B7E24
+	.incbin "baserom_jp.gba", 0x3B7E24, 0x18
+	.globl gTileset_SecretBaseTree
+gTileset_SecretBaseTree: @ 0x083B7E3C
+	.incbin "baserom_jp.gba", 0x3B7E3C, 0x18
+	.globl gTileset_SecretBaseShrub
+gTileset_SecretBaseShrub: @ 0x083B7E54
+	.incbin "baserom_jp.gba", 0x3B7E54, 0x18
+	.globl gTileset_SecretBaseBlueCave
+gTileset_SecretBaseBlueCave: @ 0x083B7E6C
+	.incbin "baserom_jp.gba", 0x3B7E6C, 0x18
+	.globl gTileset_SecretBaseYellowCave
+gTileset_SecretBaseYellowCave: @ 0x083B7E84
+	.incbin "baserom_jp.gba", 0x3B7E84, 0x18
+	.globl gTileset_SecretBaseRedCave
+gTileset_SecretBaseRedCave: @ 0x083B7E9C
+	.incbin "baserom_jp.gba", 0x3B7E9C, 0x18
+	.incbin "baserom_jp.gba", 0x3B7EB4, 0x30
 	.globl gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY
 gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY: @ 0x083B7EE4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -1557,7 +1575,10 @@ gTileset_MOSSDEEP_CITY_GYM_SECONDARY: @ 0x083B804C
 	.4byte 0x00000000  @ callback
 	.globl gTileset_ABANDONED_SHIP_SECONDARY
 gTileset_ABANDONED_SHIP_SECONDARY: @ 0x083B8064
-	.incbin "baserom_jp.gba", 0x3B8064, 0x30
+	.incbin "baserom_jp.gba", 0x3B8064, 0x18
+	.globl gTileset_SecretBase
+gTileset_SecretBase: @ 0x083B807C
+	.incbin "baserom_jp.gba", 0x3B807C, 0x18
 
 	.globl gUnknown_83B8094
 gUnknown_83B8094: @ 0x83B8094
@@ -2315,8 +2336,56 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/AlteringCave/header.inc"
 	@ MAP_METEOR_FALLS_STEVENS_CAVE (g24 m107)
 	.include "data/maps/MeteorFalls_StevensCave/header.inc"
-	@ MAP_SECRET_BASE_RED_CAVE1 through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45CEB0, 0x1AE8
+	@ MAP_SECRET_BASE_RED_CAVE1 (g25 m0)
+	.include "data/maps/SecretBase_RedCave1/header.inc"
+	@ MAP_SECRET_BASE_BROWN_CAVE1 (g25 m1)
+	.include "data/maps/SecretBase_BrownCave1/header.inc"
+	@ MAP_SECRET_BASE_BLUE_CAVE1 (g25 m2)
+	.include "data/maps/SecretBase_BlueCave1/header.inc"
+	@ MAP_SECRET_BASE_YELLOW_CAVE1 (g25 m3)
+	.include "data/maps/SecretBase_YellowCave1/header.inc"
+	@ MAP_SECRET_BASE_TREE1 (g25 m4)
+	.include "data/maps/SecretBase_Tree1/header.inc"
+	@ MAP_SECRET_BASE_SHRUB1 (g25 m5)
+	.include "data/maps/SecretBase_Shrub1/header.inc"
+	@ MAP_SECRET_BASE_RED_CAVE2 (g25 m6)
+	.include "data/maps/SecretBase_RedCave2/header.inc"
+	@ MAP_SECRET_BASE_BROWN_CAVE2 (g25 m7)
+	.include "data/maps/SecretBase_BrownCave2/header.inc"
+	@ MAP_SECRET_BASE_BLUE_CAVE2 (g25 m8)
+	.include "data/maps/SecretBase_BlueCave2/header.inc"
+	@ MAP_SECRET_BASE_YELLOW_CAVE2 (g25 m9)
+	.include "data/maps/SecretBase_YellowCave2/header.inc"
+	@ MAP_SECRET_BASE_TREE2 (g25 m10)
+	.include "data/maps/SecretBase_Tree2/header.inc"
+	@ MAP_SECRET_BASE_SHRUB2 (g25 m11)
+	.include "data/maps/SecretBase_Shrub2/header.inc"
+	@ MAP_SECRET_BASE_RED_CAVE3 (g25 m12)
+	.include "data/maps/SecretBase_RedCave3/header.inc"
+	@ MAP_SECRET_BASE_BROWN_CAVE3 (g25 m13)
+	.include "data/maps/SecretBase_BrownCave3/header.inc"
+	@ MAP_SECRET_BASE_BLUE_CAVE3 (g25 m14)
+	.include "data/maps/SecretBase_BlueCave3/header.inc"
+	@ MAP_SECRET_BASE_YELLOW_CAVE3 (g25 m15)
+	.include "data/maps/SecretBase_YellowCave3/header.inc"
+	@ MAP_SECRET_BASE_TREE3 (g25 m16)
+	.include "data/maps/SecretBase_Tree3/header.inc"
+	@ MAP_SECRET_BASE_SHRUB3 (g25 m17)
+	.include "data/maps/SecretBase_Shrub3/header.inc"
+	@ MAP_SECRET_BASE_RED_CAVE4 (g25 m18)
+	.include "data/maps/SecretBase_RedCave4/header.inc"
+	@ MAP_SECRET_BASE_BROWN_CAVE4 (g25 m19)
+	.include "data/maps/SecretBase_BrownCave4/header.inc"
+	@ MAP_SECRET_BASE_BLUE_CAVE4 (g25 m20)
+	.include "data/maps/SecretBase_BlueCave4/header.inc"
+	@ MAP_SECRET_BASE_YELLOW_CAVE4 (g25 m21)
+	.include "data/maps/SecretBase_YellowCave4/header.inc"
+	@ MAP_SECRET_BASE_TREE4 (g25 m22)
+	.include "data/maps/SecretBase_Tree4/header.inc"
+	@ MAP_SECRET_BASE_SHRUB4 (g25 m23)
+	.include "data/maps/SecretBase_Shrub4/header.inc"
+	@ MAP_BATTLE_COLOSSEUM_2P through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45D150, 0x1848
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

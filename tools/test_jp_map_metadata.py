@@ -270,6 +270,30 @@ MAPS = (
     "TerraCave_End",
     "AlteringCave",
     "MeteorFalls_StevensCave",
+    "SecretBase_RedCave1",
+    "SecretBase_BrownCave1",
+    "SecretBase_BlueCave1",
+    "SecretBase_YellowCave1",
+    "SecretBase_Tree1",
+    "SecretBase_Shrub1",
+    "SecretBase_RedCave2",
+    "SecretBase_BrownCave2",
+    "SecretBase_BlueCave2",
+    "SecretBase_YellowCave2",
+    "SecretBase_Tree2",
+    "SecretBase_Shrub2",
+    "SecretBase_RedCave3",
+    "SecretBase_BrownCave3",
+    "SecretBase_BlueCave3",
+    "SecretBase_YellowCave3",
+    "SecretBase_Tree3",
+    "SecretBase_Shrub3",
+    "SecretBase_RedCave4",
+    "SecretBase_BrownCave4",
+    "SecretBase_BlueCave4",
+    "SecretBase_YellowCave4",
+    "SecretBase_Tree4",
+    "SecretBase_Shrub4",
 )
 
 CONNECTED_MAPS = (
@@ -537,6 +561,30 @@ NULL_CONNECTION_MAPS = (
     "TerraCave_End",
     "AlteringCave",
     "MeteorFalls_StevensCave",
+    "SecretBase_RedCave1",
+    "SecretBase_BrownCave1",
+    "SecretBase_BlueCave1",
+    "SecretBase_YellowCave1",
+    "SecretBase_Tree1",
+    "SecretBase_Shrub1",
+    "SecretBase_RedCave2",
+    "SecretBase_BrownCave2",
+    "SecretBase_BlueCave2",
+    "SecretBase_YellowCave2",
+    "SecretBase_Tree2",
+    "SecretBase_Shrub2",
+    "SecretBase_RedCave3",
+    "SecretBase_BrownCave3",
+    "SecretBase_BlueCave3",
+    "SecretBase_YellowCave3",
+    "SecretBase_Tree3",
+    "SecretBase_Shrub3",
+    "SecretBase_RedCave4",
+    "SecretBase_BrownCave4",
+    "SecretBase_BlueCave4",
+    "SecretBase_YellowCave4",
+    "SecretBase_Tree4",
+    "SecretBase_Shrub4",
 )
 
 CANONICAL_LAYOUT_MAPS = (
@@ -564,6 +612,7 @@ class MapMetadataTests(unittest.TestCase):
 
     def test_headers_use_real_map_and_layout_labels(self):
         for map_name in MAPS:
+            data = jp_map_metadata.load_map(ROOT / "data" / "maps" / map_name / "map.json")
             text = (ROOT / "data" / "maps" / map_name / "header.inc").read_text(encoding="utf-8")
             self.assertIn(f"{map_name}:", text)
             if map_name in CANONICAL_LAYOUT_MAPS:
@@ -571,6 +620,8 @@ class MapMetadataTests(unittest.TestCase):
                 self.assertNotIn("gMapLayout_", text)
             else:
                 self.assertIn("gMapLayout_", text)
+            scripts_name = data.get("shared_scripts_map", map_name)
+            self.assertIn(f"\t.4byte {scripts_name}_MapScripts\n", text)
             self.assertIn("map_header_flags allow_cycling=", text)
             self.assertNotIn(".set ", text)
 

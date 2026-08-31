@@ -2148,7 +2148,307 @@ gMapLayout_ABANDONED_SHIP_UNDERWATER2: @ 0x08418BB8
 	.4byte gMapLayout_ABANDONED_SHIP_UNDERWATER2_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_ABANDONED_SHIP_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x418BD0, 0x842C
+gMapLayout_SECRET_BASE_RED_CAVE1_Border:
+	.incbin "data/layouts/SecretBase_RedCave1/border.bin"
+gMapLayout_SECRET_BASE_RED_CAVE1_Blockdata:
+	.incbin "data/layouts/SecretBase_RedCave1/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_SECRET_BASE_RED_CAVE1
+gMapLayout_SECRET_BASE_RED_CAVE1: @ 0x08418CA0
+	.4byte 11  @ width
+	.4byte 9  @ height
+	.4byte gMapLayout_SECRET_BASE_RED_CAVE1_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_RED_CAVE1_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseRedCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_BROWN_CAVE1_Border:
+	.incbin "data/layouts/SecretBase_BrownCave1/border.bin"
+gMapLayout_SECRET_BASE_BROWN_CAVE1_Blockdata:
+	.incbin "data/layouts/SecretBase_BrownCave1/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_SECRET_BASE_BROWN_CAVE1
+gMapLayout_SECRET_BASE_BROWN_CAVE1: @ 0x08418D88
+	.4byte 11  @ width
+	.4byte 9  @ height
+	.4byte gMapLayout_SECRET_BASE_BROWN_CAVE1_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_BROWN_CAVE1_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseBrownCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_BLUE_CAVE1_Border:
+	.incbin "data/layouts/SecretBase_BlueCave1/border.bin"
+gMapLayout_SECRET_BASE_BLUE_CAVE1_Blockdata:
+	.incbin "data/layouts/SecretBase_BlueCave1/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_SECRET_BASE_BLUE_CAVE1
+gMapLayout_SECRET_BASE_BLUE_CAVE1: @ 0x08418E70
+	.4byte 11  @ width
+	.4byte 9  @ height
+	.4byte gMapLayout_SECRET_BASE_BLUE_CAVE1_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_BLUE_CAVE1_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseBlueCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_YELLOW_CAVE1_Border:
+	.incbin "data/layouts/SecretBase_YellowCave1/border.bin"
+gMapLayout_SECRET_BASE_YELLOW_CAVE1_Blockdata:
+	.incbin "data/layouts/SecretBase_YellowCave1/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_SECRET_BASE_YELLOW_CAVE1
+gMapLayout_SECRET_BASE_YELLOW_CAVE1: @ 0x08418F58
+	.4byte 11  @ width
+	.4byte 9  @ height
+	.4byte gMapLayout_SECRET_BASE_YELLOW_CAVE1_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_YELLOW_CAVE1_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseYellowCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_TREE1_Border:
+	.incbin "data/layouts/SecretBase_Tree1/border.bin"
+gMapLayout_SECRET_BASE_TREE1_Blockdata:
+	.incbin "data/layouts/SecretBase_Tree1/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_SECRET_BASE_TREE1
+gMapLayout_SECRET_BASE_TREE1: @ 0x08419040
+	.4byte 11  @ width
+	.4byte 9  @ height
+	.4byte gMapLayout_SECRET_BASE_TREE1_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_TREE1_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseTree  @ secondaryTileset
+gMapLayout_SECRET_BASE_SHRUB1_Border:
+	.incbin "data/layouts/SecretBase_Shrub1/border.bin"
+gMapLayout_SECRET_BASE_SHRUB1_Blockdata:
+	.incbin "data/layouts/SecretBase_Shrub1/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_SECRET_BASE_SHRUB1
+gMapLayout_SECRET_BASE_SHRUB1: @ 0x08419128
+	.4byte 11  @ width
+	.4byte 9  @ height
+	.4byte gMapLayout_SECRET_BASE_SHRUB1_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_SHRUB1_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseShrub  @ secondaryTileset
+gMapLayout_SECRET_BASE_RED_CAVE2_Border:
+	.incbin "data/layouts/SecretBase_RedCave2/border.bin"
+gMapLayout_SECRET_BASE_RED_CAVE2_Blockdata:
+	.incbin "data/layouts/SecretBase_RedCave2/map.bin"
+	.globl gMapLayout_SECRET_BASE_RED_CAVE2
+gMapLayout_SECRET_BASE_RED_CAVE2: @ 0x08419228
+	.4byte 7  @ width
+	.4byte 16  @ height
+	.4byte gMapLayout_SECRET_BASE_RED_CAVE2_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_RED_CAVE2_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseRedCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_BROWN_CAVE2_Border:
+	.incbin "data/layouts/SecretBase_BrownCave2/border.bin"
+gMapLayout_SECRET_BASE_BROWN_CAVE2_Blockdata:
+	.incbin "data/layouts/SecretBase_BrownCave2/map.bin"
+	.globl gMapLayout_SECRET_BASE_BROWN_CAVE2
+gMapLayout_SECRET_BASE_BROWN_CAVE2: @ 0x08419344
+	.4byte 14  @ width
+	.4byte 9  @ height
+	.4byte gMapLayout_SECRET_BASE_BROWN_CAVE2_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_BROWN_CAVE2_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseBrownCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_BLUE_CAVE2_Border:
+	.incbin "data/layouts/SecretBase_BlueCave2/border.bin"
+gMapLayout_SECRET_BASE_BLUE_CAVE2_Blockdata:
+	.incbin "data/layouts/SecretBase_BlueCave2/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_SECRET_BASE_BLUE_CAVE2
+gMapLayout_SECRET_BASE_BLUE_CAVE2: @ 0x08419438
+	.4byte 15  @ width
+	.4byte 7  @ height
+	.4byte gMapLayout_SECRET_BASE_BLUE_CAVE2_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_BLUE_CAVE2_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseBlueCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_YELLOW_CAVE2_Border:
+	.incbin "data/layouts/SecretBase_YellowCave2/border.bin"
+gMapLayout_SECRET_BASE_YELLOW_CAVE2_Blockdata:
+	.incbin "data/layouts/SecretBase_YellowCave2/map.bin"
+	.globl gMapLayout_SECRET_BASE_YELLOW_CAVE2
+gMapLayout_SECRET_BASE_YELLOW_CAVE2: @ 0x08419554
+	.4byte 14  @ width
+	.4byte 9  @ height
+	.4byte gMapLayout_SECRET_BASE_YELLOW_CAVE2_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_YELLOW_CAVE2_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseYellowCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_TREE2_Border:
+	.incbin "data/layouts/SecretBase_Tree2/border.bin"
+gMapLayout_SECRET_BASE_TREE2_Blockdata:
+	.incbin "data/layouts/SecretBase_Tree2/map.bin"
+	.globl gMapLayout_SECRET_BASE_TREE2
+gMapLayout_SECRET_BASE_TREE2: @ 0x08419654
+	.4byte 7  @ width
+	.4byte 16  @ height
+	.4byte gMapLayout_SECRET_BASE_TREE2_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_TREE2_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseTree  @ secondaryTileset
+gMapLayout_SECRET_BASE_SHRUB2_Border:
+	.incbin "data/layouts/SecretBase_Shrub2/border.bin"
+gMapLayout_SECRET_BASE_SHRUB2_Blockdata:
+	.incbin "data/layouts/SecretBase_Shrub2/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_SECRET_BASE_SHRUB2
+gMapLayout_SECRET_BASE_SHRUB2: @ 0x08419748
+	.4byte 15  @ width
+	.4byte 7  @ height
+	.4byte gMapLayout_SECRET_BASE_SHRUB2_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_SHRUB2_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseShrub  @ secondaryTileset
+gMapLayout_SECRET_BASE_RED_CAVE3_Border:
+	.incbin "data/layouts/SecretBase_RedCave3/border.bin"
+gMapLayout_SECRET_BASE_RED_CAVE3_Blockdata:
+	.incbin "data/layouts/SecretBase_RedCave3/map.bin"
+	.globl gMapLayout_SECRET_BASE_RED_CAVE3
+gMapLayout_SECRET_BASE_RED_CAVE3: @ 0x08419858
+	.4byte 15  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_SECRET_BASE_RED_CAVE3_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_RED_CAVE3_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseRedCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_BROWN_CAVE3_Border:
+	.incbin "data/layouts/SecretBase_BrownCave3/border.bin"
+gMapLayout_SECRET_BASE_BROWN_CAVE3_Blockdata:
+	.incbin "data/layouts/SecretBase_BrownCave3/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_SECRET_BASE_BROWN_CAVE3
+gMapLayout_SECRET_BASE_BROWN_CAVE3: @ 0x084199C4
+	.4byte 15  @ width
+	.4byte 11  @ height
+	.4byte gMapLayout_SECRET_BASE_BROWN_CAVE3_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_BROWN_CAVE3_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseBrownCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_BLUE_CAVE3_Border:
+	.incbin "data/layouts/SecretBase_BlueCave3/border.bin"
+gMapLayout_SECRET_BASE_BLUE_CAVE3_Blockdata:
+	.incbin "data/layouts/SecretBase_BlueCave3/map.bin"
+	.globl gMapLayout_SECRET_BASE_BLUE_CAVE3
+gMapLayout_SECRET_BASE_BLUE_CAVE3: @ 0x08419B38
+	.4byte 10  @ width
+	.4byte 17  @ height
+	.4byte gMapLayout_SECRET_BASE_BLUE_CAVE3_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_BLUE_CAVE3_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseBlueCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_YELLOW_CAVE3_Border:
+	.incbin "data/layouts/SecretBase_YellowCave3/border.bin"
+gMapLayout_SECRET_BASE_YELLOW_CAVE3_Blockdata:
+	.incbin "data/layouts/SecretBase_YellowCave3/map.bin"
+	.globl gMapLayout_SECRET_BASE_YELLOW_CAVE3
+gMapLayout_SECRET_BASE_YELLOW_CAVE3: @ 0x08419C60
+	.4byte 12  @ width
+	.4byte 11  @ height
+	.4byte gMapLayout_SECRET_BASE_YELLOW_CAVE3_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_YELLOW_CAVE3_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseYellowCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_TREE3_Border:
+	.incbin "data/layouts/SecretBase_Tree3/border.bin"
+gMapLayout_SECRET_BASE_TREE3_Blockdata:
+	.incbin "data/layouts/SecretBase_Tree3/map.bin"
+	.globl gMapLayout_SECRET_BASE_TREE3
+gMapLayout_SECRET_BASE_TREE3: @ 0x08419D90
+	.4byte 17  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_SECRET_BASE_TREE3_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_TREE3_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseTree  @ secondaryTileset
+gMapLayout_SECRET_BASE_SHRUB3_Border:
+	.incbin "data/layouts/SecretBase_Shrub3/border.bin"
+gMapLayout_SECRET_BASE_SHRUB3_Blockdata:
+	.incbin "data/layouts/SecretBase_Shrub3/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_SECRET_BASE_SHRUB3
+gMapLayout_SECRET_BASE_SHRUB3: @ 0x08419ED0
+	.4byte 13  @ width
+	.4byte 11  @ height
+	.4byte gMapLayout_SECRET_BASE_SHRUB3_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_SHRUB3_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseShrub  @ secondaryTileset
+gMapLayout_SECRET_BASE_RED_CAVE4_Border:
+	.incbin "data/layouts/SecretBase_RedCave4/border.bin"
+gMapLayout_SECRET_BASE_RED_CAVE4_Blockdata:
+	.incbin "data/layouts/SecretBase_RedCave4/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_SECRET_BASE_RED_CAVE4
+gMapLayout_SECRET_BASE_RED_CAVE4: @ 0x0841A000
+	.4byte 9  @ width
+	.4byte 15  @ height
+	.4byte gMapLayout_SECRET_BASE_RED_CAVE4_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_RED_CAVE4_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseRedCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_BROWN_CAVE4_Border:
+	.incbin "data/layouts/SecretBase_BrownCave4/border.bin"
+gMapLayout_SECRET_BASE_BROWN_CAVE4_Blockdata:
+	.incbin "data/layouts/SecretBase_BrownCave4/map.bin"
+	.globl gMapLayout_SECRET_BASE_BROWN_CAVE4
+gMapLayout_SECRET_BASE_BROWN_CAVE4: @ 0x0841A170
+	.4byte 14  @ width
+	.4byte 12  @ height
+	.4byte gMapLayout_SECRET_BASE_BROWN_CAVE4_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_BROWN_CAVE4_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseBrownCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_BLUE_CAVE4_Border:
+	.incbin "data/layouts/SecretBase_BlueCave4/border.bin"
+gMapLayout_SECRET_BASE_BLUE_CAVE4_Blockdata:
+	.incbin "data/layouts/SecretBase_BlueCave4/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_SECRET_BASE_BLUE_CAVE4
+gMapLayout_SECRET_BASE_BLUE_CAVE4: @ 0x0841A2C4
+	.4byte 9  @ width
+	.4byte 17  @ height
+	.4byte gMapLayout_SECRET_BASE_BLUE_CAVE4_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_BLUE_CAVE4_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseBlueCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_YELLOW_CAVE4_Border:
+	.incbin "data/layouts/SecretBase_YellowCave4/border.bin"
+gMapLayout_SECRET_BASE_YELLOW_CAVE4_Blockdata:
+	.incbin "data/layouts/SecretBase_YellowCave4/map.bin"
+	.globl gMapLayout_SECRET_BASE_YELLOW_CAVE4
+gMapLayout_SECRET_BASE_YELLOW_CAVE4: @ 0x0841A450
+	.4byte 13  @ width
+	.4byte 14  @ height
+	.4byte gMapLayout_SECRET_BASE_YELLOW_CAVE4_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_YELLOW_CAVE4_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseYellowCave  @ secondaryTileset
+gMapLayout_SECRET_BASE_TREE4_Border:
+	.incbin "data/layouts/SecretBase_Tree4/border.bin"
+gMapLayout_SECRET_BASE_TREE4_Blockdata:
+	.incbin "data/layouts/SecretBase_Tree4/map.bin"
+	.globl gMapLayout_SECRET_BASE_TREE4
+gMapLayout_SECRET_BASE_TREE4: @ 0x0841A5F8
+	.4byte 14  @ width
+	.4byte 14  @ height
+	.4byte gMapLayout_SECRET_BASE_TREE4_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_TREE4_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseTree  @ secondaryTileset
+gMapLayout_SECRET_BASE_SHRUB4_Border:
+	.incbin "data/layouts/SecretBase_Shrub4/border.bin"
+gMapLayout_SECRET_BASE_SHRUB4_Blockdata:
+	.incbin "data/layouts/SecretBase_Shrub4/map.bin"
+	.globl gMapLayout_SECRET_BASE_SHRUB4
+gMapLayout_SECRET_BASE_SHRUB4: @ 0x0841A74C
+	.4byte 14  @ width
+	.4byte 11  @ height
+	.4byte gMapLayout_SECRET_BASE_SHRUB4_Border  @ border
+	.4byte gMapLayout_SECRET_BASE_SHRUB4_Blockdata  @ map
+	.4byte gTileset_SecretBase  @ primaryTileset
+	.4byte gTileset_SecretBaseShrub  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x41A764, 0x6898
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Border:
 	.incbin "data/layouts/FortreeCity_DecorationShop/border.bin"
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata:
