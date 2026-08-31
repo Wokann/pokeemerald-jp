@@ -779,13 +779,19 @@ BattleScript_ImmunityProtected:: @ 0x082874EB
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectPayDay:: @ 0x08287505
-	.incbin "baserom_jp.gba", 0x287505, 0xb
+	setmoveeffect MOVE_EFFECT_PAYDAY
+	goto BattleScript_EffectHit
 
 BattleScript_EffectLightScreen:: @ 0x08287510
-	.incbin "baserom_jp.gba", 0x287510, 0x9
+	attackcanceler
+	attackstring
+	ppreduce
+	setlightscreen
+	goto BattleScript_PrintReflectLightScreenSafeguardString
 
 BattleScript_EffectTriAttack:: @ 0x08287519
-	.incbin "baserom_jp.gba", 0x287519, 0xb
+	setmoveeffect MOVE_EFFECT_TRI_ATTACK
+	goto BattleScript_EffectHit
 
 BattleScript_EffectRest:: @ 0x08287524
 	.incbin "baserom_jp.gba", 0x287524, 0x4b
@@ -854,7 +860,10 @@ BattleScript_EffectSpecialDefenseDown2:: @ 0x08287805
 	.incbin "baserom_jp.gba", 0x287805, 0xb
 
 BattleScript_EffectReflect:: @ 0x08287810
-	.incbin "baserom_jp.gba", 0x287810, 0x13
+	.incbin "baserom_jp.gba", 0x287810, 0x4
+
+BattleScript_PrintReflectLightScreenSafeguardString:: @ 0x08287814
+	.incbin "baserom_jp.gba", 0x287814, 0xf
 
 BattleScript_EffectPoison:: @ 0x08287823
 	.incbin "baserom_jp.gba", 0x287823, 0x61
