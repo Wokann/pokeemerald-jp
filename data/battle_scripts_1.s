@@ -1972,7 +1972,21 @@ BattleScript_EffectStomp:: @ 0x08288282
 	goto BattleScript_FlinchEffect
 
 BattleScript_EffectSolarBeam:: @ 0x08288298
-	.incbin "baserom_jp.gba", 0x288298, 0x56
+	jumpifabilitypresent ABILITY_CLOUD_NINE, BattleScript_SolarBeamDecideTurn
+	jumpifabilitypresent ABILITY_AIR_LOCK, BattleScript_SolarBeamDecideTurn
+	jumpifhalfword CMP_COMMON_BITS, gBattleWeather, B_WEATHER_SUN, BattleScript_SolarBeamOnFirstTurn
+BattleScript_SolarBeamDecideTurn::
+	jumpifstatus2 BS_ATTACKER, STATUS2_MULTIPLETURNS, BattleScript_TwoTurnMovesSecondTurn
+	jumpifword CMP_COMMON_BITS, gHitMarker, HITMARKER_NO_ATTACKSTRING, BattleScript_TwoTurnMovesSecondTurn
+	setbyte sTWOTURN_STRINGID, B_MSG_TURN1_SOLAR_BEAM
+	call BattleScriptFirstChargingTurn
+	goto BattleScript_MoveEnd
+BattleScript_SolarBeamOnFirstTurn::
+	orword gHitMarker, HITMARKER_CHARGING
+	setmoveeffect MOVE_EFFECT_CHARGING | MOVE_EFFECT_AFFECTS_USER
+	seteffectprimary
+	ppreduce
+	goto BattleScript_TwoTurnMovesSecondTurn
 
 BattleScript_EffectThunder:: @ 0x082882EE
 	.incbin "baserom_jp.gba", 0x2882ee, 0x14
