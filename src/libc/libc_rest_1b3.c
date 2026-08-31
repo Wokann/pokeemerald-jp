@@ -1,4 +1,6 @@
-// JP byte-exact newlib math/syscall stubs (kept as naked asm).
+// JP newlib math/syscall stubs.
+// The IEEE double-bit classifiers remain naked: agbcc reassigns the bit-test
+// intermediates from the JP r3/r2 sequence even when their object sizes match.
 
 __attribute__((naked)) int isinf(double x)
 {
@@ -47,158 +49,65 @@ __attribute__((naked)) int isnan(double x)
     );
 }
 
-__attribute__((naked)) void *_sbrk_r(void *ptr, int incr)
+extern void *_sbrk(int incr);
+
+void *_sbrk_r(void *ptr, int incr)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, lr}\n\t"
-        "adds r5, r0, #0\n\t"
-        "adds r0, r1, #0\n\t"
-        "ldr r4, _0829B6C0\n\t"
-        "movs r1, #0\n\t"
-        "str r1, [r4]\n\t"
-        "bl _sbrk\n\t"
-        "adds r1, r0, #0\n\t"
-        "movs r0, #1\n\t"
-        "rsbs r0, r0, #0\n\t"
-        "cmp r1, r0\n\t"
-        "bne _0829B6BA\n\t"
-        "ldr r0, [r4]\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0829B6BA\n\t"
-        "str r0, [r5]\n\t"
-        "_0829B6BA:\n\t"
-        "adds r0, r1, #0\n\t"
-        "pop {r4, r5, pc}\n\t"
-        ".align 2, 0\n\t"
-        "_0829B6C0: .4byte gUnknown_300764C\n\t"
-        ".syntax divided\n\t"
-    );
+    int *err = (int *)0x0300764C;
+    void *result;
+
+    *err = 0;
+    result = _sbrk(incr);
+    if (result == (void *)-1 && *err)
+        *(int *)ptr = *err;
+
+    return result;
 }
 
-__attribute__((naked)) int __sread(void *cookie, char *buf, int len)
+extern int _read_r(void *reent, int fd, char *buf, int len);
+
+int __sread(void *cookie, char *buf, int len)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, lr}\n\t"
-        "adds r5, r0, #0\n\t"
-        "adds r4, r1, #0\n\t"
-        "adds r3, r2, #0\n\t"
-        "ldr r0, [r5, #0x54]\n\t"
-        "movs r2, #0xe\n\t"
-        "ldrsh r1, [r5, r2]\n\t"
-        "adds r2, r4, #0\n\t"
-        "bl _read_r\n\t"
-        "adds r1, r0, #0\n\t"
-        "cmp r1, #0\n\t"
-        "blt _0829B6E6\n\t"
-        "ldr r0, [r5, #0x50]\n\t"
-        "adds r0, r0, r1\n\t"
-        "str r0, [r5, #0x50]\n\t"
-        "b _0829B6EE\n\t"
-        "_0829B6E6:\n\t"
-        "ldr r0, _0829B6F4\n\t"
-        "ldrh r2, [r5, #0xc]\n\t"
-        "ands r0, r2\n\t"
-        "strh r0, [r5, #0xc]\n\t"
-        "_0829B6EE:\n\t"
-        "adds r0, r1, #0\n\t"
-        "pop {r4, r5, pc}\n\t"
-        ".align 2, 0\n\t"
-        "_0829B6F4: .4byte 0xFFFFEFFF\n\t"
-        ".syntax divided\n\t"
-    );
+    int result = _read_r(*(void **)((char *)cookie + 0x54), *(short *)((char *)cookie + 0x0E), buf, len);
+
+    if (result >= 0)
+        *(int *)((char *)cookie + 0x50) += result;
+    else
+        *(short *)((char *)cookie + 0x0C) &= ~0x1000;
+
+    return result;
 }
 
-__attribute__((naked)) int __swrite(void *cookie, char *buf, int len)
+extern int _lseek_r(void *reent, int fd, int offset, int whence);
+extern int _write_r(void *reent, int fd, char *buf, int len);
+
+int __swrite(void *cookie, char *buf, int len)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, r6, lr}\n\t"
-        "adds r4, r0, #0\n\t"
-        "adds r5, r1, #0\n\t"
-        "adds r6, r2, #0\n\t"
-        "movs r0, #0x80\n\t"
-        "lsls r0, r0, #1\n\t"
-        "ldrh r1, [r4, #0xc]\n\t"
-        "ands r0, r1\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0829B71A\n\t"
-        "ldr r0, [r4, #0x54]\n\t"
-        "movs r2, #0xe\n\t"
-        "ldrsh r1, [r4, r2]\n\t"
-        "movs r2, #0\n\t"
-        "movs r3, #2\n\t"
-        "bl _lseek_r\n\t"
-        "_0829B71A:\n\t"
-        "ldr r0, _0829B734\n\t"
-        "ldrh r1, [r4, #0xc]\n\t"
-        "ands r0, r1\n\t"
-        "strh r0, [r4, #0xc]\n\t"
-        "ldr r0, [r4, #0x54]\n\t"
-        "movs r2, #0xe\n\t"
-        "ldrsh r1, [r4, r2]\n\t"
-        "adds r2, r5, #0\n\t"
-        "adds r3, r6, #0\n\t"
-        "bl _write_r\n\t"
-        "pop {r4, r5, r6, pc}\n\t"
-        ".align 2, 0\n\t"
-        "_0829B734: .4byte 0xFFFFEFFF\n\t"
-        ".syntax divided\n\t"
-    );
+    if (*(short *)((char *)cookie + 0x0C) & 0x100)
+        _lseek_r(*(void **)((char *)cookie + 0x54), *(short *)((char *)cookie + 0x0E), 0, 2);
+
+    *(short *)((char *)cookie + 0x0C) &= ~0x1000;
+    return _write_r(*(void **)((char *)cookie + 0x54), *(short *)((char *)cookie + 0x0E), buf, len);
 }
 
-__attribute__((naked)) int __sseek(void *cookie, int offset, int whence)
+int __sseek(void *cookie, int offset, int whence)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, lr}\n\t"
-        "adds r5, r0, #0\n\t"
-        "adds r4, r1, #0\n\t"
-        "adds r3, r2, #0\n\t"
-        "ldr r0, [r5, #0x54]\n\t"
-        "movs r2, #0xe\n\t"
-        "ldrsh r1, [r5, r2]\n\t"
-        "adds r2, r4, #0\n\t"
-        "bl _lseek_r\n\t"
-        "adds r1, r0, #0\n\t"
-        "movs r0, #1\n\t"
-        "rsbs r0, r0, #0\n\t"
-        "cmp r1, r0\n\t"
-        "bne _0829B764\n\t"
-        "ldr r0, _0829B760\n\t"
-        "ldrh r2, [r5, #0xc]\n\t"
-        "ands r0, r2\n\t"
-        "strh r0, [r5, #0xc]\n\t"
-        "b _0829B772\n\t"
-        ".align 2, 0\n\t"
-        "_0829B760: .4byte 0xFFFFEFFF\n\t"
-        "_0829B764:\n\t"
-        "movs r2, #0x80\n\t"
-        "lsls r2, r2, #5\n\t"
-        "adds r0, r2, #0\n\t"
-        "ldrh r2, [r5, #0xc]\n\t"
-        "orrs r0, r2\n\t"
-        "strh r0, [r5, #0xc]\n\t"
-        "str r1, [r5, #0x50]\n\t"
-        "_0829B772:\n\t"
-        "adds r0, r1, #0\n\t"
-        "pop {r4, r5, pc}\n\t"
-        ".syntax divided\n\t"
-    );
+    int result = _lseek_r(*(void **)((char *)cookie + 0x54), *(short *)((char *)cookie + 0x0E), offset, whence);
+
+    if (result == -1)
+        *(short *)((char *)cookie + 0x0C) &= ~0x1000;
+    else
+    {
+        *(short *)((char *)cookie + 0x0C) |= 0x1000;
+        *(int *)((char *)cookie + 0x50) = result;
+    }
+
+    return result;
 }
 
-__attribute__((naked)) int __sclose(void *cookie)
+extern int _close_r(void *reent, int fd);
+
+int __sclose(void *cookie)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {lr}\n\t"
-        "ldr r2, [r0, #0x54]\n\t"
-        "movs r3, #0xe\n\t"
-        "ldrsh r1, [r0, r3]\n\t"
-        "adds r0, r2, #0\n\t"
-        "bl _close_r\n\t"
-        "pop {pc}\n\t"
-        ".syntax divided\n\t"
-    );
+    return _close_r(*(void **)((char *)cookie + 0x54), *(short *)((char *)cookie + 0x0E));
 }
