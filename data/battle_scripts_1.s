@@ -3406,17 +3406,43 @@ BattleScript_LeechSeedTurnPrintAndUpdateHp:: @ 0x082892D5
 	end2
 
 @ Bide's charge and release scripts. The complete three-path family stays
-@ physically contiguous while its raw battle commands await conversion.
+@ physically contiguous.
 BattleScript_BideStoringEnergy:: @ 0x082892F9
-	.byte 0x10, 0x78, 0x00 @ printstring STRINGID_PKMNSTORINGENERGY
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
+	printstring STRINGID_PKMNSTORINGENERGY
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_BideAttack:: @ 0x08289304
-	.incbin "baserom_jp.gba", 0x289304, 0x48
+	attackcanceler
+	setmoveeffect MOVE_EFFECT_CHARGING
+	clearstatusfromeffect BS_ATTACKER
+	printstring STRINGID_PKMNUNLEASHEDENERGY
+	waitmessage B_WAIT_TIME_LONG
+	accuracycheck BattleScript_MoveMissed, ACC_CURR_MOVE
+	typecalc
+	bicbyte gMoveResultFlags, MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE
+	copyword gBattleMoveDamage, sBIDE_DMG
+	adjustsetdamage
+	setbyte sB_ANIM_TURN, 1
+	attackanimation
+	waitanimation
+	effectivenesssound
+	hitanimation BS_TARGET
+	waitstate
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	tryfaintmon BS_TARGET
+	goto BattleScript_MoveEnd
 
 BattleScript_BideNoEnergyToAttack:: @ 0x0828934C
-	.incbin "baserom_jp.gba", 0x28934c, 0x14
+	attackcanceler
+	setmoveeffect MOVE_EFFECT_CHARGING
+	clearstatusfromeffect BS_ATTACKER
+	printstring STRINGID_PKMNUNLEASHEDENERGY
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_ButItFailed
 
 @ Forced-switch scripts. The trainer branch begins at its actual JP entry
 @ rather than remaining hidden inside a mixed EventScript container.
