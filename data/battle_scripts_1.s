@@ -2919,7 +2919,45 @@ BattleScript_HandleFaintedMon:: @ 0x08288D55
 	printstring STRINGID_CANTESCAPE2
 
 BattleScript_FaintedMonTryChoose:: @ 0x08288D9E
-	.incbin "baserom_jp.gba", 0x288d9e, 0xba
+	openpartyscreen BS_FAINTED, BattleScript_FaintedMonEnd
+	switchhandleorder BS_FAINTED, 2
+	jumpifnotbattletype BATTLE_TYPE_TRAINER, BattleScript_FaintedMonSendOutNew
+	jumpifbattletype BATTLE_TYPE_LINK, BattleScript_FaintedMonSendOutNew
+	jumpifbattletype BATTLE_TYPE_RECORDED_LINK, BattleScript_FaintedMonSendOutNew
+	jumpifbattletype BATTLE_TYPE_FRONTIER, BattleScript_FaintedMonSendOutNew
+	jumpifbattletype BATTLE_TYPE_DOUBLE, BattleScript_FaintedMonSendOutNew
+	jumpifword CMP_COMMON_BITS, gHitMarker, HITMARKER_PLAYER_FAINTED, BattleScript_FaintedMonSendOutNew
+	jumpifbyte CMP_EQUAL, sBATTLE_STYLE, OPTIONS_BATTLE_STYLE_SET, BattleScript_FaintedMonSendOutNew
+	jumpifcantswitch BS_PLAYER1, BattleScript_FaintedMonSendOutNew
+@ Yes/No for sending out a new Pokémon when the opponent is switching
+	printstring STRINGID_ENEMYABOUTTOSWITCHPKMN
+	setbyte gBattleCommunication, 0
+	yesnobox
+	jumpifbyte CMP_EQUAL, gBattleCommunication + 1, 1, BattleScript_FaintedMonSendOutNew
+@ Player said yes, go to party screen (note optional flag, player may exit the menu instead)
+	setatktoplayer0
+	openpartyscreen BS_ATTACKER | PARTY_SCREEN_OPTIONAL, BattleScript_FaintedMonSendOutNew
+	switchhandleorder BS_ATTACKER, 2
+	jumpifbyte CMP_EQUAL, gBattleCommunication, PARTY_SIZE, BattleScript_FaintedMonSendOutNew
+@ Switch Pokémon before opponent
+	atknameinbuff1
+	resetintimidatetracebits BS_ATTACKER
+	hpthresholds2 BS_ATTACKER
+	printstring STRINGID_RETURNMON
+	switchoutabilities BS_ATTACKER
+	waitstate
+	returnatktoball
+	waitstate
+	drawpartystatussummary BS_ATTACKER
+	getswitchedmondata BS_ATTACKER
+	switchindataupdate BS_ATTACKER
+	hpthresholds BS_ATTACKER
+	printstring STRINGID_SWITCHINMON
+	hidepartystatussummary BS_ATTACKER
+	switchinanim BS_ATTACKER, 0
+	waitstate
+	switchineffects BS_ATTACKER
+	resetsentmonsvalue
 
 BattleScript_FaintedMonSendOutNew:: @ 0x08288E58
 	.incbin "baserom_jp.gba", 0x288e58, 0x25
