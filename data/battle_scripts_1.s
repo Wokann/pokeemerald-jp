@@ -3695,45 +3695,45 @@ BattleScript_FutureAttackMiss:: @ 0x082895E0
 @ Move-selection rejection scripts. Keep the distinct selection and in-battle
 @ paths explicit so the JP physical order matches the US script owner.
 BattleScript_NoMovesLeft:: @ 0x082895FA
-	.byte 0x11, 0xA8, 0x00 @ printselectionstring STRINGID_PKMNHASNOMOVESLEFT
-	.byte 0x44 @ endselectionscript
+	printselectionstring STRINGID_PKMNHASNOMOVESLEFT
+	endselectionscript
 
 BattleScript_SelectingMoveWithNoPP:: @ 0x082895FE
-	.byte 0x11, 0xFF, 0x00 @ printselectionstring STRINGID_NOPPLEFT
-	.byte 0x44 @ endselectionscript
+	printselectionstring STRINGID_NOPPLEFT
+	endselectionscript
 
 BattleScript_NoPPForMove:: @ 0x08289602
-	.byte 0x02 @ attackstring
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0x00, 0x01 @ printstring STRINGID_BUTNOPPLEFT
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	attackstring
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_BUTNOPPLEFT
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_SelectingTormentedMove:: @ 0x08289611
-	.byte 0x11, 0xAA, 0x00 @ printselectionstring STRINGID_PKMNCANTUSEMOVETORMENT
-	.byte 0x44 @ endselectionscript
+	printselectionstring STRINGID_PKMNCANTUSEMOVETORMENT
+	endselectionscript
 
 BattleScript_MoveUsedIsTormented:: @ 0x08289615
-	.byte 0x10, 0xAA, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVETORMENT
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	printstring STRINGID_PKMNCANTUSEMOVETORMENT
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_SelectingTormentedMoveInPalace:: @ 0x08289620
-	.byte 0x10, 0xAA, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVETORMENT
-	.byte 0x28, 0xB5, 0x93, 0x28, 0x08 @ goto BattleScript_SelectingUnusableMoveInPalace
+	printstring STRINGID_PKMNCANTUSEMOVETORMENT
+	goto BattleScript_SelectingUnusableMoveInPalace
 
 BattleScript_SelectingNotAllowedMoveTaunt:: @ 0x08289628
-	.byte 0x11, 0xAD, 0x00 @ printselectionstring STRINGID_PKMNCANTUSEMOVETAUNT
-	.byte 0x44 @ endselectionscript
+	printselectionstring STRINGID_PKMNCANTUSEMOVETAUNT
+	endselectionscript
 
 BattleScript_MoveUsedIsTaunted:: @ 0x0828962C
-	.byte 0x10, 0xAD, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVETAUNT
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	printstring STRINGID_PKMNCANTUSEMOVETAUNT
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_SelectingNotAllowedMoveTauntInPalace:: @ 0x08289637
-	.byte 0x10, 0xAD, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVETAUNT
-	.byte 0x28, 0xB5, 0x93, 0x28, 0x08 @ goto BattleScript_SelectingUnusableMoveInPalace
+	printstring STRINGID_PKMNCANTUSEMOVETAUNT
+	goto BattleScript_SelectingUnusableMoveInPalace
 
 @ Wish and Ingrain healing paths, including their physical fallback/status
 @ entries. Preserve JP command bytes while exposing the US-aligned labels.
