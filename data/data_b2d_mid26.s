@@ -13,7 +13,7 @@
 #define NULL 0
 
 .include "sound/MPlayDef.s"
-	.section .rodata
+	.section .rodata.data_b2d_mid26_before_battle_anim_status_effects
 	.include "asm/macros.inc"
 
 #include "constants/tms_hms.inc"
@@ -1125,24 +1125,9 @@ gWeatherBallNormalDownSpriteTemplate: @ 0x8517594
 gSpinningSparkleSpriteTemplate: @ 0x85175C8
 	.incbin "baserom_jp.gba", 0x5175C8, 0x18
 
-	.incbin "baserom_jp.gba", 0x5175E0, 0xBC
+	.incbin "baserom_jp.gba", 0x5175E0, 0xAC
 
-	.globl sFrozenIceCubeSubspriteTable
-sFrozenIceCubeSubspriteTable: @ 0x851769C
-sFrozenIceCubeSubspriteTable: @ 0x851769C
-	.4byte 4
-	.4byte 0x0851768C
-
-	.globl sFrozenIceCubeSpriteTemplate
-sFrozenIceCubeSpriteTemplate: @ 0x85176A4
-sFrozenIceCubeSpriteTemplate: @ 0x85176A4
-	.hword 0x271A, 0x271A
-	.4byte sOam_MoveEffectMons + 0x108, gDummySpriteAnimTable, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
-
-	.globl sFlashingCircleImpactSpriteTemplate
-sFlashingCircleImpactSpriteTemplate: @ 0x85176BC
-	.hword 0x2798, 0x2798
-	.4byte 0x084FD010, gDummySpriteAnimTable, 0, gDummySpriteAffineAnimTable, 0x080A970D
+	.section .rodata.data_b2d_mid26_after_battle_anim_status_effects
 	.incbin "baserom_jp.gba", 0x5176d4, 0x3cc
 
 	.globl gTitleScreenPokemonLogoTilemap

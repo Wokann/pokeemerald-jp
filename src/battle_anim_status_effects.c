@@ -11,19 +11,13 @@
 #include "constants/battle_anim.h"
 #include "constants/rgb.h"
 
-// The sprite templates and the status-condition animation table below live
-// in the JP ROM data region; they are bound via ld aliases in
-// ld_script_jp.txt (sFrozenIceCubeSubspriteTable 0x0851769C,
-// sFrozenIceCubeSpriteTemplate 0x085176A4, sFlashingCircleImpactSpriteTemplate
-// 0x085176BC, gBattleAnims_StatusConditions 0x08277888) instead of being
-// re-created in C, matching how the other battle-anim modules bind their
-// static tables.
+#define BATTLE_ANIM_STATUS_EFFECTS_DATA __attribute__((section(".rodata.battle_anim_status_effects_data")))
+
 extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
 extern const struct CompressedSpritePalette gBattleAnimPaletteTable[];
 extern const u8 *const gBattleAnims_StatusConditions[];
-extern const struct SubspriteTable sFrozenIceCubeSubspriteTable[];
-extern const struct SpriteTemplate sFrozenIceCubeSpriteTemplate;
-extern const struct SpriteTemplate sFlashingCircleImpactSpriteTemplate;
+extern const struct OamData gOamData_AffineOff_ObjNormal_8x8;
+extern const struct OamData gOamData_AffineOff_ObjBlend_64x64;
 
 static void Task_UpdateFlashingCircleImpacts(u8 taskId);
 static void AnimTask_FrozenIceCube_Step1(u8 taskId);
@@ -33,6 +27,69 @@ static void AnimTask_FrozenIceCube_Step4(u8 taskId);
 static void Task_DoStatusAnimation(u8 taskId);
 static void AnimFlashingCircleImpact(struct Sprite *sprite);
 static void AnimFlashingCircleImpact_Step(struct Sprite *sprite);
+
+static const struct Subsprite sFrozenIceCubeSubsprites[] BATTLE_ANIM_STATUS_EFFECTS_DATA =
+{
+    {
+        .x = -16,
+        .y = -16,
+        .shape = SPRITE_SHAPE(64x64),
+        .size = SPRITE_SIZE(64x64),
+        .tileOffset = 0,
+        .priority = 2
+    },
+    {
+        .x = -16,
+        .y = 48,
+        .shape = SPRITE_SHAPE(64x32),
+        .size = SPRITE_SIZE(64x32),
+        .tileOffset = 64,
+        .priority = 2
+    },
+    {
+        .x = 48,
+        .y = -16,
+        .shape = SPRITE_SHAPE(32x64),
+        .size = SPRITE_SIZE(32x64),
+        .tileOffset = 96,
+        .priority = 2
+    },
+    {
+        .x = 48,
+        .y = 48,
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .tileOffset = 128,
+        .priority = 2
+    },
+};
+
+static const struct SubspriteTable sFrozenIceCubeSubspriteTable[] BATTLE_ANIM_STATUS_EFFECTS_DATA =
+{
+    {ARRAY_COUNT(sFrozenIceCubeSubsprites), sFrozenIceCubeSubsprites},
+};
+
+static const struct SpriteTemplate sFrozenIceCubeSpriteTemplate BATTLE_ANIM_STATUS_EFFECTS_DATA =
+{
+    .tileTag = ANIM_TAG_ICE_CUBE,
+    .paletteTag = ANIM_TAG_ICE_CUBE,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct SpriteTemplate sFlashingCircleImpactSpriteTemplate BATTLE_ANIM_STATUS_EFFECTS_DATA =
+{
+    .tileTag = ANIM_TAG_CIRCLE_IMPACT,
+    .paletteTag = ANIM_TAG_CIRCLE_IMPACT,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimFlashingCircleImpact,
+};
 
 static u8 UNUSED Task_FlashingCircleImpacts(u8 battler, bool8 red)
 {
