@@ -4940,7 +4940,7 @@ __attribute__((naked)) void sub_0813A740(void)
 }
 
 void nullsub_55(void) {}
-__attribute__((naked)) void sub_0813A774(void)
+__attribute__((naked)) void SetBattleTowerLinkPlayerGfx(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6819,7 +6819,7 @@ __attribute__((naked)) void ShouldDistributeEonTicket(void)
     );
 }
 
-__attribute__((naked)) void sub_0813B56C(void)
+__attribute__((naked)) void BattleTowerReconnectLink(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6849,7 +6849,7 @@ __attribute__((naked)) void sub_0813B56C(void)
     );
 }
 
-__attribute__((naked)) void sub_0813B5A0(void)
+__attribute__((naked)) void LinkRetireStatusWithBattleTowerPartner(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

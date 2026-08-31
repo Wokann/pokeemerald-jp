@@ -26,8 +26,7 @@ BattleFrontier_BattleTowerMultiCorridor_EventScript_SetPlayerGfxFemale::
 	return
 
 BattleFrontier_BattleTowerMultiCorridor_EventScript_SetLinkPlayerGfx::
-	@ The JP special table still names SetBattleTowerLinkPlayerGfx sub_0813A774.
-	special sub_0813A774
+	special SetBattleTowerLinkPlayerGfx
 	return
 
 BattleFrontier_BattleTowerMultiCorridor_OnWarp:

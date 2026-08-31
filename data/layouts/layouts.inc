@@ -3617,7 +3617,20 @@ gMapLayout_MAGMA_HIDEOUT_4F: @ 0x0843BC4C
 	.4byte gMapLayout_MAGMA_HIDEOUT_4F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x43BC64, 0x5E5C
+	.incbin "baserom_jp.gba", 0x43BC64, 0x5C0
+gMapLayout_BATTLE_FRONTIER_OUTSIDE_EAST_Border:
+	.incbin "data/layouts/BattleFrontier_OutsideEast/border.bin"
+gMapLayout_BATTLE_FRONTIER_OUTSIDE_EAST_Blockdata:
+	.incbin "data/layouts/BattleFrontier_OutsideEast/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_OUTSIDE_EAST
+gMapLayout_BATTLE_FRONTIER_OUTSIDE_EAST: @ 0x0843EAAC
+	.4byte 72  @ width
+	.4byte 72  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_OUTSIDE_EAST_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_OUTSIDE_EAST_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleFrontierOutsideEast  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x43EAC4, 0x2FFC
 gMapLayout_BATTLE_PYRAMID_SQUARE01_Border:
 	.incbin "data/layouts/BattlePyramidSquare01/border.bin"
 gMapLayout_BATTLE_PYRAMID_SQUARE01_Blockdata:
@@ -3941,7 +3954,33 @@ gMapLayout_DESERT_UNDERPASS: @ 0x084460B4
 	.4byte gMapLayout_DESERT_UNDERPASS_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4460CC, 0x2F44
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_PARTNER_ROOM_Border:
+	.incbin "data/layouts/BattleFrontier_BattleTowerMultiPartnerRoom/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_PARTNER_ROOM_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattleTowerMultiPartnerRoom/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_PARTNER_ROOM
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_PARTNER_ROOM: @ 0x0844634C
+	.4byte 21  @ width
+	.4byte 15  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_PARTNER_ROOM_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_PARTNER_ROOM_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleFrontier  @ secondaryTileset
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR_Border:
+	.incbin "data/layouts/BattleFrontier_BattleTowerMultiCorridor/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattleTowerMultiCorridor/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR: @ 0x08446418
+	.4byte 17  @ width
+	.4byte 5  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleFrontier  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x446430, 0x2BE0
 gMapLayout_UNION_ROOM_Border:
 	.incbin "data/layouts/UnionRoom/border.bin"
 gMapLayout_UNION_ROOM_Blockdata:

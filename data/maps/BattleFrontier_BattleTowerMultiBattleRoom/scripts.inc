@@ -27,8 +27,7 @@ BattleFrontier_BattleTowerMultiBattleRoom_EventScript_SetPlayerGfxFemale::
 	return
 
 BattleFrontier_BattleTowerMultiBattleRoom_EventScript_SetLinkPlayerGfx::
-	@ The JP special table still names SetBattleTowerLinkPlayerGfx sub_0813A774.
-	special sub_0813A774
+	special SetBattleTowerLinkPlayerGfx
 	return
 
 BattleFrontier_BattleTowerMultiBattleRoom_OnWarp:
@@ -331,9 +330,7 @@ BattleFrontier_BattleTowerMultiBattleRoom_EventScript_ContinueChallengeLink::
 	setvar VAR_0x8005, 0
 	message gText_LinkStandby3
 	waitmessage
-	@ The JP special table still names LinkRetireStatusWithBattleTowerPartner sub_0813B5A0.
-	special sub_0813B5A0
-	waitstate
+	special LinkRetireStatusWithBattleTowerPartner
 	goto_if_ne VAR_RESULT, BATTLE_TOWER_LINKSTAT_CONTINUE, BattleFrontier_BattleTowerMultiBattleRoom_EventScript_WarpToLobbyLost
 	goto BattleFrontier_BattleTowerMultiBattleRoom_EventScript_LinkDelayForMsg
 	end
@@ -363,15 +360,12 @@ BattleFrontier_BattleTowerMultiBattleRoom_EventScript_RetireChallengeLink::
 	setvar VAR_0x8005, 0
 	message gText_LinkStandby3
 	waitmessage
-	@ The JP special table still names LinkRetireStatusWithBattleTowerPartner sub_0813B5A0.
-	special sub_0813B5A0
-	waitstate
+	special LinkRetireStatusWithBattleTowerPartner
 	goto BattleFrontier_BattleTowerMultiBattleRoom_EventScript_WarpToLobbyLost
 	end
 
 BattleFrontier_BattleTowerMultiBattleRoom_EventScript_ReconnectLink::
-	@ The JP special table still names BattleTowerReconnectLink sub_0813B56C.
-	special sub_0813B56C
+	special BattleTowerReconnectLink
 	return
 
 BattleFrontier_BattleTowerMultiBattleRoom_Movement_PlayerEnterRoom:

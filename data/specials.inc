@@ -478,7 +478,7 @@ gSpecials::
 	.set SPECIAL_WAITSTATE_ChooseItemsToTossFromPyramidBag, 1
 	def_special DoBattlePyramidMonsHaveHeldItem
 	def_special BattlePyramidChooseMonHeldItems, waitstate=1
-	def_special sub_0813A774
+	def_special SetBattleTowerLinkPlayerGfx
 	def_special ShowNatureGirlMessage
 	def_special ShowBattlePointsWindow
 	def_special UpdateBattlePointsWindow
@@ -536,8 +536,8 @@ gSpecials::
 	def_special TurnOnTVScreen
 	def_special SetMewAboveGrass
 	def_special ShouldDistributeEonTicket
-	def_special sub_0813B5A0
-	def_special sub_0813B56C
+	def_special LinkRetireStatusWithBattleTowerPartner, waitstate=1
+	def_special BattleTowerReconnectLink
 	def_special CallTrainerHillFunction
 	def_special Script_DoRayquazaScene, waitstate=1
 	def_special LoopWingFlapSE

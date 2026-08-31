@@ -1321,6 +1321,8 @@ gTileset_SOOTOPOLIS_CITY_SECONDARY: @ 0x083B7C5C
 	.globl gTileset_BattleFrontierOutsideWest
 gTileset_BattleFrontierOutsideWest: @ 0x083B7C74
 	.incbin "baserom_jp.gba", 0x3B7C74, 0x18
+	.globl gTileset_BattleFrontierOutsideEast
+gTileset_BattleFrontierOutsideEast: @ 0x083B7C8C
 	.incbin "baserom_jp.gba", 0x3B7C8C, 0x18
 	.globl gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY
 gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY: @ 0x083B7CA4
@@ -2487,7 +2489,11 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/SafariZone_RestHouse/header.inc"
 	.include "data/maps/SafariZone_Northeast/header.inc"
 	.include "data/maps/SafariZone_Southeast/header.inc"
-	.incbin "baserom_jp.gba", 0x45D6E4, 0x12B4
+	.include "data/maps/BattleFrontier_OutsideEast/header.inc"
+	.include "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/header.inc"
+	.include "data/maps/BattleFrontier_BattleTowerMultiCorridor/header.inc"
+	.include "data/maps/BattleFrontier_BattleTowerMultiBattleRoom/header.inc"
+	.incbin "baserom_jp.gba", 0x45D754, 0x1244
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
@@ -2571,7 +2577,7 @@ gUnknown_845E998: @ 0x0845E998
 	.include "data/maps/SafariZone_Northeast/connections.inc"
 	.include "data/maps/SafariZone_Southeast/connections.inc"
 	.include "data/maps/BattleFrontier_OutsideWest/connections.inc"
-	.incbin "baserom_jp.gba", 0x45F304, 0x14
+	.include "data/maps/BattleFrontier_OutsideEast/connections.inc"
 
 	.globl sDummyConnectionFlags
 sDummyConnectionFlags: @ 0x845F318

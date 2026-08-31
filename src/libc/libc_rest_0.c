@@ -964,7 +964,7 @@ __attribute__((naked)) void *_malloc_r(void *ptr, int size)
         "	str r0, [r2, #4]\n\t"
         "	b _0829AC2E\n\t"
         "	.align 2, 0\n\t"
-        "_0829A8F4: .4byte SPECIAL_sub_0813B56C\n\t"
+        "_0829A8F4: .4byte SPECIAL_BattleTowerReconnectLink\n\t"
         "_0829A8F8: .4byte gUnknown_203CF34\n\t"
         "_0829A8FC:\n\t"
         "	movs r0, #2\n\t"
