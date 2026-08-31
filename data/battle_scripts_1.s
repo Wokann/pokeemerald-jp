@@ -1364,7 +1364,16 @@ BattleScript_EffectLockOn:: @ 0x08287B93
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectSketch:: @ 0x08287BB5
-	.incbin "baserom_jp.gba", 0x287bb5, 0x1f
+	attackcanceler
+	attackstring
+	ppreduce
+	jumpifstatus2 BS_TARGET, STATUS2_SUBSTITUTE, BattleScript_ButItFailed
+	copymovepermanently BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNSKETCHEDMOVE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectSleepTalk:: @ 0x08287BD4
 	.incbin "baserom_jp.gba", 0x287bd4, 0x42
