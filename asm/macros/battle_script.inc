@@ -187,7 +187,7 @@
 	.byte \battler
 	.endm
 
-	.macro atk24 ptr:req
+	.macro checkteamslost ptr:req
 	.byte 0x24
 	.4byte \ptr
 	.endm

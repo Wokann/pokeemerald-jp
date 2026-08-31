@@ -2905,7 +2905,18 @@ BattleScript_GiveExp:: @ 0x08288D4C
 	end2
 
 BattleScript_HandleFaintedMon:: @ 0x08288D55
-	.incbin "baserom_jp.gba", 0x288d55, 0x49
+	checkteamslost BattleScript_LinkHandleFaintedMonMultiple
+	jumpifbyte CMP_NOT_EQUAL, gBattleOutcome, 0, BattleScript_FaintedMonEnd
+	jumpifbattletype BATTLE_TYPE_TRAINER, BattleScript_FaintedMonTryChoose
+	jumpifword CMP_NO_COMMON_BITS, gHitMarker, HITMARKER_PLAYER_FAINTED, BattleScript_FaintedMonTryChoose
+@ Yes/No for sending out a new Pokémon if one is defeated in a wild battle
+	printstring STRINGID_USENEXTPKMN
+	setbyte gBattleCommunication, 0
+	yesnobox
+	jumpifbyte CMP_EQUAL, gBattleCommunication + 1, 0, BattleScript_FaintedMonTryChoose
+@ Player said no, try to run
+	jumpifplayerran BattleScript_FaintedMonEnd
+	printstring STRINGID_CANTESCAPE2
 
 BattleScript_FaintedMonTryChoose:: @ 0x08288D9E
 	.incbin "baserom_jp.gba", 0x288d9e, 0xba
