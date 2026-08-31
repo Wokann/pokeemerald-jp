@@ -4125,10 +4125,10 @@ BattleScript_MoveEffectWrap: @ 0x8289965
 
 	.globl BattleScript_MoveEffectConfusion
 BattleScript_MoveEffectConfusion: @ 0x828996E
-	.byte 0x66, 0x02, 0x01, 0x07, 0x00, 0x00, 0x00 @ chosenstatus2animation BS_EFFECT_BATTLER, STATUS2_CONFUSION
-	.byte 0x10, 0x43, 0x00 @ printstring STRINGID_PKMNWASCONFUSED
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x3C @ return
+	chosenstatus2animation BS_EFFECT_BATTLER, STATUS2_CONFUSION
+	printstring STRINGID_PKMNWASCONFUSED
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_MoveEffectRecoil
 BattleScript_MoveEffectRecoil: @ 0x828997C
