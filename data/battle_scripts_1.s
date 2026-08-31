@@ -2155,13 +2155,53 @@ BattleScript_UproarHit::
 	goto BattleScript_HitFromCritCalc
 
 BattleScript_EffectStockpile:: @ 0x082884E8
-	.incbin "baserom_jp.gba", 0x2884e8, 0x13
+	attackcanceler
+	attackstring
+	ppreduce
+	stockpile
+	attackanimation
+	waitanimation
+	printfromtable gStockpileUsedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectSpitUp:: @ 0x082884FB
-	.incbin "baserom_jp.gba", 0x2884fb, 0x42
+	attackcanceler
+	jumpifbyte CMP_EQUAL, cMISS_TYPE, B_MSG_PROTECTED, BattleScript_SpitUpFailProtect
+	attackstring
+	ppreduce
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	stockpiletobasedamage BattleScript_SpitUpFail
+	typecalc
+	adjustsetdamage
+	goto BattleScript_HitFromAtkAnimation
+BattleScript_SpitUpFail::
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_FAILEDTOSPITUP
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
+BattleScript_SpitUpFailProtect::
+	attackstring
+	ppreduce
+	pause B_WAIT_TIME_LONG
+	stockpiletobasedamage BattleScript_SpitUpFail
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectSwallow:: @ 0x0828853D
-	.incbin "baserom_jp.gba", 0x28853d, 0x1d
+	attackcanceler
+	attackstring
+	ppreduce
+	stockpiletohpheal BattleScript_SwallowFail
+	goto BattleScript_PresentHealTarget
+
+BattleScript_SwallowFail::
+	pause B_WAIT_TIME_SHORT
+	printfromtable gSwallowFailStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectHail:: @ 0x0828855A
 	.incbin "baserom_jp.gba", 0x28855a, 0x9
