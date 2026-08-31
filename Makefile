@@ -291,6 +291,7 @@ JP_STRUCTURED_MAPS += SecretBase_RedCave1 SecretBase_BrownCave1 SecretBase_BlueC
 	SecretBase_RedCave2 SecretBase_BrownCave2 SecretBase_BlueCave2 SecretBase_YellowCave2 SecretBase_Tree2 SecretBase_Shrub2 \
 	SecretBase_RedCave3 SecretBase_BrownCave3 SecretBase_BlueCave3 SecretBase_YellowCave3 SecretBase_Tree3 SecretBase_Shrub3 \
 	SecretBase_RedCave4 SecretBase_BrownCave4 SecretBase_BlueCave4 SecretBase_YellowCave4 SecretBase_Tree4 SecretBase_Shrub4
+JP_STRUCTURED_MAPS += BattleColosseum_2P TradeCenter RecordCorner BattleColosseum_4P
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
@@ -432,6 +433,7 @@ JP_STRUCTURED_MAP_METADATA_MAPS += SecretBase_RedCave1 SecretBase_BrownCave1 Sec
 	SecretBase_RedCave2 SecretBase_BrownCave2 SecretBase_BlueCave2 SecretBase_YellowCave2 SecretBase_Tree2 SecretBase_Shrub2 \
 	SecretBase_RedCave3 SecretBase_BrownCave3 SecretBase_BlueCave3 SecretBase_YellowCave3 SecretBase_Tree3 SecretBase_Shrub3 \
 	SecretBase_RedCave4 SecretBase_BrownCave4 SecretBase_BlueCave4 SecretBase_YellowCave4 SecretBase_Tree4 SecretBase_Shrub4
+JP_STRUCTURED_MAP_METADATA_MAPS += BattleColosseum_2P TradeCenter RecordCorner BattleColosseum_4P
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

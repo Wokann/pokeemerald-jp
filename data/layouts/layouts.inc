@@ -2448,7 +2448,55 @@ gMapLayout_SECRET_BASE_SHRUB4: @ 0x0841A74C
 	.4byte gMapLayout_SECRET_BASE_SHRUB4_Blockdata  @ map
 	.4byte gTileset_SecretBase  @ primaryTileset
 	.4byte gTileset_SecretBaseShrub  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x41A764, 0x6898
+gMapLayout_BATTLE_COLOSSEUM_2P_Border:
+	.incbin "data/layouts/BattleColosseum_2P/border.bin"
+gMapLayout_BATTLE_COLOSSEUM_2P_Blockdata:
+	.incbin "data/layouts/BattleColosseum_2P/map.bin"
+	.globl gMapLayout_BATTLE_COLOSSEUM_2P
+gMapLayout_BATTLE_COLOSSEUM_2P: @ 0x0841A868
+	.4byte 14  @ width
+	.4byte 9  @ height
+	.4byte gMapLayout_BATTLE_COLOSSEUM_2P_Border  @ border
+	.4byte gMapLayout_BATTLE_COLOSSEUM_2P_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY  @ secondaryTileset
+gMapLayout_TRADE_CENTER_Border:
+	.incbin "data/layouts/TradeCenter/border.bin"
+gMapLayout_TRADE_CENTER_Blockdata:
+	.incbin "data/layouts/TradeCenter/map.bin"
+	.globl gMapLayout_TRADE_CENTER
+gMapLayout_TRADE_CENTER: @ 0x0841A960
+	.4byte 12  @ width
+	.4byte 9  @ height
+	.4byte gMapLayout_TRADE_CENTER_Border  @ border
+	.4byte gMapLayout_TRADE_CENTER_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY  @ secondaryTileset
+gMapLayout_RECORD_CORNER_Border:
+	.incbin "data/layouts/RecordCorner/border.bin"
+gMapLayout_RECORD_CORNER_Blockdata:
+	.incbin "data/layouts/RecordCorner/map.bin"
+	.globl gMapLayout_RECORD_CORNER
+gMapLayout_RECORD_CORNER: @ 0x0841AB10
+	.4byte 20  @ width
+	.4byte 10  @ height
+	.4byte gMapLayout_RECORD_CORNER_Border  @ border
+	.4byte gMapLayout_RECORD_CORNER_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY  @ secondaryTileset
+gMapLayout_BATTLE_COLOSSEUM_4P_Border:
+	.incbin "data/layouts/BattleColosseum_4P/border.bin"
+gMapLayout_BATTLE_COLOSSEUM_4P_Blockdata:
+	.incbin "data/layouts/BattleColosseum_4P/map.bin"
+	.globl gMapLayout_BATTLE_COLOSSEUM_4P
+gMapLayout_BATTLE_COLOSSEUM_4P: @ 0x0841AC2C
+	.4byte 14  @ width
+	.4byte 9  @ height
+	.4byte gMapLayout_BATTLE_COLOSSEUM_4P_Border  @ border
+	.4byte gMapLayout_BATTLE_COLOSSEUM_4P_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x41AC44, 0x63B8
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Border:
 	.incbin "data/layouts/FortreeCity_DecorationShop/border.bin"
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata:

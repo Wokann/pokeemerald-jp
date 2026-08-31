@@ -294,6 +294,10 @@ MAPS = (
     "SecretBase_YellowCave4",
     "SecretBase_Tree4",
     "SecretBase_Shrub4",
+    "BattleColosseum_2P",
+    "TradeCenter",
+    "RecordCorner",
+    "BattleColosseum_4P",
 )
 
 CONNECTED_MAPS = (
@@ -585,6 +589,10 @@ NULL_CONNECTION_MAPS = (
     "SecretBase_YellowCave4",
     "SecretBase_Tree4",
     "SecretBase_Shrub4",
+    "BattleColosseum_2P",
+    "TradeCenter",
+    "RecordCorner",
+    "BattleColosseum_4P",
 )
 
 CANONICAL_LAYOUT_MAPS = (

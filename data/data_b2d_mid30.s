@@ -2384,8 +2384,16 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/SecretBase_Tree4/header.inc"
 	@ MAP_SECRET_BASE_SHRUB4 (g25 m23)
 	.include "data/maps/SecretBase_Shrub4/header.inc"
-	@ MAP_BATTLE_COLOSSEUM_2P through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45D150, 0x1848
+	@ MAP_BATTLE_COLOSSEUM_2P (g25 m24)
+	.include "data/maps/BattleColosseum_2P/header.inc"
+	@ MAP_TRADE_CENTER (g25 m25)
+	.include "data/maps/TradeCenter/header.inc"
+	@ MAP_RECORD_CORNER (g25 m26)
+	.include "data/maps/RecordCorner/header.inc"
+	@ MAP_BATTLE_COLOSSEUM_4P (g25 m27)
+	.include "data/maps/BattleColosseum_4P/header.inc"
+	@ MAP_CONTEST_HALL through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45D1C0, 0x17D8
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

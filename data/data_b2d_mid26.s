@@ -1049,7 +1049,11 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/SecretBase_YellowCave4/events.inc"
 	.include "data/maps/SecretBase_Tree4/events.inc"
 	.include "data/maps/SecretBase_Shrub4/events.inc"
-	.incbin "baserom_jp.gba", 0x512470, 0x510C
+	.include "data/maps/BattleColosseum_2P/events.inc"
+	.include "data/maps/TradeCenter/events.inc"
+	.include "data/maps/RecordCorner/events.inc"
+	.include "data/maps/BattleColosseum_4P/events.inc"
+	.incbin "baserom_jp.gba", 0x512628, 0x4F54
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
