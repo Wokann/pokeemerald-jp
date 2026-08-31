@@ -3997,9 +3997,9 @@ BattleScript_MoveUsedIsConfusedNoMore: @ 0x8289888
 
 	.globl BattleScript_PrintPayDayMoneyString
 BattleScript_PrintPayDayMoneyString: @ 0x828988F
-	.byte 0x10, 0x7B, 0x00 @ printstring STRINGID_PLAYERPICKEDUPMONEY
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3C @ return
+	printstring STRINGID_PLAYERPICKEDUPMONEY
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_WrapTurnDmg
 BattleScript_WrapTurnDmg: @ 0x8289896
