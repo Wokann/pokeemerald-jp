@@ -1611,7 +1611,15 @@ BattleScript_EffectEndure:: @ 0x08287EBE
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectSpikes:: @ 0x08287ED1
-	.incbin "baserom_jp.gba", 0x287ed1, 0x15
+	attackcanceler
+	trysetspikes BattleScript_FailedFromAtkString
+	attackstring
+	ppreduce
+	attackanimation
+	waitanimation
+	printstring STRINGID_SPIKESSCATTERED
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectForesight:: @ 0x08287EE6
 	.incbin "baserom_jp.gba", 0x287ee6, 0x18
