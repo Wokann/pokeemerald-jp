@@ -1698,7 +1698,18 @@ BattleScript_SwaggerTryConfuse:
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectFuryCutter:: @ 0x08287FC1
-	.incbin "baserom_jp.gba", 0x287fc1, 0x1f
+	attackcanceler
+	attackstring
+	ppreduce
+	accuracycheck BattleScript_FuryCutterHit, ACC_CURR_MOVE
+BattleScript_FuryCutterHit:
+	furycuttercalc
+	critcalc
+	damagecalc
+	typecalc
+	jumpifmovehadnoeffect BattleScript_FuryCutterHit
+	adjustnormaldamage
+	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectAttract:: @ 0x08287FE0
 	.incbin "baserom_jp.gba", 0x287fe0, 0x1c
