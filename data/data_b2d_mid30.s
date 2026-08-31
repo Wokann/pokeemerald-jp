@@ -1451,7 +1451,10 @@ gTileset_SecretBaseYellowCave: @ 0x083B7E84
 	.globl gTileset_SecretBaseRedCave
 gTileset_SecretBaseRedCave: @ 0x083B7E9C
 	.incbin "baserom_jp.gba", 0x3B7E9C, 0x18
-	.incbin "baserom_jp.gba", 0x3B7EB4, 0x30
+	.globl gTileset_InsideOfTruck
+gTileset_InsideOfTruck: @ 0x083B7EB4
+	.incbin "baserom_jp.gba", 0x3B7EB4, 0x18
+	.incbin "baserom_jp.gba", 0x3B7ECC, 0x18
 	.globl gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY
 gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY: @ 0x083B7EE4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -2417,7 +2420,9 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_CONTEST_HALL_CUTE (g25 m39)
 	.include "data/maps/ContestHallCute/header.inc"
 	@ MAP_INSIDE_OF_TRUCK through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45D310, 0x1688
+	.include "data/maps/InsideOfTruck/header.inc"
+	@ MAP_SS_TIDAL_CORRIDOR through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45D32C, 0x166C
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

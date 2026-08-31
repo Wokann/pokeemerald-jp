@@ -310,6 +310,7 @@ MAPS = (
     "ContestHallCool",
     "ContestHallSmart",
     "ContestHallCute",
+    "InsideOfTruck",
 )
 
 CONNECTED_MAPS = (
@@ -617,6 +618,7 @@ NULL_CONNECTION_MAPS = (
     "ContestHallCool",
     "ContestHallSmart",
     "ContestHallCute",
+    "InsideOfTruck",
 )
 
 CANONICAL_LAYOUT_MAPS = (

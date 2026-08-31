@@ -2652,7 +2652,20 @@ gMapLayout_CONTEST_HALL_CUTE: @ 0x0841B58C
 	.4byte gMapLayout_CONTEST_HALL_CUTE_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x41B5A4, 0x5A58
+gMapLayout_INSIDE_OF_TRUCK_Border:
+	.incbin "data/layouts/InsideOfTruck/border.bin"
+gMapLayout_INSIDE_OF_TRUCK_Blockdata:
+	.incbin "data/layouts/InsideOfTruck/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_INSIDE_OF_TRUCK
+gMapLayout_INSIDE_OF_TRUCK: @ 0x0841B5E0
+	.4byte 5  @ width
+	.4byte 5  @ height
+	.4byte gMapLayout_INSIDE_OF_TRUCK_Border  @ border
+	.4byte gMapLayout_INSIDE_OF_TRUCK_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_InsideOfTruck  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x41B5F8, 0x5A04
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Border:
 	.incbin "data/layouts/FortreeCity_DecorationShop/border.bin"
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata:
