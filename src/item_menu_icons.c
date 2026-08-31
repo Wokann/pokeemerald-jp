@@ -4,6 +4,7 @@
 #include "graphics.h"
 #include "item.h"
 #include "item_icon.h"
+#include "item_menu_icons.h"
 #include "item_menu.h"
 #include "menu_helpers.h"
 #include "sprite.h"
@@ -27,7 +28,13 @@ struct CompressedTilesPal
     const u32 *pal;
 };
 
-void SpriteCB_SwitchPocketRotatingBallInit(struct Sprite *sprite);
+static void SpriteCB_BagVisualSwitchingPockets(struct Sprite *sprite);
+static void SpriteCB_ShakeBagSprite(struct Sprite *sprite);
+static void UpdateSwitchPocketRotatingBallCoords(struct Sprite *sprite);
+static void SpriteCB_SwitchPocketRotatingBallInit(struct Sprite *sprite);
+static void SpriteCB_SwitchPocketRotatingBallContinue(struct Sprite *sprite);
+static void ArrangeBerryGfx(void *src, void *dest);
+static void LoadBerryGfx(u8 berryId);
 
 #define ITEM_MENU_ICONS_DATA __attribute__((section(".rodata.item_menu_icons_mid57a")))
 
@@ -422,751 +429,231 @@ ITEM_MENU_ICONS_DATA static const struct SpriteTemplate sBerryCheckCircleSpriteT
 #undef ITEM_MENU_ICONS_DATA
 
 
-__attribute__((naked)) void RemoveBagSprite(void)
+
+extern struct BagMenu *gUnknown_203CB20;
+extern u8 gUnknown_201D000[];
+
+void RemoveBagSprite(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _080D4578\n\t"
-        "	ldr r2, _080D457C\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _080D4572\n\t"
-        "	adds r4, #0x64\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _080D4580\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl FreeSpriteOamMatrix\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r5]\n\t"
-        "_080D4572:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D4578: .4byte gUnknown_203CB20\n\t"
-        "_080D457C: .4byte 0x00000804\n\t"
-        "_080D4580: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 *spriteId = &gUnknown_203CB20->spriteIds[id];
+    if (*spriteId != SPRITE_NONE)
+    {
+        FreeSpriteTilesByTag(id + TAG_BAG_GFX);
+        FreeSpritePaletteByTag(id + TAG_BAG_GFX);
+        FreeSpriteOamMatrix(&gSprites[*spriteId]);
+        DestroySprite(&gSprites[*spriteId]);
+        *spriteId = SPRITE_NONE;
+    }
 }
 
-__attribute__((naked)) void AddBagVisualSprite(void)
+void AddBagVisualSprite(u8 bagPocketId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r0, _080D45B0\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	ldr r0, _080D45B4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _080D45B8\n\t"
-        "	movs r1, #0x44\n\t"
-        "	movs r2, #0x42\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	strb r0, [r4]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetBagVisualPocketId\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D45B0: .4byte gUnknown_203CB20\n\t"
-        "_080D45B4: .4byte 0x00000804\n\t"
-        "_080D45B8: .4byte sBagSpriteTemplate\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 *spriteId = &gUnknown_203CB20->spriteIds[ITEMMENUSPRITE_BAG];
+    *spriteId = CreateSprite(&sBagSpriteTemplate, 68, 66, 0);
+    SetBagVisualPocketId(bagPocketId, FALSE);
 }
 
-__attribute__((naked)) void SetBagVisualPocketId(void)
+#define sPocketId data[0]
+
+void SetBagVisualPocketId(u8 bagPocketId, bool8 isSwitchingPockets)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldr r0, _080D45F4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _080D45F8\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	lsls r0, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _080D45FC\n\t"
-        "	adds r2, r0, r2\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080D4608\n\t"
-        "	ldr r0, _080D4600\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "	ldr r0, _080D4604\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	strh r0, [r2, #0x2e]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	b _080D4614\n\t"
-        "	.align 2, 0\n\t"
-        "_080D45F4: .4byte gUnknown_203CB20\n\t"
-        "_080D45F8: .4byte 0x00000804\n\t"
-        "_080D45FC: .4byte gSprites\n\t"
-        "_080D4600: .4byte 0x0000FFFB\n\t"
-        "_080D4604: .4byte SpriteCB_BagVisualSwitchingPockets + 1\n\t"
-        "_080D4608:\n\t"
-        "	adds r1, r3, #1\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_080D4614:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite = &gSprites[gUnknown_203CB20->spriteIds[ITEMMENUSPRITE_BAG]];
+    if (isSwitchingPockets)
+    {
+        sprite->y2 = -5;
+        sprite->callback = SpriteCB_BagVisualSwitchingPockets;
+        sprite->sPocketId = bagPocketId + 1;
+        StartSpriteAnim(sprite, POCKET_NONE);
+    }
+    else
+    {
+        StartSpriteAnim(sprite, bagPocketId + 1);
+    }
 }
 
-__attribute__((naked)) void SpriteCB_BagVisualSwitchingPockets(void)
+static void SpriteCB_BagVisualSwitchingPockets(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x26]\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D462C\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	b _080D463C\n\t"
-        "_080D462C:\n\t"
-        "	ldrh r1, [r4, #0x2e]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r0, _080D4644\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_080D463C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D4644: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->y2 != 0)
+    {
+        sprite->y2++;
+    }
+    else
+    {
+        StartSpriteAnim(sprite, sprite->sPocketId);
+        sprite->callback = SpriteCallbackDummy;
+    }
 }
 
-__attribute__((naked)) void ShakeBagVisual(void)
+#undef sPocketId
+
+void ShakeBagSprite(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080D4680\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D4684\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080D4688\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D4678\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	ldr r0, _080D468C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_080D4678:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D4680: .4byte gUnknown_203CB20\n\t"
-        "_080D4684: .4byte 0x00000804\n\t"
-        "_080D4688: .4byte gSprites\n\t"
-        "_080D468C: .4byte SpriteCB_ShakeBagVisual + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite = &gSprites[gUnknown_203CB20->spriteIds[ITEMMENUSPRITE_BAG]];
+    if (sprite->affineAnimEnded)
+    {
+        StartSpriteAffineAnim(sprite, ANIM_BAG_SHAKE);
+        sprite->callback = SpriteCB_ShakeBagSprite;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_ShakeBagVisual(void)
+static void SpriteCB_ShakeBagSprite(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D46AC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	ldr r0, _080D46B4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_080D46AC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D46B4: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    // Wait for shaking to end
+    if (sprite->affineAnimEnded)
+    {
+        StartSpriteAffineAnim(sprite, ANIM_BAG_NORMAL);
+        sprite->callback = SpriteCallbackDummy;
+    }
 }
 
-__attribute__((naked)) void AddSwitchPocketRotatingBallSprite(void)
+void AddSwitchPocketRotatingBallSprite(s16 rotationDirection)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	ldr r0, _080D46F8\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	ldr r0, _080D46FC\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _080D4700\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	ldr r0, _080D4704\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	ldr r0, _080D4708\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldr r2, _080D470C\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r5, [r0, #0x2e]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D46F8: .4byte gUnknown_203CB20\n\t"
-        "_080D46FC: .4byte 0x00000805\n\t"
-        "_080D4700: .4byte sRotatingBallTable\n\t"
-        "_080D4704: .4byte sRotatingBallPaletteTable\n\t"
-        "_080D4708: .4byte sRotatingBallSpriteTemplate\n\t"
-        "_080D470C: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 *spriteId = &gUnknown_203CB20->spriteIds[ITEMMENUSPRITE_BALL];
+    LoadSpriteSheet(&sRotatingBallTable);
+    LoadSpritePalette(&sRotatingBallPaletteTable);
+    *spriteId = CreateSprite(&sRotatingBallSpriteTemplate, 16, 16, 0);
+    gSprites[*spriteId].data[0] = rotationDirection;
 }
 
-__attribute__((naked)) void UpdateSwitchPocketRotatingBallCoords(void)
+static void UpdateSwitchPocketRotatingBallCoords(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrh r2, [r0, #0x30]\n\t"
-        "	ldrh r1, [r0, #0x34]\n\t"
-        "	adds r1, #1\n\t"
-        "	movs r3, #1\n\t"
-        "	ands r1, r3\n\t"
-        "	subs r2, r2, r1\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0x28\n\t"
-        "	strb r2, [r1]\n\t"
-        "	ldrh r2, [r0, #0x30]\n\t"
-        "	ldrh r1, [r0, #0x34]\n\t"
-        "	adds r1, #1\n\t"
-        "	ands r1, r3\n\t"
-        "	subs r2, r2, r1\n\t"
-        "	adds r0, #0x29\n\t"
-        "	strb r2, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->centerToCornerVecX = sprite->data[1] - ((sprite->data[3] + 1) & 1);
+    sprite->centerToCornerVecY = sprite->data[1] - ((sprite->data[3] + 1) & 1);
 }
 
-__attribute__((naked)) void SpriteCB_SwitchPocketRotatingBallInit(struct Sprite *sprite)
+static void SpriteCB_SwitchPocketRotatingBallInit(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r0, #4\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080D475C\n\t"
-        "	ldr r0, _080D4758\n\t"
-        "	b _080D475E\n\t"
-        "	.align 2, 0\n\t"
-        "_080D4758: .4byte sRotatingBallAnimCmds\n\t"
-        "_080D475C:\n\t"
-        "	ldr r0, _080D4790\n\t"
-        "_080D475E:\n\t"
-        "	str r0, [r4, #0x10]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl InitSpriteAffineAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x28\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x29\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl UpdateSwitchPocketRotatingBallCoords\n\t"
-        "	ldr r0, _080D4794\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D4790: .4byte sRotatingBallAnimCmds_FullRotation\n\t"
-        "_080D4794: .4byte SpriteCB_SwitchPocketRotatingBallContinue + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    if (sprite->data[0] == -1)
+        sprite->affineAnims = sRotatingBallAnimCmds;
+    else
+        sprite->affineAnims = sRotatingBallAnimCmds_FullRotation;
+
+    InitSpriteAffineAnim(sprite);
+    sprite->data[1] = sprite->centerToCornerVecX;
+    sprite->data[1] = sprite->centerToCornerVecY;
+    UpdateSwitchPocketRotatingBallCoords(sprite);
+    sprite->callback = SpriteCB_SwitchPocketRotatingBallContinue;
 }
 
-__attribute__((naked)) void SpriteCB_SwitchPocketRotatingBallContinue(void)
+static void SpriteCB_SwitchPocketRotatingBallContinue(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl UpdateSwitchPocketRotatingBallCoords\n\t"
-        "	movs r1, #0x34\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	bne _080D47B6\n\t"
-        "	movs r0, #1\n\t"
-        "	bl RemoveBagSprite\n\t"
-        "_080D47B6:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[3]++;
+    UpdateSwitchPocketRotatingBallCoords(sprite);
+    if (sprite->data[3] == 16)
+        RemoveBagSprite(ITEMMENUSPRITE_BALL);
 }
 
-__attribute__((naked)) void AddBagItemIconSprite(void)
+void AddBagItemIconSprite(u16 itemId, u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	ldr r0, _080D4810\n\t"
-        "	ldr r2, _080D4814\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _080D480A\n\t"
-        "	adds r4, #0x66\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl AddItemIconSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0x40\n\t"
-        "	beq _080D480A\n\t"
-        "	strb r2, [r5]\n\t"
-        "	ldr r1, _080D4818\n\t"
-        "	lsls r0, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x18\n\t"
-        "	strh r1, [r0, #0x24]\n\t"
-        "	movs r1, #0x58\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "_080D480A:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D4810: .4byte gUnknown_203CB20\n\t"
-        "_080D4814: .4byte 0x00000806\n\t"
-        "_080D4818: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
-}
-__attribute__((naked)) void RemoveBagItemIconSprite(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0x12\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl RemoveBagSprite\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 *spriteId = &gUnknown_203CB20->spriteIds[id + ITEMMENUSPRITE_ITEM];
+    if (*spriteId == SPRITE_NONE)
+    {
+        u8 iconSpriteId;
+
+        // Either TAG_ITEM_ICON or TAG_ITEM_ICON_ALT
+        FreeSpriteTilesByTag(id + TAG_ITEM_ICON);
+        FreeSpritePaletteByTag(id + TAG_ITEM_ICON);
+        iconSpriteId = AddItemIconSprite(id + TAG_ITEM_ICON, id + TAG_ITEM_ICON, itemId);
+        if (iconSpriteId != MAX_SPRITES)
+        {
+            *spriteId = iconSpriteId;
+            gSprites[iconSpriteId].x2 = 24;
+            gSprites[iconSpriteId].y2 = 88;
+        }
+    }
 }
 
-
-
-__attribute__((naked)) void sub_080D4830(void)
+void RemoveBagItemIconSprite(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080D4844\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D4848\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	bl sub_08122350\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D4844: .4byte gUnknown_203CB20\n\t"
-        "_080D4848: .4byte 0x00000808\n\t"
-        ".syntax divided\n\t"
-    );
+    RemoveBagSprite(id + ITEMMENUSPRITE_ITEM);
 }
 
-__attribute__((naked)) void sub_080D484C(void)
+void CreateItemMenuSwapLine(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r0, _080D4868\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D486C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	bl sub_08122408\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D4868: .4byte gUnknown_203CB20\n\t"
-        "_080D486C: .4byte 0x00000808\n\t"
-        ".syntax divided\n\t"
-    );
+    CreateSwapLineSprites(&gUnknown_203CB20->spriteIds[ITEMMENUSPRITE_SWAP_LINE], ITEMMENU_SWAP_LINE_LENGTH);
 }
 
-__attribute__((naked)) void sub_080D4870(void)
+void SetItemMenuSwapLineInvisibility(bool8 invisible)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	ldr r0, _080D4894\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D4898\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r3, r3, #4\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0xd\n\t"
-        "	adds r3, r3, r1\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r1, #0x88\n\t"
-        "	movs r2, #0x78\n\t"
-        "	bl sub_08122454\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D4894: .4byte gUnknown_203CB20\n\t"
-        "_080D4898: .4byte 0x00000808\n\t"
-        ".syntax divided\n\t"
-    );
+    SetSwapLineSpritesInvisibility(&gUnknown_203CB20->spriteIds[ITEMMENUSPRITE_SWAP_LINE], ITEMMENU_SWAP_LINE_LENGTH, invisible);
 }
 
-__attribute__((naked)) void sub_080D489C(void)
+void UpdateItemMenuSwapLinePos(u8 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl memset\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	movs r7, #0\n\t"
-        "_080D48BA:\n\t"
-        "	adds r4, #0x20\n\t"
-        "	movs r5, #0\n\t"
-        "	adds r1, r7, #1\n\t"
-        "	mov r8, r1\n\t"
-        "_080D48C2:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl memcpy\n\t"
-        "	adds r4, #0x20\n\t"
-        "	adds r6, #0x20\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #5\n\t"
-        "	bls _080D48C2\n\t"
-        "	cmp r7, #5\n\t"
-        "	beq _080D48E0\n\t"
-        "	adds r4, #0x20\n\t"
-        "_080D48E0:\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #5\n\t"
-        "	bls _080D48BA\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateSwapLineSpritesPos(&gUnknown_203CB20->spriteIds[ITEMMENUSPRITE_SWAP_LINE], ITEMMENU_SWAP_LINE_LENGTH | SWAP_LINE_HAS_MARGIN, 120, (y + 1) * 16);
 }
 
-__attribute__((naked)) void LoadBerryGfx(void)
+static void ArrangeBerryGfx(void *src, void *dest)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	cmp r4, #0x2a\n\t"
-        "	bne _080D4906\n\t"
-        "	bl IsEnigmaBerryValid\n\t"
-        "_080D4906:\n\t"
-        "	ldr r5, _080D4944\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r0, r5, #4\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r1, _080D4948\n\t"
-        "	ldr r0, [sp, #4]\n\t"
-        "	ands r0, r1\n\t"
-        "	ldr r1, _080D494C\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	mov r0, sp\n\t"
-        "	bl LoadCompressedSpritePalette\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r4, _080D4950\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl LZDecompressVram\n\t"
-        "	ldr r0, _080D4954\n\t"
-        "	adds r1, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080D489C\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D4944: .4byte sBerryPicTable\n\t"
-        "_080D4948: .4byte 0xFFFF0000\n\t"
-        "_080D494C: .4byte 0x00007544\n\t"
-        "_080D4950: .4byte gUnknown_201D000\n\t"
-        "_080D4954: .4byte 0xFFFFF000\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i, j;
+
+    memset(dest, 0, 0x800);
+
+    // Create top margin
+    dest += 0x100;
+
+    for (i = 0; i < 6; i++)
+    {
+        // Create left margin
+        dest += 0x20;
+
+        // Copy one row of berry's icon
+        for (j = 0; j < 6; j++)
+        {
+            memcpy(dest, src, 0x20);
+            dest += 0x20;
+            src += 0x20;
+        }
+
+        // Create right margin
+        if (i != 5)
+            dest += 0x20;
+    }
 }
 
-__attribute__((naked)) void CreateBerryTagSprite(void)
+static void LoadBerryGfx(u8 berryId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	bl LoadBerryGfx\n\t"
-        "	ldr r0, _080D498C\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080D498C: .4byte sBerryPicSpriteTemplate\n\t"
-        ".syntax divided\n\t"
-    );
+    struct CompressedSpritePalette pal;
+
+    if (berryId == ITEM_TO_BERRY(ITEM_ENIGMA_BERRY) - 1 && IsEnigmaBerryValid())
+    {
+        // unknown empty if statement
+    }
+
+    pal.data = sBerryPicTable[berryId].pal;
+    pal.tag = TAG_BERRY_PIC_PAL;
+    LoadCompressedSpritePalette(&pal);
+    LZDecompressVram(sBerryPicTable[berryId].tiles, gUnknown_201D000);
+    ArrangeBerryGfx(gUnknown_201D000, gUnknown_201D000 - 0x1000);
 }
 
-__attribute__((naked)) void FreeBerryTagSpritePalette(void)
+u8 CreateBerryTagSprite(u8 id, s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080D499C\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D499C: .4byte 0x00007544\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadBerryGfx(id);
+    return CreateSprite(&sBerryPicSpriteTemplate, x, y, 0);
 }
 
-__attribute__((naked)) void LoadSpinningBerryPicGfx(void)
+void FreeBerryTagSpritePalette(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	mov r8, r3\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, _080D4A04\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl LoadBerryGfx\n\t"
-        "	ldr r0, _080D4A08\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080D49F6\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080D4A0C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "_080D49F6:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080D4A04: .4byte 0x00007544\n\t"
-        "_080D4A08: .4byte sBerryPicRotatingSpriteTemplate\n\t"
-        "_080D4A0C: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    FreeSpritePaletteByTag(TAG_BERRY_PIC_PAL);
 }
 
-__attribute__((naked)) void CreateBerryFlavorCircleSprite(void)
+// For throwing berries into the Berry Blender
+u8 CreateSpinningBerrySprite(u8 berryId, u8 x, u8 y, bool8 startAffine)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldr r0, _080D4A2C\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r2, #0x63\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080D4A2C: .4byte sBerryCheckCircleSpriteTemplate\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+
+    FreeSpritePaletteByTag(TAG_BERRY_PIC_PAL);
+    LoadBerryGfx(berryId);
+    spriteId = CreateSprite(&sBerryPicRotatingSpriteTemplate, x, y, 0);
+    if (startAffine == TRUE)
+        StartSpriteAffineAnim(&gSprites[spriteId], 1);
+
+    return spriteId;
+}
+
+u8 CreateBerryFlavorCircleSprite(s16 x)
+{
+    return CreateSprite(&sBerryCheckCircleSpriteTemplate, x, 99, 0);
 }

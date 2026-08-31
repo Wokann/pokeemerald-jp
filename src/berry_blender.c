@@ -802,7 +802,7 @@ __attribute__((naked)) void sub_0807F7C8(void)
         "	ands r3, r6\n\t"
         "	movs r1, #0\n\t"
         "	movs r2, #0x50\n\t"
-        "	bl LoadSpinningBerryPicGfx\n\t"
+        "	bl CreateSpinningBerrySprite\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	lsls r2, r0, #4\n\t"
