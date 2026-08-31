@@ -1656,7 +1656,11 @@ BattleScript_PerishSongNotAffected:
 	goto BattleScript_PerishSongLoopIncrement
 
 BattleScript_EffectSandstorm:: @ 0x08287F3F
-	.incbin "baserom_jp.gba", 0x287f3f, 0x9
+	attackcanceler
+	attackstring
+	ppreduce
+	setsandstorm
+	goto BattleScript_MoveWeatherChange
 
 BattleScript_EffectRollout:: @ 0x08287F48
 	.incbin "baserom_jp.gba", 0x287f48, 0x1b
@@ -1704,7 +1708,15 @@ BattleScript_EffectHiddenPower:: @ 0x082880BF
 	.incbin "baserom_jp.gba", 0x2880bf, 0x6
 
 BattleScript_EffectRainDance:: @ 0x082880C5
-	.incbin "baserom_jp.gba", 0x2880c5, 0x18
+	.incbin "baserom_jp.gba", 0x2880c5, 0x4
+
+BattleScript_MoveWeatherChange:: @ 0x082880C9
+	attackanimation
+	waitanimation
+	printfromtable gMoveWeatherChangeStringIds
+	waitmessage B_WAIT_TIME_LONG
+	call BattleScript_WeatherFormChanges
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectSunnyDay:: @ 0x082880DD
 	.incbin "baserom_jp.gba", 0x2880dd, 0x9
