@@ -311,6 +311,9 @@ MAPS = (
     "ContestHallSmart",
     "ContestHallCute",
     "InsideOfTruck",
+    "SSTidalCorridor",
+    "SSTidalLowerDeck",
+    "SSTidalRooms",
 )
 
 CONNECTED_MAPS = (
@@ -619,6 +622,9 @@ NULL_CONNECTION_MAPS = (
     "ContestHallSmart",
     "ContestHallCute",
     "InsideOfTruck",
+    "SSTidalCorridor",
+    "SSTidalLowerDeck",
+    "SSTidalRooms",
 )
 
 CANONICAL_LAYOUT_MAPS = (

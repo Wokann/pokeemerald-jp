@@ -1055,7 +1055,10 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/BattleColosseum_4P/events.inc"
 	.include "data/maps/ContestHall/events.inc"
 	.include "data/maps/InsideOfTruck/events.inc"
-	.incbin "baserom_jp.gba", 0x512884, 0x4CF8
+	.include "data/maps/SSTidalCorridor/events.inc"
+	.include "data/maps/SSTidalLowerDeck/events.inc"
+	.include "data/maps/SSTidalRooms/events.inc"
+	.incbin "baserom_jp.gba", 0x512B8C, 0x49F0
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

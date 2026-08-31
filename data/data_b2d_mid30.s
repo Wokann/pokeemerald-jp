@@ -1576,8 +1576,8 @@ gTileset_MOSSDEEP_CITY_GYM_SECONDARY: @ 0x083B804C
 	.4byte gTileset_MOSSDEEP_CITY_GYM_SECONDARY_Metatiles  @ metatiles
 	.4byte gTileset_MOSSDEEP_CITY_GYM_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
-	.globl gTileset_ABANDONED_SHIP_SECONDARY
-gTileset_ABANDONED_SHIP_SECONDARY: @ 0x083B8064
+	.globl gTileset_InsideShip
+gTileset_InsideShip: @ 0x083B8064
 	.incbin "baserom_jp.gba", 0x3B8064, 0x18
 	.globl gTileset_SecretBase
 gTileset_SecretBase: @ 0x083B807C
@@ -2421,8 +2421,14 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/ContestHallCute/header.inc"
 	@ MAP_INSIDE_OF_TRUCK through subsequent unstructured map headers
 	.include "data/maps/InsideOfTruck/header.inc"
-	@ MAP_SS_TIDAL_CORRIDOR through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45D32C, 0x166C
+	@ MAP_SS_TIDAL_CORRIDOR (g25 m41)
+	.include "data/maps/SSTidalCorridor/header.inc"
+	@ MAP_SS_TIDAL_LOWER_DECK (g25 m42)
+	.include "data/maps/SSTidalLowerDeck/header.inc"
+	@ MAP_SS_TIDAL_ROOMS (g25 m43)
+	.include "data/maps/SSTidalRooms/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE01 through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45D380, 0x1618
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

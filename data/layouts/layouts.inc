@@ -2036,7 +2036,7 @@ gMapLayout_ABANDONED_SHIP_CORRIDORS_1F: @ 0x08418074
 	.4byte gMapLayout_ABANDONED_SHIP_CORRIDORS_1F_Border  @ border
 	.4byte gMapLayout_ABANDONED_SHIP_CORRIDORS_1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
-	.4byte gTileset_ABANDONED_SHIP_SECONDARY  @ secondaryTileset
+	.4byte gTileset_InsideShip  @ secondaryTileset
 gMapLayout_ABANDONED_SHIP_ROOMS_1F_Border:
 	.incbin "data/layouts/AbandonedShip_Rooms_1F/border.bin"
 gMapLayout_ABANDONED_SHIP_ROOMS_1F_Blockdata:
@@ -2048,7 +2048,7 @@ gMapLayout_ABANDONED_SHIP_ROOMS_1F: @ 0x084182F8
 	.4byte gMapLayout_ABANDONED_SHIP_ROOMS_1F_Border  @ border
 	.4byte gMapLayout_ABANDONED_SHIP_ROOMS_1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
-	.4byte gTileset_ABANDONED_SHIP_SECONDARY  @ secondaryTileset
+	.4byte gTileset_InsideShip  @ secondaryTileset
 gMapLayout_ABANDONED_SHIP_CORRIDORS_B1F_Border:
 	.incbin "data/layouts/AbandonedShip_Corridors_B1F/border.bin"
 gMapLayout_ABANDONED_SHIP_CORRIDORS_B1F_Blockdata:
@@ -2060,7 +2060,7 @@ gMapLayout_ABANDONED_SHIP_CORRIDORS_B1F: @ 0x0841841C
 	.4byte gMapLayout_ABANDONED_SHIP_CORRIDORS_B1F_Border  @ border
 	.4byte gMapLayout_ABANDONED_SHIP_CORRIDORS_B1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
-	.4byte gTileset_ABANDONED_SHIP_SECONDARY  @ secondaryTileset
+	.4byte gTileset_InsideShip  @ secondaryTileset
 gMapLayout_ABANDONED_SHIP_ROOMS_B1F_Border:
 	.incbin "data/layouts/AbandonedShip_Rooms_B1F/border.bin"
 gMapLayout_ABANDONED_SHIP_ROOMS_B1F_Blockdata:
@@ -2072,7 +2072,7 @@ gMapLayout_ABANDONED_SHIP_ROOMS_B1F: @ 0x084185EC
 	.4byte gMapLayout_ABANDONED_SHIP_ROOMS_B1F_Border  @ border
 	.4byte gMapLayout_ABANDONED_SHIP_ROOMS_B1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
-	.4byte gTileset_ABANDONED_SHIP_SECONDARY  @ secondaryTileset
+	.4byte gTileset_InsideShip  @ secondaryTileset
 gMapLayout_ABANDONED_SHIP_ROOMS2_B1F_Border:
 	.incbin "data/layouts/AbandonedShip_Rooms2_B1F/border.bin"
 gMapLayout_ABANDONED_SHIP_ROOMS2_B1F_Blockdata:
@@ -2084,7 +2084,7 @@ gMapLayout_ABANDONED_SHIP_ROOMS2_B1F: @ 0x0841872C
 	.4byte gMapLayout_ABANDONED_SHIP_ROOMS2_B1F_Border  @ border
 	.4byte gMapLayout_ABANDONED_SHIP_ROOMS2_B1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
-	.4byte gTileset_ABANDONED_SHIP_SECONDARY  @ secondaryTileset
+	.4byte gTileset_InsideShip  @ secondaryTileset
 gMapLayout_ABANDONED_SHIP_UNDERWATER1_Border:
 	.incbin "data/layouts/AbandonedShip_Underwater1/border.bin"
 gMapLayout_ABANDONED_SHIP_UNDERWATER1_Blockdata:
@@ -2096,7 +2096,7 @@ gMapLayout_ABANDONED_SHIP_UNDERWATER1: @ 0x084187CC
 	.4byte gMapLayout_ABANDONED_SHIP_UNDERWATER1_Border  @ border
 	.4byte gMapLayout_ABANDONED_SHIP_UNDERWATER1_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
-	.4byte gTileset_ABANDONED_SHIP_SECONDARY  @ secondaryTileset
+	.4byte gTileset_InsideShip  @ secondaryTileset
 gMapLayout_ABANDONED_SHIP_ROOM_B1F_Border:
 	.incbin "data/layouts/AbandonedShip_Room_B1F/border.bin"
 gMapLayout_ABANDONED_SHIP_ROOM_B1F_Blockdata:
@@ -2108,7 +2108,7 @@ gMapLayout_ABANDONED_SHIP_ROOM_B1F: @ 0x0841887C
 	.4byte gMapLayout_ABANDONED_SHIP_ROOM_B1F_Border  @ border
 	.4byte gMapLayout_ABANDONED_SHIP_ROOM_B1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
-	.4byte gTileset_ABANDONED_SHIP_SECONDARY  @ secondaryTileset
+	.4byte gTileset_InsideShip  @ secondaryTileset
 gMapLayout_ABANDONED_SHIP_ROOMS2_1F_Border:
 	.incbin "data/layouts/AbandonedShip_Rooms2_1F/border.bin"
 gMapLayout_ABANDONED_SHIP_ROOMS2_1F_Blockdata:
@@ -2121,7 +2121,7 @@ gMapLayout_ABANDONED_SHIP_ROOMS2_1F: @ 0x084189D0
 	.4byte gMapLayout_ABANDONED_SHIP_ROOMS2_1F_Border  @ border
 	.4byte gMapLayout_ABANDONED_SHIP_ROOMS2_1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
-	.4byte gTileset_ABANDONED_SHIP_SECONDARY  @ secondaryTileset
+	.4byte gTileset_InsideShip  @ secondaryTileset
 gMapLayout_ABANDONED_SHIP_CAPTAINS_OFFICE_Border:
 	.incbin "data/layouts/AbandonedShip_CaptainsOffice/border.bin"
 gMapLayout_ABANDONED_SHIP_CAPTAINS_OFFICE_Blockdata:
@@ -2147,7 +2147,7 @@ gMapLayout_ABANDONED_SHIP_UNDERWATER2: @ 0x08418BB8
 	.4byte gMapLayout_ABANDONED_SHIP_UNDERWATER2_Border  @ border
 	.4byte gMapLayout_ABANDONED_SHIP_UNDERWATER2_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
-	.4byte gTileset_ABANDONED_SHIP_SECONDARY  @ secondaryTileset
+	.4byte gTileset_InsideShip  @ secondaryTileset
 gMapLayout_SECRET_BASE_RED_CAVE1_Border:
 	.incbin "data/layouts/SecretBase_RedCave1/border.bin"
 gMapLayout_SECRET_BASE_RED_CAVE1_Blockdata:
@@ -2837,7 +2837,43 @@ gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_2F: @ 0x084292C0
 	.4byte gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_2F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4292D8, 0x900
+gMapLayout_SS_TIDAL_CORRIDOR_Border:
+	.incbin "data/layouts/SSTidalCorridor/border.bin"
+gMapLayout_SS_TIDAL_CORRIDOR_Blockdata:
+	.incbin "data/layouts/SSTidalCorridor/map.bin"
+	.globl gMapLayout_SS_TIDAL_CORRIDOR
+gMapLayout_SS_TIDAL_CORRIDOR: @ 0x084294B4
+	.4byte 18  @ width
+	.4byte 13  @ height
+	.4byte gMapLayout_SS_TIDAL_CORRIDOR_Border  @ border
+	.4byte gMapLayout_SS_TIDAL_CORRIDOR_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_InsideShip  @ secondaryTileset
+gMapLayout_SS_TIDAL_LOWER_DECK_Border:
+	.incbin "data/layouts/SSTidalLowerDeck/border.bin"
+gMapLayout_SS_TIDAL_LOWER_DECK_Blockdata:
+	.incbin "data/layouts/SSTidalLowerDeck/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_SS_TIDAL_LOWER_DECK
+gMapLayout_SS_TIDAL_LOWER_DECK: @ 0x08429690
+	.4byte 17  @ width
+	.4byte 13  @ height
+	.4byte gMapLayout_SS_TIDAL_LOWER_DECK_Border  @ border
+	.4byte gMapLayout_SS_TIDAL_LOWER_DECK_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_InsideShip  @ secondaryTileset
+gMapLayout_SS_TIDAL_ROOMS_Border:
+	.incbin "data/layouts/SSTidalRooms/border.bin"
+gMapLayout_SS_TIDAL_ROOMS_Blockdata:
+	.incbin "data/layouts/SSTidalRooms/map.bin"
+	.globl gMapLayout_SS_TIDAL_ROOMS
+gMapLayout_SS_TIDAL_ROOMS: @ 0x08429BC0
+	.4byte 36  @ width
+	.4byte 18  @ height
+	.4byte gMapLayout_SS_TIDAL_ROOMS_Border  @ border
+	.4byte gMapLayout_SS_TIDAL_ROOMS_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_InsideShip  @ secondaryTileset
 gMapLayout_ISLAND_CAVE_Border:
 	.incbin "data/layouts/IslandCave/border.bin"
 gMapLayout_ISLAND_CAVE_Blockdata:
@@ -2950,7 +2986,7 @@ gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_CORRIDORS: @ 0x0842CC48
 	.4byte gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_CORRIDORS_Border  @ border
 	.4byte gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_CORRIDORS_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
-	.4byte gTileset_ABANDONED_SHIP_SECONDARY  @ secondaryTileset
+	.4byte gTileset_InsideShip  @ secondaryTileset
 	.incbin "baserom_jp.gba", 0x42CC60, 0xD0C
 gMapLayout_JAGGED_PASS_Border:
 	.incbin "data/layouts/JaggedPass/border.bin"
@@ -3170,7 +3206,7 @@ gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_ROOMS: @ 0x08432248
 	.4byte gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_ROOMS_Border  @ border
 	.4byte gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_ROOMS_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
-	.4byte gTileset_ABANDONED_SHIP_SECONDARY  @ secondaryTileset
+	.4byte gTileset_InsideShip  @ secondaryTileset
 gMapLayout_SCORCHED_SLAB_Border:
 	.incbin "data/layouts/ScorchedSlab/border.bin"
 gMapLayout_SCORCHED_SLAB_Blockdata:
