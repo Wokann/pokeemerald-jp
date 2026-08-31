@@ -2884,13 +2884,25 @@ BattleScript_EffectCamouflage:: @ 0x08288D1D
 @ Battle-end scripts. All visible JP entry points are named in their
 @ physical order; raw spans remain until their battle-script macro conversion.
 BattleScript_FaintAttacker:: @ 0x08288D32
-	.incbin "baserom_jp.gba", 0x288d32, 0xd
+	playfaintcry BS_ATTACKER
+	pause B_WAIT_TIME_LONG
+	dofaintanimation BS_ATTACKER
+	cleareffectsonfaint BS_ATTACKER
+	printstring STRINGID_ATTACKERFAINTED
+	return
 
 BattleScript_FaintTarget:: @ 0x08288D3F
-	.incbin "baserom_jp.gba", 0x288d3f, 0xd
+	playfaintcry BS_TARGET
+	pause B_WAIT_TIME_LONG
+	dofaintanimation BS_TARGET
+	cleareffectsonfaint BS_TARGET
+	printstring STRINGID_TARGETFAINTED
+	return
 
 BattleScript_GiveExp:: @ 0x08288D4C
-	.incbin "baserom_jp.gba", 0x288d4c, 0x9
+	setbyte sGIVEEXP_STATE, 0
+	getexp BS_TARGET
+	end2
 
 BattleScript_HandleFaintedMon:: @ 0x08288D55
 	.incbin "baserom_jp.gba", 0x288d55, 0x49
