@@ -1302,7 +1302,22 @@ BattleScript_EffectEncore:: @ 0x08287AF1
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectPainSplit:: @ 0x08287B0D
-	.incbin "baserom_jp.gba", 0x287b0d, 0x37
+	attackcanceler
+	attackstring
+	ppreduce
+	accuracycheck BattleScript_ButItFailed, NO_ACC_CALC_CHECK_LOCK_ON
+	painsplitdmgcalc BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	copyword gBattleMoveDamage, sPAINSPLIT_HP
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	printstring STRINGID_SHAREDPAIN
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectSnore:: @ 0x08287B44
 	.incbin "baserom_jp.gba", 0x287b44, 0x3a
