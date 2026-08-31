@@ -3950,50 +3950,50 @@ BattleScript_MoveUsedFlinched:: @ 0x08289823
 
 	.globl BattleScript_PrintUproarOverTurns
 BattleScript_PrintUproarOverTurns: @ 0x828982E
-	.byte 0x13, 0xF2, 0xB9, 0x5A, 0x08 @ printfromtable 0x085AB9F2
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
+	printfromtable gUproarOverTurnStringIds
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 	.globl BattleScript_ThrashConfuses
 BattleScript_ThrashConfuses: @ 0x8289837
-	.byte 0x66, 0x01, 0x01, 0x07, 0x00, 0x00, 0x00 @ chosenstatus2animation BS_ATTACKER, STATUS2_CONFUSION
-	.byte 0x10, 0x7A, 0x00 @ printstring STRINGID_PKMNFATIGUECONFUSION
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x3E @ end2
+	chosenstatus2animation BS_ATTACKER, STATUS2_CONFUSION
+	printstring STRINGID_PKMNFATIGUECONFUSION
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 	.globl BattleScript_MoveUsedIsConfused
 BattleScript_MoveUsedIsConfused: @ 0x8289845
-	.byte 0x10, 0x41, 0x00 @ printstring STRINGID_PKMNISCONFUSED
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x65, 0x01, 0x07, 0x00, 0x00, 0x00 @ status2animation BS_ATTACKER, STATUS2_CONFUSION
-	.byte 0x29, 0x00, 0xDB, 0x3F, 0x02, 0x02, 0x00, 0x87, 0x98, 0x28, 0x08 @ jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, FALSE, BattleScript_MoveUsedIsConfusedRet
+	printstring STRINGID_PKMNISCONFUSED
+	waitmessage B_WAIT_TIME_LONG
+	status2animation BS_ATTACKER, STATUS2_CONFUSION
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, FALSE, BattleScript_MoveUsedIsConfusedRet
 
 	.globl BattleScript_DoSelfConfusionDmg
 BattleScript_DoSelfConfusionDmg: @ 0x828985C
-	.byte 0x76, 0x01, 0x00 @ cancelmultiturnmoves BS_ATTACKER
-	.byte 0x08 @ adjustnormaldamage2
-	.byte 0x10, 0xE6, 0x00 @ printstring STRINGID_ITHURTCONFUSION
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x0E @ effectivenesssound
-	.byte 0x5C, 0x01 @ hitanimation BS_ATTACKER
-	.byte 0x3A @ waitstate
-	.byte 0x35, 0x24, 0x3F, 0x02, 0x02, 0x00, 0x01, 0x10, 0x00 @ orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
-	.byte 0x0B, 0x01 @ healthbarupdate BS_ATTACKER
-	.byte 0x0C, 0x01 @ datahpupdate BS_ATTACKER
-	.byte 0x0F @ resultmessage
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x19, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 @ tryfaintmon BS_ATTACKER
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	cancelmultiturnmoves BS_ATTACKER
+	adjustnormaldamage2
+	printstring STRINGID_ITHURTCONFUSION
+	waitmessage B_WAIT_TIME_LONG
+	effectivenesssound
+	hitanimation BS_ATTACKER
+	waitstate
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	tryfaintmon BS_ATTACKER
+	goto BattleScript_MoveEnd
 
 	.globl BattleScript_MoveUsedIsConfusedRet
 BattleScript_MoveUsedIsConfusedRet: @ 0x8289887
-	.byte 0x3C @ return
+	return
 
 	.globl BattleScript_MoveUsedIsConfusedNoMore
 BattleScript_MoveUsedIsConfusedNoMore: @ 0x8289888
-	.byte 0x10, 0x42, 0x00 @ printstring STRINGID_PKMNHEALEDCONFUSION
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3C @ return
+	printstring STRINGID_PKMNHEALEDCONFUSION
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_PrintPayDayMoneyString
 BattleScript_PrintPayDayMoneyString: @ 0x828988F
