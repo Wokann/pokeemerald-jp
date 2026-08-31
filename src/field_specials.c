@@ -7492,7 +7492,7 @@ __attribute__((naked)) void TryLoseFansFromPlayTimeAfterLinkBattle(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl sub_0813BF68\n\t"
+        "	bl DidPlayerGetFirstFans\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0813BA8A\n\t"
@@ -7531,7 +7531,7 @@ __attribute__((naked)) void UpdateTrainerFanClubGameClear(void)
         "	ands r0, r1\n\t"
         "	cmp r0, #0\n\t"
         "	bne _0813BAEE\n\t"
-        "	bl sub_0813BF84\n\t"
+        "	bl SetPlayerGotFirstFans\n\t"
         "	bl sub_0813BDBC\n\t"
         "	ldr r1, [r4]\n\t"
         "	ldr r0, _0813BAFC\n\t"
@@ -8171,7 +8171,7 @@ __attribute__((naked)) void sub_0813BF34(void)
     );
 }
 
-__attribute__((naked)) void sub_0813BF68(void)
+__attribute__((naked)) void DidPlayerGetFirstFans(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8191,7 +8191,7 @@ __attribute__((naked)) void sub_0813BF68(void)
     );
 }
 
-__attribute__((naked)) void sub_0813BF84(void)
+__attribute__((naked)) void SetPlayerGotFirstFans(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
