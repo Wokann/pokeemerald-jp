@@ -419,8 +419,12 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_UNDERWATER_ROUTE125
 	.4byte Underwater_Route129_Layout
 	.4byte gMapLayout_MARINE_CAVE_END
-	@ LAYOUT_TRAINER_HILL_ENTRANCE through LAYOUT_TRAINER_HILL_ROOF remain in raw physical layout owners.
-	.incbin "baserom_jp.gba", 0x45A868, 0x18
+	.4byte TrainerHill_Entrance_Layout
+	.4byte TrainerHill_1F_Layout
+	.4byte TrainerHill_2F_Layout
+	.4byte TrainerHill_3F_Layout
+	.4byte TrainerHill_4F_Layout
+	.4byte TrainerHill_Roof_Layout
 	.4byte gMapLayout_ALTERING_CAVE
 	@ LAYOUT_NAVEL_ROCK_EXTERIOR through LAYOUT_BATTLE_FRONTIER_SCOTTS_HOUSE remain in raw physical layout owners.
 	.incbin "baserom_jp.gba", 0x45A884, 0x28

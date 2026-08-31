@@ -615,6 +615,18 @@ $(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_
 	data/layouts/BirthIsland_Exterior/map.bin \
 	data/layouts/IslandHarbor/border.bin \
 	data/layouts/IslandHarbor/map.bin \
+	data/layouts/TrainerHill_Entrance/border.bin \
+	data/layouts/TrainerHill_Entrance/map.bin \
+	data/layouts/TrainerHill_1F/border.bin \
+	data/layouts/TrainerHill_1F/map.bin \
+	data/layouts/TrainerHill_2F/border.bin \
+	data/layouts/TrainerHill_2F/map.bin \
+	data/layouts/TrainerHill_3F/border.bin \
+	data/layouts/TrainerHill_3F/map.bin \
+	data/layouts/TrainerHill_4F/border.bin \
+	data/layouts/TrainerHill_4F/map.bin \
+	data/layouts/TrainerHill_Roof/border.bin \
+	data/layouts/TrainerHill_Roof/map.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 

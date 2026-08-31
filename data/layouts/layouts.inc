@@ -5170,7 +5170,95 @@ gMapLayout_MARINE_CAVE_END: @ 0x084547AC
 	.4byte gMapLayout_MARINE_CAVE_END_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Cave  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4547C4, 0x10E8
+TrainerHill_Entrance_Layout_Border::
+	.incbin "data/layouts/TrainerHill_Entrance/border.bin"
+
+TrainerHill_Entrance_Layout_Blockdata::
+	.incbin "data/layouts/TrainerHill_Entrance/map.bin"
+
+	.align 2
+TrainerHill_Entrance_Layout:: @ 0x08454A54
+	.4byte 19
+	.4byte 17
+	.4byte TrainerHill_Entrance_Layout_Border
+	.4byte TrainerHill_Entrance_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_TrainerHill
+
+TrainerHill_1F_Layout_Border::
+	.incbin "data/layouts/TrainerHill_1F/border.bin"
+
+TrainerHill_1F_Layout_Blockdata::
+	.incbin "data/layouts/TrainerHill_1F/map.bin"
+
+	.align 2
+TrainerHill_1F_Layout:: @ 0x08454D14
+	.4byte 16
+	.4byte 21
+	.4byte TrainerHill_1F_Layout_Border
+	.4byte TrainerHill_1F_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_TrainerHill
+
+TrainerHill_2F_Layout_Border::
+	.incbin "data/layouts/TrainerHill_2F/border.bin"
+
+TrainerHill_2F_Layout_Blockdata::
+	.incbin "data/layouts/TrainerHill_2F/map.bin"
+
+	.align 2
+TrainerHill_2F_Layout:: @ 0x08454FD4
+	.4byte 16
+	.4byte 21
+	.4byte TrainerHill_2F_Layout_Border
+	.4byte TrainerHill_2F_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_TrainerHill
+
+TrainerHill_3F_Layout_Border::
+	.incbin "data/layouts/TrainerHill_3F/border.bin"
+
+TrainerHill_3F_Layout_Blockdata::
+	.incbin "data/layouts/TrainerHill_3F/map.bin"
+
+	.align 2
+TrainerHill_3F_Layout:: @ 0x08455294
+	.4byte 16
+	.4byte 21
+	.4byte TrainerHill_3F_Layout_Border
+	.4byte TrainerHill_3F_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_TrainerHill
+
+TrainerHill_4F_Layout_Border::
+	.incbin "data/layouts/TrainerHill_4F/border.bin"
+
+TrainerHill_4F_Layout_Blockdata::
+	.incbin "data/layouts/TrainerHill_4F/map.bin"
+
+	.align 2
+TrainerHill_4F_Layout:: @ 0x08455554
+	.4byte 16
+	.4byte 21
+	.4byte TrainerHill_4F_Layout_Border
+	.4byte TrainerHill_4F_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_TrainerHill
+
+TrainerHill_Roof_Layout_Border::
+	.incbin "data/layouts/TrainerHill_Roof/border.bin"
+
+TrainerHill_Roof_Layout_Blockdata::
+	.incbin "data/layouts/TrainerHill_Roof/map.bin"
+
+	.align 2
+TrainerHill_Roof_Layout:: @ 0x08455894
+	.4byte 25
+	.4byte 16
+	.4byte TrainerHill_Roof_Layout_Border
+	.4byte TrainerHill_Roof_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_TrainerHill
 gMapLayout_ALTERING_CAVE_Border:
 	.incbin "data/layouts/AlteringCave/border.bin"
 gMapLayout_ALTERING_CAVE_Blockdata:
