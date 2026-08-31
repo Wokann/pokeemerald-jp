@@ -29,29 +29,9 @@
 
 	.section .rodata.data_b2d_mid26_after_tileset_anims_data_before_palette_static_data
 
-	.section .rodata.data_b2d_mid26_after_palette_static_data_before_battle_anim_status_effects
+	.section .rodata.data_b2d_mid26_after_palette_static_data_before_sound_fanfare_data
 
-	.globl sFanfares
-	.globl sFanfares
-sFanfares: @ 0x84FCFC8
-	.hword 367, 80  @ [FANFARE_LEVEL_UP] = { MUS_LEVEL_UP, 80 }
-	.hword 370, 160  @ [FANFARE_OBTAIN_ITEM] = { MUS_OBTAIN_ITEM, 160 }
-	.hword 371, 220  @ [FANFARE_EVOLVED] = { MUS_EVOLVED, 220 }
-	.hword 372, 220  @ [FANFARE_OBTAIN_TMHM] = { MUS_OBTAIN_TMHM, 220 }
-	.hword 368, 160  @ [FANFARE_HEAL] = { MUS_HEAL, 160 }
-	.hword 369, 340  @ [FANFARE_OBTAIN_BADGE] = { MUS_OBTAIN_BADGE, 340 }
-	.hword 378, 180  @ [FANFARE_MOVE_DELETED] = { MUS_MOVE_DELETED, 180 }
-	.hword 387, 120  @ [FANFARE_OBTAIN_BERRY] = { MUS_OBTAIN_BERRY, 120 }
-	.hword 388, 710  @ [FANFARE_AWAKEN_LEGEND] = { MUS_AWAKEN_LEGEND, 710 }
-	.hword 389, 250  @ [FANFARE_SLOTS_JACKPOT] = { MUS_SLOTS_JACKPOT, 250 }
-	.hword 390, 150  @ [FANFARE_SLOTS_WIN] = { MUS_SLOTS_WIN, 150 }
-	.hword 391, 160  @ [FANFARE_TOO_BAD] = { MUS_TOO_BAD, 160 }
-	.hword 550, 450  @ [FANFARE_RG_POKE_FLUTE] = { MUS_RG_POKE_FLUTE, 450 }
-	.hword 530, 170  @ [FANFARE_RG_OBTAIN_KEY_ITEM] = { MUS_RG_OBTAIN_KEY_ITEM, 170 }
-	.hword 529, 196  @ [FANFARE_RG_DEX_RATING] = { MUS_RG_DEX_RATING, 196 }
-	.hword 459, 313  @ [FANFARE_OBTAIN_B_POINTS] = { MUS_OBTAIN_B_POINTS, 313 }
-	.hword 466, 318  @ [FANFARE_OBTAIN_SYMBOL] = { MUS_OBTAIN_SYMBOL, 318 }
-	.hword 460, 135  @ [FANFARE_REGISTER_MATCH_CALL] = { MUS_REGISTER_MATCH_CALL, 135 }
+	.section .rodata.data_b2d_mid26_after_sound_fanfare_data_before_battle_anim_status_effects
 
 	.globl gUnknown_84FD010
 	.globl gUnknown_84FD010
