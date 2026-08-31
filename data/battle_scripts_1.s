@@ -2118,19 +2118,30 @@ BattleScript_AlreadyAtFullHp:: @ 0x08288483
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectFakeOut:: @ 0x08288491
-	.incbin "baserom_jp.gba", 0x288491, 0x11
+	attackcanceler
+	jumpifnotfirstturn BattleScript_FailedFromAtkString
+	setmoveeffect MOVE_EFFECT_FLINCH | MOVE_EFFECT_CERTAIN
+	goto BattleScript_EffectHit
 
 BattleScript_FailedFromAtkString:: @ 0x082884A2
-	.incbin "baserom_jp.gba", 0x2884a2, 0x1
+	attackstring
 
 BattleScript_FailedFromPPReduce:: @ 0x082884A3
-	.incbin "baserom_jp.gba", 0x2884a3, 0x1
+	ppreduce
 
 BattleScript_ButItFailed:: @ 0x082884A4
-	.incbin "baserom_jp.gba", 0x2884a4, 0x12
+	pause B_WAIT_TIME_SHORT
+	orbyte gMoveResultFlags, MOVE_RESULT_FAILED
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_NotAffected:: @ 0x082884B6
-	.incbin "baserom_jp.gba", 0x2884b6, 0x12
+	pause B_WAIT_TIME_SHORT
+	orbyte gMoveResultFlags, MOVE_RESULT_DOESNT_AFFECT_FOE
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectUproar:: @ 0x082884C8
 	.incbin "baserom_jp.gba", 0x2884c8, 0x20
