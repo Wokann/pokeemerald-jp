@@ -987,19 +987,24 @@ BattleScript_AlreadyConfused:: @ 0x08287789
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectAttackUp2:: @ 0x0828779A
-	.incbin "baserom_jp.gba", 0x28779a, 0xb
+	setstatchanger STAT_ATK, 2, FALSE
+	goto BattleScript_EffectStatUp
 
 BattleScript_EffectDefenseUp2:: @ 0x082877A5
-	.incbin "baserom_jp.gba", 0x2877a5, 0xb
+	setstatchanger STAT_DEF, 2, FALSE
+	goto BattleScript_EffectStatUp
 
 BattleScript_EffectSpeedUp2:: @ 0x082877B0
-	.incbin "baserom_jp.gba", 0x2877b0, 0xb
+	setstatchanger STAT_SPEED, 2, FALSE
+	goto BattleScript_EffectStatUp
 
 BattleScript_EffectSpecialAttackUp2:: @ 0x082877BB
-	.incbin "baserom_jp.gba", 0x2877bb, 0xb
+	setstatchanger STAT_SPATK, 2, FALSE
+	goto BattleScript_EffectStatUp
 
 BattleScript_EffectSpecialDefenseUp2:: @ 0x082877C6
-	.incbin "baserom_jp.gba", 0x2877c6, 0xb
+	setstatchanger STAT_SPDEF, 2, FALSE
+	goto BattleScript_EffectStatUp
 
 BattleScript_EffectTransform:: @ 0x082877D1
 	.incbin "baserom_jp.gba", 0x2877d1, 0x13
