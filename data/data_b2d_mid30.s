@@ -2307,8 +2307,12 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/MarineCave_Entrance/header.inc"
 	@ MAP_MARINE_CAVE_END (g24 m103)
 	.include "data/maps/MarineCave_End/header.inc"
-	@ MAP_TERRA_CAVE_ENTRANCE through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45CE40, 0x1B58
+	@ MAP_TERRA_CAVE_ENTRANCE (g24 m104)
+	.include "data/maps/TerraCave_Entrance/header.inc"
+	@ MAP_TERRA_CAVE_END (g24 m105)
+	.include "data/maps/TerraCave_End/header.inc"
+	@ MAP_ALTERING_CAVE through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45CE78, 0x1B20
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

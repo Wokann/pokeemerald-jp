@@ -3098,7 +3098,28 @@ gMapLayout_MARINE_CAVE_ENTRANCE: @ 0x0844EC24
 	.4byte gMapLayout_MARINE_CAVE_ENTRANCE_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x44EC3C, 0x9B4
+gMapLayout_TERRA_CAVE_ENTRANCE_Border:
+	.incbin "data/layouts/TerraCave_Entrance/border.bin"
+gMapLayout_TERRA_CAVE_ENTRANCE_Blockdata:
+	.incbin "data/layouts/TerraCave_Entrance/map.bin"
+gMapLayout_TERRA_CAVE_ENTRANCE: @ 0x0844EF64
+	.4byte 20  @ width
+	.4byte 20  @ height
+	.4byte gMapLayout_TERRA_CAVE_ENTRANCE_Border  @ border
+	.4byte gMapLayout_TERRA_CAVE_ENTRANCE_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+gMapLayout_TERRA_CAVE_END_Border:
+	.incbin "data/layouts/TerraCave_End/border.bin"
+gMapLayout_TERRA_CAVE_END_Blockdata:
+	.incbin "data/layouts/TerraCave_End/map.bin"
+gMapLayout_TERRA_CAVE_END: @ 0x0844F5D8
+	.4byte 27  @ width
+	.4byte 30  @ height
+	.4byte gMapLayout_TERRA_CAVE_END_Border  @ border
+	.4byte gMapLayout_TERRA_CAVE_END_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
 gMapLayout_UNDERWATER_ROUTE105_Border:
 	.incbin "data/layouts/Underwater_Route105/border.bin"
 gMapLayout_UNDERWATER_ROUTE105_Blockdata:

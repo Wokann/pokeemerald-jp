@@ -266,6 +266,8 @@ MAPS = (
     "Underwater_MarineCave",
     "MarineCave_Entrance",
     "MarineCave_End",
+    "TerraCave_Entrance",
+    "TerraCave_End",
 )
 
 CONNECTED_MAPS = (
@@ -529,6 +531,8 @@ NULL_CONNECTION_MAPS = (
     "Underwater_MarineCave",
     "MarineCave_Entrance",
     "MarineCave_End",
+    "TerraCave_Entrance",
+    "TerraCave_End",
 )
 
 CANONICAL_LAYOUT_MAPS = (
