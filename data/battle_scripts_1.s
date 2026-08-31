@@ -3363,24 +3363,47 @@ BattleScript_OverworldWeatherStarts:: @ 0x0828926F
 	end3
 
 @ Turn-end side-status scripts. These physical entry points include the
-@ safeguard and Leech Seed branches; byte spans remain JP-exact for now.
+@ safeguard and Leech Seed branches.
 BattleScript_SideStatusWoreOff:: @ 0x08289282
-	.incbin "baserom_jp.gba", 0x289282, 0x7
+	printstring STRINGID_PKMNSXWOREOFF
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_SafeguardProtected:: @ 0x08289289
-	.incbin "baserom_jp.gba", 0x289289, 0xa
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNUSEDSAFEGUARD
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_SafeguardEnds:: @ 0x08289293
-	.incbin "baserom_jp.gba", 0x289293, 0xa
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNSAFEGUARDEXPIRED
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_LeechSeedTurnDrain:: @ 0x0828929D
-	.incbin "baserom_jp.gba", 0x28929d, 0x32
+	playanimation BS_ATTACKER, B_ANIM_LEECH_SEED_DRAIN, sB_ANIM_ARG1
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	copyword gBattleMoveDamage, gHpDealt
+	jumpifability BS_ATTACKER, ABILITY_LIQUID_OOZE, BattleScript_LeechSeedTurnPrintLiquidOoze
+	manipulatedamage DMG_CHANGE_SIGN
+	setbyte cMULTISTRING_CHOOSER, B_MSG_LEECH_SEED_DRAIN
+	goto BattleScript_LeechSeedTurnPrintAndUpdateHp
 
 BattleScript_LeechSeedTurnPrintLiquidOoze:: @ 0x082892CF
-	.incbin "baserom_jp.gba", 0x2892cf, 0x6
+	setbyte cMULTISTRING_CHOOSER, B_MSG_LEECH_SEED_OOZE
 
 BattleScript_LeechSeedTurnPrintAndUpdateHp:: @ 0x082892D5
-	.incbin "baserom_jp.gba", 0x2892d5, 0x24
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	printfromtable gLeechSeedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	tryfaintmon BS_ATTACKER
+	tryfaintmon BS_TARGET
+	end2
 
 @ Bide's charge and release scripts. The complete three-path family stays
 @ physically contiguous while its raw battle commands await conversion.
