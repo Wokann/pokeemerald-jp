@@ -306,8 +306,7 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_EVER_GRANDE_CITY_HALL_OF_FAME
 	.4byte gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_1F
 	.4byte gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_2F
-	@ LAYOUT_ROUTE124_DIVING_TREASURE_HUNTERS_HOUSE remains in its raw physical layout owner.
-	.incbin "baserom_jp.gba", 0x45A6A4, 0x4
+	.4byte Route124_DivingTreasureHuntersHouse_Layout
 	.4byte gMapLayout_MT_PYRE_EXTERIOR
 	.4byte gMapLayout_MT_PYRE_SUMMIT
 	.4byte gMapLayout_SEALED_CHAMBER_INNER_ROOM

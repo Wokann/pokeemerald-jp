@@ -3774,7 +3774,20 @@ gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_2F: @ 0x0842F6B4
 	.4byte gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_2F_Blockdata  @ map
 	.4byte gTileset_Building  @ primaryTileset
 	.4byte gTileset_GenericBuilding  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42f6cc, 0xd4
+Route124_DivingTreasureHuntersHouse_Layout_Border::
+	.incbin "data/layouts/Route124_DivingTreasureHuntersHouse/border.bin"
+
+Route124_DivingTreasureHuntersHouse_Layout_Blockdata::
+	.incbin "data/layouts/Route124_DivingTreasureHuntersHouse/map.bin"
+
+Route124_DivingTreasureHuntersHouse_Layout:: @ 0x0842F788
+	.4byte 10
+	.4byte 9
+	.4byte Route124_DivingTreasureHuntersHouse_Layout_Border
+	.4byte Route124_DivingTreasureHuntersHouse_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_GenericBuilding
+
 gMapLayout_MT_PYRE_EXTERIOR_Border:
 	.incbin "data/layouts/MtPyre_Exterior/border.bin"
 gMapLayout_MT_PYRE_EXTERIOR_Blockdata:
