@@ -3665,7 +3665,42 @@ gMapLayout_MAGMA_HIDEOUT_4F: @ 0x0843BC4C
 	.4byte gMapLayout_MAGMA_HIDEOUT_4F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x43BC64, 0x5C0
+gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_LOBBY_Border:
+	.incbin "data/layouts/BattleFrontier_BattlePalaceLobby/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_LOBBY_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattlePalaceLobby/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_LOBBY
+gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_LOBBY: @ 0x0843BEC4
+	.4byte 25  @ width
+	.4byte 12  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_LOBBY_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_LOBBY_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePalace  @ secondaryTileset
+gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_CORRIDOR_Border:
+	.incbin "data/layouts/BattleFrontier_BattlePalaceCorridor/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_CORRIDOR_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattlePalaceCorridor/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_CORRIDOR
+gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_CORRIDOR: @ 0x0843C0C0
+	.4byte 17  @ width
+	.4byte 14  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_CORRIDOR_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_CORRIDOR_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePalace  @ secondaryTileset
+gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_BATTLE_ROOM_Border:
+	.incbin "data/layouts/BattleFrontier_BattlePalaceBattleRoom/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_BATTLE_ROOM_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattlePalaceBattleRoom/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_BATTLE_ROOM
+gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_BATTLE_ROOM: @ 0x0843C20C
+	.4byte 15  @ width
+	.4byte 10  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_BATTLE_ROOM_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_BATTLE_ROOM_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePalace  @ secondaryTileset
 gMapLayout_BATTLE_FRONTIER_OUTSIDE_EAST_Border:
 	.incbin "data/layouts/BattleFrontier_OutsideEast/border.bin"
 gMapLayout_BATTLE_FRONTIER_OUTSIDE_EAST_Blockdata:
