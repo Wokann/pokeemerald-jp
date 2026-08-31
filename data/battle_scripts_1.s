@@ -1858,7 +1858,15 @@ BattleScript_EffectBellyDrum:: @ 0x08288107
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectPsychUp:: @ 0x08288129
-	.incbin "baserom_jp.gba", 0x288129, 0x15
+	attackcanceler
+	attackstring
+	ppreduce
+	copyfoestats BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNCOPIEDSTATCHANGES
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectMirrorCoat:: @ 0x0828813E
 	.incbin "baserom_jp.gba", 0x28813e, 0x16
