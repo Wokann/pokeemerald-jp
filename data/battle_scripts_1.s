@@ -2083,7 +2083,17 @@ BattleScript_SemiInvulnerableMiss::
 	goto BattleScript_PrintMoveMissed
 
 BattleScript_EffectDefenseCurl:: @ 0x0828843E
-	.incbin "baserom_jp.gba", 0x28843e, 0x22
+	attackcanceler
+	attackstring
+	ppreduce
+	setdefensecurlbit
+	setstatchanger STAT_DEF, 1, FALSE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | STAT_CHANGE_ALLOW_PTR, BattleScript_DefenseCurlDoStatUpAnim
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_INCREASE, BattleScript_StatUpPrintString
+	attackanimation
+	waitanimation
+BattleScript_DefenseCurlDoStatUpAnim::
+	goto BattleScript_StatUpDoAnim
 
 BattleScript_EffectSoftboiled:: @ 0x08288460
 	.incbin "baserom_jp.gba", 0x288460, 0x9
