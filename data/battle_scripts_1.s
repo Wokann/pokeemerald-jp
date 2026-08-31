@@ -2223,7 +2223,27 @@ BattleScript_EffectTorment:: @ 0x08288563
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectFlatter:: @ 0x0828857F
-	.incbin "baserom_jp.gba", 0x28857f, 0x5e
+	attackcanceler
+	jumpifstatus2 BS_TARGET, STATUS2_SUBSTITUTE, BattleScript_MakeMoveMissed
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	jumpifconfusedandstatmaxed STAT_SPATK, BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	setstatchanger STAT_SPATK, 1, FALSE
+	statbuffchange STAT_CHANGE_ALLOW_PTR, BattleScript_FlatterTryConfuse
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_INCREASE, BattleScript_FlatterTryConfuse
+	setgraphicalstatchangevalues
+	playanimation BS_TARGET, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_FlatterTryConfuse::
+	jumpifability BS_TARGET, ABILITY_OWN_TEMPO, BattleScript_OwnTempoPrevents
+	jumpifsideaffecting BS_TARGET, SIDE_STATUS_SAFEGUARD, BattleScript_SafeguardProtected
+	setmoveeffect MOVE_EFFECT_CONFUSION
+	seteffectprimary
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectWillOWisp:: @ 0x082885DD
 	.incbin "baserom_jp.gba", 0x2885dd, 0x77
