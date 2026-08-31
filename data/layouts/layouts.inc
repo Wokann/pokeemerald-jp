@@ -5390,7 +5390,35 @@ NavelRock_Fork_Layout:: @ 0x08458764
 	.4byte gTileset_General
 	.4byte gTileset_NavelRock
 
-	.incbin "baserom_jp.gba", 0x45877C, 0x154
+BattleFrontier_Lounge2_Layout_Border::
+	.incbin "data/layouts/BattleFrontier_Lounge2/border.bin"
+
+BattleFrontier_Lounge2_Layout_Blockdata::
+	.incbin "data/layouts/BattleFrontier_Lounge2/map.bin"
+
+	.align 2
+BattleFrontier_Lounge2_Layout:: @ 0x08458838
+	.4byte 9
+	.4byte 10
+	.4byte BattleFrontier_Lounge2_Layout_Border
+	.4byte BattleFrontier_Lounge2_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_BattleFrontier
+
+BattleFrontier_ScottsHouse_Layout_Border::
+	.incbin "data/layouts/BattleFrontier_ScottsHouse/border.bin"
+
+BattleFrontier_ScottsHouse_Layout_Blockdata::
+	.incbin "data/layouts/BattleFrontier_ScottsHouse/map.bin"
+
+	.align 2
+BattleFrontier_ScottsHouse_Layout:: @ 0x084588B8
+	.4byte 6
+	.4byte 8
+	.4byte BattleFrontier_ScottsHouse_Layout_Border
+	.4byte BattleFrontier_ScottsHouse_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_BattleFrontier
 gMapLayout_METEOR_FALLS_STEVENS_CAVE_Border:
 	.incbin "data/layouts/MeteorFalls_StevensCave/border.bin"
 gMapLayout_METEOR_FALLS_STEVENS_CAVE_Blockdata:

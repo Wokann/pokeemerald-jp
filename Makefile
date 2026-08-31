@@ -643,6 +643,10 @@ $(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_
 	data/layouts/NavelRock_B1F/map.bin \
 	data/layouts/NavelRock_Fork/border.bin \
 	data/layouts/NavelRock_Fork/map.bin \
+	data/layouts/BattleFrontier_Lounge2/border.bin \
+	data/layouts/BattleFrontier_Lounge2/map.bin \
+	data/layouts/BattleFrontier_ScottsHouse/border.bin \
+	data/layouts/BattleFrontier_ScottsHouse/map.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 
