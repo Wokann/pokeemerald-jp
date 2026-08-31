@@ -4003,16 +4003,16 @@ BattleScript_PrintPayDayMoneyString: @ 0x828988F
 
 	.globl BattleScript_WrapTurnDmg
 BattleScript_WrapTurnDmg: @ 0x8289896
-	.byte 0x45, 0x01, 0x06, 0x28, 0x41, 0x02, 0x02 @ playanimation BS_ATTACKER, B_ANIM_TURN_TRAP, sB_ANIM_ARG1
-	.byte 0x10, 0x5E, 0x00 @ printstring STRINGID_PKMNHURTBY
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0xCD, 0x97, 0x28, 0x08 @ goto BattleScript_DoTurnDmg
+	playanimation BS_ATTACKER, B_ANIM_TURN_TRAP, sB_ANIM_ARG1
+	printstring STRINGID_PKMNHURTBY
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_DoTurnDmg
 
 	.globl BattleScript_WrapEnds
 BattleScript_WrapEnds: @ 0x82898A8
-	.byte 0x10, 0x5F, 0x00 @ printstring STRINGID_PKMNFREEDFROM
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
+	printstring STRINGID_PKMNFREEDFROM
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 	.globl BattleScript_MoveUsedIsInLove
 BattleScript_MoveUsedIsInLove: @ 0x82898AF
