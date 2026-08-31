@@ -51,8 +51,7 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_ROUTE127
 	.4byte gMapLayout_ROUTE128
 	.4byte gMapLayout_ROUTE129
-	@ LAYOUT_ROUTE130_MIRAGE_ISLAND remains in its raw physical layout owner.
-	.incbin "baserom_jp.gba", 0x45A2A8, 0x4
+	.4byte Route130_MirageIsland_Layout
 	.4byte gMapLayout_ROUTE131
 	.4byte gMapLayout_ROUTE132
 	.4byte gMapLayout_ROUTE133

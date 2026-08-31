@@ -538,7 +538,20 @@ gMapLayout_ROUTE129: @ 0x083EEAC4
 	.4byte gMapLayout_ROUTE129_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Mossdeep  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3eeadc, 0x1920
+Route130_MirageIsland_Layout_Border::
+	.incbin "data/layouts/Route130_MirageIsland/border.bin"
+
+Route130_MirageIsland_Layout_Blockdata::
+	.incbin "data/layouts/Route130_MirageIsland/map.bin"
+
+	.align 2
+Route130_MirageIsland_Layout:: @ 0x083F03E4
+	.4byte 80
+	.4byte 40
+	.4byte Route130_MirageIsland_Layout_Border
+	.4byte Route130_MirageIsland_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
 gMapLayout_ROUTE131_Border:
 	.incbin "data/layouts/Route131/border.bin"
 gMapLayout_ROUTE131_Blockdata:
