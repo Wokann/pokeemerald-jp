@@ -1663,7 +1663,16 @@ BattleScript_EffectSandstorm:: @ 0x08287F3F
 	goto BattleScript_MoveWeatherChange
 
 BattleScript_EffectRollout:: @ 0x08287F48
-	.incbin "baserom_jp.gba", 0x287f48, 0x1b
+	attackcanceler
+	attackstring
+	jumpifstatus2 BS_ATTACKER, STATUS2_MULTIPLETURNS, BattleScript_RolloutCheckAccuracy
+	ppreduce
+BattleScript_RolloutCheckAccuracy:
+	accuracycheck BattleScript_RolloutHit, ACC_CURR_MOVE
+BattleScript_RolloutHit:
+	typecalc2
+	rolloutdamagecalculation
+	goto BattleScript_HitFromCritCalc
 
 BattleScript_EffectSwagger:: @ 0x08287F63
 	.incbin "baserom_jp.gba", 0x287f63, 0x5e
