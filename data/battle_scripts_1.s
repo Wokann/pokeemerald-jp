@@ -3507,34 +3507,77 @@ BattleScript_EncoredNoMore:: @ 0x082893BF
 @ Delayed-faint scripts: Destiny Bond, Spikes, and Perish Song. Keep every
 @ branch at its actual JP address, including the shared Spikes print path.
 BattleScript_DestinyBondTakesLife:: @ 0x082893C6
-	.incbin "baserom_jp.gba", 0x2893c6, 0x1b
+	printstring STRINGID_PKMNTOOKFOE
+	waitmessage B_WAIT_TIME_LONG
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	tryfaintmon BS_ATTACKER
+	return
 
 BattleScript_SpikesOnAttacker:: @ 0x082893E1
-	.incbin "baserom_jp.gba", 0x2893e1, 0x21
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	call BattleScript_PrintHurtBySpikes
+	tryfaintmon BS_ATTACKER
+	tryfaintmon_spikes BS_ATTACKER, BattleScript_SpikesOnAttackerFainted
+	return
 
 BattleScript_SpikesOnAttackerFainted:: @ 0x08289402
-	.incbin "baserom_jp.gba", 0x289402, 0x16
+	setbyte sGIVEEXP_STATE, 0
+	getexp BS_ATTACKER
+	moveendall
+	goto BattleScript_HandleFaintedMon
 
 BattleScript_SpikesOnTarget:: @ 0x08289418
-	.incbin "baserom_jp.gba", 0x289418, 0x21
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	call BattleScript_PrintHurtBySpikes
+	tryfaintmon BS_TARGET
+	tryfaintmon_spikes BS_TARGET, BattleScript_SpikesOnTargetFainted
+	return
 
 BattleScript_SpikesOnTargetFainted:: @ 0x08289439
-	.incbin "baserom_jp.gba", 0x289439, 0x16
+	setbyte sGIVEEXP_STATE, 0
+	getexp BS_TARGET
+	moveendall
+	goto BattleScript_HandleFaintedMon
 
 BattleScript_SpikesOnFaintedBattler:: @ 0x0828944F
-	.incbin "baserom_jp.gba", 0x28944f, 0x21
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	healthbarupdate BS_FAINTED
+	datahpupdate BS_FAINTED
+	call BattleScript_PrintHurtBySpikes
+	tryfaintmon BS_FAINTED
+	tryfaintmon_spikes BS_FAINTED, BattleScript_SpikesOnFaintedBattlerFainted
+	return
 
 BattleScript_SpikesOnFaintedBattlerFainted:: @ 0x08289470
-	.incbin "baserom_jp.gba", 0x289470, 0x16
+	setbyte sGIVEEXP_STATE, 0
+	getexp BS_FAINTED
+	moveendall
+	goto BattleScript_HandleFaintedMon
 
 BattleScript_PrintHurtBySpikes:: @ 0x08289486
-	.incbin "baserom_jp.gba", 0x289486, 0x7
+	printstring STRINGID_PKMNHURTBYSPIKES
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 BattleScript_PerishSongTakesLife:: @ 0x0828948D
-	.incbin "baserom_jp.gba", 0x28948d, 0x1b
+	printstring STRINGID_PKMNPERISHCOUNTFELL
+	waitmessage B_WAIT_TIME_LONG
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	tryfaintmon BS_ATTACKER
+	end2
 
 BattleScript_PerishSongCountGoesDown:: @ 0x082894A8
-	.incbin "baserom_jp.gba", 0x2894a8, 0x7
+	printstring STRINGID_PKMNPERISHCOUNTFELL
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 @ All-stat boost script, split at each actual stat branch so the full
 @ chained flow is visible without retaining a gUnknown container.
