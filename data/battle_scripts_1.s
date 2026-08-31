@@ -1989,7 +1989,9 @@ BattleScript_SolarBeamOnFirstTurn::
 	goto BattleScript_TwoTurnMovesSecondTurn
 
 BattleScript_EffectThunder:: @ 0x082882EE
-	.incbin "baserom_jp.gba", 0x2882ee, 0x14
+	setmoveeffect MOVE_EFFECT_PARALYSIS
+	orword gHitMarker, HITMARKER_IGNORE_ON_AIR
+	goto BattleScript_EffectHit
 
 BattleScript_EffectTeleport:: @ 0x08288302
 	.incbin "baserom_jp.gba", 0x288302, 0x3a
