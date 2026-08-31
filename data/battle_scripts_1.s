@@ -621,16 +621,46 @@ BattleScript_StatDown:: @ 0x082872ED
 	return
 
 BattleScript_EffectHaze:: @ 0x082872FD
-	.incbin "baserom_jp.gba", 0x2872fd, 0x11
+	attackcanceler
+	attackstring
+	ppreduce
+	attackanimation
+	waitanimation
+	normalisebuffs
+	printstring STRINGID_STATCHANGESGONE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectBide:: @ 0x0828730E
-	.incbin "baserom_jp.gba", 0x28730e, 0x14
+	attackcanceler
+	attackstring
+	ppreduce
+	attackanimation
+	waitanimation
+	orword gHitMarker, HITMARKER_CHARGING
+	setbide
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectRampage:: @ 0x08287322
-	.incbin "baserom_jp.gba", 0x287322, 0x1a
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	jumpifstatus2 BS_ATTACKER, STATUS2_MULTIPLETURNS, BattleScript_EffectRampage2
+	ppreduce
+BattleScript_EffectRampage2::
+	confuseifrepeatingattackends
+	goto BattleScript_HitFromCritCalc
 
 BattleScript_EffectRoar:: @ 0x0828733C
-	.incbin "baserom_jp.gba", 0x28733c, 0x36
+	attackcanceler
+	attackstring
+	ppreduce
+	jumpifability BS_TARGET, ABILITY_SUCTION_CUPS, BattleScript_AbilityPreventsPhasingOut
+	jumpifstatus3 BS_TARGET, STATUS3_ROOTED, BattleScript_PrintMonIsRooted
+	accuracycheck BattleScript_ButItFailed, NO_ACC_CALC_CHECK_LOCK_ON
+	accuracycheck BattleScript_MoveMissedPause, ACC_CURR_MOVE
+	jumpifbattletype BATTLE_TYPE_ARENA, BattleScript_ButItFailed
+	forcerandomswitch BattleScript_ButItFailed
 
 BattleScript_EffectMultiHit:: @ 0x08287372
 	.incbin "baserom_jp.gba", 0x287372, 0xc4
