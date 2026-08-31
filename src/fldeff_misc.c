@@ -324,7 +324,7 @@ bool8 SetUpFieldMove_SecretPower(void)
     {
         SetCurrentSecretBase();
         gFieldCallback2 = FieldCallback_PrepareFadeInFromMenu;
-        gPostMenuFieldCallback = FieldCallback_SecretBaseShrub;
+        gPostMenuFieldCallback = FieldCallback_SecretBaseTree;
         return TRUE;
     }
 
@@ -332,7 +332,7 @@ bool8 SetUpFieldMove_SecretPower(void)
     {
         SetCurrentSecretBase();
         gFieldCallback2 = FieldCallback_PrepareFadeInFromMenu;
-        gPostMenuFieldCallback = FieldCallback_SecretBaseTree;
+        gPostMenuFieldCallback = FieldCallback_SecretBaseShrub;
         return TRUE;
     }
 
@@ -569,14 +569,14 @@ void CaveEntranceSpriteCallbackEnd(struct Sprite *sprite)
 }
 
 
-void FieldCallback_SecretBaseShrub(void)
+void FieldCallback_SecretBaseTree(void)
 {
     gFieldEffectArguments[0] = (u8)GetCursorSelectionMonId();
     ScriptContext_SetupScript(SecretBase_EventScript_TreeUseSecretPower);
 }
 
 
-bool8 FldEff_UseSecretPowerShrub(void)
+bool8 FldEff_UseSecretPowerTree(void)
 {
     u8 taskId = CreateFieldMoveTask();
 
@@ -646,14 +646,14 @@ void TreeEntranceSpriteCallbackEnd(struct Sprite *sprite)
 }
 
 
-void FieldCallback_SecretBaseTree(void)
+void FieldCallback_SecretBaseShrub(void)
 {
     gFieldEffectArguments[0] = (u8)GetCursorSelectionMonId();
     ScriptContext_SetupScript(SecretBase_EventScript_ShrubUseSecretPower);
 }
 
 
-bool8 FldEff_UseSecretPowerTree(void)
+bool8 FldEff_UseSecretPowerShrub(void)
 {
     u8 taskId = CreateFieldMoveTask();
 
@@ -828,12 +828,12 @@ static void DoBalloonSoundEffect(s16 metatileId)
 }
 
 
-bool8 FldEff_NopA700(void)
+bool8 FldEff_Nop47(void)
 {
     return FALSE;
 }
 
-bool8 FldEff_NopA6FC(void)
+bool8 FldEff_Nop48(void)
 {
     return FALSE;
 }

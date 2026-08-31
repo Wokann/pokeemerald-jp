@@ -1,11 +1,10 @@
-	.section script_data, "aw", %progbits
 	.include "asm/macros.inc"
+	.include "constants/constants.inc"
 
-@ This JP-located owner mirrors pokeemerald data/field_effect_scripts.s.
-@ Unconverted bytes remain in their verified physical ROM span.
+	.section script_data, "aw", %progbits
+
 	.align 2
-	.globl gFieldEffectScriptPointers
-gFieldEffectScriptPointers: @ 0x8289F5C
+gFieldEffectScriptPointers:: @ 0x8289F5C
 	.4byte gFieldEffectScript_ExclamationMarkIcon1 @ FLDEFF_EXCLAMATION_MARK_ICON
 	.4byte gFieldEffectScript_UseCutOnTallGrass @ FLDEFF_USE_CUT_ON_GRASS
 	.4byte gFieldEffectScript_UseCutOnTree @ FLDEFF_USE_CUT_ON_TREE
@@ -180,11 +179,11 @@ gFieldEffectScript_PokeCenterHeal: @ 0x828A13E
 	field_eff_end
 
 gFieldEffectScript_UseSecretPowerTree: @ 0x828A14D
-	field_eff_callnative FldEff_UseSecretPowerShrub
+	field_eff_callnative FldEff_UseSecretPowerTree
 	field_eff_end
 
 gFieldEffectScript_UseSecretPowerShrub: @ 0x828A153
-	field_eff_callnative FldEff_UseSecretPowerTree
+	field_eff_callnative FldEff_UseSecretPowerShrub
 	field_eff_end
 
 gFieldEffectScript_TreeDisguise: @ 0x828A159
@@ -265,11 +264,11 @@ gFieldEffectScript_HeartIcon: @ 0x828A1DE
 	field_eff_end
 
 gFieldEffectScript_Nop47: @ 0x828A1E8
-	field_eff_callnative FldEff_NopA700
+	field_eff_callnative FldEff_Nop47
 	field_eff_end
 
 gFieldEffectScript_Nop48: @ 0x828A1EE
-	field_eff_callnative FldEff_NopA6FC
+	field_eff_callnative FldEff_Nop48
 	field_eff_end
 
 gFieldEffectScript_AshPuff: @ 0x828A1F4
