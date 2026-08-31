@@ -1543,7 +1543,10 @@ BattleScript_NightmareWorked:
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectMinimize:: @ 0x08287DE8
-	.incbin "baserom_jp.gba", 0x287de8, 0xd
+	attackcanceler
+	setminimize
+	setstatchanger STAT_EVASION, 1, FALSE
+	goto BattleScript_EffectStatUpAfterAtkCanceler
 
 BattleScript_EffectCurse:: @ 0x08287DF5
 	.incbin "baserom_jp.gba", 0x287df5, 0xc9
