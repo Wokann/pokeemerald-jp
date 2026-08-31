@@ -2523,7 +2523,21 @@ BattleScript_BrickBreakDoHit:
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectYawn:: @ 0x082888BF
-	.incbin "baserom_jp.gba", 0x2888bf, 0x41
+	attackcanceler
+	attackstring
+	ppreduce
+	jumpifability BS_TARGET, ABILITY_VITAL_SPIRIT, BattleScript_PrintBankAbilityMadeIneffective
+	jumpifability BS_TARGET, ABILITY_INSOMNIA, BattleScript_PrintBankAbilityMadeIneffective
+	jumpifstatus2 BS_TARGET, STATUS2_SUBSTITUTE, BattleScript_ButItFailed
+	jumpifsideaffecting BS_TARGET, SIDE_STATUS_SAFEGUARD, BattleScript_SafeguardProtected
+	accuracycheck BattleScript_ButItFailed, NO_ACC_CALC_CHECK_LOCK_ON
+	jumpifcantmakeasleep BattleScript_ButItFailed
+	setyawn BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNWASMADEDROWSY
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_PrintBankAbilityMadeIneffective:: @ 0x08288900
 	copybyte sBATTLER, sBATTLER_WITH_ABILITY
