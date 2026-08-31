@@ -1739,7 +1739,11 @@ BattleScript_EffectPresent:: @ 0x0828800A
 	presentdamagecalculation
 
 BattleScript_EffectSafeguard:: @ 0x08288016
-	.incbin "baserom_jp.gba", 0x288016, 0x9
+	attackcanceler
+	attackstring
+	ppreduce
+	setsafeguard
+	goto BattleScript_PrintReflectLightScreenSafeguardString
 
 BattleScript_EffectThawHit:: @ 0x0828801F
 	.incbin "baserom_jp.gba", 0x28801f, 0xb
