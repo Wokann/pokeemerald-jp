@@ -1172,10 +1172,15 @@ BattleScript_AlreadyHasSubstitute:: @ 0x082879C6
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectRecharge:: @ 0x082879D7
-	.incbin "baserom_jp.gba", 0x2879d7, 0x13
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	setmoveeffect MOVE_EFFECT_RECHARGE | MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_CERTAIN
+	goto BattleScript_HitFromAtkString
 
 BattleScript_MoveUsedMustRecharge:: @ 0x082879EA
-	.incbin "baserom_jp.gba", 0x2879ea, 0xb
+	printstring STRINGID_PKMNMUSTRECHARGE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectRage:: @ 0x082879F5
 	.incbin "baserom_jp.gba", 0x2879f5, 0x27
