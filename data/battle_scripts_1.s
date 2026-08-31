@@ -1246,7 +1246,16 @@ BattleScript_EffectSplash:: @ 0x08287A7D
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectDisable:: @ 0x08287A8F
-	.incbin "baserom_jp.gba", 0x287a8f, 0x1c
+	attackcanceler
+	attackstring
+	ppreduce
+	accuracycheck BattleScript_ButItFailed, ACC_CURR_MOVE
+	disablelastusedattack BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNMOVEWASDISABLED
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectLevelDamage:: @ 0x08287AAB
 	.incbin "baserom_jp.gba", 0x287aab, 0x18
