@@ -996,7 +996,35 @@ gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_2F: @ 0x084018C0
 	.4byte gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_2F_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Facility  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4018d8, 0x48
+UnusedContestRoom2_Layout_Border::
+	.incbin "data/layouts/UnusedContestRoom2/border.bin"
+
+UnusedContestRoom2_Layout_Blockdata::
+	.incbin "data/layouts/UnusedContestRoom2/map.bin"
+
+	.align 2
+UnusedContestRoom2_Layout:: @ 0x084018E4
+	.4byte 1
+	.4byte 1
+	.4byte UnusedContestRoom2_Layout_Border
+	.4byte UnusedContestRoom2_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_Contest
+
+UnusedContestRoom3_Layout_Border::
+	.incbin "data/layouts/UnusedContestRoom3/border.bin"
+
+UnusedContestRoom3_Layout_Blockdata::
+	.incbin "data/layouts/UnusedContestRoom3/map.bin"
+
+	.align 2
+UnusedContestRoom3_Layout:: @ 0x08401908
+	.4byte 1
+	.4byte 1
+	.4byte UnusedContestRoom3_Layout_Border
+	.4byte UnusedContestRoom3_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_Contest
 gMapLayout_SLATEPORT_CITY_POKEMON_FAN_CLUB_Border:
 	.incbin "data/layouts/SlateportCity_PokemonFanClub/border.bin"
 gMapLayout_SLATEPORT_CITY_POKEMON_FAN_CLUB_Blockdata:

@@ -88,8 +88,8 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_PETALBURG_CITY_HOUSE2
 	.4byte gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_1F
 	.4byte gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_2F
-	@ LAYOUT_UNUSED_CONTEST_ROOM2 through LAYOUT_UNUSED_CONTEST_ROOM3 remain in raw physical layout owners.
-	.incbin "baserom_jp.gba", 0x45A33C, 0x8
+	.4byte UnusedContestRoom2_Layout
+	.4byte UnusedContestRoom3_Layout
 	.4byte gMapLayout_SLATEPORT_CITY_POKEMON_FAN_CLUB
 	.4byte gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_1F
 	.4byte gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_2F

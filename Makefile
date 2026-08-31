@@ -508,6 +508,10 @@ $(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_
 	data/layouts/Route130_MirageIsland/map.bin \
 	data/layouts/UnusedContestRoom1/border.bin \
 	data/layouts/UnusedContestRoom1/map.bin \
+	data/layouts/UnusedContestRoom2/border.bin \
+	data/layouts/UnusedContestRoom2/map.bin \
+	data/layouts/UnusedContestRoom3/border.bin \
+	data/layouts/UnusedContestRoom3/map.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 
