@@ -4132,21 +4132,21 @@ BattleScript_MoveEffectConfusion: @ 0x828996E
 
 	.globl BattleScript_MoveEffectRecoil
 BattleScript_MoveEffectRecoil: @ 0x828997C
-	.byte 0x2A, 0x00, 0x8E, 0x3E, 0x02, 0x02, 0xA5, 0x00, 0x8F, 0x99, 0x28, 0x08 @ jumpifmove MOVE_STRUGGLE, BattleScript_DoRecoil
-	.byte 0x1E, 0x01, 0x45, 0xA9, 0x99, 0x28, 0x08 @ jumpifability BS_ATTACKER, ABILITY_ROCK_HEAD, BattleScript_RecoilEnd
+	jumpifmove MOVE_STRUGGLE, BattleScript_DoRecoil
+	jumpifability BS_ATTACKER, ABILITY_ROCK_HEAD, BattleScript_RecoilEnd
 
 	.globl BattleScript_DoRecoil
 BattleScript_DoRecoil: @ 0x828998F
-	.byte 0x35, 0x24, 0x3F, 0x02, 0x02, 0x00, 0x01, 0x10, 0x00 @ orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
-	.byte 0x0B, 0x01 @ healthbarupdate BS_ATTACKER
-	.byte 0x0C, 0x01 @ datahpupdate BS_ATTACKER
-	.byte 0x10, 0x64, 0x00 @ printstring STRINGID_PKMNHITWITHRECOIL
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x19, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 @ tryfaintmon BS_ATTACKER
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	printstring STRINGID_PKMNHITWITHRECOIL
+	waitmessage B_WAIT_TIME_LONG
+	tryfaintmon BS_ATTACKER
 
 	.globl BattleScript_RecoilEnd
 BattleScript_RecoilEnd: @ 0x82899A9
-	.byte 0x3C @ return
+	return
 
 	.globl BattleScript_ItemSteal
 BattleScript_ItemSteal: @ 0x82899AA
