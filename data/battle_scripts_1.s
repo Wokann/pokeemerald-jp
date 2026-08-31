@@ -3466,40 +3466,43 @@ BattleScript_TrainerBattleForceOut:: @ 0x08289379
 	goto BattleScript_MoveEnd
 
 @ Status-block and status-expiry response scripts. Preserve the Battle
-@ Palace selection branch as separate physical entries instead of a raw
-@ mixed container.
+@ Palace selection branch as separate physical entries.
 BattleScript_MistProtected:: @ 0x0828938B
-	.incbin "baserom_jp.gba", 0x28938b, 0xa
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNPROTECTEDBYMIST
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 BattleScript_RageIsBuilding:: @ 0x08289395
-	.byte 0x10, 0x83, 0x00 @ printstring STRINGID_PKMNRAGEBUILDING
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3C @ return
+	printstring STRINGID_PKMNRAGEBUILDING
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 BattleScript_MoveUsedIsDisabled:: @ 0x0828939C
-	.byte 0x10, 0x85, 0x00 @ printstring STRINGID_PKMNMOVEISDISABLED
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
+	printstring STRINGID_PKMNMOVEISDISABLED
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_SelectingDisabledMove:: @ 0x082893A7
-	.byte 0x11, 0x85, 0x00 @ printselectionstring STRINGID_PKMNMOVEISDISABLED
-	.byte 0x44 @ endselectionscript
+	printselectionstring STRINGID_PKMNMOVEISDISABLED
+	endselectionscript
 
 BattleScript_DisabledNoMore:: @ 0x082893AB
-	.byte 0x10, 0x86, 0x00 @ printstring STRINGID_PKMNMOVEDISABLEDNOMORE
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
+	printstring STRINGID_PKMNMOVEDISABLEDNOMORE
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_SelectingDisabledMoveInPalace:: @ 0x082893B2
-	.incbin "baserom_jp.gba", 0x2893b2, 0x3
+	printstring STRINGID_PKMNMOVEISDISABLED
 
 BattleScript_SelectingUnusableMoveInPalace:: @ 0x082893B5
-	.incbin "baserom_jp.gba", 0x2893b5, 0xa
+	moveendto MOVEEND_NEXT_TARGET
+	end
 
 BattleScript_EncoredNoMore:: @ 0x082893BF
-	.byte 0x10, 0x88, 0x00 @ printstring STRINGID_PKMNENCOREENDED
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
+	printstring STRINGID_PKMNENCOREENDED
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 @ Delayed-faint scripts: Destiny Bond, Spikes, and Perish Song. Keep every
 @ branch at its actual JP address, including the shared Spikes print path.
