@@ -269,6 +269,7 @@ MAPS = (
     "TerraCave_Entrance",
     "TerraCave_End",
     "AlteringCave",
+    "MeteorFalls_StevensCave",
 )
 
 CONNECTED_MAPS = (
@@ -535,6 +536,7 @@ NULL_CONNECTION_MAPS = (
     "TerraCave_Entrance",
     "TerraCave_End",
     "AlteringCave",
+    "MeteorFalls_StevensCave",
 )
 
 CANONICAL_LAYOUT_MAPS = (

@@ -2313,8 +2313,10 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/TerraCave_End/header.inc"
 	@ MAP_ALTERING_CAVE (g24 m106)
 	.include "data/maps/AlteringCave/header.inc"
-	@ MAP_METEOR_FALLS_STEVENS_CAVE through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45CE94, 0x1B04
+	@ MAP_METEOR_FALLS_STEVENS_CAVE (g24 m107)
+	.include "data/maps/MeteorFalls_StevensCave/header.inc"
+	@ MAP_SECRET_BASE_RED_CAVE1 through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45CEB0, 0x1AE8
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
