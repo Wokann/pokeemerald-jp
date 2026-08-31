@@ -1258,7 +1258,15 @@ BattleScript_EffectDisable:: @ 0x08287A8F
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectLevelDamage:: @ 0x08287AAB
-	.incbin "baserom_jp.gba", 0x287aab, 0x18
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	typecalc
+	bicbyte gMoveResultFlags, MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE
+	dmgtolevel
+	adjustsetdamage
+	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectPsywave:: @ 0x08287AC3
 	.incbin "baserom_jp.gba", 0x287ac3, 0x18
