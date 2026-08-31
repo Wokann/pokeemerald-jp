@@ -6,11 +6,11 @@ BattleFrontier_BattleTowerLobby_MapScripts::
 	.byte 0
 
 BattleFrontier_BattleTowerLobby_OnResume:
-	special sub_08165248
+	special TryHideBattleTowerReporter
 	end
 
 BattleFrontier_BattleTowerLobby_OnTransition:
-	call 0x0825409C
+	call BattleFrontier_BattleTowerLobby_EventScript_ShowOrHideReporter
 	apprentice_shouldcheckgone
 	goto_if_eq VAR_0x8004, FALSE, BattleFrontier_BattleTowerLobby_EventScript_ShowApprentice  @ VAR_0x8004 always TRUE here
 	goto_if_set FLAG_DAILY_APPRENTICE_LEAVES, BattleFrontier_BattleTowerLobby_EventScript_HideApprentice
@@ -133,11 +133,11 @@ BattleFrontier_EventScript_SaveBattle::
 	frontier_savebattle
 	goto_if_eq VAR_RESULT, FALSE, BattleFrontier_EventScript_BattleSaveFailed
 	playse SE_SAVE
-	msgbox 0x08222412, MSGBOX_DEFAULT
+	msgbox BattleFrontier_BattleTowerLobby_Text_BattleRecordedOnPass, MSGBOX_DEFAULT
 	goto BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle
 
 BattleFrontier_EventScript_BattleSaveFailed::
-	msgbox 0x0822247E, MSGBOX_DEFAULT
+	msgbox BattleFrontier_BattleTowerBattleRoom_Text_RecordCouldntBeSaved, MSGBOX_DEFAULT
 BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle::
 	return
 
@@ -746,25 +746,25 @@ BattleFrontier_EventScript_GetLvlMode::
 
 BattleFrontier_BattleTowerLobby_EventScript_TryCableLink::
 	setvar VAR_0x8004, USING_BATTLE_TOWER
-	message 0x08247C79
+	message gText_PleaseWaitForLink
 	waitmessage
 	setvar VAR_0x8005, 0
 	special TryBattleLinkup
 	@ JP waits for link setup before inspecting VAR_RESULT.
 	waitstate
 	goto_if_eq VAR_RESULT, LINKUP_SUCCESS, BattleFrontier_BattleTowerLobby_EventScript_CableLinkSuccessful
-	goto_if_eq VAR_RESULT, LINKUP_SOMEONE_NOT_READY, 0x08246FBE
+	goto_if_eq VAR_RESULT, LINKUP_SOMEONE_NOT_READY, CableClub_EventScript_AbortLinkSomeoneNotReady
 	goto_if_eq VAR_RESULT, LINKUP_DIFF_SELECTIONS, BattleFrontier_BattleTowerLobby_EventScript_AbortLinkDifferentSelections
 	goto_if_eq VAR_RESULT, LINKUP_WRONG_NUM_PLAYERS, BattleFrontier_BattleTowerLobby_EventScript_AbortLinkIncorrectNumberOfPlayers
 	goto_if_eq VAR_RESULT, LINKUP_FAILED, BattleFrontier_BattleTowerLobby_EventScript_CancelChallenge
-	goto_if_eq VAR_RESULT, LINKUP_CONNECTION_ERROR, 0x08246FB1
+	goto_if_eq VAR_RESULT, LINKUP_CONNECTION_ERROR, CableClub_EventScript_AbortLinkConnectionError
 	goto_if_eq VAR_RESULT, LINKUP_FAILED_BATTLE_TOWER, BattleFrontier_BattleTowerLobby_EventScript_AbortLink
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_AbortLinkDifferentSelections::
 	special CloseLink
 	goto_if_eq VAR_0x8005, 3, BattleFrontier_BattleTowerLobby_EventScript_FriendDifferentSelection
-	msgbox 0x08247D84, MSGBOX_DEFAULT
+	msgbox Text_PlayersMadeDifferentSelections, MSGBOX_DEFAULT
 	release
 	end
 
@@ -777,7 +777,7 @@ BattleFrontier_BattleTowerLobby_EventScript_FriendDifferentSelection::
 BattleFrontier_BattleTowerLobby_EventScript_AbortLinkIncorrectNumberOfPlayers::
 	msgbox BattleFrontier_BattleTowerLobby_Text_LinkMultiOnlyForTwoPlayers, MSGBOX_DEFAULT
 	special CloseLink
-	msgbox 0x08247DAF, MSGBOX_DEFAULT
+	msgbox CableClub_Text_IncorrectNumberOfParticipants, MSGBOX_DEFAULT
 	release
 	end
 
@@ -808,7 +808,7 @@ BattleFrontier_BattleTowerLobby_EventScript_CableLinkSuccessful::
 	message BattleFrontier_BattleTowerLobby_Text_SaveGameBeforeShowingIn
 	waitmessage
 	tower_save CHALLENGE_STATUS_SAVING
-	special sub_080A0194
+	special SaveForBattleTowerLink
 	@ JP waits for the link-save special before continuing.
 	waitstate
 	playse SE_SAVE
@@ -828,7 +828,7 @@ BattleFrontier_BattleTowerLobby_EventScript_TryWirelessLink::
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_ChooseLeader::
-	message 0x082485D7
+	message CableClub_Text_ChooseGroupLeaderOfTwo
 	waitmessage
 	multichoice 16, 6, MULTI_LINK_LEADER, FALSE
 	switch VAR_RESULT
@@ -839,7 +839,7 @@ BattleFrontier_BattleTowerLobby_EventScript_ChooseLeader::
 	end
 
 BattleFrontier_BattleTowerLobby_EventScript_TryBecomeLeader::
-	call 0x0824780F
+	call CableClub_EventScript_TryBecomeLinkLeader
 	goto_if_eq VAR_RESULT, LINKUP_SUCCESS, BattleFrontier_BattleTowerLobby_EventScript_WirelessLinkSuccessful
 	goto_if_eq VAR_RESULT, LINKUP_FAILED, BattleFrontier_BattleTowerLobby_EventScript_ChooseLeader
 	goto_if_eq VAR_RESULT, LINKUP_RETRY_ROLE_ASSIGN, BattleFrontier_BattleTowerLobby_EventScript_TryBecomeLeader
@@ -848,7 +848,7 @@ BattleFrontier_BattleTowerLobby_EventScript_TryBecomeLeader::
 	return
 
 BattleFrontier_BattleTowerLobby_EventScript_TryJoinGroup::
-	call 0x08247814
+	call CableClub_EventScript_TryJoinLinkGroup
 	goto_if_eq VAR_RESULT, LINKUP_SUCCESS, BattleFrontier_BattleTowerLobby_EventScript_WirelessLinkSuccessful
 	goto_if_eq VAR_RESULT, LINKUP_FAILED, BattleFrontier_BattleTowerLobby_EventScript_ChooseLeader
 	goto_if_eq VAR_RESULT, LINKUP_RETRY_ROLE_ASSIGN, BattleFrontier_BattleTowerLobby_EventScript_TryJoinGroup
@@ -862,7 +862,7 @@ BattleFrontier_BattleTowerLobby_EventScript_WirelessLinkSuccessful::
 	message BattleFrontier_BattleTowerLobby_Text_SaveGameBeforeShowingIn
 	waitmessage
 	tower_save CHALLENGE_STATUS_SAVING
-	special sub_080A0194
+	special SaveForBattleTowerLink
 	@ JP waits for the link-save special before continuing.
 	waitstate
 	playse SE_SAVE

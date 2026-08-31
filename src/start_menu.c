@@ -2955,7 +2955,7 @@ __attribute__((naked)) void sub_080A016C(void)
     );
 }
 
-__attribute__((naked)) void sub_080A0194(void)
+__attribute__((naked)) void SaveForBattleTowerLink(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -2811,7 +2811,68 @@ gMapLayout_ROUTE130: @ 0x08423268
 	.4byte gMapLayout_ROUTE130_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x423280, 0x23bc
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_LOBBY_Border:
+	.incbin "data/layouts/BattleFrontier_BattleTowerLobby/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_LOBBY_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattleTowerLobby/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_LOBBY
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_LOBBY: @ 0x0842347C
+	.4byte 25  @ width
+	.4byte 10  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_LOBBY_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_LOBBY_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleFrontier  @ secondaryTileset
+gMapLayout_BATTLE_FRONTIER_OUTSIDE_WEST_Border:
+	.incbin "data/layouts/BattleFrontier_OutsideWest/border.bin"
+gMapLayout_BATTLE_FRONTIER_OUTSIDE_WEST_Blockdata:
+	.incbin "data/layouts/BattleFrontier_OutsideWest/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_OUTSIDE_WEST
+gMapLayout_BATTLE_FRONTIER_OUTSIDE_WEST: @ 0x0842541C
+	.4byte 56  @ width
+	.4byte 72  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_OUTSIDE_WEST_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_OUTSIDE_WEST_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleFrontierOutsideWest  @ secondaryTileset
+gMapLayout_BATTLE_ELEVATOR_Border:
+	.incbin "data/layouts/BattleElevator/border.bin"
+gMapLayout_BATTLE_ELEVATOR_Blockdata:
+	.incbin "data/layouts/BattleElevator/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_BATTLE_ELEVATOR
+gMapLayout_BATTLE_ELEVATOR: @ 0x08425484
+	.4byte 5  @ width
+	.4byte 7  @ height
+	.4byte gMapLayout_BATTLE_ELEVATOR_Border  @ border
+	.4byte gMapLayout_BATTLE_ELEVATOR_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleFrontier  @ secondaryTileset
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_CORRIDOR_Border:
+	.incbin "data/layouts/BattleFrontier_BattleTowerCorridor/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_CORRIDOR_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattleTowerCorridor/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_CORRIDOR
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_CORRIDOR: @ 0x08425550
+	.4byte 17  @ width
+	.4byte 5  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_CORRIDOR_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_CORRIDOR_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleFrontier  @ secondaryTileset
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_BATTLE_ROOM_Border:
+	.incbin "data/layouts/BattleFrontier_BattleTowerBattleRoom/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_BATTLE_ROOM_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattleTowerBattleRoom/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_BATTLE_ROOM
+gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_BATTLE_ROOM: @ 0x08425624
+	.4byte 10  @ width
+	.4byte 9  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_BATTLE_ROOM_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_BATTLE_ROOM_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleFrontier  @ secondaryTileset
 gMapLayout_RUSTBORO_CITY_DEVON_CORP_3F_Border:
 	.incbin "data/layouts/RustboroCity_DevonCorp_3F/border.bin"
 gMapLayout_RUSTBORO_CITY_DEVON_CORP_3F_Blockdata:
@@ -2849,7 +2910,7 @@ gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR: @ 0x08425DE0
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_Border  @ border
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
-	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY  @ secondaryTileset
+	.4byte gTileset_BattleFrontier  @ secondaryTileset
 Underwater_Route124_Layout_Border::
 	.incbin "data/layouts/Underwater_Route124/border.bin"
 Underwater_Route124_Layout_Blockdata::

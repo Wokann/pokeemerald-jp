@@ -2977,7 +2977,7 @@ __attribute__((naked)) void PrintLinkResultsNumsOnCard(void)
         "_080C33F0: .4byte gUnknown_2039988\n\t"
         "_080C33F4: .4byte sLinkBattleTexts\n\t"
         "_080C33F8: .4byte 0x00000516\n\t"
-        "_080C33FC: .4byte SPECIAL_sub_08165248\n\t"
+        "_080C33FC: .4byte SPECIAL_TryHideBattleTowerReporter\n\t"
         "_080C3400: .4byte 0x00000534\n\t"
         "_080C3404: .4byte SPECIAL_ShowMapNamePopup\n\t"
         "_080C3408: .4byte 0x00000536\n\t"
@@ -3061,7 +3061,7 @@ __attribute__((naked)) void PrintIdOnCard(void)
         "_080C34A4: .4byte gUnknown_854676C\n\t"
         "_080C34A8: .4byte gText_WinsLosses\n\t"
         "_080C34AC: .4byte gUnknown_854676F\n\t"
-        "_080C34B0: .4byte SPECIAL_sub_08165248\n\t"
+        "_080C34B0: .4byte SPECIAL_TryHideBattleTowerReporter\n\t"
         "_080C34B4: .4byte SPECIAL_ShowMapNamePopup\n\t"
         ".syntax divided\n\t"
     );

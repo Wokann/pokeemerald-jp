@@ -335,6 +335,11 @@ MAPS = (
     "SafariZone_North",
     "SafariZone_Southwest",
     "SafariZone_South",
+    "BattleFrontier_OutsideWest",
+    "BattleFrontier_BattleTowerLobby",
+    "BattleFrontier_BattleTowerElevator",
+    "BattleFrontier_BattleTowerCorridor",
+    "BattleFrontier_BattleTowerBattleRoom",
 )
 
 CONNECTED_MAPS = (
@@ -347,6 +352,7 @@ CONNECTED_MAPS = (
     "SafariZone_North",
     "SafariZone_Southwest",
     "SafariZone_South",
+    "BattleFrontier_OutsideWest",
 )
 
 NULL_CONNECTION_MAPS = (
@@ -667,6 +673,10 @@ NULL_CONNECTION_MAPS = (
     "BattlePyramidSquare15",
     "BattlePyramidSquare16",
     "UnionRoom",
+    "BattleFrontier_BattleTowerLobby",
+    "BattleFrontier_BattleTowerElevator",
+    "BattleFrontier_BattleTowerCorridor",
+    "BattleFrontier_BattleTowerBattleRoom",
 )
 
 CANONICAL_LAYOUT_MAPS = (

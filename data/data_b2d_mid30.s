@@ -926,9 +926,9 @@ gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY_Palettes:
 	.incbin "data/tilesets/secondary/elite_four/palettes/13.gbapal"
 	.incbin "data/tilesets/secondary/elite_four/palettes/14.gbapal"
 	.incbin "data/tilesets/secondary/elite_four/palettes/15.gbapal"
-gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_Tiles:
+gTileset_BattleFrontier_Tiles:
 	.incbin "data/tilesets/secondary/battle_frontier/tiles.4bpp.lz"
-gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_Palettes:
+gTileset_BattleFrontier_Palettes:
 	.incbin "data/tilesets/secondary/battle_frontier/palettes/00.gbapal"
 	.incbin "data/tilesets/secondary/battle_frontier/palettes/01.gbapal"
 	.incbin "data/tilesets/secondary/battle_frontier/palettes/02.gbapal"
@@ -1187,9 +1187,9 @@ gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY_Metatiles:
 	.incbin "data/tilesets/secondary/elite_four/metatiles.bin"
 gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY_MetatileAttributes:
 	.incbin "data/tilesets/secondary/elite_four/metatile_attributes.bin"
-gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_Metatiles:
+gTileset_BattleFrontier_Metatiles:
 	.incbin "data/tilesets/secondary/battle_frontier/metatiles.bin"
-gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_MetatileAttributes:
+gTileset_BattleFrontier_MetatileAttributes:
 	.incbin "data/tilesets/secondary/battle_frontier/metatile_attributes.bin"
 	.incbin "baserom_jp.gba", 0x3A5E2A, 0x94A4
 gTileset_MOSSDEEP_CITY_GAME_CORNER_1F_SECONDARY_Metatiles:
@@ -1318,7 +1318,10 @@ gTileset_SOOTOPOLIS_CITY_SECONDARY: @ 0x083B7C5C
 	.4byte gTileset_SOOTOPOLIS_CITY_SECONDARY_Metatiles  @ metatiles
 	.4byte gTileset_SOOTOPOLIS_CITY_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A0739  @ callback
-	.incbin "baserom_jp.gba", 0x3B7C74, 0x30
+	.globl gTileset_BattleFrontierOutsideWest
+gTileset_BattleFrontierOutsideWest: @ 0x083B7C74
+	.incbin "baserom_jp.gba", 0x3B7C74, 0x18
+	.incbin "baserom_jp.gba", 0x3B7C8C, 0x18
 	.globl gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY
 gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY: @ 0x083B7CA4
 	.byte 0x01, 0x00, 0x00, 0x00  @ isCompressed, isSecondary
@@ -1600,13 +1603,13 @@ gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY: @ 0x083B809C
 	.4byte gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY_Metatiles  @ metatiles
 	.4byte gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A0831  @ callback
-	.globl gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY
-gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY: @ 0x083B80B4
+	.globl gTileset_BattleFrontier
+gTileset_BattleFrontier: @ 0x083B80B4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_Tiles  @ tiles
-	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_Palettes  @ palettes
-	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_Metatiles  @ metatiles
-	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_MetatileAttributes  @ metatileAttributes
+	.4byte gTileset_BattleFrontier_Tiles  @ tiles
+	.4byte gTileset_BattleFrontier_Palettes  @ palettes
+	.4byte gTileset_BattleFrontier_Metatiles  @ metatiles
+	.4byte gTileset_BattleFrontier_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.incbin "baserom_jp.gba", 0x3B80CC, 0x78
 	.globl gTileset_BattlePyramid
@@ -2474,8 +2477,12 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/SafariZone_Southwest/header.inc"
 	@ MAP_SAFARI_ZONE_SOUTH (g26 m3)
 	.include "data/maps/SafariZone_South/header.inc"
-	@ MAP_BATTLE_FRONTIER_OUTSIDE_WEST through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45D5CC, 0x13CC
+	.include "data/maps/BattleFrontier_OutsideWest/header.inc"
+	.include "data/maps/BattleFrontier_BattleTowerLobby/header.inc"
+	.include "data/maps/BattleFrontier_BattleTowerElevator/header.inc"
+	.include "data/maps/BattleFrontier_BattleTowerCorridor/header.inc"
+	.include "data/maps/BattleFrontier_BattleTowerBattleRoom/header.inc"
+	.incbin "baserom_jp.gba", 0x45D658, 0x1340
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
@@ -2556,7 +2563,9 @@ gUnknown_845E998: @ 0x0845E998
 	.include "data/maps/SafariZone_Southwest/connections.inc"
 	@ 0x0845F284: Safari Zone South connection list and header.
 	.include "data/maps/SafariZone_South/connections.inc"
-	.incbin "baserom_jp.gba", 0x45F2B0, 0x68
+	.incbin "baserom_jp.gba", 0x45F2B0, 0x40
+	.include "data/maps/BattleFrontier_OutsideWest/connections.inc"
+	.incbin "baserom_jp.gba", 0x45F304, 0x14
 
 	.globl sDummyConnectionFlags
 sDummyConnectionFlags: @ 0x845F318

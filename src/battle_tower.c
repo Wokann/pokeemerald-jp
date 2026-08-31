@@ -7134,7 +7134,7 @@ __attribute__((naked)) void CopyEReaderTrainerFarewellMessage(void)
     );
 }
 
-__attribute__((naked)) void sub_08165248(void)
+__attribute__((naked)) void TryHideBattleTowerReporter(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

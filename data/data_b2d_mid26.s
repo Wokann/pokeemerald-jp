@@ -1079,7 +1079,12 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/SafariZone_North/events.inc"
 	.include "data/maps/SafariZone_Southwest/events.inc"
 	.include "data/maps/SafariZone_South/events.inc"
-	.incbin "baserom_jp.gba", 0x513A7C, 0x3B00
+	.include "data/maps/BattleFrontier_OutsideWest/events.inc"
+	.include "data/maps/BattleFrontier_BattleTowerLobby/events.inc"
+	.include "data/maps/BattleFrontier_BattleTowerElevator/events.inc"
+	.include "data/maps/BattleFrontier_BattleTowerCorridor/events.inc"
+	.include "data/maps/BattleFrontier_BattleTowerBattleRoom/events.inc"
+	.incbin "baserom_jp.gba", 0x513F68, 0x3614
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

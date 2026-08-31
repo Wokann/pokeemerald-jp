@@ -353,7 +353,7 @@ gSpecials::
 	def_special HasAllHoennMons
 	def_special MonOTNameMatchesPlayer
 	def_special BufferLottoTicketNumber
-	def_special sub_08165248
+	def_special TryHideBattleTowerReporter
 	def_special DoesPartyHaveEnigmaBerry
 	def_special GenerateContestRand
 	def_special SetChampionSaveWarp
@@ -519,7 +519,7 @@ gSpecials::
 	def_special CreateAbnormalWeatherEvent
 	def_special GetAbnormalWeatherMapNameAndType
 	def_special sub_0813B4C8
-	def_special sub_080A0194
+	def_special SaveForBattleTowerLink
 	def_special Unused_SetWeatherSunny
 	def_special SetUnlockedPokedexFlags
 	def_special IsTrainerRegistered
