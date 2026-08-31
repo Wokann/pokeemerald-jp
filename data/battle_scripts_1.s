@@ -1416,7 +1416,16 @@ BattleScript_EffectFlail:: @ 0x08287C27
 	goto BattleScript_EffectHit
 
 BattleScript_EffectSpite:: @ 0x08287C2D
-	.incbin "baserom_jp.gba", 0x287c2d, 0x1c
+	attackcanceler
+	attackstring
+	ppreduce
+	accuracycheck BattleScript_ButItFailed, ACC_CURR_MOVE
+	tryspiteppreduce BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNREDUCEDPP
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectHealBell:: @ 0x08287C49
 	.incbin "baserom_jp.gba", 0x287c49, 0x45
