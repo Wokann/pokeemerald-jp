@@ -2717,7 +2717,8 @@ BattleScript_EffectPoisonFang:: @ 0x08288AC8
 	goto BattleScript_EffectHit
 
 BattleScript_EffectWeatherBall:: @ 0x08288AD3
-	.incbin "baserom_jp.gba", 0x288ad3, 0x6
+	setweatherballtype
+	goto BattleScript_EffectHit
 
 BattleScript_EffectOverheat:: @ 0x08288AD9
 	.incbin "baserom_jp.gba", 0x288ad9, 0xb
