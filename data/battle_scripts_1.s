@@ -434,13 +434,104 @@ BattleScript_EffectParalyzeHit:: @ 0x082870F6
 	goto BattleScript_EffectHit
 
 BattleScript_EffectExplosion:: @ 0x08287101
-	.incbin "baserom_jp.gba", 0x287101, 0x80
+	attackcanceler
+	attackstring
+	ppreduce
+	tryexplosion
+	setatkhptozero
+	waitstate
+	jumpifbyte CMP_NO_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_MISSED, BattleScript_ExplosionDoAnimStartLoop
+	call BattleScript_PreserveMissedBitDoMoveAnim
+	goto BattleScript_ExplosionLoop
+BattleScript_ExplosionDoAnimStartLoop::
+	attackanimation
+	waitanimation
+BattleScript_ExplosionLoop::
+	movevaluescleanup
+	critcalc
+	damagecalc
+	typecalc
+	adjustnormaldamage
+	accuracycheck BattleScript_ExplosionMissed, ACC_CURR_MOVE
+	effectivenesssound
+	hitanimation BS_TARGET
+	waitstate
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	critmessage
+	waitmessage B_WAIT_TIME_LONG
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	tryfaintmon BS_TARGET
+	moveendto MOVEEND_NEXT_TARGET
+	jumpifnexttargetvalid BattleScript_ExplosionLoop
+	tryfaintmon BS_ATTACKER
+	end
+BattleScript_ExplosionMissed::
+	effectivenesssound
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	moveendto MOVEEND_NEXT_TARGET
+	jumpifnexttargetvalid BattleScript_ExplosionLoop
+	tryfaintmon BS_ATTACKER
+	end
+
+BattleScript_PreserveMissedBitDoMoveAnim::
+	bicbyte gMoveResultFlags, MOVE_RESULT_MISSED
+	attackanimation
+	waitanimation
+	orbyte gMoveResultFlags, MOVE_RESULT_MISSED
+	return
 
 BattleScript_EffectDreamEater:: @ 0x08287181
-	.incbin "baserom_jp.gba", 0x287181, 0x69
+	attackcanceler
+	jumpifstatus2 BS_TARGET, STATUS2_SUBSTITUTE, BattleScript_DreamEaterNoEffect
+	jumpifstatus BS_TARGET, STATUS1_SLEEP, BattleScript_DreamEaterWorked
+BattleScript_DreamEaterNoEffect::
+	attackstring
+	ppreduce
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_WasntAffected
+BattleScript_DreamEaterWorked::
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	critcalc
+	damagecalc
+	typecalc
+	adjustnormaldamage
+	attackanimation
+	waitanimation
+	effectivenesssound
+	hitanimation BS_TARGET
+	waitstate
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	critmessage
+	waitmessage B_WAIT_TIME_LONG
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	negativedamage
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	jumpifmovehadnoeffect BattleScript_DreamEaterTryFaintEnd
+	printstring STRINGID_PKMNDREAMEATEN
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_DreamEaterTryFaintEnd::
+	tryfaintmon BS_TARGET
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectMirrorMove:: @ 0x082871EA
-	.incbin "baserom_jp.gba", 0x2871ea, 0x18
+	attackcanceler
+	attackstring
+	pause B_WAIT_TIME_LONG
+	trymirrormove
+	ppreduce
+	orbyte gMoveResultFlags, MOVE_RESULT_FAILED
+	printstring STRINGID_MIRRORMOVEFAILED
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectAttackUp:: @ 0x08287202
 	.incbin "baserom_jp.gba", 0x287202, 0xb

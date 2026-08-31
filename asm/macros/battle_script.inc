@@ -430,13 +430,13 @@
 	
 	@ All cases from 0 to (not inclusive)
 	.macro moveendto to:req
-	setbyte sMOVEEND_STATE, 0
+	setbyte gBattleScripting + 0x14, 0
 	moveend 2, \to
 	.endm
 	
 	@ Cases from (inclusive) to (not inclusive)
 	.macro moveendfromto from:req, to:req
-	setbyte sMOVEEND_STATE, \from
+	setbyte gBattleScripting + 0x14, \from
 	moveend 2, \to
 	.endm
 
@@ -667,6 +667,10 @@
 
 	.macro faintifabilitynotdamp
 	.byte 0x78
+	.endm
+
+	.macro tryexplosion
+	faintifabilitynotdamp
 	.endm
 
 	.macro setatkhptozero
