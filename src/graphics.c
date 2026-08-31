@@ -1285,3 +1285,31 @@ MESSAGE_BOX_PAL const u16 gMessageBox_Pal[] =
 #undef SCRIPT_COMMAND_STRING_VARS
 #undef SCRIPT_COMMAND_CONDITION_TABLE
 #undef SCRIPT_COMMAND_NULL_PTR
+
+// JP ROM stores the General tiles before its palettes; retain that physical
+// order while keeping the US graphics.c ownership and symbol names.
+#define TILESET_GENERAL_DATA __attribute__((section(".rodata.tileset_general_data"), aligned(1)))
+
+TILESET_GENERAL_DATA const u32 gTilesetTiles_General[] = INCBIN_U32("data/tilesets/primary/general/tiles.4bpp.lz");
+
+TILESET_GENERAL_DATA const u16 gTilesetPalettes_General[][16] =
+{
+    INCBIN_U16("data/tilesets/primary/general/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/12.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/13.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/14.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general/palettes/15.gbapal"),
+};
+
+#undef TILESET_GENERAL_DATA

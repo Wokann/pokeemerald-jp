@@ -10,25 +10,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-gTileset_PETALBURG_CITY_PRIMARY_Tiles:
-	.incbin "data/tilesets/primary/general/tiles.4bpp.lz"
-gTileset_PETALBURG_CITY_PRIMARY_Palettes:
-	.incbin "data/tilesets/primary/general/palettes/00.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/01.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/02.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/03.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/04.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/05.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/06.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/07.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/08.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/09.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/10.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/11.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/12.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/13.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/14.gbapal"
-	.incbin "data/tilesets/primary/general/palettes/15.gbapal"
 gTileset_PETALBURG_CITY_SECONDARY_Tiles:
 	.incbin "data/tilesets/secondary/petalburg/tiles.4bpp.lz"
 gTileset_PETALBURG_CITY_SECONDARY_Palettes:
@@ -1135,8 +1116,8 @@ gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY_MetatileAttributes:
 	.globl gTileset_PETALBURG_CITY_PRIMARY
 gTileset_PETALBURG_CITY_PRIMARY: @ 0x083B7B24
 	.byte 0x01, 0x00, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte gTileset_PETALBURG_CITY_PRIMARY_Tiles  @ tiles
-	.4byte gTileset_PETALBURG_CITY_PRIMARY_Palettes  @ palettes
+	.4byte gTilesetTiles_General  @ tiles
+	.4byte gTilesetPalettes_General  @ palettes
 	.4byte gTileset_PETALBURG_CITY_PRIMARY_Metatiles  @ metatiles
 	.4byte gTileset_PETALBURG_CITY_PRIMARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A03E9  @ callback
