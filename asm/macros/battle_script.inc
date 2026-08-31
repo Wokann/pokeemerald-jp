@@ -1193,9 +1193,9 @@
 	.4byte \param0
 	.endm
 
-	.macro settypetoterrain param0:req
+	.macro settypetoenvironment ptr:req
 	.byte 0xeb
-	.4byte \param0
+	.4byte \ptr
 	.endm
 
 	.macro pursuitrelated param0:req

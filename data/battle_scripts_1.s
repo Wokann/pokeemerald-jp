@@ -2871,7 +2871,15 @@ BattleScript_DragonDanceEnd::
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectCamouflage:: @ 0x08288D1D
-	.incbin "baserom_jp.gba", 0x288d1d, 0x15
+	attackcanceler
+	attackstring
+	ppreduce
+	settypetoenvironment BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNCHANGEDTYPE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 @ Battle-end scripts. All visible JP entry points are named in their
 @ physical order; raw spans remain until their battle-script macro conversion.
