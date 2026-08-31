@@ -1600,7 +1600,15 @@ BattleScript_DoGhostCurse:
 
 BattleScript_EffectProtect:: @ 0x08287EBE
 BattleScript_EffectEndure:: @ 0x08287EBE
-	.incbin "baserom_jp.gba", 0x287ebe, 0x13
+	attackcanceler
+	attackstring
+	ppreduce
+	setprotectlike
+	attackanimation
+	waitanimation
+	printfromtable gProtectLikeUsedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectSpikes:: @ 0x08287ED1
 	.incbin "baserom_jp.gba", 0x287ed1, 0x15
