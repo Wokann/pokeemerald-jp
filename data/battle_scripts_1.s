@@ -1787,7 +1787,15 @@ BattleScript_EffectRapidSpin:: @ 0x08288078
 	goto BattleScript_EffectHit
 
 BattleScript_EffectSonicboom:: @ 0x08288083
-	.incbin "baserom_jp.gba", 0x288083, 0x2f
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	typecalc
+	bicbyte gMoveResultFlags, MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE
+	setword gBattleMoveDamage, 20
+	adjustsetdamage
+	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectMorningSun:: @ 0x082880B2
 BattleScript_EffectSynthesis:: @ 0x082880B2
