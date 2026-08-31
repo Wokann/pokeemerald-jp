@@ -2042,7 +2042,45 @@ BattleScript_BeatUpEnd::
 	end
 
 BattleScript_EffectSemiInvulnerable:: @ 0x08288393
-	.incbin "baserom_jp.gba", 0x288393, 0xab
+	jumpifstatus2 BS_ATTACKER, STATUS2_MULTIPLETURNS, BattleScript_SecondTurnSemiInvulnerable
+	jumpifword CMP_COMMON_BITS, gHitMarker, HITMARKER_NO_ATTACKSTRING, BattleScript_SecondTurnSemiInvulnerable
+	jumpifmove MOVE_FLY, BattleScript_FirstTurnFly
+	jumpifmove MOVE_DIVE, BattleScript_FirstTurnDive
+	jumpifmove MOVE_BOUNCE, BattleScript_FirstTurnBounce
+	setbyte sTWOTURN_STRINGID, B_MSG_TURN1_DIG
+	goto BattleScript_FirstTurnSemiInvulnerable
+
+BattleScript_FirstTurnBounce::
+	setbyte sTWOTURN_STRINGID, B_MSG_TURN1_BOUNCE
+	goto BattleScript_FirstTurnSemiInvulnerable
+
+BattleScript_FirstTurnDive::
+	setbyte sTWOTURN_STRINGID, B_MSG_TURN1_DIVE
+	goto BattleScript_FirstTurnSemiInvulnerable
+
+BattleScript_FirstTurnFly::
+	setbyte sTWOTURN_STRINGID, B_MSG_TURN1_FLY
+BattleScript_FirstTurnSemiInvulnerable::
+	call BattleScriptFirstChargingTurn
+	setsemiinvulnerablebit
+	goto BattleScript_MoveEnd
+
+BattleScript_SecondTurnSemiInvulnerable::
+	attackcanceler
+	setmoveeffect MOVE_EFFECT_CHARGING
+	setbyte sB_ANIM_TURN, 1
+	clearstatusfromeffect BS_ATTACKER
+	orword gHitMarker, HITMARKER_NO_PPDEDUCT
+	jumpifnotmove MOVE_BOUNCE, BattleScript_SemiInvulnerableTryHit
+	setmoveeffect MOVE_EFFECT_PARALYSIS
+BattleScript_SemiInvulnerableTryHit::
+	accuracycheck BattleScript_SemiInvulnerableMiss, ACC_CURR_MOVE
+	clearsemiinvulnerablebit
+	goto BattleScript_HitFromAtkString
+
+BattleScript_SemiInvulnerableMiss::
+	clearsemiinvulnerablebit
+	goto BattleScript_PrintMoveMissed
 
 BattleScript_EffectDefenseCurl:: @ 0x0828843E
 	.incbin "baserom_jp.gba", 0x28843e, 0x22
