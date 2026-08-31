@@ -4890,7 +4890,20 @@ gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR: @ 0x08446418
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR_Blockdata  @ map
 	.4byte gTileset_Building  @ primaryTileset
 	.4byte gTileset_BattleFrontier  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x446430, 0x2BE0
+Route111_NoMirageTower_Layout_Border::
+	.incbin "data/layouts/Route111_NoMirageTower/border.bin"
+
+Route111_NoMirageTower_Layout_Blockdata::
+	.incbin "data/layouts/Route111_NoMirageTower/map.bin"
+
+	.align 2
+Route111_NoMirageTower_Layout:: @ 0x08448FF8
+	.4byte 40
+	.4byte 140
+	.4byte Route111_NoMirageTower_Layout_Border
+	.4byte Route111_NoMirageTower_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Mauville
 gMapLayout_UNION_ROOM_Border:
 	.incbin "data/layouts/UnionRoom/border.bin"
 gMapLayout_UNION_ROOM_Blockdata:

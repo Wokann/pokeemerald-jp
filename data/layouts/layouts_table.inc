@@ -397,8 +397,7 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_DESERT_UNDERPASS
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_PARTNER_ROOM
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR
-	@ LAYOUT_ROUTE111_NO_MIRAGE_TOWER remains in its raw physical layout owner.
-	.incbin "baserom_jp.gba", 0x45A810, 0x4
+	.4byte Route111_NoMirageTower_Layout
 	.4byte gMapLayout_UNION_ROOM
 	.4byte gMapLayout_SAFARI_ZONE_NORTHEAST
 	.4byte gMapLayout_SAFARI_ZONE_SOUTHEAST
