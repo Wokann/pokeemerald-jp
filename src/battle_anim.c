@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "graphics.h"
 #include "data/battle_anim.h"
 
 __attribute__((naked)) void ClearBattleAnimationVars()
@@ -3126,7 +3127,7 @@ __attribute__((naked)) void LoadMoveBg(void)
         "	bl LoadCompressedPalette\n\t"
         "	b _080A4946\n\t"
         "	.align 2, 0\n\t"
-        "_080A4900: .4byte gUnknown_84FE460\n\t"
+	        "_080A4900: .4byte gBattleAnimBackgroundTable\n\t"
         "_080A4904: .4byte gDecompressionBuffer\n\t"
         "_080A4908: .4byte 0x0600D000\n\t"
         "_080A490C: .4byte 0x040000D4\n\t"
@@ -3158,7 +3159,7 @@ __attribute__((naked)) void LoadMoveBg(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A494C: .4byte gUnknown_84FE460\n\t"
+	        "_080A494C: .4byte gBattleAnimBackgroundTable\n\t"
         "_080A4950: .4byte 0x0600D000\n\t"
         "_080A4954: .4byte 0x06008000\n\t"
         ".syntax divided\n\t"
