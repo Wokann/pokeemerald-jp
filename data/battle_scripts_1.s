@@ -3447,10 +3447,23 @@ BattleScript_BideNoEnergyToAttack:: @ 0x0828934C
 @ Forced-switch scripts. The trainer branch begins at its actual JP entry
 @ rather than remaining hidden inside a mixed EventScript container.
 BattleScript_SuccessForceOut:: @ 0x08289360
-	.incbin "baserom_jp.gba", 0x289360, 0x19
+	attackanimation
+	waitanimation
+	switchoutabilities BS_TARGET
+	returntoball BS_TARGET
+	waitstate
+	jumpifbattletype BATTLE_TYPE_TRAINER, BattleScript_TrainerBattleForceOut
+	setoutcomeonteleport BS_ATTACKER
+	finishaction
 
 BattleScript_TrainerBattleForceOut:: @ 0x08289379
-	.incbin "baserom_jp.gba", 0x289379, 0x12
+	getswitchedmondata BS_TARGET
+	switchindataupdate BS_TARGET
+	switchinanim BS_TARGET, FALSE
+	waitstate
+	printstring STRINGID_PKMNWASDRAGGEDOUT
+	switchineffects BS_TARGET
+	goto BattleScript_MoveEnd
 
 @ Status-block and status-expiry response scripts. Preserve the Battle
 @ Palace selection branch as separate physical entries instead of a raw
