@@ -103,7 +103,25 @@ gUnknown_8D85604: @ 0x8D85604
 
 	.globl gUnknown_8D85606
 gUnknown_8D85606: @ 0x8D85606
-	.incbin "baserom_jp.gba", 0xd85606, 0xa6
+	.incbin "baserom_jp.gba", 0xd85606, 0x1e
+
+	.globl gTilesetAnims_BattleDomePals0_0
+gTilesetAnims_BattleDomePals0_0: @ 0x8D85624
+	.incbin "baserom_jp.gba", 0xd85624, 0x20
+
+	.globl gTilesetAnims_BattleDomePals0_1
+gTilesetAnims_BattleDomePals0_1: @ 0x8D85644
+	.incbin "baserom_jp.gba", 0xd85644, 0x20
+
+	.globl gTilesetAnims_BattleDomePals0_2
+gTilesetAnims_BattleDomePals0_2: @ 0x8D85664
+	.incbin "baserom_jp.gba", 0xd85664, 0x20
+
+	.globl gTilesetAnims_BattleDomePals0_3
+gTilesetAnims_BattleDomePals0_3: @ 0x8D85684
+	.incbin "baserom_jp.gba", 0xd85684, 0x20
+
+	.incbin "baserom_jp.gba", 0xd856a4, 0x8
 
 
 	.globl gUnknown_8D856AC

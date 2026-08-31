@@ -1,149 +1,582 @@
 #include "global.h"
+#include "graphics.h"
+#include "palette.h"
+#include "util.h"
+#include "battle_transition.h"
+#include "task.h"
+#include "fieldmap.h"
 #include "tileset_anims.h"
+
+struct TilesetAnimDmaTransfer
+{
+    const u16 *src;
+    u16 *dest;
+    u16 size;
+};
+
 // Tileset animation state (JP EWRAM, aliased in ld_script_jp.txt).
+extern struct TilesetAnimDmaTransfer gUnknown_20372C4[20];
+extern u8 gUnknown_3000F34;
 extern u16 sPrimaryTilesetAnimCounter;
 extern u16 sPrimaryTilesetAnimCounterMax;
 extern void (*sPrimaryTilesetAnimCallback)(u16);
 extern u16 sSecondaryTilesetAnimCounter;
 extern u16 sSecondaryTilesetAnimCounterMax;
 extern void (*sSecondaryTilesetAnimCallback)(u16);
+extern void Phase2Task_Magma(u8 taskId);
 
-extern void TilesetAnim_BattleDome(u16 timer);
-extern void TilesetAnim_BattleFrontierOutsideEast(u16 timer);
-extern void TilesetAnim_BattleFrontierOutsideWest(u16 timer);
-extern void TilesetAnim_BattlePyramid(void);
-extern void TilesetAnim_BikeShop(u16 timer);
-extern void TilesetAnim_Building(u16 timer);
-extern void TilesetAnim_Cave(void);
-extern void TilesetAnim_Dewford(u16 timer);
-extern void TilesetAnim_EliteFour(void);
-extern void TilesetAnim_EverGrande(void);
-extern void TilesetAnim_General(void);
-extern void TilesetAnim_Lavaridge(void);
-extern void TilesetAnim_Mauville(void);
-extern void TilesetAnim_MauvilleGym(u16 timer);
-extern void TilesetAnim_Pacifidlog(void);
-extern void TilesetAnim_Rustboro(void);
-extern void TilesetAnim_Slateport(u16 timer);
-extern void TilesetAnim_Sootopolis(u16 timer);
-extern void TilesetAnim_SootopolisGym(u16 timer);
-extern void TilesetAnim_Underwater(void);
+void _InitPrimaryTilesetAnimation(void);
+void _InitSecondaryTilesetAnimation(void);
+void TilesetAnim_General(u16 timer);
+void TilesetAnim_Building(u16 timer);
+void TilesetAnim_Rustboro(u16 timer);
+void TilesetAnim_Dewford(u16 timer);
+void TilesetAnim_Slateport(u16 timer);
+void TilesetAnim_Mauville(u16 timer);
+void TilesetAnim_Lavaridge(u16 timer);
+void TilesetAnim_EverGrande(u16 timer);
+void TilesetAnim_Pacifidlog(u16 timer);
+void TilesetAnim_Sootopolis(u16 timer);
+void TilesetAnim_BattleFrontierOutsideWest(u16 timer);
+void TilesetAnim_BattleFrontierOutsideEast(u16 timer);
+void TilesetAnim_Underwater(u16 timer);
+void TilesetAnim_SootopolisGym(u16 timer);
+void TilesetAnim_Cave(u16 timer);
+void TilesetAnim_EliteFour(u16 timer);
+void TilesetAnim_MauvilleGym(u16 timer);
+void TilesetAnim_BikeShop(u16 timer);
+void TilesetAnim_BattlePyramid(u16 timer);
+void TilesetAnim_BattleDome(u16 timer);
+void QueueAnimTiles_General_Flower(u16 timer);
+void QueueAnimTiles_General_Water(u16 timer);
+void QueueAnimTiles_General_SandWaterEdge(u16 timer);
+void QueueAnimTiles_General_Waterfall(u16 timer);
+void QueueAnimTiles_General_LandWaterEdge(u16 timer);
+void QueueAnimTiles_Building_TVTurnedOn(u16 timer);
+void QueueAnimTiles_Rustboro_WindyWater(u16 timer_div, u8 timer_mod);
+void QueueAnimTiles_Rustboro_Fountain(u16 timer);
+void QueueAnimTiles_Dewford_Flag(u16 timer);
+void QueueAnimTiles_Slateport_Balloons(u16 timer);
+void QueueAnimTiles_Mauville_Flowers(u16 timer_div, u8 timer_mod);
+void QueueAnimTiles_BikeShop_BlinkingLights(u16 timer);
+void QueueAnimTiles_BattlePyramid_Torch(u16 timer);
+void QueueAnimTiles_BattlePyramid_StatueShadow(u16 timer);
+void BlendAnimPalette_BattleDome_FloorLights(u16 timer);
+void BlendAnimPalette_BattleDome_FloorLightsNoBlend(u16 timer);
+void QueueAnimTiles_Lavaridge_Steam(u8 timer);
+void QueueAnimTiles_Lavaridge_Lava(u16 timer);
+void QueueAnimTiles_EverGrande_Flowers(u16 timer_div, u8 timer_mod);
+void QueueAnimTiles_Pacifidlog_LogBridges(u8 timer);
+void QueueAnimTiles_Pacifidlog_WaterCurrents(u8 timer);
+void QueueAnimTiles_Sootopolis_StormyWater(u16 timer);
+void QueueAnimTiles_Underwater_Seaweed(u8 timer);
+void QueueAnimTiles_Cave_Lava(u16 timer);
+void QueueAnimTiles_BattleFrontierOutsideWest_Flag(u16 timer);
+void QueueAnimTiles_BattleFrontierOutsideEast_Flag(u16 timer);
+void QueueAnimTiles_MauvilleGym_ElectricGates(u16 timer);
+void QueueAnimTiles_SootopolisGym_Waterfalls(u16 timer);
+void QueueAnimTiles_EliteFour_GroundLights(u16 timer);
+void QueueAnimTiles_EliteFour_WallLights(u16 timer);
 
-__attribute__((naked)) void ResetTilesetAnimBuffer(void)
+#define TILESET_ANIMS_DATA __attribute__((section(".rodata.tileset_anims_data")))
+
+const u16 gTilesetAnims_General_Flower_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/flower/1.png", ".4bpp");
+const u16 gTilesetAnims_General_Flower_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/flower/0.png", ".4bpp");
+const u16 gTilesetAnims_General_Flower_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/flower/2.png", ".4bpp");
+const u16 tileset_anims_space_0[16] TILESET_ANIMS_DATA = {};
+
+const u16 *const gTilesetAnims_General_Flower[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_General_Flower_Frame0,
+    gTilesetAnims_General_Flower_Frame1,
+    gTilesetAnims_General_Flower_Frame0,
+    gTilesetAnims_General_Flower_Frame2
+};
+
+const u16 gTilesetAnims_General_Water_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/water/0.png", ".4bpp");
+const u16 gTilesetAnims_General_Water_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/water/1.png", ".4bpp");
+const u16 gTilesetAnims_General_Water_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/water/2.png", ".4bpp");
+const u16 gTilesetAnims_General_Water_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/water/3.png", ".4bpp");
+const u16 gTilesetAnims_General_Water_Frame4[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/water/4.png", ".4bpp");
+const u16 gTilesetAnims_General_Water_Frame5[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/water/5.png", ".4bpp");
+const u16 gTilesetAnims_General_Water_Frame6[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/water/6.png", ".4bpp");
+const u16 gTilesetAnims_General_Water_Frame7[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/water/7.png", ".4bpp");
+
+const u16 *const gTilesetAnims_General_Water[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_General_Water_Frame0,
+    gTilesetAnims_General_Water_Frame1,
+    gTilesetAnims_General_Water_Frame2,
+    gTilesetAnims_General_Water_Frame3,
+    gTilesetAnims_General_Water_Frame4,
+    gTilesetAnims_General_Water_Frame5,
+    gTilesetAnims_General_Water_Frame6,
+    gTilesetAnims_General_Water_Frame7
+};
+
+const u16 gTilesetAnims_General_SandWaterEdge_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/sand_water_edge/0.png", ".4bpp");
+const u16 gTilesetAnims_General_SandWaterEdge_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/sand_water_edge/1.png", ".4bpp");
+const u16 gTilesetAnims_General_SandWaterEdge_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/sand_water_edge/2.png", ".4bpp");
+const u16 gTilesetAnims_General_SandWaterEdge_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/sand_water_edge/3.png", ".4bpp");
+const u16 gTilesetAnims_General_SandWaterEdge_Frame4[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/sand_water_edge/4.png", ".4bpp");
+const u16 gTilesetAnims_General_SandWaterEdge_Frame5[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/sand_water_edge/5.png", ".4bpp");
+const u16 gTilesetAnims_General_SandWaterEdge_Frame6[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/sand_water_edge/6.png", ".4bpp");
+
+const u16 *const gTilesetAnims_General_SandWaterEdge[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_General_SandWaterEdge_Frame0,
+    gTilesetAnims_General_SandWaterEdge_Frame1,
+    gTilesetAnims_General_SandWaterEdge_Frame2,
+    gTilesetAnims_General_SandWaterEdge_Frame3,
+    gTilesetAnims_General_SandWaterEdge_Frame4,
+    gTilesetAnims_General_SandWaterEdge_Frame5,
+    gTilesetAnims_General_SandWaterEdge_Frame6,
+    gTilesetAnims_General_SandWaterEdge_Frame0
+};
+
+const u16 gTilesetAnims_General_Waterfall_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/waterfall/0.png", ".4bpp");
+const u16 gTilesetAnims_General_Waterfall_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/waterfall/1.png", ".4bpp");
+const u16 gTilesetAnims_General_Waterfall_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/waterfall/2.png", ".4bpp");
+const u16 gTilesetAnims_General_Waterfall_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/waterfall/3.png", ".4bpp");
+
+const u16 *const gTilesetAnims_General_Waterfall[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_General_Waterfall_Frame0,
+    gTilesetAnims_General_Waterfall_Frame1,
+    gTilesetAnims_General_Waterfall_Frame2,
+    gTilesetAnims_General_Waterfall_Frame3
+};
+
+const u16 gTilesetAnims_General_LandWaterEdge_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/land_water_edge/0.png", ".4bpp");
+const u16 gTilesetAnims_General_LandWaterEdge_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/land_water_edge/1.png", ".4bpp");
+const u16 gTilesetAnims_General_LandWaterEdge_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/land_water_edge/2.png", ".4bpp");
+const u16 gTilesetAnims_General_LandWaterEdge_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/general/anim/land_water_edge/3.png", ".4bpp");
+
+const u16 *const gTilesetAnims_General_LandWaterEdge[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_General_LandWaterEdge_Frame0,
+    gTilesetAnims_General_LandWaterEdge_Frame1,
+    gTilesetAnims_General_LandWaterEdge_Frame2,
+    gTilesetAnims_General_LandWaterEdge_Frame3
+};
+
+const u16 gTilesetAnims_Lavaridge_Steam_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/lavaridge/anim/steam/0.png", ".4bpp");
+const u16 gTilesetAnims_Lavaridge_Steam_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/lavaridge/anim/steam/1.png", ".4bpp");
+const u16 gTilesetAnims_Lavaridge_Steam_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/lavaridge/anim/steam/2.png", ".4bpp");
+const u16 gTilesetAnims_Lavaridge_Steam_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/lavaridge/anim/steam/3.png", ".4bpp");
+
+const u16 *const gTilesetAnims_Lavaridge_Steam[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Lavaridge_Steam_Frame0,
+    gTilesetAnims_Lavaridge_Steam_Frame1,
+    gTilesetAnims_Lavaridge_Steam_Frame2,
+    gTilesetAnims_Lavaridge_Steam_Frame3
+};
+
+const u16 gTilesetAnims_Pacifidlog_LogBridges_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/pacifidlog/anim/log_bridges/0.png", ".4bpp");
+const u16 gTilesetAnims_Pacifidlog_LogBridges_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/pacifidlog/anim/log_bridges/1.png", ".4bpp");
+const u16 gTilesetAnims_Pacifidlog_LogBridges_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/pacifidlog/anim/log_bridges/2.png", ".4bpp");
+
+const u16 *const gTilesetAnims_Pacifidlog_LogBridges[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Pacifidlog_LogBridges_Frame0,
+    gTilesetAnims_Pacifidlog_LogBridges_Frame1,
+    gTilesetAnims_Pacifidlog_LogBridges_Frame2,
+    gTilesetAnims_Pacifidlog_LogBridges_Frame1
+};
+
+const u16 gTilesetAnims_Underwater_Seaweed_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/underwater/anim/seaweed/0.png", ".4bpp");
+const u16 gTilesetAnims_Underwater_Seaweed_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/underwater/anim/seaweed/1.png", ".4bpp");
+const u16 gTilesetAnims_Underwater_Seaweed_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/underwater/anim/seaweed/2.png", ".4bpp");
+const u16 gTilesetAnims_Underwater_Seaweed_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/underwater/anim/seaweed/3.png", ".4bpp");
+
+const u16 *const gTilesetAnims_Underwater_Seaweed[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Underwater_Seaweed_Frame0,
+    gTilesetAnims_Underwater_Seaweed_Frame1,
+    gTilesetAnims_Underwater_Seaweed_Frame2,
+    gTilesetAnims_Underwater_Seaweed_Frame3
+};
+
+const u16 gTilesetAnims_Pacifidlog_WaterCurrents_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/pacifidlog/anim/water_currents/0.png", ".4bpp");
+const u16 gTilesetAnims_Pacifidlog_WaterCurrents_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/pacifidlog/anim/water_currents/1.png", ".4bpp");
+const u16 gTilesetAnims_Pacifidlog_WaterCurrents_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/pacifidlog/anim/water_currents/2.png", ".4bpp");
+const u16 gTilesetAnims_Pacifidlog_WaterCurrents_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/pacifidlog/anim/water_currents/3.png", ".4bpp");
+const u16 gTilesetAnims_Pacifidlog_WaterCurrents_Frame4[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/pacifidlog/anim/water_currents/4.png", ".4bpp");
+const u16 gTilesetAnims_Pacifidlog_WaterCurrents_Frame5[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/pacifidlog/anim/water_currents/5.png", ".4bpp");
+const u16 gTilesetAnims_Pacifidlog_WaterCurrents_Frame6[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/pacifidlog/anim/water_currents/6.png", ".4bpp");
+const u16 gTilesetAnims_Pacifidlog_WaterCurrents_Frame7[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/pacifidlog/anim/water_currents/7.png", ".4bpp");
+
+const u16 *const gTilesetAnims_Pacifidlog_WaterCurrents[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Pacifidlog_WaterCurrents_Frame0,
+    gTilesetAnims_Pacifidlog_WaterCurrents_Frame1,
+    gTilesetAnims_Pacifidlog_WaterCurrents_Frame2,
+    gTilesetAnims_Pacifidlog_WaterCurrents_Frame3,
+    gTilesetAnims_Pacifidlog_WaterCurrents_Frame4,
+    gTilesetAnims_Pacifidlog_WaterCurrents_Frame5,
+    gTilesetAnims_Pacifidlog_WaterCurrents_Frame6,
+    gTilesetAnims_Pacifidlog_WaterCurrents_Frame7
+};
+
+const u16 gTilesetAnims_Mauville_Flower1_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/mauville/anim/flower_1/0.png", ".4bpp");
+const u16 gTilesetAnims_Mauville_Flower1_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/mauville/anim/flower_1/1.png", ".4bpp");
+const u16 gTilesetAnims_Mauville_Flower1_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/mauville/anim/flower_1/2.png", ".4bpp");
+const u16 gTilesetAnims_Mauville_Flower1_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/mauville/anim/flower_1/3.png", ".4bpp");
+const u16 gTilesetAnims_Mauville_Flower1_Frame4[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/mauville/anim/flower_1/4.png", ".4bpp");
+const u16 gTilesetAnims_Mauville_Flower2_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/mauville/anim/flower_2/0.png", ".4bpp");
+const u16 gTilesetAnims_Mauville_Flower2_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/mauville/anim/flower_2/1.png", ".4bpp");
+const u16 gTilesetAnims_Mauville_Flower2_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/mauville/anim/flower_2/2.png", ".4bpp");
+const u16 gTilesetAnims_Mauville_Flower2_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/mauville/anim/flower_2/3.png", ".4bpp");
+const u16 gTilesetAnims_Mauville_Flower2_Frame4[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/mauville/anim/flower_2/4.png", ".4bpp");
+const u16 tileset_anims_space_1[16] TILESET_ANIMS_DATA = {};
+
+u16 *const gTilesetAnims_Mauville_Flower1_VDests[] TILESET_ANIMS_DATA = {
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 96)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 100)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 104)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 108)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 112)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 116)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 120)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 124))
+};
+
+u16 *const gTilesetAnims_Mauville_Flower2_VDests[] TILESET_ANIMS_DATA = {
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 128)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 132)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 136)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 140)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 144)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 148)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 152)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 156))
+};
+
+const u16 *const gTilesetAnims_Mauville_Flower1[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Mauville_Flower1_Frame0,
+    gTilesetAnims_Mauville_Flower1_Frame0,
+    gTilesetAnims_Mauville_Flower1_Frame1,
+    gTilesetAnims_Mauville_Flower1_Frame2,
+    gTilesetAnims_Mauville_Flower1_Frame3,
+    gTilesetAnims_Mauville_Flower1_Frame3,
+    gTilesetAnims_Mauville_Flower1_Frame3,
+    gTilesetAnims_Mauville_Flower1_Frame3,
+    gTilesetAnims_Mauville_Flower1_Frame3,
+    gTilesetAnims_Mauville_Flower1_Frame3,
+    gTilesetAnims_Mauville_Flower1_Frame2,
+    gTilesetAnims_Mauville_Flower1_Frame1
+};
+
+const u16 *const gTilesetAnims_Mauville_Flower2[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Mauville_Flower2_Frame0,
+    gTilesetAnims_Mauville_Flower2_Frame0,
+    gTilesetAnims_Mauville_Flower2_Frame1,
+    gTilesetAnims_Mauville_Flower2_Frame2,
+    gTilesetAnims_Mauville_Flower2_Frame3,
+    gTilesetAnims_Mauville_Flower2_Frame3,
+    gTilesetAnims_Mauville_Flower2_Frame3,
+    gTilesetAnims_Mauville_Flower2_Frame3,
+    gTilesetAnims_Mauville_Flower2_Frame3,
+    gTilesetAnims_Mauville_Flower2_Frame3,
+    gTilesetAnims_Mauville_Flower2_Frame2,
+    gTilesetAnims_Mauville_Flower2_Frame1
+};
+
+const u16 *const gTilesetAnims_Mauville_Flower1_B[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Mauville_Flower1_Frame0,
+    gTilesetAnims_Mauville_Flower1_Frame0,
+    gTilesetAnims_Mauville_Flower1_Frame4,
+    gTilesetAnims_Mauville_Flower1_Frame4
+};
+
+const u16 *const gTilesetAnims_Mauville_Flower2_B[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Mauville_Flower2_Frame0,
+    gTilesetAnims_Mauville_Flower2_Frame0,
+    gTilesetAnims_Mauville_Flower2_Frame4,
+    gTilesetAnims_Mauville_Flower2_Frame4
+};
+
+const u16 gTilesetAnims_Rustboro_WindyWater_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/rustboro/anim/windy_water/0.png", ".4bpp");
+const u16 gTilesetAnims_Rustboro_WindyWater_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/rustboro/anim/windy_water/1.png", ".4bpp");
+const u16 gTilesetAnims_Rustboro_WindyWater_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/rustboro/anim/windy_water/2.png", ".4bpp");
+const u16 gTilesetAnims_Rustboro_WindyWater_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/rustboro/anim/windy_water/3.png", ".4bpp");
+const u16 gTilesetAnims_Rustboro_WindyWater_Frame4[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/rustboro/anim/windy_water/4.png", ".4bpp");
+const u16 gTilesetAnims_Rustboro_WindyWater_Frame5[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/rustboro/anim/windy_water/5.png", ".4bpp");
+const u16 gTilesetAnims_Rustboro_WindyWater_Frame6[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/rustboro/anim/windy_water/6.png", ".4bpp");
+const u16 gTilesetAnims_Rustboro_WindyWater_Frame7[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/rustboro/anim/windy_water/7.png", ".4bpp");
+
+u16 *const gTilesetAnims_Rustboro_WindyWater_VDests[] TILESET_ANIMS_DATA = {
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 128)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 132)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 136)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 140)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 144)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 148)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 152)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 156))
+};
+
+const u16 *const gTilesetAnims_Rustboro_WindyWater[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Rustboro_WindyWater_Frame0,
+    gTilesetAnims_Rustboro_WindyWater_Frame1,
+    gTilesetAnims_Rustboro_WindyWater_Frame2,
+    gTilesetAnims_Rustboro_WindyWater_Frame3,
+    gTilesetAnims_Rustboro_WindyWater_Frame4,
+    gTilesetAnims_Rustboro_WindyWater_Frame5,
+    gTilesetAnims_Rustboro_WindyWater_Frame6,
+    gTilesetAnims_Rustboro_WindyWater_Frame7
+};
+
+const u16 gTilesetAnims_Rustboro_Fountain_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/rustboro/anim/fountain/0.png", ".4bpp");
+const u16 gTilesetAnims_Rustboro_Fountain_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/rustboro/anim/fountain/1.png", ".4bpp");
+const u16 tileset_anims_space_2[16] TILESET_ANIMS_DATA = {};
+
+const u16 *const gTilesetAnims_Rustboro_Fountain[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Rustboro_Fountain_Frame0,
+    gTilesetAnims_Rustboro_Fountain_Frame1
+};
+
+const u16 gTilesetAnims_Lavaridge_Cave_Lava_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/cave/anim/lava/0.png", ".4bpp");
+const u16 gTilesetAnims_Lavaridge_Cave_Lava_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/cave/anim/lava/1.png", ".4bpp");
+const u16 gTilesetAnims_Lavaridge_Cave_Lava_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/cave/anim/lava/2.png", ".4bpp");
+const u16 gTilesetAnims_Lavaridge_Cave_Lava_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/cave/anim/lava/3.png", ".4bpp");
+const u16 gTilesetAnims_Lavaridge_Cave_Lava_Frame4[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/cave/anim/lava/4.png", ".4bpp");
+const u16 gTilesetAnims_Lavaridge_Cave_Lava_Frame5[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/cave/anim/lava/5.png", ".4bpp");
+const u16 gTilesetAnims_Lavaridge_Cave_Lava_Frame6[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/cave/anim/lava/6.png", ".4bpp");
+const u16 gTilesetAnims_Lavaridge_Cave_Lava_Frame7[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/cave/anim/lava/7.png", ".4bpp");
+const u16 tileset_anims_space_3[16] TILESET_ANIMS_DATA = {};
+
+const u16 *const gTilesetAnims_Lavaridge_Cave_Lava[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Lavaridge_Cave_Lava_Frame0,
+    gTilesetAnims_Lavaridge_Cave_Lava_Frame1,
+    gTilesetAnims_Lavaridge_Cave_Lava_Frame2,
+    gTilesetAnims_Lavaridge_Cave_Lava_Frame3
+};
+
+const u16 gTilesetAnims_EverGrande_Flowers_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/ever_grande/anim/flowers/0.png", ".4bpp");
+const u16 gTilesetAnims_EverGrande_Flowers_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/ever_grande/anim/flowers/1.png", ".4bpp");
+const u16 gTilesetAnims_EverGrande_Flowers_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/ever_grande/anim/flowers/2.png", ".4bpp");
+const u16 gTilesetAnims_EverGrande_Flowers_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/ever_grande/anim/flowers/3.png", ".4bpp");
+const u16 gTilesetAnims_EverGrande_Flowers_Frame4[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/ever_grande/anim/flowers/4.png", ".4bpp");
+const u16 gTilesetAnims_EverGrande_Flowers_Frame5[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/ever_grande/anim/flowers/5.png", ".4bpp");
+const u16 gTilesetAnims_EverGrande_Flowers_Frame6[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/ever_grande/anim/flowers/6.png", ".4bpp");
+const u16 gTilesetAnims_EverGrande_Flowers_Frame7[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/ever_grande/anim/flowers/7.png", ".4bpp");
+const u16 tileset_anims_space_4[16] TILESET_ANIMS_DATA = {};
+
+u16 *const gTilesetAnims_EverGrande_VDests[] TILESET_ANIMS_DATA = {
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 224)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 228)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 232)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 236)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 240)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 244)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 248)),
+    (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 252))
+};
+
+const u16 *const gTilesetAnims_EverGrande_Flowers[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_EverGrande_Flowers_Frame0,
+    gTilesetAnims_EverGrande_Flowers_Frame1,
+    gTilesetAnims_EverGrande_Flowers_Frame2,
+    gTilesetAnims_EverGrande_Flowers_Frame3,
+    gTilesetAnims_EverGrande_Flowers_Frame4,
+    gTilesetAnims_EverGrande_Flowers_Frame5,
+    gTilesetAnims_EverGrande_Flowers_Frame6,
+    gTilesetAnims_EverGrande_Flowers_Frame7
+};
+
+const u16 gTilesetAnims_Dewford_Flag_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/dewford/anim/flag/0.png", ".4bpp");
+const u16 gTilesetAnims_Dewford_Flag_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/dewford/anim/flag/1.png", ".4bpp");
+const u16 gTilesetAnims_Dewford_Flag_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/dewford/anim/flag/2.png", ".4bpp");
+const u16 gTilesetAnims_Dewford_Flag_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/dewford/anim/flag/3.png", ".4bpp");
+
+const u16 *const gTilesetAnims_Dewford_Flag[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Dewford_Flag_Frame0,
+    gTilesetAnims_Dewford_Flag_Frame1,
+    gTilesetAnims_Dewford_Flag_Frame2,
+    gTilesetAnims_Dewford_Flag_Frame3
+};
+
+const u16 gTilesetAnims_BattleFrontierOutsideWest_Flag_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/battle_frontier_outside_west/anim/flag/0.png", ".4bpp");
+const u16 gTilesetAnims_BattleFrontierOutsideWest_Flag_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/battle_frontier_outside_west/anim/flag/1.png", ".4bpp");
+const u16 gTilesetAnims_BattleFrontierOutsideWest_Flag_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/battle_frontier_outside_west/anim/flag/2.png", ".4bpp");
+const u16 gTilesetAnims_BattleFrontierOutsideWest_Flag_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/battle_frontier_outside_west/anim/flag/3.png", ".4bpp");
+
+const u16 *const gTilesetAnims_BattleFrontierOutsideWest_Flag[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_BattleFrontierOutsideWest_Flag_Frame0,
+    gTilesetAnims_BattleFrontierOutsideWest_Flag_Frame1,
+    gTilesetAnims_BattleFrontierOutsideWest_Flag_Frame2,
+    gTilesetAnims_BattleFrontierOutsideWest_Flag_Frame3
+};
+
+const u16 gTilesetAnims_BattleFrontierOutsideEast_Flag_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/battle_frontier_outside_east/anim/flag/0.png", ".4bpp");
+const u16 gTilesetAnims_BattleFrontierOutsideEast_Flag_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/battle_frontier_outside_east/anim/flag/1.png", ".4bpp");
+const u16 gTilesetAnims_BattleFrontierOutsideEast_Flag_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/battle_frontier_outside_east/anim/flag/2.png", ".4bpp");
+const u16 gTilesetAnims_BattleFrontierOutsideEast_Flag_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/battle_frontier_outside_east/anim/flag/3.png", ".4bpp");
+
+const u16 *const gTilesetAnims_BattleFrontierOutsideEast_Flag[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_BattleFrontierOutsideEast_Flag_Frame0,
+    gTilesetAnims_BattleFrontierOutsideEast_Flag_Frame1,
+    gTilesetAnims_BattleFrontierOutsideEast_Flag_Frame2,
+    gTilesetAnims_BattleFrontierOutsideEast_Flag_Frame3
+};
+
+const u16 gTilesetAnims_Slateport_Balloons_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/slateport/anim/balloons/0.png", ".4bpp");
+const u16 gTilesetAnims_Slateport_Balloons_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/slateport/anim/balloons/1.png", ".4bpp");
+const u16 gTilesetAnims_Slateport_Balloons_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/slateport/anim/balloons/2.png", ".4bpp");
+const u16 gTilesetAnims_Slateport_Balloons_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/slateport/anim/balloons/3.png", ".4bpp");
+
+const u16 *const gTilesetAnims_Slateport_Balloons[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Slateport_Balloons_Frame0,
+    gTilesetAnims_Slateport_Balloons_Frame1,
+    gTilesetAnims_Slateport_Balloons_Frame2,
+    gTilesetAnims_Slateport_Balloons_Frame3
+};
+
+const u16 gTilesetAnims_Building_TvTurnedOn_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/building/anim/tv_turned_on/0.png", ".4bpp");
+const u16 gTilesetAnims_Building_TvTurnedOn_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/primary/building/anim/tv_turned_on/1.png", ".4bpp");
+
+const u16 *const gTilesetAnims_Building_TvTurnedOn[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Building_TvTurnedOn_Frame0,
+    gTilesetAnims_Building_TvTurnedOn_Frame1
+};
+
+const u16 gTilesetAnims_SootopolisGym_SideWaterfall_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/sootopolis_gym/anim/side_waterfall/0.png", ".4bpp");
+const u16 gTilesetAnims_SootopolisGym_SideWaterfall_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/sootopolis_gym/anim/side_waterfall/1.png", ".4bpp");
+const u16 gTilesetAnims_SootopolisGym_SideWaterfall_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/sootopolis_gym/anim/side_waterfall/2.png", ".4bpp");
+const u16 gTilesetAnims_SootopolisGym_FrontWaterfall_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/sootopolis_gym/anim/front_waterfall/0.png", ".4bpp");
+const u16 gTilesetAnims_SootopolisGym_FrontWaterfall_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/sootopolis_gym/anim/front_waterfall/1.png", ".4bpp");
+const u16 gTilesetAnims_SootopolisGym_FrontWaterfall_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/sootopolis_gym/anim/front_waterfall/2.png", ".4bpp");
+
+const u16 *const gTilesetAnims_SootopolisGym_SideWaterfall[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_SootopolisGym_SideWaterfall_Frame0,
+    gTilesetAnims_SootopolisGym_SideWaterfall_Frame1,
+    gTilesetAnims_SootopolisGym_SideWaterfall_Frame2
+};
+
+const u16 *const gTilesetAnims_SootopolisGym_FrontWaterfall[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_SootopolisGym_FrontWaterfall_Frame0,
+    gTilesetAnims_SootopolisGym_FrontWaterfall_Frame1,
+    gTilesetAnims_SootopolisGym_FrontWaterfall_Frame2
+};
+
+const u16 gTilesetAnims_EliteFour_FloorLight_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/elite_four/anim/floor_light/0.png", ".4bpp");
+const u16 gTilesetAnims_EliteFour_FloorLight_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/elite_four/anim/floor_light/1.png", ".4bpp");
+const u16 gTilesetAnims_EliteFour_WallLights_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/elite_four/anim/wall_lights/0.png", ".4bpp");
+const u16 gTilesetAnims_EliteFour_WallLights_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/elite_four/anim/wall_lights/1.png", ".4bpp");
+const u16 gTilesetAnims_EliteFour_WallLights_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/elite_four/anim/wall_lights/2.png", ".4bpp");
+const u16 gTilesetAnims_EliteFour_WallLights_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/elite_four/anim/wall_lights/3.png", ".4bpp");
+const u16 tileset_anims_space_5[16] TILESET_ANIMS_DATA = {};
+
+const u16 *const gTilesetAnims_EliteFour_WallLights[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_EliteFour_WallLights_Frame0,
+    gTilesetAnims_EliteFour_WallLights_Frame1,
+    gTilesetAnims_EliteFour_WallLights_Frame2,
+    gTilesetAnims_EliteFour_WallLights_Frame3
+};
+
+const u16 *const gTilesetAnims_EliteFour_FloorLight[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_EliteFour_FloorLight_Frame0,
+    gTilesetAnims_EliteFour_FloorLight_Frame1
+};
+
+const u16 gTilesetAnims_MauvilleGym_ElectricGates_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/mauville_gym/anim/electric_gates/0.png", ".4bpp");
+const u16 gTilesetAnims_MauvilleGym_ElectricGates_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/mauville_gym/anim/electric_gates/1.png", ".4bpp");
+const u16 tileset_anims_space_6[16] TILESET_ANIMS_DATA = {};
+
+const u16 *const gTilesetAnims_MauvilleGym_ElectricGates[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_MauvilleGym_ElectricGates_Frame0,
+    gTilesetAnims_MauvilleGym_ElectricGates_Frame1
+};
+
+const u16 gTilesetAnims_BikeShop_BlinkingLights_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/bike_shop/anim/blinking_lights/0.png", ".4bpp");
+const u16 gTilesetAnims_BikeShop_BlinkingLights_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/bike_shop/anim/blinking_lights/1.png", ".4bpp");
+const u16 tileset_anims_space_7[16] TILESET_ANIMS_DATA = {};
+
+const u16 *const gTilesetAnims_BikeShop_BlinkingLights[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_BikeShop_BlinkingLights_Frame0,
+    gTilesetAnims_BikeShop_BlinkingLights_Frame1
+};
+
+const u16 gTilesetAnims_Sootopolis_StormyWater_Frame0[] TILESET_ANIMS_DATA = INCBIN_U16("data/tilesets/secondary/sootopolis/anim/stormy_water/0_kyogre.4bpp", "data/tilesets/secondary/sootopolis/anim/stormy_water/0_groudon.4bpp");
+const u16 gTilesetAnims_Sootopolis_StormyWater_Frame1[] TILESET_ANIMS_DATA = INCBIN_U16("data/tilesets/secondary/sootopolis/anim/stormy_water/1_kyogre.4bpp", "data/tilesets/secondary/sootopolis/anim/stormy_water/1_groudon.4bpp");
+const u16 gTilesetAnims_Sootopolis_StormyWater_Frame2[] TILESET_ANIMS_DATA = INCBIN_U16("data/tilesets/secondary/sootopolis/anim/stormy_water/2_kyogre.4bpp", "data/tilesets/secondary/sootopolis/anim/stormy_water/2_groudon.4bpp");
+const u16 gTilesetAnims_Sootopolis_StormyWater_Frame3[] TILESET_ANIMS_DATA = INCBIN_U16("data/tilesets/secondary/sootopolis/anim/stormy_water/3_kyogre.4bpp", "data/tilesets/secondary/sootopolis/anim/stormy_water/3_groudon.4bpp");
+const u16 gTilesetAnims_Sootopolis_StormyWater_Frame4[] TILESET_ANIMS_DATA = INCBIN_U16("data/tilesets/secondary/sootopolis/anim/stormy_water/4_kyogre.4bpp", "data/tilesets/secondary/sootopolis/anim/stormy_water/4_groudon.4bpp");
+const u16 gTilesetAnims_Sootopolis_StormyWater_Frame5[] TILESET_ANIMS_DATA = INCBIN_U16("data/tilesets/secondary/sootopolis/anim/stormy_water/5_kyogre.4bpp", "data/tilesets/secondary/sootopolis/anim/stormy_water/5_groudon.4bpp");
+const u16 gTilesetAnims_Sootopolis_StormyWater_Frame6[] TILESET_ANIMS_DATA = INCBIN_U16("data/tilesets/secondary/sootopolis/anim/stormy_water/6_kyogre.4bpp", "data/tilesets/secondary/sootopolis/anim/stormy_water/6_groudon.4bpp");
+const u16 gTilesetAnims_Sootopolis_StormyWater_Frame7[] TILESET_ANIMS_DATA = INCBIN_U16("data/tilesets/secondary/sootopolis/anim/stormy_water/7_kyogre.4bpp", "data/tilesets/secondary/sootopolis/anim/stormy_water/7_groudon.4bpp");
+const u16 tileset_anims_space_8[16] TILESET_ANIMS_DATA = {};
+
+const u16 gTilesetAnims_Unused1_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/unused_1/0.png", ".4bpp");
+const u16 gTilesetAnims_Unused1_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/unused_1/1.png", ".4bpp");
+const u16 gTilesetAnims_Unused1_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/unused_1/2.png", ".4bpp");
+const u16 gTilesetAnims_Unused1_Frame3[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/unused_1/3.png", ".4bpp");
+
+const u16 *const gTilesetAnims_Sootopolis_StormyWater[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_Sootopolis_StormyWater_Frame0,
+    gTilesetAnims_Sootopolis_StormyWater_Frame1,
+    gTilesetAnims_Sootopolis_StormyWater_Frame2,
+    gTilesetAnims_Sootopolis_StormyWater_Frame3,
+    gTilesetAnims_Sootopolis_StormyWater_Frame4,
+    gTilesetAnims_Sootopolis_StormyWater_Frame5,
+    gTilesetAnims_Sootopolis_StormyWater_Frame6,
+    gTilesetAnims_Sootopolis_StormyWater_Frame7
+};
+
+const u16 gTilesetAnims_BattlePyramid_Torch_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/battle_pyramid/anim/torch/0.png", ".4bpp");
+const u16 gTilesetAnims_BattlePyramid_Torch_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/battle_pyramid/anim/torch/1.png", ".4bpp");
+const u16 gTilesetAnims_BattlePyramid_Torch_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/battle_pyramid/anim/torch/2.png", ".4bpp");
+const u16 tileset_anims_space_9[16] TILESET_ANIMS_DATA = {};
+
+const u16 gTilesetAnims_BattlePyramid_StatueShadow_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/battle_pyramid/anim/statue_shadow/0.png", ".4bpp");
+const u16 gTilesetAnims_BattlePyramid_StatueShadow_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/battle_pyramid/anim/statue_shadow/1.png", ".4bpp");
+const u16 gTilesetAnims_BattlePyramid_StatueShadow_Frame2[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/battle_pyramid/anim/statue_shadow/2.png", ".4bpp");
+const u16 tileset_anims_space_10[7808] TILESET_ANIMS_DATA = {};
+
+const u16 gTilesetAnims_Unused2_Frame0[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/unused_2/0.png", ".4bpp");
+const u16 tileset_anims_space_11[224] TILESET_ANIMS_DATA = {};
+
+const u16 gTilesetAnims_Unused2_Frame1[] TILESET_ANIMS_DATA = INCGFX_U16("data/tilesets/secondary/unused_2/1.png", ".4bpp");
+
+const u16 *const gTilesetAnims_BattlePyramid_Torch[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_BattlePyramid_Torch_Frame0,
+    gTilesetAnims_BattlePyramid_Torch_Frame1,
+    gTilesetAnims_BattlePyramid_Torch_Frame2
+};
+
+const u16 *const gTilesetAnims_BattlePyramid_StatueShadow[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_BattlePyramid_StatueShadow_Frame0,
+    gTilesetAnims_BattlePyramid_StatueShadow_Frame1,
+    gTilesetAnims_BattlePyramid_StatueShadow_Frame2
+};
+
+static const u16 *const sTilesetAnims_BattleDomeFloorLightPals[] TILESET_ANIMS_DATA = {
+    gTilesetAnims_BattleDomePals0_0,
+    gTilesetAnims_BattleDomePals0_1,
+    gTilesetAnims_BattleDomePals0_2,
+    gTilesetAnims_BattleDomePals0_3,
+};
+
+#undef TILESET_ANIMS_DATA
+
+void ResetTilesetAnimBuffer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r1, _080A023C\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r1, _080A0240\n\t"
-        "	ldr r2, _080A0244\n\t"
-        "	mov r0, sp\n\t"
-        "	bl CpuSet\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A023C: .4byte gUnknown_3000F34\n\t"
-        "_080A0240: .4byte gUnknown_20372C4\n\t"
-        "_080A0244: .4byte 0x0500003C\n\t"
-        ".syntax divided\n\t"
-    );
+    gUnknown_3000F34 = 0;
+    CpuFill32(0, gUnknown_20372C4, sizeof gUnknown_20372C4);
 }
 
-__attribute__((naked)) void AppendTilesetAnimToBuffer(void)
+void AppendTilesetAnimToBuffer(const u16 *src, u16 *dest, u16 size)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r6, r2, #0x10\n\t"
-        "	ldr r3, _080A0290\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	cmp r0, #0x13\n\t"
-        "	bhi _080A0288\n\t"
-        "	ldr r2, _080A0294\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	str r4, [r0]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r2, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r5, [r0]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r6, [r0, #8]\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r3]\n\t"
-        "_080A0288:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0290: .4byte gUnknown_3000F34\n\t"
-        "_080A0294: .4byte gUnknown_20372C4\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gUnknown_3000F34 < 20)
+    {
+        gUnknown_20372C4[gUnknown_3000F34].src = src;
+        gUnknown_20372C4[gUnknown_3000F34].dest = dest;
+        gUnknown_20372C4[gUnknown_3000F34].size = size;
+        gUnknown_3000F34 ++;
+    }
 }
 
-__attribute__((naked)) void TransferTilesetAnimsBuffer()
+void TransferTilesetAnimsBuffer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r4, _080A02D4\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	cmp r3, r0\n\t"
-        "	bge _080A02CA\n\t"
-        "	ldr r2, _080A02D8\n\t"
-        "	ldr r1, _080A02DC\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "_080A02AE:\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	str r0, [r2]\n\t"
-        "	ldr r0, [r1, #4]\n\t"
-        "	str r0, [r2, #4]\n\t"
-        "	ldrh r0, [r1, #8]\n\t"
-        "	lsrs r0, r0, #1\n\t"
-        "	orrs r0, r5\n\t"
-        "	str r0, [r2, #8]\n\t"
-        "	ldr r0, [r2, #8]\n\t"
-        "	adds r1, #0xc\n\t"
-        "	adds r3, #1\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	cmp r3, r0\n\t"
-        "	blt _080A02AE\n\t"
-        "_080A02CA:\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r6]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A02D4: .4byte gUnknown_3000F34\n\t"
-        "_080A02D8: .4byte 0x040000D4\n\t"
-        "_080A02DC: .4byte gUnknown_20372C4\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    for (i = 0; i < gUnknown_3000F34; i ++)
+        DmaCopy16(3, gUnknown_20372C4[i].src, gUnknown_20372C4[i].dest, gUnknown_20372C4[i].size);
+
+    gUnknown_3000F34 = 0;
 }
 
 
@@ -162,132 +595,36 @@ void InitSecondaryTilesetAnimation(void)
 }
 
 
-__attribute__((naked)) void UpdateTilesetAnimations()
+void UpdateTilesetAnimations(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl ResetTilesetAnimBuffer\n\t"
-        "	ldr r2, _080A0358\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r1, _080A035C\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	cmp r0, r1\n\t"
-        "	blo _080A031E\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "_080A031E:\n\t"
-        "	ldr r4, _080A0360\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4]\n\t"
-        "	ldr r1, _080A0364\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	cmp r0, r1\n\t"
-        "	blo _080A0336\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4]\n\t"
-        "_080A0336:\n\t"
-        "	ldr r0, _080A0368\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080A0344\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	bl _call_via_r1\n\t"
-        "_080A0344:\n\t"
-        "	ldr r0, _080A036C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080A0352\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	bl _call_via_r1\n\t"
-        "_080A0352:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0358: .4byte gUnknown_3000F36\n\t"
-        "_080A035C: .4byte gUnknown_3000F38\n\t"
-        "_080A0360: .4byte gUnknown_3000F3A\n\t"
-        "_080A0364: .4byte gUnknown_3000F3C\n\t"
-        "_080A0368: .4byte gUnknown_3000F40\n\t"
-        "_080A036C: .4byte gUnknown_3000F44\n\t"
-        ".syntax divided\n\t"
-    );
+    ResetTilesetAnimBuffer();
+    if (++sPrimaryTilesetAnimCounter >= sPrimaryTilesetAnimCounterMax)
+        sPrimaryTilesetAnimCounter = 0;
+    if (++sSecondaryTilesetAnimCounter >= sSecondaryTilesetAnimCounterMax)
+        sSecondaryTilesetAnimCounter = 0;
+
+    if (sPrimaryTilesetAnimCallback)
+        sPrimaryTilesetAnimCallback(sPrimaryTilesetAnimCounter);
+    if (sSecondaryTilesetAnimCallback)
+        sSecondaryTilesetAnimCallback(sSecondaryTilesetAnimCounter);
 }
 
-__attribute__((naked)) void _InitPrimaryTilesetAnimation(void)
+void _InitPrimaryTilesetAnimation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080A039C\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _080A03A0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r1, _080A03A4\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _080A03A8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #0x10]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080A0396\n\t"
-        "	ldr r0, [r0, #0x14]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080A0396\n\t"
-        "	bl _call_via_r0\n\t"
-        "_080A0396:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A039C: .4byte gUnknown_3000F36\n\t"
-        "_080A03A0: .4byte gUnknown_3000F38\n\t"
-        "_080A03A4: .4byte gUnknown_3000F40\n\t"
-        "_080A03A8: .4byte gMapHeader\n\t"
-        ".syntax divided\n\t"
-    );
+    sPrimaryTilesetAnimCounter = 0;
+    sPrimaryTilesetAnimCounterMax = 0;
+    sPrimaryTilesetAnimCallback = NULL;
+    if (gMapHeader.mapLayout->primaryTileset && gMapHeader.mapLayout->primaryTileset->callback)
+        gMapHeader.mapLayout->primaryTileset->callback();
 }
 
-__attribute__((naked)) void _InitSecondaryTilesetAnimation(void)
+void _InitSecondaryTilesetAnimation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080A03D8\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _080A03DC\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r1, _080A03E0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _080A03E4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #0x14]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080A03D2\n\t"
-        "	ldr r0, [r0, #0x14]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080A03D2\n\t"
-        "	bl _call_via_r0\n\t"
-        "_080A03D2:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A03D8: .4byte gUnknown_3000F3A\n\t"
-        "_080A03DC: .4byte gUnknown_3000F3C\n\t"
-        "_080A03E0: .4byte gUnknown_3000F44\n\t"
-        "_080A03E4: .4byte gMapHeader\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = 0;
+    sSecondaryTilesetAnimCallback = NULL;
+    if (gMapHeader.mapLayout->secondaryTileset && gMapHeader.mapLayout->secondaryTileset->callback)
+        gMapHeader.mapLayout->secondaryTileset->callback();
 }
 
 void InitTilesetAnim_General(void)
@@ -304,46 +641,18 @@ void InitTilesetAnim_Building(void)
     sPrimaryTilesetAnimCallback = TilesetAnim_Building;
 }
 
-__attribute__((naked)) void TilesetAnim_General(void)
+void TilesetAnim_General(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r5, r0, #0x10\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	lsls r0, r0, #0xc\n\t"
-        "	ands r0, r5\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080A044E\n\t"
-        "	lsrs r0, r5, #0x14\n\t"
-        "	bl QueueAnimTiles_General_Flower\n\t"
-        "_080A044E:\n\t"
-        "	cmp r4, #1\n\t"
-        "	bne _080A0458\n\t"
-        "	lsrs r0, r5, #0x14\n\t"
-        "	bl QueueAnimTiles_General_Water\n\t"
-        "_080A0458:\n\t"
-        "	cmp r4, #2\n\t"
-        "	bne _080A0462\n\t"
-        "	lsrs r0, r5, #0x14\n\t"
-        "	bl QueueAnimTiles_General_SandWaterEdge\n\t"
-        "_080A0462:\n\t"
-        "	cmp r4, #3\n\t"
-        "	bne _080A046C\n\t"
-        "	lsrs r0, r5, #0x14\n\t"
-        "	bl QueueAnimTiles_General_Waterfall\n\t"
-        "_080A046C:\n\t"
-        "	cmp r4, #4\n\t"
-        "	bne _080A0476\n\t"
-        "	lsrs r0, r5, #0x14\n\t"
-        "	bl QueueAnimTiles_General_LandWaterEdge\n\t"
-        "_080A0476:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 16 == 0)
+        QueueAnimTiles_General_Flower(timer / 16);
+    if (timer % 16 == 1)
+        QueueAnimTiles_General_Water(timer / 16);
+    if (timer % 16 == 2)
+        QueueAnimTiles_General_SandWaterEdge(timer / 16);
+    if (timer % 16 == 3)
+        QueueAnimTiles_General_Waterfall(timer / 16);
+    if (timer % 16 == 4)
+        QueueAnimTiles_General_LandWaterEdge(timer / 16);
 }
 
 void TilesetAnim_Building(u16 timer)
@@ -353,106 +662,28 @@ void TilesetAnim_Building(u16 timer)
 }
 
 
-__attribute__((naked)) void QueueAnimTiles_General_Flower(void)
+void QueueAnimTiles_General_Flower(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A04B4\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A04B8\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A04B4: .4byte gUnknown_84E8E70\n\t"
-        "_080A04B8: .4byte 0x06003F80\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_General_Flower);
+    AppendTilesetAnimToBuffer(gTilesetAnims_General_Flower[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(508)), 4 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_General_Water(void)
+void QueueAnimTiles_General_Water(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #7\n\t"
-        "	ands r0, r1\n\t"
-        "	ldr r1, _080A04DC\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080A04E0\n\t"
-        "	movs r2, #0xf0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A04DC: .4byte gUnknown_84EAC80\n\t"
-        "_080A04E0: .4byte 0x06003600\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i = timer % ARRAY_COUNT(gTilesetAnims_General_Water);
+    AppendTilesetAnimToBuffer(gTilesetAnims_General_Water[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(432)), 30 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_General_SandWaterEdge(void)
+void QueueAnimTiles_General_SandWaterEdge(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xe0\n\t"
-        "	lsls r1, r1, #0xb\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A0504\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A0508\n\t"
-        "	movs r2, #0xa0\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0504: .4byte gUnknown_84EB560\n\t"
-        "_080A0508: .4byte 0x06003A00\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_General_SandWaterEdge);
+    AppendTilesetAnimToBuffer(gTilesetAnims_General_SandWaterEdge[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(464)), 10 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_General_Waterfall(void)
+void QueueAnimTiles_General_Waterfall(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A052C\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A0530\n\t"
-        "	movs r2, #0xc0\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A052C: .4byte gUnknown_84EB880\n\t"
-        "_080A0530: .4byte 0x06003E00\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_General_Waterfall);
+    AppendTilesetAnimToBuffer(gTilesetAnims_General_Waterfall[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(496)), 6 * TILE_SIZE_4BPP);
 }
 
 void InitTilesetAnim_Fallarbor(void)
@@ -616,73 +847,27 @@ void InitTilesetAnim_BattleDome(void)
     sSecondaryTilesetAnimCallback = TilesetAnim_BattleDome;
 }
 
-__attribute__((naked)) void TilesetAnim_Rustboro(void)
+void TilesetAnim_Rustboro(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r5, r0, #0x10\n\t"
-        "	movs r0, #0xe0\n\t"
-        "	lsls r0, r0, #0xb\n\t"
-        "	ands r0, r5\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _080A0924\n\t"
-        "	lsrs r4, r5, #0x13\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl QueueAnimTiles_Rustboro_WindyWater\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl QueueAnimTiles_Rustboro_Fountain\n\t"
-        "_080A0924:\n\t"
-        "	cmp r6, #1\n\t"
-        "	bne _080A0930\n\t"
-        "	lsrs r0, r5, #0x13\n\t"
-        "	movs r1, #1\n\t"
-        "	bl QueueAnimTiles_Rustboro_WindyWater\n\t"
-        "_080A0930:\n\t"
-        "	cmp r6, #2\n\t"
-        "	bne _080A093C\n\t"
-        "	lsrs r0, r5, #0x13\n\t"
-        "	movs r1, #2\n\t"
-        "	bl QueueAnimTiles_Rustboro_WindyWater\n\t"
-        "_080A093C:\n\t"
-        "	cmp r6, #3\n\t"
-        "	bne _080A0948\n\t"
-        "	lsrs r0, r5, #0x13\n\t"
-        "	movs r1, #3\n\t"
-        "	bl QueueAnimTiles_Rustboro_WindyWater\n\t"
-        "_080A0948:\n\t"
-        "	cmp r6, #4\n\t"
-        "	bne _080A0954\n\t"
-        "	lsrs r0, r5, #0x13\n\t"
-        "	movs r1, #4\n\t"
-        "	bl QueueAnimTiles_Rustboro_WindyWater\n\t"
-        "_080A0954:\n\t"
-        "	cmp r6, #5\n\t"
-        "	bne _080A0960\n\t"
-        "	lsrs r0, r5, #0x13\n\t"
-        "	movs r1, #5\n\t"
-        "	bl QueueAnimTiles_Rustboro_WindyWater\n\t"
-        "_080A0960:\n\t"
-        "	cmp r6, #6\n\t"
-        "	bne _080A096C\n\t"
-        "	lsrs r0, r5, #0x13\n\t"
-        "	movs r1, #6\n\t"
-        "	bl QueueAnimTiles_Rustboro_WindyWater\n\t"
-        "_080A096C:\n\t"
-        "	cmp r6, #7\n\t"
-        "	bne _080A0978\n\t"
-        "	lsrs r0, r5, #0x13\n\t"
-        "	movs r1, #7\n\t"
-        "	bl QueueAnimTiles_Rustboro_WindyWater\n\t"
-        "_080A0978:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 8 == 0)
+    {
+        QueueAnimTiles_Rustboro_WindyWater(timer / 8, 0);
+        QueueAnimTiles_Rustboro_Fountain(timer / 8);
+    }
+    if (timer % 8 == 1)
+        QueueAnimTiles_Rustboro_WindyWater(timer / 8, 1);
+    if (timer % 8 == 2)
+        QueueAnimTiles_Rustboro_WindyWater(timer / 8, 2);
+    if (timer % 8 == 3)
+        QueueAnimTiles_Rustboro_WindyWater(timer / 8, 3);
+    if (timer % 8 == 4)
+        QueueAnimTiles_Rustboro_WindyWater(timer / 8, 4);
+    if (timer % 8 == 5)
+        QueueAnimTiles_Rustboro_WindyWater(timer / 8, 5);
+    if (timer % 8 == 6)
+        QueueAnimTiles_Rustboro_WindyWater(timer / 8, 6);
+    if (timer % 8 == 7)
+        QueueAnimTiles_Rustboro_WindyWater(timer / 8, 7);
 }
 
 void TilesetAnim_Dewford(u16 timer)
@@ -699,198 +884,60 @@ void TilesetAnim_Slateport(u16 timer)
 }
 
 
-__attribute__((naked)) void TilesetAnim_Mauville(void)
+void TilesetAnim_Mauville(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r4, r0, #0x10\n\t"
-        "	movs r0, #0xe0\n\t"
-        "	lsls r0, r0, #0xb\n\t"
-        "	ands r0, r4\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _080A09C8\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #0\n\t"
-        "	bl QueueAnimTiles_Mauville_Flowers\n\t"
-        "_080A09C8:\n\t"
-        "	cmp r5, #1\n\t"
-        "	bne _080A09D4\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #1\n\t"
-        "	bl QueueAnimTiles_Mauville_Flowers\n\t"
-        "_080A09D4:\n\t"
-        "	cmp r5, #2\n\t"
-        "	bne _080A09E0\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #2\n\t"
-        "	bl QueueAnimTiles_Mauville_Flowers\n\t"
-        "_080A09E0:\n\t"
-        "	cmp r5, #3\n\t"
-        "	bne _080A09EC\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #3\n\t"
-        "	bl QueueAnimTiles_Mauville_Flowers\n\t"
-        "_080A09EC:\n\t"
-        "	cmp r5, #4\n\t"
-        "	bne _080A09F8\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #4\n\t"
-        "	bl QueueAnimTiles_Mauville_Flowers\n\t"
-        "_080A09F8:\n\t"
-        "	cmp r5, #5\n\t"
-        "	bne _080A0A04\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #5\n\t"
-        "	bl QueueAnimTiles_Mauville_Flowers\n\t"
-        "_080A0A04:\n\t"
-        "	cmp r5, #6\n\t"
-        "	bne _080A0A10\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #6\n\t"
-        "	bl QueueAnimTiles_Mauville_Flowers\n\t"
-        "_080A0A10:\n\t"
-        "	cmp r5, #7\n\t"
-        "	bne _080A0A1C\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #7\n\t"
-        "	bl QueueAnimTiles_Mauville_Flowers\n\t"
-        "_080A0A1C:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 8 == 0)
+        QueueAnimTiles_Mauville_Flowers(timer / 8, 0);
+    if (timer % 8 == 1)
+        QueueAnimTiles_Mauville_Flowers(timer / 8, 1);
+    if (timer % 8 == 2)
+        QueueAnimTiles_Mauville_Flowers(timer / 8, 2);
+    if (timer % 8 == 3)
+        QueueAnimTiles_Mauville_Flowers(timer / 8, 3);
+    if (timer % 8 == 4)
+        QueueAnimTiles_Mauville_Flowers(timer / 8, 4);
+    if (timer % 8 == 5)
+        QueueAnimTiles_Mauville_Flowers(timer / 8, 5);
+    if (timer % 8 == 6)
+        QueueAnimTiles_Mauville_Flowers(timer / 8, 6);
+    if (timer % 8 == 7)
+        QueueAnimTiles_Mauville_Flowers(timer / 8, 7);
 }
 
-__attribute__((naked)) void TilesetAnim_Lavaridge(void)
+void TilesetAnim_Lavaridge(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r4, r0, #0x10\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	lsls r0, r0, #0xc\n\t"
-        "	ands r0, r4\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _080A0A3E\n\t"
-        "	lsrs r0, r4, #0x14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl QueueAnimTiles_Lavaridge_Steam\n\t"
-        "_080A0A3E:\n\t"
-        "	cmp r5, #1\n\t"
-        "	bne _080A0A48\n\t"
-        "	lsrs r0, r4, #0x14\n\t"
-        "	bl QueueAnimTiles_Lavaridge_Lava\n\t"
-        "_080A0A48:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 16 == 0)
+        QueueAnimTiles_Lavaridge_Steam(timer / 16);
+    if (timer % 16 == 1)
+        QueueAnimTiles_Lavaridge_Lava(timer / 16);
 }
 
-__attribute__((naked)) void TilesetAnim_EverGrande(void)
+void TilesetAnim_EverGrande(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r4, r0, #0x10\n\t"
-        "	movs r0, #0xe0\n\t"
-        "	lsls r0, r0, #0xb\n\t"
-        "	ands r0, r4\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _080A0A68\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #0\n\t"
-        "	bl QueueAnimTiles_EverGrande_Flowers\n\t"
-        "_080A0A68:\n\t"
-        "	cmp r5, #1\n\t"
-        "	bne _080A0A74\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #1\n\t"
-        "	bl QueueAnimTiles_EverGrande_Flowers\n\t"
-        "_080A0A74:\n\t"
-        "	cmp r5, #2\n\t"
-        "	bne _080A0A80\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #2\n\t"
-        "	bl QueueAnimTiles_EverGrande_Flowers\n\t"
-        "_080A0A80:\n\t"
-        "	cmp r5, #3\n\t"
-        "	bne _080A0A8C\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #3\n\t"
-        "	bl QueueAnimTiles_EverGrande_Flowers\n\t"
-        "_080A0A8C:\n\t"
-        "	cmp r5, #4\n\t"
-        "	bne _080A0A98\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #4\n\t"
-        "	bl QueueAnimTiles_EverGrande_Flowers\n\t"
-        "_080A0A98:\n\t"
-        "	cmp r5, #5\n\t"
-        "	bne _080A0AA4\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #5\n\t"
-        "	bl QueueAnimTiles_EverGrande_Flowers\n\t"
-        "_080A0AA4:\n\t"
-        "	cmp r5, #6\n\t"
-        "	bne _080A0AB0\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #6\n\t"
-        "	bl QueueAnimTiles_EverGrande_Flowers\n\t"
-        "_080A0AB0:\n\t"
-        "	cmp r5, #7\n\t"
-        "	bne _080A0ABC\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	movs r1, #7\n\t"
-        "	bl QueueAnimTiles_EverGrande_Flowers\n\t"
-        "_080A0ABC:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 8 == 0)
+        QueueAnimTiles_EverGrande_Flowers(timer / 8, 0);
+    if (timer % 8 == 1)
+        QueueAnimTiles_EverGrande_Flowers(timer / 8, 1);
+    if (timer % 8 == 2)
+        QueueAnimTiles_EverGrande_Flowers(timer / 8, 2);
+    if (timer % 8 == 3)
+        QueueAnimTiles_EverGrande_Flowers(timer / 8, 3);
+    if (timer % 8 == 4)
+        QueueAnimTiles_EverGrande_Flowers(timer / 8, 4);
+    if (timer % 8 == 5)
+        QueueAnimTiles_EverGrande_Flowers(timer / 8, 5);
+    if (timer % 8 == 6)
+        QueueAnimTiles_EverGrande_Flowers(timer / 8, 6);
+    if (timer % 8 == 7)
+        QueueAnimTiles_EverGrande_Flowers(timer / 8, 7);
 }
 
-__attribute__((naked)) void TilesetAnim_Pacifidlog(void)
+void TilesetAnim_Pacifidlog(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r4, r0, #0x10\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	lsls r0, r0, #0xc\n\t"
-        "	ands r0, r4\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _080A0ADE\n\t"
-        "	lsrs r0, r4, #0x14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl QueueAnimTiles_Pacifidlog_LogBridges\n\t"
-        "_080A0ADE:\n\t"
-        "	cmp r5, #1\n\t"
-        "	bne _080A0AEC\n\t"
-        "	lsrs r0, r4, #0x14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl QueueAnimTiles_Pacifidlog_WaterCurrents\n\t"
-        "_080A0AEC:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 16 == 0)
+        QueueAnimTiles_Pacifidlog_LogBridges(timer / 16);
+    if (timer % 16 == 1)
+        QueueAnimTiles_Pacifidlog_WaterCurrents(timer / 16);
 }
 
 void TilesetAnim_Sootopolis(u16 timer)
@@ -898,47 +945,15 @@ void TilesetAnim_Sootopolis(u16 timer)
     if (timer % 16 == 0)
         QueueAnimTiles_Sootopolis_StormyWater(timer / 16);
 }
-__attribute__((naked)) void TilesetAnim_Underwater(void)
+void TilesetAnim_Underwater(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	lsls r0, r0, #0xc\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080A0B24\n\t"
-        "	lsrs r0, r1, #0x14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl QueueAnimTiles_Underwater_Seaweed\n\t"
-        "_080A0B24:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 16 == 0)
+        QueueAnimTiles_Underwater_Seaweed(timer / 16);
 }
-__attribute__((naked)) void TilesetAnim_Cave(void)
+void TilesetAnim_Cave(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	lsls r0, r0, #0xc\n\t"
-        "	ands r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080A0B3E\n\t"
-        "	lsrs r0, r1, #0x14\n\t"
-        "	bl QueueAnimTiles_Cave_Lava\n\t"
-        "_080A0B3E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 16 == 1)
+        QueueAnimTiles_Cave_Lava(timer / 16);
 }
 
 
@@ -957,468 +972,112 @@ void TilesetAnim_BattleFrontierOutsideEast(u16 timer)
 }
 
 
-__attribute__((naked)) void QueueAnimTiles_General_LandWaterEdge(void)
+void QueueAnimTiles_General_LandWaterEdge(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A0B94\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A0B98\n\t"
-        "	movs r2, #0xa0\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0B94: .4byte gUnknown_84EBD90\n\t"
-        "_080A0B98: .4byte 0x06003C00\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_General_LandWaterEdge);
+    AppendTilesetAnimToBuffer(gTilesetAnims_General_LandWaterEdge[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(480)), 10 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_Lavaridge_Steam(void)
+void QueueAnimTiles_Lavaridge_Steam(u8 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r4\n\t"
-        "	ldr r5, _080A0BD8\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080A0BDC\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	adds r1, r4, #2\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	asrs r0, r0, #2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080A0BE0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0BD8: .4byte gUnknown_84EBFA0\n\t"
-        "_080A0BDC: .4byte 0x06006400\n\t"
-        "_080A0BE0: .4byte 0x06006480\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i = timer % ARRAY_COUNT(gTilesetAnims_Lavaridge_Steam);
+    AppendTilesetAnimToBuffer(gTilesetAnims_Lavaridge_Steam[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 288)), 4 * TILE_SIZE_4BPP);
+
+    i = (timer + 2) % (int)ARRAY_COUNT(gTilesetAnims_Lavaridge_Steam);
+    AppendTilesetAnimToBuffer(gTilesetAnims_Lavaridge_Steam[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 292)), 4 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_Pacifidlog_LogBridges(void)
+void QueueAnimTiles_Pacifidlog_LogBridges(u8 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x12\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A0C04\n\t"
-        "	lsrs r1, r1, #0x16\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A0C08\n\t"
-        "	movs r2, #0xf0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0C04: .4byte gUnknown_84ECAF0\n\t"
-        "_080A0C08: .4byte 0x06007A00\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i = timer % ARRAY_COUNT(gTilesetAnims_Pacifidlog_LogBridges);
+    AppendTilesetAnimToBuffer(gTilesetAnims_Pacifidlog_LogBridges[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 464)), 30 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_Underwater_Seaweed(void)
+void QueueAnimTiles_Underwater_Seaweed(u8 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x12\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A0C2C\n\t"
-        "	lsrs r1, r1, #0x16\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A0C30\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0C2C: .4byte gUnknown_84ECD00\n\t"
-        "_080A0C30: .4byte 0x06007E00\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i = timer % ARRAY_COUNT(gTilesetAnims_Underwater_Seaweed);
+    AppendTilesetAnimToBuffer(gTilesetAnims_Underwater_Seaweed[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 496)), 4 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_Pacifidlog_WaterCurrents(void)
+void QueueAnimTiles_Pacifidlog_WaterCurrents(u8 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	movs r1, #0xe0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A0C54\n\t"
-        "	lsrs r1, r1, #0x16\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A0C58\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0C54: .4byte gUnknown_84ED510\n\t"
-        "_080A0C58: .4byte 0x06007E00\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i = timer % ARRAY_COUNT(gTilesetAnims_Pacifidlog_WaterCurrents);
+    AppendTilesetAnimToBuffer(gTilesetAnims_Pacifidlog_WaterCurrents[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 496)), 8 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_Mauville_Flowers(void)
+void QueueAnimTiles_Mauville_Flowers(u16 timer_div, u8 timer_mod)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	subs r0, r5, r6\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #0xb\n\t"
-        "	bhi _080A0CB8\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl __umodsi3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	ldr r0, _080A0CA8\n\t"
-        "	lsrs r4, r4, #0xe\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080A0CAC\n\t"
-        "	lsls r5, r6, #2\n\t"
-        "	adds r1, r5, r1\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	ldr r0, _080A0CB0\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080A0CB4\n\t"
-        "	adds r5, r5, r1\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	b _080A0CE4\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0CA8: .4byte gUnknown_84EDA90\n\t"
-        "_080A0CAC: .4byte gUnknown_84EDA50\n\t"
-        "_080A0CB0: .4byte gUnknown_84EDAC0\n\t"
-        "_080A0CB4: .4byte gUnknown_84EDA70\n\t"
-        "_080A0CB8:\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r5, r0\n\t"
-        "	ldr r0, _080A0CEC\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080A0CF0\n\t"
-        "	lsls r4, r6, #2\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	ldr r0, _080A0CF4\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r1, _080A0CF8\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "_080A0CE4:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0CEC: .4byte gUnknown_84EDAF0\n\t"
-        "_080A0CF0: .4byte gUnknown_84EDA50\n\t"
-        "_080A0CF4: .4byte gUnknown_84EDB00\n\t"
-        "_080A0CF8: .4byte gUnknown_84EDA70\n\t"
-        ".syntax divided\n\t"
-    );
+    timer_div -= timer_mod;
+    if (timer_div < min(ARRAY_COUNT(gTilesetAnims_Mauville_Flower1), ARRAY_COUNT(gTilesetAnims_Mauville_Flower2)))
+    {
+        timer_div %= min(ARRAY_COUNT(gTilesetAnims_Mauville_Flower1), ARRAY_COUNT(gTilesetAnims_Mauville_Flower2));
+        AppendTilesetAnimToBuffer(gTilesetAnims_Mauville_Flower1[timer_div], gTilesetAnims_Mauville_Flower1_VDests[timer_mod], 4 * TILE_SIZE_4BPP);
+        AppendTilesetAnimToBuffer(gTilesetAnims_Mauville_Flower2[timer_div], gTilesetAnims_Mauville_Flower2_VDests[timer_mod], 4 * TILE_SIZE_4BPP);
+    }
+    else
+    {
+        timer_div %= min(ARRAY_COUNT(gTilesetAnims_Mauville_Flower1_B), ARRAY_COUNT(gTilesetAnims_Mauville_Flower2_B));
+        AppendTilesetAnimToBuffer(gTilesetAnims_Mauville_Flower1_B[timer_div], gTilesetAnims_Mauville_Flower1_VDests[timer_mod], 4 * TILE_SIZE_4BPP);
+        AppendTilesetAnimToBuffer(gTilesetAnims_Mauville_Flower2_B[timer_div], gTilesetAnims_Mauville_Flower2_VDests[timer_mod], 4 * TILE_SIZE_4BPP);
+    }
 }
 
-__attribute__((naked)) void QueueAnimTiles_Rustboro_WindyWater(void)
+void QueueAnimTiles_Rustboro_WindyWater(u16 timer_div, u8 timer_mod)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r3, r1, #0x18\n\t"
-        "	subs r0, r0, r3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xe0\n\t"
-        "	lsls r1, r1, #0xb\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A0D30\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _080A0D2C\n\t"
-        "	ldr r0, _080A0D34\n\t"
-        "	lsls r1, r3, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "_080A0D2C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0D30: .4byte gUnknown_84EDF30\n\t"
-        "_080A0D34: .4byte gUnknown_84EDF10\n\t"
-        ".syntax divided\n\t"
-    );
+    timer_div -= timer_mod;
+    timer_div %= ARRAY_COUNT(gTilesetAnims_Rustboro_WindyWater);
+    if (gTilesetAnims_Rustboro_WindyWater[timer_div])
+        AppendTilesetAnimToBuffer(gTilesetAnims_Rustboro_WindyWater[timer_div], gTilesetAnims_Rustboro_WindyWater_VDests[timer_mod], 4 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_Rustboro_Fountain(void)
+void QueueAnimTiles_Rustboro_Fountain(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	ldr r1, _080A0D58\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080A0D5C\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0D58: .4byte gUnknown_84EE070\n\t"
-        "_080A0D5C: .4byte 0x06007800\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_Rustboro_Fountain);
+    AppendTilesetAnimToBuffer(gTilesetAnims_Rustboro_Fountain[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 448)), 4 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_Lavaridge_Lava(void)
+void QueueAnimTiles_Lavaridge_Lava(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A0D80\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A0D84\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0D80: .4byte gUnknown_84EE498\n\t"
-        "_080A0D84: .4byte 0x06005400\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_Lavaridge_Cave_Lava);
+    AppendTilesetAnimToBuffer(gTilesetAnims_Lavaridge_Cave_Lava[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 160)), 4 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_EverGrande_Flowers(void)
+void QueueAnimTiles_EverGrande_Flowers(u16 timer_div, u8 timer_mod)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r2, #0xe0\n\t"
-        "	lsls r2, r2, #0xb\n\t"
-        "	ands r2, r0\n\t"
-        "	ldr r0, _080A0DB8\n\t"
-        "	lsrs r2, r2, #0xe\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r2, _080A0DBC\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0DB8: .4byte gUnknown_84EE8E8\n\t"
-        "_080A0DBC: .4byte gUnknown_84EE8C8\n\t"
-        ".syntax divided\n\t"
-    );
+    timer_div -= timer_mod;
+    timer_div %= ARRAY_COUNT(gTilesetAnims_EverGrande_Flowers);
+
+    AppendTilesetAnimToBuffer(gTilesetAnims_EverGrande_Flowers[timer_div], gTilesetAnims_EverGrande_VDests[timer_mod], 4 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_Cave_Lava(void)
+void QueueAnimTiles_Cave_Lava(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A0DE0\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A0DE4\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0DE0: .4byte gUnknown_84EE498\n\t"
-        "_080A0DE4: .4byte 0x06007400\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_Lavaridge_Cave_Lava);
+    AppendTilesetAnimToBuffer(gTilesetAnims_Lavaridge_Cave_Lava[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 416)), 4 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_Dewford_Flag(void)
+void QueueAnimTiles_Dewford_Flag(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A0E08\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A0E0C\n\t"
-        "	movs r2, #0xc0\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0E08: .4byte gUnknown_84EEC08\n\t"
-        "_080A0E0C: .4byte 0x06005540\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_Dewford_Flag);
+    AppendTilesetAnimToBuffer(gTilesetAnims_Dewford_Flag[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 170)), 6 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_BattleFrontierOutsideWest_Flag(void)
+void QueueAnimTiles_BattleFrontierOutsideWest_Flag(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A0E30\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A0E34\n\t"
-        "	movs r2, #0xc0\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0E30: .4byte gUnknown_84EEF18\n\t"
-        "_080A0E34: .4byte 0x06005B40\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_BattleFrontierOutsideWest_Flag);
+    AppendTilesetAnimToBuffer(gTilesetAnims_BattleFrontierOutsideWest_Flag[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 218)), 6 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_BattleFrontierOutsideEast_Flag(void)
+void QueueAnimTiles_BattleFrontierOutsideEast_Flag(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A0E58\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A0E5C\n\t"
-        "	movs r2, #0xc0\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0E58: .4byte gUnknown_84EF228\n\t"
-        "_080A0E5C: .4byte 0x06005B40\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_BattleFrontierOutsideEast_Flag);
+    AppendTilesetAnimToBuffer(gTilesetAnims_BattleFrontierOutsideEast_Flag[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 218)), 6 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_Slateport_Balloons(void)
+void QueueAnimTiles_Slateport_Balloons(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A0E80\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A0E84\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0E80: .4byte gUnknown_84EF438\n\t"
-        "_080A0E84: .4byte 0x06005C00\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_Slateport_Balloons);
+    AppendTilesetAnimToBuffer(gTilesetAnims_Slateport_Balloons[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 224)), 4 * TILE_SIZE_4BPP);
 }
 
 void TilesetAnim_MauvilleGym(u16 timer)
@@ -1435,34 +1094,12 @@ void TilesetAnim_SootopolisGym(u16 timer)
 }
 
 
-__attribute__((naked)) void TilesetAnim_EliteFour(void)
+void TilesetAnim_EliteFour(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r4, r0, #0x10\n\t"
-        "	lsrs r0, r4, #0x10\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r5\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080A0ECE\n\t"
-        "	lsrs r0, r4, #0x16\n\t"
-        "	bl QueueAnimTiles_EliteFour_GroundLights\n\t"
-        "_080A0ECE:\n\t"
-        "	movs r0, #7\n\t"
-        "	ands r0, r5\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080A0EDC\n\t"
-        "	lsrs r0, r4, #0x13\n\t"
-        "	bl QueueAnimTiles_EliteFour_WallLights\n\t"
-        "_080A0EDC:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 64 == 1)
+        QueueAnimTiles_EliteFour_GroundLights(timer / 64);
+    if (timer % 8 == 1)
+        QueueAnimTiles_EliteFour_WallLights(timer / 8);
 }
 
 void TilesetAnim_BikeShop(u16 timer)
@@ -1472,29 +1109,13 @@ void TilesetAnim_BikeShop(u16 timer)
 }
 
 
-__attribute__((naked)) void TilesetAnim_BattlePyramid(void)
+void TilesetAnim_BattlePyramid(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r4, r0, #0x10\n\t"
-        "	movs r0, #0xe0\n\t"
-        "	lsls r0, r0, #0xb\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080A0F18\n\t"
-        "	lsrs r4, r4, #0x13\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl QueueAnimTiles_BattlePyramid_Torch\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl QueueAnimTiles_BattlePyramid_StatueShadow\n\t"
-        "_080A0F18:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 8 == 0)
+    {
+        QueueAnimTiles_BattlePyramid_Torch(timer / 8);
+        QueueAnimTiles_BattlePyramid_StatueShadow(timer / 8);
+    }
 }
 
 void TilesetAnim_BattleDome(u16 timer)
@@ -1511,357 +1132,79 @@ void TilesetAnim_BattleDome2(u16 timer)
 }
 
 
-__attribute__((naked)) void QueueAnimTiles_Building_TVTurnedOn(void)
+void QueueAnimTiles_Building_TVTurnedOn(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	ldr r1, _080A0F70\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080A0F74\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0F70: .4byte gUnknown_84EF548\n\t"
-        "_080A0F74: .4byte 0x06003E00\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_Building_TvTurnedOn);
+    AppendTilesetAnimToBuffer(gTilesetAnims_Building_TvTurnedOn[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(496)), 4 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_SootopolisGym_Waterfalls(void)
+void QueueAnimTiles_SootopolisGym_Waterfalls(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #3\n\t"
-        "	bl __umodsi3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	ldr r0, _080A0FB0\n\t"
-        "	lsrs r4, r4, #0xe\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080A0FB4\n\t"
-        "	movs r2, #0xc0\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	ldr r0, _080A0FB8\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080A0FBC\n\t"
-        "	movs r2, #0xa0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0FB0: .4byte gUnknown_84F0150\n\t"
-        "_080A0FB4: .4byte 0x06007E00\n\t"
-        "_080A0FB8: .4byte gUnknown_84F015C\n\t"
-        "_080A0FBC: .4byte 0x06007A00\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % min(ARRAY_COUNT(gTilesetAnims_SootopolisGym_SideWaterfall), ARRAY_COUNT(gTilesetAnims_SootopolisGym_FrontWaterfall));
+    AppendTilesetAnimToBuffer(gTilesetAnims_SootopolisGym_SideWaterfall[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 496)), 12 * TILE_SIZE_4BPP);
+    AppendTilesetAnimToBuffer(gTilesetAnims_SootopolisGym_FrontWaterfall[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 464)), 20 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_EliteFour_WallLights(void)
+void QueueAnimTiles_EliteFour_WallLights(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A0FE0\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A0FE4\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0FE0: .4byte gUnknown_84F0308\n\t"
-        "_080A0FE4: .4byte 0x06007F00\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_EliteFour_WallLights);
+    AppendTilesetAnimToBuffer(gTilesetAnims_EliteFour_WallLights[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 504)), 1 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_EliteFour_GroundLights(void)
+void QueueAnimTiles_EliteFour_GroundLights(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	ldr r1, _080A1008\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080A100C\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A1008: .4byte gUnknown_84F0318\n\t"
-        "_080A100C: .4byte 0x06007C00\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_EliteFour_FloorLight);
+    AppendTilesetAnimToBuffer(gTilesetAnims_EliteFour_FloorLight[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 480)), 4 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_MauvilleGym_ElectricGates(void)
+void QueueAnimTiles_MauvilleGym_ElectricGates(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	ldr r1, _080A1030\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080A1034\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A1030: .4byte gUnknown_84F0740\n\t"
-        "_080A1034: .4byte 0x06005200\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_MauvilleGym_ElectricGates);
+    AppendTilesetAnimToBuffer(gTilesetAnims_MauvilleGym_ElectricGates[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 144)), 16 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_BikeShop_BlinkingLights(void)
+void QueueAnimTiles_BikeShop_BlinkingLights(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	ldr r1, _080A1058\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080A105C\n\t"
-        "	movs r2, #0x90\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A1058: .4byte gUnknown_84F09A8\n\t"
-        "_080A105C: .4byte 0x06007E00\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_BikeShop_BlinkingLights);
+    AppendTilesetAnimToBuffer(gTilesetAnims_BikeShop_BlinkingLights[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 496)), 9 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_Sootopolis_StormyWater(void)
+void QueueAnimTiles_Sootopolis_StormyWater(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xe0\n\t"
-        "	lsls r1, r1, #0xb\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _080A1080\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A1084\n\t"
-        "	movs r2, #0xc0\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A1080: .4byte gUnknown_84F89D0\n\t"
-        "_080A1084: .4byte 0x06005E00\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_Sootopolis_StormyWater);
+    AppendTilesetAnimToBuffer(gTilesetAnims_Sootopolis_StormyWater[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 240)), 96 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_BattlePyramid_Torch(void)
+void QueueAnimTiles_BattlePyramid_Torch(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #3\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldr r1, _080A10AC\n\t"
-        "	lsrs r0, r0, #0xe\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080A10B0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A10AC: .4byte gUnknown_84FCF70\n\t"
-        "_080A10B0: .4byte 0x060052E0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_BattlePyramid_Torch);
+    AppendTilesetAnimToBuffer(gTilesetAnims_BattlePyramid_Torch[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 151)), 8 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void QueueAnimTiles_BattlePyramid_StatueShadow(void)
+void QueueAnimTiles_BattlePyramid_StatueShadow(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #3\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldr r1, _080A10D8\n\t"
-        "	lsrs r0, r0, #0xe\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080A10DC\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	bl AppendTilesetAnimToBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A10D8: .4byte gUnknown_84FCF7C\n\t"
-        "_080A10DC: .4byte 0x060050E0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_BattlePyramid_StatueShadow);
+    AppendTilesetAnimToBuffer(gTilesetAnims_BattlePyramid_StatueShadow[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 135)), 8 * TILE_SIZE_4BPP);
 }
 
-__attribute__((naked)) void BlendAnimPalette_BattleDome_FloorLights(void)
+void BlendAnimPalette_BattleDome_FloorLights(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldr r2, _080A1130\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	ands r1, r0\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A1134\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl CpuSet\n\t"
-        "	ldr r0, _080A1138\n\t"
-        "	ldrh r2, [r0, #4]\n\t"
-        "	lsls r2, r2, #0x15\n\t"
-        "	lsrs r2, r2, #0x1b\n\t"
-        "	ldrh r3, [r0, #6]\n\t"
-        "	lsls r3, r3, #0x11\n\t"
-        "	lsrs r3, r3, #0x11\n\t"
-        "	movs r0, #0x80\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalette\n\t"
-        "	ldr r0, _080A113C\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _080A112A\n\t"
-        "	ldr r1, _080A1140\n\t"
-        "	ldr r0, _080A1144\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r1, _080A1148\n\t"
-        "	movs r0, #0x20\n\t"
-        "	strh r0, [r1]\n\t"
-        "_080A112A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A1130: .4byte gUnknown_84FCF88\n\t"
-        "_080A1134: .4byte gUnknown_20374B4\n\t"
-        "_080A1138: .4byte gPaletteFade\n\t"
-        "_080A113C: .4byte Phase2Task_Magma + 1\n\t"
-        "_080A1140: .4byte gUnknown_3000F44\n\t"
-        "_080A1144: .4byte TilesetAnim_BattleDome2 + 1\n\t"
-        "_080A1148: .4byte gUnknown_3000F3C\n\t"
-        ".syntax divided\n\t"
-    );
+    CpuCopy16(sTilesetAnims_BattleDomeFloorLightPals[timer % ARRAY_COUNT(sTilesetAnims_BattleDomeFloorLightPals)], &gPlttBufferUnfaded[BG_PLTT_ID(8)], PLTT_SIZE_4BPP);
+    BlendPalette(BG_PLTT_ID(8), 16, gPaletteFade.y, gPaletteFade.blendColor & 0x7FFF);
+    if ((u8)FindTaskIdByFunc(Phase2Task_Magma) != TASK_NONE)
+    {
+        sSecondaryTilesetAnimCallback = TilesetAnim_BattleDome2;
+        sSecondaryTilesetAnimCounterMax = 32;
+    }
 }
 
-__attribute__((naked)) void BlendAnimPalette_BattleDome_FloorLightsNoBlend(void)
+void BlendAnimPalette_BattleDome_FloorLightsNoBlend(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldr r2, _080A11A4\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	ands r1, r0\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080A11A8\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl CpuSet\n\t"
-        "	ldr r0, _080A11AC\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _080A119E\n\t"
-        "	ldr r0, _080A11B0\n\t"
-        "	ldrh r2, [r0, #4]\n\t"
-        "	lsls r2, r2, #0x15\n\t"
-        "	lsrs r2, r2, #0x1b\n\t"
-        "	ldrh r3, [r0, #6]\n\t"
-        "	lsls r3, r3, #0x11\n\t"
-        "	lsrs r3, r3, #0x11\n\t"
-        "	movs r0, #0x80\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalette\n\t"
-        "	ldr r1, _080A11B4\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _080A119E\n\t"
-        "	ldr r0, _080A11B8\n\t"
-        "	str r1, [r0]\n\t"
-        "_080A119E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080A11A4: .4byte gUnknown_84FCF88\n\t"
-        "_080A11A8: .4byte gUnknown_20374B4\n\t"
-        "_080A11AC: .4byte Phase2Task_Magma + 1\n\t"
-        "_080A11B0: .4byte gPaletteFade\n\t"
-        "_080A11B4: .4byte gUnknown_3000F3C\n\t"
-        "_080A11B8: .4byte gUnknown_3000F44\n\t"
-        ".syntax divided\n\t"
-    );
+    CpuCopy16(sTilesetAnims_BattleDomeFloorLightPals[timer % ARRAY_COUNT(sTilesetAnims_BattleDomeFloorLightPals)], &gPlttBufferUnfaded[BG_PLTT_ID(8)], PLTT_SIZE_4BPP);
+    if ((u8)FindTaskIdByFunc(Phase2Task_Magma) == TASK_NONE)
+    {
+        BlendPalette(BG_PLTT_ID(8), 16, gPaletteFade.y, gPaletteFade.blendColor & 0x7FFF);
+        if (!--sSecondaryTilesetAnimCounterMax)
+            sSecondaryTilesetAnimCallback = NULL;
+    }
 }
-

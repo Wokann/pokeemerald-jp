@@ -589,8 +589,8 @@ __attribute__((naked)) void ScriptCmd_loadspritegfx(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080A3638: .4byte gUnknown_2038090\n\t"
-        "_080A363C: .4byte gUnknown_84E99D0\n\t"
-        "_080A3640: .4byte gUnknown_84EA2D8\n\t"
+        "_080A363C: .4byte gTilesetAnims_General_Water_Frame3 + 0x10\n\t"
+        "_080A3640: .4byte gTilesetAnims_General_Water_Frame5 + 0x198\n\t"
         "_080A3644: .4byte 0xFFFFD8F0\n\t"
         "_080A3648: .4byte gUnknown_203809C\n\t"
         "_080A364C: .4byte gAnimScriptCallback\n\t"
@@ -4839,4 +4839,3 @@ __attribute__((naked)) void sub_080A550C(void)
         ".syntax divided\n\t"
     );
 }
-

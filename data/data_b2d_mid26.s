@@ -13,7 +13,7 @@
 #define NULL 0
 
 .include "sound/MPlayDef.s"
-	.section .rodata.data_b2d_mid26_before_battle_anim_status_effects
+	.section .rodata.data_b2d_mid26_before_tileset_anims_data
 	.include "asm/macros.inc"
 
 #include "constants/tms_hms.inc"
@@ -26,159 +26,8 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.incbin "baserom_jp.gba", 0x4e8cd0, 0x1a0
 
-	.globl gUnknown_84E8E70
-gUnknown_84E8E70: @ 0x84E8E70
-	.incbin "baserom_jp.gba", 0x4e8e70, 0xb60
-
-	.globl gUnknown_84E99D0
-gUnknown_84E99D0: @ 0x84E99D0
-	.incbin "baserom_jp.gba", 0x4e99d0, 0x908
-
-	.globl gUnknown_84EA2D8
-gUnknown_84EA2D8: @ 0x84EA2D8
-	.incbin "baserom_jp.gba", 0x4ea2d8, 0x9a8
-
-	.globl gUnknown_84EAC80
-gUnknown_84EAC80: @ 0x84EAC80
-	.incbin "baserom_jp.gba", 0x4eac80, 0x8e0
-
-	.globl gUnknown_84EB560
-gUnknown_84EB560: @ 0x84EB560
-	.incbin "baserom_jp.gba", 0x4eb560, 0x320
-
-	.globl gUnknown_84EB880
-gUnknown_84EB880: @ 0x84EB880
-	.incbin "baserom_jp.gba", 0x4eb880, 0x510
-
-	.globl gUnknown_84EBD90
-gUnknown_84EBD90: @ 0x84EBD90
-	.incbin "baserom_jp.gba", 0x4ebd90, 0x210
-
-	.globl gUnknown_84EBFA0
-gUnknown_84EBFA0: @ 0x84EBFA0
-	.incbin "baserom_jp.gba", 0x4ebfa0, 0xb50
-
-	.globl gUnknown_84ECAF0
-gUnknown_84ECAF0: @ 0x84ECAF0
-	.incbin "baserom_jp.gba", 0x4ecaf0, 0x210
-
-	.globl gUnknown_84ECD00
-gUnknown_84ECD00: @ 0x84ECD00
-	.incbin "baserom_jp.gba", 0x4ecd00, 0x810
-
-	.globl gUnknown_84ED510
-gUnknown_84ED510: @ 0x84ED510
-	.incbin "baserom_jp.gba", 0x4ed510, 0x540
-
-	.globl gUnknown_84EDA50
-gUnknown_84EDA50: @ 0x84EDA50
-	.incbin "baserom_jp.gba", 0x4eda50, 0x20
-
-	.globl gUnknown_84EDA70
-gUnknown_84EDA70: @ 0x84EDA70
-	.incbin "baserom_jp.gba", 0x4eda70, 0x20
-
-	.globl gUnknown_84EDA90
-gUnknown_84EDA90: @ 0x84EDA90
-	.incbin "baserom_jp.gba", 0x4eda90, 0x30
-
-	.globl gUnknown_84EDAC0
-gUnknown_84EDAC0: @ 0x84EDAC0
-	.incbin "baserom_jp.gba", 0x4edac0, 0x30
-
-	.globl gUnknown_84EDAF0
-gUnknown_84EDAF0: @ 0x84EDAF0
-	.incbin "baserom_jp.gba", 0x4edaf0, 0x10
-
-	.globl gUnknown_84EDB00
-gUnknown_84EDB00: @ 0x84EDB00
-	.incbin "baserom_jp.gba", 0x4edb00, 0x410
-
-	.globl gUnknown_84EDF10
-gUnknown_84EDF10: @ 0x84EDF10
-	.incbin "baserom_jp.gba", 0x4edf10, 0x20
-
-	.globl gUnknown_84EDF30
-gUnknown_84EDF30: @ 0x84EDF30
-	.incbin "baserom_jp.gba", 0x4edf30, 0x140
-
-	.globl gUnknown_84EE070
-gUnknown_84EE070: @ 0x84EE070
-	.incbin "baserom_jp.gba", 0x4ee070, 0x428
-
-	.globl gUnknown_84EE498
-gUnknown_84EE498: @ 0x84EE498
-	.incbin "baserom_jp.gba", 0x4ee498, 0x430
-
-	.globl gUnknown_84EE8C8
-gUnknown_84EE8C8: @ 0x84EE8C8
-	.incbin "baserom_jp.gba", 0x4ee8c8, 0x20
-
-	.globl gUnknown_84EE8E8
-gUnknown_84EE8E8: @ 0x84EE8E8
-	.incbin "baserom_jp.gba", 0x4ee8e8, 0x320
-
-	.globl gUnknown_84EEC08
-gUnknown_84EEC08: @ 0x84EEC08
-	.incbin "baserom_jp.gba", 0x4eec08, 0x310
-
-	.globl gUnknown_84EEF18
-gUnknown_84EEF18: @ 0x84EEF18
-	.incbin "baserom_jp.gba", 0x4eef18, 0x310
-
-	.globl gUnknown_84EF228
-gUnknown_84EF228: @ 0x84EF228
-	.incbin "baserom_jp.gba", 0x4ef228, 0x210
-
-	.globl gUnknown_84EF438
-gUnknown_84EF438: @ 0x84EF438
-	.incbin "baserom_jp.gba", 0x4ef438, 0x110
-
-	.globl gUnknown_84EF548
-gUnknown_84EF548: @ 0x84EF548
-	.incbin "baserom_jp.gba", 0x4ef548, 0xc08
-
-	.globl gUnknown_84F0150
-gUnknown_84F0150: @ 0x84F0150
-	.incbin "baserom_jp.gba", 0x4f0150, 0xc
-
-	.globl gUnknown_84F015C
-gUnknown_84F015C: @ 0x84F015C
-	.incbin "baserom_jp.gba", 0x4f015c, 0x1ac
-
-	.globl gUnknown_84F0308
-gUnknown_84F0308: @ 0x84F0308
-	.incbin "baserom_jp.gba", 0x4f0308, 0x10
-
-	.globl gUnknown_84F0318
-gUnknown_84F0318: @ 0x84F0318
-	.incbin "baserom_jp.gba", 0x4f0318, 0x428
-
-	.globl gUnknown_84F0740
-gUnknown_84F0740: @ 0x84F0740
-	.incbin "baserom_jp.gba", 0x4f0740, 0x268
-
-	.globl gUnknown_84F09A8
-gUnknown_84F09A8: @ 0x84F09A8
-	.incbin "baserom_jp.gba", 0x4f09a8, 0x8028
-
-	.globl gUnknown_84F89D0
-gUnknown_84F89D0: @ 0x84F89D0
-	.incbin "baserom_jp.gba", 0x4f89d0, 0x45a0
-
-	.globl gUnknown_84FCF70
-gUnknown_84FCF70: @ 0x84FCF70
-	.incbin "baserom_jp.gba", 0x4fcf70, 0xc
-
-	.globl gUnknown_84FCF7C
-gUnknown_84FCF7C: @ 0x84FCF7C
-	.incbin "baserom_jp.gba", 0x4fcf7c, 0xc
-
-	.globl gUnknown_84FCF88
-gUnknown_84FCF88: @ 0x84FCF88
-	.incbin "baserom_jp.gba", 0x4fcf88, 0x10
+	.section .rodata.data_b2d_mid26_after_tileset_anims_data_before_battle_anim_status_effects
 
 	.globl gUnknown_84FCF98
 gUnknown_84FCF98: @ 0x84FCF98
