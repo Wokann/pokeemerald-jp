@@ -1994,7 +1994,19 @@ BattleScript_EffectThunder:: @ 0x082882EE
 	goto BattleScript_EffectHit
 
 BattleScript_EffectTeleport:: @ 0x08288302
-	.incbin "baserom_jp.gba", 0x288302, 0x3a
+	attackcanceler
+	attackstring
+	ppreduce
+	jumpifbattletype BATTLE_TYPE_TRAINER, BattleScript_ButItFailed
+	getifcantrunfrombattle BS_ATTACKER
+	jumpifbyte CMP_EQUAL, gBattleCommunication, BATTLE_RUN_FORBIDDEN, BattleScript_ButItFailed
+	jumpifbyte CMP_EQUAL, gBattleCommunication, BATTLE_RUN_FAILURE, BattleScript_PrintAbilityMadeIneffective
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNFLEDFROMBATTLE
+	waitmessage B_WAIT_TIME_LONG
+	setoutcomeonteleport BS_ATTACKER
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectBeatUp:: @ 0x0828833C
 	.incbin "baserom_jp.gba", 0x28833c, 0x57
@@ -2111,7 +2123,15 @@ BattleScript_EffectBrickBreak:: @ 0x0828886E
 	.incbin "baserom_jp.gba", 0x28886e, 0x51
 
 BattleScript_EffectYawn:: @ 0x082888BF
-	.incbin "baserom_jp.gba", 0x2888bf, 0x59
+	.incbin "baserom_jp.gba", 0x2888bf, 0x41
+
+BattleScript_PrintBankAbilityMadeIneffective:: @ 0x08288900
+	copybyte sBATTLER, sBATTLER_WITH_ABILITY
+BattleScript_PrintAbilityMadeIneffective:: @ 0x0828890A
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNSXMADEITINEFFECTIVE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectKnockOff:: @ 0x08288918
 	.incbin "baserom_jp.gba", 0x288918, 0xb
