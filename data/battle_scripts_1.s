@@ -3795,29 +3795,29 @@ BattleScript_AtkDefDown_End:: @ 0x082896EF
 	return
 
 BattleScript_KnockedOff:: @ 0x082896F0
-	.byte 0x45, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_TARGET, B_ANIM_ITEM_KNOCKOFF
-	.byte 0x10, 0xB7, 0x00 @ printstring STRINGID_PKMNKNOCKEDOFF
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x3C @ return
+	playanimation BS_TARGET, B_ANIM_ITEM_KNOCKOFF
+	printstring STRINGID_PKMNKNOCKEDOFF
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 @ Imprison and Grudge response paths.
 BattleScript_MoveUsedIsImprisoned:: @ 0x082896FE
-	.byte 0x10, 0xBA, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVESEALED
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	printstring STRINGID_PKMNCANTUSEMOVESEALED
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_SelectingImprisonedMove:: @ 0x08289709
-	.byte 0x11, 0xBA, 0x00 @ printselectionstring STRINGID_PKMNCANTUSEMOVESEALED
-	.byte 0x44 @ endselectionscript
+	printselectionstring STRINGID_PKMNCANTUSEMOVESEALED
+	endselectionscript
 
 BattleScript_SelectingImprisonedMoveInPalace:: @ 0x0828970D
-	.byte 0x10, 0xBA, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVESEALED
-	.byte 0x28, 0xB5, 0x93, 0x28, 0x08 @ goto BattleScript_SelectingUnusableMoveInPalace
+	printstring STRINGID_PKMNCANTUSEMOVESEALED
+	goto BattleScript_SelectingUnusableMoveInPalace
 
 BattleScript_GrudgeTakesPP:: @ 0x08289715
-	.byte 0x10, 0xBC, 0x00 @ printstring STRINGID_PKMNLOSTPPGRUDGE
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3C @ return
+	printstring STRINGID_PKMNLOSTPPGRUDGE
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 @ Magic Coat and Snatch interception paths.
 BattleScript_MagicCoatBounce:: @ 0x0828971C
