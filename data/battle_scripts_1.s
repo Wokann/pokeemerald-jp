@@ -3918,13 +3918,22 @@ BattleScript_BurnTurnDmg:: @ 0x082897E7
 
 @ Frozen-status responses: unable to move, ordinary thaw, and fire thaw.
 BattleScript_MoveUsedIsFrozen:: @ 0x082897F2
-	.incbin "baserom_jp.gba", 0x2897f2, 0xd
+	printstring STRINGID_PKMNISFROZEN
+	waitmessage B_WAIT_TIME_LONG
+	statusanimation BS_ATTACKER
+	goto BattleScript_MoveEnd
 
 BattleScript_MoveUsedUnfroze:: @ 0x082897FF
-	.incbin "baserom_jp.gba", 0x2897ff, 0xb
+	printfromtable gGotDefrostedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	updatestatusicon BS_ATTACKER
+	return
 
 BattleScript_DefrostedViaFireMove:: @ 0x0828980A
-	.incbin "baserom_jp.gba", 0x28980a, 0x9
+	printstring STRINGID_PKMNWASDEFROSTED
+	waitmessage B_WAIT_TIME_LONG
+	updatestatusicon BS_TARGET
+	return
 
 @ Action-denial responses for paralysis and flinching.
 BattleScript_MoveUsedIsParalyzed:: @ 0x08289813
