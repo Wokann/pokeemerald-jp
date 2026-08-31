@@ -2324,7 +2324,12 @@ BattleScript_MementoTargetProtectEnd:
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectFacade:: @ 0x082886F7
-	.incbin "baserom_jp.gba", 0x2886f7, 0x1a
+	jumpifstatus BS_ATTACKER, STATUS1_POISON | STATUS1_BURN | STATUS1_PARALYSIS | STATUS1_TOXIC_POISON, BattleScript_FacadeDoubleDmg
+	goto BattleScript_EffectHit
+
+BattleScript_FacadeDoubleDmg:
+	setbyte sDMG_MULTIPLIER, 2
+	goto BattleScript_EffectHit
 
 BattleScript_EffectFocusPunch:: @ 0x08288711
 	.incbin "baserom_jp.gba", 0x288711, 0x12
