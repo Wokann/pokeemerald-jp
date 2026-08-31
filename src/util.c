@@ -8,6 +8,12 @@ extern const struct SpriteTemplate sInvisibleSpriteTemplate;  // ROM @ 0x082FAD3
 extern const u8 sSpriteDimensions[3][4][2];  // ROM @ 0x082FAD4C
 extern const u16 sCrc16Table[256];          // ROM @ 0x082FAD64
 
+#define UTIL_MISC_BLANK_GFX_DATA __attribute__((section(".rodata.util_misc_blank_gfx_data")))
+
+const u8 gMiscBlank_Gfx[0x800] UTIL_MISC_BLANK_GFX_DATA = {0};
+
+#undef UTIL_MISC_BLANK_GFX_DATA
+
 u8 CreateInvisibleSpriteWithCallback(void (*callback)(struct Sprite *))
 {
     u8 sprite = CreateSprite(&sInvisibleSpriteTemplate, DISPLAY_WIDTH + 8, DISPLAY_HEIGHT + 8, 14);
