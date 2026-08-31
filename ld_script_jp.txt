@@ -10234,7 +10234,8 @@ SECTIONS {
         src/graphics.o(.rodata.battle_anim_a_battle_bar_and_sap_drip_graphics);
         data/data_rest2b.o(.rodata.data_rest2b_before_sparkle_graphics);
         src/graphics.o(.rodata.battle_anim_a_sparkle_graphics);
-        data/data_rest2b.o(.rodata.data_rest2b_after_sparkle_graphics);
+        src/graphics.o(.rodata.battle_anim_a_foot_and_hand_graphics);
+        data/data_rest2b.o(.rodata.data_rest2b_after_foot_and_hand_graphics);
         src/graphics.o(.rodata.battle_interface_graphics);
         data/data_rest2b.o(.rodata.data_rest2b_after_healthbox);
         src/graphics.o(.rodata.jp_contest_graphics);

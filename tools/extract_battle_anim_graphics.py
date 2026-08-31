@@ -34,6 +34,10 @@ RESOURCES = (
     Resource("gBattleAnimSpriteGfx_Sparkle1", Path("graphics/battle_anims/sprites/sparkle_1.png.4bpp.lz"), 0xC09CF8, 0x298, 0x295),
     Resource("gBattleAnimSpritePal_Sparkle1", Path("graphics/battle_anims/sprites/sparkle_1.png.gbapal.lz"), 0xC09F90, 0x28, 0x25),
     Resource("gBattleAnimSpritePal_Sparkle2", Path("graphics/battle_anims/sprites/sparkle_2.pal.gbapal.lz"), 0xC09FB8, 0x28, 0x25),
+    Resource("gBattleAnimSpritePal_HumanoidFoot", Path("graphics/battle_anims/sprites/humanoid_foot.png.gbapal.lz"), 0xC09FE0, 0x24, 0x24),
+    Resource("gBattleAnimSpriteGfx_HumanoidFoot", Path("graphics/battle_anims/sprites/humanoid_foot.png.4bpp.lz"), 0xC0A004, 0xA0, 0x9D),
+    Resource("gBattleAnimSpriteGfx_MonsterFoot", Path("graphics/battle_anims/sprites/monster_foot.png.4bpp.lz"), 0xC0A0A4, 0xAC, 0xAB),
+    Resource("gBattleAnimSpriteGfx_HumanoidHand", Path("graphics/battle_anims/sprites/humanoid_hand.png.4bpp.lz"), 0xC0A150, 0xCC, 0xCB),
 )
 
 
