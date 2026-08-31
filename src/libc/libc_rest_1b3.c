@@ -1,52 +1,41 @@
 // JP newlib math/syscall stubs.
-// The IEEE double-bit classifiers remain naked: agbcc reassigns the bit-test
-// intermediates from the JP r3/r2 sequence even when their object sizes match.
+// The IEEE double-bit classifiers use the JP newlib bit-test sequence.
 
-__attribute__((naked)) int isinf(double x)
+union IeeeDoubleBits
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "ldr r3, _0829B670\n\t"
-        "ands r3, r0\n\t"
-        "rsbs r2, r1, #0\n\t"
-        "orrs r2, r1\n\t"
-        "lsrs r2, r2, #0x1f\n\t"
-        "orrs r3, r2\n\t"
-        "ldr r0, _0829B674\n\t"
-        "subs r3, r0, r3\n\t"
-        "rsbs r0, r3, #0\n\t"
-        "orrs r3, r0\n\t"
-        "lsrs r3, r3, #0x1f\n\t"
-        "movs r0, #1\n\t"
-        "subs r0, r0, r3\n\t"
-        "bx lr\n\t"
-        ".align 2, 0\n\t"
-        "_0829B670: .4byte 0x7FFFFFFF\n\t"
-        "_0829B674: .4byte 0x7FF00000\n\t"
-        ".syntax divided\n\t"
-    );
+    double value;
+    unsigned int words[2];
+};
+
+int isinf(double x)
+{
+    union IeeeDoubleBits bits;
+    unsigned int high;
+    unsigned int low;
+
+    bits.value = x;
+    high = bits.words[0] & 0x7FFFFFFF;
+    low = bits.words[1];
+    low = -low | low;
+    high |= low >> 31;
+    high = 0x7FF00000 - high;
+    high = -high | high;
+    return 1 - (high >> 31);
 }
 
-__attribute__((naked)) int isnan(double x)
+int isnan(double x)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "ldr r3, _0829B690\n\t"
-        "ands r3, r0\n\t"
-        "rsbs r2, r1, #0\n\t"
-        "orrs r2, r1\n\t"
-        "lsrs r2, r2, #0x1f\n\t"
-        "orrs r3, r2\n\t"
-        "ldr r0, _0829B694\n\t"
-        "subs r3, r0, r3\n\t"
-        "lsrs r3, r3, #0x1f\n\t"
-        "adds r0, r3, #0\n\t"
-        "bx lr\n\t"
-        ".align 2, 0\n\t"
-        "_0829B690: .4byte 0x7FFFFFFF\n\t"
-        "_0829B694: .4byte 0x7FF00000\n\t"
-        ".syntax divided\n\t"
-    );
+    union IeeeDoubleBits bits;
+    unsigned int high;
+    unsigned int low;
+
+    bits.value = x;
+    high = bits.words[0] & 0x7FFFFFFF;
+    low = bits.words[1];
+    low = -low | low;
+    high |= low >> 31;
+    high = 0x7FF00000 - high;
+    return high >> 31;
 }
 
 extern void *_sbrk(int incr);
