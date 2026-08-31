@@ -1351,8 +1351,8 @@
 	various \battler, 23
 	.endm
 	
-	.macro various24 battler:req
-	various \battler, 24
+	.macro palacetryescapestatus battler:req
+	various \battler, VARIOUS_PALACE_TRY_ESCAPE_STATUS
 	.endm
 	
 	.macro setoutcomeonteleport battler:req
