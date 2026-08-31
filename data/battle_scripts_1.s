@@ -1731,7 +1731,12 @@ BattleScript_EffectFrustration:: @ 0x08287FFC
 	goto BattleScript_HitFromAtkString
 
 BattleScript_EffectPresent:: @ 0x0828800A
-	.incbin "baserom_jp.gba", 0x28800a, 0xc
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	typecalc
+	presentdamagecalculation
 
 BattleScript_EffectSafeguard:: @ 0x08288016
 	.incbin "baserom_jp.gba", 0x288016, 0x9
