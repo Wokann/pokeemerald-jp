@@ -5445,7 +5445,95 @@ LittlerootTown_ProfessorBirchsLabWithTable_Layout:: @ 0x084591CC
 	.4byte gTileset_Building
 	.4byte gTileset_Lab
 
-	.incbin "baserom_jp.gba", 0x4591E4, 0xD78
+SkyPillar_1F_Clean_Layout_Border::
+	.incbin "data/layouts/SkyPillar_1F_Clean/border.bin"
+
+SkyPillar_1F_Clean_Layout_Blockdata::
+	.incbin "data/layouts/SkyPillar_1F_Clean/map.bin"
+
+	.align 2
+SkyPillar_1F_Clean_Layout:: @ 0x08459374
+	.4byte 14
+	.4byte 14
+	.4byte SkyPillar_1F_Clean_Layout_Border
+	.4byte SkyPillar_1F_Clean_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Pacifidlog
+
+SkyPillar_2F_Clean_Layout_Border::
+	.incbin "data/layouts/SkyPillar_2F_Clean/border.bin"
+
+SkyPillar_2F_Clean_Layout_Blockdata::
+	.incbin "data/layouts/SkyPillar_2F_Clean/map.bin"
+
+	.align 2
+SkyPillar_2F_Clean_Layout:: @ 0x0845951C
+	.4byte 14
+	.4byte 14
+	.4byte SkyPillar_2F_Clean_Layout_Border
+	.4byte SkyPillar_2F_Clean_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Pacifidlog
+
+SkyPillar_3F_Clean_Layout_Border::
+	.incbin "data/layouts/SkyPillar_3F_Clean/border.bin"
+
+SkyPillar_3F_Clean_Layout_Blockdata::
+	.incbin "data/layouts/SkyPillar_3F_Clean/map.bin"
+
+	.align 2
+SkyPillar_3F_Clean_Layout:: @ 0x084596C4
+	.4byte 14
+	.4byte 14
+	.4byte SkyPillar_3F_Clean_Layout_Border
+	.4byte SkyPillar_3F_Clean_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Pacifidlog
+
+SkyPillar_4F_Clean_Layout_Border::
+	.incbin "data/layouts/SkyPillar_4F_Clean/border.bin"
+
+SkyPillar_4F_Clean_Layout_Blockdata::
+	.incbin "data/layouts/SkyPillar_4F_Clean/map.bin"
+
+	.align 2
+SkyPillar_4F_Clean_Layout:: @ 0x0845986C
+	.4byte 14
+	.4byte 14
+	.4byte SkyPillar_4F_Clean_Layout_Border
+	.4byte SkyPillar_4F_Clean_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Pacifidlog
+
+SkyPillar_5F_Clean_Layout_Border::
+	.incbin "data/layouts/SkyPillar_5F_Clean/border.bin"
+
+SkyPillar_5F_Clean_Layout_Blockdata::
+	.incbin "data/layouts/SkyPillar_5F_Clean/map.bin"
+
+	.align 2
+SkyPillar_5F_Clean_Layout:: @ 0x08459A14
+	.4byte 14
+	.4byte 14
+	.4byte SkyPillar_5F_Clean_Layout_Border
+	.4byte SkyPillar_5F_Clean_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Pacifidlog
+
+SkyPillar_Top_Clean_Layout_Border::
+	.incbin "data/layouts/SkyPillar_Top_Clean/border.bin"
+
+SkyPillar_Top_Clean_Layout_Blockdata::
+	.incbin "data/layouts/SkyPillar_Top_Clean/map.bin"
+
+	.align 2
+SkyPillar_Top_Clean_Layout:: @ 0x08459F44
+	.4byte 27
+	.4byte 24
+	.4byte SkyPillar_Top_Clean_Layout_Border
+	.4byte SkyPillar_Top_Clean_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Pacifidlog
 gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_Border:
 	.incbin "data/layouts/SootopolisCity_MysteryEventsHouse_1F/border.bin"
 gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_Blockdata:

@@ -438,8 +438,12 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte BattleFrontier_ScottsHouse_Layout
 	.4byte gMapLayout_METEOR_FALLS_STEVENS_CAVE
 	.4byte LittlerootTown_ProfessorBirchsLabWithTable_Layout
-	@ LAYOUT_SKY_PILLAR_1F_CLEAN through LAYOUT_SKY_PILLAR_TOP_CLEAN remain in raw physical layout owners.
-	.incbin "baserom_jp.gba", 0x45A8B4, 0x18
+	.4byte SkyPillar_1F_Clean_Layout
+	.4byte SkyPillar_2F_Clean_Layout
+	.4byte SkyPillar_3F_Clean_Layout
+	.4byte SkyPillar_4F_Clean_Layout
+	.4byte SkyPillar_5F_Clean_Layout
+	.4byte SkyPillar_Top_Clean_Layout
 	.4byte gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F
 	.4byte gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F
 	.4byte SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked_Layout

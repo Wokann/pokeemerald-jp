@@ -649,6 +649,18 @@ $(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_
 	data/layouts/BattleFrontier_ScottsHouse/map.bin \
 	data/layouts/LittlerootTown_ProfessorBirchsLabWithTable/border.bin \
 	data/layouts/LittlerootTown_ProfessorBirchsLabWithTable/map.bin \
+	data/layouts/SkyPillar_1F_Clean/border.bin \
+	data/layouts/SkyPillar_1F_Clean/map.bin \
+	data/layouts/SkyPillar_2F_Clean/border.bin \
+	data/layouts/SkyPillar_2F_Clean/map.bin \
+	data/layouts/SkyPillar_3F_Clean/border.bin \
+	data/layouts/SkyPillar_3F_Clean/map.bin \
+	data/layouts/SkyPillar_4F_Clean/border.bin \
+	data/layouts/SkyPillar_4F_Clean/map.bin \
+	data/layouts/SkyPillar_5F_Clean/border.bin \
+	data/layouts/SkyPillar_5F_Clean/map.bin \
+	data/layouts/SkyPillar_Top_Clean/border.bin \
+	data/layouts/SkyPillar_Top_Clean/map.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 
