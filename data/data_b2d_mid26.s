@@ -1074,7 +1074,8 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/BattlePyramidSquare14/events.inc"
 	.include "data/maps/BattlePyramidSquare15/events.inc"
 	.include "data/maps/BattlePyramidSquare16/events.inc"
-	.incbin "baserom_jp.gba", 0x51374C, 0x3E30
+	.include "data/maps/UnionRoom/events.inc"
+	.incbin "baserom_jp.gba", 0x513848, 0x3D34
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

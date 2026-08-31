@@ -1640,6 +1640,8 @@ gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY: @ 0x083B8204
 	.4byte gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY_Metatiles  @ metatiles
 	.4byte gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
+	.globl gTileset_UnionRoom
+gTileset_UnionRoom: @ 0x083B821C
 	.incbin "baserom_jp.gba", 0x3B821C, 0x18
 	.include "data/layouts/layouts.inc"
 	.incbin "baserom_jp.gba", 0x45A124, 0xD0
@@ -2462,8 +2464,10 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/BattlePyramidSquare15/header.inc"
 	@ MAP_BATTLE_PYRAMID_SQUARE16 (g25 m59)
 	.include "data/maps/BattlePyramidSquare16/header.inc"
-	@ MAP_UNION_ROOM through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45D540, 0x1458
+	@ MAP_UNION_ROOM (g25 m60)
+	.include "data/maps/UnionRoom/header.inc"
+	@ MAP_SAFARI_ZONE_NORTHWEST through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45D55C, 0x143C
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

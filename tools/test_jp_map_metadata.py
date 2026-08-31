@@ -330,6 +330,7 @@ MAPS = (
     "BattlePyramidSquare14",
     "BattlePyramidSquare15",
     "BattlePyramidSquare16",
+    "UnionRoom",
 )
 
 CONNECTED_MAPS = (
@@ -657,6 +658,7 @@ NULL_CONNECTION_MAPS = (
     "BattlePyramidSquare14",
     "BattlePyramidSquare15",
     "BattlePyramidSquare16",
+    "UnionRoom",
 )
 
 CANONICAL_LAYOUT_MAPS = (

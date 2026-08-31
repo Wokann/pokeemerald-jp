@@ -3798,7 +3798,20 @@ gMapLayout_DESERT_UNDERPASS: @ 0x084460B4
 	.4byte gMapLayout_DESERT_UNDERPASS_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4460CC, 0x53DC
+	.incbin "baserom_jp.gba", 0x4460CC, 0x2F44
+gMapLayout_UNION_ROOM_Border:
+	.incbin "data/layouts/UnionRoom/border.bin"
+gMapLayout_UNION_ROOM_Blockdata:
+	.incbin "data/layouts/UnionRoom/map.bin"
+	.globl gMapLayout_UNION_ROOM
+gMapLayout_UNION_ROOM: @ 0x08449180
+	.4byte 15  @ width
+	.4byte 12  @ height
+	.4byte gMapLayout_UNION_ROOM_Border  @ border
+	.4byte gMapLayout_UNION_ROOM_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_UnionRoom  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x449198, 0x2310
 gMapLayout_ARTISAN_CAVE_B1F_Border:
 	.incbin "data/layouts/ArtisanCave_B1F/border.bin"
 gMapLayout_ARTISAN_CAVE_B1F_Blockdata:
