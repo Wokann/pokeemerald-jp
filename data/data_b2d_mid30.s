@@ -2484,7 +2484,10 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/BattleFrontier_BattleTowerBattleRoom/header.inc"
 	.include "data/maps/SouthernIsland_Exterior/header.inc"
 	.include "data/maps/SouthernIsland_Interior/header.inc"
-	.incbin "baserom_jp.gba", 0x45D690, 0x1308
+	.include "data/maps/SafariZone_RestHouse/header.inc"
+	.include "data/maps/SafariZone_Northeast/header.inc"
+	.include "data/maps/SafariZone_Southeast/header.inc"
+	.incbin "baserom_jp.gba", 0x45D6E4, 0x12B4
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
@@ -2565,7 +2568,8 @@ gUnknown_845E998: @ 0x0845E998
 	.include "data/maps/SafariZone_Southwest/connections.inc"
 	@ 0x0845F284: Safari Zone South connection list and header.
 	.include "data/maps/SafariZone_South/connections.inc"
-	.incbin "baserom_jp.gba", 0x45F2B0, 0x40
+	.include "data/maps/SafariZone_Northeast/connections.inc"
+	.include "data/maps/SafariZone_Southeast/connections.inc"
 	.include "data/maps/BattleFrontier_OutsideWest/connections.inc"
 	.incbin "baserom_jp.gba", 0x45F304, 0x14
 

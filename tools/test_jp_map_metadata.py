@@ -342,6 +342,9 @@ MAPS = (
     "BattleFrontier_BattleTowerBattleRoom",
     "SouthernIsland_Exterior",
     "SouthernIsland_Interior",
+    "SafariZone_RestHouse",
+    "SafariZone_Northeast",
+    "SafariZone_Southeast",
 )
 
 CONNECTED_MAPS = (
@@ -354,6 +357,8 @@ CONNECTED_MAPS = (
     "SafariZone_North",
     "SafariZone_Southwest",
     "SafariZone_South",
+    "SafariZone_Northeast",
+    "SafariZone_Southeast",
     "BattleFrontier_OutsideWest",
 )
 
@@ -681,6 +686,7 @@ NULL_CONNECTION_MAPS = (
     "BattleFrontier_BattleTowerBattleRoom",
     "SouthernIsland_Exterior",
     "SouthernIsland_Interior",
+    "SafariZone_RestHouse",
 )
 
 CANONICAL_LAYOUT_MAPS = (
