@@ -1750,7 +1750,15 @@ BattleScript_EffectThawHit:: @ 0x0828801F
 	goto BattleScript_EffectHit
 
 BattleScript_EffectMagnitude:: @ 0x0828802A
-	.incbin "baserom_jp.gba", 0x28802a, 0x13
+	attackcanceler
+	attackstring
+	ppreduce
+	selectfirstvalidtarget
+	magnitudedamagecalculation
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_MAGNITUDESTRENGTH
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_HitsAllWithUndergroundBonusLoop
 
 BattleScript_EffectBatonPass:: @ 0x0828803D
 	.incbin "baserom_jp.gba", 0x28803d, 0x3b
@@ -1808,7 +1816,10 @@ BattleScript_EffectTwister:: @ 0x082881A3
 	.incbin "baserom_jp.gba", 0x2881a3, 0x25
 
 BattleScript_EffectEarthquake:: @ 0x082881C8
-	.incbin "baserom_jp.gba", 0x2881c8, 0x84
+	.incbin "baserom_jp.gba", 0x2881c8, 0x4
+
+BattleScript_HitsAllWithUndergroundBonusLoop:: @ 0x082881CC
+	.incbin "baserom_jp.gba", 0x2881cc, 0x80
 
 BattleScript_EffectFutureSight:: @ 0x0828824C
 	.incbin "baserom_jp.gba", 0x28824c, 0x17
