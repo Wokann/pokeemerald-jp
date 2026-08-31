@@ -6522,7 +6522,7 @@ __attribute__((naked)) void CreateAbnormalWeatherEvent(void)
         "	b _0813B3A2\n\t"
         "	.align 2, 0\n\t"
         "_0813B35C: .4byte 0x00004038\n\t"
-        "_0813B360: .4byte SPECIAL_sub_081C472C\n\t"
+        "_0813B360: .4byte SPECIAL_ChooseItemsToTossFromPyramidBag\n\t"
         "_0813B364: .4byte 0x00004037\n\t"
         "_0813B368:\n\t"
         "	movs r0, #1\n\t"

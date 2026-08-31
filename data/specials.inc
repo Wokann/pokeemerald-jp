@@ -468,14 +468,8 @@ gSpecials::
 	def_special ShowScrollableMultichoice, waitstate=1
 	def_special sub_0813A638
 	def_special BufferBattleTowerElevatorFloors
-	def_special sub_081C62AC
-	@ Battle Pyramid's JP implementation retains this C symbol.
-	.set SPECIAL_TryStoreHeldItemsInPyramidBag, SPECIAL_sub_081C62AC
-	.set SPECIAL_WAITSTATE_TryStoreHeldItemsInPyramidBag, SPECIAL_WAITSTATE_sub_081C62AC
-	def_special sub_081C472C
-	@ The item-selection screen waits before returning to script execution.
-	.set SPECIAL_ChooseItemsToTossFromPyramidBag, SPECIAL_sub_081C472C
-	.set SPECIAL_WAITSTATE_ChooseItemsToTossFromPyramidBag, 1
+	def_special TryStoreHeldItemsInPyramidBag
+	def_special ChooseItemsToTossFromPyramidBag, waitstate=1
 	def_special DoBattlePyramidMonsHaveHeldItem
 	def_special BattlePyramidChooseMonHeldItems, waitstate=1
 	def_special SetBattleTowerLinkPlayerGfx

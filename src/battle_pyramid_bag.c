@@ -338,7 +338,7 @@ __attribute__((naked)) void sub_081C4718(void)
     );
 }
 
-__attribute__((naked)) void sub_081C472C(void)
+__attribute__((naked)) void ChooseItemsToTossFromPyramidBag(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3940,7 +3940,7 @@ __attribute__((naked)) void sub_081C622C(void)
     );
 }
 
-__attribute__((naked)) void sub_081C62AC(void)
+__attribute__((naked)) void TryStoreHeldItemsInPyramidBag(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
