@@ -957,7 +957,10 @@ BattleScript_EffectFocusEnergy:: @ 0x08287714
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectRecoil:: @ 0x08287731
-	.incbin "baserom_jp.gba", 0x287731, 0x19
+	setmoveeffect MOVE_EFFECT_RECOIL_25 | MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_CERTAIN
+	jumpifnotmove MOVE_STRUGGLE, BattleScript_EffectHit
+	incrementgamestat GAME_STAT_USED_STRUGGLE
+	goto BattleScript_EffectHit
 
 BattleScript_EffectConfuse:: @ 0x0828774A
 	.incbin "baserom_jp.gba", 0x28774a, 0x50
