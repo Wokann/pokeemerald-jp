@@ -45,14 +45,21 @@
 #include "union_room_chat.h"
 #include "constants/items.h"
 
+#define NEW_GAME_CONTEST_WINNER_DATA __attribute__((section(".rodata.new_game_contest_winner_data")))
+
 extern const u8 EventScript_ResetAllMapFlags[];
-extern const struct ContestWinner sContestWinnerPicDummy;
 extern u8 gUnusedPokedexU8;
 extern bool8 gDifferentSaveFile;
 
 static void ClearFrontierRecord(void);
 static void WarpToTruck(void);
 static void ResetMiniGamesRecords(void);
+
+NEW_GAME_CONTEST_WINNER_DATA static const struct ContestWinner sContestWinnerPicDummy =
+{
+    .monName = {EOS},
+    .trainerName = {EOS},
+};
 
 void SetTrainerId(u32 trainerId, u8 *dst)
 {

@@ -10,10 +10,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl sContestWinnerPicDummy
-sContestWinnerPicDummy: @ 0x830FC68
-	.incbin "graphics/misc/sContestWinnerPicDummy.bin"
-
 	.globl gUnknown_830FC88
 gUnknown_830FC88: @ 0x830FC88
 	.incbin "baserom_jp.gba", 0x30fc88, 0x28
