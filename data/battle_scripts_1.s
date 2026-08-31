@@ -4043,32 +4043,32 @@ BattleScript_CurseTurnDmg: @ 0x82898D8
 
 	.globl BattleScript_TargetPRLZHeal
 BattleScript_TargetPRLZHeal: @ 0x82898E9
-	.byte 0x10, 0x3B, 0x00 @ printstring STRINGID_PKMNHEALEDPARALYSIS
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x98, 0x00 @ updatestatusicon BS_TARGET
-	.byte 0x3C @ return
+	printstring STRINGID_PKMNHEALEDPARALYSIS
+	waitmessage B_WAIT_TIME_LONG
+	updatestatusicon BS_TARGET
+	return
 
 	.globl BattleScript_MoveEffectSleep
 BattleScript_MoveEffectSleep: @ 0x82898F2
-	.byte 0x64, 0x02 @ statusanimation BS_EFFECT_BATTLER
-	.byte 0x13, 0x50, 0xBA, 0x5A, 0x08 @ printfromtable gFellAsleepStringIds
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	statusanimation BS_EFFECT_BATTLER
+	printfromtable gFellAsleepStringIds
+	waitmessage B_WAIT_TIME_LONG
 
 	.globl BattleScript_UpdateEffectStatusIconRet
 BattleScript_UpdateEffectStatusIconRet: @ 0x82898FC
-	.byte 0x98, 0x02 @ updatestatusicon BS_EFFECT_BATTLER
-	.byte 0x3A @ waitstate
-	.byte 0x3C @ return
+	updatestatusicon BS_EFFECT_BATTLER
+	waitstate
+	return
 
 	.globl BattleScript_YawnMakesAsleep
 BattleScript_YawnMakesAsleep: @ 0x8289900
-	.byte 0x64, 0x02 @ statusanimation BS_EFFECT_BATTLER
-	.byte 0x10, 0x23, 0x00 @ printstring STRINGID_PKMNFELLASLEEP
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x98, 0x02 @ updatestatusicon BS_EFFECT_BATTLER
-	.byte 0x3A @ waitstate
-	.byte 0x6F, 0x02 @ makevisible BS_EFFECT_BATTLER
-	.byte 0x3E @ end2
+	statusanimation BS_EFFECT_BATTLER
+	printstring STRINGID_PKMNFELLASLEEP
+	waitmessage B_WAIT_TIME_LONG
+	updatestatusicon BS_EFFECT_BATTLER
+	waitstate
+	makevisible BS_EFFECT_BATTLER
+	end2
 
 	.globl BattleScript_MoveEffectPoison
 BattleScript_MoveEffectPoison: @ 0x828990E
