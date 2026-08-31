@@ -4100,9 +4100,9 @@ BattleScript_MoveEffectParalysis: @ 0x828993B
 
 	.globl BattleScript_MoveEffectUproar
 BattleScript_MoveEffectUproar: @ 0x828994A
-	.byte 0x10, 0x6F, 0x00 @ printstring STRINGID_PKMNCAUSEDUPROAR
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x3C @ return
+	printstring STRINGID_PKMNCAUSEDUPROAR
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_MoveEffectToxic
 BattleScript_MoveEffectToxic: @ 0x8289951
