@@ -1280,7 +1280,14 @@ BattleScript_EffectPsywave:: @ 0x08287AC3
 	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectCounter:: @ 0x08287ADB
-	.incbin "baserom_jp.gba", 0x287adb, 0x16
+	attackcanceler
+	counterdamagecalculator BattleScript_FailedFromAtkString
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	typecalc2
+	adjustsetdamage
+	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectEncore:: @ 0x08287AF1
 	.incbin "baserom_jp.gba", 0x287af1, 0x1c
