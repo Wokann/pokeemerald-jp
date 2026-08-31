@@ -1101,22 +1101,28 @@ BattleScript_LimberProtected:: @ 0x082878EA
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectAttackDownHit:: @ 0x08287904
-	.incbin "baserom_jp.gba", 0x287904, 0xb
+	setmoveeffect MOVE_EFFECT_ATK_MINUS_1
+	goto BattleScript_EffectHit
 
 BattleScript_EffectDefenseDownHit:: @ 0x0828790F
-	.incbin "baserom_jp.gba", 0x28790f, 0xb
+	setmoveeffect MOVE_EFFECT_DEF_MINUS_1
+	goto BattleScript_EffectHit
 
 BattleScript_EffectSpeedDownHit:: @ 0x0828791A
-	.incbin "baserom_jp.gba", 0x28791a, 0xb
+	setmoveeffect MOVE_EFFECT_SPD_MINUS_1
+	goto BattleScript_EffectHit
 
 BattleScript_EffectSpecialAttackDownHit:: @ 0x08287925
-	.incbin "baserom_jp.gba", 0x287925, 0xb
+	setmoveeffect MOVE_EFFECT_SP_ATK_MINUS_1
+	goto BattleScript_EffectHit
 
 BattleScript_EffectSpecialDefenseDownHit:: @ 0x08287930
-	.incbin "baserom_jp.gba", 0x287930, 0xb
+	setmoveeffect MOVE_EFFECT_SP_DEF_MINUS_1
+	goto BattleScript_EffectHit
 
 BattleScript_EffectAccuracyDownHit:: @ 0x0828793B
-	.incbin "baserom_jp.gba", 0x28793b, 0xb
+	setmoveeffect MOVE_EFFECT_ACC_MINUS_1
+	goto BattleScript_EffectHit
 
 BattleScript_EffectSkyAttack:: @ 0x08287946
 	.incbin "baserom_jp.gba", 0x287946, 0x28
