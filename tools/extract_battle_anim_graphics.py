@@ -51,6 +51,12 @@ RESOURCES = (
     Resource("gBattleAnimSpritePal_Z", Path("graphics/battle_anims/sprites/z.png.gbapal.lz"), 0xC0AF24, 0x1C, 0x19),
     Resource("gBattleAnimSpriteGfx_YellowUnk2", Path("graphics/battle_anims/sprites/yellow_unk_2.png.4bpp.lz"), 0xC0AF40, 0x28, 0x27),
     Resource("gBattleAnimSpritePal_YellowUnk2", Path("graphics/battle_anims/sprites/yellow_unk_2.png.gbapal.lz"), 0xC0AF68, 0x1C, 0x19),
+    Resource("gBattleAnimSpriteGfx_AirSlash", Path("graphics/battle_anims/sprites/air_slash.png.4bpp.lz"), 0xC0AF84, 0xB0, 0xAE),
+    Resource("gBattleAnimSpritePal_AirSlash", Path("graphics/battle_anims/sprites/air_slash.png.gbapal.lz"), 0xC0B034, 0x20, 0x1D),
+    Resource("gBattleAnimSpriteGfx_SpinningGreenOrbs", Path("graphics/battle_anims/sprites/spinning_green_orbs.png.4bpp.lz"), 0xC0B054, 0x3D0, 0x3D0),
+    Resource("gBattleAnimSpritePal_SpinningGreenOrbs", Path("graphics/battle_anims/sprites/spinning_green_orbs.png.gbapal.lz"), 0xC0B424, 0x28, 0x27),
+    Resource("gBattleAnimSpriteGfx_Leaf", Path("graphics/battle_anims/sprites/leaf.png.4bpp.lz"), 0xC0B44C, 0x1BC, 0x1BB),
+    Resource("gBattleAnimSpritePal_Leaf", Path("graphics/battle_anims/sprites/leaf.png.gbapal.lz"), 0xC0B608, 0x28, 0x25),
 )
 
 

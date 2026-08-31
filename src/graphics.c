@@ -185,6 +185,18 @@ BATTLE_ANIM_A_UNUSED_Z_AND_YELLOW_GRAPHICS const u32 gBattleAnimSpritePal_Yellow
 
 #undef BATTLE_ANIM_A_UNUSED_Z_AND_YELLOW_GRAPHICS
 
+#define BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS __attribute__((section(".rodata.battle_anim_a_air_and_leaf_graphics"), aligned(1)))
+
+// The JP LZ77 streams retain their original alignment padding.
+BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS const u32 gBattleAnimSpriteGfx_AirSlash[] = INCBIN_U32("graphics/battle_anims/sprites/air_slash.png.4bpp.lz");
+BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS const u32 gBattleAnimSpritePal_AirSlash[] = INCBIN_U32("graphics/battle_anims/sprites/air_slash.png.gbapal.lz");
+BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS const u32 gBattleAnimSpriteGfx_SpinningGreenOrbs[] = INCBIN_U32("graphics/battle_anims/sprites/spinning_green_orbs.png.4bpp.lz");
+BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS const u32 gBattleAnimSpritePal_SpinningGreenOrbs[] = INCBIN_U32("graphics/battle_anims/sprites/spinning_green_orbs.png.gbapal.lz");
+BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS const u32 gBattleAnimSpriteGfx_Leaf[] = INCBIN_U32("graphics/battle_anims/sprites/leaf.png.4bpp.lz");
+BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS const u32 gBattleAnimSpritePal_Leaf[] = INCBIN_U32("graphics/battle_anims/sprites/leaf.png.gbapal.lz");
+
+#undef BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS
+
 // Pokédex.  These custom sections retain the JP ROM order while assigning the
 // resources to pokeemerald's graphics owner and source hierarchy.
 #define POKEDEX_GRAPHICS_PREFIX __attribute__((section(".rodata.pokedex_graphics_prefix"), aligned(1)))
