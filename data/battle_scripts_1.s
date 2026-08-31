@@ -4282,12 +4282,12 @@ BattleScript_DroughtActivates: @ 0x8289AB2
 
 	.globl BattleScript_TookAttack
 BattleScript_TookAttack: @ 0x8289AC6
-	.byte 0x02 @ attackstring
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0x4E, 0x01 @ printstring STRINGID_PKMNSXTOOKATTACK
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x35, 0x24, 0x3F, 0x02, 0x02, 0x00, 0x04, 0x00, 0x00 @ orword gHitMarker, HITMARKER_ATTACKSTRING_PRINTED
-	.byte 0x3C @ return
+	attackstring
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNSXTOOKATTACK
+	waitmessage B_WAIT_TIME_LONG
+	orword gHitMarker, HITMARKER_ATTACKSTRING_PRINTED
+	return
 
 	.globl BattleScript_SturdyPreventsOHKO
 BattleScript_SturdyPreventsOHKO: @ 0x8289ADA
