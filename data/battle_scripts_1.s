@@ -2430,7 +2430,13 @@ BattleScript_EffectRolePlay:: @ 0x082887DB
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectWish:: @ 0x082887F7
-	.incbin "baserom_jp.gba", 0x2887f7, 0x10
+	attackcanceler
+	attackstring
+	ppreduce
+	trywish 0, BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectAssist:: @ 0x08288807
 	.incbin "baserom_jp.gba", 0x288807, 0x17
