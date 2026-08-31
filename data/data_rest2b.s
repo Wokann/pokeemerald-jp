@@ -24,8 +24,8 @@ gBlankGfxCompressed: @ 0x8C02384
 	.section .rodata.data_rest2b_before_impact_graphics
 	.incbin "baserom_jp.gba", 0xc0a21c, 0x1d8
 
-	.section .rodata.data_rest2b_after_ring_and_rocks_graphics
-	.incbin "baserom_jp.gba", 0xc0aec4, 0x6ce0
+	.section .rodata.data_rest2b_after_unused_z_and_yellow_graphics
+	.incbin "baserom_jp.gba", 0xc0af84, 0x6c20
 
 
 	.section .rodata.data_rest2b_after_healthbox

@@ -47,6 +47,10 @@ RESOURCES = (
     Resource("gBattleAnimSpritePal_Ring", Path("graphics/battle_anims/sprites/ring.png.gbapal.lz"), 0xC0AA10, 0x24, 0x24),
     Resource("gBattleAnimSpriteGfx_Rocks", Path("graphics/battle_anims/sprites/rocks.png.4bpp.lz"), 0xC0AA34, 0x468, 0x468),
     Resource("gBattleAnimSpritePal_Rocks", Path("graphics/battle_anims/sprites/rocks.png.gbapal.lz"), 0xC0AE9C, 0x28, 0x25),
+    Resource("gBattleAnimSpriteGfx_Z", Path("graphics/battle_anims/sprites/z.png.4bpp.lz"), 0xC0AEC4, 0x60, 0x5F),
+    Resource("gBattleAnimSpritePal_Z", Path("graphics/battle_anims/sprites/z.png.gbapal.lz"), 0xC0AF24, 0x1C, 0x19),
+    Resource("gBattleAnimSpriteGfx_YellowUnk2", Path("graphics/battle_anims/sprites/yellow_unk_2.png.4bpp.lz"), 0xC0AF40, 0x28, 0x27),
+    Resource("gBattleAnimSpritePal_YellowUnk2", Path("graphics/battle_anims/sprites/yellow_unk_2.png.gbapal.lz"), 0xC0AF68, 0x1C, 0x19),
 )
 
 
