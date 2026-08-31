@@ -3148,40 +3148,44 @@ BattleScript_FrontierTrainerBattleWon_End:: @ 0x08289062
 	end2
 
 @ Escape, switch, and level-up scripts. All visible JP entry points are
-@ named in physical order; opaque byte spans await macro conversion.
+@ named in physical order.
 BattleScript_SmokeBallEscape:: @ 0x08289063
-	.incbin "baserom_jp.gba", 0x289063, 0xe
+	playanimation BS_ATTACKER, B_ANIM_SMOKEBALL_ESCAPE, 0
+	printstring STRINGID_PKMNFLEDUSINGITS
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_RanAwayUsingMonAbility:: @ 0x08289071
-	.byte 0x10, 0x53, 0x01 @ printstring STRINGID_PKMNFLEDUSING
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
+	printstring STRINGID_PKMNFLEDUSING
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_GotAwaySafely:: @ 0x08289078
-	.byte 0x10, 0xDF, 0x00 @ printstring STRINGID_GOTAWAYSAFELY
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
+	printstring STRINGID_GOTAWAYSAFELY
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_WildMonFled:: @ 0x0828907F
-	.byte 0x10, 0xE0, 0x00 @ printstring STRINGID_WILDPKMNFLED
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
+	printstring STRINGID_WILDPKMNFLED
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_PrintCantRunFromTrainer:: @ 0x08289086
-	.byte 0x10, 0xE1, 0x00 @ printstring STRINGID_NORUNNINGFROMTRAINERS
-	.byte 0x3E @ end2
+	printstring STRINGID_NORUNNINGFROMTRAINERS
+	end2
 
 BattleScript_PrintFailedToRunString:: @ 0x0828908A
-	.byte 0x13, 0xAA, 0xB9, 0x5A, 0x08 @ printfromtable 0x085AB9AA
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3E @ end2
+	printfromtable gNoEscapeStringIds
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_PrintCantEscapeFromBattle:: @ 0x08289093
-	.incbin "baserom_jp.gba", 0x289093, 0x6
+	printselectionstringfromtable gNoEscapeStringIds
+	endselectionscript
 
 BattleScript_PrintFullBox:: @ 0x08289099
-	.byte 0x11, 0x58, 0x01 @ printselectionstring STRINGID_BOXISFULL
-	.byte 0x44 @ endselectionscript
+	printselectionstring STRINGID_BOXISFULL
+	endselectionscript
 
 BattleScript_ActionSwitch:: @ 0x0828909D
 	.incbin "baserom_jp.gba", 0x28909d, 0x20
