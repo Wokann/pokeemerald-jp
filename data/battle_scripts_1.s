@@ -1290,7 +1290,16 @@ BattleScript_EffectCounter:: @ 0x08287ADB
 	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectEncore:: @ 0x08287AF1
-	.incbin "baserom_jp.gba", 0x287af1, 0x1c
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	trysetencore BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNGOTENCORE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectPainSplit:: @ 0x08287B0D
 	.incbin "baserom_jp.gba", 0x287b0d, 0x37
