@@ -2144,7 +2144,15 @@ BattleScript_NotAffected:: @ 0x082884B6
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectUproar:: @ 0x082884C8
-	.incbin "baserom_jp.gba", 0x2884c8, 0x20
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	setmoveeffect MOVE_EFFECT_UPROAR | MOVE_EFFECT_AFFECTS_USER
+	attackstring
+	jumpifstatus2 BS_ATTACKER, STATUS2_MULTIPLETURNS, BattleScript_UproarHit
+	ppreduce
+BattleScript_UproarHit::
+	nop
+	goto BattleScript_HitFromCritCalc
 
 BattleScript_EffectStockpile:: @ 0x082884E8
 	.incbin "baserom_jp.gba", 0x2884e8, 0x13
