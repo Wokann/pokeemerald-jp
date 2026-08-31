@@ -232,7 +232,7 @@ gSpecials::
 	def_special ShowPokedexRatingMessage
 	def_special DoPCTurnOnEffect
 	def_special DoPCTurnOffEffect
-	def_special SetDepartmentStoreFloorVar
+	def_special SetDeptStoreFloor
 	def_special DoLotteryCornerComputerEffect
 	def_special EndLotteryCornerComputerEffect
 	def_special ChooseMonForMoveRelearner
@@ -321,7 +321,7 @@ gSpecials::
 	def_special CopyCurSecretBaseOwnerName_StrVar1
 	def_special ScriptCheckFreePokemonStorageSpace
 	def_special DoSealedChamberShakingEffect1
-	def_special sub_08139BD4
+	def_special ShowDeptStoreElevatorFloorSelect
 	def_special InteractWithShieldOrTVDecoration
 	def_special IsPokerusInParty
 	def_special SetSootopolisGymCrackedIceMetatiles
@@ -446,7 +446,7 @@ gSpecials::
 	def_special IsDodrioInParty
 	def_special ShowDodrioBerryPickingRecords
 	def_special OffsetCameraForBattle
-	def_special sub_08139A68
+	def_special GetDeptStoreDefaultFloorChoice
 	def_special BufferVarsForIVRater
 	def_special LinkContestWaitForConnection, waitstate=1
 	def_special GetWirelessCommType
@@ -550,15 +550,6 @@ gSpecials::
 	def_special RemoveRecordsWindow
 	def_special CloseDeptStoreElevatorWindow
 	def_special TrySetBattleTowerLinkType
-
-	@ Department Store Elevator aliases keep the JP special table byte order
-	@ while allowing map scripts to use the matching pokeemerald names.
-	.set SPECIAL_SetDeptStoreFloor, SPECIAL_SetDepartmentStoreFloorVar
-	.set SPECIAL_WAITSTATE_SetDeptStoreFloor, SPECIAL_WAITSTATE_SetDepartmentStoreFloorVar
-	.set SPECIAL_ShowDeptStoreElevatorFloorSelect, SPECIAL_sub_08139BD4
-	.set SPECIAL_WAITSTATE_ShowDeptStoreElevatorFloorSelect, SPECIAL_WAITSTATE_sub_08139BD4
-	.set SPECIAL_GetDeptStoreDefaultFloorChoice, SPECIAL_sub_08139A68
-	.set SPECIAL_WAITSTATE_GetDeptStoreDefaultFloorChoice, SPECIAL_WAITSTATE_sub_08139A68
 
 	@ Name Rater special aliases matching pokeemerald's semantic script names.
 	@ The JP C symbols retain their existing TV-prefixed linker names.

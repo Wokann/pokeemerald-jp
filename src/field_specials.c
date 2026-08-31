@@ -3149,7 +3149,7 @@ __attribute__((naked)) void OffsetCameraForBattle(void)
     );
 }
 
-__attribute__((naked)) void SetDepartmentStoreFloorVar(void)
+__attribute__((naked)) void SetDeptStoreFloor(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3205,7 +3205,7 @@ __attribute__((naked)) void SetDepartmentStoreFloorVar(void)
     );
 }
 
-__attribute__((naked)) void sub_08139A68(void)
+__attribute__((naked)) u16 GetDeptStoreDefaultFloorChoice(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3401,7 +3401,7 @@ __attribute__((naked)) void sub_08139B68(void)
     );
 }
 
-__attribute__((naked)) void sub_08139BD4(void)
+__attribute__((naked)) void ShowDeptStoreElevatorFloorSelect(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
