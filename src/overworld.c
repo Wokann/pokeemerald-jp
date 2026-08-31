@@ -1,4 +1,5 @@
 #include "global.h"
+#include "bg.h"
 #include "overworld.h"
 #include "main.h"
 #include "task.h"
@@ -9,8 +10,10 @@ extern u16 KeyInterCB_SelfIdle(u32 key);
 #include "constants/map_types.h"
 #include "constants/songs.h"
 #include "field_screen_effect.h"
+#include "scanline_effect.h"
 
 #define OVERWORLD_DUMMY_WARP_DATA __attribute__((section(".rodata.overworld_dummy_warp_data")))
+#define OVERWORLD_MOVEMENT_TABLES __attribute__((section(".rodata.overworld_movement_tables")))
 
 extern void *sUnusedOverworldCallback;
 
@@ -22,6 +25,15 @@ extern struct WarpData sFixedDiveWarp;
 extern struct WarpData sFixedHoleWarp;
 extern struct MapHeader *const *const gMapGroups[];
 extern u8 sObjectEventLoadFlag;
+
+u8 MovementEventModeCB_Normal(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+u8 MovementEventModeCB_Ignored(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+u8 MovementEventModeCB_Scripted(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+u8 FacingHandler_DoNothing(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+u8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+bool8 FacingHandler_ForcedFacingChange(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+void MovementStatusHandler_EnterFreeMode(struct LinkPlayerObjectEvent *, struct ObjectEvent *);
+void MovementStatusHandler_TryAdvanceScript(struct LinkPlayerObjectEvent *, struct ObjectEvent *);
 
 OVERWORLD_DUMMY_WARP_DATA static const struct WarpData sDummyWarpData =
 {
@@ -35,6 +47,131 @@ OVERWORLD_DUMMY_WARP_DATA static const struct WarpData sDummyWarpData =
 OVERWORLD_DUMMY_WARP_DATA static const u32 sUnusedData[] =
 {
     1200, 3600, 1200, 2400, 50, 80, -44, 44,
+};
+
+OVERWORLD_MOVEMENT_TABLES const struct UCoords32 gDirectionToVectors[] =
+{
+    [DIR_NONE] =
+    {
+        .x = 0,
+        .y = 0,
+    },
+    [DIR_SOUTH] =
+    {
+        .x = 0,
+        .y = 1,
+    },
+    [DIR_NORTH] =
+    {
+        .x = 0,
+        .y = -1,
+    },
+    [DIR_WEST] =
+    {
+        .x = -1,
+        .y = 0,
+    },
+    [DIR_EAST] =
+    {
+        .x = 1,
+        .y = 0,
+    },
+    [DIR_SOUTHWEST] =
+    {
+        .x = -1,
+        .y = 1,
+    },
+    [DIR_SOUTHEAST] =
+    {
+        .x = 1,
+        .y = 1,
+    },
+    [DIR_NORTHWEST] =
+    {
+        .x = -1,
+        .y = -1,
+    },
+    [DIR_NORTHEAST] =
+    {
+        .x = 1,
+        .y = -1,
+    },
+};
+
+OVERWORLD_MOVEMENT_TABLES static const struct BgTemplate sOverworldBgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 29,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 28,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0,
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0,
+    },
+};
+
+OVERWORLD_MOVEMENT_TABLES static const struct ScanlineEffectParams sFlashEffectParams =
+{
+    &REG_WIN0H,
+    ((DMA_ENABLE | DMA_START_HBLANK | DMA_REPEAT | DMA_DEST_RELOAD) << 16) | 1,
+    1,
+    0,
+};
+
+OVERWORLD_MOVEMENT_TABLES static u8 (*const sLinkPlayerMovementModes[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) =
+{
+    [MOVEMENT_MODE_FREE] = MovementEventModeCB_Normal,
+    [MOVEMENT_MODE_FROZEN] = MovementEventModeCB_Ignored,
+    [MOVEMENT_MODE_SCRIPTED] = MovementEventModeCB_Scripted,
+};
+
+OVERWORLD_MOVEMENT_TABLES static bool8 (*const sLinkPlayerFacingHandlers[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) =
+{
+    FacingHandler_DoNothing,
+    FacingHandler_DpadMovement,
+    FacingHandler_DpadMovement,
+    FacingHandler_DpadMovement,
+    FacingHandler_DpadMovement,
+    FacingHandler_DoNothing,
+    FacingHandler_DoNothing,
+    FacingHandler_ForcedFacingChange,
+    FacingHandler_ForcedFacingChange,
+    FacingHandler_ForcedFacingChange,
+    FacingHandler_ForcedFacingChange,
+};
+
+OVERWORLD_MOVEMENT_TABLES static void (*const sMovementStatusHandler[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *) =
+{
+    MovementStatusHandler_EnterFreeMode,
+    MovementStatusHandler_TryAdvanceScript,
 };
 
 __attribute__((naked)) void DoWhiteOut(void)
@@ -2703,7 +2840,7 @@ __attribute__((naked)) void InitOverworldBgs(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808568C: .4byte gUnknown_830FCF8\n\t"
+        "_0808568C: .4byte sOverworldBgTemplates\n\t"
         "_08085690: .4byte gOverworldTilemapBuffer_Bg1\n\t"
         "_08085694: .4byte gOverworldTilemapBuffer_Bg2\n\t"
         "_08085698: .4byte gOverworldTilemapBuffer_Bg3\n\t"
@@ -3609,7 +3746,7 @@ __attribute__((naked)) void InitCurrentFlashLevelScanlineEffect(void)
         "	bl ScanlineEffect_SetParams\n\t"
         "	b _08085D54\n\t"
         "	.align 2, 0\n\t"
-        "_08085D34: .4byte gUnknown_830FD08\n\t"
+        "_08085D34: .4byte sFlashEffectParams\n\t"
         "_08085D38:\n\t"
         "	bl GetFlashLevel\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3626,7 +3763,7 @@ __attribute__((naked)) void InitCurrentFlashLevelScanlineEffect(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085D58: .4byte gUnknown_830FD08\n\t"
+        "_08085D58: .4byte sFlashEffectParams\n\t"
         ".syntax divided\n\t"
     );
 }
