@@ -3645,25 +3645,49 @@ BattleScript_SpikesFree:: @ 0x08289565
 @ Future Sight / Doom Desire resolution. All hit, miss, animation, and
 @ return paths remain explicit at their physical JP entry points.
 BattleScript_MonTookFutureAttack:: @ 0x0828956C
-	.incbin "baserom_jp.gba", 0x28956c, 0x1d
+	printstring STRINGID_PKMNTOOKATTACK
+	waitmessage B_WAIT_TIME_LONG
+	jumpifbyte CMP_NOT_EQUAL, cMULTISTRING_CHOOSER, B_MSG_FUTURE_SIGHT, BattleScript_CheckDoomDesireMiss
+	accuracycheck BattleScript_FutureAttackMiss, MOVE_FUTURE_SIGHT
+	goto BattleScript_FutureAttackAnimate
 
 BattleScript_CheckDoomDesireMiss:: @ 0x08289589
-	.incbin "baserom_jp.gba", 0x289589, 0x7
+	accuracycheck BattleScript_FutureAttackMiss, MOVE_DOOM_DESIRE
 
 BattleScript_FutureAttackAnimate:: @ 0x08289590
-	.incbin "baserom_jp.gba", 0x289590, 0x18
+	adjustnormaldamage2
+	jumpifbyte CMP_NOT_EQUAL, cMULTISTRING_CHOOSER, B_MSG_FUTURE_SIGHT, BattleScript_FutureHitAnimDoomDesire
+	playanimation BS_ATTACKER, B_ANIM_FUTURE_SIGHT_HIT
+	goto BattleScript_DoFutureAttackHit
 
 BattleScript_FutureHitAnimDoomDesire:: @ 0x082895A8
-	.incbin "baserom_jp.gba", 0x2895a8, 0x7
+	playanimation BS_ATTACKER, B_ANIM_DOOM_DESIRE_HIT
 
 BattleScript_DoFutureAttackHit:: @ 0x082895AF
-	.incbin "baserom_jp.gba", 0x2895af, 0x18
+	effectivenesssound
+	hitanimation BS_TARGET
+	waitstate
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	tryfaintmon BS_TARGET
+	checkteamslost BattleScript_FutureAttackEnd
 
 BattleScript_FutureAttackEnd:: @ 0x082895C7
-	.incbin "baserom_jp.gba", 0x2895c7, 0x19
+	moveendcase MOVEEND_RAGE
+	moveendfromto MOVEEND_ITEM_EFFECTS_ALL, MOVEEND_UPDATE_LAST_MOVES
+	setbyte gMoveResultFlags, 0
+	end2
 
 BattleScript_FutureAttackMiss:: @ 0x082895E0
-	.incbin "baserom_jp.gba", 0x2895e0, 0x1a
+	pause B_WAIT_TIME_SHORT
+	setbyte gMoveResultFlags, 0
+	orbyte gMoveResultFlags, MOVE_RESULT_FAILED
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	setbyte gMoveResultFlags, 0
+	end2
 
 @ Move-selection rejection scripts. Keep the distinct selection and in-battle
 @ paths explicit so the JP physical order matches the US script owner.
