@@ -4113,15 +4113,15 @@ BattleScript_MoveEffectToxic: @ 0x8289951
 
 	.globl BattleScript_MoveEffectPayDay
 BattleScript_MoveEffectPayDay: @ 0x828995E
-	.byte 0x10, 0xFA, 0x00 @ printstring STRINGID_COINSSCATTERED
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x3C @ return
+	printstring STRINGID_COINSSCATTERED
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_MoveEffectWrap
 BattleScript_MoveEffectWrap: @ 0x8289965
-	.byte 0x13, 0x2C, 0xBA, 0x5A, 0x08 @ printfromtable gWrappedStringIds
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x3C @ return
+	printfromtable gWrappedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_MoveEffectConfusion
 BattleScript_MoveEffectConfusion: @ 0x828996E
