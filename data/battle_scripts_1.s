@@ -1,8 +1,10 @@
 
 #include "config.h"
 #include "constants/global.h"
+#include "constants/abilities.h"
 #include "constants/apprentice.h"
 #include "constants/battle.h"
+#include "constants/battle_anim.h"
 #include "constants/battle_arena.h"
 #include "constants/battle_dome.h"
 #include "constants/battle_factory.h"
@@ -10,7 +12,9 @@
 #include "constants/battle_palace.h"
 #include "constants/battle_pike.h"
 #include "constants/battle_pyramid.h"
+#include "constants/battle_script_commands.h"
 #include "constants/battle_setup.h"
+#include "constants/battle_string_ids.h"
 #include "constants/battle_tent.h"
 #include "constants/battle_tower.h"
 #include "constants/berry.h"
@@ -63,7 +67,7 @@
 
 #include "constants/tms_hms.inc"
 
-	.include "asm/macros/event.inc"
+	.include "asm/macros/battle_script.inc"
 	.include "constants/gba_constants.inc"
 	.include "constants/global.inc"
 
@@ -287,37 +291,147 @@ gBattleScriptsForMoveEffects:: @ 0x8286C30
 	.4byte BattleScript_EffectCamouflage             @ EFFECT_CAMOUFLAGE
 
 @ The 214 JP dispatcher entries below use their real effect labels.
-@ Each effect body remains a byte-exact raw span until its battle-script
-@ macro conversion is independently verified.
+@ Script bodies are migrated in verified physical-ROM-order batches.
 BattleScript_EffectHit:: @ 0x08286F88
-	.incbin "baserom_jp.gba", 0x286f88, 0x30
+	jumpifnotmove MOVE_SURF, BattleScript_HitFromAtkCanceler
+	jumpifnostatus3 BS_TARGET, STATUS3_UNDERWATER, BattleScript_HitFromAtkCanceler
+	orword gHitMarker, HITMARKER_IGNORE_UNDERWATER
+	setbyte sDMG_MULTIPLIER, 2
+BattleScript_HitFromAtkCanceler::
+	attackcanceler
+BattleScript_HitFromAccCheck::
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+BattleScript_HitFromAtkString::
+	attackstring
+	ppreduce
 
 BattleScript_HitFromCritCalc:: @ 0x08286FB8
-	.incbin "baserom_jp.gba", 0x286fb8, 0x1e
+	critcalc
+	damagecalc
+	typecalc
+	adjustnormaldamage
+BattleScript_HitFromAtkAnimation::
+	attackanimation
+	waitanimation
+	effectivenesssound
+	hitanimation BS_TARGET
+	waitstate
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	critmessage
+	waitmessage B_WAIT_TIME_LONG
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	seteffectwithchance
+	tryfaintmon BS_TARGET
 
 BattleScript_MoveEnd:: @ 0x08286FD6
-	.incbin "baserom_jp.gba", 0x286fd6, 0x12
+	moveendall
+	end
+
+BattleScript_MakeMoveMissed::
+	orbyte gMoveResultFlags, MOVE_RESULT_MISSED
+BattleScript_PrintMoveMissed::
+	attackstring
+	ppreduce
 
 BattleScript_MoveMissedPause:: @ 0x08286FE8
-	.incbin "baserom_jp.gba", 0x286fe8, 0xd
+	pause B_WAIT_TIME_SHORT
+BattleScript_MoveMissed::
+	effectivenesssound
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectSleep:: @ 0x08286FF5
-	.incbin "baserom_jp.gba", 0x286ff5, 0x72
+	attackcanceler
+	attackstring
+	ppreduce
+	jumpifstatus2 BS_TARGET, STATUS2_SUBSTITUTE, BattleScript_ButItFailed
+	jumpifstatus BS_TARGET, STATUS1_SLEEP, BattleScript_AlreadyAsleep
+	jumpifcantmakeasleep BattleScript_CantMakeAsleep
+	jumpifstatus BS_TARGET, STATUS1_ANY, BattleScript_ButItFailed
+	accuracycheck BattleScript_ButItFailed, ACC_CURR_MOVE
+	jumpifsideaffecting BS_TARGET, SIDE_STATUS_SAFEGUARD, BattleScript_SafeguardProtected
+	attackanimation
+	waitanimation
+	setmoveeffect MOVE_EFFECT_SLEEP
+	seteffectprimary
+	goto BattleScript_MoveEnd
+
+BattleScript_AlreadyAsleep::
+	setalreadystatusedmoveattempt BS_ATTACKER
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNALREADYASLEEP
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
+BattleScript_WasntAffected::
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNWASNTAFFECTED
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
+BattleScript_CantMakeAsleep::
+	pause B_WAIT_TIME_SHORT
+	printfromtable gUproarAwakeStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectPoisonHit:: @ 0x08287067
-	.incbin "baserom_jp.gba", 0x287067, 0xb
+	setmoveeffect MOVE_EFFECT_POISON
+	goto BattleScript_EffectHit
 
 BattleScript_EffectAbsorb:: @ 0x08287072
-	.incbin "baserom_jp.gba", 0x287072, 0x6e
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	critcalc
+	damagecalc
+	typecalc
+	adjustnormaldamage
+	attackanimation
+	waitanimation
+	effectivenesssound
+	hitanimation BS_TARGET
+	waitstate
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	critmessage
+	waitmessage B_WAIT_TIME_LONG
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	negativedamage
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	jumpifability BS_TARGET, ABILITY_LIQUID_OOZE, BattleScript_AbsorbLiquidOoze
+	setbyte cMULTISTRING_CHOOSER, B_MSG_ABSORB
+	goto BattleScript_AbsorbUpdateHp
+BattleScript_AbsorbLiquidOoze::
+	manipulatedamage DMG_CHANGE_SIGN
+	setbyte cMULTISTRING_CHOOSER, B_MSG_ABSORB_OOZE
+BattleScript_AbsorbUpdateHp::
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	jumpifmovehadnoeffect BattleScript_AbsorbTryFainting
+	printfromtable gAbsorbDrainStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_AbsorbTryFainting::
+	tryfaintmon BS_ATTACKER
+	tryfaintmon BS_TARGET
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectBurnHit:: @ 0x082870E0
-	.incbin "baserom_jp.gba", 0x2870e0, 0xb
+	setmoveeffect MOVE_EFFECT_BURN
+	goto BattleScript_EffectHit
 
 BattleScript_EffectFreezeHit:: @ 0x082870EB
-	.incbin "baserom_jp.gba", 0x2870eb, 0xb
+	setmoveeffect MOVE_EFFECT_FREEZE
+	goto BattleScript_EffectHit
 
 BattleScript_EffectParalyzeHit:: @ 0x082870F6
-	.incbin "baserom_jp.gba", 0x2870f6, 0xb
+	setmoveeffect MOVE_EFFECT_PARALYSIS
+	goto BattleScript_EffectHit
 
 BattleScript_EffectExplosion:: @ 0x08287101
 	.incbin "baserom_jp.gba", 0x287101, 0x80

@@ -109,11 +109,15 @@
 	.byte \battler
 	.endm
 
-	.macro tryfaintmon battler:req, param1:req, ptr:req
+	.macro tryfaintmon battler:req, param1=0, ptr=0
 	.byte 0x19
 	.byte \battler
 	.byte \param1
 	.4byte \ptr
+	.endm
+
+	.macro tryfaintmon_spikes battler:req, ptr:req
+	tryfaintmon \battler, 1, \ptr
 	.endm
 
 	.macro dofaintanimation battler:req
@@ -408,19 +412,19 @@
 	
 	@ All cases
 	.macro moveendall
-	setbyte sMOVEEND_STATE, 0
+	setbyte gBattleScripting + 0x14, 0
 	moveend 0, 0
 	.endm
 	
 	@ Chosen case
 	.macro moveendcase case:req
-	setbyte sMOVEEND_STATE, \case
+	setbyte gBattleScripting + 0x14, \case
 	moveend 1, 0
 	.endm
 	
 	@ All cases from (inclusive)
 	.macro moveendfrom from:req
-	setbyte sMOVEEND_STATE, \from
+	setbyte gBattleScripting + 0x14, \from
 	moveend 0, 0
 	.endm
 	
@@ -1357,11 +1361,13 @@
 	
 @ helpful macros
 	.macro setstatchanger stat:req, stages:req, down:req
-	setbyte sSTATCHANGER \stat | \stages << 4 | \down << 7
+	setbyte gBattleScripting + 0x1A, \stat | \stages << 4 | \down << 7
 	.endm
 	
 	.macro setmoveeffect effect:req
-	setbyte cEFFECT_CHOOSER \effect
+	@ This assembler include is expanded after the C preprocessor, so use the
+	@ JP ROM's concrete gBattleCommunication slot instead of cEFFECT_CHOOSER.
+	setbyte gBattleCommunication + 3, \effect
 	.endm
 	
 	.macro chosenstatus1animation battler:req, status:req
@@ -1405,11 +1411,11 @@
 	.endm
 	
 	.macro jumpifmove move:req, jumpptr:req
-	jumpifhalfword CMP_EQUAL, gCurrentMove, \move, \jumpptr
+	jumpifhalfword 0, gCurrentMove, \move, \jumpptr
 	.endm
 
 	.macro jumpifnotmove move:req, jumpptr:req
-	jumpifhalfword CMP_NOT_EQUAL, gCurrentMove, \move, \jumpptr
+	jumpifhalfword 1, gCurrentMove, \move, \jumpptr
 	.endm
 	
 	.macro jumpifstatus3 battler:req, status:req, jumpptr:req
@@ -1421,13 +1427,13 @@
 	.endm
 	
 	.macro jumpifmovehadnoeffect jumpptr:req
-	jumpifbyte CMP_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_NO_EFFECT, \jumpptr
+	jumpifbyte 4, gMoveResultFlags, 0x29, \jumpptr
 	.endm
 	
 	.macro jumpifbattletype flags:req, jumpptr:req
-	jumpifword CMP_COMMON_BITS, gBattleTypeFlags, \flags, \jumpptr
+	jumpifword 4, gBattleTypeFlags, \flags, \jumpptr
 	.endm
 	
 	.macro jumpifnotbattletype flags:req, jumpptr:req
-	jumpifword CMP_NO_COMMON_BITS, gBattleTypeFlags, \flags, \jumpptr
+	jumpifword 5, gBattleTypeFlags, \flags, \jumpptr
 	.endm
