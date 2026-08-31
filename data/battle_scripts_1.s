@@ -3580,27 +3580,48 @@ BattleScript_PerishSongCountGoesDown:: @ 0x082894A8
 	end2
 
 @ All-stat boost script, split at each actual stat branch so the full
-@ chained flow is visible without retaining a gUnknown container.
+@ chained flow is visible.
 BattleScript_AllStatsUp:: @ 0x082894AF
-	.incbin "baserom_jp.gba", 0x2894af, 0x2d
+	jumpifstat BS_ATTACKER, CMP_LESS_THAN, STAT_ATK, MAX_STAT_STAGE, BattleScript_AllStatsUpAtk
+	jumpifstat BS_ATTACKER, CMP_LESS_THAN, STAT_DEF, MAX_STAT_STAGE, BattleScript_AllStatsUpAtk
+	jumpifstat BS_ATTACKER, CMP_LESS_THAN, STAT_SPEED, MAX_STAT_STAGE, BattleScript_AllStatsUpAtk
+	jumpifstat BS_ATTACKER, CMP_LESS_THAN, STAT_SPATK, MAX_STAT_STAGE, BattleScript_AllStatsUpAtk
+	jumpifstat BS_ATTACKER, CMP_EQUAL, STAT_SPDEF, MAX_STAT_STAGE, BattleScript_AllStatsUpRet
 
 BattleScript_AllStatsUpAtk:: @ 0x082894DC
-	.incbin "baserom_jp.gba", 0x2894dc, 0x1e
+	setbyte sSTAT_ANIM_PLAYED, FALSE
+	playstatchangeanimation BS_ATTACKER, BIT_ATK | BIT_DEF | BIT_SPEED | BIT_SPATK | BIT_SPDEF, 0
+	setstatchanger STAT_ATK, 1, FALSE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | STAT_CHANGE_ALLOW_PTR, BattleScript_AllStatsUpDef
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
 
 BattleScript_AllStatsUpDef:: @ 0x082894FA
-	.incbin "baserom_jp.gba", 0x2894fa, 0x14
+	setstatchanger STAT_DEF, 1, FALSE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | STAT_CHANGE_ALLOW_PTR, BattleScript_AllStatsUpSpeed
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
 
 BattleScript_AllStatsUpSpeed:: @ 0x0828950E
-	.incbin "baserom_jp.gba", 0x28950e, 0x14
+	setstatchanger STAT_SPEED, 1, FALSE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | STAT_CHANGE_ALLOW_PTR, BattleScript_AllStatsUpSpAtk
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
 
 BattleScript_AllStatsUpSpAtk:: @ 0x08289522
-	.incbin "baserom_jp.gba", 0x289522, 0x14
+	setstatchanger STAT_SPATK, 1, FALSE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | STAT_CHANGE_ALLOW_PTR, BattleScript_AllStatsUpSpDef
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
 
 BattleScript_AllStatsUpSpDef:: @ 0x08289536
-	.incbin "baserom_jp.gba", 0x289536, 0x14
+	setstatchanger STAT_SPDEF, 1, FALSE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | STAT_CHANGE_ALLOW_PTR, BattleScript_AllStatsUpRet
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
 
 BattleScript_AllStatsUpRet:: @ 0x0828954A
-	.incbin "baserom_jp.gba", 0x28954a, 0x1
+	return
 
 @ Residual-effect cleanup scripts used by Rapid Spin: free wrapping,
 @ Leech Seed, and Spikes in physical JP order.
