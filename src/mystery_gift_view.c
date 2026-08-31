@@ -100,11 +100,6 @@ extern const struct SpritePalette sSpritePalettes_StampShadow[];
 extern const struct SpriteTemplate sSpriteTemplate_StampShadow;
 extern const u8 sTextColors_News[];
 extern const struct WindowTemplate sNews_WindowTemplates[];
-extern const struct OamData gUnknown_84FD040;
-
-
-
-
 bool32 InitWonderCardResources(struct WonderCard *card, struct WonderCardMetadata *metadata)
 {
     if (card == NULL || metadata == NULL)

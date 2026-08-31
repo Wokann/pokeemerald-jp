@@ -14,7 +14,8 @@ extern const u16 gBerryCrush_Crusher_Pal[]; // packed palettes, 0x82C5F84 (src/g
 extern const struct OamData gOamData_AffineOff_ObjNormal_16x16;
 extern const struct OamData gOamData_AffineOff_ObjNormal_32x32;
 extern const struct OamData gOamData_AffineOff_ObjNormal_64x64;
-extern const struct OamData gUnknown_84FD040[]; // 0x84FD040 OamData table (asm)
+extern const struct OamData gOamData_AffineOff_ObjNormal_8x16;
+extern const struct OamData gOamData_AffineDouble_ObjNormal_32x32;
 extern void SpriteCB_Impact(struct Sprite *sprite); // src/berry_crush.c
 
 // 0x82C7A08 - index into sPlayerCoords by (playerCount - 2) and player slot.
@@ -247,7 +248,7 @@ const struct SpriteTemplate sSpriteTemplate_Timer =
 {
     .tileTag = 4, // TAG_TIMER_DIGITS
     .paletteTag = 4, // TAG_TIMER_DIGITS
-    .oam = &gUnknown_84FD040[2],
+    .oam = &gOamData_AffineOff_ObjNormal_8x16,
     .anims = sAnims_Timer,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -259,7 +260,7 @@ const struct SpriteTemplate sSpriteTemplate_PlayerBerry =
 {
     .tileTag = 5, // TAG_PLAYER1_BERRY
     .paletteTag = 5, // TAG_PLAYER1_BERRY
-    .oam = &gUnknown_84FD040[20],
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = sAnims_PlayerBerry,
     .images = NULL,
     .affineAnims = sAffineAnims_PlayerBerry,

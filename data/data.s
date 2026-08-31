@@ -268,25 +268,6 @@ gUnknown_82BF304: @ 0x82BF304
 gDummySpriteAffineAnimTable: @ 0x82BF310
 	.4byte 0x082BF308
 
-	.globl gOamData_AffineOff_ObjNormal_32x16
-	.set gOamData_AffineOff_ObjNormal_32x16, 0x084FD040
-	.globl gOamData_AffineNormal_ObjNormal_32x32
-	.set gOamData_AffineNormal_ObjNormal_32x32, 0x084FD080
-	.globl gOamData_AffineNormal_ObjNormal_64x64
-	.set gOamData_AffineNormal_ObjNormal_64x64, 0x084FD088
-	.globl gOamData_AffineDouble_ObjNormal_32x32
-	.set gOamData_AffineDouble_ObjNormal_32x32, 0x084FD0E0
-	.globl gOamData_AffineDouble_ObjNormal_64x64
-	.set gOamData_AffineDouble_ObjNormal_64x64, 0x084FD0E8
-	.globl gOamData_AffineOff_ObjBlend_32x32
-	.set gOamData_AffineOff_ObjBlend_32x32, 0x084FD140
-	.globl gOamData_AffineOff_ObjBlend_64x64
-	.set gOamData_AffineOff_ObjBlend_64x64, 0x084FD148
-	.globl gOamData_AffineNormal_ObjBlend_64x64
-	.set gOamData_AffineNormal_ObjBlend_64x64, 0x084FD1A8
-	.globl gOamData_AffineDouble_ObjBlend_64x64
-	.set gOamData_AffineDouble_ObjBlend_64x64, 0x084FD208
-
 	.globl gDummySpriteTemplate
 gDummySpriteTemplate: @ 0x82BF314
 	.hword 0x0000, 0xFFFF

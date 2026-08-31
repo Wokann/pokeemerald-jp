@@ -6,7 +6,7 @@
 
 #define TAG_STAMP_SHADOW 0x8000
 
-extern const struct OamData gUnknown_84FD040;
+extern const struct OamData gOamData_AffineOff_ObjNormal_32x16;
 
 struct WonderGfx
 {
@@ -93,7 +93,7 @@ const struct SpritePalette sSpritePalettes_StampShadow[] = {
 const struct SpriteTemplate sSpriteTemplate_StampShadow = {
     .tileTag = TAG_STAMP_SHADOW,
     .paletteTag = TAG_STAMP_SHADOW,
-    .oam = &gUnknown_84FD040,
+    .oam = &gOamData_AffineOff_ObjNormal_32x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
