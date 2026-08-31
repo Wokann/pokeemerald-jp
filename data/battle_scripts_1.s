@@ -4305,19 +4305,19 @@ BattleScript_DampStopsExplosion: @ 0x8289AE8
 
 	.globl BattleScript_MoveHPDrain_PPLoss
 BattleScript_MoveHPDrain_PPLoss: @ 0x8289AF6
-	.byte 0x03 @ ppreduce
+	ppreduce
 
 	.globl BattleScript_MoveHPDrain
 BattleScript_MoveHPDrain: @ 0x8289AF7
-	.byte 0x02 @ attackstring
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x35, 0x24, 0x3F, 0x02, 0x02, 0x00, 0x01, 0x00, 0x00 @ orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
-	.byte 0x0B, 0x00 @ healthbarupdate BS_TARGET
-	.byte 0x0C, 0x00 @ datahpupdate BS_TARGET
-	.byte 0x10, 0xC5, 0x00 @ printstring STRINGID_PKMNRESTOREDHPUSING
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x33, 0x20, 0x3F, 0x02, 0x02, 0x08 @ orbyte gMoveResultFlags, MOVE_RESULT_DOESNT_AFFECT_FOE
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	attackstring
+	pause B_WAIT_TIME_SHORT
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	printstring STRINGID_PKMNRESTOREDHPUSING
+	waitmessage B_WAIT_TIME_LONG
+	orbyte gMoveResultFlags, MOVE_RESULT_DOESNT_AFFECT_FOE
+	goto BattleScript_MoveEnd
 
 	.globl BattleScript_MonMadeMoveUseless_PPLoss
 BattleScript_MonMadeMoveUseless_PPLoss: @ 0x8289B19
