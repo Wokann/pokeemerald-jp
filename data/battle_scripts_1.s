@@ -2582,7 +2582,15 @@ BattleScript_EffectSkillSwap:: @ 0x08288964
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectImprison:: @ 0x08288980
-	.incbin "baserom_jp.gba", 0x288980, 0x15
+	attackcanceler
+	attackstring
+	ppreduce
+	tryimprison BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNSEALEDOPPONENTMOVE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectRefresh:: @ 0x08288995
 	.incbin "baserom_jp.gba", 0x288995, 0x17
