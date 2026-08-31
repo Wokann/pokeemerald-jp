@@ -1320,7 +1320,24 @@ BattleScript_EffectPainSplit:: @ 0x08287B0D
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectSnore:: @ 0x08287B44
-	.incbin "baserom_jp.gba", 0x287b44, 0x3a
+	attackcanceler
+	jumpifstatus BS_ATTACKER, STATUS1_SLEEP, BattleScript_SnoreIsAsleep
+	attackstring
+	ppreduce
+	goto BattleScript_ButItFailed
+
+BattleScript_SnoreIsAsleep:: @ 0x08287B56
+	jumpifhalfword CMP_EQUAL, gChosenMove, MOVE_SLEEP_TALK, BattleScript_DoSnore
+	printstring STRINGID_PKMNFASTASLEEP
+	waitmessage B_WAIT_TIME_LONG
+	statusanimation BS_ATTACKER
+
+BattleScript_DoSnore:: @ 0x08287B6A
+	attackstring
+	ppreduce
+	accuracycheck BattleScript_MoveMissedPause, ACC_CURR_MOVE
+	setmoveeffect MOVE_EFFECT_FLINCH
+	goto BattleScript_HitFromCritCalc
 
 BattleScript_EffectConversion2:: @ 0x08287B7E
 	.incbin "baserom_jp.gba", 0x287b7e, 0x15
