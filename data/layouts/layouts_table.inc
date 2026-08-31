@@ -175,8 +175,20 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_SHOAL_CAVE_LOW_TIDE_LOWER_ROOM
 	.4byte gMapLayout_SHOAL_CAVE_HIGH_TIDE_ENTRANCE_ROOM
 	.4byte gMapLayout_SHOAL_CAVE_HIGH_TIDE_INNER_ROOM
-	@ LAYOUT_UNUSED_CAVE1 through LAYOUT_UNUSED_CAVE14 remain in raw physical layout owners.
-	.incbin "baserom_jp.gba", 0x45A498, 0x38
+	.4byte UnusedCave1_Layout
+	.4byte UnusedCave2_Layout
+	.4byte UnusedCave3_Layout
+	.4byte UnusedCave4_Layout
+	.4byte UnusedCave5_Layout
+	.4byte UnusedCave6_Layout
+	.4byte UnusedCave7_Layout
+	.4byte UnusedCave8_Layout
+	.4byte UnusedCave9_Layout
+	.4byte UnusedCave10_Layout
+	.4byte UnusedCave11_Layout
+	.4byte UnusedCave12_Layout
+	.4byte UnusedCave13_Layout
+	.4byte UnusedCave14_Layout
 	.4byte gMapLayout_NEW_MAUVILLE_ENTRANCE
 	.4byte gMapLayout_NEW_MAUVILLE_INSIDE
 	.4byte gMapLayout_ABANDONED_SHIP_DECK

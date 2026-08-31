@@ -2067,7 +2067,216 @@ gMapLayout_SHOAL_CAVE_HIGH_TIDE_INNER_ROOM: @ 0x08416ABC
 	.4byte gMapLayout_SHOAL_CAVE_HIGH_TIDE_INNER_ROOM_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Cave  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x416AD4, 0x1F8
+UnusedCave1_Layout_Border::
+	.incbin "data/layouts/UnusedCave1/border.bin"
+
+UnusedCave1_Layout_Blockdata::
+	.incbin "data/layouts/UnusedCave1/map.bin"
+
+	.align 2
+UnusedCave1_Layout:: @ 0x08416AE0
+	.4byte 1
+	.4byte 1
+	.4byte UnusedCave1_Layout_Border
+	.4byte UnusedCave1_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
+UnusedCave2_Layout_Border::
+	.incbin "data/layouts/UnusedCave2/border.bin"
+
+UnusedCave2_Layout_Blockdata::
+	.incbin "data/layouts/UnusedCave2/map.bin"
+
+	.align 2
+UnusedCave2_Layout:: @ 0x08416B04
+	.4byte 1
+	.4byte 1
+	.4byte UnusedCave2_Layout_Border
+	.4byte UnusedCave2_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
+UnusedCave3_Layout_Border::
+	.incbin "data/layouts/UnusedCave3/border.bin"
+
+UnusedCave3_Layout_Blockdata::
+	.incbin "data/layouts/UnusedCave3/map.bin"
+
+	.align 2
+UnusedCave3_Layout:: @ 0x08416B28
+	.4byte 1
+	.4byte 1
+	.4byte UnusedCave3_Layout_Border
+	.4byte UnusedCave3_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
+UnusedCave4_Layout_Border::
+	.incbin "data/layouts/UnusedCave4/border.bin"
+
+UnusedCave4_Layout_Blockdata::
+	.incbin "data/layouts/UnusedCave4/map.bin"
+
+	.align 2
+UnusedCave4_Layout:: @ 0x08416B4C
+	.4byte 1
+	.4byte 1
+	.4byte UnusedCave4_Layout_Border
+	.4byte UnusedCave4_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
+UnusedCave5_Layout_Border::
+	.incbin "data/layouts/UnusedCave5/border.bin"
+
+UnusedCave5_Layout_Blockdata::
+	.incbin "data/layouts/UnusedCave5/map.bin"
+
+	.align 2
+UnusedCave5_Layout:: @ 0x08416B70
+	.4byte 1
+	.4byte 1
+	.4byte UnusedCave5_Layout_Border
+	.4byte UnusedCave5_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
+UnusedCave6_Layout_Border::
+	.incbin "data/layouts/UnusedCave6/border.bin"
+
+UnusedCave6_Layout_Blockdata::
+	.incbin "data/layouts/UnusedCave6/map.bin"
+
+	.align 2
+UnusedCave6_Layout:: @ 0x08416B94
+	.4byte 1
+	.4byte 1
+	.4byte UnusedCave6_Layout_Border
+	.4byte UnusedCave6_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
+UnusedCave7_Layout_Border::
+	.incbin "data/layouts/UnusedCave7/border.bin"
+
+UnusedCave7_Layout_Blockdata::
+	.incbin "data/layouts/UnusedCave7/map.bin"
+
+	.align 2
+UnusedCave7_Layout:: @ 0x08416BB8
+	.4byte 1
+	.4byte 1
+	.4byte UnusedCave7_Layout_Border
+	.4byte UnusedCave7_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
+UnusedCave8_Layout_Border::
+	.incbin "data/layouts/UnusedCave8/border.bin"
+
+UnusedCave8_Layout_Blockdata::
+	.incbin "data/layouts/UnusedCave8/map.bin"
+
+	.align 2
+UnusedCave8_Layout:: @ 0x08416BDC
+	.4byte 1
+	.4byte 1
+	.4byte UnusedCave8_Layout_Border
+	.4byte UnusedCave8_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
+UnusedCave9_Layout_Border::
+	.incbin "data/layouts/UnusedCave9/border.bin"
+
+UnusedCave9_Layout_Blockdata::
+	.incbin "data/layouts/UnusedCave9/map.bin"
+
+	.align 2
+UnusedCave9_Layout:: @ 0x08416C00
+	.4byte 1
+	.4byte 1
+	.4byte UnusedCave9_Layout_Border
+	.4byte UnusedCave9_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
+UnusedCave10_Layout_Border::
+	.incbin "data/layouts/UnusedCave10/border.bin"
+
+UnusedCave10_Layout_Blockdata::
+	.incbin "data/layouts/UnusedCave10/map.bin"
+
+	.align 2
+UnusedCave10_Layout:: @ 0x08416C24
+	.4byte 1
+	.4byte 1
+	.4byte UnusedCave10_Layout_Border
+	.4byte UnusedCave10_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
+UnusedCave11_Layout_Border::
+	.incbin "data/layouts/UnusedCave11/border.bin"
+
+UnusedCave11_Layout_Blockdata::
+	.incbin "data/layouts/UnusedCave11/map.bin"
+
+	.align 2
+UnusedCave11_Layout:: @ 0x08416C48
+	.4byte 1
+	.4byte 1
+	.4byte UnusedCave11_Layout_Border
+	.4byte UnusedCave11_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
+UnusedCave12_Layout_Border::
+	.incbin "data/layouts/UnusedCave12/border.bin"
+
+UnusedCave12_Layout_Blockdata::
+	.incbin "data/layouts/UnusedCave12/map.bin"
+
+	.align 2
+UnusedCave12_Layout:: @ 0x08416C6C
+	.4byte 1
+	.4byte 1
+	.4byte UnusedCave12_Layout_Border
+	.4byte UnusedCave12_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
+UnusedCave13_Layout_Border::
+	.incbin "data/layouts/UnusedCave13/border.bin"
+
+UnusedCave13_Layout_Blockdata::
+	.incbin "data/layouts/UnusedCave13/map.bin"
+
+	.align 2
+UnusedCave13_Layout:: @ 0x08416C90
+	.4byte 1
+	.4byte 1
+	.4byte UnusedCave13_Layout_Border
+	.4byte UnusedCave13_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
+UnusedCave14_Layout_Border::
+	.incbin "data/layouts/UnusedCave14/border.bin"
+
+UnusedCave14_Layout_Blockdata::
+	.incbin "data/layouts/UnusedCave14/map.bin"
+
+	.align 2
+UnusedCave14_Layout:: @ 0x08416CB4
+	.4byte 1
+	.4byte 1
+	.4byte UnusedCave14_Layout_Border
+	.4byte UnusedCave14_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
 gMapLayout_NEW_MAUVILLE_ENTRANCE_Border:
 	.incbin "data/layouts/NewMauville_Entrance/border.bin"
 gMapLayout_NEW_MAUVILLE_ENTRANCE_Blockdata:

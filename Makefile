@@ -512,6 +512,34 @@ $(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_
 	data/layouts/UnusedContestRoom2/map.bin \
 	data/layouts/UnusedContestRoom3/border.bin \
 	data/layouts/UnusedContestRoom3/map.bin \
+	data/layouts/UnusedCave1/border.bin \
+	data/layouts/UnusedCave1/map.bin \
+	data/layouts/UnusedCave2/border.bin \
+	data/layouts/UnusedCave2/map.bin \
+	data/layouts/UnusedCave3/border.bin \
+	data/layouts/UnusedCave3/map.bin \
+	data/layouts/UnusedCave4/border.bin \
+	data/layouts/UnusedCave4/map.bin \
+	data/layouts/UnusedCave5/border.bin \
+	data/layouts/UnusedCave5/map.bin \
+	data/layouts/UnusedCave6/border.bin \
+	data/layouts/UnusedCave6/map.bin \
+	data/layouts/UnusedCave7/border.bin \
+	data/layouts/UnusedCave7/map.bin \
+	data/layouts/UnusedCave8/border.bin \
+	data/layouts/UnusedCave8/map.bin \
+	data/layouts/UnusedCave9/border.bin \
+	data/layouts/UnusedCave9/map.bin \
+	data/layouts/UnusedCave10/border.bin \
+	data/layouts/UnusedCave10/map.bin \
+	data/layouts/UnusedCave11/border.bin \
+	data/layouts/UnusedCave11/map.bin \
+	data/layouts/UnusedCave12/border.bin \
+	data/layouts/UnusedCave12/map.bin \
+	data/layouts/UnusedCave13/border.bin \
+	data/layouts/UnusedCave13/map.bin \
+	data/layouts/UnusedCave14/border.bin \
+	data/layouts/UnusedCave14/map.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 
