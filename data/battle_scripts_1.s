@@ -663,7 +663,57 @@ BattleScript_EffectRoar:: @ 0x0828733C
 	forcerandomswitch BattleScript_ButItFailed
 
 BattleScript_EffectMultiHit:: @ 0x08287372
-	.incbin "baserom_jp.gba", 0x287372, 0xc4
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	setmultihitcounter 0
+	initmultihitstring
+	setbyte sMULTIHIT_EFFECT, 0
+BattleScript_MultiHitLoop::
+	jumpifhasnohp BS_ATTACKER, BattleScript_MultiHitEnd
+	jumpifhasnohp BS_TARGET, BattleScript_MultiHitPrintStrings
+	jumpifhalfword CMP_EQUAL, gChosenMove, MOVE_SLEEP_TALK, BattleScript_DoMultiHit
+	jumpifstatus BS_ATTACKER, STATUS1_SLEEP, BattleScript_MultiHitPrintStrings
+BattleScript_DoMultiHit::
+	movevaluescleanup
+	copybyte cEFFECT_CHOOSER, sMULTIHIT_EFFECT
+	critcalc
+	damagecalc
+	typecalc
+	jumpifmovehadnoeffect BattleScript_MultiHitNoMoreHits
+	adjustnormaldamage
+	attackanimation
+	waitanimation
+	effectivenesssound
+	hitanimation BS_TARGET
+	waitstate
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	critmessage
+	waitmessage B_WAIT_TIME_LONG
+	printstring STRINGID_EMPTYSTRING3
+	waitmessage 1
+	addbyte sMULTIHIT_STRING + 4, 1
+	moveendto MOVEEND_NEXT_TARGET
+	jumpifbyte CMP_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_FOE_ENDURED, BattleScript_MultiHitPrintStrings
+	decrementmultihit BattleScript_MultiHitLoop
+	goto BattleScript_MultiHitPrintStrings
+BattleScript_MultiHitNoMoreHits::
+	pause B_WAIT_TIME_SHORT
+BattleScript_MultiHitPrintStrings::
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	jumpifmovehadnoeffect BattleScript_MultiHitEnd
+	copyarray gBattleTextBuff1, sMULTIHIT_STRING, 6
+	printstring STRINGID_HITXTIMES
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_MultiHitEnd::
+	seteffectwithchance
+	tryfaintmon BS_TARGET
+	moveendcase MOVEEND_SYNCHRONIZE_TARGET
+	moveendfrom MOVEEND_IMMUNITY_ABILITIES
+	end
 
 BattleScript_EffectConversion:: @ 0x08287436
 	.incbin "baserom_jp.gba", 0x287436, 0x15
