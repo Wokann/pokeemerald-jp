@@ -11,10 +11,8 @@
 
 	.section script_data, "aw", %progbits
 
-@ Battle script tables and handlers at 0x0828A290.
 	.align 2
-	.globl gBattlescriptsForBallThrow
-gBattlescriptsForBallThrow: @ 0x0828A290
+gBattlescriptsForBallThrow:: @ 0x0828A290
 	.4byte BattleScript_BallThrow        @ ITEM_NONE
 	.4byte BattleScript_BallThrow        @ ITEM_MASTER_BALL
 	.4byte BattleScript_BallThrow        @ ITEM_ULTRA_BALL
@@ -30,8 +28,7 @@ gBattlescriptsForBallThrow: @ 0x0828A290
 	.4byte BattleScript_BallThrow        @ ITEM_PREMIER_BALL
 
 	.align 2
-	.globl gBattlescriptsForUsingItem
-gBattlescriptsForUsingItem: @ 0x0828A2C4
+gBattlescriptsForUsingItem:: @ 0x0828A2C4
 	.4byte BattleScript_PlayerUsesItem
 	.4byte BattleScript_OpponentUsesHealItem        @ AI_ITEM_FULL_RESTORE
 	.4byte BattleScript_OpponentUsesHealItem        @ AI_ITEM_HEAL_HP
@@ -40,47 +37,41 @@ gBattlescriptsForUsingItem: @ 0x0828A2C4
 	.4byte BattleScript_OpponentUsesGuardSpec       @ AI_ITEM_GUARD_SPEC
 
 	.align 2
-	.globl gBattlescriptsForRunningByItem
-gBattlescriptsForRunningByItem: @ 0x0828A2DC
+gBattlescriptsForRunningByItem:: @ 0x0828A2DC
 	.4byte BattleScript_RunByUsingItem
 
 	.align 2
-	.globl gBattlescriptsForSafariActions
-gBattlescriptsForSafariActions: @ 0x0828A2E0
+gBattlescriptsForSafariActions:: @ 0x0828A2E0
 	.4byte BattleScript_ActionWatchesCarefully
 	.4byte BattleScript_ActionGetNear
 	.4byte BattleScript_ActionThrowPokeblock
 	.4byte BattleScript_ActionWallyThrow
 
-	.globl BattleScript_BallThrow
-BattleScript_BallThrow: @ 0x0828A2F0
+BattleScript_BallThrow:: @ 0x0828A2F0
 	jumpifword CMP_COMMON_BITS, gBattleTypeFlags, BATTLE_TYPE_WALLY_TUTORIAL, BattleScript_BallThrowByWally
 	printstring STRINGID_PLAYERUSEDITEM
 	handleballthrow
 
-	.globl BattleScript_BallThrowByWally
-BattleScript_BallThrowByWally: @ 0x0828A306
+BattleScript_BallThrowByWally:: @ 0x0828A306
 	printstring STRINGID_WALLYUSEDITEM
 	handleballthrow
 
-	.globl BattleScript_SafariBallThrow
-BattleScript_SafariBallThrow: @ 0x0828A30C
+BattleScript_SafariBallThrow:: @ 0x0828A30C
 	printstring STRINGID_PLAYERUSEDITEM
 	updatestatusicon BS_ATTACKER
 	handleballthrow
 
-	.globl BattleScript_SuccessBallThrow
-BattleScript_SuccessBallThrow: @ 0x0828A352
+BattleScript_SuccessBallThrow:: @ 0x0828A352
 	jumpifhalfword CMP_EQUAL, gLastUsedItem, ITEM_SAFARI_BALL, BattleScript_PrintCaughtMonInfo
 	incrementgamestat GAME_STAT_POKEMON_CAPTURES
-BattleScript_PrintCaughtMonInfo:
+BattleScript_PrintCaughtMonInfo::
 	printstring STRINGID_GOTCHAPKMNCAUGHTPLAYER
 	trysetcaughtmondexflags BattleScript_TryNicknameCaughtMon
 	printstring STRINGID_PKMNDATAADDEDTODEX
 	waitstate
 	setbyte gBattleCommunication, 0
 	displaydexinfo
-BattleScript_TryNicknameCaughtMon:
+BattleScript_TryNicknameCaughtMon::
 	printstring STRINGID_GIVENICKNAMECAPTURED
 	waitstate
 	setbyte gBattleCommunication, 0
@@ -89,20 +80,18 @@ BattleScript_TryNicknameCaughtMon:
 	printfromtable gCaughtMonStringIds
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_SuccessBallThrowEnd
-BattleScript_GiveCaughtMonEnd:
+BattleScript_GiveCaughtMonEnd::
 	givecaughtmon
-BattleScript_SuccessBallThrowEnd:
+BattleScript_SuccessBallThrowEnd::
 	setbyte gBattleOutcome, B_OUTCOME_CAUGHT
 	finishturn
 
-	.globl BattleScript_WallyBallThrow
-BattleScript_WallyBallThrow: @ 0x0828A35C
+BattleScript_WallyBallThrow:: @ 0x0828A35C
 	printstring STRINGID_GOTCHAPKMNCAUGHTWALLY
 	setbyte gBattleOutcome, B_OUTCOME_CAUGHT
 	finishturn
 
-	.globl BattleScript_ShakeBallThrow
-BattleScript_ShakeBallThrow: @ 0x0828A38A
+BattleScript_ShakeBallThrow:: @ 0x0828A38A
 	printfromtable gBallEscapeStringIds
 	waitmessage B_WAIT_TIME_LONG
 	jumpifword CMP_NO_COMMON_BITS, gBattleTypeFlags, BATTLE_TYPE_SAFARI, BattleScript_ShakeBallThrowEnd
@@ -110,11 +99,10 @@ BattleScript_ShakeBallThrow: @ 0x0828A38A
 	printstring STRINGID_OUTOFSAFARIBALLS
 	waitmessage B_WAIT_TIME_LONG
 	setbyte gBattleOutcome, B_OUTCOME_NO_SAFARI_BALLS
-BattleScript_ShakeBallThrowEnd:
+BattleScript_ShakeBallThrowEnd::
 	finishaction
 
-	.globl BattleScript_TrainerBallBlock
-BattleScript_TrainerBallBlock: @ 0x0828A39A
+BattleScript_TrainerBallBlock:: @ 0x0828A39A
 	waitmessage B_WAIT_TIME_LONG
 	printstring STRINGID_TRAINERBLOCKEDBALL
 	waitmessage B_WAIT_TIME_LONG
@@ -122,13 +110,11 @@ BattleScript_TrainerBallBlock: @ 0x0828A39A
 	waitmessage B_WAIT_TIME_LONG
 	finishaction
 
-	.globl BattleScript_PlayerUsesItem
-BattleScript_PlayerUsesItem: @ 0x0828A3A4
+BattleScript_PlayerUsesItem:: @ 0x0828A3A4
 	moveendcase MOVEEND_MIRROR_MOVE
 	end
 
-	.globl BattleScript_OpponentUsesHealItem
-BattleScript_OpponentUsesHealItem: @ 0x0828A3D3
+BattleScript_OpponentUsesHealItem:: @ 0x0828A3D3
 	printstring STRINGID_EMPTYSTRING3
 	pause B_WAIT_TIME_MED
 	playse SE_USE_ITEM
@@ -144,8 +130,7 @@ BattleScript_OpponentUsesHealItem: @ 0x0828A3D3
 	moveendcase MOVEEND_MIRROR_MOVE
 	finishaction
 
-	.globl BattleScript_OpponentUsesStatusCureItem
-BattleScript_OpponentUsesStatusCureItem: @ 0x0828A3F7
+BattleScript_OpponentUsesStatusCureItem:: @ 0x0828A3F7
 	printstring STRINGID_EMPTYSTRING3
 	pause B_WAIT_TIME_MED
 	playse SE_USE_ITEM
@@ -158,8 +143,7 @@ BattleScript_OpponentUsesStatusCureItem: @ 0x0828A3F7
 	moveendcase MOVEEND_MIRROR_MOVE
 	finishaction
 
-	.globl BattleScript_OpponentUsesXItem
-BattleScript_OpponentUsesXItem: @ 0x0828A419
+BattleScript_OpponentUsesXItem:: @ 0x0828A419
 	printstring STRINGID_EMPTYSTRING3
 	pause B_WAIT_TIME_MED
 	playse SE_USE_ITEM
@@ -171,8 +155,7 @@ BattleScript_OpponentUsesXItem: @ 0x0828A419
 	moveendcase MOVEEND_MIRROR_MOVE
 	finishaction
 
-	.globl BattleScript_OpponentUsesGuardSpec
-BattleScript_OpponentUsesGuardSpec: @ 0x0828A43B
+BattleScript_OpponentUsesGuardSpec:: @ 0x0828A43B
 	printstring STRINGID_EMPTYSTRING3
 	pause B_WAIT_TIME_MED
 	playse SE_USE_ITEM
@@ -184,23 +167,22 @@ BattleScript_OpponentUsesGuardSpec: @ 0x0828A43B
 	moveendcase MOVEEND_MIRROR_MOVE
 	finishaction
 
-	.globl BattleScript_RunByUsingItem
-BattleScript_RunByUsingItem: @ 0x0828A445
+BattleScript_RunByUsingItem:: @ 0x0828A445
 	playse SE_FLEE
 	setbyte gBattleOutcome, B_OUTCOME_RAN
 	finishturn
 
-BattleScript_ActionWatchesCarefully: @ 0x0828A44C
+BattleScript_ActionWatchesCarefully:: @ 0x0828A44C
 	printstring STRINGID_PKMNWATCHINGCAREFULLY
 	waitmessage B_WAIT_TIME_LONG
 	end2
 
-BattleScript_ActionGetNear: @ 0x0828A455
+BattleScript_ActionGetNear:: @ 0x0828A455
 	printfromtable gSafariGetNearStringIds
 	waitmessage B_WAIT_TIME_LONG
 	end2
 
-BattleScript_ActionThrowPokeblock: @ 0x0828A45E
+BattleScript_ActionThrowPokeblock:: @ 0x0828A45E
 	printstring STRINGID_THREWPOKEBLOCKATPKMN
 	waitmessage B_WAIT_TIME_LONG
 	playanimation BS_ATTACKER, B_ANIM_POKEBLOCK_THROW, NULL
@@ -208,7 +190,7 @@ BattleScript_ActionThrowPokeblock: @ 0x0828A45E
 	waitmessage B_WAIT_TIME_LONG
 	end2
 
-BattleScript_ActionWallyThrow: @ 0x0828A474
+BattleScript_ActionWallyThrow:: @ 0x0828A474
 	printstring STRINGID_RETURNMON
 	waitmessage B_WAIT_TIME_LONG
 	returnatktoball
