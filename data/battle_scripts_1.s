@@ -2552,7 +2552,18 @@ BattleScript_EffectKnockOff:: @ 0x08288918
 	goto BattleScript_EffectHit
 
 BattleScript_EffectEndeavor:: @ 0x08288923
-	.incbin "baserom_jp.gba", 0x288923, 0x3b
+	attackcanceler
+	attackstring
+	ppreduce
+	setdamagetohealthdifference BattleScript_ButItFailed
+	copyword gHpDealt, gBattleMoveDamage
+	accuracycheck BattleScript_MoveMissedPause, ACC_CURR_MOVE
+	typecalc
+	jumpifmovehadnoeffect BattleScript_HitFromAtkAnimation
+	bicbyte gMoveResultFlags, MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE
+	copyword gBattleMoveDamage, gHpDealt
+	adjustsetdamage
+	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectEruption:: @ 0x0828895E
 	.incbin "baserom_jp.gba", 0x28895e, 0x6
