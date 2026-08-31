@@ -890,7 +890,13 @@ BattleScript_EffectDragonRage:: @ 0x08287638
 	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectTrap:: @ 0x08287667
-	.incbin "baserom_jp.gba", 0x287667, 0x31
+	jumpifnotmove MOVE_WHIRLPOOL, BattleScript_DoWrapEffect
+	jumpifnostatus3 BS_TARGET, STATUS3_UNDERWATER, BattleScript_DoWrapEffect
+	orword gHitMarker, HITMARKER_IGNORE_UNDERWATER
+	setbyte sDMG_MULTIPLIER, 2
+BattleScript_DoWrapEffect:: @ 0x0828768D
+	setmoveeffect MOVE_EFFECT_WRAP
+	goto BattleScript_EffectHit
 
 BattleScript_EffectDoubleHit:: @ 0x08287698
 	.incbin "baserom_jp.gba", 0x287698, 0x18
