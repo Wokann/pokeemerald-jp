@@ -3854,10 +3854,16 @@ BattleScript_OneHitKOMsg:: @ 0x08289756
 
 @ Two-stage Special Attack reduction and its shared return target.
 BattleScript_SAtkDown2:: @ 0x0828975D
-	.incbin "baserom_jp.gba", 0x28975d, 0x29
+	setbyte sSTAT_ANIM_PLAYED, FALSE
+	playstatchangeanimation BS_ATTACKER, BIT_SPATK, STAT_CHANGE_CANT_PREVENT | STAT_CHANGE_NEGATIVE | STAT_CHANGE_BY_TWO
+	setstatchanger STAT_SPATK, 2, TRUE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_CERTAIN | STAT_CHANGE_ALLOW_PTR, BattleScript_SAtkDown2End
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_DECREASE, BattleScript_SAtkDown2End
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
 
 BattleScript_SAtkDown2End:: @ 0x08289786
-	.incbin "baserom_jp.gba", 0x289786, 0x1
+	return
 
 BattleScript_FocusPunchSetUp:: @ 0x08289787
 	.incbin "baserom_jp.gba", 0x289787, 0x14
