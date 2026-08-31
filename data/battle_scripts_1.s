@@ -1800,7 +1800,11 @@ BattleScript_EffectSonicboom:: @ 0x08288083
 BattleScript_EffectMorningSun:: @ 0x082880B2
 BattleScript_EffectSynthesis:: @ 0x082880B2
 BattleScript_EffectMoonlight:: @ 0x082880B2
-	.incbin "baserom_jp.gba", 0x2880b2, 0xd
+	attackcanceler
+	attackstring
+	ppreduce
+	recoverbasedonsunlight BattleScript_AlreadyAtFullHp
+	goto BattleScript_PresentHealTarget
 
 BattleScript_EffectHiddenPower:: @ 0x082880BF
 	.incbin "baserom_jp.gba", 0x2880bf, 0x6
