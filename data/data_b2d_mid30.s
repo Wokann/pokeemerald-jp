@@ -10,12 +10,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_830FC88
-gUnknown_830FC88: @ 0x830FC88
-	.incbin "baserom_jp.gba", 0x30fc88, 0x28
-	.globl sDummyWarpData
-	.set sDummyWarpData, gUnknown_830FC88
-
 	.globl gDirectionToVectors
 gDirectionToVectors: @ 0x830FCB0
 	.4byte 0 @ DIR_NONE.x

@@ -9468,6 +9468,7 @@ SECTIONS {
         src/data/text/region_texts26.o(.rodata);
         src/berry_blender.o(.rodata.berry_blender_record_window_data);
         src/new_game.o(.rodata.new_game_contest_winner_data);
+        src/overworld.o(.rodata.overworld_dummy_warp_data);
         data/data_b2d_mid30.o(.rodata);
         src/data/text/region_texts17.o(.rodata);
         data/data_b2d.o(.rodata.mid27);

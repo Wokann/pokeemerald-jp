@@ -10,6 +10,8 @@ extern u16 KeyInterCB_SelfIdle(u32 key);
 #include "constants/songs.h"
 #include "field_screen_effect.h"
 
+#define OVERWORLD_DUMMY_WARP_DATA __attribute__((section(".rodata.overworld_dummy_warp_data")))
+
 extern void *sUnusedOverworldCallback;
 
 #define linkDirection(obj) ((u8 *)obj)[offsetof(typeof(*obj), range)] // -> rangeX
@@ -18,9 +20,22 @@ extern struct InitialPlayerAvatarState sInitialPlayerAvatarState;
 extern struct WarpData sWarpDestination;
 extern struct WarpData sFixedDiveWarp;
 extern struct WarpData sFixedHoleWarp;
-extern const struct WarpData sDummyWarpData;
 extern struct MapHeader *const *const gMapGroups[];
 extern u8 sObjectEventLoadFlag;
+
+OVERWORLD_DUMMY_WARP_DATA static const struct WarpData sDummyWarpData =
+{
+    .mapGroup = MAP_GROUP(MAP_UNDEFINED),
+    .mapNum = MAP_NUM(MAP_UNDEFINED),
+    .warpId = WARP_ID_NONE,
+    .x = -1,
+    .y = -1,
+};
+
+OVERWORLD_DUMMY_WARP_DATA static const u32 sUnusedData[] =
+{
+    1200, 3600, 1200, 2400, 50, 80, -44, 44,
+};
 
 __attribute__((naked)) void DoWhiteOut(void)
 {
