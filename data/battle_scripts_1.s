@@ -4273,12 +4273,12 @@ BattleScript_IntimidatePrevented: @ 0x8289AA4
 
 	.globl BattleScript_DroughtActivates
 BattleScript_DroughtActivates: @ 0x8289AB2
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0x4B, 0x01 @ printstring STRINGID_PKMNSXINTENSIFIEDSUN
-	.byte 0x3A @ waitstate
-	.byte 0x45, 0x07, 0x0B, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_BATTLER_0, B_ANIM_SUN_CONTINUES
-	.byte 0x41, 0x15, 0x9A, 0x28, 0x08 @ call BattleScript_WeatherFormChanges
-	.byte 0x3F @ end3
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNSXINTENSIFIEDSUN
+	waitstate
+	playanimation BS_BATTLER_0, B_ANIM_SUN_CONTINUES
+	call BattleScript_WeatherFormChanges
+	end3
 
 	.globl BattleScript_TookAttack
 BattleScript_TookAttack: @ 0x8289AC6
