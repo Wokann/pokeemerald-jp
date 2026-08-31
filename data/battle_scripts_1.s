@@ -2392,7 +2392,15 @@ BattleScript_EffectTaunt:: @ 0x0828877C
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectHelpingHand:: @ 0x08288798
-	.incbin "baserom_jp.gba", 0x288798, 0x15
+	attackcanceler
+	attackstring
+	ppreduce
+	trysethelpinghand BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNREADYTOHELP
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectTrick:: @ 0x082887AD
 	.incbin "baserom_jp.gba", 0x2887ad, 0x2e
