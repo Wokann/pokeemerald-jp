@@ -3821,10 +3821,25 @@ BattleScript_GrudgeTakesPP:: @ 0x08289715
 
 @ Magic Coat and Snatch interception paths.
 BattleScript_MagicCoatBounce:: @ 0x0828971C
-	.incbin "baserom_jp.gba", 0x28971c, 0x18
+	attackstring
+	ppreduce
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNMOVEBOUNCED
+	waitmessage B_WAIT_TIME_LONG
+	orword gHitMarker, HITMARKER_ATTACKSTRING_PRINTED | HITMARKER_NO_PPDEDUCT | HITMARKER_ALLOW_NO_PP
+	setmagiccoattarget BS_ATTACKER
+	return
 
 BattleScript_SnatchedMove:: @ 0x08289734
-	.incbin "baserom_jp.gba", 0x289734, 0x1b
+	attackstring
+	ppreduce
+	snatchsetbattlers
+	playanimation BS_TARGET, B_ANIM_SNATCH_MOVE
+	printstring STRINGID_PKMNSNATCHEDMOVE
+	waitmessage B_WAIT_TIME_LONG
+	orword gHitMarker, HITMARKER_ATTACKSTRING_PRINTED | HITMARKER_NO_PPDEDUCT | HITMARKER_ALLOW_NO_PP
+	swapattackerwithtarget
+	return
 
 @ Battle result messages for Endure and a one-hit KO.
 BattleScript_EnduredMsg:: @ 0x0828974F
