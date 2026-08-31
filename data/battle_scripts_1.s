@@ -3774,13 +3774,25 @@ BattleScript_PrintMonIsRooted:: @ 0x08289691
 
 @ Shared Attack-and-Defense stat reduction script and its two branch targets.
 BattleScript_AtkDefDown:: @ 0x0828969F
-	.incbin "baserom_jp.gba", 0x28969f, 0x2d
+	setbyte sSTAT_ANIM_PLAYED, FALSE
+	playstatchangeanimation BS_ATTACKER, BIT_DEF | BIT_ATK, STAT_CHANGE_CANT_PREVENT | STAT_CHANGE_NEGATIVE | STAT_CHANGE_MULTIPLE_STATS
+	playstatchangeanimation BS_ATTACKER, BIT_ATK, STAT_CHANGE_CANT_PREVENT | STAT_CHANGE_NEGATIVE
+	setstatchanger STAT_ATK, 1, TRUE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_CERTAIN | STAT_CHANGE_ALLOW_PTR, BattleScript_AtkDefDown_TryDef
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_DECREASE, BattleScript_AtkDefDown_TryDef
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
 
 BattleScript_AtkDefDown_TryDef:: @ 0x082896CC
-	.incbin "baserom_jp.gba", 0x2896cc, 0x23
+	playstatchangeanimation BS_ATTACKER, BIT_DEF, STAT_CHANGE_CANT_PREVENT | STAT_CHANGE_NEGATIVE
+	setstatchanger STAT_DEF, 1, TRUE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_CERTAIN | STAT_CHANGE_ALLOW_PTR, BattleScript_AtkDefDown_End
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_DECREASE, BattleScript_AtkDefDown_End
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
 
 BattleScript_AtkDefDown_End:: @ 0x082896EF
-	.incbin "baserom_jp.gba", 0x2896ef, 0x1
+	return
 
 BattleScript_KnockedOff:: @ 0x082896F0
 	.byte 0x45, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_TARGET, B_ANIM_ITEM_KNOCKOFF
