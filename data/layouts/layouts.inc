@@ -4460,7 +4460,21 @@ gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_BATTLE_ROOM: @ 0x0843F9E0
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_BATTLE_ROOM_Blockdata  @ map
 	.4byte gTileset_Building  @ primaryTileset
 	.4byte gTileset_BattleArena  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x43F9F8, 0x1C40
+SootopolisCity_LegendsBattle_Layout_Border::
+	.incbin "data/layouts/SootopolisCity_LegendsBattle/border.bin"
+
+@ JP blockdata differs from the US asset at byte offset 0x509.
+SootopolisCity_LegendsBattle_Layout_Blockdata::
+	.incbin "data/layouts/SootopolisCity_LegendsBattle/map.bin"
+
+	.align 2
+SootopolisCity_LegendsBattle_Layout:: @ 0x08441620
+	.4byte 60
+	.4byte 60
+	.4byte SootopolisCity_LegendsBattle_Layout_Border
+	.4byte SootopolisCity_LegendsBattle_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Sootopolis
 
 BattleFrontier_BattlePikeRoomWildMons_Layout_Border::
 	.incbin "data/layouts/BattleFrontier_BattlePikeRoomWildMons/border.bin"

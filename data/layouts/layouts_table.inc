@@ -362,8 +362,7 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_LOBBY
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_CORRIDOR
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_BATTLE_ROOM
-	@ LAYOUT_SOOTOPOLIS_CITY_LEGENDS_BATTLE remains in its raw physical layout owner.
-	.incbin "baserom_jp.gba", 0x45A784, 0x4
+	.4byte SootopolisCity_LegendsBattle_Layout
 	.4byte BattleFrontier_BattlePikeRoomWildMons_Layout
 	.4byte BattleFrontier_BattlePikeRoomUnused_Layout
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY
