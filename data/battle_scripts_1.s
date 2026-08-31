@@ -1894,7 +1894,12 @@ BattleScript_SkullBashEnd:
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectTwister:: @ 0x082881A3
-	.incbin "baserom_jp.gba", 0x2881a3, 0x25
+	jumpifnostatus3 BS_TARGET, STATUS3_ON_AIR, BattleScript_FlinchEffect
+	orword gHitMarker, HITMARKER_IGNORE_ON_AIR
+	setbyte sDMG_MULTIPLIER, 2
+BattleScript_FlinchEffect:: @ 0x082881BD
+	setmoveeffect MOVE_EFFECT_FLINCH
+	goto BattleScript_EffectHit
 
 BattleScript_EffectEarthquake:: @ 0x082881C8
 	.incbin "baserom_jp.gba", 0x2881c8, 0x4
