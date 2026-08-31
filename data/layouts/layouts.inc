@@ -5270,7 +5270,127 @@ gMapLayout_ALTERING_CAVE: @ 0x08455EB4
 	.4byte gMapLayout_ALTERING_CAVE_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Cave  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x455ECC, 0x2A04
+NavelRock_Exterior_Layout_Border::
+	.incbin "data/layouts/NavelRock_Exterior/border.bin"
+
+NavelRock_Exterior_Layout_Blockdata::
+	.incbin "data/layouts/NavelRock_Exterior/map.bin"
+
+	.align 2
+NavelRock_Exterior_Layout:: @ 0x084562C4
+	.4byte 21
+	.4byte 24
+	.4byte NavelRock_Exterior_Layout_Border
+	.4byte NavelRock_Exterior_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Dewford
+
+NavelRock_Entrance_Layout_Border::
+	.incbin "data/layouts/NavelRock_Entrance/border.bin"
+
+NavelRock_Entrance_Layout_Blockdata::
+	.incbin "data/layouts/NavelRock_Entrance/map.bin"
+
+	.align 2
+NavelRock_Entrance_Layout:: @ 0x08456824
+	.4byte 21
+	.4byte 32
+	.4byte NavelRock_Entrance_Layout_Border
+	.4byte NavelRock_Entrance_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_NavelRock
+
+NavelRock_Top_Layout_Border::
+	.incbin "data/layouts/NavelRock_Top/border.bin"
+
+NavelRock_Top_Layout_Blockdata::
+	.incbin "data/layouts/NavelRock_Top/map.bin"
+
+	.align 2
+NavelRock_Top_Layout:: @ 0x08456DBC
+	.4byte 25
+	.4byte 28
+	.4byte NavelRock_Top_Layout_Border
+	.4byte NavelRock_Top_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_NavelRock
+
+NavelRock_Bottom_Layout_Border::
+	.incbin "data/layouts/NavelRock_Bottom/border.bin"
+
+NavelRock_Bottom_Layout_Blockdata::
+	.incbin "data/layouts/NavelRock_Bottom/map.bin"
+
+	.align 2
+NavelRock_Bottom_Layout:: @ 0x084571A4
+	.4byte 22
+	.4byte 22
+	.4byte NavelRock_Bottom_Layout_Border
+	.4byte NavelRock_Bottom_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_NavelRock
+
+NavelRock_LadderRoom1_Layout_Border::
+	.incbin "data/layouts/NavelRock_LadderRoom1/border.bin"
+
+NavelRock_LadderRoom1_Layout_Blockdata::
+	.incbin "data/layouts/NavelRock_LadderRoom1/map.bin"
+
+	.align 2
+NavelRock_LadderRoom1_Layout:: @ 0x08457254
+	.4byte 9
+	.4byte 8
+	.4byte NavelRock_LadderRoom1_Layout_Border
+	.4byte NavelRock_LadderRoom1_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_NavelRock
+
+NavelRock_LadderRoom2_Layout_Border::
+	.incbin "data/layouts/NavelRock_LadderRoom2/border.bin"
+
+NavelRock_LadderRoom2_Layout_Blockdata::
+	.incbin "data/layouts/NavelRock_LadderRoom2/map.bin"
+
+	.align 2
+NavelRock_LadderRoom2_Layout:: @ 0x08457304
+	.4byte 9
+	.4byte 8
+	.4byte NavelRock_LadderRoom2_Layout_Border
+	.4byte NavelRock_LadderRoom2_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_NavelRock
+
+NavelRock_B1F_Layout_Border::
+	.incbin "data/layouts/NavelRock_B1F/border.bin"
+
+NavelRock_B1F_Layout_Blockdata::
+	.incbin "data/layouts/NavelRock_B1F/map.bin"
+
+	.align 2
+NavelRock_B1F_Layout:: @ 0x08457520
+	.4byte 23
+	.4byte 11
+	.4byte NavelRock_B1F_Layout_Border
+	.4byte NavelRock_B1F_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_NavelRock
+
+NavelRock_Fork_Layout_Border::
+	.incbin "data/layouts/NavelRock_Fork/border.bin"
+
+NavelRock_Fork_Layout_Blockdata::
+	.incbin "data/layouts/NavelRock_Fork/map.bin"
+
+	.align 2
+NavelRock_Fork_Layout:: @ 0x08458764
+	.4byte 27
+	.4byte 86
+	.4byte NavelRock_Fork_Layout_Border
+	.4byte NavelRock_Fork_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_NavelRock
+
+	.incbin "baserom_jp.gba", 0x45877C, 0x154
 gMapLayout_METEOR_FALLS_STEVENS_CAVE_Border:
 	.incbin "data/layouts/MeteorFalls_StevensCave/border.bin"
 gMapLayout_METEOR_FALLS_STEVENS_CAVE_Blockdata:

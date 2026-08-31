@@ -426,8 +426,16 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte TrainerHill_4F_Layout
 	.4byte TrainerHill_Roof_Layout
 	.4byte gMapLayout_ALTERING_CAVE
-	@ LAYOUT_NAVEL_ROCK_EXTERIOR through LAYOUT_BATTLE_FRONTIER_SCOTTS_HOUSE remain in raw physical layout owners.
-	.incbin "baserom_jp.gba", 0x45A884, 0x28
+	.4byte NavelRock_Exterior_Layout
+	.4byte NavelRock_Entrance_Layout
+	.4byte NavelRock_Top_Layout
+	.4byte NavelRock_Bottom_Layout
+	.4byte NavelRock_LadderRoom1_Layout
+	.4byte NavelRock_LadderRoom2_Layout
+	.4byte NavelRock_B1F_Layout
+	.4byte NavelRock_Fork_Layout
+	@ LAYOUT_BATTLE_FRONTIER_LOUNGE2 through LAYOUT_BATTLE_FRONTIER_SCOTTS_HOUSE remain in raw physical layout owners.
+	.incbin "baserom_jp.gba", 0x45A8A4, 0x8
 	.4byte gMapLayout_METEOR_FALLS_STEVENS_CAVE
 	@ LAYOUT_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_WITH_TABLE through LAYOUT_SKY_PILLAR_TOP_CLEAN remain in raw physical layout owners.
 	.incbin "baserom_jp.gba", 0x45A8B0, 0x1C

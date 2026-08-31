@@ -627,6 +627,22 @@ $(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_
 	data/layouts/TrainerHill_4F/map.bin \
 	data/layouts/TrainerHill_Roof/border.bin \
 	data/layouts/TrainerHill_Roof/map.bin \
+	data/layouts/NavelRock_Exterior/border.bin \
+	data/layouts/NavelRock_Exterior/map.bin \
+	data/layouts/NavelRock_Entrance/border.bin \
+	data/layouts/NavelRock_Entrance/map.bin \
+	data/layouts/NavelRock_Top/border.bin \
+	data/layouts/NavelRock_Top/map.bin \
+	data/layouts/NavelRock_Bottom/border.bin \
+	data/layouts/NavelRock_Bottom/map.bin \
+	data/layouts/NavelRock_LadderRoom1/border.bin \
+	data/layouts/NavelRock_LadderRoom1/map.bin \
+	data/layouts/NavelRock_LadderRoom2/border.bin \
+	data/layouts/NavelRock_LadderRoom2/map.bin \
+	data/layouts/NavelRock_B1F/border.bin \
+	data/layouts/NavelRock_B1F/map.bin \
+	data/layouts/NavelRock_Fork/border.bin \
+	data/layouts/NavelRock_Fork/map.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 
