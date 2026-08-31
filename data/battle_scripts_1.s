@@ -2713,7 +2713,8 @@ BattleScript_EffectWaterSport:: @ 0x08288AB1
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectPoisonFang:: @ 0x08288AC8
-	.incbin "baserom_jp.gba", 0x288ac8, 0xb
+	setmoveeffect MOVE_EFFECT_TOXIC
+	goto BattleScript_EffectHit
 
 BattleScript_EffectWeatherBall:: @ 0x08288AD3
 	.incbin "baserom_jp.gba", 0x288ad3, 0x6
