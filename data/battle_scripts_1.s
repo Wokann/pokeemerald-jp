@@ -3001,21 +3001,33 @@ BattleScript_LinkHandleFaintedMonMultipleEnd:: @ 0x08288EB4
 	end2
 
 BattleScript_LocalTrainerBattleWon:: @ 0x08288EB5
-	.incbin "baserom_jp.gba", 0x288eb5, 0x16
+	jumpifbattletype BATTLE_TYPE_TWO_OPPONENTS, BattleScript_LocalTwoTrainersDefeated
+	printstring STRINGID_PLAYERDEFEATEDTRAINER1
+	goto BattleScript_LocalBattleWonLoseTexts
 
 BattleScript_LocalTwoTrainersDefeated:: @ 0x08288ECB
-	.incbin "baserom_jp.gba", 0x288ecb, 0x3
+	printstring STRINGID_TWOENEMIESDEFEATED
 
 BattleScript_LocalBattleWonLoseTexts:: @ 0x08288ECE
-	.incbin "baserom_jp.gba", 0x288ece, 0x1d
+	trainerslidein BS_ATTACKER
+	waitstate
+	printstring STRINGID_TRAINER1LOSETEXT
+	jumpifnotbattletype BATTLE_TYPE_TWO_OPPONENTS, BattleScript_LocalBattleWonReward
+	trainerslideout B_POSITION_OPPONENT_LEFT
+	waitstate
+	trainerslidein BS_FAINTED
+	waitstate
+	printstring STRINGID_TRAINER2LOSETEXT
 
 BattleScript_LocalBattleWonReward:: @ 0x08288EEB
-	.incbin "baserom_jp.gba", 0x288eeb, 0x7
+	getmoneyreward
+	printstring STRINGID_PLAYERGOTMONEY
+	waitmessage B_WAIT_TIME_LONG
 
 BattleScript_PayDayMoneyAndPickUpItems:: @ 0x08288EF2
-	.byte 0x91 @ givepaydaymoney
-	.byte 0xE5 @ pickup
-	.byte 0x3E @ end2
+	givepaydaymoney
+	pickup
+	end2
 
 BattleScript_LocalBattleLost:: @ 0x08288EF5
 	.incbin "baserom_jp.gba", 0x288ef5, 0x44
