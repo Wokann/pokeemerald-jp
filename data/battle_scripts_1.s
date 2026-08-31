@@ -2960,7 +2960,18 @@ BattleScript_FaintedMonTryChoose:: @ 0x08288D9E
 	resetsentmonsvalue
 
 BattleScript_FaintedMonSendOutNew:: @ 0x08288E58
-	.incbin "baserom_jp.gba", 0x288e58, 0x25
+	drawpartystatussummary BS_FAINTED
+	getswitchedmondata BS_FAINTED
+	switchindataupdate BS_FAINTED
+	hpthresholds BS_FAINTED
+	printstring STRINGID_SWITCHINMON
+	hidepartystatussummary BS_FAINTED
+	switchinanim BS_FAINTED, FALSE
+	waitstate
+	resetplayerfainted
+	switchineffects BS_FAINTED
+	jumpifbattletype BATTLE_TYPE_DOUBLE, BattleScript_FaintedMonEnd
+	cancelallactions
 
 BattleScript_FaintedMonEnd:: @ 0x08288E7D
 	.incbin "baserom_jp.gba", 0x288e7d, 0x1
