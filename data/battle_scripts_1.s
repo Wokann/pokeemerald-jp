@@ -3626,21 +3626,24 @@ BattleScript_AllStatsUpRet:: @ 0x0828954A
 @ Residual-effect cleanup scripts used by Rapid Spin: free wrapping,
 @ Leech Seed, and Spikes in physical JP order.
 BattleScript_RapidSpinAway:: @ 0x0828954B
-	.byte 0xBE @ rapidspinfree
-	.byte 0x3C @ return
+	rapidspinfree
+	return
 
 BattleScript_WrapFree:: @ 0x0828954D
-	.incbin "baserom_jp.gba", 0x28954d, 0x11
+	printstring STRINGID_PKMNGOTFREE
+	waitmessage B_WAIT_TIME_LONG
+	copybyte gBattlerTarget, sBATTLER
+	return
 
 BattleScript_LeechSeedFree:: @ 0x0828955E
-	.byte 0x10, 0x9E, 0x00 @ printstring STRINGID_PKMNSHEDLEECHSEED
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3C @ return
+	printstring STRINGID_PKMNSHEDLEECHSEED
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 BattleScript_SpikesFree:: @ 0x08289565
-	.byte 0x10, 0x9F, 0x00 @ printstring STRINGID_PKMNBLEWAWAYSPIKES
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3C @ return
+	printstring STRINGID_PKMNBLEWAWAYSPIKES
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 @ Future Sight / Doom Desire resolution. All hit, miss, animation, and
 @ return paths remain explicit at their physical JP entry points.
