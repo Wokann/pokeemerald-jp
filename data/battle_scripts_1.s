@@ -1401,7 +1401,15 @@ BattleScript_SleepTalkUsingMove:: @ 0x08287C06
 	jumptocalledmove TRUE
 
 BattleScript_EffectDestinyBond:: @ 0x08287C16
-	.incbin "baserom_jp.gba", 0x287c16, 0x11
+	attackcanceler
+	attackstring
+	ppreduce
+	setdestinybond
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNTRYINGTOTAKEFOE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectFlail:: @ 0x08287C27
 	.incbin "baserom_jp.gba", 0x287c27, 0x6
