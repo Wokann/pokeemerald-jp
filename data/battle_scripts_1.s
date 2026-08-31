@@ -3121,7 +3121,31 @@ BattleScript_TowerLinkBattleWonEnd:: @ 0x0828900B
 	end2
 
 BattleScript_FrontierTrainerBattleWon:: @ 0x0828900F
-	.incbin "baserom_jp.gba", 0x28900f, 0x54
+	jumpifnotbattletype BATTLE_TYPE_TRAINER, BattleScript_PayDayMoneyAndPickUpItems
+	jumpifbattletype BATTLE_TYPE_TWO_OPPONENTS, BattleScript_FrontierTrainerBattleWon_TwoDefeated
+	printstring STRINGID_PLAYERDEFEATEDTRAINER1
+	goto BattleScript_FrontierTrainerBattleWon_LoseTexts
+
+BattleScript_FrontierTrainerBattleWon_TwoDefeated:: @ 0x08289033
+	printstring STRINGID_TWOENEMIESDEFEATED
+
+BattleScript_FrontierTrainerBattleWon_LoseTexts:: @ 0x08289036
+	trainerslidein BS_ATTACKER
+	waitstate
+	printstring STRINGID_TRAINER1LOSETEXT
+	jumpifnotbattletype BATTLE_TYPE_TWO_OPPONENTS, BattleScript_TryPickUpItems
+	trainerslideout B_POSITION_OPPONENT_LEFT
+	waitstate
+	trainerslidein BS_FAINTED
+	waitstate
+	printstring STRINGID_TRAINER2LOSETEXT
+
+BattleScript_TryPickUpItems:: @ 0x08289053
+	jumpifnotbattletype BATTLE_TYPE_PYRAMID, BattleScript_FrontierTrainerBattleWon_End
+	pickup
+
+BattleScript_FrontierTrainerBattleWon_End:: @ 0x08289062
+	end2
 
 @ Escape, switch, and level-up scripts. All visible JP entry points are
 @ named in physical order; opaque byte spans await macro conversion.
