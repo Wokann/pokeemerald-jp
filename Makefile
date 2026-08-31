@@ -506,6 +506,8 @@ $(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_
 	data/layouts/FallarborTown_LeftoverRSContestHall/map.bin \
 	data/layouts/Route130_MirageIsland/border.bin \
 	data/layouts/Route130_MirageIsland/map.bin \
+	data/layouts/UnusedContestRoom1/border.bin \
+	data/layouts/UnusedContestRoom1/map.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 

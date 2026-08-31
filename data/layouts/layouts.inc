@@ -896,7 +896,20 @@ gMapLayout_LILYCOVE_CITY_HOUSE2: @ 0x0840084C
 	.4byte gMapLayout_LILYCOVE_CITY_HOUSE2_Blockdata  @ map
 	.4byte gTileset_Building  @ primaryTileset
 	.4byte gTileset_GenericBuilding  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x400864, 0x24
+UnusedContestRoom1_Layout_Border::
+	.incbin "data/layouts/UnusedContestRoom1/border.bin"
+
+UnusedContestRoom1_Layout_Blockdata::
+	.incbin "data/layouts/UnusedContestRoom1/map.bin"
+
+	.align 2
+UnusedContestRoom1_Layout:: @ 0x08400870
+	.4byte 1
+	.4byte 1
+	.4byte UnusedContestRoom1_Layout_Border
+	.4byte UnusedContestRoom1_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_Contest
 gMapLayout_VERDANTURF_TOWN_WANDAS_HOUSE_Border:
 	.incbin "data/layouts/VerdanturfTown_WandasHouse/border.bin"
 gMapLayout_VERDANTURF_TOWN_WANDAS_HOUSE_Blockdata:

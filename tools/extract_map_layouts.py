@@ -502,15 +502,23 @@ def main():
                     )
                     continue
                 path = ROOT / actual_path
-                expected_data = (
-                    rom[e["border_off"] : e["border_off"] + 8]
-                    if label == e["expected_border"]
-                    else rom[e["map_off"] : e["map_off"] + e["w"] * e["h"] * 2]
-                )
+                if label == e["expected_border"]:
+                    expected_options = (rom[e["border_off"] : e["border_off"] + 8],)
+                else:
+                    map_size = e["w"] * e["h"] * 2
+                    expected_options = (rom[e["map_off"] : e["map_off"] + map_size],)
+                    if e["gap"]:
+                        expected_options += (
+                            rom[
+                                e["map_off"] : e["map_off"] + map_size + e["gap"]
+                            ],
+                        )
                 if not path.is_file():
                     problems.append(f"{e['name']}: missing {actual_path}")
-                elif path.read_bytes() != expected_data:
-                    problems.append(f"{e['name']}: {actual_path} differs from baserom")
+                elif path.read_bytes() not in expected_options:
+                    problems.append(
+                        f"{e['name']}: {actual_path} differs from its baserom span"
+                    )
     raw_replacements, raw_replacement_problems = raw_layout_replacements(lines, raw_structs)
     problems.extend(raw_replacement_problems)
     if problems:

@@ -80,8 +80,7 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte FallarborTown_LeftoverRSContestLobby_Layout
 	.4byte FallarborTown_LeftoverRSContestHall_Layout
 	.4byte gMapLayout_LILYCOVE_CITY_HOUSE2
-	@ LAYOUT_UNUSED_CONTEST_ROOM1 remains in its raw physical layout owner.
-	.incbin "baserom_jp.gba", 0x45A31C, 0x4
+	.4byte UnusedContestRoom1_Layout
 	.4byte gMapLayout_VERDANTURF_TOWN_WANDAS_HOUSE
 	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE1
 	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE2
