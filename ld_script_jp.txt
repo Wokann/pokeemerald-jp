@@ -10120,6 +10120,7 @@ SECTIONS {
         src/pokeblock_feed.o(.rodata.pokeblock_feed_data);
         src/strings.o(.rodata.strings_clear_save);
         src/clear_save_data_screen.o(.rodata.clear_save_data_screen_data);
+        data/intro_credits_graphics.o(.rodata);
         data/data_b2d_mid98.o(.rodata.mid98_suffix);
         src/data/text/region_texts113.o(.rodata);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_data);
