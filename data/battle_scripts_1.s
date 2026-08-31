@@ -1412,7 +1412,8 @@ BattleScript_EffectDestinyBond:: @ 0x08287C16
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectFlail:: @ 0x08287C27
-	.incbin "baserom_jp.gba", 0x287c27, 0x6
+	remaininghptopower
+	goto BattleScript_EffectHit
 
 BattleScript_EffectSpite:: @ 0x08287C2D
 	.incbin "baserom_jp.gba", 0x287c2d, 0x1c
