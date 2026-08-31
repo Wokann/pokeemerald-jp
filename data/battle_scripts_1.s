@@ -3071,16 +3071,35 @@ BattleScript_LocalBattleLostEnd_:: @ 0x08288F92
 	end2
 
 BattleScript_FrontierLinkBattleLost:: @ 0x08288F93
-	.incbin "baserom_jp.gba", 0x288f93, 0x26
+	returnopponentmon1toball BS_ATTACKER
+	waitstate
+	returnopponentmon2toball BS_ATTACKER
+	waitstate
+	trainerslidein BS_ATTACKER
+	waitstate
+	printstring STRINGID_TRAINER1WINTEXT
+	trainerslideout B_POSITION_OPPONENT_LEFT
+	waitstate
+	trainerslidein BS_FAINTED
+	waitstate
+	printstring STRINGID_TRAINER2WINTEXT
+	jumpifbattletype BATTLE_TYPE_RECORDED, BattleScript_FrontierLinkBattleLostEnd
+	endlinkbattle
 
 BattleScript_FrontierLinkBattleLostEnd:: @ 0x08288FB9
-	.incbin "baserom_jp.gba", 0x288fb9, 0x4
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_LinkBattleWonOrLost:: @ 0x08288FBD
-	.incbin "baserom_jp.gba", 0x288fbd, 0x23
+	jumpifbattletype BATTLE_TYPE_BATTLE_TOWER, BattleScript_TowerLinkBattleWon
+	printstring STRINGID_BATTLEEND
+	waitmessage B_WAIT_TIME_LONG
+	jumpifbattletype BATTLE_TYPE_RECORDED, BattleScript_LinkBattleWonOrLostWaitEnd
+	endlinkbattle
 
 BattleScript_LinkBattleWonOrLostWaitEnd:: @ 0x08288FE0
-	.incbin "baserom_jp.gba", 0x288fe0, 0x4
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_TowerLinkBattleWon:: @ 0x08288FE4
 	.incbin "baserom_jp.gba", 0x288fe4, 0x27
