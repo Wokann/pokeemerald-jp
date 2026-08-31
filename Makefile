@@ -579,6 +579,8 @@ $(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_
 	data/layouts/CaveOfOrigin_Unused_B4F_Lava/map.bin \
 	data/layouts/Route131_SkyPillar/border.bin \
 	data/layouts/Route131_SkyPillar/map.bin \
+	data/layouts/SeafloorCavern_Room9_Lava/border.bin \
+	data/layouts/SeafloorCavern_Room9_Lava/map.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 

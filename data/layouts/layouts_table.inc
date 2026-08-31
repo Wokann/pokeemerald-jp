@@ -331,8 +331,7 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_SKY_PILLAR_2F
 	.4byte gMapLayout_SKY_PILLAR_3F
 	.4byte gMapLayout_SKY_PILLAR_4F
-	@ LAYOUT_SEAFLOOR_CAVERN_ROOM9_LAVA remains in its raw physical layout owner.
-	.incbin "baserom_jp.gba", 0x45A708, 0x4
+	.4byte SeafloorCavern_Room9_Lava_Layout
 	.4byte gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE
 	.4byte gMapLayout_SHOAL_CAVE_LOW_TIDE_ICE_ROOM
 	.4byte gMapLayout_SAFARI_ZONE_REST_HOUSE

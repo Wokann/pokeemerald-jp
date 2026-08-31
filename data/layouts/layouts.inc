@@ -4077,7 +4077,21 @@ gMapLayout_SKY_PILLAR_4F: @ 0x08436700
 	.4byte gMapLayout_SKY_PILLAR_4F_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Pacifidlog  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x436718, 0x9D4
+SeafloorCavern_Room9_Lava_Layout_Border::
+	.incbin "data/layouts/SeafloorCavern_Room9_Lava/border.bin"
+
+SeafloorCavern_Room9_Lava_Layout_Blockdata::
+	.incbin "data/layouts/SeafloorCavern_Room9_Lava/map.bin"
+
+	.align 2
+SeafloorCavern_Room9_Lava_Layout:: @ 0x084370D4
+	.4byte 27
+	.4byte 46
+	.4byte SeafloorCavern_Room9_Lava_Layout_Border
+	.4byte SeafloorCavern_Room9_Lava_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
 gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE_Border:
 	.incbin "data/layouts/MossdeepCity_StevensHouse/border.bin"
 gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE_Blockdata:
