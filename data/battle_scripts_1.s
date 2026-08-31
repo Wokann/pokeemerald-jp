@@ -2211,7 +2211,16 @@ BattleScript_EffectHail:: @ 0x0828855A
 	goto BattleScript_MoveWeatherChange
 
 BattleScript_EffectTorment:: @ 0x08288563
-	.incbin "baserom_jp.gba", 0x288563, 0x1c
+	attackcanceler
+	attackstring
+	ppreduce
+	accuracycheck BattleScript_ButItFailed, ACC_CURR_MOVE
+	settorment BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNSUBJECTEDTOTORMENT
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectFlatter:: @ 0x0828857F
 	.incbin "baserom_jp.gba", 0x28857f, 0x5e
