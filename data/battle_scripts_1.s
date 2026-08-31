@@ -3030,25 +3030,45 @@ BattleScript_PayDayMoneyAndPickUpItems:: @ 0x08288EF2
 	end2
 
 BattleScript_LocalBattleLost:: @ 0x08288EF5
-	.incbin "baserom_jp.gba", 0x288ef5, 0x44
+	jumpifbattletype BATTLE_TYPE_DOME, BattleScript_CheckDomeDrew
+	jumpifbattletype BATTLE_TYPE_FRONTIER, BattleScript_LocalBattleLostPrintTrainersWinText
+	jumpifbattletype BATTLE_TYPE_TRAINER_HILL, BattleScript_LocalBattleLostPrintTrainersWinText
+	jumpifbattletype BATTLE_TYPE_EREADER_TRAINER, BattleScript_LocalBattleLostEnd
+	jumpifhalfword CMP_EQUAL, gTrainerBattleOpponent_A, TRAINER_SECRET_BASE, BattleScript_LocalBattleLostEnd
 
 BattleScript_LocalBattleLostPrintWhiteOut:: @ 0x08288F39
-	.incbin "baserom_jp.gba", 0x288f39, 0xc
+	printstring STRINGID_PLAYERWHITEOUT
+	waitmessage B_WAIT_TIME_LONG
+	printstring STRINGID_PLAYERWHITEOUT2
+	waitmessage B_WAIT_TIME_LONG
 
 BattleScript_LocalBattleLostEnd:: @ 0x08288F45
-	.incbin "baserom_jp.gba", 0x288f45, 0x1
+	end2
 
 BattleScript_CheckDomeDrew:: @ 0x08288F46
-	.incbin "baserom_jp.gba", 0x288f46, 0xb
+	jumpifbyte CMP_EQUAL, gBattleOutcome, B_OUTCOME_DREW, BattleScript_LocalBattleLostEnd_
 
 BattleScript_LocalBattleLostPrintTrainersWinText:: @ 0x08288F51
-	.incbin "baserom_jp.gba", 0x288f51, 0x38
+	jumpifnotbattletype BATTLE_TYPE_TRAINER, BattleScript_LocalBattleLostPrintWhiteOut
+	returnopponentmon1toball BS_ATTACKER
+	waitstate
+	returnopponentmon2toball BS_ATTACKER
+	waitstate
+	trainerslidein BS_ATTACKER
+	waitstate
+	printstring STRINGID_TRAINER1WINTEXT
+	jumpifbattletype BATTLE_TYPE_TOWER_LINK_MULTI, BattleScript_LocalBattleLostDoTrainer2WinText
+	jumpifnotbattletype BATTLE_TYPE_TWO_OPPONENTS, BattleScript_LocalBattleLostEnd_
 
 BattleScript_LocalBattleLostDoTrainer2WinText:: @ 0x08288F89
-	.incbin "baserom_jp.gba", 0x288f89, 0x9
+	trainerslideout B_POSITION_OPPONENT_LEFT
+	waitstate
+	trainerslidein BS_FAINTED
+	waitstate
+	printstring STRINGID_TRAINER2WINTEXT
 
 BattleScript_LocalBattleLostEnd_:: @ 0x08288F92
-	.incbin "baserom_jp.gba", 0x288f92, 0x1
+	end2
 
 BattleScript_FrontierLinkBattleLost:: @ 0x08288F93
 	.incbin "baserom_jp.gba", 0x288f93, 0x26
