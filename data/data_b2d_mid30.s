@@ -10,30 +10,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_830FC29
-gUnknown_830FC29: @ 0x830FC29
-	.incbin "baserom_jp.gba", 0x30fc29, 0x5
-
-	.globl gUnknown_830FC2E
-gUnknown_830FC2E: @ 0x830FC2E
-	.incbin "baserom_jp.gba", 0x30fc2e, 0x5
-
-	.globl gUnknown_830FC33
-gUnknown_830FC33: @ 0x830FC33
-	.incbin "baserom_jp.gba", 0x30fc33, 0x5
-
-	.globl gUnknown_830FC38
-gUnknown_830FC38: @ 0x830FC38
-	.string "きのみブレンダー\n"
-	.string "さいこうそくど　ランキング！$"
-	.globl gUnknown_830FC50
-gUnknown_830FC50: @ 0x830FC50
-	.incbin "baserom_jp.gba", 0x30fc50, 0x10
-
-	.globl gUnknown_830FC60
-gUnknown_830FC60: @ 0x830FC60
-	.incbin "baserom_jp.gba", 0x30fc60, 0x8
-
 	.globl sContestWinnerPicDummy
 sContestWinnerPicDummy: @ 0x830FC68
 	.incbin "graphics/misc/sContestWinnerPicDummy.bin"

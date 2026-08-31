@@ -1,7 +1,9 @@
 #include "global.h"
 #include "berry_blender.h"
+#include "window.h"
 
 #define BERRY_BLENDER_DATA __attribute__((section(".rodata.berry_blender_data")))
+#define BERRY_BLENDER_RECORD_WINDOW_DATA __attribute__((section(".rodata.berry_blender_record_window_data"), aligned(1)))
 
 __attribute__((naked)) void Blender_ControlHitPitch(void)
 {
@@ -8292,10 +8294,10 @@ __attribute__((naked)) void Blender_PrintBlendingResults(void)
         "	.align 2, 0\n\t"
         "_08083154: .4byte gUnknown_830F81F\n\t"
         "_08083158: .4byte gUnknown_2031F44\n\t"
-        "_0808315C: .4byte gUnknown_830FC2E\n\t"
+        "_0808315C: .4byte sBerryBlenderRecordWindowUnused + 5\n\t"
         "_08083160: .4byte gUnknown_830F847\n\t"
         "_08083164: .4byte gUnknown_20226A8\n\t"
-        "_08083168: .4byte gUnknown_830FC29\n\t"
+        "_08083168: .4byte sBerryBlenderRecordWindowUnused\n\t"
         "_0808316C: .4byte gUnknown_830F82D\n\t"
         "_08083170: .4byte gUnknown_830F83B\n\t"
         "_08083174: .4byte gUnknown_830F843\n\t"
@@ -9048,7 +9050,7 @@ __attribute__((naked)) void Blender_PrintBlendingRanking(void)
         "_08083754: .4byte gUnknown_2031F44\n\t"
         "_08083758: .4byte gSprites\n\t"
         "_0808375C: .4byte SpriteCallbackDummy + 1\n\t"
-        "_08083760: .4byte gUnknown_830FC33\n\t"
+        "_08083760: .4byte sBerryBlenderRecordWindowUnused + 10\n\t"
         "_08083764: .4byte gUnknown_830F847\n\t"
         "_08083768: .4byte gUnknown_20226A8\n\t"
         "_0808376C:\n\t"
@@ -9206,10 +9208,10 @@ __attribute__((naked)) void ShowBerryBlenderRecordWindow()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080838A4: .4byte gUnknown_830FC60\n\t"
+        "_080838A4: .4byte sBlenderRecordWindowTemplate\n\t"
         "_080838A8: .4byte gRecordsWindowId\n\t"
-        "_080838AC: .4byte gUnknown_830FC38\n\t"
-        "_080838B0: .4byte gUnknown_830FC50\n\t"
+        "_080838AC: .4byte gText_BlenderMaxSpeedRecord\n\t"
+        "_080838B0: .4byte gText_234Players\n\t"
         "_080838B4: .4byte gSaveBlock1Ptr\n\t"
         "_080838B8: .4byte 0x000009BC\n\t"
         "_080838BC: .4byte gUnknown_830F847\n\t"
@@ -9611,3 +9613,27 @@ BERRY_BLENDER_DATA const u8 gUnknown_830FB68[] = {0xF6, 0xFF, 0x14, 0x00, 0x0A, 
 BERRY_BLENDER_DATA const u8 gUnknown_830FB90[] = {0x04, 0x03, 0x02, 0x00, 0x04, 0x03, 0x01, 0x00, 0x04, 0x02, 0x01, 0x00, 0x03, 0x02, 0x01, 0x00, 0x02, 0x03, 0x01, 0x03, 0x04, 0x02, 0x04, 0x00, 0x03, 0x00, 0x01, 0x04, 0x01, 0x02};
 BERRY_BLENDER_DATA const u8 gUnknown_830FBAE[] = {0x1E, 0x1F, 0x20, 0x21, 0x22};
 BERRY_BLENDER_DATA const u8 gUnknown_830FBB3[] = {0x01, 0x01, 0x02, 0x03, 0x04};
+
+// The Japanese layout has a distinct record-window arrangement, but the
+// data serves the same unused bookkeeping and record-display roles as US.
+const u8 sBerryBlenderRecordWindowUnused[] BERRY_BLENDER_RECORD_WINDOW_DATA = {
+    6, 6, 6, 6, 5,
+    3, 3, 3, 2, 2,
+    3, 3, 3, 3, 2,
+};
+
+const u8 gText_BlenderMaxSpeedRecord[] BERRY_BLENDER_RECORD_WINDOW_DATA = _("きのみブレンダー\nさいこうそくど　ランキング！");
+
+const u8 gText_234Players[] BERRY_BLENDER_RECORD_WINDOW_DATA = _("ふたり\nさんにん\nよにん");
+
+const u8 sBlenderRecordWindowPadding[] BERRY_BLENDER_RECORD_WINDOW_DATA = {0, 0, 0};
+
+const struct WindowTemplate sBlenderRecordWindowTemplate BERRY_BLENDER_RECORD_WINDOW_DATA = {
+    .bg = 0,
+    .tilemapLeft = 6,
+    .tilemapTop = 4,
+    .width = 16,
+    .height = 12,
+    .paletteNum = 15,
+    .baseBlock = 8,
+};

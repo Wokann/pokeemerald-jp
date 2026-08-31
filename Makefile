@@ -1064,6 +1064,13 @@ $(C_BUILDDIR)/berry_crush.o: src/berry_crush.c graphics/berry_crush/gBerryCrush_
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/berry_crush.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/berry_crush.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/berry_crush.gen.s
+
+$(C_BUILDDIR)/berry_blender.o: src/berry_blender.c charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/berry_blender.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/berry_blender.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/berry_blender.gen.s
+
 $(C_BUILDDIR)/dodrio_berry_picking.o: src/dodrio_berry_picking.c graphics/misc/sBg_Pal.bin graphics/dodrio/sDodrioNormalPal.bin graphics/dodrio/sDodrioShinyPal.bin graphics/misc/sBerry_Gfx.bin graphics/misc/sBg_Gfx.bin graphics/misc/sTreeBorder_Gfx.bin graphics/battle_anims/sStatus_Gfx.bin graphics/misc/sCloud_Gfx.bin graphics/dodrio/sDodrio_Gfx.bin graphics/dodrio/sDodrioBg_Tilemap.bin graphics/misc/sTreeBorderRight_Tilemap.bin graphics/misc/sTreeBorderLeft_Tilemap.bin
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/dodrio_berry_picking.gen.s
