@@ -2369,7 +2369,15 @@ BattleScript_EffectNaturePower:: @ 0x0828875E
 	return
 
 BattleScript_EffectCharge:: @ 0x0828876B
-	.incbin "baserom_jp.gba", 0x28876b, 0x11
+	attackcanceler
+	attackstring
+	ppreduce
+	setcharge
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNCHARGINGPOWER
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectTaunt:: @ 0x0828877C
 	.incbin "baserom_jp.gba", 0x28877c, 0x1c
