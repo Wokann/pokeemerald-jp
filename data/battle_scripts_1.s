@@ -1634,7 +1634,26 @@ BattleScript_EffectForesight:: @ 0x08287EE6
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectPerishSong:: @ 0x08287EFE
-	.incbin "baserom_jp.gba", 0x287efe, 0x41
+	attackcanceler
+	attackstring
+	ppreduce
+	trysetperishsong BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_FAINTINTHREE
+	waitmessage B_WAIT_TIME_LONG
+	setbyte sBATTLER, 0
+BattleScript_PerishSongLoop:
+	jumpifability BS_SCRIPTING, ABILITY_SOUNDPROOF, BattleScript_PerishSongNotAffected
+BattleScript_PerishSongLoopIncrement:
+	addbyte sBATTLER, 1
+	jumpifbytenotequal sBATTLER, gBattlersCount, BattleScript_PerishSongLoop
+	goto BattleScript_MoveEnd
+
+BattleScript_PerishSongNotAffected:
+	printstring STRINGID_PKMNSXBLOCKSY2
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_PerishSongLoopIncrement
 
 BattleScript_EffectSandstorm:: @ 0x08287F3F
 	.incbin "baserom_jp.gba", 0x287f3f, 0x9
