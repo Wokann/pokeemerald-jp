@@ -4072,31 +4072,31 @@ BattleScript_YawnMakesAsleep: @ 0x8289900
 
 	.globl BattleScript_MoveEffectPoison
 BattleScript_MoveEffectPoison: @ 0x828990E
-	.byte 0x64, 0x02 @ statusanimation BS_EFFECT_BATTLER
-	.byte 0x13, 0x48, 0xBA, 0x5A, 0x08 @ printfromtable gGotPoisonedStringIds
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0xFC, 0x98, 0x28, 0x08 @ goto BattleScript_UpdateEffectStatusIconRet
+	statusanimation BS_EFFECT_BATTLER
+	printfromtable gGotPoisonedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_UpdateEffectStatusIconRet
 
 	.globl BattleScript_MoveEffectBurn
 BattleScript_MoveEffectBurn: @ 0x828991D
-	.byte 0x64, 0x02 @ statusanimation BS_EFFECT_BATTLER
-	.byte 0x13, 0x54, 0xBA, 0x5A, 0x08 @ printfromtable gGotBurnedStringIds
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0xFC, 0x98, 0x28, 0x08 @ goto BattleScript_UpdateEffectStatusIconRet
+	statusanimation BS_EFFECT_BATTLER
+	printfromtable gGotBurnedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_UpdateEffectStatusIconRet
 
 	.globl BattleScript_MoveEffectFreeze
 BattleScript_MoveEffectFreeze: @ 0x828992C
-	.byte 0x64, 0x02 @ statusanimation BS_EFFECT_BATTLER
-	.byte 0x13, 0x58, 0xBA, 0x5A, 0x08 @ printfromtable gGotFrozenStringIds
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0xFC, 0x98, 0x28, 0x08 @ goto BattleScript_UpdateEffectStatusIconRet
+	statusanimation BS_EFFECT_BATTLER
+	printfromtable gGotFrozenStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_UpdateEffectStatusIconRet
 
 	.globl BattleScript_MoveEffectParalysis
 BattleScript_MoveEffectParalysis: @ 0x828993B
-	.byte 0x64, 0x02 @ statusanimation BS_EFFECT_BATTLER
-	.byte 0x13, 0x4C, 0xBA, 0x5A, 0x08 @ printfromtable gGotParalyzedStringIds
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0xFC, 0x98, 0x28, 0x08 @ goto BattleScript_UpdateEffectStatusIconRet
+	statusanimation BS_EFFECT_BATTLER
+	printfromtable gGotParalyzedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_UpdateEffectStatusIconRet
 
 	.globl BattleScript_MoveEffectUproar
 BattleScript_MoveEffectUproar: @ 0x828994A
