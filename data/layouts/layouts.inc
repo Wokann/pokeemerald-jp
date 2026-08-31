@@ -2665,7 +2665,55 @@ gMapLayout_INSIDE_OF_TRUCK: @ 0x0841B5E0
 	.4byte gMapLayout_INSIDE_OF_TRUCK_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_InsideOfTruck  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x41B5F8, 0x5A04
+gMapLayout_SAFARI_ZONE_NORTHWEST_Border:
+	.incbin "data/layouts/SafariZone_Northwest/border.bin"
+gMapLayout_SAFARI_ZONE_NORTHWEST_Blockdata:
+	.incbin "data/layouts/SafariZone_Northwest/map.bin"
+	.globl gMapLayout_SAFARI_ZONE_NORTHWEST
+gMapLayout_SAFARI_ZONE_NORTHWEST: @ 0x0841C280
+	.4byte 40  @ width
+	.4byte 40  @ height
+	.4byte gMapLayout_SAFARI_ZONE_NORTHWEST_Border  @ border
+	.4byte gMapLayout_SAFARI_ZONE_NORTHWEST_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_SECONDARY  @ secondaryTileset
+gMapLayout_SAFARI_ZONE_NORTH_Border:
+	.incbin "data/layouts/SafariZone_North/border.bin"
+gMapLayout_SAFARI_ZONE_NORTH_Blockdata:
+	.incbin "data/layouts/SafariZone_North/map.bin"
+	.globl gMapLayout_SAFARI_ZONE_NORTH
+gMapLayout_SAFARI_ZONE_NORTH: @ 0x0841CF20
+	.4byte 40  @ width
+	.4byte 40  @ height
+	.4byte gMapLayout_SAFARI_ZONE_NORTH_Border  @ border
+	.4byte gMapLayout_SAFARI_ZONE_NORTH_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_SECONDARY  @ secondaryTileset
+gMapLayout_SAFARI_ZONE_SOUTHWEST_Border:
+	.incbin "data/layouts/SafariZone_Southwest/border.bin"
+gMapLayout_SAFARI_ZONE_SOUTHWEST_Blockdata:
+	.incbin "data/layouts/SafariZone_Southwest/map.bin"
+	.globl gMapLayout_SAFARI_ZONE_SOUTHWEST
+gMapLayout_SAFARI_ZONE_SOUTHWEST: @ 0x0841DBC0
+	.4byte 40  @ width
+	.4byte 40  @ height
+	.4byte gMapLayout_SAFARI_ZONE_SOUTHWEST_Border  @ border
+	.4byte gMapLayout_SAFARI_ZONE_SOUTHWEST_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_SECONDARY  @ secondaryTileset
+gMapLayout_SAFARI_ZONE_SOUTH_Border:
+	.incbin "data/layouts/SafariZone_South/border.bin"
+gMapLayout_SAFARI_ZONE_SOUTH_Blockdata:
+	.incbin "data/layouts/SafariZone_South/map.bin"
+	.globl gMapLayout_SAFARI_ZONE_SOUTH
+gMapLayout_SAFARI_ZONE_SOUTH: @ 0x0841E860
+	.4byte 40  @ width
+	.4byte 40  @ height
+	.4byte gMapLayout_SAFARI_ZONE_SOUTH_Border  @ border
+	.4byte gMapLayout_SAFARI_ZONE_SOUTH_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x41E878, 0x2784
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Border:
 	.incbin "data/layouts/FortreeCity_DecorationShop/border.bin"
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata:

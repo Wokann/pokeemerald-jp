@@ -1075,7 +1075,11 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/BattlePyramidSquare15/events.inc"
 	.include "data/maps/BattlePyramidSquare16/events.inc"
 	.include "data/maps/UnionRoom/events.inc"
-	.incbin "baserom_jp.gba", 0x513848, 0x3D34
+	.include "data/maps/SafariZone_Northwest/events.inc"
+	.include "data/maps/SafariZone_North/events.inc"
+	.include "data/maps/SafariZone_Southwest/events.inc"
+	.include "data/maps/SafariZone_South/events.inc"
+	.incbin "baserom_jp.gba", 0x513A7C, 0x3B00
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

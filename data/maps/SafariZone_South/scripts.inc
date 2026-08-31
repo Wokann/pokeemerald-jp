@@ -36,35 +36,35 @@ SafariZone_South_Movement_ExitAttendantBlockDoor:
 	step_end
 
 SafariZone_South_EventScript_Boy::
-	msgbox 0x0826283A, MSGBOX_NPC
+	msgbox SafariZone_South_Text_Boy, MSGBOX_NPC
 	end
 
 SafariZone_South_EventScript_Man::
-	msgbox 0x08262869, MSGBOX_NPC
+	msgbox SafariZone_South_Text_Man, MSGBOX_NPC
 	end
 
 SafariZone_South_EventScript_Youngster::
-	msgbox 0x08262987, MSGBOX_NPC
+	msgbox SafariZone_South_Text_Youngster, MSGBOX_NPC
 	end
 
 SafariZone_South_EventScript_ExitAttendant::
 	lock
 	faceplayer
 	goto_if_unset FLAG_GOOD_LUCK_SAFARI_ZONE, SafariZone_South_EventScript_GoodLuck
-	msgbox 0x0826279C, MSGBOX_YESNO
+	msgbox SafariZone_South_Text_StillHaveTimeExit, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, SafariZone_South_EventScript_ExitEarly
-	msgbox 0x082627BD, MSGBOX_DEFAULT
+	msgbox SafariZone_South_Text_EnjoyTheRestOfYourAdventure, MSGBOX_DEFAULT
 	release
 	end
 
 SafariZone_South_EventScript_GoodLuck::
 	setflag FLAG_GOOD_LUCK_SAFARI_ZONE
-	msgbox 0x0826280D, MSGBOX_DEFAULT
+	msgbox SafariZone_South_Text_GoodLuck, MSGBOX_DEFAULT
 	release
 	end
 
 SafariZone_South_EventScript_ExitEarly::
-	msgbox 0x082627D2, MSGBOX_DEFAULT
+	msgbox SafariZone_South_Text_ExitEarlyThankYouForPlaying, MSGBOX_DEFAULT
 	closemessage
 	switch VAR_FACING
 	case DIR_NORTH, SafariZone_South_EventScript_ExitEarlyNorth
@@ -114,37 +114,37 @@ SafariZone_South_Movement_MoveExitAttendantEast:
 	step_end
 
 SafariZone_South_EventScript_ConstructionWorker1::
-	msgbox 0x08262AEF, MSGBOX_NPC
+	msgbox SafariZone_South_Text_AreaOffLimits1, MSGBOX_NPC
 	end
 
 SafariZone_Southeast_EventScript_ExpansionZoneAttendant::
-	msgbox 0x08262B16, MSGBOX_NPC
+	msgbox SafariZone_Southeast_Text_ExpansionIsFinished, MSGBOX_NPC
 	end
 
 SafariZone_South_EventScript_ConstructionWorker2::
-	msgbox 0x08262B4E, MSGBOX_NPC
+	msgbox SafariZone_South_Text_AreaOffLimits2, MSGBOX_NPC
 	end
 
 SafariZone_Southeast_EventScript_LittleGirl::
-	msgbox 0x08262B75, MSGBOX_NPC
+	msgbox SafariZone_Southeast_Text_LittleGirl, MSGBOX_NPC
 	end
 
 SafariZone_Southeast_EventScript_FatMan::
-	msgbox 0x08262B92, MSGBOX_NPC
+	msgbox SafariZone_Southeast_Text_FatMan, MSGBOX_NPC
 	end
 
 SafariZone_Southeast_EventScript_RichBoy::
-	msgbox 0x08262BD6, MSGBOX_NPC
+	msgbox SafariZone_Southeast_Text_RichBoy, MSGBOX_NPC
 	end
 
 SafariZone_Northeast_EventScript_Boy::
-	msgbox 0x08262C05, MSGBOX_NPC
+	msgbox SafariZone_Northeast_Text_Boy, MSGBOX_NPC
 	end
 
 SafariZone_Northeast_EventScript_Woman::
-	msgbox 0x08262C36, MSGBOX_NPC
+	msgbox SafariZone_Northeast_Text_Woman, MSGBOX_NPC
 	end
 
 SafariZone_Northeast_EventScript_Girl::
-	msgbox 0x08262C5B, MSGBOX_NPC
+	msgbox SafariZone_Northeast_Text_Girl, MSGBOX_NPC
 	end

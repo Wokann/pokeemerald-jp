@@ -2,9 +2,9 @@ SafariZone_North_MapScripts::
 	.byte 0
 
 SafariZone_North_EventScript_Fisherman::
-	msgbox 0x08262922, MSGBOX_NPC
+	msgbox SafariZone_North_Text_Fisherman, MSGBOX_NPC
 	end
 
 SafariZone_North_EventScript_Man::
-	msgbox 0x0826295B, MSGBOX_NPC
+	msgbox SafariZone_North_Text_Man, MSGBOX_NPC
 	end

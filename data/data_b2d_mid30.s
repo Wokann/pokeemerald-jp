@@ -2466,8 +2466,16 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/BattlePyramidSquare16/header.inc"
 	@ MAP_UNION_ROOM (g25 m60)
 	.include "data/maps/UnionRoom/header.inc"
-	@ MAP_SAFARI_ZONE_NORTHWEST through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45D55C, 0x143C
+	@ MAP_SAFARI_ZONE_NORTHWEST (g26 m0)
+	.include "data/maps/SafariZone_Northwest/header.inc"
+	@ MAP_SAFARI_ZONE_NORTH (g26 m1)
+	.include "data/maps/SafariZone_North/header.inc"
+	@ MAP_SAFARI_ZONE_SOUTHWEST (g26 m2)
+	.include "data/maps/SafariZone_Southwest/header.inc"
+	@ MAP_SAFARI_ZONE_SOUTH (g26 m3)
+	.include "data/maps/SafariZone_South/header.inc"
+	@ MAP_BATTLE_FRONTIER_OUTSIDE_WEST through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45D5CC, 0x13CC
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
@@ -2540,7 +2548,15 @@ gUnknown_845E998: @ 0x0845E998
 	.include "data/maps/Underwater_Route128/connections.inc"
 	@ 0x0845F204: Underwater_Route129 connection list and header.
 	.include "data/maps/Underwater_Route129/connections.inc"
-	.incbin "baserom_jp.gba", 0x45F218, 0x100
+	@ 0x0845F218: Safari Zone Northwest connection list and header.
+	.include "data/maps/SafariZone_Northwest/connections.inc"
+	@ 0x0845F238: Safari Zone North connection list and header.
+	.include "data/maps/SafariZone_North/connections.inc"
+	@ 0x0845F264: Safari Zone Southwest connection list and header.
+	.include "data/maps/SafariZone_Southwest/connections.inc"
+	@ 0x0845F284: Safari Zone South connection list and header.
+	.include "data/maps/SafariZone_South/connections.inc"
+	.incbin "baserom_jp.gba", 0x45F2B0, 0x68
 
 	.globl sDummyConnectionFlags
 sDummyConnectionFlags: @ 0x845F318

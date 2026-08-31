@@ -300,6 +300,7 @@ JP_STRUCTURED_MAPS += BattlePyramidSquare01 BattlePyramidSquare02 BattlePyramidS
 	BattlePyramidSquare09 BattlePyramidSquare10 BattlePyramidSquare11 BattlePyramidSquare12 \
 	BattlePyramidSquare13 BattlePyramidSquare14 BattlePyramidSquare15 BattlePyramidSquare16
 JP_STRUCTURED_MAPS += UnionRoom
+JP_STRUCTURED_MAPS += SafariZone_Northwest SafariZone_North SafariZone_Southwest SafariZone_South
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
@@ -451,6 +452,7 @@ JP_STRUCTURED_MAP_METADATA_MAPS += BattlePyramidSquare01 BattlePyramidSquare02 B
 	BattlePyramidSquare09 BattlePyramidSquare10 BattlePyramidSquare11 BattlePyramidSquare12 \
 	BattlePyramidSquare13 BattlePyramidSquare14 BattlePyramidSquare15 BattlePyramidSquare16
 JP_STRUCTURED_MAP_METADATA_MAPS += UnionRoom
+JP_STRUCTURED_MAP_METADATA_MAPS += SafariZone_Northwest SafariZone_North SafariZone_Southwest SafariZone_South
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

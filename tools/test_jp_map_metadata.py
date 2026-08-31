@@ -331,6 +331,10 @@ MAPS = (
     "BattlePyramidSquare15",
     "BattlePyramidSquare16",
     "UnionRoom",
+    "SafariZone_Northwest",
+    "SafariZone_North",
+    "SafariZone_Southwest",
+    "SafariZone_South",
 )
 
 CONNECTED_MAPS = (
@@ -339,6 +343,10 @@ CONNECTED_MAPS = (
     "Underwater_Route127",
     "Underwater_Route128",
     "Underwater_Route129",
+    "SafariZone_Northwest",
+    "SafariZone_North",
+    "SafariZone_Southwest",
+    "SafariZone_South",
 )
 
 NULL_CONNECTION_MAPS = (
