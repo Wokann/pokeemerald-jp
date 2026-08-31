@@ -1018,16 +1018,20 @@ BattleScript_EffectTransform:: @ 0x082877D1
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectAttackDown2:: @ 0x082877E4
-	.incbin "baserom_jp.gba", 0x2877e4, 0xb
+	setstatchanger STAT_ATK, 2, TRUE
+	goto BattleScript_EffectStatDown
 
 BattleScript_EffectDefenseDown2:: @ 0x082877EF
-	.incbin "baserom_jp.gba", 0x2877ef, 0xb
+	setstatchanger STAT_DEF, 2, TRUE
+	goto BattleScript_EffectStatDown
 
 BattleScript_EffectSpeedDown2:: @ 0x082877FA
-	.incbin "baserom_jp.gba", 0x2877fa, 0xb
+	setstatchanger STAT_SPEED, 2, TRUE
+	goto BattleScript_EffectStatDown
 
 BattleScript_EffectSpecialDefenseDown2:: @ 0x08287805
-	.incbin "baserom_jp.gba", 0x287805, 0xb
+	setstatchanger STAT_SPDEF, 2, TRUE
+	goto BattleScript_EffectStatDown
 
 BattleScript_EffectReflect:: @ 0x08287810
 	.incbin "baserom_jp.gba", 0x287810, 0x4
