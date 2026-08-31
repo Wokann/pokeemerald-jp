@@ -3075,7 +3075,30 @@ gMapLayout_ARTISAN_CAVE_1F: @ 0x0844CBD4
 	.4byte gMapLayout_ARTISAN_CAVE_1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x44CBEC, 0x2A04
+	.incbin "baserom_jp.gba", 0x44CBEC, 0x1B60
+gMapLayout_UNDERWATER_MARINE_CAVE_Border:
+	.incbin "data/layouts/Underwater_MarineCave/border.bin"
+gMapLayout_UNDERWATER_MARINE_CAVE_Blockdata:
+	.incbin "data/layouts/Underwater_MarineCave/map.bin"
+gMapLayout_UNDERWATER_MARINE_CAVE: @ 0x0844E8E4
+	.4byte 20  @ width
+	.4byte 10  @ height
+	.4byte gMapLayout_UNDERWATER_MARINE_CAVE_Border  @ border
+	.4byte gMapLayout_UNDERWATER_MARINE_CAVE_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
+gMapLayout_MARINE_CAVE_ENTRANCE_Border:
+	.incbin "data/layouts/MarineCave_Entrance/border.bin"
+gMapLayout_MARINE_CAVE_ENTRANCE_Blockdata:
+	.incbin "data/layouts/MarineCave_Entrance/map.bin"
+gMapLayout_MARINE_CAVE_ENTRANCE: @ 0x0844EC24
+	.4byte 20  @ width
+	.4byte 20  @ height
+	.4byte gMapLayout_MARINE_CAVE_ENTRANCE_Border  @ border
+	.4byte gMapLayout_MARINE_CAVE_ENTRANCE_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x44EC3C, 0x9B4
 gMapLayout_UNDERWATER_ROUTE105_Border:
 	.incbin "data/layouts/Underwater_Route105/border.bin"
 gMapLayout_UNDERWATER_ROUTE105_Blockdata:
@@ -3111,7 +3134,18 @@ Underwater_Route129_Layout:: @ 0x08454138
 	.4byte Underwater_Route129_Layout_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x454150, 0x5e0c
+gMapLayout_MARINE_CAVE_END_Border:
+	.incbin "data/layouts/MarineCave_End/border.bin"
+gMapLayout_MARINE_CAVE_END_Blockdata:
+	.incbin "data/layouts/MarineCave_End/map.bin"
+gMapLayout_MARINE_CAVE_END: @ 0x084547AC
+	.4byte 27  @ width
+	.4byte 30  @ height
+	.4byte gMapLayout_MARINE_CAVE_END_Border  @ border
+	.4byte gMapLayout_MARINE_CAVE_END_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x4547C4, 0x5798
 gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_Border:
 	.incbin "data/layouts/SootopolisCity_MysteryEventsHouse_1F/border.bin"
 gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_Blockdata:

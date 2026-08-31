@@ -2301,8 +2301,14 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/ArtisanCave_B1F/header.inc"
 	@ MAP_ARTISAN_CAVE_1F (g24 m100)
 	.include "data/maps/ArtisanCave_1F/header.inc"
-	@ MAP_UNDERWATER_MARINE_CAVE through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45CDEC, 0x1BAC
+	@ MAP_UNDERWATER_MARINE_CAVE (g24 m101)
+	.include "data/maps/Underwater_MarineCave/header.inc"
+	@ MAP_MARINE_CAVE_ENTRANCE (g24 m102)
+	.include "data/maps/MarineCave_Entrance/header.inc"
+	@ MAP_MARINE_CAVE_END (g24 m103)
+	.include "data/maps/MarineCave_End/header.inc"
+	@ MAP_TERRA_CAVE_ENTRANCE through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45CE40, 0x1B58
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

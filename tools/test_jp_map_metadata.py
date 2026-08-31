@@ -263,6 +263,9 @@ MAPS = (
     "DesertUnderpass",
     "ArtisanCave_B1F",
     "ArtisanCave_1F",
+    "Underwater_MarineCave",
+    "MarineCave_Entrance",
+    "MarineCave_End",
 )
 
 CONNECTED_MAPS = (
@@ -523,6 +526,9 @@ NULL_CONNECTION_MAPS = (
     "DesertUnderpass",
     "ArtisanCave_B1F",
     "ArtisanCave_1F",
+    "Underwater_MarineCave",
+    "MarineCave_Entrance",
+    "MarineCave_End",
 )
 
 CANONICAL_LAYOUT_MAPS = (
