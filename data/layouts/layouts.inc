@@ -3166,7 +3166,19 @@ gMapLayout_MARINE_CAVE_END: @ 0x084547AC
 	.4byte gMapLayout_MARINE_CAVE_END_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4547C4, 0x5798
+	.incbin "baserom_jp.gba", 0x4547C4, 0x10E8
+gMapLayout_ALTERING_CAVE_Border:
+	.incbin "data/layouts/AlteringCave/border.bin"
+gMapLayout_ALTERING_CAVE_Blockdata:
+	.incbin "data/layouts/AlteringCave/map.bin"
+gMapLayout_ALTERING_CAVE: @ 0x08455EB4
+	.4byte 32  @ width
+	.4byte 24  @ height
+	.4byte gMapLayout_ALTERING_CAVE_Border  @ border
+	.4byte gMapLayout_ALTERING_CAVE_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x455ECC, 0x4090
 gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_Border:
 	.incbin "data/layouts/SootopolisCity_MysteryEventsHouse_1F/border.bin"
 gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_Blockdata:
