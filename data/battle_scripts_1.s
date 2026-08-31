@@ -1746,7 +1746,8 @@ BattleScript_EffectSafeguard:: @ 0x08288016
 	goto BattleScript_PrintReflectLightScreenSafeguardString
 
 BattleScript_EffectThawHit:: @ 0x0828801F
-	.incbin "baserom_jp.gba", 0x28801f, 0xb
+	setmoveeffect MOVE_EFFECT_BURN
+	goto BattleScript_EffectHit
 
 BattleScript_EffectMagnitude:: @ 0x0828802A
 	.incbin "baserom_jp.gba", 0x28802a, 0x13
