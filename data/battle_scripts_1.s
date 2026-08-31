@@ -4346,125 +4346,125 @@ BattleScript_FlashFireBoost: @ 0x8289B30
 
 	.globl BattleScript_AbilityPreventsPhasingOut
 BattleScript_AbilityPreventsPhasingOut: @ 0x8289B41
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0xCC, 0x00 @ printstring STRINGID_PKMNANCHORSITSELFWITH
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNANCHORSITSELFWITH
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 	.globl BattleScript_AbilityNoStatLoss
 BattleScript_AbilityNoStatLoss: @ 0x8289B4F
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0xCE, 0x00 @ printstring STRINGID_PKMNPREVENTSSTATLOSSWITH
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x3C @ return
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNPREVENTSSTATLOSSWITH
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_BRNPrevention
 BattleScript_BRNPrevention: @ 0x8289B59
-	.byte 0x39, 0x20, 0x00 @ pause 0x0020
-	.byte 0x13, 0xCA, 0xBA, 0x5A, 0x08 @ printfromtable 0x085ABACA
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3C @ return
+	pause B_WAIT_TIME_SHORT
+	printfromtable gBRNPreventionStringIds
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_PRLZPrevention
 BattleScript_PRLZPrevention: @ 0x8289B65
-	.byte 0x39, 0x20, 0x00 @ pause 0x0020
-	.byte 0x13, 0xD0, 0xBA, 0x5A, 0x08 @ printfromtable 0x085ABAD0
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3C @ return
+	pause B_WAIT_TIME_SHORT
+	printfromtable gPRLZPreventionStringIds
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_PSNPrevention
 BattleScript_PSNPrevention: @ 0x8289B71
-	.byte 0x39, 0x20, 0x00 @ pause 0x0020
-	.byte 0x13, 0xD6, 0xBA, 0x5A, 0x08 @ printfromtable 0x085ABAD6
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3C @ return
+	pause B_WAIT_TIME_SHORT
+	printfromtable gPSNPreventionStringIds
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_ObliviousPreventsAttraction
 BattleScript_ObliviousPreventsAttraction: @ 0x8289B7D
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0xC8, 0x00 @ printstring STRINGID_PKMNPREVENTSROMANCEWITH
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNPREVENTSROMANCEWITH
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 	.globl BattleScript_FlinchPrevention
 BattleScript_FlinchPrevention: @ 0x8289B8B
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0x5B, 0x01 @ printstring STRINGID_PKMNSXPREVENTSFLINCHING
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNSXPREVENTSFLINCHING
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 	.globl BattleScript_OwnTempoPrevents
 BattleScript_OwnTempoPrevents: @ 0x8289B99
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0xCA, 0x00 @ printstring STRINGID_PKMNPREVENTSCONFUSIONWITH
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNPREVENTSCONFUSIONWITH
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 	.globl BattleScript_SoundproofProtected
 BattleScript_SoundproofProtected: @ 0x8289BA7
-	.byte 0x02 @ attackstring
-	.byte 0x03 @ ppreduce
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0x32, 0x01 @ printstring STRINGID_PKMNSXBLOCKSY
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	attackstring
+	ppreduce
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNSXBLOCKSY
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 	.globl BattleScript_AbilityNoSpecificStatLoss
 BattleScript_AbilityNoSpecificStatLoss: @ 0x8289BB7
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0x35, 0x01 @ printstring STRINGID_PKMNSXPREVENTSYLOSS
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x2E, 0xDB, 0x3F, 0x02, 0x02, 0x03 @ setbyte cMULTISTRING_CHOOSER, B_MSG_STAT_FELL_EMPTY
-	.byte 0x3C @ return
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNSXPREVENTSYLOSS
+	waitmessage B_WAIT_TIME_LONG
+	setbyte cMULTISTRING_CHOOSER, B_MSG_STAT_FELL_EMPTY
+	return
 
 	.globl BattleScript_StickyHoldActivates
 BattleScript_StickyHoldActivates: @ 0x8289BC7
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0x37, 0x01 @ printstring STRINGID_PKMNSXMADEYINEFFECTIVE
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNSXMADEYINEFFECTIVE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 	.globl BattleScript_ColorChangeActivates
 BattleScript_ColorChangeActivates: @ 0x8289BD5
-	.byte 0x10, 0xC6, 0x00 @ printstring STRINGID_PKMNCHANGEDTYPEWITH
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3C @ return
+	printstring STRINGID_PKMNCHANGEDTYPEWITH
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_RoughSkinActivates
 BattleScript_RoughSkinActivates: @ 0x8289BDC
-	.byte 0x35, 0x24, 0x3F, 0x02, 0x02, 0x00, 0x01, 0x10, 0x00 @ orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
-	.byte 0x0B, 0x01 @ healthbarupdate BS_ATTACKER
-	.byte 0x0C, 0x01 @ datahpupdate BS_ATTACKER
-	.byte 0x10, 0xCF, 0x00 @ printstring STRINGID_PKMNHURTSWITH
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x19, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 @ tryfaintmon BS_ATTACKER
-	.byte 0x3C @ return
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	printstring STRINGID_PKMNHURTSWITH
+	waitmessage B_WAIT_TIME_LONG
+	tryfaintmon BS_ATTACKER
+	return
 
 	.globl BattleScript_CuteCharmActivates
 BattleScript_CuteCharmActivates: @ 0x8289BF7
-	.byte 0x65, 0x01, 0x00, 0x00, 0x0F, 0x00 @ status2animation BS_ATTACKER, STATUS2_INFATUATION
-	.byte 0x10, 0x36, 0x01 @ printstring STRINGID_PKMNSXINFATUATEDY
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x3C @ return
+	status2animation BS_ATTACKER, STATUS2_INFATUATION
+	printstring STRINGID_PKMNSXINFATUATEDY
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_ApplySecondaryEffect
 BattleScript_ApplySecondaryEffect: @ 0x8289C04
-	.byte 0x3A @ waitstate
-	.byte 0x17 @ seteffectsecondary
-	.byte 0x3C @ return
+	waitstate
+	seteffectsecondary
+	return
 
 	.globl BattleScript_SynchronizeActivates
 BattleScript_SynchronizeActivates: @ 0x8289C07
-	.byte 0x3A @ waitstate
-	.byte 0x16 @ seteffectprimary
-	.byte 0x3C @ return
+	waitstate
+	seteffectprimary
+	return
 
 	.globl BattleScript_NoItemSteal
 BattleScript_NoItemSteal: @ 0x8289C0A
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0x37, 0x01 @ printstring STRINGID_PKMNSXMADEYINEFFECTIVE
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x3C @ return
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNSXMADEYINEFFECTIVE
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_AbilityCuredStatus
 BattleScript_AbilityCuredStatus: @ 0x8289C14
