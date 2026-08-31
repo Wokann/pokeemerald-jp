@@ -377,18 +377,18 @@
 	.byte 0x44
 	.endm
 
-	.macro playanimation battler:req, param1:req, param2:req
+	.macro playanimation battler:req, animType:req, arg=0
 	.byte 0x45
 	.byte \battler
-	.byte \param1
-	.4byte \param2
+	.byte \animType
+	.4byte \arg
 	.endm
 
-	.macro playanimation2 battler:req, param1:req, param2:req
+	.macro playanimation_var battler:req, animType:req, arg=0
 	.byte 0x46
 	.byte \battler
-	.4byte \param1
-	.4byte \param2
+	.4byte \animType
+	.4byte \arg
 	.endm
 
 	.macro setgraphicalstatchangevalues

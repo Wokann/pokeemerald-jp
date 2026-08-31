@@ -3301,36 +3301,66 @@ BattleScript_LearnMoveReturn:: @ 0x082891B3
 	return
 
 @ Weather-turn scripts. The physical entry points and loop labels are
-@ retained explicitly; byte spans await battle-script macro conversion.
+@ retained explicitly.
 BattleScript_RainContinuesOrEnds:: @ 0x082891B4
-	.incbin "baserom_jp.gba", 0x2891b4, 0x1a
+	printfromtable gRainContinuesStringIds
+	waitmessage B_WAIT_TIME_LONG
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_RAIN_STOPPED, BattleScript_RainContinuesOrEndsEnd
+	playanimation BS_ATTACKER, B_ANIM_RAIN_CONTINUES
 
 BattleScript_RainContinuesOrEndsEnd:: @ 0x082891CE
-	.incbin "baserom_jp.gba", 0x2891ce, 0x1
+	end2
 
 BattleScript_DamagingWeatherContinues:: @ 0x082891CF
-	.incbin "baserom_jp.gba", 0x2891cf, 0x18
+	printfromtable gSandStormHailContinuesStringIds
+	waitmessage B_WAIT_TIME_LONG
+	playanimation_var BS_ATTACKER, sB_ANIM_ARG1
+	setbyte gBattleCommunication, 0
 
 BattleScript_DamagingWeatherLoop:: @ 0x082891E7
-	.incbin "baserom_jp.gba", 0x2891e7, 0x41
+	copyarraywithindex gBattlerAttacker, gBattlerByTurnOrder, gBattleCommunication, 1
+	weatherdamage
+	jumpifword CMP_EQUAL, gBattleMoveDamage, 0, BattleScript_DamagingWeatherLoopIncrement
+	printfromtable gSandStormHailDmgStringIds
+	waitmessage B_WAIT_TIME_LONG
+	orword gHitMarker, HITMARKER_IGNORE_BIDE | HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE | HITMARKER_GRUDGE
+	effectivenesssound
+	hitanimation BS_ATTACKER
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	tryfaintmon BS_ATTACKER
+	checkteamslost BattleScript_DamagingWeatherLoopIncrement
 
 BattleScript_DamagingWeatherLoopIncrement:: @ 0x08289228
-	.incbin "baserom_jp.gba", 0x289228, 0x1f
+	jumpifbyte CMP_NOT_EQUAL, gBattleOutcome, 0, BattleScript_DamagingWeatherContinuesEnd
+	addbyte gBattleCommunication, 1
+	jumpifbytenotequal gBattleCommunication, gBattlersCount, BattleScript_DamagingWeatherLoop
 
 BattleScript_DamagingWeatherContinuesEnd:: @ 0x08289247
-	.incbin "baserom_jp.gba", 0x289247, 0xa
+	bicword gHitMarker, HITMARKER_IGNORE_BIDE | HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE | HITMARKER_GRUDGE
+	end2
 
 BattleScript_SandStormHailEnds:: @ 0x08289251
-	.incbin "baserom_jp.gba", 0x289251, 0x9
+	printfromtable gSandStormHailEndStringIds
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_SunlightContinues:: @ 0x0828925A
-	.incbin "baserom_jp.gba", 0x28925a, 0xe
+	printstring STRINGID_SUNLIGHTSTRONG
+	waitmessage B_WAIT_TIME_LONG
+	playanimation BS_ATTACKER, B_ANIM_SUN_CONTINUES
+	end2
 
 BattleScript_SunlightFaded:: @ 0x08289268
-	.incbin "baserom_jp.gba", 0x289268, 0x7
+	printstring STRINGID_SUNLIGHTFADED
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_OverworldWeatherStarts:: @ 0x0828926F
-	.incbin "baserom_jp.gba", 0x28926f, 0x13
+	printfromtable gWeatherStartsStringIds
+	waitmessage B_WAIT_TIME_LONG
+	playanimation_var BS_ATTACKER, sB_ANIM_ARG1
+	end3
 
 @ Turn-end side-status scripts. These physical entry points include the
 @ safeguard and Leech Seed branches; byte spans remain JP-exact for now.
