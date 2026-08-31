@@ -1879,7 +1879,19 @@ BattleScript_EffectMirrorCoat:: @ 0x0828813E
 	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectSkullBash:: @ 0x08288154
-	.incbin "baserom_jp.gba", 0x288154, 0x4f
+	jumpifstatus2 BS_ATTACKER, STATUS2_MULTIPLETURNS, BattleScript_TwoTurnMovesSecondTurn
+	jumpifword CMP_COMMON_BITS, gHitMarker, HITMARKER_NO_ATTACKSTRING, BattleScript_TwoTurnMovesSecondTurn
+	setbyte sTWOTURN_STRINGID, B_MSG_TURN1_SKULL_BASH
+	call BattleScriptFirstChargingTurn
+	setstatchanger STAT_DEF, 1, FALSE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | STAT_CHANGE_ALLOW_PTR, BattleScript_SkullBashEnd
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_INCREASE, BattleScript_SkullBashEnd
+	setgraphicalstatchangevalues
+	playanimation BS_ATTACKER, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_SkullBashEnd:
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectTwister:: @ 0x082881A3
 	.incbin "baserom_jp.gba", 0x2881a3, 0x25
