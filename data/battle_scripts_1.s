@@ -3937,16 +3937,16 @@ BattleScript_DefrostedViaFireMove:: @ 0x0828980A
 
 @ Action-denial responses for paralysis and flinching.
 BattleScript_MoveUsedIsParalyzed:: @ 0x08289813
-	.byte 0x10, 0x39, 0x00 @ printstring STRINGID_PKMNISPARALYZED
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x64, 0x01 @ statusanimation BS_ATTACKER
-	.byte 0x76, 0x01, 0x00 @ cancelmultiturnmoves BS_ATTACKER
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	printstring STRINGID_PKMNISPARALYZED
+	waitmessage B_WAIT_TIME_LONG
+	statusanimation BS_ATTACKER
+	cancelmultiturnmoves BS_ATTACKER
+	goto BattleScript_MoveEnd
 
 BattleScript_MoveUsedFlinched:: @ 0x08289823
-	.byte 0x10, 0x4A, 0x00 @ printstring STRINGID_PKMNFLINCHED
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	printstring STRINGID_PKMNFLINCHED
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 	.globl BattleScript_PrintUproarOverTurns
 BattleScript_PrintUproarOverTurns: @ 0x828982E
