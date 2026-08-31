@@ -4349,7 +4349,81 @@ gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM: @ 0x0843EFE8
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM_Blockdata  @ map
 	.4byte gTileset_Building  @ primaryTileset
 	.4byte gTileset_BattleFactory  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x43F000, 0x4A0
+BattleFrontier_BattlePikeLobby_Layout_Border::
+	.incbin "data/layouts/BattleFrontier_BattlePikeLobby/border.bin"
+
+BattleFrontier_BattlePikeLobby_Layout_Blockdata::
+	.incbin "data/layouts/BattleFrontier_BattlePikeLobby/map.bin"
+
+	.align 2
+BattleFrontier_BattlePikeLobby_Layout:: @ 0x0843F128
+	.4byte 11
+	.4byte 13
+	.4byte BattleFrontier_BattlePikeLobby_Layout_Border
+	.4byte BattleFrontier_BattlePikeLobby_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_BattlePike
+
+BattleFrontier_BattlePikeCorridor_Layout_Border::
+	.incbin "data/layouts/BattleFrontier_BattlePikeCorridor/border.bin"
+
+BattleFrontier_BattlePikeCorridor_Layout_Blockdata::
+	.incbin "data/layouts/BattleFrontier_BattlePikeCorridor/map.bin"
+
+	.align 2
+BattleFrontier_BattlePikeCorridor_Layout:: @ 0x0843F228
+	.4byte 14
+	.4byte 8
+	.4byte BattleFrontier_BattlePikeCorridor_Layout_Border
+	.4byte BattleFrontier_BattlePikeCorridor_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_BattlePike
+
+BattleFrontier_BattlePikeThreePathRoom_Layout_Border::
+	.incbin "data/layouts/BattleFrontier_BattlePikeThreePathRoom/border.bin"
+
+BattleFrontier_BattlePikeThreePathRoom_Layout_Blockdata::
+	.incbin "data/layouts/BattleFrontier_BattlePikeThreePathRoom/map.bin"
+
+	.align 2
+BattleFrontier_BattlePikeThreePathRoom_Layout:: @ 0x0843F368
+	.4byte 13
+	.4byte 11
+	.4byte BattleFrontier_BattlePikeThreePathRoom_Layout_Border
+	.4byte BattleFrontier_BattlePikeThreePathRoom_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_BattlePike
+
+BattleFrontier_BattlePikeRoomNormal_Layout_Border::
+	.incbin "data/layouts/BattleFrontier_BattlePikeRoomNormal/border.bin"
+
+BattleFrontier_BattlePikeRoomNormal_Layout_Blockdata::
+	.incbin "data/layouts/BattleFrontier_BattlePikeRoomNormal/map.bin"
+
+	.align 2
+BattleFrontier_BattlePikeRoomNormal_Layout:: @ 0x0843F418
+	.4byte 9
+	.4byte 8
+	.4byte BattleFrontier_BattlePikeRoomNormal_Layout_Border
+	.4byte BattleFrontier_BattlePikeRoomNormal_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_BattlePike
+
+BattleFrontier_BattlePikeRoomFinal_Layout_Border::
+	.incbin "data/layouts/BattleFrontier_BattlePikeRoomFinal/border.bin"
+
+BattleFrontier_BattlePikeRoomFinal_Layout_Blockdata::
+	.incbin "data/layouts/BattleFrontier_BattlePikeRoomFinal/map.bin"
+
+	.align 2
+BattleFrontier_BattlePikeRoomFinal_Layout:: @ 0x0843F488
+	.4byte 5
+	.4byte 8
+	.4byte BattleFrontier_BattlePikeRoomFinal_Layout_Border
+	.4byte BattleFrontier_BattlePikeRoomFinal_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_BattlePike
+
 gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_LOBBY_Border:
 	.incbin "data/layouts/BattleFrontier_BattleArenaLobby/border.bin"
 gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_LOBBY_Blockdata:

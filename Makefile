@@ -581,6 +581,16 @@ $(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_
 	data/layouts/Route131_SkyPillar/map.bin \
 	data/layouts/SeafloorCavern_Room9_Lava/border.bin \
 	data/layouts/SeafloorCavern_Room9_Lava/map.bin \
+	data/layouts/BattleFrontier_BattlePikeLobby/border.bin \
+	data/layouts/BattleFrontier_BattlePikeLobby/map.bin \
+	data/layouts/BattleFrontier_BattlePikeCorridor/border.bin \
+	data/layouts/BattleFrontier_BattlePikeCorridor/map.bin \
+	data/layouts/BattleFrontier_BattlePikeThreePathRoom/border.bin \
+	data/layouts/BattleFrontier_BattlePikeThreePathRoom/map.bin \
+	data/layouts/BattleFrontier_BattlePikeRoomNormal/border.bin \
+	data/layouts/BattleFrontier_BattlePikeRoomNormal/map.bin \
+	data/layouts/BattleFrontier_BattlePikeRoomFinal/border.bin \
+	data/layouts/BattleFrontier_BattlePikeRoomFinal/map.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 

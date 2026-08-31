@@ -354,8 +354,11 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM
-	@ LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_LOBBY through LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_FINAL remain in raw physical layout owners.
-	.incbin "baserom_jp.gba", 0x45A764, 0x14
+	.4byte BattleFrontier_BattlePikeLobby_Layout
+	.4byte BattleFrontier_BattlePikeCorridor_Layout
+	.4byte BattleFrontier_BattlePikeThreePathRoom_Layout
+	.4byte BattleFrontier_BattlePikeRoomNormal_Layout
+	.4byte BattleFrontier_BattlePikeRoomFinal_Layout
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_LOBBY
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_CORRIDOR
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_BATTLE_ROOM
