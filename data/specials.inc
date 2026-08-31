@@ -152,7 +152,7 @@ gSpecials::
 	def_special CountPartyAliveNonEggMons_IgnoreVar0x8004Slot
 	def_special ShouldReadyContestArtist
 	def_special SaveMuseumContestPainting
-	def_special sub_080F90F4
+	def_special DoesContestCategoryHaveMuseumPainting
 	def_special CountPlayerMuseumPaintings
 	def_special ShowContestWinner
 	def_special MauvilleGymSetDefaultBarriers

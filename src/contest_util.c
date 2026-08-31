@@ -6552,7 +6552,7 @@ __attribute__((naked)) void BufferContestTrainerAndMonNames(void)
     );
 }
 
-__attribute__((naked)) void sub_080F90F4(void)
+__attribute__((naked)) void DoesContestCategoryHaveMuseumPainting(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
