@@ -2570,7 +2570,16 @@ BattleScript_EffectEruption:: @ 0x0828895E
 	goto BattleScript_EffectHit
 
 BattleScript_EffectSkillSwap:: @ 0x08288964
-	.incbin "baserom_jp.gba", 0x288964, 0x1c
+	attackcanceler
+	attackstring
+	ppreduce
+	accuracycheck BattleScript_ButItFailed, NO_ACC_CALC_CHECK_LOCK_ON
+	tryswapabilities BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNSWAPPEDABILITIES
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectImprison:: @ 0x08288980
 	.incbin "baserom_jp.gba", 0x288980, 0x15
