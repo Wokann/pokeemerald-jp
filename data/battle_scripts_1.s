@@ -3738,16 +3738,39 @@ BattleScript_SelectingNotAllowedMoveTauntInPalace:: @ 0x08289637
 @ Wish and Ingrain healing paths, including their physical fallback/status
 @ entries. Preserve JP command bytes while exposing the US-aligned labels.
 BattleScript_WishComesTrue:: @ 0x0828963F
-	.incbin "baserom_jp.gba", 0x28963f, 0x27
+	trywish 1, BattleScript_WishButFullHp
+	playanimation BS_TARGET, B_ANIM_WISH_HEAL
+	printstring STRINGID_PKMNWISHCAMETRUE
+	waitmessage B_WAIT_TIME_LONG
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	printstring STRINGID_PKMNREGAINEDHEALTH
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_WishButFullHp:: @ 0x08289666
-	.incbin "baserom_jp.gba", 0x289666, 0x10
+	printstring STRINGID_PKMNWISHCAMETRUE
+	waitmessage B_WAIT_TIME_LONG
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNHPFULL
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 BattleScript_IngrainTurnHeal:: @ 0x08289676
-	.incbin "baserom_jp.gba", 0x289676, 0x1b
+	playanimation BS_ATTACKER, B_ANIM_INGRAIN_HEAL
+	printstring STRINGID_PKMNABSORBEDNUTRIENTS
+	waitmessage B_WAIT_TIME_LONG
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	end2
 
 BattleScript_PrintMonIsRooted:: @ 0x08289691
-	.incbin "baserom_jp.gba", 0x289691, 0xe
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNANCHOREDITSELF
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 @ Shared Attack-and-Defense stat reduction script and its two branch targets.
 BattleScript_AtkDefDown:: @ 0x0828969F
