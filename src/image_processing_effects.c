@@ -150,7 +150,7 @@ __attribute__((naked)) void sub_08124DF4(void)
     );
 }
 
-__attribute__((naked)) void sub_08124F14(void)
+__attribute__((naked)) void ApplyImageProcessingEffects(struct ImageProcessingContext *context)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2503,7 +2503,7 @@ __attribute__((naked)) void sub_08125F20(void)
     );
 }
 
-__attribute__((naked)) void sub_08126040(void)
+__attribute__((naked)) void ConvertImageProcessingToGBA(struct ImageProcessingContext *context)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2687,7 +2687,7 @@ __attribute__((naked)) void sub_08126040(void)
     );
 }
 
-__attribute__((naked)) void sub_0812618C(void)
+__attribute__((naked)) void ApplyImageProcessingQuantization(struct ImageProcessingContext *context)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3782,4 +3782,3 @@ __attribute__((naked)) void sub_08126924(void)
         ".syntax divided\n\t"
     );
 }
-

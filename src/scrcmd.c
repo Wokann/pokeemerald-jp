@@ -84,7 +84,6 @@ void TryOverrideEventObjectTemplateCoords(u8 localId, u8 x, u8 y);
 void npc_by_local_id_and_map_set_field_1_bit_x20(u8 localId, u8 mapGroup, u8 mapNum, u8 flag);
 void SetObjectSubpriority(u8 localId, u8 mapNum, u8 mapGroup, u8 priority);
 void ResetObjectSubpriority(u8 localId, u8 mapNum, u8 mapGroup);
-void sub_0812FDE0(u8 a);
 void ShowContestWinner(void);
 u8 GetPriceReduction(u8 a);
 u8 GetCurrentApproachingTrainerEventObjectId(void);
@@ -1488,7 +1487,7 @@ bool8 ScrCmd_showcontestwinner(struct ScriptContext *ctx)
     u8 a = *ctx->scriptPtr++;
 
     if (a != 0)
-        sub_0812FDE0(a);
+        SetContestWinnerForPainting(a);
     ShowContestWinner();
     ScriptContext_Stop();
     return TRUE;

@@ -9934,6 +9934,7 @@ SECTIONS {
         src/slot_machine.o(.rodata.sEmptyTilemap);
         src/data/text/region_texts38.o(.rodata);
         src/data/text/region_texts38.o(.rodata.gText_ReelTimeHelp);
+        data/contest_painting.o(.rodata);
         data/data_b2d_mid38.o(.rodata);
         src/data/text/region_texts33.o(.rodata);
         data/data_b2d_mid33.o(.rodata.data_b2d_mid33_pokeblock_flavor_prefix);

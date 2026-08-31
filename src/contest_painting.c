@@ -1,1402 +1,525 @@
 #include "global.h"
+#include "malloc.h"
+#include "battle.h"
+#include "battle_gfx_sfx_util.h"
+#include "bg.h"
+#include "contest.h"
 #include "contest_painting.h"
+#include "data.h"
+#include "decompress.h"
+#include "gpu_regs.h"
+#include "image_processing_effects.h"
+#include "international_string_util.h"
+#include "main.h"
+#include "lilycove_lady.h"
+#include "palette.h"
+#include "random.h"
+#include "scanline_effect.h"
+#include "string_util.h"
+#include "strings.h"
+#include "text.h"
+#include "window.h"
+#include "constants/rgb.h"
 
-__attribute__((naked)) void sub_0812FDE0(void)
+extern u16 (*gContestMonPixels)[][32];
+extern struct ImageProcessingContext gImageProcessingContext;
+extern struct ContestWinner *gContestPaintingWinner;
+extern u16 *gContestPaintingMonPalette;
+
+extern u8 sHoldState;
+extern u16 sMosaicVal;
+extern u16 sFadeCounter;
+extern bool8 sVarsInitialized;
+extern u8 sWindowId;
+
+static void ShowContestPainting(void);
+static void HoldContestPainting(void);
+static void InitContestPaintingWindow(void);
+static void InitContestPaintingBg(void);
+static void InitContestPaintingVars(bool8);
+static void CreateContestPaintingPicture(u8, u8);
+static void PrintContestPaintingCaption(u8, u8);
+static void VBlankCB_ContestPainting(void);
+static void _InitContestMonPixels(u8 *spriteGfx, u16 *palette, u16 (*destPixels)[64][64]);
+
+extern const u8 gContestHallPaintingCaption[];
+extern const u8 gContestPaintingContest[];
+extern const u8 gContestCoolness[];
+extern const u8 gContestBeauty[];
+extern const u8 gContestCuteness[];
+extern const u8 gContestSmartness[];
+extern const u8 gContestToughness[];
+extern const u8 gContestRankNormal[];
+extern const u8 gContestRankSuper[];
+extern const u8 gContestRankHyper[];
+extern const u8 gContestRankMaster[];
+extern const u8 gContestLink[];
+extern const u8 gContestPaintingCool1[];
+extern const u8 gContestPaintingCool2[];
+extern const u8 gContestPaintingCool3[];
+extern const u8 gContestPaintingBeauty1[];
+extern const u8 gContestPaintingBeauty2[];
+extern const u8 gContestPaintingBeauty3[];
+extern const u8 gContestPaintingCute1[];
+extern const u8 gContestPaintingCute2[];
+extern const u8 gContestPaintingCute3[];
+extern const u8 gContestPaintingSmart1[];
+extern const u8 gContestPaintingSmart2[];
+extern const u8 gContestPaintingSmart3[];
+extern const u8 gContestPaintingTough1[];
+extern const u8 gContestPaintingTough2[];
+extern const u8 gContestPaintingTough3[];
+
+extern const u16 sContestPaintingFramePalettes[];
+extern const u32 sContestPaintingFrameTiles_Cool[];
+extern const u32 sContestPaintingFrameTiles_Beauty[];
+extern const u32 sContestPaintingFrameTiles_Cute[];
+extern const u32 sContestPaintingFrameTiles_Smart[];
+extern const u32 sContestPaintingFrameTiles_Tough[];
+extern const u32 sContestPaintingFrameTiles_HallLobby[];
+extern const u32 sContestPaintingFrameTilemap_Cool[];
+extern const u32 sContestPaintingFrameTilemap_Beauty[];
+extern const u32 sContestPaintingFrameTilemap_Cute[];
+extern const u32 sContestPaintingFrameTilemap_Smart[];
+extern const u32 sContestPaintingFrameTilemap_Tough[];
+extern const u32 sContestPaintingFrameTilemap_HallLobby[];
+extern const u8 *const sContestPaintingCategoryNames_Unused[];
+extern const u8 *const sContestPaintingRankNames[];
+extern const struct BgTemplate sContestPaintingBgTemplates[1];
+extern const struct WindowTemplate sContestPaintingWindowTemplate;
+extern const u8 *const sContestPaintingMuseumCaptions[NUM_PAINTING_CAPTIONS * CONTEST_CATEGORIES_COUNT];
+extern const struct OamData sContestPaintingMonOamData;
+extern const u16 sContestPaintingBgPalette[];
+
+void SetContestWinnerForPainting(int contestWinnerId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	ldr r3, _0812FE10\n\t"
-        "	ldr r4, _0812FE14\n\t"
-        "	ldr r1, _0812FE18\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r1, r0, #5\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldr r1, _0812FE1C\n\t"
-        "	ldr r5, _0812FE20\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldm r2!, {r5, r6, r7}\n\t"
-        "	stm r1!, {r5, r6, r7}\n\t"
-        "	ldm r2!, {r5, r6, r7}\n\t"
-        "	stm r1!, {r5, r6, r7}\n\t"
-        "	ldm r2!, {r6, r7}\n\t"
-        "	stm r1!, {r6, r7}\n\t"
-        "	strb r0, [r3]\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r4]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812FE10: .4byte gUnknown_2039BFD\n\t"
-        "_0812FE14: .4byte gUnknown_2039BFC\n\t"
-        "_0812FE18: .4byte gSaveBlock1Ptr\n\t"
-        "_0812FE1C: .4byte gUnknown_2039BDC\n\t"
-        "_0812FE20: .4byte 0x00002E90\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 *saveIdx = &gCurContestWinnerSaveIdx;
+    u8 *isForArtist = &gCurContestWinnerIsForArtist;
+    gCurContestWinner = gSaveBlock1Ptr->contestWinners[contestWinnerId - 1];
+    *saveIdx = contestWinnerId - 1;
+    *isForArtist = FALSE;
 }
-
 
 void CB2_ContestPainting(void)
 {
     ShowContestPainting();
 }
 
-
-__attribute__((naked)) void CB2_HoldContestPainting(void)
+static void CB2_HoldContestPainting(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl HoldContestPainting\n\t"
-        "	bl RunTextPrinters\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    HoldContestPainting();
+    RunTextPrinters();
+    UpdatePaletteFade();
 }
 
-__attribute__((naked)) void CB2_QuitContestPainting(void)
+static void CB2_QuitContestPainting(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _0812FE80\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r4, _0812FE84\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	movs r5, #0\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812FE88\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r0, _0812FE8C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl RemoveWindow\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBgTilemapBuffer\n\t"
-        "	bl Free\n\t"
-        "	bl FreeMonSpritesGfx\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812FE80: .4byte gMain\n\t"
-        "_0812FE84: .4byte gUnknown_3005F04\n\t"
-        "_0812FE88: .4byte gUnknown_3005ED0\n\t"
-        "_0812FE8C: .4byte gUnknown_30011F7\n\t"
-        ".syntax divided\n\t"
-    );
+    SetMainCallback2(gMain.savedCallback);
+    FREE_AND_SET_NULL(gContestPaintingMonPalette);
+    FREE_AND_SET_NULL(gContestMonPixels);
+    RemoveWindow(sWindowId);
+    Free(GetBgTilemapBuffer(1));
+    FreeMonSpritesGfx();
 }
 
-__attribute__((naked)) void ShowContestPainting(void)
+static void ShowContestPainting(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r1, _0812FEB0\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	cmp r0, #4\n\t"
-        "	bls _0812FEA6\n\t"
-        "	b _0812FFD8\n\t"
-        "_0812FEA6:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0812FEB4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812FEB0: .4byte gMain\n\t"
-        "_0812FEB4: .4byte _0812FEB8\n\t"
-        "_0812FEB8:\n\t"
-        "	.4byte _0812FECC\n\t"
-        "	.4byte _0812FF00\n\t"
-        "	.4byte _0812FF4C\n\t"
-        "	.4byte _0812FF62\n\t"
-        "	.4byte _0812FF8C\n\t"
-        "_0812FECC:\n\t"
-        "	bl ScanlineEffect_Stop\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	bl AllocateMonSpritesGfx\n\t"
-        "	ldr r1, _0812FEF4\n\t"
-        "	ldr r0, _0812FEF8\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl InitContestPaintingVars\n\t"
-        "	bl InitContestPaintingBg\n\t"
-        "	ldr r1, _0812FEFC\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _0812FF76\n\t"
-        "	.align 2, 0\n\t"
-        "_0812FEF4: .4byte gUnknown_3005F00\n\t"
-        "_0812FEF8: .4byte gUnknown_2039BDC\n\t"
-        "_0812FEFC: .4byte gMain\n\t"
-        "_0812FF00:\n\t"
-        "	bl ResetPaletteFade\n\t"
-        "	movs r2, #0xc0\n\t"
-        "	lsls r2, r2, #0x13\n\t"
-        "	movs r3, #0xc0\n\t"
-        "	lsls r3, r3, #9\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r1, _0812FF44\n\t"
-        "	movs r4, #0x80\n\t"
-        "	lsls r4, r4, #5\n\t"
-        "	ldr r6, _0812FF48\n\t"
-        "	movs r7, #0x85\n\t"
-        "	lsls r7, r7, #0x18\n\t"
-        "_0812FF1A:\n\t"
-        "	str r5, [sp]\n\t"
-        "	mov r0, sp\n\t"
-        "	str r0, [r1]\n\t"
-        "	str r2, [r1, #4]\n\t"
-        "	str r6, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	subs r3, r3, r4\n\t"
-        "	cmp r3, r4\n\t"
-        "	bhi _0812FF1A\n\t"
-        "	str r5, [sp]\n\t"
-        "	mov r0, sp\n\t"
-        "	str r0, [r1]\n\t"
-        "	str r2, [r1, #4]\n\t"
-        "	lsrs r0, r3, #2\n\t"
-        "	orrs r0, r7\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	b _0812FF6E\n\t"
-        "	.align 2, 0\n\t"
-        "_0812FF44: .4byte 0x040000D4\n\t"
-        "_0812FF48: .4byte 0x85000400\n\t"
-        "_0812FF4C:\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	bl SeedRng\n\t"
-        "	bl InitKeys\n\t"
-        "	bl InitContestPaintingWindow\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r4, r0\n\t"
-        "	b _0812FF76\n\t"
-        "_0812FF62:\n\t"
-        "	ldr r0, _0812FF80\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, _0812FF84\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	bl sub_081308DC\n\t"
-        "_0812FF6E:\n\t"
-        "	ldr r1, _0812FF88\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "_0812FF76:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0812FFD8\n\t"
-        "	.align 2, 0\n\t"
-        "_0812FF80: .4byte gUnknown_2039BFD\n\t"
-        "_0812FF84: .4byte gUnknown_2039BFC\n\t"
-        "_0812FF88: .4byte gMain\n\t"
-        "_0812FF8C:\n\t"
-        "	ldr r0, _0812FFE0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, _0812FFE4\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	bl PrintContestPaintingCaption\n\t"
-        "	ldr r0, _0812FFE8\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp]\n\t"
-        "	ldr r0, _0812FFEC\n\t"
-        "	mov r2, sp\n\t"
-        "	str r2, [r0]\n\t"
-        "	str r1, [r0, #4]\n\t"
-        "	ldr r1, _0812FFF0\n\t"
-        "	str r1, [r0, #8]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	bl BeginFastPaletteFade\n\t"
-        "	ldr r0, _0812FFF4\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	ldr r0, _0812FFF8\n\t"
-        "	strb r4, [r0]\n\t"
-        "	movs r1, #0x9a\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0812FFFC\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_0812FFD8:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812FFE0: .4byte gUnknown_2039BFD\n\t"
-        "_0812FFE4: .4byte gUnknown_2039BFC\n\t"
-        "_0812FFE8: .4byte gUnknown_858F648\n\t"
-        "_0812FFEC: .4byte 0x040000D4\n\t"
-        "_0812FFF0: .4byte 0x85000100\n\t"
-        "_0812FFF4: .4byte VBlankCB_ContestPainting + 1\n\t"
-        "_0812FFF8: .4byte gUnknown_30011F0\n\t"
-        "_0812FFFC: .4byte CB2_HoldContestPainting + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gMain.state)
+    {
+    case 0:
+        ScanlineEffect_Stop();
+        SetVBlankCallback(NULL);
+        AllocateMonSpritesGfx();
+        gContestPaintingWinner = &gCurContestWinner;
+        InitContestPaintingVars(TRUE);
+        InitContestPaintingBg();
+        gMain.state++;
+        break;
+    case 1:
+        ResetPaletteFade();
+        DmaClearLarge32(3, (void *)VRAM, VRAM_SIZE, 0x1000);
+        ResetSpriteData();
+        gMain.state++;
+        break;
+    case 2:
+        SeedRng(gMain.vblankCounter1);
+        InitKeys();
+        InitContestPaintingWindow();
+        gMain.state++;
+        break;
+    case 3:
+        CreateContestPaintingPicture(gCurContestWinnerSaveIdx, gCurContestWinnerIsForArtist);
+        gMain.state++;
+        break;
+    case 4:
+        PrintContestPaintingCaption(gCurContestWinnerSaveIdx, gCurContestWinnerIsForArtist);
+        SetBackdropFromPalette(sContestPaintingBgPalette);
+        DmaClear32(3, PLTT, PLTT_SIZE);
+        BeginFastPaletteFade(2);
+        SetVBlankCallback(VBlankCB_ContestPainting);
+        sHoldState = 0;
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_ON);
+        SetMainCallback2(CB2_HoldContestPainting);
+        break;
+    }
 }
 
-__attribute__((naked)) void HoldContestPainting(void)
+static void HoldContestPainting(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r3, _08130018\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _08130054\n\t"
-        "	cmp r1, #1\n\t"
-        "	bgt _0813001C\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _08130022\n\t"
-        "	b _081300BA\n\t"
-        "	.align 2, 0\n\t"
-        "_08130018: .4byte gUnknown_30011F0\n\t"
-        "_0813001C:\n\t"
-        "	cmp r1, #2\n\t"
-        "	beq _08130094\n\t"
-        "	b _081300BA\n\t"
-        "_08130022:\n\t"
-        "	ldr r0, _08130048\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08130032\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r3]\n\t"
-        "_08130032:\n\t"
-        "	ldr r0, _0813004C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081300BA\n\t"
-        "	ldr r1, _08130050\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081300BA\n\t"
-        "	subs r0, #1\n\t"
-        "	b _081300B8\n\t"
-        "	.align 2, 0\n\t"
-        "_08130048: .4byte gPaletteFade\n\t"
-        "_0813004C: .4byte gUnknown_30011F6\n\t"
-        "_08130050: .4byte gUnknown_30011F4\n\t"
-        "_08130054:\n\t"
-        "	ldr r0, _08130088\n\t"
-        "	ldrh r2, [r0, #0x2e]\n\t"
-        "	ands r1, r2\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _08130066\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08130078\n\t"
-        "_08130066:\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r3]\n\t"
-        "	subs r0, #3\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "_08130078:\n\t"
-        "	ldr r0, _0813008C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081300BA\n\t"
-        "	ldr r1, _08130090\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081300B8\n\t"
-        "	.align 2, 0\n\t"
-        "_08130088: .4byte gMain\n\t"
-        "_0813008C: .4byte gUnknown_30011F6\n\t"
-        "_08130090: .4byte gUnknown_30011F4\n\t"
-        "_08130094:\n\t"
-        "	ldr r0, _081300C0\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081300A6\n\t"
-        "	ldr r0, _081300C4\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_081300A6:\n\t"
-        "	ldr r0, _081300C8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081300BA\n\t"
-        "	ldr r1, _081300CC\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0x1d\n\t"
-        "	bhi _081300BA\n\t"
-        "	adds r0, #1\n\t"
-        "_081300B8:\n\t"
-        "	strh r0, [r1]\n\t"
-        "_081300BA:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081300C0: .4byte gPaletteFade\n\t"
-        "_081300C4: .4byte CB2_QuitContestPainting + 1\n\t"
-        "_081300C8: .4byte gUnknown_30011F6\n\t"
-        "_081300CC: .4byte gUnknown_30011F4\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sHoldState)
+    {
+    case 0:
+        if (!gPaletteFade.active)
+            sHoldState = 1;
+        if (sVarsInitialized && sFadeCounter)
+            sFadeCounter--;
+        break;
+    case 1:
+        if ((JOY_NEW(A_BUTTON)) || (JOY_NEW(B_BUTTON)))
+        {
+            sHoldState++;
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        }
+
+        if (sVarsInitialized)
+            sFadeCounter = 0;
+        break;
+    case 2:
+        if (!gPaletteFade.active)
+            SetMainCallback2(CB2_QuitContestPainting);
+        if (sVarsInitialized && sFadeCounter < 30)
+            sFadeCounter++;
+        break;
+    }
 }
 
-__attribute__((naked)) void InitContestPaintingWindow(void)
+static void InitContestPaintingWindow(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ResetBgsAndClearDma3BusyFlags\n\t"
-        "	ldr r1, _08130138\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl InitBgsFromTemplates\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	bl AllocZeroed\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	ldr r4, _0813013C\n\t"
-        "	ldr r0, _08130140\n\t"
-        "	bl AddWindow\n\t"
-        "	strb r0, [r4]\n\t"
-        "	bl DeactivateAllTextPrinters\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ShowBg\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08130138: .4byte gUnknown_858F5F8\n\t"
-        "_0813013C: .4byte gUnknown_30011F7\n\t"
-        "_08130140: .4byte gUnknown_858F5FC\n\t"
-        ".syntax divided\n\t"
-    );
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, sContestPaintingBgTemplates, ARRAY_COUNT(sContestPaintingBgTemplates));
+    ChangeBgX(1, 0, BG_COORD_SET);
+    ChangeBgY(1, 0, BG_COORD_SET);
+    SetBgTilemapBuffer(1, AllocZeroed(BG_SCREEN_SIZE));
+    sWindowId = AddWindow(&sContestPaintingWindowTemplate);
+    DeactivateAllTextPrinters();
+    FillWindowPixelBuffer(sWindowId, PIXEL_FILL(0));
+    PutWindowTilemap(sWindowId);
+    CopyWindowToVram(sWindowId, COPYWIN_FULL);
+    ShowBg(1);
 }
 
-__attribute__((naked)) void PrintContestPaintingCaption(void)
+static void PrintContestPaintingCaption(u8 contestType, bool8 isForArtist)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _0813022A\n\t"
-        "	ldr r6, _081301C8\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldrb r5, [r1, #0xa]\n\t"
-        "	cmp r0, #7\n\t"
-        "	bhi _081301F4\n\t"
-        "	ldr r4, _081301CC\n\t"
-        "	ldr r1, _081301D0\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r1, _081301D4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringAppend\n\t"
-        "	ldr r1, _081301D8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringAppend\n\t"
-        "	ldr r1, _081301DC\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldrb r0, [r0, #0x1e]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringAppend\n\t"
-        "	ldr r0, _081301E0\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r1, #0x16\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r0, _081301E4\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r1, #0xb\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r4, _081301E8\n\t"
-        "	ldr r1, _081301EC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	ldr r0, _081301F0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	movs r3, #8\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	b _08130224\n\t"
-        "	.align 2, 0\n\t"
-        "_081301C8: .4byte gUnknown_3005F00\n\t"
-        "_081301CC: .4byte gStringVar1\n\t"
-        "_081301D0: .4byte gUnknown_858F5D0\n\t"
-        "_081301D4: .4byte gContestPaintingContest\n\t"
-        "_081301D8: .4byte gUnknown_85C941F\n\t"
-        "_081301DC: .4byte gUnknown_858F5E4\n\t"
-        "_081301E0: .4byte gStringVar2\n\t"
-        "_081301E4: .4byte gStringVar3\n\t"
-        "_081301E8: .4byte gStringVar4\n\t"
-        "_081301EC: .4byte gContestHallPaintingCaption\n\t"
-        "_081301F0: .4byte gUnknown_30011F7\n\t"
-        "_081301F4:\n\t"
-        "	ldr r0, _08130234\n\t"
-        "	adds r1, #0xb\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r4, _08130238\n\t"
-        "	ldr r1, _0813023C\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	ldr r0, _08130240\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "_08130224:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "_0813022A:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08130234: .4byte gStringVar1\n\t"
-        "_08130238: .4byte gStringVar4\n\t"
-        "_0813023C: .4byte gUnknown_858F604\n\t"
-        "_08130240: .4byte gUnknown_30011F7\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 category;
+
+    if (isForArtist == TRUE)
+        return;
+
+    category = gContestPaintingWinner->contestCategory;
+    if (contestType < MUSEUM_CONTEST_WINNERS_START)
+    {
+        StringCopy(gStringVar1, sContestPaintingCategoryNames_Unused[category]);
+        StringAppend(gStringVar1, gContestPaintingContest);
+        StringAppend(gStringVar1, gText_Space);
+        StringAppend(gStringVar1, sContestPaintingRankNames[gContestPaintingWinner->contestRank]);
+        StringCopy(gStringVar2, gContestPaintingWinner->trainerName);
+        StringCopy(gStringVar3, gContestPaintingWinner->monName);
+        StringExpandPlaceholders(gStringVar4, gContestHallPaintingCaption);
+        AddTextPrinterParameterized(sWindowId, FONT_NORMAL, gStringVar4, 8, 1, 0, 0);
+    }
+    else
+    {
+        StringCopy(gStringVar1, gContestPaintingWinner->monName);
+        StringExpandPlaceholders(gStringVar4, sContestPaintingMuseumCaptions[category]);
+        AddTextPrinterParameterized(sWindowId, FONT_NORMAL, gStringVar4, 0, 1, 0, 0);
+    }
+
+    CopyBgTilemapBufferToVram(1);
 }
 
-__attribute__((naked)) void InitContestPaintingBg(void)
+static void InitContestPaintingBg(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r2, _08130284\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r1, _08130288\n\t"
-        "	movs r0, #8\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _0813028C\n\t"
-        "	movs r0, #0xa\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x52\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x54\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08130284: .4byte 0x04000200\n\t"
-        "_08130288: .4byte 0x00000C42\n\t"
-        "_0813028C: .4byte 0x00000A45\n\t"
-        ".syntax divided\n\t"
-    );
+    SetGpuReg(REG_OFFSET_DISPCNT, 0);
+    REG_IE |= INTR_FLAG_VBLANK;
+    SetGpuReg(REG_OFFSET_BG0CNT, BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(12) | BGCNT_MOSAIC | BGCNT_16COLOR | BGCNT_TXT256x256);
+    SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(10) | BGCNT_MOSAIC | BGCNT_16COLOR | BGCNT_TXT256x256);
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+    SetGpuReg(REG_OFFSET_BLDY, 0);
 }
 
-__attribute__((naked)) void InitContestPaintingVars(void)
+static void InitContestPaintingVars(bool8 reset)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _081302B4\n\t"
-        "	ldr r0, _081302A8\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _081302AC\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _081302B0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _081302C6\n\t"
-        "	.align 2, 0\n\t"
-        "_081302A8: .4byte gUnknown_30011F6\n\t"
-        "_081302AC: .4byte gUnknown_30011F2\n\t"
-        "_081302B0: .4byte gUnknown_30011F4\n\t"
-        "_081302B4:\n\t"
-        "	ldr r1, _081302CC\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, _081302D0\n\t"
-        "	movs r0, #0xf\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _081302D4\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	strh r0, [r1]\n\t"
-        "_081302C6:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081302CC: .4byte gUnknown_30011F6\n\t"
-        "_081302D0: .4byte gUnknown_30011F2\n\t"
-        "_081302D4: .4byte gUnknown_30011F4\n\t"
-        ".syntax divided\n\t"
-    );
+    if (reset == FALSE)
+    {
+        // Never reached
+        sVarsInitialized = FALSE;
+        sMosaicVal = 0;
+        sFadeCounter = 0;
+    }
+    else
+    {
+        sVarsInitialized = TRUE;
+        sMosaicVal = 15;
+        sFadeCounter = 30;
+    }
 }
 
-__attribute__((naked)) void UpdateContestPaintingMosaicEffect(void)
+static void UpdateContestPaintingMosaicEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081302EC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081302F0\n\t"
-        "	movs r0, #0x4c\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	b _08130318\n\t"
-        "	.align 2, 0\n\t"
-        "_081302EC: .4byte gUnknown_30011F6\n\t"
-        "_081302F0:\n\t"
-        "	ldr r1, _0813031C\n\t"
-        "	movs r0, #0xa\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _08130320\n\t"
-        "	ldr r0, _08130324\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsrs r0, r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r1, r0, #0xc\n\t"
-        "	lsls r2, r0, #8\n\t"
-        "	orrs r1, r2\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x4c\n\t"
-        "	bl SetGpuReg\n\t"
-        "_08130318:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813031C: .4byte 0x00000A45\n\t"
-        "_08130320: .4byte gUnknown_30011F2\n\t"
-        "_08130324: .4byte gUnknown_30011F4\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!sVarsInitialized)
+    {
+        SetGpuReg(REG_OFFSET_MOSAIC, 0);
+    }
+    else
+    {
+        SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(10) | BGCNT_MOSAIC | BGCNT_16COLOR | BGCNT_TXT256x256);
+        sMosaicVal = sFadeCounter / 2;
+        SetGpuReg(REG_OFFSET_MOSAIC, (sMosaicVal << 12) | (sMosaicVal << 8) | (sMosaicVal << 4) | (sMosaicVal << 0));
+    }
 }
 
-__attribute__((naked)) void VBlankCB_ContestPainting(void)
+static void VBlankCB_ContestPainting(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl UpdateContestPaintingMosaicEffect\n\t"
-        "	bl LoadOam\n\t"
-        "	bl ProcessSpriteCopyRequests\n\t"
-        "	bl TransferPlttBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateContestPaintingMosaicEffect();
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
 }
 
-__attribute__((naked)) void sub_08130340(void)
+static void InitContestMonPixels(u16 species, bool8 backPic)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r6, _0813038C\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetMonSpritePalFromSpeciesAndPersonality\n\t"
-        "	ldr r7, _08130390\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	bl LZDecompressWram\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _081303A0\n\t"
-        "	lsls r0, r5, #3\n\t"
-        "	ldr r1, _08130394\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r4, _08130398\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r1, [r1, #8]\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldr r3, [r2]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl HandleLoadSpecialPokePic_DontHandleDeoxys\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r2, _0813039C\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	bl sub_081303D8\n\t"
-        "	b _081303C4\n\t"
-        "	.align 2, 0\n\t"
-        "_0813038C: .4byte gUnknown_3005F00\n\t"
-        "_08130390: .4byte gUnknown_3005F04\n\t"
-        "_08130394: .4byte gMonFrontPicTable\n\t"
-        "_08130398: .4byte gMonSpritesGfxPtr\n\t"
-        "_0813039C: .4byte gUnknown_3005ED0\n\t"
-        "_081303A0:\n\t"
-        "	lsls r0, r5, #3\n\t"
-        "	ldr r1, _081303CC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r4, _081303D0\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r1, [r1, #4]\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldr r3, [r2]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl HandleLoadSpecialPokePic_DontHandleDeoxys\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r2, _081303D4\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	bl sub_081303D8\n\t"
-        "_081303C4:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081303CC: .4byte gMonBackPicTable\n\t"
-        "_081303D0: .4byte gMonSpritesGfxPtr\n\t"
-        "_081303D4: .4byte gUnknown_3005ED0\n\t"
-        ".syntax divided\n\t"
-    );
+    const void *pal = GetMonSpritePalFromSpeciesAndPersonality(species, gContestPaintingWinner->trainerId, gContestPaintingWinner->personality);
+    LZDecompressWram(pal, gContestPaintingMonPalette);
+    if (!backPic)
+    {
+        HandleLoadSpecialPokePic_DontHandleDeoxys(
+            &gMonFrontPicTable[species],
+            gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_LEFT],
+            species,
+            gContestPaintingWinner->personality);
+        _InitContestMonPixels(gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_LEFT], gContestPaintingMonPalette, (void *)gContestMonPixels);
+    }
+    else
+    {
+        HandleLoadSpecialPokePic_DontHandleDeoxys(
+            &gMonBackPicTable[species],
+            gMonSpritesGfxPtr->sprites.ptr[B_POSITION_PLAYER_LEFT],
+            species,
+            gContestPaintingWinner->personality);
+        _InitContestMonPixels(gMonSpritesGfxPtr->sprites.ptr[B_POSITION_PLAYER_LEFT], gContestPaintingMonPalette, (void *)gContestMonPixels);
+    }
 }
 
-__attribute__((naked)) void sub_081303D8(void)
+static void _InitContestMonPixels(u8 *spriteGfx, u16 *palette, u16 (*destPixels)[64][64])
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	mov sl, r0\n\t"
-        "	mov sb, r1\n\t"
-        "	str r2, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "_081303EC:\n\t"
-        "	movs r3, #0\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "_081303F6:\n\t"
-        "	movs r1, #0\n\t"
-        "	adds r2, r3, #1\n\t"
-        "	mov r8, r2\n\t"
-        "	ldr r7, [sp, #8]\n\t"
-        "	adds r0, r7, r3\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	mov ip, r0\n\t"
-        "	lsls r4, r3, #3\n\t"
-        "_08130406:\n\t"
-        "	movs r3, #0\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r6, r1, #1\n\t"
-        "	mov r2, ip\n\t"
-        "	adds r5, r2, r0\n\t"
-        "	ldr r7, [sp, #8]\n\t"
-        "	adds r0, r7, r1\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	adds r2, r0, r1\n\t"
-        "_0813041A:\n\t"
-        "	lsrs r0, r3, #1\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	add r0, sl\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0813042E\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	b _08130432\n\t"
-        "_0813042E:\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r1, r0\n\t"
-        "_08130432:\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _08130444\n\t"
-        "	adds r0, r4, r3\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r7, #0x80\n\t"
-        "	lsls r7, r7, #8\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	b _08130450\n\t"
-        "_08130444:\n\t"
-        "	adds r0, r4, r3\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	add r1, sb\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "_08130450:\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	cmp r3, #7\n\t"
-        "	bls _0813041A\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	cmp r1, #7\n\t"
-        "	bls _08130406\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	cmp r3, #7\n\t"
-        "	bls _081303F6\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #7\n\t"
-        "	bls _081303EC\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 tileY, tileX, pixelY, pixelX;
+    u8 colorIndex;
+
+    for (tileY = 0; tileY < 8; tileY++)
+    {
+        for (tileX = 0; tileX < 8; tileX++)
+        {
+            for (pixelY = 0; pixelY < 8; pixelY++)
+            {
+                for (pixelX = 0; pixelX < 8; pixelX++)
+                {
+                    colorIndex = spriteGfx[32 * (tileY * 8 + tileX) + (pixelY << 2) + (pixelX >> 1)];
+                    if (pixelX & 1)
+                        colorIndex >>= 4;
+                    else
+                        colorIndex &= 0xF;
+
+                    if (colorIndex == 0) // transparent pixel
+                        (*destPixels)[8 * tileY + pixelY][tileX * 8 + pixelX] = 0x8000;
+                    else
+                        (*destPixels)[8 * tileY + pixelY][tileX * 8 + pixelX] = palette[colorIndex];
+                }
+            }
+        }
+    }
 }
 
-__attribute__((naked)) void sub_08130488(void)
+#define VRAM_PICTURE_DATA(x, y) (((u16 *)(BG_SCREEN_ADDR(12)))[(y) * 32 + (x)])
+
+static void LoadContestPaintingFrame(u8 contestWinnerId, bool8 isForArtist)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _081304C4\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl LoadPalette\n\t"
-        "	cmp r4, #1\n\t"
-        "	beq _081304A6\n\t"
-        "	b _081305FC\n\t"
-        "_081304A6:\n\t"
-        "	ldr r0, _081304C8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl __udivsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #4\n\t"
-        "	bhi _08130564\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081304CC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081304C4: .4byte gUnknown_85886AC\n\t"
-        "_081304C8: .4byte gUnknown_3005F00\n\t"
-        "_081304CC: .4byte _081304D0\n\t"
-        "_081304D0:\n\t"
-        "	.4byte _081304E4\n\t"
-        "	.4byte _081304FC\n\t"
-        "	.4byte _08130514\n\t"
-        "	.4byte _0813052C\n\t"
-        "	.4byte _08130550\n\t"
-        "_081304E4:\n\t"
-        "	ldr r0, _081304F4\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	bl RLUnCompVram\n\t"
-        "	ldr r0, _081304F8\n\t"
-        "	b _08130538\n\t"
-        "	.align 2, 0\n\t"
-        "_081304F4: .4byte gUnknown_85888AC\n\t"
-        "_081304F8: .4byte gUnknown_858D784\n\t"
-        "_081304FC:\n\t"
-        "	ldr r0, _0813050C\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	bl RLUnCompVram\n\t"
-        "	ldr r0, _08130510\n\t"
-        "	b _08130538\n\t"
-        "	.align 2, 0\n\t"
-        "_0813050C: .4byte gUnknown_8589930\n\t"
-        "_08130510: .4byte gUnknown_858DC90\n\t"
-        "_08130514:\n\t"
-        "	ldr r0, _08130524\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	bl RLUnCompVram\n\t"
-        "	ldr r0, _08130528\n\t"
-        "	b _08130538\n\t"
-        "	.align 2, 0\n\t"
-        "_08130524: .4byte gUnknown_858A560\n\t"
-        "_08130528: .4byte gUnknown_858E19C\n\t"
-        "_0813052C:\n\t"
-        "	ldr r0, _08130544\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	bl RLUnCompVram\n\t"
-        "	ldr r0, _08130548\n\t"
-        "_08130538:\n\t"
-        "	ldr r1, _0813054C\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl RLUnCompWram\n\t"
-        "	b _08130564\n\t"
-        "	.align 2, 0\n\t"
-        "_08130544: .4byte gUnknown_858B098\n\t"
-        "_08130548: .4byte gUnknown_858E6A8\n\t"
-        "_0813054C: .4byte gUnknown_3005ED0\n\t"
-        "_08130550:\n\t"
-        "	ldr r0, _081305E0\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	bl RLUnCompVram\n\t"
-        "	ldr r0, _081305E4\n\t"
-        "	ldr r1, _081305E8\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl RLUnCompWram\n\t"
-        "_08130564:\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r5, _081305EC\n\t"
-        "	ldr r0, _081305F0\n\t"
-        "	adds r4, r0, #0\n\t"
-        "_0813056C:\n\t"
-        "	movs r3, #0\n\t"
-        "	lsls r2, r1, #5\n\t"
-        "_08130570:\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r4, [r0]\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #0x1f\n\t"
-        "	bls _08130570\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0x13\n\t"
-        "	bls _0813056C\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r0, _081305F4\n\t"
-        "	mov ip, r0\n\t"
-        "	ldr r7, _081305E8\n\t"
-        "_08130594:\n\t"
-        "	movs r3, #0\n\t"
-        "	adds r6, r1, #1\n\t"
-        "	lsls r5, r1, #5\n\t"
-        "	lsls r4, r1, #6\n\t"
-        "_0813059C:\n\t"
-        "	adds r2, r5, r3\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	add r2, ip\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	lsls r1, r3, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, #0x8c\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #0x11\n\t"
-        "	bls _0813059C\n\t"
-        "	lsls r0, r6, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #9\n\t"
-        "	bls _08130594\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r4, _081305F8\n\t"
-        "	ldr r2, _081305E8\n\t"
-        "_081305C8:\n\t"
-        "	lsls r1, r3, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #0xf\n\t"
-        "	bls _081305C8\n\t"
-        "	b _081306CE\n\t"
-        "	.align 2, 0\n\t"
-        "_081305E0: .4byte gUnknown_858C050\n\t"
-        "_081305E4: .4byte gUnknown_858EBB4\n\t"
-        "_081305E8: .4byte gUnknown_3005ED0\n\t"
-        "_081305EC: .4byte 0x06006000\n\t"
-        "_081305F0: .4byte 0x00001015\n\t"
-        "_081305F4: .4byte 0x0600608C\n\t"
-        "_081305F8: .4byte 0x0600608E\n\t"
-        "_081305FC:\n\t"
-        "	cmp r5, #7\n\t"
-        "	bhi _08130618\n\t"
-        "	ldr r0, _08130610\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	bl RLUnCompVram\n\t"
-        "	ldr r0, _08130614\n\t"
-        "	b _081306A8\n\t"
-        "	.align 2, 0\n\t"
-        "_08130610: .4byte gUnknown_858D180\n\t"
-        "_08130614: .4byte gUnknown_858F0C0\n\t"
-        "_08130618:\n\t"
-        "	ldr r0, _08130638\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl __udivsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #4\n\t"
-        "	bhi _081306CE\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0813063C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08130638: .4byte gUnknown_3005F00\n\t"
-        "_0813063C: .4byte _08130640\n\t"
-        "_08130640:\n\t"
-        "	.4byte _08130654\n\t"
-        "	.4byte _0813066C\n\t"
-        "	.4byte _08130684\n\t"
-        "	.4byte _0813069C\n\t"
-        "	.4byte _081306BC\n\t"
-        "_08130654:\n\t"
-        "	ldr r0, _08130664\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	bl RLUnCompVram\n\t"
-        "	ldr r0, _08130668\n\t"
-        "	b _081306A8\n\t"
-        "	.align 2, 0\n\t"
-        "_08130664: .4byte gUnknown_85888AC\n\t"
-        "_08130668: .4byte gUnknown_858D784\n\t"
-        "_0813066C:\n\t"
-        "	ldr r0, _0813067C\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	bl RLUnCompVram\n\t"
-        "	ldr r0, _08130680\n\t"
-        "	b _081306A8\n\t"
-        "	.align 2, 0\n\t"
-        "_0813067C: .4byte gUnknown_8589930\n\t"
-        "_08130680: .4byte gUnknown_858DC90\n\t"
-        "_08130684:\n\t"
-        "	ldr r0, _08130694\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	bl RLUnCompVram\n\t"
-        "	ldr r0, _08130698\n\t"
-        "	b _081306A8\n\t"
-        "	.align 2, 0\n\t"
-        "_08130694: .4byte gUnknown_858A560\n\t"
-        "_08130698: .4byte gUnknown_858E19C\n\t"
-        "_0813069C:\n\t"
-        "	ldr r0, _081306B0\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	bl RLUnCompVram\n\t"
-        "	ldr r0, _081306B4\n\t"
-        "_081306A8:\n\t"
-        "	ldr r1, _081306B8\n\t"
-        "	bl RLUnCompVram\n\t"
-        "	b _081306CE\n\t"
-        "	.align 2, 0\n\t"
-        "_081306B0: .4byte gUnknown_858B098\n\t"
-        "_081306B4: .4byte gUnknown_858E6A8\n\t"
-        "_081306B8: .4byte 0x06006000\n\t"
-        "_081306BC:\n\t"
-        "	ldr r0, _081306D4\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	bl RLUnCompVram\n\t"
-        "	ldr r0, _081306D8\n\t"
-        "	ldr r1, _081306DC\n\t"
-        "	bl RLUnCompVram\n\t"
-        "_081306CE:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081306D4: .4byte gUnknown_858C050\n\t"
-        "_081306D8: .4byte gUnknown_858EBB4\n\t"
-        "_081306DC: .4byte 0x06006000\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 x, y;
+
+    LoadPalette(sContestPaintingFramePalettes, BG_PLTT_ID(0), 8 * PLTT_SIZE_4BPP);
+    if (isForArtist == TRUE)
+    {
+        // Load Artist's frame
+        switch (gContestPaintingWinner->contestCategory / NUM_PAINTING_CAPTIONS)
+        {
+        case CONTEST_CATEGORY_COOL:
+            RLUnCompVram(sContestPaintingFrameTiles_Cool, (void *)VRAM);
+            RLUnCompWram(sContestPaintingFrameTilemap_Cool, gContestMonPixels);
+            break;
+        case CONTEST_CATEGORY_BEAUTY:
+            RLUnCompVram(sContestPaintingFrameTiles_Beauty, (void *)VRAM);
+            RLUnCompWram(sContestPaintingFrameTilemap_Beauty, gContestMonPixels);
+            break;
+        case CONTEST_CATEGORY_CUTE:
+            RLUnCompVram(sContestPaintingFrameTiles_Cute, (void *)VRAM);
+            RLUnCompWram(sContestPaintingFrameTilemap_Cute, gContestMonPixels);
+            break;
+        case CONTEST_CATEGORY_SMART:
+            RLUnCompVram(sContestPaintingFrameTiles_Smart, (void *)VRAM);
+            RLUnCompWram(sContestPaintingFrameTilemap_Smart, gContestMonPixels);
+            break;
+        case CONTEST_CATEGORY_TOUGH:
+            RLUnCompVram(sContestPaintingFrameTiles_Tough, (void *)VRAM);
+            RLUnCompWram(sContestPaintingFrameTilemap_Tough, gContestMonPixels);
+            break;
+        }
+
+        // Set the background
+        for (y = 0; y < 20; y++)
+        {
+            for (x = 0; x < 32; x++)
+                VRAM_PICTURE_DATA(x, y) = 0x1015;
+        }
+
+        // Copy the image frame
+        for (y = 0; y < 10; y++)
+        {
+            for (x = 0; x < 18; x++)
+                VRAM_PICTURE_DATA(x + 6, y + 2) = (*gContestMonPixels)[y + 2][x + 6];
+        }
+
+        // Re-set the entire top row to the first top frame part
+        for (x = 0; x < 16; x++)
+            VRAM_PICTURE_DATA(x + 7, 2) = (*gContestMonPixels)[2][7];
+    }
+    else if (contestWinnerId < MUSEUM_CONTEST_WINNERS_START)
+    {
+        // Load Contest Hall lobby frame
+        RLUnCompVram(sContestPaintingFrameTiles_HallLobby, (void *)VRAM);
+        RLUnCompVram(sContestPaintingFrameTilemap_HallLobby, (void *)(BG_SCREEN_ADDR(12)));
+    }
+    else
+    {
+        // Load Museum frame
+        switch (gContestPaintingWinner->contestCategory / NUM_PAINTING_CAPTIONS)
+        {
+        case CONTEST_CATEGORY_COOL:
+            RLUnCompVram(sContestPaintingFrameTiles_Cool, (void *)VRAM);
+            RLUnCompVram(sContestPaintingFrameTilemap_Cool, (void *)(BG_SCREEN_ADDR(12)));
+            break;
+        case CONTEST_CATEGORY_BEAUTY:
+            RLUnCompVram(sContestPaintingFrameTiles_Beauty, (void *)VRAM);
+            RLUnCompVram(sContestPaintingFrameTilemap_Beauty, (void *)(BG_SCREEN_ADDR(12)));
+            break;
+        case CONTEST_CATEGORY_CUTE:
+            RLUnCompVram(sContestPaintingFrameTiles_Cute, (void *)VRAM);
+            RLUnCompVram(sContestPaintingFrameTilemap_Cute, (void *)(BG_SCREEN_ADDR(12)));
+            break;
+        case CONTEST_CATEGORY_SMART:
+            RLUnCompVram(sContestPaintingFrameTiles_Smart, (void *)VRAM);
+            RLUnCompVram(sContestPaintingFrameTilemap_Smart, (void *)(BG_SCREEN_ADDR(12)));
+            break;
+        case CONTEST_CATEGORY_TOUGH:
+            RLUnCompVram(sContestPaintingFrameTiles_Tough, (void *)VRAM);
+            RLUnCompVram(sContestPaintingFrameTilemap_Tough, (void *)(BG_SCREEN_ADDR(12)));
+            break;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_081306E0(void)
+#undef VRAM_PICTURE_DATA
+
+static void InitPaintingMonOamData(u8 contestWinnerId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r3, _08130714\n\t"
-        "	ldr r1, _08130718\n\t"
-        "	ldr r2, [r1, #4]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	str r1, [r3, #0x38]\n\t"
-        "	str r2, [r3, #0x3c]\n\t"
-        "	ldrh r2, [r3, #0x3c]\n\t"
-        "	ldr r1, _0813071C\n\t"
-        "	ands r1, r2\n\t"
-        "	strh r1, [r3, #0x3c]\n\t"
-        "	ldrh r1, [r3, #0x3a]\n\t"
-        "	ldr r0, _08130720\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x58\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r3, #0x3a]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0x38\n\t"
-        "	movs r0, #0x18\n\t"
-        "	strb r0, [r1]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08130714: .4byte gMain\n\t"
-        "_08130718: .4byte gUnknown_858F640\n\t"
-        "_0813071C: .4byte 0xFFFFFC00\n\t"
-        "_08130720: .4byte 0xFFFFFE00\n\t"
-        ".syntax divided\n\t"
-    );
+    gMain.oamBuffer[0] = sContestPaintingMonOamData;
+    gMain.oamBuffer[0].tileNum = 0;
+
+    if (contestWinnerId > 1)
+    {
+        gMain.oamBuffer[0].x = 88;
+        gMain.oamBuffer[0].y = 24;
+    }
+    else
+    {
+        gMain.oamBuffer[0].x = 88; // Duplicated code
+        gMain.oamBuffer[0].y = 24;
+    }
 }
 
-__attribute__((naked)) void sub_08130724(void)
+static u8 GetImageEffectForContestWinner(u8 contestWinnerId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #7\n\t"
-        "	bhi _0813073C\n\t"
-        "	ldr r0, _08130738\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	b _0813074C\n\t"
-        "	.align 2, 0\n\t"
-        "_08130738: .4byte gUnknown_3005F00\n\t"
-        "_0813073C:\n\t"
-        "	ldr r0, _0813075C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl __udivsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_0813074C:\n\t"
-        "	cmp r0, #4\n\t"
-        "	bhi _0813078A\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08130760\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813075C: .4byte gUnknown_3005F00\n\t"
-        "_08130760: .4byte _08130764\n\t"
-        "_08130764:\n\t"
-        "	.4byte _08130778\n\t"
-        "	.4byte _0813077C\n\t"
-        "	.4byte _08130780\n\t"
-        "	.4byte _08130784\n\t"
-        "	.4byte _08130788\n\t"
-        "_08130778:\n\t"
-        "	movs r0, #9\n\t"
-        "	b _0813078A\n\t"
-        "_0813077C:\n\t"
-        "	movs r0, #0xd\n\t"
-        "	b _0813078A\n\t"
-        "_08130780:\n\t"
-        "	movs r0, #2\n\t"
-        "	b _0813078A\n\t"
-        "_08130784:\n\t"
-        "	movs r0, #0x24\n\t"
-        "	b _0813078A\n\t"
-        "_08130788:\n\t"
-        "	movs r0, #6\n\t"
-        "_0813078A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 contestCategory;
+
+    if (contestWinnerId < MUSEUM_CONTEST_WINNERS_START)
+        contestCategory = gContestPaintingWinner->contestCategory;
+    else
+        contestCategory = gContestPaintingWinner->contestCategory / NUM_PAINTING_CAPTIONS;
+
+    switch (contestCategory)
+    {
+    case CONTEST_CATEGORY_COOL:
+        return IMAGE_EFFECT_OUTLINE_COLORED;
+    case CONTEST_CATEGORY_BEAUTY:
+        return IMAGE_EFFECT_SHIMMER;
+    case CONTEST_CATEGORY_CUTE:
+        return IMAGE_EFFECT_POINTILLISM;
+    case CONTEST_CATEGORY_SMART:
+        return IMAGE_EFFECT_CHARCOAL;
+    case CONTEST_CATEGORY_TOUGH:
+        return IMAGE_EFFECT_GRAYSCALE_LIGHT;
+    }
+
+    return contestCategory;
 }
 
-__attribute__((naked)) void sub_08130790(void)
+static void AllocPaintingResources(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _081307B0\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r4, _081307B4\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #6\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081307B0: .4byte gUnknown_3005F04\n\t"
-        "_081307B4: .4byte gUnknown_3005ED0\n\t"
-        ".syntax divided\n\t"
-    );
+    gContestPaintingMonPalette = AllocZeroed(OBJ_PLTT_SIZE);
+    gContestMonPixels = AllocZeroed(0x2000);
 }
 
-__attribute__((naked)) void sub_081307B8(void)
+static void DoContestPaintingImageProcessing(u8 imageEffect)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	ldr r1, _081307F8\n\t"
-        "	ldr r0, _081307FC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	ldr r0, _08130800\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r1, #0x18]\n\t"
-        "	ldr r0, _08130804\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	strb r0, [r1, #0x1f]\n\t"
-        "	strb r2, [r1, #0x19]\n\t"
-        "	strb r2, [r1, #0x1a]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	strb r0, [r1, #0x1b]\n\t"
-        "	strb r0, [r1, #0x1c]\n\t"
-        "	strb r0, [r1, #0x1d]\n\t"
-        "	strb r0, [r1, #0x1e]\n\t"
-        "	subs r0, r3, #2\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	cmp r0, #0x22\n\t"
-        "	bhi _0813089C\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08130808\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081307F8: .4byte gUnknown_3005EE0\n\t"
-        "_081307FC: .4byte gUnknown_3005ED0\n\t"
-        "_08130800: .4byte gUnknown_3005F04\n\t"
-        "_08130804: .4byte gUnknown_3005F00\n\t"
-        "_08130808: .4byte _0813080C\n\t"
-        "_0813080C:\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _08130898\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _0813089C\n\t"
-        "	.4byte _08130898\n\t"
-        "_08130898:\n\t"
-        "	movs r0, #3\n\t"
-        "	b _0813089E\n\t"
-        "_0813089C:\n\t"
-        "	movs r0, #1\n\t"
-        "_0813089E:\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x16]\n\t"
-        "	strb r3, [r4]\n\t"
-        "	ldr r0, _081308D4\n\t"
-        "	str r0, [r4, #0x10]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08124F14\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0812618C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08126040\n\t"
-        "	ldr r0, _081308D8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081308D4: .4byte 0x06010000\n\t"
-        "_081308D8: .4byte gUnknown_3005F04\n\t"
-        ".syntax divided\n\t"
-    );
+    gImageProcessingContext.canvasPixels = gContestMonPixels;
+    gImageProcessingContext.canvasPalette = gContestPaintingMonPalette;
+    gImageProcessingContext.paletteStart = 0;
+    gImageProcessingContext.personality = gContestPaintingWinner->personality % 256;
+    gImageProcessingContext.columnStart = 0;
+    gImageProcessingContext.rowStart = 0;
+    gImageProcessingContext.columnEnd = 64;
+    gImageProcessingContext.rowEnd = 64;
+    gImageProcessingContext.canvasWidth = 64;
+    gImageProcessingContext.canvasHeight = 64;
+
+    switch (imageEffect)
+    {
+    case IMAGE_EFFECT_CHARCOAL:
+    case IMAGE_EFFECT_GRAYSCALE_LIGHT:
+        gImageProcessingContext.quantizeEffect = QUANTIZE_EFFECT_GRAYSCALE;
+        break;
+    case IMAGE_EFFECT_OUTLINE_COLORED:
+    case IMAGE_EFFECT_SHIMMER:
+    case IMAGE_EFFECT_POINTILLISM:
+    default:
+        gImageProcessingContext.quantizeEffect = QUANTIZE_EFFECT_STANDARD_LIMITED_COLORS;
+        break;
+    }
+
+    gImageProcessingContext.var_16 = 2;
+    gImageProcessingContext.effect = imageEffect;
+    gImageProcessingContext.dest = (void *)OBJ_VRAM0;
+
+    ApplyImageProcessingEffects(&gImageProcessingContext);
+    ApplyImageProcessingQuantization(&gImageProcessingContext);
+    ConvertImageProcessingToGBA(&gImageProcessingContext);
+    LoadPalette(gContestPaintingMonPalette, OBJ_PLTT_ID(0), 16 * PLTT_SIZE_4BPP);
 }
 
-__attribute__((naked)) void sub_081308DC(void)
+static void CreateContestPaintingPicture(u8 contestWinnerId, bool8 isForArtist)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	bl sub_08130790\n\t"
-        "	ldr r0, _0813091C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r0, [r0, #8]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_08130340\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08130724\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl sub_081307B8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081306E0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl sub_08130488\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813091C: .4byte gUnknown_3005F00\n\t"
-        ".syntax divided\n\t"
-    );
+    AllocPaintingResources();
+    InitContestMonPixels(gContestPaintingWinner->species, FALSE);
+    DoContestPaintingImageProcessing(GetImageEffectForContestWinner(contestWinnerId));
+    InitPaintingMonOamData(contestWinnerId);
+    LoadContestPaintingFrame(contestWinnerId, isForArtist);
 }

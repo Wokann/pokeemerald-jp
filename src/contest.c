@@ -16418,7 +16418,7 @@ __attribute__((naked)) void sub_080DE4B0(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080DE6A8: .4byte gUnknown_2039BDC\n\t"
+        "_080DE6A8: .4byte gCurContestWinner\n\t"
         "_080DE6AC: .4byte gContestMons\n\t"
         ".syntax divided\n\t"
     );
