@@ -2605,7 +2605,15 @@ BattleScript_EffectRefresh:: @ 0x08288995
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectGrudge:: @ 0x082889AC
-	.incbin "baserom_jp.gba", 0x2889ac, 0x15
+	attackcanceler
+	attackstring
+	ppreduce
+	trysetgrudge BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNWANTSGRUDGE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectSnatch:: @ 0x082889C1
 	.incbin "baserom_jp.gba", 0x2889c1, 0x18
