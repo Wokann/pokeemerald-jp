@@ -10210,9 +10210,13 @@ SECTIONS {
         src/graphics.o(.rodata.smokescreen_impact_graphics);
         src/graphics.o(.rodata.pokeball_graphics);
         src/graphics.o(.rodata.pokeball_open_graphics);
-        data/data_rest2b.o(.rodata.data_rest2b_before_battle_anim_initial_sprite_gfx);
-        src/graphics.o(.rodata.battle_anim_initial_sprite_gfx);
-        data/data_rest2b.o(.rodata.data_rest2b_after_battle_anim_initial_sprite_gfx);
+        data/data_rest2b.o(.rodata.data_rest2b_before_battle_anim_a_base_graphics);
+        src/graphics.o(.rodata.battle_anim_a_base_graphics);
+        data/data_rest2b.o(.rodata.data_rest2b_between_battle_anim_a_base_and_claw);
+        src/graphics.o(.rodata.battle_anim_a_claw_graphics);
+        data/data_rest2b.o(.rodata.data_rest2b_between_battle_anim_a_claw_and_burst);
+        src/graphics.o(.rodata.battle_anim_a_burst_graphics);
+        data/data_rest2b.o(.rodata.data_rest2b_after_battle_anim_a_burst_graphics);
         src/graphics.o(.rodata.battle_interface_graphics);
         data/data_rest2b.o(.rodata.data_rest2b_after_healthbox);
         src/graphics.o(.rodata.jp_contest_graphics);

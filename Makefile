@@ -801,6 +801,12 @@ $(OBJFILE) $(ELF) $(ROM): | tools
 %.4bpp: %.png | tools
 	$(GFX) $< $@
 
+graphics/battle_anims/sprites/ice_cube.4bpp: graphics/battle_anims/sprites/ice_cube_0.4bpp \
+	graphics/battle_anims/sprites/ice_cube_1.4bpp \
+	graphics/battle_anims/sprites/ice_cube_2.4bpp \
+	graphics/battle_anims/sprites/ice_cube_3.4bpp
+	@cat $^ > $@
+
 %.gbapal: %.pal | tools
 	$(GFX) $< $@
 
@@ -964,6 +970,48 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_anims/sprites/bubble.4bpp.lz graphics/battle_anims/sprites/bone.4bpp.lz \
 	graphics/battle_anims/sprites/air_wave.4bpp.lz graphics/battle_anims/sprites/orb.4bpp.lz \
 	graphics/battle_anims/sprites/sword.4bpp.lz graphics/battle_anims/sprites/seed.4bpp.lz \
+	graphics/battle_anims/sprites/rain_drops.gbapal.lz \
+	graphics/battle_anims/sprites/bone.gbapal.lz graphics/battle_anims/sprites/air_wave.gbapal.lz \
+	graphics/battle_anims/sprites/orb.gbapal.lz graphics/battle_anims/sprites/sword.gbapal.lz \
+	graphics/battle_anims/sprites/seed.gbapal.lz graphics/battle_anims/sprites/needle.4bpp.lz \
+	graphics/battle_anims/sprites/needle.gbapal.lz graphics/battle_anims/sprites/explosion_6.4bpp.lz \
+	graphics/battle_anims/sprites/explosion_6.gbapal.lz graphics/battle_anims/sprites/pink_orb.4bpp.lz \
+	graphics/battle_anims/sprites/pink_orb.gbapal.lz graphics/battle_anims/sprites/ice_cube.gbapal.lz \
+	graphics/battle_anims/sprites/ice_cube.4bpp.lz graphics/battle_anims/sprites/gust.4bpp.lz \
+	graphics/battle_anims/sprites/gust.gbapal.lz graphics/battle_anims/sprites/spark_2.4bpp.lz \
+	graphics/battle_anims/sprites/spark_2.gbapal.lz graphics/battle_anims/sprites/orange.4bpp.lz \
+	graphics/battle_anims/sprites/orange.gbapal.lz graphics/battle_anims/sprites/spikes.4bpp.lz \
+	graphics/battle_anims/sprites/spikes.gbapal.lz graphics/battle_anims/sprites/yellow_ball.4bpp.lz \
+	graphics/battle_anims/sprites/yellow_ball.gbapal.lz graphics/battle_anims/sprites/tied_bag.4bpp.lz \
+	graphics/battle_anims/sprites/tied_bag.gbapal.lz graphics/battle_anims/sprites/black_smoke.4bpp.lz \
+	graphics/battle_anims/sprites/black_smoke.gbapal.lz graphics/battle_anims/sprites/black_ball.4bpp.lz \
+	graphics/battle_anims/sprites/black_ball.gbapal.lz graphics/battle_anims/sprites/glass.gbapal.lz \
+	graphics/battle_anims/sprites/glass.4bpp.lz graphics/battle_anims/sprites/horn_hit.4bpp.lz \
+	graphics/battle_anims/sprites/horn_hit.gbapal.lz graphics/battle_anims/sprites/blue_shards.gbapal.lz \
+	graphics/battle_anims/sprites/blue_shards.4bpp.lz graphics/battle_anims/unused/music_notes.gbapal.lz \
+	graphics/battle_anims/unused/music_notes.4bpp.lz graphics/battle_anims/sprites/hit.gbapal.lz \
+	graphics/battle_anims/sprites/hit.4bpp.lz graphics/battle_anims/sprites/hit_2.gbapal.lz \
+	graphics/battle_anims/sprites/waving_hand.gbapal.lz graphics/battle_anims/sprites/waving_hand.4bpp.lz \
+	graphics/battle_anims/sprites/closing_eye.4bpp.lz graphics/battle_anims/sprites/closing_eye.gbapal.lz \
+	graphics/battle_anims/sprites/blue_star.4bpp.lz graphics/battle_anims/sprites/blue_star.gbapal.lz \
+	graphics/battle_anims/sprites/bubble_burst.gbapal.lz graphics/battle_anims/sprites/bubble_burst.4bpp.lz \
+	graphics/battle_anims/sprites/hit_duplicate.4bpp.lz graphics/battle_anims/sprites/hit_duplicate.gbapal.lz \
+	graphics/battle_anims/sprites/leer.gbapal.lz graphics/battle_anims/sprites/leer.4bpp.lz \
+	graphics/battle_anims/sprites/blue_burst.gbapal.lz graphics/battle_anims/sprites/blue_burst.4bpp.lz \
+	graphics/battle_anims/sprites/small_ember.4bpp.lz graphics/battle_anims/sprites/small_ember.gbapal.lz \
+	graphics/battle_anims/sprites/gray_smoke.4bpp.lz graphics/battle_anims/sprites/gray_smoke.gbapal.lz \
+	graphics/battle_anims/sprites/fire.gbapal.lz graphics/battle_anims/sprites/fire.4bpp.lz \
+	graphics/battle_anims/sprites/spinning_fire.4bpp.lz graphics/battle_anims/sprites/fire_plume.4bpp.lz \
+	graphics/battle_anims/sprites/lightning_2.gbapal.lz graphics/battle_anims/sprites/lightning_2.4bpp.lz \
+	graphics/battle_anims/sprites/lightning.4bpp.lz graphics/battle_anims/unused/spinning_ball.4bpp.lz \
+	graphics/battle_anims/unused/spinning_ball.gbapal.lz graphics/battle_anims/unused/spinning_ball_2.gbapal.lz \
+	graphics/battle_anims/sprites/claw_slash_2.gbapal.lz graphics/battle_anims/sprites/claw_slash.gbapal.lz \
+	graphics/battle_anims/sprites/claw_slash_2.4bpp.lz graphics/battle_anims/sprites/claw_slash.4bpp.lz \
+	graphics/battle_anims/sprites/scratch_3.4bpp.lz graphics/battle_anims/sprites/scratch_2.4bpp.lz \
+	graphics/battle_anims/sprites/bubble_burst_2.4bpp.lz graphics/battle_anims/sprites/bubble_burst_2.gbapal.lz \
+	graphics/battle_anims/sprites/ice_chunk.4bpp.lz graphics/battle_anims/sprites/ice_chunk.gbapal.lz \
+	graphics/battle_anims/sprites/glass_2.gbapal.lz graphics/battle_anims/sprites/glass_2.4bpp.lz \
+	graphics/battle_anims/sprites/pink_heart_2.gbapal.lz graphics/battle_anims/sprites/pink_heart_2.4bpp.lz \
 	graphics/battle_anims/sprites/splash.4bpp.lz graphics/battle_anims/sprites/splash.gbapal.lz \
 	graphics/battle_anims/sprites/sweat_bead.4bpp.lz graphics/battle_anims/sprites/pokeblock.4bpp.lz \
 	graphics/battle_anims/sprites/pokeblock.gbapal.lz graphics/battle_anims/sprites/gem_1.4bpp.lz \

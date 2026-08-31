@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-.section .rodata.data_rest2b_before_battle_anim_initial_sprite_gfx
+.section .rodata.data_rest2b_before_battle_anim_a_base_graphics
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -12,8 +12,14 @@
 gBlankGfxCompressed: @ 0x8C02384
 	.incbin "baserom_jp.gba", 0xc02384, 0xfc
 
-	.section .rodata.data_rest2b_after_battle_anim_initial_sprite_gfx
-	.incbin "baserom_jp.gba", 0xc028b4, 0x6b44
+	.section .rodata.data_rest2b_between_battle_anim_a_base_and_claw
+	.incbin "baserom_jp.gba", 0xc06e2c, 0xaf0
+
+	.section .rodata.data_rest2b_between_battle_anim_a_claw_and_burst
+	.incbin "baserom_jp.gba", 0xc08238, 0x94
+
+	.section .rodata.data_rest2b_after_battle_anim_a_burst_graphics
+	.incbin "baserom_jp.gba", 0xc08f14, 0x4e4
 
 	.globl gUnknown_8C093F8
 gUnknown_8C093F8: @ 0x8C093F8
