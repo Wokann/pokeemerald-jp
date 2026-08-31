@@ -6,16 +6,88 @@
 #include "malloc.h"
 #include "pokemon.h"
 #include "sprite.h"
+#include "util.h"
 #include <stdint.h>
 
 #define IS_DOUBLE_BATTLE() ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) != 0)
 
-extern const struct UCoords8 sBattlerCoords[][MAX_BATTLERS_COUNT];
-extern const u8 sCastformBackSpriteYCoords[];
-extern const u8 sCastformElevations[];
-extern const struct MonCoords gCastformFrontSpriteCoords[];
-extern const struct CompressedSpriteSheet sSpriteSheets_MoveEffectMons[];
-extern const struct SpriteTemplate sSpriteTemplates_MoveEffectMons[];
+#define BATTLE_ANIM_MONS_STATIC_DATA __attribute__((section(".rodata.battle_anim_mons_static_data")))
+
+static const struct UCoords8 sBattlerCoords[][MAX_BATTLERS_COUNT] BATTLE_ANIM_MONS_STATIC_DATA =
+{
+    {
+        { 72, 80 },
+        { 176, 40 },
+        { 48, 40 },
+        { 112, 80 },
+    },
+    {
+        { 32, 80 },
+        { 200, 40 },
+        { 90, 88 },
+        { 152, 32 },
+    },
+};
+
+const struct MonCoords gCastformFrontSpriteCoords[NUM_CASTFORM_FORMS] BATTLE_ANIM_MONS_STATIC_DATA =
+{
+    [CASTFORM_NORMAL] = { .size = MON_COORDS_SIZE(32, 32), .y_offset = 17 },
+    [CASTFORM_FIRE]   = { .size = MON_COORDS_SIZE(48, 48), .y_offset =  9 },
+    [CASTFORM_WATER]  = { .size = MON_COORDS_SIZE(32, 48), .y_offset =  9 },
+    [CASTFORM_ICE]    = { .size = MON_COORDS_SIZE(64, 48), .y_offset =  8 },
+};
+
+static const u8 sCastformElevations[NUM_CASTFORM_FORMS] BATTLE_ANIM_MONS_STATIC_DATA =
+{
+    [CASTFORM_NORMAL] = 13,
+    [CASTFORM_FIRE]   = 14,
+    [CASTFORM_WATER]  = 13,
+    [CASTFORM_ICE]    = 13,
+};
+
+static const u8 sCastformBackSpriteYCoords[NUM_CASTFORM_FORMS] BATTLE_ANIM_MONS_STATIC_DATA =
+{
+    [CASTFORM_NORMAL] = 0,
+    [CASTFORM_FIRE]   = 0,
+    [CASTFORM_WATER]  = 0,
+    [CASTFORM_ICE]    = 0,
+};
+
+#define TAG_MOVE_EFFECT_MON_1 55125
+#define TAG_MOVE_EFFECT_MON_2 55126
+
+static const struct SpriteTemplate sSpriteTemplates_MoveEffectMons[] BATTLE_ANIM_MONS_STATIC_DATA =
+{
+    {
+        .tileTag = TAG_MOVE_EFFECT_MON_1,
+        .paletteTag = TAG_MOVE_EFFECT_MON_1,
+        .oam = &gOamData_AffineNormal_ObjNormal_64x64,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    {
+        .tileTag = TAG_MOVE_EFFECT_MON_2,
+        .paletteTag = TAG_MOVE_EFFECT_MON_2,
+        .oam = &gOamData_AffineNormal_ObjNormal_64x64,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+};
+
+static const struct SpriteSheet sSpriteSheets_MoveEffectMons[] BATTLE_ANIM_MONS_STATIC_DATA =
+{
+    { gMiscBlank_Gfx, MON_PIC_SIZE, TAG_MOVE_EFFECT_MON_1 },
+    { gMiscBlank_Gfx, MON_PIC_SIZE, TAG_MOVE_EFFECT_MON_2 },
+};
+
+#undef TAG_MOVE_EFFECT_MON_2
+#undef TAG_MOVE_EFFECT_MON_1
+#undef BATTLE_ANIM_MONS_STATIC_DATA
+
 extern struct MonSpritesGfx *gMonSpritesGfxPtr;
 extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteContest[];
 

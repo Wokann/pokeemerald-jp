@@ -308,51 +308,9 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 
 	.section .rodata.data_b2d_mid26_after_battle_anim_background_data_before_battle_anim_script_cmd_data
 
-	.section .rodata.data_b2d_mid26_after_battle_anim_script_cmd_data_before_battle_anim_status_effects
+	.section .rodata.data_b2d_mid26_after_battle_anim_script_cmd_data_before_battle_anim_mons_static_data
 
-	.globl sBattlerCoords
-sBattlerCoords: @ 0x84FE664
-sBattlerCoords: @ 0x84FE664
-	.4byte 0x00005048, 0x000028B0, 0x00002830, 0x00005070, 0x00005020, 0x000028C8, 0x0000585A, 0x00002098
-
-	.globl gCastformFrontSpriteCoords
-gCastformFrontSpriteCoords: @ 0x84FE684
-	.byte 68 @ entry 0 size
-	.byte 17 @ entry 0 y_offset
-	.hword 0
-	.byte 102 @ entry 1 size
-	.byte 9 @ entry 1 y_offset
-	.hword 0
-	.byte 70 @ entry 2 size
-	.byte 9 @ entry 2 y_offset
-	.hword 0
-	.byte 134 @ entry 3 size
-	.byte 8 @ entry 3 y_offset
-	.hword 0
-
-	.globl sCastformElevations
-sCastformElevations: @ 0x84FE694
-	.byte 0x0D, 0x0E, 0x0D, 0x0D
-
-	.globl sCastformBackSpriteYCoords
-sCastformBackSpriteYCoords: @ 0x84FE698
-	.byte 0x00, 0x00, 0x00, 0x00
-
-	.globl sSpriteTemplates_MoveEffectMons
-sSpriteTemplates_MoveEffectMons: @ 0x84FE69C
-sSpriteTemplates_MoveEffectMons: @ 0x84FE69C
-	.hword 0xD755, 0xD755
-	.4byte gOamData_AffineNormal_ObjNormal_64x64, gDummySpriteAnimTable, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
-	.hword 0xD756, 0xD756
-	.4byte gOamData_AffineNormal_ObjNormal_64x64, gDummySpriteAnimTable, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
-
-	.globl sSpriteSheets_MoveEffectMons
-sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
-sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
-	.4byte 0x082FAF64
-	.hword 0x0800, 0xD755
-	.4byte 0x082FAF64
-	.hword 0x0800, 0xD756
+	.section .rodata.data_b2d_mid26_after_battle_anim_mons_static_data_before_battle_anim_status_effects
 
 	.include "data/maps/PetalburgCity/events.inc"
 	.include "data/maps/SlateportCity/events.inc"
