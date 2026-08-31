@@ -1219,7 +1219,20 @@ BattleScript_EffectMetronome:: @ 0x08287A42
 	metronome
 
 BattleScript_EffectLeechSeed:: @ 0x08287A56
-	.incbin "baserom_jp.gba", 0x287a56, 0x27
+	attackcanceler
+	attackstring
+	pause B_WAIT_TIME_SHORT
+	ppreduce
+	jumpifstatus2 BS_TARGET, STATUS2_SUBSTITUTE, BattleScript_ButItFailed
+	accuracycheck BattleScript_DoLeechSeed, ACC_CURR_MOVE
+
+BattleScript_DoLeechSeed:: @ 0x08287A6D
+	setseeded
+	attackanimation
+	waitanimation
+	printfromtable gLeechSeedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectSplash:: @ 0x08287A7D
 	.incbin "baserom_jp.gba", 0x287a7d, 0x12
