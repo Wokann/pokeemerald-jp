@@ -500,6 +500,10 @@ data/layouts/layouts_table.inc: data/layouts/layouts.inc baserom_jp.gba tools/ex
 	python3 tools/extract_map_layouts.py --write-table
 
 $(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_table.inc \
+	data/layouts/FallarborTown_LeftoverRSContestLobby/border.bin \
+	data/layouts/FallarborTown_LeftoverRSContestLobby/map.bin \
+	data/layouts/FallarborTown_LeftoverRSContestHall/border.bin \
+	data/layouts/FallarborTown_LeftoverRSContestHall/map.bin \
 	data/layouts/Route130_MirageIsland/border.bin \
 	data/layouts/Route130_MirageIsland/map.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \

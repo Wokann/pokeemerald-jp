@@ -77,8 +77,8 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_LAVARIDGE_TOWN_GYM_1F
 	.4byte gMapLayout_LAVARIDGE_TOWN_GYM_B1F
 	.4byte gMapLayout_LAVARIDGE_TOWN_POKEMON_CENTER_1F
-	@ LAYOUT_FALLARBOR_TOWN_LEFTOVER_RSCONTEST_LOBBY through LAYOUT_FALLARBOR_TOWN_LEFTOVER_RSCONTEST_HALL remain in raw physical layout owners.
-	.incbin "baserom_jp.gba", 0x45A310, 0x8
+	.4byte FallarborTown_LeftoverRSContestLobby_Layout
+	.4byte FallarborTown_LeftoverRSContestHall_Layout
 	.4byte gMapLayout_LILYCOVE_CITY_HOUSE2
 	@ LAYOUT_UNUSED_CONTEST_ROOM1 remains in its raw physical layout owner.
 	.incbin "baserom_jp.gba", 0x45A31C, 0x4

@@ -855,7 +855,35 @@ gMapLayout_LAVARIDGE_TOWN_POKEMON_CENTER_1F: @ 0x084003A4
 	.4byte gMapLayout_LAVARIDGE_TOWN_POKEMON_CENTER_1F_Blockdata  @ map
 	.4byte gTileset_Building  @ primaryTileset
 	.4byte gTileset_PokemonCenter  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4003bc, 0x408
+FallarborTown_LeftoverRSContestLobby_Layout_Border::
+	.incbin "data/layouts/FallarborTown_LeftoverRSContestLobby/border.bin"
+
+FallarborTown_LeftoverRSContestLobby_Layout_Blockdata::
+	.incbin "data/layouts/FallarborTown_LeftoverRSContestLobby/map.bin"
+
+	.align 2
+FallarborTown_LeftoverRSContestLobby_Layout:: @ 0x08400498
+	.4byte 15
+	.4byte 7
+	.4byte FallarborTown_LeftoverRSContestLobby_Layout_Border
+	.4byte FallarborTown_LeftoverRSContestLobby_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_Contest
+
+FallarborTown_LeftoverRSContestHall_Layout_Border::
+	.incbin "data/layouts/FallarborTown_LeftoverRSContestHall/border.bin"
+
+FallarborTown_LeftoverRSContestHall_Layout_Blockdata::
+	.incbin "data/layouts/FallarborTown_LeftoverRSContestHall/map.bin"
+
+	.align 2
+FallarborTown_LeftoverRSContestHall_Layout:: @ 0x084007AC
+	.4byte 21
+	.4byte 18
+	.4byte FallarborTown_LeftoverRSContestHall_Layout_Border
+	.4byte FallarborTown_LeftoverRSContestHall_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_Contest
 gMapLayout_LILYCOVE_CITY_HOUSE2_Border:
 	.incbin "data/layouts/LilycoveCity_House2/border.bin"
 gMapLayout_LILYCOVE_CITY_HOUSE2_Blockdata:
