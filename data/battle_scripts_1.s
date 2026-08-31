@@ -2360,7 +2360,13 @@ BattleScript_EffectFollowMe:: @ 0x0828874D
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectNaturePower:: @ 0x0828875E
-	.incbin "baserom_jp.gba", 0x28875e, 0xd
+	attackcanceler
+	attackstring
+	pause B_WAIT_TIME_SHORT
+	callenvironmentattack
+	printstring STRINGID_NATUREPOWERTURNEDINTO
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 BattleScript_EffectCharge:: @ 0x0828876B
 	.incbin "baserom_jp.gba", 0x28876b, 0x11

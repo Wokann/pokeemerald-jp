@@ -1045,7 +1045,7 @@
 	.byte 0xcb
 	.endm
 
-	.macro callterrainattack
+	.macro callenvironmentattack
 	.byte 0xcc
 	.endm
 
