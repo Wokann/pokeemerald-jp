@@ -2235,7 +2235,7 @@ __attribute__((naked)) void LoadBattleBarGfx(u8 unused)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0805DDEC: .4byte gUnknown_8C093F8\n\t"
+        "_0805DDEC: .4byte gBattleInterfaceGfx_BattleBar\n\t"
         "_0805DDF0: .4byte gMonSpritesGfxPtr\n\t"
         ".syntax divided\n\t"
     );

@@ -1183,6 +1183,9 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_anims/sprites/ice_chunk.4bpp.lz graphics/battle_anims/sprites/ice_chunk.gbapal.lz \
 	graphics/battle_anims/sprites/glass_2.gbapal.lz graphics/battle_anims/sprites/glass_2.4bpp.lz \
 	graphics/battle_anims/sprites/pink_heart_2.gbapal.lz graphics/battle_anims/sprites/pink_heart_2.4bpp.lz \
+	graphics/battle_interface/battle_bar.4bpp.lz \
+	graphics/battle_anims/sprites/sap_drip.png.4bpp.lz graphics/battle_anims/sprites/sap_drip.png.gbapal.lz \
+	graphics/battle_anims/sprites/sap_drip_2.pal.gbapal.lz \
 	graphics/battle_anims/sprites/splash.4bpp.lz graphics/battle_anims/sprites/splash.gbapal.lz \
 	graphics/battle_anims/sprites/sweat_bead.4bpp.lz graphics/battle_anims/sprites/pokeblock.4bpp.lz \
 	graphics/battle_anims/sprites/pokeblock.gbapal.lz graphics/battle_anims/sprites/gem_1.4bpp.lz \

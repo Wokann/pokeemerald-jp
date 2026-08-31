@@ -10231,6 +10231,8 @@ SECTIONS {
         data/data_rest2b.o(.rodata.data_rest2b_between_battle_anim_a_claw_and_burst);
         src/graphics.o(.rodata.battle_anim_a_burst_graphics);
         data/data_rest2b.o(.rodata.data_rest2b_after_battle_anim_a_burst_graphics);
+        src/graphics.o(.rodata.battle_anim_a_battle_bar_and_sap_drip_graphics);
+        data/data_rest2b.o(.rodata.data_rest2b_between_battle_bar_sap_drip_and_battle_interface_graphics);
         src/graphics.o(.rodata.battle_interface_graphics);
         data/data_rest2b.o(.rodata.data_rest2b_after_healthbox);
         src/graphics.o(.rodata.jp_contest_graphics);
