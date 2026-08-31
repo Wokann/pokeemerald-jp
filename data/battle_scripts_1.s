@@ -1783,7 +1783,8 @@ BattleScript_EffectBatonPass:: @ 0x0828803D
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectRapidSpin:: @ 0x08288078
-	.incbin "baserom_jp.gba", 0x288078, 0xb
+	setmoveeffect MOVE_EFFECT_RAPIDSPIN | MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_CERTAIN
+	goto BattleScript_EffectHit
 
 BattleScript_EffectSonicboom:: @ 0x08288083
 	.incbin "baserom_jp.gba", 0x288083, 0x2f
