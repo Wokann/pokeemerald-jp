@@ -961,6 +961,9 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/contest/nextturn_random.4bpp \
 	graphics/contest/applause.4bpp.lz graphics/contest/applause_meter.4bpp \
 	graphics/contest/nextturn.gbapal \
+	graphics/battle_anims/sprites/bubble.4bpp.lz graphics/battle_anims/sprites/bone.4bpp.lz \
+	graphics/battle_anims/sprites/air_wave.4bpp.lz graphics/battle_anims/sprites/orb.4bpp.lz \
+	graphics/battle_anims/sprites/sword.4bpp.lz graphics/battle_anims/sprites/seed.4bpp.lz \
 	graphics/battle_anims/sprites/splash.4bpp.lz graphics/battle_anims/sprites/splash.gbapal.lz \
 	graphics/battle_anims/sprites/sweat_bead.4bpp.lz graphics/battle_anims/sprites/pokeblock.4bpp.lz \
 	graphics/battle_anims/sprites/pokeblock.gbapal.lz graphics/battle_anims/sprites/gem_1.4bpp.lz \

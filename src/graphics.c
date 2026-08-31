@@ -13,6 +13,17 @@
 #include "data/graphics/battle_environment.h"
 #undef BATTLE_ENVIRONMENT_GRAPHICS
 
+#define BATTLE_ANIM_INITIAL_SPRITE_GFX __attribute__((section(".rodata.battle_anim_initial_sprite_gfx"), aligned(1)))
+
+BATTLE_ANIM_INITIAL_SPRITE_GFX const u32 gBattleAnimSpriteGfx_Bubble[] = INCBIN_U32("graphics/battle_anims/sprites/bubble.4bpp.lz");
+BATTLE_ANIM_INITIAL_SPRITE_GFX const u32 gBattleAnimSpriteGfx_Bone[] = INCBIN_U32("graphics/battle_anims/sprites/bone.4bpp.lz");
+BATTLE_ANIM_INITIAL_SPRITE_GFX const u32 gBattleAnimSpriteGfx_AirWave[] = INCBIN_U32("graphics/battle_anims/sprites/air_wave.4bpp.lz");
+BATTLE_ANIM_INITIAL_SPRITE_GFX const u32 gBattleAnimSpriteGfx_Orb[] = INCBIN_U32("graphics/battle_anims/sprites/orb.4bpp.lz");
+BATTLE_ANIM_INITIAL_SPRITE_GFX const u32 gBattleAnimSpriteGfx_Sword[] = INCBIN_U32("graphics/battle_anims/sprites/sword.4bpp.lz");
+BATTLE_ANIM_INITIAL_SPRITE_GFX const u32 gBattleAnimSpriteGfx_Seed[] = INCBIN_U32("graphics/battle_anims/sprites/seed.4bpp.lz");
+
+#undef BATTLE_ANIM_INITIAL_SPRITE_GFX
+
 // Pokédex.  These custom sections retain the JP ROM order while assigning the
 // resources to pokeemerald's graphics owner and source hierarchy.
 #define POKEDEX_GRAPHICS_PREFIX __attribute__((section(".rodata.pokedex_graphics_prefix"), aligned(1)))
