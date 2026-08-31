@@ -40,6 +40,9 @@ RESOURCES = (
     Resource("gBattleAnimSpriteGfx_HumanoidFoot", Path("graphics/battle_anims/sprites/humanoid_foot.png.4bpp.lz"), 0xC0A004, 0xA0, 0x9D),
     Resource("gBattleAnimSpriteGfx_MonsterFoot", Path("graphics/battle_anims/sprites/monster_foot.png.4bpp.lz"), 0xC0A0A4, 0xAC, 0xAB),
     Resource("gBattleAnimSpriteGfx_HumanoidHand", Path("graphics/battle_anims/sprites/humanoid_hand.png.4bpp.lz"), 0xC0A150, 0xCC, 0xCB),
+    Resource("gBattleAnimSpriteGfx_SlamHit", Path("graphics/battle_anims/sprites/slam_hit.png.4bpp.lz"), 0xC0A3F4, 0x4A8, 0x4A8),
+    Resource("gBattleAnimSpritePal_SlamHit", Path("graphics/battle_anims/sprites/slam_hit.png.gbapal.lz"), 0xC0A89C, 0x28, 0x25),
+    Resource("gBattleAnimSpriteGfx_RedFist", Path("graphics/battle_anims/sprites/red_fist.png.4bpp.lz"), 0xC0A8C4, 0xC4, 0xC3),
 )
 
 

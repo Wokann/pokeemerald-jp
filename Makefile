@@ -1191,6 +1191,8 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_anims/sprites/sparkle_2.pal.gbapal.lz \
 	graphics/battle_anims/sprites/humanoid_foot.png.gbapal.lz graphics/battle_anims/sprites/humanoid_foot.png.4bpp.lz \
 	graphics/battle_anims/sprites/monster_foot.png.4bpp.lz graphics/battle_anims/sprites/humanoid_hand.png.4bpp.lz \
+	graphics/battle_anims/sprites/slam_hit.png.4bpp.lz graphics/battle_anims/sprites/slam_hit.png.gbapal.lz \
+	graphics/battle_anims/sprites/red_fist.png.4bpp.lz \
 	graphics/battle_anims/sprites/splash.4bpp.lz graphics/battle_anims/sprites/splash.gbapal.lz \
 	graphics/battle_anims/sprites/sweat_bead.4bpp.lz graphics/battle_anims/sprites/pokeblock.4bpp.lz \
 	graphics/battle_anims/sprites/pokeblock.gbapal.lz graphics/battle_anims/sprites/gem_1.4bpp.lz \
