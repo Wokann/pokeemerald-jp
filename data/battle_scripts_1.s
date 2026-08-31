@@ -2721,7 +2721,8 @@ BattleScript_EffectWeatherBall:: @ 0x08288AD3
 	goto BattleScript_EffectHit
 
 BattleScript_EffectOverheat:: @ 0x08288AD9
-	.incbin "baserom_jp.gba", 0x288ad9, 0xb
+	setmoveeffect MOVE_EFFECT_SP_ATK_TWO_DOWN | MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_CERTAIN
+	goto BattleScript_EffectHit
 
 BattleScript_EffectTickle:: @ 0x08288AE4
 	.incbin "baserom_jp.gba", 0x288ae4, 0x87
