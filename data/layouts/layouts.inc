@@ -5021,7 +5021,65 @@ gMapLayout_ARTISAN_CAVE_1F: @ 0x0844CBD4
 	.4byte gMapLayout_ARTISAN_CAVE_1F_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Cave  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x44CBEC, 0x1B60
+FarawayIsland_Entrance_Layout_Border::
+	.incbin "data/layouts/FarawayIsland_Entrance/border.bin"
+
+FarawayIsland_Entrance_Layout_Blockdata::
+	.incbin "data/layouts/FarawayIsland_Entrance/map.bin"
+
+	.align 2
+FarawayIsland_Entrance_Layout:: @ 0x0844D82C
+	.4byte 34
+	.4byte 46
+	.4byte FarawayIsland_Entrance_Layout_Border
+	.4byte FarawayIsland_Entrance_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Rustboro
+
+FarawayIsland_Interior_Layout_Border::
+	.incbin "data/layouts/FarawayIsland_Interior/border.bin"
+
+FarawayIsland_Interior_Layout_Blockdata::
+	.incbin "data/layouts/FarawayIsland_Interior/map.bin"
+
+	.align 2
+FarawayIsland_Interior_Layout:: @ 0x0844DE30
+	.4byte 29
+	.4byte 26
+	.4byte FarawayIsland_Interior_Layout_Border
+	.4byte FarawayIsland_Interior_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Fortree
+
+BirthIsland_Exterior_Layout_Border::
+	.incbin "data/layouts/BirthIsland_Exterior/border.bin"
+
+BirthIsland_Exterior_Layout_Blockdata::
+	.incbin "data/layouts/BirthIsland_Exterior/map.bin"
+
+	.align 2
+BirthIsland_Exterior_Layout:: @ 0x0844E558
+	.4byte 30
+	.4byte 30
+	.4byte BirthIsland_Exterior_Layout_Border
+	.4byte BirthIsland_Exterior_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Dewford
+
+IslandHarbor_Layout_Border::
+	.incbin "data/layouts/IslandHarbor/border.bin"
+
+IslandHarbor_Layout_Blockdata::
+	.incbin "data/layouts/IslandHarbor/map.bin"
+
+	.align 2
+IslandHarbor_Layout:: @ 0x0844E734
+	.4byte 17
+	.4byte 13
+	.4byte IslandHarbor_Layout_Border
+	.4byte IslandHarbor_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_IslandHarbor
 gMapLayout_UNDERWATER_MARINE_CAVE_Border:
 	.incbin "data/layouts/Underwater_MarineCave/border.bin"
 gMapLayout_UNDERWATER_MARINE_CAVE_Blockdata:

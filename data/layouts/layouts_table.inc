@@ -407,8 +407,10 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte BattleFrontier_ReceptionGate_Layout
 	.4byte gMapLayout_ARTISAN_CAVE_B1F
 	.4byte gMapLayout_ARTISAN_CAVE_1F
-	@ LAYOUT_FARAWAY_ISLAND_ENTRANCE through LAYOUT_ISLAND_HARBOR remain in raw physical layout owners.
-	.incbin "baserom_jp.gba", 0x45A838, 0x10
+	.4byte FarawayIsland_Entrance_Layout
+	.4byte FarawayIsland_Interior_Layout
+	.4byte BirthIsland_Exterior_Layout
+	.4byte IslandHarbor_Layout
 	.4byte gMapLayout_UNDERWATER_MARINE_CAVE
 	.4byte gMapLayout_MARINE_CAVE_ENTRANCE
 	.4byte gMapLayout_TERRA_CAVE_ENTRANCE

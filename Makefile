@@ -607,6 +607,14 @@ $(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_
 	data/layouts/BattleFrontier_ExchangeServiceCorner/map.bin \
 	data/layouts/BattleFrontier_ReceptionGate/border.bin \
 	data/layouts/BattleFrontier_ReceptionGate/map.bin \
+	data/layouts/FarawayIsland_Entrance/border.bin \
+	data/layouts/FarawayIsland_Entrance/map.bin \
+	data/layouts/FarawayIsland_Interior/border.bin \
+	data/layouts/FarawayIsland_Interior/map.bin \
+	data/layouts/BirthIsland_Exterior/border.bin \
+	data/layouts/BirthIsland_Exterior/map.bin \
+	data/layouts/IslandHarbor/border.bin \
+	data/layouts/IslandHarbor/map.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 
