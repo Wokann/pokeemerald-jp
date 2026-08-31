@@ -3713,7 +3713,43 @@ gMapLayout_BATTLE_FRONTIER_OUTSIDE_EAST: @ 0x0843EAAC
 	.4byte gMapLayout_BATTLE_FRONTIER_OUTSIDE_EAST_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_BattleFrontierOutsideEast  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x43EAC4, 0x9DC
+gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY_Border:
+	.incbin "data/layouts/BattleFrontier_BattleFactoryLobby/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattleFactoryLobby/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY
+gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY: @ 0x0843EC94
+	.4byte 19  @ width
+	.4byte 12  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleFactory  @ secondaryTileset
+gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM_Border:
+	.incbin "data/layouts/BattleFrontier_BattleFactoryPreBattleRoom/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattleFactoryPreBattleRoom/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM
+gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM: @ 0x0843EE90
+	.4byte 17  @ width
+	.4byte 14  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleFactory  @ secondaryTileset
+gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM_Border:
+	.incbin "data/layouts/BattleFrontier_BattleFactoryBattleRoom/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattleFactoryBattleRoom/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM
+gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM: @ 0x0843EFE8
+	.4byte 13  @ width
+	.4byte 12  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleFactory  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x43F000, 0x4A0
 gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_LOBBY_Border:
 	.incbin "data/layouts/BattleFrontier_BattleArenaLobby/border.bin"
 gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_LOBBY_Blockdata:

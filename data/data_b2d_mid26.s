@@ -1106,7 +1106,10 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/BattleFrontier_BattleArenaLobby/events.inc"
 	.include "data/maps/BattleFrontier_BattleArenaCorridor/events.inc"
 	.include "data/maps/BattleFrontier_BattleArenaBattleRoom/events.inc"
-	.incbin "baserom_jp.gba", 0x515104, 0x2478
+	.include "data/maps/BattleFrontier_BattleFactoryLobby/events.inc"
+	.include "data/maps/BattleFrontier_BattleFactoryPreBattleRoom/events.inc"
+	.include "data/maps/BattleFrontier_BattleFactoryBattleRoom/events.inc"
+	.incbin "baserom_jp.gba", 0x5152DC, 0x22A0
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
