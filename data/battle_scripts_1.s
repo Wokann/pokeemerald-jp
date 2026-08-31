@@ -1068,7 +1068,37 @@ BattleScript_EffectPoison:: @ 0x08287823
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectParalyze:: @ 0x08287884
-	.incbin "baserom_jp.gba", 0x287884, 0x80
+	attackcanceler
+	attackstring
+	ppreduce
+	jumpifability BS_TARGET, ABILITY_LIMBER, BattleScript_LimberProtected
+	jumpifstatus2 BS_TARGET, STATUS2_SUBSTITUTE, BattleScript_ButItFailed
+	typecalc
+	jumpifmovehadnoeffect BattleScript_ButItFailed
+	jumpifstatus BS_TARGET, STATUS1_PARALYSIS, BattleScript_AlreadyParalyzed
+	jumpifstatus BS_TARGET, STATUS1_ANY, BattleScript_ButItFailed
+	accuracycheck BattleScript_ButItFailed, ACC_CURR_MOVE
+	jumpifsideaffecting BS_TARGET, SIDE_STATUS_SAFEGUARD, BattleScript_SafeguardProtected
+	attackanimation
+	waitanimation
+	setmoveeffect MOVE_EFFECT_PARALYSIS
+	seteffectprimary
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
+BattleScript_AlreadyParalyzed:: @ 0x082878D9
+	setalreadystatusedmoveattempt BS_ATTACKER
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNISALREADYPARALYZED
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
+BattleScript_LimberProtected:: @ 0x082878EA
+	copybyte gEffectBattler, gBattlerTarget
+	setbyte cMULTISTRING_CHOOSER, B_MSG_ABILITY_PREVENTS_MOVE_STATUS
+	call BattleScript_PRLZPrevention
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectAttackDownHit:: @ 0x08287904
 	.incbin "baserom_jp.gba", 0x287904, 0xb
