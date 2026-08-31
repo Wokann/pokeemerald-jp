@@ -1235,7 +1235,15 @@ BattleScript_DoLeechSeed:: @ 0x08287A6D
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectSplash:: @ 0x08287A7D
-	.incbin "baserom_jp.gba", 0x287a7d, 0x12
+	attackcanceler
+	attackstring
+	ppreduce
+	attackanimation
+	waitanimation
+	incrementgamestat GAME_STAT_USED_SPLASH
+	printstring STRINGID_BUTNOTHINGHAPPENED
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectDisable:: @ 0x08287A8F
 	.incbin "baserom_jp.gba", 0x287a8f, 0x1c
