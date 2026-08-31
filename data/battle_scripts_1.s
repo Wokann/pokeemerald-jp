@@ -1132,10 +1132,18 @@ BattleScript_EffectSkyAttack:: @ 0x08287946
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectConfuseHit:: @ 0x0828796E
-	.incbin "baserom_jp.gba", 0x28796e, 0xb
+	setmoveeffect MOVE_EFFECT_CONFUSION
+	goto BattleScript_EffectHit
 
 BattleScript_EffectTwineedle:: @ 0x08287979
-	.incbin "baserom_jp.gba", 0x287979, 0x18
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	setbyte sMULTIHIT_EFFECT, MOVE_EFFECT_POISON
+	attackstring
+	ppreduce
+	setmultihitcounter 2
+	initmultihitstring
+	goto BattleScript_MultiHitLoop
 
 BattleScript_EffectSubstitute:: @ 0x08287991
 	.incbin "baserom_jp.gba", 0x287991, 0x46
