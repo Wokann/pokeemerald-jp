@@ -247,8 +247,19 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_SAFARI_ZONE_NORTH
 	.4byte gMapLayout_SAFARI_ZONE_SOUTHWEST
 	.4byte gMapLayout_SAFARI_ZONE_SOUTH
-	@ LAYOUT_UNUSED_OUTDOOR_AREA through LAYOUT_ROUTE110_TRICK_HOUSE_PUZZLE8 remain in raw physical layout owners.
-	.incbin "baserom_jp.gba", 0x45A5B8, 0x34
+	.4byte UnusedOutdoorArea_Layout
+	.4byte Route109_SeashoreHouse_Layout
+	.4byte Route110_TrickHouseEntrance_Layout
+	.4byte Route110_TrickHouseEnd_Layout
+	.4byte Route110_TrickHouseCorridor_Layout
+	.4byte Route110_TrickHousePuzzle1_Layout
+	.4byte Route110_TrickHousePuzzle2_Layout
+	.4byte Route110_TrickHousePuzzle3_Layout
+	.4byte Route110_TrickHousePuzzle4_Layout
+	.4byte Route110_TrickHousePuzzle5_Layout
+	.4byte Route110_TrickHousePuzzle6_Layout
+	.4byte Route110_TrickHousePuzzle7_Layout
+	.4byte Route110_TrickHousePuzzle8_Layout
 	.4byte gMapLayout_FORTREE_CITY_DECORATION_SHOP
 	@ LAYOUT_ROUTE110_SEASIDE_CYCLING_ROAD_ENTRANCE remains in its raw physical layout owner.
 	.incbin "baserom_jp.gba", 0x45A5F0, 0x4

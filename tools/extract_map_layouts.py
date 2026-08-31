@@ -41,6 +41,13 @@ TABLE_PATH = OUT_BASE / "layouts_table.inc"
 TABLE_OFFSET = 0x45A1F4
 TABLE_SIZE = 0x6E4
 
+# JP-specific resources intentionally retained as byte-exact baserom spans
+# under their final US-style labels. Each listed item is validated against its
+# owning MapLayout field; do not use this for an unreviewed raw resource.
+JP_RAW_LAYOUT_RESOURCES = {
+    "Route110_TrickHousePuzzle4_Layout_Blockdata",
+}
+
 PAT_LAYOUT = re.compile(
     r"^(?:gMapLayout_(?P<legacy>\w+)|(?P<canonical>[A-Za-z_]\w*_Layout))"
     r"::?\s*@\s*0x(?P<addr>[0-9A-Fa-f]+)$"
@@ -174,6 +181,20 @@ def parse_layout_resource_labels(lines):
         incbin = PAT_LAYOUT_RESOURCE.match(lines[i + 1])
         if label and incbin:
             resources[label.group(1)] = incbin.group(1)
+    return resources
+
+
+def parse_raw_layout_resource_labels(lines):
+    """Return baserom incbins immediately owned by their source labels."""
+    resources = {}
+    for i, line in enumerate(lines[:-1]):
+        label = PAT_LABEL.match(line)
+        incbin = PAT_INC.match(lines[i + 1])
+        if label and incbin:
+            resources[label.group(1)] = (
+                int(incbin.group(1), 16),
+                int(incbin.group(2), 16),
+            )
     return resources
 
 
@@ -454,6 +475,7 @@ def main():
     canonical_layout_names = load_us_layout_names()
     entries, raw_layouts = parse_layouts(lines, rom, canonical_layout_names)
     resources = parse_layout_resource_labels(lines)
+    raw_resources = parse_raw_layout_resource_labels(lines)
     address_labels = load_address_labels()
     raw_structs = [
         layout for layout in raw_layouts if layout.get("pointer_mode") == "raw_struct"
@@ -494,6 +516,19 @@ def main():
                 e["expected_map"]: f"data/layouts/{area}/map.bin",
             }
             for label, expected_path in expected_resources.items():
+                if label in JP_RAW_LAYOUT_RESOURCES:
+                    if label != e["expected_map"]:
+                        problems.append(
+                            f"{e['name']}: JP raw exception is not map blockdata"
+                        )
+                        continue
+                    expected_raw = (e["map_off"], e["w"] * e["h"] * 2 + e["gap"])
+                    if raw_resources.get(label) != expected_raw:
+                        problems.append(
+                            f"{e['name']}: {label} does not own JP ROM "
+                            f"span 0x{expected_raw[0]:X}/0x{expected_raw[1]:X}"
+                        )
+                    continue
                 actual_path = resources.get(label)
                 if actual_path != expected_path:
                     problems.append(

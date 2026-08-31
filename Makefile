@@ -540,6 +540,31 @@ $(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_
 	data/layouts/UnusedCave13/map.bin \
 	data/layouts/UnusedCave14/border.bin \
 	data/layouts/UnusedCave14/map.bin \
+	data/layouts/UnusedOutdoorArea/border.bin \
+	data/layouts/UnusedOutdoorArea/map.bin \
+	data/layouts/Route109_SeashoreHouse/border.bin \
+	data/layouts/Route109_SeashoreHouse/map.bin \
+	data/layouts/Route110_TrickHouseEntrance/border.bin \
+	data/layouts/Route110_TrickHouseEntrance/map.bin \
+	data/layouts/Route110_TrickHouseEnd/border.bin \
+	data/layouts/Route110_TrickHouseEnd/map.bin \
+	data/layouts/Route110_TrickHouseCorridor/border.bin \
+	data/layouts/Route110_TrickHouseCorridor/map.bin \
+	data/layouts/Route110_TrickHousePuzzle1/border.bin \
+	data/layouts/Route110_TrickHousePuzzle1/map.bin \
+	data/layouts/Route110_TrickHousePuzzle2/border.bin \
+	data/layouts/Route110_TrickHousePuzzle2/map.bin \
+	data/layouts/Route110_TrickHousePuzzle3/border.bin \
+	data/layouts/Route110_TrickHousePuzzle3/map.bin \
+	data/layouts/Route110_TrickHousePuzzle4/border.bin \
+	data/layouts/Route110_TrickHousePuzzle5/border.bin \
+	data/layouts/Route110_TrickHousePuzzle5/map.bin \
+	data/layouts/Route110_TrickHousePuzzle6/border.bin \
+	data/layouts/Route110_TrickHousePuzzle6/map.bin \
+	data/layouts/Route110_TrickHousePuzzle7/border.bin \
+	data/layouts/Route110_TrickHousePuzzle7/map.bin \
+	data/layouts/Route110_TrickHousePuzzle8/border.bin \
+	data/layouts/Route110_TrickHousePuzzle8/map.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 

@@ -3004,7 +3004,204 @@ gMapLayout_SAFARI_ZONE_SOUTH: @ 0x0841E860
 	.4byte gMapLayout_SAFARI_ZONE_SOUTH_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Lilycove  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x41E878, 0x2784
+UnusedOutdoorArea_Layout_Border::
+	.incbin "data/layouts/UnusedOutdoorArea/border.bin"
+
+UnusedOutdoorArea_Layout_Blockdata::
+	.incbin "data/layouts/UnusedOutdoorArea/map.bin"
+
+	.align 2
+UnusedOutdoorArea_Layout:: @ 0x0841F448
+	.4byte 58
+	.4byte 26
+	.4byte UnusedOutdoorArea_Layout_Border
+	.4byte UnusedOutdoorArea_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte 0
+
+Route109_SeashoreHouse_Layout_Border::
+	.incbin "data/layouts/Route109_SeashoreHouse/border.bin"
+
+Route109_SeashoreHouse_Layout_Blockdata::
+	.incbin "data/layouts/Route109_SeashoreHouse/map.bin"
+
+	.align 2
+Route109_SeashoreHouse_Layout:: @ 0x0841F594
+	.4byte 15
+	.4byte 10
+	.4byte Route109_SeashoreHouse_Layout_Border
+	.4byte Route109_SeashoreHouse_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_SeashoreHouse
+
+Route110_TrickHouseEntrance_Layout_Border::
+	.incbin "data/layouts/Route110_TrickHouseEntrance/border.bin"
+
+Route110_TrickHouseEntrance_Layout_Blockdata::
+	.incbin "data/layouts/Route110_TrickHouseEntrance/map.bin"
+
+	.align 2
+Route110_TrickHouseEntrance_Layout:: @ 0x0841F674
+	.4byte 12
+	.4byte 8
+	.4byte Route110_TrickHouseEntrance_Layout_Border
+	.4byte Route110_TrickHouseEntrance_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_GenericBuilding
+
+Route110_TrickHouseEnd_Layout_Border::
+	.incbin "data/layouts/Route110_TrickHouseEnd/border.bin"
+
+Route110_TrickHouseEnd_Layout_Blockdata::
+	.incbin "data/layouts/Route110_TrickHouseEnd/map.bin"
+
+	.align 2
+Route110_TrickHouseEnd_Layout:: @ 0x0841F754
+	.4byte 12
+	.4byte 8
+	.4byte Route110_TrickHouseEnd_Layout_Border
+	.4byte Route110_TrickHouseEnd_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_GenericBuilding
+
+Route110_TrickHouseCorridor_Layout_Border::
+	.incbin "data/layouts/Route110_TrickHouseCorridor/border.bin"
+
+Route110_TrickHouseCorridor_Layout_Blockdata::
+	.incbin "data/layouts/Route110_TrickHouseCorridor/map.bin"
+
+	.align 2
+Route110_TrickHouseCorridor_Layout:: @ 0x0841FA44
+	.4byte 15
+	.4byte 24
+	.4byte Route110_TrickHouseCorridor_Layout_Border
+	.4byte Route110_TrickHouseCorridor_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_GenericBuilding
+
+Route110_TrickHousePuzzle1_Layout_Border::
+	.incbin "data/layouts/Route110_TrickHousePuzzle1/border.bin"
+
+Route110_TrickHousePuzzle1_Layout_Blockdata::
+	.incbin "data/layouts/Route110_TrickHousePuzzle1/map.bin"
+
+	.align 2
+Route110_TrickHousePuzzle1_Layout:: @ 0x0841FCF8
+	.4byte 15
+	.4byte 22
+	.4byte Route110_TrickHousePuzzle1_Layout_Border
+	.4byte Route110_TrickHousePuzzle1_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_TrickHousePuzzle
+
+Route110_TrickHousePuzzle2_Layout_Border::
+	.incbin "data/layouts/Route110_TrickHousePuzzle2/border.bin"
+
+Route110_TrickHousePuzzle2_Layout_Blockdata::
+	.incbin "data/layouts/Route110_TrickHousePuzzle2/map.bin"
+
+	.align 2
+Route110_TrickHousePuzzle2_Layout:: @ 0x0841FFAC
+	.4byte 15
+	.4byte 22
+	.4byte Route110_TrickHousePuzzle2_Layout_Border
+	.4byte Route110_TrickHousePuzzle2_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_TrickHousePuzzle
+
+Route110_TrickHousePuzzle3_Layout_Border::
+	.incbin "data/layouts/Route110_TrickHousePuzzle3/border.bin"
+
+Route110_TrickHousePuzzle3_Layout_Blockdata::
+	.incbin "data/layouts/Route110_TrickHousePuzzle3/map.bin"
+
+	.align 2
+Route110_TrickHousePuzzle3_Layout:: @ 0x08420260
+	.4byte 15
+	.4byte 22
+	.4byte Route110_TrickHousePuzzle3_Layout_Border
+	.4byte Route110_TrickHousePuzzle3_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_TrickHousePuzzle
+
+Route110_TrickHousePuzzle4_Layout_Border::
+	.incbin "data/layouts/Route110_TrickHousePuzzle4/border.bin"
+
+@ JP-specific blockdata differs from the US asset at 16 bytes. Keep this
+@ byte-exact span visible under its final owner until it has a reconstructed
+@ JP source asset.
+Route110_TrickHousePuzzle4_Layout_Blockdata::
+	.incbin "baserom_jp.gba", 0x420280, 0x294
+
+	.align 2
+Route110_TrickHousePuzzle4_Layout:: @ 0x08420514
+	.4byte 15
+	.4byte 22
+	.4byte Route110_TrickHousePuzzle4_Layout_Border
+	.4byte Route110_TrickHousePuzzle4_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_TrickHousePuzzle
+
+Route110_TrickHousePuzzle5_Layout_Border::
+	.incbin "data/layouts/Route110_TrickHousePuzzle5/border.bin"
+
+Route110_TrickHousePuzzle5_Layout_Blockdata::
+	.incbin "data/layouts/Route110_TrickHousePuzzle5/map.bin"
+
+	.align 2
+Route110_TrickHousePuzzle5_Layout:: @ 0x084207C8
+	.4byte 15
+	.4byte 22
+	.4byte Route110_TrickHousePuzzle5_Layout_Border
+	.4byte Route110_TrickHousePuzzle5_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_TrickHousePuzzle
+
+Route110_TrickHousePuzzle6_Layout_Border::
+	.incbin "data/layouts/Route110_TrickHousePuzzle6/border.bin"
+
+Route110_TrickHousePuzzle6_Layout_Blockdata::
+	.incbin "data/layouts/Route110_TrickHousePuzzle6/map.bin"
+
+	.align 2
+Route110_TrickHousePuzzle6_Layout:: @ 0x08420A7C
+	.4byte 15
+	.4byte 22
+	.4byte Route110_TrickHousePuzzle6_Layout_Border
+	.4byte Route110_TrickHousePuzzle6_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_TrickHousePuzzle
+
+Route110_TrickHousePuzzle7_Layout_Border::
+	.incbin "data/layouts/Route110_TrickHousePuzzle7/border.bin"
+
+Route110_TrickHousePuzzle7_Layout_Blockdata::
+	.incbin "data/layouts/Route110_TrickHousePuzzle7/map.bin"
+
+	.align 2
+Route110_TrickHousePuzzle7_Layout:: @ 0x08420D30
+	.4byte 15
+	.4byte 22
+	.4byte Route110_TrickHousePuzzle7_Layout_Border
+	.4byte Route110_TrickHousePuzzle7_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_TrickHousePuzzle
+
+Route110_TrickHousePuzzle8_Layout_Border::
+	.incbin "data/layouts/Route110_TrickHousePuzzle8/border.bin"
+
+Route110_TrickHousePuzzle8_Layout_Blockdata::
+	.incbin "data/layouts/Route110_TrickHousePuzzle8/map.bin"
+
+	.align 2
+Route110_TrickHousePuzzle8_Layout:: @ 0x08420FE4
+	.4byte 15
+	.4byte 22
+	.4byte Route110_TrickHousePuzzle8_Layout_Border
+	.4byte Route110_TrickHousePuzzle8_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_TrickHousePuzzle
+
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Border:
 	.incbin "data/layouts/FortreeCity_DecorationShop/border.bin"
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata:
