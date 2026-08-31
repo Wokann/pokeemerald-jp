@@ -727,10 +727,22 @@ BattleScript_EffectConversion:: @ 0x08287436
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectFlinchHit:: @ 0x0828744B
-	.incbin "baserom_jp.gba", 0x28744b, 0xb
+	setmoveeffect MOVE_EFFECT_FLINCH
+	goto BattleScript_EffectHit
 
 BattleScript_EffectRestoreHp:: @ 0x08287456
-	.incbin "baserom_jp.gba", 0x287456, 0x23
+	attackcanceler
+	attackstring
+	ppreduce
+	tryhealhalfhealth BattleScript_AlreadyAtFullHp, BS_ATTACKER
+	attackanimation
+	waitanimation
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	printstring STRINGID_PKMNREGAINEDHEALTH
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectToxic:: @ 0x08287479
 	.incbin "baserom_jp.gba", 0x287479, 0x8c
