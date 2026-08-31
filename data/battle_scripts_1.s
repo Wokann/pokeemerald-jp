@@ -1825,7 +1825,11 @@ BattleScript_MoveWeatherChange:: @ 0x082880C9
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectSunnyDay:: @ 0x082880DD
-	.incbin "baserom_jp.gba", 0x2880dd, 0x9
+	attackcanceler
+	attackstring
+	ppreduce
+	setsunny
+	goto BattleScript_MoveWeatherChange
 
 BattleScript_EffectDefenseUpHit:: @ 0x082880E6
 	.incbin "baserom_jp.gba", 0x2880e6, 0xb
