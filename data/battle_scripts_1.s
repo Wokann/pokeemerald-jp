@@ -716,7 +716,15 @@ BattleScript_MultiHitEnd::
 	end
 
 BattleScript_EffectConversion:: @ 0x08287436
-	.incbin "baserom_jp.gba", 0x287436, 0x15
+	attackcanceler
+	attackstring
+	ppreduce
+	tryconversiontypechange BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNCHANGEDTYPE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectFlinchHit:: @ 0x0828744B
 	.incbin "baserom_jp.gba", 0x28744b, 0xb
