@@ -356,6 +356,9 @@ MAPS = (
     "BattleFrontier_BattlePalaceLobby",
     "BattleFrontier_BattlePalaceCorridor",
     "BattleFrontier_BattlePalaceBattleRoom",
+    "BattleFrontier_BattlePyramidLobby",
+    "BattleFrontier_BattlePyramidFloor",
+    "BattleFrontier_BattlePyramidTop",
 )
 
 CONNECTED_MAPS = (
@@ -706,6 +709,9 @@ NULL_CONNECTION_MAPS = (
     "BattleFrontier_BattlePalaceLobby",
     "BattleFrontier_BattlePalaceCorridor",
     "BattleFrontier_BattlePalaceBattleRoom",
+    "BattleFrontier_BattlePyramidLobby",
+    "BattleFrontier_BattlePyramidFloor",
+    "BattleFrontier_BattlePyramidTop",
     "SouthernIsland_Exterior",
     "SouthernIsland_Interior",
     "SafariZone_RestHouse",

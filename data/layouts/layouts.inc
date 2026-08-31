@@ -3713,7 +3713,31 @@ gMapLayout_BATTLE_FRONTIER_OUTSIDE_EAST: @ 0x0843EAAC
 	.4byte gMapLayout_BATTLE_FRONTIER_OUTSIDE_EAST_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_BattleFrontierOutsideEast  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x43EAC4, 0x2FFC
+	.incbin "baserom_jp.gba", 0x43EAC4, 0x2D20
+gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY_Border:
+	.incbin "data/layouts/BattleFrontier_BattlePyramidLobby/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattlePyramidLobby/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY
+gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY: @ 0x08441A08
+	.4byte 15  @ width
+	.4byte 18  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR_Border:
+	.incbin "data/layouts/BattleFrontier_BattlePyramidFloor/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattlePyramidFloor/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR
+gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR: @ 0x08441AA8
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
 gMapLayout_BATTLE_PYRAMID_SQUARE01_Border:
 	.incbin "data/layouts/BattlePyramidSquare01/border.bin"
 gMapLayout_BATTLE_PYRAMID_SQUARE01_Blockdata:
@@ -3906,7 +3930,18 @@ gMapLayout_BATTLE_PYRAMID_SQUARE16: @ 0x084424A8
 	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE16_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_BattlePyramid  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4424C0, 0x63C
+gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_TOP_Border:
+	.incbin "data/layouts/BattleFrontier_BattlePyramidTop/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_TOP_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattlePyramidTop/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_TOP
+gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_TOP: @ 0x08442AE4
+	.4byte 34  @ width
+	.4byte 23  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_TOP_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_TOP_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
 gMapLayout_MAGMA_HIDEOUT_3F_3R_Border:
 	.incbin "data/layouts/MagmaHideout_3F_3R/border.bin"
 gMapLayout_MAGMA_HIDEOUT_3F_3R_Blockdata:

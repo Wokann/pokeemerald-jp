@@ -2506,7 +2506,10 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/BattleFrontier_BattlePalaceLobby/header.inc"
 	.include "data/maps/BattleFrontier_BattlePalaceCorridor/header.inc"
 	.include "data/maps/BattleFrontier_BattlePalaceBattleRoom/header.inc"
-	.incbin "baserom_jp.gba", 0x45D818, 0x1180
+	.include "data/maps/BattleFrontier_BattlePyramidLobby/header.inc"
+	.include "data/maps/BattleFrontier_BattlePyramidFloor/header.inc"
+	.include "data/maps/BattleFrontier_BattlePyramidTop/header.inc"
+	.incbin "baserom_jp.gba", 0x45D86C, 0x112C
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

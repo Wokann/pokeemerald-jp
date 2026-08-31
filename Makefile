@@ -311,6 +311,8 @@ JP_STRUCTURED_MAPS += BattleFrontier_BattleDomeLobby BattleFrontier_BattleDomeCo
 	BattleFrontier_BattleDomePreBattleRoom BattleFrontier_BattleDomeBattleRoom
 JP_STRUCTURED_MAPS += BattleFrontier_BattlePalaceLobby BattleFrontier_BattlePalaceCorridor \
 	BattleFrontier_BattlePalaceBattleRoom
+JP_STRUCTURED_MAPS += BattleFrontier_BattlePyramidLobby BattleFrontier_BattlePyramidFloor \
+	BattleFrontier_BattlePyramidTop
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
@@ -473,6 +475,8 @@ JP_STRUCTURED_MAP_METADATA_MAPS += BattleFrontier_BattleDomeLobby BattleFrontier
 	BattleFrontier_BattleDomePreBattleRoom BattleFrontier_BattleDomeBattleRoom
 JP_STRUCTURED_MAP_METADATA_MAPS += BattleFrontier_BattlePalaceLobby BattleFrontier_BattlePalaceCorridor \
 	BattleFrontier_BattlePalaceBattleRoom
+JP_STRUCTURED_MAP_METADATA_MAPS += BattleFrontier_BattlePyramidLobby BattleFrontier_BattlePyramidFloor \
+	BattleFrontier_BattlePyramidTop
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)
