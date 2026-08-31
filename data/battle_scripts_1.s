@@ -2974,19 +2974,31 @@ BattleScript_FaintedMonSendOutNew:: @ 0x08288E58
 	cancelallactions
 
 BattleScript_FaintedMonEnd:: @ 0x08288E7D
-	.incbin "baserom_jp.gba", 0x288e7d, 0x1
+	end2
 
 BattleScript_LinkHandleFaintedMonMultiple:: @ 0x08288E7E
-	.incbin "baserom_jp.gba", 0x288e7e, 0x6
+	openpartyscreen BS_FAINTED_LINK_MULTIPLE_1, BattleScript_LinkHandleFaintedMonMultipleStart
 
 BattleScript_LinkHandleFaintedMonMultipleStart:: @ 0x08288E84
-	.incbin "baserom_jp.gba", 0x288e84, 0xc
+	switchhandleorder BS_FAINTED, 0
+	openpartyscreen BS_FAINTED_LINK_MULTIPLE_2, BattleScript_LinkHandleFaintedMonMultipleEnd
+	switchhandleorder BS_FAINTED, 0
 
 BattleScript_LinkHandleFaintedMonLoop:: @ 0x08288E90
-	.incbin "baserom_jp.gba", 0x288e90, 0x24
+	switchhandleorder BS_FAINTED, 3
+	drawpartystatussummary BS_FAINTED
+	getswitchedmondata BS_FAINTED
+	switchindataupdate BS_FAINTED
+	hpthresholds BS_FAINTED
+	printstring STRINGID_SWITCHINMON
+	hidepartystatussummary BS_FAINTED
+	switchinanim BS_FAINTED, FALSE
+	waitstate
+	switchineffects BS_FAINTED_LINK_MULTIPLE_1
+	jumpifbytenotequal gBattlerFainted, gBattlersCount, BattleScript_LinkHandleFaintedMonLoop
 
 BattleScript_LinkHandleFaintedMonMultipleEnd:: @ 0x08288EB4
-	.incbin "baserom_jp.gba", 0x288eb4, 0x1
+	end2
 
 BattleScript_LocalTrainerBattleWon:: @ 0x08288EB5
 	.incbin "baserom_jp.gba", 0x288eb5, 0x16
