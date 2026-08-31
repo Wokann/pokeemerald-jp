@@ -3214,7 +3214,21 @@ gMapLayout_FORTREE_CITY_DECORATION_SHOP: @ 0x08421064
 	.4byte gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata  @ map
 	.4byte gTileset_Building  @ primaryTileset
 	.4byte gTileset_GenericBuilding  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42107c, 0xd4
+Route110_SeasideCyclingRoadEntrance_Layout_Border::
+	.incbin "data/layouts/Route110_SeasideCyclingRoadEntrance/border.bin"
+
+Route110_SeasideCyclingRoadEntrance_Layout_Blockdata::
+	.incbin "data/layouts/Route110_SeasideCyclingRoadEntrance/map.bin"
+
+	.align 2
+Route110_SeasideCyclingRoadEntrance_Layout:: @ 0x08421138
+	.4byte 15
+	.4byte 6
+	.4byte Route110_SeasideCyclingRoadEntrance_Layout_Border
+	.4byte Route110_SeasideCyclingRoadEntrance_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_Shop
+
 gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_1F_Border:
 	.incbin "data/layouts/LilycoveCity_DepartmentStore_1F/border.bin"
 gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_1F_Blockdata:

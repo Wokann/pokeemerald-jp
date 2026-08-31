@@ -261,8 +261,7 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte Route110_TrickHousePuzzle7_Layout
 	.4byte Route110_TrickHousePuzzle8_Layout
 	.4byte gMapLayout_FORTREE_CITY_DECORATION_SHOP
-	@ LAYOUT_ROUTE110_SEASIDE_CYCLING_ROAD_ENTRANCE remains in its raw physical layout owner.
-	.incbin "baserom_jp.gba", 0x45A5F0, 0x4
+	.4byte Route110_SeasideCyclingRoadEntrance_Layout
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_1F
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_2F
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_3F
