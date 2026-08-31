@@ -2702,7 +2702,15 @@ BattleScript_TeeterDanceMissed:
 
 BattleScript_EffectMudSport:: @ 0x08288AB1
 BattleScript_EffectWaterSport:: @ 0x08288AB1
-	.incbin "baserom_jp.gba", 0x288ab1, 0x17
+	attackcanceler
+	attackstring
+	ppreduce
+	settypebasedhalvers BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printfromtable gSportsUsedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectPoisonFang:: @ 0x08288AC8
 	.incbin "baserom_jp.gba", 0x288ac8, 0xb
