@@ -1125,7 +1125,7 @@ gSpinningSparkleSpriteTemplate: @ 0x85175C8
 
 	.incbin "baserom_jp.gba", 0x5175E0, 0xAC
 
-	.section .rodata.data_b2d_mid26_after_battle_anim_status_effects
+	.section .rodata.data_b2d_mid26_after_battle_anim_status_effects_before_field_weather_drought
 	.incbin "baserom_jp.gba", 0x5176d4, 0x3cc
 
 	.globl gTitleScreenPokemonLogoTilemap
@@ -1281,9 +1281,7 @@ sPokemonLogoShineSpriteSheet: @ 0x851ADD8
 	.hword 0x0800, 0x03EA
 	.4byte 0x00000000, 0x00000000
 
-	.globl gUnknown_851ADE8
-gUnknown_851ADE8: @ 0x851ADE8
-	.incbin "baserom_jp.gba", 0x51ade8, 0xc000
+	.section .rodata.data_b2d_mid26_after_field_weather_drought
 
 	.globl gWeatherPtr
 gWeatherPtr: @ 0x8526DE8

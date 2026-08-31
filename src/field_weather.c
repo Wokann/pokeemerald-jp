@@ -1,6 +1,18 @@
 #include "global.h"
 #include "field_weather.h"
 
+#define FIELD_WEATHER_DROUGHT_DATA __attribute__((section(".rodata.field_weather_drought_data")))
+
+// The drought weather effect uses a precalculated color lookup table. Presumably this
+// is because the underlying color shift calculation is slow.
+static const u16 sDroughtWeatherColors[][0x1000] FIELD_WEATHER_DROUGHT_DATA = INCBIN_U16(
+    "graphics/weather/drought/colors_0.bin",
+    "graphics/weather/drought/colors_1.bin",
+    "graphics/weather/drought/colors_2.bin",
+    "graphics/weather/drought/colors_3.bin",
+    "graphics/weather/drought/colors_4.bin",
+    "graphics/weather/drought/colors_5.bin");
+
 __attribute__((naked)) void StartWeather()
 {
     __asm__(".syntax unified\n\t"
@@ -1149,7 +1161,7 @@ __attribute__((naked)) void ApplyGammaShift(void)
         "	blo _080AB06C\n\t"
         "	b _080AB12A\n\t"
         "	.align 2, 0\n\t"
-        "_080AB10C: .4byte gUnknown_851ADE8\n\t"
+        "_080AB10C: .4byte sDroughtWeatherColors\n\t"
         "_080AB110: .4byte gPlttBufferFaded\n\t"
         "_080AB114: .4byte gPlttBufferUnfaded\n\t"
         "_080AB118:\n\t"
@@ -1499,7 +1511,7 @@ __attribute__((naked)) void ApplyDroughtGammaShiftWithBlend(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080AB3A0: .4byte gPlttBufferUnfaded\n\t"
-        "_080AB3A4: .4byte gUnknown_851ADE8\n\t"
+        "_080AB3A4: .4byte sDroughtWeatherColors\n\t"
         "_080AB3A8: .4byte gPlttBufferFaded\n\t"
         ".syntax divided\n\t"
     );
@@ -2896,4 +2908,3 @@ __attribute__((naked)) void ResetPreservedPalettesInWeather()
         ".syntax divided\n\t"
     );
 }
-
