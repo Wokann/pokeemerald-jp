@@ -794,7 +794,31 @@ BattleScript_EffectTriAttack:: @ 0x08287519
 	goto BattleScript_EffectHit
 
 BattleScript_EffectRest:: @ 0x08287524
-	.incbin "baserom_jp.gba", 0x287524, 0x4b
+	attackcanceler
+	attackstring
+	ppreduce
+	jumpifstatus BS_ATTACKER, STATUS1_SLEEP, BattleScript_RestIsAlreadyAsleep
+	jumpifcantmakeasleep BattleScript_RestCantSleep
+	trysetrest BattleScript_AlreadyAtFullHp
+	pause B_WAIT_TIME_SHORT
+	printfromtable gRestUsedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	updatestatusicon BS_ATTACKER
+	waitstate
+	goto BattleScript_PresentHealTarget
+
+BattleScript_RestCantSleep:: @ 0x0828754E
+	pause B_WAIT_TIME_LONG
+	printfromtable gUproarAwakeStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
+BattleScript_RestIsAlreadyAsleep:: @ 0x0828755E
+	setalreadystatusedmoveattempt BS_ATTACKER
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNALREADYASLEEP2
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectOHKO:: @ 0x0828756F
 	.incbin "baserom_jp.gba", 0x28756f, 0x31
