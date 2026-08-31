@@ -899,7 +899,14 @@ BattleScript_DoWrapEffect:: @ 0x0828768D
 	goto BattleScript_EffectHit
 
 BattleScript_EffectDoubleHit:: @ 0x08287698
-	.incbin "baserom_jp.gba", 0x287698, 0x18
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	setmultihitcounter 2
+	initmultihitstring
+	setbyte sMULTIHIT_EFFECT, 0
+	goto BattleScript_MultiHitLoop
 
 BattleScript_EffectRecoilIfMiss:: @ 0x082876B0
 	.incbin "baserom_jp.gba", 0x2876b0, 0x51
