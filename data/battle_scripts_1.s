@@ -838,7 +838,35 @@ BattleScript_KOFail:: @ 0x08287590
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectRazorWind:: @ 0x082875A0
-	.incbin "baserom_jp.gba", 0x2875a0, 0x81
+	jumpifstatus2 BS_ATTACKER, STATUS2_MULTIPLETURNS, BattleScript_TwoTurnMovesSecondTurn
+	jumpifword CMP_COMMON_BITS, gHitMarker, HITMARKER_NO_ATTACKSTRING, BattleScript_TwoTurnMovesSecondTurn
+	setbyte sTWOTURN_STRINGID, B_MSG_TURN1_RAZOR_WIND
+	call BattleScriptFirstChargingTurn
+	goto BattleScript_MoveEnd
+
+BattleScript_TwoTurnMovesSecondTurn:: @ 0x082875C8
+	attackcanceler
+	setmoveeffect MOVE_EFFECT_CHARGING
+	setbyte sB_ANIM_TURN, 1
+	clearstatusfromeffect BS_ATTACKER
+	orword gHitMarker, HITMARKER_NO_PPDEDUCT
+	jumpifnotmove MOVE_SKY_ATTACK, BattleScript_HitFromAccCheck
+	setmoveeffect MOVE_EFFECT_FLINCH
+	goto BattleScript_HitFromAccCheck
+
+BattleScriptFirstChargingTurn:: @ 0x082875F7
+	attackcanceler
+	printstring STRINGID_EMPTYSTRING3
+	ppreduce
+	attackanimation
+	waitanimation
+	orword gHitMarker, HITMARKER_CHARGING
+	setmoveeffect MOVE_EFFECT_CHARGING | MOVE_EFFECT_AFFECTS_USER
+	seteffectprimary
+	copybyte cMULTISTRING_CHOOSER, sTWOTURN_STRINGID
+	printfromtable gFirstTurnOfTwoStringIds
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 BattleScript_EffectSuperFang:: @ 0x08287621
 	.incbin "baserom_jp.gba", 0x287621, 0x17
