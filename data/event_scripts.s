@@ -68,27 +68,6 @@
 	.include "constants/gba_constants.inc"
 	.include "constants/global.inc"
 
-	@ Reviewed semantic names for shared event/text entries that still live
-	@ inside retained JP blocks. Keeping these aliases in the owning event
-	@ object lets map sources use the same names as pokeemerald without moving
-	@ or duplicating any ROM bytes.
-	.globl BattleFrontier_BattleTowerLobby_Text_ReceivedPrize
-	.set BattleFrontier_BattleTowerLobby_Text_ReceivedPrize, 0x0822064B
-	.globl ProfBirch_EventScript_RatePokedexOrRegister
-	.set ProfBirch_EventScript_RatePokedexOrRegister, 0x082431CD
-	@ Champion-room story code calls this retained standalone Pokédex rating branch.
-	.globl ProfBirch_EventScript_RatePokedex
-	.set ProfBirch_EventScript_RatePokedex, 0x08243207
-	@ The four-step shared player approach remains in the retained movement block.
-	.globl Common_Movement_WalkUp4
-	.set Common_Movement_WalkUp4, 0x08243644
-	@ This shared movement stream remains in the retained JP movement block.
-	.globl Common_Movement_QuestionMark
-	.set Common_Movement_QuestionMark, 0x08243619
-	.globl Common_EventScript_UpdateBrineyLocation
-	.set Common_EventScript_UpdateBrineyLocation, 0x08242978
-	.globl Common_EventScript_PkmnCenterNurse
-	.set Common_EventScript_PkmnCenterNurse, 0x082429B8
 	.set ALLOCATE_SCRIPT_CMD_TABLE, 1
 	.include "data/script_cmd_table.inc"
 
@@ -630,12 +609,6 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/Route124_DivingTreasureHuntersHouse/scripts.inc"
 	.include "data/scripts/std_msgbox.inc"
 
-	.globl EventScript_StartTrainerApproach
-	.globl EventScript_TryDoNormalTrainerBattle
-	.globl EventScript_TryDoDoubleTrainerBattle
-	.globl EventScript_DoNoIntroTrainerBattle
-	.globl EventScript_TryDoRematchBattle
-	.globl EventScript_TryDoDoubleRematchBattle
 	.include "data/scripts/trainer_battle.inc"
 	.include "data/scripts/std_msgbox_autoclose.inc"
 	.include "data/scripts/new_game.inc"
@@ -716,29 +689,6 @@ Common_EventScript_OutOfCenterPartyHeal::
 	special HealPlayerParty
 	fadescreen FADE_FROM_BLACK
 	return
-
-	@ These Fan Club interview strings remain in the later shared TV-text raw
-	@ owner. Export semantic aliases until that physical text owner is split.
-	.globl LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer
-	.set LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer, 0x0824DE14
-	.globl LilycoveCity_PokemonTrainerFanClub_Text_ThatsWhatYouThink
-	.set LilycoveCity_PokemonTrainerFanClub_Text_ThatsWhatYouThink, 0x0824DE37
-	.globl LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer
-	.set LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer, 0x0824DE51
-	.globl LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer2
-	.set LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer2, 0x0824DE64
-	.globl LilycoveCity_PokemonTrainerFanClub_Text_HowStrongRateTrainer
-	.set LilycoveCity_PokemonTrainerFanClub_Text_HowStrongRateTrainer, 0x0824DE82
-	.globl LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer2
-	.set LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer2, 0x0824DEA3
-	.globl LilycoveCity_PokemonTrainerFanClub_Text_YouShouldMeetTrainer
-	.set LilycoveCity_PokemonTrainerFanClub_Text_YouShouldMeetTrainer, 0x0824DEB6
-	.globl LilycoveCity_PokemonTrainerFanClub_Text_ThankYouIllShareThisInfo
-	.set LilycoveCity_PokemonTrainerFanClub_Text_ThankYouIllShareThisInfo, 0x0824DEE0
-	.globl LilycoveCity_PokemonTrainerFanClub_HopeYouCatchTVSpecial
-	.set LilycoveCity_PokemonTrainerFanClub_HopeYouCatchTVSpecial, 0x0824DF29
-	.globl EventScript_GotoTrainerScript
-	.set EventScript_GotoTrainerScript, 0x08244D20
 
 EventScript_RegionMap::
 	lockall
