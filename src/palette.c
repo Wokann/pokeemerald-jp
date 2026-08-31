@@ -17,6 +17,7 @@ enum
 // The full functionality of this system is unknown.
 
 #define NUM_PALETTE_STRUCTS 16
+#define PALETTE_STATIC_DATA __attribute__((section(".rodata.palette_static_data")))
 
 struct PaletteStructTemplate
 {
@@ -64,12 +65,20 @@ extern EWRAM_DATA struct PaletteFadeControl gPaletteFade;
 extern EWRAM_DATA u32 sPlttBufferTransferPending;
 extern EWRAM_DATA u8 gPaletteDecompressionBuffer[PLTT_SIZE];
 
-// JP const data lives in data.s.
-extern const struct PaletteStructTemplate gUnknown_84FCF98;
-extern const u8 gUnknown_84FCFA8[];
+PALETTE_STATIC_DATA static const struct PaletteStructTemplate sDummyPaletteStructTemplate = {
+    .id = 0xFFFF,
+    .state = 1,
+};
 
-#define sDummyPaletteStructTemplate gUnknown_84FCF98
-#define sRoundedDownGrayscaleMap gUnknown_84FCFA8
+PALETTE_STATIC_DATA static const u8 sRoundedDownGrayscaleMap[] = {
+     0,  0,  0,  0,  0,
+     5,  5,  5,  5,  5,
+    11, 11, 11, 11, 11,
+    16, 16, 16, 16, 16,
+    21, 21, 21, 21, 21,
+    27, 27, 27, 27, 27,
+    31, 31,
+};
 
 void LoadCompressedPalette(const u32 *src, u16 offset, u16 size)
 {

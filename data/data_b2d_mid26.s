@@ -27,17 +27,9 @@
 	.include "constants/ribbon_constants.inc"
 
 
-	.section .rodata.data_b2d_mid26_after_tileset_anims_data_before_battle_anim_status_effects
+	.section .rodata.data_b2d_mid26_after_tileset_anims_data_before_palette_static_data
 
-	.globl gUnknown_84FCF98
-gUnknown_84FCF98: @ 0x84FCF98
-	.incbin "baserom_jp.gba", 0x4fcf98, 0x10
-
-	.globl gUnknown_84FCFA8
-gUnknown_84FCFA8: @ 0x84FCFA8
-	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x05, 0x05, 0x05, 0x05, 0x05, 0x0B, 0x0B
-	.byte 0x0B, 0x0B, 0x0B, 0x10, 0x10, 0x10, 0x10, 0x10, 0x15, 0x15, 0x15, 0x15
-	.byte 0x15, 0x1B, 0x1B, 0x1B, 0x1B, 0x1B, 0x1F, 0x1F
+	.section .rodata.data_b2d_mid26_after_palette_static_data_before_battle_anim_status_effects
 
 	.globl sFanfares
 	.globl sFanfares
