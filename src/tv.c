@@ -2621,7 +2621,7 @@ __attribute__((naked)) void sub_080EECA4(void)
     );
 }
 
-__attribute__((naked)) void sub_080EEDEC(void)
+__attribute__((naked)) void TryPutLotteryWinnerReportOnAir(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3195,7 +3195,7 @@ __attribute__((naked)) void MonDataIdxToRibbon(void)
     );
 }
 
-__attribute__((naked)) void sub_080EF244(void)
+__attribute__((naked)) void TryPutTrainerFanClubOnAir(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3267,7 +3267,7 @@ __attribute__((naked)) void sub_080EF244(void)
     );
 }
 
-__attribute__((naked)) void sub_080EF2D8(void)
+__attribute__((naked)) bool8 ShouldHideFanClubInterviewer(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

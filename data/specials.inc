@@ -358,15 +358,9 @@ gSpecials::
 	def_special GenerateContestRand
 	def_special SetChampionSaveWarp
 	def_special TryPutTreasureInvestigatorsOnAir
-	def_special sub_080EEDEC
-	.set SPECIAL_TryPutLotteryWinnerReportOnAir, SPECIAL_sub_080EEDEC
-	.set SPECIAL_WAITSTATE_TryPutLotteryWinnerReportOnAir, SPECIAL_WAITSTATE_sub_080EEDEC
-	def_special sub_080EF244
-	def_special sub_080EF2D8
-	.set SPECIAL_TryPutTrainerFanClubOnAir, SPECIAL_sub_080EF244
-	.set SPECIAL_WAITSTATE_TryPutTrainerFanClubOnAir, SPECIAL_WAITSTATE_sub_080EF244
-	.set SPECIAL_ShouldHideFanClubInterviewer, SPECIAL_sub_080EF2D8
-	.set SPECIAL_WAITSTATE_ShouldHideFanClubInterviewer, SPECIAL_WAITSTATE_sub_080EF2D8
+	def_special TryPutLotteryWinnerReportOnAir
+	def_special TryPutTrainerFanClubOnAir
+	def_special ShouldHideFanClubInterviewer
 	def_special nullsub_55
 	def_special PutFanClubSpecialOnTheAir
 	def_special IncrementDailyPlantedBerries

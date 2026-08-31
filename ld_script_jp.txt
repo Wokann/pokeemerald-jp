@@ -6206,14 +6206,14 @@ SECTIONS {
         src/tv.o(.text.sub_080EEAD4);
         src/tv.o(.text.TV_PutSecretBaseVisitOnTheAir);
         src/tv.o(.text.sub_080EECA4);
-        src/tv.o(.text.sub_080EEDEC);
+        src/tv.o(.text.TryPutLotteryWinnerReportOnAir);
         src/tv.o(.text.sub_080EEE7C);
         src/tv.o(.text.sub_080EEF6C);
         src/tv.o(.text.TryPutSpotTheCutiesOnAir);
         src/tv.o(.text.GetRibbonCount);
         src/tv.o(.text.MonDataIdxToRibbon);
-        src/tv.o(.text.sub_080EF244);
-        src/tv.o(.text.sub_080EF2D8);
+        src/tv.o(.text.TryPutTrainerFanClubOnAir);
+        src/tv.o(.text.ShouldHideFanClubInterviewer);
         src/tv.o(.text.sub_080EF330);
         src/tv.o(.text.sub_080EF3E0);
         src/tv.o(.text.sub_080EF588);
