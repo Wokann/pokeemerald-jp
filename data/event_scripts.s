@@ -69,21 +69,9 @@
 	.include "constants/global.inc"
 
 	@ Reviewed semantic names for shared event/text entries that still live
-	@ inside retained JP blocks.  Keeping these aliases in the owning event
+	@ inside retained JP blocks. Keeping these aliases in the owning event
 	@ object lets map sources use the same names as pokeemerald without moving
 	@ or duplicating any ROM bytes.
-	.globl BattleFrontier_BattleArenaLobby_Text_RulesAreListed
-	.set BattleFrontier_BattleArenaLobby_Text_RulesAreListed, 0x0822FD87
-	.globl BattleFrontier_BattleArenaLobby_Text_ReadWhichHeading
-	.set BattleFrontier_BattleArenaLobby_Text_ReadWhichHeading, 0x0822FDA0
-	.globl BattleFrontier_BattleArenaLobby_Text_ExplainBattleRules
-	.set BattleFrontier_BattleArenaLobby_Text_ExplainBattleRules, 0x0822FDB0
-	.globl BattleFrontier_BattleArenaLobby_Text_ExplainMindRules
-	.set BattleFrontier_BattleArenaLobby_Text_ExplainMindRules, 0x0822FE72
-	.globl BattleFrontier_BattleArenaLobby_Text_ExplainSkillRules
-	.set BattleFrontier_BattleArenaLobby_Text_ExplainSkillRules, 0x0822FECB
-	.globl BattleFrontier_BattleArenaLobby_Text_ExplainBodyRules
-	.set BattleFrontier_BattleArenaLobby_Text_ExplainBodyRules, 0x0822FFB6
 	@ The Slateport Tent corridor reuses retained Battle Factory pre-battle
 	@ text blocks. Keep their US semantic names without moving their JP bytes.
 	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_HoldMonsChooseFromSelection

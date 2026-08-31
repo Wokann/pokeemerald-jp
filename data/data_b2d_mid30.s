@@ -1619,7 +1619,10 @@ gTileset_BattlePalace: @ 0x083B80CC
 	.globl gTileset_BattleDome
 gTileset_BattleDome: @ 0x083B80E4
 	.incbin "baserom_jp.gba", 0x3B80E4, 0x18
-	.incbin "baserom_jp.gba", 0x3B80FC, 0x48
+	.incbin "baserom_jp.gba", 0x3B80FC, 0x30
+	.globl gTileset_BattleArena
+gTileset_BattleArena: @ 0x083B812C
+	.incbin "baserom_jp.gba", 0x3B812C, 0x18
 	.globl gTileset_BattlePyramid
 gTileset_BattlePyramid: @ 0x083B8144
 	.incbin "baserom_jp.gba", 0x3B8144, 0x18
@@ -2509,7 +2512,10 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/BattleFrontier_BattlePyramidLobby/header.inc"
 	.include "data/maps/BattleFrontier_BattlePyramidFloor/header.inc"
 	.include "data/maps/BattleFrontier_BattlePyramidTop/header.inc"
-	.incbin "baserom_jp.gba", 0x45D86C, 0x112C
+	.include "data/maps/BattleFrontier_BattleArenaLobby/header.inc"
+	.include "data/maps/BattleFrontier_BattleArenaCorridor/header.inc"
+	.include "data/maps/BattleFrontier_BattleArenaBattleRoom/header.inc"
+	.incbin "baserom_jp.gba", 0x45D8C0, 0x10D8
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
