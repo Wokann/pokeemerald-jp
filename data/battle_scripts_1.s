@@ -2380,7 +2380,16 @@ BattleScript_EffectCharge:: @ 0x0828876B
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectTaunt:: @ 0x0828877C
-	.incbin "baserom_jp.gba", 0x28877c, 0x1c
+	attackcanceler
+	attackstring
+	ppreduce
+	accuracycheck BattleScript_ButItFailed, ACC_CURR_MOVE
+	settaunt BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNFELLFORTAUNT
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectHelpingHand:: @ 0x08288798
 	.incbin "baserom_jp.gba", 0x288798, 0x15
