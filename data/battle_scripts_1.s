@@ -1869,7 +1869,14 @@ BattleScript_EffectPsychUp:: @ 0x08288129
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectMirrorCoat:: @ 0x0828813E
-	.incbin "baserom_jp.gba", 0x28813e, 0x16
+	attackcanceler
+	mirrorcoatdamagecalculator BattleScript_FailedFromAtkString
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	typecalc2
+	adjustsetdamage
+	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectSkullBash:: @ 0x08288154
 	.incbin "baserom_jp.gba", 0x288154, 0x4f
