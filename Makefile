@@ -571,6 +571,8 @@ $(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_
 	data/layouts/Route119_WeatherInstitute_1F/map.bin \
 	data/layouts/Route119_WeatherInstitute_2F/border.bin \
 	data/layouts/Route119_WeatherInstitute_2F/map.bin \
+	data/layouts/Route104_Prototype/border.bin \
+	data/layouts/Route104_Prototype/map.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 

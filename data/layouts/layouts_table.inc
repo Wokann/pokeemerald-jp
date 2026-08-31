@@ -292,8 +292,7 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_SEALED_CHAMBER_OUTER_ROOM
 	.4byte gMapLayout_VICTORY_ROAD_B1F
 	.4byte gMapLayout_VICTORY_ROAD_B2F
-	@ LAYOUT_ROUTE104_PROTOTYPE remains in its raw physical layout owner.
-	.incbin "baserom_jp.gba", 0x45A66C, 0x4
+	.4byte Route104_Prototype_Layout
 	.4byte gMapLayout_GRANITE_CAVE_STEVENS_ROOM
 	.4byte gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_CORRIDORS
 	.4byte gMapLayout_SOUTHERN_ISLAND_EXTERIOR

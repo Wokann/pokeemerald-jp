@@ -3601,7 +3601,21 @@ gMapLayout_VICTORY_ROAD_B2F: @ 0x0842C920
 	.4byte gMapLayout_VICTORY_ROAD_B2F_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Cave  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42c938, 0x24
+Route104_Prototype_Layout_Border::
+	.incbin "data/layouts/Route104_Prototype/border.bin"
+
+Route104_Prototype_Layout_Blockdata::
+	.incbin "data/layouts/Route104_Prototype/map.bin"
+
+	.align 2
+Route104_Prototype_Layout:: @ 0x0842C944
+	.4byte 1
+	.4byte 1
+	.4byte Route104_Prototype_Layout_Border
+	.4byte Route104_Prototype_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Rustboro
+
 gMapLayout_GRANITE_CAVE_STEVENS_ROOM_Border:
 	.incbin "data/layouts/GraniteCave_StevensRoom/border.bin"
 gMapLayout_GRANITE_CAVE_STEVENS_ROOM_Blockdata:
