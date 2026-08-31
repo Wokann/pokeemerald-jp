@@ -575,22 +575,50 @@ BattleScript_StatUp:: @ 0x0828725C
 	return
 
 BattleScript_EffectAttackDown:: @ 0x0828726C
-	.incbin "baserom_jp.gba", 0x28726c, 0xb
+	setstatchanger STAT_ATK, 1, TRUE
+	goto BattleScript_EffectStatDown
 
 BattleScript_EffectDefenseDown:: @ 0x08287277
-	.incbin "baserom_jp.gba", 0x287277, 0xb
+	setstatchanger STAT_DEF, 1, TRUE
+	goto BattleScript_EffectStatDown
 
 BattleScript_EffectSpeedDown:: @ 0x08287282
-	.incbin "baserom_jp.gba", 0x287282, 0xb
+	setstatchanger STAT_SPEED, 1, TRUE
+	goto BattleScript_EffectStatDown
 
 BattleScript_EffectAccuracyDown:: @ 0x0828728D
-	.incbin "baserom_jp.gba", 0x28728d, 0xb
+	setstatchanger STAT_ACC, 1, TRUE
+	goto BattleScript_EffectStatDown
 
 BattleScript_EffectEvasionDown:: @ 0x08287298
-	.incbin "baserom_jp.gba", 0x287298, 0x55
+	setstatchanger STAT_EVASION, 1, TRUE
+BattleScript_EffectStatDown::
+	attackcanceler
+	jumpifstatus2 BS_TARGET, STATUS2_SUBSTITUTE, BattleScript_FailedFromAtkString
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	statbuffchange STAT_CHANGE_ALLOW_PTR, BattleScript_StatDownEnd
+	jumpifbyte CMP_LESS_THAN, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_DECREASE, BattleScript_StatDownDoAnim
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_FELL_EMPTY, BattleScript_StatDownEnd
+	pause B_WAIT_TIME_SHORT
+	goto BattleScript_StatDownPrintString
+BattleScript_StatDownDoAnim::
+	attackanimation
+	waitanimation
+	setgraphicalstatchangevalues
+	playanimation BS_TARGET, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+BattleScript_StatDownPrintString::
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_StatDownEnd::
+	goto BattleScript_MoveEnd
 
 BattleScript_StatDown:: @ 0x082872ED
-	.incbin "baserom_jp.gba", 0x2872ed, 0x10
+	playanimation BS_EFFECT_BATTLER, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 BattleScript_EffectHaze:: @ 0x082872FD
 	.incbin "baserom_jp.gba", 0x2872fd, 0x11
@@ -948,7 +976,13 @@ BattleScript_AlreadyAtFullHp:: @ 0x08288483
 	.incbin "baserom_jp.gba", 0x288483, 0xe
 
 BattleScript_EffectFakeOut:: @ 0x08288491
-	.incbin "baserom_jp.gba", 0x288491, 0x13
+	.incbin "baserom_jp.gba", 0x288491, 0x11
+
+BattleScript_FailedFromAtkString:: @ 0x082884A2
+	.incbin "baserom_jp.gba", 0x2884a2, 0x1
+
+BattleScript_FailedFromPPReduce:: @ 0x082884A3
+	.incbin "baserom_jp.gba", 0x2884a3, 0x1
 
 BattleScript_ButItFailed:: @ 0x082884A4
 	.incbin "baserom_jp.gba", 0x2884a4, 0x24
