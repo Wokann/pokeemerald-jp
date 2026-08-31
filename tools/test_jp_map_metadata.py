@@ -340,6 +340,8 @@ MAPS = (
     "BattleFrontier_BattleTowerElevator",
     "BattleFrontier_BattleTowerCorridor",
     "BattleFrontier_BattleTowerBattleRoom",
+    "SouthernIsland_Exterior",
+    "SouthernIsland_Interior",
 )
 
 CONNECTED_MAPS = (
@@ -677,6 +679,8 @@ NULL_CONNECTION_MAPS = (
     "BattleFrontier_BattleTowerElevator",
     "BattleFrontier_BattleTowerCorridor",
     "BattleFrontier_BattleTowerBattleRoom",
+    "SouthernIsland_Exterior",
+    "SouthernIsland_Interior",
 )
 
 CANONICAL_LAYOUT_MAPS = (

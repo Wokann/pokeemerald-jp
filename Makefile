@@ -303,6 +303,7 @@ JP_STRUCTURED_MAPS += UnionRoom
 JP_STRUCTURED_MAPS += SafariZone_Northwest SafariZone_North SafariZone_Southwest SafariZone_South
 JP_STRUCTURED_MAPS += BattleFrontier_OutsideWest BattleFrontier_BattleTowerLobby BattleFrontier_BattleTowerElevator \
 	BattleFrontier_BattleTowerCorridor BattleFrontier_BattleTowerBattleRoom
+JP_STRUCTURED_MAPS += SouthernIsland_Exterior SouthernIsland_Interior
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
@@ -457,6 +458,7 @@ JP_STRUCTURED_MAP_METADATA_MAPS += UnionRoom
 JP_STRUCTURED_MAP_METADATA_MAPS += SafariZone_Northwest SafariZone_North SafariZone_Southwest SafariZone_South
 JP_STRUCTURED_MAP_METADATA_MAPS += BattleFrontier_OutsideWest BattleFrontier_BattleTowerLobby BattleFrontier_BattleTowerElevator \
 	BattleFrontier_BattleTowerCorridor BattleFrontier_BattleTowerBattleRoom
+JP_STRUCTURED_MAP_METADATA_MAPS += SouthernIsland_Exterior SouthernIsland_Interior
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

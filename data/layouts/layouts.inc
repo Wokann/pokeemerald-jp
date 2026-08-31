@@ -3096,7 +3096,30 @@ gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_CORRIDORS: @ 0x0842CC48
 	.4byte gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_CORRIDORS_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_InsideShip  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42CC60, 0xD0C
+gMapLayout_SOUTHERN_ISLAND_EXTERIOR_Border:
+	.incbin "data/layouts/SouthernIsland_Exterior/border.bin"
+gMapLayout_SOUTHERN_ISLAND_EXTERIOR_Blockdata:
+	.incbin "data/layouts/SouthernIsland_Exterior/map.bin"
+	.globl gMapLayout_SOUTHERN_ISLAND_EXTERIOR
+gMapLayout_SOUTHERN_ISLAND_EXTERIOR: @ 0x0842D424
+	.4byte 33  @ width
+	.4byte 30  @ height
+	.4byte gMapLayout_SOUTHERN_ISLAND_EXTERIOR_Border  @ border
+	.4byte gMapLayout_SOUTHERN_ISLAND_EXTERIOR_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_RUSTBORO_CITY_SECONDARY  @ secondaryTileset
+gMapLayout_SOUTHERN_ISLAND_INTERIOR_Border:
+	.incbin "data/layouts/SouthernIsland_Interior/border.bin"
+gMapLayout_SOUTHERN_ISLAND_INTERIOR_Blockdata:
+	.incbin "data/layouts/SouthernIsland_Interior/map.bin"
+	.globl gMapLayout_SOUTHERN_ISLAND_INTERIOR
+gMapLayout_SOUTHERN_ISLAND_INTERIOR: @ 0x0842D954
+	.4byte 27  @ width
+	.4byte 24  @ height
+	.4byte gMapLayout_SOUTHERN_ISLAND_INTERIOR_Border  @ border
+	.4byte gMapLayout_SOUTHERN_ISLAND_INTERIOR_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_RUSTBORO_CITY_SECONDARY  @ secondaryTileset
 gMapLayout_JAGGED_PASS_Border:
 	.incbin "data/layouts/JaggedPass/border.bin"
 gMapLayout_JAGGED_PASS_Blockdata:

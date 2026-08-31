@@ -2482,7 +2482,9 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/BattleFrontier_BattleTowerElevator/header.inc"
 	.include "data/maps/BattleFrontier_BattleTowerCorridor/header.inc"
 	.include "data/maps/BattleFrontier_BattleTowerBattleRoom/header.inc"
-	.incbin "baserom_jp.gba", 0x45D658, 0x1340
+	.include "data/maps/SouthernIsland_Exterior/header.inc"
+	.include "data/maps/SouthernIsland_Interior/header.inc"
+	.incbin "baserom_jp.gba", 0x45D690, 0x1308
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
