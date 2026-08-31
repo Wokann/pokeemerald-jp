@@ -1196,7 +1196,17 @@ BattleScript_RageMiss:: @ 0x08287A0F
 	goto BattleScript_PrintMoveMissed
 
 BattleScript_EffectMimic:: @ 0x08287A1C
-	.incbin "baserom_jp.gba", 0x287a1c, 0x26
+	attackcanceler
+	attackstring
+	ppreduce
+	jumpifstatus2 BS_TARGET, STATUS2_SUBSTITUTE, BattleScript_ButItFailed
+	accuracycheck BattleScript_ButItFailed, NO_ACC_CALC_CHECK_LOCK_ON
+	mimicattackcopy BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNLEARNEDMOVE2
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectMetronome:: @ 0x08287A42
 	.incbin "baserom_jp.gba", 0x287a42, 0x14
