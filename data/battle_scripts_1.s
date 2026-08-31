@@ -2204,7 +2204,11 @@ BattleScript_SwallowFail::
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectHail:: @ 0x0828855A
-	.incbin "baserom_jp.gba", 0x28855a, 0x9
+	attackcanceler
+	attackstring
+	ppreduce
+	sethail
+	goto BattleScript_MoveWeatherChange
 
 BattleScript_EffectTorment:: @ 0x08288563
 	.incbin "baserom_jp.gba", 0x288563, 0x1c
