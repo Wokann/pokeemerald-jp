@@ -8021,12 +8021,12 @@ SECTIONS {
         src/mystery_event_script.o(.text.MEScrCmd_setenigmaberry);
         src/mystery_event_script.o(.text.MEScrCmd_giveribbon);
         src/mystery_event_script.o(.text.MEScrCmd_initramscript);
-        src/mystery_event_script.o(.text.MEScrCmd_enableresetrtc);
+        src/mystery_event_script.o(.text.MEScrCmd_givenationaldex);
         src/mystery_event_script.o(.text.MEScrCmd_addrareword);
         src/mystery_event_script.o(.text.MEScrCmd_setrecordmixinggift);
         src/mystery_event_script.o(.text.MEScrCmd_givepokemon);
         src/mystery_event_script.o(.text.MEScrCmd_addtrainer);
-        src/mystery_event_script.o(.text.MEScrCmd_givenationaldex);
+        src/mystery_event_script.o(.text.MEScrCmd_enableresetrtc);
         src/mystery_event_script.o(.text.MEScrCmd_checksum);
         src/mystery_event_script.o(.text.MEScrCmd_crc);
         src/field_effect_helpers.o(.text);

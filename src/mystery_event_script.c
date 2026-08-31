@@ -12,7 +12,6 @@
 #include "strings.h"
 #include "string_util.h"
 
-extern const u8 sMEScrCmdEnableresetrtcText[];
 #include "text.h"
 #include "util.h"
 #include "mystery_event_msg.h"
@@ -285,7 +284,7 @@ bool8 MEScrCmd_initramscript(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 MEScrCmd_givenationaldex(struct ScriptContext *ctx)
+bool8 MEScrCmd_enableresetrtc(struct ScriptContext *ctx)
 {
     EnableResetRTC();
     StringExpandPlaceholders(gStringVar4, gText_InGameClockUsable);
@@ -367,10 +366,10 @@ bool8 MEScrCmd_addtrainer(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 MEScrCmd_enableresetrtc(struct ScriptContext *ctx)
+bool8 MEScrCmd_givenationaldex(struct ScriptContext *ctx)
 {
     EnableNationalPokedex();
-    StringExpandPlaceholders(gStringVar4, sMEScrCmdEnableresetrtcText);
+    StringExpandPlaceholders(gStringVar4, gText_MysteryEventNationalDex);
     ctx->mStatus = MEVENT_STATUS_SUCCESS;
     return FALSE;
 }

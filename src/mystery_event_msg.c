@@ -18,7 +18,7 @@ const u8 gText_MysteryEventSpecialRibbon[] MYSTERY_EVENT_MSG = _(
     "てもちのポケモンに\n"
     "とくべつなリボンが　あたえられた！");
 
-const u8 sMEScrCmdEnableresetrtcText[] MYSTERY_EVENT_MSG = _(
+const u8 gText_MysteryEventNationalDex[] MYSTERY_EVENT_MSG = _(
     "ずかんに　ぜんこくモードが\n"
     "ついか　された！");
 
