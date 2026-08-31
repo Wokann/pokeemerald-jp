@@ -945,7 +945,16 @@ BattleScript_EffectMist:: @ 0x08287701
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectFocusEnergy:: @ 0x08287714
-	.incbin "baserom_jp.gba", 0x287714, 0x1d
+	attackcanceler
+	attackstring
+	ppreduce
+	jumpifstatus2 BS_ATTACKER, STATUS2_FOCUS_ENERGY, BattleScript_ButItFailed
+	setfocusenergy
+	attackanimation
+	waitanimation
+	printfromtable gFocusEnergyUsedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectRecoil:: @ 0x08287731
 	.incbin "baserom_jp.gba", 0x287731, 0x19
