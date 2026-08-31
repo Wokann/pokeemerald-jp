@@ -129,6 +129,14 @@ BATTLE_ANIM_A_BATTLE_BAR_AND_SAP_DRIP_GRAPHICS const u32 gBattleAnimSpritePal_Sa
 
 #undef BATTLE_ANIM_A_BATTLE_BAR_AND_SAP_DRIP_GRAPHICS
 
+#define BATTLE_ANIM_A_UNUSED_WINDOW2_GRAPHICS __attribute__((section(".rodata.battle_anim_a_unused_window2_graphics"), aligned(1)))
+
+// The JP LZ77 streams retain their original alignment padding.
+BATTLE_ANIM_A_UNUSED_WINDOW2_GRAPHICS const u32 gBattleInterfaceGfx_UnusedWindow2[] = INCBIN_U32("graphics/battle_interface/unused_window2.png.4bpp.lz");
+BATTLE_ANIM_A_UNUSED_WINDOW2_GRAPHICS const u32 gBattleInterfaceGfx_UnusedWindow2Bar[] = INCBIN_U32("graphics/battle_interface/unused_window2bar.png.4bpp.lz");
+
+#undef BATTLE_ANIM_A_UNUSED_WINDOW2_GRAPHICS
+
 #define BATTLE_ANIM_A_SPARKLE_GRAPHICS __attribute__((section(".rodata.battle_anim_a_sparkle_graphics"), aligned(1)))
 
 // The JP LZ77 streams retain their original alignment padding.

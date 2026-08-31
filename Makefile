@@ -1186,6 +1186,7 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_interface/battle_bar.4bpp.lz \
 	graphics/battle_anims/sprites/sap_drip.png.4bpp.lz graphics/battle_anims/sprites/sap_drip.png.gbapal.lz \
 	graphics/battle_anims/sprites/sap_drip_2.pal.gbapal.lz \
+	graphics/battle_interface/unused_window2.png.4bpp.lz graphics/battle_interface/unused_window2bar.png.4bpp.lz \
 	graphics/battle_anims/sprites/sparkle_1.png.4bpp.lz graphics/battle_anims/sprites/sparkle_1.png.gbapal.lz \
 	graphics/battle_anims/sprites/sparkle_2.pal.gbapal.lz \
 	graphics/battle_anims/sprites/humanoid_foot.png.gbapal.lz graphics/battle_anims/sprites/humanoid_foot.png.4bpp.lz \
