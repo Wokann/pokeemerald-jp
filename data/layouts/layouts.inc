@@ -5430,7 +5430,22 @@ gMapLayout_METEOR_FALLS_STEVENS_CAVE: @ 0x08459058
 	.4byte gMapLayout_METEOR_FALLS_STEVENS_CAVE_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_MeteorFalls  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x459070, 0xEEC
+LittlerootTown_ProfessorBirchsLabWithTable_Layout_Border::
+	.incbin "data/layouts/LittlerootTown_ProfessorBirchsLabWithTable/border.bin"
+
+LittlerootTown_ProfessorBirchsLabWithTable_Layout_Blockdata::
+	.incbin "data/layouts/LittlerootTown_ProfessorBirchsLabWithTable/map.bin"
+
+	.align 2
+LittlerootTown_ProfessorBirchsLabWithTable_Layout:: @ 0x084591CC
+	.4byte 13
+	.4byte 13
+	.4byte LittlerootTown_ProfessorBirchsLabWithTable_Layout_Border
+	.4byte LittlerootTown_ProfessorBirchsLabWithTable_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_Lab
+
+	.incbin "baserom_jp.gba", 0x4591E4, 0xD78
 gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_Border:
 	.incbin "data/layouts/SootopolisCity_MysteryEventsHouse_1F/border.bin"
 gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_Blockdata:
