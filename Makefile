@@ -599,6 +599,14 @@ $(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_
 	data/layouts/SootopolisCity_LegendsBattle/map.bin \
 	data/layouts/Route111_NoMirageTower/border.bin \
 	data/layouts/Route111_NoMirageTower/map.bin \
+	data/layouts/BattleFrontier_RankingHall/border.bin \
+	data/layouts/BattleFrontier_RankingHall/map.bin \
+	data/layouts/BattleFrontier_Lounge1/border.bin \
+	data/layouts/BattleFrontier_Lounge1/map.bin \
+	data/layouts/BattleFrontier_ExchangeServiceCorner/border.bin \
+	data/layouts/BattleFrontier_ExchangeServiceCorner/map.bin \
+	data/layouts/BattleFrontier_ReceptionGate/border.bin \
+	data/layouts/BattleFrontier_ReceptionGate/map.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 

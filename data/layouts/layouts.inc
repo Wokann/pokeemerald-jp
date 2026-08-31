@@ -4940,7 +4940,65 @@ gMapLayout_SAFARI_ZONE_SOUTHEAST: @ 0x0844AAC0
 	.4byte gMapLayout_SAFARI_ZONE_SOUTHEAST_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Lilycove  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x44AAD8, 0x9D0
+BattleFrontier_RankingHall_Layout_Border::
+	.incbin "data/layouts/BattleFrontier_RankingHall/border.bin"
+
+BattleFrontier_RankingHall_Layout_Blockdata::
+	.incbin "data/layouts/BattleFrontier_RankingHall/map.bin"
+
+	.align 2
+BattleFrontier_RankingHall_Layout:: @ 0x0844B118
+	.4byte 53
+	.4byte 15
+	.4byte BattleFrontier_RankingHall_Layout_Border
+	.4byte BattleFrontier_RankingHall_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_BattleFrontierRankingHall
+
+BattleFrontier_Lounge1_Layout_Border::
+	.incbin "data/layouts/BattleFrontier_Lounge1/border.bin"
+
+BattleFrontier_Lounge1_Layout_Blockdata::
+	.incbin "data/layouts/BattleFrontier_Lounge1/map.bin"
+
+	.align 2
+BattleFrontier_Lounge1_Layout:: @ 0x0844B208
+	.4byte 13
+	.4byte 8
+	.4byte BattleFrontier_Lounge1_Layout_Border
+	.4byte BattleFrontier_Lounge1_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_BattleFrontier
+
+BattleFrontier_ExchangeServiceCorner_Layout_Border::
+	.incbin "data/layouts/BattleFrontier_ExchangeServiceCorner/border.bin"
+
+BattleFrontier_ExchangeServiceCorner_Layout_Blockdata::
+	.incbin "data/layouts/BattleFrontier_ExchangeServiceCorner/map.bin"
+
+	.align 2
+BattleFrontier_ExchangeServiceCorner_Layout:: @ 0x0844B374
+	.4byte 15
+	.4byte 11
+	.4byte BattleFrontier_ExchangeServiceCorner_Layout_Border
+	.4byte BattleFrontier_ExchangeServiceCorner_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_BattleFrontier
+
+BattleFrontier_ReceptionGate_Layout_Border::
+	.incbin "data/layouts/BattleFrontier_ReceptionGate/border.bin"
+
+BattleFrontier_ReceptionGate_Layout_Blockdata::
+	.incbin "data/layouts/BattleFrontier_ReceptionGate/map.bin"
+
+	.align 2
+BattleFrontier_ReceptionGate_Layout:: @ 0x0844B490
+	.4byte 9
+	.4byte 14
+	.4byte BattleFrontier_ReceptionGate_Layout_Border
+	.4byte BattleFrontier_ReceptionGate_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_BattleFrontier
 gMapLayout_ARTISAN_CAVE_B1F_Border:
 	.incbin "data/layouts/ArtisanCave_B1F/border.bin"
 gMapLayout_ARTISAN_CAVE_B1F_Blockdata:

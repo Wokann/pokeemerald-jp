@@ -401,8 +401,10 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_UNION_ROOM
 	.4byte gMapLayout_SAFARI_ZONE_NORTHEAST
 	.4byte gMapLayout_SAFARI_ZONE_SOUTHEAST
-	@ LAYOUT_BATTLE_FRONTIER_RANKING_HALL through LAYOUT_BATTLE_FRONTIER_RECEPTION_GATE remain in raw physical layout owners.
-	.incbin "baserom_jp.gba", 0x45A820, 0x10
+	.4byte BattleFrontier_RankingHall_Layout
+	.4byte BattleFrontier_Lounge1_Layout
+	.4byte BattleFrontier_ExchangeServiceCorner_Layout
+	.4byte BattleFrontier_ReceptionGate_Layout
 	.4byte gMapLayout_ARTISAN_CAVE_B1F
 	.4byte gMapLayout_ARTISAN_CAVE_1F
 	@ LAYOUT_FARAWAY_ISLAND_ENTRANCE through LAYOUT_ISLAND_HARBOR remain in raw physical layout owners.
