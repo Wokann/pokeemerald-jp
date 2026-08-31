@@ -2486,7 +2486,8 @@ BattleScript_EffectRecycle:: @ 0x08288853
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectRevenge:: @ 0x08288868
-	.incbin "baserom_jp.gba", 0x288868, 0x6
+	doubledamagedealtifdamaged
+	goto BattleScript_EffectHit
 
 BattleScript_EffectBrickBreak:: @ 0x0828886E
 	.incbin "baserom_jp.gba", 0x28886e, 0x51
