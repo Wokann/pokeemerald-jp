@@ -2349,7 +2349,15 @@ BattleScript_SmellingsaltDoubleDmg:
 	goto BattleScript_EffectHit
 
 BattleScript_EffectFollowMe:: @ 0x0828874D
-	.incbin "baserom_jp.gba", 0x28874d, 0x11
+	attackcanceler
+	attackstring
+	ppreduce
+	setforcedtarget
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNCENTERATTENTION
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectNaturePower:: @ 0x0828875E
 	.incbin "baserom_jp.gba", 0x28875e, 0xd
