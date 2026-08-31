@@ -3875,13 +3875,23 @@ BattleScript_FocusPunchSetUp:: @ 0x08289787
 
 @ Sleep-status responses: still asleep, regular wake-up, and Uproar wake-up.
 BattleScript_MoveUsedIsAsleep:: @ 0x0828979B
-	.incbin "baserom_jp.gba", 0x28979b, 0xd
+	printstring STRINGID_PKMNFASTASLEEP
+	waitmessage B_WAIT_TIME_LONG
+	statusanimation BS_ATTACKER
+	goto BattleScript_MoveEnd
 
 BattleScript_MoveUsedWokeUp:: @ 0x082897A8
-	.incbin "baserom_jp.gba", 0x2897a8, 0x14
+	bicword gHitMarker, HITMARKER_WAKE_UP_CLEAR
+	printfromtable gWokeUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+	updatestatusicon BS_ATTACKER
+	return
 
 BattleScript_MonWokeUpInUproar:: @ 0x082897BC
-	.incbin "baserom_jp.gba", 0x2897bc, 0x9
+	printstring STRINGID_PKMNWOKEUPINUPROAR
+	waitmessage B_WAIT_TIME_LONG
+	updatestatusicon BS_ATTACKER
+	end2
 
 @ Poison and burn residual-damage paths with their shared status handlers.
 BattleScript_PoisonTurnDmg:: @ 0x082897C5
