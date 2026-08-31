@@ -1967,7 +1967,9 @@ BattleScript_EffectGust:: @ 0x08288263
 	goto BattleScript_EffectHit
 
 BattleScript_EffectStomp:: @ 0x08288282
-	.incbin "baserom_jp.gba", 0x288282, 0x16
+	jumpifnostatus3 BS_TARGET, STATUS3_MINIMIZED, BattleScript_FlinchEffect
+	setbyte sDMG_MULTIPLIER, 2
+	goto BattleScript_FlinchEffect
 
 BattleScript_EffectSolarBeam:: @ 0x08288298
 	.incbin "baserom_jp.gba", 0x288298, 0x56
