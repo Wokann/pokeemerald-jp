@@ -4029,17 +4029,17 @@ BattleScript_MoveUsedIsInLoveCantAttack: @ 0x82898BC
 
 	.globl BattleScript_NightmareTurnDmg
 BattleScript_NightmareTurnDmg: @ 0x82898C7
-	.byte 0x10, 0x91, 0x00 @ printstring STRINGID_PKMNLOCKEDINNIGHTMARE
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x65, 0x01, 0x00, 0x00, 0x00, 0x08 @ status2animation BS_ATTACKER, STATUS2_NIGHTMARE
-	.byte 0x28, 0xCD, 0x97, 0x28, 0x08 @ goto BattleScript_DoTurnDmg
+	printstring STRINGID_PKMNLOCKEDINNIGHTMARE
+	waitmessage B_WAIT_TIME_LONG
+	status2animation BS_ATTACKER, STATUS2_NIGHTMARE
+	goto BattleScript_DoTurnDmg
 
 	.globl BattleScript_CurseTurnDmg
 BattleScript_CurseTurnDmg: @ 0x82898D8
-	.byte 0x10, 0x93, 0x00 @ printstring STRINGID_PKMNAFFLICTEDBYCURSE
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x65, 0x01, 0x00, 0x00, 0x00, 0x10 @ status2animation BS_ATTACKER, STATUS2_CURSED
-	.byte 0x28, 0xCD, 0x97, 0x28, 0x08 @ goto BattleScript_DoTurnDmg
+	printstring STRINGID_PKMNAFFLICTEDBYCURSE
+	waitmessage B_WAIT_TIME_LONG
+	status2animation BS_ATTACKER, STATUS2_CURSED
+	goto BattleScript_DoTurnDmg
 
 	.globl BattleScript_TargetPRLZHeal
 BattleScript_TargetPRLZHeal: @ 0x82898E9
