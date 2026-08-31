@@ -10,10 +10,7 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 	.include "data/layouts/layouts.inc"
-
-	.globl gUnknown_845A1F4
-gUnknown_845A1F4: @ 0x845A1F4
-	.incbin "baserom_jp.gba", 0x45a1f4, 0x6e4
+	.include "data/layouts/layouts_table.inc"
 	.globl gMapHeaders
 gMapHeaders: @ 0x0845A8D8
 	@ struct MapHeader { mapLayout, events, mapScripts, connections, music, mapLayoutId, regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType }

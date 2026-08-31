@@ -554,7 +554,7 @@ __attribute__((naked)) const struct MapLayout *GetMapLayout(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08084354: .4byte gUnknown_845A1F4\n\t"
+        "_08084354: .4byte gMapLayouts\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -2620,7 +2620,7 @@ __attribute__((naked)) void GenerateBattlePyramidFloorLayout(u16 *backupMapData,
         "	b _081A9F0E\n\t"
         "	.align 2, 0\n\t"
         "_081A9EF0: .4byte 0x169\n\t"
-        "_081A9EF4: .4byte gUnknown_845A1F4\n\t"
+        "_081A9EF4: .4byte gMapLayouts\n\t"
         "_081A9EF8: .4byte gBackupMapLayout\n\t"
         "_081A9EFC: .4byte gSaveBlock1Ptr\n\t"
         "_081A9F00: .4byte 0x000003FF\n\t"

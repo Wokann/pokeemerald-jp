@@ -496,7 +496,10 @@ data/maps/%/header.inc data/maps/%/connections.inc &: data/maps/%/map.json tools
 # owner. State the ordering directly so a changed map.json cannot race its
 # generated metadata during make -j.
 $(OBJ_DIR)/data/data_b2d_mid30.o: $(JP_STRUCTURED_MAP_METADATA)
-$(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc \
+data/layouts/layouts_table.inc: data/layouts/layouts.inc baserom_jp.gba tools/extract_map_layouts.py
+	python3 tools/extract_map_layouts.py --write-table
+
+$(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc data/layouts/layouts_table.inc \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 
