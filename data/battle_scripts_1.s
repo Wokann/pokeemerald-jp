@@ -3895,19 +3895,26 @@ BattleScript_MonWokeUpInUproar:: @ 0x082897BC
 
 @ Poison and burn residual-damage paths with their shared status handlers.
 BattleScript_PoisonTurnDmg:: @ 0x082897C5
-	.incbin "baserom_jp.gba", 0x2897c5, 0x6
+	printstring STRINGID_PKMNHURTBYPOISON
+	waitmessage B_WAIT_TIME_LONG
 
 BattleScript_DoStatusTurnDmg:: @ 0x082897CB
-	.incbin "baserom_jp.gba", 0x2897cb, 0x2
+	statusanimation BS_ATTACKER
 
 BattleScript_DoTurnDmg:: @ 0x082897CD
-	.incbin "baserom_jp.gba", 0x2897cd, 0x19
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	tryfaintmon BS_ATTACKER
+	checkteamslost BattleScript_DoTurnDmgEnd
 
 BattleScript_DoTurnDmgEnd:: @ 0x082897E6
-	.incbin "baserom_jp.gba", 0x2897e6, 0x1
+	end2
 
 BattleScript_BurnTurnDmg:: @ 0x082897E7
-	.incbin "baserom_jp.gba", 0x2897e7, 0xb
+	printstring STRINGID_PKMNHURTBYBURN
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_DoStatusTurnDmg
 
 @ Frozen-status responses: unable to move, ordinary thaw, and fire thaw.
 BattleScript_MoveUsedIsFrozen:: @ 0x082897F2
