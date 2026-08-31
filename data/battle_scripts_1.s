@@ -1761,7 +1761,26 @@ BattleScript_EffectMagnitude:: @ 0x0828802A
 	goto BattleScript_HitsAllWithUndergroundBonusLoop
 
 BattleScript_EffectBatonPass:: @ 0x0828803D
-	.incbin "baserom_jp.gba", 0x28803d, 0x3b
+	attackcanceler
+	attackstring
+	ppreduce
+	jumpifbattletype BATTLE_TYPE_ARENA, BattleScript_ButItFailed
+	jumpifcantswitch SWITCH_IGNORE_ESCAPE_PREVENTION | BS_ATTACKER, BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	openpartyscreen BS_ATTACKER, BattleScript_ButItFailed
+	switchoutabilities BS_ATTACKER
+	waitstate
+	switchhandleorder BS_ATTACKER, 2
+	returntoball BS_ATTACKER
+	getswitchedmondata BS_ATTACKER
+	switchindataupdate BS_ATTACKER
+	hpthresholds BS_ATTACKER
+	printstring STRINGID_SWITCHINMON
+	switchinanim BS_ATTACKER, TRUE
+	waitstate
+	switchineffects BS_ATTACKER
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectRapidSpin:: @ 0x08288078
 	.incbin "baserom_jp.gba", 0x288078, 0xb
