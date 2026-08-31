@@ -1950,7 +1950,15 @@ BattleScript_HitAllWithUndergroundBonusMissed::
 	end
 
 BattleScript_EffectFutureSight:: @ 0x0828824C
-	.incbin "baserom_jp.gba", 0x28824c, 0x17
+	attackcanceler
+	attackstring
+	ppreduce
+	trysetfutureattack BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printfromtable gFutureMoveUsedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectGust:: @ 0x08288263
 	.incbin "baserom_jp.gba", 0x288263, 0x1f
