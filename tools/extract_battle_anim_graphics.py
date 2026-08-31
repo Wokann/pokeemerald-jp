@@ -31,6 +31,9 @@ RESOURCES = (
     Resource("gBattleAnimSpriteGfx_SapDrip", Path("graphics/battle_anims/sprites/sap_drip.png.4bpp.lz"), 0xC0960C, 0x3E0, 0x3DD),
     Resource("gBattleAnimSpritePal_SapDrip", Path("graphics/battle_anims/sprites/sap_drip.png.gbapal.lz"), 0xC099EC, 0x20, 0x20),
     Resource("gBattleAnimSpritePal_SapDrip2", Path("graphics/battle_anims/sprites/sap_drip_2.pal.gbapal.lz"), 0xC09A0C, 0x24, 0x22),
+    Resource("gBattleAnimSpriteGfx_Sparkle1", Path("graphics/battle_anims/sprites/sparkle_1.png.4bpp.lz"), 0xC09CF8, 0x298, 0x295),
+    Resource("gBattleAnimSpritePal_Sparkle1", Path("graphics/battle_anims/sprites/sparkle_1.png.gbapal.lz"), 0xC09F90, 0x28, 0x25),
+    Resource("gBattleAnimSpritePal_Sparkle2", Path("graphics/battle_anims/sprites/sparkle_2.pal.gbapal.lz"), 0xC09FB8, 0x28, 0x25),
 )
 
 

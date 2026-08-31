@@ -129,6 +129,15 @@ BATTLE_ANIM_A_BATTLE_BAR_AND_SAP_DRIP_GRAPHICS const u32 gBattleAnimSpritePal_Sa
 
 #undef BATTLE_ANIM_A_BATTLE_BAR_AND_SAP_DRIP_GRAPHICS
 
+#define BATTLE_ANIM_A_SPARKLE_GRAPHICS __attribute__((section(".rodata.battle_anim_a_sparkle_graphics"), aligned(1)))
+
+// The JP LZ77 streams retain their original alignment padding.
+BATTLE_ANIM_A_SPARKLE_GRAPHICS const u32 gBattleAnimSpriteGfx_Sparkle1[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_1.png.4bpp.lz");
+BATTLE_ANIM_A_SPARKLE_GRAPHICS const u32 gBattleAnimSpritePal_Sparkle1[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_1.png.gbapal.lz");
+BATTLE_ANIM_A_SPARKLE_GRAPHICS const u32 gBattleAnimSpritePal_Sparkle2[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_2.pal.gbapal.lz");
+
+#undef BATTLE_ANIM_A_SPARKLE_GRAPHICS
+
 // Pokédex.  These custom sections retain the JP ROM order while assigning the
 // resources to pokeemerald's graphics owner and source hierarchy.
 #define POKEDEX_GRAPHICS_PREFIX __attribute__((section(".rodata.pokedex_graphics_prefix"), aligned(1)))
