@@ -1311,15 +1311,15 @@
 	various \battler, VARIOUS_EMIT_YESNOBOX
 	.endm
 	
-	.macro various14 battler:req
-	various \battler, 14
+	.macro arenadrawreftextbox
+	various BS_ATTACKER, VARIOUS_DRAW_ARENA_REF_TEXT_BOX
 	.endm
-	
-	.macro various15 battler:req
-	various \battler, 15
+
+	.macro arenaerasereftextbox
+	various BS_ATTACKER, VARIOUS_ERASE_ARENA_REF_TEXT_BOX
 	.endm
-	
-	.macro arenajudmengtstring id:req
+
+	.macro arenajudgmentstring id:req
 	various \id, VARIOUS_ARENA_JUDGMENT_STRING
 	.endm
 	
