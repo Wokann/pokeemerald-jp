@@ -1007,7 +1007,15 @@ BattleScript_EffectSpecialDefenseUp2:: @ 0x082877C6
 	goto BattleScript_EffectStatUp
 
 BattleScript_EffectTransform:: @ 0x082877D1
-	.incbin "baserom_jp.gba", 0x2877d1, 0x13
+	attackcanceler
+	attackstring
+	ppreduce
+	transformdataexecution
+	attackanimation
+	waitanimation
+	printfromtable gTransformUsedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectAttackDown2:: @ 0x082877E4
 	.incbin "baserom_jp.gba", 0x2877e4, 0xb
