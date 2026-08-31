@@ -3255,26 +3255,50 @@ BattleScript_PursuitDmgOnSwitchOutRet:: @ 0x08289140
 	return
 
 BattleScript_Pausex20:: @ 0x08289141
-	.byte 0x39, 0x20, 0x00 @ pause 0x0020
-	.byte 0x3C @ return
+	pause B_WAIT_TIME_SHORT
+	return
 
 BattleScript_LevelUp:: @ 0x08289145
-	.incbin "baserom_jp.gba", 0x289145, 0x1c
+	fanfare MUS_LEVEL_UP
+	printstring STRINGID_PKMNGREWTOLV
+	setbyte sLVLBOX_STATE, 0
+	drawlvlupbox
+	handlelearnnewmove BattleScript_LearnedNewMove, BattleScript_LearnMoveReturn, TRUE
+	goto BattleScript_AskToLearnMove
 
 BattleScript_TryLearnMoveLoop:: @ 0x08289161
-	.incbin "baserom_jp.gba", 0x289161, 0xa
+	handlelearnnewmove BattleScript_LearnedNewMove, BattleScript_LearnMoveReturn, FALSE
 
 BattleScript_AskToLearnMove:: @ 0x0828916B
-	.incbin "baserom_jp.gba", 0x28916b, 0x2d
+	buffermovetolearn
+	printstring STRINGID_TRYTOLEARNMOVE1
+	printstring STRINGID_TRYTOLEARNMOVE2
+	printstring STRINGID_TRYTOLEARNMOVE3
+	waitstate
+	setbyte sLEARNMOVE_STATE, 0
+	yesnoboxlearnmove BattleScript_ForgotAndLearnedNewMove
+	printstring STRINGID_STOPLEARNINGMOVE
+	waitstate
+	setbyte sLEARNMOVE_STATE, 0
+	yesnoboxstoplearningmove BattleScript_AskToLearnMove
+	printstring STRINGID_DIDNOTLEARNMOVE
+	goto BattleScript_TryLearnMoveLoop
 
 BattleScript_ForgotAndLearnedNewMove:: @ 0x08289198
-	.incbin "baserom_jp.gba", 0x289198, 0x9
+	printstring STRINGID_123POOF
+	printstring STRINGID_PKMNFORGOTMOVE
+	printstring STRINGID_ANDELLIPSIS
 
 BattleScript_LearnedNewMove:: @ 0x082891A1
-	.incbin "baserom_jp.gba", 0x2891a1, 0x12
+	buffermovetolearn
+	fanfare MUS_LEVEL_UP
+	printstring STRINGID_PKMNLEARNEDMOVE
+	waitmessage B_WAIT_TIME_LONG
+	updatechoicemoveonlvlup BS_ATTACKER
+	goto BattleScript_TryLearnMoveLoop
 
 BattleScript_LearnMoveReturn:: @ 0x082891B3
-	.incbin "baserom_jp.gba", 0x2891b3, 0x1
+	return
 
 @ Weather-turn scripts. The physical entry points and loop labels are
 @ retained explicitly; byte spans await battle-script macro conversion.
