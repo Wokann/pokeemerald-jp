@@ -1832,13 +1832,16 @@ BattleScript_EffectSunnyDay:: @ 0x082880DD
 	goto BattleScript_MoveWeatherChange
 
 BattleScript_EffectDefenseUpHit:: @ 0x082880E6
-	.incbin "baserom_jp.gba", 0x2880e6, 0xb
+	setmoveeffect MOVE_EFFECT_DEF_PLUS_1 | MOVE_EFFECT_AFFECTS_USER
+	goto BattleScript_EffectHit
 
 BattleScript_EffectAttackUpHit:: @ 0x082880F1
-	.incbin "baserom_jp.gba", 0x2880f1, 0xb
+	setmoveeffect MOVE_EFFECT_ATK_PLUS_1 | MOVE_EFFECT_AFFECTS_USER
+	goto BattleScript_EffectHit
 
 BattleScript_EffectAllStatsUpHit:: @ 0x082880FC
-	.incbin "baserom_jp.gba", 0x2880fc, 0xb
+	setmoveeffect MOVE_EFFECT_ALL_STATS_UP | MOVE_EFFECT_AFFECTS_USER
+	goto BattleScript_EffectHit
 
 BattleScript_EffectBellyDrum:: @ 0x08288107
 	.incbin "baserom_jp.gba", 0x288107, 0x22
