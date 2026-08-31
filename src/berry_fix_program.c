@@ -1,295 +1,156 @@
 #include "global.h"
+#include "gba/m4a_internal.h"
+#include "gpu_regs.h"
+#include "main.h"
+#include "multiboot.h"
+#include "scanline_effect.h"
+#include "sprite.h"
+#include "task.h"
 
-// JP byte-exact berry glitch fix multiboot program (naked asm).
+extern void LoadBerryFixGraphics(u32 idx);
+extern const u8 gMultiBootProgram_BerryGlitchFix_Start[];
+extern const u8 gMultiBootProgram_BerryGlitchFix_End[];
+extern s16 gUnknown_3005B68[];
+extern const u8 *gUnknown_3006070;
+extern s32 gUnknown_3006074;
+extern u32 gUnknown_3006078;
+extern struct MultiBootParam gUnknown_3006080;
 
-__attribute__((naked)) void berry_fix_bg_hide(void)
+void berry_fix_main(u8 taskId);
+void berry_fix_text_print(void);
+
+// JP byte-exact berry glitch fix multiboot program.
+
+void berry_fix_bg_hide(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, lr}\n\t"
-        "sub sp, #4\n\t"
-        "ldr r0, _081BF094\n\t"
-        "bl DisableInterrupts\n\t"
-        "movs r0, #1\n\t"
-        "bl EnableInterrupts\n\t"
-        "bl m4aSoundVSyncOff\n\t"
-        "movs r0, #0\n\t"
-        "bl SetVBlankCallback\n\t"
-        "movs r4, #0\n\t"
-        "str r4, [sp]\n\t"
-        "ldr r0, _081BF098\n\t"
-        "mov r1, sp\n\t"
-        "str r1, [r0]\n\t"
-        "movs r1, #0xc0\n\t"
-        "lsls r1, r1, #0x13\n\t"
-        "str r1, [r0, #4]\n\t"
-        "ldr r1, _081BF09C\n\t"
-        "str r1, [r0, #8]\n\t"
-        "ldr r1, [r0, #8]\n\t"
-        "str r4, [sp]\n\t"
-        "mov r1, sp\n\t"
-        "str r1, [r0]\n\t"
-        "movs r1, #0xa0\n\t"
-        "lsls r1, r1, #0x13\n\t"
-        "str r1, [r0, #4]\n\t"
-        "ldr r1, _081BF0A0\n\t"
-        "str r1, [r0, #8]\n\t"
-        "ldr r0, [r0, #8]\n\t"
-        "bl ResetSpriteData\n\t"
-        "bl ResetTasks\n\t"
-        "bl ScanlineEffect_Stop\n\t"
-        "ldr r0, _081BF0A4\n\t"
-        "movs r1, #0\n\t"
-        "bl CreateTask\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r0, r0, #0x18\n\t"
-        "ldr r2, _081BF0A8\n\t"
-        "lsls r1, r0, #2\n\t"
-        "adds r1, r1, r0\n\t"
-        "lsls r1, r1, #3\n\t"
-        "adds r1, r1, r2\n\t"
-        "strh r4, [r1, #8]\n\t"
-        "ldr r0, _081BF0AC\n\t"
-        "bl SetMainCallback2\n\t"
-        "add sp, #4\n\t"
-        "pop {r4}\n\t"
-        "pop {r0}\n\t"
-        "bx r0\n\t"
-        ".align 2, 0\n\t"
-        "_081BF094: .4byte 0x0000FFFF\n\t"
-        "_081BF098: .4byte 0x040000D4\n\t"
-        "_081BF09C: .4byte 0x85006000\n\t"
-        "_081BF0A0: .4byte 0x85000100\n\t"
-        "_081BF0A4: .4byte berry_fix_main + 1\n\t"
-        "_081BF0A8: .4byte gTasks\n\t"
-        "_081BF0AC: .4byte berry_fix_text_print + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    volatile u32 zero;
+    vu32 *dma;
+    u8 taskId;
+
+    DisableInterrupts(0xFFFF);
+    EnableInterrupts(1);
+    m4aSoundVSyncOff();
+    SetVBlankCallback(NULL);
+
+    zero = 0;
+    dma = (vu32 *)REG_ADDR_DMA3SAD;
+    dma[0] = (u32)&zero;
+    dma[1] = VRAM;
+    dma[2] = 0x85006000;
+    (void)dma[2];
+
+    zero = 0;
+    dma[0] = (u32)&zero;
+    dma[1] = PLTT;
+    dma[2] = 0x85000100;
+    (void)dma[2];
+
+    ResetSpriteData();
+    ResetTasks();
+    ScanlineEffect_Stop();
+
+    taskId = CreateTask(berry_fix_main, 0);
+    gTasks[taskId].data[0] = 0;
+    SetMainCallback2(berry_fix_text_print);
 }
 
-__attribute__((naked)) void berry_fix_text_print(void)
+void berry_fix_text_print(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {lr}\n\t"
-        "bl RunTasks\n\t"
-        "pop {r0}\n\t"
-        "bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    RunTasks();
 }
 
-__attribute__((naked)) void berry_fix_main(u8 taskId)
+void berry_fix_main(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, r6, lr}\n\t"
-        "sub sp, #4\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r2, r0, #0x18\n\t"
-        "lsls r0, r2, #2\n\t"
-        "adds r0, r0, r2\n\t"
-        "lsls r0, r0, #3\n\t"
-        "ldr r1, _081BF0E4\n\t"
-        "adds r5, r0, r1\n\t"
-        "movs r1, #0\n\t"
-        "ldrsh r0, [r5, r1]\n\t"
-        "cmp r0, #0xa\n\t"
-        "bls _081BF0D8\n\t"
-        "b _081BF272\n\t"
-        "_081BF0D8:\n\t"
-        "lsls r0, r0, #2\n\t"
-        "ldr r1, _081BF0E8\n\t"
-        "adds r0, r0, r1\n\t"
-        "ldr r0, [r0]\n\t"
-        "mov pc, r0\n\t"
-        ".align 2, 0\n\t"
-        "_081BF0E4: .4byte gUnknown_3005B68\n\t"
-        "_081BF0E8: .4byte 0x081BF0EC\n\t"
-        "_081BF0EC: @ jump table\n\t"
-        ".4byte _081BF118 @ case 0\n\t"
-        ".4byte _081BF122 @ case 1\n\t"
-        ".4byte _081BF140 @ case 2\n\t"
-        ".4byte _081BF272 @ case 3\n\t"
-        ".4byte _081BF15C @ case 4\n\t"
-        ".4byte _081BF194 @ case 5\n\t"
-        ".4byte _081BF200 @ case 6\n\t"
-        ".4byte _081BF236 @ case 7\n\t"
-        ".4byte _081BF23A @ case 8\n\t"
-        ".4byte _081BF258 @ case 9\n\t"
-        ".4byte _081BF262 @ case 10\n\t"
-        "_081BF118:\n\t"
-        "movs r0, #5\n\t"
-        "bl LoadBerryFixGraphics\n\t"
-        "movs r0, #1\n\t"
-        "b _081BF270\n\t"
-        "_081BF122:\n\t"
-        "ldr r0, _081BF13C\n\t"
-        "ldrh r1, [r0, #0x2e]\n\t"
-        "movs r0, #1\n\t"
-        "ands r0, r1\n\t"
-        "cmp r0, #0\n\t"
-        "bne _081BF130\n\t"
-        "b _081BF272\n\t"
-        "_081BF130:\n\t"
-        "movs r0, #0\n\t"
-        "bl LoadBerryFixGraphics\n\t"
-        "movs r0, #2\n\t"
-        "b _081BF270\n\t"
-        ".align 2, 0\n\t"
-        "_081BF13C: .4byte gMain\n\t"
-        "_081BF140:\n\t"
-        "ldr r0, _081BF158\n\t"
-        "ldrh r1, [r0, #0x2e]\n\t"
-        "movs r0, #1\n\t"
-        "ands r0, r1\n\t"
-        "cmp r0, #0\n\t"
-        "bne _081BF14E\n\t"
-        "b _081BF272\n\t"
-        "_081BF14E:\n\t"
-        "movs r0, #1\n\t"
-        "bl LoadBerryFixGraphics\n\t"
-        "movs r0, #4\n\t"
-        "b _081BF270\n\t"
-        ".align 2, 0\n\t"
-        "_081BF158: .4byte gMain\n\t"
-        "_081BF15C:\n\t"
-        "ldr r0, _081BF180\n\t"
-        "ldr r1, _081BF184\n\t"
-        "str r1, [r0]\n\t"
-        "ldr r2, _081BF188\n\t"
-        "ldr r0, _081BF18C\n\t"
-        "subs r0, r0, r1\n\t"
-        "str r0, [r2]\n\t"
-        "ldr r0, _081BF190\n\t"
-        "str r1, [r0, #0x28]\n\t"
-        "adds r1, r0, #0\n\t"
-        "adds r1, #0x4b\n\t"
-        "movs r4, #0\n\t"
-        "strb r4, [r1]\n\t"
-        "bl MultiBootInit\n\t"
-        "strh r4, [r5, #2]\n\t"
-        "movs r0, #5\n\t"
-        "b _081BF270\n\t"
-        ".align 2, 0\n\t"
-        "_081BF180: .4byte gUnknown_3006070\n\t"
-        "_081BF184: .4byte gMultiBootProgram_BerryGlitchFix_Start\n\t"
-        "_081BF188: .4byte gUnknown_3006078\n\t"
-        "_081BF18C: .4byte gMultiBootProgram_BerryGlitchFix_End\n\t"
-        "_081BF190: .4byte gUnknown_3006080\n\t"
-        "_081BF194:\n\t"
-        "ldr r0, _081BF1DC\n\t"
-        "ldrb r6, [r0, #0x18]\n\t"
-        "adds r4, r0, #0\n\t"
-        "cmp r6, #0\n\t"
-        "bne _081BF1EC\n\t"
-        "ldr r0, [r4, #0x1c]\n\t"
-        "ldr r1, _081BF1E0\n\t"
-        "ands r0, r1\n\t"
-        "cmp r0, r1\n\t"
-        "bne _081BF1EC\n\t"
-        "ldrh r0, [r5, #2]\n\t"
-        "adds r0, #1\n\t"
-        "strh r0, [r5, #2]\n\t"
-        "lsls r0, r0, #0x10\n\t"
-        "asrs r0, r0, #0x10\n\t"
-        "cmp r0, #0xb4\n\t"
-        "ble _081BF1F0\n\t"
-        "movs r0, #2\n\t"
-        "bl LoadBerryFixGraphics\n\t"
-        "ldr r0, _081BF1E4\n\t"
-        "ldr r1, [r0]\n\t"
-        "adds r1, #0xc0\n\t"
-        "ldr r0, _081BF1E8\n\t"
-        "ldr r2, [r0]\n\t"
-        "subs r2, #0xc0\n\t"
-        "movs r0, #1\n\t"
-        "str r0, [sp]\n\t"
-        "adds r0, r4, #0\n\t"
-        "movs r3, #4\n\t"
-        "bl sub_081BA808\n\t"
-        "strh r6, [r5, #2]\n\t"
-        "movs r0, #6\n\t"
-        "b _081BF270\n\t"
-        ".align 2, 0\n\t"
-        "_081BF1DC: .4byte gUnknown_3006080\n\t"
-        "_081BF1E0: .4byte 0x00020200\n\t"
-        "_081BF1E4: .4byte gUnknown_3006070\n\t"
-        "_081BF1E8: .4byte gUnknown_3006078\n\t"
-        "_081BF1EC:\n\t"
-        "movs r0, #0\n\t"
-        "strh r0, [r5, #2]\n\t"
-        "_081BF1F0:\n\t"
-        "adds r0, r4, #0\n\t"
-        "bl sub_081BA3A8\n\t"
-        "ldr r1, _081BF1FC\n\t"
-        "str r0, [r1]\n\t"
-        "b _081BF272\n\t"
-        ".align 2, 0\n\t"
-        "_081BF1FC: .4byte gUnknown_3006074\n\t"
-        "_081BF200:\n\t"
-        "ldr r4, _081BF220\n\t"
-        "adds r0, r4, #0\n\t"
-        "bl sub_081BA3A8\n\t"
-        "ldr r1, _081BF224\n\t"
-        "str r0, [r1]\n\t"
-        "adds r0, r4, #0\n\t"
-        "bl sub_081BA8CC\n\t"
-        "cmp r0, #0\n\t"
-        "beq _081BF228\n\t"
-        "movs r0, #3\n\t"
-        "bl LoadBerryFixGraphics\n\t"
-        "movs r0, #7\n\t"
-        "b _081BF270\n\t"
-        ".align 2, 0\n\t"
-        "_081BF220: .4byte gUnknown_3006080\n\t"
-        "_081BF224: .4byte gUnknown_3006074\n\t"
-        "_081BF228:\n\t"
-        "ldrb r1, [r4, #0x1e]\n\t"
-        "movs r0, #2\n\t"
-        "ands r0, r1\n\t"
-        "cmp r0, #0\n\t"
-        "bne _081BF272\n\t"
-        "movs r0, #9\n\t"
-        "b _081BF270\n\t"
-        "_081BF236:\n\t"
-        "movs r0, #8\n\t"
-        "b _081BF270\n\t"
-        "_081BF23A:\n\t"
-        "ldr r0, _081BF254\n\t"
-        "ldrh r1, [r0, #0x2e]\n\t"
-        "movs r0, #1\n\t"
-        "ands r0, r1\n\t"
-        "cmp r0, #0\n\t"
-        "beq _081BF272\n\t"
-        "adds r0, r2, #0\n\t"
-        "bl DestroyTask\n\t"
-        "bl DoSoftReset\n\t"
-        "b _081BF272\n\t"
-        ".align 2, 0\n\t"
-        "_081BF254: .4byte gMain\n\t"
-        "_081BF258:\n\t"
-        "movs r0, #4\n\t"
-        "bl LoadBerryFixGraphics\n\t"
-        "movs r0, #0xa\n\t"
-        "b _081BF270\n\t"
-        "_081BF262:\n\t"
-        "ldr r0, _081BF27C\n\t"
-        "ldrh r1, [r0, #0x2e]\n\t"
-        "movs r0, #1\n\t"
-        "ands r0, r1\n\t"
-        "cmp r0, #0\n\t"
-        "beq _081BF272\n\t"
-        "movs r0, #0\n\t"
-        "_081BF270:\n\t"
-        "strh r0, [r5]\n\t"
-        "_081BF272:\n\t"
-        "add sp, #4\n\t"
-        "pop {r4, r5, r6}\n\t"
-        "pop {r0}\n\t"
-        "bx r0\n\t"
-        ".align 2, 0\n\t"
-        "_081BF27C: .4byte gMain\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gUnknown_3005B68 + taskId * 20;
+
+    switch (data[0])
+    {
+    case 0:
+        LoadBerryFixGraphics(5);
+        data[0] = 1;
+        break;
+    case 1:
+        if (gMain.newKeys & A_BUTTON)
+        {
+            LoadBerryFixGraphics(0);
+            data[0] = 2;
+        }
+        break;
+    case 2:
+        if (gMain.newKeys & A_BUTTON)
+        {
+            LoadBerryFixGraphics(1);
+            data[0] = 4;
+        }
+        break;
+    case 4:
+        gUnknown_3006070 = gMultiBootProgram_BerryGlitchFix_Start;
+        gUnknown_3006078 = gMultiBootProgram_BerryGlitchFix_End - gMultiBootProgram_BerryGlitchFix_Start;
+        gUnknown_3006080.masterp = gMultiBootProgram_BerryGlitchFix_Start;
+        gUnknown_3006080.server_type = 0;
+        MultiBootInit(&gUnknown_3006080);
+        data[1] = 0;
+        data[0] = 5;
+        break;
+    case 5:
+    {
+        u8 probeCount = gUnknown_3006080.probe_count;
+        struct MultiBootParam *multiBoot = &gUnknown_3006080;
+
+        if (probeCount == 0
+         && (multiBoot->response_bit & 2)
+         && (multiBoot->client_bit & 2))
+        {
+            if (++data[1] > 180)
+            {
+                LoadBerryFixGraphics(2);
+                MultiBootStartMaster(multiBoot,
+                                     gUnknown_3006070 + MULTIBOOT_HEADER_SIZE,
+                                     gUnknown_3006078 - MULTIBOOT_HEADER_SIZE,
+                                     4,
+                                     1);
+                data[1] = probeCount;
+                data[0] = 6;
+                break;
+            }
+        }
+        else
+        {
+            data[1] = 0;
+        }
+
+        gUnknown_3006074 = MultiBootMain(multiBoot);
+        break;
+    }
+    case 6:
+        gUnknown_3006074 = MultiBootMain(&gUnknown_3006080);
+        if (MultiBootCheckComplete(&gUnknown_3006080))
+        {
+            LoadBerryFixGraphics(3);
+            data[0] = 7;
+        }
+        else if (!(gUnknown_3006080.client_bit & 2))
+        {
+            data[0] = 9;
+        }
+        break;
+    case 7:
+        data[0] = 8;
+        break;
+    case 8:
+        if (gMain.newKeys & A_BUTTON)
+        {
+            DestroyTask(taskId);
+            DoSoftReset();
+        }
+        break;
+    case 9:
+        LoadBerryFixGraphics(4);
+        data[0] = 10;
+        break;
+    case 10:
+        if (gMain.newKeys & A_BUTTON)
+            data[0] = 0;
+        break;
+    }
 }
