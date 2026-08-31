@@ -2096,13 +2096,26 @@ BattleScript_DefenseCurlDoStatUpAnim::
 	goto BattleScript_StatUpDoAnim
 
 BattleScript_EffectSoftboiled:: @ 0x08288460
-	.incbin "baserom_jp.gba", 0x288460, 0x9
+	attackcanceler
+	attackstring
+	ppreduce
+	tryhealhalfhealth BattleScript_AlreadyAtFullHp, BS_TARGET
 
 BattleScript_PresentHealTarget:: @ 0x08288469
-	.incbin "baserom_jp.gba", 0x288469, 0x1a
+	attackanimation
+	waitanimation
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	printstring STRINGID_PKMNREGAINEDHEALTH
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_AlreadyAtFullHp:: @ 0x08288483
-	.incbin "baserom_jp.gba", 0x288483, 0xe
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNHPFULL
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectFakeOut:: @ 0x08288491
 	.incbin "baserom_jp.gba", 0x288491, 0x11
