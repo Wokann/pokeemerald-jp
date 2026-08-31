@@ -1712,7 +1712,16 @@ BattleScript_FuryCutterHit:
 	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectAttract:: @ 0x08287FE0
-	.incbin "baserom_jp.gba", 0x287fe0, 0x1c
+	attackcanceler
+	attackstring
+	ppreduce
+	accuracycheck BattleScript_ButItFailed, ACC_CURR_MOVE
+	tryinfatuating BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNFELLINLOVE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectReturn:: @ 0x08287FFC
 BattleScript_EffectFrustration:: @ 0x08287FFC
