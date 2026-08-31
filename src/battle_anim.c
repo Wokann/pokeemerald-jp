@@ -542,7 +542,7 @@ __attribute__((naked)) void RunAnimScriptCommand(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A35DC: .4byte gUnknown_84FE5A4\n\t"
+        "_080A35DC: .4byte sScriptCmdTable\n\t"
         "_080A35E0: .4byte gUnknown_2038090\n\t"
         "_080A35E4: .4byte gUnknown_203809C\n\t"
         "_080A35E8: .4byte gAnimScriptActive\n\t"
@@ -4841,3 +4841,59 @@ __attribute__((naked)) void sub_080A550C(void)
         ".syntax divided\n\t"
     );
 }
+
+#define BATTLE_ANIM_SCRIPT_CMD_DATA __attribute__((section(".rodata.battle_anim_script_cmd_data")))
+
+static void (*const sScriptCmdTable[])(void) BATTLE_ANIM_SCRIPT_CMD_DATA =
+{
+    ScriptCmd_loadspritegfx,
+    ScriptCmd_unloadspritegfx,
+    ScriptCmd_createsprite,
+    ScriptCmd_createvisualtask,
+    ScriptCmd_delay,
+    ScriptCmd_waitbgfadein,
+    ScriptCmd_hang2,
+    ScriptCmd_stopsound,
+    ScriptCmd_end,
+    ScriptCmd_playse,
+    ScriptCmd_monbg,
+    ScriptCmd_clearmonbg,
+    ScriptCmd_setalpha,
+    ScriptCmd_blendoff,
+    ScriptCmd_call,
+    ScriptCmd_return,
+    ScriptCmd_setarg,
+    ScriptCmd_choosetwoturnanim,
+    ScriptCmd_jumpifmoveturn,
+    ScriptCmd_goto,
+    ScriptCmd_fadetobg,
+    ScriptCmd_restorebg,
+    ScriptCmd_waitbgfadeout,
+    ScriptCmd_waitforvisualfinish,
+    ScriptCmd_changebg,
+    ScriptCmd_playsewithpan,
+    ScriptCmd_setpan,
+    ScriptCmd_panse_1B,
+    ScriptCmd_loopsewithpan,
+    ScriptCmd_waitplaysewithpan,
+    ScriptCmd_setbldcnt,
+    ScriptCmd_createsoundtask,
+    ScriptCmd_waitsound,
+    ScriptCmd_jumpargeq,
+    ScriptCmd_monbg_22,
+    ScriptCmd_clearmonbg_23,
+    ScriptCmd_jumpifcontest,
+    ScriptCmd_fadetobgfromset,
+    ScriptCmd_panse_26,
+    ScriptCmd_panse_27,
+    ScriptCmd_monbgprio_28,
+    ScriptCmd_monbgprio_29,
+    ScriptCmd_monbgprio_2A,
+    ScriptCmd_invisible,
+    ScriptCmd_visible,
+    ScriptCmd_doublebattle_2D,
+    ScriptCmd_doublebattle_2E,
+    sub_080A550C,
+};
+
+#undef BATTLE_ANIM_SCRIPT_CMD_DATA

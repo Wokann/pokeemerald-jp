@@ -306,11 +306,9 @@ gUnknown_84FE2A0: @ 0x84FE2A0
 gUnknown_84FE3C0: @ 0x84FE3C0
 	.incbin "baserom_jp.gba", 0x4fe3c0, 0xa0
 
-	.section .rodata.data_b2d_mid26_after_battle_anim_background_data_before_battle_anim_status_effects
+	.section .rodata.data_b2d_mid26_after_battle_anim_background_data_before_battle_anim_script_cmd_data
 
-	.globl gUnknown_84FE5A4
-gUnknown_84FE5A4: @ 0x84FE5A4
-	.incbin "baserom_jp.gba", 0x4fe5a4, 0xc0
+	.section .rodata.data_b2d_mid26_after_battle_anim_script_cmd_data_before_battle_anim_status_effects
 
 	.globl sBattlerCoords
 sBattlerCoords: @ 0x84FE664
