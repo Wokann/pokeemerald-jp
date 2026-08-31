@@ -2332,7 +2332,12 @@ BattleScript_FacadeDoubleDmg:
 	goto BattleScript_EffectHit
 
 BattleScript_EffectFocusPunch:: @ 0x08288711
-	.incbin "baserom_jp.gba", 0x288711, 0x12
+	attackcanceler
+	jumpifnodamage BattleScript_HitFromAccCheck
+	ppreduce
+	printstring STRINGID_PKMNLOSTFOCUS
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectSmellingsalt:: @ 0x08288723
 	.incbin "baserom_jp.gba", 0x288723, 0x2a
