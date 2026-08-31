@@ -1428,7 +1428,27 @@ BattleScript_EffectSpite:: @ 0x08287C2D
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectHealBell:: @ 0x08287C49
-	.incbin "baserom_jp.gba", 0x287c49, 0x45
+	attackcanceler
+	attackstring
+	ppreduce
+	healpartystatus
+	waitstate
+	attackanimation
+	waitanimation
+	printfromtable gPartyStatusHealStringIds
+	waitmessage B_WAIT_TIME_LONG
+	jumpifnotmove MOVE_HEAL_BELL, BattleScript_PartyHealEnd
+	jumpifbyte CMP_NO_COMMON_BITS, cMULTISTRING_CHOOSER, B_MSG_BELL_SOUNDPROOF_ATTACKER, BattleScript_CheckHealBellMon2Unaffected
+	printstring STRINGID_PKMNSXBLOCKSY
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_CheckHealBellMon2Unaffected:
+	jumpifbyte CMP_NO_COMMON_BITS, cMULTISTRING_CHOOSER, B_MSG_BELL_SOUNDPROOF_PARTNER, BattleScript_PartyHealEnd
+	printstring STRINGID_PKMNSXBLOCKSY2
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_PartyHealEnd:
+	updatestatusicon BS_ATTACKER_WITH_PARTNER
+	waitstate
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectTripleKick:: @ 0x08287C8E
 	.incbin "baserom_jp.gba", 0x287c8e, 0xe3
