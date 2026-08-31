@@ -2475,7 +2475,15 @@ BattleScript_EffectMagicCoat:: @ 0x0828883E
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectRecycle:: @ 0x08288853
-	.incbin "baserom_jp.gba", 0x288853, 0x15
+	attackcanceler
+	attackstring
+	ppreduce
+	tryrecycleitem BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_XFOUNDONEY
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectRevenge:: @ 0x08288868
 	.incbin "baserom_jp.gba", 0x288868, 0x6
