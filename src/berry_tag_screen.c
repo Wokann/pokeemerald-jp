@@ -20,6 +20,7 @@
 #include "palette.h"
 #include "graphics.h"
 #include "save.h"
+#include "string_util.h"
 
 // JP ROM layout matches pokeemerald's struct plus a trailing 2-byte
 // padding, giving sizeof(*sBerryTag) == 0x180C (matches AllocZeroed size).
@@ -41,11 +42,36 @@ extern struct BerryTagScreenStruct *sBerryTag;
 void bag_menu_mail_related(void);
 void PrintTextInBerryTagScreen(u8 windowId, const u8 *text, u8 x, u8 y, s32 speed, u8 colorStructId);
 void CB2_InitBerryTagScreen(void);
+bool8 InitBerryTagScreen(void);
+void AddBerryTagTextToBg0(void);
+bool8 LoadBerryTagGfx(void);
+void PrintMysteryMenuText(void);
+void PrintBerrySize(void);
+void PrintAllBerryData(void);
+void CreateBerrySprite(void);
+void CreateFlavorCircleSprites(void);
+void SetFlavorCirclesVisiblity(void);
+void Task_HandleInput(u8 taskId);
 void Task_CloseBerryTagScreen(u8 taskId);
 void Task_DisplayAnotherBerry(u8 taskId);
 void HandleBagCursorPositionChange(s8 toMove);
 void TryChangeDisplayedBerry(u8 taskId, s8 toMove);
+void sub_0817804C(void);
+void PrintBerryNumberAndName(void);
+void PrintBerryFirmness(void);
+void PrintBerryDescription1(void);
+void PrintBerryDescription2(void);
 extern const u8 gUnknown_85C97BD[];
+extern const u8 gUnknown_85C97B5[];
+extern const u8 gUnknown_85C977D[];
+extern const u8 gUnknown_85C9786[];
+extern const u8 gUnknown_85C9782[];
+extern const u8 gUnknown_85C93F5[];
+extern const u8 gUnknown_85CD098[];
+extern const u8 *const gUnknown_85CD0C8[];
+extern const struct BgTemplate gUnknown_85CD068[];
+extern const u16 gUnknown_85CD078[];
+extern const struct WindowTemplate gUnknown_85CD0A0[];
 
 void DoBerryTagScreen(void)
 {
@@ -70,248 +96,118 @@ void VblankCB(void)
     TransferPlttBuffer();
 }
 
-__attribute__((naked)) void CB2_InitBerryTagScreen(void)
+void CB2_InitBerryTagScreen(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "_08177B6E:\n\t"
-        "	bl MenuHelpers_ShouldWaitForLinkRecv\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08177B92\n\t"
-        "	bl InitBerryTagScreen\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08177B92\n\t"
-        "	bl MenuHelpers_IsLinkActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08177B6E\n\t"
-        "_08177B92:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    while (1)
+    {
+        if (MenuHelpers_ShouldWaitForLinkRecv() == TRUE)
+            break;
+        if (InitBerryTagScreen() == TRUE)
+            break;
+        if (MenuHelpers_IsLinkActive() == TRUE)
+            break;
+    }
 }
 
-__attribute__((naked)) void InitBerryTagScreen(void)
+bool8 InitBerryTagScreen(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _08177BB8\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bls _08177BAC\n\t"
-        "	b _08177CDC\n\t"
-        "_08177BAC:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08177BBC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08177BB8: .4byte gMain\n\t"
-        "_08177BBC: .4byte _08177BC0\n\t"
-        "_08177BC0:\n\t"
-        "	.4byte _08177C00\n\t"
-        "	.4byte _08177C0E\n\t"
-        "	.4byte _08177C14\n\t"
-        "	.4byte _08177C28\n\t"
-        "	.4byte _08177C2E\n\t"
-        "	.4byte _08177C34\n\t"
-        "	.4byte _08177C44\n\t"
-        "	.4byte _08177C60\n\t"
-        "	.4byte _08177C6C\n\t"
-        "	.4byte _08177C72\n\t"
-        "	.4byte _08177C78\n\t"
-        "	.4byte _08177C7E\n\t"
-        "	.4byte _08177C84\n\t"
-        "	.4byte _08177C8E\n\t"
-        "	.4byte _08177C9C\n\t"
-        "	.4byte _08177CAA\n\t"
-        "_08177C00:\n\t"
-        "	bl SetVBlankHBlankCallbacksToNull\n\t"
-        "	bl ResetVramOamAndBgCntRegs\n\t"
-        "	bl ClearScheduledBgCopiesToVram\n\t"
-        "	b _08177CC4\n\t"
-        "_08177C0E:\n\t"
-        "	bl ScanlineEffect_Stop\n\t"
-        "	b _08177CC4\n\t"
-        "_08177C14:\n\t"
-        "	bl ResetPaletteFade\n\t"
-        "	ldr r2, _08177C24\n\t"
-        "	ldrb r0, [r2, #8]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	b _08177CC2\n\t"
-        "	.align 2, 0\n\t"
-        "_08177C24: .4byte gPaletteFade\n\t"
-        "_08177C28:\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	b _08177CC4\n\t"
-        "_08177C2E:\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	b _08177CC4\n\t"
-        "_08177C34:\n\t"
-        "	bl sub_081221B8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08177CC4\n\t"
-        "	bl ResetTasks\n\t"
-        "	b _08177CC4\n\t"
-        "_08177C44:\n\t"
-        "	bl AddBerryTagTextToBg0\n\t"
-        "	ldr r0, _08177C58\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _08177C5C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _08177CC4\n\t"
-        "	.align 2, 0\n\t"
-        "_08177C58: .4byte sBerryTag\n\t"
-        "_08177C5C: .4byte 0x00001808\n\t"
-        "_08177C60:\n\t"
-        "	bl LoadBerryTagGfx\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08177CF4\n\t"
-        "	b _08177CC4\n\t"
-        "_08177C6C:\n\t"
-        "	bl PrintMysteryMenuText\n\t"
-        "	b _08177CC4\n\t"
-        "_08177C72:\n\t"
-        "	bl PrintBerrySize\n\t"
-        "	b _08177CC4\n\t"
-        "_08177C78:\n\t"
-        "	bl PrintAllBerryData\n\t"
-        "	b _08177CC4\n\t"
-        "_08177C7E:\n\t"
-        "	bl CreateBerrySprite\n\t"
-        "	b _08177CC4\n\t"
-        "_08177C84:\n\t"
-        "	bl CreateFlavorCircleSprites\n\t"
-        "	bl SetFlavorCirclesVisiblity\n\t"
-        "	b _08177CC4\n\t"
-        "_08177C8E:\n\t"
-        "	ldr r0, _08177C98\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	b _08177CC4\n\t"
-        "	.align 2, 0\n\t"
-        "_08177C98: .4byte Task_HandleInput + 1\n\t"
-        "_08177C9C:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "	b _08177CC4\n\t"
-        "_08177CAA:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r2, _08177CD4\n\t"
-        "	ldrb r1, [r2, #8]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "_08177CC2:\n\t"
-        "	strb r0, [r2, #8]\n\t"
-        "_08177CC4:\n\t"
-        "	ldr r1, _08177CD8\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _08177CF4\n\t"
-        "	.align 2, 0\n\t"
-        "_08177CD4: .4byte gPaletteFade\n\t"
-        "_08177CD8: .4byte gMain\n\t"
-        "_08177CDC:\n\t"
-        "	ldr r0, _08177CEC\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	ldr r0, _08177CF0\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08177CF6\n\t"
-        "	.align 2, 0\n\t"
-        "_08177CEC: .4byte VblankCB + 1\n\t"
-        "_08177CF0: .4byte CB2_BerryTagScreen + 1\n\t"
-        "_08177CF4:\n\t"
-        "	movs r0, #0\n\t"
-        "_08177CF6:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gMain.state)
+    {
+    case 0:
+        SetVBlankHBlankCallbacksToNull();
+        ResetVramOamAndBgCntRegs();
+        ClearScheduledBgCopiesToVram();
+        gMain.state++;
+        break;
+    case 1:
+        ScanlineEffect_Stop();
+        gMain.state++;
+        break;
+    case 2:
+        ResetPaletteFade();
+        gPaletteFade.bufferTransferDisabled = TRUE;
+        gMain.state++;
+        break;
+    case 3:
+        ResetSpriteData();
+        gMain.state++;
+        break;
+    case 4:
+        FreeAllSpritePalettes();
+        gMain.state++;
+        break;
+    case 5:
+        if (!MenuHelpers_IsLinkActive())
+            ResetTasks();
+        gMain.state++;
+        break;
+    case 6:
+        AddBerryTagTextToBg0();
+        sBerryTag->gfxState = 0;
+        gMain.state++;
+        break;
+    case 7:
+        if (LoadBerryTagGfx())
+            gMain.state++;
+        break;
+    case 8:
+        PrintMysteryMenuText();
+        gMain.state++;
+        break;
+    case 9:
+        PrintBerrySize();
+        gMain.state++;
+        break;
+    case 10:
+        PrintAllBerryData();
+        gMain.state++;
+        break;
+    case 11:
+        CreateBerrySprite();
+        gMain.state++;
+        break;
+    case 12:
+        CreateFlavorCircleSprites();
+        SetFlavorCirclesVisiblity();
+        gMain.state++;
+        break;
+    case 13:
+        CreateTask(Task_HandleInput, 0);
+        gMain.state++;
+        break;
+    case 14:
+        BlendPalettes(PALETTES_ALL, 0x10, RGB_BLACK);
+        gMain.state++;
+        break;
+    case 15:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_BLACK);
+        gPaletteFade.bufferTransferDisabled = FALSE;
+        gMain.state++;
+        break;
+    default:
+        SetVBlankCallback(VblankCB);
+        SetMainCallback2(CB2_BerryTagScreen);
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void AddBerryTagTextToBg0(void)
+void AddBerryTagTextToBg0(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ResetBgsAndClearDma3BusyFlags\n\t"
-        "	ldr r1, _08177D68\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	bl InitBgsFromTemplates\n\t"
-        "	ldr r4, _08177D6C\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #2\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #3\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	bl ResetAllBgsCoordinates\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	movs r0, #3\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	movs r1, #0x82\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #3\n\t"
-        "	bl ShowBg\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08177D68: .4byte gUnknown_85CD068\n\t"
-        "_08177D6C: .4byte sBerryTag\n\t"
-        ".syntax divided\n\t"
-    );
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, gUnknown_85CD068, 4);
+    SetBgTilemapBuffer(2, sBerryTag->tilemapBuffers[0]);
+    SetBgTilemapBuffer(3, sBerryTag->tilemapBuffers[1]);
+    ResetAllBgsCoordinates();
+    ScheduleBgCopyTilemapToVram(2);
+    ScheduleBgCopyTilemapToVram(3);
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    ShowBg(0);
+    ShowBg(1);
+    ShowBg(2);
+    ShowBg(3);
 }
 
 bool8 LoadBerryTagGfx(void)
@@ -365,408 +261,94 @@ bool8 LoadBerryTagGfx(void)
     return FALSE;
 }
 
-__attribute__((naked)) void PrintMysteryMenuText(void)
+void PrintMysteryMenuText(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _08177F2C\n\t"
-        "	bl InitWindows\n\t"
-        "	bl DeactivateAllTextPrinters\n\t"
-        "	ldr r0, _08177F30\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	movs r4, #0\n\t"
-        "_08177F08:\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #3\n\t"
-        "	bls _08177F08\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08177F2C: .4byte gUnknown_85CD0A0\n\t"
-        "_08177F30: .4byte gUnknown_85CD078\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    InitWindows(gUnknown_85CD0A0);
+    DeactivateAllTextPrinters();
+    LoadPalette(gUnknown_85CD078, 0xF0, 0x20);
+    for (i = 0; i < 4; i++)
+        PutWindowTilemap(i);
+    ScheduleBgCopyTilemapToVram(0);
+    ScheduleBgCopyTilemapToVram(1);
 }
 
-__attribute__((naked)) void PrintTextInBerryTagScreen(u8 windowId, const u8 *text, u8 x, u8 y, s32 speed, u8 colorStructId)
+void PrintTextInBerryTagScreen(u8 windowId, const u8 *text, u8 x, u8 y, s32 speed, u8 colorStructId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	ldr r6, [sp, #0x24]\n\t"
-        "	ldr r5, [sp, #0x28]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	lsls r4, r5, #1\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	ldr r5, _08177F74\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	asrs r6, r6, #0x18\n\t"
-        "	str r6, [sp, #0xc]\n\t"
-        "	str r1, [sp, #0x10]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AddTextPrinterParameterized4\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08177F74: .4byte gUnknown_85CD098\n\t"
-        ".syntax divided\n\t"
-    );
+    AddTextPrinterParameterized4(windowId, 1, x, y, 0, 0, &gUnknown_85CD098[colorStructId * 3], speed, text);
 }
 
-__attribute__((naked)) void PrintBerrySize(void)
+void PrintBerrySize(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetBgTilemapBuffer\n\t"
-        "	ldr r1, _08177FC4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r1, _08177FC8\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl PrintTextInBerryTagScreen\n\t"
-        "	movs r0, #3\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08177FC4: .4byte sBerryTag\n\t"
-        "_08177FC8: .4byte gUnknown_85C97BD\n\t"
-        ".syntax divided\n\t"
-    );
+    memcpy(GetBgTilemapBuffer(0), sBerryTag->tilemapBuffers[2], 0x800);
+    FillWindowPixelBuffer(3, 0xFF);
+    PrintTextInBerryTagScreen(3, gUnknown_85C97BD, 0, 2, 0, 1);
+    PutWindowTilemap(3);
+    ScheduleBgCopyTilemapToVram(0);
 }
 
 
-__attribute__((naked)) void PrintAllBerryData(void)
+void PrintAllBerryData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PrintBerryNumberAndName\n\t"
-        "	bl sub_0817804C\n\t"
-        "	bl PrintBerryFirmness\n\t"
-        "	bl PrintBerryDescription1\n\t"
-        "	bl PrintBerryDescription2\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PrintBerryNumberAndName();
+    sub_0817804C();
+    PrintBerryFirmness();
+    PrintBerryDescription1();
+    PrintBerryDescription2();
 }
 
-__attribute__((naked)) void PrintBerryNumberAndName(void)
+void PrintBerryNumberAndName(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	ldr r5, _08178038\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r4, #0xc0\n\t"
-        "	lsls r4, r4, #5\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBerryInfo\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldr r0, _0817803C\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #2\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	ldr r0, _08178040\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r4, _08178044\n\t"
-        "	ldr r1, _08178048\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl PrintTextInBerryTagScreen\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08178038: .4byte sBerryTag\n\t"
-        "_0817803C: .4byte gStringVar1\n\t"
-        "_08178040: .4byte gStringVar2\n\t"
-        "_08178044: .4byte gStringVar4\n\t"
-        "_08178048: .4byte gUnknown_85C97B5\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct Berry *berry = GetBerryInfo(sBerryTag->berryId);
+
+    ConvertIntToDecimalStringN(gStringVar1, sBerryTag->berryId, 2, 2);
+    StringCopy(gStringVar2, berry->name);
+    StringExpandPlaceholders(gStringVar4, gUnknown_85C97B5);
+    PrintTextInBerryTagScreen(0, gStringVar4, 0, 2, 0, 0);
 }
 
-__attribute__((naked)) void sub_0817804C(void)
+void sub_0817804C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r0, _081780D0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBerryInfo\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r2, _081780D4\n\t"
-        "	movs r7, #2\n\t"
-        "	str r7, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r6, #0\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081780E8\n\t"
-        "	ldr r4, _081780D8\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __udivsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	ldr r4, _081780DC\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __umodsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	ldr r4, _081780E0\n\t"
-        "	ldr r1, _081780E4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	str r7, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	movs r3, #0x28\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	b _081780FA\n\t"
-        "	.align 2, 0\n\t"
-        "_081780D0: .4byte sBerryTag\n\t"
-        "_081780D4: .4byte gUnknown_85C977D\n\t"
-        "_081780D8: .4byte gStringVar1\n\t"
-        "_081780DC: .4byte gStringVar2\n\t"
-        "_081780E0: .4byte gStringVar4\n\t"
-        "_081780E4: .4byte gUnknown_85C9786\n\t"
-        "_081780E8:\n\t"
-        "	ldr r2, _08178104\n\t"
-        "	str r7, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0x28\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "_081780FA:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08178104: .4byte gUnknown_85C93F5\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct Berry *berry = GetBerryInfo(sBerryTag->berryId);
+
+    AddTextPrinterParameterized(1, 1, gUnknown_85C977D, 0, 2, 0xFF, NULL);
+    if (berry->size != 0)
+    {
+        ConvertIntToDecimalStringN(gStringVar1, berry->size / 10, 0, 2);
+        ConvertIntToDecimalStringN(gStringVar2, berry->size % 10, 0, 2);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C9786);
+        AddTextPrinterParameterized(1, 1, gStringVar4, 0x28, 2, 0, NULL);
+    }
+    else
+    {
+        AddTextPrinterParameterized(1, 1, gUnknown_85C93F5, 0x28, 2, 0, NULL);
+    }
 }
 
-__attribute__((naked)) void PrintBerryFirmness(void)
+void PrintBerryFirmness(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r0, _0817815C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBerryInfo\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldr r2, _08178160\n\t"
-        "	movs r5, #0x12\n\t"
-        "	str r5, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	ldrb r0, [r6, #7]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08178168\n\t"
-        "	ldr r0, _08178164\n\t"
-        "	ldrb r1, [r6, #7]\n\t"
-        "	subs r1, #1\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	str r5, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0x28\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	b _0817817A\n\t"
-        "	.align 2, 0\n\t"
-        "_0817815C: .4byte sBerryTag\n\t"
-        "_08178160: .4byte gUnknown_85C9782\n\t"
-        "_08178164: .4byte gUnknown_85CD0C8\n\t"
-        "_08178168:\n\t"
-        "	ldr r2, _08178184\n\t"
-        "	str r5, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0x28\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "_0817817A:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08178184: .4byte gUnknown_85C93F5\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct Berry *berry = GetBerryInfo(sBerryTag->berryId);
+
+    AddTextPrinterParameterized(1, 1, gUnknown_85C9782, 0, 0x12, 0xFF, NULL);
+    if (berry->firmness != 0)
+        AddTextPrinterParameterized(1, 1, gUnknown_85CD0C8[berry->firmness - 1], 0x28, 0x12, 0, NULL);
+    else
+        AddTextPrinterParameterized(1, 1, gUnknown_85C93F5, 0x28, 0x12, 0, NULL);
 }
 
-__attribute__((naked)) void PrintBerryDescription1(void)
+void PrintBerryDescription1(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r0, _081781B8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBerryInfo\n\t"
-        "	ldr r2, [r0, #0xc]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081781B8: .4byte sBerryTag\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct Berry *berry = GetBerryInfo(sBerryTag->berryId);
+
+    AddTextPrinterParameterized(2, 1, berry->description1, 0, 2, 0, NULL);
 }
 
-__attribute__((naked)) void PrintBerryDescription2(void)
+void PrintBerryDescription2(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r0, _081781EC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBerryInfo\n\t"
-        "	ldr r2, [r0, #0x10]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081781EC: .4byte sBerryTag\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct Berry *berry = GetBerryInfo(sBerryTag->berryId);
+
+    AddTextPrinterParameterized(2, 1, berry->description2, 0, 0x12, 0, NULL);
 }
 
 void CreateBerrySprite(void)
@@ -902,222 +484,101 @@ void HandleBagCursorPositionChange(s8 toMove)
     sBerryTag->berryId = ItemIdToBerryType(BagGetItemIdByPocketPosition(POCKET_BERRIES, *scrollPos + *cursorPos));
 }
 
-__attribute__((naked)) void Task_DisplayAnotherBerry(u8 taskId)
+void Task_DisplayAnotherBerry(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _081786A8\n\t"
-        "	adds r6, r0, r1\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	adds r0, #0x10\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r6]\n\t"
-        "	movs r1, #2\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081786E0\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	cmp r0, #0x70\n\t"
-        "	beq _08178740\n\t"
-        "	cmp r0, #0x70\n\t"
-        "	bgt _081786B6\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _081786D2\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	bgt _081786AC\n\t"
-        "	cmp r0, #0x30\n\t"
-        "	beq _08178750\n\t"
-        "	b _0817875E\n\t"
-        "	.align 2, 0\n\t"
-        "_081786A8: .4byte gUnknown_3005B68\n\t"
-        "_081786AC:\n\t"
-        "	cmp r0, #0x50\n\t"
-        "	beq _08178746\n\t"
-        "	cmp r0, #0x60\n\t"
-        "	beq _081786D8\n\t"
-        "	b _0817875E\n\t"
-        "_081786B6:\n\t"
-        "	cmp r0, #0xa0\n\t"
-        "	beq _081786DC\n\t"
-        "	cmp r0, #0xa0\n\t"
-        "	bgt _081786C8\n\t"
-        "	cmp r0, #0x80\n\t"
-        "	beq _0817873A\n\t"
-        "	cmp r0, #0x90\n\t"
-        "	beq _08178730\n\t"
-        "	b _0817875E\n\t"
-        "_081786C8:\n\t"
-        "	cmp r0, #0xb0\n\t"
-        "	beq _0817872A\n\t"
-        "	cmp r0, #0xc0\n\t"
-        "	beq _08178724\n\t"
-        "	b _0817875E\n\t"
-        "_081786D2:\n\t"
-        "	bl PrintBerryNumberAndName\n\t"
-        "	b _0817875E\n\t"
-        "_081786D8:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08178752\n\t"
-        "_081786DC:\n\t"
-        "	movs r0, #2\n\t"
-        "	b _08178752\n\t"
-        "_081786E0:\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0x70\n\t"
-        "	beq _08178736\n\t"
-        "	cmp r0, #0x70\n\t"
-        "	bgt _08178704\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _08178724\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	bgt _081786FA\n\t"
-        "	cmp r0, #0x30\n\t"
-        "	beq _08178720\n\t"
-        "	b _0817875E\n\t"
-        "_081786FA:\n\t"
-        "	cmp r0, #0x50\n\t"
-        "	beq _0817872A\n\t"
-        "	cmp r0, #0x60\n\t"
-        "	beq _08178730\n\t"
-        "	b _0817875E\n\t"
-        "_08178704:\n\t"
-        "	cmp r0, #0xa0\n\t"
-        "	beq _08178746\n\t"
-        "	cmp r0, #0xa0\n\t"
-        "	bgt _08178716\n\t"
-        "	cmp r0, #0x80\n\t"
-        "	beq _0817873A\n\t"
-        "	cmp r0, #0x90\n\t"
-        "	beq _08178740\n\t"
-        "	b _0817875E\n\t"
-        "_08178716:\n\t"
-        "	cmp r0, #0xb0\n\t"
-        "	beq _08178750\n\t"
-        "	cmp r0, #0xc0\n\t"
-        "	beq _0817875A\n\t"
-        "	b _0817875E\n\t"
-        "_08178720:\n\t"
-        "	movs r0, #2\n\t"
-        "	b _08178752\n\t"
-        "_08178724:\n\t"
-        "	bl PrintBerryDescription2\n\t"
-        "	b _0817875E\n\t"
-        "_0817872A:\n\t"
-        "	bl PrintBerryDescription1\n\t"
-        "	b _0817875E\n\t"
-        "_08178730:\n\t"
-        "	bl SetFlavorCirclesVisiblity\n\t"
-        "	b _0817875E\n\t"
-        "_08178736:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08178752\n\t"
-        "_0817873A:\n\t"
-        "	bl PrintBerryFirmness\n\t"
-        "	b _0817875E\n\t"
-        "_08178740:\n\t"
-        "	bl sub_0817804C\n\t"
-        "	b _0817875E\n\t"
-        "_08178746:\n\t"
-        "	bl DestroyBerrySprite\n\t"
-        "	bl CreateBerrySprite\n\t"
-        "	b _0817875E\n\t"
-        "_08178750:\n\t"
-        "	movs r0, #0\n\t"
-        "_08178752:\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	b _0817875E\n\t"
-        "_0817875A:\n\t"
-        "	bl PrintBerryNumberAndName\n\t"
-        "_0817875E:\n\t"
-        "	movs r2, #2\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08178770\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	b _08178772\n\t"
-        "_08178770:\n\t"
-        "	ldrh r5, [r6]\n\t"
-        "_08178772:\n\t"
-        "	ldr r2, _081787E4\n\t"
-        "	ldr r3, _081787E8\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _081787EC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r5, [r0, #0x26]\n\t"
-        "	movs r4, #0\n\t"
-        "	adds r7, r2, #0\n\t"
-        "	ldr r2, _081787F0\n\t"
-        "_0817878E:\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	strh r5, [r0, #0x26]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _0817878E\n\t"
-        "	movs r4, #0x80\n\t"
-        "	lsls r4, r4, #5\n\t"
-        "	ldrb r2, [r6, #2]\n\t"
-        "	movs r0, #1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	ldrb r2, [r6, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081787DA\n\t"
-        "	ldr r0, _081787F4\n\t"
-        "	mov r2, r8\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	add r1, r8\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081787F8\n\t"
-        "	str r0, [r1]\n\t"
-        "_081787DA:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081787E4: .4byte gSprites\n\t"
-        "_081787E8: .4byte sBerryTag\n\t"
-        "_081787EC: .4byte 0x00001802\n\t"
-        "_081787F0: .4byte 0x00001803\n\t"
-        "_081787F4: .4byte gTasks\n\t"
-        "_081787F8: .4byte Task_HandleInput + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+    s16 y;
+    s16 *data = gTasks[taskId].data;
+
+    tBerryY += 0x10;
+    tBerryY &= 0xFF;
+    if (tBgOp == BG_COORD_ADD)
+    {
+        switch (tBerryY)
+        {
+        case 0x30:
+            FillWindowPixelBuffer(0, 0);
+            break;
+        case 0x40:
+            PrintBerryNumberAndName();
+            break;
+        case 0x50:
+            DestroyBerrySprite();
+            CreateBerrySprite();
+            break;
+        case 0x60:
+            FillWindowPixelBuffer(1, 0);
+            break;
+        case 0x70:
+            sub_0817804C();
+            break;
+        case 0x80:
+            PrintBerryFirmness();
+            break;
+        case 0x90:
+            SetFlavorCirclesVisiblity();
+            break;
+        case 0xA0:
+            FillWindowPixelBuffer(2, 0);
+            break;
+        case 0xB0:
+            PrintBerryDescription1();
+            break;
+        case 0xC0:
+            PrintBerryDescription2();
+            break;
+        }
+    }
+    else
+    {
+        switch (tBerryY)
+        {
+        case 0x30:
+            FillWindowPixelBuffer(2, 0);
+            break;
+        case 0x40:
+            PrintBerryDescription2();
+            break;
+        case 0x50:
+            PrintBerryDescription1();
+            break;
+        case 0x60:
+            SetFlavorCirclesVisiblity();
+            break;
+        case 0x70:
+            FillWindowPixelBuffer(1, 0);
+            break;
+        case 0x80:
+            PrintBerryFirmness();
+            break;
+        case 0x90:
+            sub_0817804C();
+            break;
+        case 0xA0:
+            DestroyBerrySprite();
+            CreateBerrySprite();
+            break;
+        case 0xB0:
+            FillWindowPixelBuffer(0, 0);
+            break;
+        case 0xC0:
+            PrintBerryNumberAndName();
+            break;
+        }
+    }
+
+    if (tBgOp == BG_COORD_ADD)
+        y = -tBerryY;
+    else
+        y = tBerryY;
+
+    gSprites[sBerryTag->berrySpriteId].y2 = y;
+    for (i = 0; i < FLAVOR_COUNT; i++)
+        gSprites[sBerryTag->flavorCircleIds[i]].y2 = y;
+
+    ChangeBgY(1, 0x1000, tBgOp);
+    ChangeBgY(2, 0x1000, tBgOp);
+
+    if (tBerryY == 0)
+        gTasks[taskId].func = Task_HandleInput;
 }
