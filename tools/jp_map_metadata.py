@@ -93,6 +93,9 @@ def layout_symbol(layout_id: str) -> str:
 def render_header(data: dict[str, Any]) -> str:
     name = require_string(data, "name")
     layout_id = require_string(data, "layout")
+    events_name = data.get("shared_events_map", name)
+    if not isinstance(events_name, str) or not events_name:
+        raise ValueError("shared_events_map must be a non-empty string")
     scripts_name = data.get("shared_scripts_map", name)
     if not isinstance(scripts_name, str) or not scripts_name:
         raise ValueError("shared_scripts_map must be a non-empty string")
@@ -113,7 +116,7 @@ def render_header(data: dict[str, Any]) -> str:
         f"{warning(name)}\n"
         f"{name}:\n"
         f"\t.4byte {map_layout_symbol}\n"
-        f"\t.4byte {name}_MapEvents\n"
+        f"\t.4byte {events_name}_MapEvents\n"
         f"\t.4byte {scripts_name}_MapScripts\n"
         f"\t.4byte {connection_label}\n"
         f"\t.2byte {require_string(data, 'music')}\n"

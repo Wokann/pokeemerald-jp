@@ -2392,8 +2392,32 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/RecordCorner/header.inc"
 	@ MAP_BATTLE_COLOSSEUM_4P (g25 m27)
 	.include "data/maps/BattleColosseum_4P/header.inc"
-	@ MAP_CONTEST_HALL through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45D1C0, 0x17D8
+	@ MAP_CONTEST_HALL (g25 m28)
+	.include "data/maps/ContestHall/header.inc"
+	@ MAP_UNUSED_CONTEST_HALL1 (g25 m29)
+	.include "data/maps/UnusedContestHall1/header.inc"
+	@ MAP_UNUSED_CONTEST_HALL2 (g25 m30)
+	.include "data/maps/UnusedContestHall2/header.inc"
+	@ MAP_UNUSED_CONTEST_HALL3 (g25 m31)
+	.include "data/maps/UnusedContestHall3/header.inc"
+	@ MAP_UNUSED_CONTEST_HALL4 (g25 m32)
+	.include "data/maps/UnusedContestHall4/header.inc"
+	@ MAP_UNUSED_CONTEST_HALL5 (g25 m33)
+	.include "data/maps/UnusedContestHall5/header.inc"
+	@ MAP_UNUSED_CONTEST_HALL6 (g25 m34)
+	.include "data/maps/UnusedContestHall6/header.inc"
+	@ MAP_CONTEST_HALL_BEAUTY (g25 m35)
+	.include "data/maps/ContestHallBeauty/header.inc"
+	@ MAP_CONTEST_HALL_TOUGH (g25 m36)
+	.include "data/maps/ContestHallTough/header.inc"
+	@ MAP_CONTEST_HALL_COOL (g25 m37)
+	.include "data/maps/ContestHallCool/header.inc"
+	@ MAP_CONTEST_HALL_SMART (g25 m38)
+	.include "data/maps/ContestHallSmart/header.inc"
+	@ MAP_CONTEST_HALL_CUTE (g25 m39)
+	.include "data/maps/ContestHallCute/header.inc"
+	@ MAP_INSIDE_OF_TRUCK through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45D310, 0x1688
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

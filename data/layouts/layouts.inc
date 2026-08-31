@@ -2496,7 +2496,163 @@ gMapLayout_BATTLE_COLOSSEUM_4P: @ 0x0841AC2C
 	.4byte gMapLayout_BATTLE_COLOSSEUM_4P_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x41AC44, 0x63B8
+gMapLayout_CONTEST_HALL_Border:
+	.incbin "data/layouts/ContestHall/border.bin"
+gMapLayout_CONTEST_HALL_Blockdata:
+	.incbin "data/layouts/ContestHall/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_CONTEST_HALL
+gMapLayout_CONTEST_HALL: @ 0x0841AD98
+	.4byte 15  @ width
+	.4byte 11  @ height
+	.4byte gMapLayout_CONTEST_HALL_Border  @ border
+	.4byte gMapLayout_CONTEST_HALL_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
+gMapLayout_UNUSED_CONTEST_HALL1_Border:
+	.incbin "data/layouts/UnusedContestHall1/border.bin"
+gMapLayout_UNUSED_CONTEST_HALL1_Blockdata:
+	.incbin "data/layouts/UnusedContestHall1/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_UNUSED_CONTEST_HALL1
+gMapLayout_UNUSED_CONTEST_HALL1: @ 0x0841ADBC
+	.4byte 1  @ width
+	.4byte 1  @ height
+	.4byte gMapLayout_UNUSED_CONTEST_HALL1_Border  @ border
+	.4byte gMapLayout_UNUSED_CONTEST_HALL1_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
+gMapLayout_UNUSED_CONTEST_HALL2_Border:
+	.incbin "data/layouts/UnusedContestHall2/border.bin"
+gMapLayout_UNUSED_CONTEST_HALL2_Blockdata:
+	.incbin "data/layouts/UnusedContestHall2/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_UNUSED_CONTEST_HALL2
+gMapLayout_UNUSED_CONTEST_HALL2: @ 0x0841ADE0
+	.4byte 1  @ width
+	.4byte 1  @ height
+	.4byte gMapLayout_UNUSED_CONTEST_HALL2_Border  @ border
+	.4byte gMapLayout_UNUSED_CONTEST_HALL2_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
+gMapLayout_UNUSED_CONTEST_HALL3_Border:
+	.incbin "data/layouts/UnusedContestHall3/border.bin"
+gMapLayout_UNUSED_CONTEST_HALL3_Blockdata:
+	.incbin "data/layouts/UnusedContestHall3/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_UNUSED_CONTEST_HALL3
+gMapLayout_UNUSED_CONTEST_HALL3: @ 0x0841AE04
+	.4byte 1  @ width
+	.4byte 1  @ height
+	.4byte gMapLayout_UNUSED_CONTEST_HALL3_Border  @ border
+	.4byte gMapLayout_UNUSED_CONTEST_HALL3_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
+gMapLayout_UNUSED_CONTEST_HALL4_Border:
+	.incbin "data/layouts/UnusedContestHall4/border.bin"
+gMapLayout_UNUSED_CONTEST_HALL4_Blockdata:
+	.incbin "data/layouts/UnusedContestHall4/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_UNUSED_CONTEST_HALL4
+gMapLayout_UNUSED_CONTEST_HALL4: @ 0x0841AE28
+	.4byte 1  @ width
+	.4byte 1  @ height
+	.4byte gMapLayout_UNUSED_CONTEST_HALL4_Border  @ border
+	.4byte gMapLayout_UNUSED_CONTEST_HALL4_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
+gMapLayout_UNUSED_CONTEST_HALL5_Border:
+	.incbin "data/layouts/UnusedContestHall5/border.bin"
+gMapLayout_UNUSED_CONTEST_HALL5_Blockdata:
+	.incbin "data/layouts/UnusedContestHall5/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_UNUSED_CONTEST_HALL5
+gMapLayout_UNUSED_CONTEST_HALL5: @ 0x0841AE4C
+	.4byte 1  @ width
+	.4byte 1  @ height
+	.4byte gMapLayout_UNUSED_CONTEST_HALL5_Border  @ border
+	.4byte gMapLayout_UNUSED_CONTEST_HALL5_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
+gMapLayout_UNUSED_CONTEST_HALL6_Border:
+	.incbin "data/layouts/UnusedContestHall6/border.bin"
+gMapLayout_UNUSED_CONTEST_HALL6_Blockdata:
+	.incbin "data/layouts/UnusedContestHall6/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_UNUSED_CONTEST_HALL6
+gMapLayout_UNUSED_CONTEST_HALL6: @ 0x0841AE70
+	.4byte 1  @ width
+	.4byte 1  @ height
+	.4byte gMapLayout_UNUSED_CONTEST_HALL6_Border  @ border
+	.4byte gMapLayout_UNUSED_CONTEST_HALL6_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
+gMapLayout_CONTEST_HALL_BEAUTY_Border:
+	.incbin "data/layouts/ContestHallBeauty/border.bin"
+gMapLayout_CONTEST_HALL_BEAUTY_Blockdata:
+	.incbin "data/layouts/ContestHallBeauty/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_CONTEST_HALL_BEAUTY
+gMapLayout_CONTEST_HALL_BEAUTY: @ 0x0841AFDC
+	.4byte 15  @ width
+	.4byte 11  @ height
+	.4byte gMapLayout_CONTEST_HALL_BEAUTY_Border  @ border
+	.4byte gMapLayout_CONTEST_HALL_BEAUTY_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
+gMapLayout_CONTEST_HALL_TOUGH_Border:
+	.incbin "data/layouts/ContestHallTough/border.bin"
+gMapLayout_CONTEST_HALL_TOUGH_Blockdata:
+	.incbin "data/layouts/ContestHallTough/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_CONTEST_HALL_TOUGH
+gMapLayout_CONTEST_HALL_TOUGH: @ 0x0841B148
+	.4byte 15  @ width
+	.4byte 11  @ height
+	.4byte gMapLayout_CONTEST_HALL_TOUGH_Border  @ border
+	.4byte gMapLayout_CONTEST_HALL_TOUGH_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
+gMapLayout_CONTEST_HALL_COOL_Border:
+	.incbin "data/layouts/ContestHallCool/border.bin"
+gMapLayout_CONTEST_HALL_COOL_Blockdata:
+	.incbin "data/layouts/ContestHallCool/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_CONTEST_HALL_COOL
+gMapLayout_CONTEST_HALL_COOL: @ 0x0841B2B4
+	.4byte 15  @ width
+	.4byte 11  @ height
+	.4byte gMapLayout_CONTEST_HALL_COOL_Border  @ border
+	.4byte gMapLayout_CONTEST_HALL_COOL_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
+gMapLayout_CONTEST_HALL_SMART_Border:
+	.incbin "data/layouts/ContestHallSmart/border.bin"
+gMapLayout_CONTEST_HALL_SMART_Blockdata:
+	.incbin "data/layouts/ContestHallSmart/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_CONTEST_HALL_SMART
+gMapLayout_CONTEST_HALL_SMART: @ 0x0841B420
+	.4byte 15  @ width
+	.4byte 11  @ height
+	.4byte gMapLayout_CONTEST_HALL_SMART_Border  @ border
+	.4byte gMapLayout_CONTEST_HALL_SMART_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
+gMapLayout_CONTEST_HALL_CUTE_Border:
+	.incbin "data/layouts/ContestHallCute/border.bin"
+gMapLayout_CONTEST_HALL_CUTE_Blockdata:
+	.incbin "data/layouts/ContestHallCute/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_CONTEST_HALL_CUTE
+gMapLayout_CONTEST_HALL_CUTE: @ 0x0841B58C
+	.4byte 15  @ width
+	.4byte 11  @ height
+	.4byte gMapLayout_CONTEST_HALL_CUTE_Border  @ border
+	.4byte gMapLayout_CONTEST_HALL_CUTE_Blockdata  @ map
+	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x41B5A4, 0x5A58
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Border:
 	.incbin "data/layouts/FortreeCity_DecorationShop/border.bin"
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata:

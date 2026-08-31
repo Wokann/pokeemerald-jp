@@ -298,6 +298,18 @@ MAPS = (
     "TradeCenter",
     "RecordCorner",
     "BattleColosseum_4P",
+    "ContestHall",
+    "UnusedContestHall1",
+    "UnusedContestHall2",
+    "UnusedContestHall3",
+    "UnusedContestHall4",
+    "UnusedContestHall5",
+    "UnusedContestHall6",
+    "ContestHallBeauty",
+    "ContestHallTough",
+    "ContestHallCool",
+    "ContestHallSmart",
+    "ContestHallCute",
 )
 
 CONNECTED_MAPS = (
@@ -593,6 +605,18 @@ NULL_CONNECTION_MAPS = (
     "TradeCenter",
     "RecordCorner",
     "BattleColosseum_4P",
+    "ContestHall",
+    "UnusedContestHall1",
+    "UnusedContestHall2",
+    "UnusedContestHall3",
+    "UnusedContestHall4",
+    "UnusedContestHall5",
+    "UnusedContestHall6",
+    "ContestHallBeauty",
+    "ContestHallTough",
+    "ContestHallCool",
+    "ContestHallSmart",
+    "ContestHallCute",
 )
 
 CANONICAL_LAYOUT_MAPS = (
@@ -628,6 +652,8 @@ class MapMetadataTests(unittest.TestCase):
                 self.assertNotIn("gMapLayout_", text)
             else:
                 self.assertIn("gMapLayout_", text)
+            events_name = data.get("shared_events_map", map_name)
+            self.assertIn(f"\t.4byte {events_name}_MapEvents\n", text)
             scripts_name = data.get("shared_scripts_map", map_name)
             self.assertIn(f"\t.4byte {scripts_name}_MapScripts\n", text)
             self.assertIn("map_header_flags allow_cycling=", text)

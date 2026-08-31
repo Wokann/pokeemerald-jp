@@ -292,6 +292,7 @@ JP_STRUCTURED_MAPS += SecretBase_RedCave1 SecretBase_BrownCave1 SecretBase_BlueC
 	SecretBase_RedCave3 SecretBase_BrownCave3 SecretBase_BlueCave3 SecretBase_YellowCave3 SecretBase_Tree3 SecretBase_Shrub3 \
 	SecretBase_RedCave4 SecretBase_BrownCave4 SecretBase_BlueCave4 SecretBase_YellowCave4 SecretBase_Tree4 SecretBase_Shrub4
 JP_STRUCTURED_MAPS += BattleColosseum_2P TradeCenter RecordCorner BattleColosseum_4P
+JP_STRUCTURED_MAPS += ContestHall
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
@@ -434,6 +435,8 @@ JP_STRUCTURED_MAP_METADATA_MAPS += SecretBase_RedCave1 SecretBase_BrownCave1 Sec
 	SecretBase_RedCave3 SecretBase_BrownCave3 SecretBase_BlueCave3 SecretBase_YellowCave3 SecretBase_Tree3 SecretBase_Shrub3 \
 	SecretBase_RedCave4 SecretBase_BrownCave4 SecretBase_BlueCave4 SecretBase_YellowCave4 SecretBase_Tree4 SecretBase_Shrub4
 JP_STRUCTURED_MAP_METADATA_MAPS += BattleColosseum_2P TradeCenter RecordCorner BattleColosseum_4P
+JP_STRUCTURED_MAP_METADATA_MAPS += ContestHall UnusedContestHall1 UnusedContestHall2 UnusedContestHall3 UnusedContestHall4 UnusedContestHall5 UnusedContestHall6 \
+	ContestHallBeauty ContestHallTough ContestHallCool ContestHallSmart ContestHallCute
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)
