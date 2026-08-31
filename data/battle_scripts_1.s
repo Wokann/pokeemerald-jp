@@ -1622,7 +1622,16 @@ BattleScript_EffectSpikes:: @ 0x08287ED1
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectForesight:: @ 0x08287EE6
-	.incbin "baserom_jp.gba", 0x287ee6, 0x18
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	setforesight
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNIDENTIFIED
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectPerishSong:: @ 0x08287EFE
 	.incbin "baserom_jp.gba", 0x287efe, 0x41
