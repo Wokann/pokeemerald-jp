@@ -72,6 +72,19 @@ RESOURCES = (
     Resource("gBattleAnimSpritePal_Alert", Path("graphics/battle_anims/sprites/alert.png.gbapal.lz"), 0xC0BFE0, 0x24, 0x24),
     Resource("gBattleAnimSpriteGfx_Shock4", Path("graphics/battle_anims/sprites/shock_4.png.4bpp.lz"), 0xC0C004, 0x198, 0x196),
     Resource("gBattleAnimSpritePal_Shock4", Path("graphics/battle_anims/sprites/shock_4.png.gbapal.lz"), 0xC0C19C, 0x28, 0x28),
+    Resource("gBattleAnimSpriteGfx_Shock", Path("graphics/battle_anims/sprites/shock.png.4bpp.lz"), 0xC0C1C4, 0x430, 0x42D),
+    Resource("gBattleAnimSpriteGfx_Bell2", Path("graphics/battle_anims/sprites/bell_2.png.4bpp.lz"), 0xC0C5F4, 0x364, 0x364),
+    Resource("gBattleAnimSpritePal_Bell2", Path("graphics/battle_anims/sprites/bell_2.png.gbapal.lz"), 0xC0C958, 0x24, 0x23),
+    Resource("gBattleAnimSpriteGfx_PinkGlove", Path("graphics/battle_anims/sprites/pink_glove.png.4bpp.lz"), 0xC0C97C, 0x84, 0x81),
+    Resource("gBattleAnimSpritePal_PinkGlove", Path("graphics/battle_anims/sprites/pink_glove.png.gbapal.lz"), 0xC0CA00, 0x24, 0x24),
+    Resource("gBattleAnimUnused_Unknown1", Path("graphics/battle_anims/unused/unknown_1.bin"), 0xC0CA24, 0x24, 0x24),
+    Resource("gBattleAnimUnused_Unknown2", Path("graphics/battle_anims/unused/unknown_2.bin"), 0xC0CA48, 0x24, 0x24),
+    Resource("gBattleAnimUnused_Unknown3", Path("graphics/battle_anims/unused/unknown_3.bin"), 0xC0CA6C, 0x24, 0x24),
+    Resource("gBattleAnimUnusedGfx_LineSketch2", Path("graphics/battle_anims/unused/line_sketch_2.png.8bpp.lz"), 0xC0CA90, 0x58, 0x57),
+    Resource("gBattleAnimUnusedPal_LineSketch2", Path("graphics/battle_anims/unused/line_sketch_2.pal.gbapal.lz"), 0xC0CAE8, 0x20, 0x1F),
+    Resource("gBattleAnimUnusedTilemap_LineSketch2", Path("graphics/battle_anims/unused/line_sketch_2.bin.lz"), 0xC0CB08, 0x90, 0x8F),
+    Resource("gBattleAnimSpriteGfx_BlueLines", Path("graphics/battle_anims/sprites/blue_lines.png.4bpp.lz"), 0xC0CB98, 0x24, 0x23),
+    Resource("gBattleAnimSpritePal_BlueLines", Path("graphics/battle_anims/sprites/blue_lines.png.gbapal.lz"), 0xC0CBBC, 0x14, 0x12),
 )
 
 

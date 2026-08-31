@@ -224,6 +224,25 @@ BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpritePal_Shock4[] = INCBIN
 
 #undef BATTLE_ANIM_A_REACTION_GRAPHICS
 
+#define BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS __attribute__((section(".rodata.battle_anim_a_shock_through_blue_lines_graphics"), aligned(1)))
+
+// The JP LZ77 streams retain their original alignment padding.
+BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimSpriteGfx_Shock[] = INCBIN_U32("graphics/battle_anims/sprites/shock.png.4bpp.lz");
+BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimSpriteGfx_Bell2[] = INCBIN_U32("graphics/battle_anims/sprites/bell_2.png.4bpp.lz");
+BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimSpritePal_Bell2[] = INCBIN_U32("graphics/battle_anims/sprites/bell_2.png.gbapal.lz");
+BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimSpriteGfx_PinkGlove[] = INCBIN_U32("graphics/battle_anims/sprites/pink_glove.png.4bpp.lz");
+BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimSpritePal_PinkGlove[] = INCBIN_U32("graphics/battle_anims/sprites/pink_glove.png.gbapal.lz");
+BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u16 gBattleAnimUnused_Unknown1[] = INCBIN_U16("graphics/battle_anims/unused/unknown_1.bin");
+BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u16 gBattleAnimUnused_Unknown2[] = INCBIN_U16("graphics/battle_anims/unused/unknown_2.bin");
+BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u16 gBattleAnimUnused_Unknown3[] = INCBIN_U16("graphics/battle_anims/unused/unknown_3.bin");
+BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimUnusedGfx_LineSketch2[] = INCBIN_U32("graphics/battle_anims/unused/line_sketch_2.png.8bpp.lz");
+BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimUnusedPal_LineSketch2[] = INCBIN_U32("graphics/battle_anims/unused/line_sketch_2.pal.gbapal.lz");
+BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimUnusedTilemap_LineSketch2[] = INCBIN_U32("graphics/battle_anims/unused/line_sketch_2.bin.lz");
+BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimSpriteGfx_BlueLines[] = INCBIN_U32("graphics/battle_anims/sprites/blue_lines.png.4bpp.lz");
+BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimSpritePal_BlueLines[] = INCBIN_U32("graphics/battle_anims/sprites/blue_lines.png.gbapal.lz");
+
+#undef BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS
+
 // Pokédex.  These custom sections retain the JP ROM order while assigning the
 // resources to pokeemerald's graphics owner and source hierarchy.
 #define POKEDEX_GRAPHICS_PREFIX __attribute__((section(".rodata.pokedex_graphics_prefix"), aligned(1)))

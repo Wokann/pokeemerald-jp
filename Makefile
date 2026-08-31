@@ -1208,6 +1208,13 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_anims/sprites/duck.png.4bpp.lz graphics/battle_anims/sprites/duck.png.gbapal.lz \
 	graphics/battle_anims/sprites/alert.png.4bpp.lz graphics/battle_anims/sprites/alert.png.gbapal.lz \
 	graphics/battle_anims/sprites/shock_4.png.4bpp.lz graphics/battle_anims/sprites/shock_4.png.gbapal.lz \
+	graphics/battle_anims/sprites/shock.png.4bpp.lz \
+	graphics/battle_anims/sprites/bell_2.png.4bpp.lz graphics/battle_anims/sprites/bell_2.png.gbapal.lz \
+	graphics/battle_anims/sprites/pink_glove.png.4bpp.lz graphics/battle_anims/sprites/pink_glove.png.gbapal.lz \
+	graphics/battle_anims/unused/unknown_1.bin graphics/battle_anims/unused/unknown_2.bin graphics/battle_anims/unused/unknown_3.bin \
+	graphics/battle_anims/unused/line_sketch_2.png.8bpp.lz graphics/battle_anims/unused/line_sketch_2.pal.gbapal.lz \
+	graphics/battle_anims/unused/line_sketch_2.bin.lz \
+	graphics/battle_anims/sprites/blue_lines.png.4bpp.lz graphics/battle_anims/sprites/blue_lines.png.gbapal.lz \
 	graphics/battle_anims/sprites/splash.4bpp.lz graphics/battle_anims/sprites/splash.gbapal.lz \
 	graphics/battle_anims/sprites/sweat_bead.4bpp.lz graphics/battle_anims/sprites/pokeblock.4bpp.lz \
 	graphics/battle_anims/sprites/pokeblock.gbapal.lz graphics/battle_anims/sprites/gem_1.4bpp.lz \
