@@ -2464,7 +2464,15 @@ BattleScript_EffectSuperpower:: @ 0x08288833
 	goto BattleScript_EffectHit
 
 BattleScript_EffectMagicCoat:: @ 0x0828883E
-	.incbin "baserom_jp.gba", 0x28883e, 0x15
+	attackcanceler
+	trysetmagiccoat BattleScript_FailedFromAtkString
+	attackstring
+	ppreduce
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNSHROUDEDITSELF
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectRecycle:: @ 0x08288853
 	.incbin "baserom_jp.gba", 0x288853, 0x15
