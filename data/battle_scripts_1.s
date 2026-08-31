@@ -869,10 +869,25 @@ BattleScriptFirstChargingTurn:: @ 0x082875F7
 	return
 
 BattleScript_EffectSuperFang:: @ 0x08287621
-	.incbin "baserom_jp.gba", 0x287621, 0x17
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	typecalc
+	bicbyte gMoveResultFlags, MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE
+	damagetohalftargethp
+	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectDragonRage:: @ 0x08287638
-	.incbin "baserom_jp.gba", 0x287638, 0x2f
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	typecalc
+	bicbyte gMoveResultFlags, MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE
+	setword gBattleMoveDamage, 40
+	adjustsetdamage
+	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectTrap:: @ 0x08287667
 	.incbin "baserom_jp.gba", 0x287667, 0x31
