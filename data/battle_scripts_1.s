@@ -934,7 +934,15 @@ BattleScript_MoveMissedDoDamage:: @ 0x082876BC
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectMist:: @ 0x08287701
-	.incbin "baserom_jp.gba", 0x287701, 0x13
+	attackcanceler
+	attackstring
+	ppreduce
+	setmist
+	attackanimation
+	waitanimation
+	printfromtable gMistUsedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectFocusEnergy:: @ 0x08287714
 	.incbin "baserom_jp.gba", 0x287714, 0x1d
