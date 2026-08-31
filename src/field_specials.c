@@ -1065,7 +1065,7 @@ __attribute__((naked)) void MauvilleGymPressSwitch(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081385AC: .4byte SPECIAL_sub_0813B9D8\n\t"
+        "_081385AC: .4byte SPECIAL_ResetHealLocationFromDewford\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7371,12 +7371,12 @@ __attribute__((naked)) void Task_CloseBattlePikeCurtain(void)
         "	.align 2, 0\n\t"
         "_0813B994: .4byte gUnknown_3005B68\n\t"
         "_0813B998: .4byte gSaveBlock1Ptr\n\t"
-        "_0813B99C: .4byte SPECIAL_sub_0813B9A0\n\t"
+        "_0813B99C: .4byte SPECIAL_GetBattlePyramidHint\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_0813B9A0(void)
+__attribute__((naked)) void GetBattlePyramidHint(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7408,7 +7408,7 @@ __attribute__((naked)) void sub_0813B9A0(void)
     );
 }
 
-__attribute__((naked)) void sub_0813B9D8(void)
+__attribute__((naked)) void ResetHealLocationFromDewford(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

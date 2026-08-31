@@ -551,18 +551,11 @@ gSpecials::
 	def_special DoWaldaNamingScreen, waitstate=1
 	def_special TryGetWallpaperWithWaldaPhrase
 	def_special PlayerNotAtTrainerHillEntrance
-	def_special sub_0813B9A0
-	@ Battle Pyramid's JP hint selector keeps its original C symbol.
-	.set SPECIAL_GetBattlePyramidHint, SPECIAL_sub_0813B9A0
-	.set SPECIAL_WAITSTATE_GetBattlePyramidHint, SPECIAL_WAITSTATE_sub_0813B9A0
+	def_special GetBattlePyramidHint
 	def_special LoadLinkContestPlayerPalettes
 	def_special ShowTrainerHillRecords, waitstate=1
 	def_special PlayerFaceTrainerAfterBattle
-	def_special sub_0813B9D8
-	@ Keep Petalburg Gym's script-facing name aligned with pokeemerald while
-	@ retaining the verified JP implementation symbol in the special table.
-	.set SPECIAL_ResetHealLocationFromDewford, SPECIAL_sub_0813B9D8
-	.set SPECIAL_WAITSTATE_ResetHealLocationFromDewford, SPECIAL_WAITSTATE_sub_0813B9D8
+	def_special ResetHealLocationFromDewford
 	def_special IsLastMonThatKnowsSurf
 	def_special CountPartyAliveNonEggMons
 	def_special TryPrepareSecondApproachingTrainer

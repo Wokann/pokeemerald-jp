@@ -4072,7 +4072,7 @@ __attribute__((naked)) void sub_08081160(void)
         "_080811B4: .4byte gUnknown_2031F44\n\t"
         "_080811B8: .4byte gSaveBlock2Ptr\n\t"
         "_080811BC: .4byte gMain\n\t"
-        "_080811C0: .4byte SPECIAL_sub_0813B9A0\n\t"
+        "_080811C0: .4byte SPECIAL_GetBattlePyramidHint\n\t"
         "_080811C4:\n\t"
         "	ldr r0, _08081218\n\t"
         "	ldrh r1, [r0, #0x2e]\n\t"
