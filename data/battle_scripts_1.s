@@ -2785,7 +2785,8 @@ BattleScript_CosmicPowerEnd::
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectSkyUppercut:: @ 0x08288BCF
-	.incbin "baserom_jp.gba", 0x288bcf, 0xe
+	orword gHitMarker, HITMARKER_IGNORE_ON_AIR
+	goto BattleScript_EffectHit
 
 BattleScript_EffectBulkUp:: @ 0x08288BDD
 	.incbin "baserom_jp.gba", 0x288bdd, 0x64
