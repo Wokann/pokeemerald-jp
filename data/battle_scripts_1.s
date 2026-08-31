@@ -1807,7 +1807,8 @@ BattleScript_EffectMoonlight:: @ 0x082880B2
 	goto BattleScript_PresentHealTarget
 
 BattleScript_EffectHiddenPower:: @ 0x082880BF
-	.incbin "baserom_jp.gba", 0x2880bf, 0x6
+	hiddenpowercalc
+	goto BattleScript_EffectHit
 
 BattleScript_EffectRainDance:: @ 0x082880C5
 	.incbin "baserom_jp.gba", 0x2880c5, 0x4
