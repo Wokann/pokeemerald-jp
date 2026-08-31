@@ -3866,7 +3866,12 @@ BattleScript_SAtkDown2End:: @ 0x08289786
 	return
 
 BattleScript_FocusPunchSetUp:: @ 0x08289787
-	.incbin "baserom_jp.gba", 0x289787, 0x14
+	printstring STRINGID_EMPTYSTRING3
+	waitmessage 1
+	playanimation BS_ATTACKER, B_ANIM_FOCUS_PUNCH_SETUP
+	printstring STRINGID_PKMNTIGHTENINGFOCUS
+	waitmessage B_WAIT_TIME_LONG
+	end2
 
 @ Sleep-status responses: still asleep, regular wake-up, and Uproar wake-up.
 BattleScript_MoveUsedIsAsleep:: @ 0x0828979B
