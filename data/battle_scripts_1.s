@@ -4157,75 +4157,75 @@ BattleScript_ItemSteal: @ 0x82899AA
 
 	.globl BattleScript_DrizzleActivates
 BattleScript_DrizzleActivates: @ 0x82899B8
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0xC1, 0x00 @ printstring STRINGID_PKMNMADEITRAIN
-	.byte 0x3A @ waitstate
-	.byte 0x45, 0x07, 0x0A, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_BATTLER_0, B_ANIM_RAIN_CONTINUES
-	.byte 0x41, 0x15, 0x9A, 0x28, 0x08 @ call BattleScript_WeatherFormChanges
-	.byte 0x3F @ end3
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNMADEITRAIN
+	waitstate
+	playanimation BS_BATTLER_0, B_ANIM_RAIN_CONTINUES
+	call BattleScript_WeatherFormChanges
+	end3
 
 	.globl BattleScript_SpeedBoostActivates
 BattleScript_SpeedBoostActivates: @ 0x82899CC
-	.byte 0x45, 0x01, 0x01, 0x28, 0x41, 0x02, 0x02 @ playanimation BS_ATTACKER, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
-	.byte 0x10, 0xC2, 0x00 @ printstring STRINGID_PKMNRAISEDSPEED
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x3F @ end3
+	playanimation BS_ATTACKER, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printstring STRINGID_PKMNRAISEDSPEED
+	waitmessage B_WAIT_TIME_LONG
+	end3
 
 	.globl BattleScript_TraceActivates
 BattleScript_TraceActivates: @ 0x82899DA
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0xD0, 0x00 @ printstring STRINGID_PKMNTRACED
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x3F @ end3
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNTRACED
+	waitmessage B_WAIT_TIME_LONG
+	end3
 
 	.globl BattleScript_RainDishActivates
 BattleScript_RainDishActivates: @ 0x82899E4
-	.byte 0x10, 0x33, 0x01 @ printstring STRINGID_PKMNSXRESTOREDHPALITTLE2
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x35, 0x24, 0x3F, 0x02, 0x02, 0x00, 0x01, 0x00, 0x00 @ orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
-	.byte 0x0B, 0x01 @ healthbarupdate BS_ATTACKER
-	.byte 0x0C, 0x01 @ datahpupdate BS_ATTACKER
-	.byte 0x3F @ end3
+	printstring STRINGID_PKMNSXRESTOREDHPALITTLE2
+	waitmessage B_WAIT_TIME_LONG
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	end3
 
 	.globl BattleScript_SandstreamActivates
 BattleScript_SandstreamActivates: @ 0x82899F8
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0x34, 0x01 @ printstring STRINGID_PKMNSXWHIPPEDUPSANDSTORM
-	.byte 0x3A @ waitstate
-	.byte 0x45, 0x07, 0x0C, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_BATTLER_0, B_ANIM_SANDSTORM_CONTINUES
-	.byte 0x41, 0x15, 0x9A, 0x28, 0x08 @ call BattleScript_WeatherFormChanges
-	.byte 0x3F @ end3
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNSXWHIPPEDUPSANDSTORM
+	waitstate
+	playanimation BS_BATTLER_0, B_ANIM_SANDSTORM_CONTINUES
+	call BattleScript_WeatherFormChanges
+	end3
 
 	.globl BattleScript_ShedSkinActivates
 BattleScript_ShedSkinActivates: @ 0x8289A0C
-	.byte 0x10, 0x38, 0x01 @ printstring STRINGID_PKMNSXCUREDYPROBLEM
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x98, 0x01 @ updatestatusicon BS_ATTACKER
-	.byte 0x3F @ end3
+	printstring STRINGID_PKMNSXCUREDYPROBLEM
+	waitmessage B_WAIT_TIME_LONG
+	updatestatusicon BS_ATTACKER
+	end3
 
 	.globl BattleScript_WeatherFormChanges
 BattleScript_WeatherFormChanges: @ 0x8289A15
-	.byte 0x2E, 0x2F, 0x41, 0x02, 0x02, 0x00 @ setbyte sBATTLER, 0
+	setbyte sBATTLER, 0
 
 	.globl BattleScript_WeatherFormChangesLoop
 BattleScript_WeatherFormChangesLoop: @ 0x8289A1B
-	.byte 0xE7 @ trycastformdatachange
-	.byte 0x2F, 0x2F, 0x41, 0x02, 0x02, 0x01 @ addbyte sBATTLER, 1
-	.byte 0x2D, 0x2F, 0x41, 0x02, 0x02, 0x10, 0x3D, 0x02, 0x02, 0x01, 0x1B, 0x9A, 0x28, 0x08 @ jumpifbytenotequal sBATTLER, gBattlersCount, BattleScript_WeatherFormChangesLoop
-	.byte 0x3C @ return
+	trycastformdatachange
+	addbyte sBATTLER, 1
+	jumpifbytenotequal sBATTLER, gBattlersCount, BattleScript_WeatherFormChangesLoop
+	return
 
 	.globl BattleScript_CastformChange
 BattleScript_CastformChange: @ 0x8289A31
-	.byte 0x41, 0x37, 0x9A, 0x28, 0x08 @ call BattleScript_DoCastformChange
-	.byte 0x3F @ end3
+	call BattleScript_DoCastformChange
+	end3
 
 	.globl BattleScript_DoCastformChange
 BattleScript_DoCastformChange: @ 0x8289A37
-	.byte 0xE6 @ docastformchangeanimation
-	.byte 0x3A @ waitstate
-	.byte 0x10, 0x3A, 0x01 @ printstring STRINGID_PKMNTRANSFORMED
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3C @ return
+	docastformchangeanimation
+	waitstate
+	printstring STRINGID_PKMNTRANSFORMED
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_IntimidateActivatesEnd3
 BattleScript_IntimidateActivatesEnd3: @ 0x8289A40
