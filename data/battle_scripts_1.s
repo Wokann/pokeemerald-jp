@@ -1125,7 +1125,11 @@ BattleScript_EffectAccuracyDownHit:: @ 0x0828793B
 	goto BattleScript_EffectHit
 
 BattleScript_EffectSkyAttack:: @ 0x08287946
-	.incbin "baserom_jp.gba", 0x287946, 0x28
+	jumpifstatus2 BS_ATTACKER, STATUS2_MULTIPLETURNS, BattleScript_TwoTurnMovesSecondTurn
+	jumpifword CMP_COMMON_BITS, gHitMarker, HITMARKER_NO_ATTACKSTRING, BattleScript_TwoTurnMovesSecondTurn
+	setbyte sTWOTURN_STRINGID, B_MSG_TURN1_SKY_ATTACK
+	call BattleScriptFirstChargingTurn
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectConfuseHit:: @ 0x0828796E
 	.incbin "baserom_jp.gba", 0x28796e, 0xb
