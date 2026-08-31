@@ -4150,10 +4150,10 @@ BattleScript_RecoilEnd: @ 0x82899A9
 
 	.globl BattleScript_ItemSteal
 BattleScript_ItemSteal: @ 0x82899AA
-	.byte 0x45, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00 @ playanimation BS_TARGET, B_ANIM_ITEM_STEAL
-	.byte 0x10, 0x8E, 0x00 @ printstring STRINGID_PKMNSTOLEITEM
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x3C @ return
+	playanimation BS_TARGET, B_ANIM_ITEM_STEAL
+	printstring STRINGID_PKMNSTOLEITEM
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 	.globl BattleScript_DrizzleActivates
 BattleScript_DrizzleActivates: @ 0x82899B8
