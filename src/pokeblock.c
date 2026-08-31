@@ -3436,7 +3436,7 @@ __attribute__((naked)) void sub_08136F4C(void)
     );
 }
 
-__attribute__((naked)) void sub_08136F64(void)
+__attribute__((naked)) s8 GetFirstFreePokeblockSlot(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3474,13 +3474,13 @@ __attribute__((naked)) void sub_08136F64(void)
     );
 }
 
-__attribute__((naked)) void sub_08136F9C(void)
+__attribute__((naked)) bool32 AddPokeblock(const struct Pokeblock *pokeblock)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r0, #0\n\t"
-        "	bl sub_08136F64\n\t"
+        "	bl GetFirstFreePokeblockSlot\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	asrs r1, r0, #0x18\n\t"
         "	movs r0, #1\n\t"

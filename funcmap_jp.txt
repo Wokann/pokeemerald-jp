@@ -10549,7 +10549,7 @@ pokeblock.spokeblock.s
 08136ef8 sub_08136EF8 ClearPokeblocks
 08136f14 pokeblock.spokeblock.s sub_08136F14
 08136f4c pokeblock.spokeblock.s sub_08136F4C
-08136f64 pokeblock.spokeblock.s sub_08136F64
+08136f64 GetFirstFreePokeblockSlot GetFirstFreePokeblockSlot
 08136f9c AddPokeblock AddPokeblock
 08136fd8 sub_08136FD8 TryClearPokeblock
 0813700c pokeblock.spokeblock.s sub_0813700C
