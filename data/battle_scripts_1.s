@@ -2636,7 +2636,8 @@ BattleScript_EffectLowKick:: @ 0x082889D9
 	goto BattleScript_HitFromCritCalc
 
 BattleScript_EffectSecretPower:: @ 0x082889E9
-	.incbin "baserom_jp.gba", 0x2889e9, 0x6
+	getsecretpowereffect
+	goto BattleScript_EffectHit
 
 BattleScript_EffectDoubleEdge:: @ 0x082889EF
 	.incbin "baserom_jp.gba", 0x2889ef, 0xb
