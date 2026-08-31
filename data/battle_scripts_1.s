@@ -4334,15 +4334,15 @@ BattleScript_MonMadeMoveUseless: @ 0x8289B1A
 
 	.globl BattleScript_FlashFireBoost_PPLoss
 BattleScript_FlashFireBoost_PPLoss: @ 0x8289B2F
-	.byte 0x03 @ ppreduce
+	ppreduce
 
 	.globl BattleScript_FlashFireBoost
 BattleScript_FlashFireBoost: @ 0x8289B30
-	.byte 0x02 @ attackstring
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x13, 0xE2, 0xBA, 0x5A, 0x08 @ printfromtable gFlashFireStringIds
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	attackstring
+	pause B_WAIT_TIME_SHORT
+	printfromtable gFlashFireStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 	.globl BattleScript_AbilityPreventsPhasingOut
 BattleScript_AbilityPreventsPhasingOut: @ 0x8289B41
