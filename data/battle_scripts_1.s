@@ -1183,7 +1183,17 @@ BattleScript_MoveUsedMustRecharge:: @ 0x082879EA
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectRage:: @ 0x082879F5
-	.incbin "baserom_jp.gba", 0x2879f5, 0x27
+	attackcanceler
+	accuracycheck BattleScript_RageMiss, ACC_CURR_MOVE
+	setmoveeffect MOVE_EFFECT_RAGE
+	seteffectprimary
+	setmoveeffect 0
+	goto BattleScript_HitFromAtkString
+
+BattleScript_RageMiss:: @ 0x08287A0F
+	setmoveeffect MOVE_EFFECT_RAGE
+	clearstatusfromeffect BS_ATTACKER
+	goto BattleScript_PrintMoveMissed
 
 BattleScript_EffectMimic:: @ 0x08287A1C
 	.incbin "baserom_jp.gba", 0x287a1c, 0x26
