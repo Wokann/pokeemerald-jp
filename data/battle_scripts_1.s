@@ -1376,7 +1376,29 @@ BattleScript_EffectSketch:: @ 0x08287BB5
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectSleepTalk:: @ 0x08287BD4
-	.incbin "baserom_jp.gba", 0x287bd4, 0x42
+	attackcanceler
+	jumpifstatus BS_ATTACKER, STATUS1_SLEEP, BattleScript_SleepTalkIsAsleep
+	attackstring
+	ppreduce
+	goto BattleScript_ButItFailed
+
+BattleScript_SleepTalkIsAsleep:: @ 0x08287BE6
+	printstring STRINGID_PKMNFASTASLEEP
+	waitmessage B_WAIT_TIME_LONG
+	statusanimation BS_ATTACKER
+	attackstring
+	ppreduce
+	orword gHitMarker, HITMARKER_NO_PPDEDUCT
+	trychoosesleeptalkmove BattleScript_SleepTalkUsingMove
+	pause B_WAIT_TIME_LONG
+	goto BattleScript_ButItFailed
+
+BattleScript_SleepTalkUsingMove:: @ 0x08287C06
+	attackanimation
+	waitanimation
+	setbyte sB_ANIM_TURN, 0
+	setbyte sB_ANIM_TARGETS_HIT, 0
+	jumptocalledmove TRUE
 
 BattleScript_EffectDestinyBond:: @ 0x08287C16
 	.incbin "baserom_jp.gba", 0x287c16, 0x11
