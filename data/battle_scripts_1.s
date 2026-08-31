@@ -2460,7 +2460,8 @@ BattleScript_EffectIngrain:: @ 0x0828881E
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectSuperpower:: @ 0x08288833
-	.incbin "baserom_jp.gba", 0x288833, 0xb
+	setmoveeffect MOVE_EFFECT_ATK_DEF_DOWN | MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_CERTAIN
+	goto BattleScript_EffectHit
 
 BattleScript_EffectMagicCoat:: @ 0x0828883E
 	.incbin "baserom_jp.gba", 0x28883e, 0x15
