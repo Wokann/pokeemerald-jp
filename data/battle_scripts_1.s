@@ -1811,7 +1811,10 @@ BattleScript_EffectHiddenPower:: @ 0x082880BF
 	goto BattleScript_EffectHit
 
 BattleScript_EffectRainDance:: @ 0x082880C5
-	.incbin "baserom_jp.gba", 0x2880c5, 0x4
+	attackcanceler
+	attackstring
+	ppreduce
+	setrain
 
 BattleScript_MoveWeatherChange:: @ 0x082880C9
 	attackanimation
