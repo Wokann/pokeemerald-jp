@@ -745,7 +745,38 @@ BattleScript_EffectRestoreHp:: @ 0x08287456
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectToxic:: @ 0x08287479
-	.incbin "baserom_jp.gba", 0x287479, 0x8c
+	attackcanceler
+	attackstring
+	ppreduce
+	jumpifability BS_TARGET, ABILITY_IMMUNITY, BattleScript_ImmunityProtected
+	jumpifstatus2 BS_TARGET, STATUS2_SUBSTITUTE, BattleScript_ButItFailed
+	jumpifstatus BS_TARGET, STATUS1_POISON, BattleScript_AlreadyPoisoned
+	jumpifstatus BS_TARGET, STATUS1_TOXIC_POISON, BattleScript_AlreadyPoisoned
+	jumpifstatus BS_TARGET, STATUS1_ANY, BattleScript_ButItFailed
+	jumpiftype BS_TARGET, TYPE_POISON, BattleScript_NotAffected
+	jumpiftype BS_TARGET, TYPE_STEEL, BattleScript_NotAffected
+	accuracycheck BattleScript_ButItFailed, ACC_CURR_MOVE
+	jumpifsideaffecting BS_TARGET, SIDE_STATUS_SAFEGUARD, BattleScript_SafeguardProtected
+	attackanimation
+	waitanimation
+	setmoveeffect MOVE_EFFECT_TOXIC
+	seteffectprimary
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
+BattleScript_AlreadyPoisoned:: @ 0x082874DA
+	setalreadystatusedmoveattempt BS_ATTACKER
+	pause B_WAIT_TIME_LONG
+	printstring STRINGID_PKMNALREADYPOISONED
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
+BattleScript_ImmunityProtected:: @ 0x082874EB
+	copybyte gEffectBattler, gBattlerTarget
+	setbyte cMULTISTRING_CHOOSER, B_MSG_ABILITY_PREVENTS_MOVE_STATUS
+	call BattleScript_PSNPrevention
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectPayDay:: @ 0x08287505
 	.incbin "baserom_jp.gba", 0x287505, 0xb
@@ -1085,7 +1116,10 @@ BattleScript_FailedFromPPReduce:: @ 0x082884A3
 	.incbin "baserom_jp.gba", 0x2884a3, 0x1
 
 BattleScript_ButItFailed:: @ 0x082884A4
-	.incbin "baserom_jp.gba", 0x2884a4, 0x24
+	.incbin "baserom_jp.gba", 0x2884a4, 0x12
+
+BattleScript_NotAffected:: @ 0x082884B6
+	.incbin "baserom_jp.gba", 0x2884b6, 0x12
 
 BattleScript_EffectUproar:: @ 0x082884C8
 	.incbin "baserom_jp.gba", 0x2884c8, 0x20
