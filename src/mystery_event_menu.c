@@ -1,4 +1,7 @@
 #include "global.h"
+#include "link.h"
+#include "mystery_event_script.h"
+#include "save.h"
 #include "berry_tag_screen.h"
 #include "berry.h"
 #include "item_menu.h"
@@ -19,731 +22,280 @@
 #include "bg.h"
 #include "palette.h"
 #include "graphics.h"
-__attribute__((naked)) void sub_081787FC(void)
+#include "strings.h"
+#include "string_util.h"
+
+extern const u8 gUnknown_85CD159[];
+extern const u8 gUnknown_85CD19F[];
+extern const struct BgTemplate gUnknown_85CD204[1];
+extern const struct WindowTemplate gUnknown_85CD208[];
+extern const u8 gUnknown_85CD0DC[];
+extern const u8 gUnknown_85CD0FE[];
+extern const u8 gUnknown_85CD123[];
+extern const u8 gUnknown_85CD133[];
+extern u8 gUnknown_203B9C4;
+
+void CB2_MysteryEventMenu(void);
+static void PrintMysteryMenuText(u8 windowId, const u8 *text, u8 x, u8 y, s32 speed);
+
+enum
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LoadOam\n\t"
-        "	bl ProcessSpriteCopyRequests\n\t"
-        "	bl TransferPlttBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WIN_MSG,
+    WIN_LOADING,
+};
+static void VBlankCB(void)
+{
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
 }
 
-__attribute__((naked)) void CheckLanguageMatch(void)
+void sub_081787FC(void) __attribute__((alias("VBlankCB")));
+
+bool8 CheckLanguageMatch(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r1, _08178828\n\t"
-        "	ldrh r0, [r1, #0x1a]\n\t"
-        "	ldrh r1, [r1, #0x36]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _08178820\n\t"
-        "	movs r2, #1\n\t"
-        "_08178820:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08178828: .4byte gLinkPlayers\n\t"
-        ".syntax divided\n\t"
-    );
+    return (gLinkPlayers[0].language == gLinkPlayers[1].language);
 }
 
-__attribute__((naked)) void CB2_InitMysteryEventMenu(void)
+void CB2_InitMysteryEventMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	bl ResetTasks\n\t"
-        "	ldr r0, _081788E4\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ResetBgsAndClearDma3BusyFlags\n\t"
-        "	ldr r1, _081788E8\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl InitBgsFromTemplates\n\t"
-        "	ldr r0, _081788EC\n\t"
-        "	bl InitWindows\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081788DA\n\t"
-        "	bl DeactivateAllTextPrinters\n\t"
-        "	movs r4, #0\n\t"
-        "_08178864:\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #1\n\t"
-        "	ble _08178864\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl FillBgTilemapBufferRect_Palette0\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0xd0\n\t"
-        "	bl LoadUserWindowBorderGfx\n\t"
-        "	movs r0, #0xe0\n\t"
-        "	bl Menu_LoadStdPalAt\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _081788F0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	bl StopMapMusic\n\t"
-        "	bl RunTasks\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl RunTextPrinters\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl FillPalette\n\t"
-        "	ldr r0, _081788F4\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_081788DA:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081788E4: .4byte sub_081787FC + 1\n\t"
-        "_081788E8: .4byte gUnknown_85CD204\n\t"
-        "_081788EC: .4byte gUnknown_85CD208\n\t"
-        "_081788F0: .4byte Task_DestroySelf + 1\n\t"
-        "_081788F4: .4byte CB2_MysteryEventMenu + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    ResetSpriteData();
+    FreeAllSpritePalettes();
+    ResetTasks();
+    SetVBlankCallback(VBlankCB);
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, gUnknown_85CD204, 1);
+    if (InitWindows(gUnknown_85CD208))
+    {
+        DeactivateAllTextPrinters();
+        for (i = 0; i < 2; i++)
+            FillWindowPixelBuffer(i, PIXEL_FILL(0));
+
+        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
+        LoadUserWindowBorderGfx(0, 1, BG_PLTT_ID(13));
+        Menu_LoadStdPalAt(BG_PLTT_ID(14));
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON);
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        CreateTask(Task_DestroySelf, 0);
+        StopMapMusic();
+        RunTasks();
+        AnimateSprites();
+        BuildOamBuffer();
+        RunTextPrinters();
+        UpdatePaletteFade();
+        SetBackdropFromColor(RGB_BLACK);
+        SetMainCallback2(CB2_MysteryEventMenu);
+    }
 }
 
-__attribute__((naked)) void GetEventLoadMessage(void)
+bool8 GetEventLoadMessage(u8 *dest, u32 status)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r5, #1\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _0817890C\n\t"
-        "	ldr r1, _08178928\n\t"
-        "	bl StringCopy\n\t"
-        "	movs r5, #0\n\t"
-        "_0817890C:\n\t"
-        "	cmp r4, #2\n\t"
-        "	bne _08178912\n\t"
-        "	movs r5, #0\n\t"
-        "_08178912:\n\t"
-        "	cmp r4, #1\n\t"
-        "	bne _0817891E\n\t"
-        "	ldr r1, _0817892C\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl StringCopy\n\t"
-        "_0817891E:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08178928: .4byte gUnknown_85CD159\n\t"
-        "_0817892C: .4byte gUnknown_85CD19F\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 retVal = TRUE;
+
+    if (status == MEVENT_STATUS_LOAD_OK)
+    {
+        StringCopy(dest, gUnknown_85CD159);
+        retVal = FALSE;
+    }
+
+    if (status == MEVENT_STATUS_SUCCESS)
+        retVal = FALSE;
+
+    if (status == MEVENT_STATUS_LOAD_ERROR)
+        StringCopy(dest, gUnknown_85CD19F);
+
+    return retVal;
 }
 
-__attribute__((naked)) void CB2_MysteryEventMenu(void)
+void CB2_MysteryEventMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	ldr r1, _08178950\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	bls _08178946\n\t"
-        "	b _08178D10\n\t"
-        "_08178946:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08178954\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08178950: .4byte gMain\n\t"
-        "_08178954: .4byte _08178958\n\t"
-        "_08178958:\n\t"
-        "	.4byte _0817899C\n\t"
-        "	.4byte _081789CA\n\t"
-        "	.4byte _08178A00\n\t"
-        "	.4byte _08178A38\n\t"
-        "	.4byte _08178A84\n\t"
-        "	.4byte _08178A94\n\t"
-        "	.4byte _08178B0C\n\t"
-        "	.4byte _08178BE0\n\t"
-        "	.4byte _08178BF0\n\t"
-        "	.4byte _08178C10\n\t"
-        "	.4byte _08178C18\n\t"
-        "	.4byte _08178C2C\n\t"
-        "	.4byte _08178C74\n\t"
-        "	.4byte _08178C98\n\t"
-        "	.4byte _08178CC4\n\t"
-        "	.4byte _08178CDC\n\t"
-        "	.4byte _08178D00\n\t"
-        "_0817899C:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0xd\n\t"
-        "	bl DrawStdFrameWithCustomTileAndPalette\n\t"
-        "	movs r0, #0\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	b _08178CE8\n\t"
-        "_081789CA:\n\t"
-        "	ldr r0, _081789F4\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081789D8\n\t"
-        "	b _08178D10\n\t"
-        "_081789D8:\n\t"
-        "	ldr r1, _081789F8\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_08178D7C\n\t"
-        "	ldr r1, _081789FC\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _08178CF4\n\t"
-        "	.align 2, 0\n\t"
-        "_081789F4: .4byte gPaletteFade\n\t"
-        "_081789F8: .4byte gUnknown_85CD0DC\n\t"
-        "_081789FC: .4byte gMain\n\t"
-        "_08178A00:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl IsTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08178A0E\n\t"
-        "	b _08178D10\n\t"
-        "_08178A0E:\n\t"
-        "	ldr r1, _08178A2C\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, _08178A30\n\t"
-        "	ldr r2, _08178A34\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl OpenLink\n\t"
-        "	b _08178D10\n\t"
-        "	.align 2, 0\n\t"
-        "_08178A2C: .4byte gMain\n\t"
-        "_08178A30: .4byte gLinkType\n\t"
-        "_08178A34: .4byte 0x00005501\n\t"
-        "_08178A38:\n\t"
-        "	ldr r0, _08178A78\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08178A46\n\t"
-        "	b _08178BB8\n\t"
-        "_08178A46:\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #4\n\t"
-        "	bhi _08178A50\n\t"
-        "	b _08178BB8\n\t"
-        "_08178A50:\n\t"
-        "	movs r0, #0x15\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r1, _08178A7C\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_08178D7C\n\t"
-        "	ldr r1, _08178A80\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _08178BB8\n\t"
-        "	.align 2, 0\n\t"
-        "_08178A78: .4byte gLinkStatus\n\t"
-        "_08178A7C: .4byte gUnknown_85CD0FE\n\t"
-        "_08178A80: .4byte gMain\n\t"
-        "_08178A84:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl IsTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08178A92\n\t"
-        "	b _08178D10\n\t"
-        "_08178A92:\n\t"
-        "	b _08178CEC\n\t"
-        "_08178A94:\n\t"
-        "	bl GetLinkPlayerCount_2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #2\n\t"
-        "	bne _08178B88\n\t"
-        "	ldr r4, _08178AE8\n\t"
-        "	ldrh r1, [r4, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08178AF0\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl CheckShouldAdvanceLinkState\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0xd\n\t"
-        "	bl DrawStdFrameWithCustomTileAndPalette\n\t"
-        "	ldr r1, _08178AEC\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_08178D7C\n\t"
-        "	movs r0, #1\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	b _08178CF4\n\t"
-        "	.align 2, 0\n\t"
-        "_08178AE8: .4byte gMain\n\t"
-        "_08178AEC: .4byte gUnknown_85CD123\n\t"
-        "_08178AF0:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08178AFA\n\t"
-        "	b _08178D10\n\t"
-        "_08178AFA:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl CloseLink\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r4, r0\n\t"
-        "	b _08178BD6\n\t"
-        "_08178B0C:\n\t"
-        "	bl IsLinkConnectionEstablished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08178BB8\n\t"
-        "	ldr r0, _08178B58\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08178B20\n\t"
-        "	b _08178D10\n\t"
-        "_08178B20:\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetLinkPlayerDataExchangeStatusTimed\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _08178B64\n\t"
-        "	bl SetCloseLinkCallback\n\t"
-        "	ldr r4, _08178B5C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetEventLoadMessage\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_08178D7C\n\t"
-        "	ldr r0, _08178B60\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	b _08178BAA\n\t"
-        "	.align 2, 0\n\t"
-        "_08178B58: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_08178B5C: .4byte gStringVar4\n\t"
-        "_08178B60: .4byte gMain\n\t"
-        "_08178B64:\n\t"
-        "	bl CheckLanguageMatch\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08178B84\n\t"
-        "	ldr r1, _08178B80\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_08178D7C\n\t"
-        "	b _08178CEC\n\t"
-        "	.align 2, 0\n\t"
-        "_08178B80: .4byte gUnknown_85CD133\n\t"
-        "_08178B84:\n\t"
-        "	bl CloseLink\n\t"
-        "_08178B88:\n\t"
-        "	ldr r4, _08178BB0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetEventLoadMessage\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_08178D7C\n\t"
-        "	ldr r0, _08178BB4\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_08178BAA:\n\t"
-        "	movs r1, #0xd\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _08178D10\n\t"
-        "	.align 2, 0\n\t"
-        "_08178BB0: .4byte gStringVar4\n\t"
-        "_08178BB4: .4byte gMain\n\t"
-        "_08178BB8:\n\t"
-        "	ldr r4, _08178BDC\n\t"
-        "	ldrh r1, [r4, #0x2e]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08178BC6\n\t"
-        "	b _08178D10\n\t"
-        "_08178BC6:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl CloseLink\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r4, r2\n\t"
-        "_08178BD6:\n\t"
-        "	movs r0, #0xf\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _08178D10\n\t"
-        "	.align 2, 0\n\t"
-        "_08178BDC: .4byte gMain\n\t"
-        "_08178BE0:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl IsTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08178BEE\n\t"
-        "	b _08178D10\n\t"
-        "_08178BEE:\n\t"
-        "	b _08178CEC\n\t"
-        "_08178BF0:\n\t"
-        "	bl GetBlockReceivedStatus\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08178BFC\n\t"
-        "	b _08178D10\n\t"
-        "_08178BFC:\n\t"
-        "	bl ResetBlockReceivedFlags\n\t"
-        "	ldr r1, _08178C0C\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _08178CF4\n\t"
-        "	.align 2, 0\n\t"
-        "_08178C0C: .4byte gMain\n\t"
-        "_08178C10:\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r4, r0\n\t"
-        "	b _08178CF4\n\t"
-        "_08178C18:\n\t"
-        "	bl SetCloseLinkCallback\n\t"
-        "	ldr r1, _08178C28\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _08178CF4\n\t"
-        "	.align 2, 0\n\t"
-        "_08178C28: .4byte gMain\n\t"
-        "_08178C2C:\n\t"
-        "	ldr r0, _08178C64\n\t"
-        "	ldrb r6, [r0]\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _08178D10\n\t"
-        "	ldr r5, _08178C68\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl RunMysteryEventScript\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	ldr r2, _08178C6C\n\t"
-        "	add r0, sp, #4\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl CpuSet\n\t"
-        "	ldr r0, _08178C70\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetEventLoadMessage\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08178CEC\n\t"
-        "	movs r0, #0\n\t"
-        "	bl TrySavingData\n\t"
-        "	b _08178CEC\n\t"
-        "	.align 2, 0\n\t"
-        "_08178C64: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_08178C68: .4byte gDecompressionBuffer\n\t"
-        "_08178C6C: .4byte 0x050001F5\n\t"
-        "_08178C70: .4byte gStringVar4\n\t"
-        "_08178C74:\n\t"
-        "	ldr r1, _08178C90\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_08178D7C\n\t"
-        "	ldr r1, _08178C94\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _08178CF4\n\t"
-        "	.align 2, 0\n\t"
-        "_08178C90: .4byte gStringVar4\n\t"
-        "_08178C94: .4byte gMain\n\t"
-        "_08178C98:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl IsTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _08178D10\n\t"
-        "	ldr r0, _08178CBC\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _08178CC0\n\t"
-        "	strb r2, [r0]\n\t"
-        "	b _08178D10\n\t"
-        "	.align 2, 0\n\t"
-        "_08178CBC: .4byte gMain\n\t"
-        "_08178CC0: .4byte gUnknown_203B9C4\n\t"
-        "_08178CC4:\n\t"
-        "	ldrh r1, [r4, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08178D10\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	b _08178CF4\n\t"
-        "_08178CDC:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "_08178CE8:\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "_08178CEC:\n\t"
-        "	ldr r1, _08178CFC\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "_08178CF4:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _08178D10\n\t"
-        "	.align 2, 0\n\t"
-        "_08178CFC: .4byte gMain\n\t"
-        "_08178D00:\n\t"
-        "	ldr r0, _08178D6C\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08178D10\n\t"
-        "	bl DoSoftReset\n\t"
-        "_08178D10:\n\t"
-        "	ldr r0, _08178D70\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08178D50\n\t"
-        "	bl IsLinkMaster\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08178D50\n\t"
-        "	bl CloseLink\n\t"
-        "	ldr r4, _08178D74\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetEventLoadMessage\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_08178D7C\n\t"
-        "	ldr r0, _08178D78\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xd\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08178D50:\n\t"
-        "	bl RunTasks\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl RunTextPrinters\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08178D6C: .4byte gPaletteFade\n\t"
-        "_08178D70: .4byte gLinkStatus\n\t"
-        "_08178D74: .4byte gStringVar4\n\t"
-        "_08178D78: .4byte gMain\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gMain.state)
+    {
+    case 0:
+        DrawStdFrameWithCustomTileAndPalette(WIN_MSG, TRUE, 1, 0xD);
+        PutWindowTilemap(WIN_MSG);
+        CopyWindowToVram(WIN_MSG, COPYWIN_FULL);
+        ShowBg(0);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_BLACK);
+        gMain.state++;
+        break;
+    case 1:
+        if (!gPaletteFade.active)
+        {
+            PrintMysteryMenuText(WIN_MSG, gUnknown_85CD0DC, 1, 2, 1);
+            gMain.state++;
+        }
+        break;
+    case 2:
+        if (!IsTextPrinterActive(WIN_MSG))
+        {
+            gMain.state++;
+            gLinkType = LINKTYPE_MYSTERY_EVENT;
+            OpenLink();
+        }
+        break;
+    case 3:
+        if ((gLinkStatus & LINK_STAT_MASTER) && (gLinkStatus & LINK_STAT_PLAYER_COUNT) > 4)
+        {
+            PlaySE(SE_PIN);
+            PrintMysteryMenuText(WIN_MSG, gUnknown_85CD0FE, 1, 2, 1);
+            gMain.state++;
+        }
+        if (JOY_NEW(B_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            CloseLink();
+            gMain.state = 15;
+        }
+        break;
+    case 4:
+        if (!IsTextPrinterActive(WIN_MSG))
+            gMain.state++;
+        break;
+    case 5:
+        if (GetLinkPlayerCount_2() == 2)
+        {
+            if (JOY_NEW(A_BUTTON))
+            {
+                PlaySE(SE_SELECT);
+                CheckShouldAdvanceLinkState();
+                DrawStdFrameWithCustomTileAndPalette(WIN_LOADING, TRUE, 1, 0xD);
+                PrintMysteryMenuText(WIN_LOADING, gUnknown_85CD123, 1, 2, 0);
+                PutWindowTilemap(WIN_LOADING);
+                CopyWindowToVram(WIN_LOADING, COPYWIN_FULL);
+                gMain.state++;
+            }
+            else if (JOY_NEW(B_BUTTON))
+            {
+                PlaySE(SE_SELECT);
+                CloseLink();
+                gMain.state = 15;
+            }
+        }
+        else
+        {
+            GetEventLoadMessage(gStringVar4, MEVENT_STATUS_LOAD_ERROR);
+            PrintMysteryMenuText(WIN_MSG, gStringVar4, 1, 2, 1);
+            gMain.state = 13;
+        }
+        break;
+    case 6:
+        if (IsLinkConnectionEstablished())
+        {
+            if (gReceivedRemoteLinkPlayers)
+            {
+                if (GetLinkPlayerDataExchangeStatusTimed(2, 2) == EXCHANGE_DIFF_SELECTIONS)
+                {
+                    SetCloseLinkCallback();
+                    GetEventLoadMessage(gStringVar4, MEVENT_STATUS_LOAD_ERROR);
+                    PrintMysteryMenuText(WIN_MSG, gStringVar4, 1, 2, 1);
+                    gMain.state = 13;
+                }
+                else if (CheckLanguageMatch())
+                {
+                    PrintMysteryMenuText(WIN_MSG, gUnknown_85CD133, 1, 2, 1);
+                    gMain.state++;
+                }
+                else
+                {
+                    CloseLink();
+                    GetEventLoadMessage(gStringVar4, MEVENT_STATUS_LOAD_ERROR);
+                    PrintMysteryMenuText(WIN_MSG, gStringVar4, 1, 2, 1);
+                    gMain.state = 13;
+                }
+            }
+        }
+        else if (JOY_NEW(B_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            CloseLink();
+            gMain.state = 15;
+        }
+        break;
+    case 7:
+        if (!IsTextPrinterActive(WIN_MSG))
+            gMain.state++;
+        break;
+    case 8:
+        if (GetBlockReceivedStatus())
+        {
+            ResetBlockReceivedFlags();
+            gMain.state++;
+        }
+        break;
+    case 9:
+        gMain.state++;
+        break;
+    case 10:
+        SetCloseLinkCallback();
+        gMain.state++;
+        break;
+    case 11:
+        if (gReceivedRemoteLinkPlayers == 0)
+        {
+            u16 status = RunMysteryEventScript(gDecompressionBuffer);
+            CpuFill32(0, gDecompressionBuffer, 0x7D4);
+            if (!GetEventLoadMessage(gStringVar4, status))
+                TrySavingData(SAVE_NORMAL);
+            gMain.state++;
+        }
+        break;
+    case 12:
+        PrintMysteryMenuText(WIN_MSG, gStringVar4, 1, 2, 1);
+        gMain.state++;
+        break;
+    case 13:
+        if (!IsTextPrinterActive(WIN_MSG))
+        {
+            gMain.state++;
+            gUnknown_203B9C4 = 0;
+        }
+        break;
+    case 14:
+        if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            gMain.state++;
+        }
+        break;
+    case 15:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
+        gMain.state++;
+        break;
+    case 16:
+        if (!gPaletteFade.active)
+            DoSoftReset();
+        break;
+    }
+
+    if (gLinkStatus & LINK_STAT_CONN_ESTABLISHED && !IsLinkMaster())
+    {
+        CloseLink();
+        GetEventLoadMessage(gStringVar4, MEVENT_STATUS_LOAD_ERROR);
+        PrintMysteryMenuText(WIN_MSG, gStringVar4, 1, 2, 1);
+        gMain.state = 13;
+    }
+
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    RunTextPrinters();
+    UpdatePaletteFade();
 }
 
-__attribute__((naked)) void sub_08178D7C(void)
+static void PrintMysteryMenuText(u8 windowId, const u8 *text, u8 x, u8 y, s32 speed)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sl\n\t"
-        "	mov r5, sb\n\t"
-        "	mov r4, r8\n\t"
-        "	push {r4, r5, r6}\n\t"
-        "	sub sp, #0x1c\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	mov sl, r1\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	ldr r4, [sp, #0x38]\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r1, #1\n\t"
-        "	mov r8, r1\n\t"
-        "	add r0, sp, #0x14\n\t"
-        "	mov r1, r8\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r1, #2]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	str r3, [sp, #0x18]\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	mov r0, sb\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r1, r8\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	add r0, sp, #0x14\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	asrs r4, r4, #0x18\n\t"
-        "	str r4, [sp, #0xc]\n\t"
-        "	mov r1, sl\n\t"
-        "	str r1, [sp, #0x10]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	ldr r3, [sp, #0x18]\n\t"
-        "	bl AddTextPrinterParameterized4\n\t"
-        "	add sp, #0x1c\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 textColor[3];
+    u8 letterSpacing = 0;
+    u8 lineSpacing = 1;
+
+    textColor[0] = 1;
+    textColor[1] = 2;
+    textColor[2] = 3;
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(textColor[0]));
+    AddTextPrinterParameterized4(windowId, FONT_NORMAL, x, y, letterSpacing, lineSpacing, textColor, speed, text);
 }
+
+void sub_08178D7C(u8 windowId, const u8 *text, u8 x, u8 y, s32 speed) __attribute__((alias("PrintMysteryMenuText")));
