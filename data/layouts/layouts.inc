@@ -3996,7 +3996,21 @@ gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP3: @ 0x084345B0
 	.4byte gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP3_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Facility  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4345C8, 0x12E0
+Route131_SkyPillar_Layout_Border::
+	.incbin "data/layouts/Route131_SkyPillar/border.bin"
+
+Route131_SkyPillar_Layout_Blockdata::
+	.incbin "data/layouts/Route131_SkyPillar/map.bin"
+
+	.align 2
+Route131_SkyPillar_Layout:: @ 0x08435890
+	.4byte 60
+	.4byte 40
+	.4byte Route131_SkyPillar_Layout_Border
+	.4byte Route131_SkyPillar_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Pacifidlog
+
 gMapLayout_SKY_PILLAR_ENTRANCE_Border:
 	.incbin "data/layouts/SkyPillar_Entrance/border.bin"
 gMapLayout_SKY_PILLAR_ENTRANCE_Blockdata:

@@ -324,8 +324,7 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP1
 	.4byte gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP2
 	.4byte gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP3
-	@ LAYOUT_ROUTE131_SKY_PILLAR remains in its raw physical layout owner.
-	.incbin "baserom_jp.gba", 0x45A6EC, 0x4
+	.4byte Route131_SkyPillar_Layout
 	.4byte gMapLayout_SKY_PILLAR_ENTRANCE
 	.4byte gMapLayout_SKY_PILLAR_OUTSIDE
 	.4byte gMapLayout_SKY_PILLAR_1F
