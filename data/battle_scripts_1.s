@@ -1507,7 +1507,8 @@ BattleScript_TripleKickEnd:
 	end
 
 BattleScript_EffectThief:: @ 0x08287D71
-	.incbin "baserom_jp.gba", 0x287d71, 0xb
+	setmoveeffect MOVE_EFFECT_STEAL_ITEM
+	goto BattleScript_EffectHit
 
 BattleScript_EffectMeanLook:: @ 0x08287D7C
 	.incbin "baserom_jp.gba", 0x287d7c, 0x32
