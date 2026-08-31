@@ -534,19 +534,45 @@ BattleScript_EffectMirrorMove:: @ 0x082871EA
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectAttackUp:: @ 0x08287202
-	.incbin "baserom_jp.gba", 0x287202, 0xb
+	setstatchanger STAT_ATK, 1, FALSE
+	goto BattleScript_EffectStatUp
 
 BattleScript_EffectDefenseUp:: @ 0x0828720D
-	.incbin "baserom_jp.gba", 0x28720d, 0xb
+	setstatchanger STAT_DEF, 1, FALSE
+	goto BattleScript_EffectStatUp
 
 BattleScript_EffectSpecialAttackUp:: @ 0x08287218
-	.incbin "baserom_jp.gba", 0x287218, 0xb
+	setstatchanger STAT_SPATK, 1, FALSE
+	goto BattleScript_EffectStatUp
 
 BattleScript_EffectEvasionUp:: @ 0x08287223
-	.incbin "baserom_jp.gba", 0x287223, 0x39
+	setstatchanger STAT_EVASION, 1, FALSE
+BattleScript_EffectStatUp::
+	attackcanceler
+BattleScript_EffectStatUpAfterAtkCanceler::
+	attackstring
+	ppreduce
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | STAT_CHANGE_ALLOW_PTR, BattleScript_StatUpEnd
+	jumpifbyte CMP_NOT_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_INCREASE, BattleScript_StatUpAttackAnim
+	pause B_WAIT_TIME_SHORT
+	goto BattleScript_StatUpPrintString
+BattleScript_StatUpAttackAnim::
+	attackanimation
+	waitanimation
+BattleScript_StatUpDoAnim::
+	setgraphicalstatchangevalues
+	playanimation BS_ATTACKER, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+BattleScript_StatUpPrintString::
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_StatUpEnd::
+	goto BattleScript_MoveEnd
 
 BattleScript_StatUp:: @ 0x0828725C
-	.incbin "baserom_jp.gba", 0x28725c, 0x10
+	playanimation BS_EFFECT_BATTLER, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 BattleScript_EffectAttackDown:: @ 0x0828726C
 	.incbin "baserom_jp.gba", 0x28726c, 0xb
