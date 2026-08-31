@@ -4016,16 +4016,16 @@ BattleScript_WrapEnds: @ 0x82898A8
 
 	.globl BattleScript_MoveUsedIsInLove
 BattleScript_MoveUsedIsInLove: @ 0x82898AF
-	.byte 0x10, 0x46, 0x00 @ printstring STRINGID_PKMNINLOVE
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x65, 0x01, 0x00, 0x00, 0x0F, 0x00 @ status2animation BS_ATTACKER, STATUS2_INFATUATION
-	.byte 0x3C @ return
+	printstring STRINGID_PKMNINLOVE
+	waitmessage B_WAIT_TIME_LONG
+	status2animation BS_ATTACKER, STATUS2_INFATUATION
+	return
 
 	.globl BattleScript_MoveUsedIsInLoveCantAttack
 BattleScript_MoveUsedIsInLoveCantAttack: @ 0x82898BC
-	.byte 0x10, 0x47, 0x00 @ printstring STRINGID_PKMNIMMOBILIZEDBYLOVE
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
+	printstring STRINGID_PKMNIMMOBILIZEDBYLOVE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 	.globl BattleScript_NightmareTurnDmg
 BattleScript_NightmareTurnDmg: @ 0x82898C7
