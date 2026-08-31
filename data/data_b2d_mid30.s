@@ -1608,7 +1608,10 @@ gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY: @ 0x083B80B4
 	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_Metatiles  @ metatiles
 	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
-	.incbin "baserom_jp.gba", 0x3B80CC, 0x90
+	.incbin "baserom_jp.gba", 0x3B80CC, 0x78
+	.globl gTileset_BattlePyramid
+gTileset_BattlePyramid: @ 0x083B8144
+	.incbin "baserom_jp.gba", 0x3B8144, 0x18
 	.globl gTileset_MIRAGE_TOWER_SECONDARY
 gTileset_MIRAGE_TOWER_SECONDARY: @ 0x083B815C
 	.incbin "baserom_jp.gba", 0x3B815C, 0x18
@@ -2427,8 +2430,40 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/SSTidalLowerDeck/header.inc"
 	@ MAP_SS_TIDAL_ROOMS (g25 m43)
 	.include "data/maps/SSTidalRooms/header.inc"
-	@ MAP_BATTLE_PYRAMID_SQUARE01 through subsequent unstructured map headers
-	.incbin "baserom_jp.gba", 0x45D380, 0x1618
+	@ MAP_BATTLE_PYRAMID_SQUARE01 (g25 m44)
+	.include "data/maps/BattlePyramidSquare01/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE02 (g25 m45)
+	.include "data/maps/BattlePyramidSquare02/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE03 (g25 m46)
+	.include "data/maps/BattlePyramidSquare03/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE04 (g25 m47)
+	.include "data/maps/BattlePyramidSquare04/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE05 (g25 m48)
+	.include "data/maps/BattlePyramidSquare05/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE06 (g25 m49)
+	.include "data/maps/BattlePyramidSquare06/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE07 (g25 m50)
+	.include "data/maps/BattlePyramidSquare07/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE08 (g25 m51)
+	.include "data/maps/BattlePyramidSquare08/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE09 (g25 m52)
+	.include "data/maps/BattlePyramidSquare09/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE10 (g25 m53)
+	.include "data/maps/BattlePyramidSquare10/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE11 (g25 m54)
+	.include "data/maps/BattlePyramidSquare11/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE12 (g25 m55)
+	.include "data/maps/BattlePyramidSquare12/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE13 (g25 m56)
+	.include "data/maps/BattlePyramidSquare13/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE14 (g25 m57)
+	.include "data/maps/BattlePyramidSquare14/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE15 (g25 m58)
+	.include "data/maps/BattlePyramidSquare15/header.inc"
+	@ MAP_BATTLE_PYRAMID_SQUARE16 (g25 m59)
+	.include "data/maps/BattlePyramidSquare16/header.inc"
+	@ MAP_UNION_ROOM through subsequent unstructured map headers
+	.incbin "baserom_jp.gba", 0x45D540, 0x1458
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

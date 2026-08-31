@@ -295,6 +295,10 @@ JP_STRUCTURED_MAPS += BattleColosseum_2P TradeCenter RecordCorner BattleColosseu
 JP_STRUCTURED_MAPS += ContestHall
 JP_STRUCTURED_MAPS += InsideOfTruck
 JP_STRUCTURED_MAPS += SSTidalCorridor SSTidalLowerDeck SSTidalRooms
+JP_STRUCTURED_MAPS += BattlePyramidSquare01 BattlePyramidSquare02 BattlePyramidSquare03 BattlePyramidSquare04 \
+	BattlePyramidSquare05 BattlePyramidSquare06 BattlePyramidSquare07 BattlePyramidSquare08 \
+	BattlePyramidSquare09 BattlePyramidSquare10 BattlePyramidSquare11 BattlePyramidSquare12 \
+	BattlePyramidSquare13 BattlePyramidSquare14 BattlePyramidSquare15 BattlePyramidSquare16
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
@@ -441,6 +445,10 @@ JP_STRUCTURED_MAP_METADATA_MAPS += ContestHall UnusedContestHall1 UnusedContestH
 	ContestHallBeauty ContestHallTough ContestHallCool ContestHallSmart ContestHallCute
 JP_STRUCTURED_MAP_METADATA_MAPS += InsideOfTruck
 JP_STRUCTURED_MAP_METADATA_MAPS += SSTidalCorridor SSTidalLowerDeck SSTidalRooms
+JP_STRUCTURED_MAP_METADATA_MAPS += BattlePyramidSquare01 BattlePyramidSquare02 BattlePyramidSquare03 BattlePyramidSquare04 \
+	BattlePyramidSquare05 BattlePyramidSquare06 BattlePyramidSquare07 BattlePyramidSquare08 \
+	BattlePyramidSquare09 BattlePyramidSquare10 BattlePyramidSquare11 BattlePyramidSquare12 \
+	BattlePyramidSquare13 BattlePyramidSquare14 BattlePyramidSquare15 BattlePyramidSquare16
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

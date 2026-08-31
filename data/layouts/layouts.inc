@@ -3474,7 +3474,200 @@ gMapLayout_MAGMA_HIDEOUT_4F: @ 0x0843BC4C
 	.4byte gMapLayout_MAGMA_HIDEOUT_4F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x43BC64, 0x6E98
+	.incbin "baserom_jp.gba", 0x43BC64, 0x5E5C
+gMapLayout_BATTLE_PYRAMID_SQUARE01_Border:
+	.incbin "data/layouts/BattlePyramidSquare01/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE01_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare01/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE01
+gMapLayout_BATTLE_PYRAMID_SQUARE01: @ 0x08441B48
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE01_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE01_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE02_Border:
+	.incbin "data/layouts/BattlePyramidSquare02/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE02_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare02/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE02
+gMapLayout_BATTLE_PYRAMID_SQUARE02: @ 0x08441BE8
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE02_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE02_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE03_Border:
+	.incbin "data/layouts/BattlePyramidSquare03/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE03_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare03/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE03
+gMapLayout_BATTLE_PYRAMID_SQUARE03: @ 0x08441C88
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE03_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE03_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE04_Border:
+	.incbin "data/layouts/BattlePyramidSquare04/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE04_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare04/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE04
+gMapLayout_BATTLE_PYRAMID_SQUARE04: @ 0x08441D28
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE04_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE04_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE05_Border:
+	.incbin "data/layouts/BattlePyramidSquare05/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE05_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare05/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE05
+gMapLayout_BATTLE_PYRAMID_SQUARE05: @ 0x08441DC8
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE05_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE05_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE06_Border:
+	.incbin "data/layouts/BattlePyramidSquare06/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE06_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare06/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE06
+gMapLayout_BATTLE_PYRAMID_SQUARE06: @ 0x08441E68
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE06_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE06_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE07_Border:
+	.incbin "data/layouts/BattlePyramidSquare07/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE07_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare07/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE07
+gMapLayout_BATTLE_PYRAMID_SQUARE07: @ 0x08441F08
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE07_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE07_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE08_Border:
+	.incbin "data/layouts/BattlePyramidSquare08/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE08_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare08/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE08
+gMapLayout_BATTLE_PYRAMID_SQUARE08: @ 0x08441FA8
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE08_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE08_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE09_Border:
+	.incbin "data/layouts/BattlePyramidSquare09/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE09_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare09/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE09
+gMapLayout_BATTLE_PYRAMID_SQUARE09: @ 0x08442048
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE09_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE09_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE10_Border:
+	.incbin "data/layouts/BattlePyramidSquare10/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE10_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare10/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE10
+gMapLayout_BATTLE_PYRAMID_SQUARE10: @ 0x084420E8
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE10_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE10_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE11_Border:
+	.incbin "data/layouts/BattlePyramidSquare11/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE11_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare11/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE11
+gMapLayout_BATTLE_PYRAMID_SQUARE11: @ 0x08442188
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE11_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE11_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE12_Border:
+	.incbin "data/layouts/BattlePyramidSquare12/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE12_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare12/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE12
+gMapLayout_BATTLE_PYRAMID_SQUARE12: @ 0x08442228
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE12_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE12_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE13_Border:
+	.incbin "data/layouts/BattlePyramidSquare13/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE13_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare13/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE13
+gMapLayout_BATTLE_PYRAMID_SQUARE13: @ 0x084422C8
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE13_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE13_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE14_Border:
+	.incbin "data/layouts/BattlePyramidSquare14/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE14_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare14/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE14
+gMapLayout_BATTLE_PYRAMID_SQUARE14: @ 0x08442368
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE14_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE14_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE15_Border:
+	.incbin "data/layouts/BattlePyramidSquare15/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE15_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare15/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE15
+gMapLayout_BATTLE_PYRAMID_SQUARE15: @ 0x08442408
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE15_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE15_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+gMapLayout_BATTLE_PYRAMID_SQUARE16_Border:
+	.incbin "data/layouts/BattlePyramidSquare16/border.bin"
+gMapLayout_BATTLE_PYRAMID_SQUARE16_Blockdata:
+	.incbin "data/layouts/BattlePyramidSquare16/map.bin"
+	.globl gMapLayout_BATTLE_PYRAMID_SQUARE16
+gMapLayout_BATTLE_PYRAMID_SQUARE16: @ 0x084424A8
+	.4byte 8  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE16_Border  @ border
+	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE16_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattlePyramid  @ secondaryTileset
+	.incbin "baserom_jp.gba", 0x4424C0, 0x63C
 gMapLayout_MAGMA_HIDEOUT_3F_3R_Border:
 	.incbin "data/layouts/MagmaHideout_3F_3R/border.bin"
 gMapLayout_MAGMA_HIDEOUT_3F_3R_Blockdata:

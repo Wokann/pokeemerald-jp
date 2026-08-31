@@ -1058,7 +1058,23 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/SSTidalCorridor/events.inc"
 	.include "data/maps/SSTidalLowerDeck/events.inc"
 	.include "data/maps/SSTidalRooms/events.inc"
-	.incbin "baserom_jp.gba", 0x512B8C, 0x49F0
+	.include "data/maps/BattlePyramidSquare01/events.inc"
+	.include "data/maps/BattlePyramidSquare02/events.inc"
+	.include "data/maps/BattlePyramidSquare03/events.inc"
+	.include "data/maps/BattlePyramidSquare04/events.inc"
+	.include "data/maps/BattlePyramidSquare05/events.inc"
+	.include "data/maps/BattlePyramidSquare06/events.inc"
+	.include "data/maps/BattlePyramidSquare07/events.inc"
+	.include "data/maps/BattlePyramidSquare08/events.inc"
+	.include "data/maps/BattlePyramidSquare09/events.inc"
+	.include "data/maps/BattlePyramidSquare10/events.inc"
+	.include "data/maps/BattlePyramidSquare11/events.inc"
+	.include "data/maps/BattlePyramidSquare12/events.inc"
+	.include "data/maps/BattlePyramidSquare13/events.inc"
+	.include "data/maps/BattlePyramidSquare14/events.inc"
+	.include "data/maps/BattlePyramidSquare15/events.inc"
+	.include "data/maps/BattlePyramidSquare16/events.inc"
+	.incbin "baserom_jp.gba", 0x51374C, 0x3E30
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
