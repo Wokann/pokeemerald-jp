@@ -1961,7 +1961,10 @@ BattleScript_EffectFutureSight:: @ 0x0828824C
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectGust:: @ 0x08288263
-	.incbin "baserom_jp.gba", 0x288263, 0x1f
+	jumpifnostatus3 BS_TARGET, STATUS3_ON_AIR, BattleScript_EffectHit
+	orword gHitMarker, HITMARKER_IGNORE_ON_AIR
+	setbyte sDMG_MULTIPLIER, 2
+	goto BattleScript_EffectHit
 
 BattleScript_EffectStomp:: @ 0x08288282
 	.incbin "baserom_jp.gba", 0x288282, 0x16
