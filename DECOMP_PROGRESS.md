@@ -5,13 +5,16 @@
 
 ## 当前快照
 
-- 严格 C：7945/16023 (49.58%)；naked 汇编地址：4709；strict/naked 交集：0。
-- 模块归位：7723/7945 (97.21%)；路径对齐：7672/7945 (96.56%)。
-- JP 独有 C 迁移记录：46；同名多地址 C 定义：272。
-- 过渡文件：tail=0、rest=4、mid=19、stub=0、address=664。
-- incbin：7884 引用、6007 条唯一路径、原始二进制 5961、非原始 1923、缺失资源 0。
-- 资产命名：4687 条 graphics/sound 引用中，精确 US 路径 26、唯一 basename 候选 16、歧义 0。
-- 地图脚本：355/469 (75.69%) 个首 owner 有 scripts.inc；非 owner scripts.inc：0；map.json：27（含 scripts：27）。
+- 严格 C：8380/16023 (52.30%)；naked 汇编地址：4482；strict/naked 交集：0。
+- 模块归位：8138/8380 (97.11%)；路径对齐：8087/8380 (96.50%)。
+- JP 独有 C 迁移记录：50（动态清单，不沿用旧固定数）；同名多地址 C 定义：269。
+- 过渡文件：tail=0、rest=4、mid=19、stub=0、address=0。
+- incbin：7642 引用、6606 条唯一路径、原始二进制 5711、非原始 1931、缺失资源 0。
+- 资产命名：4775 条 graphics/sound 引用中，精确 US 路径 26、唯一 basename 候选 16、歧义 0。
+- 地图脚本：468/469 (99.79%) 个首 owner 有 scripts.inc；非 owner scripts.inc：0；结构完整地图：391（要求 map.json、scripts.inc、events.inc 和上层 events include；其中首 owner 391）；map.json 总数：441。
+- 地图语义复核：not_recorded。没有版本化复核清单前，任何 scripts.inc、map.json 或 events.inc 都不计入语义已审计。
+- 三流地图会合：scripts 流 468、events 流 430、共有 391、地图头 410；事件指针状态 direct=399、missing_header=108、other=11；地图内裸 baserom 范围（脚本/事件/资源）=0/0/0。
+- script_data 顶层边界：JP linker 明确 owner 8/US 8；待补 JP owner 0；可见 event_scripts 原始 baserom 范围 0。US 只定义 owner 顺序，JP 范围必须由 JP map/ROM 锚点确认。
 
 ## 指标定义
 
@@ -24,6 +27,11 @@
 | incbin | `.incbin` 与 `INCBIN_*` 的引用数，按原始二进制和结构化/编码后缀分组；不是字节转换率。 |
 | 资产命名 | 被引用的 `graphics/`、`sound/` 路径与 US 同名文件比较；仅生成候选，不自动改名。 |
 | 地图脚本 owner | `scripts.inc` 与 map-table 实际首 owner 名的交集 / 去重首 owner；共享表只属于首次出现地图。 |
+| 地图结构完整 | 同一地图同时有 `map.json`、`scripts.inc`、`events.inc`，且后者被上层 `data/*.s` include；只说明结构已拆分。 |
+| 地图语义复核 | 仅接受未来版本化复核清单的显式记录；当前为 `not_recorded`，绝不从目录或 include 推断。 |
+| 三流地图会合 | 以 `data/event_scripts.s`、`data/data_b2d_mid26.s`、`data/data_b2d_mid30.s` 的同图记录连接 scripts、events、地图头/布局/tileset。别名和 baserom 范围均为待办，不构成完成。 |
+| script_data 顶层分区 | US linker 提供 8 个对象的目标 owner 顺序；JP linker map 提供实际范围和锚点。只在 JP 起止标签、末尾位置与 ROM 比对均成立时，才允许拆出一个 owner。 |
+| JP 独有 C 迁移清单 | 已映射、非裸汇编、但无 US 标准 C owner 的函数模块；动态分类，不沿用失效的固定“38 个”计数。 |
 
 ## 复现与输入
 
@@ -31,6 +39,9 @@
 python3 tools/audit_structure.py
 python3 tools/audit_structure.py --json --output build/audit-structure.json \
     --manifest build/jp-only-c-manifest.json
+python3 tools/audit_structure.py --transition-manifest build/transition-file-manifest.json
+python3 tools/audit_structure.py --map-convergence-manifest build/map-convergence-manifest.json
+python3 tools/audit_structure.py --script-data-manifest build/script-data-manifest.json
 python3 tools/audit_structure.py --markdown-output DECOMP_PROGRESS.md
 # 比较另一份 US 工程时显式指定其根目录
 python3 tools/audit_structure.py --us-root /path/to/pokeemerald --markdown-output DECOMP_PROGRESS.md
