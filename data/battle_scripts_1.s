@@ -4229,47 +4229,47 @@ BattleScript_DoCastformChange: @ 0x8289A37
 
 	.globl BattleScript_IntimidateActivatesEnd3
 BattleScript_IntimidateActivatesEnd3: @ 0x8289A40
-	.byte 0x41, 0x46, 0x9A, 0x28, 0x08 @ call BattleScript_PauseIntimidateActivates
-	.byte 0x3F @ end3
+	call BattleScript_PauseIntimidateActivates
+	end3
 
 	.globl BattleScript_PauseIntimidateActivates
 BattleScript_PauseIntimidateActivates: @ 0x8289A46
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
+	pause B_WAIT_TIME_SHORT
 
 	.globl BattleScript_IntimidateActivates
 BattleScript_IntimidateActivates: @ 0x8289A49
-	.byte 0x2E, 0xB0, 0x3E, 0x02, 0x02, 0x00 @ setbyte gBattlerTarget, 0
-	.byte 0x2E, 0x32, 0x41, 0x02, 0x02, 0x91 @ setstatchanger STAT_ATK, 1, TRUE
+	setbyte gBattlerTarget, 0
+	setstatchanger STAT_ATK, 1, TRUE
 
 	.globl BattleScript_IntimidateActivatesLoop
 BattleScript_IntimidateActivatesLoop: @ 0x8289A55
-	.byte 0xE1, 0xA3, 0x9A, 0x28, 0x08 @ trygetintimidatetarget BattleScript_IntimidateActivatesReturn
-	.byte 0x1D, 0x00, 0x00, 0x00, 0x00, 0x01, 0x98, 0x9A, 0x28, 0x08 @ jumpifstatus2 BS_TARGET, STATUS2_SUBSTITUTE, BattleScript_IntimidateActivatesLoopIncrement
-	.byte 0x1E, 0x00, 0x1D, 0xA4, 0x9A, 0x28, 0x08 @ jumpifability BS_TARGET, ABILITY_CLEAR_BODY, BattleScript_IntimidatePrevented
-	.byte 0x1E, 0x00, 0x34, 0xA4, 0x9A, 0x28, 0x08 @ jumpifability BS_TARGET, ABILITY_HYPER_CUTTER, BattleScript_IntimidatePrevented
-	.byte 0x1E, 0x00, 0x49, 0xA4, 0x9A, 0x28, 0x08 @ jumpifability BS_TARGET, ABILITY_WHITE_SMOKE, BattleScript_IntimidatePrevented
-	.byte 0x89, 0x21, 0x98, 0x9A, 0x28, 0x08 @ statbuffchange STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_ALLOW_PTR, BattleScript_IntimidateActivatesLoopIncrement
-	.byte 0x29, 0x02, 0xDB, 0x3F, 0x02, 0x02, 0x01, 0x98, 0x9A, 0x28, 0x08 @ jumpifbyte CMP_GREATER_THAN, cMULTISTRING_CHOOSER, 1, BattleScript_IntimidateActivatesLoopIncrement
-	.byte 0x47 @ setgraphicalstatchangevalues
-	.byte 0x45, 0x00, 0x01, 0x28, 0x41, 0x02, 0x02 @ playanimation BS_TARGET, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
-	.byte 0x10, 0xCD, 0x00 @ printstring STRINGID_PKMNCUTSATTACKWITH
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	trygetintimidatetarget BattleScript_IntimidateActivatesReturn
+	jumpifstatus2 BS_TARGET, STATUS2_SUBSTITUTE, BattleScript_IntimidateActivatesLoopIncrement
+	jumpifability BS_TARGET, ABILITY_CLEAR_BODY, BattleScript_IntimidatePrevented
+	jumpifability BS_TARGET, ABILITY_HYPER_CUTTER, BattleScript_IntimidatePrevented
+	jumpifability BS_TARGET, ABILITY_WHITE_SMOKE, BattleScript_IntimidatePrevented
+	statbuffchange STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_ALLOW_PTR, BattleScript_IntimidateActivatesLoopIncrement
+	jumpifbyte CMP_GREATER_THAN, cMULTISTRING_CHOOSER, 1, BattleScript_IntimidateActivatesLoopIncrement
+	setgraphicalstatchangevalues
+	playanimation BS_TARGET, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printstring STRINGID_PKMNCUTSATTACKWITH
+	waitmessage B_WAIT_TIME_LONG
 
 	.globl BattleScript_IntimidateActivatesLoopIncrement
 BattleScript_IntimidateActivatesLoopIncrement: @ 0x8289A98
-	.byte 0x2F, 0xB0, 0x3E, 0x02, 0x02, 0x01 @ addbyte gBattlerTarget, 1
-	.byte 0x28, 0x55, 0x9A, 0x28, 0x08 @ goto BattleScript_IntimidateActivatesLoop
+	addbyte gBattlerTarget, 1
+	goto BattleScript_IntimidateActivatesLoop
 
 	.globl BattleScript_IntimidateActivatesReturn
 BattleScript_IntimidateActivatesReturn: @ 0x8289AA3
-	.byte 0x3C @ return
+	return
 
 	.globl BattleScript_IntimidatePrevented
 BattleScript_IntimidatePrevented: @ 0x8289AA4
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0x55, 0x01 @ printstring STRINGID_PREVENTEDFROMWORKING
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0x98, 0x9A, 0x28, 0x08 @ goto BattleScript_IntimidateActivatesLoopIncrement
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PREVENTEDFROMWORKING
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_IntimidateActivatesLoopIncrement
 
 	.globl BattleScript_DroughtActivates
 BattleScript_DroughtActivates: @ 0x8289AB2
