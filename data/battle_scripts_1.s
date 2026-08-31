@@ -1725,7 +1725,10 @@ BattleScript_EffectAttract:: @ 0x08287FE0
 
 BattleScript_EffectReturn:: @ 0x08287FFC
 BattleScript_EffectFrustration:: @ 0x08287FFC
-	.incbin "baserom_jp.gba", 0x287ffc, 0xe
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	friendshiptodamagecalculation
+	goto BattleScript_HitFromAtkString
 
 BattleScript_EffectPresent:: @ 0x0828800A
 	.incbin "baserom_jp.gba", 0x28800a, 0xc
