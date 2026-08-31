@@ -2566,7 +2566,8 @@ BattleScript_EffectEndeavor:: @ 0x08288923
 	goto BattleScript_HitFromAtkAnimation
 
 BattleScript_EffectEruption:: @ 0x0828895E
-	.incbin "baserom_jp.gba", 0x28895e, 0x6
+	scaledamagebyhealthratio
+	goto BattleScript_EffectHit
 
 BattleScript_EffectSkillSwap:: @ 0x08288964
 	.incbin "baserom_jp.gba", 0x288964, 0x1c
