@@ -10,7 +10,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 	.include "data/layouts/layouts.inc"
-	.incbin "baserom_jp.gba", 0x45A124, 0xD0
 
 	.globl gUnknown_845A1F4
 gUnknown_845A1F4: @ 0x845A1F4

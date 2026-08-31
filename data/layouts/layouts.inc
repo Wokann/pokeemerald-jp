@@ -4371,3 +4371,18 @@ gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F: @ 0x0845A10C
 	.4byte gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F_Blockdata  @ map
 	.4byte gTileset_Building  @ primaryTileset
 	.4byte gTileset_MysteryEventsHouse  @ secondaryTileset
+
+SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked_Layout_Border::
+	.incbin "data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin"
+
+SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked_Layout_Blockdata::
+	.incbin "data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin"
+
+	.align 2
+SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked_Layout:: @ 0x0845A1DC
+	.4byte 11
+	.4byte 8
+	.4byte SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked_Layout_Border
+	.4byte SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_MysteryEventsHouse

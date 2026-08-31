@@ -162,10 +162,12 @@ def parse_layouts(lines, rom, canonical_layout_names):
                 raise ValueError(f"no layout id for canonical symbol: {symbol}")
         addr = int(m.group("addr"), 16)
         defs = {}
-        for j in range(1, 7):
-            mm = re.match(r"\s*\.4byte\s+(\S+)\s+@\s+(\w+)", lines[i + j])
+        fields = ("width", "height", "border", "map", "primaryTileset", "secondaryTileset")
+        for j, field in enumerate(fields, 1):
+            mm = re.match(r"\s*\.4byte\s+(\S+)(?:\s+@\s+(\w+))?$", lines[i + j])
             if mm:
-                defs[mm.group(2)] = mm.group(1)
+                # Canonical US-style layout labels omit the optional field comments.
+                defs[mm.group(2) or field] = mm.group(1)
         required = {"width", "height", "border", "map"}
         if not required.issubset(defs):
             raw = parse_raw_layout_struct(name, addr, i, lines, rom)

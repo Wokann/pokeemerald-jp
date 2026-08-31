@@ -496,6 +496,9 @@ data/maps/%/header.inc data/maps/%/connections.inc &: data/maps/%/map.json tools
 # owner. State the ordering directly so a changed map.json cannot race its
 # generated metadata during make -j.
 $(OBJ_DIR)/data/data_b2d_mid30.o: $(JP_STRUCTURED_MAP_METADATA)
+$(OBJ_DIR)/data/data_b2d_mid30.o: data/layouts/layouts.inc \
+	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin \
+	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 
 JP_TILESET_ASM_RESOURCES := $(shell find data/tilesets -type f \( -name '*.4bpp.lz' -o -name '*.gbapal' -o -name '*.bin' \) -print)
 $(OBJ_DIR)/data/tilesets.o: data/tilesets.s data/tilesets/graphics.inc data/tilesets/metatiles.inc data/tilesets/headers.inc baserom_jp.gba $(JP_TILESET_ASM_RESOURCES)
