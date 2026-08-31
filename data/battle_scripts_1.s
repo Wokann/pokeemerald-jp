@@ -2449,7 +2449,15 @@ BattleScript_EffectAssist:: @ 0x08288807
 	jumptocalledmove TRUE
 
 BattleScript_EffectIngrain:: @ 0x0828881E
-	.incbin "baserom_jp.gba", 0x28881e, 0x15
+	attackcanceler
+	attackstring
+	ppreduce
+	trysetroots BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNPLANTEDROOTS
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectSuperpower:: @ 0x08288833
 	.incbin "baserom_jp.gba", 0x288833, 0xb
