@@ -4460,7 +4460,38 @@ gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_BATTLE_ROOM: @ 0x0843F9E0
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_BATTLE_ROOM_Blockdata  @ map
 	.4byte gTileset_Building  @ primaryTileset
 	.4byte gTileset_BattleArena  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x43F9F8, 0x1DEC
+	.incbin "baserom_jp.gba", 0x43F9F8, 0x1C40
+
+BattleFrontier_BattlePikeRoomWildMons_Layout_Border::
+	.incbin "data/layouts/BattleFrontier_BattlePikeRoomWildMons/border.bin"
+
+BattleFrontier_BattlePikeRoomWildMons_Layout_Blockdata::
+	.incbin "data/layouts/BattleFrontier_BattlePikeRoomWildMons/map.bin"
+
+	.align 2
+BattleFrontier_BattlePikeRoomWildMons_Layout:: @ 0x084417A8
+	.4byte 9
+	.4byte 20
+	.4byte BattleFrontier_BattlePikeRoomWildMons_Layout_Border
+	.4byte BattleFrontier_BattlePikeRoomWildMons_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_BattlePike
+
+BattleFrontier_BattlePikeRoomUnused_Layout_Border::
+	.incbin "data/layouts/BattleFrontier_BattlePikeRoomUnused/border.bin"
+
+BattleFrontier_BattlePikeRoomUnused_Layout_Blockdata::
+	.incbin "data/layouts/BattleFrontier_BattlePikeRoomUnused/map.bin"
+
+	.align 2
+BattleFrontier_BattlePikeRoomUnused_Layout:: @ 0x084417CC
+	.4byte 1
+	.4byte 1
+	.4byte BattleFrontier_BattlePikeRoomUnused_Layout_Border
+	.4byte BattleFrontier_BattlePikeRoomUnused_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_BattlePike
+
 gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY_Border:
 	.incbin "data/layouts/BattleFrontier_BattlePyramidLobby/border.bin"
 gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY_Blockdata:
