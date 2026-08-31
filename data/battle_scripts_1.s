@@ -4721,18 +4721,18 @@ BattleScript_FlushMessageBox: @ 0x8289E05
 
 	.globl BattleScript_PalacePrintFlavorText
 BattleScript_PalacePrintFlavorText: @ 0x8289E09
-	.byte 0x2E, 0xD7, 0x3F, 0x02, 0x02, 0x00 @ setbyte gBattleCommunication + 1, 0
+	setbyte gBattleCommunication + 1, 0
 BattleScript_PalaceTryBattlerFlavorText: @ 0x8289E0F
-	.byte 0x76, 0x01, 0x08 @ palaceflavortext BS_ATTACKER
-	.byte 0x29, 0x01, 0xD6, 0x3F, 0x02, 0x02, 0x01, 0x25, 0x9E, 0x28, 0x08 @ jumpifbyte CMP_NOT_EQUAL, gBattleCommunication, TRUE, BattleScript_PalaceEndFlavorText
-	.byte 0x13, 0xB4, 0xBE, 0x5A, 0x08 @ printfromtable gBattlePalaceFlavorTextTable
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
+	palaceflavortext BS_ATTACKER @ BS_ATTACKER here overwritten by gBattleCommunication + 1
+	jumpifbyte CMP_NOT_EQUAL, gBattleCommunication, TRUE, BattleScript_PalaceEndFlavorText
+	printfromtable gBattlePalaceFlavorTextTable
+	waitmessage B_WAIT_TIME_LONG
 BattleScript_PalaceEndFlavorText: @ 0x8289E25
-	.byte 0x2F, 0xD7, 0x3F, 0x02, 0x02, 0x01 @ addbyte gBattleCommunication + 1, 1
-	.byte 0x2D, 0xD7, 0x3F, 0x02, 0x02, 0x10, 0x3D, 0x02, 0x02, 0x01, 0x0F, 0x9E, 0x28, 0x08 @ jumpifbytenotequal gBattleCommunication + 1, gBattlersCount, BattleScript_PalaceTryBattlerFlavorText
-	.byte 0x2E, 0xD6, 0x3F, 0x02, 0x02, 0x00 @ setbyte gBattleCommunication, 0
-	.byte 0x2E, 0xD7, 0x3F, 0x02, 0x02, 0x00 @ setbyte gBattleCommunication + 1, 0
-	.byte 0x3E @ end2
+	addbyte gBattleCommunication + 1, 1
+	jumpifbytenotequal gBattleCommunication + 1, gBattlersCount, BattleScript_PalaceTryBattlerFlavorText
+	setbyte gBattleCommunication, 0
+	setbyte gBattleCommunication + 1, 0
+	end2
 
 	.globl BattleScript_ArenaTurnBeginning
 BattleScript_ArenaTurnBeginning: @ 0x8289E46

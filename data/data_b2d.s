@@ -572,4 +572,13 @@ gUnknown_85C97BD: @ 0x85C97BD
 
 	.globl gUnknown_85ABE2F
 gUnknown_85ABE2F: @ 0x85ABE2F
-	.incbin "baserom_jp.gba", 0x5abe2f, 0x21d
+	.incbin "baserom_jp.gba", 0x5abe2f, 0x85
+
+	.globl gBattlePalaceFlavorTextTable
+gBattlePalaceFlavorTextTable: @ 0x85ABEB4
+	.hword STRINGID_GLINTAPPEARSINEYE
+	.hword STRINGID_PKMNGETTINGINTOPOSITION
+	.hword STRINGID_PKMNBEGANGROWLINGDEEPLY
+	.hword STRINGID_PKMNEAGERFORMORE
+
+	.incbin "baserom_jp.gba", 0x5abebc, 0x190
