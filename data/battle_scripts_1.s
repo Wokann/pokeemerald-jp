@@ -1340,7 +1340,15 @@ BattleScript_DoSnore:: @ 0x08287B6A
 	goto BattleScript_HitFromCritCalc
 
 BattleScript_EffectConversion2:: @ 0x08287B7E
-	.incbin "baserom_jp.gba", 0x287b7e, 0x15
+	attackcanceler
+	attackstring
+	ppreduce
+	settypetorandomresistance BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNCHANGEDTYPE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectLockOn:: @ 0x08287B93
 	.incbin "baserom_jp.gba", 0x287b93, 0x22
