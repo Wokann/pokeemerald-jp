@@ -4106,10 +4106,10 @@ BattleScript_MoveEffectUproar: @ 0x828994A
 
 	.globl BattleScript_MoveEffectToxic
 BattleScript_MoveEffectToxic: @ 0x8289951
-	.byte 0x64, 0x02 @ statusanimation BS_EFFECT_BATTLER
-	.byte 0x10, 0x2C, 0x00 @ printstring STRINGID_PKMNBADLYPOISONED
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x28, 0xFC, 0x98, 0x28, 0x08 @ goto BattleScript_UpdateEffectStatusIconRet
+	statusanimation BS_EFFECT_BATTLER
+	printstring STRINGID_PKMNBADLYPOISONED
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_UpdateEffectStatusIconRet
 
 	.globl BattleScript_MoveEffectPayDay
 BattleScript_MoveEffectPayDay: @ 0x828995E
