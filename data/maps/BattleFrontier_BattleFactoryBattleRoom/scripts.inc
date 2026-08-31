@@ -1,76 +1,76 @@
 @ BattleFrontier_BattleFactoryBattleRoom scripts (JP map g26 m33 @ 0x082329C4)
 
 BattleFrontier_BattleFactoryBattleRoom_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, BattleFrontier_BattleFactoryBattleRoom_EventScript_002329D4
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattleFactoryBattleRoom_MapScriptTable_00232A19
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleFactoryBattleRoom_MapScriptTable_00232A4A
+	map_script MAP_SCRIPT_ON_TRANSITION, BattleFrontier_BattleFactoryBattleRoom_OnTransition
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattleFactoryBattleRoom_OnWarp
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleFactoryBattleRoom_OnFrame
 	.byte 0
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_002329D4::
+BattleFrontier_BattleFactoryBattleRoom_OnTransition::
 	setvar 0x8004, 0x5
 	special CallFrontierUtilFunc
 	checkplayergender
 	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A3E
+	call_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_SetPlayerGfxMale
 	compare_var_to_value 0x800D, 0x1
-	call_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A44
+	call_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_SetPlayerGfxFemale
 	setvar 0x8004, 0x9
 	special CallFrontierUtilFunc
 	copyvar 0x400F, 0x800D
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A0C
+	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_SetUpFactoryHeadObj
 	end
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A0C::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_SetUpFactoryHeadObj::
 	call 0x08222264
 	setobjectxyperm 0x2, 0x7, 0x9
 	end
 
-BattleFrontier_BattleFactoryBattleRoom_MapScriptTable_00232A19::
-	map_script_2 0x4001, 0x0, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A23
+BattleFrontier_BattleFactoryBattleRoom_OnWarp::
+	map_script_2 0x4001, 0x0, BattleFrontier_BattleFactoryBattleRoom_EventScript_HideObjects
 	.2byte 0
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A23::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_HideObjects::
 	setvar 0x4001, 0x1
 	hideobject_at 0xFF, 0x1A21
 	compare_var_to_value 0x400F, 0x0
-	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A3D
+	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_EndHideObjects
 	hideobject_at 0x2, 0x1A21
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A3D::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_EndHideObjects::
 	end
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A3E::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_SetPlayerGfxMale::
 	setvar 0x401F, 0x64
 	return
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A44::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_SetPlayerGfxFemale::
 	setvar 0x401F, 0x69
 	return
 
-BattleFrontier_BattleFactoryBattleRoom_MapScriptTable_00232A4A::
-	map_script_2 0x4000, 0x0, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A80
+BattleFrontier_BattleFactoryBattleRoom_OnFrame::
+	map_script_2 0x4000, 0x0, BattleFrontier_BattleFactoryBattleRoom_EventScript_EnterRoom
 	.2byte 0
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A54::
-	loadword 0x0, gJPText_00232DFB
+BattleFrontier_BattleFactoryBattleRoom_EventScript_EnterRoomFactoryHeadBattle::
+	loadword 0x0, BattleFrontier_BattleFactoryBattleRoom_Text_GetAMoveOn
 	callstd 0x4
 	closemessage
 	applymovement 0x2, BattleFrontier_BattleFactoryBattleRoom_Movement_NolandMoveToBattle
 	applymovement 0x8, BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerEnterRoom
 	applymovement 0xFF, BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerEnterRoom
 	waitmovement 0x0
-	call BattleFrontier_BattleFactoryBattleRoom_EventScript_00232DCD
-	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_00232AC0
+	call BattleFrontier_BattleFactoryBattleRoom_EventScript_ScientistsFaceBattle
+	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleOpponent
 	end
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A80::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_EnterRoom::
 	compare_var_to_value 0x400F, 0x0
-	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A54
+	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_EnterRoomFactoryHeadBattle
 	applymovement 0x8, BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerEnterRoom
 	applymovement 0xFF, BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerEnterRoom
 	waitmovement 0x0
-	call BattleFrontier_BattleFactoryBattleRoom_EventScript_00232DCD
+	call BattleFrontier_BattleFactoryBattleRoom_EventScript_ScientistsFaceBattle
 	setvar 0x8004, 0xB
 	special CallBattleFactoryFunction
 	removeobject 0x2
@@ -79,9 +79,9 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_00232A80::
 	applymovement 0x2, BattleFrontier_BattleFactoryBattleRoom_Movement_OpponentEnter
 	waitmovement 0x0
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232AC0::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleOpponent::
 	compare_var_to_value 0x400F, 0x0
-	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232BB5
+	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleNoland
 	setvar 0x8004, 0x5
 	special CallBattlePalaceFunction
 	lockall
@@ -99,31 +99,31 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_00232AC0::
 	special DoSpecialTrainerBattle
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B28
+	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedOpponent
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B11::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyLost::
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x0
 	setvar 0x8006, 0x4
 	special CallFrontierUtilFunc
-	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_00232DA9
+	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobby
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B28::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedOpponent::
 	setvar 0x8004, 0x1
 	setvar 0x8005, 0x3
 	special CallBattleFactoryFunction
 	compare_var_to_value 0x800D, 0x270F
-	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B57
+	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_IncrementWinStreak
 	addvar 0x800D, 0x1
 	setorcopyvar 0x8006, 0x800D
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x3
 	special CallBattleFactoryFunction
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B57::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_IncrementWinStreak::
 	call 0x08221FB3
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B5C::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_IncrementBattleNum::
 	setvar 0x8004, 0x1
 	setvar 0x8005, 0x2
 	special CallFrontierUtilFunc
@@ -134,106 +134,106 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B5C::
 	special CallFrontierUtilFunc
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x7
-	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B9E
+	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyWon
 	setvar 0x8006, 0x1
 	warp 0x1A20, 0xFF, 0x8, 0x8
 	waitstate
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B9E::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyWon::
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x0
 	setvar 0x8006, 0x3
 	special CallFrontierUtilFunc
-	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_00232DA9
+	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobby
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232BB5::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleNoland::
 	copyvar 0x8000, 0x400F
 	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232C6A
+	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_IntroNolandGold
 	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232C08
+	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleNolandSilver
 	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232C97
+	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleNolandGold
 	setvar 0x8004, 0x1
 	setvar 0x8005, 0x7
 	special CallFrontierUtilFunc
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232C08
-	loadword 0x0, gJPText_00232E0A
+	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleNolandSilver
+	loadword 0x0, BattleFrontier_BattleFactoryBattleRoom_Text_NolandImFactoryHead
 	callstd 0x4
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x7
 	special CallFrontierUtilFunc
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232C08::
-	loadword 0x0, gJPText_00232F10
+BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleNolandSilver::
+	loadword 0x0, BattleFrontier_BattleFactoryBattleRoom_Text_ShakeOutKnowledgeBringItOn
 	callstd 0x4
-	call BattleFrontier_BattleFactoryBattleRoom_EventScript_00232CF9
+	call BattleFrontier_BattleFactoryBattleRoom_EventScript_DoNolandBattle
 	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232C25
-	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B11
+	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNolandSilver
+	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyLost
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232C25::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNolandSilver::
 	setvar 0x8004, 0xC
 	special CallFrontierUtilFunc
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232D1E
-	loadword 0x0, gJPText_00232F2D
+	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNoland
+	loadword 0x0, BattleFrontier_BattleFactoryBattleRoom_Text_NolandLetsSeeFrontierPass
 	callstd 0x4
 	closemessage
 	applymovement 0x8, BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerApproachNoland
 	waitmovement 0x0
 	playfanfare 0x1D2
-	message gJPText_00232F44
+	message BattleFrontier_BattleFactoryBattleRoom_Text_ReceivedKnowledgeSymbol
 	waitmessage
 	waitfanfare
 	setvar 0x8004, 0xD
 	special CallFrontierUtilFunc
-	loadword 0x0, gJPText_00232F60
+	loadword 0x0, BattleFrontier_BattleFactoryBattleRoom_Text_NextTimeNoHoldsBarred
 	callstd 0x4
-	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_00232D1E
+	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNoland
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232C6A::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_IntroNolandGold::
 	setvar 0x8004, 0x1
 	setvar 0x8005, 0x7
 	special CallFrontierUtilFunc
 	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232C97
-	loadword 0x0, gJPText_00232FA0
+	goto_if 0x5, BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleNolandGold
+	loadword 0x0, BattleFrontier_BattleFactoryBattleRoom_Text_HarderLookThanLastTime
 	callstd 0x4
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x7
 	special CallFrontierUtilFunc
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232C97::
-	loadword 0x0, gJPText_00233012
+BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleNolandGold::
+	loadword 0x0, BattleFrontier_BattleFactoryBattleRoom_Text_AllRightBringItOn
 	callstd 0x4
-	call BattleFrontier_BattleFactoryBattleRoom_EventScript_00232CF9
+	call BattleFrontier_BattleFactoryBattleRoom_EventScript_DoNolandBattle
 	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232CB4
-	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B11
+	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNolandGold
+	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyLost
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232CB4::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNolandGold::
 	setvar 0x8004, 0xC
 	special CallFrontierUtilFunc
 	compare_var_to_value 0x800D, 0x2
-	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232D1E
-	loadword 0x0, gJPText_00233023
+	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNoland
+	loadword 0x0, BattleFrontier_BattleFactoryBattleRoom_Text_OutOfMyLeagueLetsSeePass
 	callstd 0x4
 	waitmessage
 	applymovement 0x8, BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerApproachNoland
 	waitmovement 0x0
 	playfanfare 0x1D2
-	message gJPText_0023305D
+	message BattleFrontier_BattleFactoryBattleRoom_Text_KnowledgeSymbolTookGoldenShine
 	waitmessage
 	waitfanfare
 	setvar 0x8004, 0xD
 	special CallFrontierUtilFunc
-	loadword 0x0, gJPText_00233075
+	loadword 0x0, BattleFrontier_BattleFactoryBattleRoom_Text_LastTimeILoseToYou
 	callstd 0x4
-	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_00232D1E
+	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNoland
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232CF9::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_DoNolandBattle::
 	closemessage
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x6
@@ -245,12 +245,12 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_00232CF9::
 	special DoSpecialTrainerBattle
 	return
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232D1E::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNoland::
 	setvar 0x8004, 0x1
 	setvar 0x8005, 0x3
 	special CallBattleFactoryFunction
 	compare_var_to_value 0x800D, 0x270F
-	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B57
+	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_IncrementWinStreak
 	addvar 0x800D, 0x1
 	setorcopyvar 0x8006, 0x800D
 	setvar 0x8004, 0x2
@@ -260,7 +260,7 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_00232D1E::
 	setvar 0x8005, 0x1
 	special CallBattleFactoryFunction
 	compare_var_to_value 0x800D, 0x270F
-	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B5C
+	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_IncrementBattleNum
 	addvar 0x800D, 0x1
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x1
@@ -270,7 +270,7 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_00232D1E::
 	setvar 0x8005, 0x2
 	special CallFrontierUtilFunc
 	addvar 0x800D, 0x1
-	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_00232B9E
+	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyWon
 	end
 
 BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerEnterRoom:: @ 0x08232D94
@@ -301,20 +301,20 @@ BattleFrontier_BattleFactoryBattleRoom_Movement_NolandMoveToBattle:: @ 0x08232DA
 	walk_up
 	face_left
 	step_end
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232DA9::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobby::
 	copyvar 0x800D, 0x40CE
 	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_00232DC3
+	goto_if 0x1, BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyDoubles
 	warp 0x1A1F, 0xFF, 0x4, 0x8
 	waitstate
 	end
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232DC3::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyDoubles::
 	warp 0x1A1F, 0xFF, 0xE, 0x8
 	waitstate
 	end
 
-BattleFrontier_BattleFactoryBattleRoom_EventScript_00232DCD::
+BattleFrontier_BattleFactoryBattleRoom_EventScript_ScientistsFaceBattle::
 	applymovement 0x1, 0x0824362B
 	applymovement 0x3, 0x0824362B
 	applymovement 0x4, 0x0824362B
@@ -324,12 +324,10 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_00232DCD::
 	waitmovement 0x0
 	return
 
-	.globl gJPText_00232DFB
-gJPText_00232DFB: @ 0x08232DFB
+BattleFrontier_BattleFactoryBattleRoom_Text_GetAMoveOn: @ 0x08232DFB
 	.string "ほらほら！　はやく　きなっ！$"
 
-	.globl gJPText_00232E0A
-gJPText_00232E0A: @ 0x08232E0A
+BattleFrontier_BattleFactoryBattleRoom_Text_NolandImFactoryHead: @ 0x08232E0A
 	.string "おれの　なまえは　ダツラ！\n"
 	.string "いちおう　ここの　せきにんしゃで\l"
 	.string "ファクトリーヘッド　ってのを　やってる！\p"
@@ -346,30 +344,25 @@ gJPText_00232E0A: @ 0x08232E0A
 	.string "おれも　おめえと　おんなじ　じょうけん！\n"
 	.string "レンタルポケモンで　たたかう！！$"
 
-	.globl gJPText_00232F10
-gJPText_00232F10: @ 0x08232F10
+BattleFrontier_BattleFactoryBattleRoom_Text_ShakeOutKnowledgeBringItOn: @ 0x08232F10
 	.string "ありったけの　ちしき　ふりしぼって\n"
 	.string "かかって　こいやっ！$"
 
-	.globl gJPText_00232F2D
-gJPText_00232F2D: @ 0x08232F2D
+BattleFrontier_BattleFactoryBattleRoom_Text_NolandLetsSeeFrontierPass: @ 0x08232F2D
 	.string "ダツラ“イイぜ！\n"
 	.string "フロンティアパス　かしな！$"
 
-	.globl gJPText_00232F44
-gJPText_00232F44: @ 0x08232F44
+BattleFrontier_BattleFactoryBattleRoom_Text_ReceivedKnowledgeSymbol: @ 0x08232F44
 	.string "フロンティアパスに\n"
 	.string "ノウレッジシンボルが　きざまれた！$"
 
-	.globl gJPText_00232F60
-gJPText_00232F60: @ 0x08232F60
+BattleFrontier_BattleFactoryBattleRoom_Text_NextTimeNoHoldsBarred: @ 0x08232F60
 	.string "へっ⋯⋯　おもしれぇじゃ　ねえか⋯⋯\p"
 	.string "つぎに　あうときゃー\n"
 	.string "おれも　マジで　いく　からな！\p"
 	.string "しっかり　べんきょう　しとけよ！！$"
 
-	.globl gJPText_00232FA0
-gJPText_00232FA0: @ 0x08232FA0
+BattleFrontier_BattleFactoryBattleRoom_Text_HarderLookThanLastTime: @ 0x08232FA0
 	.string "ダツラ“オース！　どうよー？　ちょうしはー？\n"
 	.string "しっかり　べんきょう　してるか？\p"
 	.string "⋯⋯　お？\p"
@@ -378,23 +371,19 @@ gJPText_00232FA0: @ 0x08232FA0
 	.string "こりゃ　たのしみ　だねー！\n"
 	.string "ワクワクして　きたぜ！　おい！$"
 
-	.globl gJPText_00233012
-gJPText_00233012: @ 0x08233012
+BattleFrontier_BattleFactoryBattleRoom_Text_AllRightBringItOn: @ 0x08233012
 	.string "よっしゃ！！　バチッと　こい！！$"
 
-	.globl gJPText_00233023
-gJPText_00233023: @ 0x08233023
+BattleFrontier_BattleFactoryBattleRoom_Text_OutOfMyLeagueLetsSeePass: @ 0x08233023
 	.string "ダツラ“なんだよ！　おめえー！！\n"
 	.string "すっげぇ　ことに　なってんじゃ　ねぇかよ！\p"
 	.string "ったく　フロンティアパス　よこしな！$"
 
-	.globl gJPText_0023305D
-gJPText_0023305D: @ 0x0823305D
+BattleFrontier_BattleFactoryBattleRoom_Text_KnowledgeSymbolTookGoldenShine: @ 0x0823305D
 	.string "ノウレッジシンボルが\n"
 	.string "きんいろに　かがやいた！$"
 
-	.globl gJPText_00233075
-gJPText_00233075: @ 0x08233075
+BattleFrontier_BattleFactoryBattleRoom_Text_LastTimeILoseToYou: @ 0x08233075
 	.string "ちっくしょー！！\p"
 	.string "つぎは　ぜってぇに　まけねぇ　からな！\n"
 	.string "また　やろうぜっ！！$"

@@ -72,28 +72,6 @@
 	@ inside retained JP blocks. Keeping these aliases in the owning event
 	@ object lets map sources use the same names as pokeemerald without moving
 	@ or duplicating any ROM bytes.
-	@ The Slateport Tent corridor reuses retained Battle Factory pre-battle
-	@ text blocks. Keep their US semantic names without moving their JP bytes.
-	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_HoldMonsChooseFromSelection
-	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_HoldMonsChooseFromSelection, 0x082323B3
-	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_LetUsRestoreMons
-	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_LetUsRestoreMons, 0x082323F8
-	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_ReadyFor2ndOpponent
-	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_ReadyFor2ndOpponent, 0x08232415
-	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_ReadyFor3rdOpponent
-	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_ReadyFor3rdOpponent, 0x08232433
-	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_SaveAndQuitGame
-	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_SaveAndQuitGame, 0x082324CA
-	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_RetireFromChallenge
-	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_RetireFromChallenge, 0x082324E3
-	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_LikeToSwapMon
-	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_LikeToSwapMon, 0x08232839
-	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_YourSwapIsComplete
-	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_YourSwapIsComplete, 0x0823285F
-	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_RightThisWay
-	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_RightThisWay, 0x0823287D
-	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_SavingDataPleaseWait
-	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_SavingDataPleaseWait, 0x0823288B
 	.globl BattleFrontier_BattleTowerLobby_Text_ReceivedPrize
 	.set BattleFrontier_BattleTowerLobby_Text_ReceivedPrize, 0x0822064B
 	.globl ProfBirch_EventScript_RatePokedexOrRegister
