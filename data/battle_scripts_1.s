@@ -821,7 +821,21 @@ BattleScript_RestIsAlreadyAsleep:: @ 0x0828755E
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectOHKO:: @ 0x0828756F
-	.incbin "baserom_jp.gba", 0x28756f, 0x31
+	attackcanceler
+	attackstring
+	ppreduce
+	accuracycheck BattleScript_ButItFailed, NO_ACC_CALC_CHECK_LOCK_ON
+	typecalc
+	jumpifmovehadnoeffect BattleScript_HitFromAtkAnimation
+	tryKO BattleScript_KOFail
+	trysetdestinybondtohappen
+	goto BattleScript_HitFromAtkAnimation
+
+BattleScript_KOFail:: @ 0x08287590
+	pause B_WAIT_TIME_LONG
+	printfromtable gKOFailedStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectRazorWind:: @ 0x082875A0
 	.incbin "baserom_jp.gba", 0x2875a0, 0x81
