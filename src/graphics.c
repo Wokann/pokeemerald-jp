@@ -197,6 +197,18 @@ BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS const u32 gBattleAnimSpritePal_Leaf[] = INCB
 
 #undef BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS
 
+#define BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS __attribute__((section(".rodata.battle_anim_a_status_particle_graphics"), aligned(1)))
+
+// The JP LZ77 streams retain their original alignment padding.
+BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS const u32 gBattleAnimSpriteGfx_PoisonPowder[] = INCBIN_U32("graphics/battle_anims/sprites/poison_powder.png.4bpp.lz");
+BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS const u32 gBattleAnimSpritePal_PoisonPowder[] = INCBIN_U32("graphics/battle_anims/sprites/poison_powder.png.gbapal.lz");
+BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS const u32 gBattleAnimSpriteGfx_BrownTriangle[] = INCBIN_U32("graphics/battle_anims/sprites/brown_triangle.png.4bpp.lz");
+BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS const u32 gBattleAnimSpritePal_BrownTriangle[] = INCBIN_U32("graphics/battle_anims/sprites/brown_triangle.png.gbapal.lz");
+BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS const u32 gBattleAnimSpriteGfx_Sparkle3[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_3.png.4bpp.lz");
+BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS const u32 gBattleAnimSpritePal_Sparkle3[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_3.png.gbapal.lz");
+
+#undef BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS
+
 // Pokédex.  These custom sections retain the JP ROM order while assigning the
 // resources to pokeemerald's graphics owner and source hierarchy.
 #define POKEDEX_GRAPHICS_PREFIX __attribute__((section(".rodata.pokedex_graphics_prefix"), aligned(1)))

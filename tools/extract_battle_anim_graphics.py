@@ -57,6 +57,12 @@ RESOURCES = (
     Resource("gBattleAnimSpritePal_SpinningGreenOrbs", Path("graphics/battle_anims/sprites/spinning_green_orbs.png.gbapal.lz"), 0xC0B424, 0x28, 0x27),
     Resource("gBattleAnimSpriteGfx_Leaf", Path("graphics/battle_anims/sprites/leaf.png.4bpp.lz"), 0xC0B44C, 0x1BC, 0x1BB),
     Resource("gBattleAnimSpritePal_Leaf", Path("graphics/battle_anims/sprites/leaf.png.gbapal.lz"), 0xC0B608, 0x28, 0x25),
+    Resource("gBattleAnimSpriteGfx_PoisonPowder", Path("graphics/battle_anims/sprites/poison_powder.png.4bpp.lz"), 0xC0B6C4, 0x114, 0x113),
+    Resource("gBattleAnimSpritePal_PoisonPowder", Path("graphics/battle_anims/sprites/poison_powder.png.gbapal.lz"), 0xC0B7D8, 0x20, 0x1F),
+    Resource("gBattleAnimSpriteGfx_BrownTriangle", Path("graphics/battle_anims/sprites/brown_triangle.png.4bpp.lz"), 0xC0B7F8, 0x4C, 0x4A),
+    Resource("gBattleAnimSpritePal_BrownTriangle", Path("graphics/battle_anims/sprites/brown_triangle.png.gbapal.lz"), 0xC0B844, 0x28, 0x25),
+    Resource("gBattleAnimSpriteGfx_Sparkle3", Path("graphics/battle_anims/sprites/sparkle_3.png.4bpp.lz"), 0xC0B86C, 0x80, 0x80),
+    Resource("gBattleAnimSpritePal_Sparkle3", Path("graphics/battle_anims/sprites/sparkle_3.png.gbapal.lz"), 0xC0B8EC, 0x28, 0x26),
 )
 
 

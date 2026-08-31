@@ -10240,7 +10240,9 @@ SECTIONS {
         src/graphics.o(.rodata.battle_anim_a_ring_and_rocks_graphics);
         src/graphics.o(.rodata.battle_anim_a_unused_z_and_yellow_graphics);
         src/graphics.o(.rodata.battle_anim_a_air_and_leaf_graphics);
-        data/data_rest2b.o(.rodata.data_rest2b_after_air_and_leaf_graphics);
+        data/data_rest2b.o(.rodata.data_rest2b_before_status_particle_graphics);
+        src/graphics.o(.rodata.battle_anim_a_status_particle_graphics);
+        data/data_rest2b.o(.rodata.data_rest2b_after_status_particle_graphics);
         src/graphics.o(.rodata.battle_interface_graphics);
         data/data_rest2b.o(.rodata.data_rest2b_after_healthbox);
         src/graphics.o(.rodata.jp_contest_graphics);
