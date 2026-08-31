@@ -2418,7 +2418,16 @@ BattleScript_EffectTrick:: @ 0x082887AD
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectRolePlay:: @ 0x082887DB
-	.incbin "baserom_jp.gba", 0x2887db, 0x1c
+	attackcanceler
+	attackstring
+	ppreduce
+	accuracycheck BattleScript_ButItFailed, NO_ACC_CALC_CHECK_LOCK_ON
+	trycopyability BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNCOPIEDFOE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectWish:: @ 0x082887F7
 	.incbin "baserom_jp.gba", 0x2887f7, 0x10
