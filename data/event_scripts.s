@@ -108,8 +108,6 @@
 	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_SavingDataPleaseWait, 0x0823288B
 	.globl BattleFrontier_BattleTowerLobby_Text_ReceivedPrize
 	.set BattleFrontier_BattleTowerLobby_Text_ReceivedPrize, 0x0822064B
-	.globl BattleFrontier_BattleDomeLobby_Text_ReceivedPrize
-	.set BattleFrontier_BattleDomeLobby_Text_ReceivedPrize, 0x08227865
 	.globl ProfBirch_EventScript_RatePokedexOrRegister
 	.set ProfBirch_EventScript_RatePokedexOrRegister, 0x082431CD
 	@ Champion-room story code calls this retained standalone Pokédex rating branch.

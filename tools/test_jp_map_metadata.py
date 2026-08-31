@@ -349,6 +349,10 @@ MAPS = (
     "BattleFrontier_BattleTowerMultiPartnerRoom",
     "BattleFrontier_BattleTowerMultiCorridor",
     "BattleFrontier_BattleTowerMultiBattleRoom",
+    "BattleFrontier_BattleDomeLobby",
+    "BattleFrontier_BattleDomeCorridor",
+    "BattleFrontier_BattleDomePreBattleRoom",
+    "BattleFrontier_BattleDomeBattleRoom",
 )
 
 CONNECTED_MAPS = (
@@ -692,6 +696,10 @@ NULL_CONNECTION_MAPS = (
     "BattleFrontier_BattleTowerMultiPartnerRoom",
     "BattleFrontier_BattleTowerMultiCorridor",
     "BattleFrontier_BattleTowerMultiBattleRoom",
+    "BattleFrontier_BattleDomeLobby",
+    "BattleFrontier_BattleDomeCorridor",
+    "BattleFrontier_BattleDomePreBattleRoom",
+    "BattleFrontier_BattleDomeBattleRoom",
     "SouthernIsland_Exterior",
     "SouthernIsland_Interior",
     "SafariZone_RestHouse",

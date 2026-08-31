@@ -3549,7 +3549,55 @@ gMapLayout_SKY_PILLAR_TOP: @ 0x08437E20
 	.4byte gMapLayout_SKY_PILLAR_TOP_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x437E38, 0x850
+gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_LOBBY_Border:
+	.incbin "data/layouts/BattleFrontier_BattleDomeLobby/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_LOBBY_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattleDomeLobby/map.bin"
+	.byte 0x00, 0x00
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_LOBBY
+gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_LOBBY: @ 0x08438150
+	.4byte 23  @ width
+	.4byte 17  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_LOBBY_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_LOBBY_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleDome  @ secondaryTileset
+gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_CORRIDOR_Border:
+	.incbin "data/layouts/BattleFrontier_BattleDomeCorridor/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_CORRIDOR_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattleDomeCorridor/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_CORRIDOR
+gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_CORRIDOR: @ 0x08438410
+	.4byte 48  @ width
+	.4byte 7  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_CORRIDOR_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_CORRIDOR_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleDome  @ secondaryTileset
+gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_PRE_BATTLE_ROOM_Border:
+	.incbin "data/layouts/BattleFrontier_BattleDomePreBattleRoom/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_PRE_BATTLE_ROOM_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattleDomePreBattleRoom/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_PRE_BATTLE_ROOM
+gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_PRE_BATTLE_ROOM: @ 0x084384C0
+	.4byte 9  @ width
+	.4byte 8  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_PRE_BATTLE_ROOM_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_PRE_BATTLE_ROOM_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleDome  @ secondaryTileset
+gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_BATTLE_ROOM_Border:
+	.incbin "data/layouts/BattleFrontier_BattleDomeBattleRoom/border.bin"
+gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_BATTLE_ROOM_Blockdata:
+	.incbin "data/layouts/BattleFrontier_BattleDomeBattleRoom/map.bin"
+	.globl gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_BATTLE_ROOM
+gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_BATTLE_ROOM: @ 0x08438670
+	.4byte 20  @ width
+	.4byte 10  @ height
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_BATTLE_ROOM_Border  @ border
+	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_DOME_BATTLE_ROOM_Blockdata  @ map
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
+	.4byte gTileset_BattleDome  @ secondaryTileset
 gMapLayout_MAGMA_HIDEOUT_1F_Border:
 	.incbin "data/layouts/MagmaHideout_1F/border.bin"
 gMapLayout_MAGMA_HIDEOUT_1F_Blockdata:

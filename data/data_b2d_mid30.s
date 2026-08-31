@@ -1613,7 +1613,11 @@ gTileset_BattleFrontier: @ 0x083B80B4
 	.4byte gTileset_BattleFrontier_Metatiles  @ metatiles
 	.4byte gTileset_BattleFrontier_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
-	.incbin "baserom_jp.gba", 0x3B80CC, 0x78
+	.incbin "baserom_jp.gba", 0x3B80CC, 0x18
+	.globl gTileset_BattleDome
+gTileset_BattleDome: @ 0x083B80E4
+	.incbin "baserom_jp.gba", 0x3B80E4, 0x18
+	.incbin "baserom_jp.gba", 0x3B80FC, 0x48
 	.globl gTileset_BattlePyramid
 gTileset_BattlePyramid: @ 0x083B8144
 	.incbin "baserom_jp.gba", 0x3B8144, 0x18
@@ -2493,7 +2497,11 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/header.inc"
 	.include "data/maps/BattleFrontier_BattleTowerMultiCorridor/header.inc"
 	.include "data/maps/BattleFrontier_BattleTowerMultiBattleRoom/header.inc"
-	.incbin "baserom_jp.gba", 0x45D754, 0x1244
+	.include "data/maps/BattleFrontier_BattleDomeLobby/header.inc"
+	.include "data/maps/BattleFrontier_BattleDomeCorridor/header.inc"
+	.include "data/maps/BattleFrontier_BattleDomePreBattleRoom/header.inc"
+	.include "data/maps/BattleFrontier_BattleDomeBattleRoom/header.inc"
+	.incbin "baserom_jp.gba", 0x45D7C4, 0x11D4
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
