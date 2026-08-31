@@ -1209,7 +1209,14 @@ BattleScript_EffectMimic:: @ 0x08287A1C
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectMetronome:: @ 0x08287A42
-	.incbin "baserom_jp.gba", 0x287a42, 0x14
+	attackcanceler
+	attackstring
+	pause B_WAIT_TIME_SHORT
+	attackanimation
+	waitanimation
+	setbyte sB_ANIM_TURN, 0
+	setbyte sB_ANIM_TARGETS_HIT, 0
+	metronome
 
 BattleScript_EffectLeechSeed:: @ 0x08287A56
 	.incbin "baserom_jp.gba", 0x287a56, 0x27
