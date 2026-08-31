@@ -317,8 +317,7 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE3
 	.4byte gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_ROOMS
 	.4byte gMapLayout_SCORCHED_SLAB
-	@ LAYOUT_CAVE_OF_ORIGIN_UNUSED_B4F_LAVA remains in its raw physical layout owner.
-	.incbin "baserom_jp.gba", 0x45A6D0, 0x4
+	.4byte CaveOfOrigin_Unused_B4F_Lava_Layout
 	.4byte gMapLayout_RUSTBORO_CITY_FLAT1_1F
 	.4byte gMapLayout_RUSTBORO_CITY_FLAT1_2F
 	.4byte gMapLayout_EVER_GRANDE_CITY_HALL4

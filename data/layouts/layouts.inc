@@ -3909,7 +3909,21 @@ gMapLayout_SCORCHED_SLAB: @ 0x084324C0
 	.4byte gMapLayout_SCORCHED_SLAB_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Cave  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4324D8, 0x2F4
+CaveOfOrigin_Unused_B4F_Lava_Layout_Border::
+	.incbin "data/layouts/CaveOfOrigin_Unused_B4F_Lava/border.bin"
+
+CaveOfOrigin_Unused_B4F_Lava_Layout_Blockdata::
+	.incbin "data/layouts/CaveOfOrigin_Unused_B4F_Lava/map.bin"
+
+	.align 2
+CaveOfOrigin_Unused_B4F_Lava_Layout:: @ 0x084327B4
+	.4byte 19
+	.4byte 19
+	.4byte CaveOfOrigin_Unused_B4F_Lava_Layout_Border
+	.4byte CaveOfOrigin_Unused_B4F_Lava_Layout_Blockdata
+	.4byte gTileset_General
+	.4byte gTileset_Cave
+
 gMapLayout_RUSTBORO_CITY_FLAT1_1F_Border:
 	.incbin "data/layouts/RustboroCity_Flat1_1F/border.bin"
 gMapLayout_RUSTBORO_CITY_FLAT1_1F_Blockdata:
