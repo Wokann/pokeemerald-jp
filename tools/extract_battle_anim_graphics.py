@@ -63,6 +63,15 @@ RESOURCES = (
     Resource("gBattleAnimSpritePal_BrownTriangle", Path("graphics/battle_anims/sprites/brown_triangle.png.gbapal.lz"), 0xC0B844, 0x28, 0x25),
     Resource("gBattleAnimSpriteGfx_Sparkle3", Path("graphics/battle_anims/sprites/sparkle_3.png.4bpp.lz"), 0xC0B86C, 0x80, 0x80),
     Resource("gBattleAnimSpritePal_Sparkle3", Path("graphics/battle_anims/sprites/sparkle_3.png.gbapal.lz"), 0xC0B8EC, 0x28, 0x26),
+    Resource("gBattleAnimSpriteGfx_Sparkle4", Path("graphics/battle_anims/sprites/sparkle_4.png.4bpp.lz"), 0xC0B914, 0x22C, 0x22C),
+    Resource("gBattleAnimSpriteGfx_MusicNotes", Path("graphics/battle_anims/sprites/music_notes.png.4bpp.lz"), 0xC0BB40, 0xD0, 0xD0),
+    Resource("gBattleAnimSpritePal_MusicNotes", Path("graphics/battle_anims/sprites/music_notes.png.gbapal.lz"), 0xC0BC10, 0x18, 0x16),
+    Resource("gBattleAnimSpriteGfx_Duck", Path("graphics/battle_anims/sprites/duck.png.4bpp.lz"), 0xC0BC28, 0x11C, 0x11A),
+    Resource("gBattleAnimSpritePal_Duck", Path("graphics/battle_anims/sprites/duck.png.gbapal.lz"), 0xC0BD44, 0x20, 0x20),
+    Resource("gBattleAnimSpriteGfx_Alert", Path("graphics/battle_anims/sprites/alert.png.4bpp.lz"), 0xC0BD64, 0x27C, 0x27B),
+    Resource("gBattleAnimSpritePal_Alert", Path("graphics/battle_anims/sprites/alert.png.gbapal.lz"), 0xC0BFE0, 0x24, 0x24),
+    Resource("gBattleAnimSpriteGfx_Shock4", Path("graphics/battle_anims/sprites/shock_4.png.4bpp.lz"), 0xC0C004, 0x198, 0x196),
+    Resource("gBattleAnimSpritePal_Shock4", Path("graphics/battle_anims/sprites/shock_4.png.gbapal.lz"), 0xC0C19C, 0x28, 0x28),
 )
 
 

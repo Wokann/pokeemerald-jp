@@ -209,6 +209,21 @@ BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS const u32 gBattleAnimSpritePal_Sparkle3[]
 
 #undef BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS
 
+#define BATTLE_ANIM_A_REACTION_GRAPHICS __attribute__((section(".rodata.battle_anim_a_reaction_graphics"), aligned(1)))
+
+// The JP LZ77 streams retain their original alignment padding.
+BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpriteGfx_Sparkle4[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_4.png.4bpp.lz");
+BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpriteGfx_MusicNotes[] = INCBIN_U32("graphics/battle_anims/sprites/music_notes.png.4bpp.lz");
+BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpritePal_MusicNotes[] = INCBIN_U32("graphics/battle_anims/sprites/music_notes.png.gbapal.lz");
+BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpriteGfx_Duck[] = INCBIN_U32("graphics/battle_anims/sprites/duck.png.4bpp.lz");
+BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpritePal_Duck[] = INCBIN_U32("graphics/battle_anims/sprites/duck.png.gbapal.lz");
+BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpriteGfx_Alert[] = INCBIN_U32("graphics/battle_anims/sprites/alert.png.4bpp.lz");
+BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpritePal_Alert[] = INCBIN_U32("graphics/battle_anims/sprites/alert.png.gbapal.lz");
+BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpriteGfx_Shock4[] = INCBIN_U32("graphics/battle_anims/sprites/shock_4.png.4bpp.lz");
+BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpritePal_Shock4[] = INCBIN_U32("graphics/battle_anims/sprites/shock_4.png.gbapal.lz");
+
+#undef BATTLE_ANIM_A_REACTION_GRAPHICS
+
 // Pokédex.  These custom sections retain the JP ROM order while assigning the
 // resources to pokeemerald's graphics owner and source hierarchy.
 #define POKEDEX_GRAPHICS_PREFIX __attribute__((section(".rodata.pokedex_graphics_prefix"), aligned(1)))

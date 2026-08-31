@@ -1203,6 +1203,11 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_anims/sprites/poison_powder.png.4bpp.lz graphics/battle_anims/sprites/poison_powder.png.gbapal.lz \
 	graphics/battle_anims/sprites/brown_triangle.png.4bpp.lz graphics/battle_anims/sprites/brown_triangle.png.gbapal.lz \
 	graphics/battle_anims/sprites/sparkle_3.png.4bpp.lz graphics/battle_anims/sprites/sparkle_3.png.gbapal.lz \
+	graphics/battle_anims/sprites/sparkle_4.png.4bpp.lz \
+	graphics/battle_anims/sprites/music_notes.png.4bpp.lz graphics/battle_anims/sprites/music_notes.png.gbapal.lz \
+	graphics/battle_anims/sprites/duck.png.4bpp.lz graphics/battle_anims/sprites/duck.png.gbapal.lz \
+	graphics/battle_anims/sprites/alert.png.4bpp.lz graphics/battle_anims/sprites/alert.png.gbapal.lz \
+	graphics/battle_anims/sprites/shock_4.png.4bpp.lz graphics/battle_anims/sprites/shock_4.png.gbapal.lz \
 	graphics/battle_anims/sprites/splash.4bpp.lz graphics/battle_anims/sprites/splash.gbapal.lz \
 	graphics/battle_anims/sprites/sweat_bead.4bpp.lz graphics/battle_anims/sprites/pokeblock.4bpp.lz \
 	graphics/battle_anims/sprites/pokeblock.gbapal.lz graphics/battle_anims/sprites/gem_1.4bpp.lz \
