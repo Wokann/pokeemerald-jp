@@ -165,6 +165,16 @@ BATTLE_ANIM_A_IMPACT_GRAPHICS const u32 gBattleAnimSpriteGfx_RedFist[] = INCBIN_
 
 #undef BATTLE_ANIM_A_IMPACT_GRAPHICS
 
+#define BATTLE_ANIM_A_RING_AND_ROCKS_GRAPHICS __attribute__((section(".rodata.battle_anim_a_ring_and_rocks_graphics"), aligned(1)))
+
+// The JP LZ77 streams retain their original alignment padding.
+BATTLE_ANIM_A_RING_AND_ROCKS_GRAPHICS const u32 gBattleAnimSpriteGfx_Ring[] = INCBIN_U32("graphics/battle_anims/sprites/ring.png.4bpp.lz");
+BATTLE_ANIM_A_RING_AND_ROCKS_GRAPHICS const u32 gBattleAnimSpritePal_Ring[] = INCBIN_U32("graphics/battle_anims/sprites/ring.png.gbapal.lz");
+BATTLE_ANIM_A_RING_AND_ROCKS_GRAPHICS const u32 gBattleAnimSpriteGfx_Rocks[] = INCBIN_U32("graphics/battle_anims/sprites/rocks.png.4bpp.lz");
+BATTLE_ANIM_A_RING_AND_ROCKS_GRAPHICS const u32 gBattleAnimSpritePal_Rocks[] = INCBIN_U32("graphics/battle_anims/sprites/rocks.png.gbapal.lz");
+
+#undef BATTLE_ANIM_A_RING_AND_ROCKS_GRAPHICS
+
 // Pokédex.  These custom sections retain the JP ROM order while assigning the
 // resources to pokeemerald's graphics owner and source hierarchy.
 #define POKEDEX_GRAPHICS_PREFIX __attribute__((section(".rodata.pokedex_graphics_prefix"), aligned(1)))
