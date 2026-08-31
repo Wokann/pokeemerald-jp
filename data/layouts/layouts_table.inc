@@ -276,8 +276,8 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_BATTLE_ROOM
 	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_3F
 	.4byte gMapLayout_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F
-	@ LAYOUT_ROUTE119_WEATHER_INSTITUTE_1F through LAYOUT_ROUTE119_WEATHER_INSTITUTE_2F remain in raw physical layout owners.
-	.incbin "baserom_jp.gba", 0x45A62C, 0x8
+	.4byte Route119_WeatherInstitute_1F_Layout
+	.4byte Route119_WeatherInstitute_2F_Layout
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR
 	.4byte Underwater_Route124_Layout
 	.4byte gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_1F

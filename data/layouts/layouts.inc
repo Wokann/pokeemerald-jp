@@ -3400,7 +3400,36 @@ gMapLayout_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F: @ 0x08425984
 	.4byte gMapLayout_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F_Blockdata  @ map
 	.4byte gTileset_Building  @ primaryTileset
 	.4byte gTileset_PokemonCenter  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42599c, 0x400
+Route119_WeatherInstitute_1F_Layout_Border::
+	.incbin "data/layouts/Route119_WeatherInstitute_1F/border.bin"
+
+Route119_WeatherInstitute_1F_Layout_Blockdata::
+	.incbin "data/layouts/Route119_WeatherInstitute_1F/map.bin"
+
+	.align 2
+Route119_WeatherInstitute_1F_Layout:: @ 0x08425BAC
+	.4byte 20
+	.4byte 13
+	.4byte Route119_WeatherInstitute_1F_Layout_Border
+	.4byte Route119_WeatherInstitute_1F_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_Lab
+
+Route119_WeatherInstitute_2F_Layout_Border::
+	.incbin "data/layouts/Route119_WeatherInstitute_2F/border.bin"
+
+Route119_WeatherInstitute_2F_Layout_Blockdata::
+	.incbin "data/layouts/Route119_WeatherInstitute_2F/map.bin"
+
+	.align 2
+Route119_WeatherInstitute_2F_Layout:: @ 0x08425D84
+	.4byte 20
+	.4byte 11
+	.4byte Route119_WeatherInstitute_2F_Layout_Border
+	.4byte Route119_WeatherInstitute_2F_Layout_Blockdata
+	.4byte gTileset_Building
+	.4byte gTileset_Lab
+
 gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_Border:
 	.incbin "data/layouts/LilycoveCity_DepartmentStoreElevator/border.bin"
 gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_Blockdata:
