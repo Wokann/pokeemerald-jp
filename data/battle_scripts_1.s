@@ -1844,7 +1844,18 @@ BattleScript_EffectAllStatsUpHit:: @ 0x082880FC
 	goto BattleScript_EffectHit
 
 BattleScript_EffectBellyDrum:: @ 0x08288107
-	.incbin "baserom_jp.gba", 0x288107, 0x22
+	attackcanceler
+	attackstring
+	ppreduce
+	maxattackhalvehp BattleScript_ButItFailed
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	attackanimation
+	waitanimation
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	printstring STRINGID_PKMNCUTHPMAXEDATTACK
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectPsychUp:: @ 0x08288129
 	.incbin "baserom_jp.gba", 0x288129, 0x15
