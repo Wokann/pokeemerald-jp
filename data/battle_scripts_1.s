@@ -1034,10 +1034,17 @@ BattleScript_EffectSpecialDefenseDown2:: @ 0x08287805
 	goto BattleScript_EffectStatDown
 
 BattleScript_EffectReflect:: @ 0x08287810
-	.incbin "baserom_jp.gba", 0x287810, 0x4
+	attackcanceler
+	attackstring
+	ppreduce
+	setreflect
 
 BattleScript_PrintReflectLightScreenSafeguardString:: @ 0x08287814
-	.incbin "baserom_jp.gba", 0x287814, 0xf
+	attackanimation
+	waitanimation
+	printfromtable gReflectLightScreenSafeguardStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectPoison:: @ 0x08287823
 	.incbin "baserom_jp.gba", 0x287823, 0x61
