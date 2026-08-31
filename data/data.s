@@ -268,14 +268,8 @@ gUnknown_82BF304: @ 0x82BF304
 gDummySpriteAffineAnimTable: @ 0x82BF310
 	.4byte 0x082BF308
 
-	.globl gOamData_AffineOff_ObjNormal_16x16
-	.set gOamData_AffineOff_ObjNormal_16x16, 0x084FD018
-	.globl gOamData_AffineOff_ObjNormal_8x8
-	.set gOamData_AffineOff_ObjNormal_8x8, 0x084FD010
 	.globl gOamData_AffineOff_ObjNormal_32x16
 	.set gOamData_AffineOff_ObjNormal_32x16, 0x084FD040
-	.globl gOamData_AffineOff_ObjNormal_64x64
-	.set gOamData_AffineOff_ObjNormal_64x64, 0x084FD028
 	.globl gOamData_AffineNormal_ObjNormal_32x32
 	.set gOamData_AffineNormal_ObjNormal_32x32, 0x084FD080
 	.globl gOamData_AffineNormal_ObjNormal_64x64

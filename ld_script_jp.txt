@@ -1183,7 +1183,6 @@ gText_SomeoneDroppedOut2 = gUnknown_85CCE7F;
 gText_SpacePoints2 = gUnknown_85CCDF8;
 gText_SpaceTimes3 = gUnknown_85CCDFB;
 gText_PkmnJumpRecords = gUnknown_85CCDFE;
-gOamData_AffineOff_ObjNormal_32x32 = gUnknown_84FD010 + 0x10;
 gText_CommunicationStandby4 = gUnknown_85CCE99;
 sub_0802A788 = ResetForNewGame;
 sub_0802A814 = InitPlayerAndJumpTypes;
@@ -9764,7 +9763,9 @@ SECTIONS {
         src/palette.o(.rodata.palette_static_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_palette_static_data_before_sound_fanfare_data);
         src/sound.o(.rodata.sound_fanfare_data);
-        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_sound_fanfare_data_before_battle_anim_status_effects);
+        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_sound_fanfare_data_before_battle_anim_oam_data);
+        src/battle_anim.o(.rodata.battle_anim_oam_data);
+        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_battle_anim_oam_data_before_battle_anim_status_effects);
         src/battle_anim_status_effects.o(.rodata.battle_anim_status_effects_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_battle_anim_status_effects_before_field_weather_drought);
         src/field_weather.o(.rodata.field_weather_drought_data);

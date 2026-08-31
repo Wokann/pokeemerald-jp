@@ -11,7 +11,7 @@
 
 extern const u16 s321Start_Static_Pal[]; // 0x82D1B10 (pokejump4)
 extern const u8 s321Start_Static_Gfx[];  // 0x82D1B30 (pokejump4)
-extern const struct OamData gOamData_AffineOff_ObjNormal_32x32; // 0x084FD020 (ld alias)
+extern const struct OamData gOamData_AffineOff_ObjNormal_32x32; // 0x084FD020 (battle_anim data)
 extern void Task_StaticCountdown_Init(u8 taskId); // src/pokemon_jump.c
 extern void Task_StaticCountdown_Free(u8 taskId);
 extern void Task_StaticCountdown_Start(u8 taskId);

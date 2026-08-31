@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "data/battle_anim.h"
 
 __attribute__((naked)) void ClearBattleAnimationVars()
 {

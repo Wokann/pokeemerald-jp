@@ -11,7 +11,9 @@
 
 extern const u8 gBerryCrush_Crusher_Gfx[]; // packed LZ streams, 0x82C6104 (src/graphics.c)
 extern const u16 gBerryCrush_Crusher_Pal[]; // packed palettes, 0x82C5F84 (src/graphics.c)
-extern const struct OamData gUnknown_84FD010[]; // 0x84FD010 OamData table (asm)
+extern const struct OamData gOamData_AffineOff_ObjNormal_16x16;
+extern const struct OamData gOamData_AffineOff_ObjNormal_32x32;
+extern const struct OamData gOamData_AffineOff_ObjNormal_64x64;
 extern const struct OamData gUnknown_84FD040[]; // 0x84FD040 OamData table (asm)
 extern void SpriteCB_Impact(struct Sprite *sprite); // src/berry_crush.c
 
@@ -209,7 +211,7 @@ const struct SpriteTemplate sSpriteTemplate_CrusherBase =
 {
     .tileTag = 1, // TAG_CRUSHER_BASE
     .paletteTag = 1, // TAG_CRUSHER_BASE
-    .oam = &gUnknown_84FD010[3],
+    .oam = &gOamData_AffineOff_ObjNormal_64x64,
     .anims = sAnims_CrusherBase,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -221,7 +223,7 @@ const struct SpriteTemplate sSpriteTemplate_Impact =
 {
     .tileTag = 2, // GFXTAG_IMPACT
     .paletteTag = 2, // PALTAG_EFFECT
-    .oam = &gUnknown_84FD010[2],
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = sAnims_Impact,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -233,7 +235,7 @@ const struct SpriteTemplate sSpriteTemplate_Sparkle =
 {
     .tileTag = 3, // GFXTAG_SPARKLE
     .paletteTag = 2, // PALTAG_EFFECT
-    .oam = &gUnknown_84FD010[1],
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = sAnims_Sparkle,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

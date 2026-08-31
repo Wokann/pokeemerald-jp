@@ -31,12 +31,9 @@
 
 	.section .rodata.data_b2d_mid26_after_palette_static_data_before_sound_fanfare_data
 
-	.section .rodata.data_b2d_mid26_after_sound_fanfare_data_before_battle_anim_status_effects
+	.section .rodata.data_b2d_mid26_after_sound_fanfare_data_before_battle_anim_oam_data
 
-	.globl gUnknown_84FD010
-	.globl gUnknown_84FD010
-gUnknown_84FD010: @ 0x4FD010
-	.incbin "baserom_jp.gba", 0x4fd010, 0x30
+	.section .rodata.data_b2d_mid26_after_battle_anim_oam_data_before_battle_anim_status_effects
 
 	.globl gUnknown_84FD040
 	.globl sOam_MoveEffectMons
