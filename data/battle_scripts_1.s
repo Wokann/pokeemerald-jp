@@ -3843,14 +3843,14 @@ BattleScript_SnatchedMove:: @ 0x08289734
 
 @ Battle result messages for Endure and a one-hit KO.
 BattleScript_EnduredMsg:: @ 0x0828974F
-	.byte 0x10, 0x99, 0x00 @ printstring STRINGID_PKMNENDUREDHIT
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3C @ return
+	printstring STRINGID_PKMNENDUREDHIT
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 BattleScript_OneHitKOMsg:: @ 0x08289756
-	.byte 0x10, 0xDA, 0x00 @ printstring STRINGID_ONEHITKO
-	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
-	.byte 0x3C @ return
+	printstring STRINGID_ONEHITKO
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 @ Two-stage Special Attack reduction and its shared return target.
 BattleScript_SAtkDown2:: @ 0x0828975D
