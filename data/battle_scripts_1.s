@@ -2439,7 +2439,14 @@ BattleScript_EffectWish:: @ 0x082887F7
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectAssist:: @ 0x08288807
-	.incbin "baserom_jp.gba", 0x288807, 0x17
+	attackcanceler
+	attackstring
+	assistattackselect BattleScript_FailedFromPPReduce
+	attackanimation
+	waitanimation
+	setbyte sB_ANIM_TURN, 0
+	setbyte sB_ANIM_TARGETS_HIT, 0
+	jumptocalledmove TRUE
 
 BattleScript_EffectIngrain:: @ 0x0828881E
 	.incbin "baserom_jp.gba", 0x28881e, 0x15
