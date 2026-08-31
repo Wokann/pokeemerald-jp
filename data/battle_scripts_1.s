@@ -4321,16 +4321,16 @@ BattleScript_MoveHPDrain: @ 0x8289AF7
 
 	.globl BattleScript_MonMadeMoveUseless_PPLoss
 BattleScript_MonMadeMoveUseless_PPLoss: @ 0x8289B19
-	.byte 0x03 @ ppreduce
+	ppreduce
 
 	.globl BattleScript_MonMadeMoveUseless
 BattleScript_MonMadeMoveUseless: @ 0x8289B1A
-	.byte 0x02 @ attackstring
-	.byte 0x39, 0x20, 0x00 @ pause B_WAIT_TIME_SHORT
-	.byte 0x10, 0x47, 0x01 @ printstring STRINGID_PKMNSXMADEYUSELESS
-	.byte 0x12, 0x40, 0x00 @ waitmessage B_WAIT_TIME_LONG
-	.byte 0x33, 0x20, 0x3F, 0x02, 0x02, 0x08 @ orbyte gMoveResultFlags, MOVE_RESULT_DOESNT_AFFECT_FOE
-	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto BattleScript_MoveEnd
+	attackstring
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNSXMADEYUSELESS
+	waitmessage B_WAIT_TIME_LONG
+	orbyte gMoveResultFlags, MOVE_RESULT_DOESNT_AFFECT_FOE
+	goto BattleScript_MoveEnd
 
 	.globl BattleScript_FlashFireBoost_PPLoss
 BattleScript_FlashFireBoost_PPLoss: @ 0x8289B2F
