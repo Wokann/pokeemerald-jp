@@ -2593,7 +2593,16 @@ BattleScript_EffectImprison:: @ 0x08288980
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectRefresh:: @ 0x08288995
-	.incbin "baserom_jp.gba", 0x288995, 0x17
+	attackcanceler
+	attackstring
+	ppreduce
+	cureifburnedparalyzedorpoisoned BattleScript_ButItFailed
+	attackanimation
+	waitanimation
+	printstring STRINGID_PKMNSTATUSNORMAL
+	waitmessage B_WAIT_TIME_LONG
+	updatestatusicon BS_ATTACKER
+	goto BattleScript_MoveEnd
 
 BattleScript_EffectGrudge:: @ 0x082889AC
 	.incbin "baserom_jp.gba", 0x2889ac, 0x15
