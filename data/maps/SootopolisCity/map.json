@@ -13,6 +13,7 @@
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [],
+  "has_unused_connection_table": true,
   "object_events": [
     {
       "local_id": "LOCALID_SOOTOPOLIS_EXPERT",

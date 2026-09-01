@@ -189,7 +189,10 @@ def render_connections(data: dict[str, Any]) -> str:
         connections = []
     if not isinstance(connections, list):
         raise ValueError("connections must be an array")
-    if not connections:
+    has_unused_connection_table = data.get("has_unused_connection_table", False)
+    if not isinstance(has_unused_connection_table, bool):
+        raise ValueError("has_unused_connection_table must be a JSON boolean")
+    if not connections and not has_unused_connection_table:
         return warning(name)
 
     lines = [warning(name).rstrip(), "", f"{name}_MapConnectionsList:"]

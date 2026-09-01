@@ -841,6 +841,24 @@ class MapMetadataTests(unittest.TestCase):
                 jp_map_metadata.warning(map_name),
             )
 
+    def test_sootopolis_unused_connection_table_is_generated(self):
+        map_name = "SootopolisCity"
+        data = jp_map_metadata.load_map(ROOT / "data" / "maps" / map_name / "map.json")
+        self.assertTrue(data["has_unused_connection_table"])
+        self.assertIn("\t.4byte NULL\n", jp_map_metadata.render_header(data))
+        self.assertEqual(
+            jp_map_metadata.render_connections(data),
+            "@\n"
+            "@ DO NOT MODIFY THIS FILE! It is auto-generated from data/maps/SootopolisCity/map.json\n"
+            "@\n"
+            "\n"
+            "SootopolisCity_MapConnectionsList:\n"
+            "\n"
+            "SootopolisCity_MapConnections:\n"
+            "\t.4byte 0\n"
+            "\t.4byte SootopolisCity_MapConnectionsList\n",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

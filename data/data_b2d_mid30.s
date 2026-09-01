@@ -30,7 +30,7 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/FortreeCity/connections.inc"
 	.include "data/maps/LilycoveCity/connections.inc"
 	.include "data/maps/MossdeepCity/connections.inc"
-	.incbin "baserom_jp.gba", 0x45EC10, 0x8
+	.include "data/maps/SootopolisCity/connections.inc"
 	.include "data/maps/EverGrandeCity/connections.inc"
 	.include "data/maps/Route101/connections.inc"
 	.include "data/maps/Route102/connections.inc"
