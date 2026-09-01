@@ -9532,17 +9532,8 @@ SECTIONS {
         src/event_object_movement.o(.rodata.event_object_movement_base_oam_data);
         src/event_object_movement.o(.rodata.event_object_movement_object_event_subsprites);
         src/event_object_movement.o(.rodata.event_object_movement_object_event_graphics_info);
-        gUnknown_84E401C = .;
         src/event_object_movement.o(.rodata.event_object_movement_palette_data);
-        gUnknown_84E4154 = gUnknown_84E401C + 0x138;
-        gUnknown_84E41CC = gUnknown_84E401C + 0x1B0;
-        gUnknown_84E428C = gUnknown_84E401C + 0x270;
-        gUnknown_84E429C = .;
         src/event_object_movement.o(.rodata.event_object_movement_berry_tree_graphics_data);
-        gUnknown_84E4C04 = gUnknown_84E429C + 0x968;
-        gUnknown_84E4CB0 = gUnknown_84E429C + 0xA14;
-        gUnknown_84E4D5C = gUnknown_84E429C + 0xAC0;
-        gUnknown_84E4E14 = .;
         src/event_object_movement.o(.rodata.event_object_movement_field_effect_objects_data);
         gObjectEventPal_QuintyPlump = ABSOLUTE(0x084CEC6C);
         gObjectEventPal_QuintyPlumpReflection = ABSOLUTE(0x084CEC8C);
