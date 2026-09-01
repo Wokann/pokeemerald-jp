@@ -40,9 +40,7 @@ LilycoveCity_EventScript_BerryGentleman::
 	msgbox LilycoveCity_Text_BerrySuitsYou, MSGBOX_DEFAULT
 	random 10
 	addvar VAR_RESULT, FIRST_BERRY_INDEX
-	setorcopyvar VAR_0x8000, VAR_RESULT
-	setorcopyvar VAR_0x8001, TRUE
-	callstd 0x0
+	giveitem VAR_RESULT
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_DAILY_LILYCOVE_RECEIVED_BERRY
 	msgbox LilycoveCity_Text_BecauseYoureTrainer, MSGBOX_DEFAULT
