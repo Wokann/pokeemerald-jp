@@ -1,6 +1,8 @@
 #include "global.h"
 #include "battle_controllers.h"
 
+#define RECORDED_PLAYER_COMMANDS __attribute__((section(".rodata.recorded_player_commands")))
+
 void nullsub_120(void) {}
 __attribute__((naked)) void SetControllerToRecordedPlayer(void)
 {
@@ -56,7 +58,7 @@ __attribute__((naked)) void RecordedPlayerBufferRunCommand(void)
         "_081896CC: .4byte gBitTable\n\t"
         "_081896D0: .4byte gActiveBattler\n\t"
         "_081896D4: .4byte gBattleBufferA\n\t"
-        "_081896D8: .4byte gUnknown_85D39D4\n\t"
+        "_081896D8: .4byte sRecordedPlayerBufferCommands\n\t"
         "_081896DC:\n\t"
         "	bl RecordedPlayerBufferExecCompleted\n\t"
         "_081896E0:\n\t"
@@ -6895,3 +6897,64 @@ __attribute__((naked)) void RecordedPlayerHandleCmd55(void)
 }
 
 void RecordedPlayerCmdEnd(void) {}
+
+static void (*const sRecordedPlayerBufferCommands[CONTROLLER_CMDS_COUNT])(void) RECORDED_PLAYER_COMMANDS =
+{
+    [0x00] = RecordedPlayerHandleGetMonData,
+    [0x01] = RecordedPlayerHandleSuccessBallThrowAnim,
+    [0x02] = RecordedPlayerHandleSetMonData,
+    [0x03] = RecordedPlayerHandleSetRawMonData,
+    [0x04] = RecordedPlayerHandleLoadMonSprite,
+    [0x05] = RecordedPlayerHandleSwitchInAnim,
+    [0x06] = RecordedPlayerHandleReturnMonToBall,
+    [0x07] = RecordedPlayerHandleDrawTrainerPic,
+    [0x08] = RecordedPlayerHandleTrainerSlide,
+    [0x09] = RecordedPlayerHandleTrainerSlideBack,
+    [0x0A] = RecordedPlayerHandleFaintAnimation,
+    [0x0B] = RecordedPlayerHandlePaletteFade,
+    [0x0C] = RecordedPlayerHandleTwoReturnValues,
+    [0x0D] = RecordedPlayerHandleChoosePokemon,
+    [0x0E] = RecordedPlayerHandlePause,
+    [0x0F] = RecordedPlayerHandleMoveAnimation,
+    [0x10] = RecordedPlayerHandlePrintString,
+    [0x11] = RecordedPlayerHandlePrintSelectionString,
+    [0x12] = RecordedPlayerHandleChooseAction,
+    [0x13] = RecordedPlayerHandleUnknownYesNoBox,
+    [0x14] = RecordedPlayerHandleChooseMove,
+    [0x15] = RecordedPlayerHandleChooseItem,
+    [0x16] = RecordedPlayerHandlePlaySE,
+    [0x17] = RecordedPlayerHandleCmd23,
+    [0x18] = RecordedPlayerHandleHealthBarUpdate,
+    [0x19] = RecordedPlayerHandleExpUpdate,
+    [0x1A] = RecordedPlayerHandleStatusIconUpdate,
+    [0x1B] = RecordedPlayerHandleStatusAnimation,
+    [0x1C] = RecordedPlayerHandleStatusXor,
+    [0x1D] = RecordedPlayerHandleDataTransfer,
+    [0x1E] = RecordedPlayerHandleDMA3Transfer,
+    [0x1F] = RecordedPlayerHandlePlayBGM,
+    [0x20] = RecordedPlayerHandleCmd32,
+    [0x21] = sub_0818C53C,
+    [0x22] = sub_0818C548,
+    [0x23] = sub_0818C554,
+    [0x24] = RecordedPlayerHandleOneReturnValue_Duplicate,
+    [0x25] = RecordedPlayerHandleCmd37,
+    [0x26] = RecordedPlayerHandleCmd38,
+    [0x27] = RecordedPlayerHandleCmd39,
+    [0x28] = RecordedPlayerHandleCmd40,
+    [0x29] = sub_0818C600,
+    [0x2A] = RecordedPlayerHandleCmd42,
+    [0x2B] = sub_0818C67C,
+    [0x2C] = RecordedPlayerHandlePlayFanfareOrBGM,
+    [0x2D] = RecordedPlayerHandleFaintingCry,
+    [0x2E] = RecordedPlayerHandleIntroSlide,
+    [0x2F] = RecordedPlayerHandleIntroTrainerBallThrow,
+    [0x30] = RecordedPlayerHandleDrawPartyStatusSummary,
+    [0x31] = RecordedPlayerHandleHidePartyStatusSummary,
+    [0x32] = RecordedPlayerHandleEndBounceEffect,
+    [0x33] = RecordedPlayerHandleSpriteInvisibility,
+    [0x34] = RecordedPlayerHandleBattleAnimation,
+    [0x35] = RecordedPlayerHandleLinkStandbyMsg,
+    [0x36] = RecordedPlayerHandleResetActionMoveSelection,
+    [0x37] = RecordedPlayerHandleCmd55,
+    [0x38] = RecordedPlayerCmdEnd,
+};

@@ -1219,7 +1219,6 @@ sub_0802EC60 = CreateStartSprite;
 BattleControllerDummy = nullsub_21;
 RecordedBattle_Init = sub_08184C50;
 
-SetControllerToRecordedOpponent = sub_08186218;
 BattleScriptPop = DoBattlerEndTurnEffects;
 sub_080416AC = AtkCanceler_UnableToUseMove;
 sub_08043F18 = AbilityBattleEffects;
@@ -10067,6 +10066,8 @@ SECTIONS {
         src/pokemon_animation.o(.rodata.pokemon_animation_shake_yellow_flash_data_slow);
         src/pokemon_animation.o(.rodata.pokemon_animation_shake_yellow_flash_data);
         src/pokemon_animation.o(.rodata.pokemon_animation_shake_glow_colors);
+        src/battle_controller_recorded_opponent.o(.rodata.recorded_opponent_commands);
+        src/battle_controller_recorded_player.o(.rodata.recorded_player_commands);
         data/data_b2d_mid98.o(.rodata.mid98_suffix_after_shake_visual_data);
         src/data/text/region_texts113.o(.rodata);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_data);

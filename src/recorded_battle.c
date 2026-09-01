@@ -2982,7 +2982,7 @@ __attribute__((naked)) u16 *GetRecordedBattleEasyChatSpeech(void)
 }
 
 void sub_08186214(void) {}
-__attribute__((naked)) void sub_08186218(void)
+__attribute__((naked)) void SetControllerToRecordedOpponent(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2997,12 +2997,12 @@ __attribute__((naked)) void sub_08186218(void)
         "	.align 2, 0\n\t"
         "_08186228: .4byte gBattlerControllerFuncs\n\t"
         "_0818622C: .4byte gActiveBattler\n\t"
-        "_08186230: .4byte sub_08186234 + 1\n\t"
+        "_08186230: .4byte RecordedOpponentBufferRunCommand + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_08186234(void)
+__attribute__((naked)) void RecordedOpponentBufferRunCommand(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3036,7 +3036,7 @@ __attribute__((naked)) void sub_08186234(void)
         "_0818626C: .4byte gBitTable\n\t"
         "_08186270: .4byte gActiveBattler\n\t"
         "_08186274: .4byte gBattleBufferA\n\t"
-        "_08186278: .4byte gUnknown_85D38F0\n\t"
+        "_08186278: .4byte gRecordedOpponentBufferCommands\n\t"
         "_0818627C:\n\t"
         "	bl RecordedOpponentBufferExecCompleted\n\t"
         "_08186280:\n\t"

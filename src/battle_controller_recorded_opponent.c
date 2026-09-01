@@ -1,6 +1,8 @@
 #include "global.h"
 #include "battle_controllers.h"
 
+#define RECORDED_OPPONENT_COMMANDS __attribute__((section(".rodata.recorded_opponent_commands")))
+
 __attribute__((naked)) void RecordedOpponentBufferExecCompleted(void)
 {
     __asm__(".syntax unified\n\t"
@@ -37,7 +39,7 @@ __attribute__((naked)) void RecordedOpponentBufferExecCompleted(void)
         "	.align 2, 0\n\t"
         "_08186F18: .4byte gBattlerControllerFuncs\n\t"
         "_08186F1C: .4byte gActiveBattler\n\t"
-        "_08186F20: .4byte sub_08186234 + 1\n\t"
+        "_08186F20: .4byte RecordedOpponentBufferRunCommand + 1\n\t"
         "_08186F24: .4byte gBattleTypeFlags\n\t"
         "_08186F28: .4byte gBattleBufferA\n\t"
         "_08186F2C:\n\t"
@@ -3587,7 +3589,7 @@ __attribute__((naked)) void RecordedOpponentHandleChooseAction(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandleUnknownYesNoBox(void)
+__attribute__((naked)) void RecordedOpponentHandleYesNoBox(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3981,7 +3983,7 @@ void RecordedOpponentHandleOneReturnValue_Duplicate(void)
 }
 
 
-__attribute__((naked)) void RecordedOpponentHandleCmd37(void)
+__attribute__((naked)) void RecordedOpponentHandleClearUnkVar(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4001,7 +4003,7 @@ __attribute__((naked)) void RecordedOpponentHandleCmd37(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandleCmd38(void)
+__attribute__((naked)) void RecordedOpponentHandleSetUnkVar(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4033,7 +4035,7 @@ __attribute__((naked)) void RecordedOpponentHandleCmd38(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandleCmd39(void)
+__attribute__((naked)) void RecordedOpponentHandleClearUnkFlag(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4052,7 +4054,7 @@ __attribute__((naked)) void RecordedOpponentHandleCmd39(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandleCmd40(void)
+__attribute__((naked)) void RecordedOpponentHandleToggleUnkFlag(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4137,7 +4139,7 @@ __attribute__((naked)) void RecordedOpponentHandleHitAnimation(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandleCmd42(void)
+__attribute__((naked)) void RecordedOpponentHandleCantSwitch(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4913,7 +4915,7 @@ void RecordedOpponentHandleResetActionMoveSelection(void)
 }
 
 
-__attribute__((naked)) void RecordedOpponentHandleCmd55(void)
+__attribute__((naked)) void RecordedOpponentHandleEndLinkBattle(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4964,3 +4966,64 @@ __attribute__((naked)) void RecordedOpponentHandleCmd55(void)
 }
 
 void RecordedOpponentCmdEnd(void) {}
+
+void (*const gRecordedOpponentBufferCommands[CONTROLLER_CMDS_COUNT])(void) RECORDED_OPPONENT_COMMANDS =
+{
+    [CONTROLLER_GETMONDATA]               = RecordedOpponentHandleGetMonData,
+    [CONTROLLER_GETRAWMONDATA]            = RecordedOpponentHandleGetRawMonData,
+    [CONTROLLER_SETMONDATA]               = RecordedOpponentHandleSetMonData,
+    [CONTROLLER_SETRAWMONDATA]            = RecordedOpponentHandleSetRawMonData,
+    [CONTROLLER_LOADMONSPRITE]            = RecordedOpponentHandleLoadMonSprite,
+    [CONTROLLER_SWITCHINANIM]             = RecordedOpponentHandleSwitchInAnim,
+    [CONTROLLER_RETURNMONTOBALL]          = RecordedOpponentHandleReturnMonToBall,
+    [CONTROLLER_DRAWTRAINERPIC]           = RecordedOpponentHandleDrawTrainerPic,
+    [CONTROLLER_TRAINERSLIDE]             = RecordedOpponentHandleTrainerSlide,
+    [CONTROLLER_TRAINERSLIDEBACK]         = RecordedOpponentHandleTrainerSlideBack,
+    [CONTROLLER_FAINTANIMATION]           = RecordedOpponentHandleFaintAnimation,
+    [CONTROLLER_PALETTEFADE]              = RecordedOpponentHandlePaletteFade,
+    [CONTROLLER_SUCCESSBALLTHROWANIM]     = RecordedOpponentHandleSuccessBallThrowAnim,
+    [CONTROLLER_BALLTHROWANIM]            = RecordedOpponentHandleBallThrowAnim,
+    [CONTROLLER_PAUSE]                    = RecordedOpponentHandlePause,
+    [CONTROLLER_MOVEANIMATION]            = RecordedOpponentHandleMoveAnimation,
+    [CONTROLLER_PRINTSTRING]              = RecordedOpponentHandlePrintString,
+    [CONTROLLER_PRINTSTRINGPLAYERONLY]    = RecordedOpponentHandlePrintSelectionString,
+    [CONTROLLER_CHOOSEACTION]             = RecordedOpponentHandleChooseAction,
+    [CONTROLLER_YESNOBOX]                 = RecordedOpponentHandleYesNoBox,
+    [CONTROLLER_CHOOSEMOVE]               = RecordedOpponentHandleChooseMove,
+    [CONTROLLER_OPENBAG]                  = RecordedOpponentHandleChooseItem,
+    [CONTROLLER_CHOOSEPOKEMON]            = RecordedOpponentHandleChoosePokemon,
+    [CONTROLLER_23]                       = RecordedOpponentHandleCmd23,
+    [CONTROLLER_HEALTHBARUPDATE]          = RecordedOpponentHandleHealthBarUpdate,
+    [CONTROLLER_EXPUPDATE]                = RecordedOpponentHandleExpUpdate,
+    [CONTROLLER_STATUSICONUPDATE]         = RecordedOpponentHandleStatusIconUpdate,
+    [CONTROLLER_STATUSANIMATION]          = RecordedOpponentHandleStatusAnimation,
+    [CONTROLLER_STATUSXOR]                = RecordedOpponentHandleStatusXor,
+    [CONTROLLER_DATATRANSFER]             = RecordedOpponentHandleDataTransfer,
+    [CONTROLLER_DMA3TRANSFER]             = RecordedOpponentHandleDMA3Transfer,
+    [CONTROLLER_PLAYBGM]                  = RecordedOpponentHandlePlayBGM,
+    [CONTROLLER_32]                       = RecordedOpponentHandleCmd32,
+    [CONTROLLER_TWORETURNVALUES]          = RecordedOpponentHandleTwoReturnValues,
+    [CONTROLLER_CHOSENMONRETURNVALUE]     = RecordedOpponentHandleChosenMonReturnValue,
+    [CONTROLLER_ONERETURNVALUE]           = RecordedOpponentHandleOneReturnValue,
+    [CONTROLLER_ONERETURNVALUE_DUPLICATE] = RecordedOpponentHandleOneReturnValue_Duplicate,
+    [CONTROLLER_CLEARUNKVAR]              = RecordedOpponentHandleClearUnkVar,
+    [CONTROLLER_SETUNKVAR]                = RecordedOpponentHandleSetUnkVar,
+    [CONTROLLER_CLEARUNKFLAG]             = RecordedOpponentHandleClearUnkFlag,
+    [CONTROLLER_TOGGLEUNKFLAG]            = RecordedOpponentHandleToggleUnkFlag,
+    [CONTROLLER_HITANIMATION]             = RecordedOpponentHandleHitAnimation,
+    [CONTROLLER_CANTSWITCH]               = RecordedOpponentHandleCantSwitch,
+    [CONTROLLER_PLAYSE]                   = RecordedOpponentHandlePlaySE,
+    [CONTROLLER_PLAYFANFAREORBGM]         = RecordedOpponentHandlePlayFanfareOrBGM,
+    [CONTROLLER_FAINTINGCRY]              = RecordedOpponentHandleFaintingCry,
+    [CONTROLLER_INTROSLIDE]               = RecordedOpponentHandleIntroSlide,
+    [CONTROLLER_INTROTRAINERBALLTHROW]    = RecordedOpponentHandleIntroTrainerBallThrow,
+    [CONTROLLER_DRAWPARTYSTATUSSUMMARY]   = RecordedOpponentHandleDrawPartyStatusSummary,
+    [CONTROLLER_HIDEPARTYSTATUSSUMMARY]   = RecordedOpponentHandleHidePartyStatusSummary,
+    [CONTROLLER_ENDBOUNCE]                = RecordedOpponentHandleEndBounceEffect,
+    [CONTROLLER_SPRITEINVISIBILITY]       = RecordedOpponentHandleSpriteInvisibility,
+    [CONTROLLER_BATTLEANIMATION]          = RecordedOpponentHandleBattleAnimation,
+    [CONTROLLER_LINKSTANDBYMSG]           = RecordedOpponentHandleLinkStandbyMsg,
+    [CONTROLLER_RESETACTIONMOVESELECTION] = RecordedOpponentHandleResetActionMoveSelection,
+    [CONTROLLER_ENDLINKBATTLE]            = RecordedOpponentHandleEndLinkBattle,
+    [CONTROLLER_TERMINATOR_NOP]           = RecordedOpponentCmdEnd,
+};
