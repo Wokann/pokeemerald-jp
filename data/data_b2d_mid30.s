@@ -918,7 +918,19 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/BirthIsland_Exterior/header.inc"
 	@ MAP_BIRTH_ISLAND_HARBOR (g26 m59)
 	.include "data/maps/BirthIsland_Harbor/header.inc"
-	.incbin "baserom_jp.gba", 0x45DBEC, 0xC78
+	@ MAP_TRAINER_HILL_ENTRANCE (g26 m60)
+	.include "data/maps/TrainerHill_Entrance/header.inc"
+	@ MAP_TRAINER_HILL_1F (g26 m61)
+	.include "data/maps/TrainerHill_1F/header.inc"
+	@ MAP_TRAINER_HILL_2F (g26 m62)
+	.include "data/maps/TrainerHill_2F/header.inc"
+	@ MAP_TRAINER_HILL_3F (g26 m63)
+	.include "data/maps/TrainerHill_3F/header.inc"
+	@ MAP_TRAINER_HILL_4F (g26 m64)
+	.include "data/maps/TrainerHill_4F/header.inc"
+	@ MAP_TRAINER_HILL_ROOF (g26 m65)
+	.include "data/maps/TrainerHill_Roof/header.inc"
+	.incbin "baserom_jp.gba", 0x45DC94, 0xBD0
 	.4byte BattleFrontier_BattlePikeLobby
 	.4byte BattleFrontier_BattlePikeCorridor
 	.4byte BattleFrontier_BattlePikeThreePathRoom
@@ -945,7 +957,13 @@ gMapHeaders: @ 0x0845A8D8
 	.4byte FarawayIsland_Interior
 	.4byte BirthIsland_Exterior
 	.4byte BirthIsland_Harbor
-	.incbin "baserom_jp.gba", 0x45E8CC, 0xCC
+	.4byte TrainerHill_Entrance
+	.4byte TrainerHill_1F
+	.4byte TrainerHill_2F
+	.4byte TrainerHill_3F
+	.4byte TrainerHill_4F
+	.4byte TrainerHill_Roof
+	.incbin "baserom_jp.gba", 0x45E8E4, 0xB4
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

@@ -45,6 +45,12 @@ CANONICAL_LAYOUT_SYMBOLS = {
     "LAYOUT_FARAWAY_ISLAND_INTERIOR": "FarawayIsland_Interior_Layout",
     "LAYOUT_BIRTH_ISLAND_EXTERIOR": "BirthIsland_Exterior_Layout",
     "LAYOUT_ISLAND_HARBOR": "IslandHarbor_Layout",
+    "LAYOUT_TRAINER_HILL_ENTRANCE": "TrainerHill_Entrance_Layout",
+    "LAYOUT_TRAINER_HILL_1F": "TrainerHill_1F_Layout",
+    "LAYOUT_TRAINER_HILL_2F": "TrainerHill_2F_Layout",
+    "LAYOUT_TRAINER_HILL_3F": "TrainerHill_3F_Layout",
+    "LAYOUT_TRAINER_HILL_4F": "TrainerHill_4F_Layout",
+    "LAYOUT_TRAINER_HILL_ROOF": "TrainerHill_Roof_Layout",
 }
 
 # The JP layout table has not yet adopted the US shared-layout labels for these

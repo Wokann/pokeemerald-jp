@@ -773,7 +773,19 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/BirthIsland_Exterior/events.inc"
 	@ MAP_BIRTH_ISLAND_HARBOR (g26 m59)
 	.include "data/maps/BirthIsland_Harbor/events.inc"
-	.incbin "baserom_jp.gba", 0x515FA0, 0x15DC
+	@ MAP_TRAINER_HILL_ENTRANCE (g26 m60)
+	.include "data/maps/TrainerHill_Entrance/events.inc"
+	@ MAP_TRAINER_HILL_1F (g26 m61)
+	.include "data/maps/TrainerHill_1F/events.inc"
+	@ MAP_TRAINER_HILL_2F (g26 m62)
+	.include "data/maps/TrainerHill_2F/events.inc"
+	@ MAP_TRAINER_HILL_3F (g26 m63)
+	.include "data/maps/TrainerHill_3F/events.inc"
+	@ MAP_TRAINER_HILL_4F (g26 m64)
+	.include "data/maps/TrainerHill_4F/events.inc"
+	@ MAP_TRAINER_HILL_ROOF (g26 m65)
+	.include "data/maps/TrainerHill_Roof/events.inc"
+	.incbin "baserom_jp.gba", 0x51612C, 0x1450
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
