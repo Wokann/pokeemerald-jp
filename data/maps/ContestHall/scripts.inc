@@ -17,7 +17,7 @@ ContestHall_OnTransition:
 	end
 
 ContestHall_EventScript_ReadyContestMusic::
-	call 0x08248F62
+	call ContestHall_EventScript_TryWaitForLink
 	special GetContestMultiplayerId
 	call_if_eq VAR_RESULT, 0, ContestHall_EventScript_SaveContestMusicPlayer1
 	call_if_eq VAR_RESULT, 1, ContestHall_EventScript_SaveContestMusicPlayer2
@@ -63,7 +63,7 @@ ContestHall_OnWarp:
 	.2byte 0
 
 ContestHall_EventScript_Contest::
-	call 0x08248DC6
+	call ContestHall_EventScript_DoContest
 	call ContestHall_EventScript_SetExitWarp
 	end
 
