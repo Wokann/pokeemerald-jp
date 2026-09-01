@@ -762,7 +762,10 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/BattleFrontier_ReceptionGate/events.inc"
 	.include "data/maps/BattleFrontier_Lounge8/events.inc"
 	.include "data/maps/BattleFrontier_Lounge9/events.inc"
-	.incbin "baserom_jp.gba", 0x515C88, 0x18F4
+	.include "data/maps/BattleFrontier_PokemonCenter_1F/events.inc"
+	.include "data/maps/BattleFrontier_PokemonCenter_2F/events.inc"
+	.include "data/maps/BattleFrontier_Mart/events.inc"
+	.incbin "baserom_jp.gba", 0x515E3C, 0x1740
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

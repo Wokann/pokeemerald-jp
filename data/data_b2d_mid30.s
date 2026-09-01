@@ -904,7 +904,13 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/BattleFrontier_Lounge8/header.inc"
 	@ MAP_BATTLE_FRONTIER_LOUNGE9 (g26 m52)
 	.include "data/maps/BattleFrontier_Lounge9/header.inc"
-	.incbin "baserom_jp.gba", 0x45DB28, 0xD3C
+	@ MAP_BATTLE_FRONTIER_POKEMON_CENTER_1F (g26 m53)
+	.include "data/maps/BattleFrontier_PokemonCenter_1F/header.inc"
+	@ MAP_BATTLE_FRONTIER_POKEMON_CENTER_2F (g26 m54)
+	.include "data/maps/BattleFrontier_PokemonCenter_2F/header.inc"
+	@ MAP_BATTLE_FRONTIER_MART (g26 m55)
+	.include "data/maps/BattleFrontier_Mart/header.inc"
+	.incbin "baserom_jp.gba", 0x45DB7C, 0xCE8
 	.4byte BattleFrontier_BattlePikeLobby
 	.4byte BattleFrontier_BattlePikeCorridor
 	.4byte BattleFrontier_BattlePikeThreePathRoom
@@ -924,7 +930,10 @@ gMapHeaders: @ 0x0845A8D8
 	.4byte BattleFrontier_ReceptionGate
 	.4byte BattleFrontier_Lounge8
 	.4byte BattleFrontier_Lounge9
-	.incbin "baserom_jp.gba", 0x45E8B0, 0xE8
+	.4byte BattleFrontier_PokemonCenter_1F
+	.4byte BattleFrontier_PokemonCenter_2F
+	.4byte BattleFrontier_Mart
+	.incbin "baserom_jp.gba", 0x45E8BC, 0xDC
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
