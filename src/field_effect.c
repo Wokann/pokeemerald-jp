@@ -3,8 +3,23 @@
 #include "sprite.h"
 #include "main.h"
 #include "task.h"
+#include "constants/field_effects.h"
 
+#define FIELD_EFFECT_GRAPHICS_DATA __attribute__((section(".rodata.field_effect_graphics_data")))
 #define FIELD_EFFECT_GRAPHICS_RESOURCE_DATA __attribute__((section(".rodata.field_effect_graphics_resource_data")))
+#define FIELD_EFFECT_STATIC_DATA __attribute__((section(".rodata.field_effect_static_data")))
+
+static const u32 sNewGameBirch_Gfx[] FIELD_EFFECT_GRAPHICS_DATA = INCBIN_U32("graphics/birch_speech/birch.4bpp");
+static const u32 sUnusedBirchBeauty[] FIELD_EFFECT_GRAPHICS_DATA = INCBIN_U32("graphics/birch_speech/unused_beauty.4bpp");
+static const u16 sNewGameBirch_Pal[16] FIELD_EFFECT_GRAPHICS_DATA = INCBIN_U16("graphics/birch_speech/birch.gbapal");
+
+static const u32 sPokeballGlow_Gfx[] FIELD_EFFECT_GRAPHICS_DATA = INCBIN_U32("graphics/field_effects/pics/pokeball_glow.4bpp");
+static const u16 sPokeballGlow_Pal[16] FIELD_EFFECT_GRAPHICS_DATA = INCBIN_U16("graphics/field_effects/palettes/pokeball_glow.gbapal");
+static const u32 sPokecenterMonitor0_Gfx[] FIELD_EFFECT_GRAPHICS_DATA = INCBIN_U32("graphics/field_effects/pics/pokecenter_monitor/0.4bpp");
+static const u32 sPokecenterMonitor1_Gfx[] FIELD_EFFECT_GRAPHICS_DATA = INCBIN_U32("graphics/field_effects/pics/pokecenter_monitor/1.4bpp");
+static const u32 sHofMonitorBig_Gfx[] FIELD_EFFECT_GRAPHICS_DATA = INCBIN_U32("graphics/field_effects/pics/hof_monitor_big.4bpp");
+static const u8 sHofMonitorSmall_Gfx[] FIELD_EFFECT_GRAPHICS_DATA = INCBIN_U8("graphics/field_effects/pics/hof_monitor_small.4bpp");
+static const u16 sHofMonitor_Pal[16] FIELD_EFFECT_GRAPHICS_DATA = INCBIN_U16("graphics/field_effects/palettes/hof_monitor.gbapal");
 
 // Graphics for the lights streaking past your Pokémon when it uses a field move.
 static const u32 sFieldMoveStreaksOutdoors_Gfx[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U32("graphics/field_effects/pics/field_move_streaks.4bpp");
@@ -22,6 +37,290 @@ static const u8 sRockFragment_TopLeft[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = IN
 static const u8 sRockFragment_TopRight[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U8("graphics/field_effects/pics/deoxys_rock_fragment_top_right.4bpp");
 static const u8 sRockFragment_BottomLeft[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U8("graphics/field_effects/pics/deoxys_rock_fragment_bottom_left.4bpp");
 static const u8 sRockFragment_BottomRight[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U8("graphics/field_effects/pics/deoxys_rock_fragment_bottom_right.4bpp");
+
+void SpriteCB_PokeballGlow(struct Sprite *sprite);
+void SpriteCB_PokecenterMonitor(struct Sprite *sprite);
+void SpriteCB_HallOfFameMonitor(struct Sprite *sprite);
+
+static const struct OamData sOam_64x64 FIELD_EFFECT_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+};
+
+static const struct OamData sOam_8x8 FIELD_EFFECT_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+};
+
+static const struct OamData sOam_16x16 FIELD_EFFECT_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+};
+
+static const struct SpriteFrameImage sPicTable_NewGameBirch[] FIELD_EFFECT_STATIC_DATA =
+{
+    obj_frame_tiles(sNewGameBirch_Gfx)
+};
+
+static const struct SpritePalette sSpritePalette_NewGameBirch FIELD_EFFECT_STATIC_DATA =
+{
+    .data = sNewGameBirch_Pal,
+    .tag = 0x1006,
+};
+
+static const union AnimCmd sAnim_NewGameBirch[] FIELD_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(.imageValue = 0, .duration = 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnimTable_NewGameBirch[] FIELD_EFFECT_STATIC_DATA =
+{
+    sAnim_NewGameBirch,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_NewGameBirch FIELD_EFFECT_STATIC_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = 0x1006,
+    .oam = &sOam_64x64,
+    .anims = sAnimTable_NewGameBirch,
+    .images = sPicTable_NewGameBirch,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+const struct SpritePalette gSpritePalette_PokeballGlow FIELD_EFFECT_STATIC_DATA =
+{
+    .data = sPokeballGlow_Pal,
+    .tag = FLDEFF_PAL_TAG_POKEBALL_GLOW,
+};
+
+const struct SpritePalette gSpritePalette_HofMonitor FIELD_EFFECT_STATIC_DATA =
+{
+    .data = sHofMonitor_Pal,
+    .tag = FLDEFF_PAL_TAG_HOF_MONITOR,
+};
+
+static const struct OamData sOam_32x16 FIELD_EFFECT_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x16),
+    .x = 0,
+    .size = SPRITE_SIZE(32x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+};
+
+static const struct SpriteFrameImage sPicTable_PokeballGlow[] FIELD_EFFECT_STATIC_DATA =
+{
+    obj_frame_tiles(sPokeballGlow_Gfx)
+};
+
+static const struct SpriteFrameImage sPicTable_PokecenterMonitor[] FIELD_EFFECT_STATIC_DATA =
+{
+    obj_frame_tiles(sPokecenterMonitor0_Gfx),
+    obj_frame_tiles(sPokecenterMonitor1_Gfx),
+};
+
+static const struct SpriteFrameImage sPicTable_HofMonitorBig[] FIELD_EFFECT_STATIC_DATA =
+{
+    obj_frame_tiles(sHofMonitorBig_Gfx)
+};
+
+static const struct SpriteFrameImage sPicTable_HofMonitorSmall[] FIELD_EFFECT_STATIC_DATA =
+{
+    {.data = sHofMonitorSmall_Gfx, .size = 0x200},
+};
+
+static const struct Subsprite sSubsprites_PokecenterMonitor[] FIELD_EFFECT_STATIC_DATA =
+{
+    {
+        .x = -12,
+        .y = -8,
+        .shape = SPRITE_SHAPE(16x8),
+        .size = SPRITE_SIZE(16x8),
+        .tileOffset = 0,
+        .priority = 2,
+    },
+    {
+        .x = 4,
+        .y = -8,
+        .shape = SPRITE_SHAPE(8x8),
+        .size = SPRITE_SIZE(8x8),
+        .tileOffset = 2,
+        .priority = 2,
+    },
+    {
+        .x = -12,
+        .y = 0,
+        .shape = SPRITE_SHAPE(16x8),
+        .size = SPRITE_SIZE(16x8),
+        .tileOffset = 3,
+        .priority = 2,
+    },
+    {
+        .x = 4,
+        .y = 0,
+        .shape = SPRITE_SHAPE(8x8),
+        .size = SPRITE_SIZE(8x8),
+        .tileOffset = 5,
+        .priority = 2,
+    },
+};
+
+static const struct SubspriteTable sSubspriteTable_PokecenterMonitor FIELD_EFFECT_STATIC_DATA =
+{
+    .subspriteCount = ARRAY_COUNT(sSubsprites_PokecenterMonitor),
+    .subsprites = sSubsprites_PokecenterMonitor,
+};
+
+static const struct Subsprite sSubsprites_HofMonitorBig[] FIELD_EFFECT_STATIC_DATA =
+{
+    {
+        .x = -32,
+        .y = -8,
+        .shape = SPRITE_SHAPE(32x8),
+        .size = SPRITE_SIZE(32x8),
+        .tileOffset = 0,
+        .priority = 2,
+    },
+    {
+        .x = 0,
+        .y = -8,
+        .shape = SPRITE_SHAPE(32x8),
+        .size = SPRITE_SIZE(32x8),
+        .tileOffset = 4,
+        .priority = 2,
+    },
+    {
+        .x = -32,
+        .y = 0,
+        .shape = SPRITE_SHAPE(32x8),
+        .size = SPRITE_SIZE(32x8),
+        .tileOffset = 8,
+        .priority = 2,
+    },
+    {
+        .x = 0,
+        .y = 0,
+        .shape = SPRITE_SHAPE(32x8),
+        .size = SPRITE_SIZE(32x8),
+        .tileOffset = 12,
+        .priority = 2,
+    },
+};
+
+static const struct SubspriteTable sSubspriteTable_HofMonitorBig FIELD_EFFECT_STATIC_DATA =
+{
+    .subspriteCount = ARRAY_COUNT(sSubsprites_HofMonitorBig),
+    .subsprites = sSubsprites_HofMonitorBig,
+};
+
+static const union AnimCmd sAnim_Static[] FIELD_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(.imageValue = 0, .duration = 1),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_Flicker[] FIELD_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(.imageValue = 0, .duration = 16),
+    ANIMCMD_FRAME(.imageValue = 1, .duration = 16),
+    ANIMCMD_FRAME(.imageValue = 0, .duration = 16),
+    ANIMCMD_FRAME(.imageValue = 1, .duration = 16),
+    ANIMCMD_FRAME(.imageValue = 0, .duration = 16),
+    ANIMCMD_FRAME(.imageValue = 1, .duration = 16),
+    ANIMCMD_FRAME(.imageValue = 0, .duration = 16),
+    ANIMCMD_FRAME(.imageValue = 1, .duration = 16),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_Flicker[] FIELD_EFFECT_STATIC_DATA =
+{
+    sAnim_Static,
+    sAnim_Flicker,
+};
+
+static const union AnimCmd *const sAnims_HofMonitor[] FIELD_EFFECT_STATIC_DATA =
+{
+    sAnim_Static,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_PokeballGlow FIELD_EFFECT_STATIC_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_POKEBALL_GLOW,
+    .oam = &sOam_8x8,
+    .anims = sAnims_Flicker,
+    .images = sPicTable_PokeballGlow,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_PokeballGlow,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_PokecenterMonitor FIELD_EFFECT_STATIC_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_GENERAL_0,
+    .oam = &sOam_16x16,
+    .anims = sAnims_Flicker,
+    .images = sPicTable_PokecenterMonitor,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_PokecenterMonitor,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_HofMonitorBig FIELD_EFFECT_STATIC_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_HOF_MONITOR,
+    .oam = &sOam_16x16,
+    .anims = sAnims_HofMonitor,
+    .images = sPicTable_HofMonitorBig,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_HallOfFameMonitor,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_HofMonitorSmall FIELD_EFFECT_STATIC_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_HOF_MONITOR,
+    .oam = &sOam_32x16,
+    .anims = sAnims_HofMonitor,
+    .images = sPicTable_HofMonitorSmall,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_HallOfFameMonitor,
+};
 
 extern u8 gUnknown_3000F58[32]; // sActiveList
 
@@ -452,7 +751,7 @@ __attribute__((naked)) u8 CreateTrainerSprite(u8 trainerSpriteID, s16 x, s16 y, 
         "	.align 2, 0\n\t"
         "_080B564C: .4byte gTrainerFrontPicPaletteTable\n\t"
         "_080B5650: .4byte gTrainerFrontPicTable\n\t"
-        "_080B5654: .4byte gUnknown_8536EBC\n\t"
+        "_080B5654: .4byte sOam_64x64\n\t"
         "_080B5658: .4byte gDummySpriteAnimTable\n\t"
         "_080B565C: .4byte gDummySpriteAffineAnimTable\n\t"
         "_080B5660: .4byte SpriteCallbackDummy + 1\n\t"
@@ -523,8 +822,8 @@ __attribute__((naked)) u8 AddNewGameBirchObject(s16 x, s16 y, u8 subpriority)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B56D4: .4byte gUnknown_8536EDC\n\t"
-        "_080B56D8: .4byte gUnknown_8536EF0\n\t"
+        "_080B56D4: .4byte sSpritePalette_NewGameBirch\n\t"
+        "_080B56D8: .4byte sSpriteTemplate_NewGameBirch\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1404,7 +1703,7 @@ __attribute__((naked)) void PokeballGlowEffect_PlaceBalls(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B5CC0: .4byte gUnknown_8536FB0\n\t"
+        "_080B5CC0: .4byte sSpriteTemplate_PokeballGlow\n\t"
         "_080B5CC4: .4byte gUnknown_8537050\n\t"
         "_080B5CC8: .4byte gSprites\n\t"
         ".syntax divided\n\t"
@@ -1843,9 +2142,9 @@ __attribute__((naked)) u8 CreatePokecenterMonitorSprite(s16 x, s16 y)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B5FF8: .4byte gUnknown_8536FC8\n\t"
+        "_080B5FF8: .4byte sSpriteTemplate_PokecenterMonitor\n\t"
         "_080B5FFC: .4byte gSprites\n\t"
-        "_080B6000: .4byte gUnknown_8536F58\n\t"
+        "_080B6000: .4byte sSubspriteTable_PokecenterMonitor\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1922,9 +2221,9 @@ __attribute__((naked)) void CreateHofMonitorSprite(s16 a0, s16 a1, s16 a2, bool8
         "	bl SetSubspriteTables\n\t"
         "	b _080B60A0\n\t"
         "	.align 2, 0\n\t"
-        "_080B6080: .4byte gUnknown_8536FE0\n\t"
+        "_080B6080: .4byte sSpriteTemplate_HofMonitorBig\n\t"
         "_080B6084: .4byte gSprites\n\t"
-        "_080B6088: .4byte gUnknown_8536F70\n\t"
+        "_080B6088: .4byte sSubspriteTable_HofMonitorBig\n\t"
         "_080B608C:\n\t"
         "	ldr r0, _080B60C0\n\t"
         "	lsls r1, r1, #0x10\n\t"
@@ -1952,7 +2251,7 @@ __attribute__((naked)) void CreateHofMonitorSprite(s16 a0, s16 a1, s16 a2, bool8
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B60C0: .4byte gUnknown_8536FF8\n\t"
+        "_080B60C0: .4byte sSpriteTemplate_HofMonitorSmall\n\t"
         "_080B60C4: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );

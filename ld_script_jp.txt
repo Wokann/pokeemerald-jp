@@ -9715,8 +9715,11 @@ SECTIONS {
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_battle_setup_rematch_data);
         src/wild_encounter.o(.rodata.wild_encounter_route119_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_wild_encounter_route119_data);
+        src/field_effect.o(.rodata.field_effect_graphics_data);
         src/field_effect.o(.rodata.field_effect_graphics_resource_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_field_effect_graphics_resource_data);
+        src/field_effect.o(.rodata.field_effect_static_data);
+        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_field_effect_script_funcs);
         src/option_menu.o(.rodata.option_menu_static_data);
         data/data_b2d_mid15.o(.rodata.option_menu_suffix);
         src/graphics.o(.rodata.pokedex_graphics_prefix);

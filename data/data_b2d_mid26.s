@@ -1775,10 +1775,6 @@ gBattlePikeWildMonHeaders: @ 0x852E6C0
 	.section .rodata.data_b2d_mid26_after_wild_encounter_route119_data
 	.align 2
 
-	.globl gUnknown_852E73C
-gUnknown_852E73C: @ 0x852E73C
-	.incbin "baserom_jp.gba", 0x52e73c, 0x73c0
-
 	.section .rodata.data_b2d_mid26_after_field_effect_graphics_resource_data
 	.align 2
 
@@ -1786,51 +1782,8 @@ gUnknown_852E73C: @ 0x852E73C
 gFieldEffectScriptFuncs: @ 0x8536E9C
 	.4byte FieldEffectCmd_loadtiles + 1, FieldEffectCmd_loadfadedpal + 1, FieldEffectCmd_loadpal + 1, FieldEffectCmd_callnative + 1, FieldEffectCmd_end + 1, FieldEffectCmd_loadgfx_callnative + 1, FieldEffectCmd_loadtiles_callnative + 1, FieldEffectCmd_loadfadedpal_callnative + 1
 
-	.globl gUnknown_8536EBC
-gUnknown_8536EBC: @ 0x8536EBC
-	.incbin "baserom_jp.gba", 0x536ebc, 0x20
-
-	.globl gUnknown_8536EDC
-gUnknown_8536EDC: @ 0x8536EDC
-	.incbin "baserom_jp.gba", 0x536edc, 0x14
-
-	.globl gUnknown_8536EF0
-gUnknown_8536EF0: @ 0x8536EF0
-	.incbin "baserom_jp.gba", 0x536ef0, 0x18
-
-	.globl gSpritePalette_PokeballGlow
-gSpritePalette_PokeballGlow: @ 0x8536F08
-	.incbin "baserom_jp.gba", 0x536f08, 0x8
-
-	.globl gSpritePalette_HofMonitor
-gSpritePalette_HofMonitor: @ 0x8536F10
-	.incbin "baserom_jp.gba", 0x536f10, 0x8
-
-	.incbin "baserom_jp.gba", 0x536f18, 0x40
-
-	.globl gUnknown_8536F58
-gUnknown_8536F58: @ 0x8536F58
-	.incbin "baserom_jp.gba", 0x536f58, 0x18
-
-	.globl gUnknown_8536F70
-gUnknown_8536F70: @ 0x8536F70
-	.incbin "baserom_jp.gba", 0x536f70, 0x40
-
-	.globl gUnknown_8536FB0
-gUnknown_8536FB0: @ 0x8536FB0
-	.incbin "baserom_jp.gba", 0x536fb0, 0x18
-
-	.globl gUnknown_8536FC8
-gUnknown_8536FC8: @ 0x8536FC8
-	.incbin "baserom_jp.gba", 0x536fc8, 0x18
-
-	.globl gUnknown_8536FE0
-gUnknown_8536FE0: @ 0x8536FE0
-	.incbin "baserom_jp.gba", 0x536fe0, 0x18
-
-	.globl gUnknown_8536FF8
-gUnknown_8536FF8: @ 0x8536FF8
-	.incbin "baserom_jp.gba", 0x536ff8, 0x18
+	.section .rodata.data_b2d_mid26_after_field_effect_script_funcs
+	.align 2
 
 	.globl sPokecenterHealEffectFuncs
 sPokecenterHealEffectFuncs: @ 0x8537010

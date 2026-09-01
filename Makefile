@@ -1041,6 +1041,9 @@ $(OBJFILE) $(ELF) $(ROM): | tools
 %.lz: % | tools
 	$(GFX) $< $@
 
+graphics/birch_speech/unused_beauty.4bpp: graphics/birch_speech/unused_beauty.png | tools
+	$(GFX) $< $@ -num_tiles 822 -Wnum_tiles
+
 %.4bpp: %.png | tools
 	$(GFX) $< $@
 
@@ -1364,7 +1367,16 @@ $(C_BUILDDIR)/field_weather_effect.o: src/field_weather_effect.c $(wildcard grap
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/field_weather_effect.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/field_weather_effect.gen.s
 
-$(C_BUILDDIR)/field_effect.o: src/field_effect.c $(wildcard graphics/field_effects/pics/field_move_streaks.4bpp graphics/field_effects/pics/field_move_streaks.gbapal graphics/field_effects/pics/field_move_streaks.bin graphics/field_effects/pics/field_move_streaks_indoors.4bpp graphics/field_effects/pics/field_move_streaks_indoors.gbapal graphics/field_effects/pics/field_move_streaks_indoors.bin graphics/field_effects/pics/spotlight.4bpp graphics/field_effects/pics/spotlight.gbapal graphics/field_effects/pics/deoxys_rock_fragment_top_left.4bpp graphics/field_effects/pics/deoxys_rock_fragment_top_right.4bpp graphics/field_effects/pics/deoxys_rock_fragment_bottom_left.4bpp graphics/field_effects/pics/deoxys_rock_fragment_bottom_right.4bpp)
+$(C_BUILDDIR)/field_effect.o: src/field_effect.c \
+	graphics/birch_speech/birch.4bpp graphics/birch_speech/unused_beauty.4bpp graphics/birch_speech/birch.gbapal \
+	graphics/field_effects/pics/pokeball_glow.4bpp graphics/field_effects/palettes/pokeball_glow.gbapal \
+	graphics/field_effects/pics/pokecenter_monitor/0.4bpp graphics/field_effects/pics/pokecenter_monitor/1.4bpp \
+	graphics/field_effects/pics/hof_monitor_big.4bpp graphics/field_effects/pics/hof_monitor_small.4bpp graphics/field_effects/palettes/hof_monitor.gbapal \
+	graphics/field_effects/pics/field_move_streaks.4bpp graphics/field_effects/pics/field_move_streaks.gbapal graphics/field_effects/pics/field_move_streaks.bin \
+	graphics/field_effects/pics/field_move_streaks_indoors.4bpp graphics/field_effects/pics/field_move_streaks_indoors.gbapal graphics/field_effects/pics/field_move_streaks_indoors.bin \
+	graphics/field_effects/pics/spotlight.4bpp graphics/field_effects/pics/spotlight.gbapal \
+	graphics/field_effects/pics/deoxys_rock_fragment_top_left.4bpp graphics/field_effects/pics/deoxys_rock_fragment_top_right.4bpp \
+	graphics/field_effects/pics/deoxys_rock_fragment_bottom_left.4bpp graphics/field_effects/pics/deoxys_rock_fragment_bottom_right.4bpp
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/field_effect.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/field_effect.gen.s | $(AS) $(ASFLAGS) -o $@ -
