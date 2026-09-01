@@ -2,11 +2,11 @@ const u8 gUnknown_85CA1FB[] = _("その　ポケモンは　さんか　でき�
 
 const u8 gUnknown_85CA210[] = _("さんかを　やめますか？");
 
-const u8 gUnknown_85CA21C[] = _("たいせんを　やめますか？");
+const u8 gText_CancelBattle[] = _("たいせんを　やめますか？");
 
-const u8 gUnknown_85CA229[] = _("ひかえしつに　もどりますか？");
+const u8 gText_ReturnToWaitingRoom[] = _("ひかえしつに　もどりますか？");
 
-const u8 gUnknown_85CA238[] = _("ちょうせんを　やめますか？");
+const u8 gText_CancelChallenge[] = _("ちょうせんを　やめますか？");
 
 const u8 gUnknown_85CA246[] = _(
     "ここを　だっしゅつ　して\n"

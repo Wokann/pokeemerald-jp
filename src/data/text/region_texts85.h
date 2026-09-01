@@ -1,12 +1,12 @@
-const u8 gUnknown_85CA36F[] = _("こうげき");
+const u8 gText_Attack3[] = _("こうげき");
 
-const u8 gUnknown_85CA374[] = _("ぼうぎょ");
+const u8 gText_Defense3[] = _("ぼうぎょ");
 
 const u8 gUnknown_85CA379[] = _("とくこう");
 
 const u8 gUnknown_85CA37E[] = _("とくぼう");
 
-const u8 gUnknown_85CA383[] = _("すばやさ");
+const u8 gText_Speed2[] = _("すばやさ");
 
 const u8 gUnknown_85CA388[] = _("HP");
 

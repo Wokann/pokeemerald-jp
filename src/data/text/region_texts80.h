@@ -20,4 +20,10 @@ const u8 gUnknown_85C9894[] = _(
 
 const u8 gUnknown_85C98A9[] = _(
     "{STR_VAR_1}は　{STR_VAR_2}を\n"
-    "いやそうに　たべた！{PAUSE_UNTIL_PRESS}$かいに　きた$うりに　きた$なんでもないです");
+    "いやそうに　たべた！{PAUSE_UNTIL_PRESS}");
+
+const u8 gText_ShopBuy[] = _("かいに　きた");
+
+const u8 gText_ShopSell[] = _("うりに　きた");
+
+const u8 gText_ShopQuit[] = _("なんでもないです");

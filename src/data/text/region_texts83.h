@@ -6,7 +6,7 @@ const u8 gUnknown_85C9F3B[] = _(
     "{STR_VAR_1}の\n"
     "わざポイントが　ふえた！{PAUSE_UNTIL_PRESS}");
 
-const u8 gUnknown_85C9F4E[] = _(
+const u8 gText_PkmnElevatedToLvVar2[] = _(
     "{STR_VAR_1}の\n"
     "レベルが　{STR_VAR_2}になった！");
 

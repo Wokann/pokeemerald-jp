@@ -236,11 +236,13 @@ gSlideMonToOffsetAndBackSpriteTemplate: @ 0x855A9B8
 	.globl gJPText_WriteErrorUnableToSaveData
 gJPText_WriteErrorUnableToSaveData: @ 0x85CD043
 	.string "かきこみ　エラー　です\n"
-	.string "データが　ほぞん　できませんでした$あか$あお$　"
+	.string "データが　ほぞん　できませんでした$"
 	.globl gText_Red
-	.set gText_Red, gJPText_WriteErrorUnableToSaveData + 0x1E
+gText_Red: @ 0x85CD061
+	.string "あか$"
 	.globl gText_Blue
-	.set gText_Blue, gJPText_WriteErrorUnableToSaveData + 0x21
+gText_Blue: @ 0x85CD064
+	.string "あお$　"
 	.globl gUnknown_85CD068
 gUnknown_85CD068: @ 0x85CD068
 	.incbin "baserom_jp.gba", 0x5cd068, 0x10
@@ -336,12 +338,6 @@ gUnknown_85CA2CC: @ 0x85CA2CC
 	.globl gText_Register
 gText_Register: @ 0x85CA368
 	.string "とうろくする$"
-	.globl gText_Attack3
-	.set gText_Attack3, gText_Register + 0x7
-	.globl gText_Defense3
-	.set gText_Defense3, gText_Register + 0xC
-	.globl gText_Speed2
-	.set gText_Speed2, gText_Register + 0x1B
 
 	.section .rodata.mid93
 
@@ -402,9 +398,10 @@ gUnknown_85CAB0D: @ 0x85CAB0D
 
 	.globl gUnknown_85CAB13
 gUnknown_85CAB13: @ 0x85CAB13
-	.string "オープンレベル$おいしいみず　200¥$サイコソーダ　300¥$ミックスオレ　350¥$はしりかた$まがるコツ$すなのさか$ウイリー$ダニエル$ジャンプ$まんぞく$ふまん$しんかいのキバ$しんかいのウロコ$あおいビードロ$きいろビードロ$あかいビードロ$しろいビードロ$くろいビードロ$ガラスのいす$ガラスのつくえ$キモリドール　　　1000まい$アチャモドール　　1000まい$ミズゴロウドール　1000まい$　50まい　　1000¥$500まい　10000¥$ばつぐん$あんまり$あかいかけら$きいろいかけら$あおいかけら$みどりのかけら$バトルフロンティア$みぎ$ひだり$わざマシン32　　1500まい$わざマシン29　　3500まい$わざマシン35　　4000まい$わざマシン24　　4000まい$わざマシン13　　4000まい$"
+	.string "オープンレベル$おいしいみず　200¥$サイコソーダ　300¥$ミックスオレ　350¥$はしりかた$まがるコツ$すなのさか$ウイリー$ダニエル$ジャンプ$まんぞく$ふまん$しんかいのキバ$しんかいのウロコ$あおいビードロ$きいろビードロ$あかいビードロ$しろいビードロ$くろいビードロ$ガラスのいす$ガラスのつくえ$キモリドール　　　1000まい$アチャモドール　　1000まい$ミズゴロウドール　1000まい$　50まい　　1000¥$500まい　10000¥$ばつぐん$あんまり$あかいかけら$きいろいかけら$あおいかけら$みどりのかけら$"
 	.globl gText_BattleFrontier
-	.set gText_BattleFrontier, gUnknown_85CAB13 + 0x110
+gText_BattleFrontier: @ 0x85CAC23
+	.string "バトルフロンティア$みぎ$ひだり$わざマシン32　　1500まい$わざマシン29　　3500まい$わざマシン35　　4000まい$わざマシン24　　4000まい$わざマシン13　　4000まい$"
 	.globl gUnknown_85CAC84
 
 	.section .rodata.mid85
@@ -418,15 +415,19 @@ gUnknown_85CADCB: @ 0x85CADCB
 	.string "せってい$"
 	.globl gUnknown_85CADD0
 gUnknown_85CADD0: @ 0x85CADD0
-	.string "とじる$　5BP$10BP$15BP$あかいテント$あおいテント$みなみのことう$たんじょうのしま$さいはてのことう$へそのいわ$ツメのかせき$ねっこのかせき$いいえ　$これからしょうぶだ！$しょうぶにかった！$しょうぶにまけた！$おしえない$トレードセンター$コロシアム$レコードコーナー$きのみクラッシュ$ぐるぐるこうかん$ミニポケモンでジャンプ$ドードリオのきのみどり$リーダーになる$グループにはいる$2つのコース$レベル50$オープンレベル$ポケモンのしゅるいとかず$もたせるどうぐ$シンボル$たいせんのきろく$バトルポイント$タワーについて$つれていくポケモン$バトルサロン$つうしんマルチ$バトルでの　ちゅうい$はんてい‘こころ'$はんてい‘わざ'$はんてい‘からだ'$くみあわせ$トーナメントひょう$ダブルノックアウト$きほんルール$トレード　あいて$トレード　かいすう$トレード　ちゅうい$オープンレベル$たたかいのきほん$ポケモンのせいかく$ポケモンのわざ$ちからをはっきできない$ピンチになったら$ピラミッドの　ポケモン$ピラミッドの　トレーナー$ピラミッドの　めいろ$バトルバッグ$ポケナビと　バッグ$もたせた　どうぐ$ポケモンの　じゅんばん$でてくるポケモン$たたかう　トレーナー$つづける$きろくする$やすむ$リタイア$"
+	.string "とじる$　5BP$10BP$15BP$あかいテント$あおいテント$"
 	.globl gText_SouthernIsland
-	.set gText_SouthernIsland, gUnknown_85CADD0 + 0x21
+gText_SouthernIsland: @ 0x85CADF1
+	.string "みなみのことう$"
 	.globl gText_BirthIsland
-	.set gText_BirthIsland, gUnknown_85CADD0 + 0x29
+gText_BirthIsland: @ 0x85CADF9
+	.string "たんじょうのしま$"
 	.globl gText_FarawayIsland
-	.set gText_FarawayIsland, gUnknown_85CADD0 + 0x32
+gText_FarawayIsland: @ 0x85CAE02
+	.string "さいはてのことう$"
 	.globl gText_NavelRock
-	.set gText_NavelRock, gUnknown_85CADD0 + 0x3B
+gText_NavelRock: @ 0x85CAE0B
+	.string "へそのいわ$ツメのかせき$ねっこのかせき$いいえ　$これからしょうぶだ！$しょうぶにかった！$しょうぶにまけた！$おしえない$トレードセンター$コロシアム$レコードコーナー$きのみクラッシュ$ぐるぐるこうかん$ミニポケモンでジャンプ$ドードリオのきのみどり$リーダーになる$グループにはいる$2つのコース$レベル50$オープンレベル$ポケモンのしゅるいとかず$もたせるどうぐ$シンボル$たいせんのきろく$バトルポイント$タワーについて$つれていくポケモン$バトルサロン$つうしんマルチ$バトルでの　ちゅうい$はんてい‘こころ'$はんてい‘わざ'$はんてい‘からだ'$くみあわせ$トーナメントひょう$ダブルノックアウト$きほんルール$トレード　あいて$トレード　かいすう$トレード　ちゅうい$オープンレベル$たたかいのきほん$ポケモンのせいかく$ポケモンのわざ$ちからをはっきできない$ピンチになったら$ピラミッドの　ポケモン$ピラミッドの　トレーナー$ピラミッドの　めいろ$バトルバッグ$ポケナビと　バッグ$もたせた　どうぐ$ポケモンの　じゅんばん$でてくるポケモン$たたかう　トレーナー$つづける$きろくする$やすむ$リタイア$"
 	.globl gUnknown_85CB00E
 
 	.section .rodata.mid94
@@ -510,62 +511,6 @@ gUnknown_85C97B5: @ 0x85C97B5
 	.globl gUnknown_85C97BD
 gUnknown_85C97BD: @ 0x85C97BD
 	.string "きのみのタグ$"
-	.globl gText_HP3
-	.set gText_HP3, gUnknown_85C97BD + 0x32A
-	.globl gText_SpAtk3
-	.set gText_SpAtk3, gUnknown_85C97BD + 0x330
-	.globl gText_SpDef3
-	.set gText_SpDef3, gUnknown_85C97BD + 0x335
-	.globl gText_WontHaveEffect
-	.set gText_WontHaveEffect, gUnknown_85C97BD + 0x33A
-	.globl gText_PkmnLearnedMove3
-	.set gText_PkmnLearnedMove3, gUnknown_85C97BD + 0x5AB
-	.globl gText_PkmnCantLearnMove
-	.set gText_PkmnCantLearnMove, gUnknown_85C97BD + 0x5BF
-	.globl gText_PkmnNeedsToReplaceMove
-	.set gText_PkmnNeedsToReplaceMove, gUnknown_85C97BD + 0x5E4
-	.globl gText_StopLearningMove2
-	.set gText_StopLearningMove2, gUnknown_85C97BD + 0x635
-	.globl gText_MoveNotLearned
-	.set gText_MoveNotLearned, gUnknown_85C97BD + 0x650
-	.globl gText_WhichMoveToForget
-	.set gText_WhichMoveToForget, gUnknown_85C97BD + 0x666
-	.globl gText_12PoofForgotMove
-	.set gText_12PoofForgotMove, gUnknown_85C97BD + 0x678
-	.globl gText_PkmnAlreadyKnows
-	.set gText_PkmnAlreadyKnows, gUnknown_85C97BD + 0x6BC
-	.globl gText_PkmnElevatedToLvVar2
-	.set gText_PkmnElevatedToLvVar2, gUnknown_85C97BD + 0x791
-	.globl gText_RemoveMailBeforeItem
-	.set gText_RemoveMailBeforeItem, gUnknown_85C97BD + 0x49F
-	.globl gText_PkmnHoldingItemCantHoldMail
-	.set gText_PkmnHoldingItemCantHoldMail, gUnknown_85C97BD + 0x54F
-	.globl gText_MailTransferredFromMailbox
-	.set gText_MailTransferredFromMailbox, gUnknown_85C97BD + 0x575
-	.globl gText_CancelBattle
-	.set gText_CancelBattle, gUnknown_85C97BD + 0xA5F
-	.globl gText_ReturnToWaitingRoom
-	.set gText_ReturnToWaitingRoom, gUnknown_85C97BD + 0xA6C
-	.globl gText_CancelChallenge
-	.set gText_CancelChallenge, gUnknown_85C97BD + 0xA7B
-	.globl gText_PkmnCantSwitchOut
-	.set gText_PkmnCantSwitchOut, gUnknown_85C97BD + 0x35D
-	.globl gText_PkmnAlreadyInBattle
-	.set gText_PkmnAlreadyInBattle, gUnknown_85C97BD + 0x370
-	.globl gText_PkmnAlreadySelected
-	.set gText_PkmnAlreadySelected, gUnknown_85C97BD + 0x386
-	.globl gText_PkmnHasNoEnergy
-	.set gText_PkmnHasNoEnergy, gUnknown_85C97BD + 0x39C
-	.globl gText_CantSwitchWithAlly
-	.set gText_CantSwitchWithAlly, gUnknown_85C97BD + 0x3B9
-	.globl gText_EggCantBattle
-	.set gText_EggCantBattle, gUnknown_85C97BD + 0x3E0
-	.globl gText_ShopBuy
-	.set gText_ShopBuy, gUnknown_85C97BD + 0x101
-	.globl gText_ShopSell
-	.set gText_ShopSell, gUnknown_85C97BD + 0x108
-	.globl gText_ShopQuit
-	.set gText_ShopQuit, gUnknown_85C97BD + 0x10F
 	.globl gUnknown_85C983E
 
 	.section .rodata.mid68
