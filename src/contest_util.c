@@ -1,4 +1,7 @@
 #include "global.h"
+#include "contest_painting.h"
+#include "main.h"
+#include "overworld.h"
 #include "script_pokemon_util.h"
 
 __attribute__((naked)) void sub_080F5FBC(void)
@@ -6901,39 +6904,15 @@ __attribute__((naked)) void GetContestantNamesAtRank(void)
     );
 }
 
-__attribute__((naked)) void ShowContestWinnerCleanup(void)
+static void ExitContestPainting(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080F9368\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9368: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
-__attribute__((naked)) void ShowContestWinner(void)
+void ShowContestPainting(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080F9380\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r1, _080F9384\n\t"
-        "	ldr r0, _080F9388\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9380: .4byte CB2_ContestPainting + 1\n\t"
-        "_080F9384: .4byte gMain\n\t"
-        "_080F9388: .4byte ShowContestWinnerCleanup + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    SetMainCallback2(CB2_ContestPainting);
+    gMain.savedCallback = ExitContestPainting;
 }
 
 __attribute__((naked)) void SetLinkContestPlayerGfx(void)

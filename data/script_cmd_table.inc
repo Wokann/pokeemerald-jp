@@ -134,7 +134,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_74 ScrCmd_mossdeepgym2 @ 0x74
 	script_cmd_table_entry SCR_OP_SHOWMONPIC ScrCmd_showmonpic @ 0x75
 	script_cmd_table_entry SCR_OP_HIDEMONPIC ScrCmd_hidemonpic @ 0x76
-	script_cmd_table_entry SCR_OP_SHOWCONTESTPAINTING ScrCmd_showcontestwinner @ 0x77
+	script_cmd_table_entry SCR_OP_SHOWCONTESTPAINTING ScrCmd_showcontestpainting @ 0x77
 	script_cmd_table_entry SCR_OP_BRAILLEMESSAGE ScrCmd_braillemessage @ 0x78
 	script_cmd_table_entry SCR_OP_GIVEMON ScrCmd_givemon @ 0x79
 	script_cmd_table_entry SCR_OP_GIVEEGG ScrCmd_giveegg @ 0x7A

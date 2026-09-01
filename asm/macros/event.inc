@@ -2111,11 +2111,6 @@
 	.byte SCR_OP_74
 	.endm
 
-	.macro showcontestwinner mode:req
-	.byte SCR_OP_SHOWCONTESTPAINTING
-	.byte \mode
-	.endm
-
 	.macro givemoney amount:req, silent=0
 	.byte SCR_OP_90
 	.4byte \amount
