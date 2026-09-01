@@ -244,7 +244,7 @@ def parse_raw_layout_struct(name, addr, idx, lines, rom):
 def load_address_labels():
     """Return exact source labels for addresses needed by raw MapLayout fields."""
     labels = {}
-    for path in (ROOT / "data" / "data_b2d_mid30.s", S_PATH):
+    for path in (ROOT / "data" / "maps.s", S_PATH):
         for line in path.read_text(encoding="utf-8").splitlines():
             match = PAT_SYMBOL.match(line)
             if match is not None:

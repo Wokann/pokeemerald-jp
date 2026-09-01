@@ -17,7 +17,3 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/headers.inc"
 	.include "data/maps/groups.inc"
 	.include "data/maps/connections.inc"
-	.include "data/maps/connection_flags.inc"
-	.include "data/metatile_behavior.inc"
-	.include "data/field_door.inc"
-	.include "data/field_player_avatar.inc"

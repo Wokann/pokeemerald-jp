@@ -243,9 +243,40 @@ class StructureAuditTests(unittest.TestCase):
                 '.include "data/maps/Included/scripts.inc"\n', encoding="utf-8")
             (root / "data/data_b2d_mid26.s").write_text(
                 '.include "data/maps/Included/events.inc"\n', encoding="utf-8")
-            (root / "data/data_b2d_mid30.s").write_text(
+            (root / "data/maps.s").write_text(
                 '@ MAP_INCLUDED (g1 m2)\n'
                 '.include "data/maps/Included/header.inc"\n', encoding="utf-8")
+            progress = audit.map_convergence_progress(root)
+        record = progress["records"][0]
+        self.assertEqual(progress["header_records"], 1)
+        self.assertEqual(record["events"]["status"], "direct")
+        self.assertEqual(record["scripts"]["status"], "direct")
+        self.assertEqual(record["layout"]["status"], "direct")
+
+    def test_map_convergence_inlines_map_header_aggregate(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            map_dir = root / "data/maps/Aggregated"
+            map_dir.mkdir(parents=True)
+            (map_dir / "map.json").write_text(
+                '{"id":"MAP_AGGREGATED","name":"Aggregated","layout":"LAYOUT_AGGREGATED"}',
+                encoding="utf-8")
+            (map_dir / "scripts.inc").write_text("", encoding="utf-8")
+            (map_dir / "events.inc").write_text("", encoding="utf-8")
+            (map_dir / "header.inc").write_text(
+                'Aggregated:\n'
+                '\t.4byte gMapLayout_AGGREGATED\n'
+                '\t.4byte Aggregated_MapEvents\n'
+                '\t.4byte Aggregated_MapScripts\n'
+                '\t.4byte NULL\n', encoding="utf-8")
+            (root / "data/maps/headers.inc").write_text(
+                '.include "data/maps/Aggregated/header.inc"\n', encoding="utf-8")
+            (root / "data/event_scripts.s").write_text(
+                '.include "data/maps/Aggregated/scripts.inc"\n', encoding="utf-8")
+            (root / "data/data_b2d_mid26.s").write_text(
+                '.include "data/maps/Aggregated/events.inc"\n', encoding="utf-8")
+            (root / "data/maps.s").write_text(
+                '.include "data/maps/headers.inc"\n', encoding="utf-8")
             progress = audit.map_convergence_progress(root)
         record = progress["records"][0]
         self.assertEqual(progress["header_records"], 1)
@@ -272,7 +303,7 @@ class StructureAuditTests(unittest.TestCase):
                 '.include "data/maps/Underwater_Route124/scripts.inc"\n', encoding="utf-8")
             (root / "data/data_b2d_mid26.s").write_text(
                 '.include "data/maps/Underwater_Route124/events.inc"\n', encoding="utf-8")
-            (root / "data/data_b2d_mid30.s").write_text(
+            (root / "data/maps.s").write_text(
                 '@ MAP_UNDERWATER_ROUTE124 (g1 m2)\n'
                 '.include "data/maps/Underwater_Route124/header.inc"\n', encoding="utf-8")
             layouts_dir = root / "data/layouts"

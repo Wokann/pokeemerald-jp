@@ -531,7 +531,7 @@ def inline_asm_includes(text: str, root: Path, included: frozenset[Path] = froze
                         inside_header: bool = False) -> list[str]:
     """Return assembly lines with repository-local ``.include`` files inlined.
 
-    Map headers may be written directly in ``data_b2d_mid30.s`` or delegated
+    Map headers may be written directly in ``data/maps.s`` or delegated
     to a map's ``header.inc``.  The audit needs the same pointer view in both
     cases.  Includes outside ``root``, missing files, and recursive includes
     are ignored deterministically: they cannot contribute a header field.
@@ -544,7 +544,7 @@ def inline_asm_includes(text: str, root: Path, included: frozenset[Path] = froze
             lines.append(line)
             continue
         candidate = (resolved_root / match.group(1)).resolve()
-        if not inside_header and candidate.name != "header.inc":
+        if not inside_header and candidate.name not in {"header.inc", "headers.inc"}:
             lines.append(line)
             continue
         if candidate in included or not candidate.is_file():
@@ -558,15 +558,16 @@ def inline_asm_includes(text: str, root: Path, included: frozenset[Path] = froze
     return lines
 
 
-def map_headers(text: str, root: Path | None = None) -> dict[str, dict[str, object]]:
+def map_headers(text: str, root: Path | None = None,
+                header_labels: dict[str, str] | None = None) -> dict[str, dict[str, object]]:
     """Read annotated map-header fields, including repository-local headers.
 
     ``root`` is optional so callers with directly expanded assembly retain the
     original text-only behavior.  When supplied, map ``header.inc`` files are
     inlined recursively before their fields are associated with the preceding
-    ``@ MAP_*`` annotation.  Generated ``header.inc`` files use the fixed
-    MapHeader pointer order without field comments, while older direct headers
-    retain comments; accept both forms.
+    ``@ MAP_*`` annotation.  Generated ``header.inc`` files use their map-name
+    label and a fixed MapHeader pointer order without field comments, while
+    older direct headers retain annotations and comments; accept both forms.
     """
     records: dict[str, dict[str, object]] = {}
     current: dict[str, object] | None = None
@@ -580,6 +581,12 @@ def map_headers(text: str, root: Path | None = None) -> dict[str, dict[str, obje
             }
             records[match.group(1)] = current
             continue
+        if header_labels and (match := ASM_LABEL_RE.match(line)):
+            map_id = header_labels.get(match.group(1))
+            if map_id is not None:
+                current = {"id": map_id}
+                records[map_id] = current
+                continue
         if current and (match := MAP_HEADER_FIELD_RE.match(line)):
             current[match.group(2)] = match.group(1)
             continue
@@ -972,13 +979,13 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
     """Audit map records across the three JP source streams.
 
     The check starts with the first map in data/event_scripts.s and joins it
-    to data/data_b2d_mid26.s (events) and data/data_b2d_mid30.s (headers,
+    to data/data_b2d_mid26.s (events) and data/maps.s (headers,
     layouts, and tilesets).  It records aliases and raw ranges as work items;
     a present include or generated file is deliberately never a semantic pass.
     """
     event_scripts_path = root / "data/event_scripts.s"
     events_path = root / "data/data_b2d_mid26.s"
-    map_data_path = root / "data/data_b2d_mid30.s"
+    map_data_path = root / "data/maps.s"
     layouts_path = root / "data/layouts/layouts.inc"
     event_scripts_text = event_scripts_path.read_text(encoding="utf-8", errors="replace") \
         if event_scripts_path.is_file() else ""
@@ -987,17 +994,9 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
         if map_data_path.is_file() else ""
     layouts_text = layouts_path.read_text(encoding="utf-8", errors="replace") \
         if layouts_path.is_file() else ""
-    script_order = map_includes(event_scripts_path, MAP_NAME_RE)
-    event_order = map_includes(events_path, MAP_EVENTS_RE)
-    headers = map_headers(map_data_text, root)
-    aliases = map_event_aliases(events_text)
-    # Headers remain in the legacy mid30 stream, while migrated layout owners
-    # live in data/layouts/layouts.inc. Combine their label blocks so a direct
-    # canonical header reference is not reported as an undefined layout.
-    blocks = asm_label_blocks(map_data_text + "\n" + layouts_text)
-
     map_root = root / "data/maps"
     metadata: dict[str, dict[str, object]] = {}
+    header_labels: dict[str, str] = {}
     if map_root.is_dir():
         for path in sorted(map_root.glob("*/map.json")):
             try:
@@ -1008,6 +1007,21 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
                 "id": payload.get("id"),
                 "layout": payload.get("layout"),
             }
+            map_id = payload.get("id")
+            header_name = payload.get("name")
+            if isinstance(map_id, str):
+                header_labels[path.parent.name] = map_id
+                if isinstance(header_name, str):
+                    header_labels[header_name] = map_id
+
+    script_order = map_includes(event_scripts_path, MAP_NAME_RE)
+    event_order = map_includes(events_path, MAP_EVENTS_RE)
+    headers = map_headers(map_data_text, root, header_labels)
+    aliases = map_event_aliases(events_text)
+    # Headers remain in the map-data stream, while migrated layout owners
+    # live in data/layouts/layouts.inc. Combine their label blocks so a direct
+    # canonical header reference is not reported as an undefined layout.
+    blocks = asm_label_blocks(map_data_text + "\n" + layouts_text)
 
     ordered_names = list(dict.fromkeys(script_order + event_order + sorted(metadata)))
     records = []
@@ -1124,7 +1138,7 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
         "stream_files": {
             "scripts": "data/event_scripts.s",
             "events": "data/data_b2d_mid26.s",
-            "map_data": "data/data_b2d_mid30.s",
+            "map_data": "data/maps.s",
             "layouts": "data/layouts/layouts.inc",
         },
         "script_stream_maps": len(script_order),
@@ -1140,7 +1154,7 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
         "top_level_raw_baserom_directives": {
             "data/event_scripts.s": raw_baserom_directives(event_scripts_text),
             "data/data_b2d_mid26.s": raw_baserom_directives(events_text),
-            "data/data_b2d_mid30.s": raw_baserom_directives(map_data_text),
+            "data/maps.s": raw_baserom_directives(map_data_text),
         },
         "semantic_review": {
             "status": "not_recorded",
@@ -1445,7 +1459,7 @@ def print_report(report: dict[str, object]) -> None:
     raw_streams = convergence["top_level_raw_baserom_directives"]
     print("map convergence: script-stream=%d event-stream=%d shared=%d headers=%d; "
           "event-pointers=%s; map raw scripts/events/resources=%d/%d/%d; "
-          "top-level raw scripts/mid26/mid30=%d/%d/%d; semantic-review=%s" % (
+          "top-level raw scripts/mid26/maps=%d/%d/%d; semantic-review=%s" % (
               convergence["script_stream_maps"], convergence["event_stream_maps"],
               convergence["maps_in_both_streams"], convergence["header_records"],
               ",".join("%s=%d" % item for item in convergence["event_pointer_statuses"].items()),
@@ -1453,7 +1467,7 @@ def print_report(report: dict[str, object]) -> None:
               convergence["maps_with_raw_resource_ranges"],
               len(raw_streams["data/event_scripts.s"]),
               len(raw_streams["data/data_b2d_mid26.s"]),
-              len(raw_streams["data/data_b2d_mid30.s"]),
+              len(raw_streams["data/maps.s"]),
               convergence["semantic_review"]["status"]))
     jp_section = script_data["linked_sections"]["jp"]["section"]
     print("script_data: JP owners=%d/%d US; JP section=%s; missing owners=%d; "
@@ -1533,7 +1547,7 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "| 地图脚本 owner | `scripts.inc` 与 map-table 实际首 owner 名的交集 / 去重首 owner；共享表只属于首次出现地图。 |",
         "| 地图结构完整 | 同一地图同时有 `map.json`、`scripts.inc`、`events.inc`，且后者被上层 `data/*.s` include；只说明结构已拆分。 |",
         "| 地图语义复核 | 仅接受未来版本化复核清单的显式记录；当前为 `not_recorded`，绝不从目录或 include 推断。 |",
-        "| 三流地图会合 | 以 `data/event_scripts.s`、`data/data_b2d_mid26.s`、`data/data_b2d_mid30.s` 的同图记录连接 scripts、events、地图头/布局/tileset。别名和 baserom 范围均为待办，不构成完成。 |",
+        "| 三流地图会合 | 以 `data/event_scripts.s`、`data/data_b2d_mid26.s`、`data/maps.s` 的同图记录连接 scripts、events、地图头/布局/tileset。别名和 baserom 范围均为待办，不构成完成。 |",
         "| script_data 顶层分区 | US linker 提供 8 个对象的目标 owner 顺序；JP linker map 提供实际范围和锚点。只在 JP 起止标签、末尾位置与 ROM 比对均成立时，才允许拆出一个 owner。 |",
         "| JP 独有 C 迁移清单 | 已映射、非裸汇编、但无 US 标准 C owner 的函数模块；动态分类，不沿用失效的固定“38 个”计数。 |",
         "",

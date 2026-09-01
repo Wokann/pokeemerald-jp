@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Report the remaining physical ownership transition in data_b2d_mid30.s.
+"""Report map-data ownership after removing the temporary mid30 aggregate.
 
 JP ROM offsets come only from JP ``.incbin "baserom_jp.gba"`` directives.
 US paths classify final source ownership, but never supply JP boundaries.
@@ -16,7 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_US_ROOT = ROOT.parent.parent / "pokeemerald"
-MID30 = Path("data/data_b2d_mid30.s")
+MAPS = Path("data/maps.s")
 LAYOUTS = Path("data/layouts/layouts.inc")
 ROM_BASE = 0x08000000
 
@@ -26,12 +26,14 @@ RAW_RE = re.compile(
 INCLUDE_RE = re.compile(r'^\s*\.include\s+"([^"]+)"\s*$')
 LABEL_RE = re.compile(r'^\s*([A-Za-z_]\w*)::?\s*(?:@\s*0x([0-9A-Fa-f]{8}))?\s*$')
 MAP_INCLUDE_RE = re.compile(r'^data/maps/([^/]+)/(header|connections)\.inc$')
+MAP_AGGREGATES = {
+    Path("data/maps/headers.inc"),
+    Path("data/maps/connections.inc"),
+}
 MAP_HEADER_COMMENT_RE = re.compile(r'^\s*@\s*(MAP_[A-Z0-9_]+)\s+\(g\d+ m\d+\)\s*$')
 CONNECTION_LABEL_RE = re.compile(r'^\s*gMapConnections_([A-Z0-9_]+):')
 LAYOUT_LABEL_RE = re.compile(
     r'^\s*(gMapLayout_[A-Za-z0-9_]+|[A-Za-z_]\w*_Layout)::?\s*(?:@.*)?$', re.MULTILINE)
-TILESET_LABEL_RE = re.compile(r'^\s*gTileset_[A-Za-z0-9_]+::?', re.MULTILINE)
-TILESET_RESOURCE_RE = re.compile(r'"(data/tilesets/[^"]+)"')
 
 
 def hex_address(value: int) -> str:
@@ -63,6 +65,20 @@ def raw_spans(lines: list[str]) -> list[dict[str, object]]:
     return result
 
 
+def expand_map_aggregates(root: Path, lines: list[str]) -> list[str]:
+    """Inline the two map owner aggregates in their source position."""
+    result = []
+    for line in lines:
+        include = INCLUDE_RE.match(line)
+        path = Path(include.group(1)) if include else None
+        candidate = root / path if path is not None else None
+        if path not in MAP_AGGREGATES or candidate is None or not candidate.is_file():
+            result.append(line)
+            continue
+        result.extend(candidate.read_text(encoding="utf-8", errors="replace").splitlines())
+    return result
+
+
 def map_include_records(root: Path, us_root: Path, lines: list[str]) -> list[dict[str, object]]:
     """Classify direct map header/connection includes by their final path."""
     records = []
@@ -77,7 +93,7 @@ def map_include_records(root: Path, us_root: Path, lines: list[str]) -> list[dic
             "source_line": line_number,
             "rom_start": None,
             "rom_end": None,
-            "rom_order_evidence": "mid30 source order; no numeric JP boundary inferred",
+            "rom_order_evidence": "maps source order; no numeric JP boundary inferred",
             "classification": f"map_{component}_final_owner",
             "map": map_name,
             "final_us_owner": path,
@@ -103,7 +119,7 @@ def map_paths_by_id(root: Path) -> dict[str, str]:
 
 
 def pending_map_component_records(root: Path, us_root: Path, lines: list[str]) -> list[dict[str, object]]:
-    """Map direct mid30 components to a verified US path, without extracting them."""
+    """Map direct source components to a verified US path, without extracting them."""
     id_paths = map_paths_by_id(root)
     records = []
     for line_number, line in enumerate(lines, 1):
@@ -122,7 +138,7 @@ def pending_map_component_records(root: Path, us_root: Path, lines: list[str]) -
             "source_line": line_number,
             "rom_start": None,
             "rom_end": None,
-            "rom_order_evidence": "mid30 source order; no numeric JP boundary inferred",
+            "rom_order_evidence": "maps source order; no numeric JP boundary inferred",
             "classification": f"map_{component}_mapped_pending_extraction",
             "map_id": map_id,
             "final_us_owner": path,
@@ -162,36 +178,22 @@ def layout_record(root: Path, us_root: Path, lines: list[str], raws: list[dict[s
     }
 
 
-def tileset_record(lines: list[str]) -> dict[str, object]:
-    """Keep structured tileset resources distinct from a proven final owner."""
-    text = "\n".join(lines)
-    resources = sorted(set(TILESET_RESOURCE_RE.findall(text)))
-    return {
-        "classification": "tilesets_structured_resources_boundary_audit",
-        "final_us_owner": "data/tilesets/ (resource paths only; owner split unproven)",
-        "tileset_structs": len(TILESET_LABEL_RE.findall(text)),
-        "resource_references": len(resources),
-        "status": "requires_boundary_audit",
-        "rule": "Structured resource paths do not prove a safe extraction boundary for tileset structs.",
-    }
-
-
 def report(root: Path, us_root: Path) -> dict[str, object]:
-    path = root / MID30
+    path = root / MAPS
     lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    map_lines = expand_map_aggregates(root, lines)
     raws = raw_spans(lines)
-    maps = map_include_records(root, us_root, lines)
-    pending_maps = pending_map_component_records(root, us_root, lines)
+    maps = map_include_records(root, us_root, map_lines)
+    pending_maps = pending_map_component_records(root, us_root, map_lines)
     layouts = layout_record(root, us_root, lines, raws)
-    tilesets = tileset_record(lines)
     regions = sorted(raws + maps + pending_maps + ([layouts] if layouts else []),
                      key=lambda item: item["source_line"])
     counts = Counter(item["classification"] for item in regions)
     first_pending = next((item for item in regions
                           if item["classification"] == "raw_baserom_requires_boundary_audit"), None)
     return {
-        "schema": 1,
-        "inputs": {"jp": str(MID30), "us_root": str(us_root)},
+        "schema": 2,
+        "inputs": {"jp": str(MAPS), "us_root": str(us_root)},
         "method": {
             "jp_rom_rule": "Only JP raw incbin offsets and lengths define numeric JP ranges.",
             "us_rule": "US paths classify final structure only; US numeric addresses are ignored.",
@@ -206,11 +208,9 @@ def report(root: Path, us_root: Path) -> dict[str, object]:
             "map_connections_mapped_pending_extraction": sum(
                 item["classification"] == "map_connections_mapped_pending_extraction" for item in pending_maps),
             "structured_layouts": layouts["structured_layouts"] if layouts else 0,
-            "tileset_structs_requiring_boundary_audit": tilesets["tileset_structs"],
             "classification_counts": dict(sorted(counts.items())),
         },
         "regions_in_physical_source_order": regions,
-        "tilesets": tilesets,
         "first_unresolved_boundary": first_pending,
         "protected_from_script_data_sweep": {
             "final_map_owners": [item["final_us_owner"] for item in maps],

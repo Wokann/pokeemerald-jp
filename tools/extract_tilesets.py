@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Extract JP tileset resources from baserom_jp.gba.
+"""One-time extractor for the historical JP tileset aggregate.
 
-All 48 gTileset_* structures in data/data_b2d_mid30.s point at data inside a
-single giant incbin (gUnknown_830FD4C, 0x30FD4C, 0xA7DD8) that covers every
-tileset's tiles/palettes/metatiles/metatileAttributes blocks.
+The historical input was data/data_b2d_mid30.s. Its tileset resources have
+already been migrated to data/tilesets/{graphics,metatiles,headers}.inc, so
+this tool no longer mutates the active source tree. ``--check`` reports that
+the one-time extraction is not applicable; retaining the implementation keeps
+the migration recipe available for an unstructured JP ROM baseline.
 
 Verified against pokeemerald (same maps -> identical bytes):
   - tiles: LZ stream (pokemon toolchain format), 4-byte aligned
@@ -18,8 +20,7 @@ The giant incbin is split into per-tileset resource blocks; leftover gaps stay
 as baserom incbins so the ROM byte order is unchanged.
 
 Usage:
-  python3 tools/extract_tilesets.py            # extract + rewrite .s
-  python3 tools/extract_tilesets.py --check    # verify only
+  python3 tools/extract_tilesets.py --check    # report migration status
 """
 
 import argparse
@@ -31,7 +32,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ROM_PATH = ROOT / "baserom_jp.gba"
-S_PATH = ROOT / "data" / "data_b2d_mid30.s"
+LEGACY_S_PATH = ROOT / "data" / "data_b2d_mid30.s"
 OUT_BASE = ROOT / "data" / "tilesets"
 US_BASE = Path("/home/kenny/pokeemerald/data/tilesets")
 
@@ -107,8 +108,14 @@ def main():
     ap.add_argument("--check", action="store_true", help="verify only, no writes")
     args = ap.parse_args()
 
+    if not LEGACY_S_PATH.is_file():
+        if args.check:
+            print("Tileset extraction is not applicable: resources already live in data/tilesets/.")
+            return
+        sys.exit("The one-time tileset source has been migrated; use --check for its status.")
+
     rom = ROM_PATH.read_bytes()
-    raw = S_PATH.read_bytes()
+    raw = LEGACY_S_PATH.read_bytes()
     crlf = b"\r\n" in raw
     lines = raw.decode("utf-8").split("\r\n" if crlf else "\n")
 
@@ -251,7 +258,7 @@ def main():
     new_lines[giant_idx : giant_idx + 1] = out_lines
 
     if not args.check:
-        S_PATH.write_bytes(("\r\n".join(new_lines) if crlf else "\n".join(new_lines)).encode("utf-8"))
+        LEGACY_S_PATH.write_bytes(("\r\n".join(new_lines) if crlf else "\n".join(new_lines)).encode("utf-8"))
     print(f"{'Check' if args.check else 'Extracted'}: {len(blocks)//4} tilesets "
           f"-> {OUT_BASE}")
 

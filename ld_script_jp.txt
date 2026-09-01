@@ -9473,7 +9473,11 @@ SECTIONS {
         src/overworld.o(.rodata.overworld_movement_tables);
         src/graphics.o(.rodata.tileset_general_data);
         data/tilesets.o(.rodata.tilesets);
-        data/data_b2d_mid30.o(.rodata.after_tilesets);
+        data/maps.o(.rodata.after_tilesets);
+        data/fieldmap.o(.rodata.after_tilesets);
+        data/metatile_behavior.o(.rodata.after_tilesets);
+        data/field_door.o(.rodata.after_tilesets);
+        data/field_player_avatar.o(.rodata.after_tilesets);
         src/data/text/region_texts17.o(.rodata);
         data/data_b2d.o(.rodata.mid27);
         src/data/text/region_texts18.o(.rodata);
