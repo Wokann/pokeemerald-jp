@@ -36,7 +36,7 @@ gSpecials::
 	def_special GetSecretBaseOwnerAndState
 	def_special InitSecretBaseDecorationSprites
 	def_special SetDecoration
-	def_special sub_08129798
+	def_special GetObjectEventLocalIdByFlag
 	def_special GetSecretBaseTypeInFrontOfPlayer
 	def_special SetSecretBaseOwnerGfxId
 	def_special PutAwayDecorationIteration

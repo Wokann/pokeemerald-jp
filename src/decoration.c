@@ -6381,7 +6381,7 @@ __attribute__((naked)) void PutAwayDecorationIteration(void)
     );
 }
 
-__attribute__((naked)) void sub_08129798(void)
+__attribute__((naked)) void GetObjectEventLocalIdByFlag(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
