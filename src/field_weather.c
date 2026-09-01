@@ -1,7 +1,41 @@
 #include "global.h"
 #include "field_weather.h"
+#include "constants/weather.h"
 
 #define FIELD_WEATHER_DROUGHT_DATA __attribute__((section(".rodata.field_weather_drought_data")))
+#define FIELD_WEATHER_STATIC_DATA __attribute__((section(".rodata.field_weather_static_data")))
+
+struct WeatherCallbacks
+{
+    void (*initVars)(void);
+    void (*main)(void);
+    void (*initAll)(void);
+    bool8 (*finish)(void);
+};
+
+void None_Init(void);
+void sub_080AAB88(void);
+bool8 None_Finish(void);
+void UpdateWeatherGammaShift(void);
+void FadeInScreenWithWeather(void);
+void DoNothing(void);
+
+void LightRain_InitVars(void);
+void LightRain_InitAll(void);
+void LightRain_Main(void);
+bool8 LightRain_Finish(void);
+void MedRain_InitVars(void);
+void MedRain_InitAll(void);
+void HeavyRain_InitVars(void);
+void HeavyRain_InitAll(void);
+void Fog1_InitVars(void);
+void Fog1_InitAll(void);
+void Fog1_Main(void);
+bool8 Fog1_Finish(void);
+void Fog2_InitVars(void);
+void Fog2_InitAll(void);
+void Fog2_Main(void);
+bool8 Fog2_Finish(void);
 
 // The drought weather effect uses a precalculated color lookup table. Presumably this
 // is because the underlying color shift calculation is slow.
@@ -12,6 +46,83 @@ static const u16 sDroughtWeatherColors[][0x1000] FIELD_WEATHER_DROUGHT_DATA = IN
     "graphics/weather/drought/colors_3.bin",
     "graphics/weather/drought/colors_4.bin",
     "graphics/weather/drought/colors_5.bin");
+
+// These tables retain the JP callback identities and physical order. The
+// remaining weather-effect function naming cleanup is kept separate from this
+// byte-exact static-data migration.
+static const struct WeatherCallbacks sWeatherFuncs[] FIELD_WEATHER_STATIC_DATA =
+{
+    [WEATHER_NONE]               = {None_Init,              sub_080AAB88,      None_Init,             None_Finish},
+    [WEATHER_SUNNY_CLOUDS]       = {Clouds_InitVars,        Clouds_Main,        Clouds_InitAll,         Clouds_Finish},
+    [WEATHER_SUNNY]              = {Sunny_InitVars,         Sunny_Main,         Sunny_InitAll,          Shade_Finish},
+    [WEATHER_RAIN]               = {LightRain_InitVars,     LightRain_Main,     LightRain_InitAll,      LightRain_Finish},
+    [WEATHER_SNOW]               = {Snow_InitVars,          Snow_Main,          Snow_InitAll,           Snow_Finish},
+    [WEATHER_RAIN_THUNDERSTORM]  = {MedRain_InitVars,       Rain_Main,          MedRain_InitAll,        Rain_Finish},
+    [WEATHER_FOG_HORIZONTAL]     = {Fog1_InitVars,          Fog1_Main,          Fog1_InitAll,           Fog1_Finish},
+    [WEATHER_VOLCANIC_ASH]       = {Ash_InitVars,           Ash_Main,           Ash_InitAll,            Ash_Finish},
+    [WEATHER_SANDSTORM]          = {Sandstorm_InitVars,     Sandstorm_Main,     Sandstorm_InitAll,      Sandstorm_Finish},
+    [WEATHER_FOG_DIAGONAL]       = {Fog2_InitVars,          Fog2_Main,          Fog2_InitAll,           Fog2_Finish},
+    [WEATHER_UNDERWATER]         = {Fog1_InitVars,          Fog1_Main,          Fog1_InitAll,           Fog1_Finish},
+    [WEATHER_SHADE]              = {Shade_InitVars,         Shade_Main,         Shade_InitAll,          Drought_Finish},
+    [WEATHER_DROUGHT]            = {Drought_InitVars,       Drought_Main,       Drought_InitAll,        Sunny_Finish},
+    [WEATHER_DOWNPOUR]           = {HeavyRain_InitVars,     Rain_Main,          HeavyRain_InitAll,      Rain_Finish},
+    [WEATHER_UNDERWATER_BUBBLES] = {Bubbles_InitVars,       Bubbles_Main,       Bubbles_InitAll,        Bubbles_Finish},
+};
+
+void (*const gWeatherPalStateFuncs[])(void) FIELD_WEATHER_STATIC_DATA =
+{
+    [WEATHER_PAL_STATE_CHANGING_WEATHER]  = UpdateWeatherGammaShift,
+    [WEATHER_PAL_STATE_SCREEN_FADING_IN]  = FadeInScreenWithWeather,
+    [WEATHER_PAL_STATE_SCREEN_FADING_OUT] = DoNothing,
+    [WEATHER_PAL_STATE_IDLE]              = DoNothing,
+};
+
+enum
+{
+    COLOR_MAP_NONE,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_CONTRAST,
+};
+
+static const u8 ALIGNED(2) sBasePaletteColorMapTypes[32] FIELD_WEATHER_STATIC_DATA =
+{
+    // background palettes
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_NONE,
+    COLOR_MAP_NONE,
+    // sprite palettes
+    COLOR_MAP_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_CONTRAST,
+    COLOR_MAP_CONTRAST,
+    COLOR_MAP_CONTRAST,
+    COLOR_MAP_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_DARK_CONTRAST,
+};
+
+const u16 ALIGNED(4) gFogPalette[] FIELD_WEATHER_STATIC_DATA = INCBIN_U16("graphics/field_effects/gFogPalette.bin");
 
 __attribute__((naked)) void StartWeather()
 {
@@ -175,7 +286,7 @@ __attribute__((naked)) void SetNextWeather(u8 weather)
         "	.align 2, 0\n\t"
         "_080AA9EC: .4byte gUnknown_20380F4\n\t"
         "_080AA9F0: .4byte 0x000006D1\n\t"
-        "_080AA9F4: .4byte gUnknown_8526DEC\n\t"
+        "_080AA9F4: .4byte sWeatherFuncs\n\t"
         "_080AA9F8: .4byte 0x000006D3\n\t"
         "_080AA9FC: .4byte 0x000006CE\n\t"
         ".syntax divided\n\t"
@@ -277,7 +388,7 @@ __attribute__((naked)) void Task_WeatherInit(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080AAA9C: .4byte gUnknown_20380F4\n\t"
-        "_080AAAA0: .4byte gUnknown_8526DEC\n\t"
+        "_080AAAA0: .4byte sWeatherFuncs\n\t"
         "_080AAAA4: .4byte gTasks\n\t"
         "_080AAAA8: .4byte Task_WeatherMain + 1\n\t"
         ".syntax divided\n\t"
@@ -341,7 +452,7 @@ __attribute__((naked)) void Task_WeatherMain(void)
         "	.align 2, 0\n\t"
         "_080AAB14: .4byte gUnknown_20380F4\n\t"
         "_080AAB18: .4byte 0x000006D1\n\t"
-        "_080AAB1C: .4byte gUnknown_8526DEC\n\t"
+        "_080AAB1C: .4byte sWeatherFuncs\n\t"
         "_080AAB20: .4byte 0x000006C6\n\t"
         "_080AAB24: .4byte 0x000006C3\n\t"
         "_080AAB28:\n\t"
@@ -377,8 +488,8 @@ __attribute__((naked)) void None_Main(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080AAB58: .4byte gUnknown_8526DEC\n\t"
-        "_080AAB5C: .4byte gUnknown_8526EDC\n\t"
+        "_080AAB58: .4byte sWeatherFuncs\n\t"
+        "_080AAB5C: .4byte gWeatherPalStateFuncs\n\t"
         "_080AAB60: .4byte gUnknown_20380F4\n\t"
         "_080AAB64: .4byte 0x000006C6\n\t"
         ".syntax divided\n\t"
@@ -455,7 +566,7 @@ __attribute__((naked)) void BuildGammaShiftTables(void)
         "	b _080AABE2\n\t"
         "	.align 2, 0\n\t"
         "_080AABD0: .4byte gUnknown_3000F50\n\t"
-        "_080AABD4: .4byte gUnknown_8526EEC\n\t"
+        "_080AABD4: .4byte sBasePaletteColorMapTypes\n\t"
         "_080AABD8: .4byte gUnknown_2038554\n\t"
         "_080AABDC: .4byte 0xFFFFFDA0\n\t"
         "_080AABE0:\n\t"
@@ -2887,7 +2998,7 @@ __attribute__((naked)) void PreservePaletteInWeather(u8 preservedPalIndex)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080ABD18: .4byte gUnknown_8526EEC\n\t"
+        "_080ABD18: .4byte sBasePaletteColorMapTypes\n\t"
         "_080ABD1C: .4byte gUnknown_2038844\n\t"
         "_080ABD20: .4byte gUnknown_3000F50\n\t"
         ".syntax divided\n\t"
@@ -2904,7 +3015,7 @@ __attribute__((naked)) void ResetPreservedPalettesInWeather()
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_080ABD2C: .4byte gUnknown_3000F50\n\t"
-        "_080ABD30: .4byte gUnknown_8526EEC\n\t"
+        "_080ABD30: .4byte sBasePaletteColorMapTypes\n\t"
         ".syntax divided\n\t"
     );
 }

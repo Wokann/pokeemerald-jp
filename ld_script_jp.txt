@@ -9708,7 +9708,9 @@ SECTIONS {
         src/battle_anim_status_effects.o(.rodata.battle_anim_status_effects_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_battle_anim_status_effects_before_field_weather_drought);
         src/field_weather.o(.rodata.field_weather_drought_data);
-        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_field_weather_drought);
+        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_field_weather_drought_before_field_weather_static_data);
+        src/field_weather.o(.rodata.field_weather_static_data);
+        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_field_weather_static_data);
         src/option_menu.o(.rodata.option_menu_static_data);
         data/data_b2d_mid15.o(.rodata.option_menu_suffix);
         src/graphics.o(.rodata.pokedex_graphics_prefix);

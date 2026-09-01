@@ -1038,27 +1038,13 @@ sPokemonLogoShineSpriteSheet: @ 0x851ADD8
 	.hword 0x0800, 0x03EA
 	.4byte 0x00000000, 0x00000000
 
-	.section .rodata.data_b2d_mid26_after_field_weather_drought
+	.section .rodata.data_b2d_mid26_after_field_weather_drought_before_field_weather_static_data
 
 	.globl gWeatherPtr
 gWeatherPtr: @ 0x8526DE8
 	.4byte gUnknown_20380F4 @ &gWeather
 
-	.globl gUnknown_8526DEC
-gUnknown_8526DEC: @ 0x8526DEC
-	.incbin "baserom_jp.gba", 0x526dec, 0xf0
-
-	.globl gUnknown_8526EDC
-gUnknown_8526EDC: @ 0x8526EDC
-	.incbin "baserom_jp.gba", 0x526edc, 0x10
-
-	.globl gUnknown_8526EEC
-gUnknown_8526EEC: @ 0x8526EEC
-	.incbin "baserom_jp.gba", 0x526eec, 0x20
-
-	.globl gFogPalette
-gFogPalette: @ 0x8526F0C
-	.incbin "graphics/field_effects/gFogPalette.bin"
+	.section .rodata.data_b2d_mid26_after_field_weather_static_data
 
 	.globl gUnknown_8526F2C
 gUnknown_8526F2C: @ 0x8526F2C
