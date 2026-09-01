@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "constants/battle_anim.h"
 #include "graphics.h"
 #include "data/battle_anim.h"
 

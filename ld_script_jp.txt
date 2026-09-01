@@ -9699,7 +9699,8 @@ SECTIONS {
         src/sound.o(.rodata.sound_fanfare_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_sound_fanfare_data_before_battle_anim_oam_data);
         src/battle_anim.o(.rodata.battle_anim_oam_data);
-        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_battle_anim_oam_data_before_battle_anim_background_data);
+        src/battle_anim.o(.rodata.battle_anim_pic_table);
+        src/battle_anim.o(.rodata.battle_anim_palette_table);
         src/battle_anim.o(.rodata.battle_anim_background_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_battle_anim_background_data_before_battle_anim_script_cmd_data);
         src/battle_anim.o(.rodata.battle_anim_script_cmd_data);
