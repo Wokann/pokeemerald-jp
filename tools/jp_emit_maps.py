@@ -18047,10 +18047,7 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08243460: 'Common_EventScript_NameReceivedPartyMon',
         },
         'specials': {
-            'TV_CopyNicknameToStringVar1AndEnsureTerminated': 'BufferMonNickname',
-            'TV_CheckMonOTIDEqualsPlayerID': 'IsMonOTIDNotPlayers',
             'MonOTNameMatchesPlayer': 'MonOTNameNotPlayer',
-            'TV_PutNameRaterShowOnTheAirIfNicknameChanged': 'TryPutNameRaterShowOnTheAir',
         },
         'field_placeholders': {
             0x081FBEEA: {0x02: 'STR_VAR_1'},

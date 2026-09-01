@@ -8164,7 +8164,7 @@ tv.s
 080f0648 GetRandomWordFromShow GetRandomWordFromShow
 080f0694 tv.s TV_GetNicknameSumMod8
 080f06cc tv.s TV_GetNicknameSubstring
-080f0820 tv.s TV_IsScriptShowKindAlreadyInQueue
+080f0820 IsTVShowAlreadyInQueue IsTVShowAlreadyInQueue
 080f0864 TryPutNameRaterShowOnTheAir TryPutNameRaterShowOnTheAir
 080f08a8 ChangePokemonNickname ChangePokemonNickname
 080f0964 ChangePokemonNickname_CB ChangePokemonNickname_CB

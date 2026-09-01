@@ -6269,14 +6269,14 @@ SECTIONS {
         src/tv.o(.text.TV_FanClubLetter_RandomWordToStringVar3);
         src/tv.o(.text.TV_GetNicknameSumMod8);
         src/tv.o(.text.TV_GetNicknameSubstring);
-        src/tv.o(.text.TV_IsScriptShowKindAlreadyInQueue);
-        src/tv.o(.text.TV_PutNameRaterShowOnTheAirIfNicknameChanged);
+        src/tv.o(.text.IsTVShowAlreadyInQueue);
+        src/tv.o(.text.TryPutNameRaterShowOnTheAir);
         src/tv.o(.text.ChangePokemonNickname);
         src/tv.o(.text.ChangePokemonNickname_CB);
         src/tv.o(.text.ChangeBoxPokemonNickname);
         src/tv.o(.text.ChangeBoxPokemonNickname_CB);
-        src/tv.o(.text.TV_CopyNicknameToStringVar1AndEnsureTerminated);
-        src/tv.o(.text.TV_CheckMonOTIDEqualsPlayerID);
+        src/tv.o(.text.BufferMonNickname);
+        src/tv.o(.text.IsMonOTIDNotPlayers);
         src/tv.o(.text.GetTVGroupByShowId);
         src/tv.o(.text.GetPlayerIDAsU32);
         src/tv.o(.text.CheckForPlayersHouseNews);

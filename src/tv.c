@@ -8291,7 +8291,7 @@ __attribute__((naked)) void TV_GetNicknameSubstring(void)
     );
 }
 
-__attribute__((naked)) void TV_IsScriptShowKindAlreadyInQueue(void)
+__attribute__((naked)) bool8 IsTVShowAlreadyInQueue(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8333,7 +8333,7 @@ __attribute__((naked)) void TV_IsScriptShowKindAlreadyInQueue(void)
     );
 }
 
-__attribute__((naked)) void TV_PutNameRaterShowOnTheAirIfNicknameChanged(void)
+__attribute__((naked)) bool8 TryPutNameRaterShowOnTheAir(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8572,7 +8572,7 @@ __attribute__((naked)) void ChangeBoxPokemonNickname_CB(void)
     );
 }
 
-__attribute__((naked)) void TV_CopyNicknameToStringVar1AndEnsureTerminated(void)
+__attribute__((naked)) void BufferMonNickname(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8601,7 +8601,7 @@ __attribute__((naked)) void TV_CopyNicknameToStringVar1AndEnsureTerminated(void)
 }
 
 
-__attribute__((naked)) void TV_CheckMonOTIDEqualsPlayerID(void)
+__attribute__((naked)) void IsMonOTIDNotPlayers(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -88,7 +88,7 @@ gSpecials::
 	def_special IsLeadMonNicknamedOrNotEnglish
 	def_special SetContestCategoryStringVarForInterview
 	def_special GetNextActiveShowIfMassOutbreak
-	def_special TV_IsScriptShowKindAlreadyInQueue
+	def_special IsTVShowAlreadyInQueue
 	def_special CheckForPlayersHouseNews
 	def_special GetMomOrDadStringForTVMessage
 	def_special ResetTVShowState
@@ -139,9 +139,9 @@ gSpecials::
 	def_special CompareSeedotSize
 	def_special GetLotadSizeRecordInfo
 	def_special CompareLotadSize
-	def_special TV_PutNameRaterShowOnTheAirIfNicknameChanged
-	def_special TV_CopyNicknameToStringVar1AndEnsureTerminated
-	def_special TV_CheckMonOTIDEqualsPlayerID
+	def_special TryPutNameRaterShowOnTheAir
+	def_special BufferMonNickname
+	def_special IsMonOTIDNotPlayers
 	def_special BufferTrendyPhraseString
 	def_special IsTrendyPhraseBoring
 	def_special BufferDeepLinkPhrase
@@ -541,13 +541,7 @@ gSpecials::
 	def_special CloseDeptStoreElevatorWindow
 	def_special TrySetBattleTowerLinkType
 
-	@ Name Rater special aliases matching pokeemerald's semantic script names.
-	@ The JP C symbols retain their existing TV-prefixed linker names.
-	.set SPECIAL_TryPutNameRaterShowOnTheAir, SPECIAL_TV_PutNameRaterShowOnTheAirIfNicknameChanged
-	.set SPECIAL_WAITSTATE_TryPutNameRaterShowOnTheAir, SPECIAL_WAITSTATE_TV_PutNameRaterShowOnTheAirIfNicknameChanged
-	.set SPECIAL_BufferMonNickname, SPECIAL_TV_CopyNicknameToStringVar1AndEnsureTerminated
-	.set SPECIAL_WAITSTATE_BufferMonNickname, SPECIAL_WAITSTATE_TV_CopyNicknameToStringVar1AndEnsureTerminated
-	.set SPECIAL_IsMonOTIDNotPlayers, SPECIAL_TV_CheckMonOTIDEqualsPlayerID
-	.set SPECIAL_WAITSTATE_IsMonOTIDNotPlayers, SPECIAL_WAITSTATE_TV_CheckMonOTIDEqualsPlayerID
+	@ Retain the JP MonOT predicate alias until its inverse-condition behavior is
+	@ independently audited.
 	.set SPECIAL_MonOTNameNotPlayer, SPECIAL_MonOTNameMatchesPlayer
 	.set SPECIAL_WAITSTATE_MonOTNameNotPlayer, SPECIAL_WAITSTATE_MonOTNameMatchesPlayer
