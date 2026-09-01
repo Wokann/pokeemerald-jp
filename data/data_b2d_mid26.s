@@ -749,7 +749,20 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/BattleFrontier_BattlePikeRoomNormal/events.inc"
 	.include "data/maps/BattleFrontier_BattlePikeRoomFinal/events.inc"
 	.include "data/maps/BattleFrontier_BattlePikeRoomWildMons/events.inc"
-	.incbin "baserom_jp.gba", 0x5155E4, 0x1F98
+	.include "data/maps/BattleFrontier_RankingHall/events.inc"
+	.include "data/maps/BattleFrontier_Lounge1/events.inc"
+	.include "data/maps/BattleFrontier_ExchangeServiceCorner/events.inc"
+	.include "data/maps/BattleFrontier_Lounge2/events.inc"
+	.include "data/maps/BattleFrontier_Lounge3/events.inc"
+	.include "data/maps/BattleFrontier_Lounge4/events.inc"
+	.include "data/maps/BattleFrontier_ScottsHouse/events.inc"
+	.include "data/maps/BattleFrontier_Lounge5/events.inc"
+	.include "data/maps/BattleFrontier_Lounge6/events.inc"
+	.include "data/maps/BattleFrontier_Lounge7/events.inc"
+	.include "data/maps/BattleFrontier_ReceptionGate/events.inc"
+	.include "data/maps/BattleFrontier_Lounge8/events.inc"
+	.include "data/maps/BattleFrontier_Lounge9/events.inc"
+	.incbin "baserom_jp.gba", 0x515C88, 0x18F4
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

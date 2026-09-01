@@ -878,14 +878,53 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/BattleFrontier_BattlePikeRoomFinal/header.inc"
 	@ MAP_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS (g26 m39)
 	.include "data/maps/BattleFrontier_BattlePikeRoomWildMons/header.inc"
-	.incbin "baserom_jp.gba", 0x45D9BC, 0xEA8
+	@ MAP_BATTLE_FRONTIER_RANKING_HALL (g26 m40)
+	.include "data/maps/BattleFrontier_RankingHall/header.inc"
+	@ MAP_BATTLE_FRONTIER_LOUNGE1 (g26 m41)
+	.include "data/maps/BattleFrontier_Lounge1/header.inc"
+	@ MAP_BATTLE_FRONTIER_EXCHANGE_SERVICE_CORNER (g26 m42)
+	.include "data/maps/BattleFrontier_ExchangeServiceCorner/header.inc"
+	@ MAP_BATTLE_FRONTIER_LOUNGE2 (g26 m43)
+	.include "data/maps/BattleFrontier_Lounge2/header.inc"
+	@ MAP_BATTLE_FRONTIER_LOUNGE3 (g26 m44)
+	.include "data/maps/BattleFrontier_Lounge3/header.inc"
+	@ MAP_BATTLE_FRONTIER_LOUNGE4 (g26 m45)
+	.include "data/maps/BattleFrontier_Lounge4/header.inc"
+	@ MAP_BATTLE_FRONTIER_SCOTTS_HOUSE (g26 m46)
+	.include "data/maps/BattleFrontier_ScottsHouse/header.inc"
+	@ MAP_BATTLE_FRONTIER_LOUNGE5 (g26 m47)
+	.include "data/maps/BattleFrontier_Lounge5/header.inc"
+	@ MAP_BATTLE_FRONTIER_LOUNGE6 (g26 m48)
+	.include "data/maps/BattleFrontier_Lounge6/header.inc"
+	@ MAP_BATTLE_FRONTIER_LOUNGE7 (g26 m49)
+	.include "data/maps/BattleFrontier_Lounge7/header.inc"
+	@ MAP_BATTLE_FRONTIER_RECEPTION_GATE (g26 m50)
+	.include "data/maps/BattleFrontier_ReceptionGate/header.inc"
+	@ MAP_BATTLE_FRONTIER_LOUNGE8 (g26 m51)
+	.include "data/maps/BattleFrontier_Lounge8/header.inc"
+	@ MAP_BATTLE_FRONTIER_LOUNGE9 (g26 m52)
+	.include "data/maps/BattleFrontier_Lounge9/header.inc"
+	.incbin "baserom_jp.gba", 0x45DB28, 0xD3C
 	.4byte BattleFrontier_BattlePikeLobby
 	.4byte BattleFrontier_BattlePikeCorridor
 	.4byte BattleFrontier_BattlePikeThreePathRoom
 	.4byte BattleFrontier_BattlePikeRoomNormal
 	.4byte BattleFrontier_BattlePikeRoomFinal
 	.4byte BattleFrontier_BattlePikeRoomWildMons
-	.incbin "baserom_jp.gba", 0x45E87C, 0x11C
+	.4byte BattleFrontier_RankingHall
+	.4byte BattleFrontier_Lounge1
+	.4byte BattleFrontier_ExchangeServiceCorner
+	.4byte BattleFrontier_Lounge2
+	.4byte BattleFrontier_Lounge3
+	.4byte BattleFrontier_Lounge4
+	.4byte BattleFrontier_ScottsHouse
+	.4byte BattleFrontier_Lounge5
+	.4byte BattleFrontier_Lounge6
+	.4byte BattleFrontier_Lounge7
+	.4byte BattleFrontier_ReceptionGate
+	.4byte BattleFrontier_Lounge8
+	.4byte BattleFrontier_Lounge9
+	.incbin "baserom_jp.gba", 0x45E8B0, 0xE8
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
