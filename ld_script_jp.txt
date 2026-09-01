@@ -506,7 +506,6 @@ sMatchCallTrainers = gUnknown_85D6934;
 sPopulateMatchCallStringVarFuncs = gUnknown_85D7A28;
 gWildMonHeaders = gUnknown_852D9F4;
 sub_08196C74 = BufferPokedexRatingForMatchCall;
-sRoute119WaterTileData = gUnknown_852E728;
 DoGlobalWildEncounterDiceRoll = AllowWildCheckOnNewMetatile;
 DoWildEncounterRateTest = WildEncounterCheck;
 PokeblockGetGain = sub_08137054;
@@ -9714,6 +9713,8 @@ SECTIONS {
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_field_weather_effect_static_data);
         src/battle_setup.o(.rodata.battle_setup_rematch_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_battle_setup_rematch_data);
+        src/wild_encounter.o(.rodata.wild_encounter_route119_data);
+        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_wild_encounter_route119_data);
         src/option_menu.o(.rodata.option_menu_static_data);
         data/data_b2d_mid15.o(.rodata.option_menu_suffix);
         src/graphics.o(.rodata.pokedex_graphics_prefix);

@@ -47,6 +47,8 @@ enum {
 
 #define HEADER_NONE 0xFFFF
 
+#define WILD_ENCOUNTER_ROUTE119_DATA __attribute__((section(".rodata.wild_encounter_route119_data")))
+
 static u16 FeebasRandom(void);
 static void FeebasSeedRng(u16 seed);
 bool8 IsWildLevelAllowedByRepel(u8 level);
@@ -60,10 +62,17 @@ bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior);
 // JP state/data live at fixed addresses supplied by ld_script_jp.txt.
 extern u8 sWildEncountersDisabled;           // 0x020388A0
 extern u32 sFeebasRngValue;                  // 0x020388A4
-extern const u16 sRoute119WaterTileData[];   // 0x0852E728
-extern const struct WildPokemon sWildFeebas; // 0x0852E724
 extern const struct WildPokemonHeader gBattlePikeWildMonHeaders[];
 extern const struct WildPokemonHeader gBattlePyramidWildMonHeaders[];
+
+static const struct WildPokemon sWildFeebas WILD_ENCOUNTER_ROUTE119_DATA = {20, 25, SPECIES_FEEBAS};
+
+static const u16 sRoute119WaterTileData[] WILD_ENCOUNTER_ROUTE119_DATA =
+{
+     0,  45,   0,
+    46,  91, 131,
+    92, 139, 298,
+};
 
 void DisableWildEncounters(bool8 disabled)
 {

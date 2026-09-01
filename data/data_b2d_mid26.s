@@ -1772,14 +1772,12 @@ gBattlePikeWildMonHeaders: @ 0x852E6C0
 	.4byte 0 @ rockSmashMonsInfo NULL
 	.4byte 0 @ fishingMonsInfo NULL
 
-	.globl sWildFeebas
-sWildFeebas: @ 0x852E724
-	.byte 20, 25 @ minLevel, maxLevel
-	.hword SPECIES_FEEBAS @ 0x0148
+	.section .rodata.data_b2d_mid26_after_wild_encounter_route119_data
+	.align 2
 
-	.globl gUnknown_852E728
-gUnknown_852E728: @ 0x852E728
-	.incbin "baserom_jp.gba", 0x52e728, 0x73d4
+	.globl gUnknown_852E73C
+gUnknown_852E73C: @ 0x852E73C
+	.incbin "baserom_jp.gba", 0x52e73c, 0x73c0
 
 	.globl gUnknown_8535AFC
 gUnknown_8535AFC: @ 0x8535AFC
