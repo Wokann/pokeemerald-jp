@@ -1379,27 +1379,23 @@ SootopolisCity_Movement_DestroyTask: @ 0x081E2C07
 	destroy_extra_task
 	step_end
 
-	.globl SootopolisCity_Text_GymSign
 SootopolisCity_Text_GymSign: @ 0x081E2C09
 	.string "ルネ　シティ　ポケモンジム\n"
 	.string "リーダー　アダン\l"
 	.string "みずも　したたる　ジムリーダー！$"
 
-	.globl SootopolisCity_Text_CitySign
 SootopolisCity_Text_CitySign: @ 0x081E2C31
 	.string "ここは　ルネ　シティ\n"
 	.string "れきしが　ねむる　しんぴの　まち$"
 
 SootopolisCity_Text_DoorIsClosed: @ 0x081E2C4D
 	.string "とびらは　とざされて　いる！$"
-	.globl SootopolisCity_Text_PhysicallyFitLivingHere
 SootopolisCity_Text_PhysicallyFitLivingHere: @ 0x081E2C5C
 	.string "うみに　もぐったり\n"
 	.string "かいだんを　のぼったり　おりたり⋯⋯\p"
 	.string "このまちで　くらして　いると\n"
 	.string "けっこう　たくましく　なるんだよね$"
 
-	.globl SootopolisCity_Text_GiantPokemonSuddenlyAppeared
 SootopolisCity_Text_GiantPokemonSuddenlyAppeared: @ 0x081E2C9A
 	.string "おっきな　ポケモンが　とつぜん\n"
 	.string "まちの　まんなかに　あらわれたんだ！\l"
@@ -1408,65 +1404,54 @@ SootopolisCity_Text_GiantPokemonSuddenlyAppeared: @ 0x081E2C9A
 	.string "どうして　ぶつかり　あってるの？\l"
 	.string "ポケモンどうし　なかよく　できないの？$"
 
-	.globl SootopolisCity_Text_WhatIsThatGreenPokemon
 SootopolisCity_Text_WhatIsThatGreenPokemon: @ 0x081E2D00
 	.string "なに？　なに？　なに？\n"
 	.string "あの　みどりの　ポケモン　なにー！？$"
 
-	.globl SootopolisCity_Text_WhereDidLegendariesGo
 SootopolisCity_Text_WhereDidLegendariesGo: @ 0x081E2D1F
 	.string "グラードンと　カイオーガ\n"
 	.string "どこ　いっちゃったんだろう⋯⋯\p"
 	.string "また　どこかで　ひでりに　したり\n"
 	.string "おおあめ　ふらせたり　してるのかな？$"
 
-	.globl SootopolisCity_Text_TwoPokemonArentAngry
 SootopolisCity_Text_TwoPokemonArentAngry: @ 0x081E2D60
 	.string "なんとなく　かんじるよ⋯⋯　あの2ひき\n"
 	.string "おこってる　わけじゃ　ないみたい\p"
 	.string "たぶん⋯⋯　じぶんの　ちからを\n"
 	.string "コントロール　できなく　なってるんだ⋯⋯$"
 
-	.globl SootopolisCity_Text_FlyingMonStoppedRampage
 SootopolisCity_Text_FlyingMonStoppedRampage: @ 0x081E2DAA
 	.string "そらから　きた　ポケモンが\n"
 	.string "あばれていた　2ひきを\l"
 	.string "おとなしく　させちゃった⋯⋯$"
 
-	.globl SootopolisCity_Text_WonderWhatWorldIsLike
 SootopolisCity_Text_WonderWhatWorldIsLike: @ 0x081E2DD3
 	.string "ぼく⋯⋯　まだ　いちども　このまちから\n"
 	.string "そとに　でたこと　ないんだ\p"
 	.string "あの　まあるい　そらの　むこうには\n"
 	.string "どんな　せかいが　あるのかな？$"
 
-	.globl SootopolisCity_Text_ThisIsWicked
 SootopolisCity_Text_ThisIsWicked: @ 0x081E2E17
 	.string "すげー　だいはくりょく！$"
 
-	.globl SootopolisCity_Text_ThatWasWicked
 SootopolisCity_Text_ThatWasWicked: @ 0x081E2E24
 	.string "すげー　だいはくりょく　だった！$"
 
-	.globl SootopolisCity_Text_GoRedAndBlueMon
 SootopolisCity_Text_GoRedAndBlueMon: @ 0x081E2E35
 	.string "それいけ！　あかい　ポケモン！\n"
 	.string "まけるな！　あおい　ポケモン！$"
 
-	.globl SootopolisCity_Text_DoYouKnowMonNames
 SootopolisCity_Text_DoYouKnowMonNames: @ 0x081E2E55
 	.string "⋯⋯　⋯⋯　⋯⋯\p"
 	.string "きみ　あそこで　たたかってる\n"
 	.string "ポケモンたちの　なまえ　しってる？$"
 
-	.globl SootopolisCity_Text_GreenOneSettlesThings
 SootopolisCity_Text_GreenOneSettlesThings: @ 0x081E2E7F
 	.string "あかい　ポケモンと　あおい　ポケモン\n"
 	.string "どっちが　かつのかと　おもったら\l"
 	.string "みどりの　ポケモンかよ！\p"
 	.string "こりゃ　だいドンデンがえしだ！$"
 
-	.globl SootopolisCity_Text_SeeingLegendWithOwnEyes
 SootopolisCity_Text_SeeingLegendWithOwnEyes: @ 0x081E2EC0
 	.string "ポケモンの　たたかいに　よって\n"
 	.string "りくちと　うみが　つくられた　という\l"
@@ -1475,7 +1460,6 @@ SootopolisCity_Text_SeeingLegendWithOwnEyes: @ 0x081E2EC0
 	.string "うぉぉー！　こんな　すごいものを\n"
 	.string "この　めで　みられる　なんてー！！$"
 
-	.globl SootopolisCity_Text_SawLegendWithOwnEyes
 SootopolisCity_Text_SawLegendWithOwnEyes: @ 0x081E2F2C
 	.string "ポケモンの　たたかいに　よって\n"
 	.string "りくちと　うみが　つくられた　という\l"
@@ -1484,26 +1468,21 @@ SootopolisCity_Text_SawLegendWithOwnEyes: @ 0x081E2F2C
 	.string "うぉぉー！　こんな　すごいものを\n"
 	.string "この　めで　みられた　なんてー！！$"
 
-	.globl SootopolisCity_Text_BigPokemonFighting
 SootopolisCity_Text_BigPokemonFighting: @ 0x081E2F96
 	.string "おっきな　ポケモンと　ポケモンが\n"
 	.string "けんか　してるよ！\p"
 	.string "だれか　とめて　あげて！$"
 
-	.globl SootopolisCity_Text_PrettyMonCameFromSky
 SootopolisCity_Text_PrettyMonCameFromSky: @ 0x081E2FBE
 	.string "きれいな　ポケモン\n"
 	.string "おそらから　おりて　きた⋯⋯$"
 
-	.globl SootopolisCity_Text_SootopolisWillBeWrecked
 SootopolisCity_Text_SootopolisWillBeWrecked: @ 0x081E2FD7
 	.string "ひー　ルネシティが　こわれちゃうよー！$"
 
-	.globl SootopolisCity_Text_SootopolisDidntGetWrecked
 SootopolisCity_Text_SootopolisDidntGetWrecked: @ 0x081E2FEB
 	.string "ルネシティ　こわれないで　すんだよー！$"
 
-	.globl SootopolisCity_Text_NoOrdinaryTourist
 SootopolisCity_Text_NoOrdinaryTourist: @ 0x081E2FFF
 	.string "ほう！\n"
 	.string "わざわざ　ルネに　やってくるとは\l"
@@ -1511,11 +1490,9 @@ SootopolisCity_Text_NoOrdinaryTourist: @ 0x081E2FFF
 	.string "だからといって　おかねを　はらった\n"
 	.string "かんこうきゃく　でも　ないな⋯⋯$"
 
-	.globl SootopolisCity_Text_CityRegainedCalm
 SootopolisCity_Text_CityRegainedCalm: @ 0x081E304B
 	.string "まちが　また　しずかに　なった⋯⋯$"
 
-	.globl SootopolisCity_Text_CaveOfOriginPleaseLeave
 SootopolisCity_Text_CaveOfOriginPleaseLeave: @ 0x081E305D
 	.string "あなたは　なんですかな？\p"
 	.string "ここは　めざめのほこら⋯⋯\p"
@@ -1524,7 +1501,6 @@ SootopolisCity_Text_CaveOfOriginPleaseLeave: @ 0x081E305D
 	.string "よみがえると　いわれる　ばしょ⋯⋯\p"
 	.string "どうか　おひきとり　ください$"
 
-	.globl SootopolisCity_Text_LeadSuperiorTrainerToCave
 SootopolisCity_Text_LeadSuperiorTrainerToCave: @ 0x081E30B4
 	.string "つよい　いしと　すぐれた　さいのう\p"
 	.string "そして　たくさんの　ポケモンを　みてきた\n"
@@ -1533,19 +1509,16 @@ SootopolisCity_Text_LeadSuperiorTrainerToCave: @ 0x081E30B4
 	.string "この　ほこらへ　あんない　するよう\l"
 	.string "ミクリから　もうしつけられて　いたのです$"
 
-	.globl SootopolisCity_Text_AwakenedPokemonClash
 SootopolisCity_Text_AwakenedPokemonClash: @ 0x081E311F
 	.string "おお⋯⋯\p"
 	.string "めざめた　2ひきの　あらそいを\n"
 	.string "もう　1ひきの　めざめが　しずめた⋯⋯$"
 
-	.globl SootopolisCity_Text_CaveOfOriginSleepsToo
 SootopolisCity_Text_CaveOfOriginSleepsToo: @ 0x081E3148
 	.string "ここは　めざめのほこら⋯⋯\p"
 	.string "けれど　わざわいが　きえさった　いま\n"
 	.string "ほこらも　しずかに　ねむるのです⋯⋯$"
 
-	.globl SootopolisCity_Text_SootopolisSkyBeautiful
 SootopolisCity_Text_SootopolisSkyBeautiful: @ 0x081E317C
 	.string "ルネは　かざんの\n"
 	.string "かこうの　なかに　できた　まち\p"
@@ -1556,19 +1529,16 @@ SootopolisCity_Text_SootopolisSkyBeautiful: @ 0x081E317C
 	.string "ルネから　みえる　そらが\l"
 	.string "いちばん　うつくしいの$"
 
-	.globl SootopolisCity_Text_GiganticPokemonFight
 SootopolisCity_Text_GiganticPokemonFight: @ 0x081E31E2
 	.string "あんなに　おおきな　ポケモンが\n"
 	.string "2ひきも　あばれている　なんて\l"
 	.string "とても　わたしたちの　てに　おえないわ！$"
 
-	.globl SootopolisCity_Text_FearedWorstWhenPokemonFlewDown
 SootopolisCity_Text_FearedWorstWhenPokemonFlewDown: @ 0x081E3217
 	.string "3ひきめの　おおきな　ポケモンが\n"
 	.string "そらから　おりてきた　ときには\l"
 	.string "もう　どうなることかと　おもったわ⋯⋯$"
 
-	.globl SootopolisCity_Text_NightSkyFavoriteScenery
 SootopolisCity_Text_NightSkyFavoriteScenery: @ 0x081E324C
 	.string "かざんの　かこう　という\n"
 	.string "わっかに　かこまれた　まるい　よぞら\p"
@@ -1576,7 +1546,6 @@ SootopolisCity_Text_NightSkyFavoriteScenery: @ 0x081E324C
 	.string "いきている　みたいに　またたくの⋯⋯\l"
 	.string "わたしが　いちばん　すきな　けしき$"
 
-	.globl SootopolisCity_Text_WeatherWentWild
 SootopolisCity_Text_WeatherWentWild: @ 0x081E32A3
 	.string "きょうの　あさは　いいてんき　だったのよ\n"
 	.string "それが⋯⋯\p"
@@ -1587,14 +1556,12 @@ SootopolisCity_Text_WeatherWentWild: @ 0x081E32A3
 	.string "それも　これも　ぜんぶ\n"
 	.string "あの　ポケモンの　せい　かしら⋯⋯？$"
 
-	.globl SootopolisCity_Text_YouBroughtFlyingMon
 SootopolisCity_Text_YouBroughtFlyingMon: @ 0x081E3326
 	.string "えっ！\p"
 	.string "あの　そらから　おりてきた　ポケモンを\n"
 	.string "つれてきたの　って　あなたなの！？\p"
 	.string "⋯⋯へえ　やるじゃない！$"
 
-	.globl SootopolisCity_Text_GroudonPleaseStop
 SootopolisCity_Text_GroudonPleaseStop: @ 0x081E335D
 	.string "マツブサ“グ⋯　グラードン⋯⋯\n"
 	.string "たのむから　もう　やめてくれ！\p"
@@ -1603,7 +1570,6 @@ SootopolisCity_Text_GroudonPleaseStop: @ 0x081E335D
 	.string "ホウエンじゅうが\l"
 	.string "めちゃめちゃに　なってしまう！$"
 
-	.globl SootopolisCity_Text_AfterAllOurScheming
 SootopolisCity_Text_AfterAllOurScheming: @ 0x081E33BA
 	.string "マツブサ“ちょうこだい　ポケモンは\n"
 	.string "グラードンと　カイオーガ　だけじゃ\l"
@@ -1614,7 +1580,6 @@ SootopolisCity_Text_AfterAllOurScheming: @ 0x081E33BA
 	.string "ぜんぶ　もとどおり　というわけか⋯⋯\p"
 	.string "ふ⋯⋯　ふははは⋯⋯$"
 
-	.globl SootopolisCity_Text_KyogreCalmDown
 SootopolisCity_Text_KyogreCalmDown: @ 0x081E343A
 	.string "アオギリ“カイオーガ！　どうした！？\n"
 	.string "これを　みろ！　べにいろのたま　だぞ！\l"
@@ -1623,7 +1588,6 @@ SootopolisCity_Text_KyogreCalmDown: @ 0x081E343A
 	.string "⋯⋯　⋯⋯　⋯⋯\p"
 	.string "だめだ！　ぜんぜん　きかない！$"
 
-	.globl SootopolisCity_Text_TryingMeaninglessToPokemon
 SootopolisCity_Text_TryingMeaninglessToPokemon: @ 0x081E3495
 	.string "アオギリ“カイオーガと　グラードンは\n"
 	.string "どこかへ　とびさって　しまった\p"
@@ -1634,7 +1598,6 @@ SootopolisCity_Text_TryingMeaninglessToPokemon: @ 0x081E3495
 	.string "ポケモンから　みれば\l"
 	.string "ちっぽけなこと　だったの　かもな⋯⋯$"
 
-	.globl SootopolisCity_Text_InvolvedWithCrisisComeWithMe
 SootopolisCity_Text_InvolvedWithCrisisComeWithMe: @ 0x081E350F
 	.string "ダイゴ“あそこで　たたかって　いるのは\n"
 	.string "グラードン⋯⋯\l"
@@ -1651,7 +1614,6 @@ SootopolisCity_Text_InvolvedWithCrisisComeWithMe: @ 0x081E350F
 	.string "きみに　あわせたい　ひとが　いるんだ\p"
 	.string "ちょっと　ボクに　ついておいで$"
 
-	.globl SootopolisCity_Text_DoesThisMakeYourFearPokemon
 SootopolisCity_Text_DoesThisMakeYourFearPokemon: @ 0x081E35DC
 	.string "ダイゴ“ねえ　{PLAYER}{KUN}\n"
 	.string "グラードンと　カイオーガを　みて\l"
@@ -1661,7 +1623,6 @@ SootopolisCity_Text_DoesThisMakeYourFearPokemon: @ 0x081E35DC
 	.string "⋯⋯いや　きみなら　そんなことは\n"
 	.string "もう　とっくに　きがついて　いるよね$"
 
-	.globl SootopolisCity_Text_HereWereAreHelpWallace
 SootopolisCity_Text_HereWereAreHelpWallace: @ 0x081E3656
 	.string "ダイゴ“さあ　ついた！\p"
 	.string "このおくに　ミクリさん　という\n"
@@ -1669,31 +1630,26 @@ SootopolisCity_Text_HereWereAreHelpWallace: @ 0x081E3656
 	.string "きみなら　かれの　ちからに\n"
 	.string "なって　あげられると　おもうよ⋯⋯$"
 
-	.globl SootopolisCity_Text_KnowWhatsNeededToHelpHim
 SootopolisCity_Text_KnowWhatsNeededToHelpHim: @ 0x081E369B
 	.string "ダイゴ“きみなら　かれの　ちからに\n"
 	.string "なって　あげられると　おもうよ⋯⋯$"
 
-	.globl SootopolisCity_Text_NeverBeenToSkyPillar
 SootopolisCity_Text_NeverBeenToSkyPillar: @ 0x081E36BF
 	.string "ダイゴ“そらのはしら⋯⋯\n"
 	.string "ボクも　まだ　いったことが　ないけど\l"
 	.string "いったい　どこに　あるんだろうね$"
 
-	.globl SootopolisCity_Text_SoThatsRayquaza
 SootopolisCity_Text_SoThatsRayquaza: @ 0x081E36F0
 	.string "ダイゴ“あれが　レックウザか⋯⋯\p"
 	.string "あばれていた　2ひきが　おそれをなして\n"
 	.string "さっていく　なんて　すごいや⋯⋯$"
 
-	.globl SootopolisCity_Text_MaxieArchieLeft
 SootopolisCity_Text_MaxieArchieLeft: @ 0x081E3726
 	.string "ダイゴ“マツブサと　アオギリの　ふたりは\n"
 	.string "どこかへ　いって　しまった　ようだね\p"
 	.string "もしかすると　おくりびやまに\n"
 	.string "たまを　かえしに　いったのかも⋯⋯$"
 
-	.globl SootopolisCity_Text_HaventYouScaledSkyPillar
 SootopolisCity_Text_HaventYouScaledSkyPillar: @ 0x081E376F
 	.string "ミクリ“おや？　{PLAYER}{KUN}\p"
 	.string "あれから　そらのはしらを　のぼって\n"
@@ -1701,7 +1657,6 @@ SootopolisCity_Text_HaventYouScaledSkyPillar: @ 0x081E376F
 	.string "きみなら　きっと　いけるさ\n"
 	.string "そらのはしらの　おくじょうへ⋯⋯$"
 
-	.globl SootopolisCity_Text_AquaMagmaDidntMeanHarm
 SootopolisCity_Text_AquaMagmaDidntMeanHarm: @ 0x081E37B8
 	.string "ミクリ“{PLAYER}{KUN}⋯⋯\p"
 	.string "マグマだんと　アクアだんの　ふたりも\n"
@@ -1709,7 +1664,6 @@ SootopolisCity_Text_AquaMagmaDidntMeanHarm: @ 0x081E37B8
 	.string "ちょっと　かれらの　はなしを\n"
 	.string "きいてやって　みては　どうかな⋯⋯$"
 
-	.globl SootopolisCity_Text_ThankYouForHelpAcceptThis
 SootopolisCity_Text_ThankYouForHelpAcceptThis: @ 0x081E380B
 	.string "ミクリ“{PLAYER}{KUN}⋯⋯\n"
 	.string "やはり　わたしの　めは　ただしかった\p"
@@ -1722,7 +1676,6 @@ SootopolisCity_Text_ThankYouForHelpAcceptThis: @ 0x081E380B
 	.string "これは　わたしからの　プレゼントだ\n"
 	.string "うけとって　くれたまえ！$"
 
-	.globl SootopolisCity_Text_ExplainWaterfallGoToGym
 SootopolisCity_Text_ExplainWaterfallGoToGym: @ 0x081E38A0
 	.string "その　ひでんマシンは　たきのぼり！\p"
 	.string "レインバッジを　もっていれば\n"
@@ -1735,7 +1688,6 @@ SootopolisCity_Text_ExplainWaterfallGoToGym: @ 0x081E38A0
 	.string "さあ　じゅんびが　できたら\n"
 	.string "なかに　はいって　くれたまえ！$"
 
-	.globl SootopolisCity_Text_DazzledByMentor
 SootopolisCity_Text_DazzledByMentor: @ 0x081E3943
 	.string "ミクリ“わたしの　ししょうの\n"
 	.string "かれい　かつ　ゆうがな　たたかいぶりに\l"
