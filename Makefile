@@ -342,6 +342,7 @@ JP_STRUCTURED_MAPS += Route110_SeasideCyclingRoadSouthEntrance Route110_SeasideC
 JP_STRUCTURED_MAPS += Route113_GlassWorkshop
 JP_STRUCTURED_MAPS += Route123_BerryMastersHouse
 JP_STRUCTURED_MAPS += Route119_WeatherInstitute_1F Route119_WeatherInstitute_2F Route119_House
+JP_STRUCTURED_MAPS += Route124_DivingTreasureHuntersHouse
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
@@ -535,6 +536,7 @@ JP_STRUCTURED_MAP_METADATA_MAPS += Route110_SeasideCyclingRoadSouthEntrance Rout
 JP_STRUCTURED_MAP_METADATA_MAPS += Route113_GlassWorkshop
 JP_STRUCTURED_MAP_METADATA_MAPS += Route123_BerryMastersHouse
 JP_STRUCTURED_MAP_METADATA_MAPS += Route119_WeatherInstitute_1F Route119_WeatherInstitute_2F Route119_House
+JP_STRUCTURED_MAP_METADATA_MAPS += Route124_DivingTreasureHuntersHouse
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

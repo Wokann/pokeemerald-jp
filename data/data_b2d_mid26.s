@@ -873,7 +873,9 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/Route119_WeatherInstitute_2F/events.inc"
 	@ MAP_ROUTE119_HOUSE (g32 m2)
 	.include "data/maps/Route119_House/events.inc"
-	.incbin "baserom_jp.gba", 0x5174E0, 0x9C
+	@ MAP_ROUTE124_DIVING_TREASURE_HUNTERS_HOUSE (g33 m0)
+	.include "data/maps/Route124_DivingTreasureHuntersHouse/events.inc"
+	.incbin "baserom_jp.gba", 0x517528, 0x54
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

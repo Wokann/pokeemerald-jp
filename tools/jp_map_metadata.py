@@ -75,6 +75,7 @@ CANONICAL_LAYOUT_SYMBOLS = {
     "LAYOUT_ROUTE110_SEASIDE_CYCLING_ROAD_ENTRANCE": "Route110_SeasideCyclingRoadEntrance_Layout",
     "LAYOUT_ROUTE119_WEATHER_INSTITUTE_1F": "Route119_WeatherInstitute_1F_Layout",
     "LAYOUT_ROUTE119_WEATHER_INSTITUTE_2F": "Route119_WeatherInstitute_2F_Layout",
+    "LAYOUT_ROUTE124_DIVING_TREASURE_HUNTERS_HOUSE": "Route124_DivingTreasureHuntersHouse_Layout",
 }
 
 # The JP layout table has not yet adopted the US shared-layout labels for these
