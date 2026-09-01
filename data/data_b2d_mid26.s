@@ -875,24 +875,6 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/Route119_House/events.inc"
 	@ MAP_ROUTE124_DIVING_TREASURE_HUNTERS_HOUSE (g33 m0)
 	.include "data/maps/Route124_DivingTreasureHuntersHouse/events.inc"
-	.incbin "baserom_jp.gba", 0x517528, 0x54
-
-	.globl gWeatherBallUpSpriteTemplate
-gWeatherBallUpSpriteTemplate: @ 0x851757C
-	.incbin "baserom_jp.gba", 0x51757C, 0x18
-
-	.globl gWeatherBallNormalDownSpriteTemplate
-gWeatherBallNormalDownSpriteTemplate: @ 0x8517594
-	.incbin "baserom_jp.gba", 0x517594, 0x18
-
-	.incbin "baserom_jp.gba", 0x5175AC, 0x1C
-
-	.globl gSpinningSparkleSpriteTemplate
-gSpinningSparkleSpriteTemplate: @ 0x85175C8
-	.incbin "baserom_jp.gba", 0x5175C8, 0x18
-
-	.incbin "baserom_jp.gba", 0x5175E0, 0xAC
-
 	.section .rodata.data_b2d_mid26_after_battle_anim_status_effects_before_field_weather_drought
 	.incbin "baserom_jp.gba", 0x5176d4, 0x3cc
 
