@@ -777,8 +777,6 @@ sText_FemaleSymbol = sText_ConditionSearchMonMale + 0xA;
 sGenderlessIconString = sText_ConditionSearchMonFemale + 0x6;
 sBattlePalaceNatureToFlavorTextId = gUnknown_82ECE7C;
 gRefereeStringsTable = gUnknown_85AC04C;
-gDummySpriteAnimTable = gUnknown_82BF304;
-gDummySpriteAffineAnimTable = gUnknown_82BF304 + 0xC;
 Menu_LoadStdPal = sub_08197680;
 CB2_LinkTrade = CB2_LinkTrade;
 GetUnionRoomTrainerClass = sub_080686F0;
@@ -9245,6 +9243,8 @@ SECTIONS {
     ALIGN(4)
     {
         data/data.o(.rodata);
+        src/sprite.o(.rodata.sprite_dummy_data);
+        data/data.o(.rodata.data_after_sprite_dummy_data);
         src/sprite.o(.rodata.sprite_oam_dimensions);
         src/io_reg.o(.rodata.io_reg_data.sUnused);
         src/io_reg.o(.rodata.io_reg_data.gOverworldBackgroundLayerFlags);

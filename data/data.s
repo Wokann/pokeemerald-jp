@@ -254,19 +254,8 @@ sCenterToCornerVecTable: @ 0x82BF299
 	.globl sDummySprite
 sDummySprite: @ 0x82BF2B4
 	.string "ッ　ぃあ　し　　えÜろく　　　　たÜろくとÜろく　　　　だム　くぃあッ　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　$"
-	.globl gDummyOamData
-gDummyOamData: @ 0x82BF2F8
-	.4byte 0x013000A0
-	.4byte 0x00000C00
-	.hword 0xFFFF, 0x0000
 
-	.globl gUnknown_82BF304
-gUnknown_82BF304: @ 0x82BF304
-	.incbin "baserom_jp.gba", 0x2bf304, 0xc
-
-	.globl gDummySpriteAffineAnimTable
-gDummySpriteAffineAnimTable: @ 0x82BF310
-	.4byte 0x082BF308
+	.section .rodata.data_after_sprite_dummy_data
 
 	.globl gDummySpriteTemplate
 gDummySpriteTemplate: @ 0x82BF314

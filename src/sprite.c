@@ -156,8 +156,20 @@ const struct OamDimensions sOamDimensions[3][4] __attribute__((section(".rodata.
         [SPRITE_SIZE(32x64)] = { 32, 64 },
     },
 };
-extern const union AnimCmd *const gDummySpriteAnimTable[];
-extern const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
+#define SPRITE_DUMMY_DATA __attribute__((section(".rodata.sprite_dummy_data")))
+
+const struct OamData gDummyOamData SPRITE_DUMMY_DATA = DUMMY_OAM_DATA;
+
+static const union AnimCmd sDummyAnim SPRITE_DUMMY_DATA = { ANIM_END };
+
+const union AnimCmd *const gDummySpriteAnimTable[] SPRITE_DUMMY_DATA = { &sDummyAnim };
+
+static const union AffineAnimCmd sDummyAffineAnim SPRITE_DUMMY_DATA = { AFFINE_ANIM_END };
+
+const union AffineAnimCmd *const gDummySpriteAffineAnimTable[] SPRITE_DUMMY_DATA = { &sDummyAffineAnim };
+
+#undef SPRITE_DUMMY_DATA
+
 extern const struct SpriteTemplate gDummySpriteTemplate;
 // iwram bss
 extern u16 sSpriteTileRangeTags[MAX_SPRITES];
