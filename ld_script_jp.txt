@@ -9342,7 +9342,6 @@ SECTIONS {
         src/data/main_menu_data.o(.rodata);
         src/data/battle_affine.o(.rodata);
         src/data/unused_anims.o(.rodata);
-        data/data_b_mid2b3.o(.rodata);
         src/data/front_pic_coordinates.o(.rodata);
         src/data/still_front_pic_table.o(.rodata);
         src/data/back_pic_coordinates.o(.rodata);
