@@ -349,8 +349,8 @@ $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tool
 	$(MAPJSON) events emerald $< $(@D)
 
 # Match pokeemerald's aggregate map hierarchy. These four files are generated
-# together from the canonical group order; only headers/groups are consumed by
-# mid30 so the remaining connection migration can retain its raw boundary.
+# together from the canonical group order; mid30 consumes headers, groups, and
+# connections while data_b2d_mid26 keeps map events visible per map.
 JP_MAP_GROUP_AGGREGATES := data/maps/connections.inc data/maps/events.inc data/maps/groups.inc data/maps/headers.inc
 
 $(JP_MAP_GROUP_AGGREGATES) &: data/maps/map_groups.json | tools
