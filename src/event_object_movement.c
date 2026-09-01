@@ -764,6 +764,18 @@ struct Sprite;
 #include "data/object_events/object_event_anims.h"
 #undef EVENT_OBJECT_MOVEMENT_OBJECT_EVENT_ANIMS
 
+#define EVENT_OBJECT_MOVEMENT_BASE_OAM_DATA __attribute__((section(".rodata.event_object_movement_base_oam_data"), aligned(4), used))
+#include "data/object_events/base_oam.h"
+#undef EVENT_OBJECT_MOVEMENT_BASE_OAM_DATA
+
+#define EVENT_OBJECT_MOVEMENT_OBJECT_EVENT_SUBSPRITES __attribute__((section(".rodata.event_object_movement_object_event_subsprites"), used))
+#include "data/object_events/object_event_subsprites.h"
+#undef EVENT_OBJECT_MOVEMENT_OBJECT_EVENT_SUBSPRITES
+
+#define EVENT_OBJECT_MOVEMENT_OBJECT_EVENT_GRAPHICS_INFO __attribute__((section(".rodata.event_object_movement_object_event_graphics_info"), aligned(4), used))
+#include "data/object_events/object_event_graphics_info.h"
+#undef EVENT_OBJECT_MOVEMENT_OBJECT_EVENT_GRAPHICS_INFO
+
 #define EVENT_OBJECT_MOVEMENT_FIELD_EFFECT_OBJECT_DATA __attribute__((section(".rodata.event_object_movement_field_effect_objects_data")))
 #include "data/field_effects/field_effect_objects.h"
 #undef EVENT_OBJECT_MOVEMENT_FIELD_EFFECT_OBJECT_DATA

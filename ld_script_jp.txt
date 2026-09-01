@@ -9529,7 +9529,9 @@ SECTIONS {
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_field_effect_object_template_pointers);
         src/event_object_movement.o(.rodata.event_object_movement_object_event_pic_tables);
         src/event_object_movement.o(.rodata.event_object_movement_object_event_anims);
-        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_object_event_anims);
+        src/event_object_movement.o(.rodata.event_object_movement_base_oam_data);
+        src/event_object_movement.o(.rodata.event_object_movement_object_event_subsprites);
+        src/event_object_movement.o(.rodata.event_object_movement_object_event_graphics_info);
         gUnknown_84E401C = .;
         src/event_object_movement.o(.rodata.event_object_movement_palette_data);
         gUnknown_84E4154 = gUnknown_84E401C + 0x138;
@@ -9654,13 +9656,6 @@ SECTIONS {
         gFieldEffectObjectPic_WaterSurfacing = ABSOLUTE(0x084D190C);
         gFieldEffectPal_Ash = ABSOLUTE(0x084D310C);
         gFieldEffectPal_SmallSparkle = ABSOLUTE(0x084D3F2C);
-        gObjectEventBaseOam_8x8 = ABSOLUTE(0x084E1940);
-        gObjectEventBaseOam_16x8 = ABSOLUTE(0x084E1948);
-        gObjectEventBaseOam_16x16 = ABSOLUTE(0x084E1950);
-        gObjectEventBaseOam_32x8 = ABSOLUTE(0x084E1958);
-        gObjectEventBaseOam_64x32 = ABSOLUTE(0x084E1960);
-        gObjectEventBaseOam_16x32 = ABSOLUTE(0x084E1968);
-        gObjectEventBaseOam_32x32 = ABSOLUTE(0x084E1970);
         gUnknown_84E5B30 = .;
         src/event_object_movement.o(.rodata.event_object_movement_function_tables);
         gUnknown_84E5B40 = gUnknown_84E5B30 + 0x10;

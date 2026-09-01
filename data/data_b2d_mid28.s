@@ -55,11 +55,6 @@ gUnknown_84DDE30: @ 0x84DDE30
 
 	.section .rodata.data_b2d_mid28_after_field_effect_object_template_pointers
 
-	.section .rodata.data_b2d_mid28_after_object_event_anims
-
-	@ Object-event base OAM, subsprite, and graphics-info data pending source recovery.
-	.incbin "baserom_jp.gba", 0x4e1940, 0x26dc
-
 	.section .rodata.data_b2d_mid28_after_event_object_movement_action_function_tables_tail
 
 	.globl gTextWindowFrame1_Gfx
