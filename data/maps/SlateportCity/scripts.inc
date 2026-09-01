@@ -914,52 +914,43 @@ SlateportCity_Text_EnergyGuruSellWhatYouNeed: @ 0x081DC9BE
 	.string "わし　がんばりや！\n"
 	.string "がんばって　いろいろ　うりますよ！$"
 
-	.globl SlateportCity_Text_OhYourPokemon
 SlateportCity_Text_OhYourPokemon: @ 0x081DC9DA
 	.string "あら？\n"
 	.string "きみの　{STR_VAR_1}⋯⋯$"
 
-	.globl SlateportCity_Text_PleaseGiveItThisEffortRibbon
 SlateportCity_Text_PleaseGiveItThisEffortRibbon: @ 0x081DC9E7
 	.string "ものすごく　がんばったのね！\p"
 	.string "ごほうびと　して\n"
 	.string "この　がんばリボンを　つけてあげて！$"
 
-	.globl SlateportCity_Text_ReceivedEffortRibbon
 SlateportCity_Text_ReceivedEffortRibbon: @ 0x081DCA12
 	.string "{PLAYER}は　がんばリボンを　もらった！$"
 
-	.globl SlateportCity_Text_PutEffortRibbonOnMon
 SlateportCity_Text_PutEffortRibbonOnMon: @ 0x081DCA24
 	.string "{PLAYER}は　がんばリボンを\n"
 	.string "{STR_VAR_1}に　つけて　あげた！$"
 
-	.globl SlateportCity_Text_GoForItLittleHarder
 SlateportCity_Text_GoForItLittleHarder: @ 0x081DCA3D
 	.string "もっと　がんばってみて！\p"
 	.string "がんばれば　わたしが　ポケモンに\n"
 	.string "いいもの　あげるから！$"
 
-	.globl SlateportCity_Text_EffortRibbonLooksGoodOnIt
 SlateportCity_Text_EffortRibbonLooksGoodOnIt: @ 0x081DCA67
 	.string "あっ！　きみの　{STR_VAR_1}\n"
 	.string "がんばリボン　にあってるよ！$"
 
-	.globl SlateportCity_Text_WonderIfLighthouseStartlesPokemon
 SlateportCity_Text_WonderIfLighthouseStartlesPokemon: @ 0x081DCA81
 	.string "とうだいの　あかりは\n"
 	.string "すう10キロさき　にも　とどくんだ\p"
 	.string "うみの　なかの　ポケモン\n"
 	.string "まぶしくて　おどろいて　いないかな？$"
 
-	.globl SlateportCity_Text_SeaweedFullOfLife
 SlateportCity_Text_SeaweedFullOfLife: @ 0x081DCABE
 	.string "ほれ　みてみろ！\p"
 	.string "このあたりで　とれる　かいそうは\n"
 	.string "しんせん　ピチピチ！\p"
 	.string "いまにも　おそい　かかって　きそうだ！$"
 
-	.globl SlateportCity_Text_HowTownIsBornAndGrows
 SlateportCity_Text_HowTownIsBornAndGrows: @ 0x081DCAF7
 	.string "みずの　きれいな　ところに\n"
 	.string "たくさんの　みのりが　あつまり\p"
@@ -967,13 +958,11 @@ SlateportCity_Text_HowTownIsBornAndGrows: @ 0x081DCAF7
 	.string "いちばが　できる⋯⋯\p"
 	.string "こうして　まちは　おおきくなるのさ$"
 
-	.globl SlateportCity_Text_SlateportWonderfulPlace
 SlateportCity_Text_SlateportWonderfulPlace: @ 0x081DCB43
 	.string "うみの　かおりが　する　ばしょで\n"
 	.string "かいものが　できるなんて⋯⋯\p"
 	.string "カイナって　すてきな　ところ！$"
 
-	.globl SlateportCity_Text_BuyBricksSoDecorWontGetDirty
 SlateportCity_Text_BuyBricksSoDecorWontGetDirty: @ 0x081DCB73
 	.string "ぬいぐるみや　クッションって\n"
 	.string "ゆかに　おくと　よごれちゃうでしょ？\p"
@@ -981,14 +970,12 @@ SlateportCity_Text_BuyBricksSoDecorWontGetDirty: @ 0x081DCB73
 	.string "ぬいぐるみや　クッションを　おくための\l"
 	.string "レンガを　かいに　きたの！$"
 
-	.globl SlateportCity_Text_GoingToCompeteInBattleTent
 SlateportCity_Text_GoingToCompeteInBattleTent: @ 0x081DCBCA
 	.string "うぉー！　バトルテントに\n"
 	.string "ぼくも　しゅつじょう　するぞおー！\p"
 	.string "と　そのまえに！\n"
 	.string "ポケモン　つかまえて　こなくちゃ！$"
 
-	.globl SlateportCity_Text_BushedHikingFromMauville
 SlateportCity_Text_BushedHikingFromMauville: @ 0x081DCC04
 	.string "ふぅ　ふぅ⋯⋯\p"
 	.string "おれは　キンセツシティ　から\n"
@@ -997,7 +984,6 @@ SlateportCity_Text_BushedHikingFromMauville: @ 0x081DCC04
 	.string "こんな　ことなら　じてんしゃに\n"
 	.string "のって　くれば　よかったよ！$"
 
-	.globl SlateportCity_Text_EveryoneCallsHimCaptStern
 SlateportCity_Text_EveryoneCallsHimCaptStern: @ 0x081DCC5B
 	.string "この　はくぶつかんを　つくったのは\n"
 	.string "クスノキさん　といって\p"
@@ -1009,123 +995,102 @@ SlateportCity_Text_EveryoneCallsHimCaptStern: @ 0x081DCC5B
 	.string "クスノキかんちょう　と　よんでおけば\l"
 	.string "まちがい　ないよな！$"
 
-	.globl SlateportCity_Text_WhatsLongLineOverThere
 SlateportCity_Text_WhatsLongLineOverThere: @ 0x081DCCE4
 	.string "なんなのかしら\n"
 	.string "あの　ぎょうれつ？$"
 
-	.globl SlateportCity_Text_VisitedMuseumOften
 SlateportCity_Text_VisitedMuseumOften: @ 0x081DCCF6
 	.string "この　はくぶつかん　には\n"
 	.string "こどもの　ころ　わたしも　よく　きました\p"
 	.string "かんないの　てんじひんを　みて\n"
 	.string "うみの　しんぴに　あこがれた　ものです$"
 
-	.globl SlateportCity_Text_QuitPushing
 SlateportCity_Text_QuitPushing: @ 0x081DCD3C
 	.string "ちょっと　あんた！　おさないでよ！\n"
 	.string "じゅんばん　なんだから！$"
 
-	.globl SlateportCity_Text_AquaHasPolicy
 SlateportCity_Text_AquaHasPolicy: @ 0x081DCD5B
 	.string "おれたち　アクアだんの　ポリシーは\n"
 	.string "‘げんち　しゅうごう’　そして\l"
 	.string "‘げんち　かいさん’　なんだぜ！$"
 
-	.globl SlateportCity_Text_BossIsBrilliant
 SlateportCity_Text_BossIsBrilliant: @ 0x081DCD8E
 	.string "リーダーほど　あたまの　いい　ひとが\n"
 	.string "いまさら　はくぶつかんに\l"
 	.string "なんの　ようじが　あるんだ⋯⋯？$"
 
-	.globl SlateportCity_Text_WhatsNewSchemeIWonder
 SlateportCity_Text_WhatsNewSchemeIWonder: @ 0x081DCDBF
 	.string "こんどの　さくせんは　なんだろう？\p"
 	.string "リーダーを　おこらせると　こわいから\n"
 	.string "しっぱい　したくないぜ⋯⋯$"
 
-	.globl SlateportCity_Text_ShouldTakeItAll
 SlateportCity_Text_ShouldTakeItAll: @ 0x081DCDF2
 	.string "はくぶつかんに　ほしいもの　あるなら\n"
 	.string "まるごと　うばっちゃえば　いいのに⋯⋯$"
 
-	.globl SlateportCity_Text_DontButtIn
 SlateportCity_Text_DontButtIn: @ 0x081DCE19
 	.string "おい　こら！\n"
 	.string "じゅんばん　ぬかすなよ！$"
 
-	.globl SlateportCity_Text_RemindsMeOfLongLineForGames
 SlateportCity_Text_RemindsMeOfLongLineForGames: @ 0x081DCE2D
 	.string "ぎょうれつ　というと\n"
 	.string "だいにんきの　ゲームを　かったときを\l"
 	.string "おもいだすなあ⋯⋯$"
 
-	.globl SlateportCity_Text_WhyAreWeLiningUp
 SlateportCity_Text_WhyAreWeLiningUp: @ 0x081DCE55
 	.string "まじめに　おかね　はらわずに\n"
 	.string "むりやり　はいれば　いいのによ！$"
 
-	.globl SlateportCity_Text_WhatDoYouWant
 SlateportCity_Text_WhatDoYouWant: @ 0x081DCE75
 	.string "なんだ　なんだ！？$"
 
-	.globl SlateportCity_Text_IllReadSignForYou
 SlateportCity_Text_IllReadSignForYou: @ 0x081DCE7F
 	.string "おまえ　このカンバンが　よみたいのか？\n"
 	.string "なら　オレが　かわりに　よんでやらぁ！$"
 
-	.globl SlateportCity_Text_SaysSomethingLikeSeaIsEndless
 SlateportCity_Text_SaysSomethingLikeSeaIsEndless: @ 0x081DCEA7
 	.string "えーと⋯⋯\p"
 	.string "“てしない　それは　の　の”\p"
 	.string "⋯⋯って　かいて　あるぜ！$"
 
-	.globl SlateportCity_Text_ShouldveBroughtMyGameBoy
 SlateportCity_Text_ShouldveBroughtMyGameBoy: @ 0x081DCECA
 	.string "ぶつぶつぶつ⋯⋯\p"
 	.string "ゲームボーイが　あれば\n"
 	.string "ぎょうれつも　たいくつ　しないぜ\p"
 	.string "ぶつぶつぶつ⋯⋯$"
 
-	.globl SlateportCity_Text_HotSpringsAfterOperation
 SlateportCity_Text_HotSpringsAfterOperation: @ 0x081DCEF9
 	.string "このさくせんが　おわったら\n"
 	.string "おんせんに　つれていって　やる！\p"
 	.string "って　リーダーが　いってたんだ\n"
 	.string "たのしみ　だなぁ⋯⋯$"
 
-	.globl SlateportCity_Text_SeaIsSoWet
 SlateportCity_Text_SeaIsSoWet: @ 0x081DCF33
 	.string "うみって　おおきいなあ⋯⋯\p"
 	.string "ひょっとして　うみって\n"
 	.string "ポケモンが　ながした　なみだで\l"
 	.string "できてるのかなあ⋯⋯$"
 
-	.globl SlateportCity_Text_SinkOldBoats
 SlateportCity_Text_SinkOldBoats: @ 0x081DCF68
 	.string "ふるく　なって　のれない　ふねは\n"
 	.string "どうするか　しって　いるかね？\p"
 	.string "うみの　そこに　しずめて\n"
 	.string "ポケモンの　すみかに　してやるのだよ！$"
 
-	.globl SlateportCity_Text_BuyTooMuch
 SlateportCity_Text_BuyTooMuch: @ 0x081DCFAA
 	.string "ここに　くると　うれしくて\n"
 	.string "つい　たくさん　かいもの　しちゃう！$"
 
-	.globl SlateportCity_Text_GetNameRaterToHelpYou
 SlateportCity_Text_GetNameRaterToHelpYou: @ 0x081DCFCB
 	.string "ポケモンの　ニックネームを　かえたいなら\n"
 	.string "せいめい　はんだんしに　たのむんだね！$"
 
-	.globl SlateportCity_Text_CantChangeTradeMonName
 SlateportCity_Text_CantChangeTradeMonName: @ 0x081DCFF4
 	.string "ひとと　こうかんした　ポケモンは\n"
 	.string "ニックネームを　かえられないわよ！\p"
 	.string "だって　つけた　ひとの　きもちが\n"
 	.string "こめられて　いるんですもの！$"
 
-	.globl SlateportCity_Text_BattleTentBuiltRecently
 SlateportCity_Text_BattleTentBuiltRecently: @ 0x081DD037
 	.string "さいきん　カイナには\n"
 	.string "バトルテントが　できたんだ\l"
@@ -1133,58 +1098,48 @@ SlateportCity_Text_BattleTentBuiltRecently: @ 0x081DD037
 	.string "おまえも　つよい　ポケモン　さがしに\n"
 	.string "いって　みなよ！$"
 
-	.globl SlateportCity_Text_CaptSternBeingInterviewed
 SlateportCity_Text_CaptSternBeingInterviewed: @ 0x081DD082
 	.string "ゆうめいな　スターが　きていたら\n"
 	.string "サインを　もらうつもり　だったのに\p"
 	.string "インタビュー　されてるのは\n"
 	.string "あれ⋯⋯　クスノキさん　でないかい？$"
 
-	.globl SlateportCity_Text_InterviewerSoCool
 SlateportCity_Text_InterviewerSoCool: @ 0x081DD0C6
 	.string "あの　インタビュアーの　おねえさん\n"
 	.string "かっこよくて　びじん！\p"
 	.string "あたしも　おおきく　なったら\n"
 	.string "こくさい　ジャーナリストに　なるわ！$"
 
-	.globl SlateportCity_Text_SternSaysDiscoveredSomething
 SlateportCity_Text_SternSaysDiscoveredSomething: @ 0x081DD106
 	.string "クスノキかんちょうは　うみの　そこで\n"
 	.string "なにかを　はっけん　したんだって！\p"
 	.string "なんだろなー？　なんだろなー？$"
 
-	.globl SlateportCity_Text_CaptainComeBackWithBigFish
 SlateportCity_Text_CaptainComeBackWithBigFish: @ 0x081DD13B
 	.string "なんだ　なんだ！？\p"
 	.string "かんちょうは　うみの　そこから\n"
 	.string "おおもの　でも　つりあげたのか？$"
 
-	.globl SlateportCity_Text_AmIOnTV
 SlateportCity_Text_AmIOnTV: @ 0x081DD166
 	.string "みんなー！　みてるかー！\n"
 	.string "おれも　テレビに　うつってるかー？$"
 
-	.globl SlateportCity_Text_CaptainsACelebrity
 SlateportCity_Text_CaptainsACelebrity: @ 0x081DD185
 	.string "テレビが　しゅざいに　くる　なんて\n"
 	.string "かんちょうも　ゆうめいじん　ですなあ！$"
 
-	.globl SlateportCity_Text_BigSmileForCamera
 SlateportCity_Text_BigSmileForCamera: @ 0x081DD1AB
 	.string "ダイ“はい　クスノキさん\n"
 	.string "そこで　えがお！$"
 
-	.globl SlateportCity_Text_MostInvaluableExperience
 SlateportCity_Text_MostInvaluableExperience: @ 0x081DD1C1
 	.string "マリ“なるほど　なるほど　それは\n"
 	.string "きちょうな　たいけんを　なさいましたね⋯⋯$"
 
-	.globl SlateportCity_Text_SternMoveAheadWithExploration
 SlateportCity_Text_SternMoveAheadWithExploration: @ 0x081DD1E8
 	.string "クスノキ“⋯⋯というわけで　こんごも\n"
 	.string "ちょうさは　つづけて　いきますよ！$"
 
-	.globl SlateportCity_Text_GabbyWonderfulThanksForInterview
 SlateportCity_Text_GabbyWonderfulThanksForInterview: @ 0x081DD20D
 	.string "マリ“そうですか　いやあ　クスノキさん！\n"
 	.string "きょうは　おいそがしい　ところ\l"
@@ -1192,13 +1147,11 @@ SlateportCity_Text_GabbyWonderfulThanksForInterview: @ 0x081DD20D
 	.string "また　なにか　はっけんが　ありましたら\n"
 	.string "ぜひ　しゅざい　させて　くださいね！$"
 
-	.globl SlateportCity_Text_SternWhewFirstInterview
 SlateportCity_Text_SternWhewFirstInterview: @ 0x081DD26B
 	.string "クスノキ“ふう⋯⋯\p"
 	.string "テレビカメラに　うつされる　なんて\n"
 	.string "はじめて　だったから　きんちょう　したよ！$"
 
-	.globl SlateportCity_Text_OhPlayerWeMadeDiscovery
 SlateportCity_Text_OhPlayerWeMadeDiscovery: @ 0x081DD29D
 	.string "おっ！　{PLAYER}{KUN}\n"
 	.string "げんきそう　だね！\p"
@@ -1209,7 +1162,6 @@ SlateportCity_Text_OhPlayerWeMadeDiscovery: @ 0x081DD29D
 	.string "ポケモンの　すみかと　おもわれる\l"
 	.string "かいてい　どうくつを　みつけた⋯⋯$"
 
-	.globl SlateportCity_Text_AquaWillAssumeControlOfSubmarine
 SlateportCity_Text_AquaWillAssumeControlOfSubmarine: @ 0x081DD316
 	.string "“フフフ⋯⋯\n"
 	.string "クスノキかんちょう　とやら\p"
@@ -1221,87 +1173,72 @@ SlateportCity_Text_AquaWillAssumeControlOfSubmarine: @ 0x081DD316
 	.string "これから　アクアだんが　なにを　するか\l"
 	.string "たのしみに　していたまえ！”$"
 
-	.globl SlateportCity_Text_SternWhatWasAllThat
 SlateportCity_Text_SternWhatWasAllThat: @ 0x081DD395
 	.string "クスノキ“いまの　こえは⋯⋯？\p"
 	.string "だれかが　かくせいきを　つかって⋯⋯\p"
 	.string "どこから　はなしてるんだ⋯⋯？$"
 
-	.globl SlateportCity_Text_FromHarborTryingToTakeSub
 SlateportCity_Text_FromHarborTryingToTakeSub: @ 0x081DD3C8
 	.string "ふねのりばの　なか！\p"
 	.string "せんすいていが⋯⋯　うばわれる⋯⋯？$"
 
-	.globl SlateportCity_Text_PleaseComeWithMe
 SlateportCity_Text_PleaseComeWithMe: @ 0x081DD3E6
 	.string "{PLAYER}{KUN}！\n"
 	.string "いっしょに　きてくれ！$"
 
-	.globl SlateportCity_Text_BattleTentSign
 SlateportCity_Text_BattleTentSign: @ 0x081DD3F8
 	.string "バトルテント　カイナシティ　かいじょう\n"
 	.string "さがせ！　さいきょう　ポケモン$"
 
-	.globl SlateportCity_Text_SternsShipyardWantedSign
 SlateportCity_Text_SternsShipyardWantedSign: @ 0x081DD41C
 	.string "‘クスノキ　ぞうせんじょ’\p"
 	.string "なみを　じざいに　あやつる　ふなのり\n"
 	.string "だいぼしゅう　してます！$"
 
-	.globl SlateportCity_Text_SternsShipyardNearsCompletion
 SlateportCity_Text_SternsShipyardNearsCompletion: @ 0x081DD44A
 	.string "‘クスノキ　ぞうせんじょ’\p"
 	.string "カイナと　ミナモを　むすぶ\n"
 	.string "れんらくせん　タイドリップごうは\l"
 	.string "かんせい　まで　あと　わずか！$"
 
-	.globl SlateportCity_Text_SternsShipyardFerryComplete
 SlateportCity_Text_SternsShipyardFerryComplete: @ 0x081DD487
 	.string "‘クスノキ　ぞうせんじょ’\p"
 	.string "れんらくせん　タイドリップごうに\n"
 	.string "じょうせんを　きぼう　される　かたは\l"
 	.string "ふねのりば　うけつけ　まで　どうぞ！$"
 
-	.globl SlateportCity_Text_PokemonFanClubSign
 SlateportCity_Text_PokemonFanClubSign: @ 0x081DD4CC
 	.string "‘ポケモン　だいすきクラブ’\n"
 	.string "ポケモンが　すきなひと　みんな　あつまれ！$"
 
-	.globl SlateportCity_Text_OceanicMuseumSign
 SlateportCity_Text_OceanicMuseumSign: @ 0x081DD4F1
 	.string "はてしない　うみ⋯⋯\n"
 	.string "それは　いのちの　みなもと⋯⋯\p"
 	.string "‘うみの　かがく　はくぶつかん’$"
 
-	.globl SlateportCity_Text_CitySign
 SlateportCity_Text_CitySign: @ 0x081DD51D
 	.string "ここは　カイナ　シティ\n"
 	.string "ヒトと　ポケモンが　いきかう　みなと$"
 
-	.globl SlateportCity_Text_MarketSign
 SlateportCity_Text_MarketSign: @ 0x081DD53C
 	.string "‘カイナ　いちば’\n"
 	.string "ここでしか　かえない　もの　たくさん！$"
 
-	.globl SlateportCity_Text_HarborFerryUnderConstruction
 SlateportCity_Text_HarborFerryUnderConstruction: @ 0x081DD55A
 	.string "‘カイナ　シティ　ふねのりば’\p"
 	.string "れんらくせん　タイドリップごう　は\n"
 	.string "ぞうせんじょ　にて　けんぞう　ちゅう！\p"
 	.string "もう　しばらく　おまちください！$"
 
-	.globl SlateportCity_Text_HarborSign
 SlateportCity_Text_HarborSign: @ 0x081DD5A1
 	.string "‘カイナ　シティ　ふねのりば’\p"
 	.string "れんらくせん　タイドリップごうで\n"
 	.string "ふねの　たびを　おたのしみ　ください！$"
 
-	.globl SlateportCity_Text_NameRatersHouseSign
 SlateportCity_Text_NameRatersHouseSign: @ 0x081DD5D6
 	.string "‘せいめい　はんだんし　の　いえ’\n"
 	.string "ポケモンの　なまえ　うらないます$"
 
-	.globl SlateportCity_Text_ExplainBerries
 SlateportCity_Text_ExplainBerries: @ 0x081DD5F9
 	.string "きずついた　やせいの　ポケモンは\n"
 	.string "きのみを　かじって　けがを　なおすの\p"
@@ -1317,7 +1254,6 @@ SlateportCity_Text_ExplainBerries: @ 0x081DD5F9
 	.string "きのみに　きょうみが　ありそうね！\p"
 	.string "いいものを　あげるわ$"
 
-	.globl SlateportCity_Text_ExplainBerryPowder
 SlateportCity_Text_ExplainBerryPowder: @ 0x081DD69F
 	.string "さいきん　ポケモンセンターの　2かいの\n"
 	.string "ダイレクト　コーナー　というところに\l"
@@ -1329,37 +1265,30 @@ SlateportCity_Text_ExplainBerryPowder: @ 0x081DD69F
 	.string "たくさん　つくって　きてくれたら\l"
 	.string "いろいろな　くすりを　あげるわ$"
 
-	.globl SlateportCity_Text_BroughtMeSomeBerryPowder
 SlateportCity_Text_BroughtMeSomeBerryPowder: @ 0x081DD723
 	.string "きのみの　こなを　もってきたの？$"
 
-	.globl SlateportCity_Text_ExchangeWhatWithIt
 SlateportCity_Text_ExchangeWhatWithIt: @ 0x081DD734
 	.string "なにと　こうかん　しましょ？$"
 
-	.globl SlateportCity_Text_ExchangeBerryPowderForItem
 SlateportCity_Text_ExchangeBerryPowderForItem: @ 0x081DD743
 	.string "{STR_VAR_1}　と\n"
 	.string "こうかん　するのね？$"
 
-	.globl SlateportCity_Text_DontHaveEnoughBerryPowder
 SlateportCity_Text_DontHaveEnoughBerryPowder: @ 0x081DD753
 	.string "あれま！？\n"
 	.string "こなが　たりない　じゃないの！$"
 
-	.globl SlateportCity_Text_FineBerryPowderTradeSomethingElse
 SlateportCity_Text_FineBerryPowderTradeSomethingElse: @ 0x081DD769
 	.string "まあ　いいこな　だこと！\p"
 	.string "あなたが　くれた　こなで\n"
 	.string "また　いいくすりを　つくれるわ！\p"
 	.string "ほかにも　なにか　こうかんする？$"
 
-	.globl SlateportCity_Text_WhenYouGetMoreBringItToMe
 SlateportCity_Text_WhenYouGetMoreBringItToMe: @ 0x081DD7A5
 	.string "そう\n"
 	.string "こなが　できたら　また　よろしくね！$"
 
-	.globl SlateportCity_Text_ComeBackToTradeBerryPowder
 SlateportCity_Text_ComeBackToTradeBerryPowder: @ 0x081DD7BB
 	.string "くすりと　こうかん　したくなったら\n"
 	.string "また　ここに　くるのよ\p"
@@ -1367,7 +1296,6 @@ SlateportCity_Text_ComeBackToTradeBerryPowder: @ 0x081DD7BB
 	.string "おみせ　だしてるから　ね\p"
 	.string "しってた？$"
 
-	.globl SlateportCity_Text_YouDroveTeamAquaAway
 SlateportCity_Text_YouDroveTeamAquaAway: @ 0x081DD7F5
 	.string "エニシダ“⋯⋯あれ？\n"
 	.string "きみとは　まえに　どこかで　あったよね\p"
@@ -1377,12 +1305,10 @@ SlateportCity_Text_YouDroveTeamAquaAway: @ 0x081DD7F5
 	.string "にげだして　いったけど\l"
 	.string "もしかして　きみが　やっつけたの　かい？$"
 
-	.globl SlateportCity_Text_MaybeThisTrainer
 SlateportCity_Text_MaybeThisTrainer: @ 0x081DD864
 	.string "エニシダ“うーむ　これは\n"
 	.string "ひょっとして　ひょっとすると⋯⋯$"
 
-	.globl SlateportCity_Text_LetsRegisterEachOther
 SlateportCity_Text_LetsRegisterEachOther: @ 0x081DD882
 	.string "エニシダ“⋯⋯よっし！\n"
 	.string "きみとは　なかよく　なれそう　だから\l"
@@ -1390,12 +1316,10 @@ SlateportCity_Text_LetsRegisterEachOther: @ 0x081DD882
 	.string "なまえを　とうろく　しておこう！\p"
 	.string "⋯⋯　⋯⋯　⋯⋯$"
 
-	.globl SlateportCity_Text_RegisteredScott
 SlateportCity_Text_RegisteredScott: @ 0x081DD8C6
 	.string "エニシダ　という　ひとを\n"
 	.string "ポケナビに　とうろく　した！$"
 
-	.globl SlateportCity_Text_KeepEyeOnTrainersBeSeeingYou
 SlateportCity_Text_KeepEyeOnTrainersBeSeeingYou: @ 0x081DD8E2
 	.string "エニシダ“ホントは　きみに\n"
 	.string "くっついて　いきたい　ところ　だけど\l"
@@ -1404,7 +1328,6 @@ SlateportCity_Text_KeepEyeOnTrainersBeSeeingYou: @ 0x081DD8E2
 	.string "たずね　あるいて　みるよ！\p"
 	.string "じゃあね　{PLAYER}{KUN}！$"
 
-	.globl SlateportCity_Text_TakingBattleTentChallenge
 SlateportCity_Text_TakingBattleTentChallenge: @ 0x081DD93E
 	.string "エニシダ“お　おおっと\n"
 	.string "{PLAYER}{KUN}か！\p"
