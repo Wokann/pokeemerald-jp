@@ -9716,7 +9716,9 @@ SECTIONS {
         src/field_weather_effect.o(.rodata.field_weather_effect_static_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_field_weather_effect_static_data);
         src/battle_setup.o(.rodata.battle_setup_rematch_data);
-        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_battle_setup_rematch_data);
+        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_battle_setup_rematch_data_before_trainer_see_data);
+        src/trainer_see.o(.rodata.trainer_see_data);
+        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_trainer_see_data);
         src/wild_encounter.o(.rodata.wild_encounter_route119_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_wild_encounter_route119_data);
         src/field_effect.o(.rodata.field_effect_graphics_data);

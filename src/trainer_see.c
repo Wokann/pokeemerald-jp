@@ -19,6 +19,8 @@
 #include "constants/field_effects.h"
 #include "constants/trainer_types.h"
 
+#define TRAINER_SEE_DATA __attribute__((section(".rodata.trainer_see_data")))
+
 // this file's functions
 // JP: these are the JP-only equivalents of the US movement action helpers;
 // the US-named helpers live at different JP addresses (0x08092228 etc.).
@@ -56,16 +58,19 @@ static bool8 WaitRevealBuriedTrainer(u8 taskId, struct Task *task, struct Object
 
 static void SpriteCB_TrainerIcons(struct Sprite *sprite);
 
-// JP: these tables and sprites live at fixed JP ROM addresses
-// (sDirectionalApproachDistanceFuncs @ 0x0852B3D8,
-//  sTrainerSeeFuncList @ 0x0852B3E8, sTrainerSeeFuncList2 @ 0x0852B418,
-//  sSpriteTemplate_ExclamationQuestionMark @ 0x0852B460,
-//  sSpriteTemplate_HeartIcon @ 0x0852B478); wired via ld_script_jp.txt.
-extern u8 (*const sDirectionalApproachDistanceFuncs[4])(struct ObjectEvent *trainerObj, s16 range, s16 x, s16 y);
-extern bool8 (*const sTrainerSeeFuncList[12])(u8 taskId, struct Task *task, struct ObjectEvent *trainerObj);
-extern bool8 (*const sTrainerSeeFuncList2[4])(u8 taskId, struct Task *task, struct ObjectEvent *trainerObj);
-extern const struct SpriteTemplate sSpriteTemplate_ExclamationQuestionMark;
-extern const struct SpriteTemplate sSpriteTemplate_HeartIcon;
+// JP icon graphics differ from the US PNG assets, so keep the byte-exact
+// JP variants under the corresponding field-effect asset path.
+TRAINER_SEE_DATA static const u32 sEmotion_ExclamationMarkGfx[] = INCBIN_U32("graphics/field_effects/pics/jp/emotion_exclamation.4bpp");
+TRAINER_SEE_DATA static const u32 sEmotion_QuestionMarkGfx[] = INCBIN_U32("graphics/field_effects/pics/jp/emotion_question.4bpp");
+TRAINER_SEE_DATA static const u32 sEmotion_HeartGfx[] = INCBIN_U32("graphics/field_effects/pics/jp/emotion_heart.4bpp");
+
+static u8 (*const sDirectionalApproachDistanceFuncs[])(struct ObjectEvent *trainerObj, s16 range, s16 x, s16 y) TRAINER_SEE_DATA =
+{
+    GetTrainerApproachDistanceSouth,
+    GetTrainerApproachDistanceNorth,
+    GetTrainerApproachDistanceWest,
+    GetTrainerApproachDistanceEast,
+};
 
 enum {
     TRSEE_NONE,
@@ -80,6 +85,107 @@ enum {
     TRSEE_BURIED_POP_OUT,
     TRSEE_BURIED_JUMP,
     TRSEE_REVEAL_BURIED_WAIT,
+};
+
+static bool8 (*const sTrainerSeeFuncList[])(u8 taskId, struct Task *task, struct ObjectEvent *trainerObj) TRAINER_SEE_DATA =
+{
+    [TRSEE_NONE]                 = TrainerSeeIdle,
+    [TRSEE_EXCLAMATION]          = TrainerExclamationMark,
+    [TRSEE_EXCLAMATION_WAIT]     = WaitTrainerExclamationMark,
+    [TRSEE_MOVE_TO_PLAYER]       = TrainerMoveToPlayer,
+    [TRSEE_PLAYER_FACE]          = PlayerFaceApproachingTrainer,
+    [TRSEE_PLAYER_FACE_WAIT]     = WaitPlayerFaceApproachingTrainer,
+    [TRSEE_REVEAL_DISGUISE]      = RevealDisguisedTrainer,
+    [TRSEE_REVEAL_DISGUISE_WAIT] = WaitRevealDisguisedTrainer,
+    [TRSEE_REVEAL_BURIED]        = RevealBuriedTrainer,
+    [TRSEE_BURIED_POP_OUT]       = PopOutOfAshBuriedTrainer,
+    [TRSEE_BURIED_JUMP]          = JumpInPlaceBuriedTrainer,
+    [TRSEE_REVEAL_BURIED_WAIT]   = WaitRevealBuriedTrainer,
+};
+
+static bool8 (*const sTrainerSeeFuncList2[])(u8 taskId, struct Task *task, struct ObjectEvent *trainerObj) TRAINER_SEE_DATA =
+{
+    RevealBuriedTrainer,
+    PopOutOfAshBuriedTrainer,
+    JumpInPlaceBuriedTrainer,
+    WaitRevealBuriedTrainer,
+};
+
+static const struct OamData sOamData_Icons TRAINER_SEE_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct SpriteFrameImage sSpriteImageTable_ExclamationQuestionMark[] TRAINER_SEE_DATA =
+{
+    {
+        .data = (const u8 *)sEmotion_ExclamationMarkGfx,
+        .size = sizeof(sEmotion_ExclamationMarkGfx)
+    },
+    {
+        .data = (const u8 *)sEmotion_QuestionMarkGfx,
+        .size = sizeof(sEmotion_QuestionMarkGfx)
+    }
+};
+
+static const struct SpriteFrameImage sSpriteImageTable_HeartIcon[] TRAINER_SEE_DATA =
+{
+    {
+        .data = (const u8 *)sEmotion_HeartGfx,
+        .size = sizeof(sEmotion_HeartGfx)
+    }
+};
+
+static const union AnimCmd sSpriteAnim_Icons1[] TRAINER_SEE_DATA =
+{
+    ANIMCMD_FRAME(0, 60),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sSpriteAnim_Icons2[] TRAINER_SEE_DATA =
+{
+    ANIMCMD_FRAME(1, 60),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sSpriteAnimTable_Icons[] TRAINER_SEE_DATA =
+{
+    sSpriteAnim_Icons1,
+    sSpriteAnim_Icons2
+};
+
+static const struct SpriteTemplate sSpriteTemplate_ExclamationQuestionMark TRAINER_SEE_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = TAG_NONE,
+    .oam = &sOamData_Icons,
+    .anims = sSpriteAnimTable_Icons,
+    .images = sSpriteImageTable_ExclamationQuestionMark,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_TrainerIcons
+};
+
+static const struct SpriteTemplate sSpriteTemplate_HeartIcon TRAINER_SEE_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_GENERAL_0,
+    .oam = &sOamData_Icons,
+    .anims = sSpriteAnimTable_Icons,
+    .images = sSpriteImageTable_HeartIcon,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_TrainerIcons
 };
 
 // code

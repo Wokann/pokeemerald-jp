@@ -1750,6 +1750,14 @@ $(C_BUILDDIR)/%.o: src/%.c
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/$*.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/$*.gen.s
 
+$(C_BUILDDIR)/trainer_see.o: src/trainer_see.c graphics/field_effects/pics/jp/emotion_exclamation.4bpp graphics/field_effects/pics/jp/emotion_question.4bpp graphics/field_effects/pics/jp/emotion_heart.4bpp
+	@mkdir -p $(dir $@)
+	@$(CPP) $(CPPFLAGS) -P -x c $< > $(C_BUILDDIR)/trainer_see.pre.c
+	@$(PREPROC) -i $< charmap.txt < $(C_BUILDDIR)/trainer_see.pre.c > $(C_BUILDDIR)/trainer_see.preproc.c
+	@$(CC) $(CFLAGS) -o $(C_BUILDDIR)/trainer_see.gen.s $(C_BUILDDIR)/trainer_see.preproc.c
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/trainer_see.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/trainer_see.pre.c $(C_BUILDDIR)/trainer_see.preproc.c $(C_BUILDDIR)/trainer_see.gen.s
+
 $(C_BUILDDIR)/battle_interface.o: src/battle_interface.c
 	@mkdir -p $(C_BUILDDIR)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o - -; \

@@ -1138,7 +1138,7 @@ sTrainerBContinueScriptBattleParams: @ 0x0052ACF8
 	.byte 0x06
 	.byte 0x00, 0x00, 0x00
 
-	.section .rodata.data_b2d_mid26_after_battle_setup_rematch_data
+	.section .rodata.data_b2d_mid26_after_battle_setup_rematch_data_before_trainer_see_data
 
 	.globl sBadgeFlagsJp
 sBadgeFlagsJp: @ 0x852B220
@@ -1150,34 +1150,9 @@ sBadgeFlagsJp: @ 0x852B220
 	.globl sTrainerCardColorNames
 	.set sTrainerCardColorNames, sBadgeFlagsJp + 0x1F
 
-	.incbin "baserom_jp.gba", 0x52b230, 0x1a8
+	.incbin "baserom_jp.gba", 0x52b230, 0x28
 
-	.globl sDirectionalApproachDistanceFuncs
-sDirectionalApproachDistanceFuncs: @ 0x852B3D8
-	.4byte 0x080B35F9, 0x080B363D, 0x080B3681, 0x080B36C5
-
-	.globl sTrainerSeeFuncList
-sTrainerSeeFuncList: @ 0x852B3E8
-	.4byte 0x080B38D1, 0x080B38D5, 0x080B3919, 0x080B3959
-	.4byte 0x080B39B5, 0x080B3A71, 0x080B3AB5, 0x080B3AE9
-	.4byte 0x080B3B05, 0x080B3B39, 0x080B3B91, 0x080B3C05
-
-	.globl sTrainerSeeFuncList2
-sTrainerSeeFuncList2: @ 0x852B418
-	.4byte 0x080B3B05, 0x080B3B39, 0x080B3B91, 0x080B3C05
-	.4byte 0x40000000, 0x00000400, 0x0852B258, 0x00000080
-	.4byte 0x0852B2D8, 0x00000080, 0x0852B358, 0x00000080
-	.4byte 0x003C0000, 0x0000FFFF, 0x003C0001, 0x0000FFFF
-	.4byte 0x0852B448, 0x0852B450
-
-	.globl sSpriteTemplate_ExclamationQuestionMark
-sSpriteTemplate_ExclamationQuestionMark: @ 0x852B460
-	.hword 0xFFFF, 0xFFFF
-	.4byte 0x0852B428, 0x0852B458, 0x0852B430, gDummySpriteAffineAnimTable, 0x080B3E7D
-	.globl sSpriteTemplate_HeartIcon
-sSpriteTemplate_HeartIcon: @ 0x852B478
-	.hword 0xFFFF, 0x1004
-	.4byte 0x0852B428, 0x0852B458, 0x0852B440, gDummySpriteAffineAnimTable, 0x080B3E7D
+	.section .rodata.data_b2d_mid26_after_trainer_see_data
 	.incbin "baserom_jp.gba", 0x52b490, 0x2564
 
 	.globl gUnknown_852D9F4
