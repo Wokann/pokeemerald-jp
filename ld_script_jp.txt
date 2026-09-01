@@ -5149,7 +5149,7 @@ SECTIONS {
         src/cable_club.o(.text.Task_StartWirelessTrade);
         src/cable_club.o(.text.PlayerEnteredTradeSeat);
         src/cable_club.o(.text.CreateTask_StartWiredTrade);
-        src/cable_club.o(.text.nullsub_37);
+        src/cable_club.o(.text.Script_StartWiredTrade);
         src/cable_club.o(.text.ColosseumPlayerSpotTriggered);
         src/cable_club.o(.text.CreateTask_EnterCableClubSeatNoFollowup);
         src/cable_club.o(.text.Script_ShowLinkTrainerCard);

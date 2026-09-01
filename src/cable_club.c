@@ -1045,7 +1045,7 @@ static void UNUSED CreateTask_StartWiredTrade(void)
     CreateTask(Task_StartWiredTrade, 80);
 }
 
-void nullsub_37(void) {}
+void Script_StartWiredTrade(void) {}
 void ColosseumPlayerSpotTriggered(void)
 {
     gLinkType = LINKTYPE_BATTLE;
