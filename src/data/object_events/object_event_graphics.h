@@ -1,6 +1,39 @@
 #ifndef GUARD_DATA_OBJECT_EVENTS_OBJECT_EVENT_GRAPHICS_H
 #define GUARD_DATA_OBJECT_EVENTS_OBJECT_EVENT_GRAPHICS_H
 
+// These JP-specific graphics are addressed by the recovered picture tables.
+// Their binary owners remain in the original ROM layout pending source recovery.
+extern const u32 gObjectEventPic_Vigoroth[];
+extern const u32 gObjectEventPic_BirchsBag[0x20];
+extern const u32 gObjectEventPic_EnemyZigzagoon[];
+extern const u32 gObjectEventPic_Poochyena[];
+extern const u32 gObjectEventPic_CableCar[0x200];
+extern const u32 gObjectEventPic_SSTidal[0x1E0];
+extern const u32 gObjectEventPic_QuintyPlump[];
+extern const u32 gObjectEventPic_Juan[];
+extern const u32 gObjectEventPic_Scott[];
+extern const u32 gObjectEventPic_Statue[0x40];
+extern const u32 gObjectEventPic_Kirlia[];
+extern const u32 gObjectEventPic_Dusclops[];
+extern const u32 gObjectEventPic_MysteryEventDeliveryman[];
+extern const u32 gObjectEventPic_UnionRoomAttendant[];
+extern const u32 gObjectEventPic_MovingBox[0x20];
+extern const u32 gObjectEventPic_Sudowoodo[];
+extern const u32 gObjectEventPic_Mew[];
+extern const u32 gObjectEventPic_Red[];
+extern const u32 gObjectEventPic_Leaf[];
+extern const u32 gObjectEventPic_BirthIslandStone[0x80];
+extern const u32 gObjectEventPic_Deoxys[];
+extern const u32 gObjectEventPic_Anabel[];
+extern const u32 gObjectEventPic_Tucker[];
+extern const u32 gObjectEventPic_Spenser[];
+extern const u32 gObjectEventPic_Greta[];
+extern const u32 gObjectEventPic_Noland[];
+extern const u32 gObjectEventPic_Lucy[];
+extern const u32 gObjectEventPic_Brandon[];
+extern const u32 gObjectEventPic_Lugia[];
+extern const u32 gObjectEventPic_HoOh[];
+
 // This JP-owned subset is emitted by event_object_movement.c at its original ROM range.
 OBJECT_EVENT_GRAPHICS_PLAYER_DATA const u32 gObjectEventPic_BrendanNormal[] = INCBIN_U32("graphics/object_events/pics/people/brendan/walking.4bpp");
 OBJECT_EVENT_GRAPHICS_PLAYER_DATA const u32 gObjectEventPic_BrendanRunning[] = INCBIN_U32("graphics/object_events/pics/people/brendan/running.4bpp");
