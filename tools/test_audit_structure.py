@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Regression checks for ``audit_structure.py``."""
 
+import json
 import sys
 import tempfile
 import unittest
@@ -316,6 +317,95 @@ class StructureAuditTests(unittest.TestCase):
         self.assertEqual(record["layout"]["expected"], "Underwater_Route124_Layout")
         self.assertEqual(record["layout"]["status"], "direct")
         self.assertTrue(record["layout"]["resource_chain"]["layout_defined"])
+
+    def test_map_convergence_accepts_declared_shared_map_owners(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "data/maps").mkdir(parents=True)
+            headers = []
+
+            def add_map(name, map_id, events, scripts, *, shared_events=None,
+                        shared_scripts=None, event_file=False, script_file=False):
+                directory = root / "data/maps" / name
+                directory.mkdir()
+                payload = {"id": map_id, "name": name, "layout": None}
+                if shared_events:
+                    payload["shared_events_map"] = shared_events
+                if shared_scripts:
+                    payload["shared_scripts_map"] = shared_scripts
+                (directory / "map.json").write_text(json.dumps(payload), encoding="utf-8")
+                if event_file:
+                    (directory / "events.inc").write_text(f"{events}::\n", encoding="utf-8")
+                if script_file:
+                    (directory / "scripts.inc").write_text(f"{scripts}::\n", encoding="utf-8")
+                headers.extend([
+                    f"@ {map_id} (g1 m{len(headers) // 5})",
+                    "\t.4byte NULL", f"\t.4byte {events}",
+                    f"\t.4byte {scripts}", "\t.4byte NULL",
+                ])
+
+            add_map("ContestHall", "MAP_CONTEST_HALL", "ContestHall_MapEvents",
+                    "ContestHall_MapScripts", event_file=True, script_file=True)
+            add_map("ContestHallBeauty", "MAP_CONTEST_HALL_BEAUTY", "ContestHall_MapEvents",
+                    "ContestHall_MapScripts", shared_events="ContestHall",
+                    shared_scripts="ContestHall")
+            add_map("BattlePyramidSquare01", "MAP_BATTLE_PYRAMID_SQUARE01",
+                    "BattlePyramidSquare01_MapEvents", "BattlePyramidSquare01_MapScripts",
+                    event_file=True, script_file=True)
+            add_map("BattlePyramidSquare02", "MAP_BATTLE_PYRAMID_SQUARE02",
+                    "BattlePyramidSquare02_MapEvents", "BattlePyramidSquare01_MapScripts",
+                    shared_scripts="BattlePyramidSquare01", event_file=True)
+            add_map("SecretBase_BlueCave1", "MAP_SECRET_BASE_BLUE_CAVE1",
+                    "SecretBase_BlueCave1_MapEvents", "SecretBase_MapScripts",
+                    shared_scripts="SecretBase", event_file=True)
+            (root / "data/event_scripts.s").write_text(
+                '.include "data/maps/ContestHall/scripts.inc"\n'
+                '.include "data/maps/BattlePyramidSquare01/scripts.inc"\n'
+                '.include "data/scripts/shared_secret_base.inc"\n', encoding="utf-8")
+            (root / "data/data_b2d_mid26.s").write_text(
+                '.include "data/maps/ContestHall/events.inc"\n'
+                '.include "data/maps/BattlePyramidSquare01/events.inc"\n'
+                '.include "data/maps/BattlePyramidSquare02/events.inc"\n'
+                '.include "data/maps/SecretBase_BlueCave1/events.inc"\n', encoding="utf-8")
+            (root / "data/maps.s").write_text("\n".join(headers) + "\n", encoding="utf-8")
+            shared = root / "data/scripts/shared_secret_base.inc"
+            shared.parent.mkdir(parents=True)
+            shared.write_text("SecretBase_MapScripts::\n", encoding="utf-8")
+
+            convergence = audit.map_convergence_progress(root)
+            records = {record["name"]: record for record in convergence["records"]}
+            artifacts = audit.map_artifact_progress(root, convergence["records"])
+
+        contest = records["ContestHallBeauty"]
+        self.assertEqual(contest["events"]["status"], "shared")
+        self.assertEqual(contest["scripts"]["status"], "shared")
+        self.assertEqual(contest["events"]["shared_target"], "ContestHall_MapEvents")
+        self.assertNotIn("create_or_recover_scripts_inc", contest["required_actions"])
+        self.assertNotIn("restore_upper_events_include", contest["required_actions"])
+        self.assertTrue(contest["structure"]["complete"])
+        self.assertEqual(records["BattlePyramidSquare02"]["scripts"]["status"], "shared")
+        self.assertEqual(records["BattlePyramidSquare02"]["events"]["status"], "direct")
+        self.assertEqual(records["SecretBase_BlueCave1"]["scripts"]["shared_target"],
+                         "SecretBase_MapScripts")
+        self.assertEqual(artifacts["structure_complete_maps"], 5)
+        self.assertEqual(artifacts["shared_scripts_maps"], 3)
+        self.assertEqual(artifacts["shared_events_maps"], 1)
+
+    def test_map_convergence_rejects_shared_owner_without_source_label(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            directory = root / "data/maps/Child"
+            directory.mkdir(parents=True)
+            (directory / "map.json").write_text(
+                '{"id":"MAP_CHILD","shared_scripts_map":"Missing"}', encoding="utf-8")
+            (root / "data/event_scripts.s").write_text("", encoding="utf-8")
+            (root / "data/data_b2d_mid26.s").write_text("", encoding="utf-8")
+            (root / "data/maps.s").write_text(
+                "@ MAP_CHILD (g1 m1)\n\t.4byte NULL\n\t.4byte NULL\n"
+                "\t.4byte Missing_MapScripts\n\t.4byte NULL\n", encoding="utf-8")
+            record = audit.map_convergence_progress(root)["records"][0]
+        self.assertEqual(record["scripts"]["status"], "shared_or_other")
+        self.assertIn("create_or_recover_scripts_inc", record["required_actions"])
 
     def test_map_entries_uses_requested_us_root_not_emitter_default(self):
         class FakeEmitter:

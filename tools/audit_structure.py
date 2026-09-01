@@ -485,7 +485,52 @@ def transition_manifest(files: set[str]) -> list[dict[str, object]]:
     return records
 
 
-def map_artifact_progress(root: Path) -> dict[str, object]:
+def map_metadata(root: Path) -> dict[str, dict[str, object]]:
+    """Read the map.json fields relevant to structural ownership.
+
+    In particular, ``shared_events_map`` and ``shared_scripts_map`` describe
+    intentional reuse of another map (or a shared non-map script file).  The
+    declarations are evidence, not proof on their own: callers also check the
+    corresponding header pointer and source definition.
+    """
+    metadata: dict[str, dict[str, object]] = {}
+    for path in sorted((root / "data/maps").glob("*/map.json")):
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            payload = {}
+        metadata[path.parent.name] = payload if isinstance(payload, dict) else {}
+    return metadata
+
+
+def assembly_label_names(root: Path, names: set[str]) -> set[str]:
+    """Return requested assembly labels that are physically defined in data/.
+
+    Shared script owners need not have a map directory (``SecretBase`` is
+    defined in a shared script include), so checking only ``data/maps`` would
+    recreate the false missing-file diagnosis this audit is meant to prevent.
+    """
+    if not names:
+        return set()
+    pattern = re.compile(r"^\s*(%s)::?\s*(?:@.*)?$" %
+                         "|".join(re.escape(name) for name in sorted(names)))
+    found = set()
+    for path in sorted((root / "data").glob("**/*")):
+        if path.suffix not in {".s", ".inc"} or not path.is_file():
+            continue
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+            if match := pattern.match(line):
+                found.add(match.group(1))
+    return found
+
+
+def shared_map_target(metadata: dict[str, object], field: str) -> str | None:
+    """Return a declared shared map name, rejecting empty/non-string values."""
+    value = metadata.get(field)
+    return value if isinstance(value, str) and value else None
+
+
+def map_artifact_progress(root: Path, convergence_records: list[dict[str, object]] | None = None) -> dict[str, object]:
     """Count map artifacts without treating their presence as semantic review.
 
     ``map.json`` and the two generated includes demonstrate that the map has
@@ -503,7 +548,23 @@ def map_artifact_progress(root: Path) -> dict[str, object]:
         for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
             if match := MAP_EVENTS_RE.match(line):
                 upper_event_includes.add(match.group(1))
-    structure_complete = jp_json & jp_scripts & jp_events & upper_event_includes
+    direct_structure_complete = jp_json & jp_scripts & jp_events & upper_event_includes
+    if convergence_records is None:
+        structure_complete = direct_structure_complete
+        shared_scripts = shared_events = set()
+    else:
+        structure_complete = {
+            record["name"] for record in convergence_records
+            if record["structure"]["complete"]
+        }
+        shared_scripts = {
+            record["name"] for record in convergence_records
+            if record["scripts"]["status"] == "shared"
+        }
+        shared_events = {
+            record["name"] for record in convergence_records
+            if record["events"]["status"] == "shared"
+        }
     return {
         "jp_map_json": len(jp_json),
         "jp_scripts_inc": len(jp_scripts),
@@ -511,6 +572,11 @@ def map_artifact_progress(root: Path) -> dict[str, object]:
         "upper_event_includes": len(upper_event_includes),
         "structure_complete_maps": len(structure_complete),
         "structure_complete_map_names": sorted(structure_complete),
+        "direct_structure_complete_maps": len(direct_structure_complete),
+        "shared_scripts_maps": len(shared_scripts),
+        "shared_scripts_map_names": sorted(shared_scripts),
+        "shared_events_maps": len(shared_events),
+        "shared_events_map_names": sorted(shared_events),
         "semantic_review": {
             "status": "not_recorded",
             "reviewed_map_names": [],
@@ -995,29 +1061,27 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
     layouts_text = layouts_path.read_text(encoding="utf-8", errors="replace") \
         if layouts_path.is_file() else ""
     map_root = root / "data/maps"
-    metadata: dict[str, dict[str, object]] = {}
+    metadata = map_metadata(root)
     header_labels: dict[str, str] = {}
-    if map_root.is_dir():
-        for path in sorted(map_root.glob("*/map.json")):
-            try:
-                payload = json.loads(path.read_text(encoding="utf-8"))
-            except json.JSONDecodeError:
-                payload = {}
-            metadata[path.parent.name] = {
-                "id": payload.get("id"),
-                "layout": payload.get("layout"),
-            }
-            map_id = payload.get("id")
-            header_name = payload.get("name")
-            if isinstance(map_id, str):
-                header_labels[path.parent.name] = map_id
-                if isinstance(header_name, str):
-                    header_labels[header_name] = map_id
+    for name, payload in metadata.items():
+        map_id = payload.get("id")
+        header_name = payload.get("name")
+        if isinstance(map_id, str):
+            header_labels[name] = map_id
+            if isinstance(header_name, str):
+                header_labels[header_name] = map_id
 
     script_order = map_includes(event_scripts_path, MAP_NAME_RE)
     event_order = map_includes(events_path, MAP_EVENTS_RE)
     headers = map_headers(map_data_text, root, header_labels)
     aliases = map_event_aliases(events_text)
+    shared_symbols = set()
+    for payload in metadata.values():
+        for field, suffix in (("shared_events_map", "MapEvents"),
+                              ("shared_scripts_map", "MapScripts")):
+            if owner := shared_map_target(payload, field):
+                shared_symbols.add(f"{owner}_{suffix}")
+    defined_shared_symbols = assembly_label_names(root, shared_symbols)
     # Headers remain in the map-data stream, while migrated layout owners
     # live in data/layouts/layouts.inc. Combine their label blocks so a direct
     # canonical header reference is not reported as an undefined layout.
@@ -1033,11 +1097,25 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
         expected_events = f"{name}_MapEvents"
         expected_scripts = f"{name}_MapScripts"
         expected_layout = layout_symbol(layout) if isinstance(layout, str) else None
+        shared_events_owner = shared_map_target(meta, "shared_events_map")
+        shared_scripts_owner = shared_map_target(meta, "shared_scripts_map")
+        shared_events_target = (f"{shared_events_owner}_MapEvents"
+                                if shared_events_owner else None)
+        shared_scripts_target = (f"{shared_scripts_owner}_MapScripts"
+                                 if shared_scripts_owner else None)
         event_alias = ("gMapEvents_" + map_id.removeprefix("MAP_")) \
             if isinstance(map_id, str) else None
         actual_events = header.get("events")
+        events_shared = bool(shared_events_target
+                             and actual_events == shared_events_target
+                             and shared_events_target in defined_shared_symbols)
+        scripts_shared = bool(shared_scripts_target
+                              and header.get("mapScripts") == shared_scripts_target
+                              and shared_scripts_target in defined_shared_symbols)
         if actual_events == expected_events:
             event_pointer_status = "direct"
+        elif events_shared:
+            event_pointer_status = "shared"
         elif event_alias and actual_events == event_alias and aliases.get(event_alias) == expected_events:
             event_pointer_status = "legacy_alias"
         elif actual_events is None:
@@ -1046,6 +1124,7 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
             event_pointer_status = "other"
         actual_scripts = header.get("mapScripts")
         script_pointer_status = ("direct" if actual_scripts == expected_scripts else
+                                 "shared" if scripts_shared else
                                  "missing_header" if actual_scripts is None else "shared_or_other")
         actual_layout = header.get("mapLayout")
         layout_pointer_status = ("direct" if expected_layout and actual_layout == expected_layout else
@@ -1071,13 +1150,13 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
         events_file_text = events_file.read_text(encoding="utf-8", errors="replace") \
             if events_file.is_file() else ""
         actions = ["semantic_review_required"]
-        if not scripts_file.is_file():
+        if not scripts_file.is_file() and not scripts_shared:
             actions.append("create_or_recover_scripts_inc")
-        if not events_file.is_file():
+        if not events_file.is_file() and not events_shared:
             actions.append("generate_or_recover_events_inc_from_map_json")
-        if name not in script_order:
+        if name not in script_order and not scripts_shared:
             actions.append("restore_upper_scripts_include")
-        if name not in event_order:
+        if name not in event_order and not events_shared:
             actions.append("restore_upper_events_include")
         if event_pointer_status == "legacy_alias":
             actions.append("replace_event_header_alias_with_real_label")
@@ -1095,6 +1174,11 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
             actions.append("split_map_owned_event_baserom_range")
         if resource_chain["raw_baserom_source_count"]:
             actions.append("split_map_resource_baserom_range")
+        structure = {
+            "scripts": scripts_file.is_file() or scripts_shared,
+            "events": (events_file.is_file() and name in event_order) or events_shared,
+        }
+        structure["complete"] = bool(name in metadata and structure["scripts"] and structure["events"])
         records.append({
             "name": name,
             "map_id": map_id,
@@ -1113,11 +1197,15 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
                 "legacy_alias": event_alias,
                 "actual": actual_events,
                 "status": event_pointer_status,
+                "shared_owner": shared_events_owner if events_shared else None,
+                "shared_target": shared_events_target if events_shared else None,
             },
             "scripts": {
                 "expected": expected_scripts,
                 "actual": actual_scripts,
                 "status": script_pointer_status,
+                "shared_owner": shared_scripts_owner if scripts_shared else None,
+                "shared_target": shared_scripts_target if scripts_shared else None,
                 "raw_baserom_directives": script_raw,
             },
             "layout": {
@@ -1127,11 +1215,13 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
                 "resource_chain": resource_chain,
             },
             "events_raw_baserom_directives": event_raw,
+            "structure": structure,
             "semantic_review": "not_recorded",
             "required_actions": actions,
         })
 
     event_statuses = Counter(record["events"]["status"] for record in records)
+    script_statuses = Counter(record["scripts"]["status"] for record in records)
     resource_raw_maps = sum(bool(record["layout"]["resource_chain"]["raw_baserom_source_count"])
                             for record in records)
     return {
@@ -1146,6 +1236,9 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
         "maps_in_both_streams": len(set(script_order) & set(event_order)),
         "header_records": len(headers),
         "event_pointer_statuses": dict(sorted(event_statuses.items())),
+        "script_pointer_statuses": dict(sorted(script_statuses.items())),
+        "valid_shared_events_maps": sum(record["events"]["status"] == "shared" for record in records),
+        "valid_shared_scripts_maps": sum(record["scripts"]["status"] == "shared" for record in records),
         "maps_with_raw_script_ranges": sum(bool(record["scripts"]["raw_baserom_directives"])
                                            for record in records),
         "maps_with_raw_event_ranges": sum(bool(record["events_raw_baserom_directives"])
@@ -1270,7 +1363,7 @@ def map_entries_for_us_root(emitter, us_root: Path):
         emitter.US_JSON, emitter.MAP_NAMES = saved_json, saved_names
 
 
-def map_progress(root: Path, us_root: Path) -> dict[str, object]:
+def map_progress(root: Path, us_root: Path, convergence: dict[str, object]) -> dict[str, object]:
     # The emitter is the repository's authoritative parser for JP map tables.
     # A shared table belongs to its first map, matching audit_map_script_coverage.
     import jp_emit_maps as emitter
@@ -1285,7 +1378,7 @@ def map_progress(root: Path, us_root: Path) -> dict[str, object]:
             if match:
                 names.add(match.group(1))
     map_root = root / "data/maps"
-    artifacts = map_artifact_progress(root)
+    artifacts = map_artifact_progress(root, convergence["records"])
     jp_scripts = {path.parent.name for path in map_root.glob("*/scripts.inc")}
     owner_scripts = jp_scripts & owner_names
     non_owner_scripts = jp_scripts - owner_names
@@ -1369,6 +1462,7 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
     transitions = transition_files(jp_files)
     incbin = incbin_progress(root)
     convergence = map_convergence_progress(root)
+    maps = map_progress(root, us_root, convergence)
     script_data = script_data_progress(root, us_root)
 
     return {
@@ -1407,7 +1501,7 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
         "transition_manifest": transition_manifest(jp_files),
         "incbin": incbin,
         "asset_naming": asset_naming_progress(incbin, us_root),
-        "maps": map_progress(root, us_root),
+        "maps": maps,
         "map_convergence": convergence,
         "script_data": script_data,
         "jp_only_c_manifest": manifest,
@@ -1450,12 +1544,13 @@ def print_report(report: dict[str, object]) -> None:
         assets["no_us_basename_match"]))
     print("map structure: owners=%d owner-scripts=%d (%.2f%%) non-owner=%d included=%d; "
           "map.json=%d events.inc=%d upper-events=%d structure-complete=%d "
-          "(owner=%d); semantic-review=%s" % (
+          "(direct=%d owner=%d shared-scripts/events=%d/%d); semantic-review=%s" % (
         maps["map_table_owners"], maps["first_owner_scripts_inc"], maps["jp_scripts_owner_rate"] * 100,
         maps["non_owner_scripts_inc"],
         maps["event_script_included_owners"], maps["jp_map_json"], maps["jp_events_inc"],
         maps["upper_event_includes"], maps["structure_complete_maps"],
-        maps["structure_complete_owner_maps"], maps["semantic_review"]["status"]))
+        maps["direct_structure_complete_maps"], maps["structure_complete_owner_maps"],
+        maps["shared_scripts_maps"], maps["shared_events_maps"], maps["semantic_review"]["status"]))
     raw_streams = convergence["top_level_raw_baserom_directives"]
     print("map convergence: script-stream=%d event-stream=%d shared=%d headers=%d; "
           "event-pointers=%s; map raw scripts/events/resources=%d/%d/%d; "
@@ -1518,8 +1613,10 @@ def render_markdown_report(report: dict[str, object]) -> str:
         f"- 地图脚本：{maps['first_owner_scripts_inc']}/{maps['map_table_owners']} "
         f"({maps['jp_scripts_owner_rate'] * 100:.2f}%) 个首 owner 有 scripts.inc；"
         f"非 owner scripts.inc：{maps['non_owner_scripts_inc']}；结构完整地图："
-        f"{maps['structure_complete_maps']}（要求 map.json、scripts.inc、events.inc 和上层 events include；"
-        f"其中首 owner {maps['structure_complete_owner_maps']}）；map.json 总数：{maps['jp_map_json']}。",
+        f"{maps['structure_complete_maps']}（直接物理文件满足者 "
+        f"{maps['direct_structure_complete_maps']}；合法共享 scripts/events owner "
+        f"{maps['shared_scripts_maps']}/{maps['shared_events_maps']}；其中首 owner "
+        f"{maps['structure_complete_owner_maps']}）；map.json 总数：{maps['jp_map_json']}。",
         f"- 地图语义复核：{maps['semantic_review']['status']}。没有版本化复核清单前，"
         "任何 scripts.inc、map.json 或 events.inc 都不计入语义已审计。",
         f"- 三流地图会合：scripts 流 {convergence['script_stream_maps']}、events 流 "
@@ -1545,7 +1642,7 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "| incbin | `.incbin` 与 `INCBIN_*` 的引用数，按原始二进制和结构化/编码后缀分组；不是字节转换率。 |",
         "| 资产命名 | 被引用的 `graphics/`、`sound/` 路径与 US 同名文件比较；仅生成候选，不自动改名。 |",
         "| 地图脚本 owner | `scripts.inc` 与 map-table 实际首 owner 名的交集 / 去重首 owner；共享表只属于首次出现地图。 |",
-        "| 地图结构完整 | 同一地图同时有 `map.json`、`scripts.inc`、`events.inc`，且后者被上层 `data/*.s` include；只说明结构已拆分。 |",
+        "| 地图结构完整 | 同一地图具 `map.json`，且其 scripts/events 为本地图的物理文件与上层 include，或为 map.json 明示、header 精确指向且在 JP `data/` 有真实标签定义的共享 owner；只说明结构已拆分。 |",
         "| 地图语义复核 | 仅接受未来版本化复核清单的显式记录；当前为 `not_recorded`，绝不从目录或 include 推断。 |",
         "| 三流地图会合 | 以 `data/event_scripts.s`、`data/data_b2d_mid26.s`、`data/maps.s` 的同图记录连接 scripts、events、地图头/布局/tileset。别名和 baserom 范围均为待办，不构成完成。 |",
         "| script_data 顶层分区 | US linker 提供 8 个对象的目标 owner 顺序；JP linker map 提供实际范围和锚点。只在 JP 起止标签、末尾位置与 ROM 比对均成立时，才允许拆出一个 owner。 |",
