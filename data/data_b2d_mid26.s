@@ -829,7 +829,9 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/NavelRock_Down11/events.inc"
 	@ MAP_NAVEL_ROCK_BOTTOM (g26 m87)
 	.include "data/maps/NavelRock_Bottom/events.inc"
-	.incbin "baserom_jp.gba", 0x5164B0, 0x10CC
+	@ MAP_TRAINER_HILL_ELEVATOR (g26 m88)
+	.include "data/maps/TrainerHill_Elevator/events.inc"
+	.incbin "baserom_jp.gba", 0x5164EC, 0x1090
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

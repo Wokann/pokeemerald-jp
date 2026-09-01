@@ -974,7 +974,9 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/NavelRock_Down11/header.inc"
 	@ MAP_NAVEL_ROCK_BOTTOM (g26 m87)
 	.include "data/maps/NavelRock_Bottom/header.inc"
-	.incbin "baserom_jp.gba", 0x45DEFC, 0x968
+	@ MAP_TRAINER_HILL_ELEVATOR (g26 m88)
+	.include "data/maps/TrainerHill_Elevator/header.inc"
+	.incbin "baserom_jp.gba", 0x45DF18, 0x94C
 	.4byte BattleFrontier_BattlePikeLobby
 	.4byte BattleFrontier_BattlePikeCorridor
 	.4byte BattleFrontier_BattlePikeThreePathRoom
@@ -1029,7 +1031,8 @@ gMapHeaders: @ 0x0845A8D8
 	.4byte NavelRock_Down10
 	.4byte NavelRock_Down11
 	.4byte NavelRock_Bottom
-	.incbin "baserom_jp.gba", 0x45E93C, 0x5C
+	.4byte TrainerHill_Elevator
+	.incbin "baserom_jp.gba", 0x45E940, 0x58
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
