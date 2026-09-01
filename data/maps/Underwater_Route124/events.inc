@@ -15,3 +15,4 @@ Underwater_Route124_MapBGEvents:
 
 Underwater_Route124_MapEvents::
 	map_events NULL, NULL, NULL, Underwater_Route124_MapBGEvents
+
