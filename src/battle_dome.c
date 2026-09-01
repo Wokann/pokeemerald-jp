@@ -7641,7 +7641,7 @@ __attribute__((naked)) void DisplayTrainerInfoOnCard(void)
         "	ldr r3, [sp, #0x24]\n\t"
         "	cmp r3, r0\n\t"
         "	bne _08192208\n\t"
-        "	bl CallBattleDomeFunction\n\t"
+        "	bl GetDomeBrainTrainerPicId\n\t"
         "	b _0819220E\n\t"
         "	.align 2, 0\n\t"
         "_08192204: .4byte 0x000003FE\n\t"
@@ -9307,7 +9307,7 @@ __attribute__((naked)) void DisplayMatchInfoOnCard(void)
         "	ldr r0, _08192F10\n\t"
         "	cmp r1, r0\n\t"
         "	bne _08192F14\n\t"
-        "	bl CallBattleDomeFunction\n\t"
+        "	bl GetDomeBrainTrainerPicId\n\t"
         "	b _08192F1C\n\t"
         "	.align 2, 0\n\t"
         "_08192F10: .4byte 0x000003FE\n\t"
@@ -9395,7 +9395,7 @@ __attribute__((naked)) void DisplayMatchInfoOnCard(void)
         "	ldr r0, _08192FD0\n\t"
         "	cmp r1, r0\n\t"
         "	bne _08192FD4\n\t"
-        "	bl CallBattleDomeFunction\n\t"
+        "	bl GetDomeBrainTrainerPicId\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	ldr r2, [sp, #0x48]\n\t"
@@ -12742,7 +12742,7 @@ __attribute__((naked)) void RestoreDomePlayerPartyHeldItems(void)
     );
 }
 
-__attribute__((naked)) void GetDomeBrainTrainerPicId(void)
+__attribute__((naked)) void ReduceDomePlayerPartyToSelectedMons(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -14112,7 +14112,7 @@ __attribute__((naked)) void CopyDomeTrainerName(void)
     );
 }
 
-__attribute__((naked)) void CallBattleDomeFunction(void)
+__attribute__((naked)) u8 GetDomeBrainTrainerPicId(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -14171,4 +14171,3 @@ __attribute__((naked)) void CopyDomeBrainTrainerName(void)
         ".syntax divided\n\t"
     );
 }
-

@@ -2344,7 +2344,7 @@ __attribute__((naked)) void GetContestLadyCategory(void)
     );
 }
 
-__attribute__((naked)) void sub_0818E608(void)
+__attribute__((naked)) void CallBattleDomeFunction(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

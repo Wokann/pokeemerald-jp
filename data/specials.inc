@@ -249,7 +249,7 @@ gSpecials::
 	def_special GetLeadMonFriendshipScore
 	def_special CallFrontierUtilFunc
 	def_special CallBattleTowerFunc
-	def_special sub_0818E608
+	def_special CallBattleDomeFunction
 	def_special CallBattlePalaceFunction
 	def_special CopyEReaderTrainerGreeting
 	def_special DoSpecialTrainerBattle, waitstate=1
