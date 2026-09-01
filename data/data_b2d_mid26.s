@@ -859,7 +859,11 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/Route110_TrickHousePuzzle7/events.inc"
 	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE8 (g29 m10)
 	.include "data/maps/Route110_TrickHousePuzzle8/events.inc"
-	.incbin "baserom_jp.gba", 0x5170E4, 0x498
+	@ MAP_ROUTE110_SEASIDE_CYCLING_ROAD_SOUTH_ENTRANCE (g29 m11)
+	.include "data/maps/Route110_SeasideCyclingRoadSouthEntrance/events.inc"
+	@ MAP_ROUTE110_SEASIDE_CYCLING_ROAD_NORTH_ENTRANCE (g29 m12)
+	.include "data/maps/Route110_SeasideCyclingRoadNorthEntrance/events.inc"
+	.incbin "baserom_jp.gba", 0x5171BC, 0x3C0
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

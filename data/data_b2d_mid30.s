@@ -1004,7 +1004,11 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/Route110_TrickHousePuzzle7/header.inc"
 	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE8 (g29 m10)
 	.include "data/maps/Route110_TrickHousePuzzle8/header.inc"
-	.incbin "baserom_jp.gba", 0x45E0A0, 0x7C4
+	@ MAP_ROUTE110_SEASIDE_CYCLING_ROAD_SOUTH_ENTRANCE (g29 m11)
+	.include "data/maps/Route110_SeasideCyclingRoadSouthEntrance/header.inc"
+	@ MAP_ROUTE110_SEASIDE_CYCLING_ROAD_NORTH_ENTRANCE (g29 m12)
+	.include "data/maps/Route110_SeasideCyclingRoadNorthEntrance/header.inc"
+	.incbin "baserom_jp.gba", 0x45E0D8, 0x78C
 	.4byte BattleFrontier_BattlePikeLobby
 	.4byte BattleFrontier_BattlePikeCorridor
 	.4byte BattleFrontier_BattlePikeThreePathRoom
@@ -1074,7 +1078,9 @@ gMapHeaders: @ 0x0845A8D8
 	.4byte Route110_TrickHousePuzzle6
 	.4byte Route110_TrickHousePuzzle7
 	.4byte Route110_TrickHousePuzzle8
-	.incbin "baserom_jp.gba", 0x45E978, 0x20
+	.4byte Route110_SeasideCyclingRoadSouthEntrance
+	.4byte Route110_SeasideCyclingRoadNorthEntrance
+	.incbin "baserom_jp.gba", 0x45E980, 0x18
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
