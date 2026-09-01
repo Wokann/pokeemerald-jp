@@ -17,10 +17,7 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/headers.inc"
 	.include "data/maps/groups.inc"
 	.include "data/maps/connections.inc"
-
-	.globl sDummyConnectionFlags
-sDummyConnectionFlags: @ 0x845F318
-	.incbin "baserom_jp.gba", 0x45f318, 0x4
+	.include "data/maps/connection_flags.inc"
 
 	.globl sTileBitAttributes
 sTileBitAttributes: @ 0x845F31C
