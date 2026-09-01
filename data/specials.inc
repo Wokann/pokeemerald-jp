@@ -497,8 +497,8 @@ gSpecials::
 	def_special SetDeoxysRockPalette
 	def_special CreateEnemyEventMon
 	def_special StartMirageTowerDisintegration, waitstate=1
-	def_special StartMirageTowerFossilFallAndSink, waitstate=1
 	def_special StartMirageTowerShake, waitstate=1
+	def_special StartMirageTowerFossilFallAndSink, waitstate=1
 	def_special ChangeBoxPokemonNickname, waitstate=1
 	def_special GetPCBoxToSendMon
 	def_special ShouldShowBoxWasFullMessage

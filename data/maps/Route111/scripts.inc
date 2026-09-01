@@ -109,8 +109,7 @@ Route111_OnFrame:: @ 0x081EA2FC
 
 Route111_EventScript_MirageTowerDisappear:: @ 0x081EA306
 	lockall
-	@ JP special slots retain their byte order; their implementations are swapped relative to US.
-	special StartMirageTowerFossilFallAndSink
+	special StartMirageTowerShake
 	delay 24
 	playse SE_FALL
 	addobject LOCALID_ROUTE111_PLAYER_FALLING
@@ -121,7 +120,7 @@ Route111_EventScript_MirageTowerDisappear:: @ 0x081EA306
 	turnobject LOCALID_PLAYER, DIR_NORTH
 	delay 16
 	special StartMirageTowerDisintegration
-	special StartMirageTowerShake
+	special StartMirageTowerFossilFallAndSink
 	setvar VAR_MIRAGE_TOWER_STATE, 2
 	clearflag FLAG_HIDE_DESERT_UNDERPASS_FOSSIL
 	goto_if_set FLAG_CHOSE_CLAW_FOSSIL, Route111_EventScript_RootFossilDisappeared

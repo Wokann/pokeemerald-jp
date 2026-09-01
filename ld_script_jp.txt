@@ -8982,8 +8982,8 @@ SECTIONS {
         src/mirage_tower.o(.text.SpriteCB_CeilingCrumble);
         src/mirage_tower.o(.text.SetInvisibleMirageTowerMetatiles);
         src/mirage_tower.o(.text.StartMirageTowerDisintegration);
-        src/mirage_tower.o(.text.StartMirageTowerFossilFallAndSink);
         src/mirage_tower.o(.text.StartMirageTowerShake);
+        src/mirage_tower.o(.text.StartMirageTowerFossilFallAndSink);
         src/mirage_tower.o(.text.SetBgShakeOffsets);
         src/mirage_tower.o(.text.UpdateBgShake);
         src/mirage_tower.o(.text.InitMirageTowerShake);

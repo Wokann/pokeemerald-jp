@@ -555,15 +555,12 @@ void StartMirageTowerDisintegration(void)
 
 void StartMirageTowerShake(void)
 {
-    // JP swaps the two starts vs US: this function creates the fossil
-    // fall-and-sink task and StartMirageTowerFossilFallAndSink creates the
-    // shake task.
-    CreateTask(Task_FossilFallAndSink, 9);
+    CreateTask(InitMirageTowerShake, 9);
 }
 
 void StartMirageTowerFossilFallAndSink(void)
 {
-    CreateTask(InitMirageTowerShake, 9);
+    CreateTask(Task_FossilFallAndSink, 9);
 }
 
 static void SetBgShakeOffsets(void)

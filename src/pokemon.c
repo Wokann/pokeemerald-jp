@@ -15343,7 +15343,7 @@ __attribute__((naked)) u16 GetBattleBGM()
         "	.align 2, 0\n\t"
         "_0806E088: .4byte gBattleTypeFlags\n\t"
         "_0806E08C: .4byte 0x003F0100\n\t"
-        "_0806E090: .4byte SPECIAL_StartMirageTowerFossilFallAndSink\n\t"
+        "_0806E090: .4byte SPECIAL_StartMirageTowerShake\n\t"
         "_0806E094:\n\t"
         "	ldr r0, _0806E0AC\n\t"
         "	ldrh r0, [r0]\n\t"
