@@ -1,5 +1,13 @@
 #include "global.h"
 #include "battle_dome.h"
+#include "event_data.h"
+
+extern void (*const sBattleDomeFunctions[])(void);
+
+void CallBattleDomeFunction(void)
+{
+    sBattleDomeFunctions[gSpecialVar_0x8004]();
+}
 
 __attribute__((naked)) void InitDomeChallenge(void)
 {

@@ -2344,32 +2344,3 @@ __attribute__((naked)) void GetContestLadyCategory(void)
         ".syntax divided\n\t"
     );
 }
-
-__attribute__((naked)) void CallBattleDomeFunction(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _0818E620\n\t"
-        "	ldr r0, _0818E624\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	pop {r0}\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_0818E61C(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0818E620: .4byte gUnknown_85D5B0C\n\t"
-        "_0818E624: .4byte gSpecialVar_0x8004\n\t"
-        ".syntax divided\n\t"
-    );
-}

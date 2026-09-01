@@ -214,8 +214,8 @@ gUnknown_85D5AE4: @ 0x85D5AE4
 sTourneyTreeTrainerIds: @ 0x85D5AFC
 	.incbin "baserom_jp.gba", 0x5d5afc, 0x10
 
-	.globl gUnknown_85D5B0C
-gUnknown_85D5B0C: @ 0x85D5B0C
+	.globl sBattleDomeFunctions
+sBattleDomeFunctions: @ 0x85D5B0C
 	.incbin "baserom_jp.gba", 0x5d5b0c, 0x5c
 
 	.globl gUnknown_85D5B68
