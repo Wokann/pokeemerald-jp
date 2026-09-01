@@ -6,8 +6,7 @@ EventScript_Questionnaire::
 	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
-	@ The JP byte-exact C owner has not yet been renamed.
-	specialvar VAR_0x8008, sub_0813B4C8
+	specialvar VAR_0x8008, GetMartEmployeeObjectEventId
 	goto_if_eq VAR_0x8004, 1, Questionnaire_EventScript_PlayerInputMysteryEventPhrase
 	goto_if_eq VAR_0x8004, 2, Questionnaire_EventScript_PlayerInputMysteryGiftPhrase
 	goto_if_eq VAR_RESULT, FALSE, Questionnaire_EventScript_Release

@@ -2957,7 +2957,7 @@ __attribute__((naked)) void BufferLottoTicketNumber(void)
     );
 }
 
-__attribute__((naked)) void sub_081398CC(void)
+__attribute__((naked)) u16 GetMysteryGiftCardStat(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6711,7 +6711,7 @@ void Unused_SetWeatherSunny(void)
     SetCurrentAndNextWeather(WEATHER_SUNNY);
 }
 
-__attribute__((naked)) void sub_0813B4C8(void)
+__attribute__((naked)) u32 GetMartEmployeeObjectEventId(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

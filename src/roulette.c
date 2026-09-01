@@ -2895,7 +2895,7 @@ __attribute__((naked)) void sub_08141964(void)
         "	b _081419CA\n\t"
         "	.align 2, 0\n\t"
         "_081419A4: .4byte gTasks\n\t"
-        "_081419A8: .4byte SPECIAL_sub_081398CC\n\t"
+        "_081419A8: .4byte SPECIAL_GetMysteryGiftCardStat\n\t"
         "_081419AC: .4byte gUnknown_203A858\n\t"
         "_081419B0: .4byte Roulette_Text_Jackpot\n\t"
         "_081419B4:\n\t"
