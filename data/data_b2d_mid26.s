@@ -837,7 +837,29 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/Route104_PrototypePrettyPetalFlowerShop/events.inc"
 	@ MAP_ROUTE109_SEASHORE_HOUSE (g28 m0)
 	.include "data/maps/Route109_SeashoreHouse/events.inc"
-	.incbin "baserom_jp.gba", 0x516598, 0xFE4
+	@ MAP_ROUTE110_TRICK_HOUSE_ENTRANCE (g29 m0)
+	.include "data/maps/Route110_TrickHouseEntrance/events.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_END (g29 m1)
+	.include "data/maps/Route110_TrickHouseEnd/events.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_CORRIDOR (g29 m2)
+	.include "data/maps/Route110_TrickHouseCorridor/events.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE1 (g29 m3)
+	.include "data/maps/Route110_TrickHousePuzzle1/events.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE2 (g29 m4)
+	.include "data/maps/Route110_TrickHousePuzzle2/events.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE3 (g29 m5)
+	.include "data/maps/Route110_TrickHousePuzzle3/events.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE4 (g29 m6)
+	.include "data/maps/Route110_TrickHousePuzzle4/events.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE5 (g29 m7)
+	.include "data/maps/Route110_TrickHousePuzzle5/events.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE6 (g29 m8)
+	.include "data/maps/Route110_TrickHousePuzzle6/events.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE7 (g29 m9)
+	.include "data/maps/Route110_TrickHousePuzzle7/events.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE8 (g29 m10)
+	.include "data/maps/Route110_TrickHousePuzzle8/events.inc"
+	.incbin "baserom_jp.gba", 0x5170E4, 0x498
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

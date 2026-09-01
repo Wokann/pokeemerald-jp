@@ -61,6 +61,17 @@ CANONICAL_LAYOUT_SYMBOLS = {
     "LAYOUT_NAVEL_ROCK_FORK": "NavelRock_Fork_Layout",
     "LAYOUT_ROUTE104_PROTOTYPE": "Route104_Prototype_Layout",
     "LAYOUT_ROUTE109_SEASHORE_HOUSE": "Route109_SeashoreHouse_Layout",
+    "LAYOUT_ROUTE110_TRICK_HOUSE_ENTRANCE": "Route110_TrickHouseEntrance_Layout",
+    "LAYOUT_ROUTE110_TRICK_HOUSE_END": "Route110_TrickHouseEnd_Layout",
+    "LAYOUT_ROUTE110_TRICK_HOUSE_CORRIDOR": "Route110_TrickHouseCorridor_Layout",
+    "LAYOUT_ROUTE110_TRICK_HOUSE_PUZZLE1": "Route110_TrickHousePuzzle1_Layout",
+    "LAYOUT_ROUTE110_TRICK_HOUSE_PUZZLE2": "Route110_TrickHousePuzzle2_Layout",
+    "LAYOUT_ROUTE110_TRICK_HOUSE_PUZZLE3": "Route110_TrickHousePuzzle3_Layout",
+    "LAYOUT_ROUTE110_TRICK_HOUSE_PUZZLE4": "Route110_TrickHousePuzzle4_Layout",
+    "LAYOUT_ROUTE110_TRICK_HOUSE_PUZZLE5": "Route110_TrickHousePuzzle5_Layout",
+    "LAYOUT_ROUTE110_TRICK_HOUSE_PUZZLE6": "Route110_TrickHousePuzzle6_Layout",
+    "LAYOUT_ROUTE110_TRICK_HOUSE_PUZZLE7": "Route110_TrickHousePuzzle7_Layout",
+    "LAYOUT_ROUTE110_TRICK_HOUSE_PUZZLE8": "Route110_TrickHousePuzzle8_Layout",
 }
 
 # The JP layout table has not yet adopted the US shared-layout labels for these

@@ -982,7 +982,29 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/Route104_PrototypePrettyPetalFlowerShop/header.inc"
 	@ MAP_ROUTE109_SEASHORE_HOUSE (g28 m0)
 	.include "data/maps/Route109_SeashoreHouse/header.inc"
-	.incbin "baserom_jp.gba", 0x45DF6C, 0x8F8
+	@ MAP_ROUTE110_TRICK_HOUSE_ENTRANCE (g29 m0)
+	.include "data/maps/Route110_TrickHouseEntrance/header.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_END (g29 m1)
+	.include "data/maps/Route110_TrickHouseEnd/header.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_CORRIDOR (g29 m2)
+	.include "data/maps/Route110_TrickHouseCorridor/header.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE1 (g29 m3)
+	.include "data/maps/Route110_TrickHousePuzzle1/header.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE2 (g29 m4)
+	.include "data/maps/Route110_TrickHousePuzzle2/header.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE3 (g29 m5)
+	.include "data/maps/Route110_TrickHousePuzzle3/header.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE4 (g29 m6)
+	.include "data/maps/Route110_TrickHousePuzzle4/header.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE5 (g29 m7)
+	.include "data/maps/Route110_TrickHousePuzzle5/header.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE6 (g29 m8)
+	.include "data/maps/Route110_TrickHousePuzzle6/header.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE7 (g29 m9)
+	.include "data/maps/Route110_TrickHousePuzzle7/header.inc"
+	@ MAP_ROUTE110_TRICK_HOUSE_PUZZLE8 (g29 m10)
+	.include "data/maps/Route110_TrickHousePuzzle8/header.inc"
+	.incbin "baserom_jp.gba", 0x45E0A0, 0x7C4
 	.4byte BattleFrontier_BattlePikeLobby
 	.4byte BattleFrontier_BattlePikeCorridor
 	.4byte BattleFrontier_BattlePikeThreePathRoom
@@ -1041,7 +1063,18 @@ gMapHeaders: @ 0x0845A8D8
 	.4byte Route104_Prototype
 	.4byte Route104_PrototypePrettyPetalFlowerShop
 	.4byte Route109_SeashoreHouse
-	.incbin "baserom_jp.gba", 0x45E94C, 0x4C
+	.4byte Route110_TrickHouseEntrance
+	.4byte Route110_TrickHouseEnd
+	.4byte Route110_TrickHouseCorridor
+	.4byte Route110_TrickHousePuzzle1
+	.4byte Route110_TrickHousePuzzle2
+	.4byte Route110_TrickHousePuzzle3
+	.4byte Route110_TrickHousePuzzle4
+	.4byte Route110_TrickHousePuzzle5
+	.4byte Route110_TrickHousePuzzle6
+	.4byte Route110_TrickHousePuzzle7
+	.4byte Route110_TrickHousePuzzle8
+	.incbin "baserom_jp.gba", 0x45E978, 0x20
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
