@@ -76,7 +76,7 @@ void ShouldDoBrailleRegirockEffectOld(void)
 #define tDelay         data[5]
 #define tNumShakes     data[6]
 
-void DoSealedChamberShakingEffect1(void)
+void DoSealedChamberShakingEffect_Long(void)
 {
     u8 taskId = CreateTask(SealedChamberShakingEffect, 9);
 
@@ -88,7 +88,7 @@ void DoSealedChamberShakingEffect1(void)
     SetCameraPanningCallback(0);
 }
 
-void DoSealedChamberShakingEffect2(void)
+void DoSealedChamberShakingEffect_Short(void)
 {
     u8 taskId = CreateTask(SealedChamberShakingEffect, 9);
 

@@ -8227,8 +8227,8 @@ SECTIONS {
         src/braille_puzzles.o(.text.DoBrailleDigEffect);
         src/braille_puzzles.o(.text.CheckRelicanthWailord);
         src/braille_puzzles.o(.text.ShouldDoBrailleRegirockEffectOld);
-        src/braille_puzzles.o(.text.DoSealedChamberShakingEffect1);
-        src/braille_puzzles.o(.text.DoSealedChamberShakingEffect2);
+        src/braille_puzzles.o(.text.DoSealedChamberShakingEffect_Long);
+        src/braille_puzzles.o(.text.DoSealedChamberShakingEffect_Short);
         src/braille_puzzles.o(.text.SealedChamberShakingEffect);
         src/braille_puzzles.o(.text.ShouldDoBrailleRegirockEffect);
         src/braille_puzzles.o(.text.SetUpPuzzleEffectRegirock);
