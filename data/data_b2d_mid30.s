@@ -1012,7 +1012,13 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/Route113_GlassWorkshop/header.inc"
 	@ MAP_ROUTE123_BERRY_MASTERS_HOUSE (g31 m0)
 	.include "data/maps/Route123_BerryMastersHouse/header.inc"
-	.incbin "baserom_jp.gba", 0x45E110, 0x754
+	@ MAP_ROUTE119_WEATHER_INSTITUTE_1F (g32 m0)
+	.include "data/maps/Route119_WeatherInstitute_1F/header.inc"
+	@ MAP_ROUTE119_WEATHER_INSTITUTE_2F (g32 m1)
+	.include "data/maps/Route119_WeatherInstitute_2F/header.inc"
+	@ MAP_ROUTE119_HOUSE (g32 m2)
+	.include "data/maps/Route119_House/header.inc"
+	.incbin "baserom_jp.gba", 0x45E164, 0x700
 	.4byte BattleFrontier_BattlePikeLobby
 	.4byte BattleFrontier_BattlePikeCorridor
 	.4byte BattleFrontier_BattlePikeThreePathRoom
@@ -1086,7 +1092,10 @@ gMapHeaders: @ 0x0845A8D8
 	.4byte Route110_SeasideCyclingRoadNorthEntrance
 	.4byte Route113_GlassWorkshop
 	.4byte Route123_BerryMastersHouse
-	.incbin "baserom_jp.gba", 0x45E988, 0x10
+	.4byte Route119_WeatherInstitute_1F
+	.4byte Route119_WeatherInstitute_2F
+	.4byte Route119_House
+	.incbin "baserom_jp.gba", 0x45E994, 0x4
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

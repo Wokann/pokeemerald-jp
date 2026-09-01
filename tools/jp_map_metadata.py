@@ -73,6 +73,8 @@ CANONICAL_LAYOUT_SYMBOLS = {
     "LAYOUT_ROUTE110_TRICK_HOUSE_PUZZLE7": "Route110_TrickHousePuzzle7_Layout",
     "LAYOUT_ROUTE110_TRICK_HOUSE_PUZZLE8": "Route110_TrickHousePuzzle8_Layout",
     "LAYOUT_ROUTE110_SEASIDE_CYCLING_ROAD_ENTRANCE": "Route110_SeasideCyclingRoadEntrance_Layout",
+    "LAYOUT_ROUTE119_WEATHER_INSTITUTE_1F": "Route119_WeatherInstitute_1F_Layout",
+    "LAYOUT_ROUTE119_WEATHER_INSTITUTE_2F": "Route119_WeatherInstitute_2F_Layout",
 }
 
 # The JP layout table has not yet adopted the US shared-layout labels for these

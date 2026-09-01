@@ -867,7 +867,13 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/Route113_GlassWorkshop/events.inc"
 	@ MAP_ROUTE123_BERRY_MASTERS_HOUSE (g31 m0)
 	.include "data/maps/Route123_BerryMastersHouse/events.inc"
-	.incbin "baserom_jp.gba", 0x517264, 0x318
+	@ MAP_ROUTE119_WEATHER_INSTITUTE_1F (g32 m0)
+	.include "data/maps/Route119_WeatherInstitute_1F/events.inc"
+	@ MAP_ROUTE119_WEATHER_INSTITUTE_2F (g32 m1)
+	.include "data/maps/Route119_WeatherInstitute_2F/events.inc"
+	@ MAP_ROUTE119_HOUSE (g32 m2)
+	.include "data/maps/Route119_House/events.inc"
+	.incbin "baserom_jp.gba", 0x5174E0, 0x9C
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
