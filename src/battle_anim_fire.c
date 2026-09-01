@@ -8,10 +8,6 @@
 #include "task.h"
 #include "trig.h"
 
-// JP: the fire anim sprite templates, coord tables and anim/affine data
-// stay embedded in ROM data (see the ABSOLUTE aliases in ld_script_jp.txt);
-// only the sprite callbacks are decompiled here, matching US pokeemerald.
-
 static void AnimFireSpiralInward(struct Sprite *);
 static void AnimFireSpread(struct Sprite *);
 static void AnimFirePlume(struct Sprite *);
@@ -22,6 +18,7 @@ static void AnimUnusedSmallEmber_Step(struct Sprite *);
 static void AnimSunlight(struct Sprite *);
 static void AnimEmberFlare(struct Sprite *);
 static void AnimBurnFlame(struct Sprite *);
+void AnimFireRing(struct Sprite *);
 static void AnimFireRing_Step1(struct Sprite *);
 static void AnimFireRing_Step2(struct Sprite *);
 static void AnimFireRing_Step3(struct Sprite *);
@@ -43,11 +40,431 @@ static void AnimWillOWispOrb_Step(struct Sprite *);
 static void AnimWillOWispFire(struct Sprite *);
 static void AnimTask_MoveHeatWaveTargets_Step(u8 taskId);
 
-extern const struct SpriteTemplate gEruptionLaunchRockSpriteTemplate;
-extern const struct SpriteTemplate gEruptionFallingRockSpriteTemplate;
-extern const s16 sEruptionLaunchRockSpeeds[][2];
-extern const s8 sShakeDirsPattern0[];
-extern const s8 sShakeDirsPattern1[];
+#define BATTLE_ANIM_FIRE_DATA __attribute__((section(".rodata.battle_anim_fire_data")))
+
+static const union AnimCmd sAnim_FireSpiralSpread_0[] BATTLE_ANIM_FIRE_DATA =
+{
+    ANIMCMD_FRAME(16, 4),
+    ANIMCMD_FRAME(32, 4),
+    ANIMCMD_FRAME(48, 4),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_FireSpiralSpread_1[] BATTLE_ANIM_FIRE_DATA =
+{
+    ANIMCMD_FRAME(16, 4, .vFlip = TRUE, .hFlip = TRUE),
+    ANIMCMD_FRAME(32, 4, .vFlip = TRUE, .hFlip = TRUE),
+    ANIMCMD_FRAME(48, 4, .vFlip = TRUE, .hFlip = TRUE),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_FireSpiralSpread[] BATTLE_ANIM_FIRE_DATA =
+{
+    sAnim_FireSpiralSpread_0,
+    sAnim_FireSpiralSpread_1,
+};
+
+const struct SpriteTemplate gFireSpiralInwardSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_FireSpiralSpread,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimFireSpiralInward,
+};
+
+const struct SpriteTemplate gFireSpreadSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_FireSpiralSpread,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimFireSpread,
+};
+
+static const union AnimCmd sAnim_LargeFlame[] BATTLE_ANIM_FIRE_DATA =
+{
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_FRAME(16, 3),
+    ANIMCMD_FRAME(32, 3),
+    ANIMCMD_FRAME(48, 3),
+    ANIMCMD_FRAME(64, 3),
+    ANIMCMD_FRAME(80, 3),
+    ANIMCMD_FRAME(96, 3),
+    ANIMCMD_FRAME(112, 3),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_LargeFlame[] BATTLE_ANIM_FIRE_DATA =
+{
+    sAnim_LargeFlame,
+};
+
+static const union AnimCmd sAnim_FirePlume[] BATTLE_ANIM_FIRE_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_FRAME(16, 5),
+    ANIMCMD_FRAME(32, 5),
+    ANIMCMD_FRAME(48, 5),
+    ANIMCMD_FRAME(64, 5),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_FirePlume[] BATTLE_ANIM_FIRE_DATA =
+{
+    sAnim_FirePlume,
+};
+
+static const union AffineAnimCmd sAffineAnim_LargeFlame[] BATTLE_ANIM_FIRE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x32, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0x20, 0x0, 0, 7),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_LargeFlame[] BATTLE_ANIM_FIRE_DATA =
+{
+    sAffineAnim_LargeFlame,
+};
+
+const struct SpriteTemplate gLargeFlameSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_FIRE,
+    .paletteTag = ANIM_TAG_FIRE,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
+    .anims = sAnims_LargeFlame,
+    .images = NULL,
+    .affineAnims = sAffineAnims_LargeFlame,
+    .callback = AnimLargeFlame,
+};
+
+const struct SpriteTemplate gLargeFlameScatterSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_FIRE,
+    .paletteTag = ANIM_TAG_FIRE,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_LargeFlame,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimLargeFlame,
+};
+
+const struct SpriteTemplate gFirePlumeSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_FIRE_PLUME,
+    .paletteTag = ANIM_TAG_FIRE_PLUME,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_FirePlume,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimFirePlume,
+};
+
+// Unused
+static const struct SpriteTemplate sUnusedEmberFirePlumeSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_FirePlume,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimFirePlume,
+};
+
+static const union AnimCmd sAnim_UnusedSmallEmber[] BATTLE_ANIM_FIRE_DATA =
+{
+    ANIMCMD_FRAME(16, 6),
+    ANIMCMD_FRAME(32, 6),
+    ANIMCMD_FRAME(48, 6),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_UnusedSmallEmber[] BATTLE_ANIM_FIRE_DATA =
+{
+    sAnim_UnusedSmallEmber,
+};
+
+// Unused
+static const struct SpriteTemplate sUnusedSmallEmberSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_UnusedSmallEmber,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimUnusedSmallEmber,
+};
+
+static const union AffineAnimCmd sAffineAnim_SunlightRay[] BATTLE_ANIM_FIRE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x50, 0x50, 0, 0),
+    AFFINEANIMCMD_FRAME(0x2, 0x2, 10, 1),
+    AFFINEANIMCMD_JUMP(1),
+};
+
+static const union AffineAnimCmd *const sAffineAnims_SunlightRay[] BATTLE_ANIM_FIRE_DATA =
+{
+    sAffineAnim_SunlightRay,
+};
+
+const struct SpriteTemplate gSunlightRaySpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_SUNLIGHT,
+    .paletteTag = ANIM_TAG_SUNLIGHT,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_SunlightRay,
+    .callback = AnimSunlight,
+};
+
+static const union AnimCmd sAnim_BasicFire[] BATTLE_ANIM_FIRE_DATA =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(16, 4),
+    ANIMCMD_FRAME(32, 4),
+    ANIMCMD_FRAME(48, 4),
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_JUMP(0),
+};
+
+const union AnimCmd *const gAnims_BasicFire[] BATTLE_ANIM_FIRE_DATA =
+{
+    sAnim_BasicFire,
+};
+
+const struct SpriteTemplate gEmberSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = TranslateAnimSpriteToTargetMonLocation,
+};
+
+const struct SpriteTemplate gEmberFlareSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gAnims_BasicFire,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimEmberFlare,
+};
+
+const struct SpriteTemplate gBurnFlameSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gAnims_BasicFire,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimBurnFlame,
+};
+
+const struct SpriteTemplate gFireBlastRingSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gAnims_BasicFire,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimFireRing,
+};
+
+static const union AnimCmd sAnim_FireBlastCross[] BATTLE_ANIM_FIRE_DATA =
+{
+    ANIMCMD_FRAME(32, 6),
+    ANIMCMD_FRAME(48, 6),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_FireBlastCross[] BATTLE_ANIM_FIRE_DATA =
+{
+    sAnim_FireBlastCross,
+};
+
+static const union AffineAnimCmd sAffineAnim_Unused_0[] BATTLE_ANIM_FIRE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_Unused_1[] BATTLE_ANIM_FIRE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xA0, 0xA0, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+// Unused
+static const union AffineAnimCmd *const sAffineAnims_Unused[] BATTLE_ANIM_FIRE_DATA =
+{
+    sAffineAnim_Unused_0,
+    sAffineAnim_Unused_1,
+};
+
+const struct SpriteTemplate gFireBlastCrossSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_FireBlastCross,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimFireCross,
+};
+
+const struct SpriteTemplate gFireSpiralOutwardSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gAnims_BasicFire,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimFireSpiralOutward,
+};
+
+const struct SpriteTemplate gWeatherBallFireDownSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gAnims_BasicFire,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimWeatherBallDown,
+};
+
+const struct SpriteTemplate gEruptionLaunchRockSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_WARM_ROCK,
+    .paletteTag = ANIM_TAG_WARM_ROCK,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimEruptionLaunchRock,
+};
+
+static const s16 sEruptionLaunchRockSpeeds[][2] BATTLE_ANIM_FIRE_DATA =
+{
+    {-2, -5},
+    {-1, -1},
+    { 3, -6},
+    { 4, -2},
+    { 2, -8},
+    {-5, -5},
+    { 4, -7},
+};
+
+const struct SpriteTemplate gEruptionFallingRockSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_WARM_ROCK,
+    .paletteTag = ANIM_TAG_WARM_ROCK,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimEruptionFallingRock,
+};
+
+static const union AnimCmd sAnim_WillOWispOrb_0[] BATTLE_ANIM_FIRE_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_FRAME(12, 5),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_WillOWispOrb_1[] BATTLE_ANIM_FIRE_DATA =
+{
+    ANIMCMD_FRAME(16, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_WillOWispOrb_2[] BATTLE_ANIM_FIRE_DATA =
+{
+    ANIMCMD_FRAME(20, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_WillOWispOrb_3[] BATTLE_ANIM_FIRE_DATA =
+{
+    ANIMCMD_FRAME(20, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_WillOWispOrb[] BATTLE_ANIM_FIRE_DATA =
+{
+    sAnim_WillOWispOrb_0,
+    sAnim_WillOWispOrb_1,
+    sAnim_WillOWispOrb_2,
+    sAnim_WillOWispOrb_3,
+};
+
+const struct SpriteTemplate gWillOWispOrbSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_WISP_ORB,
+    .paletteTag = ANIM_TAG_WISP_ORB,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = sAnims_WillOWispOrb,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimWillOWispOrb,
+};
+
+static const union AnimCmd sAnim_WillOWispFire[] BATTLE_ANIM_FIRE_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_FRAME(16, 5),
+    ANIMCMD_FRAME(32, 5),
+    ANIMCMD_FRAME(48, 5),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_WillOWispFire[] BATTLE_ANIM_FIRE_DATA =
+{
+    sAnim_WillOWispFire,
+};
+
+const struct SpriteTemplate gWillOWispFireSpriteTemplate BATTLE_ANIM_FIRE_DATA =
+{
+    .tileTag = ANIM_TAG_WISP_FIRE,
+    .paletteTag = ANIM_TAG_WISP_FIRE,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_WillOWispFire,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimWillOWispFire,
+};
+
+// Directions for shaking up/down or left/right in AnimTask_ShakeTargetInPattern
+// Only first 10 values are ever accessed.
+// First pattern results in larger shakes, second results in faster oscillation
+static const s8 sShakeDirsPattern0[16] BATTLE_ANIM_FIRE_DATA =
+{
+    -1, -1, 0, 1, 1, 0, 0, -1, -1, 1, 1, 0, 0, -1, 0, 1,
+};
+
+static const s8 sShakeDirsPattern1[16] BATTLE_ANIM_FIRE_DATA =
+{
+    -1, 0, 1, 0, -1, 1, 0, -1, 0, 1, 0, -1, 0, 1, 0, 1,
+};
+
+#undef BATTLE_ANIM_FIRE_DATA
 
 static void AnimFireSpiralInward(struct Sprite *sprite)
 {
