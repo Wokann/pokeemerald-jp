@@ -1,7 +1,9 @@
 #include "global.h"
+#include "battle_anim.h"
 #include "field_weather.h"
 
 #define FIELD_WEATHER_EFFECT_RESOURCE_DATA __attribute__((section(".rodata.field_weather_effect_resource_data")))
+#define FIELD_WEATHER_EFFECT_STATIC_DATA __attribute__((section(".rodata.field_weather_effect_static_data")))
 
 const u16 gCloudsWeatherPalette[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U16("graphics/weather/cloud.gbapal");
 const u16 gSandstormWeatherPalette[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U16("graphics/weather/sandstorm.gbapal");
@@ -14,6 +16,506 @@ const u8 gWeatherBubbleTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("g
 const u8 gWeatherAshTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/ash.4bpp");
 const u8 gWeatherRainTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/rain.4bpp");
 const u8 gWeatherSandstormTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/sandstorm.4bpp");
+
+void UpdateCloudSprite(struct Sprite *sprite);
+void UpdateRainSprite(void);
+void UpdateSnowflakeSprite(void);
+void Fog1SpriteCallback(void);
+void UpdateAshSprite(void);
+void UpdateFog2Sprite(void);
+void UpdateSandstormSprite(void);
+void UpdateBubbleSprite(void);
+
+static const struct Coords16 sCloudSpriteMapCoords[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    { 0, 66},
+    { 5, 73},
+    {10, 78},
+};
+
+static const struct SpriteSheet sCloudSpriteSheet FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .data = gWeatherCloudTiles,
+    .size = sizeof(gWeatherCloudTiles),
+    .tag = GFXTAG_CLOUD,
+};
+
+static const struct OamData sCloudSpriteOamData FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_BLEND,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 3,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sCloudSpriteAnimCmd[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(0, 16),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sCloudSpriteAnimCmds[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    sCloudSpriteAnimCmd,
+};
+
+static const struct SpriteTemplate sCloudSpriteTemplate FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .tileTag = GFXTAG_CLOUD,
+    .paletteTag = PALTAG_WEATHER_2,
+    .oam = &sCloudSpriteOamData,
+    .anims = sCloudSpriteAnimCmds,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = UpdateCloudSprite,
+};
+
+static const struct Coords16 sRainSpriteCoords[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    {  0,   0},
+    {  0, 160},
+    {  0,  64},
+    {144, 224},
+    {144, 128},
+    { 32,  32},
+    { 32, 192},
+    { 32,  96},
+    { 72, 128},
+    { 72,  32},
+    { 72, 192},
+    {216,  96},
+    {216,   0},
+    {104, 160},
+    {104,  64},
+    {104, 224},
+    {144,   0},
+    {144, 160},
+    {144,  64},
+    { 32, 224},
+    { 32, 128},
+    { 72,  32},
+    { 72, 192},
+    { 48,  96},
+};
+
+static const struct OamData sRainSpriteOamData FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 2,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sRainSpriteFallAnimCmd[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(0, 16),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sRainSpriteSplashAnimCmd[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(8, 3),
+    ANIMCMD_FRAME(32, 2),
+    ANIMCMD_FRAME(40, 2),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sRainSpriteHeavySplashAnimCmd[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(8, 3),
+    ANIMCMD_FRAME(16, 3),
+    ANIMCMD_FRAME(24, 4),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sRainSpriteAnimCmds[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    sRainSpriteFallAnimCmd,
+    sRainSpriteSplashAnimCmd,
+    sRainSpriteHeavySplashAnimCmd,
+};
+
+static const struct SpriteTemplate sRainSpriteTemplate FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .tileTag = GFXTAG_RAIN,
+    .paletteTag = PALTAG_WEATHER,
+    .oam = &sRainSpriteOamData,
+    .anims = sRainSpriteAnimCmds,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)UpdateRainSprite,
+};
+
+static const s16 sRainSpriteMovement[][2] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    {-0x68,  0xD0},
+    {-0xA0, 0x140},
+};
+
+static const u16 sRainSpriteFallingDurations[][2] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    {18, 7},
+    {12, 10},
+};
+
+static const struct SpriteSheet sRainSpriteSheet FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .data = gWeatherRainTiles,
+    .size = sizeof(gWeatherRainTiles),
+    .tag = GFXTAG_RAIN,
+};
+
+static const struct OamData sSnowflakeSpriteOamData FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct SpriteFrameImage sSnowflakeSpriteImages[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    {gWeatherSnow1Tiles, sizeof(gWeatherSnow1Tiles)},
+    {gWeatherSnow2Tiles, sizeof(gWeatherSnow2Tiles)},
+};
+
+static const union AnimCmd sSnowflakeAnimCmd0[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(0, 16),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sSnowflakeAnimCmd1[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(1, 16),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sSnowflakeAnimCmds[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    sSnowflakeAnimCmd0,
+    sSnowflakeAnimCmd1,
+};
+
+static const struct SpriteTemplate sSnowflakeSpriteTemplate FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = PALTAG_WEATHER,
+    .oam = &sSnowflakeSpriteOamData,
+    .anims = sSnowflakeAnimCmds,
+    .images = sSnowflakeSpriteImages,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)UpdateSnowflakeSprite,
+};
+
+static const u16 sUnusedData[] FIELD_WEATHER_EFFECT_STATIC_DATA = {0, 6, 6, 12, 18, 42, 300, 300};
+
+static const struct OamData sOamData_FogH FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_BLEND,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_FogH_0[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(0, 16),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_FogH_1[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(32, 16),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_FogH_2[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(64, 16),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_FogH_3[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(96, 16),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_FogH_4[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(128, 16),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_FogH_5[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(160, 16),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_FogH[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    sAnim_FogH_0,
+    sAnim_FogH_1,
+    sAnim_FogH_2,
+    sAnim_FogH_3,
+    sAnim_FogH_4,
+    sAnim_FogH_5,
+};
+
+static const union AffineAnimCmd sAffineAnim_FogH[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x200, 0x200, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_FogH[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    sAffineAnim_FogH,
+};
+
+static const struct SpriteTemplate sFogHorizontalSpriteTemplate FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .tileTag = GFXTAG_FOG_H,
+    .paletteTag = PALTAG_WEATHER,
+    .oam = &sOamData_FogH,
+    .anims = sAnims_FogH,
+    .images = NULL,
+    .affineAnims = sAffineAnims_FogH,
+    .callback = (SpriteCallback)Fog1SpriteCallback,
+};
+
+static const struct SpriteSheet sFogHorizontalSpriteSheet FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .data = gWeatherFogHorizontalTiles,
+    .size = sizeof(gWeatherFogHorizontalTiles),
+    .tag = GFXTAG_FOG_H,
+};
+
+static const struct SpriteSheet sAshSpriteSheet FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .data = gWeatherAshTiles,
+    .size = sizeof(gWeatherAshTiles),
+    .tag = GFXTAG_ASH,
+};
+
+static const struct OamData sAshSpriteOamData FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_BLEND,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 15,
+};
+
+static const union AnimCmd sAshSpriteAnimCmd0[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(0, 60),
+    ANIMCMD_FRAME(64, 60),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAshSpriteAnimCmds[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    sAshSpriteAnimCmd0,
+};
+
+static const struct SpriteTemplate sAshSpriteTemplate FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .tileTag = GFXTAG_ASH,
+    .paletteTag = PALTAG_WEATHER,
+    .oam = &sAshSpriteOamData,
+    .anims = sAshSpriteAnimCmds,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)UpdateAshSprite,
+};
+
+static const struct SpriteSheet sFogDiagonalSpriteSheet FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .data = gWeatherFogDiagonalTiles,
+    .size = sizeof(gWeatherFogDiagonalTiles),
+    .tag = GFXTAG_FOG_D,
+};
+
+static const struct OamData sFogDiagonalSpriteOamData FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_BLEND,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+};
+
+static const union AnimCmd sFogDiagonalSpriteAnimCmd0[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(0, 16),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sFogDiagonalSpriteAnimCmds[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    sFogDiagonalSpriteAnimCmd0,
+};
+
+static const struct SpriteTemplate sFogDiagonalSpriteTemplate FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .tileTag = GFXTAG_FOG_D,
+    .paletteTag = PALTAG_WEATHER,
+    .oam = &sFogDiagonalSpriteOamData,
+    .anims = sFogDiagonalSpriteAnimCmds,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)UpdateFog2Sprite,
+};
+
+static const struct OamData sSandstormSpriteOamData FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_BLEND,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+};
+
+static const union AnimCmd sSandstormSpriteAnimCmd0[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sSandstormSpriteAnimCmd1[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(64, 3),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sSandstormSpriteAnimCmds[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    sSandstormSpriteAnimCmd0,
+    sSandstormSpriteAnimCmd1,
+};
+
+static const struct SpriteTemplate sSandstormSpriteTemplate FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .tileTag = GFXTAG_SANDSTORM,
+    .paletteTag = PALTAG_WEATHER_2,
+    .oam = &sSandstormSpriteOamData,
+    .anims = sSandstormSpriteAnimCmds,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)UpdateSandstormSprite,
+};
+
+static const struct SpriteSheet sSandstormSpriteSheet FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .data = gWeatherSandstormTiles,
+    .size = sizeof(gWeatherSandstormTiles),
+    .tag = GFXTAG_SANDSTORM,
+};
+
+static const u16 sSwirlEntranceDelays[] FIELD_WEATHER_EFFECT_STATIC_DATA = {0, 120, 80, 160, 40, 0};
+
+static const u8 sBubbleStartDelays[] FIELD_WEATHER_EFFECT_STATIC_DATA = {40, 90, 60, 90, 2, 60, 40, 30};
+
+static const struct SpriteSheet sWeatherBubbleSpriteSheet FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .data = gWeatherBubbleTiles,
+    .size = sizeof(gWeatherBubbleTiles),
+    .tag = GFXTAG_BUBBLE,
+};
+
+static const s16 sBubbleStartCoords[][2] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    {120, 160},
+    {376, 160},
+    { 40, 140},
+    {296, 140},
+    {180, 130},
+    {436, 130},
+    { 60, 160},
+    {436, 160},
+    {220, 180},
+    {476, 180},
+    { 10,  90},
+    {266,  90},
+    {256, 160},
+};
+
+static const union AnimCmd sBubbleSpriteAnimCmd0[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    ANIMCMD_FRAME(0, 16),
+    ANIMCMD_FRAME(1, 16),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sBubbleSpriteAnimCmds[] FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    sBubbleSpriteAnimCmd0,
+};
+
+static const struct SpriteTemplate sBubbleSpriteTemplate FIELD_WEATHER_EFFECT_STATIC_DATA =
+{
+    .tileTag = GFXTAG_BUBBLE,
+    .paletteTag = PALTAG_WEATHER,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = sBubbleSpriteAnimCmds,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)UpdateBubbleSprite,
+};
 
 __attribute__((naked)) void Clouds_InitVars()
 {
@@ -287,11 +789,11 @@ __attribute__((naked)) void CreateCloudSprites(void)
         "	.align 2, 0\n\t"
         "_080ABF08: .4byte gWeatherPtr\n\t"
         "_080ABF0C: .4byte 0x000006DE\n\t"
-        "_080ABF10: .4byte gUnknown_852A7F8\n\t"
+        "_080ABF10: .4byte sCloudSpriteSheet\n\t"
         "_080ABF14: .4byte gCloudsWeatherPalette\n\t"
-        "_080ABF18: .4byte gUnknown_852A814\n\t"
+        "_080ABF18: .4byte sCloudSpriteTemplate\n\t"
         "_080ABF1C: .4byte gSprites\n\t"
-        "_080ABF20: .4byte gUnknown_852A7EC\n\t"
+        "_080ABF20: .4byte sCloudSpriteMapCoords\n\t"
         "_080ABF24:\n\t"
         "	ldr r0, _080ABF54\n\t"
         "	ldr r1, [r0]\n\t"
@@ -1008,10 +1510,10 @@ __attribute__((naked)) void StartRainSpriteFall(void)
         "_080AC464: .4byte 0x169\n\t"
         "_080AC468: .4byte 0x41C64E6D\n\t"
         "_080AC46C: .4byte 0x00003039\n\t"
-        "_080AC470: .4byte gUnknown_852A8E8\n\t"
+        "_080AC470: .4byte sRainSpriteFallingDurations\n\t"
         "_080AC474: .4byte gWeatherPtr\n\t"
         "_080AC478: .4byte 0x000006DC\n\t"
-        "_080AC47C: .4byte gUnknown_852A8E0\n\t"
+        "_080AC47C: .4byte sRainSpriteMovement\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1079,7 +1581,7 @@ __attribute__((naked)) void UpdateRainSprite(void)
         "	ands r1, r2\n\t"
         "	b _080AC50A\n\t"
         "	.align 2, 0\n\t"
-        "_080AC4F4: .4byte gUnknown_852A8E0\n\t"
+        "_080AC4F4: .4byte sRainSpriteMovement\n\t"
         "_080AC4F8: .4byte gWeatherPtr\n\t"
         "_080AC4FC: .4byte 0x000006DC\n\t"
         "_080AC500:\n\t"
@@ -1253,7 +1755,7 @@ __attribute__((naked)) void InitRainSpriteMovement(void)
         "	movs r0, #0\n\t"
         "	b _080AC658\n\t"
         "	.align 2, 0\n\t"
-        "_080AC634: .4byte gUnknown_852A8E8\n\t"
+        "_080AC634: .4byte sRainSpriteFallingDurations\n\t"
         "_080AC638: .4byte gWeatherPtr\n\t"
         "_080AC63C: .4byte 0x000006DC\n\t"
         "_080AC640: .4byte 0x0000FFFF\n\t"
@@ -1289,7 +1791,7 @@ __attribute__((naked)) void LoadRainSpriteSheet(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080AC670: .4byte gUnknown_852A8F0\n\t"
+        "_080AC670: .4byte sRainSpriteSheet\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1387,8 +1889,8 @@ __attribute__((naked)) void CreateRainSprite(void)
         "	.align 2, 0\n\t"
         "_080AC720: .4byte gWeatherPtr\n\t"
         "_080AC724: .4byte 0x000006DA\n\t"
-        "_080AC728: .4byte gUnknown_852A8C8\n\t"
-        "_080AC72C: .4byte gUnknown_852A82C\n\t"
+        "_080AC728: .4byte sRainSpriteTemplate\n\t"
+        "_080AC72C: .4byte sRainSpriteCoords\n\t"
         "_080AC730: .4byte gSprites\n\t"
         "_080AC734: .4byte 0x00000257\n\t"
         "_080AC738: .4byte 0xFFFFFDA8\n\t"
@@ -1890,7 +2392,7 @@ __attribute__((naked)) void CreateSnowflakeSprite(void)
         "	movs r0, #1\n\t"
         "	b _080ACAC6\n\t"
         "	.align 2, 0\n\t"
-        "_080ACAB4: .4byte gUnknown_852A928\n\t"
+        "_080ACAB4: .4byte sSnowflakeSpriteTemplate\n\t"
         "_080ACAB8: .4byte gSprites\n\t"
         "_080ACABC: .4byte gWeatherPtr\n\t"
         "_080ACAC0: .4byte 0x000006E4\n\t"
@@ -3404,8 +3906,8 @@ __attribute__((naked)) void CreateFog1Sprites(void)
         "	.align 2, 0\n\t"
         "_080AD61C: .4byte gWeatherPtr\n\t"
         "_080AD620: .4byte 0x000006FB\n\t"
-        "_080AD624: .4byte gUnknown_852A9CC\n\t"
-        "_080AD628: .4byte gUnknown_852A9B4\n\t"
+        "_080AD624: .4byte sFogHorizontalSpriteSheet\n\t"
+        "_080AD628: .4byte sFogHorizontalSpriteTemplate\n\t"
         "_080AD62C: .4byte gSprites\n\t"
         "_080AD630:\n\t"
         "	ldr r2, _080AD65C\n\t"
@@ -3731,7 +4233,7 @@ __attribute__((naked)) void LoadAshSpriteSheet(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080AD864: .4byte gUnknown_852A9D4\n\t"
+        "_080AD864: .4byte sAshSpriteSheet\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3793,7 +4295,7 @@ __attribute__((naked)) void CreateAshSprites(void)
         "	b _080AD8EE\n\t"
         "	.align 2, 0\n\t"
         "_080AD8D4: .4byte gWeatherPtr\n\t"
-        "_080AD8D8: .4byte gUnknown_852A9F4\n\t"
+        "_080AD8D8: .4byte sAshSpriteTemplate\n\t"
         "_080AD8DC: .4byte gSprites\n\t"
         "_080AD8E0:\n\t"
         "	ldr r2, _080AD90C\n\t"
@@ -4292,8 +4794,8 @@ __attribute__((naked)) void CreateFog2Sprites(void)
         "	.align 2, 0\n\t"
         "_080ADC58: .4byte gWeatherPtr\n\t"
         "_080ADC5C: .4byte 0x00000724\n\t"
-        "_080ADC60: .4byte gUnknown_852AA0C\n\t"
-        "_080ADC64: .4byte gUnknown_852AA28\n\t"
+        "_080ADC60: .4byte sFogDiagonalSpriteSheet\n\t"
+        "_080ADC64: .4byte sFogDiagonalSpriteTemplate\n\t"
         "_080ADC68: .4byte gSprites\n\t"
         "_080ADC6C:\n\t"
         "	ldr r2, _080ADC9C\n\t"
@@ -4892,9 +5394,9 @@ __attribute__((naked)) void CreateSandstormSprites(void)
         "	.align 2, 0\n\t"
         "_080AE0A4: .4byte gWeatherPtr\n\t"
         "_080AE0A8: .4byte 0x00000716\n\t"
-        "_080AE0AC: .4byte gUnknown_852AA78\n\t"
+        "_080AE0AC: .4byte sSandstormSpriteSheet\n\t"
         "_080AE0B0: .4byte gSandstormWeatherPalette\n\t"
-        "_080AE0B4: .4byte gUnknown_852AA60\n\t"
+        "_080AE0B4: .4byte sSandstormSpriteTemplate\n\t"
         "_080AE0B8: .4byte gSprites\n\t"
         "_080AE0BC:\n\t"
         "	ldr r2, _080AE0EC\n\t"
@@ -5017,10 +5519,10 @@ __attribute__((naked)) void CreateSwirlSandstormSprites(void)
         "	.align 2, 0\n\t"
         "_080AE19C: .4byte gWeatherPtr\n\t"
         "_080AE1A0: .4byte 0x00000717\n\t"
-        "_080AE1A4: .4byte gUnknown_852AA60\n\t"
+        "_080AE1A4: .4byte sSandstormSpriteTemplate\n\t"
         "_080AE1A8: .4byte gSprites\n\t"
         "_080AE1AC: .4byte 0x00006730\n\t"
-        "_080AE1B0: .4byte gUnknown_852AA80\n\t"
+        "_080AE1B0: .4byte sSwirlEntranceDelays\n\t"
         "_080AE1B4: .4byte WaitSandSwirlSpriteEntrance + 1\n\t"
         "_080AE1B8:\n\t"
         "	mov r2, sb\n\t"
@@ -5282,8 +5784,8 @@ __attribute__((naked)) void Bubbles_InitVars()
         "	.align 2, 0\n\t"
         "_080AE370: .4byte gWeatherPtr\n\t"
         "_080AE374: .4byte 0x0000072E\n\t"
-        "_080AE378: .4byte gUnknown_852AA94\n\t"
-        "_080AE37C: .4byte gUnknown_852AA8C\n\t"
+        "_080AE378: .4byte sWeatherBubbleSpriteSheet\n\t"
+        "_080AE37C: .4byte sBubbleStartDelays\n\t"
         "_080AE380: .4byte 0x0000072A\n\t"
         ".syntax divided\n\t"
     );
@@ -5374,7 +5876,7 @@ __attribute__((naked)) void Bubbles_Main()
         "_080AE414: .4byte gWeatherPtr\n\t"
         "_080AE418: .4byte 0x00000726\n\t"
         "_080AE41C: .4byte 0x0000FFFF\n\t"
-        "_080AE420: .4byte gUnknown_852AA8C\n\t"
+        "_080AE420: .4byte sBubbleStartDelays\n\t"
         "_080AE424: .4byte 0x0000072A\n\t"
         ".syntax divided\n\t"
     );
@@ -5463,9 +5965,9 @@ __attribute__((naked)) void CreateBubbleSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080AE4B4: .4byte gUnknown_852AA9C\n\t"
+        "_080AE4B4: .4byte sBubbleStartCoords\n\t"
         "_080AE4B8: .4byte gSpriteCoordOffsetY\n\t"
-        "_080AE4BC: .4byte gUnknown_852AAE0\n\t"
+        "_080AE4BC: .4byte sBubbleSpriteTemplate\n\t"
         "_080AE4C0: .4byte gSprites\n\t"
         "_080AE4C4: .4byte gWeatherPtr\n\t"
         "_080AE4C8: .4byte 0x0000072C\n\t"
@@ -5522,7 +6024,7 @@ __attribute__((naked)) void DestroyBubbleSprites(void)
         "_080AE51C: .4byte gWeatherPtr\n\t"
         "_080AE520: .4byte 0x0000072C\n\t"
         "_080AE524: .4byte gSprites\n\t"
-        "_080AE528: .4byte gUnknown_852AAE0\n\t"
+        "_080AE528: .4byte sBubbleSpriteTemplate\n\t"
         "_080AE52C: .4byte 0x00001205\n\t"
         ".syntax divided\n\t"
     );
