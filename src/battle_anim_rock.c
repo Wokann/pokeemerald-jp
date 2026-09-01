@@ -9,11 +9,6 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 
-// JP: the rock anim sprite templates, subsprite tables and anim/affine
-// data stay embedded in ROM data (see the ABSOLUTE aliases in
-// ld_script_jp.txt); only the sprite callbacks are decompiled here,
-// matching US pokeemerald.
-
 static void AnimFallingRock(struct Sprite *sprite);
 static void AnimFallingRock_Step(struct Sprite *sprite);
 static void AnimRockFragment(struct Sprite *sprite);
@@ -32,12 +27,281 @@ static u8 GetRolloutCounter(void);
 static void AnimTask_LoadSandstormBackground_Step(u8 taskId);
 static void AnimTask_Rollout_Step(u8 taskId);
 
-extern const struct SpriteTemplate gRolloutMudSpriteTemplate;
-extern const struct SpriteTemplate gRolloutRockSpriteTemplate;
-extern const struct SubspriteTable sFlyingSandSubspriteTable[];
 extern const u32 gBattleAnimBgImage_Sandstorm[];
 extern const u32 gBattleAnimBgTilemap_Sandstorm[];
 extern const u32 gBattleAnimSpritePal_FlyingDirt[];
+extern const union AnimCmd *const gAnims_WaterMudOrb[];
+
+#define BATTLE_ANIM_ROCK_DATA __attribute__((section(".rodata.battle_anim_rock_data")))
+
+static const union AnimCmd sAnim_FlyingRock_0[] BATTLE_ANIM_ROCK_DATA =
+{
+    ANIMCMD_FRAME(32, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_FlyingRock_1[] BATTLE_ANIM_ROCK_DATA =
+{
+    ANIMCMD_FRAME(48, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_FlyingRock_2[] BATTLE_ANIM_ROCK_DATA =
+{
+    ANIMCMD_FRAME(64, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_FlyingRock[] BATTLE_ANIM_ROCK_DATA =
+{
+    sAnim_FlyingRock_0,
+    sAnim_FlyingRock_1,
+    sAnim_FlyingRock_2,
+};
+
+const struct SpriteTemplate gFallingRockSpriteTemplate BATTLE_ANIM_ROCK_DATA =
+{
+    .tileTag = ANIM_TAG_ROCKS,
+    .paletteTag = ANIM_TAG_ROCKS,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_FlyingRock,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimFallingRock,
+};
+
+const struct SpriteTemplate gRockFragmentSpriteTemplate BATTLE_ANIM_ROCK_DATA =
+{
+    .tileTag = ANIM_TAG_ROCKS,
+    .paletteTag = ANIM_TAG_ROCKS,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_FlyingRock,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimRockFragment,
+};
+
+const struct SpriteTemplate gSwirlingDirtSpriteTemplate BATTLE_ANIM_ROCK_DATA =
+{
+    .tileTag = ANIM_TAG_MUD_SAND,
+    .paletteTag = ANIM_TAG_MUD_SAND,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimParticleInVortex,
+};
+
+static const union AffineAnimCmd sAffineAnim_Whirlpool[] BATTLE_ANIM_ROCK_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xC0, 0xC0, 0, 0),
+    AFFINEANIMCMD_FRAME(0x2, 0xFFFD, 0, 5),
+    AFFINEANIMCMD_FRAME(0xFFFE, 0x3, 0, 5),
+    AFFINEANIMCMD_JUMP(1),
+};
+
+static const union AffineAnimCmd *const sAffineAnims_Whirlpool[] BATTLE_ANIM_ROCK_DATA =
+{
+    sAffineAnim_Whirlpool,
+};
+
+const struct SpriteTemplate gWhirlpoolSpriteTemplate BATTLE_ANIM_ROCK_DATA =
+{
+    .tileTag = ANIM_TAG_WATER_ORB,
+    .paletteTag = ANIM_TAG_WATER_ORB,
+    .oam = &gOamData_AffineNormal_ObjBlend_16x16,
+    .anims = gAnims_WaterMudOrb,
+    .images = NULL,
+    .affineAnims = sAffineAnims_Whirlpool,
+    .callback = AnimParticleInVortex,
+};
+
+const struct SpriteTemplate gFireSpinSpriteTemplate BATTLE_ANIM_ROCK_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gAnims_BasicFire,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimParticleInVortex,
+};
+
+const struct SpriteTemplate gFlyingSandCrescentSpriteTemplate BATTLE_ANIM_ROCK_DATA =
+{
+    .tileTag = ANIM_TAG_FLYING_DIRT,
+    .paletteTag = ANIM_TAG_FLYING_DIRT,
+    .oam = &gOamData_AffineOff_ObjNormal_32x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimFlyingSandCrescent,
+};
+
+static const struct Subsprite sFlyingSandSubsprites[] BATTLE_ANIM_ROCK_DATA =
+{
+    {.x = -16, .y = 0, .shape = SPRITE_SHAPE(32x16), .size = SPRITE_SIZE(32x16), .tileOffset = 0, .priority = 1},
+    {.x =  16, .y = 0, .shape = SPRITE_SHAPE(32x16), .size = SPRITE_SIZE(32x16), .tileOffset = 8, .priority = 1},
+};
+
+static const struct SubspriteTable sFlyingSandSubspriteTable[] BATTLE_ANIM_ROCK_DATA =
+{
+    {ARRAY_COUNT(sFlyingSandSubsprites), sFlyingSandSubsprites},
+};
+
+static const union AnimCmd sAnim_Rock_Biggest[] BATTLE_ANIM_ROCK_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Rock_Bigger[] BATTLE_ANIM_ROCK_DATA =
+{
+    ANIMCMD_FRAME(16, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Rock_Big[] BATTLE_ANIM_ROCK_DATA =
+{
+    ANIMCMD_FRAME(32, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Rock_Small[] BATTLE_ANIM_ROCK_DATA =
+{
+    ANIMCMD_FRAME(48, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Rock_Smaller[] BATTLE_ANIM_ROCK_DATA =
+{
+    ANIMCMD_FRAME(64, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Rock_Smallest[] BATTLE_ANIM_ROCK_DATA =
+{
+    ANIMCMD_FRAME(80, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_BasicRock[] BATTLE_ANIM_ROCK_DATA =
+{
+    sAnim_Rock_Biggest,
+    sAnim_Rock_Bigger,
+    sAnim_Rock_Big,
+    sAnim_Rock_Small,
+    sAnim_Rock_Smaller,
+    sAnim_Rock_Smallest,
+};
+
+const struct SpriteTemplate gAncientPowerRockSpriteTemplate BATTLE_ANIM_ROCK_DATA =
+{
+    .tileTag = ANIM_TAG_ROCKS,
+    .paletteTag = ANIM_TAG_ROCKS,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_BasicRock,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimRaiseSprite,
+};
+
+const struct SpriteTemplate gRolloutMudSpriteTemplate BATTLE_ANIM_ROCK_DATA =
+{
+    .tileTag = ANIM_TAG_MUD_SAND,
+    .paletteTag = ANIM_TAG_MUD_SAND,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimRolloutParticle,
+};
+
+const struct SpriteTemplate gRolloutRockSpriteTemplate BATTLE_ANIM_ROCK_DATA =
+{
+    .tileTag = ANIM_TAG_ROCKS,
+    .paletteTag = ANIM_TAG_ROCKS,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimRolloutParticle,
+};
+
+const struct SpriteTemplate gRockTombRockSpriteTemplate BATTLE_ANIM_ROCK_DATA =
+{
+    .tileTag = ANIM_TAG_ROCKS,
+    .paletteTag = ANIM_TAG_ROCKS,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_BasicRock,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimRockTomb,
+};
+
+static const union AffineAnimCmd sAffineAnim_BasicRock_0[] BATTLE_ANIM_ROCK_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -5, 5),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd sAffineAnim_BasicRock_1[] BATTLE_ANIM_ROCK_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 5, 5),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd *const sAffineAnims_BasicRock[] BATTLE_ANIM_ROCK_DATA =
+{
+    sAffineAnim_BasicRock_0,
+    sAffineAnim_BasicRock_1,
+};
+
+const struct SpriteTemplate gRockBlastRockSpriteTemplate BATTLE_ANIM_ROCK_DATA =
+{
+    .tileTag = ANIM_TAG_ROCKS,
+    .paletteTag = ANIM_TAG_ROCKS,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
+    .anims = sAnims_BasicRock,
+    .images = NULL,
+    .affineAnims = sAffineAnims_BasicRock,
+    .callback = AnimRockBlastRock,
+};
+
+const struct SpriteTemplate gRockScatterSpriteTemplate BATTLE_ANIM_ROCK_DATA =
+{
+    .tileTag = ANIM_TAG_ROCKS,
+    .paletteTag = ANIM_TAG_ROCKS,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
+    .anims = sAnims_BasicRock,
+    .images = NULL,
+    .affineAnims = sAffineAnims_BasicRock,
+    .callback = AnimRockScatter,
+};
+
+const struct SpriteTemplate gTwisterRockSpriteTemplate BATTLE_ANIM_ROCK_DATA =
+{
+    .tileTag = ANIM_TAG_ROCKS,
+    .paletteTag = ANIM_TAG_ROCKS,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = &sAnims_BasicRock[4],
+    .images = NULL,
+    .affineAnims = sAffineAnims_BasicRock,
+    .callback = AnimMoveTwisterParticle,
+};
+
+const struct SpriteTemplate gWeatherBallRockDownSpriteTemplate BATTLE_ANIM_ROCK_DATA =
+{
+    .tileTag = ANIM_TAG_ROCKS,
+    .paletteTag = ANIM_TAG_ROCKS,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
+    .anims = &sAnims_BasicRock[2],
+    .images = NULL,
+    .affineAnims = sAffineAnims_BasicRock,
+    .callback = AnimWeatherBallDown,
+};
+
+#undef BATTLE_ANIM_ROCK_DATA
 
 static void AnimFallingRock(struct Sprite *sprite)
 {

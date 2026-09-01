@@ -1848,7 +1848,11 @@ gWaterBubbleProjectileSpriteTemplate: @ 0x570C4C
 gAuroraBeamRingSpriteTemplate: @ 0x570C98
 	.incbin "baserom_jp.gba", 0x570c98, 0x18
 
-	.incbin "baserom_jp.gba", 0x570cb0, 0x18
+	.incbin "baserom_jp.gba", 0x570cb0, 0x14
+
+	.globl gAnims_WaterMudOrb
+gAnims_WaterMudOrb: @ 0x8570CC4
+	.4byte 0x08570CB0
 
 	.globl gHydroPumpOrbSpriteTemplate
 gHydroPumpOrbSpriteTemplate: @ 0x570CC8
@@ -1936,106 +1940,7 @@ gWaterPulseRingBubbleSpriteTemplate: @ 0x570EF4
 gWeatherBallWaterDownSpriteTemplate: @ 0x8570F0C
 	.incbin "baserom_jp.gba", 0x570F0C, 0x18
 
-	.section .rodata.mid60_after_battle_anim_bug_data
-	.incbin "baserom_jp.gba", 0x5726c4, 0x24
-
-	.globl gFallingRockSpriteTemplate
-gFallingRockSpriteTemplate: @ 0x5726E8
-	.hword 0x274A, 0x274A
-	.4byte 0x084FD020, 0x085726DC, 0, gDummySpriteAffineAnimTable, 0x08111241
-
-	.globl gRockFragmentSpriteTemplate
-gRockFragmentSpriteTemplate: @ 0x572700
-	.hword 0x274A, 0x274A
-	.4byte 0x084FD020, 0x085726DC, 0, gDummySpriteAffineAnimTable, 0x08111305
-
-	.globl gSwirlingDirtSpriteTemplate
-gSwirlingDirtSpriteTemplate: @ 0x572718
-	.hword 0x275A, 0x275A
-	.4byte 0x084FD010, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08111389
-	.incbin "baserom_jp.gba", 0x572730, 0x24
-
-	.globl gWhirlpoolSpriteTemplate
-gWhirlpoolSpriteTemplate: @ 0x572754
-	.hword 0x27A5, 0x27A5
-	.4byte 0x084FD198, 0x08570CC4, 0, 0x08572750, 0x08111389
-
-	.globl gFireSpinSpriteTemplate
-gFireSpinSpriteTemplate: @ 0x57276C
-	.hword 0x272D, 0x272D
-	.4byte 0x084FD020, 0x085710B4, 0, gDummySpriteAffineAnimTable, 0x08111389
-
-	.globl gFlyingSandCrescentSpriteTemplate
-gFlyingSandCrescentSpriteTemplate: @ 0x572784
-	.hword 0x2815, 0x2815
-	.4byte 0x084FD040, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x0811169D
-sFlyingSandSubsprites: @ 0x857279C
-	.byte 0xF0, 0x00, 0x09, 0x40
-	.byte 0x10, 0x00, 0x89, 0x40
-
-	.globl sFlyingSandSubspriteTable
-sFlyingSandSubspriteTable: @ 0x85727A4
-	.byte 0x02, 0x00, 0x00, 0x00
-	.4byte sFlyingSandSubsprites
-
-sAnim_Rock_Biggest: @ 0x85727AC
-	.hword 0x0000, 0x0001, 0xFFFF, 0x0000
-sAnim_Rock_Bigger: @ 0x85727B4
-	.hword 0x0010, 0x0001, 0xFFFF, 0x0000
-sAnim_Rock_Big: @ 0x85727BC
-	.hword 0x0020, 0x0001, 0xFFFF, 0x0000
-sAnim_Rock_Small: @ 0x85727C4
-	.hword 0x0030, 0x0001, 0xFFFF, 0x0000
-sAnim_Rock_Smaller: @ 0x85727CC
-	.hword 0x0040, 0x0001, 0xFFFF, 0x0000
-sAnim_Rock_Smallest: @ 0x85727D4
-	.hword 0x0050, 0x0001, 0xFFFF, 0x0000
-
-sAnims_BasicRock: @ 0x85727DC
-	.4byte sAnim_Rock_Biggest, sAnim_Rock_Bigger, sAnim_Rock_Big, sAnim_Rock_Small
-	.4byte sAnim_Rock_Smaller, sAnim_Rock_Smallest
-
-	.globl gAncientPowerRockSpriteTemplate
-gAncientPowerRockSpriteTemplate: @ 0x85727F4
-	.hword 0x274A, 0x274A
-	.4byte 0x084FD020, sAnims_BasicRock, 0, gDummySpriteAffineAnimTable, 0x08111781
-
-	.globl gRolloutMudSpriteTemplate
-gRolloutMudSpriteTemplate: @ 0x857280C
-	.hword 0x275A, 0x275A
-	.4byte 0x084FD010, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08111B6D
-
-	.globl gRolloutRockSpriteTemplate
-	.globl gRolloutRockSpriteTemplate
-gRolloutRockSpriteTemplate: @ 0x572824
-	.hword 0x274A, 0x274A
-	.4byte 0x084FD020, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08111B6D
-
-	.globl gRockTombRockSpriteTemplate
-gRockTombRockSpriteTemplate: @ 0x57283C
-	.hword 0x274A, 0x274A
-	.4byte 0x084FD020, 0x085727DC, 0, gDummySpriteAffineAnimTable, 0x08111BD9
-	.incbin "baserom_jp.gba", 0x572854, 0x28
-
-	.globl gRockBlastRockSpriteTemplate
-gRockBlastRockSpriteTemplate: @ 0x57287C
-	.hword 0x274A, 0x274A
-	.4byte 0x084FD080, 0x085727DC, 0, 0x08572874, 0x08111C69
-
-	.globl gRockScatterSpriteTemplate
-gRockScatterSpriteTemplate: @ 0x572894
-	.hword 0x274A, 0x274A
-	.4byte 0x084FD080, 0x085727DC, 0, 0x08572874, 0x08111C95
-
-	.globl gTwisterRockSpriteTemplate
-gTwisterRockSpriteTemplate: @ 0x5728AC
-	.hword 0x274A, 0x274A
-	.4byte 0x084FD020, 0x085727EC, 0, 0x08572874, 0x080FFAB9
-
-	.globl gWeatherBallRockDownSpriteTemplate
-gWeatherBallRockDownSpriteTemplate: @ 0x85728C4
-	.incbin "baserom_jp.gba", 0x5728C4, 0x18
-
+	.section .rodata.mid60_after_battle_anim_rock_data
 	.incbin "baserom_jp.gba", 0x5728DC, 0x1C
 
 	.globl gConfuseRayBallBounceSpriteTemplate
