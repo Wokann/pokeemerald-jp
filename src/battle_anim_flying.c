@@ -6,10 +6,6 @@
 #include "constants/rgb.h"
 #include "random.h"
 
-// JP: the flying anim sprite templates and anim/affine data stay embedded
-// in ROM data (see the ABSOLUTE aliases in ld_script_jp.txt); only the
-// sprite callbacks are decompiled here, matching US pokeemerald.
-
 extern const struct SpriteTemplate gFlashingHitSplatSpriteTemplate;
 
 static void AnimEllipticalGust(struct Sprite *);
@@ -39,6 +35,323 @@ static void AnimUnusedFlashingLight(struct Sprite *);
 static void AnimUnusedFlashingLight_Step(struct Sprite *);
 static void AnimSkyAttackBird(struct Sprite *);
 void AnimSkyAttackBird_Step(struct Sprite *);
+
+#define BATTLE_ANIM_FLYING_DATA __attribute__((section(".rodata.battle_anim_flying_data")))
+
+const struct SpriteTemplate gEllipticalGustSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_GUST,
+    .paletteTag = ANIM_TAG_GUST,
+    .oam = &gOamData_AffineOff_ObjNormal_32x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimEllipticalGust,
+};
+
+static const union AffineAnimCmd sAffineAnim_GustToTarget[] BATTLE_ANIM_FLYING_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x10, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0xA, 0x0, 0, 24),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_GustToTarget[] BATTLE_ANIM_FLYING_DATA =
+{
+    sAffineAnim_GustToTarget,
+};
+
+const struct SpriteTemplate gGustToTargetSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_GUST,
+    .paletteTag = ANIM_TAG_GUST,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_GustToTarget,
+    .callback = AnimGustToTarget,
+};
+
+static const union AnimCmd sAffineAnim_AirWaveCrescent[] BATTLE_ANIM_FLYING_DATA =
+{
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_FRAME(0, 3, .hFlip = TRUE),
+    ANIMCMD_FRAME(0, 3, .vFlip = TRUE),
+    ANIMCMD_FRAME(0, 3, .vFlip = TRUE, .hFlip = TRUE),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAffineAnims_AirWaveCrescent[] BATTLE_ANIM_FLYING_DATA =
+{
+    sAffineAnim_AirWaveCrescent,
+};
+
+const struct SpriteTemplate gAirWaveCrescentSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_AIR_WAVE_2,
+    .paletteTag = ANIM_TAG_AIR_WAVE_2,
+    .oam = &gOamData_AffineOff_ObjNormal_32x16,
+    .anims = sAffineAnims_AirWaveCrescent,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimAirWaveCrescent,
+};
+
+static const union AffineAnimCmd sAffineAnim_FlyBallUp[] BATTLE_ANIM_FLYING_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x10, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0x28, 0x0, 0, 6),
+    AFFINEANIMCMD_FRAME(0x0, 0xFFE0, 0, 5),
+    AFFINEANIMCMD_FRAME(0xFFF0, 0x20, 0, 10),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_FlyBallUp[] BATTLE_ANIM_FLYING_DATA =
+{
+    sAffineAnim_FlyBallUp,
+};
+
+static const union AffineAnimCmd sAffineAnim_FlyBallAttack_0[] BATTLE_ANIM_FLYING_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 50, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_FlyBallAttack_1[] BATTLE_ANIM_FLYING_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -40, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_FlyBallAttack[] BATTLE_ANIM_FLYING_DATA =
+{
+    sAffineAnim_FlyBallAttack_0,
+    sAffineAnim_FlyBallAttack_1,
+};
+
+const struct SpriteTemplate gFlyBallUpSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_ROUND_SHADOW,
+    .paletteTag = ANIM_TAG_ROUND_SHADOW,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_FlyBallUp,
+    .callback = AnimFlyBallUp,
+};
+
+const struct SpriteTemplate gFlyBallAttackSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_ROUND_SHADOW,
+    .paletteTag = ANIM_TAG_ROUND_SHADOW,
+    .oam = &gOamData_AffineNormal_ObjNormal_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_FlyBallAttack,
+    .callback = AnimFlyBallAttack,
+};
+
+static const union AnimCmd sAnim_FallingFeather_0[] BATTLE_ANIM_FLYING_DATA =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_FallingFeather_1[] BATTLE_ANIM_FLYING_DATA =
+{
+    ANIMCMD_FRAME(16, 0, .hFlip = TRUE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_FallingFeather[] BATTLE_ANIM_FLYING_DATA =
+{
+    sAnim_FallingFeather_0,
+    sAnim_FallingFeather_1,
+};
+
+const struct SpriteTemplate gFallingFeatherSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_WHITE_FEATHER,
+    .paletteTag = ANIM_TAG_WHITE_FEATHER,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
+    .anims = sAnims_FallingFeather,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimFallingFeather,
+};
+
+// Unused
+static const struct SpriteTemplate sUnusedBubbleThrowSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_BUBBLES,
+    .paletteTag = ANIM_TAG_SMALL_BUBBLES,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimUnusedBubbleThrow,
+};
+
+static const union AnimCmd sAnim_WhirlwindLines[] BATTLE_ANIM_FLYING_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_FRAME(8, 1),
+    ANIMCMD_FRAME(16, 1),
+    ANIMCMD_FRAME(8, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(0, 1, .hFlip = TRUE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_WhirlwindLines[] BATTLE_ANIM_FLYING_DATA =
+{
+    sAnim_WhirlwindLines,
+};
+
+const struct SpriteTemplate gWhirlwindLineSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_WHIRLWIND_LINES,
+    .paletteTag = ANIM_TAG_WHIRLWIND_LINES,
+    .oam = &gOamData_AffineOff_ObjNormal_32x16,
+    .anims = sAnims_WhirlwindLines,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimWhirlwindLine,
+};
+
+static const union AffineAnimCmd sAffineAnim_BounceBallShrink[] BATTLE_ANIM_FLYING_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x10, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0x28, 0x0, 0, 6),
+    AFFINEANIMCMD_FRAME(0x0, 0xFFE0, 0, 5),
+    AFFINEANIMCMD_FRAME(0xFFEC, 0x0, 0, 7),
+    AFFINEANIMCMD_FRAME(0xFFEC, 0xFFEC, 0, 5),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_BounceBallShrink[] BATTLE_ANIM_FLYING_DATA =
+{
+    sAffineAnim_BounceBallShrink,
+};
+
+const struct SpriteTemplate gBounceBallShrinkSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_ROUND_SHADOW,
+    .paletteTag = ANIM_TAG_ROUND_SHADOW,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_BounceBallShrink,
+    .callback = AnimBounceBallShrink,
+};
+
+static const union AffineAnimCmd sAffineAnim_BounceBallLand[] BATTLE_ANIM_FLYING_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xA0, 0x100, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_BounceBallLand[] BATTLE_ANIM_FLYING_DATA =
+{
+    sAffineAnim_BounceBallLand,
+};
+
+const struct SpriteTemplate gBounceBallLandSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_ROUND_SHADOW,
+    .paletteTag = ANIM_TAG_ROUND_SHADOW,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_BounceBallLand,
+    .callback = AnimBounceBallLand,
+};
+
+static const union AffineAnimCmd sAffineAnim_DiveBall[] BATTLE_ANIM_FLYING_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x10, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0x28, 0x0, 0, 6),
+    AFFINEANIMCMD_FRAME(0x0, 0xFFE0, 0, 5),
+    AFFINEANIMCMD_FRAME(0xFFF0, 0x20, 0, 10),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_DiveBall[] BATTLE_ANIM_FLYING_DATA =
+{
+    sAffineAnim_DiveBall,
+};
+
+const struct SpriteTemplate gDiveBallSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_ROUND_SHADOW,
+    .paletteTag = ANIM_TAG_ROUND_SHADOW,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_DiveBall,
+    .callback = AnimDiveBall,
+};
+
+static const union AffineAnimCmd sAnim_Unused[] BATTLE_ANIM_FLYING_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x0, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x20, 0, 12),
+    AFFINEANIMCMD_FRAME(0x0, 0xFFE0, 0, 11),
+    AFFINEANIMCMD_END,
+};
+
+// Unused
+static const union AffineAnimCmd *const sAnims_Unused[] BATTLE_ANIM_FLYING_DATA =
+{
+    sAnim_Unused,
+};
+
+const struct SpriteTemplate gDiveWaterSplashSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_SPLASH,
+    .paletteTag = ANIM_TAG_SPLASH,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimDiveWaterSplash,
+};
+
+const struct SpriteTemplate gSprayWaterDropletSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_SWEAT_BEAD,
+    .paletteTag = ANIM_TAG_SWEAT_BEAD,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimSprayWaterDroplet,
+};
+
+// Unused
+static const struct SpriteTemplate sUnusedFlashingLightSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_CIRCLE_OF_LIGHT,
+    .paletteTag = ANIM_TAG_CIRCLE_OF_LIGHT,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimUnusedFlashingLight,
+};
+
+const struct SpriteTemplate gSkyAttackBirdSpriteTemplate BATTLE_ANIM_FLYING_DATA =
+{
+    .tileTag = ANIM_TAG_BIRD,
+    .paletteTag = ANIM_TAG_BIRD,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimSkyAttackBird,
+};
+
+
+#undef BATTLE_ANIM_FLYING_DATA
 
 static void AnimEllipticalGust(struct Sprite *sprite)
 {
