@@ -158,18 +158,6 @@ sSpecialBattleStrings: @ 0x85D3304
 	.string "ビ　”　B　ザ　'　♂　ヅ　ハ　ダ　セ　ぃ　れ　ド　ふ　へ　ト　タ　$$"
 	.section .rodata.mid98_suffix_after_shake_visual_data
 
-	.globl sDummyPicData
-sDummyPicData: @ 0x85D3AB8
-	.incbin "graphics/misc/sDummyPicData.bin"
-
-	.globl sOamData_Normal
-sOamData_Normal: @ 0x85D3AC4
-	.byte 0x00, 0x00, 0x00, 0xC0, 0x00, 0x00, 0x00, 0x00
-
-	.globl sOamData_Affine
-sOamData_Affine: @ 0x85D3ACC
-	.byte 0x00, 0x01, 0x00, 0xC0, 0x00, 0x00, 0x00, 0x00
-
 	.globl gUnknown_85D3AD4
 gUnknown_85D3AD4: @ 0x85D3AD4
 	.incbin "baserom_jp.gba", 0x5d3ad4, 0xa

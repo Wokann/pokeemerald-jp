@@ -14,6 +14,7 @@
 // Needs to be large enough to store either a decompressed Pokémon pic or trainer pic
 #define PIC_SPRITE_SIZE max(MON_PIC_SIZE, TRAINER_PIC_SIZE)
 #define MAX_PIC_FRAMES  max(MAX_MON_PIC_FRAMES, MAX_TRAINER_PIC_FRAMES)
+#define TRAINER_POKEMON_SPRITES_DATA __attribute__((section(".rodata.trainer_pokemon_sprites_data")))
 
 struct PicData
 {
@@ -27,9 +28,21 @@ struct PicData
 // JP: these live in the JP EWRAM/data sections; wired via ld_script_jp.txt
 extern EWRAM_DATA struct SpriteTemplate sCreatingSpriteTemplate;
 extern EWRAM_DATA struct PicData sSpritePics[PICS_COUNT];
-extern const struct PicData sDummyPicData;
-extern const struct OamData sOamData_Normal;
-extern const struct OamData sOamData_Affine;
+
+static const struct PicData sDummyPicData TRAINER_POKEMON_SPRITES_DATA = {};
+
+static const struct OamData sOamData_Normal TRAINER_POKEMON_SPRITES_DATA =
+{
+    .shape = SPRITE_SHAPE(64x64),
+    .size = SPRITE_SIZE(64x64),
+};
+
+static const struct OamData sOamData_Affine TRAINER_POKEMON_SPRITES_DATA =
+{
+    .affineMode = ST_OAM_AFFINE_NORMAL,
+    .shape = SPRITE_SHAPE(64x64),
+    .size = SPRITE_SIZE(64x64),
+};
 
 static void DummyPicSpriteCallback(struct Sprite *sprite)
 {
