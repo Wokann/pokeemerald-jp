@@ -176,6 +176,64 @@ def _compile_time_aliases() -> dict[str, int]:
     return aliases
 
 
+@lru_cache(maxsize=None)
+def _linked_elf_symbol_addresses(
+    elf_path: Path | None = None,
+) -> dict[str, frozenset[int]]:
+    """Read exact local and global ROM symbols from the linked JP ELF.
+
+    The textual linker map records global labels only, while text owners often
+    deliberately keep their labels local.  ``nm`` on the final JP ELF exposes
+    both kinds.  Keep all addresses until a caller asks for a specific name:
+    unrelated local-label collisions must not invalidate an isolated map.
+    """
+    elf_path = elf_path or ROOT / "pokeemerald_jp.elf"
+    if not elf_path.is_file() or not NM.is_file():
+        return {}
+    result = _run([str(NM), "-n", str(elf_path)], cwd=ROOT, description="linked nm")
+    symbols: dict[str, set[int]] = {}
+    for line in result.stdout.splitlines():
+        match = re.match(
+            r"^([0-9A-Fa-f]{8})\s+\S\s+([A-Za-z_][A-Za-z0-9_]*)$", line
+        )
+        if match is None:
+            continue
+        address, name = int(match.group(1), 16), match.group(2)
+        if ROM_BASE <= address < 0x0A000000:
+            symbols.setdefault(name, set()).add(address)
+    return {name: frozenset(addresses) for name, addresses in symbols.items()}
+
+
+@lru_cache(maxsize=None)
+def _linked_symbol_addresses(map_path: Path | None = None) -> dict[str, int]:
+    """Read global ROM addresses from the locally linked JP symbol map.
+
+    This is a fallback for environments where only the map is available. Do
+    not infer addresses from spelling, text, or a US counterpart. Repeated
+    identical entries are harmless, but a global symbol at two ROM addresses
+    makes the candidate unverifiable.
+    """
+    map_path = map_path or ROOT / "pokeemerald_jp.map"
+    if not map_path.is_file():
+        return {}
+    symbols: dict[str, int] = {}
+    for line in map_path.read_text(encoding="utf-8", errors="replace").splitlines():
+        match = re.match(
+            r"^\s*0x(08[0-9A-Fa-f]{6})\s+([A-Za-z_][A-Za-z0-9_]*)\s*$", line
+        )
+        if match is None:
+            continue
+        address, name = int(match.group(1), 16), match.group(2)
+        previous = symbols.get(name)
+        if previous is not None and previous != address:
+            raise VerificationError(
+                f"linked symbol {name} has conflicting addresses "
+                f"0x{previous:08X} and 0x{address:08X}"
+            )
+        symbols[name] = address
+    return symbols
+
+
 def _external_label_addresses() -> dict[str, int]:
     # One ROM address may deliberately retain both a legacy gJPText alias and
     # a reviewed semantic label.  The temporary verifier must know every
@@ -192,6 +250,21 @@ def _external_label_addresses() -> dict[str, int]:
 def _resolve_address(symbol: str, known: dict[str, int]) -> int | None:
     if symbol in known:
         return known[symbol]
+    # Consult the linked JP ELF only for a symbol the reviewed-source index
+    # could not resolve. This preserves source aliases and admits text labels
+    # whose physical owner intentionally kept them local.
+    linked_elf = _linked_elf_symbol_addresses().get(symbol)
+    if linked_elf:
+        if len(linked_elf) != 1:
+            addresses = ", ".join(f"0x{address:08X}" for address in sorted(linked_elf))
+            raise VerificationError(
+                f"linked ELF symbol {symbol} has conflicting addresses {addresses}"
+            )
+        return next(iter(linked_elf))
+    # Fall back to the global-symbol map only when no linked ELF label exists.
+    linked_map = _linked_symbol_addresses().get(symbol)
+    if linked_map is not None:
+        return linked_map
     match = ADDRESS_SUFFIX_RE.search(symbol)
     if not match:
         return None
