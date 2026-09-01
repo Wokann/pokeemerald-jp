@@ -1,15 +1,13 @@
 @ SkyPillar_5F scripts (JP map g24 m84 @ 0x0821BF12)
 
 SkyPillar_5F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, SkyPillar_5F_EventScript_0021BF18
+	map_script MAP_SCRIPT_ON_TRANSITION, SkyPillar_5F_OnTransition
 	.byte 0
 
-SkyPillar_5F_EventScript_0021BF18::
-	compare_var_to_value 0x40CA, 0x2
-	call_if 0x0, SkyPillar_5F_EventScript_0021BF24
+SkyPillar_5F_OnTransition:
+	call_if_lt VAR_SKY_PILLAR_STATE, 2, SkyPillar_5F_EventScript_CleanFloor
 	return
 
-SkyPillar_5F_EventScript_0021BF24::
-	setmaplayoutindex 0x1B5
+SkyPillar_5F_EventScript_CleanFloor::
+	setmaplayoutindex LAYOUT_SKY_PILLAR_5F_CLEAN
 	return
-

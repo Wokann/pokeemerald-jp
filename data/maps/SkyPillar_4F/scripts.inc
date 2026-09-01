@@ -2,21 +2,24 @@
 
 SkyPillar_4F_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, CaveHole_CheckFallDownHole
-	map_script MAP_SCRIPT_ON_TRANSITION, SkyPillar_4F_EventScript_0021BEF1
-	map_script MAP_SCRIPT_ON_RESUME, SkyPillar_4F_EventScript_0021BF06
+	map_script MAP_SCRIPT_ON_TRANSITION, SkyPillar_4F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, SkyPillar_4F_SetHoleWarp
 	.byte 0
 
-SkyPillar_4F_EventScript_0021BEF1::
-	compare_var_to_value 0x40CA, 0x2
-	call_if 0x0, SkyPillar_4F_EventScript_0021BF02
-	copyvar 0x4022, 0x1
+SkyPillar_4F_OnTransition:
+	call_if_lt VAR_SKY_PILLAR_STATE, 2, SkyPillar_4F_EventScript_CleanFloor
+#ifdef UBFIX
+	setvar VAR_ICE_STEP_COUNT, 1
+#else
+	copyvar VAR_ICE_STEP_COUNT, 1, warn=FALSE
+#endif
 	end
 
-SkyPillar_4F_EventScript_0021BF02::
-	setmaplayoutindex 0x1B4
+SkyPillar_4F_EventScript_CleanFloor::
+	setmaplayoutindex LAYOUT_SKY_PILLAR_4F_CLEAN
 	return
 
-SkyPillar_4F_EventScript_0021BF06::
-	setstepcallback 0x7
-	setholewarp 0x1851, 0xFF, 0x0, 0x0
+SkyPillar_4F_SetHoleWarp:
+	setstepcallback STEP_CB_CRACKED_FLOOR
+	setholewarp MAP_SKY_PILLAR_3F
 	end
