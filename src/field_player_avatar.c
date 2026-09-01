@@ -1313,7 +1313,7 @@ __attribute__((naked)) void sub_0808B658(void)
     );
 }
 
-__attribute__((naked)) void GetPlayerAvatarGraphicsIdByStateIdAndGender(void)
+__attribute__((naked)) u8 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1327,12 +1327,12 @@ __attribute__((naked)) void GetPlayerAvatarGraphicsIdByStateIdAndGender(void)
         "	ldrb r0, [r1]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808B6B4: .4byte gUnknown_846F908\n\t"
+        "_0808B6B4: .4byte sRivalAvatarGfxIds\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_0808B6B8(void)
+__attribute__((naked)) u8 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1346,12 +1346,12 @@ __attribute__((naked)) void sub_0808B6B8(void)
         "	ldrb r0, [r1]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808B6CC: .4byte gUnknown_846F918\n\t"
+        "_0808B6CC: .4byte sPlayerAvatarGfxIds\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_0808B6D0(void)
+__attribute__((naked)) u8 GetFRLGAvatarGraphicsIdByGender(u8 gender)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1362,12 +1362,12 @@ __attribute__((naked)) void sub_0808B6D0(void)
         "	ldrb r0, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808B6DC: .4byte gUnknown_846F928\n\t"
+        "_0808B6DC: .4byte sFRLGAvatarGfxIds\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void GetFRLGAvatarGraphicsIdByGender(void)
+__attribute__((naked)) u8 GetRSAvatarGraphicsIdByGender(u8 gender)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1378,7 +1378,7 @@ __attribute__((naked)) void GetFRLGAvatarGraphicsIdByGender(void)
         "	ldrb r0, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808B6EC: .4byte gUnknown_846F92A\n\t"
+        "_0808B6EC: .4byte sRSAvatarGfxIds\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1392,7 +1392,7 @@ __attribute__((naked)) void GetPlayerAvatarGraphicsIdByStateId(void)
         "	lsrs r0, r0, #0x18\n\t"
         "	ldr r1, _0808B708\n\t"
         "	ldrb r1, [r1, #7]\n\t"
-        "	bl sub_0808B6B8\n\t"
+        "	bl GetPlayerAvatarGraphicsIdByStateIdAndGender\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	pop {r1}\n\t"
@@ -1683,7 +1683,7 @@ __attribute__((naked)) void GetPlayerAvatarStateTransitionByGraphicsId(void)
         "	ldrb r0, [r0]\n\t"
         "	b _0808B8C8\n\t"
         "	.align 2, 0\n\t"
-        "_0808B8B8: .4byte gUnknown_846F92C\n\t"
+        "_0808B8B8: .4byte sPlayerAvatarGfxToStateFlag\n\t"
         "_0808B8BC:\n\t"
         "	adds r0, r2, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1727,7 +1727,7 @@ __attribute__((naked)) void GetPlayerAvatarGraphicsIdByCurrentState(void)
         "	b _0808B90C\n\t"
         "	.align 2, 0\n\t"
         "_0808B8F8: .4byte 0x02037230\n\t"
-        "_0808B8FC: .4byte gUnknown_846F92C\n\t"
+        "_0808B8FC: .4byte sPlayerAvatarGfxToStateFlag\n\t"
         "_0808B900:\n\t"
         "	adds r0, r2, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1803,7 +1803,7 @@ __attribute__((naked)) void InitPlayerAvatar(void)
         "	strb r0, [r1]\n\t"
         "	movs r0, #0\n\t"
         "	mov r1, r8\n\t"
-        "	bl sub_0808B6B8\n\t"
+        "	bl GetPlayerAvatarGraphicsIdByStateIdAndGender\n\t"
         "	mov r1, sp\n\t"
         "	movs r3, #0\n\t"
         "	strb r0, [r1, #1]\n\t"
@@ -2229,13 +2229,13 @@ __attribute__((naked)) void StartStrengthAnim(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808BCA8: .4byte 0x0808BCB1\n\t"
+        "_0808BCA8: .4byte Task_PushBoulder + 1\n\t"
         "_0808BCAC: .4byte 0x03005B60\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void Task_BumpBoulder(void)
+__attribute__((naked)) void Task_PushBoulder(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2276,7 +2276,7 @@ __attribute__((naked)) void Task_BumpBoulder(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808BCF8: .4byte gUnknown_846F950\n\t"
+        "_0808BCF8: .4byte sPushBoulderFuncs\n\t"
         "_0808BCFC: .4byte 0x03005B60\n\t"
         "_0808BD00: .4byte 0x02036FF0\n\t"
         "_0808BD04: .4byte 0x02037230\n\t"
@@ -2284,7 +2284,7 @@ __attribute__((naked)) void Task_BumpBoulder(void)
     );
 }
 
-__attribute__((naked)) void sub_0808BD08(void)
+__attribute__((naked)) void PushBoulder_Start(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2307,7 +2307,7 @@ __attribute__((naked)) void sub_0808BD08(void)
     );
 }
 
-__attribute__((naked)) void do_boulder_dust(void)
+__attribute__((naked)) void PushBoulder_Move(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2398,7 +2398,7 @@ __attribute__((naked)) void do_boulder_dust(void)
     );
 }
 
-__attribute__((naked)) void sub_0808BDE8(void)
+__attribute__((naked)) void PushBoulder_End(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2435,7 +2435,7 @@ __attribute__((naked)) void sub_0808BDE8(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0808BE34: .4byte 0x02037230\n\t"
-        "_0808BE38: .4byte 0x0808BCB1\n\t"
+        "_0808BE38: .4byte Task_PushBoulder + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2456,7 +2456,7 @@ __attribute__((naked)) void DoPlayerMatJump(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808BE58: .4byte 0x0808BE5D\n\t"
+        "_0808BE58: .4byte DoPlayerAvatarSecretBaseMatJump + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2504,7 +2504,7 @@ __attribute__((naked)) void sub_0808BE8C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808BE98: .4byte gUnknown_846F95C\n\t"
+        "_0808BE98: .4byte sPlayerAvatarSecretBaseMatJump\n\t"
         "_0808BE9C: .4byte 0x03005B60\n\t"
         "_0808BEA0: .4byte 0x02037230\n\t"
         "_0808BEA4: .4byte 0x02036FF0\n\t"
@@ -2563,7 +2563,7 @@ __attribute__((naked)) void PlayerAvatar_DoSecretBaseMatJump(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0808BF0C: .4byte 0x02037230\n\t"
-        "_0808BF10: .4byte 0x0808BE5D\n\t"
+        "_0808BF10: .4byte DoPlayerAvatarSecretBaseMatJump + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2725,7 +2725,7 @@ __attribute__((naked)) void PlayerAvatar_SecretBaseMatSpinStep1(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808C01C: .4byte gUnknown_846F970\n\t"
+        "_0808C01C: .4byte sSecretBaseMatSpinDirections\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2762,7 +2762,7 @@ __attribute__((naked)) void PlayerAvatar_SecretBaseMatSpinStep2(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808C05C: .4byte gUnknown_846F974\n\t"
+        "_0808C05C: .4byte sSecretBaseMatSpinActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3122,8 +3122,8 @@ __attribute__((naked)) void Fishing_GetRodOut(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808C304: .4byte gUnknown_846F9BC\n\t"
-        "_0808C308: .4byte gUnknown_846F9C2\n\t"
+        "_0808C304: .4byte sFishingMinRounds1\n\t"
+        "_0808C308: .4byte sFishingMinRounds2\n\t"
         "_0808C30C: .4byte 0x02036FF0\n\t"
         "_0808C310: .4byte 0x02037230\n\t"
         ".syntax divided\n\t"
@@ -3234,7 +3234,7 @@ __attribute__((naked)) void Fishing_ShowDots(void)
         "	movs r0, #1\n\t"
         "	b _0808C41A\n\t"
         "	.align 2, 0\n\t"
-        "_0808C3C0: .4byte gUnknown_846F9C2 + 0x6\n\t"
+        "_0808C3C0: .4byte gText_FishingDot\n\t"
         "_0808C3C4: .4byte 0x03002360\n\t"
         "_0808C3C8:\n\t"
         "	lsls r0, r1, #0x10\n\t"
@@ -3412,7 +3412,7 @@ __attribute__((naked)) void Fishing_GotBite(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808C510: .4byte gUnknown_846F9C2 + 0x8\n\t"
+        "_0808C510: .4byte gText_OhABite\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3445,7 +3445,7 @@ __attribute__((naked)) void Fishing_WaitForA(void)
         "	movs r0, #0xc\n\t"
         "	b _0808C55C\n\t"
         "	.align 2, 0\n\t"
-        "_0808C548: .4byte gUnknown_846F9D6\n\t"
+        "_0808C548: .4byte sFishingReelTimeouts\n\t"
         "_0808C54C:\n\t"
         "	ldr r0, _0808C568\n\t"
         "	ldrh r1, [r0, #0x2e]\n\t"
@@ -3522,7 +3522,7 @@ __attribute__((naked)) void Fishing_CheckMoreDots(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808C5D0: .4byte gUnknown_846F9DC\n\t"
+        "_0808C5D0: .4byte sFishingMoreDotsChance\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3561,7 +3561,7 @@ __attribute__((naked)) void Fishing_MonOnHook(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808C614: .4byte gUnknown_846F9DC + 0xC\n\t"
+        "_0808C614: .4byte gText_PokemonOnHook\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3732,7 +3732,7 @@ __attribute__((naked)) void Fishing_NotEvenNibble(void)
         "	.align 2, 0\n\t"
         "_0808C768: .4byte 0x02037230\n\t"
         "_0808C76C: .4byte 0x020205AC\n\t"
-        "_0808C770: .4byte gUnknown_846F9DC + 0x1B\n\t"
+        "_0808C770: .4byte gText_NotEvenANibble\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3788,7 +3788,7 @@ __attribute__((naked)) void Fishing_GotAway(void)
         "	.align 2, 0\n\t"
         "_0808C7D8: .4byte 0x02037230\n\t"
         "_0808C7DC: .4byte 0x020205AC\n\t"
-        "_0808C7E0: .4byte gUnknown_846F9DC + 0x27\n\t"
+        "_0808C7E0: .4byte gText_ItGotAway\n\t"
         ".syntax divided\n\t"
     );
 }

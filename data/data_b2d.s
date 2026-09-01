@@ -83,13 +83,13 @@ gUnknown_8566D64: @ 0x8566D64
 
 	.section .rodata.mid27
 
-	.globl gUnknown_846F9D6
-gUnknown_846F9D6: @ 0x846F9D6
-	.incbin "baserom_jp.gba", 0x46f9d6, 0x6
+	.globl sFishingReelTimeouts
+sFishingReelTimeouts: @ 0x846F9D6
+	.2byte 36, 33, 30
 
-	.globl gUnknown_846F9DC
-gUnknown_846F9DC: @ 0x846F9DC
-	.incbin "baserom_jp.gba", 0x46f9dc, 0xc
+	.globl sFishingMoreDotsChance
+sFishingMoreDotsChance: @ 0x846F9DC
+	.2byte 0, 0, 40, 10, 70, 30
 
 	.section .rodata.mid52
 

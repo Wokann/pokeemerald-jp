@@ -3073,7 +3073,7 @@ __attribute__((naked)) void NamingScreen_CreatePlayerIcon(void)
         "	adds r0, r0, r1\n\t"
         "	ldrb r1, [r0]\n\t"
         "	movs r0, #0\n\t"
-        "	bl GetPlayerAvatarGraphicsIdByStateIdAndGender\n\t"
+        "	bl GetRivalAvatarGraphicsIdByStateIdAndGender\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	ldr r1, _080E38A4\n\t"

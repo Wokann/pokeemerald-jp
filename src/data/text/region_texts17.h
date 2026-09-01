@@ -1,3 +1,3 @@
-const u8 gUnknown_846F9C8[] = _("·");
+const u8 gText_FishingDot[] = _("·");
 
-const u8 gUnknown_846F9CA[] = _("ひいてる　ひいてる！！");
+const u8 gText_OhABite[] = _("ひいてる　ひいてる！！");
