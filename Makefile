@@ -888,6 +888,7 @@ $(C_BUILDDIR)/pokedex_area_region_map.o: CC1 = $(PREPROC) -i src/pokedex_area_re
 $(C_BUILDDIR)/pokedex_cry_screen.o: CC1 = $(PREPROC) -i src/pokedex_cry_screen.c charmap.txt | $(CC)
 $(C_BUILDDIR)/move_relearner.o: CC1 = $(PREPROC) -i src/move_relearner.c charmap.txt | $(CC)
 $(C_BUILDDIR)/pokeblock.o: CC1 = $(PREPROC) -i src/pokeblock.c charmap.txt | $(CC)
+$(C_BUILDDIR)/lilycove_lady.o: CC1 = $(PREPROC) -i src/lilycove_lady.c charmap.txt | $(CC)
 $(C_BUILDDIR)/battle_tower.o: CC1 = $(PREPROC) -i src/battle_tower.c charmap.txt | $(CC)
 $(C_BUILDDIR)/braille.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/libc/libc_rest_1b3.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections

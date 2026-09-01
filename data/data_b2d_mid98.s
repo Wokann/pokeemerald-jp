@@ -158,54 +158,6 @@ sSpecialBattleStrings: @ 0x85D3304
 	.string "ビ　”　B　ザ　'　♂　ヅ　ハ　ダ　セ　ぃ　れ　ド　ふ　へ　ト　タ　$$"
 	.section .rodata.mid98_suffix_after_shake_visual_data
 
-	.globl gUnknown_85D3AD4
-gUnknown_85D3AD4: @ 0x85D3AD4
-	.incbin "baserom_jp.gba", 0x5d3ad4, 0xa
-
-	.globl gUnknown_85D3ADE
-gUnknown_85D3ADE: @ 0x85D3ADE
-	.incbin "baserom_jp.gba", 0x5d3ade, 0x126
-
-	.globl gUnknown_85D3C04
-gUnknown_85D3C04: @ 0x85D3C04
-	.incbin "baserom_jp.gba", 0x5d3c04, 0x40
-
-	.globl gUnknown_85D3C44
-gUnknown_85D3C44: @ 0x85D3C44
-	.incbin "baserom_jp.gba", 0x5d3c44, 0x20
-
-	.globl gUnknown_85D3C64
-gUnknown_85D3C64: @ 0x85D3C64
-	.incbin "baserom_jp.gba", 0x5d3c64, 0x40
-
-	.globl gUnknown_85D3CA4
-gUnknown_85D3CA4: @ 0x85D3CA4
-	.incbin "baserom_jp.gba", 0x5d3ca4, 0xc8
-
-	.globl gUnknown_85D3D6C
-gUnknown_85D3D6C: @ 0x85D3D6C
-	.incbin "baserom_jp.gba", 0x5d3d6c, 0x18
-
-	.globl gUnknown_85D3D84
-gUnknown_85D3D84: @ 0x85D3D84
-	.incbin "baserom_jp.gba", 0x5d3d84, 0xc
-
-	.globl gUnknown_85D3D90
-gUnknown_85D3D90: @ 0x85D3D90
-	.string "おねえ$ハンサム$ジョバンニ$もあもあ$てつ$きんにくん$　　　"
-
-	.globl gUnknown_85D3DB0
-gUnknown_85D3DB0: @ 0x85D3DB0
-	.incbin "baserom_jp.gba", 0x5d3db0, 0x2c
-
-	.globl gUnknown_85D3DDC
-gUnknown_85D3DDC: @ 0x85D3DDC
-	.incbin "baserom_jp.gba", 0x5d3ddc, 0x14
-
-	.globl gUnknown_85D3DF0
-gUnknown_85D3DF0: @ 0x85D3DF0
-	.incbin "baserom_jp.gba", 0x5d3df0, 0xc
-
 	.globl gUnknown_85D3DFC
 gUnknown_85D3DFC: @ 0x85D3DFC
 	.incbin "baserom_jp.gba", 0x5d3dfc, 0x1630
