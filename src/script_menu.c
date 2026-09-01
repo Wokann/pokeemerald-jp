@@ -1023,7 +1023,7 @@ __attribute__((naked)) void ScriptMenu_DisplayPCStartupPrompt()
     );
 }
 
-__attribute__((naked)) void display_text_and_get_width_internal(void)
+__attribute__((naked)) bool8 ScriptMenu_CreateLilycoveSSTidalMultichoice(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1422,7 +1422,7 @@ __attribute__((naked)) void sub_080E1A70(void)
     );
 }
 
-__attribute__((naked)) void sub_080E1D6C(void)
+__attribute__((naked)) void GetLilycoveSSTidalSelection(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

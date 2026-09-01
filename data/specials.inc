@@ -513,14 +513,8 @@ gSpecials::
 	def_special IsTrainerRegistered
 	def_special ShouldDoBrailleRegicePuzzle
 	def_special EnableNationalPokedex
-	def_special display_text_and_get_width_internal
-	def_special sub_080E1D6C
-	@ Harbor's ferry menu uses the matching pokeemerald names while retaining
-	@ the verified JP special-table slots and their byte-exact waitstate.
-	.set SPECIAL_ScriptMenu_CreateLilycoveSSTidalMultichoice, SPECIAL_display_text_and_get_width_internal
-	.set SPECIAL_WAITSTATE_ScriptMenu_CreateLilycoveSSTidalMultichoice, 1
-	.set SPECIAL_GetLilycoveSSTidalSelection, SPECIAL_sub_080E1D6C
-	.set SPECIAL_WAITSTATE_GetLilycoveSSTidalSelection, SPECIAL_WAITSTATE_sub_080E1D6C
+	def_special ScriptMenu_CreateLilycoveSSTidalMultichoice, waitstate=1
+	def_special GetLilycoveSSTidalSelection
 	def_special TurnOnTVScreen
 	def_special SetMewAboveGrass
 	def_special ShouldDistributeEonTicket

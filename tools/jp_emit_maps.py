@@ -12744,10 +12744,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08275D2A: 'EventTicket_Text_OddTicketGetOnBoard',
             0x08275DF2: 'EventTicket_Text_OddTicketsWhereTo',
         },
-        'specials': {
-            'display_text_and_get_width_internal': 'ScriptMenu_CreateLilycoveSSTidalMultichoice',
-            'sub_080E1D6C': 'GetLilycoveSSTidalSelection',
-        },
         'field_placeholders': {
             0x08209C16: {0x01: 'PLAYER'},
             0x08209C52: {0x01: 'PLAYER'},
