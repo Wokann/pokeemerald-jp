@@ -4759,7 +4759,7 @@ __attribute__((naked)) void sub_0813A608(void)
     );
 }
 
-__attribute__((naked)) void sub_0813A638(void)
+__attribute__((naked)) void ScrollableMultichoice_TryReturnToList(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

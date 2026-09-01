@@ -460,7 +460,7 @@ gSpecials::
 	def_special ClearLinkContestFlags
 	def_special TryContestEModeLinkup
 	def_special ShowScrollableMultichoice, waitstate=1
-	def_special sub_0813A638
+	def_special ScrollableMultichoice_TryReturnToList
 	def_special BufferBattleTowerElevatorFloors
 	def_special TryStoreHeldItemsInPyramidBag
 	def_special ChooseItemsToTossFromPyramidBag, waitstate=1
