@@ -9527,6 +9527,8 @@ SECTIONS {
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_event_object_movement_core_data);
         src/event_object_movement.o(.rodata.event_object_movement_field_effect_object_template_pointers);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_field_effect_object_template_pointers);
+        src/event_object_movement.o(.rodata.event_object_movement_object_event_pic_tables);
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_object_event_pic_tables);
         gUnknown_84E401C = .;
         src/event_object_movement.o(.rodata.event_object_movement_palette_data);
         gUnknown_84E4154 = gUnknown_84E401C + 0x138;

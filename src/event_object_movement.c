@@ -756,6 +756,10 @@ struct Sprite;
 #include "data/field_effects/field_effect_object_template_pointers.h"
 #undef EVENT_OBJECT_MOVEMENT_FIELD_EFFECT_OBJECT_TEMPLATE_POINTERS
 
+#define EVENT_OBJECT_MOVEMENT_OBJECT_EVENT_PIC_TABLES __attribute__((section(".rodata.event_object_movement_object_event_pic_tables"), aligned(4), used))
+#include "data/object_events/object_event_pic_tables.h"
+#undef EVENT_OBJECT_MOVEMENT_OBJECT_EVENT_PIC_TABLES
+
 #define EVENT_OBJECT_MOVEMENT_FIELD_EFFECT_OBJECT_DATA __attribute__((section(".rodata.event_object_movement_field_effect_objects_data")))
 #include "data/field_effects/field_effect_objects.h"
 #undef EVENT_OBJECT_MOVEMENT_FIELD_EFFECT_OBJECT_DATA

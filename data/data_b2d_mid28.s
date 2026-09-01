@@ -55,9 +55,11 @@ gUnknown_84DDE30: @ 0x84DDE30
 
 	.section .rodata.data_b2d_mid28_after_field_effect_object_template_pointers
 
+	.section .rodata.data_b2d_mid28_after_object_event_pic_tables
+
 	@ Object-event frame, animation, OAM, subsprite, and graphics-info data.
-	@ These following 0x3a20 bytes remain pending structural extraction.
-	.incbin "baserom_jp.gba", 0x4ddee0, 0x3a20
+	@ The player table prefix through 0x084DE160 is structured in C.
+	.incbin "baserom_jp.gba", 0x4de160, 0x37a0
 
 	.globl gUnknown_84E1900
 gUnknown_84E1900: @ 0x84E1900
