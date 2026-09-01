@@ -863,7 +863,9 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/Route110_SeasideCyclingRoadSouthEntrance/events.inc"
 	@ MAP_ROUTE110_SEASIDE_CYCLING_ROAD_NORTH_ENTRANCE (g29 m12)
 	.include "data/maps/Route110_SeasideCyclingRoadNorthEntrance/events.inc"
-	.incbin "baserom_jp.gba", 0x5171BC, 0x3C0
+	@ MAP_ROUTE113_GLASS_WORKSHOP (g30 m0)
+	.include "data/maps/Route113_GlassWorkshop/events.inc"
+	.incbin "baserom_jp.gba", 0x517210, 0x36C
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
