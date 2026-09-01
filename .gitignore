@@ -122,6 +122,10 @@ tools/br_ips/ips_patch
 *.sa*
 Thumbs.db
 build/
+data/maps/connections.inc
+data/maps/events.inc
+data/maps/groups.inc
+data/maps/headers.inc
 .DS_Store
 *.ddump
 .idea/

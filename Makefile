@@ -348,6 +348,14 @@ JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
 	$(MAPJSON) events emerald $< $(@D)
 
+# Match pokeemerald's aggregate map hierarchy. These four files are generated
+# together from the canonical group order; only headers/groups are consumed by
+# mid30 so the remaining connection migration can retain its raw boundary.
+JP_MAP_GROUP_AGGREGATES := data/maps/connections.inc data/maps/events.inc data/maps/groups.inc data/maps/headers.inc
+
+$(JP_MAP_GROUP_AGGREGATES) &: data/maps/map_groups.json | tools
+	$(MAPJSON) groups emerald $< data/maps include/constants
+
 # These maps also own local headers and connections. The JP layout table is
 # still centralized, so the local generator directly references its existing
 # gMapLayout_* labels while keeping canonical sources beside each map.json.
@@ -544,10 +552,10 @@ JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_C
 data/maps/%/header.inc data/maps/%/connections.inc &: data/maps/%/map.json tools/jp_map_metadata.py
 	python3 tools/jp_map_metadata.py $< $(@D)
 
-# data_b2d_mid30.s owns the map-layout and map-header data after the tileset
-# owner. State the ordering directly so a changed map.json cannot race its
-# generated metadata during make -j.
-$(OBJ_DIR)/data/data_b2d_mid30.o: $(JP_STRUCTURED_MAP_METADATA)
+# data_b2d_mid30.s owns the map-layout, map-header, and map-group data after
+# the tileset owner. State the ordering directly so a changed map.json cannot
+# race its generated metadata during make -j.
+$(OBJ_DIR)/data/data_b2d_mid30.o: $(JP_STRUCTURED_MAP_METADATA) $(JP_MAP_GROUP_AGGREGATES)
 data/layouts/layouts_table.inc: data/layouts/layouts.inc baserom_jp.gba tools/extract_map_layouts.py
 	python3 tools/extract_map_layouts.py --write-table
 
@@ -1011,6 +1019,7 @@ compare: $(ROM)
 
 clean: clean-tools
 	rm -rf build $(ROM) $(ELF)
+	rm -f $(JP_MAP_GROUP_AGGREGATES)
 
 # All build artifacts wait for the host-tool chain, so a fresh checkout can
 # safely use `make -j` without racing the C/asset rules against tool builds.
