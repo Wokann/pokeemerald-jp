@@ -11,10 +11,6 @@
 #include "task.h"
 #include "constants/rgb.h"
 
-// JP: the dark anim sprite templates and anim/affine data stay embedded in
-// ROM data (see the ABSOLUTE aliases in ld_script_jp.txt); only the sprite
-// callbacks are decompiled here, matching US pokeemerald.
-
 static void AnimTask_AttackerFadeToInvisible_Step(u8 taskId);
 static void AnimTask_AttackerFadeFromInvisible_Step(u8 taskId);
 static void AnimUnusedBagSteal(struct Sprite *);
@@ -34,6 +30,172 @@ static void AnimTask_MetallicShine_Step(u8 taskId);
 extern const u32 gMetalShineTilemap[];
 extern const u32 gMetalShineGfx[];
 extern const u32 gMetalShinePalette[];
+
+#define BATTLE_ANIM_DARK_DATA __attribute__((section(".rodata.battle_anim_dark_data")))
+
+static const struct SpriteTemplate sUnusedBagStealSpriteTemplate BATTLE_ANIM_DARK_DATA =
+{
+    .tileTag = ANIM_TAG_TIED_BAG,
+    .paletteTag = ANIM_TAG_TIED_BAG,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimUnusedBagSteal,
+};
+
+static const union AffineAnimCmd sAffineAnim_Bite_0[] BATTLE_ANIM_DARK_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_Bite_1[] BATTLE_ANIM_DARK_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 32, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_Bite_2[] BATTLE_ANIM_DARK_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 64, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_Bite_3[] BATTLE_ANIM_DARK_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 96, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_Bite_4[] BATTLE_ANIM_DARK_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -128, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_Bite_5[] BATTLE_ANIM_DARK_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -96, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_Bite_6[] BATTLE_ANIM_DARK_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -64, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_Bite_7[] BATTLE_ANIM_DARK_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -32, 1),
+    AFFINEANIMCMD_END,
+};
+
+const union AffineAnimCmd *const gAffineAnims_Bite[] BATTLE_ANIM_DARK_DATA =
+{
+    sAffineAnim_Bite_0,
+    sAffineAnim_Bite_1,
+    sAffineAnim_Bite_2,
+    sAffineAnim_Bite_3,
+    sAffineAnim_Bite_4,
+    sAffineAnim_Bite_5,
+    sAffineAnim_Bite_6,
+    sAffineAnim_Bite_7,
+};
+
+const struct SpriteTemplate gSharpTeethSpriteTemplate BATTLE_ANIM_DARK_DATA =
+{
+    .tileTag = ANIM_TAG_SHARP_TEETH,
+    .paletteTag = ANIM_TAG_SHARP_TEETH,
+    .oam = &gOamData_AffineNormal_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gAffineAnims_Bite,
+    .callback = AnimBite,
+};
+
+const struct SpriteTemplate gClampJawSpriteTemplate BATTLE_ANIM_DARK_DATA =
+{
+    .tileTag = ANIM_TAG_CLAMP,
+    .paletteTag = ANIM_TAG_CLAMP,
+    .oam = &gOamData_AffineNormal_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gAffineAnims_Bite,
+    .callback = AnimBite,
+};
+
+static const union AffineAnimCmd sAffineAnim_TearDrop_0[] BATTLE_ANIM_DARK_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xC0, 0xC0, 80, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -2, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_TearDrop_1[] BATTLE_ANIM_DARK_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xC0, 0xC0, -80, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 2, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_TearDrop[] BATTLE_ANIM_DARK_DATA =
+{
+    sAffineAnim_TearDrop_0,
+    sAffineAnim_TearDrop_1,
+};
+
+const struct SpriteTemplate gTearDropSpriteTemplate BATTLE_ANIM_DARK_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_BUBBLES,
+    .paletteTag = ANIM_TAG_SMALL_BUBBLES,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_TearDrop,
+    .callback = AnimTearDrop,
+};
+
+static const union AnimCmd sAnim_ClawSlash_0[] BATTLE_ANIM_DARK_DATA =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(16, 4),
+    ANIMCMD_FRAME(32, 4),
+    ANIMCMD_FRAME(48, 4),
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_ClawSlash_1[] BATTLE_ANIM_DARK_DATA =
+{
+    ANIMCMD_FRAME(0, 4, .hFlip = TRUE),
+    ANIMCMD_FRAME(16, 4, .hFlip = TRUE),
+    ANIMCMD_FRAME(32, 4, .hFlip = TRUE),
+    ANIMCMD_FRAME(48, 4, .hFlip = TRUE),
+    ANIMCMD_FRAME(64, 4, .hFlip = TRUE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_ClawSlash[] BATTLE_ANIM_DARK_DATA =
+{
+    sAnim_ClawSlash_0,
+    sAnim_ClawSlash_1,
+};
+
+const struct SpriteTemplate gClawSlashSpriteTemplate BATTLE_ANIM_DARK_DATA =
+{
+    .tileTag = ANIM_TAG_CLAW_SLASH,
+    .paletteTag = ANIM_TAG_CLAW_SLASH,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_ClawSlash,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimClawSlash,
+};
+
+#undef BATTLE_ANIM_DARK_DATA
+
 
 void AnimTask_AttackerFadeToInvisible(u8 taskId)
 {

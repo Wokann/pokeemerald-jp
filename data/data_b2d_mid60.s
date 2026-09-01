@@ -1940,31 +1940,8 @@ gWaterPulseRingBubbleSpriteTemplate: @ 0x570EF4
 gWeatherBallWaterDownSpriteTemplate: @ 0x8570F0C
 	.incbin "baserom_jp.gba", 0x570F0C, 0x18
 
-	.section .rodata.mid60_after_battle_anim_dragon_data
-	.incbin "baserom_jp.gba", 0x572BAC, 0xB8
-
-	.globl gSharpTeethSpriteTemplate
-gSharpTeethSpriteTemplate: @ 0x572C64
-	.hword 0x279B, 0x279B
-	.4byte 0x084FD1A8, 0x082BF304, 0, 0x08572C44, 0x0811422D
-
-	.globl gClampJawSpriteTemplate
-gClampJawSpriteTemplate: @ 0x572C7C
-	.hword 0x27A1, 0x27A1
-	.4byte 0x084FD1A8, 0x082BF304, 0, 0x08572C44, 0x0811422D
-	.incbin "baserom_jp.gba", 0x572c94, 0x38
-
-	.globl gTearDropSpriteTemplate
-gTearDropSpriteTemplate: @ 0x572CCC
-	.hword 0x27AB, 0x27AB
-	.4byte 0x084FD078, 0x082BF304, 0, 0x08572CC4, 0x081142E1
-	.incbin "baserom_jp.gba", 0x572ce4, 0x38
-
-	.globl gClawSlashSpriteTemplate
-gClawSlashSpriteTemplate: @ 0x572D1C
-	.hword 0x2737, 0x2737
-	.4byte 0x084FD020, 0x08572D14, 0, gDummySpriteAffineAnimTable, 0x08114D0D
-	.incbin "baserom_jp.gba", 0x572d34, 0x28
+	.section .rodata.mid60_after_battle_anim_dark_data
+	.incbin "baserom_jp.gba", 0x572D34, 0x28
 
 	.globl gBonemerangSpriteTemplate
 gBonemerangSpriteTemplate: @ 0x572D5C
