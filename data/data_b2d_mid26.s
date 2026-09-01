@@ -785,7 +785,51 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/TrainerHill_4F/events.inc"
 	@ MAP_TRAINER_HILL_ROOF (g26 m65)
 	.include "data/maps/TrainerHill_Roof/events.inc"
-	.incbin "baserom_jp.gba", 0x51612C, 0x1450
+	@ MAP_NAVEL_ROCK_EXTERIOR (g26 m66)
+	.include "data/maps/NavelRock_Exterior/events.inc"
+	@ MAP_NAVEL_ROCK_HARBOR (g26 m67)
+	.include "data/maps/NavelRock_Harbor/events.inc"
+	@ MAP_NAVEL_ROCK_ENTRANCE (g26 m68)
+	.include "data/maps/NavelRock_Entrance/events.inc"
+	@ MAP_NAVEL_ROCK_B1F (g26 m69)
+	.include "data/maps/NavelRock_B1F/events.inc"
+	@ MAP_NAVEL_ROCK_FORK (g26 m70)
+	.include "data/maps/NavelRock_Fork/events.inc"
+	@ MAP_NAVEL_ROCK_UP1 (g26 m71)
+	.include "data/maps/NavelRock_Up1/events.inc"
+	@ MAP_NAVEL_ROCK_UP2 (g26 m72)
+	.include "data/maps/NavelRock_Up2/events.inc"
+	@ MAP_NAVEL_ROCK_UP3 (g26 m73)
+	.include "data/maps/NavelRock_Up3/events.inc"
+	@ MAP_NAVEL_ROCK_UP4 (g26 m74)
+	.include "data/maps/NavelRock_Up4/events.inc"
+	@ MAP_NAVEL_ROCK_TOP (g26 m75)
+	.include "data/maps/NavelRock_Top/events.inc"
+	@ MAP_NAVEL_ROCK_DOWN01 (g26 m76)
+	.include "data/maps/NavelRock_Down01/events.inc"
+	@ MAP_NAVEL_ROCK_DOWN02 (g26 m77)
+	.include "data/maps/NavelRock_Down02/events.inc"
+	@ MAP_NAVEL_ROCK_DOWN03 (g26 m78)
+	.include "data/maps/NavelRock_Down03/events.inc"
+	@ MAP_NAVEL_ROCK_DOWN04 (g26 m79)
+	.include "data/maps/NavelRock_Down04/events.inc"
+	@ MAP_NAVEL_ROCK_DOWN05 (g26 m80)
+	.include "data/maps/NavelRock_Down05/events.inc"
+	@ MAP_NAVEL_ROCK_DOWN06 (g26 m81)
+	.include "data/maps/NavelRock_Down06/events.inc"
+	@ MAP_NAVEL_ROCK_DOWN07 (g26 m82)
+	.include "data/maps/NavelRock_Down07/events.inc"
+	@ MAP_NAVEL_ROCK_DOWN08 (g26 m83)
+	.include "data/maps/NavelRock_Down08/events.inc"
+	@ MAP_NAVEL_ROCK_DOWN09 (g26 m84)
+	.include "data/maps/NavelRock_Down09/events.inc"
+	@ MAP_NAVEL_ROCK_DOWN10 (g26 m85)
+	.include "data/maps/NavelRock_Down10/events.inc"
+	@ MAP_NAVEL_ROCK_DOWN11 (g26 m86)
+	.include "data/maps/NavelRock_Down11/events.inc"
+	@ MAP_NAVEL_ROCK_BOTTOM (g26 m87)
+	.include "data/maps/NavelRock_Bottom/events.inc"
+	.incbin "baserom_jp.gba", 0x5164B0, 0x10CC
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

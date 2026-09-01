@@ -51,6 +51,14 @@ CANONICAL_LAYOUT_SYMBOLS = {
     "LAYOUT_TRAINER_HILL_3F": "TrainerHill_3F_Layout",
     "LAYOUT_TRAINER_HILL_4F": "TrainerHill_4F_Layout",
     "LAYOUT_TRAINER_HILL_ROOF": "TrainerHill_Roof_Layout",
+    "LAYOUT_NAVEL_ROCK_EXTERIOR": "NavelRock_Exterior_Layout",
+    "LAYOUT_NAVEL_ROCK_ENTRANCE": "NavelRock_Entrance_Layout",
+    "LAYOUT_NAVEL_ROCK_TOP": "NavelRock_Top_Layout",
+    "LAYOUT_NAVEL_ROCK_BOTTOM": "NavelRock_Bottom_Layout",
+    "LAYOUT_NAVEL_ROCK_LADDER_ROOM1": "NavelRock_LadderRoom1_Layout",
+    "LAYOUT_NAVEL_ROCK_LADDER_ROOM2": "NavelRock_LadderRoom2_Layout",
+    "LAYOUT_NAVEL_ROCK_B1F": "NavelRock_B1F_Layout",
+    "LAYOUT_NAVEL_ROCK_FORK": "NavelRock_Fork_Layout",
 }
 
 # The JP layout table has not yet adopted the US shared-layout labels for these

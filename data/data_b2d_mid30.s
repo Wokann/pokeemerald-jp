@@ -930,7 +930,51 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/TrainerHill_4F/header.inc"
 	@ MAP_TRAINER_HILL_ROOF (g26 m65)
 	.include "data/maps/TrainerHill_Roof/header.inc"
-	.incbin "baserom_jp.gba", 0x45DC94, 0xBD0
+	@ MAP_NAVEL_ROCK_EXTERIOR (g26 m66)
+	.include "data/maps/NavelRock_Exterior/header.inc"
+	@ MAP_NAVEL_ROCK_HARBOR (g26 m67)
+	.include "data/maps/NavelRock_Harbor/header.inc"
+	@ MAP_NAVEL_ROCK_ENTRANCE (g26 m68)
+	.include "data/maps/NavelRock_Entrance/header.inc"
+	@ MAP_NAVEL_ROCK_B1F (g26 m69)
+	.include "data/maps/NavelRock_B1F/header.inc"
+	@ MAP_NAVEL_ROCK_FORK (g26 m70)
+	.include "data/maps/NavelRock_Fork/header.inc"
+	@ MAP_NAVEL_ROCK_UP1 (g26 m71)
+	.include "data/maps/NavelRock_Up1/header.inc"
+	@ MAP_NAVEL_ROCK_UP2 (g26 m72)
+	.include "data/maps/NavelRock_Up2/header.inc"
+	@ MAP_NAVEL_ROCK_UP3 (g26 m73)
+	.include "data/maps/NavelRock_Up3/header.inc"
+	@ MAP_NAVEL_ROCK_UP4 (g26 m74)
+	.include "data/maps/NavelRock_Up4/header.inc"
+	@ MAP_NAVEL_ROCK_TOP (g26 m75)
+	.include "data/maps/NavelRock_Top/header.inc"
+	@ MAP_NAVEL_ROCK_DOWN01 (g26 m76)
+	.include "data/maps/NavelRock_Down01/header.inc"
+	@ MAP_NAVEL_ROCK_DOWN02 (g26 m77)
+	.include "data/maps/NavelRock_Down02/header.inc"
+	@ MAP_NAVEL_ROCK_DOWN03 (g26 m78)
+	.include "data/maps/NavelRock_Down03/header.inc"
+	@ MAP_NAVEL_ROCK_DOWN04 (g26 m79)
+	.include "data/maps/NavelRock_Down04/header.inc"
+	@ MAP_NAVEL_ROCK_DOWN05 (g26 m80)
+	.include "data/maps/NavelRock_Down05/header.inc"
+	@ MAP_NAVEL_ROCK_DOWN06 (g26 m81)
+	.include "data/maps/NavelRock_Down06/header.inc"
+	@ MAP_NAVEL_ROCK_DOWN07 (g26 m82)
+	.include "data/maps/NavelRock_Down07/header.inc"
+	@ MAP_NAVEL_ROCK_DOWN08 (g26 m83)
+	.include "data/maps/NavelRock_Down08/header.inc"
+	@ MAP_NAVEL_ROCK_DOWN09 (g26 m84)
+	.include "data/maps/NavelRock_Down09/header.inc"
+	@ MAP_NAVEL_ROCK_DOWN10 (g26 m85)
+	.include "data/maps/NavelRock_Down10/header.inc"
+	@ MAP_NAVEL_ROCK_DOWN11 (g26 m86)
+	.include "data/maps/NavelRock_Down11/header.inc"
+	@ MAP_NAVEL_ROCK_BOTTOM (g26 m87)
+	.include "data/maps/NavelRock_Bottom/header.inc"
+	.incbin "baserom_jp.gba", 0x45DEFC, 0x968
 	.4byte BattleFrontier_BattlePikeLobby
 	.4byte BattleFrontier_BattlePikeCorridor
 	.4byte BattleFrontier_BattlePikeThreePathRoom
@@ -963,7 +1007,29 @@ gMapHeaders: @ 0x0845A8D8
 	.4byte TrainerHill_3F
 	.4byte TrainerHill_4F
 	.4byte TrainerHill_Roof
-	.incbin "baserom_jp.gba", 0x45E8E4, 0xB4
+	.4byte NavelRock_Exterior
+	.4byte NavelRock_Harbor
+	.4byte NavelRock_Entrance
+	.4byte NavelRock_B1F
+	.4byte NavelRock_Fork
+	.4byte NavelRock_Up1
+	.4byte NavelRock_Up2
+	.4byte NavelRock_Up3
+	.4byte NavelRock_Up4
+	.4byte NavelRock_Top
+	.4byte NavelRock_Down01
+	.4byte NavelRock_Down02
+	.4byte NavelRock_Down03
+	.4byte NavelRock_Down04
+	.4byte NavelRock_Down05
+	.4byte NavelRock_Down06
+	.4byte NavelRock_Down07
+	.4byte NavelRock_Down08
+	.4byte NavelRock_Down09
+	.4byte NavelRock_Down10
+	.4byte NavelRock_Down11
+	.4byte NavelRock_Bottom
+	.incbin "baserom_jp.gba", 0x45E93C, 0x5C
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
