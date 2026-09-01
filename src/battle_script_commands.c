@@ -60,6 +60,7 @@
 #define DEFENDER_IS_PROTECTED ((gProtectStructs[gBattlerTarget].protected) && (gBattleMoves[gCurrentMove].flags & FLAG_PROTECT_AFFECTED))
 
 #define BATTLE_SCRIPT_COMMANDS_PALACE_DATA __attribute__((section(".rodata.battle_script_commands_palace_data")))
+#define BATTLE_SCRIPT_COMMANDS_PALACE_FLAVOR_DATA __attribute__((section(".rodata.battle_script_commands_palace_flavor_data")))
 #define BATTLE_SCRIPT_COMMANDS_DATA(name) __attribute__((section(".rodata.battle_script_commands_data." #name)))
 #define TAG_LVLUP_BANNER_MON_ICON 55130
 
@@ -383,7 +384,37 @@ const ALIGNED(4) u8 gBattlePalaceNatureToMoveGroupLikelihood[NUM_NATURES][4] BAT
     [NATURE_QUIRKY]  = PALACE_STYLE(56, 22, 56, 22),
 };
 
+static const u8 sBattlePalaceNatureToFlavorTextId[NUM_NATURES] BATTLE_SCRIPT_COMMANDS_PALACE_FLAVOR_DATA =
+{
+    [NATURE_HARDY]   = B_MSG_EAGER_FOR_MORE,
+    [NATURE_LONELY]  = B_MSG_GLINT_IN_EYE,
+    [NATURE_BRAVE]   = B_MSG_GETTING_IN_POS,
+    [NATURE_ADAMANT] = B_MSG_GLINT_IN_EYE,
+    [NATURE_NAUGHTY] = B_MSG_GLINT_IN_EYE,
+    [NATURE_BOLD]    = B_MSG_GETTING_IN_POS,
+    [NATURE_DOCILE]  = B_MSG_EAGER_FOR_MORE,
+    [NATURE_RELAXED] = B_MSG_GLINT_IN_EYE,
+    [NATURE_IMPISH]  = B_MSG_GETTING_IN_POS,
+    [NATURE_LAX]     = B_MSG_GROWL_DEEPLY,
+    [NATURE_TIMID]   = B_MSG_GROWL_DEEPLY,
+    [NATURE_HASTY]   = B_MSG_GLINT_IN_EYE,
+    [NATURE_SERIOUS] = B_MSG_EAGER_FOR_MORE,
+    [NATURE_JOLLY]   = B_MSG_GETTING_IN_POS,
+    [NATURE_NAIVE]   = B_MSG_EAGER_FOR_MORE,
+    [NATURE_MODEST]  = B_MSG_GETTING_IN_POS,
+    [NATURE_MILD]    = B_MSG_GROWL_DEEPLY,
+    [NATURE_QUIET]   = B_MSG_EAGER_FOR_MORE,
+    [NATURE_BASHFUL] = B_MSG_EAGER_FOR_MORE,
+    [NATURE_RASH]    = B_MSG_GROWL_DEEPLY,
+    [NATURE_CALM]    = B_MSG_GETTING_IN_POS,
+    [NATURE_GENTLE]  = B_MSG_GLINT_IN_EYE,
+    [NATURE_SASSY]   = B_MSG_GROWL_DEEPLY,
+    [NATURE_CAREFUL] = B_MSG_GROWL_DEEPLY,
+    [NATURE_QUIRKY]  = B_MSG_EAGER_FOR_MORE,
+};
+
 #undef PALACE_STYLE
+#undef BATTLE_SCRIPT_COMMANDS_PALACE_FLAVOR_DATA
 #undef BATTLE_SCRIPT_COMMANDS_PALACE_DATA
 #undef BATTLE_SCRIPT_COMMANDS_DATA
 
@@ -412,7 +443,6 @@ void Cmd_useitemonopponent(void);
 bool8 sub_0806B7EC(struct Pokemon *mon, u16 item, u8 partyIndex, u8 moveIndex, bool8 usedByAI);
 
 extern const u32 gBitTable[];
-extern const u8 sBattlePalaceNatureToFlavorTextId[];
 extern void TryGetStatusString(const u8 *text); // JP text-expand helper (US: BattleStringExpandPlaceholdersToDisplayedString)
 extern void sub_0814FA04(const u8 *text, u8 windowId); // JP BattlePutTextOnWindow equivalent
 extern void BtlController_EmitUnknownYesNoBox(u8 bufferId);

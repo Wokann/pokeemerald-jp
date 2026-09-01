@@ -16,9 +16,7 @@ gUnknown_82EC5FE: @ 0x82EC5FE
 
 	.section .rodata.data_b2d_after_battle_palace_likelihood
 
-	.globl gUnknown_82ECE7C
-gUnknown_82ECE7C: @ 0x82ECE7C
-	.incbin "baserom_jp.gba", 0x2ece7c, 0x20
+	.incbin "baserom_jp.gba", 0x2ece95, 0x7
 
 	.section .rodata.data_b2d_after_battle_moves
 

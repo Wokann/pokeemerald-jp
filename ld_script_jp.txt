@@ -775,7 +775,6 @@ FillAroundBattleWindows = sub_0805EB30;
 sText_MaleSymbol = gText_Number2 + 0x2;
 sText_FemaleSymbol = sText_ConditionSearchMonMale + 0xA;
 sGenderlessIconString = sText_ConditionSearchMonFemale + 0x6;
-sBattlePalaceNatureToFlavorTextId = gUnknown_82ECE7C;
 gRefereeStringsTable = gUnknown_85AC04C;
 Menu_LoadStdPal = sub_08197680;
 CB2_LinkTrade = CB2_LinkTrade;
@@ -9401,6 +9400,7 @@ SECTIONS {
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sEnvironmentToType);
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sBallCatchBonuses);
         src/battle_script_commands.o(.rodata.battle_script_commands_palace_data);
+        src/battle_script_commands.o(.rodata.battle_script_commands_palace_flavor_data);
         data/data_b2d.o(.rodata.data_b2d_after_battle_palace_likelihood);
         src/battle_controller_player.o(.rodata.battle_controller_player_commands);
         src/battle_anim_smokescreen.o(.rodata.battle_anim_smokescreen_data);
