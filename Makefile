@@ -1364,6 +1364,12 @@ $(C_BUILDDIR)/field_weather_effect.o: src/field_weather_effect.c $(wildcard grap
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/field_weather_effect.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/field_weather_effect.gen.s
 
+$(C_BUILDDIR)/field_effect.o: src/field_effect.c $(wildcard graphics/field_effects/pics/field_move_streaks.4bpp graphics/field_effects/pics/field_move_streaks.gbapal graphics/field_effects/pics/field_move_streaks.bin graphics/field_effects/pics/field_move_streaks_indoors.4bpp graphics/field_effects/pics/field_move_streaks_indoors.gbapal graphics/field_effects/pics/field_move_streaks_indoors.bin graphics/field_effects/pics/spotlight.4bpp graphics/field_effects/pics/spotlight.gbapal graphics/field_effects/pics/deoxys_rock_fragment_top_left.4bpp graphics/field_effects/pics/deoxys_rock_fragment_top_right.4bpp graphics/field_effects/pics/deoxys_rock_fragment_bottom_left.4bpp graphics/field_effects/pics/deoxys_rock_fragment_bottom_right.4bpp)
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/field_effect.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/field_effect.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/field_effect.gen.s
+
 $(C_BUILDDIR)/map_name_popup.o: src/map_name_popup.c $(wildcard graphics/map_popup/*)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/map_name_popup.gen.s

@@ -3,6 +3,26 @@
 #include "sprite.h"
 #include "main.h"
 #include "task.h"
+
+#define FIELD_EFFECT_GRAPHICS_RESOURCE_DATA __attribute__((section(".rodata.field_effect_graphics_resource_data")))
+
+// Graphics for the lights streaking past your Pokémon when it uses a field move.
+static const u32 sFieldMoveStreaksOutdoors_Gfx[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U32("graphics/field_effects/pics/field_move_streaks.4bpp");
+static const u16 sFieldMoveStreaksOutdoors_Pal[16] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U16("graphics/field_effects/pics/field_move_streaks.gbapal");
+static const u16 sFieldMoveStreaksOutdoors_Tilemap[320] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U16("graphics/field_effects/pics/field_move_streaks.bin");
+
+// The following light streaks effect is used when the map is indoors
+static const u32 sFieldMoveStreaksIndoors_Gfx[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U32("graphics/field_effects/pics/field_move_streaks_indoors.4bpp");
+static const u16 sFieldMoveStreaksIndoors_Pal[16] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U16("graphics/field_effects/pics/field_move_streaks_indoors.gbapal");
+static const u16 sFieldMoveStreaksIndoors_Tilemap[320] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U16("graphics/field_effects/pics/field_move_streaks_indoors.bin");
+
+static const u16 sSpotlight_Pal[16] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U16("graphics/field_effects/pics/spotlight.gbapal");
+static const u8 sSpotlight_Gfx[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U8("graphics/field_effects/pics/spotlight.4bpp");
+static const u8 sRockFragment_TopLeft[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U8("graphics/field_effects/pics/deoxys_rock_fragment_top_left.4bpp");
+static const u8 sRockFragment_TopRight[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U8("graphics/field_effects/pics/deoxys_rock_fragment_top_right.4bpp");
+static const u8 sRockFragment_BottomLeft[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U8("graphics/field_effects/pics/deoxys_rock_fragment_bottom_left.4bpp");
+static const u8 sRockFragment_BottomRight[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U8("graphics/field_effects/pics/deoxys_rock_fragment_bottom_right.4bpp");
+
 extern u8 gUnknown_3000F58[32]; // sActiveList
 
 
@@ -6054,9 +6074,9 @@ __attribute__((naked)) void FieldMoveShowMonOutdoorsEffect_LoadGfx(struct Task *
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B7DA8: .4byte 0x04000008\n\t"
-        "_080B7DAC: .4byte gUnknown_8535AFC\n\t"
+        "_080B7DAC: .4byte sFieldMoveStreaksOutdoors_Gfx\n\t"
         "_080B7DB0: .4byte 0x05000200\n\t"
-        "_080B7DB4: .4byte gUnknown_8535CFC\n\t"
+        "_080B7DB4: .4byte sFieldMoveStreaksOutdoors_Pal\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6396,7 +6416,7 @@ __attribute__((naked)) void LoadFieldMoveOutdoorStreaksTilemap(u16 a0)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B8000: .4byte 0x06000140\n\t"
-        "_080B8004: .4byte gUnknown_8535D1C\n\t"
+        "_080B8004: .4byte sFieldMoveStreaksOutdoors_Tilemap\n\t"
         "_080B8008: .4byte SPECIAL_ShowContestEntryMonPic\n\t"
         ".syntax divided\n\t"
     );
@@ -6512,9 +6532,9 @@ __attribute__((naked)) void FieldMoveShowMonIndoorsEffect_LoadGfx(struct Task *t
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B80D4: .4byte 0x04000008\n\t"
-        "_080B80D8: .4byte gUnknown_8535F9C\n\t"
+        "_080B80D8: .4byte sFieldMoveStreaksIndoors_Gfx\n\t"
         "_080B80DC: .4byte 0x05000200\n\t"
-        "_080B80E0: .4byte gUnknown_853601C\n\t"
+        "_080B80E0: .4byte sFieldMoveStreaksIndoors_Pal\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6861,7 +6881,7 @@ __attribute__((naked)) bool8 SlideIndoorBannerOnscreen(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080B8340: .4byte 0x06000140\n\t"
-        "_080B8344: .4byte gUnknown_853603C\n\t"
+        "_080B8344: .4byte sFieldMoveStreaksIndoors_Tilemap\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7529,10 +7549,10 @@ __attribute__((naked)) u8 FldEff_RayquazaSpotlight(void)
         "_080B8800: .4byte 0x00003E41\n\t"
         "_080B8804: .4byte 0x00000E0E\n\t"
         "_080B8808: .4byte 0x00003F3F\n\t"
-        "_080B880C: .4byte gUnknown_85362BC\n\t"
+        "_080B880C: .4byte sSpotlight_Pal\n\t"
         "_080B8810: .4byte 0x0600F800\n\t"
         "_080B8814: .4byte 0x0000BFF4\n\t"
-        "_080B8818: .4byte gUnknown_85362DC\n\t"
+        "_080B8818: .4byte sSpotlight_Gfx\n\t"
         "_080B881C: .4byte 0x06008020\n\t"
         "_080B8820: .4byte 0x06008022\n\t"
         ".syntax divided\n\t"

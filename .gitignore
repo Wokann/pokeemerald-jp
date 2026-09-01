@@ -23,6 +23,16 @@ baserom_jp.gba
 !graphics/battle_frontier/*.gbapal
 !graphics/battle_transitions/*.4bpp
 !graphics/battle_transitions/*.gbapal
+!graphics/field_effects/pics/field_move_streaks.4bpp
+!graphics/field_effects/pics/field_move_streaks.gbapal
+!graphics/field_effects/pics/field_move_streaks_indoors.4bpp
+!graphics/field_effects/pics/field_move_streaks_indoors.gbapal
+!graphics/field_effects/pics/spotlight.4bpp
+!graphics/field_effects/pics/spotlight.gbapal
+!graphics/field_effects/pics/deoxys_rock_fragment_top_left.4bpp
+!graphics/field_effects/pics/deoxys_rock_fragment_top_right.4bpp
+!graphics/field_effects/pics/deoxys_rock_fragment_bottom_left.4bpp
+!graphics/field_effects/pics/deoxys_rock_fragment_bottom_right.4bpp
 !graphics/battle_transitions/*.lz
 !graphics/pokedex/cry_meter_needle.4bpp
 !graphics/pokedex/cry_meter_needle.gbapal

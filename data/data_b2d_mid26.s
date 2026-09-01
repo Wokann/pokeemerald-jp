@@ -1779,37 +1779,8 @@ gBattlePikeWildMonHeaders: @ 0x852E6C0
 gUnknown_852E73C: @ 0x852E73C
 	.incbin "baserom_jp.gba", 0x52e73c, 0x73c0
 
-	.globl gUnknown_8535AFC
-gUnknown_8535AFC: @ 0x8535AFC
-	.incbin "baserom_jp.gba", 0x535afc, 0x200
-
-	.globl gUnknown_8535CFC
-gUnknown_8535CFC: @ 0x8535CFC
-	.incbin "baserom_jp.gba", 0x535cfc, 0x20
-
-	.globl gUnknown_8535D1C
-gUnknown_8535D1C: @ 0x8535D1C
-	.incbin "baserom_jp.gba", 0x535d1c, 0x280
-
-	.globl gUnknown_8535F9C
-gUnknown_8535F9C: @ 0x8535F9C
-	.incbin "baserom_jp.gba", 0x535f9c, 0x80
-
-	.globl gUnknown_853601C
-gUnknown_853601C: @ 0x853601C
-	.incbin "baserom_jp.gba", 0x53601c, 0x20
-
-	.globl gUnknown_853603C
-gUnknown_853603C: @ 0x853603C
-	.incbin "baserom_jp.gba", 0x53603c, 0x280
-
-	.globl gUnknown_85362BC
-gUnknown_85362BC: @ 0x85362BC
-	.incbin "baserom_jp.gba", 0x5362bc, 0x20
-
-	.globl gUnknown_85362DC
-gUnknown_85362DC: @ 0x85362DC
-	.incbin "baserom_jp.gba", 0x5362dc, 0xbc0
+	.section .rodata.data_b2d_mid26_after_field_effect_graphics_resource_data
+	.align 2
 
 	.globl gFieldEffectScriptFuncs
 gFieldEffectScriptFuncs: @ 0x8536E9C
