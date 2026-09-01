@@ -27,6 +27,65 @@ static void AnimTask_RotateMonSpriteToSide_Step(u8 taskId);
 static void AnimTask_ShakeTargetBasedOnMovePowerOrDmg_Step(u8 taskId);
 static void AnimTask_SlideOffScreen_Step(u8 taskId);
 
+#define BATTLE_ANIM_MON_MOVEMENT_TEMPLATES __attribute__((section(".rodata.battle_anim_mon_movement_templates")))
+
+BATTLE_ANIM_MON_MOVEMENT_TEMPLATES const struct SpriteTemplate gHorizontalLungeSpriteTemplate =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &gDummyOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = DoHorizontalLunge,
+};
+
+BATTLE_ANIM_MON_MOVEMENT_TEMPLATES const struct SpriteTemplate gVerticalDipSpriteTemplate =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &gDummyOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = DoVerticalDip,
+};
+
+BATTLE_ANIM_MON_MOVEMENT_TEMPLATES const struct SpriteTemplate gSlideMonToOriginalPosSpriteTemplate =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &gDummyOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SlideMonToOriginalPos,
+};
+
+BATTLE_ANIM_MON_MOVEMENT_TEMPLATES const struct SpriteTemplate gSlideMonToOffsetSpriteTemplate =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &gDummyOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SlideMonToOffset,
+};
+
+BATTLE_ANIM_MON_MOVEMENT_TEMPLATES const struct SpriteTemplate gSlideMonToOffsetAndBackSpriteTemplate =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &gDummyOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SlideMonToOffsetAndBack,
+};
+
+#undef BATTLE_ANIM_MON_MOVEMENT_TEMPLATES
+
 // Task to facilitate simple shaking of a pokemon's picture in battle.
 // The shaking alternates between the original position and the target position.
 // arg 0: anim battler

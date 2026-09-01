@@ -9758,7 +9758,7 @@ SECTIONS {
         src/map_name_popup.o(.rodata.map_name_popup_mid57a);
         src/map_name_popup.o(.rodata.map_name_popup_mid57a_pyramid);
         src/item_menu_icons.o(.rodata.item_menu_icons_mid57a);
-        data/data_b2d.o(.rodata.mid57_gap);
+        src/battle_anim_mon_movement.o(.rodata.battle_anim_mon_movement_templates);
         src/item.o(.rodata);
         src/contest.o(.rodata.contest_mid57b_graphics);
         src/contest.o(.rodata.contest_mid57b_text_tables);
