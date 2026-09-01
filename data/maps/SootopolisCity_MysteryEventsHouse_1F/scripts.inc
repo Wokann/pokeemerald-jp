@@ -202,8 +202,6 @@ SootopolisCity_MysteryEventsHouse_1F_Text_StrVar1Tie: @ 0x08210095
 	.string "{STR_VAR_1}$"
 
 SootopolisCity_MysteryEventsHouse_B1F_Text_MatchEndedUpDraw: @ 0x08210098
-	.globl gJPText_00210098
-gJPText_00210098:
 	.string "しょうぶは　ひきわけに　おわった！$"
 
 SootopolisCity_MysteryEventsHouse_1F_Text_BrilliantStandoff: @ 0x082100AA

@@ -1296,14 +1296,14 @@ SootopolisCity_EventScript_GiveWaterfall::
 SootopolisCity_EventScript_WallaceMoveFromGym::
 	applymovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceMoveFromGym
 	waitmovement 0
-	moveobjectoffscreen LOCALID_SOOTOPOLIS_WALLACE
+	copyobjectxytoperm LOCALID_SOOTOPOLIS_WALLACE
 	setvar VAR_SOOTOPOLIS_WALLACE_STATE, 0x1
 	return
 
 SootopolisCity_EventScript_WallaceMoveFromGymWest::
 	applymovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceMoveFromGymWest
 	waitmovement 0
-	moveobjectoffscreen LOCALID_SOOTOPOLIS_WALLACE
+	copyobjectxytoperm LOCALID_SOOTOPOLIS_WALLACE
 	setvar VAR_SOOTOPOLIS_WALLACE_STATE, 0x2
 	return
 

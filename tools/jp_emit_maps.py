@@ -14225,12 +14225,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08210102: 'SootopolisCity_MysteryEventsHouse_1F_Text_StrVar1Lost',
             0x08210105: 'SootopolisCity_MysteryEventsHouse_1F_Text_TooBadForYou',
         },
-        # B1F remains unstructured at this stage and still references the
-        # legacy global symbol. Keep it as a compatibility alias until its
-        # own physical range is migrated.
-        'text_aliases': {
-            0x08210098: ('gJPText_00210098',),
-        },
         'symbols': {
             'vars': {
                 0x4001: 'VAR_TEMP_1',
@@ -15843,7 +15837,6 @@ CANONICAL_SCRIPT_COMMAND_NAMES = {
     # Both JP spellings use the same established Emerald source macros.
     'hideobject_at': 'hideobjectat',
     'showobject_at': 'showobjectat',
-    'copyobjectxytoperm': 'moveobjectoffscreen',
     # JP exposes the historical radius name for SCR_OP_SETFLASHLEVEL; the
     # byte-identical Emerald macro name matches the reviewed US sources.
     'setflashradius': 'setflashlevel',

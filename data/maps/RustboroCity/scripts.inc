@@ -503,9 +503,7 @@ RustboroCity_EventScript_EmployeeAskToGetGoods::
 	call_if_eq VAR_TEMP_1, 3, RustboroCity_EventScript_EmployeeApproachPlayerDown1
 	setflag FLAG_INTERACTED_WITH_DEVON_EMPLOYEE_GOODS_STOLEN
 	setvar VAR_RUSTBORO_CITY_STATE, 3
-	@ JP command table uses moveobjectoffscreen here; the US source uses
-	@ copyobjectxytoperm, but that would not reproduce this ROM slice.
-	moveobjectoffscreen LOCALID_RUSTBORO_DEVON_EMPLOYEE
+	copyobjectxytoperm LOCALID_RUSTBORO_DEVON_EMPLOYEE
 	msgbox RustboroCity_Text_HelpMeIWasRobbed, MSGBOX_DEFAULT
 	releaseall
 	end
