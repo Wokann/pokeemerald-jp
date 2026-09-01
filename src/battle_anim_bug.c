@@ -3,10 +3,6 @@
 #include "battle_anim_internal.h"
 #include "trig.h"
 
-// JP: the bug anim sprite templates and anim/affine data stay embedded
-// in ROM data (see the ABSOLUTE aliases in ld_script_jp.txt); only the
-// sprite callbacks are decompiled here, matching US pokeemerald.
-
 static void AnimMegahornHorn(struct Sprite *sprite);
 static void AnimLeechLifeNeedle(struct Sprite *sprite);
 static void AnimTranslateWebThread(struct Sprite *sprite);
@@ -20,6 +16,187 @@ static void AnimTranslateStinger(struct Sprite *sprite);
 static void AnimMissileArc(struct Sprite *sprite);
 static void AnimMissileArc_Step(struct Sprite *sprite);
 static void AnimTailGlowOrb(struct Sprite *sprite);
+
+#define BATTLE_ANIM_BUG_DATA __attribute__((section(".rodata.battle_anim_bug_data")))
+
+static const union AffineAnimCmd sAffineAnim_MegahornHorn_0[] BATTLE_ANIM_BUG_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 30, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_MegahornHorn_1[] BATTLE_ANIM_BUG_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, -99, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_MegahornHorn_2[] BATTLE_ANIM_BUG_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 94, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_MegahornHorn[] BATTLE_ANIM_BUG_DATA =
+{
+    sAffineAnim_MegahornHorn_0,
+    sAffineAnim_MegahornHorn_1,
+    sAffineAnim_MegahornHorn_2,
+};
+
+const struct SpriteTemplate gMegahornHornSpriteTemplate BATTLE_ANIM_BUG_DATA =
+{
+    .tileTag = ANIM_TAG_HORN_HIT_2,
+    .paletteTag = ANIM_TAG_HORN_HIT_2,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_MegahornHorn,
+    .callback = AnimMegahornHorn,
+};
+
+static const union AffineAnimCmd sAffineAnim_LeechLifeNeedle_0[] BATTLE_ANIM_BUG_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -33, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_LeechLifeNeedle_1[] BATTLE_ANIM_BUG_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 96, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_LeechLifeNeedle_2[] BATTLE_ANIM_BUG_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -96, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_LeechLifeNeedle[] BATTLE_ANIM_BUG_DATA =
+{
+    sAffineAnim_LeechLifeNeedle_0,
+    sAffineAnim_LeechLifeNeedle_1,
+    sAffineAnim_LeechLifeNeedle_2,
+};
+
+const struct SpriteTemplate gLeechLifeNeedleSpriteTemplate BATTLE_ANIM_BUG_DATA =
+{
+    .tileTag = ANIM_TAG_NEEDLE,
+    .paletteTag = ANIM_TAG_NEEDLE,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_LeechLifeNeedle,
+    .callback = AnimLeechLifeNeedle,
+};
+
+const struct SpriteTemplate gWebThreadSpriteTemplate BATTLE_ANIM_BUG_DATA =
+{
+    .tileTag = ANIM_TAG_WEB_THREAD,
+    .paletteTag = ANIM_TAG_WEB_THREAD,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimTranslateWebThread,
+};
+
+const struct SpriteTemplate gStringWrapSpriteTemplate BATTLE_ANIM_BUG_DATA =
+{
+    .tileTag = ANIM_TAG_STRING,
+    .paletteTag = ANIM_TAG_STRING,
+    .oam = &gOamData_AffineOff_ObjNormal_64x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimStringWrap,
+};
+
+static const union AffineAnimCmd sAffineAnim_SpiderWeb[] BATTLE_ANIM_BUG_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
+    AFFINEANIMCMD_FRAME(0x6, 0x6, 0, 1),
+    AFFINEANIMCMD_JUMP(1),
+};
+
+static const union AffineAnimCmd *const sAffineAnims_SpiderWeb[] BATTLE_ANIM_BUG_DATA =
+{
+    sAffineAnim_SpiderWeb,
+};
+
+const struct SpriteTemplate gSpiderWebSpriteTemplate BATTLE_ANIM_BUG_DATA =
+{
+    .tileTag = ANIM_TAG_SPIDER_WEB,
+    .paletteTag = ANIM_TAG_SPIDER_WEB,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_SpiderWeb,
+    .callback = AnimSpiderWeb,
+};
+
+const struct SpriteTemplate gLinearStingerSpriteTemplate BATTLE_ANIM_BUG_DATA =
+{
+    .tileTag = ANIM_TAG_NEEDLE,
+    .paletteTag = ANIM_TAG_NEEDLE,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimTranslateStinger,
+};
+
+const struct SpriteTemplate gPinMissileSpriteTemplate BATTLE_ANIM_BUG_DATA =
+{
+    .tileTag = ANIM_TAG_NEEDLE,
+    .paletteTag = ANIM_TAG_NEEDLE,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimMissileArc,
+};
+
+const struct SpriteTemplate gIcicleSpearSpriteTemplate BATTLE_ANIM_BUG_DATA =
+{
+    .tileTag = ANIM_TAG_ICICLE_SPEAR,
+    .paletteTag = ANIM_TAG_ICICLE_SPEAR,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimMissileArc,
+};
+
+static const union AffineAnimCmd sAffineAnim_TailGlowOrb[] BATTLE_ANIM_BUG_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
+    AFFINEANIMCMD_FRAME(0x8, 0x8, 0, 18),
+    AFFINEANIMCMD_LOOP(0),
+    AFFINEANIMCMD_FRAME(0xFFFB, 0xFFFB, 0, 8),
+    AFFINEANIMCMD_FRAME(0x5, 0x5, 0, 8),
+    AFFINEANIMCMD_LOOP(5),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_TailGlowOrb[] BATTLE_ANIM_BUG_DATA =
+{
+    sAffineAnim_TailGlowOrb,
+};
+
+const struct SpriteTemplate gTailGlowOrbSpriteTemplate BATTLE_ANIM_BUG_DATA =
+{
+    .tileTag = ANIM_TAG_CIRCLE_OF_LIGHT,
+    .paletteTag = ANIM_TAG_CIRCLE_OF_LIGHT,
+    .oam = &gOamData_AffineNormal_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_TailGlowOrb,
+    .callback = AnimTailGlowOrb,
+};
+
+#undef BATTLE_ANIM_BUG_DATA
 
 static void AnimMegahornHorn(struct Sprite *sprite)
 {

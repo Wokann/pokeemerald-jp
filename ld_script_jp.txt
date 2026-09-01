@@ -9822,7 +9822,8 @@ SECTIONS {
         src/battle_anim_poison.o(.rodata.battle_anim_poison_data);
         src/battle_anim_flying.o(.rodata.battle_anim_flying_data);
         src/battle_anim_psychic.o(.rodata.battle_anim_psychic_data);
-        data/data_b2d_mid60.o(.rodata.mid60_after_battle_anim_psychic_data);
+        src/battle_anim_bug.o(.rodata.battle_anim_bug_data);
+        data/data_b2d_mid60.o(.rodata.mid60_after_battle_anim_bug_data);
         src/data/text/region_texts61.o(.rodata);
         data/data_b2d_mid61.o(.rodata);
         sHealLocations = . + 0x4C;

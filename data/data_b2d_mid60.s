@@ -1936,56 +1936,7 @@ gWaterPulseRingBubbleSpriteTemplate: @ 0x570EF4
 gWeatherBallWaterDownSpriteTemplate: @ 0x8570F0C
 	.incbin "baserom_jp.gba", 0x570F0C, 0x18
 
-	.section .rodata.mid60_after_battle_anim_psychic_data
-	.incbin "baserom_jp.gba", 0x57251c, 0x3c
-
-	.globl gMegahornHornSpriteTemplate
-gMegahornHornSpriteTemplate: @ 0x572558
-	.hword 0x27A9, 0x27A9
-	.4byte 0x084FD100, 0x082BF304, 0, 0x0857254C, 0x08110BB9
-	.incbin "baserom_jp.gba", 0x572570, 0x3c
-
-	.globl gLeechLifeNeedleSpriteTemplate
-gLeechLifeNeedleSpriteTemplate: @ 0x5725AC
-	.hword 0x27B1, 0x27B1
-	.4byte 0x084FD078, 0x082BF304, 0, 0x085725A0, 0x08110C89
-
-	.globl gWebThreadSpriteTemplate
-gWebThreadSpriteTemplate: @ 0x5725C4
-	.hword 0x27C4, 0x27C4
-	.4byte 0x084FD010, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08110D35
-
-	.globl gStringWrapSpriteTemplate
-gStringWrapSpriteTemplate: @ 0x5725DC
-	.hword 0x27C3, 0x27C3
-	.4byte 0x084FD048, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08110E05
-	.incbin "baserom_jp.gba", 0x5725f4, 0x1c
-
-	.globl gSpiderWebSpriteTemplate
-gSpiderWebSpriteTemplate: @ 0x572610
-	.hword 0x27C5, 0x27C5
-	.4byte 0x084FD208, 0x082BF304, 0, 0x0857260C, 0x08110ECD
-
-	.globl gLinearStingerSpriteTemplate
-gLinearStingerSpriteTemplate: @ 0x572628
-	.hword 0x27B1, 0x27B1
-	.4byte 0x084FD078, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08110F71
-
-	.globl gPinMissileSpriteTemplate
-gPinMissileSpriteTemplate: @ 0x572640
-	.hword 0x27B1, 0x27B1
-	.4byte 0x084FD078, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x081110A1
-
-	.globl gIcicleSpearSpriteTemplate
-gIcicleSpearSpriteTemplate: @ 0x572658
-	.hword 0x2816, 0x2816
-	.4byte 0x084FD080, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x081110A1
-	.incbin "baserom_jp.gba", 0x572670, 0x3c
-
-	.globl gTailGlowOrbSpriteTemplate
-gTailGlowOrbSpriteTemplate: @ 0x5726AC
-	.hword 0x27E4, 0x27E4
-	.4byte 0x084FD1A8, 0x082BF304, 0, 0x085726A8, 0x081111E5
+	.section .rodata.mid60_after_battle_anim_bug_data
 	.incbin "baserom_jp.gba", 0x5726c4, 0x24
 
 	.globl gFallingRockSpriteTemplate
