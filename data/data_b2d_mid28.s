@@ -9,10 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_846FA13
-gUnknown_846FA13: @ 0x846FA13
-	.incbin "baserom_jp.gba", 0x46fa13, 0x5
-
 	.section .rodata.data_b2d_mid28_after_reflection_data
 
 	.section .rodata.data_b2d_mid28_after_camera_function_data

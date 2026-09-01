@@ -2255,7 +2255,7 @@ $(OBJ_DIR)/data/field_door.o: data/field_door.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-$(OBJ_DIR)/data/field_player_avatar.o: data/field_player_avatar.s baserom_jp.gba
+$(OBJ_DIR)/data/field_player_avatar.o: data/field_player_avatar.s data/field_player_avatar.inc data/field_player_avatar_spin.inc baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 

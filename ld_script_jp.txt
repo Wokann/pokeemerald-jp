@@ -9481,7 +9481,7 @@ SECTIONS {
         src/data/text/region_texts17.o(.rodata);
         data/data_b2d.o(.rodata.mid27);
         src/data/text/region_texts18.o(.rodata);
-        data/data_b2d_mid28.o(.rodata);
+        data/field_player_avatar.o(.rodata.field_player_avatar_spin_directions);
         src/event_object_movement.o(.rodata.event_object_movement_reflection_palette_data);
         gUnknown_846FA28 = .;
         src/event_object_movement.o(.rodata.event_object_movement_camera_data);
