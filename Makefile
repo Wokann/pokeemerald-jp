@@ -292,7 +292,11 @@ JP_STRUCTURED_MAPS += SecretBase_RedCave1 SecretBase_BrownCave1 SecretBase_BlueC
 	SecretBase_RedCave3 SecretBase_BrownCave3 SecretBase_BlueCave3 SecretBase_YellowCave3 SecretBase_Tree3 SecretBase_Shrub3 \
 	SecretBase_RedCave4 SecretBase_BrownCave4 SecretBase_BlueCave4 SecretBase_YellowCave4 SecretBase_Tree4 SecretBase_Shrub4
 JP_STRUCTURED_MAPS += BattleColosseum_2P TradeCenter RecordCorner BattleColosseum_4P
-JP_STRUCTURED_MAPS += ContestHall
+# Contest Hall's alternate layouts share ContestHall_MapEvents.  Keep their
+# empty, map.json-generated events.inc stubs tracked just like pokeemerald;
+# data_b2d_mid26 only includes the shared owner, so these add no ROM data.
+JP_STRUCTURED_MAPS += ContestHall ContestHallBeauty ContestHallCool ContestHallCute ContestHallSmart ContestHallTough \
+	UnusedContestHall1 UnusedContestHall2 UnusedContestHall3 UnusedContestHall4 UnusedContestHall5 UnusedContestHall6
 JP_STRUCTURED_MAPS += InsideOfTruck
 JP_STRUCTURED_MAPS += SSTidalCorridor SSTidalLowerDeck SSTidalRooms
 JP_STRUCTURED_MAPS += BattlePyramidSquare01 BattlePyramidSquare02 BattlePyramidSquare03 BattlePyramidSquare04 \
