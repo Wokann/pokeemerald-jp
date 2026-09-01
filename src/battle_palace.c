@@ -13,6 +13,8 @@
 #include "constants/frontier_util.h"
 #include "constants/trainers.h"
 
+#define BATTLE_PALACE_DATA __attribute__((section(".rodata.battle_palace_data")))
+
 // This file's functions.
 static void InitPalaceChallenge(void);
 static void GetPalaceData(void);
@@ -25,12 +27,54 @@ static void SavePalaceChallenge(void);
 static void SetRandomPalacePrize(void);
 static void GivePalacePrize(void);
 
-// JP keeps the dispatch table and prize/streak tables in ROM.
-extern void (*const sBattlePalaceFunctions[])(void);
-extern const u16 sBattlePalaceEarlyPrizes[6];
-extern const u16 sBattlePalaceLatePrizes[9];
-extern const u32 sWinStreakFlags[][2];
-extern const u32 sWinStreakMasks[][2];
+static void (*const sBattlePalaceFunctions[])(void) BATTLE_PALACE_DATA =
+{
+    [BATTLE_PALACE_FUNC_INIT]               = InitPalaceChallenge,
+    [BATTLE_PALACE_FUNC_GET_DATA]           = GetPalaceData,
+    [BATTLE_PALACE_FUNC_SET_DATA]           = SetPalaceData,
+    [BATTLE_PALACE_FUNC_GET_COMMENT_ID]     = GetPalaceCommentId,
+    [BATTLE_PALACE_FUNC_SET_OPPONENT]       = SetPalaceOpponent,
+    [BATTLE_PALACE_FUNC_GET_OPPONENT_INTRO] = BufferOpponentIntroSpeech,
+    [BATTLE_PALACE_FUNC_INCREMENT_STREAK]   = IncrementPalaceStreak,
+    [BATTLE_PALACE_FUNC_SAVE]               = SavePalaceChallenge,
+    [BATTLE_PALACE_FUNC_SET_PRIZE]          = SetRandomPalacePrize,
+    [BATTLE_PALACE_FUNC_GIVE_PRIZE]         = GivePalacePrize,
+};
+
+static const u16 sBattlePalaceEarlyPrizes[] BATTLE_PALACE_DATA =
+{
+    ITEM_HP_UP,
+    ITEM_PROTEIN,
+    ITEM_IRON,
+    ITEM_CALCIUM,
+    ITEM_CARBOS,
+    ITEM_ZINC,
+};
+
+static const u16 sBattlePalaceLatePrizes[] BATTLE_PALACE_DATA =
+{
+    ITEM_BRIGHT_POWDER,
+    ITEM_WHITE_HERB,
+    ITEM_QUICK_CLAW,
+    ITEM_LEFTOVERS,
+    ITEM_MENTAL_HERB,
+    ITEM_KINGS_ROCK,
+    ITEM_FOCUS_BAND,
+    ITEM_SCOPE_LENS,
+    ITEM_CHOICE_BAND,
+};
+
+static const u32 sWinStreakFlags[][2] BATTLE_PALACE_DATA =
+{
+    {STREAK_PALACE_SINGLES_50, STREAK_PALACE_SINGLES_OPEN},
+    {STREAK_PALACE_DOUBLES_50, STREAK_PALACE_DOUBLES_OPEN},
+};
+
+static const u32 sWinStreakMasks[][2] BATTLE_PALACE_DATA =
+{
+    {~STREAK_PALACE_SINGLES_50, ~STREAK_PALACE_SINGLES_OPEN},
+    {~STREAK_PALACE_DOUBLES_50, ~STREAK_PALACE_DOUBLES_OPEN},
+};
 
 // JP asm name for the still-asm frontier save helper; US: SaveGameFrontier.
 void sub_081A482C(void);

@@ -158,26 +158,6 @@ sSpecialBattleStrings: @ 0x85D3304
 	.string "ビ　”　B　ザ　'　♂　ヅ　ハ　ダ　セ　ぃ　れ　ド　ふ　へ　ト　タ　$$"
 	.section .rodata.mid98_suffix_after_shake_visual_data
 
-	.globl sBattlePalaceFunctions
-sBattlePalaceFunctions: @ 0x85D68CC
-	.incbin "graphics/battle_palace/sBattlePalaceFunctions.bin"
-
-	.globl sBattlePalaceEarlyPrizes
-sBattlePalaceEarlyPrizes: @ 0x85D68F4
-	.hword 0x003F, 0x0040, 0x0041, 0x0043, 0x0042, 0x0046
-
-	.globl sBattlePalaceLatePrizes
-sBattlePalaceLatePrizes: @ 0x85D6900
-	.hword 0x00B3, 0x00B4, 0x00B7, 0x00C8, 0x00B9, 0x00BB, 0x00C4, 0x00C6, 0x00BA, 0x0000
-
-	.globl sWinStreakFlags
-sWinStreakFlags: @ 0x85D6914
-	.4byte 0x00000010, 0x00000020, 0x00400000, 0x00800000
-
-	.globl sWinStreakMasks
-sWinStreakMasks: @ 0x85D6924
-	.4byte 0xFFFFFFEF, 0xFFFFFFDF, 0xFFBFFFFF, 0xFF7FFFFF
-
 	.globl gUnknown_85D6934
 gUnknown_85D6934: @ 0x85D6934
 	.incbin "baserom_jp.gba", 0x5d6934, 0xb68
