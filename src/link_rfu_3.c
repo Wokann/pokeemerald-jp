@@ -11,6 +11,19 @@
 // instead of US's file-static variable).
 extern IWRAM_DATA u8 sSequenceArrayValOffset;
 
+#define LINK_RFU_3_WIRELESS_STATUS_INDICATOR_PALETTE_DATA __attribute__((section(".rodata.link_rfu_3_wireless_status_indicator_palette_data")))
+#define LINK_RFU_3_WIRELESS_STATUS_INDICATOR_GRAPHICS_DATA __attribute__((section(".rodata.link_rfu_3_wireless_status_indicator_graphics_data")))
+#define LINK_RFU_3_WIRELESS_STATUS_INDICATOR_SHEET_DATA __attribute__((section(".rodata.link_rfu_3_wireless_status_indicator_sheet")))
+#define LINK_RFU_3_WIRELESS_STATUS_INDICATOR_PALETTE_DESCRIPTOR_DATA __attribute__((section(".rodata.link_rfu_3_wireless_status_indicator_palette")))
+#define LINK_RFU_3_WIRELESS_STATUS_INDICATOR_TEMPLATE_DATA __attribute__((section(".rodata.link_rfu_3_wireless_status_indicator_template")))
+
+#define TAG_GFX_STATUS_INDICATOR 0xD431
+#define TAG_PAL_STATUS_INDICATOR 0xD432
+
+// JP uses a distinct icon encoding from the US PNG-derived assets.
+LINK_RFU_3_WIRELESS_STATUS_INDICATOR_PALETTE_DATA static const u16 sWirelessLinkIconPalette[] = INCBIN_U16("graphics/link/jp/wireless_icon.gbapal");
+LINK_RFU_3_WIRELESS_STATUS_INDICATOR_GRAPHICS_DATA static const u32 sWirelessLinkIconPic[] = INCBIN_U32("graphics/link/jp/wireless_icon.4bpp.lz");
+
 const u8 sWireless_ASCIItoRSETable[256]
     __attribute__((section(".rodata.link_rfu_3_ascii_to_rse"))) =
 {
@@ -52,11 +65,6 @@ const u8 sWireless_RSEtoASCIITable[256]
     0x6C, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7A, 0x20,
     0x20, 0x2B, 0x5B, 0x5C, 0x5D, 0x5E, 0x5F, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00,
 };
-
-// JP: the sheet and palette descriptors remain in their fixed ROM data block.
-extern const struct CompressedSpriteSheet sWirelessStatusIndicatorSpriteSheet;
-extern const struct SpritePalette sWirelessStatusIndicatorSpritePalette;
-extern const struct SpriteTemplate sWirelessStatusIndicatorSpriteTemplate;
 
 enum {
     WIRELESS_STATUS_ANIM_3_BARS,
@@ -135,6 +143,27 @@ const union AnimCmd *const sWirelessStatusIndicatorAnims[]
     [WIRELESS_STATUS_ANIM_1_BAR]     = sWirelessStatusIndicator_1Bar,
     [WIRELESS_STATUS_ANIM_SEARCHING] = sWirelessStatusIndicator_Searching,
     [WIRELESS_STATUS_ANIM_ERROR]     = sWirelessStatusIndicator_Error,
+};
+
+LINK_RFU_3_WIRELESS_STATUS_INDICATOR_SHEET_DATA const struct CompressedSpriteSheet sWirelessStatusIndicatorSpriteSheet =
+{
+    sWirelessLinkIconPic, 0x0380, TAG_GFX_STATUS_INDICATOR,
+};
+
+LINK_RFU_3_WIRELESS_STATUS_INDICATOR_PALETTE_DESCRIPTOR_DATA const struct SpritePalette sWirelessStatusIndicatorSpritePalette =
+{
+    sWirelessLinkIconPalette, TAG_PAL_STATUS_INDICATOR,
+};
+
+LINK_RFU_3_WIRELESS_STATUS_INDICATOR_TEMPLATE_DATA const struct SpriteTemplate sWirelessStatusIndicatorSpriteTemplate =
+{
+    .tileTag = TAG_GFX_STATUS_INDICATOR,
+    .paletteTag = TAG_PAL_STATUS_INDICATOR,
+    .oam = &sWirelessStatusIndicatorOamData,
+    .anims = sWirelessStatusIndicatorAnims,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
 };
 
 #define STATUS_INDICATOR_ACTIVE 0x1234 // Used to validate active indicator

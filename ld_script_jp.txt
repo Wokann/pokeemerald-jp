@@ -9258,7 +9258,8 @@ SECTIONS {
         src/link.o(.rodata.link_error_text_data);
         sTextColors = sLinkErrorTextData;
         sUnusedData = sLinkErrorTextData + 3;
-        data/data_b.o(.rodata.data_b_after_link_error_text_data);
+        src/link_rfu_3.o(.rodata.link_rfu_3_wireless_status_indicator_palette_data);
+        src/link_rfu_3.o(.rodata.link_rfu_3_wireless_status_indicator_graphics_data);
         src/link_rfu_3.o(.rodata.link_rfu_3_ascii_to_rse);
         src/link_rfu_3.o(.rodata.link_rfu_3_rse_to_ascii);
         data/data_b.o(.rodata.data_b_after_wireless_ascii_tables);
@@ -9269,7 +9270,9 @@ SECTIONS {
         src/link_rfu_3.o(.rodata.link_rfu_3_wireless_status_indicator_searching);
         src/link_rfu_3.o(.rodata.link_rfu_3_wireless_status_indicator_error);
         src/link_rfu_3.o(.rodata.link_rfu_3_wireless_status_indicator_anims);
-        data/data_b.o(.rodata.data_b_after_wireless_status_indicator_anims);
+        src/link_rfu_3.o(.rodata.link_rfu_3_wireless_status_indicator_sheet);
+        src/link_rfu_3.o(.rodata.link_rfu_3_wireless_status_indicator_palette);
+        src/link_rfu_3.o(.rodata.link_rfu_3_wireless_status_indicator_template);
         src/link_rfu_2.o(.rodata.link_rfu_2_rfu_req_config_template);
         src/link_rfu_2.o(.rodata.link_rfu_2_avail_slots);
         src/link_rfu_2.o(.rodata.link_rfu_2_all_blocks_received);

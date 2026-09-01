@@ -998,10 +998,13 @@ $(C_BUILDDIR)/AgbRfu_LinkManager.o: src/AgbRfu_LinkManager.c
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o - -; \
 		printf '.text\n\t.align\t2, 0\n'; } | awk '/^\t\.size\t/{print; print "\t.align\t2, 0"; next} {print}' | $(AS) $(ASFLAGS) -o $@ -
 
-$(C_BUILDDIR)/link_rfu_3.o: src/link_rfu_3.c
+$(C_BUILDDIR)/link_rfu_3.o: src/link_rfu_3.c graphics/link/jp/wireless_icon.gbapal graphics/link/jp/wireless_icon.4bpp.lz
 	@mkdir -p $(C_BUILDDIR)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o - -; \
-		printf '.text\n\t.align\t2, 0\n'; } | awk '/^\t\.size\t/{print; print "\t.align\t2, 0"; next} {print}' | $(AS) $(ASFLAGS) -o $@ -
+	@$(CPP) $(CPPFLAGS) -P -x c $< > $(C_BUILDDIR)/link_rfu_3.pre.c
+	@$(PREPROC) -i $< charmap.txt < $(C_BUILDDIR)/link_rfu_3.pre.c > $(C_BUILDDIR)/link_rfu_3.preproc.c
+	@$(CC) $(CFLAGS) -o $(C_BUILDDIR)/link_rfu_3.gen.s $(C_BUILDDIR)/link_rfu_3.preproc.c
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/link_rfu_3.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/link_rfu_3.pre.c $(C_BUILDDIR)/link_rfu_3.preproc.c $(C_BUILDDIR)/link_rfu_3.gen.s
 
 $(C_BUILDDIR)/link_rfu_2.o: src/link_rfu_2.c
 	@mkdir -p $(C_BUILDDIR)
