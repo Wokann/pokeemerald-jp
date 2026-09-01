@@ -13,11 +13,6 @@
 #include "constants/battle_anim.h"
 #include "constants/rgb.h"
 
-// JP: the ice anim sprite templates, blend/coord tables and anim/affine
-// data stay embedded in ROM data (see the ABSOLUTE aliases in
-// ld_script_jp.txt); only the sprite callbacks are decompiled here,
-// matching US pokeemerald.
-
 enum {
    HAILSTRUCTTYPE_NEGATIVE_POS_MOD = 0,
    HAILSTRUCTTYPE_POSITIVE_POS_MOD = 1,
@@ -59,30 +54,484 @@ static void AnimThrowIceBall(struct Sprite *);
 static void InitIceBallParticle(struct Sprite *);
 static void AnimIceBallParticle(struct Sprite *);
 
-extern const struct SpriteTemplate gIceCrystalSpiralInwardLarge;
-extern const struct SpriteTemplate gIceCrystalSpiralInwardSmall;
-extern const struct SpriteTemplate gIceBeamInnerCrystalSpriteTemplate;
-extern const struct SpriteTemplate gIceBeamOuterCrystalSpriteTemplate;
-extern const struct SpriteTemplate gIceCrystalHitLargeSpriteTemplate;
-extern const struct SpriteTemplate gIceCrystalHitSmallSpriteTemplate;
-extern const struct SpriteTemplate gSwirlingSnowballSpriteTemplate;
-extern const struct SpriteTemplate gBlizzardIceCrystalSpriteTemplate;
-extern const struct SpriteTemplate gPowderSnowSnowballSpriteTemplate;
-extern const struct SpriteTemplate gIceGroundSpikeSpriteTemplate;
-extern const struct SpriteTemplate gMistCloudSpriteTemplate;
-extern const struct SpriteTemplate gSmogCloudSpriteTemplate;
-extern const struct SpriteTemplate gMistBallSpriteTemplate;
-extern const struct SpriteTemplate gPoisonGasCloudSpriteTemplate;
-extern const struct SpriteTemplate gHailParticleSpriteTemplate;
-extern const struct SpriteTemplate gIceBallChunkSpriteTemplate;
-extern const struct SpriteTemplate gIceBallImpactShardSpriteTemplate;
+#define BATTLE_ANIM_ICE_DATA __attribute__((section(".rodata.battle_anim_ice_data")))
 
-extern const u8 sHazeBlendAmounts[];
-extern const u8 sMistBlendAmounts[];
-extern const union AffineAnimCmd *const sAffineAnims_HailParticle[3];
-extern const struct HailStruct sHailCoordData[10];
-extern const u32 gBattleAnimFogTilemap[];
-extern const u16 gFogPalette[];
+static const union AnimCmd sAnim_Unused[] BATTLE_ANIM_ICE_DATA =
+{
+    ANIMCMD_FRAME(0, 5, .hFlip = TRUE),
+    ANIMCMD_FRAME(1, 5, .hFlip = TRUE),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_Unused[] BATTLE_ANIM_ICE_DATA =
+{
+    sAnim_Unused,
+};
+
+// Unused
+static const struct SpriteTemplate sUnusedIceCrystalThrowSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_ICE_CRYSTALS,
+    .paletteTag = ANIM_TAG_ICE_CRYSTALS,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimUnusedIceCrystalThrow,
+};
+
+static const union AnimCmd sAnim_IceCrystalLargeChunk[] BATTLE_ANIM_ICE_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_IceCrystalLarge[] BATTLE_ANIM_ICE_DATA =
+{
+    ANIMCMD_FRAME(4, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_IceCrystalSmall[] BATTLE_ANIM_ICE_DATA =
+{
+    ANIMCMD_FRAME(6, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Snowball[] BATTLE_ANIM_ICE_DATA =
+{
+    ANIMCMD_FRAME(7, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_BlizzardIceCrystal[] BATTLE_ANIM_ICE_DATA =
+{
+    ANIMCMD_FRAME(8, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_SmallBubblePair[] BATTLE_ANIM_ICE_DATA =
+{
+    ANIMCMD_FRAME(12, 6),
+    ANIMCMD_FRAME(13, 6),
+    ANIMCMD_JUMP(0),
+};
+
+// Unused, contains just the top left corner of the large ice crystal
+static const union AnimCmd *const sAnims_IceCrystalLargeChunk[] BATTLE_ANIM_ICE_DATA =
+{
+    sAnim_IceCrystalLargeChunk,
+};
+
+static const union AnimCmd *const sAnims_IceCrystalLarge[] BATTLE_ANIM_ICE_DATA =
+{
+    sAnim_IceCrystalLarge,
+};
+
+static const union AnimCmd *const sAnims_IceCrystalSmall[] BATTLE_ANIM_ICE_DATA =
+{
+    sAnim_IceCrystalSmall,
+};
+
+static const union AnimCmd *const sAnims_Snowball[] BATTLE_ANIM_ICE_DATA =
+{
+    sAnim_Snowball,
+};
+
+static const union AnimCmd *const sAnims_BlizzardIceCrystal[] BATTLE_ANIM_ICE_DATA =
+{
+    sAnim_BlizzardIceCrystal,
+};
+
+const union AnimCmd *const gAnims_SmallBubblePair[] BATTLE_ANIM_ICE_DATA =
+{
+    sAnim_SmallBubblePair,
+};
+
+static const union AffineAnimCmd sAffineAnim_IceCrystalSpiralInwardLarge[] BATTLE_ANIM_ICE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 40, 1),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd *const sAffineAnims_IceCrystalSpiralInwardLarge[] BATTLE_ANIM_ICE_DATA =
+{
+    sAffineAnim_IceCrystalSpiralInwardLarge,
+};
+
+const struct SpriteTemplate gIceCrystalSpiralInwardLarge BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_ICE_CRYSTALS,
+    .paletteTag = ANIM_TAG_ICE_CRYSTALS,
+    .oam = &gOamData_AffineDouble_ObjBlend_8x16,
+    .anims = sAnims_IceCrystalLarge,
+    .images = NULL,
+    .affineAnims = sAffineAnims_IceCrystalSpiralInwardLarge,
+    .callback = AnimIcePunchSwirlingParticle,
+};
+
+const struct SpriteTemplate gIceCrystalSpiralInwardSmall BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_ICE_CRYSTALS,
+    .paletteTag = ANIM_TAG_ICE_CRYSTALS,
+    .oam = &gOamData_AffineOff_ObjBlend_8x8,
+    .anims = sAnims_IceCrystalSmall,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimIcePunchSwirlingParticle,
+};
+
+static const union AffineAnimCmd sAffineAnim_IceBeamInnerCrystal[] BATTLE_ANIM_ICE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 10, 1),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd *const sAffineAnims_IceBeamInnerCrystal[] BATTLE_ANIM_ICE_DATA =
+{
+    sAffineAnim_IceBeamInnerCrystal,
+};
+
+const struct SpriteTemplate gIceBeamInnerCrystalSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_ICE_CRYSTALS,
+    .paletteTag = ANIM_TAG_ICE_CRYSTALS,
+    .oam = &gOamData_AffineNormal_ObjBlend_8x16,
+    .anims = sAnims_IceCrystalLarge,
+    .images = NULL,
+    .affineAnims = sAffineAnims_IceBeamInnerCrystal,
+    .callback = AnimIceBeamParticle,
+};
+
+const struct SpriteTemplate gIceBeamOuterCrystalSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_ICE_CRYSTALS,
+    .paletteTag = ANIM_TAG_ICE_CRYSTALS,
+    .oam = &gOamData_AffineOff_ObjBlend_8x8,
+    .anims = sAnims_IceCrystalSmall,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimIceBeamParticle,
+};
+
+static const union AffineAnimCmd sAffineAnim_IceCrystalHit[] BATTLE_ANIM_ICE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xCE, 0xCE, 0, 0),
+    AFFINEANIMCMD_FRAME(0x5, 0x5, 0, 10),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 6),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_IceCrystalHit[] BATTLE_ANIM_ICE_DATA =
+{
+    sAffineAnim_IceCrystalHit,
+};
+
+const struct SpriteTemplate gIceCrystalHitLargeSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_ICE_CRYSTALS,
+    .paletteTag = ANIM_TAG_ICE_CRYSTALS,
+    .oam = &gOamData_AffineNormal_ObjBlend_8x16,
+    .anims = sAnims_IceCrystalLarge,
+    .images = NULL,
+    .affineAnims = sAffineAnims_IceCrystalHit,
+    .callback = AnimIceEffectParticle,
+};
+
+const struct SpriteTemplate gIceCrystalHitSmallSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_ICE_CRYSTALS,
+    .paletteTag = ANIM_TAG_ICE_CRYSTALS,
+    .oam = &gOamData_AffineNormal_ObjBlend_8x8,
+    .anims = sAnims_IceCrystalSmall,
+    .images = NULL,
+    .affineAnims = sAffineAnims_IceCrystalHit,
+    .callback = AnimIceEffectParticle,
+};
+
+const struct SpriteTemplate gSwirlingSnowballSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_ICE_CRYSTALS,
+    .paletteTag = ANIM_TAG_ICE_CRYSTALS,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = sAnims_Snowball,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimSwirlingSnowball,
+};
+
+const struct SpriteTemplate gBlizzardIceCrystalSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_ICE_CRYSTALS,
+    .paletteTag = ANIM_TAG_ICE_CRYSTALS,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = sAnims_BlizzardIceCrystal,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimMoveParticleBeyondTarget,
+};
+
+const struct SpriteTemplate gPowderSnowSnowballSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_ICE_CRYSTALS,
+    .paletteTag = ANIM_TAG_ICE_CRYSTALS,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = sAnims_Snowball,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimMoveParticleBeyondTarget,
+};
+
+static const union AnimCmd sAnim_IceGroundSpike[] BATTLE_ANIM_ICE_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_FRAME(2, 5),
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_FRAME(6, 5),
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_FRAME(2, 5),
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_IceGroundSpike[] BATTLE_ANIM_ICE_DATA =
+{
+    sAnim_IceGroundSpike,
+};
+
+const struct SpriteTemplate gIceGroundSpikeSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_ICE_SPIKES,
+    .paletteTag = ANIM_TAG_ICE_SPIKES,
+    .oam = &gOamData_AffineOff_ObjBlend_8x16,
+    .anims = sAnims_IceGroundSpike,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimWaveFromCenterOfTarget,
+};
+
+static const union AnimCmd sAnim_Cloud[] BATTLE_ANIM_ICE_DATA =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(8, 8),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_Cloud[] BATTLE_ANIM_ICE_DATA =
+{
+    sAnim_Cloud,
+};
+
+const struct SpriteTemplate gMistCloudSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_MIST_CLOUD,
+    .paletteTag = ANIM_TAG_MIST_CLOUD,
+    .oam = &gOamData_AffineOff_ObjBlend_32x16,
+    .anims = sAnims_Cloud,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = InitSwirlingFogAnim,
+};
+
+const struct SpriteTemplate gSmogCloudSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_PURPLE_GAS_CLOUD,
+    .paletteTag = ANIM_TAG_PURPLE_GAS_CLOUD,
+    .oam = &gOamData_AffineOff_ObjBlend_32x16,
+    .anims = sAnims_Cloud,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = InitSwirlingFogAnim,
+};
+
+static const u8 sHazeBlendAmounts[] BATTLE_ANIM_ICE_DATA =
+{
+    0, 1, 2, 2, 2, 2, 3, 4, 4, 4, 5, 6, 6, 6, 6, 7, 8, 8, 8, 9,
+};
+
+const struct SpriteTemplate gMistBallSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_BUBBLES,
+    .paletteTag = ANIM_TAG_SMALL_BUBBLES,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimThrowMistBall,
+};
+
+static const u8 sMistBlendAmounts[] BATTLE_ANIM_ICE_DATA =
+{
+    0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5,
+};
+
+const struct SpriteTemplate gPoisonGasCloudSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_PURPLE_GAS_CLOUD,
+    .paletteTag = ANIM_TAG_PURPLE_GAS_CLOUD,
+    .oam = &gOamData_AffineOff_ObjBlend_32x16,
+    .anims = sAnims_Cloud,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = InitPoisonGasCloudAnim,
+};
+
+static const struct HailStruct sHailCoordData[] BATTLE_ANIM_ICE_DATA =
+{
+    {.x = 100, .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .type = HAILSTRUCTTYPE_FIXED_POSITION},
+    {.x = 85,  .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .type = HAILSTRUCTTYPE_NEGATIVE_POS_MOD},
+    {.x = 242, .y = 120, .bPosition = B_POSITION_OPPONENT_LEFT,  .type = HAILSTRUCTTYPE_POSITIVE_POS_MOD},
+    {.x = 66,  .y = 120, .bPosition = B_POSITION_PLAYER_RIGHT,   .type = HAILSTRUCTTYPE_POSITIVE_POS_MOD},
+    {.x = 182, .y = 120, .bPosition = B_POSITION_OPPONENT_RIGHT, .type = HAILSTRUCTTYPE_NEGATIVE_POS_MOD},
+    {.x = 60,  .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .type = HAILSTRUCTTYPE_FIXED_POSITION},
+    {.x = 214, .y = 120, .bPosition = B_POSITION_OPPONENT_LEFT,  .type = HAILSTRUCTTYPE_NEGATIVE_POS_MOD},
+    {.x = 113, .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .type = HAILSTRUCTTYPE_POSITIVE_POS_MOD},
+    {.x = 210, .y = 120, .bPosition = B_POSITION_OPPONENT_RIGHT, .type = HAILSTRUCTTYPE_POSITIVE_POS_MOD},
+    {.x = 38,  .y = 120, .bPosition = B_POSITION_PLAYER_RIGHT,   .type = HAILSTRUCTTYPE_NEGATIVE_POS_MOD},
+};
+
+static const union AffineAnimCmd sAffineAnim_HailParticle_0[] BATTLE_ANIM_ICE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_HailParticle_1[] BATTLE_ANIM_ICE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xF0, 0xF0, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_HailParticle_2[] BATTLE_ANIM_ICE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xE0, 0xE0, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_WeatherBallIceDown[] BATTLE_ANIM_ICE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x150, 0x150, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_HailParticle[] BATTLE_ANIM_ICE_DATA =
+{
+    sAffineAnim_HailParticle_0,
+    sAffineAnim_HailParticle_1,
+    sAffineAnim_HailParticle_2,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_WeatherBallIceDown[] BATTLE_ANIM_ICE_DATA =
+{
+    sAffineAnim_WeatherBallIceDown,
+};
+
+const struct SpriteTemplate gHailParticleSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_HAIL,
+    .paletteTag = ANIM_TAG_HAIL,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_HailParticle,
+    .callback = AnimHailBegin,
+};
+
+const struct SpriteTemplate gWeatherBallIceDownSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_HAIL,
+    .paletteTag = ANIM_TAG_HAIL,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_WeatherBallIceDown,
+    .callback = AnimWeatherBallDown,
+};
+
+static const union AnimCmd sAnim_IceBallChunk_0[] BATTLE_ANIM_ICE_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_IceBallChunk_1[] BATTLE_ANIM_ICE_DATA =
+{
+    ANIMCMD_FRAME(16, 4),
+    ANIMCMD_FRAME(32, 4),
+    ANIMCMD_FRAME(48, 4),
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_IceBallChunk[] BATTLE_ANIM_ICE_DATA =
+{
+    sAnim_IceBallChunk_0,
+    sAnim_IceBallChunk_1,
+};
+
+static const union AffineAnimCmd sAffineAnim_IceBallChunk_0[] BATTLE_ANIM_ICE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xE0, 0xE0, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_IceBallChunk_1[] BATTLE_ANIM_ICE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x118, 0x118, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_IceBallChunk_2[] BATTLE_ANIM_ICE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x150, 0x150, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_IceBallChunk_3[] BATTLE_ANIM_ICE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x180, 0x180, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_IceBallChunk_4[] BATTLE_ANIM_ICE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x1C0, 0x1C0, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_IceBallChunk[] BATTLE_ANIM_ICE_DATA =
+{
+    sAffineAnim_IceBallChunk_0,
+    sAffineAnim_IceBallChunk_1,
+    sAffineAnim_IceBallChunk_2,
+    sAffineAnim_IceBallChunk_3,
+    sAffineAnim_IceBallChunk_4,
+};
+
+const struct SpriteTemplate gIceBallChunkSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_ICE_CHUNK,
+    .paletteTag = ANIM_TAG_ICE_CHUNK,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
+    .anims = sAnims_IceBallChunk,
+    .images = NULL,
+    .affineAnims = sAffineAnims_IceBallChunk,
+    .callback = InitIceBallAnim,
+};
+
+const struct SpriteTemplate gIceBallImpactShardSpriteTemplate BATTLE_ANIM_ICE_DATA =
+{
+    .tileTag = ANIM_TAG_ICE_CRYSTALS,
+    .paletteTag = ANIM_TAG_ICE_CRYSTALS,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = sAnims_IceCrystalSmall,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = InitIceBallParticle,
+};
+
+// Unused
+#undef BATTLE_ANIM_ICE_DATA
 
 static void AnimUnusedIceCrystalThrow(struct Sprite *sprite)
 {
