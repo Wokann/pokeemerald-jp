@@ -2410,19 +2410,9 @@ void GetSecretBaseNearbyMapName(void)
     GetMapName(gStringVar1, VarGet(VAR_SECRET_BASE_MAP), 0);
 }
 
-__attribute__((naked)) void GetBestBattleTowerStreak(void)
+u16 GetBattleTowerSinglesStreak(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl GetGameStat\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetGameStat(GAME_STAT_BATTLE_TOWER_SINGLES_STREAK);
 }
 
 void BufferEReaderTrainerName(void)
