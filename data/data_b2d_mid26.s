@@ -1044,19 +1044,7 @@ sPokemonLogoShineSpriteSheet: @ 0x851ADD8
 gWeatherPtr: @ 0x8526DE8
 	.4byte gUnknown_20380F4 @ &gWeather
 
-	.section .rodata.data_b2d_mid26_after_field_weather_static_data
-
-	.globl gUnknown_8526F2C
-gUnknown_8526F2C: @ 0x8526F2C
-	.incbin "baserom_jp.gba", 0x526f2c, 0x20
-
-	.globl gUnknown_8526F4C
-gUnknown_8526F4C: @ 0x8526F4C
-	.incbin "baserom_jp.gba", 0x526f4c, 0x820
-
-	.globl gWeatherFogHorizontalTiles
-gWeatherFogHorizontalTiles: @ 0x852776C
-	.incbin "graphics/misc/gWeatherFogHorizontalTiles.bin"
+	.section .rodata.data_b2d_mid26_after_field_weather_effect_resource_data
 
 	.globl gUnknown_852A7EC
 gUnknown_852A7EC: @ 0x852A7EC

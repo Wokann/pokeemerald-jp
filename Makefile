@@ -1358,6 +1358,12 @@ $(C_BUILDDIR)/field_weather.o: src/field_weather.c $(wildcard graphics/weather/d
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/field_weather.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/field_weather.gen.s
 
+$(C_BUILDDIR)/field_weather_effect.o: src/field_weather_effect.c $(wildcard graphics/weather/*.4bpp graphics/weather/*.gbapal)
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/field_weather_effect.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/field_weather_effect.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/field_weather_effect.gen.s
+
 $(C_BUILDDIR)/map_name_popup.o: src/map_name_popup.c $(wildcard graphics/map_popup/*)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/map_name_popup.gen.s

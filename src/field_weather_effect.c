@@ -1,6 +1,20 @@
 #include "global.h"
 #include "field_weather.h"
 
+#define FIELD_WEATHER_EFFECT_RESOURCE_DATA __attribute__((section(".rodata.field_weather_effect_resource_data")))
+
+const u16 gCloudsWeatherPalette[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U16("graphics/weather/cloud.gbapal");
+const u16 gSandstormWeatherPalette[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U16("graphics/weather/sandstorm.gbapal");
+const u8 gWeatherFogDiagonalTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/fog_diagonal.4bpp");
+const u8 gWeatherFogHorizontalTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/fog_horizontal.4bpp");
+const u8 gWeatherCloudTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/cloud.4bpp");
+const u8 gWeatherSnow1Tiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/snow0.4bpp");
+const u8 gWeatherSnow2Tiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/snow1.4bpp");
+const u8 gWeatherBubbleTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/bubble.4bpp");
+const u8 gWeatherAshTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/ash.4bpp");
+const u8 gWeatherRainTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/rain.4bpp");
+const u8 gWeatherSandstormTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/sandstorm.4bpp");
+
 __attribute__((naked)) void Clouds_InitVars()
 {
     __asm__(".syntax unified\n\t"
@@ -274,7 +288,7 @@ __attribute__((naked)) void CreateCloudSprites(void)
         "_080ABF08: .4byte gWeatherPtr\n\t"
         "_080ABF0C: .4byte 0x000006DE\n\t"
         "_080ABF10: .4byte gUnknown_852A7F8\n\t"
-        "_080ABF14: .4byte gUnknown_8526F2C\n\t"
+        "_080ABF14: .4byte gCloudsWeatherPalette\n\t"
         "_080ABF18: .4byte gUnknown_852A814\n\t"
         "_080ABF1C: .4byte gSprites\n\t"
         "_080ABF20: .4byte gUnknown_852A7EC\n\t"
@@ -4879,7 +4893,7 @@ __attribute__((naked)) void CreateSandstormSprites(void)
         "_080AE0A4: .4byte gWeatherPtr\n\t"
         "_080AE0A8: .4byte 0x00000716\n\t"
         "_080AE0AC: .4byte gUnknown_852AA78\n\t"
-        "_080AE0B0: .4byte gUnknown_8526F4C\n\t"
+        "_080AE0B0: .4byte gSandstormWeatherPalette\n\t"
         "_080AE0B4: .4byte gUnknown_852AA60\n\t"
         "_080AE0B8: .4byte gSprites\n\t"
         "_080AE0BC:\n\t"
