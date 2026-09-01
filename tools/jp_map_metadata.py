@@ -25,6 +25,11 @@ VALID_DIRECTIONS = {"down", "up", "left", "right", "dive", "emerge"}
 # layout.
 CANONICAL_LAYOUT_SYMBOLS = {
     "LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_LOBBY": "BattleFrontier_BattlePikeLobby_Layout",
+    "LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_CORRIDOR": "BattleFrontier_BattlePikeCorridor_Layout",
+    "LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_THREE_PATH_ROOM": "BattleFrontier_BattlePikeThreePathRoom_Layout",
+    "LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_NORMAL": "BattleFrontier_BattlePikeRoomNormal_Layout",
+    "LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_FINAL": "BattleFrontier_BattlePikeRoomFinal_Layout",
+    "LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS": "BattleFrontier_BattlePikeRoomWildMons_Layout",
     "LAYOUT_UNDERWATER_ROUTE124": "Underwater_Route124_Layout",
     "LAYOUT_UNDERWATER_ROUTE126": "Underwater_Route126_Layout",
     "LAYOUT_UNDERWATER_ROUTE127": "Underwater_Route127_Layout",

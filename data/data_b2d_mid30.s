@@ -868,9 +868,24 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/BattleFrontier_BattleFactoryBattleRoom/header.inc"
 	@ MAP_BATTLE_FRONTIER_BATTLE_PIKE_LOBBY (g26 m34)
 	.include "data/maps/BattleFrontier_BattlePikeLobby/header.inc"
-	.incbin "baserom_jp.gba", 0x45D930, 0xF34
+	@ MAP_BATTLE_FRONTIER_BATTLE_PIKE_CORRIDOR (g26 m35)
+	.include "data/maps/BattleFrontier_BattlePikeCorridor/header.inc"
+	@ MAP_BATTLE_FRONTIER_BATTLE_PIKE_THREE_PATH_ROOM (g26 m36)
+	.include "data/maps/BattleFrontier_BattlePikeThreePathRoom/header.inc"
+	@ MAP_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_NORMAL (g26 m37)
+	.include "data/maps/BattleFrontier_BattlePikeRoomNormal/header.inc"
+	@ MAP_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_FINAL (g26 m38)
+	.include "data/maps/BattleFrontier_BattlePikeRoomFinal/header.inc"
+	@ MAP_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS (g26 m39)
+	.include "data/maps/BattleFrontier_BattlePikeRoomWildMons/header.inc"
+	.incbin "baserom_jp.gba", 0x45D9BC, 0xEA8
 	.4byte BattleFrontier_BattlePikeLobby
-	.incbin "baserom_jp.gba", 0x45E868, 0x130
+	.4byte BattleFrontier_BattlePikeCorridor
+	.4byte BattleFrontier_BattlePikeThreePathRoom
+	.4byte BattleFrontier_BattlePikeRoomNormal
+	.4byte BattleFrontier_BattlePikeRoomFinal
+	.4byte BattleFrontier_BattlePikeRoomWildMons
+	.incbin "baserom_jp.gba", 0x45E87C, 0x11C
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

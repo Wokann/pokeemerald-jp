@@ -316,7 +316,10 @@ JP_STRUCTURED_MAPS += BattleFrontier_BattlePyramidLobby BattleFrontier_BattlePyr
 JP_STRUCTURED_MAPS += BattleFrontier_BattleArenaLobby BattleFrontier_BattleArenaCorridor \
 	BattleFrontier_BattleArenaBattleRoom
 JP_STRUCTURED_MAPS += BattleFrontier_BattleFactoryLobby BattleFrontier_BattleFactoryPreBattleRoom \
-	BattleFrontier_BattleFactoryBattleRoom BattleFrontier_BattlePikeLobby
+	BattleFrontier_BattleFactoryBattleRoom BattleFrontier_BattlePikeLobby \
+	BattleFrontier_BattlePikeCorridor BattleFrontier_BattlePikeThreePathRoom \
+	BattleFrontier_BattlePikeRoomNormal BattleFrontier_BattlePikeRoomFinal \
+	BattleFrontier_BattlePikeRoomWildMons
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
@@ -484,7 +487,10 @@ JP_STRUCTURED_MAP_METADATA_MAPS += BattleFrontier_BattlePyramidLobby BattleFront
 JP_STRUCTURED_MAP_METADATA_MAPS += BattleFrontier_BattleArenaLobby BattleFrontier_BattleArenaCorridor \
 	BattleFrontier_BattleArenaBattleRoom
 JP_STRUCTURED_MAP_METADATA_MAPS += BattleFrontier_BattleFactoryLobby BattleFrontier_BattleFactoryPreBattleRoom \
-	BattleFrontier_BattleFactoryBattleRoom BattleFrontier_BattlePikeLobby
+	BattleFrontier_BattleFactoryBattleRoom BattleFrontier_BattlePikeLobby \
+	BattleFrontier_BattlePikeCorridor BattleFrontier_BattlePikeThreePathRoom \
+	BattleFrontier_BattlePikeRoomNormal BattleFrontier_BattlePikeRoomFinal \
+	BattleFrontier_BattlePikeRoomWildMons
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)
