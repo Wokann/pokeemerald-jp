@@ -9915,7 +9915,7 @@ SECTIONS {
         data/data_b2d_mid32.o(.rodata.data_b2d_mid32_frontier_suffix);
         src/battle_transition.o(.rodata.battle_transition_task_data);
         src/battle_transition.o(.rodata.battle_transition_state_data);
-        data/data_b2d_mid65.o(.rodata.battle_transition_sprite_template_prefix);
+        src/battle_transition.o(.rodata.battle_transition_sprite_template_data);
         src/battle_transition.o(.rodata.battle_transition_palette_data);
         data/battle_transition_tilemaps.o(.rodata.battle_transition_tilemap_data);
         src/battle_transition.o(.rodata.battle_transition_frontier_state_data);

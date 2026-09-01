@@ -94,6 +94,12 @@ bool8 FrontierSquaresScroll_Erase(struct Task *task);
 bool8 FrontierSquaresScroll_End(struct Task *task);
 
 extern const u8 sPokeball_Gfx[];
+extern const u8 sUnusedBrendan_Gfx[];
+extern const u8 sUnusedLass_Gfx[];
+extern const struct OamData gObjectEventBaseOam_32x32;
+
+void SpriteCB_FldEffPokeballTrail(struct Sprite *sprite);
+void SpriteCB_MugshotTrainerPic(struct Sprite *sprite);
 
 #define BATTLE_TRANSITION_STATE_DATA __attribute__((section(".rodata.battle_transition_state_data")))
 
@@ -310,6 +316,81 @@ static const union AffineAnimCmd *const sSpriteAffineAnimTable_Pokeball[] BATTLE
 };
 
 #undef BATTLE_TRANSITION_STATE_DATA
+
+#define BATTLE_TRANSITION_SPRITE_TEMPLATE_DATA __attribute__((section(".rodata.battle_transition_sprite_template_data")))
+
+const struct SpriteTemplate sSpriteTemplate_Pokeball BATTLE_TRANSITION_SPRITE_TEMPLATE_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_POKEBALL_TRAIL,
+    .oam = &gObjectEventBaseOam_32x32,
+    .anims = sSpriteAnimTable_Pokeball,
+    .images = sSpriteImage_Pokeball,
+    .affineAnims = sSpriteAffineAnimTable_Pokeball,
+    .callback = SpriteCB_FldEffPokeballTrail,
+};
+
+const struct OamData sOam_UnusedBrendanLass BATTLE_TRANSITION_SPRITE_TEMPLATE_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+const struct SpriteFrameImage sImageTable_UnusedBrendan[] BATTLE_TRANSITION_SPRITE_TEMPLATE_DATA =
+{
+    {sUnusedBrendan_Gfx, 0x800},
+};
+
+const struct SpriteFrameImage sImageTable_UnusedLass[] BATTLE_TRANSITION_SPRITE_TEMPLATE_DATA =
+{
+    {sUnusedLass_Gfx, 0x800},
+};
+
+const union AnimCmd sSpriteAnim_UnusedBrendanLass[] BATTLE_TRANSITION_SPRITE_TEMPLATE_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+const union AnimCmd *const sSpriteAnimTable_UnusedBrendanLass[] BATTLE_TRANSITION_SPRITE_TEMPLATE_DATA =
+{
+    sSpriteAnim_UnusedBrendanLass,
+};
+
+const struct SpriteTemplate sSpriteTemplate_UnusedBrendan BATTLE_TRANSITION_SPRITE_TEMPLATE_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = PALTAG_UNUSED_MUGSHOT,
+    .oam = &sOam_UnusedBrendanLass,
+    .anims = sSpriteAnimTable_UnusedBrendanLass,
+    .images = sImageTable_UnusedBrendan,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_MugshotTrainerPic,
+};
+
+const struct SpriteTemplate sSpriteTemplate_UnusedLass BATTLE_TRANSITION_SPRITE_TEMPLATE_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = PALTAG_UNUSED_MUGSHOT,
+    .oam = &sOam_UnusedBrendanLass,
+    .anims = sSpriteAnimTable_UnusedBrendanLass,
+    .images = sImageTable_UnusedLass,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_MugshotTrainerPic,
+};
+
+#undef BATTLE_TRANSITION_SPRITE_TEMPLATE_DATA
 
 #define BATTLE_TRANSITION_PALETTE_DATA __attribute__((section(".rodata.battle_transition_palette_data")))
 
@@ -3100,7 +3181,7 @@ __attribute__((naked)) bool8 FldEff_PokeballTrail(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081471EC: .4byte gUnknown_85A8918\n\t"
+        "_081471EC: .4byte sSpriteTemplate_Pokeball\n\t"
         "_081471F0: .4byte gFieldEffectArguments\n\t"
         "_081471F4: .4byte gSprites\n\t"
         "_081471F8: .4byte 0x0000FFFF\n\t"
