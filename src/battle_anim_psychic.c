@@ -8,10 +8,6 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 
-// JP: the psychic anim sprite templates and anim/affine data stay embedded
-// in ROM data (see the ABSOLUTE aliases in ld_script_jp.txt); only the
-// sprite callbacks are decompiled here, matching US pokeemerald.
-
 static void AnimDefensiveWall(struct Sprite *);
 static void AnimDefensiveWall_Step1(struct Sprite *);
 static void AnimDefensiveWall_Step2(struct Sprite *);
@@ -34,11 +30,400 @@ static void AnimTask_ExtrasensoryDistortion_Step(u8 taskId);
 static void AnimTask_TransparentCloneGrowAndShrink_Step(u8 taskId);
 static void AnimPsychoBoost(struct Sprite *);
 
-extern const union AffineAnimCmd *const sAffineAnims_QuestionMark[];
-extern const union AffineAnimCmd sAffineAnim_MeditateStretchAttacker[];
-extern const union AffineAnimCmd sAffineAnim_Teleport[];
-extern const struct SpriteTemplate gImprisonOrbSpriteTemplate;
-extern const struct SpriteTemplate gSkillSwapOrbSpriteTemplate;
+#define BATTLE_ANIM_PSYCHIC_DATA __attribute__((section(".rodata.battle_anim_psychic_data")))
+
+static const union AffineAnimCmd sAffineAnim_PsychUpSpiral[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0xFFFE, 0xFFFE, -10, 120),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_PsychUpSpiral[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    sAffineAnim_PsychUpSpiral,
+};
+
+const struct SpriteTemplate gPsychUpSpiralSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_SPIRAL,
+    .paletteTag = ANIM_TAG_SPIRAL,
+    .oam = &gOamData_AffineNormal_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_PsychUpSpiral,
+    .callback = AnimSpriteOnMonPos,
+};
+
+const struct SpriteTemplate gLightScreenWallSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_GREEN_LIGHT_WALL,
+    .paletteTag = ANIM_TAG_GREEN_LIGHT_WALL,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimDefensiveWall,
+};
+
+const struct SpriteTemplate gReflectWallSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_BLUE_LIGHT_WALL,
+    .paletteTag = ANIM_TAG_BLUE_LIGHT_WALL,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimDefensiveWall,
+};
+
+const struct SpriteTemplate gMirrorCoatWallSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_RED_LIGHT_WALL,
+    .paletteTag = ANIM_TAG_RED_LIGHT_WALL,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimDefensiveWall,
+};
+
+const struct SpriteTemplate gBarrierWallSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_GRAY_LIGHT_WALL,
+    .paletteTag = ANIM_TAG_GRAY_LIGHT_WALL,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimDefensiveWall,
+};
+
+const struct SpriteTemplate gMagicCoatWallSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_ORANGE_LIGHT_WALL,
+    .paletteTag = ANIM_TAG_ORANGE_LIGHT_WALL,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimDefensiveWall,
+};
+
+static const union AnimCmd sAnim_ReflectSparkle[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_FRAME(16, 3),
+    ANIMCMD_FRAME(32, 3),
+    ANIMCMD_FRAME(48, 3),
+    ANIMCMD_FRAME(64, 3),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_ReflectSparkle[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    sAnim_ReflectSparkle,
+};
+
+const struct SpriteTemplate gReflectSparkleSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_SPARKLE_4,
+    .paletteTag = ANIM_TAG_SPARKLE_4,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_ReflectSparkle,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimWallSparkle,
+};
+
+static const union AnimCmd sAnim_SpecialScreenSparkle[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_FRAME(12, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_SpecialScreenSparkle[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    sAnim_SpecialScreenSparkle,
+};
+
+const struct SpriteTemplate gSpecialScreenSparkleSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_SPARKLE_3,
+    .paletteTag = ANIM_TAG_SPARKLE_3,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = sAnims_SpecialScreenSparkle,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimWallSparkle,
+};
+
+const struct SpriteTemplate gGoldRingSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_GOLD_RING,
+    .paletteTag = ANIM_TAG_GOLD_RING,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = TranslateAnimSpriteToTargetMonLocation,
+};
+
+static const union AnimCmd sAnim_BentSpoon_0[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    ANIMCMD_FRAME(8, 60, .hFlip = TRUE),
+    ANIMCMD_FRAME(16, 5, .hFlip = TRUE),
+    ANIMCMD_FRAME(8, 5, .hFlip = TRUE),
+    ANIMCMD_FRAME(0, 5, .hFlip = TRUE),
+    ANIMCMD_FRAME(8, 22, .hFlip = TRUE),
+    ANIMCMD_LOOP(0),
+    ANIMCMD_FRAME(16, 5, .hFlip = TRUE),
+    ANIMCMD_FRAME(8, 5, .hFlip = TRUE),
+    ANIMCMD_FRAME(0, 5, .hFlip = TRUE),
+    ANIMCMD_FRAME(8, 5, .hFlip = TRUE),
+    ANIMCMD_LOOP(1),
+    ANIMCMD_FRAME(8, 22, .hFlip = TRUE),
+    ANIMCMD_FRAME(24, 3, .hFlip = TRUE),
+    ANIMCMD_FRAME(32, 3, .hFlip = TRUE),
+    ANIMCMD_FRAME(40, 22, .hFlip = TRUE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_BentSpoon_1[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    ANIMCMD_FRAME(8, 60),
+    ANIMCMD_FRAME(16, 5),
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_FRAME(8, 22),
+    ANIMCMD_LOOP(0),
+    ANIMCMD_FRAME(16, 5),
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_LOOP(1),
+    ANIMCMD_FRAME(8, 22),
+    ANIMCMD_FRAME(24, 3),
+    ANIMCMD_FRAME(32, 3),
+    ANIMCMD_FRAME(40, 22),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_BentSpoon[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    sAnim_BentSpoon_0,
+    sAnim_BentSpoon_1,
+};
+
+const struct SpriteTemplate gBentSpoonSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_BENT_SPOON,
+    .paletteTag = ANIM_TAG_BENT_SPOON,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
+    .anims = sAnims_BentSpoon,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimBentSpoon,
+};
+
+static const union AnimCmd sAnim_QuestionMark[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    ANIMCMD_FRAME(0, 6),
+    ANIMCMD_FRAME(16, 6),
+    ANIMCMD_FRAME(32, 6),
+    ANIMCMD_FRAME(48, 6),
+    ANIMCMD_FRAME(64, 6),
+    ANIMCMD_FRAME(80, 6),
+    ANIMCMD_FRAME(96, 18),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_QuestionMark[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    sAnim_QuestionMark,
+};
+
+static const union AffineAnimCmd sAffineAnim_QuestionMark[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    AFFINEANIMCMD_FRAME(0, 0, 4, 4),
+    AFFINEANIMCMD_FRAME(0, 0, -4, 8),
+    AFFINEANIMCMD_FRAME(0, 0, 4, 4),
+    AFFINEANIMCMD_LOOP(2),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_QuestionMark[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    sAffineAnim_QuestionMark,
+};
+
+const struct SpriteTemplate gQuestionMarkSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_AMNESIA,
+    .paletteTag = ANIM_TAG_AMNESIA,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_QuestionMark,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimQuestionMark,
+};
+
+static const union AffineAnimCmd sAffineAnim_MeditateStretchAttacker[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    AFFINEANIMCMD_FRAME(-8, 10, 0, 16),
+    AFFINEANIMCMD_FRAME(18, -18, 0, 16),
+    AFFINEANIMCMD_FRAME(-20, 16, 0, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_Teleport[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    AFFINEANIMCMD_FRAME(64, -4, 0, 20),
+    AFFINEANIMCMD_FRAME(0, 0, 0, -56),
+    AFFINEANIMCMD_END,
+};
+
+const struct SpriteTemplate gImprisonOrbSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_HOLLOW_ORB,
+    .paletteTag = ANIM_TAG_HOLLOW_ORB,
+    .oam = &gOamData_AffineOff_ObjBlend_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+const struct SpriteTemplate gRedXSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_X_SIGN,
+    .paletteTag = ANIM_TAG_X_SIGN,
+    .oam = &gOamData_AffineOff_ObjNormal_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimRedX,
+};
+
+static const union AffineAnimCmd sAffineAnim_SkillSwapOrb_0[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 8),
+    AFFINEANIMCMD_FRAME(0x8, 0x8, 0, 8),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd sAffineAnim_SkillSwapOrb_1[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xF0, 0xF0, 0, 0),
+    AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 6),
+    AFFINEANIMCMD_FRAME(0x8, 0x8, 0, 8),
+    AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 2),
+    AFFINEANIMCMD_JUMP(1),
+};
+
+static const union AffineAnimCmd sAffineAnim_SkillSwapOrb_2[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xD0, 0xD0, 0, 0),
+    AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 4),
+    AFFINEANIMCMD_FRAME(0x8, 0x8, 0, 8),
+    AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 4),
+    AFFINEANIMCMD_JUMP(1),
+};
+
+static const union AffineAnimCmd sAffineAnim_SkillSwapOrb_3[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xB0, 0xB0, 0, 0),
+    AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 2),
+    AFFINEANIMCMD_FRAME(0x8, 0x8, 0, 8),
+    AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 6),
+    AFFINEANIMCMD_JUMP(1),
+};
+
+static const union AffineAnimCmd *const sAffineAnims_SkillSwapOrb[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    sAffineAnim_SkillSwapOrb_0,
+    sAffineAnim_SkillSwapOrb_1,
+    sAffineAnim_SkillSwapOrb_2,
+    sAffineAnim_SkillSwapOrb_3,
+};
+
+const struct SpriteTemplate gSkillSwapOrbSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_BLUEGREEN_ORB,
+    .paletteTag = ANIM_TAG_BLUEGREEN_ORB,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_SkillSwapOrb,
+    .callback = AnimSkillSwapOrb,
+};
+
+static const union AffineAnimCmd sAffineAnim_LusterPurgeCircle[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x20, 0x20, 0, 0),
+    AFFINEANIMCMD_FRAME(0x4, 0x4, 0, 120),
+    AFFINEANIMCMD_END_ALT(1),
+};
+
+static const union AffineAnimCmd *const sAffineAnims_LusterPurgeCircle[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    sAffineAnim_LusterPurgeCircle,
+};
+
+const struct SpriteTemplate gLusterPurgeCircleSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_WHITE_CIRCLE_OF_LIGHT,
+    .paletteTag = ANIM_TAG_WHITE_CIRCLE_OF_LIGHT,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_LusterPurgeCircle,
+    .callback = AnimSpriteOnMonPos,
+};
+
+static const union AffineAnimCmd sAffineAnim_PsychoBoostOrb_0[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x20, 0x20, 0, 0),
+    AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 17),
+    AFFINEANIMCMD_LOOP(0),
+    AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 10),
+    AFFINEANIMCMD_FRAME(0x8, 0x8, 0, 10),
+    AFFINEANIMCMD_LOOP(4),
+    AFFINEANIMCMD_LOOP(0),
+    AFFINEANIMCMD_FRAME(0xFFF0, 0xFFF0, 0, 5),
+    AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 5),
+    AFFINEANIMCMD_LOOP(7),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_PsychoBoostOrb_1[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xFFEC, 0x18, 0, 15),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_PsychoBoostOrb[] BATTLE_ANIM_PSYCHIC_DATA =
+{
+    sAffineAnim_PsychoBoostOrb_0,
+    sAffineAnim_PsychoBoostOrb_1,
+};
+
+const struct SpriteTemplate gPsychoBoostOrbSpriteTemplate BATTLE_ANIM_PSYCHIC_DATA =
+{
+    .tileTag = ANIM_TAG_CIRCLE_OF_LIGHT,
+    .paletteTag = ANIM_TAG_CIRCLE_OF_LIGHT,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_PsychoBoostOrb,
+    .callback = AnimPsychoBoost,
+};
+
+// For the rectangular wall sprite used by Reflect, Mirror Coat, etc
+#undef BATTLE_ANIM_PSYCHIC_DATA
 
 static void AnimDefensiveWall(struct Sprite *sprite)
 {
