@@ -413,7 +413,6 @@ LilycoveCity_EventScript_DontKnowAboutBerryBlender::
 	msgbox LilycoveCity_Text_ExplainBerryBlender, MSGBOX_DEFAULT
 	return
 
-	.globl LilycoveCity_Text_MayShoppingLetsBattle
 LilycoveCity_Text_MayShoppingLetsBattle: @ 0x081E0696
 	.string "ハルカ“あら！？\n"
 	.string "{PLAYER}{KUN}も　おかいもの？\p"
@@ -426,25 +425,21 @@ LilycoveCity_Text_MayShoppingLetsBattle: @ 0x081E0696
 	.string "しょうぶ　してあげるから\n"
 	.string "{PLAYER}{KUN}の　ポケモン　みせてよ！$"
 
-	.globl LilycoveCity_Text_MayNotRaisingPokemon
 LilycoveCity_Text_MayNotRaisingPokemon: @ 0x081E0733
 	.string "ハルカ“えー　なんで？\n"
 	.string "{PLAYER}{KUN}　ポケモン　そだててないの？\p"
 	.string "それじゃあ　トレーナーとして\n"
 	.string "まだまだ　ね！$"
 
-	.globl LilycoveCity_Text_MayBattleMe
 LilycoveCity_Text_MayBattleMe: @ 0x081E0769
 	.string "ハルカ“しょうぶ　してあげるから\n"
 	.string "{PLAYER}{KUN}の　ポケモン　みせてよ！$"
 
-	.globl LilycoveCity_Text_MayWontBeBeaten
 LilycoveCity_Text_MayWontBeBeaten: @ 0x081E078B
 	.string "ハルカ“あたしの　そだてた　ポケモンが\n"
 	.string "{PLAYER}{KUN}の　ポケモンに\l"
 	.string "まけるわけ　ないんだから！$"
 
-	.globl LilycoveCity_Text_MayDefeat
 LilycoveCity_Text_MayDefeat: @ 0x081E07B9
 	.string "⋯⋯　⋯⋯　⋯⋯\p"
 	.string "103ばん　どうろで\n"
@@ -454,7 +449,6 @@ LilycoveCity_Text_MayDefeat: @ 0x081E07B9
 	.string "{PLAYER}{KUN}　ここまで\l"
 	.string "つよく　なったんだね！$"
 
-	.globl LilycoveCity_Text_MayGoingBackToLittleroot
 LilycoveCity_Text_MayGoingBackToLittleroot: @ 0x081E080D
 	.string "ハルカ“あたし　そろそろ\n"
 	.string "ミシロタウンに　かえる　つもりなの\p"
@@ -462,7 +456,6 @@ LilycoveCity_Text_MayGoingBackToLittleroot: @ 0x081E080D
 	.string "ずかんも　けっこう　できてきたから\l"
 	.string "おとうさんに　みせるんだ！$"
 
-	.globl LilycoveCity_Text_MayYouGoingToCollectBadges
 LilycoveCity_Text_MayYouGoingToCollectBadges: @ 0x081E085C
 	.string "{PLAYER}{KUN}は　どうするの？\p"
 	.string "あちこちの　ジムバッジを　あつめて\n"
@@ -472,7 +465,6 @@ LilycoveCity_Text_MayYouGoingToCollectBadges: @ 0x081E085C
 	.string "ポケモンずかんを　かんせい　させちゃお！\p"
 	.string "じゃね！$"
 
-	.globl LilycoveCity_Text_MayYouGoingToPokemonLeague
 LilycoveCity_Text_MayYouGoingToPokemonLeague: @ 0x081E08C7
 	.string "{PLAYER}{KUN}は　どうするの？\p"
 	.string "ポケモンリーグ　ちょうせん　するの？\p"
@@ -483,7 +475,6 @@ LilycoveCity_Text_MayYouGoingToPokemonLeague: @ 0x081E08C7
 	.string "さきに　かんせい　させるんだから！\p"
 	.string "じゃね！$"
 
-	.globl LilycoveCity_Text_MayYouGoingToBattleFrontier
 LilycoveCity_Text_MayYouGoingToBattleFrontier: @ 0x081E0939
 	.string "{PLAYER}{KUN}は　どうするの？\p"
 	.string "バトルフロンティアに　ちょうせん　する？\n"
@@ -493,7 +484,6 @@ LilycoveCity_Text_MayYouGoingToBattleFrontier: @ 0x081E0939
 	.string "さきに　かんせい　させるんだから！\p"
 	.string "じゃね！$"
 
-	.globl LilycoveCity_Text_BrendanShoppingLetsBattle
 LilycoveCity_Text_BrendanShoppingLetsBattle: @ 0x081E09A9
 	.string "ユウキ“なんだ　{PLAYER}か\p"
 	.string "オレ　とうさんに　たのまれた\n"
@@ -504,23 +494,19 @@ LilycoveCity_Text_BrendanShoppingLetsBattle: @ 0x081E09A9
 	.string "ポケモン　そだてているか\l"
 	.string "しょうぶ　してやろうか？$"
 
-	.globl LilycoveCity_Text_BrendanNoConfidence
 LilycoveCity_Text_BrendanNoConfidence: @ 0x081E0A1B
 	.string "ユウキ“なんだよ\n"
 	.string "じしんが　ないのかよ$"
 
-	.globl LilycoveCity_Text_BrendanBattleMe
 LilycoveCity_Text_BrendanBattleMe: @ 0x081E0A2F
 	.string "ユウキ“どっちが　うまく\n"
 	.string "ポケモン　そだてているか\l"
 	.string "しょうぶ　してやろうか？$"
 
-	.globl LilycoveCity_Text_BrendanWontBeBeaten
 LilycoveCity_Text_BrendanWontBeBeaten: @ 0x081E0A56
 	.string "ユウキ“まあ　オレが\n"
 	.string "{PLAYER}に　まけるわけ　ないんだけど$"
 
-	.globl LilycoveCity_Text_BrendanDefeat
 LilycoveCity_Text_BrendanDefeat: @ 0x081E0A72
 	.string "ふうん⋯⋯\n"
 	.string "かなり　そだててるんだな\p"
@@ -528,7 +514,6 @@ LilycoveCity_Text_BrendanDefeat: @ 0x081E0A72
 	.string "トレーナーとしては　オレの　ほうが\l"
 	.string "センパイ　だったのに⋯⋯$"
 
-	.globl LilycoveCity_Text_BrendanGoingBackToLittleroot
 LilycoveCity_Text_BrendanGoingBackToLittleroot: @ 0x081E0AAF
 	.string "ユウキ“オレ⋯⋯\n"
 	.string "ミシロタウンに　もどるつもり　なんだ\p"
@@ -536,7 +521,6 @@ LilycoveCity_Text_BrendanGoingBackToLittleroot: @ 0x081E0AAF
 	.string "ポケモンずかんも　けっこう　できてきたし\l"
 	.string "いちど　とうさんに　みせておかないと$"
 
-	.globl LilycoveCity_Text_BrendanYouGoingToCollectBadges
 LilycoveCity_Text_BrendanYouGoingToCollectBadges: @ 0x081E0B06
 	.string "{PLAYER}は　どうする？\p"
 	.string "やっぱり　ぜんぶの　ジムバッジ　あつめて\n"
@@ -545,7 +529,6 @@ LilycoveCity_Text_BrendanYouGoingToCollectBadges: @ 0x081E0B06
 	.string "まあ　いいや\n"
 	.string "とにかく　がんばれよ！$"
 
-	.globl LilycoveCity_Text_BrendanYouGoingToPokemonLeague
 LilycoveCity_Text_BrendanYouGoingToPokemonLeague: @ 0x081E0B58
 	.string "{PLAYER}は　どうする？\p"
 	.string "そんなに　つよいんだから\n"
@@ -556,7 +539,6 @@ LilycoveCity_Text_BrendanYouGoingToPokemonLeague: @ 0x081E0B58
 	.string "まあ　いいや\n"
 	.string "とにかく　がんばれよ！$"
 
-	.globl LilycoveCity_Text_BrendanYouGoingToBattleFrontier
 LilycoveCity_Text_BrendanYouGoingToBattleFrontier: @ 0x081E0BC3
 	.string "{PLAYER}は　どうする？\p"
 	.string "バトルフロンティアに　ちょうせん　する？\n"
@@ -570,7 +552,6 @@ LilycoveCity_Text_BrendanYouGoingToBattleFrontier: @ 0x081E0BC3
 	.string "まあ　いいや\n"
 	.string "とにかく　がんばれよ！$"
 
-	.globl LilycoveCity_Text_MovedLootIntoHideoutToday
 LilycoveCity_Text_MovedLootIntoHideoutToday: @ 0x081E0C6D
 	.string "ふふふ⋯⋯\p"
 	.string "きょうも　うばった　ブツを\n"
@@ -578,7 +559,6 @@ LilycoveCity_Text_MovedLootIntoHideoutToday: @ 0x081E0C6D
 	.string "なっ　なんだ　おまえ！\n"
 	.string "いっ　いまのは　ひとりごと　だぞ！$"
 
-	.globl LilycoveCity_Text_ChanceToDoBigThings
 LilycoveCity_Text_ChanceToDoBigThings: @ 0x081E0CAE
 	.string "リーダーが　なに　かんがえてるのか\n"
 	.string "したっぱの　オレには　わからんが\p"
@@ -587,7 +567,6 @@ LilycoveCity_Text_ChanceToDoBigThings: @ 0x081E0CAE
 	.string "なっ　なんだ　おまえ！\n"
 	.string "いっ　いまのは　ひとりごと　だぞ！$"
 
-	.globl LilycoveCity_Text_DontGoNearCaveInCove
 LilycoveCity_Text_DontGoNearCaveInCove: @ 0x081E0D08
 	.string "おい　おまえ！\p"
 	.string "いりえに　ある\n"
@@ -595,24 +574,20 @@ LilycoveCity_Text_DontGoNearCaveInCove: @ 0x081E0D08
 	.string "なぜって？　りゆうは　どうでも　いいんだ！\n"
 	.string "おとなの　いうこと　きけよな！！$"
 
-	.globl LilycoveCity_Text_IfWorldBecomesOurs
 LilycoveCity_Text_IfWorldBecomesOurs: @ 0x081E0D4E
 	.string "この　ひろい　せかい　すべてが\n"
 	.string "おれら　アクアだんの　ものに　なったら\l"
 	.string "ポケモンも　しあわせに　なれるはずだ！$"
 
-	.globl LilycoveCity_Text_WailmerLeapOutOfWater
 LilycoveCity_Text_WailmerLeapOutOfWater: @ 0x081E0D86
 	.string "それっ！　ホエルコ！\n"
 	.string "そこで　すいめんから　ジャンプするのだ！$"
 
-	.globl LilycoveCity_Text_GetLostMessingUpTraining
 LilycoveCity_Text_GetLostMessingUpTraining: @ 0x081E0DA6
 	.string "⋯⋯ん？　なんだ　おまえは？\p"
 	.string "トレーニングの　じゃまに　なるから\n"
 	.string "あっちに　いっててくれ！$"
 
-	.globl LilycoveCity_Text_ContestHallInTown
 LilycoveCity_Text_ContestHallInTown: @ 0x081E0DD4
 	.string "この　まちに　ポケモンコンテストの\n"
 	.string "かいじょうが　あるんだな！\p"
@@ -620,12 +595,10 @@ LilycoveCity_Text_ContestHallInTown: @ 0x081E0DD4
 	.string "いっぱい　あつまって　いるんだな！\p"
 	.string "わしの　ハートは　わくわく　なんだな！$"
 
-	.globl LilycoveCity_Text_StrangeCaveInCove
 LilycoveCity_Text_StrangeCaveInCove: @ 0x081E0E2F
 	.string "まちの　はずれの　いりえに\n"
 	.string "おかしな　どうくつが　あるの　みた？$"
 
-	.globl LilycoveCity_Text_GoingToMoveDeleterForHMs
 LilycoveCity_Text_GoingToMoveDeleterForHMs: @ 0x081E0E50
 	.string "あたしの　ポケモン\n"
 	.string "コンテストの　ために　あたらしい　わざを\l"
@@ -633,7 +606,6 @@ LilycoveCity_Text_GoingToMoveDeleterForHMs: @ 0x081E0E50
 	.string "だからね　わざわすれ　じいさんに　たのんで\n"
 	.string "ひでんわざを　わすれさせて　もらうのよ！$"
 
-	.globl LilycoveCity_Text_ImFromKanto
 LilycoveCity_Text_ImFromKanto: @ 0x081E0EA8
 	.string "ぼくは　カントーから　きました！\p"
 	.string "ホウエン　ちほうは　みずと　みどりに\n"
@@ -642,7 +614,6 @@ LilycoveCity_Text_ImFromKanto: @ 0x081E0EA8
 	.string "この　とち　だけに　せいそくする\n"
 	.string "めずらしい　ポケモンが　いるのかも？$"
 
-	.globl LilycoveCity_Text_TeamAquaBeenTrainingWailmer
 LilycoveCity_Text_TeamAquaBeenTrainingWailmer: @ 0x081E0F11
 	.string "アクアだんの　れんちゅうが\n"
 	.string "いりえで　ホエルコを\l"
@@ -650,7 +621,6 @@ LilycoveCity_Text_TeamAquaBeenTrainingWailmer: @ 0x081E0F11
 	.string "おいらたち　ふなのり\n"
 	.string "このままじゃ　うみに　でられないよ！$"
 
-	.globl LilycoveCity_Text_SomeonePuntedTeamAquaOut
 LilycoveCity_Text_SomeonePuntedTeamAquaOut: @ 0x081E0F57
 	.string "あんた　しってるかい？\p"
 	.string "だれかが　アクアだんを\n"
@@ -658,7 +628,6 @@ LilycoveCity_Text_SomeonePuntedTeamAquaOut: @ 0x081E0F57
 	.string "おかげで　ホエルコ　いなくなって\n"
 	.string "うみに　でられるように　なったよ！$"
 
-	.globl LilycoveCity_Text_SomeoneStoleMyPokemon
 LilycoveCity_Text_SomeoneStoleMyPokemon: @ 0x081E0FA2
 	.string "うみべの　やどで　なみの　おとを\n"
 	.string "ききながら　のんびり　おひるね\l"
@@ -667,12 +636,10 @@ LilycoveCity_Text_SomeoneStoleMyPokemon: @ 0x081E0FA2
 	.string "はんにんは　だれー！？\n"
 	.string "アクアだん？　アクアだん　なのー！？$"
 
-	.globl LilycoveCity_Text_MissingPokemonCameBack
 LilycoveCity_Text_MissingPokemonCameBack: @ 0x081E0FFF
 	.string "いなくなってた　わたしの　ポケモン\n"
 	.string "いつのまにか　かえってきたの！$"
 
-	.globl LilycoveCity_Text_ImArtDealer
 LilycoveCity_Text_ImArtDealer: @ 0x081E1021
 	.string "わたしは　ガショウ　です！\p"
 	.string "いや　そういう　なまえ　なのではなく\n"
@@ -681,21 +648,18 @@ LilycoveCity_Text_ImArtDealer: @ 0x081E1021
 	.string "このまちの　びじゅつかんに　すばらしい\n"
 	.string "めいが　が　あると　きいたの　ですが⋯⋯$"
 
-	.globl LilycoveCity_Text_SeaRemainsForeverYoung
 LilycoveCity_Text_SeaRemainsForeverYoung: @ 0x081E1092
 	.string "わしらが　しわくちゃに　なっても\n"
 	.string "このうみは　いつまでも　わかわかしく\l"
 	.string "いのちの　かがやきに　あふれとる\p"
 	.string "ふほほ　ふほほほほ⋯⋯$"
 
-	.globl LilycoveCity_Text_SixtyYearsAgoHusbandProposed
 LilycoveCity_Text_SixtyYearsAgoHusbandProposed: @ 0x081E10D3
 	.string "60ねんまえ　ここで　おじいしゃんが\n"
 	.string "わしに　プロポーズ　してくれた　ときから\l"
 	.string "このうみは　うつくしいまま　ですのじゃ\p"
 	.string "むふふ　むふふふふ⋯⋯$"
 
-	.globl LilycoveCity_Text_TeamAquaRenovatedCavern
 LilycoveCity_Text_TeamAquaRenovatedCavern: @ 0x081E111B
 	.string "この　いりえの　ところに　おかしな\n"
 	.string "どうくつの　いりぐちが　ある　じゃろう？\p"
@@ -706,99 +670,82 @@ LilycoveCity_Text_TeamAquaRenovatedCavern: @ 0x081E111B
 	.string "⋯⋯と　いっておるが\p"
 	.string "いうことと　やることが　ちがっとる！$"
 
-	.globl LilycoveCity_Text_TeamAquaLotGoneForGood
 LilycoveCity_Text_TeamAquaLotGoneForGood: @ 0x081E11AF
 	.string "いりえに　あった　どうくつ⋯⋯\n"
 	.string "いつのまにやら　カラッポに　なっておる\p"
 	.string "アクアだんの　れんちゅう\n"
 	.string "どこかへ　いって　しまったらしい　のう$"
 
-	.globl LilycoveCity_Text_CitySign
 LilycoveCity_Text_CitySign: @ 0x081E11F4
 	.string "ここは　ミナモ　シティ\n"
 	.string "りくちの　さいはて　うみの　はじまり$"
 
-	.globl LilycoveCity_Text_ContestHallSign
 LilycoveCity_Text_ContestHallSign: @ 0x081E1213
 	.string "ポケモンコンテスト　かいじょう\n"
 	.string "あつまれ！　ポケモン　トレーナー$"
 
-	.globl LilycoveCity_Text_MotelSign
 LilycoveCity_Text_MotelSign: @ 0x081E1234
 	.string "‘みんしゅく　モナミ’\n"
 	.string "ミナモのモナミ　と　おぼえて　ください$"
 
-	.globl LilycoveCity_Text_MuseumSign
 LilycoveCity_Text_MuseumSign: @ 0x081E1254
 	.string "‘ミナモ　びじゅつかん’\n"
 	.string "ポケモン　めいがてん　かいさい　ちゅう！$"
 
-	.globl LilycoveCity_Text_MuseumSignPlayersExhibit
 LilycoveCity_Text_MuseumSignPlayersExhibit: @ 0x081E1276
 	.string "‘ミナモ　びじゅつかん’\p"
 	.string "{PLAYER}の　ポケモン　コレクション\n"
 	.string "かいさい　ちゅう！$"
 
-	.globl LilycoveCity_Text_HarborSignUnderConstruction
 LilycoveCity_Text_HarborSignUnderConstruction: @ 0x081E129D
 	.string "‘ミナモ　シティ　ふねのりば’\p"
 	.string "れんらくせん　タイドリップごう　は\n"
 	.string "カイナシティにて　けんぞう　ちゅう！\p"
 	.string "もう　しばらく　おまちください！$"
 
-	.globl LilycoveCity_Text_HarborSign
 LilycoveCity_Text_HarborSign: @ 0x081E12E3
 	.string "‘ミナモ　シティ　ふねのりば’\p"
 	.string "れんらくせん　タイドリップごうで\n"
 	.string "ふねの　たびを　おたのしみ　ください！$"
 
-	.globl LilycoveCity_Text_TrainerFanClubSign
 LilycoveCity_Text_TrainerFanClubSign: @ 0x081E1318
 	.string "‘ポケモン　トレーナー　ファンクラブ’\p"
 	.string "かんばんに　いろんな　トレーナーの\n"
 	.string "なまえが　らくがき　されている⋯⋯$"
 
-	.globl LilycoveCity_Text_DepartmentStoreSign
 LilycoveCity_Text_DepartmentStoreSign: @ 0x081E1350
 	.string "‘ミナモ　デパート’\p"
 	.string "グッズ　いっぱい！　ドキドキ　いっぱい！\n"
 	.string "なにかが　みつかる　すてきな　ところ$"
 
-	.globl LilycoveCity_Text_MoveDeletersHouseSign
 LilycoveCity_Text_MoveDeletersHouseSign: @ 0x081E1383
 	.string "‘わざわすれ　じいさんの　いえ’\n"
 	.string "ポケモンの　わざ　わすれさせます$"
 
-	.globl LilycoveCity_Text_DoYouKnowAboutBerryBlender
 LilycoveCity_Text_DoYouKnowAboutBerryBlender: @ 0x081E13A5
 	.string "きのみブレンダー　っていう\n"
 	.string "マシンを　しってるかい？$"
 
-	.globl LilycoveCity_Text_FasterSpinBetterPokeblocks
 LilycoveCity_Text_FasterSpinBetterPokeblocks: @ 0x081E13C0
 	.string "みんなで　こうそくで　まわし　まくるんだ\p"
 	.string "すっげー　はやいと\n"
 	.string "すっげー　いいポロックが　できるらしいぜ！$"
 
-	.globl LilycoveCity_Text_ExplainBerryBlender
 LilycoveCity_Text_ExplainBerryBlender: @ 0x081E13F5
 	.string "ポロックっていう　おかしが　できるんだぜ\p"
 	.string "いいポロックを　つくると　ポケモンの\n"
 	.string "コンディションも　ぐーんと　アップさ！$"
 
-	.globl LilycoveCity_Text_HeardTowerCalledSkyPillar
 LilycoveCity_Text_HeardTowerCalledSkyPillar: @ 0x081E1431
 	.string "あのな　どこかの　すいどうに\n"
 	.string "そらのはしら　とかいう　とうが\l"
 	.string "たってる　らしいぜ$"
 
-	.globl LilycoveCity_Text_SawTallTowerOnRoute131
 LilycoveCity_Text_SawTallTowerOnRoute131: @ 0x081E145A
 	.string "オレな　131ばん　すいどうの　あたりで\n"
 	.string "たかーい　とうを　みたんだけど\l"
 	.string "もしかして　それって⋯⋯？$"
 
-	.globl LilycoveCity_Text_JustArrivedAndSawRarePokemon
 LilycoveCity_Text_JustArrivedAndSawRarePokemon: @ 0x081E148D
 	.string "ぼくら　しんこん　りょこうで\n"
 	.string "このまちに　きたばかり　なんだけど\p"
@@ -808,7 +755,6 @@ LilycoveCity_Text_JustArrivedAndSawRarePokemon: @ 0x081E148D
 	.string "あんな　かっこいい　ポケモンが\l"
 	.string "せいそく　してるのかい？$"
 
-	.globl LilycoveCity_Text_HoneymoonVowToSeeRarePokemon
 LilycoveCity_Text_HoneymoonVowToSeeRarePokemon: @ 0x081E14F9
 	.string "わたしたちの　しんこん　りょこうは\n"
 	.string "かくちの　めずらしい　ポケモンを\l"
