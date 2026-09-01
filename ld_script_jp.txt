@@ -9409,7 +9409,7 @@ SECTIONS {
         src/data/pokemon/battle_moves.o(.rodata);
         gUnknown_82ED224 = gBattleMoves + 4;
         src/pokemon.o(.rodata.pokedex_order_data);
-        data/data_b2d.o(.rodata.data_b2d_after_battle_moves);
+        src/pokemon.o(.rodata.pokemon_spinda_data);
     src/data/pokemon/item_effects.o(.rodata);
     data/data_b2d.o(.rodata.data_b2d_after_item_effects);
     src/data/pokemon/tmhm_learnsets.o(.rodata);

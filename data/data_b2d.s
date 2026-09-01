@@ -18,17 +18,6 @@ gUnknown_82EC5FE: @ 0x82EC5FE
 
 	.incbin "baserom_jp.gba", 0x2ece95, 0x7
 
-	.section .rodata.data_b2d_after_battle_moves
-
-	.align 2
-	.globl gUnknown_82EEC78
-gUnknown_82EEC78: @ 0x82EEC78
-	.incbin "baserom_jp.gba", 0x2eec78, 0x2
-
-	.globl gUnknown_82EEC7A
-gUnknown_82EEC7A: @ 0x82EEC7A
-	.incbin "baserom_jp.gba", 0x2eec7a, 0x8e
-
 	.section .rodata.data_b2d_after_item_effects
 
 	.globl gUnknown_82EF1A0

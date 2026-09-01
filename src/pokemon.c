@@ -5,6 +5,7 @@
 #include "constants/trainers.h"
 
 #define POKEDEX_ORDER_DATA __attribute__((section(".rodata.pokedex_order_data")))
+#define POKEMON_SPINDA_DATA __attribute__((section(".rodata.pokemon_spinda_data")))
 
 struct CombinedMove
 {
@@ -1272,6 +1273,34 @@ POKEDEX_ORDER_DATA static const u16 sHoennToNationalOrder[NUM_SPECIES - 1] =
     HOENN_TO_NATIONAL(OLD_UNOWN_X),
     HOENN_TO_NATIONAL(OLD_UNOWN_Y),
     HOENN_TO_NATIONAL(OLD_UNOWN_Z),
+};
+
+const ALIGNED(4) struct SpindaSpot gSpindaSpotGraphics[] POKEMON_SPINDA_DATA =
+{
+    {
+        .x = 16,
+        .y = 7,
+        .image = {0x0070, 0x01FC, 0x03FE, 0x07FE, 0x07FF, 0x0FFF, 0x0FFF, 0x0FFF,
+                  0x07FE, 0x07FE, 0x03FC, 0x01E0, 0x0000, 0x0000, 0x0000, 0x0000},
+    },
+    {
+        .x = 40,
+        .y = 8,
+        .image = {0x01E0, 0x03F8, 0x07FC, 0x0FFE, 0x0FFE, 0x1FFF, 0x1FFF, 0x1FFF,
+                  0x0FFE, 0x0FFE, 0x07FC, 0x07F8, 0x00E0, 0x0000, 0x0000, 0x0000},
+    },
+    {
+        .x = 22,
+        .y = 25,
+        .image = {0x001C, 0x003E, 0x007F, 0x007F, 0x007F, 0x007F, 0x007F, 0x003E,
+                  0x001C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000},
+    },
+    {
+        .x = 34,
+        .y = 26,
+        .image = {0x003C, 0x007E, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x007E,
+                  0x003C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000},
+    },
 };
 
 __attribute__((naked)) void ZeroBoxMonData(struct BoxPokemon *boxMon)
@@ -13161,8 +13190,8 @@ __attribute__((naked)) void sub_0806D008(void)
         "	b _0806D0F6\n\t"
         "	.align 2, 0\n\t"
         "_0806D0D8: .4byte gMonSpritesGfxPtr\n\t"
-        "_0806D0DC: .4byte gUnknown_82EEC78\n\t"
-        "_0806D0E0: .4byte gUnknown_82EEC7A\n\t"
+        "_0806D0DC: .4byte gSpindaSpotGraphics\n\t"
+        "_0806D0E0: .4byte gSpindaSpotGraphics + 2\n\t"
         "_0806D0E4:\n\t"
         "	ldrb r1, [r2]\n\t"
         "	movs r0, #0xf\n\t"
@@ -13315,8 +13344,8 @@ __attribute__((naked)) void DrawSpindaSpots(u16 species, u32 personality, u8 *de
         "	adds r0, #0x40\n\t"
         "	b _0806D20A\n\t"
         "	.align 2, 0\n\t"
-        "_0806D1F0: .4byte gUnknown_82EEC78\n\t"
-        "_0806D1F4: .4byte gUnknown_82EEC7A\n\t"
+        "_0806D1F0: .4byte gSpindaSpotGraphics\n\t"
+        "_0806D1F4: .4byte gSpindaSpotGraphics + 2\n\t"
         "_0806D1F8:\n\t"
         "	ldrb r1, [r2]\n\t"
         "	movs r0, #0xf\n\t"
