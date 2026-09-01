@@ -6,6 +6,7 @@
 
 #define POKEDEX_ORDER_DATA __attribute__((section(".rodata.pokedex_order_data")))
 #define POKEMON_SPINDA_DATA __attribute__((section(".rodata.pokemon_spinda_data")))
+#define POKEMON_NATURE_STAT_DATA __attribute__((section(".rodata.pokemon_nature_stat_data")))
 
 struct CombinedMove
 {
@@ -1301,6 +1302,35 @@ const ALIGNED(4) struct SpindaSpot gSpindaSpotGraphics[] POKEMON_SPINDA_DATA =
         .image = {0x003C, 0x007E, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x007E,
                   0x003C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000},
     },
+};
+
+const ALIGNED(4) s8 gNatureStatTable[NUM_NATURES][NUM_NATURE_STATS] POKEMON_NATURE_STAT_DATA =
+{                      // Attack  Defense  Speed  Sp.Atk  Sp.Def
+    [NATURE_HARDY]   = {    0,      0,      0,      0,      0   },
+    [NATURE_LONELY]  = {   +1,     -1,      0,      0,      0   },
+    [NATURE_BRAVE]   = {   +1,      0,     -1,      0,      0   },
+    [NATURE_ADAMANT] = {   +1,      0,      0,     -1,      0   },
+    [NATURE_NAUGHTY] = {   +1,      0,      0,      0,     -1   },
+    [NATURE_BOLD]    = {   -1,     +1,      0,      0,      0   },
+    [NATURE_DOCILE]  = {    0,      0,      0,      0,      0   },
+    [NATURE_RELAXED] = {    0,     +1,     -1,      0,      0   },
+    [NATURE_IMPISH]  = {    0,     +1,      0,     -1,      0   },
+    [NATURE_LAX]     = {    0,     +1,      0,      0,     -1   },
+    [NATURE_TIMID]   = {   -1,      0,     +1,      0,      0   },
+    [NATURE_HASTY]   = {    0,     -1,     +1,      0,      0   },
+    [NATURE_SERIOUS] = {    0,      0,      0,      0,      0   },
+    [NATURE_JOLLY]   = {    0,      0,     +1,     -1,      0   },
+    [NATURE_NAIVE]   = {    0,      0,     +1,      0,     -1   },
+    [NATURE_MODEST]  = {   -1,      0,      0,     +1,      0   },
+    [NATURE_MILD]    = {    0,     -1,      0,     +1,      0   },
+    [NATURE_QUIET]   = {    0,      0,     -1,     +1,      0   },
+    [NATURE_BASHFUL] = {    0,      0,      0,      0,      0   },
+    [NATURE_RASH]    = {    0,      0,      0,     +1,     -1   },
+    [NATURE_CALM]    = {   -1,      0,      0,      0,     +1   },
+    [NATURE_GENTLE]  = {    0,     -1,      0,      0,     +1   },
+    [NATURE_SASSY]   = {    0,      0,     -1,      0,     +1   },
+    [NATURE_CAREFUL] = {    0,      0,      0,     -1,     +1   },
+    [NATURE_QUIRKY]  = {    0,      0,      0,      0,      0   },
 };
 
 __attribute__((naked)) void ZeroBoxMonData(struct BoxPokemon *boxMon)
@@ -13622,7 +13652,7 @@ __attribute__((naked)) u16 ModifyStatByNature(u8 nature, u16 stat, u8 statIndex)
         "	movs r0, #0x6e\n\t"
         "	b _0806D3B2\n\t"
         "	.align 2, 0\n\t"
-        "_0806D3AC: .4byte gUnknown_82EF1A0\n\t"
+        "_0806D3AC: .4byte gNatureStatTable\n\t"
         "_0806D3B0:\n\t"
         "	movs r0, #0x5a\n\t"
         "_0806D3B2:\n\t"

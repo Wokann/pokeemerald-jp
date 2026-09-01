@@ -9411,7 +9411,7 @@ SECTIONS {
         src/pokemon.o(.rodata.pokedex_order_data);
         src/pokemon.o(.rodata.pokemon_spinda_data);
     src/data/pokemon/item_effects.o(.rodata);
-    data/data_b2d.o(.rodata.data_b2d_after_item_effects);
+    src/pokemon.o(.rodata.pokemon_nature_stat_data);
     src/data/pokemon/tmhm_learnsets.o(.rodata);
     gUnknown_82EF220 = gTMHMLearnsets;
     data/data_b2d.o(.rodata.data_b2d_after_tmhm_learnsets);
