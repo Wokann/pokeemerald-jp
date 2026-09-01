@@ -566,8 +566,9 @@ EVENT_OBJECT_MOVEMENT_ACTION_TABLES const u8 gWalkSlowMovementActions[] =
 
 #define EVENT_OBJECT_MOVEMENT_DIRECTION_DATA __attribute__((section(".rodata.event_object_movement_direction_data"), aligned(1)))
 
-// Keep this packed: the original ROM places a 9-byte lookup directly before
-// two function-pointer tables, without the normal C alignment padding.
+// Keep this packed: the JP ROM places a 9-byte lookup directly before two
+// unaligned function-pointer tables. The one source label below is used with
+// field offsets by the retained naked functions, rather than linker aliases.
 struct EventObjectMovementDirectionData
 {
     u8 trainerFacingDirectionMovementTypes[9];
@@ -713,9 +714,9 @@ EVENT_OBJECT_MOVEMENT_DIRECTION_COMPOSITION_DATA static const u8 sDirectionCompo
 #undef EVENT_OBJECT_MOVEMENT_ACTION_FUNCTION_TABLES_TAIL
 #undef EVENT_OBJECT_MOVEMENT_ACTION_FUNCTION_TABLES
 
-extern const struct Coords16 sDirectionToVectors[];
 extern u8 gUnknown_2037254; // sCurrentReflectionType
 extern u16 gUnknown_2037256; // sCurrentSpecialObjectPaletteTag
+extern const struct Coords16 sDirectionToVectors[];
 static u8 GetCollisionInDirection(struct ObjectEvent *, u8);
 extern u32 state_to_direction(u8, u8, u8);
 // Figure-8 animation offsets (defined in field_effect_helpers_rest.c).
@@ -4390,7 +4391,7 @@ __attribute__((naked)) bool8 MovementType_WanderAround_Step2(struct ObjectEvent 
         "	movs r0, #1\n\t"
         "	b _0808EE32\n\t"
         "	.align 2, 0\n\t"
-        "_0808EE2C: .4byte gUnknown_84E5B30\n\t"
+        "_0808EE2C: .4byte sMovementDelaysMedium\n\t"
         "_0808EE30:\n\t"
         "	movs r0, #0\n\t"
         "_0808EE32:\n\t"
@@ -4761,7 +4762,7 @@ __attribute__((naked)) bool8 MovementType_LookAround_Step2(struct ObjectEvent *o
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808F378: .4byte gUnknown_84E5B30\n\t"
+        "_0808F378: .4byte sMovementDelaysMedium\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4839,7 +4840,7 @@ __attribute__((naked)) bool8 MovementType_WanderUpAndDown_Step2(struct ObjectEve
         "	movs r0, #1\n\t"
         "	b _0808F4AE\n\t"
         "	.align 2, 0\n\t"
-        "_0808F4A8: .4byte gUnknown_84E5B30\n\t"
+        "_0808F4A8: .4byte sMovementDelaysMedium\n\t"
         "_0808F4AC:\n\t"
         "	movs r0, #0\n\t"
         "_0808F4AE:\n\t"
@@ -4900,7 +4901,7 @@ __attribute__((naked)) bool8 MovementType_WanderUpAndDown_Step4(struct ObjectEve
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808F51C: .4byte gUnknown_84E5BC4\n\t"
+        "_0808F51C: .4byte gUpAndDownDirections\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4973,7 +4974,7 @@ __attribute__((naked)) bool8 MovementType_WanderLeftAndRight_Step2(struct Object
         "	movs r0, #1\n\t"
         "	b _0808F632\n\t"
         "	.align 2, 0\n\t"
-        "_0808F62C: .4byte gUnknown_84E5B30\n\t"
+        "_0808F62C: .4byte sMovementDelaysMedium\n\t"
         "_0808F630:\n\t"
         "	movs r0, #0\n\t"
         "_0808F632:\n\t"
@@ -5034,7 +5035,7 @@ __attribute__((naked)) bool8 MovementType_WanderLeftAndRight_Step4(struct Object
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808F6A0: .4byte gUnknown_84E5BE4\n\t"
+        "_0808F6A0: .4byte gLeftAndRightDirections\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5151,7 +5152,7 @@ __attribute__((naked)) u8 MovementType_FaceDownAndUp_callback(struct ObjectEvent
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808F7FC: .4byte gUnknown_84E5BF4\n\t"
+        "_0808F7FC: .4byte gMovementTypeFuncs_BerryTreeGrowth\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5305,7 +5306,7 @@ __attribute__((naked)) bool8 MovementType_FaceDownAndUp_Step2(struct ObjectEvent
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808FA84: .4byte gUnknown_84E5B30\n\t"
+        "_0808FA84: .4byte sMovementDelaysMedium\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5391,7 +5392,7 @@ __attribute__((naked)) bool8 MovementType_FaceLeftAndRight_Step2(struct ObjectEv
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808FBC4: .4byte gUnknown_84E5B30\n\t"
+        "_0808FBC4: .4byte sMovementDelaysMedium\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5478,7 +5479,7 @@ __attribute__((naked)) bool8 MovementType_FaceUpAndLeft_Step2(struct ObjectEvent
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808FD04: .4byte gUnknown_84E5B40\n\t"
+        "_0808FD04: .4byte sMovementDelaysShort\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5564,7 +5565,7 @@ __attribute__((naked)) bool8 MovementType_FaceUpAndRight_Step2(struct ObjectEven
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808FE44: .4byte gUnknown_84E5B40\n\t"
+        "_0808FE44: .4byte sMovementDelaysShort\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5651,7 +5652,7 @@ __attribute__((naked)) bool8 MovementType_FaceDownAndLeft_Step2(struct ObjectEve
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808FF84: .4byte gUnknown_84E5B40\n\t"
+        "_0808FF84: .4byte sMovementDelaysShort\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5737,7 +5738,7 @@ __attribute__((naked)) bool8 MovementType_FaceDownAndRight_Step2(struct ObjectEv
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080900C4: .4byte gUnknown_84E5B40\n\t"
+        "_080900C4: .4byte sMovementDelaysShort\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5823,7 +5824,7 @@ __attribute__((naked)) bool8 MovementType_FaceDownUpAndLeft_Step2(struct ObjectE
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090204: .4byte gUnknown_84E5B40\n\t"
+        "_08090204: .4byte sMovementDelaysShort\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5910,7 +5911,7 @@ __attribute__((naked)) bool8 MovementType_FaceDownUpAndRight_Step2(struct Object
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090344: .4byte gUnknown_84E5B40\n\t"
+        "_08090344: .4byte sMovementDelaysShort\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5996,7 +5997,7 @@ __attribute__((naked)) bool8 MovementType_FaceUpLeftAndRight_Step2(struct Object
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090484: .4byte gUnknown_84E5B40\n\t"
+        "_08090484: .4byte sMovementDelaysShort\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6083,7 +6084,7 @@ __attribute__((naked)) bool8 MovementType_FaceDownLeftAndRight_Step2(struct Obje
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080905C4: .4byte gUnknown_84E5B40\n\t"
+        "_080905C4: .4byte sMovementDelaysShort\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6873,7 +6874,7 @@ __attribute__((naked)) bool8 MovementType_CopyPlayer_Step1(struct ObjectEvent *o
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809188C: .4byte gUnknown_84E5EB8\n\t"
+        "_0809188C: .4byte gCopyPlayerMovementFuncs\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7622,7 +7623,7 @@ __attribute__((naked)) bool8 MovementType_CopyPlayerInGrass_Step1(struct ObjectE
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08091EA4: .4byte gUnknown_84E5EB8\n\t"
+        "_08091EA4: .4byte gCopyPlayerMovementFuncs\n\t"
         "_08091EA8: .4byte MetatileBehavior_IsPokeGrass + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -7739,7 +7740,7 @@ __attribute__((naked)) u8 sub_08091FFC(struct ObjectEvent *objectEvent, struct S
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092018: .4byte gUnknown_84E5EF0\n\t"
+        "_08092018: .4byte gMovementTypeFuncs_Buried\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8134,7 +8135,7 @@ __attribute__((naked, section(".text.GroundEffect_DeepSandTracks"))) u8 GetTrain
         "	ldrb r0, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080924F4: .4byte gTrainerFacingDirectionMovementTypes\n\t"
+        "_080924F4: .4byte sEventObjectMovementDirectionData\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8496,8 +8497,8 @@ __attribute__((naked)) bool8 IsMetatileDirectionallyImpassable(struct ObjectEven
         "	movs r0, #1\n\t"
         "	b _0809278A\n\t"
         "	.align 2, 0\n\t"
-        "_08092780: .4byte gDirectionBlockedMetatileFuncs\n\t"
-        "_08092784: .4byte gOppositeDirectionBlockedMetatileFuncs\n\t"
+        "_08092780: .4byte sEventObjectMovementDirectionData + 0x9\n\t"
+        "_08092784: .4byte sEventObjectMovementDirectionData + 0x19\n\t"
         "_08092788:\n\t"
         "	movs r0, #0\n\t"
         "_0809278A:\n\t"
@@ -8705,7 +8706,7 @@ __attribute__((naked)) void sub_080928D0(u8 direction, s16 *destX, s16 *destY)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080928F4: .4byte gUnknown_84E5FD0\n\t"
+        "_080928F4: .4byte sEventObjectMovementDirectionData + 0x29\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8768,7 +8769,7 @@ __attribute__((naked)) void MoveCoordsInDirection(u32 direction, s16 *x, s16 *y,
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0809295C: .4byte gUnknown_84E5FD0\n\t"
+        "_0809295C: .4byte sEventObjectMovementDirectionData + 0x29\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10177,7 +10178,7 @@ __attribute__((naked)) void InitMovementNormal(struct ObjectEvent *objectEvent, 
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080933F4: .4byte gUnknown_84E633C\n\t"
+        "_080933F4: .4byte sDirectionAnimFuncsBySpeed\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10735,7 +10736,7 @@ __attribute__((naked)) bool8 sub_08093934(struct ObjectEvent *objectEvent, struc
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080939EC: .4byte gUnknown_84E6410\n\t"
+        "_080939EC: .4byte sJumpInitDisplacements\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10848,7 +10849,7 @@ __attribute__((naked)) u8 sub_08093A34(struct ObjectEvent *objectEvent, struct S
         "	strb r0, [r6]\n\t"
         "	b _08093AE8\n\t"
         "	.align 2, 0\n\t"
-        "_08093AC0: .4byte gUnknown_84E6416\n\t"
+        "_08093AC0: .4byte sJumpDisplacements\n\t"
         "_08093AC4:\n\t"
         "	mov r1, r8\n\t"
         "	cmp r1, #0xff\n\t"
@@ -15697,7 +15698,7 @@ __attribute__((naked)) void Step8(struct Sprite *sprite, u8 direction)
         "	strh r1, [r0, #0x22]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08096FCC: .4byte gUnknown_84E5FD0\n\t"
+        "_08096FCC: .4byte sEventObjectMovementDirectionData + 0x29\n\t"
         ".syntax divided\n\t"
     );
 }
