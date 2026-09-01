@@ -24,6 +24,7 @@ VALID_DIRECTIONS = {"down", "up", "left", "right", "dive", "emerge"}
 # table is migrated, so generation never guesses an owner for an unreviewed
 # layout.
 CANONICAL_LAYOUT_SYMBOLS = {
+    "LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_LOBBY": "BattleFrontier_BattlePikeLobby_Layout",
     "LAYOUT_UNDERWATER_ROUTE124": "Underwater_Route124_Layout",
     "LAYOUT_UNDERWATER_ROUTE126": "Underwater_Route126_Layout",
     "LAYOUT_UNDERWATER_ROUTE127": "Underwater_Route127_Layout",

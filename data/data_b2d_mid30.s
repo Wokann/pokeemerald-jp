@@ -866,7 +866,11 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/BattleFrontier_BattleFactoryLobby/header.inc"
 	.include "data/maps/BattleFrontier_BattleFactoryPreBattleRoom/header.inc"
 	.include "data/maps/BattleFrontier_BattleFactoryBattleRoom/header.inc"
-	.incbin "baserom_jp.gba", 0x45D914, 0x1084
+	@ MAP_BATTLE_FRONTIER_BATTLE_PIKE_LOBBY (g26 m34)
+	.include "data/maps/BattleFrontier_BattlePikeLobby/header.inc"
+	.incbin "baserom_jp.gba", 0x45D930, 0xF34
+	.4byte BattleFrontier_BattlePikeLobby
+	.incbin "baserom_jp.gba", 0x45E868, 0x130
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
