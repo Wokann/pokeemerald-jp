@@ -37,6 +37,7 @@ CANONICAL_LAYOUT_SYMBOLS = {
     "LAYOUT_BATTLE_FRONTIER_LOUNGE2": "BattleFrontier_Lounge2_Layout",
     "LAYOUT_BATTLE_FRONTIER_SCOTTS_HOUSE": "BattleFrontier_ScottsHouse_Layout",
     "LAYOUT_UNDERWATER_ROUTE124": "Underwater_Route124_Layout",
+    "LAYOUT_UNDERWATER_ROUTE125": "Underwater_Route125_Layout",
     "LAYOUT_UNDERWATER_ROUTE126": "Underwater_Route126_Layout",
     "LAYOUT_UNDERWATER_ROUTE127": "Underwater_Route127_Layout",
     "LAYOUT_UNDERWATER_ROUTE128": "Underwater_Route128_Layout",

@@ -731,6 +731,7 @@ NULL_CONNECTION_MAPS = (
 
 CANONICAL_LAYOUT_MAPS = (
     "Underwater_Route124",
+    "Underwater_Route125",
     "Underwater_Route126",
     "Underwater_Route127",
     "Underwater_Route128",
@@ -773,6 +774,10 @@ class MapMetadataTests(unittest.TestCase):
         self.assertEqual(
             jp_map_metadata.layout_symbol("LAYOUT_UNDERWATER_ROUTE124"),
             "Underwater_Route124_Layout",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_UNDERWATER_ROUTE125"),
+            "Underwater_Route125_Layout",
         )
         self.assertEqual(
             jp_map_metadata.layout_symbol("LAYOUT_CAVE_OF_ORIGIN_B1F"),

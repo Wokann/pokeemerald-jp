@@ -5136,16 +5136,18 @@ gMapLayout_UNDERWATER_ROUTE105: @ 0x08450EF8
 	.4byte gMapLayout_UNDERWATER_ROUTE105_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Underwater  @ secondaryTileset
-gMapLayout_UNDERWATER_ROUTE125_Border:
+Underwater_Route125_Layout_Border::
 	.incbin "data/layouts/Underwater_Route125/border.bin"
-gMapLayout_UNDERWATER_ROUTE125_Blockdata:
+
+Underwater_Route125_Layout_Blockdata::
 	.incbin "data/layouts/Underwater_Route125/map.bin"
-	.globl gMapLayout_UNDERWATER_ROUTE125
-gMapLayout_UNDERWATER_ROUTE125: @ 0x08452818
+
+	.align 2
+Underwater_Route125_Layout:: @ 0x08452818
 	.4byte 80  @ width
 	.4byte 40  @ height
-	.4byte gMapLayout_UNDERWATER_ROUTE125_Border  @ border
-	.4byte gMapLayout_UNDERWATER_ROUTE125_Blockdata  @ map
+	.4byte Underwater_Route125_Layout_Border  @ border
+	.4byte Underwater_Route125_Layout_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Underwater  @ secondaryTileset
 Underwater_Route129_Layout_Border::

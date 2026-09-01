@@ -8,4 +8,3 @@ Underwater_Route129_MapConnectionsList:
 Underwater_Route129_MapConnections:
 	.4byte 1
 	.4byte Underwater_Route129_MapConnectionsList
-

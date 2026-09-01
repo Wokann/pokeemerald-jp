@@ -9,4 +9,3 @@ Underwater_Route124_MapConnectionsList:
 Underwater_Route124_MapConnections:
 	.4byte 2
 	.4byte Underwater_Route124_MapConnectionsList
-

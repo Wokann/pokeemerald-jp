@@ -416,7 +416,7 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte gMapLayout_TERRA_CAVE_ENTRANCE
 	.4byte gMapLayout_TERRA_CAVE_END
 	.4byte gMapLayout_UNDERWATER_ROUTE105
-	.4byte gMapLayout_UNDERWATER_ROUTE125
+	.4byte Underwater_Route125_Layout
 	.4byte Underwater_Route129_Layout
 	.4byte gMapLayout_MARINE_CAVE_END
 	.4byte TrainerHill_Entrance_Layout
