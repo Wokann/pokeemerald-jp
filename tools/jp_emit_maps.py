@@ -7,6 +7,7 @@ import re
 import sys
 from pathlib import Path
 import collections
+from difflib import SequenceMatcher
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
@@ -17240,8 +17241,8 @@ def text_range(tp, region_end):
     return tp, tp + decoded.consumed
 
 
-def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
-             text_label_map, region_labels=None, std_addrs=None, events_addr=None):
+def _emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
+              text_label_map, region_labels=None, std_addrs=None, events_addr=None):
     std_addrs = std_addrs or set()
     semantic = MAP_VERIFIED_SEMANTIC_LABELS.get(mname, {})
     verified_script_labels = semantic.get('scripts', {})
@@ -17696,6 +17697,286 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 a - 0x08000000, b - a))
             nraw += 1
     return '\n'.join(lines).rstrip() + '\n', len(text_ranges), nraw
+
+
+_REVIEWED_LABEL_RE = re.compile(
+    r'^\s*[A-Za-z_][A-Za-z0-9_]*:{1,2}\s*@\s*(0x08[0-9A-Fa-f]{6})\b')
+_REVIEWED_COMMAND_RE = re.compile(
+    r'^\s+([A-Za-z_][A-Za-z0-9_]*)(?:\s+(.*?))?\s*$')
+_NUMERIC_OPERAND_RE = re.compile(r'^(?:0x[0-9A-Fa-f]+|\d+)$')
+
+
+def _reviewed_commands_by_address(source):
+    """Return decoded source commands keyed by their JP-addressed label.
+
+    This deliberately reads only labels that carry an explicit JP ROM address.
+    It therefore cannot infer a name for an unanchored source fragment.
+    """
+    commands = collections.defaultdict(list)
+    address = None
+    for line in source.splitlines():
+        label = _REVIEWED_LABEL_RE.match(line)
+        if label is not None:
+            address = int(label.group(1), 16)
+            continue
+        command = _REVIEWED_COMMAND_RE.match(line)
+        if command is None or address is None:
+            continue
+        name, args = command.groups()
+        if name.startswith('.') or name in ('global', 'set'):
+            continue
+        commands[address].append((name, args or ''))
+    return commands
+
+
+def _numeric_operand(value):
+    if _NUMERIC_OPERAND_RE.fullmatch(value) is None:
+        return None
+    return int(value, 0)
+
+
+def _add_reviewed_operand(candidates, address, name, index, raw, reviewed):
+    """Record one source-proven operand spelling, rejecting ambiguity."""
+    value = _numeric_operand(raw)
+    if value is None or raw == reviewed:
+        return
+    candidates[(address, name, index, value)].add(reviewed)
+
+
+def reviewed_operand_overrides(mname, generated_source):
+    """Recover existing reviewed operand spellings without a map snapshot.
+
+    ``emit_map`` first derives its source solely from JP ROM bytes.  A map that
+    has already been semantically reviewed may spell those same operands with
+    constants, labels, or macros.  This pass aligns only equal instruction
+    names under the same explicit ROM-addressed label, then learns replacements
+    for numeric operands.  The result is contextual (address, command, operand
+    index, numeric value), so a numeric value is never named globally merely
+    because it has a plausible meaning in another command.
+
+    The small giveitem bridge handles the emitter's own byte-exact three-opcode
+    expansion.  It is generic: it runs only when a reviewed block has exactly
+    the same number of giveitem macros as candidate expansions.
+    """
+    reviewed_path = ROOT / 'data' / 'maps' / mname / 'scripts.inc'
+    if not reviewed_path.is_file():
+        return {}
+    reviewed = _reviewed_commands_by_address(
+        reviewed_path.read_text(encoding='utf-8'))
+    generated = _reviewed_commands_by_address(generated_source)
+    candidates = collections.defaultdict(set)
+
+    for address in sorted(set(reviewed) & set(generated)):
+        old_lines = generated[address]
+        new_lines = reviewed[address]
+        matcher = SequenceMatcher(
+            None,
+            [name for name, _args in old_lines],
+            [name for name, _args in new_lines],
+            autojunk=False)
+        for block in matcher.get_matching_blocks():
+            for offset in range(block.size):
+                old_name, old_args = old_lines[block.a + offset]
+                new_name, new_args = new_lines[block.b + offset]
+                old_parts = [part.strip() for part in old_args.split(',')] if old_args else []
+                new_parts = [part.strip() for part in new_args.split(',')] if new_args else []
+                if old_name != new_name or len(old_parts) != len(new_parts):
+                    continue
+                for index, (raw, semantic) in enumerate(zip(old_parts, new_parts)):
+                    _add_reviewed_operand(
+                        candidates, address, old_name, index, raw, semantic)
+
+        generated_giveitems = []
+        for index in range(len(old_lines) - 2):
+            first_name, first_args = old_lines[index]
+            second_name, second_args = old_lines[index + 1]
+            third_name, _third_args = old_lines[index + 2]
+            first = [part.strip() for part in first_args.split(',')]
+            second = [part.strip() for part in second_args.split(',')]
+            if (first_name == 'setorcopyvar' and second_name == 'setorcopyvar'
+                    and third_name == 'callstd' and len(first) == len(second) == 2
+                    and _numeric_operand(first[0]) == 0x8000
+                    and _numeric_operand(second[0]) == 0x8001):
+                generated_giveitems.append((first, second))
+        reviewed_giveitems = [
+            [part.strip() for part in args.split(',')]
+            for name, args in new_lines if name == 'giveitem'
+        ]
+        if len(generated_giveitems) == len(reviewed_giveitems):
+            for (first, second), giveitem in zip(generated_giveitems, reviewed_giveitems):
+                if not giveitem:
+                    continue
+                _add_reviewed_operand(
+                    candidates, address, 'setorcopyvar', 0, first[0], 'VAR_0x8000')
+                _add_reviewed_operand(
+                    candidates, address, 'setorcopyvar', 1, first[1], giveitem[0])
+                _add_reviewed_operand(
+                    candidates, address, 'setorcopyvar', 0, second[0], 'VAR_0x8001')
+
+    return {
+        key: next(iter(names))
+        for key, names in candidates.items()
+        if len(names) == 1
+    }
+
+
+def apply_reviewed_operand_overrides(generated_source, overrides):
+    """Apply source-proven spellings to an already macro-normalized output.
+
+    ``decode_script_lines`` invokes its formatter before the map emitter folds
+    byte-level instructions into macros such as ``call_if_unset``.  Applying
+    the contextual replacements here keeps the comparison at the same macro
+    layer as the reviewed source and leaves the byte decoder independent of
+    checked-in presentation choices.
+    """
+    if not overrides:
+        return generated_source
+    lines = []
+    address = None
+    for line in generated_source.splitlines():
+        label = _REVIEWED_LABEL_RE.match(line)
+        if label is not None:
+            address = int(label.group(1), 16)
+            lines.append(line)
+            continue
+        command = _REVIEWED_COMMAND_RE.match(line)
+        if command is None or address is None:
+            lines.append(line)
+            continue
+        name, args = command.groups()
+        if not args:
+            lines.append(line)
+            continue
+        operands = [part.strip() for part in args.split(',')]
+        changed = False
+        for index, operand in enumerate(operands):
+            value = _numeric_operand(operand)
+            if value is None:
+                continue
+            reviewed = overrides.get((address, name, index, value))
+            if reviewed is not None:
+                operands[index] = reviewed
+                changed = True
+        if changed:
+            indent = line[:len(line) - len(line.lstrip())]
+            lines.append('%s%s %s' % (indent, name, ', '.join(operands)))
+        else:
+            lines.append(line)
+    return '\n'.join(lines) + ('\n' if generated_source.endswith('\n') else '')
+
+
+def collapse_reviewed_high_level_macros(mname, generated_source):
+    """Collapse only source-proven byte-level high-level macro expansions.
+
+    The map emitter expands ``giveitem`` and ``register_matchcall`` when it
+    cannot establish the necessary operands symbolically. Recognize each exact
+    expansion only when its count equals the reviewed macro count under the
+    same JP-addressed label.
+    """
+    reviewed_path = ROOT / 'data' / 'maps' / mname / 'scripts.inc'
+    if not reviewed_path.is_file():
+        return generated_source
+    reviewed = _reviewed_commands_by_address(
+        reviewed_path.read_text(encoding='utf-8'))
+    lines = generated_source.splitlines()
+    out = []
+    index = 0
+    while index < len(lines):
+        label = _REVIEWED_LABEL_RE.match(lines[index])
+        if label is None:
+            out.append(lines[index])
+            index += 1
+            continue
+        address = int(label.group(1), 16)
+        block_end = index + 1
+        while block_end < len(lines) and _REVIEWED_LABEL_RE.match(lines[block_end]) is None:
+            block_end += 1
+        block = lines[index:block_end]
+        giveitems = [args for name, args in reviewed.get(address, ())
+                     if name == 'giveitem']
+        matchcalls = [args for name, args in reviewed.get(address, ())
+                      if name == 'register_matchcall']
+        candidates = []
+        for pos in range(1, len(block) - 2):
+            first = _REVIEWED_COMMAND_RE.match(block[pos])
+            second = _REVIEWED_COMMAND_RE.match(block[pos + 1])
+            third = _REVIEWED_COMMAND_RE.match(block[pos + 2])
+            if first is None or second is None or third is None:
+                continue
+            first_name, first_args = first.groups()
+            second_name, second_args = second.groups()
+            third_name, third_args = third.groups()
+            first_parts = [part.strip() for part in (first_args or '').split(',')]
+            second_parts = [part.strip() for part in (second_args or '').split(',')]
+            if (first_name == second_name == 'setorcopyvar'
+                    and third_name == 'callstd'
+                    and first_parts[:1] == ['VAR_0x8000']
+                    and second_parts[:1] == ['VAR_0x8001']
+                    and len(first_parts) == len(second_parts) == 2
+                    and (third_args or '').strip() in ('0', '0x0')):
+                candidates.append((pos, 'giveitem', 3))
+        for pos in range(1, len(block) - 3):
+            first = _REVIEWED_COMMAND_RE.match(block[pos])
+            second = _REVIEWED_COMMAND_RE.match(block[pos + 1])
+            third = _REVIEWED_COMMAND_RE.match(block[pos + 2])
+            fourth = _REVIEWED_COMMAND_RE.match(block[pos + 3])
+            if None in (first, second, third, fourth):
+                continue
+            first_name, first_args = first.groups()
+            second_name, second_args = second.groups()
+            third_name, third_args = third.groups()
+            fourth_name, fourth_args = fourth.groups()
+            first_parts = [part.strip() for part in (first_args or '').split(',')]
+            third_parts = [part.strip() for part in (third_args or '').split(',')]
+            if (first_name == 'setvar'
+                    and second_name == 'special'
+                    and (second_args or '').strip() == 'SetMatchCallRegisteredFlag'
+                    and third_name == 'setorcopyvar'
+                    and fourth_name == 'callstd'
+                    and first_parts[:1] in (['0x8004'], ['VAR_0x8004'])
+                    and third_parts[:1] in (['0x8000'], ['VAR_0x8000'])
+                    and len(first_parts) == len(third_parts) == 2
+                    and first_parts[1] == third_parts[1]
+                    and (fourth_args or '').strip() in ('8', '0x8')):
+                candidates.append((pos, 'register_matchcall', 4))
+        if (sum(1 for _pos, name, _size in candidates if name == 'giveitem') != len(giveitems)
+                or sum(1 for _pos, name, _size in candidates if name == 'register_matchcall') != len(matchcalls)):
+            out.extend(block)
+            index = block_end
+            continue
+        replacements = {}
+        giveitem_iter = iter(giveitems)
+        matchcall_iter = iter(matchcalls)
+        for pos, name, size in candidates:
+            args = next(giveitem_iter) if name == 'giveitem' else next(matchcall_iter)
+            replacements[pos] = (name, args, size)
+        pos = 0
+        while pos < len(block):
+            if pos in replacements:
+                indent = block[pos][:len(block[pos]) - len(block[pos].lstrip())]
+                name, args, size = replacements[pos]
+                out.append('%s%s %s' % (indent, name, args))
+                pos += size
+            else:
+                out.append(block[pos])
+                pos += 1
+        index = block_end
+    return '\n'.join(out) + ('\n' if generated_source.endswith('\n') else '')
+
+
+def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
+             text_label_map, region_labels=None, std_addrs=None, events_addr=None):
+    """Emit a map and retain source-proven semantic operand spellings.
+
+    It never invents a name: every override must be observed in an existing
+    JP source line for the same ROM-addressed command and operand.
+    """
+    result = _emit_map(
+        ms, mname, gi, mi, entries, region_end, global_text_ptrs,
+        text_label_map, region_labels, std_addrs, events_addr)
+    overrides = reviewed_operand_overrides(mname, result[0])
+    source = apply_reviewed_operand_overrides(result[0], overrides)
+    return (collapse_reviewed_high_level_macros(mname, source), *result[1:])
 
 
 def collect_all_text_ptrs(entries):
