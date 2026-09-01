@@ -5,12 +5,6 @@
 #include "task.h"
 #include "trig.h"
 
-// JP: the dragon anim sprite templates and anim/affine data stay embedded
-// in ROM data (see the ABSOLUTE aliases in ld_script_jp.txt); only the
-// sprite callbacks are decompiled here, matching US pokeemerald. The JP
-// ROM splits this module across asm/dragon.s and asm/dark.s (the latter
-// holds AnimOverheatFlame_Step).
-
 static void AnimOutrageFlame(struct Sprite *);
 static void StartDragonFireTranslation(struct Sprite *);
 static void AnimDragonRageFirePlume(struct Sprite *);
@@ -23,6 +17,181 @@ static void AnimOverheatFlame(struct Sprite *);
 static void AnimOverheatFlame_Step(struct Sprite *);
 
 extern u16 sUnusedOverheatData[7];
+
+#define BATTLE_ANIM_DRAGON_DATA __attribute__((section(".rodata.battle_anim_dragon_data")))
+
+static const union AnimCmd sAnim_OutrageOverheatFire_0[] BATTLE_ANIM_DRAGON_DATA =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(16, 4),
+    ANIMCMD_FRAME(32, 4),
+    ANIMCMD_FRAME(48, 4),
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_OutrageOverheatFire[] BATTLE_ANIM_DRAGON_DATA =
+{
+    sAnim_OutrageOverheatFire_0,
+};
+
+const struct SpriteTemplate gOutrageFlameSpriteTemplate BATTLE_ANIM_DRAGON_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_OutrageOverheatFire,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimOutrageFlame,
+};
+
+static const union AnimCmd sAnim_DragonBreathFire_0[] BATTLE_ANIM_DRAGON_DATA =
+{
+    ANIMCMD_FRAME(16, 3),
+    ANIMCMD_FRAME(32, 3),
+    ANIMCMD_FRAME(48, 3),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_DragonBreathFire_1[] BATTLE_ANIM_DRAGON_DATA =
+{
+    ANIMCMD_FRAME(16, 3, .vFlip = TRUE, .hFlip = TRUE),
+    ANIMCMD_FRAME(32, 3, .vFlip = TRUE, .hFlip = TRUE),
+    ANIMCMD_FRAME(48, 3, .vFlip = TRUE, .hFlip = TRUE),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_DragonBreathFire[] BATTLE_ANIM_DRAGON_DATA =
+{
+    sAnim_DragonBreathFire_0,
+    sAnim_DragonBreathFire_1,
+};
+
+static const union AffineAnimCmd sAffineAnim_DragonBreathFire_0[] BATTLE_ANIM_DRAGON_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x50, 0x50, 127, 0),
+    AFFINEANIMCMD_FRAME(0xD, 0xD, 0, 100),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_DragonBreathFire_1[] BATTLE_ANIM_DRAGON_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x50, 0x50, 0, 0),
+    AFFINEANIMCMD_FRAME(0xD, 0xD, 0, 100),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_DragonBreathFire[] BATTLE_ANIM_DRAGON_DATA =
+{
+    sAffineAnim_DragonBreathFire_0,
+    sAffineAnim_DragonBreathFire_1,
+};
+
+const struct SpriteTemplate gDragonBreathFireSpriteTemplate BATTLE_ANIM_DRAGON_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
+    .anims = sAnims_DragonBreathFire,
+    .images = NULL,
+    .affineAnims = sAffineAnims_DragonBreathFire,
+    .callback = AnimDragonFireToTarget,
+};
+
+static const union AnimCmd sAnim_DragonRageFirePlume[] BATTLE_ANIM_DRAGON_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_FRAME(16, 5),
+    ANIMCMD_FRAME(32, 5),
+    ANIMCMD_FRAME(48, 5),
+    ANIMCMD_FRAME(64, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_DragonRageFirePlume[] BATTLE_ANIM_DRAGON_DATA =
+{
+    sAnim_DragonRageFirePlume,
+};
+
+const struct SpriteTemplate gDragonRageFirePlumeSpriteTemplate BATTLE_ANIM_DRAGON_DATA =
+{
+    .tileTag = ANIM_TAG_FIRE_PLUME,
+    .paletteTag = ANIM_TAG_FIRE_PLUME,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_DragonRageFirePlume,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimDragonRageFirePlume,
+};
+
+static const union AnimCmd sAnim_DragonRageFire[] BATTLE_ANIM_DRAGON_DATA =
+{
+    ANIMCMD_FRAME(16, 3),
+    ANIMCMD_FRAME(32, 3),
+    ANIMCMD_FRAME(48, 3),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_DragonRageFire[] BATTLE_ANIM_DRAGON_DATA =
+{
+    sAnim_DragonRageFire,
+    sAnim_DragonRageFire,
+};
+
+static const union AffineAnimCmd sAffineAnim_DragonRageFire_0[] BATTLE_ANIM_DRAGON_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x64, 0x64, 127, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_DragonRageFire_1[] BATTLE_ANIM_DRAGON_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x64, 0x64, 0, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_DragonRageFire[] BATTLE_ANIM_DRAGON_DATA =
+{
+    sAffineAnim_DragonRageFire_0,
+    sAffineAnim_DragonRageFire_1,
+};
+
+const struct SpriteTemplate gDragonRageFireSpitSpriteTemplate BATTLE_ANIM_DRAGON_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
+    .anims = sAnims_DragonRageFire,
+    .images = NULL,
+    .affineAnims = sAffineAnims_DragonRageFire,
+    .callback = AnimDragonFireToTarget,
+};
+
+const struct SpriteTemplate gDragonDanceOrbSpriteTemplate BATTLE_ANIM_DRAGON_DATA =
+{
+    .tileTag = ANIM_TAG_HOLLOW_ORB,
+    .paletteTag = ANIM_TAG_HOLLOW_ORB,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimDragonDanceOrb,
+};
+
+const struct SpriteTemplate gOverheatFlameSpriteTemplate BATTLE_ANIM_DRAGON_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_OutrageOverheatFire,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimOverheatFlame,
+};
+
+#undef BATTLE_ANIM_DRAGON_DATA
+
 
 static void AnimOutrageFlame(struct Sprite *sprite)
 {

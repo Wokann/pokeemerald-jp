@@ -1940,42 +1940,8 @@ gWaterPulseRingBubbleSpriteTemplate: @ 0x570EF4
 gWeatherBallWaterDownSpriteTemplate: @ 0x8570F0C
 	.incbin "baserom_jp.gba", 0x570F0C, 0x18
 
-	.section .rodata.mid60_after_battle_anim_ghost_data
-	.incbin "baserom_jp.gba", 0x572A44, 0x1C
-
-	.globl gOutrageFlameSpriteTemplate
-gOutrageFlameSpriteTemplate: @ 0x572A60
-	.hword 0x272D, 0x272D
-	.4byte 0x084FD020, 0x08572A5C, 0, gDummySpriteAffineAnimTable, 0x081138B5
-	.incbin "baserom_jp.gba", 0x572a78, 0x60
-
-	.globl gDragonBreathFireSpriteTemplate
-gDragonBreathFireSpriteTemplate: @ 0x572AD8
-	.hword 0x272D, 0x272D
-	.4byte 0x084FD0E0, 0x08572A98, 0, 0x08572AD0, 0x08113A75
-	.incbin "baserom_jp.gba", 0x572af0, 0x1c
-
-	.globl gDragonRageFirePlumeSpriteTemplate
-gDragonRageFirePlumeSpriteTemplate: @ 0x572B0C
-	.hword 0x2733, 0x2733
-	.4byte 0x084FD020, 0x08572B08, 0, gDummySpriteAffineAnimTable, 0x08113A05
-	.incbin "baserom_jp.gba", 0x572b24, 0x40
-
-	.globl gDragonRageFireSpitSpriteTemplate
-gDragonRageFireSpitSpriteTemplate: @ 0x572B64
-	.hword 0x272D, 0x272D
-	.4byte 0x084FD0E0, 0x08572B34, 0, 0x08572B5C, 0x08113A75
-
-	.globl gDragonDanceOrbSpriteTemplate
-gDragonDanceOrbSpriteTemplate: @ 0x572B7C
-	.hword 0x2809, 0x2809
-	.4byte 0x084FD018, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08113AA1
-
-	.globl gOverheatFlameSpriteTemplate
-gOverheatFlameSpriteTemplate: @ 0x572B94
-	.hword 0x272D, 0x272D
-	.4byte 0x084FD020, 0x08572A5C, 0, gDummySpriteAffineAnimTable, 0x08113E3D
-	.incbin "baserom_jp.gba", 0x572bac, 0xb8
+	.section .rodata.mid60_after_battle_anim_dragon_data
+	.incbin "baserom_jp.gba", 0x572BAC, 0xB8
 
 	.globl gSharpTeethSpriteTemplate
 gSharpTeethSpriteTemplate: @ 0x572C64
