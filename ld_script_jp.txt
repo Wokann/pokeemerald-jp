@@ -1227,7 +1227,6 @@ RecordedBattle_BufferNewBattlerData = sub_08184F3C;
 sub_08032600 = InitBattleControllers;
 sub_0802691C = GetActiveBerryColumns;
 Task_ShowRankings = sub_08021FC0;
-sub_08022230 = ShowBerryCrushRankings;
 ChooseBerryForMachine = sub_081AA968;
 InitTextBoxGfxAndPrinters = sub_08196DF4;
 sub_08020918 = GetBerryCrushGame;
