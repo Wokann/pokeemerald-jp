@@ -60,6 +60,7 @@ CANONICAL_LAYOUT_SYMBOLS = {
     "LAYOUT_NAVEL_ROCK_B1F": "NavelRock_B1F_Layout",
     "LAYOUT_NAVEL_ROCK_FORK": "NavelRock_Fork_Layout",
     "LAYOUT_ROUTE104_PROTOTYPE": "Route104_Prototype_Layout",
+    "LAYOUT_ROUTE109_SEASHORE_HOUSE": "Route109_SeashoreHouse_Layout",
 }
 
 # The JP layout table has not yet adopted the US shared-layout labels for these

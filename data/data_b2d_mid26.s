@@ -835,7 +835,9 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/Route104_Prototype/events.inc"
 	@ MAP_ROUTE104_PROTOTYPE_PRETTY_PETAL_FLOWER_SHOP (g27 m1)
 	.include "data/maps/Route104_PrototypePrettyPetalFlowerShop/events.inc"
-	.incbin "baserom_jp.gba", 0x516514, 0x1068
+	@ MAP_ROUTE109_SEASHORE_HOUSE (g28 m0)
+	.include "data/maps/Route109_SeashoreHouse/events.inc"
+	.incbin "baserom_jp.gba", 0x516598, 0xFE4
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
