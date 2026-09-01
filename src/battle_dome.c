@@ -1,10 +1,34 @@
 #include "global.h"
 #include "battle_dome.h"
+#include "bg.h"
 #include "constants/battle_dome.h"
 #include "constants/moves.h"
 #include "event_data.h"
+#include "window.h"
 
 #define BATTLE_DOME_DATA __attribute__((section(".rodata.battle_dome_data")))
+
+// Window IDs for the tourney tree.
+enum {
+    TOURNEYWIN_NAMES_LEFT,
+    TOURNEYWIN_NAMES_RIGHT,
+    TOURNEYWIN_TITLE,
+};
+
+// Window IDs for the trainer (WIN_TRAINER_*) and match (WIN_MATCH_*) info cards.
+// All 9 have a duplicate window at WIN + NUM_INFO_CARD_WINDOWS for the alternate info card.
+enum {
+    WIN_TRAINER_NAME,
+    WIN_TRAINER_MON1_NAME,
+    WIN_TRAINER_MON2_NAME,
+    WIN_TRAINER_MON3_NAME,
+    WIN_TRAINER_FLAVOR_TEXT = WIN_TRAINER_MON1_NAME + FRONTIER_PARTY_SIZE,
+    WIN_MATCH_NUMBER,
+    WIN_MATCH_TRAINER_NAME_LEFT,
+    WIN_MATCH_TRAINER_NAME_RIGHT,
+    WIN_MATCH_WIN_TEXT,
+    NUM_INFO_CARD_WINDOWS,
+};
 
 extern void (*const sBattleDomeFunctions[])(void);
 
@@ -463,6 +487,288 @@ static const u8 sTourneyTreeCursorMovementMap[DOME_TOURNAMENT_TRAINERS_COUNT + D
     [31] = {{  15,    8,    8,    0}, {  15,    8,    8,    0}, {  15,    8,    8,    0}, {  15,    8,    8,    0}, {  15,    8,    8,    0}}, // TOURNEY_TREE_CLOSE_BUTTON
 };
 
+static const struct BgTemplate sTourneyTreeBgTemplates[4] BATTLE_DOME_DATA =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 28,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 29,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    },
+};
+
+static const struct BgTemplate sInfoCardBgTemplates[4] BATTLE_DOME_DATA =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 20,
+        .screenSize = 3,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 24,
+        .screenSize = 3,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 28,
+        .screenSize = 3,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 7,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+};
+
+static const struct WindowTemplate sTourneyTreeWindowTemplates[] BATTLE_DOME_DATA =
+{
+    [TOURNEYWIN_NAMES_LEFT] = {
+        .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 3,
+        .width = 8,
+        .height = 16,
+        .paletteNum = 15,
+        .baseBlock = 16,
+    },
+    [TOURNEYWIN_NAMES_RIGHT] = {
+        .bg = 0,
+        .tilemapLeft = 22,
+        .tilemapTop = 3,
+        .width = 8,
+        .height = 16,
+        .paletteNum = 15,
+        .baseBlock = 144,
+    },
+    [TOURNEYWIN_TITLE] = {
+        .bg = 0,
+        .tilemapLeft = 8,
+        .tilemapTop = 1,
+        .width = 14,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 272,
+    },
+    // Present in the JP ROM regardless of the US UBFIX conditional.
+    DUMMY_WIN_TEMPLATE,
+};
+
+
+// JP text metrics require a distinct information-card window layout.
+static const struct WindowTemplate sInfoCardWindowTemplates[] BATTLE_DOME_DATA =
+{
+    [WIN_TRAINER_NAME] = {
+        .bg = 0,
+        .tilemapLeft = 4,
+        .tilemapTop = 2,
+        .width = 23,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 1,
+    },
+    [WIN_TRAINER_MON1_NAME] = {
+        .bg = 0,
+        .tilemapLeft = 16,
+        .tilemapTop = 5,
+        .width = 8,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 47,
+    },
+    [WIN_TRAINER_MON2_NAME] = {
+        .bg = 0,
+        .tilemapLeft = 20,
+        .tilemapTop = 7,
+        .width = 8,
+        .height = 3,
+        .paletteNum = 15,
+        .baseBlock = 63,
+    },
+    [WIN_TRAINER_MON3_NAME] = {
+        .bg = 0,
+        .tilemapLeft = 16,
+        .tilemapTop = 10,
+        .width = 8,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 87,
+    },
+    [WIN_TRAINER_FLAVOR_TEXT] = {
+        .bg = 0,
+        .tilemapLeft = 3,
+        .tilemapTop = 12,
+        .width = 24,
+        .height = 7,
+        .paletteNum = 15,
+        .baseBlock = 103,
+    },
+    [WIN_MATCH_NUMBER] = {
+        .bg = 0,
+        .tilemapLeft = 6,
+        .tilemapTop = 2,
+        .width = 26,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 271,
+    },
+    [WIN_MATCH_TRAINER_NAME_LEFT] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 5,
+        .width = 8,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 323,
+    },
+    [WIN_MATCH_TRAINER_NAME_RIGHT] = {
+        .bg = 0,
+        .tilemapLeft = 20,
+        .tilemapTop = 5,
+        .width = 8,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 339,
+    },
+    [WIN_MATCH_WIN_TEXT] = {
+        .bg = 0,
+        .tilemapLeft = 3,
+        .tilemapTop = 16,
+        .width = 24,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 355,
+    },
+    [WIN_TRAINER_NAME + NUM_INFO_CARD_WINDOWS] = {
+        .bg = 1,
+        .tilemapLeft = 4,
+        .tilemapTop = 2,
+        .width = 23,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 1,
+    },
+    [WIN_TRAINER_MON1_NAME + NUM_INFO_CARD_WINDOWS] = {
+        .bg = 1,
+        .tilemapLeft = 16,
+        .tilemapTop = 5,
+        .width = 8,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 47,
+    },
+    [WIN_TRAINER_MON2_NAME + NUM_INFO_CARD_WINDOWS] = {
+        .bg = 1,
+        .tilemapLeft = 20,
+        .tilemapTop = 7,
+        .width = 8,
+        .height = 3,
+        .paletteNum = 15,
+        .baseBlock = 63,
+    },
+    [WIN_TRAINER_MON3_NAME + NUM_INFO_CARD_WINDOWS] = {
+        .bg = 1,
+        .tilemapLeft = 16,
+        .tilemapTop = 10,
+        .width = 8,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 87,
+    },
+    [WIN_TRAINER_FLAVOR_TEXT + NUM_INFO_CARD_WINDOWS] = {
+        .bg = 1,
+        .tilemapLeft = 3,
+        .tilemapTop = 12,
+        .width = 24,
+        .height = 7,
+        .paletteNum = 15,
+        .baseBlock = 103,
+    },
+    [WIN_MATCH_NUMBER + NUM_INFO_CARD_WINDOWS] = {
+        .bg = 1,
+        .tilemapLeft = 6,
+        .tilemapTop = 2,
+        .width = 26,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 271,
+    },
+    [WIN_MATCH_TRAINER_NAME_LEFT + NUM_INFO_CARD_WINDOWS] = {
+        .bg = 1,
+        .tilemapLeft = 2,
+        .tilemapTop = 5,
+        .width = 8,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 323,
+    },
+    [WIN_MATCH_TRAINER_NAME_RIGHT + NUM_INFO_CARD_WINDOWS] = {
+        .bg = 1,
+        .tilemapLeft = 20,
+        .tilemapTop = 5,
+        .width = 8,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 339,
+    },
+    [WIN_MATCH_WIN_TEXT + NUM_INFO_CARD_WINDOWS] = {
+        .bg = 1,
+        .tilemapLeft = 3,
+        .tilemapTop = 16,
+        .width = 24,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 355,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
 /*
  * JP physical owner [0x085D3DFC, 0x085D68CC).
  * Keep every verified raw sub-boundary visible here while the Battle Dome
@@ -471,22 +777,6 @@ static const u8 sTourneyTreeCursorMovementMap[DOME_TOURNAMENT_TRAINERS_COUNT + D
 __asm__(
     ".section .rodata.battle_dome_raw,\"a\",%progbits\n"
     ".align 2\n"
-    "\t.globl gUnknown_85D5918\n"
-    "gUnknown_85D5918: @ 0x85D5918\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5918, 0x10\n"
-    "\n"
-    "\t.globl gUnknown_85D5928\n"
-    "gUnknown_85D5928: @ 0x85D5928\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5928, 0x10\n"
-    "\n"
-    "\t.globl gUnknown_85D5938\n"
-    "gUnknown_85D5938: @ 0x85D5938\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5938, 0x20\n"
-    "\n"
-    "\t.globl gUnknown_85D5958\n"
-    "gUnknown_85D5958: @ 0x85D5958\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5958, 0x98\n"
-    "\n"
     "\t.globl gUnknown_85D59F0\n"
     "gUnknown_85D59F0: @ 0x85D59F0\n"
     "\t.incbin \"baserom_jp.gba\", 0x5d59f0, 0xc\n"
@@ -4128,8 +4418,8 @@ __attribute__((naked)) void Task_ShowOpponentInfo(void)
         "	b _08190142\n\t"
         "	.align 2, 0\n\t"
         "_0819010C: .4byte 0x05006000\n\t"
-        "_08190110: .4byte gUnknown_85D5928\n\t"
-        "_08190114: .4byte gUnknown_85D5958\n\t"
+        "_08190110: .4byte sInfoCardBgTemplates\n\t"
+        "_08190114: .4byte sInfoCardWindowTemplates\n\t"
         "_08190118: .4byte gBattle_BG0_X\n\t"
         "_0819011C: .4byte gBattle_BG0_Y\n\t"
         "_08190120: .4byte gBattle_BG1_X\n\t"
@@ -11935,8 +12225,8 @@ __attribute__((naked)) void Task_ShowTourneyTree(void)
         "	b _0819401C\n\t"
         "	.align 2, 0\n\t"
         "_08193EDC: .4byte 0x05006000\n\t"
-        "_08193EE0: .4byte gUnknown_85D5918\n\t"
-        "_08193EE4: .4byte gUnknown_85D5938\n\t"
+        "_08193EE0: .4byte sTourneyTreeBgTemplates\n\t"
+        "_08193EE4: .4byte sTourneyTreeWindowTemplates\n\t"
         "_08193EE8: .4byte gBattle_BG0_X\n\t"
         "_08193EEC: .4byte gBattle_BG0_Y\n\t"
         "_08193EF0: .4byte gBattle_BG1_X\n\t"
