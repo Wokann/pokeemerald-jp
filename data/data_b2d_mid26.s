@@ -865,20 +865,6 @@ sTrainerBContinueScriptBattleParams: @ 0x0052ACF8
 	.byte 0x06
 	.byte 0x00, 0x00, 0x00
 
-	.section .rodata.data_b2d_mid26_after_battle_setup_rematch_data_before_trainer_see_data
-
-	.globl sBadgeFlagsJp
-sBadgeFlagsJp: @ 0x852B220
-	.hword 0x0867, 0x0868, 0x0869, 0x086A, 0x086B, 0x086C, 0x086D, 0x086E
-
-	.globl sWindowTemplate_LinkPlayerCount
-	.set sWindowTemplate_LinkPlayerCount, sBadgeFlagsJp + 0x1C
-
-	.globl sTrainerCardColorNames
-	.set sTrainerCardColorNames, sBadgeFlagsJp + 0x1F
-
-	.incbin "baserom_jp.gba", 0x52b230, 0x28
-
 	.section .rodata.data_b2d_mid26_after_trainer_see_data
 	.incbin "baserom_jp.gba", 0x52b490, 0x2564
 

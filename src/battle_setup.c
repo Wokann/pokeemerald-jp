@@ -139,6 +139,7 @@ extern const struct TrainerBattleParameter sTrainerBOrdinaryBattleParams[];
 extern const struct TrainerBattleParameter sTrainerBContinueScriptBattleParams[];
 
 #define BATTLE_SETUP_REMATCH_DATA __attribute__((section(".rodata.battle_setup_rematch_data")))
+#define BATTLE_SETUP_LINK_DATA __attribute__((section(".rodata.battle_setup_link_data")))
 
 #define REMATCH(trainer1, trainer2, trainer3, trainer4, trainer5, map)  \
 {                                                                       \
@@ -229,7 +230,11 @@ const struct RematchTrainer gRematchTable[REMATCH_TABLE_ENTRIES] BATTLE_SETUP_RE
     [REMATCH_WALLACE] = REMATCH(TRAINER_WALLACE, TRAINER_WALLACE, TRAINER_WALLACE, TRAINER_WALLACE, TRAINER_WALLACE, MAP_EVER_GRANDE_CITY),
 };
 
-extern const u16 sBadgeFlagsJp[NUM_BADGES]; // JP: 0x0852B220 badge flag table
+static const u16 sBadgeFlags[NUM_BADGES] BATTLE_SETUP_LINK_DATA =
+{
+    FLAG_BADGE01_GET, FLAG_BADGE02_GET, FLAG_BADGE03_GET, FLAG_BADGE04_GET,
+    FLAG_BADGE05_GET, FLAG_BADGE06_GET, FLAG_BADGE07_GET, FLAG_BADGE08_GET,
+};
 
 #define tState data[0]
 #define tTransition data[1]
@@ -1660,9 +1665,9 @@ static bool32 HasAtLeastFiveBadges(void)
 {
     s32 i, count;
 
-    for (count = 0, i = 0; i < ARRAY_COUNT(sBadgeFlagsJp); i++)
+    for (count = 0, i = 0; i < ARRAY_COUNT(sBadgeFlags); i++)
     {
-        if (FlagGet(sBadgeFlagsJp[i]) == TRUE)
+        if (FlagGet(sBadgeFlags[i]) == TRUE)
         {
             if (++count >= 5)
                 return TRUE;

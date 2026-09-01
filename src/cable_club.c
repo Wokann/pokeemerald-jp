@@ -34,8 +34,9 @@
 #define tTimer      data[4]
 #define tWindowId   data[5]
 
+#define CABLE_CLUB_LINK_DATA __attribute__((section(".rodata.cable_club_link_data")))
+
 extern s16 gUnknown_3005B68[];
-extern const u16 sBadgeFlagsJp[];
 
 static void PrintNumPlayersInLink(u16 windowId, u32 numPlayers);
 static void Task_LinkupStart(u8 taskId);
@@ -56,16 +57,48 @@ static void Task_ReestablishLinkAwaitConfirmation(u8 taskId);
 void Task_LinkupFailed(u8 taskId);
 void Task_LinkupConnectionError(u8 taskId);
 
-extern const struct WindowTemplate sWindowTemplate_LinkPlayerCount;
 extern const u8 gText_ConfirmLinkWhenPlayersReady[];
 extern const u8 gText_ConfirmStartLinkWithXPlayers[];
 extern const u8 gText_AwaitingLinkup[];
 extern struct Pokemon gUnknown_202412C[];
 extern void TrainerCard_GenerateCardForPlayer(struct TrainerCard *trainerCard);
 extern struct LinkPlayer gLocalLinkPlayer;
-extern const u8 sTrainerCardColorNames[][5];
 extern const u8 gText_PleaseWaitForLink[];
 extern void sub_0809FDEC(void);
+
+// {B_COPY_VAR_1}にん　せつぞく$
+const u8 gText_NumPlayerLink[] CABLE_CLUB_LINK_DATA =
+{
+    0xFD, 0x02, 0x16, 0x2E, 0x00, 0x0E, 0x12, 0x40, 0x08, 0xFF,
+};
+
+static const struct WindowTemplate sWindowTemplate_LinkPlayerCount CABLE_CLUB_LINK_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 16,
+    .tilemapTop = 11,
+    .width = 11,
+    .height = 2,
+    .paletteNum = 15,
+    .baseBlock = 0x0146,
+};
+
+const u8 sTrainerCardColorNames[][5] CABLE_CLUB_LINK_DATA =
+{
+    // ブロンズ$
+    {0x98, 0x7B, 0x7E, 0x8E, 0xFF},
+    // カッパー$
+    {0x56, 0xA0, 0x9B, 0xAE, 0xFF},
+    // シルバー$
+    {0x5C, 0x79, 0x96, 0xAE, 0xFF},
+    // ゴールド$
+    {0x8B, 0xAE, 0x79, 0x95, 0xFF},
+};
+
+// JP uses card-star values 1-4. The original code indexes those values through
+// the final five bytes of the preceding window template, whose index 1 begins
+// at the first real color name.
+#define sTrainerCardColorNamesByStars ((const u8 (*)[5])((const u8 *)&sWindowTemplate_LinkPlayerCount + 3))
 
 static void CreateLinkupTask(u8 minPlayers, u8 maxPlayers)
 {
@@ -83,7 +116,7 @@ static void PrintNumPlayersInLink(u16 windowId, u32 numPlayers)
 {
     ConvertIntToDecimalStringN(gStringVar1, numPlayers, STR_CONV_MODE_LEFT_ALIGN, 1);
     SetStandardWindowBorderStyle(windowId, FALSE);
-    StringExpandPlaceholders(gStringVar4, (const u8 *)(sBadgeFlagsJp + 8));
+    StringExpandPlaceholders(gStringVar4, gText_NumPlayerLink);
     AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar4, 0, 0, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(windowId, COPYWIN_FULL);
 }
@@ -1079,7 +1112,7 @@ bool32 GetLinkTrainerCardColor(u8 linkPlayerIndex)
         return FALSE;
 
     // JP table indexing is one ahead of US (no -1)
-    StringCopy(gStringVar2, sTrainerCardColorNames[numStars]);
+    StringCopy(gStringVar2, sTrainerCardColorNamesByStars[numStars]);
     return TRUE;
 }
 
