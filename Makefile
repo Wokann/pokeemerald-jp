@@ -1165,6 +1165,7 @@ $(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c graphics/su
 	@rm -f $(C_BUILDDIR)/pokemon_summary_screen.gen.s
 $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/graphics/pokeballs.h src/data/text_window.h src/data/scrcmd_data.h \
 	graphics/text_window/message_box_jp.4bpp \
+	graphics/title_screen/press_start.gbapal graphics/title_screen/press_start.4bpp.lz \
 	graphics/balls/poke.4bpp.lz graphics/balls/poke.gbapal.lz \
 	graphics/balls/great.4bpp.lz graphics/balls/great.gbapal.lz \
 	graphics/balls/safari.4bpp.lz graphics/balls/safari.gbapal.lz \

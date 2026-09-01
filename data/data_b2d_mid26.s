@@ -877,14 +877,6 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/Route124_DivingTreasureHuntersHouse/events.inc"
 	.section .rodata.data_b2d_mid26_after_battle_anim_status_effects_before_field_weather_drought
 
-	.globl gTitleScreenPressStartPal
-gTitleScreenPressStartPal: @ 0x85176D4
-	.incbin "baserom_jp.gba", 0x5176d4, 0x20
-
-	.globl gTitleScreenPressStartGfx
-gTitleScreenPressStartGfx: @ 0x85176F4
-	.incbin "baserom_jp.gba", 0x5176f4, 0x3ac
-
 	.globl gTitleScreenPokemonLogoTilemap
 gTitleScreenPokemonLogoTilemap: @ 0x8517AA0
 	.incbin "graphics/title_screen/gTitleScreenPokemonLogoTilemap.bin"

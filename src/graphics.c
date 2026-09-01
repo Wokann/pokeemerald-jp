@@ -3,6 +3,14 @@
 #include "string_util.h"
 #include "constants/comparison_operators.h"
 
+#define TITLE_SCREEN_PRESS_START_GRAPHICS __attribute__((section(".rodata.title_screen_press_start_graphics"), aligned(1)))
+
+// The localized JP Press Start tile stream is byte-exact source data.
+TITLE_SCREEN_PRESS_START_GRAPHICS const u16 gTitleScreenPressStartPal[] = INCBIN_U16("graphics/title_screen/press_start.gbapal");
+TITLE_SCREEN_PRESS_START_GRAPHICS const u32 gTitleScreenPressStartGfx[] = INCBIN_U32("graphics/title_screen/press_start.4bpp.lz");
+
+#undef TITLE_SCREEN_PRESS_START_GRAPHICS
+
 #define POKEBALL_GRAPHICS __attribute__((section(".rodata.pokeball_graphics"), aligned(1)))
 #define POKEBALL_OPEN_GRAPHICS __attribute__((section(".rodata.pokeball_open_graphics"), aligned(1)))
 #include "data/graphics/pokeballs.h"

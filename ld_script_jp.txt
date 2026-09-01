@@ -9704,6 +9704,7 @@ SECTIONS {
         src/battle_anim_mons.o(.rodata.battle_anim_mons_static_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_battle_anim_mons_static_data_before_battle_anim_status_effects);
         src/battle_anim_status_effects.o(.rodata.battle_anim_status_effects_data);
+        src/graphics.o(.rodata.title_screen_press_start_graphics);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_battle_anim_status_effects_before_field_weather_drought);
         src/field_weather.o(.rodata.field_weather_drought_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_field_weather_drought_before_field_weather_static_data);
