@@ -876,7 +876,14 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	@ MAP_ROUTE124_DIVING_TREASURE_HUNTERS_HOUSE (g33 m0)
 	.include "data/maps/Route124_DivingTreasureHuntersHouse/events.inc"
 	.section .rodata.data_b2d_mid26_after_battle_anim_status_effects_before_field_weather_drought
-	.incbin "baserom_jp.gba", 0x5176d4, 0x3cc
+
+	.globl gTitleScreenPressStartPal
+gTitleScreenPressStartPal: @ 0x85176D4
+	.incbin "baserom_jp.gba", 0x5176d4, 0x20
+
+	.globl gTitleScreenPressStartGfx
+gTitleScreenPressStartGfx: @ 0x85176F4
+	.incbin "baserom_jp.gba", 0x5176f4, 0x3ac
 
 	.globl gTitleScreenPokemonLogoTilemap
 gTitleScreenPokemonLogoTilemap: @ 0x8517AA0
@@ -996,13 +1003,13 @@ sStartCopyrightBannerSpriteTemplate: @ 0x851AD74
 
 	.globl sSpriteSheet_PressStart
 sSpriteSheet_PressStart: @ 0x851AD8C
-	.4byte 0x085176F4
+	.4byte gTitleScreenPressStartGfx
 	.hword 0x0520, 0x03E9
 	.4byte 0x00000000, 0x00000000
 
 	.globl sSpritePalette_PressStart
 sSpritePalette_PressStart: @ 0x851AD9C
-	.4byte 0x085176D4
+	.4byte gTitleScreenPressStartPal
 	.hword 0x03E9, 0x0000
 	.4byte 0x00000000, 0x00000000
 
