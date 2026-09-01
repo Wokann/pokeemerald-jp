@@ -865,7 +865,9 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/Route110_SeasideCyclingRoadNorthEntrance/events.inc"
 	@ MAP_ROUTE113_GLASS_WORKSHOP (g30 m0)
 	.include "data/maps/Route113_GlassWorkshop/events.inc"
-	.incbin "baserom_jp.gba", 0x517210, 0x36C
+	@ MAP_ROUTE123_BERRY_MASTERS_HOUSE (g31 m0)
+	.include "data/maps/Route123_BerryMastersHouse/events.inc"
+	.incbin "baserom_jp.gba", 0x517264, 0x318
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C
