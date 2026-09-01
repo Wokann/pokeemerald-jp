@@ -6352,7 +6352,7 @@ field_effect.s
 080b6aa4 FldEff_UseWaterfall FldEff_UseWaterfall
 080b6adc sub_080B6ADC_jp MovePlayerOnMachBike
 080b6b0c field_effect.s sub_080B6B0C_jp
-080b6b28 field_effect.s sub_080B6B28_jp
+080b6b28 field_effect.c WaterfallFieldEffect_Init
 080b6b48 WaterfallFieldEffect_ShowMon WaterfallFieldEffect_ShowMon
 080b6b84 waterfall_2_wait_anim_finish_probably WaterfallFieldEffect_WaitForShowMon
 080b6ba8 sub_080B6BA8_jp WaterfallFieldEffect_RideUp

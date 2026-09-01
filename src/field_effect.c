@@ -4,10 +4,12 @@
 #include "main.h"
 #include "task.h"
 #include "constants/field_effects.h"
+#include "constants/event_object_movement.h"
 
 #define FIELD_EFFECT_GRAPHICS_DATA __attribute__((section(".rodata.field_effect_graphics_data")))
 #define FIELD_EFFECT_GRAPHICS_RESOURCE_DATA __attribute__((section(".rodata.field_effect_graphics_resource_data")))
 #define FIELD_EFFECT_STATIC_DATA __attribute__((section(".rodata.field_effect_static_data")))
+#define FIELD_EFFECT_RUNTIME_STATIC_DATA __attribute__((section(".rodata.field_effect_static_data")))
 
 static const u32 sNewGameBirch_Gfx[] FIELD_EFFECT_GRAPHICS_DATA = INCBIN_U32("graphics/birch_speech/birch.4bpp");
 static const u32 sUnusedBirchBeauty[] FIELD_EFFECT_GRAPHICS_DATA = INCBIN_U32("graphics/birch_speech/unused_beauty.4bpp");
@@ -320,6 +322,424 @@ static const struct SpriteTemplate sSpriteTemplate_HofMonitorSmall FIELD_EFFECT_
     .images = sPicTable_HofMonitorSmall,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_HallOfFameMonitor,
+};
+
+void PokecenterHealEffect_Init(struct Task *task);
+void PokecenterHealEffect_WaitForBallPlacement(struct Task *task);
+void PokecenterHealEffect_2(struct Task *task);
+void PokecenterHealEffect_WaitForSoundAndEnd(struct Task *task);
+void HallOfFameRecordEffect_Init(struct Task *task);
+void HallOfFameRecordEffect_WaitForBallPlacement(struct Task *task);
+void HallOfFameRecordEffect_2(struct Task *task);
+void HallOfFameRecordEffect_WaitForSoundAndEnd(struct Task *task);
+void PokeballGlowEffect_PlaceBalls(struct Sprite *sprite);
+void PokeballGlowEffect_TryPlaySe(struct Sprite *sprite);
+void PokeballGlowEffect_Flash1(struct Sprite *sprite);
+void PokeballGlowEffect_Flash2(struct Sprite *sprite);
+void PokeballGlowEffect_4(struct Sprite *sprite);
+void PokeballGlowEffect_Dummy(struct Sprite *sprite);
+void PokeballGlowEffect_6(struct Sprite *sprite);
+void PokeballGlowEffect_7(struct Sprite *sprite);
+bool8 FallWarpEffect_Init(struct Task *task);
+bool8 FallWarpEffect_WaitWeather(struct Task *task);
+bool8 FallWarpEffect_StartFall(struct Task *task);
+bool8 FallWarpEffect_Fall(struct Task *task);
+bool8 FallWarpEffect_Land(struct Task *task);
+bool8 FallWarpEffect_CameraShake(struct Task *task);
+bool8 FallWarpEffect_End(struct Task *task);
+bool8 EscalatorWarpOut_Init(struct Task *task);
+bool8 EscalatorWarpOut_WaitForPlayer(struct Task *task);
+bool8 EscalatorWarpOut_Up_Ride(struct Task *task);
+bool8 EscalatorWarpOut_Up_End(struct Task *task);
+bool8 EscalatorWarpOut_Down_Ride(struct Task *task);
+bool8 EscalatorWarpOut_Down_End(struct Task *task);
+bool8 EscalatorWarpIn_Init(struct Task *task);
+bool8 EscalatorWarpIn_Down_Init(struct Task *task);
+bool8 EscalatorWarpIn_Down_Ride(struct Task *task);
+bool8 EscalatorWarpIn_Up_Init(struct Task *task);
+bool8 EscalatorWarpIn_Up_Ride(struct Task *task);
+bool8 EscalatorWarpIn_WaitForMovement(struct Task *task);
+bool8 EscalatorWarpIn_End(struct Task *task);
+bool8 WaterfallFieldEffect_Init(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 WaterfallFieldEffect_ShowMon(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 WaterfallFieldEffect_WaitForShowMon(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 WaterfallFieldEffect_RideUp(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 WaterfallFieldEffect_ContinueRideOrEnd(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 DiveFieldEffect_Init(struct Task *task);
+bool8 DiveFieldEffect_ShowMon(struct Task *task);
+bool8 DiveFieldEffect_TryWarp(struct Task *task);
+bool8 LavaridgeGymB1FWarpEffect_Init(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpEffect_CameraShake(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpEffect_Launch(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpEffect_Rise(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpEffect_FadeOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpEffect_Warp(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpExitEffect_Init(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpExitEffect_StartPopOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpExitEffect_PopOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpExitEffect_End(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGym1FWarpEffect_Init(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGym1FWarpEffect_AshPuff(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGym1FWarpEffect_Disappear(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGym1FWarpEffect_FadeOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGym1FWarpEffect_Warp(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void EscapeRopeWarpOutEffect_Init(struct Task *task);
+void EscapeRopeWarpOutEffect_Spin(struct Task *task);
+void EscapeRopeWarpInEffect_Init(struct Task *task);
+void EscapeRopeWarpInEffect_Spin(struct Task *task);
+void TeleportWarpOutFieldEffect_Init(struct Task *task);
+void TeleportWarpOutFieldEffect_SpinGround(struct Task *task);
+void TeleportWarpOutFieldEffect_SpinExit(struct Task *task);
+void TeleportWarpOutFieldEffect_End(struct Task *task);
+void TeleportWarpInFieldEffect_Init(struct Task *task);
+void TeleportWarpInFieldEffect_SpinEnter(struct Task *task);
+void TeleportWarpInFieldEffect_SpinGround(struct Task *task);
+void FieldMoveShowMonOutdoorsEffect_Init(struct Task *task);
+void FieldMoveShowMonOutdoorsEffect_LoadGfx(struct Task *task);
+void FieldMoveShowMonOutdoorsEffect_CreateBanner(struct Task *task);
+void FieldMoveShowMonOutdoorsEffect_WaitForMon(struct Task *task);
+void FieldMoveShowMonOutdoorsEffect_ShrinkBanner(struct Task *task);
+void FieldMoveShowMonOutdoorsEffect_RestoreBg(struct Task *task);
+void FieldMoveShowMonOutdoorsEffect_End(struct Task *task);
+void FieldMoveShowMonIndoorsEffect_Init(struct Task *task);
+void FieldMoveShowMonIndoorsEffect_LoadGfx(struct Task *task);
+void FieldMoveShowMonIndoorsEffect_SlideBannerOn(struct Task *task);
+void FieldMoveShowMonIndoorsEffect_WaitForMon(struct Task *task);
+void FieldMoveShowMonIndoorsEffect_RestoreBg(struct Task *task);
+void FieldMoveShowMonIndoorsEffect_SlideBannerOff(struct Task *task);
+void FieldMoveShowMonIndoorsEffect_End(struct Task *task);
+void SurfFieldEffect_Init(struct Task *task);
+void SurfFieldEffect_FieldMovePose(struct Task *task);
+void SurfFieldEffect_ShowMon(struct Task *task);
+void SurfFieldEffect_JumpOnSurfBlob(struct Task *task);
+void SurfFieldEffect_End(struct Task *task);
+void FlyOutFieldEffect_FieldMovePose(struct Task *task);
+void FlyOutFieldEffect_ShowMon(struct Task *task);
+void FlyOutFieldEffect_BirdLeaveBall(struct Task *task);
+void FlyOutFieldEffect_WaitBirdLeave(struct Task *task);
+void FlyOutFieldEffect_BirdSwoopDown(struct Task *task);
+void FlyOutFieldEffect_JumpOnBird(struct Task *task);
+void FlyOutFieldEffect_FlyOffWithBird(struct Task *task);
+void FlyOutFieldEffect_WaitFlyOff(struct Task *task);
+void FlyOutFieldEffect_End(struct Task *task);
+void FlyInFieldEffect_BirdSwoopDown(struct Task *task);
+void FlyInFieldEffect_FlyInWithBird(struct Task *task);
+void FlyInFieldEffect_JumpOffBird(struct Task *task);
+void FlyInFieldEffect_FieldMovePose(struct Task *task);
+void FlyInFieldEffect_BirdReturnToBall(struct Task *task);
+void FlyInFieldEffect_WaitBirdReturn(struct Task *task);
+void FlyInFieldEffect_End(struct Task *task);
+void DestroyDeoxysRockEffect_CameraShake(s16 *data, u8 taskId);
+void DestroyDeoxysRockEffect_RockFragments(s16 *data, u8 taskId);
+void DestroyDeoxysRockEffect_WaitAndEnd(s16 *data, u8 taskId);
+void SpriteCB_DeoxysRockFragment(struct Sprite *sprite);
+
+static void (*const sPokecenterHealEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    PokecenterHealEffect_Init,
+    PokecenterHealEffect_WaitForBallPlacement,
+    PokecenterHealEffect_2,
+    PokecenterHealEffect_WaitForSoundAndEnd,
+};
+
+static void (*const sHallOfFameRecordEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    HallOfFameRecordEffect_Init,
+    HallOfFameRecordEffect_WaitForBallPlacement,
+    HallOfFameRecordEffect_2,
+    HallOfFameRecordEffect_WaitForSoundAndEnd,
+};
+
+static void (*const sPokeballGlowEffectFuncs[])(struct Sprite *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    PokeballGlowEffect_PlaceBalls,
+    PokeballGlowEffect_TryPlaySe,
+    PokeballGlowEffect_Flash1,
+    PokeballGlowEffect_Flash2,
+    PokeballGlowEffect_4,
+    PokeballGlowEffect_Dummy,
+    PokeballGlowEffect_6,
+    PokeballGlowEffect_7,
+};
+
+static const struct Coords16 sPokeballCoordOffsets[PARTY_SIZE] FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    {.x = 0, .y = 0},
+    {.x = 6, .y = 0},
+    {.x = 0, .y = 4},
+    {.x = 6, .y = 4},
+    {.x = 0, .y = 8},
+    {.x = 6, .y = 8},
+};
+
+static const u8 sPokeballGlowReds[] FIELD_EFFECT_RUNTIME_STATIC_DATA = {16, 12, 8, 0};
+static const u8 sPokeballGlowGreens[] FIELD_EFFECT_RUNTIME_STATIC_DATA = {16, 12, 8, 0};
+static const u8 sPokeballGlowBlues[] FIELD_EFFECT_RUNTIME_STATIC_DATA = {0, 0, 0, 0};
+
+static bool8 (*const sFallWarpFieldEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    FallWarpEffect_Init,
+    FallWarpEffect_WaitWeather,
+    FallWarpEffect_StartFall,
+    FallWarpEffect_Fall,
+    FallWarpEffect_Land,
+    FallWarpEffect_CameraShake,
+    FallWarpEffect_End,
+};
+
+static bool8 (*const sEscalatorWarpOutFieldEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    EscalatorWarpOut_Init,
+    EscalatorWarpOut_WaitForPlayer,
+    EscalatorWarpOut_Up_Ride,
+    EscalatorWarpOut_Up_End,
+    EscalatorWarpOut_Down_Ride,
+    EscalatorWarpOut_Down_End,
+};
+
+static bool8 (*const sEscalatorWarpInFieldEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    EscalatorWarpIn_Init,
+    EscalatorWarpIn_Down_Init,
+    EscalatorWarpIn_Down_Ride,
+    EscalatorWarpIn_Up_Init,
+    EscalatorWarpIn_Up_Ride,
+    EscalatorWarpIn_WaitForMovement,
+    EscalatorWarpIn_End,
+};
+
+static bool8 (*const sWaterfallFieldEffectFuncs[])(struct Task *, struct ObjectEvent *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    WaterfallFieldEffect_Init,
+    WaterfallFieldEffect_ShowMon,
+    WaterfallFieldEffect_WaitForShowMon,
+    WaterfallFieldEffect_RideUp,
+    WaterfallFieldEffect_ContinueRideOrEnd,
+};
+
+static bool8 (*const sDiveFieldEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    DiveFieldEffect_Init,
+    DiveFieldEffect_ShowMon,
+    DiveFieldEffect_TryWarp,
+};
+
+static bool8 (*const sLavaridgeGymB1FWarpEffectFuncs[])(struct Task *, struct ObjectEvent *, struct Sprite *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    LavaridgeGymB1FWarpEffect_Init,
+    LavaridgeGymB1FWarpEffect_CameraShake,
+    LavaridgeGymB1FWarpEffect_Launch,
+    LavaridgeGymB1FWarpEffect_Rise,
+    LavaridgeGymB1FWarpEffect_FadeOut,
+    LavaridgeGymB1FWarpEffect_Warp,
+};
+
+static bool8 (*const sLavaridgeGymB1FWarpExitEffectFuncs[])(struct Task *, struct ObjectEvent *, struct Sprite *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    LavaridgeGymB1FWarpExitEffect_Init,
+    LavaridgeGymB1FWarpExitEffect_StartPopOut,
+    LavaridgeGymB1FWarpExitEffect_PopOut,
+    LavaridgeGymB1FWarpExitEffect_End,
+};
+
+static bool8 (*const sLavaridgeGym1FWarpEffectFuncs[])(struct Task *, struct ObjectEvent *, struct Sprite *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    LavaridgeGym1FWarpEffect_Init,
+    LavaridgeGym1FWarpEffect_AshPuff,
+    LavaridgeGym1FWarpEffect_Disappear,
+    LavaridgeGym1FWarpEffect_FadeOut,
+    LavaridgeGym1FWarpEffect_Warp,
+};
+
+static void (*const sEscapeRopeWarpOutEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    EscapeRopeWarpOutEffect_Init,
+    EscapeRopeWarpOutEffect_Spin,
+};
+
+static const u8 sEscapeRopeSpinDirections[] FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    DIR_SOUTH,
+    DIR_WEST,
+    DIR_EAST,
+    DIR_NORTH,
+    DIR_SOUTH,
+};
+
+static void (*const sEscapeRopeWarpInEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    EscapeRopeWarpInEffect_Init,
+    EscapeRopeWarpInEffect_Spin,
+};
+
+static void (*const sTeleportWarpOutFieldEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    TeleportWarpOutFieldEffect_Init,
+    TeleportWarpOutFieldEffect_SpinGround,
+    TeleportWarpOutFieldEffect_SpinExit,
+    TeleportWarpOutFieldEffect_End,
+};
+
+static void (*const sTeleportWarpInFieldEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    TeleportWarpInFieldEffect_Init,
+    TeleportWarpInFieldEffect_SpinEnter,
+    TeleportWarpInFieldEffect_SpinGround,
+};
+
+static void (*const sFieldMoveShowMonOutdoorsEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    FieldMoveShowMonOutdoorsEffect_Init,
+    FieldMoveShowMonOutdoorsEffect_LoadGfx,
+    FieldMoveShowMonOutdoorsEffect_CreateBanner,
+    FieldMoveShowMonOutdoorsEffect_WaitForMon,
+    FieldMoveShowMonOutdoorsEffect_ShrinkBanner,
+    FieldMoveShowMonOutdoorsEffect_RestoreBg,
+    FieldMoveShowMonOutdoorsEffect_End,
+};
+
+static void (*const sFieldMoveShowMonIndoorsEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    FieldMoveShowMonIndoorsEffect_Init,
+    FieldMoveShowMonIndoorsEffect_LoadGfx,
+    FieldMoveShowMonIndoorsEffect_SlideBannerOn,
+    FieldMoveShowMonIndoorsEffect_WaitForMon,
+    FieldMoveShowMonIndoorsEffect_RestoreBg,
+    FieldMoveShowMonIndoorsEffect_SlideBannerOff,
+    FieldMoveShowMonIndoorsEffect_End,
+};
+
+static void (*const sSurfFieldEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    SurfFieldEffect_Init,
+    SurfFieldEffect_FieldMovePose,
+    SurfFieldEffect_ShowMon,
+    SurfFieldEffect_JumpOnSurfBlob,
+    SurfFieldEffect_End,
+};
+
+static void (*const sFlyOutFieldEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    FlyOutFieldEffect_FieldMovePose,
+    FlyOutFieldEffect_ShowMon,
+    FlyOutFieldEffect_BirdLeaveBall,
+    FlyOutFieldEffect_WaitBirdLeave,
+    FlyOutFieldEffect_BirdSwoopDown,
+    FlyOutFieldEffect_JumpOnBird,
+    FlyOutFieldEffect_FlyOffWithBird,
+    FlyOutFieldEffect_WaitFlyOff,
+    FlyOutFieldEffect_End,
+};
+
+static const union AffineAnimCmd sAffineAnim_FlyBirdLeaveBall[] FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    AFFINEANIMCMD_FRAME(8, 8, -30, 0),
+    AFFINEANIMCMD_FRAME(28, 28, 0, 30),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_FlyBirdReturnToBall[] FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    AFFINEANIMCMD_FRAME(256, 256, 64, 0),
+    AFFINEANIMCMD_FRAME(-10, -10, 0, 22),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_FlyBird[] FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    sAffineAnim_FlyBirdLeaveBall,
+    sAffineAnim_FlyBirdReturnToBall,
+};
+
+static void (*const sFlyInFieldEffectFuncs[])(struct Task *) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    FlyInFieldEffect_BirdSwoopDown,
+    FlyInFieldEffect_FlyInWithBird,
+    FlyInFieldEffect_JumpOffBird,
+    FlyInFieldEffect_FieldMovePose,
+    FlyInFieldEffect_BirdReturnToBall,
+    FlyInFieldEffect_WaitBirdReturn,
+    FlyInFieldEffect_End,
+};
+
+static const s16 sFlyInYPositions[] FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    -2,
+    -4,
+    -5,
+    -6,
+    -7,
+    -8,
+    -8,
+    -8,
+    -7,
+    -7,
+    -6,
+    -5,
+    -3,
+    -2,
+    0,
+    2,
+    4,
+    8,
+};
+
+static void (*const sDestroyDeoxysRockEffectFuncs[])(s16 *, u8) FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    DestroyDeoxysRockEffect_CameraShake,
+    DestroyDeoxysRockEffect_RockFragments,
+    DestroyDeoxysRockEffect_WaitAndEnd,
+};
+
+static const struct SpriteFrameImage sImages_DeoxysRockFragment[] FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    obj_frame_tiles(sRockFragment_TopLeft),
+    obj_frame_tiles(sRockFragment_TopRight),
+    obj_frame_tiles(sRockFragment_BottomLeft),
+    obj_frame_tiles(sRockFragment_BottomRight),
+};
+
+static const union AnimCmd sAnim_RockFragment_TopLeft[] FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    ANIMCMD_FRAME(.imageValue = 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_RockFragment_TopRight[] FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    ANIMCMD_FRAME(.imageValue = 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_RockFragment_BottomLeft[] FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    ANIMCMD_FRAME(.imageValue = 2),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_RockFragment_BottomRight[] FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    ANIMCMD_FRAME(.imageValue = 3),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_DeoxysRockFragment[] FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    sAnim_RockFragment_TopLeft,
+    sAnim_RockFragment_TopRight,
+    sAnim_RockFragment_BottomLeft,
+    sAnim_RockFragment_BottomRight,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_DeoxysRockFragment FIELD_EFFECT_RUNTIME_STATIC_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = 4378,
+    .oam = &sOam_8x8,
+    .anims = sAnims_DeoxysRockFragment,
+    .images = sImages_DeoxysRockFragment,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_DeoxysRockFragment,
 };
 
 extern u8 gUnknown_3000F58[32]; // sActiveList
@@ -1704,7 +2124,7 @@ __attribute__((naked)) void PokeballGlowEffect_PlaceBalls(struct Sprite *sprite)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B5CC0: .4byte sSpriteTemplate_PokeballGlow\n\t"
-        "_080B5CC4: .4byte gUnknown_8537050\n\t"
+        "_080B5CC4: .4byte sPokeballCoordOffsets\n\t"
         "_080B5CC8: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -1890,9 +2310,9 @@ __attribute__((naked)) void PokeballGlowEffect_Flash1(struct Sprite *sprite)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B5E28: .4byte 0x00001007\n\t"
-        "_080B5E2C: .4byte gUnknown_8537068\n\t"
-        "_080B5E30: .4byte gUnknown_853706C\n\t"
-        "_080B5E34: .4byte gUnknown_8537070\n\t"
+        "_080B5E2C: .4byte sPokeballGlowReds\n\t"
+        "_080B5E30: .4byte sPokeballGlowGreens\n\t"
+        "_080B5E34: .4byte sPokeballGlowBlues\n\t"
         "_080B5E38: .4byte 0x01050000\n\t"
         "_080B5E3C: .4byte 0x01030000\n\t"
         ".syntax divided\n\t"
@@ -2006,9 +2426,9 @@ __attribute__((naked)) void PokeballGlowEffect_Flash2(struct Sprite *sprite)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B5F1C: .4byte 0x00001007\n\t"
-        "_080B5F20: .4byte gUnknown_8537068\n\t"
-        "_080B5F24: .4byte gUnknown_853706C\n\t"
-        "_080B5F28: .4byte gUnknown_8537070\n\t"
+        "_080B5F20: .4byte sPokeballGlowReds\n\t"
+        "_080B5F24: .4byte sPokeballGlowGreens\n\t"
+        "_080B5F28: .4byte sPokeballGlowBlues\n\t"
         "_080B5F2C: .4byte 0x01050000\n\t"
         "_080B5F30: .4byte 0x01030000\n\t"
         ".syntax divided\n\t"
@@ -3757,7 +4177,7 @@ __attribute__((naked)) void sub_080B6ADC(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B6B18: .4byte gUnknown_85370C4\n\t"
+        "_080B6B18: .4byte sWaterfallFieldEffectFuncs\n\t"
         "_080B6B1C: .4byte gTasks\n\t"
         "_080B6B20: .4byte gPlayerAvatar\n\t"
         "_080B6B24: .4byte gObjectEvents\n\t"
@@ -3768,7 +4188,7 @@ __attribute__((naked)) void sub_080B6ADC(u8 taskId)
 }
 
 
-__attribute__((naked)) void sub_080B6B28(void)
+__attribute__((naked)) bool8 WaterfallFieldEffect_Init(struct Task *task, struct ObjectEvent *objectEvent)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5235,7 +5655,7 @@ __attribute__((naked)) void EscapeRopeWarpOutEffect_Spin(struct Task *task)
         "	bl DestroyTask\n\t"
         "	b _080B7598\n\t"
         "	.align 2, 0\n\t"
-        "_080B7530: .4byte gUnknown_8537128\n\t"
+        "_080B7530: .4byte sEscapeRopeSpinDirections\n\t"
         "_080B7534: .4byte gPlayerAvatar\n\t"
         "_080B7538: .4byte gObjectEvents\n\t"
         "_080B753C: .4byte gPaletteFade\n\t"
@@ -5446,7 +5866,7 @@ __attribute__((naked)) void EscapeRopeWarpInEffect_Spin(struct Task *task)
         "	bl DestroyTask\n\t"
         "	b _080B7718\n\t"
         "	.align 2, 0\n\t"
-        "_080B76C4: .4byte gUnknown_8537128\n\t"
+        "_080B76C4: .4byte sEscapeRopeSpinDirections\n\t"
         "_080B76C8: .4byte gPlayerAvatar\n\t"
         "_080B76CC: .4byte gObjectEvents\n\t"
         "_080B76D0: .4byte Task_EscapeRopeWarpIn + 1\n\t"
@@ -5633,7 +6053,7 @@ __attribute__((naked)) void TeleportWarpOutFieldEffect_SpinGround(struct Task *t
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B7810: .4byte gUnknown_8537128\n\t"
+        "_080B7810: .4byte sEscapeRopeSpinDirections\n\t"
         "_080B7814: .4byte gPlayerAvatar\n\t"
         "_080B7818: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
@@ -5742,7 +6162,7 @@ __attribute__((naked)) void TeleportWarpOutFieldEffect_SpinExit(struct Task *tas
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B78E0: .4byte gUnknown_8537128\n\t"
+        "_080B78E0: .4byte sEscapeRopeSpinDirections\n\t"
         "_080B78E4: .4byte gPlayerAvatar\n\t"
         "_080B78E8: .4byte gObjectEvents\n\t"
         "_080B78EC: .4byte gSprites\n\t"
@@ -5997,7 +6417,7 @@ __attribute__((naked)) void TeleportWarpInFieldEffect_SpinEnter(struct Task *tas
         "	strb r0, [r3]\n\t"
         "	b _080B7B02\n\t"
         "	.align 2, 0\n\t"
-        "_080B7ACC: .4byte gUnknown_8537128\n\t"
+        "_080B7ACC: .4byte sEscapeRopeSpinDirections\n\t"
         "_080B7AD0: .4byte gPlayerAvatar\n\t"
         "_080B7AD4: .4byte gObjectEvents\n\t"
         "_080B7AD8: .4byte gSprites\n\t"
@@ -6140,7 +6560,7 @@ __attribute__((naked)) void TeleportWarpInFieldEffect_SpinGround(struct Task *ta
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B7BE4: .4byte gUnknown_8537128\n\t"
+        "_080B7BE4: .4byte sEscapeRopeSpinDirections\n\t"
         "_080B7BE8: .4byte gPlayerAvatar\n\t"
         "_080B7BEC: .4byte gObjectEvents\n\t"
         "_080B7BF0: .4byte Task_TeleportWarpIn + 1\n\t"
@@ -8027,7 +8447,7 @@ __attribute__((naked)) void Task_FlyOut(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8954: .4byte gUnknown_85371A0\n\t"
+        "_080B8954: .4byte sFlyOutFieldEffectFuncs\n\t"
         "_080B8958: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -8616,7 +9036,7 @@ __attribute__((naked)) void SpriteCB_FlyBirdLeaveBall(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8D88: .4byte gUnknown_85371F4\n\t"
+        "_080B8D88: .4byte sAffineAnims_FlyBird\n\t"
         "_080B8D8C: .4byte 0x0000FFD0\n\t"
         "_080B8D90: .4byte 0x000007FF\n\t"
         ".syntax divided\n\t"
@@ -8803,7 +9223,7 @@ __attribute__((naked)) void SpriteCB_FlyBirdReturnToBall(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8EE4: .4byte gUnknown_85371F4\n\t"
+        "_080B8EE4: .4byte sAffineAnims_FlyBird\n\t"
         "_080B8EE8: .4byte 0x0000FFE0\n\t"
         ".syntax divided\n\t"
     );
@@ -9070,7 +9490,7 @@ __attribute__((naked)) void FlyInFieldEffect_JumpOffBird(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B90C4: .4byte gUnknown_8537218\n\t"
+        "_080B90C4: .4byte sFlyInYPositions\n\t"
         "_080B90C8: .4byte gPlayerAvatar\n\t"
         "_080B90CC: .4byte gSprites\n\t"
         ".syntax divided\n\t"
@@ -9441,7 +9861,7 @@ __attribute__((naked)) void sub_080B9340(u8 a0)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B9378: .4byte gUnknown_3005B68\n\t"
-        "_080B937C: .4byte gUnknown_853723C\n\t"
+        "_080B937C: .4byte sDestroyDeoxysRockEffectFuncs\n\t"
 
         ".syntax divided\n\t"
 
@@ -9655,7 +10075,7 @@ __attribute__((naked)) void CreateDeoxysRockFragments(struct Sprite *sprite)
         "	.align 2, 0\n\t"
         "_080B9500: .4byte gTotalCameraPixelOffsetX\n\t"
         "_080B9504: .4byte gTotalCameraPixelOffsetY\n\t"
-        "_080B9508: .4byte gUnknown_8537298\n\t"
+        "_080B9508: .4byte sSpriteTemplate_DeoxysRockFragment\n\t"
         "_080B950C: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );

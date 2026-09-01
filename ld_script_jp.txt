@@ -5321,7 +5321,7 @@ SECTIONS {
         src/field_effect.o(.text.EscalatorWarpIn_End);
         src/field_effect.o(.text.FldEff_UseWaterfall);
         src/field_effect.o(.text.sub_080B6ADC);
-        src/field_effect.o(.text.sub_080B6B28);
+        src/field_effect.o(.text.WaterfallFieldEffect_Init);
         src/field_effect.o(.text.WaterfallFieldEffect_ShowMon);
         src/field_effect.o(.text.WaterfallFieldEffect_WaitForShowMon);
         src/field_effect.o(.text.WaterfallFieldEffect_RideUp);
