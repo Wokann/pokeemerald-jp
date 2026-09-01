@@ -831,7 +831,11 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/NavelRock_Bottom/events.inc"
 	@ MAP_TRAINER_HILL_ELEVATOR (g26 m88)
 	.include "data/maps/TrainerHill_Elevator/events.inc"
-	.incbin "baserom_jp.gba", 0x5164EC, 0x1090
+	@ MAP_ROUTE104_PROTOTYPE (g27 m0)
+	.include "data/maps/Route104_Prototype/events.inc"
+	@ MAP_ROUTE104_PROTOTYPE_PRETTY_PETAL_FLOWER_SHOP (g27 m1)
+	.include "data/maps/Route104_PrototypePrettyPetalFlowerShop/events.inc"
+	.incbin "baserom_jp.gba", 0x516514, 0x1068
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

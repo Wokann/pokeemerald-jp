@@ -976,7 +976,11 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/NavelRock_Bottom/header.inc"
 	@ MAP_TRAINER_HILL_ELEVATOR (g26 m88)
 	.include "data/maps/TrainerHill_Elevator/header.inc"
-	.incbin "baserom_jp.gba", 0x45DF18, 0x94C
+	@ MAP_ROUTE104_PROTOTYPE (g27 m0)
+	.include "data/maps/Route104_Prototype/header.inc"
+	@ MAP_ROUTE104_PROTOTYPE_PRETTY_PETAL_FLOWER_SHOP (g27 m1)
+	.include "data/maps/Route104_PrototypePrettyPetalFlowerShop/header.inc"
+	.incbin "baserom_jp.gba", 0x45DF50, 0x914
 	.4byte BattleFrontier_BattlePikeLobby
 	.4byte BattleFrontier_BattlePikeCorridor
 	.4byte BattleFrontier_BattlePikeThreePathRoom
@@ -1032,7 +1036,9 @@ gMapHeaders: @ 0x0845A8D8
 	.4byte NavelRock_Down11
 	.4byte NavelRock_Bottom
 	.4byte TrainerHill_Elevator
-	.incbin "baserom_jp.gba", 0x45E940, 0x58
+	.4byte Route104_Prototype
+	.4byte Route104_PrototypePrettyPetalFlowerShop
+	.incbin "baserom_jp.gba", 0x45E948, 0x50
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

@@ -332,6 +332,7 @@ JP_STRUCTURED_MAPS += NavelRock_Exterior NavelRock_Harbor NavelRock_Entrance Nav
 	NavelRock_Down01 NavelRock_Down02 NavelRock_Down03 NavelRock_Down04 NavelRock_Down05 \
 	NavelRock_Down06 NavelRock_Down07 NavelRock_Down08 NavelRock_Down09 NavelRock_Down10 \
 	NavelRock_Down11 NavelRock_Bottom
+JP_STRUCTURED_MAPS += Route104_Prototype Route104_PrototypePrettyPetalFlowerShop
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
@@ -515,6 +516,7 @@ JP_STRUCTURED_MAP_METADATA_MAPS += NavelRock_Exterior NavelRock_Harbor NavelRock
 	NavelRock_Down01 NavelRock_Down02 NavelRock_Down03 NavelRock_Down04 NavelRock_Down05 \
 	NavelRock_Down06 NavelRock_Down07 NavelRock_Down08 NavelRock_Down09 NavelRock_Down10 \
 	NavelRock_Down11 NavelRock_Bottom
+JP_STRUCTURED_MAP_METADATA_MAPS += Route104_Prototype Route104_PrototypePrettyPetalFlowerShop
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)
