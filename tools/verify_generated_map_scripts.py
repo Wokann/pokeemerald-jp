@@ -465,7 +465,11 @@ def empty_owner_names(max_size: int | None) -> list[str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("map_name", nargs="?", default="PetalburgCity")
+    parser.add_argument(
+        "map_names",
+        nargs="*",
+        help="one or more map owners to verify (defaults to PetalburgCity)",
+    )
     parser.add_argument(
         "--all-empty",
         action="store_true",
@@ -484,6 +488,8 @@ def main() -> None:
     )
     args = parser.parse_args()
     if args.all_empty:
+        if args.map_names:
+            raise SystemExit("map names cannot be used with --all-empty")
         if args.output is not None:
             raise SystemExit("--output cannot be used with --all-empty")
         names = empty_owner_names(args.max_size)
@@ -501,10 +507,26 @@ def main() -> None:
         if failures:
             raise SystemExit(1)
         return
-    source = verify_map(args.map_name)
+
+    names = args.map_names or ["PetalburgCity"]
+    if args.output is not None and len(names) != 1:
+        raise SystemExit("--output can only be used with one map name")
+
+    sources = []
+    failures = []
+    for name in names:
+        try:
+            sources.append((name, verify_map(name, verbose=True)))
+        except VerificationError as error:
+            failures.append((name, str(error)))
+    if failures:
+        for name, error in failures:
+            print(f"FAIL {name}: {error}")
+        raise SystemExit(1)
+
     if args.output is not None:
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(source, encoding="utf-8")
+        args.output.write_text(sources[0][1], encoding="utf-8")
         print(f"wrote {args.output}")
 
 
