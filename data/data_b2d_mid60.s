@@ -1936,51 +1936,7 @@ gWaterPulseRingBubbleSpriteTemplate: @ 0x570EF4
 gWeatherBallWaterDownSpriteTemplate: @ 0x8570F0C
 	.incbin "baserom_jp.gba", 0x570F0C, 0x18
 
-	.section .rodata.mid60_after_battle_anim_fight_data
-	.incbin "baserom_jp.gba", 0x571d00, 0x18
-
-	.globl gToxicBubbleSpriteTemplate
-gToxicBubbleSpriteTemplate: @ 0x571D18
-	.hword 0x27A7, 0x27A7
-	.4byte 0x084FD060, 0x08571D14, 0, gDummySpriteAffineAnimTable, 0x080A7091
-	.incbin "baserom_jp.gba", 0x571d30, 0x5c
-
-	.globl gSludgeProjectileSpriteTemplate
-gSludgeProjectileSpriteTemplate: @ 0x571D8C
-	.hword 0x27A6, 0x27A6
-	.4byte 0x084FD0D8, 0x08571D48, 0, 0x08571D84, 0x0810E3FD
-
-	.globl gAcidPoisonBubbleSpriteTemplate
-gAcidPoisonBubbleSpriteTemplate: @ 0x571DA4
-	.hword 0x27A6, 0x27A6
-	.4byte 0x084FD0D8, 0x08571D48, 0, 0x08571D84, 0x0810E47D
-
-	.globl gSludgeBombHitParticleSpriteTemplate
-gSludgeBombHitParticleSpriteTemplate: @ 0x571DBC
-	.hword 0x27A6, 0x27A6
-	.4byte 0x084FD078, 0x08571D50, 0, 0x08571D88, 0x0810E521
-	.incbin "baserom_jp.gba", 0x571dd4, 0x18
-
-	.globl gAffineAnims_Droplet
-gAffineAnims_Droplet: @ 0x571DEC
-	.4byte 0x08571DD4
-
-	.globl gAcidPoisonDropletSpriteTemplate
-gAcidPoisonDropletSpriteTemplate: @ 0x571DF0
-	.hword 0x27A6, 0x27A6
-	.4byte 0x084FD0D8, 0x08571D4C, 0, 0x08571DEC, 0x0810E5A1
-	.incbin "baserom_jp.gba", 0x571e08, 0x1c
-
-	.globl gPoisonBubbleSpriteTemplate
-gPoisonBubbleSpriteTemplate: @ 0x571E24
-	.hword 0x27A6, 0x27A6
-	.4byte 0x084FD078, 0x08571D48, 0, 0x08571E20, 0x0810E615
-
-	.globl gWaterBubbleSpriteTemplate
-gWaterBubbleSpriteTemplate: @ 0x571E3C
-	.hword 0x27AB, 0x27AB
-	.4byte 0x084FD198, 0x08570DE4, 0, 0x08571E20, 0x0810E615
-
+	.section .rodata.mid60_after_battle_anim_poison_data
 	.globl gEllipticalGustSpriteTemplate
 gEllipticalGustSpriteTemplate: @ 0x571E54
 	.hword 0x2719, 0x2719

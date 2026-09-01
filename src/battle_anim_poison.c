@@ -2,10 +2,6 @@
 #include "battle_anim.h"
 #include "trig.h"
 
-// JP: the poison anim sprite templates and anim/affine data stay embedded
-// in ROM data (see the ABSOLUTE aliases in ld_script_jp.txt); only the
-// sprite callbacks are decompiled here, matching US pokeemerald.
-
 static void AnimSludgeProjectile(struct Sprite *sprite);
 static void AnimSludgeProjectile_Step(struct Sprite *sprite);
 static void AnimAcidPoisonBubble(struct Sprite *sprite);
@@ -15,6 +11,174 @@ static void AnimSludgeBombHitParticle_Step(struct Sprite *sprite);
 static void AnimAcidPoisonDroplet(struct Sprite *sprite);
 static void AnimBubbleEffect(struct Sprite *sprite);
 static void AnimBubbleEffect_Step(struct Sprite *sprite);
+
+#define BATTLE_ANIM_POISON_DATA __attribute__((section(".rodata.battle_anim_poison_data")))
+
+static const union AnimCmd sAnim_ToxicBubble[] BATTLE_ANIM_POISON_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_FRAME(16, 5),
+    ANIMCMD_FRAME(24, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_ToxicBubble[] BATTLE_ANIM_POISON_DATA =
+{
+    sAnim_ToxicBubble,
+};
+
+const struct SpriteTemplate gToxicBubbleSpriteTemplate BATTLE_ANIM_POISON_DATA =
+{
+    .tileTag = ANIM_TAG_TOXIC_BUBBLE,
+    .paletteTag = ANIM_TAG_TOXIC_BUBBLE,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
+    .anims = sAnims_ToxicBubble,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimSpriteOnMonPos,
+};
+
+static const union AnimCmd sAnim_PoisonProjectile[] BATTLE_ANIM_POISON_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_AcidPoisonDroplet[] BATTLE_ANIM_POISON_DATA =
+{
+    ANIMCMD_FRAME(4, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_SludgeBombHit[] BATTLE_ANIM_POISON_DATA =
+{
+    ANIMCMD_FRAME(8, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_PoisonProjectile[] BATTLE_ANIM_POISON_DATA =
+{
+    sAnim_PoisonProjectile,
+    sAnim_AcidPoisonDroplet,
+    sAnim_SludgeBombHit,
+};
+
+static const union AffineAnimCmd sAffineAnim_PoisonProjectile[] BATTLE_ANIM_POISON_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x160, 0x160, 0, 0),
+    AFFINEANIMCMD_FRAME(0xFFF6, 0xFFF6, 0, 10),
+    AFFINEANIMCMD_FRAME(0xA, 0xA, 0, 10),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd sAffineAnim_SludgeBombHit[] BATTLE_ANIM_POISON_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xEC, 0xEC, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_PoisonProjectile[] BATTLE_ANIM_POISON_DATA =
+{
+    sAffineAnim_PoisonProjectile,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_SludgeBombHit[] BATTLE_ANIM_POISON_DATA =
+{
+    sAffineAnim_SludgeBombHit,
+};
+
+const struct SpriteTemplate gSludgeProjectileSpriteTemplate BATTLE_ANIM_POISON_DATA =
+{
+    .tileTag = ANIM_TAG_POISON_BUBBLE,
+    .paletteTag = ANIM_TAG_POISON_BUBBLE,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x16,
+    .anims = sAnims_PoisonProjectile,
+    .images = NULL,
+    .affineAnims = sAffineAnims_PoisonProjectile,
+    .callback = AnimSludgeProjectile,
+};
+
+const struct SpriteTemplate gAcidPoisonBubbleSpriteTemplate BATTLE_ANIM_POISON_DATA =
+{
+    .tileTag = ANIM_TAG_POISON_BUBBLE,
+    .paletteTag = ANIM_TAG_POISON_BUBBLE,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x16,
+    .anims = sAnims_PoisonProjectile,
+    .images = NULL,
+    .affineAnims = sAffineAnims_PoisonProjectile,
+    .callback = AnimAcidPoisonBubble,
+};
+
+const struct SpriteTemplate gSludgeBombHitParticleSpriteTemplate BATTLE_ANIM_POISON_DATA =
+{
+    .tileTag = ANIM_TAG_POISON_BUBBLE,
+    .paletteTag = ANIM_TAG_POISON_BUBBLE,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
+    .anims = &sAnims_PoisonProjectile[2],
+    .images = NULL,
+    .affineAnims = sAffineAnims_SludgeBombHit,
+    .callback = AnimSludgeBombHitParticle,
+};
+
+static const union AffineAnimCmd sAffineAnim_AcidPoisonDroplet[] BATTLE_ANIM_POISON_DATA =
+{
+    AFFINEANIMCMD_FRAME(0xFFF0, 0x10, 0, 6),
+    AFFINEANIMCMD_FRAME(0x10, 0xFFF0, 0, 6),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+const union AffineAnimCmd *const gAffineAnims_Droplet[] BATTLE_ANIM_POISON_DATA =
+{
+    sAffineAnim_AcidPoisonDroplet,
+};
+
+const struct SpriteTemplate gAcidPoisonDropletSpriteTemplate BATTLE_ANIM_POISON_DATA =
+{
+    .tileTag = ANIM_TAG_POISON_BUBBLE,
+    .paletteTag = ANIM_TAG_POISON_BUBBLE,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x16,
+    .anims = &sAnims_PoisonProjectile[1],
+    .images = NULL,
+    .affineAnims = gAffineAnims_Droplet,
+    .callback = AnimAcidPoisonDroplet,
+};
+
+static const union AffineAnimCmd sAffineAnim_Bubble[] BATTLE_ANIM_POISON_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x9C, 0x9C, 0, 0),
+    AFFINEANIMCMD_FRAME(0x5, 0x5, 0, 20),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_Bubble[] BATTLE_ANIM_POISON_DATA =
+{
+    sAffineAnim_Bubble,
+};
+
+const struct SpriteTemplate gPoisonBubbleSpriteTemplate BATTLE_ANIM_POISON_DATA =
+{
+    .tileTag = ANIM_TAG_POISON_BUBBLE,
+    .paletteTag = ANIM_TAG_POISON_BUBBLE,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
+    .anims = sAnims_PoisonProjectile,
+    .images = NULL,
+    .affineAnims = sAffineAnims_Bubble,
+    .callback = AnimBubbleEffect,
+};
+
+const struct SpriteTemplate gWaterBubbleSpriteTemplate BATTLE_ANIM_POISON_DATA =
+{
+    .tileTag = ANIM_TAG_SMALL_BUBBLES,
+    .paletteTag = ANIM_TAG_SMALL_BUBBLES,
+    .oam = &gOamData_AffineNormal_ObjBlend_16x16,
+    .anims = gAnims_WaterBubble,
+    .images = NULL,
+    .affineAnims = sAffineAnims_Bubble,
+    .callback = AnimBubbleEffect,
+};
+
+#undef BATTLE_ANIM_POISON_DATA
 
 static void AnimSludgeProjectile(struct Sprite *sprite)
 {
