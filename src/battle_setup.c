@@ -138,6 +138,8 @@ extern const struct TrainerBattleParameter sTrainerBOrdinaryBattleParams[];
 
 extern const struct TrainerBattleParameter sTrainerBContinueScriptBattleParams[];
 
+#define BATTLE_SETUP_REMATCH_DATA __attribute__((section(".rodata.battle_setup_rematch_data")))
+
 #define REMATCH(trainer1, trainer2, trainer3, trainer4, trainer5, map)  \
 {                                                                       \
     .trainerIds = {trainer1, trainer2, trainer3, trainer4, trainer5},   \
@@ -145,7 +147,7 @@ extern const struct TrainerBattleParameter sTrainerBContinueScriptBattleParams[]
     .mapNum = MAP_NUM(map),                                             \
 }
 
-const struct RematchTrainer gRematchTable[REMATCH_TABLE_ENTRIES] =
+const struct RematchTrainer gRematchTable[REMATCH_TABLE_ENTRIES] BATTLE_SETUP_REMATCH_DATA =
 {
     [REMATCH_ROSE] = REMATCH(TRAINER_ROSE_1, TRAINER_ROSE_2, TRAINER_ROSE_3, TRAINER_ROSE_4, TRAINER_ROSE_5, MAP_ROUTE118),
     [REMATCH_ANDRES] = REMATCH(TRAINER_ANDRES_1, TRAINER_ANDRES_2, TRAINER_ANDRES_3, TRAINER_ANDRES_4, TRAINER_ANDRES_5, MAP_ROUTE105),

@@ -491,7 +491,6 @@ RomHeaderSoftwareVersion = ABSOLUTE(0x080000BC);
 gText_PokenavMatchCall_Strategy = gText_NumberOfBattles + 0x34;
 gText_PokenavMatchCall_TrainerPokemon = gText_NumberOfBattles + 0x39;
 gText_PokenavMatchCall_SelfIntroduction = gText_NumberOfBattles + 0x43;
-gRematchTable = gUnknown_852AD40;
 PlayCry1 = PlayCry_Normal;
 PlayCry3 = PlayCry_ByMode;
 PlayCry4 = PlayCry_ReleaseDouble;
@@ -9713,6 +9712,8 @@ SECTIONS {
         src/field_weather_effect.o(.rodata.field_weather_effect_resource_data);
         src/field_weather_effect.o(.rodata.field_weather_effect_static_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_field_weather_effect_static_data);
+        src/battle_setup.o(.rodata.battle_setup_rematch_data);
+        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_battle_setup_rematch_data);
         src/option_menu.o(.rodata.option_menu_static_data);
         data/data_b2d_mid15.o(.rodata.option_menu_suffix);
         src/graphics.o(.rodata.pokedex_graphics_prefix);

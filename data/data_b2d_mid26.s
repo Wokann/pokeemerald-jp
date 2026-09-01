@@ -1301,9 +1301,7 @@ sTrainerBContinueScriptBattleParams: @ 0x0052ACF8
 	.byte 0x06
 	.byte 0x00, 0x00, 0x00
 
-	.globl gUnknown_852AD40
-gUnknown_852AD40: @ 0x852AD40
-	.incbin "baserom_jp.gba", 0x52ad40, 0x4e0
+	.section .rodata.data_b2d_mid26_after_battle_setup_rematch_data
 
 	.globl sBadgeFlagsJp
 sBadgeFlagsJp: @ 0x852B220
