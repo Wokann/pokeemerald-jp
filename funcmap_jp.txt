@@ -10692,7 +10692,7 @@ field_specials.s
 08139778 field_specials.s nullsub_54
 0813977c field_specials.s GetDaysUntilPacifidlogTMAvailable
 081397c4 SetPacifidlogTMReceivedDay SetPacifidlogTMReceivedDay
-081397e0 field_specials.s MonOTNameMatchesPlayer
+081397e0 MonOTNameNotPlayer MonOTNameNotPlayer
 08139824 BufferLottoTicketNumber BufferLottoTicketNumber
 081398cc field_specials.s sub_081398CC_jp
 08139938 BufferTMHMMoveName BufferTMHMMoveName

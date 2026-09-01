@@ -351,7 +351,7 @@ gSpecials::
 	def_special SetPacifidlogTMReceivedDay
 	def_special GetDaysUntilPacifidlogTMAvailable
 	def_special HasAllHoennMons
-	def_special MonOTNameMatchesPlayer
+	def_special MonOTNameNotPlayer
 	def_special BufferLottoTicketNumber
 	def_special TryHideBattleTowerReporter
 	def_special DoesPartyHaveEnigmaBerry
@@ -540,8 +540,3 @@ gSpecials::
 	def_special RemoveRecordsWindow
 	def_special CloseDeptStoreElevatorWindow
 	def_special TrySetBattleTowerLinkType
-
-	@ Retain the JP MonOT predicate alias until its inverse-condition behavior is
-	@ independently audited.
-	.set SPECIAL_MonOTNameNotPlayer, SPECIAL_MonOTNameMatchesPlayer
-	.set SPECIAL_WAITSTATE_MonOTNameNotPlayer, SPECIAL_WAITSTATE_MonOTNameMatchesPlayer

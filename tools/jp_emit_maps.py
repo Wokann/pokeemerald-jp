@@ -18046,9 +18046,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'external_labels': {
             0x08243460: 'Common_EventScript_NameReceivedPartyMon',
         },
-        'specials': {
-            'MonOTNameMatchesPlayer': 'MonOTNameNotPlayer',
-        },
         'field_placeholders': {
             0x081FBEEA: {0x02: 'STR_VAR_1'},
             0x081FBF4E: {0x02: 'STR_VAR_1'},

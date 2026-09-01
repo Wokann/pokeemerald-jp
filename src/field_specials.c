@@ -2829,7 +2829,7 @@ u16 SetPacifidlogTMReceivedDay(void)
     return gLocalTime.days;
 }
 
-__attribute__((naked)) void MonOTNameMatchesPlayer(void)
+__attribute__((naked)) bool8 MonOTNameNotPlayer(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
