@@ -19,7 +19,7 @@ from typing import Any
 VALID_DIRECTIONS = {"down", "up", "left", "right", "dive", "emerge"}
 
 
-# These five layouts have map-local resources and canonical labels in
+# These reviewed layouts have map-local resources and canonical labels in
 # data/layouts/layouts.inc. Keep this explicit until the complete JP layout
 # table is migrated, so generation never guesses an owner for an unreviewed
 # layout.
@@ -41,6 +41,10 @@ CANONICAL_LAYOUT_SYMBOLS = {
     "LAYOUT_UNDERWATER_ROUTE127": "Underwater_Route127_Layout",
     "LAYOUT_UNDERWATER_ROUTE128": "Underwater_Route128_Layout",
     "LAYOUT_UNDERWATER_ROUTE129": "Underwater_Route129_Layout",
+    "LAYOUT_FARAWAY_ISLAND_ENTRANCE": "FarawayIsland_Entrance_Layout",
+    "LAYOUT_FARAWAY_ISLAND_INTERIOR": "FarawayIsland_Interior_Layout",
+    "LAYOUT_BIRTH_ISLAND_EXTERIOR": "BirthIsland_Exterior_Layout",
+    "LAYOUT_ISLAND_HARBOR": "IslandHarbor_Layout",
 }
 
 # The JP layout table has not yet adopted the US shared-layout labels for these

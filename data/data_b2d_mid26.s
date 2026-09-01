@@ -765,7 +765,15 @@ gUnknown_84FE3C0: @ 0x84FE3C0
 	.include "data/maps/BattleFrontier_PokemonCenter_1F/events.inc"
 	.include "data/maps/BattleFrontier_PokemonCenter_2F/events.inc"
 	.include "data/maps/BattleFrontier_Mart/events.inc"
-	.incbin "baserom_jp.gba", 0x515E3C, 0x1740
+	@ MAP_FARAWAY_ISLAND_ENTRANCE (g26 m56)
+	.include "data/maps/FarawayIsland_Entrance/events.inc"
+	@ MAP_FARAWAY_ISLAND_INTERIOR (g26 m57)
+	.include "data/maps/FarawayIsland_Interior/events.inc"
+	@ MAP_BIRTH_ISLAND_EXTERIOR (g26 m58)
+	.include "data/maps/BirthIsland_Exterior/events.inc"
+	@ MAP_BIRTH_ISLAND_HARBOR (g26 m59)
+	.include "data/maps/BirthIsland_Harbor/events.inc"
+	.incbin "baserom_jp.gba", 0x515FA0, 0x15DC
 
 	.globl gWeatherBallUpSpriteTemplate
 gWeatherBallUpSpriteTemplate: @ 0x851757C

@@ -325,6 +325,7 @@ JP_STRUCTURED_MAPS += BattleFrontier_BattleFactoryLobby BattleFrontier_BattleFac
 	BattleFrontier_Lounge5 BattleFrontier_Lounge6 BattleFrontier_Lounge7 \
 	BattleFrontier_ReceptionGate BattleFrontier_Lounge8 BattleFrontier_Lounge9 \
 	BattleFrontier_PokemonCenter_1F BattleFrontier_PokemonCenter_2F BattleFrontier_Mart
+JP_STRUCTURED_MAPS += FarawayIsland_Entrance FarawayIsland_Interior BirthIsland_Exterior BirthIsland_Harbor
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
@@ -501,6 +502,7 @@ JP_STRUCTURED_MAP_METADATA_MAPS += BattleFrontier_BattleFactoryLobby BattleFront
 	BattleFrontier_Lounge5 BattleFrontier_Lounge6 BattleFrontier_Lounge7 \
 	BattleFrontier_ReceptionGate BattleFrontier_Lounge8 BattleFrontier_Lounge9 \
 	BattleFrontier_PokemonCenter_1F BattleFrontier_PokemonCenter_2F BattleFrontier_Mart
+JP_STRUCTURED_MAP_METADATA_MAPS += FarawayIsland_Entrance FarawayIsland_Interior BirthIsland_Exterior BirthIsland_Harbor
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

@@ -910,7 +910,15 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/BattleFrontier_PokemonCenter_2F/header.inc"
 	@ MAP_BATTLE_FRONTIER_MART (g26 m55)
 	.include "data/maps/BattleFrontier_Mart/header.inc"
-	.incbin "baserom_jp.gba", 0x45DB7C, 0xCE8
+	@ MAP_FARAWAY_ISLAND_ENTRANCE (g26 m56)
+	.include "data/maps/FarawayIsland_Entrance/header.inc"
+	@ MAP_FARAWAY_ISLAND_INTERIOR (g26 m57)
+	.include "data/maps/FarawayIsland_Interior/header.inc"
+	@ MAP_BIRTH_ISLAND_EXTERIOR (g26 m58)
+	.include "data/maps/BirthIsland_Exterior/header.inc"
+	@ MAP_BIRTH_ISLAND_HARBOR (g26 m59)
+	.include "data/maps/BirthIsland_Harbor/header.inc"
+	.incbin "baserom_jp.gba", 0x45DBEC, 0xC78
 	.4byte BattleFrontier_BattlePikeLobby
 	.4byte BattleFrontier_BattlePikeCorridor
 	.4byte BattleFrontier_BattlePikeThreePathRoom
@@ -933,7 +941,11 @@ gMapHeaders: @ 0x0845A8D8
 	.4byte BattleFrontier_PokemonCenter_1F
 	.4byte BattleFrontier_PokemonCenter_2F
 	.4byte BattleFrontier_Mart
-	.incbin "baserom_jp.gba", 0x45E8BC, 0xDC
+	.4byte FarawayIsland_Entrance
+	.4byte FarawayIsland_Interior
+	.4byte BirthIsland_Exterior
+	.4byte BirthIsland_Harbor
+	.incbin "baserom_jp.gba", 0x45E8CC, 0xCC
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
