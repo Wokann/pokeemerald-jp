@@ -1940,62 +1940,8 @@ gWaterPulseRingBubbleSpriteTemplate: @ 0x570EF4
 gWeatherBallWaterDownSpriteTemplate: @ 0x8570F0C
 	.incbin "baserom_jp.gba", 0x570F0C, 0x18
 
-	.section .rodata.mid60_after_battle_anim_rock_data
-	.incbin "baserom_jp.gba", 0x5728DC, 0x1C
-
-	.globl gConfuseRayBallBounceSpriteTemplate
-gConfuseRayBallBounceSpriteTemplate: @ 0x5728F8
-	.hword 0x271D, 0x271D
-	.4byte 0x084FD0D8, 0x082BF304, 0, 0x085728F4, 0x08111E5D
-
-	.globl gConfuseRayBallSpiralSpriteTemplate
-gConfuseRayBallSpiralSpriteTemplate: @ 0x572910
-	.hword 0x271D, 0x271D
-	.4byte 0x084FD138, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08112045
-	.incbin "baserom_jp.gba", 0x572928, 0x14
-
-	.globl gShadowBallSpriteTemplate
-gShadowBallSpriteTemplate: @ 0x57293C
-	.hword 0x27C0, 0x27C0
-	.4byte 0x084FD080, 0x082BF304, 0, 0x08572938, 0x08112231
-	.incbin "baserom_jp.gba", 0x572954, 0x1c
-
-	.globl gLickSpriteTemplate
-gLickSpriteTemplate: @ 0x572970
-	.hword 0x27C1, 0x27C1
-	.4byte 0x084FD060, 0x0857296C, 0, gDummySpriteAffineAnimTable, 0x081123ED
-	.incbin "baserom_jp.gba", 0x572988, 0x14
-
-
-	.globl gDestinyBondWhiteShadowSpriteTemplate
-	.globl gDestinyBondWhiteShadowSpriteTemplate
-gDestinyBondWhiteShadowSpriteTemplate: @ 0x57299C
-	.hword 0x27CC, 0x27CC
-	.4byte 0x084FD168, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08112AB5
-
-	.globl gCurseNailSpriteTemplate
-gCurseNailSpriteTemplate: @ 0x5729B4
-	.hword 0x27D7, 0x27D7
-	.4byte 0x084FD160, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08113241
-
-	.globl gCurseGhostSpriteTemplate
-gCurseGhostSpriteTemplate: @ 0x5729CC
-	.hword 0x27D8, 0x27D8
-	.4byte 0x084FD140, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x081133C9
-
-	.globl gNightmareDevilSpriteTemplate
-gNightmareDevilSpriteTemplate: @ 0x5729E4
-	.hword 0x27ED, 0x27ED
-	.4byte 0x084FD140, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x081133C9
-	.incbin "baserom_jp.gba", 0x5729fc, 0x18
-
-
-	.globl gGrudgeFlameSpriteTemplate
-	.globl gGrudgeFlameSpriteTemplate
-gGrudgeFlameSpriteTemplate: @ 0x572A14
-	.hword 0x280D, 0x280D
-	.4byte 0x084FD180, 0x08572A10, 0, gDummySpriteAffineAnimTable, 0x081136ED
-	.incbin "baserom_jp.gba", 0x572a2c, 0x34
+	.section .rodata.mid60_after_battle_anim_ghost_data
+	.incbin "baserom_jp.gba", 0x572A44, 0x1C
 
 	.globl gOutrageFlameSpriteTemplate
 gOutrageFlameSpriteTemplate: @ 0x572A60

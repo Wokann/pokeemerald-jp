@@ -10,10 +10,6 @@
 #include "trig.h"
 #include "util.h"
 
-// JP: the ghost anim sprite templates and anim/affine data stay embedded
-// in ROM data (see the ABSOLUTE aliases in ld_script_jp.txt); only the
-// sprite callbacks are decompiled here, matching US pokeemerald.
-
 static void AnimConfuseRayBallBounce(struct Sprite *);
 static void AnimConfuseRayBallBounce_Step1(struct Sprite *);
 static void AnimConfuseRayBallBounce_Step2(struct Sprite *);
@@ -44,10 +40,186 @@ static void AnimGhostStatusSprite_Step(struct Sprite *);
 static void AnimTask_GrudgeFlames_Step(u8 taskId);
 static void AnimGrudgeFlame(struct Sprite *);
 static void AnimMonMoveCircular(struct Sprite *);
+static void AnimMonMoveCircular_Step(struct Sprite *);
 
-extern const struct SpriteTemplate gDestinyBondWhiteShadowSpriteTemplate;
-extern const struct SpriteTemplate gGrudgeFlameSpriteTemplate;
-static void AnimMonMoveCircular_Step(struct Sprite *sprite);
+#define BATTLE_ANIM_GHOST_DATA __attribute__((section(".rodata.battle_anim_ghost_data")))
+
+static const union AffineAnimCmd sAffineAnim_ConfuseRayBallBounce[] BATTLE_ANIM_GHOST_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x1E, 0x1E, 10, 5),
+    AFFINEANIMCMD_FRAME(0xFFE2, 0xFFE2, 10, 5),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd *const sAffineAnims_ConfuseRayBallBounce[] BATTLE_ANIM_GHOST_DATA =
+{
+    sAffineAnim_ConfuseRayBallBounce,
+};
+
+const struct SpriteTemplate gConfuseRayBallBounceSpriteTemplate BATTLE_ANIM_GHOST_DATA =
+{
+    .tileTag = ANIM_TAG_YELLOW_BALL,
+    .paletteTag = ANIM_TAG_YELLOW_BALL,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_ConfuseRayBallBounce,
+    .callback = AnimConfuseRayBallBounce,
+};
+
+const struct SpriteTemplate gConfuseRayBallSpiralSpriteTemplate BATTLE_ANIM_GHOST_DATA =
+{
+    .tileTag = ANIM_TAG_YELLOW_BALL,
+    .paletteTag = ANIM_TAG_YELLOW_BALL,
+    .oam = &gOamData_AffineOff_ObjBlend_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimConfuseRayBallSpiral,
+};
+
+static const union AffineAnimCmd sAffineAnim_ShadowBall[] BATTLE_ANIM_GHOST_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 10, 1),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd *const sAffineAnims_ShadowBall[] BATTLE_ANIM_GHOST_DATA =
+{
+    sAffineAnim_ShadowBall,
+};
+
+const struct SpriteTemplate gShadowBallSpriteTemplate BATTLE_ANIM_GHOST_DATA =
+{
+    .tileTag = ANIM_TAG_SHADOW_BALL,
+    .paletteTag = ANIM_TAG_SHADOW_BALL,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_ShadowBall,
+    .callback = AnimShadowBall,
+};
+
+static const union AnimCmd sAnim_Lick[] BATTLE_ANIM_GHOST_DATA =
+{
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_FRAME(8, 2),
+    ANIMCMD_FRAME(16, 2),
+    ANIMCMD_FRAME(24, 2),
+    ANIMCMD_FRAME(32, 2),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_Lick[] BATTLE_ANIM_GHOST_DATA =
+{
+    sAnim_Lick,
+};
+
+const struct SpriteTemplate gLickSpriteTemplate BATTLE_ANIM_GHOST_DATA =
+{
+    .tileTag = ANIM_TAG_LICK,
+    .paletteTag = ANIM_TAG_LICK,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
+    .anims = sAnims_Lick,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimLick,
+};
+
+static const union AffineAnimCmd sAffineAnim_Unused[] BATTLE_ANIM_GHOST_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x200, 0x200, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+// Unused
+static const union AffineAnimCmd *const sAffineAnims_Unused[] BATTLE_ANIM_GHOST_DATA =
+{
+    sAffineAnim_Unused,
+};
+
+const struct SpriteTemplate gDestinyBondWhiteShadowSpriteTemplate BATTLE_ANIM_GHOST_DATA =
+{
+    .tileTag = ANIM_TAG_WHITE_SHADOW,
+    .paletteTag = ANIM_TAG_WHITE_SHADOW,
+    .oam = &gOamData_AffineOff_ObjBlend_64x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimDestinyBondWhiteShadow,
+};
+
+const struct SpriteTemplate gCurseNailSpriteTemplate BATTLE_ANIM_GHOST_DATA =
+{
+    .tileTag = ANIM_TAG_NAIL,
+    .paletteTag = ANIM_TAG_NAIL,
+    .oam = &gOamData_AffineOff_ObjBlend_32x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimCurseNail,
+};
+
+const struct SpriteTemplate gCurseGhostSpriteTemplate BATTLE_ANIM_GHOST_DATA =
+{
+    .tileTag = ANIM_TAG_GHOSTLY_SPIRIT,
+    .paletteTag = ANIM_TAG_GHOSTLY_SPIRIT,
+    .oam = &gOamData_AffineOff_ObjBlend_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimGhostStatusSprite,
+};
+
+const struct SpriteTemplate gNightmareDevilSpriteTemplate BATTLE_ANIM_GHOST_DATA =
+{
+    .tileTag = ANIM_TAG_DEVIL,
+    .paletteTag = ANIM_TAG_DEVIL,
+    .oam = &gOamData_AffineOff_ObjBlend_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimGhostStatusSprite,
+};
+
+static const union AnimCmd sAnim_GrudgeFlame[] BATTLE_ANIM_GHOST_DATA =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(8, 4),
+    ANIMCMD_FRAME(16, 4),
+    ANIMCMD_FRAME(24, 4),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_GrudgeFlame[] BATTLE_ANIM_GHOST_DATA =
+{
+    sAnim_GrudgeFlame,
+};
+
+const struct SpriteTemplate gGrudgeFlameSpriteTemplate BATTLE_ANIM_GHOST_DATA =
+{
+    .tileTag = ANIM_TAG_PURPLE_FLAME,
+    .paletteTag = ANIM_TAG_PURPLE_FLAME,
+    .oam = &gOamData_AffineOff_ObjBlend_16x32,
+    .anims = sAnims_GrudgeFlame,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimGrudgeFlame,
+};
+
+// Unused
+static const struct SpriteTemplate sMonMoveCircularSpriteTemplate BATTLE_ANIM_GHOST_DATA =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &gDummyOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimMonMoveCircular,
+};
+
+#undef BATTLE_ANIM_GHOST_DATA
 
 static void AnimConfuseRayBallBounce(struct Sprite *sprite)
 {
