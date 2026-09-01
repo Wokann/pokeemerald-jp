@@ -4930,7 +4930,10 @@ __attribute__((naked)) void sub_0813A740(void)
     );
 }
 
-void nullsub_55(void) {}
+// Removed for Emerald (replaced by ShowScrollableMultichoice)
+void ShowGlassWorkshopMenu(void)
+{
+}
 __attribute__((naked)) void SetBattleTowerLinkPlayerGfx(void)
 {
     __asm__(".syntax unified\n\t"

@@ -290,7 +290,7 @@ gSpecials::
 	def_special DoSoftReset
 	def_special GameClear, waitstate=1
 	def_special MoveElevator, waitstate=1
-	def_special nullsub_55
+	def_special ShowGlassWorkshopMenu
 	def_special SpawnCameraObject
 	def_special RemoveCameraObject
 	def_special GetPokeblockNameByMonNature
@@ -361,7 +361,7 @@ gSpecials::
 	def_special TryPutLotteryWinnerReportOnAir
 	def_special TryPutTrainerFanClubOnAir
 	def_special ShouldHideFanClubInterviewer
-	def_special nullsub_55
+	def_special ShowGlassWorkshopMenu
 	def_special PutFanClubSpecialOnTheAir
 	def_special IncrementDailyPlantedBerries
 	def_special IncrementDailyPickedBerries
