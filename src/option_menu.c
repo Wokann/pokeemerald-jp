@@ -287,7 +287,7 @@ __attribute__((naked)) void CB2_InitOptionMenu(void)
         "	bl LoadPalette\n\t"
         "	b _080B9F44\n\t"
         "	.align 2, 0\n\t"
-        "_080B9E7C: .4byte gUnknown_85372B0\n\t"
+        "_080B9E7C: .4byte sOptionMenuText_Pal\n\t"
         "_080B9E80:\n\t"
         "	movs r0, #0\n\t"
         "	bl PutWindowTilemap\n\t"
@@ -1850,6 +1850,9 @@ __attribute__((naked)) void sub_080BA890(void)
         ".syntax divided\n\t"
     );
 }
+
+static const u16 sOptionMenuText_Pal[] OPTION_MENU_STATIC_DATA = INCBIN_U16("graphics/interface/option_menu_text.gbapal");
+static const u8 sEqualSignGfx[] OPTION_MENU_STATIC_DATA = INCBIN_U8("graphics/interface/option_menu_equals_sign.4bpp");
 
 const u8 gText_Option[] OPTION_MENU_STATIC_DATA = _("せっていを　かえる");
 const u8 gText_TextSpeed[] OPTION_MENU_STATIC_DATA = _("はなしの　はやさ");

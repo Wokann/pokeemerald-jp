@@ -1784,7 +1784,3 @@ gFieldEffectScriptFuncs: @ 0x8536E9C
 
 	.section .rodata.data_b2d_mid26_after_field_effect_script_funcs
 	.align 2
-
-	.globl gUnknown_85372B0
-gUnknown_85372B0: @ 0x85372B0
-	.incbin "baserom_jp.gba", 0x5372b0, 0x60
