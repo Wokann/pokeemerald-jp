@@ -2811,7 +2811,8 @@ u16 ScriptGetPartyMonSpecies(void)
     return GetMonData3(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_SPECIES_OR_EGG, NULL);
 }
 
-void nullsub_54(void) {}
+// Removed for Emerald
+void TryInitBattleTowerAwardManObjectEvent(void) {}
 u16 GetDaysUntilPacifidlogTMAvailable(void)
 {
     u16 tmReceivedDay = VarGet(VAR_PACIFIDLOG_TM_RECEIVED_DAY);
