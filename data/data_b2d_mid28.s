@@ -53,9 +53,11 @@ gUnknown_84DDA74: @ 0x84DDA74
 gUnknown_84DDE30: @ 0x84DDE30
 	.incbin "baserom_jp.gba", 0x4dde30, 0x1c
 
-	.globl gFieldEffectObjectTemplatePointers
-gFieldEffectObjectTemplatePointers: @ 0x84DDE4C
-	.incbin "baserom_jp.gba", 0x4dde4c, 0x3ab4
+	.section .rodata.data_b2d_mid28_after_field_effect_object_template_pointers
+
+	@ Object-event frame, animation, OAM, subsprite, and graphics-info data.
+	@ These following 0x3a20 bytes remain pending structural extraction.
+	.incbin "baserom_jp.gba", 0x4ddee0, 0x3a20
 
 	.globl gUnknown_84E1900
 gUnknown_84E1900: @ 0x84E1900

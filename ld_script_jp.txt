@@ -9525,6 +9525,8 @@ SECTIONS {
         gUnknown_84DD9D0 = gUnknown_84DD88C + 0x144;
         gUnknown_84DDA21 = gUnknown_84DD88C + 0x195;
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_event_object_movement_core_data);
+        src/event_object_movement.o(.rodata.event_object_movement_field_effect_object_template_pointers);
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_field_effect_object_template_pointers);
         gUnknown_84E401C = .;
         src/event_object_movement.o(.rodata.event_object_movement_palette_data);
         gUnknown_84E4154 = gUnknown_84E401C + 0x138;
