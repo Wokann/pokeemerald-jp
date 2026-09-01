@@ -556,7 +556,10 @@ data/maps/%/header.inc data/maps/%/connections.inc &: data/maps/%/map.json tools
 # the tileset owner. State the ordering directly so a changed map.json cannot
 # race its generated metadata during make -j.
 $(OBJ_DIR)/data/data_b2d_mid30.o: $(JP_STRUCTURED_MAP_METADATA) $(JP_MAP_GROUP_AGGREGATES)
-$(OBJ_DIR)/data/data_b2d_mid30.o: data/maps/connection_flags.inc
+$(OBJ_DIR)/data/data_b2d_mid30.o: data/maps/connection_flags.inc \
+	data/metatile_behavior.inc data/field_door.inc data/field_player_avatar.inc \
+	graphics/misc/sTileBitAttributes.bin graphics/misc/sDoorOpenAnimFrames.bin \
+	graphics/misc/sDoorCloseAnimFrames.bin graphics/misc/sBigDoorOpenAnimFrames.bin
 data/layouts/layouts_table.inc: data/layouts/layouts.inc baserom_jp.gba tools/extract_map_layouts.py
 	python3 tools/extract_map_layouts.py --write-table
 
