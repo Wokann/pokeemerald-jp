@@ -166,6 +166,33 @@ class StructureAuditTests(unittest.TestCase):
         self.assertEqual(report["references"], 1)
         self.assertEqual(report["manifest"][0]["owner"], "src/data/assets.h")
 
+    def test_incbin_named_encoded_asset_is_not_reported_as_raw(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "src" / "assets.c"
+            source.parent.mkdir()
+            source.write_text(
+                'INCBIN_U32("graphics/title_screen/pokemon_logo.8bpp.lz")\n'
+                'INCBIN_U8("data/gUnknown_123456.lz")\n'
+                'INCBIN_U8("graphics/misc/gUnknown_123456.4bpp.lz")\n',
+                encoding="utf-8",
+            )
+            encoded_asset = root / "graphics" / "title_screen" / "pokemon_logo.8bpp.lz"
+            encoded_asset.parent.mkdir(parents=True)
+            encoded_asset.write_bytes(b"asset")
+            raw_stream = root / "data" / "gUnknown_123456.lz"
+            raw_stream.parent.mkdir()
+            raw_stream.write_bytes(b"raw")
+            anonymous_asset = root / "graphics" / "misc" / "gUnknown_123456.4bpp.lz"
+            anonymous_asset.parent.mkdir(parents=True)
+            anonymous_asset.write_bytes(b"raw")
+            report = audit.incbin_progress(root)
+        self.assertEqual(report["raw_binary_references"], 2)
+        self.assertEqual(report["non_raw_references"], 1)
+        self.assertEqual(report["manifest"][0]["classification_reason"], "named_encoded_asset")
+        self.assertEqual(report["manifest"][1]["classification"], "raw_binary")
+        self.assertEqual(report["manifest"][2]["classification_reason"], "anonymous_encoded_asset")
+
     def test_asset_naming_reports_a_unique_us_basename_candidate(self):
         incbin = {"manifest": [
             {"resource": "graphics/jp/path/shared.bin"},

@@ -1257,24 +1257,51 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
     }
 
 
+def classify_incbin_resource(resource: str) -> tuple[str, str]:
+    """Classify an INCBIN path without treating named encoded assets as raw.
+
+    A ``.bin`` container or an encoded stream outside an asset tree still
+    needs a source-owner audit.  Conversely, a named LZ/RL/Huff resource in
+    ``graphics/`` or ``sound/`` is already a final, structured asset owner:
+    it must be validated against the ROM, but it is not an anonymous raw span
+    waiting to be split.  Keeping those cases separate makes the progress
+    report useful after byte-exact asset migrations.
+    """
+    path = Path(resource)
+    suffix = path.suffix or "[no suffix]"
+    asset_root = path.parts and path.parts[0] in {"graphics", "sound"}
+    encoded_asset = asset_root and suffix in {".lz", ".rl", ".huff"}
+    anonymous_asset = path.name.lower().startswith(("gunknown", "unknown", "unk"))
+    raw = suffix in {".bin", ".gba", ".lz", ".rl", ".huff"} and (
+        not encoded_asset or anonymous_asset
+    )
+    if encoded_asset:
+        if anonymous_asset:
+            return "raw_binary", "anonymous_encoded_asset"
+        return "structured_or_encoded", "named_encoded_asset"
+    if raw:
+        return "raw_binary", "raw_suffix_or_container"
+    return "structured_or_encoded", "structured_suffix"
+
+
 def incbin_progress(root: Path) -> dict[str, object]:
     references = []
-    raw_suffixes = {".bin", ".gba", ".lz", ".rl", ".huff"}
     for relpath in sorted(source_files(root)):
         path = root / relpath
         if path.suffix not in {".s", ".inc", ".c", ".h"}:
             continue
         for resource in INCBIN_RE.findall(path.read_text(encoding="utf-8", errors="replace")):
             suffix = Path(resource).suffix or "[no suffix]"
-            raw = suffix in raw_suffixes
+            classification, classification_reason = classify_incbin_resource(resource)
             references.append({
                 "owner": relpath,
                 "resource": resource,
                 "suffix": suffix,
-                "classification": "raw_binary" if raw else "structured_or_encoded",
+                "classification": classification,
+                "classification_reason": classification_reason,
                 "exists": (root / resource).is_file(),
                 "suggested_action": (
-                    "decode_or_split_into_named_asset" if raw
+                    "decode_or_split_into_named_asset" if classification == "raw_binary"
                     else "retain_and_validate_source_asset"
                 ),
             })
@@ -1639,7 +1666,7 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "| 模块归位率 | 严格 C 地址中能按 US 标准名在 US 源树找到定义的地址 / 严格 C 地址。 |",
         "| 路径对齐率 | 上述地址中 JP 相对 `src/` 路径也属于 US owner 的地址 / 严格 C 地址。 |",
         "| 过渡文件 | 文件名包含 tail、rest、mid、stub 或地址式片段；分类可重叠。 |",
-        "| incbin | `.incbin` 与 `INCBIN_*` 的引用数，按原始二进制和结构化/编码后缀分组；不是字节转换率。 |",
+        "| incbin | `.incbin` 与 `INCBIN_*` 的引用数。裸 `.bin/.gba`、asset 根目录外的压缩流，以及 `gUnknown`/`unknown`/`unk` 命名的压缩资产记为原始；`graphics/`、`sound/` 内其余具名 `.lz/.rl/.huff` 记为已结构化编码资产。不是字节转换率。 |",
         "| 资产命名 | 被引用的 `graphics/`、`sound/` 路径与 US 同名文件比较；仅生成候选，不自动改名。 |",
         "| 地图脚本 owner | `scripts.inc` 与 map-table 实际首 owner 名的交集 / 去重首 owner；共享表只属于首次出现地图。 |",
         "| 地图结构完整 | 同一地图具 `map.json`，且其 scripts/events 为本地图的物理文件与上层 include，或为 map.json 明示、header 精确指向且在 JP `data/` 有真实标签定义的共享 owner；只说明结构已拆分。 |",
