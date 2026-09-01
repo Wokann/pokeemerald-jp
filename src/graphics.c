@@ -11,6 +11,21 @@ TITLE_SCREEN_PRESS_START_GRAPHICS const u32 gTitleScreenPressStartGfx[] = INCBIN
 
 #undef TITLE_SCREEN_PRESS_START_GRAPHICS
 
+#define TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS __attribute__((section(".rodata.title_screen_graphics_before_title_screen_static_graphics"), aligned(1)))
+
+TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS const u32 gTitleScreenPokemonLogoTilemap[] = INCBIN_U32("graphics/title_screen/pokemon_logo.bin.lz");
+TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS const u16 gTitleScreenBgPalettes[] = INCBIN_U16("graphics/title_screen/pokemon_logo.gbapal");
+TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS const u32 gTitleScreenPokemonLogoGfx[] = INCBIN_U32("graphics/title_screen/pokemon_logo.8bpp.lz");
+TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS const u32 gTitleScreenEmeraldVersionGfx[] = INCBIN_U32("graphics/title_screen/emerald_version.8bpp.lz");
+
+#undef TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS
+
+#define TITLE_SCREEN_GRAPHICS_AFTER_TITLE_SCREEN_STATIC_GRAPHICS __attribute__((section(".rodata.title_screen_graphics_after_title_screen_static_graphics"), aligned(1)))
+
+TITLE_SCREEN_GRAPHICS_AFTER_TITLE_SCREEN_STATIC_GRAPHICS const u32 gTitleScreenCloudsTilemap[] = INCBIN_U32("graphics/title_screen/clouds.bin.lz");
+
+#undef TITLE_SCREEN_GRAPHICS_AFTER_TITLE_SCREEN_STATIC_GRAPHICS
+
 #define POKEBALL_GRAPHICS __attribute__((section(".rodata.pokeball_graphics"), aligned(1)))
 #define POKEBALL_OPEN_GRAPHICS __attribute__((section(".rodata.pokeball_open_graphics"), aligned(1)))
 #include "data/graphics/pokeballs.h"

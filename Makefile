@@ -750,6 +750,15 @@ $(C_BUILDDIR)/braille_puzzles.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffun
 
 $(C_BUILDDIR)/title_screen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 
+$(C_BUILDDIR)/title_screen_assets.o: src/title_screen_assets.c graphics/title_screen/rayquaza.4bpp.lz graphics/title_screen/rayquaza.bin.lz \
+	graphics/title_screen/logo_shine.4bpp.lz graphics/title_screen/clouds.4bpp.lz
+	@mkdir -p $(dir $@)
+	@$(CPP) $(CPPFLAGS) -P -x c $< > $(C_BUILDDIR)/title_screen_assets.pre.c
+	@$(PREPROC) -i $< charmap.txt < $(C_BUILDDIR)/title_screen_assets.pre.c > $(C_BUILDDIR)/title_screen_assets.preproc.c
+	@$(CC) $(CFLAGS) -o $(C_BUILDDIR)/title_screen_assets.gen.s $(C_BUILDDIR)/title_screen_assets.preproc.c
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/title_screen_assets.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/title_screen_assets.pre.c $(C_BUILDDIR)/title_screen_assets.preproc.c $(C_BUILDDIR)/title_screen_assets.gen.s
+
 $(C_BUILDDIR)/contest_effect.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/contest.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/trade.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
@@ -1166,6 +1175,8 @@ $(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c graphics/su
 $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/graphics/pokeballs.h src/data/text_window.h src/data/scrcmd_data.h \
 	graphics/text_window/message_box_jp.4bpp \
 	graphics/title_screen/press_start.gbapal graphics/title_screen/press_start.4bpp.lz \
+	graphics/title_screen/pokemon_logo.gbapal graphics/title_screen/pokemon_logo.bin.lz graphics/title_screen/pokemon_logo.8bpp.lz \
+	graphics/title_screen/emerald_version.8bpp.lz graphics/title_screen/clouds.bin.lz \
 	graphics/balls/poke.4bpp.lz graphics/balls/poke.gbapal.lz \
 	graphics/balls/great.4bpp.lz graphics/balls/great.gbapal.lz \
 	graphics/balls/safari.4bpp.lz graphics/balls/safari.gbapal.lz \

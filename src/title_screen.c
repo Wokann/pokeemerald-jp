@@ -35,6 +35,10 @@ enum {
 #define VERSION_BANNER_Y_GOAL 48
 #define START_BANNER_X 128
 
+// The "Press Start" and copyright graphics are each 5 32x8 segments long.
+#define NUM_PRESS_START_FRAMES 5
+#define NUM_COPYRIGHT_FRAMES 5
+
 #define CLEAR_SAVE_BUTTON_COMBO (B_BUTTON | SELECT_BUTTON | DPAD_UP)
 #define RESET_RTC_BUTTON_COMBO (B_BUTTON | SELECT_BUTTON | DPAD_LEFT)
 #define BERRY_UPDATE_BUTTON_COMBO (B_BUTTON | SELECT_BUTTON)
@@ -60,28 +64,318 @@ static void SpriteCB_PokemonLogoShine(struct Sprite *sprite);
 // subpixel position in r5) cannot be reproduced by agbcc; it stays in
 // asm/title_screen_phase2.s.
 
-// JP note: the title-screen tables and graphics live in the JP ROM data
-// region (0x0851xxxx) and are bound via ld aliases.
 extern const u16 gTitleScreenAlphaBlend[64];
 extern const u32 gTitleScreenPokemonLogoGfx[];
 extern const u32 gTitleScreenPokemonLogoTilemap[];
 extern const u16 gTitleScreenBgPalettes[];
 extern const u32 gTitleScreenCloudsTilemap[];
-extern const struct SpriteTemplate sVersionBannerLeftSpriteTemplate;
-extern const struct SpriteTemplate sVersionBannerRightSpriteTemplate;
-extern const struct SpriteTemplate sStartCopyrightBannerSpriteTemplate;
-extern const struct SpriteTemplate sPokemonLogoShineSpriteTemplate;
-extern const struct CompressedSpriteSheet sSpriteSheet_EmeraldVersion[];
-extern const struct CompressedSpriteSheet sSpriteSheet_PressStart[];
-extern const struct CompressedSpriteSheet sPokemonLogoShineSpriteSheet[];
-extern const struct SpritePalette sSpritePalette_PressStart[];
+extern const u32 gTitleScreenEmeraldVersionGfx[];
+extern const u32 gTitleScreenPressStartGfx[];
+extern const u16 gTitleScreenPressStartPal[];
 extern const u32 sTitleScreenRayquazaGfx[];
 extern const u32 sTitleScreenRayquazaTilemap[];
+extern const u32 sTitleScreenLogoShineGfx[];
 extern const u32 sTitleScreenCloudsGfx[];
 
-// The "Press Start" and copyright graphics are each 5 32x8 segments long
-#define NUM_PRESS_START_FRAMES 5
-#define NUM_COPYRIGHT_FRAMES 5
+#define TITLE_SCREEN_STATIC_DATA __attribute__((section(".rodata.title_screen_static_data"), aligned(1)))
+
+TITLE_SCREEN_STATIC_DATA const u16 gTitleScreenAlphaBlend[64] =
+{
+    BLDALPHA_BLEND(16, 0),
+    BLDALPHA_BLEND(16, 1),
+    BLDALPHA_BLEND(16, 2),
+    BLDALPHA_BLEND(16, 3),
+    BLDALPHA_BLEND(16, 4),
+    BLDALPHA_BLEND(16, 5),
+    BLDALPHA_BLEND(16, 6),
+    BLDALPHA_BLEND(16, 7),
+    BLDALPHA_BLEND(16, 8),
+    BLDALPHA_BLEND(16, 9),
+    BLDALPHA_BLEND(16, 10),
+    BLDALPHA_BLEND(16, 11),
+    BLDALPHA_BLEND(16, 12),
+    BLDALPHA_BLEND(16, 13),
+    BLDALPHA_BLEND(16, 14),
+    BLDALPHA_BLEND(16, 15),
+    BLDALPHA_BLEND(15, 16),
+    BLDALPHA_BLEND(14, 16),
+    BLDALPHA_BLEND(13, 16),
+    BLDALPHA_BLEND(12, 16),
+    BLDALPHA_BLEND(11, 16),
+    BLDALPHA_BLEND(10, 16),
+    BLDALPHA_BLEND(9, 16),
+    BLDALPHA_BLEND(8, 16),
+    BLDALPHA_BLEND(7, 16),
+    BLDALPHA_BLEND(6, 16),
+    BLDALPHA_BLEND(5, 16),
+    BLDALPHA_BLEND(4, 16),
+    BLDALPHA_BLEND(3, 16),
+    BLDALPHA_BLEND(2, 16),
+    BLDALPHA_BLEND(1, 16),
+    BLDALPHA_BLEND(0, 16),
+    [32 ... 63] = BLDALPHA_BLEND(0, 16),
+};
+
+TITLE_SCREEN_STATIC_DATA static const struct OamData sVersionBannerLeftOamData =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_8BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+TITLE_SCREEN_STATIC_DATA static const struct OamData sVersionBannerRightOamData =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_8BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd sVersionBannerLeftAnimSequence[] =
+{
+    ANIMCMD_FRAME(0, 30),
+    ANIMCMD_END,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd sVersionBannerRightAnimSequence[] =
+{
+    ANIMCMD_FRAME(VERSION_BANNER_RIGHT_TILEOFFSET, 30),
+    ANIMCMD_END,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd *const sVersionBannerLeftAnimTable[] =
+{
+    sVersionBannerLeftAnimSequence,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd *const sVersionBannerRightAnimTable[] =
+{
+    sVersionBannerRightAnimSequence,
+};
+
+TITLE_SCREEN_STATIC_DATA static const struct SpriteTemplate sVersionBannerLeftSpriteTemplate =
+{
+    .tileTag = TAG_VERSION,
+    .paletteTag = TAG_VERSION,
+    .oam = &sVersionBannerLeftOamData,
+    .anims = sVersionBannerLeftAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_VersionBannerLeft,
+};
+
+TITLE_SCREEN_STATIC_DATA static const struct SpriteTemplate sVersionBannerRightSpriteTemplate =
+{
+    .tileTag = TAG_VERSION,
+    .paletteTag = TAG_VERSION,
+    .oam = &sVersionBannerRightOamData,
+    .anims = sVersionBannerRightAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_VersionBannerRight,
+};
+
+TITLE_SCREEN_STATIC_DATA static const struct CompressedSpriteSheet sSpriteSheet_EmeraldVersion[] =
+{
+    {
+        .data = gTitleScreenEmeraldVersionGfx,
+        .size = 0x1000,
+        .tag = TAG_VERSION,
+    },
+    {},
+};
+
+TITLE_SCREEN_STATIC_DATA static const struct OamData sOamData_CopyrightBanner =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd sAnim_PressStart_0[] =
+{
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_END,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd sAnim_PressStart_1[] =
+{
+    ANIMCMD_FRAME(5, 4),
+    ANIMCMD_END,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd sAnim_PressStart_2[] =
+{
+    ANIMCMD_FRAME(9, 4),
+    ANIMCMD_END,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd sAnim_PressStart_3[] =
+{
+    ANIMCMD_FRAME(13, 4),
+    ANIMCMD_END,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd sAnim_PressStart_4[] =
+{
+    ANIMCMD_FRAME(17, 4),
+    ANIMCMD_END,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd sAnim_Copyright_0[] =
+{
+    ANIMCMD_FRAME(21, 4),
+    ANIMCMD_END,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd sAnim_Copyright_1[] =
+{
+    ANIMCMD_FRAME(25, 4),
+    ANIMCMD_END,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd sAnim_Copyright_2[] =
+{
+    ANIMCMD_FRAME(29, 4),
+    ANIMCMD_END,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd sAnim_Copyright_3[] =
+{
+    ANIMCMD_FRAME(33, 4),
+    ANIMCMD_END,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd sAnim_Copyright_4[] =
+{
+    ANIMCMD_FRAME(37, 4),
+    ANIMCMD_END,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd *const sStartCopyrightBannerAnimTable[NUM_PRESS_START_FRAMES + NUM_COPYRIGHT_FRAMES] =
+{
+    sAnim_PressStart_0,
+    sAnim_PressStart_1,
+    sAnim_PressStart_2,
+    sAnim_PressStart_3,
+    sAnim_PressStart_4,
+    [NUM_PRESS_START_FRAMES] =
+    sAnim_Copyright_0,
+    sAnim_Copyright_1,
+    sAnim_Copyright_2,
+    sAnim_Copyright_3,
+    sAnim_Copyright_4,
+};
+
+TITLE_SCREEN_STATIC_DATA static const struct SpriteTemplate sStartCopyrightBannerSpriteTemplate =
+{
+    .tileTag = TAG_PRESS_START_COPYRIGHT,
+    .paletteTag = TAG_PRESS_START_COPYRIGHT,
+    .oam = &sOamData_CopyrightBanner,
+    .anims = sStartCopyrightBannerAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_PressStartCopyrightBanner,
+};
+
+TITLE_SCREEN_STATIC_DATA static const struct CompressedSpriteSheet sSpriteSheet_PressStart[] =
+{
+    {
+        .data = gTitleScreenPressStartGfx,
+        .size = 0x520,
+        .tag = TAG_PRESS_START_COPYRIGHT,
+    },
+    {},
+};
+
+TITLE_SCREEN_STATIC_DATA static const struct SpritePalette sSpritePalette_PressStart[] =
+{
+    {
+        .data = gTitleScreenPressStartPal,
+        .tag = TAG_PRESS_START_COPYRIGHT,
+    },
+    {},
+};
+
+TITLE_SCREEN_STATIC_DATA static const struct OamData sPokemonLogoShineOamData =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd sPokemonLogoShineAnimSequence[] =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_END,
+};
+
+TITLE_SCREEN_STATIC_DATA static const union AnimCmd *const sPokemonLogoShineAnimTable[] =
+{
+    sPokemonLogoShineAnimSequence,
+};
+
+TITLE_SCREEN_STATIC_DATA static const struct SpriteTemplate sPokemonLogoShineSpriteTemplate =
+{
+    .tileTag = TAG_LOGO_SHINE,
+    .paletteTag = TAG_PRESS_START_COPYRIGHT,
+    .oam = &sPokemonLogoShineOamData,
+    .anims = sPokemonLogoShineAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_PokemonLogoShine,
+};
+
+TITLE_SCREEN_STATIC_DATA static const struct CompressedSpriteSheet sPokemonLogoShineSpriteSheet[] =
+{
+    {
+        .data = sTitleScreenLogoShineGfx,
+        .size = 0x800,
+        .tag = TAG_LOGO_SHINE,
+    },
+    {},
+};
+
+#undef TITLE_SCREEN_STATIC_DATA
 
 // Task data for the main title screen tasks (Task_TitleScreenPhase#)
 #define tCounter    data[0]
