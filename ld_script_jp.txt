@@ -9816,7 +9816,8 @@ SECTIONS {
         src/fldeff_misc.o(.rodata);
         data/data_b2d_mid60.o(.rodata.mid60_tail);
         src/battle_anim_fire.o(.rodata.battle_anim_fire_data);
-        data/data_b2d_mid60.o(.rodata.mid60_after_battle_anim_fire_data);
+        src/battle_anim_electric.o(.rodata.battle_anim_electric_data);
+        data/data_b2d_mid60.o(.rodata.mid60_after_battle_anim_electric_data);
         src/data/text/region_texts61.o(.rodata);
         data/data_b2d_mid61.o(.rodata);
         sHealLocations = . + 0x4C;
