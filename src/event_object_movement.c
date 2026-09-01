@@ -760,6 +760,10 @@ struct Sprite;
 #include "data/object_events/object_event_pic_tables.h"
 #undef EVENT_OBJECT_MOVEMENT_OBJECT_EVENT_PIC_TABLES
 
+#define EVENT_OBJECT_MOVEMENT_OBJECT_EVENT_ANIMS __attribute__((section(".rodata.event_object_movement_object_event_anims"), used))
+#include "data/object_events/object_event_anims.h"
+#undef EVENT_OBJECT_MOVEMENT_OBJECT_EVENT_ANIMS
+
 #define EVENT_OBJECT_MOVEMENT_FIELD_EFFECT_OBJECT_DATA __attribute__((section(".rodata.event_object_movement_field_effect_objects_data")))
 #include "data/field_effects/field_effect_objects.h"
 #undef EVENT_OBJECT_MOVEMENT_FIELD_EFFECT_OBJECT_DATA
@@ -7977,7 +7981,7 @@ __attribute__((naked)) void *sub_080923BC(u32 id)
         "	ldr r1, _080923C4\n\t"
         "	b _080923D4\n\t"
         "	.align 2, 0\n\t"
-        "_080923C4: .4byte gUnknown_84E1900\n\t"
+        "_080923C4: .4byte sStepAnimTables\n\t"
         "_080923C8:\n\t"
         "	ldr r0, [r1]\n\t"
         "	cmp r0, r2\n\t"
