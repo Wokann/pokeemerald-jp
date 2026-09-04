@@ -118,189 +118,47 @@ static bool32 ValidateTrainerHillChecksum(struct EReaderTrainerHillSet *hillSet)
     return TRUE;
 }
 
-// JP 0x081D2FC8: kept as asm (compiler register allocation differs from US).
-__attribute__((naked)) static bool32 TryWriteTrainerHill_Internal(struct EReaderTrainerHillSet *hillSet, struct TrainerHillChallenge *challenge)
+// JP 0x081D2FC8: JP e-reader trainer data flattens the floor-map fields, so
+// copy the map bytes explicitly rather than using the US nested-map assignment.
+static bool32 TryWriteTrainerHill_Internal(struct EReaderTrainerHillSet *hillSet, struct TrainerHillChallenge *challenge)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, sl\n\t"
-            "mov r6, sb\n\t"
-            "mov r5, r8\n\t"
-            "push {r5, r6, r7}\n\t"
-            "sub sp, #4\n\t"
-            "mov r8, r0\n\t"
-            "mov sb, r1\n\t"
-            "ldrh r0, [r0, #2]\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081D2FEA\n\t"
-            "ldr r0, _081D3080\n\t"
-            "ldr r2, _081D3084\n\t"
-            "movs r1, #0xe1\n\t"
-            "movs r3, #1\n\t"
-            "bl AGBAssert\n\t"
-            "_081D2FEA:\n\t"
-            "mov r1, r8\n\t"
-            "ldrb r0, [r1, #1]\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081D2FFE\n\t"
-            "ldr r0, _081D3080\n\t"
-            "ldr r2, _081D3088\n\t"
-            "movs r1, #0xe2\n\t"
-            "movs r3, #1\n\t"
-            "bl AGBAssert\n\t"
-            "_081D2FFE:\n\t"
-            "movs r2, #0x80\n\t"
-            "lsls r2, r2, #5\n\t"
-            "mov r0, sb\n\t"
-            "movs r1, #0\n\t"
-            "bl memset\n\t"
-            "mov r1, r8\n\t"
-            "ldrb r0, [r1]\n\t"
-            "mov r1, sb\n\t"
-            "strb r0, [r1]\n\t"
-            "bl GetTrainerHillUnkVal\n\t"
-            "mov r1, sb\n\t"
-            "strb r0, [r1, #1]\n\t"
-            "mov r1, r8\n\t"
-            "ldrb r0, [r1]\n\t"
-            "adds r0, #1\n\t"
-            "asrs r0, r0, #1\n\t"
-            "mov r1, sb\n\t"
-            "strb r0, [r1, #2]\n\t"
-            "movs r5, #0\n\t"
-            "adds r1, #8\n\t"
-            "str r1, [sp]\n\t"
-            "mov r0, r8\n\t"
-            "ldrb r0, [r0]\n\t"
-            "cmp r5, r0\n\t"
-            "bge _081D30C6\n\t"
-            "mov r7, r8\n\t"
-            "adds r7, #0xc\n\t"
-            "mov r6, r8\n\t"
-            "movs r1, #0xa8\n\t"
-            "lsls r1, r1, #1\n\t"
-            "add r1, r8\n\t"
-            "mov sl, r1\n\t"
-            "_081D3042:\n\t"
-            "movs r0, #1\n\t"
-            "ands r0, r5\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081D308C\n\t"
-            "lsrs r0, r5, #0x1f\n\t"
-            "adds r0, r5, r0\n\t"
-            "asrs r0, r0, #1\n\t"
-            "lsls r4, r0, #4\n\t"
-            "subs r4, r4, r0\n\t"
-            "lsls r4, r4, #2\n\t"
-            "subs r4, r4, r0\n\t"
-            "lsls r4, r4, #4\n\t"
-            "add r4, sb\n\t"
-            "ldrb r0, [r6, #8]\n\t"
-            "strb r0, [r4, #8]\n\t"
-            "movs r1, #0xa5\n\t"
-            "lsls r1, r1, #2\n\t"
-            "adds r0, r4, r1\n\t"
-            "mov r1, sl\n\t"
-            "movs r2, #0x92\n\t"
-            "lsls r2, r2, #1\n\t"
-            "bl memcpy\n\t"
-            "adds r4, #0xc\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r7, #0\n\t"
-            "movs r2, #0xa2\n\t"
-            "lsls r2, r2, #1\n\t"
-            "bl memcpy\n\t"
-            "b _081D30B2\n\t"
-            ".align 2, 0\n\t"
-            "_081D3080: .4byte sEReaderToolFileName\n\t"
-            "_081D3084: .4byte sEReaderTrainerHillDummyAssert\n\t"
-            "_081D3088: .4byte sEReaderTrainerHillIdAssert\n\t"
-            "_081D308C:\n\t"
-            "lsrs r1, r5, #0x1f\n\t"
-            "adds r1, r5, r1\n\t"
-            "asrs r1, r1, #1\n\t"
-            "lsls r0, r1, #4\n\t"
-            "subs r0, r0, r1\n\t"
-            "lsls r0, r0, #2\n\t"
-            "subs r0, r0, r1\n\t"
-            "lsls r0, r0, #4\n\t"
-            "add r0, sb\n\t"
-            "ldrb r1, [r6, #8]\n\t"
-            "strb r1, [r0, #9]\n\t"
-            "movs r1, #0xa8\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r0, r0, r1\n\t"
-            "adds r1, r7, #0\n\t"
-            "movs r2, #0xa2\n\t"
-            "lsls r2, r2, #1\n\t"
-            "bl memcpy\n\t"
-            "_081D30B2:\n\t"
-            "movs r0, #0x9c\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r7, r7, r0\n\t"
-            "adds r6, r6, r0\n\t"
-            "add sl, r0\n\t"
-            "adds r5, #1\n\t"
-            "mov r1, r8\n\t"
-            "ldrb r1, [r1]\n\t"
-            "cmp r5, r1\n\t"
-            "blt _081D3042\n\t"
-            "_081D30C6:\n\t"
-            "movs r0, #1\n\t"
-            "ands r0, r5\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081D30FC\n\t"
-            "lsrs r2, r5, #0x1f\n\t"
-            "adds r2, r5, r2\n\t"
-            "asrs r2, r2, #1\n\t"
-            "lsls r0, r2, #4\n\t"
-            "subs r0, r0, r2\n\t"
-            "lsls r0, r0, #2\n\t"
-            "subs r0, r0, r2\n\t"
-            "lsls r0, r0, #4\n\t"
-            "add r0, sb\n\t"
-            "movs r1, #0xa8\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r3, _081D3118\n\t"
-            "lsls r1, r2, #2\n\t"
-            "adds r1, r1, r2\n\t"
-            "lsls r1, r1, #4\n\t"
-            "adds r1, r1, r2\n\t"
-            "lsls r1, r1, #2\n\t"
-            "adds r1, r1, r3\n\t"
-            "movs r2, #0xa2\n\t"
-            "lsls r2, r2, #1\n\t"
-            "bl memcpy\n\t"
-            "_081D30FC:\n\t"
-            "movs r1, #0xec\n\t"
-            "lsls r1, r1, #4\n\t"
-            "ldr r0, [sp]\n\t"
-            "bl CalcByteArraySum\n\t"
-            "mov r1, sb\n\t"
-            "str r0, [r1, #4]\n\t"
-            "movs r0, #0x1e\n\t"
-            "bl TryWriteSpecialSaveSection\n\t"
-            "cmp r0, #1\n\t"
-            "bne _081D311C\n\t"
-            "movs r0, #1\n\t"
-            "b _081D311E\n\t"
-            ".align 2, 0\n\t"
-            "_081D3118: .4byte sTrainerHillTrainerTemplates_JP\n\t"
-            "_081D311C:\n\t"
-            "movs r0, #0\n\t"
-            "_081D311E:\n\t"
-            "add sp, #4\n\t"
-            "pop {r3, r4, r5}\n\t"
-            "mov r8, r3\n\t"
-            "mov sb, r4\n\t"
-            "mov sl, r5\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided\n");
+    int i;
+
+    if (hillSet->dummy != 0)
+        AGBAssert(sEReaderToolFileName, 0xE1, sEReaderTrainerHillDummyAssert, TRUE);
+    if (hillSet->id != 0)
+        AGBAssert(sEReaderToolFileName, 0xE2, sEReaderTrainerHillIdAssert, TRUE);
+
+    memset(challenge, 0, SECTOR_SIZE);
+    challenge->numTrainers = hillSet->numTrainers;
+    challenge->unused1 = GetTrainerHillUnkVal();
+    challenge->numFloors = (hillSet->numTrainers + 1) / HILL_TRAINERS_PER_FLOOR;
+
+    for (i = 0; i < hillSet->numTrainers; i++)
+    {
+        if (!(i & 1))
+        {
+            challenge->floors[i / HILL_TRAINERS_PER_FLOOR].trainerNum1 = hillSet->trainers[i].trainerNum;
+            memcpy(&challenge->floors[i / HILL_TRAINERS_PER_FLOOR].map,
+                   hillSet->trainers[i].mapMetatileData,
+                   sizeof(struct TrainerHillFloorMap));
+            challenge->floors[i / HILL_TRAINERS_PER_FLOOR].trainers[0] = hillSet->trainers[i].trainer;
+        }
+        else
+        {
+            challenge->floors[i / HILL_TRAINERS_PER_FLOOR].trainerNum2 = hillSet->trainers[i].trainerNum;
+            challenge->floors[i / HILL_TRAINERS_PER_FLOOR].trainers[1] = hillSet->trainers[i].trainer;
+        }
+    }
+
+    if (i & 1)
+        challenge->floors[i / HILL_TRAINERS_PER_FLOOR].trainers[1] = sTrainerHillTrainerTemplates_JP[i / HILL_TRAINERS_PER_FLOOR];
+
+    challenge->checksum = CalcByteArraySum((u8 *)challenge->floors, NUM_TRAINER_HILL_FLOORS * sizeof(struct TrainerHillFloor));
+    if (TryWriteSpecialSaveSection(SECTOR_ID_TRAINER_HILL, (u8 *)challenge) != SAVE_STATUS_OK)
+        return FALSE;
+
+    return TRUE;
 }
 
 bool32 TryWriteTrainerHill(struct EReaderTrainerHillSet *hillSet)
