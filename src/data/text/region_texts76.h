@@ -1,42 +1,145 @@
-const u8 gUnknown_85C8F88[] = _(
+const u8 gText_ThisIsAPokemon[] = _(
     "ポケットモンスター\n"
     "⋯⋯すなわち　ポケモン{PAUSE 96}\p");
 
-const u8 gUnknown_85C8FA2[] = _("？？？？？ポケモン");
+const u8 gText_5MarksPokemon[] = _("？？？？？ポケモン");
 
-const u8 gUnknown_85C8FAC[] = _("？？？,？m");
+const u8 gText_UnkHeight[] = _("？？？,？m");
 
-const u8 gUnknown_85C8FB3[] = _("？？？,？kg");
+const u8 gText_UnkWeight[] = _("？？？,？kg");
 
-const u8 gUnknown_85C8FBB[] = _("　　　　　ポケモン");
+const u8 gText_EmptyPkmnCategory[] = _("　　　　　ポケモン");
 
-const u8 gUnknown_85C8FC5[] = _("　　　,　m");
+const u8 gText_EmptyHeight[] = _("　　　,　m");
 
-const u8 gUnknown_85C8FCC[] = _("　　　,　kg");
+const u8 gText_EmptyWeight[] = _("　　　,　kg");
 
-const u8 gUnknown_85C8FD4[] = _("の");
+const u8 gText_EmptyPokedexInfo1[] = _("の");
 
-const u8 gUnknown_85C8FD6[] = _("なきごえ");
+const u8 gText_CryOf[] = _("なきごえ");
 
-const u8 gUnknown_85C8FDB[] = _("と");
+const u8 gText_EmptyPokedexInfo2[] = _("と");
 
-const u8 gUnknown_85C8FDD[] = _("の　おおきさくらべ");
+const u8 gText_SizeComparedTo[] = _("の　おおきさくらべ");
 
-const u8 gUnknown_85C8FE7[] = _("ポケモンずかんの　とうろく　かんりょう！");
+const u8 gText_PokedexRegistration[] = _("ポケモンずかんの　とうろく　かんりょう！");
 
-const u8 gUnknown_85C8FFC[] = _("けんさくを　しています⋯⋯");
+const u8 gText_SearchingPleaseWait[] = _("けんさくを　しています⋯⋯");
 
-const u8 gUnknown_85C900A[] = _("けんさくが　しゅうりょう　しました！");
+const u8 gText_SearchCompleted[] = _("けんさくが　しゅうりょう　しました！");
 
-const u8 gUnknown_85C901D[] = _(
-    "がいとう　する　ポケモンは　いませんでした⋯⋯$じょうけんを　していして\n"
-    "ポケモンの　けんさくを　します$ずかんリストの　ならびを　きりかえます$ずかんに　もどります$ずかんモードを　してい　します$ずかんの　ならびを　してい　します$なまえの　さいしょの　もじを　してい　します\n"
-    "　/みつけたポケモンのみ$からだの　いろを　してい　します\n"
-    "　/みつけたポケモンのみ$タイプを　してい　します\n"
-    "　/つかまえたポケモンのみ$けんさく/きりかえを　じっこうします$ホウエン　ずかん$ぜんこく　ずかん$ばんごう　じゅん$ごじゅうおん　じゅん$おもい　じゅん$かるい　じゅん$たかい　じゅん$ひくい　じゅん$あいうえお$かきくけこ$さしすせそ$たちつてと$なにぬねの$はひふへほ$まみむめも$らりるれろ$やゆよわをん$あか$あお$きいろ$みどり$くろ$ちゃいろ$むらさき$はいいろ$しろ$ピンク$ホウエンちほう　ばん　ポケモンずかん$ぜんこく　ばん　ポケモンずかん$ポケモンを\n"
-    "ばんごうじゅんで　ひょうじ　します$みつけたポケモンの　なまえを\n"
-    "ごじゅうおんじゅんで　ひょうじ　します$つかまえたポケモンを\n"
-    "おもい　じゅんばんで　ひょうじ　します$つかまえたポケモンを\n"
-    "かるい　じゅんばんで　ひょうじ　します$つかまえたポケモンを\n"
-    "しんちょうのたかい　じゅんばんで　ひょうじ　します$つかまえたポケモンを\n"
-    "しんちょうのひくい　じゅんばんで　ひょうじ　します$$してい　しない$なし");
+const u8 gText_NoMatchingPkmnWereFound[] = _("がいとう　する　ポケモンは　いませんでした⋯⋯");
+
+const u8 gText_SearchForPkmnBasedOnParameters[] = _(
+    "じょうけんを　していして\n"
+    "ポケモンの　けんさくを　します");
+
+const u8 gText_SwitchPokedexListings[] = _("ずかんリストの　ならびを　きりかえます");
+
+const u8 gText_ReturnToPokedex[] = _("ずかんに　もどります");
+
+const u8 gText_SelectPokedexMode[] = _("ずかんモードを　してい　します");
+
+const u8 gText_SelectPokedexListingMode[] = _("ずかんの　ならびを　してい　します");
+
+const u8 gText_ListByFirstLetter[] = _(
+    "なまえの　さいしょの　もじを　してい　します\n"
+    "　/みつけたポケモンのみ");
+
+const u8 gText_ListByBodyColor[] = _(
+    "からだの　いろを　してい　します\n"
+    "　/みつけたポケモンのみ");
+
+const u8 gText_ListByType[] = _(
+    "タイプを　してい　します\n"
+    "　/つかまえたポケモンのみ");
+
+const u8 gText_ExecuteSearchSwitch[] = _("けんさく/きりかえを　じっこうします");
+
+const u8 gText_DexHoennTitle[] = _("ホウエン　ずかん");
+
+const u8 gText_DexNatTitle[] = _("ぜんこく　ずかん");
+
+const u8 gText_DexSortNumericalTitle[] = _("ばんごう　じゅん");
+
+const u8 gText_DexSortAtoZTitle[] = _("ごじゅうおん　じゅん");
+
+const u8 gText_DexSortHeaviestTitle[] = _("おもい　じゅん");
+
+const u8 gText_DexSortLightestTitle[] = _("かるい　じゅん");
+
+const u8 gText_DexSortTallestTitle[] = _("たかい　じゅん");
+
+const u8 gText_DexSortSmallestTitle[] = _("ひくい　じゅん");
+
+const u8 gText_DexSearchAlphaABC[] = _("あいうえお");
+
+const u8 gText_DexSearchAlphaDEF[] = _("かきくけこ");
+
+const u8 gText_DexSearchAlphaGHI[] = _("さしすせそ");
+
+const u8 gText_DexSearchAlphaJKL[] = _("たちつてと");
+
+const u8 gText_DexSearchAlphaMNO[] = _("なにぬねの");
+
+const u8 gText_DexSearchAlphaPQR[] = _("はひふへほ");
+
+const u8 gText_DexSearchAlphaSTU[] = _("まみむめも");
+
+const u8 gText_DexSearchAlphaVWX[] = _("らりるれろ");
+
+const u8 gText_DexSearchAlphaYZ[] = _("やゆよわをん");
+
+const u8 gText_DexSearchColorRed[] = _("あか");
+
+const u8 gText_DexSearchColorBlue[] = _("あお");
+
+const u8 gText_DexSearchColorYellow[] = _("きいろ");
+
+const u8 gText_DexSearchColorGreen[] = _("みどり");
+
+const u8 gText_DexSearchColorBlack[] = _("くろ");
+
+const u8 gText_DexSearchColorBrown[] = _("ちゃいろ");
+
+const u8 gText_DexSearchColorPurple[] = _("むらさき");
+
+const u8 gText_DexSearchColorGray[] = _("はいいろ");
+
+const u8 gText_DexSearchColorWhite[] = _("しろ");
+
+const u8 gText_DexSearchColorPink[] = _("ピンク");
+
+const u8 gText_DexHoennDescription[] = _("ホウエンちほう　ばん　ポケモンずかん");
+
+const u8 gText_DexNatDescription[] = _("ぜんこく　ばん　ポケモンずかん");
+
+const u8 gText_DexSortNumericalDescription[] = _(
+    "ポケモンを\n"
+    "ばんごうじゅんで　ひょうじ　します");
+
+const u8 gText_DexSortAtoZDescription[] = _(
+    "みつけたポケモンの　なまえを\n"
+    "ごじゅうおんじゅんで　ひょうじ　します");
+
+const u8 gText_DexSortHeaviestDescription[] = _(
+    "つかまえたポケモンを\n"
+    "おもい　じゅんばんで　ひょうじ　します");
+
+const u8 gText_DexSortLightestDescription[] = _(
+    "つかまえたポケモンを\n"
+    "かるい　じゅんばんで　ひょうじ　します");
+
+const u8 gText_DexSortTallestDescription[] = _(
+    "つかまえたポケモンを\n"
+    "しんちょうのたかい　じゅんばんで　ひょうじ　します");
+
+const u8 gText_DexSortSmallestDescription[] = _(
+    "つかまえたポケモンを\n"
+    "しんちょうのひくい　じゅんばんで　ひょうじ　します");
+
+const u8 gText_DexEmptyString[] = _("");
+
+const u8 gText_DexSearchDontSpecify[] = _("してい　しない");
+
+const u8 gText_DexSearchTypeNone[] = _("なし");

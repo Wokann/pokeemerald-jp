@@ -3,9 +3,11 @@
 #include "graphics.h"
 #include "pokedex.h"
 #include "sprite.h"
+#include "strings.h"
 #include "window.h"
 
 #define POKEDEX_STATIC_DATA __attribute__((section(".rodata.pokedex_static_data")))
+#define POKEDEX_SEARCH_MENU_DATA __attribute__((section(".rodata.pokedex_search_menu_data")))
 
 static void SpriteCB_SeenOwnInfo(struct Sprite *sprite);
 static void SpriteCB_Scrollbar(struct Sprite *sprite);
@@ -14,7 +16,173 @@ static void SpriteCB_DexListInterfaceText(struct Sprite *sprite);
 static void SpriteCB_RotatingPokeBall(struct Sprite *sprite);
 static void SpriteCB_DexListStartMenuCursor(struct Sprite *sprite);
 
+enum
+{
+    SEARCH_NAME,
+    SEARCH_COLOR,
+    SEARCH_TYPE_LEFT,
+    SEARCH_TYPE_RIGHT,
+    SEARCH_ORDER,
+    SEARCH_MODE,
+    SEARCH_OK,
+    SEARCH_COUNT,
+};
+
+enum
+{
+    SEARCH_TOPBAR_SEARCH,
+    SEARCH_TOPBAR_SHIFT,
+    SEARCH_TOPBAR_CANCEL,
+    SEARCH_TOPBAR_COUNT,
+};
+
+enum
+{
+    NAME_ABC = 1,
+    NAME_DEF,
+    NAME_GHI,
+    NAME_JKL,
+    NAME_MNO,
+    NAME_PQR,
+    NAME_STU,
+    NAME_VWX,
+    NAME_YZ,
+};
+
+struct SearchMenuTopBarItem
+{
+    const u8 *description;
+    u8 highlightX;
+    u8 highlightY;
+    u8 highlightWidth;
+};
+
+struct SearchMenuItem
+{
+    const u8 *description;
+    u8 titleBgX;
+    u8 titleBgY;
+    u8 titleBgWidth;
+    u8 selectionBgX;
+    u8 selectionBgY;
+    u8 selectionBgWidth;
+};
+
 #define TAG_DEX_INTERFACE 4096
+
+// Japanese name sorting uses kana ranges and their voiced/semi-voiced variants.
+POKEDEX_SEARCH_MENU_DATA static const u8 sLetterSearchRanges[][4] =
+{
+    {},
+    [NAME_ABC] = {0x51, 5, 0x00, 0}, // ア-オ
+    [NAME_DEF] = {0x56, 5, 0x87, 5}, // カ-コ / ガ-ゴ
+    [NAME_GHI] = {0x5B, 5, 0x8C, 5}, // サ-ソ / ザ-ゾ
+    [NAME_JKL] = {0x60, 5, 0x91, 5}, // タ-ト / ダ-ド
+    [NAME_MNO] = {0x65, 5, 0x00, 0}, // ナ-ノ
+    [NAME_PQR] = {0x6A, 5, 0x96, 10}, // ハ-ホ / バ-ボ・パ-ポ
+    [NAME_STU] = {0x6F, 5, 0x00, 0}, // マ-モ
+    [NAME_VWX] = {0x77, 5, 0x00, 0}, // ラ-ロ
+    [NAME_YZ]  = {0x74, 3, 0x7C, 3}, // ヤ-ヨ / ワ-ン
+};
+
+POKEDEX_SEARCH_MENU_DATA static const struct SearchMenuTopBarItem sSearchMenuTopBarItems[SEARCH_TOPBAR_COUNT] =
+{
+    [SEARCH_TOPBAR_SEARCH] =
+    {
+        .description = gText_SearchForPkmnBasedOnParameters,
+        .highlightX = 0,
+        .highlightY = 0,
+        .highlightWidth = 5,
+    },
+    [SEARCH_TOPBAR_SHIFT] =
+    {
+        .description = gText_SwitchPokedexListings,
+        .highlightX = 6,
+        .highlightY = 0,
+        .highlightWidth = 5,
+    },
+    [SEARCH_TOPBAR_CANCEL] =
+    {
+        .description = gText_ReturnToPokedex,
+        .highlightX = 12,
+        .highlightY = 0,
+        .highlightWidth = 5,
+    },
+};
+
+POKEDEX_SEARCH_MENU_DATA static const struct SearchMenuItem sSearchMenuItems[SEARCH_COUNT] =
+{
+    [SEARCH_NAME] =
+    {
+        .description = gText_ListByFirstLetter,
+        .titleBgX = 0,
+        .titleBgY = 2,
+        .titleBgWidth = 5,
+        .selectionBgX = 5,
+        .selectionBgY = 2,
+        .selectionBgWidth = 12,
+    },
+    [SEARCH_COLOR] =
+    {
+        .description = gText_ListByBodyColor,
+        .titleBgX = 0,
+        .titleBgY = 4,
+        .titleBgWidth = 5,
+        .selectionBgX = 5,
+        .selectionBgY = 4,
+        .selectionBgWidth = 12,
+    },
+    [SEARCH_TYPE_LEFT] =
+    {
+        .description = gText_ListByType,
+        .titleBgX = 0,
+        .titleBgY = 6,
+        .titleBgWidth = 5,
+        .selectionBgX = 5,
+        .selectionBgY = 6,
+        .selectionBgWidth = 6,
+    },
+    [SEARCH_TYPE_RIGHT] =
+    {
+        .description = gText_ListByType,
+        .titleBgX = 0,
+        .titleBgY = 6,
+        .titleBgWidth = 5,
+        .selectionBgX = 11,
+        .selectionBgY = 6,
+        .selectionBgWidth = 6,
+    },
+    [SEARCH_ORDER] =
+    {
+        .description = gText_SelectPokedexListingMode,
+        .titleBgX = 0,
+        .titleBgY = 8,
+        .titleBgWidth = 5,
+        .selectionBgX = 5,
+        .selectionBgY = 8,
+        .selectionBgWidth = 12,
+    },
+    [SEARCH_MODE] =
+    {
+        .description = gText_SelectPokedexMode,
+        .titleBgX = 0,
+        .titleBgY = 10,
+        .titleBgWidth = 5,
+        .selectionBgX = 5,
+        .selectionBgY = 10,
+        .selectionBgWidth = 12,
+    },
+    [SEARCH_OK] =
+    {
+        .description = gText_ExecuteSearchSwitch,
+        .titleBgX = 0,
+        .titleBgY = 12,
+        .titleBgWidth = 5,
+        .selectionBgX = 0,
+        .selectionBgY = 0,
+        .selectionBgWidth = 0,
+    },
+};
 
 POKEDEX_STATIC_DATA static const struct OamData sOamData_ScrollBar =
 {
@@ -12466,7 +12634,7 @@ __attribute__((naked)) void sub_080C0488(void)
         "_080C069C: .4byte 0x181\n\t"
         "_080C06A0: .4byte gUnknown_20397EC\n\t"
         "_080C06A4: .4byte 0x0000060C\n\t"
-        "_080C06A8: .4byte gUnknown_854410C\n\t"
+        "_080C06A8: .4byte sLetterSearchRanges\n\t"
         "_080C06AC: .4byte gSpeciesNames\n\t"
         "_080C06B0: .4byte gSpeciesInfo\n\t"
         "_080C06B4:\n\t"
@@ -13259,7 +13427,7 @@ __attribute__((naked)) void sub_080C0C7C(void)
         "	str r0, [r1]\n\t"
         "	b _080C0F14\n\t"
         "	.align 2, 0\n\t"
-        "_080C0CE8: .4byte gUnknown_854414C + 0x54\n\t"
+        "_080C0CE8: .4byte sSearchMenuItems + 0x54\n\t"
         "_080C0CEC: .4byte gUnknown_85441D8\n\t"
         "_080C0CF0: .4byte gMain\n\t"
         "_080C0CF4: .4byte gTasks\n\t"
@@ -14221,7 +14389,7 @@ __attribute__((naked)) void sub_080C1440(void)
         "	ldrb r2, [r0, #5]\n\t"
         "	b _080C1506\n\t"
         "	.align 2, 0\n\t"
-        "_080C14A4: .4byte gUnknown_8544134\n\t"
+        "_080C14A4: .4byte sSearchMenuTopBarItems\n\t"
         "_080C14A8:\n\t"
         "	ldr r2, _080C14D4\n\t"
         "	subs r1, r4, #3\n\t"
@@ -14246,7 +14414,7 @@ __attribute__((naked)) void sub_080C1440(void)
         "	ldrb r3, [r0, #9]\n\t"
         "	b _080C1508\n\t"
         "	.align 2, 0\n\t"
-        "_080C14D4: .4byte gUnknown_854414C\n\t"
+        "_080C14D4: .4byte sSearchMenuItems\n\t"
         "_080C14D8:\n\t"
         "	ldr r0, _080C14E4\n\t"
         "	ldrb r1, [r0, #0x1c]\n\t"
@@ -14254,7 +14422,7 @@ __attribute__((naked)) void sub_080C1440(void)
         "	ldrb r3, [r0, #0x1e]\n\t"
         "	b _080C1508\n\t"
         "	.align 2, 0\n\t"
-        "_080C14E4: .4byte gUnknown_854414C\n\t"
+        "_080C14E4: .4byte sSearchMenuItems\n\t"
         "_080C14E8:\n\t"
         "	bl IsNationalPokedexEnabled\n\t"
         "	cmp r0, #0\n\t"
@@ -14277,7 +14445,7 @@ __attribute__((naked)) void sub_080C1440(void)
         "	bl sub_080C13DC\n\t"
         "	b _080C152C\n\t"
         "	.align 2, 0\n\t"
-        "_080C1510: .4byte gUnknown_854414C\n\t"
+        "_080C1510: .4byte sSearchMenuItems\n\t"
         "_080C1514:\n\t"
         "	ldr r2, _080C1534\n\t"
         "	subs r1, r4, #3\n\t"
@@ -14295,7 +14463,7 @@ __attribute__((naked)) void sub_080C1440(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C1534: .4byte gUnknown_854414C\n\t"
+        "_080C1534: .4byte sSearchMenuItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14477,7 +14645,7 @@ __attribute__((naked)) void sub_080C1684(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C16B4: .4byte gUnknown_8544134\n\t"
+        "_080C16B4: .4byte sSearchMenuTopBarItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14563,7 +14731,7 @@ __attribute__((naked)) void sub_080C16B8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C1758: .4byte gUnknown_854414C\n\t"
+        "_080C1758: .4byte sSearchMenuItems\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -59,7 +59,7 @@ extern const u16 sBirchSpeechBgPals[][16];
 extern const u16 sBirchSpeechBgGradientPal[];
 extern const struct WindowTemplate sNewGameBirchSpeechTextWindows[];
 extern const u8 gText_Birch_Welcome[];
-extern const u8 gUnknown_85C8F88[];
+extern const u8 gText_ThisIsAPokemon[];
 extern const u8 gText_Birch_MainSpeech[];
 extern const u8 gText_Birch_AndYouAre[];
 extern const u8 gText_Birch_BoyOrGirl[];
@@ -972,7 +972,7 @@ static void Task_NewGameBirchSpeech_ThisIsAPokemon(u8 taskId)
     if (!gPaletteFade.active && !RunTextPrintersAndIsPrinter0Active())
     {
         gTasks[taskId].func = Task_NewGameBirchSpeech_MainSpeech;
-        StringExpandPlaceholders(gStringVar4, gUnknown_85C8F88);
+        StringExpandPlaceholders(gStringVar4, gText_ThisIsAPokemon);
         AddTextPrinterWithCallbackForMessage(TRUE, NewGameBirchSpeech_WaitForThisIsPokemonText);
         sBirchSpeechMainTaskId = taskId;
     }
