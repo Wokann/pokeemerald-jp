@@ -3,7 +3,7 @@
 @
 
 TerraCave_Entrance:
-	.4byte gMapLayout_TERRA_CAVE_ENTRANCE
+	.4byte TerraCave_Entrance_Layout
 	.4byte TerraCave_Entrance_MapEvents
 	.4byte TerraCave_Entrance_MapScripts
 	.4byte NULL

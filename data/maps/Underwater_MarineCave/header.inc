@@ -3,7 +3,7 @@
 @
 
 Underwater_MarineCave:
-	.4byte gMapLayout_UNDERWATER_MARINE_CAVE
+	.4byte Underwater_MarineCave_Layout
 	.4byte Underwater_MarineCave_MapEvents
 	.4byte Underwater_MarineCave_MapScripts
 	.4byte NULL

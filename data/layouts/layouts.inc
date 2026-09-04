@@ -5080,60 +5080,78 @@ IslandHarbor_Layout:: @ 0x0844E734
 	.4byte IslandHarbor_Layout_Blockdata
 	.4byte gTileset_General
 	.4byte gTileset_IslandHarbor
-gMapLayout_UNDERWATER_MARINE_CAVE_Border:
+Underwater_MarineCave_Layout_Border::
 	.incbin "data/layouts/Underwater_MarineCave/border.bin"
-gMapLayout_UNDERWATER_MARINE_CAVE_Blockdata:
+
+Underwater_MarineCave_Layout_Blockdata::
 	.incbin "data/layouts/Underwater_MarineCave/map.bin"
-gMapLayout_UNDERWATER_MARINE_CAVE: @ 0x0844E8E4
+
+	.align 2
+Underwater_MarineCave_Layout:: @ 0x0844E8E4
 	.4byte 20  @ width
 	.4byte 10  @ height
-	.4byte gMapLayout_UNDERWATER_MARINE_CAVE_Border  @ border
-	.4byte gMapLayout_UNDERWATER_MARINE_CAVE_Blockdata  @ map
+	.4byte Underwater_MarineCave_Layout_Border  @ border
+	.4byte Underwater_MarineCave_Layout_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Underwater  @ secondaryTileset
-gMapLayout_MARINE_CAVE_ENTRANCE_Border:
+
+MarineCave_Entrance_Layout_Border::
 	.incbin "data/layouts/MarineCave_Entrance/border.bin"
-gMapLayout_MARINE_CAVE_ENTRANCE_Blockdata:
+
+MarineCave_Entrance_Layout_Blockdata::
 	.incbin "data/layouts/MarineCave_Entrance/map.bin"
-gMapLayout_MARINE_CAVE_ENTRANCE: @ 0x0844EC24
+
+	.align 2
+MarineCave_Entrance_Layout:: @ 0x0844EC24
 	.4byte 20  @ width
 	.4byte 20  @ height
-	.4byte gMapLayout_MARINE_CAVE_ENTRANCE_Border  @ border
-	.4byte gMapLayout_MARINE_CAVE_ENTRANCE_Blockdata  @ map
+	.4byte MarineCave_Entrance_Layout_Border  @ border
+	.4byte MarineCave_Entrance_Layout_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Cave  @ secondaryTileset
-gMapLayout_TERRA_CAVE_ENTRANCE_Border:
+
+TerraCave_Entrance_Layout_Border::
 	.incbin "data/layouts/TerraCave_Entrance/border.bin"
-gMapLayout_TERRA_CAVE_ENTRANCE_Blockdata:
+
+TerraCave_Entrance_Layout_Blockdata::
 	.incbin "data/layouts/TerraCave_Entrance/map.bin"
-gMapLayout_TERRA_CAVE_ENTRANCE: @ 0x0844EF64
+
+	.align 2
+TerraCave_Entrance_Layout:: @ 0x0844EF64
 	.4byte 20  @ width
 	.4byte 20  @ height
-	.4byte gMapLayout_TERRA_CAVE_ENTRANCE_Border  @ border
-	.4byte gMapLayout_TERRA_CAVE_ENTRANCE_Blockdata  @ map
+	.4byte TerraCave_Entrance_Layout_Border  @ border
+	.4byte TerraCave_Entrance_Layout_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Cave  @ secondaryTileset
-gMapLayout_TERRA_CAVE_END_Border:
+
+TerraCave_End_Layout_Border::
 	.incbin "data/layouts/TerraCave_End/border.bin"
-gMapLayout_TERRA_CAVE_END_Blockdata:
+
+TerraCave_End_Layout_Blockdata::
 	.incbin "data/layouts/TerraCave_End/map.bin"
-gMapLayout_TERRA_CAVE_END: @ 0x0844F5D8
+
+	.align 2
+TerraCave_End_Layout:: @ 0x0844F5D8
 	.4byte 27  @ width
 	.4byte 30  @ height
-	.4byte gMapLayout_TERRA_CAVE_END_Border  @ border
-	.4byte gMapLayout_TERRA_CAVE_END_Blockdata  @ map
+	.4byte TerraCave_End_Layout_Border  @ border
+	.4byte TerraCave_End_Layout_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Cave  @ secondaryTileset
-gMapLayout_UNDERWATER_ROUTE105_Border:
+
+Underwater_Route105_Layout_Border::
 	.incbin "data/layouts/Underwater_Route105/border.bin"
-gMapLayout_UNDERWATER_ROUTE105_Blockdata:
+
+Underwater_Route105_Layout_Blockdata::
 	.incbin "data/layouts/Underwater_Route105/map.bin"
-	.globl gMapLayout_UNDERWATER_ROUTE105
-gMapLayout_UNDERWATER_ROUTE105: @ 0x08450EF8
+
+	.align 2
+Underwater_Route105_Layout:: @ 0x08450EF8
 	.4byte 40  @ width
 	.4byte 80  @ height
-	.4byte gMapLayout_UNDERWATER_ROUTE105_Border  @ border
-	.4byte gMapLayout_UNDERWATER_ROUTE105_Blockdata  @ map
+	.4byte Underwater_Route105_Layout_Border  @ border
+	.4byte Underwater_Route105_Layout_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Underwater  @ secondaryTileset
 Underwater_Route125_Layout_Border::
@@ -5161,15 +5179,18 @@ Underwater_Route129_Layout:: @ 0x08454138
 	.4byte Underwater_Route129_Layout_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Underwater  @ secondaryTileset
-gMapLayout_MARINE_CAVE_END_Border:
+MarineCave_End_Layout_Border::
 	.incbin "data/layouts/MarineCave_End/border.bin"
-gMapLayout_MARINE_CAVE_END_Blockdata:
+
+MarineCave_End_Layout_Blockdata::
 	.incbin "data/layouts/MarineCave_End/map.bin"
-gMapLayout_MARINE_CAVE_END: @ 0x084547AC
+
+	.align 2
+MarineCave_End_Layout:: @ 0x084547AC
 	.4byte 27  @ width
 	.4byte 30  @ height
-	.4byte gMapLayout_MARINE_CAVE_END_Border  @ border
-	.4byte gMapLayout_MARINE_CAVE_END_Blockdata  @ map
+	.4byte MarineCave_End_Layout_Border  @ border
+	.4byte MarineCave_End_Layout_Blockdata  @ map
 	.4byte gTileset_General  @ primaryTileset
 	.4byte gTileset_Cave  @ secondaryTileset
 TrainerHill_Entrance_Layout_Border::

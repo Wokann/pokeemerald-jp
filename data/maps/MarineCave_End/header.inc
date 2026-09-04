@@ -3,7 +3,7 @@
 @
 
 MarineCave_End:
-	.4byte gMapLayout_MARINE_CAVE_END
+	.4byte MarineCave_End_Layout
 	.4byte MarineCave_End_MapEvents
 	.4byte MarineCave_End_MapScripts
 	.4byte NULL

@@ -13,7 +13,9 @@ MAPS = (
     "VictoryRoad_1F",
     "VictoryRoad_B1F",
     "VictoryRoad_B2F",
+    "Underwater_Route105",
     "Underwater_Route124",
+    "Underwater_Route125",
     "Underwater_Route126",
     "Underwater_Route127",
     "Underwater_Route128",
@@ -730,12 +732,18 @@ NULL_CONNECTION_MAPS = (
 )
 
 CANONICAL_LAYOUT_MAPS = (
+    "Underwater_MarineCave",
+    "MarineCave_Entrance",
+    "TerraCave_Entrance",
+    "TerraCave_End",
+    "Underwater_Route105",
     "Underwater_Route124",
     "Underwater_Route125",
     "Underwater_Route126",
     "Underwater_Route127",
     "Underwater_Route128",
     "Underwater_Route129",
+    "MarineCave_End",
 )
 
 
@@ -778,6 +786,30 @@ class MapMetadataTests(unittest.TestCase):
         self.assertEqual(
             jp_map_metadata.layout_symbol("LAYOUT_UNDERWATER_ROUTE125"),
             "Underwater_Route125_Layout",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_UNDERWATER_MARINE_CAVE"),
+            "Underwater_MarineCave_Layout",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_MARINE_CAVE_ENTRANCE"),
+            "MarineCave_Entrance_Layout",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_TERRA_CAVE_ENTRANCE"),
+            "TerraCave_Entrance_Layout",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_TERRA_CAVE_END"),
+            "TerraCave_End_Layout",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_UNDERWATER_ROUTE105"),
+            "Underwater_Route105_Layout",
+        )
+        self.assertEqual(
+            jp_map_metadata.layout_symbol("LAYOUT_MARINE_CAVE_END"),
+            "MarineCave_End_Layout",
         )
         self.assertEqual(
             jp_map_metadata.layout_symbol("LAYOUT_CAVE_OF_ORIGIN_B1F"),

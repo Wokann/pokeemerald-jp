@@ -3,7 +3,7 @@
 @
 
 MarineCave_Entrance:
-	.4byte gMapLayout_MARINE_CAVE_ENTRANCE
+	.4byte MarineCave_Entrance_Layout
 	.4byte MarineCave_Entrance_MapEvents
 	.4byte MarineCave_Entrance_MapScripts
 	.4byte NULL

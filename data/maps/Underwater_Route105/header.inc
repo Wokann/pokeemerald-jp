@@ -3,7 +3,7 @@
 @
 
 Underwater_Route105:
-	.4byte gMapLayout_UNDERWATER_ROUTE105
+	.4byte Underwater_Route105_Layout
 	.4byte Underwater_Route105_MapEvents
 	.4byte Underwater_Route105_MapScripts
 	.4byte Underwater_Route105_MapConnections

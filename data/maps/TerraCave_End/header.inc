@@ -3,7 +3,7 @@
 @
 
 TerraCave_End:
-	.4byte gMapLayout_TERRA_CAVE_END
+	.4byte TerraCave_End_Layout
 	.4byte TerraCave_End_MapEvents
 	.4byte TerraCave_End_MapScripts
 	.4byte NULL

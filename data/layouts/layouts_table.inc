@@ -411,14 +411,14 @@ gMapLayouts:: @ 0x0845A1F4
 	.4byte FarawayIsland_Interior_Layout
 	.4byte BirthIsland_Exterior_Layout
 	.4byte IslandHarbor_Layout
-	.4byte gMapLayout_UNDERWATER_MARINE_CAVE
-	.4byte gMapLayout_MARINE_CAVE_ENTRANCE
-	.4byte gMapLayout_TERRA_CAVE_ENTRANCE
-	.4byte gMapLayout_TERRA_CAVE_END
-	.4byte gMapLayout_UNDERWATER_ROUTE105
+	.4byte Underwater_MarineCave_Layout
+	.4byte MarineCave_Entrance_Layout
+	.4byte TerraCave_Entrance_Layout
+	.4byte TerraCave_End_Layout
+	.4byte Underwater_Route105_Layout
 	.4byte Underwater_Route125_Layout
 	.4byte Underwater_Route129_Layout
-	.4byte gMapLayout_MARINE_CAVE_END
+	.4byte MarineCave_End_Layout
 	.4byte TrainerHill_Entrance_Layout
 	.4byte TrainerHill_1F_Layout
 	.4byte TrainerHill_2F_Layout
