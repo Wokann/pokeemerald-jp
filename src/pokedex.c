@@ -7,6 +7,7 @@
 #include "window.h"
 
 #define POKEDEX_STATIC_DATA __attribute__((section(".rodata.pokedex_static_data")))
+#define POKEDEX_PREFIX_DATA __attribute__((section(".rodata.pokedex_prefix"), aligned(1)))
 #define POKEDEX_SEARCH_MENU_DATA __attribute__((section(".rodata.pokedex_search_menu_data")))
 
 static void SpriteCB_SeenOwnInfo(struct Sprite *sprite);
@@ -69,6 +70,9 @@ struct SearchMenuItem
 };
 
 #define TAG_DEX_INTERFACE 4096
+
+static const u8 sCaughtBall_Gfx[] POKEDEX_PREFIX_DATA = INCGFX_U8("graphics/pokedex/caught_ball.png", ".4bpp");
+static const u8 sCaughtBall_GfxPadding[2] POKEDEX_PREFIX_DATA = {};
 
 // Japanese name sorting uses kana ranges and their voiced/semi-voiced variants.
 POKEDEX_SEARCH_MENU_DATA static const u8 sLetterSearchRanges[][4] =
@@ -4754,7 +4758,7 @@ __attribute__((naked)) void CreateCaughtBall(void)
         "	bl BlitBitmapToWindow\n\t"
         "	b _080BC970\n\t"
         "	.align 2, 0\n\t"
-        "_080BC958: .4byte gUnknown_8539C0E\n\t"
+        "_080BC958: .4byte sCaughtBall_Gfx\n\t"
         "_080BC95C:\n\t"
         "	lsls r2, r3, #3\n\t"
         "	lsls r3, r4, #3\n\t"
