@@ -1474,7 +1474,13 @@ $(C_BUILDDIR)/data/trainer_hill_templates.o: src/data/trainer_hill_templates.c c
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/trainer_hill_templates.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/data/trainer_hill_templates.gen.s
 
-$(C_BUILDDIR)/data/trade.o: src/data/trade.c src/data/trade.h $(wildcard graphics/trade/jp/menu/* graphics/trade/jp/animation/*)
+$(C_BUILDDIR)/data/trade.d: src/data/trade.h | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -I include -I "" $<
+
+-include $(C_BUILDDIR)/data/trade.d
+
+$(C_BUILDDIR)/data/trade.o: src/data/trade.c src/data/trade.h graphics/trade/cursor.png $(wildcard graphics/trade/jp/menu/* graphics/trade/jp/animation/*)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/trade.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/trade.gen.s | $(AS) $(ASFLAGS) -o $@ -

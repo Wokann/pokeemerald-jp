@@ -200,9 +200,9 @@ static void PrintPartyLevelsAndGenders(u8 whichParty);
 static void DoQueuedActions(void);
 static void PrintPartyNicknames(u8 whichParty);
 static bool8 LoadUISpriteGfx(void);
-extern const struct SpritePalette gUnknown_83008DC;
-extern const struct SpritePalette gUnknown_830083C;
-extern const struct SpriteSheet gUnknown_8300834;
+extern const struct SpritePalette sSpritePalette_MenuText;
+extern const struct SpritePalette sCursor_SpritePalette;
+extern const struct SpriteSheet sCursor_SpriteSheet;
 extern const u16 gUnknown_830D0E8[];
 extern const struct SpriteSheet gUnknown_830CF5C;
 extern const struct SpritePalette gUnknown_830CF64;
@@ -393,9 +393,8 @@ extern const u8 gUnknown_8300AA5[];
 extern const u8 gUnknown_8300AB1[];
 extern const u8 gUnknown_8300C00[];
 extern const u8 gUnknown_8300A9B[];
-extern const u8 gUnknown_8300A36[][2];
-extern const u8 gUnknown_8300A4E[][2];
-extern const u8 gUnknown_8300A1C[][2];
+extern const u8 sTradeMonLevelCoords[][2];
+extern const u8 sTradeMonBoxCoords[][2];
 extern const u8 gUnknown_8300D40[][2];
 extern const struct SpriteTemplate gUnknown_830CF6C;
 extern const struct SpriteTemplate gUnknown_830CFCC;
@@ -2190,7 +2189,7 @@ __attribute__((naked)) void sub_080790C8(u8 side)
         "	.align 2, 0\n\t"
         "_0807928C: .4byte gSprites\n\t"
         "_08079290: .4byte sTradeMenu\n\t"
-        "_08079294: .4byte gUnknown_8300A1C\n\t"
+        "_08079294: .4byte sTradeMonSpriteCoords\n\t"
         "_08079298: .4byte SpriteCB_MonIcon + 1\n\t"
         "_0807929C: .4byte sTradePartyBoxTilemap\n\t"
         "_080792A0:\n\t"
@@ -2365,7 +2364,7 @@ __attribute__((naked)) void sub_080790C8(u8 side)
         "_08079404: .4byte sTradeMovesBoxTilemap\n\t"
         "_08079408: .4byte gSprites\n\t"
         "_0807940C: .4byte sTradeMenu\n\t"
-        "_08079410: .4byte gUnknown_8300A1C\n\t"
+        "_08079410: .4byte sTradeMonSpriteCoords\n\t"
         "_08079414: .4byte gUnknown_8300C00\n\t"
         "_08079418: .4byte gUnknown_8300A9B\n\t"
         "_0807941C:\n\t"
@@ -2551,10 +2550,10 @@ static void PrintPartyLevelsAndGenders(u8 whichParty)
     {
         s32 j = i + PARTY_SIZE * whichParty;
         PrintLevelAndGender(whichParty, i,
-            gUnknown_8300A36[j][0],
-            gUnknown_8300A36[j][1],
-            gUnknown_8300A4E[j][0],
-            gUnknown_8300A4E[j][1]);
+            sTradeMonLevelCoords[j][0],
+            sTradeMonLevelCoords[j][1],
+            sTradeMonBoxCoords[j][0],
+            sTradeMonBoxCoords[j][1]);
     }
 }
 
@@ -2565,8 +2564,8 @@ static void ShowTradePartyMonIcons(u8 whichParty)
     for (i = 0; i < sTradeMenu->partyCounts[whichParty]; i++)
     {
         gSprites[sTradeMenu->partySpriteIds[whichParty][i]].invisible = FALSE;
-        gSprites[sTradeMenu->partySpriteIds[whichParty][i]].x = gUnknown_8300A1C[(whichParty * PARTY_SIZE) + i][0] * 8 + 14;
-        gSprites[sTradeMenu->partySpriteIds[whichParty][i]].y = gUnknown_8300A1C[(whichParty * PARTY_SIZE) + i][1] * 8 - 12;
+        gSprites[sTradeMenu->partySpriteIds[whichParty][i]].x = sTradeMonSpriteCoords[(whichParty * PARTY_SIZE) + i][0] * 8 + 14;
+        gSprites[sTradeMenu->partySpriteIds[whichParty][i]].y = sTradeMonSpriteCoords[(whichParty * PARTY_SIZE) + i][1] * 8 - 12;
         gSprites[sTradeMenu->partySpriteIds[whichParty][i]].x2 = 0;
         gSprites[sTradeMenu->partySpriteIds[whichParty][i]].y2 = 0;
     }
@@ -2723,15 +2722,15 @@ static bool8 LoadUISpriteGfx(void)
         sTradeMenu->timer++;
         break;
     case NUM_MENU_TEXT_SPRITES:
-        LoadSpritePalette(&gUnknown_83008DC);
+        LoadSpritePalette(&sSpritePalette_MenuText);
         sTradeMenu->timer++;
         break;
     case NUM_MENU_TEXT_SPRITES + 1:
-        LoadSpritePalette(&gUnknown_830083C);
+        LoadSpritePalette(&sCursor_SpritePalette);
         sTradeMenu->timer++;
         break;
     case NUM_MENU_TEXT_SPRITES + 2:
-        LoadSpriteSheet(&gUnknown_8300834);
+        LoadSpriteSheet(&sCursor_SpriteSheet);
         sTradeMenu->timer++;
         break;
     case NUM_MENU_TEXT_SPRITES + 3:
