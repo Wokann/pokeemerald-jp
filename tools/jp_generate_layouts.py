@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the JP layout sources from local layout metadata.
-
-The normal mapjson output is shared with pokeemerald.  Route110 Trick House
-Puzzle 4 is the one reviewed JP-only asset exception: its blockdata differs
-from the US source asset, so it deliberately remains a visible byte-exact ROM
-span under the canonical layout label.
-"""
+"""Generate the JP layout sources from local layout metadata."""
 
 from __future__ import annotations
 
@@ -20,24 +14,6 @@ LAYOUTS_JSON = ROOT / "data/layouts/layouts.json"
 MAPJSON = ROOT / "tools/mapjson/mapjson"
 LAYOUTS_DIR = ROOT / "data/layouts"
 CONSTANTS_DIR = ROOT / "include/constants"
-
-RAW_LABEL = "Route110_TrickHousePuzzle4_Layout_Blockdata::"
-RAW_US_ASSET = '\t.incbin "data/layouts/Route110_TrickHousePuzzle4/map.bin"'
-RAW_JP_OWNER = (
-    "@ JP-specific blockdata differs from the US asset at 16 bytes. Keep this\n"
-    "@ byte-exact span visible under its final owner until it has a reconstructed\n"
-    "@ JP source asset.\n"
-    f"{RAW_LABEL}\n"
-    '\t.incbin "baserom_jp.gba", 0x420280, 0x294'
-)
-
-
-def patch_jp_layout_exception(text: str) -> str:
-    expected = f"{RAW_LABEL}\n{RAW_US_ASSET}"
-    if text.count(expected) != 1:
-        raise ValueError("expected exactly one Route110 Trick House Puzzle 4 blockdata owner")
-    return text.replace(expected, RAW_JP_OWNER)
-
 
 def normalize_generated_text(text: str) -> str:
     return text.rstrip() + "\n"
@@ -61,7 +37,7 @@ def generated_outputs() -> dict[Path, str]:
         )
         return {
             LAYOUTS_DIR / "layouts.inc": normalize_generated_text(
-                patch_jp_layout_exception((temp_layouts / "layouts.inc").read_text(encoding="utf-8"))
+                (temp_layouts / "layouts.inc").read_text(encoding="utf-8")
             ),
             LAYOUTS_DIR / "layouts_table.inc": normalize_generated_text(
                 (temp_layouts / "layouts_table.inc").read_text(encoding="utf-8")

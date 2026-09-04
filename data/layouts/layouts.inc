@@ -3740,11 +3740,8 @@ Route110_TrickHousePuzzle3_Layout::
 Route110_TrickHousePuzzle4_Layout_Border::
 	.incbin "data/layouts/Route110_TrickHousePuzzle4/border.bin"
 
-@ JP-specific blockdata differs from the US asset at 16 bytes. Keep this
-@ byte-exact span visible under its final owner until it has a reconstructed
-@ JP source asset.
 Route110_TrickHousePuzzle4_Layout_Blockdata::
-	.incbin "baserom_jp.gba", 0x420280, 0x294
+	.incbin "data/layouts/Route110_TrickHousePuzzle4/map.bin"
 
 	.align 2
 Route110_TrickHousePuzzle4_Layout::
