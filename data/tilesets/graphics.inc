@@ -397,8 +397,25 @@ gTileset_PokemonFanClub_Palettes:
 	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/13.gbapal"
 	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/14.gbapal"
 	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/15.gbapal"
-	@ Unstructured Unused1 graphics: [0x0832ECF4, 0x0832EF40)
-	.incbin "baserom_jp.gba", 0x32ECF4, 0x24C
+gTileset_Unused1_Tiles:
+	.incbin "data/tilesets/secondary/unused_1/tiles.4bpp.lz"
+gTileset_Unused1_Palettes:
+	.incbin "data/tilesets/secondary/unused_1/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/unused_1/palettes/15.gbapal"
 gTileset_MeteorFalls_Tiles:
 	.incbin "data/tilesets/secondary/meteor_falls/tiles.4bpp.lz"
 gTileset_MeteorFalls_Palettes:

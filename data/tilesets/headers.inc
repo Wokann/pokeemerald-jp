@@ -176,7 +176,12 @@ gTileset_PokemonFanClub: @ 0x083B7D1C
 	.4byte 0x00000000  @ callback
 	.globl gTileset_Unused1
 gTileset_Unused1: @ 0x083B7D34
-	.incbin "baserom_jp.gba", 0x3B7D34, 0x18
+	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTileset_Unused1_Tiles  @ tiles
+	.4byte gTileset_Unused1_Palettes  @ palettes
+	.4byte gTileset_Unused1_Metatiles  @ metatiles
+	.4byte gTileset_Unused1_MetatileAttributes  @ metatileAttributes
+	.4byte 0x00000000  @ callback
 	.globl gTileset_MeteorFalls
 gTileset_MeteorFalls: @ 0x083B7D4C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary

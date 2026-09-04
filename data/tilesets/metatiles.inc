@@ -86,8 +86,10 @@ gTileset_PokemonFanClub_Metatiles:
 	.incbin "data/tilesets/secondary/pokemon_fan_club/metatiles.bin"
 gTileset_PokemonFanClub_MetatileAttributes:
 	.incbin "data/tilesets/secondary/pokemon_fan_club/metatile_attributes.bin"
-	@ Unstructured metatile data: [0x0838CD50, 0x0838CD74)
-	.incbin "baserom_jp.gba", 0x38CD50, 0x24
+gTileset_Unused1_Metatiles:
+	.incbin "data/tilesets/secondary/unused_1/metatiles.bin"
+gTileset_Unused1_MetatileAttributes:
+	.incbin "data/tilesets/secondary/unused_1/metatile_attributes.bin"
 gTileset_MeteorFalls_Metatiles:
 	.incbin "data/tilesets/secondary/meteor_falls/metatiles.bin"
 gTileset_MeteorFalls_MetatileAttributes:
