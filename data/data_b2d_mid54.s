@@ -15,9 +15,9 @@ gUnknown_8539C0E: @ 0x8539C0E
 
 	.section .rodata.pokedex_suffix
 
-	.globl gUnknown_8543168
-gUnknown_8543168: @ 0x8543168
-	.incbin "baserom_jp.gba", 0x543168, 0x676
+	.globl gUnknown_85437DC
+gUnknown_85437DC: @ 0x85437DC
+	.incbin "baserom_jp.gba", 0x5437dc, 0x2
 
 	.globl gUnknown_85437DE
 gUnknown_85437DE: @ 0x85437DE

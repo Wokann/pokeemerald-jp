@@ -686,6 +686,8 @@ POKEDEX_INFO_SCREEN_DATA static const struct WindowTemplate sNewEntryInfoScreen_
 
 #undef POKEDEX_INFO_SCREEN_DATA
 
+#include "data/pokemon_graphics/footprint_table.h"
+
 __attribute__((naked)) void ResetPokedex()
 {
     __asm__(".syntax unified\n\t"
@@ -11945,7 +11947,7 @@ __attribute__((naked)) void sub_080C0288(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C0314: .4byte gUnknown_8543168\n\t"
+        "_080C0314: .4byte gMonFootprintTable\n\t"
         ".syntax divided\n\t"
     );
 }
