@@ -245,8 +245,44 @@ gTileset_Sootopolis_Palettes:
 	.incbin "data/tilesets/secondary/sootopolis/palettes/13.gbapal"
 	.incbin "data/tilesets/secondary/sootopolis/palettes/14.gbapal"
 	.incbin "data/tilesets/secondary/sootopolis/palettes/15.gbapal"
-	@ Unstructured Battle Frontier outside graphics: [0x08324CD4, 0x08327FA4)
-	.incbin "baserom_jp.gba", 0x324CD4, 0x32D0
+gTileset_BattleFrontierOutsideWest_Tiles:
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/tiles.4bpp.lz"
+gTileset_BattleFrontierOutsideWest_Palettes:
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/palettes/15.gbapal"
+gTileset_BattleFrontierOutsideEast_Tiles:
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/tiles.4bpp.lz"
+gTileset_BattleFrontierOutsideEast_Palettes:
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/palettes/15.gbapal"
 gTileset_Building_Tiles:
 	.incbin "data/tilesets/primary/building/tiles.4bpp.lz"
 gTileset_Building_Palettes:

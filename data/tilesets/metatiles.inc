@@ -54,8 +54,14 @@ gTileset_Sootopolis_Metatiles:
 	.incbin "data/tilesets/secondary/sootopolis/metatiles.bin"
 gTileset_Sootopolis_MetatileAttributes:
 	.incbin "data/tilesets/secondary/sootopolis/metatile_attributes.bin"
-	@ Unstructured metatile data: [0x083837E6, 0x08387F9E)
-	.incbin "baserom_jp.gba", 0x3837E6, 0x47B8
+gTileset_BattleFrontierOutsideWest_Metatiles:
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/metatiles.bin"
+gTileset_BattleFrontierOutsideWest_MetatileAttributes:
+	.incbin "data/tilesets/secondary/battle_frontier_outside_west/metatile_attributes.bin"
+gTileset_BattleFrontierOutsideEast_Metatiles:
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/metatiles.bin"
+gTileset_BattleFrontierOutsideEast_MetatileAttributes:
+	.incbin "data/tilesets/secondary/battle_frontier_outside_east/metatile_attributes.bin"
 gTileset_Building_Metatiles:
 	.incbin "data/tilesets/primary/building/metatiles.bin"
 gTileset_Building_MetatileAttributes:

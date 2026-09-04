@@ -112,10 +112,20 @@ gTileset_Sootopolis: @ 0x083B7C5C
 	.4byte 0x080A0739  @ callback
 	.globl gTileset_BattleFrontierOutsideWest
 gTileset_BattleFrontierOutsideWest: @ 0x083B7C74
-	.incbin "baserom_jp.gba", 0x3B7C74, 0x18
+	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTileset_BattleFrontierOutsideWest_Tiles  @ tiles
+	.4byte gTileset_BattleFrontierOutsideWest_Palettes  @ palettes
+	.4byte gTileset_BattleFrontierOutsideWest_Metatiles  @ metatiles
+	.4byte gTileset_BattleFrontierOutsideWest_MetatileAttributes  @ metatileAttributes
+	.4byte InitTilesetAnim_EverGrande + 1  @ callback
 	.globl gTileset_BattleFrontierOutsideEast
 gTileset_BattleFrontierOutsideEast: @ 0x083B7C8C
-	.incbin "baserom_jp.gba", 0x3B7C8C, 0x18
+	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTileset_BattleFrontierOutsideEast_Tiles  @ tiles
+	.4byte gTileset_BattleFrontierOutsideEast_Palettes  @ palettes
+	.4byte gTileset_BattleFrontierOutsideEast_Metatiles  @ metatiles
+	.4byte gTileset_BattleFrontierOutsideEast_MetatileAttributes  @ metatileAttributes
+	.4byte InitTilesetAnim_Lavaridge + 1  @ callback
 	.globl gTileset_Building
 gTileset_Building: @ 0x083B7CA4
 	.byte 0x01, 0x00, 0x00, 0x00  @ isCompressed, isSecondary
