@@ -47,6 +47,7 @@ enum {
 
 #define HEADER_NONE 0xFFFF
 
+#define WILD_ENCOUNTER_DATA __attribute__((section(".rodata.wild_encounter_data")))
 #define WILD_ENCOUNTER_ROUTE119_DATA __attribute__((section(".rodata.wild_encounter_route119_data")))
 
 static u16 FeebasRandom(void);
@@ -64,6 +65,8 @@ extern u8 sWildEncountersDisabled;           // 0x020388A0
 extern u32 sFeebasRngValue;                  // 0x020388A4
 extern const struct WildPokemonHeader gBattlePikeWildMonHeaders[];
 extern const struct WildPokemonHeader gBattlePyramidWildMonHeaders[];
+
+#include "data/wild_encounters.h"
 
 static const struct WildPokemon sWildFeebas WILD_ENCOUNTER_ROUTE119_DATA = {20, 25, SPECIES_FEEBAS};
 

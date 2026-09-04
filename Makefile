@@ -66,6 +66,12 @@ C_OBJECTS += $(C_BUILDDIR)/libisagbprn_a.o $(C_BUILDDIR)/libisagbprn_putc.o $(C_
 C_OBJECTS += $(C_BUILDDIR)/field_player_avatar_tail.o
 C_OBJECTS += $(C_BUILDDIR)/pokenav_conditions_gfx_tail.o
 
+# Match pokeemerald's JSON source chain for the world wild-encounter owner.
+src/data/wild_encounters.h: src/data/wild_encounters.json src/data/wild_encounters.json.txt | tools
+	$(JSONPROC) $^ $@
+
+$(C_BUILDDIR)/wild_encounter.o: src/data/wild_encounters.h
+
 # Maps already migrated to the canonical map.json event-data structure.
 # Layout metadata and every map header/connection now share their local JSON
 # source of truth; this list only controls the remaining event-data migration.

@@ -865,12 +865,7 @@ sTrainerBContinueScriptBattleParams: @ 0x0052ACF8
 	.byte 0x06
 	.byte 0x00, 0x00, 0x00
 
-	.section .rodata.data_b2d_mid26_after_trainer_see_data
-	.incbin "baserom_jp.gba", 0x52b490, 0x2564
-
-	.globl gUnknown_852D9F4
-gUnknown_852D9F4: @ 0x852D9F4
-	.incbin "baserom_jp.gba", 0x52d9f4, 0x9c4
+	.section .rodata.data_b2d_mid26_after_wild_encounter_data
 	.globl gBattlePyramid_1_LandMons
 gBattlePyramid_1_LandMons: @ 0x852E3B8
 	.byte 5, 5

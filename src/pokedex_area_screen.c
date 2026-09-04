@@ -285,7 +285,7 @@ __attribute__((naked)) void FindMapsWithMon(void)
         "	b _0813CC78\n\t"
         "	.align 2, 0\n\t"
         "_0813CC50: .4byte gUnknown_8593978\n\t"
-        "_0813CC54: .4byte gUnknown_852D9F4\n\t"
+        "_0813CC54: .4byte gWildMonHeaders\n\t"
         "_0813CC58:\n\t"
         "	cmp r0, #0x1a\n\t"
         "	beq _0813CC68\n\t"
@@ -317,7 +317,7 @@ __attribute__((naked)) void FindMapsWithMon(void)
         "	bne _0813CC2A\n\t"
         "	b _0813CCD4\n\t"
         "	.align 2, 0\n\t"
-        "_0813CC90: .4byte gUnknown_852D9F4\n\t"
+        "_0813CC90: .4byte gWildMonHeaders\n\t"
         "_0813CC94:\n\t"
         "	ldr r2, [r5]\n\t"
         "	movs r3, #0x89\n\t"
@@ -2297,4 +2297,3 @@ __attribute__((naked)) void sub_0813DAC4(void)
         ".syntax divided\n\t"
     );
 }
-

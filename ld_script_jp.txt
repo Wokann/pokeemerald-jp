@@ -504,7 +504,6 @@ PlayerFreeze = sub_0808B1C8;
 StopPlayerAvatar = sub_0808B658;
 sMatchCallTrainers = gUnknown_85D6934;
 sPopulateMatchCallStringVarFuncs = gUnknown_85D7A28;
-gWildMonHeaders = gUnknown_852D9F4;
 sub_08196C74 = BufferPokedexRatingForMatchCall;
 DoGlobalWildEncounterDiceRoll = AllowWildCheckOnNewMetatile;
 DoWildEncounterRateTest = WildEncounterCheck;
@@ -9723,7 +9722,8 @@ SECTIONS {
         src/battle_setup.o(.rodata.battle_setup_link_data);
         src/cable_club.o(.rodata.cable_club_link_data);
         src/trainer_see.o(.rodata.trainer_see_data);
-        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_trainer_see_data);
+        src/wild_encounter.o(.rodata.wild_encounter_data);
+        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_wild_encounter_data);
         src/wild_encounter.o(.rodata.wild_encounter_route119_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_wild_encounter_route119_data);
         src/field_effect.o(.rodata.field_effect_graphics_data);
