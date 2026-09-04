@@ -9871,7 +9871,7 @@ SECTIONS {
         data/data_b2d.o(.rodata.mid68);
         src/data/text/region_texts72.o(.rodata);
         src/data/text/region_texts70.o(.rodata);
-        data/data_b2d_mid69.o(.rodata);
+        src/battle_message.o(.rodata.battle_message_grammar_move_data);
         data/data_b2d_mid69.o(.rodata.data_b2d_mid69_after_battle_message_alignment);
         src/battle_message.o(.rodata.battle_message_normal_window_text_data);
         src/battle_message.o(.rodata.battle_message_arena_window_text_data);
