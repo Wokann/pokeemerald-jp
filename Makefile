@@ -1263,7 +1263,9 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/pokedex/info_screen.bin.lz graphics/pokedex/cry_screen.bin.lz \
 	graphics/pokedex/size_screen.bin.lz graphics/pokedex/screen_select_bar_main.bin.lz \
 	graphics/pokedex/screen_select_bar_submenu.bin.lz graphics/pokedex/menu.4bpp.lz \
-	graphics/pokedex/interface.4bpp.lz \
+	graphics/pokedex/interface.4bpp.lz graphics/pokedex/search_menu.gbapal \
+	graphics/pokedex/search_menu.4bpp.lz graphics/pokedex/search_menu_national.bin.lz \
+	graphics/pokedex/search_menu_hoenn.bin.lz \
 	graphics/intro/scene_2/player.pal.gbapal \
 	graphics/intro/scene_2/volbeat.png.gbapal graphics/intro/scene_2/torchic.png.gbapal \
 	graphics/intro/scene_2/manectric.png.gbapal graphics/intro/scene_2/flygon.png.gbapal \

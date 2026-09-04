@@ -297,6 +297,17 @@ POKEDEX_GRAPHICS_MENU_INTERFACE const u32 gPokedexInterface_Gfx[] = INCBIN_U32("
 
 #undef POKEDEX_GRAPHICS_MENU_INTERFACE
 
+#define POKEDEX_SEARCH_MENU_GRAPHICS __attribute__((section(".rodata.pokedex_search_menu_graphics"), aligned(1)))
+
+// JP search-menu tiles differ from the English source image; retain the
+// byte-exact JP stream while sharing pokeemerald's final resource names.
+POKEDEX_SEARCH_MENU_GRAPHICS const u16 gPokedexSearchMenu_Pal[] = INCBIN_U16("graphics/pokedex/search_menu.gbapal");
+POKEDEX_SEARCH_MENU_GRAPHICS const u32 gPokedexSearchMenu_Gfx[] = INCBIN_U32("graphics/pokedex/search_menu.4bpp.lz");
+POKEDEX_SEARCH_MENU_GRAPHICS const u32 gPokedexSearchMenuNational_Tilemap[] = INCBIN_U32("graphics/pokedex/search_menu_national.bin.lz");
+POKEDEX_SEARCH_MENU_GRAPHICS const u32 gPokedexSearchMenuHoenn_Tilemap[] = INCBIN_U32("graphics/pokedex/search_menu_hoenn.bin.lz");
+
+#undef POKEDEX_SEARCH_MENU_GRAPHICS
+
 #define INTRO_COPYRIGHT_GRAPHICS __attribute__((section(".rodata.intro_copyright_graphics")))
 
 INTRO_COPYRIGHT_GRAPHICS const u16 gIntroCopyright_Pal[16] = INCBIN_U16("graphics/intro/copyright.gbapal");
