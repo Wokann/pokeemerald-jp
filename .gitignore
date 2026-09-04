@@ -16,6 +16,8 @@ baserom_jp.gba
 *.lz
 !graphics/pokemon/**/*.lz
 !graphics/misc/*.lz
+# Generated from graphics/misc/evo_sparkle.png; keep the editable source asset only.
+graphics/misc/evo_sparkle.png.4bpp.lz
 !graphics/cable_car/*.lz
 !graphics/trainers/**/*.lz
 !graphics/battle_frontier/*.lz

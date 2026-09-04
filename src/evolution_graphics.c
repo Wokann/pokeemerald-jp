@@ -1,7 +1,86 @@
 #include "global.h"
 #include "evolution_graphics.h"
+#include "sprite.h"
 
-void PokeEvoSprite_DummySpriteCB(void) {}
+#define TAG_SPARKLE 1001
+#define EVO_SPARKLE_DATA __attribute__((section(".rodata.mid98_suffix_before_species_to_back_anim_set"), aligned(1)))
+
+static void SpriteCB_Sparkle_Dummy(struct Sprite *sprite)
+{
+}
+
+static const u16 sEvoSparkle_Pal[] EVO_SPARKLE_DATA = INCGFX_U16("graphics/misc/evo_sparkle.png", ".gbapal");
+static const u32 sEvoSparkle_Gfx[] EVO_SPARKLE_DATA = INCGFX_U32("graphics/misc/evo_sparkle.png", ".4bpp.lz");
+
+static const struct CompressedSpriteSheet sEvoSparkleSpriteSheets[] EVO_SPARKLE_DATA =
+{
+    {sEvoSparkle_Gfx, 0x20, TAG_SPARKLE},
+    {NULL, 0, 0},
+};
+
+static const struct SpritePalette sEvoSparkleSpritePals[] EVO_SPARKLE_DATA =
+{
+    {sEvoSparkle_Pal, TAG_SPARKLE},
+    {NULL, 0},
+};
+
+static const struct OamData sOamData_EvoSparkle EVO_SPARKLE_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sSpriteAnim_EvoSparkle[] EVO_SPARKLE_DATA =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sSpriteAnimTable_EvoSparkle[] EVO_SPARKLE_DATA =
+{
+    sSpriteAnim_EvoSparkle,
+};
+
+static const struct SpriteTemplate sEvoSparkleSpriteTemplate EVO_SPARKLE_DATA =
+{
+    .tileTag = TAG_SPARKLE,
+    .paletteTag = TAG_SPARKLE,
+    .oam = &sOamData_EvoSparkle,
+    .anims = sSpriteAnimTable_EvoSparkle,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Sparkle_Dummy,
+};
+
+static const u16 sEvoSparkleMatrices[] EVO_SPARKLE_DATA =
+{
+    0x3C0, 0x380, 0x340, 0x300, 0x2C0, 0x280,
+    0x240, 0x200, 0x1C0, 0x180, 0x140, 0x100,
+};
+
+static const s16 sUnused[] EVO_SPARKLE_DATA =
+{
+    -4, 0x10,
+    -3, 0x30,
+    -2, 0x50,
+    -1, 0x70,
+     1, 0x70,
+     2, 0x50,
+     3, 0x30,
+     4, 0x10,
+};
+
 __attribute__((naked)) void SetEvoSparklesMatrices(void)
 {
     __asm__(".syntax unified\n\t"
@@ -32,7 +111,7 @@ __attribute__((naked)) void SetEvoSparklesMatrices(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817B938: .4byte gUnknown_85D2928\n\t"
+        "_0817B938: .4byte sEvoSparkleMatrices\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -188,7 +267,7 @@ __attribute__((naked)) void CreatePreEvoSparkleSet1(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817BA48: .4byte gUnknown_85D2910\n\t"
+        "_0817BA48: .4byte sEvoSparkleSpriteTemplate\n\t"
         "_0817BA4C: .4byte gSprites\n\t"
         "_0817BA50: .4byte SpriteCB_PreEvoSparkleSet1 + 1\n\t"
         ".syntax divided\n\t"
@@ -310,7 +389,7 @@ __attribute__((naked)) void CreatePreEvoSparkleSet2(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817BB24: .4byte gUnknown_85D2910\n\t"
+        "_0817BB24: .4byte sEvoSparkleSpriteTemplate\n\t"
         "_0817BB28: .4byte gSprites\n\t"
         "_0817BB2C: .4byte SpriteCB_PreEvoSparkleSet2 + 1\n\t"
         ".syntax divided\n\t"
@@ -411,7 +490,7 @@ __attribute__((naked)) void CreatePostEvoSparkleSet1(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817BBD4: .4byte gUnknown_85D2910\n\t"
+        "_0817BBD4: .4byte sEvoSparkleSpriteTemplate\n\t"
         "_0817BBD8: .4byte gSprites\n\t"
         "_0817BBDC: .4byte SpriteCB_PostEvoSparkleSet1 + 1\n\t"
         ".syntax divided\n\t"
@@ -597,7 +676,7 @@ __attribute__((naked)) void CreatePostEvoSparkleSet2(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817BD2C: .4byte gUnknown_85D2910\n\t"
+        "_0817BD2C: .4byte sEvoSparkleSpriteTemplate\n\t"
         "_0817BD30: .4byte gSprites\n\t"
         "_0817BD34: .4byte SpriteCB_PostEvoSparkleSet2 + 1\n\t"
         ".syntax divided\n\t"
@@ -616,8 +695,8 @@ __attribute__((naked)) void LoadEvoSparkleSpriteAndPal(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817BD4C: .4byte gUnknown_85D28DC\n\t"
-        "_0817BD50: .4byte gUnknown_85D28EC\n\t"
+        "_0817BD4C: .4byte sEvoSparkleSpriteSheets\n\t"
+        "_0817BD50: .4byte sEvoSparkleSpritePals\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1956,4 +2035,3 @@ __attribute__((naked)) void PreEvoVisible_PostEvoInvisible_KillTask(void)
         ".syntax divided\n\t"
     );
 }
-

@@ -17,25 +17,7 @@ gUnknown_85CD19F: @ 0x85CD19F
 
 	.section .rodata.mid98_suffix_before_species_to_back_anim_set
 
-	.globl gUnknown_85D289C
-gUnknown_85D289C: @ 0x85D289C
-	.incbin "baserom_jp.gba", 0x5d289c, 0x40
-
-	.globl gUnknown_85D28DC
-gUnknown_85D28DC: @ 0x85D28DC
-	.incbin "baserom_jp.gba", 0x5d28dc, 0x10
-
-	.globl gUnknown_85D28EC
-gUnknown_85D28EC: @ 0x85D28EC
-	.incbin "baserom_jp.gba", 0x5d28ec, 0x24
-
-	.globl gUnknown_85D2910
-gUnknown_85D2910: @ 0x85D2910
-	.incbin "baserom_jp.gba", 0x5d2910, 0x18
-
-	.globl gUnknown_85D2928
-gUnknown_85D2928: @ 0x85D2928
-	.incbin "baserom_jp.gba", 0x5d2928, 0x198
+	.incbin "baserom_jp.gba", 0x5d2960, 0x160
 
 	.globl sWordSounds
 sWordSounds: @ 0x85D2AC0

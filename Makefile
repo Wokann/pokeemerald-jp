@@ -1136,6 +1136,19 @@ $(C_BUILDDIR)/egg_hatch.o: src/egg_hatch.c
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/egg_hatch.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/egg_hatch.gen.s
 
+# Keep Evolution Sparkle graphics reproducible from the tracked PNG input.
+$(C_BUILDDIR)/evolution_graphics.d: src/evolution_graphics.c | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -I include -I "" $<
+
+-include $(C_BUILDDIR)/evolution_graphics.d
+
+$(C_BUILDDIR)/evolution_graphics.o: src/evolution_graphics.c
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/evolution_graphics.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/evolution_graphics.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/evolution_graphics.gen.s
+
 # Keep the Pokedex caught-ball graphic reproducible from its tracked PNG input.
 $(C_BUILDDIR)/pokedex.d: src/pokedex.c | tools
 	@mkdir -p $(dir $@)
