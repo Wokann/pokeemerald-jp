@@ -41,7 +41,6 @@
 	.section .rodata.data_b2d_mid28_after_surf_blob_graphics
 
 	.section .rodata.data_b2d_mid28_after_quinty_plump_graphics
-	.incbin "baserom_jp.gba", 0x4cecac, 0x600
 
 	.section .rodata.data_b2d_mid28_after_cut_grass_graphics
 

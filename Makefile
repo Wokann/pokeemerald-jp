@@ -1068,6 +1068,9 @@ graphics/birch_speech/unused_beauty.4bpp: graphics/birch_speech/unused_beauty.pn
 %.4bpp: %.png | tools
 	$(GFX) $< $@
 
+graphics/field_effects/pics/%.png.4bpp: graphics/field_effects/pics/%.png | tools
+	$(GFX) $< $@
+
 graphics/field_effects/pics/%.png_mwidth_2__mheight_2.4bpp: graphics/field_effects/pics/%.png | tools
 	$(GFX) $< $@ -mwidth 2 -mheight 2
 
@@ -1679,6 +1682,10 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/object_events/pics/people/quinty_plump.png_mwidth_4__mheight_4.4bpp \
 	graphics/object_events/palettes/quinty_plump.gbapal \
 	graphics/object_events/palettes/quinty_plump_reflection.gbapal \
+	graphics/field_effects/pics/shadow_small.png.4bpp \
+	graphics/field_effects/pics/shadow_medium.png.4bpp \
+	graphics/field_effects/pics/shadow_large.png.4bpp \
+	graphics/field_effects/pics/shadow_extra_large.png.4bpp \
 	graphics/object_events/pics/pokemon/vigoroth.png_mwidth_4__mheight_4.4bpp \
 	graphics/object_events/palettes/vigoroth.gbapal \
 	graphics/object_events/pics/misc/birchs_bag.4bpp \

@@ -9542,6 +9542,7 @@ SECTIONS {
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_surf_blob_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_quinty_plump_data);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_quinty_plump_graphics);
+        src/event_object_movement.o(.rodata.object_event_graphics_field_effect_shadow_data);
         src/event_object_movement.o(.rodata.object_event_graphics_cut_grass);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_cut_grass_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_field_effect_object_data);
@@ -9611,10 +9612,6 @@ SECTIONS {
         gFieldEffectObjectPic_SandDisguisePlaceholder = ABSOLUTE(0x084D298C);
         gFieldEffectObjectPic_SandFootprints = ABSOLUTE(0x084D0F0C);
         gFieldEffectObjectPic_SandPile = ABSOLUTE(0x084D150C);
-        gFieldEffectObjectPic_ShadowExtraLarge = ABSOLUTE(0x084CED8C);
-        gFieldEffectObjectPic_ShadowLarge = ABSOLUTE(0x084CED0C);
-        gFieldEffectObjectPic_ShadowMedium = ABSOLUTE(0x084CECCC);
-        gFieldEffectObjectPic_ShadowSmall = ABSOLUTE(0x084CECAC);
         gFieldEffectObjectPic_ShortGrass = ABSOLUTE(0x084D0E0C);
         gFieldEffectObjectPic_SmallSparkle = ABSOLUTE(0x084D3E2C);
         gFieldEffectObjectPic_Sparkle = ABSOLUTE(0x084C1FEC);

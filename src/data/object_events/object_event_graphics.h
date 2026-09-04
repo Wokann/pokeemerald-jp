@@ -347,6 +347,13 @@ OBJECT_EVENT_GRAPHICS_QUINTY_PLUMP_DATA const u32 gObjectEventPic_QuintyPlump[] 
 OBJECT_EVENT_GRAPHICS_QUINTY_PLUMP_DATA const u16 gObjectEventPal_QuintyPlump[] = INCBIN_U16("graphics/object_events/palettes/quinty_plump.gbapal");
 OBJECT_EVENT_GRAPHICS_QUINTY_PLUMP_DATA const u16 gObjectEventPal_QuintyPlumpReflection[] = INCBIN_U16("graphics/object_events/palettes/quinty_plump_reflection.gbapal");
 
+// This JP-owned field-effect shadow graphics family follows Quinty Plump.
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SHADOW_DATA const u8 gFieldEffectObjectPic_ShadowSmall[] = INCGFX_U8("graphics/field_effects/pics/shadow_small.png", ".4bpp");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SHADOW_DATA const u8 gFieldEffectObjectPic_ShadowMedium[] = INCGFX_U8("graphics/field_effects/pics/shadow_medium.png", ".4bpp");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SHADOW_DATA const u8 gFieldEffectObjectPic_ShadowLarge[] = INCGFX_U8("graphics/field_effects/pics/shadow_large.png", ".4bpp");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SHADOW_DATA const u8 gFieldEffectObjectPic_ShadowExtraLarge[] = INCGFX_U8("graphics/field_effects/pics/shadow_extra_large.png", ".4bpp");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SHADOW_DATA static const u32 sFiller[0x48] = {};
+
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u8 gFieldEffectPic_CutGrass[] = INCBIN_U8("graphics/field_effects/pics/cut_grass.4bpp");
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u32 gFieldEffectPic_CutGrass_Copy[] = INCBIN_U32("graphics/field_effects/pics/cut_grass.4bpp");
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u16 gFieldEffectPal_CutGrass[] = INCBIN_U16("graphics/field_effects/palettes/cut_grass.gbapal");
