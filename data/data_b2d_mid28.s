@@ -37,7 +37,9 @@
 	.incbin "baserom_jp.gba", 0x4c1fec, 0x300
 
 	.section .rodata.data_b2d_mid28_after_berry_tree_graphics
-	.incbin "baserom_jp.gba", 0x4cd86c, 0x1a40
+
+	.section .rodata.data_b2d_mid28_after_surf_blob_graphics
+	.incbin "baserom_jp.gba", 0x4cde6c, 0x1440
 
 	.section .rodata.data_b2d_mid28_after_cut_grass_graphics
 

@@ -340,6 +340,9 @@ OBJECT_EVENT_GRAPHICS_BERRY_TREE_GFX_DATA const u8 gObjectEventPic_LansatBerryTr
 OBJECT_EVENT_GRAPHICS_BERRY_TREE_GFX_DATA const u8 gObjectEventPic_DurinBerryTree[] = INCGFX_U8("graphics/object_events/pics/berry_trees/durin.png", ".4bpp", "-mwidth 2 -mheight 4");
 OBJECT_EVENT_GRAPHICS_BERRY_TREE_GFX_DATA const u8 gObjectEventPic_TamatoBerryTree[] = INCGFX_U8("graphics/object_events/pics/berry_trees/tamato.png", ".4bpp", "-mwidth 2 -mheight 4");
 
+// This JP-owned Surf Blob field-effect graphic follows the berry-tree family.
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SURF_BLOB_DATA const u8 gFieldEffectObjectPic_SurfBlob[] = INCGFX_U8("graphics/field_effects/pics/surf_blob.png", ".4bpp", "-mwidth 4 -mheight 4");
+
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u8 gFieldEffectPic_CutGrass[] = INCBIN_U8("graphics/field_effects/pics/cut_grass.4bpp");
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u32 gFieldEffectPic_CutGrass_Copy[] = INCBIN_U32("graphics/field_effects/pics/cut_grass.4bpp");
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u16 gFieldEffectPal_CutGrass[] = INCBIN_U16("graphics/field_effects/palettes/cut_grass.gbapal");

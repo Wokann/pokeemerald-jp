@@ -9538,6 +9538,8 @@ SECTIONS {
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_transport_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_berry_tree_gfx_data);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_berry_tree_graphics);
+        src/event_object_movement.o(.rodata.object_event_graphics_field_effect_surf_blob_data);
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_surf_blob_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_cut_grass);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_cut_grass_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_field_effect_object_data);
@@ -9618,7 +9620,6 @@ SECTIONS {
         gFieldEffectObjectPic_SmallSparkle = ABSOLUTE(0x084D3E2C);
         gFieldEffectObjectPic_Sparkle = ABSOLUTE(0x084C1FEC);
         gFieldEffectObjectPic_Splash = ABSOLUTE(0x084D17CC);
-        gFieldEffectObjectPic_SurfBlob = ABSOLUTE(0x084CD86C);
         gFieldEffectObjectPic_TallGrass = ABSOLUTE(0x084D0B8C);
         gFieldEffectObjectPic_TreeDisguise = ABSOLUTE(0x084D1B8C);
         gFieldEffectObjectPic_Unknown17 = ABSOLUTE(0x084D038C);
