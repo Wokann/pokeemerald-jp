@@ -57,14 +57,6 @@ gUnknown_84DDE30: @ 0x84DDE30
 
 	.section .rodata.data_b2d_mid28_after_event_object_movement_action_function_tables_tail
 
-	.globl gTextWindowFrame1_Gfx
-gTextWindowFrame1_Gfx: @ 0x84E6CE0
-	.incbin "graphics/text_window/gTextWindowFrame1_Gfx.bin"
-
-	.globl gTextWindowFrame1_Pal
-gTextWindowFrame1_Pal: @ 0x84E8360
-	.incbin "graphics/text_window/gTextWindowFrame1_Pal.bin"
-
 	.section .rodata.data_b2d_mid28_after_text_window_resources
 
 	.section .rodata.data_b2d_mid28_after_script_command_static_data

@@ -4,6 +4,15 @@
 #include "text_window.h"
 #include "window.h"
 
+// These resources are logically owned by text_window.c. A dedicated linker
+// section keeps their original JP ROM placement before the shared frame table.
+#define TEXT_WINDOW_FRAME1_RESOURCES __attribute__((section(".rodata.text_window_frame1_resources"), aligned(1)))
+
+TEXT_WINDOW_FRAME1_RESOURCES const u8 gTextWindowFrame1_Gfx[] = INCBIN_U8("graphics/text_window/gTextWindowFrame1_Gfx.bin");
+TEXT_WINDOW_FRAME1_RESOURCES const u16 gTextWindowFrame1_Pal[] = INCBIN_U16("graphics/text_window/gTextWindowFrame1_Pal.bin");
+
+#undef TEXT_WINDOW_FRAME1_RESOURCES
+
 extern const struct TilesPal sWindowFrames[];  // ROM @ 0x084E8860
 extern const u32 gMessageBox_Gfx[];           // ROM @ 0x084E85E0
 extern const u16 gMessageBox_Pal[];

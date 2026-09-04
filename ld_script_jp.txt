@@ -9684,7 +9684,7 @@ SECTIONS {
         sEventObjectMovementSourceFile = sJumpY_High + 0x52;
         sVirtualObjectAnimAssertExpression = sJumpY_High + 0x5E;
         src/event_object_movement.o(.rodata.event_object_movement_action_function_tables_tail);
-        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_event_object_movement_action_function_tables_tail);
+        src/text_window.o(.rodata.text_window_frame1_resources);
         src/graphics.o(.rodata.message_box_gfx);
         src/graphics.o(.rodata.text_window_palettes);
         src/graphics.o(.rodata.message_box_pal);
