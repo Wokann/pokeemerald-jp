@@ -110,6 +110,9 @@ baserom_jp.gba
 !graphics/diploma/tiles.4bpp.lz
 !graphics/trainers/**/*.4bpp
 !graphics/pokemon/**/*.4bpp
+# Egg Hatch now rebuilds these from tracked PNG/PAL sources via scaninc.
+graphics/pokemon/egg/hatch.png.4bpp
+graphics/pokemon/egg/shard.png.4bpp
 !data/tilesets/**/*.lz
 !data/tilesets/**/*.gbapal
 *.rl

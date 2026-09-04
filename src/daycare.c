@@ -7,8 +7,12 @@
 
 #define DAYCARE_LEVEL_MENU_DATA __attribute__((section(".rodata.daycare_level_menu_data")))
 #define DAYCARE_COMPATIBILITY_MESSAGES_DATA __attribute__((section(".rodata.daycare_compatibility_messages_data")))
+#define DAYCARE_LEVEL_SYMBOL_DATA __attribute__((section(".rodata.daycare_level_symbol_data"), aligned(1)))
 
 static void DaycarePrintMonInfo(u8 windowId, u32 daycareSlotId, u8 y);
+
+// This local {LV} string has one physical padding byte after EOS in the JP ROM.
+const u8 gDaycareText_LevelSymbol[] DAYCARE_LEVEL_SYMBOL_DATA = {0xF9, 0x05, EOS, 0};
 
 DAYCARE_LEVEL_MENU_DATA static const struct WindowTemplate sDaycareLevelMenuWindowTemplate =
 {
@@ -3196,7 +3200,7 @@ __attribute__((naked)) void GetDaycareLevelMenuLevelText(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070ABC: .4byte gUnknown_82FC0FE\n\t"
+        "_08070ABC: .4byte gDaycareText_LevelSymbol\n\t"
         "_08070AC0: .4byte 0x082FC0F8\n\t"
         ".syntax divided\n\t"
     );
@@ -3350,7 +3354,7 @@ __attribute__((naked)) void DaycarePrintMonLvl(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070BD4: .4byte gUnknown_82FC0FE\n\t"
+        "_08070BD4: .4byte gDaycareText_LevelSymbol\n\t"
         ".syntax divided\n\t"
     );
 }

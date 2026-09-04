@@ -9,14 +9,13 @@
 #define PALTAG_EGG       54321
 
 #define EGG_HATCH_STATIC_DATA __attribute__((section(".rodata.egg_hatch_static_data"), aligned(1)))
-
-// These resources remain in the preceding JP-only raw block. Linker aliases
-// retain their semantic ownership without moving unrelated graphics here.
-extern const u16 sEggPalette[];
-extern const u8 sEggHatchTiles[];
-extern const u8 sEggShardTiles[];
+#define EGG_HATCH_GRAPHICS_DATA __attribute__((section(".rodata.egg_hatch_graphics"), aligned(1)))
 
 static void SpriteCB_EggShard(struct Sprite *sprite);
+
+static const u16 sEggPalette[] EGG_HATCH_GRAPHICS_DATA = INCGFX_U16("graphics/pokemon/egg/normal.pal", ".gbapal");
+static const u8 sEggHatchTiles[] EGG_HATCH_GRAPHICS_DATA = INCGFX_U8("graphics/pokemon/egg/hatch.png", ".4bpp");
+static const u8 sEggShardTiles[] EGG_HATCH_GRAPHICS_DATA = INCGFX_U8("graphics/pokemon/egg/shard.png", ".4bpp");
 
 static const struct OamData sOamData_Egg EGG_HATCH_STATIC_DATA =
 {

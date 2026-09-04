@@ -9454,7 +9454,8 @@ SECTIONS {
         data/data_b2d_mid47.o(.rodata.data_b2d_mid47_between_daycare_text_and_compatibility_data);
         src/daycare.o(.rodata.daycare_compatibility_messages_data);
         src/data/text/region_texts51.o(.rodata);
-        data/data_b2d_mid51.o(.rodata.battle_interface_before_egg_hatch);
+        src/daycare.o(.rodata.daycare_level_symbol_data);
+        src/egg_hatch.o(.rodata.egg_hatch_graphics);
         src/egg_hatch.o(.rodata.egg_hatch_static_data);
         src/battle_gfx_sfx_util.o(.rodata.battle_gfx_sfx_util_healthbox);
         src/battle_interface.o(.rodata.battle_interface_healthbox);
@@ -10377,10 +10378,6 @@ gUnknown_82FCDBC = gStatusSummaryTextData;
 gUnknown_82FCDDA = gStatusSummaryTextData + 0x1E;
 gUnknown_82FCDEE = gStatusSummaryTextData + 0x32;
 gUnknown_82FCE02 = gStatusSummaryTextData + 0x46;
-/* Egg Hatch static tables; their graphics remain in the preceding raw block. */
-sEggPalette = gUnknown_82FC0FE + 0x4;
-sEggHatchTiles = gUnknown_82FC0FE + 0x24;
-sEggShardTiles = gUnknown_82FC0FE + 0x824;
 gUnknown_82FC9DC = sEggHatch_Sheet;
 gUnknown_82FC9E4 = sEggShards_Sheet;
 gUnknown_82FC9EC = sEgg_SpritePalette;
