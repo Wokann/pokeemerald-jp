@@ -31,9 +31,8 @@
 
 	.section .rodata.data_b2d_mid28_after_misc_graphics
 
-	.globl gUnknown_84BE14C
-gUnknown_84BE14C: @ 0x84BE14C
-	.incbin "baserom_jp.gba", 0x4be14c, 0x11160
+	.section .rodata.data_b2d_mid28_after_opening_graphics
+	.incbin "baserom_jp.gba", 0x4c102c, 0xe280
 
 	.section .rodata.data_b2d_mid28_after_cut_grass_graphics
 

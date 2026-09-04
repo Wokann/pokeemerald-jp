@@ -1071,6 +1071,9 @@ graphics/birch_speech/unused_beauty.4bpp: graphics/birch_speech/unused_beauty.pn
 graphics/field_effects/pics/%.png_mwidth_2__mheight_2.4bpp: graphics/field_effects/pics/%.png | tools
 	$(GFX) $< $@ -mwidth 2 -mheight 2
 
+graphics/object_events/pics/pokemon/%.png_mwidth_4__mheight_4.4bpp: graphics/object_events/pics/pokemon/%.png | tools
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
 graphics/battle_anims/sprites/ice_cube.4bpp: graphics/battle_anims/sprites/ice_cube_0.4bpp \
 	graphics/battle_anims/sprites/ice_cube_1.4bpp \
 	graphics/battle_anims/sprites/ice_cube_2.4bpp \
@@ -1660,6 +1663,13 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/field_effects/pics/ripple.png_mwidth_2__mheight_2.4bpp \
 	graphics/field_effects/pics/ash.png_mwidth_2__mheight_2.4bpp \
 	graphics/field_effects/pics/arrow.png_mwidth_2__mheight_2.4bpp \
+	graphics/object_events/pics/pokemon/vigoroth.png_mwidth_4__mheight_4.4bpp \
+	graphics/object_events/palettes/vigoroth.gbapal \
+	graphics/object_events/pics/misc/birchs_bag.4bpp \
+	graphics/object_events/pics/pokemon/enemy_zigzagoon.png_mwidth_4__mheight_4.4bpp \
+	graphics/object_events/palettes/enemy_zigzagoon.gbapal \
+	graphics/object_events/pics/pokemon/poochyena.png_mwidth_4__mheight_4.4bpp \
+	graphics/object_events/palettes/poochyena.gbapal \
 	graphics/object_events/pics/people/brendan/walking.4bpp graphics/object_events/pics/people/brendan/running.4bpp \
 	graphics/object_events/palettes/brendan.gbapal \
 	graphics/object_events/pics/people/ruby_sapphire_brendan/walking.4bpp \
