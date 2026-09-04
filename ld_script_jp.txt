@@ -9448,7 +9448,11 @@ SECTIONS {
         src/util.o(.rodata.util_misc_blank_gfx_data);
     src/data/pokemon/egg_moves.o(.rodata);
         gUnknown_82FB764 = gEggMoves;
-        data/data_b2d_mid47.o(.rodata.data_b2d_mid47_after_egg_moves);
+        data/data_b2d_mid47.o(.rodata.data_b2d_mid47_between_egg_moves_and_daycare_menu_data);
+        src/daycare.o(.rodata.daycare_level_menu_data);
+        src/strings.o(.rodata.strings_daycare);
+        data/data_b2d_mid47.o(.rodata.data_b2d_mid47_between_daycare_text_and_compatibility_data);
+        src/daycare.o(.rodata.daycare_compatibility_messages_data);
         src/data/text/region_texts51.o(.rodata);
         data/data_b2d_mid51.o(.rodata.battle_interface_before_egg_hatch);
         src/egg_hatch.o(.rodata.egg_hatch_static_data);

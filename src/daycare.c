@@ -1,5 +1,63 @@
 #include "global.h"
 #include "daycare.h"
+#include "list_menu.h"
+#include "strings.h"
+#include "text.h"
+#include "window.h"
+
+#define DAYCARE_LEVEL_MENU_DATA __attribute__((section(".rodata.daycare_level_menu_data")))
+#define DAYCARE_COMPATIBILITY_MESSAGES_DATA __attribute__((section(".rodata.daycare_compatibility_messages_data")))
+
+static void DaycarePrintMonInfo(u8 windowId, u32 daycareSlotId, u8 y);
+
+DAYCARE_LEVEL_MENU_DATA static const struct WindowTemplate sDaycareLevelMenuWindowTemplate =
+{
+    .bg = 0,
+    .tilemapLeft = 12,
+    .tilemapTop = 1,
+    .width = 17,
+    .height = 6,
+    .paletteNum = 15,
+    .baseBlock = 8,
+};
+
+// Indices are assigned to VAR_RESULT by Task_HandleDaycareLevelMenuInput.
+DAYCARE_LEVEL_MENU_DATA static const struct ListMenuItem sLevelMenuItems[] =
+{
+    {gText_ExpandedPlaceholder_Empty, 0},
+    {gText_ExpandedPlaceholder_Empty, 1},
+    {gText_Exit, DAYCARE_LEVEL_MENU_EXIT},
+};
+
+DAYCARE_LEVEL_MENU_DATA static const struct ListMenuTemplate sDaycareListMenuLevelTemplate =
+{
+    .items = sLevelMenuItems,
+    .moveCursorFunc = ListMenuDefaultCursorMoveFunc,
+    .itemPrintFunc = DaycarePrintMonInfo,
+    .totalItems = 3,
+    .maxShowed = 3,
+    .windowId = 0,
+    .header_X = 2,
+    .item_X = 12,
+    .cursor_X = 1,
+    .upText_Y = 0,
+    .cursorPal = 2,
+    .fillValue = 1,
+    .cursorShadowPal = 3,
+    .lettersSpacing = 1,
+    .itemVerticalPadding = 0,
+    .scrollMultiple = LIST_NO_MULTIPLE_SCROLL,
+    .fontId = FONT_NORMAL,
+    .cursorKind = CURSOR_BLACK_ARROW,
+};
+
+DAYCARE_COMPATIBILITY_MESSAGES_DATA static const u8 *const sCompatibilityMessages[] =
+{
+    gDaycareText_GetAlongVeryWell,
+    gDaycareText_GetAlong,
+    gDaycareText_DontLikeOther,
+    gDaycareText_PlayOther,
+};
 
 __attribute__((naked)) void GetBoxMonNick(void)
 {
@@ -2875,7 +2933,7 @@ __attribute__((naked)) void SetDaycareCompatibilityString()
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080708EC: .4byte gStringVar4\n\t"
-        "_080708F0: .4byte gUnknown_82FC0E8\n\t"
+        "_080708F0: .4byte sCompatibilityMessages\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3297,7 +3355,7 @@ __attribute__((naked)) void DaycarePrintMonLvl(void)
     );
 }
 
-__attribute__((naked)) void DaycarePrintMonInfo(void)
+__attribute__((naked)) void DaycarePrintMonInfo(u8 windowId, u32 daycareSlotId, u8 y)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3480,8 +3538,8 @@ __attribute__((naked)) void ShowDaycareLevelMenu()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070D40: .4byte gUnknown_82FC04C\n\t"
-        "_08070D44: .4byte gUnknown_82FC06C\n\t"
+        "_08070D40: .4byte sDaycareLevelMenuWindowTemplate\n\t"
+        "_08070D44: .4byte sDaycareListMenuLevelTemplate\n\t"
         "_08070D48: .4byte Task_HandleDaycareLevelMenuInput + 1\n\t"
         "_08070D4C: .4byte gTasks\n\t"
         ".syntax divided\n\t"

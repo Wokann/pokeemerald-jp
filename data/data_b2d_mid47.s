@@ -111,17 +111,12 @@ sCrc16Table: @ 0x82FAD64
 	.hword 0xF78F, 0xE606, 0xD49D, 0xC514, 0xB1AB, 0xA022, 0x92B9, 0x8330, 0x7BC7, 0x6A4E, 0x58D5, 0x495C
 	.hword 0x3DE3, 0x2C6A, 0x1EF1, 0x0F78
 
-	.section .rodata.data_b2d_mid47_after_egg_moves
-	.incbin "baserom_jp.gba", 0x2fc04a, 0x2
+	.section .rodata.data_b2d_mid47_between_egg_moves_and_daycare_menu_data
 
-	.globl gUnknown_82FC04C
-gUnknown_82FC04C: @ 0x82FC04C
-	.incbin "baserom_jp.gba", 0x2fc04c, 0x20
+	@ Alignment before the Day Care level-menu data.
+	.byte 0, 0
 
-	.globl gUnknown_82FC06C
-gUnknown_82FC06C: @ 0x82FC06C
-	.incbin "baserom_jp.gba", 0x2fc06c, 0x7c
+	.section .rodata.data_b2d_mid47_between_daycare_text_and_compatibility_data
 
-	.globl gUnknown_82FC0E8
-gUnknown_82FC0E8: @ 0x82FC0E8
-	.incbin "baserom_jp.gba", 0x2fc0e8, 0x10
+	@ Alignment before the Day Care compatibility-message pointer table.
+	.byte 0, 0, 0

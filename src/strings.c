@@ -5,6 +5,12 @@
 #define STRINGS_EASY_CHAT __attribute__((section(".rodata.strings_easy_chat")))
 #define STRINGS_POKENAV_STORAGE __attribute__((section(".rodata.strings_pokenav_storage")))
 #define STRINGS_CLEAR_SAVE __attribute__((section(".rodata.strings_clear_save")))
+#define STRINGS_DAYCARE __attribute__((section(".rodata.strings_daycare")))
+
+STRINGS_DAYCARE const u8 gDaycareText_GetAlongVeryWell[] = _("2ひきの　なかは\nとっても　よい　ようじゃ");
+STRINGS_DAYCARE const u8 gDaycareText_GetAlong[] = _("2ひきの　なかは\nまずまずの　ようじゃ");
+STRINGS_DAYCARE const u8 gDaycareText_DontLikeOther[] = _("2ひきの　なかは\nそれほど　よくないがなぁ");
+STRINGS_DAYCARE const u8 gDaycareText_PlayOther[] = _("2ひきは　おたがいに\nちがう　ポケモンたちと\lあそんでおるがなあ");
 
 STRINGS_COMMON const u8 gMenuText_Confirm[] = {0x09, 0x50, 0x13, 0x02, 0xFF, 0x05, 0x28, 0x29, 0xFF};
 STRINGS_COMMON const u8 gText_Cancel[] = {0x23, 0x45, 0x29, 0xFF};
