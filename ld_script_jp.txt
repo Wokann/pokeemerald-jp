@@ -10006,6 +10006,7 @@ SECTIONS {
         src/data/text/region_texts112.o(.rodata);
         data/data_b2d_mid98.o(.rodata.mid98_prefix);
         src/save_failed_screen.o(.rodata.save_failed_screen_data);
+        src/braille_puzzles.o(.rodata.mid98_between);
         data/data_b2d_mid98.o(.rodata.mid98_between);
         src/pokeblock_feed.o(.rodata.pokeblock_feed_data);
         src/strings.o(.rodata.strings_clear_save);

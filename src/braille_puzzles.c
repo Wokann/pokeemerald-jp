@@ -14,7 +14,45 @@
 
 extern bool8 sIsRegisteelPuzzle;
 
-extern const u8 sRegicePathCoords[36][2];
+static const u8 sRegicePathCoords[][2] __attribute__((section(".rodata.mid98_between"))) =
+{
+    {4,  21},
+    {5,  21},
+    {6,  21},
+    {7,  21},
+    {8,  21},
+    {9,  21},
+    {10, 21},
+    {11, 21},
+    {12, 21},
+    {12, 22},
+    {12, 23},
+    {13, 23},
+    {13, 24},
+    {13, 25},
+    {13, 26},
+    {13, 27},
+    {12, 27},
+    {12, 28},
+    {4,  29},
+    {5,  29},
+    {6,  29},
+    {7,  29},
+    {8,  29},
+    {9,  29},
+    {10, 29},
+    {11, 29},
+    {12, 29},
+    {4,  28},
+    {4,  27},
+    {3,  27},
+    {3,  26},
+    {3,  25},
+    {3,  24},
+    {3,  23},
+    {4,  23},
+    {4,  22},
+};
 
 static void SealedChamberShakingEffect(u8);
 static void DoBrailleRegirockEffect(void);
