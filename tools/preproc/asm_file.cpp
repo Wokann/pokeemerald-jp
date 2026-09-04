@@ -29,6 +29,22 @@
 #include "../../include/constants/characters.h"
 #include "io.h"
 
+// The game's braille font stores cells in row-major dot order, whereas
+// Unicode Braille uses the conventional column-major dot order.  This lets
+// .braille accept U+2800--U+283F literals without changing the regular text
+// charmap or assuming a kana-to-byte mapping.
+static unsigned char EncodeUnicodeBrailleCell(std::int32_t codepoint)
+{
+    unsigned char dots = codepoint - 0x2800;
+
+    return (dots & 0x01)
+        | ((dots & 0x02) << 1)
+        | ((dots & 0x04) << 2)
+        | ((dots & 0x08) >> 2)
+        | ((dots & 0x10) >> 1)
+        | (dots & 0x20);
+}
+
 AsmFile::AsmFile(std::string filename, bool isStdin, bool doEnum) : m_filename(filename)
 {
     m_buffer = ReadFileToBuffer(filename.c_str(), isStdin, &m_size);
@@ -385,10 +401,21 @@ int AsmFile::ReadBraille(unsigned char* s)
         }
         else
         {
+            auto unicodeChar = DecodeUtf8(&m_buffer[m_pos]);
+            if (unicodeChar.code >= 0x2800 && unicodeChar.code <= 0x283F)
+            {
+                VerifyStringLength(length);
+                s[length++] = EncodeUnicodeBrailleCell(unicodeChar.code);
+                m_pos += unicodeChar.encodingLength;
+                continue;
+            }
+
             char c = m_buffer[m_pos];
 
             if (encoding.count(c) == 0)
             {
+                if (unicodeChar.code > 0x7F)
+                    RaiseError("Unicode character U+%04X not valid in braille string", unicodeChar.code);
                 if (IsAsciiPrintable(c))
                     RaiseError("character '%c' not valid in braille string", m_buffer[m_pos]);
                 else
