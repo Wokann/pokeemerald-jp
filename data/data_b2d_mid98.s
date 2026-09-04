@@ -15,36 +15,6 @@ gUnknown_85CD19F: @ 0x85CD19F
 	.string "しゅうりょうします$Aボタンを　おしてください$つながりました$データを　じゅしんしました$セーブできませんでした$セーブできました$ロードできませんでした$ロードできました$"
 	.section .rodata.mid98_between
 
-	.globl gUnknown_85CD35C
-gUnknown_85CD35C: @ 0x85CD35C
-	.incbin "baserom_jp.gba", 0x5cd35c, 0x32
-
-	.globl gUnknown_85CD38E
-gUnknown_85CD38E: @ 0x85CD38E
-	.incbin "baserom_jp.gba", 0x5cd38e, 0x12
-
-	.globl gUnknown_85CD3A0
-gUnknown_85CD3A0: @ 0x85CD3A0
-	.incbin "baserom_jp.gba", 0x5cd3a0, 0x5fc
-
-	.globl gUnknown_85CD99C
-gUnknown_85CD99C: @ 0x85CD99C
-	.4byte 0x085CD7DC, 0x085CD7EC, 0x085CD834, 0x085CD87C
-	.4byte 0x085CD8C4, 0x085CD90C, 0x085CD954, 0x085CD7DC
-	.4byte 0x085CD7DC, 0x085CD7DC, 0x085CD7DC, 0x085CD80C
-	.4byte 0x085CD854, 0x085CD89C, 0x085CD8E4, 0x085CD92C
-	.4byte 0x085CD974, 0x085CD7DC, 0x085CD7DC, 0x085CD7DC
-	.4byte 0x085CD7DC
-
-	.globl gUnknown_85CD9F0
-gUnknown_85CD9F0: @ 0x85CD9F0
-	.byte 0xF0, 0x01, 0x00, 0x00, 0xE9, 0x31, 0x00, 0x00
-
-	.globl gUnknown_85CD9F8
-gUnknown_85CD9F8: @ 0x85CD9F8
-	.byte 0x00, 0x01, 0x0F, 0x1C, 0x04, 0x0F, 0x0A, 0x00
-	.byte 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-
 	.section .rodata.mid98_suffix_before_species_to_back_anim_set
 
 	.globl gUnknown_85D289C

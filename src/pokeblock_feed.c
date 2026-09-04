@@ -1,7 +1,9 @@
 #include "global.h"
+#include "bg.h"
 #include "graphics.h"
 #include "pokeblock.h"
 #include "sprite.h"
+#include "window.h"
 
 #define POKEBLOCK_FEED_DATA __attribute__((section(".rodata.pokeblock_feed_data")))
 
@@ -141,6 +143,392 @@ static const struct SpriteTemplate sSpriteTemplate_Pokeblock POKEBLOCK_FEED_DATA
 };
 
 #undef POKEBLOCK_FEED_DATA
+
+enum
+{
+    ANIMDATA_ROT_IDX,
+    ANIMDATA_ROT_SPEED,
+    ANIMDATA_SIN_AMPLITUDE,
+    ANIMDATA_COS_AMPLITUDE,
+    ANIMDATA_TIME,
+    ANIMDATA_ROT_ACCEL,
+    ANIMDATA_TARGET_X,
+    ANIMDATA_TARGET_Y,
+    ANIMDATA_APPR_TIME,
+    ANIMDATA_IS_LAST,
+    NUM_ANIMDATA,
+};
+
+enum
+{
+    AFFINE_NONE,
+    AFFINE_TURN_UP,
+    AFFINE_TURN_UP_AND_DOWN,
+    AFFINE_TURN_DOWN,
+    AFFINE_TURN_DOWN_SLOW,
+    AFFINE_TURN_DOWN_SLIGHT,
+    AFFINE_TURN_UP_HIGH,
+    AFFINE_UNUSED_1,
+    AFFINE_UNUSED_2,
+    AFFINE_UNUSED_3,
+    NUM_MON_AFFINES,
+};
+
+// The animation the Pokémon does during the feeding scene depends on their nature.
+// The below values are offsets into sMonPokeblockAnims of the animation data for that nature.
+#define ANIM_HARDY   0
+#define ANIM_LONELY  (ANIM_HARDY + 3)
+#define ANIM_BRAVE   (ANIM_LONELY + 1)
+#define ANIM_ADAMANT (ANIM_BRAVE + 1)
+#define ANIM_NAUGHTY (ANIM_ADAMANT + 5)
+#define ANIM_BOLD    (ANIM_NAUGHTY + 3)
+#define ANIM_DOCILE  (ANIM_BOLD + 2)
+#define ANIM_RELAXED (ANIM_DOCILE + 1)
+#define ANIM_IMPISH  (ANIM_RELAXED + 2)
+#define ANIM_LAX     (ANIM_IMPISH + 1)
+#define ANIM_TIMID   (ANIM_LAX + 1)
+#define ANIM_HASTY   (ANIM_TIMID + 5)
+#define ANIM_SERIOUS (ANIM_HASTY + 2)
+#define ANIM_JOLLY   (ANIM_SERIOUS + 1)
+#define ANIM_NAIVE   (ANIM_JOLLY + 1)
+#define ANIM_MODEST  (ANIM_NAIVE + 4)
+#define ANIM_MILD    (ANIM_MODEST + 3)
+#define ANIM_QUIET   (ANIM_MILD + 1)
+#define ANIM_BASHFUL (ANIM_QUIET + 2)
+#define ANIM_RASH    (ANIM_BASHFUL + 3)
+#define ANIM_CALM    (ANIM_RASH + 3)
+#define ANIM_GENTLE  (ANIM_CALM + 1)
+#define ANIM_SASSY   (ANIM_GENTLE + 1)
+#define ANIM_CAREFUL (ANIM_SASSY + 1)
+#define ANIM_QUIRKY  (ANIM_CAREFUL + 5)
+
+#define POKEBLOCK_FEED_ANIM_DATA __attribute__((section(".rodata.mid98_between")))
+
+static const u8 sNatureToMonPokeblockAnim[NUM_NATURES][2] POKEBLOCK_FEED_ANIM_DATA =
+{
+    [NATURE_HARDY]   = { ANIM_HARDY,   AFFINE_NONE },
+    [NATURE_LONELY]  = { ANIM_LONELY,  AFFINE_NONE },
+    [NATURE_BRAVE]   = { ANIM_BRAVE,   AFFINE_TURN_UP },
+    [NATURE_ADAMANT] = { ANIM_ADAMANT, AFFINE_NONE },
+    [NATURE_NAUGHTY] = { ANIM_NAUGHTY, AFFINE_NONE },
+    [NATURE_BOLD]    = { ANIM_BOLD,    AFFINE_NONE },
+    [NATURE_DOCILE]  = { ANIM_DOCILE,  AFFINE_NONE },
+    [NATURE_RELAXED] = { ANIM_RELAXED, AFFINE_TURN_UP_AND_DOWN },
+    [NATURE_IMPISH]  = { ANIM_IMPISH,  AFFINE_NONE },
+    [NATURE_LAX]     = { ANIM_LAX,     AFFINE_NONE },
+    [NATURE_TIMID]   = { ANIM_TIMID,   AFFINE_NONE },
+    [NATURE_HASTY]   = { ANIM_HASTY,   AFFINE_NONE },
+    [NATURE_SERIOUS] = { ANIM_SERIOUS, AFFINE_TURN_DOWN },
+    [NATURE_JOLLY]   = { ANIM_JOLLY,   AFFINE_NONE },
+    [NATURE_NAIVE]   = { ANIM_NAIVE,   AFFINE_NONE },
+    [NATURE_MODEST]  = { ANIM_MODEST,  AFFINE_TURN_DOWN_SLOW },
+    [NATURE_MILD]    = { ANIM_MILD,    AFFINE_NONE },
+    [NATURE_QUIET]   = { ANIM_QUIET,   AFFINE_NONE },
+    [NATURE_BASHFUL] = { ANIM_BASHFUL, AFFINE_NONE },
+    [NATURE_RASH]    = { ANIM_RASH,    AFFINE_NONE },
+    [NATURE_CALM]    = { ANIM_CALM,    AFFINE_NONE },
+    [NATURE_GENTLE]  = { ANIM_GENTLE,  AFFINE_TURN_DOWN_SLIGHT },
+    [NATURE_SASSY]   = { ANIM_SASSY,   AFFINE_TURN_UP_HIGH },
+    [NATURE_CAREFUL] = { ANIM_CAREFUL, AFFINE_NONE },
+    [NATURE_QUIRKY]  = { ANIM_QUIRKY,  AFFINE_NONE },
+};
+
+// Data for the animation the Pokémon does while readying to jump for the Pokéblock
+// Each nature can have up to 8 anim 'stages' it progresses through, and each stage has its own array of data.
+// The elements in each array correspond in order to the following:
+// - ANIMDATA_ROT_IDX      : Index into sin/cos table for circular movement
+// - ANIMDATA_ROT_SPEED    : Circular movement speed
+// - ANIMDATA_SIN_AMPLITUDE: How far on the x to move
+// - ANIMDATA_COS_AMPLITUDE: How far on the y to move
+// - ANIMDATA_TIME         : How long in frames this part of the animation takes
+// - ANIMDATA_ROT_ACCEL    : How much to increase circular movement speed
+// - ANIMDATA_TARGET_X     : Target x coord offset from start position
+// - ANIMDATA_TARGET_Y     : Target y coord offset from start position
+// - ANIMDATA_APPR_TIME    : The time over which the target position should be approached
+// - ANIMDATA_IS_LAST      : TRUE if it's the last anim stage for this nature, FALSE otherwise
+//
+static const s16 sMonPokeblockAnims[][NUM_ANIMDATA] POKEBLOCK_FEED_ANIM_DATA =
+{
+    [ANIM_HARDY] =
+    {   0,   4,   0,   8,  24,   0,   0,   0,  12,   FALSE},
+    {   0,   4,   0,  16,  24,   0,   0,   0,  12,   FALSE},
+    {   0,   4,   0,  32,  32,   0,   0,   0,  16,   TRUE},
+
+    [ANIM_LONELY] =
+    {   0,   3,   6,   0,  48,   0,   0,   0,  24,   TRUE},
+
+    [ANIM_BRAVE] =
+    {  64,  16, -24,   0,  32,   0,   0,   0,   0,   TRUE},
+
+    [ANIM_ADAMANT] =
+    {   0,   4,   8,   0,  16,   0,  -8,   0,   0,   FALSE},
+    {   0,   0,   0,   0,  16,   0,   0,   0,   0,   FALSE},
+    {   0,   4,   8,   0,  16,   0,  -8,   0,   0,   FALSE},
+    {   0,   0,   0,   0,  16,   0,   0,   0,   0,   FALSE},
+    {   0,   4, -16,   0,   4,   0,  16,   0,   0,   TRUE},
+
+    [ANIM_NAUGHTY] =
+    {   0,   3,   6,   0,  12,   0,   0,   0,   6,   FALSE},
+    {   0,   3,  -6,   0,  12,   0,   0,   0,   6,   FALSE},
+    {   0,  16,  16,   0,  45,   1,   0,   0,   0,   TRUE},
+
+    [ANIM_BOLD] =
+    {   0,  16,   0,  24,  32,   0,   0,   0,  16,   FALSE},
+    {   0,  16,   0,  23,  32,   0,   0,   0,  16,   TRUE},
+
+    [ANIM_DOCILE] =
+    {   0,   0,   0,   0,  80,   0,   0,   0,   0,   TRUE},
+
+    [ANIM_RELAXED] =
+    {   0,   2,   8,   0,  32,   0,   0,   0,   0,   FALSE},
+    {   0,   2,  -8,   0,  32,   0,   0,   0,   0,   TRUE},
+
+    [ANIM_IMPISH] =
+    {   0,  32,   2,   1,  48,   1,   0,   0,  24,   TRUE},
+
+    [ANIM_LAX] =
+    {   0,   2,  16,  16, 128,   0,   0,   0,   0,   TRUE},
+
+    [ANIM_TIMID] =
+    {   0,   2,  -8,   0,  48,   0, -24,   0,   0,   FALSE},
+    {   0,   0,   0,   0,   8,   0,   0,   0,   0,   FALSE},
+    {  64,  32,   2,   0,  36,   0,   0,   0,   0,   FALSE},
+    {   0,   0,   0,   0,   8,   0,   0,   0,   0,   FALSE},
+    {   0,   2,   8,   0,  48,   0,  24,   0,   0,   TRUE},
+
+    [ANIM_HASTY] =
+    {  64,  24,  16,   0,  32,   0,   0,   0,   0,   FALSE},
+    {   0,  28,   2,   1,  32,   1,   0,   0,  16,   TRUE},
+
+    [ANIM_SERIOUS] =
+    {   0,   0,   0,   0,  32,   0,   0,   0,   0,   TRUE},
+
+    [ANIM_JOLLY] =
+    {  64,  16, -16,   2,  48,   0,   0,   0,  32,   TRUE},
+
+    [ANIM_NAIVE] =
+    {   0,  12,  -8,   4,  24,   0,   8,   0,  12,   FALSE},
+    {   0,  12,   8,   8,  24,   0, -16,   0,  12,   FALSE},
+    {   0,  12,  -8,  16,  24,   0,  16,   0,  12,   FALSE},
+    {   0,  12,   8,  28,  24,   0,  -8,   0,  12,   TRUE},
+
+    [ANIM_MODEST] =
+    {   0,   0,   0,   0,   8,   0,   0,   0,   0,   FALSE},
+    {  64,  16,  -4,   0,  32,   0,   0,   0,   0,   FALSE},
+    {   0,   0,   0,   0,   8,   0,   0,   0,   0,   TRUE},
+
+    [ANIM_MILD] =
+    { 128,   4,   0,   8,  64,   0,   0,   0,   0,   TRUE},
+
+    [ANIM_QUIET] =
+    {   0,   2,  16,   0,  48,   0,   0,   0,   0,   FALSE},
+    { 128,   2,  16,   0,  48,   0,   0,   0,   0,   TRUE},
+
+    [ANIM_BASHFUL] =
+    {   0,   2,  -4,   0,  48,   0, -48,   0,   0,   FALSE},
+    {   0,   0,   0,   0,  80,   0,   0,   0,   0,   FALSE},
+    {   0,   2,   8,   0,  24,   0,  48,   0,   0,   TRUE},
+
+    [ANIM_RASH] =
+    {  64,   4,  64,  58,  52,   0, -88,   0,   0,   FALSE},
+    {   0,   0,   0,   0,  80,   0,   0,   0,   0,   FALSE},
+    {   0,  24,  80,   0,  32,   0,  88,   0,   0,   TRUE},
+
+    [ANIM_CALM] =
+    {   0,   2,  16,   4,  64,   0,   0,   0,   0,   TRUE},
+
+    [ANIM_GENTLE] =
+    {   0,   0,   0,   0,  32,   0,   0,   0,   0,   TRUE},
+
+    [ANIM_SASSY] =
+    {   0,   0,   0,   0,  42,   0,   0,   0,   0,   TRUE},
+
+    [ANIM_CAREFUL] =
+    {   0,   4,   0,   8,  24,   0,   0,   0,  12,   FALSE},
+    {   0,   0,   0,   0,  12,   0,   0,   0,   0,   FALSE},
+    {   0,   4,   0,  12,  24,   0,   0,   0,  12,   FALSE},
+    {   0,   0,   0,   0,  12,   0,   0,   0,   0,   FALSE},
+    {   0,   4,   0,   4,  24,   0,   0,   0,  12,   TRUE},
+
+    [ANIM_QUIRKY] =
+    {   0,   4,  16,  12,  64,   0,   0,   0,   0,   FALSE},
+    {   0,  -4,  16,  12,  64,   0,   0,   0,   0,   TRUE},
+};
+
+static const union AffineAnimCmd sAffineAnim_Mon_None[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Mon_TurnUp[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(0, 0, 12, 1),
+    AFFINEANIMCMD_FRAME(0, 0, 0, 30),
+    AFFINEANIMCMD_FRAME(0, 0, -12, 1),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Mon_TurnUp_Flipped[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0, 0, 12, 1),
+    AFFINEANIMCMD_FRAME(0, 0, 0, 28),
+    AFFINEANIMCMD_FRAME(0, 0, -4, 3),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Mon_TurnUpAndDown[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 1, 16),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -1, 32),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 1, 16),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Mon_TurnUpAndDown_Flipped[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 1, 16),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -1, 32),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 1, 16),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Mon_TurnDown[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -1, 8),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 16),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 1, 8),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Mon_TurnDown_Flipped[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -1, 8),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 16),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 1, 8),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Mon_TurnDownSlow[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -1, 8),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 32),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 1, 8),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Mon_TurnDownSlow_Flipped[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -1, 8),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 32),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 1, 8),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Mon_TurnDownSlight[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -1, 4),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 24),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 1, 4),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Mon_TurnDownSlight_Flipped[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -1, 4),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 24),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 1, 4),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Mon_TurnUpHigh[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 1, 24),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 16),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -12, 2),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Mon_TurnUpHigh_Flipped[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 1, 24),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 16),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -12, 2),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd *const sAffineAnims_Mon[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    // Animations for non-flipped mon sprites
+    [AFFINE_NONE]             = sAffineAnim_Mon_None,
+    [AFFINE_TURN_UP]          = sAffineAnim_Mon_TurnUp,
+    [AFFINE_TURN_UP_AND_DOWN] = sAffineAnim_Mon_TurnUpAndDown,
+    [AFFINE_TURN_DOWN]        = sAffineAnim_Mon_TurnDown,
+    [AFFINE_TURN_DOWN_SLOW]   = sAffineAnim_Mon_TurnDownSlow,
+    [AFFINE_TURN_DOWN_SLIGHT] = sAffineAnim_Mon_TurnDownSlight,
+    [AFFINE_TURN_UP_HIGH]     = sAffineAnim_Mon_TurnUpHigh,
+    [AFFINE_UNUSED_1]         = sAffineAnim_Mon_None,
+    [AFFINE_UNUSED_2]         = sAffineAnim_Mon_None,
+    [AFFINE_UNUSED_3]         = sAffineAnim_Mon_None,
+
+    // Animations for flipped mon sprites
+    [AFFINE_NONE + NUM_MON_AFFINES]             = sAffineAnim_Mon_None,
+    [AFFINE_TURN_UP + NUM_MON_AFFINES]          = sAffineAnim_Mon_TurnUp_Flipped,
+    [AFFINE_TURN_UP_AND_DOWN + NUM_MON_AFFINES] = sAffineAnim_Mon_TurnUpAndDown_Flipped,
+    [AFFINE_TURN_DOWN + NUM_MON_AFFINES]        = sAffineAnim_Mon_TurnDown_Flipped,
+    [AFFINE_TURN_DOWN_SLOW + NUM_MON_AFFINES]   = sAffineAnim_Mon_TurnDownSlow_Flipped,
+    [AFFINE_TURN_DOWN_SLIGHT + NUM_MON_AFFINES] = sAffineAnim_Mon_TurnDownSlight_Flipped,
+    [AFFINE_TURN_UP_HIGH + NUM_MON_AFFINES]     = sAffineAnim_Mon_TurnUpHigh_Flipped,
+    [AFFINE_UNUSED_1 + NUM_MON_AFFINES]         = sAffineAnim_Mon_None,
+    [AFFINE_UNUSED_2 + NUM_MON_AFFINES]         = sAffineAnim_Mon_None,
+    [AFFINE_UNUSED_3 + NUM_MON_AFFINES]         = sAffineAnim_Mon_None,
+
+    sAffineAnim_Mon_None, // ? Extra for some reason
+};
+
+static const struct BgTemplate sBackgroundTemplates[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0
+    }
+};
+
+static const struct WindowTemplate sWindowTemplates[] POKEBLOCK_FEED_ANIM_DATA =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 15,
+        .width = 28,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0xA
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+#undef POKEBLOCK_FEED_ANIM_DATA
 
 __attribute__((naked)) void CB2_PokeblockFeed(void)
 {
@@ -456,7 +844,7 @@ __attribute__((naked)) void HandleInitBackgrounds(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08179CA4: .4byte gUnknown_85CD9F0\n\t"
+        "_08179CA4: .4byte sBackgroundTemplates\n\t"
         "_08179CA8: .4byte gUnknown_203B9E4\n\t"
         ".syntax divided\n\t"
     );
@@ -684,7 +1072,7 @@ __attribute__((naked)) void HandleInitWindows(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08179E9C: .4byte gUnknown_85CD9F8\n\t"
+        "_08179E9C: .4byte sWindowTemplates\n\t"
         "_08179EA0: .4byte gStandardMenuPalette\n\t"
         ".syntax divided\n\t"
     );
@@ -1529,9 +1917,9 @@ __attribute__((naked)) void sub_0817A484(void)
         "	.align 2, 0\n\t"
         "_0817A4D8: .4byte gUnknown_203B9E4\n\t"
         "_0817A4DC: .4byte 0x00001056\n\t"
-        "_0817A4E0: .4byte gUnknown_85CD35C\n\t"
+        "_0817A4E0: .4byte sNatureToMonPokeblockAnim\n\t"
         "_0817A4E4: .4byte 0x0000105A\n\t"
-        "_0817A4E8: .4byte gUnknown_85CD3A0\n\t"
+        "_0817A4E8: .4byte sMonPokeblockAnims + 0x12\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1680,7 +2068,7 @@ __attribute__((naked)) void sub_0817A4EC(void)
         "	strb r0, [r1]\n\t"
         "	b _0817A7C6\n\t"
         "	.align 2, 0\n\t"
-        "_0817A6B8: .4byte gUnknown_85CD35C\n\t"
+        "_0817A6B8: .4byte sNatureToMonPokeblockAnim\n\t"
         "_0817A6BC: .4byte 0x0000105A\n\t"
         "_0817A6C0: .4byte 0x00001051\n\t"
         "_0817A6C4: .4byte 0x0000105B\n\t"
@@ -1741,9 +2129,9 @@ __attribute__((naked)) void sub_0817A4EC(void)
         "	bl StartSpriteAffineAnim\n\t"
         "	b _0817A780\n\t"
         "	.align 2, 0\n\t"
-        "_0817A73C: .4byte gUnknown_85CD35C\n\t"
+        "_0817A73C: .4byte sNatureToMonPokeblockAnim\n\t"
         "_0817A740: .4byte 0x0000105A\n\t"
-        "_0817A744: .4byte gUnknown_85CD99C\n\t"
+        "_0817A744: .4byte sAffineAnims_Mon\n\t"
         "_0817A748: .4byte 0x00001050\n\t"
         "_0817A74C: .4byte 0x00001053\n\t"
         "_0817A750:\n\t"
@@ -1896,7 +2284,7 @@ __attribute__((naked)) void sub_0817A7D4(void)
         "	b _0817A896\n\t"
         "	.align 2, 0\n\t"
         "_0817A878: .4byte gUnknown_203B9E4\n\t"
-        "_0817A87C: .4byte gUnknown_85CD38E\n\t"
+        "_0817A87C: .4byte sMonPokeblockAnims\n\t"
         "_0817A880: .4byte 0x00001051\n\t"
         "_0817A884: .4byte 0x00001068\n\t"
         "_0817A888: .4byte 0x00001074\n\t"
