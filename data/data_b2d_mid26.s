@@ -705,12 +705,5 @@ gBattlePikeWildMonHeaders: @ 0x852E6C0
 	.section .rodata.data_b2d_mid26_after_wild_encounter_route119_data
 	.align 2
 
-	.section .rodata.data_b2d_mid26_after_field_effect_graphics_resource_data
-	.align 2
-
-	.globl gFieldEffectScriptFuncs
-gFieldEffectScriptFuncs: @ 0x8536E9C
-	.4byte FieldEffectCmd_loadtiles + 1, FieldEffectCmd_loadfadedpal + 1, FieldEffectCmd_loadpal + 1, FieldEffectCmd_callnative + 1, FieldEffectCmd_end + 1, FieldEffectCmd_loadgfx_callnative + 1, FieldEffectCmd_loadtiles_callnative + 1, FieldEffectCmd_loadfadedpal_callnative + 1
-
 	.section .rodata.data_b2d_mid26_after_field_effect_script_funcs
 	.align 2

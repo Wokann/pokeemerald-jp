@@ -10,6 +10,7 @@
 #define FIELD_EFFECT_GRAPHICS_RESOURCE_DATA __attribute__((section(".rodata.field_effect_graphics_resource_data")))
 #define FIELD_EFFECT_STATIC_DATA __attribute__((section(".rodata.field_effect_static_data")))
 #define FIELD_EFFECT_RUNTIME_STATIC_DATA __attribute__((section(".rodata.field_effect_static_data")))
+#define FIELD_EFFECT_SCRIPT_FUNCS_DATA __attribute__((section(".rodata.field_effect_script_funcs_data")))
 
 static const u32 sNewGameBirch_Gfx[] FIELD_EFFECT_GRAPHICS_DATA = INCBIN_U32("graphics/birch_speech/birch.4bpp");
 static const u32 sUnusedBirchBeauty[] FIELD_EFFECT_GRAPHICS_DATA = INCBIN_U32("graphics/birch_speech/unused_beauty.4bpp");
@@ -39,6 +40,18 @@ static const u8 sRockFragment_TopLeft[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = IN
 static const u8 sRockFragment_TopRight[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U8("graphics/field_effects/pics/deoxys_rock_fragment_top_right.4bpp");
 static const u8 sRockFragment_BottomLeft[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U8("graphics/field_effects/pics/deoxys_rock_fragment_bottom_left.4bpp");
 static const u8 sRockFragment_BottomRight[] FIELD_EFFECT_GRAPHICS_RESOURCE_DATA = INCBIN_U8("graphics/field_effects/pics/deoxys_rock_fragment_bottom_right.4bpp");
+
+bool8 (*const gFieldEffectScriptFuncs[])(u8 **, u32 *) FIELD_EFFECT_SCRIPT_FUNCS_DATA =
+{
+    FieldEffectCmd_loadtiles,
+    FieldEffectCmd_loadfadedpal,
+    FieldEffectCmd_loadpal,
+    FieldEffectCmd_callnative,
+    FieldEffectCmd_end,
+    FieldEffectCmd_loadgfx_callnative,
+    FieldEffectCmd_loadtiles_callnative,
+    FieldEffectCmd_loadfadedpal_callnative,
+};
 
 void SpriteCB_PokeballGlow(struct Sprite *sprite);
 void SpriteCB_PokecenterMonitor(struct Sprite *sprite);
