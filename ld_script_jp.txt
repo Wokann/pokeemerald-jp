@@ -9744,7 +9744,7 @@ SECTIONS {
         src/cable_club.o(.rodata.cable_club_link_data);
         src/trainer_see.o(.rodata.trainer_see_data);
         src/wild_encounter.o(.rodata.wild_encounter_data);
-        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_wild_encounter_data);
+        src/wild_encounter.o(.rodata.wild_encounter_frontier_data);
         src/wild_encounter.o(.rodata.wild_encounter_route119_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_wild_encounter_route119_data);
         src/field_effect.o(.rodata.field_effect_graphics_data);

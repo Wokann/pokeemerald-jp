@@ -4027,3 +4027,302 @@ WILD_ENCOUNTER_DATA const struct WildPokemonHeader gWildMonHeaders[] =
         .fishingMonsInfo = NULL,
     },
 };
+const struct WildPokemon gBattlePyramid_1_LandMons[] WILD_ENCOUNTER_FRONTIER_DATA =
+{
+    { 5, 5, SPECIES_BULBASAUR },
+    { 5, 5, SPECIES_BULBASAUR },
+    { 5, 5, SPECIES_BULBASAUR },
+    { 5, 5, SPECIES_BULBASAUR },
+    { 5, 5, SPECIES_IVYSAUR },
+    { 5, 5, SPECIES_IVYSAUR },
+    { 5, 5, SPECIES_VENUSAUR },
+    { 5, 5, SPECIES_VENUSAUR },
+    { 5, 5, SPECIES_VENUSAUR },
+    { 5, 5, SPECIES_CHARMANDER },
+    { 5, 5, SPECIES_VENUSAUR },
+    { 5, 5, SPECIES_CHARMANDER },
+};
+
+const struct WildPokemonInfo gBattlePyramid_1_LandMonsInfo WILD_ENCOUNTER_FRONTIER_DATA = { 4, gBattlePyramid_1_LandMons };
+const struct WildPokemon gBattlePyramid_2_LandMons[] WILD_ENCOUNTER_FRONTIER_DATA =
+{
+    { 5, 5, SPECIES_IVYSAUR },
+    { 5, 5, SPECIES_IVYSAUR },
+    { 5, 5, SPECIES_IVYSAUR },
+    { 5, 5, SPECIES_IVYSAUR },
+    { 5, 5, SPECIES_VENUSAUR },
+    { 5, 5, SPECIES_VENUSAUR },
+    { 5, 5, SPECIES_CHARMANDER },
+    { 5, 5, SPECIES_CHARMANDER },
+    { 5, 5, SPECIES_CHARMANDER },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARMANDER },
+};
+
+const struct WildPokemonInfo gBattlePyramid_2_LandMonsInfo WILD_ENCOUNTER_FRONTIER_DATA = { 4, gBattlePyramid_2_LandMons };
+const struct WildPokemon gBattlePyramid_3_LandMons[] WILD_ENCOUNTER_FRONTIER_DATA =
+{
+    { 5, 5, SPECIES_VENUSAUR },
+    { 5, 5, SPECIES_VENUSAUR },
+    { 5, 5, SPECIES_VENUSAUR },
+    { 5, 5, SPECIES_VENUSAUR },
+    { 5, 5, SPECIES_CHARMANDER },
+    { 5, 5, SPECIES_CHARMANDER },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARIZARD },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARIZARD },
+};
+
+const struct WildPokemonInfo gBattlePyramid_3_LandMonsInfo WILD_ENCOUNTER_FRONTIER_DATA = { 4, gBattlePyramid_3_LandMons };
+const struct WildPokemon gBattlePyramid_4_LandMons[] WILD_ENCOUNTER_FRONTIER_DATA =
+{
+    { 5, 5, SPECIES_CHARMANDER },
+    { 5, 5, SPECIES_CHARMANDER },
+    { 5, 5, SPECIES_CHARMANDER },
+    { 5, 5, SPECIES_CHARMANDER },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARIZARD },
+    { 5, 5, SPECIES_CHARIZARD },
+    { 5, 5, SPECIES_CHARIZARD },
+    { 5, 5, SPECIES_SQUIRTLE },
+    { 5, 5, SPECIES_CHARIZARD },
+    { 5, 5, SPECIES_SQUIRTLE },
+};
+
+const struct WildPokemonInfo gBattlePyramid_4_LandMonsInfo WILD_ENCOUNTER_FRONTIER_DATA = { 4, gBattlePyramid_4_LandMons };
+const struct WildPokemon gBattlePyramid_5_LandMons[] WILD_ENCOUNTER_FRONTIER_DATA =
+{
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARIZARD },
+    { 5, 5, SPECIES_CHARIZARD },
+    { 5, 5, SPECIES_SQUIRTLE },
+    { 5, 5, SPECIES_SQUIRTLE },
+    { 5, 5, SPECIES_SQUIRTLE },
+    { 5, 5, SPECIES_WARTORTLE },
+    { 5, 5, SPECIES_SQUIRTLE },
+    { 5, 5, SPECIES_WARTORTLE },
+};
+
+const struct WildPokemonInfo gBattlePyramid_5_LandMonsInfo WILD_ENCOUNTER_FRONTIER_DATA = { 4, gBattlePyramid_5_LandMons };
+const struct WildPokemon gBattlePyramid_6_LandMons[] WILD_ENCOUNTER_FRONTIER_DATA =
+{
+    { 5, 5, SPECIES_CHARIZARD },
+    { 5, 5, SPECIES_CHARIZARD },
+    { 5, 5, SPECIES_CHARIZARD },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_SQUIRTLE },
+    { 5, 5, SPECIES_SQUIRTLE },
+    { 5, 5, SPECIES_WARTORTLE },
+    { 5, 5, SPECIES_WARTORTLE },
+    { 5, 5, SPECIES_WARTORTLE },
+    { 5, 5, SPECIES_WARTORTLE },
+    { 5, 5, SPECIES_WARTORTLE },
+    { 5, 5, SPECIES_WARTORTLE },
+};
+
+const struct WildPokemonInfo gBattlePyramid_6_LandMonsInfo WILD_ENCOUNTER_FRONTIER_DATA = { 4, gBattlePyramid_6_LandMons };
+const struct WildPokemon gBattlePyramid_7_LandMons[] WILD_ENCOUNTER_FRONTIER_DATA =
+{
+    { 5, 5, SPECIES_WARTORTLE },
+    { 5, 5, SPECIES_WARTORTLE },
+    { 5, 5, SPECIES_SQUIRTLE },
+    { 5, 5, SPECIES_SQUIRTLE },
+    { 5, 5, SPECIES_SQUIRTLE },
+    { 5, 5, SPECIES_CHARIZARD },
+    { 5, 5, SPECIES_CHARIZARD },
+    { 5, 5, SPECIES_CHARIZARD },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARMELEON },
+    { 5, 5, SPECIES_CHARMELEON },
+};
+
+const struct WildPokemonInfo gBattlePyramid_7_LandMonsInfo WILD_ENCOUNTER_FRONTIER_DATA = { 8, gBattlePyramid_7_LandMons };
+
+const struct WildPokemonHeader gBattlePyramidWildMonHeaders[] WILD_ENCOUNTER_FRONTIER_DATA =
+{
+    {
+        .mapGroup = 0,
+        .mapNum = 1,
+        .landMonsInfo = &gBattlePyramid_1_LandMonsInfo,
+        .waterMonsInfo = NULL,
+        .rockSmashMonsInfo = NULL,
+        .fishingMonsInfo = NULL,
+    },
+    {
+        .mapGroup = 0,
+        .mapNum = 2,
+        .landMonsInfo = &gBattlePyramid_2_LandMonsInfo,
+        .waterMonsInfo = NULL,
+        .rockSmashMonsInfo = NULL,
+        .fishingMonsInfo = NULL,
+    },
+    {
+        .mapGroup = 0,
+        .mapNum = 3,
+        .landMonsInfo = &gBattlePyramid_3_LandMonsInfo,
+        .waterMonsInfo = NULL,
+        .rockSmashMonsInfo = NULL,
+        .fishingMonsInfo = NULL,
+    },
+    {
+        .mapGroup = 0,
+        .mapNum = 4,
+        .landMonsInfo = &gBattlePyramid_4_LandMonsInfo,
+        .waterMonsInfo = NULL,
+        .rockSmashMonsInfo = NULL,
+        .fishingMonsInfo = NULL,
+    },
+    {
+        .mapGroup = 0,
+        .mapNum = 5,
+        .landMonsInfo = &gBattlePyramid_5_LandMonsInfo,
+        .waterMonsInfo = NULL,
+        .rockSmashMonsInfo = NULL,
+        .fishingMonsInfo = NULL,
+    },
+    {
+        .mapGroup = 0,
+        .mapNum = 6,
+        .landMonsInfo = &gBattlePyramid_6_LandMonsInfo,
+        .waterMonsInfo = NULL,
+        .rockSmashMonsInfo = NULL,
+        .fishingMonsInfo = NULL,
+    },
+    {
+        .mapGroup = 0,
+        .mapNum = 7,
+        .landMonsInfo = &gBattlePyramid_7_LandMonsInfo,
+        .waterMonsInfo = NULL,
+        .rockSmashMonsInfo = NULL,
+        .fishingMonsInfo = NULL,
+    },
+    {
+        .mapGroup = MAP_GROUP(MAP_UNDEFINED),
+        .mapNum = MAP_NUM(MAP_UNDEFINED),
+        .landMonsInfo = NULL,
+        .waterMonsInfo = NULL,
+        .rockSmashMonsInfo = NULL,
+        .fishingMonsInfo = NULL,
+    },
+};
+const struct WildPokemon gBattlePike_1_LandMons[] WILD_ENCOUNTER_FRONTIER_DATA =
+{
+    { 5, 5, SPECIES_SEVIPER },
+    { 5, 5, SPECIES_MILOTIC },
+    { 5, 5, SPECIES_DUSCLOPS },
+    { 5, 5, SPECIES_DUSCLOPS },
+    { 5, 5, SPECIES_DUSCLOPS },
+    { 5, 5, SPECIES_DUSCLOPS },
+    { 5, 5, SPECIES_SEVIPER },
+    { 5, 5, SPECIES_MILOTIC },
+    { 5, 5, SPECIES_DUSCLOPS },
+    { 5, 5, SPECIES_DUSCLOPS },
+    { 5, 5, SPECIES_SEVIPER },
+    { 5, 5, SPECIES_MILOTIC },
+};
+
+const struct WildPokemonInfo gBattlePike_1_LandMonsInfo WILD_ENCOUNTER_FRONTIER_DATA = { 10, gBattlePike_1_LandMons };
+const struct WildPokemon gBattlePike_2_LandMons[] WILD_ENCOUNTER_FRONTIER_DATA =
+{
+    { 5, 5, SPECIES_SEVIPER },
+    { 5, 5, SPECIES_MILOTIC },
+    { 5, 5, SPECIES_ELECTRODE },
+    { 5, 5, SPECIES_ELECTRODE },
+    { 5, 5, SPECIES_ELECTRODE },
+    { 5, 5, SPECIES_ELECTRODE },
+    { 5, 5, SPECIES_SEVIPER },
+    { 5, 5, SPECIES_MILOTIC },
+    { 5, 5, SPECIES_ELECTRODE },
+    { 5, 5, SPECIES_ELECTRODE },
+    { 5, 5, SPECIES_SEVIPER },
+    { 5, 5, SPECIES_MILOTIC },
+};
+
+const struct WildPokemonInfo gBattlePike_2_LandMonsInfo WILD_ENCOUNTER_FRONTIER_DATA = { 10, gBattlePike_2_LandMons };
+const struct WildPokemon gBattlePike_3_LandMons[] WILD_ENCOUNTER_FRONTIER_DATA =
+{
+    { 5, 5, SPECIES_SEVIPER },
+    { 5, 5, SPECIES_MILOTIC },
+    { 5, 5, SPECIES_BRELOOM },
+    { 5, 5, SPECIES_BRELOOM },
+    { 5, 5, SPECIES_BRELOOM },
+    { 5, 5, SPECIES_BRELOOM },
+    { 5, 5, SPECIES_SEVIPER },
+    { 5, 5, SPECIES_MILOTIC },
+    { 5, 5, SPECIES_BRELOOM },
+    { 5, 5, SPECIES_BRELOOM },
+    { 5, 5, SPECIES_SEVIPER },
+    { 5, 5, SPECIES_MILOTIC },
+};
+
+const struct WildPokemonInfo gBattlePike_3_LandMonsInfo WILD_ENCOUNTER_FRONTIER_DATA = { 10, gBattlePike_3_LandMons };
+const struct WildPokemon gBattlePike_4_LandMons[] WILD_ENCOUNTER_FRONTIER_DATA =
+{
+    { 5, 5, SPECIES_SEVIPER },
+    { 5, 5, SPECIES_MILOTIC },
+    { 5, 5, SPECIES_WOBBUFFET },
+    { 5, 5, SPECIES_WOBBUFFET },
+    { 5, 5, SPECIES_WOBBUFFET },
+    { 5, 5, SPECIES_WOBBUFFET },
+    { 5, 5, SPECIES_SEVIPER },
+    { 5, 5, SPECIES_MILOTIC },
+    { 5, 5, SPECIES_WOBBUFFET },
+    { 5, 5, SPECIES_WOBBUFFET },
+    { 5, 5, SPECIES_SEVIPER },
+    { 5, 5, SPECIES_MILOTIC },
+};
+
+const struct WildPokemonInfo gBattlePike_4_LandMonsInfo WILD_ENCOUNTER_FRONTIER_DATA = { 10, gBattlePike_4_LandMons };
+
+const struct WildPokemonHeader gBattlePikeWildMonHeaders[] WILD_ENCOUNTER_FRONTIER_DATA =
+{
+    {
+        .mapGroup = 0,
+        .mapNum = 1,
+        .landMonsInfo = &gBattlePike_1_LandMonsInfo,
+        .waterMonsInfo = NULL,
+        .rockSmashMonsInfo = NULL,
+        .fishingMonsInfo = NULL,
+    },
+    {
+        .mapGroup = 0,
+        .mapNum = 2,
+        .landMonsInfo = &gBattlePike_2_LandMonsInfo,
+        .waterMonsInfo = NULL,
+        .rockSmashMonsInfo = NULL,
+        .fishingMonsInfo = NULL,
+    },
+    {
+        .mapGroup = 0,
+        .mapNum = 3,
+        .landMonsInfo = &gBattlePike_3_LandMonsInfo,
+        .waterMonsInfo = NULL,
+        .rockSmashMonsInfo = NULL,
+        .fishingMonsInfo = NULL,
+    },
+    {
+        .mapGroup = 0,
+        .mapNum = 4,
+        .landMonsInfo = &gBattlePike_4_LandMonsInfo,
+        .waterMonsInfo = NULL,
+        .rockSmashMonsInfo = NULL,
+        .fishingMonsInfo = NULL,
+    },
+    {
+        .mapGroup = MAP_GROUP(MAP_UNDEFINED),
+        .mapNum = MAP_NUM(MAP_UNDEFINED),
+        .landMonsInfo = NULL,
+        .waterMonsInfo = NULL,
+        .rockSmashMonsInfo = NULL,
+        .fishingMonsInfo = NULL,
+    },
+};

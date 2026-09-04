@@ -48,6 +48,7 @@ enum {
 #define HEADER_NONE 0xFFFF
 
 #define WILD_ENCOUNTER_DATA __attribute__((section(".rodata.wild_encounter_data")))
+#define WILD_ENCOUNTER_FRONTIER_DATA __attribute__((section(".rodata.wild_encounter_frontier_data")))
 #define WILD_ENCOUNTER_ROUTE119_DATA __attribute__((section(".rodata.wild_encounter_route119_data")))
 
 static u16 FeebasRandom(void);
