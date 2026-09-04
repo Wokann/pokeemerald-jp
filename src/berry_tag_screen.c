@@ -39,6 +39,51 @@ extern struct BerryTagScreenStruct *sBerryTag;
 #define BG_TILE 0x42
 #define tBerryY data[0]
 #define tBgOp data[1]
+#define BERRY_TAG_SCREEN_DATA __attribute__((section(".rodata.berry_tag_screen_data")))
+
+extern const u8 gUnknown_85C9786[];
+
+// These JP tables occupy 0x085CD068-0x085CD0DC in the original ROM.
+// Keep their source order and JP-specific window geometry byte-exact.
+static BERRY_TAG_SCREEN_DATA const struct BgTemplate sBackgroundTemplates[] =
+{
+    { .bg = 0, .charBaseIndex = 0, .mapBaseIndex = 31, .screenSize = 0, .paletteMode = 0, .priority = 0, .baseTile = 0 },
+    { .bg = 1, .charBaseIndex = 0, .mapBaseIndex = 30, .screenSize = 0, .paletteMode = 0, .priority = 1, .baseTile = 0 },
+    { .bg = 2, .charBaseIndex = 0, .mapBaseIndex = 29, .screenSize = 0, .paletteMode = 0, .priority = 2, .baseTile = 0 },
+    { .bg = 3, .charBaseIndex = 0, .mapBaseIndex = 28, .screenSize = 0, .paletteMode = 0, .priority = 3, .baseTile = 0 },
+};
+
+static BERRY_TAG_SCREEN_DATA const u16 sFontPalette[] =
+{
+    0x7FFF, 0x7FFF, 0x318C, 0x675A, 0x043C, 0x3AFF, 0x0664, 0x4BD2,
+    0x6546, 0x7B14, 0x0000, 0x0000, 0x0000, 0x2217, 0x0088, 0x577D,
+};
+
+static BERRY_TAG_SCREEN_DATA const u8 sTextColors[2][3] =
+{
+    { 0, 2, 3 },
+    { 15, 14, 13 },
+};
+
+static BERRY_TAG_SCREEN_DATA const struct WindowTemplate sWindowTemplates[] =
+{
+    { .bg = 1, .tilemapLeft = 11, .tilemapTop = 4, .width = 7, .height = 2, .paletteNum = 15, .baseBlock = 69 },
+    { .bg = 1, .tilemapLeft = 11, .tilemapTop = 7, .width = 15, .height = 4, .paletteNum = 15, .baseBlock = 83 },
+    { .bg = 1, .tilemapLeft = 4, .tilemapTop = 14, .width = 22, .height = 4, .paletteNum = 15, .baseBlock = 143 },
+    { .bg = 0, .tilemapLeft = 3, .tilemapTop = 0, .width = 6, .height = 2, .paletteNum = 15, .baseBlock = 231 },
+    DUMMY_WIN_TEMPLATE,
+};
+
+// The shared text block has not yet been split into individual text owners.
+static BERRY_TAG_SCREEN_DATA const u8 *const sBerryFirmnessStrings[] =
+{
+    &gUnknown_85C9786[8],
+    &gUnknown_85C9786[18],
+    &gUnknown_85C9786[24],
+    &gUnknown_85C9786[28],
+    &gUnknown_85C9786[36],
+};
+
 void bag_menu_mail_related(void);
 void PrintTextInBerryTagScreen(u8 windowId, const u8 *text, u8 x, u8 y, s32 speed, u8 colorStructId);
 void CB2_InitBerryTagScreen(void);
@@ -64,14 +109,8 @@ void PrintBerryDescription2(void);
 extern const u8 gUnknown_85C97BD[];
 extern const u8 gUnknown_85C97B5[];
 extern const u8 gUnknown_85C977D[];
-extern const u8 gUnknown_85C9786[];
 extern const u8 gUnknown_85C9782[];
 extern const u8 gUnknown_85C93F5[];
-extern const u8 gUnknown_85CD098[];
-extern const u8 *const gUnknown_85CD0C8[];
-extern const struct BgTemplate gUnknown_85CD068[];
-extern const u16 gUnknown_85CD078[];
-extern const struct WindowTemplate gUnknown_85CD0A0[];
 
 void DoBerryTagScreen(void)
 {
@@ -196,7 +235,7 @@ bool8 InitBerryTagScreen(void)
 void AddBerryTagTextToBg0(void)
 {
     ResetBgsAndClearDma3BusyFlags(0);
-    InitBgsFromTemplates(0, gUnknown_85CD068, 4);
+    InitBgsFromTemplates(0, sBackgroundTemplates, ARRAY_COUNT(sBackgroundTemplates));
     SetBgTilemapBuffer(2, sBerryTag->tilemapBuffers[0]);
     SetBgTilemapBuffer(3, sBerryTag->tilemapBuffers[1]);
     ResetAllBgsCoordinates();
@@ -265,9 +304,9 @@ void PrintMysteryMenuText(void)
 {
     u16 i;
 
-    InitWindows(gUnknown_85CD0A0);
+    InitWindows(sWindowTemplates);
     DeactivateAllTextPrinters();
-    LoadPalette(gUnknown_85CD078, 0xF0, 0x20);
+    LoadPalette(sFontPalette, 0xF0, sizeof(sFontPalette));
     for (i = 0; i < 4; i++)
         PutWindowTilemap(i);
     ScheduleBgCopyTilemapToVram(0);
@@ -276,7 +315,7 @@ void PrintMysteryMenuText(void)
 
 void PrintTextInBerryTagScreen(u8 windowId, const u8 *text, u8 x, u8 y, s32 speed, u8 colorStructId)
 {
-    AddTextPrinterParameterized4(windowId, 1, x, y, 0, 0, &gUnknown_85CD098[colorStructId * 3], speed, text);
+    AddTextPrinterParameterized4(windowId, 1, x, y, 0, 0, sTextColors[colorStructId], speed, text);
 }
 
 void PrintBerrySize(void)
@@ -332,7 +371,7 @@ void PrintBerryFirmness(void)
 
     AddTextPrinterParameterized(1, 1, gUnknown_85C9782, 0, 0x12, 0xFF, NULL);
     if (berry->firmness != 0)
-        AddTextPrinterParameterized(1, 1, gUnknown_85CD0C8[berry->firmness - 1], 0x28, 0x12, 0, NULL);
+        AddTextPrinterParameterized(1, 1, sBerryFirmnessStrings[berry->firmness - 1], 0x28, 0x12, 0, NULL);
     else
         AddTextPrinterParameterized(1, 1, gUnknown_85C93F5, 0x28, 0x12, 0, NULL);
 }

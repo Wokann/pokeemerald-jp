@@ -10092,7 +10092,8 @@ SECTIONS {
         src/data/text/region_texts110.o(.rodata);
         src/ereader_screen.o(.rodata.ereader_screen_text);
         src/data/text/region_texts111.o(.rodata);
-        data/data_b2d.o(.rodata.mid97);
+        data/data_b2d.o(.rodata.mid97_prefix);
+        src/berry_tag_screen.o(.rodata.berry_tag_screen_data);
         src/data/text/region_texts112.o(.rodata);
         data/data_b2d_mid98.o(.rodata.mid98_prefix);
         src/save_failed_screen.o(.rodata.save_failed_screen_data);

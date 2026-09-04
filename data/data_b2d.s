@@ -189,7 +189,7 @@ gUnknown_85C9742: @ 0x85C9742
 	.string "　ど　う　ぐ　　$モンスターボール$　わざマシン　　$　き　の　み　　$たいせつなもの　$"
 	.globl gUnknown_85C976F
 
-	.section .rodata.mid97
+	.section .rodata.mid97_prefix
 
 	.globl gJPText_WriteErrorUnableToSaveData
 gJPText_WriteErrorUnableToSaveData: @ 0x85CD043
@@ -201,27 +201,6 @@ gText_Red: @ 0x85CD061
 	.globl gText_Blue
 gText_Blue: @ 0x85CD064
 	.string "あお$　"
-	.globl gUnknown_85CD068
-gUnknown_85CD068: @ 0x85CD068
-	.incbin "baserom_jp.gba", 0x5cd068, 0x10
-
-	.globl gUnknown_85CD078
-gUnknown_85CD078: @ 0x85CD078
-	.incbin "baserom_jp.gba", 0x5cd078, 0x20
-
-	.globl gUnknown_85CD098
-gUnknown_85CD098: @ 0x85CD098
-	.incbin "baserom_jp.gba", 0x5cd098, 0x8
-
-	.globl gUnknown_85CD0A0
-gUnknown_85CD0A0: @ 0x85CD0A0
-	.incbin "baserom_jp.gba", 0x5cd0a0, 0x28
-
-	.globl gUnknown_85CD0C8
-gUnknown_85CD0C8: @ 0x85CD0C8
-	.incbin "baserom_jp.gba", 0x5cd0c8, 0x14
-
-	.globl gUnknown_85CD0DC
 
 	.section .rodata.mid81
 
