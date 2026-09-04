@@ -1,3267 +1,902 @@
 #include "global.h"
+#include "battle.h"
+#include "battle_anim.h"
 #include "battle_controllers.h"
+#include "battle_interface.h"
+#include "battle_message.h"
+#include "battle_setup.h"
+#include "battle_tv.h"
+#include "bg.h"
+#include "data.h"
+#include "item.h"
+#include "item_menu.h"
+#include "link.h"
+#include "main.h"
+#include "m4a.h"
+#include "palette.h"
+#include "party_menu.h"
+#include "pokeball.h"
+#include "pokemon.h"
+#include "random.h"
+#include "reshow_battle_screen.h"
+#include "sound.h"
+#include "string_util.h"
+#include "task.h"
+#include "text.h"
+#include "util.h"
+#include "window.h"
+#include "constants/battle_anim.h"
+#include "constants/items.h"
+#include "constants/moves.h"
+#include "constants/rgb.h"
+#include "constants/songs.h"
+#include "constants/trainers.h"
+
+void WallyBufferRunCommand(void);
+void WallyBufferExecCompleted(void);
+void WallyHandleCmd39(void);
+void WallyDoMoveAnimation(void);
+void sub_08168454(void);
+void sub_08168620(void);
+void sub_0816A888(u8 battler);
+void sub_0816AA0C(u8 taskId);
+u32 CopyWallyMonData(u8 monId, u8 *dst);
+void SetWallyMonData(u8 monId);
+
+extern void SetCB2ToReshowScreenAfterMenu(u8 cursorPosition, u8 baseTileNum);
+extern void nullsub_35(void);
+extern bool8 gUnknown_202415D;
+extern u8 *StringCopy10(u8 *dest, const u8 *src);
+extern void sub_0805D3C8(struct Sprite *sprite);
+extern void sub_0805E7B8(u8 affineMode);
+extern void sub_0814FA04(const u8 *text, u8 windowId);
+extern void TryGetStatusString(const u8 *text);
+extern u16 gUnknown_2022D0A[][0x100];
+extern const u8 gUnknown_85ABAEE[];
+extern u8 gUnknown_3005ADC[];
+extern void sub_08172CD4(u8 battler, struct Pokemon *mon);
+extern void sub_08076320(u8 battler);
+extern void c3_0802FDF4(u8 taskId);
+extern void sub_0805C81C(struct Sprite *sprite);
+extern void sub_0805D330(struct Sprite *sprite);
+extern void sub_080583C0(void);
+extern u8 gUnknown_2024158[];
+extern u8 gUnknown_2022D0C[][0x200];
+
+static void (*const sWallyBufferCommands[CONTROLLER_CMDS_COUNT])(void);
 
 void WallyCmdEnd(void) {}
-__attribute__((naked)) void SetControllerToWally(void)
+void SetControllerToWally(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _081681EC\n\t"
-        "	ldr r0, _081681F0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081681F4\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r2, _081681F8\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x95\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x96\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x97\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_081681EC: .4byte gBattlerControllerFuncs\n\t"
-        "_081681F0: .4byte gActiveBattler\n\t"
-        "_081681F4: .4byte WallyBufferRunCommand + 1\n\t"
-        "_081681F8: .4byte gBattleStruct\n\t"
-        ".syntax divided\n\t"
-    );
+    gBattlerControllerFuncs[gActiveBattler] = WallyBufferRunCommand;
+    gBattleStruct->wallyBattleState = 0;
+    gBattleStruct->wallyMovesState = 0;
+    gBattleStruct->wallyWaitFrames = 0;
+    gBattleStruct->wallyMoveFrames = 0;
 }
 
-__attribute__((naked)) void WallyBufferRunCommand(void)
+void WallyBufferRunCommand(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _08168230\n\t"
-        "	ldr r1, _08168234\n\t"
-        "	ldr r0, _08168238\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _08168248\n\t"
-        "	ldr r0, _0816823C\n\t"
-        "	lsls r1, r3, #9\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0x38\n\t"
-        "	bhi _08168244\n\t"
-        "	ldr r0, _08168240\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	b _08168248\n\t"
-        "	.align 2, 0\n\t"
-        "_08168230: .4byte gBattleControllerExecFlags\n\t"
-        "_08168234: .4byte gBitTable\n\t"
-        "_08168238: .4byte gActiveBattler\n\t"
-        "_0816823C: .4byte gBattleBufferA\n\t"
-        "_08168240: .4byte sWallyBufferCommands\n\t"
-        "_08168244:\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_08168248:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gBattleControllerExecFlags & gBitTable[gActiveBattler])
+    {
+        if (gBattleBufferA[gActiveBattler][0] < ARRAY_COUNT(sWallyBufferCommands))
+            sWallyBufferCommands[gBattleBufferA[gActiveBattler][0]]();
+        else
+            WallyBufferExecCompleted();
+    }
 }
 
-__attribute__((naked)) void WallyHandleActions(void)
+void WallyHandleActions(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r1, _08168268\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	cmp r0, #5\n\t"
-        "	bls _0816825E\n\t"
-        "	b _0816836C\n\t"
-        "_0816825E:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0816826C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08168268: .4byte gBattleStruct\n\t"
-        "_0816826C: .4byte _08168270\n\t"
-        "_08168270:\n\t"
-        "	.4byte _08168288\n\t"
-        "	.4byte _0816829A\n\t"
-        "	.4byte _081682B8\n\t"
-        "	.4byte _081682D6\n\t"
-        "	.4byte _08168310\n\t"
-        "	.4byte _08168348\n\t"
-        "_08168288:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x96\n\t"
-        "	movs r1, #0x40\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0816829A:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x96\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0816836C\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	b _081682EC\n\t"
-        "_081682B8:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x96\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0816836C\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	b _081682EC\n\t"
-        "_081682D6:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x96\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0816836C\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #9\n\t"
-        "_081682EC:\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BtlController_EmitTwoReturnValues\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x95\n\t"
-        "	strb r5, [r0]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x96\n\t"
-        "	movs r1, #0x40\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _0816836C\n\t"
-        "_08168310:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x96\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0816836C\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ActionSelectionDestroyCursorAt\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetCB2ToReshowScreenAfterMenu\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x96\n\t"
-        "	movs r1, #0x40\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0816836C\n\t"
-        "_08168348:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x96\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0816836C\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BtlController_EmitTwoReturnValues\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_0816836C:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gBattleStruct->wallyBattleState)
+    {
+    case 0:
+        gBattleStruct->wallyWaitFrames = B_WAIT_TIME_LONG;
+        gBattleStruct->wallyBattleState++;
+    case 1:
+        if (--gBattleStruct->wallyWaitFrames == 0)
+        {
+            PlaySE(SE_SELECT);
+            BtlController_EmitTwoReturnValues(B_COMM_TO_ENGINE, B_ACTION_USE_MOVE, 0);
+            WallyBufferExecCompleted();
+            gBattleStruct->wallyBattleState++;
+            gBattleStruct->wallyMovesState = 0;
+            gBattleStruct->wallyWaitFrames = B_WAIT_TIME_LONG;
+        }
+        break;
+    case 2:
+        if (--gBattleStruct->wallyWaitFrames == 0)
+        {
+            PlaySE(SE_SELECT);
+            BtlController_EmitTwoReturnValues(B_COMM_TO_ENGINE, B_ACTION_USE_MOVE, 0);
+            WallyBufferExecCompleted();
+            gBattleStruct->wallyBattleState++;
+            gBattleStruct->wallyMovesState = 0;
+            gBattleStruct->wallyWaitFrames = B_WAIT_TIME_LONG;
+        }
+        break;
+    case 3:
+        if (--gBattleStruct->wallyWaitFrames == 0)
+        {
+            BtlController_EmitTwoReturnValues(B_COMM_TO_ENGINE, B_ACTION_WALLY_THROW, 0);
+            WallyBufferExecCompleted();
+            gBattleStruct->wallyBattleState++;
+            gBattleStruct->wallyMovesState = 0;
+            gBattleStruct->wallyWaitFrames = B_WAIT_TIME_LONG;
+        }
+        break;
+    case 4:
+        if (--gBattleStruct->wallyWaitFrames == 0)
+        {
+            PlaySE(SE_SELECT);
+            ActionSelectionDestroyCursorAt(0);
+            SetCB2ToReshowScreenAfterMenu(1, 0);
+            gBattleStruct->wallyWaitFrames = B_WAIT_TIME_LONG;
+            gBattleStruct->wallyBattleState++;
+        }
+        break;
+    case 5:
+        if (--gBattleStruct->wallyWaitFrames == 0)
+        {
+            PlaySE(SE_SELECT);
+            BtlController_EmitTwoReturnValues(B_COMM_TO_ENGINE, B_ACTION_USE_ITEM, 0);
+            WallyBufferExecCompleted();
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void CompleteOnChosenItem(void)
+void CompleteOnChosenItem(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _0816839C\n\t"
-        "	ldr r1, _081683A0\n\t"
-        "	ldr r0, _081683A4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _081683A8\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08168398\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_08168398:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816839C: .4byte gSprites\n\t"
-        "_081683A0: .4byte gBattlerSpriteIds\n\t"
-        "_081683A4: .4byte gActiveBattler\n\t"
-        "_081683A8: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[gBattlerSpriteIds[gActiveBattler]].callback == SpriteCallbackDummy)
+        WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleChosenMonReturnValue(void)
+void WallyHandleChosenMonReturnValue(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	bl IsTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081683BE\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_081683BE:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!IsTextPrinterActive(0))
+        WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void CompleteOnFinishedAnimation(void)
+void CompleteOnFinishedAnimation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081683D8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081683D2\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_081683D2:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081683D8: .4byte gUnknown_202415D\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gUnknown_202415D)
+        WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void OpenBagAfterPaletteFade(void)
+void OpenBagAfterPaletteFade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08168408\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08168404\n\t"
-        "	ldr r1, _0816840C\n\t"
-        "	ldr r0, _08168410\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08168414\n\t"
-        "	str r1, [r0]\n\t"
-        "	bl nullsub_35\n\t"
-        "	bl FreeAllWindowBuffers\n\t"
-        "	bl DoWallyTutorialBagMenu\n\t"
-        "_08168404:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08168408: .4byte gPaletteFade\n\t"
-        "_0816840C: .4byte gBattlerControllerFuncs\n\t"
-        "_08168410: .4byte gActiveBattler\n\t"
-        "_08168414: .4byte WallyHandleCmd39 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        gBattlerControllerFuncs[gActiveBattler] = WallyHandleCmd39;
+        nullsub_35();
+        FreeAllWindowBuffers();
+        DoWallyTutorialBagMenu();
+    }
 }
 
-__attribute__((naked)) void WallyHandleCmd39(void)
+void WallyHandleCmd39(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08168444\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ldr r0, _08168448\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0816843E\n\t"
-        "	ldr r0, _0816844C\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0816843E\n\t"
-        "	ldr r0, _08168450\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl BtlController_EmitOneReturnValue\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_0816843E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08168444: .4byte gMain\n\t"
-        "_08168448: .4byte BattleMainCB2 + 1\n\t"
-        "_0816844C: .4byte gPaletteFade\n\t"
-        "_08168450: .4byte gSpecialVar_ItemId\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
+    {
+        BtlController_EmitOneReturnValue(B_COMM_TO_ENGINE, gSpecialVar_ItemId);
+        WallyBufferExecCompleted();
+    }
 }
 
-__attribute__((naked)) void sub_08168454(void)
+void sub_08168454(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	ldr r4, _081685F0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r5, _081685F4\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	lsls r3, r2, #1\n\t"
-        "	adds r0, r3, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r7, #0x88\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0816848C\n\t"
-        "	ldr r0, _081685F8\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081685FC\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_08172CD4\n\t"
-        "_0816848C:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	movs r6, #2\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	eors r2, r0\n\t"
-        "	ldr r1, [r1, #4]\n\t"
-        "	lsls r3, r2, #1\n\t"
-        "	adds r0, r3, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081684BE\n\t"
-        "	ldr r0, _081685F8\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081685FC\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_08172CD4\n\t"
-        "_081684BE:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	ldr r3, [r0, #4]\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r4, #8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081684DA\n\t"
-        "	b _081685E4\n\t"
-        "_081684DA:\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	eors r1, r6\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081685E4\n\t"
-        "	ldr r0, _08168600\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r7, _08168604\n\t"
-        "	adds r0, r2, r7\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	mov r4, r8\n\t"
-        "	adds r4, #0x1c\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	ldr r0, _08168608\n\t"
-        "	cmp r3, r0\n\t"
-        "	bne _081685E4\n\t"
-        "	ldr r0, _0816860C\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, r3\n\t"
-        "	bne _081685E4\n\t"
-        "	bl IsDoubleBattle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08168582\n\t"
-        "	ldr r0, _08168610\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08168582\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	eors r0, r6\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, r8\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r4, _08168614\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	eors r1, r0\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r2, _081685F8\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r1, r2, r1\n\t"
-        "	ldr r2, _081685FC\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	bl UpdateHealthboxAttribute\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	eors r0, r6\n\t"
-        "	bl sub_08076320\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	eors r0, r6\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetHealthboxSpriteVisible\n\t"
-        "_08168582:\n\t"
-        "	ldr r1, _08168604\n\t"
-        "	ldr r4, _081685F4\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08168600\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r5, _08168614\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r2, _081685F8\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r1, r2, r1\n\t"
-        "	ldr r2, _081685FC\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	bl UpdateHealthboxAttribute\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl sub_08076320\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetHealthboxSpriteVisible\n\t"
-        "	ldr r0, _081685F0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, [r0, #8]\n\t"
-        "	ldrb r1, [r2, #9]\n\t"
-        "	movs r0, #2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2, #9]\n\t"
-        "	ldr r1, _08168618\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0816861C\n\t"
-        "	str r1, [r0]\n\t"
-        "_081685E4:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081685F0: .4byte gBattleSpritesDataPtr\n\t"
-        "_081685F4: .4byte gActiveBattler\n\t"
-        "_081685F8: .4byte gBattlerPartyIndexes\n\t"
-        "_081685FC: .4byte gPlayerParty\n\t"
-        "_08168600: .4byte gSprites\n\t"
-        "_08168604: .4byte gUnknown_3005ADC\n\t"
-        "_08168608: .4byte SpriteCallbackDummy + 1\n\t"
-        "_0816860C: .4byte gBattlerSpriteIds\n\t"
-        "_08168610: .4byte gBattleTypeFlags\n\t"
-        "_08168614: .4byte gHealthboxSpriteIds\n\t"
-        "_08168618: .4byte gBattlerControllerFuncs\n\t"
-        "_0816861C: .4byte sub_08168620 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].triedShinyMonAnim
+     && !gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].ballAnimActive)
+        sub_08172CD4(gActiveBattler, &gPlayerParty[gBattlerPartyIndexes[gActiveBattler]]);
+
+    if (!gBattleSpritesDataPtr->healthBoxesData[BATTLE_PARTNER(gActiveBattler)].triedShinyMonAnim
+     && !gBattleSpritesDataPtr->healthBoxesData[BATTLE_PARTNER(gActiveBattler)].ballAnimActive)
+        sub_08172CD4(BATTLE_PARTNER(gActiveBattler), &gPlayerParty[gBattlerPartyIndexes[BATTLE_PARTNER(gActiveBattler)]]);
+
+    if (!gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].ballAnimActive
+        && !gBattleSpritesDataPtr->healthBoxesData[BATTLE_PARTNER(gActiveBattler)].ballAnimActive
+        && gSprites[gUnknown_3005ADC[gActiveBattler]].callback == SpriteCallbackDummy
+        && gSprites[gBattlerSpriteIds[gActiveBattler]].callback == SpriteCallbackDummy)
+    {
+        if (IsDoubleBattle() && !(gBattleTypeFlags & BATTLE_TYPE_MULTI))
+        {
+            DestroySprite(&gSprites[gUnknown_3005ADC[BATTLE_PARTNER(gActiveBattler)]]);
+            UpdateHealthboxAttribute(gHealthboxSpriteIds[BATTLE_PARTNER(gActiveBattler)], &gPlayerParty[gBattlerPartyIndexes[BATTLE_PARTNER(gActiveBattler)]], HEALTHBOX_ALL);
+            sub_08076320(BATTLE_PARTNER(gActiveBattler));
+            SetHealthboxSpriteVisible(gHealthboxSpriteIds[BATTLE_PARTNER(gActiveBattler)]);
+        }
+        DestroySprite(&gSprites[gUnknown_3005ADC[gActiveBattler]]);
+        UpdateHealthboxAttribute(gHealthboxSpriteIds[gActiveBattler], &gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], HEALTHBOX_ALL);
+        sub_08076320(gActiveBattler);
+        SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler]);
+
+        gBattleSpritesDataPtr->animationData->introAnimActive = FALSE;
+        gBattlerControllerFuncs[gActiveBattler] = sub_08168620;
+    }
+
 }
 
-__attribute__((naked)) void sub_08168620(void)
+void sub_08168620(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r2, _08168718\n\t"
-        "	ldr r0, _0816871C\n\t"
-        "	ldr r1, _08168720\n\t"
-        "	mov r8, r1\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _08168724\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0816864A\n\t"
-        "	movs r4, #1\n\t"
-        "_0816864A:\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _0816870C\n\t"
-        "	ldr r7, _08168728\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldr r4, [r0, #4]\n\t"
-        "	lsls r0, r3, #1\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, r0, r4\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	movs r5, #1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0816870C\n\t"
-        "	movs r6, #2\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	eors r1, r3\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0816870C\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r3, #0x7f\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	mov r1, r8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r2, [r1, #1]\n\t"
-        "	movs r4, #2\n\t"
-        "	rsbs r4, r4, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	mov r1, r8\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	eors r1, r0\n\t"
-        "	ldr r2, [r2, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ands r3, r1\n\t"
-        "	strb r3, [r0]\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	mov r1, r8\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	eors r1, r0\n\t"
-        "	ldr r2, [r2, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	ands r4, r1\n\t"
-        "	strb r4, [r0, #1]\n\t"
-        "	ldr r4, _0816872C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "	ldr r0, _08168730\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl CreateTask\n\t"
-        "	ldr r2, _08168734\n\t"
-        "	mov r0, r8\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r2, r0\n\t"
-        "	ldr r2, _08168738\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	bl HandleLowHpMusicChange\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_0816870C:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08168718: .4byte gSprites\n\t"
-        "_0816871C: .4byte gHealthboxSpriteIds\n\t"
-        "_08168720: .4byte gActiveBattler\n\t"
-        "_08168724: .4byte SpriteCallbackDummy + 1\n\t"
-        "_08168728: .4byte gBattleSpritesDataPtr\n\t"
-        "_0816872C: .4byte 0x000027F9\n\t"
-        "_08168730: .4byte c3_0802FDF4 + 1\n\t"
-        "_08168734: .4byte gBattlerPartyIndexes\n\t"
-        "_08168738: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    bool32 healthboxAnimDone = FALSE;
+
+    if (gSprites[gHealthboxSpriteIds[gActiveBattler]].callback == SpriteCallbackDummy)
+        healthboxAnimDone = TRUE;
+
+    if (healthboxAnimDone && gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].finishedShinyMonAnim
+        && gBattleSpritesDataPtr->healthBoxesData[BATTLE_PARTNER(gActiveBattler)].finishedShinyMonAnim)
+    {
+        gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].triedShinyMonAnim = FALSE;
+        gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].finishedShinyMonAnim = FALSE;
+
+        gBattleSpritesDataPtr->healthBoxesData[BATTLE_PARTNER(gActiveBattler)].triedShinyMonAnim = FALSE;
+        gBattleSpritesDataPtr->healthBoxesData[BATTLE_PARTNER(gActiveBattler)].finishedShinyMonAnim = FALSE;
+
+        FreeSpriteTilesByTag(ANIM_TAG_GOLD_STARS);
+        FreeSpritePaletteByTag(ANIM_TAG_GOLD_STARS);
+
+        CreateTask(c3_0802FDF4, 10);
+        HandleLowHpMusicChange(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
+
+        WallyBufferExecCompleted();
+    }
 }
 
-__attribute__((naked)) void sub_0816873C(void)
+void sub_0816873C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r5, _0816877C\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	ldr r6, _08168780\n\t"
-        "	adds r1, r0, r6\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl MoveBattleBar\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetHealthboxSpriteVisible\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r1, r4, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _08168784\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r2, #0\n\t"
-        "	bl sub_080726F4\n\t"
-        "	b _0816879E\n\t"
-        "	.align 2, 0\n\t"
-        "_0816877C: .4byte gActiveBattler\n\t"
-        "_08168780: .4byte gHealthboxSpriteIds\n\t"
-        "_08168784:\n\t"
-        "	ldr r2, _081687A4\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r2, r0\n\t"
-        "	ldr r2, _081687A8\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	bl HandleLowHpMusicChange\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_0816879E:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081687A4: .4byte gBattlerPartyIndexes\n\t"
-        "_081687A8: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 hpValue = MoveBattleBar(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], HEALTH_BAR, 0);
+
+    SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler]);
+    if (hpValue != -1)
+    {
+        UpdateHpTextInHealthbox(gHealthboxSpriteIds[gActiveBattler], hpValue, HP_CURRENT);
+    }
+    else
+    {
+        HandleLowHpMusicChange(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
+        WallyBufferExecCompleted();
+    }
 }
 
-__attribute__((naked)) void WallyHandleGetRawMonData(void)
+void WallyHandleGetRawMonData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r1, _081687E8\n\t"
-        "	ldr r0, _081687EC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldr r2, _081687F0\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r4, r0, r2\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x20\n\t"
-        "	bne _081687F8\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	subs r0, #5\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, _081687F4\n\t"
-        "	strb r3, [r0]\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	b _08168822\n\t"
-        "	.align 2, 0\n\t"
-        "_081687E8: .4byte gBattlerSpriteIds\n\t"
-        "_081687EC: .4byte gActiveBattler\n\t"
-        "_081687F0: .4byte gSprites\n\t"
-        "_081687F4: .4byte gUnknown_202415D\n\t"
-        "_081687F8:\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	movs r1, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0816881C\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x3e\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	lsls r0, r2, #0x1d\n\t"
-        "	lsrs r0, r0, #0x1f\n\t"
-        "	movs r1, #1\n\t"
-        "	eors r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "_0816881C:\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "_08168822:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = gBattlerSpriteIds[gActiveBattler];
+
+    if (gSprites[spriteId].data[1] == 32)
+    {
+        gSprites[spriteId].data[1] = 0;
+        gSprites[spriteId].invisible = FALSE;
+        gUnknown_202415D = FALSE;
+        WallyBufferExecCompleted();
+    }
+    else
+    {
+        if ((gSprites[spriteId].data[1] % 4) == 0)
+            gSprites[spriteId].invisible ^= 1;
+        gSprites[spriteId].data[1]++;
+    }
 }
 
-__attribute__((naked)) void sub_08168828(void)
+void sub_08168828(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r0, _08168884\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r6, _08168888\n\t"
-        "	ldrb r2, [r6]\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0816887C\n\t"
-        "	ldr r5, _0816888C\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _08168890\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl FreeSpriteOamMatrix\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r1, _08168894\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetHealthboxSpriteInvisible\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_0816887C:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08168884: .4byte gBattleSpritesDataPtr\n\t"
-        "_08168888: .4byte gActiveBattler\n\t"
-        "_0816888C: .4byte gBattlerSpriteIds\n\t"
-        "_08168890: .4byte gSprites\n\t"
-        "_08168894: .4byte gHealthboxSpriteIds\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].specialAnimActive)
+    {
+        FreeSpriteOamMatrix(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
+        DestroySprite(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
+        SetHealthboxSpriteInvisible(gHealthboxSpriteIds[gActiveBattler]);
+        WallyBufferExecCompleted();
+    }
 }
 
-__attribute__((naked)) void WallyHandleOneReturnValue(void)
+void WallyHandleOneReturnValue(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _081688C0\n\t"
-        "	ldr r1, _081688C4\n\t"
-        "	ldr r0, _081688C8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _081688CC\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081688BC\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_081688BC:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081688C0: .4byte gSprites\n\t"
-        "_081688C4: .4byte gBattlerSpriteIds\n\t"
-        "_081688C8: .4byte gActiveBattler\n\t"
-        "_081688CC: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[gBattlerSpriteIds[gActiveBattler]].callback == SpriteCallbackDummy)
+        WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void sub_081688D0(void)
+void sub_081688D0(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081688F8\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _081688FC\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldr r2, [r2, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081688F2\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_081688F2:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081688F8: .4byte gBattleSpritesDataPtr\n\t"
-        "_081688FC: .4byte gActiveBattler\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].animFromTableActive)
+        WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyBufferExecCompleted(void)
+void WallyBufferExecCompleted(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r1, _08168940\n\t"
-        "	ldr r4, _08168944\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08168948\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r0, _0816894C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08168954\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	mov r1, sp\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #4\n\t"
-        "	mov r2, sp\n\t"
-        "	bl PrepareBufferDataTransferLink\n\t"
-        "	ldr r1, _08168950\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x38\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _08168966\n\t"
-        "	.align 2, 0\n\t"
-        "_08168940: .4byte gBattlerControllerFuncs\n\t"
-        "_08168944: .4byte gActiveBattler\n\t"
-        "_08168948: .4byte WallyBufferRunCommand + 1\n\t"
-        "_0816894C: .4byte gBattleTypeFlags\n\t"
-        "_08168950: .4byte gBattleBufferA\n\t"
-        "_08168954:\n\t"
-        "	ldr r2, _08168970\n\t"
-        "	ldr r1, _08168974\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	bics r0, r1\n\t"
-        "	str r0, [r2]\n\t"
-        "_08168966:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08168970: .4byte gBattleControllerExecFlags\n\t"
-        "_08168974: .4byte gBitTable\n\t"
-        ".syntax divided\n\t"
-    );
+    gBattlerControllerFuncs[gActiveBattler] = WallyBufferRunCommand;
+    if (gBattleTypeFlags & BATTLE_TYPE_LINK)
+    {
+        u8 playerId = GetMultiplayerId();
+
+        PrepareBufferDataTransferLink(B_COMM_CONTROLLER_IS_DONE, 4, &playerId);
+        gBattleBufferA[gActiveBattler][0] = CONTROLLER_TERMINATOR_NOP;
+    }
+    else
+    {
+        gBattleControllerExecFlags &= ~gBitTable[gActiveBattler];
+    }
 }
 
-__attribute__((naked)) void sub_08168978(void)
+void sub_08168978(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081689A0\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _081689A4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldr r2, [r2, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0816899A\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_0816899A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081689A0: .4byte gBattleSpritesDataPtr\n\t"
-        "_081689A4: .4byte gActiveBattler\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].statusAnimActive)
+        WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleGetMonData(void)
+void WallyHandleGetMonData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0x100\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r1, _081689D4\n\t"
-        "	ldr r0, _081689D8\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	lsls r0, r2, #9\n\t"
-        "	adds r1, #2\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081689E0\n\t"
-        "	ldr r0, _081689DC\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	mov r1, sp\n\t"
-        "	bl CopyWallyMonData\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	b _08168A02\n\t"
-        "	.align 2, 0\n\t"
-        "_081689D4: .4byte gBattleBufferA\n\t"
-        "_081689D8: .4byte gActiveBattler\n\t"
-        "_081689DC: .4byte gBattlerPartyIndexes\n\t"
-        "_081689E0:\n\t"
-        "	ldrb r4, [r1]\n\t"
-        "	movs r5, #0\n\t"
-        "_081689E4:\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081689FA\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r1, r2, r6\n\t"
-        "	bl CopyWallyMonData\n\t"
-        "	adds r6, r6, r0\n\t"
-        "_081689FA:\n\t"
-        "	lsrs r4, r4, #1\n\t"
-        "	adds r5, #1\n\t"
-        "	cmp r5, #5\n\t"
-        "	ble _081689E4\n\t"
-        "_08168A02:\n\t"
-        "	lsls r1, r6, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	mov r2, sp\n\t"
-        "	bl BtlController_EmitDataTransfer\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	add sp, #0x100\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 monData[sizeof(struct Pokemon) * 2 + 56]; // this allows to get full data of two Pokémon, trying to get more will result in overwriting data
+    u32 size = 0;
+    u8 monToCheck;
+    s32 i;
+
+    if (gBattleBufferA[gActiveBattler][2] == 0)
+    {
+        size += CopyWallyMonData(gBattlerPartyIndexes[gActiveBattler], monData);
+    }
+    else
+    {
+        monToCheck = gBattleBufferA[gActiveBattler][2];
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (monToCheck & 1)
+                size += CopyWallyMonData(i, monData + size);
+            monToCheck >>= 1;
+        }
+    }
+    BtlController_EmitDataTransfer(B_COMM_TO_ENGINE, size, monData);
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void CopyWallyMonData(void)
+u32 CopyWallyMonData(u8 monId, u8 *dst)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x90\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r2, _08168A50\n\t"
-        "	ldr r3, _08168A54\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	adds r1, r2, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x3b\n\t"
-        "	bls _08168A46\n\t"
-        "	bl _081691B2\n\t"
-        "_08168A46:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08168A58\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08168A50: .4byte gBattleBufferA\n\t"
-        "_08168A54: .4byte gActiveBattler\n\t"
-        "_08168A58: .4byte _08168A5C\n\t"
-        "_08168A5C:\n\t"
-        "	.4byte _08168B4C\n\t"
-        "	.4byte _08168D70\n\t"
-        "	.4byte _08168D80\n\t"
-        "	.4byte _08168D90\n\t"
-        "	.4byte _08168DF8\n\t"
-        "	.4byte _08168DF8\n\t"
-        "	.4byte _08168DF8\n\t"
-        "	.4byte _08168DF8\n\t"
-        "	.4byte _08168E14\n\t"
-        "	.4byte _08168E50\n\t"
-        "	.4byte _08168E50\n\t"
-        "	.4byte _08168E50\n\t"
-        "	.4byte _08168E50\n\t"
-        "	.4byte _081691B2\n\t"
-        "	.4byte _081691B2\n\t"
-        "	.4byte _081691B2\n\t"
-        "	.4byte _081691B2\n\t"
-        "	.4byte _08168E6C\n\t"
-        "	.4byte _08168E7C\n\t"
-        "	.4byte _08168EAC\n\t"
-        "	.4byte _08168EBC\n\t"
-        "	.4byte _08168ECC\n\t"
-        "	.4byte _08168EDC\n\t"
-        "	.4byte _08168EEC\n\t"
-        "	.4byte _08168EFC\n\t"
-        "	.4byte _08168F0C\n\t"
-        "	.4byte _08168F1C\n\t"
-        "	.4byte _08168F2C\n\t"
-        "	.4byte _08168F3C\n\t"
-        "	.4byte _08168F4C\n\t"
-        "	.4byte _08168F5C\n\t"
-        "	.4byte _08168F6C\n\t"
-        "	.4byte _08168FBC\n\t"
-        "	.4byte _08168FCC\n\t"
-        "	.4byte _08168FDC\n\t"
-        "	.4byte _08168FEC\n\t"
-        "	.4byte _08168FFC\n\t"
-        "	.4byte _0816900C\n\t"
-        "	.4byte _0816901C\n\t"
-        "	.4byte _0816902C\n\t"
-        "	.4byte _0816903C\n\t"
-        "	.4byte _08169070\n\t"
-        "	.4byte _08169080\n\t"
-        "	.4byte _08169090\n\t"
-        "	.4byte _081690A0\n\t"
-        "	.4byte _081690B0\n\t"
-        "	.4byte _081690C0\n\t"
-        "	.4byte _081690D0\n\t"
-        "	.4byte _081690E0\n\t"
-        "	.4byte _08169100\n\t"
-        "	.4byte _08169110\n\t"
-        "	.4byte _08169120\n\t"
-        "	.4byte _08169130\n\t"
-        "	.4byte _08169140\n\t"
-        "	.4byte _08169150\n\t"
-        "	.4byte _08169160\n\t"
-        "	.4byte _08169170\n\t"
-        "	.4byte _08169180\n\t"
-        "	.4byte _08169190\n\t"
-        "	.4byte _081691A0\n\t"
-        "_08168B4C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _08168D60\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	movs r6, #0\n\t"
-        "	add r0, sp, #0x24\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r1, #0x3b\n\t"
-        "	add r1, sp\n\t"
-        "	mov sl, r1\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r2, #0x2b\n\t"
-        "	str r2, [sp, #0x80]\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r0, #0x2a\n\t"
-        "	str r0, [sp, #0x7c]\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r1, #0x68\n\t"
-        "	str r1, [sp, #0x8c]\n\t"
-        "	adds r2, #5\n\t"
-        "	str r2, [sp, #0x84]\n\t"
-        "	adds r0, #0x12\n\t"
-        "	str r0, [sp, #0x88]\n\t"
-        "	mov r8, r4\n\t"
-        "	add r4, sp, #0xc\n\t"
-        "_08168B98:\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r1, #0xd\n\t"
-        "	mov r0, r8\n\t"
-        "	bl GetMonData3\n\t"
-        "	strh r0, [r4]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r1, #0x11\n\t"
-        "	mov r0, r8\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r2, sb\n\t"
-        "	adds r1, r2, r6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r4, #2\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #3\n\t"
-        "	ble _08168B98\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _08168D60\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x15\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sl\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r2, [sp, #0x80]\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x19\n\t"
-        "	bl GetMonData3\n\t"
-        "	str r0, [sp, #0x44]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x27\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r3, sp\n\t"
-        "	movs r5, #0x1f\n\t"
-        "	ands r0, r5\n\t"
-        "	ldrb r2, [r3, #0x14]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r3, #0x14]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r3, sp\n\t"
-        "	movs r6, #0x1f\n\t"
-        "	ands r0, r6\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	ldrh r2, [r3, #0x14]\n\t"
-        "	ldr r1, _08168D64\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	strh r1, [r3, #0x14]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x29\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r3, sp\n\t"
-        "	ands r0, r5\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldrb r2, [r3, #0x15]\n\t"
-        "	movs r1, #0x7d\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r3, #0x15]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2a\n\t"
-        "	bl GetMonData3\n\t"
-        "	movs r1, #0x1f\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #0xf\n\t"
-        "	ldr r0, [sp, #0x14]\n\t"
-        "	ldr r2, _08168D68\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [sp, #0x14]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2b\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r3, sp\n\t"
-        "	ands r0, r6\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	ldrh r2, [r3, #0x16]\n\t"
-        "	ldr r1, _08168D6C\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	strh r1, [r3, #0x16]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2c\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r3, sp\n\t"
-        "	ands r0, r5\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ldrb r2, [r3, #0x17]\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r3, #0x17]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	str r0, [sp, #0x48]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x37\n\t"
-        "	bl GetMonData3\n\t"
-        "	str r0, [sp, #0x4c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r1, [sp, #0x7c]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r0, [r1, #0x28]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r0, [r1, #0x2c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3b\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3d\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3e\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r3, sp\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #6\n\t"
-        "	ldrb r2, [r3, #0x17]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r3, #0x17]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r3, sp\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	ldrb r2, [r3, #0x17]\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r3, #0x17]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetMonData3\n\t"
-        "	str r0, [sp, #0x54]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	ldr r2, [sp, #0x8c]\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r0, [sp, #0x84]\n\t"
-        "	ldr r1, [sp, #0x8c]\n\t"
-        "	bl StringCopy10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #7\n\t"
-        "	ldr r2, [sp, #0x88]\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r2, sp\n\t"
-        "	movs r6, #0\n\t"
-        "_08168D50:\n\t"
-        "	adds r0, r7, r6\n\t"
-        "	adds r1, r2, r6\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #0x57\n\t"
-        "	bls _08168D50\n\t"
-        "	b _081691B2\n\t"
-        "	.align 2, 0\n\t"
-        "_08168D60: .4byte gPlayerParty\n\t"
-        "_08168D64: .4byte 0xFFFFFC1F\n\t"
-        "_08168D68: .4byte 0xFFF07FFF\n\t"
-        "_08168D6C: .4byte 0xFFFFFE0F\n\t"
-        "_08168D70:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168D7C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xb\n\t"
-        "	b _081690EA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168D7C: .4byte gPlayerParty\n\t"
-        "_08168D80:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168D8C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xc\n\t"
-        "	b _081690EA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168D8C: .4byte gPlayerParty\n\t"
-        "_08168D90:\n\t"
-        "	movs r6, #0\n\t"
-        "	add r2, sp, #0x58\n\t"
-        "	mov sb, r2\n\t"
-        "	add r0, sp, #0x60\n\t"
-        "	mov sl, r0\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _08168DF4\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	mov r8, sb\n\t"
-        "_08168DA6:\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r1, #0xd\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r1, #0x11\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r2, sl\n\t"
-        "	adds r1, r2, r6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #2\n\t"
-        "	add r8, r0\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #3\n\t"
-        "	ble _08168DA6\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168DF4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x15\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sb\n\t"
-        "	strb r0, [r1, #0xc]\n\t"
-        "	mov r2, sb\n\t"
-        "	movs r6, #0\n\t"
-        "_08168DE4:\n\t"
-        "	adds r0, r7, r6\n\t"
-        "	adds r1, r2, r6\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #0xf\n\t"
-        "	bls _08168DE4\n\t"
-        "	b _081691B2\n\t"
-        "	.align 2, 0\n\t"
-        "_08168DF4: .4byte gPlayerParty\n\t"
-        "_08168DF8:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168E10\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	adds r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r1, #9\n\t"
-        "	b _081690EA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168E10: .4byte gPlayerParty\n\t"
-        "_08168E14:\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r2, _08168E4C\n\t"
-        "	mov r8, r2\n\t"
-        "_08168E20:\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r1, #0x11\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r0, r4, r2\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r7, r6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #3\n\t"
-        "	ble _08168E20\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168E4C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x15\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r7, r6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r6, #1\n\t"
-        "	b _081691B2\n\t"
-        "	.align 2, 0\n\t"
-        "_08168E4C: .4byte gPlayerParty\n\t"
-        "_08168E50:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168E68\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	adds r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r1, #8\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168E68: .4byte gPlayerParty\n\t"
-        "_08168E6C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168E78\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	b _08168E86\n\t"
-        "	.align 2, 0\n\t"
-        "_08168E78: .4byte gPlayerParty\n\t"
-        "_08168E7C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168EA8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x19\n\t"
-        "_08168E86:\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	strb r1, [r7]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	lsrs r0, r0, #8\n\t"
-        "	strb r0, [r7, #1]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	strb r0, [r7, #2]\n\t"
-        "	movs r6, #3\n\t"
-        "	b _081691B2\n\t"
-        "	.align 2, 0\n\t"
-        "_08168EA8: .4byte gPlayerParty\n\t"
-        "_08168EAC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168EB8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x1a\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168EB8: .4byte gPlayerParty\n\t"
-        "_08168EBC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168EC8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x1b\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168EC8: .4byte gPlayerParty\n\t"
-        "_08168ECC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168ED8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x1c\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168ED8: .4byte gPlayerParty\n\t"
-        "_08168EDC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168EE8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x1d\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168EE8: .4byte gPlayerParty\n\t"
-        "_08168EEC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168EF8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168EF8: .4byte gPlayerParty\n\t"
-        "_08168EFC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168F08\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x1f\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168F08: .4byte gPlayerParty\n\t"
-        "_08168F0C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168F18\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x20\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168F18: .4byte gPlayerParty\n\t"
-        "_08168F1C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168F28\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x22\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168F28: .4byte gPlayerParty\n\t"
-        "_08168F2C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168F38\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x23\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168F38: .4byte gPlayerParty\n\t"
-        "_08168F3C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168F48\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x24\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168F48: .4byte gPlayerParty\n\t"
-        "_08168F4C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168F58\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x25\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168F58: .4byte gPlayerParty\n\t"
-        "_08168F5C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168F68\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x26\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168F68: .4byte gPlayerParty\n\t"
-        "_08168F6C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _08168FB8\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x27\n\t"
-        "	bl GetMonData3\n\t"
-        "	strb r0, [r7]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl GetMonData3\n\t"
-        "	strb r0, [r7, #1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x29\n\t"
-        "	bl GetMonData3\n\t"
-        "	strb r0, [r7, #2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2a\n\t"
-        "	bl GetMonData3\n\t"
-        "	strb r0, [r7, #3]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2b\n\t"
-        "	bl GetMonData3\n\t"
-        "	strb r0, [r7, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2c\n\t"
-        "	bl GetMonData3\n\t"
-        "	strb r0, [r7, #5]\n\t"
-        "	movs r6, #6\n\t"
-        "	b _081691B2\n\t"
-        "	.align 2, 0\n\t"
-        "_08168FB8: .4byte gPlayerParty\n\t"
-        "_08168FBC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168FC8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x27\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168FC8: .4byte gPlayerParty\n\t"
-        "_08168FCC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168FD8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x28\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168FD8: .4byte gPlayerParty\n\t"
-        "_08168FDC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168FE8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x29\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168FE8: .4byte gPlayerParty\n\t"
-        "_08168FEC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08168FF8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x2a\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08168FF8: .4byte gPlayerParty\n\t"
-        "_08168FFC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169008\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x2b\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08169008: .4byte gPlayerParty\n\t"
-        "_0816900C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169018\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x2c\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08169018: .4byte gPlayerParty\n\t"
-        "_0816901C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169028\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	b _08169046\n\t"
-        "	.align 2, 0\n\t"
-        "_08169028: .4byte gPlayerParty\n\t"
-        "_0816902C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169038\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #9\n\t"
-        "	b _081690EA\n\t"
-        "	.align 2, 0\n\t"
-        "_08169038: .4byte gPlayerParty\n\t"
-        "_0816903C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816906C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x37\n\t"
-        "_08169046:\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	strb r1, [r7]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	lsrs r0, r0, #8\n\t"
-        "	strb r0, [r7, #1]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	strb r0, [r7, #2]\n\t"
-        "	lsrs r0, r1, #0x18\n\t"
-        "	strb r0, [r7, #3]\n\t"
-        "	movs r6, #4\n\t"
-        "	b _081691B2\n\t"
-        "	.align 2, 0\n\t"
-        "_0816906C: .4byte gPlayerParty\n\t"
-        "_08169070:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816907C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x38\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_0816907C: .4byte gPlayerParty\n\t"
-        "_08169080:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816908C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x39\n\t"
-        "	b _081690EA\n\t"
-        "	.align 2, 0\n\t"
-        "_0816908C: .4byte gPlayerParty\n\t"
-        "_08169090:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816909C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	b _081690EA\n\t"
-        "	.align 2, 0\n\t"
-        "_0816909C: .4byte gPlayerParty\n\t"
-        "_081690A0:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081690AC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x3b\n\t"
-        "	b _081690EA\n\t"
-        "	.align 2, 0\n\t"
-        "_081690AC: .4byte gPlayerParty\n\t"
-        "_081690B0:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081690BC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	b _081690EA\n\t"
-        "	.align 2, 0\n\t"
-        "_081690BC: .4byte gPlayerParty\n\t"
-        "_081690C0:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081690CC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x3d\n\t"
-        "	b _081690EA\n\t"
-        "	.align 2, 0\n\t"
-        "_081690CC: .4byte gPlayerParty\n\t"
-        "_081690D0:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081690DC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x3e\n\t"
-        "	b _081690EA\n\t"
-        "	.align 2, 0\n\t"
-        "_081690DC: .4byte gPlayerParty\n\t"
-        "_081690E0:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081690FC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x3f\n\t"
-        "_081690EA:\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	strb r0, [r7]\n\t"
-        "	lsrs r0, r0, #8\n\t"
-        "	strb r0, [r7, #1]\n\t"
-        "	movs r6, #2\n\t"
-        "	b _081691B2\n\t"
-        "	.align 2, 0\n\t"
-        "_081690FC: .4byte gPlayerParty\n\t"
-        "_08169100:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816910C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x16\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_0816910C: .4byte gPlayerParty\n\t"
-        "_08169110:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816911C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x17\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_0816911C: .4byte gPlayerParty\n\t"
-        "_08169120:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816912C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x18\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_0816912C: .4byte gPlayerParty\n\t"
-        "_08169130:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816913C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x21\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_0816913C: .4byte gPlayerParty\n\t"
-        "_08169140:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816914C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x2f\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_0816914C: .4byte gPlayerParty\n\t"
-        "_08169150:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816915C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x30\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_0816915C: .4byte gPlayerParty\n\t"
-        "_08169160:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816916C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x32\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_0816916C: .4byte gPlayerParty\n\t"
-        "_08169170:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816917C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x33\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_0816917C: .4byte gPlayerParty\n\t"
-        "_08169180:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816918C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x34\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_0816918C: .4byte gPlayerParty\n\t"
-        "_08169190:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816919C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x35\n\t"
-        "	b _081691AA\n\t"
-        "	.align 2, 0\n\t"
-        "_0816919C: .4byte gPlayerParty\n\t"
-        "_081691A0:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081691C4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x36\n\t"
-        "_081691AA:\n\t"
-        "	bl GetMonData3\n\t"
-        "	strb r0, [r7]\n\t"
-        "	movs r6, #1\n\t"
-        "_081691B2:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	add sp, #0x90\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081691C4: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    struct BattlePokemon battleMon;
+    struct MovePPInfo moveData;
+    u8 nickname[POKEMON_NAME_BUFFER_SIZE];
+    u8 *src;
+    s16 data16;
+    u32 data32;
+    s32 size = 0;
+
+    switch (gBattleBufferA[gActiveBattler][1])
+    {
+    case REQUEST_ALL_BATTLE:
+        battleMon.species = GetMonData3(&gPlayerParty[monId], MON_DATA_SPECIES);
+        battleMon.item = GetMonData3(&gPlayerParty[monId], MON_DATA_HELD_ITEM);
+        for (size = 0; size < MAX_MON_MOVES; size++)
+        {
+            battleMon.moves[size] = GetMonData3(&gPlayerParty[monId], MON_DATA_MOVE1 + size);
+            battleMon.pp[size] = GetMonData3(&gPlayerParty[monId], MON_DATA_PP1 + size);
+        }
+        battleMon.ppBonuses = GetMonData3(&gPlayerParty[monId], MON_DATA_PP_BONUSES);
+        battleMon.friendship = GetMonData3(&gPlayerParty[monId], MON_DATA_FRIENDSHIP);
+        battleMon.experience = GetMonData3(&gPlayerParty[monId], MON_DATA_EXP);
+        battleMon.hpIV = GetMonData3(&gPlayerParty[monId], MON_DATA_HP_IV);
+        battleMon.attackIV = GetMonData3(&gPlayerParty[monId], MON_DATA_ATK_IV);
+        battleMon.defenseIV = GetMonData3(&gPlayerParty[monId], MON_DATA_DEF_IV);
+        battleMon.speedIV = GetMonData3(&gPlayerParty[monId], MON_DATA_SPEED_IV);
+        battleMon.spAttackIV = GetMonData3(&gPlayerParty[monId], MON_DATA_SPATK_IV);
+        battleMon.spDefenseIV = GetMonData3(&gPlayerParty[monId], MON_DATA_SPDEF_IV);
+        battleMon.personality = GetMonData3(&gPlayerParty[monId], MON_DATA_PERSONALITY);
+        battleMon.status1 = GetMonData3(&gPlayerParty[monId], MON_DATA_STATUS);
+        battleMon.level = GetMonData3(&gPlayerParty[monId], MON_DATA_LEVEL);
+        battleMon.hp = GetMonData3(&gPlayerParty[monId], MON_DATA_HP);
+        battleMon.maxHP = GetMonData3(&gPlayerParty[monId], MON_DATA_MAX_HP);
+        battleMon.attack = GetMonData3(&gPlayerParty[monId], MON_DATA_ATK);
+        battleMon.defense = GetMonData3(&gPlayerParty[monId], MON_DATA_DEF);
+        battleMon.speed = GetMonData3(&gPlayerParty[monId], MON_DATA_SPEED);
+        battleMon.spAttack = GetMonData3(&gPlayerParty[monId], MON_DATA_SPATK);
+        battleMon.spDefense = GetMonData3(&gPlayerParty[monId], MON_DATA_SPDEF);
+        battleMon.isEgg = GetMonData3(&gPlayerParty[monId], MON_DATA_IS_EGG);
+        battleMon.abilityNum = GetMonData3(&gPlayerParty[monId], MON_DATA_ABILITY_NUM);
+        battleMon.otId = GetMonData3(&gPlayerParty[monId], MON_DATA_OT_ID);
+        GetMonData3(&gPlayerParty[monId], MON_DATA_NICKNAME, nickname);
+        StringCopy10(battleMon.nickname, nickname);
+        GetMonData3(&gPlayerParty[monId], MON_DATA_OT_NAME, battleMon.otName);
+        src = (u8 *)&battleMon;
+        for (size = 0; size < sizeof(battleMon); size++)
+            dst[size] = src[size];
+        break;
+    case REQUEST_SPECIES_BATTLE:
+        data16 = GetMonData3(&gPlayerParty[monId], MON_DATA_SPECIES);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
+        size = 2;
+        break;
+    case REQUEST_HELDITEM_BATTLE:
+        data16 = GetMonData3(&gPlayerParty[monId], MON_DATA_HELD_ITEM);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
+        size = 2;
+        break;
+    case REQUEST_MOVES_PP_BATTLE:
+        for (size = 0; size < MAX_MON_MOVES; size++)
+        {
+            moveData.moves[size] = GetMonData3(&gPlayerParty[monId], MON_DATA_MOVE1 + size);
+            moveData.pp[size] = GetMonData3(&gPlayerParty[monId], MON_DATA_PP1 + size);
+        }
+        moveData.ppBonuses = GetMonData3(&gPlayerParty[monId], MON_DATA_PP_BONUSES);
+        src = (u8 *)(&moveData);
+        for (size = 0; size < sizeof(moveData); size++)
+            dst[size] = src[size];
+        break;
+    case REQUEST_MOVE1_BATTLE:
+    case REQUEST_MOVE2_BATTLE:
+    case REQUEST_MOVE3_BATTLE:
+    case REQUEST_MOVE4_BATTLE:
+        data16 = GetMonData3(&gPlayerParty[monId], MON_DATA_MOVE1 + gBattleBufferA[gActiveBattler][1] - REQUEST_MOVE1_BATTLE);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
+        size = 2;
+        break;
+    case REQUEST_PP_DATA_BATTLE:
+        for (size = 0; size < MAX_MON_MOVES; size++)
+            dst[size] = GetMonData3(&gPlayerParty[monId], MON_DATA_PP1 + size);
+        dst[size] = GetMonData3(&gPlayerParty[monId], MON_DATA_PP_BONUSES);
+        size++;
+        break;
+    case REQUEST_PPMOVE1_BATTLE:
+    case REQUEST_PPMOVE2_BATTLE:
+    case REQUEST_PPMOVE3_BATTLE:
+    case REQUEST_PPMOVE4_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_PP1 + gBattleBufferA[gActiveBattler][1] - REQUEST_PPMOVE1_BATTLE);
+        size = 1;
+        break;
+    case REQUEST_OTID_BATTLE:
+        data32 = GetMonData3(&gPlayerParty[monId], MON_DATA_OT_ID);
+        dst[0] = (data32 & 0x000000FF);
+        dst[1] = (data32 & 0x0000FF00) >> 8;
+        dst[2] = (data32 & 0x00FF0000) >> 16;
+        size = 3;
+        break;
+    case REQUEST_EXP_BATTLE:
+        data32 = GetMonData3(&gPlayerParty[monId], MON_DATA_EXP);
+        dst[0] = (data32 & 0x000000FF);
+        dst[1] = (data32 & 0x0000FF00) >> 8;
+        dst[2] = (data32 & 0x00FF0000) >> 16;
+        size = 3;
+        break;
+    case REQUEST_HP_EV_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_HP_EV);
+        size = 1;
+        break;
+    case REQUEST_ATK_EV_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_ATK_EV);
+        size = 1;
+        break;
+    case REQUEST_DEF_EV_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_DEF_EV);
+        size = 1;
+        break;
+    case REQUEST_SPEED_EV_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_SPEED_EV);
+        size = 1;
+        break;
+    case REQUEST_SPATK_EV_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_SPATK_EV);
+        size = 1;
+        break;
+    case REQUEST_SPDEF_EV_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_SPDEF_EV);
+        size = 1;
+        break;
+    case REQUEST_FRIENDSHIP_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_FRIENDSHIP);
+        size = 1;
+        break;
+    case REQUEST_POKERUS_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_POKERUS);
+        size = 1;
+        break;
+    case REQUEST_MET_LOCATION_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_MET_LOCATION);
+        size = 1;
+        break;
+    case REQUEST_MET_LEVEL_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_MET_LEVEL);
+        size = 1;
+        break;
+    case REQUEST_MET_GAME_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_MET_GAME);
+        size = 1;
+        break;
+    case REQUEST_POKEBALL_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_POKEBALL);
+        size = 1;
+        break;
+    case REQUEST_ALL_IVS_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_HP_IV);
+        dst[1] = GetMonData3(&gPlayerParty[monId], MON_DATA_ATK_IV);
+        dst[2] = GetMonData3(&gPlayerParty[monId], MON_DATA_DEF_IV);
+        dst[3] = GetMonData3(&gPlayerParty[monId], MON_DATA_SPEED_IV);
+        dst[4] = GetMonData3(&gPlayerParty[monId], MON_DATA_SPATK_IV);
+        dst[5] = GetMonData3(&gPlayerParty[monId], MON_DATA_SPDEF_IV);
+        size = 6;
+        break;
+    case REQUEST_HP_IV_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_HP_IV);
+        size = 1;
+        break;
+    case REQUEST_ATK_IV_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_ATK_IV);
+        size = 1;
+        break;
+    case REQUEST_DEF_IV_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_DEF_IV);
+        size = 1;
+        break;
+    case REQUEST_SPEED_IV_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_SPEED_IV);
+        size = 1;
+        break;
+    case REQUEST_SPATK_IV_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_SPATK_IV);
+        size = 1;
+        break;
+    case REQUEST_SPDEF_IV_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_SPDEF_IV);
+        size = 1;
+        break;
+    case REQUEST_PERSONALITY_BATTLE:
+        data32 = GetMonData3(&gPlayerParty[monId], MON_DATA_PERSONALITY);
+        dst[0] = (data32 & 0x000000FF);
+        dst[1] = (data32 & 0x0000FF00) >> 8;
+        dst[2] = (data32 & 0x00FF0000) >> 16;
+        dst[3] = (data32 & 0xFF000000) >> 24;
+        size = 4;
+        break;
+    case REQUEST_CHECKSUM_BATTLE:
+        data16 = GetMonData3(&gPlayerParty[monId], MON_DATA_CHECKSUM);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
+        size = 2;
+        break;
+    case REQUEST_STATUS_BATTLE:
+        data32 = GetMonData3(&gPlayerParty[monId], MON_DATA_STATUS);
+        dst[0] = (data32 & 0x000000FF);
+        dst[1] = (data32 & 0x0000FF00) >> 8;
+        dst[2] = (data32 & 0x00FF0000) >> 16;
+        dst[3] = (data32 & 0xFF000000) >> 24;
+        size = 4;
+        break;
+    case REQUEST_LEVEL_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_LEVEL);
+        size = 1;
+        break;
+    case REQUEST_HP_BATTLE:
+        data16 = GetMonData3(&gPlayerParty[monId], MON_DATA_HP);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
+        size = 2;
+        break;
+    case REQUEST_MAX_HP_BATTLE:
+        data16 = GetMonData3(&gPlayerParty[monId], MON_DATA_MAX_HP);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
+        size = 2;
+        break;
+    case REQUEST_ATK_BATTLE:
+        data16 = GetMonData3(&gPlayerParty[monId], MON_DATA_ATK);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
+        size = 2;
+        break;
+    case REQUEST_DEF_BATTLE:
+        data16 = GetMonData3(&gPlayerParty[monId], MON_DATA_DEF);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
+        size = 2;
+        break;
+    case REQUEST_SPEED_BATTLE:
+        data16 = GetMonData3(&gPlayerParty[monId], MON_DATA_SPEED);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
+        size = 2;
+        break;
+    case REQUEST_SPATK_BATTLE:
+        data16 = GetMonData3(&gPlayerParty[monId], MON_DATA_SPATK);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
+        size = 2;
+        break;
+    case REQUEST_SPDEF_BATTLE:
+        data16 = GetMonData3(&gPlayerParty[monId], MON_DATA_SPDEF);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
+        size = 2;
+        break;
+    case REQUEST_COOL_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_COOL);
+        size = 1;
+        break;
+    case REQUEST_BEAUTY_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_BEAUTY);
+        size = 1;
+        break;
+    case REQUEST_CUTE_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_CUTE);
+        size = 1;
+        break;
+    case REQUEST_SMART_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_SMART);
+        size = 1;
+        break;
+    case REQUEST_TOUGH_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_TOUGH);
+        size = 1;
+        break;
+    case REQUEST_SHEEN_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_SHEEN);
+        size = 1;
+        break;
+    case REQUEST_COOL_RIBBON_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_COOL_RIBBON);
+        size = 1;
+        break;
+    case REQUEST_BEAUTY_RIBBON_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_BEAUTY_RIBBON);
+        size = 1;
+        break;
+    case REQUEST_CUTE_RIBBON_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_CUTE_RIBBON);
+        size = 1;
+        break;
+    case REQUEST_SMART_RIBBON_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_SMART_RIBBON);
+        size = 1;
+        break;
+    case REQUEST_TOUGH_RIBBON_BATTLE:
+        dst[0] = GetMonData3(&gPlayerParty[monId], MON_DATA_TOUGH_RIBBON);
+        size = 1;
+        break;
+    }
+
+    return size;
 }
 
-__attribute__((naked)) void sub_081691C8(void)
+void sub_081691C8(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerHandleGetRawMonData\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerHandleGetRawMonData();
 }
 
-__attribute__((naked)) void WallyHandleSetMonData(void)
+void WallyHandleSetMonData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r1, _081691F8\n\t"
-        "	ldr r0, _081691FC\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	lsls r0, r2, #9\n\t"
-        "	adds r1, #2\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08169204\n\t"
-        "	ldr r0, _08169200\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	bl SetWallyMonData\n\t"
-        "	b _08169222\n\t"
-        "	.align 2, 0\n\t"
-        "_081691F8: .4byte gBattleBufferA\n\t"
-        "_081691FC: .4byte gActiveBattler\n\t"
-        "_08169200: .4byte gBattlerPartyIndexes\n\t"
-        "_08169204:\n\t"
-        "	ldrb r4, [r1]\n\t"
-        "	movs r5, #0\n\t"
-        "_08169208:\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08169216\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl SetWallyMonData\n\t"
-        "_08169216:\n\t"
-        "	lsrs r4, r4, #1\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #5\n\t"
-        "	bls _08169208\n\t"
-        "_08169222:\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 monToCheck;
+    u8 i;
+
+    if (gBattleBufferA[gActiveBattler][2] == 0)
+    {
+        SetWallyMonData(gBattlerPartyIndexes[gActiveBattler]);
+    }
+    else
+    {
+        monToCheck = gBattleBufferA[gActiveBattler][2];
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (monToCheck & 1)
+                SetWallyMonData(i);
+            monToCheck >>= 1;
+        }
+    }
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void SetWallyMonData(void)
+void SetWallyMonData(u8 monId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x34\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _08169264\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	ldr r2, _08169268\n\t"
-        "	adds r3, r0, r2\n\t"
-        "	adds r6, r3, #0\n\t"
-        "	subs r1, r2, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r7, r2, #0\n\t"
-        "	cmp r0, #0x3b\n\t"
-        "	bls _08169258\n\t"
-        "	bl _08169BF2\n\t"
-        "_08169258:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0816926C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08169264: .4byte gActiveBattler\n\t"
-        "_08169268: .4byte gUnknown_2022D0B\n\t"
-        "_0816926C: .4byte _08169270\n\t"
-        "_08169270:\n\t"
-        "	.4byte _08169360\n\t"
-        "	.4byte _081694F8\n\t"
-        "	.4byte _08169518\n\t"
-        "	.4byte _08169538\n\t"
-        "	.4byte _08169590\n\t"
-        "	.4byte _08169590\n\t"
-        "	.4byte _08169590\n\t"
-        "	.4byte _08169590\n\t"
-        "	.4byte _081695B8\n\t"
-        "	.4byte _0816961C\n\t"
-        "	.4byte _0816961C\n\t"
-        "	.4byte _0816961C\n\t"
-        "	.4byte _0816961C\n\t"
-        "	.4byte _08169BF2\n\t"
-        "	.4byte _08169BF2\n\t"
-        "	.4byte _08169BF2\n\t"
-        "	.4byte _08169BF2\n\t"
-        "	.4byte _0816964C\n\t"
-        "	.4byte _0816966C\n\t"
-        "	.4byte _0816968C\n\t"
-        "	.4byte _081696AC\n\t"
-        "	.4byte _081696CC\n\t"
-        "	.4byte _081696EC\n\t"
-        "	.4byte _0816970C\n\t"
-        "	.4byte _0816972C\n\t"
-        "	.4byte _0816974C\n\t"
-        "	.4byte _0816976C\n\t"
-        "	.4byte _0816978C\n\t"
-        "	.4byte _081697AC\n\t"
-        "	.4byte _081697CC\n\t"
-        "	.4byte _081697EC\n\t"
-        "	.4byte _0816980C\n\t"
-        "	.4byte _0816987C\n\t"
-        "	.4byte _0816989C\n\t"
-        "	.4byte _081698BC\n\t"
-        "	.4byte _081698DC\n\t"
-        "	.4byte _081698FC\n\t"
-        "	.4byte _0816991C\n\t"
-        "	.4byte _0816993C\n\t"
-        "	.4byte _0816995C\n\t"
-        "	.4byte _0816997C\n\t"
-        "	.4byte _0816999C\n\t"
-        "	.4byte _081699BC\n\t"
-        "	.4byte _081699DC\n\t"
-        "	.4byte _081699FC\n\t"
-        "	.4byte _08169A1C\n\t"
-        "	.4byte _08169A3C\n\t"
-        "	.4byte _08169A5C\n\t"
-        "	.4byte _08169A7C\n\t"
-        "	.4byte _08169A9C\n\t"
-        "	.4byte _08169ABC\n\t"
-        "	.4byte _08169ADC\n\t"
-        "	.4byte _08169AFC\n\t"
-        "	.4byte _08169B1C\n\t"
-        "	.4byte _08169B3C\n\t"
-        "	.4byte _08169B5C\n\t"
-        "	.4byte _08169B7C\n\t"
-        "	.4byte _08169B9C\n\t"
-        "	.4byte _08169BBC\n\t"
-        "	.4byte _08169BDC\n\t"
-        "_08169360:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _081694F4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r2, #0x2e\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl SetMonData\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r0, #0x3b\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	mov sl, r0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r0, #0x2b\n\t"
-        "	str r0, [sp, #0x20]\n\t"
-        "	adds r0, #0x19\n\t"
-        "	str r0, [sp, #0x28]\n\t"
-        "	adds r0, #4\n\t"
-        "	str r0, [sp, #0x2c]\n\t"
-        "	adds r0, #4\n\t"
-        "	str r0, [sp, #0x30]\n\t"
-        "	subs r0, #0x22\n\t"
-        "	str r0, [sp, #0x1c]\n\t"
-        "	subs r0, #2\n\t"
-        "	str r0, [sp, #0x18]\n\t"
-        "	adds r0, #4\n\t"
-        "	str r0, [sp, #0x24]\n\t"
-        "	adds r0, r6, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	adds r0, r6, #4\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	adds r0, r6, #6\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	adds r0, #2\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "	adds r0, #2\n\t"
-        "	str r0, [sp, #0x14]\n\t"
-        "	mov sb, r4\n\t"
-        "	adds r7, r6, #0\n\t"
-        "	adds r7, #0x24\n\t"
-        "	adds r4, r6, #0\n\t"
-        "	adds r4, #0xc\n\t"
-        "_081693C6:\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r1, #0xd\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r1, #0x11\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r7, #1\n\t"
-        "	adds r4, #2\n\t"
-        "	movs r0, #1\n\t"
-        "	add r8, r0\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _081693C6\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _081694F4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x15\n\t"
-        "	mov r2, sl\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	ldr r2, [sp, #0x20]\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x19\n\t"
-        "	ldr r2, [sp, #0x28]\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r0, [r6, #0x14]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	mov r1, sp\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x27\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrh r0, [r6, #0x14]\n\t"
-        "	lsls r0, r0, #0x16\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x28\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrb r0, [r6, #0x15]\n\t"
-        "	lsls r0, r0, #0x19\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x29\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r0, [r6, #0x14]\n\t"
-        "	lsls r0, r0, #0xc\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2a\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrh r0, [r6, #0x16]\n\t"
-        "	lsls r0, r0, #0x17\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2b\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrb r0, [r6, #0x17]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2c\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r2, [sp, #0x2c]\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x37\n\t"
-        "	ldr r2, [sp, #0x30]\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldr r2, [sp, #0x1c]\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	ldr r2, [sp, #0x18]\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldr r2, [sp, #0x24]\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3b\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldr r2, [sp, #8]\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3d\n\t"
-        "	ldr r2, [sp, #0xc]\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3e\n\t"
-        "	ldr r2, [sp, #0x10]\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	ldr r2, [sp, #0x14]\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081694F4: .4byte gPlayerParty\n\t"
-        "_081694F8:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169510\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169514\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169510: .4byte gPlayerParty\n\t"
-        "_08169514: .4byte gActiveBattler\n\t"
-        "_08169518:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169530\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169534\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169530: .4byte gPlayerParty\n\t"
-        "_08169534: .4byte gActiveBattler\n\t"
-        "_08169538:\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r0, #0xc\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _0816958C\n\t"
-        "	adds r7, r1, r0\n\t"
-        "	adds r6, r3, #0\n\t"
-        "	adds r6, #8\n\t"
-        "	adds r4, r3, #0\n\t"
-        "_08169552:\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r1, #0xd\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r1, #0x11\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r6, #1\n\t"
-        "	adds r4, #2\n\t"
-        "	movs r0, #1\n\t"
-        "	add r8, r0\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _08169552\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _0816958C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x15\n\t"
-        "	mov r2, sb\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_0816958C: .4byte gPlayerParty\n\t"
-        "_08169590:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081695AC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r3, _081695B0\n\t"
-        "	ldr r1, _081695B4\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r1, r3, #1\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r1, #9\n\t"
-        "	b _08169634\n\t"
-        "	.align 2, 0\n\t"
-        "_081695AC: .4byte gPlayerParty\n\t"
-        "_081695B0: .4byte gBattleBufferA\n\t"
-        "_081695B4: .4byte gActiveBattler\n\t"
-        "_081695B8:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _08169614\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r5, _08169618\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x12\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r0, r7, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x13\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r0, r7, #3\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x14\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r0, r7, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x15\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169614: .4byte gPlayerParty\n\t"
-        "_08169618: .4byte gActiveBattler\n\t"
-        "_0816961C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169640\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r3, _08169644\n\t"
-        "	ldr r1, _08169648\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r1, r3, #1\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r1, #8\n\t"
-        "_08169634:\n\t"
-        "	adds r3, #3\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169640: .4byte gPlayerParty\n\t"
-        "_08169644: .4byte gBattleBufferA\n\t"
-        "_08169648: .4byte gActiveBattler\n\t"
-        "_0816964C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169664\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169668\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169664: .4byte gPlayerParty\n\t"
-        "_08169668: .4byte gActiveBattler\n\t"
-        "_0816966C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169684\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169688\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x19\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169684: .4byte gPlayerParty\n\t"
-        "_08169688: .4byte gActiveBattler\n\t"
-        "_0816968C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081696A4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081696A8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x1a\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081696A4: .4byte gPlayerParty\n\t"
-        "_081696A8: .4byte gActiveBattler\n\t"
-        "_081696AC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081696C4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081696C8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x1b\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081696C4: .4byte gPlayerParty\n\t"
-        "_081696C8: .4byte gActiveBattler\n\t"
-        "_081696CC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081696E4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081696E8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x1c\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081696E4: .4byte gPlayerParty\n\t"
-        "_081696E8: .4byte gActiveBattler\n\t"
-        "_081696EC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169704\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169708\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x1d\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169704: .4byte gPlayerParty\n\t"
-        "_08169708: .4byte gActiveBattler\n\t"
-        "_0816970C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169724\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169728\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169724: .4byte gPlayerParty\n\t"
-        "_08169728: .4byte gActiveBattler\n\t"
-        "_0816972C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169744\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169748\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x1f\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169744: .4byte gPlayerParty\n\t"
-        "_08169748: .4byte gActiveBattler\n\t"
-        "_0816974C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169764\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169768\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169764: .4byte gPlayerParty\n\t"
-        "_08169768: .4byte gActiveBattler\n\t"
-        "_0816976C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169784\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169788\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x22\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169784: .4byte gPlayerParty\n\t"
-        "_08169788: .4byte gActiveBattler\n\t"
-        "_0816978C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081697A4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081697A8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x23\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081697A4: .4byte gPlayerParty\n\t"
-        "_081697A8: .4byte gActiveBattler\n\t"
-        "_081697AC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081697C4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081697C8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x24\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081697C4: .4byte gPlayerParty\n\t"
-        "_081697C8: .4byte gActiveBattler\n\t"
-        "_081697CC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081697E4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081697E8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x25\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081697E4: .4byte gPlayerParty\n\t"
-        "_081697E8: .4byte gActiveBattler\n\t"
-        "_081697EC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169804\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169808\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x26\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169804: .4byte gPlayerParty\n\t"
-        "_08169808: .4byte gActiveBattler\n\t"
-        "_0816980C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _08169874\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r5, _08169878\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x27\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r0, r7, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x29\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r0, r7, #3\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2a\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r0, r7, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2b\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r0, r7, #5\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	b _0816992C\n\t"
-        "	.align 2, 0\n\t"
-        "_08169874: .4byte gPlayerParty\n\t"
-        "_08169878: .4byte gActiveBattler\n\t"
-        "_0816987C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169894\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169898\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x27\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169894: .4byte gPlayerParty\n\t"
-        "_08169898: .4byte gActiveBattler\n\t"
-        "_0816989C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081698B4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081698B8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081698B4: .4byte gPlayerParty\n\t"
-        "_081698B8: .4byte gActiveBattler\n\t"
-        "_081698BC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081698D4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081698D8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x29\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081698D4: .4byte gPlayerParty\n\t"
-        "_081698D8: .4byte gActiveBattler\n\t"
-        "_081698DC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081698F4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081698F8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x2a\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081698F4: .4byte gPlayerParty\n\t"
-        "_081698F8: .4byte gActiveBattler\n\t"
-        "_081698FC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169914\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169918\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x2b\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169914: .4byte gPlayerParty\n\t"
-        "_08169918: .4byte gActiveBattler\n\t"
-        "_0816991C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169934\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169938\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "_0816992C:\n\t"
-        "	movs r1, #0x2c\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169934: .4byte gPlayerParty\n\t"
-        "_08169938: .4byte gActiveBattler\n\t"
-        "_0816993C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169954\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169958\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169954: .4byte gPlayerParty\n\t"
-        "_08169958: .4byte gActiveBattler\n\t"
-        "_0816995C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169974\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169978\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #9\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169974: .4byte gPlayerParty\n\t"
-        "_08169978: .4byte gActiveBattler\n\t"
-        "_0816997C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169994\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169998\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x37\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169994: .4byte gPlayerParty\n\t"
-        "_08169998: .4byte gActiveBattler\n\t"
-        "_0816999C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081699B4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081699B8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x38\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081699B4: .4byte gPlayerParty\n\t"
-        "_081699B8: .4byte gActiveBattler\n\t"
-        "_081699BC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081699D4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081699D8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081699D4: .4byte gPlayerParty\n\t"
-        "_081699D8: .4byte gActiveBattler\n\t"
-        "_081699DC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081699F4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081699F8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081699F4: .4byte gPlayerParty\n\t"
-        "_081699F8: .4byte gActiveBattler\n\t"
-        "_081699FC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169A14\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169A18\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x3b\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169A14: .4byte gPlayerParty\n\t"
-        "_08169A18: .4byte gActiveBattler\n\t"
-        "_08169A1C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169A34\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169A38\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169A34: .4byte gPlayerParty\n\t"
-        "_08169A38: .4byte gActiveBattler\n\t"
-        "_08169A3C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169A54\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169A58\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x3d\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169A54: .4byte gPlayerParty\n\t"
-        "_08169A58: .4byte gActiveBattler\n\t"
-        "_08169A5C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169A74\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169A78\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x3e\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169A74: .4byte gPlayerParty\n\t"
-        "_08169A78: .4byte gActiveBattler\n\t"
-        "_08169A7C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169A94\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169A98\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169A94: .4byte gPlayerParty\n\t"
-        "_08169A98: .4byte gActiveBattler\n\t"
-        "_08169A9C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169AB4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169AB8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x16\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169AB4: .4byte gPlayerParty\n\t"
-        "_08169AB8: .4byte gActiveBattler\n\t"
-        "_08169ABC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169AD4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169AD8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x17\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169AD4: .4byte gPlayerParty\n\t"
-        "_08169AD8: .4byte gActiveBattler\n\t"
-        "_08169ADC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169AF4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169AF8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x18\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169AF4: .4byte gPlayerParty\n\t"
-        "_08169AF8: .4byte gActiveBattler\n\t"
-        "_08169AFC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169B14\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169B18\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x21\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169B14: .4byte gPlayerParty\n\t"
-        "_08169B18: .4byte gActiveBattler\n\t"
-        "_08169B1C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169B34\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169B38\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x2f\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169B34: .4byte gPlayerParty\n\t"
-        "_08169B38: .4byte gActiveBattler\n\t"
-        "_08169B3C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169B54\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169B58\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x30\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169B54: .4byte gPlayerParty\n\t"
-        "_08169B58: .4byte gActiveBattler\n\t"
-        "_08169B5C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169B74\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169B78\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x32\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169B74: .4byte gPlayerParty\n\t"
-        "_08169B78: .4byte gActiveBattler\n\t"
-        "_08169B7C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169B94\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169B98\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x33\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169B94: .4byte gPlayerParty\n\t"
-        "_08169B98: .4byte gActiveBattler\n\t"
-        "_08169B9C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169BB4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169BB8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x34\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169BB4: .4byte gPlayerParty\n\t"
-        "_08169BB8: .4byte gActiveBattler\n\t"
-        "_08169BBC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169BD4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169BD8\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x35\n\t"
-        "	bl SetMonData\n\t"
-        "	b _08169BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08169BD4: .4byte gPlayerParty\n\t"
-        "_08169BD8: .4byte gActiveBattler\n\t"
-        "_08169BDC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _08169C1C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169C20\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0x36\n\t"
-        "	bl SetMonData\n\t"
-        "_08169BF2:\n\t"
-        "	ldr r2, _08169C24\n\t"
-        "	ldr r0, _08169C20\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r2, r0\n\t"
-        "	ldr r2, _08169C1C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	bl HandleLowHpMusicChange\n\t"
-        "	add sp, #0x34\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08169C1C: .4byte gPlayerParty\n\t"
-        "_08169C20: .4byte gActiveBattler\n\t"
-        "_08169C24: .4byte gBattlerPartyIndexes\n\t"
-        ".syntax divided\n\t"
-    );
+    struct BattlePokemon *battlePokemon = (struct BattlePokemon *)&gBattleBufferA[gActiveBattler][3];
+    struct MovePPInfo *moveData = (struct MovePPInfo *)&gBattleBufferA[gActiveBattler][3];
+    s32 i;
+
+    switch (gBattleBufferA[gActiveBattler][1])
+    {
+    case REQUEST_ALL_BATTLE:
+        {
+            u8 iv;
+
+            SetMonData(&gPlayerParty[monId], MON_DATA_SPECIES, &battlePokemon->species);
+            SetMonData(&gPlayerParty[monId], MON_DATA_HELD_ITEM, &battlePokemon->item);
+            for (i = 0; i < MAX_MON_MOVES; i++)
+            {
+                SetMonData(&gPlayerParty[monId], MON_DATA_MOVE1 + i, &battlePokemon->moves[i]);
+                SetMonData(&gPlayerParty[monId], MON_DATA_PP1 + i, &battlePokemon->pp[i]);
+            }
+            SetMonData(&gPlayerParty[monId], MON_DATA_PP_BONUSES, &battlePokemon->ppBonuses);
+            SetMonData(&gPlayerParty[monId], MON_DATA_FRIENDSHIP, &battlePokemon->friendship);
+            SetMonData(&gPlayerParty[monId], MON_DATA_EXP, &battlePokemon->experience);
+            iv = battlePokemon->hpIV;
+            SetMonData(&gPlayerParty[monId], MON_DATA_HP_IV, &iv);
+            iv = battlePokemon->attackIV;
+            SetMonData(&gPlayerParty[monId], MON_DATA_ATK_IV, &iv);
+            iv = battlePokemon->defenseIV;
+            SetMonData(&gPlayerParty[monId], MON_DATA_DEF_IV, &iv);
+            iv = battlePokemon->speedIV;
+            SetMonData(&gPlayerParty[monId], MON_DATA_SPEED_IV, &iv);
+            iv = battlePokemon->spAttackIV;
+            SetMonData(&gPlayerParty[monId], MON_DATA_SPATK_IV, &iv);
+            iv = battlePokemon->spDefenseIV;
+            SetMonData(&gPlayerParty[monId], MON_DATA_SPDEF_IV, &iv);
+            SetMonData(&gPlayerParty[monId], MON_DATA_PERSONALITY, &battlePokemon->personality);
+            SetMonData(&gPlayerParty[monId], MON_DATA_STATUS, &battlePokemon->status1);
+            SetMonData(&gPlayerParty[monId], MON_DATA_LEVEL, &battlePokemon->level);
+            SetMonData(&gPlayerParty[monId], MON_DATA_HP, &battlePokemon->hp);
+            SetMonData(&gPlayerParty[monId], MON_DATA_MAX_HP, &battlePokemon->maxHP);
+            SetMonData(&gPlayerParty[monId], MON_DATA_ATK, &battlePokemon->attack);
+            SetMonData(&gPlayerParty[monId], MON_DATA_DEF, &battlePokemon->defense);
+            SetMonData(&gPlayerParty[monId], MON_DATA_SPEED, &battlePokemon->speed);
+            SetMonData(&gPlayerParty[monId], MON_DATA_SPATK, &battlePokemon->spAttack);
+            SetMonData(&gPlayerParty[monId], MON_DATA_SPDEF, &battlePokemon->spDefense);
+        }
+        break;
+    case REQUEST_SPECIES_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_SPECIES, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_HELDITEM_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_HELD_ITEM, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_MOVES_PP_BATTLE:
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            SetMonData(&gPlayerParty[monId], MON_DATA_MOVE1 + i, &moveData->moves[i]);
+            SetMonData(&gPlayerParty[monId], MON_DATA_PP1 + i, &moveData->pp[i]);
+        }
+        SetMonData(&gPlayerParty[monId], MON_DATA_PP_BONUSES, &moveData->ppBonuses);
+        break;
+    case REQUEST_MOVE1_BATTLE:
+    case REQUEST_MOVE2_BATTLE:
+    case REQUEST_MOVE3_BATTLE:
+    case REQUEST_MOVE4_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_MOVE1 + gBattleBufferA[gActiveBattler][1] - REQUEST_MOVE1_BATTLE, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_PP_DATA_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_PP1, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gPlayerParty[monId], MON_DATA_PP2, &gBattleBufferA[gActiveBattler][4]);
+        SetMonData(&gPlayerParty[monId], MON_DATA_PP3, &gBattleBufferA[gActiveBattler][5]);
+        SetMonData(&gPlayerParty[monId], MON_DATA_PP4, &gBattleBufferA[gActiveBattler][6]);
+        SetMonData(&gPlayerParty[monId], MON_DATA_PP_BONUSES, &gBattleBufferA[gActiveBattler][7]);
+        break;
+    case REQUEST_PPMOVE1_BATTLE:
+    case REQUEST_PPMOVE2_BATTLE:
+    case REQUEST_PPMOVE3_BATTLE:
+    case REQUEST_PPMOVE4_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_PP1 + gBattleBufferA[gActiveBattler][1] - REQUEST_PPMOVE1_BATTLE, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_OTID_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_OT_ID, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_EXP_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_EXP, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_HP_EV_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_HP_EV, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_ATK_EV_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_ATK_EV, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_DEF_EV_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_DEF_EV, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_SPEED_EV_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_SPEED_EV, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_SPATK_EV_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_SPATK_EV, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_SPDEF_EV_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_SPDEF_EV, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_FRIENDSHIP_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_FRIENDSHIP, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_POKERUS_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_POKERUS, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_MET_LOCATION_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_MET_LOCATION, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_MET_LEVEL_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_MET_LEVEL, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_MET_GAME_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_MET_GAME, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_POKEBALL_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_POKEBALL, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_ALL_IVS_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_HP_IV, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gPlayerParty[monId], MON_DATA_ATK_IV, &gBattleBufferA[gActiveBattler][4]);
+        SetMonData(&gPlayerParty[monId], MON_DATA_DEF_IV, &gBattleBufferA[gActiveBattler][5]);
+        SetMonData(&gPlayerParty[monId], MON_DATA_SPEED_IV, &gBattleBufferA[gActiveBattler][6]);
+        SetMonData(&gPlayerParty[monId], MON_DATA_SPATK_IV, &gBattleBufferA[gActiveBattler][7]);
+        SetMonData(&gPlayerParty[monId], MON_DATA_SPDEF_IV, &gBattleBufferA[gActiveBattler][8]);
+        break;
+    case REQUEST_HP_IV_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_HP_IV, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_ATK_IV_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_ATK_IV, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_DEF_IV_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_DEF_IV, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_SPEED_IV_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_SPEED_IV, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_SPATK_IV_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_SPATK_IV, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_SPDEF_IV_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_SPDEF_IV, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_PERSONALITY_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_PERSONALITY, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_CHECKSUM_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_CHECKSUM, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_STATUS_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_STATUS, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_LEVEL_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_LEVEL, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_HP_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_HP, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_MAX_HP_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_MAX_HP, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_ATK_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_ATK, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_DEF_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_DEF, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_SPEED_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_SPEED, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_SPATK_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_SPATK, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_SPDEF_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_SPDEF, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_COOL_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_COOL, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_BEAUTY_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_BEAUTY, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_CUTE_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_CUTE, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_SMART_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_SMART, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_TOUGH_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_TOUGH, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_SHEEN_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_SHEEN, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_COOL_RIBBON_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_COOL_RIBBON, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_BEAUTY_RIBBON_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_BEAUTY_RIBBON, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_CUTE_RIBBON_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_CUTE_RIBBON, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_SMART_RIBBON_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_SMART_RIBBON, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    case REQUEST_TOUGH_RIBBON_BATTLE:
+        SetMonData(&gPlayerParty[monId], MON_DATA_TOUGH_RIBBON, &gBattleBufferA[gActiveBattler][3]);
+        break;
+    }
+
+    HandleLowHpMusicChange(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
 }
 
 void WallyHandleSetRawMonData(void)
@@ -3282,977 +917,243 @@ void WallyHandleSwitchInAnim(void)
 }
 
 
-__attribute__((naked)) void WallyHandleReturnMonToBall(void)
+void WallyHandleReturnMonToBall(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r0, _08169C78\n\t"
-        "	ldr r6, _08169C7C\n\t"
-        "	ldrb r2, [r6]\n\t"
-        "	lsls r1, r2, #9\n\t"
-        "	adds r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08169C88\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl InitAndLaunchSpecialAnimation\n\t"
-        "	ldr r0, _08169C80\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _08169C84\n\t"
-        "	str r0, [r1]\n\t"
-        "	b _08169CBE\n\t"
-        "	.align 2, 0\n\t"
-        "_08169C78: .4byte gBattleBufferA\n\t"
-        "_08169C7C: .4byte gActiveBattler\n\t"
-        "_08169C80: .4byte gBattlerControllerFuncs\n\t"
-        "_08169C84: .4byte sub_08168828 + 1\n\t"
-        "_08169C88:\n\t"
-        "	ldr r5, _08169CC4\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _08169CC8\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl FreeSpriteOamMatrix\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r1, _08169CCC\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetHealthboxSpriteInvisible\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_08169CBE:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08169CC4: .4byte gBattlerSpriteIds\n\t"
-        "_08169CC8: .4byte gSprites\n\t"
-        "_08169CCC: .4byte gHealthboxSpriteIds\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gBattleBufferA[gActiveBattler][1] == 0)
+    {
+        InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, gActiveBattler, B_ANIM_SWITCH_OUT_PLAYER_MON);
+        gBattlerControllerFuncs[gActiveBattler] = sub_08168828;
+    }
+    else
+    {
+        FreeSpriteOamMatrix(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
+        DestroySprite(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
+        SetHealthboxSpriteInvisible(gHealthboxSpriteIds[gActiveBattler]);
+        WallyBufferExecCompleted();
+    }
 }
 
-__attribute__((naked)) void WallyHandleDrawTrainerPic(void)
+void WallyHandleDrawTrainerPic(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r4, _08169D78\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #6\n\t"
-        "	bl DecompressTrainerBackPic\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl GetBattlerPosition\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r0, #6\n\t"
-        "	bl SetMultiuseSpriteTemplateToTrainerBack\n\t"
-        "	ldr r0, _08169D7C\n\t"
-        "	ldr r1, _08169D80\n\t"
-        "	ldrb r1, [r1, #0x18]\n\t"
-        "	movs r2, #8\n\t"
-        "	subs r2, r2, r1\n\t"
-        "	lsls r2, r2, #0x12\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #0xf\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	movs r1, #0x50\n\t"
-        "	movs r3, #0x1e\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r6, _08169D84\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r5, _08169D88\n\t"
-        "	ldrb r3, [r4]\n\t"
-        "	adds r0, r3, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r3\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	strh r1, [r0, #0x24]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, _08169D8C\n\t"
-        "	strh r1, [r0, #0x2e]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r5, #0x1c\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, _08169D90\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r1, _08169D94\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169D98\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08169D78: .4byte gActiveBattler\n\t"
-        "_08169D7C: .4byte gMultiuseSpriteTemplate\n\t"
-        "_08169D80: .4byte gTrainerBackPicCoords\n\t"
-        "_08169D84: .4byte gBattlerSpriteIds\n\t"
-        "_08169D88: .4byte gSprites\n\t"
-        "_08169D8C: .4byte 0x0000FFFE\n\t"
-        "_08169D90: .4byte sub_0805D3C8 + 1\n\t"
-        "_08169D94: .4byte gBattlerControllerFuncs\n\t"
-        "_08169D98: .4byte CompleteOnChosenItem + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    DecompressTrainerBackPic(TRAINER_BACK_PIC_WALLY, gActiveBattler);
+    SetMultiuseSpriteTemplateToTrainerBack(TRAINER_BACK_PIC_WALLY, GetBattlerPosition(gActiveBattler));
+    gBattlerSpriteIds[gActiveBattler] = CreateSprite(&gMultiuseSpriteTemplate,
+                                               80,
+                                               80 + 4 * (8 - gTrainerBackPicCoords[TRAINER_BACK_PIC_WALLY].size),
+                                               30);
+    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = DISPLAY_WIDTH;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].data[0] = -2;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].callback = sub_0805D3C8;
+    gBattlerControllerFuncs[gActiveBattler] = CompleteOnChosenItem;
 }
 
-__attribute__((naked)) void WallyHandleTrainerSlide(void)
+void WallyHandleTrainerSlide(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r4, _08169E44\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #6\n\t"
-        "	bl DecompressTrainerBackPic\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl GetBattlerPosition\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r0, #6\n\t"
-        "	bl SetMultiuseSpriteTemplateToTrainerBack\n\t"
-        "	ldr r0, _08169E48\n\t"
-        "	ldr r1, _08169E4C\n\t"
-        "	ldrb r1, [r1, #0x18]\n\t"
-        "	movs r2, #8\n\t"
-        "	subs r2, r2, r1\n\t"
-        "	lsls r2, r2, #0x12\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #0xf\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	movs r1, #0x50\n\t"
-        "	movs r3, #0x1e\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r6, _08169E50\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r5, _08169E54\n\t"
-        "	ldrb r3, [r4]\n\t"
-        "	adds r0, r3, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r3\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, _08169E58\n\t"
-        "	strh r1, [r0, #0x24]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #2\n\t"
-        "	strh r1, [r0, #0x2e]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r5, #0x1c\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, _08169E5C\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r1, _08169E60\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169E64\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08169E44: .4byte gActiveBattler\n\t"
-        "_08169E48: .4byte gMultiuseSpriteTemplate\n\t"
-        "_08169E4C: .4byte gTrainerBackPicCoords\n\t"
-        "_08169E50: .4byte gBattlerSpriteIds\n\t"
-        "_08169E54: .4byte gSprites\n\t"
-        "_08169E58: .4byte 0x0000FFA0\n\t"
-        "_08169E5C: .4byte sub_0805D3C8 + 1\n\t"
-        "_08169E60: .4byte gBattlerControllerFuncs\n\t"
-        "_08169E64: .4byte WallyHandleOneReturnValue + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    DecompressTrainerBackPic(TRAINER_BACK_PIC_WALLY, gActiveBattler);
+    SetMultiuseSpriteTemplateToTrainerBack(TRAINER_BACK_PIC_WALLY, GetBattlerPosition(gActiveBattler));
+    gBattlerSpriteIds[gActiveBattler] = CreateSprite(&gMultiuseSpriteTemplate,
+                                               80,
+                                               80 + 4 * (8 - gTrainerBackPicCoords[TRAINER_BACK_PIC_WALLY].size),
+                                               30);
+    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = -96;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].data[0] = 2;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].callback = sub_0805D3C8;
+    gBattlerControllerFuncs[gActiveBattler] = WallyHandleOneReturnValue;
 }
+
 
 void WallyHandleTrainerSlideBack(void)
 {
     WallyBufferExecCompleted();
 }
 
-
 void WallyHandleFaintAnimation(void)
 {
     WallyBufferExecCompleted();
 }
-
 
 void WallyHandlePaletteFade(void)
 {
     WallyBufferExecCompleted();
 }
 
-
-__attribute__((naked)) void WallyHandleSuccessBallThrowAnim(void)
+void WallyHandleSuccessBallThrowAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _08169ECC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, [r0, #8]\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r1, #8]\n\t"
-        "	ldr r1, _08169ED0\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r5, _08169ED4\n\t"
-        "	ldrb r4, [r5]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r3, #4\n\t"
-        "	bl InitAndLaunchSpecialAnimation\n\t"
-        "	ldr r1, _08169ED8\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169EDC\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08169ECC: .4byte gBattleSpritesDataPtr\n\t"
-        "_08169ED0: .4byte gUnknown_202415D\n\t"
-        "_08169ED4: .4byte gActiveBattler\n\t"
-        "_08169ED8: .4byte gBattlerControllerFuncs\n\t"
-        "_08169EDC: .4byte CompleteOnFinishedAnimation + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gBattleSpritesDataPtr->animationData->ballThrowCaseId = BALL_3_SHAKES_SUCCESS;
+    gUnknown_202415D = TRUE;
+    InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), B_ANIM_BALL_THROW_WITH_TRAINER);
+    gBattlerControllerFuncs[gActiveBattler] = CompleteOnFinishedAnimation;
 }
 
-__attribute__((naked)) void WallyHandleBallThrowAnim(void)
+void WallyHandleBallThrowAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r1, _08169F28\n\t"
-        "	ldr r5, _08169F2C\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	adds r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldr r0, _08169F30\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	strb r1, [r0, #8]\n\t"
-        "	ldr r1, _08169F34\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r4, [r5]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r3, #4\n\t"
-        "	bl InitAndLaunchSpecialAnimation\n\t"
-        "	ldr r1, _08169F38\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08169F3C\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08169F28: .4byte gBattleBufferA\n\t"
-        "_08169F2C: .4byte gActiveBattler\n\t"
-        "_08169F30: .4byte gBattleSpritesDataPtr\n\t"
-        "_08169F34: .4byte gUnknown_202415D\n\t"
-        "_08169F38: .4byte gBattlerControllerFuncs\n\t"
-        "_08169F3C: .4byte CompleteOnFinishedAnimation + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 ballThrowCaseId = gBattleBufferA[gActiveBattler][1];
+
+    gBattleSpritesDataPtr->animationData->ballThrowCaseId = ballThrowCaseId;
+    gUnknown_202415D = TRUE;
+    InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), B_ANIM_BALL_THROW_WITH_TRAINER);
+    gBattlerControllerFuncs[gActiveBattler] = CompleteOnFinishedAnimation;
 }
+
 
 void WallyHandlePause(void)
 {
     WallyBufferExecCompleted();
 }
 
-
-__attribute__((naked)) void WallyHandleMoveAnimation(void)
+void WallyHandleMoveAnimation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r0, _0816A020\n\t"
-        "	mov ip, r0\n\t"
-        "	ldr r6, _0816A024\n\t"
-        "	ldrb r2, [r6]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r0, #1\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r1, #2\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	ldr r5, _0816A028\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r1, #3\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	strb r1, [r5]\n\t"
-        "	ldr r4, _0816A02C\n\t"
-        "	ldrb r2, [r6]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r1, #4\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r1, #5\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	orrs r3, r1\n\t"
-        "	strh r3, [r4]\n\t"
-        "	ldr r4, _0816A030\n\t"
-        "	ldrb r2, [r6]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r1, #6\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r1, #7\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	orrs r3, r1\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r1, #8\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	orrs r3, r1\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r1, #9\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	orrs r3, r1\n\t"
-        "	str r3, [r4]\n\t"
-        "	ldr r3, _0816A034\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	mov r2, ip\n\t"
-        "	adds r2, #0xa\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	strb r1, [r3]\n\t"
-        "	ldr r4, _0816A038\n\t"
-        "	ldrb r2, [r6]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r1, #0xc\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r1, #0xd\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	orrs r3, r1\n\t"
-        "	strh r3, [r4]\n\t"
-        "	ldr r3, _0816A03C\n\t"
-        "	ldrb r2, [r6]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r1, #0x10\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	str r2, [r3]\n\t"
-        "	ldr r3, _0816A040\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	str r2, [r1]\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	bl IsMoveWithoutAnimation\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _0816A044\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	b _0816A062\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A020: .4byte gBattleBufferA\n\t"
-        "_0816A024: .4byte gActiveBattler\n\t"
-        "_0816A028: .4byte gAnimMoveTurn\n\t"
-        "_0816A02C: .4byte gAnimMovePower\n\t"
-        "_0816A030: .4byte gAnimMoveDmg\n\t"
-        "_0816A034: .4byte gAnimFriendship\n\t"
-        "_0816A038: .4byte gWeatherMoveAnim\n\t"
-        "_0816A03C: .4byte gAnimDisableStructPtr\n\t"
-        "_0816A040: .4byte gTransformedPersonalities\n\t"
-        "_0816A044:\n\t"
-        "	ldr r0, _0816A068\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	ldr r2, [r0, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r3, [r0, #4]\n\t"
-        "	ldr r1, _0816A06C\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0816A070\n\t"
-        "	str r1, [r0]\n\t"
-        "_0816A062:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A068: .4byte gBattleSpritesDataPtr\n\t"
-        "_0816A06C: .4byte gBattlerControllerFuncs\n\t"
-        "_0816A070: .4byte WallyDoMoveAnimation + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 move = gBattleBufferA[gActiveBattler][1] | (gBattleBufferA[gActiveBattler][2] << 8);
+
+    gAnimMoveTurn = gBattleBufferA[gActiveBattler][3];
+    gAnimMovePower = gBattleBufferA[gActiveBattler][4] | (gBattleBufferA[gActiveBattler][5] << 8);
+    gAnimMoveDmg = gBattleBufferA[gActiveBattler][6] | (gBattleBufferA[gActiveBattler][7] << 8) | (gBattleBufferA[gActiveBattler][8] << 16) | (gBattleBufferA[gActiveBattler][9] << 24);
+    gAnimFriendship = gBattleBufferA[gActiveBattler][10];
+    gWeatherMoveAnim = gBattleBufferA[gActiveBattler][12] | (gBattleBufferA[gActiveBattler][13] << 8);
+    gAnimDisableStructPtr = (struct DisableStruct *)&gBattleBufferA[gActiveBattler][16];
+    gTransformedPersonalities[gActiveBattler] = gAnimDisableStructPtr->transformedMonPersonality;
+    if (IsMoveWithoutAnimation(move, gAnimMoveTurn)) // always returns FALSE
+    {
+        WallyBufferExecCompleted();
+    }
+    else
+    {
+        gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].animationState = 0;
+        gBattlerControllerFuncs[gActiveBattler] = WallyDoMoveAnimation;
+    }
+
 }
 
-__attribute__((naked)) void WallyDoMoveAnimation(void)
+void WallyDoMoveAnimation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	ldr r2, _0816A0B8\n\t"
-        "	ldr r6, _0816A0BC\n\t"
-        "	ldrb r3, [r6]\n\t"
-        "	lsls r1, r3, #9\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	mov sb, r0\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	adds r2, #2\n\t"
-        "	mov r8, r2\n\t"
-        "	add r1, r8\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r4, r0\n\t"
-        "	ldr r7, _0816A0C0\n\t"
-        "	ldr r5, [r7]\n\t"
-        "	ldr r1, [r5, #4]\n\t"
-        "	lsls r0, r3, #1\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r2, [r0, #4]\n\t"
-        "	cmp r2, #1\n\t"
-        "	beq _0816A0FE\n\t"
-        "	cmp r2, #1\n\t"
-        "	bgt _0816A0C4\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _0816A0CE\n\t"
-        "	b _0816A1B4\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A0B8: .4byte gBattleBufferA\n\t"
-        "_0816A0BC: .4byte gActiveBattler\n\t"
-        "_0816A0C0: .4byte gBattleSpritesDataPtr\n\t"
-        "_0816A0C4:\n\t"
-        "	cmp r2, #2\n\t"
-        "	beq _0816A128\n\t"
-        "	cmp r2, #3\n\t"
-        "	beq _0816A178\n\t"
-        "	b _0816A1B4\n\t"
-        "_0816A0CE:\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0816A0EA\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	movs r3, #5\n\t"
-        "	bl InitAndLaunchSpecialAnimation\n\t"
-        "_0816A0EA:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	ldr r2, [r0, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0, #4]\n\t"
-        "	b _0816A1B4\n\t"
-        "_0816A0FE:\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0816A1B4\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_0805E7B8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DoMoveAnim\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	ldr r2, [r0, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #2\n\t"
-        "	strb r1, [r0, #4]\n\t"
-        "	b _0816A1B4\n\t"
-        "_0816A128:\n\t"
-        "	ldr r0, _0816A170\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	ldr r0, _0816A174\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0816A1B4\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_0805E7B8\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrb r2, [r6]\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0816A15C\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #6\n\t"
-        "	bl InitAndLaunchSpecialAnimation\n\t"
-        "_0816A15C:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	ldr r2, [r0, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #3\n\t"
-        "	strb r1, [r0, #4]\n\t"
-        "	b _0816A1B4\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A170: .4byte gAnimScriptCallback\n\t"
-        "_0816A174: .4byte gAnimScriptActive\n\t"
-        "_0816A178:\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _0816A1B4\n\t"
-        "	bl CopyAllBattleSpritesInvisibilities\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	lsls r2, r0, #9\n\t"
-        "	mov r3, sb\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	add r2, r8\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	lsls r2, r2, #8\n\t"
-        "	orrs r1, r2\n\t"
-        "	bl TrySetBehindSubstituteSpriteBit\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	ldr r2, [r0, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r4, [r0, #4]\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_0816A1B4:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 move = gBattleBufferA[gActiveBattler][1] | (gBattleBufferA[gActiveBattler][2] << 8);
+
+    switch (gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].animationState)
+    {
+    case 0:
+        if (gBattleSpritesDataPtr->battlerData[gActiveBattler].behindSubstitute)
+        {
+            InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, gActiveBattler, B_ANIM_SUBSTITUTE_TO_MON);
+        }
+        gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].animationState = 1;
+        break;
+    case 1:
+        if (!gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].specialAnimActive)
+        {
+            sub_0805E7B8(ST_OAM_AFFINE_OFF);
+            DoMoveAnim(move);
+            gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].animationState = 2;
+        }
+        break;
+    case 2:
+        gAnimScriptCallback();
+        if (!gAnimScriptActive)
+        {
+            sub_0805E7B8(ST_OAM_AFFINE_NORMAL);
+            if (gBattleSpritesDataPtr->battlerData[gActiveBattler].behindSubstitute)
+            {
+                InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, gActiveBattler, B_ANIM_MON_TO_SUBSTITUTE);
+            }
+            gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].animationState = 3;
+        }
+        break;
+    case 3:
+        if (!gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].specialAnimActive)
+        {
+            CopyAllBattleSpritesInvisibilities();
+            TrySetBehindSubstituteSpriteBit(gActiveBattler, gBattleBufferA[gActiveBattler][1] | (gBattleBufferA[gActiveBattler][2] << 8));
+            gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].animationState = 0;
+            WallyBufferExecCompleted();
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void WallyHandlePrintString(void)
+void WallyHandlePrintString(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _0816A1F8\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _0816A1FC\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r4, _0816A200\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	ldr r1, _0816A204\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl BufferStringBattle\n\t"
-        "	ldr r0, _0816A208\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_0814FA04\n\t"
-        "	ldr r1, _0816A20C\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0816A210\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A1F8: .4byte gBattle_BG0_X\n\t"
-        "_0816A1FC: .4byte gBattle_BG0_Y\n\t"
-        "_0816A200: .4byte gActiveBattler\n\t"
-        "_0816A204: .4byte gUnknown_2022D0A\n\t"
-        "_0816A208: .4byte gDisplayedStringBattle\n\t"
-        "_0816A20C: .4byte gBattlerControllerFuncs\n\t"
-        "_0816A210: .4byte WallyHandleChosenMonReturnValue + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *stringId;
+
+    gBattle_BG0_X = 0;
+    gBattle_BG0_Y = 0;
+    stringId = gUnknown_2022D0A[gActiveBattler];
+    BufferStringBattle(*stringId);
+    sub_0814FA04(gDisplayedStringBattle, 0);
+    gBattlerControllerFuncs[gActiveBattler] = WallyHandleChosenMonReturnValue;
 }
 
-__attribute__((naked)) void WallyHandlePrintSelectionString(void)
+void WallyHandlePrintSelectionString(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0816A22C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0816A230\n\t"
-        "	bl WallyHandlePrintString\n\t"
-        "	b _0816A234\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A22C: .4byte gActiveBattler\n\t"
-        "_0816A230:\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_0816A234:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
+        WallyHandlePrintString();
+    else
+        WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void HandleChooseActionAfterDma3(void)
+void HandleChooseActionAfterDma3(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0816A25E\n\t"
-        "	ldr r0, _0816A264\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r1, _0816A268\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _0816A26C\n\t"
-        "	ldr r0, _0816A270\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0816A274\n\t"
-        "	str r1, [r0]\n\t"
-        "_0816A25E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A264: .4byte gBattle_BG0_X\n\t"
-        "_0816A268: .4byte gBattle_BG0_Y\n\t"
-        "_0816A26C: .4byte gBattlerControllerFuncs\n\t"
-        "_0816A270: .4byte gActiveBattler\n\t"
-        "_0816A274: .4byte WallyHandleActions + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!IsDma3ManagerBusyWithBgCopy())
+    {
+        gBattle_BG0_X = 0;
+        gBattle_BG0_Y = DISPLAY_HEIGHT;
+        gBattlerControllerFuncs[gActiveBattler] = WallyHandleActions;
+    }
 }
 
-__attribute__((naked)) void WallyHandleChooseAction(void)
+void WallyHandleChooseAction(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r1, _0816A2C4\n\t"
-        "	ldr r0, _0816A2C8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0816A2CC\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r0, _0816A2D0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl sub_0814FA04\n\t"
-        "	movs r4, #0\n\t"
-        "_0816A292:\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl ActionSelectionDestroyCursorAt\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #3\n\t"
-        "	ble _0816A292\n\t"
-        "	ldr r1, _0816A2D4\n\t"
-        "	ldr r0, _0816A2C8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetCB2ToReshowScreenAfterMenu\n\t"
-        "	ldr r0, _0816A2D8\n\t"
-        "	bl TryGetStatusString\n\t"
-        "	ldr r0, _0816A2DC\n\t"
-        "	movs r1, #1\n\t"
-        "	bl sub_0814FA04\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A2C4: .4byte gBattlerControllerFuncs\n\t"
-        "_0816A2C8: .4byte gActiveBattler\n\t"
-        "_0816A2CC: .4byte HandleChooseActionAfterDma3 + 1\n\t"
-        "_0816A2D0: .4byte gUnknown_85ABAEE + 0x84\n\t"
-        "_0816A2D4: .4byte gActionSelectionCursor\n\t"
-        "_0816A2D8: .4byte gUnknown_85ABAEE + 0x69\n\t"
-        "_0816A2DC: .4byte gDisplayedStringBattle\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    gBattlerControllerFuncs[gActiveBattler] = HandleChooseActionAfterDma3;
+    sub_0814FA04(gUnknown_85ABAEE + 0x84, 2);
+
+    for (i = 0; i < 4; i++)
+        ActionSelectionDestroyCursorAt(i);
+
+    SetCB2ToReshowScreenAfterMenu(gActionSelectionCursor[gActiveBattler], 0);
+    TryGetStatusString(gUnknown_85ABAEE + 0x69);
+    sub_0814FA04(gDisplayedStringBattle, 1);
 }
 
-__attribute__((naked)) void WallyHandleUnknownYesNoBox(void)
+void WallyHandleUnknownYesNoBox(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleChooseMove(void)
+void WallyHandleChooseMove(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0816A308\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x95\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0816A32A\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _0816A30C\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0816A312\n\t"
-        "	b _0816A37C\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A308: .4byte gBattleStruct\n\t"
-        "_0816A30C:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _0816A358\n\t"
-        "	b _0816A37C\n\t"
-        "_0816A312:\n\t"
-        "	bl InitMoveSelectionsVarsAndStrings\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x95\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x97\n\t"
-        "	movs r1, #0x50\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _0816A37C\n\t"
-        "_0816A32A:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0816A37C\n\t"
-        "	ldr r0, _0816A350\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r1, _0816A354\n\t"
-        "	movs r2, #0xa0\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x95\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0816A37C\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A350: .4byte gBattle_BG0_X\n\t"
-        "_0816A354: .4byte gBattle_BG0_Y\n\t"
-        "_0816A358:\n\t"
-        "	adds r1, #0x97\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0816A37C\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl BtlController_EmitTwoReturnValues\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_0816A37C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gBattleStruct->wallyMovesState)
+    {
+    case 0:
+        InitMoveSelectionsVarsAndStrings();
+        gBattleStruct->wallyMovesState++;
+        gBattleStruct->wallyMoveFrames = 80;
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            gBattle_BG0_X = 0;
+            gBattle_BG0_Y = DISPLAY_HEIGHT * 2;
+            gBattleStruct->wallyMovesState++;
+        }
+        break;
+    case 2:
+        if (--gBattleStruct->wallyMoveFrames == 0)
+        {
+            PlaySE(SE_SELECT);
+            BtlController_EmitTwoReturnValues(B_COMM_TO_ENGINE, B_ACTION_EXEC_SCRIPT, 0x100);
+            WallyBufferExecCompleted();
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void WallyHandleChooseItem(void)
+void WallyHandleChooseItem(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, _0816A3B4\n\t"
-        "	ldr r2, _0816A3B8\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0816A3BC\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r1, _0816A3C0\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A3B4: .4byte gBattlerControllerFuncs\n\t"
-        "_0816A3B8: .4byte gActiveBattler\n\t"
-        "_0816A3BC: .4byte OpenBagAfterPaletteFade + 1\n\t"
-        "_0816A3C0: .4byte gBattlerInMenuId\n\t"
-        ".syntax divided\n\t"
-    );
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
+    gBattlerControllerFuncs[gActiveBattler] = OpenBagAfterPaletteFade;
+    gBattlerInMenuId = gActiveBattler;
 }
 
 void WallyHandleChoosePokemon(void)
@@ -4267,123 +1168,29 @@ void WallyHandleCmd23(void)
 }
 
 
-__attribute__((naked)) void WallyHandleHealthBarUpdate(void)
+void WallyHandleHealthBarUpdate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	movs r0, #0\n\t"
-        "	bl LoadBattleBarGfx\n\t"
-        "	ldr r3, _0816A454\n\t"
-        "	ldr r0, _0816A458\n\t"
-        "	mov sb, r0\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	lsls r2, r4, #9\n\t"
-        "	adds r0, r3, #2\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r3, #3\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r7, r1, #0x10\n\t"
-        "	ldr r0, _0816A45C\n\t"
-        "	cmp r7, r0\n\t"
-        "	beq _0816A46C\n\t"
-        "	ldr r6, _0816A460\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	movs r5, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r4, _0816A464\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r8, r0\n\t"
-        "	mov r1, sb\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	mov r1, sb\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	ldr r1, _0816A468\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	str r7, [sp]\n\t"
-        "	mov r2, r8\n\t"
-        "	bl SetBattleBarStruct\n\t"
-        "	b _0816A4A6\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A454: .4byte gBattleBufferA\n\t"
-        "_0816A458: .4byte gActiveBattler\n\t"
-        "_0816A45C: .4byte 0x00007FFF\n\t"
-        "_0816A460: .4byte gBattlerPartyIndexes\n\t"
-        "_0816A464: .4byte gPlayerParty\n\t"
-        "_0816A468: .4byte gHealthboxSpriteIds\n\t"
-        "_0816A46C:\n\t"
-        "	ldr r1, _0816A4C4\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _0816A4C8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	mov r1, sb\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	ldr r4, _0816A4CC\n\t"
-        "	adds r1, r0, r4\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	str r7, [sp]\n\t"
-        "	movs r3, #0\n\t"
-        "	bl SetBattleBarStruct\n\t"
-        "	mov r1, sb\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl sub_080726F4\n\t"
-        "_0816A4A6:\n\t"
-        "	ldr r1, _0816A4D0\n\t"
-        "	ldr r0, _0816A4D4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0816A4D8\n\t"
-        "	str r1, [r0]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A4C4: .4byte gBattlerPartyIndexes\n\t"
-        "_0816A4C8: .4byte gPlayerParty\n\t"
-        "_0816A4CC: .4byte gHealthboxSpriteIds\n\t"
-        "_0816A4D0: .4byte gBattlerControllerFuncs\n\t"
-        "_0816A4D4: .4byte gActiveBattler\n\t"
-        "_0816A4D8: .4byte sub_0816873C + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 hpVal;
+
+    LoadBattleBarGfx(0);
+    hpVal = gBattleBufferA[gActiveBattler][2] | (gBattleBufferA[gActiveBattler][3] << 8);
+
+    if (hpVal != INSTANT_HP_BAR_DROP)
+    {
+        u32 maxHP = GetMonData3(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_MAX_HP);
+        u32 curHP = GetMonData3(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_HP);
+
+        SetBattleBarStruct(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], maxHP, curHP, hpVal);
+    }
+    else
+    {
+        u32 maxHP = GetMonData3(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_MAX_HP);
+
+        SetBattleBarStruct(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], maxHP, 0, hpVal);
+        UpdateHpTextInHealthbox(gHealthboxSpriteIds[gActiveBattler], 0, HP_CURRENT);
+    }
+
+    gBattlerControllerFuncs[gActiveBattler] = sub_0816873C;
 }
 
 void WallyHandleExpUpdate(void)
@@ -4440,30 +1247,14 @@ void WallyHandleTwoReturnValues(void)
 }
 
 
-__attribute__((naked)) void sub_0816A548(void)
+void sub_0816A548(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void sub_0816A554(void)
+void sub_0816A554(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
 void WallyHandleOneReturnValue_Duplicate(void)
@@ -4472,751 +1263,175 @@ void WallyHandleOneReturnValue_Duplicate(void)
 }
 
 
-__attribute__((naked)) void WallyHandleCmd37(void)
+void WallyHandleCmd37(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleCmd38(void)
+void WallyHandleCmd38(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void sub_0816A584(void)
+void sub_0816A584(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleCmd40(void)
+void WallyHandleCmd40(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleHitAnimation(void)
+void WallyHandleHitAnimation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r3, _0816A5C4\n\t"
-        "	ldr r2, _0816A5C8\n\t"
-        "	ldr r4, _0816A5CC\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1d\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0816A5D0\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	b _0816A5FA\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A5C4: .4byte gSprites\n\t"
-        "_0816A5C8: .4byte gBattlerSpriteIds\n\t"
-        "_0816A5CC: .4byte gActiveBattler\n\t"
-        "_0816A5D0:\n\t"
-        "	ldr r1, _0816A600\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0, #0x30]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl DoHitAnimHealthboxEffect\n\t"
-        "	ldr r1, _0816A604\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0816A608\n\t"
-        "	str r1, [r0]\n\t"
-        "_0816A5FA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A600: .4byte gUnknown_202415D\n\t"
-        "_0816A604: .4byte gBattlerControllerFuncs\n\t"
-        "_0816A608: .4byte WallyHandleGetRawMonData + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[gBattlerSpriteIds[gActiveBattler]].invisible == TRUE)
+    {
+        WallyBufferExecCompleted();
+    }
+    else
+    {
+        gUnknown_202415D = TRUE;
+        gSprites[gBattlerSpriteIds[gActiveBattler]].data[1] = 0;
+        DoHitAnimHealthboxEffect(gActiveBattler);
+        gBattlerControllerFuncs[gActiveBattler] = WallyHandleGetRawMonData;
+    }
 }
 
-__attribute__((naked)) void WallyHandleCmd42(void)
+void WallyHandleCmd42(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandlePlaySE(void)
+void WallyHandlePlaySE(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _0816A640\n\t"
-        "	ldr r0, _0816A644\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r2, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	bl PlaySE\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A640: .4byte gBattleBufferA\n\t"
-        "_0816A644: .4byte gActiveBattler\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(gBattleBufferA[gActiveBattler][1] | (gBattleBufferA[gActiveBattler][2] << 8));
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandlePlayFanfareOrBGM(void)
+void WallyHandlePlayFanfareOrBGM(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r4, _0816A67C\n\t"
-        "	ldr r5, _0816A680\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	lsls r3, r0, #9\n\t"
-        "	adds r0, r4, #3\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0816A684\n\t"
-        "	bl BattleStopLowHpSound\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r2, r4, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	bl PlayBGM\n\t"
-        "	b _0816A698\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A67C: .4byte gBattleBufferA\n\t"
-        "_0816A680: .4byte gActiveBattler\n\t"
-        "_0816A684:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r1, r4, #2\n\t"
-        "	adds r1, r3, r1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	bl PlayFanfare\n\t"
-        "_0816A698:\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gBattleBufferA[gActiveBattler][3])
+    {
+        BattleStopLowHpSound();
+        PlayBGM(gBattleBufferA[gActiveBattler][1] | (gBattleBufferA[gActiveBattler][2] << 8));
+    }
+    else
+    {
+        PlayFanfare(gBattleBufferA[gActiveBattler][1] | (gBattleBufferA[gActiveBattler][2] << 8));
+    }
+
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleFaintingCry(void)
+void WallyHandleFaintingCry(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _0816A6D4\n\t"
-        "	ldr r0, _0816A6D8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _0816A6DC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x19\n\t"
-        "	bl PlayCry1\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A6D4: .4byte gBattlerPartyIndexes\n\t"
-        "_0816A6D8: .4byte gActiveBattler\n\t"
-        "_0816A6DC: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 species = GetMonData3(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES);
+
+    // Seems that it doesn't bother using CRY_MODE_FAINT because
+    // Wally's Pokémon during the tutorial is never intended to faint.
+    PlayCry1(species, 25);
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleIntroSlide(void)
+void WallyHandleIntroSlide(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _0816A708\n\t"
-        "	ldr r0, _0816A70C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	adds r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl HandleIntroSlide\n\t"
-        "	ldr r2, _0816A710\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A708: .4byte gBattleBufferA\n\t"
-        "_0816A70C: .4byte gActiveBattler\n\t"
-        "_0816A710: .4byte gIntroSlideFlags\n\t"
-        ".syntax divided\n\t"
-    );
+    HandleIntroSlide(gBattleBufferA[gActiveBattler][1]);
+    gIntroSlideFlags |= 1;
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleIntroTrainerBallThrow(void)
+void WallyHandleIntroTrainerBallThrow(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	ldr r6, _0816A84C\n\t"
-        "	ldr r7, _0816A850\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r5, _0816A854\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	bl SetSpritePrimaryCoordsFromSecondaryCoords\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0x32\n\t"
-        "	strh r1, [r0, #0x2e]\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, _0816A858\n\t"
-        "	strh r1, [r0, #0x32]\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r1, [r0, #0x22]\n\t"
-        "	strh r1, [r0, #0x36]\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0816A85C\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldrb r2, [r7]\n\t"
-        "	adds r0, r2, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r2, [r0, #0x38]\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, _0816A860\n\t"
-        "	bl StoreSpriteCallbackInData6\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r0, _0816A864\n\t"
-        "	bl AllocSpritePalette\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	ldr r0, _0816A868\n\t"
-        "	ldr r0, [r0, #0x30]\n\t"
-        "	lsrs r4, r4, #0x14\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r4\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldr r0, _0816A86C\n\t"
-        "	movs r1, #5\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r4, _0816A870\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	ldr r3, _0816A874\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldrb r2, [r7]\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0816A82C\n\t"
-        "	ldr r0, _0816A878\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r1, _0816A87C\n\t"
-        "	str r1, [r0]\n\t"
-        "_0816A82C:\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r2, [r0, #8]\n\t"
-        "	ldrb r0, [r2, #9]\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #9]\n\t"
-        "	ldr r1, _0816A880\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0816A884\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A84C: .4byte gBattlerSpriteIds\n\t"
-        "_0816A850: .4byte gActiveBattler\n\t"
-        "_0816A854: .4byte gSprites\n\t"
-        "_0816A858: .4byte 0x0000FFD8\n\t"
-        "_0816A85C: .4byte InitAndRunAnimFastLinearTranslation + 1\n\t"
-        "_0816A860: .4byte sub_0805C81C + 1\n\t"
-        "_0816A864: .4byte 0x0000D6F8\n\t"
-        "_0816A868: .4byte gTrainerBackPicPaletteTable\n\t"
-        "_0816A86C: .4byte sub_0816AA0C + 1\n\t"
-        "_0816A870: .4byte gTasks\n\t"
-        "_0816A874: .4byte gBattleSpritesDataPtr\n\t"
-        "_0816A878: .4byte gUnknown_2024158\n\t"
-        "_0816A87C: .4byte Task_HidePartyStatusSummary + 1\n\t"
-        "_0816A880: .4byte gBattlerControllerFuncs\n\t"
-        "_0816A884: .4byte 0x08057069\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 paletteNum;
+    u8 taskId;
+
+    SetSpritePrimaryCoordsFromSecondaryCoords(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
+
+    gSprites[gBattlerSpriteIds[gActiveBattler]].data[0] = 50;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].data[2] = -40;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].data[4] = gSprites[gBattlerSpriteIds[gActiveBattler]].y;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].callback = InitAndRunAnimFastLinearTranslation;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].data[5] = gActiveBattler;
+
+    StoreSpriteCallbackInData6(&gSprites[gBattlerSpriteIds[gActiveBattler]], sub_0805C81C);
+    StartSpriteAnim(&gSprites[gBattlerSpriteIds[gActiveBattler]], 1);
+
+    paletteNum = AllocSpritePalette(0xD6F8);
+    LoadCompressedPalette(gTrainerBackPicPaletteTable[TRAINER_BACK_PIC_WALLY].data, OBJ_PLTT_ID(paletteNum), PLTT_SIZE_4BPP);
+    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = paletteNum;
+
+    taskId = CreateTask(sub_0816AA0C, 5);
+    gTasks[taskId].data[0] = gActiveBattler;
+
+    if (gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].partyStatusSummaryShown)
+        gTasks[gUnknown_2024158[gActiveBattler]].func = Task_HidePartyStatusSummary;
+
+    gBattleSpritesDataPtr->animationData->introAnimActive = TRUE;
+    gBattlerControllerFuncs[gActiveBattler] = BattleControllerDummy;
 }
 
-__attribute__((naked)) void sub_0816A888(void)
+void sub_0816A888(u8 battler)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sl\n\t"
-        "	mov r5, sb\n\t"
-        "	mov r4, r8\n\t"
-        "	push {r4, r5, r6}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	ldr r0, _0816A9E0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0, #2]\n\t"
-        "	ldr r0, _0816A9E4\n\t"
-        "	lsls r2, r6, #1\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r0, _0816A9E8\n\t"
-        "	lsls r1, r6, #9\n\t"
-        "	adds r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _0816A9EC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, _0816A9F0\n\t"
-        "	bl CreateInvisibleSpriteWithCallback\n\t"
-        "	ldr r1, _0816A9F4\n\t"
-        "	mov sb, r1\n\t"
-        "	add sb, r6\n\t"
-        "	mov r1, sb\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetBattlerPosition\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov r0, r8\n\t"
-        "	bl SetMultiuseSpriteTemplateToPokemon\n\t"
-        "	ldr r0, _0816A9F8\n\t"
-        "	mov sl, r0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetBattlerSpriteDefault_Y\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetBattlerSpriteSubpriority\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	mov r0, sl\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r4, _0816A9FC\n\t"
-        "	adds r4, r6, r4\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldr r5, _0816AA00\n\t"
-        "	mov r0, sb\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	strh r1, [r0, #0x30]\n\t"
-        "	mov r0, sb\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r6, [r0, #0x32]\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r6, [r0, #0x2e]\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r1, [r0, #0x32]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r3, r6, #4\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r3\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, _0816AA04\n\t"
-        "	adds r6, r6, r1\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0816AA08\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl DoPokeballSendOutAnimation\n\t"
-        "	mov r1, sb\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816A9E0: .4byte gBattleSpritesDataPtr\n\t"
-        "_0816A9E4: .4byte gBattlerPartyIndexes\n\t"
-        "_0816A9E8: .4byte gBattleBufferA\n\t"
-        "_0816A9EC: .4byte gPlayerParty\n\t"
-        "_0816A9F0: .4byte sub_0805D330 + 1\n\t"
-        "_0816A9F4: .4byte gUnknown_3005ADC\n\t"
-        "_0816A9F8: .4byte gMultiuseSpriteTemplate\n\t"
-        "_0816A9FC: .4byte gBattlerSpriteIds\n\t"
-        "_0816AA00: .4byte gSprites\n\t"
-        "_0816AA04: .4byte gBattleMonForms\n\t"
-        "_0816AA08: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 species;
+
+    gBattleSpritesDataPtr->battlerData[battler].transformSpecies = 0;
+    gBattlerPartyIndexes[battler] = gBattleBufferA[battler][1];
+    species = GetMonData3(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_SPECIES);
+    gUnknown_3005ADC[battler] = CreateInvisibleSpriteWithCallback(sub_0805D330);
+    SetMultiuseSpriteTemplateToPokemon(species, GetBattlerPosition(battler));
+    gBattlerSpriteIds[battler] = CreateSprite(&gMultiuseSpriteTemplate,
+                                        GetBattlerSpriteCoord(battler, BATTLER_COORD_X_2),
+                                        GetBattlerSpriteDefault_Y(battler),
+                                        GetBattlerSpriteSubpriority(battler));
+
+    gSprites[gUnknown_3005ADC[battler]].data[1] = gBattlerSpriteIds[battler];
+    gSprites[gUnknown_3005ADC[battler]].data[2] = battler;
+
+    gSprites[gBattlerSpriteIds[battler]].data[0] = battler;
+    gSprites[gBattlerSpriteIds[battler]].data[2] = species;
+    gSprites[gBattlerSpriteIds[battler]].oam.paletteNum = battler;
+
+    StartSpriteAnim(&gSprites[gBattlerSpriteIds[battler]], gBattleMonForms[battler]);
+    gSprites[gBattlerSpriteIds[battler]].invisible = TRUE;
+    gSprites[gBattlerSpriteIds[battler]].callback = SpriteCallbackDummy;
+    gSprites[gUnknown_3005ADC[battler]].data[0] = DoPokeballSendOutAnimation(0, POKEBALL_PLAYER_SENDOUT);
 }
 
-__attribute__((naked)) void sub_0816AA0C(void)
+void sub_0816AA0C(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r1, _0816AA2C\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrh r2, [r1, #0xa]\n\t"
-        "	movs r3, #0xa\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #0x1e\n\t"
-        "	bgt _0816AA30\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	b _0816AA66\n\t"
-        "	.align 2, 0\n\t"
-        "_0816AA2C: .4byte gTasks\n\t"
-        "_0816AA30:\n\t"
-        "	ldr r4, _0816AA6C\n\t"
-        "	ldrb r5, [r4]\n\t"
-        "	ldrh r0, [r1, #8]\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldr r0, _0816AA70\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r2, r1, #9\n\t"
-        "	adds r0, #1\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r0, _0816AA74\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl sub_0816A888\n\t"
-        "	ldr r1, _0816AA78\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0816AA7C\n\t"
-        "	str r1, [r0]\n\t"
-        "	strb r5, [r4]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_0816AA66:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816AA6C: .4byte gActiveBattler\n\t"
-        "_0816AA70: .4byte gBattleBufferA\n\t"
-        "_0816AA74: .4byte gBattlerPartyIndexes\n\t"
-        "_0816AA78: .4byte gBattlerControllerFuncs\n\t"
-        "_0816AA7C: .4byte sub_08168454 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gTasks[taskId].data[1] < 31)
+    {
+        gTasks[taskId].data[1]++;
+    }
+    else
+    {
+        u8 savedActiveBank = gActiveBattler;
+
+        gActiveBattler = gTasks[taskId].data[0];
+        gBattleBufferA[gActiveBattler][1] = gBattlerPartyIndexes[gActiveBattler];
+        sub_0816A888(gActiveBattler);
+        gBattlerControllerFuncs[gActiveBattler] = sub_08168454;
+        gActiveBattler = savedActiveBank;
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void WallyHandleDrawPartyStatusSummary(void)
+void WallyHandleDrawPartyStatusSummary(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r1, _0816AAA8\n\t"
-        "	ldr r0, _0816AAAC\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	lsls r0, r2, #9\n\t"
-        "	adds r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0816AAB0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0816AAB0\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	b _0816AAEE\n\t"
-        "	.align 2, 0\n\t"
-        "_0816AAA8: .4byte gBattleBufferA\n\t"
-        "_0816AAAC: .4byte gActiveBattler\n\t"
-        "_0816AAB0:\n\t"
-        "	ldr r0, _0816AAF4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r5, _0816AAF8\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	ldr r2, [r0, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #1\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	lsls r4, r0, #9\n\t"
-        "	ldr r3, _0816AAFC\n\t"
-        "	adds r1, r4, r3\n\t"
-        "	subs r2, r3, #3\n\t"
-        "	adds r2, r4, r2\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	subs r3, #2\n\t"
-        "	adds r4, r4, r3\n\t"
-        "	ldrb r3, [r4]\n\t"
-        "	bl CreatePartyStatusSummarySprites\n\t"
-        "	ldr r2, _0816AB00\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "_0816AAEE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816AAF4: .4byte gBattleSpritesDataPtr\n\t"
-        "_0816AAF8: .4byte gActiveBattler\n\t"
-        "_0816AAFC: .4byte gUnknown_2022D0C\n\t"
-        "_0816AB00: .4byte gUnknown_2024158\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 bufferOffset;
+
+    if (gBattleBufferA[gActiveBattler][1] != 0 && GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
+    {
+        WallyBufferExecCompleted();
+    }
+    else
+    {
+        gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].partyStatusSummaryShown = 1;
+        bufferOffset = gActiveBattler << 9;
+        gUnknown_2024158[gActiveBattler] = CreatePartyStatusSummarySprites(gActiveBattler, (struct HpAndStatus *)((u8 *)gUnknown_2022D0C + bufferOffset), ((u8 *)gUnknown_2022D0C)[bufferOffset - 3], ((u8 *)gUnknown_2022D0C)[bufferOffset - 2]);
+        WallyBufferExecCompleted();
+    }
 }
 
 void WallyHandleHidePartyStatusSummary(void)
@@ -5237,56 +1452,15 @@ void WallyHandleSpriteInvisibility(void)
 }
 
 
-__attribute__((naked)) void WallyHandleBattleAnimation(void)
+void WallyHandleBattleAnimation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r5, _0816AB60\n\t"
-        "	ldr r6, _0816AB64\n\t"
-        "	ldrb r2, [r6]\n\t"
-        "	lsls r1, r2, #9\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	adds r0, r5, #2\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	adds r5, #3\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r4, r0\n\t"
-        "	str r4, [sp]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl TryHandleLaunchBattleTableAnimation\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0816AB68\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	b _0816AB74\n\t"
-        "	.align 2, 0\n\t"
-        "_0816AB60: .4byte gBattleBufferA\n\t"
-        "_0816AB64: .4byte gActiveBattler\n\t"
-        "_0816AB68:\n\t"
-        "	ldr r0, _0816AB7C\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _0816AB80\n\t"
-        "	str r0, [r1]\n\t"
-        "_0816AB74:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816AB7C: .4byte gBattlerControllerFuncs\n\t"
-        "_0816AB80: .4byte sub_081688D0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 animationId = gBattleBufferA[gActiveBattler][1];
+    u16 argument = gBattleBufferA[gActiveBattler][2] | (gBattleBufferA[gActiveBattler][3] << 8);
+
+    if (TryHandleLaunchBattleTableAnimation(gActiveBattler, gActiveBattler, gActiveBattler, animationId, argument))
+        WallyBufferExecCompleted();
+    else
+        gBattlerControllerFuncs[gActiveBattler] = sub_081688D0;
 }
 
 void WallyHandleLinkStandbyMsg(void)
@@ -5301,50 +1475,15 @@ void WallyHandleResetActionMoveSelection(void)
 }
 
 
-__attribute__((naked)) void WallyHandleCmd55(void)
+void WallyHandleCmd55(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r2, _0816ABE0\n\t"
-        "	ldr r1, _0816ABE4\n\t"
-        "	ldr r4, _0816ABE8\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	adds r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #5\n\t"
-        "	bl FadeOutMapMusic\n\t"
-        "	movs r0, #3\n\t"
-        "	bl BeginFastPaletteFade\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	ldr r0, _0816ABEC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #6\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _0816ABD8\n\t"
-        "	ldr r0, _0816ABF0\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _0816ABF4\n\t"
-        "	str r0, [r1]\n\t"
-        "_0816ABD8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0816ABE0: .4byte gBattleOutcome\n\t"
-        "_0816ABE4: .4byte gBattleBufferA\n\t"
-        "_0816ABE8: .4byte gActiveBattler\n\t"
-        "_0816ABEC: .4byte gBattleTypeFlags\n\t"
-        "_0816ABF0: .4byte gBattlerControllerFuncs\n\t"
-        "_0816ABF4: .4byte sub_080583C0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gBattleOutcome = gBattleBufferA[gActiveBattler][1];
+    FadeOutMapMusic(5);
+    BeginFastPaletteFade(3);
+    WallyBufferExecCompleted();
+
+    if (!(gBattleTypeFlags & BATTLE_TYPE_IS_MASTER) && gBattleTypeFlags & BATTLE_TYPE_LINK)
+        gBattlerControllerFuncs[gActiveBattler] = sub_080583C0;
 }
 
 void SpriteCB_Null7(void) {}
