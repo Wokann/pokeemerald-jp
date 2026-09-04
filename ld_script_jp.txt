@@ -9879,7 +9879,7 @@ SECTIONS {
         src/battle_message.o(.rodata.battle_message_recorded_text_speed_data);
         src/cable_car.o(.rodata.cable_car_tilemap_data);
         src/cable_car.o(.rodata.cable_car_sprite_data);
-        data/data_b2d_mid69.o(.rodata.data_b2d_mid69_after_cable_car);
+        src/save.o(.rodata.save_slot_layout);
         src/field_effect_helpers.o(.rodata.field_effect_helpers_data);
         data/data_b2d_mid69.o(.rodata.data_b2d_mid69_after_field_effect_helpers);
         src/contest_ai.o(.rodata.contest_ai_dispatch_data);

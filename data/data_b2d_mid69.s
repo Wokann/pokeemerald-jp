@@ -136,12 +136,6 @@ sGrammarMoveUsedTable: @ 0x85AC146
 gUnknown_85AC232: @ 0x85AC232
 	.incbin "baserom_jp.gba", 0x5ac232, 0x2
 
-	.section .rodata.data_b2d_mid69_after_cable_car
-
-	.globl gUnknown_85ACA08
-gUnknown_85ACA08: @ 0x85ACA08
-	.incbin "baserom_jp.gba", 0x5aca08, 0x38
-
 	.section .rodata.data_b2d_mid69_after_field_effect_helpers
 	.incbin "baserom_jp.gba", 0x5aca76, 0x92
 

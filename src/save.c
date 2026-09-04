@@ -12,6 +12,8 @@
 #include "link.h"
 #include "constants/game_stat.h"
 
+#define SAVE_SLOT_LAYOUT __attribute__((section(".rodata.save_slot_layout"), aligned(4)))
+
 void save_serialize_map(void);
 
 u16 CalculateChecksum(void *, u16);
@@ -36,13 +38,31 @@ extern IWRAM_DATA struct SaveSectorLocation gRamSaveSectorLocations[NUM_SECTORS_
 extern IWRAM_DATA u16 gSaveAttemptStatus;
 extern EWRAM_DATA struct SaveSector gSaveDataBuffer;
 extern IWRAM_DATA u8 gSoftResetDisabled;
-extern const struct
+
+// Keep the JP ROM's byte-exact sector layout at 0x085ACA08 explicit.
+SAVE_SLOT_LAYOUT static const struct
 {
     u16 offset;
     u16 size;
-} gUnknown_85ACA08[NUM_SECTORS_PER_SLOT];
+} sSaveSlotLayout[NUM_SECTORS_PER_SLOT] =
+{
+    { 0x0000, 0x0F2C }, // SECTOR_ID_SAVEBLOCK2
 
-#define sSaveSlotLayout gUnknown_85ACA08
+    { 0x0000, 0x0F80 }, // SECTOR_ID_SAVEBLOCK1_START
+    { 0x0F80, 0x0F80 },
+    { 0x1F00, 0x0F80 },
+    { 0x2E80, 0x0F08 }, // SECTOR_ID_SAVEBLOCK1_END
+
+    { 0x0000, 0x0F80 }, // SECTOR_ID_PKMN_STORAGE_START
+    { 0x0F80, 0x0F80 },
+    { 0x1F00, 0x0F80 },
+    { 0x2E80, 0x0F80 },
+    { 0x3E00, 0x0F80 },
+    { 0x4D80, 0x0F80 },
+    { 0x5D00, 0x0F80 },
+    { 0x6C80, 0x0F80 },
+    { 0x7C00, 0x07D0 }, // SECTOR_ID_PKMN_STORAGE_END
+};
 
 void ClearSaveData(void)
 {
