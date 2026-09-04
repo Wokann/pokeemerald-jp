@@ -256,22 +256,52 @@ gTileset_RusturfTunnel: @ 0x083B7E0C
 	.4byte 0x00000000  @ callback
 	.globl gTileset_SecretBaseBrownCave
 gTileset_SecretBaseBrownCave: @ 0x083B7E24
-	.incbin "baserom_jp.gba", 0x3B7E24, 0x18
+	.byte 0x00, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTilesetTiles_SecretBaseBrownCave  @ tiles
+	.4byte gTilesetPalettes_SecretBaseBrownCave  @ palettes
+	.4byte gMetatiles_SecretBaseSecondary  @ metatiles
+	.4byte gMetatileAttributes_SecretBaseSecondary  @ metatileAttributes
+	.4byte 0x00000000  @ callback
 	.globl gTileset_SecretBaseTree
 gTileset_SecretBaseTree: @ 0x083B7E3C
-	.incbin "baserom_jp.gba", 0x3B7E3C, 0x18
+	.byte 0x00, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTilesetTiles_SecretBaseTree  @ tiles
+	.4byte gTilesetPalettes_SecretBaseTree  @ palettes
+	.4byte gMetatiles_SecretBaseSecondary  @ metatiles
+	.4byte gMetatileAttributes_SecretBaseSecondary  @ metatileAttributes
+	.4byte 0x00000000  @ callback
 	.globl gTileset_SecretBaseShrub
 gTileset_SecretBaseShrub: @ 0x083B7E54
-	.incbin "baserom_jp.gba", 0x3B7E54, 0x18
+	.byte 0x00, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTilesetTiles_SecretBaseShrub  @ tiles
+	.4byte gTilesetPalettes_SecretBaseShrub  @ palettes
+	.4byte gMetatiles_SecretBaseSecondary  @ metatiles
+	.4byte gMetatileAttributes_SecretBaseSecondary  @ metatileAttributes
+	.4byte 0x00000000  @ callback
 	.globl gTileset_SecretBaseBlueCave
 gTileset_SecretBaseBlueCave: @ 0x083B7E6C
-	.incbin "baserom_jp.gba", 0x3B7E6C, 0x18
+	.byte 0x00, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTilesetTiles_SecretBaseBlueCave  @ tiles
+	.4byte gTilesetPalettes_SecretBaseBlueCave  @ palettes
+	.4byte gMetatiles_SecretBaseSecondary  @ metatiles
+	.4byte gMetatileAttributes_SecretBaseSecondary  @ metatileAttributes
+	.4byte 0x00000000  @ callback
 	.globl gTileset_SecretBaseYellowCave
 gTileset_SecretBaseYellowCave: @ 0x083B7E84
-	.incbin "baserom_jp.gba", 0x3B7E84, 0x18
+	.byte 0x00, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTilesetTiles_SecretBaseYellowCave  @ tiles
+	.4byte gTilesetPalettes_SecretBaseYellowCave  @ palettes
+	.4byte gMetatiles_SecretBaseSecondary  @ metatiles
+	.4byte gMetatileAttributes_SecretBaseSecondary  @ metatileAttributes
+	.4byte 0x00000000  @ callback
 	.globl gTileset_SecretBaseRedCave
 gTileset_SecretBaseRedCave: @ 0x083B7E9C
-	.incbin "baserom_jp.gba", 0x3B7E9C, 0x18
+	.byte 0x00, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTilesetTiles_SecretBaseRedCave  @ tiles
+	.4byte gTilesetPalettes_SecretBaseRedCave  @ palettes
+	.4byte gMetatiles_SecretBaseSecondary  @ metatiles
+	.4byte gMetatileAttributes_SecretBaseSecondary  @ metatileAttributes
+	.4byte 0x00000000  @ callback
 	.globl gTileset_InsideOfTruck
 gTileset_InsideOfTruck: @ 0x083B7EB4
 	.incbin "baserom_jp.gba", 0x3B7EB4, 0x18
