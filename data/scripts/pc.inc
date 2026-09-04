@@ -11,8 +11,6 @@ EventScript_PCMainMenu::
 	message gText_WhichPCShouldBeAccessed
 	waitmessage
 	special ScriptMenu_CreatePCMultichoice
-	@ The JP menu script waits for its PC menu task here.
-	waitstate
 	goto EventScript_AccessPC
 	end
 

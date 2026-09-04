@@ -33,7 +33,6 @@ SeafloorCavern_Room9_EventScript_ArchieAwakenKyogre:: @ 0x082189FE
 	setweather WEATHER_NONE
 	resetweather
 	special Script_FadeOutMapMusic
-	waitstate
 	msgbox SeafloorCavern_Room9_Text_RedOrbShinesByItself, MSGBOX_DEFAULT
 	special WaitWeather
 	setvar VAR_RESULT, 0x1
@@ -59,7 +58,6 @@ SeafloorCavern_Room9_EventScript_ArchieAwakenKyogre:: @ 0x082189FE
 	applymovement LOCALID_SEAFLOOR_CAVERN_KYOGRE, SeafloorCavern_Room9_Movement_KyogreApproach
 	waitmovement 0x0
 	special FadeOutOrbEffect
-	waitstate
 	setvar VAR_0x8004, 1  @ vertical pan
 	setvar VAR_0x8005, 1  @ horizontal pan
 	setvar VAR_0x8006, 8  @ num shakes

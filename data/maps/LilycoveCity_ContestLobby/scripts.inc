@@ -368,31 +368,26 @@ LilycoveCity_ContestLobby_EventScript_WarpToContestHall:: @ 0x08206CAF
 LilycoveCity_ContestLobby_EventScript_WarpToCoolContestHall:: @ 0x08206CEF
 	setwarp MAP_CONTEST_HALL_COOL, 7, 5
 	special DoContestHallWarp
-	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToBeautyContestHall:: @ 0x08206CFC
 	setwarp MAP_CONTEST_HALL_BEAUTY, 7, 5
 	special DoContestHallWarp
-	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToCuteContestHall:: @ 0x08206D09
 	setwarp MAP_CONTEST_HALL_CUTE, 7, 5
 	special DoContestHallWarp
-	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToSmartContestHall:: @ 0x08206D16
 	setwarp MAP_CONTEST_HALL_SMART, 7, 5
 	special DoContestHallWarp
-	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToToughContestHall:: @ 0x08206D23
 	setwarp MAP_CONTEST_HALL_TOUGH, 7, 5
 	special DoContestHallWarp
-	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_LeadToContestHall:: @ 0x08206D30
@@ -756,12 +751,10 @@ LilycoveCity_ContestLobby_EventScript_TrySetUpLinkContest:: @ 0x082070D5
 
 LilycoveCity_ContestLobby_EventScript_TryLinkEMode:: @ 0x0820717B
 	special TryContestEModeLinkup
-	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_TryLinkGMode:: @ 0x08207180
 	special TryContestGModeLinkup
-	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_CancelLinkDifferentContest:: @ 0x08207185
@@ -869,12 +862,10 @@ LilycoveCity_ContestLobby_EventScript_TryJoinGroup:: @ 0x082072CB
 
 LilycoveCity_ContestLobby_EventScript_TryBecomeLinkLeader:: @ 0x082072F3
 	special TryBecomeLinkLeader
-	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_TryJoinLinkGroup:: @ 0x082072F8
 	special TryJoinLinkGroup
-	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_LinkLeaderDecided:: @ 0x082072FD

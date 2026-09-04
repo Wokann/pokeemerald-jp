@@ -18,8 +18,8 @@ gSpecials::
 .endif
 	def_special HealPlayerParty
 	def_special SetCableClubWarp
-	def_special DoCableClubWarp
-	def_special ReturnFromLinkRoom
+	def_special DoCableClubWarp, waitstate=1
+	def_special ReturnFromLinkRoom, waitstate=1
 	def_special CleanupLinkRoomState
 	def_special ExitLinkRoom
 	def_special SetPlayerSecretBase
@@ -44,21 +44,21 @@ gSpecials::
 	def_special SetBattledOwnerFromResult
 	def_special DoSecretBasePCTurnOffEffect
 	def_special RecordMixingPlayerSpotTriggered, waitstate=1
-	def_special TryBattleLinkup
-	def_special TryTradeLinkup
-	def_special TryRecordMixLinkup
+	def_special TryBattleLinkup, waitstate=1
+	def_special TryTradeLinkup, waitstate=1
+	def_special TryRecordMixLinkup, waitstate=1
 	def_special CloseLink
 	def_special ColosseumPlayerSpotTriggered, waitstate=1
 	def_special PlayerEnteredTradeSeat, waitstate=1
 	def_special Script_StartWiredTrade
 	def_special CableClubSaveGame
-	def_special TryBerryBlenderLinkup
+	def_special TryBerryBlenderLinkup, waitstate=1
 	def_special GetLinkPartnerNames
 	def_special SpawnLinkPartnerEventObject
 	def_special SavePlayerParty
 	def_special LoadPlayerParty
 	def_special ChooseHalfPartyForBattle, waitstate=1
-	def_special Script_ShowLinkTrainerCard
+	def_special Script_ShowLinkTrainerCard, waitstate=1
 	def_special ObjectEventInteractionGetBerryTreeData
 	def_special Bag_ChooseBerry, waitstate=1
 	def_special ObjectEventInteractionPlantBerryTree
@@ -71,7 +71,7 @@ gSpecials::
 	def_special ShowTrainerIntroSpeech
 	def_special ShowTrainerCantBattleSpeech
 	def_special GetTrainerFlag
-	def_special DoTrainerApproach
+	def_special DoTrainerApproach, waitstate=1
 	def_special PlayTrainerEncounterMusic
 	def_special ShouldTryRematchBattle
 	def_special IsTrainerReadyForRematch
@@ -108,7 +108,7 @@ gSpecials::
 	def_special GiveMonContestRibbon
 	def_special IsContestDebugActive
 	def_special GiveMonArtistRibbon
-	def_special TryContestGModeLinkup
+	def_special TryContestGModeLinkup, waitstate=1
 	def_special SaveGame, waitstate=1
 	def_special DoWateringBerryTreeAnim, waitstate=1
 	def_special ShowEasyChatScreen
@@ -215,8 +215,8 @@ gSpecials::
 	def_special ShowLinkBattleRecords
 	def_special IsEnoughForCostInVar0x8005
 	def_special SubtractMoneyFromVar0x8005
-	def_special TryFieldPoisonWhiteOut
-	def_special SetCB2WhiteOut
+	def_special TryFieldPoisonWhiteOut, waitstate=1
+	def_special SetCB2WhiteOut, waitstate=1
 	def_special RotatingGate_InitPuzzle
 	def_special RotatingGate_InitPuzzleAndGraphics
 	def_special SetSSTidalFlag
@@ -235,7 +235,7 @@ gSpecials::
 	def_special SetDeptStoreFloor
 	def_special DoLotteryCornerComputerEffect
 	def_special EndLotteryCornerComputerEffect
-	def_special ChooseMonForMoveRelearner
+	def_special ChooseMonForMoveRelearner, waitstate=1
 	def_special MoveDeleterChooseMoveToForget
 	def_special MoveDeleterForgetMove
 	def_special BufferMoveDeleterNicknameAndMove
@@ -278,7 +278,7 @@ gSpecials::
 	def_special ShowBerryBlenderRecordWindow
 	def_special ResetTrickHouseNuggetFlag
 	def_special SetTrickHouseNuggetFlag
-	def_special ScriptMenu_CreatePCMultichoice
+	def_special ScriptMenu_CreatePCMultichoice, waitstate=1
 	def_special AccessHallOfFamePC, waitstate=1
 	def_special Special_ShowDiploma, waitstate=1
 	def_special CheckLeadMonCool
@@ -298,7 +298,7 @@ gSpecials::
 	def_special CheckRelicanthWailord
 	def_special ShouldDoBrailleRegirockEffectOld
 	def_special DoOrbEffect
-	def_special FadeOutOrbEffect
+	def_special FadeOutOrbEffect, waitstate=1
 	def_special WaitWeather, waitstate=1
 	def_special BufferEReaderTrainerName
 	def_special GetSlotMachineId
@@ -315,12 +315,12 @@ gSpecials::
 	def_special InitRoamer
 	def_special TryUpdateRusturfTunnelState
 	def_special IsGrassTypeInParty
-	def_special DoContestHallWarp
+	def_special DoContestHallWarp, waitstate=1
 	def_special LoadWallyZigzagoon
 	def_special IsStarterInParty
 	def_special CopyCurSecretBaseOwnerName_StrVar1
 	def_special ScriptCheckFreePokemonStorageSpace
-	def_special DoSealedChamberShakingEffect_Long
+	def_special DoSealedChamberShakingEffect_Long, waitstate=1
 	def_special ShowDeptStoreElevatorFloorSelect
 	def_special InteractWithShieldOrTVDecoration
 	def_special IsPokerusInParty
@@ -330,7 +330,7 @@ gSpecials::
 	def_special BattleSetup_StartLegendaryBattle, waitstate=1
 	def_special StartRegiBattle, waitstate=1
 	def_special SetTrainerFacingDirection
-	def_special DoSealedChamberShakingEffect_Short
+	def_special DoSealedChamberShakingEffect_Short, waitstate=1
 	def_special FoundBlackGlasses
 	def_special StartDroughtWeatherBlend
 	def_special DoDiveWarp
@@ -347,7 +347,7 @@ gSpecials::
 	def_special TryInitBattleTowerAwardManObjectEvent
 	def_special MoveOutOfSecretBaseFromOutside
 	def_special LoadPlayerBag
-	def_special Script_FadeOutMapMusic
+	def_special Script_FadeOutMapMusic, waitstate=1
 	def_special SetPacifidlogTMReceivedDay
 	def_special GetDaysUntilPacifidlogTMAvailable
 	def_special HasAllHoennMons
@@ -429,22 +429,22 @@ gSpecials::
 	def_special StartPlayerDescendMirageTower, waitstate=1
 	def_special BufferTMHMMoveName
 	def_special IsWirelessAdapterConnected
-	def_special TryBecomeLinkLeader
-	def_special TryJoinLinkGroup
+	def_special TryBecomeLinkLeader, waitstate=1
+	def_special TryJoinLinkGroup, waitstate=1
 	def_special RunUnionRoom
 	def_special ShowWirelessCommunicationScreen, waitstate=1
 	def_special InitUnionRoom
 	def_special BufferUnionRoomPlayerName
 	def_special WonderNews_GetRewardInfo
-	def_special ChooseMonForWirelessMinigame
+	def_special ChooseMonForWirelessMinigame, waitstate=1
 	def_special Script_ResetUnionRoomTrade
 	def_special IsBadEggInParty
 	def_special ValidateSavedWonderCard
 	def_special HasAtLeastOneBerry
 	def_special IsPokemonJumpSpeciesInParty
-	def_special ShowPokemonJumpRecords
+	def_special ShowPokemonJumpRecords, waitstate=1
 	def_special IsDodrioInParty
-	def_special ShowDodrioBerryPickingRecords
+	def_special ShowDodrioBerryPickingRecords, waitstate=1
 	def_special OffsetCameraForBattle
 	def_special GetDeptStoreDefaultFloorChoice
 	def_special BufferVarsForIVRater
@@ -458,7 +458,7 @@ gSpecials::
 	def_special ShowFrontierManiacMessage
 	def_special IsContestWithRSPlayer
 	def_special ClearLinkContestFlags
-	def_special TryContestEModeLinkup
+	def_special TryContestEModeLinkup, waitstate=1
 	def_special ShowScrollableMultichoice, waitstate=1
 	def_special ScrollableMultichoice_TryReturnToList
 	def_special BufferBattleTowerElevatorFloors
@@ -507,7 +507,7 @@ gSpecials::
 	def_special CreateAbnormalWeatherEvent
 	def_special GetAbnormalWeatherMapNameAndType
 	def_special GetMartEmployeeObjectEventId
-	def_special SaveForBattleTowerLink
+	def_special SaveForBattleTowerLink, waitstate=1
 	def_special Unused_SetWeatherSunny
 	def_special SetUnlockedPokedexFlags
 	def_special IsTrainerRegistered

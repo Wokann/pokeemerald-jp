@@ -12,18 +12,14 @@ SealedChamber_InnerRoom_EventScript_BrailleBackWall:: @ 0x0821BB3D
 	fadeoutbgm 0
 	playse SE_TRUCK_MOVE
 	special DoSealedChamberShakingEffect_Long
-	waitstate
 	delay 40
 	special DoSealedChamberShakingEffect_Short
-	waitstate
 	playse SE_DOOR
 	delay 40
 	special DoSealedChamberShakingEffect_Short
-	waitstate
 	playse SE_DOOR
 	delay 40
 	special DoSealedChamberShakingEffect_Short
-	waitstate
 	playse SE_DOOR
 	delay 40
 	msgbox gText_DoorOpenedFarAway, MSGBOX_DEFAULT

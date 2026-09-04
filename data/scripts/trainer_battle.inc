@@ -4,8 +4,6 @@ EventScript_StartTrainerApproach::
 EventScript_TrainerApproach::
 	special PlayTrainerEncounterMusic
 	special DoTrainerApproach
-	@ The JP stream waits for the trainer approach task here.
-	waitstate
 	goto EventScript_ShowTrainerIntroMsg
 
 EventScript_TryDoNormalTrainerBattle::

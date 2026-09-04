@@ -573,7 +573,6 @@ BerryBlender_EventScript_TryDoLinkBlender:
 	message BerryBlender_Text_SearchingForFriends
 	waitmessage
 	special TryBerryBlenderLinkup
-	waitstate
 	goto_if_eq VAR_RESULT, LINKUP_SUCCESS, BerryBlender_EventScript_SpawnLinkPartners
 	goto_if_eq VAR_RESULT, LINKUP_SOMEONE_NOT_READY, BerryBlender_EventScript_CloseLinkNotReady
 	goto_if_eq VAR_RESULT, LINKUP_DIFF_SELECTIONS, BerryBlender_EventScript_CloseLinkDifferentSelections
@@ -696,12 +695,10 @@ BerryBlender_EventScript_TryJoinGroup:
 
 BerryBlender_EventScript_TryBecomeLinkLeader:
 	special TryBecomeLinkLeader
-	waitstate
 	return
 
 BerryBlender_EventScript_TryJoinLinkGroup:
 	special TryJoinLinkGroup
-	waitstate
 	return
 
 BerryBlender_EventScript_LinkLeaderDecided:
