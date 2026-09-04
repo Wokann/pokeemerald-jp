@@ -1055,8 +1055,27 @@ gTilesetPalettes_TrickHousePuzzle:
 	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/13.gbapal"
 	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/14.gbapal"
 	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/15.gbapal"
-	@ Unstructured Inside Ship and Secret Base graphics: [0x08352098, 0x0835B068)
-	.incbin "baserom_jp.gba", 0x352098, 0x8FD0
+gTilesetTiles_InsideShip:
+	.incbin "data/tilesets/secondary/inside_ship/tiles.4bpp.lz"
+gTilesetPalettes_InsideShip:
+	.incbin "data/tilesets/secondary/inside_ship/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/15.gbapal"
+	@ Unstructured Secret Base graphics: [0x08352E68, 0x0835B068)
+	.incbin "baserom_jp.gba", 0x352E68, 0x8200
 gTileset_EliteFour_Tiles:
 	.incbin "data/tilesets/secondary/elite_four/tiles.4bpp.lz"
 gTileset_EliteFour_Palettes:

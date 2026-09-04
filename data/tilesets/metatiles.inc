@@ -202,8 +202,12 @@ gMetatiles_TrickHousePuzzle:
 	.incbin "data/tilesets/secondary/trick_house_puzzle/metatiles.bin"
 gMetatileAttributes_TrickHousePuzzle:
 	.incbin "data/tilesets/secondary/trick_house_puzzle/metatile_attributes.bin"
-	@ Unstructured Inside Ship and Secret Base metatile data: [0x083A112C, 0x083A2308)
-	.incbin "baserom_jp.gba", 0x3A112C, 0x11DC
+gMetatiles_InsideShip:
+	.incbin "data/tilesets/secondary/inside_ship/metatiles.bin"
+gMetatileAttributes_InsideShip:
+	.incbin "data/tilesets/secondary/inside_ship/metatile_attributes.bin"
+	@ Unstructured Secret Base metatile data: [0x083A22E4, 0x083A2308)
+	.incbin "baserom_jp.gba", 0x3A22E4, 0x24
 gTileset_EliteFour_Metatiles:
 	.incbin "data/tilesets/secondary/elite_four/metatiles.bin"
 gTileset_EliteFour_MetatileAttributes:

@@ -448,7 +448,12 @@ gTileset_MossdeepGym: @ 0x083B804C
 	.4byte 0x00000000  @ callback
 	.globl gTileset_InsideShip
 gTileset_InsideShip: @ 0x083B8064
-	.incbin "baserom_jp.gba", 0x3B8064, 0x18
+	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTilesetTiles_InsideShip  @ tiles
+	.4byte gTilesetPalettes_InsideShip  @ palettes
+	.4byte gMetatiles_InsideShip  @ metatiles
+	.4byte gMetatileAttributes_InsideShip  @ metatileAttributes
+	.4byte 0x00000000  @ callback
 	.globl gTileset_SecretBase
 gTileset_SecretBase: @ 0x083B807C
 	.incbin "baserom_jp.gba", 0x3B807C, 0x18
