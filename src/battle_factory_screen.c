@@ -3276,7 +3276,7 @@ __attribute__((naked)) void Select_PrintMonCategory(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0819BA4C: .4byte gUnknown_3001278\n\t"
-        "_0819BA50: .4byte gUnknown_854069C\n\t"
+        "_0819BA50: .4byte gPokedexEntries\n\t"
         "_0819BA54: .4byte gText_Pokemon\n\t"
         ".syntax divided\n\t"
     );
@@ -10129,7 +10129,7 @@ __attribute__((naked)) void Swap_PrintMonCategory(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0819EF28: .4byte gEnemyParty\n\t"
-        "_0819EF2C: .4byte gUnknown_854069C\n\t"
+        "_0819EF2C: .4byte gPokedexEntries\n\t"
         "_0819EF30: .4byte gText_Pokemon\n\t"
         ".syntax divided\n\t"
     );

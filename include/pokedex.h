@@ -20,16 +20,21 @@ enum
 
 struct PokedexEntry
 {
-    /*0x00*/ u8 categoryName[12];
-    /*0x0C*/ u16 height; //in decimeters
-    /*0x0E*/ u16 weight; //in hectograms
-    /*0x10*/ const u8 *description;
-    /*0x14*/ u16 unused;
-    /*0x16*/ u16 pokemonScale;
-    /*0x18*/ u16 pokemonOffset;
-    /*0x1A*/ u16 trainerScale;
-    /*0x1C*/ u16 trainerOffset;
-};  /*size = 0x20*/
+    // The JP ROM uses a compact six-byte category field and keeps the
+    // description pointer before the display-scale fields.
+    /*0x00*/ u8 categoryName[6];
+    /*0x06*/ u16 height; // in decimeters
+    /*0x08*/ u16 weight; // in hectograms
+              // 0x0A: compiler alignment padding
+    /*0x0C*/ const u8 *description;
+    /*0x10*/ u16 unused;
+    /*0x12*/ u16 pokemonScale;
+    /*0x14*/ s16 pokemonOffset;
+    /*0x16*/ u16 trainerScale;
+    /*0x18*/ s16 trainerOffset;
+};  /*size = 0x1C*/
+
+extern const struct PokedexEntry gPokedexEntries[];
 
 void ResetPokedex(void);
 u16 GetPokedexHeightWeight(u16 dexNum, u8 data);

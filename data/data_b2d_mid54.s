@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata
+	.section .rodata.pokedex_prefix
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -13,13 +13,7 @@
 gUnknown_8539C0E: @ 0x8539C0E
 	.incbin "baserom_jp.gba", 0x539c0e, 0x42
 
-	.globl gUnknown_8539C50
-gUnknown_8539C50: @ 0x8539C50
-	.incbin "baserom_jp.gba", 0x539c50, 0x6a4c
-
-	.globl gUnknown_854069C
-gUnknown_854069C: @ 0x854069C
-	.incbin "baserom_jp.gba", 0x54069c, 0x2a54
+	.section .rodata.pokedex_suffix
 
 	.globl gUnknown_85430F0
 gUnknown_85430F0: @ 0x85430F0

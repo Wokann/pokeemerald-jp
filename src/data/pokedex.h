@@ -1,6 +1,8 @@
 #ifndef GUARD_DATA_POKEDEX_H
 #define GUARD_DATA_POKEDEX_H
 
+#include <pokedex.h>
+
 // 0x08538FF4-0x08539932.  This follows pokeemerald's data/pokemon source
 // hierarchy while preserving the JP alphabetical order.
 #include "pokemon/pokedex_orders.h"
