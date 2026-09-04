@@ -1,609 +1,210 @@
 #include "global.h"
+#include "battle.h"
+#include "battle_anim.h"
 #include "battle_controllers.h"
+#include "battle_interface.h"
+#include "battle_message.h"
+#include "bg.h"
+#include "data.h"
+#include "item_menu.h"
+#include "link.h"
+#include "main.h"
+#include "m4a.h"
+#include "palette.h"
+#include "pokeball.h"
+#include "pokeblock.h"
+#include "pokemon.h"
+#include "reshow_battle_screen.h"
+#include "sound.h"
+#include "task.h"
+#include "text.h"
+#include "util.h"
+#include "window.h"
+#include "constants/battle_anim.h"
+#include "constants/rgb.h"
+#include "constants/songs.h"
 
 #define SAFARI_DISPATCH_DATA __attribute__((section(".rodata.safari_dispatch_data")))
 
 typedef void (*SafariBufferCommandFunc)(void);
 
+void SafariBufferRunCommand(void);
+void SafariBufferExecCompleted(void);
+void sub_081595D4(void);
+
+extern void SetCB2ToReshowScreenAfterMenu(u8 cursorPosition, u8 baseTileNum);
+extern void sub_08135944(void);
+extern void sub_0805D3C8(struct Sprite *sprite);
+extern void sub_08076320(u8 battler);
+extern void sub_0814FA04(const u8 *text, u8 windowId);
+extern void TryGetStatusString(const u8 *text);
+extern void PlayCry1(u16 species, s8 pan);
+extern bool8 gUnknown_202415D;
+extern u16 gUnknown_2022D0A[][0x100];
+extern const u8 gUnknown_85ABAEE[];
+extern const SafariBufferCommandFunc sSafariBufferCommands[CONTROLLER_TERMINATOR_NOP + 1];
+
 void SpriteCB_Null4(void) {}
-__attribute__((naked)) void SetControllerToSafari(void)
+void SetControllerToSafari(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _081592B8\n\t"
-        "	ldr r0, _081592BC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081592C0\n\t"
-        "	str r1, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_081592B8: .4byte gBattlerControllerFuncs\n\t"
-        "_081592BC: .4byte gActiveBattler\n\t"
-        "_081592C0: .4byte SafariBufferRunCommand + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gBattlerControllerFuncs[gActiveBattler] = SafariBufferRunCommand;
 }
 
-__attribute__((naked)) void SafariBufferRunCommand(void)
+void SafariBufferRunCommand(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _081592F8\n\t"
-        "	ldr r1, _081592FC\n\t"
-        "	ldr r0, _08159300\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _08159310\n\t"
-        "	ldr r0, _08159304\n\t"
-        "	lsls r1, r3, #9\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0x38\n\t"
-        "	bhi _0815930C\n\t"
-        "	ldr r0, _08159308\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	b _08159310\n\t"
-        "	.align 2, 0\n\t"
-        "_081592F8: .4byte gBattleControllerExecFlags\n\t"
-        "_081592FC: .4byte gBitTable\n\t"
-        "_08159300: .4byte gActiveBattler\n\t"
-        "_08159304: .4byte gBattleBufferA\n\t"
-        "_08159308: .4byte sSafariBufferCommands\n\t"
-        "_0815930C:\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "_08159310:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gBattleControllerExecFlags & gBitTable[gActiveBattler])
+    {
+        if (gBattleBufferA[gActiveBattler][0] < ARRAY_COUNT(sSafariBufferCommands))
+            sSafariBufferCommands[gBattleBufferA[gActiveBattler][0]]();
+        else
+            SafariBufferExecCompleted();
+    }
 }
 
-__attribute__((naked)) void HandleInputChooseAction(void)
+void HandleInputChooseAction(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _08159344\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r2, #1\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08159382\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r1, _08159348\n\t"
-        "	ldr r0, _0815934C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08159360\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _08159350\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0815935A\n\t"
-        "	b _0815937C\n\t"
-        "	.align 2, 0\n\t"
-        "_08159344: .4byte gMain\n\t"
-        "_08159348: .4byte gActionSelectionCursor\n\t"
-        "_0815934C: .4byte gActiveBattler\n\t"
-        "_08159350:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08159366\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _08159372\n\t"
-        "	b _0815937C\n\t"
-        "_0815935A:\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #5\n\t"
-        "	b _0815936A\n\t"
-        "_08159360:\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #6\n\t"
-        "	b _0815936A\n\t"
-        "_08159366:\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #7\n\t"
-        "_0815936A:\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BtlController_EmitTwoReturnValues\n\t"
-        "	b _0815937C\n\t"
-        "_08159372:\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #8\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BtlController_EmitTwoReturnValues\n\t"
-        "_0815937C:\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	b _0815948A\n\t"
-        "_08159382:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081593C0\n\t"
-        "	ldr r5, _081593B8\n\t"
-        "	ldr r4, _081593BC\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0815948A\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl ActionSelectionDestroyCursorAt\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #1\n\t"
-        "	b _0815942E\n\t"
-        "	.align 2, 0\n\t"
-        "_081593B8: .4byte gActionSelectionCursor\n\t"
-        "_081593BC: .4byte gActiveBattler\n\t"
-        "_081593C0:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081593FC\n\t"
-        "	ldr r5, _081593F4\n\t"
-        "	ldr r4, _081593F8\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0815948A\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl ActionSelectionDestroyCursorAt\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #1\n\t"
-        "	b _0815942E\n\t"
-        "	.align 2, 0\n\t"
-        "_081593F4: .4byte gActionSelectionCursor\n\t"
-        "_081593F8: .4byte gActiveBattler\n\t"
-        "_081593FC:\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08159448\n\t"
-        "	ldr r5, _08159440\n\t"
-        "	ldr r4, _08159444\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0815948A\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl ActionSelectionDestroyCursorAt\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #2\n\t"
-        "_0815942E:\n\t"
-        "	eors r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetCB2ToReshowScreenAfterMenu\n\t"
-        "	b _0815948A\n\t"
-        "	.align 2, 0\n\t"
-        "_08159440: .4byte gActionSelectionCursor\n\t"
-        "_08159444: .4byte gActiveBattler\n\t"
-        "_08159448:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0815948A\n\t"
-        "	ldr r5, _08159490\n\t"
-        "	ldr r4, _08159494\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0815948A\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl ActionSelectionDestroyCursorAt\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #2\n\t"
-        "	eors r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetCB2ToReshowScreenAfterMenu\n\t"
-        "_0815948A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159490: .4byte gActionSelectionCursor\n\t"
-        "_08159494: .4byte gActiveBattler\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(A_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+
+        switch (gActionSelectionCursor[gActiveBattler])
+        {
+        case 0:
+            BtlController_EmitTwoReturnValues(B_COMM_TO_ENGINE, B_ACTION_SAFARI_BALL, 0);
+            break;
+        case 1:
+            BtlController_EmitTwoReturnValues(B_COMM_TO_ENGINE, B_ACTION_SAFARI_POKEBLOCK, 0);
+            break;
+        case 2:
+            BtlController_EmitTwoReturnValues(B_COMM_TO_ENGINE, B_ACTION_SAFARI_GO_NEAR, 0);
+            break;
+        case 3:
+            BtlController_EmitTwoReturnValues(B_COMM_TO_ENGINE, B_ACTION_SAFARI_RUN, 0);
+            break;
+        }
+        SafariBufferExecCompleted();
+    }
+    else if (JOY_NEW(DPAD_LEFT))
+    {
+        if (gActionSelectionCursor[gActiveBattler] & 1)
+        {
+            PlaySE(SE_SELECT);
+            ActionSelectionDestroyCursorAt(gActionSelectionCursor[gActiveBattler]);
+            gActionSelectionCursor[gActiveBattler] ^= 1;
+            SetCB2ToReshowScreenAfterMenu(gActionSelectionCursor[gActiveBattler], 0);
+        }
+    }
+    else if (JOY_NEW(DPAD_RIGHT))
+    {
+        if (!(gActionSelectionCursor[gActiveBattler] & 1))
+        {
+            PlaySE(SE_SELECT);
+            ActionSelectionDestroyCursorAt(gActionSelectionCursor[gActiveBattler]);
+            gActionSelectionCursor[gActiveBattler] ^= 1;
+            SetCB2ToReshowScreenAfterMenu(gActionSelectionCursor[gActiveBattler], 0);
+        }
+    }
+    else if (JOY_NEW(DPAD_UP))
+    {
+        if (gActionSelectionCursor[gActiveBattler] & 2)
+        {
+            PlaySE(SE_SELECT);
+            ActionSelectionDestroyCursorAt(gActionSelectionCursor[gActiveBattler]);
+            gActionSelectionCursor[gActiveBattler] ^= 2;
+            SetCB2ToReshowScreenAfterMenu(gActionSelectionCursor[gActiveBattler], 0);
+        }
+    }
+    else if (JOY_NEW(DPAD_DOWN))
+    {
+        if (!(gActionSelectionCursor[gActiveBattler] & 2))
+        {
+            PlaySE(SE_SELECT);
+            ActionSelectionDestroyCursorAt(gActionSelectionCursor[gActiveBattler]);
+            gActionSelectionCursor[gActiveBattler] ^= 2;
+            SetCB2ToReshowScreenAfterMenu(gActionSelectionCursor[gActiveBattler], 0);
+        }
+    }
 }
 
-__attribute__((naked)) void CompleteOnHealthboxSpriteCallbackDummy(void)
+void CompleteOnHealthboxSpriteCallbackDummy(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _081594C0\n\t"
-        "	ldr r1, _081594C4\n\t"
-        "	ldr r0, _081594C8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _081594CC\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081594BC\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "_081594BC:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081594C0: .4byte gSprites\n\t"
-        "_081594C4: .4byte gBattlerSpriteIds\n\t"
-        "_081594C8: .4byte gActiveBattler\n\t"
-        "_081594CC: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[gBattlerSpriteIds[gActiveBattler]].callback == SpriteCallbackDummy)
+        SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandlePrintSelectionString(void)
+void SafariHandlePrintSelectionString(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	bl IsTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081594E2\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "_081594E2:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!IsTextPrinterActive(0))
+        SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void CompleteWhenChosePokeblock(void)
+void CompleteWhenChosePokeblock(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _08159510\n\t"
-        "	ldr r1, _08159514\n\t"
-        "	ldr r0, _08159518\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _0815951C\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0815950C\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "_0815950C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159510: .4byte gSprites\n\t"
-        "_08159514: .4byte gHealthboxSpriteIds\n\t"
-        "_08159518: .4byte gActiveBattler\n\t"
-        "_0815951C: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[gHealthboxSpriteIds[gActiveBattler]].callback == SpriteCallbackDummy)
+        SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void sub_08159520(void)
+void sub_08159520(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08159550\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0815954A\n\t"
-        "	ldr r2, _08159554\n\t"
-        "	ldr r0, _08159558\n\t"
-        "	adds r3, r2, r0\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	ldr r0, _0815955C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r2]\n\t"
-        "	ldr r0, [r2, #8]\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_0815954A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159550: .4byte gPaletteFade\n\t"
-        "_08159554: .4byte gMain\n\t"
-        "_08159558: .4byte 0x00000439\n\t"
-        "_0815955C: .4byte gPreBattleCallback1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        gMain.inBattle = FALSE;
+        gMain.callback1 = gPreBattleCallback1;
+        SetMainCallback2(gMain.savedCallback);
+    }
 }
 
-__attribute__((naked)) void CompleteOnSpecialAnimDone(void)
+void CompleteOnSpecialAnimDone(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08159590\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08159586\n\t"
-        "	ldr r0, _08159594\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _08159598\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldr r2, [r2, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0815958A\n\t"
-        "_08159586:\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "_0815958A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159590: .4byte gUnknown_202415D\n\t"
-        "_08159594: .4byte gBattleSpritesDataPtr\n\t"
-        "_08159598: .4byte gActiveBattler\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gUnknown_202415D || !gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].specialAnimActive)
+        SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariOpenPokeblockCase(void)
+void SafariOpenPokeblockCase(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081595C4\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081595C0\n\t"
-        "	ldr r1, _081595C8\n\t"
-        "	ldr r0, _081595CC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081595D0\n\t"
-        "	str r1, [r0]\n\t"
-        "	bl FreeAllWindowBuffers\n\t"
-        "	bl sub_08135944\n\t"
-        "_081595C0:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081595C4: .4byte gPaletteFade\n\t"
-        "_081595C8: .4byte gBattlerControllerFuncs\n\t"
-        "_081595CC: .4byte gActiveBattler\n\t"
-        "_081595D0: .4byte sub_081595D4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        gBattlerControllerFuncs[gActiveBattler] = sub_081595D4;
+        FreeAllWindowBuffers();
+        sub_08135944();
+    }
 }
 
-__attribute__((naked)) void sub_081595D4(void)
+void sub_081595D4(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08159600\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ldr r0, _08159604\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081595FA\n\t"
-        "	ldr r0, _08159608\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081595FA\n\t"
-        "	ldr r0, _0815960C\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl BtlController_EmitOneReturnValue\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "_081595FA:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159600: .4byte gMain\n\t"
-        "_08159604: .4byte BattleMainCB2 + 1\n\t"
-        "_08159608: .4byte gPaletteFade\n\t"
-        "_0815960C: .4byte gSpecialVar_ItemId\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
+    {
+        BtlController_EmitOneReturnValue(B_COMM_TO_ENGINE, gSpecialVar_ItemId);
+        SafariBufferExecCompleted();
+    }
 }
 
-__attribute__((naked)) void SafariHandleSuccessBallThrowAnim(void)
+void SafariHandleSuccessBallThrowAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08159638\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _0815963C\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldr r2, [r2, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08159632\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "_08159632:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159638: .4byte gBattleSpritesDataPtr\n\t"
-        "_0815963C: .4byte gActiveBattler\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].animFromTableActive)
+        SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariBufferExecCompleted(void)
+void SafariBufferExecCompleted(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r1, _08159680\n\t"
-        "	ldr r4, _08159684\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08159688\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r0, _0815968C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08159694\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	mov r1, sp\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #4\n\t"
-        "	mov r2, sp\n\t"
-        "	bl PrepareBufferDataTransferLink\n\t"
-        "	ldr r1, _08159690\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x38\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _081596A6\n\t"
-        "	.align 2, 0\n\t"
-        "_08159680: .4byte gBattlerControllerFuncs\n\t"
-        "_08159684: .4byte gActiveBattler\n\t"
-        "_08159688: .4byte SafariBufferRunCommand + 1\n\t"
-        "_0815968C: .4byte gBattleTypeFlags\n\t"
-        "_08159690: .4byte gBattleBufferA\n\t"
-        "_08159694:\n\t"
-        "	ldr r2, _081596B0\n\t"
-        "	ldr r1, _081596B4\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	bics r0, r1\n\t"
-        "	str r0, [r2]\n\t"
-        "_081596A6:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081596B0: .4byte gBattleControllerExecFlags\n\t"
-        "_081596B4: .4byte gBitTable\n\t"
-        ".syntax divided\n\t"
-    );
+    gBattlerControllerFuncs[gActiveBattler] = SafariBufferRunCommand;
+    if (gBattleTypeFlags & BATTLE_TYPE_LINK)
+    {
+        u8 playerId = GetMultiplayerId();
+
+        PrepareBufferDataTransferLink(B_COMM_CONTROLLER_IS_DONE, 4, &playerId);
+        gBattleBufferA[gActiveBattler][0] = CONTROLLER_TERMINATOR_NOP;
+    }
+    else
+    {
+        gBattleControllerExecFlags &= ~gBitTable[gActiveBattler];
+    }
 }
 
-__attribute__((naked)) void SafariHandleBallThrowAnim(void)
+void SafariHandleBallThrowAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081596E0\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _081596E4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldr r2, [r2, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081596DA\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "_081596DA:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081596E0: .4byte gBattleSpritesDataPtr\n\t"
-        "_081596E4: .4byte gActiveBattler\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].statusAnimActive)
+        SafariBufferExecCompleted();
 }
 
 void SafariHandleGetMonData(void)
@@ -648,111 +249,20 @@ void SafariHandleReturnMonToBall(void)
 }
 
 
-__attribute__((naked)) void SafariHandleDrawTrainerPic(void)
+void SafariHandleDrawTrainerPic(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r4, _081597F4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	ldr r5, _081597F8\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	bl DecompressTrainerBackPic\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r6, [r0, #8]\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetBattlerPosition\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl SetMultiuseSpriteTemplateToTrainerBack\n\t"
-        "	ldr r0, _081597FC\n\t"
-        "	ldr r2, _08159800\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r1, [r1, #8]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	movs r2, #8\n\t"
-        "	subs r2, r2, r1\n\t"
-        "	lsls r2, r2, #0x12\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #0xf\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	movs r1, #0x50\n\t"
-        "	movs r3, #0x1e\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r6, _08159804\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r4, _08159808\n\t"
-        "	ldrb r3, [r5]\n\t"
-        "	adds r0, r3, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r3\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	strh r1, [r0, #0x24]\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r1, _0815980C\n\t"
-        "	strh r1, [r0, #0x2e]\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r4, #0x1c\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r1, _08159810\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r1, _08159814\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08159818\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081597F4: .4byte gSaveBlock2Ptr\n\t"
-        "_081597F8: .4byte gActiveBattler\n\t"
-        "_081597FC: .4byte gMultiuseSpriteTemplate\n\t"
-        "_08159800: .4byte gTrainerBackPicCoords\n\t"
-        "_08159804: .4byte gBattlerSpriteIds\n\t"
-        "_08159808: .4byte gSprites\n\t"
-        "_0815980C: .4byte 0x0000FFFE\n\t"
-        "_08159810: .4byte sub_0805D3C8 + 1\n\t"
-        "_08159814: .4byte gBattlerControllerFuncs\n\t"
-        "_08159818: .4byte CompleteOnHealthboxSpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    DecompressTrainerBackPic(gSaveBlock2Ptr->playerGender, gActiveBattler);
+    SetMultiuseSpriteTemplateToTrainerBack(gSaveBlock2Ptr->playerGender, GetBattlerPosition(gActiveBattler));
+    gBattlerSpriteIds[gActiveBattler] = CreateSprite(
+        &gMultiuseSpriteTemplate,
+        80,
+        (8 - gTrainerBackPicCoords[gSaveBlock2Ptr->playerGender].size) * 4 + 80,
+        30);
+    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = DISPLAY_WIDTH;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].data[0] = -2;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].callback = sub_0805D3C8;
+    gBattlerControllerFuncs[gActiveBattler] = CompleteOnHealthboxSpriteCallbackDummy;
 }
 
 void SafariHandleTrainerSlide(void)
@@ -779,96 +289,22 @@ void SafariHandlePaletteFade(void)
 }
 
 
-__attribute__((naked)) void sub_0815984C(void)
+void sub_0815984C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _0815988C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, [r0, #8]\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r1, #8]\n\t"
-        "	ldr r1, _08159890\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r5, _08159894\n\t"
-        "	ldrb r4, [r5]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r3, #4\n\t"
-        "	bl InitAndLaunchSpecialAnimation\n\t"
-        "	ldr r1, _08159898\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0815989C\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0815988C: .4byte gBattleSpritesDataPtr\n\t"
-        "_08159890: .4byte gUnknown_202415D\n\t"
-        "_08159894: .4byte gActiveBattler\n\t"
-        "_08159898: .4byte gBattlerControllerFuncs\n\t"
-        "_0815989C: .4byte CompleteOnSpecialAnimDone + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gBattleSpritesDataPtr->animationData->ballThrowCaseId = BALL_3_SHAKES_SUCCESS;
+    gUnknown_202415D = TRUE;
+    InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), B_ANIM_BALL_THROW_WITH_TRAINER);
+    gBattlerControllerFuncs[gActiveBattler] = CompleteOnSpecialAnimDone;
 }
 
-__attribute__((naked)) void sub_081598A0(void)
+void sub_081598A0(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r1, _081598E8\n\t"
-        "	ldr r5, _081598EC\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	adds r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldr r0, _081598F0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	strb r1, [r0, #8]\n\t"
-        "	ldr r1, _081598F4\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r4, [r5]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r3, #4\n\t"
-        "	bl InitAndLaunchSpecialAnimation\n\t"
-        "	ldr r1, _081598F8\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081598FC\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081598E8: .4byte gBattleBufferA\n\t"
-        "_081598EC: .4byte gActiveBattler\n\t"
-        "_081598F0: .4byte gBattleSpritesDataPtr\n\t"
-        "_081598F4: .4byte gUnknown_202415D\n\t"
-        "_081598F8: .4byte gBattlerControllerFuncs\n\t"
-        "_081598FC: .4byte CompleteOnSpecialAnimDone + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 ballThrowCaseId = gBattleBufferA[gActiveBattler][1];
+
+    gBattleSpritesDataPtr->animationData->ballThrowCaseId = ballThrowCaseId;
+    gUnknown_202415D = TRUE;
+    InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), B_ANIM_BALL_THROW_WITH_TRAINER);
+    gBattlerControllerFuncs[gActiveBattler] = CompleteOnSpecialAnimDone;
 }
 
 void SafariHandlePause(void)
@@ -883,167 +319,54 @@ void SafariHandleMoveAnimation(void)
 }
 
 
-__attribute__((naked)) void SafariHandlePrintString(void)
+void SafariHandlePrintString(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _08159950\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _08159954\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r4, _08159958\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	ldr r1, _0815995C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl BufferStringBattle\n\t"
-        "	ldr r0, _08159960\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_0814FA04\n\t"
-        "	ldr r1, _08159964\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08159968\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159950: .4byte gBattle_BG0_X\n\t"
-        "_08159954: .4byte gBattle_BG0_Y\n\t"
-        "_08159958: .4byte gActiveBattler\n\t"
-        "_0815995C: .4byte gUnknown_2022D0A\n\t"
-        "_08159960: .4byte gDisplayedStringBattle\n\t"
-        "_08159964: .4byte gBattlerControllerFuncs\n\t"
-        "_08159968: .4byte SafariHandlePrintSelectionString + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *stringId;
+
+    gBattle_BG0_X = 0;
+    gBattle_BG0_Y = 0;
+    stringId = gUnknown_2022D0A[gActiveBattler];
+    BufferStringBattle(*stringId);
+    sub_0814FA04(gDisplayedStringBattle, 0);
+    gBattlerControllerFuncs[gActiveBattler] = SafariHandlePrintSelectionString;
 }
 
-__attribute__((naked)) void sub_0815996C(void)
+void sub_0815996C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08159984\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08159988\n\t"
-        "	bl SafariHandlePrintString\n\t"
-        "	b _0815998C\n\t"
-        "	.align 2, 0\n\t"
-        "_08159984: .4byte gActiveBattler\n\t"
-        "_08159988:\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "_0815998C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
+        SafariHandlePrintString();
+    else
+        SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void sub_08159990(void)
+void sub_08159990(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _081599B6\n\t"
-        "	ldr r0, _081599BC\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r1, _081599C0\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _081599C4\n\t"
-        "	ldr r0, _081599C8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081599CC\n\t"
-        "	str r1, [r0]\n\t"
-        "_081599B6:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081599BC: .4byte gBattle_BG0_X\n\t"
-        "_081599C0: .4byte gBattle_BG0_Y\n\t"
-        "_081599C4: .4byte gBattlerControllerFuncs\n\t"
-        "_081599C8: .4byte gActiveBattler\n\t"
-        "_081599CC: .4byte HandleInputChooseAction + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!IsDma3ManagerBusyWithBgCopy())
+    {
+        gBattle_BG0_X = 0;
+        gBattle_BG0_Y = DISPLAY_HEIGHT;
+        gBattlerControllerFuncs[gActiveBattler] = HandleInputChooseAction;
+    }
 }
 
-__attribute__((naked)) void SafariHandleChooseAction(void)
+void SafariHandleChooseAction(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r1, _08159A1C\n\t"
-        "	ldr r0, _08159A20\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08159A24\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r0, _08159A28\n\t"
-        "	movs r1, #2\n\t"
-        "	bl sub_0814FA04\n\t"
-        "	movs r4, #0\n\t"
-        "_081599EA:\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl ActionSelectionDestroyCursorAt\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #3\n\t"
-        "	ble _081599EA\n\t"
-        "	ldr r1, _08159A2C\n\t"
-        "	ldr r0, _08159A20\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetCB2ToReshowScreenAfterMenu\n\t"
-        "	ldr r0, _08159A30\n\t"
-        "	bl TryGetStatusString\n\t"
-        "	ldr r0, _08159A34\n\t"
-        "	movs r1, #1\n\t"
-        "	bl sub_0814FA04\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159A1C: .4byte gBattlerControllerFuncs\n\t"
-        "_08159A20: .4byte gActiveBattler\n\t"
-        "_08159A24: .4byte sub_08159990 + 1\n\t"
-        "_08159A28: .4byte gUnknown_85ABAEE + 0x98\n\t"
-        "_08159A2C: .4byte gActionSelectionCursor\n\t"
-        "_08159A30: .4byte gUnknown_85ABAEE + 0x5F\n\t"
-        "_08159A34: .4byte gDisplayedStringBattle\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    gBattlerControllerFuncs[gActiveBattler] = sub_08159990;
+    sub_0814FA04(gUnknown_85ABAEE + 0x98, 2);
+
+    for (i = 0; i < 4; i++)
+        ActionSelectionDestroyCursorAt(i);
+
+    SetCB2ToReshowScreenAfterMenu(gActionSelectionCursor[gActiveBattler], 0);
+    TryGetStatusString(gUnknown_85ABAEE + 0x5F);
+    sub_0814FA04(gDisplayedStringBattle, 1);
 }
 
-__attribute__((naked)) void SafariHandleUnknownYesNoBox(void)
+void SafariHandleUnknownYesNoBox(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
 void SafariHandleChooseMove(void)
@@ -1052,39 +375,11 @@ void SafariHandleChooseMove(void)
 }
 
 
-__attribute__((naked)) void SafariHandleChooseItem(void)
+void SafariHandleChooseItem(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, _08159A80\n\t"
-        "	ldr r2, _08159A84\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08159A88\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r1, _08159A8C\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159A80: .4byte gBattlerControllerFuncs\n\t"
-        "_08159A84: .4byte gActiveBattler\n\t"
-        "_08159A88: .4byte SafariOpenPokeblockCase + 1\n\t"
-        "_08159A8C: .4byte gBattlerInMenuId\n\t"
-        ".syntax divided\n\t"
-    );
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
+    gBattlerControllerFuncs[gActiveBattler] = SafariOpenPokeblockCase;
+    gBattlerInMenuId = gActiveBattler;
 }
 
 void SafariHandleChoosePokemon(void)
@@ -1111,36 +406,10 @@ void SafariHandleExpUpdate(void)
 }
 
 
-__attribute__((naked)) void SafariHandleStatusIconUpdate(void)
+void SafariHandleStatusIconUpdate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08159AEC\n\t"
-        "	ldr r1, _08159AF0\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r2, _08159AF4\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r1, r2, r1\n\t"
-        "	ldr r2, _08159AF8\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0xb\n\t"
-        "	bl UpdateHealthboxAttribute\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159AEC: .4byte gHealthboxSpriteIds\n\t"
-        "_08159AF0: .4byte gActiveBattler\n\t"
-        "_08159AF4: .4byte gBattlerPartyIndexes\n\t"
-        "_08159AF8: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateHealthboxAttribute(gHealthboxSpriteIds[gActiveBattler], &gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], HEALTHBOX_SAFARI_BALLS_TEXT);
+    SafariBufferExecCompleted();
 }
 
 void SafariHandleStatusAnimation(void)
@@ -1203,56 +472,24 @@ void SafariHandleOneReturnValue_Duplicate(void)
 }
 
 
-__attribute__((naked)) void SafariHandleCmd37(void)
+void SafariHandleCmd37(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleCmd38(void)
+void SafariHandleCmd38(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleCmd39(void)
+void SafariHandleCmd39(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleCmd40(void)
+void SafariHandleCmd40(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
 void SafariHandleHitAnimation(void)
@@ -1261,213 +498,60 @@ void SafariHandleHitAnimation(void)
 }
 
 
-__attribute__((naked)) void SafariHandleCmd42(void)
+void SafariHandleCmd42(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandlePlaySE(void)
+void SafariHandlePlaySE(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _08159BF8\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	movs r3, #0x3f\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08159BD0\n\t"
-        "	movs r3, #0xc0\n\t"
-        "_08159BD0:\n\t"
-        "	ldr r2, _08159BFC\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r2, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	lsls r1, r3, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	bl PlaySE12WithPanning\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159BF8: .4byte gActiveBattler\n\t"
-        "_08159BFC: .4byte gBattleBufferA\n\t"
-        ".syntax divided\n\t"
-    );
+    s8 pan;
+
+    if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
+        pan = SOUND_PAN_ATTACKER;
+    else
+        pan = SOUND_PAN_TARGET;
+
+    PlaySE12WithPanning(gBattleBufferA[gActiveBattler][1] | (gBattleBufferA[gActiveBattler][2] << 8), pan);
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandlePlayFanfareOrBGM(void)
+void SafariHandlePlayFanfareOrBGM(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r4, _08159C34\n\t"
-        "	ldr r5, _08159C38\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	lsls r3, r0, #9\n\t"
-        "	adds r0, r4, #3\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08159C3C\n\t"
-        "	bl BattleStopLowHpSound\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r2, r4, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	bl PlayBGM\n\t"
-        "	b _08159C50\n\t"
-        "	.align 2, 0\n\t"
-        "_08159C34: .4byte gBattleBufferA\n\t"
-        "_08159C38: .4byte gActiveBattler\n\t"
-        "_08159C3C:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r1, r4, #2\n\t"
-        "	adds r1, r3, r1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	bl PlayFanfare\n\t"
-        "_08159C50:\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gBattleBufferA[gActiveBattler][3])
+    {
+        BattleStopLowHpSound();
+        PlayBGM(gBattleBufferA[gActiveBattler][1] | (gBattleBufferA[gActiveBattler][2] << 8));
+    }
+    else
+    {
+        PlayFanfare(gBattleBufferA[gActiveBattler][1] | (gBattleBufferA[gActiveBattler][2] << 8));
+    }
+
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleFaintingCry(void)
+void SafariHandleFaintingCry(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _08159C8C\n\t"
-        "	ldr r0, _08159C90\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08159C94\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x19\n\t"
-        "	bl PlayCry1\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159C8C: .4byte gBattlerPartyIndexes\n\t"
-        "_08159C90: .4byte gActiveBattler\n\t"
-        "_08159C94: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 species = GetMonData3(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES);
+
+    PlayCry1(species, 25);
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleIntroSlide(void)
+void SafariHandleIntroSlide(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _08159CC0\n\t"
-        "	ldr r0, _08159CC4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	adds r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl HandleIntroSlide\n\t"
-        "	ldr r2, _08159CC8\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159CC0: .4byte gBattleBufferA\n\t"
-        "_08159CC4: .4byte gActiveBattler\n\t"
-        "_08159CC8: .4byte gIntroSlideFlags\n\t"
-        ".syntax divided\n\t"
-    );
+    HandleIntroSlide(gBattleBufferA[gActiveBattler][1]);
+    gIntroSlideFlags |= 1;
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleIntroTrainerBallThrow(void)
+void SafariHandleIntroTrainerBallThrow(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r5, _08159D10\n\t"
-        "	ldr r4, _08159D14\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r2, _08159D18\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r1, r2, r1\n\t"
-        "	ldr r2, _08159D1C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0xa\n\t"
-        "	bl UpdateHealthboxAttribute\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl sub_08076320\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetHealthboxSpriteVisible\n\t"
-        "	ldr r1, _08159D20\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08159D24\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159D10: .4byte gHealthboxSpriteIds\n\t"
-        "_08159D14: .4byte gActiveBattler\n\t"
-        "_08159D18: .4byte gBattlerPartyIndexes\n\t"
-        "_08159D1C: .4byte gPlayerParty\n\t"
-        "_08159D20: .4byte gBattlerControllerFuncs\n\t"
-        "_08159D24: .4byte CompleteWhenChosePokeblock + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateHealthboxAttribute(gHealthboxSpriteIds[gActiveBattler], &gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], HEALTHBOX_SAFARI_ALL_TEXT);
+    sub_08076320(gActiveBattler);
+    SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler]);
+    gBattlerControllerFuncs[gActiveBattler] = CompleteWhenChosePokeblock;
 }
 
 void SafariHandleDrawPartyStatusSummary(void)
@@ -1494,56 +578,15 @@ void SafariHandleSpriteInvisibility(void)
 }
 
 
-__attribute__((naked)) void SafariHandleBattleAnimation(void)
+void SafariHandleBattleAnimation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r5, _08159D90\n\t"
-        "	ldr r6, _08159D94\n\t"
-        "	ldrb r2, [r6]\n\t"
-        "	lsls r1, r2, #9\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	adds r0, r5, #2\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	adds r5, #3\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r4, r0\n\t"
-        "	str r4, [sp]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl TryHandleLaunchBattleTableAnimation\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08159D98\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	b _08159DA4\n\t"
-        "	.align 2, 0\n\t"
-        "_08159D90: .4byte gBattleBufferA\n\t"
-        "_08159D94: .4byte gActiveBattler\n\t"
-        "_08159D98:\n\t"
-        "	ldr r0, _08159DAC\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _08159DB0\n\t"
-        "	str r0, [r1]\n\t"
-        "_08159DA4:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159DAC: .4byte gBattlerControllerFuncs\n\t"
-        "_08159DB0: .4byte SafariHandleSuccessBallThrowAnim + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 animationId = gBattleBufferA[gActiveBattler][1];
+    u16 argument = gBattleBufferA[gActiveBattler][2] | (gBattleBufferA[gActiveBattler][3] << 8);
+
+    if (TryHandleLaunchBattleTableAnimation(gActiveBattler, gActiveBattler, gActiveBattler, animationId, argument))
+        SafariBufferExecCompleted();
+    else
+        gBattlerControllerFuncs[gActiveBattler] = SafariHandleSuccessBallThrowAnim;
 }
 
 void SafariHandleLinkStandbyMsg(void)
@@ -1558,50 +601,14 @@ void SafariHandleResetActionMoveSelection(void)
 }
 
 
-__attribute__((naked)) void SafariHandleCmd55(void)
+void SafariHandleCmd55(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r2, _08159E10\n\t"
-        "	ldr r1, _08159E14\n\t"
-        "	ldr r4, _08159E18\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	adds r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #5\n\t"
-        "	bl FadeOutMapMusic\n\t"
-        "	movs r0, #3\n\t"
-        "	bl BeginFastPaletteFade\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	ldr r0, _08159E1C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #6\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08159E08\n\t"
-        "	ldr r0, _08159E20\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _08159E24\n\t"
-        "	str r0, [r1]\n\t"
-        "_08159E08:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08159E10: .4byte gBattleOutcome\n\t"
-        "_08159E14: .4byte gBattleBufferA\n\t"
-        "_08159E18: .4byte gActiveBattler\n\t"
-        "_08159E1C: .4byte gBattleTypeFlags\n\t"
-        "_08159E20: .4byte gBattlerControllerFuncs\n\t"
-        "_08159E24: .4byte sub_08159520 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gBattleOutcome = gBattleBufferA[gActiveBattler][1];
+    FadeOutMapMusic(5);
+    BeginFastPaletteFade(3);
+    SafariBufferExecCompleted();
+    if ((gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_IS_MASTER)) == BATTLE_TYPE_LINK)
+        gBattlerControllerFuncs[gActiveBattler] = sub_08159520;
 }
 
 void SafariCmdEnd(void) {}
