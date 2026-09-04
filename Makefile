@@ -1670,6 +1670,10 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/object_events/palettes/enemy_zigzagoon.gbapal \
 	graphics/object_events/pics/pokemon/poochyena.png_mwidth_4__mheight_4.4bpp \
 	graphics/object_events/palettes/poochyena.gbapal \
+	graphics/object_events/pics/misc/cable_car.4bpp \
+	graphics/object_events/palettes/cable_car.gbapal \
+	graphics/object_events/pics/misc/ss_tidal.4bpp \
+	graphics/object_events/palettes/ss_tidal.gbapal \
 	graphics/object_events/pics/people/brendan/walking.4bpp graphics/object_events/pics/people/brendan/running.4bpp \
 	graphics/object_events/palettes/brendan.gbapal \
 	graphics/object_events/pics/people/ruby_sapphire_brendan/walking.4bpp \

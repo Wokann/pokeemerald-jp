@@ -3,8 +3,6 @@
 
 // These JP-specific graphics are addressed by the recovered picture tables.
 // Their binary owners remain in the original ROM layout pending source recovery.
-extern const u32 gObjectEventPic_CableCar[0x200];
-extern const u32 gObjectEventPic_SSTidal[0x1E0];
 extern const u32 gObjectEventPic_QuintyPlump[];
 extern const u32 gObjectEventPic_Juan[];
 extern const u32 gObjectEventPic_Scott[];
@@ -301,6 +299,12 @@ OBJECT_EVENT_GRAPHICS_OPENING_DATA const u32 gObjectEventPic_EnemyZigzagoon[] = 
 OBJECT_EVENT_GRAPHICS_OPENING_DATA const u16 gObjectEventPal_EnemyZigzagoon[] = INCBIN_U16("graphics/object_events/palettes/enemy_zigzagoon.gbapal");
 OBJECT_EVENT_GRAPHICS_OPENING_DATA const u32 gObjectEventPic_Poochyena[] = INCGFX_U32("graphics/object_events/pics/pokemon/poochyena.png", ".4bpp", "-mwidth 4 -mheight 4");
 OBJECT_EVENT_GRAPHICS_OPENING_DATA const u16 gObjectEventPal_Poochyena[] = INCBIN_U16("graphics/object_events/palettes/poochyena.gbapal");
+
+// This JP-owned transport graphics family follows the opening-story objects.
+OBJECT_EVENT_GRAPHICS_TRANSPORT_DATA const u32 gObjectEventPic_CableCar[] = INCBIN_U32("graphics/object_events/pics/misc/cable_car.4bpp");
+OBJECT_EVENT_GRAPHICS_TRANSPORT_DATA const u16 gObjectEventPal_CableCar[] = INCBIN_U16("graphics/object_events/palettes/cable_car.gbapal");
+OBJECT_EVENT_GRAPHICS_TRANSPORT_DATA const u32 gObjectEventPic_SSTidal[] = INCBIN_U32("graphics/object_events/pics/misc/ss_tidal.4bpp");
+OBJECT_EVENT_GRAPHICS_TRANSPORT_DATA const u16 gObjectEventPal_SSTidal[] = INCBIN_U16("graphics/object_events/palettes/ss_tidal.gbapal");
 
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u8 gFieldEffectPic_CutGrass[] = INCBIN_U8("graphics/field_effects/pics/cut_grass.4bpp");
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u32 gFieldEffectPic_CutGrass_Copy[] = INCBIN_U32("graphics/field_effects/pics/cut_grass.4bpp");

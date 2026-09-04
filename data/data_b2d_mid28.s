@@ -32,7 +32,9 @@
 	.section .rodata.data_b2d_mid28_after_misc_graphics
 
 	.section .rodata.data_b2d_mid28_after_opening_graphics
-	.incbin "baserom_jp.gba", 0x4c102c, 0xe280
+
+	.section .rodata.data_b2d_mid28_after_transport_graphics
+	.incbin "baserom_jp.gba", 0x4c1fec, 0xd2c0
 
 	.section .rodata.data_b2d_mid28_after_cut_grass_graphics
 
