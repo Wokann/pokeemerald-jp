@@ -1,28 +1,41 @@
 #include "global.h"
 #include "sprite.h"
+#include "decompress.h"
+#include "battle_transition_frontier.h"
+#include "battle_transition.h"
 #include "task.h"
+#include "palette.h"
+#include "trig.h"
+#include "bg.h"
+#include "gpu_regs.h"
+#include "constants/rgb.h"
 
 typedef bool8 (*TransitionStateFunc)(struct Task *task);
 
-bool8 Circles_Init(struct Task *task);
-bool8 WaitForLogoCirclesAnim(struct Task *task);
-bool8 FadeInCenterLogoCircle(struct Task *task);
-bool8 CirclesMeet_CreateSprites(struct Task *task);
-bool8 CirclesMeet_End(struct Task *task);
-bool8 CirclesCross_CreateSprites(struct Task *task);
-bool8 CirclesCross_End(struct Task *task);
-bool8 CirclesAsymmetricSpiral_CreateSprites(struct Task *task);
-bool8 CirclesAsymmetricSpiral_End(struct Task *task);
-bool8 CirclesSymmetricSpiral_CreateSprites(struct Task *task);
-bool8 CirclesSymmetricSpiral_End(struct Task *task);
-bool8 CirclesMeetInSeq_CreateSprites(struct Task *task);
-bool8 CirclesMeetInSeq_End(struct Task *task);
-bool8 CirclesCrossInSeq_CreateSprites(struct Task *task);
-bool8 CirclesCrossInSeq_End(struct Task *task);
-bool8 CirclesAsymmetricSpiralInSeq_CreateSprites(struct Task *task);
-bool8 CirclesAsymmetricSpiralInSeq_End(struct Task *task);
-bool8 CirclesSymmetricSpiralInSeq_CreateSprites(struct Task *task);
-bool8 CirclesSymmetricSpiralInSeq_End(struct Task *task);
+// The JP implementation in battle_transition.c still exports this original symbol.
+void sub_0814A018(u16 **tilemap, u16 **tileset);
+
+static void SpriteCB_LogoCircleSlide(struct Sprite *sprite);
+static void SpriteCB_LogoCircleSpiral(struct Sprite *sprite);
+static bool8 WaitForLogoCirclesAnim(struct Task *task);
+static bool8 FadeInCenterLogoCircle(struct Task *task);
+static bool8 Circles_Init(struct Task *task);
+static bool8 CirclesMeet_CreateSprites(struct Task *task);
+static bool8 CirclesMeet_End(struct Task *task);
+static bool8 CirclesCross_CreateSprites(struct Task *task);
+static bool8 CirclesCross_End(struct Task *task);
+static bool8 CirclesAsymmetricSpiral_CreateSprites(struct Task *task);
+static bool8 CirclesAsymmetricSpiral_End(struct Task *task);
+static bool8 CirclesSymmetricSpiral_CreateSprites(struct Task *task);
+static bool8 CirclesSymmetricSpiral_End(struct Task *task);
+static bool8 CirclesMeetInSeq_CreateSprites(struct Task *task);
+static bool8 CirclesMeetInSeq_End(struct Task *task);
+static bool8 CirclesCrossInSeq_CreateSprites(struct Task *task);
+static bool8 CirclesCrossInSeq_End(struct Task *task);
+static bool8 CirclesAsymmetricSpiralInSeq_CreateSprites(struct Task *task);
+static bool8 CirclesAsymmetricSpiralInSeq_End(struct Task *task);
+static bool8 CirclesSymmetricSpiralInSeq_CreateSprites(struct Task *task);
+static bool8 CirclesSymmetricSpiralInSeq_End(struct Task *task);
 
 #define PALTAG_LOGO_CIRCLES 0x2E90
 #define FRONTIER_CIRCLES_DATA __attribute__((section(".rodata.battle_transition_frontier_circles")))
@@ -90,1780 +103,484 @@ FRONTIER_STATE_TABLE(sFrontierCirclesSymmetricSpiralInSeq_Funcs, CirclesSymmetri
 
 #undef FRONTIER_STATE_TABLE
 #undef FRONTIER_CIRCLES_DATA
+// Task data
+#define tState           data[0]
+#define tTimer           data[1]
+#define tBlend           data[2]
+#define tFadeTimer       data[3]
+#define tCircle1SpriteId data[4]
+#define tCircle2SpriteId data[5]
+#define tCircle3SpriteId data[6]
 
-__attribute__((naked)) void sub_081D9F50(void)
+#define sTargetX data[0]
+#define sTargetY data[1]
+
+// Sprite data for CreateSlidingLogoCircleSprite
+#define sSpeedX  data[2]
+#define sSpeedY  data[3]
+#define sTimerX  data[4]
+#define sTimerY  data[5]
+#define sDelayX  data[6]
+#define sDelayY  data[7]
+
+// Sprite data for CreateSpiralingLogoCircleSprite
+#define sAngle        data[2]
+#define sRotateSpeed  data[3]
+#define sRadius       data[4]
+#define sTargetRadius data[5]
+#define sRadiusDelta  data[6]
+
+
+static void LoadLogoGfx(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	add r1, sp, #4\n\t"
-        "	mov r0, sp\n\t"
-        "	bl sub_0814A018\n\t"
-        "	ldr r0, _081D9F88\n\t"
-        "	ldr r1, [sp, #4]\n\t"
-        "	bl LZ77UnCompVram\n\t"
-        "	ldr r0, _081D9F8C\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	bl LZ77UnCompVram\n\t"
-        "	ldr r0, _081D9F90\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r0, _081D9F94\n\t"
-        "	bl LoadCompressedSpriteSheet\n\t"
-        "	ldr r0, _081D9F98\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081D9F88: .4byte sLogoCenter_Gfx\n\t"
-        "_081D9F8C: .4byte sLogoCenter_Tilemap\n\t"
-        "_081D9F90: .4byte sLogo_Pal\n\t"
-        "_081D9F94: .4byte sSpriteSheet_LogoCircles\n\t"
-        "_081D9F98: .4byte sSpritePalette_LogoCircles\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *tilemap, *tileset;
+
+    sub_0814A018(&tilemap, &tileset);
+    LZ77UnCompVram(sLogoCenter_Gfx, tileset);
+    LZ77UnCompVram(sLogoCenter_Tilemap, tilemap);
+    LoadPalette(sLogo_Pal, BG_PLTT_ID(15), sizeof(sLogo_Pal));
+    LoadCompressedSpriteSheet(&sSpriteSheet_LogoCircles);
+    LoadSpritePalette(&sSpritePalette_LogoCircles);
 }
 
-__attribute__((naked)) void sub_081D9F9C(void)
+static u8 CreateSlidingLogoCircleSprite(s16 x, s16 y, u8 delayX, u8 delayY, s8 speedX, s8 speedY, u8 spriteAnimNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	ldr r0, [sp, #0x24]\n\t"
-        "	ldr r1, [sp, #0x28]\n\t"
-        "	ldr r4, [sp, #0x2c]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	str r2, [sp]\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	mov sl, r3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov sb, r1\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r7, r4, #0x18\n\t"
-        "	ldr r0, _081D9FF4\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	asrs r6, r6, #0x10\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r7, #1\n\t"
-        "	beq _081DA020\n\t"
-        "	cmp r7, #1\n\t"
-        "	bgt _081D9FF8\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _081DA008\n\t"
-        "	b _081D9FFC\n\t"
-        "	.align 2, 0\n\t"
-        "_081D9FF4: .4byte sSpriteTemplate_LogoCircles\n\t"
-        "_081D9FF8:\n\t"
-        "	cmp r7, #2\n\t"
-        "	beq _081DA034\n\t"
-        "_081D9FFC:\n\t"
-        "	ldr r6, _081DA004\n\t"
-        "	lsls r3, r5, #4\n\t"
-        "	b _081DA048\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA004: .4byte gSprites\n\t"
-        "_081DA008:\n\t"
-        "	ldr r2, _081DA01C\n\t"
-        "	lsls r3, r5, #4\n\t"
-        "	adds r0, r3, r5\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x78\n\t"
-        "	strh r1, [r0, #0x2e]\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	b _081DA044\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA01C: .4byte gSprites\n\t"
-        "_081DA020:\n\t"
-        "	ldr r2, _081DA030\n\t"
-        "	lsls r3, r5, #4\n\t"
-        "	adds r0, r3, r5\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x59\n\t"
-        "	b _081DA040\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA030: .4byte gSprites\n\t"
-        "_081DA034:\n\t"
-        "	ldr r2, _081DA090\n\t"
-        "	lsls r3, r5, #4\n\t"
-        "	adds r0, r3, r5\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x97\n\t"
-        "_081DA040:\n\t"
-        "	strh r1, [r0, #0x2e]\n\t"
-        "	movs r1, #0x61\n\t"
-        "_081DA044:\n\t"
-        "	strh r1, [r0, #0x30]\n\t"
-        "	adds r6, r2, #0\n\t"
-        "_081DA048:\n\t"
-        "	adds r4, r3, r5\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r0, r4, r6\n\t"
-        "	mov r2, r8\n\t"
-        "	lsls r1, r2, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r1, [r0, #0x32]\n\t"
-        "	mov r3, sb\n\t"
-        "	lsls r1, r3, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	strh r1, [r0, #0x34]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	strh r1, [r0, #0x3a]\n\t"
-        "	mov r3, sl\n\t"
-        "	strh r3, [r0, #0x3c]\n\t"
-        "	strh r2, [r0, #0x36]\n\t"
-        "	strh r2, [r0, #0x38]\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _081DA094\n\t"
-        "	str r0, [r4]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA090: .4byte gSprites\n\t"
-        "_081DA094: .4byte sub_081DA098 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = CreateSprite(&sSpriteTemplate_LogoCircles, x, y, 0);
+
+    switch (spriteAnimNum)
+    {
+    case 0:
+        gSprites[spriteId].sTargetX = 120;
+        gSprites[spriteId].sTargetY = 45;
+        break;
+    case 1:
+        gSprites[spriteId].sTargetX = 89;
+        gSprites[spriteId].sTargetY = 97;
+        break;
+    case 2:
+        gSprites[spriteId].sTargetX = 151;
+        gSprites[spriteId].sTargetY = 97;
+        break;
+    }
+
+    gSprites[spriteId].sSpeedX = speedX;
+    gSprites[spriteId].sSpeedY = speedY;
+    gSprites[spriteId].sDelayX = delayX;
+    gSprites[spriteId].sDelayY = delayY;
+    gSprites[spriteId].sTimerX = 0;
+    gSprites[spriteId].sTimerY = 0;
+
+    StartSpriteAnim(&gSprites[spriteId], spriteAnimNum);
+    gSprites[spriteId].callback = SpriteCB_LogoCircleSlide;
+
+    return spriteId;
 }
 
-__attribute__((naked)) void sub_081DA098(void)
+static void SpriteCB_LogoCircleSlide(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	adds r2, #0x2e\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	movs r4, #0x2e\n\t"
-        "	ldrsh r0, [r3, r4]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081DA0C4\n\t"
-        "	movs r5, #0x22\n\t"
-        "	ldrsh r1, [r3, r5]\n\t"
-        "	movs r4, #2\n\t"
-        "	ldrsh r0, [r2, r4]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081DA0C4\n\t"
-        "	ldr r0, _081DA0C0\n\t"
-        "	str r0, [r3, #0x1c]\n\t"
-        "	b _081DA104\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA0C0: .4byte SpriteCallbackDummy + 1\n\t"
-        "_081DA0C4:\n\t"
-        "	ldrh r4, [r2, #8]\n\t"
-        "	movs r5, #8\n\t"
-        "	ldrsh r1, [r2, r5]\n\t"
-        "	movs r5, #0xc\n\t"
-        "	ldrsh r0, [r2, r5]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081DA0E0\n\t"
-        "	ldrh r0, [r2, #4]\n\t"
-        "	ldrh r1, [r3, #0x20]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r3, #0x20]\n\t"
-        "	strh r1, [r2, #8]\n\t"
-        "	b _081DA0E4\n\t"
-        "_081DA0E0:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	strh r0, [r2, #8]\n\t"
-        "_081DA0E4:\n\t"
-        "	ldrh r4, [r2, #0xa]\n\t"
-        "	movs r5, #0xa\n\t"
-        "	ldrsh r1, [r2, r5]\n\t"
-        "	movs r5, #0xe\n\t"
-        "	ldrsh r0, [r2, r5]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081DA100\n\t"
-        "	ldrh r0, [r2, #6]\n\t"
-        "	ldrh r1, [r3, #0x22]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r3, #0x22]\n\t"
-        "	strh r1, [r2, #0xa]\n\t"
-        "	b _081DA104\n\t"
-        "_081DA100:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	strh r0, [r2, #0xa]\n\t"
-        "_081DA104:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = sprite->data;
+
+    if (sprite->x == sTargetX && sprite->y == sTargetY)
+    {
+        sprite->callback = SpriteCallbackDummy;
+    }
+    else
+    {
+        if (sTimerX == sDelayX)
+        {
+            sprite->x += sSpeedX;
+            sTimerX = 0;
+        }
+        else
+        {
+            sTimerX++;
+        }
+
+        if (sTimerY == sDelayY)
+        {
+            sprite->y += sSpeedY;
+            sTimerY = 0;
+        }
+        else
+        {
+            sTimerY++;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_081DA10C(void)
+static u8 CreateSpiralingLogoCircleSprite(s16 x, s16 y, s16 angle, s16 rotateSpeed, s16 radiusStart, s16 radiusEnd, s16 radiusDelta, u8 spriteAnimNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	mov r8, r1\n\t"
-        "	ldr r0, [sp, #0x2c]\n\t"
-        "	ldr r1, [sp, #0x30]\n\t"
-        "	ldr r4, [sp, #0x34]\n\t"
-        "	ldr r5, [sp, #0x38]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	str r2, [sp]\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	str r3, [sp, #4]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sl, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov sb, r1\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r7, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r0, _081DA170\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	asrs r6, r6, #0x10\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	mov r8, r1\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	mov r2, r8\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r5, #1\n\t"
-        "	beq _081DA19C\n\t"
-        "	cmp r5, #1\n\t"
-        "	bgt _081DA174\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _081DA184\n\t"
-        "	b _081DA178\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA170: .4byte sSpriteTemplate_LogoCircles\n\t"
-        "_081DA174:\n\t"
-        "	cmp r5, #2\n\t"
-        "	beq _081DA1B0\n\t"
-        "_081DA178:\n\t"
-        "	ldr r2, _081DA180\n\t"
-        "	lsls r3, r6, #4\n\t"
-        "	b _081DA1C2\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA180: .4byte gSprites\n\t"
-        "_081DA184:\n\t"
-        "	ldr r2, _081DA198\n\t"
-        "	lsls r3, r6, #4\n\t"
-        "	adds r0, r3, r6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x78\n\t"
-        "	strh r1, [r0, #0x2e]\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	b _081DA1C0\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA198: .4byte gSprites\n\t"
-        "_081DA19C:\n\t"
-        "	ldr r2, _081DA1AC\n\t"
-        "	lsls r3, r6, #4\n\t"
-        "	adds r0, r3, r6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x59\n\t"
-        "	b _081DA1BC\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA1AC: .4byte gSprites\n\t"
-        "_081DA1B0:\n\t"
-        "	ldr r2, _081DA204\n\t"
-        "	lsls r3, r6, #4\n\t"
-        "	adds r0, r3, r6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x97\n\t"
-        "_081DA1BC:\n\t"
-        "	strh r1, [r0, #0x2e]\n\t"
-        "	movs r1, #0x61\n\t"
-        "_081DA1C0:\n\t"
-        "	strh r1, [r0, #0x30]\n\t"
-        "_081DA1C2:\n\t"
-        "	adds r4, r3, r6\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r0, r4, r2\n\t"
-        "	mov r3, sp\n\t"
-        "	ldrh r3, [r3]\n\t"
-        "	strh r3, [r0, #0x32]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrh r1, [r1, #4]\n\t"
-        "	strh r1, [r0, #0x34]\n\t"
-        "	mov r3, sl\n\t"
-        "	strh r3, [r0, #0x36]\n\t"
-        "	mov r1, sb\n\t"
-        "	strh r1, [r0, #0x38]\n\t"
-        "	strh r7, [r0, #0x3a]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r2, [sp, #8]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _081DA208\n\t"
-        "	str r0, [r4]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA204: .4byte gSprites\n\t"
-        "_081DA208: .4byte sub_081DA20C + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = CreateSprite(&sSpriteTemplate_LogoCircles, x, y, 0);
+
+    // Target coords are set but irrelevant
+    switch (spriteAnimNum)
+    {
+    case 0:
+        gSprites[spriteId].sTargetX = 120;
+        gSprites[spriteId].sTargetY = 45;
+        break;
+    case 1:
+        gSprites[spriteId].sTargetX = 89;
+        gSprites[spriteId].sTargetY = 97;
+        break;
+    case 2:
+        gSprites[spriteId].sTargetX = 151;
+        gSprites[spriteId].sTargetY = 97;
+        break;
+    }
+
+    gSprites[spriteId].sAngle = angle;
+    gSprites[spriteId].sRotateSpeed = rotateSpeed;
+    gSprites[spriteId].sRadius = radiusStart;
+    gSprites[spriteId].sTargetRadius = radiusEnd;
+    gSprites[spriteId].sRadiusDelta = radiusDelta;
+
+    StartSpriteAnim(&gSprites[spriteId], spriteAnimNum);
+    gSprites[spriteId].callback = SpriteCB_LogoCircleSpiral;
+
+    return spriteId;
 }
 
-__attribute__((naked)) void sub_081DA20C(void)
+static void SpriteCB_LogoCircleSpiral(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	bl Sin2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	asrs r0, r0, #0xc\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	bl Cos2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	asrs r0, r0, #0xc\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x34\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xb4\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	bl __modsi3\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldrh r2, [r4, #0x36]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	movs r3, #0x38\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081DA262\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	b _081DA266\n\t"
-        "_081DA262:\n\t"
-        "	ldr r0, _081DA26C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_081DA266:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA26C: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x2 = (Sin2(sprite->sAngle) * sprite->sRadius) >> 12; // div by 4096
+    sprite->y2 = (Cos2(sprite->sAngle) * sprite->sRadius) >> 12; // div by 4096
+
+    sprite->sAngle = (sprite->sAngle + sprite->sRotateSpeed) % 360;
+
+    if (sprite->sRadius != sprite->sTargetRadius)
+        sprite->sRadius += sprite->sRadiusDelta;
+    else
+        sprite->callback = SpriteCallbackDummy;
 }
 
-__attribute__((naked)) void sub_081DA270(void)
+static void DestroyLogoCirclesGfx(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r4, _081DA2BC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _081DA2C0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	movs r0, #0x12\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	movs r0, #0x14\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA2BC: .4byte 0x00002E90\n\t"
-        "_081DA2C0: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    FreeSpriteTilesByTag(PALTAG_LOGO_CIRCLES);
+    FreeSpritePaletteByTag(PALTAG_LOGO_CIRCLES);
+
+    DestroySprite(&gSprites[task->tCircle1SpriteId]);
+    DestroySprite(&gSprites[task->tCircle2SpriteId]);
+    DestroySprite(&gSprites[task->tCircle3SpriteId]);
 }
 
-__attribute__((naked)) void sub_081DA2C4(void)
+static bool8 IsLogoCirclesAnimFinished(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldr r2, _081DA30C\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	adds r5, #0x1c\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	ldr r0, _081DA310\n\t"
-        "	cmp r4, r0\n\t"
-        "	bne _081DA314\n\t"
-        "	movs r0, #0x12\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	cmp r2, r4\n\t"
-        "	bne _081DA314\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r3, r1]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	cmp r0, r2\n\t"
-        "	bne _081DA314\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081DA316\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA30C: .4byte gSprites\n\t"
-        "_081DA310: .4byte SpriteCallbackDummy + 1\n\t"
-        "_081DA314:\n\t"
-        "	movs r0, #0\n\t"
-        "_081DA316:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[task->tCircle1SpriteId].callback == SpriteCallbackDummy
+     && gSprites[task->tCircle2SpriteId].callback == SpriteCallbackDummy
+     && gSprites[task->tCircle3SpriteId].callback == SpriteCallbackDummy)
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) bool8 Circles_Init(struct Task *task)
+static bool8 Circles_Init(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081DA370\n\t"
-        "	bl sub_081D9F50\n\t"
-        "	ldr r1, _081DA36C\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081DA396\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA36C: .4byte 0x00003F41\n\t"
-        "_081DA370:\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ClearGpuRegBits\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #7\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ClearGpuRegBits\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ClearGpuRegBits\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	movs r0, #0\n\t"
-        "_081DA396:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (task->tTimer == 0)
+    {
+        ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON);
+        ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN1_ON);
+        ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_BG0_ON);
+
+        task->tTimer++;
+        return FALSE;
+    }
+    else
+    {
+        LoadLogoGfx();
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL);
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(0, 16));
+        ChangeBgX(0, 0, BG_COORD_SET);
+        ChangeBgY(0, 0, BG_COORD_SET);
+        ChangeBgY(0, 0x500, BG_COORD_SUB);
+
+        task->tTimer = 0;
+        task->tState++;
+        return TRUE;
+    }
 }
 
-__attribute__((naked)) bool8 FadeInCenterLogoCircle(struct Task *task)
+static bool8 FadeInCenterLogoCircle(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DA3B4\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuRegBits\n\t"
-        "_081DA3B4:\n\t"
-        "	ldrh r1, [r4, #0xc]\n\t"
-        "	movs r2, #0xc\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	bne _081DA3E8\n\t"
-        "	ldrh r1, [r4, #0xe]\n\t"
-        "	movs r2, #0xe\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	bne _081DA3E2\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	b _081DA400\n\t"
-        "_081DA3E2:\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	b _081DA400\n\t"
-        "_081DA3E8:\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	ldrh r1, [r4, #0xc]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "_081DA400:\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (task->tBlend == 0)
+        SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_BG0_ON);
+
+    if (task->tBlend == 16)
+    {
+        if (task->tFadeTimer == 31)
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, -1, 0, 0x10, RGB_BLACK);
+            task->tState++;
+        }
+        else
+        {
+            task->tFadeTimer++;
+        }
+    }
+    else
+    {
+        u16 blnd;
+
+        task->tBlend++;
+        blnd = task->tBlend;
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(blnd, 16 - blnd));
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 WaitForLogoCirclesAnim(struct Task *task)
+static bool8 WaitForLogoCirclesAnim(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_081DA2C4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081DA422\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_081DA422:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsLogoCirclesAnimFinished(task) == TRUE)
+        task->tState++;
+
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_FrontierCirclesMeet(u8 taskId)
+void Task_FrontierCirclesMeet(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _081DA45C\n\t"
-        "	ldr r2, _081DA460\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_081DA43E:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DA43E\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA45C: .4byte sFrontierCirclesMeet_Funcs\n\t"
-        "_081DA460: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sFrontierCirclesMeet_Funcs[gTasks[taskId].tState](&gTasks[taskId]));
 }
 
-__attribute__((naked)) bool8 CirclesMeet_CreateSprites(struct Task *task)
+static bool8 CirclesMeet_CreateSprites(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r1, #0x33\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r5, #2\n\t"
-        "	str r5, [sp, #4]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0x78\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_081D9F9C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r6, #0x10]\n\t"
-        "	movs r0, #7\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r5, [sp]\n\t"
-        "	movs r4, #2\n\t"
-        "	rsbs r4, r4, #0\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	movs r1, #1\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #0xc1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_081D9F9C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r6, #0x12]\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0xf7\n\t"
-        "	movs r1, #0xc1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_081D9F9C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r6, #0x14]\n\t"
-        "	ldrh r0, [r6, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    task->tCircle1SpriteId = CreateSlidingLogoCircleSprite(120, -51, 0, 0, 0,   2, 0);
+    task->tCircle2SpriteId = CreateSlidingLogoCircleSprite(-7,  193, 0, 0, 2,  -2, 1);
+    task->tCircle3SpriteId = CreateSlidingLogoCircleSprite(247, 193, 0, 0, -2, -2, 2);
+
+    task->tState++;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 CirclesMeet_End(struct Task *task)
+static bool8 CirclesMeet_End(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r0, _081DA4FC\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DA4F4\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_081DA270\n\t"
-        "	ldr r0, _081DA500\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_081DA4F4:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA4FC: .4byte gPaletteFade\n\t"
-        "_081DA500: .4byte Task_FrontierCirclesMeet + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        DestroyLogoCirclesGfx(task);
+        DestroyTask(FindTaskIdByFunc(Task_FrontierCirclesMeet));
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_FrontierCirclesCross(u8 taskId)
+void Task_FrontierCirclesCross(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _081DA534\n\t"
-        "	ldr r2, _081DA538\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_081DA516:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DA516\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA534: .4byte sFrontierCirclesCross_Funcs\n\t"
-        "_081DA538: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sFrontierCirclesCross_Funcs[gTasks[taskId].tState](&gTasks[taskId]));
 }
 
-__attribute__((naked)) bool8 CirclesCross_CreateSprites(struct Task *task)
+static bool8 CirclesCross_CreateSprites(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r4, #4\n\t"
-        "	rsbs r4, r4, #0\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0x78\n\t"
-        "	movs r1, #0xc5\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_081D9F9C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r5, #0x10]\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r4, #2\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0xf1\n\t"
-        "	movs r1, #0x3b\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_081D9F9C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r5, #0x12]\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #4\n\t"
-        "	str r1, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	movs r1, #0x3b\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_081D9F9C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r5, #0x14]\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    task->tCircle1SpriteId = CreateSlidingLogoCircleSprite(120, 197, 0, 0, 0, -4, 0);
+    task->tCircle2SpriteId = CreateSlidingLogoCircleSprite(241, 59,  0, 1, -4, 2, 1);
+    task->tCircle3SpriteId = CreateSlidingLogoCircleSprite(-1,  59,  0, 1, 4,  2, 2);
+
+    task->tState++;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 CirclesCross_End(struct Task *task)
+static bool8 CirclesCross_End(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r0, _081DA5D4\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DA5CC\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_081DA270\n\t"
-        "	ldr r0, _081DA5D8\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_081DA5CC:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA5D4: .4byte gPaletteFade\n\t"
-        "_081DA5D8: .4byte Task_FrontierCirclesCross + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        DestroyLogoCirclesGfx(task);
+        DestroyTask(FindTaskIdByFunc(Task_FrontierCirclesCross));
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_FrontierCirclesAsymmetricSpiral(u8 taskId)
+void Task_FrontierCirclesAsymmetricSpiral(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _081DA60C\n\t"
-        "	ldr r2, _081DA610\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_081DA5EE:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DA5EE\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA60C: .4byte sFrontierCirclesAsymmetricSpiral_Funcs\n\t"
-        "_081DA610: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sFrontierCirclesAsymmetricSpiral_Funcs[gTasks[taskId].tState](&gTasks[taskId]));
 }
 
-__attribute__((naked)) bool8 CirclesAsymmetricSpiral_CreateSprites(struct Task *task)
+static bool8 CirclesAsymmetricSpiral_CreateSprites(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r6, #0x80\n\t"
-        "	str r6, [sp]\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	movs r5, #4\n\t"
-        "	rsbs r5, r5, #0\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	str r4, [sp, #0xc]\n\t"
-        "	movs r0, #0x78\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	movs r2, #0xc\n\t"
-        "	movs r3, #4\n\t"
-        "	bl sub_081DA10C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r0, [r1, #0x10]\n\t"
-        "	str r6, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0x59\n\t"
-        "	movs r1, #0x61\n\t"
-        "	movs r2, #0xfc\n\t"
-        "	movs r3, #4\n\t"
-        "	bl sub_081DA10C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r0, [r1, #0x12]\n\t"
-        "	str r6, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0x97\n\t"
-        "	movs r1, #0x61\n\t"
-        "	movs r2, #0x84\n\t"
-        "	movs r3, #4\n\t"
-        "	bl sub_081DA10C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r0, [r1, #0x14]\n\t"
-        "	ldrh r0, [r1, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    task->tCircle1SpriteId = CreateSpiralingLogoCircleSprite(120, 45, 12,  4, 128, 0, -4, 0);
+    task->tCircle2SpriteId = CreateSpiralingLogoCircleSprite(89,  97, 252, 4, 128, 0, -4, 1);
+    task->tCircle3SpriteId = CreateSpiralingLogoCircleSprite(151, 97, 132, 4, 128, 0, -4, 2);
+
+    task->tState++;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 CirclesAsymmetricSpiral_End(struct Task *task)
+static bool8 CirclesAsymmetricSpiral_End(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r0, _081DA6C0\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DA6B8\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_081DA270\n\t"
-        "	ldr r0, _081DA6C4\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_081DA6B8:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA6C0: .4byte gPaletteFade\n\t"
-        "_081DA6C4: .4byte Task_FrontierCirclesAsymmetricSpiral + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        DestroyLogoCirclesGfx(task);
+        DestroyTask(FindTaskIdByFunc(Task_FrontierCirclesAsymmetricSpiral));
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_FrontierCirclesSymmetricSpiral(u8 taskId)
+void Task_FrontierCirclesSymmetricSpiral(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _081DA6F8\n\t"
-        "	ldr r2, _081DA6FC\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_081DA6DA:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DA6DA\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA6F8: .4byte sFrontierCirclesSymmetricSpiral_Funcs\n\t"
-        "_081DA6FC: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sFrontierCirclesSymmetricSpiral_Funcs[gTasks[taskId].tState](&gTasks[taskId]));
 }
 
-__attribute__((naked)) bool8 CirclesSymmetricSpiral_CreateSprites(struct Task *task)
+static bool8 CirclesSymmetricSpiral_CreateSprites(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r2, #0x8e\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	movs r6, #0x83\n\t"
-        "	str r6, [sp]\n\t"
-        "	movs r5, #0x23\n\t"
-        "	str r5, [sp, #4]\n\t"
-        "	movs r4, #3\n\t"
-        "	rsbs r4, r4, #0\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0x78\n\t"
-        "	movs r1, #0x50\n\t"
-        "	movs r3, #8\n\t"
-        "	bl sub_081DA10C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r0, [r1, #0x10]\n\t"
-        "	str r6, [sp]\n\t"
-        "	str r5, [sp, #4]\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0x78\n\t"
-        "	movs r1, #0x50\n\t"
-        "	movs r2, #0x2c\n\t"
-        "	movs r3, #8\n\t"
-        "	bl sub_081DA10C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r0, [r1, #0x12]\n\t"
-        "	str r6, [sp]\n\t"
-        "	str r5, [sp, #4]\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0x79\n\t"
-        "	movs r1, #0x50\n\t"
-        "	movs r2, #0xa4\n\t"
-        "	movs r3, #8\n\t"
-        "	bl sub_081DA10C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r0, [r1, #0x14]\n\t"
-        "	ldrh r0, [r1, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    task->tCircle1SpriteId = CreateSpiralingLogoCircleSprite(120, 80, 284, 8, 131, 35, -3, 0);
+    task->tCircle2SpriteId = CreateSpiralingLogoCircleSprite(120, 80, 44,  8, 131, 35, -3, 1);
+    task->tCircle3SpriteId = CreateSpiralingLogoCircleSprite(121, 80, 164, 8, 131, 35, -3, 2);
+
+    task->tState++;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 CirclesSymmetricSpiral_End(struct Task *task)
+static bool8 CirclesSymmetricSpiral_End(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r0, _081DA7B0\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DA7A8\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_081DA270\n\t"
-        "	ldr r0, _081DA7B4\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_081DA7A8:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA7B0: .4byte gPaletteFade\n\t"
-        "_081DA7B4: .4byte Task_FrontierCirclesSymmetricSpiral + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        DestroyLogoCirclesGfx(task);
+        DestroyTask(FindTaskIdByFunc(Task_FrontierCirclesSymmetricSpiral));
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_FrontierCirclesMeetInSeq(u8 taskId)
+void Task_FrontierCirclesMeetInSeq(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _081DA7E8\n\t"
-        "	ldr r2, _081DA7EC\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_081DA7CA:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DA7CA\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA7E8: .4byte sFrontierCirclesMeetInSeq_Funcs\n\t"
-        "_081DA7EC: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sFrontierCirclesMeetInSeq_Funcs[gTasks[taskId].tState](&gTasks[taskId]));
 }
 
-__attribute__((naked)) bool8 CirclesMeetInSeq_CreateSprites(struct Task *task)
+static bool8 CirclesMeetInSeq_CreateSprites(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _081DA81C\n\t"
-        "	movs r1, #0x33\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	str r2, [sp]\n\t"
-        "	movs r0, #4\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	movs r0, #0x78\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_081D9F9C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	b _081DA86A\n\t"
-        "_081DA81C:\n\t"
-        "	cmp r2, #0x10\n\t"
-        "	bne _081DA842\n\t"
-        "	movs r0, #7\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #4\n\t"
-        "	str r1, [sp]\n\t"
-        "	subs r1, #8\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	movs r1, #1\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #0xc1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_081D9F9C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	b _081DA86A\n\t"
-        "_081DA842:\n\t"
-        "	cmp r2, #0x20\n\t"
-        "	bne _081DA86A\n\t"
-        "	movs r0, #4\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0xf7\n\t"
-        "	movs r1, #0xc1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_081D9F9C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_081DA86A:\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (task->tTimer == 0)
+    {
+        task->tCircle1SpriteId = CreateSlidingLogoCircleSprite(120, -51, 0, 0, 0, 4,  0);
+    }
+    else if (task->tTimer == 16)
+    {
+        task->tCircle2SpriteId = CreateSlidingLogoCircleSprite(-7,  193, 0, 0, 4, -4, 1);
+    }
+    else if (task->tTimer == 32)
+    {
+        task->tCircle3SpriteId = CreateSlidingLogoCircleSprite(247, 193, 0, 0, -4, -4, 2);
+        task->tState++;
+    }
+
+    task->tTimer++;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 CirclesMeetInSeq_End(struct Task *task)
+static bool8 CirclesMeetInSeq_End(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r0, _081DA8A8\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DA8A0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_081DA270\n\t"
-        "	ldr r0, _081DA8AC\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_081DA8A0:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA8A8: .4byte gPaletteFade\n\t"
-        "_081DA8AC: .4byte Task_FrontierCirclesMeetInSeq + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        DestroyLogoCirclesGfx(task);
+        DestroyTask(FindTaskIdByFunc(Task_FrontierCirclesMeetInSeq));
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_FrontierCirclesCrossInSeq(u8 taskId)
+void Task_FrontierCirclesCrossInSeq(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _081DA8E0\n\t"
-        "	ldr r2, _081DA8E4\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_081DA8C2:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DA8C2\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA8E0: .4byte sFrontierCirclesCrossInSeq_Funcs\n\t"
-        "_081DA8E4: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sFrontierCirclesCrossInSeq_Funcs[gTasks[taskId].tState](&gTasks[taskId]));
 }
 
-__attribute__((naked)) bool8 CirclesCrossInSeq_CreateSprites(struct Task *task)
+static bool8 CirclesCrossInSeq_CreateSprites(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _081DA914\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r0, #8\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r0, #0x78\n\t"
-        "	movs r1, #0xc5\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_081D9F9C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	b _081DA962\n\t"
-        "_081DA914:\n\t"
-        "	cmp r1, #0x10\n\t"
-        "	bne _081DA938\n\t"
-        "	movs r0, #8\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0xf1\n\t"
-        "	movs r1, #0x4e\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_081D9F9C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	b _081DA962\n\t"
-        "_081DA938:\n\t"
-        "	cmp r1, #0x20\n\t"
-        "	bne _081DA962\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #1\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	movs r1, #2\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #0x4e\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_081D9F9C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_081DA962:\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (task->tTimer == 0)
+    {
+        task->tCircle1SpriteId = CreateSlidingLogoCircleSprite(120, 197, 0, 0, 0, -8,  0);
+    }
+    else if (task->tTimer == 16)
+    {
+        task->tCircle2SpriteId = CreateSlidingLogoCircleSprite(241, 78,  0, 0, -8, 1,  1);
+    }
+    else if (task->tTimer == 32)
+    {
+        task->tCircle3SpriteId = CreateSlidingLogoCircleSprite(-1,  78,  0, 0, 8,  1,  2);
+        task->tState++;
+    }
+
+    task->tTimer++;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 CirclesCrossInSeq_End(struct Task *task)
+static bool8 CirclesCrossInSeq_End(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r0, _081DA9A0\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DA998\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_081DA270\n\t"
-        "	ldr r0, _081DA9A4\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_081DA998:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA9A0: .4byte gPaletteFade\n\t"
-        "_081DA9A4: .4byte Task_FrontierCirclesCrossInSeq + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        DestroyLogoCirclesGfx(task);
+        DestroyTask(FindTaskIdByFunc(Task_FrontierCirclesCrossInSeq));
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_FrontierCirclesAsymmetricSpiralInSeq(u8 taskId)
+void Task_FrontierCirclesAsymmetricSpiralInSeq(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _081DA9D8\n\t"
-        "	ldr r2, _081DA9DC\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_081DA9BA:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DA9BA\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081DA9D8: .4byte sFrontierCirclesAsymmetricSpiralInSeq_Funcs\n\t"
-        "_081DA9DC: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sFrontierCirclesAsymmetricSpiralInSeq_Funcs[gTasks[taskId].tState](&gTasks[taskId]));
 }
 
-__attribute__((naked)) bool8 CirclesAsymmetricSpiralInSeq_CreateSprites(struct Task *task)
+static bool8 CirclesAsymmetricSpiralInSeq_CreateSprites(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _081DAA0E\n\t"
-        "	movs r0, #0x80\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	subs r0, #0x84\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	str r1, [sp, #0xc]\n\t"
-        "	movs r0, #0x78\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	movs r2, #0xc\n\t"
-        "	movs r3, #4\n\t"
-        "	bl sub_081DA10C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	b _081DAA62\n\t"
-        "_081DAA0E:\n\t"
-        "	cmp r1, #0x10\n\t"
-        "	bne _081DAA36\n\t"
-        "	movs r0, #0x80\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	subs r0, #4\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0x59\n\t"
-        "	movs r1, #0x61\n\t"
-        "	movs r2, #0xfc\n\t"
-        "	movs r3, #4\n\t"
-        "	bl sub_081DA10C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	b _081DAA62\n\t"
-        "_081DAA36:\n\t"
-        "	cmp r1, #0x20\n\t"
-        "	bne _081DAA62\n\t"
-        "	movs r0, #0x80\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	subs r0, #4\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0x97\n\t"
-        "	movs r1, #0x61\n\t"
-        "	movs r2, #0x84\n\t"
-        "	movs r3, #4\n\t"
-        "	bl sub_081DA10C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_081DAA62:\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (task->tTimer == 0)
+    {
+        task->tCircle1SpriteId = CreateSpiralingLogoCircleSprite(120, 45, 12,  4, 128, 0, -4, 0);
+    }
+    else if (task->tTimer == 16)
+    {
+        task->tCircle2SpriteId = CreateSpiralingLogoCircleSprite(89,  97, 252, 4, 128, 0, -4, 1);
+    }
+    else if (task->tTimer == 32)
+    {
+        task->tCircle3SpriteId = CreateSpiralingLogoCircleSprite(151, 97, 132, 4, 128, 0, -4, 2);
+        task->tState++;
+    }
+
+    task->tTimer++;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 CirclesAsymmetricSpiralInSeq_End(struct Task *task)
+static bool8 CirclesAsymmetricSpiralInSeq_End(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r0, _081DAAA0\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DAA98\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_081DA270\n\t"
-        "	ldr r0, _081DAAA4\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_081DAA98:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081DAAA0: .4byte gPaletteFade\n\t"
-        "_081DAAA4: .4byte Task_FrontierCirclesAsymmetricSpiralInSeq + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        DestroyLogoCirclesGfx(task);
+        DestroyTask(FindTaskIdByFunc(Task_FrontierCirclesAsymmetricSpiralInSeq));
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_FrontierCirclesSymmetricSpiralInSeq(u8 taskId)
+void Task_FrontierCirclesSymmetricSpiralInSeq(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _081DAAD8\n\t"
-        "	ldr r2, _081DAADC\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_081DAABA:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DAABA\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081DAAD8: .4byte sFrontierCirclesSymmetricSpiralInSeq_Funcs\n\t"
-        "_081DAADC: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sFrontierCirclesSymmetricSpiralInSeq_Funcs[gTasks[taskId].tState](&gTasks[taskId]));
 }
 
-__attribute__((naked)) bool8 CirclesSymmetricSpiralInSeq_CreateSprites(struct Task *task)
+static bool8 CirclesSymmetricSpiralInSeq_CreateSprites(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _081DAB12\n\t"
-        "	movs r2, #0x8e\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	movs r0, #0x83\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x23\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	subs r0, #0x26\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	str r1, [sp, #0xc]\n\t"
-        "	movs r0, #0x78\n\t"
-        "	movs r1, #0x50\n\t"
-        "	movs r3, #8\n\t"
-        "	bl sub_081DA10C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	b _081DAB66\n\t"
-        "_081DAB12:\n\t"
-        "	cmp r1, #0x10\n\t"
-        "	bne _081DAB3A\n\t"
-        "	movs r0, #0x83\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x23\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	subs r0, #0x26\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0x78\n\t"
-        "	movs r1, #0x50\n\t"
-        "	movs r2, #0x2c\n\t"
-        "	movs r3, #8\n\t"
-        "	bl sub_081DA10C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	b _081DAB66\n\t"
-        "_081DAB3A:\n\t"
-        "	cmp r1, #0x20\n\t"
-        "	bne _081DAB66\n\t"
-        "	movs r0, #0x83\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x23\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	subs r0, #0x26\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0x79\n\t"
-        "	movs r1, #0x50\n\t"
-        "	movs r2, #0xa4\n\t"
-        "	movs r3, #8\n\t"
-        "	bl sub_081DA10C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_081DAB66:\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (task->tTimer == 0)
+    {
+        task->tCircle1SpriteId = CreateSpiralingLogoCircleSprite(120, 80, 284, 8, 131, 35, -3, 0);
+    }
+    else if (task->tTimer == 16)
+    {
+        task->tCircle2SpriteId = CreateSpiralingLogoCircleSprite(120, 80, 44,  8, 131, 35, -3, 1);
+    }
+    else if (task->tTimer == 32)
+    {
+        task->tCircle3SpriteId = CreateSpiralingLogoCircleSprite(121, 80, 164, 8, 131, 35, -3, 2);
+        task->tState++;
+    }
+
+    task->tTimer++;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 CirclesSymmetricSpiralInSeq_End(struct Task *task)
+static bool8 CirclesSymmetricSpiralInSeq_End(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r0, _081DABA4\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081DAB9C\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_081DA270\n\t"
-        "	ldr r0, _081DABA8\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_081DAB9C:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081DABA4: .4byte gPaletteFade\n\t"
-        "_081DABA8: .4byte Task_FrontierCirclesSymmetricSpiralInSeq + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        DestroyLogoCirclesGfx(task);
+        DestroyTask(FindTaskIdByFunc(Task_FrontierCirclesSymmetricSpiralInSeq));
+    }
+
+    return FALSE;
 }
