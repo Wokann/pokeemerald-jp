@@ -1,77 +1,56 @@
 // JP byte-exact redboot semihosting syscalls (svc #0xab), kept as naked asm.
 
-__attribute__((naked)) int sub_0829B7CC(void *fd)
+struct RedbootFileHandle
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "adds r3, r0, #0\n\t"
-        "movs r1, #0\n\t"
-        "ldr r2, _0829B7D4\n\t"
-        "b _0829B7E0\n\t"
-        ".align 2, 0\n\t"
-        "_0829B7D4: .4byte gUnknown_3001AB0\n\t"
-        "_0829B7D8:\n\t"
-        "adds r2, #8\n\t"
-        "adds r1, #1\n\t"
-        "cmp r1, #0x13\n\t"
-        "bgt _0829B7E6\n\t"
-        "_0829B7E0:\n\t"
-        "ldr r0, [r2]\n\t"
-        "cmp r0, r3\n\t"
-        "bne _0829B7D8\n\t"
-        "_0829B7E6:\n\t"
-        "adds r0, r1, #0\n\t"
-        "bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    void *handle;
+    int offset;
+};
+
+struct RedbootStream
+{
+    char unused[14];
+    short fd;
+};
+
+struct RedbootReent
+{
+    int err;
+    struct RedbootStream *stdin;
+    struct RedbootStream *stdout;
+    struct RedbootStream *stderr;
+};
+
+extern struct RedbootReent *gUnknown_203CF1C;
+extern void *gUnknown_3001AA4;
+extern void *gUnknown_3001AA8;
+extern void *gUnknown_3001AAC;
+extern int gUnknown_300764C;
+
+int *__errno(void);
+
+extern struct RedbootFileHandle gUnknown_3001AB0[];
+
+int sub_0829B7CC(void *fd)
+{
+    int i;
+
+    for (i = 0; i < 20; i++)
+    {
+        if (gUnknown_3001AB0[i].handle == fd)
+            break;
+    }
+    return i;
 }
 
-__attribute__((naked)) void *sub_0829B7EC(void *fd)
+void *sub_0829B7EC(int fd)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "adds r2, r0, #0\n\t"
-        "ldr r0, _0829B800\n\t"
-        "ldr r1, [r0]\n\t"
-        "ldr r0, [r1, #4]\n\t"
-        "movs r3, #0xe\n\t"
-        "ldrsh r0, [r0, r3]\n\t"
-        "cmp r2, r0\n\t"
-        "bne _0829B808\n\t"
-        "ldr r0, _0829B804\n\t"
-        "b _0829B82E\n\t"
-        ".align 2, 0\n\t"
-        "_0829B800: .4byte gUnknown_203CF1C\n\t"
-        "_0829B804: .4byte gUnknown_3001AA4\n\t"
-        "_0829B808:\n\t"
-        "ldr r0, [r1, #8]\n\t"
-        "movs r3, #0xe\n\t"
-        "ldrsh r0, [r0, r3]\n\t"
-        "cmp r2, r0\n\t"
-        "bne _0829B81C\n\t"
-        "ldr r0, _0829B818\n\t"
-        "b _0829B82E\n\t"
-        ".align 2, 0\n\t"
-        "_0829B818: .4byte gUnknown_3001AA8\n\t"
-        "_0829B81C:\n\t"
-        "ldr r0, [r1, #0xc]\n\t"
-        "movs r1, #0xe\n\t"
-        "ldrsh r0, [r0, r1]\n\t"
-        "cmp r2, r0\n\t"
-        "beq _0829B82C\n\t"
-        "adds r0, r2, #0\n\t"
-        "subs r0, #0x20\n\t"
-        "b _0829B830\n\t"
-        "_0829B82C:\n\t"
-        "ldr r0, _0829B834\n\t"
-        "_0829B82E:\n\t"
-        "ldr r0, [r0]\n\t"
-        "_0829B830:\n\t"
-        "bx lr\n\t"
-        ".align 2, 0\n\t"
-        "_0829B834: .4byte gUnknown_3001AAC\n\t"
-        ".syntax divided\n\t"
-    );
+    if (fd == gUnknown_203CF1C->stdin->fd)
+        return gUnknown_3001AA4;
+    if (fd == gUnknown_203CF1C->stdout->fd)
+        return gUnknown_3001AA8;
+    if (fd == gUnknown_203CF1C->stderr->fd)
+        return gUnknown_3001AAC;
+    return (void *)(long)(fd - 0x20);
 }
 
 __attribute__((naked)) void initialise_monitor_handles(void)
@@ -152,41 +131,19 @@ __attribute__((naked)) int sub_0829B8A8(void)
     );
 }
 
-__attribute__((naked)) int sub_0829B8BC(int err)
+int sub_0829B8BC(int err)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, lr}\n\t"
-        "adds r5, r0, #0\n\t"
-        "bl __errno\n\t"
-        "adds r4, r0, #0\n\t"
-        "bl sub_0829B8A8\n\t"
-        "str r0, [r4]\n\t"
-        "adds r0, r5, #0\n\t"
-        "pop {r4, r5, pc}\n\t"
-        ".syntax divided\n\t"
-    );
+    int *errnoPtr = __errno();
+
+    *errnoPtr = sub_0829B8A8();
+    return err;
 }
 
-__attribute__((naked)) int sub_0829B8D0(int err)
+int sub_0829B8D0(int err)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {lr}\n\t"
-        "adds r1, r0, #0\n\t"
-        "movs r0, #1\n\t"
-        "rsbs r0, r0, #0\n\t"
-        "cmp r1, r0\n\t"
-        "beq _0829B8E0\n\t"
-        "adds r0, r1, #0\n\t"
-        "b _0829B8E6\n\t"
-        "_0829B8E0:\n\t"
-        "adds r0, r1, #0\n\t"
-        "bl sub_0829B8BC\n\t"
-        "_0829B8E6:\n\t"
-        "pop {pc}\n\t"
-        ".syntax divided\n\t"
-    );
+    if (err == -1)
+        return sub_0829B8BC(err);
+    return err;
 }
 
 __attribute__((naked)) int _swiread(int fd, void *ptr, unsigned int len)
@@ -213,6 +170,7 @@ __attribute__((naked)) int _swiread(int fd, void *ptr, unsigned int len)
     );
 }
 
+// agbcc materializes the _swiread result in r2 before testing it; JP tests r0.
 __attribute__((naked)) int _read(int fd, void *ptr, unsigned int len)
 {
     __asm__(".syntax unified\n\t"
@@ -331,16 +289,9 @@ __attribute__((naked)) int _swilseek(int fd, long ptr, int dir)
     );
 }
 
-__attribute__((naked)) int _lseek(int fd, long ptr, int dir)
+int _lseek(int fd, long ptr, int dir)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {lr}\n\t"
-        "bl _swilseek\n\t"
-        "bl sub_0829B8D0\n\t"
-        "pop {pc}\n\t"
-        ".syntax divided\n\t"
-    );
+    return sub_0829B8D0(_swilseek(fd, ptr, dir));
 }
 
 __attribute__((naked)) int _swiwrite(int fd, char *ptr, int len)
@@ -367,6 +318,7 @@ __attribute__((naked)) int _swiwrite(int fd, char *ptr, int len)
     );
 }
 
+// agbcc materializes the _swiwrite result in r2; JP branches directly on r0.
 __attribute__((naked)) int _write(int fd, char *ptr, int len)
 {
     __asm__(".syntax unified\n\t"
@@ -503,6 +455,7 @@ __attribute__((naked)) int _swiopen(const char *path, int flags, int mode)
     );
 }
 
+// agbcc omits the JP wrapper's argument-save and stack-alignment sequence.
 __attribute__((naked)) int _open(const char *path, int flags, int mode)
 {
     __asm__(".syntax unified\n\t"
@@ -552,16 +505,9 @@ __attribute__((naked)) int _swiclose(int fd)
     );
 }
 
-__attribute__((naked)) int _close(int fd)
+int _close(int fd)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {lr}\n\t"
-        "bl _swiclose\n\t"
-        "bl sub_0829B8D0\n\t"
-        "pop {pc}\n\t"
-        ".syntax divided\n\t"
-    );
+    return sub_0829B8D0(_swiclose(fd));
 }
 
 __attribute__((naked)) void _exit(int status)
@@ -614,6 +560,7 @@ int _getpid(void)
 {
     return 1;
 }
+// The JP heap bound check reads sp directly; standard C cannot preserve that ABI sequence.
 __attribute__((naked)) void *_sbrk(int incr)
 {
     __asm__(".syntax unified\n\t"
@@ -650,37 +597,20 @@ __attribute__((naked)) void *_sbrk(int incr)
     );
 }
 
-__attribute__((naked)) int _fstat(int fd, void *st)
+int _fstat(int fd, void *st)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "movs r0, #0x80\n\t"
-        "lsls r0, r0, #6\n\t"
-        "str r0, [r1, #4]\n\t"
-        "movs r0, #0\n\t"
-        "bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    *(int *)((char *)st + 4) = 0x2000;
+    return 0;
 }
 
-__attribute__((naked)) int _unlink(char *path)
+int _unlink(char *path)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "movs r0, #1\n\t"
-        "rsbs r0, r0, #0\n\t"
-        "bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return -1;
 }
 
-__attribute__((naked)) int _raise(int sig)
+int _raise(int sig)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return sig;
 }
 
 __attribute__((naked)) int _gettimeofday(void *ptimeval, void *ptimezone)
@@ -741,37 +671,18 @@ __attribute__((naked)) int _times(void *buf)
     );
 }
 
-__attribute__((naked)) int _write_r(void *ptr, int fd, char *buf, int len)
+int _write_r(void *ptr, int fd, char *buf, int len)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, lr}\n\t"
-        "adds r5, r0, #0\n\t"
-        "adds r0, r1, #0\n\t"
-        "adds r1, r2, #0\n\t"
-        "adds r2, r3, #0\n\t"
-        "ldr r4, _0829BC5C\n\t"
-        "movs r3, #0\n\t"
-        "str r3, [r4]\n\t"
-        "bl _write\n\t"
-        "adds r1, r0, #0\n\t"
-        "movs r0, #1\n\t"
-        "rsbs r0, r0, #0\n\t"
-        "cmp r1, r0\n\t"
-        "bne _0829BC56\n\t"
-        "ldr r0, [r4]\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0829BC56\n\t"
-        "str r0, [r5]\n\t"
-        "_0829BC56:\n\t"
-        "adds r0, r1, #0\n\t"
-        "pop {r4, r5, pc}\n\t"
-        ".align 2, 0\n\t"
-        "_0829BC5C: .4byte gUnknown_300764C\n\t"
-        ".syntax divided\n\t"
-    );
+    int ret;
+
+    gUnknown_300764C = 0;
+    ret = _write(fd, buf, len);
+    if (ret == -1 && gUnknown_300764C != 0)
+        *(int *)ptr = gUnknown_300764C;
+    return ret;
 }
 
+// The JP allocator-specific chunk-header and unrolled zeroing path remains byte-sensitive.
 __attribute__((naked)) void *_calloc_r(void *ptr, unsigned int n, unsigned int size)
 {
     __asm__(".syntax unified\n\t"
@@ -827,76 +738,31 @@ __attribute__((naked)) void *_calloc_r(void *ptr, unsigned int n, unsigned int s
     );
 }
 
-__attribute__((naked)) int _close_r(void *ptr, int fd)
+int _close_r(void *ptr, int fd)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, lr}\n\t"
-        "adds r5, r0, #0\n\t"
-        "adds r0, r1, #0\n\t"
-        "ldr r4, _0829BCE0\n\t"
-        "movs r1, #0\n\t"
-        "str r1, [r4]\n\t"
-        "bl _close\n\t"
-        "adds r1, r0, #0\n\t"
-        "movs r0, #1\n\t"
-        "rsbs r0, r0, #0\n\t"
-        "cmp r1, r0\n\t"
-        "bne _0829BCDA\n\t"
-        "ldr r0, [r4]\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0829BCDA\n\t"
-        "str r0, [r5]\n\t"
-        "_0829BCDA:\n\t"
-        "adds r0, r1, #0\n\t"
-        "pop {r4, r5, pc}\n\t"
-        ".align 2, 0\n\t"
-        "_0829BCE0: .4byte gUnknown_300764C\n\t"
-        ".syntax divided\n\t"
-    );
+    int ret;
+
+    gUnknown_300764C = 0;
+    ret = _close(fd);
+    if (ret == -1 && gUnknown_300764C != 0)
+        *(int *)ptr = gUnknown_300764C;
+    return ret;
 }
 
-__attribute__((naked)) int *__errno(void)
+int *__errno(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "ldr r0, _0829BCEC\n\t"
-        "ldr r0, [r0]\n\t"
-        "bx lr\n\t"
-        ".align 2, 0\n\t"
-        "_0829BCEC: .4byte gUnknown_203CF1C\n\t"
-        ".syntax divided\n\t"
-    );
+    return (int *)gUnknown_203CF1C;
 }
 
-__attribute__((naked)) int _fstat_r(void *ptr, int fd, void *st)
+int _fstat_r(void *ptr, int fd, void *st)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, lr}\n\t"
-        "adds r5, r0, #0\n\t"
-        "adds r0, r1, #0\n\t"
-        "adds r1, r2, #0\n\t"
-        "ldr r4, _0829BD18\n\t"
-        "movs r2, #0\n\t"
-        "str r2, [r4]\n\t"
-        "bl _fstat\n\t"
-        "adds r1, r0, #0\n\t"
-        "movs r0, #1\n\t"
-        "rsbs r0, r0, #0\n\t"
-        "cmp r1, r0\n\t"
-        "bne _0829BD14\n\t"
-        "ldr r0, [r4]\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0829BD14\n\t"
-        "str r0, [r5]\n\t"
-        "_0829BD14:\n\t"
-        "adds r0, r1, #0\n\t"
-        "pop {r4, r5, pc}\n\t"
-        ".align 2, 0\n\t"
-        "_0829BD18: .4byte gUnknown_300764C\n\t"
-        ".syntax divided\n\t"
-    );
+    int ret;
+
+    gUnknown_300764C = 0;
+    ret = _fstat(fd, st);
+    if (ret == -1 && gUnknown_300764C != 0)
+        *(int *)ptr = gUnknown_300764C;
+    return ret;
 }
 
 __attribute__((naked)) void abort(void)
@@ -926,73 +792,29 @@ int isatty(int fd)
 {
     return 1;
 }
-__attribute__((naked)) int alarm(int sec)
+int alarm(int sec)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return sec;
 }
 
-__attribute__((naked)) int _lseek_r(void *ptr, int fd, long off, int dir)
+int _lseek_r(void *ptr, int fd, long off, int dir)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, lr}\n\t"
-        "adds r5, r0, #0\n\t"
-        "adds r0, r1, #0\n\t"
-        "adds r1, r2, #0\n\t"
-        "adds r2, r3, #0\n\t"
-        "ldr r4, _0829BD70\n\t"
-        "movs r3, #0\n\t"
-        "str r3, [r4]\n\t"
-        "bl _lseek\n\t"
-        "adds r1, r0, #0\n\t"
-        "movs r0, #1\n\t"
-        "rsbs r0, r0, #0\n\t"
-        "cmp r1, r0\n\t"
-        "bne _0829BD6A\n\t"
-        "ldr r0, [r4]\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0829BD6A\n\t"
-        "str r0, [r5]\n\t"
-        "_0829BD6A:\n\t"
-        "adds r0, r1, #0\n\t"
-        "pop {r4, r5, pc}\n\t"
-        ".align 2, 0\n\t"
-        "_0829BD70: .4byte gUnknown_300764C\n\t"
-        ".syntax divided\n\t"
-    );
+    int ret;
+
+    gUnknown_300764C = 0;
+    ret = _lseek(fd, off, dir);
+    if (ret == -1 && gUnknown_300764C != 0)
+        *(int *)ptr = gUnknown_300764C;
+    return ret;
 }
 
-__attribute__((naked)) int _read_r(void *ptr, int fd, void *buf, int len)
+int _read_r(void *ptr, int fd, void *buf, int len)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, lr}\n\t"
-        "adds r5, r0, #0\n\t"
-        "adds r0, r1, #0\n\t"
-        "adds r1, r2, #0\n\t"
-        "adds r2, r3, #0\n\t"
-        "ldr r4, _0829BDA0\n\t"
-        "movs r3, #0\n\t"
-        "str r3, [r4]\n\t"
-        "bl _read\n\t"
-        "adds r1, r0, #0\n\t"
-        "movs r0, #1\n\t"
-        "rsbs r0, r0, #0\n\t"
-        "cmp r1, r0\n\t"
-        "bne _0829BD9A\n\t"
-        "ldr r0, [r4]\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0829BD9A\n\t"
-        "str r0, [r5]\n\t"
-        "_0829BD9A:\n\t"
-        "adds r0, r1, #0\n\t"
-        "pop {r4, r5, pc}\n\t"
-        ".align 2, 0\n\t"
-        "_0829BDA0: .4byte gUnknown_300764C\n\t"
-        ".syntax divided\n\t"
-    );
+    int ret;
+
+    gUnknown_300764C = 0;
+    ret = _read(fd, buf, len);
+    if (ret == -1 && gUnknown_300764C != 0)
+        *(int *)ptr = gUnknown_300764C;
+    return ret;
 }
