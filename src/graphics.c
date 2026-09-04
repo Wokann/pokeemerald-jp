@@ -290,6 +290,12 @@ POKEDEX_GRAPHICS_SCREEN_TILEMAPS const u32 gPokedexScreenSelectBarSubmenu_Tilema
 
 #undef POKEDEX_GRAPHICS_SCREEN_TILEMAPS
 
+#define POKEDEX_GRAPHICS_UNUSED_NOBALL __attribute__((section(".rodata.pokedex_graphics_unused_noball"), aligned(1)))
+
+POKEDEX_GRAPHICS_UNUSED_NOBALL const u32 gUnused_PokedexNoBall[] = INCBIN_U32("graphics/pokedex/noball_unused.png.4bpp.lz");
+
+#undef POKEDEX_GRAPHICS_UNUSED_NOBALL
+
 #define POKEDEX_GRAPHICS_MENU_INTERFACE __attribute__((section(".rodata.pokedex_graphics_menu_interface"), aligned(1)))
 
 POKEDEX_GRAPHICS_MENU_INTERFACE const u32 gPokedexMenu_Gfx[] = INCBIN_U32("graphics/pokedex/menu.4bpp.lz");

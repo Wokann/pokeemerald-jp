@@ -9651,10 +9651,10 @@ SECTIONS {
         src/field_effect.o(.rodata.field_effect_script_funcs_data);
         src/field_effect.o(.rodata.field_effect_static_data);
         src/option_menu.o(.rodata.option_menu_static_data);
-        data/data_b2d_mid15.o(.rodata.option_menu_suffix);
+        . = ALIGN(4);
         src/graphics.o(.rodata.pokedex_graphics_prefix);
         src/graphics.o(.rodata.pokedex_graphics_screen_tilemaps);
-        data/data_b2d_mid15.o(.rodata.data_b2d_mid15_pokedex_unused_lz);
+        src/graphics.o(.rodata.pokedex_graphics_unused_noball);
         src/graphics.o(.rodata.pokedex_graphics_menu_interface);
         src/data/pokedex.o(.rodata.pokedex_orders);
         src/pokedex.o(.rodata.pokedex_static_data);
