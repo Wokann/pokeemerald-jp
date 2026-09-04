@@ -1,7 +1,29 @@
 #include "global.h"
 #include "berry.h"
+#include "event_data.h"
+#include "event_object_movement.h"
+#include "event_scripts.h"
+#include "field_control_avatar.h"
+#include "fieldmap.h"
+#include "item.h"
+#include "item_menu.h"
+#include "main.h"
+#include "random.h"
+#include "string_util.h"
+#include "text.h"
 #include "constants/berry.h"
+#include "constants/event_object_movement.h"
 #include "constants/items.h"
+
+static bool32 BerryTreeGrow(struct BerryTree *tree);
+static u16 BerryTypeToItemId(u16 berry);
+static u8 BerryTreeGetNumStagesWatered(struct BerryTree *tree);
+static u8 GetNumStagesWateredByBerryTreeId(u8 id);
+static u8 CalcBerryYieldInternal(u16 max, u16 min, u8 water);
+static u8 CalcBerryYield(struct BerryTree *tree);
+static u8 GetBerryCountByBerryTreeId(u8 id);
+static u16 GetStageDurationByBerryType(u8 berry);
+void sub_08092860(u8 localId, u8 mapNum, u8 mapGroup);
 
 // BEGIN JP BERRY DATA (generated; do not edit by hand)
 #define BERRY_DESCRIPTION_DATA __attribute__((section(".rodata.berry_mid57b_descriptions")))
@@ -926,63 +948,21 @@ BERRY_DATA const struct BerryTree gBlankBerryTree = {};
 #undef BERRY_DATA
 // END JP BERRY DATA
 
-__attribute__((naked)) void ClearEnigmaBerries()
+void ClearEnigmaBerries(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov r1, sp\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _080E0B24\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _080E0B28\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, _080E0B2C\n\t"
-        "	mov r0, sp\n\t"
-        "	bl CpuSet\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0B24: .4byte gSaveBlock1Ptr\n\t"
-        "_080E0B28: .4byte 0x000031F8\n\t"
-        "_080E0B2C: .4byte 0x0100001A\n\t"
-        ".syntax divided\n\t"
-    );
+    CpuFill16(0, &gSaveBlock1Ptr->enigmaBerry, sizeof(gSaveBlock1Ptr->enigmaBerry));
 }
 
-__attribute__((naked)) void SetEnigmaBerry(u8 *src)
+void SetEnigmaBerry(u8 *src)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _080E0B54\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080E0B58\n\t"
-        "	adds r3, r0, r1\n\t"
-        "	movs r2, #0\n\t"
-        "_080E0B3E:\n\t"
-        "	adds r0, r3, r2\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r2, #1\n\t"
-        "	cmp r2, #0x33\n\t"
-        "	bls _080E0B3E\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0B54: .4byte gSaveBlock1Ptr\n\t"
-        "_080E0B58: .4byte 0x000031F8\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 i;
+    u8 *dest = (u8 *)&gSaveBlock1Ptr->enigmaBerry;
+
+    for (i = 0; i < sizeof(gSaveBlock1Ptr->enigmaBerry); i++)
+        dest[i] = src[i];
 }
 
-u32 GetEnigmaBerryChecksum(struct EnigmaBerry *enigmaBerry)
+static u32 GetEnigmaBerryChecksum(struct EnigmaBerry *enigmaBerry)
 {
     u32 i;
     u32 checksum;
@@ -996,1134 +976,360 @@ u32 GetEnigmaBerryChecksum(struct EnigmaBerry *enigmaBerry)
     return checksum;
 }
 
-
-__attribute__((naked)) bool32 IsEnigmaBerryValid()
+bool32 IsEnigmaBerryValid(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080E0BAC\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _080E0BB0\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E0BC0\n\t"
-        "	ldr r2, _080E0BB4\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E0BC0\n\t"
-        "	ldr r2, _080E0BB8\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	bl GetEnigmaBerryChecksum\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _080E0BBC\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _080E0BC0\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080E0BC2\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0BAC: .4byte gSaveBlock1Ptr\n\t"
-        "_080E0BB0: .4byte 0x0000320C\n\t"
-        "_080E0BB4: .4byte 0x00003202\n\t"
-        "_080E0BB8: .4byte 0x000031F8\n\t"
-        "_080E0BBC: .4byte 0x00003228\n\t"
-        "_080E0BC0:\n\t"
-        "	movs r0, #0\n\t"
-        "_080E0BC2:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gSaveBlock1Ptr->enigmaBerry.berry.stageDuration)
+        return FALSE;
+    if (!gSaveBlock1Ptr->enigmaBerry.berry.maxYield)
+        return FALSE;
+    if (GetEnigmaBerryChecksum(&gSaveBlock1Ptr->enigmaBerry) != gSaveBlock1Ptr->enigmaBerry.checksum)
+        return FALSE;
+    return TRUE;
 }
 
-__attribute__((naked)) const struct Berry *GetBerryInfo(u8 berry)
+const struct Berry *GetBerryInfo(u8 berry)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0x2b\n\t"
-        "	bne _080E0BEC\n\t"
-        "	bl IsEnigmaBerryValid\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E0BEC\n\t"
-        "	ldr r0, _080E0BE4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080E0BE8\n\t"
-        "	b _080E0C00\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0BE4: .4byte gSaveBlock1Ptr\n\t"
-        "_080E0BE8: .4byte 0x000031F8\n\t"
-        "_080E0BEC:\n\t"
-        "	subs r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x2a\n\t"
-        "	bls _080E0BF8\n\t"
-        "	movs r4, #1\n\t"
-        "_080E0BF8:\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	subs r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080E0C08\n\t"
-        "_080E0C00:\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0C08: .4byte sEscalatorMetatiles_2F_2 + 0x6D2\n\t"
-        ".syntax divided\n\t"
-    );
+    if (berry == ITEM_TO_BERRY(ITEM_ENIGMA_BERRY) && IsEnigmaBerryValid())
+    {
+        return (struct Berry *)&gSaveBlock1Ptr->enigmaBerry.berry;
+    }
+    else
+    {
+        if (berry == BERRY_NONE || berry > ITEM_TO_BERRY(LAST_BERRY_INDEX))
+            berry = ITEM_TO_BERRY(FIRST_BERRY_INDEX);
+        return &gBerries[berry - 1];
+    }
 }
 
-__attribute__((naked)) struct BerryTree *GetBerryTreeInfo(u8 id)
+struct BerryTree *GetBerryTreeInfo(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _080E0C20\n\t"
-        "	lsrs r0, r0, #0x15\n\t"
-        "	ldr r2, _080E0C24\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0C20: .4byte gSaveBlock1Ptr\n\t"
-        "_080E0C24: .4byte 0x0000169C\n\t"
-        ".syntax divided\n\t"
-    );
+    return &gSaveBlock1Ptr->berryTrees[id];
 }
 
-__attribute__((naked)) bool32 ObjectEventInteractionWaterBerryTree(void)
+bool32 ObjectEventInteractionWaterBerryTree(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080E0C50\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl EventObjectGetBerryTreeId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetBerryTreeInfo\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrb r0, [r2, #1]\n\t"
-        "	lsls r0, r0, #0x19\n\t"
-        "	lsrs r0, r0, #0x19\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080E0C64\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _080E0C54\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080E0C5E\n\t"
-        "	b _080E0C7A\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0C50: .4byte gSelectedObjectEvent\n\t"
-        "_080E0C54:\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080E0C6A\n\t"
-        "	cmp r0, #4\n\t"
-        "	beq _080E0C70\n\t"
-        "	b _080E0C7A\n\t"
-        "_080E0C5E:\n\t"
-        "	ldrb r0, [r2, #5]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	b _080E0C74\n\t"
-        "_080E0C64:\n\t"
-        "	ldrb r0, [r2, #5]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	b _080E0C74\n\t"
-        "_080E0C6A:\n\t"
-        "	ldrb r0, [r2, #5]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	b _080E0C74\n\t"
-        "_080E0C70:\n\t"
-        "	ldrb r0, [r2, #5]\n\t"
-        "	movs r1, #0x80\n\t"
-        "_080E0C74:\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "	b _080E0C7E\n\t"
-        "_080E0C7A:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080E0C80\n\t"
-        "_080E0C7E:\n\t"
-        "	movs r0, #1\n\t"
-        "_080E0C80:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct BerryTree *tree = GetBerryTreeInfo(GetObjectEventBerryTreeId(gSelectedObjectEvent));
+
+    switch (tree->stage)
+    {
+    case BERRY_STAGE_PLANTED:
+        tree->watered1 = TRUE;
+        break;
+    case BERRY_STAGE_SPROUTED:
+        tree->watered2 = TRUE;
+        break;
+    case BERRY_STAGE_TALLER:
+        tree->watered3 = TRUE;
+        break;
+    case BERRY_STAGE_FLOWERING:
+        tree->watered4 = TRUE;
+        break;
+    default:
+        return FALSE;
+    }
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 IsPlayerFacingEmptyBerryTreePatch()
+bool8 IsPlayerFacingEmptyBerryTreePatch(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetEventObjectScriptPointerPlayerFacing\n\t"
-        "	ldr r1, _080E0CAC\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _080E0CB4\n\t"
-        "	ldr r0, _080E0CB0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl EventObjectGetBerryTreeId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetStageByBerryTreeId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E0CB4\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080E0CB6\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0CAC: .4byte BerryTreeScript\n\t"
-        "_080E0CB0: .4byte gSelectedObjectEvent\n\t"
-        "_080E0CB4:\n\t"
-        "	movs r0, #0\n\t"
-        "_080E0CB6:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetObjectEventScriptPointerPlayerFacing() == BerryTreeScript
+     && GetStageByBerryTreeId(GetObjectEventBerryTreeId(gSelectedObjectEvent)) == BERRY_STAGE_NO_BERRY)
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) bool8 TryToWaterBerryTree()
+bool8 TryToWaterBerryTree(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetEventObjectScriptPointerPlayerFacing\n\t"
-        "	ldr r1, _080E0CD4\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _080E0CD8\n\t"
-        "	bl ObjectEventInteractionWaterBerryTree\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _080E0CDA\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0CD4: .4byte BerryTreeScript\n\t"
-        "_080E0CD8:\n\t"
-        "	movs r0, #0\n\t"
-        "_080E0CDA:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetObjectEventScriptPointerPlayerFacing() != BerryTreeScript)
+        return FALSE;
+    else
+        return ObjectEventInteractionWaterBerryTree();
 }
 
-__attribute__((naked)) void ClearBerryTrees()
+void ClearBerryTrees(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r6, _080E0D08\n\t"
-        "	ldr r5, _080E0D0C\n\t"
-        "	ldr r0, _080E0D10\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	ldr r4, [r0, #4]\n\t"
-        "_080E0CEE:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	lsls r1, r2, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	str r3, [r0]\n\t"
-        "	str r4, [r0, #4]\n\t"
-        "	adds r2, #1\n\t"
-        "	cmp r2, #0x7f\n\t"
-        "	ble _080E0CEE\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0D08: .4byte gSaveBlock1Ptr\n\t"
-        "_080E0D0C: .4byte 0x0000169C\n\t"
-        "_080E0D10: .4byte gBlankBerryTree\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    for (i = 0; i < BERRY_TREES_COUNT; i++)
+        gSaveBlock1Ptr->berryTrees[i] = gBlankBerryTree;
 }
 
-__attribute__((naked)) void BerryTreeGrow(void)
+static bool32 BerryTreeGrow(struct BerryTree *tree)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E0D26\n\t"
-        "_080E0D22:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080E0DB2\n\t"
-        "_080E0D26:\n\t"
-        "	lsls r0, r1, #0x19\n\t"
-        "	lsrs r0, r0, #0x19\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _080E0DB0\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080E0D38\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0D38: .4byte _080E0D3C\n\t"
-        "_080E0D3C:\n\t"
-        "	.4byte _080E0D22\n\t"
-        "	.4byte _080E0D5C\n\t"
-        "	.4byte _080E0D5C\n\t"
-        "	.4byte _080E0D5C\n\t"
-        "	.4byte _080E0D54\n\t"
-        "	.4byte _080E0D74\n\t"
-        "_080E0D54:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CalcBerryYield\n\t"
-        "	strb r0, [r4, #4]\n\t"
-        "_080E0D5C:\n\t"
-        "	ldrb r2, [r4, #1]\n\t"
-        "	lsls r1, r2, #0x19\n\t"
-        "	lsrs r1, r1, #0x19\n\t"
-        "	adds r1, #1\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #0x80\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	b _080E0DB0\n\t"
-        "_080E0D74:\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	movs r1, #0x11\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #0x21\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	subs r0, #0x20\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r4, #4]\n\t"
-        "	ldrb r2, [r4, #1]\n\t"
-        "	subs r0, #0x80\n\t"
-        "	ands r0, r2\n\t"
-        "	movs r2, #2\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	adds r1, #1\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #5]\n\t"
-        "	cmp r1, #0xa\n\t"
-        "	bne _080E0DB0\n\t"
-        "	ldr r0, _080E0DB8\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r4]\n\t"
-        "	str r1, [r4, #4]\n\t"
-        "_080E0DB0:\n\t"
-        "	movs r0, #1\n\t"
-        "_080E0DB2:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0DB8: .4byte gBlankBerryTree\n\t"
-        ".syntax divided\n\t"
-    );
+    if (tree->stopGrowth)
+        return FALSE;
+
+    switch (tree->stage)
+    {
+    case BERRY_STAGE_NO_BERRY:
+        return FALSE;
+    case BERRY_STAGE_FLOWERING:
+        tree->berryYield = CalcBerryYield(tree);
+    case BERRY_STAGE_PLANTED:
+    case BERRY_STAGE_SPROUTED:
+    case BERRY_STAGE_TALLER:
+        tree->stage++;
+        break;
+    case BERRY_STAGE_BERRIES:
+        tree->watered1 = 0;
+        tree->watered2 = 0;
+        tree->watered3 = 0;
+        tree->watered4 = 0;
+        tree->berryYield = 0;
+        tree->stage = BERRY_STAGE_SPROUTED;
+        if (++tree->regrowthCount == 10)
+            *tree = gBlankBerryTree;
+        break;
+    }
+    return TRUE;
 }
 
-__attribute__((naked)) void BerryTreeTimeUpdate(s32 minutes)
+void BerryTreeTimeUpdate(s32 minutes)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r2, #0\n\t"
-        "_080E0DC2:\n\t"
-        "	ldr r1, _080E0E0C\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	ldr r3, _080E0E10\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r7, r2, #1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E0E5C\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E0E5C\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E0E5C\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl GetStageDurationByBerryType\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	cmp r6, r1\n\t"
-        "	blt _080E0E18\n\t"
-        "	ldr r0, _080E0E14\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r4]\n\t"
-        "	str r1, [r4, #4]\n\t"
-        "	b _080E0E5C\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0E0C: .4byte gSaveBlock1Ptr\n\t"
-        "_080E0E10: .4byte 0x0000169C\n\t"
-        "_080E0E14: .4byte gBlankBerryTree\n\t"
-        "_080E0E18:\n\t"
-        "	adds r5, r6, #0\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _080E0E5C\n\t"
-        "	ldrh r1, [r4, #2]\n\t"
-        "	cmp r1, r5\n\t"
-        "	ble _080E0E28\n\t"
-        "	subs r0, r1, r5\n\t"
-        "	b _080E0E5A\n\t"
-        "_080E0E28:\n\t"
-        "	subs r5, r5, r1\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl GetStageDurationByBerryType\n\t"
-        "	strh r0, [r4, #2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl BerryTreeGrow\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E0E5C\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #5\n\t"
-        "	bne _080E0E4C\n\t"
-        "	ldrh r0, [r4, #2]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	strh r0, [r4, #2]\n\t"
-        "_080E0E4C:\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _080E0E5C\n\t"
-        "	ldrh r0, [r4, #2]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r0, r5\n\t"
-        "	ble _080E0E28\n\t"
-        "	subs r0, r0, r5\n\t"
-        "_080E0E5A:\n\t"
-        "	strh r0, [r4, #2]\n\t"
-        "_080E0E5C:\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	cmp r2, #0x7f\n\t"
-        "	ble _080E0DC2\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+    struct BerryTree *tree;
+
+    for (i = 0; i < BERRY_TREES_COUNT; i++)
+    {
+        tree = &gSaveBlock1Ptr->berryTrees[i];
+
+        if (tree->berry && tree->stage && !tree->stopGrowth)
+        {
+            if (minutes >= GetStageDurationByBerryType(tree->berry) * 71)
+            {
+                *tree = gBlankBerryTree;
+            }
+            else
+            {
+                s32 time = minutes;
+
+                while (time != 0)
+                {
+                    if (tree->minutesUntilNextStage > time)
+                    {
+                        tree->minutesUntilNextStage -= time;
+                        break;
+                    }
+                    time -= tree->minutesUntilNextStage;
+                    tree->minutesUntilNextStage = GetStageDurationByBerryType(tree->berry);
+                    if (!BerryTreeGrow(tree))
+                        break;
+                    if (tree->stage == BERRY_STAGE_BERRIES)
+                        tree->minutesUntilNextStage *= 4;
+                }
+            }
+        }
+    }
 }
 
-__attribute__((naked)) void PlantBerryTree(u8 id, u8 berry, u8 stage, bool8 allowGrowth)
+void PlantBerryTree(u8 id, u8 berry, u8 stage, bool8 allowGrowth)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r7, r3, #0x18\n\t"
-        "	bl GetBerryTreeInfo\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldr r0, _080E0ECC\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r6]\n\t"
-        "	str r1, [r6, #4]\n\t"
-        "	strb r4, [r6]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetStageDurationByBerryType\n\t"
-        "	strh r0, [r6, #2]\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	ands r1, r5\n\t"
-        "	ldrb r2, [r6, #1]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r6, #1]\n\t"
-        "	cmp r5, #5\n\t"
-        "	bne _080E0EBA\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl CalcBerryYield\n\t"
-        "	strb r0, [r6, #4]\n\t"
-        "	ldrh r0, [r6, #2]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	strh r0, [r6, #2]\n\t"
-        "_080E0EBA:\n\t"
-        "	cmp r7, #0\n\t"
-        "	bne _080E0EC6\n\t"
-        "	ldrb r0, [r6, #1]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r6, #1]\n\t"
-        "_080E0EC6:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0ECC: .4byte gBlankBerryTree\n\t"
-        ".syntax divided\n\t"
-    );
+    struct BerryTree *tree = GetBerryTreeInfo(id);
+
+    *tree = gBlankBerryTree;
+    tree->berry = berry;
+    tree->minutesUntilNextStage = GetStageDurationByBerryType(berry);
+    tree->stage = stage;
+    if (stage == BERRY_STAGE_BERRIES)
+    {
+        tree->berryYield = CalcBerryYield(tree);
+        tree->minutesUntilNextStage *= 4;
+    }
+    if (!allowGrowth)
+        tree->stopGrowth = TRUE;
 }
 
-__attribute__((naked)) void RemoveBerryTree(u8 id)
+void RemoveBerryTree(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _080E0EEC\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	lsrs r0, r0, #0x15\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r0, _080E0EF0\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r0, _080E0EF4\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r2]\n\t"
-        "	str r1, [r2, #4]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0EEC: .4byte gSaveBlock1Ptr\n\t"
-        "_080E0EF0: .4byte 0x0000169C\n\t"
-        "_080E0EF4: .4byte gBlankBerryTree\n\t"
-        ".syntax divided\n\t"
-    );
+    gSaveBlock1Ptr->berryTrees[id] = gBlankBerryTree;
 }
 
-__attribute__((naked)) u8 GetBerryTypeByBerryTreeId(u8 id)
+u8 GetBerryTypeByBerryTreeId(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _080E0F0C\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	lsrs r0, r0, #0x15\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _080E0F10\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0F0C: .4byte gSaveBlock1Ptr\n\t"
-        "_080E0F10: .4byte 0x0000169C\n\t"
-        ".syntax divided\n\t"
-    );
+    return gSaveBlock1Ptr->berryTrees[id].berry;
 }
 
-__attribute__((naked)) u8 GetStageByBerryTreeId(u8 id)
+u8 GetStageByBerryTreeId(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _080E0F2C\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	lsrs r0, r0, #0x15\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _080E0F30\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x19\n\t"
-        "	lsrs r0, r0, #0x19\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0F2C: .4byte gSaveBlock1Ptr\n\t"
-        "_080E0F30: .4byte 0x0000169D\n\t"
-        ".syntax divided\n\t"
-    );
+    return gSaveBlock1Ptr->berryTrees[id].stage;
 }
 
-__attribute__((naked)) u8 ItemIdToBerryType(u16 item)
+u8 ItemIdToBerryType(u16 item)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	ldr r2, _080E0F50\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x2a\n\t"
-        "	bhi _080E0F54\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x7c\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _080E0F56\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0F50: .4byte 0xFF7B0000\n\t"
-        "_080E0F54:\n\t"
-        "	movs r0, #1\n\t"
-        "_080E0F56:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 berry = item - FIRST_BERRY_INDEX;
+
+    if (berry > LAST_BERRY_INDEX - FIRST_BERRY_INDEX)
+        return ITEM_TO_BERRY(FIRST_BERRY_INDEX);
+    else
+        return ITEM_TO_BERRY(item);
 }
 
-__attribute__((naked)) void BerryTypeToItemId(void)
+static u16 BerryTypeToItemId(u16 berry)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	ldr r2, _080E0F78\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x2a\n\t"
-        "	bhi _080E0F7C\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x84\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	b _080E0F7E\n\t"
-        "	.align 2, 0\n\t"
-        "_080E0F78: .4byte 0xFFFF0000\n\t"
-        "_080E0F7C:\n\t"
-        "	movs r0, #0x85\n\t"
-        "_080E0F7E:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 item = berry - 1;
+
+    if (item > LAST_BERRY_INDEX - FIRST_BERRY_INDEX)
+        return FIRST_BERRY_INDEX;
+    else
+        return berry + FIRST_BERRY_INDEX - 1;
 }
 
-__attribute__((naked)) void GetBerryNameByBerryType(u8 berry, u8 *string)
+void GetBerryNameByBerryType(u8 berry, u8 *string)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetBerryInfo\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #6\n\t"
-        "	bl memcpy\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r4, #6]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    memcpy(string, GetBerryInfo(berry)->name, BERRY_NAME_LENGTH);
+    string[BERRY_NAME_LENGTH] = 0xFF;
 }
 
-__attribute__((naked)) void ResetBerryTreeSparkleFlag(void)
+static void ResetBerryTreeSparkleFlag(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetBerryTreeInfo\n\t"
-        "	ldrb r2, [r0, #1]\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0, #1]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    GetBerryTreeInfo(id)->stopGrowth = FALSE;
 }
 
-__attribute__((naked)) void BerryTreeGetNumStagesWatered(void)
+static u8 BerryTreeGetNumStagesWatered(struct BerryTree *tree)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrb r2, [r0, #5]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsrs r1, r0, #0x1f\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E0FD6\n\t"
-        "	adds r1, #1\n\t"
-        "_080E0FD6:\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E0FE4\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "_080E0FE4:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E0FF2\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "_080E0FF2:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 count = 0;
+
+    if (tree->watered1)
+        count++;
+    if (tree->watered2)
+        count++;
+    if (tree->watered3)
+        count++;
+    if (tree->watered4)
+        count++;
+    return count;
 }
 
-__attribute__((naked)) void GetNumStagesWateredByBerryTreeId(void)
+static u8 GetNumStagesWateredByBerryTreeId(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetBerryTreeInfo\n\t"
-        "	bl BerryTreeGetNumStagesWatered\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return BerryTreeGetNumStagesWatered(GetBerryTreeInfo(id));
 }
 
-__attribute__((naked)) void CalcBerryYieldInternal(void)
+static u8 CalcBerryYieldInternal(u16 max, u16 min, u8 water)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r6, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _080E1026\n\t"
-        "	lsls r0, r6, #0x18\n\t"
-        "	b _080E105A\n\t"
-        "_080E1026:\n\t"
-        "	subs r1, r0, r6\n\t"
-        "	subs r0, r2, #1\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	muls r5, r0, r5\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	muls r4, r2, r4\n\t"
-        "	bl Random\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	subs r4, r4, r5\n\t"
-        "	adds r4, #1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl __umodsi3\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r5\n\t"
-        "	cmp r0, #1\n\t"
-        "	bls _080E1054\n\t"
-        "	lsrs r0, r5, #2\n\t"
-        "	adds r0, #1\n\t"
-        "	b _080E1056\n\t"
-        "_080E1054:\n\t"
-        "	lsrs r0, r5, #2\n\t"
-        "_080E1056:\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "_080E105A:\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 randMin;
+    u32 randMax;
+    u32 rand;
+    u32 extraYield;
+    u16 random;
+
+    if (water == 0)
+    {
+        return min;
+    }
+    else
+    {
+        randMin = (max - min) * (water - 1);
+        randMax = (max - min) * water;
+        random = Random();
+        rand = randMin + random % (randMax - randMin + 1);
+
+        if ((rand % NUM_WATER_STAGES) >= NUM_WATER_STAGES / 2)
+            extraYield = rand / NUM_WATER_STAGES + 1;
+        else
+            extraYield = rand / NUM_WATER_STAGES;
+        return extraYield + min;
+    }
 }
 
-__attribute__((naked)) void CalcBerryYield(void)
+static u8 CalcBerryYield(struct BerryTree *tree)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl GetBerryInfo\n\t"
-        "	ldrb r6, [r0, #0xb]\n\t"
-        "	ldrb r5, [r0, #0xa]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl BerryTreeGetNumStagesWatered\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl CalcBerryYieldInternal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct Berry *berry = GetBerryInfo(tree->berry);
+    u8 min = berry->minYield;
+    u8 max = berry->maxYield;
+
+    return CalcBerryYieldInternal(max, min, BerryTreeGetNumStagesWatered(tree));
 }
 
-__attribute__((naked)) void GetBerryCountByBerryTreeId(void)
+static u8 GetBerryCountByBerryTreeId(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _080E10A4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	lsrs r0, r0, #0x15\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0xb5\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080E10A4: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    return gSaveBlock1Ptr->berryTrees[id].berryYield;
 }
 
-__attribute__((naked)) void GetStageDurationByBerryType(void)
+static u16 GetStageDurationByBerryType(u8 berry)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetBerryInfo\n\t"
-        "	ldrb r1, [r0, #0x14]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x12\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetBerryInfo(berry)->stageDuration * 60;
 }
 
-__attribute__((naked)) void ObjectEventInteractionGetBerryTreeData(void)
+void ObjectEventInteractionGetBerryTreeData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r0, _080E10FC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl EventObjectGetBerryTreeId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetBerryTypeByBerryTreeId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ResetBerryTreeSparkleFlag\n\t"
-        "	ldr r0, _080E1100\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, _080E1104\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	ldrb r2, [r2, #4]\n\t"
-        "	bl IsBerryTreeSparkling\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E110C\n\t"
-        "	ldr r1, _080E1108\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _080E111A\n\t"
-        "	.align 2, 0\n\t"
-        "_080E10FC: .4byte gSelectedObjectEvent\n\t"
-        "_080E1100: .4byte gSpecialVar_LastTalked\n\t"
-        "_080E1104: .4byte gSaveBlock1Ptr\n\t"
-        "_080E1108: .4byte gSpecialVar_0x8004\n\t"
-        "_080E110C:\n\t"
-        "	ldr r4, _080E1144\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetStageByBerryTreeId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4]\n\t"
-        "_080E111A:\n\t"
-        "	ldr r4, _080E1148\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetNumStagesWateredByBerryTreeId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4]\n\t"
-        "	ldr r4, _080E114C\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetBerryCountByBerryTreeId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4]\n\t"
-        "	ldr r1, _080E1150\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetBerryNameByBerryType\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1144: .4byte gSpecialVar_0x8004\n\t"
-        "_080E1148: .4byte gSpecialVar_0x8005\n\t"
-        "_080E114C: .4byte gSpecialVar_0x8006\n\t"
-        "_080E1150: .4byte gStringVar1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id;
+    u8 berry;
+    u8 localId;
+    u8 group;
+    u8 num;
+
+    id = GetObjectEventBerryTreeId(gSelectedObjectEvent);
+    berry = GetBerryTypeByBerryTreeId(id);
+    ResetBerryTreeSparkleFlag(id);
+    localId = gSpecialVar_LastTalked;
+    num = gSaveBlock1Ptr->location.mapNum;
+    group = gSaveBlock1Ptr->location.mapGroup;
+    if (IsBerryTreeSparkling(localId, num, group))
+        gSpecialVar_0x8004 = BERRY_STAGE_SPARKLING;
+    else
+        gSpecialVar_0x8004 = GetStageByBerryTreeId(id);
+    gSpecialVar_0x8005 = GetNumStagesWateredByBerryTreeId(id);
+    gSpecialVar_0x8006 = GetBerryCountByBerryTreeId(id);
+    GetBerryNameByBerryType(berry, gStringVar1);
 }
 
-__attribute__((naked)) void Bag_ChooseBerry()
+void Bag_ChooseBerry(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080E1160\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1160: .4byte CB2_ChooseBerry\n\t"
-        ".syntax divided\n\t"
-    );
+    SetMainCallback2(CB2_ChooseBerry);
 }
 
-__attribute__((naked)) void ObjectEventInteractionPlantBerryTree(void)
+void ObjectEventInteractionPlantBerryTree(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080E1194\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemIdToBerryType\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _080E1198\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl EventObjectGetBerryTreeId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #1\n\t"
-        "	bl PlantBerryTree\n\t"
-        "	bl ObjectEventInteractionGetBerryTreeData\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1194: .4byte gSpecialVar_ItemId\n\t"
-        "_080E1198: .4byte gSelectedObjectEvent\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 berry = ItemIdToBerryType(gSpecialVar_ItemId);
+
+    PlantBerryTree(GetObjectEventBerryTreeId(gSelectedObjectEvent), berry, BERRY_STAGE_PLANTED, TRUE);
+    ObjectEventInteractionGetBerryTreeData();
 }
 
-__attribute__((naked)) void ObjectEventInteractionPickBerryTree(void)
+void ObjectEventInteractionPickBerryTree(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r0, _080E11E0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl EventObjectGetBerryTreeId\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetBerryTypeByBerryTreeId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r6, _080E11E4\n\t"
-        "	bl BerryTypeToItemId\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetBerryCountByBerryTreeId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl AddBagItem\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r6]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E11E0: .4byte gSelectedObjectEvent\n\t"
-        "_080E11E4: .4byte gSpecialVar_0x8004\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id = GetObjectEventBerryTreeId(gSelectedObjectEvent);
+    u8 berry = GetBerryTypeByBerryTreeId(id);
+
+    gSpecialVar_0x8004 = AddBagItem(BerryTypeToItemId(berry), GetBerryCountByBerryTreeId(id));
 }
 
-__attribute__((naked)) void ObjectEventInteractionRemoveBerryTree(void)
+void ObjectEventInteractionRemoveBerryTree(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080E1210\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl EventObjectGetBerryTreeId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl RemoveBerryTree\n\t"
-        "	ldr r0, _080E1214\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, _080E1218\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	ldrb r2, [r2, #4]\n\t"
-        "	bl sub_08092860\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1210: .4byte gSelectedObjectEvent\n\t"
-        "_080E1214: .4byte gSpecialVar_LastTalked\n\t"
-        "_080E1218: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    RemoveBerryTree(GetObjectEventBerryTreeId(gSelectedObjectEvent));
+    sub_08092860(gSpecialVar_LastTalked, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup);
 }
 
-__attribute__((naked)) bool8 PlayerHasBerries()
+bool8 PlayerHasBerries(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #4\n\t"
-        "	bl IsBagPocketNonEmpty\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return IsBagPocketNonEmpty(POCKET_BERRIES);
 }
 
-__attribute__((naked)) void SetBerryTreesSeen()
+void SetBerryTreesSeen(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov r4, sp\n\t"
-        "	adds r4, #2\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetCameraCoords\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	adds r1, #3\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	adds r3, #0xe\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #0xc\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sl, r0\n\t"
-        "	mov r5, sp\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	mov sb, r2\n\t"
-        "	ldr r4, _080E12C4\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	mov r8, r3\n\t"
-        "	asrs r7, r1, #0x10\n\t"
-        "	movs r6, #0xf\n\t"
-        "_080E1270:\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E12AC\n\t"
-        "	ldrb r0, [r4, #6]\n\t"
-        "	cmp r0, #0xc\n\t"
-        "	bne _080E12AC\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	strh r0, [r5]\n\t"
-        "	ldrh r0, [r4, #0x12]\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	cmp sb, r1\n\t"
-        "	bgt _080E12AC\n\t"
-        "	cmp r1, r8\n\t"
-        "	bgt _080E12AC\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	cmp r7, r1\n\t"
-        "	bgt _080E12AC\n\t"
-        "	mov r2, sl\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _080E12AC\n\t"
-        "	ldrb r0, [r4, #0x1d]\n\t"
-        "	bl ResetBerryTreeSparkleFlag\n\t"
-        "_080E12AC:\n\t"
-        "	adds r4, #0x24\n\t"
-        "	subs r6, #1\n\t"
-        "	cmp r6, #0\n\t"
-        "	bge _080E1270\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E12C4: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 cam_left;
+    s16 cam_top;
+    s16 left;
+    s16 top;
+    s16 right;
+    s16 bottom;
+    int i;
+
+    GetCameraCoords(&cam_left, &cam_top);
+    left = cam_left;
+    top = cam_top + 3;
+    right = cam_left + 14;
+    bottom = top + 8;
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+    {
+        if (gObjectEvents[i].active && gObjectEvents[i].movementType == MOVEMENT_TYPE_BERRY_TREE_GROWTH)
+        {
+            cam_left = gObjectEvents[i].currentCoords.x;
+            cam_top = gObjectEvents[i].currentCoords.y;
+            if (left <= cam_left && cam_left <= right && top <= cam_top && cam_top <= bottom)
+                ResetBerryTreeSparkleFlag(gObjectEvents[i].trainerRange_berryTreeId);
+        }
+    }
 }
