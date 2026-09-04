@@ -484,7 +484,7 @@ gSpecials::
 	def_special ShowFrontierGamblerLookingMessage
 	def_special ShowFrontierGamblerGoMessage
 	def_special Script_DoRayquazaScene, waitstate=1
-	def_special OpenPokenavForTutorial
+	def_special OpenPokenavForTutorial, waitstate=1
 	def_special ScriptMenu_CreateStartMenuForPokenavTutorial, waitstate=1
 	def_special CountPlayerTrainerStars
 	def_special BufferBattleFrontierTutorMoveName
@@ -524,7 +524,7 @@ gSpecials::
 	def_special Script_DoRayquazaScene, waitstate=1
 	def_special LoopWingFlapSE
 	def_special DestroyMewEmergingGrassSprite
-	def_special ShowBerryCrushRankings
+	def_special ShowBerryCrushRankings, waitstate=1
 	def_special TryBufferWaldaPhrase
 	def_special DoWaldaNamingScreen, waitstate=1
 	def_special TryGetWallpaperWithWaldaPhrase

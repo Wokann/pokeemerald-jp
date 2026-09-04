@@ -86,9 +86,6 @@ RustboroCity_EventScript_MatchCallTutorial::
 	case 7, RustboroCity_EventScript_PleaseSelectPokenav
 	case MULTI_B_PRESSED, RustboroCity_EventScript_PleaseSelectPokenav
 	special OpenPokenavForTutorial
-	@ JP ROM retains an explicit waitstate here; the matching US source
-	@ expresses the same flow without this visible opcode.
-	waitstate
 	delay 20
 	msgbox RustboroCity_Text_IdBetterGetBackToWork, MSGBOX_DEFAULT
 	closemessage
