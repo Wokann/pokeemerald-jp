@@ -53,12 +53,20 @@ extern u8 sub_08092CF8(u32 direction);
 // data[0] is used universally by tasks in this file as a state for switches
 #define tState       data[0]
 
-// JP ROM data (see ld_script_jp.txt):
-// sFlashLevelToRadius at 0x0852AB00, gMaxFlashLevel at 0x0852AB14,
-// sFlashEffectParams at 0x0852AB18.
-extern const u16 sFlashLevelToRadius[];
-extern const s32 gMaxFlashLevel;
-extern const struct ScanlineEffectParams sFlashEffectParams;
+#define FIELD_SCREEN_EFFECT_FLASH_DATA __attribute__((section(".rodata.field_screen_effect_flash_data")))
+
+// Kept in this explicit section to preserve the JP ROM placement.
+FIELD_SCREEN_EFFECT_FLASH_DATA const u16 sFlashLevelToRadius[] = { 200, 72, 64, 56, 48, 40, 32, 24, 0 };
+FIELD_SCREEN_EFFECT_FLASH_DATA const s32 gMaxFlashLevel = ARRAY_COUNT(sFlashLevelToRadius) - 1;
+
+FIELD_SCREEN_EFFECT_FLASH_DATA const struct ScanlineEffectParams sFlashEffectParams =
+{
+    &REG_WIN0H,
+    ((DMA_ENABLE | DMA_START_HBLANK | DMA_REPEAT | DMA_DEST_RELOAD) << 16) | 1,
+    1,
+};
+
+#undef FIELD_SCREEN_EFFECT_FLASH_DATA
 
 // code
 static void FillPalBufferWhite(void)

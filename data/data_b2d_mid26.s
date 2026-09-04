@@ -43,7 +43,7 @@
 gWeatherPtr: @ 0x8526DE8
 	.4byte gUnknown_20380F4 @ &gWeather
 
-	.section .rodata.data_b2d_mid26_after_field_weather_effect_static_data
+	.section .rodata.data_b2d_mid26_after_field_weather_effect_static_data_before_field_screen_effect_flash_data
 
 	.globl sWeatherCycleRoute119
 sWeatherCycleRoute119: @ 0x852AAF8
@@ -53,22 +53,7 @@ sWeatherCycleRoute119: @ 0x852AAF8
 sWeatherCycleRoute123: @ 0x852AAFC
 	.byte 0x02, 0x02, 0x03, 0x02
 
-	.globl sFlashLevelToRadius
-sFlashLevelToRadius: @ 0x852AB00
-	.hword 0x00C8, 0x0048, 0x0040, 0x0038, 0x0030, 0x0028, 0x0020, 0x0018, 0x0000, 0x0000
-
-	.globl gMaxFlashLevel
-gMaxFlashLevel: @ 0x852AB14
-gMaxFlashLevel: @ 0x852AB14
-	.4byte 8
-
-	.globl sFlashEffectParams
-sFlashEffectParams: @ 0x852AB18
-sFlashEffectParams: @ 0x852AB18
-	.4byte 0x04000040  @ dmaDest
-	.4byte 0xA2600001  @ dmaControl
-	.byte 0x01  @ initState
-	.byte 0x00, 0x00, 0x00
+	.section .rodata.data_b2d_mid26_after_field_screen_effect_flash_data_before_battle_setup_rematch_data
 
 	.globl sBattleTransitionTable_Wild
 sBattleTransitionTable_Wild: @ 0x852AB24
