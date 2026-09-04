@@ -1,6 +1,7 @@
 #include "global.h"
 
 #define OBJECT_EVENT_GRAPHICS_CUT_GRASS __attribute__((section(".rodata.object_event_graphics_cut_grass"), aligned(1)))
+#define OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_OBJECT_DATA __attribute__((section(".rodata.object_event_graphics_field_effect_object_data"), aligned(4)))
 #define OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_PALETTES __attribute__((section(".rodata.object_event_graphics_field_effect_palettes")))
 #define OBJECT_EVENT_GRAPHICS_PLAYER_DATA __attribute__((section(".rodata.object_event_graphics_player_data"), aligned(4)))
 #define OBJECT_EVENT_GRAPHICS_PLAYER_EXTENDED_DATA __attribute__((section(".rodata.object_event_graphics_player_extended_data"), aligned(4)))
@@ -22,6 +23,7 @@
 #undef OBJECT_EVENT_GRAPHICS_PLAYER_EXTENDED_DATA
 #undef OBJECT_EVENT_GRAPHICS_PLAYER_DATA
 #undef OBJECT_EVENT_GRAPHICS_CUT_GRASS
+#undef OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_OBJECT_DATA
 #undef OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_PALETTES
 #include "event_object_movement.h"
 #include "field_effect.h"
@@ -75,8 +77,8 @@ EVENT_OBJECT_MOVEMENT_CAMERA_DATA static const struct SpriteTemplate sCameraSpri
 #undef EVENT_OBJECT_MOVEMENT_CAMERA_DATA
 #undef EVENT_OBJECT_MOVEMENT_REFLECTION_PALETTE_DATA
 
-extern const u8 gFieldEffectObjectPic_Arrow[];
-extern const u8 gFieldEffectObjectPic_Ash[];
+extern const u32 gFieldEffectObjectPic_Arrow[];
+extern const u32 gFieldEffectObjectPic_Ash[];
 extern const u8 gFieldEffectObjectPic_AshLaunch[];
 extern const u8 gFieldEffectObjectPic_AshPuff[];
 extern const u8 gFieldEffectObjectPic_BikeTireTracks[];
@@ -91,7 +93,7 @@ extern const u8 gFieldEffectObjectPic_JumpSmallSplash[];
 extern const u8 gFieldEffectObjectPic_JumpTallGrass[];
 extern const u8 gFieldEffectObjectPic_LongGrass[];
 extern const u8 gFieldEffectObjectPic_MountainDisguise[];
-extern const u8 gFieldEffectObjectPic_Ripple[];
+extern const u32 gFieldEffectObjectPic_Ripple[];
 extern const u8 gFieldEffectObjectPic_SandDisguisePlaceholder[];
 extern const u8 gFieldEffectObjectPic_SandFootprints[];
 extern const u8 gFieldEffectObjectPic_SandPile[];

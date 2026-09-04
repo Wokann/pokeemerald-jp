@@ -9534,6 +9534,7 @@ SECTIONS {
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_misc_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_cut_grass);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_cut_grass_graphics);
+        src/event_object_movement.o(.rodata.object_event_graphics_field_effect_object_data);
         src/event_object_movement.o(.rodata.object_event_graphics_field_effect_palettes);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_field_effect_general_palettes);
         gUnknown_84DD88C = .;

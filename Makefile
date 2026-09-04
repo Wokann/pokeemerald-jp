@@ -1068,6 +1068,9 @@ graphics/birch_speech/unused_beauty.4bpp: graphics/birch_speech/unused_beauty.pn
 %.4bpp: %.png | tools
 	$(GFX) $< $@
 
+graphics/field_effects/pics/%.png_mwidth_2__mheight_2.4bpp: graphics/field_effects/pics/%.png | tools
+	$(GFX) $< $@ -mwidth 2 -mheight 2
+
 graphics/battle_anims/sprites/ice_cube.4bpp: graphics/battle_anims/sprites/ice_cube_0.4bpp \
 	graphics/battle_anims/sprites/ice_cube_1.4bpp \
 	graphics/battle_anims/sprites/ice_cube_2.4bpp \
@@ -1654,6 +1657,9 @@ $(C_BUILDDIR)/diploma.o: src/diploma.c charmap.txt \
 
 $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/object_events/object_event_graphics.h src/data/object_events/object_event_pic_tables.h src/data/object_events/object_event_anims.h src/data/object_events/base_oam.h src/data/object_events/object_event_subsprites.h src/data/object_events/object_event_graphics_info.h charmap.txt \
 	graphics/field_effects/pics/cut_grass.4bpp graphics/field_effects/palettes/cut_grass.gbapal \
+	graphics/field_effects/pics/ripple.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/ash.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/arrow.png_mwidth_2__mheight_2.4bpp \
 	graphics/object_events/pics/people/brendan/walking.4bpp graphics/object_events/pics/people/brendan/running.4bpp \
 	graphics/object_events/palettes/brendan.gbapal \
 	graphics/object_events/pics/people/ruby_sapphire_brendan/walking.4bpp \

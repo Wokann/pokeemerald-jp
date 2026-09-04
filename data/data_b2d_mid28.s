@@ -37,8 +37,6 @@ gUnknown_84BE14C: @ 0x84BE14C
 
 	.section .rodata.data_b2d_mid28_after_cut_grass_graphics
 
-	.incbin "baserom_jp.gba", 0x4cf30c, 0x900
-
 	.section .rodata.data_b2d_mid28_after_field_effect_general_palettes
 
 	.incbin "baserom_jp.gba", 0x4cfc4c, 0xdc40
