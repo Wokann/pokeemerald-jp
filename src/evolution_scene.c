@@ -1,1234 +1,464 @@
 #include "global.h"
+#include "battle.h"
+#include "battle_gfx_sfx_util.h"
+#include "bg.h"
+#include "data.h"
+#include "decompress.h"
 #include "evolution_scene.h"
+#include "evolution_graphics.h"
+#include "gpu_regs.h"
+#include "link.h"
+#include "main.h"
+#include "malloc.h"
+#include "m4a.h"
+#include "palette.h"
+#include "pokedex.h"
+#include "pokemon.h"
+#include "scanline_effect.h"
+#include "sprite.h"
+#include "string_util.h"
+#include "task.h"
+#include "trade.h"
+#include "window.h"
+#include "text.h"
+#include "constants/items.h"
+#include "constants/battle.h"
+#include "constants/pokemon.h"
+#include "constants/rgb.h"
 
-__attribute__((naked)) void BeginEvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u8 partyId)
+extern u16 *gUnknown_203A850;
+
+struct EvoInfo
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	adds r6, r3, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	ldr r0, _0813DB84\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0813DB88\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	strh r4, [r1, #0xc]\n\t"
-        "	strh r5, [r1, #0xe]\n\t"
-        "	strh r6, [r1, #0x1c]\n\t"
-        "	ldr r0, _0813DB8C\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813DB84: .4byte sub_0813DAC4 + 1\n\t"
-        "_0813DB88: .4byte gTasks\n\t"
-        "_0813DB8C: .4byte sub_0813DAB4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 preEvoSpriteId;
+    u8 postEvoSpriteId;
+    u8 evoTaskId;
+    u8 delayTimer;
+    u16 savedPalette[48];
+};
+
+extern struct EvoInfo *gUnknown_203A84C;
+extern u16 gUnknown_20373F4[];
+extern s16 gUnknown_3005B68[];
+extern const u32 gUnknown_8593CA0[];
+extern const u32 gUnknown_8594398[];
+extern const u32 gUnknown_859487C[];
+extern const u16 gUnknown_8594D50[];
+extern const u16 gUnknown_85953F0[];
+extern const u8 gUnknown_8595475[];
+extern const u8 gUnknown_8595485[];
+extern struct Evolution gEvolutionTable[][EVOS_PER_MON];
+extern u8 *StringCopy10(u8 *dest, const u8 *src);
+extern void sub_0813DAB4(void);
+extern void sub_0813DAC4(u8 taskId);
+extern void Task_EvolutionScene(u8 taskId);
+extern void Task_TradeEvolutionScene(u8 taskId);
+extern void EvoDummyFunc(void);
+extern void VBlankCB_EvolutionScene(void);
+extern void VBlankCB_TradeEvolutionScene(void);
+extern void CB2_EvolutionSceneUpdate(void);
+extern void CB2_TradeEvolutionSceneUpdate(void);
+extern void sub_0813FEB4(void);
+extern void sub_0813FFB0(u8 taskId);
+extern void sub_0814023C(void);
+
+#define sBgAnim_Pal gUnknown_85953F0
+#define sEvoStructPtr gUnknown_203A84C
+#define sBgAnim_PaletteControl ((const u8 (*)[4])gUnknown_8595475)
+#define sBgAnim_PalIndexes ((const u8 (*)[16])gUnknown_8595485)
+#define sBgAnimPal gUnknown_203A850
+#define sBgAnim_Gfx gUnknown_8593CA0
+#define sBgAnim_Inner_Tilemap gUnknown_8594398
+#define sBgAnim_Outer_Tilemap gUnknown_859487C
+#define sBgAnim_Intro_Pal gUnknown_8594D50
+
+void BeginEvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u8 partyId)
+{
+    u8 taskId = CreateTask((TaskFunc)sub_0813DAC4, 0);
+
+    gTasks[taskId].data[0] = 0;
+    gTasks[taskId].data[2] = postEvoSpecies;
+    gTasks[taskId].data[3] = canStopEvo;
+    gTasks[taskId].data[10] = partyId;
+    SetMainCallback2(sub_0813DAB4);
 }
 
-__attribute__((naked)) void EvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u8 partyId)
+void EvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u8 partyId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x24\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	mov sb, r1\n\t"
-        "	mov r0, sb\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	str r2, [sp, #0x18]\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	str r3, [sp, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetHBlankCallback\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp, #0x14]\n\t"
-        "	add r0, sp, #0x14\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	ldr r2, _0813DE14\n\t"
-        "	bl CpuSet\n\t"
-        "	movs r0, #0x4c\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x40\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x44\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x42\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x46\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x48\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	bl ResetPaletteFade\n\t"
-        "	ldr r0, _0813DE18\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r0]\n\t"
-        "	ldr r0, _0813DE1C\n\t"
-        "	strh r2, [r0]\n\t"
-        "	ldr r0, _0813DE20\n\t"
-        "	strh r2, [r0]\n\t"
-        "	ldr r0, _0813DE24\n\t"
-        "	strh r2, [r0]\n\t"
-        "	ldr r0, _0813DE28\n\t"
-        "	strh r2, [r0]\n\t"
-        "	ldr r0, _0813DE2C\n\t"
-        "	strh r2, [r0]\n\t"
-        "	ldr r1, _0813DE30\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _0813DE34\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r1, _0813DE38\n\t"
-        "	movs r0, #9\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl InitBattleBgsVideo\n\t"
-        "	bl LoadBattleTextboxAndBackground\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	bl ScanlineEffect_Stop\n\t"
-        "	bl ResetTasks\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	ldr r0, _0813DE3C\n\t"
-        "	movs r2, #4\n\t"
-        "	strb r2, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	bl AllocZeroed\n\t"
-        "	ldr r1, _0813DE40\n\t"
-        "	str r0, [r1]\n\t"
-        "	bl AllocateMonSpritesGfx\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	mov r2, sp\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r0, _0813DE44\n\t"
-        "	mov r1, sp\n\t"
-        "	bl StringCopy10\n\t"
-        "	ldr r0, _0813DE48\n\t"
-        "	mov r2, sb\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	add r1, sb\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldr r2, _0813DE4C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	bl StringCopy\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetMonData3\n\t"
-        "	str r0, [sp, #0x20]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov sl, r0\n\t"
-        "	lsls r0, r5, #3\n\t"
-        "	ldr r1, _0813DE50\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, _0813DE54\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r1, [r1, #8]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl DecompressPicFromTable_2\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ldr r1, [sp, #0x20]\n\t"
-        "	mov r2, sl\n\t"
-        "	bl GetMonSpritePalStructFromOtIdPersonality\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x88\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetMultiuseSpriteTemplateToPokemon\n\t"
-        "	ldr r0, _0813DE58\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r1, _0813DE5C\n\t"
-        "	str r1, [r0, #0x10]\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x40\n\t"
-        "	movs r3, #0x1e\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, _0813DE40\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	lsls r1, r0, #0x18\n\t"
-        "	lsrs r3, r1, #0x18\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r7, _0813DE60\n\t"
-        "	lsls r1, r3, #4\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r6, r7, #0\n\t"
-        "	adds r6, #0x1c\n\t"
-        "	adds r0, r1, r6\n\t"
-        "	ldr r2, _0813DE64\n\t"
-        "	str r2, [r0]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r4, #0xf\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	movs r2, #0x10\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	mov r1, sb\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	ldr r2, _0813DE50\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _0813DE54\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r1, [r1, #0x10]\n\t"
-        "	mov r2, sb\n\t"
-        "	bl DecompressPicFromTable_2\n\t"
-        "	mov r0, sb\n\t"
-        "	ldr r1, [sp, #0x20]\n\t"
-        "	mov r2, sl\n\t"
-        "	bl GetMonSpritePalStructFromOtIdPersonality\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x90\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	mov r0, sb\n\t"
-        "	movs r1, #3\n\t"
-        "	bl SetMultiuseSpriteTemplateToPokemon\n\t"
-        "	ldr r0, _0813DE5C\n\t"
-        "	mov r1, r8\n\t"
-        "	str r0, [r1, #0x10]\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x40\n\t"
-        "	movs r3, #0x1e\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, _0813DE40\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	lsls r1, r0, #0x18\n\t"
-        "	lsrs r3, r1, #0x18\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	lsls r1, r3, #4\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r6, r1, r6\n\t"
-        "	ldr r2, _0813DE64\n\t"
-        "	str r2, [r6]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	ands r4, r0\n\t"
-        "	movs r0, #0x20\n\t"
-        "	orrs r4, r0\n\t"
-        "	strb r4, [r1, #5]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl LoadEvoSparkleSpriteAndPal\n\t"
-        "	ldr r0, _0813DE68\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	ldr r1, _0813DE40\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	lsls r1, r0, #0x18\n\t"
-        "	lsrs r3, r1, #0x18\n\t"
-        "	strb r0, [r2, #2]\n\t"
-        "	ldr r1, _0813DE6C\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r0, #8]\n\t"
-        "	strh r5, [r0, #0xa]\n\t"
-        "	mov r1, sb\n\t"
-        "	strh r1, [r0, #0xc]\n\t"
-        "	mov r2, sp\n\t"
-        "	ldrh r2, [r2, #0x18]\n\t"
-        "	strh r2, [r0, #0xe]\n\t"
-        "	movs r1, #1\n\t"
-        "	strh r1, [r0, #0x10]\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0, #0x1a]\n\t"
-        "	mov r2, sp\n\t"
-        "	ldrh r2, [r2, #0x1c]\n\t"
-        "	strh r2, [r0, #0x1c]\n\t"
-        "	ldr r1, _0813DE40\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _0813DE70\n\t"
-        "	adds r0, #4\n\t"
-        "	movs r2, #0x60\n\t"
-        "	bl memcpy\n\t"
-        "	movs r1, #0xfa\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813DE74\n\t"
-        "	bl SetHBlankCallback\n\t"
-        "	ldr r0, _0813DE78\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	bl m4aMPlayAllStop\n\t"
-        "	ldr r0, _0813DE7C\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	add sp, #0x24\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813DE14: .4byte 0x05006000\n\t"
-        "_0813DE18: .4byte gBattle_BG0_X\n\t"
-        "_0813DE1C: .4byte gBattle_BG0_Y\n\t"
-        "_0813DE20: .4byte gBattle_BG1_X\n\t"
-        "_0813DE24: .4byte gBattle_BG1_Y\n\t"
-        "_0813DE28: .4byte gBattle_BG2_X\n\t"
-        "_0813DE2C: .4byte gBattle_BG2_Y\n\t"
-        "_0813DE30: .4byte gBattle_BG3_X\n\t"
-        "_0813DE34: .4byte gBattle_BG3_Y\n\t"
-        "_0813DE38: .4byte gBattleEnvironment\n\t"
-        "_0813DE3C: .4byte gReservedSpritePaletteCount\n\t"
-        "_0813DE40: .4byte gUnknown_203A84C\n\t"
-        "_0813DE44: .4byte gStringVar1\n\t"
-        "_0813DE48: .4byte gStringVar2\n\t"
-        "_0813DE4C: .4byte gSpeciesNames\n\t"
-        "_0813DE50: .4byte gMonFrontPicTable\n\t"
-        "_0813DE54: .4byte gMonSpritesGfxPtr\n\t"
-        "_0813DE58: .4byte gMultiuseSpriteTemplate\n\t"
-        "_0813DE5C: .4byte gDummySpriteAffineAnimTable\n\t"
-        "_0813DE60: .4byte gSprites\n\t"
-        "_0813DE64: .4byte SpriteCallbackDummy_2 + 1\n\t"
-        "_0813DE68: .4byte Task_EvolutionScene + 1\n\t"
-        "_0813DE6C: .4byte gTasks\n\t"
-        "_0813DE70: .4byte gUnknown_20373F4\n\t"
-        "_0813DE74: .4byte EvoDummyFunc + 1\n\t"
-        "_0813DE78: .4byte VBlankCB_EvolutionScene + 1\n\t"
-        "_0813DE7C: .4byte CB2_EvolutionSceneUpdate + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 name[POKEMON_NAME_BUFFER_SIZE];
+    u16 currSpecies;
+    u32 trainerId;
+    u32 personality;
+    const struct CompressedSpritePalette *pokePal;
+    u8 id;
+
+    SetHBlankCallback(NULL);
+    SetVBlankCallback(NULL);
+    CpuFill32(0, (void *)VRAM, VRAM_SIZE);
+
+    SetGpuReg(REG_OFFSET_MOSAIC, 0);
+    SetGpuReg(REG_OFFSET_WIN0H, 0);
+    SetGpuReg(REG_OFFSET_WIN0V, 0);
+    SetGpuReg(REG_OFFSET_WIN1H, 0);
+    SetGpuReg(REG_OFFSET_WIN1V, 0);
+    SetGpuReg(REG_OFFSET_WININ, 0);
+    SetGpuReg(REG_OFFSET_WINOUT, 0);
+
+    ResetPaletteFade();
+
+    gBattle_BG0_X = 0;
+    gBattle_BG0_Y = 0;
+    gBattle_BG1_X = 0;
+    gBattle_BG1_Y = 0;
+    gBattle_BG2_X = 0;
+    gBattle_BG2_Y = 0;
+    gBattle_BG3_X = 256;
+    gBattle_BG3_Y = 0;
+
+    gBattleEnvironment = BATTLE_ENVIRONMENT_PLAIN;
+
+    InitBattleBgsVideo();
+    LoadBattleTextboxAndBackground();
+    ResetSpriteData();
+    ScanlineEffect_Stop();
+    ResetTasks();
+    FreeAllSpritePalettes();
+
+    gReservedSpritePaletteCount = 4;
+
+    sEvoStructPtr = AllocZeroed(sizeof(struct EvoInfo));
+    AllocateMonSpritesGfx();
+
+    GetMonData(mon, MON_DATA_NICKNAME, name);
+    StringCopy10(gStringVar1, name);
+    StringCopy(gStringVar2, gSpeciesNames[postEvoSpecies]);
+
+    currSpecies = GetMonData(mon, MON_DATA_SPECIES);
+    trainerId = GetMonData(mon, MON_DATA_OT_ID);
+    personality = GetMonData(mon, MON_DATA_PERSONALITY);
+    DecompressPicFromTable_2(&gMonFrontPicTable[currSpecies],
+                             gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_LEFT],
+                             currSpecies);
+    pokePal = GetMonSpritePalStructFromOtIdPersonality(currSpecies, trainerId, personality);
+    LoadCompressedPalette(pokePal->data, OBJ_PLTT_ID(1), PLTT_SIZE_4BPP);
+
+    SetMultiuseSpriteTemplateToPokemon(currSpecies, B_POSITION_OPPONENT_LEFT);
+    gMultiuseSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
+    sEvoStructPtr->preEvoSpriteId = id = CreateSprite(&gMultiuseSpriteTemplate, 120, 64, 30);
+
+    gSprites[id].callback = SpriteCallbackDummy_2;
+    gSprites[id].oam.paletteNum = 1;
+    gSprites[id].invisible = TRUE;
+
+    DecompressPicFromTable_2(&gMonFrontPicTable[postEvoSpecies],
+                             gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_RIGHT],
+                             postEvoSpecies);
+    pokePal = GetMonSpritePalStructFromOtIdPersonality(postEvoSpecies, trainerId, personality);
+    LoadCompressedPalette(pokePal->data, OBJ_PLTT_ID(2), PLTT_SIZE_4BPP);
+
+    SetMultiuseSpriteTemplateToPokemon(postEvoSpecies, B_POSITION_OPPONENT_RIGHT);
+    gMultiuseSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
+    sEvoStructPtr->postEvoSpriteId = id = CreateSprite(&gMultiuseSpriteTemplate, 120, 64, 30);
+    gSprites[id].callback = SpriteCallbackDummy_2;
+    gSprites[id].oam.paletteNum = 2;
+    gSprites[id].invisible = TRUE;
+
+    LoadEvoSparkleSpriteAndPal();
+
+    sEvoStructPtr->evoTaskId = id = CreateTask(Task_EvolutionScene, 0);
+    gTasks[id].data[0] = 0;
+    gTasks[id].data[1] = currSpecies;
+    gTasks[id].data[2] = postEvoSpecies;
+    gTasks[id].data[3] = canStopEvo;
+    gTasks[id].data[4] = TRUE;
+    gTasks[id].data[9] = FALSE;
+    gTasks[id].data[10] = partyId;
+
+    memcpy(sEvoStructPtr->savedPalette, gUnknown_20373F4, sizeof(sEvoStructPtr->savedPalette));
+
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG_ALL_ON | DISPCNT_OBJ_1D_MAP);
+
+    SetHBlankCallback(EvoDummyFunc);
+    SetVBlankCallback(VBlankCB_EvolutionScene);
+    m4aMPlayAllStop();
+    SetMainCallback2(CB2_EvolutionSceneUpdate);
 }
 
-__attribute__((naked)) void CB2_EvolutionSceneLoadGraphics(void)
+void CB2_EvolutionSceneLoadGraphics(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6}\n\t"
-        "	sub sp, #8\n\t"
-        "	ldr r2, _0813E018\n\t"
-        "	ldr r0, _0813E01C\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r1, [r0, #2]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x1c\n\t"
-        "	ldrsh r2, [r0, r1]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	muls r4, r1, r4\n\t"
-        "	ldr r1, _0813E020\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	ldrh r5, [r0, #0xc]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov sb, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetHBlankCallback\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	ldr r2, _0813E024\n\t"
-        "	add r0, sp, #4\n\t"
-        "	bl CpuSet\n\t"
-        "	movs r0, #0x4c\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x40\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x44\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x42\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x46\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x48\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	bl ResetPaletteFade\n\t"
-        "	ldr r0, _0813E028\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r0, _0813E02C\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r0, _0813E030\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r0, _0813E034\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r0, _0813E038\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r0, _0813E03C\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r1, _0813E040\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _0813E044\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r1, _0813E048\n\t"
-        "	movs r0, #9\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl InitBattleBgsVideo\n\t"
-        "	bl LoadBattleTextboxAndBackground\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	ldr r1, _0813E04C\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r5, #3\n\t"
-        "	ldr r1, _0813E050\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0813E054\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r1, [r1, #0x10]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl DecompressPicFromTable_2\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	mov r1, sb\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl GetMonSpritePalStructFromOtIdPersonality\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x90\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl SetMultiuseSpriteTemplateToPokemon\n\t"
-        "	ldr r0, _0813E058\n\t"
-        "	ldr r1, _0813E05C\n\t"
-        "	str r1, [r0, #0x10]\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x40\n\t"
-        "	movs r3, #0x1e\n\t"
-        "	bl CreateSprite\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	lsls r2, r0, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	ldr r3, _0813E060\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r2, _0813E064\n\t"
-        "	str r2, [r0]\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r2\n\t"
-        "	movs r2, #0x20\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	movs r1, #0xfa\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813E068\n\t"
-        "	bl SetHBlankCallback\n\t"
-        "	ldr r0, _0813E06C\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	ldr r0, _0813E070\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #3\n\t"
-        "	bl ShowBg\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813E018: .4byte gTasks\n\t"
-        "_0813E01C: .4byte gUnknown_203A84C\n\t"
-        "_0813E020: .4byte gPlayerParty\n\t"
-        "_0813E024: .4byte 0x05006000\n\t"
-        "_0813E028: .4byte gBattle_BG0_X\n\t"
-        "_0813E02C: .4byte gBattle_BG0_Y\n\t"
-        "_0813E030: .4byte gBattle_BG1_X\n\t"
-        "_0813E034: .4byte gBattle_BG1_Y\n\t"
-        "_0813E038: .4byte gBattle_BG2_X\n\t"
-        "_0813E03C: .4byte gBattle_BG2_Y\n\t"
-        "_0813E040: .4byte gBattle_BG3_X\n\t"
-        "_0813E044: .4byte gBattle_BG3_Y\n\t"
-        "_0813E048: .4byte gBattleEnvironment\n\t"
-        "_0813E04C: .4byte gReservedSpritePaletteCount\n\t"
-        "_0813E050: .4byte gMonFrontPicTable\n\t"
-        "_0813E054: .4byte gMonSpritesGfxPtr\n\t"
-        "_0813E058: .4byte gMultiuseSpriteTemplate\n\t"
-        "_0813E05C: .4byte gDummySpriteAffineAnimTable\n\t"
-        "_0813E060: .4byte gSprites\n\t"
-        "_0813E064: .4byte SpriteCallbackDummy_2 + 1\n\t"
-        "_0813E068: .4byte EvoDummyFunc + 1\n\t"
-        "_0813E06C: .4byte VBlankCB_EvolutionScene + 1\n\t"
-        "_0813E070: .4byte CB2_EvolutionSceneUpdate + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id;
+    const struct CompressedSpritePalette *pokePal;
+    u16 postEvoSpecies;
+    u32 trainerId;
+    u32 personality;
+    struct Pokemon *mon = &gPlayerParty[gTasks[sEvoStructPtr->evoTaskId].data[10]];
+
+    postEvoSpecies = gTasks[sEvoStructPtr->evoTaskId].data[2];
+    trainerId = GetMonData(mon, MON_DATA_OT_ID);
+    personality = GetMonData(mon, MON_DATA_PERSONALITY);
+
+    SetHBlankCallback(NULL);
+    SetVBlankCallback(NULL);
+    CpuFill32(0, (void *)VRAM, VRAM_SIZE);
+
+    SetGpuReg(REG_OFFSET_MOSAIC, 0);
+    SetGpuReg(REG_OFFSET_WIN0H, 0);
+    SetGpuReg(REG_OFFSET_WIN0V, 0);
+    SetGpuReg(REG_OFFSET_WIN1H, 0);
+    SetGpuReg(REG_OFFSET_WIN1V, 0);
+    SetGpuReg(REG_OFFSET_WININ, 0);
+    SetGpuReg(REG_OFFSET_WINOUT, 0);
+
+    ResetPaletteFade();
+
+    gBattle_BG0_X = 0;
+    gBattle_BG0_Y = 0;
+    gBattle_BG1_X = 0;
+    gBattle_BG1_Y = 0;
+    gBattle_BG2_X = 0;
+    gBattle_BG2_Y = 0;
+    gBattle_BG3_X = 256;
+    gBattle_BG3_Y = 0;
+
+    gBattleEnvironment = BATTLE_ENVIRONMENT_PLAIN;
+
+    InitBattleBgsVideo();
+    LoadBattleTextboxAndBackground();
+    ResetSpriteData();
+    FreeAllSpritePalettes();
+    gReservedSpritePaletteCount = 4;
+
+    DecompressPicFromTable_2(&gMonFrontPicTable[postEvoSpecies],
+                             gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_RIGHT],
+                             postEvoSpecies);
+    pokePal = GetMonSpritePalStructFromOtIdPersonality(postEvoSpecies, trainerId, personality);
+    LoadCompressedPalette(pokePal->data, OBJ_PLTT_ID(2), PLTT_SIZE_4BPP);
+
+    SetMultiuseSpriteTemplateToPokemon(postEvoSpecies, B_POSITION_OPPONENT_RIGHT);
+    gMultiuseSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
+    sEvoStructPtr->postEvoSpriteId = id = CreateSprite(&gMultiuseSpriteTemplate, 120, 64, 30);
+
+    gSprites[id].callback = SpriteCallbackDummy_2;
+    gSprites[id].oam.paletteNum = 2;
+
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG_ALL_ON | DISPCNT_OBJ_1D_MAP);
+
+    SetHBlankCallback(EvoDummyFunc);
+    SetVBlankCallback(VBlankCB_EvolutionScene);
+    SetMainCallback2(CB2_EvolutionSceneUpdate);
+
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_BLACK);
+
+    ShowBg(0);
+    ShowBg(1);
+    ShowBg(2);
+    ShowBg(3);
 }
 
-__attribute__((naked)) void CB2_TradeEvolutionSceneLoadGraphics(void)
+void CB2_TradeEvolutionSceneLoadGraphics(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r2, _0813E0B0\n\t"
-        "	ldr r0, _0813E0B4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r1, [r0, #2]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x1c\n\t"
-        "	ldrsh r2, [r0, r1]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r2, r1, r2\n\t"
-        "	ldr r1, _0813E0B8\n\t"
-        "	adds r4, r2, r1\n\t"
-        "	ldrh r6, [r0, #0xc]\n\t"
-        "	ldr r0, _0813E0BC\n\t"
-        "	movs r3, #0x87\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #7\n\t"
-        "	bls _0813E0A6\n\t"
-        "	b _0813E2CC\n\t"
-        "_0813E0A6:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0813E0C0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813E0B0: .4byte gTasks\n\t"
-        "_0813E0B4: .4byte gUnknown_203A84C\n\t"
-        "_0813E0B8: .4byte gPlayerParty\n\t"
-        "_0813E0BC: .4byte gMain\n\t"
-        "_0813E0C0: .4byte _0813E0C4\n\t"
-        "_0813E0C4:\n\t"
-        "	.4byte _0813E0E4\n\t"
-        "	.4byte _0813E154\n\t"
-        "	.4byte _0813E17C\n\t"
-        "	.4byte _0813E182\n\t"
-        "	.4byte _0813E1AC\n\t"
-        "	.4byte _0813E1F4\n\t"
-        "	.4byte _0813E264\n\t"
-        "	.4byte _0813E29C\n\t"
-        "_0813E0E4:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetHBlankCallback\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	ldr r1, _0813E130\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _0813E134\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _0813E138\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _0813E13C\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _0813E140\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _0813E144\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _0813E148\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r2, _0813E14C\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r0, _0813E150\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _0813E284\n\t"
-        "	.align 2, 0\n\t"
-        "_0813E130: .4byte gReservedSpritePaletteCount\n\t"
-        "_0813E134: .4byte gBattle_BG0_X\n\t"
-        "_0813E138: .4byte gBattle_BG0_Y\n\t"
-        "_0813E13C: .4byte gBattle_BG1_X\n\t"
-        "_0813E140: .4byte gBattle_BG1_Y\n\t"
-        "_0813E144: .4byte gBattle_BG2_X\n\t"
-        "_0813E148: .4byte gBattle_BG2_Y\n\t"
-        "_0813E14C: .4byte gBattle_BG3_X\n\t"
-        "_0813E150: .4byte gBattle_BG3_Y\n\t"
-        "_0813E154:\n\t"
-        "	bl ResetPaletteFade\n\t"
-        "	ldr r0, _0813E170\n\t"
-        "	bl SetHBlankCallback\n\t"
-        "	ldr r0, _0813E174\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	ldr r1, _0813E178\n\t"
-        "	movs r3, #0x87\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	b _0813E28C\n\t"
-        "	.align 2, 0\n\t"
-        "_0813E170: .4byte EvoDummyFunc + 1\n\t"
-        "_0813E174: .4byte VBlankCB_TradeEvolutionScene + 1\n\t"
-        "_0813E178: .4byte gMain\n\t"
-        "_0813E17C:\n\t"
-        "	bl LoadTradeAnimGfx\n\t"
-        "	b _0813E284\n\t"
-        "_0813E182:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	movs r0, #1\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "	ldr r1, _0813E1A8\n\t"
-        "	movs r3, #0x87\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	b _0813E28C\n\t"
-        "	.align 2, 0\n\t"
-        "_0813E1A8: .4byte gMain\n\t"
-        "_0813E1AC:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r0, r6, #3\n\t"
-        "	ldr r1, _0813E1EC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0813E1F0\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r1, [r1, #0x10]\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl DecompressPicFromTable_2\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl GetMonSpritePalStructFromOtIdPersonality\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x90\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	b _0813E284\n\t"
-        "	.align 2, 0\n\t"
-        "_0813E1EC: .4byte gMonFrontPicTable\n\t"
-        "_0813E1F0: .4byte gMonSpritesGfxPtr\n\t"
-        "_0813E1F4:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetMultiuseSpriteTemplateToPokemon\n\t"
-        "	ldr r0, _0813E24C\n\t"
-        "	ldr r1, _0813E250\n\t"
-        "	str r1, [r0, #0x10]\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x40\n\t"
-        "	movs r3, #0x1e\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, _0813E254\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	lsls r2, r0, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	ldr r3, _0813E258\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r2, _0813E25C\n\t"
-        "	str r2, [r0]\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r2\n\t"
-        "	movs r2, #0x20\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldr r1, _0813E260\n\t"
-        "	movs r3, #0x87\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl LinkTradeDrawWindow\n\t"
-        "	b _0813E2CC\n\t"
-        "	.align 2, 0\n\t"
-        "_0813E24C: .4byte gMultiuseSpriteTemplate\n\t"
-        "_0813E250: .4byte gDummySpriteAffineAnimTable\n\t"
-        "_0813E254: .4byte gUnknown_203A84C\n\t"
-        "_0813E258: .4byte gSprites\n\t"
-        "_0813E25C: .4byte SpriteCallbackDummy_2 + 1\n\t"
-        "_0813E260: .4byte gMain\n\t"
-        "_0813E264:\n\t"
-        "	ldr r0, _0813E294\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0813E278\n\t"
-        "	bl LoadWirelessStatusIndicatorSpriteGfx\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateWirelessStatusIndicatorSprite\n\t"
-        "_0813E278:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "_0813E284:\n\t"
-        "	ldr r1, _0813E298\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "_0813E28C:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0813E2CC\n\t"
-        "	.align 2, 0\n\t"
-        "_0813E294: .4byte gWirelessCommType\n\t"
-        "_0813E298: .4byte gMain\n\t"
-        "_0813E29C:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	bl InitTradeSequenceBgGpuRegs\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ShowBg\n\t"
-        "	ldr r0, _0813E2D4\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	movs r1, #0x9a\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "_0813E2CC:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813E2D4: .4byte CB2_TradeEvolutionSceneUpdate + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *mon = &gPlayerParty[gTasks[sEvoStructPtr->evoTaskId].data[10]];
+    u16 postEvoSpecies = gTasks[sEvoStructPtr->evoTaskId].data[2];
+
+    switch (gMain.state)
+    {
+    case 0:
+        SetGpuReg(REG_OFFSET_DISPCNT, 0);
+        SetHBlankCallback(NULL);
+        SetVBlankCallback(NULL);
+        ResetSpriteData();
+        FreeAllSpritePalettes();
+        gReservedSpritePaletteCount = 4;
+        gBattle_BG0_X = 0;
+        gBattle_BG0_Y = 0;
+        gBattle_BG1_X = 0;
+        gBattle_BG1_Y = 0;
+        gBattle_BG2_X = 0;
+        gBattle_BG2_Y = 0;
+        gBattle_BG3_X = 256;
+        gBattle_BG3_Y = 0;
+        gMain.state++;
+        break;
+    case 1:
+        ResetPaletteFade();
+        SetHBlankCallback(EvoDummyFunc);
+        SetVBlankCallback(VBlankCB_TradeEvolutionScene);
+        gMain.state++;
+        break;
+    case 2:
+        LoadTradeAnimGfx();
+        gMain.state++;
+        break;
+    case 3:
+        FillBgTilemapBufferRect(1, 0, 0, 0, 0x20, 0x20, 0x11);
+        CopyBgTilemapBufferToVram(1);
+        gMain.state++;
+        break;
+    case 4:
+        {
+            const struct CompressedSpritePalette *pokePal;
+            u32 trainerId = GetMonData(mon, MON_DATA_OT_ID);
+            u32 personality = GetMonData(mon, MON_DATA_PERSONALITY);
+
+            DecompressPicFromTable_2(&gMonFrontPicTable[postEvoSpecies],
+                                     gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_RIGHT],
+                                     postEvoSpecies);
+            pokePal = GetMonSpritePalStructFromOtIdPersonality(postEvoSpecies, trainerId, personality);
+            LoadCompressedPalette(pokePal->data, OBJ_PLTT_ID(2), PLTT_SIZE_4BPP);
+            gMain.state++;
+        }
+        break;
+    case 5:
+        {
+            u8 id;
+
+            SetMultiuseSpriteTemplateToPokemon(postEvoSpecies, B_POSITION_OPPONENT_LEFT);
+            gMultiuseSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
+            sEvoStructPtr->postEvoSpriteId = id = CreateSprite(&gMultiuseSpriteTemplate, 120, 64, 30);
+
+            gSprites[id].callback = SpriteCallbackDummy_2;
+            gSprites[id].oam.paletteNum = 2;
+            gMain.state++;
+            LinkTradeDrawWindow();
+        }
+        break;
+    case 6:
+        if (gWirelessCommType)
+        {
+            LoadWirelessStatusIndicatorSpriteGfx();
+            CreateWirelessStatusIndicatorSprite(0, 0);
+        }
+        BlendPalettes(PALETTES_ALL, 0x10, RGB_BLACK);
+        gMain.state++;
+        break;
+    case 7:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_BLACK);
+        InitTradeSequenceBgGpuRegs();
+        ShowBg(0);
+        ShowBg(1);
+        SetMainCallback2(CB2_TradeEvolutionSceneUpdate);
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_1D_MAP);
+        break;
+    }
 }
 
-__attribute__((naked)) void TradeEvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, u8 preEvoSpriteId, u8 partyId)
+void TradeEvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, u8 preEvoSpriteId, u8 partyId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	str r3, [sp, #0x14]\n\t"
-        "	movs r1, #2\n\t"
-        "	mov r2, sp\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r0, _0813E448\n\t"
-        "	mov r1, sp\n\t"
-        "	bl StringCopy10\n\t"
-        "	ldr r0, _0813E44C\n\t"
-        "	lsls r1, r5, #1\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldr r2, _0813E450\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r1, _0813E454\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov sl, r0\n\t"
-        "	ldr r1, _0813E458\n\t"
-        "	mov sb, r1\n\t"
-        "	movs r0, #0x64\n\t"
-        "	bl AllocZeroed\n\t"
-        "	mov r2, sb\n\t"
-        "	str r0, [r2]\n\t"
-        "	movs r4, #0\n\t"
-        "	strb r6, [r0]\n\t"
-        "	lsls r0, r5, #3\n\t"
-        "	ldr r1, _0813E45C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0813E460\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r1, [r1, #8]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl DecompressPicFromTable_2\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	mov r1, sl\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	bl GetMonSpritePalStructFromOtIdPersonality\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x90\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetMultiuseSpriteTemplateToPokemon\n\t"
-        "	ldr r0, _0813E464\n\t"
-        "	ldr r1, _0813E468\n\t"
-        "	str r1, [r0, #0x10]\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x40\n\t"
-        "	movs r3, #0x1e\n\t"
-        "	bl CreateSprite\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	lsls r1, r0, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	ldr r3, _0813E46C\n\t"
-        "	lsls r1, r6, #4\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r2, _0813E470\n\t"
-        "	str r2, [r0]\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r2\n\t"
-        "	movs r2, #0x20\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl LoadEvoSparkleSpriteAndPal\n\t"
-        "	ldr r0, _0813E474\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	lsls r1, r0, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	strb r0, [r2, #2]\n\t"
-        "	ldr r1, _0813E478\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r4, [r0, #8]\n\t"
-        "	mov r2, r8\n\t"
-        "	strh r2, [r0, #0xa]\n\t"
-        "	strh r5, [r0, #0xc]\n\t"
-        "	movs r1, #1\n\t"
-        "	strh r1, [r0, #0x10]\n\t"
-        "	strh r4, [r0, #0x1a]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrh r1, [r1, #0x14]\n\t"
-        "	strh r1, [r0, #0x1c]\n\t"
-        "	ldr r0, _0813E47C\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r0, _0813E480\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r0, _0813E484\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r0, _0813E488\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r0, _0813E48C\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r0, _0813E490\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r1, _0813E494\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _0813E498\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r2, _0813E49C\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, _0813E4A0\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	ldr r0, _0813E4A4\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813E448: .4byte gStringVar1\n\t"
-        "_0813E44C: .4byte gStringVar2\n\t"
-        "_0813E450: .4byte gSpeciesNames\n\t"
-        "_0813E454: .4byte gAffineAnimsDisabled\n\t"
-        "_0813E458: .4byte gUnknown_203A84C\n\t"
-        "_0813E45C: .4byte gMonFrontPicTable\n\t"
-        "_0813E460: .4byte gMonSpritesGfxPtr\n\t"
-        "_0813E464: .4byte gMultiuseSpriteTemplate\n\t"
-        "_0813E468: .4byte gDummySpriteAffineAnimTable\n\t"
-        "_0813E46C: .4byte gSprites\n\t"
-        "_0813E470: .4byte SpriteCallbackDummy_2 + 1\n\t"
-        "_0813E474: .4byte Task_TradeEvolutionScene + 1\n\t"
-        "_0813E478: .4byte gTasks\n\t"
-        "_0813E47C: .4byte gBattle_BG0_X\n\t"
-        "_0813E480: .4byte gBattle_BG0_Y\n\t"
-        "_0813E484: .4byte gBattle_BG1_X\n\t"
-        "_0813E488: .4byte gBattle_BG1_Y\n\t"
-        "_0813E48C: .4byte gBattle_BG2_X\n\t"
-        "_0813E490: .4byte gBattle_BG2_Y\n\t"
-        "_0813E494: .4byte gBattle_BG3_X\n\t"
-        "_0813E498: .4byte gBattle_BG3_Y\n\t"
-        "_0813E49C: .4byte gTextFlags\n\t"
-        "_0813E4A0: .4byte VBlankCB_TradeEvolutionScene + 1\n\t"
-        "_0813E4A4: .4byte CB2_TradeEvolutionSceneUpdate + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 name[POKEMON_NAME_BUFFER_SIZE];
+    u16 currSpecies;
+    u32 trainerId;
+    u32 personality;
+    const struct CompressedSpritePalette *pokePal;
+    u8 id;
+
+    GetMonData(mon, MON_DATA_NICKNAME, name);
+    StringCopy10(gStringVar1, name);
+    StringCopy(gStringVar2, gSpeciesNames[postEvoSpecies]);
+
+    gAffineAnimsDisabled = TRUE;
+
+    currSpecies = GetMonData(mon, MON_DATA_SPECIES);
+    personality = GetMonData(mon, MON_DATA_PERSONALITY);
+    trainerId = GetMonData(mon, MON_DATA_OT_ID);
+
+    sEvoStructPtr = AllocZeroed(sizeof(struct EvoInfo));
+    sEvoStructPtr->preEvoSpriteId = preEvoSpriteId;
+
+    DecompressPicFromTable_2(&gMonFrontPicTable[postEvoSpecies],
+                             gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_LEFT],
+                             postEvoSpecies);
+    pokePal = GetMonSpritePalStructFromOtIdPersonality(postEvoSpecies, trainerId, personality);
+    LoadCompressedPalette(pokePal->data, OBJ_PLTT_ID(2), PLTT_SIZE_4BPP);
+
+    SetMultiuseSpriteTemplateToPokemon(postEvoSpecies, B_POSITION_OPPONENT_LEFT);
+    gMultiuseSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
+    sEvoStructPtr->postEvoSpriteId = id = CreateSprite(&gMultiuseSpriteTemplate, 120, 64, 30);
+
+    gSprites[id].callback = SpriteCallbackDummy_2;
+    gSprites[id].oam.paletteNum = 2;
+    gSprites[id].invisible = TRUE;
+
+    LoadEvoSparkleSpriteAndPal();
+
+    sEvoStructPtr->evoTaskId = id = CreateTask(Task_TradeEvolutionScene, 0);
+    gTasks[id].data[0] = 0;
+    gTasks[id].data[1] = currSpecies;
+    gTasks[id].data[2] = postEvoSpecies;
+    gTasks[id].data[4] = TRUE;
+    gTasks[id].data[9] = FALSE;
+    gTasks[id].data[10] = partyId;
+
+    gBattle_BG0_X = 0;
+    gBattle_BG0_Y = 0;
+    gBattle_BG1_X = 0;
+    gBattle_BG1_Y = 0;
+    gBattle_BG2_X = 0;
+    gBattle_BG2_Y = 0;
+    gBattle_BG3_X = 256;
+    gBattle_BG3_Y = 0;
+
+    gTextFlags.useAlternateDownArrow = TRUE;
+
+    SetVBlankCallback(VBlankCB_TradeEvolutionScene);
+    SetMainCallback2(CB2_TradeEvolutionSceneUpdate);
 }
 
-__attribute__((naked)) void CB2_EvolutionSceneUpdate(void)
+void CB2_EvolutionSceneUpdate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl RunTextPrinters\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	bl RunTasks\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    AnimateSprites();
+    BuildOamBuffer();
+    RunTextPrinters();
+    UpdatePaletteFade();
+    RunTasks();
 }
 
-__attribute__((naked)) void CB2_TradeEvolutionSceneUpdate(void)
+void CB2_TradeEvolutionSceneUpdate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl RunTextPrinters\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	bl RunTasks\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    AnimateSprites();
+    BuildOamBuffer();
+    RunTextPrinters();
+    UpdatePaletteFade();
+    RunTasks();
 }
 
-__attribute__((naked)) void CreateShedinja(void)
+void CreateShedinja(u16 preEvoSpecies, struct Pokemon *mon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _0813E628\n\t"
-        "	mov sl, r0\n\t"
-        "	mov r2, sb\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	add r0, sb\n\t"
-        "	lsls r7, r0, #3\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	add r0, sl\n\t"
-        "	mov r8, r0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0xd\n\t"
-        "	beq _0813E514\n\t"
-        "	b _0813E616\n\t"
-        "_0813E514:\n\t"
-        "	ldr r6, _0813E62C\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _0813E616\n\t"
-        "	movs r5, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r4, _0813E630\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl CopyMon\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	mov r1, sl\n\t"
-        "	adds r2, r1, r7\n\t"
-        "	adds r2, #0xc\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	mov r2, r8\n\t"
-        "	ldrh r1, [r2, #0xc]\n\t"
-        "	lsls r2, r1, #1\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldr r1, _0813E634\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	movs r1, #2\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0xc\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #8\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0xa\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	movs r4, #0x32\n\t"
-        "	ldr r0, [sp, #4]\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r5, r6, #0\n\t"
-        "_0813E588:\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _0813E630\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #0x36\n\t"
-        "	ble _0813E588\n\t"
-        "	movs r4, #0x43\n\t"
-        "	ldr r7, _0813E62C\n\t"
-        "_0813E5A4:\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	movs r6, #0x64\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	ldr r5, _0813E630\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #0x4f\n\t"
-        "	ble _0813E5A4\n\t"
-        "	ldr r4, _0813E62C\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0x37\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0x40\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	bl CalculateMonStats\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	ldr r0, _0813E628\n\t"
-        "	mov r4, r8\n\t"
-        "	add r4, sb\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	bl HoennToNationalOrder\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetSetPokedexFlag\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	bl HoennToNationalOrder\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #3\n\t"
-        "	bl GetSetPokedexFlag\n\t"
-        "_0813E616:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813E628: .4byte gUnknown_82F5CA4\n\t"
-        "_0813E62C: .4byte gPlayerPartyCount\n\t"
-        "_0813E630: .4byte gPlayerParty\n\t"
-        "_0813E634: .4byte gSpeciesNames\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 data = 0;
+
+    if (gEvolutionTable[preEvoSpecies][0].method == EVO_LEVEL_NINJASK && gPlayerPartyCount < PARTY_SIZE)
+    {
+        s32 i;
+
+        CopyMon(&gPlayerParty[gPlayerPartyCount], mon, sizeof(struct Pokemon));
+        SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_SPECIES, &gEvolutionTable[preEvoSpecies][1].targetSpecies);
+        SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_NICKNAME, gSpeciesNames[gEvolutionTable[preEvoSpecies][1].targetSpecies]);
+        SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_HELD_ITEM, &data);
+        SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_MARKINGS, &data);
+        SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_ENCRYPT_SEPARATOR, &data);
+
+        for (i = MON_DATA_COOL_RIBBON; i < MON_DATA_COOL_RIBBON + CONTEST_CATEGORIES_COUNT; i++)
+            SetMonData(&gPlayerParty[gPlayerPartyCount], i, &data);
+        for (i = MON_DATA_CHAMPION_RIBBON; i <= MON_DATA_UNUSED_RIBBONS; i++)
+            SetMonData(&gPlayerParty[gPlayerPartyCount], i, &data);
+
+        SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_STATUS, &data);
+        data = MAIL_NONE;
+        SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_MAIL, &data);
+
+        CalculateMonStats(&gPlayerParty[gPlayerPartyCount]);
+        CalculatePlayerPartyCount();
+
+        GetSetPokedexFlag(HoennToNationalOrder(gEvolutionTable[preEvoSpecies][1].targetSpecies), FLAG_SET_SEEN);
+        GetSetPokedexFlag(HoennToNationalOrder(gEvolutionTable[preEvoSpecies][1].targetSpecies), FLAG_SET_CAUGHT);
+    }
 }
 
-__attribute__((naked)) void Task_EvolutionScene(void)
+// Kept naked: this 23-state JP move-learning/evolution machine indexes the
+// JP-only gUnknown_85AB3DC pointer table (including entries 207, 208, and 307)
+// and four gUnknown_85ABAEE text offsets.  The US body instead uses symbolic
+// gBattleStringsTable entries, so no verified JP C form preserves the original
+// call and relocation ordering byte-for-byte.
+__attribute__((naked)) void Task_EvolutionScene(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2635,7 +1865,11 @@ __attribute__((naked)) void Task_EvolutionScene(void)
     );
 }
 
-__attribute__((naked)) void Task_TradeEvolutionScene(void)
+// Kept naked: the 21-state trade variant combines the JP CreateYesNoMenuAtPos
+// ABI, DrawTextOnTradeWindow, and direct gUnknown_85AB3DC table accesses.  Its
+// US counterpart uses a WindowTemplate and gBattleStringsTable; no matching JP
+// C representation has been verified to retain this call and relocation layout.
+__attribute__((naked)) void Task_TradeEvolutionScene(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3901,118 +3135,43 @@ __attribute__((naked)) void Task_TradeEvolutionScene(void)
 }
 
 void EvoDummyFunc(void) {}
-__attribute__((naked)) void VBlankCB_EvolutionScene(void)
+void VBlankCB_EvolutionScene(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0813FE0C\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813FE10\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813FE14\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813FE18\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x16\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813FE1C\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x18\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813FE20\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813FE24\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813FE28\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	bl SetGpuReg\n\t"
-        "	bl LoadOam\n\t"
-        "	bl ProcessSpriteCopyRequests\n\t"
-        "	bl TransferPlttBuffer\n\t"
-        "	bl ScanlineEffect_InitHBlankDmaTransfer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813FE0C: .4byte gBattle_BG0_X\n\t"
-        "_0813FE10: .4byte gBattle_BG0_Y\n\t"
-        "_0813FE14: .4byte gBattle_BG1_X\n\t"
-        "_0813FE18: .4byte gBattle_BG1_Y\n\t"
-        "_0813FE1C: .4byte gBattle_BG2_X\n\t"
-        "_0813FE20: .4byte gBattle_BG2_Y\n\t"
-        "_0813FE24: .4byte gBattle_BG3_X\n\t"
-        "_0813FE28: .4byte gBattle_BG3_Y\n\t"
-        ".syntax divided\n\t"
-    );
+    SetGpuReg(REG_OFFSET_BG0HOFS, gBattle_BG0_X);
+    SetGpuReg(REG_OFFSET_BG0VOFS, gBattle_BG0_Y);
+    SetGpuReg(REG_OFFSET_BG1HOFS, gBattle_BG1_X);
+    SetGpuReg(REG_OFFSET_BG1VOFS, gBattle_BG1_Y);
+    SetGpuReg(REG_OFFSET_BG2HOFS, gBattle_BG2_X);
+    SetGpuReg(REG_OFFSET_BG2VOFS, gBattle_BG2_Y);
+    SetGpuReg(REG_OFFSET_BG3HOFS, gBattle_BG3_X);
+    SetGpuReg(REG_OFFSET_BG3VOFS, gBattle_BG3_Y);
+
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
+    ScanlineEffect_InitHBlankDmaTransfer();
 }
 
-__attribute__((naked)) void VBlankCB_TradeEvolutionScene(void)
+void VBlankCB_TradeEvolutionScene(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0813FE94\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813FE98\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813FE9C\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813FEA0\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x16\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813FEA4\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x18\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813FEA8\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813FEAC\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0813FEB0\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	bl SetGpuReg\n\t"
-        "	bl LoadOam\n\t"
-        "	bl ProcessSpriteCopyRequests\n\t"
-        "	bl TransferPlttBuffer\n\t"
-        "	bl ScanlineEffect_InitHBlankDmaTransfer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813FE94: .4byte gBattle_BG0_X\n\t"
-        "_0813FE98: .4byte gBattle_BG0_Y\n\t"
-        "_0813FE9C: .4byte gBattle_BG1_X\n\t"
-        "_0813FEA0: .4byte gBattle_BG1_Y\n\t"
-        "_0813FEA4: .4byte gBattle_BG2_X\n\t"
-        "_0813FEA8: .4byte gBattle_BG2_Y\n\t"
-        "_0813FEAC: .4byte gBattle_BG3_X\n\t"
-        "_0813FEB0: .4byte gBattle_BG3_Y\n\t"
-        ".syntax divided\n\t"
-    );
+    SetGpuReg(REG_OFFSET_BG0HOFS, gBattle_BG0_X);
+    SetGpuReg(REG_OFFSET_BG0VOFS, gBattle_BG0_Y);
+    SetGpuReg(REG_OFFSET_BG1HOFS, gBattle_BG1_X);
+    SetGpuReg(REG_OFFSET_BG1VOFS, gBattle_BG1_Y);
+    SetGpuReg(REG_OFFSET_BG2HOFS, gBattle_BG2_X);
+    SetGpuReg(REG_OFFSET_BG2VOFS, gBattle_BG2_Y);
+    SetGpuReg(REG_OFFSET_BG3HOFS, gBattle_BG3_X);
+    SetGpuReg(REG_OFFSET_BG3VOFS, gBattle_BG3_Y);
+
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
+    ScanlineEffect_InitHBlankDmaTransfer();
 }
 
+// Kept naked: using the externally owned JP palette-control bytes makes agbcc
+// fold row offsets into relocations, unlike the original in-object
+// base-plus-offset sequence.
 __attribute__((naked)) void sub_0813FEB4(void)
 {
     __asm__(".syntax unified\n\t"
@@ -4113,424 +3272,149 @@ __attribute__((naked)) void sub_0813FEB4(void)
         ".syntax divided\n\t"
     );
 }
-
-__attribute__((naked)) void sub_0813FF6C(void)
+void sub_0813FF6C(bool8 isLink)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _0813FF90\n\t"
-        "	movs r1, #7\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _0813FF98\n\t"
-        "	ldr r1, _0813FF94\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r4, [r0, #0xc]\n\t"
-        "	b _0813FFA6\n\t"
-        "	.align 2, 0\n\t"
-        "_0813FF90: .4byte sub_0813FFB0 + 1\n\t"
-        "_0813FF94: .4byte gTasks\n\t"
-        "_0813FF98:\n\t"
-        "	ldr r0, _0813FFAC\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0xc]\n\t"
-        "_0813FFA6:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813FFAC: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateTask((TaskFunc)sub_0813FFB0, 7);
+
+    if (!isLink)
+        gTasks[taskId].data[2] = FALSE;
+    else
+        gTasks[taskId].data[2] = TRUE;
 }
 
-__attribute__((naked)) void sub_0813FFB0(void)
+void sub_0813FFB0(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _0813FFDC\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r1, _0813FFE0\n\t"
-        "	mov sb, r1\n\t"
-        "	ldr r1, _0813FFE4\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r2, #0xc\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0813FFF0\n\t"
-        "	ldr r7, _0813FFE8\n\t"
-        "	ldr r6, _0813FFEC\n\t"
-        "	b _0813FFF4\n\t"
-        "	.align 2, 0\n\t"
-        "_0813FFDC: .4byte gBattle_BG1_X\n\t"
-        "_0813FFE0: .4byte gBattle_BG1_Y\n\t"
-        "_0813FFE4: .4byte gTasks\n\t"
-        "_0813FFE8: .4byte gBattle_BG2_X\n\t"
-        "_0813FFEC: .4byte gBattle_BG2_Y\n\t"
-        "_0813FFF0:\n\t"
-        "	ldr r7, _0814007C\n\t"
-        "	ldr r6, _08140080\n\t"
-        "_0813FFF4:\n\t"
-        "	lsls r4, r5, #2\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #5\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	adds r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #4\n\t"
-        "	bl Cos\n\t"
-        "	adds r0, #8\n\t"
-        "	mov r2, r8\n\t"
-        "	strh r0, [r2]\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #4\n\t"
-        "	bl Sin\n\t"
-        "	adds r0, #0x10\n\t"
-        "	mov r2, sb\n\t"
-        "	strh r0, [r2]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #4\n\t"
-        "	bl Cos\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r7]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #4\n\t"
-        "	bl Sin\n\t"
-        "	adds r0, #0x10\n\t"
-        "	strh r0, [r6]\n\t"
-        "	ldr r0, _08140084\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _0814006E\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	mov r0, r8\n\t"
-        "	strh r4, [r0]\n\t"
-        "	mov r1, sb\n\t"
-        "	strh r4, [r1]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r7]\n\t"
-        "	strh r4, [r6]\n\t"
-        "_0814006E:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0814007C: .4byte gBattle_BG3_X\n\t"
-        "_08140080: .4byte gBattle_BG3_Y\n\t"
-        "_08140084: .4byte sub_0813FEB4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *outer_X;
+    u16 *outer_Y;
+    u16 *inner_X = &gBattle_BG1_X;
+    u16 *inner_Y = &gBattle_BG1_Y;
+
+    if (!gTasks[taskId].data[2])
+    {
+        outer_X = &gBattle_BG2_X;
+        outer_Y = &gBattle_BG2_Y;
+    }
+    else
+    {
+        outer_X = &gBattle_BG3_X;
+        outer_Y = &gBattle_BG3_Y;
+    }
+
+    gTasks[taskId].data[0] = (gTasks[taskId].data[0] + 5) & 0xFF;
+    gTasks[taskId].data[1] = (gTasks[taskId].data[0] + 0x80) & 0xFF;
+
+    *inner_X = Cos(gTasks[taskId].data[0], 4) + 8;
+    *inner_Y = Sin(gTasks[taskId].data[0], 4) + 16;
+    *outer_X = Cos(gTasks[taskId].data[1], 4) + 8;
+    *outer_Y = Sin(gTasks[taskId].data[1], 4) + 16;
+
+    if (!FuncIsActiveTask((TaskFunc)sub_0813FEB4))
+    {
+        DestroyTask(taskId);
+        *inner_X = 0;
+        *inner_Y = 0;
+        *outer_X = 256;
+        *outer_Y = 0;
+    }
 }
 
-__attribute__((naked)) void InitMovingBgValues(void)
+void InitMovingBgValues(u16 *palette)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r5, _081400C0\n\t"
-        "	ldr r7, _081400C4\n\t"
-        "_08140092:\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r4, r1, #1\n\t"
-        "	adds r2, r0, r7\n\t"
-        "	lsls r0, r1, #5\n\t"
-        "	adds r1, r0, r6\n\t"
-        "	movs r3, #0xf\n\t"
-        "_0814009E:\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r2, #1\n\t"
-        "	adds r1, #2\n\t"
-        "	subs r3, #1\n\t"
-        "	cmp r3, #0\n\t"
-        "	bge _0814009E\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	cmp r1, #0x31\n\t"
-        "	ble _08140092\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081400C0: .4byte gUnknown_85953F0\n\t"
-        "_081400C4: .4byte gUnknown_8595485\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+    s32 j;
+
+    for (i = 0; i < 50; i++)
+    {
+        for (j = 0; j < 16; j++)
+            palette[i * 16 + j] = sBgAnim_Pal[sBgAnim_PalIndexes[i][j]];
+    }
 }
 
-__attribute__((naked)) void InitMovingBackgroundTask(void)
+void InitMovingBackgroundTask(bool8 isLink)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r4, _081400EC\n\t"
-        "	movs r0, #0xc8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	bl InitMovingBgValues\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _081400F0\n\t"
-        "	movs r6, #1\n\t"
-        "	movs r4, #2\n\t"
-        "	b _081400F4\n\t"
-        "	.align 2, 0\n\t"
-        "_081400EC: .4byte gUnknown_203A850\n\t"
-        "_081400F0:\n\t"
-        "	movs r6, #1\n\t"
-        "	movs r4, #3\n\t"
-        "_081400F4:\n\t"
-        "	ldr r0, _08140174\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r1, _08140178\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl DecompressAndLoadBgGfxUsingHeap\n\t"
-        "	ldr r1, _0814017C\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CopyToBgTilemapBuffer\n\t"
-        "	ldr r1, _08140180\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CopyToBgTilemapBuffer\n\t"
-        "	movs r0, #1\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0814018C\n\t"
-        "	ldr r1, _08140184\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _08140188\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r1, #0xba\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #7\n\t"
-        "	movs r2, #2\n\t"
-        "	bl SetBgAttribute\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #7\n\t"
-        "	movs r2, #2\n\t"
-        "	bl SetBgAttribute\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ShowBg\n\t"
-        "	b _081401A6\n\t"
-        "	.align 2, 0\n\t"
-        "_08140174: .4byte gUnknown_8594D50\n\t"
-        "_08140178: .4byte gUnknown_8593CA0\n\t"
-        "_0814017C: .4byte gUnknown_8594398\n\t"
-        "_08140180: .4byte gUnknown_859487C\n\t"
-        "_08140184: .4byte 0x00000442\n\t"
-        "_08140188: .4byte 0x00000808\n\t"
-        "_0814018C:\n\t"
-        "	ldr r1, _081401BC\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _081401C0\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r1, #0xda\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "_081401A6:\n\t"
-        "	ldr r0, _081401C4\n\t"
-        "	movs r1, #5\n\t"
-        "	bl CreateTask\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_0813FF6C\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081401BC: .4byte 0x00000842\n\t"
-        "_081401C0: .4byte 0x00000808\n\t"
-        "_081401C4: .4byte sub_0813FEB4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 innerBgId;
+    u8 outerBgId;
+
+    sBgAnimPal = AllocZeroed(0x640);
+    InitMovingBgValues(sBgAnimPal);
+
+    if (!isLink)
+    {
+        innerBgId = 1;
+        outerBgId = 2;
+    }
+    else
+    {
+        innerBgId = 1;
+        outerBgId = 3;
+    }
+
+    LoadPalette(sBgAnim_Intro_Pal, BG_PLTT_ID(10), PLTT_SIZE_4BPP);
+    DecompressAndLoadBgGfxUsingHeap(1, sBgAnim_Gfx, FALSE, 0, 0);
+    CopyToBgTilemapBuffer(innerBgId, sBgAnim_Inner_Tilemap, 0, 0);
+    CopyToBgTilemapBuffer(outerBgId, sBgAnim_Outer_Tilemap, 0, 0);
+    CopyBgTilemapBufferToVram(innerBgId);
+    CopyBgTilemapBufferToVram(outerBgId);
+
+    if (!isLink)
+    {
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG2);
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(8, 8));
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG2_ON | DISPCNT_BG1_ON | DISPCNT_BG0_ON | DISPCNT_OBJ_1D_MAP);
+        SetBgAttribute(innerBgId, BG_ATTR_PRIORITY, 2);
+        SetBgAttribute(outerBgId, BG_ATTR_PRIORITY, 2);
+        ShowBg(1);
+        ShowBg(2);
+    }
+    else
+    {
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG3);
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(8, 8));
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG3_ON | DISPCNT_BG1_ON | DISPCNT_BG0_ON | DISPCNT_OBJ_1D_MAP);
+    }
+
+    CreateTask((TaskFunc)sub_0813FEB4, 5);
+    sub_0813FF6C(isLink);
 }
 
-__attribute__((naked)) void sub_081401C8(void)
+void sub_081401C8(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081401F4\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0xff\n\t"
-        "	beq _081401E6\n\t"
-        "	ldr r0, _081401F8\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x14]\n\t"
-        "_081401E6:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl FillPalette\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081401F4: .4byte sub_0813FEB4 + 1\n\t"
-        "_081401F8: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = FindTaskIdByFunc((TaskFunc)sub_0813FEB4);
+
+    if (taskId != TASK_NONE)
+        gTasks[taskId].data[6] = TRUE;
+
+    FillPalette(RGB_BLACK, BG_PLTT_ID(10), PLTT_SIZE_4BPP);
 }
 
-__attribute__((naked)) void sub_081401FC(void)
+void sub_081401FC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08140234\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _08140210\n\t"
-        "	bl DestroyTask\n\t"
-        "_08140210:\n\t"
-        "	ldr r0, _08140238\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _08140222\n\t"
-        "	bl DestroyTask\n\t"
-        "_08140222:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl FillPalette\n\t"
-        "	bl sub_0814023C\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08140234: .4byte sub_0813FEB4 + 1\n\t"
-        "_08140238: .4byte sub_0813FFB0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId;
+
+    if ((taskId = FindTaskIdByFunc((TaskFunc)sub_0813FEB4)) != TASK_NONE)
+        DestroyTask(taskId);
+    if ((taskId = FindTaskIdByFunc((TaskFunc)sub_0813FFB0)) != TASK_NONE)
+        DestroyTask(taskId);
+
+    FillPalette(RGB_BLACK, BG_PLTT_ID(10), PLTT_SIZE_4BPP);
+    sub_0814023C();
 }
 
-__attribute__((naked)) void sub_0814023C(void)
+void sub_0814023C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _08140298\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _0814029C\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _081402A0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetBattleBgTemplateData\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #7\n\t"
-        "	bl SetBgAttribute\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetBattleBgTemplateData\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #7\n\t"
-        "	bl SetBgAttribute\n\t"
-        "	movs r1, #0xca\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _081402A4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl Free\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08140298: .4byte gBattle_BG1_X\n\t"
-        "_0814029C: .4byte gBattle_BG1_Y\n\t"
-        "_081402A0: .4byte gBattle_BG2_X\n\t"
-        "_081402A4: .4byte gUnknown_203A850\n\t"
-        ".syntax divided\n\t"
-    );
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    gBattle_BG1_X = 0;
+    gBattle_BG1_Y = 0;
+    gBattle_BG2_X = 0;
+    SetBgAttribute(1, BG_ATTR_PRIORITY, GetBattleBgTemplateData(1, 5));
+    SetBgAttribute(2, BG_ATTR_PRIORITY, GetBattleBgTemplateData(2, 5));
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG3_ON | DISPCNT_BG0_ON | DISPCNT_OBJ_1D_MAP);
+    Free(gUnknown_203A850);
 }
 
+// Kept naked: the original normalizes the unused species argument before the
+// call; an equivalent C implementation discards it, so agbcc cannot reproduce
+// the prologue byte-for-byte.
 __attribute__((naked)) void EvoScene_DoMonAnimation(void)
 {
     __asm__(".syntax unified\n\t"
@@ -4557,34 +3441,9 @@ __attribute__((naked)) void EvoScene_DoMonAnimation(void)
     );
 }
 
-__attribute__((naked)) void EvoScene_IsMonAnimFinished(void)
+bool32 EvoScene_IsMonAnimFinished(u8 monSpriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _081402F0\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r0, _081402F4\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081402F8\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081402FA\n\t"
-        "	.align 2, 0\n\t"
-        "_081402F0: .4byte gSprites\n\t"
-        "_081402F4: .4byte SpriteCallbackDummy + 1\n\t"
-        "_081402F8:\n\t"
-        "	movs r0, #1\n\t"
-        "_081402FA:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[monSpriteId].callback == SpriteCallbackDummy)
+        return TRUE;
+    return FALSE;
 }
