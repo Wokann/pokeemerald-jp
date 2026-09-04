@@ -3,7 +3,7 @@
 @
 
 BattleFrontier_BattlePalaceCorridor:
-	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PALACE_CORRIDOR
+	.4byte BattleFrontier_BattlePalaceCorridor_Layout
 	.4byte BattleFrontier_BattlePalaceCorridor_MapEvents
 	.4byte BattleFrontier_BattlePalaceCorridor_MapScripts
 	.4byte NULL

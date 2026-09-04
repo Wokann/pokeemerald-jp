@@ -3,7 +3,7 @@
 @
 
 BattleFrontier_BattleTowerMultiCorridor:
-	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR
+	.4byte BattleFrontier_BattleTowerMultiCorridor_Layout
 	.4byte BattleFrontier_BattleTowerMultiCorridor_MapEvents
 	.4byte BattleFrontier_BattleTowerMultiCorridor_MapScripts
 	.4byte NULL

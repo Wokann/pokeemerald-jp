@@ -3,7 +3,7 @@
 @
 
 SootopolisCity_LotadAndSeedotHouse:
-	.4byte gMapLayout_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE
+	.4byte SootopolisCity_LotadAndSeedotHouse_Layout
 	.4byte SootopolisCity_LotadAndSeedotHouse_MapEvents
 	.4byte SootopolisCity_LotadAndSeedotHouse_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 Route127:
-	.4byte gMapLayout_ROUTE127
+	.4byte Route127_Layout
 	.4byte Route127_MapEvents
 	.4byte Route127_MapScripts
 	.4byte Route127_MapConnections

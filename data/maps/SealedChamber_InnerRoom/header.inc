@@ -3,7 +3,7 @@
 @
 
 SealedChamber_InnerRoom:
-	.4byte gMapLayout_SEALED_CHAMBER_INNER_ROOM
+	.4byte SealedChamber_InnerRoom_Layout
 	.4byte SealedChamber_InnerRoom_MapEvents
 	.4byte SealedChamber_InnerRoom_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 LilycoveCity_PokemonTrainerFanClub:
-	.4byte gMapLayout_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB
+	.4byte LilycoveCity_PokemonTrainerFanClub_Layout
 	.4byte LilycoveCity_PokemonTrainerFanClub_MapEvents
 	.4byte LilycoveCity_PokemonTrainerFanClub_MapScripts
 	.4byte NULL

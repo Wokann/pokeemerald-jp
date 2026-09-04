@@ -3,7 +3,7 @@
 @
 
 MossdeepCity_GameCorner_B1F:
-	.4byte gMapLayout_MOSSDEEP_CITY_GAME_CORNER_B1F
+	.4byte MossdeepCity_GameCorner_B1F_Layout
 	.4byte MossdeepCity_GameCorner_B1F_MapEvents
 	.4byte MossdeepCity_GameCorner_B1F_MapScripts
 	.4byte NULL

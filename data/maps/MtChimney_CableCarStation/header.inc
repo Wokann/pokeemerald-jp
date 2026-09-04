@@ -3,7 +3,7 @@
 @
 
 MtChimney_CableCarStation:
-	.4byte gMapLayout_ROUTE112_CABLE_CAR_STATION
+	.4byte CableCarStation_Layout
 	.4byte MtChimney_CableCarStation_MapEvents
 	.4byte MtChimney_CableCarStation_MapScripts
 	.4byte NULL

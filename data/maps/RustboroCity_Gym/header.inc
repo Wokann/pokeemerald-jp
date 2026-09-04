@@ -3,7 +3,7 @@
 @
 
 RustboroCity_Gym:
-	.4byte gMapLayout_RUSTBORO_CITY_GYM
+	.4byte RustboroCity_Gym_Layout
 	.4byte RustboroCity_Gym_MapEvents
 	.4byte RustboroCity_Gym_MapScripts
 	.4byte NULL

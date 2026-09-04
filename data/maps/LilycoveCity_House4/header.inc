@@ -3,7 +3,7 @@
 @
 
 LilycoveCity_House4:
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE1
+	.4byte House1_Layout
 	.4byte LilycoveCity_House4_MapEvents
 	.4byte LilycoveCity_House4_MapScripts
 	.4byte NULL

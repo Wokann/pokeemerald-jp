@@ -3,7 +3,7 @@
 @
 
 ContestHallCool:
-	.4byte gMapLayout_CONTEST_HALL_COOL
+	.4byte ContestHallCool_Layout
 	.4byte ContestHall_MapEvents
 	.4byte ContestHall_MapScripts
 	.4byte NULL

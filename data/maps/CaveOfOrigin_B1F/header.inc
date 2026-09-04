@@ -3,7 +3,7 @@
 @
 
 CaveOfOrigin_B1F:
-	.4byte gMapLayout_CAVE_OF_ORIGIN_B1F
+	.4byte CaveOfOrigin_B1F_Layout
 	.4byte CaveOfOrigin_B1F_MapEvents
 	.4byte CaveOfOrigin_B1F_MapScripts
 	.4byte NULL

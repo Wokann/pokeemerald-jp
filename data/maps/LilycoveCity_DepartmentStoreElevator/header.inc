@@ -3,7 +3,7 @@
 @
 
 LilycoveCity_DepartmentStoreElevator:
-	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR
+	.4byte LilycoveCity_DepartmentStoreElevator_Layout
 	.4byte LilycoveCity_DepartmentStoreElevator_MapEvents
 	.4byte LilycoveCity_DepartmentStoreElevator_MapScripts
 	.4byte NULL

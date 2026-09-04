@@ -3,7 +3,7 @@
 @
 
 RustboroCity:
-	.4byte gMapLayout_RUSTBORO_CITY
+	.4byte RustboroCity_Layout
 	.4byte RustboroCity_MapEvents
 	.4byte RustboroCity_MapScripts
 	.4byte RustboroCity_MapConnections

@@ -3,7 +3,7 @@
 @
 
 ScorchedSlab:
-	.4byte gMapLayout_SCORCHED_SLAB
+	.4byte ScorchedSlab_Layout
 	.4byte ScorchedSlab_MapEvents
 	.4byte ScorchedSlab_MapScripts
 	.4byte NULL

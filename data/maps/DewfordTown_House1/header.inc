@@ -3,7 +3,7 @@
 @
 
 DewfordTown_House1:
-	.4byte gMapLayout_DEWFORD_TOWN_HOUSE1
+	.4byte House3_Layout
 	.4byte DewfordTown_House1_MapEvents
 	.4byte DewfordTown_House1_MapScripts
 	.4byte NULL

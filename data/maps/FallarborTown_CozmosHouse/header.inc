@@ -3,7 +3,7 @@
 @
 
 FallarborTown_CozmosHouse:
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE1
+	.4byte House1_Layout
 	.4byte FallarborTown_CozmosHouse_MapEvents
 	.4byte FallarborTown_CozmosHouse_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 DewfordTown:
-	.4byte gMapLayout_DEWFORD_TOWN
+	.4byte DewfordTown_Layout
 	.4byte DewfordTown_MapEvents
 	.4byte DewfordTown_MapScripts
 	.4byte DewfordTown_MapConnections

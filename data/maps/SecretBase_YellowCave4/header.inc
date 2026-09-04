@@ -3,7 +3,7 @@
 @
 
 SecretBase_YellowCave4:
-	.4byte gMapLayout_SECRET_BASE_YELLOW_CAVE4
+	.4byte SecretBase_YellowCave4_Layout
 	.4byte SecretBase_YellowCave4_MapEvents
 	.4byte SecretBase_MapScripts
 	.4byte NULL

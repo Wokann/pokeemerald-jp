@@ -3,7 +3,7 @@
 @
 
 LittlerootTown_ProfessorBirchsLab:
-	.4byte gMapLayout_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB
+	.4byte LittlerootTown_ProfessorBirchsLab_Layout
 	.4byte LittlerootTown_ProfessorBirchsLab_MapEvents
 	.4byte LittlerootTown_ProfessorBirchsLab_MapScripts
 	.4byte NULL

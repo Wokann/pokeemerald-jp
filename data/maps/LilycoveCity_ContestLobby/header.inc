@@ -3,7 +3,7 @@
 @
 
 LilycoveCity_ContestLobby:
-	.4byte gMapLayout_LILYCOVE_CITY_CONTEST_LOBBY
+	.4byte LilycoveCity_ContestLobby_Layout
 	.4byte LilycoveCity_ContestLobby_MapEvents
 	.4byte LilycoveCity_ContestLobby_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 SkyPillar_Entrance:
-	.4byte gMapLayout_SKY_PILLAR_ENTRANCE
+	.4byte SkyPillar_Entrance_Layout
 	.4byte SkyPillar_Entrance_MapEvents
 	.4byte SkyPillar_Entrance_MapScripts
 	.4byte NULL

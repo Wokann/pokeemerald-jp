@@ -3,7 +3,7 @@
 @
 
 LittlerootTown_MaysHouse_1F:
-	.4byte gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_1F
+	.4byte LittlerootTown_MaysHouse_1F_Layout
 	.4byte LittlerootTown_MaysHouse_1F_MapEvents
 	.4byte LittlerootTown_MaysHouse_1F_MapScripts
 	.4byte NULL

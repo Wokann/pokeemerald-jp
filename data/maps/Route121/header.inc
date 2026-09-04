@@ -3,7 +3,7 @@
 @
 
 Route121:
-	.4byte gMapLayout_ROUTE121
+	.4byte Route121_Layout
 	.4byte Route121_MapEvents
 	.4byte Route121_MapScripts
 	.4byte Route121_MapConnections

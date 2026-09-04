@@ -3,7 +3,7 @@
 @
 
 SouthernIsland_Interior:
-	.4byte gMapLayout_SOUTHERN_ISLAND_INTERIOR
+	.4byte SouthernIsland_Interior_Layout
 	.4byte SouthernIsland_Interior_MapEvents
 	.4byte SouthernIsland_Interior_MapScripts
 	.4byte NULL

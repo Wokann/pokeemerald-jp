@@ -3,7 +3,7 @@
 @
 
 LilycoveCity_LilycoveMuseum_1F:
-	.4byte gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F
+	.4byte LilycoveCity_LilycoveMuseum_1F_Layout
 	.4byte LilycoveCity_LilycoveMuseum_1F_MapEvents
 	.4byte LilycoveCity_LilycoveMuseum_1F_MapScripts
 	.4byte NULL

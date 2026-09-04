@@ -3,7 +3,7 @@
 @
 
 LittlerootTown:
-	.4byte gMapLayout_LITTLEROOT_TOWN
+	.4byte LittlerootTown_Layout
 	.4byte LittlerootTown_MapEvents
 	.4byte LittlerootTown_MapScripts
 	.4byte LittlerootTown_MapConnections

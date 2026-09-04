@@ -3,7 +3,7 @@
 @
 
 FortreeCity_House3:
-	.4byte gMapLayout_FORTREE_CITY_HOUSE1
+	.4byte FortreeCity_House1_Layout
 	.4byte FortreeCity_House3_MapEvents
 	.4byte FortreeCity_House3_MapScripts
 	.4byte NULL

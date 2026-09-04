@@ -3,7 +3,7 @@
 @
 
 Route114_FossilManiacsHouse:
-	.4byte gMapLayout_ROUTE114_FOSSIL_MANIACS_HOUSE
+	.4byte Route114_FossilManiacsHouse_Layout
 	.4byte Route114_FossilManiacsHouse_MapEvents
 	.4byte Route114_FossilManiacsHouse_MapScripts
 	.4byte NULL

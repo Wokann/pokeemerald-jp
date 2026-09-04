@@ -3,7 +3,7 @@
 @
 
 PacifidlogTown:
-	.4byte gMapLayout_PACIFIDLOG_TOWN
+	.4byte PacifidlogTown_Layout
 	.4byte PacifidlogTown_MapEvents
 	.4byte PacifidlogTown_MapScripts
 	.4byte PacifidlogTown_MapConnections

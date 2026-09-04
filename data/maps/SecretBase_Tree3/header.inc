@@ -3,7 +3,7 @@
 @
 
 SecretBase_Tree3:
-	.4byte gMapLayout_SECRET_BASE_TREE3
+	.4byte SecretBase_Tree3_Layout
 	.4byte SecretBase_Tree3_MapEvents
 	.4byte SecretBase_MapScripts
 	.4byte NULL

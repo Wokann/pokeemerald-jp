@@ -3,7 +3,7 @@
 @
 
 PetalburgWoods:
-	.4byte gMapLayout_PETALBURG_WOODS
+	.4byte PetalburgWoods_Layout
 	.4byte PetalburgWoods_MapEvents
 	.4byte PetalburgWoods_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 MtPyre_Summit:
-	.4byte gMapLayout_MT_PYRE_SUMMIT
+	.4byte MtPyre_Summit_Layout
 	.4byte MtPyre_Summit_MapEvents
 	.4byte MtPyre_Summit_MapScripts
 	.4byte NULL

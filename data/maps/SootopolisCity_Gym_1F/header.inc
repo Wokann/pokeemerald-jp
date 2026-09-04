@@ -3,7 +3,7 @@
 @
 
 SootopolisCity_Gym_1F:
-	.4byte gMapLayout_SOOTOPOLIS_CITY_GYM_1F
+	.4byte SootopolisCity_Gym_1F_Layout
 	.4byte SootopolisCity_Gym_1F_MapEvents
 	.4byte SootopolisCity_Gym_1F_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 EverGrandeCity_SidneysRoom:
-	.4byte gMapLayout_EVER_GRANDE_CITY_SIDNEYS_ROOM
+	.4byte EverGrandeCity_SidneysRoom_Layout
 	.4byte EverGrandeCity_SidneysRoom_MapEvents
 	.4byte EverGrandeCity_SidneysRoom_MapScripts
 	.4byte NULL

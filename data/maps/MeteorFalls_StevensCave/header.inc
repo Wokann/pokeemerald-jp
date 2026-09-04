@@ -3,7 +3,7 @@
 @
 
 MeteorFalls_StevensCave:
-	.4byte gMapLayout_METEOR_FALLS_STEVENS_CAVE
+	.4byte MeteorFalls_StevensCave_Layout
 	.4byte MeteorFalls_StevensCave_MapEvents
 	.4byte MeteorFalls_StevensCave_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 LavaridgeTown_PokemonCenter_1F:
-	.4byte gMapLayout_LAVARIDGE_TOWN_POKEMON_CENTER_1F
+	.4byte LavaridgeTown_PokemonCenter_1F_Layout
 	.4byte LavaridgeTown_PokemonCenter_1F_MapEvents
 	.4byte LavaridgeTown_PokemonCenter_1F_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 RustboroCity_House2:
-	.4byte gMapLayout_RUSTBORO_CITY_HOUSE2
+	.4byte RustboroCity_House_Layout
 	.4byte RustboroCity_House2_MapEvents
 	.4byte RustboroCity_House2_MapScripts
 	.4byte NULL

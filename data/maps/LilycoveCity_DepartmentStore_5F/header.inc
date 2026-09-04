@@ -3,7 +3,7 @@
 @
 
 LilycoveCity_DepartmentStore_5F:
-	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_5F
+	.4byte LilycoveCity_DepartmentStore_5F_Layout
 	.4byte LilycoveCity_DepartmentStore_5F_MapEvents
 	.4byte LilycoveCity_DepartmentStore_5F_MapScripts
 	.4byte NULL

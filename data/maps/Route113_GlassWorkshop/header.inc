@@ -3,7 +3,7 @@
 @
 
 Route113_GlassWorkshop:
-	.4byte gMapLayout_DEWFORD_TOWN_HOUSE2
+	.4byte House4_Layout
 	.4byte Route113_GlassWorkshop_MapEvents
 	.4byte Route113_GlassWorkshop_MapScripts
 	.4byte NULL

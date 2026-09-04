@@ -3,7 +3,7 @@
 @
 
 LilycoveCity:
-	.4byte gMapLayout_LILYCOVE_CITY
+	.4byte LilycoveCity_Layout
 	.4byte LilycoveCity_MapEvents
 	.4byte LilycoveCity_MapScripts
 	.4byte LilycoveCity_MapConnections

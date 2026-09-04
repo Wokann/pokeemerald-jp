@@ -3,7 +3,7 @@
 @
 
 EverGrandeCity_Hall1:
-	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1
+	.4byte EverGrandeCity_ShortHall_Layout
 	.4byte EverGrandeCity_Hall1_MapEvents
 	.4byte EverGrandeCity_Hall1_MapScripts
 	.4byte NULL

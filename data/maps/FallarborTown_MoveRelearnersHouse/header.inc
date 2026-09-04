@@ -3,7 +3,7 @@
 @
 
 FallarborTown_MoveRelearnersHouse:
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE2
+	.4byte House2_Layout
 	.4byte FallarborTown_MoveRelearnersHouse_MapEvents
 	.4byte FallarborTown_MoveRelearnersHouse_MapScripts
 	.4byte NULL

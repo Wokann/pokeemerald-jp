@@ -3,7 +3,7 @@
 @
 
 RecordCorner:
-	.4byte gMapLayout_RECORD_CORNER
+	.4byte RecordCorner_Layout
 	.4byte RecordCorner_MapEvents
 	.4byte RecordCorner_MapScripts
 	.4byte NULL

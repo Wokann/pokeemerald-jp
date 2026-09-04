@@ -3,7 +3,7 @@
 @
 
 Route104:
-	.4byte gMapLayout_ROUTE104
+	.4byte Route104_Layout
 	.4byte Route104_MapEvents
 	.4byte Route104_MapScripts
 	.4byte Route104_MapConnections

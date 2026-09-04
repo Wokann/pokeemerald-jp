@@ -3,7 +3,7 @@
 @
 
 Route126:
-	.4byte gMapLayout_ROUTE126
+	.4byte Route126_Layout
 	.4byte Route126_MapEvents
 	.4byte Route126_MapScripts
 	.4byte Route126_MapConnections

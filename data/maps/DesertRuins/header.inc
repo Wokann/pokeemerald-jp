@@ -3,7 +3,7 @@
 @
 
 DesertRuins:
-	.4byte gMapLayout_DESERT_RUINS
+	.4byte DesertRuins_Layout
 	.4byte DesertRuins_MapEvents
 	.4byte DesertRuins_MapScripts
 	.4byte NULL

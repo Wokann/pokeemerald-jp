@@ -3,7 +3,7 @@
 @
 
 Route116:
-	.4byte gMapLayout_ROUTE116
+	.4byte Route116_Layout
 	.4byte Route116_MapEvents
 	.4byte Route116_MapScripts
 	.4byte Route116_MapConnections

@@ -3,7 +3,7 @@
 @
 
 Route101:
-	.4byte gMapLayout_ROUTE101
+	.4byte Route101_Layout
 	.4byte Route101_MapEvents
 	.4byte Route101_MapScripts
 	.4byte Route101_MapConnections

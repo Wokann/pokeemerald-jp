@@ -3,7 +3,7 @@
 @
 
 Route117_PokemonDayCare:
-	.4byte gMapLayout_ROUTE117_POKEMON_DAY_CARE
+	.4byte Route117_PokemonDayCare_Layout
 	.4byte Route117_PokemonDayCare_MapEvents
 	.4byte Route117_PokemonDayCare_MapScripts
 	.4byte NULL

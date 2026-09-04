@@ -3,7 +3,7 @@
 @
 
 Route123_BerryMastersHouse:
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE2
+	.4byte House2_Layout
 	.4byte Route123_BerryMastersHouse_MapEvents
 	.4byte Route123_BerryMastersHouse_MapScripts
 	.4byte NULL

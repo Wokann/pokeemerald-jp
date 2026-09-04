@@ -3,7 +3,7 @@
 @
 
 MossdeepCity:
-	.4byte gMapLayout_MOSSDEEP_CITY
+	.4byte MossdeepCity_Layout
 	.4byte MossdeepCity_MapEvents
 	.4byte MossdeepCity_MapScripts
 	.4byte MossdeepCity_MapConnections

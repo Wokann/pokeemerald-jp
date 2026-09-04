@@ -3,7 +3,7 @@
 @
 
 RustboroCity_DevonCorp_3F:
-	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_3F
+	.4byte RustboroCity_DevonCorp_3F_Layout
 	.4byte RustboroCity_DevonCorp_3F_MapEvents
 	.4byte RustboroCity_DevonCorp_3F_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 EverGrandeCity_HallOfFame:
-	.4byte gMapLayout_EVER_GRANDE_CITY_HALL_OF_FAME
+	.4byte EverGrandeCity_HallOfFame_Layout
 	.4byte EverGrandeCity_HallOfFame_MapEvents
 	.4byte EverGrandeCity_HallOfFame_MapScripts
 	.4byte NULL

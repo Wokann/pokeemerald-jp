@@ -3,7 +3,7 @@
 @
 
 SecretBase_BrownCave3:
-	.4byte gMapLayout_SECRET_BASE_BROWN_CAVE3
+	.4byte SecretBase_BrownCave3_Layout
 	.4byte SecretBase_BrownCave3_MapEvents
 	.4byte SecretBase_MapScripts
 	.4byte NULL

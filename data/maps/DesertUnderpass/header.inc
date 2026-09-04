@@ -3,7 +3,7 @@
 @
 
 DesertUnderpass:
-	.4byte gMapLayout_DESERT_UNDERPASS
+	.4byte DesertUnderpass_Layout
 	.4byte DesertUnderpass_MapEvents
 	.4byte DesertUnderpass_MapScripts
 	.4byte NULL

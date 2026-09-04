@@ -3,7 +3,7 @@
 @
 
 SealedChamber_OuterRoom:
-	.4byte gMapLayout_SEALED_CHAMBER_OUTER_ROOM
+	.4byte SealedChamber_OuterRoom_Layout
 	.4byte SealedChamber_OuterRoom_MapEvents
 	.4byte SealedChamber_OuterRoom_MapScripts
 	.4byte NULL

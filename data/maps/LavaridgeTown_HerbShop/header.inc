@@ -3,7 +3,7 @@
 @
 
 LavaridgeTown_HerbShop:
-	.4byte gMapLayout_LAVARIDGE_TOWN_HERB_SHOP
+	.4byte LavaridgeTown_HerbShop_Layout
 	.4byte LavaridgeTown_HerbShop_MapEvents
 	.4byte LavaridgeTown_HerbShop_MapScripts
 	.4byte NULL

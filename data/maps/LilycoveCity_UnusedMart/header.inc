@@ -3,7 +3,7 @@
 @
 
 LilycoveCity_UnusedMart:
-	.4byte gMapLayout_OLDALE_TOWN_MART
+	.4byte Mart_Layout
 	.4byte LilycoveCity_UnusedMart_MapEvents
 	.4byte LilycoveCity_UnusedMart_MapScripts
 	.4byte NULL

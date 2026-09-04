@@ -3,7 +3,7 @@
 @
 
 TrainerHill_Elevator:
-	.4byte gMapLayout_BATTLE_ELEVATOR
+	.4byte BattleElevator_Layout
 	.4byte TrainerHill_Elevator_MapEvents
 	.4byte TrainerHill_Elevator_MapScripts
 	.4byte NULL

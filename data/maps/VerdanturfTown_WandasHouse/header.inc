@@ -3,7 +3,7 @@
 @
 
 VerdanturfTown_WandasHouse:
-	.4byte gMapLayout_VERDANTURF_TOWN_WANDAS_HOUSE
+	.4byte VerdanturfTown_WandasHouse_Layout
 	.4byte VerdanturfTown_WandasHouse_MapEvents
 	.4byte VerdanturfTown_WandasHouse_MapScripts
 	.4byte NULL

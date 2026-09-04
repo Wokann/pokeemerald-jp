@@ -3,7 +3,7 @@
 @
 
 LilycoveCity_CoveLilyMotel_1F:
-	.4byte gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_1F
+	.4byte LilycoveCity_CoveLilyMotel_1F_Layout
 	.4byte LilycoveCity_CoveLilyMotel_1F_MapEvents
 	.4byte LilycoveCity_CoveLilyMotel_1F_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 GraniteCave_1F:
-	.4byte gMapLayout_GRANITE_CAVE_1F
+	.4byte GraniteCave_1F_Layout
 	.4byte GraniteCave_1F_MapEvents
 	.4byte GraniteCave_1F_MapScripts
 	.4byte NULL

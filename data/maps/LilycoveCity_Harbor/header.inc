@@ -3,7 +3,7 @@
 @
 
 LilycoveCity_Harbor:
-	.4byte gMapLayout_SLATEPORT_CITY_HARBOR
+	.4byte Harbor_Layout
 	.4byte LilycoveCity_Harbor_MapEvents
 	.4byte LilycoveCity_Harbor_MapScripts
 	.4byte NULL

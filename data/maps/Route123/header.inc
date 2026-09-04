@@ -3,7 +3,7 @@
 @
 
 Route123:
-	.4byte gMapLayout_ROUTE123
+	.4byte Route123_Layout
 	.4byte Route123_MapEvents
 	.4byte Route123_MapScripts
 	.4byte Route123_MapConnections

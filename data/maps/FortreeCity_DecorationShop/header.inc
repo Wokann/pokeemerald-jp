@@ -3,7 +3,7 @@
 @
 
 FortreeCity_DecorationShop:
-	.4byte gMapLayout_FORTREE_CITY_DECORATION_SHOP
+	.4byte FortreeCity_DecorationShop_Layout
 	.4byte FortreeCity_DecorationShop_MapEvents
 	.4byte FortreeCity_DecorationShop_MapScripts
 	.4byte NULL

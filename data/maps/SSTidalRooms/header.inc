@@ -3,7 +3,7 @@
 @
 
 SSTidalRooms:
-	.4byte gMapLayout_SS_TIDAL_ROOMS
+	.4byte SSTidalRooms_Layout
 	.4byte SSTidalRooms_MapEvents
 	.4byte SSTidalRooms_MapScripts
 	.4byte NULL

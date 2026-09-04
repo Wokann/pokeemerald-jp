@@ -3,7 +3,7 @@
 @
 
 RusturfTunnel:
-	.4byte gMapLayout_RUSTURF_TUNNEL
+	.4byte RusturfTunnel_Layout
 	.4byte RusturfTunnel_MapEvents
 	.4byte RusturfTunnel_MapScripts
 	.4byte NULL

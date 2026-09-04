@@ -3,7 +3,7 @@
 @
 
 Route102:
-	.4byte gMapLayout_ROUTE102
+	.4byte Route102_Layout
 	.4byte Route102_MapEvents
 	.4byte Route102_MapScripts
 	.4byte Route102_MapConnections

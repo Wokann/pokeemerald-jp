@@ -3,7 +3,7 @@
 @
 
 Route104_MrBrineysHouse:
-	.4byte gMapLayout_ROUTE104_MR_BRINEYS_HOUSE
+	.4byte Route104_MrBrineysHouse_Layout
 	.4byte Route104_MrBrineysHouse_MapEvents
 	.4byte Route104_MrBrineysHouse_MapScripts
 	.4byte NULL

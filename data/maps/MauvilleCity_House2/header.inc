@@ -3,7 +3,7 @@
 @
 
 MauvilleCity_House2:
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE1
+	.4byte House1_Layout
 	.4byte MauvilleCity_House2_MapEvents
 	.4byte MauvilleCity_House2_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 DewfordTown_Gym:
-	.4byte gMapLayout_DEWFORD_TOWN_GYM
+	.4byte DewfordTown_Gym_Layout
 	.4byte DewfordTown_Gym_MapEvents
 	.4byte DewfordTown_Gym_MapScripts
 	.4byte NULL

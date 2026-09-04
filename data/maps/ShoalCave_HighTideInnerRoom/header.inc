@@ -3,7 +3,7 @@
 @
 
 ShoalCave_HighTideInnerRoom:
-	.4byte gMapLayout_SHOAL_CAVE_HIGH_TIDE_INNER_ROOM
+	.4byte ShoalCave_HighTideInnerRoom_Layout
 	.4byte ShoalCave_HighTideInnerRoom_MapEvents
 	.4byte ShoalCave_HighTideInnerRoom_MapScripts
 	.4byte NULL

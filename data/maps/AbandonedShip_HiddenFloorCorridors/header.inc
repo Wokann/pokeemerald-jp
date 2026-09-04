@@ -3,7 +3,7 @@
 @
 
 AbandonedShip_HiddenFloorCorridors:
-	.4byte gMapLayout_ABANDONED_SHIP_HIDDEN_FLOOR_CORRIDORS
+	.4byte AbandonedShip_HiddenFloorCorridors_Layout
 	.4byte AbandonedShip_HiddenFloorCorridors_MapEvents
 	.4byte AbandonedShip_HiddenFloorCorridors_MapScripts
 	.4byte NULL

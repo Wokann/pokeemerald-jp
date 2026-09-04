@@ -3,7 +3,7 @@
 @
 
 VerdanturfTown:
-	.4byte gMapLayout_VERDANTURF_TOWN
+	.4byte VerdanturfTown_Layout
 	.4byte VerdanturfTown_MapEvents
 	.4byte VerdanturfTown_MapScripts
 	.4byte VerdanturfTown_MapConnections

@@ -3,7 +3,7 @@
 @
 
 BattleFrontier_BattlePyramidLobby:
-	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY
+	.4byte BattleFrontier_BattlePyramidLobby_Layout
 	.4byte BattleFrontier_BattlePyramidLobby_MapEvents
 	.4byte BattleFrontier_BattlePyramidLobby_MapScripts
 	.4byte NULL

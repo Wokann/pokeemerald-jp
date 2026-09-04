@@ -3,7 +3,7 @@
 @
 
 BattleFrontier_BattleFactoryPreBattleRoom:
-	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM
+	.4byte BattleFrontier_BattleFactoryPreBattleRoom_Layout
 	.4byte BattleFrontier_BattleFactoryPreBattleRoom_MapEvents
 	.4byte BattleFrontier_BattleFactoryPreBattleRoom_MapScripts
 	.4byte NULL

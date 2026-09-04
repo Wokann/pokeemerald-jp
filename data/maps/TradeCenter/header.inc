@@ -3,7 +3,7 @@
 @
 
 TradeCenter:
-	.4byte gMapLayout_TRADE_CENTER
+	.4byte TradeCenter_Layout
 	.4byte TradeCenter_MapEvents
 	.4byte TradeCenter_MapScripts
 	.4byte NULL

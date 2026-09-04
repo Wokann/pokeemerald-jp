@@ -3,7 +3,7 @@
 @
 
 MauvilleCity_Gym:
-	.4byte gMapLayout_MAUVILLE_CITY_GYM
+	.4byte MauvilleCity_Gym_Layout
 	.4byte MauvilleCity_Gym_MapEvents
 	.4byte MauvilleCity_Gym_MapScripts
 	.4byte NULL

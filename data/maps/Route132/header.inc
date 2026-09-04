@@ -3,7 +3,7 @@
 @
 
 Route132:
-	.4byte gMapLayout_ROUTE132
+	.4byte Route132_Layout
 	.4byte Route132_MapEvents
 	.4byte Route132_MapScripts
 	.4byte Route132_MapConnections

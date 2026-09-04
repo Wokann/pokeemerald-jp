@@ -3,7 +3,7 @@
 @
 
 Route119_House:
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE1
+	.4byte House1_Layout
 	.4byte Route119_House_MapEvents
 	.4byte Route119_House_MapScripts
 	.4byte NULL

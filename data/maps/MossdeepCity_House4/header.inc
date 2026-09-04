@@ -3,7 +3,7 @@
 @
 
 MossdeepCity_House4:
-	.4byte gMapLayout_PETALBURG_CITY_HOUSE2
+	.4byte HouseWithBed_Layout
 	.4byte MossdeepCity_House4_MapEvents
 	.4byte MossdeepCity_House4_MapScripts
 	.4byte NULL

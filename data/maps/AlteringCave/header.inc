@@ -3,7 +3,7 @@
 @
 
 AlteringCave:
-	.4byte gMapLayout_ALTERING_CAVE
+	.4byte AlteringCave_Layout
 	.4byte AlteringCave_MapEvents
 	.4byte AlteringCave_MapScripts
 	.4byte NULL

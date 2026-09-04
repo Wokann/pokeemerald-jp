@@ -3,7 +3,7 @@
 @
 
 CaveOfOrigin_Entrance:
-	.4byte gMapLayout_CAVE_OF_ORIGIN_ENTRANCE
+	.4byte CaveOfOrigin_Entrance_Layout
 	.4byte CaveOfOrigin_Entrance_MapEvents
 	.4byte CaveOfOrigin_Entrance_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 Underwater_SeafloorCavern:
-	.4byte gMapLayout_UNDERWATER_SEAFLOOR_CAVERN
+	.4byte Underwater_SeafloorCavern_Layout
 	.4byte Underwater_SeafloorCavern_MapEvents
 	.4byte Underwater_SeafloorCavern_MapScripts
 	.4byte NULL

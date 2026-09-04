@@ -3,7 +3,7 @@
 @
 
 BattleFrontier_OutsideWest:
-	.4byte gMapLayout_BATTLE_FRONTIER_OUTSIDE_WEST
+	.4byte BattleFrontier_OutsideWest_Layout
 	.4byte BattleFrontier_OutsideWest_MapEvents
 	.4byte BattleFrontier_OutsideWest_MapScripts
 	.4byte BattleFrontier_OutsideWest_MapConnections

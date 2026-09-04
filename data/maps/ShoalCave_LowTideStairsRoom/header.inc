@@ -3,7 +3,7 @@
 @
 
 ShoalCave_LowTideStairsRoom:
-	.4byte gMapLayout_SHOAL_CAVE_LOW_TIDE_STAIRS_ROOM
+	.4byte ShoalCave_LowTideStairsRoom_Layout
 	.4byte ShoalCave_LowTideStairsRoom_MapEvents
 	.4byte ShoalCave_LowTideStairsRoom_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 SlateportCity_SternsShipyard_1F:
-	.4byte gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_1F
+	.4byte SlateportCity_SternsShipyard_1F_Layout
 	.4byte SlateportCity_SternsShipyard_1F_MapEvents
 	.4byte SlateportCity_SternsShipyard_1F_MapScripts
 	.4byte NULL

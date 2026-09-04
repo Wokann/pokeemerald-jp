@@ -3,7 +3,7 @@
 @
 
 SkyPillar_4F:
-	.4byte gMapLayout_SKY_PILLAR_4F
+	.4byte SkyPillar_4F_Layout
 	.4byte SkyPillar_4F_MapEvents
 	.4byte SkyPillar_4F_MapScripts
 	.4byte NULL

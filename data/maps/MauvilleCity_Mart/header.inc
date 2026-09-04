@@ -3,7 +3,7 @@
 @
 
 MauvilleCity_Mart:
-	.4byte gMapLayout_OLDALE_TOWN_MART
+	.4byte Mart_Layout
 	.4byte MauvilleCity_Mart_MapEvents
 	.4byte MauvilleCity_Mart_MapScripts
 	.4byte NULL

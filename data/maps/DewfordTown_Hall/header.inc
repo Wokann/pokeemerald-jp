@@ -3,7 +3,7 @@
 @
 
 DewfordTown_Hall:
-	.4byte gMapLayout_DEWFORD_TOWN_HALL
+	.4byte DewfordTown_Hall_Layout
 	.4byte DewfordTown_Hall_MapEvents
 	.4byte DewfordTown_Hall_MapScripts
 	.4byte NULL

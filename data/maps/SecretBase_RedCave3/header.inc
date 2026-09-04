@@ -3,7 +3,7 @@
 @
 
 SecretBase_RedCave3:
-	.4byte gMapLayout_SECRET_BASE_RED_CAVE3
+	.4byte SecretBase_RedCave3_Layout
 	.4byte SecretBase_RedCave3_MapEvents
 	.4byte SecretBase_MapScripts
 	.4byte NULL

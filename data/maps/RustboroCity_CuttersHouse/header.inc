@@ -3,7 +3,7 @@
 @
 
 RustboroCity_CuttersHouse:
-	.4byte gMapLayout_RUSTBORO_CITY_CUTTERS_HOUSE
+	.4byte RustboroCity_CuttersHouse_Layout
 	.4byte RustboroCity_CuttersHouse_MapEvents
 	.4byte RustboroCity_CuttersHouse_MapScripts
 	.4byte NULL

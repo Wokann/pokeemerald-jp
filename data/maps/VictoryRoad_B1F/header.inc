@@ -3,7 +3,7 @@
 @
 
 VictoryRoad_B1F:
-	.4byte gMapLayout_VICTORY_ROAD_B1F
+	.4byte VictoryRoad_B1F_Layout
 	.4byte VictoryRoad_B1F_MapEvents
 	.4byte VictoryRoad_B1F_MapScripts
 	.4byte NULL

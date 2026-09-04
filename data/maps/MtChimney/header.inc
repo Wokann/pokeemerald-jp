@@ -3,7 +3,7 @@
 @
 
 MtChimney:
-	.4byte gMapLayout_MT_CHIMNEY
+	.4byte MtChimney_Layout
 	.4byte MtChimney_MapEvents
 	.4byte MtChimney_MapScripts
 	.4byte NULL

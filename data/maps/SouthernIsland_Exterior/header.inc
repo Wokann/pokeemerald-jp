@@ -3,7 +3,7 @@
 @
 
 SouthernIsland_Exterior:
-	.4byte gMapLayout_SOUTHERN_ISLAND_EXTERIOR
+	.4byte SouthernIsland_Exterior_Layout
 	.4byte SouthernIsland_Exterior_MapEvents
 	.4byte SouthernIsland_Exterior_MapScripts
 	.4byte NULL

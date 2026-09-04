@@ -3,7 +3,7 @@
 @
 
 MirageTower_1F:
-	.4byte gMapLayout_MIRAGE_TOWER_1F
+	.4byte MirageTower_1F_Layout
 	.4byte MirageTower_1F_MapEvents
 	.4byte MirageTower_1F_MapScripts
 	.4byte NULL

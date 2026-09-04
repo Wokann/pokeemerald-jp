@@ -3,7 +3,7 @@
 @
 
 Route114:
-	.4byte gMapLayout_ROUTE114
+	.4byte Route114_Layout
 	.4byte Route114_MapEvents
 	.4byte Route114_MapScripts
 	.4byte Route114_MapConnections

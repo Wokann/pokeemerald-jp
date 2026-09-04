@@ -3,7 +3,7 @@
 @
 
 SSTidalLowerDeck:
-	.4byte gMapLayout_SS_TIDAL_LOWER_DECK
+	.4byte SSTidalLowerDeck_Layout
 	.4byte SSTidalLowerDeck_MapEvents
 	.4byte SSTidalLowerDeck_MapScripts
 	.4byte NULL

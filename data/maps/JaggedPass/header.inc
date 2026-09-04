@@ -3,7 +3,7 @@
 @
 
 JaggedPass:
-	.4byte gMapLayout_JAGGED_PASS
+	.4byte JaggedPass_Layout
 	.4byte JaggedPass_MapEvents
 	.4byte JaggedPass_MapScripts
 	.4byte NULL

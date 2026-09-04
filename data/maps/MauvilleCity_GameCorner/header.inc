@@ -3,7 +3,7 @@
 @
 
 MauvilleCity_GameCorner:
-	.4byte gMapLayout_MAUVILLE_CITY_GAME_CORNER
+	.4byte MauvilleCity_GameCorner_Layout
 	.4byte MauvilleCity_GameCorner_MapEvents
 	.4byte MauvilleCity_GameCorner_MapScripts
 	.4byte NULL

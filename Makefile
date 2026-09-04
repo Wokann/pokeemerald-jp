@@ -67,8 +67,8 @@ C_OBJECTS += $(C_BUILDDIR)/field_player_avatar_tail.o
 C_OBJECTS += $(C_BUILDDIR)/pokenav_conditions_gfx_tail.o
 
 # Maps already migrated to the canonical map.json event-data structure.
-# The event-only mode keeps this first slice reproducible while the complete
-# JP layouts.json and map header/connection tables are migrated separately.
+# Layout metadata and every map header/connection now share their local JSON
+# source of truth; this list only controls the remaining event-data migration.
 JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route104_MrBrineysHouse Route104_PrettyPetalFlowerShop Route105 Route106 Route107 Route108 Route109 Route111_WinstrateFamilysHouse Route111_OldLadysRestStop Route112_CableCarStation MtChimney_CableCarStation Route114_FossilManiacsHouse Route114_FossilManiacsTunnel Route114_LanettesHouse Route116_TunnelersRestHouse Route117_PokemonDayCare Route121_SafariZoneEntrance MeteorFalls_1F_1R MeteorFalls_1F_2R MeteorFalls_B1F_1R MeteorFalls_B1F_2R RusturfTunnel Underwater_SootopolisCity DesertRuins GraniteCave_1F GraniteCave_B1F GraniteCave_B2F GraniteCave_StevensRoom PetalburgWoods MtChimney JaggedPass FieryPath MtPyre_1F MtPyre_2F MtPyre_3F MtPyre_4F MtPyre_5F MtPyre_6F MtPyre_Exterior MtPyre_Summit AquaHideout_1F AquaHideout_B1F AquaHideout_B2F Underwater_SeafloorCavern SeafloorCavern_Entrance SeafloorCavern_Room1 SeafloorCavern_Room2 SeafloorCavern_Room3 SeafloorCavern_Room4 SeafloorCavern_Room5 SeafloorCavern_Room6 SeafloorCavern_Room7 SeafloorCavern_Room8 SeafloorCavern_Room9 CaveOfOrigin_Entrance CaveOfOrigin_B1F VictoryRoad_1F VictoryRoad_B1F VictoryRoad_B2F Route123 Route124 Route125 Route126 Route127 Route128 Route129 Route130 Route131 Route132 Route133 Route134 \
 	Underwater_Route105 Underwater_Route124 Underwater_Route125 Underwater_Route126 \
 	Underwater_Route127 Underwater_Route128 Underwater_Route129 Underwater_Route134 \
@@ -566,8 +566,8 @@ $(OBJ_DIR)/data/field_door.o: data/field_door.inc graphics/misc/sTileBitAttribut
 	graphics/misc/sDoorOpenAnimFrames.bin graphics/misc/sDoorCloseAnimFrames.bin \
 	graphics/misc/sBigDoorOpenAnimFrames.bin
 $(OBJ_DIR)/data/field_player_avatar.o: data/field_player_avatar.inc
-data/layouts/layouts_table.inc: data/layouts/layouts.inc baserom_jp.gba tools/extract_map_layouts.py
-	python3 tools/extract_map_layouts.py --write-table
+data/layouts/layouts.inc data/layouts/layouts_table.inc include/constants/layouts.h &: data/layouts/layouts.json tools/jp_generate_layouts.py tools/mapjson/mapjson
+	python3 tools/jp_generate_layouts.py
 
 $(OBJ_DIR)/data/maps.o: data/layouts/layouts.inc data/layouts/layouts_table.inc \
 	data/layouts/FallarborTown_LeftoverRSContestLobby/border.bin \

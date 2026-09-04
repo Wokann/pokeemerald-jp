@@ -3,7 +3,7 @@
 @
 
 SlateportCity:
-	.4byte gMapLayout_SLATEPORT_CITY
+	.4byte SlateportCity_Layout
 	.4byte SlateportCity_MapEvents
 	.4byte SlateportCity_MapScripts
 	.4byte SlateportCity_MapConnections

@@ -3,7 +3,7 @@
 @
 
 AquaHideout_B1F:
-	.4byte gMapLayout_AQUA_HIDEOUT_B1F
+	.4byte AquaHideout_B1F_Layout
 	.4byte AquaHideout_B1F_MapEvents
 	.4byte AquaHideout_B1F_MapScripts
 	.4byte NULL

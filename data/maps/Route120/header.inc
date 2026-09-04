@@ -3,7 +3,7 @@
 @
 
 Route120:
-	.4byte gMapLayout_ROUTE120
+	.4byte Route120_Layout
 	.4byte Route120_MapEvents
 	.4byte Route120_MapScripts
 	.4byte Route120_MapConnections

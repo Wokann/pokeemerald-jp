@@ -3,7 +3,7 @@
 @
 
 SafariZone_Southeast:
-	.4byte gMapLayout_SAFARI_ZONE_SOUTHEAST
+	.4byte SafariZone_Southeast_Layout
 	.4byte SafariZone_Southeast_MapEvents
 	.4byte SafariZone_Southeast_MapScripts
 	.4byte SafariZone_Southeast_MapConnections

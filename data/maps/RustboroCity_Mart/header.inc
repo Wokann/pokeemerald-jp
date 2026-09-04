@@ -3,7 +3,7 @@
 @
 
 RustboroCity_Mart:
-	.4byte gMapLayout_OLDALE_TOWN_MART
+	.4byte Mart_Layout
 	.4byte RustboroCity_Mart_MapEvents
 	.4byte RustboroCity_Mart_MapScripts
 	.4byte NULL

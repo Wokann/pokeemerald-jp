@@ -3,7 +3,7 @@
 @
 
 PetalburgCity_Gym:
-	.4byte gMapLayout_PETALBURG_CITY_GYM
+	.4byte PetalburgCity_Gym_Layout
 	.4byte PetalburgCity_Gym_MapEvents
 	.4byte PetalburgCity_Gym_MapScripts
 	.4byte NULL

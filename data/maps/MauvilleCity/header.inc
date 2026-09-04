@@ -3,7 +3,7 @@
 @
 
 MauvilleCity:
-	.4byte gMapLayout_MAUVILLE_CITY
+	.4byte MauvilleCity_Layout
 	.4byte MauvilleCity_MapEvents
 	.4byte MauvilleCity_MapScripts
 	.4byte MauvilleCity_MapConnections

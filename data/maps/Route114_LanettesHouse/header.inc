@@ -3,7 +3,7 @@
 @
 
 Route114_LanettesHouse:
-	.4byte gMapLayout_ROUTE114_LANETTES_HOUSE
+	.4byte Route114_LanettesHouse_Layout
 	.4byte Route114_LanettesHouse_MapEvents
 	.4byte Route114_LanettesHouse_MapScripts
 	.4byte NULL

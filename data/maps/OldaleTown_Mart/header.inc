@@ -3,7 +3,7 @@
 @
 
 OldaleTown_Mart:
-	.4byte gMapLayout_OLDALE_TOWN_MART
+	.4byte Mart_Layout
 	.4byte OldaleTown_Mart_MapEvents
 	.4byte OldaleTown_Mart_MapScripts
 	.4byte NULL

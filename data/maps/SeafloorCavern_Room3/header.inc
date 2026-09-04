@@ -3,7 +3,7 @@
 @
 
 SeafloorCavern_Room3:
-	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM3
+	.4byte SeafloorCavern_Room3_Layout
 	.4byte SeafloorCavern_Room3_MapEvents
 	.4byte SeafloorCavern_Room3_MapScripts
 	.4byte NULL

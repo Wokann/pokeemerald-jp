@@ -3,7 +3,7 @@
 @
 
 PetalburgCity_PokemonCenter_2F:
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F
+	.4byte PokemonCenter_2F_Layout
 	.4byte PetalburgCity_PokemonCenter_2F_MapEvents
 	.4byte PetalburgCity_PokemonCenter_2F_MapScripts
 	.4byte NULL

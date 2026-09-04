@@ -3,7 +3,7 @@
 @
 
 SootopolisCity:
-	.4byte gMapLayout_SOOTOPOLIS_CITY
+	.4byte SootopolisCity_Layout
 	.4byte SootopolisCity_MapEvents
 	.4byte SootopolisCity_MapScripts
 	.4byte NULL

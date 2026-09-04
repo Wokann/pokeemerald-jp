@@ -3,7 +3,7 @@
 @
 
 SecretBase_Shrub1:
-	.4byte gMapLayout_SECRET_BASE_SHRUB1
+	.4byte SecretBase_Shrub1_Layout
 	.4byte SecretBase_Shrub1_MapEvents
 	.4byte SecretBase_MapScripts
 	.4byte NULL

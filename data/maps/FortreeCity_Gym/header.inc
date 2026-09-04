@@ -3,7 +3,7 @@
 @
 
 FortreeCity_Gym:
-	.4byte gMapLayout_FORTREE_CITY_GYM
+	.4byte FortreeCity_Gym_Layout
 	.4byte FortreeCity_Gym_MapEvents
 	.4byte FortreeCity_Gym_MapScripts
 	.4byte NULL

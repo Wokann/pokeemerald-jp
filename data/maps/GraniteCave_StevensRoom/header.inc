@@ -3,7 +3,7 @@
 @
 
 GraniteCave_StevensRoom:
-	.4byte gMapLayout_GRANITE_CAVE_STEVENS_ROOM
+	.4byte GraniteCave_StevensRoom_Layout
 	.4byte GraniteCave_StevensRoom_MapEvents
 	.4byte GraniteCave_StevensRoom_MapScripts
 	.4byte NULL

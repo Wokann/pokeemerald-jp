@@ -3,7 +3,7 @@
 @
 
 SSTidalCorridor:
-	.4byte gMapLayout_SS_TIDAL_CORRIDOR
+	.4byte SSTidalCorridor_Layout
 	.4byte SSTidalCorridor_MapEvents
 	.4byte SSTidalCorridor_MapScripts
 	.4byte NULL

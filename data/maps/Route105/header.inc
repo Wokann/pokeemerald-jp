@@ -3,7 +3,7 @@
 @
 
 Route105:
-	.4byte gMapLayout_ROUTE105
+	.4byte Route105_Layout
 	.4byte Route105_MapEvents
 	.4byte Route105_MapScripts
 	.4byte Route105_MapConnections

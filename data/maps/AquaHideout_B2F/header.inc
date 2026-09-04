@@ -3,7 +3,7 @@
 @
 
 AquaHideout_B2F:
-	.4byte gMapLayout_AQUA_HIDEOUT_B2F
+	.4byte AquaHideout_B2F_Layout
 	.4byte AquaHideout_B2F_MapEvents
 	.4byte AquaHideout_B2F_MapScripts
 	.4byte NULL

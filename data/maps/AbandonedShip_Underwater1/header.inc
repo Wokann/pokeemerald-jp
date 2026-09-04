@@ -3,7 +3,7 @@
 @
 
 AbandonedShip_Underwater1:
-	.4byte gMapLayout_ABANDONED_SHIP_UNDERWATER1
+	.4byte AbandonedShip_Underwater1_Layout
 	.4byte AbandonedShip_Underwater1_MapEvents
 	.4byte AbandonedShip_Underwater1_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 RustboroCity_PokemonSchool:
-	.4byte gMapLayout_RUSTBORO_CITY_POKEMON_SCHOOL
+	.4byte RustboroCity_PokemonSchool_Layout
 	.4byte RustboroCity_PokemonSchool_MapEvents
 	.4byte RustboroCity_PokemonSchool_MapScripts
 	.4byte NULL

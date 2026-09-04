@@ -3,7 +3,7 @@
 @
 
 Route121_SafariZoneEntrance:
-	.4byte gMapLayout_ROUTE121_SAFARI_ZONE_ENTRANCE
+	.4byte Route121_SafariZoneEntrance_Layout
 	.4byte Route121_SafariZoneEntrance_MapEvents
 	.4byte Route121_SafariZoneEntrance_MapScripts
 	.4byte NULL

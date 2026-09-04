@@ -3,7 +3,7 @@
 @
 
 AbandonedShip_Rooms_B1F:
-	.4byte gMapLayout_ABANDONED_SHIP_ROOMS_B1F
+	.4byte AbandonedShip_Rooms_B1F_Layout
 	.4byte AbandonedShip_Rooms_B1F_MapEvents
 	.4byte AbandonedShip_Rooms_B1F_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 OldaleTown_House1:
-	.4byte gMapLayout_OLDALE_TOWN_HOUSE1
+	.4byte House1_Layout
 	.4byte OldaleTown_House1_MapEvents
 	.4byte OldaleTown_House1_MapScripts
 	.4byte NULL

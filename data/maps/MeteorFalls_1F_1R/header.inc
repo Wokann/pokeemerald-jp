@@ -3,7 +3,7 @@
 @
 
 MeteorFalls_1F_1R:
-	.4byte gMapLayout_METEOR_FALLS_1F_1R
+	.4byte MeteorFalls_1F_1R_Layout
 	.4byte MeteorFalls_1F_1R_MapEvents
 	.4byte MeteorFalls_1F_1R_MapScripts
 	.4byte NULL

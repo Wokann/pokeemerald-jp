@@ -3,7 +3,7 @@
 @
 
 Route109:
-	.4byte gMapLayout_ROUTE109
+	.4byte Route109_Layout
 	.4byte Route109_MapEvents
 	.4byte Route109_MapScripts
 	.4byte Route109_MapConnections

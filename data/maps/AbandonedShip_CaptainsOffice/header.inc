@@ -3,7 +3,7 @@
 @
 
 AbandonedShip_CaptainsOffice:
-	.4byte gMapLayout_ABANDONED_SHIP_CAPTAINS_OFFICE
+	.4byte AbandonedShip_CaptainsOffice_Layout
 	.4byte AbandonedShip_CaptainsOffice_MapEvents
 	.4byte AbandonedShip_CaptainsOffice_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 Route111_OldLadysRestStop:
-	.4byte gMapLayout_DEWFORD_TOWN_HOUSE1
+	.4byte House3_Layout
 	.4byte Route111_OldLadysRestStop_MapEvents
 	.4byte Route111_OldLadysRestStop_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 SkyPillar_Outside:
-	.4byte gMapLayout_SKY_PILLAR_OUTSIDE
+	.4byte SkyPillar_Outside_Layout
 	.4byte SkyPillar_Outside_MapEvents
 	.4byte SkyPillar_Outside_MapScripts
 	.4byte NULL

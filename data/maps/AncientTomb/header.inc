@@ -3,7 +3,7 @@
 @
 
 AncientTomb:
-	.4byte gMapLayout_ANCIENT_TOMB
+	.4byte AncientTomb_Layout
 	.4byte AncientTomb_MapEvents
 	.4byte AncientTomb_MapScripts
 	.4byte NULL

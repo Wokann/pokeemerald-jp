@@ -3,7 +3,7 @@
 @
 
 LavaridgeTown_Gym_B1F:
-	.4byte gMapLayout_LAVARIDGE_TOWN_GYM_B1F
+	.4byte LavaridgeTown_Gym_B1F_Layout
 	.4byte LavaridgeTown_Gym_B1F_MapEvents
 	.4byte LavaridgeTown_Gym_B1F_MapScripts
 	.4byte NULL

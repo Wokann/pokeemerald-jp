@@ -3,7 +3,7 @@
 @
 
 ArtisanCave_1F:
-	.4byte gMapLayout_ARTISAN_CAVE_1F
+	.4byte ArtisanCave_1F_Layout
 	.4byte ArtisanCave_1F_MapEvents
 	.4byte ArtisanCave_1F_MapScripts
 	.4byte NULL

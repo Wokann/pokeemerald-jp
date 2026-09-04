@@ -3,7 +3,7 @@
 @
 
 Underwater_SealedChamber:
-	.4byte gMapLayout_UNDERWATER_SEALED_CHAMBER
+	.4byte Underwater_SealedChamber_Layout
 	.4byte Underwater_SealedChamber_MapEvents
 	.4byte Underwater_SealedChamber_MapScripts
 	.4byte NULL

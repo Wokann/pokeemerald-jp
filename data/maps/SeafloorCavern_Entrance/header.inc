@@ -3,7 +3,7 @@
 @
 
 SeafloorCavern_Entrance:
-	.4byte gMapLayout_SEAFLOOR_CAVERN_ENTRANCE
+	.4byte SeafloorCavern_Entrance_Layout
 	.4byte SeafloorCavern_Entrance_MapEvents
 	.4byte SeafloorCavern_Entrance_MapScripts
 	.4byte NULL

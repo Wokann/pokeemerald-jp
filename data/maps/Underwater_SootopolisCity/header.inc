@@ -3,7 +3,7 @@
 @
 
 Underwater_SootopolisCity:
-	.4byte gMapLayout_UNDERWATER_SOOTOPOLIS_CITY
+	.4byte Underwater_SootopolisCity_Layout
 	.4byte Underwater_SootopolisCity_MapEvents
 	.4byte Underwater_SootopolisCity_MapScripts
 	.4byte NULL

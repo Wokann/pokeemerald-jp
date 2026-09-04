@@ -3,7 +3,7 @@
 @
 
 MtPyre_5F:
-	.4byte gMapLayout_MT_PYRE_5F
+	.4byte MtPyre_5F_Layout
 	.4byte MtPyre_5F_MapEvents
 	.4byte MtPyre_5F_MapScripts
 	.4byte NULL

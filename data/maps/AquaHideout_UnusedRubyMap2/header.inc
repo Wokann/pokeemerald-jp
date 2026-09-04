@@ -3,7 +3,7 @@
 @
 
 AquaHideout_UnusedRubyMap2:
-	.4byte gMapLayout_AQUA_HIDEOUT_UNUSED_RUBY_MAP2
+	.4byte AquaHideout_UnusedRubyMap2_Layout
 	.4byte AquaHideout_UnusedRubyMap2_MapEvents
 	.4byte AquaHideout_UnusedRubyMap2_MapScripts
 	.4byte NULL

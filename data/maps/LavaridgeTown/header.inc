@@ -3,7 +3,7 @@
 @
 
 LavaridgeTown:
-	.4byte gMapLayout_LAVARIDGE_TOWN
+	.4byte LavaridgeTown_Layout
 	.4byte LavaridgeTown_MapEvents
 	.4byte LavaridgeTown_MapScripts
 	.4byte LavaridgeTown_MapConnections

@@ -3,7 +3,7 @@
 @
 
 Route128:
-	.4byte gMapLayout_ROUTE128
+	.4byte Route128_Layout
 	.4byte Route128_MapEvents
 	.4byte Route128_MapScripts
 	.4byte Route128_MapConnections

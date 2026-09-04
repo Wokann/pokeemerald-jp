@@ -3,7 +3,7 @@
 @
 
 Route116_TunnelersRestHouse:
-	.4byte gMapLayout_ROUTE116_TUNNELERS_REST_HOUSE
+	.4byte Route116_TunnelersRestHouse_Layout
 	.4byte Route116_TunnelersRestHouse_MapEvents
 	.4byte Route116_TunnelersRestHouse_MapScripts
 	.4byte NULL

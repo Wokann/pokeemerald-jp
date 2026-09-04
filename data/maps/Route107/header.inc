@@ -3,7 +3,7 @@
 @
 
 Route107:
-	.4byte gMapLayout_ROUTE107
+	.4byte Route107_Layout
 	.4byte Route107_MapEvents
 	.4byte Route107_MapScripts
 	.4byte Route107_MapConnections

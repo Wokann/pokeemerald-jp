@@ -3,7 +3,7 @@
 @
 
 Route108:
-	.4byte gMapLayout_ROUTE108
+	.4byte Route108_Layout
 	.4byte Route108_MapEvents
 	.4byte Route108_MapScripts
 	.4byte Route108_MapConnections

@@ -3,7 +3,7 @@
 @
 
 SootopolisCity_MysteryEventsHouse_1F:
-	.4byte gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F
+	.4byte SootopolisCity_MysteryEventsHouse_1F_Layout
 	.4byte SootopolisCity_MysteryEventsHouse_1F_MapEvents
 	.4byte SootopolisCity_MysteryEventsHouse_1F_MapScripts
 	.4byte NULL

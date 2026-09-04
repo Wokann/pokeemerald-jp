@@ -3,7 +3,7 @@
 @
 
 LilycoveCity_DepartmentStoreRooftop:
-	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP
+	.4byte LilycoveCity_DepartmentStoreRooftop_Layout
 	.4byte LilycoveCity_DepartmentStoreRooftop_MapEvents
 	.4byte LilycoveCity_DepartmentStoreRooftop_MapScripts
 	.4byte NULL

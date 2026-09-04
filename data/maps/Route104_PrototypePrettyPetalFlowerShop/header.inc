@@ -3,7 +3,7 @@
 @
 
 Route104_PrototypePrettyPetalFlowerShop:
-	.4byte gMapLayout_ROUTE104_PRETTY_PETAL_FLOWER_SHOP
+	.4byte Route104_PrettyPetalFlowerShop_Layout
 	.4byte Route104_PrototypePrettyPetalFlowerShop_MapEvents
 	.4byte Route104_PrototypePrettyPetalFlowerShop_MapScripts
 	.4byte NULL

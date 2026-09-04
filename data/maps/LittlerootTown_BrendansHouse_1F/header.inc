@@ -3,7 +3,7 @@
 @
 
 LittlerootTown_BrendansHouse_1F:
-	.4byte gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F
+	.4byte LittlerootTown_BrendansHouse_1F_Layout
 	.4byte LittlerootTown_BrendansHouse_1F_MapEvents
 	.4byte LittlerootTown_BrendansHouse_1F_MapScripts
 	.4byte NULL

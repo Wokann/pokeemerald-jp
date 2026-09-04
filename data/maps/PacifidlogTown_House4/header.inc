@@ -3,7 +3,7 @@
 @
 
 PacifidlogTown_House4:
-	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE2
+	.4byte PacifidlogTown_House2_Layout
 	.4byte PacifidlogTown_House4_MapEvents
 	.4byte PacifidlogTown_House4_MapScripts
 	.4byte NULL

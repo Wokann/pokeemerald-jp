@@ -3,7 +3,7 @@
 @
 
 EverGrandeCity_DrakesRoom:
-	.4byte gMapLayout_EVER_GRANDE_CITY_DRAKES_ROOM
+	.4byte EverGrandeCity_DrakesRoom_Layout
 	.4byte EverGrandeCity_DrakesRoom_MapEvents
 	.4byte EverGrandeCity_DrakesRoom_MapScripts
 	.4byte NULL

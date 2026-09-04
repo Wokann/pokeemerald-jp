@@ -3,7 +3,7 @@
 @
 
 Route134:
-	.4byte gMapLayout_ROUTE134
+	.4byte Route134_Layout
 	.4byte Route134_MapEvents
 	.4byte Route134_MapScripts
 	.4byte Route134_MapConnections

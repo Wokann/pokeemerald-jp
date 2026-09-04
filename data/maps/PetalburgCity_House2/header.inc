@@ -3,7 +3,7 @@
 @
 
 PetalburgCity_House2:
-	.4byte gMapLayout_PETALBURG_CITY_HOUSE2
+	.4byte HouseWithBed_Layout
 	.4byte PetalburgCity_House2_MapEvents
 	.4byte PetalburgCity_House2_MapScripts
 	.4byte NULL

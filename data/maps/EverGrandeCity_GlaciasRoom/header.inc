@@ -3,7 +3,7 @@
 @
 
 EverGrandeCity_GlaciasRoom:
-	.4byte gMapLayout_EVER_GRANDE_CITY_GLACIAS_ROOM
+	.4byte EverGrandeCity_GlaciasRoom_Layout
 	.4byte EverGrandeCity_GlaciasRoom_MapEvents
 	.4byte EverGrandeCity_GlaciasRoom_MapScripts
 	.4byte NULL

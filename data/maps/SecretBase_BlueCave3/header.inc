@@ -3,7 +3,7 @@
 @
 
 SecretBase_BlueCave3:
-	.4byte gMapLayout_SECRET_BASE_BLUE_CAVE3
+	.4byte SecretBase_BlueCave3_Layout
 	.4byte SecretBase_BlueCave3_MapEvents
 	.4byte SecretBase_MapScripts
 	.4byte NULL

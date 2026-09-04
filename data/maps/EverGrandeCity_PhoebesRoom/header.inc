@@ -3,7 +3,7 @@
 @
 
 EverGrandeCity_PhoebesRoom:
-	.4byte gMapLayout_EVER_GRANDE_CITY_PHOEBES_ROOM
+	.4byte EverGrandeCity_PhoebesRoom_Layout
 	.4byte EverGrandeCity_PhoebesRoom_MapEvents
 	.4byte EverGrandeCity_PhoebesRoom_MapScripts
 	.4byte NULL

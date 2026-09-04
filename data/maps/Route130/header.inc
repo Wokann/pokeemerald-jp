@@ -3,7 +3,7 @@
 @
 
 Route130:
-	.4byte gMapLayout_ROUTE130
+	.4byte Route130_Layout
 	.4byte Route130_MapEvents
 	.4byte Route130_MapScripts
 	.4byte Route130_MapConnections

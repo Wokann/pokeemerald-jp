@@ -3,7 +3,7 @@
 @
 
 SkyPillar_Top:
-	.4byte gMapLayout_SKY_PILLAR_TOP
+	.4byte SkyPillar_Top_Layout
 	.4byte SkyPillar_Top_MapEvents
 	.4byte SkyPillar_Top_MapScripts
 	.4byte NULL

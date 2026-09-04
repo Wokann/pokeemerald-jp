@@ -3,7 +3,7 @@
 @
 
 FortreeCity:
-	.4byte gMapLayout_FORTREE_CITY
+	.4byte FortreeCity_Layout
 	.4byte FortreeCity_MapEvents
 	.4byte FortreeCity_MapScripts
 	.4byte FortreeCity_MapConnections

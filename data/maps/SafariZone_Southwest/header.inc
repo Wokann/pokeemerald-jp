@@ -3,7 +3,7 @@
 @
 
 SafariZone_Southwest:
-	.4byte gMapLayout_SAFARI_ZONE_SOUTHWEST
+	.4byte SafariZone_Southwest_Layout
 	.4byte SafariZone_Southwest_MapEvents
 	.4byte SafariZone_Southwest_MapScripts
 	.4byte SafariZone_Southwest_MapConnections

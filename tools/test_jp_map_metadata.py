@@ -731,22 +731,6 @@ NULL_CONNECTION_MAPS = (
     "SafariZone_RestHouse",
 )
 
-CANONICAL_LAYOUT_MAPS = (
-    "Underwater_MarineCave",
-    "MarineCave_Entrance",
-    "TerraCave_Entrance",
-    "TerraCave_End",
-    "Underwater_Route105",
-    "Underwater_Route124",
-    "Underwater_Route125",
-    "Underwater_Route126",
-    "Underwater_Route127",
-    "Underwater_Route128",
-    "Underwater_Route129",
-    "MarineCave_End",
-)
-
-
 class MapMetadataTests(unittest.TestCase):
     def test_checked_metadata_matches_canonical_json(self):
         for map_name in MAPS:
@@ -766,11 +750,8 @@ class MapMetadataTests(unittest.TestCase):
             data = jp_map_metadata.load_map(ROOT / "data" / "maps" / map_name / "map.json")
             text = (ROOT / "data" / "maps" / map_name / "header.inc").read_text(encoding="utf-8")
             self.assertIn(f"{map_name}:", text)
-            if map_name in CANONICAL_LAYOUT_MAPS:
-                self.assertIn(f".4byte {map_name}_Layout\n", text)
-                self.assertNotIn("gMapLayout_", text)
-            else:
-                self.assertIn("gMapLayout_", text)
+            self.assertIn(f".4byte {jp_map_metadata.layout_symbol(data['layout'])}\n", text)
+            self.assertNotIn("gMapLayout_", text)
             events_name = data.get("shared_events_map", map_name)
             self.assertIn(f"\t.4byte {events_name}_MapEvents\n", text)
             scripts_name = data.get("shared_scripts_map", map_name)
@@ -778,7 +759,7 @@ class MapMetadataTests(unittest.TestCase):
             self.assertIn("map_header_flags allow_cycling=", text)
             self.assertNotIn(".set ", text)
 
-    def test_layout_symbol_keeps_legacy_names_outside_reviewed_family(self):
+    def test_layout_symbol_uses_local_layout_metadata(self):
         self.assertEqual(
             jp_map_metadata.layout_symbol("LAYOUT_UNDERWATER_ROUTE124"),
             "Underwater_Route124_Layout",
@@ -813,54 +794,35 @@ class MapMetadataTests(unittest.TestCase):
         )
         self.assertEqual(
             jp_map_metadata.layout_symbol("LAYOUT_CAVE_OF_ORIGIN_B1F"),
-            "gMapLayout_CAVE_OF_ORIGIN_B1F",
+            "CaveOfOrigin_B1F_Layout",
         )
 
-    def test_shared_layouts_use_their_real_jp_owners(self):
-        self.assertEqual(
-            jp_map_metadata.layout_symbol("LAYOUT_HOUSE1"),
-            "gMapLayout_OLDALE_TOWN_HOUSE1",
-        )
-        self.assertEqual(
-            jp_map_metadata.layout_symbol("LAYOUT_HOUSE2"),
-            "gMapLayout_OLDALE_TOWN_HOUSE2",
-        )
-        self.assertEqual(
-            jp_map_metadata.layout_symbol("LAYOUT_POKEMON_CENTER_1F"),
-            "gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F",
-        )
-        self.assertEqual(
-            jp_map_metadata.layout_symbol("LAYOUT_POKEMON_CENTER_2F"),
-            "gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F",
-        )
-        self.assertEqual(
-            jp_map_metadata.layout_symbol("LAYOUT_MART"),
-            "gMapLayout_OLDALE_TOWN_MART",
-        )
-        self.assertEqual(
-            jp_map_metadata.layout_symbol("LAYOUT_HOUSE3"),
-            "gMapLayout_DEWFORD_TOWN_HOUSE1",
-        )
-        self.assertEqual(
-            jp_map_metadata.layout_symbol("LAYOUT_HOUSE4"),
-            "gMapLayout_DEWFORD_TOWN_HOUSE2",
-        )
-        self.assertEqual(
-            jp_map_metadata.layout_symbol("LAYOUT_BATTLE_TENT_LOBBY"),
-            "gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY",
-        )
-        self.assertEqual(
-            jp_map_metadata.layout_symbol("LAYOUT_BATTLE_TENT_CORRIDOR"),
-            "gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR",
-        )
-        self.assertEqual(
-            jp_map_metadata.layout_symbol("LAYOUT_BATTLE_TENT_BATTLE_ROOM"),
-            "gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM",
-        )
-        self.assertEqual(
-            jp_map_metadata.layout_symbol("LAYOUT_CABLE_CAR_STATION"),
-            "gMapLayout_ROUTE112_CABLE_CAR_STATION",
-        )
+    def test_shared_layouts_use_canonical_owner_symbols(self):
+        expected = {
+            "LAYOUT_HOUSE1": "House1_Layout",
+            "LAYOUT_HOUSE2": "House2_Layout",
+            "LAYOUT_POKEMON_CENTER_1F": "PokemonCenter_1F_Layout",
+            "LAYOUT_POKEMON_CENTER_2F": "PokemonCenter_2F_Layout",
+            "LAYOUT_MART": "Mart_Layout",
+            "LAYOUT_HOUSE_WITH_BED": "HouseWithBed_Layout",
+            "LAYOUT_HARBOR": "Harbor_Layout",
+            "LAYOUT_RUSTBORO_CITY_HOUSE": "RustboroCity_House_Layout",
+            "LAYOUT_EVER_GRANDE_CITY_SHORT_HALL": "EverGrandeCity_ShortHall_Layout",
+            "LAYOUT_HOUSE3": "House3_Layout",
+            "LAYOUT_HOUSE4": "House4_Layout",
+            "LAYOUT_BATTLE_TENT_LOBBY": "BattleTentLobby_Layout",
+            "LAYOUT_BATTLE_TENT_CORRIDOR": "BattleTentCorridor_Layout",
+            "LAYOUT_BATTLE_TENT_BATTLE_ROOM": "BattleTentBattleRoom_Layout",
+            "LAYOUT_CABLE_CAR_STATION": "CableCarStation_Layout",
+        }
+        for layout_id, symbol in expected.items():
+            self.assertEqual(jp_map_metadata.layout_symbol(layout_id), symbol)
+
+    def test_all_map_headers_follow_the_local_layout_source(self):
+        for map_json in sorted((ROOT / "data" / "maps").glob("*/map.json")):
+            data = jp_map_metadata.load_map(map_json)
+            header = map_json.parent / "header.inc"
+            self.assertEqual(header.read_text(encoding="utf-8"), jp_map_metadata.render_header(data))
 
     def test_connections_use_real_map_labels(self):
         for map_name in CONNECTED_MAPS:

@@ -3,7 +3,7 @@
 @
 
 RustboroCity_Flat1_2F:
-	.4byte gMapLayout_RUSTBORO_CITY_FLAT1_2F
+	.4byte RustboroCity_Flat1_2F_Layout
 	.4byte RustboroCity_Flat1_2F_MapEvents
 	.4byte RustboroCity_Flat1_2F_MapScripts
 	.4byte NULL

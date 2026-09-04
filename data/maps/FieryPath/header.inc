@@ -3,7 +3,7 @@
 @
 
 FieryPath:
-	.4byte gMapLayout_FIERY_PATH
+	.4byte FieryPath_Layout
 	.4byte FieryPath_MapEvents
 	.4byte FieryPath_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 SootopolisCity_House6:
-	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE3
+	.4byte SootopolisCity_House3_Layout
 	.4byte SootopolisCity_House6_MapEvents
 	.4byte SootopolisCity_House6_MapScripts
 	.4byte NULL

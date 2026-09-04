@@ -3,7 +3,7 @@
 @
 
 Route111:
-	.4byte gMapLayout_ROUTE111
+	.4byte Route111_Layout
 	.4byte Route111_MapEvents
 	.4byte Route111_MapScripts
 	.4byte Route111_MapConnections

@@ -3,7 +3,7 @@
 @
 
 BattleFrontier_BattleArenaBattleRoom:
-	.4byte gMapLayout_BATTLE_FRONTIER_BATTLE_ARENA_BATTLE_ROOM
+	.4byte BattleFrontier_BattleArenaBattleRoom_Layout
 	.4byte BattleFrontier_BattleArenaBattleRoom_MapEvents
 	.4byte BattleFrontier_BattleArenaBattleRoom_MapScripts
 	.4byte NULL

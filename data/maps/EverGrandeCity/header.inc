@@ -3,7 +3,7 @@
 @
 
 EverGrandeCity:
-	.4byte gMapLayout_EVER_GRANDE_CITY
+	.4byte EverGrandeCity_Layout
 	.4byte EverGrandeCity_MapEvents
 	.4byte EverGrandeCity_MapScripts
 	.4byte EverGrandeCity_MapConnections

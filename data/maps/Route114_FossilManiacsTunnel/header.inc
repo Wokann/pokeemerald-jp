@@ -3,7 +3,7 @@
 @
 
 Route114_FossilManiacsTunnel:
-	.4byte gMapLayout_ROUTE114_FOSSIL_MANIACS_TUNNEL
+	.4byte Route114_FossilManiacsTunnel_Layout
 	.4byte Route114_FossilManiacsTunnel_MapEvents
 	.4byte Route114_FossilManiacsTunnel_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 EverGrandeCity_PokemonCenter_1F:
-	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F
+	.4byte PokemonCenter_1F_Layout
 	.4byte EverGrandeCity_PokemonCenter_1F_MapEvents
 	.4byte EverGrandeCity_PokemonCenter_1F_MapScripts
 	.4byte NULL

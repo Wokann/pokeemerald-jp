@@ -3,7 +3,7 @@
 @
 
 SlateportCity_OceanicMuseum_2F:
-	.4byte gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_2F
+	.4byte SlateportCity_OceanicMuseum_2F_Layout
 	.4byte SlateportCity_OceanicMuseum_2F_MapEvents
 	.4byte SlateportCity_OceanicMuseum_2F_MapScripts
 	.4byte NULL

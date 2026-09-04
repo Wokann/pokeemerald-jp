@@ -3,7 +3,7 @@
 @
 
 SlateportCity_BattleTentCorridor:
-	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR
+	.4byte BattleTentCorridor_Layout
 	.4byte SlateportCity_BattleTentCorridor_MapEvents
 	.4byte SlateportCity_BattleTentCorridor_MapScripts
 	.4byte NULL

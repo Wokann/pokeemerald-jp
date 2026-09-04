@@ -3,7 +3,7 @@
 @
 
 UnionRoom:
-	.4byte gMapLayout_UNION_ROOM
+	.4byte UnionRoom_Layout
 	.4byte UnionRoom_MapEvents
 	.4byte UnionRoom_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 OldaleTown:
-	.4byte gMapLayout_OLDALE_TOWN
+	.4byte OldaleTown_Layout
 	.4byte OldaleTown_MapEvents
 	.4byte OldaleTown_MapScripts
 	.4byte OldaleTown_MapConnections

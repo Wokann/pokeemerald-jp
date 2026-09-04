@@ -3,7 +3,7 @@
 @
 
 SlateportCity_NameRatersHouse:
-	.4byte gMapLayout_PETALBURG_CITY_HOUSE2
+	.4byte HouseWithBed_Layout
 	.4byte SlateportCity_NameRatersHouse_MapEvents
 	.4byte SlateportCity_NameRatersHouse_MapScripts
 	.4byte NULL

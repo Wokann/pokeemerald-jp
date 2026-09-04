@@ -3,7 +3,7 @@
 @
 
 SkyPillar_5F:
-	.4byte gMapLayout_SKY_PILLAR_5F
+	.4byte SkyPillar_5F_Layout
 	.4byte SkyPillar_5F_MapEvents
 	.4byte SkyPillar_5F_MapScripts
 	.4byte NULL

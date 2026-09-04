@@ -3,7 +3,7 @@
 @
 
 EverGrandeCity_PokemonLeague_1F:
-	.4byte gMapLayout_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F
+	.4byte EverGrandeCity_PokemonLeague_1F_Layout
 	.4byte EverGrandeCity_PokemonLeague_1F_MapEvents
 	.4byte EverGrandeCity_PokemonLeague_1F_MapScripts
 	.4byte NULL

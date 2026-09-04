@@ -3,7 +3,7 @@
 @
 
 Underwater_Route134:
-	.4byte gMapLayout_UNDERWATER_ROUTE134
+	.4byte Underwater_Route134_Layout
 	.4byte Underwater_Route134_MapEvents
 	.4byte Underwater_Route134_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 Route112_CableCarStation:
-	.4byte gMapLayout_ROUTE112_CABLE_CAR_STATION
+	.4byte CableCarStation_Layout
 	.4byte Route112_CableCarStation_MapEvents
 	.4byte Route112_CableCarStation_MapScripts
 	.4byte NULL

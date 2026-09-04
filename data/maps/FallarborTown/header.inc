@@ -3,7 +3,7 @@
 @
 
 FallarborTown:
-	.4byte gMapLayout_FALLARBOR_TOWN
+	.4byte FallarborTown_Layout
 	.4byte FallarborTown_MapEvents
 	.4byte FallarborTown_MapScripts
 	.4byte FallarborTown_MapConnections

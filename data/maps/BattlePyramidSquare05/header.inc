@@ -3,7 +3,7 @@
 @
 
 BattlePyramidSquare05:
-	.4byte gMapLayout_BATTLE_PYRAMID_SQUARE05
+	.4byte BattlePyramidSquare05_Layout
 	.4byte BattlePyramidSquare05_MapEvents
 	.4byte BattlePyramidSquare01_MapScripts
 	.4byte NULL

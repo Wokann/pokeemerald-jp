@@ -3,7 +3,7 @@
 @
 
 MtPyre_Exterior:
-	.4byte gMapLayout_MT_PYRE_EXTERIOR
+	.4byte MtPyre_Exterior_Layout
 	.4byte MtPyre_Exterior_MapEvents
 	.4byte MtPyre_Exterior_MapScripts
 	.4byte NULL

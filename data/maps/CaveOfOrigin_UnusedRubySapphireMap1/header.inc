@@ -3,7 +3,7 @@
 @
 
 CaveOfOrigin_UnusedRubySapphireMap1:
-	.4byte gMapLayout_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP1
+	.4byte CaveOfOrigin_UnusedRubySapphireMap1_Layout
 	.4byte CaveOfOrigin_UnusedRubySapphireMap1_MapEvents
 	.4byte CaveOfOrigin_UnusedRubySapphireMap1_MapScripts
 	.4byte NULL

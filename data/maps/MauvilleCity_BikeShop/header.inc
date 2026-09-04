@@ -3,7 +3,7 @@
 @
 
 MauvilleCity_BikeShop:
-	.4byte gMapLayout_MAUVILLE_CITY_BIKE_SHOP
+	.4byte MauvilleCity_BikeShop_Layout
 	.4byte MauvilleCity_BikeShop_MapEvents
 	.4byte MauvilleCity_BikeShop_MapScripts
 	.4byte NULL

@@ -3,7 +3,7 @@
 @
 
 NewMauville_Entrance:
-	.4byte gMapLayout_NEW_MAUVILLE_ENTRANCE
+	.4byte NewMauville_Entrance_Layout
 	.4byte NewMauville_Entrance_MapEvents
 	.4byte NewMauville_Entrance_MapScripts
 	.4byte NULL

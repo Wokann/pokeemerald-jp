@@ -3,7 +3,7 @@
 @
 
 VerdanturfTown_BattleTentBattleRoom:
-	.4byte gMapLayout_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM
+	.4byte VerdanturfTown_BattleTentBattleRoom_Layout
 	.4byte VerdanturfTown_BattleTentBattleRoom_MapEvents
 	.4byte VerdanturfTown_BattleTentBattleRoom_MapScripts
 	.4byte NULL

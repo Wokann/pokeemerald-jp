@@ -3,7 +3,7 @@
 @
 
 MossdeepCity_StevensHouse:
-	.4byte gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE
+	.4byte MossdeepCity_StevensHouse_Layout
 	.4byte MossdeepCity_StevensHouse_MapEvents
 	.4byte MossdeepCity_StevensHouse_MapScripts
 	.4byte NULL

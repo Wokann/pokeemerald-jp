@@ -3,7 +3,7 @@
 @
 
 SlateportCity_PokemonFanClub:
-	.4byte gMapLayout_SLATEPORT_CITY_POKEMON_FAN_CLUB
+	.4byte SlateportCity_PokemonFanClub_Layout
 	.4byte SlateportCity_PokemonFanClub_MapEvents
 	.4byte SlateportCity_PokemonFanClub_MapScripts
 	.4byte NULL

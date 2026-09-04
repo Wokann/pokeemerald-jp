@@ -3,7 +3,7 @@
 @
 
 FallarborTown_BattleTentBattleRoom:
-	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM
+	.4byte BattleTentBattleRoom_Layout
 	.4byte FallarborTown_BattleTentBattleRoom_MapEvents
 	.4byte FallarborTown_BattleTentBattleRoom_MapScripts
 	.4byte NULL

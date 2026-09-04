@@ -3,7 +3,7 @@
 @
 
 BattleFrontier_BattleTowerElevator:
-	.4byte gMapLayout_BATTLE_ELEVATOR
+	.4byte BattleElevator_Layout
 	.4byte BattleFrontier_BattleTowerElevator_MapEvents
 	.4byte BattleFrontier_BattleTowerElevator_MapScripts
 	.4byte NULL

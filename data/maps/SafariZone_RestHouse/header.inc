@@ -3,7 +3,7 @@
 @
 
 SafariZone_RestHouse:
-	.4byte gMapLayout_SAFARI_ZONE_REST_HOUSE
+	.4byte SafariZone_RestHouse_Layout
 	.4byte SafariZone_RestHouse_MapEvents
 	.4byte SafariZone_RestHouse_MapScripts
 	.4byte NULL

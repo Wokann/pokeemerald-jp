@@ -3,7 +3,7 @@
 @
 
 BattleColosseum_4P:
-	.4byte gMapLayout_BATTLE_COLOSSEUM_4P
+	.4byte BattleColosseum_4P_Layout
 	.4byte BattleColosseum_4P_MapEvents
 	.4byte BattleColosseum_4P_MapScripts
 	.4byte NULL

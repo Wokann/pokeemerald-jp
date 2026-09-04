@@ -3,7 +3,7 @@
 @
 
 LavaridgeTown_House:
-	.4byte gMapLayout_DEWFORD_TOWN_HOUSE1
+	.4byte House3_Layout
 	.4byte LavaridgeTown_House_MapEvents
 	.4byte LavaridgeTown_House_MapScripts
 	.4byte NULL

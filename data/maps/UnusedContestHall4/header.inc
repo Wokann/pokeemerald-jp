@@ -3,7 +3,7 @@
 @
 
 UnusedContestHall4:
-	.4byte gMapLayout_UNUSED_CONTEST_HALL4
+	.4byte UnusedContestHall4_Layout
 	.4byte ContestHall_MapEvents
 	.4byte ContestHall_MapScripts
 	.4byte NULL

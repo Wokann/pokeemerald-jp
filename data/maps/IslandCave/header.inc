@@ -3,7 +3,7 @@
 @
 
 IslandCave:
-	.4byte gMapLayout_ISLAND_CAVE
+	.4byte IslandCave_Layout
 	.4byte IslandCave_MapEvents
 	.4byte IslandCave_MapScripts
 	.4byte NULL
