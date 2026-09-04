@@ -1,5 +1,554 @@
 #include "global.h"
+#include "bg.h"
+#include "graphics.h"
 #include "pokedex.h"
+#include "sprite.h"
+#include "window.h"
+
+#define POKEDEX_STATIC_DATA __attribute__((section(".rodata.pokedex_static_data")))
+
+static void SpriteCB_SeenOwnInfo(struct Sprite *sprite);
+static void SpriteCB_Scrollbar(struct Sprite *sprite);
+static void SpriteCB_ScrollArrow(struct Sprite *sprite);
+static void SpriteCB_DexListInterfaceText(struct Sprite *sprite);
+static void SpriteCB_RotatingPokeBall(struct Sprite *sprite);
+static void SpriteCB_DexListStartMenuCursor(struct Sprite *sprite);
+
+#define TAG_DEX_INTERFACE 4096
+
+POKEDEX_STATIC_DATA static const struct OamData sOamData_ScrollBar =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
+POKEDEX_STATIC_DATA static const struct OamData sOamData_ScrollArrow =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
+POKEDEX_STATIC_DATA static const struct OamData sOamData_InterfaceText =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
+POKEDEX_STATIC_DATA static const struct OamData sOamData_RotatingPokeBall =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_WINDOW,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
+POKEDEX_STATIC_DATA static const struct OamData sOamData_SeenOwnText =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
+POKEDEX_STATIC_DATA static const struct OamData sOamData_Dex8x16 =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_ScrollBar[] =
+{
+    ANIMCMD_FRAME(3, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_ScrollArrow[] =
+{
+    ANIMCMD_FRAME(1, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_RotatingPokeBall[] =
+{
+    ANIMCMD_FRAME(16, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_StartButton[] =
+{
+    ANIMCMD_FRAME(48, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_SearchText[] =
+{
+    ANIMCMD_FRAME(40, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_SelectButton[] =
+{
+    ANIMCMD_FRAME(32, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_MenuText[] =
+{
+    ANIMCMD_FRAME(56, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_SeenText[] =
+{
+    ANIMCMD_FRAME(64, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_OwnText[] =
+{
+    ANIMCMD_FRAME(96, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_HoennText[] =
+{
+    ANIMCMD_FRAME(160, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_NationalText[] =
+{
+    ANIMCMD_FRAME(168, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit0[] =
+{
+    ANIMCMD_FRAME(128, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit1[] =
+{
+    ANIMCMD_FRAME(130, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit2[] =
+{
+    ANIMCMD_FRAME(132, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit3[] =
+{
+    ANIMCMD_FRAME(134, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit4[] =
+{
+    ANIMCMD_FRAME(136, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit5[] =
+{
+    ANIMCMD_FRAME(138, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit6[] =
+{
+    ANIMCMD_FRAME(140, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit7[] =
+{
+    ANIMCMD_FRAME(142, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit8[] =
+{
+    ANIMCMD_FRAME(144, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_HoennSeenOwnDigit9[] =
+{
+    ANIMCMD_FRAME(146, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit0[] =
+{
+    ANIMCMD_FRAME(176, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit1[] =
+{
+    ANIMCMD_FRAME(178, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit2[] =
+{
+    ANIMCMD_FRAME(180, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit3[] =
+{
+    ANIMCMD_FRAME(182, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit4[] =
+{
+    ANIMCMD_FRAME(184, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit5[] =
+{
+    ANIMCMD_FRAME(186, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit6[] =
+{
+    ANIMCMD_FRAME(188, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit7[] =
+{
+    ANIMCMD_FRAME(190, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit8[] =
+{
+    ANIMCMD_FRAME(192, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_NationalSeenOwnDigit9[] =
+{
+    ANIMCMD_FRAME(194, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd sSpriteAnim_DexListStartMenuCursor[] =
+{
+    ANIMCMD_FRAME(4, 30),
+    ANIMCMD_END
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd *const sSpriteAnimTable_ScrollBar[] =
+{
+    sSpriteAnim_ScrollBar
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd *const sSpriteAnimTable_ScrollArrow[] =
+{
+    sSpriteAnim_ScrollArrow
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd *const sSpriteAnimTable_RotatingPokeBall[] =
+{
+    sSpriteAnim_RotatingPokeBall
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd *const sSpriteAnimTable_InterfaceText[] =
+{
+    sSpriteAnim_StartButton,
+    sSpriteAnim_SearchText,
+    sSpriteAnim_SelectButton,
+    sSpriteAnim_MenuText
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd *const sSpriteAnimTable_SeenOwnText[] =
+{
+    sSpriteAnim_SeenText,
+    sSpriteAnim_OwnText
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd *const sSpriteAnimTable_HoennNationalText[] =
+{
+    sSpriteAnim_HoennText,
+    sSpriteAnim_NationalText
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd *const sSpriteAnimTable_HoennSeenOwnNumber[] =
+{
+    sSpriteAnim_HoennSeenOwnDigit0,
+    sSpriteAnim_HoennSeenOwnDigit1,
+    sSpriteAnim_HoennSeenOwnDigit2,
+    sSpriteAnim_HoennSeenOwnDigit3,
+    sSpriteAnim_HoennSeenOwnDigit4,
+    sSpriteAnim_HoennSeenOwnDigit5,
+    sSpriteAnim_HoennSeenOwnDigit6,
+    sSpriteAnim_HoennSeenOwnDigit7,
+    sSpriteAnim_HoennSeenOwnDigit8,
+    sSpriteAnim_HoennSeenOwnDigit9
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd *const sSpriteAnimTable_NationalSeenOwnNumber[] =
+{
+    sSpriteAnim_NationalSeenOwnDigit0,
+    sSpriteAnim_NationalSeenOwnDigit1,
+    sSpriteAnim_NationalSeenOwnDigit2,
+    sSpriteAnim_NationalSeenOwnDigit3,
+    sSpriteAnim_NationalSeenOwnDigit4,
+    sSpriteAnim_NationalSeenOwnDigit5,
+    sSpriteAnim_NationalSeenOwnDigit6,
+    sSpriteAnim_NationalSeenOwnDigit7,
+    sSpriteAnim_NationalSeenOwnDigit8,
+    sSpriteAnim_NationalSeenOwnDigit9
+};
+
+POKEDEX_STATIC_DATA static const union AnimCmd *const sSpriteAnimTable_DexListStartMenuCursor[] =
+{
+    sSpriteAnim_DexListStartMenuCursor
+};
+
+POKEDEX_STATIC_DATA static const struct SpriteTemplate sScrollBarSpriteTemplate =
+{
+    .tileTag = TAG_DEX_INTERFACE,
+    .paletteTag = TAG_DEX_INTERFACE,
+    .oam = &sOamData_ScrollBar,
+    .anims = sSpriteAnimTable_ScrollBar,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Scrollbar,
+};
+
+POKEDEX_STATIC_DATA static const struct SpriteTemplate sScrollArrowSpriteTemplate =
+{
+    .tileTag = TAG_DEX_INTERFACE,
+    .paletteTag = TAG_DEX_INTERFACE,
+    .oam = &sOamData_ScrollArrow,
+    .anims = sSpriteAnimTable_ScrollArrow,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_ScrollArrow,
+};
+
+POKEDEX_STATIC_DATA static const struct SpriteTemplate sInterfaceTextSpriteTemplate =
+{
+    .tileTag = TAG_DEX_INTERFACE,
+    .paletteTag = TAG_DEX_INTERFACE,
+    .oam = &sOamData_InterfaceText,
+    .anims = sSpriteAnimTable_InterfaceText,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_DexListInterfaceText,
+};
+
+POKEDEX_STATIC_DATA static const struct SpriteTemplate sRotatingPokeBallSpriteTemplate =
+{
+    .tileTag = TAG_DEX_INTERFACE,
+    .paletteTag = TAG_DEX_INTERFACE,
+    .oam = &sOamData_RotatingPokeBall,
+    .anims = sSpriteAnimTable_RotatingPokeBall,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_RotatingPokeBall,
+};
+
+POKEDEX_STATIC_DATA static const struct SpriteTemplate sSeenOwnTextSpriteTemplate =
+{
+    .tileTag = TAG_DEX_INTERFACE,
+    .paletteTag = TAG_DEX_INTERFACE,
+    .oam = &sOamData_SeenOwnText,
+    .anims = sSpriteAnimTable_SeenOwnText,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_SeenOwnInfo,
+};
+
+POKEDEX_STATIC_DATA static const struct SpriteTemplate sHoennNationalTextSpriteTemplate =
+{
+    .tileTag = TAG_DEX_INTERFACE,
+    .paletteTag = TAG_DEX_INTERFACE,
+    .oam = &sOamData_InterfaceText,
+    .anims = sSpriteAnimTable_HoennNationalText,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_SeenOwnInfo,
+};
+
+POKEDEX_STATIC_DATA static const struct SpriteTemplate sHoennDexSeenOwnNumberSpriteTemplate =
+{
+    .tileTag = TAG_DEX_INTERFACE,
+    .paletteTag = TAG_DEX_INTERFACE,
+    .oam = &sOamData_Dex8x16,
+    .anims = sSpriteAnimTable_HoennSeenOwnNumber,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_SeenOwnInfo,
+};
+
+POKEDEX_STATIC_DATA static const struct SpriteTemplate sNationalDexSeenOwnNumberSpriteTemplate =
+{
+    .tileTag = TAG_DEX_INTERFACE,
+    .paletteTag = TAG_DEX_INTERFACE,
+    .oam = &sOamData_Dex8x16,
+    .anims = sSpriteAnimTable_NationalSeenOwnNumber,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_SeenOwnInfo,
+};
+
+POKEDEX_STATIC_DATA static const struct SpriteTemplate sDexListStartMenuCursorSpriteTemplate =
+{
+    .tileTag = TAG_DEX_INTERFACE,
+    .paletteTag = TAG_DEX_INTERFACE,
+    .oam = &sOamData_Dex8x16,
+    .anims = sSpriteAnimTable_DexListStartMenuCursor,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_DexListStartMenuCursor,
+};
+
+POKEDEX_STATIC_DATA static const struct CompressedSpriteSheet sInterfaceSpriteSheet[] =
+{
+    {gPokedexInterface_Gfx, 0x2000, TAG_DEX_INTERFACE},
+    {0}
+};
+
+POKEDEX_STATIC_DATA static const struct SpritePalette sInterfaceSpritePalette[] =
+{
+    {gPokedexBgHoenn_Pal, TAG_DEX_INTERFACE},
+    {0}
+};
+
+// By scroll speed. Last element of each unused.
+POKEDEX_STATIC_DATA static const u8 sScrollMonIncrements[] = {4, 8, 16, 32, 32};
+POKEDEX_STATIC_DATA static const u8 sScrollTimers[] = {8, 4, 2, 1, 1};
+
+POKEDEX_STATIC_DATA static const struct BgTemplate sPokedex_BgTemplate[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 12,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 13,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 14,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 15,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0
+    }
+};
+
+POKEDEX_STATIC_DATA static const struct WindowTemplate sPokemonList_WindowTemplate[] =
+{
+    {
+        .bg = 2,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = 32,
+        .height = 32,
+        .paletteNum = 0,
+        .baseBlock = 1,
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+#undef TAG_DEX_INTERFACE
+#undef POKEDEX_STATIC_DATA
 
 __attribute__((naked)) void ResetPokedex()
 {
@@ -2401,7 +2950,7 @@ __attribute__((naked)) void sub_080BBC50(void)
         "_080BBD5C: .4byte gUnknown_20397EC\n\t"
         "_080BBD60: .4byte 0x0000064A\n\t"
         "_080BBD64: .4byte 0x0000062D\n\t"
-        "_080BBD68: .4byte gUnknown_8539BE8\n\t"
+        "_080BBD68: .4byte sPokedex_BgTemplate\n\t"
         "_080BBD6C: .4byte gPokedexMenu_Gfx\n\t"
         "_080BBD70: .4byte gPokedexList_Tilemap\n\t"
         "_080BBD74: .4byte gPokedexListUnderlay_Tilemap\n\t"
@@ -2465,7 +3014,7 @@ __attribute__((naked)) void sub_080BBC50(void)
         "	.align 2, 0\n\t"
         "_080BBDF8: .4byte gUnknown_20397EC\n\t"
         "_080BBDFC: .4byte 0x0000064C\n\t"
-        "_080BBE00: .4byte gUnknown_8539BF8\n\t"
+        "_080BBE00: .4byte sPokemonList_WindowTemplate\n\t"
         "_080BBE04: .4byte gMain\n\t"
         "_080BBE08:\n\t"
         "	bl ResetSpriteData\n\t"
@@ -2482,8 +3031,8 @@ __attribute__((naked)) void sub_080BBC50(void)
         "	b _080BBF34\n\t"
         "	.align 2, 0\n\t"
         "_080BBE2C: .4byte gReservedSpritePaletteCount\n\t"
-        "_080BBE30: .4byte gUnknown_8539BBC\n\t"
-        "_080BBE34: .4byte gUnknown_8539BCC\n\t"
+        "_080BBE30: .4byte sInterfaceSpriteSheet\n\t"
+        "_080BBE34: .4byte sInterfaceSpritePalette\n\t"
         "_080BBE38:\n\t"
         "	movs r2, #0x87\n\t"
         "	lsls r2, r2, #3\n\t"
@@ -3868,7 +4417,7 @@ __attribute__((naked)) void CreateMonDexNum(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BC924: .4byte gUnknown_8539BF8 + 0x10\n\t"
+        "_080BC924: .4byte sPokemonList_WindowTemplate + 0x10\n\t"
         "_080BC928: .4byte gUnknown_20397EC\n\t"
         "_080BC92C: .4byte 0x00000612\n\t"
         ".syntax divided\n\t"
@@ -4800,9 +5349,9 @@ __attribute__((naked)) void sub_080BCE3C(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080BD054: .4byte gUnknown_8539BDC\n\t"
+        "_080BD054: .4byte sScrollMonIncrements\n\t"
         "_080BD058: .4byte gUnknown_20397EC\n\t"
-        "_080BD05C: .4byte gUnknown_8539BE1\n\t"
+        "_080BD05C: .4byte sScrollTimers\n\t"
         "_080BD060: .4byte 0x0000062E\n\t"
         "_080BD064: .4byte 0x00000636\n\t"
         "_080BD068: .4byte 0x00000634\n\t"
@@ -5407,13 +5956,13 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	mov r8, r0\n\t"
         "	b _080BD518\n\t"
         "	.align 2, 0\n\t"
-        "_080BD4E8: .4byte gUnknown_8539AFC\n\t"
+        "_080BD4E8: .4byte sScrollArrowSpriteTemplate\n\t"
         "_080BD4EC: .4byte gSprites\n\t"
-        "_080BD4F0: .4byte gUnknown_8539AE4\n\t"
-        "_080BD4F4: .4byte gUnknown_8539B14\n\t"
-        "_080BD4F8: .4byte gUnknown_8539B2C\n\t"
-        "_080BD4FC: .4byte gUnknown_8539B44\n\t"
-        "_080BD500: .4byte gUnknown_8539B74\n\t"
+        "_080BD4F0: .4byte sScrollBarSpriteTemplate\n\t"
+        "_080BD4F4: .4byte sInterfaceTextSpriteTemplate\n\t"
+        "_080BD4F8: .4byte sRotatingPokeBallSpriteTemplate\n\t"
+        "_080BD4FC: .4byte sSeenOwnTextSpriteTemplate\n\t"
+        "_080BD500: .4byte sHoennDexSeenOwnNumberSpriteTemplate\n\t"
         "_080BD504: .4byte gUnknown_20397EC\n\t"
         "_080BD508: .4byte 0x0000061A\n\t"
         "_080BD50C:\n\t"
@@ -5460,7 +6009,7 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	bl StartSpriteAnim\n\t"
         "	b _080BD588\n\t"
         "	.align 2, 0\n\t"
-        "_080BD564: .4byte gUnknown_8539B74\n\t"
+        "_080BD564: .4byte sHoennDexSeenOwnNumberSpriteTemplate\n\t"
         "_080BD568: .4byte gUnknown_20397EC\n\t"
         "_080BD56C: .4byte 0x0000061A\n\t"
         "_080BD570: .4byte gSprites\n\t"
@@ -5536,7 +6085,7 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	b _080BD62C\n\t"
         "	.align 2, 0\n\t"
         "_080BD60C: .4byte gSprites\n\t"
-        "_080BD610: .4byte gUnknown_8539B74\n\t"
+        "_080BD610: .4byte sHoennDexSeenOwnNumberSpriteTemplate\n\t"
         "_080BD614: .4byte gUnknown_20397EC\n\t"
         "_080BD618: .4byte 0x0000061A\n\t"
         "_080BD61C: .4byte 0x0000061C\n\t"
@@ -5584,7 +6133,7 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	bl StartSpriteAnim\n\t"
         "	b _080BD69C\n\t"
         "	.align 2, 0\n\t"
-        "_080BD678: .4byte gUnknown_8539B74\n\t"
+        "_080BD678: .4byte sHoennDexSeenOwnNumberSpriteTemplate\n\t"
         "_080BD67C: .4byte gUnknown_20397EC\n\t"
         "_080BD680: .4byte 0x0000061C\n\t"
         "_080BD684: .4byte gSprites\n\t"
@@ -5630,7 +6179,7 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	b _080BDB82\n\t"
         "	.align 2, 0\n\t"
         "_080BD6DC: .4byte gSprites\n\t"
-        "_080BD6E0: .4byte gUnknown_8539B74\n\t"
+        "_080BD6E0: .4byte sHoennDexSeenOwnNumberSpriteTemplate\n\t"
         "_080BD6E4: .4byte gUnknown_20397EC\n\t"
         "_080BD6E8: .4byte 0x0000061C\n\t"
         "_080BD6EC:\n\t"
@@ -5723,9 +6272,9 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	mov r8, r0\n\t"
         "	b _080BD7D0\n\t"
         "	.align 2, 0\n\t"
-        "_080BD7B8: .4byte gUnknown_8539B44\n\t"
-        "_080BD7BC: .4byte gUnknown_8539B5C\n\t"
-        "_080BD7C0: .4byte gUnknown_8539B8C\n\t"
+        "_080BD7B8: .4byte sSeenOwnTextSpriteTemplate\n\t"
+        "_080BD7BC: .4byte sHoennNationalTextSpriteTemplate\n\t"
+        "_080BD7C0: .4byte sNationalDexSeenOwnNumberSpriteTemplate\n\t"
         "_080BD7C4:\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r0, #0x3e\n\t"
@@ -5766,7 +6315,7 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	bl StartSpriteAnim\n\t"
         "	b _080BD830\n\t"
         "	.align 2, 0\n\t"
-        "_080BD814: .4byte gUnknown_8539B8C\n\t"
+        "_080BD814: .4byte sNationalDexSeenOwnNumberSpriteTemplate\n\t"
         "_080BD818: .4byte gSprites\n\t"
         "_080BD81C:\n\t"
         "	ldr r1, _080BD8AC\n\t"
@@ -5837,7 +6386,7 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	b _080BD8C8\n\t"
         "	.align 2, 0\n\t"
         "_080BD8AC: .4byte gSprites\n\t"
-        "_080BD8B0: .4byte gUnknown_8539B8C\n\t"
+        "_080BD8B0: .4byte sNationalDexSeenOwnNumberSpriteTemplate\n\t"
         "_080BD8B4: .4byte gUnknown_20397EC\n\t"
         "_080BD8B8: .4byte 0x0000061A\n\t"
         "_080BD8BC:\n\t"
@@ -5884,7 +6433,7 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	bl StartSpriteAnim\n\t"
         "	b _080BD938\n\t"
         "	.align 2, 0\n\t"
-        "_080BD914: .4byte gUnknown_8539B8C\n\t"
+        "_080BD914: .4byte sNationalDexSeenOwnNumberSpriteTemplate\n\t"
         "_080BD918: .4byte gUnknown_20397EC\n\t"
         "_080BD91C: .4byte 0x0000061A\n\t"
         "_080BD920: .4byte gSprites\n\t"
@@ -5961,7 +6510,7 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	b _080BD9DC\n\t"
         "	.align 2, 0\n\t"
         "_080BD9C0: .4byte gSprites\n\t"
-        "_080BD9C4: .4byte gUnknown_8539B8C\n\t"
+        "_080BD9C4: .4byte sNationalDexSeenOwnNumberSpriteTemplate\n\t"
         "_080BD9C8: .4byte gUnknown_20397EC\n\t"
         "_080BD9CC: .4byte 0x0000061A\n\t"
         "_080BD9D0:\n\t"
@@ -6004,7 +6553,7 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	bl StartSpriteAnim\n\t"
         "	b _080BDA3C\n\t"
         "	.align 2, 0\n\t"
-        "_080BDA20: .4byte gUnknown_8539B8C\n\t"
+        "_080BDA20: .4byte sNationalDexSeenOwnNumberSpriteTemplate\n\t"
         "_080BDA24: .4byte gSprites\n\t"
         "_080BDA28:\n\t"
         "	ldr r1, _080BDAB8\n\t"
@@ -6075,7 +6624,7 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	b _080BDAD4\n\t"
         "	.align 2, 0\n\t"
         "_080BDAB8: .4byte gSprites\n\t"
-        "_080BDABC: .4byte gUnknown_8539B8C\n\t"
+        "_080BDABC: .4byte sNationalDexSeenOwnNumberSpriteTemplate\n\t"
         "_080BDAC0: .4byte gUnknown_20397EC\n\t"
         "_080BDAC4: .4byte 0x0000061C\n\t"
         "_080BDAC8:\n\t"
@@ -6122,7 +6671,7 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	bl StartSpriteAnim\n\t"
         "	b _080BDB44\n\t"
         "	.align 2, 0\n\t"
-        "_080BDB20: .4byte gUnknown_8539B8C\n\t"
+        "_080BDB20: .4byte sNationalDexSeenOwnNumberSpriteTemplate\n\t"
         "_080BDB24: .4byte gUnknown_20397EC\n\t"
         "_080BDB28: .4byte 0x0000061C\n\t"
         "_080BDB2C: .4byte gSprites\n\t"
@@ -6181,10 +6730,10 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	b _080BDBCC\n\t"
         "	.align 2, 0\n\t"
         "_080BDBA0: .4byte gSprites\n\t"
-        "_080BDBA4: .4byte gUnknown_8539B8C\n\t"
+        "_080BDBA4: .4byte sNationalDexSeenOwnNumberSpriteTemplate\n\t"
         "_080BDBA8: .4byte gUnknown_20397EC\n\t"
         "_080BDBAC: .4byte 0x0000061C\n\t"
-        "_080BDBB0: .4byte gUnknown_8539BA4\n\t"
+        "_080BDBB0: .4byte sDexListStartMenuCursorSpriteTemplate\n\t"
         "_080BDBB4:\n\t"
         "	ldr r0, _080BDBE4\n\t"
         "	movs r1, #0x90\n\t"
@@ -6211,13 +6760,13 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BDBE4: .4byte gUnknown_8539BA4\n\t"
+        "_080BDBE4: .4byte sDexListStartMenuCursorSpriteTemplate\n\t"
         ".syntax divided\n\t"
     );
 }
 
 void nullsub_38(void) {}
-__attribute__((naked)) void sub_080BDBEC(void)
+static __attribute__((naked)) void SpriteCB_SeenOwnInfo(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6462,7 +7011,7 @@ __attribute__((naked)) void sub_080BDC80(void)
     );
 }
 
-__attribute__((naked)) void SpriteCB_Scrollbar(void)
+static __attribute__((naked)) void SpriteCB_Scrollbar(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6508,7 +7057,7 @@ __attribute__((naked)) void SpriteCB_Scrollbar(void)
     );
 }
 
-__attribute__((naked)) void sub_080BDDF8(void)
+static __attribute__((naked)) void SpriteCB_ScrollArrow(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6651,7 +7200,7 @@ __attribute__((naked)) void sub_080BDDF8(void)
     );
 }
 
-__attribute__((naked)) void sub_080BDEF8(void)
+static __attribute__((naked)) void SpriteCB_DexListInterfaceText(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6678,7 +7227,7 @@ __attribute__((naked)) void sub_080BDEF8(void)
     );
 }
 
-__attribute__((naked)) void sub_080BDF20(void)
+static __attribute__((naked)) void SpriteCB_RotatingPokeBall(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6775,7 +7324,7 @@ __attribute__((naked)) void sub_080BDF20(void)
     );
 }
 
-__attribute__((naked)) void sub_080BDFD4(void)
+static __attribute__((naked)) void SpriteCB_DexListStartMenuCursor(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -12184,8 +12733,8 @@ __attribute__((naked)) void sub_080C0850(void)
         "	bl CopyBgTilemapBufferToVram\n\t"
         "	b _080C0A4A\n\t"
         "	.align 2, 0\n\t"
-        "_080C09E4: .4byte gUnknown_8539BBC\n\t"
-        "_080C09E8: .4byte gUnknown_8539BCC\n\t"
+        "_080C09E4: .4byte sInterfaceSpriteSheet\n\t"
+        "_080C09E8: .4byte sInterfaceSpritePalette\n\t"
         "_080C09EC: .4byte gUnknown_3005B68\n\t"
         "_080C09F0:\n\t"
         "	movs r0, #1\n\t"
@@ -14622,7 +15171,7 @@ __attribute__((naked)) void sub_080C1C38(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C1CB0: .4byte gUnknown_8539AFC\n\t"
+        "_080C1CB0: .4byte sScrollArrowSpriteTemplate\n\t"
         "_080C1CB4: .4byte gSprites\n\t"
         "_080C1CB8: .4byte sub_080C1B84 + 1\n\t"
         ".syntax divided\n\t"

@@ -9657,7 +9657,7 @@ SECTIONS {
         data/data_b2d_mid15.o(.rodata.data_b2d_mid15_pokedex_unused_lz);
         src/graphics.o(.rodata.pokedex_graphics_menu_interface);
         src/data/pokedex.o(.rodata.pokedex_orders);
-        data/data_b2d_mid15.o(.rodata.data_b2d_mid15_suffix);
+        src/pokedex.o(.rodata.pokedex_static_data);
         src/data/text/region_texts54.o(.rodata);
         data/data_b2d_mid54.o(.rodata);
         src/data/text/region_texts55.o(.rodata);
