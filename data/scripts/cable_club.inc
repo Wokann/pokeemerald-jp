@@ -1193,8 +1193,6 @@ EventScript_WirelessBoxResults::
 	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_AdapterNotConnected
 	fadescreen FADE_TO_BLACK
 	special ShowWirelessCommunicationScreen
-	@ JP keeps the status-screen wait explicit.
-	waitstate
 	msgbox CableClub_Text_ParticipantsStepUpToCounter, MSGBOX_DEFAULT
 	releaseall
 	end

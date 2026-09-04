@@ -432,7 +432,7 @@ gSpecials::
 	def_special TryBecomeLinkLeader
 	def_special TryJoinLinkGroup
 	def_special RunUnionRoom
-	def_special ShowWirelessCommunicationScreen
+	def_special ShowWirelessCommunicationScreen, waitstate=1
 	def_special InitUnionRoom
 	def_special BufferUnionRoomPlayerName
 	def_special WonderNews_GetRewardInfo
