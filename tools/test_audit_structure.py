@@ -258,12 +258,11 @@ class StructureAuditTests(unittest.TestCase):
             root = Path(temporary)
             map_dir = root / "data/maps/Included"
             map_dir.mkdir(parents=True)
-            (map_dir / "map.json").write_text(
-                '{"id":"MAP_INCLUDED","layout":"LAYOUT_INCLUDED"}', encoding="utf-8")
+            (map_dir / "map.json").write_text('{"id":"MAP_INCLUDED"}', encoding="utf-8")
             (map_dir / "scripts.inc").write_text("", encoding="utf-8")
             (map_dir / "events.inc").write_text("", encoding="utf-8")
             (map_dir / "header.inc").write_text(
-                '\t.4byte gMapLayout_INCLUDED\n'
+                '\t.4byte NULL\n'
                 '\t.4byte Included_MapEvents\n'
                 '\t.4byte Included_MapScripts\n'
                 '\t.4byte NULL\n', encoding="utf-8")
@@ -279,7 +278,39 @@ class StructureAuditTests(unittest.TestCase):
         self.assertEqual(progress["header_records"], 1)
         self.assertEqual(record["events"]["status"], "direct")
         self.assertEqual(record["scripts"]["status"], "direct")
-        self.assertEqual(record["layout"]["status"], "direct")
+
+    def test_map_convergence_prefers_final_map_events_stream(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            map_dir = root / "data/maps/FinalOwner"
+            map_dir.mkdir(parents=True)
+            (map_dir / "map.json").write_text('{"id":"MAP_FINAL_OWNER"}', encoding="utf-8")
+            (map_dir / "scripts.inc").write_text("", encoding="utf-8")
+            (map_dir / "events.inc").write_text("", encoding="utf-8")
+            (map_dir / "header.inc").write_text(
+                '\t.4byte NULL\n'
+                '\t.4byte FinalOwner_MapEvents\n'
+                '\t.4byte FinalOwner_MapScripts\n'
+                '\t.4byte NULL\n', encoding="utf-8")
+            (root / "data/event_scripts.s").write_text(
+                '.include "data/maps/FinalOwner/scripts.inc"\n', encoding="utf-8")
+            (root / "data/maps/events.inc").write_text(
+                '.include "data/maps/FinalOwner/events.inc"\n', encoding="utf-8")
+            (root / "data/map_events.s").write_text(
+                '.include "data/maps/events.inc"\n', encoding="utf-8")
+            (root / "data/data_b2d_mid26.s").write_text(
+                '@ historical container after event-owner migration\n', encoding="utf-8")
+            (root / "data/maps.s").write_text(
+                '@ MAP_FINAL_OWNER (g1 m2)\n'
+                '.include "data/maps/FinalOwner/header.inc"\n', encoding="utf-8")
+            progress = audit.map_convergence_progress(root)
+            artifacts = audit.map_artifact_progress(root, progress["records"])
+        self.assertEqual(progress["stream_files"]["events"], "data/map_events.s")
+        self.assertEqual(progress["event_stream_maps"], 1)
+        self.assertEqual(progress["maps_in_both_streams"], 1)
+        self.assertEqual(progress["records"][0]["name"], "FinalOwner")
+        self.assertEqual(artifacts["upper_event_includes"], 1)
+        self.assertEqual(artifacts["direct_structure_complete_maps"], 1)
 
     def test_map_convergence_inlines_map_header_aggregate(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -287,13 +318,12 @@ class StructureAuditTests(unittest.TestCase):
             map_dir = root / "data/maps/Aggregated"
             map_dir.mkdir(parents=True)
             (map_dir / "map.json").write_text(
-                '{"id":"MAP_AGGREGATED","name":"Aggregated","layout":"LAYOUT_AGGREGATED"}',
-                encoding="utf-8")
+                '{"id":"MAP_AGGREGATED","name":"Aggregated"}', encoding="utf-8")
             (map_dir / "scripts.inc").write_text("", encoding="utf-8")
             (map_dir / "events.inc").write_text("", encoding="utf-8")
             (map_dir / "header.inc").write_text(
                 'Aggregated:\n'
-                '\t.4byte gMapLayout_AGGREGATED\n'
+                '\t.4byte NULL\n'
                 '\t.4byte Aggregated_MapEvents\n'
                 '\t.4byte Aggregated_MapScripts\n'
                 '\t.4byte NULL\n', encoding="utf-8")
@@ -310,7 +340,6 @@ class StructureAuditTests(unittest.TestCase):
         self.assertEqual(progress["header_records"], 1)
         self.assertEqual(record["events"]["status"], "direct")
         self.assertEqual(record["scripts"]["status"], "direct")
-        self.assertEqual(record["layout"]["status"], "direct")
 
     def test_map_convergence_accepts_canonical_layout_label(self):
         with tempfile.TemporaryDirectory() as temporary:

@@ -544,10 +544,17 @@ def map_artifact_progress(root: Path, convergence_records: list[dict[str, object
     jp_scripts = {path.parent.name for path in map_root.glob("*/scripts.inc")}
     jp_events = {path.parent.name for path in map_root.glob("*/events.inc")}
     upper_event_includes = set()
+    aggregate_events_path = root / "data/maps/events.inc"
+    aggregate_events_included = False
     for path in sorted((root / "data").glob("*.s")):
-        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        source_text = path.read_text(encoding="utf-8", errors="replace")
+        for line in source_text.splitlines():
             if match := MAP_EVENTS_RE.match(line):
                 upper_event_includes.add(match.group(1))
+            if (match := ASM_INCLUDE_RE.match(line)) and match.group(1) == "data/maps/events.inc":
+                aggregate_events_included = True
+    if aggregate_events_included and aggregate_events_path.is_file():
+        upper_event_includes.update(map_includes(aggregate_events_path, MAP_EVENTS_RE))
     direct_structure_complete = jp_json & jp_scripts & jp_events & upper_event_includes
     if convergence_records is None:
         structure_complete = direct_structure_complete
@@ -1045,14 +1052,19 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
     """Audit map records across the three JP source streams.
 
     The check starts with the first map in data/event_scripts.s and joins it
-    to data/data_b2d_mid26.s (events) and data/maps.s (headers,
-    layouts, and tilesets).  It records aliases and raw ranges as work items;
-    a present include or generated file is deliberately never a semantic pass.
+    to data/map_events.s (events) and data/maps.s (headers, layouts, and
+    tilesets).  Older trees that have not yet moved the event stream use the
+    data/data_b2d_mid26.s fallback. It records aliases and raw ranges as work
+    items; a present include or generated file is deliberately never a
+    semantic pass.
     """
     event_scripts_path = root / "data/event_scripts.s"
-    events_path = root / "data/data_b2d_mid26.s"
+    events_path = root / "data/map_events.s"
+    if not events_path.is_file():
+        events_path = root / "data/data_b2d_mid26.s"
     map_data_path = root / "data/maps.s"
     layouts_path = root / "data/layouts/layouts.inc"
+    events_stream_path = events_path.relative_to(root).as_posix()
     event_scripts_text = event_scripts_path.read_text(encoding="utf-8", errors="replace") \
         if event_scripts_path.is_file() else ""
     events_text = events_path.read_text(encoding="utf-8", errors="replace") if events_path.is_file() else ""
@@ -1073,6 +1085,15 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
 
     script_order = map_includes(event_scripts_path, MAP_NAME_RE)
     event_order = map_includes(events_path, MAP_EVENTS_RE)
+    # The final event owner delegates to the generated aggregate. Preserve
+    # the aggregate's source order rather than treating its single include as
+    # an empty event stream. Legacy mid26 owners still carry direct includes.
+    aggregate_events_path = root / "data/maps/events.inc"
+    aggregate_events_included = any(
+        (match := ASM_INCLUDE_RE.match(line)) and match.group(1) == "data/maps/events.inc"
+        for line in events_text.splitlines())
+    if not event_order and aggregate_events_included and aggregate_events_path.is_file():
+        event_order = map_includes(aggregate_events_path, MAP_EVENTS_RE)
     headers = map_headers(map_data_text, root, header_labels)
     aliases = map_event_aliases(events_text)
     shared_symbols = set()
@@ -1227,7 +1248,7 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
     return {
         "stream_files": {
             "scripts": "data/event_scripts.s",
-            "events": "data/data_b2d_mid26.s",
+            "events": events_stream_path,
             "map_data": "data/maps.s",
             "layouts": "data/layouts/layouts.inc",
         },
@@ -1246,7 +1267,7 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
         "maps_with_raw_resource_ranges": resource_raw_maps,
         "top_level_raw_baserom_directives": {
             "data/event_scripts.s": raw_baserom_directives(event_scripts_text),
-            "data/data_b2d_mid26.s": raw_baserom_directives(events_text),
+            events_stream_path: raw_baserom_directives(events_text),
             "data/maps.s": raw_baserom_directives(map_data_text),
         },
         "semantic_review": {
@@ -1581,14 +1602,14 @@ def print_report(report: dict[str, object]) -> None:
     raw_streams = convergence["top_level_raw_baserom_directives"]
     print("map convergence: script-stream=%d event-stream=%d shared=%d headers=%d; "
           "event-pointers=%s; map raw scripts/events/resources=%d/%d/%d; "
-          "top-level raw scripts/mid26/maps=%d/%d/%d; semantic-review=%s" % (
+          "top-level raw scripts/events/maps=%d/%d/%d; semantic-review=%s" % (
               convergence["script_stream_maps"], convergence["event_stream_maps"],
               convergence["maps_in_both_streams"], convergence["header_records"],
               ",".join("%s=%d" % item for item in convergence["event_pointer_statuses"].items()),
               convergence["maps_with_raw_script_ranges"], convergence["maps_with_raw_event_ranges"],
               convergence["maps_with_raw_resource_ranges"],
               len(raw_streams["data/event_scripts.s"]),
-              len(raw_streams["data/data_b2d_mid26.s"]),
+              len(raw_streams[convergence["stream_files"]["events"]]),
               len(raw_streams["data/maps.s"]),
               convergence["semantic_review"]["status"]))
     jp_section = script_data["linked_sections"]["jp"]["section"]
@@ -1671,7 +1692,7 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "| 地图脚本 owner | `scripts.inc` 与 map-table 实际首 owner 名的交集 / 去重首 owner；共享表只属于首次出现地图。 |",
         "| 地图结构完整 | 同一地图具 `map.json`，且其 scripts/events 为本地图的物理文件与上层 include，或为 map.json 明示、header 精确指向且在 JP `data/` 有真实标签定义的共享 owner；只说明结构已拆分。 |",
         "| 地图语义复核 | 仅接受未来版本化复核清单的显式记录；当前为 `not_recorded`，绝不从目录或 include 推断。 |",
-        "| 三流地图会合 | 以 `data/event_scripts.s`、`data/data_b2d_mid26.s`、`data/maps.s` 的同图记录连接 scripts、events、地图头/布局/tileset。别名和 baserom 范围均为待办，不构成完成。 |",
+        "| 三流地图会合 | 以 `data/event_scripts.s`、`data/map_events.s`（旧树回退 `data/data_b2d_mid26.s`）和 `data/maps.s` 的同图记录连接 scripts、events、地图头/布局/tileset。别名和 baserom 范围均为待办，不构成完成。 |",
         "| script_data 顶层分区 | US linker 提供 8 个对象的目标 owner 顺序；JP linker map 提供实际范围和锚点。只在 JP 起止标签、末尾位置与 ROM 比对均成立时，才允许拆出一个 owner。 |",
         "| JP 独有 C 迁移清单 | 已映射、非裸汇编、但无 US 标准 C owner 的函数模块；动态分类，不沿用失效的固定“38 个”计数。 |",
         "",
