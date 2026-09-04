@@ -44,10 +44,9 @@ extern IWRAM_DATA struct BgConfig2 sGpuBgConfigs2[NUM_BACKGROUNDS];
 extern IWRAM_DATA u32 sDmaBusyBitfield[NUM_BACKGROUNDS];
 extern IWRAM_DATA u32 gWindowTileAutoAllocEnabled;
 
-// JP const data lives in data.s.
-extern const struct BgConfig gUnknown_829BEAC;
+#define BG_DATA __attribute__((section(".rodata.bg_data")))
 
-#define sZeroedBgControlStruct gUnknown_829BEAC
+BG_DATA static const struct BgConfig sZeroedBgControlStruct = { 0 };
 
 static u32 GetBgType(u8 bg);
 

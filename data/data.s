@@ -1,4 +1,4 @@
-	.section .rodata
+	.section .rodata.data_before_bg_data
 	.globl gGameVersion
 gGameVersion: @ 0x829BDA4
 	.byte 0x03
@@ -42,13 +42,7 @@ sMallocAssertNextMagic: @ 0x829BE54
 	.globl sMallocAssertPrevMagic
 sMallocAssertPrevMagic: @ 0x829BE80
 	.asciz "pos->prev->magic_number == MALLOC_SYSTEM_ID"
-	.globl gUnknown_829BEAC
-gUnknown_829BEAC: @ 0x829BEAC
-	.incbin "baserom_jp.gba", 0x29beac, 0x4
-
-	.globl gUnknown_829BEB0
-gUnknown_829BEB0: @ 0x829BEB0
-	.incbin "baserom_jp.gba", 0x29beb0, 0x8
+	.section .rodata.data_after_window_data
 
 	.globl sGlyphPaletteIdxTable
 sGlyphPaletteIdxTable: @ 0x829BEB8

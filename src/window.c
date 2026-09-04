@@ -12,10 +12,9 @@ extern EWRAM_DATA struct Window gWindows[WINDOWS_MAX];
 extern EWRAM_DATA struct Window *sWindowPtr;
 extern EWRAM_DATA u16 sWindowSize;
 
-// JP const data lives in data.s.
-extern const struct WindowTemplate gUnknown_829BEB0;
+#define WINDOW_DATA __attribute__((section(".rodata.window_data")))
 
-#define sDummyWindowTemplate gUnknown_829BEB0
+WINDOW_DATA static const struct WindowTemplate sDummyWindowTemplate = DUMMY_WIN_TEMPLATE;
 
 static u8 GetNumActiveWindowsOnBg(u8 bgId);
 static u8 GetNumActiveWindowsOnBg8Bit(u8 bgId);

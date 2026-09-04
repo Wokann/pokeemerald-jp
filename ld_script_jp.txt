@@ -9240,7 +9240,10 @@ SECTIONS {
     .rodata :
     ALIGN(4)
     {
-        data/data.o(.rodata);
+        data/data.o(.rodata.data_before_bg_data);
+        src/bg.o(.rodata.bg_data);
+        src/window.o(.rodata.window_data);
+        data/data.o(.rodata.data_after_window_data);
         src/sprite.o(.rodata.sprite_dummy_data);
         data/data.o(.rodata.data_after_sprite_dummy_data);
         src/sprite.o(.rodata.sprite_oam_dimensions);
