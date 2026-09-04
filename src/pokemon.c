@@ -9,6 +9,7 @@
 #define POKEMON_SPINDA_DATA __attribute__((section(".rodata.pokemon_spinda_data")))
 #define POKEMON_NATURE_STAT_DATA __attribute__((section(".rodata.pokemon_nature_stat_data")))
 #define POKEMON_FRONT_ANIMATION_TABLE_DATA __attribute__((section(".rodata.pokemon_front_animation_table_data"), aligned(1)))
+#define POKEMON_PP_UP_AND_STAT_STAGE_DATA __attribute__((section(".rodata.pokemon_pp_up_and_stat_stage_data"), aligned(1)))
 
 // SPECIES_NONE is ignored in these tables, so decrement the species before lookup.
 
@@ -459,6 +460,37 @@ POKEMON_FRONT_ANIMATION_TABLE_DATA static const u8 sMonAnimationDelayTable[NUM_S
     [SPECIES_SALAMENCE - 1]  = 70,
     [SPECIES_KYOGRE - 1]     = 60,
     [SPECIES_RAYQUAZA - 1]   = 60,
+};
+
+#define PP_UP_SHIFTS(val)           val,        (val) << 2,        (val) << 4,        (val) << 6
+#define PP_UP_SHIFTS_INV(val) (u8)~(val), (u8)~((val) << 2), (u8)~((val) << 4), (u8)~((val) << 6)
+
+// PP Up bonuses are stored for a Pokémon as a single byte.
+// There are 2 bits (a value 0-3) for each move slot that
+// represent how many PP Ups have been applied.
+// The following arrays take a move slot id and return:
+// gPPUpGetMask - A mask to get the number of PP Ups applied to that move slot
+// gPPUpClearMask - A mask to clear the number of PP Ups applied to that move slot
+// gPPUpAddValues - A value to add to the PP Bonuses byte to apply 1 PP Up to that move slot
+POKEMON_PP_UP_AND_STAT_STAGE_DATA const u8 gPPUpGetMask[MAX_MON_MOVES]   = {PP_UP_SHIFTS(3)};
+POKEMON_PP_UP_AND_STAT_STAGE_DATA const u8 gPPUpClearMask[MAX_MON_MOVES] = {PP_UP_SHIFTS_INV(3)};
+POKEMON_PP_UP_AND_STAT_STAGE_DATA const u8 gPPUpAddValues[MAX_MON_MOVES] = {PP_UP_SHIFTS(1)};
+
+POKEMON_PP_UP_AND_STAT_STAGE_DATA const u8 gStatStageRatios[MAX_STAT_STAGE + 1][2] =
+{
+    {10, 40}, // -6, MIN_STAT_STAGE
+    {10, 35}, // -5
+    {10, 30}, // -4
+    {10, 25}, // -3
+    {10, 20}, // -2
+    {10, 15}, // -1
+    {10, 10}, //  0, DEFAULT_STAT_STAGE
+    {15, 10}, // +1
+    {20, 10}, // +2
+    {25, 10}, // +3
+    {30, 10}, // +4
+    {35, 10}, // +5
+    {40, 10}, // +6, MAX_STAT_STAGE
 };
 
 struct CombinedMove
@@ -5815,7 +5847,7 @@ __attribute__((naked)) s32 CalculateBaseDamage(struct BattlePokemon *attacker, s
         "_080695CC: .4byte gBattleMoves\n\t"
         "_080695D0: .4byte gCurrentMove\n\t"
         "_080695D4: .4byte gCritMultiplier\n\t"
-        "_080695D8: .4byte gUnknown_82FA6B6\n\t"
+        "_080695D8: .4byte gStatStageRatios\n\t"
         "_080695DC:\n\t"
         "	adds r5, r7, #0\n\t"
         "	b _080695FE\n\t"
@@ -5861,7 +5893,7 @@ __attribute__((naked)) s32 CalculateBaseDamage(struct BattlePokemon *attacker, s
         "	ldrsb r0, [r3, r0]\n\t"
         "	b _08069644\n\t"
         "	.align 2, 0\n\t"
-        "_08069630: .4byte gUnknown_82FA6B6\n\t"
+        "_08069630: .4byte gStatStageRatios\n\t"
         "_08069634: .4byte gBattleMovePower\n\t"
         "_08069638:\n\t"
         "	ldr r3, [sp, #0x18]\n\t"
@@ -5930,7 +5962,7 @@ __attribute__((naked)) s32 CalculateBaseDamage(struct BattlePokemon *attacker, s
         "	lsls r5, r0, #1\n\t"
         "	b _080696CA\n\t"
         "	.align 2, 0\n\t"
-        "_080696BC: .4byte gUnknown_82FA6B6\n\t"
+        "_080696BC: .4byte gStatStageRatios\n\t"
         "_080696C0: .4byte gBattleTypeFlags\n\t"
         "_080696C4:\n\t"
         "	lsrs r0, r5, #0x1f\n\t"
@@ -5991,7 +6023,7 @@ __attribute__((naked)) s32 CalculateBaseDamage(struct BattlePokemon *attacker, s
         "_08069728: .4byte gBattleTypeFlags\n\t"
         "_0806972C: .4byte gBattleMoves\n\t"
         "_08069730: .4byte gCritMultiplier\n\t"
-        "_08069734: .4byte gUnknown_82FA6B6\n\t"
+        "_08069734: .4byte gStatStageRatios\n\t"
         "_08069738:\n\t"
         "	mov r5, r8\n\t"
         "	b _0806975A\n\t"
@@ -6034,7 +6066,7 @@ __attribute__((naked)) s32 CalculateBaseDamage(struct BattlePokemon *attacker, s
         "	ldr r2, _08069788\n\t"
         "	b _0806979C\n\t"
         "	.align 2, 0\n\t"
-        "_08069788: .4byte gUnknown_82FA6B6\n\t"
+        "_08069788: .4byte gStatStageRatios\n\t"
         "_0806978C: .4byte gBattleMovePower\n\t"
         "_08069790:\n\t"
         "	ldr r3, [sp, #0x1c]\n\t"
@@ -6090,7 +6122,7 @@ __attribute__((naked)) s32 CalculateBaseDamage(struct BattlePokemon *attacker, s
         "	lsls r5, r0, #1\n\t"
         "	b _0806980A\n\t"
         "	.align 2, 0\n\t"
-        "_080697FC: .4byte gUnknown_82FA6B6\n\t"
+        "_080697FC: .4byte gStatStageRatios\n\t"
         "_08069800: .4byte gBattleTypeFlags\n\t"
         "_08069804:\n\t"
         "	lsrs r0, r5, #0x1f\n\t"
@@ -9961,7 +9993,7 @@ __attribute__((naked)) u8 CalculatePPWithBonus(u16 move, u8 ppBonuses, u8 moveIn
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0806B464: .4byte gBattleMoves\n\t"
-        "_0806B468: .4byte gUnknown_82FA6AA\n\t"
+        "_0806B468: .4byte gPPUpGetMask\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9997,7 +10029,7 @@ __attribute__((naked)) void RemoveMonPPBonus(struct Pokemon *mon, u8 moveIndex)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0806B4A4: .4byte gUnknown_82FA6AE\n\t"
+        "_0806B4A4: .4byte gPPUpClearMask\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10017,7 +10049,7 @@ __attribute__((naked)) void RemoveBattleMonPPBonus(struct BattlePokemon *mon, u8
         "	strb r1, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0806B4BC: .4byte gUnknown_82FA6AE\n\t"
+        "_0806B4BC: .4byte gPPUpClearMask\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11272,8 +11304,8 @@ __attribute__((naked)) bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item
         "	ldr r0, [r0]\n\t"
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
-        "_0806BEC8: .4byte gUnknown_82FA6AA\n\t"
-        "_0806BECC: .4byte gUnknown_82FA6B2\n\t"
+        "_0806BEC8: .4byte gPPUpGetMask\n\t"
+        "_0806BECC: .4byte gPPUpAddValues\n\t"
         "_0806BED0: .4byte _0806BED4\n\t"
         "_0806BED4:\n\t"
         "	.4byte _0806BEF4\n\t"
@@ -12187,9 +12219,9 @@ __attribute__((naked)) bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item
         "	str r5, [sp, #0x20]\n\t"
         "	b _0806C7FE\n\t"
         "	.align 2, 0\n\t"
-        "_0806C64C: .4byte gUnknown_82FA6AA\n\t"
-        "_0806C650: .4byte gUnknown_82FA6AE\n\t"
-        "_0806C654: .4byte gUnknown_82FA6B2\n\t"
+        "_0806C64C: .4byte gPPUpGetMask\n\t"
+        "_0806C650: .4byte gPPUpClearMask\n\t"
+        "_0806C654: .4byte gPPUpAddValues\n\t"
         "_0806C658:\n\t"
         "	mov r0, r8\n\t"
         "	movs r1, #0x20\n\t"

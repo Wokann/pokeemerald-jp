@@ -8,23 +8,11 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-	.section .rodata.data_b2d_mid47_after_pokemon_front_animation_table_data
+	.section .rodata.data_b2d_mid47_after_pokemon_pp_up_and_stat_stage_data
 
-	.globl gUnknown_82FA6AA
-gUnknown_82FA6AA: @ 0x82FA6AA
-	.incbin "baserom_jp.gba", 0x2fa6aa, 0x4
-
-	.globl gUnknown_82FA6AE
-gUnknown_82FA6AE: @ 0x82FA6AE
-	.incbin "baserom_jp.gba", 0x2fa6ae, 0x4
-
-	.globl gUnknown_82FA6B2
-gUnknown_82FA6B2: @ 0x82FA6B2
-	.incbin "baserom_jp.gba", 0x2fa6b2, 0x4
-
-	.globl gUnknown_82FA6B6
-gUnknown_82FA6B6: @ 0x82FA6B6
-	.incbin "baserom_jp.gba", 0x2fa6b6, 0x20
+	.globl gUnknown_82FA6D0
+gUnknown_82FA6D0: @ 0x82FA6D0
+	.incbin "baserom_jp.gba", 0x2fa6d0, 0x6
 
 	.globl gUnknown_82FA6D6
 gUnknown_82FA6D6: @ 0x82FA6D6

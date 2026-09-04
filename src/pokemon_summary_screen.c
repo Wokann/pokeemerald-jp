@@ -4070,7 +4070,7 @@ __attribute__((naked)) void SwapBoxMonMoves(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C0F18: .4byte gUnknown_203CBE8\n\t"
-        "_081C0F1C: .4byte gUnknown_82FA6AA\n\t"
+        "_081C0F1C: .4byte gPPUpGetMask\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4224,7 +4224,7 @@ __attribute__((naked)) void SwapMonMoves(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C1048: .4byte gUnknown_203CBE8\n\t"
-        "_081C104C: .4byte gUnknown_82FA6AA\n\t"
+        "_081C104C: .4byte gPPUpGetMask\n\t"
         ".syntax divided\n\t"
     );
 }
