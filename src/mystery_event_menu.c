@@ -27,8 +27,6 @@
 
 extern const u8 gUnknown_85CD159[];
 extern const u8 gUnknown_85CD19F[];
-extern const struct BgTemplate gUnknown_85CD204[1];
-extern const struct WindowTemplate gUnknown_85CD208[];
 extern const u8 gUnknown_85CD0DC[];
 extern const u8 gUnknown_85CD0FE[];
 extern const u8 gUnknown_85CD123[];
@@ -43,6 +41,43 @@ enum
     WIN_MSG,
     WIN_LOADING,
 };
+
+static const struct BgTemplate sBgTemplates[] __attribute__((section(".rodata.mid98_prefix"))) =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+};
+
+static const struct WindowTemplate sWindowTemplates[] __attribute__((section(".rodata.mid98_prefix"))) =
+{
+    [WIN_MSG] = {
+        .bg = 0,
+        .tilemapLeft = 4,
+        .tilemapTop = 15,
+        .width = 22,
+        .height = 4,
+        .paletteNum = 14,
+        .baseBlock = 20,
+    },
+    [WIN_LOADING] = {
+        .bg = 0,
+        .tilemapLeft = 7,
+        .tilemapTop = 6,
+        .width = 16,
+        .height = 4,
+        .paletteNum = 14,
+        .baseBlock = 0x6C,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
 static void VBlankCB(void)
 {
     LoadOam();
@@ -66,8 +101,8 @@ void CB2_InitMysteryEventMenu(void)
     ResetTasks();
     SetVBlankCallback(VBlankCB);
     ResetBgsAndClearDma3BusyFlags(0);
-    InitBgsFromTemplates(0, gUnknown_85CD204, 1);
-    if (InitWindows(gUnknown_85CD208))
+    InitBgsFromTemplates(0, sBgTemplates, ARRAY_COUNT(sBgTemplates));
+    if (InitWindows(sWindowTemplates))
     {
         DeactivateAllTextPrinters();
         for (i = 0; i < 2; i++)

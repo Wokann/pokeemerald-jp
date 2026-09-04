@@ -10005,6 +10005,7 @@ SECTIONS {
         src/berry_tag_screen.o(.rodata.berry_tag_screen_data);
         src/data/text/region_texts112.o(.rodata);
         data/data_b2d_mid98.o(.rodata.mid98_prefix);
+        src/mystery_event_menu.o(.rodata.mid98_prefix);
         src/save_failed_screen.o(.rodata.save_failed_screen_data);
         src/braille_puzzles.o(.rodata.mid98_between);
         data/data_b2d_mid98.o(.rodata.mid98_between);
