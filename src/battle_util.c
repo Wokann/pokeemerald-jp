@@ -19,6 +19,7 @@
 #include "constants/abilities.h"
 #include "constants/battle_anim.h"
 #include "constants/battle_move_effects.h"
+#include "constants/battle_pyramid.h"
 #include "constants/battle_string_ids.h"
 #include "constants/characters.h"
 #include "constants/hold_effects.h"
@@ -3596,12 +3597,9 @@ void HandleAction_ActionFinished(void)
     gBattleResources->battleScriptsStack->size = 0;
 }
 
-
-
-
-
-
-
+// JP byte-exact exception: equivalent C is 0x310 bytes versus the original
+// 0x314. Its AI-item switch assigns the script table and destination to r9/r6,
+// while the ROM needs r6/r9 plus an intermediate store through r2.
 __attribute__((naked)) void HandleAction_UseItem(void)
 {
     __asm__(".syntax unified\n\t"
@@ -3970,278 +3968,94 @@ __attribute__((naked)) void HandleAction_UseItem(void)
     );
 }
 
-
-__attribute__((naked)) bool8 TryRunFromBattle(u8 battler)
+bool8 TryRunFromBattle(u8 battler)
 {
-    __asm__(".syntax unified\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r1, _0803E88C\n\t"
-        "	movs r0, #0x58\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrh r0, [r1, #0x2e]\n\t"
-        "	cmp r0, #0xaf\n\t"
-        "	bne _0803E894\n\t"
-        "	ldr r1, _0803E890\n\t"
-        "	lsls r0, r5, #3\n\t"
-        "	subs r0, r0, r5\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	b _0803E89E\n\t"
-        "	.align 2, 0\n\t"
-        "_0803E88C: .4byte gBattleMons\n\t"
-        "_0803E890: .4byte gEnigmaBerries\n\t"
-        "_0803E894:\n\t"
-        "	ldrh r0, [r1, #0x2e]\n\t"
-        "	bl sub_080D6CF8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "_0803E89E:\n\t"
-        "	ldr r0, _0803E8CC\n\t"
-        "	strb r5, [r0]\n\t"
-        "	cmp r1, #0x25\n\t"
-        "	bne _0803E8DC\n\t"
-        "	ldr r2, _0803E8D0\n\t"
-        "	ldr r1, _0803E8D4\n\t"
-        "	movs r0, #0x58\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0, #0x2e]\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r0, _0803E8D8\n\t"
-        "	lsls r2, r5, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	movs r0, #0x19\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	b _0803E9B0\n\t"
-        "	.align 2, 0\n\t"
-        "_0803E8CC: .4byte gPotentialItemEffectBattler\n\t"
-        "_0803E8D0: .4byte gLastUsedItem\n\t"
-        "_0803E8D4: .4byte gBattleMons\n\t"
-        "_0803E8D8: .4byte gProtectStructs\n\t"
-        "_0803E8DC:\n\t"
-        "	ldr r0, _0803E968\n\t"
-        "	mov sl, r0\n\t"
-        "	movs r2, #0x58\n\t"
-        "	mov sb, r2\n\t"
-        "	mov r0, sb\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	add r0, sl\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r0, #0x20\n\t"
-        "	ldrb r6, [r0]\n\t"
-        "	cmp r6, #0x32\n\t"
-        "	bne _0803E99C\n\t"
-        "	bl CurrentBattlePyramidLocation\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0803E978\n\t"
-        "	ldr r4, _0803E96C\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x6c\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl GetPyramidRunMultiplier\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	mov r2, r8\n\t"
-        "	ldrh r0, [r2, #6]\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	movs r2, #1\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	eors r1, r2\n\t"
-        "	mov r2, sb\n\t"
-        "	muls r2, r1, r2\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	add r1, sl\n\t"
-        "	ldrh r1, [r1, #6]\n\t"
-        "	bl __divsi3\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x6c\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	subs r1, r1, r2\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl Random\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r4, r1\n\t"
-        "	bhi _0803E94C\n\t"
-        "	b _0803EA52\n\t"
-        "_0803E94C:\n\t"
-        "	ldr r0, _0803E970\n\t"
-        "	strb r6, [r0]\n\t"
-        "	ldr r0, _0803E974\n\t"
-        "	lsls r2, r5, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	movs r0, #0x19\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x10\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	b _0803E9B0\n\t"
-        "	.align 2, 0\n\t"
-        "_0803E968: .4byte gBattleMons\n\t"
-        "_0803E96C: .4byte gBattleStruct\n\t"
-        "_0803E970: .4byte gLastUsedAbility\n\t"
-        "_0803E974: .4byte gProtectStructs\n\t"
-        "_0803E978:\n\t"
-        "	ldr r0, _0803E994\n\t"
-        "	strb r6, [r0]\n\t"
-        "	ldr r0, _0803E998\n\t"
-        "	lsls r2, r5, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	movs r0, #0x19\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x10\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	b _0803E9B0\n\t"
-        "	.align 2, 0\n\t"
-        "_0803E994: .4byte gLastUsedAbility\n\t"
-        "_0803E998: .4byte gProtectStructs\n\t"
-        "_0803E99C:\n\t"
-        "	ldr r1, _0803E9B8\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldr r0, _0803E9BC\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0803E9C0\n\t"
-        "	movs r0, #8\n\t"
-        "	ands r2, r0\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _0803E9C0\n\t"
-        "_0803E9B0:\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	b _0803EA52\n\t"
-        "	.align 2, 0\n\t"
-        "_0803E9B8: .4byte gBattleTypeFlags\n\t"
-        "_0803E9BC: .4byte 0x043F0100\n\t"
-        "_0803E9C0:\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0803EA46\n\t"
-        "	bl CurrentBattlePyramidLocation\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0803E9FC\n\t"
-        "	bl GetPyramidRunMultiplier\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	ldr r4, _0803E9F8\n\t"
-        "	movs r3, #0x58\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	muls r0, r3, r0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r0, [r0, #6]\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	movs r2, #1\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	eors r1, r2\n\t"
-        "	muls r1, r3, r1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	b _0803EA1A\n\t"
-        "	.align 2, 0\n\t"
-        "_0803E9F8: .4byte gBattleMons\n\t"
-        "_0803E9FC:\n\t"
-        "	ldr r3, _0803EA74\n\t"
-        "	movs r2, #0x58\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	muls r0, r2, r0\n\t"
-        "	adds r4, r0, r3\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	eors r0, r1\n\t"
-        "	muls r0, r2, r0\n\t"
-        "	adds r1, r0, r3\n\t"
-        "	ldrh r0, [r4, #6]\n\t"
-        "	ldrh r2, [r1, #6]\n\t"
-        "	cmp r0, r2\n\t"
-        "	bhs _0803EA40\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "_0803EA1A:\n\t"
-        "	ldrh r1, [r1, #6]\n\t"
-        "	bl __divsi3\n\t"
-        "	ldr r1, _0803EA78\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, #0x6c\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	subs r1, r1, r2\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl Random\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r4, r1\n\t"
-        "	bls _0803EA46\n\t"
-        "_0803EA40:\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "_0803EA46:\n\t"
-        "	ldr r0, _0803EA78\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x6c\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0803EA52:\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _0803EA64\n\t"
-        "	ldr r1, _0803EA7C\n\t"
-        "	ldr r0, _0803EA80\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, _0803EA84\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0803EA64:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0803EA74: .4byte gBattleMons\n\t"
-        "_0803EA78: .4byte gBattleStruct\n\t"
-        "_0803EA7C: .4byte gCurrentTurnActionNumber\n\t"
-        "_0803EA80: .4byte gBattlersCount\n\t"
-        "_0803EA84: .4byte gBattleOutcome\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    // Keep the JP ability branch's long-lived battle-mon values in r8/r9/sl.
+    register struct BattlePokemon *battleMon asm("r8");
+    register struct BattlePokemon *battleMons asm("sl");
+    register u32 battleMonSize asm("r9");
+    bool8 effect = FALSE;
+    u8 holdEffect;
+    u8 pyramidMultiplier;
+    u8 speedVar;
 
+    if (gBattleMons[battler].item == ITEM_ENIGMA_BERRY)
+        holdEffect = gEnigmaBerries[battler].holdEffect;
+    else
+        holdEffect = GetItemHoldEffect(gBattleMons[battler].item);
+
+    gPotentialItemEffectBattler = battler;
+
+    if (holdEffect == HOLD_EFFECT_CAN_ALWAYS_RUN)
+    {
+        gLastUsedItem = gBattleMons[battler].item;
+        gProtectStructs[battler].fleeType = FLEE_ITEM;
+        effect++;
+    }
+    else if ((battleMons = gBattleMons,
+              battleMonSize = sizeof *battleMons,
+              battleMon = (struct BattlePokemon *)((u8 *)battleMons + battleMonSize * battler))->ability == ABILITY_RUN_AWAY)
+    {
+        if ((s8)CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
+        {
+            gBattleStruct->runTries++;
+            pyramidMultiplier = GetPyramidRunMultiplier();
+            {
+                register struct BattlePokemon *battleMonPtr asm("r2") = battleMon;
+                speedVar = (battleMonPtr->speed * pyramidMultiplier) / ((struct BattlePokemon *)((u8 *)battleMons + battleMonSize * BATTLE_OPPOSITE(battler)))->speed + (gBattleStruct->runTries * 30);
+            }
+            if (speedVar > (Random() & 0xFF))
+            {
+                gLastUsedAbility = ABILITY_RUN_AWAY;
+                gProtectStructs[battler].fleeType = FLEE_ABILITY;
+                effect++;
+            }
+        }
+        else
+        {
+            gLastUsedAbility = ABILITY_RUN_AWAY;
+            gProtectStructs[battler].fleeType = FLEE_ABILITY;
+            effect++;
+        }
+    }
+    else if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_TRAINER_HILL) && gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+    {
+        effect++;
+    }
+    else
+    {
+        if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
+        {
+            if ((s8)CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
+            {
+                pyramidMultiplier = GetPyramidRunMultiplier();
+                speedVar = (gBattleMons[battler].speed * pyramidMultiplier) / (gBattleMons[BATTLE_OPPOSITE(battler)].speed) + (gBattleStruct->runTries * 30);
+                if (speedVar > (Random() & 0xFF))
+                    effect++;
+            }
+            else if (gBattleMons[battler].speed < gBattleMons[BATTLE_OPPOSITE(battler)].speed)
+            {
+                speedVar = (gBattleMons[battler].speed * 128) / (gBattleMons[BATTLE_OPPOSITE(battler)].speed) + (gBattleStruct->runTries * 30);
+                if (speedVar > (Random() & 0xFF))
+                    effect++;
+            }
+            else
+            {
+                effect++;
+            }
+        }
+
+        gBattleStruct->runTries++;
+    }
+
+    if (effect != 0)
+    {
+        gCurrentTurnActionNumber = gBattlersCount;
+        gBattleOutcome = B_OUTCOME_RAN;
+    }
+
+    return effect;
+}
 
 void HandleAction_UseMove(void)
 {
@@ -4459,6 +4273,8 @@ void HandleAction_UseMove(void)
     gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
 }
 
+// JP byte-exact exception: this wrapper tail-branches into _0803C956 in
+// battle_main.c with its caller frame still active, so it has no normal C ABI.
 __attribute__((naked)) void HandleAction_TryFinish(void)
 {
     __asm__(".syntax unified\n\t"
