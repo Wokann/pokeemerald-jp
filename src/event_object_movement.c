@@ -34,6 +34,7 @@
 #include "constants/event_objects.h"
 #include "constants/field_effects.h"
 #include "constants/items.h"
+#include "constants/mauville_old_man.h"
 
 extern void MovementType_Hidden(struct Sprite *sprite);
 void ObjectCB_CameraObject(struct Sprite *sprite);
@@ -776,6 +777,10 @@ struct Sprite;
 #define EVENT_OBJECT_MOVEMENT_OBJECT_EVENT_GRAPHICS_INFO __attribute__((section(".rodata.event_object_movement_object_event_graphics_info"), aligned(4), used))
 #include "data/object_events/object_event_graphics_info.h"
 #undef EVENT_OBJECT_MOVEMENT_OBJECT_EVENT_GRAPHICS_INFO
+
+#define EVENT_OBJECT_MOVEMENT_OBJECT_EVENT_GRAPHICS_INFO_POINTERS __attribute__((section(".rodata.event_object_movement_object_event_graphics_info_pointers"), aligned(4), used))
+#include "data/object_events/object_event_graphics_info_pointers.h"
+#undef EVENT_OBJECT_MOVEMENT_OBJECT_EVENT_GRAPHICS_INFO_POINTERS
 
 #define EVENT_OBJECT_MOVEMENT_FIELD_EFFECT_OBJECT_DATA __attribute__((section(".rodata.event_object_movement_field_effect_objects_data")))
 #include "data/field_effects/field_effect_objects.h"
@@ -2962,7 +2967,7 @@ __attribute__((naked)) const struct ObjectEventGraphicsInfo *GetObjectEventGraph
         "	ldr r0, [r0]\n\t"
         "	b _0808E042\n\t"
         "	.align 2, 0\n\t"
-        "_0808E030: .4byte gUnknown_84DDE30\n\t"
+        "_0808E030: .4byte gMauvilleOldManGraphicsInfoPointers\n\t"
         "_0808E034:\n\t"
         "	cmp r1, #0xee\n\t"
         "	bls _0808E03A\n\t"
@@ -2976,7 +2981,7 @@ __attribute__((naked)) const struct ObjectEventGraphicsInfo *GetObjectEventGraph
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808E048: .4byte gUnknown_84DDA74\n\t"
+        "_0808E048: .4byte gObjectEventGraphicsInfoPointers\n\t"
         ".syntax divided\n\t"
     );
 }

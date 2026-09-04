@@ -45,14 +45,6 @@ gUnknown_84BE14C: @ 0x84BE14C
 
 	.section .rodata.data_b2d_mid28_after_event_object_movement_core_data
 
-	.globl gUnknown_84DDA74
-gUnknown_84DDA74: @ 0x84DDA74
-	.incbin "baserom_jp.gba", 0x4dda74, 0x3bc
-
-	.globl gUnknown_84DDE30
-gUnknown_84DDE30: @ 0x84DDE30
-	.incbin "baserom_jp.gba", 0x4dde30, 0x1c
-
 	.section .rodata.data_b2d_mid28_after_field_effect_object_template_pointers
 
 	.section .rodata.data_b2d_mid28_after_event_object_movement_action_function_tables_tail
