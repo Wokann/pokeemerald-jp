@@ -7,1848 +7,600 @@
 #include "scanline_effect.h"
 #undef ScanlineEffect_SetParams
 
+#include "option_menu.h"
+#include "bg.h"
+#include "gpu_regs.h"
+#include "international_string_util.h"
+#include "main.h"
+#include "menu.h"
+#include "palette.h"
+#include "scanline_effect.h"
+#include "sprite.h"
+#include "strings.h"
+#include "task.h"
+#include "text.h"
+#include "text_window.h"
+#include "window.h"
+#include "gba/m4a_internal.h"
+#include "constants/rgb.h"
+
+#define tMenuSelection data[0]
+#define tTextSpeed data[1]
+#define tBattleSceneOff data[2]
+#define tBattleStyle data[3]
+#define tSound data[4]
+#define tButtonMode data[5]
+#define tWindowFrameType data[6]
+
+enum
+{
+    MENUITEM_TEXTSPEED,
+    MENUITEM_BATTLESCENE,
+    MENUITEM_BATTLESTYLE,
+    MENUITEM_SOUND,
+    MENUITEM_BUTTONMODE,
+    MENUITEM_FRAMETYPE,
+    MENUITEM_CANCEL,
+    MENUITEM_COUNT,
+};
+
+enum
+{
+    WIN_HEADER,
+    WIN_OPTIONS
+};
+
+#define YPOS_TEXTSPEED    (MENUITEM_TEXTSPEED * 16)
+#define YPOS_BATTLESCENE  (MENUITEM_BATTLESCENE * 16)
+#define YPOS_BATTLESTYLE  (MENUITEM_BATTLESTYLE * 16)
+#define YPOS_SOUND        (MENUITEM_SOUND * 16)
+#define YPOS_BUTTONMODE   (MENUITEM_BUTTONMODE * 16)
+#define YPOS_FRAMETYPE    (MENUITEM_FRAMETYPE * 16)
+
+static void Task_OptionMenuFadeIn(u8 taskId);
+static void Task_OptionMenuProcessInput(u8 taskId);
+static void Task_OptionMenuSave(u8 taskId);
+static void Task_OptionMenuFadeOut(u8 taskId);
+static void HighlightOptionMenuItem(u8 selection);
+static u8 TextSpeed_ProcessInput(u8 selection);
+static void TextSpeed_DrawChoices(u8 selection);
+static u8 BattleScene_ProcessInput(u8 selection);
+static void BattleScene_DrawChoices(u8 selection);
+static u8 BattleStyle_ProcessInput(u8 selection);
+static void BattleStyle_DrawChoices(u8 selection);
+static u8 Sound_ProcessInput(u8 selection);
+static void Sound_DrawChoices(u8 selection);
+static u8 FrameType_ProcessInput(u8 selection);
+static void FrameType_DrawChoices(u8 selection);
+static u8 ButtonMode_ProcessInput(u8 selection);
+static void ButtonMode_DrawChoices(u8 selection);
+static void DrawHeaderText(void);
+static void DrawOptionMenuTexts(void);
+static void DrawBgWindowFrames(void);
+
+// JP EWRAM layout keeps this state byte outside the source-owned data block.
+extern EWRAM_DATA bool8 gUnknown_20397E8;
+#define sArrowPressed gUnknown_20397E8
+
+static const u16 sOptionMenuText_Pal[16];
+extern const u8 *const sOptionMenuItemsNames[];
+extern const struct WindowTemplate sOptionMenuWinTemplates[];
+extern const struct BgTemplate sOptionMenuBgTemplates[2];
+extern const u16 sOptionMenuBg_Pal[1];
+
 #define OPTION_MENU_STATIC_DATA __attribute__((section(".rodata.option_menu_static_data")))
-__attribute__((naked)) void BattleScene_ProcessInput(void)
+
+static void MainCB2(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RunTasks\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
 }
 
-__attribute__((naked)) void BattleStyle_ProcessInput(void)
+static void VBlankCB(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LoadOam\n\t"
-        "	bl ProcessSpriteCopyRequests\n\t"
-        "	bl TransferPlttBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
 }
 
-__attribute__((naked)) void CB2_InitOptionMenu(void)
+void CB2_InitOptionMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r1, _080B9C58\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	bhi _080B9C90\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B9C5C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9C58: .4byte gMain\n\t"
-        "_080B9C5C: .4byte _080B9C60\n\t"
-        "_080B9C60:\n\t"
-        "	.4byte _080B9C90\n\t"
-        "	.4byte _080B9CA4\n\t"
-        "	.4byte _080B9DF4\n\t"
-        "	.4byte _080B9E14\n\t"
-        "	.4byte _080B9E38\n\t"
-        "	.4byte _080B9E70\n\t"
-        "	.4byte _080B9E80\n\t"
-        "	.4byte _080B9E98\n\t"
-        "	.4byte _080B9EA0\n\t"
-        "	.4byte _080B9EB8\n\t"
-        "	.4byte _080B9ECC\n\t"
-        "	.4byte _080B9F64\n\t"
-        "_080B9C90:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	ldr r1, _080B9CA0\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _080B9F4C\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9CA0: .4byte gMain\n\t"
-        "_080B9CA4:\n\t"
-        "	movs r3, #0xc0\n\t"
-        "	lsls r3, r3, #0x13\n\t"
-        "	movs r4, #0xc0\n\t"
-        "	lsls r4, r4, #9\n\t"
-        "	add r1, sp, #8\n\t"
-        "	mov r8, r1\n\t"
-        "	add r2, sp, #4\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r1, _080B9DE4\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #5\n\t"
-        "	ldr r7, _080B9DE8\n\t"
-        "	movs r0, #0x81\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	mov ip, r0\n\t"
-        "_080B9CC2:\n\t"
-        "	strh r6, [r2]\n\t"
-        "	add r0, sp, #4\n\t"
-        "	str r0, [r1]\n\t"
-        "	str r3, [r1, #4]\n\t"
-        "	str r7, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	adds r3, r3, r5\n\t"
-        "	subs r4, r4, r5\n\t"
-        "	cmp r4, r5\n\t"
-        "	bhi _080B9CC2\n\t"
-        "	strh r6, [r2]\n\t"
-        "	add r2, sp, #4\n\t"
-        "	str r2, [r1]\n\t"
-        "	str r3, [r1, #4]\n\t"
-        "	lsrs r0, r4, #1\n\t"
-        "	mov r2, ip\n\t"
-        "	orrs r0, r2\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	movs r0, #0xe0\n\t"
-        "	lsls r0, r0, #0x13\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	ldr r2, _080B9DE4\n\t"
-        "	mov r1, r8\n\t"
-        "	str r1, [r2]\n\t"
-        "	str r0, [r2, #4]\n\t"
-        "	lsrs r0, r3, #2\n\t"
-        "	movs r1, #0x85\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r2, #8]\n\t"
-        "	ldr r0, [r2, #8]\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	add r0, sp, #4\n\t"
-        "	strh r4, [r0]\n\t"
-        "	str r0, [r2]\n\t"
-        "	str r1, [r2, #4]\n\t"
-        "	lsrs r3, r3, #1\n\t"
-        "	movs r0, #0x81\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	orrs r3, r0\n\t"
-        "	str r3, [r2, #8]\n\t"
-        "	ldr r0, [r2, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ResetBgsAndClearDma3BusyFlags\n\t"
-        "	ldr r1, _080B9DEC\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl InitBgsFromTemplates\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	ldr r0, _080B9DF0\n\t"
-        "	bl InitWindows\n\t"
-        "	bl DeactivateAllTextPrinters\n\t"
-        "	movs r0, #0x40\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x44\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x48\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	movs r1, #0x23\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0xc1\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x52\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x54\n\t"
-        "	movs r1, #4\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r1, #0xc1\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ShowBg\n\t"
-        "	b _080B9F44\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9DE4: .4byte 0x040000D4\n\t"
-        "_080B9DE8: .4byte 0x81000800\n\t"
-        "_080B9DEC: .4byte sOptionMenuBgTemplates\n\t"
-        "_080B9DF0: .4byte sOptionMenuWinTemplates\n\t"
-        "_080B9DF4:\n\t"
-        "	bl ResetPaletteFade\n\t"
-        "	bl ScanlineEffect_Stop\n\t"
-        "	bl ResetTasks\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	ldr r1, _080B9E10\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _080B9F4C\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9E10: .4byte gMain\n\t"
-        "_080B9E14:\n\t"
-        "	ldr r0, _080B9E34\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #0x14]\n\t"
-        "	lsrs r0, r0, #3\n\t"
-        "	bl GetWindowFrameTilesPal\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r2, #0x90\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	movs r3, #0xd1\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	movs r0, #1\n\t"
-        "	bl LoadBgTiles\n\t"
-        "	b _080B9F44\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9E34: .4byte gSaveBlock2Ptr\n\t"
-        "_080B9E38:\n\t"
-        "	ldr r0, _080B9E64\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r0, _080B9E68\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #0x14]\n\t"
-        "	lsrs r0, r0, #3\n\t"
-        "	bl GetWindowFrameTilesPal\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	movs r1, #0x70\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r1, _080B9E6C\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _080B9F4C\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9E64: .4byte sOptionMenuBg_Pal\n\t"
-        "_080B9E68: .4byte gSaveBlock2Ptr\n\t"
-        "_080B9E6C: .4byte gMain\n\t"
-        "_080B9E70:\n\t"
-        "	ldr r0, _080B9E7C\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	b _080B9F44\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9E7C: .4byte sOptionMenuText_Pal\n\t"
-        "_080B9E80:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	bl DrawTextOption\n\t"
-        "	ldr r1, _080B9E94\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _080B9F4C\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9E94: .4byte gMain\n\t"
-        "_080B9E98:\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	b _080B9F4C\n\t"
-        "_080B9EA0:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	bl sub_080BA834\n\t"
-        "	ldr r1, _080B9EC8\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080B9EB8:\n\t"
-        "	bl sub_080BA890\n\t"
-        "	ldr r1, _080B9EC8\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _080B9F4C\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9EC8: .4byte gMain\n\t"
-        "_080B9ECC:\n\t"
-        "	ldr r0, _080B9F54\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080B9F58\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	ldr r0, _080B9F5C\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r0, [r2, #0x14]\n\t"
-        "	lsls r0, r0, #0x1d\n\t"
-        "	lsrs r0, r0, #0x1d\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	ldrb r1, [r2, #0x15]\n\t"
-        "	lsls r1, r1, #0x1d\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	strh r1, [r4, #0xc]\n\t"
-        "	ldrb r1, [r2, #0x15]\n\t"
-        "	lsls r1, r1, #0x1e\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	strh r1, [r4, #0xe]\n\t"
-        "	ldrb r1, [r2, #0x15]\n\t"
-        "	lsls r1, r1, #0x1f\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	strh r1, [r4, #0x10]\n\t"
-        "	ldrb r1, [r2, #0x13]\n\t"
-        "	strh r1, [r4, #0x12]\n\t"
-        "	ldrb r1, [r2, #0x14]\n\t"
-        "	lsrs r1, r1, #3\n\t"
-        "	strh r1, [r4, #0x14]\n\t"
-        "	bl BattleScene_DrawChoices\n\t"
-        "	ldrb r0, [r4, #0xc]\n\t"
-        "	bl Sound_DrawChoices\n\t"
-        "	ldrb r0, [r4, #0xe]\n\t"
-        "	bl TextSpeed_ProcessInput\n\t"
-        "	ldrb r0, [r4, #0x10]\n\t"
-        "	bl TextSpeed_DrawChoices\n\t"
-        "	ldrb r0, [r4, #0x12]\n\t"
-        "	bl sub_080BA780\n\t"
-        "	ldrb r0, [r4, #0x14]\n\t"
-        "	bl FrameType_DrawChoices\n\t"
-        "	ldrb r0, [r4, #8]\n\t"
-        "	bl HighlightOptionMenuItem\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "_080B9F44:\n\t"
-        "	ldr r1, _080B9F60\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "_080B9F4C:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080B9F80\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9F54: .4byte Task_OptionMenuFadeIn + 1\n\t"
-        "_080B9F58: .4byte gTasks\n\t"
-        "_080B9F5C: .4byte gSaveBlock2Ptr\n\t"
-        "_080B9F60: .4byte gMain\n\t"
-        "_080B9F64:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _080B9F8C\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	ldr r0, _080B9F90\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_080B9F80:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9F8C: .4byte BattleStyle_ProcessInput + 1\n\t"
-        "_080B9F90: .4byte BattleScene_ProcessInput + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gMain.state)
+    {
+    default:
+    case 0:
+        SetVBlankCallback(NULL);
+        gMain.state++;
+        break;
+    case 1:
+        DmaClearLarge16(3, (void *)(VRAM), VRAM_SIZE, 0x1000);
+        DmaClear32(3, OAM, OAM_SIZE);
+        DmaClear16(3, PLTT, PLTT_SIZE);
+        SetGpuReg(REG_OFFSET_DISPCNT, 0);
+        ResetBgsAndClearDma3BusyFlags(0);
+        InitBgsFromTemplates(0, sOptionMenuBgTemplates, ARRAY_COUNT(sOptionMenuBgTemplates));
+        ChangeBgX(0, 0, BG_COORD_SET);
+        ChangeBgY(0, 0, BG_COORD_SET);
+        ChangeBgX(1, 0, BG_COORD_SET);
+        ChangeBgY(1, 0, BG_COORD_SET);
+        ChangeBgX(2, 0, BG_COORD_SET);
+        ChangeBgY(2, 0, BG_COORD_SET);
+        ChangeBgX(3, 0, BG_COORD_SET);
+        ChangeBgY(3, 0, BG_COORD_SET);
+        InitWindows(sOptionMenuWinTemplates);
+        DeactivateAllTextPrinters();
+        SetGpuReg(REG_OFFSET_WIN0H, 0);
+        SetGpuReg(REG_OFFSET_WIN0V, 0);
+        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG0);
+        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG0 | WINOUT_WIN01_BG1 | WINOUT_WIN01_CLR);
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_EFFECT_DARKEN);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        SetGpuReg(REG_OFFSET_BLDY, 4);
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+        ShowBg(0);
+        ShowBg(1);
+        gMain.state++;
+        break;
+    case 2:
+        ResetPaletteFade();
+        ScanlineEffect_Stop();
+        ResetTasks();
+        ResetSpriteData();
+        gMain.state++;
+        break;
+    case 3:
+        LoadBgTiles(1, GetWindowFrameTilesPal(gSaveBlock2Ptr->optionsWindowFrameType)->tiles, 0x120, 0x1A2);
+        gMain.state++;
+        break;
+    case 4:
+        LoadPalette(sOptionMenuBg_Pal, BG_PLTT_ID(0), sizeof(sOptionMenuBg_Pal));
+        LoadPalette(GetWindowFrameTilesPal(gSaveBlock2Ptr->optionsWindowFrameType)->pal, BG_PLTT_ID(7), PLTT_SIZE_4BPP);
+        gMain.state++;
+        break;
+    case 5:
+        LoadPalette(sOptionMenuText_Pal, BG_PLTT_ID(1), sizeof(sOptionMenuText_Pal));
+        gMain.state++;
+        break;
+    case 6:
+        PutWindowTilemap(WIN_HEADER);
+        DrawHeaderText();
+        gMain.state++;
+        break;
+    case 7:
+        gMain.state++;
+        break;
+    case 8:
+        PutWindowTilemap(WIN_OPTIONS);
+        DrawOptionMenuTexts();
+        gMain.state++;
+    case 9:
+        DrawBgWindowFrames();
+        gMain.state++;
+        break;
+    case 10:
+    {
+        u8 taskId = CreateTask(Task_OptionMenuFadeIn, 0);
+
+        gTasks[taskId].tMenuSelection = 0;
+        gTasks[taskId].tTextSpeed = gSaveBlock2Ptr->optionsTextSpeed;
+        gTasks[taskId].tBattleSceneOff = gSaveBlock2Ptr->optionsBattleSceneOff;
+        gTasks[taskId].tBattleStyle = gSaveBlock2Ptr->optionsBattleStyle;
+        gTasks[taskId].tSound = gSaveBlock2Ptr->optionsSound;
+        gTasks[taskId].tButtonMode = gSaveBlock2Ptr->optionsButtonMode;
+        gTasks[taskId].tWindowFrameType = gSaveBlock2Ptr->optionsWindowFrameType;
+
+        TextSpeed_DrawChoices(gTasks[taskId].tTextSpeed);
+        BattleScene_DrawChoices(gTasks[taskId].tBattleSceneOff);
+        BattleStyle_DrawChoices(gTasks[taskId].tBattleStyle);
+        Sound_DrawChoices(gTasks[taskId].tSound);
+        ButtonMode_DrawChoices(gTasks[taskId].tButtonMode);
+        FrameType_DrawChoices(gTasks[taskId].tWindowFrameType);
+        HighlightOptionMenuItem(gTasks[taskId].tMenuSelection);
+
+        CopyWindowToVram(WIN_OPTIONS, COPYWIN_FULL);
+        gMain.state++;
+        break;
+    }
+    case 11:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        SetVBlankCallback(VBlankCB);
+        SetMainCallback2(MainCB2);
+        return;
+    }
 }
 
-__attribute__((naked)) void Task_OptionMenuFadeIn(void)
+static void Task_OptionMenuFadeIn(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r0, _080B9FB8\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B9FB4\n\t"
-        "	ldr r0, _080B9FBC\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _080B9FC0\n\t"
-        "	str r0, [r1]\n\t"
-        "_080B9FB4:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9FB8: .4byte gPaletteFade\n\t"
-        "_080B9FBC: .4byte gTasks\n\t"
-        "_080B9FC0: .4byte Task_OptionMenuProcessInput + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+        gTasks[taskId].func = Task_OptionMenuProcessInput;
 }
 
-__attribute__((naked)) void Task_OptionMenuProcessInput(void)
+static void Task_OptionMenuProcessInput(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _080B9FEC\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B9FF4\n\t"
-        "	ldr r0, _080B9FF0\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #6\n\t"
-        "	beq _080B9FEA\n\t"
-        "	b _080BA1B2\n\t"
-        "_080B9FEA:\n\t"
-        "	b _080BA006\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9FEC: .4byte gMain\n\t"
-        "_080B9FF0: .4byte gTasks\n\t"
-        "_080B9FF4:\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080BA014\n\t"
-        "	ldr r0, _080BA00C\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "_080BA006:\n\t"
-        "	ldr r0, _080BA010\n\t"
-        "	str r0, [r1]\n\t"
-        "	b _080BA1B2\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA00C: .4byte gTasks\n\t"
-        "_080BA010: .4byte Task_OptionMenuSave + 1\n\t"
-        "_080BA014:\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, #0\n\t"
-        "	beq _080BA044\n\t"
-        "	ldr r1, _080BA03C\n\t"
-        "	lsls r2, r4, #2\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r3, r0, r1\n\t"
-        "	ldrh r5, [r3, #8]\n\t"
-        "	movs r6, #8\n\t"
-        "	ldrsh r0, [r3, r6]\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _080BA040\n\t"
-        "	subs r0, r5, #1\n\t"
-        "	b _080BA064\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA03C: .4byte gTasks\n\t"
-        "_080BA040:\n\t"
-        "	movs r0, #6\n\t"
-        "	b _080BA064\n\t"
-        "_080BA044:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080BA07C\n\t"
-        "	ldr r1, _080BA068\n\t"
-        "	lsls r2, r4, #2\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r3, r0, r1\n\t"
-        "	ldrh r5, [r3, #8]\n\t"
-        "	movs r7, #8\n\t"
-        "	ldrsh r0, [r3, r7]\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	cmp r0, #5\n\t"
-        "	bgt _080BA06C\n\t"
-        "	adds r0, r5, #1\n\t"
-        "_080BA064:\n\t"
-        "	strh r0, [r3, #8]\n\t"
-        "	b _080BA06E\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA068: .4byte gTasks\n\t"
-        "_080BA06C:\n\t"
-        "	strh r6, [r3, #8]\n\t"
-        "_080BA06E:\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	bl HighlightOptionMenuItem\n\t"
-        "	b _080BA1B2\n\t"
-        "_080BA07C:\n\t"
-        "	ldr r0, _080BA09C\n\t"
-        "	lsls r2, r4, #2\n\t"
-        "	adds r1, r2, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r3, #8\n\t"
-        "	ldrsh r1, [r1, r3]\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	cmp r1, #5\n\t"
-        "	bls _080BA092\n\t"
-        "	b _080BA1B2\n\t"
-        "_080BA092:\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	ldr r1, _080BA0A0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA09C: .4byte gTasks\n\t"
-        "_080BA0A0: .4byte _080BA0A4\n\t"
-        "_080BA0A4:\n\t"
-        "	.4byte _080BA0BC\n\t"
-        "	.4byte _080BA0E2\n\t"
-        "	.4byte _080BA108\n\t"
-        "	.4byte _080BA12E\n\t"
-        "	.4byte _080BA154\n\t"
-        "	.4byte _080BA17A\n\t"
-        "_080BA0BC:\n\t"
-        "	adds r4, r2, r4\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r7\n\t"
-        "	ldrb r5, [r4, #0xa]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ButtonMode_ProcessInput\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	movs r6, #0xa\n\t"
-        "	ldrsh r0, [r4, r6]\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _080BA19E\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl BattleScene_DrawChoices\n\t"
-        "	b _080BA19E\n\t"
-        "_080BA0E2:\n\t"
-        "	adds r4, r2, r4\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r7\n\t"
-        "	ldrb r5, [r4, #0xc]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl BattleStyle_DrawChoices\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	movs r7, #0xc\n\t"
-        "	ldrsh r0, [r4, r7]\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _080BA19E\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl Sound_DrawChoices\n\t"
-        "	b _080BA19E\n\t"
-        "_080BA108:\n\t"
-        "	adds r4, r2, r4\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r7\n\t"
-        "	ldrb r5, [r4, #0xe]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DrawOptionMenuTexts\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	movs r2, #0xe\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _080BA19E\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl TextSpeed_ProcessInput\n\t"
-        "	b _080BA19E\n\t"
-        "_080BA12E:\n\t"
-        "	adds r4, r2, r4\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r7\n\t"
-        "	ldrb r5, [r4, #0x10]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl Sound_ProcessInput\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _080BA19E\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl TextSpeed_DrawChoices\n\t"
-        "	b _080BA19E\n\t"
-        "_080BA154:\n\t"
-        "	adds r4, r2, r4\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r7\n\t"
-        "	ldrb r5, [r4, #0x12]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ButtonMode_DrawChoices\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	movs r6, #0x12\n\t"
-        "	ldrsh r0, [r4, r6]\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _080BA19E\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl sub_080BA780\n\t"
-        "	b _080BA19E\n\t"
-        "_080BA17A:\n\t"
-        "	adds r4, r2, r4\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r7\n\t"
-        "	ldrb r5, [r4, #0x14]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl FrameType_ProcessInput\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	movs r7, #0x14\n\t"
-        "	ldrsh r0, [r4, r7]\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _080BA19E\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl FrameType_DrawChoices\n\t"
-        "_080BA19E:\n\t"
-        "	ldr r1, _080BA1B8\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080BA1B2\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "_080BA1B2:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA1B8: .4byte gUnknown_20397E8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(A_BUTTON))
+    {
+        if (gTasks[taskId].tMenuSelection == MENUITEM_CANCEL)
+            gTasks[taskId].func = Task_OptionMenuSave;
+    }
+    else if (JOY_NEW(B_BUTTON))
+    {
+        gTasks[taskId].func = Task_OptionMenuSave;
+    }
+    else if (JOY_NEW(DPAD_UP))
+    {
+        if (gTasks[taskId].tMenuSelection > 0)
+            gTasks[taskId].tMenuSelection--;
+        else
+            gTasks[taskId].tMenuSelection = MENUITEM_CANCEL;
+        HighlightOptionMenuItem(gTasks[taskId].tMenuSelection);
+    }
+    else if (JOY_NEW(DPAD_DOWN))
+    {
+        if (gTasks[taskId].tMenuSelection < MENUITEM_CANCEL)
+            gTasks[taskId].tMenuSelection++;
+        else
+            gTasks[taskId].tMenuSelection = 0;
+        HighlightOptionMenuItem(gTasks[taskId].tMenuSelection);
+    }
+    else
+    {
+        u8 previousOption;
+
+        switch (gTasks[taskId].tMenuSelection)
+        {
+        case MENUITEM_TEXTSPEED:
+            previousOption = gTasks[taskId].tTextSpeed;
+            gTasks[taskId].tTextSpeed = TextSpeed_ProcessInput(gTasks[taskId].tTextSpeed);
+
+            if (previousOption != gTasks[taskId].tTextSpeed)
+                TextSpeed_DrawChoices(gTasks[taskId].tTextSpeed);
+            break;
+        case MENUITEM_BATTLESCENE:
+            previousOption = gTasks[taskId].tBattleSceneOff;
+            gTasks[taskId].tBattleSceneOff = BattleScene_ProcessInput(gTasks[taskId].tBattleSceneOff);
+
+            if (previousOption != gTasks[taskId].tBattleSceneOff)
+                BattleScene_DrawChoices(gTasks[taskId].tBattleSceneOff);
+            break;
+        case MENUITEM_BATTLESTYLE:
+            previousOption = gTasks[taskId].tBattleStyle;
+            gTasks[taskId].tBattleStyle = BattleStyle_ProcessInput(gTasks[taskId].tBattleStyle);
+
+            if (previousOption != gTasks[taskId].tBattleStyle)
+                BattleStyle_DrawChoices(gTasks[taskId].tBattleStyle);
+            break;
+        case MENUITEM_SOUND:
+            previousOption = gTasks[taskId].tSound;
+            gTasks[taskId].tSound = Sound_ProcessInput(gTasks[taskId].tSound);
+
+            if (previousOption != gTasks[taskId].tSound)
+                Sound_DrawChoices(gTasks[taskId].tSound);
+            break;
+        case MENUITEM_BUTTONMODE:
+            previousOption = gTasks[taskId].tButtonMode;
+            gTasks[taskId].tButtonMode = ButtonMode_ProcessInput(gTasks[taskId].tButtonMode);
+
+            if (previousOption != gTasks[taskId].tButtonMode)
+                ButtonMode_DrawChoices(gTasks[taskId].tButtonMode);
+            break;
+        case MENUITEM_FRAMETYPE:
+            previousOption = gTasks[taskId].tWindowFrameType;
+            gTasks[taskId].tWindowFrameType = FrameType_ProcessInput(gTasks[taskId].tWindowFrameType);
+
+            if (previousOption != gTasks[taskId].tWindowFrameType)
+                FrameType_DrawChoices(gTasks[taskId].tWindowFrameType);
+            break;
+        default:
+            return;
+        }
+
+        if (sArrowPressed)
+        {
+            sArrowPressed = FALSE;
+            CopyWindowToVram(WIN_OPTIONS, COPYWIN_GFX);
+        }
+    }
 }
 
-__attribute__((naked)) void Task_OptionMenuSave(void)
+static void Task_OptionMenuSave(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r6, _080BA254\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	ldr r1, _080BA258\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	movs r0, #7\n\t"
-        "	ldrb r1, [r4, #0xa]\n\t"
-        "	ands r1, r0\n\t"
-        "	ldrb r2, [r3, #0x14]\n\t"
-        "	movs r0, #8\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #0x14]\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	movs r5, #1\n\t"
-        "	ldrb r1, [r4, #0xc]\n\t"
-        "	ands r1, r5\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldrb r2, [r3, #0x15]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #0x15]\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	ldrb r1, [r4, #0xe]\n\t"
-        "	ands r1, r5\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldrb r2, [r3, #0x15]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #0x15]\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	ldrb r1, [r4, #0x10]\n\t"
-        "	ands r1, r5\n\t"
-        "	ldrb r2, [r3, #0x15]\n\t"
-        "	movs r0, #2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #0x15]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldrh r0, [r4, #0x12]\n\t"
-        "	movs r5, #0\n\t"
-        "	strb r0, [r1, #0x13]\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	ldrb r1, [r4, #0x14]\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldrb r2, [r3, #0x14]\n\t"
-        "	movs r0, #7\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #0x14]\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r5, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _080BA25C\n\t"
-        "	str r0, [r4]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA254: .4byte gSaveBlock2Ptr\n\t"
-        "_080BA258: .4byte gTasks\n\t"
-        "_080BA25C: .4byte Task_OptionMenuFadeOut + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gSaveBlock2Ptr->optionsTextSpeed = gTasks[taskId].tTextSpeed;
+    gSaveBlock2Ptr->optionsBattleSceneOff = gTasks[taskId].tBattleSceneOff;
+    gSaveBlock2Ptr->optionsBattleStyle = gTasks[taskId].tBattleStyle;
+    gSaveBlock2Ptr->optionsSound = gTasks[taskId].tSound;
+    gSaveBlock2Ptr->optionsButtonMode = gTasks[taskId].tButtonMode;
+    gSaveBlock2Ptr->optionsWindowFrameType = gTasks[taskId].tWindowFrameType;
+
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+    gTasks[taskId].func = Task_OptionMenuFadeOut;
 }
 
-__attribute__((naked)) void Task_OptionMenuFadeOut(void)
+static void Task_OptionMenuFadeOut(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r0, _080BA288\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080BA284\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	bl FreeAllWindowBuffers\n\t"
-        "	ldr r0, _080BA28C\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_080BA284:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA288: .4byte gPaletteFade\n\t"
-        "_080BA28C: .4byte gMain\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        DestroyTask(taskId);
+        FreeAllWindowBuffers();
+        SetMainCallback2(gMain.savedCallback);
+    }
 }
 
-__attribute__((naked)) void HighlightOptionMenuItem(void)
+static void HighlightOptionMenuItem(u8 index)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0x40\n\t"
-        "	bl SetGpuReg\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x28\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	adds r4, #0x38\n\t"
-        "	orrs r1, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x44\n\t"
-        "	bl SetGpuReg\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(16, DISPLAY_WIDTH - 16));
+    SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(index * 16 + 40, index * 16 + 56));
 }
 
-__attribute__((naked)) void DrawOptionMenuChoice(void)
+static void DrawOptionMenuChoice(const u8 *text, u8 x, u8 y, u8 style)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0x1c\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r5, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _080BA2F8\n\t"
-        "_080BA2DC:\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, #0xc\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r4, #1\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _080BA2F8\n\t"
-        "	cmp r2, #0xe\n\t"
-        "	bls _080BA2DC\n\t"
-        "_080BA2F8:\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _080BA306\n\t"
-        "	add r1, sp, #0xc\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r1, #2]\n\t"
-        "	movs r0, #5\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "_080BA306:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, #0xc\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r5, #2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	add r2, sp, #0xc\n\t"
-        "	adds r3, r6, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	add sp, #0x1c\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dst[16];
+    u16 i;
+
+    for (i = 0; *text != EOS && i < ARRAY_COUNT(dst) - 1; i++)
+        dst[i] = *(text++);
+
+    if (style != 0)
+    {
+        dst[2] = TEXT_COLOR_RED;
+        dst[5] = TEXT_COLOR_LIGHT_RED;
+    }
+
+    dst[i] = EOS;
+    AddTextPrinterParameterized(WIN_OPTIONS, FONT_NORMAL, dst, x, y + 2, TEXT_SKIP_DRAW, NULL);
 }
 
-__attribute__((naked)) void ButtonMode_ProcessInput(void)
+static u8 TextSpeed_ProcessInput(u8 selection)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	ldr r2, _080BA354\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080BA360\n\t"
-        "	cmp r3, #1\n\t"
-        "	bhi _080BA358\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	b _080BA35A\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA354: .4byte gMain\n\t"
-        "_080BA358:\n\t"
-        "	movs r3, #0\n\t"
-        "_080BA35A:\n\t"
-        "	ldr r1, _080BA378\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080BA360:\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080BA384\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _080BA37C\n\t"
-        "	subs r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	b _080BA37E\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA378: .4byte gUnknown_20397E8\n\t"
-        "_080BA37C:\n\t"
-        "	movs r3, #2\n\t"
-        "_080BA37E:\n\t"
-        "	ldr r1, _080BA38C\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080BA384:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA38C: .4byte gUnknown_20397E8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(DPAD_RIGHT))
+    {
+        if (selection <= 1)
+            selection++;
+        else
+            selection = 0;
+
+        sArrowPressed = TRUE;
+    }
+    if (JOY_NEW(DPAD_LEFT))
+    {
+        if (selection != 0)
+            selection--;
+        else
+            selection = 2;
+
+        sArrowPressed = TRUE;
+    }
+    return selection;
 }
 
-__attribute__((naked)) void BattleScene_DrawChoices(void)
+static void TextSpeed_DrawChoices(u8 selection)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r1, sp\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r1]\n\t"
-        "	strb r2, [r1, #1]\n\t"
-        "	strb r2, [r1, #2]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _080BA3D8\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	movs r1, #0x68\n\t"
-        "	bl DrawOptionMenuChoice\n\t"
-        "	ldr r0, _080BA3DC\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrb r3, [r1, #1]\n\t"
-        "	movs r1, #0x88\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DrawOptionMenuChoice\n\t"
-        "	ldr r0, _080BA3E0\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrb r3, [r1, #2]\n\t"
-        "	movs r1, #0xa8\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DrawOptionMenuChoice\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA3D8: .4byte gText_TextSpeedSlow\n\t"
-        "_080BA3DC: .4byte gText_TextSpeedMid\n\t"
-        "_080BA3E0: .4byte gText_TextSpeedFast\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 styles[3];
+
+    styles[0] = 0;
+    styles[1] = 0;
+    styles[2] = 0;
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(gText_TextSpeedSlow, 104, 0, styles[0]);
+    DrawOptionMenuChoice(gText_TextSpeedMid, 136, 0, styles[1]);
+    DrawOptionMenuChoice(gText_TextSpeedFast, 168, 0, styles[2]);
 }
 
-__attribute__((naked)) void BattleStyle_DrawChoices(void)
+static u8 BattleScene_ProcessInput(u8 selection)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r0, _080BA404\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0x30\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080BA3FE\n\t"
-        "	movs r1, #1\n\t"
-        "	eors r2, r1\n\t"
-        "	ldr r0, _080BA408\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080BA3FE:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA404: .4byte gMain\n\t"
-        "_080BA408: .4byte gUnknown_20397E8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        selection ^= 1;
+        sArrowPressed = TRUE;
+    }
+
+    return selection;
 }
 
-__attribute__((naked)) void Sound_DrawChoices(void)
+static void BattleScene_DrawChoices(u8 selection)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r1, sp\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r1]\n\t"
-        "	strb r2, [r1, #1]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r4, _080BA460\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x68\n\t"
-        "	bl DrawOptionMenuChoice\n\t"
-        "	ldr r4, _080BA464\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r3, [r0, #1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xa8\n\t"
-        "	bl DrawOptionMenuChoice\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA460: .4byte gText_BattleSceneOn\n\t"
-        "_080BA464: .4byte gText_BattleSceneOff\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 styles[2];
+
+    styles[0] = 0;
+    styles[1] = 0;
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(gText_BattleSceneOn, 104, GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT), styles[0]);
+    DrawOptionMenuChoice(gText_BattleSceneOff, 168, GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT), styles[1]);
 }
 
-__attribute__((naked)) void DrawOptionMenuTexts(void)
+static u8 BattleStyle_ProcessInput(u8 selection)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r0, _080BA488\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0x30\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080BA482\n\t"
-        "	movs r1, #1\n\t"
-        "	eors r2, r1\n\t"
-        "	ldr r0, _080BA48C\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080BA482:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA488: .4byte gMain\n\t"
-        "_080BA48C: .4byte gUnknown_20397E8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        selection ^= 1;
+        sArrowPressed = TRUE;
+    }
+
+    return selection;
 }
 
-__attribute__((naked)) void TextSpeed_ProcessInput(void)
+static void BattleStyle_DrawChoices(u8 selection)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r1, sp\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r1]\n\t"
-        "	strb r2, [r1, #1]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r4, _080BA4E4\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x19\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x68\n\t"
-        "	bl DrawOptionMenuChoice\n\t"
-        "	ldr r4, _080BA4E8\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x19\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r3, [r0, #1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	bl DrawOptionMenuChoice\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA4E4: .4byte gText_BattleStyleShift\n\t"
-        "_080BA4E8: .4byte gText_BattleStyleSet\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 styles[2];
+
+    styles[0] = 0;
+    styles[1] = 0;
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(gText_BattleStyleShift, 104, GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT) * 2, styles[0]);
+    DrawOptionMenuChoice(gText_BattleStyleSet, 160, GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT) * 2, styles[1]);
 }
 
-__attribute__((naked)) void Sound_ProcessInput(void)
+static u8 Sound_ProcessInput(u8 selection)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _080BA514\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0x30\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080BA50C\n\t"
-        "	movs r4, #1\n\t"
-        "	eors r5, r4\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl SetPokemonCryStereo\n\t"
-        "	ldr r0, _080BA518\n\t"
-        "	strb r4, [r0]\n\t"
-        "_080BA50C:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA514: .4byte gMain\n\t"
-        "_080BA518: .4byte gUnknown_20397E8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        selection ^= 1;
+        SetPokemonCryStereo(selection);
+        sArrowPressed = TRUE;
+    }
+
+    return selection;
 }
 
-__attribute__((naked)) void TextSpeed_DrawChoices(void)
+static void Sound_DrawChoices(u8 selection)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r1, sp\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r1]\n\t"
-        "	strb r2, [r1, #1]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r4, _080BA57C\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r2, r0, #1\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x68\n\t"
-        "	bl DrawOptionMenuChoice\n\t"
-        "	ldr r4, _080BA580\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r2, r0, #1\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r3, [r0, #1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	bl DrawOptionMenuChoice\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA57C: .4byte gText_SoundMono\n\t"
-        "_080BA580: .4byte gText_SoundStereo\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 styles[2];
+
+    styles[0] = 0;
+    styles[1] = 0;
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(gText_SoundMono, 104, GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT) * 3, styles[0]);
+    DrawOptionMenuChoice(gText_SoundStereo, 160, GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT) * 3, styles[1]);
 }
 
-__attribute__((naked)) void FrameType_ProcessInput(void)
+static u8 FrameType_ProcessInput(u8 selection)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _080BA5A4\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080BA5D6\n\t"
-        "	cmp r4, #0x12\n\t"
-        "	bhi _080BA5A8\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	b _080BA5AA\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA5A4: .4byte gMain\n\t"
-        "_080BA5A8:\n\t"
-        "	movs r4, #0\n\t"
-        "_080BA5AA:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetWindowFrameTilesPal\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r2, #0x90\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	movs r3, #0xd1\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	movs r0, #1\n\t"
-        "	bl LoadBgTiles\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetWindowFrameTilesPal\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	movs r1, #0x70\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r1, _080BA5F0\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080BA5D6:\n\t"
-        "	ldr r0, _080BA5F4\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080BA626\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080BA5F8\n\t"
-        "	subs r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	b _080BA5FA\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA5F0: .4byte gUnknown_20397E8\n\t"
-        "_080BA5F4: .4byte gMain\n\t"
-        "_080BA5F8:\n\t"
-        "	movs r4, #0x13\n\t"
-        "_080BA5FA:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetWindowFrameTilesPal\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r2, #0x90\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	movs r3, #0xd1\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	movs r0, #1\n\t"
-        "	bl LoadBgTiles\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetWindowFrameTilesPal\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	movs r1, #0x70\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r1, _080BA630\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080BA626:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA630: .4byte gUnknown_20397E8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(DPAD_RIGHT))
+    {
+        if (selection < WINDOW_FRAMES_COUNT - 1)
+            selection++;
+        else
+            selection = 0;
+
+        LoadBgTiles(1, GetWindowFrameTilesPal(selection)->tiles, 0x120, 0x1A2);
+        LoadPalette(GetWindowFrameTilesPal(selection)->pal, BG_PLTT_ID(7), PLTT_SIZE_4BPP);
+        sArrowPressed = TRUE;
+    }
+    if (JOY_NEW(DPAD_LEFT))
+    {
+        if (selection != 0)
+            selection--;
+        else
+            selection = WINDOW_FRAMES_COUNT - 1;
+
+        LoadBgTiles(1, GetWindowFrameTilesPal(selection)->tiles, 0x120, 0x1A2);
+        LoadPalette(GetWindowFrameTilesPal(selection)->pal, BG_PLTT_ID(7), PLTT_SIZE_4BPP);
+        sArrowPressed = TRUE;
+    }
+    return selection;
 }
 
-__attribute__((naked)) void FrameType_DrawChoices(void)
+static void FrameType_DrawChoices(u8 selection)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r1, _080BA6A8\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	ldr r2, _080BA6AC\n\t"
-        "	mov r8, r2\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _080BA672\n\t"
-        "	adds r2, r1, #0\n\t"
-        "_080BA656:\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r0, r5\n\t"
-        "	adds r0, r5, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r0, r5, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _080BA672\n\t"
-        "	cmp r5, #5\n\t"
-        "	bls _080BA656\n\t"
-        "_080BA672:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __udivsi3\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r0, r2, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0\n\t"
-        "	beq _080BA6B0\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r0, r5\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0xa1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r4, r1, r5\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __umodsi3\n\t"
-        "	adds r0, #0xa1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	b _080BA6CC\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA6A8: .4byte gText_FrameTypeNumber\n\t"
-        "_080BA6AC: .4byte gText_FrameType\n\t"
-        "_080BA6B0:\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r4, r2, r5\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __umodsi3\n\t"
-        "	adds r0, #0xa1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	strb r6, [r0]\n\t"
-        "_080BA6CC:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r1, r2, r5\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r2, r0, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r1, #0x68\n\t"
-        "	movs r3, #0\n\t"
-        "	bl DrawOptionMenuChoice\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r2, r0, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0x80\n\t"
-        "	movs r3, #1\n\t"
-        "	bl DrawOptionMenuChoice\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 text[8];
+    u8 n = selection + 1;
+    u16 i;
+
+    for (i = 0; gText_FrameTypeNumber[i] != EOS && i <= 5; i++)
+        text[i] = gText_FrameTypeNumber[i];
+
+    if (n / 10 != 0)
+    {
+        text[i] = n / 10 + CHAR_0;
+        i++;
+        text[i] = n % 10 + CHAR_0;
+    }
+    else
+    {
+        text[i] = n % 10 + CHAR_0;
+        i++;
+        text[i] = 0;
+    }
+
+    i++;
+    text[i] = EOS;
+
+    DrawOptionMenuChoice(gText_FrameType, 104, GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT) * 5, 0);
+    DrawOptionMenuChoice(text, 128, GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT) * 5, 1);
 }
 
-__attribute__((naked)) void ButtonMode_DrawChoices(void)
+static u8 ButtonMode_ProcessInput(u8 selection)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	ldr r2, _080BA744\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080BA750\n\t"
-        "	cmp r3, #1\n\t"
-        "	bhi _080BA748\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	b _080BA74A\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA744: .4byte gMain\n\t"
-        "_080BA748:\n\t"
-        "	movs r3, #0\n\t"
-        "_080BA74A:\n\t"
-        "	ldr r1, _080BA768\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080BA750:\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080BA774\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _080BA76C\n\t"
-        "	subs r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	b _080BA76E\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA768: .4byte gUnknown_20397E8\n\t"
-        "_080BA76C:\n\t"
-        "	movs r3, #2\n\t"
-        "_080BA76E:\n\t"
-        "	ldr r1, _080BA77C\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080BA774:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA77C: .4byte gUnknown_20397E8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(DPAD_RIGHT))
+    {
+        if (selection <= 1)
+            selection++;
+        else
+            selection = 0;
+
+        sArrowPressed = TRUE;
+    }
+    if (JOY_NEW(DPAD_LEFT))
+    {
+        if (selection != 0)
+            selection--;
+        else
+            selection = 2;
+
+        sArrowPressed = TRUE;
+    }
+    return selection;
 }
 
-__attribute__((naked)) void sub_080BA780(void)
+static void ButtonMode_DrawChoices(u8 selection)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r1, sp\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r1]\n\t"
-        "	strb r2, [r1, #1]\n\t"
-        "	strb r2, [r1, #2]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r4, _080BA7F4\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x1a\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x68\n\t"
-        "	bl DrawOptionMenuChoice\n\t"
-        "	ldr r4, _080BA7F8\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x1a\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r3, [r0, #1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x90\n\t"
-        "	bl DrawOptionMenuChoice\n\t"
-        "	ldr r4, _080BA7FC\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x1a\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r3, [r0, #2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xa8\n\t"
-        "	bl DrawOptionMenuChoice\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA7F4: .4byte gText_ButtonTypeNormal\n\t"
-        "_080BA7F8: .4byte gText_ButtonTypeLR\n\t"
-        "_080BA7FC: .4byte gText_ButtonTypeLEqualsA\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 styles[3];
+
+    styles[0] = 0;
+    styles[1] = 0;
+    styles[2] = 0;
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(gText_ButtonTypeNormal, 104, GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT) * 4, styles[0]);
+    DrawOptionMenuChoice(gText_ButtonTypeLR, 144, GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT) * 4, styles[1]);
+    DrawOptionMenuChoice(gText_ButtonTypeLEqualsA, 168, GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT) * 4, styles[2]);
 }
 
-__attribute__((naked)) void DrawTextOption(void)
+static void DrawHeaderText(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r2, _080BA830\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #8\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA830: .4byte gText_Option\n\t"
-        ".syntax divided\n\t"
-    );
+    FillWindowPixelBuffer(WIN_HEADER, PIXEL_FILL(1));
+    AddTextPrinterParameterized(WIN_HEADER, FONT_NORMAL, gText_Option, 8, 2, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(WIN_HEADER, COPYWIN_FULL);
 }
 
-__attribute__((naked)) void sub_080BA834(void)
+static void DrawOptionMenuTexts(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	movs r4, #0\n\t"
-        "_080BA842:\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	adds r1, #2\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r2, _080BA88C\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #8\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #6\n\t"
-        "	bls _080BA842\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA88C: .4byte sOptionMenuItemsNames\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    FillWindowPixelBuffer(WIN_OPTIONS, PIXEL_FILL(1));
+    for (i = 0; i < MENUITEM_COUNT; i++)
+        AddTextPrinterParameterized(WIN_OPTIONS, FONT_NORMAL, sOptionMenuItemsNames[i], 8, GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT) * i + 2, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(WIN_OPTIONS, COPYWIN_FULL);
 }
 
-__attribute__((naked)) void sub_080BA890(void)
+#define TILE_TOP_CORNER_L 0x1A2
+#define TILE_TOP_EDGE     0x1A3
+#define TILE_TOP_CORNER_R 0x1A4
+#define TILE_LEFT_EDGE    0x1A5
+#define TILE_RIGHT_EDGE   0x1A7
+#define TILE_BOT_CORNER_L 0x1A8
+#define TILE_BOT_EDGE     0x1A9
+#define TILE_BOT_CORNER_R 0x1AA
+
+static void DrawBgWindowFrames(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r4, #1\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	movs r5, #7\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0xd1\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	movs r0, #0x1b\n\t"
-        "	mov r8, r0\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	ldr r1, _080BA9FC\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0xd2\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #0\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r6, #2\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	ldr r1, _080BAA00\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #1\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	ldr r1, _080BAA04\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #1\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	movs r7, #0xd4\n\t"
-        "	lsls r7, r7, #1\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #3\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	ldr r0, _080BAA08\n\t"
-        "	mov sl, r0\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	mov r1, sl\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #3\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	movs r0, #0xd5\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	mov sb, r0\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	mov r1, sb\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #3\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0xd1\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #4\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	mov r8, r0\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	ldr r1, _080BA9FC\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #4\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0xd2\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #4\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r6, #0x12\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	ldr r1, _080BAA00\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #5\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	ldr r1, _080BAA04\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #5\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	mov r1, sl\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	mov r1, sb\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	movs r0, #1\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080BA9FC: .4byte SPECIAL_WonderNews_GetRewardInfo\n\t"
-        "_080BAA00: .4byte SPECIAL_Script_ResetUnionRoomTrade\n\t"
-        "_080BAA04: .4byte SPECIAL_ValidateSavedWonderCard\n\t"
-        "_080BAA08: .4byte SPECIAL_IsPokemonJumpSpeciesInParty\n\t"
-        ".syntax divided\n\t"
-    );
+    //                     bg, tile,              x, y, width, height, palNum
+    // Draw title window frame
+    FillBgTilemapBufferRect(1, TILE_TOP_CORNER_L,  1,  0,  1,  1,  7);
+    FillBgTilemapBufferRect(1, TILE_TOP_EDGE,      2,  0, 27,  1,  7);
+    FillBgTilemapBufferRect(1, TILE_TOP_CORNER_R, 28,  0,  1,  1,  7);
+    FillBgTilemapBufferRect(1, TILE_LEFT_EDGE,     1,  1,  1,  2,  7);
+    FillBgTilemapBufferRect(1, TILE_RIGHT_EDGE,   28,  1,  1,  2,  7);
+    FillBgTilemapBufferRect(1, TILE_BOT_CORNER_L,  1,  3,  1,  1,  7);
+    FillBgTilemapBufferRect(1, TILE_BOT_EDGE,      2,  3, 27,  1,  7);
+    FillBgTilemapBufferRect(1, TILE_BOT_CORNER_R, 28,  3,  1,  1,  7);
+
+    // Draw options list window frame
+    FillBgTilemapBufferRect(1, TILE_TOP_CORNER_L,  1,  4,  1,  1,  7);
+    FillBgTilemapBufferRect(1, TILE_TOP_EDGE,      2,  4, 26,  1,  7);
+    FillBgTilemapBufferRect(1, TILE_TOP_CORNER_R, 28,  4,  1,  1,  7);
+    FillBgTilemapBufferRect(1, TILE_LEFT_EDGE,     1,  5,  1, 18,  7);
+    FillBgTilemapBufferRect(1, TILE_RIGHT_EDGE,   28,  5,  1, 18,  7);
+    FillBgTilemapBufferRect(1, TILE_BOT_CORNER_L,  1, 19,  1,  1,  7);
+    FillBgTilemapBufferRect(1, TILE_BOT_EDGE,      2, 19, 26,  1,  7);
+    FillBgTilemapBufferRect(1, TILE_BOT_CORNER_R, 28, 19,  1,  1,  7);
+
+    CopyBgTilemapBufferToVram(1);
 }
 
 static const u16 sOptionMenuText_Pal[] OPTION_MENU_STATIC_DATA = INCBIN_U16("graphics/interface/option_menu_text.gbapal");
