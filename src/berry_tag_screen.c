@@ -21,6 +21,7 @@
 #include "graphics.h"
 #include "save.h"
 #include "string_util.h"
+#include "strings.h"
 
 // JP ROM layout matches pokeemerald's struct plus a trailing 2-byte
 // padding, giving sizeof(*sBerryTag) == 0x180C (matches AllocZeroed size).
@@ -40,8 +41,6 @@ extern struct BerryTagScreenStruct *sBerryTag;
 #define tBerryY data[0]
 #define tBgOp data[1]
 #define BERRY_TAG_SCREEN_DATA __attribute__((section(".rodata.berry_tag_screen_data")))
-
-extern const u8 gUnknown_85C9786[];
 
 // These JP tables occupy 0x085CD068-0x085CD0DC in the original ROM.
 // Keep their source order and JP-specific window geometry byte-exact.
@@ -74,14 +73,13 @@ static BERRY_TAG_SCREEN_DATA const struct WindowTemplate sWindowTemplates[] =
     DUMMY_WIN_TEMPLATE,
 };
 
-// The shared text block has not yet been split into individual text owners.
 static BERRY_TAG_SCREEN_DATA const u8 *const sBerryFirmnessStrings[] =
 {
-    &gUnknown_85C9786[8],
-    &gUnknown_85C9786[18],
-    &gUnknown_85C9786[24],
-    &gUnknown_85C9786[28],
-    &gUnknown_85C9786[36],
+    gBerryFirmnessString_VerySoft,
+    gBerryFirmnessString_Soft,
+    gBerryFirmnessString_Hard,
+    gBerryFirmnessString_VeryHard,
+    gBerryFirmnessString_SuperHard,
 };
 
 void bag_menu_mail_related(void);
@@ -106,11 +104,9 @@ void PrintBerryNumberAndName(void);
 void PrintBerryFirmness(void);
 void PrintBerryDescription1(void);
 void PrintBerryDescription2(void);
-extern const u8 gUnknown_85C97BD[];
-extern const u8 gUnknown_85C97B5[];
-extern const u8 gUnknown_85C977D[];
-extern const u8 gUnknown_85C9782[];
 extern const u8 gUnknown_85C93F5[];
+extern const u8 gUnknown_85C97B5[];
+extern const u8 gUnknown_85C97BD[];
 
 void DoBerryTagScreen(void)
 {
@@ -351,12 +347,12 @@ void sub_0817804C(void)
 {
     const struct Berry *berry = GetBerryInfo(sBerryTag->berryId);
 
-    AddTextPrinterParameterized(1, 1, gUnknown_85C977D, 0, 2, 0xFF, NULL);
+    AddTextPrinterParameterized(1, 1, gText_SizeSlash, 0, 2, 0xFF, NULL);
     if (berry->size != 0)
     {
         ConvertIntToDecimalStringN(gStringVar1, berry->size / 10, 0, 2);
         ConvertIntToDecimalStringN(gStringVar2, berry->size % 10, 0, 2);
-        StringExpandPlaceholders(gStringVar4, gUnknown_85C9786);
+        StringExpandPlaceholders(gStringVar4, gText_Var1DotVar2);
         AddTextPrinterParameterized(1, 1, gStringVar4, 0x28, 2, 0, NULL);
     }
     else
@@ -369,7 +365,7 @@ void PrintBerryFirmness(void)
 {
     const struct Berry *berry = GetBerryInfo(sBerryTag->berryId);
 
-    AddTextPrinterParameterized(1, 1, gUnknown_85C9782, 0, 0x12, 0xFF, NULL);
+    AddTextPrinterParameterized(1, 1, gText_FirmSlash, 0, 0x12, 0xFF, NULL);
     if (berry->firmness != 0)
         AddTextPrinterParameterized(1, 1, sBerryFirmnessStrings[berry->firmness - 1], 0x28, 0x12, 0, NULL);
     else

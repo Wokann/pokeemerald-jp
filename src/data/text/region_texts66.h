@@ -124,13 +124,3 @@ const u8 gUnknown_85C9699[] = _(
 const u8 gUnknown_85C96BD[] = _("ボックスが　いっぱい　です！{PAUSE_UNTIL_PRESS}");
 
 const u8 gUnknown_85C96CE[] = _("こなの　りょう　{STR_VAR_1}{PAUSE_UNTIL_PRESS}");
-
-const u8 gUnknown_85C96CE_sub1[] = _("フィールド");
-
-const u8 gUnknown_85C96CE_sub2[] = _("せんとう");
-
-const u8 gUnknown_85C96CE_sub3[] = _("ポケモンリスト");
-
-const u8 gUnknown_85C96CE_sub4[] = _("ショップ");
-
-const u8 gUnknown_85C96CE_sub5[] = _("パソコン");

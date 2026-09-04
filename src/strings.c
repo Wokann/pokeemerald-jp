@@ -1,4 +1,7 @@
 #include "global.h"
+#include "strings.h"
+#include "battle_pyramid_bag.h"
+#include "item_menu.h"
 
 #define STRINGS_COMMON __attribute__((section(".rodata.strings_common")))
 #define STRINGS_MAIN_MENU __attribute__((section(".rodata.strings_main_menu")))
@@ -6,11 +9,61 @@
 #define STRINGS_POKENAV_STORAGE __attribute__((section(".rodata.strings_pokenav_storage")))
 #define STRINGS_CLEAR_SAVE __attribute__((section(".rodata.strings_clear_save")))
 #define STRINGS_DAYCARE __attribute__((section(".rodata.strings_daycare")))
+#define STRINGS_BAG_RETURN_TEXT __attribute__((section(".rodata.strings_bag_return_text"), aligned(1)))
+#define STRINGS_BAG_RETURN_TABLES __attribute__((section(".rodata.strings_bag_return_tables")))
+#define STRINGS_ITEM_MENU_TEXT __attribute__((section(".rodata.strings_item_menu_text"), aligned(1)))
 
 STRINGS_DAYCARE const u8 gDaycareText_GetAlongVeryWell[] = _("2ひきの　なかは\nとっても　よい　ようじゃ");
 STRINGS_DAYCARE const u8 gDaycareText_GetAlong[] = _("2ひきの　なかは\nまずまずの　ようじゃ");
 STRINGS_DAYCARE const u8 gDaycareText_DontLikeOther[] = _("2ひきの　なかは\nそれほど　よくないがなぁ");
 STRINGS_DAYCARE const u8 gDaycareText_PlayOther[] = _("2ひきは　おたがいに\nちがう　ポケモンたちと\lあそんでおるがなあ");
+
+STRINGS_BAG_RETURN_TEXT const u8 gText_TheField[] = _("フィールド");
+STRINGS_BAG_RETURN_TEXT const u8 gText_TheBattle[] = _("せんとう");
+STRINGS_BAG_RETURN_TEXT const u8 gText_ThePokemonList[] = _("ポケモンリスト");
+STRINGS_BAG_RETURN_TEXT const u8 gText_TheShop[] = _("ショップ");
+STRINGS_BAG_RETURN_TEXT const u8 gText_ThePC[] = _("パソコン");
+
+STRINGS_BAG_RETURN_TABLES const u8 *const gBagMenu_ReturnToStrings[] =
+{
+    [ITEMMENULOCATION_FIELD]               = gText_TheField,
+    [ITEMMENULOCATION_BATTLE]              = gText_TheBattle,
+    [ITEMMENULOCATION_PARTY]               = gText_ThePokemonList,
+    [ITEMMENULOCATION_SHOP]                = gText_TheShop,
+    [ITEMMENULOCATION_BERRY_TREE]          = gText_TheField,
+    [ITEMMENULOCATION_BERRY_BLENDER_CRUSH] = gText_TheField,
+    [ITEMMENULOCATION_ITEMPC]              = gText_ThePC,
+    [ITEMMENULOCATION_FAVOR_LADY]          = gText_TheField,
+    [ITEMMENULOCATION_QUIZ_LADY]           = gText_TheField,
+    [ITEMMENULOCATION_APPRENTICE]          = gText_TheField,
+    [ITEMMENULOCATION_WALLY]               = gText_TheBattle,
+    [ITEMMENULOCATION_PCBOX]               = gText_ThePC
+};
+
+STRINGS_BAG_RETURN_TABLES const u8 *const gPyramidBagMenu_ReturnToStrings[] =
+{
+    [PYRAMIDBAG_LOC_FIELD]       = gText_TheField,
+    [PYRAMIDBAG_LOC_BATTLE]      = gText_TheBattle,
+    [PYRAMIDBAG_LOC_PARTY]       = gText_ThePokemonList,
+    [PYRAMIDBAG_LOC_CHOOSE_TOSS] = gText_TheField
+};
+
+STRINGS_ITEM_MENU_TEXT const u8 gText_ReturnToVar1[] = _("{B_COPY_VAR_1}へ\nもどります");
+STRINGS_ITEM_MENU_TEXT const u8 gText_ItemsPocket[] = _("　ど　う　ぐ　　");
+STRINGS_ITEM_MENU_TEXT const u8 gText_PokeBallsPocket[] = _("モンスターボール");
+STRINGS_ITEM_MENU_TEXT const u8 gText_TMHMPocket[] = _("　わざマシン　　");
+STRINGS_ITEM_MENU_TEXT const u8 gText_BerriesPocket[] = _("　き　の　み　　");
+STRINGS_ITEM_MENU_TEXT const u8 gText_KeyItemsPocket[] = _("たいせつなもの　");
+STRINGS_ITEM_MENU_TEXT const u8 gText_NumberItem_TMBerry[] = _("{NO}{STR_VAR_1}{STR_VAR_2}");
+STRINGS_ITEM_MENU_TEXT const u8 gText_NumberItem_HM[] = _("　　{STR_VAR_1}{STR_VAR_2}");
+STRINGS_ITEM_MENU_TEXT const u8 gText_SizeSlash[] = _("おおきさ");
+STRINGS_ITEM_MENU_TEXT const u8 gText_FirmSlash[] = _("かたさ");
+STRINGS_ITEM_MENU_TEXT const u8 gText_Var1DotVar2[] = _("{STR_VAR_1},{STR_VAR_2}cm");
+STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_VerySoft[] = _("とても　やわらかい");
+STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_Soft[] = _("やわらかい");
+STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_Hard[] = _("かたい");
+STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_VeryHard[] = _("とても　かたい");
+STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_SuperHard[] = _("とてつもなく　かたい");
 
 STRINGS_COMMON const u8 gMenuText_Confirm[] = {0x09, 0x50, 0x13, 0x02, 0xFF, 0x05, 0x28, 0x29, 0xFF};
 STRINGS_COMMON const u8 gText_Cancel[] = {0x23, 0x45, 0x29, 0xFF};

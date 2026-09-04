@@ -1002,7 +1002,7 @@ __attribute__((naked)) void PyramidBag_CopyItemName(void)
         "	.align 2, 0\n\t"
         "_081C4C4C: .4byte gStringVar1\n\t"
         "_081C4C50: .4byte gStringVar2\n\t"
-        "_081C4C54: .4byte gUnknown_85C9742 + 0x2D\n\t"
+        "_081C4C54: .4byte gText_NumberItem_TMBerry\n\t"
         "_081C4C58:\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
@@ -1261,10 +1261,10 @@ __attribute__((naked)) void PrintItemDescription(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C4E5C: .4byte gStringVar1\n\t"
-        "_081C4E60: .4byte gUnknown_85C9728\n\t"
+        "_081C4E60: .4byte gPyramidBagMenu_ReturnToStrings\n\t"
         "_081C4E64: .4byte gUnknown_203CBFC\n\t"
         "_081C4E68: .4byte gStringVar4\n\t"
-        "_081C4E6C: .4byte gUnknown_85C9738\n\t"
+        "_081C4E6C: .4byte gText_ReturnToVar1\n\t"
         ".syntax divided\n\t"
     );
 }
