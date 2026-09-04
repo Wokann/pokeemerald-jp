@@ -9724,7 +9724,7 @@ SECTIONS {
         src/battle_anim.o(.rodata.battle_anim_script_cmd_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_battle_anim_script_cmd_data_before_battle_anim_mons_static_data);
         src/battle_anim_mons.o(.rodata.battle_anim_mons_static_data);
-        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_battle_anim_mons_static_data_before_battle_anim_status_effects);
+        data/map_events.o(.rodata.map_events);
         src/battle_anim_status_effects.o(.rodata.battle_anim_status_effects_data);
         src/graphics.o(.rodata.title_screen_press_start_graphics);
         src/graphics.o(.rodata.title_screen_graphics_before_title_screen_static_graphics);
