@@ -1749,6 +1749,7 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/field_effects/pics/ash_puff.png_mwidth_2__mheight_2.4bpp \
 	graphics/field_effects/pics/ash_launch.png_mwidth_2__mheight_2.4bpp \
 	graphics/field_effects/pics/bubbles.png_mwidth_2__mheight_4.4bpp \
+	graphics/field_effects/pics/sparkle.png_mwidth_2__mheight_2.4bpp \
 	graphics/field_effects/pics/small_sparkle.png_mwidth_2__mheight_2.4bpp \
 	graphics/field_effects/palettes/small_sparkle.pal.gbapal \
 	graphics/field_effects/pics/bird.png.4bpp \

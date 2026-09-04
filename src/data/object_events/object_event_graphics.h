@@ -278,6 +278,7 @@ OBJECT_EVENT_GRAPHICS_TRANSPORT_DATA const u32 gObjectEventPic_CableCar[] = INCB
 OBJECT_EVENT_GRAPHICS_TRANSPORT_DATA const u16 gObjectEventPal_CableCar[] = INCBIN_U16("graphics/object_events/palettes/cable_car.gbapal");
 OBJECT_EVENT_GRAPHICS_TRANSPORT_DATA const u32 gObjectEventPic_SSTidal[] = INCBIN_U32("graphics/object_events/pics/misc/ss_tidal.4bpp");
 OBJECT_EVENT_GRAPHICS_TRANSPORT_DATA const u16 gObjectEventPal_SSTidal[] = INCBIN_U16("graphics/object_events/palettes/ss_tidal.gbapal");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SPARKLE_DATA const u8 gFieldEffectObjectPic_Sparkle[] = INCGFX_U8("graphics/field_effects/pics/sparkle.png", ".4bpp", "-mwidth 2 -mheight 2");
 
 // This JP-owned berry-tree graphics family follows the transport objects.
 OBJECT_EVENT_GRAPHICS_BERRY_TREE_GFX_DATA const u8 gObjectEventPic_BerryTreeDirtPile[] = INCBIN_U8("graphics/object_events/pics/berry_trees/dirt_pile.4bpp");

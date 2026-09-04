@@ -14,6 +14,7 @@
 #define OBJECT_EVENT_GRAPHICS_MISC_DATA __attribute__((section(".rodata.object_event_graphics_misc_data"), aligned(4)))
 #define OBJECT_EVENT_GRAPHICS_OPENING_DATA __attribute__((section(".rodata.object_event_graphics_opening_data"), aligned(4)))
 #define OBJECT_EVENT_GRAPHICS_TRANSPORT_DATA __attribute__((section(".rodata.object_event_graphics_transport_data"), aligned(4)))
+#define OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SPARKLE_DATA __attribute__((section(".rodata.object_event_graphics_field_effect_sparkle_data"), aligned(4)))
 #define OBJECT_EVENT_GRAPHICS_BERRY_TREE_GFX_DATA __attribute__((section(".rodata.object_event_graphics_berry_tree_gfx_data"), aligned(4)))
 #define OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SURF_BLOB_DATA __attribute__((section(".rodata.object_event_graphics_field_effect_surf_blob_data"), aligned(4)))
 #define OBJECT_EVENT_GRAPHICS_QUINTY_PLUMP_DATA __attribute__((section(".rodata.object_event_graphics_quinty_plump_data"), aligned(4)))
@@ -27,6 +28,7 @@
 #undef OBJECT_EVENT_GRAPHICS_QUINTY_PLUMP_DATA
 #undef OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SURF_BLOB_DATA
 #undef OBJECT_EVENT_GRAPHICS_BERRY_TREE_GFX_DATA
+#undef OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SPARKLE_DATA
 #undef OBJECT_EVENT_GRAPHICS_TRANSPORT_DATA
 #undef OBJECT_EVENT_GRAPHICS_OPENING_DATA
 #undef OBJECT_EVENT_GRAPHICS_MISC_DATA

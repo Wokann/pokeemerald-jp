@@ -33,9 +33,6 @@
 
 	.section .rodata.data_b2d_mid28_after_opening_graphics
 
-	.section .rodata.data_b2d_mid28_after_transport_graphics
-	.incbin "baserom_jp.gba", 0x4c1fec, 0x300
-
 	.section .rodata.data_b2d_mid28_after_berry_tree_graphics
 
 	.section .rodata.data_b2d_mid28_after_surf_blob_graphics

@@ -9535,7 +9535,7 @@ SECTIONS {
         src/event_object_movement.o(.rodata.object_event_graphics_opening_data);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_opening_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_transport_data);
-        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_transport_graphics);
+        src/event_object_movement.o(.rodata.object_event_graphics_field_effect_sparkle_data);
         src/event_object_movement.o(.rodata.object_event_graphics_berry_tree_gfx_data);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_berry_tree_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_field_effect_surf_blob_data);
@@ -9568,7 +9568,6 @@ SECTIONS {
         gFieldEffectObjectPic_Arrow = ABSOLUTE(0x084CF80C);
         gFieldEffectObjectPic_Ash = ABSOLUTE(0x084CF58C);
         gFieldEffectObjectPic_Ripple = ABSOLUTE(0x084CF30C);
-        gFieldEffectObjectPic_Sparkle = ABSOLUTE(0x084C1FEC);
         src/event_object_movement.o(.rodata.event_object_movement_function_tables);
         src/event_object_movement.o(.rodata.event_object_movement_action_tables);
         sDirectionToVectors = . + 0x29;
