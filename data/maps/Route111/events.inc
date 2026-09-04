@@ -117,3 +117,4 @@ Route111_MapBGEvents:
 
 Route111_MapEvents::
 	map_events Route111_ObjectEvents, Route111_MapWarps, Route111_MapCoordEvents, Route111_MapBGEvents
+

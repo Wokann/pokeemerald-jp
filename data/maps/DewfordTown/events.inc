@@ -27,3 +27,4 @@ DewfordTown_MapBGEvents:
 
 DewfordTown_MapEvents::
 	map_events DewfordTown_ObjectEvents, DewfordTown_MapWarps, NULL, DewfordTown_MapBGEvents
+

@@ -16,3 +16,4 @@ RustboroCity_Mart_MapWarps:
 
 RustboroCity_Mart_MapEvents::
 	map_events RustboroCity_Mart_ObjectEvents, RustboroCity_Mart_MapWarps, NULL, NULL
+

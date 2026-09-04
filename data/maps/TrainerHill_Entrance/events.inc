@@ -24,3 +24,4 @@ TrainerHill_Entrance_MapBGEvents:
 
 TrainerHill_Entrance_MapEvents::
 	map_events TrainerHill_Entrance_ObjectEvents, TrainerHill_Entrance_MapWarps, TrainerHill_Entrance_MapCoordEvents, TrainerHill_Entrance_MapBGEvents
+

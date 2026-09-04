@@ -6,3 +6,4 @@
 
 Route104_PrototypePrettyPetalFlowerShop_MapEvents::
 	map_events NULL, NULL, NULL, NULL
+

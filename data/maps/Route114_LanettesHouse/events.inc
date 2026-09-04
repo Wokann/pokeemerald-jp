@@ -18,3 +18,4 @@ Route114_LanettesHouse_MapBGEvents:
 
 Route114_LanettesHouse_MapEvents::
 	map_events Route114_LanettesHouse_ObjectEvents, Route114_LanettesHouse_MapWarps, NULL, Route114_LanettesHouse_MapBGEvents
+

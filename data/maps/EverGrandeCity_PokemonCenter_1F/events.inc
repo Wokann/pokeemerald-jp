@@ -17,3 +17,4 @@ EverGrandeCity_PokemonCenter_1F_MapWarps:
 
 EverGrandeCity_PokemonCenter_1F_MapEvents::
 	map_events EverGrandeCity_PokemonCenter_1F_ObjectEvents, EverGrandeCity_PokemonCenter_1F_MapWarps, NULL, NULL
+

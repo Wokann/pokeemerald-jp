@@ -9,3 +9,4 @@ Route106_MapConnectionsList:
 Route106_MapConnections:
 	.4byte 2
 	.4byte Route106_MapConnectionsList
+

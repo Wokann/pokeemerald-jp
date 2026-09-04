@@ -10,3 +10,4 @@ MossdeepCity_MapConnectionsList:
 MossdeepCity_MapConnections:
 	.4byte 3
 	.4byte MossdeepCity_MapConnectionsList
+

@@ -18,3 +18,4 @@ LilycoveCity_PokemonCenter_1F_MapWarps:
 
 LilycoveCity_PokemonCenter_1F_MapEvents::
 	map_events LilycoveCity_PokemonCenter_1F_ObjectEvents, LilycoveCity_PokemonCenter_1F_MapWarps, NULL, NULL
+

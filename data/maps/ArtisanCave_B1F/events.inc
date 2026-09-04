@@ -19,3 +19,4 @@ ArtisanCave_B1F_MapBGEvents:
 
 ArtisanCave_B1F_MapEvents::
 	map_events ArtisanCave_B1F_ObjectEvents, ArtisanCave_B1F_MapWarps, NULL, ArtisanCave_B1F_MapBGEvents
+

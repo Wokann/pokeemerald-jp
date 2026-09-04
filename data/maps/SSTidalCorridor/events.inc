@@ -38,3 +38,4 @@ SSTidalCorridor_MapBGEvents:
 
 SSTidalCorridor_MapEvents::
 	map_events SSTidalCorridor_ObjectEvents, SSTidalCorridor_MapWarps, NULL, SSTidalCorridor_MapBGEvents
+

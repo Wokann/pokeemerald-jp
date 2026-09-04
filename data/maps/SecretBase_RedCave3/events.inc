@@ -26,3 +26,4 @@ SecretBase_RedCave3_MapWarps:
 
 SecretBase_RedCave3_MapEvents::
 	map_events SecretBase_RedCave3_ObjectEvents, SecretBase_RedCave3_MapWarps, NULL, NULL
+

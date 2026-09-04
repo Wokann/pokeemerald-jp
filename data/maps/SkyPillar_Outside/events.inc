@@ -13,3 +13,4 @@ SkyPillar_Outside_MapWarps:
 
 SkyPillar_Outside_MapEvents::
 	map_events SkyPillar_Outside_ObjectEvents, SkyPillar_Outside_MapWarps, NULL, NULL
+

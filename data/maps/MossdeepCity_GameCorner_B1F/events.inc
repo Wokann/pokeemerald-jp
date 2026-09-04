@@ -12,3 +12,4 @@ MossdeepCity_GameCorner_B1F_MapWarps:
 
 MossdeepCity_GameCorner_B1F_MapEvents::
 	map_events MossdeepCity_GameCorner_B1F_ObjectEvents, MossdeepCity_GameCorner_B1F_MapWarps, NULL, NULL
+

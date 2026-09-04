@@ -17,3 +17,4 @@ SouthernIsland_Exterior_MapBGEvents:
 
 SouthernIsland_Exterior_MapEvents::
 	map_events SouthernIsland_Exterior_ObjectEvents, SouthernIsland_Exterior_MapWarps, NULL, SouthernIsland_Exterior_MapBGEvents
+

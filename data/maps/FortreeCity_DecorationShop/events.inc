@@ -16,3 +16,4 @@ FortreeCity_DecorationShop_MapWarps:
 
 FortreeCity_DecorationShop_MapEvents::
 	map_events FortreeCity_DecorationShop_ObjectEvents, FortreeCity_DecorationShop_MapWarps, NULL, NULL
+

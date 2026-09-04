@@ -28,3 +28,4 @@ InsideOfTruck_MapBGEvents:
 
 InsideOfTruck_MapEvents::
 	map_events InsideOfTruck_ObjectEvents, InsideOfTruck_MapWarps, InsideOfTruck_MapCoordEvents, InsideOfTruck_MapBGEvents
+

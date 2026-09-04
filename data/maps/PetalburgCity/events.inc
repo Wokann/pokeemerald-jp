@@ -45,3 +45,4 @@ PetalburgCity_MapBGEvents:
 
 PetalburgCity_MapEvents::
 	map_events PetalburgCity_ObjectEvents, PetalburgCity_MapWarps, PetalburgCity_MapCoordEvents, PetalburgCity_MapBGEvents
+

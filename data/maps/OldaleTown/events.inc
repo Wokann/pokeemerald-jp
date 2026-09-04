@@ -31,3 +31,4 @@ OldaleTown_MapBGEvents:
 
 OldaleTown_MapEvents::
 	map_events OldaleTown_ObjectEvents, OldaleTown_MapWarps, OldaleTown_MapCoordEvents, OldaleTown_MapBGEvents
+

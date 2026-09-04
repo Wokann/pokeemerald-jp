@@ -59,3 +59,4 @@ MossdeepCity_MapBGEvents:
 
 MossdeepCity_MapEvents::
 	map_events MossdeepCity_ObjectEvents, MossdeepCity_MapWarps, MossdeepCity_MapCoordEvents, MossdeepCity_MapBGEvents
+

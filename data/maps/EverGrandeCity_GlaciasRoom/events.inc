@@ -13,3 +13,4 @@ EverGrandeCity_GlaciasRoom_MapWarps:
 
 EverGrandeCity_GlaciasRoom_MapEvents::
 	map_events EverGrandeCity_GlaciasRoom_ObjectEvents, EverGrandeCity_GlaciasRoom_MapWarps, NULL, NULL
+

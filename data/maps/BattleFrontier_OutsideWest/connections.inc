@@ -8,3 +8,4 @@ BattleFrontier_OutsideWest_MapConnectionsList:
 BattleFrontier_OutsideWest_MapConnections:
 	.4byte 1
 	.4byte BattleFrontier_OutsideWest_MapConnectionsList
+

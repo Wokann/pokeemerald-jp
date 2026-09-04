@@ -17,3 +17,4 @@ BattleFrontier_BattleTowerMultiPartnerRoom_ObjectEvents:
 
 BattleFrontier_BattleTowerMultiPartnerRoom_MapEvents::
 	map_events BattleFrontier_BattleTowerMultiPartnerRoom_ObjectEvents, NULL, NULL, NULL
+

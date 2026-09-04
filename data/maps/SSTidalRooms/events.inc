@@ -34,3 +34,4 @@ SSTidalRooms_MapBGEvents:
 
 SSTidalRooms_MapEvents::
 	map_events SSTidalRooms_ObjectEvents, SSTidalRooms_MapWarps, NULL, SSTidalRooms_MapBGEvents
+

@@ -9,3 +9,4 @@ PacifidlogTown_MapConnectionsList:
 PacifidlogTown_MapConnections:
 	.4byte 2
 	.4byte PacifidlogTown_MapConnectionsList
+

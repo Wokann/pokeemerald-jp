@@ -18,3 +18,4 @@ PacifidlogTown_PokemonCenter_1F_MapWarps:
 
 PacifidlogTown_PokemonCenter_1F_MapEvents::
 	map_events PacifidlogTown_PokemonCenter_1F_ObjectEvents, PacifidlogTown_PokemonCenter_1F_MapWarps, NULL, NULL
+

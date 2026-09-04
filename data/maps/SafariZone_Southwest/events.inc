@@ -16,3 +16,4 @@ SafariZone_Southwest_MapBGEvents:
 
 SafariZone_Southwest_MapEvents::
 	map_events SafariZone_Southwest_ObjectEvents, SafariZone_Southwest_MapWarps, NULL, SafariZone_Southwest_MapBGEvents
+

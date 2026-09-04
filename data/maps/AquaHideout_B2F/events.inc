@@ -30,3 +30,4 @@ AquaHideout_B2F_MapCoordEvents:
 
 AquaHideout_B2F_MapEvents::
 	map_events AquaHideout_B2F_ObjectEvents, AquaHideout_B2F_MapWarps, AquaHideout_B2F_MapCoordEvents, NULL
+

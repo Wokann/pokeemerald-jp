@@ -16,3 +16,4 @@ GraniteCave_1F_MapWarps:
 
 GraniteCave_1F_MapEvents::
 	map_events GraniteCave_1F_ObjectEvents, GraniteCave_1F_MapWarps, NULL, NULL
+

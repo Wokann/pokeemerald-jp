@@ -17,3 +17,4 @@ BattleFrontier_BattlePalaceBattleRoom_MapWarps:
 
 BattleFrontier_BattlePalaceBattleRoom_MapEvents::
 	map_events BattleFrontier_BattlePalaceBattleRoom_ObjectEvents, BattleFrontier_BattlePalaceBattleRoom_MapWarps, NULL, NULL
+

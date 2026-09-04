@@ -17,3 +17,4 @@ FallarborTown_PokemonCenter_2F_MapWarps:
 
 FallarborTown_PokemonCenter_2F_MapEvents::
 	map_events FallarborTown_PokemonCenter_2F_ObjectEvents, FallarborTown_PokemonCenter_2F_MapWarps, NULL, NULL
+

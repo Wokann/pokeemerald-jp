@@ -16,3 +16,4 @@ BattleFrontier_Lounge3_MapWarps:
 
 BattleFrontier_Lounge3_MapEvents::
 	map_events BattleFrontier_Lounge3_ObjectEvents, BattleFrontier_Lounge3_MapWarps, NULL, NULL
+

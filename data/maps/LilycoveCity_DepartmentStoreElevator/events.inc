@@ -13,3 +13,4 @@ LilycoveCity_DepartmentStoreElevator_MapWarps:
 
 LilycoveCity_DepartmentStoreElevator_MapEvents::
 	map_events LilycoveCity_DepartmentStoreElevator_ObjectEvents, LilycoveCity_DepartmentStoreElevator_MapWarps, NULL, NULL
+

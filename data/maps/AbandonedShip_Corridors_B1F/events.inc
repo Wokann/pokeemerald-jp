@@ -23,3 +23,4 @@ AbandonedShip_Corridors_B1F_MapBGEvents:
 
 AbandonedShip_Corridors_B1F_MapEvents::
 	map_events AbandonedShip_Corridors_B1F_ObjectEvents, AbandonedShip_Corridors_B1F_MapWarps, NULL, AbandonedShip_Corridors_B1F_MapBGEvents
+

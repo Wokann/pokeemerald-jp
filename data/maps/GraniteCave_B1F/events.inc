@@ -18,3 +18,4 @@ GraniteCave_B1F_MapWarps:
 
 GraniteCave_B1F_MapEvents::
 	map_events GraniteCave_B1F_ObjectEvents, GraniteCave_B1F_MapWarps, NULL, NULL
+

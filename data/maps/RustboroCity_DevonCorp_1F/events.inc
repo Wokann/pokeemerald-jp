@@ -20,3 +20,4 @@ RustboroCity_DevonCorp_1F_MapBGEvents:
 
 RustboroCity_DevonCorp_1F_MapEvents::
 	map_events RustboroCity_DevonCorp_1F_ObjectEvents, RustboroCity_DevonCorp_1F_MapWarps, NULL, RustboroCity_DevonCorp_1F_MapBGEvents
+

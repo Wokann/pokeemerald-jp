@@ -10,3 +10,4 @@ NavelRock_Exterior_MapWarps:
 
 NavelRock_Exterior_MapEvents::
 	map_events NULL, NavelRock_Exterior_MapWarps, NULL, NULL
+

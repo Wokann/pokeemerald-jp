@@ -13,3 +13,4 @@ Route111_OldLadysRestStop_MapWarps:
 
 Route111_OldLadysRestStop_MapEvents::
 	map_events Route111_OldLadysRestStop_ObjectEvents, Route111_OldLadysRestStop_MapWarps, NULL, NULL
+

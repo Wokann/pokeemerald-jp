@@ -46,3 +46,4 @@ LavaridgeTown_Gym_1F_MapBGEvents:
 
 LavaridgeTown_Gym_1F_MapEvents::
 	map_events LavaridgeTown_Gym_1F_ObjectEvents, LavaridgeTown_Gym_1F_MapWarps, NULL, LavaridgeTown_Gym_1F_MapBGEvents
+

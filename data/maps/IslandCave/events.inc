@@ -19,3 +19,4 @@ IslandCave_MapBGEvents:
 
 IslandCave_MapEvents::
 	map_events IslandCave_ObjectEvents, IslandCave_MapWarps, NULL, IslandCave_MapBGEvents
+

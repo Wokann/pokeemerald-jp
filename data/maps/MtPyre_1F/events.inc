@@ -19,3 +19,4 @@ MtPyre_1F_MapWarps:
 
 MtPyre_1F_MapEvents::
 	map_events MtPyre_1F_ObjectEvents, MtPyre_1F_MapWarps, NULL, NULL
+

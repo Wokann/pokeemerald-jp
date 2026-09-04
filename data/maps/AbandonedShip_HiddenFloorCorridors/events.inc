@@ -20,3 +20,4 @@ AbandonedShip_HiddenFloorCorridors_MapBGEvents:
 
 AbandonedShip_HiddenFloorCorridors_MapEvents::
 	map_events NULL, AbandonedShip_HiddenFloorCorridors_MapWarps, NULL, AbandonedShip_HiddenFloorCorridors_MapBGEvents
+

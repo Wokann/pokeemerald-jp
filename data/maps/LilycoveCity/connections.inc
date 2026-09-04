@@ -9,3 +9,4 @@ LilycoveCity_MapConnectionsList:
 LilycoveCity_MapConnections:
 	.4byte 2
 	.4byte LilycoveCity_MapConnectionsList
+

@@ -41,3 +41,4 @@ SlateportCity_OceanicMuseum_2F_MapBGEvents:
 
 SlateportCity_OceanicMuseum_2F_MapEvents::
 	map_events SlateportCity_OceanicMuseum_2F_ObjectEvents, SlateportCity_OceanicMuseum_2F_MapWarps, NULL, SlateportCity_OceanicMuseum_2F_MapBGEvents
+

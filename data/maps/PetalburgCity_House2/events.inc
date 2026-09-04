@@ -14,3 +14,4 @@ PetalburgCity_House2_MapWarps:
 
 PetalburgCity_House2_MapEvents::
 	map_events PetalburgCity_House2_ObjectEvents, PetalburgCity_House2_MapWarps, NULL, NULL
+

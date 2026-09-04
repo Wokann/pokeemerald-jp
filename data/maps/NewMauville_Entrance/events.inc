@@ -13,3 +13,4 @@ NewMauville_Entrance_MapCoordEvents:
 
 NewMauville_Entrance_MapEvents::
 	map_events NULL, NewMauville_Entrance_MapWarps, NewMauville_Entrance_MapCoordEvents, NULL
+

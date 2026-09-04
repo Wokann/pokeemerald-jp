@@ -17,3 +17,4 @@ LavaridgeTown_PokemonCenter_2F_MapWarps:
 
 LavaridgeTown_PokemonCenter_2F_MapEvents::
 	map_events LavaridgeTown_PokemonCenter_2F_ObjectEvents, LavaridgeTown_PokemonCenter_2F_MapWarps, NULL, NULL
+

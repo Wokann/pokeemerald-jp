@@ -15,3 +15,4 @@ SootopolisCity_House4_MapWarps:
 
 SootopolisCity_House4_MapEvents::
 	map_events SootopolisCity_House4_ObjectEvents, SootopolisCity_House4_MapWarps, NULL, NULL
+

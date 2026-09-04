@@ -21,3 +21,4 @@ RustboroCity_Gym_MapBGEvents:
 
 RustboroCity_Gym_MapEvents::
 	map_events RustboroCity_Gym_ObjectEvents, RustboroCity_Gym_MapWarps, NULL, RustboroCity_Gym_MapBGEvents
+

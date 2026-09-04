@@ -41,3 +41,4 @@ Route117_MapBGEvents:
 
 Route117_MapEvents::
 	map_events Route117_ObjectEvents, Route117_MapWarps, NULL, Route117_MapBGEvents
+

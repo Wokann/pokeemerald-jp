@@ -10,3 +10,4 @@ LilycoveCity_UnusedMart_MapWarps:
 
 LilycoveCity_UnusedMart_MapEvents::
 	map_events NULL, LilycoveCity_UnusedMart_MapWarps, NULL, NULL
+

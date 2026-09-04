@@ -8,3 +8,4 @@ LittlerootTown_MapConnectionsList:
 LittlerootTown_MapConnections:
 	.4byte 1
 	.4byte LittlerootTown_MapConnectionsList
+

@@ -16,3 +16,4 @@ AquaHideout_1F_MapWarps:
 
 AquaHideout_1F_MapEvents::
 	map_events AquaHideout_1F_ObjectEvents, AquaHideout_1F_MapWarps, NULL, NULL
+

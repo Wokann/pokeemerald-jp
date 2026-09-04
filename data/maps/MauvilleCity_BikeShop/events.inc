@@ -18,3 +18,4 @@ MauvilleCity_BikeShop_MapBGEvents:
 
 MauvilleCity_BikeShop_MapEvents::
 	map_events MauvilleCity_BikeShop_ObjectEvents, MauvilleCity_BikeShop_MapWarps, NULL, MauvilleCity_BikeShop_MapBGEvents
+

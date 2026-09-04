@@ -13,3 +13,4 @@ BattleFrontier_ScottsHouse_MapWarps:
 
 BattleFrontier_ScottsHouse_MapEvents::
 	map_events BattleFrontier_ScottsHouse_ObjectEvents, BattleFrontier_ScottsHouse_MapWarps, NULL, NULL
+

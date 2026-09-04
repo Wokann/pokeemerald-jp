@@ -9,3 +9,4 @@ AbandonedShip_Underwater2_MapWarps:
 
 AbandonedShip_Underwater2_MapEvents::
 	map_events NULL, AbandonedShip_Underwater2_MapWarps, NULL, NULL
+

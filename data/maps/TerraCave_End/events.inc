@@ -15,3 +15,4 @@ TerraCave_End_MapCoordEvents:
 
 TerraCave_End_MapEvents::
 	map_events TerraCave_End_ObjectEvents, TerraCave_End_MapWarps, TerraCave_End_MapCoordEvents, NULL
+

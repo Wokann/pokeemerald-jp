@@ -21,3 +21,4 @@ BattleFrontier_BattlePalaceCorridor_MapWarps:
 
 BattleFrontier_BattlePalaceCorridor_MapEvents::
 	map_events BattleFrontier_BattlePalaceCorridor_ObjectEvents, BattleFrontier_BattlePalaceCorridor_MapWarps, NULL, NULL
+

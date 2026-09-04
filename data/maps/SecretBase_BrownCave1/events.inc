@@ -26,3 +26,4 @@ SecretBase_BrownCave1_MapWarps:
 
 SecretBase_BrownCave1_MapEvents::
 	map_events SecretBase_BrownCave1_ObjectEvents, SecretBase_BrownCave1_MapWarps, NULL, NULL
+

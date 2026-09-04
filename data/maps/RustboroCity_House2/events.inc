@@ -14,3 +14,4 @@ RustboroCity_House2_MapWarps:
 
 RustboroCity_House2_MapEvents::
 	map_events RustboroCity_House2_ObjectEvents, RustboroCity_House2_MapWarps, NULL, NULL
+

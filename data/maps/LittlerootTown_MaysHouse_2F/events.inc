@@ -33,3 +33,4 @@ LittlerootTown_MaysHouse_2F_MapBGEvents:
 
 LittlerootTown_MaysHouse_2F_MapEvents::
 	map_events LittlerootTown_MaysHouse_2F_ObjectEvents, LittlerootTown_MaysHouse_2F_MapWarps, NULL, LittlerootTown_MaysHouse_2F_MapBGEvents
+

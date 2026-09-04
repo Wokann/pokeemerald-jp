@@ -14,3 +14,4 @@ LilycoveCity_House1_MapWarps:
 
 LilycoveCity_House1_MapEvents::
 	map_events LilycoveCity_House1_ObjectEvents, LilycoveCity_House1_MapWarps, NULL, NULL
+

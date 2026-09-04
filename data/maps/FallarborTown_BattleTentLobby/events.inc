@@ -20,3 +20,4 @@ FallarborTown_BattleTentLobby_MapBGEvents:
 
 FallarborTown_BattleTentLobby_MapEvents::
 	map_events FallarborTown_BattleTentLobby_ObjectEvents, FallarborTown_BattleTentLobby_MapWarps, NULL, FallarborTown_BattleTentLobby_MapBGEvents
+

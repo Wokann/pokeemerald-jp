@@ -38,3 +38,4 @@ LittlerootTown_MapBGEvents:
 
 LittlerootTown_MapEvents::
 	map_events LittlerootTown_ObjectEvents, LittlerootTown_MapWarps, LittlerootTown_MapCoordEvents, LittlerootTown_MapBGEvents
+

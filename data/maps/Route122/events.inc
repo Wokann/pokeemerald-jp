@@ -9,3 +9,4 @@ Route122_MapWarps:
 
 Route122_MapEvents::
 	map_events NULL, Route122_MapWarps, NULL, NULL
+

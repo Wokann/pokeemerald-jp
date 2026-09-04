@@ -20,3 +20,4 @@ SealedChamber_InnerRoom_MapBGEvents:
 
 SealedChamber_InnerRoom_MapEvents::
 	map_events NULL, SealedChamber_InnerRoom_MapWarps, NULL, SealedChamber_InnerRoom_MapBGEvents
+

@@ -26,3 +26,4 @@ LittlerootTown_BrendansHouse_1F_MapCoordEvents:
 
 LittlerootTown_BrendansHouse_1F_MapEvents::
 	map_events LittlerootTown_BrendansHouse_1F_ObjectEvents, LittlerootTown_BrendansHouse_1F_MapWarps, LittlerootTown_BrendansHouse_1F_MapCoordEvents, NULL
+

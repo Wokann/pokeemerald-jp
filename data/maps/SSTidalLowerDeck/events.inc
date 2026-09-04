@@ -16,3 +16,4 @@ SSTidalLowerDeck_MapBGEvents:
 
 SSTidalLowerDeck_MapEvents::
 	map_events SSTidalLowerDeck_ObjectEvents, SSTidalLowerDeck_MapWarps, NULL, SSTidalLowerDeck_MapBGEvents
+

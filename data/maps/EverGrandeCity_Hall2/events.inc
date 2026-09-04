@@ -12,3 +12,4 @@ EverGrandeCity_Hall2_MapWarps:
 
 EverGrandeCity_Hall2_MapEvents::
 	map_events NULL, EverGrandeCity_Hall2_MapWarps, NULL, NULL
+

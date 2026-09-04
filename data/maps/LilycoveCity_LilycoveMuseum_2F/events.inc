@@ -29,3 +29,4 @@ LilycoveCity_LilycoveMuseum_2F_MapBGEvents:
 
 LilycoveCity_LilycoveMuseum_2F_MapEvents::
 	map_events LilycoveCity_LilycoveMuseum_2F_ObjectEvents, LilycoveCity_LilycoveMuseum_2F_MapWarps, NULL, LilycoveCity_LilycoveMuseum_2F_MapBGEvents
+

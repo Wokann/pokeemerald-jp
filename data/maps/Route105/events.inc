@@ -23,3 +23,4 @@ Route105_MapBGEvents:
 
 Route105_MapEvents::
 	map_events Route105_ObjectEvents, Route105_MapWarps, NULL, Route105_MapBGEvents
+

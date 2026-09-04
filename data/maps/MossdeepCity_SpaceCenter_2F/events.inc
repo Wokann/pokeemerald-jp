@@ -20,3 +20,4 @@ MossdeepCity_SpaceCenter_2F_MapWarps:
 
 MossdeepCity_SpaceCenter_2F_MapEvents::
 	map_events MossdeepCity_SpaceCenter_2F_ObjectEvents, MossdeepCity_SpaceCenter_2F_MapWarps, NULL, NULL
+

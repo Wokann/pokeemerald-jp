@@ -17,3 +17,4 @@ PetalburgCity_PokemonCenter_2F_MapWarps:
 
 PetalburgCity_PokemonCenter_2F_MapEvents::
 	map_events PetalburgCity_PokemonCenter_2F_ObjectEvents, PetalburgCity_PokemonCenter_2F_MapWarps, NULL, NULL
+

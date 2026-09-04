@@ -12,3 +12,4 @@ NavelRock_Bottom_MapWarps:
 
 NavelRock_Bottom_MapEvents::
 	map_events NavelRock_Bottom_ObjectEvents, NavelRock_Bottom_MapWarps, NULL, NULL
+

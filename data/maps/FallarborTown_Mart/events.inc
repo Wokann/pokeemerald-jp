@@ -17,3 +17,4 @@ FallarborTown_Mart_MapWarps:
 
 FallarborTown_Mart_MapEvents::
 	map_events FallarborTown_Mart_ObjectEvents, FallarborTown_Mart_MapWarps, NULL, NULL
+

@@ -25,3 +25,4 @@ VictoryRoad_B2F_MapBGEvents:
 
 VictoryRoad_B2F_MapEvents::
 	map_events VictoryRoad_B2F_ObjectEvents, VictoryRoad_B2F_MapWarps, NULL, VictoryRoad_B2F_MapBGEvents
+

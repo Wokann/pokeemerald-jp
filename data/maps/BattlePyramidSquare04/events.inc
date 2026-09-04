@@ -15,3 +15,4 @@ BattlePyramidSquare04_ObjectEvents:
 
 BattlePyramidSquare04_MapEvents::
 	map_events BattlePyramidSquare04_ObjectEvents, NULL, NULL, NULL
+

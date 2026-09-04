@@ -12,3 +12,4 @@ GraniteCave_StevensRoom_MapWarps:
 
 GraniteCave_StevensRoom_MapEvents::
 	map_events GraniteCave_StevensRoom_ObjectEvents, GraniteCave_StevensRoom_MapWarps, NULL, NULL
+

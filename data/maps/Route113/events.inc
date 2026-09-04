@@ -60,3 +60,4 @@ Route113_MapBGEvents:
 
 Route113_MapEvents::
 	map_events Route113_ObjectEvents, Route113_MapWarps, Route113_MapCoordEvents, Route113_MapBGEvents
+

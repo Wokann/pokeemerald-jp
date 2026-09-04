@@ -26,3 +26,4 @@ SecretBase_Shrub1_MapWarps:
 
 SecretBase_Shrub1_MapEvents::
 	map_events SecretBase_Shrub1_ObjectEvents, SecretBase_Shrub1_MapWarps, NULL, NULL
+

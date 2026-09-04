@@ -16,3 +16,4 @@ SlateportCity_PokemonCenter_1F_MapWarps:
 
 SlateportCity_PokemonCenter_1F_MapEvents::
 	map_events SlateportCity_PokemonCenter_1F_ObjectEvents, SlateportCity_PokemonCenter_1F_MapWarps, NULL, NULL
+

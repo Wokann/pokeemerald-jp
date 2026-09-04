@@ -13,3 +13,4 @@ OldaleTown_House1_MapWarps:
 
 OldaleTown_House1_MapEvents::
 	map_events OldaleTown_House1_ObjectEvents, OldaleTown_House1_MapWarps, NULL, NULL
+

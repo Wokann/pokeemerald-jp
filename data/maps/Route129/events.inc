@@ -13,3 +13,4 @@ Route129_ObjectEvents:
 
 Route129_MapEvents::
 	map_events Route129_ObjectEvents, NULL, NULL, NULL
+

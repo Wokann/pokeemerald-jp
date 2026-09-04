@@ -21,3 +21,4 @@ UnionRoom_MapWarps:
 
 UnionRoom_MapEvents::
 	map_events UnionRoom_ObjectEvents, UnionRoom_MapWarps, NULL, NULL
+

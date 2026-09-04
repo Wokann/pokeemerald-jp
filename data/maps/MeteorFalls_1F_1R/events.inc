@@ -32,3 +32,4 @@ MeteorFalls_1F_1R_MapBGEvents:
 
 MeteorFalls_1F_1R_MapEvents::
 	map_events MeteorFalls_1F_1R_ObjectEvents, MeteorFalls_1F_1R_MapWarps, MeteorFalls_1F_1R_MapCoordEvents, MeteorFalls_1F_1R_MapBGEvents
+

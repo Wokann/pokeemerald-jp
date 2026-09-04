@@ -93,3 +93,4 @@ Route120_MapBGEvents:
 
 Route120_MapEvents::
 	map_events Route120_ObjectEvents, Route120_MapWarps, Route120_MapCoordEvents, Route120_MapBGEvents
+

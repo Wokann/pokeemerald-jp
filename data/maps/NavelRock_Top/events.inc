@@ -18,3 +18,4 @@ NavelRock_Top_MapBGEvents:
 
 NavelRock_Top_MapEvents::
 	map_events NavelRock_Top_ObjectEvents, NavelRock_Top_MapWarps, NavelRock_Top_MapCoordEvents, NavelRock_Top_MapBGEvents
+

@@ -45,3 +45,4 @@ Route110_TrickHousePuzzle5_MapBGEvents:
 
 Route110_TrickHousePuzzle5_MapEvents::
 	map_events Route110_TrickHousePuzzle5_ObjectEvents, Route110_TrickHousePuzzle5_MapWarps, Route110_TrickHousePuzzle5_MapCoordEvents, Route110_TrickHousePuzzle5_MapBGEvents
+

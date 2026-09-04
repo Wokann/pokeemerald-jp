@@ -22,3 +22,4 @@ BattleFrontier_ExchangeServiceCorner_MapWarps:
 
 BattleFrontier_ExchangeServiceCorner_MapEvents::
 	map_events BattleFrontier_ExchangeServiceCorner_ObjectEvents, BattleFrontier_ExchangeServiceCorner_MapWarps, NULL, NULL
+

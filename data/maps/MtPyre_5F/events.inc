@@ -17,3 +17,4 @@ MtPyre_5F_MapWarps:
 
 MtPyre_5F_MapEvents::
 	map_events MtPyre_5F_ObjectEvents, MtPyre_5F_MapWarps, NULL, NULL
+

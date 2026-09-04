@@ -34,3 +34,4 @@ FortreeCity_MapBGEvents:
 
 FortreeCity_MapEvents::
 	map_events FortreeCity_ObjectEvents, FortreeCity_MapWarps, NULL, FortreeCity_MapBGEvents
+

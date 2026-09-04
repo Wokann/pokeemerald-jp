@@ -13,3 +13,4 @@ Route117_PokemonDayCare_MapWarps:
 
 Route117_PokemonDayCare_MapEvents::
 	map_events Route117_PokemonDayCare_ObjectEvents, Route117_PokemonDayCare_MapWarps, NULL, NULL
+

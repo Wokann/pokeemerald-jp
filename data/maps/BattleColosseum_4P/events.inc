@@ -18,3 +18,4 @@ BattleColosseum_4P_MapCoordEvents:
 
 BattleColosseum_4P_MapEvents::
 	map_events NULL, BattleColosseum_4P_MapWarps, BattleColosseum_4P_MapCoordEvents, NULL
+

@@ -9,3 +9,4 @@ SlateportCity_BattleTentCorridor_ObjectEvents:
 
 SlateportCity_BattleTentCorridor_MapEvents::
 	map_events SlateportCity_BattleTentCorridor_ObjectEvents, NULL, NULL, NULL
+

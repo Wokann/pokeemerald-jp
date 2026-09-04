@@ -15,3 +15,4 @@ AbandonedShip_Rooms_B1F_MapWarps:
 
 AbandonedShip_Rooms_B1F_MapEvents::
 	map_events AbandonedShip_Rooms_B1F_ObjectEvents, AbandonedShip_Rooms_B1F_MapWarps, NULL, NULL
+

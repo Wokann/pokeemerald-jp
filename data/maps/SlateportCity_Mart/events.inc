@@ -15,3 +15,4 @@ SlateportCity_Mart_MapWarps:
 
 SlateportCity_Mart_MapEvents::
 	map_events SlateportCity_Mart_ObjectEvents, SlateportCity_Mart_MapWarps, NULL, NULL
+

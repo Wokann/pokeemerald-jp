@@ -12,3 +12,4 @@ Route124_MapConnectionsList:
 Route124_MapConnections:
 	.4byte 5
 	.4byte Route124_MapConnectionsList
+

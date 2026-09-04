@@ -15,3 +15,4 @@ Underwater_SeafloorCavern_MapWarps:
 
 Underwater_SeafloorCavern_MapEvents::
 	map_events Underwater_SeafloorCavern_ObjectEvents, Underwater_SeafloorCavern_MapWarps, NULL, NULL
+

@@ -29,3 +29,4 @@ Route110_TrickHousePuzzle3_MapBGEvents:
 
 Route110_TrickHousePuzzle3_MapEvents::
 	map_events Route110_TrickHousePuzzle3_ObjectEvents, Route110_TrickHousePuzzle3_MapWarps, Route110_TrickHousePuzzle3_MapCoordEvents, Route110_TrickHousePuzzle3_MapBGEvents
+

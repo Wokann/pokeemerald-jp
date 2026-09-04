@@ -13,3 +13,4 @@ LilycoveCity_MoveDeletersHouse_MapWarps:
 
 LilycoveCity_MoveDeletersHouse_MapEvents::
 	map_events LilycoveCity_MoveDeletersHouse_ObjectEvents, LilycoveCity_MoveDeletersHouse_MapWarps, NULL, NULL
+

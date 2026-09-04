@@ -14,3 +14,4 @@ FallarborTown_CozmosHouse_MapWarps:
 
 FallarborTown_CozmosHouse_MapEvents::
 	map_events FallarborTown_CozmosHouse_ObjectEvents, FallarborTown_CozmosHouse_MapWarps, NULL, NULL
+

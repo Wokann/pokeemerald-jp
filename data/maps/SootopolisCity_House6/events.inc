@@ -13,3 +13,4 @@ SootopolisCity_House6_MapWarps:
 
 SootopolisCity_House6_MapEvents::
 	map_events SootopolisCity_House6_ObjectEvents, SootopolisCity_House6_MapWarps, NULL, NULL
+

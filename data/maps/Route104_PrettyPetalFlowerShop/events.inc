@@ -15,3 +15,4 @@ Route104_PrettyPetalFlowerShop_MapWarps:
 
 Route104_PrettyPetalFlowerShop_MapEvents::
 	map_events Route104_PrettyPetalFlowerShop_ObjectEvents, Route104_PrettyPetalFlowerShop_MapWarps, NULL, NULL
+

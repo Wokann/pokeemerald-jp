@@ -20,3 +20,4 @@ Route110_TrickHousePuzzle8_MapBGEvents:
 
 Route110_TrickHousePuzzle8_MapEvents::
 	map_events Route110_TrickHousePuzzle8_ObjectEvents, Route110_TrickHousePuzzle8_MapWarps, NULL, Route110_TrickHousePuzzle8_MapBGEvents
+

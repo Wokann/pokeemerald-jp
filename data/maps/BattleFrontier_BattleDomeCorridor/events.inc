@@ -13,3 +13,4 @@ BattleFrontier_BattleDomeCorridor_MapWarps:
 
 BattleFrontier_BattleDomeCorridor_MapEvents::
 	map_events BattleFrontier_BattleDomeCorridor_ObjectEvents, BattleFrontier_BattleDomeCorridor_MapWarps, NULL, NULL
+

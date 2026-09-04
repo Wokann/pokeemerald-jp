@@ -26,3 +26,4 @@ MtPyre_Exterior_MapBGEvents:
 
 MtPyre_Exterior_MapEvents::
 	map_events MtPyre_Exterior_ObjectEvents, MtPyre_Exterior_MapWarps, MtPyre_Exterior_MapCoordEvents, MtPyre_Exterior_MapBGEvents
+

@@ -16,3 +16,4 @@ VerdanturfTown_Mart_MapWarps:
 
 VerdanturfTown_Mart_MapEvents::
 	map_events VerdanturfTown_Mart_ObjectEvents, VerdanturfTown_Mart_MapWarps, NULL, NULL
+

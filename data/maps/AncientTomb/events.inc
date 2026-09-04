@@ -19,3 +19,4 @@ AncientTomb_MapBGEvents:
 
 AncientTomb_MapEvents::
 	map_events AncientTomb_ObjectEvents, AncientTomb_MapWarps, NULL, AncientTomb_MapBGEvents
+

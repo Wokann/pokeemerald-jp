@@ -20,3 +20,4 @@ MossdeepCity_GameCorner_1F_MapBGEvents:
 
 MossdeepCity_GameCorner_1F_MapEvents::
 	map_events MossdeepCity_GameCorner_1F_ObjectEvents, MossdeepCity_GameCorner_1F_MapWarps, NULL, MossdeepCity_GameCorner_1F_MapBGEvents
+

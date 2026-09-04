@@ -17,3 +17,4 @@ BattleFrontier_BattleArenaBattleRoom_ObjectEvents:
 
 BattleFrontier_BattleArenaBattleRoom_MapEvents::
 	map_events BattleFrontier_BattleArenaBattleRoom_ObjectEvents, NULL, NULL, NULL
+

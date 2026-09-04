@@ -9,3 +9,4 @@ SafariZone_Southwest_MapConnectionsList:
 SafariZone_Southwest_MapConnections:
 	.4byte 2
 	.4byte SafariZone_Southwest_MapConnectionsList
+

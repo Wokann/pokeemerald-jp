@@ -56,3 +56,4 @@ Route114_MapBGEvents:
 
 Route114_MapEvents::
 	map_events Route114_ObjectEvents, Route114_MapWarps, NULL, Route114_MapBGEvents
+

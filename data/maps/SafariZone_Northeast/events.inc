@@ -21,3 +21,4 @@ SafariZone_Northeast_MapBGEvents:
 
 SafariZone_Northeast_MapEvents::
 	map_events SafariZone_Northeast_ObjectEvents, NULL, NULL, SafariZone_Northeast_MapBGEvents
+

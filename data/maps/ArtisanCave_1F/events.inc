@@ -13,3 +13,4 @@ ArtisanCave_1F_MapWarps:
 
 ArtisanCave_1F_MapEvents::
 	map_events ArtisanCave_1F_ObjectEvents, ArtisanCave_1F_MapWarps, NULL, NULL
+

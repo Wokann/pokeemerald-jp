@@ -24,3 +24,4 @@ PacifidlogTown_MapBGEvents:
 
 PacifidlogTown_MapEvents::
 	map_events PacifidlogTown_ObjectEvents, PacifidlogTown_MapWarps, NULL, PacifidlogTown_MapBGEvents
+

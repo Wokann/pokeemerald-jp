@@ -31,3 +31,4 @@ VerdanturfTown_MapBGEvents:
 
 VerdanturfTown_MapEvents::
 	map_events VerdanturfTown_ObjectEvents, VerdanturfTown_MapWarps, NULL, VerdanturfTown_MapBGEvents
+

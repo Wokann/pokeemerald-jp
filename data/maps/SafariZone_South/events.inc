@@ -17,3 +17,4 @@ SafariZone_South_MapWarps:
 
 SafariZone_South_MapEvents::
 	map_events SafariZone_South_ObjectEvents, SafariZone_South_MapWarps, NULL, NULL
+

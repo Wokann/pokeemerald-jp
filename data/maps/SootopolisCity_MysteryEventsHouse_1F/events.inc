@@ -14,3 +14,4 @@ SootopolisCity_MysteryEventsHouse_1F_MapWarps:
 
 SootopolisCity_MysteryEventsHouse_1F_MapEvents::
 	map_events SootopolisCity_MysteryEventsHouse_1F_ObjectEvents, SootopolisCity_MysteryEventsHouse_1F_MapWarps, NULL, NULL
+

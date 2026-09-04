@@ -38,3 +38,4 @@ LavaridgeTown_Gym_B1F_MapWarps:
 
 LavaridgeTown_Gym_B1F_MapEvents::
 	map_events LavaridgeTown_Gym_B1F_ObjectEvents, LavaridgeTown_Gym_B1F_MapWarps, NULL, NULL
+

@@ -59,3 +59,4 @@ Route116_MapBGEvents:
 
 Route116_MapEvents::
 	map_events Route116_ObjectEvents, Route116_MapWarps, Route116_MapCoordEvents, Route116_MapBGEvents
+

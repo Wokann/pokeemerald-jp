@@ -16,3 +16,4 @@ VictoryRoad_B2F:
 	.2byte 0
 	map_header_flags allow_cycling=TRUE, allow_escaping=TRUE, allow_running=TRUE, show_map_name=TRUE
 	.byte MAP_BATTLE_SCENE_NORMAL
+

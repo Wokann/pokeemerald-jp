@@ -21,3 +21,4 @@ BattleFrontier_BattlePikeThreePathRoom_MapCoordEvents:
 
 BattleFrontier_BattlePikeThreePathRoom_MapEvents::
 	map_events BattleFrontier_BattlePikeThreePathRoom_ObjectEvents, NULL, BattleFrontier_BattlePikeThreePathRoom_MapCoordEvents, NULL
+

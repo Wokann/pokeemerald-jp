@@ -9,3 +9,4 @@ VerdanturfTown_BattleTentCorridor_ObjectEvents:
 
 VerdanturfTown_BattleTentCorridor_MapEvents::
 	map_events VerdanturfTown_BattleTentCorridor_ObjectEvents, NULL, NULL, NULL
+

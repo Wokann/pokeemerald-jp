@@ -10,3 +10,4 @@ NavelRock_Up2_MapWarps:
 
 NavelRock_Up2_MapEvents::
 	map_events NULL, NavelRock_Up2_MapWarps, NULL, NULL
+

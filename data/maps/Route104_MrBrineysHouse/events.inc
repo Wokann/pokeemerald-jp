@@ -14,3 +14,4 @@ Route104_MrBrineysHouse_MapWarps:
 
 Route104_MrBrineysHouse_MapEvents::
 	map_events Route104_MrBrineysHouse_ObjectEvents, Route104_MrBrineysHouse_MapWarps, NULL, NULL
+

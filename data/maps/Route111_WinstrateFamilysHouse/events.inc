@@ -16,3 +16,4 @@ Route111_WinstrateFamilysHouse_MapWarps:
 
 Route111_WinstrateFamilysHouse_MapEvents::
 	map_events Route111_WinstrateFamilysHouse_ObjectEvents, Route111_WinstrateFamilysHouse_MapWarps, NULL, NULL
+

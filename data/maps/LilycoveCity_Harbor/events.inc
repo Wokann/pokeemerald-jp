@@ -17,3 +17,4 @@ LilycoveCity_Harbor_MapWarps:
 
 LilycoveCity_Harbor_MapEvents::
 	map_events LilycoveCity_Harbor_ObjectEvents, LilycoveCity_Harbor_MapWarps, NULL, NULL
+

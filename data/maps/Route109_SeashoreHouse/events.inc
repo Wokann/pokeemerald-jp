@@ -16,3 +16,4 @@ Route109_SeashoreHouse_MapWarps:
 
 Route109_SeashoreHouse_MapEvents::
 	map_events Route109_SeashoreHouse_ObjectEvents, Route109_SeashoreHouse_MapWarps, NULL, NULL
+

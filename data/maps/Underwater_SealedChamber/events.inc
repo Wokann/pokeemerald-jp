@@ -12,3 +12,4 @@ Underwater_SealedChamber_MapBGEvents:
 
 Underwater_SealedChamber_MapEvents::
 	map_events NULL, Underwater_SealedChamber_MapWarps, NULL, Underwater_SealedChamber_MapBGEvents
+

@@ -52,3 +52,4 @@ BattleFrontier_OutsideWest_MapBGEvents:
 
 BattleFrontier_OutsideWest_MapEvents::
 	map_events BattleFrontier_OutsideWest_ObjectEvents, BattleFrontier_OutsideWest_MapWarps, NULL, BattleFrontier_OutsideWest_MapBGEvents
+

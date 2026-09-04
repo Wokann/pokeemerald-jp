@@ -14,3 +14,4 @@ MirageTower_3F_MapWarps:
 
 MirageTower_3F_MapEvents::
 	map_events MirageTower_3F_ObjectEvents, MirageTower_3F_MapWarps, NULL, NULL
+

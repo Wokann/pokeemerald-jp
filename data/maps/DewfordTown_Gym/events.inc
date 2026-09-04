@@ -26,3 +26,4 @@ DewfordTown_Gym_MapBGEvents:
 
 DewfordTown_Gym_MapEvents::
 	map_events DewfordTown_Gym_ObjectEvents, DewfordTown_Gym_MapWarps, NULL, DewfordTown_Gym_MapBGEvents
+

@@ -50,3 +50,4 @@ MauvilleCity_GameCorner_MapBGEvents:
 
 MauvilleCity_GameCorner_MapEvents::
 	map_events MauvilleCity_GameCorner_ObjectEvents, MauvilleCity_GameCorner_MapWarps, NULL, MauvilleCity_GameCorner_MapBGEvents
+

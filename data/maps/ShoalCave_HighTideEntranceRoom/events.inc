@@ -6,3 +6,4 @@
 
 ShoalCave_HighTideEntranceRoom_MapEvents::
 	map_events NULL, NULL, NULL, NULL
+

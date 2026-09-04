@@ -16,3 +16,4 @@ DewfordTown_PokemonCenter_1F_MapWarps:
 
 DewfordTown_PokemonCenter_1F_MapEvents::
 	map_events DewfordTown_PokemonCenter_1F_ObjectEvents, DewfordTown_PokemonCenter_1F_MapWarps, NULL, NULL
+

@@ -26,3 +26,4 @@ SecretBase_YellowCave3_MapWarps:
 
 SecretBase_YellowCave3_MapEvents::
 	map_events SecretBase_YellowCave3_ObjectEvents, SecretBase_YellowCave3_MapWarps, NULL, NULL
+

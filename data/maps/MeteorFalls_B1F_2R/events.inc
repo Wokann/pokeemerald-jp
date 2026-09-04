@@ -12,3 +12,4 @@ MeteorFalls_B1F_2R_MapWarps:
 
 MeteorFalls_B1F_2R_MapEvents::
 	map_events MeteorFalls_B1F_2R_ObjectEvents, MeteorFalls_B1F_2R_MapWarps, NULL, NULL
+

@@ -22,3 +22,4 @@ FarawayIsland_Entrance_MapBGEvents:
 
 FarawayIsland_Entrance_MapEvents::
 	map_events FarawayIsland_Entrance_ObjectEvents, FarawayIsland_Entrance_MapWarps, FarawayIsland_Entrance_MapCoordEvents, FarawayIsland_Entrance_MapBGEvents
+

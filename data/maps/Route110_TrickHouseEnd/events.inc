@@ -19,3 +19,4 @@ Route110_TrickHouseEnd_MapBGEvents:
 
 Route110_TrickHouseEnd_MapEvents::
 	map_events Route110_TrickHouseEnd_ObjectEvents, Route110_TrickHouseEnd_MapWarps, Route110_TrickHouseEnd_MapCoordEvents, Route110_TrickHouseEnd_MapBGEvents
+

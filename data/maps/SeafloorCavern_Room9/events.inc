@@ -21,3 +21,4 @@ SeafloorCavern_Room9_MapCoordEvents:
 
 SeafloorCavern_Room9_MapEvents::
 	map_events SeafloorCavern_Room9_ObjectEvents, SeafloorCavern_Room9_MapWarps, SeafloorCavern_Room9_MapCoordEvents, NULL
+

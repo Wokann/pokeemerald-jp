@@ -10,3 +10,4 @@ TrainerHill_4F_MapWarps:
 
 TrainerHill_4F_MapEvents::
 	map_events NULL, TrainerHill_4F_MapWarps, NULL, NULL
+

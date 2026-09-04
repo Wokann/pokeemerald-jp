@@ -15,3 +15,4 @@ RustboroCity_House3_MapWarps:
 
 RustboroCity_House3_MapEvents::
 	map_events RustboroCity_House3_ObjectEvents, RustboroCity_House3_MapWarps, NULL, NULL
+

@@ -26,3 +26,4 @@ SecretBase_BlueCave3_MapWarps:
 
 SecretBase_BlueCave3_MapEvents::
 	map_events SecretBase_BlueCave3_ObjectEvents, SecretBase_BlueCave3_MapWarps, NULL, NULL
+

@@ -17,3 +17,4 @@ FortreeCity_PokemonCenter_2F_MapWarps:
 
 FortreeCity_PokemonCenter_2F_MapEvents::
 	map_events FortreeCity_PokemonCenter_2F_ObjectEvents, FortreeCity_PokemonCenter_2F_MapWarps, NULL, NULL
+

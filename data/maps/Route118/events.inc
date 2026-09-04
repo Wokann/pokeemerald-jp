@@ -49,3 +49,4 @@ Route118_MapBGEvents:
 
 Route118_MapEvents::
 	map_events Route118_ObjectEvents, Route118_MapWarps, Route118_MapCoordEvents, Route118_MapBGEvents
+

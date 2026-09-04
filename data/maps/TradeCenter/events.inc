@@ -17,3 +17,4 @@ TradeCenter_MapCoordEvents:
 
 TradeCenter_MapEvents::
 	map_events TradeCenter_ObjectEvents, TradeCenter_MapWarps, TradeCenter_MapCoordEvents, NULL
+

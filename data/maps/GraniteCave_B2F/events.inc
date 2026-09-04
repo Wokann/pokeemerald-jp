@@ -28,3 +28,4 @@ GraniteCave_B2F_MapBGEvents:
 
 GraniteCave_B2F_MapEvents::
 	map_events GraniteCave_B2F_ObjectEvents, GraniteCave_B2F_MapWarps, NULL, GraniteCave_B2F_MapBGEvents
+

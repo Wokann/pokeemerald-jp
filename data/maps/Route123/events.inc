@@ -91,3 +91,4 @@ Route123_MapBGEvents:
 
 Route123_MapEvents::
 	map_events Route123_ObjectEvents, Route123_MapWarps, Route123_MapCoordEvents, Route123_MapBGEvents
+

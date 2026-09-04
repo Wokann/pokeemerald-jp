@@ -49,3 +49,4 @@ SootopolisCity_MapBGEvents:
 
 SootopolisCity_MapEvents::
 	map_events SootopolisCity_ObjectEvents, SootopolisCity_MapWarps, NULL, SootopolisCity_MapBGEvents
+

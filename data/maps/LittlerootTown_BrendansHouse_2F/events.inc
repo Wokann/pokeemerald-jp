@@ -33,3 +33,4 @@ LittlerootTown_BrendansHouse_2F_MapBGEvents:
 
 LittlerootTown_BrendansHouse_2F_MapEvents::
 	map_events LittlerootTown_BrendansHouse_2F_ObjectEvents, LittlerootTown_BrendansHouse_2F_MapWarps, NULL, LittlerootTown_BrendansHouse_2F_MapBGEvents
+

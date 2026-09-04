@@ -38,3 +38,4 @@ LavaridgeTown_MapBGEvents:
 
 LavaridgeTown_MapEvents::
 	map_events LavaridgeTown_ObjectEvents, LavaridgeTown_MapWarps, LavaridgeTown_MapCoordEvents, LavaridgeTown_MapBGEvents
+

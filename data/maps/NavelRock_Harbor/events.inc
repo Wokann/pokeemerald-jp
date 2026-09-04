@@ -13,3 +13,4 @@ NavelRock_Harbor_MapWarps:
 
 NavelRock_Harbor_MapEvents::
 	map_events NavelRock_Harbor_ObjectEvents, NavelRock_Harbor_MapWarps, NULL, NULL
+

@@ -16,3 +16,4 @@ Route124_DivingTreasureHuntersHouse_MapBGEvents:
 
 Route124_DivingTreasureHuntersHouse_MapEvents::
 	map_events Route124_DivingTreasureHuntersHouse_ObjectEvents, Route124_DivingTreasureHuntersHouse_MapWarps, NULL, Route124_DivingTreasureHuntersHouse_MapBGEvents
+

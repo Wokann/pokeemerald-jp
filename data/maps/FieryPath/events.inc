@@ -20,3 +20,4 @@ FieryPath_MapWarps:
 
 FieryPath_MapEvents::
 	map_events FieryPath_ObjectEvents, FieryPath_MapWarps, NULL, NULL
+

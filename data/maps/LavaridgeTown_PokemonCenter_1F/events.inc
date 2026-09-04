@@ -18,3 +18,4 @@ LavaridgeTown_PokemonCenter_1F_MapWarps:
 
 LavaridgeTown_PokemonCenter_1F_MapEvents::
 	map_events LavaridgeTown_PokemonCenter_1F_ObjectEvents, LavaridgeTown_PokemonCenter_1F_MapWarps, NULL, NULL
+

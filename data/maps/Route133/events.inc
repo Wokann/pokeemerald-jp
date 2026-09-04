@@ -18,3 +18,4 @@ Route133_ObjectEvents:
 
 Route133_MapEvents::
 	map_events Route133_ObjectEvents, NULL, NULL, NULL
+

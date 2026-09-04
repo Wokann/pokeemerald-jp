@@ -10,3 +10,4 @@ CaveOfOrigin_Entrance_MapWarps:
 
 CaveOfOrigin_Entrance_MapEvents::
 	map_events NULL, CaveOfOrigin_Entrance_MapWarps, NULL, NULL
+

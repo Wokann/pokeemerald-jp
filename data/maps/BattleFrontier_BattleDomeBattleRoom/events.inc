@@ -23,3 +23,4 @@ BattleFrontier_BattleDomeBattleRoom_ObjectEvents:
 
 BattleFrontier_BattleDomeBattleRoom_MapEvents::
 	map_events BattleFrontier_BattleDomeBattleRoom_ObjectEvents, NULL, NULL, NULL
+

@@ -14,3 +14,4 @@ RustboroCity_CuttersHouse_MapWarps:
 
 RustboroCity_CuttersHouse_MapEvents::
 	map_events RustboroCity_CuttersHouse_ObjectEvents, RustboroCity_CuttersHouse_MapWarps, NULL, NULL
+

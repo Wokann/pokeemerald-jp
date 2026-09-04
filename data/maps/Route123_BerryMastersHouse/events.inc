@@ -14,3 +14,4 @@ Route123_BerryMastersHouse_MapWarps:
 
 Route123_BerryMastersHouse_MapEvents::
 	map_events Route123_BerryMastersHouse_ObjectEvents, Route123_BerryMastersHouse_MapWarps, NULL, NULL
+

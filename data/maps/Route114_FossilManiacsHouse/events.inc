@@ -20,3 +20,4 @@ Route114_FossilManiacsHouse_MapBGEvents:
 
 Route114_FossilManiacsHouse_MapEvents::
 	map_events Route114_FossilManiacsHouse_ObjectEvents, Route114_FossilManiacsHouse_MapWarps, NULL, Route114_FossilManiacsHouse_MapBGEvents
+

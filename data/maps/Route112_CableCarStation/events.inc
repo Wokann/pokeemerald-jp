@@ -14,3 +14,4 @@ Route112_CableCarStation_MapWarps:
 
 Route112_CableCarStation_MapEvents::
 	map_events Route112_CableCarStation_ObjectEvents, Route112_CableCarStation_MapWarps, NULL, NULL
+

@@ -13,3 +13,4 @@ AbandonedShip_Deck_MapWarps:
 
 AbandonedShip_Deck_MapEvents::
 	map_events NULL, AbandonedShip_Deck_MapWarps, NULL, NULL
+

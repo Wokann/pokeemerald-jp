@@ -20,3 +20,4 @@ SlateportCity_BattleTentLobby_MapBGEvents:
 
 SlateportCity_BattleTentLobby_MapEvents::
 	map_events SlateportCity_BattleTentLobby_ObjectEvents, SlateportCity_BattleTentLobby_MapWarps, NULL, SlateportCity_BattleTentLobby_MapBGEvents
+

@@ -26,3 +26,4 @@ RustboroCity_PokemonSchool_MapBGEvents:
 
 RustboroCity_PokemonSchool_MapEvents::
 	map_events RustboroCity_PokemonSchool_ObjectEvents, RustboroCity_PokemonSchool_MapWarps, NULL, RustboroCity_PokemonSchool_MapBGEvents
+

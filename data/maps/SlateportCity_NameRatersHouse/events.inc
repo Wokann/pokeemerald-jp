@@ -13,3 +13,4 @@ SlateportCity_NameRatersHouse_MapWarps:
 
 SlateportCity_NameRatersHouse_MapEvents::
 	map_events SlateportCity_NameRatersHouse_ObjectEvents, SlateportCity_NameRatersHouse_MapWarps, NULL, NULL
+

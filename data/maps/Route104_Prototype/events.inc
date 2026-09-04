@@ -6,3 +6,4 @@
 
 Route104_Prototype_MapEvents::
 	map_events NULL, NULL, NULL, NULL
+

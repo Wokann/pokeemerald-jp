@@ -17,3 +17,4 @@ SafariZone_Southeast_MapBGEvents:
 
 SafariZone_Southeast_MapEvents::
 	map_events SafariZone_Southeast_ObjectEvents, NULL, NULL, SafariZone_Southeast_MapBGEvents
+

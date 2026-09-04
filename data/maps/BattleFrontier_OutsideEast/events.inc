@@ -60,3 +60,4 @@ BattleFrontier_OutsideEast_MapBGEvents:
 
 BattleFrontier_OutsideEast_MapEvents::
 	map_events BattleFrontier_OutsideEast_ObjectEvents, BattleFrontier_OutsideEast_MapWarps, NULL, BattleFrontier_OutsideEast_MapBGEvents
+

@@ -12,3 +12,4 @@ ScorchedSlab_MapWarps:
 
 ScorchedSlab_MapEvents::
 	map_events ScorchedSlab_ObjectEvents, ScorchedSlab_MapWarps, NULL, NULL
+

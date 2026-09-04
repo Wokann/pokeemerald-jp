@@ -14,3 +14,4 @@ AbandonedShip_CaptainsOffice_MapWarps:
 
 AbandonedShip_CaptainsOffice_MapEvents::
 	map_events AbandonedShip_CaptainsOffice_ObjectEvents, AbandonedShip_CaptainsOffice_MapWarps, NULL, NULL
+

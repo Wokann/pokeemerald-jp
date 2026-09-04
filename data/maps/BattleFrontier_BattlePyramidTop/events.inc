@@ -13,3 +13,4 @@ BattleFrontier_BattlePyramidTop_MapCoordEvents:
 
 BattleFrontier_BattlePyramidTop_MapEvents::
 	map_events BattleFrontier_BattlePyramidTop_ObjectEvents, NULL, BattleFrontier_BattlePyramidTop_MapCoordEvents, NULL
+

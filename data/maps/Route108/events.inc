@@ -21,3 +21,4 @@ Route108_MapBGEvents:
 
 Route108_MapEvents::
 	map_events Route108_ObjectEvents, Route108_MapWarps, NULL, Route108_MapBGEvents
+

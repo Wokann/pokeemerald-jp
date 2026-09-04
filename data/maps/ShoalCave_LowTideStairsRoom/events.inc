@@ -16,3 +16,4 @@ ShoalCave_LowTideStairsRoom_MapBGEvents:
 
 ShoalCave_LowTideStairsRoom_MapEvents::
 	map_events ShoalCave_LowTideStairsRoom_ObjectEvents, ShoalCave_LowTideStairsRoom_MapWarps, NULL, ShoalCave_LowTideStairsRoom_MapBGEvents
+

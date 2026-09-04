@@ -12,3 +12,4 @@ CaveOfOrigin_B1F_MapWarps:
 
 CaveOfOrigin_B1F_MapEvents::
 	map_events CaveOfOrigin_B1F_ObjectEvents, CaveOfOrigin_B1F_MapWarps, NULL, NULL
+

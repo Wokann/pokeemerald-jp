@@ -19,3 +19,4 @@ EverGrandeCity_PokemonLeague_1F_MapWarps:
 
 EverGrandeCity_PokemonLeague_1F_MapEvents::
 	map_events EverGrandeCity_PokemonLeague_1F_ObjectEvents, EverGrandeCity_PokemonLeague_1F_MapWarps, NULL, NULL
+

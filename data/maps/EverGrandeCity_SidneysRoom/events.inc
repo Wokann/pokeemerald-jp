@@ -13,3 +13,4 @@ EverGrandeCity_SidneysRoom_MapWarps:
 
 EverGrandeCity_SidneysRoom_MapEvents::
 	map_events EverGrandeCity_SidneysRoom_ObjectEvents, EverGrandeCity_SidneysRoom_MapWarps, NULL, NULL
+

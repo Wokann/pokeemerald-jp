@@ -38,3 +38,4 @@ JaggedPass_MapBGEvents:
 
 JaggedPass_MapEvents::
 	map_events JaggedPass_ObjectEvents, JaggedPass_MapWarps, JaggedPass_MapCoordEvents, JaggedPass_MapBGEvents
+

@@ -30,3 +30,4 @@ RusturfTunnel_MapCoordEvents:
 
 RusturfTunnel_MapEvents::
 	map_events RusturfTunnel_ObjectEvents, RusturfTunnel_MapWarps, RusturfTunnel_MapCoordEvents, NULL
+

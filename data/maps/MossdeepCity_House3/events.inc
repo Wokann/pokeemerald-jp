@@ -13,3 +13,4 @@ MossdeepCity_House3_MapWarps:
 
 MossdeepCity_House3_MapEvents::
 	map_events MossdeepCity_House3_ObjectEvents, MossdeepCity_House3_MapWarps, NULL, NULL
+

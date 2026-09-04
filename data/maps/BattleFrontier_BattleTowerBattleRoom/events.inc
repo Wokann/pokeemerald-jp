@@ -15,3 +15,4 @@ BattleFrontier_BattleTowerBattleRoom_MapWarps:
 
 BattleFrontier_BattleTowerBattleRoom_MapEvents::
 	map_events BattleFrontier_BattleTowerBattleRoom_ObjectEvents, BattleFrontier_BattleTowerBattleRoom_MapWarps, NULL, NULL
+

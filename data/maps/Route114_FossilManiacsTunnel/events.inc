@@ -18,3 +18,4 @@ Route114_FossilManiacsTunnel_MapCoordEvents:
 
 Route114_FossilManiacsTunnel_MapEvents::
 	map_events Route114_FossilManiacsTunnel_ObjectEvents, Route114_FossilManiacsTunnel_MapWarps, Route114_FossilManiacsTunnel_MapCoordEvents, NULL
+

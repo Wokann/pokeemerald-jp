@@ -9,3 +9,4 @@ BattleFrontier_BattlePikeRoomFinal_ObjectEvents:
 
 BattleFrontier_BattlePikeRoomFinal_MapEvents::
 	map_events BattleFrontier_BattlePikeRoomFinal_ObjectEvents, NULL, NULL, NULL
+

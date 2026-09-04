@@ -21,3 +21,4 @@ RecordCorner_MapCoordEvents:
 
 RecordCorner_MapEvents::
 	map_events RecordCorner_ObjectEvents, RecordCorner_MapWarps, RecordCorner_MapCoordEvents, NULL
+

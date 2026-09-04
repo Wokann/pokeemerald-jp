@@ -13,3 +13,4 @@ SeafloorCavern_Entrance_MapWarps:
 
 SeafloorCavern_Entrance_MapEvents::
 	map_events SeafloorCavern_Entrance_ObjectEvents, SeafloorCavern_Entrance_MapWarps, NULL, NULL
+

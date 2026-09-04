@@ -13,3 +13,4 @@ ShoalCave_LowTideIceRoom_MapWarps:
 
 ShoalCave_LowTideIceRoom_MapEvents::
 	map_events ShoalCave_LowTideIceRoom_ObjectEvents, ShoalCave_LowTideIceRoom_MapWarps, NULL, NULL
+

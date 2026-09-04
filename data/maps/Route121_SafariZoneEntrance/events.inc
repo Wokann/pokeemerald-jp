@@ -23,3 +23,4 @@ Route121_SafariZoneEntrance_MapBGEvents:
 
 Route121_SafariZoneEntrance_MapEvents::
 	map_events Route121_SafariZoneEntrance_ObjectEvents, Route121_SafariZoneEntrance_MapWarps, Route121_SafariZoneEntrance_MapCoordEvents, Route121_SafariZoneEntrance_MapBGEvents
+

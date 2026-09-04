@@ -9,3 +9,4 @@ PetalburgCity_MapConnectionsList:
 PetalburgCity_MapConnections:
 	.4byte 2
 	.4byte PetalburgCity_MapConnectionsList
+

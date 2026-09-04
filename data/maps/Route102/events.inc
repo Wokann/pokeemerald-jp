@@ -21,3 +21,4 @@ Route102_MapBGEvents:
 
 Route102_MapEvents::
 	map_events Route102_ObjectEvents, NULL, NULL, Route102_MapBGEvents
+

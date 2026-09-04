@@ -17,3 +17,4 @@ VerdanturfTown_PokemonCenter_1F_MapWarps:
 
 VerdanturfTown_PokemonCenter_1F_MapEvents::
 	map_events VerdanturfTown_PokemonCenter_1F_ObjectEvents, VerdanturfTown_PokemonCenter_1F_MapWarps, NULL, NULL
+

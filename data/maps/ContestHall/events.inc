@@ -23,3 +23,4 @@ ContestHall_ObjectEvents:
 
 ContestHall_MapEvents::
 	map_events ContestHall_ObjectEvents, NULL, NULL, NULL
+

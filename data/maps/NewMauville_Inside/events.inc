@@ -41,3 +41,4 @@ NewMauville_Inside_MapBGEvents:
 
 NewMauville_Inside_MapEvents::
 	map_events NewMauville_Inside_ObjectEvents, NewMauville_Inside_MapWarps, NewMauville_Inside_MapCoordEvents, NewMauville_Inside_MapBGEvents
+

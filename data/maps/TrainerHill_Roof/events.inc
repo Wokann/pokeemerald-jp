@@ -13,3 +13,4 @@ TrainerHill_Roof_MapWarps:
 
 TrainerHill_Roof_MapEvents::
 	map_events TrainerHill_Roof_ObjectEvents, TrainerHill_Roof_MapWarps, NULL, NULL
+

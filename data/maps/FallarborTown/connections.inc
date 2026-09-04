@@ -9,3 +9,4 @@ FallarborTown_MapConnectionsList:
 FallarborTown_MapConnections:
 	.4byte 2
 	.4byte FallarborTown_MapConnectionsList
+

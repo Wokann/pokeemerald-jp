@@ -29,3 +29,4 @@ BattleFrontier_RankingHall_MapBGEvents:
 
 BattleFrontier_RankingHall_MapEvents::
 	map_events BattleFrontier_RankingHall_ObjectEvents, BattleFrontier_RankingHall_MapWarps, NULL, BattleFrontier_RankingHall_MapBGEvents
+

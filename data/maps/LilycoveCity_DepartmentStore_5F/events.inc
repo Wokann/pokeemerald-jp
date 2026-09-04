@@ -20,3 +20,4 @@ LilycoveCity_DepartmentStore_5F_MapWarps:
 
 LilycoveCity_DepartmentStore_5F_MapEvents::
 	map_events LilycoveCity_DepartmentStore_5F_ObjectEvents, LilycoveCity_DepartmentStore_5F_MapWarps, NULL, NULL
+

@@ -12,3 +12,4 @@ DesertUnderpass_MapWarps:
 
 DesertUnderpass_MapEvents::
 	map_events DesertUnderpass_ObjectEvents, DesertUnderpass_MapWarps, NULL, NULL
+

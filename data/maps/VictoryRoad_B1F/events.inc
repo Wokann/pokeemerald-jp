@@ -38,3 +38,4 @@ VictoryRoad_B1F_MapWarps:
 
 VictoryRoad_B1F_MapEvents::
 	map_events VictoryRoad_B1F_ObjectEvents, VictoryRoad_B1F_MapWarps, NULL, NULL
+

@@ -20,3 +20,4 @@ BattleFrontier_BattleArenaLobby_MapBGEvents:
 
 BattleFrontier_BattleArenaLobby_MapEvents::
 	map_events BattleFrontier_BattleArenaLobby_ObjectEvents, BattleFrontier_BattleArenaLobby_MapWarps, NULL, BattleFrontier_BattleArenaLobby_MapBGEvents
+

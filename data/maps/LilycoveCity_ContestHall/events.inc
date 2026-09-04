@@ -54,3 +54,4 @@ LilycoveCity_ContestHall_MapBGEvents:
 
 LilycoveCity_ContestHall_MapEvents::
 	map_events LilycoveCity_ContestHall_ObjectEvents, LilycoveCity_ContestHall_MapWarps, NULL, LilycoveCity_ContestHall_MapBGEvents
+

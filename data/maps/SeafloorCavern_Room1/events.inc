@@ -18,3 +18,4 @@ SeafloorCavern_Room1_MapWarps:
 
 SeafloorCavern_Room1_MapEvents::
 	map_events SeafloorCavern_Room1_ObjectEvents, SeafloorCavern_Room1_MapWarps, NULL, NULL
+

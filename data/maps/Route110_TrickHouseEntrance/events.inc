@@ -23,3 +23,4 @@ Route110_TrickHouseEntrance_MapBGEvents:
 
 Route110_TrickHouseEntrance_MapEvents::
 	map_events Route110_TrickHouseEntrance_ObjectEvents, Route110_TrickHouseEntrance_MapWarps, Route110_TrickHouseEntrance_MapCoordEvents, Route110_TrickHouseEntrance_MapBGEvents
+

@@ -15,3 +15,4 @@ MauvilleCity_Mart_MapWarps:
 
 MauvilleCity_Mart_MapEvents::
 	map_events MauvilleCity_Mart_ObjectEvents, MauvilleCity_Mart_MapWarps, NULL, NULL
+

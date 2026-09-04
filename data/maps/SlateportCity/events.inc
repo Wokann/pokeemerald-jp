@@ -74,3 +74,4 @@ SlateportCity_MapBGEvents:
 
 SlateportCity_MapEvents::
 	map_events SlateportCity_ObjectEvents, SlateportCity_MapWarps, SlateportCity_MapCoordEvents, SlateportCity_MapBGEvents
+

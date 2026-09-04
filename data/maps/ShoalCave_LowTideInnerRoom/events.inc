@@ -27,3 +27,4 @@ ShoalCave_LowTideInnerRoom_MapBGEvents:
 
 ShoalCave_LowTideInnerRoom_MapEvents::
 	map_events ShoalCave_LowTideInnerRoom_ObjectEvents, ShoalCave_LowTideInnerRoom_MapWarps, NULL, ShoalCave_LowTideInnerRoom_MapBGEvents
+

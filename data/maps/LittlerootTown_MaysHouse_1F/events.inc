@@ -26,3 +26,4 @@ LittlerootTown_MaysHouse_1F_MapCoordEvents:
 
 LittlerootTown_MaysHouse_1F_MapEvents::
 	map_events LittlerootTown_MaysHouse_1F_ObjectEvents, LittlerootTown_MaysHouse_1F_MapWarps, LittlerootTown_MaysHouse_1F_MapCoordEvents, NULL
+

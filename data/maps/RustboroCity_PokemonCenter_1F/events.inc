@@ -17,3 +17,4 @@ RustboroCity_PokemonCenter_1F_MapWarps:
 
 RustboroCity_PokemonCenter_1F_MapEvents::
 	map_events RustboroCity_PokemonCenter_1F_ObjectEvents, RustboroCity_PokemonCenter_1F_MapWarps, NULL, NULL
+

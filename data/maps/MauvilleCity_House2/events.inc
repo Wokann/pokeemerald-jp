@@ -13,3 +13,4 @@ MauvilleCity_House2_MapWarps:
 
 MauvilleCity_House2_MapEvents::
 	map_events MauvilleCity_House2_ObjectEvents, MauvilleCity_House2_MapWarps, NULL, NULL
+

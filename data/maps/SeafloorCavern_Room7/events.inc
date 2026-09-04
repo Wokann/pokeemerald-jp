@@ -10,3 +10,4 @@ SeafloorCavern_Room7_MapWarps:
 
 SeafloorCavern_Room7_MapEvents::
 	map_events NULL, SeafloorCavern_Room7_MapWarps, NULL, NULL
+

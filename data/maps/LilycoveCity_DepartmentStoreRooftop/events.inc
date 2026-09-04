@@ -19,3 +19,4 @@ LilycoveCity_DepartmentStoreRooftop_MapBGEvents:
 
 LilycoveCity_DepartmentStoreRooftop_MapEvents::
 	map_events LilycoveCity_DepartmentStoreRooftop_ObjectEvents, LilycoveCity_DepartmentStoreRooftop_MapWarps, NULL, LilycoveCity_DepartmentStoreRooftop_MapBGEvents
+

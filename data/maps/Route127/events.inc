@@ -26,3 +26,4 @@ Route127_MapBGEvents:
 
 Route127_MapEvents::
 	map_events Route127_ObjectEvents, NULL, NULL, Route127_MapBGEvents
+

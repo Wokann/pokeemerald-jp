@@ -28,3 +28,4 @@ Route101_MapBGEvents:
 
 Route101_MapEvents::
 	map_events Route101_ObjectEvents, NULL, Route101_MapCoordEvents, Route101_MapBGEvents
+

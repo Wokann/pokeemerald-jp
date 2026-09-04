@@ -14,3 +14,4 @@ MtChimney_CableCarStation_MapWarps:
 
 MtChimney_CableCarStation_MapEvents::
 	map_events MtChimney_CableCarStation_ObjectEvents, MtChimney_CableCarStation_MapWarps, NULL, NULL
+

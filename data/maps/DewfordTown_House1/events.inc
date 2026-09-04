@@ -15,3 +15,4 @@ DewfordTown_House1_MapWarps:
 
 DewfordTown_House1_MapEvents::
 	map_events DewfordTown_House1_ObjectEvents, DewfordTown_House1_MapWarps, NULL, NULL
+

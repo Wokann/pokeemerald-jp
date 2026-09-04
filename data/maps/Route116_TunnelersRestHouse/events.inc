@@ -15,3 +15,4 @@ Route116_TunnelersRestHouse_MapWarps:
 
 Route116_TunnelersRestHouse_MapEvents::
 	map_events Route116_TunnelersRestHouse_ObjectEvents, Route116_TunnelersRestHouse_MapWarps, NULL, NULL
+

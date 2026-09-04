@@ -401,10 +401,6 @@ void process_map_events(string map_filepath, string output_dir) {
         FATAL_ERROR("%s\n", mapdata_err.c_str());
 
     string events_text = generate_map_events_text(map_data);
-    while (events_text.size() >= 2
-           && events_text[events_text.size() - 1] == '\n'
-           && events_text[events_text.size() - 2] == '\n')
-        events_text.pop_back();
 
     string out_dir = strip_trailing_separator(output_dir).append(sep);
     write_text_file(out_dir + "events.inc", events_text);

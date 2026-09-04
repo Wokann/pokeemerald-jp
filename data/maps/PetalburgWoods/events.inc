@@ -41,3 +41,4 @@ PetalburgWoods_MapBGEvents:
 
 PetalburgWoods_MapEvents::
 	map_events PetalburgWoods_ObjectEvents, PetalburgWoods_MapWarps, PetalburgWoods_MapCoordEvents, PetalburgWoods_MapBGEvents
+

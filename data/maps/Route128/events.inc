@@ -23,3 +23,4 @@ Route128_MapBGEvents:
 
 Route128_MapEvents::
 	map_events Route128_ObjectEvents, NULL, NULL, Route128_MapBGEvents
+

@@ -16,3 +16,4 @@ MossdeepCity_Mart_MapWarps:
 
 MossdeepCity_Mart_MapEvents::
 	map_events MossdeepCity_Mart_ObjectEvents, MossdeepCity_Mart_MapWarps, NULL, NULL
+

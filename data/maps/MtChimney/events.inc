@@ -48,3 +48,4 @@ MtChimney_MapBGEvents:
 
 MtChimney_MapEvents::
 	map_events MtChimney_ObjectEvents, MtChimney_MapWarps, NULL, MtChimney_MapBGEvents
+

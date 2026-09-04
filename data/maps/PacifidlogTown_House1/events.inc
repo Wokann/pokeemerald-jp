@@ -14,3 +14,4 @@ PacifidlogTown_House1_MapWarps:
 
 PacifidlogTown_House1_MapEvents::
 	map_events PacifidlogTown_House1_ObjectEvents, PacifidlogTown_House1_MapWarps, NULL, NULL
+

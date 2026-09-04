@@ -17,3 +17,4 @@ LilycoveCity_PokemonCenter_2F_MapWarps:
 
 LilycoveCity_PokemonCenter_2F_MapEvents::
 	map_events LilycoveCity_PokemonCenter_2F_ObjectEvents, LilycoveCity_PokemonCenter_2F_MapWarps, NULL, NULL
+

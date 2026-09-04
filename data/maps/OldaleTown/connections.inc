@@ -10,3 +10,4 @@ OldaleTown_MapConnectionsList:
 OldaleTown_MapConnections:
 	.4byte 3
 	.4byte OldaleTown_MapConnectionsList
+

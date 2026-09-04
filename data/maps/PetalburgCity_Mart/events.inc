@@ -16,3 +16,4 @@ PetalburgCity_Mart_MapWarps:
 
 PetalburgCity_Mart_MapEvents::
 	map_events PetalburgCity_Mart_ObjectEvents, PetalburgCity_Mart_MapWarps, NULL, NULL
+

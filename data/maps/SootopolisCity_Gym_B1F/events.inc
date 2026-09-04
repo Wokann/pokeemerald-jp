@@ -21,3 +21,4 @@ SootopolisCity_Gym_B1F_MapWarps:
 
 SootopolisCity_Gym_B1F_MapEvents::
 	map_events SootopolisCity_Gym_B1F_ObjectEvents, SootopolisCity_Gym_B1F_MapWarps, NULL, NULL
+

@@ -104,3 +104,4 @@ Route119_MapBGEvents:
 
 Route119_MapEvents::
 	map_events Route119_ObjectEvents, Route119_MapWarps, Route119_MapCoordEvents, Route119_MapBGEvents
+

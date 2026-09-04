@@ -10,3 +10,4 @@ SkyPillar_Entrance_MapWarps:
 
 SkyPillar_Entrance_MapEvents::
 	map_events NULL, SkyPillar_Entrance_MapWarps, NULL, NULL
+

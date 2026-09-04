@@ -73,3 +73,4 @@ RustboroCity_MapBGEvents:
 
 RustboroCity_MapEvents::
 	map_events RustboroCity_ObjectEvents, RustboroCity_MapWarps, RustboroCity_MapCoordEvents, RustboroCity_MapBGEvents
+

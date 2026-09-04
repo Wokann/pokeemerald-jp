@@ -17,3 +17,4 @@ Route126_ObjectEvents:
 
 Route126_MapEvents::
 	map_events Route126_ObjectEvents, NULL, NULL, NULL
+

@@ -10,3 +10,4 @@ TerraCave_Entrance_MapWarps:
 
 TerraCave_Entrance_MapEvents::
 	map_events NULL, TerraCave_Entrance_MapWarps, NULL, NULL
+

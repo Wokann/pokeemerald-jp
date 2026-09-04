@@ -24,3 +24,4 @@ BattleFrontier_BattlePyramidFloor_ObjectEvents:
 
 BattleFrontier_BattlePyramidFloor_MapEvents::
 	map_events BattleFrontier_BattlePyramidFloor_ObjectEvents, NULL, NULL, NULL
+

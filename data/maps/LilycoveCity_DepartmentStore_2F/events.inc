@@ -18,3 +18,4 @@ LilycoveCity_DepartmentStore_2F_MapWarps:
 
 LilycoveCity_DepartmentStore_2F_MapEvents::
 	map_events LilycoveCity_DepartmentStore_2F_ObjectEvents, LilycoveCity_DepartmentStore_2F_MapWarps, NULL, NULL
+

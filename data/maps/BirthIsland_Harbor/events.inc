@@ -13,3 +13,4 @@ BirthIsland_Harbor_MapWarps:
 
 BirthIsland_Harbor_MapEvents::
 	map_events BirthIsland_Harbor_ObjectEvents, BirthIsland_Harbor_MapWarps, NULL, NULL
+

@@ -8,3 +8,4 @@ LavaridgeTown_MapConnectionsList:
 LavaridgeTown_MapConnections:
 	.4byte 1
 	.4byte LavaridgeTown_MapConnectionsList
+

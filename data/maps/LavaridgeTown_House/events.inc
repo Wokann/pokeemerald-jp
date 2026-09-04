@@ -15,3 +15,4 @@ LavaridgeTown_House_MapWarps:
 
 LavaridgeTown_House_MapEvents::
 	map_events LavaridgeTown_House_ObjectEvents, LavaridgeTown_House_MapWarps, NULL, NULL
+

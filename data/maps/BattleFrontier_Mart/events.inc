@@ -16,3 +16,4 @@ BattleFrontier_Mart_MapWarps:
 
 BattleFrontier_Mart_MapEvents::
 	map_events BattleFrontier_Mart_ObjectEvents, BattleFrontier_Mart_MapWarps, NULL, NULL
+

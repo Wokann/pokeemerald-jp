@@ -9,3 +9,4 @@ FallarborTown_BattleTentCorridor_ObjectEvents:
 
 FallarborTown_BattleTentCorridor_MapEvents::
 	map_events FallarborTown_BattleTentCorridor_ObjectEvents, NULL, NULL, NULL
+

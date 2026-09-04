@@ -58,3 +58,4 @@ Route121_MapBGEvents:
 
 Route121_MapEvents::
 	map_events Route121_ObjectEvents, Route121_MapWarps, Route121_MapCoordEvents, Route121_MapBGEvents
+

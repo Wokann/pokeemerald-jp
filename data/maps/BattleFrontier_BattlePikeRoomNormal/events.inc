@@ -19,3 +19,4 @@ BattleFrontier_BattlePikeRoomNormal_MapCoordEvents:
 
 BattleFrontier_BattlePikeRoomNormal_MapEvents::
 	map_events BattleFrontier_BattlePikeRoomNormal_ObjectEvents, NULL, BattleFrontier_BattlePikeRoomNormal_MapCoordEvents, NULL
+

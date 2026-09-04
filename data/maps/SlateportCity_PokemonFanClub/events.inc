@@ -21,3 +21,4 @@ SlateportCity_PokemonFanClub_MapWarps:
 
 SlateportCity_PokemonFanClub_MapEvents::
 	map_events SlateportCity_PokemonFanClub_ObjectEvents, SlateportCity_PokemonFanClub_MapWarps, NULL, NULL
+

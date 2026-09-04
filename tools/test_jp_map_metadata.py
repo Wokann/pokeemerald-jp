@@ -837,8 +837,14 @@ class MapMetadataTests(unittest.TestCase):
             self.assertIn("\t.4byte NULL\n", jp_map_metadata.render_header(data))
             self.assertEqual(
                 jp_map_metadata.render_connections(data),
-                jp_map_metadata.warning(map_name),
+                "\n",
             )
+
+    def test_metadata_keeps_the_us_terminal_separator(self):
+        data = jp_map_metadata.load_map(
+            ROOT / "data" / "maps" / "Underwater_Route124" / "map.json")
+        self.assertTrue(jp_map_metadata.render_header(data).endswith("\n\n"))
+        self.assertTrue(jp_map_metadata.render_connections(data).endswith("\n\n"))
 
     def test_sootopolis_unused_connection_table_is_generated(self):
         map_name = "SootopolisCity"
@@ -855,7 +861,7 @@ class MapMetadataTests(unittest.TestCase):
             "\n"
             "SootopolisCity_MapConnections:\n"
             "\t.4byte 0\n"
-            "\t.4byte SootopolisCity_MapConnectionsList\n",
+            "\t.4byte SootopolisCity_MapConnectionsList\n\n",
         )
 
 

@@ -11,3 +11,4 @@ VerdanturfTown_BattleTentBattleRoom_ObjectEvents:
 
 VerdanturfTown_BattleTentBattleRoom_MapEvents::
 	map_events VerdanturfTown_BattleTentBattleRoom_ObjectEvents, NULL, NULL, NULL
+

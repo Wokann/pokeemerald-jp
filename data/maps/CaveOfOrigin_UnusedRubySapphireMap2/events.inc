@@ -10,3 +10,4 @@ CaveOfOrigin_UnusedRubySapphireMap2_MapWarps:
 
 CaveOfOrigin_UnusedRubySapphireMap2_MapEvents::
 	map_events NULL, CaveOfOrigin_UnusedRubySapphireMap2_MapWarps, NULL, NULL
+

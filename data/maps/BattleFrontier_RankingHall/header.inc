@@ -16,3 +16,4 @@ BattleFrontier_RankingHall:
 	.2byte 0
 	map_header_flags allow_cycling=FALSE, allow_escaping=FALSE, allow_running=FALSE, show_map_name=FALSE
 	.byte MAP_BATTLE_SCENE_NORMAL
+

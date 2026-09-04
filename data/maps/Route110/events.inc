@@ -82,3 +82,4 @@ Route110_MapBGEvents:
 
 Route110_MapEvents::
 	map_events Route110_ObjectEvents, Route110_MapWarps, Route110_MapCoordEvents, Route110_MapBGEvents
+

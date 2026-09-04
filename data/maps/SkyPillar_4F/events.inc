@@ -11,3 +11,4 @@ SkyPillar_4F_MapWarps:
 
 SkyPillar_4F_MapEvents::
 	map_events NULL, SkyPillar_4F_MapWarps, NULL, NULL
+

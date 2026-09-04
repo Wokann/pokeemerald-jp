@@ -35,3 +35,4 @@ AbandonedShip_HiddenFloorRooms_MapBGEvents:
 
 AbandonedShip_HiddenFloorRooms_MapEvents::
 	map_events AbandonedShip_HiddenFloorRooms_ObjectEvents, AbandonedShip_HiddenFloorRooms_MapWarps, NULL, AbandonedShip_HiddenFloorRooms_MapBGEvents
+

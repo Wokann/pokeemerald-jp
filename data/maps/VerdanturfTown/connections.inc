@@ -9,3 +9,4 @@ VerdanturfTown_MapConnectionsList:
 VerdanturfTown_MapConnections:
 	.4byte 2
 	.4byte VerdanturfTown_MapConnectionsList
+

@@ -17,3 +17,4 @@ SlateportCity_SternsShipyard_1F_MapWarps:
 
 SlateportCity_SternsShipyard_1F_MapEvents::
 	map_events SlateportCity_SternsShipyard_1F_ObjectEvents, SlateportCity_SternsShipyard_1F_MapWarps, NULL, NULL
+

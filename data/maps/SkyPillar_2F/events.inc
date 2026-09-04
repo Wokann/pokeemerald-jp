@@ -10,3 +10,4 @@ SkyPillar_2F_MapWarps:
 
 SkyPillar_2F_MapEvents::
 	map_events NULL, SkyPillar_2F_MapWarps, NULL, NULL
+

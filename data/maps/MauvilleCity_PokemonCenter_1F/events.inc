@@ -18,3 +18,4 @@ MauvilleCity_PokemonCenter_1F_MapWarps:
 
 MauvilleCity_PokemonCenter_1F_MapEvents::
 	map_events MauvilleCity_PokemonCenter_1F_ObjectEvents, MauvilleCity_PokemonCenter_1F_MapWarps, NULL, NULL
+

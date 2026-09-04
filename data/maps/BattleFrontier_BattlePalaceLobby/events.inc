@@ -24,3 +24,4 @@ BattleFrontier_BattlePalaceLobby_MapBGEvents:
 
 BattleFrontier_BattlePalaceLobby_MapEvents::
 	map_events BattleFrontier_BattlePalaceLobby_ObjectEvents, BattleFrontier_BattlePalaceLobby_MapWarps, NULL, BattleFrontier_BattlePalaceLobby_MapBGEvents
+

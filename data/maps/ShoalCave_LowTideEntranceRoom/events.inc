@@ -16,3 +16,4 @@ ShoalCave_LowTideEntranceRoom_MapWarps:
 
 ShoalCave_LowTideEntranceRoom_MapEvents::
 	map_events ShoalCave_LowTideEntranceRoom_ObjectEvents, ShoalCave_LowTideEntranceRoom_MapWarps, NULL, NULL
+

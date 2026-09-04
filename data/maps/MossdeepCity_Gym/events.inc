@@ -75,3 +75,4 @@ MossdeepCity_Gym_MapBGEvents:
 
 MossdeepCity_Gym_MapEvents::
 	map_events MossdeepCity_Gym_ObjectEvents, MossdeepCity_Gym_MapWarps, MossdeepCity_Gym_MapCoordEvents, MossdeepCity_Gym_MapBGEvents
+

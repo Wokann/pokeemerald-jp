@@ -33,3 +33,4 @@ MtPyre_Summit_MapBGEvents:
 
 MtPyre_Summit_MapEvents::
 	map_events MtPyre_Summit_ObjectEvents, MtPyre_Summit_MapWarps, MtPyre_Summit_MapCoordEvents, MtPyre_Summit_MapBGEvents
+

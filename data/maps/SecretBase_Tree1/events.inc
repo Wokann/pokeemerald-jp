@@ -26,3 +26,4 @@ SecretBase_Tree1_MapWarps:
 
 SecretBase_Tree1_MapEvents::
 	map_events SecretBase_Tree1_ObjectEvents, SecretBase_Tree1_MapWarps, NULL, NULL
+

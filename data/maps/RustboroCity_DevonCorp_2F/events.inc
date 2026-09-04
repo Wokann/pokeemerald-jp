@@ -18,3 +18,4 @@ RustboroCity_DevonCorp_2F_MapWarps:
 
 RustboroCity_DevonCorp_2F_MapEvents::
 	map_events RustboroCity_DevonCorp_2F_ObjectEvents, RustboroCity_DevonCorp_2F_MapWarps, NULL, NULL
+

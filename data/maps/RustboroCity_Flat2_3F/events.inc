@@ -13,3 +13,4 @@ RustboroCity_Flat2_3F_MapWarps:
 
 RustboroCity_Flat2_3F_MapEvents::
 	map_events RustboroCity_Flat2_3F_ObjectEvents, RustboroCity_Flat2_3F_MapWarps, NULL, NULL
+

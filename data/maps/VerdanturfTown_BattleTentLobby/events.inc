@@ -21,3 +21,4 @@ VerdanturfTown_BattleTentLobby_MapBGEvents:
 
 VerdanturfTown_BattleTentLobby_MapEvents::
 	map_events VerdanturfTown_BattleTentLobby_ObjectEvents, VerdanturfTown_BattleTentLobby_MapWarps, NULL, VerdanturfTown_BattleTentLobby_MapBGEvents
+

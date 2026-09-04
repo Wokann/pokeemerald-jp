@@ -17,3 +17,4 @@ SootopolisCity_PokemonCenter_2F_MapWarps:
 
 SootopolisCity_PokemonCenter_2F_MapEvents::
 	map_events SootopolisCity_PokemonCenter_2F_ObjectEvents, SootopolisCity_PokemonCenter_2F_MapWarps, NULL, NULL
+

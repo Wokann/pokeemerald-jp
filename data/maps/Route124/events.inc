@@ -26,3 +26,4 @@ Route124_MapBGEvents:
 
 Route124_MapEvents::
 	map_events Route124_ObjectEvents, Route124_MapWarps, NULL, Route124_MapBGEvents
+

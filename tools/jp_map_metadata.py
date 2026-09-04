@@ -118,7 +118,7 @@ def render_header(data: dict[str, Any]) -> str:
         f"allow_escaping={bool_token(data.get('allow_escaping'), 'allow_escaping')}, "
         f"allow_running={bool_token(data.get('allow_running'), 'allow_running')}, "
         f"show_map_name={bool_token(data.get('show_map_name'), 'show_map_name')}\n"
-        f"\t.byte {require_string(data, 'battle_scene')}\n"
+        f"\t.byte {require_string(data, 'battle_scene')}\n\n"
     )
 
 
@@ -133,7 +133,7 @@ def render_connections(data: dict[str, Any]) -> str:
     if not isinstance(has_unused_connection_table, bool):
         raise ValueError("has_unused_connection_table must be a JSON boolean")
     if not connections and not has_unused_connection_table:
-        return warning(name)
+        return "\n"
 
     lines = [warning(name).rstrip(), "", f"{name}_MapConnectionsList:"]
     for connection in connections:
@@ -157,7 +157,7 @@ def render_connections(data: dict[str, Any]) -> str:
             "",
         ]
     )
-    return "\n".join(lines)
+    return "\n".join(lines) + "\n"
 
 
 def load_map(path: Path) -> dict[str, Any]:

@@ -61,3 +61,4 @@ LilycoveCity_MapBGEvents:
 
 LilycoveCity_MapEvents::
 	map_events LilycoveCity_ObjectEvents, LilycoveCity_MapWarps, NULL, LilycoveCity_MapBGEvents
+

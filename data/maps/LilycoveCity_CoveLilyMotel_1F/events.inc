@@ -17,3 +17,4 @@ LilycoveCity_CoveLilyMotel_1F_MapCoordEvents:
 
 LilycoveCity_CoveLilyMotel_1F_MapEvents::
 	map_events LilycoveCity_CoveLilyMotel_1F_ObjectEvents, LilycoveCity_CoveLilyMotel_1F_MapWarps, LilycoveCity_CoveLilyMotel_1F_MapCoordEvents, NULL
+

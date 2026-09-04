@@ -15,3 +15,4 @@ EverGrandeCity_ChampionsRoom_MapWarps:
 
 EverGrandeCity_ChampionsRoom_MapEvents::
 	map_events EverGrandeCity_ChampionsRoom_ObjectEvents, EverGrandeCity_ChampionsRoom_MapWarps, NULL, NULL
+

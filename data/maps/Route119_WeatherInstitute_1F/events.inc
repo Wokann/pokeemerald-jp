@@ -24,3 +24,4 @@ Route119_WeatherInstitute_1F_MapBGEvents:
 
 Route119_WeatherInstitute_1F_MapEvents::
 	map_events Route119_WeatherInstitute_1F_ObjectEvents, Route119_WeatherInstitute_1F_MapWarps, NULL, Route119_WeatherInstitute_1F_MapBGEvents
+

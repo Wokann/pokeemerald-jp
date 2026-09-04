@@ -17,3 +17,4 @@ OldaleTown_PokemonCenter_2F_MapWarps:
 
 OldaleTown_PokemonCenter_2F_MapEvents::
 	map_events OldaleTown_PokemonCenter_2F_ObjectEvents, OldaleTown_PokemonCenter_2F_MapWarps, NULL, NULL
+

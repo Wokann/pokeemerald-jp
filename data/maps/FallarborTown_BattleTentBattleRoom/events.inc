@@ -11,3 +11,4 @@ FallarborTown_BattleTentBattleRoom_ObjectEvents:
 
 FallarborTown_BattleTentBattleRoom_MapEvents::
 	map_events FallarborTown_BattleTentBattleRoom_ObjectEvents, NULL, NULL, NULL
+

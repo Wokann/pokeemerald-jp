@@ -13,3 +13,4 @@ FarawayIsland_Interior_MapWarps:
 
 FarawayIsland_Interior_MapEvents::
 	map_events FarawayIsland_Interior_ObjectEvents, FarawayIsland_Interior_MapWarps, NULL, NULL
+

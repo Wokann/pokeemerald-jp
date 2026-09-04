@@ -13,3 +13,4 @@ BirthIsland_Exterior_MapWarps:
 
 BirthIsland_Exterior_MapEvents::
 	map_events BirthIsland_Exterior_ObjectEvents, BirthIsland_Exterior_MapWarps, NULL, NULL
+

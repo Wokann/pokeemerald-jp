@@ -15,3 +15,4 @@ OldaleTown_Mart_MapWarps:
 
 OldaleTown_Mart_MapEvents::
 	map_events OldaleTown_Mart_ObjectEvents, OldaleTown_Mart_MapWarps, NULL, NULL
+

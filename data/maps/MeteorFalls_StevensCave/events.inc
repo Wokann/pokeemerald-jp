@@ -12,3 +12,4 @@ MeteorFalls_StevensCave_MapWarps:
 
 MeteorFalls_StevensCave_MapEvents::
 	map_events MeteorFalls_StevensCave_ObjectEvents, MeteorFalls_StevensCave_MapWarps, NULL, NULL
+

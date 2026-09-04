@@ -38,3 +38,4 @@ MauvilleCity_MapBGEvents:
 
 MauvilleCity_MapEvents::
 	map_events MauvilleCity_ObjectEvents, MauvilleCity_MapWarps, NULL, MauvilleCity_MapBGEvents
+

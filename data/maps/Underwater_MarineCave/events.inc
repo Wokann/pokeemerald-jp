@@ -9,3 +9,4 @@ Underwater_MarineCave_MapWarps:
 
 Underwater_MarineCave_MapEvents::
 	map_events NULL, Underwater_MarineCave_MapWarps, NULL, NULL
+

@@ -19,3 +19,4 @@ DesertRuins_MapBGEvents:
 
 DesertRuins_MapEvents::
 	map_events DesertRuins_ObjectEvents, DesertRuins_MapWarps, NULL, DesertRuins_MapBGEvents
+

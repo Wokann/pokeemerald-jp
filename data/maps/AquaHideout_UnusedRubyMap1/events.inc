@@ -6,3 +6,4 @@
 
 AquaHideout_UnusedRubyMap1_MapEvents::
 	map_events NULL, NULL, NULL, NULL
+

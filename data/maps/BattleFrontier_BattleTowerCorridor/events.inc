@@ -9,3 +9,4 @@ BattleFrontier_BattleTowerCorridor_ObjectEvents:
 
 BattleFrontier_BattleTowerCorridor_MapEvents::
 	map_events BattleFrontier_BattleTowerCorridor_ObjectEvents, NULL, NULL, NULL
+

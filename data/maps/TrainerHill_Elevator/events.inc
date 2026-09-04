@@ -13,3 +13,4 @@ TrainerHill_Elevator_MapWarps:
 
 TrainerHill_Elevator_MapEvents::
 	map_events TrainerHill_Elevator_ObjectEvents, TrainerHill_Elevator_MapWarps, NULL, NULL
+

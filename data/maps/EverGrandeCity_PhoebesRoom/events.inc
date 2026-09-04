@@ -13,3 +13,4 @@ EverGrandeCity_PhoebesRoom_MapWarps:
 
 EverGrandeCity_PhoebesRoom_MapEvents::
 	map_events EverGrandeCity_PhoebesRoom_ObjectEvents, EverGrandeCity_PhoebesRoom_MapWarps, NULL, NULL
+

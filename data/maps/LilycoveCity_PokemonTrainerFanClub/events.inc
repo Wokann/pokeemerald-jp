@@ -21,3 +21,4 @@ LilycoveCity_PokemonTrainerFanClub_MapWarps:
 
 LilycoveCity_PokemonTrainerFanClub_MapEvents::
 	map_events LilycoveCity_PokemonTrainerFanClub_ObjectEvents, LilycoveCity_PokemonTrainerFanClub_MapWarps, NULL, NULL
+

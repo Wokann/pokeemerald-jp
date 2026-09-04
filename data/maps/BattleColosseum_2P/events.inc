@@ -17,3 +17,4 @@ BattleColosseum_2P_MapCoordEvents:
 
 BattleColosseum_2P_MapEvents::
 	map_events BattleColosseum_2P_ObjectEvents, BattleColosseum_2P_MapWarps, BattleColosseum_2P_MapCoordEvents, NULL
+

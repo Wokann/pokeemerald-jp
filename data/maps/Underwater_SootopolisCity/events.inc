@@ -10,3 +10,4 @@ Underwater_SootopolisCity_MapWarps:
 
 Underwater_SootopolisCity_MapEvents::
 	map_events NULL, Underwater_SootopolisCity_MapWarps, NULL, NULL
+

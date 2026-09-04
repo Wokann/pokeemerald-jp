@@ -19,3 +19,4 @@ Route110_SeasideCyclingRoadNorthEntrance_MapCoordEvents:
 
 Route110_SeasideCyclingRoadNorthEntrance_MapEvents::
 	map_events Route110_SeasideCyclingRoadNorthEntrance_ObjectEvents, Route110_SeasideCyclingRoadNorthEntrance_MapWarps, Route110_SeasideCyclingRoadNorthEntrance_MapCoordEvents, NULL
+

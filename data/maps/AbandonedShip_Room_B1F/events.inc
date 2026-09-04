@@ -13,3 +13,4 @@ AbandonedShip_Room_B1F_MapWarps:
 
 AbandonedShip_Room_B1F_MapEvents::
 	map_events AbandonedShip_Room_B1F_ObjectEvents, AbandonedShip_Room_B1F_MapWarps, NULL, NULL
+

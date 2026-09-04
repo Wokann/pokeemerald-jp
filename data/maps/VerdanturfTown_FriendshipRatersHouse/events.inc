@@ -14,3 +14,4 @@ VerdanturfTown_FriendshipRatersHouse_MapWarps:
 
 VerdanturfTown_FriendshipRatersHouse_MapEvents::
 	map_events VerdanturfTown_FriendshipRatersHouse_ObjectEvents, VerdanturfTown_FriendshipRatersHouse_MapWarps, NULL, NULL
+

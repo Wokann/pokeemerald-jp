@@ -11,3 +11,4 @@ MauvilleCity_MapConnectionsList:
 MauvilleCity_MapConnections:
 	.4byte 4
 	.4byte MauvilleCity_MapConnectionsList
+

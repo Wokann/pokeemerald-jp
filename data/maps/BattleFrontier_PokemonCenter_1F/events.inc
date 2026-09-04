@@ -18,3 +18,4 @@ BattleFrontier_PokemonCenter_1F_MapWarps:
 
 BattleFrontier_PokemonCenter_1F_MapEvents::
 	map_events BattleFrontier_PokemonCenter_1F_ObjectEvents, BattleFrontier_PokemonCenter_1F_MapWarps, NULL, NULL
+

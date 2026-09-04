@@ -45,3 +45,4 @@ Route109_MapBGEvents:
 
 Route109_MapEvents::
 	map_events Route109_ObjectEvents, Route109_MapWarps, NULL, Route109_MapBGEvents
+

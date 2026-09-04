@@ -11,3 +11,4 @@ SlateportCity_BattleTentBattleRoom_ObjectEvents:
 
 SlateportCity_BattleTentBattleRoom_MapEvents::
 	map_events SlateportCity_BattleTentBattleRoom_ObjectEvents, NULL, NULL, NULL
+

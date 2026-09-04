@@ -11,3 +11,4 @@ NavelRock_Fork_MapWarps:
 
 NavelRock_Fork_MapEvents::
 	map_events NULL, NavelRock_Fork_MapWarps, NULL, NULL
+

@@ -9,3 +9,4 @@ BattleFrontier_BattleFactoryPreBattleRoom_ObjectEvents:
 
 BattleFrontier_BattleFactoryPreBattleRoom_MapEvents::
 	map_events BattleFrontier_BattleFactoryPreBattleRoom_ObjectEvents, NULL, NULL, NULL
+

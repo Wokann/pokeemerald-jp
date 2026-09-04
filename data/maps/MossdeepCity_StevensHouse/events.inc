@@ -21,3 +21,4 @@ MossdeepCity_StevensHouse_MapBGEvents:
 
 MossdeepCity_StevensHouse_MapEvents::
 	map_events MossdeepCity_StevensHouse_ObjectEvents, MossdeepCity_StevensHouse_MapWarps, NULL, MossdeepCity_StevensHouse_MapBGEvents
+

@@ -10,3 +10,4 @@ CaveOfOrigin_1F_MapWarps:
 
 CaveOfOrigin_1F_MapEvents::
 	map_events NULL, CaveOfOrigin_1F_MapWarps, NULL, NULL
+

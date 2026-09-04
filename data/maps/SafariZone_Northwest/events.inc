@@ -10,3 +10,4 @@ SafariZone_Northwest_ObjectEvents:
 
 SafariZone_Northwest_MapEvents::
 	map_events SafariZone_Northwest_ObjectEvents, NULL, NULL, NULL
+

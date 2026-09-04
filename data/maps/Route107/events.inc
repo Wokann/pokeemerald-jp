@@ -15,3 +15,4 @@ Route107_ObjectEvents:
 
 Route107_MapEvents::
 	map_events Route107_ObjectEvents, NULL, NULL, NULL
+

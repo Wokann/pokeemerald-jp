@@ -23,3 +23,4 @@ LilycoveCity_DepartmentStore_1F_MapBGEvents:
 
 LilycoveCity_DepartmentStore_1F_MapEvents::
 	map_events LilycoveCity_DepartmentStore_1F_ObjectEvents, LilycoveCity_DepartmentStore_1F_MapWarps, NULL, LilycoveCity_DepartmentStore_1F_MapBGEvents
+

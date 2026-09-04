@@ -15,3 +15,4 @@ SafariZone_RestHouse_MapWarps:
 
 SafariZone_RestHouse_MapEvents::
 	map_events SafariZone_RestHouse_ObjectEvents, SafariZone_RestHouse_MapWarps, NULL, NULL
+

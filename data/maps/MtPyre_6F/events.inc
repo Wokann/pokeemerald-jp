@@ -15,3 +15,4 @@ MtPyre_6F_MapWarps:
 
 MtPyre_6F_MapEvents::
 	map_events MtPyre_6F_ObjectEvents, MtPyre_6F_MapWarps, NULL, NULL
+

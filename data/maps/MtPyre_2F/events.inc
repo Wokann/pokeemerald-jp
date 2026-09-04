@@ -23,3 +23,4 @@ MtPyre_2F_MapWarps:
 
 MtPyre_2F_MapEvents::
 	map_events MtPyre_2F_ObjectEvents, MtPyre_2F_MapWarps, NULL, NULL
+

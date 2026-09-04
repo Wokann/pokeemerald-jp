@@ -29,3 +29,4 @@ MauvilleCity_Gym_MapBGEvents:
 
 MauvilleCity_Gym_MapEvents::
 	map_events MauvilleCity_Gym_ObjectEvents, MauvilleCity_Gym_MapWarps, MauvilleCity_Gym_MapCoordEvents, MauvilleCity_Gym_MapBGEvents
+

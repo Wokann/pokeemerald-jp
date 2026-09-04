@@ -15,3 +15,4 @@ BattleFrontier_BattlePikeRoomWildMons_MapCoordEvents:
 
 BattleFrontier_BattlePikeRoomWildMons_MapEvents::
 	map_events NULL, NULL, BattleFrontier_BattlePikeRoomWildMons_MapCoordEvents, NULL
+

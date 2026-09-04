@@ -10,3 +10,4 @@ MirageTower_2F_MapWarps:
 
 MirageTower_2F_MapEvents::
 	map_events NULL, MirageTower_2F_MapWarps, NULL, NULL
+

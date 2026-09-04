@@ -14,3 +14,4 @@ Route113_GlassWorkshop_MapWarps:
 
 Route113_GlassWorkshop_MapEvents::
 	map_events Route113_GlassWorkshop_ObjectEvents, Route113_GlassWorkshop_MapWarps, NULL, NULL
+

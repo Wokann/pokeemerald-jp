@@ -11,3 +11,4 @@ SkyPillar_3F_MapWarps:
 
 SkyPillar_3F_MapEvents::
 	map_events NULL, SkyPillar_3F_MapWarps, NULL, NULL
+

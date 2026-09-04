@@ -15,3 +15,4 @@ SootopolisCity_Mart_MapWarps:
 
 SootopolisCity_Mart_MapEvents::
 	map_events SootopolisCity_Mart_ObjectEvents, SootopolisCity_Mart_MapWarps, NULL, NULL
+

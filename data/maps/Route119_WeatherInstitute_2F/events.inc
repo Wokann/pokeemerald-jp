@@ -19,3 +19,4 @@ Route119_WeatherInstitute_2F_MapWarps:
 
 Route119_WeatherInstitute_2F_MapEvents::
 	map_events Route119_WeatherInstitute_2F_ObjectEvents, Route119_WeatherInstitute_2F_MapWarps, NULL, NULL
+

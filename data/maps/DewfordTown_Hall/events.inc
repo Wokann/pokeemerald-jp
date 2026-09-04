@@ -25,3 +25,4 @@ DewfordTown_Hall_MapBGEvents:
 
 DewfordTown_Hall_MapEvents::
 	map_events DewfordTown_Hall_ObjectEvents, DewfordTown_Hall_MapWarps, NULL, DewfordTown_Hall_MapBGEvents
+

@@ -15,3 +15,4 @@ BattleFrontier_Lounge7_MapWarps:
 
 BattleFrontier_Lounge7_MapEvents::
 	map_events BattleFrontier_Lounge7_ObjectEvents, BattleFrontier_Lounge7_MapWarps, NULL, NULL
+

@@ -22,3 +22,4 @@ Route106_MapBGEvents:
 
 Route106_MapEvents::
 	map_events Route106_ObjectEvents, Route106_MapWarps, NULL, Route106_MapBGEvents
+

@@ -24,3 +24,4 @@ FortreeCity_Gym_MapBGEvents:
 
 FortreeCity_Gym_MapEvents::
 	map_events FortreeCity_Gym_ObjectEvents, FortreeCity_Gym_MapWarps, NULL, FortreeCity_Gym_MapBGEvents
+

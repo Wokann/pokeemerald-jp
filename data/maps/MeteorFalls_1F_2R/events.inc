@@ -20,3 +20,4 @@ MeteorFalls_1F_2R_MapBGEvents:
 
 MeteorFalls_1F_2R_MapEvents::
 	map_events MeteorFalls_1F_2R_ObjectEvents, MeteorFalls_1F_2R_MapWarps, NULL, MeteorFalls_1F_2R_MapBGEvents
+

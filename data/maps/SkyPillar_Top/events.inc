@@ -16,3 +16,4 @@ SkyPillar_Top_MapCoordEvents:
 
 SkyPillar_Top_MapEvents::
 	map_events SkyPillar_Top_ObjectEvents, SkyPillar_Top_MapWarps, SkyPillar_Top_MapCoordEvents, NULL
+

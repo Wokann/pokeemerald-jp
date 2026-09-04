@@ -9,3 +9,4 @@ BattleFrontier_BattleTowerElevator_ObjectEvents:
 
 BattleFrontier_BattleTowerElevator_MapEvents::
 	map_events BattleFrontier_BattleTowerElevator_ObjectEvents, NULL, NULL, NULL
+

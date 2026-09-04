@@ -14,3 +14,4 @@ SlateportCity_House_MapWarps:
 
 SlateportCity_House_MapEvents::
 	map_events SlateportCity_House_ObjectEvents, SlateportCity_House_MapWarps, NULL, NULL
+

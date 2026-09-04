@@ -9,3 +9,4 @@ AlteringCave_MapWarps:
 
 AlteringCave_MapEvents::
 	map_events NULL, AlteringCave_MapWarps, NULL, NULL
+

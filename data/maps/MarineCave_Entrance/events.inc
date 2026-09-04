@@ -9,3 +9,4 @@ MarineCave_Entrance_MapWarps:
 
 MarineCave_Entrance_MapEvents::
 	map_events NULL, MarineCave_Entrance_MapWarps, NULL, NULL
+

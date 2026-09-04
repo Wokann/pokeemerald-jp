@@ -67,3 +67,4 @@ Route104_MapBGEvents:
 
 Route104_MapEvents::
 	map_events Route104_ObjectEvents, Route104_MapWarps, Route104_MapCoordEvents, Route104_MapBGEvents
+

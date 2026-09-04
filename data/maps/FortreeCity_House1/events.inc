@@ -15,3 +15,4 @@ FortreeCity_House1_MapWarps:
 
 FortreeCity_House1_MapEvents::
 	map_events FortreeCity_House1_ObjectEvents, FortreeCity_House1_MapWarps, NULL, NULL
+

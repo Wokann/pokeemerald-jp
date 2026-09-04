@@ -32,3 +32,4 @@ EverGrandeCity_MapBGEvents:
 
 EverGrandeCity_MapEvents::
 	map_events NULL, EverGrandeCity_MapWarps, EverGrandeCity_MapCoordEvents, EverGrandeCity_MapBGEvents
+

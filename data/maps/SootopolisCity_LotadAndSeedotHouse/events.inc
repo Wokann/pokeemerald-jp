@@ -18,3 +18,4 @@ SootopolisCity_LotadAndSeedotHouse_MapBGEvents:
 
 SootopolisCity_LotadAndSeedotHouse_MapEvents::
 	map_events SootopolisCity_LotadAndSeedotHouse_ObjectEvents, SootopolisCity_LotadAndSeedotHouse_MapWarps, NULL, SootopolisCity_LotadAndSeedotHouse_MapBGEvents
+

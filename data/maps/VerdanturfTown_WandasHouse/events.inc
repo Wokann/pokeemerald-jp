@@ -17,3 +17,4 @@ VerdanturfTown_WandasHouse_MapWarps:
 
 VerdanturfTown_WandasHouse_MapEvents::
 	map_events VerdanturfTown_WandasHouse_ObjectEvents, VerdanturfTown_WandasHouse_MapWarps, NULL, NULL
+

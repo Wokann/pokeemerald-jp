@@ -14,3 +14,4 @@ BattleFrontier_BattleTowerMultiBattleRoom_ObjectEvents:
 
 BattleFrontier_BattleTowerMultiBattleRoom_MapEvents::
 	map_events BattleFrontier_BattleTowerMultiBattleRoom_ObjectEvents, NULL, NULL, NULL
+

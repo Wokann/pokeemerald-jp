@@ -41,3 +41,4 @@ LilycoveCity_LilycoveMuseum_1F_MapBGEvents:
 
 LilycoveCity_LilycoveMuseum_1F_MapEvents::
 	map_events LilycoveCity_LilycoveMuseum_1F_ObjectEvents, LilycoveCity_LilycoveMuseum_1F_MapWarps, NULL, LilycoveCity_LilycoveMuseum_1F_MapBGEvents
+

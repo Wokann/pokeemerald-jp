@@ -19,3 +19,4 @@ Route119_House_MapWarps:
 
 Route119_House_MapEvents::
 	map_events Route119_House_ObjectEvents, Route119_House_MapWarps, NULL, NULL
+

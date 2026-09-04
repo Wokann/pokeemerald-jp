@@ -24,3 +24,4 @@ AbandonedShip_Corridors_1F_MapWarps:
 
 AbandonedShip_Corridors_1F_MapEvents::
 	map_events AbandonedShip_Corridors_1F_ObjectEvents, AbandonedShip_Corridors_1F_MapWarps, NULL, NULL
+

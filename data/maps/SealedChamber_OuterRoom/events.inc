@@ -40,3 +40,4 @@ SealedChamber_OuterRoom_MapBGEvents:
 
 SealedChamber_OuterRoom_MapEvents::
 	map_events NULL, SealedChamber_OuterRoom_MapWarps, NULL, SealedChamber_OuterRoom_MapBGEvents
+

@@ -15,3 +15,4 @@ LavaridgeTown_HerbShop_MapWarps:
 
 LavaridgeTown_HerbShop_MapEvents::
 	map_events LavaridgeTown_HerbShop_ObjectEvents, LavaridgeTown_HerbShop_MapWarps, NULL, NULL
+

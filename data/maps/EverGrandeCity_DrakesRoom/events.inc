@@ -13,3 +13,4 @@ EverGrandeCity_DrakesRoom_MapWarps:
 
 EverGrandeCity_DrakesRoom_MapEvents::
 	map_events EverGrandeCity_DrakesRoom_ObjectEvents, EverGrandeCity_DrakesRoom_MapWarps, NULL, NULL
+

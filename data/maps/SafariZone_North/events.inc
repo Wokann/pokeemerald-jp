@@ -17,3 +17,4 @@ SafariZone_North_ObjectEvents:
 
 SafariZone_North_MapEvents::
 	map_events SafariZone_North_ObjectEvents, NULL, NULL, NULL
+

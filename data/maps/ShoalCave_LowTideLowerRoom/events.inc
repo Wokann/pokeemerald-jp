@@ -19,3 +19,4 @@ ShoalCave_LowTideLowerRoom_MapBGEvents:
 
 ShoalCave_LowTideLowerRoom_MapEvents::
 	map_events ShoalCave_LowTideLowerRoom_ObjectEvents, ShoalCave_LowTideLowerRoom_MapWarps, NULL, ShoalCave_LowTideLowerRoom_MapBGEvents
+

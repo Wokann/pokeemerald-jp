@@ -12,3 +12,4 @@ Route110_TrickHouseCorridor_MapWarps:
 
 Route110_TrickHouseCorridor_MapEvents::
 	map_events NULL, Route110_TrickHouseCorridor_MapWarps, NULL, NULL
+

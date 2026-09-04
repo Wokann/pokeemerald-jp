@@ -28,3 +28,4 @@ SlateportCity_Harbor_MapCoordEvents:
 
 SlateportCity_Harbor_MapEvents::
 	map_events SlateportCity_Harbor_ObjectEvents, SlateportCity_Harbor_MapWarps, SlateportCity_Harbor_MapCoordEvents, NULL
+

@@ -75,3 +75,4 @@ PetalburgCity_Gym_MapBGEvents:
 
 PetalburgCity_Gym_MapEvents::
 	map_events PetalburgCity_Gym_ObjectEvents, PetalburgCity_Gym_MapWarps, NULL, PetalburgCity_Gym_MapBGEvents
+

@@ -12,3 +12,4 @@ EverGrandeCity_HallOfFame_MapWarps:
 
 EverGrandeCity_HallOfFame_MapEvents::
 	map_events EverGrandeCity_HallOfFame_ObjectEvents, EverGrandeCity_HallOfFame_MapWarps, NULL, NULL
+

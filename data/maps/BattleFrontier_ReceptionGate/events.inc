@@ -17,3 +17,4 @@ BattleFrontier_ReceptionGate_MapWarps:
 
 BattleFrontier_ReceptionGate_MapEvents::
 	map_events BattleFrontier_ReceptionGate_ObjectEvents, BattleFrontier_ReceptionGate_MapWarps, NULL, NULL
+

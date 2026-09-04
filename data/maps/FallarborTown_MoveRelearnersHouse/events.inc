@@ -13,3 +13,4 @@ FallarborTown_MoveRelearnersHouse_MapWarps:
 
 FallarborTown_MoveRelearnersHouse_MapEvents::
 	map_events FallarborTown_MoveRelearnersHouse_ObjectEvents, FallarborTown_MoveRelearnersHouse_MapWarps, NULL, NULL
+

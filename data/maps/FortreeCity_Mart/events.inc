@@ -16,3 +16,4 @@ FortreeCity_Mart_MapWarps:
 
 FortreeCity_Mart_MapEvents::
 	map_events FortreeCity_Mart_ObjectEvents, FortreeCity_Mart_MapWarps, NULL, NULL
+

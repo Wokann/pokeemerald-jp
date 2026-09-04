@@ -13,3 +13,4 @@ Underwater_Route128_MapBGEvents:
 
 Underwater_Route128_MapEvents::
 	map_events NULL, Underwater_Route128_MapWarps, NULL, Underwater_Route128_MapBGEvents
+

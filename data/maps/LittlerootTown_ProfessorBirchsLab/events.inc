@@ -35,3 +35,4 @@ LittlerootTown_ProfessorBirchsLab_MapBGEvents:
 
 LittlerootTown_ProfessorBirchsLab_MapEvents::
 	map_events LittlerootTown_ProfessorBirchsLab_ObjectEvents, LittlerootTown_ProfessorBirchsLab_MapWarps, NULL, LittlerootTown_ProfessorBirchsLab_MapBGEvents
+

@@ -19,3 +19,4 @@ BattleFrontier_BattlePyramidLobby_MapBGEvents:
 
 BattleFrontier_BattlePyramidLobby_MapEvents::
 	map_events BattleFrontier_BattlePyramidLobby_ObjectEvents, BattleFrontier_BattlePyramidLobby_MapWarps, NULL, BattleFrontier_BattlePyramidLobby_MapBGEvents
+

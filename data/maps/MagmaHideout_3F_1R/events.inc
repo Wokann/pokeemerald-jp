@@ -16,3 +16,4 @@ MagmaHideout_3F_1R_MapWarps:
 
 MagmaHideout_3F_1R_MapEvents::
 	map_events MagmaHideout_3F_1R_ObjectEvents, MagmaHideout_3F_1R_MapWarps, NULL, NULL
+

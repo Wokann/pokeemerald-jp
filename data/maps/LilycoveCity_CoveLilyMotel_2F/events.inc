@@ -18,3 +18,4 @@ LilycoveCity_CoveLilyMotel_2F_MapWarps:
 
 LilycoveCity_CoveLilyMotel_2F_MapEvents::
 	map_events LilycoveCity_CoveLilyMotel_2F_ObjectEvents, LilycoveCity_CoveLilyMotel_2F_MapWarps, NULL, NULL
+

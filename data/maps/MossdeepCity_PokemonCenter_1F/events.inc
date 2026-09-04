@@ -16,3 +16,4 @@ MossdeepCity_PokemonCenter_1F_MapWarps:
 
 MossdeepCity_PokemonCenter_1F_MapEvents::
 	map_events MossdeepCity_PokemonCenter_1F_ObjectEvents, MossdeepCity_PokemonCenter_1F_MapWarps, NULL, NULL
+

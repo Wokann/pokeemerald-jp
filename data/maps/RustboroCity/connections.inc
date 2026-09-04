@@ -10,3 +10,4 @@ RustboroCity_MapConnectionsList:
 RustboroCity_MapConnections:
 	.4byte 3
 	.4byte RustboroCity_MapConnectionsList
+

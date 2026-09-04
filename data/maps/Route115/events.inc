@@ -52,3 +52,4 @@ Route115_MapBGEvents:
 
 Route115_MapEvents::
 	map_events Route115_ObjectEvents, Route115_MapWarps, NULL, Route115_MapBGEvents
+

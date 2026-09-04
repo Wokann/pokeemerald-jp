@@ -9,3 +9,4 @@ DewfordTown_MapConnectionsList:
 DewfordTown_MapConnections:
 	.4byte 2
 	.4byte DewfordTown_MapConnectionsList
+

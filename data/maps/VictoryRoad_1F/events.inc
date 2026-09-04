@@ -31,3 +31,4 @@ VictoryRoad_1F_MapBGEvents:
 
 VictoryRoad_1F_MapEvents::
 	map_events VictoryRoad_1F_ObjectEvents, VictoryRoad_1F_MapWarps, VictoryRoad_1F_MapCoordEvents, VictoryRoad_1F_MapBGEvents
+

@@ -29,3 +29,4 @@ FallarborTown_MapBGEvents:
 
 FallarborTown_MapEvents::
 	map_events FallarborTown_ObjectEvents, FallarborTown_MapWarps, NULL, FallarborTown_MapBGEvents
+

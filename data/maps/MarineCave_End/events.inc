@@ -15,3 +15,4 @@ MarineCave_End_MapCoordEvents:
 
 MarineCave_End_MapEvents::
 	map_events MarineCave_End_ObjectEvents, MarineCave_End_MapWarps, MarineCave_End_MapCoordEvents, NULL
+
