@@ -20,7 +20,9 @@
 
 #include <cstdio>
 #include <cstdarg>
+#include <map>
 #include <stdexcept>
+#include <vector>
 #include "preproc.h"
 #include "asm_file.h"
 #include "char_util.h"
@@ -43,6 +45,121 @@ static unsigned char EncodeUnicodeBrailleCell(std::int32_t codepoint)
         | ((dots & 0x08) >> 2)
         | ((dots & 0x10) >> 1)
         | (dots & 0x20);
+}
+
+static std::int32_t NormalizeJapaneseKana(std::int32_t codepoint)
+{
+    if (codepoint >= 0x30A1 && codepoint <= 0x30F6)
+        return codepoint - 0x60;
+
+    return codepoint;
+}
+
+// The Japanese Braille source owner is written as readable kana. This is
+// intentionally a closed mapping for the characters covered by its ROM-backed
+// regression fixtures; unsupported Japanese text must remain a hard error.
+// Katakana is normalized to its hiragana counterpart so either conventional
+// phonetic spelling is accepted without changing the emitted cells.
+static const std::vector<unsigned char> *GetJapaneseBrailleCells(std::int32_t codepoint)
+{
+    static const std::map<std::int32_t, std::vector<unsigned char>> sEncoding =
+    {
+        { 0x3042, { EncodeUnicodeBrailleCell(0x2801) } }, // あ
+        { 0x3044, { EncodeUnicodeBrailleCell(0x2803) } }, // い
+        { 0x3046, { EncodeUnicodeBrailleCell(0x2809) } }, // う
+        { 0x3048, { EncodeUnicodeBrailleCell(0x280B) } }, // え
+        { 0x304A, { EncodeUnicodeBrailleCell(0x280A) } }, // お
+        { 0x304B, { EncodeUnicodeBrailleCell(0x2821) } }, // か
+        { 0x304D, { EncodeUnicodeBrailleCell(0x2823) } }, // き
+        { 0x304F, { EncodeUnicodeBrailleCell(0x2829) } }, // く
+        { 0x3051, { EncodeUnicodeBrailleCell(0x282B) } }, // け
+        { 0x3053, { EncodeUnicodeBrailleCell(0x282A) } }, // こ
+        { 0x3055, { EncodeUnicodeBrailleCell(0x2831) } }, // さ
+        { 0x3057, { EncodeUnicodeBrailleCell(0x2833) } }, // し
+        { 0x3059, { EncodeUnicodeBrailleCell(0x2839) } }, // す
+        { 0x305B, { EncodeUnicodeBrailleCell(0x283B) } }, // せ
+        { 0x305D, { EncodeUnicodeBrailleCell(0x283A) } }, // そ
+        { 0x305F, { EncodeUnicodeBrailleCell(0x2815) } }, // た
+        { 0x3061, { EncodeUnicodeBrailleCell(0x2817) } }, // ち
+        { 0x3064, { EncodeUnicodeBrailleCell(0x281D) } }, // つ
+        { 0x3066, { EncodeUnicodeBrailleCell(0x281F) } }, // て
+        { 0x3068, { EncodeUnicodeBrailleCell(0x281E) } }, // と
+        { 0x306A, { EncodeUnicodeBrailleCell(0x2805) } }, // な
+        { 0x306B, { EncodeUnicodeBrailleCell(0x2807) } }, // に
+        { 0x306C, { EncodeUnicodeBrailleCell(0x280D) } }, // ぬ
+        { 0x306D, { EncodeUnicodeBrailleCell(0x280F) } }, // ね
+        { 0x306E, { EncodeUnicodeBrailleCell(0x280E) } }, // の
+        { 0x306F, { EncodeUnicodeBrailleCell(0x2825) } }, // は
+        { 0x3072, { EncodeUnicodeBrailleCell(0x2827) } }, // ひ
+        { 0x3075, { EncodeUnicodeBrailleCell(0x282D) } }, // ふ
+        { 0x3078, { EncodeUnicodeBrailleCell(0x282F) } }, // へ
+        { 0x307B, { EncodeUnicodeBrailleCell(0x282E) } }, // ほ
+        { 0x307E, { EncodeUnicodeBrailleCell(0x2835) } }, // ま
+        { 0x307F, { EncodeUnicodeBrailleCell(0x2837) } }, // み
+        { 0x3080, { EncodeUnicodeBrailleCell(0x283D) } }, // む
+        { 0x3081, { EncodeUnicodeBrailleCell(0x283F) } }, // め
+        { 0x3082, { EncodeUnicodeBrailleCell(0x283E) } }, // も
+        { 0x3084, { EncodeUnicodeBrailleCell(0x280C) } }, // や
+        { 0x3086, { EncodeUnicodeBrailleCell(0x282C) } }, // ゆ
+        { 0x3088, { EncodeUnicodeBrailleCell(0x281C) } }, // よ
+        { 0x3089, { EncodeUnicodeBrailleCell(0x2811) } }, // ら
+        { 0x308A, { EncodeUnicodeBrailleCell(0x2813) } }, // り
+        { 0x308B, { EncodeUnicodeBrailleCell(0x2819) } }, // る
+        { 0x308C, { EncodeUnicodeBrailleCell(0x281B) } }, // れ
+        { 0x308D, { EncodeUnicodeBrailleCell(0x281A) } }, // ろ
+        { 0x308F, { EncodeUnicodeBrailleCell(0x2804) } }, // わ
+        { 0x3092, { EncodeUnicodeBrailleCell(0x2814) } }, // を
+        { 0x3093, { EncodeUnicodeBrailleCell(0x2834) } }, // ん
+        { 0x304C, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x2821) } }, // が
+        { 0x304E, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x2823) } }, // ぎ
+        { 0x3050, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x2829) } }, // ぐ
+        { 0x3052, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x282B) } }, // げ
+        { 0x3054, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x282A) } }, // ご
+        { 0x3056, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x2831) } }, // ざ
+        { 0x3058, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x2833) } }, // じ
+        { 0x305A, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x2839) } }, // ず
+        { 0x305C, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x283B) } }, // ぜ
+        { 0x305E, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x283A) } }, // ぞ
+        { 0x3060, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x2815) } }, // だ
+        { 0x3062, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x2817) } }, // ぢ
+        { 0x3065, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x281D) } }, // づ
+        { 0x3067, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x281F) } }, // で
+        { 0x3069, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x281E) } }, // ど
+        { 0x3070, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x2825) } }, // ば
+        { 0x3073, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x2827) } }, // び
+        { 0x3076, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x282D) } }, // ぶ
+        { 0x3079, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x282F) } }, // べ
+        { 0x307C, { EncodeUnicodeBrailleCell(0x2810), EncodeUnicodeBrailleCell(0x282E) } }, // ぼ
+        { 0x3071, { EncodeUnicodeBrailleCell(0x2820), EncodeUnicodeBrailleCell(0x2825) } }, // ぱ
+        { 0x3074, { EncodeUnicodeBrailleCell(0x2820), EncodeUnicodeBrailleCell(0x2827) } }, // ぴ
+        { 0x3077, { EncodeUnicodeBrailleCell(0x2820), EncodeUnicodeBrailleCell(0x282D) } }, // ぷ
+        { 0x307A, { EncodeUnicodeBrailleCell(0x2820), EncodeUnicodeBrailleCell(0x282F) } }, // ぺ
+        { 0x307D, { EncodeUnicodeBrailleCell(0x2820), EncodeUnicodeBrailleCell(0x282E) } }, // ぽ
+        { 0x3063, { EncodeUnicodeBrailleCell(0x2802) } }, // っ
+        { 0x30FC, { EncodeUnicodeBrailleCell(0x2812) } }, // ー
+    };
+
+    auto it = sEncoding.find(NormalizeJapaneseKana(codepoint));
+    if (it == sEncoding.end())
+        return nullptr;
+
+    return &it->second;
+}
+
+static const std::vector<unsigned char> *GetJapaneseBrailleDigraph(
+    std::int32_t firstCodepoint, std::int32_t secondCodepoint)
+{
+    static const std::vector<unsigned char> sSho =
+    {
+        EncodeUnicodeBrailleCell(0x2808),
+        EncodeUnicodeBrailleCell(0x283A),
+    };
+
+    if (NormalizeJapaneseKana(firstCodepoint) == 0x3057
+     && NormalizeJapaneseKana(secondCodepoint) == 0x3087)
+        return &sSho;
+
+    return nullptr;
 }
 
 AsmFile::AsmFile(std::string filename, bool isStdin, bool doEnum) : m_filename(filename)
@@ -406,6 +523,34 @@ int AsmFile::ReadBraille(unsigned char* s)
             {
                 VerifyStringLength(length);
                 s[length++] = EncodeUnicodeBrailleCell(unicodeChar.code);
+                m_pos += unicodeChar.encodingLength;
+                continue;
+            }
+
+            auto nextUnicodeChar = DecodeUtf8(&m_buffer[m_pos + unicodeChar.encodingLength]);
+            const auto *japaneseDigraph = GetJapaneseBrailleDigraph(
+                unicodeChar.code, nextUnicodeChar.code);
+            if (japaneseDigraph != nullptr)
+            {
+                for (unsigned char cell : *japaneseDigraph)
+                {
+                    VerifyStringLength(length);
+                    s[length++] = cell;
+                }
+
+                m_pos += unicodeChar.encodingLength + nextUnicodeChar.encodingLength;
+                continue;
+            }
+
+            const auto *japaneseCells = GetJapaneseBrailleCells(unicodeChar.code);
+            if (japaneseCells != nullptr)
+            {
+                for (unsigned char cell : *japaneseCells)
+                {
+                    VerifyStringLength(length);
+                    s[length++] = cell;
+                }
+
                 m_pos += unicodeChar.encodingLength;
                 continue;
             }
