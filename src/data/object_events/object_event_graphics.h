@@ -3,7 +3,6 @@
 
 // These JP-specific graphics are addressed by the recovered picture tables.
 // Their binary owners remain in the original ROM layout pending source recovery.
-extern const u32 gObjectEventPic_QuintyPlump[];
 extern const u32 gObjectEventPic_Juan[];
 extern const u32 gObjectEventPic_Scott[];
 extern const u32 gObjectEventPic_Statue[0x40];
@@ -342,6 +341,11 @@ OBJECT_EVENT_GRAPHICS_BERRY_TREE_GFX_DATA const u8 gObjectEventPic_TamatoBerryTr
 
 // This JP-owned Surf Blob field-effect graphic follows the berry-tree family.
 OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SURF_BLOB_DATA const u8 gFieldEffectObjectPic_SurfBlob[] = INCGFX_U8("graphics/field_effects/pics/surf_blob.png", ".4bpp", "-mwidth 4 -mheight 4");
+
+// This JP-owned Quinty Plump graphics family follows the Surf Blob field effect.
+OBJECT_EVENT_GRAPHICS_QUINTY_PLUMP_DATA const u32 gObjectEventPic_QuintyPlump[] = INCGFX_U32("graphics/object_events/pics/people/quinty_plump.png", ".4bpp", "-mwidth 4 -mheight 4");
+OBJECT_EVENT_GRAPHICS_QUINTY_PLUMP_DATA const u16 gObjectEventPal_QuintyPlump[] = INCBIN_U16("graphics/object_events/palettes/quinty_plump.gbapal");
+OBJECT_EVENT_GRAPHICS_QUINTY_PLUMP_DATA const u16 gObjectEventPal_QuintyPlumpReflection[] = INCBIN_U16("graphics/object_events/palettes/quinty_plump_reflection.gbapal");
 
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u8 gFieldEffectPic_CutGrass[] = INCBIN_U8("graphics/field_effects/pics/cut_grass.4bpp");
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u32 gFieldEffectPic_CutGrass_Copy[] = INCBIN_U32("graphics/field_effects/pics/cut_grass.4bpp");

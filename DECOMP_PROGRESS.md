@@ -9,8 +9,8 @@
 - 模块归位：8307/8592 (96.68%)；路径对齐：8247/8592 (95.98%)。
 - JP 独有 C 迁移记录：49（动态清单，不沿用旧固定数）；同名多地址 C 定义：271。
 - 过渡文件：tail=0、rest=4、mid=16、stub=0、address=0。
-- incbin：7536 引用、6696 条唯一路径、原始二进制 2327、非原始 5209、缺失资源 0；可见 baserom 范围 839 条/0x4FC7DA 字节，未限定范围 0 条。
-- 资产命名：4865 条 graphics/sound 引用中，精确 US 路径 32、唯一 basename 候选 18、歧义 0。
+- incbin：7538 引用、6698 条唯一路径、原始二进制 2327、非原始 5211、缺失资源 0；可见 baserom 范围 839 条/0x4FB99A 字节，未限定范围 0 条。
+- 资产命名：4867 条 graphics/sound 引用中，精确 US 路径 32、唯一 basename 候选 18、歧义 0。
 - 地图脚本：468/469 (99.79%) 个首 owner 有 scripts.inc；非 owner scripts.inc：0；结构完整地图：518（直接物理文件满足者 468；合法共享 scripts/events owner 50/11；其中首 owner 469）；map.json 总数：518。
 - 地图语义复核：not_recorded。没有版本化复核清单前，任何 scripts.inc、map.json 或 events.inc 都不计入语义已审计。
 - 三流地图会合：scripts 流 468、events 流 518、共有 468、地图头 518；事件指针状态 direct=507、shared=11；地图内裸 baserom 范围（脚本/事件/资源）=0/0/0。

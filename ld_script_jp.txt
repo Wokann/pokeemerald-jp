@@ -9540,6 +9540,8 @@ SECTIONS {
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_berry_tree_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_field_effect_surf_blob_data);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_surf_blob_graphics);
+        src/event_object_movement.o(.rodata.object_event_graphics_quinty_plump_data);
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_quinty_plump_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_cut_grass);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_cut_grass_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_field_effect_object_data);
@@ -9560,15 +9562,12 @@ SECTIONS {
         src/event_object_movement.o(.rodata.event_object_movement_palette_data);
         src/event_object_movement.o(.rodata.event_object_movement_berry_tree_graphics_data);
         src/event_object_movement.o(.rodata.event_object_movement_field_effect_objects_data);
-        gObjectEventPal_QuintyPlump = ABSOLUTE(0x084CEC6C);
-        gObjectEventPal_QuintyPlumpReflection = ABSOLUTE(0x084CEC8C);
         gObjectEventPal_MovingBox = ABSOLUTE(0x084D6CCC);
         gObjectEventPal_RedLeaf = ABSOLUTE(0x084D78EC);
         gObjectEventPal_Deoxys = ABSOLUTE(0x084D8D2C);
         gObjectEventPal_BirthIslandStone = ABSOLUTE(0x084D8B0C);
         gObjectEventPal_HoOh = ABSOLUTE(0x084DD86C);
         gObjectEventPal_Lugia = ABSOLUTE(0x084DD44C);
-        gObjectEventPic_QuintyPlump = ABSOLUTE(0x084CDE6C);
         gObjectEventPic_Juan = ABSOLUTE(0x084D414C);
         gObjectEventPic_Scott = ABSOLUTE(0x084D4A4C);
         gObjectEventPic_Statue = ABSOLUTE(0x084D534C);
