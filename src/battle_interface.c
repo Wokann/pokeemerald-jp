@@ -2207,6 +2207,8 @@ u8 GetHPBarLevel(s16 hp, s16 maxhp)
     return result;
 }
 
+// JP 0x08073AE4: the C reconstruction reaches the original ABI, but agbcc emits a
+// 0x294 control/literal layout instead of the ROM-required 0x29c layout.
 #ifndef NONMATCHING
 __attribute__((naked)) void UpdateNickInHealthbox(u8 healthboxSpriteId, struct Pokemon *mon)
 {
@@ -2591,175 +2593,49 @@ void UpdateNickInHealthbox(u8 healthboxSpriteId, struct Pokemon *mon)
 }
 #endif
 
-
 // JP byte-exact safari-ball text rendering on healthboxes (naked asm:
 // JP uses RenderTextFont9 and GetHealthboxElementGfxPtr, unlike US).
 
-__attribute__((naked)) void AddTextPrinterAndCreateWindowOnHealthbox(u8 healthboxSpriteId)
+void AddTextPrinterAndCreateWindowOnHealthbox(u8 healthboxSpriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, r6, r7, lr}\n\t"
-        "mov r7, sl\n\t"
-        "mov r6, sb\n\t"
-        "mov r5, r8\n\t"
-        "push {r5, r6, r7}\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r5, r0, #0x18\n\t"
-        "ldr r1, _08074254\n\t"
-        "lsls r0, r5, #4\n\t"
-        "adds r0, r0, r5\n\t"
-        "lsls r0, r0, #2\n\t"
-        "adds r0, r0, r1\n\t"
-        "ldrh r0, [r0, #0x3a]\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r0, r0, #0x18\n\t"
-        "bl GetBattlerPosition\n\t"
-        "ldr r1, _08074258\n\t"
-        "ldr r2, [r1]\n\t"
-        "movs r1, #0xba\n\t"
-        "lsls r1, r1, #1\n\t"
-        "adds r2, r2, r1\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r0, r0, #0x18\n\t"
-        "lsls r1, r0, #1\n\t"
-        "adds r1, r1, r0\n\t"
-        "lsls r1, r1, #7\n\t"
-        "movs r0, #0xa4\n\t"
-        "lsls r0, r0, #3\n\t"
-        "adds r1, r1, r0\n\t"
-        "ldr r0, [r2]\n\t"
-        "adds r6, r0, r1\n\t"
-        "movs r1, #7\n\t"
-        "mov r8, r1\n\t"
-        "ldr r2, _0807425C\n\t"
-        "adds r0, r6, #0\n\t"
-        "bl RenderTextFont9\n\t"
-        "movs r7, #3\n\t"
-        "movs r4, #0\n\t"
-        "_08074230:\n\t"
-        "ldr r0, _0807425C\n\t"
-        "adds r0, r7, r0\n\t"
-        "ldrb r1, [r0]\n\t"
-        "adds r0, r1, #0\n\t"
-        "subs r0, #0x37\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r0, r0, #0x18\n\t"
-        "cmp r0, #0x13\n\t"
-        "bls _0807424E\n\t"
-        "adds r0, r1, #0\n\t"
-        "adds r0, #0x79\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r0, r0, #0x18\n\t"
-        "cmp r0, #0x13\n\t"
-        "bhi _08074260\n\t"
-        "_0807424E:\n\t"
-        "movs r0, #0x2c\n\t"
-        "b _0807427E\n\t"
-        ".align 2, 0\n\t"
-        "_08074254: .4byte gSprites\n\t"
-        "_08074258: .4byte gMonSpritesGfxPtr\n\t"
-        "_0807425C: .4byte gText_SafariBalls\n\t"
-        "_08074260:\n\t"
-        "adds r0, r1, #0\n\t"
-        "subs r0, #0x4b\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r0, r0, #0x18\n\t"
-        "cmp r0, #4\n\t"
-        "bls _08074278\n\t"
-        "adds r0, r1, #0\n\t"
-        "adds r0, #0x65\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r0, r0, #0x18\n\t"
-        "cmp r0, #4\n\t"
-        "bhi _0807427C\n\t"
-        "_08074278:\n\t"
-        "movs r0, #0x2d\n\t"
-        "b _0807427E\n\t"
-        "_0807427C:\n\t"
-        "movs r0, #0x2b\n\t"
-        "_0807427E:\n\t"
-        "bl GetHealthboxElementGfxPtr\n\t"
-        "lsls r1, r4, #6\n\t"
-        "adds r1, r6, r1\n\t"
-        "ldr r2, _08074314\n\t"
-        "bl CpuSet\n\t"
-        "adds r0, r4, #1\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r4, r0, #0x18\n\t"
-        "adds r7, #1\n\t"
-        "cmp r4, r8\n\t"
-        "blo _08074230\n\t"
-        "movs r7, #3\n\t"
-        "movs r2, #3\n\t"
-        "add r2, r8\n\t"
-        "mov sb, r2\n\t"
-        "cmp r7, sb\n\t"
-        "bge _08074304\n\t"
-        "ldr r1, _08074318\n\t"
-        "ldr r0, _08074314\n\t"
-        "mov sl, r0\n\t"
-        "lsls r0, r5, #4\n\t"
-        "adds r0, r0, r5\n\t"
-        "lsls r0, r0, #2\n\t"
-        "adds r0, r0, r1\n\t"
-        "mov r8, r0\n\t"
-        "_080742B4:\n\t"
-        "mov r1, r8\n\t"
-        "ldrh r0, [r1, #4]\n\t"
-        "lsls r0, r0, #0x16\n\t"
-        "lsrs r0, r0, #0x16\n\t"
-        "adds r5, r7, #0\n\t"
-        "cmp r7, #0\n\t"
-        "bge _080742C4\n\t"
-        "adds r5, r7, #7\n\t"
-        "_080742C4:\n\t"
-        "asrs r5, r5, #3\n\t"
-        "lsls r4, r5, #3\n\t"
-        "subs r4, r7, r4\n\t"
-        "adds r0, r0, r4\n\t"
-        "lsls r5, r5, #6\n\t"
-        "adds r0, r0, r5\n\t"
-        "lsls r0, r0, #5\n\t"
-        "ldr r2, _0807431C\n\t"
-        "adds r1, r0, r2\n\t"
-        "adds r0, r6, #0\n\t"
-        "mov r2, sl\n\t"
-        "bl CpuSet\n\t"
-        "adds r6, #0x20\n\t"
-        "mov r1, r8\n\t"
-        "ldrh r0, [r1, #4]\n\t"
-        "lsls r0, r0, #0x16\n\t"
-        "lsrs r0, r0, #0x16\n\t"
-        "adds r4, #8\n\t"
-        "adds r0, r0, r4\n\t"
-        "adds r0, r0, r5\n\t"
-        "lsls r0, r0, #5\n\t"
-        "ldr r2, _0807431C\n\t"
-        "adds r1, r0, r2\n\t"
-        "adds r0, r6, #0\n\t"
-        "mov r2, sl\n\t"
-        "bl CpuSet\n\t"
-        "adds r6, #0x20\n\t"
-        "adds r7, #1\n\t"
-        "cmp r7, sb\n\t"
-        "blt _080742B4\n\t"
-        "_08074304:\n\t"
-        "pop {r3, r4, r5}\n\t"
-        "mov r8, r3\n\t"
-        "mov sb, r4\n\t"
-        "mov sl, r5\n\t"
-        "pop {r4, r5, r6, r7}\n\t"
-        "pop {r0}\n\t"
-        "bx r0\n\t"
-        ".align 2, 0\n\t"
-        "_08074314: .4byte 0x04000008\n\t"
-        "_08074318: .4byte gSprites\n\t"
-        "_0807431C: .4byte 0x06010000\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 j, spriteTileNum;
+    u8 *barFontGfx;
+    u8 i, var;
+
+    barFontGfx = &gMonSpritesGfxPtr->barFontGfx[0x520 + (GetBattlerPosition(gSprites[healthboxSpriteId].hMain_Battler) * 384)];
+    var = 7;
+    RenderTextFont9(barFontGfx, FONT_BOLD, (u8 *)gText_SafariBalls);
+
+    for (j = 3, i = 0; i < var; i++, j++)
+    {
+        u8 elementId;
+
+        if ((gText_SafariBalls[j] >= 55 && gText_SafariBalls[j] <= 74)
+         || (gText_SafariBalls[j] >= 135 && gText_SafariBalls[j] <= 154))
+            elementId = 44;
+        else if ((gText_SafariBalls[j] >= 75 && gText_SafariBalls[j] <= 79)
+              || (gText_SafariBalls[j] >= 155 && gText_SafariBalls[j] <= 159))
+            elementId = 45;
+        else
+            elementId = 43;
+
+        CpuCopy32(GetHealthboxElementGfxPtr(elementId), barFontGfx + (i * 64), 0x20);
+    }
+
+    for (j = 3; j < var + 3; j++)
+    {
+        spriteTileNum = (gSprites[healthboxSpriteId].oam.tileNum + (j - (j / 8 * 8)) + (j / 8 * 64)) * TILE_SIZE_4BPP;
+        CpuCopy32(barFontGfx, (void *)(OBJ_VRAM0) + spriteTileNum, 0x20);
+        barFontGfx += 0x20;
+
+        spriteTileNum = (8 + gSprites[healthboxSpriteId].oam.tileNum + (j - (j / 8 * 8)) + (j / 8 * 64)) * TILE_SIZE_4BPP;
+        CpuCopy32(barFontGfx, (void *)(OBJ_VRAM0) + spriteTileNum, 0x20);
+        barFontGfx += 0x20;
+    }
 }
 
+// JP 0x08074320: agbcc cannot retain the ROM's r8/r5 loop allocation and
+// OBJ_VRAM0 base sequence (the closest tested C layout was 0xcc, not 0xd0).
 __attribute__((naked)) void UpdateLeftNoOfBallsTextOnHealthbox(u8 healthboxSpriteId)
 {
     __asm__(".syntax unified\n\t"
