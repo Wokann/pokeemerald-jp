@@ -4,6 +4,7 @@
 #define TRADE_UNUSED_STRUCT_SIZES __attribute__((section(".rodata.trade_unused_struct_sizes"), aligned(1)))
 #define TRADE_MENU_RESOURCES __attribute__((section(".rodata.trade_menu_resources"), aligned(1)))
 #define TRADE_MENU_RESOURCES_AFTER_MON_BOX __attribute__((section(".rodata.trade_menu_resources_after_mon_box"), aligned(1)))
+#define TRADE_ANIMATION_TEXT_RESOURCES __attribute__((section(".rodata.trade_animation_text_resources"), aligned(1)))
 #define TRADE_ANIMATION_RESOURCES __attribute__((section(".rodata.trade_animation_resources"), aligned(1)))
 #define TRADE_POST_ANIMATION_RESOURCES __attribute__((section(".rodata.trade_post_animation_resources"), aligned(1)))
 
@@ -325,13 +326,124 @@ static const u8 sUnusedCoords[][2] TRADE_MENU_RESOURCES_AFTER_MON_BOX __attribut
     {23, 12},
 };
 
-const u8 gUnknown_8300AB1[] TRADE_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/8300ab1.bin");
-const u8 gUnknown_8300AFC[0x2C] TRADE_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/8300afc.bin");
-const u8 gUnknown_8300B28[0xB4] TRADE_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/8300b28.bin");
-const u8 gUnknown_8300BDC[0x24] TRADE_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/8300bdc.bin");
-const u8 gUnknown_8300C00[] TRADE_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/8300c00.bin");
-const u8 gUnknown_8300C04[0x10] TRADE_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/8300c04.bin");
-const u8 gUnknown_8300C14[0x98] TRADE_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/8300c14.bin");
+const u8 sText_IsThisTradeOkay[] TRADE_ANIMATION_TEXT_RESOURCES = _("を　こうかんしますか？");
+static const u8 sText_Cancel[] TRADE_ANIMATION_TEXT_RESOURCES = _("やめる");
+static const u8 sText_ChooseAPkmn[] TRADE_ANIMATION_TEXT_RESOURCES = _("ポケモンを　えらんで　ください");
+static const u8 sText_Summary[] TRADE_ANIMATION_TEXT_RESOURCES = _("つよさをみる");
+static const u8 sText_Trade[] TRADE_ANIMATION_TEXT_RESOURCES = _("こうかんにだす");
+static const u8 sText_CancelTrade[] TRADE_ANIMATION_TEXT_RESOURCES = _("こうかん　を　やめますか？");
+static const u8 sJPText_PressBButtonToQuit[] TRADE_ANIMATION_TEXT_RESOURCES = _("Bボタン　で　もどります");
+
+const u8 *const sActionTexts[] TRADE_ANIMATION_RESOURCES =
+{
+    [TEXT_CANCEL]       = sText_Cancel,
+    [TEXT_CHOOSE_MON]   = sText_ChooseAPkmn,
+    [TEXT_SUMMARY]      = sText_Summary,
+    [TEXT_TRADE]        = sText_Trade,
+    [TEXT_CANCEL_TRADE] = sText_CancelTrade,
+    [TEXT_JP_QUIT]      = sJPText_PressBButtonToQuit,
+};
+
+static const u8 sText_Summary2[] TRADE_ANIMATION_RESOURCES = _("ステータスをみる");
+static const u8 sText_Trade2[] TRADE_ANIMATION_RESOURCES = _("こうかんにだす");
+
+const struct MenuAction sSelectTradeMonActions[] TRADE_ANIMATION_RESOURCES =
+{
+    {sText_Summary2, {Task_DrawSelectionSummary}},
+    {sText_Trade2,   {Task_DrawSelectionTrade}},
+};
+
+static const u8 sText_CommunicationStandby[] TRADE_ANIMATION_RESOURCES = _("{COLOR 0x02}{HIGHLIGHT 0x01}{SHADOW 0x03}つうしんたいきちゅう！\nしばらくおまちください");
+static const u8 sText_TheTradeHasBeenCanceled[] TRADE_ANIMATION_RESOURCES = _("{COLOR 0x02}{HIGHLIGHT 0x01}{SHADOW 0x03}こうかんは\nキャンセル　されました！");
+static const u8 sText_OnlyPkmnForBattle[] TRADE_ANIMATION_RESOURCES = _("{COLOR 0x02}{HIGHLIGHT 0x01}{SHADOW 0x03}そのポケモンを　こうかんすると\nせんとうできなくなっちゃうよ！");
+static const u8 sText_WaitingForYourFriend[] TRADE_ANIMATION_RESOURCES = _("{COLOR 0x02}{HIGHLIGHT 0x01}{SHADOW 0x03}ともだちの　しゅうりょうを\nまっています⋯⋯");
+static const u8 sText_YourFriendWantsToTrade[] TRADE_ANIMATION_RESOURCES = _("ともだちは　ポケモンの\nこうかんを　したいようです！");
+
+// These shared messages remain in their own text owner. Use its actual JP
+// labels here instead of adding temporary aliases.
+const u8 *const sTradeMessages[] TRADE_ANIMATION_RESOURCES =
+{
+    [MSG_STANDBY]                    = sText_CommunicationStandby,
+    [MSG_CANCELED]                   = sText_TheTradeHasBeenCanceled,
+    [MSG_ONLY_MON1]                  = sText_OnlyPkmnForBattle,
+    [MSG_ONLY_MON2]                  = gUnknown_85CA294,
+    [MSG_WAITING_FOR_FRIEND]         = sText_WaitingForYourFriend,
+    [MSG_FRIEND_WANTS_TO_TRADE]      = sText_YourFriendWantsToTrade,
+    [MSG_MON_CANT_BE_TRADED]         = gUnknown_85CA2B4,
+    [MSG_EGG_CANT_BE_TRADED]         = gUnknown_85CA2CC,
+    [MSG_FRIENDS_MON_CANT_BE_TRADED] = gUnknown_85CA2CC + 0x14,
+};
+
+const u8 sTradeTextColors[] TRADE_ANIMATION_RESOURCES =
+{
+    TEXT_COLOR_TRANSPARENT,
+    TEXT_COLOR_WHITE,
+    TEXT_COLOR_DARK_GRAY,
+};
+
+const struct BgTemplate sTradeBgTemplates[] TRADE_ANIMATION_RESOURCES =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 5,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 6,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0,
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 7,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0,
+    },
+};
+
+const struct WindowTemplate sTradeWindowTemplates[] TRADE_ANIMATION_RESOURCES =
+{
+    { .bg = 0, .tilemapLeft = 7,  .tilemapTop = 7,  .width = 16, .height = 4, .paletteNum = 15, .baseBlock = 30  },
+    { .bg = 0, .tilemapLeft = 19, .tilemapTop = 15, .width = 10, .height = 4, .paletteNum = 15, .baseBlock = 94  },
+    { .bg = 0, .tilemapLeft = 1,  .tilemapTop = 5,  .width = 6,  .height = 2, .paletteNum = 13, .baseBlock = 134 },
+    { .bg = 0, .tilemapLeft = 8,  .tilemapTop = 5,  .width = 6,  .height = 2, .paletteNum = 13, .baseBlock = 146 },
+    { .bg = 0, .tilemapLeft = 1,  .tilemapTop = 10, .width = 6,  .height = 2, .paletteNum = 13, .baseBlock = 158 },
+    { .bg = 0, .tilemapLeft = 8,  .tilemapTop = 10, .width = 6,  .height = 2, .paletteNum = 13, .baseBlock = 170 },
+    { .bg = 0, .tilemapLeft = 1,  .tilemapTop = 15, .width = 6,  .height = 2, .paletteNum = 13, .baseBlock = 182 },
+    { .bg = 0, .tilemapLeft = 8,  .tilemapTop = 15, .width = 6,  .height = 2, .paletteNum = 13, .baseBlock = 194 },
+    { .bg = 0, .tilemapLeft = 16, .tilemapTop = 5,  .width = 6,  .height = 2, .paletteNum = 13, .baseBlock = 206 },
+    { .bg = 0, .tilemapLeft = 23, .tilemapTop = 5,  .width = 6,  .height = 2, .paletteNum = 13, .baseBlock = 218 },
+    { .bg = 0, .tilemapLeft = 16, .tilemapTop = 10, .width = 6,  .height = 2, .paletteNum = 13, .baseBlock = 230 },
+    { .bg = 0, .tilemapLeft = 23, .tilemapTop = 10, .width = 6,  .height = 2, .paletteNum = 13, .baseBlock = 242 },
+    { .bg = 0, .tilemapLeft = 16, .tilemapTop = 15, .width = 6,  .height = 2, .paletteNum = 13, .baseBlock = 254 },
+    { .bg = 0, .tilemapLeft = 23, .tilemapTop = 15, .width = 6,  .height = 2, .paletteNum = 13, .baseBlock = 266 },
+    { .bg = 0, .tilemapLeft = 2,  .tilemapTop = 5,  .width = 12, .height = 2, .paletteNum = 13, .baseBlock = 278 },
+    { .bg = 0, .tilemapLeft = 3,  .tilemapTop = 8,  .width = 11, .height = 8, .paletteNum = 15, .baseBlock = 302 },
+    { .bg = 0, .tilemapLeft = 17, .tilemapTop = 5,  .width = 12, .height = 2, .paletteNum = 15, .baseBlock = 390 },
+    { .bg = 0, .tilemapLeft = 18, .tilemapTop = 8,  .width = 11, .height = 8, .paletteNum = 15, .baseBlock = 414 },
+    DUMMY_WIN_TEMPLATE,
+};
+
 const u8 gUnknown_8300CAC[0x94] TRADE_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/8300cac.bin");
 const u8 gUnknown_8300D40[0x2024] TRADE_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/8300d40.bin");
 const u8 gUnknown_8302D64[] TRADE_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/8302d64.bin");

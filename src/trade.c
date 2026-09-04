@@ -109,8 +109,8 @@ extern struct TradeMenu *sTradeMenu;
 extern u8 *sMenuTextTileBuffer;
 extern u8 *sMenuTextTileBuffers[];
 static void RedrawPartyWindow(u8 whichParty);
-extern const struct BgTemplate gUnknown_8300C04[];
-extern const struct WindowTemplate gUnknown_8300C14[];
+extern const struct BgTemplate sTradeBgTemplates[];
+extern const struct WindowTemplate sTradeWindowTemplates[];
 extern void VBlankCB_TradeMenu(void);
 extern const u16 sTradeMovesBoxTilemap[];
 extern const u16 sTradePartyBoxTilemap[];
@@ -365,7 +365,7 @@ void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused);
 static void SetTradePartyHPBarSprites(void);
 void sub_080C66A4(const u8 *str, u8 *buffer, u8 x, u8 y, void *decompBuffer);
 static void PrintTradeMessage(u8 messageId);
-extern const u8 *const gUnknown_8300BDC[];
+extern const u8 *const sTradeMessages[];
 static bool8 BufferTradeParties(void);
 static void SaveTradeGiftRibbons(void);
 static void ComputePartyTradeableFlags(u8 whichParty);
@@ -390,8 +390,8 @@ extern const u8 gUnknown_8300AAE[];
 extern const u8 gUnknown_8300AA0[];
 extern const u8 gUnknown_8300AA2[];
 extern const u8 gUnknown_8300AA5[];
-extern const u8 gUnknown_8300AB1[];
-extern const u8 gUnknown_8300C00[];
+extern const u8 sText_IsThisTradeOkay[];
+extern const u8 sTradeTextColors[];
 extern const u8 gUnknown_8300A9B[];
 extern const u8 sTradeMonLevelCoords[][2];
 extern const u8 sTradeMonBoxCoords[][2];
@@ -503,10 +503,10 @@ static void InitTradeMenu(void)
     LoadPalette(gStandardMenuPalette, BG_PLTT_ID(15), PLTT_SIZEOF(10));
     LoadPalette(gStandardMenuPalette, BG_PLTT_ID(13), PLTT_SIZEOF(10));
     ResetBgsAndClearDma3BusyFlags(0);
-    InitBgsFromTemplates(0, gUnknown_8300C04, 4);
+    InitBgsFromTemplates(0, sTradeBgTemplates, 4);
     SetBgTilemapBuffer(1, sTradeMenu->tilemapBuffer);
 
-    if (InitWindows(gUnknown_8300C14))
+    if (InitWindows(sTradeWindowTemplates))
     {
         u32 i;
 
@@ -1288,7 +1288,7 @@ static void DrawTradeMonNicknames(void)
     StringCopy(nickname, str1);
     StringAppend(nickname, gUnknown_8300AAE);
     StringAppend(nickname, str2);
-    StringAppend(nickname, gUnknown_8300AB1);
+    StringAppend(nickname, sText_IsThisTradeOkay);
     DrawBottomRowText(nickname, (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
 }
 
@@ -2365,7 +2365,7 @@ __attribute__((naked)) void sub_080790C8(u8 side)
         "_08079408: .4byte gSprites\n\t"
         "_0807940C: .4byte sTradeMenu\n\t"
         "_08079410: .4byte sTradeMonSpriteCoords\n\t"
-        "_08079414: .4byte gUnknown_8300C00\n\t"
+        "_08079414: .4byte sTradeTextColors\n\t"
         "_08079418: .4byte gUnknown_8300A9B\n\t"
         "_0807941C:\n\t"
         "	ldr r0, _08079464\n\t"
@@ -2491,7 +2491,7 @@ static void PrintPartyMonNickname(u8 whichParty, u8 windowIdOffset, u8 *nickname
     s8 signedOffset = windowIdOffset;
     u8 windowId = (u8)(signedOffset + ((whichParty * PARTY_SIZE) + 2));
 
-    AddTextPrinterParameterized3(windowId, FONT_NORMAL, 0, 0, gUnknown_8300C00, 0, nickname);
+    AddTextPrinterParameterized3(windowId, FONT_NORMAL, 0, 0, sTradeTextColors, 0, nickname);
     PutWindowTilemap(windowId);
     CopyWindowToVram(windowId, 3);
 }
@@ -2589,13 +2589,13 @@ static void RedrawPartyWindow(u8 whichParty)
     sTradeMenu->drawSelectedMonState[whichParty] = 0;
 }
 
-static void Task_DrawSelectionSummary(u8 taskId)
+void Task_DrawSelectionSummary(u8 taskId)
 {
     FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
     CopyBgTilemapBufferToVram(0);
 }
 
-static void Task_DrawSelectionTrade(u8 taskId)
+void Task_DrawSelectionTrade(u8 taskId)
 {
     FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
     CopyBgTilemapBufferToVram(0);
@@ -2680,7 +2680,7 @@ static void DoQueuedActions(void)
 static void PrintTradeMessage(u8 messageId)
 {
     FillWindowPixelBuffer(0, PIXEL_FILL(1));
-    AddTextPrinterParameterized(0, FONT_NORMAL, gUnknown_8300BDC[messageId], 2, 2, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(0, FONT_NORMAL, sTradeMessages[messageId], 2, 2, TEXT_SKIP_DRAW, NULL);
     DrawTextBorderOuter(0, 20, 12);
     PutWindowTilemap(0);
     CopyWindowToVram(0, COPYWIN_FULL);
