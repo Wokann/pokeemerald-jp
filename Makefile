@@ -1086,8 +1086,20 @@ graphics/field_effects/pics/%.png_mwidth_2__mheight_4.4bpp: graphics/field_effec
 graphics/field_effects/pics/%.png_mwidth_4__mheight_4.4bpp: graphics/field_effects/pics/%.png | tools
 	$(GFX) $< $@ -mwidth 4 -mheight 4
 
+graphics/object_events/pics/%.png.4bpp: graphics/object_events/pics/%.png | tools
+	$(GFX) $< $@
+
+graphics/object_events/palettes/%.pal.gbapal: graphics/object_events/palettes/%.pal | tools
+	$(GFX) $< $@
+
+graphics/object_events/pics/pokemon/%.png_mwidth_2__mheight_4.4bpp: graphics/object_events/pics/pokemon/%.png | tools
+	$(GFX) $< $@ -mwidth 2 -mheight 4
+
 graphics/object_events/pics/pokemon/%.png_mwidth_4__mheight_4.4bpp: graphics/object_events/pics/pokemon/%.png | tools
 	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+graphics/object_events/pics/people/%.png_mwidth_2__mheight_4.4bpp: graphics/object_events/pics/people/%.png | tools
+	$(GFX) $< $@ -mwidth 2 -mheight 4
 
 graphics/object_events/pics/people/%.png_mwidth_4__mheight_4.4bpp: graphics/object_events/pics/people/%.png | tools
 	$(GFX) $< $@ -mwidth 4 -mheight 4
@@ -1724,6 +1736,35 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/field_effects/pics/small_sparkle.png_mwidth_2__mheight_2.4bpp \
 	graphics/field_effects/palettes/small_sparkle.pal.gbapal \
 	graphics/field_effects/pics/bird.png.4bpp \
+	graphics/object_events/pics/people/gym_leaders/juan.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/people/scott.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/misc/statue.png.4bpp \
+	graphics/object_events/pics/pokemon/kirlia.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/pokemon/dusclops.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/people/mystery_event_deliveryman.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/people/union_room_attendant.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/misc/moving_box.png.4bpp \
+	graphics/object_events/palettes/moving_box.pal.gbapal \
+	graphics/object_events/pics/pokemon/sudowoodo.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/pokemon/mew.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/palettes/red_leaf.pal.gbapal \
+	graphics/object_events/pics/people/red.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/people/leaf.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/palettes/birth_island_stone.pal.gbapal \
+	graphics/object_events/pics/misc/birth_island_stone.png.4bpp \
+	graphics/object_events/palettes/deoxys.pal.gbapal \
+	graphics/object_events/pics/pokemon/deoxys.png_mwidth_4__mheight_4.4bpp \
+	graphics/object_events/pics/people/frontier_brains/anabel.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/people/frontier_brains/tucker.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/people/frontier_brains/spenser.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/people/frontier_brains/greta.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/people/frontier_brains/noland.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/people/frontier_brains/lucy.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/people/frontier_brains/brandon.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/pokemon/lugia.png_mwidth_4__mheight_4.4bpp \
+	graphics/object_events/palettes/lugia.pal.gbapal \
+	graphics/object_events/pics/pokemon/ho_oh.png_mwidth_4__mheight_4.4bpp \
+	graphics/object_events/palettes/ho_oh.pal.gbapal \
 	graphics/object_events/pics/pokemon/vigoroth.png_mwidth_4__mheight_4.4bpp \
 	graphics/object_events/palettes/vigoroth.gbapal \
 	graphics/object_events/pics/misc/birchs_bag.4bpp \

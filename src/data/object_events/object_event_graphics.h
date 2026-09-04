@@ -1,32 +1,6 @@
 #ifndef GUARD_DATA_OBJECT_EVENTS_OBJECT_EVENT_GRAPHICS_H
 #define GUARD_DATA_OBJECT_EVENTS_OBJECT_EVENT_GRAPHICS_H
 
-// These JP-specific graphics are addressed by the recovered picture tables.
-// Their binary owners remain in the original ROM layout pending source recovery.
-extern const u32 gObjectEventPic_Juan[];
-extern const u32 gObjectEventPic_Scott[];
-extern const u32 gObjectEventPic_Statue[0x40];
-extern const u32 gObjectEventPic_Kirlia[];
-extern const u32 gObjectEventPic_Dusclops[];
-extern const u32 gObjectEventPic_MysteryEventDeliveryman[];
-extern const u32 gObjectEventPic_UnionRoomAttendant[];
-extern const u32 gObjectEventPic_MovingBox[0x20];
-extern const u32 gObjectEventPic_Sudowoodo[];
-extern const u32 gObjectEventPic_Mew[];
-extern const u32 gObjectEventPic_Red[];
-extern const u32 gObjectEventPic_Leaf[];
-extern const u32 gObjectEventPic_BirthIslandStone[0x80];
-extern const u32 gObjectEventPic_Deoxys[];
-extern const u32 gObjectEventPic_Anabel[];
-extern const u32 gObjectEventPic_Tucker[];
-extern const u32 gObjectEventPic_Spenser[];
-extern const u32 gObjectEventPic_Greta[];
-extern const u32 gObjectEventPic_Noland[];
-extern const u32 gObjectEventPic_Lucy[];
-extern const u32 gObjectEventPic_Brandon[];
-extern const u32 gObjectEventPic_Lugia[];
-extern const u32 gObjectEventPic_HoOh[];
-
 // This JP-owned subset is emitted by event_object_movement.c at its original ROM range.
 OBJECT_EVENT_GRAPHICS_PLAYER_DATA const u32 gObjectEventPic_BrendanNormal[] = INCBIN_U32("graphics/object_events/pics/people/brendan/walking.4bpp");
 OBJECT_EVENT_GRAPHICS_PLAYER_DATA const u32 gObjectEventPic_BrendanRunning[] = INCBIN_U32("graphics/object_events/pics/people/brendan/running.4bpp");
@@ -396,5 +370,36 @@ OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_
 OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_SmallSparkle[] = INCGFX_U8("graphics/field_effects/pics/small_sparkle.png", ".4bpp", "-mwidth 2 -mheight 2");
 OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u16 gFieldEffectPal_SmallSparkle[] = INCGFX_U16("graphics/field_effects/palettes/small_sparkle.pal", ".gbapal");
 OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_Bird[] = INCGFX_U8("graphics/field_effects/pics/bird.png", ".4bpp");
+
+// This JP-owned special object graphics family follows the extended field effects.
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Juan[] = INCGFX_U32("graphics/object_events/pics/people/gym_leaders/juan.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Scott[] = INCGFX_U32("graphics/object_events/pics/people/scott.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Statue[] = INCGFX_U32("graphics/object_events/pics/misc/statue.png", ".4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Kirlia[] = INCGFX_U32("graphics/object_events/pics/pokemon/kirlia.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Dusclops[] = INCGFX_U32("graphics/object_events/pics/pokemon/dusclops.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_MysteryEventDeliveryman[] = INCGFX_U32("graphics/object_events/pics/people/mystery_event_deliveryman.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_UnionRoomAttendant[] = INCGFX_U32("graphics/object_events/pics/people/union_room_attendant.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_MovingBox[] = INCGFX_U32("graphics/object_events/pics/misc/moving_box.png", ".4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u16 gObjectEventPal_MovingBox[] = INCGFX_U16("graphics/object_events/palettes/moving_box.pal", ".gbapal");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Sudowoodo[] = INCGFX_U32("graphics/object_events/pics/pokemon/sudowoodo.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Mew[] = INCGFX_U32("graphics/object_events/pics/pokemon/mew.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u16 gObjectEventPal_RedLeaf[] = INCGFX_U16("graphics/object_events/palettes/red_leaf.pal", ".gbapal");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Red[] = INCGFX_U32("graphics/object_events/pics/people/red.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Leaf[] = INCGFX_U32("graphics/object_events/pics/people/leaf.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u16 gObjectEventPal_BirthIslandStone[] = INCGFX_U16("graphics/object_events/palettes/birth_island_stone.pal", ".gbapal");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_BirthIslandStone[] = INCGFX_U32("graphics/object_events/pics/misc/birth_island_stone.png", ".4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u16 gObjectEventPal_Deoxys[] = INCGFX_U16("graphics/object_events/palettes/deoxys.pal", ".gbapal");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Deoxys[] = INCGFX_U32("graphics/object_events/pics/pokemon/deoxys.png", ".4bpp", "-mwidth 4 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Anabel[] = INCGFX_U32("graphics/object_events/pics/people/frontier_brains/anabel.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Tucker[] = INCGFX_U32("graphics/object_events/pics/people/frontier_brains/tucker.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Spenser[] = INCGFX_U32("graphics/object_events/pics/people/frontier_brains/spenser.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Greta[] = INCGFX_U32("graphics/object_events/pics/people/frontier_brains/greta.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Noland[] = INCGFX_U32("graphics/object_events/pics/people/frontier_brains/noland.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Lucy[] = INCGFX_U32("graphics/object_events/pics/people/frontier_brains/lucy.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Brandon[] = INCGFX_U32("graphics/object_events/pics/people/frontier_brains/brandon.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_Lugia[] = INCGFX_U32("graphics/object_events/pics/pokemon/lugia.png", ".4bpp", "-mwidth 4 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u16 gObjectEventPal_Lugia[] = INCGFX_U16("graphics/object_events/palettes/lugia.pal", ".gbapal");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u32 gObjectEventPic_HoOh[] = INCGFX_U32("graphics/object_events/pics/pokemon/ho_oh.png", ".4bpp", "-mwidth 4 -mheight 4");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_EXTENDED_DATA const u16 gObjectEventPal_HoOh[] = INCGFX_U16("graphics/object_events/palettes/ho_oh.pal", ".gbapal");
 
 #endif // GUARD_DATA_OBJECT_EVENTS_OBJECT_EVENT_GRAPHICS_H
