@@ -9434,7 +9434,8 @@ SECTIONS {
     gUnknown_82F5CA4 = gEvolutionTable;
     src/data/pokemon/level_up_learnsets.o(.rodata.level_up_learnset_pointers);
     gUnknown_82F9D04 = gLevelUpLearnsets;
-    data/data_b2d_mid47.o(.rodata.data_b2d_mid47_after_level_up_learnset_pointers_before_util_misc_blank_gfx_data);
+    src/pokemon.o(.rodata.pokemon_front_animation_table_data);
+    data/data_b2d_mid47.o(.rodata.data_b2d_mid47_after_pokemon_front_animation_table_data);
         src/util.o(.rodata.util_misc_blank_gfx_data);
     src/data/pokemon/egg_moves.o(.rodata);
         gUnknown_82FB764 = gEggMoves;

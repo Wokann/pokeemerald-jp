@@ -8,15 +8,7 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-	.section .rodata.data_b2d_mid47_after_level_up_learnset_pointers_before_util_misc_blank_gfx_data
-
-	.globl gUnknown_82FA374
-gUnknown_82FA374: @ 0x82FA374
-	.incbin "baserom_jp.gba", 0x2fa374, 0x19b
-
-	.globl gUnknown_82FA50F
-gUnknown_82FA50F: @ 0x82FA50F
-	.incbin "baserom_jp.gba", 0x2fa50f, 0x19b
+	.section .rodata.data_b2d_mid47_after_pokemon_front_animation_table_data
 
 	.globl gUnknown_82FA6AA
 gUnknown_82FA6AA: @ 0x82FA6AA
