@@ -713,8 +713,25 @@ gTilesetTiles_SecretBaseYellowCave:
 	.incbin "data/tilesets/secondary/secret_base/yellow_cave/tiles.4bpp"
 gTilesetTiles_SecretBaseRedCave:
 	.incbin "data/tilesets/secondary/secret_base/red_cave/tiles.4bpp"
-	@ Unstructured Inside of Truck graphics: [0x08343E00, 0x0834425C)
-	.incbin "baserom_jp.gba", 0x343E00, 0x45C
+gTilesetTiles_InsideOfTruck:
+	.incbin "data/tilesets/secondary/inside_of_truck/tiles.4bpp.lz"
+gTilesetPalettes_InsideOfTruck:
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/inside_of_truck/palettes/15.gbapal"
 gTileset_Contest_Tiles:
 	.incbin "data/tilesets/secondary/contest/tiles.4bpp.lz"
 gTileset_Contest_Palettes:

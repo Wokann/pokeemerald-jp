@@ -304,7 +304,12 @@ gTileset_SecretBaseRedCave: @ 0x083B7E9C
 	.4byte 0x00000000  @ callback
 	.globl gTileset_InsideOfTruck
 gTileset_InsideOfTruck: @ 0x083B7EB4
-	.incbin "baserom_jp.gba", 0x3B7EB4, 0x18
+	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTilesetTiles_InsideOfTruck  @ tiles
+	.4byte gTilesetPalettes_InsideOfTruck  @ palettes
+	.4byte gMetatiles_InsideOfTruck  @ metatiles
+	.4byte gMetatileAttributes_InsideOfTruck  @ metatileAttributes
+	.4byte 0x00000000  @ callback
 	.globl gTileset_Unused2
 gTileset_Unused2: @ 0x083B7ECC
 	.incbin "baserom_jp.gba", 0x3B7ECC, 0x18

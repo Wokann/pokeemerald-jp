@@ -130,8 +130,10 @@ gMetatiles_SecretBaseSecondary:
 	.incbin "data/tilesets/secondary/secret_base/metatiles.bin"
 gMetatileAttributes_SecretBaseSecondary:
 	.incbin "data/tilesets/secondary/secret_base/metatile_attributes.bin"
-	@ Unstructured Inside of Truck metatile data: [0x083952FA, 0x083955A6)
-	.incbin "baserom_jp.gba", 0x3952FA, 0x2AC
+gMetatiles_InsideOfTruck:
+	.incbin "data/tilesets/secondary/inside_of_truck/metatiles.bin"
+gMetatileAttributes_InsideOfTruck:
+	.incbin "data/tilesets/secondary/inside_of_truck/metatile_attributes.bin"
 gTileset_Contest_Metatiles:
 	.incbin "data/tilesets/secondary/contest/metatiles.bin"
 gTileset_Contest_MetatileAttributes:
