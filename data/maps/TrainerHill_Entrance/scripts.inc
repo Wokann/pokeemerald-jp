@@ -52,8 +52,7 @@ TrainerHill_Entrance_OnFrame:
 	map_script_2 VAR_TEMP_0, 0, TrainerHill_Entrance_EventScript_ExitChallenge
 	map_script_2 VAR_TEMP_D, 17, TrainerHill_Entrance_EventScript_ExitElevator
 	map_script_2 VAR_TEMP_5, 1, TrainerHill_Entrance_EventScript_EntryTrigger
-	@ The shared JP warp script has not yet been given a source label.
-	map_script_2 VAR_TEMP_1, 1, 0x08276CFB
+	map_script_2 VAR_TEMP_1, 1, TrainerHill_EventScript_WarpToEntranceCounter
 	.2byte 0
 
 TrainerHill_Entrance_EventScript_ExitElevator::
