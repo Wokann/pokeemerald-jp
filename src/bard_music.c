@@ -21,8 +21,11 @@ struct WordInfo
     s16 field1C; // retry counter
 };
 
-extern const struct WordPhoneme sWordPhonemes[];
-extern const s16 *const sWordSounds[];
+#define BARD_MUSIC_DATA __attribute__((section(".rodata.mid98_suffix_before_species_to_back_anim_set"), aligned(1)))
+
+#include "data/bard_music/jp_word_voice.h"
+
+#undef BARD_MUSIC_DATA
 
 void CalcWordPitch(struct WordInfo *word, u16 pitch, u16 volume)
 {
