@@ -1074,6 +1074,12 @@ graphics/field_effects/pics/%.png_mwidth_2__mheight_2.4bpp: graphics/field_effec
 graphics/object_events/pics/pokemon/%.png_mwidth_4__mheight_4.4bpp: graphics/object_events/pics/pokemon/%.png | tools
 	$(GFX) $< $@ -mwidth 4 -mheight 4
 
+graphics/object_events/pics/berry_trees/%.png_mwidth_2__mheight_2.4bpp: graphics/object_events/pics/berry_trees/%.png | tools
+	$(GFX) $< $@ -mwidth 2 -mheight 2
+
+graphics/object_events/pics/berry_trees/%.png_mwidth_2__mheight_4.4bpp: graphics/object_events/pics/berry_trees/%.png | tools
+	$(GFX) $< $@ -mwidth 2 -mheight 4
+
 graphics/battle_anims/sprites/ice_cube.4bpp: graphics/battle_anims/sprites/ice_cube_0.4bpp \
 	graphics/battle_anims/sprites/ice_cube_1.4bpp \
 	graphics/battle_anims/sprites/ice_cube_2.4bpp \
@@ -1674,6 +1680,38 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/object_events/palettes/cable_car.gbapal \
 	graphics/object_events/pics/misc/ss_tidal.4bpp \
 	graphics/object_events/palettes/ss_tidal.gbapal \
+	graphics/object_events/pics/berry_trees/dirt_pile.4bpp \
+	graphics/object_events/pics/berry_trees/sprout.png_mwidth_2__mheight_2.4bpp \
+	graphics/object_events/pics/berry_trees/pecha.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/kelpsy.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/wepear.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/iapapa.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/cheri.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/figy.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/mago.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/lum.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/razz.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/grepa.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/rabuta.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/nomel.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/leppa.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/liechi.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/hondew.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/aguav.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/wiki.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/pomeg.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/rawst.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/spelon.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/chesto.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/oran.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/persim.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/sitrus.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/aspear.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/pamtre.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/cornn.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/lansat.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/durin.png_mwidth_2__mheight_4.4bpp \
+	graphics/object_events/pics/berry_trees/tamato.png_mwidth_2__mheight_4.4bpp \
 	graphics/object_events/pics/people/brendan/walking.4bpp graphics/object_events/pics/people/brendan/running.4bpp \
 	graphics/object_events/palettes/brendan.gbapal \
 	graphics/object_events/pics/people/ruby_sapphire_brendan/walking.4bpp \
