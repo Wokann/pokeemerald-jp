@@ -23,10 +23,13 @@ extern u8 gUnknown_203A808;
 extern bool8 BattleAIStackPop(void);
 extern const u8 *const gBattleAI_ScriptsTable[];
 extern const void (*const gUnknown_858F64C[])(void);
+extern const u16 gUnknown_858F7D8[];
 
 void BattleAI_DoAIProcessing(void);
 void RecordLastUsedMoveByTarget(void);
 void sub_081339A0(const u8 *var);
+u8 ChooseMoveOrAction_Singles(void);
+u8 ChooseMoveOrAction_Doubles(void);
 
 #define AI_ACTION_DONE          0x01
 #define AI_ACTION_FLEE          0x02
@@ -132,30 +135,12 @@ void BattleAI_SetupAIData(u8 defaultScoreMoves)
         gBattleResources->ai->aiFlags |= AI_SCRIPT_DOUBLE_BATTLE;
 }
 
-__attribute__((naked)) u8 BattleAI_ChooseMoveOrAction()
+u8 BattleAI_ChooseMoveOrAction(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08130C00\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08130C04\n\t"
-        "	bl ChooseMoveOrAction_Doubles\n\t"
-        "	b _08130C08\n\t"
-        "	.align 2, 0\n\t"
-        "_08130C00: .4byte gBattleTypeFlags\n\t"
-        "_08130C04:\n\t"
-        "	bl ChooseMoveOrAction_Singles\n\t"
-        "_08130C08:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
+        return ChooseMoveOrAction_Singles();
+
+    return ChooseMoveOrAction_Doubles();
 }
 
 u8 ChooseMoveOrAction_Singles(void)
@@ -363,6 +348,7 @@ void BattleAI_DoAIProcessing(void)
     }
 }
 
+// Kept naked: equivalent C needs an extra r9 save/restore (0x80 bytes; JP is 0x7C).
 __attribute__((naked)) void RecordLastUsedMoveByTarget(void)
 {
     __asm__(".syntax unified\n\t"
@@ -974,268 +960,70 @@ void BattleAICmd_get_considered_move_power(void)
     gUnknown_203A804 += 1;
 }
 
-__attribute__((naked)) void BattleAICmd_get_how_powerful_move_is(void)
+void BattleAICmd_get_how_powerful_move_is(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, _081320BC\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r5, _081320C0\n\t"
-        "	ldr r6, _081320C4\n\t"
-        "	ldr r2, _081320C8\n\t"
-        "	cmp r1, r5\n\t"
-        "	beq _08131FBA\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r0, [r0, #0x14]\n\t"
-        "	ldrh r1, [r0, #2]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	ldr r1, _081320BC\n\t"
-        "_08131FAA:\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _08131FBA\n\t"
-        "	adds r1, #2\n\t"
-        "	adds r3, #1\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _08131FAA\n\t"
-        "_08131FBA:\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r0, [r0, #0x14]\n\t"
-        "	ldrh r1, [r0, #2]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bhi _08131FD0\n\t"
-        "	b _0813215A\n\t"
-        "_08131FD0:\n\t"
-        "	lsls r0, r3, #1\n\t"
-        "	ldr r1, _081320BC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r3, [r0]\n\t"
-        "	ldr r0, _081320C0\n\t"
-        "	cmp r3, r0\n\t"
-        "	beq _08131FE0\n\t"
-        "	b _0813215A\n\t"
-        "_08131FE0:\n\t"
-        "	ldr r0, _081320CC\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _081320D0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	strb r1, [r0, #0x13]\n\t"
-        "	ldr r0, _081320D4\n\t"
-        "	movs r2, #1\n\t"
-        "	strb r2, [r0, #0xe]\n\t"
-        "	ldr r0, _081320D8\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _081320DC\n\t"
-        "	strb r2, [r0]\n\t"
-        "	movs r6, #0\n\t"
-        "	mov sb, r3\n\t"
-        "	ldr r2, _081320BC\n\t"
-        "	ldrh r2, [r2]\n\t"
-        "	str r2, [sp, #0x10]\n\t"
-        "_08132004:\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r5, _081320E0\n\t"
-        "	lsls r4, r6, #1\n\t"
-        "	ldr r7, _081320E4\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r1, r6, #1\n\t"
-        "	mov sl, r1\n\t"
-        "	ldr r2, [sp, #0x10]\n\t"
-        "	cmp r2, sb\n\t"
-        "	beq _08132048\n\t"
-        "	ldr r2, _081320C4\n\t"
-        "	ldrb r1, [r7]\n\t"
-        "	movs r0, #0x58\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0xc\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	ldr r1, _081320BC\n\t"
-        "_08132038:\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r2, r0\n\t"
-        "	beq _08132048\n\t"
-        "	adds r1, #2\n\t"
-        "	adds r3, #1\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, sb\n\t"
-        "	bne _08132038\n\t"
-        "_08132048:\n\t"
-        "	ldrb r1, [r7]\n\t"
-        "	movs r0, #0x58\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0xc\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081320F4\n\t"
-        "	lsls r0, r3, #1\n\t"
-        "	ldr r2, _081320BC\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, sb\n\t"
-        "	bne _081320F4\n\t"
-        "	ldr r0, _081320C4\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bls _081320F4\n\t"
-        "	ldr r5, _081320E8\n\t"
-        "	strh r2, [r5]\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	ldr r4, _081320EC\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	bl AI_CalcDmg\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	ldrb r1, [r7]\n\t"
-        "	ldrb r2, [r4]\n\t"
-        "	bl TypeCalc\n\t"
-        "	mov r4, sp\n\t"
-        "	add r4, r8\n\t"
-        "	ldr r2, _081320F0\n\t"
-        "	ldr r0, _081320C8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #0x14]\n\t"
-        "	adds r0, #0x18\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	movs r1, #0x64\n\t"
-        "	bl __divsi3\n\t"
-        "	str r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081320FC\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [r4]\n\t"
-        "	b _081320FC\n\t"
-        "	.align 2, 0\n\t"
-        "_081320BC: .4byte gUnknown_858F7D8\n\t"
-        "_081320C0: .4byte 0x0000FFFF\n\t"
-        "_081320C4: .4byte gBattleMoves\n\t"
-        "_081320C8: .4byte gBattleResources\n\t"
-        "_081320CC: .4byte gDynamicBasePower\n\t"
-        "_081320D0: .4byte gBattleStruct\n\t"
-        "_081320D4: .4byte gBattleScripting\n\t"
-        "_081320D8: .4byte gMoveResultFlags\n\t"
-        "_081320DC: .4byte gCritMultiplier\n\t"
-        "_081320E0: .4byte gBattleMons\n\t"
-        "_081320E4: .4byte gUnknown_203A808\n\t"
-        "_081320E8: .4byte gCurrentMove\n\t"
-        "_081320EC: .4byte gBattlerTarget\n\t"
-        "_081320F0: .4byte gBattleMoveDamage\n\t"
-        "_081320F4:\n\t"
-        "	mov r1, sp\n\t"
-        "	add r1, r8\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "_081320FC:\n\t"
-        "	mov r6, sl\n\t"
-        "	cmp r6, #3\n\t"
-        "	bgt _08132104\n\t"
-        "	b _08132004\n\t"
-        "_08132104:\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r2, _08132148\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r0, [r0, #0x14]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, sp\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r5, _0813214C\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _0813213A\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	mov r3, sp\n\t"
-        "_08132120:\n\t"
-        "	adds r3, #4\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #3\n\t"
-        "	bgt _0813213A\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r0, [r0, #0x14]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, sp\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _08132120\n\t"
-        "_0813213A:\n\t"
-        "	cmp r6, #4\n\t"
-        "	bne _08132150\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, [r0, #0x14]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	b _08132164\n\t"
-        "	.align 2, 0\n\t"
-        "_08132148: .4byte gBattleResources\n\t"
-        "_0813214C: .4byte gUnknown_203A804\n\t"
-        "_08132150:\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, [r0, #0x14]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	b _08132164\n\t"
-        "_0813215A:\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, [r0, #0x14]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r5, _0813217C\n\t"
-        "_08132164:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r5]\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813217C: .4byte gUnknown_203A804\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    s32 i;
+    s32 checkedMove;
+    s32 moveDmgs[MAX_MON_MOVES];
 
+    for (i = 0; gUnknown_858F7D8[i] != 0xFFFF; i++)
+    {
+        if (gBattleMoves[gBattleResources->ai->moveConsidered].effect == gUnknown_858F7D8[i])
+            break;
+    }
+
+    if (gBattleMoves[gBattleResources->ai->moveConsidered].power > 1
+     && gUnknown_858F7D8[i] == 0xFFFF)
+    {
+        gDynamicBasePower = 0;
+        *(&gBattleStruct->dynamicMoveType) = 0;
+        gBattleScripting.dmgMultiplier = 1;
+        gMoveResultFlags = 0;
+        gCritMultiplier = 1;
+
+        for (checkedMove = 0; checkedMove < MAX_MON_MOVES; checkedMove++)
+        {
+            for (i = 0; gUnknown_858F7D8[i] != 0xFFFF; i++)
+            {
+                if (gBattleMoves[gBattleMons[gUnknown_203A808].moves[checkedMove]].effect == gUnknown_858F7D8[i])
+                    break;
+            }
+
+            if (gBattleMons[gUnknown_203A808].moves[checkedMove] != MOVE_NONE
+             && gUnknown_858F7D8[i] == 0xFFFF
+             && gBattleMoves[gBattleMons[gUnknown_203A808].moves[checkedMove]].power > 1)
+            {
+                gCurrentMove = gBattleMons[gUnknown_203A808].moves[checkedMove];
+                AI_CalcDmg(gUnknown_203A808, gBattlerTarget);
+                TypeCalc(gCurrentMove, gUnknown_203A808, gBattlerTarget);
+                moveDmgs[checkedMove] = gBattleMoveDamage * gBattleResources->ai->simulatedRNG[checkedMove] / 100;
+                if (moveDmgs[checkedMove] == 0)
+                    moveDmgs[checkedMove] = 1;
+            }
+            else
+            {
+                moveDmgs[checkedMove] = 0;
+            }
+        }
+
+        for (checkedMove = 0; checkedMove < MAX_MON_MOVES; checkedMove++)
+        {
+            if (moveDmgs[checkedMove] > moveDmgs[gBattleResources->ai->movesetIndex])
+                break;
+        }
+
+        if (checkedMove == MAX_MON_MOVES)
+            gBattleResources->ai->funcResult = 2;
+        else
+            gBattleResources->ai->funcResult = 1;
+    }
+    else
+    {
+        gBattleResources->ai->funcResult = 0;
+    }
+
+    gUnknown_203A804++;
+}
 void BattleAICmd_get_last_used_battler_move(void)
 {
     if (gUnknown_203A804[1] == AI_USER)
@@ -1568,120 +1356,43 @@ void BattleAICmd_if_status_in_party(void)
     gUnknown_203A804 += 10;
 }
 
-__attribute__((naked)) void BattleAICmd_if_status_not_in_party(void)
+void BattleAICmd_if_status_not_in_party(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	ldr r0, _08132904\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0813290C\n\t"
-        "	ldr r0, _08132908\n\t"
-        "	b _0813290E\n\t"
-        "	.align 2, 0\n\t"
-        "_08132904: .4byte gUnknown_203A804\n\t"
-        "_08132908: .4byte gUnknown_203A808\n\t"
-        "_0813290C:\n\t"
-        "	ldr r0, _081329B8\n\t"
-        "_0813290E:\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _081329BC\n\t"
-        "	mov sl, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08132922\n\t"
-        "	ldr r0, _081329C0\n\t"
-        "	mov sl, r0\n\t"
-        "_08132922:\n\t"
-        "	ldr r2, _081329C4\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldrb r7, [r1, #2]\n\t"
-        "	ldrb r0, [r1, #3]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r7, r0\n\t"
-        "	ldrb r0, [r1, #4]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	orrs r7, r0\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	orrs r7, r0\n\t"
-        "	movs r1, #0\n\t"
-        "	mov r8, r1\n\t"
-        "	mov sb, r2\n\t"
-        "_08132940:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	mov r4, r8\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	add r4, sl\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x37\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _08132984\n\t"
-        "	movs r1, #0xce\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	cmp r5, r1\n\t"
-        "	beq _08132984\n\t"
-        "	cmp r6, #0\n\t"
-        "	beq _08132984\n\t"
-        "	cmp r0, r7\n\t"
-        "	bne _08132984\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, #0xa\n\t"
-        "	str r0, [r1]\n\t"
-        "_08132984:\n\t"
-        "	movs r0, #1\n\t"
-        "	add r8, r0\n\t"
-        "	mov r1, r8\n\t"
-        "	cmp r1, #5\n\t"
-        "	ble _08132940\n\t"
-        "	ldr r3, _081329C4\n\t"
-        "	ldr r2, [r3]\n\t"
-        "	ldrb r1, [r2, #6]\n\t"
-        "	ldrb r0, [r2, #7]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r1, r0\n\t"
-        "	ldrb r0, [r2, #8]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	orrs r1, r0\n\t"
-        "	ldrb r0, [r2, #9]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	orrs r1, r0\n\t"
-        "	str r1, [r3]\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081329B8: .4byte gBattlerTarget\n\t"
-        "_081329BC: .4byte gEnemyParty\n\t"
-        "_081329C0: .4byte gPlayerParty\n\t"
-        "_081329C4: .4byte gUnknown_203A804\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    struct Pokemon *party;
+    s32 i;
+    u32 statusToCompareTo;
+    u8 battler;
 
+    switch (gUnknown_203A804[1])
+    {
+    case AI_USER:
+        battler = gUnknown_203A808;
+        break;
+    default:
+        battler = gBattlerTarget;
+        break;
+    }
+
+    party = (GetBattlerSide(battler) == B_SIDE_PLAYER) ? gPlayerParty : gEnemyParty;
+    statusToCompareTo = T1_READ_32(gUnknown_203A804 + 2);
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        u16 species = GetMonData(&party[i], MON_DATA_SPECIES);
+        u16 hp = GetMonData(&party[i], MON_DATA_HP);
+        u32 status = GetMonData(&party[i], MON_DATA_STATUS);
+
+        if (species != SPECIES_NONE && species != SPECIES_EGG && hp != 0 && status == statusToCompareTo)
+        {
+            gUnknown_203A804 += 10;
+#ifdef UBFIX
+            return;
+#endif
+        }
+    }
+
+    gUnknown_203A804 = T1_READ_PTR(gUnknown_203A804 + 6);
+}
 void BattleAICmd_get_weather(void)
 {
     if (gBattleWeather & B_WEATHER_RAIN)
