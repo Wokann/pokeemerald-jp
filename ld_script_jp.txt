@@ -9662,6 +9662,7 @@ SECTIONS {
         data/data_b2d_mid54.o(.rodata.pokedex_prefix);
         src/data/pokedex.o(.rodata.pokedex_text);
         src/data/pokedex.o(.rodata.pokedex_entries);
+        src/pokedex.o(.rodata.pokedex_info_screen_data);
         data/data_b2d_mid54.o(.rodata.pokedex_suffix);
         src/data/text/region_texts55.o(.rodata);
         src/data/pokedex.o(.rodata.pokedex_mid55);

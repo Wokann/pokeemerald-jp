@@ -15,26 +15,6 @@ gUnknown_8539C0E: @ 0x8539C0E
 
 	.section .rodata.pokedex_suffix
 
-	.globl gUnknown_85430F0
-gUnknown_85430F0: @ 0x85430F0
-	.incbin "baserom_jp.gba", 0x5430f0, 0x20
-
-	.globl gUnknown_8543110
-gUnknown_8543110: @ 0x8543110
-	.incbin "baserom_jp.gba", 0x543110, 0x10
-
-	.globl gUnknown_8543120
-gUnknown_8543120: @ 0x8543120
-	.incbin "baserom_jp.gba", 0x543120, 0x28
-
-	.globl gUnknown_8543148
-gUnknown_8543148: @ 0x8543148
-	.incbin "baserom_jp.gba", 0x543148, 0x8
-
-	.globl gUnknown_8543150
-gUnknown_8543150: @ 0x8543150
-	.incbin "baserom_jp.gba", 0x543150, 0x18
-
 	.globl gUnknown_8543168
 gUnknown_8543168: @ 0x8543168
 	.incbin "baserom_jp.gba", 0x543168, 0x676

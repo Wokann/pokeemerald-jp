@@ -550,6 +550,142 @@ POKEDEX_STATIC_DATA static const struct WindowTemplate sPokemonList_WindowTempla
 #undef TAG_DEX_INTERFACE
 #undef POKEDEX_STATIC_DATA
 
+#define POKEDEX_INFO_SCREEN_DATA __attribute__((section(".rodata.pokedex_info_screen_data")))
+
+POKEDEX_INFO_SCREEN_DATA static const u16 ALIGNED(4) sSizeScreenSilhouette_Pal[] =
+{
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+};
+
+POKEDEX_INFO_SCREEN_DATA static const struct BgTemplate sInfoScreen_BgTemplate[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 12,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 13,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 14,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 15,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0,
+    },
+};
+
+POKEDEX_INFO_SCREEN_DATA static const struct WindowTemplate sInfoScreen_WindowTemplates[] =
+{
+    {
+        .bg = 2,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = 32,
+        .height = 20,
+        .paletteNum = 0,
+        .baseBlock = 1,
+    },
+    {
+        .bg = 2,
+        .tilemapLeft = 25,
+        .tilemapTop = 8,
+        .width = 2,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 641,
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 12,
+        .width = 32,
+        .height = 7,
+        .paletteNum = 8,
+        .baseBlock = 645,
+    },
+    {
+        .bg = 2,
+        .tilemapLeft = 18,
+        .tilemapTop = 3,
+        .width = 10,
+        .height = 8,
+        .paletteNum = 9,
+        .baseBlock = 869,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+POKEDEX_INFO_SCREEN_DATA static const struct BgTemplate sNewEntryInfoScreen_BgTemplate[] =
+{
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 14,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0,
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 15,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0,
+    },
+};
+
+POKEDEX_INFO_SCREEN_DATA static const struct WindowTemplate sNewEntryInfoScreen_WindowTemplates[] =
+{
+    {
+        .bg = 2,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = 32,
+        .height = 20,
+        .paletteNum = 0,
+        .baseBlock = 1,
+    },
+    {
+        .bg = 2,
+        .tilemapLeft = 25,
+        .tilemapTop = 8,
+        .width = 2,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 641,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+#undef POKEDEX_INFO_SCREEN_DATA
+
 __attribute__((naked)) void ResetPokedex()
 {
     __asm__(".syntax unified\n\t"
@@ -7525,8 +7661,8 @@ __attribute__((naked)) void sub_080BE0C0(void)
         "_080BE154: .4byte gUnknown_20397F4\n\t"
         "_080BE158: .4byte sub_080BE1C8 + 1\n\t"
         "_080BE15C: .4byte gTasks\n\t"
-        "_080BE160: .4byte gUnknown_8543110\n\t"
-        "_080BE164: .4byte gUnknown_8543120\n\t"
+        "_080BE160: .4byte sInfoScreen_BgTemplate\n\t"
+        "_080BE164: .4byte sInfoScreen_WindowTemplates\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9644,7 +9780,7 @@ __attribute__((naked)) void sub_080BF0C8(void)
         "_080BF2D0: .4byte gSprites\n\t"
         "_080BF2D4: .4byte gPokedexEntries\n\t"
         "_080BF2D8: .4byte gUnknown_20397F4\n\t"
-        "_080BF2DC: .4byte gUnknown_85430F0\n\t"
+        "_080BF2DC: .4byte sSizeScreenSilhouette_Pal\n\t"
         "_080BF2E0: .4byte gTasks\n\t"
         "_080BF2E4: .4byte gMain\n\t"
         "_080BF2E8:\n\t"
@@ -9728,7 +9864,7 @@ __attribute__((naked)) void sub_080BF0C8(void)
         "_080BF390: .4byte gUnknown_20397F4\n\t"
         "_080BF394: .4byte gSprites\n\t"
         "_080BF398: .4byte gPokedexEntries\n\t"
-        "_080BF39C: .4byte gUnknown_85430F0\n\t"
+        "_080BF39C: .4byte sSizeScreenSilhouette_Pal\n\t"
         "_080BF3A0: .4byte gTasks\n\t"
         "_080BF3A4:\n\t"
         "	movs r0, #0x15\n\t"
@@ -10272,8 +10408,8 @@ __attribute__((naked)) void sub_080BF6F4(void)
         "_080BF7B0: .4byte gPaletteFade\n\t"
         "_080BF7B4: .4byte gUnknown_3005E14\n\t"
         "_080BF7B8: .4byte gMain\n\t"
-        "_080BF7BC: .4byte gUnknown_8543148\n\t"
-        "_080BF7C0: .4byte gUnknown_8543150\n\t"
+        "_080BF7BC: .4byte sNewEntryInfoScreen_BgTemplate\n\t"
+        "_080BF7C0: .4byte sNewEntryInfoScreen_WindowTemplates\n\t"
         "_080BF7C4: .4byte gTasks\n\t"
         "_080BF7C8:\n\t"
         "	ldr r1, _080BF828\n\t"
