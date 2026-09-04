@@ -1036,8 +1036,27 @@ gTileset_SootopolisGym_Palettes:
 	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/13.gbapal"
 	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/14.gbapal"
 	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/15.gbapal"
-	@ Unstructured Trick House, ship, and Secret Base graphics: [0x083510E4, 0x0835B068)
-	.incbin "baserom_jp.gba", 0x3510E4, 0x9F84
+gTilesetTiles_TrickHousePuzzle:
+	.incbin "data/tilesets/secondary/trick_house_puzzle/tiles.4bpp.lz"
+gTilesetPalettes_TrickHousePuzzle:
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/trick_house_puzzle/palettes/15.gbapal"
+	@ Unstructured Inside Ship and Secret Base graphics: [0x08352098, 0x0835B068)
+	.incbin "baserom_jp.gba", 0x352098, 0x8FD0
 gTileset_EliteFour_Tiles:
 	.incbin "data/tilesets/secondary/elite_four/tiles.4bpp.lz"
 gTileset_EliteFour_Palettes:

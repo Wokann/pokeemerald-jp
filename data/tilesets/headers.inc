@@ -424,7 +424,12 @@ gTileset_LavaridgeGym: @ 0x083B8004
 	.4byte 0x00000000  @ callback
 	.globl gTileset_TrickHousePuzzle
 gTileset_TrickHousePuzzle: @ 0x083B801C
-	.incbin "baserom_jp.gba", 0x3B801C, 0x18
+	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTilesetTiles_TrickHousePuzzle  @ tiles
+	.4byte gTilesetPalettes_TrickHousePuzzle  @ palettes
+	.4byte gMetatiles_TrickHousePuzzle  @ metatiles
+	.4byte gMetatileAttributes_TrickHousePuzzle  @ metatileAttributes
+	.4byte 0x00000000  @ callback
 	.globl gTileset_FortreeGym
 gTileset_FortreeGym: @ 0x083B8034
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary

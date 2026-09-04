@@ -198,8 +198,12 @@ gTileset_SootopolisGym_Metatiles:
 	.incbin "data/tilesets/secondary/sootopolis_gym/metatiles.bin"
 gTileset_SootopolisGym_MetatileAttributes:
 	.incbin "data/tilesets/secondary/sootopolis_gym/metatile_attributes.bin"
-	@ Unstructured metatile data: [0x083A03E2, 0x083A2308)
-	.incbin "baserom_jp.gba", 0x3A03E2, 0x1F26
+gMetatiles_TrickHousePuzzle:
+	.incbin "data/tilesets/secondary/trick_house_puzzle/metatiles.bin"
+gMetatileAttributes_TrickHousePuzzle:
+	.incbin "data/tilesets/secondary/trick_house_puzzle/metatile_attributes.bin"
+	@ Unstructured Inside Ship and Secret Base metatile data: [0x083A112C, 0x083A2308)
+	.incbin "baserom_jp.gba", 0x3A112C, 0x11DC
 gTileset_EliteFour_Metatiles:
 	.incbin "data/tilesets/secondary/elite_four/metatiles.bin"
 gTileset_EliteFour_MetatileAttributes:
