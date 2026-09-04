@@ -3530,7 +3530,7 @@ __attribute__((naked)) void CreateApprenticeMon(struct Pokemon *mon, const struc
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08068170: .4byte gUnknown_85DC21C\n\t"
+        "_08068170: .4byte gApprentices\n\t"
         ".syntax divided\n\t"
     );
 }

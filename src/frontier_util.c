@@ -4137,7 +4137,7 @@ __attribute__((naked)) void CopyFrontierTrainerText(u8 whichText, u16 trainerId)
         "	b _081A368E\n\t"
         "	.align 2, 0\n\t"
         "_081A3660: .4byte gBattleTypeFlags\n\t"
-        "_081A3664: .4byte gUnknown_85DC23E\n\t"
+        "_081A3664: .4byte gApprentices + 0x22\n\t"
         "_081A3668:\n\t"
         "	ldr r0, _081A3694\n\t"
         "	ldr r1, [r0]\n\t"
@@ -4163,7 +4163,7 @@ __attribute__((naked)) void CopyFrontierTrainerText(u8 whichText, u16 trainerId)
         "	.align 2, 0\n\t"
         "_081A3694: .4byte gSaveBlock2Ptr\n\t"
         "_081A3698: .4byte 0xFFFFFE70\n\t"
-        "_081A369C: .4byte gUnknown_85DC23E\n\t"
+        "_081A369C: .4byte gApprentices + 0x22\n\t"
         ".syntax divided\n\t"
     );
 }

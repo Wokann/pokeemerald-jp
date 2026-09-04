@@ -5,12 +5,16 @@
 
 struct ApprenticeTrainer
 {
-    u8 name[NUM_LANGUAGES - 1][PLAYER_NAME_LENGTH + 1]; // For all languages except the unused one.
+    // The Japanese ROM stores one Japanese name per 0x30-byte record.
+    u8 name[PLAYER_NAME_LENGTH + 1];
     u16 otId;
     u8 facilityClass;
+    u8 paddingB;
     u16 species[APPRENTICE_SPECIES_COUNT];
     u8 id;
+    u8 padding21;
     u16 speechLost[EASY_CHAT_BATTLE_WORDS_COUNT];
+    u16 padding2E;
 };
 
 extern const struct ApprenticeTrainer gApprentices[];
