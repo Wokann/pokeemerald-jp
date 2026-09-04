@@ -1,10 +1,22 @@
 // JP Trade resources retain original ROM order. Verified menu resources use
 // their semantic names; only the unclassified JP-only suffix remains address-named.
 
+#define TRADE_UNUSED_STRUCT_SIZES __attribute__((section(".rodata.trade_unused_struct_sizes"), aligned(1)))
 #define TRADE_MENU_RESOURCES __attribute__((section(".rodata.trade_menu_resources"), aligned(1)))
 #define TRADE_MENU_RESOURCES_AFTER_MON_BOX __attribute__((section(".rodata.trade_menu_resources_after_mon_box"), aligned(1)))
 #define TRADE_ANIMATION_RESOURCES __attribute__((section(".rodata.trade_animation_resources"), aligned(1)))
 #define TRADE_POST_ANIMATION_RESOURCES __attribute__((section(".rodata.trade_post_animation_resources"), aligned(1)))
+
+// Exists unused in Ruby/Sapphire as well. The final literal is 0x528 in JP.
+static const u32 sUnusedStructSizes[] TRADE_UNUSED_STRUCT_SIZES __attribute__((used)) =
+{
+    sizeof(struct SaveBlock2),
+    sizeof(struct SaveBlock1),
+    sizeof(struct MapHeader),
+    sizeof(struct Mail),
+    sizeof(struct Pokemon),
+    0x00000528,
+};
 
 const u16 sTradeMovesBoxTilemap[] TRADE_MENU_RESOURCES = INCBIN_U16("graphics/trade/moves_box_map.bin");
 const u16 sTradePartyBoxTilemap[] TRADE_MENU_RESOURCES = INCBIN_U16("graphics/trade/party_box_map.bin");
@@ -75,6 +87,7 @@ const u8 gUnknown_830D294[0x10] TRADE_POST_ANIMATION_RESOURCES = INCBIN_U8("grap
 const u8 gUnknown_830D2A4[0x6C] TRADE_POST_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/830d2a4.bin");
 const u8 gUnknown_830D310[0x44] TRADE_POST_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/830d310.bin");
 
+#undef TRADE_UNUSED_STRUCT_SIZES
 #undef TRADE_MENU_RESOURCES
 #undef TRADE_MENU_RESOURCES_AFTER_MON_BOX
 #undef TRADE_ANIMATION_RESOURCES

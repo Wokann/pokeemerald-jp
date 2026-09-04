@@ -9462,7 +9462,7 @@ SECTIONS {
         src/battle_interface.o(.rodata.battle_interface_healthbar);
         src/battle_interface.o(.rodata.battle_interface_subsprites);
         src/pokeball.o(.rodata.pokeball_static_data);
-        data/data_b2d_mid51.o(.rodata.pokeball_static_suffix);
+        src/data/trade.o(.rodata.trade_unused_struct_sizes);
         src/graphics.o(.rodata.trade_menu_graphics);
         src/data/trade.o(.rodata.trade_menu_resources);
         src/graphics.o(.rodata.trade_menu_mon_box_graphics);
