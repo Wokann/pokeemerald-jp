@@ -1074,8 +1074,25 @@ gTilesetPalettes_InsideShip:
 	.incbin "data/tilesets/secondary/inside_ship/palettes/13.gbapal"
 	.incbin "data/tilesets/secondary/inside_ship/palettes/14.gbapal"
 	.incbin "data/tilesets/secondary/inside_ship/palettes/15.gbapal"
-	@ Unstructured Secret Base graphics: [0x08352E68, 0x0835B068)
-	.incbin "baserom_jp.gba", 0x352E68, 0x8200
+gTilesetTiles_SecretBase:
+	.incbin "data/tilesets/primary/secret_base/tiles.4bpp"
+gTilesetPalettes_SecretBase:
+	.incbin "data/tilesets/primary/secret_base/palettes/00.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/01.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/02.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/03.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/04.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/05.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/06.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/07.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/08.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/09.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/10.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/11.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/12.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/13.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/14.gbapal"
+	.incbin "data/tilesets/primary/secret_base/palettes/15.gbapal"
 gTileset_EliteFour_Tiles:
 	.incbin "data/tilesets/secondary/elite_four/tiles.4bpp.lz"
 gTileset_EliteFour_Palettes:

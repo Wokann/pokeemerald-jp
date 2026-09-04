@@ -206,8 +206,10 @@ gMetatiles_InsideShip:
 	.incbin "data/tilesets/secondary/inside_ship/metatiles.bin"
 gMetatileAttributes_InsideShip:
 	.incbin "data/tilesets/secondary/inside_ship/metatile_attributes.bin"
-	@ Unstructured Secret Base metatile data: [0x083A22E4, 0x083A2308)
-	.incbin "baserom_jp.gba", 0x3A22E4, 0x24
+gMetatiles_SecretBasePrimary:
+	.incbin "data/tilesets/primary/secret_base/metatiles.bin"
+gMetatileAttributes_SecretBasePrimary:
+	.incbin "data/tilesets/primary/secret_base/metatile_attributes.bin"
 gTileset_EliteFour_Metatiles:
 	.incbin "data/tilesets/secondary/elite_four/metatiles.bin"
 gTileset_EliteFour_MetatileAttributes:

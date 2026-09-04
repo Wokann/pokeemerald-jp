@@ -456,15 +456,20 @@ gTileset_InsideShip: @ 0x083B8064
 	.4byte 0x00000000  @ callback
 	.globl gTileset_SecretBase
 gTileset_SecretBase: @ 0x083B807C
-	.incbin "baserom_jp.gba", 0x3B807C, 0x18
+	.byte 0x00, 0x00, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTilesetTiles_SecretBase  @ tiles
+	.4byte gTilesetPalettes_SecretBase  @ palettes
+	.4byte gMetatiles_SecretBasePrimary  @ metatiles
+	.4byte gMetatileAttributes_SecretBasePrimary  @ metatileAttributes
+	.4byte 0x00000000  @ callback
 
 	.globl gTilesetPointer_SecretBase
 gTilesetPointer_SecretBase: @ 0x83B8094
-	.incbin "baserom_jp.gba", 0x3b8094, 0x4
+	.4byte gTileset_SecretBase
 
 	.globl gTilesetPointer_SecretBaseRedCave
 gTilesetPointer_SecretBaseRedCave: @ 0x083B8098
-	.incbin "baserom_jp.gba", 0x3B8098, 0x4
+	.4byte gTileset_SecretBaseRedCave
 	.globl gTileset_EliteFour
 gTileset_EliteFour: @ 0x083B809C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
