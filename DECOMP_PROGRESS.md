@@ -9,7 +9,7 @@
 - 模块归位：8307/8592 (96.68%)；路径对齐：8247/8592 (95.98%)。
 - JP 独有 C 迁移记录：49（动态清单，不沿用旧固定数）；同名多地址 C 定义：271。
 - 过渡文件：tail=0、rest=4、mid=16、stub=0、address=0。
-- incbin：7536 引用、6696 条唯一路径、原始二进制 2327、非原始 5209、缺失资源 0。
+- incbin：7536 引用、6696 条唯一路径、原始二进制 2327、非原始 5209、缺失资源 0；可见 baserom 范围 839 条/0x4FCDDA 字节，未限定范围 0 条。
 - 资产命名：4865 条 graphics/sound 引用中，精确 US 路径 32、唯一 basename 候选 18、歧义 0。
 - 地图脚本：468/469 (99.79%) 个首 owner 有 scripts.inc；非 owner scripts.inc：0；结构完整地图：518（直接物理文件满足者 468；合法共享 scripts/events owner 50/11；其中首 owner 469）；map.json 总数：518。
 - 地图语义复核：not_recorded。没有版本化复核清单前，任何 scripts.inc、map.json 或 events.inc 都不计入语义已审计。
@@ -24,7 +24,7 @@
 | 模块归位率 | 严格 C 地址中能按 US 标准名在 US 源树找到定义的地址 / 严格 C 地址。 |
 | 路径对齐率 | 上述地址中 JP 相对 `src/` 路径也属于 US owner 的地址 / 严格 C 地址。 |
 | 过渡文件 | 文件名包含 tail、rest、mid、stub 或地址式片段；分类可重叠。 |
-| incbin | `.incbin` 与 `INCBIN_*` 的引用数。裸 `.bin/.gba`、asset 根目录外的压缩流，以及 `gUnknown`/`unknown`/`unk` 命名的压缩资产记为原始；`graphics/`、`sound/` 内其余具名 `.lz/.rl/.huff` 记为已结构化编码资产。不是字节转换率。 |
+| incbin | `.incbin` 与 `INCBIN_*` 的引用数。裸 `.bin/.gba`、asset 根目录外的压缩流，以及 `gUnknown`/`unknown`/`unk` 命名的压缩资产记为原始；`graphics/`、`sound/` 内其余具名 `.lz/.rl/.huff` 记为已结构化编码资产。另列显式 `baserom_jp.gba, offset, size` 指令的可见字节和未限定范围数；该字节值不含无法判定范围的指令，不是总 ROM 转换率。 |
 | 资产命名 | 被引用的 `graphics/`、`sound/` 路径与 US 同名文件比较；仅生成候选，不自动改名。 |
 | 地图脚本 owner | `scripts.inc` 与 map-table 实际首 owner 名的交集 / 去重首 owner；共享表只属于首次出现地图。 |
 | 地图结构完整 | 同一地图具 `map.json`，且其 scripts/events 为本地图的物理文件与上层 include，或为 map.json 明示、header 精确指向且在 JP `data/` 有真实标签定义的共享 owner；只说明结构已拆分。 |

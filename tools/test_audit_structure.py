@@ -166,6 +166,22 @@ class StructureAuditTests(unittest.TestCase):
         self.assertEqual(report["references"], 1)
         self.assertEqual(report["manifest"][0]["owner"], "src/data/assets.h")
 
+    def test_incbin_reports_visible_baserom_byte_ranges(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "data" / "raw.s"
+            source.parent.mkdir()
+            source.write_text(
+                '.incbin "baserom_jp.gba", 0x10, 0x20\n'
+                '.incbin "baserom_jp.gba"\n',
+                encoding="utf-8",
+            )
+            report = audit.incbin_progress(root)
+        self.assertEqual(report["raw_baserom_visible_range_references"], 1)
+        self.assertEqual(report["raw_baserom_visible_bytes"], 0x20)
+        self.assertEqual(report["raw_baserom_unbounded_references"], 1)
+        self.assertEqual(report["raw_baserom_manifest"][0]["owner"], "data/raw.s")
+
     def test_incbin_named_encoded_asset_is_not_reported_as_raw(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

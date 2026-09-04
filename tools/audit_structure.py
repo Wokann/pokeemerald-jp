@@ -1307,11 +1307,20 @@ def classify_incbin_resource(resource: str) -> tuple[str, str]:
 
 def incbin_progress(root: Path) -> dict[str, object]:
     references = []
+    raw_baserom_ranges = []
+    raw_baserom_unbounded_references = 0
     for relpath in sorted(source_files(root)):
         path = root / relpath
         if path.suffix not in {".s", ".inc", ".c", ".h"}:
             continue
-        for resource in INCBIN_RE.findall(path.read_text(encoding="utf-8", errors="replace")):
+        text = path.read_text(encoding="utf-8", errors="replace")
+        visible_ranges = parse_baserom_incbin_ranges(text)
+        for item in visible_ranges:
+            item["owner"] = relpath
+        raw_baserom_ranges.extend(visible_ranges)
+        raw_baserom_unbounded_references += (
+            len(BASEROM_INCBIN_RE.findall(text)) - len(visible_ranges))
+        for resource in INCBIN_RE.findall(text):
             suffix = Path(resource).suffix or "[no suffix]"
             classification, classification_reason = classify_incbin_resource(resource)
             references.append({
@@ -1336,10 +1345,15 @@ def incbin_progress(root: Path) -> dict[str, object]:
         "unique_paths": len({item["resource"] for item in references}),
         "raw_binary_references": len(raw_records),
         "non_raw_references": len(references) - len(raw_records),
+        "raw_baserom_visible_range_references": len(raw_baserom_ranges),
+        "raw_baserom_visible_bytes": sum(
+            int(item["size"], 0) for item in raw_baserom_ranges),
+        "raw_baserom_unbounded_references": raw_baserom_unbounded_references,
         "missing_resource_paths": len(missing),
         "suffixes": dict(sorted(suffixes.items())),
         "raw_by_owner_directory": dict(sorted(raw_owner_dirs.items())),
         "raw_by_resource_directory": dict(sorted(raw_resource_dirs.items())),
+        "raw_baserom_manifest": raw_baserom_ranges,
         "manifest": references,
     }
 
@@ -1583,9 +1597,12 @@ def print_report(report: dict[str, object]) -> None:
     print("transition files: " + ", ".join(
         "%s=%d" % (name, value["count"])
         for name, value in report["transition_files"].items()))
-    print("incbin: references=%d unique=%d raw=%d non-raw=%d missing=%d" % (
+    print("incbin: references=%d unique=%d raw=%d non-raw=%d missing=%d visible-baserom-ranges=%d visible-baserom-bytes=0x%X unbounded-baserom=%d" % (
         incbin["references"], incbin["unique_paths"], incbin["raw_binary_references"],
-        incbin["non_raw_references"], incbin["missing_resource_paths"]))
+        incbin["non_raw_references"], incbin["missing_resource_paths"],
+        incbin["raw_baserom_visible_range_references"],
+        incbin["raw_baserom_visible_bytes"],
+        incbin["raw_baserom_unbounded_references"]))
     print("asset naming: referenced=%d exact-US=%d unique-candidates=%d ambiguous=%d no-match=%d" % (
         assets["referenced_graphics_or_sound_paths"], assets["exact_us_paths"],
         assets["unique_us_basename_candidates"], assets["ambiguous_us_basename_candidates"],
@@ -1653,7 +1670,10 @@ def render_markdown_report(report: dict[str, object]) -> str:
         f"address={transitions['address']['count']}。",
         f"- incbin：{incbin['references']} 引用、{incbin['unique_paths']} 条唯一路径、"
         f"原始二进制 {incbin['raw_binary_references']}、非原始 {incbin['non_raw_references']}、"
-        f"缺失资源 {incbin['missing_resource_paths']}。",
+        f"缺失资源 {incbin['missing_resource_paths']}；可见 baserom 范围 "
+        f"{incbin['raw_baserom_visible_range_references']} 条/"
+        f"0x{incbin['raw_baserom_visible_bytes']:X} 字节，未限定范围 "
+        f"{incbin['raw_baserom_unbounded_references']} 条。",
         f"- 资产命名：{assets['referenced_graphics_or_sound_paths']} 条 graphics/sound 引用中，"
         f"精确 US 路径 {assets['exact_us_paths']}、唯一 basename 候选 "
         f"{assets['unique_us_basename_candidates']}、歧义 "
@@ -1687,7 +1707,7 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "| 模块归位率 | 严格 C 地址中能按 US 标准名在 US 源树找到定义的地址 / 严格 C 地址。 |",
         "| 路径对齐率 | 上述地址中 JP 相对 `src/` 路径也属于 US owner 的地址 / 严格 C 地址。 |",
         "| 过渡文件 | 文件名包含 tail、rest、mid、stub 或地址式片段；分类可重叠。 |",
-        "| incbin | `.incbin` 与 `INCBIN_*` 的引用数。裸 `.bin/.gba`、asset 根目录外的压缩流，以及 `gUnknown`/`unknown`/`unk` 命名的压缩资产记为原始；`graphics/`、`sound/` 内其余具名 `.lz/.rl/.huff` 记为已结构化编码资产。不是字节转换率。 |",
+        "| incbin | `.incbin` 与 `INCBIN_*` 的引用数。裸 `.bin/.gba`、asset 根目录外的压缩流，以及 `gUnknown`/`unknown`/`unk` 命名的压缩资产记为原始；`graphics/`、`sound/` 内其余具名 `.lz/.rl/.huff` 记为已结构化编码资产。另列显式 `baserom_jp.gba, offset, size` 指令的可见字节和未限定范围数；该字节值不含无法判定范围的指令，不是总 ROM 转换率。 |",
         "| 资产命名 | 被引用的 `graphics/`、`sound/` 路径与 US 同名文件比较；仅生成候选，不自动改名。 |",
         "| 地图脚本 owner | `scripts.inc` 与 map-table 实际首 owner 名的交集 / 去重首 owner；共享表只属于首次出现地图。 |",
         "| 地图结构完整 | 同一地图具 `map.json`，且其 scripts/events 为本地图的物理文件与上层 include，或为 map.json 明示、header 精确指向且在 JP `data/` 有真实标签定义的共享 owner；只说明结构已拆分。 |",
