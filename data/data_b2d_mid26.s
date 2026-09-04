@@ -43,16 +43,6 @@
 gWeatherPtr: @ 0x8526DE8
 	.4byte gUnknown_20380F4 @ &gWeather
 
-	.section .rodata.data_b2d_mid26_after_field_weather_effect_static_data_before_field_screen_effect_flash_data
-
-	.globl sWeatherCycleRoute119
-sWeatherCycleRoute119: @ 0x852AAF8
-	.byte 0x02, 0x03, 0x05, 0x03
-
-	.globl sWeatherCycleRoute123
-sWeatherCycleRoute123: @ 0x852AAFC
-	.byte 0x02, 0x02, 0x03, 0x02
-
 	.section .rodata.data_b2d_mid26_after_field_screen_effect_flash_data_before_battle_setup_rematch_data
 
 	.globl sBattleTransitionTable_Wild

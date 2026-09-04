@@ -9736,7 +9736,7 @@ SECTIONS {
         src/field_weather.o(.rodata.field_weather_static_data);
         src/field_weather_effect.o(.rodata.field_weather_effect_resource_data);
         src/field_weather_effect.o(.rodata.field_weather_effect_static_data);
-        data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_field_weather_effect_static_data_before_field_screen_effect_flash_data);
+        src/field_weather_effect.o(.rodata.field_weather_effect_weather_cycle_data);
         src/field_screen_effect.o(.rodata.field_screen_effect_flash_data);
         data/data_b2d_mid26.o(.rodata.data_b2d_mid26_after_field_screen_effect_flash_data_before_battle_setup_rematch_data);
         src/battle_setup.o(.rodata.battle_setup_rematch_data);

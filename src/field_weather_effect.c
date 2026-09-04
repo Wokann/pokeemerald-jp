@@ -1,9 +1,11 @@
 #include "global.h"
 #include "battle_anim.h"
 #include "field_weather.h"
+#include "constants/weather.h"
 
 #define FIELD_WEATHER_EFFECT_RESOURCE_DATA __attribute__((section(".rodata.field_weather_effect_resource_data")))
 #define FIELD_WEATHER_EFFECT_STATIC_DATA __attribute__((section(".rodata.field_weather_effect_static_data")))
+#define FIELD_WEATHER_EFFECT_WEATHER_CYCLE_DATA __attribute__((section(".rodata.field_weather_effect_weather_cycle_data")))
 
 const u16 gCloudsWeatherPalette[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U16("graphics/weather/cloud.gbapal");
 const u16 gSandstormWeatherPalette[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U16("graphics/weather/sandstorm.gbapal");
@@ -16,6 +18,26 @@ const u8 gWeatherBubbleTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("g
 const u8 gWeatherAshTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/ash.4bpp");
 const u8 gWeatherRainTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/rain.4bpp");
 const u8 gWeatherSandstormTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/sandstorm.4bpp");
+
+#define WEATHER_CYCLE_LENGTH 4
+
+FIELD_WEATHER_EFFECT_WEATHER_CYCLE_DATA static const u8 sWeatherCycleRoute119[WEATHER_CYCLE_LENGTH] =
+{
+    WEATHER_SUNNY,
+    WEATHER_RAIN,
+    WEATHER_RAIN_THUNDERSTORM,
+    WEATHER_RAIN,
+};
+
+FIELD_WEATHER_EFFECT_WEATHER_CYCLE_DATA static const u8 sWeatherCycleRoute123[WEATHER_CYCLE_LENGTH] =
+{
+    WEATHER_SUNNY,
+    WEATHER_SUNNY,
+    WEATHER_RAIN,
+    WEATHER_SUNNY,
+};
+
+#undef WEATHER_CYCLE_LENGTH
 
 void UpdateCloudSprite(struct Sprite *sprite);
 void UpdateRainSprite(void);
