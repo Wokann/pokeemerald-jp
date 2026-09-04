@@ -1,3 +1,69 @@
+// data/text/apprentice.inc
+extern const u8 gText_ApprenticePleaseTeach0[];
+extern const u8 gText_ApprenticePleaseTeach1[];
+extern const u8 gText_ApprenticePleaseTeach2[];
+extern const u8 gText_ApprenticePleaseTeach3[];
+extern const u8 gText_ApprenticePleaseTeach4[];
+extern const u8 gText_ApprenticePleaseTeach5[];
+extern const u8 gText_ApprenticePleaseTeach6[];
+extern const u8 gText_ApprenticePleaseTeach7[];
+extern const u8 gText_ApprenticePleaseTeach8[];
+extern const u8 gText_ApprenticePleaseTeach9[];
+extern const u8 gText_ApprenticePleaseTeach10[];
+extern const u8 gText_ApprenticePleaseTeach11[];
+extern const u8 gText_ApprenticePleaseTeach12[];
+extern const u8 gText_ApprenticePleaseTeach13[];
+extern const u8 gText_ApprenticePleaseTeach14[];
+extern const u8 gText_ApprenticePleaseTeach15[];
+extern const u8 gText_ApprenticeRejectTeaching0[];
+extern const u8 gText_ApprenticeRejectTeaching1[];
+extern const u8 gText_ApprenticeRejectTeaching2[];
+extern const u8 gText_ApprenticeRejectTeaching3[];
+extern const u8 gText_ApprenticeRejectTeaching4[];
+extern const u8 gText_ApprenticeRejectTeaching5[];
+extern const u8 gText_ApprenticeRejectTeaching6[];
+extern const u8 gText_ApprenticeRejectTeaching7[];
+extern const u8 gText_ApprenticeRejectTeaching8[];
+extern const u8 gText_ApprenticeRejectTeaching9[];
+extern const u8 gText_ApprenticeRejectTeaching10[];
+extern const u8 gText_ApprenticeRejectTeaching11[];
+extern const u8 gText_ApprenticeRejectTeaching12[];
+extern const u8 gText_ApprenticeRejectTeaching13[];
+extern const u8 gText_ApprenticeRejectTeaching14[];
+extern const u8 gText_ApprenticeRejectTeaching15[];
+extern const u8 gText_ApprenticeWhichLevelMode0[];
+extern const u8 gText_ApprenticeWhichLevelMode1[];
+extern const u8 gText_ApprenticeWhichLevelMode2[];
+extern const u8 gText_ApprenticeWhichLevelMode3[];
+extern const u8 gText_ApprenticeWhichLevelMode4[];
+extern const u8 gText_ApprenticeWhichLevelMode5[];
+extern const u8 gText_ApprenticeWhichLevelMode6[];
+extern const u8 gText_ApprenticeWhichLevelMode7[];
+extern const u8 gText_ApprenticeWhichLevelMode8[];
+extern const u8 gText_ApprenticeWhichLevelMode9[];
+extern const u8 gText_ApprenticeWhichLevelMode10[];
+extern const u8 gText_ApprenticeWhichLevelMode11[];
+extern const u8 gText_ApprenticeWhichLevelMode12[];
+extern const u8 gText_ApprenticeWhichLevelMode13[];
+extern const u8 gText_ApprenticeWhichLevelMode14[];
+extern const u8 gText_ApprenticeWhichLevelMode15[];
+extern const u8 gText_ApprenticeLevelModeThanks0[];
+extern const u8 gText_ApprenticeLevelModeThanks1[];
+extern const u8 gText_ApprenticeLevelModeThanks2[];
+extern const u8 gText_ApprenticeLevelModeThanks3[];
+extern const u8 gText_ApprenticeLevelModeThanks4[];
+extern const u8 gText_ApprenticeLevelModeThanks5[];
+extern const u8 gText_ApprenticeLevelModeThanks6[];
+extern const u8 gText_ApprenticeLevelModeThanks7[];
+extern const u8 gText_ApprenticeLevelModeThanks8[];
+extern const u8 gText_ApprenticeLevelModeThanks9[];
+extern const u8 gText_ApprenticeLevelModeThanks10[];
+extern const u8 gText_ApprenticeLevelModeThanks11[];
+extern const u8 gText_ApprenticeLevelModeThanks12[];
+extern const u8 gText_ApprenticeLevelModeThanks13[];
+extern const u8 gText_ApprenticeLevelModeThanks14[];
+extern const u8 gText_ApprenticeLevelModeThanks15[];
+
 // Japanese-language ApprenticeTrainer records. Their ROM layout is 0x30 bytes.
 
 APPRENTICE_DATA const struct ApprenticeTrainer gApprentices[NUM_APPRENTICES] =
@@ -130,4 +196,25 @@ APPRENTICE_DATA const struct ApprenticeTrainer gApprentices[NUM_APPRENTICES] =
         .id = 15,
         .speechLost = {EC_WORD_SHE_WAS, EC_WORD_LOSE, EC_WORD_JOKING, EC_WORD_LIE, EC_WORD_WERE, EC_WORD_DASH},
     },
+};
+
+// Sequence of four messages for the first meeting with the apprentice.
+static APPRENTICE_DATA const u8 *const sApprenticeFirstMeetingTexts[NUM_APPRENTICES][4] =
+{
+    {gText_ApprenticePleaseTeach0,  gText_ApprenticeRejectTeaching0,  gText_ApprenticeWhichLevelMode0,  gText_ApprenticeLevelModeThanks0},
+    {gText_ApprenticePleaseTeach1,  gText_ApprenticeRejectTeaching1,  gText_ApprenticeWhichLevelMode1,  gText_ApprenticeLevelModeThanks1},
+    {gText_ApprenticePleaseTeach2,  gText_ApprenticeRejectTeaching2,  gText_ApprenticeWhichLevelMode2,  gText_ApprenticeLevelModeThanks2},
+    {gText_ApprenticePleaseTeach3,  gText_ApprenticeRejectTeaching3,  gText_ApprenticeWhichLevelMode3,  gText_ApprenticeLevelModeThanks3},
+    {gText_ApprenticePleaseTeach4,  gText_ApprenticeRejectTeaching4,  gText_ApprenticeWhichLevelMode4,  gText_ApprenticeLevelModeThanks4},
+    {gText_ApprenticePleaseTeach5,  gText_ApprenticeRejectTeaching5,  gText_ApprenticeWhichLevelMode5,  gText_ApprenticeLevelModeThanks5},
+    {gText_ApprenticePleaseTeach6,  gText_ApprenticeRejectTeaching6,  gText_ApprenticeWhichLevelMode6,  gText_ApprenticeLevelModeThanks6},
+    {gText_ApprenticePleaseTeach7,  gText_ApprenticeRejectTeaching7,  gText_ApprenticeWhichLevelMode7,  gText_ApprenticeLevelModeThanks7},
+    {gText_ApprenticePleaseTeach8,  gText_ApprenticeRejectTeaching8,  gText_ApprenticeWhichLevelMode8,  gText_ApprenticeLevelModeThanks8},
+    {gText_ApprenticePleaseTeach9,  gText_ApprenticeRejectTeaching9,  gText_ApprenticeWhichLevelMode9,  gText_ApprenticeLevelModeThanks9},
+    {gText_ApprenticePleaseTeach10, gText_ApprenticeRejectTeaching10, gText_ApprenticeWhichLevelMode10, gText_ApprenticeLevelModeThanks10},
+    {gText_ApprenticePleaseTeach11, gText_ApprenticeRejectTeaching11, gText_ApprenticeWhichLevelMode11, gText_ApprenticeLevelModeThanks11},
+    {gText_ApprenticePleaseTeach12, gText_ApprenticeRejectTeaching12, gText_ApprenticeWhichLevelMode12, gText_ApprenticeLevelModeThanks12},
+    {gText_ApprenticePleaseTeach13, gText_ApprenticeRejectTeaching13, gText_ApprenticeWhichLevelMode13, gText_ApprenticeLevelModeThanks13},
+    {gText_ApprenticePleaseTeach14, gText_ApprenticeRejectTeaching14, gText_ApprenticeWhichLevelMode14, gText_ApprenticeLevelModeThanks14},
+    {gText_ApprenticePleaseTeach15, gText_ApprenticeRejectTeaching15, gText_ApprenticeWhichLevelMode15, gText_ApprenticeLevelModeThanks15},
 };
