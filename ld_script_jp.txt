@@ -9822,7 +9822,9 @@ SECTIONS {
         src/money.o(.rodata.money_label_data);
         src/contest_effect.o(.rodata.contest_effect_data);
         src/data/text/region_texts34.o(.rodata);
-        data/data_b2d.o(.rodata.mid34);
+        src/record_mixing.o(.rodata.record_mixing_tables);
+        . = ALIGN(4);
+        data/data_b2d.o(.rodata.mid34_suffix);
         src/data/text/region_texts35.o(.rodata);
         data/data_b2d.o(.rodata.mid35);
         src/data/text/region_texts36.o(.rodata);

@@ -1,6 +1,45 @@
 #include "global.h"
 #include "record_mixing.h"
 
+#define NUM_SWAP_COMBOS 3
+#define RECORD_MIXING_TABLES __attribute__((section(".rodata.record_mixing_tables"), aligned(1)))
+
+// These tables retain the original JP ordering at 0x08566CC7.
+static RECORD_MIXING_TABLES const u8 sPlayerIdxOrders_2Player[] = { 1, 0 };
+
+static RECORD_MIXING_TABLES const u8 sPlayerIdxOrders_3Player[][3] =
+{
+    { 1, 2, 0 },
+    { 2, 0, 1 },
+};
+
+static RECORD_MIXING_TABLES const u8 sPlayerIdxOrders_4Player[][4] =
+{
+    { 1, 0, 3, 2 },
+    { 3, 0, 1, 2 },
+    { 2, 0, 3, 1 },
+    { 1, 3, 0, 2 },
+    { 2, 3, 0, 1 },
+    { 3, 2, 0, 1 },
+    { 1, 2, 3, 0 },
+    { 2, 3, 1, 0 },
+    { 3, 2, 1, 0 },
+};
+
+static RECORD_MIXING_TABLES const u8 sDaycareMailSwapIds_3Player[NUM_SWAP_COMBOS][2] =
+{
+    { 0, 1 },
+    { 1, 2 },
+    { 2, 0 },
+};
+
+static RECORD_MIXING_TABLES const u8 sDaycareMailSwapIds_4Player[NUM_SWAP_COMBOS][4] =
+{
+    { 0, 1, 2, 3 },
+    { 0, 2, 1, 3 },
+    { 0, 3, 2, 1 },
+};
+
 __attribute__((naked)) void RecordMixingPlayerSpotTriggered()
 {
     __asm__(".syntax unified\n\t"
@@ -1539,7 +1578,7 @@ __attribute__((naked)) void ShufflePlayerIndices(void)
         "	bls _080E702E\n\t"
         "	b _080E7090\n\t"
         "	.align 2, 0\n\t"
-        "_080E703C: .4byte gUnknown_8566CC7\n\t"
+        "_080E703C: .4byte sPlayerIdxOrders_2Player\n\t"
         "_080E7040:\n\t"
         "	movs r0, #0\n\t"
         "	bl GetLinkPlayerTrainerId\n\t"
@@ -1561,7 +1600,7 @@ __attribute__((naked)) void ShufflePlayerIndices(void)
         "	bls _080E7058\n\t"
         "	b _080E7090\n\t"
         "	.align 2, 0\n\t"
-        "_080E7068: .4byte gUnknown_8566CC9\n\t"
+        "_080E7068: .4byte sPlayerIdxOrders_3Player\n\t"
         "_080E706C:\n\t"
         "	movs r0, #0\n\t"
         "	bl GetLinkPlayerTrainerId\n\t"
@@ -1585,7 +1624,7 @@ __attribute__((naked)) void ShufflePlayerIndices(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E7098: .4byte gUnknown_8566CCF\n\t"
+        "_080E7098: .4byte sPlayerIdxOrders_4Player\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2445,7 +2484,7 @@ __attribute__((naked)) void ReceiveDaycareMailData(void)
         "	bl sub_080E7274\n\t"
         "	b _080E7704\n\t"
         "	.align 2, 0\n\t"
-        "_080E76CC: .4byte gUnknown_8566CF3\n\t"
+        "_080E76CC: .4byte sDaycareMailSwapIds_3Player\n\t"
         "_080E76D0:\n\t"
         "	add r6, sp, #0x24\n\t"
         "	ldr r4, _080E7744\n\t"
@@ -2501,7 +2540,7 @@ __attribute__((naked)) void ReceiveDaycareMailData(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E7744: .4byte gUnknown_8566CF9\n\t"
+        "_080E7744: .4byte sDaycareMailSwapIds_4Player\n\t"
         "_080E7748: .4byte gSaveBlock1Ptr\n\t"
         "_080E774C: .4byte 0x0000310C\n\t"
         ".syntax divided\n\t"

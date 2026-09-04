@@ -94,27 +94,7 @@ gUnknown_85CA8D1: @ 0x85CA8D1
 	.string "どうぐを　すてます$"
 	.globl gUnknown_85CA918
 
-	.section .rodata.mid34
-
-	.globl gUnknown_8566CC7
-gUnknown_8566CC7: @ 0x8566CC7
-	.incbin "baserom_jp.gba", 0x566cc7, 0x2
-
-	.globl gUnknown_8566CC9
-gUnknown_8566CC9: @ 0x8566CC9
-	.incbin "baserom_jp.gba", 0x566cc9, 0x6
-
-	.globl gUnknown_8566CCF
-gUnknown_8566CCF: @ 0x8566CCF
-	.incbin "baserom_jp.gba", 0x566ccf, 0x24
-
-	.globl gUnknown_8566CF3
-gUnknown_8566CF3: @ 0x8566CF3
-	.incbin "baserom_jp.gba", 0x566cf3, 0x6
-
-	.globl gUnknown_8566CF9
-gUnknown_8566CF9: @ 0x8566CF9
-	.incbin "baserom_jp.gba", 0x566cf9, 0xf
+	.section .rodata.mid34_suffix
 
 	.globl gUnknown_8566D08
 gUnknown_8566D08: @ 0x8566D08
