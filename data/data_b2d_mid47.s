@@ -14,25 +14,12 @@
 gUnknown_82FA6D0: @ 0x82FA6D0
 	.incbin "baserom_jp.gba", 0x2fa6d0, 0x6
 
-	.section .rodata.data_b2d_mid47_after_pokemon_battler_data
+	.section .rodata.data_b2d_mid47_between_pokemon_battler_and_hm_data
 
-	@ Alignment before the following unidentified data.
+	@ Alignment before the following Pokemon static data.
 	.byte 0
 
-	.globl gUnknown_82FA876
-gUnknown_82FA876: @ 0x82FA876
-	.string "そ　て　ぐ　ば　デ　{UP_ARROW_2}ァ　もあ$$"
-	.globl gUnknown_82FA888
-gUnknown_82FA888: @ 0x82FA888
-	.incbin "baserom_jp.gba", 0x2fa888, 0x2
-
-	.globl gUnknown_82FA88A
-gUnknown_82FA88A: @ 0x82FA88A
-	.incbin "baserom_jp.gba", 0x2fa88a, 0x2a
-
-	.globl gUnknown_82FA8B4
-gUnknown_82FA8B4: @ 0x82FA8B4
-	.incbin "baserom_jp.gba", 0x2fa8b4, 0x18
+	.section .rodata.data_b2d_mid47_after_pokemon_hm_data
 
 	.globl gSineTable
 gSineTable: @ 0x82FA8CC

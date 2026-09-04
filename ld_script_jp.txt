@@ -9440,7 +9440,11 @@ SECTIONS {
     src/pokemon.o(.rodata.pokemon_battler_sprite_template_data);
     src/pokemon.o(.rodata.pokemon_trainer_back_sprite_template_data);
     src/pokemon.o(.rodata.pokemon_battler_misc_data);
-    data/data_b2d_mid47.o(.rodata.data_b2d_mid47_after_pokemon_battler_data);
+    data/data_b2d_mid47.o(.rodata.data_b2d_mid47_between_pokemon_battler_and_hm_data);
+    src/pokemon.o(.rodata.pokemon_hm_and_altering_cave_data);
+    src/pokemon.o(.rodata.pokemon_sprite_template_64x64_oam_data);
+    src/pokemon.o(.rodata.pokemon_sprite_template_64x64_data);
+    data/data_b2d_mid47.o(.rodata.data_b2d_mid47_after_pokemon_hm_data);
         src/util.o(.rodata.util_misc_blank_gfx_data);
     src/data/pokemon/egg_moves.o(.rodata);
         gUnknown_82FB764 = gEggMoves;

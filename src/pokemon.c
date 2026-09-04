@@ -5,6 +5,7 @@
 #include "pokemon.h"
 #include "pokemon_animation.h"
 #include "constants/hold_effects.h"
+#include "constants/items.h"
 #include "constants/moves.h"
 #include "constants/pokedex.h"
 #include "constants/trainers.h"
@@ -19,6 +20,15 @@
 #define POKEMON_BATTLER_SPRITE_TEMPLATE_DATA __attribute__((section(".rodata.pokemon_battler_sprite_template_data"), aligned(1)))
 #define POKEMON_TRAINER_BACK_SPRITE_TEMPLATE_DATA __attribute__((section(".rodata.pokemon_trainer_back_sprite_template_data"), aligned(1)))
 #define POKEMON_BATTLER_MISC_DATA __attribute__((section(".rodata.pokemon_battler_misc_data"), aligned(1)))
+#define POKEMON_HM_AND_ALTERING_CAVE_DATA __attribute__((section(".rodata.pokemon_hm_and_altering_cave_data"), aligned(1)))
+#define POKEMON_SPRITE_TEMPLATE_64X64_OAM_DATA __attribute__((section(".rodata.pokemon_sprite_template_64x64_oam_data"), aligned(1)))
+#define POKEMON_SPRITE_TEMPLATE_64X64_DATA __attribute__((section(".rodata.pokemon_sprite_template_64x64_data"), aligned(1)))
+
+struct SpeciesItem
+{
+    u16 species;
+    u16 item;
+} __attribute__((packed));
 
 // SPECIES_NONE is ignored in these tables, so decrement the species before lookup.
 
@@ -721,6 +731,62 @@ POKEMON_BATTLER_MISC_DATA static const s8 sFriendshipEventModifiers[][3] =
     [FRIENDSHIP_EVENT_FAINT_SMALL]     = {-1, -1, -1},
     [FRIENDSHIP_EVENT_FAINT_FIELD_PSN] = {-5, -5, -10},
     [FRIENDSHIP_EVENT_FAINT_LARGE]     = {-5, -5, -10},
+};
+
+#define HM_MOVES_END 0xFFFF
+
+POKEMON_HM_AND_ALTERING_CAVE_DATA static const u16 sHMMoves[] =
+{
+    MOVE_CUT,
+    MOVE_FLY,
+    MOVE_SURF,
+    MOVE_STRENGTH,
+    MOVE_FLASH,
+    MOVE_ROCK_SMASH,
+    MOVE_WATERFALL,
+    MOVE_DIVE,
+    HM_MOVES_END,
+};
+
+POKEMON_HM_AND_ALTERING_CAVE_DATA static const struct SpeciesItem sAlteringCaveWildMonHeldItems[] =
+{
+    {SPECIES_NONE,      ITEM_NONE},
+    {SPECIES_MAREEP,    ITEM_GANLON_BERRY},
+    {SPECIES_PINECO,    ITEM_APICOT_BERRY},
+    {SPECIES_HOUNDOUR,  ITEM_BIG_MUSHROOM},
+    {SPECIES_TEDDIURSA, ITEM_PETAYA_BERRY},
+    {SPECIES_AIPOM,     ITEM_BERRY_JUICE},
+    {SPECIES_SHUCKLE,   ITEM_BERRY_JUICE},
+    {SPECIES_STANTLER,  ITEM_PETAYA_BERRY},
+    {SPECIES_SMEARGLE,  ITEM_SALAC_BERRY},
+};
+
+POKEMON_SPRITE_TEMPLATE_64X64_OAM_DATA static const struct OamData sOamData_64x64 =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+POKEMON_SPRITE_TEMPLATE_64X64_DATA static const struct SpriteTemplate sSpriteTemplate_64x64 =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = TAG_NONE,
+    .oam = &sOamData_64x64,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
 };
 
 struct CombinedMove
@@ -16444,7 +16510,7 @@ __attribute__((naked)) bool32 IsHMMove2(u16 move)
         "	movs r0, #1\n\t"
         "	b _0806E2C4\n\t"
         "	.align 2, 0\n\t"
-        "_0806E2B4: .4byte gUnknown_82FA876\n\t"
+        "_0806E2B4: .4byte sHMMoves\n\t"
         "_0806E2B8: .4byte 0x0000FFFF\n\t"
         "_0806E2BC:\n\t"
         "	ldrh r0, [r1]\n\t"
@@ -16744,7 +16810,7 @@ __attribute__((naked)) void GetWildMonTableIdInAlteringCave(void)
         "	adds r0, r1, #0\n\t"
         "	b _0806E4EE\n\t"
         "	.align 2, 0\n\t"
-        "_0806E4E0: .4byte gUnknown_82FA888\n\t"
+        "_0806E4E0: .4byte sAlteringCaveWildMonHeldItems\n\t"
         "_0806E4E4:\n\t"
         "	adds r2, #4\n\t"
         "	adds r1, #1\n\t"
@@ -16830,7 +16896,7 @@ __attribute__((naked)) void SetWildMonHeldItem()
         "_0806E580: .4byte gEnemyParty\n\t"
         "_0806E584: .4byte gPlayerParty\n\t"
         "_0806E588: .4byte gMapHeader\n\t"
-        "_0806E58C: .4byte gUnknown_82FA88A\n\t"
+        "_0806E58C: .4byte sAlteringCaveWildMonHeldItems + 2\n\t"
         "_0806E590:\n\t"
         "	cmp r6, r8\n\t"
         "	blo _0806E61C\n\t"
@@ -17940,7 +18006,7 @@ __attribute__((naked)) void sub_0806EC80(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0806ED28: .4byte gUnknown_82FA8B4\n\t"
+        "_0806ED28: .4byte sSpriteTemplate_64x64\n\t"
         "_0806ED2C: .4byte gAnims_MonPic\n\t"
         ".syntax divided\n\t"
     );
