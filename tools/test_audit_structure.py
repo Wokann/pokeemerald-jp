@@ -209,6 +209,52 @@ class StructureAuditTests(unittest.TestCase):
         self.assertEqual(report["manifest"][1]["classification"], "raw_binary")
         self.assertEqual(report["manifest"][2]["classification_reason"], "anonymous_encoded_asset")
 
+    def test_incbin_named_tileset_and_declared_layout_assets_are_not_raw(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "data" / "assets.s"
+            source.parent.mkdir()
+            resources = [
+                "data/tilesets/secondary/battle_frontier_outside_west/tiles.4bpp.lz",
+                "data/tilesets/secondary/battle_frontier_outside_west/metatiles.bin",
+                "data/tilesets/secondary/battle_frontier_outside_west/metatile_attributes.bin",
+                "data/layouts/NamedLayout/map.bin",
+                "data/layouts/NamedLayout/border.bin",
+                "data/layouts/UndeclaredLayout/map.bin",
+                "data/data_b2d_mid26.bin",
+                "data/tilesets/secondary/gUnknownOwner/tiles.4bpp.lz",
+                "graphics/unknown_owner/tiles.4bpp.lz",
+            ]
+            source.write_text(
+                "".join(f'.incbin \"{resource}\"\n' for resource in resources),
+                encoding="utf-8",
+            )
+            for resource in resources:
+                path = root / resource
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(b"asset")
+            layouts = root / "data" / "layouts" / "layouts.json"
+            layouts.write_text(
+                '{"layouts": [{"blockdata_filepath": "data/layouts/NamedLayout/map.bin", '
+                '"border_filepath": "data/layouts/NamedLayout/border.bin"}, '
+                '{"blockdata_filepath": "data/data_b2d_mid26.bin"}]}',
+                encoding="utf-8",
+            )
+            report = audit.incbin_progress(root)
+        self.assertEqual(report["raw_binary_references"], 4)
+        self.assertEqual(report["non_raw_references"], 5)
+        reasons = {item["resource"]: item["classification_reason"]
+                   for item in report["manifest"]}
+        self.assertEqual(reasons[resources[0]], "named_tileset_resource")
+        self.assertEqual(reasons[resources[1]], "named_tileset_resource")
+        self.assertEqual(reasons[resources[2]], "named_tileset_resource")
+        self.assertEqual(reasons[resources[3]], "declared_layout_resource")
+        self.assertEqual(reasons[resources[4]], "declared_layout_resource")
+        self.assertEqual(reasons[resources[5]], "raw_suffix_or_container")
+        self.assertEqual(reasons[resources[6]], "raw_suffix_or_container")
+        self.assertEqual(reasons[resources[7]], "raw_suffix_or_container")
+        self.assertEqual(reasons[resources[8]], "anonymous_encoded_asset")
+
     def test_asset_naming_reports_a_unique_us_basename_candidate(self):
         incbin = {"manifest": [
             {"resource": "graphics/jp/path/shared.bin"},

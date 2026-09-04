@@ -1278,21 +1278,74 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
     }
 
 
-def classify_incbin_resource(resource: str) -> tuple[str, str]:
+TILESET_RESOURCE_FILENAMES = {
+    "tiles.4bpp.lz",
+    "metatiles.bin",
+    "metatile_attributes.bin",
+}
+ANONYMOUS_RESOURCE_PREFIXES = ("gunknown", "unknown", "unk")
+
+
+def is_anonymous_resource_path(path: Path) -> bool:
+    """Return whether any owner or leaf name is intentionally anonymous."""
+    return any(part.lower().startswith(ANONYMOUS_RESOURCE_PREFIXES) for part in path.parts)
+
+
+def declared_layout_resources(root: Path) -> set[str]:
+    """Return the exact map and border resource paths owned by layouts.json."""
+    path = root / "data" / "layouts" / "layouts.json"
+    if not path.is_file():
+        return set()
+    try:
+        layouts = json.loads(path.read_text(encoding="utf-8")).get("layouts", [])
+    except (json.JSONDecodeError, OSError):
+        return set()
+    resources = set()
+    for layout in layouts:
+        if not isinstance(layout, dict):
+            continue
+        for field in ("blockdata_filepath", "border_filepath"):
+            resource = layout.get(field)
+            if isinstance(resource, str):
+                resources.add(resource)
+    return resources
+
+
+def classify_incbin_resource(resource: str,
+                             layout_resources: set[str] | None = None) -> tuple[str, str]:
     """Classify an INCBIN path without treating named encoded assets as raw.
 
-    A ``.bin`` container or an encoded stream outside an asset tree still
-    needs a source-owner audit.  Conversely, a named LZ/RL/Huff resource in
-    ``graphics/`` or ``sound/`` is already a final, structured asset owner:
-    it must be validated against the ROM, but it is not an anonymous raw span
-    waiting to be split.  Keeping those cases separate makes the progress
-    report useful after byte-exact asset migrations.
+    A ``.bin`` container or an encoded stream outside a verified asset owner
+    still needs a source-owner audit.  Conversely, named encoded assets in
+    ``graphics/`` or ``sound/``, the three canonical tileset resources under
+    a named primary/secondary owner, and map/border paths declared by
+    ``layouts.json`` are final physical owners.  They still need byte and
+    semantic validation, but are not anonymous raw spans waiting to be split.
     """
     path = Path(resource)
     suffix = path.suffix or "[no suffix]"
     asset_root = path.parts and path.parts[0] in {"graphics", "sound"}
     encoded_asset = asset_root and suffix in {".lz", ".rl", ".huff"}
-    anonymous_asset = path.name.lower().startswith(("gunknown", "unknown", "unk"))
+    anonymous_asset = is_anonymous_resource_path(path)
+    named_tileset_asset = (
+        len(path.parts) == 5
+        and path.parts[:2] == ("data", "tilesets")
+        and path.parts[2] in {"primary", "secondary"}
+        and path.name in TILESET_RESOURCE_FILENAMES
+        and not anonymous_asset
+    )
+    named_layout_asset = (
+        len(path.parts) == 4
+        and path.parts[:2] == ("data", "layouts")
+        and path.name in {"map.bin", "border.bin"}
+        and not anonymous_asset
+    )
+    declared_layout_asset = (
+        resource in (layout_resources or set()) and named_layout_asset)
+    if named_tileset_asset:
+        return "structured_or_encoded", "named_tileset_resource"
+    if declared_layout_asset:
+        return "structured_or_encoded", "declared_layout_resource"
     raw = suffix in {".bin", ".gba", ".lz", ".rl", ".huff"} and (
         not encoded_asset or anonymous_asset
     )
@@ -1309,6 +1362,7 @@ def incbin_progress(root: Path) -> dict[str, object]:
     references = []
     raw_baserom_ranges = []
     raw_baserom_unbounded_references = 0
+    layout_resources = declared_layout_resources(root)
     for relpath in sorted(source_files(root)):
         path = root / relpath
         if path.suffix not in {".s", ".inc", ".c", ".h"}:
@@ -1322,7 +1376,8 @@ def incbin_progress(root: Path) -> dict[str, object]:
             len(BASEROM_INCBIN_RE.findall(text)) - len(visible_ranges))
         for resource in INCBIN_RE.findall(text):
             suffix = Path(resource).suffix or "[no suffix]"
-            classification, classification_reason = classify_incbin_resource(resource)
+            classification, classification_reason = classify_incbin_resource(
+                resource, layout_resources)
             references.append({
                 "owner": relpath,
                 "resource": resource,
