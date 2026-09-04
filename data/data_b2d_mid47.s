@@ -8,48 +8,16 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-	.section .rodata.data_b2d_mid47_after_pokemon_pp_up_and_stat_stage_data
+	.section .rodata.data_b2d_mid47_before_pokemon_battler_data
 
 	.globl gUnknown_82FA6D0
 gUnknown_82FA6D0: @ 0x82FA6D0
 	.incbin "baserom_jp.gba", 0x2fa6d0, 0x6
 
-	.globl gUnknown_82FA6D6
-gUnknown_82FA6D6: @ 0x82FA6D6
-	.incbin "baserom_jp.gba", 0x2fa6d6, 0xc
+	.section .rodata.data_b2d_mid47_after_pokemon_battler_data
 
-	.globl gUnionRoomFacilityClasses
-gUnionRoomFacilityClasses: @ 0x82FA6E2
-	.hword 0x0003, 0x000A, 0x001B, 0x002B, 0x001E, 0x0043, 0x0042, 0x0019
-	.hword 0x0012, 0x000C, 0x001C, 0x0047, 0x001F, 0x0036, 0x0002, 0x0014
-
-	.globl gUnknown_82FA702
-gUnknown_82FA702: @ 0x82FA702
-	.incbin "baserom_jp.gba", 0x2fa702, 0x22
-
-	.globl gUnknown_82FA724
-gUnknown_82FA724: @ 0x82FA724
-	.incbin "baserom_jp.gba", 0x2fa724, 0x60
-
-	.globl gUnknown_82FA784
-gUnknown_82FA784: @ 0x82FA784
-	.incbin "baserom_jp.gba", 0x2fa784, 0xc0
-
-	.globl gUnknown_82FA844
-gUnknown_82FA844: @ 0x82FA844
-	.incbin "baserom_jp.gba", 0x2fa844, 0xa
-
-	.globl gUnknown_82FA84E
-gUnknown_82FA84E: @ 0x82FA84E
-	.incbin "baserom_jp.gba", 0x2fa84e, 0x6
-
-	.globl gUnknown_82FA854
-gUnknown_82FA854: @ 0x82FA854
-	.incbin "baserom_jp.gba", 0x2fa854, 0x6
-
-	.globl gUnknown_82FA85A
-gUnknown_82FA85A: @ 0x82FA85A
-	.incbin "baserom_jp.gba", 0x2fa85a, 0x1c
+	@ Alignment before the following unidentified data.
+	.byte 0
 
 	.globl gUnknown_82FA876
 gUnknown_82FA876: @ 0x82FA876

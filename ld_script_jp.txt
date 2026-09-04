@@ -9435,7 +9435,12 @@ SECTIONS {
     gUnknown_82F9D04 = gLevelUpLearnsets;
     src/pokemon.o(.rodata.pokemon_front_animation_table_data);
     src/pokemon.o(.rodata.pokemon_pp_up_and_stat_stage_data);
-    data/data_b2d_mid47.o(.rodata.data_b2d_mid47_after_pokemon_pp_up_and_stat_stage_data);
+    data/data_b2d_mid47.o(.rodata.data_b2d_mid47_before_pokemon_battler_data);
+    src/pokemon.o(.rodata.pokemon_battler_support_data);
+    src/pokemon.o(.rodata.pokemon_battler_sprite_template_data);
+    src/pokemon.o(.rodata.pokemon_trainer_back_sprite_template_data);
+    src/pokemon.o(.rodata.pokemon_battler_misc_data);
+    data/data_b2d_mid47.o(.rodata.data_b2d_mid47_after_pokemon_battler_data);
         src/util.o(.rodata.util_misc_blank_gfx_data);
     src/data/pokemon/egg_moves.o(.rodata);
         gUnknown_82FB764 = gEggMoves;

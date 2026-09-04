@@ -1,15 +1,24 @@
 #include "global.h"
+#include "battle.h"
+#include "battle_main.h"
+#include "data.h"
 #include "pokemon.h"
 #include "pokemon_animation.h"
+#include "constants/hold_effects.h"
 #include "constants/moves.h"
 #include "constants/pokedex.h"
 #include "constants/trainers.h"
+#include "constants/union_room.h"
 
 #define POKEDEX_ORDER_DATA __attribute__((section(".rodata.pokedex_order_data")))
 #define POKEMON_SPINDA_DATA __attribute__((section(".rodata.pokemon_spinda_data")))
 #define POKEMON_NATURE_STAT_DATA __attribute__((section(".rodata.pokemon_nature_stat_data")))
 #define POKEMON_FRONT_ANIMATION_TABLE_DATA __attribute__((section(".rodata.pokemon_front_animation_table_data"), aligned(1)))
 #define POKEMON_PP_UP_AND_STAT_STAGE_DATA __attribute__((section(".rodata.pokemon_pp_up_and_stat_stage_data"), aligned(1)))
+#define POKEMON_BATTLER_SUPPORT_DATA __attribute__((section(".rodata.pokemon_battler_support_data"), aligned(1)))
+#define POKEMON_BATTLER_SPRITE_TEMPLATE_DATA __attribute__((section(".rodata.pokemon_battler_sprite_template_data"), aligned(1)))
+#define POKEMON_TRAINER_BACK_SPRITE_TEMPLATE_DATA __attribute__((section(".rodata.pokemon_trainer_back_sprite_template_data"), aligned(1)))
+#define POKEMON_BATTLER_MISC_DATA __attribute__((section(".rodata.pokemon_battler_misc_data"), aligned(1)))
 
 // SPECIES_NONE is ignored in these tables, so decrement the species before lookup.
 
@@ -491,6 +500,227 @@ POKEMON_PP_UP_AND_STAT_STAGE_DATA const u8 gStatStageRatios[MAX_STAT_STAGE + 1][
     {30, 10}, // +4
     {35, 10}, // +5
     {40, 10}, // +6, MAX_STAT_STAGE
+};
+
+POKEMON_BATTLER_SUPPORT_DATA static const u16 sDeoxysBaseStats[] =
+{
+    [STAT_HP]    = 50,
+    [STAT_ATK]   = 95,
+    [STAT_DEF]   = 90,
+    [STAT_SPEED] = 180,
+    [STAT_SPATK] = 95,
+    [STAT_SPDEF] = 90,
+};
+
+// The classes used by other players in the Union Room.
+// These should correspond with the overworld graphics in sUnionRoomObjGfxIds.
+POKEMON_BATTLER_SUPPORT_DATA const u16 gUnionRoomFacilityClasses[NUM_UNION_ROOM_CLASSES * GENDER_COUNT] =
+{
+    // Male classes
+    FACILITY_CLASS_COOLTRAINER_M,
+    FACILITY_CLASS_BLACK_BELT,
+    FACILITY_CLASS_CAMPER,
+    FACILITY_CLASS_YOUNGSTER,
+    FACILITY_CLASS_PSYCHIC_M,
+    FACILITY_CLASS_BUG_CATCHER,
+    FACILITY_CLASS_PKMN_BREEDER_M,
+    FACILITY_CLASS_GUITARIST,
+    // Female classes
+    FACILITY_CLASS_COOLTRAINER_F,
+    FACILITY_CLASS_HEX_MANIAC,
+    FACILITY_CLASS_PICNICKER,
+    FACILITY_CLASS_LASS,
+    FACILITY_CLASS_PSYCHIC_F,
+    FACILITY_CLASS_BATTLE_GIRL,
+    FACILITY_CLASS_PKMN_BREEDER_F,
+    FACILITY_CLASS_BEAUTY
+};
+
+POKEMON_BATTLER_SUPPORT_DATA static const u8 sHoldEffectToType[][2] =
+{
+    {HOLD_EFFECT_BUG_POWER, TYPE_BUG},
+    {HOLD_EFFECT_STEEL_POWER, TYPE_STEEL},
+    {HOLD_EFFECT_GROUND_POWER, TYPE_GROUND},
+    {HOLD_EFFECT_ROCK_POWER, TYPE_ROCK},
+    {HOLD_EFFECT_GRASS_POWER, TYPE_GRASS},
+    {HOLD_EFFECT_DARK_POWER, TYPE_DARK},
+    {HOLD_EFFECT_FIGHTING_POWER, TYPE_FIGHTING},
+    {HOLD_EFFECT_ELECTRIC_POWER, TYPE_ELECTRIC},
+    {HOLD_EFFECT_WATER_POWER, TYPE_WATER},
+    {HOLD_EFFECT_FLYING_POWER, TYPE_FLYING},
+    {HOLD_EFFECT_POISON_POWER, TYPE_POISON},
+    {HOLD_EFFECT_ICE_POWER, TYPE_ICE},
+    {HOLD_EFFECT_GHOST_POWER, TYPE_GHOST},
+    {HOLD_EFFECT_PSYCHIC_POWER, TYPE_PSYCHIC},
+    {HOLD_EFFECT_FIRE_POWER, TYPE_FIRE},
+    {HOLD_EFFECT_DRAGON_POWER, TYPE_DRAGON},
+    {HOLD_EFFECT_NORMAL_POWER, TYPE_NORMAL},
+};
+
+POKEMON_BATTLER_SPRITE_TEMPLATE_DATA const struct SpriteTemplate gBattlerSpriteTemplates[MAX_BATTLERS_COUNT] =
+{
+    [B_POSITION_PLAYER_LEFT] = {
+        .tileTag = TAG_NONE,
+        .paletteTag = 0,
+        .oam = &gOamData_BattleSpritePlayerSide,
+        .anims = NULL,
+        .images = gBattlerPicTable_PlayerLeft,
+        .affineAnims = gAffineAnims_BattleSpritePlayerSide,
+        .callback = SpriteCB_BattleSpriteStartSlideLeft,
+    },
+    [B_POSITION_OPPONENT_LEFT] = {
+        .tileTag = TAG_NONE,
+        .paletteTag = 0,
+        .oam = &gOamData_BattleSpriteOpponentSide,
+        .anims = NULL,
+        .images = gBattlerPicTable_OpponentLeft,
+        .affineAnims = gAffineAnims_BattleSpriteOpponentSide,
+        .callback = SpriteCB_WildMon,
+    },
+    [B_POSITION_PLAYER_RIGHT] = {
+        .tileTag = TAG_NONE,
+        .paletteTag = 0,
+        .oam = &gOamData_BattleSpritePlayerSide,
+        .anims = NULL,
+        .images = gBattlerPicTable_PlayerRight,
+        .affineAnims = gAffineAnims_BattleSpritePlayerSide,
+        .callback = SpriteCB_BattleSpriteStartSlideLeft,
+    },
+    [B_POSITION_OPPONENT_RIGHT] = {
+        .tileTag = TAG_NONE,
+        .paletteTag = 0,
+        .oam = &gOamData_BattleSpriteOpponentSide,
+        .anims = NULL,
+        .images = gBattlerPicTable_OpponentRight,
+        .affineAnims = gAffineAnims_BattleSpriteOpponentSide,
+        .callback = SpriteCB_WildMon
+    },
+};
+
+POKEMON_TRAINER_BACK_SPRITE_TEMPLATE_DATA static const struct SpriteTemplate sTrainerBackSpriteTemplates[] =
+{
+    [TRAINER_BACK_PIC_BRENDAN] = {
+        .tileTag = TAG_NONE,
+        .paletteTag = 0,
+        .oam = &gOamData_BattleSpritePlayerSide,
+        .anims = NULL,
+        .images = gTrainerBackPicTable_Brendan,
+        .affineAnims = gAffineAnims_BattleSpritePlayerSide,
+        .callback = SpriteCB_BattleSpriteStartSlideLeft,
+    },
+    [TRAINER_BACK_PIC_MAY] = {
+        .tileTag = TAG_NONE,
+        .paletteTag = 0,
+        .oam = &gOamData_BattleSpritePlayerSide,
+        .anims = NULL,
+        .images = gTrainerBackPicTable_May,
+        .affineAnims = gAffineAnims_BattleSpritePlayerSide,
+        .callback = SpriteCB_BattleSpriteStartSlideLeft,
+    },
+    [TRAINER_BACK_PIC_RED] = {
+        .tileTag = TAG_NONE,
+        .paletteTag = 0,
+        .oam = &gOamData_BattleSpritePlayerSide,
+        .anims = NULL,
+        .images = gTrainerBackPicTable_Red,
+        .affineAnims = gAffineAnims_BattleSpritePlayerSide,
+        .callback = SpriteCB_BattleSpriteStartSlideLeft,
+    },
+    [TRAINER_BACK_PIC_LEAF] = {
+        .tileTag = TAG_NONE,
+        .paletteTag = 0,
+        .oam = &gOamData_BattleSpritePlayerSide,
+        .anims = NULL,
+        .images = gTrainerBackPicTable_Leaf,
+        .affineAnims = gAffineAnims_BattleSpritePlayerSide,
+        .callback = SpriteCB_BattleSpriteStartSlideLeft,
+    },
+    [TRAINER_BACK_PIC_RUBY_SAPPHIRE_BRENDAN] = {
+        .tileTag = TAG_NONE,
+        .paletteTag = 0,
+        .oam = &gOamData_BattleSpritePlayerSide,
+        .anims = NULL,
+        .images = gTrainerBackPicTable_RubySapphireBrendan,
+        .affineAnims = gAffineAnims_BattleSpritePlayerSide,
+        .callback = SpriteCB_BattleSpriteStartSlideLeft,
+    },
+    [TRAINER_BACK_PIC_RUBY_SAPPHIRE_MAY] = {
+        .tileTag = TAG_NONE,
+        .paletteTag = 0,
+        .oam = &gOamData_BattleSpritePlayerSide,
+        .anims = NULL,
+        .images = gTrainerBackPicTable_RubySapphireMay,
+        .affineAnims = gAffineAnims_BattleSpritePlayerSide,
+        .callback = SpriteCB_BattleSpriteStartSlideLeft,
+    },
+    [TRAINER_BACK_PIC_WALLY] = {
+        .tileTag = TAG_NONE,
+        .paletteTag = 0,
+        .oam = &gOamData_BattleSpritePlayerSide,
+        .anims = NULL,
+        .images = gTrainerBackPicTable_Wally,
+        .affineAnims = gAffineAnims_BattleSpritePlayerSide,
+        .callback = SpriteCB_BattleSpriteStartSlideLeft,
+    },
+    [TRAINER_BACK_PIC_STEVEN] = {
+        .tileTag = TAG_NONE,
+        .paletteTag = 0,
+        .oam = &gOamData_BattleSpritePlayerSide,
+        .anims = NULL,
+        .images = gTrainerBackPicTable_Steven,
+        .affineAnims = gAffineAnims_BattleSpritePlayerSide,
+        .callback = SpriteCB_BattleSpriteStartSlideLeft,
+    },
+};
+
+#define NUM_SECRET_BASE_CLASSES 5
+POKEMON_BATTLER_MISC_DATA static const u8 sSecretBaseFacilityClasses[GENDER_COUNT][NUM_SECRET_BASE_CLASSES] =
+{
+    [MALE] = {
+        FACILITY_CLASS_YOUNGSTER,
+        FACILITY_CLASS_BUG_CATCHER,
+        FACILITY_CLASS_RICH_BOY,
+        FACILITY_CLASS_CAMPER,
+        FACILITY_CLASS_COOLTRAINER_M
+    },
+    [FEMALE] = {
+        FACILITY_CLASS_LASS,
+        FACILITY_CLASS_SCHOOL_KID_F,
+        FACILITY_CLASS_LADY,
+        FACILITY_CLASS_PICNICKER,
+        FACILITY_CLASS_COOLTRAINER_F
+    }
+};
+
+POKEMON_BATTLER_MISC_DATA static const u8 sGetMonDataEVConstants[] =
+{
+    MON_DATA_HP_EV,
+    MON_DATA_ATK_EV,
+    MON_DATA_DEF_EV,
+    MON_DATA_SPEED_EV,
+    MON_DATA_SPDEF_EV,
+    MON_DATA_SPATK_EV
+};
+
+// For stat-raising items.
+POKEMON_BATTLER_MISC_DATA static const u8 sStatsToRaise[] =
+{
+    STAT_ATK, STAT_ATK, STAT_SPEED, STAT_DEF, STAT_SPATK, STAT_ACC
+};
+
+// 3 modifiers each for how much to change friendship for different ranges:
+// 0-99, 100-199, 200+.
+POKEMON_BATTLER_MISC_DATA static const s8 sFriendshipEventModifiers[][3] =
+{
+    [FRIENDSHIP_EVENT_GROW_LEVEL]      = { 5,  3,  2},
+    [FRIENDSHIP_EVENT_VITAMIN]         = { 5,  3,  2},
+    [FRIENDSHIP_EVENT_BATTLE_ITEM]     = { 1,  1,  0},
+    [FRIENDSHIP_EVENT_LEAGUE_BATTLE]   = { 3,  2,  1},
+    [FRIENDSHIP_EVENT_LEARN_TMHM]      = { 1,  1,  0},
+    [FRIENDSHIP_EVENT_WALKING]         = { 1,  1,  1},
+    [FRIENDSHIP_EVENT_FAINT_SMALL]     = {-1, -1, -1},
+    [FRIENDSHIP_EVENT_FAINT_FIELD_PSN] = {-5, -5, -10},
+    [FRIENDSHIP_EVENT_FAINT_LARGE]     = {-5, -5, -10},
 };
 
 struct CombinedMove
@@ -3804,7 +4034,7 @@ __attribute__((naked)) void GetDeoxysStat(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080685E0: .4byte gUnknown_82FA6D6\n\t"
+        "_080685E0: .4byte sDeoxysBaseStats\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5447,7 +5677,7 @@ __attribute__((naked)) s32 CalculateBaseDamage(struct BattlePokemon *attacker, s
         "_080692A4: .4byte 0x00000867\n\t"
         "_080692A8: .4byte 0x0000086B\n\t"
         "_080692AC: .4byte 0x0000086D\n\t"
-        "_080692B0: .4byte gUnknown_82FA702\n\t"
+        "_080692B0: .4byte sHoldEffectToType\n\t"
         "_080692B4:\n\t"
         "	adds r3, #2\n\t"
         "	adds r2, #1\n\t"
@@ -6709,7 +6939,7 @@ __attribute__((naked)) void SetMultiuseSpriteTemplateToPokemon(u16 speciesTag, u
         "	b _08069C62\n\t"
         "	.align 2, 0\n\t"
         "_08069C2C: .4byte gMultiuseSpriteTemplate\n\t"
-        "_08069C30: .4byte gUnknown_82FA724\n\t"
+        "_08069C30: .4byte gBattlerSpriteTemplates\n\t"
         "_08069C34: .4byte gAnims_MonPic\n\t"
         "_08069C38:\n\t"
         "	movs r0, #0xfa\n\t"
@@ -6777,7 +7007,7 @@ __attribute__((naked)) void SetMultiuseSpriteTemplateToTrainerBack(u16 trainerPi
         "	b _08069CF0\n\t"
         "	.align 2, 0\n\t"
         "_08069CA4: .4byte gMultiuseSpriteTemplate\n\t"
-        "_08069CA8: .4byte gUnknown_82FA784\n\t"
+        "_08069CA8: .4byte sTrainerBackSpriteTemplates\n\t"
         "_08069CAC: .4byte gTrainerBackAnimsPtrTable\n\t"
         "_08069CB0:\n\t"
         "	ldr r0, _08069CD0\n\t"
@@ -6819,7 +7049,7 @@ __attribute__((naked)) void SetMultiuseSpriteTemplateToTrainerBack(u16 trainerPi
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08069CF8: .4byte gUnknown_82FA724\n\t"
+        "_08069CF8: .4byte gBattlerSpriteTemplates\n\t"
         "_08069CFC: .4byte gTrainerFrontAnimsPtrTable\n\t"
         ".syntax divided\n\t"
     );
@@ -6878,7 +7108,7 @@ __attribute__((naked)) void SetMultiuseSpriteTemplateToTrainerFront(u16 trainerP
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08069D5C: .4byte gMultiuseSpriteTemplate\n\t"
-        "_08069D60: .4byte gUnknown_82FA724\n\t"
+        "_08069D60: .4byte gBattlerSpriteTemplates\n\t"
         "_08069D64: .4byte gTrainerFrontAnimsPtrTable\n\t"
         ".syntax divided\n\t"
     );
@@ -9796,7 +10026,7 @@ __attribute__((naked)) u8 GetSecretBaseTrainerClass()
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0806B32C: .4byte gUnknown_82FA844\n\t"
+        "_0806B32C: .4byte sSecretBaseFacilityClasses\n\t"
         "_0806B330: .4byte gBattleResources\n\t"
         "_0806B334: .4byte gFacilityClassToPicIndex\n\t"
         ".syntax divided\n\t"
@@ -9832,7 +10062,7 @@ __attribute__((naked)) u8 GetSecretBaseTrainerPicIndex()
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0806B36C: .4byte gUnknown_82FA844\n\t"
+        "_0806B36C: .4byte sSecretBaseFacilityClasses\n\t"
         "_0806B370: .4byte gBattleResources\n\t"
         "_0806B374: .4byte gUnknown_82EFF52\n\t"
         ".syntax divided\n\t"
@@ -11356,7 +11586,7 @@ __attribute__((naked)) bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item
         "	subs r5, r0, r1\n\t"
         "	b _0806BF4A\n\t"
         "	.align 2, 0\n\t"
-        "_0806BF40: .4byte gUnknown_82FA84E\n\t"
+        "_0806BF40: .4byte sGetMonDataEVConstants\n\t"
         "_0806BF44: .4byte SPECIAL_TryBufferWaldaPhrase\n\t"
         "_0806BF48:\n\t"
         "	adds r5, r2, #0\n\t"
@@ -11405,7 +11635,7 @@ __attribute__((naked)) bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item
         "	str r0, [sp, #0x28]\n\t"
         "	b _0806C43C\n\t"
         "	.align 2, 0\n\t"
-        "_0806BF9C: .4byte gUnknown_82FA84E\n\t"
+        "_0806BF9C: .4byte sGetMonDataEVConstants\n\t"
         "_0806BFA0:\n\t"
         "	movs r0, #0x10\n\t"
         "	mov r1, sl\n\t"
@@ -12078,7 +12308,7 @@ __attribute__((naked)) bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item
         "	subs r5, r0, r1\n\t"
         "	b _0806C536\n\t"
         "	.align 2, 0\n\t"
-        "_0806C52C: .4byte gUnknown_82FA84E\n\t"
+        "_0806C52C: .4byte sGetMonDataEVConstants\n\t"
         "_0806C530: .4byte SPECIAL_TryBufferWaldaPhrase\n\t"
         "_0806C534:\n\t"
         "	adds r5, r2, #0\n\t"
@@ -12120,7 +12350,7 @@ __attribute__((naked)) bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item
         "	str r3, [sp, #0x20]\n\t"
         "	b _0806C7F4\n\t"
         "	.align 2, 0\n\t"
-        "_0806C578: .4byte gUnknown_82FA84E\n\t"
+        "_0806C578: .4byte sGetMonDataEVConstants\n\t"
         "_0806C57C:\n\t"
         "	mov r0, r8\n\t"
         "	movs r1, #0x15\n\t"
@@ -12755,7 +12985,7 @@ __attribute__((naked)) void sub_0806C9E8(void)
         "_0806CA20: .4byte gBattlerInMenuId\n\t"
         "_0806CA24: .4byte gBattleTextBuff1\n\t"
         "_0806CA28: .4byte gUnknown_85AB08C\n\t"
-        "_0806CA2C: .4byte gUnknown_82FA854\n\t"
+        "_0806CA2C: .4byte sStatsToRaise\n\t"
         "_0806CA30: .4byte gBattleTextBuff2\n\t"
         "_0806CA34: .4byte gUnknown_85A9544 + 0x1333\n\t"
         "_0806CA38: .4byte gUnknown_85A9544 + 0x1350\n\t"
@@ -14370,7 +14600,7 @@ __attribute__((naked)) void AdjustFriendship(struct Pokemon *mon, u8 event)
         "_0806D560: .4byte gBattleTypeFlags\n\t"
         "_0806D564: .4byte gTrainers\n\t"
         "_0806D568: .4byte gTrainerBattleOpponent_A\n\t"
-        "_0806D56C: .4byte gUnknown_82FA85A\n\t"
+        "_0806D56C: .4byte sFriendshipEventModifiers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -17612,7 +17842,7 @@ __attribute__((naked)) void sub_0806EBE4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0806EC7C: .4byte gUnknown_82FA724\n\t"
+        "_0806EC7C: .4byte gBattlerSpriteTemplates\n\t"
         ".syntax divided\n\t"
     );
 }

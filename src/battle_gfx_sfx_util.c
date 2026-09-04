@@ -4174,7 +4174,7 @@ __attribute__((naked)) void AllocateMonSpritesGfx()
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0805ECA8: .4byte gMonSpritesGfxPtr\n\t"
-        "_0805ECAC: .4byte gUnknown_82FA724\n\t"
+        "_0805ECAC: .4byte gBattlerSpriteTemplates\n\t"
         ".syntax divided\n\t"
     );
 }
