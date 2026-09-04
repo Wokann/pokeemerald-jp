@@ -9288,7 +9288,7 @@ SECTIONS {
         src/link_rfu_2.o(.rodata.link_rfu_2_shutdown_tasks);
         data/data_b.o(.rodata.data_b_after_link_rfu_2_core_tables);
         src/data/union_room.o(.rodata);
-        data/data_b_mid1.o(.rodata);
+        src/data/union_room.o(.rodata.union_room_link_waiting_data);
         src/union_room.o(.rodata.union_room_players_needed_or_mode_texts);
         src/data/union_room2.o(.rodata);
         src/data/union_room3.o(.rodata);

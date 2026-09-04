@@ -60,3 +60,55 @@ ALIGNED(4) const u8 sText_AwaitingCommunication[28] = _(
     "{B_COPY_VAR_1}！\n"
     "ともだちからの　れんらくを　まっています");
 
+// Keep these JP link-group texts in their original ROM order after the
+// wireless debug data. The separate section preserves the former mid1 slot.
+#define UNION_ROOM_LINK_WAITING_DATA __attribute__((section(".rodata.union_room_link_waiting_data"), aligned(1)))
+#define UNION_ROOM_LINK_WAITING_DATA_ALIGNED __attribute__((section(".rodata.union_room_link_waiting_data"), aligned(4)))
+
+const u8 sText_AwaitingLinkPressStart[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = _(
+    "{B_COPY_VAR_1}！　れんらくまち！\n"
+    "にんずうが　そろったら　STARTボタン");
+
+static const u8 sJPText_SingleBattle[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = _("シングルバトルを　かいさいする");
+static const u8 sJPText_DoubleBattle[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = _("ダブルバトルを　かいさいする");
+static const u8 sJPText_MultiBattle[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = _("マルチバトルを　かいさいする");
+static const u8 sJPText_TradePokemon[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = _("ポケモンこうかんを　かいさいする");
+static const u8 sJPText_Chat[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = _("チャットを　かいさいする");
+static const u8 sJPText_DistWonderCard[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = _("ふしぎなカードをくばる");
+static const u8 sJPText_DistWonderNews[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = _("ふしぎなニュースをくばる");
+static const u8 sJPText_DistMysteryEvent[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = _("ふしぎなできごとを　かいさいする");
+static const u8 sJPText_HoldPokemonJump[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = _("なわとびを　かいさいする");
+static const u8 sJPText_HoldBerryCrush[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = _("きのみマッシャーを　かいさいする");
+static const u8 sJPText_HoldBerryPicking[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = _("きのみどりを　かいさいする");
+static const u8 sJPText_HoldSpinTrade[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = _("ぐるぐるこうかんを　かいさいする");
+static const u8 sJPText_HoldSpinShop[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = _("ぐるぐるショップを　かいさいする");
+
+// Unused in JP, but the pointer table is part of the original Union Room data.
+static const u8 *const sJPLinkGroupActionTexts[] UNION_ROOM_LINK_WAITING_DATA_ALIGNED = {
+    sJPText_SingleBattle,
+    sJPText_DoubleBattle,
+    sJPText_MultiBattle,
+    sJPText_TradePokemon,
+    sJPText_Chat,
+    sJPText_DistWonderCard,
+    sJPText_DistWonderNews,
+    sJPText_DistWonderCard,
+    sJPText_HoldPokemonJump,
+    sJPText_HoldBerryCrush,
+    sJPText_HoldBerryPicking,
+    sJPText_HoldBerryPicking,
+    sJPText_HoldSpinTrade,
+    sJPText_HoldSpinShop,
+};
+
+const u8 sText_1PlayerNeeded[] UNION_ROOM_LINK_WAITING_DATA = _("あと1にん\nひつよう");
+const u8 sText_2PlayersNeeded[] UNION_ROOM_LINK_WAITING_DATA = _("あと2にん\nひつよう");
+const u8 sText_3PlayersNeeded[] UNION_ROOM_LINK_WAITING_DATA = _("あと3にん\nひつよう");
+const u8 sText_4PlayersNeeded[] UNION_ROOM_LINK_WAITING_DATA = _("あと4にん\nひつよう");
+const u8 sText_2PlayerMode[] UNION_ROOM_LINK_WAITING_DATA = _("2にん\nプレイ");
+const u8 sText_3PlayerMode[] UNION_ROOM_LINK_WAITING_DATA = _("3にん\nプレイ");
+const u8 sText_4PlayerMode[] UNION_ROOM_LINK_WAITING_DATA = _("4にん\nプレイ");
+const u8 sText_5PlayerMode[] UNION_ROOM_LINK_WAITING_DATA = _("5にん\nプレイ");
+
+#undef UNION_ROOM_LINK_WAITING_DATA_ALIGNED
+#undef UNION_ROOM_LINK_WAITING_DATA
