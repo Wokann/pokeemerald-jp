@@ -312,7 +312,12 @@ gTileset_InsideOfTruck: @ 0x083B7EB4
 	.4byte 0x00000000  @ callback
 	.globl gTileset_Unused2
 gTileset_Unused2: @ 0x083B7ECC
-	.incbin "baserom_jp.gba", 0x3B7ECC, 0x18
+	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTilesetTiles_Unused2  @ tiles
+	.4byte gTilesetPalettes_Unused2  @ palettes
+	.4byte gMetatiles_Unused2  @ metatiles
+	.4byte gMetatileAttributes_Unused2  @ metatileAttributes
+	.4byte 0x00000000  @ callback
 	.globl gTileset_Contest
 gTileset_Contest: @ 0x083B7EE4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary

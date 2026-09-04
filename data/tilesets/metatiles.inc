@@ -162,8 +162,10 @@ gTileset_MauvilleGameCorner_Metatiles:
 	.incbin "data/tilesets/secondary/mauville_game_corner/metatiles.bin"
 gTileset_MauvilleGameCorner_MetatileAttributes:
 	.incbin "data/tilesets/secondary/mauville_game_corner/metatile_attributes.bin"
-	@ Unstructured metatile data: [0x0839C452, 0x0839C866)
-	.incbin "baserom_jp.gba", 0x39C452, 0x414
+gMetatiles_Unused2:
+	.incbin "data/tilesets/secondary/unused_2/metatiles.bin"
+gMetatileAttributes_Unused2:
+	.incbin "data/tilesets/secondary/unused_2/metatile_attributes.bin"
 gTileset_RustboroGym_Metatiles:
 	.incbin "data/tilesets/secondary/rustboro_gym/metatiles.bin"
 gTileset_RustboroGym_MetatileAttributes:

@@ -865,8 +865,25 @@ gTileset_MauvilleGameCorner_Palettes:
 	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/13.gbapal"
 	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/14.gbapal"
 	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/15.gbapal"
-	@ Unstructured Unused2 graphics: [0x0834C8A8, 0x0834CFD0)
-	.incbin "baserom_jp.gba", 0x34C8A8, 0x728
+gTilesetTiles_Unused2:
+	.incbin "data/tilesets/secondary/unused_2/tiles.4bpp.lz"
+gTilesetPalettes_Unused2:
+	.incbin "data/tilesets/secondary/unused_2/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/unused_2/palettes/15.gbapal"
 gTileset_RustboroGym_Tiles:
 	.incbin "data/tilesets/secondary/rustboro_gym/tiles.4bpp.lz"
 gTileset_RustboroGym_Palettes:
