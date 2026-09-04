@@ -208,7 +208,12 @@ gTileset_CableClub: @ 0x083B7D7C
 	.4byte 0x00000000  @ callback
 	.globl gTileset_SeashoreHouse
 gTileset_SeashoreHouse: @ 0x083B7D94
-	.incbin "baserom_jp.gba", 0x3B7D94, 0x18
+	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
+	.4byte gTileset_SeashoreHouse_Tiles  @ tiles
+	.4byte gTileset_SeashoreHouse_Palettes  @ palettes
+	.4byte gTileset_SeashoreHouse_Metatiles  @ metatiles
+	.4byte gTileset_SeashoreHouse_MetatileAttributes  @ metatileAttributes
+	.4byte 0x00000000  @ callback
 	.globl gTileset_PrettyPetalFlowerShop
 gTileset_PrettyPetalFlowerShop: @ 0x083B7DAC
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary

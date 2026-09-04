@@ -473,8 +473,25 @@ gTileset_CableClub_Palettes:
 	.incbin "data/tilesets/secondary/cable_club/palettes/13.gbapal"
 	.incbin "data/tilesets/secondary/cable_club/palettes/14.gbapal"
 	.incbin "data/tilesets/secondary/cable_club/palettes/15.gbapal"
-	@ Unstructured Seashore House graphics: [0x083370EC, 0x08337BC8)
-	.incbin "baserom_jp.gba", 0x3370EC, 0xADC
+gTileset_SeashoreHouse_Tiles:
+	.incbin "data/tilesets/secondary/seashore_house/tiles.4bpp.lz"
+gTileset_SeashoreHouse_Palettes:
+	.incbin "data/tilesets/secondary/seashore_house/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/seashore_house/palettes/15.gbapal"
 gTileset_PrettyPetalFlowerShop_Tiles:
 	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/tiles.4bpp.lz"
 gTileset_PrettyPetalFlowerShop_Palettes:

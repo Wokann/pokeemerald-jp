@@ -102,8 +102,10 @@ gTileset_CableClub_Metatiles:
 	.incbin "data/tilesets/secondary/cable_club/metatiles.bin"
 gTileset_CableClub_MetatileAttributes:
 	.incbin "data/tilesets/secondary/cable_club/metatile_attributes.bin"
-	@ Unstructured metatile data: [0x0838F336, 0x0838F726)
-	.incbin "baserom_jp.gba", 0x38F336, 0x3F0
+gTileset_SeashoreHouse_Metatiles:
+	.incbin "data/tilesets/secondary/seashore_house/metatiles.bin"
+gTileset_SeashoreHouse_MetatileAttributes:
+	.incbin "data/tilesets/secondary/seashore_house/metatile_attributes.bin"
 gTileset_PrettyPetalFlowerShop_Metatiles:
 	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/metatiles.bin"
 gTileset_PrettyPetalFlowerShop_MetatileAttributes:
