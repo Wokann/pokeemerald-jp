@@ -366,4 +366,35 @@ OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_OBJECT_DATA const u32 gFieldEffectObjectPic_A
 OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_PALETTES const u16 gFieldEffectObjectPalette0[] = INCBIN_U16("graphics/field_effects/palettes/general_0.gbapal");
 OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_PALETTES const u16 gFieldEffectObjectPalette1[] = INCBIN_U16("graphics/field_effects/palettes/general_1.gbapal");
 
+// This JP-owned field-effect graphics family follows the general palettes.
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_GroundImpactDust[] = INCGFX_U8("graphics/field_effects/pics/ground_impact_dust.png", ".4bpp", "-mwidth 2 -mheight 1");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_JumpTallGrass[] = INCGFX_U8("graphics/field_effects/pics/jump_tall_grass.png", ".4bpp", "-mwidth 2 -mheight 1");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gUnusedGrass3[] = INCGFX_U8("graphics/field_effects/pics/unused_grass_3.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_JumpLongGrass[] = INCGFX_U8("graphics/field_effects/pics/jump_long_grass.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_Unknown17[] = INCGFX_U8("graphics/field_effects/pics/unknown_17.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_UnusedGrass2[] = INCGFX_U8("graphics/field_effects/pics/unused_grass_2.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_LongGrass[] = INCGFX_U8("graphics/field_effects/pics/long_grass.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_TallGrass[] = INCGFX_U8("graphics/field_effects/pics/tall_grass.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_ShortGrass[] = INCGFX_U8("graphics/field_effects/pics/short_grass.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_SandFootprints[] = INCGFX_U8("graphics/field_effects/pics/sand_footprints.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_DeepSandFootprints[] = INCGFX_U8("graphics/field_effects/pics/deep_sand_footprints.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_BikeTireTracks[] = INCGFX_U8("graphics/field_effects/pics/bike_tire_tracks.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_UnusedSand[] = INCGFX_U8("graphics/field_effects/pics/unused_sand.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_SandPile[] = INCGFX_U8("graphics/field_effects/pics/sand_pile.png", ".4bpp", "-mwidth 2 -mheight 1");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_JumpBigSplash[] = INCGFX_U8("graphics/field_effects/pics/jump_big_splash.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_Splash[] = INCGFX_U8("graphics/field_effects/pics/splash.png", ".4bpp");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_JumpSmallSplash[] = INCGFX_U8("graphics/field_effects/pics/jump_small_splash.png", ".4bpp", "-mwidth 2 -mheight 1");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_WaterSurfacing[] = INCGFX_U8("graphics/field_effects/pics/water_surfacing.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_TreeDisguise[] = INCGFX_U8("graphics/field_effects/pics/tree_disguise.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_MountainDisguise[] = INCGFX_U8("graphics/field_effects/pics/mountain_disguise.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_SandDisguisePlaceholder[] = INCGFX_U8("graphics/field_effects/pics/sand_disguise_placeholder.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_HotSpringsWater[] = INCGFX_U8("graphics/field_effects/pics/hot_springs_water.png", ".4bpp");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u16 gFieldEffectPal_Ash[] = INCGFX_U16("graphics/field_effects/palettes/ash.pal", ".gbapal");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_AshPuff[] = INCGFX_U8("graphics/field_effects/pics/ash_puff.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_AshLaunch[] = INCGFX_U8("graphics/field_effects/pics/ash_launch.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_Bubbles[] = INCGFX_U8("graphics/field_effects/pics/bubbles.png", ".4bpp", "-mwidth 2 -mheight 4");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_SmallSparkle[] = INCGFX_U8("graphics/field_effects/pics/small_sparkle.png", ".4bpp", "-mwidth 2 -mheight 2");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u16 gFieldEffectPal_SmallSparkle[] = INCGFX_U16("graphics/field_effects/palettes/small_sparkle.pal", ".gbapal");
+OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA const u8 gFieldEffectObjectPic_Bird[] = INCGFX_U8("graphics/field_effects/pics/bird.png", ".4bpp");
+
 #endif // GUARD_DATA_OBJECT_EVENTS_OBJECT_EVENT_GRAPHICS_H

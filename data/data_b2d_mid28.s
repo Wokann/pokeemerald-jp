@@ -46,7 +46,7 @@
 
 	.section .rodata.data_b2d_mid28_after_field_effect_general_palettes
 
-	.incbin "baserom_jp.gba", 0x4cfc4c, 0xdc40
+	.incbin "baserom_jp.gba", 0x4d414c, 0x9740
 
 	.section .rodata.data_b2d_mid28_after_event_object_movement_core_data
 

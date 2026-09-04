@@ -1071,8 +1071,17 @@ graphics/birch_speech/unused_beauty.4bpp: graphics/birch_speech/unused_beauty.pn
 graphics/field_effects/pics/%.png.4bpp: graphics/field_effects/pics/%.png | tools
 	$(GFX) $< $@
 
+graphics/field_effects/palettes/%.pal.gbapal: graphics/field_effects/palettes/%.pal | tools
+	$(GFX) $< $@
+
+graphics/field_effects/pics/%.png_mwidth_2__mheight_1.4bpp: graphics/field_effects/pics/%.png | tools
+	$(GFX) $< $@ -mwidth 2 -mheight 1
+
 graphics/field_effects/pics/%.png_mwidth_2__mheight_2.4bpp: graphics/field_effects/pics/%.png | tools
 	$(GFX) $< $@ -mwidth 2 -mheight 2
+
+graphics/field_effects/pics/%.png_mwidth_2__mheight_4.4bpp: graphics/field_effects/pics/%.png | tools
+	$(GFX) $< $@ -mwidth 2 -mheight 4
 
 graphics/field_effects/pics/%.png_mwidth_4__mheight_4.4bpp: graphics/field_effects/pics/%.png | tools
 	$(GFX) $< $@ -mwidth 4 -mheight 4
@@ -1686,6 +1695,35 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/field_effects/pics/shadow_medium.png.4bpp \
 	graphics/field_effects/pics/shadow_large.png.4bpp \
 	graphics/field_effects/pics/shadow_extra_large.png.4bpp \
+	graphics/field_effects/pics/ground_impact_dust.png_mwidth_2__mheight_1.4bpp \
+	graphics/field_effects/pics/jump_tall_grass.png_mwidth_2__mheight_1.4bpp \
+	graphics/field_effects/pics/unused_grass_3.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/jump_long_grass.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/unknown_17.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/unused_grass_2.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/long_grass.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/tall_grass.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/short_grass.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/sand_footprints.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/deep_sand_footprints.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/bike_tire_tracks.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/unused_sand.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/sand_pile.png_mwidth_2__mheight_1.4bpp \
+	graphics/field_effects/pics/jump_big_splash.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/splash.png.4bpp \
+	graphics/field_effects/pics/jump_small_splash.png_mwidth_2__mheight_1.4bpp \
+	graphics/field_effects/pics/water_surfacing.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/tree_disguise.png_mwidth_2__mheight_4.4bpp \
+	graphics/field_effects/pics/mountain_disguise.png_mwidth_2__mheight_4.4bpp \
+	graphics/field_effects/pics/sand_disguise_placeholder.png_mwidth_2__mheight_4.4bpp \
+	graphics/field_effects/pics/hot_springs_water.png.4bpp \
+	graphics/field_effects/palettes/ash.pal.gbapal \
+	graphics/field_effects/pics/ash_puff.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/ash_launch.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/bubbles.png_mwidth_2__mheight_4.4bpp \
+	graphics/field_effects/pics/small_sparkle.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/palettes/small_sparkle.pal.gbapal \
+	graphics/field_effects/pics/bird.png.4bpp \
 	graphics/object_events/pics/pokemon/vigoroth.png_mwidth_4__mheight_4.4bpp \
 	graphics/object_events/palettes/vigoroth.gbapal \
 	graphics/object_events/pics/misc/birchs_bag.4bpp \

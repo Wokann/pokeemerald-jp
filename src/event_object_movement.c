@@ -18,7 +18,9 @@
 #define OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SURF_BLOB_DATA __attribute__((section(".rodata.object_event_graphics_field_effect_surf_blob_data"), aligned(4)))
 #define OBJECT_EVENT_GRAPHICS_QUINTY_PLUMP_DATA __attribute__((section(".rodata.object_event_graphics_quinty_plump_data"), aligned(4)))
 #define OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SHADOW_DATA __attribute__((section(".rodata.object_event_graphics_field_effect_shadow_data"), aligned(4)))
+#define OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA __attribute__((section(".rodata.object_event_graphics_field_effect_extended_data"), aligned(4)))
 #include "data/object_events/object_event_graphics.h"
+#undef OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_EXTENDED_DATA
 #undef OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SHADOW_DATA
 #undef OBJECT_EVENT_GRAPHICS_QUINTY_PLUMP_DATA
 #undef OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_SURF_BLOB_DATA
