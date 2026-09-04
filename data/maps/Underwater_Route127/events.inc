@@ -16,4 +16,3 @@ Underwater_Route127_MapBGEvents:
 
 Underwater_Route127_MapEvents::
 	map_events NULL, Underwater_Route127_MapWarps, NULL, Underwater_Route127_MapBGEvents
-

@@ -10,4 +10,3 @@ Underwater_Route129_MapWarps:
 
 Underwater_Route129_MapEvents::
 	map_events NULL, Underwater_Route129_MapWarps, NULL, NULL
-
