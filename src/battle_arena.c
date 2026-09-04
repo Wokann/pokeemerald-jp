@@ -1,1786 +1,543 @@
 #include "global.h"
+#include "battle.h"
 #include "battle_arena.h"
+#include "battle_script_commands.h"
+#include "battle_setup.h"
+#include "battle_tower.h"
+#include "bg.h"
+#include "decompress.h"
+#include "event_data.h"
+#include "frontier_util.h"
+#include "gpu_regs.h"
+#include "item.h"
+#include "m4a.h"
+#include "palette.h"
+#include "random.h"
+#include "sound.h"
+#include "sprite.h"
+#include "string_util.h"
+#include "util.h"
+#include "constants/battle_string_ids.h"
+#include "constants/frontier_util.h"
+#include "constants/songs.h"
+#include "constants/vars.h"
 
 #define BATTLE_ARENA_DATA __attribute__((section(".rodata.battle_arena_data")))
 
-__attribute__((naked)) void CallBattleArenaFunction(void)
+extern void (*const sArenaFunctions[])(void);
+asm("sArenaFunctions = gUnknown_85DD7BC");
+extern const s8 sArenaMindRatings[];
+asm("sArenaMindRatings = gUnknown_85DD5F8");
+extern const u16 sArenaShortStreakPrizeItems[];
+asm("sArenaShortStreakPrizeItems = gUnknown_85DD7D8");
+extern const u16 sArenaLongStreakPrizeItems[];
+asm("sArenaLongStreakPrizeItems = gUnknown_85DD7E4");
+extern const struct SpriteTemplate sArenaJudgmentIconSpriteTemplate;
+asm("sArenaJudgmentIconSpriteTemplate = gUnknown_85DD794");
+extern const struct CompressedSpriteSheet sArenaJudgmentSymbolsSpriteSheet[];
+asm("sArenaJudgmentSymbolsSpriteSheet = gUnknown_85DD7AC");
+extern const u32 sArenaJudgmentSymbolsPalette[];
+asm("sArenaJudgmentSymbolsPalette = gUnknown_8D855CC");
+extern const u8 sArenaTextPlayerMon1Name[];
+asm("sArenaTextPlayerMon1Name = gUnknown_85ABD3C + 0x5E");
+extern const u8 sArenaTextVs[];
+asm("sArenaTextVs = gUnknown_85ABD3C + 0x61");
+extern const u8 sArenaTextOpponentMon1Name[];
+asm("sArenaTextOpponentMon1Name = gUnknown_85ABD3C + 0x64");
+extern const u8 sArenaTextMind[];
+asm("sArenaTextMind = gUnknown_85ABD3C + 0x67");
+extern const u8 sArenaTextSkill[];
+asm("sArenaTextSkill = gUnknown_85ABD3C + 0x6B");
+extern const u8 sArenaTextBody[];
+asm("sArenaTextBody = gUnknown_85ABD3C + 0x6E");
+extern const u8 sArenaTextJudgment[];
+asm("sArenaTextJudgment = gUnknown_85ABD3C + 0x72");
+
+extern void TryGetStatusString(const u8 *text);
+extern void sub_0814FA04(const u8 *text, u8 windowId);
+extern void sub_081A482C(void);
+void ShowJudgmentSprite(u8 x, u8 y, u8 category, u8 battler);
+
+
+void CallBattleArenaFunction(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _081A4E40\n\t"
-        "	ldr r0, _081A4E44\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	pop {r0}\n\t"
-        ".syntax divided\n\t"
-    );
+    sArenaFunctions[gSpecialVar_0x8004]();
 }
 
-__attribute__((naked)) void sub_081A4E3C(void)
+
+u8 BattleArena_ShowJudgmentWindow(u8 *state)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A4E40: .4byte gUnknown_85DD7BC\n\t"
-        "_081A4E44: .4byte gSpecialVar_0x8004\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+    s32 x;
+    u8 result = 0;
+
+    switch (*state)
+    {
+    case 0:
+        BeginNormalPaletteFade(0x7FFFFF1C, 4, 0, 8, 0);
+        SetGpuReg(0x48, 0x3F3E);
+        LoadCompressedSpriteSheet(sArenaJudgmentSymbolsSpriteSheet);
+        LoadCompressedPalette(sArenaJudgmentSymbolsPalette, 0x1F0, 0x20);
+        gBattle_WIN0H = 0xFF;
+        gBattle_WIN0V = 0x70;
+        (*state)++;
+        break;
+    case 1:
+        if (!gPaletteFade.active)
+        {
+            HandleBattleWindow(6, 0, 23, 13, 0);
+            (*state)++;
+        }
+        break;
+    case 2:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            gBattleTextBuff1[0] = 0xA1;
+            gBattleTextBuff1[1] = 0xFF;
+            gBattleTextBuff2[0] = 0xA1;
+            gBattleTextBuff2[1] = 0xFF;
+            TryGetStatusString(sArenaTextPlayerMon1Name);
+            sub_0814FA04(gDisplayedStringBattle, 15);
+            sub_0814FA04(sArenaTextVs, 16);
+            TryGetStatusString(sArenaTextOpponentMon1Name);
+            sub_0814FA04(gDisplayedStringBattle, 17);
+            sub_0814FA04(sArenaTextMind, 18);
+            sub_0814FA04(sArenaTextSkill, 19);
+            sub_0814FA04(sArenaTextBody, 20);
+            TryGetStatusString(sArenaTextJudgment);
+            sub_0814FA04(gDisplayedStringBattle, 21);
+            (*state)++;
+        }
+        break;
+    case 3:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            SetGpuReg(0x48, 0x3F3F);
+            for (x = 64 << 16, i = 7; i >= 0; x += 16 << 16, i--)
+            {
+                u8 spriteId = CreateSprite(&sArenaJudgmentIconSpriteTemplate, x >> 16, 84, 0);
+                StartSpriteAnim(&gSprites[spriteId], 3);
+            }
+            result = 1;
+            (*state)++;
+        }
+        break;
+    case 4:
+        PlaySE(SE_ARENA_TIMEUP1);
+        ShowJudgmentSprite(80, 40, 0, 0);
+        ShowJudgmentSprite(160, 40, 0, 1);
+        TryGetStatusString(sArenaTextJudgment);
+        sub_0814FA04(gDisplayedStringBattle, 21);
+        (*state)++;
+        result = 1;
+        break;
+    case 5:
+        PlaySE(SE_ARENA_TIMEUP1);
+        ShowJudgmentSprite(80, 56, 1, 0);
+        ShowJudgmentSprite(160, 56, 1, 1);
+        TryGetStatusString(sArenaTextJudgment);
+        sub_0814FA04(gDisplayedStringBattle, 21);
+        (*state)++;
+        result = 1;
+        break;
+    case 6:
+        PlaySE(SE_ARENA_TIMEUP1);
+        ShowJudgmentSprite(80, 72, 2, 0);
+        ShowJudgmentSprite(160, 72, 2, 1);
+        TryGetStatusString(sArenaTextJudgment);
+        sub_0814FA04(gDisplayedStringBattle, 21);
+        (*state)++;
+        result = 1;
+        break;
+    case 7:
+        PlaySE(SE_ARENA_TIMEUP2);
+        if (gBattleTextBuff1[0] > gBattleTextBuff2[0])
+        {
+            result = 2;
+            gBattleScripting.battler = 0;
+        }
+        else if (gBattleTextBuff1[0] < gBattleTextBuff2[0])
+        {
+            result = 3;
+            gBattleScripting.battler = 1;
+        }
+        else
+        {
+            result = 4;
+        }
+        (*state)++;
+        break;
+    case 8:
+        (*state)++;
+        break;
+    case 9:
+        SetGpuReg(0x48, 0x3F3E);
+        HandleBattleWindow(6, 0, 23, 13, 1);
+        CopyBgTilemapBufferToVram(0);
+        m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 0x100);
+        BeginNormalPaletteFade(0x7FFFFF1C, 4, 8, 0, 0);
+        (*state)++;
+        break;
+    case 10:
+        if (!gPaletteFade.active)
+        {
+            SetGpuReg(0x48, 0x3F3F);
+            FreeSpriteTilesByTag(1000);
+            result = 1;
+            (*state)++;
+        }
+        break;
+    }
+
+    return result;
 }
 
-__attribute__((naked)) u8 BattleArena_ShowJudgmentWindow(u8 *state)
+
+void ShowJudgmentSprite(u8 x, u8 y, u8 category, u8 battler)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r6, #0\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bls _081A4E58\n\t"
-        "	b _081A5134\n\t"
-        "_081A4E58:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081A4E64\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A4E64: .4byte _081A4E68\n\t"
-        "_081A4E68:\n\t"
-        "	.4byte _081A4E94\n\t"
-        "	.4byte _081A4EE4\n\t"
-        "	.4byte _081A4F0C\n\t"
-        "	.4byte _081A4FA4\n\t"
-        "	.4byte _081A4FFC\n\t"
-        "	.4byte _081A501C\n\t"
-        "	.4byte _081A503C\n\t"
-        "	.4byte _081A5080\n\t"
-        "	.4byte _081A512E\n\t"
-        "	.4byte _081A50C4\n\t"
-        "	.4byte _081A5110\n\t"
-        "_081A4E94:\n\t"
-        "	ldr r0, _081A4ECC\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #4\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #8\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, _081A4ED0\n\t"
-        "	movs r0, #0x48\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _081A4ED4\n\t"
-        "	bl LoadCompressedSpriteSheet\n\t"
-        "	ldr r0, _081A4ED8\n\t"
-        "	movs r1, #0xf8\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	ldr r1, _081A4EDC\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _081A4EE0\n\t"
-        "	movs r0, #0x70\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _081A512E\n\t"
-        "	.align 2, 0\n\t"
-        "_081A4ECC: .4byte 0x7FFFFF1C\n\t"
-        "_081A4ED0: .4byte 0x00003F3E\n\t"
-        "_081A4ED4: .4byte gUnknown_85DD7AC\n\t"
-        "_081A4ED8: .4byte gUnknown_8D855CC\n\t"
-        "_081A4EDC: .4byte gBattle_WIN0H\n\t"
-        "_081A4EE0: .4byte gBattle_WIN0V\n\t"
-        "_081A4EE4:\n\t"
-        "	ldr r0, _081A4F08\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A4EF6\n\t"
-        "	b _081A5134\n\t"
-        "_081A4EF6:\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #6\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x17\n\t"
-        "	movs r3, #0xd\n\t"
-        "	bl HandleBattleWindow\n\t"
-        "	b _081A512E\n\t"
-        "	.align 2, 0\n\t"
-        "_081A4F08: .4byte gPaletteFade\n\t"
-        "_081A4F0C:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A4F18\n\t"
-        "	b _081A5134\n\t"
-        "_081A4F18:\n\t"
-        "	ldr r1, _081A4F7C\n\t"
-        "	movs r2, #0xa1\n\t"
-        "	strb r2, [r1]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	ldr r1, _081A4F80\n\t"
-        "	strb r2, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	ldr r0, _081A4F84\n\t"
-        "	bl TryGetStatusString\n\t"
-        "	ldr r4, _081A4F88\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xf\n\t"
-        "	bl sub_0814FA04\n\t"
-        "	ldr r0, _081A4F8C\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl sub_0814FA04\n\t"
-        "	ldr r0, _081A4F90\n\t"
-        "	bl TryGetStatusString\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl sub_0814FA04\n\t"
-        "	ldr r0, _081A4F94\n\t"
-        "	movs r1, #0x12\n\t"
-        "	bl sub_0814FA04\n\t"
-        "	ldr r0, _081A4F98\n\t"
-        "	movs r1, #0x13\n\t"
-        "	bl sub_0814FA04\n\t"
-        "	ldr r0, _081A4F9C\n\t"
-        "	movs r1, #0x14\n\t"
-        "	bl sub_0814FA04\n\t"
-        "	ldr r0, _081A4FA0\n\t"
-        "	bl TryGetStatusString\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x15\n\t"
-        "	bl sub_0814FA04\n\t"
-        "	b _081A512E\n\t"
-        "	.align 2, 0\n\t"
-        "_081A4F7C: .4byte gBattleTextBuff1\n\t"
-        "_081A4F80: .4byte gBattleTextBuff2\n\t"
-        "_081A4F84: .4byte gUnknown_85ABD3C + 0x5E\n\t"
-        "_081A4F88: .4byte gDisplayedStringBattle\n\t"
-        "_081A4F8C: .4byte gUnknown_85ABD3C + 0x61\n\t"
-        "_081A4F90: .4byte gUnknown_85ABD3C + 0x64\n\t"
-        "_081A4F94: .4byte gUnknown_85ABD3C + 0x67\n\t"
-        "_081A4F98: .4byte gUnknown_85ABD3C + 0x6B\n\t"
-        "_081A4F9C: .4byte gUnknown_85ABD3C + 0x6E\n\t"
-        "_081A4FA0: .4byte gUnknown_85ABD3C + 0x72\n\t"
-        "_081A4FA4:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A4FB0\n\t"
-        "	b _081A5134\n\t"
-        "_081A4FB0:\n\t"
-        "	ldr r1, _081A4FF0\n\t"
-        "	movs r0, #0x48\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r6, #0x80\n\t"
-        "	lsls r6, r6, #0xf\n\t"
-        "	movs r4, #7\n\t"
-        "_081A4FBE:\n\t"
-        "	asrs r1, r6, #0x10\n\t"
-        "	ldr r0, _081A4FF4\n\t"
-        "	movs r2, #0x54\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081A4FF8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #3\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0xd\n\t"
-        "	adds r6, r6, r0\n\t"
-        "	subs r4, #1\n\t"
-        "	cmp r4, #0\n\t"
-        "	bge _081A4FBE\n\t"
-        "	b _081A512C\n\t"
-        "	.align 2, 0\n\t"
-        "_081A4FF0: .4byte 0x00003F3F\n\t"
-        "_081A4FF4: .4byte gUnknown_85DD794\n\t"
-        "_081A4FF8: .4byte gSprites\n\t"
-        "_081A4FFC:\n\t"
-        "	ldr r0, _081A5018\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0x28\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl ShowJudgmentSprite\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	movs r1, #0x28\n\t"
-        "	movs r2, #0\n\t"
-        "	b _081A5054\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5018: .4byte SPECIAL_CheckLeadMonCool\n\t"
-        "_081A501C:\n\t"
-        "	ldr r0, _081A5038\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0x38\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl ShowJudgmentSprite\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	movs r2, #1\n\t"
-        "	b _081A5054\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5038: .4byte SPECIAL_CheckLeadMonCool\n\t"
-        "_081A503C:\n\t"
-        "	ldr r0, _081A5074\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0x48\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0\n\t"
-        "	bl ShowJudgmentSprite\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	movs r1, #0x48\n\t"
-        "	movs r2, #2\n\t"
-        "_081A5054:\n\t"
-        "	movs r3, #1\n\t"
-        "	bl ShowJudgmentSprite\n\t"
-        "	ldr r0, _081A5078\n\t"
-        "	bl TryGetStatusString\n\t"
-        "	ldr r0, _081A507C\n\t"
-        "	movs r1, #0x15\n\t"
-        "	bl sub_0814FA04\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r5]\n\t"
-        "	movs r6, #1\n\t"
-        "	b _081A5134\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5074: .4byte SPECIAL_CheckLeadMonCool\n\t"
-        "_081A5078: .4byte gUnknown_85ABD3C + 0x72\n\t"
-        "_081A507C: .4byte gDisplayedStringBattle\n\t"
-        "_081A5080:\n\t"
-        "	movs r0, #0x85\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _081A50A0\n\t"
-        "	ldr r1, _081A50A4\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r2, r0\n\t"
-        "	bls _081A50AC\n\t"
-        "	movs r6, #2\n\t"
-        "	ldr r1, _081A50A8\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #0x17]\n\t"
-        "	b _081A512E\n\t"
-        "	.align 2, 0\n\t"
-        "_081A50A0: .4byte gBattleTextBuff1\n\t"
-        "_081A50A4: .4byte gBattleTextBuff2\n\t"
-        "_081A50A8: .4byte gBattleScripting\n\t"
-        "_081A50AC:\n\t"
-        "	cmp r2, r0\n\t"
-        "	bhs _081A50C0\n\t"
-        "	movs r6, #3\n\t"
-        "	ldr r1, _081A50BC\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1, #0x17]\n\t"
-        "	b _081A512E\n\t"
-        "	.align 2, 0\n\t"
-        "_081A50BC: .4byte gBattleScripting\n\t"
-        "_081A50C0:\n\t"
-        "	movs r6, #4\n\t"
-        "	b _081A512E\n\t"
-        "_081A50C4:\n\t"
-        "	ldr r1, _081A5100\n\t"
-        "	movs r0, #0x48\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #6\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x17\n\t"
-        "	movs r3, #0xd\n\t"
-        "	bl HandleBattleWindow\n\t"
-        "	movs r0, #0\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "	ldr r0, _081A5104\n\t"
-        "	ldr r1, _081A5108\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	bl m4aMPlayVolumeControl\n\t"
-        "	ldr r0, _081A510C\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #4\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	b _081A512E\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5100: .4byte 0x00003F3E\n\t"
-        "_081A5104: .4byte gMPlayInfo_BGM\n\t"
-        "_081A5108: .4byte 0x0000FFFF\n\t"
-        "_081A510C: .4byte 0x7FFFFF1C\n\t"
-        "_081A5110:\n\t"
-        "	ldr r0, _081A5140\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081A5134\n\t"
-        "	ldr r1, _081A5144\n\t"
-        "	movs r0, #0x48\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0xfa\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "_081A512C:\n\t"
-        "	movs r6, #1\n\t"
-        "_081A512E:\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r5]\n\t"
-        "_081A5134:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5140: .4byte gPaletteFade\n\t"
-        "_081A5144: .4byte 0x00003F3F\n\t"
-        ".syntax divided\n\t"
-    );
+    int animNum = 0;
+    int pointsPlayer = 0;
+    int pointsOpponent = 0;
+    s8 *mindPoints = gBattleStruct->arenaMindPoints;
+    s8 *skillPoints = gBattleStruct->arenaSkillPoints;
+    u16 *hpAtStart = gBattleStruct->arenaStartHp;
+
+    switch (category)
+    {
+    case 0:
+        pointsPlayer = mindPoints[battler];
+        pointsOpponent = mindPoints[BATTLE_OPPOSITE(battler)];
+        break;
+    case 1:
+        pointsPlayer = skillPoints[battler];
+        pointsOpponent = skillPoints[BATTLE_OPPOSITE(battler)];
+        break;
+    case 2:
+        pointsPlayer = gBattleMons[battler].hp * 100 / hpAtStart[battler];
+        pointsOpponent = gBattleMons[BATTLE_OPPOSITE(battler)].hp * 100 / hpAtStart[BATTLE_OPPOSITE(battler)];
+        break;
+    }
+
+    if (pointsPlayer > pointsOpponent)
+    {
+        animNum = 2;
+        if (battler != 0)
+            gBattleTextBuff2[0] += 2;
+        else
+            gBattleTextBuff1[0] += 2;
+    }
+    else if (pointsPlayer == pointsOpponent)
+    {
+        animNum = 1;
+        if (battler != 0)
+            gBattleTextBuff2[0] += 1;
+        else
+            gBattleTextBuff1[0] += 1;
+    }
+    else
+    {
+        animNum = 0;
+    }
+
+    pointsPlayer = CreateSprite(&sArenaJudgmentIconSpriteTemplate, x, y, 0);
+    StartSpriteAnim(&gSprites[pointsPlayer], animNum);
 }
 
-__attribute__((naked)) void ShowJudgmentSprite(u8 x, u8 y, u8 category, u8 battler)
+
+void SpriteCB_JudgmentIcon(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov sl, r1\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov sb, r2\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r7, r3, #0x18\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r0, _081A5190\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r3, #0xa6\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r4, r0, r3\n\t"
-        "	ldr r5, _081A5194\n\t"
-        "	adds r3, r0, r5\n\t"
-        "	adds r5, #2\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	mov r8, r5\n\t"
-        "	cmp r2, #1\n\t"
-        "	beq _081A51B4\n\t"
-        "	cmp r2, #1\n\t"
-        "	bgt _081A5198\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _081A51A0\n\t"
-        "	b _081A5202\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5190: .4byte gBattleStruct\n\t"
-        "_081A5194: .4byte 0x0000029A\n\t"
-        "_081A5198:\n\t"
-        "	mov r0, sb\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081A51C8\n\t"
-        "	b _081A5202\n\t"
-        "_081A51A0:\n\t"
-        "	adds r0, r4, r7\n\t"
-        "	movs r6, #0\n\t"
-        "	ldrsb r6, [r0, r6]\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	eors r0, r1\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	b _081A5202\n\t"
-        "_081A51B4:\n\t"
-        "	adds r0, r3, r7\n\t"
-        "	movs r6, #0\n\t"
-        "	ldrsb r6, [r0, r6]\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	eors r0, r1\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	b _081A5202\n\t"
-        "_081A51C8:\n\t"
-        "	ldr r3, _081A5210\n\t"
-        "	mov sb, r3\n\t"
-        "	movs r5, #0x58\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	add r0, sb\n\t"
-        "	ldrh r0, [r0, #0x28]\n\t"
-        "	movs r4, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	lsls r1, r7, #1\n\t"
-        "	add r1, r8\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	eors r1, r0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	add r0, sb\n\t"
-        "	ldrh r0, [r0, #0x28]\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	add r1, r8\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "_081A5202:\n\t"
-        "	cmp r6, r1\n\t"
-        "	ble _081A5228\n\t"
-        "	movs r4, #2\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _081A5218\n\t"
-        "	ldr r1, _081A5214\n\t"
-        "	b _081A521A\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5210: .4byte gBattleMons\n\t"
-        "_081A5214: .4byte gBattleTextBuff2\n\t"
-        "_081A5218:\n\t"
-        "	ldr r1, _081A5224\n\t"
-        "_081A521A:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _081A524E\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5224: .4byte gBattleTextBuff1\n\t"
-        "_081A5228:\n\t"
-        "	cmp r6, r1\n\t"
-        "	bne _081A524C\n\t"
-        "	movs r4, #1\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _081A523C\n\t"
-        "	ldr r1, _081A5238\n\t"
-        "	b _081A523E\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5238: .4byte gBattleTextBuff2\n\t"
-        "_081A523C:\n\t"
-        "	ldr r1, _081A5248\n\t"
-        "_081A523E:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _081A524E\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5248: .4byte gBattleTextBuff1\n\t"
-        "_081A524C:\n\t"
-        "	movs r4, #0\n\t"
-        "_081A524E:\n\t"
-        "	ldr r0, _081A5280\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	mov r2, sl\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r0, r6, #4\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081A5284\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5280: .4byte gUnknown_85DD794\n\t"
-        "_081A5284: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gBattleCommunication[0] > 8)
+        DestroySprite(sprite);
 }
 
-__attribute__((naked)) void SpriteCB_JudgmentIcon(struct Sprite *sprite)
+
+void BattleArena_InitPoints(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldr r0, _081A52A0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #8\n\t"
-        "	bls _081A529A\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_081A529A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A52A0: .4byte gBattleCommunication\n\t"
-        ".syntax divided\n\t"
-    );
+    s8 *mindPoints = gBattleStruct->arenaMindPoints;
+    s8 *skillPoints = gBattleStruct->arenaSkillPoints;
+    u16 *hpAtStart = gBattleStruct->arenaStartHp;
+
+    mindPoints[0] = 0;
+    mindPoints[1] = 0;
+    skillPoints[0] = 0;
+    skillPoints[1] = 0;
+    hpAtStart[0] = gBattleMons[0].hp;
+    hpAtStart[1] = gBattleMons[1].hp;
 }
 
-__attribute__((naked)) void BattleArena_InitPoints(void)
+
+void BattleArena_AddMindPoints(u8 battler)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _081A52D0\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r0, #0xa6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	adds r0, #2\n\t"
-        "	adds r3, r2, r0\n\t"
-        "	adds r0, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	strb r0, [r3]\n\t"
-        "	strb r0, [r3, #1]\n\t"
-        "	ldr r0, _081A52D4\n\t"
-        "	ldrh r1, [r0, #0x28]\n\t"
-        "	strh r1, [r2]\n\t"
-        "	adds r0, #0x80\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r2, #2]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_081A52D0: .4byte gBattleStruct\n\t"
-        "_081A52D4: .4byte gBattleMons\n\t"
-        ".syntax divided\n\t"
-    );
+    gBattleStruct->arenaMindPoints[battler] += sArenaMindRatings[gCurrentMove];
 }
 
-__attribute__((naked)) void BattleArena_AddMindPoints(u8 battler)
+
+void BattleArena_AddSkillPoints(u8 battler)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _081A52FC\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r2, #0xa6\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, _081A5300\n\t"
-        "	ldr r0, _081A5304\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_081A52FC: .4byte gBattleStruct\n\t"
-        "_081A5300: .4byte gUnknown_85DD5F8\n\t"
-        "_081A5304: .4byte gCurrentMove\n\t"
-        ".syntax divided\n\t"
-    );
+    s8 *skillPoints = gBattleStruct->arenaSkillPoints;
+
+    if (gHitMarker & HITMARKER_OBEYS)
+    {
+        u8 *failedMoveBits = &gBattleStruct->alreadyStatusedMoveAttempt;
+
+        if (*failedMoveBits & gBitTable[battler])
+        {
+            *failedMoveBits &= ~(gBitTable[battler]);
+            skillPoints[battler] -= 2;
+        }
+        else if (gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+        {
+            if (!(gMoveResultFlags & MOVE_RESULT_MISSED)
+             || gBattleCommunication[MISS_TYPE] != B_MSG_PROTECTED)
+                skillPoints[battler] -= 2;
+        }
+        else if ((gMoveResultFlags & MOVE_RESULT_SUPER_EFFECTIVE)
+              && (gMoveResultFlags & MOVE_RESULT_NOT_VERY_EFFECTIVE))
+        {
+            skillPoints[battler] += 1;
+        }
+        else if (gMoveResultFlags & MOVE_RESULT_SUPER_EFFECTIVE)
+        {
+            skillPoints[battler] += 2;
+        }
+        else if (gMoveResultFlags & MOVE_RESULT_NOT_VERY_EFFECTIVE)
+        {
+            skillPoints[battler] -= 1;
+        }
+        else if (!gProtectStructs[battler].protected)
+        {
+            skillPoints[battler] += 1;
+        }
+    }
 }
 
-__attribute__((naked)) void BattleArena_AddSkillPoints(u8 battler)
+
+void BattleArena_DeductSkillPoints(u8 battler, u16 stringId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	adds r6, r3, #0\n\t"
-        "	ldr r0, _081A5348\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _081A534C\n\t"
-        "	adds r5, r2, r0\n\t"
-        "	ldr r0, _081A5350\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0x12\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A53CA\n\t"
-        "	ldr r0, _081A5354\n\t"
-        "	adds r4, r2, r0\n\t"
-        "	ldrb r2, [r4]\n\t"
-        "	ldr r0, _081A5358\n\t"
-        "	lsls r1, r3, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A535C\n\t"
-        "	bics r2, r1\n\t"
-        "	strb r2, [r4]\n\t"
-        "	adds r1, r5, r3\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	subs r0, #2\n\t"
-        "	b _081A53C8\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5348: .4byte gBattleStruct\n\t"
-        "_081A534C: .4byte 0x0000029A\n\t"
-        "_081A5350: .4byte gHitMarker\n\t"
-        "_081A5354: .4byte 0x000002A2\n\t"
-        "_081A5358: .4byte gBitTable\n\t"
-        "_081A535C:\n\t"
-        "	ldr r0, _081A5380\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x29\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A5388\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A5378\n\t"
-        "	ldr r0, _081A5384\n\t"
-        "	ldrb r0, [r0, #6]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081A53CA\n\t"
-        "_081A5378:\n\t"
-        "	adds r1, r5, r3\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	subs r0, #2\n\t"
-        "	b _081A53C8\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5380: .4byte gMoveResultFlags\n\t"
-        "_081A5384: .4byte gBattleCommunication\n\t"
-        "_081A5388:\n\t"
-        "	movs r0, #6\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _081A5394\n\t"
-        "	adds r1, r5, r3\n\t"
-        "	b _081A53C4\n\t"
-        "_081A5394:\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A53A4\n\t"
-        "	adds r1, r5, r3\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #2\n\t"
-        "	b _081A53C8\n\t"
-        "_081A53A4:\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A53B4\n\t"
-        "	adds r1, r5, r3\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	b _081A53C8\n\t"
-        "_081A53B4:\n\t"
-        "	ldr r0, _081A53D0\n\t"
-        "	lsls r1, r6, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081A53CA\n\t"
-        "	adds r1, r5, r6\n\t"
-        "_081A53C4:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "_081A53C8:\n\t"
-        "	strb r0, [r1]\n\t"
-        "_081A53CA:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A53D0: .4byte gProtectStructs\n\t"
-        ".syntax divided\n\t"
-    );
+    s8 *skillPoints = gBattleStruct->arenaSkillPoints;
+
+    switch (stringId)
+    {
+    case STRINGID_PKMNSXMADEYUSELESS:
+    case STRINGID_PKMNSXMADEITINEFFECTIVE:
+    case STRINGID_PKMNSXPREVENTSFLINCHING:
+    case STRINGID_PKMNSXBLOCKSY2:
+    case STRINGID_PKMNSXPREVENTSYLOSS:
+    case STRINGID_PKMNSXMADEYINEFFECTIVE:
+    case STRINGID_PKMNSXPREVENTSBURNS:
+    case STRINGID_PKMNSXBLOCKSY:
+    case STRINGID_PKMNPROTECTEDBY:
+    case STRINGID_PKMNPREVENTSUSAGE:
+    case STRINGID_PKMNRESTOREDHPUSING:
+    case STRINGID_PKMNPREVENTSPARALYSISWITH:
+    case STRINGID_PKMNPREVENTSROMANCEWITH:
+    case STRINGID_PKMNPREVENTSPOISONINGWITH:
+    case STRINGID_PKMNPREVENTSCONFUSIONWITH:
+    case STRINGID_PKMNRAISEDFIREPOWERWITH:
+    case STRINGID_PKMNANCHORSITSELFWITH:
+    case STRINGID_PKMNPREVENTSSTATLOSSWITH:
+    case STRINGID_PKMNSTAYEDAWAKEUSING:
+        skillPoints[battler] -= 3;
+        break;
+    }
 }
 
-__attribute__((naked)) void BattleArena_DeductSkillPoints(u8 battler, u16 stringId)
+
+void sub_081A545C(u8 battler)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	ldr r0, _081A5404\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r5, _081A5408\n\t"
-        "	adds r3, r0, r5\n\t"
-        "	movs r0, #0x99\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _081A541A\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bge _081A544C\n\t"
-        "	cmp r1, #0xc5\n\t"
-        "	bgt _081A540C\n\t"
-        "	cmp r1, #0xc3\n\t"
-        "	bge _081A544C\n\t"
-        "	cmp r1, #0x77\n\t"
-        "	beq _081A544C\n\t"
-        "	b _081A5454\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5404: .4byte gBattleStruct\n\t"
-        "_081A5408: .4byte 0x0000029A\n\t"
-        "_081A540C:\n\t"
-        "	cmp r1, #0xc7\n\t"
-        "	blt _081A5454\n\t"
-        "	cmp r1, #0xcc\n\t"
-        "	ble _081A544C\n\t"
-        "	cmp r1, #0xce\n\t"
-        "	beq _081A544C\n\t"
-        "	b _081A5454\n\t"
-        "_081A541A:\n\t"
-        "	ldr r0, _081A5434\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081A544C\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _081A5438\n\t"
-        "	subs r0, #0x12\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081A544C\n\t"
-        "	adds r0, #2\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081A544C\n\t"
-        "	b _081A5454\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5434: .4byte SPECIAL_IsSelectedMonEgg\n\t"
-        "_081A5438:\n\t"
-        "	movs r0, #0xad\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r2, r0\n\t"
-        "	blt _081A5454\n\t"
-        "	adds r0, #1\n\t"
-        "	cmp r2, r0\n\t"
-        "	ble _081A544C\n\t"
-        "	adds r0, #3\n\t"
-        "	cmp r2, r0\n\t"
-        "	bne _081A5454\n\t"
-        "_081A544C:\n\t"
-        "	adds r1, r3, r4\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	subs r0, #3\n\t"
-        "	strb r0, [r1]\n\t"
-        "_081A5454:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *hpAtStart = gBattleStruct->arenaStartHp;
+
+    hpAtStart[battler] = gBattleMons[battler].hp;
+    if (hpAtStart[BATTLE_OPPOSITE(battler)] > gBattleMons[BATTLE_OPPOSITE(battler)].hp)
+        hpAtStart[BATTLE_OPPOSITE(battler)] = gBattleMons[BATTLE_OPPOSITE(battler)].hp;
 }
 
-__attribute__((naked)) void sub_081A545C(void)
+
+void InitArenaChallenge(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _081A549C\n\t"
-        "	ldr r3, [r1]\n\t"
-        "	movs r1, #0xa7\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r3, r3, r1\n\t"
-        "	lsls r2, r0, #1\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldr r5, _081A54A0\n\t"
-        "	movs r4, #0x58\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	muls r1, r4, r1\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrh r1, [r1, #0x28]\n\t"
-        "	strh r1, [r2]\n\t"
-        "	movs r1, #1\n\t"
-        "	eors r0, r1\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r2, [r0, #0x28]\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, r2\n\t"
-        "	bls _081A5494\n\t"
-        "	strh r2, [r1]\n\t"
-        "_081A5494:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A549C: .4byte gBattleStruct\n\t"
-        "_081A54A0: .4byte gBattleMons\n\t"
-        ".syntax divided\n\t"
-    );
+    bool32 isCurrent;
+    u32 lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
+
+    gSaveBlock2Ptr->frontier.challengeStatus = 0;
+    gSaveBlock2Ptr->frontier.curChallengeBattleNum = 0;
+    gSaveBlock2Ptr->frontier.challengePaused = FALSE;
+    gSaveBlock2Ptr->frontier.disableRecordBattle = FALSE;
+    if (lvlMode != FRONTIER_LVL_50)
+        isCurrent = gSaveBlock2Ptr->frontier.winStreakActiveFlags & STREAK_ARENA_OPEN;
+    else
+        isCurrent = gSaveBlock2Ptr->frontier.winStreakActiveFlags & STREAK_ARENA_50;
+    if (!isCurrent)
+        gSaveBlock2Ptr->frontier.arenaWinStreaks[lvlMode] = 0;
+
+    SetDynamicWarp(0, gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum, WARP_ID_NONE);
+    gTrainerBattleOpponent_A = 0;
 }
 
-__attribute__((naked)) void InitArenaChallenge(void)
+
+void GetArenaData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r4, _081A54F0\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r3, _081A54F4\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1e\n\t"
-        "	lsrs r5, r0, #0x1e\n\t"
-        "	ldr r0, _081A54F8\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r6, _081A54FC\n\t"
-        "	adds r0, r1, r6\n\t"
-        "	strh r2, [r0]\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	movs r0, #9\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _081A5504\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _081A5500\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	b _081A550E\n\t"
-        "	.align 2, 0\n\t"
-        "_081A54F0: .4byte gSaveBlock2Ptr\n\t"
-        "_081A54F4: .4byte 0x00000CA9\n\t"
-        "_081A54F8: .4byte 0x00000CA8\n\t"
-        "_081A54FC: .4byte 0x00000CB2\n\t"
-        "_081A5500: .4byte 0x00000CDC\n\t"
-        "_081A5504:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r3, _081A5544\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r0, #0x40\n\t"
-        "_081A550E:\n\t"
-        "	ands r2, r0\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _081A5520\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	lsls r1, r5, #1\n\t"
-        "	ldr r6, _081A5548\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r2, [r0]\n\t"
-        "_081A5520:\n\t"
-        "	ldr r0, _081A554C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #4\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r2, #5\n\t"
-        "	ldrsb r2, [r0, r2]\n\t"
-        "	movs r3, #1\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetDynamicWarp\n\t"
-        "	ldr r1, _081A5550\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5544: .4byte 0x00000CDC\n\t"
-        "_081A5548: .4byte 0x00000DDA\n\t"
-        "_081A554C: .4byte gSaveBlock1Ptr\n\t"
-        "_081A5550: .4byte gTrainerBattleOpponent_A\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
+
+    switch (gSpecialVar_0x8005)
+    {
+    case ARENA_DATA_PRIZE:
+        gSpecialVar_Result = gSaveBlock2Ptr->frontier.arenaPrize;
+        break;
+    case ARENA_DATA_WIN_STREAK:
+        gSpecialVar_Result = gSaveBlock2Ptr->frontier.arenaWinStreaks[lvlMode];
+        break;
+    case ARENA_DATA_WIN_STREAK_ACTIVE:
+        if (lvlMode != FRONTIER_LVL_50)
+            gSpecialVar_Result = gSaveBlock2Ptr->frontier.winStreakActiveFlags & STREAK_ARENA_OPEN;
+        else
+            gSpecialVar_Result = gSaveBlock2Ptr->frontier.winStreakActiveFlags & STREAK_ARENA_50;
+        break;
+    }
 }
 
-__attribute__((naked)) void GetArenaData(void)
+
+void SetArenaData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _081A5578\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	ldr r1, _081A557C\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1e\n\t"
-        "	lsrs r1, r0, #0x1e\n\t"
-        "	ldr r0, _081A5580\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081A55A0\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _081A5584\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A558A\n\t"
-        "	b _081A55DE\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5578: .4byte gSaveBlock2Ptr\n\t"
-        "_081A557C: .4byte 0x00000CA9\n\t"
-        "_081A5580: .4byte gSpecialVar_0x8005\n\t"
-        "_081A5584:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081A55B8\n\t"
-        "	b _081A55DE\n\t"
-        "_081A558A:\n\t"
-        "	ldr r0, _081A5598\n\t"
-        "	ldr r2, _081A559C\n\t"
-        "	adds r1, r3, r2\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _081A55DE\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5598: .4byte gSpecialVar_Result\n\t"
-        "_081A559C: .4byte 0x00000DD8\n\t"
-        "_081A55A0:\n\t"
-        "	ldr r2, _081A55B0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldr r4, _081A55B4\n\t"
-        "	adds r0, r3, r4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	b _081A55DC\n\t"
-        "	.align 2, 0\n\t"
-        "_081A55B0: .4byte gSpecialVar_Result\n\t"
-        "_081A55B4: .4byte 0x00000DDA\n\t"
-        "_081A55B8:\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081A55D0\n\t"
-        "	ldr r2, _081A55C8\n\t"
-        "	ldr r1, _081A55CC\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	b _081A55DA\n\t"
-        "	.align 2, 0\n\t"
-        "_081A55C8: .4byte gSpecialVar_Result\n\t"
-        "_081A55CC: .4byte 0x00000CDC\n\t"
-        "_081A55D0:\n\t"
-        "	ldr r2, _081A55E4\n\t"
-        "	ldr r4, _081A55E8\n\t"
-        "	adds r0, r3, r4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x40\n\t"
-        "_081A55DA:\n\t"
-        "	ands r0, r1\n\t"
-        "_081A55DC:\n\t"
-        "	strh r0, [r2]\n\t"
-        "_081A55DE:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A55E4: .4byte gSpecialVar_Result\n\t"
-        "_081A55E8: .4byte 0x00000CDC\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
+
+    switch (gSpecialVar_0x8005)
+    {
+    case ARENA_DATA_PRIZE:
+        gSaveBlock2Ptr->frontier.arenaPrize = gSpecialVar_0x8006;
+        break;
+    case ARENA_DATA_WIN_STREAK:
+        gSaveBlock2Ptr->frontier.arenaWinStreaks[lvlMode] = gSpecialVar_0x8006;
+        break;
+    case ARENA_DATA_WIN_STREAK_ACTIVE:
+        if (lvlMode != FRONTIER_LVL_50)
+        {
+            if (gSpecialVar_0x8006)
+                gSaveBlock2Ptr->frontier.winStreakActiveFlags |= STREAK_ARENA_OPEN;
+            else
+                gSaveBlock2Ptr->frontier.winStreakActiveFlags &= ~STREAK_ARENA_OPEN;
+        }
+        else
+        {
+            if (gSpecialVar_0x8006)
+                gSaveBlock2Ptr->frontier.winStreakActiveFlags |= STREAK_ARENA_50;
+            else
+                gSaveBlock2Ptr->frontier.winStreakActiveFlags &= ~STREAK_ARENA_50;
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void SetArenaData(void)
+
+void sub_081A56B4(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081A5610\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r1, _081A5614\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1e\n\t"
-        "	lsrs r1, r0, #0x1e\n\t"
-        "	ldr r0, _081A5618\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081A5638\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _081A561C\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A5622\n\t"
-        "	b _081A56AA\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5610: .4byte gSaveBlock2Ptr\n\t"
-        "_081A5614: .4byte 0x00000CA9\n\t"
-        "_081A5618: .4byte gSpecialVar_0x8005\n\t"
-        "_081A561C:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081A5650\n\t"
-        "	b _081A56AA\n\t"
-        "_081A5622:\n\t"
-        "	ldr r0, _081A5630\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r3, _081A5634\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _081A56AA\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5630: .4byte gSpecialVar_0x8006\n\t"
-        "_081A5634: .4byte 0x00000DD8\n\t"
-        "_081A5638:\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldr r3, _081A5648\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081A564C\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _081A56AA\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5648: .4byte 0x00000DDA\n\t"
-        "_081A564C: .4byte gSpecialVar_0x8006\n\t"
-        "_081A5650:\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081A5680\n\t"
-        "	ldr r0, _081A5668\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A5670\n\t"
-        "	ldr r1, _081A566C\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	orrs r1, r2\n\t"
-        "	b _081A56A8\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5668: .4byte gSpecialVar_0x8006\n\t"
-        "_081A566C: .4byte 0x00000CDC\n\t"
-        "_081A5670:\n\t"
-        "	ldr r3, _081A567C\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r2, #0x81\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	b _081A56A6\n\t"
-        "	.align 2, 0\n\t"
-        "_081A567C: .4byte 0x00000CDC\n\t"
-        "_081A5680:\n\t"
-        "	ldr r0, _081A5694\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A569C\n\t"
-        "	ldr r1, _081A5698\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r2, #0x40\n\t"
-        "	orrs r1, r2\n\t"
-        "	b _081A56A8\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5694: .4byte gSpecialVar_0x8006\n\t"
-        "_081A5698: .4byte 0x00000CDC\n\t"
-        "_081A569C:\n\t"
-        "	ldr r3, _081A56B0\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r2, #0x41\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "_081A56A6:\n\t"
-        "	ands r1, r2\n\t"
-        "_081A56A8:\n\t"
-        "	str r1, [r0]\n\t"
-        "_081A56AA:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A56B0: .4byte 0x00000CDC\n\t"
-        ".syntax divided\n\t"
-    );
+    gSaveBlock2Ptr->frontier.challengeStatus = gSpecialVar_0x8005;
+    VarSet(VAR_TEMP_CHALLENGE_STATUS, 0);
+    gSaveBlock2Ptr->frontier.challengePaused = TRUE;
+    sub_081A482C();
 }
 
-__attribute__((naked)) void sub_081A56B4(void)
+
+void SetArenaPrize(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _081A56E8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _081A56EC\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	ldr r2, _081A56F0\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	movs r1, #0\n\t"
-        "	bl VarSet\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r0, _081A56F4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl sub_081A482C\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A56E8: .4byte gSaveBlock2Ptr\n\t"
-        "_081A56EC: .4byte gSpecialVar_0x8005\n\t"
-        "_081A56F0: .4byte 0x00000CA8\n\t"
-        "_081A56F4: .4byte 0x00000CA9\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
+
+    if (gSaveBlock2Ptr->frontier.arenaWinStreaks[lvlMode] > 41)
+        gSaveBlock2Ptr->frontier.arenaPrize = sArenaLongStreakPrizeItems[Random() % 9];
+    else
+        gSaveBlock2Ptr->frontier.arenaPrize = sArenaShortStreakPrizeItems[Random() % 6];
 }
 
-__attribute__((naked)) void SetArenaPrize(void)
+
+void GiveArenaPrize(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r4, _081A5734\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _081A5738\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1e\n\t"
-        "	lsrs r0, r0, #0x1d\n\t"
-        "	ldr r2, _081A573C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0x29\n\t"
-        "	bls _081A5748\n\t"
-        "	bl Random\n\t"
-        "	ldr r4, [r4]\n\t"
-        "	ldr r5, _081A5740\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #9\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0xf\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldr r1, _081A5744\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	b _081A5766\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5734: .4byte gSaveBlock2Ptr\n\t"
-        "_081A5738: .4byte 0x00000CA9\n\t"
-        "_081A573C: .4byte 0x00000DDA\n\t"
-        "_081A5740: .4byte gUnknown_85DD7E4\n\t"
-        "_081A5744: .4byte 0x00000DD8\n\t"
-        "_081A5748:\n\t"
-        "	bl Random\n\t"
-        "	ldr r4, [r4]\n\t"
-        "	ldr r5, _081A5770\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0xf\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldr r2, _081A5774\n\t"
-        "	adds r4, r4, r2\n\t"
-        "_081A5766:\n\t"
-        "	strh r0, [r4]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5770: .4byte gUnknown_85DD7D8\n\t"
-        "_081A5774: .4byte 0x00000DD8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (AddBagItem(gSaveBlock2Ptr->frontier.arenaPrize, 1) == TRUE)
+    {
+        CopyItemName(gSaveBlock2Ptr->frontier.arenaPrize, gStringVar1);
+        gSaveBlock2Ptr->frontier.arenaPrize = ITEM_NONE;
+        gSpecialVar_Result = TRUE;
+    }
+    else
+    {
+        gSpecialVar_Result = FALSE;
+    }
 }
 
-__attribute__((naked)) void GiveArenaPrize(void)
+
+void BufferArenaOpponentName(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r4, _081A57B0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _081A57B4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AddBagItem\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #1\n\t"
-        "	bne _081A57C0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _081A57B4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldr r1, _081A57B8\n\t"
-        "	bl CopyItemName\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _081A57B4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _081A57BC\n\t"
-        "	strh r5, [r0]\n\t"
-        "	b _081A57C6\n\t"
-        "	.align 2, 0\n\t"
-        "_081A57B0: .4byte gSaveBlock2Ptr\n\t"
-        "_081A57B4: .4byte 0x00000DD8\n\t"
-        "_081A57B8: .4byte gStringVar1\n\t"
-        "_081A57BC: .4byte gSpecialVar_Result\n\t"
-        "_081A57C0:\n\t"
-        "	ldr r1, _081A57CC\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "_081A57C6:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A57CC: .4byte gSpecialVar_Result\n\t"
-        ".syntax divided\n\t"
-    );
+    GetFrontierTrainerName(gStringVar1, gTrainerBattleOpponent_A);
 }
 
-__attribute__((naked)) void BufferArenaOpponentName(void)
+
+void DrawArenaRefereeTextBox(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081A57E0\n\t"
-        "	ldr r1, _081A57E4\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	bl GetFrontierTrainerName\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A57E0: .4byte gStringVar1\n\t"
-        "_081A57E4: .4byte gTrainerBattleOpponent_A\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 width = 22;
+    u8 palNum = 7;
+    u8 height;
+
+    FillBgTilemapBufferRect(0, 0,     0,  14, 1,     6, palNum);
+    FillBgTilemapBufferRect(0, 0,     29, 14, 1,     6, palNum);
+    FillBgTilemapBufferRect(0, 0x31,  1,  14, 1,     1, palNum);
+    height = 2;
+    FillBgTilemapBufferRect(0, 0x32,  2,  14, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x33,  3,  14, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x34,  4,  14, width, 1, palNum);
+    FillBgTilemapBufferRect(0, 0x35,  26, 14, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x32,  27, 14, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x36,  28, 14, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x37,  1,  15, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x38,  2,  15, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x3B,  3,  15, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x39,  4,  15, width, 1, palNum);
+    FillBgTilemapBufferRect(0, 0x43B, 26, 15, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x38,  27, 15, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x3A,  28, 15, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x37,  1,  16, 1,     height, palNum);
+    FillBgTilemapBufferRect(0, 0x38,  2,  16, 1,     height, palNum);
+    FillBgTilemapBufferRect(0, 0x3C,  3,  16, 1,     height, palNum);
+    FillBgTilemapBufferRect(0, 0x39,  4,  16, width, height, palNum);
+    FillBgTilemapBufferRect(0, 0x43C, 26, 16, 1,     height, palNum);
+    FillBgTilemapBufferRect(0, 0x38,  27, 16, 1,     height, palNum);
+    FillBgTilemapBufferRect(0, 0x3A,  28, 16, 1,     height, palNum);
+    FillBgTilemapBufferRect(0, 0x37,  1,  18, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x38,  2,  18, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x83B, 3,  18, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x39,  4,  18, width, 1, palNum);
+    FillBgTilemapBufferRect(0, 0xC3B, 26, 18, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x38,  27, 18, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x3A,  28, 18, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x831, 1,  19, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x832, 2,  19, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x833, 3,  19, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x834, 4,  19, width, 1, palNum);
+    FillBgTilemapBufferRect(0, 0x835, 26, 19, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x832, 27, 19, 1,     1, palNum);
+    FillBgTilemapBufferRect(0, 0x836, 28, 19, 1,     1, palNum);
 }
 
-__attribute__((naked)) void DrawArenaRefereeTextBox(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #0x16\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r5, #7\n\t"
-        "	movs r4, #1\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r6, #6\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x1d\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x31\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	movs r6, #2\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x33\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x34\n\t"
-        "	movs r2, #4\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x35\n\t"
-        "	movs r2, #0x1a\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	movs r2, #0x1b\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x36\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x37\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0xf\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0xf\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x3b\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #0xf\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	movs r2, #4\n\t"
-        "	movs r3, #0xf\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	ldr r1, _081A5AB0\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #0x1a\n\t"
-        "	movs r3, #0xf\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	movs r2, #0x1b\n\t"
-        "	movs r3, #0xf\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #0xf\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x37\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	movs r2, #4\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	ldr r1, _081A5AB4\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #0x1a\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	movs r2, #0x1b\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x37\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0x12\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0x12\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	ldr r1, _081A5AB8\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #0x12\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	movs r2, #4\n\t"
-        "	movs r3, #0x12\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	ldr r1, _081A5ABC\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #0x1a\n\t"
-        "	movs r3, #0x12\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	movs r2, #0x1b\n\t"
-        "	movs r3, #0x12\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #0x12\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	ldr r1, _081A5AC0\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	ldr r6, _081A5AC4\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	ldr r1, _081A5AC8\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	ldr r1, _081A5ACC\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	ldr r1, _081A5AD0\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #0x1a\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #0x1b\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	ldr r1, _081A5AD4\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5AB0: .4byte 0x0000043B\n\t"
-        "_081A5AB4: .4byte 0x0000043C\n\t"
-        "_081A5AB8: .4byte 0x0000083B\n\t"
-        "_081A5ABC: .4byte 0x00000C3B\n\t"
-        "_081A5AC0: .4byte 0x00000831\n\t"
-        "_081A5AC4: .4byte 0x00000832\n\t"
-        "_081A5AC8: .4byte 0x00000833\n\t"
-        "_081A5ACC: .4byte 0x00000834\n\t"
-        "_081A5AD0: .4byte 0x00000835\n\t"
-        "_081A5AD4: .4byte 0x00000836\n\t"
-        ".syntax divided\n\t"
-    );
-}
 
-__attribute__((naked)) void EraseArenaRefereeTextBox(void)
+void EraseArenaRefereeTextBox(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r4, #1\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	movs r6, #4\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #4\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #5\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #7\n\t"
-        "	movs r2, #0x1d\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0xf\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #9\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0xf\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0xf\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #0xf\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	movs r2, #0x1d\n\t"
-        "	movs r3, #0xf\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xd\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xe\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xf\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	movs r2, #0x1d\n\t"
-        "	movs r3, #0x13\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 palNum = 0;
+    u8 width = 26;
+    u8 height;
+
+    FillBgTilemapBufferRect(0, 3, 0, 14, 1, 1, palNum);
+    height = 4;
+    FillBgTilemapBufferRect(0, 4, 1, 14, 1, 1, palNum);
+    FillBgTilemapBufferRect(0, 5, 2, 14, width, 1, palNum);
+    FillBgTilemapBufferRect(0, 6, 28, 14, 1, 1, palNum);
+    FillBgTilemapBufferRect(0, 7, 29, 14, 1, 1, palNum);
+    FillBgTilemapBufferRect(0, 8, 0, 15, 1, height, palNum);
+    FillBgTilemapBufferRect(0, 9, 1, 15, 1, height, palNum);
+    FillBgTilemapBufferRect(0, 0xA, 2, 15, width, height, palNum);
+    FillBgTilemapBufferRect(0, 0xB, 28, 15, 1, height, palNum);
+    FillBgTilemapBufferRect(0, 0xC, 29, 15, 1, height, palNum);
+    FillBgTilemapBufferRect(0, 0xD, 0, 19, 1, 1, palNum);
+    FillBgTilemapBufferRect(0, 0xE, 1, 19, 1, 1, palNum);
+    FillBgTilemapBufferRect(0, 0xF, 2, 19, width, 1, palNum);
+    FillBgTilemapBufferRect(0, 0x10, 28, 19, 1, 1, palNum);
+    FillBgTilemapBufferRect(0, 0x11, 29, 19, 1, 1, palNum);
 }
 
 
