@@ -3,6 +3,25 @@
 
 #define BATTLE_FACTORY_SCREEN_DATA __attribute__((section(".rodata.battle_factory_screen_data")))
 #define BATTLE_FACTORY_SCREEN_DATA_LATE __attribute__((section(".rodata.battle_factory_screen_data_late")))
+#define BATTLE_FACTORY_SCREEN_GRAPHICS __attribute__((section(".rodata.battle_factory_screen_graphics"), aligned(1)))
+
+// Keep the JP Battle Factory screen resources in pokeemerald's final hierarchy.
+// The assets retain their original JP palette and tile streams.
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u16 sPokeballGray_Pal[] = INCBIN_U16("graphics/battle_frontier/factory_screen/pokeball_gray.pal.gbapal");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u16 sPokeballSelected_Pal[] = INCBIN_U16("graphics/battle_frontier/factory_screen/pokeball_selected.pal.gbapal");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u16 sInterface_Pal[] = INCBIN_U16("graphics/battle_frontier/factory_screen/interface.pal.gbapal");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sPokeball_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/pokeball.png.4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sArrow_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/arrow.png.4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sMenuHighlightLeft_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/menu_highlight_left.png.4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sMenuHighlightRight_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/menu_highlight_right.png.4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionBoxLeft_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/action_box_left.png.4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionBoxRight_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/action_box_right.png.4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionHighlightLeft_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/action_highlight_left.png.4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionHighlightMiddle_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/action_highlight_middle.png.4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionHighlightRight_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/action_highlight_right.png.4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sMonPicBgAnim_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/mon_pic_bg_anim.png.4bpp");
+
+#undef BATTLE_FACTORY_SCREEN_GRAPHICS
 
 // Return states for the Select Actions
 enum
@@ -6554,7 +6573,7 @@ __attribute__((naked)) void sub_0819D270(void)
         "	strh r1, [r0, #8]\n\t"
         "	b _0819D44A\n\t"
         "	.align 2, 0\n\t"
-        "_0819D31C: .4byte gUnknown_85D9C38\n\t"
+        "_0819D31C: .4byte sPokeballGray_Pal\n\t"
         "_0819D320: .4byte gTasks\n\t"
         "_0819D324:\n\t"
         "	ldr r0, _0819D388\n\t"
@@ -6894,7 +6913,7 @@ __attribute__((naked)) void sub_0819D458(void)
         "	b _0819D6C0\n\t"
         "	.align 2, 0\n\t"
         "_0819D5D4: .4byte gPlttBufferFaded\n\t"
-        "_0819D5D8: .4byte gUnknown_85D9C38\n\t"
+        "_0819D5D8: .4byte sPokeballGray_Pal\n\t"
         "_0819D5DC:\n\t"
         "	movs r0, #0x80\n\t"
         "	lsls r0, r0, #7\n\t"
@@ -6908,7 +6927,7 @@ __attribute__((naked)) void sub_0819D458(void)
         "	bl BeginNormalPaletteFade\n\t"
         "	b _0819D678\n\t"
         "	.align 2, 0\n\t"
-        "_0819D5F4: .4byte gUnknown_85D9C38\n\t"
+        "_0819D5F4: .4byte sPokeballGray_Pal\n\t"
         "_0819D5F8:\n\t"
         "	ldr r0, _0819D60C\n\t"
         "	ldrb r1, [r0, #7]\n\t"

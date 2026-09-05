@@ -25,10 +25,6 @@ gStandardMenuPalette: @ 0x85D7B04
 
 	.section .rodata.mid98_suffix_after_menu_info_resources
 
-	.globl gUnknown_85D9C38
-gUnknown_85D9C38: @ 0x85D9C38
-	.incbin "baserom_jp.gba", 0x5d9c38, 0x1100
-
 	.globl gUnknown_85DAD38
 gUnknown_85DAD38: @ 0x85DAD38
 	.incbin "baserom_jp.gba", 0x5dad38, 0x440

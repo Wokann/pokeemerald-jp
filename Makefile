@@ -833,6 +833,20 @@ $(C_BUILDDIR)/item_menu.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/pokemon_summary_screen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/graphics.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/battle_factory_screen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
+$(C_BUILDDIR)/battle_factory_screen.o: \
+	graphics/battle_frontier/factory_screen/pokeball_gray.pal.gbapal \
+	graphics/battle_frontier/factory_screen/pokeball_selected.pal.gbapal \
+	graphics/battle_frontier/factory_screen/interface.pal.gbapal \
+	graphics/battle_frontier/factory_screen/pokeball.png.4bpp \
+	graphics/battle_frontier/factory_screen/arrow.png.4bpp \
+	graphics/battle_frontier/factory_screen/menu_highlight_left.png.4bpp \
+	graphics/battle_frontier/factory_screen/menu_highlight_right.png.4bpp \
+	graphics/battle_frontier/factory_screen/action_box_left.png.4bpp \
+	graphics/battle_frontier/factory_screen/action_box_right.png.4bpp \
+	graphics/battle_frontier/factory_screen/action_highlight_left.png.4bpp \
+	graphics/battle_frontier/factory_screen/action_highlight_middle.png.4bpp \
+	graphics/battle_frontier/factory_screen/action_highlight_right.png.4bpp \
+	graphics/battle_frontier/factory_screen/mon_pic_bg_anim.png.4bpp
 $(C_BUILDDIR)/menu.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/naming_screen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/pokedex.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
@@ -1067,6 +1081,12 @@ graphics/birch_speech/unused_beauty.4bpp: graphics/birch_speech/unused_beauty.pn
 	$(GFX) $< $@ -num_tiles 822 -Wnum_tiles
 
 %.4bpp: %.png | tools
+	$(GFX) $< $@
+
+graphics/battle_frontier/factory_screen/%.png.4bpp: graphics/battle_frontier/factory_screen/%.png | tools
+	$(GFX) $< $@
+
+graphics/battle_frontier/factory_screen/%.pal.gbapal: graphics/battle_frontier/factory_screen/%.pal | tools
 	$(GFX) $< $@
 
 graphics/field_effects/pics/%.png.4bpp: graphics/field_effects/pics/%.png | tools
@@ -1459,6 +1479,12 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/graphics.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/graphics.gen.s
+
+$(C_BUILDDIR)/battle_factory_screen.o: src/battle_factory_screen.c
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/battle_factory_screen.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/battle_factory_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/battle_factory_screen.gen.s
 
 $(C_BUILDDIR)/text_window.o: src/text_window.c graphics/text_window/gTextWindowFrame1_Gfx.bin graphics/text_window/gTextWindowFrame1_Pal.bin
 	@mkdir -p $(dir $@)
