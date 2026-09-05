@@ -15,6 +15,7 @@
 #define STRINGS_MENU_YES_NO __attribute__((section(".rodata.strings_menu_yes_no"), aligned(1)))
 #define STRINGS_MENU_SELECTOR_ARROW3 __attribute__((section(".rodata.strings_menu_selector_arrow3"), aligned(1)))
 #define STRINGS_BATTLE_FACTORY_SELECTION __attribute__((section(".rodata.strings_battle_factory_selection"), aligned(1)))
+#define STRINGS_DECORATION_TEXT __attribute__((section(".rodata.strings_decoration_text"), aligned(1)))
 
 STRINGS_MENU_YES_NO const u8 gText_YesNo[] = _("はい\nいいえ");
 STRINGS_MENU_SELECTOR_ARROW3 const u8 gText_SelectorArrow3[] = _("▶");
@@ -30,6 +31,29 @@ STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_Deselect[] = _("はずす");
 STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_TheseThreePkmnOkay[] = _("いじょうの　3ひきで　よろしいですか？");
 STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_Yes2[] = _("はい");
 STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_No2[] = _("いいえ");
+
+STRINGS_DECORATION_TEXT const u8 gText_CantPlaceInRoom[] = _(
+    "この　グッズは\n"
+    "じぶんの　へやには　おけません！");
+STRINGS_DECORATION_TEXT const u8 gText_CantThrowAwayInUse[] = _(
+    "このグッズは　おかれて　いるので\n"
+    "すてる　ことが　できません！");
+STRINGS_DECORATION_TEXT const u8 gText_DecorationWillBeDiscarded[] = _(
+    "{STR_VAR_1}　は　なくなりますが\n"
+    "よろしい　ですか？");
+STRINGS_DECORATION_TEXT const u8 gText_DecorationThrownAway[] = _("グッズを　すてました！");
+STRINGS_DECORATION_TEXT const u8 gText_StopPuttingAwayDecorations[] = _("もどすのを　やめますか？");
+STRINGS_DECORATION_TEXT const u8 gText_NoDecorationHere[] = _("ここに　グッズは　ありません！");
+STRINGS_DECORATION_TEXT const u8 gText_ReturnDecorationToPC[] = _("このグッズを　パソコンに　もどしますか？");
+STRINGS_DECORATION_TEXT const u8 gText_DecorationReturnedToPC[] = _("グッズを　パソコンに　もどしました！");
+STRINGS_DECORATION_TEXT const u8 gText_NoDecorationsInUse[] = _("グッズは　おかれて　いません！{PAUSE_UNTIL_PRESS}");
+STRINGS_DECORATION_TEXT const u8 gText_Tristan[] = _("ヒロミ");
+STRINGS_DECORATION_TEXT const u8 gText_Philip[] = _("ユウリ");
+STRINGS_DECORATION_TEXT const u8 gText_Dennis[] = _("ヨシオ");
+STRINGS_DECORATION_TEXT const u8 gText_Roberto[] = _("サダハル");
+STRINGS_DECORATION_TEXT const u8 gText_TurnOff[] = _("せつぞくを　きる");
+STRINGS_DECORATION_TEXT const u8 gText_Decoration[] = _("もようがえ");
+STRINGS_DECORATION_TEXT const u8 gText_ItemStorage[] = _("どうぐ　あずかり");
 
 STRINGS_DAYCARE const u8 gDaycareText_GetAlongVeryWell[] = _("2ひきの　なかは\nとっても　よい　ようじゃ");
 STRINGS_DAYCARE const u8 gDaycareText_GetAlong[] = _("2ひきの　なかは\nまずまずの　ようじゃ");

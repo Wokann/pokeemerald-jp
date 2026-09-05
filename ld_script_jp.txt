@@ -24,9 +24,6 @@ gText_PokenavCondition_MonListButtons = 0x085CB72E;
 gText_PokenavMap_ZoomedInButtons = 0x085CB721;
 gText_PokenavMap_ZoomedOutButtons = 0x085CB714;
 gText_Pokenav_ClearButtonList = 0x085CB703;
-gText_TurnOff = 0x085CA89D;
-gText_Decoration = 0x085CA8A6;
-gText_ItemStorage = 0x085CA8AC;
 gText_Mailbox = 0x085CA8B5;
 gText_DepositItem = 0x085CA8BD;
 gText_WithdrawItem = 0x085CA8C7;
@@ -9969,7 +9966,7 @@ SECTIONS {
         src/data/text/region_texts87.o(.rodata);
         data/data_b2d.o(.rodata.mid81);
         src/data/text/region_texts88.o(.rodata);
-        src/data/text/region_texts89.o(.rodata);
+        src/strings.o(.rodata.strings_decoration_text);
         data/data_b2d.o(.rodata.mid82);
         src/data/text/region_texts90.o(.rodata);
         src/data/text/region_texts91.o(.rodata);
