@@ -46,6 +46,8 @@
 #define MAX_AREA_HIGHLIGHTS 64
 #define MAX_AREA_MARKERS 32
 
+#define POKEDEX_AREA_SCREEN_DATA __attribute__((section(".rodata.pokedex_area_screen_data")))
+
 struct OverworldArea
 {
     u8 mapGroup;
@@ -87,11 +89,6 @@ extern struct PokedexAreaScreen *gUnknown_203A848;
 extern u32 gUnknown_20374F4[];
 extern const u32 gUnknown_859381C[];
 extern const u32 gUnknown_859383C[];
-extern const u16 gUnknown_8593970[];
-extern const u16 gUnknown_8593972[];
-extern const u16 gUnknown_8593978[][3];
-extern const u16 gUnknown_8593984[][2];
-extern const struct PokedexAreaMapTemplate gUnknown_85939A0;
 extern const struct SpriteSheet gUnknown_85939A4;
 extern const struct SpritePalette gUnknown_85939AC;
 extern const struct SpriteTemplate gUnknown_85939BC;
@@ -114,6 +111,43 @@ struct JPRegionMapEntry
 };
 
 extern const struct JPRegionMapEntry gUnknown_857CD6C[];
+
+static const u16 sSpeciesHiddenFromAreaScreen[] POKEDEX_AREA_SCREEN_DATA =
+{
+    SPECIES_WYNAUT,
+};
+
+static const mapsec_u16_t sMovingRegionMapSections[] POKEDEX_AREA_SCREEN_DATA =
+{
+    MAPSEC_MARINE_CAVE,
+    MAPSEC_UNDERWATER_MARINE_CAVE,
+    MAPSEC_TERRA_CAVE,
+};
+
+static const u16 sFeebasData[][3] POKEDEX_AREA_SCREEN_DATA =
+{
+    { SPECIES_FEEBAS, MAP_GROUP(MAP_ROUTE119), MAP_NUM(MAP_ROUTE119) },
+    { NUM_SPECIES },
+};
+
+static const mapsec_u16_t sLandmarkData[][2] POKEDEX_AREA_SCREEN_DATA =
+{
+    { MAPSEC_SKY_PILLAR,      FLAG_LANDMARK_SKY_PILLAR },
+    { MAPSEC_SEAFLOOR_CAVERN, FLAG_LANDMARK_SEAFLOOR_CAVERN },
+    { MAPSEC_ALTERING_CAVE,   FLAG_LANDMARK_ALTERING_CAVE },
+    { MAPSEC_MIRAGE_TOWER,    FLAG_LANDMARK_MIRAGE_TOWER },
+    { MAPSEC_DESERT_UNDERPASS, FLAG_LANDMARK_DESERT_UNDERPASS },
+    { MAPSEC_ARTISAN_CAVE,    FLAG_LANDMARK_ARTISAN_CAVE },
+    { MAPSEC_NONE },
+};
+
+static const struct PokedexAreaMapTemplate sPokedexAreaMapTemplate POKEDEX_AREA_SCREEN_DATA =
+{
+    .bg = 3,
+    .offset = 0,
+    .mode = 0,
+    .unk = 2,
+};
 
 bool8 DrawAreaGlow(void);
 void FindMapsWithMon(u16 species);
@@ -190,22 +224,22 @@ void FindMapsWithMon(u16 species)
 
         for (i = 0; i < 1; i++)
         {
-            if (gUnknown_8593970[i] == species)
+            if (sSpeciesHiddenFromAreaScreen[i] == species)
                 return;
         }
 
-        for (i = 0; gUnknown_8593978[i][0] != NUM_SPECIES; i++)
+        for (i = 0; sFeebasData[i][0] != NUM_SPECIES; i++)
         {
-            if (species == gUnknown_8593978[i][0])
+            if (species == sFeebasData[i][0])
             {
-                switch (gUnknown_8593978[i][1])
+                switch (sFeebasData[i][1])
                 {
                 case MAP_GROUP_TOWNS_AND_ROUTES:
-                    SetAreaHasMon(gUnknown_8593978[i][1], gUnknown_8593978[i][2]);
+                    SetAreaHasMon(sFeebasData[i][1], sFeebasData[i][2]);
                     break;
                 case MAP_GROUP_DUNGEONS:
                 case MAP_GROUP_SPECIAL_AREA:
-                    SetSpecialMapHasMon(gUnknown_8593978[i][1], gUnknown_8593978[i][2]);
+                    SetSpecialMapHasMon(sFeebasData[i][1], sFeebasData[i][2]);
                     break;
                 }
             }
@@ -268,13 +302,13 @@ void SetSpecialMapHasMon(u16 mapGroup, u16 mapNum)
         {
             for (i = 0; (u32)i < 3; i++)
             {
-                if (regionMapSectionId == gUnknown_8593972[i])
+                if (regionMapSectionId == sMovingRegionMapSections[i])
                     return;
             }
 
-            for (i = 0; gUnknown_8593984[i][0] != MAPSEC_NONE; i++)
+            for (i = 0; sLandmarkData[i][0] != MAPSEC_NONE; i++)
             {
-                if (regionMapSectionId == gUnknown_8593984[i][0] && !FlagGet(gUnknown_8593984[i][1]))
+                if (regionMapSectionId == sLandmarkData[i][0] && !FlagGet(sLandmarkData[i][1]))
                     return;
             }
 
@@ -956,7 +990,7 @@ void Task_PokedexAreaScreen_0(u8 taskId)
         break;
     case 1:
         SetBgAttribute(3, BG_ATTR_CHARBASEINDEX, 3);
-        LoadPokedexAreaMapGfx(&gUnknown_85939A0);
+        LoadPokedexAreaMapGfx(&sPokedexAreaMapTemplate);
         StringFill(gUnknown_203A848->charBuffer, 0, 10);
         break;
     case 2:

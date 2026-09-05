@@ -9842,6 +9842,8 @@ SECTIONS {
         src/data/battle_records.o(.rodata.battle_records_data);
         src/data/text/region_texts32.o(.rodata);
         data/data_b2d_mid32.o(.rodata.data_b2d_mid32_pre_cry_prefix);
+        src/pokedex_area_screen.o(.rodata.pokedex_area_screen_data);
+        data/data_b2d_mid32.o(.rodata.data_b2d_mid32_pre_cry_suffix);
         src/pokedex_cry_screen.o(.rodata.pokedex_cry_screen_data);
         src/landmark.o(.rodata.landmark_data);
         data/battle_transition_pre_regi_resources.o(.rodata.battle_transition_pre_regi_resources);

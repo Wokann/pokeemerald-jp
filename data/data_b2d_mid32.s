@@ -17,25 +17,7 @@ gUnknown_859381C: @ 0x859381C
 gUnknown_859383C: @ 0x859383C
 	.incbin "baserom_jp.gba", 0x59383c, 0x134
 
-	.globl gUnknown_8593970
-gUnknown_8593970: @ 0x8593970
-	.incbin "baserom_jp.gba", 0x593970, 0x2
-
-	.globl gUnknown_8593972
-gUnknown_8593972: @ 0x8593972
-	.incbin "baserom_jp.gba", 0x593972, 0x6
-
-	.globl gUnknown_8593978
-gUnknown_8593978: @ 0x8593978
-	.incbin "baserom_jp.gba", 0x593978, 0xc
-
-	.globl gUnknown_8593984
-gUnknown_8593984: @ 0x8593984
-	.incbin "baserom_jp.gba", 0x593984, 0x1c
-
-	.globl gUnknown_85939A0
-gUnknown_85939A0: @ 0x85939A0
-	.incbin "baserom_jp.gba", 0x5939a0, 0x4
+	.section .rodata.data_b2d_mid32_pre_cry_suffix, "a", %progbits
 
 	.globl gUnknown_85939A4
 gUnknown_85939A4: @ 0x85939A4
