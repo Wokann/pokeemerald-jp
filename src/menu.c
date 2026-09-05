@@ -37,6 +37,18 @@ MENU_CORE_DATA static const struct WindowTemplate sYesNo_WindowTemplates =
 
 #undef MENU_CORE_DATA
 
+#define MENU_HOF_PC_TOPBAR_DATA __attribute__((section(".rodata.menu_hof_pc_topbar_pal")))
+
+MENU_HOF_PC_TOPBAR_DATA static const u16 sHofPC_TopBar_Pal[] =
+{
+    0x532E, 0x7FFF, 0x318C, 0x675A,
+    0x043C, 0x3AFF, 0x0664, 0x4BD2,
+    0x6546, 0x7B14, 0x7FFF, 0x7729,
+    0x7686, 0x4160, 0x6183, 0x2E20,
+};
+
+#undef MENU_HOF_PC_TOPBAR_DATA
+
 __attribute__((naked)) void InitStandardTextBoxWindows()
 {
     __asm__(".syntax unified\n\t"
@@ -2841,7 +2853,7 @@ __attribute__((naked)) void sub_081981B4(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0819823C: .4byte gUnknown_85D7B48\n\t"
+        "_0819823C: .4byte sHofPC_TopBar_Pal\n\t"
         "_08198240: .4byte gUnknown_203CA6C\n\t"
         ".syntax divided\n\t"
     );
