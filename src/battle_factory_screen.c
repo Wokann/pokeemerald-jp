@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle_factory_screen.h"
 #include "sprite.h"
+#include "starter_choose.h"
 
 #define BATTLE_FACTORY_SCREEN_DATA __attribute__((section(".rodata.battle_factory_screen_data")))
 #define BATTLE_FACTORY_SCREEN_DATA_LATE __attribute__((section(".rodata.battle_factory_screen_data_late")))
@@ -71,6 +72,16 @@ BATTLE_FACTORY_SCREEN_SELECT_SPRITE_SHEETS static const struct SpriteSheet sSele
 };
 
 #undef BATTLE_FACTORY_SCREEN_SELECT_SPRITE_SHEETS
+
+#define BATTLE_FACTORY_SCREEN_SELECT_BALL_GFX __attribute__((section(".rodata.battle_factory_screen_select_ball_gfx"), aligned(1)))
+
+BATTLE_FACTORY_SCREEN_SELECT_BALL_GFX static const struct CompressedSpriteSheet sSelect_BallGfx[] =
+{
+    {gPokeballSelection_Gfx, 0x800, GFXTAG_BALL},
+    {},
+};
+
+#undef BATTLE_FACTORY_SCREEN_SELECT_BALL_GFX
 
 #define BATTLE_FACTORY_SCREEN_SELECT_SPRITE_PALETTES __attribute__((section(".rodata.battle_factory_screen_select_sprite_palettes"), aligned(1)))
 

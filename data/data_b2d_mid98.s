@@ -22,9 +22,3 @@ gUnknown_85CD19F: @ 0x85CD19F
 	.globl gStandardMenuPalette
 gStandardMenuPalette: @ 0x85D7B04
 	.incbin "graphics/misc/gStandardMenuPalette.bin"
-
-	.section .rodata.mid98_suffix_after_battle_factory_menu
-
-	.globl sSelect_BallGfx
-sSelect_BallGfx: @ 0x85DBB60
-	.incbin "baserom_jp.gba", 0x5dbb60, 0x10
