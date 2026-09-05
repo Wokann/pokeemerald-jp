@@ -1064,6 +1064,7 @@ SONG_OBJS := $(patsubst sound/songs/midi/%.s,$(OBJ_DIR)/sound/songs/midi/%.o,$(S
 DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_anim_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o $(OBJ_DIR)/data/field_effect_scripts.o $(OBJ_DIR)/data/battle_scripts_2.o $(OBJ_DIR)/data/battle_ai_scripts.o $(OBJ_DIR)/data/contest_ai_scripts.o $(OBJ_DIR)/data/mystery_event_script_cmd_table.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_b.o $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b2.o $(OBJ_DIR)/data/data_b2b.o $(OBJ_DIR)/data/data_b2d.o $(OBJ_DIR)/data/data_b2d_mid47.o $(OBJ_DIR)/data/tilesets.o $(OBJ_DIR)/data/maps.o $(OBJ_DIR)/data/fieldmap.o $(OBJ_DIR)/data/metatile_behavior.o $(OBJ_DIR)/data/field_door.o $(OBJ_DIR)/data/field_player_avatar.o $(OBJ_DIR)/data/data_b2d_mid28.o $(OBJ_DIR)/data/map_events.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid37.o $(OBJ_DIR)/data/data_b2d_mid60.o $(OBJ_DIR)/data/data_b2d_mid61.o $(OBJ_DIR)/data/data_b2d_mid62.o $(OBJ_DIR)/data/contest_painting.o $(OBJ_DIR)/data/data_b2d_mid33.o $(OBJ_DIR)/data/data_b2d_mid32.o $(OBJ_DIR)/data/data_b2d_mid65.o $(OBJ_DIR)/data/battle_transition_tilemaps.o $(OBJ_DIR)/data/data_b2d_rest.o $(OBJ_DIR)/data/data_b2d_mid69.o $(OBJ_DIR)/data/data_b2d_mid70.o $(OBJ_DIR)/data/intro_credits_graphics.o $(OBJ_DIR)/data/data_b2d_mid98.o $(OBJ_DIR)/data/mystery_gift.o $(OBJ_DIR)/data/sound_data.o $(OBJ_DIR)/data/rom_padding.o $(OBJ_DIR)/data/battle_textbox.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_none.o $(OBJ_DIR)/data/data_rest2b.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_main.o $(OBJ_DIR)/data/data_rest2c.o $(OBJ_DIR)/data/data_b2d_gfx_front.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
 # Migrated data files now build from C or no longer contribute data.
 DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b_mid2b5.o $(OBJ_DIR)/data/data_b_mid2b6.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid62.o,$(DATA_OBJS))
+DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b2d_mid33.o,$(DATA_OBJS))
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_regis_resources.o
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_legendary_resources.o
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_frontier_resources.o
@@ -2638,10 +2639,6 @@ $(OBJ_DIR)/data/battle_transition_frontier_resources.o: data/battle_transition_f
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(OBJ_DIR)/data/battle_transition_pre_regi_resources.o: data/battle_transition_pre_regi_resources.s graphics/battle_transitions/big_pokeball.4bpp graphics/battle_transitions/pokeball_trail.4bpp graphics/battle_transitions/pokeball.4bpp graphics/battle_transitions/elite_four_bg.4bpp graphics/battle_transitions/unused_brendan.4bpp graphics/battle_transitions/unused_lass.4bpp graphics/battle_transitions/shrinking_box.4bpp graphics/battle_transitions/evil_team.gbapal graphics/battle_transitions/team_aqua.4bpp.lz graphics/battle_transitions/team_aqua.bin.lz graphics/battle_transitions/team_magma.4bpp.lz graphics/battle_transitions/team_magma.bin.lz
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
-
-$(OBJ_DIR)/data/data_b2d_mid33.o: data/data_b2d_mid33.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 

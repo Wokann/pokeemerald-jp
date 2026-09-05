@@ -1,6 +1,7 @@
 #include "global.h"
 #include "bg.h"
 #include "graphics.h"
+#include "list_menu.h"
 #include "menu.h"
 #include "menu_helpers.h"
 #include "pokeblock.h"
@@ -55,6 +56,7 @@ void sub_08136E00(void);
 void sub_08136E58(void);
 void sub_08136BE8(void);
 void sub_08136CC4(void);
+void sub_08135FB4(void);
 
 const s8 gPokeblockFlavorCompatibilityTable[NUM_NATURES * FLAVOR_COUNT] POKEBLOCK_FLAVOR_DATA =
 {
@@ -372,6 +374,40 @@ static const struct WindowTemplate sWindowTemplates[] POKEBLOCK_WINDOW_TEMPLATE_
         .baseBlock = 0x16E,
     },
     DUMMY_WIN_TEMPLATE,
+};
+
+// These remain visible to the JP naked routines until their C conversion.
+static const struct WindowTemplate sTossPkblockWindowTemplate POKEBLOCK_WINDOW_TEMPLATE_DATA =
+{
+    .bg = 1,
+    .tilemapLeft = 21,
+    .tilemapTop = 9,
+    .width = 5,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 0x1C6,
+};
+
+static const struct ListMenuTemplate sPokeblockListMenuTemplate POKEBLOCK_WINDOW_TEMPLATE_DATA =
+{
+    .items = NULL,
+    .moveCursorFunc = (void (*)(s32, bool8, struct ListMenu *))sub_08135FB4,
+    .itemPrintFunc = NULL,
+    .totalItems = 0,
+    .maxShowed = 0,
+    .windowId = WIN_LIST,
+    .header_X = 0,
+    .item_X = 0,
+    .cursor_X = 0,
+    .upText_Y = 2,
+    .cursorPal = 2,
+    .fillValue = 0,
+    .cursorShadowPal = 3,
+    .lettersSpacing = 0,
+    .itemVerticalPadding = 0,
+    .scrollMultiple = LIST_MULTIPLE_SCROLL_DPAD,
+    .fontId = FONT_NORMAL,
+    .cursorKind = CURSOR_INVISIBLE,
 };
 
 #undef POKEBLOCK_FLAVOR_DATA
@@ -1248,7 +1284,7 @@ __attribute__((naked)) void sub_08135E60(void)
         "_08135F1C: .4byte 0x0000080C\n\t"
         "_08135F20: .4byte gUnknown_85C97BD + 0x9F\n\t"
         "_08135F24: .4byte gMultiuseListMenuTemplate\n\t"
-        "_08135F28: .4byte gUnknown_85921FC\n\t"
+        "_08135F28: .4byte sPokeblockListMenuTemplate\n\t"
         "_08135F2C: .4byte 0x0000080B\n\t"
         ".syntax divided\n\t"
     );
@@ -2954,7 +2990,7 @@ __attribute__((naked)) void sub_08136BB8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08136BE0: .4byte gUnknown_85921F4\n\t"
+        "_08136BE0: .4byte sTossPkblockWindowTemplate\n\t"
         "_08136BE4: .4byte sTossYesNoFuncTable\n\t"
         ".syntax divided\n\t"
     );
