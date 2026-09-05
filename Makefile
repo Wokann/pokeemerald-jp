@@ -927,6 +927,12 @@ $(C_BUILDDIR)/wallclock.o: \
 	graphics/wallclock/clock_view.bin.lz \
 	graphics/wallclock/clock.png.4bpp.lz \
 	graphics/wallclock/hand.png.4bpp.lz
+$(C_BUILDDIR)/fldeff_flash.o: \
+	graphics/cave_transition/white.pal.gbapal \
+	graphics/cave_transition/black.pal.gbapal \
+	graphics/cave_transition/enter.pal.gbapal \
+	graphics/cave_transition/tilemap.bin.lz \
+	graphics/cave_transition/tiles.png.4bpp.lz
 $(C_BUILDDIR)/move_relearner.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/title_screen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/battle_anim_smokescreen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
@@ -1110,6 +1116,12 @@ graphics/starter_choose/%.png.4bpp: graphics/starter_choose/%.png | tools
 	$(GFX) $< $@
 
 graphics/wallclock/%.png.4bpp: graphics/wallclock/%.png | tools
+	$(GFX) $< $@
+
+graphics/cave_transition/%.png.4bpp: graphics/cave_transition/%.png | tools
+	$(GFX) $< $@
+
+graphics/cave_transition/%.pal.gbapal: graphics/cave_transition/%.pal | tools
 	$(GFX) $< $@
 
 graphics/battle_frontier/factory_screen/%.pal.gbapal: graphics/battle_frontier/factory_screen/%.pal | tools
@@ -1524,6 +1536,12 @@ $(C_BUILDDIR)/wallclock.o: src/wallclock.c
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/wallclock.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/wallclock.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/wallclock.gen.s
+
+$(C_BUILDDIR)/fldeff_flash.o: src/fldeff_flash.c
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/fldeff_flash.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/fldeff_flash.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/fldeff_flash.gen.s
 
 $(C_BUILDDIR)/text_window.o: src/text_window.c graphics/text_window/gTextWindowFrame1_Gfx.bin graphics/text_window/gTextWindowFrame1_Pal.bin
 	@mkdir -p $(dir $@)

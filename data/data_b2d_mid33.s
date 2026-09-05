@@ -19,66 +19,7 @@ gUnknown_85921F4: @ 0x85921F4
 gUnknown_85921FC: @ 0x85921FC
 	.incbin "baserom_jp.gba", 0x5921fc, 0x18
 
-	.globl sTransitionTypes
-sTransitionTypes: @ 0x8592214
-	.byte 0x01, 0x04, 0x01, 0x00
-	.4byte 0x08137619
-	.byte 0x02, 0x04, 0x01, 0x00
-	.4byte 0x08137619
-	.byte 0x03, 0x04, 0x01, 0x00
-	.4byte 0x08137619
-	.byte 0x05, 0x04, 0x01, 0x00
-	.4byte 0x08137619
-	.byte 0x06, 0x04, 0x01, 0x00
-	.4byte 0x08137619
-	.byte 0x07, 0x04, 0x01, 0x00
-	.4byte 0x08137619
-	.byte 0x08, 0x04, 0x01, 0x00
-	.4byte 0x08137619
-	.byte 0x09, 0x04, 0x01, 0x00
-	.4byte 0x08137619
-	.byte 0x04, 0x01, 0x00, 0x01
-	.4byte 0x08137461
-	.byte 0x04, 0x02, 0x00, 0x01
-	.4byte 0x08137461
-	.byte 0x04, 0x03, 0x00, 0x01
-	.4byte 0x08137461
-	.byte 0x04, 0x05, 0x00, 0x01
-	.4byte 0x08137461
-	.byte 0x04, 0x06, 0x00, 0x01
-	.4byte 0x08137461
-	.byte 0x04, 0x07, 0x00, 0x01
-	.4byte 0x08137461
-	.byte 0x04, 0x08, 0x00, 0x01
-	.4byte 0x08137461
-	.byte 0x04, 0x09, 0x00, 0x01
-	.4byte 0x08137461
-	.byte 0x00, 0x00, 0x00, 0x00
-	.4byte 0x00000000
-
-	.globl sCaveTransitionPalette_White
-sCaveTransitionPalette_White: @ 0x859229C
-	.incbin "graphics/cave_transition/sCaveTransitionPalette_White.bin"
-
-	.globl sCaveTransitionPalette_Black
-sCaveTransitionPalette_Black: @ 0x85922BC
-	.incbin "graphics/cave_transition/sCaveTransitionPalette_Black.bin"
-
-	.globl sCaveTransitionPalette_Enter
-sCaveTransitionPalette_Enter: @ 0x85922DC
-	.incbin "graphics/cave_transition/sCaveTransitionPalette_Enter.bin"
-
-	.globl gUnknown_85922EC
-gUnknown_85922EC: @ 0x85922EC
-	.incbin "baserom_jp.gba", 0x5922ec, 0x10
-
-	.globl sCaveTransitionTilemap
-sCaveTransitionTilemap: @ 0x85922FC
-	.incbin "graphics/cave_transition/sCaveTransitionTilemap.bin"
-
-	.globl sCaveTransitionTiles
-sCaveTransitionTiles: @ 0x85924DC
-	.incbin "graphics/cave_transition/sCaveTransitionTiles.bin"
+	.section .rodata.data_b2d_mid33_shoal_tide_suffix, "a", %progbits
 
 	.globl gShoalTideTable
 gShoalTideTable: @ 0x8592590

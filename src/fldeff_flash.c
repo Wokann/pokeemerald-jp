@@ -25,6 +25,8 @@ struct FlashStruct
     void (*func)(void);
 };
 
+#define FLDEFF_FLASH_CAVE_TRANSITION_DATA __attribute__((section(".rodata.fldeff_flash_cave_transition_data"), aligned(1)))
+
 static void FieldCallback_Flash(void);
 static void FldEff_UseFlash(void);
 static bool8 TryDoMapTransition(void);
@@ -40,13 +42,34 @@ static void Task_EnterCaveTransition2(u8 taskId);
 static void Task_EnterCaveTransition3(u8 taskId);
 static void Task_EnterCaveTransition4(u8 taskId);
 
-// JP ROM data (kept in the ROM's data region, referenced by address):
-extern const struct FlashStruct sTransitionTypes[];
-extern const u16 sCaveTransitionPalette_White[];
-extern const u16 sCaveTransitionPalette_Black[];
-extern const u16 sCaveTransitionPalette_Enter[];
-extern const u32 sCaveTransitionTilemap[];
-extern const u32 sCaveTransitionTiles[];
+static const struct FlashStruct sTransitionTypes[] FLDEFF_FLASH_CAVE_TRANSITION_DATA =
+{
+    {MAP_TYPE_TOWN,        MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
+    {MAP_TYPE_CITY,        MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
+    {MAP_TYPE_ROUTE,       MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
+    {MAP_TYPE_UNDERWATER,  MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
+    {MAP_TYPE_OCEAN_ROUTE, MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
+    {MAP_TYPE_UNKNOWN,     MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
+    {MAP_TYPE_INDOOR,      MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
+    {MAP_TYPE_SECRET_BASE, MAP_TYPE_UNDERGROUND,  TRUE, FALSE, DoEnterCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_TOWN,          FALSE, TRUE,  DoExitCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_CITY,          FALSE, TRUE,  DoExitCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_ROUTE,         FALSE, TRUE,  DoExitCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_UNDERWATER,    FALSE, TRUE,  DoExitCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_OCEAN_ROUTE,   FALSE, TRUE,  DoExitCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_UNKNOWN,       FALSE, TRUE,  DoExitCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_INDOOR,        FALSE, TRUE,  DoExitCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_SECRET_BASE,   FALSE, TRUE,  DoExitCaveTransition},
+    {},
+};
+
+static const u16 sCaveTransitionPalette_White[] FLDEFF_FLASH_CAVE_TRANSITION_DATA = INCGFX_U16("graphics/cave_transition/white.pal", ".gbapal");
+static const u16 sCaveTransitionPalette_Black[] FLDEFF_FLASH_CAVE_TRANSITION_DATA = INCGFX_U16("graphics/cave_transition/black.pal", ".gbapal");
+static const u16 sCaveTransitionPalette_Enter[] FLDEFF_FLASH_CAVE_TRANSITION_DATA = INCGFX_U16("graphics/cave_transition/enter.pal", ".gbapal");
+static const u32 sCaveTransitionTilemap[] FLDEFF_FLASH_CAVE_TRANSITION_DATA = INCGFX_U32("graphics/cave_transition/tilemap.bin", ".lz");
+static const u32 sCaveTransitionTiles[] FLDEFF_FLASH_CAVE_TRANSITION_DATA = INCGFX_U32("graphics/cave_transition/tiles.png", ".4bpp.lz");
+
+#undef FLDEFF_FLASH_CAVE_TRANSITION_DATA
 
 bool8 SetUpFieldMove_Flash(void)
 {
