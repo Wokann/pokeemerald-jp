@@ -41,6 +41,7 @@ extern void GetEreaderTrainerName(u8 *dest);
 #define FIELD_SPECIALS_DATA_SLOT_MACHINE_SELECTORS __attribute__((section(".rodata.field_specials_slot_machine_selectors")))
 #define FIELD_SPECIALS_DATA_ELEVATOR __attribute__((section(".rodata.field_specials_elevator_data")))
 #define FIELD_SPECIALS_DATA_LINK_PARTNER __attribute__((section(".rodata.field_specials_link_partner_data")))
+#define FIELD_SPECIALS_DATA_MAUVILLE_GYM __attribute__((section(".rodata.field_specials_mauville_gym_data")))
 
 #define ELEVATOR_WINDOW_WIDTH  3
 #define ELEVATOR_WINDOW_HEIGHT 3
@@ -1048,6 +1049,15 @@ __attribute__((naked)) void LoadLinkPartnerEventObjectSpritePalette(void)
     );
 }
 
+// Kept externally visible while the two Mauville Gym routines remain naked assembly.
+FIELD_SPECIALS_DATA_MAUVILLE_GYM const struct UCoords8 sMauvilleGymSwitchCoords[] =
+{
+    { 0 + MAP_OFFSET, 15 + MAP_OFFSET},
+    { 4 + MAP_OFFSET, 12 + MAP_OFFSET},
+    { 3 + MAP_OFFSET,  9 + MAP_OFFSET},
+    { 8 + MAP_OFFSET,  9 + MAP_OFFSET},
+};
+
 __attribute__((naked)) void MauvilleGymPressSwitch(void)
 {
     __asm__(".syntax unified\n\t"
@@ -1068,7 +1078,7 @@ __attribute__((naked)) void MauvilleGymPressSwitch(void)
         "	bl MapGridSetMetatileIdAt\n\t"
         "	b _0813859A\n\t"
         "	.align 2, 0\n\t"
-        "_08138580: .4byte gUnknown_85925B4\n\t"
+        "_08138580: .4byte sMauvilleGymSwitchCoords\n\t"
         "_08138584: .4byte gSpecialVar_0x8004\n\t"
         "_08138588: .4byte SPECIAL_IsLastMonThatKnowsSurf\n\t"
         "_0813858C:\n\t"
@@ -1369,7 +1379,7 @@ __attribute__((naked)) void MauvilleGymDeactivatePuzzle(void)
         "	ldr r0, [r0]\n\t"
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
-        "_081387FC: .4byte gUnknown_85925B4\n\t"
+        "_081387FC: .4byte sMauvilleGymSwitchCoords\n\t"
         "_08138800: .4byte SPECIAL_IsLastMonThatKnowsSurf\n\t"
         "_08138804: .4byte 0xFFFFFDE0\n\t"
         "_08138808: .4byte _0813880C\n\t"
