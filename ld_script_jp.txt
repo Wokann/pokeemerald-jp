@@ -9831,6 +9831,7 @@ SECTIONS {
         src/pokeblock.o(.rodata.pokeblock_window_template_data);
         data/data_b2d_mid33.o(.rodata.data_b2d_mid33_pokeblock_case_favorite_suffix);
         src/fldeff_flash.o(.rodata.fldeff_flash_cave_transition_data);
+        src/time_events.o(.rodata.time_events_shoal_tide_data);
         data/data_b2d_mid33.o(.rodata.data_b2d_mid33_shoal_tide_suffix);
         src/data/text/region_texts63.o(.rodata);
         src/field_specials.o(.rodata.field_specials_data_early);
