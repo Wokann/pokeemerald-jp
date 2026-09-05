@@ -23,6 +23,16 @@ extern const struct SpriteTemplate gWaterPulseRingBubbleSpriteTemplate;
 
 static void AnimRainDrop(struct Sprite *);
 static void AnimRainDrop_Step(struct Sprite *);
+static void AnimWaterBubbleProjectile(struct Sprite *);
+static void AnimAuroraBeamRings(struct Sprite *);
+static void AnimToTargetInSinWave(struct Sprite *);
+static void AnimHydroCannonCharge(struct Sprite *);
+static void AnimHydroCannonBeam(struct Sprite *);
+static void AnimWaterGunDroplet(struct Sprite *);
+static void AnimSmallBubblePair(struct Sprite *);
+static void AnimSmallDriftingBubbles(struct Sprite *);
+static void AnimWaterPulseBubble(struct Sprite *);
+static void AnimWaterPulseRingBubble(struct Sprite *);
 static void AnimAuroraBeamRings_Step(struct Sprite *);
 static void AnimWaterBubbleProjectile_Step1(struct Sprite *);
 static void AnimWaterBubbleProjectile_Step2(struct Sprite *);
@@ -51,6 +61,429 @@ static void AnimWaterSportDroplet_Step(struct Sprite *);
 static void AnimWaterPulseBubble_Step(struct Sprite *);
 static void AnimWaterPulseRing_Step(struct Sprite *);
 static void CreateWaterPulseRingBubbles(struct Sprite *sprite, int xDiff, int yDiff);
+
+// agbcc requires explicit lengths for INCBIN initializers.
+static const u8 sUnusedWater_Gfx[0x380] = INCBIN_U8("graphics/battle_anims/unused/water_gfx.4bpp");
+static const u8 sUnusedWater[0x1000] = INCBIN_U8("graphics/battle_anims/unused/water.bin");
+
+static const union AnimCmd sAnim_RainDrop[] =
+{
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_FRAME(8, 2),
+    ANIMCMD_FRAME(16, 2),
+    ANIMCMD_FRAME(24, 6),
+    ANIMCMD_FRAME(32, 2),
+    ANIMCMD_FRAME(40, 2),
+    ANIMCMD_FRAME(48, 2),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_RainDrop[] =
+{
+    sAnim_RainDrop,
+};
+
+const struct SpriteTemplate gRainDropSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_RAIN_DROPS,
+    .paletteTag = ANIM_TAG_RAIN_DROPS,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
+    .anims = sAnims_RainDrop,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimRainDrop,
+};
+
+static const union AffineAnimCmd sAffineAnim_WaterBubbleProjectile[] =
+{
+    AFFINEANIMCMD_FRAME(0xFFFB, 0xFFFB, 0, 10),
+    AFFINEANIMCMD_FRAME(0x5, 0x5, 0, 10),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd *const sAffineAnims_WaterBubbleProjectile[] =
+{
+    sAffineAnim_WaterBubbleProjectile,
+};
+
+static const union AnimCmd sAnim_WaterBubbleProjectile[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_WaterBubbleProjectile[] =
+{
+    sAnim_WaterBubbleProjectile,
+};
+
+const struct SpriteTemplate gWaterBubbleProjectileSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_BUBBLE,
+    .paletteTag = ANIM_TAG_BUBBLE,
+    .oam = &gOamData_AffineNormal_ObjBlend_16x16,
+    .anims = sAnims_WaterBubbleProjectile,
+    .images = NULL,
+    .affineAnims = sAffineAnims_WaterBubbleProjectile,
+    .callback = AnimWaterBubbleProjectile,
+};
+
+static const union AnimCmd sAnim_AuroraBeamRing_0[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_AuroraBeamRing_1[] =
+{
+    ANIMCMD_FRAME(4, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_AuroraBeamRing[] =
+{
+    sAnim_AuroraBeamRing_0,
+    sAnim_AuroraBeamRing_1,
+};
+
+static const union AffineAnimCmd sAffineAnim_AuroraBeamRing[] =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 1),
+    AFFINEANIMCMD_FRAME(0x60, 0x60, 0, 1),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_AuroraBeamRing[] =
+{
+    sAffineAnim_AuroraBeamRing,
+};
+
+const struct SpriteTemplate gAuroraBeamRingSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_RAINBOW_RINGS,
+    .paletteTag = ANIM_TAG_RAINBOW_RINGS,
+    .oam = &gOamData_AffineDouble_ObjNormal_8x16,
+    .anims = sAnims_AuroraBeamRing,
+    .images = NULL,
+    .affineAnims = sAffineAnims_AuroraBeamRing,
+    .callback = AnimAuroraBeamRings,
+};
+
+static const union AnimCmd sAnim_WaterMudOrb[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_FRAME(4, 1),
+    ANIMCMD_FRAME(8, 1),
+    ANIMCMD_FRAME(12, 1),
+    ANIMCMD_JUMP(0),
+};
+
+const union AnimCmd *const gAnims_WaterMudOrb[] =
+{
+    sAnim_WaterMudOrb,
+};
+
+const struct SpriteTemplate gHydroPumpOrbSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_WATER_ORB,
+    .paletteTag = ANIM_TAG_WATER_ORB,
+    .oam = &gOamData_AffineOff_ObjBlend_16x16,
+    .anims = gAnims_WaterMudOrb,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimToTargetInSinWave,
+};
+
+const struct SpriteTemplate gMudShotOrbSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_BROWN_ORB,
+    .paletteTag = ANIM_TAG_BROWN_ORB,
+    .oam = &gOamData_AffineOff_ObjBlend_16x16,
+    .anims = gAnims_WaterMudOrb,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimToTargetInSinWave,
+};
+
+const struct SpriteTemplate gSignalBeamRedOrbSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_GLOWY_RED_ORB,
+    .paletteTag = ANIM_TAG_GLOWY_RED_ORB,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimToTargetInSinWave,
+};
+
+const struct SpriteTemplate gSignalBeamGreenOrbSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_GLOWY_GREEN_ORB,
+    .paletteTag = ANIM_TAG_GLOWY_GREEN_ORB,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimToTargetInSinWave,
+};
+
+static const union AnimCmd sAnim_FlamethrowerFlame[] =
+{
+    ANIMCMD_FRAME(16, 2),
+    ANIMCMD_FRAME(32, 2),
+    ANIMCMD_FRAME(48, 2),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_FlamethrowerFlame[] =
+{
+    sAnim_FlamethrowerFlame,
+};
+
+const struct SpriteTemplate gFlamethrowerFlameSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SMALL_EMBER,
+    .paletteTag = ANIM_TAG_SMALL_EMBER,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_FlamethrowerFlame,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimToTargetInSinWave,
+};
+
+const struct SpriteTemplate gPsywaveRingSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_BLUE_RING,
+    .paletteTag = ANIM_TAG_BLUE_RING,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gGrowingRingAffineAnimTable,
+    .callback = AnimToTargetInSinWave,
+};
+
+static const union AffineAnimCmd sAffineAnim_HydroCannonCharge[] =
+{
+    AFFINEANIMCMD_FRAME(0x3, 0x3, 10, 50),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 10),
+    AFFINEANIMCMD_FRAME(0xFFEC, 0xFFEC, -10, 20),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_HydroCannonBeam[] =
+{
+    AFFINEANIMCMD_FRAME(0x150, 0x150, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_HydroCannonCharge[] =
+{
+    sAffineAnim_HydroCannonCharge,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_HydroCannonBeam[] =
+{
+    sAffineAnim_HydroCannonBeam,
+};
+
+const struct SpriteTemplate gHydroCannonChargeSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_WATER_ORB,
+    .paletteTag = ANIM_TAG_WATER_ORB,
+    .oam = &gOamData_AffineDouble_ObjBlend_16x16,
+    .anims = gAnims_WaterMudOrb,
+    .images = NULL,
+    .affineAnims = sAffineAnims_HydroCannonCharge,
+    .callback = AnimHydroCannonCharge,
+};
+
+const struct SpriteTemplate gHydroCannonBeamSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_WATER_ORB,
+    .paletteTag = ANIM_TAG_WATER_ORB,
+    .oam = &gOamData_AffineDouble_ObjBlend_16x16,
+    .anims = gAnims_WaterMudOrb,
+    .images = NULL,
+    .affineAnims = sAffineAnims_HydroCannonBeam,
+    .callback = AnimHydroCannonBeam,
+};
+
+static const union AnimCmd sAnim_WaterBubble[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_WaterGunDroplet[] =
+{
+    ANIMCMD_FRAME(4, 1),
+    ANIMCMD_END,
+};
+
+const union AnimCmd *const gAnims_WaterBubble[] =
+{
+    sAnim_WaterBubble,
+};
+
+static const union AnimCmd *const sAnims_WaterGunDroplet[] =
+{
+    sAnim_WaterGunDroplet,
+};
+
+const struct SpriteTemplate gWaterGunProjectileSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SMALL_BUBBLES,
+    .paletteTag = ANIM_TAG_SMALL_BUBBLES,
+    .oam = &gOamData_AffineOff_ObjBlend_16x16,
+    .anims = gAnims_WaterBubble,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimThrowProjectile,
+};
+
+const struct SpriteTemplate gWaterGunDropletSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SMALL_BUBBLES,
+    .paletteTag = ANIM_TAG_SMALL_BUBBLES,
+    .oam = &gOamData_AffineDouble_ObjBlend_16x16,
+    .anims = sAnims_WaterGunDroplet,
+    .images = NULL,
+    .affineAnims = gAffineAnims_Droplet,
+    .callback = AnimWaterGunDroplet,
+};
+
+const struct SpriteTemplate gSmallBubblePairSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_ICE_CRYSTALS, // ice_crystals_4, which are bubbles
+    .paletteTag = ANIM_TAG_ICE_CRYSTALS,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = gAnims_SmallBubblePair,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimSmallBubblePair,
+};
+
+const struct SpriteTemplate gSmallDriftingBubblesSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SMALL_BUBBLES,
+    .paletteTag = ANIM_TAG_SMALL_BUBBLES,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimSmallDriftingBubbles,
+};
+
+// Used by Water Spout / Water Sport
+const struct SpriteTemplate gSmallWaterOrbSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_GLOWY_BLUE_ORB,
+    .paletteTag = ANIM_TAG_GLOWY_BLUE_ORB,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimSmallWaterOrb,
+};
+
+static const union AnimCmd sAnim_WaterPulseBubble_0[] =
+{
+    ANIMCMD_FRAME(8, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_WaterPulseBubble_1[] =
+{
+    ANIMCMD_FRAME(9, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_WeatherBallWaterDown[] =
+{
+    ANIMCMD_FRAME(4, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_WaterPulseBubble[] =
+{
+    sAnim_WaterPulseBubble_0,
+    sAnim_WaterPulseBubble_1,
+};
+
+static const union AnimCmd *const sAnims_WeatherBallWaterDown[] =
+{
+    sAnim_WeatherBallWaterDown,
+};
+
+static const union AffineAnimCmd sAffineAnim_WaterPulseRingBubble_0[] =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0xFFF6, 0xFFF6, 0, 15),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_WaterPulseRingBubble_1[] =
+{
+    AFFINEANIMCMD_FRAME(0xE0, 0xE0, 0, 0),
+    AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 15),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_WeatherBallWaterDown[] =
+{
+    AFFINEANIMCMD_FRAME(0x150, 0x150, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 15),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_WaterPulseRingBubble[] =
+{
+    sAffineAnim_WaterPulseRingBubble_0,
+    sAffineAnim_WaterPulseRingBubble_1,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_WeatherBallWaterDown[] =
+{
+    sAffineAnim_WeatherBallWaterDown,
+};
+
+const struct SpriteTemplate gWaterPulseBubbleSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SMALL_BUBBLES,
+    .paletteTag = ANIM_TAG_SMALL_BUBBLES,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = sAnims_WaterPulseBubble,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimWaterPulseBubble,
+};
+
+const struct SpriteTemplate gWaterPulseRingBubbleSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SMALL_BUBBLES,
+    .paletteTag = ANIM_TAG_SMALL_BUBBLES,
+    .oam = &gOamData_AffineNormal_ObjNormal_8x8,
+    .anims = sAnims_WaterPulseBubble,
+    .images = NULL,
+    .affineAnims = sAffineAnims_WaterPulseRingBubble,
+    .callback = AnimWaterPulseRingBubble,
+};
+
+const struct SpriteTemplate gWeatherBallWaterDownSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SMALL_BUBBLES,
+    .paletteTag = ANIM_TAG_SMALL_BUBBLES,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
+    .anims = sAnims_WeatherBallWaterDown,
+    .images = NULL,
+    .affineAnims = sAffineAnims_WeatherBallWaterDown,
+    .callback = AnimWeatherBallDown,
+};
+
+#define tRaindropSpawnTimer    data[0]
+#define tRaindropSpawnTimer    data[0]
 
 #define tRaindropSpawnTimer    data[0]
 #define tRaindropUnused        data[1]
