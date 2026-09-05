@@ -50,27 +50,3 @@ gUnknown_85925F8: @ 0x85925F8
 	.globl gUnknown_8592604
 gUnknown_8592604: @ 0x8592604
 	.incbin "baserom_jp.gba", 0x592604, 0x4
-
-	.globl gUnknown_8592608
-gUnknown_8592608: @ 0x8592608
-	.incbin "baserom_jp.gba", 0x592608, 0x8
-
-	.globl gUnknown_8592610
-gUnknown_8592610: @ 0x8592610
-	.incbin "baserom_jp.gba", 0x592610, 0x40
-
-	.globl gUnknown_8592650
-gUnknown_8592650: @ 0x8592650
-	.incbin "baserom_jp.gba", 0x592650, 0x12
-
-	.globl gUnknown_8592662
-gUnknown_8592662: @ 0x8592662
-	.incbin "baserom_jp.gba", 0x592662, 0x12
-
-	.globl sElevatorTripLength
-sElevatorTripLength: @ 0x8592674
-	.incbin "baserom_jp.gba", 0x592674, 0x9
-
-	.globl sElevatorLightCycles
-sElevatorLightCycles: @ 0x859267D
-	.incbin "baserom_jp.gba", 0x59267d, 0x9

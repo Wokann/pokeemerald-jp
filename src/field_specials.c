@@ -25,13 +25,11 @@ extern void Task_PCTurnOnEffect(u8 taskId);
 #include "tv.h"
 #include "battle.h"
 #include "string_util.h"
+#include "strings.h"
 #include "data/field_specials.h"
+#include "window.h"
 extern u32 sBikeCyclingTimer;
 extern void Task_DeoxysRockInteraction(u8 taskId);
-extern const u8 gText_BigGuy[];
-extern const u8 gText_BigGirl[];
-extern const u8 gText_Son[];
-extern const u8 gText_Daughter[];
 
 extern u8 sub_081370D8(u8 nature, u8 *dest);
 extern void GetEreaderTrainerName(u8 *dest);
@@ -40,6 +38,11 @@ extern void GetEreaderTrainerName(u8 *dest);
 #define FIELD_SPECIALS_DATA __attribute__((section(".rodata.field_specials_data")))
 #define FIELD_SPECIALS_DATA_EARLY __attribute__((section(".rodata.field_specials_data_early")))
 #define FIELD_SPECIALS_DATA_SLOT_MACHINE_SELECTORS __attribute__((section(".rodata.field_specials_slot_machine_selectors")))
+#define FIELD_SPECIALS_DATA_ELEVATOR __attribute__((section(".rodata.field_specials_elevator_data")))
+
+#define ELEVATOR_WINDOW_WIDTH  3
+#define ELEVATOR_WINDOW_HEIGHT 3
+#define ELEVATOR_LIGHT_STAGES  3
 
 void Special_ShowDiploma(void)
 {
@@ -3287,6 +3290,80 @@ __attribute__((naked)) u16 GetDeptStoreDefaultFloorChoice(void)
     );
 }
 
+// Kept externally visible while the Department Store elevator routines remain
+// byte-exact naked assembly.
+FIELD_SPECIALS_DATA_ELEVATOR const struct WindowTemplate sWindowTemplate_ElevatorFloor =
+{
+    .bg = 0,
+    .tilemapLeft = 21,
+    .tilemapTop = 1,
+    .width = 8,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 8,
+};
+
+FIELD_SPECIALS_DATA_ELEVATOR const u8 *const sDeptStoreFloorNames[] =
+{
+    [DEPT_STORE_FLOORNUM_B4F] = gText_B4F,
+    [DEPT_STORE_FLOORNUM_B3F] = gText_B3F,
+    [DEPT_STORE_FLOORNUM_B2F] = gText_B2F,
+    [DEPT_STORE_FLOORNUM_B1F] = gText_B1F,
+    [DEPT_STORE_FLOORNUM_1F] = gText_1F,
+    [DEPT_STORE_FLOORNUM_2F] = gText_2F,
+    [DEPT_STORE_FLOORNUM_3F] = gText_3F,
+    [DEPT_STORE_FLOORNUM_4F] = gText_4F,
+    [DEPT_STORE_FLOORNUM_5F] = gText_5F,
+    [DEPT_STORE_FLOORNUM_6F] = gText_6F,
+    [DEPT_STORE_FLOORNUM_7F] = gText_7F,
+    [DEPT_STORE_FLOORNUM_8F] = gText_8F,
+    [DEPT_STORE_FLOORNUM_9F] = gText_9F,
+    [DEPT_STORE_FLOORNUM_10F] = gText_10F,
+    [DEPT_STORE_FLOORNUM_11F] = gText_11F,
+    [DEPT_STORE_FLOORNUM_ROOFTOP] = gText_Rooftop,
+};
+
+FIELD_SPECIALS_DATA_ELEVATOR const u16 sElevatorWindowTiles_Ascending[ELEVATOR_WINDOW_HEIGHT][ELEVATOR_LIGHT_STAGES] =
+{
+    {
+        METATILE_BattleFrontier_Elevator_Top0,
+        METATILE_BattleFrontier_Elevator_Top1,
+        METATILE_BattleFrontier_Elevator_Top2,
+    },
+    {
+        METATILE_BattleFrontier_Elevator_Mid0,
+        METATILE_BattleFrontier_Elevator_Mid1,
+        METATILE_BattleFrontier_Elevator_Mid2,
+    },
+    {
+        METATILE_BattleFrontier_Elevator_Bottom0,
+        METATILE_BattleFrontier_Elevator_Bottom1,
+        METATILE_BattleFrontier_Elevator_Bottom2,
+    },
+};
+
+FIELD_SPECIALS_DATA_ELEVATOR const u16 sElevatorWindowTiles_Descending[ELEVATOR_WINDOW_HEIGHT][ELEVATOR_LIGHT_STAGES] =
+{
+    {
+        METATILE_BattleFrontier_Elevator_Top0,
+        METATILE_BattleFrontier_Elevator_Top2,
+        METATILE_BattleFrontier_Elevator_Top1,
+    },
+    {
+        METATILE_BattleFrontier_Elevator_Mid0,
+        METATILE_BattleFrontier_Elevator_Mid2,
+        METATILE_BattleFrontier_Elevator_Mid1,
+    },
+    {
+        METATILE_BattleFrontier_Elevator_Bottom0,
+        METATILE_BattleFrontier_Elevator_Bottom2,
+        METATILE_BattleFrontier_Elevator_Bottom1,
+    },
+};
+
+FIELD_SPECIALS_DATA_ELEVATOR const u8 sElevatorTripLength[] = { 8, 16, 24, 32, 38, 46, 52, 56, 57 };
+FIELD_SPECIALS_DATA_ELEVATOR const u8 sElevatorLightCycles[] = { 3, 6, 9, 12, 15, 18, 21, 24, 27 };
+
 __attribute__((naked)) void MoveElevator(void)
 {
     __asm__(".syntax unified\n\t"
@@ -3458,9 +3535,9 @@ __attribute__((naked)) void ShowDeptStoreElevatorFloorSelect(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08139C38: .4byte gUnknown_203A82A\n\t"
-        "_08139C3C: .4byte gUnknown_8592608\n\t"
+        "_08139C3C: .4byte sWindowTemplate_ElevatorFloor\n\t"
         "_08139C40: .4byte gText_ElevatorNowOn\n\t"
-        "_08139C44: .4byte gUnknown_8592610\n\t"
+        "_08139C44: .4byte sDeptStoreFloorNames\n\t"
         "_08139C48: .4byte gSpecialVar_0x8005\n\t"
         ".syntax divided\n\t"
     );
@@ -3606,7 +3683,7 @@ __attribute__((naked)) void MoveElevatorWindowLights(void)
         "	b _08139D9E\n\t"
         "	.align 2, 0\n\t"
         "_08139D44: .4byte gUnknown_3005B68\n\t"
-        "_08139D48: .4byte gUnknown_8592650\n\t"
+        "_08139D48: .4byte sElevatorWindowTiles_Ascending\n\t"
         "_08139D4C:\n\t"
         "	movs r1, #0\n\t"
         "	ldr r0, _08139DD0\n\t"
@@ -3674,7 +3751,7 @@ __attribute__((naked)) void MoveElevatorWindowLights(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08139DD0: .4byte gUnknown_8592662\n\t"
+        "_08139DD0: .4byte sElevatorWindowTiles_Descending\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -9831,6 +9831,7 @@ SECTIONS {
         data/data_b2d_mid33.o(.rodata.data_b2d_mid33_shoal_tide_suffix);
         src/field_specials.o(.rodata.field_specials_slot_machine_selectors);
         data/data_b2d_mid33.o(.rodata.data_b2d_mid33_field_specials_raw_suffix);
+        src/field_specials.o(.rodata.field_specials_elevator_data);
         src/data/text/region_texts63.o(.rodata);
         src/field_specials.o(.rodata.field_specials_data_early);
         src/data/text/region_texts39.o(.rodata);
