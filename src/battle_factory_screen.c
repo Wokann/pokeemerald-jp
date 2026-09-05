@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle_factory_screen.h"
+#include "sprite.h"
 
 #define BATTLE_FACTORY_SCREEN_DATA __attribute__((section(".rodata.battle_factory_screen_data")))
 #define BATTLE_FACTORY_SCREEN_DATA_LATE __attribute__((section(".rodata.battle_factory_screen_data_late")))
@@ -35,6 +36,54 @@ BATTLE_FACTORY_SCREEN_MON_PIC_BG_TILES static const u16 sMonPicBg_Gfx[] = INCBIN
 BATTLE_FACTORY_SCREEN_MON_PIC_BG_PAL static const u16 sMonPicBg_Pal[] = INCBIN_U16("graphics/battle_frontier/factory_screen/mon_pic_bg.pal.gbapal");
 
 #undef BATTLE_FACTORY_SCREEN_MON_PIC_BG_PAL
+
+enum
+{
+    PALTAG_BALL_GRAY = 100,
+    PALTAG_BALL_SELECTED,
+    PALTAG_INTERFACE,
+    PALTAG_MON_PIC_BG,
+};
+
+enum
+{
+    GFXTAG_BALL = 100,
+    GFXTAG_ARROW,
+    GFXTAG_MENU_HIGHLIGHT_LEFT,
+    GFXTAG_MENU_HIGHLIGHT_RIGHT,
+    GFXTAG_ACTION_BOX_LEFT,
+    GFXTAG_ACTION_BOX_RIGHT,
+    GFXTAG_ACTION_HIGHLIGHT_LEFT,
+    GFXTAG_ACTION_HIGHLIGHT_MIDDLE,
+    GFXTAG_ACTION_HIGHLIGHT_RIGHT,
+    GFXTAG_MON_PIC_BG_ANIM,
+};
+
+#define BATTLE_FACTORY_SCREEN_SELECT_SPRITE_SHEETS __attribute__((section(".rodata.battle_factory_screen_select_sprite_sheets"), aligned(1)))
+
+BATTLE_FACTORY_SCREEN_SELECT_SPRITE_SHEETS static const struct SpriteSheet sSelect_SpriteSheets[] =
+{
+    {sArrow_Gfx,              sizeof(sArrow_Gfx),              GFXTAG_ARROW},
+    {sMenuHighlightLeft_Gfx,  sizeof(sMenuHighlightLeft_Gfx),  GFXTAG_MENU_HIGHLIGHT_LEFT},
+    {sMenuHighlightRight_Gfx, sizeof(sMenuHighlightRight_Gfx), GFXTAG_MENU_HIGHLIGHT_RIGHT},
+    {sMonPicBgAnim_Gfx,       sizeof(sMonPicBgAnim_Gfx),       GFXTAG_MON_PIC_BG_ANIM},
+    {},
+};
+
+#undef BATTLE_FACTORY_SCREEN_SELECT_SPRITE_SHEETS
+
+#define BATTLE_FACTORY_SCREEN_SELECT_SPRITE_PALETTES __attribute__((section(".rodata.battle_factory_screen_select_sprite_palettes"), aligned(1)))
+
+BATTLE_FACTORY_SCREEN_SELECT_SPRITE_PALETTES static const struct SpritePalette sSelect_SpritePalettes[] =
+{
+    {sPokeballGray_Pal,     PALTAG_BALL_GRAY},
+    {sPokeballSelected_Pal, PALTAG_BALL_SELECTED},
+    {sInterface_Pal,        PALTAG_INTERFACE},
+    {sMonPicBg_Pal,         PALTAG_MON_PIC_BG},
+    {},
+};
+
+#undef BATTLE_FACTORY_SCREEN_SELECT_SPRITE_PALETTES
 
 // Return states for the Select Actions
 enum
@@ -487,9 +536,9 @@ __attribute__((naked)) void CB2_InitSelectScreen(void)
         "	bl SetGpuReg\n\t"
         "	b _0819A4FA\n\t"
         "	.align 2, 0\n\t"
-        "_0819A4D8: .4byte gUnknown_85DBB70\n\t"
-        "_0819A4DC: .4byte gUnknown_85DBB38\n\t"
-        "_0819A4E0: .4byte gUnknown_85DBB60\n\t"
+        "_0819A4D8: .4byte sSelect_SpritePalettes\n\t"
+        "_0819A4DC: .4byte sSelect_SpriteSheets\n\t"
+        "_0819A4E0: .4byte sSelect_BallGfx\n\t"
         "_0819A4E4: .4byte Select_VblankCb + 1\n\t"
         "_0819A4E8: .4byte gUnknown_3001278\n\t"
         "_0819A4EC: .4byte 0x00001248\n\t"
@@ -2781,7 +2830,7 @@ __attribute__((naked)) void Select_PrintRentalPkmnString(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0819B684: .4byte gUnknown_85DBB70 + 0x28\n\t"
+        "_0819B684: .4byte gUnknown_85DBB98\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2867,14 +2916,14 @@ __attribute__((naked)) void Select_PrintSelectMonString(void)
         "	b _0819B740\n\t"
         "	.align 2, 0\n\t"
         "_0819B724: .4byte gUnknown_3001278\n\t"
-        "_0819B728: .4byte gUnknown_85DBB70 + 0x31\n\t"
+        "_0819B728: .4byte gUnknown_85DBBA1\n\t"
         "_0819B72C:\n\t"
         "	cmp r0, #2\n\t"
         "	bne _0819B738\n\t"
         "	ldr r2, _0819B734\n\t"
         "	b _0819B740\n\t"
         "	.align 2, 0\n\t"
-        "_0819B734: .4byte gUnknown_85DBB70 + 0x45\n\t"
+        "_0819B734: .4byte gUnknown_85DBBB5\n\t"
         "_0819B738:\n\t"
         "	ldr r2, _0819B764\n\t"
         "	cmp r0, #3\n\t"
@@ -2897,8 +2946,8 @@ __attribute__((naked)) void Select_PrintSelectMonString(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0819B764: .4byte gUnknown_85DBB70 + 0x86\n\t"
-        "_0819B768: .4byte gUnknown_85DBB70 + 0x59\n\t"
+        "_0819B764: .4byte gUnknown_85DBBF6\n\t"
+        "_0819B768: .4byte gUnknown_85DBBC9\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2978,8 +3027,8 @@ __attribute__((naked)) void Select_PrintMenuOptions(void)
         "	.align 2, 0\n\t"
         "_0819B7F4: .4byte gUnknown_3001278\n\t"
         "_0819B7F8: .4byte gUnknown_85DBC7E\n\t"
-        "_0819B7FC: .4byte gUnknown_85DBB70 + 0x74\n\t"
-        "_0819B800: .4byte gUnknown_85DBB70 + 0x82\n\t"
+        "_0819B7FC: .4byte gUnknown_85DBBE4\n\t"
+        "_0819B800: .4byte gUnknown_85DBBF2\n\t"
         "_0819B804:\n\t"
         "	str r4, [sp]\n\t"
         "	str r5, [sp, #4]\n\t"
@@ -3010,9 +3059,9 @@ __attribute__((naked)) void Select_PrintMenuOptions(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0819B840: .4byte gUnknown_85DBB70 + 0x6D\n\t"
+        "_0819B840: .4byte gUnknown_85DBBDD\n\t"
         "_0819B844: .4byte gUnknown_85DBC7E\n\t"
-        "_0819B848: .4byte gUnknown_85DBB70 + 0x7B\n\t"
+        "_0819B848: .4byte gUnknown_85DBBEB\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3057,8 +3106,8 @@ __attribute__((naked)) void Select_PrintYesNoOptions(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0819B89C: .4byte gUnknown_85DBC7E\n\t"
-        "_0819B8A0: .4byte gUnknown_85DBB70 + 0x9A\n\t"
-        "_0819B8A4: .4byte gUnknown_85DBB70 + 0x9D\n\t"
+        "_0819B8A0: .4byte gUnknown_85DBC0A\n\t"
+        "_0819B8A4: .4byte gUnknown_85DBC0D\n\t"
         ".syntax divided\n\t"
     );
 }

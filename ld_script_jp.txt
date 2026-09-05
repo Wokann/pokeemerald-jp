@@ -10055,7 +10055,9 @@ SECTIONS {
         src/battle_factory_screen.o(.rodata.battle_factory_screen_mon_pic_bg_tiles);
         src/graphics.o(.rodata.graphics_battle_factory_menu_pal);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_mon_pic_bg_pal);
+        src/battle_factory_screen.o(.rodata.battle_factory_screen_select_sprite_sheets);
         data/data_b2d_mid98.o(.rodata.mid98_suffix_after_battle_factory_menu);
+        src/battle_factory_screen.o(.rodata.battle_factory_screen_select_sprite_palettes);
         src/data/text/region_texts113.o(.rodata);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_data);
         src/data/text/region_texts114.o(.rodata);

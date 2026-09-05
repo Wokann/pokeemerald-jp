@@ -25,16 +25,6 @@ gStandardMenuPalette: @ 0x85D7B04
 
 	.section .rodata.mid98_suffix_after_battle_factory_menu
 
-	.globl gUnknown_85DBB38
-gUnknown_85DBB38: @ 0x85DBB38
-	.incbin "baserom_jp.gba", 0x5dbb38, 0x28
-
-	.globl gUnknown_85DBB60
-gUnknown_85DBB60: @ 0x85DBB60
+	.globl sSelect_BallGfx
+sSelect_BallGfx: @ 0x85DBB60
 	.incbin "baserom_jp.gba", 0x5dbb60, 0x10
-
-	.globl gUnknown_85DBB70
-gUnknown_85DBB70: @ 0x85DBB70
-	.incbin "baserom_jp.gba", 0x5dbb70, 0x28
-
-	.globl gUnknown_85DBB98
