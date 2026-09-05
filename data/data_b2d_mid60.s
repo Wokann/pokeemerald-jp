@@ -366,45 +366,7 @@ gUnknown_856DCC8: @ 0x856DCC8
 gUnknown_856DCCC: @ 0x856DCCC
 	.incbin "baserom_jp.gba", 0x56dccc, 0x8
 
-	.section .rodata.mid60_after_battle_anim_dark_data
-	.section .rodata.mid60_after_battle_anim_dark_data
-	.incbin "baserom_jp.gba", 0x572D34, 0x28
-
-	.globl gBonemerangSpriteTemplate
-gBonemerangSpriteTemplate: @ 0x572D5C
-	.hword 0x2710, 0x2710
-	.4byte 0x084FD080, 0x082BF304, 0, 0x08572D54, 0x081151E5
-
-	.globl gSpinningBoneSpriteTemplate
-gSpinningBoneSpriteTemplate: @ 0x572D74
-	.hword 0x2710, 0x2710
-	.4byte 0x084FD080, 0x082BF304, 0, 0x08572D58, 0x081152CD
-
-	.globl gSandAttackDirtSpriteTemplate
-gSandAttackDirtSpriteTemplate: @ 0x572D8C
-	.hword 0x275A, 0x275A
-	.4byte 0x084FD010, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08115341
-	.incbin "baserom_jp.gba", 0x572da4, 0xc
-
-	.globl gMudSlapMudSpriteTemplate
-gMudSlapMudSpriteTemplate: @ 0x572DB0
-	.hword 0x275A, 0x275A
-	.4byte 0x084FD018, 0x08572DAC, 0, gDummySpriteAffineAnimTable, 0x08115341
-
-	.globl gMudsportMudSpriteTemplate
-gMudsportMudSpriteTemplate: @ 0x572DC8
-	.hword 0x275A, 0x275A
-	.4byte 0x084FD018, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x081153D1
-
-	.globl gDirtPlumeSpriteTemplate
-gDirtPlumeSpriteTemplate: @ 0x572DE0
-	.hword 0x275A, 0x275A
-	.4byte 0x084FD010, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x081159F1
-
-	.globl gDirtMoundSpriteTemplate
-gDirtMoundSpriteTemplate: @ 0x572DF8
-	.hword 0x2829, 0x2829
-	.4byte 0x084FD040, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x08115A95
+	.section .rodata.mid60_tail_after_battle_anim_ground_data
 	.incbin "baserom_jp.gba", 0x572e10, 0x30
 
 	.globl gConfusionDuckSpriteTemplate
