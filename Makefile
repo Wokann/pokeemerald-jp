@@ -910,6 +910,10 @@ $(C_BUILDDIR)/battle_anim_mon_movement.o: CFLAGS := -mthumb-interwork -O2 -fhex-
 $(C_BUILDDIR)/battle_anim_utility_funcs.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/mail.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/starter_choose.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
+$(C_BUILDDIR)/starter_choose.o: \
+	graphics/starter_choose/tiles.png.4bpp.lz \
+	graphics/starter_choose/pokeball_selection.png.4bpp.lz \
+	graphics/starter_choose/starter_circle.png.4bpp.lz
 $(C_BUILDDIR)/move_relearner.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/title_screen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/battle_anim_smokescreen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
@@ -1087,6 +1091,9 @@ graphics/birch_speech/unused_beauty.4bpp: graphics/birch_speech/unused_beauty.pn
 	$(GFX) $< $@
 
 graphics/battle_frontier/factory_screen/%.png.4bpp: graphics/battle_frontier/factory_screen/%.png | tools
+	$(GFX) $< $@
+
+graphics/starter_choose/%.png.4bpp: graphics/starter_choose/%.png | tools
 	$(GFX) $< $@
 
 graphics/battle_frontier/factory_screen/%.pal.gbapal: graphics/battle_frontier/factory_screen/%.pal | tools
@@ -1489,6 +1496,12 @@ $(C_BUILDDIR)/battle_factory_screen.o: src/battle_factory_screen.c
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/battle_factory_screen.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/battle_factory_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/battle_factory_screen.gen.s
+
+$(C_BUILDDIR)/starter_choose.o: src/starter_choose.c
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/starter_choose.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/starter_choose.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/starter_choose.gen.s
 
 $(C_BUILDDIR)/text_window.o: src/text_window.c graphics/text_window/gTextWindowFrame1_Gfx.bin graphics/text_window/gTextWindowFrame1_Pal.bin
 	@mkdir -p $(dir $@)

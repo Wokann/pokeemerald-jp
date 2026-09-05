@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata
+	.section .rodata.mid38_before_starter_choose_graphics
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -45,9 +45,7 @@ gBirchBagTilemap: @ 0x858F890
 gBirchGrassTilemap: @ 0x858FA1C
 	.incbin "graphics/misc/gBirchGrassTilemap.bin"
 
-	.globl gBirchBagGrass_Gfx
-gBirchBagGrass_Gfx: @ 0x858FC14
-	.incbin "graphics/misc/gBirchBagGrass_Gfx.bin"
+	.section .rodata.mid38_after_starter_choose_graphics
 
 	.globl sStarterWindowTemplates
 sStarterWindowTemplates: @ 0x8590BDC
@@ -108,14 +106,14 @@ sStarterAffineAnims_StarterPokemon: @ 0x8590CE0
 
 	.globl sStarterSpriteSheet_PokeballSelect
 sStarterSpriteSheet_PokeballSelect: @ 0x8590CE8
-	.4byte 0x085906BC
+	.4byte gPokeballSelection_Gfx
 	.hword 0x0800, 0x1000
 	.4byte 0
 	.hword 0, 0
 
 	.globl sStarterSpriteSheet_StarterCircle
 sStarterSpriteSheet_StarterCircle: @ 0x8590CF8
-	.4byte 0x085909DC
+	.4byte sStarterCircle_Gfx
 	.hword 0x0800, 0x1001
 	.4byte 0
 	.hword 0, 0

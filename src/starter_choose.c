@@ -33,6 +33,16 @@
 #define TAG_POKEBALL_SELECT 0x1000
 #define TAG_STARTER_CIRCLE  0x1001
 
+#define STARTER_CHOOSE_GRAPHICS __attribute__((section(".rodata.starter_choose_graphics"), aligned(1)))
+
+// Keep the JP starter-selection image streams in pokeemerald's final asset
+// hierarchy while preserving their original compressed ROM order.
+STARTER_CHOOSE_GRAPHICS const u32 gBirchBagGrass_Gfx[] = INCBIN_U32("graphics/starter_choose/tiles.png.4bpp.lz");
+STARTER_CHOOSE_GRAPHICS const u32 gPokeballSelection_Gfx[] = INCBIN_U32("graphics/starter_choose/pokeball_selection.png.4bpp.lz");
+STARTER_CHOOSE_GRAPHICS const u32 sStarterCircle_Gfx[] = INCBIN_U32("graphics/starter_choose/starter_circle.png.4bpp.lz");
+
+#undef STARTER_CHOOSE_GRAPHICS
+
 // JP note: the EWRAM window id and all static tables live in the JP ROM
 // data region; they are bound via ld aliases using the sStarter* names so
 // they do not clash with the sTextColors/sWindowTemplates aliases of other
@@ -591,4 +601,3 @@ __attribute__((naked)) void CreateStarterPokemonLabel(u8 selection)
         ".syntax divided\n\t"
     );
 }
-
