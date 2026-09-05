@@ -1,875 +1,329 @@
 #include "global.h"
+#include "battle.h"
+#include "berry.h"
+#include "contest.h"
+#include "event_data.h"
+#include "link.h"
+#include "link_rfu.h"
+#include "main.h"
+#include "overworld.h"
+#include "party_menu.h"
+#include "pokedex.h"
+#include "pokemon.h"
+#include "random.h"
+#include "script.h"
+#include "string_util.h"
+#include "task.h"
+#include "constants/battle_frontier.h"
+#include "constants/items.h"
 #include "script_pokemon_util.h"
-__attribute__((naked)) void GetContestMultiplayerId(void)
+
+void sub_080F9918(u8 taskId);
+void CB2_ReturnFromChooseHalfParty(void);
+void sub_080F9D48(void);
+
+void GetContestMultiplayerId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080F985C\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080F9868\n\t"
-        "	ldr r0, _080F9860\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _080F9868\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080F9868\n\t"
-        "	ldr r4, _080F9864\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4]\n\t"
-        "	b _080F986E\n\t"
-        "	.align 2, 0\n\t"
-        "_080F985C: .4byte gLinkContestFlags\n\t"
-        "_080F9860: .4byte gNumLinkContestPlayers\n\t"
-        "_080F9864: .4byte gSpecialVar_Result\n\t"
-        "_080F9868:\n\t"
-        "	ldr r1, _080F9874\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r1]\n\t"
-        "_080F986E:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9874: .4byte gSpecialVar_Result\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((gLinkContestFlags & LINK_CONTEST_FLAG_IS_LINK)
+        && gNumLinkContestPlayers == CONTESTANT_COUNT
+        && !(gLinkContestFlags & LINK_CONTEST_FLAG_IS_WIRELESS))
+        gSpecialVar_Result = GetMultiplayerId();
+    else
+        gSpecialVar_Result = MAX_LINK_PLAYERS;
 }
 
-__attribute__((naked)) void GenerateContestRand(void)
+void GenerateContestRand(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080F989C\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080F98B0\n\t"
-        "	ldr r2, _080F98A0\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r0, _080F98A4\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _080F98A8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r0, [r2]\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldr r4, _080F98AC\n\t"
-        "	b _080F98BA\n\t"
-        "	.align 2, 0\n\t"
-        "_080F989C: .4byte gLinkContestFlags\n\t"
-        "_080F98A0: .4byte gContestRngValue\n\t"
-        "_080F98A4: .4byte 0x41C64E6D\n\t"
-        "_080F98A8: .4byte 0x00006073\n\t"
-        "_080F98AC: .4byte gSpecialVar_Result\n\t"
-        "_080F98B0:\n\t"
-        "	ldr r4, _080F98C8\n\t"
-        "	bl Random\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "_080F98BA:\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	bl __umodsi3\n\t"
-        "	strh r0, [r4]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F98C8: .4byte gSpecialVar_Result\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 random;
+    u16 *result;
+
+    if (gLinkContestFlags & LINK_CONTEST_FLAG_IS_LINK)
+    {
+        gContestRngValue = ISO_RANDOMIZE1(gContestRngValue);
+        random = gContestRngValue >> 16;
+        result = &gSpecialVar_Result;
+    }
+    else
+    {
+        result = &gSpecialVar_Result;
+        random = Random();
+    }
+    *result = random % *result;
 }
 
-__attribute__((naked)) void sub_080F98CC(void)
+// JP symbol; equivalent to GetContestRand.
+u16 sub_080F98CC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _080F98E0\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r0, _080F98E4\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _080F98E8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r0, [r2]\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080F98E0: .4byte gContestRngValue\n\t"
-        "_080F98E4: .4byte 0x41C64E6D\n\t"
-        "_080F98E8: .4byte 0x00006073\n\t"
-        ".syntax divided\n\t"
-    );
+    gContestRngValue = ISO_RANDOMIZE1(gContestRngValue);
+    return gContestRngValue >> 16;
 }
 
-__attribute__((naked)) void LinkContestWaitForConnection(void)
+bool8 LinkContestWaitForConnection(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080F9900\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080F9904\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080F990E\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9900: .4byte gLinkContestFlags\n\t"
-        "_080F9904:\n\t"
-        "	ldr r0, _080F9914\n\t"
-        "	movs r1, #5\n\t"
-        "	bl CreateTask\n\t"
-        "	movs r0, #1\n\t"
-        "_080F990E:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9914: .4byte sub_080F9918 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gLinkContestFlags & LINK_CONTEST_FLAG_IS_WIRELESS)
+    {
+        CreateTask(sub_080F9918, 5);
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
 }
 
-__attribute__((naked)) void sub_080F9918(void)
+// JP symbol; equivalent to Task_LinkContestWaitForConnection.
+void sub_080F9918(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r1, _080F994C\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080F9950\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080F995E\n\t"
-        "	bl IsLinkTaskFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080F9964\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _080F9964\n\t"
-        "	.align 2, 0\n\t"
-        "_080F994C: .4byte gTasks\n\t"
-        "_080F9950:\n\t"
-        "	bl IsLinkTaskFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080F9964\n\t"
-        "	bl SetLinkStandbyCallback\n\t"
-        "_080F995E:\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080F9964:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gTasks[taskId].data[0])
+    {
+    case 0:
+        if (IsLinkTaskFinished())
+        {
+            SetLinkStandbyCallback();
+            gTasks[taskId].data[0]++;
+        }
+        break;
+    case 1:
+        gTasks[taskId].data[0]++;
+        break;
+    default:
+        if (IsLinkTaskFinished() == 1)
+        {
+            ScriptContext_Enable();
+            DestroyTask(taskId);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void LinkContestTryShowWirelessIndicator(void)
+void LinkContestTryShowWirelessIndicator(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080F9994\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080F998E\n\t"
-        "	ldr r0, _080F9998\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080F998E\n\t"
-        "	bl LoadWirelessStatusIndicatorSpriteGfx\n\t"
-        "	movs r0, #8\n\t"
-        "	movs r1, #8\n\t"
-        "	bl CreateWirelessStatusIndicatorSprite\n\t"
-        "_080F998E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9994: .4byte gLinkContestFlags\n\t"
-        "_080F9998: .4byte gReceivedRemoteLinkPlayers\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gLinkContestFlags & LINK_CONTEST_FLAG_IS_WIRELESS)
+    {
+        if (gReceivedRemoteLinkPlayers)
+        {
+            LoadWirelessStatusIndicatorSpriteGfx();
+            CreateWirelessStatusIndicatorSprite(8, 8);
+        }
+    }
 }
 
-__attribute__((naked)) void LinkContestTryHideWirelessIndicator(void)
+void LinkContestTryHideWirelessIndicator(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080F99BC\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080F99B6\n\t"
-        "	ldr r0, _080F99C0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080F99B6\n\t"
-        "	bl DestroyWirelessStatusIndicatorSprite\n\t"
-        "_080F99B6:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F99BC: .4byte gLinkContestFlags\n\t"
-        "_080F99C0: .4byte gReceivedRemoteLinkPlayers\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gLinkContestFlags & LINK_CONTEST_FLAG_IS_WIRELESS)
+    {
+        if (gReceivedRemoteLinkPlayers)
+            DestroyWirelessStatusIndicatorSprite();
+    }
 }
 
-__attribute__((naked)) void IsContestWithRSPlayer(void)
+bool8 IsContestWithRSPlayer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080F99D8\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080F99DC\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080F99DE\n\t"
-        "	.align 2, 0\n\t"
-        "_080F99D8: .4byte gLinkContestFlags\n\t"
-        "_080F99DC:\n\t"
-        "	movs r0, #1\n\t"
-        "_080F99DE:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gLinkContestFlags & LINK_CONTEST_FLAG_HAS_RS_PLAYER)
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) void ClearLinkContestFlags(void)
+void ClearLinkContestFlags(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080F99EC\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080F99EC: .4byte gLinkContestFlags\n\t"
-        ".syntax divided\n\t"
-    );
+    gLinkContestFlags = 0;
 }
 
-__attribute__((naked)) void IsWirelessContest(void)
+bool8 IsWirelessContest(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080F9A04\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080F9A08\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080F9A0A\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9A04: .4byte gLinkContestFlags\n\t"
-        "_080F9A08:\n\t"
-        "	movs r0, #1\n\t"
-        "_080F9A0A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gLinkContestFlags & LINK_CONTEST_FLAG_IS_WIRELESS)
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) void HealPlayerParty()
+void HealPlayerParty(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, _080F9ACC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r8, r0\n\t"
-        "	bhs _080F9ABC\n\t"
-        "	ldr r1, _080F9AD0\n\t"
-        "	mov sl, r1\n\t"
-        "	mov r6, sp\n\t"
-        "_080F9A2E:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	mov r4, r8\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	add r4, sl\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	strb r0, [r6]\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	strb r1, [r6, #1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x15\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	add r1, r8\n\t"
-        "	mov sb, r1\n\t"
-        "_080F9A64:\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0xd\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl CalculatePPWithBonus\n\t"
-        "	strb r0, [r6]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x11\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #3\n\t"
-        "	bls _080F9A64\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r6]\n\t"
-        "	strb r0, [r6, #1]\n\t"
-        "	strb r0, [r6, #2]\n\t"
-        "	strb r0, [r6, #3]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	mov r0, r8\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	add r0, sl\n\t"
-        "	movs r1, #0x37\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r1, sb\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, _080F9ACC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r8, r0\n\t"
-        "	blo _080F9A2E\n\t"
-        "_080F9ABC:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9ACC: .4byte gPlayerPartyCount\n\t"
-        "_080F9AD0: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 j;
+    u8 ppBonuses;
+    u8 arg[4];
+
+    for (i = 0; i < gPlayerPartyCount; i++)
+    {
+        u16 maxHP = GetMonData3(&gPlayerParty[i], MON_DATA_MAX_HP);
+        arg[0] = maxHP;
+        arg[1] = maxHP >> 8;
+        SetMonData(&gPlayerParty[i], MON_DATA_HP, arg);
+        ppBonuses = GetMonData3(&gPlayerParty[i], MON_DATA_PP_BONUSES);
+
+        for (j = 0; j < MAX_MON_MOVES; j++)
+        {
+            arg[0] = CalculatePPWithBonus(GetMonData3(&gPlayerParty[i], MON_DATA_MOVE1 + j), ppBonuses, j);
+            SetMonData(&gPlayerParty[i], MON_DATA_PP1 + j, arg);
+        }
+
+        arg[0] = 0;
+        arg[1] = 0;
+        arg[2] = 0;
+        arg[3] = 0;
+        SetMonData(&gPlayerParty[i], MON_DATA_STATUS, arg);
+    }
 }
 
-__attribute__((naked)) u8 ScriptGiveMon(u16 species, u8 level, u16 item, u32 unused1, u32 unused2, u8 unused3)
+u8 ScriptGiveMon(u16 species, u8 level, u16 item, u32 unused1, u32 unused2, u8 unused3)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	sub sp, #0x78\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r0, r4, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	add r6, sp, #0x14\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	movs r3, #0x20\n\t"
-        "	bl CreateMon\n\t"
-        "	add r0, sp, #0x10\n\t"
-        "	mov r1, r8\n\t"
-        "	strb r1, [r0]\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	strb r4, [r0, #1]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	add r2, sp, #0x10\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GiveMonToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl HoennToNationalOrder\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r4, #1\n\t"
-        "	bgt _080F9B48\n\t"
-        "	cmp r4, #0\n\t"
-        "	blt _080F9B48\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetSetPokedexFlag\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl GetSetPokedexFlag\n\t"
-        "_080F9B48:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	add sp, #0x78\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 nationalDexNum;
+    int sentToPc;
+    u8 heldItem[2];
+    struct Pokemon mon;
+
+    CreateMon(&mon, species, level, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
+    heldItem[0] = item;
+    heldItem[1] = item >> 8;
+    SetMonData(&mon, MON_DATA_HELD_ITEM, heldItem);
+    sentToPc = GiveMonToPlayer(&mon);
+    nationalDexNum = HoennToNationalOrder(species);
+
+    switch (sentToPc)
+    {
+    case MON_GIVEN_TO_PARTY:
+    case MON_GIVEN_TO_PC:
+        GetSetPokedexFlag(nationalDexNum, FLAG_SET_SEEN);
+        GetSetPokedexFlag(nationalDexNum, FLAG_SET_CAUGHT);
+        break;
+    }
+    return sentToPc;
 }
 
-__attribute__((naked)) u8 ScriptGiveEgg(u16 species)
+u8 ScriptGiveEgg(u16 species)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0x68\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #1\n\t"
-        "	bl CreateEgg\n\t"
-        "	add r2, sp, #0x64\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r0, sp\n\t"
-        "	bl GiveMonToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #0x68\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon mon;
+    u8 isEgg;
+
+    CreateEgg(&mon, species, TRUE);
+    isEgg = TRUE;
+    SetMonData(&mon, MON_DATA_IS_EGG, &isEgg);
+
+    return GiveMonToPlayer(&mon);
 }
 
-__attribute__((naked)) void HasEnoughMonsForDoubleBattle(void)
+void HasEnoughMonsForDoubleBattle(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetMonsStateToDoubles\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080F9BA4\n\t"
-        "	cmp r1, #1\n\t"
-        "	bgt _080F9BA0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080F9BA4\n\t"
-        "	b _080F9BA8\n\t"
-        "_080F9BA0:\n\t"
-        "	cmp r1, #2\n\t"
-        "	bne _080F9BA8\n\t"
-        "_080F9BA4:\n\t"
-        "	ldr r0, _080F9BAC\n\t"
-        "	strh r1, [r0]\n\t"
-        "_080F9BA8:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9BAC: .4byte gSpecialVar_Result\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (GetMonsStateToDoubles())
+    {
+    case PLAYER_HAS_TWO_USABLE_MONS:
+        gSpecialVar_Result = PLAYER_HAS_TWO_USABLE_MONS;
+        break;
+    case PLAYER_HAS_ONE_MON:
+        gSpecialVar_Result = PLAYER_HAS_ONE_MON;
+        break;
+    case PLAYER_HAS_ONE_USABLE_MON:
+        gSpecialVar_Result = PLAYER_HAS_ONE_USABLE_MON;
+        break;
+    }
 }
 
-__attribute__((naked)) void CheckPartyMonHasHeldItem(void)
+bool8 CheckPartyMonHasHeldItem(u16 item)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r7, #0xce\n\t"
-        "	lsls r7, r7, #1\n\t"
-        "_080F9BBC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _080F9BEC\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080F9BF0\n\t"
-        "	cmp r0, r7\n\t"
-        "	beq _080F9BF0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, r6\n\t"
-        "	bne _080F9BF0\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080F9BF8\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9BEC: .4byte gPlayerParty\n\t"
-        "_080F9BF0:\n\t"
-        "	adds r5, #1\n\t"
-        "	cmp r5, #5\n\t"
-        "	ble _080F9BBC\n\t"
-        "	movs r0, #0\n\t"
-        "_080F9BF8:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        u16 species = GetMonData3(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+        if (species != SPECIES_NONE && species != SPECIES_EGG && GetMonData3(&gPlayerParty[i], MON_DATA_HELD_ITEM) == item)
+            return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void DoesPartyHaveEnigmaBerry(void)
+bool8 DoesPartyHaveEnigmaBerry(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r0, #0xaf\n\t"
-        "	bl CheckPartyMonHasHeldItem\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	cmp r4, #1\n\t"
-        "	bne _080F9C22\n\t"
-        "	movs r0, #0xaf\n\t"
-        "	bl ItemIdToBerryType\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080F9C2C\n\t"
-        "	bl GetBerryNameByBerryType\n\t"
-        "_080F9C22:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9C2C: .4byte gStringVar1\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 hasItem = CheckPartyMonHasHeldItem(ITEM_ENIGMA_BERRY);
+
+    if (hasItem == TRUE)
+        GetBerryNameByBerryType(ItemIdToBerryType(ITEM_ENIGMA_BERRY), gStringVar1);
+
+    return hasItem;
 }
 
-__attribute__((naked)) void CreateScriptedWildMon(u16 species, u8 level, u16 item)
+void CreateScriptedWildMon(u16 species, u8 level, u16 item)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r7, r2, #0x10\n\t"
-        "	lsrs r6, r7, #0x10\n\t"
-        "	bl ZeroEnemyPartyMons\n\t"
-        "	ldr r0, _080F9C8C\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	movs r3, #0x20\n\t"
-        "	bl CreateMon\n\t"
-        "	cmp r6, #0\n\t"
-        "	beq _080F9C7E\n\t"
-        "	add r0, sp, #0x10\n\t"
-        "	strb r6, [r0]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsrs r0, r7, #0x18\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r1, #0xc\n\t"
-        "	add r2, sp, #0x10\n\t"
-        "	bl SetMonData\n\t"
-        "_080F9C7E:\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9C8C: .4byte gEnemyParty\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 heldItem[2];
+
+    ZeroEnemyPartyMons();
+    CreateMon(&gEnemyParty[0], species, level, USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
+    if (item)
+    {
+        heldItem[0] = item;
+        heldItem[1] = item >> 8;
+        SetMonData(&gEnemyParty[0], MON_DATA_HELD_ITEM, heldItem);
+    }
 }
 
-__attribute__((naked)) void ScriptSetMonMoveSlot(u8 monIndex, u16 move, u8 slot)
+void ScriptSetMonMoveSlot(u8 monIndex, u16 move, u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r4, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	cmp r3, #6\n\t"
-        "	bls _080F9CAC\n\t"
-        "	ldr r0, _080F9CC0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "_080F9CAC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r3, r0\n\t"
-        "	ldr r1, _080F9CC4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetMonMoveSlot\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9CC0: .4byte gPlayerPartyCount\n\t"
-        "_080F9CC4: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    if (monIndex > PARTY_SIZE)
+        monIndex = gPlayerPartyCount - 1;
+
+    SetMonMoveSlot(&gPlayerParty[monIndex], move, slot);
 }
 
-__attribute__((naked)) void ChooseHalfPartyForBattle(void)
+void ChooseHalfPartyForBattle(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080F9CE4\n\t"
-        "	ldr r1, _080F9CE8\n\t"
-        "	str r1, [r0, #8]\n\t"
-        "	ldr r0, _080F9CEC\n\t"
-        "	movs r1, #9\n\t"
-        "	bl VarSet\n\t"
-        "	movs r0, #0\n\t"
-        "	bl InitChooseHalfPartyForBattle\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9CE4: .4byte gMain\n\t"
-        "_080F9CE8: .4byte CB2_ReturnFromChooseHalfParty + 1\n\t"
-        "_080F9CEC: .4byte 0x000040CF\n\t"
-        ".syntax divided\n\t"
-    );
+    gMain.savedCallback = CB2_ReturnFromChooseHalfParty;
+    VarSet(VAR_FRONTIER_FACILITY, FACILITY_MULTI_OR_EREADER);
+    InitChooseHalfPartyForBattle(0);
 }
 
-__attribute__((naked)) void CB2_ReturnFromChooseHalfParty(void)
+void CB2_ReturnFromChooseHalfParty(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080F9D00\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _080F9D08\n\t"
-        "	ldr r0, _080F9D04\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _080F9D0E\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9D00: .4byte gSelectedOrderFromParty\n\t"
-        "_080F9D04: .4byte gSpecialVar_Result\n\t"
-        "_080F9D08:\n\t"
-        "	ldr r1, _080F9D18\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "_080F9D0E:\n\t"
-        "	ldr r0, _080F9D1C\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9D18: .4byte gSpecialVar_Result\n\t"
-        "_080F9D1C: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gSelectedOrderFromParty[0])
+    {
+    case 0:
+        gSpecialVar_Result = FALSE;
+        break;
+    default:
+        gSpecialVar_Result = TRUE;
+        break;
+    }
+
+    SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
-__attribute__((naked)) void ChoosePartyForBattleFrontier(void)
+void ChoosePartyForBattleFrontier(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _080F9D3C\n\t"
-        "	ldr r0, _080F9D40\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, _080F9D44\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl InitChooseHalfPartyForBattle\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9D3C: .4byte gMain\n\t"
-        "_080F9D40: .4byte sub_080F9D48 + 1\n\t"
-        "_080F9D44: .4byte gSpecialVar_0x8004\n\t"
-        ".syntax divided\n\t"
-    );
+    gMain.savedCallback = sub_080F9D48;
+    InitChooseHalfPartyForBattle(gSpecialVar_0x8004 + 1);
 }
 
-__attribute__((naked)) void sub_080F9D48(void)
+// JP symbol; equivalent to CB2_ReturnFromChooseBattleFrontierParty.
+void sub_080F9D48(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080F9D58\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _080F9D60\n\t"
-        "	ldr r0, _080F9D5C\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _080F9D66\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9D58: .4byte gSelectedOrderFromParty\n\t"
-        "_080F9D5C: .4byte gSpecialVar_Result\n\t"
-        "_080F9D60:\n\t"
-        "	ldr r1, _080F9D70\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "_080F9D66:\n\t"
-        "	ldr r0, _080F9D74\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9D70: .4byte gSpecialVar_Result\n\t"
-        "_080F9D74: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gSelectedOrderFromParty[0])
+    {
+    case 0:
+        gSpecialVar_Result = FALSE;
+        break;
+    default:
+        gSpecialVar_Result = TRUE;
+        break;
+    }
+
+    SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
-__attribute__((naked)) void ReducePlayerPartyToSelectedMons()
+void ReducePlayerPartyToSelectedMons(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0x198\n\t"
-        "	add r0, sp, #0x190\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r2, _080F9DE8\n\t"
-        "	mov r1, sp\n\t"
-        "	bl CpuSet\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r7, #0x64\n\t"
-        "	ldr r6, _080F9DEC\n\t"
-        "	mov r4, sp\n\t"
-        "_080F9D92:\n\t"
-        "	ldr r0, _080F9DF0\n\t"
-        "	adds r1, r5, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080F9DAC\n\t"
-        "	subs r0, #1\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	muls r1, r7, r1\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "_080F9DAC:\n\t"
-        "	adds r4, #0x64\n\t"
-        "	adds r5, #1\n\t"
-        "	cmp r5, #3\n\t"
-        "	ble _080F9D92\n\t"
-        "	add r0, sp, #0x194\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r4, _080F9DEC\n\t"
-        "	ldr r2, _080F9DF4\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl CpuSet\n\t"
-        "	mov r5, sp\n\t"
-        "	add r6, sp, #0x12c\n\t"
-        "_080F9DC8:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	adds r5, #0x64\n\t"
-        "	adds r4, #0x64\n\t"
-        "	cmp r5, r6\n\t"
-        "	ble _080F9DC8\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	add sp, #0x198\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080F9DE8: .4byte 0x05000064\n\t"
-        "_080F9DEC: .4byte gPlayerParty\n\t"
-        "_080F9DF0: .4byte gSelectedOrderFromParty\n\t"
-        "_080F9DF4: .4byte 0x05000096\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon party[MAX_FRONTIER_PARTY_SIZE];
+    int i;
+
+    CpuFill32(0, party, sizeof party);
+
+    for (i = 0; i < MAX_FRONTIER_PARTY_SIZE; i++)
+        if (gSelectedOrderFromParty[i])
+            party[i] = gPlayerParty[gSelectedOrderFromParty[i] - 1];
+
+    CpuFill32(0, gPlayerParty, sizeof gPlayerParty);
+
+    for (i = 0; i < MAX_FRONTIER_PARTY_SIZE; i++)
+        gPlayerParty[i] = party[i];
+
+    CalculatePlayerPartyCount();
 }
