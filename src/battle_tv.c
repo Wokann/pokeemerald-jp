@@ -67,10 +67,159 @@ enum {
     FNT_OTHER,
 };
 
-// JP data tables stay in the ROM data region; bound via ld aliases.
-extern const u16 sSpecialBattleStrings[];
-extern const u16 sVariableDmgMoves[];
-extern const u16 *const sPointsArray[];
+#define BATTLE_TV_DATA __attribute__((section(".rodata.mid98_suffix_before_species_to_back_anim_set"), aligned(1)))
+
+static const u16 sVariableDmgMoves[] BATTLE_TV_DATA =
+{
+    MOVE_COUNTER, MOVE_FISSURE, MOVE_BIDE, MOVE_MIRROR_COAT,
+    MOVE_HORN_DRILL, MOVE_FLAIL, MOVE_REVERSAL, MOVE_HIDDEN_POWER,
+    MOVE_SHEER_COLD, MOVE_FOCUS_PUNCH, MOVE_ERUPTION,
+    MOVE_WATER_SPOUT, MOVE_DREAM_EATER, MOVE_WEATHER_BALL,
+    MOVE_SNORE, MOVE_PAIN_SPLIT, MOVE_GUILLOTINE,
+    MOVE_FRUSTRATION, MOVE_RETURN, MOVE_ENDEAVOR,
+    MOVE_PRESENT, MOVE_REVENGE, TABLE_END,
+    // Those are handled by the function itself.
+    MOVE_MAGNITUDE, MOVE_PSYWAVE, TABLE_END,
+};
+
+// Indexed by the JP BattleMoveEffect order, which matches the US owner.
+static const u16 sPoints_MoveEffect[] BATTLE_TV_DATA =
+{
+    1, 1, 1, 4, 1, 1, 1, 0, 5, 1, 1, 1,
+    1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1,
+    1, 5, 5, 4, 5, 1, 3, 1, 3, 5, 1, 7,
+    1, 7, 7, 1, 5, 2, 4, 1, 1, 1, 5, 1,
+    2, 4, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1,
+    1, 1, 1, 1, 1, 7, 4, 4, 1, 1, 1, 1,
+    1, 1, 1, 4, 1, 1, 1, 4, 5, 2, 4, 1,
+    4, 1, 7, 2, 1, 5, 7, 3, 3, 4, 3, 3,
+    3, 3, 3, 2, 4, 1, 5, 1, 1, 4, 5, 3,
+    1, 2, 1, 5, 4, 3, 6, 4, 3, 3, 3, 2,
+    4, 1, 1, 1, 5, 1, 1, 7, 2, 2, 1, 1,
+    4, 4, 4, 1, 4, 4, 1, 1, 1, 1, 7, 7,
+    6, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3,
+    1, 1, 4, 4, 3, 3, 3, 1, 4, 7, 7, 5,
+    7, 1, 7, 1, 5, 0, 4, 4, 4, 4, 4, 2,
+    2, 6, 3, 6, 4, 4, 2, 5, 2, 1, 1, 6,
+    6, 6, 1, 1, 1, 1, 2, 6, 1, 4, 1, 1,
+    3, 1, 1, 1, 1, 1, 4, 1, 1, 3,
+};
+
+static const u16 sPoints_Effectiveness[] BATTLE_TV_DATA = { 4, -3, -6 };
+static const u16 sPoints_SetUp[] BATTLE_TV_DATA = { 4, 4, 6, 6, 7, 6, 2 };
+
+static const u16 sPoints_RainMoves[] BATTLE_TV_DATA =
+{
+    MOVE_BUBBLE, 3, MOVE_WHIRLPOOL, 3, MOVE_OCTAZOOKA, 3,
+    MOVE_CLAMP, 3, MOVE_WITHDRAW, 3, MOVE_CRABHAMMER, 3,
+    MOVE_WATER_SPOUT, 3, MOVE_DIVE, 3, MOVE_WATERFALL, 3,
+    MOVE_MUDDY_WATER, 3, MOVE_SURF, 3, MOVE_HYDRO_CANNON, 3,
+    MOVE_HYDRO_PUMP, 3, MOVE_BUBBLE_BEAM, 3, MOVE_WATER_SPORT, 0,
+    MOVE_WATER_GUN, 3, MOVE_WATER_PULSE, 3, MOVE_WEATHER_BALL, 3,
+    MOVE_THUNDER, 3, MOVE_SOLAR_BEAM, -4, MOVE_OVERHEAT, -4,
+    MOVE_FLAME_WHEEL, -4, MOVE_FLAMETHROWER, -4, MOVE_SACRED_FIRE, -4,
+    MOVE_FIRE_BLAST, -4, MOVE_HEAT_WAVE, -4, MOVE_EMBER, -4,
+    MOVE_BLAST_BURN, -4, MOVE_BLAZE_KICK, -4, MOVE_ERUPTION, -4,
+    MOVE_FIRE_SPIN, -4, MOVE_FIRE_PUNCH, -4, MOVE_SOLAR_BEAM, -4,
+    TABLE_END, 0,
+};
+
+static const u16 sPoints_SunMoves[] BATTLE_TV_DATA =
+{
+    MOVE_OVERHEAT, 3, MOVE_FLAME_WHEEL, 3, MOVE_FLAMETHROWER, 3,
+    MOVE_SACRED_FIRE, 3, MOVE_FIRE_BLAST, 3, MOVE_HEAT_WAVE, 3,
+    MOVE_EMBER, 3, MOVE_BLAST_BURN, 3, MOVE_BLAZE_KICK, 3,
+    MOVE_ERUPTION, 3, MOVE_FIRE_SPIN, 3, MOVE_FIRE_PUNCH, 3,
+    MOVE_SOLAR_BEAM, 5, MOVE_SYNTHESIS, 3, MOVE_MORNING_SUN, 3,
+    MOVE_MOONLIGHT, 3, MOVE_WEATHER_BALL, 3, TABLE_END, 0,
+};
+
+static const u16 sPoints_SandstormMoves[] BATTLE_TV_DATA =
+{
+    MOVE_WEATHER_BALL, 3, MOVE_SOLAR_BEAM, -3, TABLE_END, 0,
+};
+
+static const u16 sPoints_HailMoves[] BATTLE_TV_DATA =
+{
+    MOVE_WEATHER_BALL, 3, MOVE_SOLAR_BEAM, -3, TABLE_END, 0,
+};
+
+static const u16 sPoints_ElectricMoves[] BATTLE_TV_DATA =
+{
+    MOVE_THUNDERBOLT, 3, MOVE_THUNDER_PUNCH, 3, MOVE_SPARK, 3,
+    MOVE_THUNDER_SHOCK, 3, MOVE_ZAP_CANNON, 3, MOVE_SHOCK_WAVE, 3,
+    MOVE_THUNDER_WAVE, 0, MOVE_THUNDER, 3, MOVE_VOLT_TACKLE, 3,
+    TABLE_END, 0,
+};
+
+static const u16 sPoints_StatusDmg[] BATTLE_TV_DATA = { 5, 3, 3, 3, 3, 3, 3 };
+static const u16 sPoints_Status[] BATTLE_TV_DATA = { 5, 5, 5, 5, 5 };
+static const u16 sPoints_Spikes[] BATTLE_TV_DATA = { 4 };
+static const u16 sPoints_WaterSport[] BATTLE_TV_DATA = { 5 };
+static const u16 sPoints_MudSport[] BATTLE_TV_DATA = { 5 };
+static const u16 sPoints_Reflect[] BATTLE_TV_DATA = { 3 };
+static const u16 sPoints_LightScreen[] BATTLE_TV_DATA = { 3 };
+static const u16 sPoints_Safeguard[] BATTLE_TV_DATA = { 4 };
+static const u16 sPoints_Mist[] BATTLE_TV_DATA = { 3 };
+static const u16 sPoints_BreakWall[] BATTLE_TV_DATA = { 6 };
+static const u16 sPoints_CriticalHit[] BATTLE_TV_DATA = { 6 };
+static const u16 sPoints_Faint[] BATTLE_TV_DATA = { 6 };
+static const u16 sPoints_Flinched[] BATTLE_TV_DATA = { 4 };
+static const u16 sPoints_StatIncrease1[] BATTLE_TV_DATA = { 2, 2, 2, 2, 2, 2, 2 };
+static const u16 sPoints_StatIncrease2[] BATTLE_TV_DATA = { 4, 4, 4, 4, 4, 4, 4 };
+static const u16 sPoints_StatDecreaseSelf[] BATTLE_TV_DATA = { -1, -1, -1, -1, -1, -1, -1 };
+static const u16 sPoints_StatDecrease1[] BATTLE_TV_DATA = { 2, 2, 2, 2, 2, 2, 2 };
+static const u16 sPoints_StatDecrease2[] BATTLE_TV_DATA = { 4, 4, 4, 4, 4, 4, 4 };
+static const u16 sPoints_StatIncreaseNotSelf[] BATTLE_TV_DATA = { -2, -2, -2, -2, -2, -2, -2 };
+
+// The JP ROM leaves two bytes between the final u16 table and this pointer table.
+static const u16 sPointsPadding BATTLE_TV_DATA = 0;
+
+static const u16 *const sPointsArray[] BATTLE_TV_DATA =
+{
+    [PTS_MOVE_EFFECT]            = sPoints_MoveEffect,
+    [PTS_EFFECTIVENESS]          = sPoints_Effectiveness,
+    [PTS_SET_UP]                 = sPoints_SetUp,
+    [PTS_RAIN]                   = sPoints_RainMoves,
+    [PTS_SUN]                    = sPoints_SunMoves,
+    [PTS_SANDSTORM]              = sPoints_SandstormMoves,
+    [PTS_HAIL]                   = sPoints_HailMoves,
+    [PTS_ELECTRIC]               = sPoints_ElectricMoves,
+    [PTS_STATUS_DMG]             = sPoints_StatusDmg,
+    [PTS_STATUS]                 = sPoints_Status,
+    [PTS_SPIKES]                 = sPoints_Spikes,
+    [PTS_WATER_SPORT]            = sPoints_WaterSport,
+    [PTS_MUD_SPORT]              = sPoints_MudSport,
+    [PTS_REFLECT]                = sPoints_Reflect,
+    [PTS_LIGHT_SCREEN]           = sPoints_LightScreen,
+    [PTS_SAFEGUARD]              = sPoints_Safeguard,
+    [PTS_MIST]                   = sPoints_Mist,
+    [PTS_BREAK_WALL]             = sPoints_BreakWall,
+    [PTS_CRITICAL_HIT]           = sPoints_CriticalHit,
+    [PTS_FAINT]                  = sPoints_Faint,
+    [PTS_FAINT_SET_UP]           = sPoints_Faint,
+    [PTS_FLINCHED]               = sPoints_Flinched,
+    [PTS_STAT_INCREASE_1]        = sPoints_StatIncrease1,
+    [PTS_STAT_INCREASE_2]        = sPoints_StatIncrease2,
+    [PTS_STAT_DECREASE_SELF]     = sPoints_StatDecreaseSelf,
+    [PTS_STAT_DECREASE_1]        = sPoints_StatDecrease1,
+    [PTS_STAT_DECREASE_2]        = sPoints_StatDecrease2,
+    [PTS_STAT_INCREASE_NOT_SELF] = sPoints_StatIncreaseNotSelf,
+};
+
+// Points are always calculated for these messages, even if the current
+// Pokémon does not have the corresponding move.
+static const u16 sSpecialBattleStrings[] BATTLE_TV_DATA =
+{
+    STRINGID_PKMNPERISHCOUNTFELL, STRINGID_PKMNWISHCAMETRUE, STRINGID_PKMNLOSTPPGRUDGE,
+    STRINGID_PKMNTOOKFOE, STRINGID_PKMNABSORBEDNUTRIENTS, STRINGID_PKMNANCHOREDITSELF,
+    STRINGID_PKMNAFFLICTEDBYCURSE, STRINGID_PKMNSAPPEDBYLEECHSEED, STRINGID_PKMNLOCKEDINNIGHTMARE,
+    STRINGID_PKMNHURTBY, STRINGID_PKMNHURTBYBURN, STRINGID_PKMNHURTBYPOISON,
+    STRINGID_PKMNHURTBYSPIKES, STRINGID_ATTACKERFAINTED, STRINGID_TARGETFAINTED,
+    STRINGID_PKMNHITWITHRECOIL, STRINGID_PKMNCRASHED, TABLE_END,
+};
+
+#undef BATTLE_TV_DATA
 
 void AddMovePoints(u8 caseId, u16 arg1, u8 arg2, u8 arg3)
 {

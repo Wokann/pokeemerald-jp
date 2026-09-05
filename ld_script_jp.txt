@@ -10016,6 +10016,7 @@ SECTIONS {
         data/intro_credits_graphics.o(.rodata);
         src/evolution_graphics.o(.rodata.mid98_suffix_before_species_to_back_anim_set);
         src/bard_music.o(.rodata.mid98_suffix_before_species_to_back_anim_set);
+        src/battle_tv.o(.rodata.mid98_suffix_before_species_to_back_anim_set);
         data/data_b2d_mid98.o(.rodata.mid98_suffix_before_species_to_back_anim_set);
         src/pokemon_animation.o(.rodata.pokemon_animation_species_to_back_anim_set);
         src/pokemon_animation.o(.rodata.pokemon_animation_yellow_flash_data);
