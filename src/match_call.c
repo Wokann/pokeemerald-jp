@@ -56,10 +56,10 @@ struct BattleFrontierStreakInfo
 // JP state/data live at fixed addresses supplied by ld_script_jp.txt.
 extern struct MatchCallState sMatchCallState;           // 0x0203CA4C
 extern struct BattleFrontierStreakInfo sBattleFrontierStreakInfo; // 0x0203CA54
-extern bool32 (*const sMatchCallTaskFuncs[])(u8);       // 0x085D79F4
-extern const struct WindowTemplate sMatchCallTextWindow; // 0x085D7A14
 
 #define MATCH_CALL_UI_DATA __attribute__((section(".rodata.match_call_ui_data")))
+#define MATCH_CALL_LOGIC_DATA __attribute__((section(".rodata.match_call_logic_data")))
+#define MATCH_CALL_LOGIC_TEXT __attribute__((section(".rodata.match_call_logic_data"), aligned(1)))
 
 static const u16 sMatchCallWindow_Pal[] MATCH_CALL_UI_DATA = INCGFX_U16("graphics/pokenav/match_call/window.png", ".gbapal");
 static const u8 sMatchCallWindow_Gfx[] MATCH_CALL_UI_DATA = INCGFX_U8("graphics/pokenav/match_call/window.png", ".4bpp");
@@ -105,6 +105,7 @@ static void PopulateMatchCallStringVar(int, int, u8 *);
 static void PopulateTrainerName(int, u8 *);
 static void PopulateMapName(int, u8 *);
 static void PopulateSpeciesFromTrainerLocation(int, u8 *);
+static void PopulateSpeciesFromTrainerParty(int, u8 *);
 static void PopulateBattleFrontierFacilityName(int, u8 *);
 static void PopulateBattleFrontierStreak(int, u8 *);
 static int GetNumOwnedBadges(void);
@@ -112,6 +113,132 @@ static bool32 ShouldTrainerRequestBattle(int);
 static u16 GetFrontierStreakInfo(u16, u32 *);
 static u8 GetPokedexRatingLevel(u16);
 void BufferPokedexRatingForMatchCall(u8 *);
+
+struct MultiTrainerMatchCallText
+{
+    u16 trainerId;
+    const u8 *text;
+};
+
+// Each match call message has variables that can be populated randomly or
+// dependent on the trainer. The below are IDs for how to populate the vars.
+enum
+{
+    STR_TRAINER_NAME,
+    STR_MAP_NAME,
+    STR_SPECIES_IN_ROUTE,
+    STR_SPECIES_IN_PARTY,
+    STR_FACILITY_NAME,
+    STR_FRONTIER_STREAK,
+    STR_NONE = -1,
+};
+
+#define NUM_STRVARS_IN_MSG 3
+
+static bool32 (*const sMatchCallTaskFuncs[])(u8) MATCH_CALL_LOGIC_DATA =
+{
+    MatchCall_LoadGfx,
+    MatchCall_DrawWindow,
+    MatchCall_ReadyIntro,
+    MatchCall_SlideWindowIn,
+    MatchCall_PrintIntro,
+    MatchCall_PrintMessage,
+    MatchCall_SlideWindowOut,
+    MatchCall_EndCall,
+};
+
+static const struct WindowTemplate sMatchCallTextWindow MATCH_CALL_LOGIC_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 1,
+    .tilemapTop = 15,
+    .width = 28,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 0x200,
+};
+
+static u8 *const sMatchCallTextStringVars[] MATCH_CALL_LOGIC_DATA =
+{
+    gStringVar1,
+    gStringVar2,
+    gStringVar3,
+};
+
+static void (*const sPopulateMatchCallStringVarFuncs[])(int, u8 *) MATCH_CALL_LOGIC_DATA =
+{
+    [STR_TRAINER_NAME]     = PopulateTrainerName,
+    [STR_MAP_NAME]         = PopulateMapName,
+    [STR_SPECIES_IN_ROUTE] = PopulateSpeciesFromTrainerLocation,
+    [STR_SPECIES_IN_PARTY] = PopulateSpeciesFromTrainerParty,
+    [STR_FACILITY_NAME]    = PopulateBattleFrontierFacilityName,
+    [STR_FRONTIER_STREAK]  = PopulateBattleFrontierStreak,
+};
+
+const u8 gText_Kira[] MATCH_CALL_LOGIC_TEXT = _("ナツ");
+const u8 gText_Amy[] MATCH_CALL_LOGIC_TEXT = _("クミ");
+const u8 gText_John[] MATCH_CALL_LOGIC_TEXT = _("ゲン");
+const u8 gText_Roy[] MATCH_CALL_LOGIC_TEXT = _("コウ");
+const u8 gText_Gabby[] MATCH_CALL_LOGIC_TEXT = _("マリ");
+const u8 gText_Anna[] MATCH_CALL_LOGIC_TEXT = _("ミホ");
+
+static const struct MultiTrainerMatchCallText sMultiTrainerMatchCallTexts[] MATCH_CALL_LOGIC_DATA =
+{
+    { .trainerId = TRAINER_KIRA_AND_DAN_1, .text = gText_Kira },
+    { .trainerId = TRAINER_AMY_AND_LIV_1,  .text = gText_Amy },
+    { .trainerId = TRAINER_JOHN_AND_JAY_1, .text = gText_John },
+    { .trainerId = TRAINER_LILA_AND_ROY_1, .text = gText_Roy },
+    { .trainerId = TRAINER_GABBY_AND_TY_1, .text = gText_Gabby },
+    { .trainerId = TRAINER_ANNA_AND_MEG_1, .text = gText_Anna },
+};
+
+static const u8 *const sBattleFrontierFacilityNames[NUM_FRONTIER_FACILITIES] MATCH_CALL_LOGIC_DATA =
+{
+    [FRONTIER_FACILITY_TOWER]   = gText_BattleTower,
+    [FRONTIER_FACILITY_DOME]    = gText_BattleDome,
+    [FRONTIER_FACILITY_PALACE]  = gText_BattlePalace,
+    [FRONTIER_FACILITY_ARENA]   = gText_BattleArena,
+    [MATCH_CALL_PIKE]           = gText_BattlePike,
+    [MATCH_CALL_FACTORY]        = gText_BattleFactory,
+    [FRONTIER_FACILITY_PYRAMID] = gText_BattlePyramid,
+};
+
+static const u16 sBadgeFlags[NUM_BADGES] MATCH_CALL_LOGIC_DATA =
+{
+    FLAG_BADGE01_GET,
+    FLAG_BADGE02_GET,
+    FLAG_BADGE03_GET,
+    FLAG_BADGE04_GET,
+    FLAG_BADGE05_GET,
+    FLAG_BADGE06_GET,
+    FLAG_BADGE07_GET,
+    FLAG_BADGE08_GET,
+};
+
+static const u8 *const sBirchDexRatingTexts[] MATCH_CALL_LOGIC_DATA =
+{
+    gBirchDexRatingText_LessThan10,
+    gBirchDexRatingText_LessThan20,
+    gBirchDexRatingText_LessThan30,
+    gBirchDexRatingText_LessThan40,
+    gBirchDexRatingText_LessThan50,
+    gBirchDexRatingText_LessThan60,
+    gBirchDexRatingText_LessThan70,
+    gBirchDexRatingText_LessThan80,
+    gBirchDexRatingText_LessThan90,
+    gBirchDexRatingText_LessThan100,
+    gBirchDexRatingText_LessThan110,
+    gBirchDexRatingText_LessThan120,
+    gBirchDexRatingText_LessThan130,
+    gBirchDexRatingText_LessThan140,
+    gBirchDexRatingText_LessThan150,
+    gBirchDexRatingText_LessThan160,
+    gBirchDexRatingText_LessThan170,
+    gBirchDexRatingText_LessThan180,
+    gBirchDexRatingText_LessThan190,
+    gBirchDexRatingText_LessThan200,
+    gBirchDexRatingText_DexCompleted,
+};
 
 void InitMatchCallCounters(void)
 {
@@ -485,20 +612,6 @@ static bool32 RunMatchCallTextPrinter(int windowId)
 
 // ---- Second stage: message selection / string population ----
 
-// Each match call message has variables that can be populated randomly or
-// dependent on the trainer. The below are IDs for how to populate the vars.
-enum {
-    STR_TRAINER_NAME,
-    STR_MAP_NAME,
-    STR_SPECIES_IN_ROUTE,
-    STR_SPECIES_IN_PARTY,
-    STR_FACILITY_NAME,
-    STR_FRONTIER_STREAK,
-    STR_NONE = -1,
-};
-
-#define NUM_STRVARS_IN_MSG 3
-
 // Topic IDs for sMatchCallGeneralTopics
 enum {
     GEN_TOPIC_PERSONAL = 1,
@@ -538,12 +651,6 @@ struct MatchCallText
 {
     const u8 *text;
     s8 stringVarFuncIds[NUM_STRVARS_IN_MSG];
-};
-
-struct MultiTrainerMatchCallText
-{
-    u16 trainerId;
-    const u8 *text;
 };
 
 #define TEXT_ID(topic, id) (((topic) << 8) | ((id) & 0xFF))
@@ -1410,14 +1517,6 @@ static const struct MatchCallText *const sMatchCallGeneralTopics[] MATCH_CALL_DA
     [GEN_TOPIC_B_PIKE - 1]        = sMatchCallBattlePikeTexts,
     [GEN_TOPIC_B_PYRAMID - 1]     = sMatchCallBattlePyramidTexts,
 };
-
-// Remaining JP tables supplied by ld_script_jp.txt.
-extern u8 *const sMatchCallTextStringVars[];      // 0x085D7A1C
-extern void (*const sPopulateMatchCallStringVarFuncs[])(int, u8 *); // 0x085D7A28
-extern const struct MultiTrainerMatchCallText sMultiTrainerMatchCallTexts[]; // 0x085D7A54
-extern const u8 *const sBattleFrontierFacilityNames[]; // 0x085D7A84
-extern const u16 sBadgeFlags[];                       // 0x085D7AA0
-extern const u8 *const sBirchDexRatingTexts[];        // 0x085D7AB0
 
 extern const u8 gBirchDexRatingText_AreYouCurious[];
 extern const u8 gBirchDexRatingText_SoYouveSeenAndCaught[];
