@@ -9848,6 +9848,7 @@ SECTIONS {
         data/data_b2d_mid32.o(.rodata.data_b2d_mid32_evolution_scene_interleave);
         data/graphics/evolution_scene.o(.rodata.evolution_scene_palette_tables);
         data/data_b2d_mid32.o(.rodata.data_b2d_mid32_post_evolution_scene_palette_tables);
+        src/data/roulette_data.o(.rodata.roulette_data);
         src/pokedex_cry_screen.o(.rodata.pokedex_cry_screen_data);
         src/landmark.o(.rodata.landmark_data);
         data/battle_transition_pre_regi_resources.o(.rodata.battle_transition_pre_regi_resources);

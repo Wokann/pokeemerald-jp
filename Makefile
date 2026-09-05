@@ -1071,6 +1071,7 @@ DATA_OBJS += $(OBJ_DIR)/data/battle_transition_frontier_resources.o
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_pre_regi_resources.o
 DATA_OBJS += $(OBJ_DIR)/data/graphics/pokedex_area_screen.o
 DATA_OBJS += $(OBJ_DIR)/data/graphics/evolution_scene.o
+DATA_OBJS += $(OBJ_DIR)/src/data/roulette_data.o
 
 OBJFILE := $(AS_OBJS) $(C_ASM_OBJS) $(C_OBJECTS) $(SONG_OBJS) $(DATA_OBJS)
 OBJFILE_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJFILE))
@@ -2633,6 +2634,10 @@ $(OBJ_DIR)/data/graphics/pokedex_area_screen.o: data/graphics/pokedex_area_scree
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(OBJ_DIR)/data/graphics/evolution_scene.o: data/graphics/evolution_scene.s baserom_jp.gba
+	@mkdir -p $(dir $@)
+	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
+
+$(OBJ_DIR)/src/data/roulette_data.o: src/data/roulette_data.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
