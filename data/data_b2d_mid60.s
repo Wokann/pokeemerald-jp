@@ -366,23 +366,7 @@ gUnknown_856DCC8: @ 0x856DCC8
 gUnknown_856DCCC: @ 0x856DCCC
 	.incbin "baserom_jp.gba", 0x56dccc, 0x8
 
-	.section .rodata.mid60_tail_after_battle_anim_normal_data
-
-	.globl sCurseLinesPalette
-sCurseLinesPalette: @ 0x8572FFC
-	.incbin "graphics/misc/sCurseLinesPalette.bin"
-
-	.globl gUnknown_8572FFE
-gUnknown_8572FFE: @ 0x8572FFE
-	.byte 0x08, 0x0A, 0x0C, 0x0E
-
-	.globl gUnknown_8573002
-gUnknown_8573002: @ 0x8573002
-	.byte 0x08, 0x0A, 0x0C, 0x0E, 0x00, 0x00
-
-	.globl gUnknown_8573008
-gUnknown_8573008: @ 0x8573008
-	.incbin "baserom_jp.gba", 0x573008, 0x28
+	.section .rodata.mid60_tail_after_battle_intro_data
 
 	.globl sMachBikeTransitions
 sMachBikeTransitions: @ 0x8573030

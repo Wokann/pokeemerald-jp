@@ -14,8 +14,8 @@
 // JP ROM-resident RAM (bound in sym_ewram_jp.txt).
 extern EWRAM_DATA u16 sBgCnt;
 
-extern const u8 gUnknown_8572FFE[];
-extern const u8 gUnknown_8573002[];
+extern const u8 gBattleAnimBgCntSet[];
+extern const u8 gBattleAnimBgCntGet[];
 
 static void BattleIntroSlide1(u8);
 static void BattleIntroSlide2(u8);
@@ -23,15 +23,25 @@ static void BattleIntroSlide3(u8);
 static void BattleIntroSlideLink(u8);
 static void BattleIntroSlidePartner(u8);
 
-extern const TaskFunc gUnknown_8573008[];
-#define sBattleIntroSlideFuncs gUnknown_8573008
-;
+static const TaskFunc sBattleIntroSlideFuncs[] =
+{
+    [BATTLE_ENVIRONMENT_GRASS]      = BattleIntroSlide1,
+    [BATTLE_ENVIRONMENT_LONG_GRASS] = BattleIntroSlide1,
+    [BATTLE_ENVIRONMENT_SAND]       = BattleIntroSlide2,
+    [BATTLE_ENVIRONMENT_UNDERWATER] = BattleIntroSlide2,
+    [BATTLE_ENVIRONMENT_WATER]      = BattleIntroSlide2,
+    [BATTLE_ENVIRONMENT_POND]       = BattleIntroSlide1,
+    [BATTLE_ENVIRONMENT_MOUNTAIN]   = BattleIntroSlide1,
+    [BATTLE_ENVIRONMENT_CAVE]       = BattleIntroSlide1,
+    [BATTLE_ENVIRONMENT_BUILDING]   = BattleIntroSlide3,
+    [BATTLE_ENVIRONMENT_PLAIN]      = BattleIntroSlide3,
+};
 
 void SetAnimBgAttribute(u8 bgId, u8 attributeId, u8 value)
 {
     if (bgId < 4)
     {
-        sBgCnt = GetGpuReg(gUnknown_8572FFE[bgId]);
+        sBgCnt = GetGpuReg(gBattleAnimBgCntSet[bgId]);
         switch (attributeId)
         {
         case BG_ANIM_SCREEN_SIZE:
@@ -57,7 +67,7 @@ void SetAnimBgAttribute(u8 bgId, u8 attributeId, u8 value)
             break;
         }
 
-        SetGpuReg(gUnknown_8572FFE[bgId], sBgCnt);
+        SetGpuReg(gBattleAnimBgCntSet[bgId], sBgCnt);
     }
 }
 
@@ -67,7 +77,7 @@ int GetAnimBgAttribute(u8 bgId, u8 attributeId)
 
     if (bgId < 4)
     {
-        bgCnt = GetGpuReg(gUnknown_8573002[bgId]);
+        bgCnt = GetGpuReg(gBattleAnimBgCntGet[bgId]);
         switch (attributeId)
         {
         case BG_ANIM_SCREEN_SIZE:

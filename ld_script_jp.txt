@@ -9747,7 +9747,9 @@ SECTIONS {
         src/battle_anim_dark.o(.rodata.battle_anim_dark_data);
         src/battle_anim_ground.o(.rodata);
         src/battle_anim_normal.o(.rodata);
-        data/data_b2d_mid60.o(.rodata.mid60_tail_after_battle_anim_normal_data);
+        src/battle_anim_utility_funcs.o(.rodata);
+        src/battle_intro.o(.rodata);
+        data/data_b2d_mid60.o(.rodata.mid60_tail_after_battle_intro_data);
         src/data/text/region_texts61.o(.rodata);
         data/data_b2d_mid61.o(.rodata);
         sHealLocations = . + 0x4C;
