@@ -40,6 +40,225 @@ static void AnimCrossImpact(struct Sprite *);
 static void AnimFlashingHitSplat(struct Sprite *);
 static void AnimFlashingHitSplat_Step(struct Sprite *);
 
+static const union AnimCmd sAnim_ConfusionDuck_0[] =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(4, 8),
+    ANIMCMD_FRAME(0, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(8, 8),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_ConfusionDuck_1[] =
+{
+    ANIMCMD_FRAME(0, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(4, 8),
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(8, 8),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_ConfusionDuck[] =
+{
+    sAnim_ConfusionDuck_0,
+    sAnim_ConfusionDuck_1,
+};
+
+const struct SpriteTemplate gConfusionDuckSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_DUCK,
+    .paletteTag = ANIM_TAG_DUCK,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = sAnims_ConfusionDuck,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimConfusionDuck,
+};
+
+const struct SpriteTemplate gSimplePaletteBlendSpriteTemplate =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &gDummyOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimSimplePaletteBlend,
+};
+
+const struct SpriteTemplate gComplexPaletteBlendSpriteTemplate =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &gDummyOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimComplexPaletteBlend,
+};
+
+static const union AnimCmd sAnim_CirclingSparkle[] =
+{
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_FRAME(16, 3),
+    ANIMCMD_FRAME(32, 3),
+    ANIMCMD_FRAME(48, 3),
+    ANIMCMD_FRAME(64, 3),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_CirclingSparkle[] =
+{
+    sAnim_CirclingSparkle,
+};
+
+// Unused
+static const struct SpriteTemplate sCirclingSparkleSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SPARKLE_4,
+    .paletteTag = ANIM_TAG_SPARKLE_4,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_CirclingSparkle,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimCirclingSparkle,
+};
+
+const struct SpriteTemplate gShakeMonOrPlatformSpriteTemplate =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &gDummyOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimShakeMonOrBattlePlatforms,
+};
+
+static const union AffineAnimCmd sAffineAnim_HitSplat_0[] =
+{
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_HitSplat_1[] =
+{
+    AFFINEANIMCMD_FRAME(0xD8, 0xD8, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_HitSplat_2[] =
+{
+    AFFINEANIMCMD_FRAME(0xB0, 0xB0, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_HitSplat_3[] =
+{
+    AFFINEANIMCMD_FRAME(0x80, 0x80, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_HitSplat[] =
+{
+    sAffineAnim_HitSplat_0,
+    sAffineAnim_HitSplat_1,
+    sAffineAnim_HitSplat_2,
+    sAffineAnim_HitSplat_3,
+};
+
+const struct SpriteTemplate gBasicHitSplatSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_IMPACT,
+    .paletteTag = ANIM_TAG_IMPACT,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_HitSplat,
+    .callback = AnimHitSplatBasic,
+};
+
+const struct SpriteTemplate gHandleInvertHitSplatSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_IMPACT,
+    .paletteTag = ANIM_TAG_IMPACT,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_HitSplat,
+    .callback = AnimHitSplatHandleInvert,
+};
+
+const struct SpriteTemplate gWaterHitSplatSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_WATER_IMPACT,
+    .paletteTag = ANIM_TAG_WATER_IMPACT,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_HitSplat,
+    .callback = AnimHitSplatBasic,
+};
+
+const struct SpriteTemplate gRandomPosHitSplatSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_IMPACT,
+    .paletteTag = ANIM_TAG_IMPACT,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_HitSplat,
+    .callback = AnimHitSplatRandom,
+};
+
+const struct SpriteTemplate gMonEdgeHitSplatSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_IMPACT,
+    .paletteTag = ANIM_TAG_IMPACT,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_HitSplat,
+    .callback = AnimHitSplatOnMonEdge,
+};
+
+const struct SpriteTemplate gCrossImpactSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_CROSS_IMPACT,
+    .paletteTag = ANIM_TAG_CROSS_IMPACT,
+    .oam = &gOamData_AffineOff_ObjBlend_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimCrossImpact,
+};
+
+const struct SpriteTemplate gFlashingHitSplatSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_IMPACT,
+    .paletteTag = ANIM_TAG_IMPACT,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_HitSplat,
+    .callback = AnimFlashingHitSplat,
+};
+
+const struct SpriteTemplate gPersistHitSplatSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_IMPACT,
+    .paletteTag = ANIM_TAG_IMPACT,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_HitSplat,
+    .callback = AnimHitSplatPersistent,
+};
+
+
 static void AnimConfusionDuck(struct Sprite *sprite)
 {
     CMD_ARGS(x, y, waveOffset, wavePeriod, duration);

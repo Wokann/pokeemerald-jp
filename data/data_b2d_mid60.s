@@ -366,64 +366,7 @@ gUnknown_856DCC8: @ 0x856DCC8
 gUnknown_856DCCC: @ 0x856DCCC
 	.incbin "baserom_jp.gba", 0x56dccc, 0x8
 
-	.section .rodata.mid60_tail_after_battle_anim_ground_data
-	.incbin "baserom_jp.gba", 0x572e10, 0x30
-
-	.globl gConfusionDuckSpriteTemplate
-gConfusionDuckSpriteTemplate: @ 0x8572E40
-	.incbin "baserom_jp.gba", 0x572e40, 0x18
-
-	.globl gSimplePaletteBlendSpriteTemplate
-gSimplePaletteBlendSpriteTemplate: @ 0x8572E58
-	.incbin "baserom_jp.gba", 0x572e58, 0x18
-
-	.globl gComplexPaletteBlendSpriteTemplate
-gComplexPaletteBlendSpriteTemplate: @ 0x8572E70
-	.incbin "baserom_jp.gba", 0x572e70, 0x18
-
-	.incbin "baserom_jp.gba", 0x572e88, 0x34
-
-	.globl gShakeMonOrPlatformSpriteTemplate
-gShakeMonOrPlatformSpriteTemplate: @ 0x8572EBC
-	.incbin "baserom_jp.gba", 0x572ebc, 0x18
-
-	.incbin "baserom_jp.gba", 0x572ed4, 0x68
-
-
-	.globl gBasicHitSplatSpriteTemplate
-gBasicHitSplatSpriteTemplate: @ 0x8572F3C
-	.hword 0x2797, 0x2797
-	.4byte 0x084FD1A0, 0x082BF304, 0, 0x08572F2C, 0x08116BD9
-
-	.globl gHandleInvertHitSplatSpriteTemplate
-gHandleInvertHitSplatSpriteTemplate: @ 0x8572F54
-	.incbin "baserom_jp.gba", 0x572f54, 0x18
-
-	.globl gWaterHitSplatSpriteTemplate
-gWaterHitSplatSpriteTemplate: @ 0x8572F6C
-	.hword 0x27A4, 0x27A4
-	.4byte 0x084FD1A0, 0x082BF304, 0, 0x08572F2C, 0x08116BD9
-	.globl gRandomPosHitSplatSpriteTemplate
-gRandomPosHitSplatSpriteTemplate: @ 0x8572F84
-	.incbin "baserom_jp.gba", 0x572f84, 0x18
-
-	.globl gMonEdgeHitSplatSpriteTemplate
-gMonEdgeHitSplatSpriteTemplate: @ 0x8572F9C
-	.hword 0x2797, 0x2797
-	.4byte 0x084FD1A0, 0x082BF304, 0, 0x08572F2C, 0x08116D41
-
-	.globl gCrossImpactSpriteTemplate
-gCrossImpactSpriteTemplate: @ 0x8572FB4
-	.incbin "baserom_jp.gba", 0x572fb4, 0x18
-
-	.globl gFlashingHitSplatSpriteTemplate
-gFlashingHitSplatSpriteTemplate: @ 0x8572FCC
-	.hword 0x2797, 0x2797
-	.4byte 0x084FD080, 0x082BF304, 0, 0x08572F2C, 0x08116DF9
-
-	.globl gPersistHitSplatSpriteTemplate
-gPersistHitSplatSpriteTemplate: @ 0x8572FE4
-	.incbin "baserom_jp.gba", 0x572fe4, 0x18
+	.section .rodata.mid60_tail_after_battle_anim_normal_data
 
 	.globl sCurseLinesPalette
 sCurseLinesPalette: @ 0x8572FFC
