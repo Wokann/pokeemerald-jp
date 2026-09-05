@@ -7065,7 +7065,7 @@ __attribute__((naked)) void sub_08199F14(void)
     );
 }
 
-__attribute__((naked)) void sub_08199F54(void)
+__attribute__((naked)) void ListMenuLoadStdPalAt(u8 palOffset, u8 palId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7084,12 +7084,12 @@ __attribute__((naked)) void sub_08199F54(void)
         "	ldr r0, _08199F70\n\t"
         "	b _08199F7E\n\t"
         "	.align 2, 0\n\t"
-        "_08199F70: .4byte gUnknown_85D7BD8\n\t"
+        "_08199F70: .4byte gMenuInfoElements1_Pal\n\t"
         "_08199F74:\n\t"
         "	ldr r0, _08199F78\n\t"
         "	b _08199F7E\n\t"
         "	.align 2, 0\n\t"
-        "_08199F78: .4byte gUnknown_85D7BF8\n\t"
+        "_08199F78: .4byte gMenuInfoElements2_Pal\n\t"
         "_08199F7C:\n\t"
         "	ldr r0, _08199F8C\n\t"
         "_08199F7E:\n\t"
@@ -7099,12 +7099,12 @@ __attribute__((naked)) void sub_08199F54(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08199F8C: .4byte gUnknown_85D7C18\n\t"
+        "_08199F8C: .4byte gMenuInfoElements3_Pal\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void blit_move_info_icon(void)
+__attribute__((naked)) void BlitMenuInfoIcon(u8 windowId, u8 iconId, u16 x, u16 y)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7143,7 +7143,7 @@ __attribute__((naked)) void blit_move_info_icon(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08199FD4: .4byte sMenuInfoIcons\n\t"
-        "_08199FD8: .4byte gUnknown_85D7C38\n\t"
+        "_08199FD8: .4byte gMenuInfoElements_Gfx\n\t"
         ".syntax divided\n\t"
     );
 }

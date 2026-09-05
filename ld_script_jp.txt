@@ -1273,7 +1273,6 @@ mevent_message_print_and_prompt_yes_no = DoMysteryGiftYesNo;
 HandleMysteryGiftListMenu = HandleGiftSelectMenu;
 EraseYesNoWindow = sub_08198D88;
 var_800D_set_xB = SetUsingUnionRoomStartMenu;
-ListMenuLoadStdPalAt = sub_08199F54;
 sub_080195B4 = InitUnionRoomPlayerObjects;
 sub_08019548 = TryReleaseUnionRoomPlayerObjectEvent;
 sub_0801960C = AnimateUnionRoomPlayerDespawn;
@@ -10050,7 +10049,8 @@ SECTIONS {
         src/strings.o(.rodata.strings_menu_selector_arrow3);
         . = ALIGN(4);
         src/menu.o(.rodata.menu_info_icons);
-        data/data_b2d_mid98.o(.rodata.mid98_suffix_after_menu_info_icons);
+        src/graphics.o(.rodata.graphics_menu_info_resources);
+        data/data_b2d_mid98.o(.rodata.mid98_suffix_after_menu_info_resources);
         src/data/text/region_texts113.o(.rodata);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_data);
         src/data/text/region_texts114.o(.rodata);

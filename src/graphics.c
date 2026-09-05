@@ -314,6 +314,16 @@ POKEDEX_SEARCH_MENU_GRAPHICS const u32 gPokedexSearchMenuHoenn_Tilemap[] = INCBI
 
 #undef POKEDEX_SEARCH_MENU_GRAPHICS
 
+#define MENU_INFO_GRAPHICS __attribute__((section(".rodata.graphics_menu_info_resources"), aligned(1)))
+
+// JP menu-info graphics retain their localized icon widths and palette data.
+MENU_INFO_GRAPHICS const u16 gMenuInfoElements1_Pal[] = INCBIN_U16("graphics/interface/menu_info1.gbapal");
+MENU_INFO_GRAPHICS const u16 gMenuInfoElements2_Pal[] = INCBIN_U16("graphics/interface/menu_info2.gbapal");
+MENU_INFO_GRAPHICS const u16 gMenuInfoElements3_Pal[] = INCBIN_U16("graphics/interface/menu_info3.gbapal");
+MENU_INFO_GRAPHICS const u8 gMenuInfoElements_Gfx[] = INCBIN_U8("graphics/interface/menu_info.4bpp");
+
+#undef MENU_INFO_GRAPHICS
+
 #define INTRO_COPYRIGHT_GRAPHICS __attribute__((section(".rodata.intro_copyright_graphics")))
 
 INTRO_COPYRIGHT_GRAPHICS const u16 gIntroCopyright_Pal[16] = INCBIN_U16("graphics/intro/copyright.gbapal");

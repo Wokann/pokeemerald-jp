@@ -294,7 +294,6 @@ extern const u8 sText_TrainerCardInfoPage2[];
 extern const u8 sText_FinishedCheckingPlayersTrainerCard[];
 extern const u8 *const sGladToMeetYouTexts[];
 extern const u8 sText_EggTrade[];
-extern void blit_move_info_icon(u8 windowId, u8 type, u16 x, u16 y);
 extern const struct WindowTemplate sWindowTemplate_TradingBoardHeader;
 extern const u8 sText_PlayerSentBackOK[];
 extern const u8 sText_WirelessLinkEstablished[];
@@ -4481,7 +4480,7 @@ static void TradeBoardPrintItemInfo(u8 windowId, u8 y, struct RfuGameData *gameD
     }
     else
     {
-        blit_move_info_icon(windowId, type + 1, 70, y);
+        BlitMenuInfoIcon(windowId, type + 1, 70, y);
         PrintUnionRoomText(windowId, FONT_NORMAL, gSpeciesNames[species], 120, y, colorIdx);
         ConvertIntToDecimalStringN(levelStr, level, STR_CONV_MODE_LEFT_ALIGN, 3);
         width = GetStringWidth(1, levelStr, 0);
