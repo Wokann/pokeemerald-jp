@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata.mid38_after_battle_ai_tables_before_starter_choose_graphics
+	.section .rodata.mid38_before_starter_choose_resources
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -8,18 +8,6 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-
-	.globl sDefaultTraderNames
-sDefaultTraderNames: @ 0x858F7F4
-	.4byte 0x085CA88C, 0x085CA890, 0x085CA894, 0x085CA898
-
-	.globl sDefaultTraderDecorations
-sDefaultTraderDecorations: @ 0x858F804
-	.byte 0x5B, 0x6B, 0x25, 0x15
-
-	.globl sTraderWindowTemplate
-sTraderWindowTemplate: @ 0x858F808
-	.byte 0x00, 0x01, 0x01, 0x0A, 0x0A, 0x0F, 0x01, 0x00
 
 	.globl gBirchBagGrass_Pal
 gBirchBagGrass_Pal: @ 0x858F810

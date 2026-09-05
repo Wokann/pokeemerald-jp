@@ -15,9 +15,34 @@
 #include "task.h"
 #include "script_menu.h"
 
-extern const u8 *const sDefaultTraderNames[NUM_TRADER_ITEMS];
-extern const u8 sDefaultTraderDecorations[NUM_TRADER_ITEMS];
-extern const struct WindowTemplate sTraderWindowTemplate;
+#define TRADER_DATA __attribute__((section(".rodata.trader_defaults")))
+
+static const u8 *const sDefaultTraderNames[NUM_TRADER_ITEMS] TRADER_DATA =
+{
+    gText_Tristan,
+    gText_Philip,
+    gText_Dennis,
+    gText_Roberto,
+};
+
+static const u8 sDefaultTraderDecorations[NUM_TRADER_ITEMS] TRADER_DATA =
+{
+    DECOR_DUSKULL_DOLL,
+    DECOR_BALL_CUSHION,
+    DECOR_TIRE,
+    DECOR_PRETTY_FLOWERS,
+};
+
+static const struct WindowTemplate sTraderWindowTemplate TRADER_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 1,
+    .tilemapTop = 1,
+    .width = 10,
+    .height = 10,
+    .paletteNum = 15,
+    .baseBlock = 1,
+};
 
 // JP asm name of the 7-arg menu initializer in asm/menu.s (US:
 // InitMenuInUpperLeftCornerNormal takes 3 args and delegates; JP passes
@@ -184,4 +209,3 @@ void TraderMenuGetDecoration(void)
     u8 taskId = CreateTask(Task_HandleGetDecorationMenuInput, 0);
     CreateAvailableDecorationsMenu(taskId);
 }
-
