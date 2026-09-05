@@ -9729,7 +9729,9 @@ SECTIONS {
         src/fldeff_misc.o(.rodata);
         data/data_b2d_mid60.o(.rodata.mid60_tail_prefix);
         src/rotating_gate.o(.rodata.rotating_gate_data);
-        data/data_b2d_mid60.o(.rodata.mid60_tail_suffix);
+        data/data_b2d_mid60.o(.rodata.mid60_tail_before_battle_anim_effects_1_data);
+        src/battle_anim_effects_1.o(.rodata);
+        data/data_b2d_mid60.o(.rodata.mid60_tail_after_battle_anim_effects_1_data);
         src/battle_anim_fire.o(.rodata.battle_anim_fire_data);
         src/battle_anim_electric.o(.rodata.battle_anim_electric_data);
         src/battle_anim_ice.o(.rodata.battle_anim_ice_data);
