@@ -1,6 +1,42 @@
 #include "global.h"
 #include "menu.h"
 
+#define MENU_CORE_DATA __attribute__((section(".rodata.menu_core_data")))
+
+MENU_CORE_DATA static const u8 sTextSpeedFrameDelays[] =
+{
+    [OPTIONS_TEXT_SPEED_SLOW] = 8,
+    [OPTIONS_TEXT_SPEED_MID]  = 4,
+    [OPTIONS_TEXT_SPEED_FAST] = 1,
+};
+
+MENU_CORE_DATA static const struct WindowTemplate sStandardTextBox_WindowTemplates[] =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 4,
+        .tilemapTop = 15,
+        .width = 22,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0x1A8,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+MENU_CORE_DATA static const struct WindowTemplate sYesNo_WindowTemplates =
+{
+    .bg = 0,
+    .tilemapLeft = 21,
+    .tilemapTop = 9,
+    .width = 5,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 0x146,
+};
+
+#undef MENU_CORE_DATA
+
 __attribute__((naked)) void InitStandardTextBoxWindows()
 {
     __asm__(".syntax unified\n\t"
@@ -16,7 +52,7 @@ __attribute__((naked)) void InitStandardTextBoxWindows()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08196DDC: .4byte gUnknown_85D7B28\n\t"
+        "_08196DDC: .4byte sStandardTextBox_WindowTemplates\n\t"
         "_08196DE0: .4byte sStartMenuWindowId\n\t"
         "_08196DE4: .4byte sMapNamePopupWindowId\n\t"
         ".syntax divided\n\t"
@@ -1297,7 +1333,7 @@ __attribute__((naked)) void DisplayYesNoMenuDefaultYes()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08197738: .4byte gUnknown_85D7B38\n\t"
+        "_08197738: .4byte sYesNo_WindowTemplates\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1326,7 +1362,7 @@ __attribute__((naked)) void DisplayYesNoMenuWithDefault(u8 initialCursorPos)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08197764: .4byte gUnknown_85D7B38\n\t"
+        "_08197764: .4byte sYesNo_WindowTemplates\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1388,7 +1424,7 @@ __attribute__((naked)) u8 GetPlayerTextSpeedDelay()
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081977C0: .4byte gSaveBlock2Ptr\n\t"
-        "_081977C4: .4byte gUnknown_85D7B24\n\t"
+        "_081977C4: .4byte sTextSpeedFrameDelays\n\t"
         ".syntax divided\n\t"
     );
 }

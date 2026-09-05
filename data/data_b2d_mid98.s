@@ -23,17 +23,7 @@ gUnknown_85CD19F: @ 0x85CD19F
 gStandardMenuPalette: @ 0x85D7B04
 	.incbin "graphics/misc/gStandardMenuPalette.bin"
 
-	.globl gUnknown_85D7B24
-gUnknown_85D7B24: @ 0x85D7B24
-	.incbin "baserom_jp.gba", 0x5d7b24, 0x4
-
-	.globl gUnknown_85D7B28
-gUnknown_85D7B28: @ 0x85D7B28
-	.incbin "baserom_jp.gba", 0x5d7b28, 0x10
-
-	.globl gUnknown_85D7B38
-gUnknown_85D7B38: @ 0x85D7B38
-	.incbin "baserom_jp.gba", 0x5d7b38, 0x8
+	.section .rodata.mid98_suffix_after_menu_core_data
 
 	.globl gUnknown_85D7B40
 gUnknown_85D7B40: @ 0x85D7B40
