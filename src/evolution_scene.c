@@ -40,13 +40,13 @@ struct EvoInfo
 extern struct EvoInfo *gUnknown_203A84C;
 extern u16 gUnknown_20373F4[];
 extern s16 gUnknown_3005B68[];
-extern const u32 gUnknown_8593CA0[];
-extern const u32 gUnknown_8594398[];
-extern const u32 gUnknown_859487C[];
-extern const u16 gUnknown_8594D50[];
-extern const u16 gUnknown_85953F0[];
-extern const u8 gUnknown_8595475[];
-extern const u8 gUnknown_8595485[];
+extern const u32 sBgAnim_Gfx[];
+extern const u32 sBgAnim_Inner_Tilemap[];
+extern const u32 sBgAnim_Outer_Tilemap[];
+extern const u16 sBgAnim_Intro_Pal[];
+extern const u16 sBgAnim_Pal[];
+extern const u8 sBgAnim_PaletteControl[][4];
+extern const u8 sBgAnim_PalIndexes[][16];
 extern struct Evolution gEvolutionTable[][EVOS_PER_MON];
 extern u8 *StringCopy10(u8 *dest, const u8 *src);
 extern void sub_0813DAB4(void);
@@ -62,15 +62,8 @@ extern void sub_0813FEB4(void);
 extern void sub_0813FFB0(u8 taskId);
 extern void sub_0814023C(void);
 
-#define sBgAnim_Pal gUnknown_85953F0
 #define sEvoStructPtr gUnknown_203A84C
-#define sBgAnim_PaletteControl ((const u8 (*)[4])gUnknown_8595475)
-#define sBgAnim_PalIndexes ((const u8 (*)[16])gUnknown_8595485)
 #define sBgAnimPal gUnknown_203A850
-#define sBgAnim_Gfx gUnknown_8593CA0
-#define sBgAnim_Inner_Tilemap gUnknown_8594398
-#define sBgAnim_Outer_Tilemap gUnknown_859487C
-#define sBgAnim_Intro_Pal gUnknown_8594D50
 
 void BeginEvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u8 partyId)
 {
@@ -3242,7 +3235,7 @@ __attribute__((naked)) void sub_0813FEB4(void)
         "	b _0813FF52\n\t"
         "	.align 2, 0\n\t"
         "_0813FF34: .4byte gUnknown_3005B68\n\t"
-        "_0813FF38: .4byte gUnknown_8595475\n\t"
+        "_0813FF38: .4byte sBgAnim_PaletteControl\n\t"
         "_0813FF3C:\n\t"
         "	ldr r0, _0813FF68\n\t"
         "	lsls r1, r1, #5\n\t"

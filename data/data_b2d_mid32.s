@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata.data_b2d_mid32_post_pokedex_area_screen, "a", %progbits
+	.section .rodata.data_b2d_mid32_evolution_scene_interleave, "a", %progbits
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -9,37 +9,14 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_8593CA0
-gUnknown_8593CA0: @ 0x8593CA0
-	.incbin "baserom_jp.gba", 0x593ca0, 0x6f8
-
-	.globl gUnknown_8594398
-gUnknown_8594398: @ 0x8594398
-	.incbin "baserom_jp.gba", 0x594398, 0x4e4
-
-	.globl gUnknown_859487C
-gUnknown_859487C: @ 0x859487C
-	.incbin "baserom_jp.gba", 0x59487c, 0x4d4
-
-	.globl gUnknown_8594D50
-gUnknown_8594D50: @ 0x8594D50
-	.incbin "baserom_jp.gba", 0x594d50, 0x6a0
-
-	.globl gUnknown_85953F0
-gUnknown_85953F0: @ 0x85953F0
-	.incbin "baserom_jp.gba", 0x5953f0, 0x40
-
 	.globl gUnknown_8595430
 gUnknown_8595430: @ 0x8595430
 	.incbin "baserom_jp.gba", 0x595430, 0x45
 
-	.globl gUnknown_8595475
-gUnknown_8595475: @ 0x8595475
-	.incbin "baserom_jp.gba", 0x595475, 0x10
-
-	.globl gUnknown_8595485
-gUnknown_8595485: @ 0x8595485
-	.incbin "baserom_jp.gba", 0x595485, 0x323
+	.section .rodata.data_b2d_mid32_post_evolution_scene_palette_tables, "a", %progbits
+	@ Unassigned alignment bytes between the evolution palette index table
+	@ and the next physical data owner.
+	.incbin "baserom_jp.gba", 0x5957a5, 0x3
 
 	.globl gUnknown_85957A8
 gUnknown_85957A8: @ 0x85957A8
