@@ -9727,7 +9727,9 @@ SECTIONS {
         src/data/text/region_texts60.o(.rodata);
         data/data_b2d_mid60.o(.rodata);
         src/fldeff_misc.o(.rodata);
-        data/data_b2d_mid60.o(.rodata.mid60_tail);
+        data/data_b2d_mid60.o(.rodata.mid60_tail_prefix);
+        src/rotating_gate.o(.rodata.rotating_gate_data);
+        data/data_b2d_mid60.o(.rodata.mid60_tail_suffix);
         src/battle_anim_fire.o(.rodata.battle_anim_fire_data);
         src/battle_anim_electric.o(.rodata.battle_anim_electric_data);
         src/battle_anim_ice.o(.rodata.battle_anim_ice_data);

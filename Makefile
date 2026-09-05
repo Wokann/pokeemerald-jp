@@ -1113,6 +1113,9 @@ graphics/birch_speech/unused_beauty.4bpp: graphics/birch_speech/unused_beauty.pn
 %.4bpp: %.png | tools
 	$(GFX) $< $@
 
+graphics/rotating_gates/%.png.4bpp: graphics/rotating_gates/%.png | tools
+	$(GFX) $< $@
+
 graphics/battle_frontier/factory_screen/%.png.4bpp: graphics/battle_frontier/factory_screen/%.png | tools
 	$(GFX) $< $@
 
@@ -2067,6 +2070,12 @@ $(C_BUILDDIR)/tileset_anims.o: src/tileset_anims.c
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/tileset_anims.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/tileset_anims.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/tileset_anims.gen.s
+
+$(C_BUILDDIR)/rotating_gate.o: src/rotating_gate.c graphics/rotating_gates/l1.png.4bpp graphics/rotating_gates/l2.png.4bpp graphics/rotating_gates/l3.png.4bpp graphics/rotating_gates/l4.png.4bpp graphics/rotating_gates/t1.png.4bpp graphics/rotating_gates/t2.png.4bpp graphics/rotating_gates/t3.png.4bpp graphics/rotating_gates/t4.png.4bpp
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/rotating_gate.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/rotating_gate.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/rotating_gate.gen.s
 
 $(C_BUILDDIR)/%.o: src/%.c
 	@mkdir -p $(dir $@)

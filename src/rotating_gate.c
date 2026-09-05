@@ -18,6 +18,8 @@
 #define GATE_ROT_ACW(arm, longArm) GATE_ROT(ROTATE_ANTICLOCKWISE, arm, longArm)
 #define GATE_ROT_NONE 255
 
+#define ROTATING_GATE_DATA __attribute__((section(".rodata.rotating_gate_data")))
+
 static void SpriteCallback_RotatingGate(struct Sprite *sprite);
 static u8 RotatingGate_CreateGate(u8 gateId, s16 deltaX, s16 deltaY);
 static void RotatingGate_HideGatesOutsideViewport(struct Sprite *sprite);
@@ -77,20 +79,357 @@ struct RotatingGatePuzzle
     u8 orientation;
 };
 
-// JP ROM data (the puzzle configs, graphics table, sprite templates,
-// rotation-info/arm tables stay in the ROM data region)
-extern const struct RotatingGatePuzzle sRotatingGate_FortreePuzzleConfig[8];
-extern const struct RotatingGatePuzzle sRotatingGate_TrickHousePuzzleConfig[11];
-extern const struct SpriteSheet sRotatingGatesGraphicsTable[];
-extern const struct SpriteTemplate sSpriteTemplate_RotatingGateLarge;
-extern const struct SpriteTemplate sSpriteTemplate_RotatingGateRegular;
-extern const u8 sRotatingGate_RotationInfoNorth[4 * 4];
-extern const u8 sRotatingGate_RotationInfoSouth[4 * 4];
-extern const u8 sRotatingGate_RotationInfoWest[4 * 4];
-extern const u8 sRotatingGate_RotationInfoEast[4 * 4];
-extern const struct Coords8 sRotatingGate_ArmPositionsClockwiseRotation[];
-extern const struct Coords8 sRotatingGate_ArmPositionsAntiClockwiseRotation[];
-extern const u8 sRotatingGate_ArmLayout[][4 * 2];
+// Fortree
+static const struct RotatingGatePuzzle sRotatingGate_FortreePuzzleConfig[] ROTATING_GATE_DATA =
+{
+    { 6,  7, GATE_SHAPE_T2, GATE_ORIENTATION_90},
+    { 9, 15, GATE_SHAPE_T2, GATE_ORIENTATION_180},
+    { 3, 19, GATE_SHAPE_T2, GATE_ORIENTATION_90},
+    { 2,  6, GATE_SHAPE_T1, GATE_ORIENTATION_90},
+    { 9, 12, GATE_SHAPE_T1, GATE_ORIENTATION_0},
+    { 6, 23, GATE_SHAPE_T1, GATE_ORIENTATION_0},
+    {12, 22, GATE_SHAPE_T1, GATE_ORIENTATION_0},
+    { 6,  3, GATE_SHAPE_L4, GATE_ORIENTATION_180},
+};
+
+// Trick House
+static const struct RotatingGatePuzzle sRotatingGate_TrickHousePuzzleConfig[] ROTATING_GATE_DATA =
+{
+    {14,  5, GATE_SHAPE_T1, GATE_ORIENTATION_90},
+    {10,  6, GATE_SHAPE_L2, GATE_ORIENTATION_180},
+    { 6,  6, GATE_SHAPE_L4, GATE_ORIENTATION_90},
+    {14,  8, GATE_SHAPE_T1, GATE_ORIENTATION_90},
+    { 3, 10, GATE_SHAPE_L3, GATE_ORIENTATION_270},
+    { 9, 14, GATE_SHAPE_L1, GATE_ORIENTATION_90},
+    { 3, 15, GATE_SHAPE_T3, GATE_ORIENTATION_0},
+    { 2, 17, GATE_SHAPE_L2, GATE_ORIENTATION_180},
+    {12, 18, GATE_SHAPE_T3, GATE_ORIENTATION_270},
+    { 5, 18, GATE_SHAPE_L4, GATE_ORIENTATION_90},
+    {10, 19, GATE_SHAPE_L3, GATE_ORIENTATION_180},
+};
+
+#define MAX_GATES max(ARRAY_COUNT(sRotatingGate_FortreePuzzleConfig), \
+                      ARRAY_COUNT(sRotatingGate_TrickHousePuzzleConfig))
+
+STATIC_ASSERT(MAX_GATES <= (2 * NUM_TEMP_VARS), TooManyRotatingGates);
+
+static const u8 sRotatingGateTiles_1[] ROTATING_GATE_DATA = INCGFX_U8("graphics/rotating_gates/l1.png", ".4bpp");
+static const u8 sRotatingGateTiles_2[] ROTATING_GATE_DATA = INCGFX_U8("graphics/rotating_gates/l2.png", ".4bpp");
+static const u8 sRotatingGateTiles_3[] ROTATING_GATE_DATA = INCGFX_U8("graphics/rotating_gates/l3.png", ".4bpp");
+static const u8 sRotatingGateTiles_4[] ROTATING_GATE_DATA = INCGFX_U8("graphics/rotating_gates/l4.png", ".4bpp");
+static const u8 sRotatingGateTiles_5[] ROTATING_GATE_DATA = INCGFX_U8("graphics/rotating_gates/t1.png", ".4bpp");
+static const u8 sRotatingGateTiles_6[] ROTATING_GATE_DATA = INCGFX_U8("graphics/rotating_gates/t2.png", ".4bpp");
+static const u8 sRotatingGateTiles_7[] ROTATING_GATE_DATA = INCGFX_U8("graphics/rotating_gates/t3.png", ".4bpp");
+static const u8 sRotatingGateTiles_8[] ROTATING_GATE_DATA = INCGFX_U8("graphics/rotating_gates/t4.png", ".4bpp");
+
+static const struct OamData sOamData_RotatingGateLarge ROTATING_GATE_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_NORMAL,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 2,
+    .affineParam = 0,
+};
+
+static const struct OamData sOamData_RotatingGateRegular ROTATING_GATE_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_NORMAL,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 2,
+    .affineParam = 0,
+};
+
+static const struct SpriteSheet sRotatingGatesGraphicsTable[] ROTATING_GATE_DATA =
+{
+    {sRotatingGateTiles_1, sizeof(sRotatingGateTiles_1), ROTATING_GATE_TILE_TAG + GATE_SHAPE_L1},
+    {sRotatingGateTiles_2, sizeof(sRotatingGateTiles_2), ROTATING_GATE_TILE_TAG + GATE_SHAPE_L2},
+    {sRotatingGateTiles_3, sizeof(sRotatingGateTiles_3), ROTATING_GATE_TILE_TAG + GATE_SHAPE_L3},
+    {sRotatingGateTiles_4, sizeof(sRotatingGateTiles_4), ROTATING_GATE_TILE_TAG + GATE_SHAPE_L4},
+    {sRotatingGateTiles_5, sizeof(sRotatingGateTiles_5), ROTATING_GATE_TILE_TAG + GATE_SHAPE_T1},
+    {sRotatingGateTiles_6, sizeof(sRotatingGateTiles_6), ROTATING_GATE_TILE_TAG + GATE_SHAPE_T2},
+    {sRotatingGateTiles_7, sizeof(sRotatingGateTiles_7), ROTATING_GATE_TILE_TAG + GATE_SHAPE_T3},
+    {sRotatingGateTiles_8, sizeof(sRotatingGateTiles_8), ROTATING_GATE_TILE_TAG + GATE_SHAPE_T4},
+    {NULL},
+};
+
+static const union AnimCmd sSpriteAnim_RotatingGateLarge[] ROTATING_GATE_DATA =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sSpriteAnim_RotatingGateRegular[] ROTATING_GATE_DATA =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sSpriteAnimTable_RotatingGateLarge[] ROTATING_GATE_DATA =
+{
+    sSpriteAnim_RotatingGateLarge,
+};
+
+static const union AnimCmd *const sSpriteAnimTable_RotatingGateRegular[] ROTATING_GATE_DATA =
+{
+    sSpriteAnim_RotatingGateRegular,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_Rotated0[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_Rotated90[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, -64, 0),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_Rotated180[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, -128, 0),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_Rotated270[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 64, 0),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingClockwise0to90[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -4, 16),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingClockwise90to180[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, -64, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -4, 16),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingClockwise180to270[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, -128, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -4, 16),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingClockwise270to360[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 64, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -4, 16),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingAnticlockwise360to270[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 4, 16),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingAnticlockwise270to180[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 64, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 4, 16),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingAnticlockwise180to90[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, -128, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 4, 16),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingAnticlockwise90to0[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, -64, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 4, 16),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingClockwise0to90Faster[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -8, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingClockwise90to180Faster[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, -64, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -8, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingClockwise180to270Faster[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, -128, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -8, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingClockwise270to360Faster[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 64, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, -8, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingAnticlockwise360to270Faster[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 8, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingAnticlockwise270to180Faster[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 64, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 8, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingAnticlockwise180to90Faster[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, -128, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 8, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_RotatingAnticlockwise90to0Faster[] ROTATING_GATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, -64, 0),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 8, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sSpriteAffineAnimTable_RotatingGate[] ROTATING_GATE_DATA =
+{
+    sSpriteAffineAnim_Rotated0,
+    sSpriteAffineAnim_Rotated90,
+    sSpriteAffineAnim_Rotated180,
+    sSpriteAffineAnim_Rotated270,
+    sSpriteAffineAnim_RotatingAnticlockwise360to270,
+    sSpriteAffineAnim_RotatingAnticlockwise90to0,
+    sSpriteAffineAnim_RotatingAnticlockwise180to90,
+    sSpriteAffineAnim_RotatingAnticlockwise270to180,
+    sSpriteAffineAnim_RotatingClockwise0to90,
+    sSpriteAffineAnim_RotatingClockwise90to180,
+    sSpriteAffineAnim_RotatingClockwise180to270,
+    sSpriteAffineAnim_RotatingClockwise270to360,
+    sSpriteAffineAnim_RotatingAnticlockwise360to270Faster,
+    sSpriteAffineAnim_RotatingAnticlockwise90to0Faster,
+    sSpriteAffineAnim_RotatingAnticlockwise180to90Faster,
+    sSpriteAffineAnim_RotatingAnticlockwise270to180Faster,
+    sSpriteAffineAnim_RotatingClockwise0to90Faster,
+    sSpriteAffineAnim_RotatingClockwise90to180Faster,
+    sSpriteAffineAnim_RotatingClockwise180to270Faster,
+    sSpriteAffineAnim_RotatingClockwise270to360Faster,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_RotatingGateLarge ROTATING_GATE_DATA =
+{
+    .tileTag = ROTATING_GATE_TILE_TAG,
+    .paletteTag = TAG_NONE,
+    .oam = &sOamData_RotatingGateLarge,
+    .anims = sSpriteAnimTable_RotatingGateLarge,
+    .images = NULL,
+    .affineAnims = sSpriteAffineAnimTable_RotatingGate,
+    .callback = SpriteCallback_RotatingGate,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_RotatingGateRegular ROTATING_GATE_DATA =
+{
+    .tileTag = ROTATING_GATE_TILE_TAG,
+    .paletteTag = TAG_NONE,
+    .oam = &sOamData_RotatingGateRegular,
+    .anims = sSpriteAnimTable_RotatingGateRegular,
+    .images = NULL,
+    .affineAnims = sSpriteAffineAnimTable_RotatingGate,
+    .callback = SpriteCallback_RotatingGate,
+};
+
+static const u8 sRotatingGate_RotationInfoNorth[4 * 4] ROTATING_GATE_DATA =
+{
+    GATE_ROT_NONE,                 GATE_ROT_NONE,                 GATE_ROT_NONE,                  GATE_ROT_NONE,
+    GATE_ROT_CW(GATE_ARM_WEST, 1), GATE_ROT_CW(GATE_ARM_WEST, 0), GATE_ROT_ACW(GATE_ARM_EAST, 0), GATE_ROT_ACW(GATE_ARM_EAST, 1),
+    GATE_ROT_NONE,                 GATE_ROT_NONE,                 GATE_ROT_NONE,                  GATE_ROT_NONE,
+    GATE_ROT_NONE,                 GATE_ROT_NONE,                 GATE_ROT_NONE,                  GATE_ROT_NONE,
+};
+
+static const u8 sRotatingGate_RotationInfoSouth[4 * 4] ROTATING_GATE_DATA =
+{
+    GATE_ROT_NONE,                  GATE_ROT_NONE,                  GATE_ROT_NONE,                 GATE_ROT_NONE,
+    GATE_ROT_NONE,                  GATE_ROT_NONE,                  GATE_ROT_NONE,                 GATE_ROT_NONE,
+    GATE_ROT_ACW(GATE_ARM_WEST, 1), GATE_ROT_ACW(GATE_ARM_WEST, 0), GATE_ROT_CW(GATE_ARM_EAST, 0), GATE_ROT_CW(GATE_ARM_EAST, 1),
+    GATE_ROT_NONE,                  GATE_ROT_NONE,                  GATE_ROT_NONE,                 GATE_ROT_NONE,
+};
+
+static const u8 sRotatingGate_RotationInfoWest[4 * 4] ROTATING_GATE_DATA =
+{
+    GATE_ROT_NONE, GATE_ROT_ACW(GATE_ARM_NORTH, 1), GATE_ROT_NONE, GATE_ROT_NONE,
+    GATE_ROT_NONE, GATE_ROT_ACW(GATE_ARM_NORTH, 0), GATE_ROT_NONE, GATE_ROT_NONE,
+    GATE_ROT_NONE, GATE_ROT_CW(GATE_ARM_SOUTH, 0),  GATE_ROT_NONE, GATE_ROT_NONE,
+    GATE_ROT_NONE, GATE_ROT_CW(GATE_ARM_SOUTH, 1),  GATE_ROT_NONE, GATE_ROT_NONE,
+};
+
+static const u8 sRotatingGate_RotationInfoEast[4 * 4] ROTATING_GATE_DATA =
+{
+    GATE_ROT_NONE, GATE_ROT_NONE, GATE_ROT_CW(GATE_ARM_NORTH, 1),  GATE_ROT_NONE,
+    GATE_ROT_NONE, GATE_ROT_NONE, GATE_ROT_CW(GATE_ARM_NORTH, 0),  GATE_ROT_NONE,
+    GATE_ROT_NONE, GATE_ROT_NONE, GATE_ROT_ACW(GATE_ARM_SOUTH, 0), GATE_ROT_NONE,
+    GATE_ROT_NONE, GATE_ROT_NONE, GATE_ROT_ACW(GATE_ARM_SOUTH, 1), GATE_ROT_NONE,
+};
+
+static const struct Coords8 sRotatingGate_ArmPositionsClockwiseRotation[] ROTATING_GATE_DATA =
+{
+    { 0, -1 }, { 1, -2 }, { 0, 0 }, { 1, 0 }, { -1, 0 }, { -1, 1 }, { -1, -1 }, { -2, -1 },
+};
+
+static const struct Coords8 sRotatingGate_ArmPositionsAntiClockwiseRotation[] ROTATING_GATE_DATA =
+{
+    { -1, -1 }, { -1, -2 }, { 0, -1 }, { 1, -1 }, { 0, 0 }, { 0, 1 }, { -1, 0 }, { -2, 0 },
+};
+
+static const u8 sRotatingGate_ArmLayout[][4 * 2] ROTATING_GATE_DATA =
+{
+    { 1, 0, 1, 0, 0, 0, 0, 0 },
+    { 1, 1, 1, 0, 0, 0, 0, 0 },
+    { 1, 0, 1, 1, 0, 0, 0, 0 },
+    { 1, 1, 1, 1, 0, 0, 0, 0 },
+    { 1, 0, 1, 0, 1, 0, 0, 0 },
+    { 1, 1, 1, 0, 1, 0, 0, 0 },
+    { 1, 0, 1, 1, 1, 0, 0, 0 },
+    { 1, 0, 1, 0, 1, 1, 0, 0 },
+    { 1, 1, 1, 1, 1, 0, 0, 0 },
+    { 1, 1, 1, 0, 1, 1, 0, 0 },
+    { 1, 0, 1, 1, 1, 1, 0, 0 },
+    { 1, 1, 1, 1, 1, 1, 0, 0 },
+};
 
 extern EWRAM_DATA u8 sRotatingGate_GateSpriteIds[ROTATING_GATE_PUZZLE_MAX];
 extern EWRAM_DATA const struct RotatingGatePuzzle *sRotatingGate_PuzzleConfig;
