@@ -39,6 +39,7 @@ extern void GetEreaderTrainerName(u8 *dest);
 
 #define FIELD_SPECIALS_DATA __attribute__((section(".rodata.field_specials_data")))
 #define FIELD_SPECIALS_DATA_EARLY __attribute__((section(".rodata.field_specials_data_early")))
+#define FIELD_SPECIALS_DATA_SLOT_MACHINE_SELECTORS __attribute__((section(".rodata.field_specials_slot_machine_selectors")))
 
 void Special_ShowDiploma(void)
 {
@@ -2419,6 +2420,22 @@ void BufferEReaderTrainerName(void)
 {
     GetEreaderTrainerName(gStringVar1);
 }
+
+// Kept externally visible while GetSlotMachineId remains naked assembly.
+FIELD_SPECIALS_DATA_SLOT_MACHINE_SELECTORS const u8 sSlotMachineRandomSeeds[] =
+{
+    12, 2, 4, 5, 1, 8, 7, 11, 3, 10, 9, 6,
+};
+
+FIELD_SPECIALS_DATA_SLOT_MACHINE_SELECTORS const u8 sSlotMachineIds[] =
+{
+    0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5,
+};
+
+FIELD_SPECIALS_DATA_SLOT_MACHINE_SELECTORS const u8 sSlotMachineServiceDayIds[] =
+{
+    3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5,
+};
 
 __attribute__((naked)) void GetSlotMachineId(void)
 {

@@ -41,17 +41,7 @@ gUnknown_85925C4: @ 0x85925C4
 gUnknown_85925CA: @ 0x85925CA
 	.incbin "baserom_jp.gba", 0x5925ca, 0xa
 
-	.globl sSlotMachineRandomSeeds
-sSlotMachineRandomSeeds: @ 0x85925D4
-	.incbin "baserom_jp.gba", 0x5925d4, 0xc
-
-	.globl sSlotMachineIds
-sSlotMachineIds: @ 0x85925E0
-	.incbin "baserom_jp.gba", 0x5925e0, 0xc
-
-	.globl sSlotMachineServiceDayIds
-sSlotMachineServiceDayIds: @ 0x85925EC
-	.incbin "baserom_jp.gba", 0x5925ec, 0xc
+	.section .rodata.data_b2d_mid33_field_specials_raw_suffix, "a", %progbits
 
 	.globl gUnknown_85925F8
 gUnknown_85925F8: @ 0x85925F8
