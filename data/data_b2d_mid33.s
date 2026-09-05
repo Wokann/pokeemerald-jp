@@ -18,13 +18,3 @@ gUnknown_85921F4: @ 0x85921F4
 	.globl gUnknown_85921FC
 gUnknown_85921FC: @ 0x85921FC
 	.incbin "baserom_jp.gba", 0x5921fc, 0x18
-
-	.section .rodata.data_b2d_mid33_field_specials_raw_suffix, "a", %progbits
-
-	.globl gUnknown_85925F8
-gUnknown_85925F8: @ 0x85925F8
-	.incbin "baserom_jp.gba", 0x5925f8, 0xc
-
-	.globl gUnknown_8592604
-gUnknown_8592604: @ 0x8592604
-	.incbin "baserom_jp.gba", 0x592604, 0x4

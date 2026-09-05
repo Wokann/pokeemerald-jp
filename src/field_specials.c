@@ -43,6 +43,7 @@ extern void GetEreaderTrainerName(u8 *dest);
 #define FIELD_SPECIALS_DATA_LINK_PARTNER __attribute__((section(".rodata.field_specials_link_partner_data")))
 #define FIELD_SPECIALS_DATA_MAUVILLE_GYM __attribute__((section(".rodata.field_specials_mauville_gym_data")))
 #define FIELD_SPECIALS_DATA_PETALBURG_GYM __attribute__((section(".rodata.field_specials_petalburg_gym_data")))
+#define FIELD_SPECIALS_DATA_MYSTERY_GIFT_ASSERT __attribute__((section(".rodata.field_specials_mystery_gift_assert_data")))
 
 #define ELEVATOR_WINDOW_WIDTH  3
 #define ELEVATOR_WINDOW_HEIGHT 3
@@ -3010,6 +3011,10 @@ __attribute__((naked)) void BufferLottoTicketNumber(void)
     );
 }
 
+// JP-specific source-location diagnostics retained by GetMysteryGiftCardStat.
+FIELD_SPECIALS_DATA_MYSTERY_GIFT_ASSERT const char sGetMysteryGiftCardStatAssertFile[12] = "scr_tool.c";
+FIELD_SPECIALS_DATA_MYSTERY_GIFT_ASSERT const char sGetMysteryGiftCardStatAssertExpression[4] = "0";
+
 __attribute__((naked)) u16 GetMysteryGiftCardStat(void)
 {
     __asm__(".syntax unified\n\t"
@@ -3063,9 +3068,9 @@ __attribute__((naked)) u16 GetMysteryGiftCardStat(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0813992C: .4byte gUnknown_85925F8\n\t"
+        "_0813992C: .4byte sGetMysteryGiftCardStatAssertFile\n\t"
         "_08139930: .4byte 0x00000B14\n\t"
-        "_08139934: .4byte gUnknown_8592604\n\t"
+        "_08139934: .4byte sGetMysteryGiftCardStatAssertExpression\n\t"
         ".syntax divided\n\t"
     );
 }

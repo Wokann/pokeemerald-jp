@@ -9832,7 +9832,7 @@ SECTIONS {
         src/field_specials.o(.rodata.field_specials_mauville_gym_data);
         src/field_specials.o(.rodata.field_specials_petalburg_gym_data);
         src/field_specials.o(.rodata.field_specials_slot_machine_selectors);
-        data/data_b2d_mid33.o(.rodata.data_b2d_mid33_field_specials_raw_suffix);
+        src/field_specials.o(.rodata.field_specials_mystery_gift_assert_data);
         src/field_specials.o(.rodata.field_specials_elevator_data);
         src/data/text/region_texts63.o(.rodata);
         src/field_specials.o(.rodata.field_specials_data_early);
