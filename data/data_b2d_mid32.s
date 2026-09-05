@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata.data_b2d_mid32_pre_cry_prefix, "a", %progbits
+	.section .rodata.data_b2d_mid32_post_pokedex_area_screen, "a", %progbits
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -8,40 +8,6 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-
-	.globl gUnknown_859381C
-gUnknown_859381C: @ 0x859381C
-	.incbin "baserom_jp.gba", 0x59381c, 0x20
-
-	.globl gUnknown_859383C
-gUnknown_859383C: @ 0x859383C
-	.incbin "baserom_jp.gba", 0x59383c, 0x134
-
-	.section .rodata.data_b2d_mid32_pre_cry_suffix, "a", %progbits
-
-	.globl gUnknown_85939A4
-gUnknown_85939A4: @ 0x85939A4
-	.incbin "baserom_jp.gba", 0x5939a4, 0x8
-
-	.globl gUnknown_85939AC
-gUnknown_85939AC: @ 0x85939AC
-	.incbin "baserom_jp.gba", 0x5939ac, 0x10
-
-	.globl gUnknown_85939BC
-gUnknown_85939BC: @ 0x85939BC
-	.incbin "baserom_jp.gba", 0x5939bc, 0xb8
-
-	.globl gUnknown_8593A74
-gUnknown_8593A74: @ 0x8593A74
-	.incbin "baserom_jp.gba", 0x593a74, 0x10
-
-	.globl gUnknown_8593A84
-gUnknown_8593A84: @ 0x8593A84
-	.incbin "baserom_jp.gba", 0x593a84, 0x38
-
-	.globl gUnknown_8593ABC
-gUnknown_8593ABC: @ 0x8593ABC
-	.incbin "baserom_jp.gba", 0x593abc, 0x1e4
 
 	.globl gUnknown_8593CA0
 gUnknown_8593CA0: @ 0x8593CA0

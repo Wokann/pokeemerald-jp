@@ -1,6 +1,7 @@
 #include "global.h"
 #include "bg.h"
 #include "event_data.h"
+#include "graphics.h"
 #include "gpu_regs.h"
 #include "main.h"
 #include "malloc.h"
@@ -87,14 +88,13 @@ struct PokedexAreaScreen
 
 extern struct PokedexAreaScreen *gUnknown_203A848;
 extern u32 gUnknown_20374F4[];
-extern const u32 gUnknown_859381C[];
-extern const u32 gUnknown_859383C[];
-extern const struct SpriteSheet gUnknown_85939A4;
-extern const struct SpritePalette gUnknown_85939AC;
-extern const struct SpriteTemplate gUnknown_85939BC;
-extern const struct SpritePalette gUnknown_8593A74;
-extern const struct SpriteTemplate gUnknown_8593A84;
-extern const u32 gUnknown_8593ABC[];
+extern const u32 sAreaGlow_Pal[];
+extern const u32 sAreaGlow_Gfx[];
+extern const struct SpriteSheet sAreaMarkerSpriteSheet;
+extern const struct SpritePalette sAreaMarkerSpritePalette;
+extern const struct SpriteTemplate sAreaMarkerSpriteTemplate;
+extern const struct SpritePalette sAreaUnknownSpritePalette;
+extern const struct SpriteTemplate sAreaUnknownSpriteTemplate;
 extern s16 gUnknown_30011FC;
 extern s16 gUnknown_30011FE;
 extern s16 gUnknown_3001200;
@@ -185,13 +185,13 @@ bool8 DrawAreaGlow(void)
         BuildAreaGlowTilemap();
         break;
     case 2:
-        DecompressAndCopyTileDataToVram(2, gUnknown_859383C, 0, 0, 0);
+        DecompressAndCopyTileDataToVram(2, sAreaGlow_Gfx, 0, 0, 0);
         LoadBgTilemap(2, gUnknown_203A848->areaGlowTilemap, sizeof(gUnknown_203A848->areaGlowTilemap), 0);
         break;
     case 3:
         if (!FreeTempTileDataBuffersIfPossible())
         {
-            CpuSet(gUnknown_859381C, gUnknown_20374F4, 0x04000008);
+            CpuSet(sAreaGlow_Pal, gUnknown_20374F4, 0x04000008);
             gUnknown_203A848->drawAreaGlowState++;
         }
         return TRUE;
@@ -1094,8 +1094,8 @@ void CreateAreaMarkerSprites(void)
 {
     u8 spriteId;
 
-    LoadSpriteSheet(&gUnknown_85939A4);
-    LoadSpritePalette(&gUnknown_85939AC);
+    LoadSpriteSheet(&sAreaMarkerSpriteSheet);
+    LoadSpritePalette(&sAreaMarkerSpritePalette);
     gUnknown_3001204 = 0;
     for (gUnknown_3001200 = 0; gUnknown_3001200 < gUnknown_203A848->numSpecialAreas; gUnknown_3001200++)
     {
@@ -1104,7 +1104,7 @@ void CreateAreaMarkerSprites(void)
         gUnknown_30011FE = 8 * gUnknown_857CD6C[gUnknown_3001202].y + 28;
         gUnknown_30011FC += 4 * (gUnknown_857CD6C[gUnknown_3001202].width - 1);
         gUnknown_30011FE += 4 * (gUnknown_857CD6C[gUnknown_3001202].height - 1);
-        spriteId = CreateSprite(&gUnknown_85939BC, gUnknown_30011FC, gUnknown_30011FE, 0);
+        spriteId = CreateSprite(&sAreaMarkerSpriteTemplate, gUnknown_30011FC, gUnknown_30011FE, 0);
         if (spriteId != MAX_SPRITES)
         {
             gSprites[spriteId].invisible = TRUE;
@@ -1142,9 +1142,9 @@ void LoadAreaUnknownGraphics(void)
         .tag = TAG_AREA_UNKNOWN,
     };
 
-    LZ77UnCompWram(gUnknown_8593ABC, gUnknown_203A848->areaUnknownGraphicsBuffer);
+    LZ77UnCompWram(gPokedexAreaScreenAreaUnknown_Gfx, gUnknown_203A848->areaUnknownGraphicsBuffer);
     LoadSpriteSheet(&spriteSheet);
-    LoadSpritePalette(&gUnknown_8593A74);
+    LoadSpritePalette(&sAreaUnknownSpritePalette);
 }
 
 void CreateAreaUnknownSprites(void)
@@ -1160,7 +1160,7 @@ void CreateAreaUnknownSprites(void)
     {
         for (i = 0; i < 3; i++)
         {
-            u8 spriteId = CreateSprite(&gUnknown_8593A84, i * 32 + 160, 140, 0);
+            u8 spriteId = CreateSprite(&sAreaUnknownSpriteTemplate, i * 32 + 160, 140, 0);
             if (spriteId != MAX_SPRITES)
             {
                 gSprites[spriteId].oam.tileNum += i * 16;
