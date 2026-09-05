@@ -1,5 +1,4 @@
 .include "sound/MPlayDef.s"
-	.section .rodata.mid38_before_starter_choose_resources
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -8,22 +7,6 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-
-	.globl gBirchBagGrass_Pal
-gBirchBagGrass_Pal: @ 0x858F810
-	.incbin "graphics/misc/gBirchBagGrass_Pal.bin"
-
-	.globl gUnknown_858F812
-gUnknown_858F812: @ 0x858F812
-	.incbin "baserom_jp.gba", 0x58f812, 0x7e
-
-	.globl gBirchBagTilemap
-gBirchBagTilemap: @ 0x858F890
-	.incbin "graphics/misc/gBirchBagTilemap.bin"
-
-	.globl gBirchGrassTilemap
-gBirchGrassTilemap: @ 0x858FA1C
-	.incbin "graphics/misc/gBirchGrassTilemap.bin"
 
 	.section .rodata.mid38_after_starter_choose_graphics
 

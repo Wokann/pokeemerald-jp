@@ -911,6 +911,11 @@ $(C_BUILDDIR)/battle_anim_utility_funcs.o: CFLAGS := -mthumb-interwork -O2 -fhex
 $(C_BUILDDIR)/mail.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/starter_choose.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/starter_choose.o: \
+	graphics/starter_choose/tiles.gbapal \
+	graphics/starter_choose/pokeball_selection.gbapal \
+	graphics/starter_choose/starter_circle.gbapal \
+	graphics/starter_choose/birch_bag.bin.lz \
+	graphics/starter_choose/birch_grass.bin.lz \
 	graphics/starter_choose/tiles.png.4bpp.lz \
 	graphics/starter_choose/pokeball_selection.png.4bpp.lz \
 	graphics/starter_choose/starter_circle.png.4bpp.lz

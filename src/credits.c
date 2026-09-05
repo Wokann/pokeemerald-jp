@@ -926,7 +926,7 @@ __attribute__((naked)) void Task_LoadShowMons(void)
         "_081758C0: .4byte gBirchBagGrass_Gfx\n\t"
         "_081758C4: .4byte gBirchGrassTilemap\n\t"
         "_081758C8: .4byte 0x06003800\n\t"
-        "_081758CC: .4byte gUnknown_858F812\n\t"
+        "_081758CC: .4byte gBirchBagGrass_Pal + 2\n\t"
         "_081758D0: .4byte gDecompressionBuffer\n\t"
         "_081758D4: .4byte 0x000007FF\n\t"
         "_081758D8: .4byte gUnknown_201D800\n\t"
