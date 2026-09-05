@@ -12,6 +12,11 @@
 #define STRINGS_BAG_RETURN_TEXT __attribute__((section(".rodata.strings_bag_return_text"), aligned(1)))
 #define STRINGS_BAG_RETURN_TABLES __attribute__((section(".rodata.strings_bag_return_tables")))
 #define STRINGS_ITEM_MENU_TEXT __attribute__((section(".rodata.strings_item_menu_text"), aligned(1)))
+#define STRINGS_MENU_YES_NO __attribute__((section(".rodata.strings_menu_yes_no"), aligned(1)))
+#define STRINGS_MENU_SELECTOR_ARROW3 __attribute__((section(".rodata.strings_menu_selector_arrow3"), aligned(1)))
+
+STRINGS_MENU_YES_NO const u8 gText_YesNo[] = _("はい\nいいえ");
+STRINGS_MENU_SELECTOR_ARROW3 const u8 gText_SelectorArrow3[] = _("▶");
 
 STRINGS_DAYCARE const u8 gDaycareText_GetAlongVeryWell[] = _("2ひきの　なかは\nとっても　よい　ようじゃ");
 STRINGS_DAYCARE const u8 gDaycareText_GetAlong[] = _("2ひきの　なかは\nまずまずの　ようじゃ");

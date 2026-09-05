@@ -1,6 +1,13 @@
 #include "global.h"
 #include "menu.h"
 
+struct MenuInfoIcon
+{
+    u8 width;
+    u8 height;
+    u16 offset;
+};
+
 #define MENU_CORE_DATA __attribute__((section(".rodata.menu_core_data")))
 
 MENU_CORE_DATA static const u8 sTextSpeedFrameDelays[] =
@@ -48,6 +55,50 @@ MENU_HOF_PC_TOPBAR_DATA static const u16 sHofPC_TopBar_Pal[] =
 };
 
 #undef MENU_HOF_PC_TOPBAR_DATA
+
+#define MENU_TEXT_COLORS_DATA __attribute__((section(".rodata.menu_text_colors"), aligned(1)))
+#define MENU_INFO_ICONS_DATA __attribute__((section(".rodata.menu_info_icons")))
+
+MENU_TEXT_COLORS_DATA static const u8 sTextColors[] =
+{
+    TEXT_DYNAMIC_COLOR_6,
+    TEXT_COLOR_WHITE,
+    TEXT_COLOR_DARK_GRAY,
+};
+
+// Table of move info icon offsets in the JP menu-info graphic.
+MENU_INFO_ICONS_DATA static const struct MenuInfoIcon sMenuInfoIcons[] =
+{
+    { 12, 12, 0x00 }, // Unused
+    [TYPE_NORMAL + 1]   = { 30, 12, 0x20 },
+    [TYPE_FIGHTING + 1] = { 30, 12, 0x64 },
+    [TYPE_FLYING + 1]   = { 30, 12, 0x60 },
+    [TYPE_POISON + 1]   = { 30, 12, 0x80 },
+    [TYPE_GROUND + 1]   = { 30, 12, 0x48 },
+    [TYPE_ROCK + 1]     = { 30, 12, 0x44 },
+    [TYPE_BUG + 1]      = { 30, 12, 0x6C },
+    [TYPE_GHOST + 1]    = { 30, 12, 0x68 },
+    [TYPE_STEEL + 1]    = { 30, 12, 0x88 },
+    [TYPE_MYSTERY + 1]  = { 30, 12, 0xA4 },
+    [TYPE_FIRE + 1]     = { 30, 12, 0x24 },
+    [TYPE_WATER + 1]    = { 30, 12, 0x28 },
+    [TYPE_GRASS + 1]    = { 30, 12, 0x2C },
+    [TYPE_ELECTRIC + 1] = { 30, 12, 0x40 },
+    [TYPE_PSYCHIC + 1]  = { 30, 12, 0x84 },
+    [TYPE_ICE + 1]      = { 30, 12, 0x4C },
+    [TYPE_DRAGON + 1]   = { 30, 12, 0xA0 },
+    [TYPE_DARK + 1]     = { 30, 12, 0x8C },
+    [MENU_INFO_ICON_TYPE]      = { 30, 12, 0xA8 },
+    [MENU_INFO_ICON_POWER]     = { 30, 12, 0xAC },
+    [MENU_INFO_ICON_ACCURACY]  = { 30, 12, 0xC0 },
+    [MENU_INFO_ICON_PP]        = { 30, 12, 0xC4 },
+    [MENU_INFO_ICON_EFFECT]    = { 30, 12, 0xC8 }, // Unused
+    [MENU_INFO_ICON_BALL_RED]  = {  8,  8, 0xCC },
+    [MENU_INFO_ICON_BALL_BLUE] = {  8,  8, 0xCD },
+};
+
+#undef MENU_TEXT_COLORS_DATA
+#undef MENU_INFO_ICONS_DATA
 
 __attribute__((naked)) void InitStandardTextBoxWindows()
 {
@@ -2941,7 +2992,7 @@ __attribute__((naked)) void sub_08198244(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081982E0: .4byte gUnknown_203CA6C\n\t"
-        "_081982E4: .4byte gUnknown_85D7B68\n\t"
+        "_081982E4: .4byte sTextColors\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3372,7 +3423,7 @@ __attribute__((naked)) void RedrawMenuCursor(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081985E0: .4byte gUnknown_85D7B6C\n\t"
+        "_081985E0: .4byte gText_SelectorArrow3\n\t"
         "_081985E4: .4byte gUnknown_203CA5C\n\t"
         ".syntax divided\n\t"
     );
@@ -4422,7 +4473,7 @@ __attribute__((naked)) void CreateYesNoMenuAtPos(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08198D3C: .4byte gUnknown_203CA6B\n\t"
-        "_08198D40: .4byte gUnknown_85D7B40\n\t"
+        "_08198D40: .4byte gText_YesNo\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5112,7 +5163,7 @@ __attribute__((naked)) void sub_08199170(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08199248: .4byte gUnknown_85D7B6C\n\t"
+        "_08199248: .4byte gText_SelectorArrow3\n\t"
         "_0819924C: .4byte gUnknown_203CA5C\n\t"
         ".syntax divided\n\t"
     );
@@ -7091,7 +7142,7 @@ __attribute__((naked)) void blit_move_info_icon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08199FD4: .4byte gUnknown_85D7B70\n\t"
+        "_08199FD4: .4byte sMenuInfoIcons\n\t"
         "_08199FD8: .4byte gUnknown_85D7C38\n\t"
         ".syntax divided\n\t"
     );
