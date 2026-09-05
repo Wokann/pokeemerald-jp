@@ -222,7 +222,7 @@ extern u8 gStringVar3[0x100];
 extern const s8 gUnknown_830D2A4[];
 extern const u16 gUnknown_830D204[][MAIL_WORDS_COUNT + 1];
 extern u8 gStringVar4[0x3E8];
-extern const u8 gUnknown_8595430[];
+extern const u8 gText_CommunicationStandby5[];
 extern const u8 gText_SavingDontTurnOffPower[];
 extern u8 *StringExpandPlaceholders(u8 *dest, const u8 *src);
 extern void IncrementGameStat(u8 index);
@@ -5109,7 +5109,7 @@ static void CB2_SaveAndEndTrade(void)
     {
     case 0:
         gMain.state++;
-        StringExpandPlaceholders(gStringVar4, gUnknown_8595430);
+        StringExpandPlaceholders(gStringVar4, gText_CommunicationStandby5);
         DrawTextOnTradeWindow(0, gStringVar4, 0);
         break;
     case 1:
@@ -5407,7 +5407,7 @@ static void CB2_SaveAndEndWirelessTrade(void)
     {
     case 0:
         gMain.state = 1;
-        StringExpandPlaceholders(gStringVar4, gUnknown_8595430);
+        StringExpandPlaceholders(gStringVar4, gText_CommunicationStandby5);
         DrawTextOnTradeWindow(0, gStringVar4, 0);
         break;
     case 1:

@@ -9,9 +9,8 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_8595430
-gUnknown_8595430: @ 0x8595430
-	.incbin "baserom_jp.gba", 0x595430, 0x45
+	.include "data/text/trade.inc"
+	.incbin "baserom_jp.gba", 0x59543d, 0x38
 
 	.section .rodata.data_b2d_mid32_post_evolution_scene_palette_tables, "a", %progbits
 	@ Unassigned alignment bytes between the evolution palette index table
