@@ -9817,7 +9817,8 @@ SECTIONS {
         . = ALIGN(4);
         src/trader.o(.rodata.trader_defaults);
         src/starter_choose.o(.rodata.starter_choose_graphics);
-        data/data_b2d_mid38.o(.rodata.mid38_after_starter_choose_graphics);
+        src/starter_choose.o(.rodata.starter_choose_data);
+        data/data_b2d_mid38.o(.rodata.mid38_after_starter_choose_data);
         src/data/text/region_texts33.o(.rodata);
         data/data_b2d_mid33.o(.rodata.data_b2d_mid33_pokeblock_flavor_prefix);
         src/pokeblock.o(.rodata.pokeblock_flavor_data);

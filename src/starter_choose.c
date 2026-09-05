@@ -50,27 +50,11 @@ STARTER_CHOOSE_GRAPHICS const u32 sStarterCircle_Gfx[] = INCBIN_U32("graphics/st
 
 #undef STARTER_CHOOSE_GRAPHICS
 
-// JP note: the EWRAM window id and all static tables live in the JP ROM
-// data region; they are bound via ld aliases using the sStarter* names so
-// they do not clash with the sTextColors/sWindowTemplates aliases of other
-// modules.
+#define STARTER_CHOOSE_DATA __attribute__((section(".rodata.starter_choose_data")))
+
+// This IWRAM slot is owned by the JP IWRAM layout rather than this ROM-data
+// owner.
 extern u16 sStarterLabelWindowId;
-extern const u16 sStarterMon[];
-extern const struct BgTemplate sStarterBgTemplates[];
-extern const struct WindowTemplate sStarterWindowTemplates[];
-extern const u8 sStarterPokeballCoords[][2];
-extern const u8 sStarterLabelCoords[][2];
-extern const u8 sStarterTextColors[];
-extern const u8 sStarterCursorCoords[][2];
-extern const struct WindowTemplate sStarterWindowTemplate_ConfirmStarter;
-extern const struct WindowTemplate sStarterWindowTemplate_StarterLabel;
-extern const struct CompressedSpriteSheet sStarterSpriteSheet_PokeballSelect[];
-extern const struct CompressedSpriteSheet sStarterSpriteSheet_StarterCircle[];
-extern const struct SpritePalette sStarterSpritePalettes[];
-extern const struct SpriteTemplate sStarterSpriteTemplate_Hand;
-extern const struct SpriteTemplate sStarterSpriteTemplate_Pokeball;
-extern const struct SpriteTemplate sStarterSpriteTemplate_StarterCircle;
-extern const union AffineAnimCmd *const sStarterAffineAnims_StarterPokemon[];
 // JP note: the JP yes/no menu entry (menu_helpers asm, 0x08198D44) takes
 // (window, u8 mode, u16 tileNum, u8 paletteNum), unlike the US
 // CreateYesNoMenu signature.
@@ -91,6 +75,300 @@ static u8 CreatePokemonFrontSprite(u16 species, u8 x, u8 y);
 static void SpriteCB_SelectionHand(struct Sprite *sprite);
 static void SpriteCB_Pokeball(struct Sprite *sprite);
 static void SpriteCB_StarterPokemon(struct Sprite *sprite);
+
+const struct WindowTemplate sStarterWindowTemplates[] STARTER_CHOOSE_DATA =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 3,
+        .tilemapTop = 15,
+        .width = 24,
+        .height = 4,
+        .paletteNum = 14,
+        .baseBlock = 0x0200,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+const struct WindowTemplate sStarterWindowTemplate_ConfirmStarter STARTER_CHOOSE_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 24,
+    .tilemapTop = 9,
+    .width = 5,
+    .height = 4,
+    .paletteNum = 14,
+    .baseBlock = 0x0260,
+};
+
+const struct WindowTemplate sStarterWindowTemplate_StarterLabel STARTER_CHOOSE_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 0,
+    .tilemapTop = 0,
+    .width = 9,
+    .height = 4,
+    .paletteNum = 14,
+    .baseBlock = 0x0274,
+};
+
+const u8 sStarterPokeballCoords[STARTER_MON_COUNT][2] STARTER_CHOOSE_DATA =
+{
+    {60, 64},
+    {120, 88},
+    {180, 64},
+};
+
+const u8 sStarterLabelCoords[STARTER_MON_COUNT][2] STARTER_CHOOSE_DATA =
+{
+    {3, 9},
+    {17, 10},
+    {12, 4},
+};
+
+const u16 sStarterMon[STARTER_MON_COUNT] STARTER_CHOOSE_DATA =
+{
+    SPECIES_TREECKO,
+    SPECIES_TORCHIC,
+    SPECIES_MUDKIP,
+};
+
+const struct BgTemplate sStarterBgTemplates[3] STARTER_CHOOSE_DATA =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 7,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0,
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 6,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+};
+
+const u8 sStarterTextColors[] STARTER_CHOOSE_DATA =
+{
+    TEXT_COLOR_TRANSPARENT,
+    TEXT_COLOR_WHITE,
+    TEXT_COLOR_LIGHT_GRAY,
+};
+
+static const struct OamData sOam_Hand STARTER_CHOOSE_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sOam_Pokeball STARTER_CHOOSE_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sOam_StarterCircle STARTER_CHOOSE_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+const u8 sStarterCursorCoords[][2] STARTER_CHOOSE_DATA =
+{
+    {60, 32},
+    {120, 56},
+    {180, 32},
+};
+
+static const union AnimCmd sAnim_Hand[] STARTER_CHOOSE_DATA =
+{
+    ANIMCMD_FRAME(48, 30),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Pokeball_Still[] STARTER_CHOOSE_DATA =
+{
+    ANIMCMD_FRAME(0, 30),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Pokeball_Moving[] STARTER_CHOOSE_DATA =
+{
+    ANIMCMD_FRAME(16, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(32, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(16, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(32, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(0, 32),
+    ANIMCMD_FRAME(16, 8),
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(32, 8),
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(16, 8),
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(32, 8),
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_StarterCircle[] STARTER_CHOOSE_DATA =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_Hand[] STARTER_CHOOSE_DATA =
+{
+    sAnim_Hand,
+};
+
+static const union AnimCmd *const sAnims_Pokeball[] STARTER_CHOOSE_DATA =
+{
+    sAnim_Pokeball_Still,
+    sAnim_Pokeball_Moving,
+};
+
+static const union AnimCmd *const sAnims_StarterCircle[] STARTER_CHOOSE_DATA =
+{
+    sAnim_StarterCircle,
+};
+
+static const union AffineAnimCmd sAffineAnim_StarterPokemon[] STARTER_CHOOSE_DATA =
+{
+    AFFINEANIMCMD_FRAME(16, 16, 0, 0),
+    AFFINEANIMCMD_FRAME(16, 16, 0, 15),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_StarterCircle[] STARTER_CHOOSE_DATA =
+{
+    AFFINEANIMCMD_FRAME(20, 20, 0, 0),
+    AFFINEANIMCMD_FRAME(20, 20, 0, 15),
+    AFFINEANIMCMD_END,
+};
+
+const union AffineAnimCmd *const sStarterAffineAnims_StarterPokemon[] STARTER_CHOOSE_DATA = {sAffineAnim_StarterPokemon};
+static const union AffineAnimCmd *const sAffineAnims_StarterCircle[] STARTER_CHOOSE_DATA = {sAffineAnim_StarterCircle};
+
+const struct CompressedSpriteSheet sStarterSpriteSheet_PokeballSelect[] STARTER_CHOOSE_DATA =
+{
+    {
+        .data = gPokeballSelection_Gfx,
+        .size = 0x0800,
+        .tag = TAG_POKEBALL_SELECT,
+    },
+    {},
+};
+
+const struct CompressedSpriteSheet sStarterSpriteSheet_StarterCircle[] STARTER_CHOOSE_DATA =
+{
+    {
+        .data = sStarterCircle_Gfx,
+        .size = 0x0800,
+        .tag = TAG_STARTER_CIRCLE,
+    },
+    {},
+};
+
+const struct SpritePalette sStarterSpritePalettes[] STARTER_CHOOSE_DATA =
+{
+    {
+        .data = sPokeballSelection_Pal,
+        .tag = TAG_POKEBALL_SELECT,
+    },
+    {
+        .data = sStarterCircle_Pal,
+        .tag = TAG_STARTER_CIRCLE,
+    },
+    {},
+};
+
+const struct SpriteTemplate sStarterSpriteTemplate_Hand STARTER_CHOOSE_DATA =
+{
+    .tileTag = TAG_POKEBALL_SELECT,
+    .paletteTag = TAG_POKEBALL_SELECT,
+    .oam = &sOam_Hand,
+    .anims = sAnims_Hand,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_SelectionHand,
+};
+
+const struct SpriteTemplate sStarterSpriteTemplate_Pokeball STARTER_CHOOSE_DATA =
+{
+    .tileTag = TAG_POKEBALL_SELECT,
+    .paletteTag = TAG_POKEBALL_SELECT,
+    .oam = &sOam_Pokeball,
+    .anims = sAnims_Pokeball,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Pokeball,
+};
+
+const struct SpriteTemplate sStarterSpriteTemplate_StarterCircle STARTER_CHOOSE_DATA =
+{
+    .tileTag = TAG_STARTER_CIRCLE,
+    .paletteTag = TAG_STARTER_CIRCLE,
+    .oam = &sOam_StarterCircle,
+    .anims = sAnims_StarterCircle,
+    .images = NULL,
+    .affineAnims = sAffineAnims_StarterCircle,
+    .callback = SpriteCB_StarterPokemon,
+};
+
+#undef STARTER_CHOOSE_DATA
 
 // JP note: CreateStarterPokemonLabel has JP-specific Japanese-text handling
 // (category-name pointer helper, 6-byte species names, 9-wide label window)
