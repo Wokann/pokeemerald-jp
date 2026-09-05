@@ -1926,239 +1926,125 @@ static void Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox(u8 taskId)
 #undef tWirelessAdapterConnected
 #undef tArrowTaskIsScrolled
 
-__attribute__((naked)) void Task_MainMenuCheckSaveFile(u8 taskId)
+#define tMenuType                  data[0]
+#define tCurrItem                  data[1]
+#define tItemCount                 data[12]
+#define tWirelessAdapterConnected  data[15]
+
+extern const u8 gUnknown_85C8D44[];
+extern const u8 gUnknown_85C8D6B[];
+extern const u8 gUnknown_85C8D80[];
+extern u8 gUnknown_3005B68[];
+
+void Task_MainMenuCheckSaveFile(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r6, r0, #3\n\t"
-        "	ldr r0, _0802F5C0\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r4, r6, r0\n\t"
-        "	ldr r0, _0802F5C4\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _0802F564\n\t"
-        "	b _0802F704\n\t"
-        "_0802F564:\n\t"
-        "	movs r0, #0x40\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x44\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x48\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	movs r1, #0x31\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0xc1\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x52\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x54\n\t"
-        "	movs r1, #7\n\t"
-        "	bl SetGpuReg\n\t"
-        "	bl IsWirelessAdapterConnected\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0802F5AA\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x1e]\n\t"
-        "_0802F5AA:\n\t"
-        "	ldr r0, _0802F5C8\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _0802F614\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _0802F5CC\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0802F66C\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0802F5D6\n\t"
-        "	b _0802F66C\n\t"
-        "	.align 2, 0\n\t"
-        "_0802F5C0: .4byte gUnknown_3005B68\n\t"
-        "_0802F5C4: .4byte gPaletteFade\n\t"
-        "_0802F5C8: .4byte gSaveFileStatus\n\t"
-        "_0802F5CC:\n\t"
-        "	cmp r0, #4\n\t"
-        "	beq _0802F688\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _0802F628\n\t"
-        "	b _0802F66C\n\t"
-        "_0802F5D6:\n\t"
-        "	strh r0, [r4]\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0802F5EE\n\t"
-        "	bl IsMysteryEventEnabled\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0802F5EE\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4]\n\t"
-        "_0802F5EE:\n\t"
-        "	bl IsMysteryGiftEnabled\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0802F5FC\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4]\n\t"
-        "_0802F5FC:\n\t"
-        "	ldr r0, _0802F60C\n\t"
-        "	lsls r1, r7, #2\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _0802F610\n\t"
-        "	str r0, [r1]\n\t"
-        "	b _0802F69A\n\t"
-        "	.align 2, 0\n\t"
-        "_0802F60C: .4byte gTasks\n\t"
-        "_0802F610: .4byte 0x0802F76D\n\t"
-        "_0802F614:\n\t"
-        "	ldr r0, _0802F624\n\t"
-        "	bl CreateMainMenuErrorWindow\n\t"
-        "	strh r5, [r4]\n\t"
-        "	mov r0, r8\n\t"
-        "	subs r0, #8\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	b _0802F696\n\t"
-        "	.align 2, 0\n\t"
-        "_0802F624: .4byte gUnknown_85C8D6B\n\t"
-        "_0802F628:\n\t"
-        "	ldr r0, _0802F664\n\t"
-        "	bl CreateMainMenuErrorWindow\n\t"
-        "	mov r0, r8\n\t"
-        "	subs r0, #8\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	ldr r1, _0802F668\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4]\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0802F652\n\t"
-        "	bl IsMysteryEventEnabled\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0802F652\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4]\n\t"
-        "_0802F652:\n\t"
-        "	bl IsMysteryGiftEnabled\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0802F69A\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4]\n\t"
-        "	b _0802F69A\n\t"
-        "	.align 2, 0\n\t"
-        "_0802F664: .4byte gUnknown_85C8D44\n\t"
-        "_0802F668: .4byte 0x0802F719\n\t"
-        "_0802F66C:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4]\n\t"
-        "	ldr r1, _0802F680\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0802F684\n\t"
-        "	b _0802F698\n\t"
-        "	.align 2, 0\n\t"
-        "_0802F680: .4byte gTasks\n\t"
-        "_0802F684: .4byte 0x0802F76D\n\t"
-        "_0802F688:\n\t"
-        "	ldr r0, _0802F6BC\n\t"
-        "	bl CreateMainMenuErrorWindow\n\t"
-        "	mov r0, r8\n\t"
-        "	subs r0, #8\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	strh r5, [r0, #8]\n\t"
-        "_0802F696:\n\t"
-        "	ldr r1, _0802F6C0\n\t"
-        "_0802F698:\n\t"
-        "	str r1, [r0]\n\t"
-        "_0802F69A:\n\t"
-        "	ldr r5, _0802F6C4\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0802F6F2\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _0802F6D2\n\t"
-        "	cmp r0, #2\n\t"
-        "	ble _0802F6C8\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _0802F6EE\n\t"
-        "	b _0802F6F2\n\t"
-        "	.align 2, 0\n\t"
-        "_0802F6BC: .4byte gUnknown_85C8D80\n\t"
-        "_0802F6C0: .4byte 0x0802F719\n\t"
-        "_0802F6C4: .4byte sCurrItemAndOptionMenuCheck\n\t"
-        "_0802F6C8:\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _0802F6F2\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "	b _0802F6F0\n\t"
-        "_0802F6D2:\n\t"
-        "	bl IsMysteryEventEnabled\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0802F6EA\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0802F6F2\n\t"
-        "	bl IsMysteryGiftEnabled\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0802F6F2\n\t"
-        "_0802F6EA:\n\t"
-        "	movs r0, #3\n\t"
-        "	b _0802F6F0\n\t"
-        "_0802F6EE:\n\t"
-        "	movs r0, #4\n\t"
-        "_0802F6F0:\n\t"
-        "	strh r0, [r5]\n\t"
-        "_0802F6F2:\n\t"
-        "	ldr r2, _0802F710\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	ldr r0, _0802F714\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	strh r0, [r4, #2]\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0x18]\n\t"
-        "_0802F704:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0802F710: .4byte sCurrItemAndOptionMenuCheck\n\t"
-        "_0802F714: .4byte 0x00007FFF\n\t"
-        ".syntax divided\n\t"
-    );
+    register u32 taskOffset asm("r6");
+    register u32 paletteFadeActive asm("r5");
+    register void *address asm("r0");
+    s16 *data;
+
+    // Keep agbcc's JP register allocation for the three long-lived task values.
+    __asm__ volatile(
+        ".syntax unified\n\t"
+        "lsls r0, %1, #2\n\t"
+        "adds r0, r0, %1\n\t"
+        "lsls %0, r0, #3\n\t"
+        ".syntax divided"
+        : "=r"(taskOffset)
+        : "r"(taskId)
+        : "r0");
+    data = (s16 *)(gUnknown_3005B68 + taskOffset);
+    address = &gPaletteFade;
+    __asm__ volatile(
+        ".syntax unified\n\t"
+        "ldrb r1, [r0, #7]\n\t"
+        "movs r0, #0x80\n\t"
+        "ands r0, r1\n\t"
+        "lsls r0, r0, #0x18\n\t"
+        "lsrs %0, r0, #0x18\n\t"
+        ".syntax divided"
+        : "=r"(paletteFadeActive), "+r"(address)
+        :
+        : "r1");
+
+    if (!paletteFadeActive)
+    {
+        SetGpuReg(REG_OFFSET_WIN0H, 0);
+        SetGpuReg(REG_OFFSET_WIN0V, 0);
+        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG0 | WININ_WIN0_OBJ);
+        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG0 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_DARKEN | BLDCNT_TGT1_BG0);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        SetGpuReg(REG_OFFSET_BLDY, 7);
+
+        if (IsWirelessAdapterConnected())
+            tWirelessAdapterConnected = TRUE;
+
+        switch (gSaveFileStatus)
+        {
+        case SAVE_STATUS_OK:
+            tMenuType = HAS_SAVED_GAME;
+            if (!tWirelessAdapterConnected && IsMysteryEventEnabled())
+                tMenuType++;
+            if (IsMysteryGiftEnabled())
+                tMenuType++;
+            gTasks[taskId].func = Task_MainMenuCheckBattery;
+            break;
+        case SAVE_STATUS_CORRUPT:
+            CreateMainMenuErrorWindow(gUnknown_85C8D6B);
+            tMenuType = paletteFadeActive;
+            address = gUnknown_3005B68 - 8 + taskOffset;
+            ((struct Task *)address)->func = Task_WaitForBatteryDryErrorWindow;
+            break;
+        case SAVE_STATUS_ERROR:
+            CreateMainMenuErrorWindow(gUnknown_85C8D44);
+            address = gUnknown_3005B68 - 8 + taskOffset;
+            ((struct Task *)address)->func = Task_WaitForBatteryDryErrorWindow;
+            tMenuType = HAS_SAVED_GAME;
+            if (!tWirelessAdapterConnected && IsMysteryEventEnabled() == TRUE)
+                tMenuType++;
+            if (IsMysteryGiftEnabled() == TRUE)
+                tMenuType++;
+            break;
+        case SAVE_STATUS_EMPTY:
+        default:
+            tMenuType = HAS_NO_SAVED_GAME;
+            gTasks[taskId].func = Task_MainMenuCheckBattery;
+            break;
+        case SAVE_STATUS_NO_FLASH:
+            CreateMainMenuErrorWindow(gUnknown_85C8D80);
+            address = gUnknown_3005B68 - 8 + taskOffset;
+            ((struct Task *)address)->tMenuType = paletteFadeActive;
+            ((struct Task *)address)->func = Task_WaitForBatteryDryErrorWindow;
+            break;
+        }
+
+        if (sCurrItemAndOptionMenuCheck & OPTION_MENU_FLAG)
+        {
+            switch (tMenuType)
+            {
+            case HAS_NO_SAVED_GAME:
+            case HAS_SAVED_GAME:
+                sCurrItemAndOptionMenuCheck = tMenuType + 1;
+                break;
+            case HAS_MYSTERY_GIFT:
+                if (IsMysteryEventEnabled()
+                 || (tWirelessAdapterConnected && IsMysteryGiftEnabled()))
+                    sCurrItemAndOptionMenuCheck = 3;
+                break;
+            case HAS_MYSTERY_EVENTS:
+                sCurrItemAndOptionMenuCheck = 4;
+                break;
+            }
+        }
+
+        sCurrItemAndOptionMenuCheck &= ~OPTION_MENU_FLAG;
+        tCurrItem = sCurrItemAndOptionMenuCheck;
+        tItemCount = tMenuType + 2;
+    }
 }
+
+#undef tMenuType
+#undef tCurrItem
+#undef tItemCount
+#undef tWirelessAdapterConnected
