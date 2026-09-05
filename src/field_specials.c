@@ -3459,7 +3459,7 @@ __attribute__((naked)) void ShowDeptStoreElevatorFloorSelect(void)
         "	.align 2, 0\n\t"
         "_08139C38: .4byte gUnknown_203A82A\n\t"
         "_08139C3C: .4byte gUnknown_8592608\n\t"
-        "_08139C40: .4byte gUnknown_85CB0BF\n\t"
+        "_08139C40: .4byte gText_ElevatorNowOn\n\t"
         "_08139C44: .4byte gUnknown_8592610\n\t"
         "_08139C48: .4byte gSpecialVar_0x8005\n\t"
         ".syntax divided\n\t"
