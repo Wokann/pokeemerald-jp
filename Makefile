@@ -846,7 +846,10 @@ $(C_BUILDDIR)/battle_factory_screen.o: \
 	graphics/battle_frontier/factory_screen/action_highlight_left.png.4bpp \
 	graphics/battle_frontier/factory_screen/action_highlight_middle.png.4bpp \
 	graphics/battle_frontier/factory_screen/action_highlight_right.png.4bpp \
-	graphics/battle_frontier/factory_screen/mon_pic_bg_anim.png.4bpp
+	graphics/battle_frontier/factory_screen/mon_pic_bg_anim.png.4bpp \
+	graphics/battle_frontier/factory_screen/mon_pic_bg.bin \
+	graphics/battle_frontier/factory_screen/mon_pic_bg.png.4bpp \
+	graphics/battle_frontier/factory_screen/mon_pic_bg.pal.gbapal
 $(C_BUILDDIR)/menu.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/naming_screen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/pokedex.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm

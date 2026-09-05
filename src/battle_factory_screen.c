@@ -23,6 +23,19 @@ BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sMonPicBgAnim_Gfx[] = INCBIN_U8("
 
 #undef BATTLE_FACTORY_SCREEN_GRAPHICS
 
+#define BATTLE_FACTORY_SCREEN_MON_PIC_BG_TILES __attribute__((section(".rodata.battle_factory_screen_mon_pic_bg_tiles"), aligned(1)))
+
+BATTLE_FACTORY_SCREEN_MON_PIC_BG_TILES static const u8 sMonPicBg_Tilemap[] = INCBIN_U8("graphics/battle_frontier/factory_screen/mon_pic_bg.bin");
+BATTLE_FACTORY_SCREEN_MON_PIC_BG_TILES static const u16 sMonPicBg_Gfx[] = INCBIN_U16("graphics/battle_frontier/factory_screen/mon_pic_bg.png.4bpp");
+
+#undef BATTLE_FACTORY_SCREEN_MON_PIC_BG_TILES
+
+#define BATTLE_FACTORY_SCREEN_MON_PIC_BG_PAL __attribute__((section(".rodata.battle_factory_screen_mon_pic_bg_pal"), aligned(1)))
+
+BATTLE_FACTORY_SCREEN_MON_PIC_BG_PAL static const u16 sMonPicBg_Pal[] = INCBIN_U16("graphics/battle_frontier/factory_screen/mon_pic_bg.pal.gbapal");
+
+#undef BATTLE_FACTORY_SCREEN_MON_PIC_BG_PAL
+
 // Return states for the Select Actions
 enum
 {
@@ -386,7 +399,7 @@ __attribute__((naked)) void CB2_InitSelectScreen(void)
         "	.align 2, 0\n\t"
         "_0819A3EC: .4byte gFrontierFactoryMenu_Gfx\n\t"
         "_0819A3F0: .4byte gUnknown_203CAF8\n\t"
-        "_0819A3F4: .4byte gUnknown_85DBA78\n\t"
+        "_0819A3F4: .4byte sMonPicBg_Gfx\n\t"
         "_0819A3F8: .4byte gUnknown_203CAFC\n\t"
         "_0819A3FC: .4byte gFrontierFactoryMenu_Tilemap\n\t"
         "_0819A400: .4byte gUnknown_203CB00\n\t"
@@ -394,7 +407,7 @@ __attribute__((naked)) void CB2_InitSelectScreen(void)
         "_0819A408: .4byte gUnknown_85DBC74\n\t"
         "_0819A40C: .4byte gUnknown_3001278\n\t"
         "_0819A410: .4byte gPlttBufferUnfaded\n\t"
-        "_0819A414: .4byte gUnknown_85DBB18\n\t"
+        "_0819A414: .4byte sMonPicBg_Pal\n\t"
         "_0819A418: .4byte gMain\n\t"
         "_0819A41C:\n\t"
         "	ldr r0, _0819A464\n\t"
@@ -429,7 +442,7 @@ __attribute__((naked)) void CB2_InitSelectScreen(void)
         "	b _0819A586\n\t"
         "	.align 2, 0\n\t"
         "_0819A464: .4byte gUnknown_203CB04\n\t"
-        "_0819A468: .4byte gUnknown_85DB978\n\t"
+        "_0819A468: .4byte sMonPicBg_Tilemap\n\t"
         "_0819A46C:\n\t"
         "	ldr r0, _0819A4D8\n\t"
         "	bl LoadSpritePalettes\n\t"
@@ -7544,13 +7557,13 @@ __attribute__((naked)) void CB2_InitSwapScreen(void)
         "	.align 2, 0\n\t"
         "_0819DB28: .4byte gFrontierFactoryMenu_Gfx\n\t"
         "_0819DB2C: .4byte gUnknown_203CB0C\n\t"
-        "_0819DB30: .4byte gUnknown_85DBA78\n\t"
+        "_0819DB30: .4byte sMonPicBg_Gfx\n\t"
         "_0819DB34: .4byte gUnknown_203CB10\n\t"
         "_0819DB38: .4byte gFrontierFactoryMenu_Tilemap\n\t"
         "_0819DB3C: .4byte gUnknown_203CB14\n\t"
         "_0819DB40: .4byte gFrontierFactoryMenu_Pal\n\t"
         "_0819DB44: .4byte gUnknown_85DC1C4\n\t"
-        "_0819DB48: .4byte gUnknown_85DBB18\n\t"
+        "_0819DB48: .4byte sMonPicBg_Pal\n\t"
         "_0819DB4C: .4byte gMain\n\t"
         "_0819DB50:\n\t"
         "	ldr r0, _0819DB74\n\t"
@@ -7570,7 +7583,7 @@ __attribute__((naked)) void CB2_InitSwapScreen(void)
         "	b _0819DD0E\n\t"
         "	.align 2, 0\n\t"
         "_0819DB74: .4byte gUnknown_203CB18\n\t"
-        "_0819DB78: .4byte gUnknown_85DB978\n\t"
+        "_0819DB78: .4byte sMonPicBg_Tilemap\n\t"
         "_0819DB7C:\n\t"
         "	ldr r0, _0819DBA0\n\t"
         "	bl LoadSpritePalettes\n\t"
