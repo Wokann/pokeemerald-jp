@@ -1,5 +1,6 @@
 #include "global.h"
 #include "constants/field_specials.h"
+#include "constants/event_object_movement.h"
 #include "constants/metatile_labels.h"
 #include "constants/event_objects.h"
 #include "constants/weather.h"
@@ -39,6 +40,7 @@ extern void GetEreaderTrainerName(u8 *dest);
 #define FIELD_SPECIALS_DATA_EARLY __attribute__((section(".rodata.field_specials_data_early")))
 #define FIELD_SPECIALS_DATA_SLOT_MACHINE_SELECTORS __attribute__((section(".rodata.field_specials_slot_machine_selectors")))
 #define FIELD_SPECIALS_DATA_ELEVATOR __attribute__((section(".rodata.field_specials_elevator_data")))
+#define FIELD_SPECIALS_DATA_LINK_PARTNER __attribute__((section(".rodata.field_specials_link_partner_data")))
 
 #define ELEVATOR_WINDOW_WIDTH  3
 #define ELEVATOR_WINDOW_HEIGHT 3
@@ -708,6 +710,23 @@ __attribute__((naked)) void GetLinkPartnerNames(void)
     );
 }
 
+// Kept externally visible while SpawnLinkPartnerEventObject remains naked assembly.
+FIELD_SPECIALS_DATA_LINK_PARTNER const u8 sLinkPartnerMovementTypes[] =
+{
+    MOVEMENT_TYPE_FACE_UP,
+    MOVEMENT_TYPE_FACE_LEFT,
+    MOVEMENT_TYPE_FACE_DOWN,
+    MOVEMENT_TYPE_FACE_RIGHT,
+};
+
+FIELD_SPECIALS_DATA_LINK_PARTNER const s8 sLinkPartnerCoordOffsets[][2] =
+{
+    { 0,  1},
+    { 1,  0},
+    { 0, -1},
+    {-1,  0},
+};
+
 __attribute__((naked)) void SpawnLinkPartnerEventObject(void)
 {
     __asm__(".syntax unified\n\t"
@@ -747,8 +766,8 @@ __attribute__((naked)) void SpawnLinkPartnerEventObject(void)
         "	beq _081383AC\n\t"
         "	b _081383C0\n\t"
         "	.align 2, 0\n\t"
-        "_0813835C: .4byte gUnknown_85925A8\n\t"
-        "_08138360: .4byte gUnknown_85925AC\n\t"
+        "_0813835C: .4byte sLinkPartnerMovementTypes\n\t"
+        "_08138360: .4byte sLinkPartnerCoordOffsets\n\t"
         "_08138364:\n\t"
         "	cmp r1, #3\n\t"
         "	beq _0813836E\n\t"
