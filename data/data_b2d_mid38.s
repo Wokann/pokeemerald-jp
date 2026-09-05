@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata.mid38_before_starter_choose_graphics
+	.section .rodata.mid38_after_battle_ai_tables_before_starter_choose_graphics
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -8,14 +8,6 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-
-	.globl gUnknown_858F64C
-gUnknown_858F64C: @ 0x858F64C
-	.incbin "baserom_jp.gba", 0x58f64c, 0x18c
-
-	.globl gUnknown_858F7D8
-gUnknown_858F7D8: @ 0x858F7D8
-	.incbin "baserom_jp.gba", 0x58f7d8, 0x1c
 
 	.globl sDefaultTraderNames
 sDefaultTraderNames: @ 0x858F7F4

@@ -10,6 +10,7 @@
 #include "constants/items.h"
 #include "constants/abilities.h"
 #include "constants/battle_ai.h"
+#include "constants/battle_move_effects.h"
 #include "constants/moves.h"
 #include "data.h"
 #include "item.h"
@@ -22,14 +23,237 @@ extern const u8 *gUnknown_203A804;
 extern u8 gUnknown_203A808;
 extern bool8 BattleAIStackPop(void);
 extern const u8 *const gBattleAI_ScriptsTable[];
-extern const void (*const gUnknown_858F64C[])(void);
-extern const u16 gUnknown_858F7D8[];
 
 void BattleAI_DoAIProcessing(void);
 void RecordLastUsedMoveByTarget(void);
 void sub_081339A0(const u8 *var);
 u8 ChooseMoveOrAction_Singles(void);
 u8 ChooseMoveOrAction_Doubles(void);
+
+typedef void (*BattleAICmdFunc)(void);
+
+#define BATTLE_AI_TABLE_DATA __attribute__((section(".rodata.battle_ai_tables")))
+#define IGNORED_MOVES_END 0xFFFF
+
+void BattleAICmd_if_random_less_than(void);
+void BattleAICmd_if_random_greater_than(void);
+void BattleAICmd_if_random_equal(void);
+void BattleAICmd_if_random_not_equal(void);
+void BattleAICmd_score(void);
+void BattleAICmd_if_hp_less_than(void);
+void BattleAICmd_if_hp_more_than(void);
+void BattleAICmd_if_hp_equal(void);
+void BattleAICmd_if_hp_not_equal(void);
+void BattleAICmd_if_status(void);
+void BattleAICmd_if_not_status(void);
+void BattleAICmd_if_status2(void);
+void BattleAICmd_if_not_status2(void);
+void BattleAICmd_if_status3(void);
+void BattleAICmd_if_not_status3(void);
+void BattleAICmd_if_side_affecting(void);
+void BattleAICmd_if_not_side_affecting(void);
+void BattleAICmd_if_less_than(void);
+void BattleAICmd_if_more_than(void);
+void BattleAICmd_if_equal(void);
+void BattleAICmd_if_not_equal(void);
+void BattleAICmd_if_less_than_ptr(void);
+void BattleAICmd_if_more_than_ptr(void);
+void BattleAICmd_if_equal_ptr(void);
+void BattleAICmd_if_not_equal_ptr(void);
+void BattleAICmd_if_move(void);
+void BattleAICmd_if_not_move(void);
+void BattleAICmd_if_in_bytes(void);
+void BattleAICmd_if_not_in_bytes(void);
+void BattleAICmd_if_in_hwords(void);
+void BattleAICmd_if_not_in_hwords(void);
+void BattleAICmd_if_user_has_attacking_move(void);
+void BattleAICmd_if_user_has_no_attacking_moves(void);
+void BattleAICmd_get_turn_count(void);
+void BattleAICmd_get_type(void);
+void BattleAICmd_get_considered_move_power(void);
+void BattleAICmd_get_how_powerful_move_is(void);
+void BattleAICmd_get_last_used_battler_move(void);
+void BattleAICmd_if_equal_(void);
+void BattleAICmd_if_not_equal_(void);
+void BattleAICmd_if_user_goes(void);
+void BattleAICmd_if_user_doesnt_go(void);
+void BattleAICmd_nullsub_2A(void);
+void BattleAICmd_nullsub_2B(void);
+void BattleAICmd_count_usable_party_mons(void);
+void BattleAICmd_get_considered_move(void);
+void BattleAICmd_get_considered_move_effect(void);
+void BattleAICmd_get_ability(void);
+void BattleAICmd_get_highest_type_effectiveness(void);
+void BattleAICmd_if_type_effectiveness(void);
+void BattleAICmd_nullsub_32(void);
+void BattleAICmd_nullsub_33(void);
+void BattleAICmd_if_status_in_party(void);
+void BattleAICmd_if_status_not_in_party(void);
+void BattleAICmd_get_weather(void);
+void BattleAICmd_if_effect(void);
+void BattleAICmd_if_not_effect(void);
+void BattleAICmd_if_stat_level_less_than(void);
+void BattleAICmd_if_stat_level_more_than(void);
+void BattleAICmd_if_stat_level_equal(void);
+void BattleAICmd_if_stat_level_not_equal(void);
+void BattleAICmd_if_can_faint(void);
+void BattleAICmd_if_cant_faint(void);
+void BattleAICmd_if_has_move(void);
+void BattleAICmd_if_doesnt_have_move(void);
+void BattleAICmd_if_has_move_with_effect(void);
+void BattleAICmd_if_doesnt_have_move_with_effect(void);
+void BattleAICmd_if_any_move_disabled_or_encored(void);
+void BattleAICmd_if_curr_move_disabled_or_encored(void);
+void BattleAICmd_flee(void);
+void BattleAICmd_if_random_safari_flee(void);
+void BattleAICmd_watch(void);
+void BattleAICmd_get_hold_effect(void);
+void BattleAICmd_get_gender(void);
+void BattleAICmd_is_first_turn_for(void);
+void BattleAICmd_get_stockpile_count(void);
+void BattleAICmd_is_double_battle(void);
+void BattleAICmd_get_used_held_item(void);
+void BattleAICmd_get_move_type_from_result(void);
+void BattleAICmd_get_move_power_from_result(void);
+void BattleAICmd_get_move_effect_from_result(void);
+void BattleAICmd_get_protect_count(void);
+void BattleAICmd_nullsub_52(void);
+void BattleAICmd_nullsub_53(void);
+void BattleAICmd_nullsub_54(void);
+void BattleAICmd_nullsub_55(void);
+void BattleAICmd_nullsub_56(void);
+void BattleAICmd_nullsub_57(void);
+void BattleAICmd_call(void);
+void BattleAICmd_goto(void);
+void BattleAICmd_end(void);
+void BattleAICmd_if_level_cond(void);
+void BattleAICmd_if_target_taunted(void);
+void BattleAICmd_if_target_not_taunted(void);
+void BattleAICmd_if_target_is_ally(void);
+void BattleAICmd_is_of_type(void);
+void BattleAICmd_check_ability(void);
+void BattleAICmd_if_flash_fired(void);
+void BattleAICmd_if_holds_item(void);
+
+static const BattleAICmdFunc sBattleAICmdTable[] BATTLE_AI_TABLE_DATA =
+{
+    BattleAICmd_if_random_less_than,
+    BattleAICmd_if_random_greater_than,
+    BattleAICmd_if_random_equal,
+    BattleAICmd_if_random_not_equal,
+    BattleAICmd_score,
+    BattleAICmd_if_hp_less_than,
+    BattleAICmd_if_hp_more_than,
+    BattleAICmd_if_hp_equal,
+    BattleAICmd_if_hp_not_equal,
+    BattleAICmd_if_status,
+    BattleAICmd_if_not_status,
+    BattleAICmd_if_status2,
+    BattleAICmd_if_not_status2,
+    BattleAICmd_if_status3,
+    BattleAICmd_if_not_status3,
+    BattleAICmd_if_side_affecting,
+    BattleAICmd_if_not_side_affecting,
+    BattleAICmd_if_less_than,
+    BattleAICmd_if_more_than,
+    BattleAICmd_if_equal,
+    BattleAICmd_if_not_equal,
+    BattleAICmd_if_less_than_ptr,
+    BattleAICmd_if_more_than_ptr,
+    BattleAICmd_if_equal_ptr,
+    BattleAICmd_if_not_equal_ptr,
+    BattleAICmd_if_move,
+    BattleAICmd_if_not_move,
+    BattleAICmd_if_in_bytes,
+    BattleAICmd_if_not_in_bytes,
+    BattleAICmd_if_in_hwords,
+    BattleAICmd_if_not_in_hwords,
+    BattleAICmd_if_user_has_attacking_move,
+    BattleAICmd_if_user_has_no_attacking_moves,
+    BattleAICmd_get_turn_count,
+    BattleAICmd_get_type,
+    BattleAICmd_get_considered_move_power,
+    BattleAICmd_get_how_powerful_move_is,
+    BattleAICmd_get_last_used_battler_move,
+    BattleAICmd_if_equal_,
+    BattleAICmd_if_not_equal_,
+    BattleAICmd_if_user_goes,
+    BattleAICmd_if_user_doesnt_go,
+    BattleAICmd_nullsub_2B,
+    BattleAICmd_nullsub_32,
+    BattleAICmd_count_usable_party_mons,
+    BattleAICmd_get_considered_move,
+    BattleAICmd_get_considered_move_effect,
+    BattleAICmd_get_ability,
+    BattleAICmd_get_highest_type_effectiveness,
+    BattleAICmd_if_type_effectiveness,
+    BattleAICmd_nullsub_33,
+    BattleAICmd_nullsub_52,
+    BattleAICmd_if_status_in_party,
+    BattleAICmd_if_status_not_in_party,
+    BattleAICmd_get_weather,
+    BattleAICmd_if_effect,
+    BattleAICmd_if_not_effect,
+    BattleAICmd_if_stat_level_less_than,
+    BattleAICmd_if_stat_level_more_than,
+    BattleAICmd_if_stat_level_equal,
+    BattleAICmd_if_stat_level_not_equal,
+    BattleAICmd_if_can_faint,
+    BattleAICmd_if_cant_faint,
+    BattleAICmd_if_has_move,
+    BattleAICmd_if_doesnt_have_move,
+    BattleAICmd_if_has_move_with_effect,
+    BattleAICmd_if_doesnt_have_move_with_effect,
+    BattleAICmd_if_any_move_disabled_or_encored,
+    BattleAICmd_if_curr_move_disabled_or_encored,
+    BattleAICmd_flee,
+    BattleAICmd_if_random_safari_flee,
+    BattleAICmd_watch,
+    BattleAICmd_get_hold_effect,
+    BattleAICmd_get_gender,
+    BattleAICmd_is_first_turn_for,
+    BattleAICmd_get_stockpile_count,
+    BattleAICmd_is_double_battle,
+    BattleAICmd_get_used_held_item,
+    BattleAICmd_get_move_type_from_result,
+    BattleAICmd_get_move_power_from_result,
+    BattleAICmd_get_move_effect_from_result,
+    BattleAICmd_get_protect_count,
+    BattleAICmd_nullsub_53,
+    BattleAICmd_nullsub_54,
+    BattleAICmd_nullsub_55,
+    BattleAICmd_nullsub_56,
+    BattleAICmd_nullsub_57,
+    BattleAICmd_nullsub_2A,
+    BattleAICmd_call,
+    BattleAICmd_goto,
+    BattleAICmd_end,
+    BattleAICmd_if_level_cond,
+    BattleAICmd_if_target_taunted,
+    BattleAICmd_if_target_not_taunted,
+    BattleAICmd_if_target_is_ally,
+    BattleAICmd_is_of_type,
+    BattleAICmd_check_ability,
+    BattleAICmd_if_flash_fired,
+    BattleAICmd_if_holds_item,
+};
+
+static const u16 sIgnoredPowerfulMoveEffects[] BATTLE_AI_TABLE_DATA =
+{
+    EFFECT_EXPLOSION,
+    EFFECT_DREAM_EATER,
+    EFFECT_RAZOR_WIND,
+    EFFECT_SKY_ATTACK,
+    EFFECT_RECHARGE,
+    EFFECT_SKULL_BASH,
+    EFFECT_SOLAR_BEAM,
+    EFFECT_SPIT_UP,
+    EFFECT_FOCUS_PUNCH,
+    EFFECT_SUPERPOWER,
+    EFFECT_ERUPTION,
+    EFFECT_OVERHEAT,
+    IGNORED_MOVES_END,
+};
 
 #define AI_ACTION_DONE          0x01
 #define AI_ACTION_FLEE          0x02
@@ -326,7 +550,7 @@ void BattleAI_DoAIProcessing(void)
             break;
         case 1:
             if (gBattleResources->ai->moveConsidered != 0)
-                gUnknown_858F64C[*gUnknown_203A804]();
+                sBattleAICmdTable[*gUnknown_203A804]();
             else
             {
                 gBattleResources->ai->score[gBattleResources->ai->movesetIndex] = 0;
@@ -966,14 +1190,14 @@ void BattleAICmd_get_how_powerful_move_is(void)
     s32 checkedMove;
     s32 moveDmgs[MAX_MON_MOVES];
 
-    for (i = 0; gUnknown_858F7D8[i] != 0xFFFF; i++)
+    for (i = 0; sIgnoredPowerfulMoveEffects[i] != IGNORED_MOVES_END; i++)
     {
-        if (gBattleMoves[gBattleResources->ai->moveConsidered].effect == gUnknown_858F7D8[i])
+        if (gBattleMoves[gBattleResources->ai->moveConsidered].effect == sIgnoredPowerfulMoveEffects[i])
             break;
     }
 
     if (gBattleMoves[gBattleResources->ai->moveConsidered].power > 1
-     && gUnknown_858F7D8[i] == 0xFFFF)
+     && sIgnoredPowerfulMoveEffects[i] == IGNORED_MOVES_END)
     {
         gDynamicBasePower = 0;
         *(&gBattleStruct->dynamicMoveType) = 0;
@@ -983,14 +1207,14 @@ void BattleAICmd_get_how_powerful_move_is(void)
 
         for (checkedMove = 0; checkedMove < MAX_MON_MOVES; checkedMove++)
         {
-            for (i = 0; gUnknown_858F7D8[i] != 0xFFFF; i++)
+            for (i = 0; sIgnoredPowerfulMoveEffects[i] != IGNORED_MOVES_END; i++)
             {
-                if (gBattleMoves[gBattleMons[gUnknown_203A808].moves[checkedMove]].effect == gUnknown_858F7D8[i])
+                if (gBattleMoves[gBattleMons[gUnknown_203A808].moves[checkedMove]].effect == sIgnoredPowerfulMoveEffects[i])
                     break;
             }
 
             if (gBattleMons[gUnknown_203A808].moves[checkedMove] != MOVE_NONE
-             && gUnknown_858F7D8[i] == 0xFFFF
+             && sIgnoredPowerfulMoveEffects[i] == IGNORED_MOVES_END
              && gBattleMoves[gBattleMons[gUnknown_203A808].moves[checkedMove]].power > 1)
             {
                 gCurrentMove = gBattleMons[gUnknown_203A808].moves[checkedMove];

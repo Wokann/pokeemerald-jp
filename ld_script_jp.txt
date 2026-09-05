@@ -9816,7 +9816,9 @@ SECTIONS {
         src/data/text/region_texts38.o(.rodata);
         src/data/text/region_texts38.o(.rodata.gText_ReelTimeHelp);
         data/contest_painting.o(.rodata);
-        data/data_b2d_mid38.o(.rodata.mid38_before_starter_choose_graphics);
+        src/battle_ai_script_commands.o(.rodata.battle_ai_tables);
+        . = ALIGN(4);
+        data/data_b2d_mid38.o(.rodata.mid38_after_battle_ai_tables_before_starter_choose_graphics);
         src/starter_choose.o(.rodata.starter_choose_graphics);
         data/data_b2d_mid38.o(.rodata.mid38_after_starter_choose_graphics);
         src/data/text/region_texts33.o(.rodata);
