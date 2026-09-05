@@ -19,30 +19,6 @@ gUnknown_85CD19F: @ 0x85CD19F
 
 	.section .rodata.mid98_suffix_after_shake_visual_data
 
-	.globl gUnknown_85D6934
-gUnknown_85D6934: @ 0x85D6934
-	.incbin "baserom_jp.gba", 0x5d6934, 0xb68
-
-	.globl sMatchCallBattleTopics
-sMatchCallBattleTopics: @ 0x85D749C
-	.4byte 0x085D6E34 @ sMatchCallWildBattleTexts
-	.4byte 0x085D6EAC @ sMatchCallNegativeBattleTexts
-	.4byte 0x085D6F1C @ sMatchCallPositiveBattleTexts
-
-	.globl sMatchCallBattleRequestTopics
-sMatchCallBattleRequestTopics: @ 0x85D74A8
-	.4byte 0x085D6F8C @ sMatchCallSameRouteBattleRequestTexts
-	.4byte 0x085D6FFC @ sMatchCallDifferentRouteBattleRequestTexts
-
-	.globl sMatchCallGeneralTopics
-sMatchCallGeneralTopics: @ 0x85D74B0
-	.4byte 0x085D706C @ sMatchCallPersonalizedTexts
-	.4byte 0x085D726C @ sMatchCallBattleFrontierStreakTexts
-	.4byte 0x085D72DC @ sMatchCallBattleFrontierRecordStreakTexts
-	.4byte 0x085D734C @ sMatchCallBattleDomeTexts
-	.4byte 0x085D73BC @ sMatchCallBattlePikeTexts
-	.4byte 0x085D742C @ sMatchCallBattlePyramidTexts
-
 	.globl sMatchCallWindow_Pal
 sMatchCallWindow_Pal: @ 0x85D74C8
 	.hword 0x0000 @ color 0
