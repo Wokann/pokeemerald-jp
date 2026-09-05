@@ -1149,6 +1149,19 @@ $(C_BUILDDIR)/evolution_graphics.o: src/evolution_graphics.c
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/evolution_graphics.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/evolution_graphics.gen.s
 
+# Keep Match Call UI graphics reproducible from tracked PNG inputs.
+$(C_BUILDDIR)/match_call.d: src/match_call.c | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -I include -I "" $<
+
+-include $(C_BUILDDIR)/match_call.d
+
+$(C_BUILDDIR)/match_call.o: src/match_call.c
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/match_call.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/match_call.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/match_call.gen.s
+
 # Keep the Pokedex caught-ball graphic reproducible from its tracked PNG input.
 $(C_BUILDDIR)/pokedex.d: src/pokedex.c | tools
 	@mkdir -p $(dir $@)

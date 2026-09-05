@@ -496,9 +496,6 @@ PlayCry4 = PlayCry_ReleaseDouble;
 PlayCry5 = PlayCry_Script;
 PlayCry6 = PlayCry_DuckNoRestore;
 sInputMap = gUnknown_84E8A6C;
-sMatchCallWindow_Gfx = gUnknown_85D74E8;
-sPokenavIcon_Gfx = gUnknown_85D7608;
-sText_PokenavCallEllipsis = gUnknown_85D79EC;
 PlayerFreeze = sub_0808B1C8;
 StopPlayerAvatar = sub_0808B658;
 sPopulateMatchCallStringVarFuncs = gUnknown_85D7A28;
@@ -10042,6 +10039,7 @@ SECTIONS {
         src/battle_dome.o(.rodata.battle_dome_raw);
         src/battle_palace.o(.rodata.battle_palace_data);
         src/match_call.o(.rodata.match_call_data);
+        src/match_call.o(.rodata.match_call_ui_data);
         data/data_b2d_mid98.o(.rodata.mid98_suffix_after_shake_visual_data);
         src/data/text/region_texts113.o(.rodata);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_data);

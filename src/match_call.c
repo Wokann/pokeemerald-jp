@@ -58,13 +58,16 @@ extern struct MatchCallState sMatchCallState;           // 0x0203CA4C
 extern struct BattleFrontierStreakInfo sBattleFrontierStreakInfo; // 0x0203CA54
 extern bool32 (*const sMatchCallTaskFuncs[])(u8);       // 0x085D79F4
 extern const struct WindowTemplate sMatchCallTextWindow; // 0x085D7A14
-extern const u16 sMatchCallWindow_Pal[];                // 0x085D74C8
-extern const u8 sMatchCallWindow_Gfx[];                 // 0x085D74E8
-extern const u16 sPokenavIcon_Pal[];                    // 0x085D75E8
-extern const u32 sPokenavIcon_Gfx[];                    // 0x085D7608
-extern const u8 sText_PokenavCallEllipsis[];            // 0x085D79EC
 
-// JP window/palette sizes (extern tables can't use sizeof).
+#define MATCH_CALL_UI_DATA __attribute__((section(".rodata.match_call_ui_data")))
+
+static const u16 sMatchCallWindow_Pal[] MATCH_CALL_UI_DATA = INCGFX_U16("graphics/pokenav/match_call/window.png", ".gbapal");
+static const u8 sMatchCallWindow_Gfx[] MATCH_CALL_UI_DATA = INCGFX_U8("graphics/pokenav/match_call/window.png", ".4bpp");
+static const u16 sPokenavIcon_Pal[] MATCH_CALL_UI_DATA = INCGFX_U16("graphics/pokenav/match_call/nav_icon.png", ".gbapal");
+static const u32 sPokenavIcon_Gfx[] MATCH_CALL_UI_DATA = INCGFX_U32("graphics/pokenav/match_call/nav_icon.png", ".4bpp.lz");
+static const u8 sText_PokenavCallEllipsis[] MATCH_CALL_UI_DATA = _("⋯⋯⋯⋯⋯⋯\p");
+
+// JP ROM sizes of the Match Call UI assets.
 #define MATCH_CALL_WINDOW_GFX_LENGTH 0x100
 #define MATCH_CALL_WINDOW_PAL_LENGTH 0x20
 #define POKENAV_ICON_PAL_LENGTH      0x20
