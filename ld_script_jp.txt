@@ -10051,7 +10051,10 @@ SECTIONS {
         src/menu.o(.rodata.menu_info_icons);
         src/graphics.o(.rodata.graphics_menu_info_resources);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_graphics);
-        data/data_b2d_mid98.o(.rodata.mid98_suffix_after_menu_info_resources);
+        src/graphics.o(.rodata.graphics_battle_factory_menu_tiles);
+        data/data_b2d_mid98.o(.rodata.mid98_suffix_battle_factory_menu_between);
+        src/graphics.o(.rodata.graphics_battle_factory_menu_pal);
+        data/data_b2d_mid98.o(.rodata.mid98_suffix_after_battle_factory_menu);
         src/data/text/region_texts113.o(.rodata);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_data);
         src/data/text/region_texts114.o(.rodata);
