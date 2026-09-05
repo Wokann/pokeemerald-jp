@@ -14,9 +14,22 @@
 #define STRINGS_ITEM_MENU_TEXT __attribute__((section(".rodata.strings_item_menu_text"), aligned(1)))
 #define STRINGS_MENU_YES_NO __attribute__((section(".rodata.strings_menu_yes_no"), aligned(1)))
 #define STRINGS_MENU_SELECTOR_ARROW3 __attribute__((section(".rodata.strings_menu_selector_arrow3"), aligned(1)))
+#define STRINGS_BATTLE_FACTORY_SELECTION __attribute__((section(".rodata.strings_battle_factory_selection"), aligned(1)))
 
 STRINGS_MENU_YES_NO const u8 gText_YesNo[] = _("はい\nいいえ");
 STRINGS_MENU_SELECTOR_ARROW3 const u8 gText_SelectorArrow3[] = _("▶");
+
+STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_RentalPkmn2[] = _("ポケモンレンタル");
+STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_SelectFirstPkmn[] = _("1ばんめのポケモンを　えらんでください");
+STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_SelectSecondPkmn[] = _("2ばんめのポケモンを　えらんでください");
+STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_SelectThirdPkmn[] = _("3ばんめのポケモンを　えらんでください");
+STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_Rent[] = _("レンタルする");
+STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_Summary[] = _("つよさをみる");
+STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_Others2[] = _("べつのにする");
+STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_Deselect[] = _("はずす");
+STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_TheseThreePkmnOkay[] = _("いじょうの　3ひきで　よろしいですか？");
+STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_Yes2[] = _("はい");
+STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_No2[] = _("いいえ");
 
 STRINGS_DAYCARE const u8 gDaycareText_GetAlongVeryWell[] = _("2ひきの　なかは\nとっても　よい　ようじゃ");
 STRINGS_DAYCARE const u8 gDaycareText_GetAlong[] = _("2ひきの　なかは\nまずまずの　ようじゃ");

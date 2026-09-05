@@ -10062,7 +10062,7 @@ SECTIONS {
         src/battle_factory_screen.o(.rodata.battle_factory_screen_select_sprite_sheets);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_select_ball_gfx);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_select_sprite_palettes);
-        src/data/text/region_texts113.o(.rodata);
+        src/strings.o(.rodata.strings_battle_factory_selection);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_data);
         src/data/text/region_texts114.o(.rodata);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_data_late);

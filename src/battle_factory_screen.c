@@ -2841,7 +2841,7 @@ __attribute__((naked)) void Select_PrintRentalPkmnString(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0819B684: .4byte gUnknown_85DBB98\n\t"
+        "_0819B684: .4byte gText_RentalPkmn2\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2927,14 +2927,14 @@ __attribute__((naked)) void Select_PrintSelectMonString(void)
         "	b _0819B740\n\t"
         "	.align 2, 0\n\t"
         "_0819B724: .4byte gUnknown_3001278\n\t"
-        "_0819B728: .4byte gUnknown_85DBBA1\n\t"
+        "_0819B728: .4byte gText_SelectFirstPkmn\n\t"
         "_0819B72C:\n\t"
         "	cmp r0, #2\n\t"
         "	bne _0819B738\n\t"
         "	ldr r2, _0819B734\n\t"
         "	b _0819B740\n\t"
         "	.align 2, 0\n\t"
-        "_0819B734: .4byte gUnknown_85DBBB5\n\t"
+        "_0819B734: .4byte gText_SelectSecondPkmn\n\t"
         "_0819B738:\n\t"
         "	ldr r2, _0819B764\n\t"
         "	cmp r0, #3\n\t"
@@ -2957,8 +2957,8 @@ __attribute__((naked)) void Select_PrintSelectMonString(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0819B764: .4byte gUnknown_85DBBF6\n\t"
-        "_0819B768: .4byte gUnknown_85DBBC9\n\t"
+        "_0819B764: .4byte gText_TheseThreePkmnOkay\n\t"
+        "_0819B768: .4byte gText_SelectThirdPkmn\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3038,8 +3038,8 @@ __attribute__((naked)) void Select_PrintMenuOptions(void)
         "	.align 2, 0\n\t"
         "_0819B7F4: .4byte gUnknown_3001278\n\t"
         "_0819B7F8: .4byte gUnknown_85DBC7E\n\t"
-        "_0819B7FC: .4byte gUnknown_85DBBE4\n\t"
-        "_0819B800: .4byte gUnknown_85DBBF2\n\t"
+        "_0819B7FC: .4byte gText_Summary\n\t"
+        "_0819B800: .4byte gText_Deselect\n\t"
         "_0819B804:\n\t"
         "	str r4, [sp]\n\t"
         "	str r5, [sp, #4]\n\t"
@@ -3070,9 +3070,9 @@ __attribute__((naked)) void Select_PrintMenuOptions(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0819B840: .4byte gUnknown_85DBBDD\n\t"
+        "_0819B840: .4byte gText_Rent\n\t"
         "_0819B844: .4byte gUnknown_85DBC7E\n\t"
-        "_0819B848: .4byte gUnknown_85DBBEB\n\t"
+        "_0819B848: .4byte gText_Others2\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3117,8 +3117,8 @@ __attribute__((naked)) void Select_PrintYesNoOptions(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0819B89C: .4byte gUnknown_85DBC7E\n\t"
-        "_0819B8A0: .4byte gUnknown_85DBC0A\n\t"
-        "_0819B8A4: .4byte gUnknown_85DBC0D\n\t"
+        "_0819B8A0: .4byte gText_Yes2\n\t"
+        "_0819B8A4: .4byte gText_No2\n\t"
         ".syntax divided\n\t"
     );
 }
