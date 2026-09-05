@@ -19,16 +19,6 @@ gUnknown_85921F4: @ 0x85921F4
 gUnknown_85921FC: @ 0x85921FC
 	.incbin "baserom_jp.gba", 0x5921fc, 0x18
 
-	.section .rodata.data_b2d_mid33_petalburg_gym_raw_suffix, "a", %progbits
-
-	.globl gUnknown_85925C4
-gUnknown_85925C4: @ 0x85925C4
-	.incbin "baserom_jp.gba", 0x5925c4, 0x6
-
-	.globl gUnknown_85925CA
-gUnknown_85925CA: @ 0x85925CA
-	.incbin "baserom_jp.gba", 0x5925ca, 0xa
-
 	.section .rodata.data_b2d_mid33_field_specials_raw_suffix, "a", %progbits
 
 	.globl gUnknown_85925F8

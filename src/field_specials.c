@@ -42,6 +42,7 @@ extern void GetEreaderTrainerName(u8 *dest);
 #define FIELD_SPECIALS_DATA_ELEVATOR __attribute__((section(".rodata.field_specials_elevator_data")))
 #define FIELD_SPECIALS_DATA_LINK_PARTNER __attribute__((section(".rodata.field_specials_link_partner_data")))
 #define FIELD_SPECIALS_DATA_MAUVILLE_GYM __attribute__((section(".rodata.field_specials_mauville_gym_data")))
+#define FIELD_SPECIALS_DATA_PETALBURG_GYM __attribute__((section(".rodata.field_specials_petalburg_gym_data")))
 
 #define ELEVATOR_WINDOW_WIDTH  3
 #define ELEVATOR_WINDOW_HEIGHT 3
@@ -1540,6 +1541,18 @@ __attribute__((naked)) void PetalburgGymSlideOpenRoomDoors(void)
     );
 }
 
+// Kept externally visible while the Petalburg Gym door routines remain naked assembly.
+FIELD_SPECIALS_DATA_PETALBURG_GYM const bool8 sSlidingDoorNextFrameDelay[] = {0, 1, 1, 1, 1};
+
+FIELD_SPECIALS_DATA_PETALBURG_GYM const u16 sPetalburgGymSlidingDoorMetatiles[] =
+{
+    METATILE_PetalburgGym_SlidingDoor_Frame0,
+    METATILE_PetalburgGym_SlidingDoor_Frame1,
+    METATILE_PetalburgGym_SlidingDoor_Frame2,
+    METATILE_PetalburgGym_SlidingDoor_Frame3,
+    METATILE_PetalburgGym_SlidingDoor_Frame4,
+};
+
 __attribute__((naked)) void Task_PetalburgGym(void)
 {
     __asm__(".syntax unified\n\t"
@@ -1577,11 +1590,11 @@ __attribute__((naked)) void Task_PetalburgGym(void)
         "	bl ScriptContext_Enable\n\t"
         "	b _081389E0\n\t"
         "	.align 2, 0\n\t"
-        "_081389C8: .4byte gUnknown_85925C4\n\t"
+        "_081389C8: .4byte sSlidingDoorNextFrameDelay\n\t"
         "_081389CC: .4byte gUnknown_203A829\n\t"
         "_081389D0: .4byte gUnknown_203A828\n\t"
         "_081389D4: .4byte gSpecialVar_0x8004\n\t"
-        "_081389D8: .4byte gUnknown_85925CA\n\t"
+        "_081389D8: .4byte sPetalburgGymSlidingDoorMetatiles\n\t"
         "_081389DC:\n\t"
         "	adds r0, r2, #1\n\t"
         "	strb r0, [r4]\n\t"
@@ -1769,7 +1782,7 @@ __attribute__((naked)) void PetalburgGymUnlockRoomDoors(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08138B28: .4byte gSpecialVar_0x8004\n\t"
-        "_08138B2C: .4byte gUnknown_85925CA\n\t"
+        "_08138B2C: .4byte sPetalburgGymSlidingDoorMetatiles\n\t"
         ".syntax divided\n\t"
     );
 }

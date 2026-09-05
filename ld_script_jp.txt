@@ -9830,7 +9830,7 @@ SECTIONS {
         src/time_events.o(.rodata.time_events_shoal_tide_data);
         src/field_specials.o(.rodata.field_specials_link_partner_data);
         src/field_specials.o(.rodata.field_specials_mauville_gym_data);
-        data/data_b2d_mid33.o(.rodata.data_b2d_mid33_petalburg_gym_raw_suffix);
+        src/field_specials.o(.rodata.field_specials_petalburg_gym_data);
         src/field_specials.o(.rodata.field_specials_slot_machine_selectors);
         data/data_b2d_mid33.o(.rodata.data_b2d_mid33_field_specials_raw_suffix);
         src/field_specials.o(.rodata.field_specials_elevator_data);
