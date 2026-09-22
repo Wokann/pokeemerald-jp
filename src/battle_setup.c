@@ -851,14 +851,10 @@ static u8 GetTrainerBattleTransition(void)
         || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_AQUA_ADMIN)
         return B_TRANSITION_AQUA;
 
-    {
-        u8 isDoubleBattle;
-        __asm__("ldrb %0, [%1, #18]" : "=r"(isDoubleBattle) : "r"(&gTrainers[gTrainerBattleOpponent_A]));
-        if (isDoubleBattle == 1)
-            minPartyCount = 2; // double battles always at least have 2 Pokemon.
-        else
-            minPartyCount = 1;
-    }
+    if (gTrainers[gTrainerBattleOpponent_A].doubleBattle == TRUE)
+        minPartyCount = 2; // double battles always at least have 2 Pokemon.
+    else
+        minPartyCount = 1;
 
     transitionType = GetBattleTransitionTypeByMap();
     enemyLevel = GetSumOfEnemyPartyLevel(gTrainerBattleOpponent_A, minPartyCount);
