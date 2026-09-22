@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata
+	.section .rodata.mid37_before_secret_base_registry
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -21,41 +21,7 @@ gUnknown_85682F8: @ 0x85682F8
 gUnknown_8568730: @ 0x8568730
 	.incbin "baserom_jp.gba", 0x568730, 0x348
 
-	.globl gUnknown_8568A78
-gUnknown_8568A78: @ 0x8568A78
-	.incbin "baserom_jp.gba", 0x568a78, 0x1c
-
-	.globl gUnknown_8568A94
-gUnknown_8568A94: @ 0x8568A94
-	.incbin "baserom_jp.gba", 0x568a94, 0x60
-
-	.globl gUnknown_8568AF4
-gUnknown_8568AF4: @ 0x8568AF4
-	.incbin "baserom_jp.gba", 0x568af4, 0x10
-
-	.globl sDeleteRegistryYesNoFuncs
-sDeleteRegistryYesNoFuncs: @ 0x8568B04
-	.incbin "baserom_jp.gba", 0x568b04, 0x8
-
-	.globl sSecretBaseOwnerGfxIds
-sSecretBaseOwnerGfxIds: @ 0x8568B0C
-	.byte 0x23, 0x24, 0x0F, 0x1F, 0x21, 0x2F, 0x0E, 0x14, 0x20, 0x22
-
-	.globl gUnknown_8568B16
-gUnknown_8568B16: @ 0x8568B16
-	.byte 0x00, 0x00
-
-	.globl gUnknown_8568B18
-gUnknown_8568B18: @ 0x8568B18
-	.incbin "baserom_jp.gba", 0x568b18, 0x8
-
-	.globl gUnknown_8568B20
-gUnknown_8568B20: @ 0x8568B20
-	.incbin "baserom_jp.gba", 0x568b20, 0x8
-
-	.globl gUnknown_8568B28
-gUnknown_8568B28: @ 0x8568B28
-	.incbin "baserom_jp.gba", 0x568b28, 0x18
+	.section .rodata.mid37_after_secret_base_registry
 
 	.globl gUnknown_8568B40
 gUnknown_8568B40: @ 0x8568B40

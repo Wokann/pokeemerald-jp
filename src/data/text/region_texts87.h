@@ -26,4 +26,5 @@ const u8 gUnknown_85CA658[] = _(
 
 const u8 gUnknown_85CA676[] = _("とうろくを　かいじょ　しました{PAUSE_UNTIL_PRESS}");
 
-const u8 gUnknown_85CA688[] = _("とうろく　リストは　ありません{PAUSE_UNTIL_PRESS}$とうろく　かいじょ");
+const u8 gUnknown_85CA688[] = _("とうろく　リストは　ありません{PAUSE_UNTIL_PRESS}");
+const u8 gText_DelRegist[] = _("とうろく　かいじょ");

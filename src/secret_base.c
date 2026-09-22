@@ -1,5 +1,150 @@
 #include "global.h"
+#include "list_menu.h"
+#include "menu.h"
+#include "menu_helpers.h"
 #include "secret_base.h"
+#include "strings.h"
+#include "constants/event_objects.h"
+#include "constants/map_groups.h"
+#include "constants/maps.h"
+#include "constants/metatile_labels.h"
+#include "constants/secret_bases.h"
+
+struct SecretBaseEntranceMetatiles
+{
+    u16 closedMetatileId;
+    u16 openMetatileId;
+};
+
+#define SECRET_BASE_REGISTRY_DATA \
+    __attribute__((section(".rodata.secret_base_registry"), aligned(4)))
+#define SECRET_BASE_REGISTRY_PADDING \
+    __attribute__((section(".rodata.secret_base_registry"), aligned(1)))
+
+void sub_080EAA4C(void);
+void ShowRegistryMenuDeleteConfirmation(void);
+void sub_080EAD68(void);
+void DeleteRegistry_No(void);
+void ReturnToMainRegistryMenu(void);
+
+static const struct SecretBaseEntranceMetatiles sSecretBaseEntranceMetatiles[] SECRET_BASE_REGISTRY_DATA =
+{
+    {.closedMetatileId = METATILE_General_SecretBase_TreeLeft,  .openMetatileId = METATILE_General_SecretBase_VineLeft},
+    {.closedMetatileId = METATILE_General_SecretBase_TreeRight, .openMetatileId = METATILE_General_SecretBase_VineRight},
+    {.closedMetatileId = METATILE_General_RedCaveIndent,        .openMetatileId = METATILE_General_RedCaveOpen},
+    {.closedMetatileId = METATILE_General_YellowCaveIndent,     .openMetatileId = METATILE_General_YellowCaveOpen},
+    {.closedMetatileId = METATILE_General_BlueCaveIndent,       .openMetatileId = METATILE_General_BlueCaveOpen},
+    {.closedMetatileId = METATILE_Fallarbor_BrownCaveIndent,    .openMetatileId = METATILE_Fallarbor_BrownCaveOpen},
+    {.closedMetatileId = METATILE_Fortree_SecretBase_Shrub,     .openMetatileId = METATILE_Fortree_SecretBase_ShrubOpen},
+};
+
+// mapNum, warpId, x, y
+// x, y positions are for when the player warps in for the first time (in front of the computer)
+static const u8 sSecretBaseEntrancePositions[NUM_SECRET_BASE_GROUPS * 4] SECRET_BASE_REGISTRY_DATA =
+{
+    [SECRET_BASE_RED_CAVE1]    = MAP_NUM(MAP_SECRET_BASE_RED_CAVE1),    0,  1,  3,
+    [SECRET_BASE_RED_CAVE2]    = MAP_NUM(MAP_SECRET_BASE_RED_CAVE2),    0,  5,  9,
+    [SECRET_BASE_RED_CAVE3]    = MAP_NUM(MAP_SECRET_BASE_RED_CAVE3),    0,  1,  3,
+    [SECRET_BASE_RED_CAVE4]    = MAP_NUM(MAP_SECRET_BASE_RED_CAVE4),    0,  7, 13,
+    [SECRET_BASE_BROWN_CAVE1]  = MAP_NUM(MAP_SECRET_BASE_BROWN_CAVE1),  0,  2,  3,
+    [SECRET_BASE_BROWN_CAVE2]  = MAP_NUM(MAP_SECRET_BASE_BROWN_CAVE2),  0,  9,  2,
+    [SECRET_BASE_BROWN_CAVE3]  = MAP_NUM(MAP_SECRET_BASE_BROWN_CAVE3),  0, 13,  4,
+    [SECRET_BASE_BROWN_CAVE4]  = MAP_NUM(MAP_SECRET_BASE_BROWN_CAVE4),  0,  1,  2,
+    [SECRET_BASE_BLUE_CAVE1]   = MAP_NUM(MAP_SECRET_BASE_BLUE_CAVE1),   0,  1,  3,
+    [SECRET_BASE_BLUE_CAVE2]   = MAP_NUM(MAP_SECRET_BASE_BLUE_CAVE2),   0,  1,  2,
+    [SECRET_BASE_BLUE_CAVE3]   = MAP_NUM(MAP_SECRET_BASE_BLUE_CAVE3),   0,  3, 15,
+    [SECRET_BASE_BLUE_CAVE4]   = MAP_NUM(MAP_SECRET_BASE_BLUE_CAVE4),   0,  3, 14,
+    [SECRET_BASE_YELLOW_CAVE1] = MAP_NUM(MAP_SECRET_BASE_YELLOW_CAVE1), 0,  9,  3,
+    [SECRET_BASE_YELLOW_CAVE2] = MAP_NUM(MAP_SECRET_BASE_YELLOW_CAVE2), 0,  8,  7,
+    [SECRET_BASE_YELLOW_CAVE3] = MAP_NUM(MAP_SECRET_BASE_YELLOW_CAVE3), 0,  3,  6,
+    [SECRET_BASE_YELLOW_CAVE4] = MAP_NUM(MAP_SECRET_BASE_YELLOW_CAVE4), 0,  5,  9,
+    [SECRET_BASE_TREE1]        = MAP_NUM(MAP_SECRET_BASE_TREE1),        0,  2,  3,
+    [SECRET_BASE_TREE2]        = MAP_NUM(MAP_SECRET_BASE_TREE2),        0,  5,  6,
+    [SECRET_BASE_TREE3]        = MAP_NUM(MAP_SECRET_BASE_TREE3),        0, 15,  3,
+    [SECRET_BASE_TREE4]        = MAP_NUM(MAP_SECRET_BASE_TREE4),        0,  4, 10,
+    [SECRET_BASE_SHRUB1]       = MAP_NUM(MAP_SECRET_BASE_SHRUB1),        0,  3,  3,
+    [SECRET_BASE_SHRUB2]       = MAP_NUM(MAP_SECRET_BASE_SHRUB2),        0,  1,  2,
+    [SECRET_BASE_SHRUB3]       = MAP_NUM(MAP_SECRET_BASE_SHRUB3),        0,  7,  8,
+    [SECRET_BASE_SHRUB4]       = MAP_NUM(MAP_SECRET_BASE_SHRUB4),        0,  9,  6,
+};
+
+static const struct MenuAction sRegistryMenuActions[] SECRET_BASE_REGISTRY_DATA =
+{
+    {
+        .text = gText_DelRegist,
+        .func = { .void_u8 = (void (*)(u8))ShowRegistryMenuDeleteConfirmation },
+    },
+    {
+        .text = gText_Cancel,
+        .func = { .void_u8 = (void (*)(u8))ReturnToMainRegistryMenu },
+    },
+};
+
+static const struct YesNoFuncTable sDeleteRegistryYesNoFuncs SECRET_BASE_REGISTRY_DATA =
+{
+    .yesFunc = (TaskFunc)sub_080EAD68,
+    .noFunc = (TaskFunc)DeleteRegistry_No,
+};
+
+static const u8 sSecretBaseOwnerGfxIds[10] SECRET_BASE_REGISTRY_DATA =
+{
+    OBJ_EVENT_GFX_YOUNGSTER,
+    OBJ_EVENT_GFX_BUG_CATCHER,
+    OBJ_EVENT_GFX_RICH_BOY,
+    OBJ_EVENT_GFX_CAMPER,
+    OBJ_EVENT_GFX_MAN_3,
+    OBJ_EVENT_GFX_LASS,
+    OBJ_EVENT_GFX_GIRL_3,
+    OBJ_EVENT_GFX_WOMAN_2,
+    OBJ_EVENT_GFX_PICNICKER,
+    OBJ_EVENT_GFX_WOMAN_5,
+};
+
+static const u8 sSecretBaseRegistryPadding[2] SECRET_BASE_REGISTRY_PADDING = {0};
+
+static const struct WindowTemplate sRegistryWindowTemplates[] SECRET_BASE_REGISTRY_DATA =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 18,
+        .tilemapTop = 1,
+        .width = 11,
+        .height = 18,
+        .paletteNum = 15,
+        .baseBlock = 0x01,
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 1,
+        .width = 10, // JP registry menu layout
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0xc7,
+    }
+};
+
+static const struct ListMenuTemplate sRegistryListMenuTemplate SECRET_BASE_REGISTRY_DATA =
+{
+    .items = NULL,
+    .moveCursorFunc = (void (*)(s32, bool8, struct ListMenu *))sub_080EAA4C,
+    .itemPrintFunc = NULL,
+    .totalItems = 0,
+    .maxShowed = 0,
+    .windowId = 0,
+    .header_X = 0,
+    .item_X = 8,
+    .cursor_X = 0,
+    .upText_Y = 10, // JP registry menu layout
+    .cursorPal = 2,
+    .fillValue = 1,
+    .cursorShadowPal = 3,
+    .lettersSpacing = 0,
+    .itemVerticalPadding = 0,
+    .scrollMultiple = LIST_NO_MULTIPLE_SCROLL,
+    .fontId = FONT_NORMAL,
+    .cursorKind = CURSOR_BLACK_ARROW,
+};
 
 __attribute__((naked)) void ClearSecretBase(void)
 {
@@ -410,7 +555,7 @@ __attribute__((naked)) void ToggleSecretBaseEntranceMetatile()
         "	ldrh r3, [r2, #2]\n\t"
         "	b _080E9A50\n\t"
         "	.align 2, 0\n\t"
-        "_080E9A24: .4byte gUnknown_8568A78\n\t"
+        "_080E9A24: .4byte sSecretBaseEntranceMetatiles\n\t"
         "_080E9A28:\n\t"
         "	adds r0, r5, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -657,7 +802,7 @@ __attribute__((naked)) void SetOccupiedSecretBaseEntranceMetatiles(struct MapEve
         "	.align 2, 0\n\t"
         "_080E9BEC: .4byte gSaveBlock1Ptr\n\t"
         "_080E9BF0: .4byte 0x00001A9C\n\t"
-        "_080E9BF4: .4byte gUnknown_8568A78\n\t"
+        "_080E9BF4: .4byte sSecretBaseEntranceMetatiles\n\t"
         "_080E9BF8:\n\t"
         "	adds r0, r3, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -716,7 +861,7 @@ __attribute__((naked)) void SetSecretBaseWarpDestination(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E9C54: .4byte gUnknown_2039CE8\n\t"
-        "_080E9C58: .4byte gUnknown_8568A94\n\t"
+        "_080E9C58: .4byte sSecretBaseEntrancePositions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1002,7 +1147,7 @@ __attribute__((naked)) void Task_EnterNewlyCreatedSecretBase(void)
         "_080E9E68: .4byte gPaletteFade\n\t"
         "_080E9E6C: .4byte gUnknown_2039CE8\n\t"
         "_080E9E70: .4byte gSaveBlock1Ptr\n\t"
-        "_080E9E74: .4byte gUnknown_8568A94\n\t"
+        "_080E9E74: .4byte sSecretBaseEntrancePositions\n\t"
         "_080E9E78: .4byte gFieldCallback\n\t"
         "_080E9E7C: .4byte EnterNewlyCreatedSecretBase_StartFadeIn + 1\n\t"
         "_080E9E80: .4byte CB2_LoadMap + 1\n\t"
@@ -2253,7 +2398,7 @@ __attribute__((naked)) void ClosePlayerSecretBaseEntrance(void)
         "	.align 2, 0\n\t"
         "_080EA790: .4byte gSaveBlock1Ptr\n\t"
         "_080EA794: .4byte 0x00001A9C\n\t"
-        "_080EA798: .4byte gUnknown_8568A78\n\t"
+        "_080EA798: .4byte sSecretBaseEntranceMetatiles\n\t"
         "_080EA79C:\n\t"
         "	ldr r0, [r4, #0x10]\n\t"
         "	adds r1, r7, r6\n\t"
@@ -2517,7 +2662,7 @@ __attribute__((naked)) void Task_ShowSecretBaseRegistryMenu(void)
         "	.align 2, 0\n\t"
         "_080EA960: .4byte gUnknown_3005B68\n\t"
         "_080EA964: .4byte gUnknown_2039CEC\n\t"
-        "_080EA968: .4byte gUnknown_8568B18\n\t"
+        "_080EA968: .4byte sRegistryWindowTemplates\n\t"
         "_080EA96C: .4byte HandleRegistryMenuInput + 1\n\t"
         "_080EA970:\n\t"
         "	ldr r1, _080EA984\n\t"
@@ -2635,7 +2780,7 @@ __attribute__((naked)) void BuildRegistryMenuItems(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080EAA44: .4byte gMultiuseListMenuTemplate\n\t"
-        "_080EAA48: .4byte gUnknown_8568B28\n\t"
+        "_080EAA48: .4byte sRegistryListMenuTemplate\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2859,8 +3004,8 @@ __attribute__((naked)) void ShowRegistryMenuActions(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080EABE8: .4byte gUnknown_3005B68\n\t"
-        "_080EABEC: .4byte gUnknown_8568B20\n\t"
-        "_080EABF0: .4byte gUnknown_8568AF4\n\t"
+        "_080EABEC: .4byte sRegistryWindowTemplates + 8\n\t"
+        "_080EABF0: .4byte sRegistryMenuActions\n\t"
         "_080EABF4: .4byte HandleRegistryMenuActionsInput + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -2904,7 +3049,7 @@ __attribute__((naked)) void HandleRegistryMenuActionsInput(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080EAC40: .4byte gUnknown_8568AF4\n\t"
+        "_080EAC40: .4byte sRegistryMenuActions\n\t"
         ".syntax divided\n\t"
     );
 }
