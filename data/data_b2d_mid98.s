@@ -9,8 +9,8 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_85CD19F
-gUnknown_85CD19F: @ 0x85CD19F
+	.globl gText_LoadErrorEndingSession
+gText_LoadErrorEndingSession: @ 0x85CD19F
 	.string "エラーがはっせいしました\n"
 	.string "しゅうりょうします$Aボタンを　おしてください$つながりました$データを　じゅしんしました$セーブできませんでした$セーブできました$ロードできませんでした$ロードできました$"
 	.section .rodata.mid98_between

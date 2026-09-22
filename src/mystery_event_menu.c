@@ -25,12 +25,6 @@
 #include "strings.h"
 #include "string_util.h"
 
-extern const u8 gUnknown_85CD159[];
-extern const u8 gUnknown_85CD19F[];
-extern const u8 gUnknown_85CD0DC[];
-extern const u8 gUnknown_85CD0FE[];
-extern const u8 gUnknown_85CD123[];
-extern const u8 gUnknown_85CD133[];
 extern u8 gUnknown_203B9C4;
 
 void CB2_MysteryEventMenu(void);
@@ -131,7 +125,7 @@ bool8 GetEventLoadMessage(u8 *dest, u32 status)
 
     if (status == MEVENT_STATUS_LOAD_OK)
     {
-        StringCopy(dest, gUnknown_85CD159);
+        StringCopy(dest, gText_EventSafelyLoaded);
         retVal = FALSE;
     }
 
@@ -139,7 +133,7 @@ bool8 GetEventLoadMessage(u8 *dest, u32 status)
         retVal = FALSE;
 
     if (status == MEVENT_STATUS_LOAD_ERROR)
-        StringCopy(dest, gUnknown_85CD19F);
+        StringCopy(dest, gText_LoadErrorEndingSession);
 
     return retVal;
 }
@@ -159,7 +153,7 @@ void CB2_MysteryEventMenu(void)
     case 1:
         if (!gPaletteFade.active)
         {
-            PrintMysteryMenuText(WIN_MSG, gUnknown_85CD0DC, 1, 2, 1);
+            PrintMysteryMenuText(WIN_MSG, gText_LinkStandby2, 1, 2, 1);
             gMain.state++;
         }
         break;
@@ -175,7 +169,7 @@ void CB2_MysteryEventMenu(void)
         if ((gLinkStatus & LINK_STAT_MASTER) && (gLinkStatus & LINK_STAT_PLAYER_COUNT) > 4)
         {
             PlaySE(SE_PIN);
-            PrintMysteryMenuText(WIN_MSG, gUnknown_85CD0FE, 1, 2, 1);
+            PrintMysteryMenuText(WIN_MSG, gText_PressAToLoadEvent, 1, 2, 1);
             gMain.state++;
         }
         if (JOY_NEW(B_BUTTON))
@@ -197,7 +191,7 @@ void CB2_MysteryEventMenu(void)
                 PlaySE(SE_SELECT);
                 CheckShouldAdvanceLinkState();
                 DrawStdFrameWithCustomTileAndPalette(WIN_LOADING, TRUE, 1, 0xD);
-                PrintMysteryMenuText(WIN_LOADING, gUnknown_85CD123, 1, 2, 0);
+                PrintMysteryMenuText(WIN_LOADING, gText_LoadingEvent, 1, 2, 0);
                 PutWindowTilemap(WIN_LOADING);
                 CopyWindowToVram(WIN_LOADING, COPYWIN_FULL);
                 gMain.state++;
@@ -230,7 +224,7 @@ void CB2_MysteryEventMenu(void)
                 }
                 else if (CheckLanguageMatch())
                 {
-                    PrintMysteryMenuText(WIN_MSG, gUnknown_85CD133, 1, 2, 1);
+                    PrintMysteryMenuText(WIN_MSG, gText_DontRemoveCableTurnOff, 1, 2, 1);
                     gMain.state++;
                 }
                 else
