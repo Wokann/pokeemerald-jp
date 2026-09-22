@@ -9062,10 +9062,10 @@ SECTIONS {
 		src/librfu_stwi.o(.text);
 		src/librfu_intr.o(.text);
 		src/librfu_rfu.o(.text);
-		src/librfu.o(.text.sub_082952F4);
-		src/librfu.o(.text.sub_082953A8);
-		src/librfu.o(.text.sub_0829541C);
-		src/librfu.o(.text.sub_08295510);
+		src/librfu_sio32id.o(.text.AgbRFU_checkID);
+		src/librfu_sio32id.o(.text.Sio32IDInit);
+		src/librfu_sio32id.o(.text.Sio32IDMain);
+		src/librfu_sio32id.o(.text.Sio32IDIntr);
 		src/libisagbprn_a.o(.text);
 		src/libisagbprn_putc.o(.text);
 		src/libisagbprn_b.o(.text);
