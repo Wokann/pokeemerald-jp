@@ -36,11 +36,11 @@ gUnknown_85743B4: @ 0x85743B4
 	@ This auxiliary UI data has no verified semantic owner yet.
 	.incbin "baserom_jp.gba", 0x5743b4, 0x8
 
-	.section .rodata.mid60_tail_after_easy_chat_group_move_2_data
+	.section .rodata.mid60_tail_after_easy_chat_group_trendy_saying_data
 
-	.globl gUnknown_85788E0
-gUnknown_85788E0: @ 0x85788E0
-	.incbin "baserom_jp.gba", 0x5788e0, 0x434
+	.globl gUnknown_8578B1C
+gUnknown_8578B1C: @ 0x8578B1C
+	.incbin "baserom_jp.gba", 0x578b1c, 0x1f8
 
 	.globl gUnknown_8578D14
 gUnknown_8578D14: @ 0x8578D14
