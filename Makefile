@@ -855,6 +855,7 @@ $(C_BUILDDIR)/battle_factory_screen.o: \
 	graphics/battle_frontier/factory_screen/mon_pic_bg.png.4bpp \
 	graphics/battle_frontier/factory_screen/mon_pic_bg.pal.gbapal
 $(C_BUILDDIR)/menu.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
+$(C_BUILDDIR)/menu.o: graphics/interface/std_menu.pal.gbapal
 $(C_BUILDDIR)/naming_screen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/pokedex.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/field_specials.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
@@ -1196,6 +1197,9 @@ graphics/battle_anims/sprites/ice_cube.4bpp: graphics/battle_anims/sprites/ice_c
 	$(GFX) $< $@
 
 %.gbapal: %.png | tools
+	$(GFX) $< $@
+
+graphics/interface/%.pal.gbapal: graphics/interface/%.pal | tools
 	$(GFX) $< $@
 
 # Keep the JP Egg Hatch graphics reproducible from tracked PNG/PAL inputs.
@@ -1541,6 +1545,12 @@ $(C_BUILDDIR)/battle_factory_screen.o: src/battle_factory_screen.c
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/battle_factory_screen.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/battle_factory_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/battle_factory_screen.gen.s
+
+$(C_BUILDDIR)/menu.o: src/menu.c
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/menu.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/menu.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/menu.gen.s
 
 $(C_BUILDDIR)/starter_choose.o: src/starter_choose.c
 	@mkdir -p $(dir $@)

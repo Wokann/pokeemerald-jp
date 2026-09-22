@@ -1,6 +1,12 @@
 #include "global.h"
 #include "menu.h"
 
+#define MENU_STANDARD_PALETTE __attribute__((section(".rodata.menu_standard_palette")))
+
+MENU_STANDARD_PALETTE const u16 gStandardMenuPalette[] = INCBIN_U16("graphics/interface/std_menu.pal.gbapal");
+
+#undef MENU_STANDARD_PALETTE
+
 struct MenuInfoIcon
 {
     u8 width;

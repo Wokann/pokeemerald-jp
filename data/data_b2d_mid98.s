@@ -16,9 +16,3 @@ gText_LoadErrorEndingSession: @ 0x85CD19F
 	.section .rodata.mid98_between
 
 	.section .rodata.mid98_suffix_before_species_to_back_anim_set
-
-	.section .rodata.mid98_suffix_after_shake_visual_data
-
-	.globl gStandardMenuPalette
-gStandardMenuPalette: @ 0x85D7B04
-	.incbin "graphics/misc/gStandardMenuPalette.bin"

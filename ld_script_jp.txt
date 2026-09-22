@@ -10059,7 +10059,7 @@ SECTIONS {
         src/match_call.o(.rodata.match_call_data);
         src/match_call.o(.rodata.match_call_ui_data);
         src/match_call.o(.rodata.match_call_logic_data);
-        data/data_b2d_mid98.o(.rodata.mid98_suffix_after_shake_visual_data);
+        src/menu.o(.rodata.menu_standard_palette);
         src/menu.o(.rodata.menu_core_data);
         src/strings.o(.rodata.strings_menu_yes_no);
         . = ALIGN(4);
