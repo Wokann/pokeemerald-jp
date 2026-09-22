@@ -1,17 +1,104 @@
 #include "global.h"
+#include "battle.h"
 #include "egg_hatch.h"
 #include "bg.h"
+#include "data.h"
+#include "daycare.h"
+#include "decompress.h"
+#include "dma3.h"
+#include "event_data.h"
+#include "field_screen_effect.h"
+#include "field_weather.h"
+#include "gpu_regs.h"
+#include "graphics.h"
+#include "international_string_util.h"
+#include "m4a.h"
+#include "main.h"
+#include "malloc.h"
+#include "menu.h"
+#include "naming_screen.h"
+#include "overworld.h"
+#include "palette.h"
+#include "pokedex.h"
+#include "pokemon.h"
+#include "pokemon_storage_system.h"
+#include "random.h"
+#include "scanline_effect.h"
+#include "script.h"
+#include "sound.h"
 #include "sprite.h"
+#include "string_util.h"
+#include "task.h"
+#include "text.h"
+#include "text_window.h"
+#include "trade.h"
+#include "trig.h"
 #include "window.h"
+#include "constants/abilities.h"
+#include "constants/items.h"
+#include "constants/rgb.h"
+#include "constants/songs.h"
 
 #define GFXTAG_EGG       12345
 #define GFXTAG_EGG_SHARD 23456
 #define PALTAG_EGG       54321
 
+#define EGG_X (DISPLAY_WIDTH / 2)
+#define EGG_Y (DISPLAY_HEIGHT / 2 - 5)
+
+struct EggHatchData
+{
+    u8 eggSpriteId;
+    u8 monSpriteId;
+    u8 state;
+    u8 delayTimer;
+    u8 eggPartyId;
+    u8 unused_5;
+    u8 unused_6;
+    u8 eggShardVelocityId;
+    u8 windowId;
+    u8 unused_9;
+    u8 unused_A;
+    u16 species;
+    u8 textColor[3];
+};
+
+extern struct EggHatchData *gUnknown_3000DE0;
+
+#define sEggHatchData gUnknown_3000DE0
+
 #define EGG_HATCH_STATIC_DATA __attribute__((section(".rodata.egg_hatch_static_data"), aligned(1)))
 #define EGG_HATCH_GRAPHICS_DATA __attribute__((section(".rodata.egg_hatch_graphics"), aligned(1)))
 
 static void SpriteCB_EggShard(struct Sprite *sprite);
+static void CreatedHatchedMon(struct Pokemon *egg, struct Pokemon *temp);
+static void AddHatchedMonToParty(u8 id);
+static bool8 sub_08070FA4(struct DayCare *daycare, u8 daycareId);
+static u8 EggHatchCreateMonSprite(u8 useAlt, u8 state, u8 partyId, u16 *speciesLoc);
+static void VBlankCB_EggHatch(void);
+static void Task_EggHatch(u8 taskId);
+static void CB2_EggHatch_0(void);
+static void CB2_EggHatch_1(void);
+static void EggHatchSetMonNickname(void);
+static void Task_EggHatchPlayBGM(u8 taskId);
+static void SpriteCB_Egg_0(struct Sprite *sprite);
+static void SpriteCB_Egg_1(struct Sprite *sprite);
+static void SpriteCB_Egg_2(struct Sprite *sprite);
+static void SpriteCB_Egg_3(struct Sprite *sprite);
+static void SpriteCB_Egg_4(struct Sprite *sprite);
+static void SpriteCB_Egg_5(struct Sprite *sprite);
+static void CreateRandomEggShardSprite(void);
+static void CreateEggShardSprite(u8 x, u8 y, s16 velocityX, s16 velocityY, s16 acceleration, u8 spriteAnimIndex);
+static void EggHatchPrintMessage(u8 windowId, u8 *string, u8 x, u8 y, u8 speed);
+
+extern void GetBoxMonNick(struct Pokemon *mon, u8 *dest);
+extern void GetMonNick(struct BoxPokemon *mon, u8 *dest);
+extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
+extern const u16 gUnknown_8305D24[];
+extern const u16 gUnknown_8305D84[];
+extern const u16 gUnknown_8304D04[];
+extern const u8 gUnknown_85CC874[];
+extern const u8 gUnknown_85CC888[];
 
 static const u16 sEggPalette[] EGG_HATCH_GRAPHICS_DATA = INCGFX_U16("graphics/pokemon/egg/normal.pal", ".gbapal");
 static const u8 sEggHatchTiles[] EGG_HATCH_GRAPHICS_DATA = INCGFX_U8("graphics/pokemon/egg/hatch.png", ".4bpp");
@@ -64,6 +151,14 @@ static const union AnimCmd *const sSpriteAnimTable_Egg[] EGG_HATCH_STATIC_DATA =
     sSpriteAnim_Egg_Cracked1,
     sSpriteAnim_Egg_Cracked2,
     sSpriteAnim_Egg_Cracked3,
+};
+
+enum
+{
+    EGG_ANIM_NORMAL,
+    EGG_ANIM_CRACKED_1,
+    EGG_ANIM_CRACKED_2,
+    EGG_ANIM_CRACKED_3,
 };
 
 const struct SpriteSheet sEggHatch_Sheet EGG_HATCH_STATIC_DATA =
@@ -227,1997 +322,624 @@ const s16 sEggShardVelocities[][2] EGG_HATCH_STATIC_DATA =
     {Q_8_8(2.5),        Q_8_8(-7.5)},
 };
 
-__attribute__((naked)) void CreatedHatchedMon(void)
+static void CreatedHatchedMon(struct Pokemon *egg, struct Pokemon *temp)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x50\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	str r0, [sp, #0x3c]\n\t"
-        "	movs r4, #0\n\t"
-        "	add r7, sp, #0x18\n\t"
-        "	add r0, sp, #0x30\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r1, #0x31\n\t"
-        "	add r1, sp\n\t"
-        "	mov sl, r1\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r0, #0x32\n\t"
-        "	str r0, [sp, #0x40]\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r1, #0x34\n\t"
-        "	str r1, [sp, #0x48]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [sp, #0x44]\n\t"
-        "	adds r1, #4\n\t"
-        "	str r1, [sp, #0x4c]\n\t"
-        "_08070DA6:\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0xd\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	add r1, sp\n\t"
-        "	adds r1, #0x10\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #3\n\t"
-        "	bls _08070DA6\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r4, #0\n\t"
-        "_08070DCE:\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x27\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r7, r1\n\t"
-        "	str r0, [r1]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #5\n\t"
-        "	bls _08070DCE\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sb\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x25\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sl\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r1, [sp, #0x40]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x22\n\t"
-        "	bl GetMonData3\n\t"
-        "	str r0, [sp, #0x38]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r1, [sp, #0x48]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	ldr r1, [sp, #0x3c]\n\t"
-        "	movs r2, #5\n\t"
-        "	movs r3, #0x20\n\t"
-        "	bl CreateMon\n\t"
-        "	movs r4, #0\n\t"
-        "_08070E3E:\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0xd\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r2, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #3\n\t"
-        "	bls _08070E3E\n\t"
-        "	movs r4, #0\n\t"
-        "_08070E5C:\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x27\n\t"
-        "	lsls r2, r4, #2\n\t"
-        "	adds r2, r7, r2\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #5\n\t"
-        "	bls _08070E5C\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	mov r2, sb\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x25\n\t"
-        "	mov r2, sl\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	ldr r2, [sp, #0x40]\n\t"
-        "	bl SetMonData\n\t"
-        "	movs r0, #0x78\n\t"
-        "	ldr r1, [sp, #0x44]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	ldr r2, [sp, #0x44]\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x22\n\t"
-        "	ldr r2, [sp, #0x4c]\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x50\n\t"
-        "	ldr r2, [sp, #0x48]\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	add sp, #0x50\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 species;
+    u32 personality, pokerus;
+    u8 i, friendship, language, gameMet, markings, isModernFatefulEncounter;
+    u16 moves[MAX_MON_MOVES];
+    u32 ivs[NUM_STATS];
+
+    species = GetMonData3(egg, MON_DATA_SPECIES);
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+        moves[i] = GetMonData3(egg, MON_DATA_MOVE1 + i);
+
+    personality = GetMonData3(egg, MON_DATA_PERSONALITY);
+
+    for (i = 0; i < NUM_STATS; i++)
+        ivs[i] = GetMonData3(egg, MON_DATA_HP_IV + i);
+
+    language = GetMonData3(egg, MON_DATA_LANGUAGE);
+    gameMet = GetMonData3(egg, MON_DATA_MET_GAME);
+    markings = GetMonData3(egg, MON_DATA_MARKINGS);
+    pokerus = GetMonData3(egg, MON_DATA_POKERUS);
+    isModernFatefulEncounter = GetMonData3(egg, MON_DATA_MODERN_FATEFUL_ENCOUNTER);
+
+    CreateMon(temp, species, EGG_HATCH_LEVEL, USE_RANDOM_IVS, TRUE, personality, OT_ID_PLAYER_ID, 0);
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+        SetMonData(temp, MON_DATA_MOVE1 + i, &moves[i]);
+
+    for (i = 0; i < NUM_STATS; i++)
+        SetMonData(temp, MON_DATA_HP_IV + i, &ivs[i]);
+
+    SetMonData(temp, MON_DATA_LANGUAGE, &language);
+    SetMonData(temp, MON_DATA_MET_GAME, &gameMet);
+    SetMonData(temp, MON_DATA_MARKINGS, &markings);
+
+    friendship = 120;
+    SetMonData(temp, MON_DATA_FRIENDSHIP, &friendship);
+    SetMonData(temp, MON_DATA_POKERUS, &pokerus);
+    SetMonData(temp, MON_DATA_MODERN_FATEFUL_ENCOUNTER, &isModernFatefulEncounter);
+
+    *egg = *temp;
 }
 
-__attribute__((naked)) void AddHatchedMonToParty(void)
+static void AddHatchedMonToParty(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add r4, sp, #0xc\n\t"
-        "	movs r1, #0x46\n\t"
-        "	strb r1, [r4]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	muls r5, r1, r5\n\t"
-        "	ldr r0, _08070F84\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	ldr r1, _08070F88\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl CreatedHatchedMon\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetSpeciesName\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HoennToNationalOrder\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetSetPokedexFlag\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl GetSetPokedexFlag\n\t"
-        "	ldr r1, _08070F8C\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetBoxMonNick\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r2, #0xe\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x26\n\t"
-        "	bl SetMonData\n\t"
-        "	add r2, sp, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x24\n\t"
-        "	bl SetMonData\n\t"
-        "	bl GetCurrentRegionMapSectionId\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r2, #0x12\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x23\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GiveMonInitialMoveset\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl CalculateMonStats\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08070F84: .4byte gPlayerParty\n\t"
-        "_08070F88: .4byte gEnemyParty\n\t"
-        "_08070F8C: .4byte gStringVar1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 isEgg = 0x46;
+    u16 species;
+    // The JP name table uses 5-character strings, but mon nickname storage
+    // retains the 10-character international layout used by this routine.
+    u8 name[POKEMON_NAME_STORAGE_LENGTH + 1];
+    u16 ball;
+    u16 metLevel;
+    metloc_u8_t metLocation;
+    struct Pokemon *mon = &gPlayerParty[id];
+
+    CreatedHatchedMon(mon, &gEnemyParty[0]);
+    SetMonData(mon, MON_DATA_IS_EGG, &isEgg);
+
+    species = GetMonData3(mon, MON_DATA_SPECIES);
+    GetSpeciesName(name, species);
+    SetMonData(mon, MON_DATA_NICKNAME, name);
+
+    species = HoennToNationalOrder(species);
+    GetSetPokedexFlag(species, FLAG_SET_SEEN);
+    GetSetPokedexFlag(species, FLAG_SET_CAUGHT);
+
+    GetBoxMonNick(mon, gStringVar1);
+
+    ball = ITEM_POKE_BALL;
+    SetMonData(mon, MON_DATA_POKEBALL, &ball);
+
+    metLevel = 0;
+    SetMonData(mon, MON_DATA_MET_LEVEL, &metLevel);
+
+    metLocation = GetCurrentRegionMapSectionId();
+    SetMonData(mon, MON_DATA_MET_LOCATION, &metLocation);
+
+    GiveMonInitialMoveset(mon);
+    CalculateMonStats(mon);
 }
 
-__attribute__((naked)) void ScriptHatchMon(void)
+void ScriptHatchMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08070FA0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl AddHatchedMonToParty\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08070FA0: .4byte gSpecialVar_0x8004\n\t"
-        ".syntax divided\n\t"
-    );
+    AddHatchedMonToParty(gSpecialVar_0x8004);
 }
 
-__attribute__((naked)) void sub_08070FA4(void)
+static bool8 sub_08070FA4(struct DayCare *daycare, u8 daycareId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x20\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r2, #0x8c\n\t"
-        "	muls r1, r2, r1\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	bl GetMonNick\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x70\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08071010\n\t"
-        "	adds r5, r4, #0\n\t"
-        "	adds r5, #0x7c\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl StringCompare\n\t"
-        "	adds r4, #0x74\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08070FE4\n\t"
-        "	ldr r0, _08071000\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl StringCompare\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08071010\n\t"
-        "_08070FE4:\n\t"
-        "	ldr r0, _08071004\n\t"
-        "	mov r1, sp\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r0, _08071008\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r0, _0807100C\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08071012\n\t"
-        "	.align 2, 0\n\t"
-        "_08071000: .4byte gSaveBlock2Ptr\n\t"
-        "_08071004: .4byte gStringVar1\n\t"
-        "_08071008: .4byte gStringVar2\n\t"
-        "_0807100C: .4byte gStringVar3\n\t"
-        "_08071010:\n\t"
-        "	movs r0, #0\n\t"
-        "_08071012:\n\t"
-        "	add sp, #0x20\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 nickname[max(32, POKEMON_NAME_BUFFER_SIZE)];
+    struct DaycareMon *daycareMon = &daycare->mons[daycareId];
+
+    GetMonNick(&daycareMon->mon, nickname);
+    if (daycareMon->mail.message.itemId != ITEM_NONE
+        && (StringCompare(nickname, daycareMon->mail.monName) != 0
+         || StringCompare(gSaveBlock2Ptr->playerName, daycareMon->mail.otName) != 0))
+    {
+        StringCopy(gStringVar1, nickname);
+        StringCopy(gStringVar2, daycareMon->mail.otName);
+        StringCopy(gStringVar3, daycareMon->mail.monName);
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 CheckDaycareMonReceivedMail(void)
+bool8 CheckDaycareMonReceivedMail(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08071038\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _0807103C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08071040\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	bl sub_08070FA4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08071038: .4byte gSaveBlock1Ptr\n\t"
-        "_0807103C: .4byte 0x00003030\n\t"
-        "_08071040: .4byte gSpecialVar_0x8004\n\t"
-        ".syntax divided\n\t"
-    );
+    return sub_08070FA4(&gSaveBlock1Ptr->daycare, gSpecialVar_0x8004);
 }
 
-__attribute__((naked)) void EggHatchCreateMonSprite(void)
+static u8 EggHatchCreateMonSprite(u8 useAlt, u8 state, u8 partyId, u16 *speciesLoc)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	mov sb, r3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	mov r8, r3\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r1, r2, #0x18\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r7, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	cmp r3, #0\n\t"
-        "	bne _08071072\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _0807108C\n\t"
-        "	adds r5, r1, r0\n\t"
-        "	movs r4, #1\n\t"
-        "_08071072:\n\t"
-        "	cmp r3, #1\n\t"
-        "	bne _08071082\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _0807108C\n\t"
-        "	adds r5, r1, r0\n\t"
-        "	movs r4, #3\n\t"
-        "_08071082:\n\t"
-        "	cmp r6, #0\n\t"
-        "	beq _08071090\n\t"
-        "	cmp r6, #1\n\t"
-        "	beq _080710E0\n\t"
-        "	b _0807111A\n\t"
-        "	.align 2, 0\n\t"
-        "_0807108C: .4byte gPlayerParty\n\t"
-        "_08071090:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	ldr r1, _080710D8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080710DC\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	mov r6, r8\n\t"
-        "	lsls r1, r6, #1\n\t"
-        "	adds r1, #1\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r2, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl HandleLoadSpecialPokePic_DontHandleDeoxys\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetMonSpritePalStruct\n\t"
-        "	bl LoadCompressedSpritePalette\n\t"
-        "	mov r0, sb\n\t"
-        "	strh r4, [r0]\n\t"
-        "	b _0807111A\n\t"
-        "	.align 2, 0\n\t"
-        "_080710D8: .4byte gMonFrontPicTable\n\t"
-        "_080710DC: .4byte gMonSpritesGfxPtr\n\t"
-        "_080710E0:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetMonSpritePalStruct\n\t"
-        "	ldrh r0, [r0, #4]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetMultiuseSpriteTemplateToPokemon\n\t"
-        "	ldr r0, _08071128\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x4b\n\t"
-        "	movs r3, #6\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r4, _0807112C\n\t"
-        "	lsls r1, r7, #4\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r2, r1, r4\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r3, #4\n\t"
-        "	orrs r0, r3\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r4, #0x1c\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r0, _08071130\n\t"
-        "	str r0, [r1]\n\t"
-        "_0807111A:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08071128: .4byte gMultiuseSpriteTemplate\n\t"
-        "_0807112C: .4byte gSprites\n\t"
-        "_08071130: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 position = 0;
+    u8 spriteId = 0;
+    struct Pokemon *mon = NULL;
+
+    if (useAlt == FALSE)
+    {
+        mon = &gPlayerParty[partyId];
+        position = B_POSITION_OPPONENT_LEFT;
+    }
+    if (useAlt == TRUE)
+    {
+        mon = &gPlayerParty[partyId];
+        position = B_POSITION_OPPONENT_RIGHT;
+    }
+    switch (state)
+    {
+    case 0:
+        {
+            u16 species = GetMonData3(mon, MON_DATA_SPECIES);
+            u32 pid = GetMonData3(mon, MON_DATA_PERSONALITY);
+            HandleLoadSpecialPokePic_DontHandleDeoxys(&gMonFrontPicTable[species],
+                                                      gMonSpritesGfxPtr->sprites.ptr[(useAlt * 2) + B_POSITION_OPPONENT_LEFT],
+                                                      species, pid);
+            LoadCompressedSpritePalette(GetMonSpritePalStruct(mon));
+            *speciesLoc = species;
+        }
+        break;
+    case 1:
+        SetMultiuseSpriteTemplateToPokemon(GetMonSpritePalStruct(mon)->tag, position);
+        spriteId = CreateSprite(&gMultiuseSpriteTemplate, EGG_X, EGG_Y, 6);
+        gSprites[spriteId].invisible = TRUE;
+        gSprites[spriteId].callback = SpriteCallbackDummy;
+        break;
+    }
+    return spriteId;
 }
 
-__attribute__((naked)) void VBlankCB_EggHatch(void)
+static void VBlankCB_EggHatch(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LoadOam\n\t"
-        "	bl ProcessSpriteCopyRequests\n\t"
-        "	bl TransferPlttBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
 }
 
-__attribute__((naked)) void EggHatch(void)
+void EggHatch(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	ldr r0, _08071164\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl CreateTask\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FadeScreen\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08071164: .4byte Task_EggHatch + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    LockPlayerFieldControls();
+    CreateTask(Task_EggHatch, 10);
+    FadeScreen(FADE_TO_BLACK, 0);
 }
 
-__attribute__((naked)) void Task_EggHatch(void)
+static void Task_EggHatch(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _08071198\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08071190\n\t"
-        "	bl CleanupOverworldWindowsAndTilemaps\n\t"
-        "	ldr r0, _0807119C\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r1, _080711A0\n\t"
-        "	ldr r0, _080711A4\n\t"
-        "	str r0, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_08071190:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08071198: .4byte gPaletteFade\n\t"
-        "_0807119C: .4byte CB2_EggHatch_0 + 1\n\t"
-        "_080711A0: .4byte gFieldCallback\n\t"
-        "_080711A4: .4byte FieldCB_ContinueScriptHandleMusic + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        CleanupOverworldWindowsAndTilemaps();
+        SetMainCallback2(CB2_EggHatch_0);
+        gFieldCallback = FieldCB_ContinueScriptHandleMusic;
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void CB2_EggHatch_0(void)
+static void CB2_EggHatch_0(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _080711C8\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #8\n\t"
-        "	bls _080711BC\n\t"
-        "	b _080713DA\n\t"
-        "_080711BC:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080711CC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080711C8: .4byte gMain\n\t"
-        "_080711CC: .4byte _080711D0\n\t"
-        "_080711D0:\n\t"
-        "	.4byte _080711F4\n\t"
-        "	.4byte _080712C0\n\t"
-        "	.4byte _080712D8\n\t"
-        "	.4byte _08071308\n\t"
-        "	.4byte _08071328\n\t"
-        "	.4byte _08071340\n\t"
-        "	.4byte _08071358\n\t"
-        "	.4byte _08071374\n\t"
-        "	.4byte _080713CC\n\t"
-        "_080711F4:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r4, _080712AC\n\t"
-        "	movs r0, #0x14\n\t"
-        "	bl Alloc\n\t"
-        "	str r0, [r4]\n\t"
-        "	bl AllocateMonSpritesGfx\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r0, _080712B0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r0, [r2, #4]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	strb r1, [r0, #7]\n\t"
-        "	ldr r0, _080712B4\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	bl GetCurrentMapMusic\n\t"
-        "	ldr r1, _080712B8\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl ResetTempTileDataBuffers\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ResetBgsAndClearDma3BusyFlags\n\t"
-        "	ldr r1, _080712BC\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl InitBgsFromTemplates\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #7\n\t"
-        "	movs r2, #2\n\t"
-        "	bl SetBgAttribute\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	bl Alloc\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #6\n\t"
-        "	bl Alloc\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	bl DeactivateAllTextPrinters\n\t"
-        "	bl ResetPaletteFade\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	bl ResetTasks\n\t"
-        "	bl ScanlineEffect_Stop\n\t"
-        "	bl m4aSoundVSyncOn\n\t"
-        "	b _080713AA\n\t"
-        "	.align 2, 0\n\t"
-        "_080712AC: .4byte gUnknown_3000DE0\n\t"
-        "_080712B0: .4byte gSpecialVar_0x8004\n\t"
-        "_080712B4: .4byte VBlankCB_EggHatch + 1\n\t"
-        "_080712B8: .4byte gSpecialVar_0x8005\n\t"
-        "_080712BC: .4byte sBgTemplates_EggHatch\n\t"
-        "_080712C0:\n\t"
-        "	ldr r0, _080712D0\n\t"
-        "	bl InitWindows\n\t"
-        "	ldr r0, _080712D4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #8]\n\t"
-        "	b _080713AA\n\t"
-        "	.align 2, 0\n\t"
-        "_080712D0: .4byte sWinTemplates_EggHatch\n\t"
-        "_080712D4: .4byte gUnknown_3000DE0\n\t"
-        "_080712D8:\n\t"
-        "	movs r1, #0x8c\n\t"
-        "	lsls r1, r1, #0x14\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl DecompressAndLoadBgGfxUsingHeap\n\t"
-        "	ldr r1, _08071300\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CopyToBgTilemapBuffer\n\t"
-        "	ldr r0, _08071304\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	b _080713AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08071300: .4byte gBattleTextboxTilemap\n\t"
-        "_08071304: .4byte gBattleTextboxPalette\n\t"
-        "_08071308:\n\t"
-        "	ldr r0, _0807131C\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	ldr r0, _08071320\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	ldr r0, _08071324\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	b _080713AA\n\t"
-        "	.align 2, 0\n\t"
-        "_0807131C: .4byte sEggHatch_Sheet\n\t"
-        "_08071320: .4byte sEggShards_Sheet\n\t"
-        "_08071324: .4byte sEgg_SpritePalette\n\t"
-        "_08071328:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "	ldr r0, _0807133C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	bl AddHatchedMonToParty\n\t"
-        "	b _080713AA\n\t"
-        "	.align 2, 0\n\t"
-        "_0807133C: .4byte gUnknown_3000DE0\n\t"
-        "_08071340:\n\t"
-        "	ldr r0, _08071354\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	ldrb r2, [r3, #4]\n\t"
-        "	adds r3, #0xc\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl EggHatchCreateMonSprite\n\t"
-        "	b _080713AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08071354: .4byte gUnknown_3000DE0\n\t"
-        "_08071358:\n\t"
-        "	ldr r4, _08071370\n\t"
-        "	ldr r3, [r4]\n\t"
-        "	ldrb r2, [r3, #4]\n\t"
-        "	adds r3, #0xc\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl EggHatchCreateMonSprite\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	b _080713AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08071370: .4byte gUnknown_3000DE0\n\t"
-        "_08071374:\n\t"
-        "	movs r1, #0x82\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _080713BC\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0xa0\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r1, _080713C0\n\t"
-        "	movs r2, #0x98\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl LoadBgTiles\n\t"
-        "	ldr r1, _080713C4\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CopyToBgTilemapBuffer\n\t"
-        "	movs r0, #1\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "_080713AA:\n\t"
-        "	ldr r1, _080713C8\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080713DA\n\t"
-        "	.align 2, 0\n\t"
-        "_080713BC: .4byte gUnknown_8305D24\n\t"
-        "_080713C0: .4byte gUnknown_8305D84\n\t"
-        "_080713C4: .4byte gUnknown_8304D04\n\t"
-        "_080713C8: .4byte gMain\n\t"
-        "_080713CC:\n\t"
-        "	ldr r0, _080713F8\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r0, _080713FC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #2]\n\t"
-        "_080713DA:\n\t"
-        "	bl RunTasks\n\t"
-        "	bl RunTextPrinters\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080713F8: .4byte CB2_EggHatch_1 + 1\n\t"
-        "_080713FC: .4byte gUnknown_3000DE0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gMain.state)
+    {
+    case 0:
+        SetGpuReg(REG_OFFSET_DISPCNT, 0);
+
+        sEggHatchData = Alloc(sizeof(*sEggHatchData));
+        AllocateMonSpritesGfx();
+        sEggHatchData->eggPartyId = gSpecialVar_0x8004;
+        sEggHatchData->eggShardVelocityId = 0;
+
+        SetVBlankCallback(VBlankCB_EggHatch);
+        gSpecialVar_0x8005 = GetCurrentMapMusic();
+
+        ResetTempTileDataBuffers();
+        ResetBgsAndClearDma3BusyFlags(0);
+        InitBgsFromTemplates(0, sBgTemplates_EggHatch, ARRAY_COUNT(sBgTemplates_EggHatch));
+
+        ChangeBgX(1, 0, BG_COORD_SET);
+        ChangeBgY(1, 0, BG_COORD_SET);
+        ChangeBgX(0, 0, BG_COORD_SET);
+        ChangeBgY(0, 0, BG_COORD_SET);
+
+        SetBgAttribute(1, BG_ATTR_PRIORITY, 2);
+        SetBgTilemapBuffer(1, Alloc(0x1000));
+        SetBgTilemapBuffer(0, Alloc(0x2000));
+
+        DeactivateAllTextPrinters();
+        ResetPaletteFade();
+        FreeAllSpritePalettes();
+        ResetSpriteData();
+        ResetTasks();
+        ScanlineEffect_Stop();
+        m4aSoundVSyncOn();
+        gMain.state++;
+        break;
+    case 1:
+        InitWindows(sWinTemplates_EggHatch);
+        sEggHatchData->windowId = 0;
+        gMain.state++;
+        break;
+    case 2:
+        DecompressAndLoadBgGfxUsingHeap(0, (const u32 *)0x08C00000, 0, 0, 0);
+        CopyToBgTilemapBuffer(0, gBattleTextboxTilemap, 0, 0);
+        LoadCompressedPalette(gBattleTextboxPalette, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+        gMain.state++;
+        break;
+    case 3:
+        LoadSpriteSheet(&sEggHatch_Sheet);
+        LoadSpriteSheet(&sEggShards_Sheet);
+        LoadSpritePalette(&sEgg_SpritePalette);
+        gMain.state++;
+        break;
+    case 4:
+        CopyBgTilemapBufferToVram(0);
+        AddHatchedMonToParty(sEggHatchData->eggPartyId);
+        gMain.state++;
+        break;
+    case 5:
+        EggHatchCreateMonSprite(FALSE, 0, sEggHatchData->eggPartyId, &sEggHatchData->species);
+        gMain.state++;
+        break;
+    case 6:
+        sEggHatchData->monSpriteId = EggHatchCreateMonSprite(FALSE, 1, sEggHatchData->eggPartyId, &sEggHatchData->species);
+        gMain.state++;
+        break;
+    case 7:
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+        LoadPalette(gUnknown_8305D24, BG_PLTT_ID(1), 5 * PLTT_SIZE_4BPP);
+        LoadBgTiles(1, gUnknown_8305D84, 0x1300, 0);
+        CopyToBgTilemapBuffer(1, gUnknown_8304D04, 0x1000, 0);
+        CopyBgTilemapBufferToVram(1);
+        gMain.state++;
+        break;
+    case 8:
+        SetMainCallback2(CB2_EggHatch_1);
+        sEggHatchData->state = 0;
+        break;
+    }
+    RunTasks();
+    RunTextPrinters();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
 }
 
-__attribute__((naked)) void EggHatchSetMonNickname(void)
+static void EggHatchSetMonNickname(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0807142C\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08071430\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, _08071434\n\t"
-        "	movs r1, #2\n\t"
-        "	bl SetMonData\n\t"
-        "	bl FreeMonSpritesGfx\n\t"
-        "	ldr r0, _08071438\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl Free\n\t"
-        "	ldr r0, _0807143C\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807142C: .4byte gSpecialVar_0x8004\n\t"
-        "_08071430: .4byte gPlayerParty\n\t"
-        "_08071434: .4byte gStringVar3\n\t"
-        "_08071438: .4byte gUnknown_3000DE0\n\t"
-        "_0807143C: .4byte CB2_ReturnToField + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    SetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_NICKNAME, gStringVar3);
+    FreeMonSpritesGfx();
+    Free(sEggHatchData);
+    SetMainCallback2(CB2_ReturnToField);
 }
 
-__attribute__((naked)) void Task_EggHatchPlayBGM(void)
+#define tTimer data[0]
+
+static void Task_EggHatchPlayBGM(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r1, _08071490\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08071460\n\t"
-        "	bl StopMapMusic\n\t"
-        "	bl PlayRainStoppingSoundEffect\n\t"
-        "_08071460:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08071470\n\t"
-        "	movs r0, #0xbc\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	bl PlayBGM\n\t"
-        "_08071470:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x3c\n\t"
-        "	ble _08071484\n\t"
-        "	ldr r0, _08071494\n\t"
-        "	bl PlayBGM\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_08071484:\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08071490: .4byte gTasks\n\t"
-        "_08071494: .4byte SPECIAL_QuizLadyShowQuizQuestion\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gTasks[taskId].tTimer == 0)
+    {
+        StopMapMusic();
+        PlayRainStoppingSoundEffect();
+    }
+
+    if (gTasks[taskId].tTimer == 1)
+        PlayBGM(MUS_EVOLUTION_INTRO);
+
+    if (gTasks[taskId].tTimer > 60)
+    {
+        PlayBGM(MUS_EVOLUTION);
+        DestroyTask(taskId);
+    }
+    gTasks[taskId].tTimer++;
 }
 
-__attribute__((naked)) void CB2_EggHatch_1(void)
+#undef tTimer
+
+static void CB2_EggHatch_1(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r1, _080714BC\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldrb r0, [r0, #2]\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	cmp r0, #0xc\n\t"
-        "	bls _080714B0\n\t"
-        "	b _08071816\n\t"
-        "_080714B0:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080714C0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080714BC: .4byte gUnknown_3000DE0\n\t"
-        "_080714C0: .4byte _080714C4\n\t"
-        "_080714C4:\n\t"
-        "	.4byte _080714F8\n\t"
-        "	.4byte _08071544\n\t"
-        "	.4byte _0807156C\n\t"
-        "	.4byte _080715A4\n\t"
-        "	.4byte _080715FC\n\t"
-        "	.4byte _08071628\n\t"
-        "	.4byte _0807168C\n\t"
-        "	.4byte _0807169A\n\t"
-        "	.4byte _080716A8\n\t"
-        "	.4byte _080716EC\n\t"
-        "	.4byte _0807172C\n\t"
-        "	.4byte _080717C4\n\t"
-        "	.4byte _080717E4\n\t"
-        "_080714F8:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _08071538\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x4b\n\t"
-        "	movs r3, #5\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r4, _0807153C\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ShowBg\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1, #2]\n\t"
-        "	ldr r0, _08071540\n\t"
-        "	movs r1, #5\n\t"
-        "	bl CreateTask\n\t"
-        "	b _08071816\n\t"
-        "	.align 2, 0\n\t"
-        "_08071538: .4byte sSpriteTemplate_Egg\n\t"
-        "_0807153C: .4byte gUnknown_3000DE0\n\t"
-        "_08071540: .4byte Task_EggHatchPlayBGM + 1\n\t"
-        "_08071544:\n\t"
-        "	ldr r0, _08071568\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _08071556\n\t"
-        "	b _08071816\n\t"
-        "_08071556:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	strb r4, [r0, #3]\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	b _080717D8\n\t"
-        "	.align 2, 0\n\t"
-        "_08071568: .4byte gPaletteFade\n\t"
-        "_0807156C:\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldrb r0, [r1, #3]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1, #3]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x1e\n\t"
-        "	bhi _0807157E\n\t"
-        "	b _08071816\n\t"
-        "_0807157E:\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldrb r0, [r1, #2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1, #2]\n\t"
-        "	ldr r2, _0807159C\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, _080715A0\n\t"
-        "	str r1, [r0]\n\t"
-        "	b _08071816\n\t"
-        "	.align 2, 0\n\t"
-        "_0807159C: .4byte gSprites\n\t"
-        "_080715A0: .4byte SpriteCB_Egg_0 + 1\n\t"
-        "_080715A4:\n\t"
-        "	ldr r4, _080715F0\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _080715F4\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080715C0\n\t"
-        "	b _08071816\n\t"
-        "_080715C0:\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _080715F8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r7, r0, #0x10\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl DoMonFrontSpriteAnimation\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	b _080717D8\n\t"
-        "	.align 2, 0\n\t"
-        "_080715F0: .4byte gSprites\n\t"
-        "_080715F4: .4byte SpriteCallbackDummy + 1\n\t"
-        "_080715F8: .4byte gPlayerParty\n\t"
-        "_080715FC:\n\t"
-        "	ldr r2, _08071620\n\t"
-        "	ldr r3, [r5]\n\t"
-        "	ldrb r1, [r3, #1]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _08071624\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _08071616\n\t"
-        "	b _08071816\n\t"
-        "_08071616:\n\t"
-        "	ldrb r0, [r3, #2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r3, #2]\n\t"
-        "	b _08071816\n\t"
-        "	.align 2, 0\n\t"
-        "_08071620: .4byte gSprites\n\t"
-        "_08071624: .4byte SpriteCallbackDummy + 1\n\t"
-        "_08071628:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08071678\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0807167C\n\t"
-        "	bl GetBoxMonNick\n\t"
-        "	ldr r4, _08071680\n\t"
-        "	ldr r1, _08071684\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	movs r1, #0xff\n\t"
-        "	str r1, [sp]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #3\n\t"
-        "	bl EggHatchPrintMessage\n\t"
-        "	ldr r0, _08071688\n\t"
-        "	bl PlayFanfare\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldrb r0, [r1, #2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1, #2]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	b _08071816\n\t"
-        "	.align 2, 0\n\t"
-        "_08071678: .4byte gPlayerParty\n\t"
-        "_0807167C: .4byte gStringVar1\n\t"
-        "_08071680: .4byte gStringVar4\n\t"
-        "_08071684: .4byte gUnknown_85CC874\n\t"
-        "_08071688: .4byte 0x173\n\t"
-        "_0807168C:\n\t"
-        "	bl IsFanfareTaskInactive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08071698\n\t"
-        "	b _08071816\n\t"
-        "_08071698:\n\t"
-        "	b _080717D4\n\t"
-        "_0807169A:\n\t"
-        "	bl IsFanfareTaskInactive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080716A6\n\t"
-        "	b _08071816\n\t"
-        "_080716A6:\n\t"
-        "	b _080717D4\n\t"
-        "_080716A8:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _080716DC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080716E0\n\t"
-        "	bl GetBoxMonNick\n\t"
-        "	ldr r4, _080716E4\n\t"
-        "	ldr r1, _080716E8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	str r1, [sp]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl EggHatchPrintMessage\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	b _080717D8\n\t"
-        "	.align 2, 0\n\t"
-        "_080716DC: .4byte gPlayerParty\n\t"
-        "_080716E0: .4byte gStringVar1\n\t"
-        "_080716E4: .4byte gStringVar4\n\t"
-        "_080716E8: .4byte gUnknown_85CC888\n\t"
-        "_080716EC:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	bl IsTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, #0\n\t"
-        "	beq _080716FE\n\t"
-        "	b _08071816\n\t"
-        "_080716FE:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	movs r4, #0xa0\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0xe0\n\t"
-        "	bl LoadUserWindowBorderGfx\n\t"
-        "	ldr r0, _08071728\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r1, #0xe\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #2\n\t"
-        "	bl CreateYesNoMenuAtPos\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	b _080717D8\n\t"
-        "	.align 2, 0\n\t"
-        "_08071728: .4byte sYesNoWinTemplate\n\t"
-        "_0807172C:\n\t"
-        "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0807174C\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _08071746\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080717D4\n\t"
-        "	b _08071816\n\t"
-        "_08071746:\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080717D4\n\t"
-        "	b _08071816\n\t"
-        "_0807174C:\n\t"
-        "	ldr r0, _080717B4\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	movs r6, #0x64\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	ldr r5, _080717B8\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, _080717BC\n\t"
-        "	mov sb, r1\n\t"
-        "	bl GetBoxMonNick\n\t"
-        "	mov r1, r8\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r7, r0, #0x10\n\t"
-        "	mov r1, r8\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	bl GetMonGender\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	mov r1, r8\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _080717C0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #3\n\t"
-        "	mov r1, sb\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl DoNamingScreen\n\t"
-        "	b _08071816\n\t"
-        "	.align 2, 0\n\t"
-        "_080717B4: .4byte gUnknown_3000DE0\n\t"
-        "_080717B8: .4byte gPlayerParty\n\t"
-        "_080717BC: .4byte gStringVar3\n\t"
-        "_080717C0: .4byte EggHatchSetMonNickname + 1\n\t"
-        "_080717C4:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "_080717D4:\n\t"
-        "	ldr r0, _080717E0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "_080717D8:\n\t"
-        "	ldrb r0, [r1, #2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1, #2]\n\t"
-        "	b _08071816\n\t"
-        "	.align 2, 0\n\t"
-        "_080717E0: .4byte gUnknown_3000DE0\n\t"
-        "_080717E4:\n\t"
-        "	ldr r0, _08071838\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08071816\n\t"
-        "	bl FreeMonSpritesGfx\n\t"
-        "	ldr r4, _0807183C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	bl RemoveWindow\n\t"
-        "	movs r0, #0\n\t"
-        "	bl UnsetBgTilemapBuffer\n\t"
-        "	movs r0, #1\n\t"
-        "	bl UnsetBgTilemapBuffer\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	ldr r0, _08071840\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_08071816:\n\t"
-        "	bl RunTasks\n\t"
-        "	bl RunTextPrinters\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08071838: .4byte gPaletteFade\n\t"
-        "_0807183C: .4byte gUnknown_3000DE0\n\t"
-        "_08071840: .4byte CB2_ReturnToField + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 species;
+    u8 gender;
+    u32 personality;
+
+    switch (sEggHatchData->state)
+    {
+    case 0:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        sEggHatchData->eggSpriteId = CreateSprite(&sSpriteTemplate_Egg, EGG_X, EGG_Y, 5);
+        ShowBg(0);
+        ShowBg(1);
+        sEggHatchData->state++;
+        CreateTask(Task_EggHatchPlayBGM, 5);
+        break;
+    case 1:
+        if (!gPaletteFade.active)
+        {
+            FillWindowPixelBuffer(sEggHatchData->windowId, PIXEL_FILL(0));
+            sEggHatchData->delayTimer = 0;
+            sEggHatchData->state++;
+        }
+        break;
+    case 2:
+        if (++sEggHatchData->delayTimer > 30)
+        {
+            sEggHatchData->state++;
+            gSprites[sEggHatchData->eggSpriteId].callback = SpriteCB_Egg_0;
+        }
+        break;
+    case 3:
+        if (gSprites[sEggHatchData->eggSpriteId].callback == SpriteCallbackDummy)
+        {
+            species = GetMonData3(&gPlayerParty[sEggHatchData->eggPartyId], MON_DATA_SPECIES);
+            DoMonFrontSpriteAnimation(&gSprites[sEggHatchData->monSpriteId], species, FALSE, 1);
+            sEggHatchData->state++;
+        }
+        break;
+    case 4:
+        if (gSprites[sEggHatchData->monSpriteId].callback == SpriteCallbackDummy)
+            sEggHatchData->state++;
+        break;
+    case 5:
+        GetBoxMonNick(&gPlayerParty[sEggHatchData->eggPartyId], gStringVar1);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85CC874);
+        EggHatchPrintMessage(sEggHatchData->windowId, gStringVar4, 0, 3, TEXT_SKIP_DRAW);
+        PlayFanfare(MUS_EVOLVED);
+        sEggHatchData->state++;
+        PutWindowTilemap(sEggHatchData->windowId);
+        CopyWindowToVram(sEggHatchData->windowId, COPYWIN_FULL);
+        break;
+    case 6:
+        if (IsFanfareTaskInactive())
+            sEggHatchData->state++;
+        break;
+    case 7:
+        if (IsFanfareTaskInactive())
+            sEggHatchData->state++;
+        break;
+    case 8:
+        GetBoxMonNick(&gPlayerParty[sEggHatchData->eggPartyId], gStringVar1);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85CC888);
+        EggHatchPrintMessage(sEggHatchData->windowId, gStringVar4, 0, 2, 1);
+        sEggHatchData->state++;
+        break;
+    case 9:
+        if (!IsTextPrinterActive(sEggHatchData->windowId))
+        {
+            LoadUserWindowBorderGfx(sEggHatchData->windowId, 0x140, BG_PLTT_ID(14));
+            CreateYesNoMenuAtPos(&sYesNoWinTemplate, FONT_NORMAL, 2, 2, 0x140, 14, 0);
+            sEggHatchData->state++;
+        }
+        break;
+    case 10:
+        switch (Menu_ProcessInputNoWrapClearOnChoose())
+        {
+        case 0:
+            GetBoxMonNick(&gPlayerParty[sEggHatchData->eggPartyId], gStringVar3);
+            species = GetMonData3(&gPlayerParty[sEggHatchData->eggPartyId], MON_DATA_SPECIES);
+            gender = GetMonGender(&gPlayerParty[sEggHatchData->eggPartyId]);
+            personality = GetMonData3(&gPlayerParty[sEggHatchData->eggPartyId], MON_DATA_PERSONALITY, NULL);
+            DoNamingScreen(NAMING_SCREEN_NICKNAME, gStringVar3, species, gender, personality, EggHatchSetMonNickname);
+            break;
+        case 1:
+        case MENU_B_PRESSED:
+            sEggHatchData->state++;
+            break;
+        }
+        break;
+    case 11:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        sEggHatchData->state++;
+        break;
+    case 12:
+        if (!gPaletteFade.active)
+        {
+            FreeMonSpritesGfx();
+            RemoveWindow(sEggHatchData->windowId);
+            UnsetBgTilemapBuffer(0);
+            UnsetBgTilemapBuffer(1);
+            Free(sEggHatchData);
+            SetMainCallback2(CB2_ReturnToField);
+        }
+        break;
+    }
+
+    RunTasks();
+    RunTextPrinters();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
 }
 
-__attribute__((naked)) void SpriteCB_Egg_0(void)
+#define sTimer      data[0]
+#define sSinIdx     data[1]
+#define sDelayTimer data[2]
+
+static void SpriteCB_Egg_0(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	ble _08071864\n\t"
-        "	ldr r0, _08071860\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	b _08071894\n\t"
-        "	.align 2, 0\n\t"
-        "_08071860: .4byte SpriteCB_Egg_1 + 1\n\t"
-        "_08071864:\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	adds r0, #0x14\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bne _08071894\n\t"
-        "	movs r0, #0x17\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	bl CreateRandomEggShardSprite\n\t"
-        "_08071894:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++sprite->sTimer > 20)
+    {
+        sprite->callback = SpriteCB_Egg_1;
+        sprite->sTimer = 0;
+    }
+    else
+    {
+        sprite->sSinIdx = (sprite->sSinIdx + 20) & 0xFF;
+        sprite->x2 = Sin(sprite->sSinIdx, 1);
+        if (sprite->sTimer == 15)
+        {
+            PlaySE(SE_BALL);
+            StartSpriteAnim(sprite, EGG_ANIM_CRACKED_1);
+            CreateRandomEggShardSprite();
+        }
+    }
 }
 
-__attribute__((naked)) void SpriteCB_Egg_1(void)
+static void SpriteCB_Egg_1(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x1e\n\t"
-        "	ble _080718F8\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	ble _080718CC\n\t"
-        "	ldr r0, _080718C8\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	strh r1, [r4, #0x2e]\n\t"
-        "	strh r1, [r4, #0x32]\n\t"
-        "	b _080718F8\n\t"
-        "	.align 2, 0\n\t"
-        "_080718C8: .4byte SpriteCB_Egg_2 + 1\n\t"
-        "_080718CC:\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	adds r0, #0x14\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bne _080718F8\n\t"
-        "	movs r0, #0x17\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_080718F8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++sprite->sDelayTimer > 30)
+    {
+        if (++sprite->sTimer > 20)
+        {
+            sprite->callback = SpriteCB_Egg_2;
+            sprite->sTimer = 0;
+            sprite->sDelayTimer = 0;
+        }
+        else
+        {
+            sprite->sSinIdx = (sprite->sSinIdx + 20) & 0xFF;
+            sprite->x2 = Sin(sprite->sSinIdx, 2);
+            if (sprite->sTimer == 15)
+            {
+                PlaySE(SE_BALL);
+                StartSpriteAnim(sprite, EGG_ANIM_CRACKED_2);
+            }
+        }
+    }
 }
 
-__attribute__((naked)) void SpriteCB_Egg_2(void)
+static void SpriteCB_Egg_2(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x1e\n\t"
-        "	ble _080719AE\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x26\n\t"
-        "	ble _0807196C\n\t"
-        "	ldr r0, _0807195C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	strh r5, [r4, #0x2e]\n\t"
-        "	ldr r4, _08071960\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08071964\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r3, _08071968\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r5, [r0, #0x24]\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r5, [r0, #0x26]\n\t"
-        "	b _080719AE\n\t"
-        "	.align 2, 0\n\t"
-        "_0807195C: .4byte SpriteCB_Egg_3 + 1\n\t"
-        "_08071960: .4byte gUnknown_3000DE0\n\t"
-        "_08071964: .4byte gPlayerParty\n\t"
-        "_08071968: .4byte gSprites\n\t"
-        "_0807196C:\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	adds r0, #0x14\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bne _080719A0\n\t"
-        "	movs r0, #0x17\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	bl CreateRandomEggShardSprite\n\t"
-        "	bl CreateRandomEggShardSprite\n\t"
-        "_080719A0:\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x1e\n\t"
-        "	bne _080719AE\n\t"
-        "	movs r0, #0x17\n\t"
-        "	bl PlaySE\n\t"
-        "_080719AE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++sprite->sDelayTimer > 30)
+    {
+        if (++sprite->sTimer > 38)
+        {
+            u16 UNUSED species;
+            sprite->callback = SpriteCB_Egg_3;
+            sprite->sTimer = 0;
+            species = GetMonData3(&gPlayerParty[sEggHatchData->eggPartyId], MON_DATA_SPECIES);
+            gSprites[sEggHatchData->monSpriteId].x2 = 0;
+            gSprites[sEggHatchData->monSpriteId].y2 = 0;
+        }
+        else
+        {
+            sprite->sSinIdx = (sprite->sSinIdx + 20) & 0xFF;
+            sprite->x2 = Sin(sprite->sSinIdx, 2);
+            if (sprite->sTimer == 15)
+            {
+                PlaySE(SE_BALL);
+                StartSpriteAnim(sprite, EGG_ANIM_CRACKED_2);
+                CreateRandomEggShardSprite();
+                CreateRandomEggShardSprite();
+            }
+            if (sprite->sTimer == 30)
+                PlaySE(SE_BALL);
+        }
+    }
 }
 
-__attribute__((naked)) void SpriteCB_Egg_3(void)
+static void SpriteCB_Egg_3(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r1, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x32\n\t"
-        "	ble _080719CE\n\t"
-        "	ldr r0, _080719D4\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "_080719CE:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080719D4: .4byte SpriteCB_Egg_4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++sprite->sTimer > 50)
+    {
+        sprite->callback = SpriteCB_Egg_4;
+        sprite->sTimer = 0;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_Egg_4(void)
+static void SpriteCB_Egg_4(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080719F8\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ldr r0, _08071A4C\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "_080719F8:\n\t"
-        "	ldrh r0, [r5, #0x2e]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bhi _08071A14\n\t"
-        "	movs r4, #0\n\t"
-        "_08071A00:\n\t"
-        "	bl CreateRandomEggShardSprite\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _08071A00\n\t"
-        "_08071A14:\n\t"
-        "	ldrh r0, [r5, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	ldr r0, _08071A50\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _08071A42\n\t"
-        "	movs r0, #0x71\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, _08071A54\n\t"
-        "	str r0, [r5, #0x1c]\n\t"
-        "	strh r4, [r5, #0x2e]\n\t"
-        "_08071A42:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08071A4C: .4byte 0x0000FFFF\n\t"
-        "_08071A50: .4byte gPaletteFade\n\t"
-        "_08071A54: .4byte SpriteCB_Egg_5 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 i;
+
+    if (sprite->sTimer == 0)
+        BeginNormalPaletteFade(PALETTES_ALL, -1, 0, 16, RGB_WHITEALPHA);
+
+    if ((u32)sprite->sTimer < 4)
+    {
+        for (i = 0; i < 4; i++)
+            CreateRandomEggShardSprite();
+    }
+
+    sprite->sTimer++;
+
+    if (!gPaletteFade.active)
+    {
+        PlaySE(SE_EGG_HATCH);
+        sprite->invisible = TRUE;
+        sprite->callback = SpriteCB_Egg_5;
+        sprite->sTimer = 0;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_Egg_5(void)
+static void SpriteCB_Egg_5(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08071A94\n\t"
-        "	ldr r4, _08071AE8\n\t"
-        "	ldr r3, _08071AEC\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "_08071A94:\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r0, #8\n\t"
-        "	bne _08071AAE\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ldr r0, _08071AF0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "_08071AAE:\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #9\n\t"
-        "	bgt _08071ACC\n\t"
-        "	ldr r2, _08071AE8\n\t"
-        "	ldr r0, _08071AEC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #0x22]\n\t"
-        "	subs r1, #1\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "_08071ACC:\n\t"
-        "	ldrh r1, [r5, #0x2e]\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r0, #0x28\n\t"
-        "	ble _08071ADA\n\t"
-        "	ldr r0, _08071AF4\n\t"
-        "	str r0, [r5, #0x1c]\n\t"
-        "_08071ADA:\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08071AE8: .4byte gSprites\n\t"
-        "_08071AEC: .4byte gUnknown_3000DE0\n\t"
-        "_08071AF0: .4byte 0x0000FFFF\n\t"
-        "_08071AF4: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->sTimer == 0)
+    {
+        gSprites[sEggHatchData->monSpriteId].invisible = FALSE;
+        StartSpriteAffineAnim(&gSprites[sEggHatchData->monSpriteId], BATTLER_AFFINE_EMERGE);
+    }
+
+    if (sprite->sTimer == 8)
+        BeginNormalPaletteFade(PALETTES_ALL, -1, 16, 0, RGB_WHITEALPHA);
+
+    if (sprite->sTimer <= 9)
+        gSprites[sEggHatchData->monSpriteId].y--;
+
+    if (sprite->sTimer > 40)
+        sprite->callback = SpriteCallbackDummy;
+
+    sprite->sTimer++;
 }
 
-__attribute__((naked)) void SpriteCB_EggShard(struct Sprite *sprite)
+#undef sTimer
+#undef sSinIdx
+#undef sDelayTimer
+
+#define sVelocX data[1]
+#define sVelocY data[2]
+#define sAccelY data[3]
+#define sDeltaX data[4]
+#define sDeltaY data[5]
+
+static void SpriteCB_EggShard(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r0, [r2, #0x30]\n\t"
-        "	ldrh r1, [r2, #0x36]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x36]\n\t"
-        "	ldrh r1, [r2, #0x32]\n\t"
-        "	ldrh r3, [r2, #0x38]\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	strh r0, [r2, #0x38]\n\t"
-        "	movs r4, #0x36\n\t"
-        "	ldrsh r0, [r2, r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08071B16\n\t"
-        "	adds r0, #0xff\n\t"
-        "_08071B16:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	strh r0, [r2, #0x24]\n\t"
-        "	movs r3, #0x38\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08071B24\n\t"
-        "	adds r0, #0xff\n\t"
-        "_08071B24:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "	ldrh r0, [r2, #0x34]\n\t"
-        "	adds r3, r1, r0\n\t"
-        "	strh r3, [r2, #0x32]\n\t"
-        "	movs r4, #0x22\n\t"
-        "	ldrsh r1, [r2, r4]\n\t"
-        "	movs r4, #0x26\n\t"
-        "	ldrsh r0, [r2, r4]\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	adds r1, #0x14\n\t"
-        "	cmp r0, r1\n\t"
-        "	ble _08071B4A\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _08071B4A\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_08071B4A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->sDeltaX += sprite->sVelocX;
+    sprite->sDeltaY += sprite->sVelocY;
+
+    sprite->x2 = sprite->sDeltaX / 256;
+    sprite->y2 = sprite->sDeltaY / 256;
+
+    sprite->sVelocY += sprite->sAccelY;
+
+    if (sprite->y + sprite->y2 > sprite->y + 20 && sprite->sVelocY > 0)
+        DestroySprite(sprite);
 }
 
-__attribute__((naked)) void CreateRandomEggShardSprite(void)
+static void CreateRandomEggShardSprite(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	ldr r2, _08071B9C\n\t"
-        "	ldr r0, _08071BA0\n\t"
-        "	ldr r6, [r0]\n\t"
-        "	ldrb r3, [r6, #7]\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrh r5, [r1]\n\t"
-        "	adds r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r4, [r0]\n\t"
-        "	adds r3, #1\n\t"
-        "	strb r3, [r6, #7]\n\t"
-        "	bl Random\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	movs r0, #0x64\n\t"
-        "	str r0, [sp]\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	movs r0, #0x78\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl CreateEggShardSprite\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08071B9C: .4byte sEggShardVelocities\n\t"
-        "_08071BA0: .4byte gUnknown_3000DE0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 spriteAnimIndex;
+    s16 velocityX = sEggShardVelocities[sEggHatchData->eggShardVelocityId][0];
+    s16 velocityY = sEggShardVelocities[sEggHatchData->eggShardVelocityId][1];
+
+    sEggHatchData->eggShardVelocityId++;
+    spriteAnimIndex = Random() % ARRAY_COUNT(sSpriteAnimTable_EggShard);
+    CreateEggShardSprite(EGG_X, EGG_Y - 15, velocityX, velocityY, 100, spriteAnimIndex);
 }
 
-__attribute__((naked)) void CreateEggShardSprite(void)
+static void CreateEggShardSprite(u8 x, u8 y, s16 velocityX, s16 velocityY, s16 acceleration, u8 spriteAnimIndex)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sl\n\t"
-        "	mov r5, sb\n\t"
-        "	mov r4, r8\n\t"
-        "	push {r4, r5, r6}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	mov r8, r3\n\t"
-        "	ldr r0, [sp, #0x1c]\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r1, [sp, #0x20]\n\t"
-        "	mov sl, r1\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	lsrs r6, r6, #0x10\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	mov r1, sb\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov sb, r1\n\t"
-        "	mov r0, sl\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	ldr r0, _08071C1C\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	movs r3, #4\n\t"
-        "	bl CreateSprite\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r2, _08071C20\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r6, [r0, #0x30]\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r1, [r0, #0x32]\n\t"
-        "	mov r1, sb\n\t"
-        "	strh r1, [r0, #0x34]\n\t"
-        "	mov r1, sl\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08071C1C: .4byte sSpriteTemplate_EggShard\n\t"
-        "_08071C20: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = CreateSprite(&sSpriteTemplate_EggShard, x, y, 4);
+
+    gSprites[spriteId].sVelocX = velocityX;
+    gSprites[spriteId].sVelocY = velocityY;
+    gSprites[spriteId].sAccelY = acceleration;
+    StartSpriteAnim(&gSprites[spriteId], spriteAnimIndex);
 }
 
-__attribute__((naked)) void EggHatchPrintMessage(void)
+static void EggHatchPrintMessage(u8 windowId, u8 *string, u8 x, u8 y, u8 speed)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	mov sb, r1\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	mov r8, r3\n\t"
-        "	ldr r4, [sp, #0x2c]\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r3, _08071C98\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r0, #0xe]\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	movs r0, #5\n\t"
-        "	strb r0, [r1, #0xf]\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	movs r0, #6\n\t"
-        "	strb r0, [r1, #0x10]\n\t"
-        "	str r2, [sp]\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, #0xe\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	asrs r4, r4, #0x18\n\t"
-        "	str r4, [sp, #0xc]\n\t"
-        "	mov r0, sb\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	mov r3, r8\n\t"
-        "	bl AddTextPrinterParameterized4\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08071C98: .4byte gUnknown_3000DE0\n\t"
-        ".syntax divided\n\t"
-    );
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(15));
+    sEggHatchData->textColor[0] = 0;
+    sEggHatchData->textColor[1] = 5;
+    sEggHatchData->textColor[2] = 6;
+    AddTextPrinterParameterized4(windowId, FONT_NORMAL, x, y, 0, 0, sEggHatchData->textColor, speed, string);
 }
 
-__attribute__((naked)) void GetEggStepsToSubtract(void)
+u8 GetEggStepsToSubtract(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	cmp r5, r6\n\t"
-        "	bhs _08071CE6\n\t"
-        "_08071CAC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _08071CD8\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08071CDC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetMonAbility\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x28\n\t"
-        "	beq _08071CD4\n\t"
-        "	cmp r0, #0x31\n\t"
-        "	bne _08071CDC\n\t"
-        "_08071CD4:\n\t"
-        "	movs r0, #2\n\t"
-        "	b _08071CE8\n\t"
-        "	.align 2, 0\n\t"
-        "_08071CD8: .4byte gPlayerParty\n\t"
-        "_08071CDC:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, r6\n\t"
-        "	blo _08071CAC\n\t"
-        "_08071CE6:\n\t"
-        "	movs r0, #1\n\t"
-        "_08071CE8:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 count;
+    u8 i;
+
+    for (count = CalculatePlayerPartyCount(), i = 0; i < count; i++)
+    {
+        if (!GetMonData3(&gPlayerParty[i], MON_DATA_SANITY_IS_EGG))
+        {
+            u8 ability = GetMonAbility(&gPlayerParty[i]);
+
+            if (ability == ABILITY_MAGMA_ARMOR || ability == ABILITY_FLAME_BODY)
+                return 2;
+        }
+    }
+    return 1;
 }
 
-__attribute__((naked)) u16 CountPartyAliveNonEggMons(void)
+u16 CountPartyAliveNonEggMons(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl CountStorageNonEggMons\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	movs r0, #6\n\t"
-        "	bl CountPartyAliveNonEggMonsExcept\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 aliveNonEggMonsCount = CountStorageNonEggMons();
+
+    aliveNonEggMonsCount += CountPartyAliveNonEggMonsExcept(PARTY_SIZE);
+    return aliveNonEggMonsCount;
 }
+
+#undef sVelocX
+#undef sVelocY
+#undef sAccelY
+#undef sDeltaX
+#undef sDeltaY
