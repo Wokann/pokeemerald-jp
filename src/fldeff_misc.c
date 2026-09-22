@@ -949,7 +949,7 @@ void DoSecretBaseGlitterMatSparkle(void)
 }
 
 
-extern const struct SpriteTemplate gUnknown_856A270;
+extern const struct SpriteTemplate sSpriteTemplate_SandPillar;
 
 bool8 FldEff_SandPillar(void)
 {
@@ -964,7 +964,7 @@ bool8 FldEff_SandPillar(void)
     switch (GetPlayerFacingDirection())
     {
     case DIR_SOUTH:
-        CreateSprite(&gUnknown_856A270,
+        CreateSprite(&sSpriteTemplate_SandPillar,
                      gSprites[gPlayerAvatar.spriteId].oam.x + 8,
                      gSprites[gPlayerAvatar.spriteId].oam.y + 32,
                      0);
@@ -972,7 +972,7 @@ bool8 FldEff_SandPillar(void)
         break;
 
     case DIR_NORTH:
-        CreateSprite(&gUnknown_856A270,
+        CreateSprite(&sSpriteTemplate_SandPillar,
                      gSprites[gPlayerAvatar.spriteId].oam.x + 8,
                      gSprites[gPlayerAvatar.spriteId].oam.y,
                      148);
@@ -980,7 +980,7 @@ bool8 FldEff_SandPillar(void)
         break;
 
     case DIR_WEST:
-        CreateSprite(&gUnknown_856A270,
+        CreateSprite(&sSpriteTemplate_SandPillar,
                      gSprites[gPlayerAvatar.spriteId].oam.x - 8,
                      gSprites[gPlayerAvatar.spriteId].oam.y + 16,
                      148);
@@ -988,7 +988,7 @@ bool8 FldEff_SandPillar(void)
         break;
 
     case DIR_EAST:
-        CreateSprite(&gUnknown_856A270,
+        CreateSprite(&sSpriteTemplate_SandPillar,
                      gSprites[gPlayerAvatar.spriteId].oam.x + 24,
                      gSprites[gPlayerAvatar.spriteId].oam.y + 16,
                      148);
