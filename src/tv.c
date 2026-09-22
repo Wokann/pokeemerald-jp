@@ -3740,7 +3740,7 @@ __attribute__((naked)) void sub_080EF69C(void)
         "	adds r7, r6, #2\n\t"
         "	b _080EF6B2\n\t"
         "	.align 2, 0\n\t"
-        "_080EF6A8: .4byte gUnknown_8568B98\n\t"
+        "_080EF6A8: .4byte sNumberOneVarsAndThresholds\n\t"
         "_080EF6AC:\n\t"
         "	adds r0, r5, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3778,7 +3778,7 @@ __attribute__((naked)) void sub_080EF69C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080EF6F4: .4byte gUnknown_8568B98\n\t"
+        "_080EF6F4: .4byte sNumberOneVarsAndThresholds\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3845,7 +3845,7 @@ __attribute__((naked)) void sub_080EF6F8(void)
         "_080EF770: .4byte 0x000027CC\n\t"
         "_080EF774: .4byte gUnknown_3005E20\n\t"
         "_080EF778: .4byte gSaveBlock2Ptr\n\t"
-        "_080EF77C: .4byte gUnknown_8568B98\n\t"
+        "_080EF77C: .4byte sNumberOneVarsAndThresholds\n\t"
         "_080EF780: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
@@ -5425,7 +5425,7 @@ __attribute__((naked)) void sub_080EE238(void)
         "_080EE314: .4byte 0x000027CC\n\t"
         "_080EE318: .4byte SPECIAL_IsSelectedMonEgg\n\t"
         "_080EE31C: .4byte gUnknown_3005E20\n\t"
-        "_080EE320: .4byte gUnknown_8568B40\n\t"
+        "_080EE320: .4byte sPokeOutbreakSpeciesList\n\t"
         "_080EE324: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
@@ -6002,8 +6002,8 @@ __attribute__((naked)) void sub_080EE664(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080EE768: .4byte gMapHeader\n\t"
-        "_080EE76C: .4byte gUnknown_8568B8A\n\t"
-        "_080EE770: .4byte gUnknown_8568B7C\n\t"
+        "_080EE76C: .4byte sSilverSymbolFlags\n\t"
+        "_080EE770: .4byte sGoldSymbolFlags\n\t"
         "_080EE774: .4byte gSaveBlock2Ptr\n\t"
         "_080EE778: .4byte 0x00000EB8\n\t"
         "_080EE77C: .4byte gGameLanguage\n\t"
@@ -6433,7 +6433,7 @@ __attribute__((naked)) void DoPokeNews(void)
         "_080EFABC: .4byte 0x00002B52\n\t"
         "_080EFAC0: .4byte 0x00002B51\n\t"
         "_080EFAC4: .4byte gLocalTime\n\t"
-        "_080EFAC8: .4byte gUnknown_8568BC8\n\t"
+        "_080EFAC8: .4byte sPokeNewsTextGroup_Ongoing\n\t"
         "_080EFACC:\n\t"
         "	ldr r1, _080EFAE4\n\t"
         "	ldr r0, [r5]\n\t"
@@ -6448,7 +6448,7 @@ __attribute__((naked)) void DoPokeNews(void)
         "	bl ShowFieldMessage\n\t"
         "	b _080EFB1A\n\t"
         "	.align 2, 0\n\t"
-        "_080EFAE4: .4byte gUnknown_8568BDC\n\t"
+        "_080EFAE4: .4byte sPokeNewsTextGroup_Ending\n\t"
         "_080EFAE8: .4byte 0x00002B50\n\t"
         "_080EFAEC:\n\t"
         "	ldrh r1, [r2]\n\t"
@@ -6483,7 +6483,7 @@ __attribute__((naked)) void DoPokeNews(void)
         "	.align 2, 0\n\t"
         "_080EFB28: .4byte gStringVar1\n\t"
         "_080EFB2C: .4byte 0x00002B51\n\t"
-        "_080EFB30: .4byte gUnknown_8568BB4\n\t"
+        "_080EFB30: .4byte sPokeNewsTextGroup_Upcoming\n\t"
         "_080EFB34: .4byte 0x00002B50\n\t"
         "_080EFB38: .4byte gSpecialVar_Result\n\t"
         ".syntax divided\n\t"
@@ -6751,7 +6751,7 @@ __attribute__((naked)) void CopyContestRankToStringVar(void)
         "	bl StringCopy\n\t"
         "	b _080EFD48\n\t"
         "	.align 2, 0\n\t"
-        "_080EFCF8: .4byte gUnknown_8568BF0\n\t"
+        "_080EFCF8: .4byte gTVStringVarPtrs\n\t"
         "_080EFCFC: .4byte gStdStrings\n\t"
         "_080EFD00:\n\t"
         "	ldr r1, _080EFD14\n\t"
@@ -6763,7 +6763,7 @@ __attribute__((naked)) void CopyContestRankToStringVar(void)
         "	bl StringCopy\n\t"
         "	b _080EFD48\n\t"
         "	.align 2, 0\n\t"
-        "_080EFD14: .4byte gUnknown_8568BF0\n\t"
+        "_080EFD14: .4byte gTVStringVarPtrs\n\t"
         "_080EFD18: .4byte gStdStrings\n\t"
         "_080EFD1C:\n\t"
         "	ldr r1, _080EFD30\n\t"
@@ -6775,7 +6775,7 @@ __attribute__((naked)) void CopyContestRankToStringVar(void)
         "	bl StringCopy\n\t"
         "	b _080EFD48\n\t"
         "	.align 2, 0\n\t"
-        "_080EFD30: .4byte gUnknown_8568BF0\n\t"
+        "_080EFD30: .4byte gTVStringVarPtrs\n\t"
         "_080EFD34: .4byte gStdStrings\n\t"
         "_080EFD38:\n\t"
         "	ldr r1, _080EFD4C\n\t"
@@ -6789,7 +6789,7 @@ __attribute__((naked)) void CopyContestRankToStringVar(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080EFD4C: .4byte gUnknown_8568BF0\n\t"
+        "_080EFD4C: .4byte gTVStringVarPtrs\n\t"
         "_080EFD50: .4byte gStdStrings\n\t"
         ".syntax divided\n\t"
     );
@@ -6829,7 +6829,7 @@ __attribute__((naked)) void CopyContestCategoryToStringVar(void)
         "	bl StringCopy\n\t"
         "	b _080EFE04\n\t"
         "	.align 2, 0\n\t"
-        "_080EFD98: .4byte gUnknown_8568BF0\n\t"
+        "_080EFD98: .4byte gTVStringVarPtrs\n\t"
         "_080EFD9C: .4byte gStdStrings\n\t"
         "_080EFDA0:\n\t"
         "	ldr r1, _080EFDB4\n\t"
@@ -6841,7 +6841,7 @@ __attribute__((naked)) void CopyContestCategoryToStringVar(void)
         "	bl StringCopy\n\t"
         "	b _080EFE04\n\t"
         "	.align 2, 0\n\t"
-        "_080EFDB4: .4byte gUnknown_8568BF0\n\t"
+        "_080EFDB4: .4byte gTVStringVarPtrs\n\t"
         "_080EFDB8: .4byte gStdStrings\n\t"
         "_080EFDBC:\n\t"
         "	ldr r1, _080EFDD0\n\t"
@@ -6853,7 +6853,7 @@ __attribute__((naked)) void CopyContestCategoryToStringVar(void)
         "	bl StringCopy\n\t"
         "	b _080EFE04\n\t"
         "	.align 2, 0\n\t"
-        "_080EFDD0: .4byte gUnknown_8568BF0\n\t"
+        "_080EFDD0: .4byte gTVStringVarPtrs\n\t"
         "_080EFDD4: .4byte gStdStrings\n\t"
         "_080EFDD8:\n\t"
         "	ldr r1, _080EFDEC\n\t"
@@ -6865,7 +6865,7 @@ __attribute__((naked)) void CopyContestCategoryToStringVar(void)
         "	bl StringCopy\n\t"
         "	b _080EFE04\n\t"
         "	.align 2, 0\n\t"
-        "_080EFDEC: .4byte gUnknown_8568BF0\n\t"
+        "_080EFDEC: .4byte gTVStringVarPtrs\n\t"
         "_080EFDF0: .4byte gStdStrings\n\t"
         "_080EFDF4:\n\t"
         "	ldr r1, _080EFE08\n\t"
@@ -6879,7 +6879,7 @@ __attribute__((naked)) void CopyContestCategoryToStringVar(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080EFE08: .4byte gUnknown_8568BF0\n\t"
+        "_080EFE08: .4byte gTVStringVarPtrs\n\t"
         "_080EFE0C: .4byte gStdStrings\n\t"
         ".syntax divided\n\t"
     );
@@ -6940,7 +6940,7 @@ __attribute__((naked)) void TV_PrintIntToStringVar(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080EFE70: .4byte gUnknown_8568BF0\n\t"
+        "_080EFE70: .4byte gTVStringVarPtrs\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7814,7 +7814,7 @@ __attribute__((naked)) void TV_GetSomeOtherSpeciesAlreadySeenByPlayer_AndPrintNa
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080F050C: .4byte gUnknown_8568BF0\n\t"
+        "_080F050C: .4byte gTVStringVarPtrs\n\t"
         "_080F0510: .4byte gSpeciesNames\n\t"
         ".syntax divided\n\t"
     );
@@ -8286,7 +8286,7 @@ __attribute__((naked)) void TV_GetNicknameSubstring(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F081C: .4byte gUnknown_8568BF0\n\t"
+        "_080F081C: .4byte gTVStringVarPtrs\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11553,7 +11553,7 @@ __attribute__((naked)) void DoTVShowBravoTrainerPokemonProfile(void)
         "_080F2154: .4byte gStringVar1\n\t"
         "_080F2158: .4byte gSpeciesNames\n\t"
         "_080F215C: .4byte gUnknown_2039CFC\n\t"
-        "_080F2160: .4byte gUnknown_8568CB0\n\t"
+        "_080F2160: .4byte sTVBravoTrainerTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11843,7 +11843,7 @@ __attribute__((naked)) void DoTVShowBravoTrainerBattleTower(void)
         "_080F23DC: .4byte gStringVar1\n\t"
         "_080F23E0: .4byte gStringVar2\n\t"
         "_080F23E4: .4byte gSpeciesNames\n\t"
-        "_080F23E8: .4byte gUnknown_8568CEC\n\t"
+        "_080F23E8: .4byte sTVBravoTrainerBattleTowerTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -12099,7 +12099,7 @@ __attribute__((naked)) void DoTVShowTodaysSmartShopper(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F2618: .4byte gStringVar1\n\t"
-        "_080F261C: .4byte gUnknown_8568C7C\n\t"
+        "_080F261C: .4byte sTVTodaysSmartShopperTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -12431,7 +12431,7 @@ __attribute__((naked)) void DoTVShowTheNameRaterShow(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F28F4: .4byte gStringVar1\n\t"
-        "_080F28F8: .4byte gUnknown_8568DE4\n\t"
+        "_080F28F8: .4byte sTVNameRaterTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -12689,7 +12689,7 @@ __attribute__((naked)) void DoTVShowPokemonTodaySuccessfulCapture(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F2B4C: .4byte gUnknown_8568C4C\n\t"
+        "_080F2B4C: .4byte sTVPokemonTodaySuccessfulTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -12851,7 +12851,7 @@ __attribute__((naked)) void DoTVShowPokemonTodayFailedCapture(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F2CB4: .4byte gUnknown_8568E40\n\t"
+        "_080F2CB4: .4byte sTVPokemonTodayFailedTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -13071,7 +13071,7 @@ __attribute__((naked)) void DoTVShowPokemonFanClubLetter(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F2EE4: .4byte gUnknown_8568BFC\n\t"
+        "_080F2EE4: .4byte sTVFanClubTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -13224,7 +13224,7 @@ __attribute__((naked)) void DoTVShowRecentHappenings(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F307C: .4byte gUnknown_8568C1C\n\t"
+        "_080F307C: .4byte sTVRecentHappeninssTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -13335,7 +13335,7 @@ __attribute__((naked)) void DoTVShowPokemonFanClubOpinions(void)
         "	.align 2, 0\n\t"
         "_080F3168: .4byte gStringVar1\n\t"
         "_080F316C: .4byte gStringVar3\n\t"
-        "_080F3170: .4byte gUnknown_8568C34\n\t"
+        "_080F3170: .4byte sTVFanClubOpinionsTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -13387,7 +13387,7 @@ __attribute__((naked)) void DoTVShowPokemonNewsMassOutbreak(void)
         "_080F31D4: .4byte gStringVar1\n\t"
         "_080F31D8: .4byte gStringVar2\n\t"
         "_080F31DC: .4byte gSpeciesNames\n\t"
-        "_080F31E0: .4byte gUnknown_8568C48\n\t"
+        "_080F31E0: .4byte sTVMassOutbreakTextGroup\n\t"
         "_080F31E4: .4byte gUnknown_2039CFC\n\t"
         ".syntax divided\n\t"
     );
@@ -14331,7 +14331,7 @@ __attribute__((naked)) void DoTVShowPokemonContestLiveUpdates(void)
         "_080F39BC: .4byte gStringVar1\n\t"
         "_080F39C0: .4byte gStringVar2\n\t"
         "_080F39C4: .4byte gSpeciesNames\n\t"
-        "_080F39C8: .4byte gUnknown_8568D28\n\t"
+        "_080F39C8: .4byte sTVContestLiveUpdatesTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14574,7 +14574,7 @@ __attribute__((naked)) void DoTVShowPokemonBattleUpdate(void)
         "_080F3BF0: .4byte gStringVar2\n\t"
         "_080F3BF4: .4byte gStringVar3\n\t"
         "_080F3BF8: .4byte gSpeciesNames\n\t"
-        "_080F3BFC: .4byte gUnknown_8568DAC\n\t"
+        "_080F3BFC: .4byte sTVPokemonBattleUpdateTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14871,7 +14871,7 @@ __attribute__((naked)) void DoTVShow3CheersForPokeblocks(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F3EA8: .4byte gUnknown_8568CD4\n\t"
+        "_080F3EA8: .4byte sTV3CheersForPokeblocksTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -15097,7 +15097,7 @@ __attribute__((naked)) void DoTVShowInSearchOfTrainers(void)
         "_080F4094: .4byte 0x00002BA6\n\t"
         "_080F4098: .4byte gSpecialVar_Result\n\t"
         "_080F409C: .4byte gUnknown_2039CFC\n\t"
-        "_080F40A0: .4byte gUnknown_8569118\n\t"
+        "_080F40A0: .4byte sTVInSearchOfTrainersTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -15200,7 +15200,7 @@ __attribute__((naked)) void DoTVShowPokemonAngler(void)
         "_080F4170: .4byte gStringVar1\n\t"
         "_080F4174: .4byte gStringVar2\n\t"
         "_080F4178: .4byte gSpeciesNames\n\t"
-        "_080F417C: .4byte gUnknown_8568E5C\n\t"
+        "_080F417C: .4byte sTVPokemonAnglerTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -15305,7 +15305,7 @@ __attribute__((naked)) void DoTVShowTheWorldOfMasters(void)
         "_080F4250: .4byte gStringVar2\n\t"
         "_080F4254: .4byte gStringVar3\n\t"
         "_080F4258: .4byte gSpeciesNames\n\t"
-        "_080F425C: .4byte gUnknown_8568E64\n\t"
+        "_080F425C: .4byte sTVWorldOfMastersTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -15557,7 +15557,7 @@ __attribute__((naked)) void DoTVShowTodaysRivalTrainer(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F4468: .4byte gStringVar1\n\t"
-        "_080F446C: .4byte gUnknown_8568E70\n\t"
+        "_080F446C: .4byte sTVTodaysRivalTrainerTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -15716,7 +15716,7 @@ __attribute__((naked)) void DoTVShowDewfordTrendWatcherNetwork(void)
         "	.align 2, 0\n\t"
         "_080F45D4: .4byte gStringVar1\n\t"
         "_080F45D8: .4byte gStringVar2\n\t"
-        "_080F45DC: .4byte gUnknown_8568E9C\n\t"
+        "_080F45DC: .4byte sTVDewfordTrendWatcherNetworkTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -15837,7 +15837,7 @@ __attribute__((naked)) void DoTVShowHoennTreasureInvestigators(void)
         "	.align 2, 0\n\t"
         "_080F46D4: .4byte gStringVar1\n\t"
         "_080F46D8: .4byte gStringVar2\n\t"
-        "_080F46DC: .4byte gUnknown_8568EB8\n\t"
+        "_080F46DC: .4byte sTVHoennTreasureInvestisatorsTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -16036,7 +16036,7 @@ __attribute__((naked)) void DoTVShowFindThatGamer(void)
         "	.align 2, 0\n\t"
         "_080F4880: .4byte gStringVar2\n\t"
         "_080F4884: .4byte gUnknown_85CBD12 + 0x29B\n\t"
-        "_080F4888: .4byte gUnknown_8568EC4\n\t"
+        "_080F4888: .4byte sTVFindThatGamerTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -16392,7 +16392,7 @@ __attribute__((naked)) void DoTVShowBreakingNewsTV(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F4BB4: .4byte gStringVar1\n\t"
-        "_080F4BB8: .4byte gUnknown_8568ED4\n\t"
+        "_080F4BB8: .4byte sTVBreakingNewsTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -16667,7 +16667,7 @@ __attribute__((naked)) void DoTVShowSecretBaseVisit(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F4E08: .4byte gUnknown_8568F08\n\t"
+        "_080F4E08: .4byte sTVSecretBaseVisitTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -16734,7 +16734,7 @@ __attribute__((naked)) void DoTVShowPokemonLotteryWinnerFlashReport(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F4E98: .4byte gStringVar3\n\t"
-        "_080F4E9C: .4byte gUnknown_8568F40\n\t"
+        "_080F4E9C: .4byte sTVPokemonLotteryWinnerFlashReportTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -16968,7 +16968,7 @@ __attribute__((naked)) void DoTVShowThePokemonBattleSeminar(void)
         "_080F509C: .4byte gStringVar1\n\t"
         "_080F50A0: .4byte gMoveNames\n\t"
         "_080F50A4: .4byte gStringVar2\n\t"
-        "_080F50A8: .4byte gUnknown_8568F44\n\t"
+        "_080F50A8: .4byte sTVThePokemonBattleSeminarTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -17108,7 +17108,7 @@ __attribute__((naked)) void DoTVShowTrainerFanClubSpecial(void)
         "_080F51D0: .4byte gStringVar1\n\t"
         "_080F51D4: .4byte gStringVar2\n\t"
         "_080F51D8: .4byte gStringVar3\n\t"
-        "_080F51DC: .4byte gUnknown_8568DCC\n\t"
+        "_080F51DC: .4byte sTVTrainerFanClubSpecialTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -17300,7 +17300,7 @@ __attribute__((naked)) void DoTVShowTrainerFanClub(void)
         "_080F536C: .4byte gStringVar1\n\t"
         "_080F5370: .4byte gStringVar2\n\t"
         "_080F5374: .4byte gStringVar3\n\t"
-        "_080F5378: .4byte gUnknown_8568F60\n\t"
+        "_080F5378: .4byte sTVTrainerFanClubTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -17548,7 +17548,7 @@ __attribute__((naked)) void DoTVShowSpotTheCuties(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F55AC: .4byte gUnknown_8568F90\n\t"
+        "_080F55AC: .4byte sTVCutiesTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -17851,7 +17851,7 @@ __attribute__((naked)) void DoTVShowPokemonNewsBattleFrontier(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F5850: .4byte gStringVar1\n\t"
-        "_080F5854: .4byte gUnknown_8568FD0\n\t"
+        "_080F5854: .4byte sTVPokemonNewsBattleFrontierTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -18007,7 +18007,7 @@ __attribute__((naked)) void DoTVShowWhatsNo1InHoennToday(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F599C: .4byte gStringVar1\n\t"
-        "_080F59A0: .4byte gUnknown_856901C\n\t"
+        "_080F59A0: .4byte sTVWhatsNo1InHoennTodayTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -18449,7 +18449,7 @@ __attribute__((naked)) void DoTVShowSecretBaseSecrets(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F5D50: .4byte gUnknown_8569040\n\t"
+        "_080F5D50: .4byte sTVSecretBaseSecretsTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -18634,7 +18634,7 @@ __attribute__((naked)) void DoTVShowSafariFanClub(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F5ECC: .4byte gUnknown_85690EC\n\t"
+        "_080F5ECC: .4byte sTVSafariFanClubTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -18719,7 +18719,7 @@ __attribute__((naked)) void DoTVShowPokemonContestLiveUpdates2(void)
         "	.align 2, 0\n\t"
         "_080F5F68: .4byte gStringVar3\n\t"
         "_080F5F6C: .4byte gStringVar2\n\t"
-        "_080F5F70: .4byte gUnknown_8568E30\n\t"
+        "_080F5F70: .4byte sTVLilycoveContestLadyTextGroup\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -707,7 +707,7 @@ __attribute__((naked)) void GetLinkPartnerNames(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08138308: .4byte gUnknown_8568BF0\n\t"
+        "_08138308: .4byte gTVStringVarPtrs\n\t"
         "_0813830C: .4byte gUnknown_20226A8\n\t"
         ".syntax divided\n\t"
     );
