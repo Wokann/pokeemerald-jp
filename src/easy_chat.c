@@ -32,8 +32,11 @@
 #define EASY_CHAT_SPRITE_SHEETS_DATA __attribute__((section(".rodata.easy_chat_sprite_sheets_data"), aligned(1)))
 #define EASY_CHAT_SPRITE_PALETTES_DATA __attribute__((section(".rodata.easy_chat_sprite_palettes_data"), aligned(1)))
 #define EASY_CHAT_COMPRESSED_SPRITE_SHEETS_DATA __attribute__((section(".rodata.easy_chat_compressed_sprite_sheets_data"), aligned(1)))
+#define EASY_CHAT_SPRITE_METADATA_DATA __attribute__((section(".rodata.easy_chat_sprite_metadata_data"), aligned(1)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
+
+void sub_0811E734(struct Sprite *sprite);
 
 void DoQuizAnswerEasyChatScreen(void);
 void DoQuizQuestionEasyChatScreen(void);
@@ -632,6 +635,246 @@ static const struct CompressedSpriteSheet sCompressedSpriteSheets[] EASY_CHAT_CO
         .size = 0x1000,
         .tag = GFXTAG_MODE_WINDOW,
     },
+};
+
+static const struct OamData sOamData_TriangleCursor EASY_CHAT_SPRITE_METADATA_DATA = {
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 3,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_TriangleCursor EASY_CHAT_SPRITE_METADATA_DATA =
+{
+    .tileTag = PALTAG_TRIANGLE_CURSOR,
+    .paletteTag = GFXTAG_TRIANGLE_CURSOR,
+    .oam = &sOamData_TriangleCursor,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = sub_0811E734,
+};
+
+static const struct OamData sOamData_RectangleCursor EASY_CHAT_SPRITE_METADATA_DATA = {
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_RectangleCursor_OnGroup[] EASY_CHAT_SPRITE_METADATA_DATA = {
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_RectangleCursor_OnButton[] EASY_CHAT_SPRITE_METADATA_DATA = {
+    ANIMCMD_FRAME(32, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_RectangleCursor_OnOthers[] EASY_CHAT_SPRITE_METADATA_DATA = {
+    ANIMCMD_FRAME(64, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_RectangleCursor_OnLetter[] EASY_CHAT_SPRITE_METADATA_DATA = {
+    ANIMCMD_FRAME(96, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_RectangleCursor[] EASY_CHAT_SPRITE_METADATA_DATA = {
+    sAnim_RectangleCursor_OnGroup,
+    sAnim_RectangleCursor_OnButton,
+    sAnim_RectangleCursor_OnOthers,
+    sAnim_RectangleCursor_OnLetter,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_RectangleCursor EASY_CHAT_SPRITE_METADATA_DATA =
+{
+    .tileTag = GFXTAG_RECTANGLE_CURSOR,
+    .paletteTag = PALTAG_RECTANGLE_CURSOR,
+    .oam = &sOamData_RectangleCursor,
+    .anims = sAnims_RectangleCursor,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = sub_0811E734,
+};
+
+static const struct OamData sOamData_ModeWindow EASY_CHAT_SPRITE_METADATA_DATA = {
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_ModeWindow_Hidden[] EASY_CHAT_SPRITE_METADATA_DATA = {
+    ANIMCMD_FRAME(96, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_ModeWindow_ToGroup[] EASY_CHAT_SPRITE_METADATA_DATA = {
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_FRAME(32, 4),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_ModeWindow_ToAlphabet[] EASY_CHAT_SPRITE_METADATA_DATA = {
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_ModeWindow_ToHidden[] EASY_CHAT_SPRITE_METADATA_DATA = {
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_FRAME(96, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_ModeWindow_Transition[] EASY_CHAT_SPRITE_METADATA_DATA = {
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_ModeWindow[] EASY_CHAT_SPRITE_METADATA_DATA = {
+    sAnim_ModeWindow_Hidden,
+    sAnim_ModeWindow_ToGroup,
+    sAnim_ModeWindow_ToAlphabet,
+    sAnim_ModeWindow_ToHidden,
+    sAnim_ModeWindow_Transition,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_ModeWindow EASY_CHAT_SPRITE_METADATA_DATA =
+{
+    .tileTag = GFXTAG_MODE_WINDOW,
+    .paletteTag = PALTAG_MISC_UI,
+    .oam = &sOamData_ModeWindow,
+    .anims = sAnims_ModeWindow,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct OamData sOamData_ButtonWindow EASY_CHAT_SPRITE_METADATA_DATA = {
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 3,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_ButtonWindow EASY_CHAT_SPRITE_METADATA_DATA =
+{
+    .tileTag = GFXTAG_BUTTON_WINDOW,
+    .paletteTag = PALTAG_MISC_UI,
+    .oam = &sOamData_ButtonWindow,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct OamData sOamData_StartSelectButton EASY_CHAT_SPRITE_METADATA_DATA = {
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x8),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sOamData_ScrollIndicator EASY_CHAT_SPRITE_METADATA_DATA = {
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_Frame0[] EASY_CHAT_SPRITE_METADATA_DATA = {
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Frame1[] EASY_CHAT_SPRITE_METADATA_DATA = {
+    ANIMCMD_FRAME(4, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_TwoFrame[] EASY_CHAT_SPRITE_METADATA_DATA = {
+    sAnim_Frame0,
+    sAnim_Frame1,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_StartSelectButton EASY_CHAT_SPRITE_METADATA_DATA =
+{
+    .tileTag = GFXTAG_START_SELECT_BUTTONS,
+    .paletteTag = PALTAG_MISC_UI,
+    .oam = &sOamData_StartSelectButton,
+    .anims = sAnims_TwoFrame,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_ScrollIndicator EASY_CHAT_SPRITE_METADATA_DATA =
+{
+    .tileTag = GFXTAG_SCROLL_INDICATOR,
+    .paletteTag = PALTAG_MISC_UI,
+    .oam = &sOamData_ScrollIndicator,
+    .anims = sAnims_TwoFrame,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
 };
 
 // State values for sEasyChatScreen->inputState
@@ -9378,14 +9621,14 @@ __attribute__((naked)) void sub_0811E6D8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0811E724: .4byte sPhraseFrameDimensions\n\t"
-        "_0811E728: .4byte gUnknown_857443C\n\t"
+        "_0811E728: .4byte sSpriteTemplate_TriangleCursor\n\t"
         "_0811E72C: .4byte gUnknown_2039DE8\n\t"
         "_0811E730: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_0811E734(void)
+__attribute__((naked)) void sub_0811E734(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9510,7 +9753,7 @@ __attribute__((naked)) void sub_0811E7D8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811E808: .4byte gUnknown_857448C\n\t"
+        "_0811E808: .4byte sSpriteTemplate_RectangleCursor\n\t"
         "_0811E80C: .4byte gUnknown_2039DE8\n\t"
         "_0811E810: .4byte gSprites\n\t"
         ".syntax divided\n\t"
@@ -9804,7 +10047,7 @@ __attribute__((naked)) void CreateWordSelectCursorSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811EA14: .4byte gUnknown_857443C\n\t"
+        "_0811EA14: .4byte sSpriteTemplate_TriangleCursor\n\t"
         "_0811EA18: .4byte gUnknown_2039DE8\n\t"
         "_0811EA1C: .4byte gSprites\n\t"
         "_0811EA20: .4byte SpriteCB_WordSelectCursor + 1\n\t"
@@ -9996,11 +10239,11 @@ __attribute__((naked)) void CreateSideWindowSprites(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811EB50: .4byte gUnknown_8574514\n\t"
+        "_0811EB50: .4byte sSpriteTemplate_ButtonWindow\n\t"
         "_0811EB54: .4byte gUnknown_2039DE8\n\t"
         "_0811EB58: .4byte gSprites\n\t"
         "_0811EB5C: .4byte 0x0000FFC0\n\t"
-        "_0811EB60: .4byte gUnknown_85744F4\n\t"
+        "_0811EB60: .4byte sSpriteTemplate_ModeWindow\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10332,7 +10575,7 @@ __attribute__((naked)) void CreateScrollIndicatorSprites(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811ED8C: .4byte gUnknown_857456C\n\t"
+        "_0811ED8C: .4byte sSpriteTemplate_ScrollIndicator\n\t"
         "_0811ED90: .4byte gUnknown_2039DE8\n\t"
         "_0811ED94: .4byte gSprites\n\t"
         ".syntax divided\n\t"
@@ -10523,7 +10766,7 @@ __attribute__((naked)) void CreateStartSelectButtonSprites(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811EED4: .4byte gUnknown_8574554\n\t"
+        "_0811EED4: .4byte sSpriteTemplate_StartSelectButton\n\t"
         "_0811EED8: .4byte gUnknown_2039DE8\n\t"
         "_0811EEDC: .4byte gSprites\n\t"
         ".syntax divided\n\t"

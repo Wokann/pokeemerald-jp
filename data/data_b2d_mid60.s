@@ -36,37 +36,11 @@ gUnknown_85743B4: @ 0x85743B4
 	@ This auxiliary UI data has no verified semantic owner yet.
 	.incbin "baserom_jp.gba", 0x5743b4, 0x8
 
-	.section .rodata.mid60_easy_chat_sprite_metadata_data
+	.section .rodata.mid60_tail_after_easy_chat_sprite_metadata_data
 
-	.globl gUnknown_8574434
-gUnknown_8574434: @ 0x8574434
-	@ Easy Chat sprite metadata begins here; it remains visible pending its
-	@ dedicated semantic conversion.
-	.incbin "baserom_jp.gba", 0x574434, 0x8
-
-	.globl gUnknown_857443C
-gUnknown_857443C: @ 0x857443C
-	.incbin "baserom_jp.gba", 0x57443c, 0x50
-
-	.globl gUnknown_857448C
-gUnknown_857448C: @ 0x857448C
-	.incbin "baserom_jp.gba", 0x57448c, 0x68
-
-	.globl gUnknown_85744F4
-gUnknown_85744F4: @ 0x85744F4
-	.incbin "baserom_jp.gba", 0x5744f4, 0x20
-
-	.globl gUnknown_8574514
-gUnknown_8574514: @ 0x8574514
-	.incbin "baserom_jp.gba", 0x574514, 0x40
-
-	.globl gUnknown_8574554
-gUnknown_8574554: @ 0x8574554
-	.incbin "baserom_jp.gba", 0x574554, 0x18
-
-	.globl gUnknown_857456C
-gUnknown_857456C: @ 0x857456C
-	.incbin "baserom_jp.gba", 0x57456c, 0x47a8
+	.globl gUnknown_8574584
+gUnknown_8574584: @ 0x8574584
+	.incbin "baserom_jp.gba", 0x574584, 0x4790
 
 	.globl gUnknown_8578D14
 gUnknown_8578D14: @ 0x8578D14
