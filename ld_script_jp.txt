@@ -9790,7 +9790,8 @@ SECTIONS {
         src/easy_chat.o(.rodata.easy_chat_group_speech_data);
         src/easy_chat.o(.rodata.easy_chat_group_endings_data);
         src/easy_chat.o(.rodata.easy_chat_group_feelings_data);
-        data/data_b2d_mid60.o(.rodata.mid60_tail_after_easy_chat_group_feelings_data);
+        src/easy_chat.o(.rodata.easy_chat_group_conditions_data);
+        data/data_b2d_mid60.o(.rodata.mid60_tail_after_easy_chat_group_conditions_data);
         src/data/text/region_texts61.o(.rodata);
         data/data_b2d_mid61.o(.rodata);
         sHealLocations = . + 0x4C;
