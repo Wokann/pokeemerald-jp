@@ -18,6 +18,8 @@
 #define EASY_CHAT_TEXT_INPUT_FRAME_ORANGE_PAL_DATA __attribute__((section(".rodata.easy_chat_text_input_frame_orange_pal_data"), aligned(1)))
 #define EASY_CHAT_TEXT_INPUT_FRAME_GREEN_PAL_DATA __attribute__((section(".rodata.easy_chat_text_input_frame_green_pal_data"), aligned(1)))
 #define EASY_CHAT_TEXT_INPUT_FRAME_GFX_DATA __attribute__((section(".rodata.easy_chat_text_input_frame_gfx_data"), aligned(1)))
+#define EASY_CHAT_TITLE_TEXT_PAL_DATA __attribute__((section(".rodata.easy_chat_title_text_pal_data"), aligned(1)))
+#define EASY_CHAT_TEXT_PAL_DATA __attribute__((section(".rodata.easy_chat_text_pal_data"), aligned(1)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
 
@@ -340,6 +342,12 @@ static const u16 sTextInputFrameGreen_Pal[] EASY_CHAT_TEXT_INPUT_FRAME_GREEN_PAL
 
 static const u32 sTextInputFrame_Gfx[] EASY_CHAT_TEXT_INPUT_FRAME_GFX_DATA =
     INCGFX_U32("graphics/easy_chat/text_input_frame.png", ".4bpp.lz");
+
+static const u16 sTitleText_Pal[] EASY_CHAT_TITLE_TEXT_PAL_DATA =
+    INCGFX_U16("graphics/easy_chat/title_text.pal", ".gbapal");
+
+static const u16 sText_Pal[] EASY_CHAT_TEXT_PAL_DATA =
+    INCGFX_U16("graphics/easy_chat/text.pal", ".gbapal");
 
 // State values for sEasyChatScreen->inputState
 enum {
@@ -7020,8 +7028,8 @@ __attribute__((naked)) void LoadEasyChatPalettes(void)
         "_0811D868: .4byte gEasyChatMode_Pal\n\t"
         "_0811D86C: .4byte sTextInputFrameOrange_Pal\n\t"
         "_0811D870: .4byte sTextInputFrameGreen_Pal\n\t"
-        "_0811D874: .4byte gUnknown_8574344\n\t"
-        "_0811D878: .4byte gUnknown_857434C\n\t"
+        "_0811D874: .4byte sTitleText_Pal\n\t"
+        "_0811D878: .4byte sText_Pal\n\t"
         ".syntax divided\n\t"
     );
 }
