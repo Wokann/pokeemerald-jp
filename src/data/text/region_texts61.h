@@ -1,1 +1,1 @@
-const u8 gUnknown_8579F30[] = _("？？？");
+const u8 gText_ThreeQuestionMarks[] = _("？？？");

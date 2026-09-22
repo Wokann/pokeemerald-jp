@@ -56,6 +56,8 @@
 #define EASY_CHAT_GROUP_TRENDY_SAYING_DATA __attribute__((section(".rodata.easy_chat_group_trendy_saying_data"), aligned(1)))
 #define EASY_CHAT_GROUP_POKEMON_NATIONAL_DATA __attribute__((section(".rodata.easy_chat_group_pokemon_national_data"), aligned(1)))
 #define EASY_CHAT_GROUPS_DATA __attribute__((section(".rodata.easy_chat_groups_data"), aligned(1)))
+#define EASY_CHAT_WORDS_BY_LETTER_DATA __attribute__((section(".rodata.easy_chat_words_by_letter_data"), aligned(1)))
+#define EASY_CHAT_GROUP_NAMES_DATA __attribute__((section(".rodata.easy_chat_group_names_data"), aligned(1)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
 
@@ -901,6 +903,8 @@ static const struct SpriteTemplate sSpriteTemplate_ScrollIndicator EASY_CHAT_SPR
 };
 
 #include "data/easy_chat/easy_chat_groups.h"
+#include "data/easy_chat/easy_chat_words_by_letter.h"
+#include "data/easy_chat/easy_chat_group_names.h"
 
 // State values for sEasyChatScreen->inputState
 enum {
@@ -995,8 +999,6 @@ static const struct
 #define sAnimateCursor data[1]
 
 extern struct EasyChatScreenControl *sScreenControl;
-extern const u8 *const sEasyChatGroupNamePointers[];
-
 
 __attribute__((naked)) void DoEasyChatScreen(u8 type, u16 *words, MainCallback exitCallback, u8 displayedPersonType)
 {
@@ -11220,7 +11222,7 @@ __attribute__((naked)) u8 *CopyEasyChatWord(u8 *dest, u16 easyChatWord)
         "	ldr r1, _0811F198\n\t"
         "	b _0811F1AE\n\t"
         "	.align 2, 0\n\t"
-        "_0811F198: .4byte gUnknown_8579ED8 + 0x58\n\t"
+        "_0811F198: .4byte gText_ThreeQuestionMarks\n\t"
         "_0811F19C:\n\t"
         "	ldr r0, _0811F1B8\n\t"
         "	cmp r4, r0\n\t"
@@ -11369,7 +11371,7 @@ __attribute__((naked)) u16 GetEasyChatWordStringLength(u16 easyChatWord)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0811F2A0: .4byte gUnknown_8579ED8 + 0x58\n\t"
+        "_0811F2A0: .4byte gText_ThreeQuestionMarks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -12369,7 +12371,7 @@ __attribute__((naked)) u8 *BufferEasyChatWordGroupName(u8 *dest, u8 groupId, u16
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0811F97C: .4byte gUnknown_8579ED8\n\t"
+        "_0811F97C: .4byte sEasyChatGroupNamePointers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -12463,7 +12465,7 @@ __attribute__((naked)) void SetUnlockedWordsByAlphabet(void)
         "	adds r1, r0, r4\n\t"
         "	b _0811FA56\n\t"
         "	.align 2, 0\n\t"
-        "_0811FA18: .4byte gUnknown_8579D04\n\t"
+        "_0811FA18: .4byte gEasyChatWordsByLetterPointers\n\t"
         "_0811FA1C: .4byte gUnknown_2039DEC\n\t"
         "_0811FA20: .4byte 0x0000FFFF\n\t"
         "_0811FA24:\n\t"

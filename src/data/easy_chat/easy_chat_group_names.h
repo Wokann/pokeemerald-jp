@@ -1,0 +1,49 @@
+#include "easy_chat.h"
+
+const u8 gEasyChatGroupName_Pokemon[] EASY_CHAT_GROUP_NAMES_DATA = _("ポケモン");
+const u8 gEasyChatGroupName_Trainer[] EASY_CHAT_GROUP_NAMES_DATA = _("トレーナー");
+const u8 gEasyChatGroupName_Status[] EASY_CHAT_GROUP_NAMES_DATA = _("ステータス");
+const u8 gEasyChatGroupName_Battle[] EASY_CHAT_GROUP_NAMES_DATA = _("バトル");
+const u8 gEasyChatGroupName_Greetings[] EASY_CHAT_GROUP_NAMES_DATA = _("あいさつ");
+const u8 gEasyChatGroupName_People[] EASY_CHAT_GROUP_NAMES_DATA = _("ひと");
+const u8 gEasyChatGroupName_Voices[] EASY_CHAT_GROUP_NAMES_DATA = _("こえ");
+const u8 gEasyChatGroupName_Speech[] EASY_CHAT_GROUP_NAMES_DATA = _("かいわ");
+const u8 gEasyChatGroupName_Endings[] EASY_CHAT_GROUP_NAMES_DATA = _("むすび");
+const u8 gEasyChatGroupName_Feelings[] EASY_CHAT_GROUP_NAMES_DATA = _("きもち");
+const u8 gEasyChatGroupName_Conditions[] EASY_CHAT_GROUP_NAMES_DATA = _("じょうたい");
+const u8 gEasyChatGroupName_Actions[] EASY_CHAT_GROUP_NAMES_DATA = _("こうどう");
+const u8 gEasyChatGroupName_Lifestyle[] EASY_CHAT_GROUP_NAMES_DATA = _("せいかつ");
+const u8 gEasyChatGroupName_Hobbies[] EASY_CHAT_GROUP_NAMES_DATA = _("しゅみ");
+const u8 gEasyChatGroupName_Time[] EASY_CHAT_GROUP_NAMES_DATA = _("じかん");
+const u8 gEasyChatGroupName_Misc[] EASY_CHAT_GROUP_NAMES_DATA = _("あれこれ");
+const u8 gEasyChatGroupName_Adjectives[] EASY_CHAT_GROUP_NAMES_DATA = _("くりかえし");
+const u8 gEasyChatGroupName_Events[] EASY_CHAT_GROUP_NAMES_DATA = _("イベント");
+const u8 gEasyChatGroupName_Move1[] EASY_CHAT_GROUP_NAMES_DATA = _("わざ1");
+const u8 gEasyChatGroupName_Move2[] EASY_CHAT_GROUP_NAMES_DATA = _("わざ2");
+const u8 gEasyChatGroupName_TrendySaying[] EASY_CHAT_GROUP_NAMES_DATA = _("ナウイことば");
+const u8 gEasyChatGroupName_Pokemon2[] EASY_CHAT_GROUP_NAMES_DATA = _("ポケモン2");
+
+static const u8 *const sEasyChatGroupNamePointers[] EASY_CHAT_GROUP_NAMES_DATA = {
+    [EC_GROUP_POKEMON] = gEasyChatGroupName_Pokemon,
+    [EC_GROUP_TRAINER] = gEasyChatGroupName_Trainer,
+    [EC_GROUP_STATUS] = gEasyChatGroupName_Status,
+    [EC_GROUP_BATTLE] = gEasyChatGroupName_Battle,
+    [EC_GROUP_GREETINGS] = gEasyChatGroupName_Greetings,
+    [EC_GROUP_PEOPLE] = gEasyChatGroupName_People,
+    [EC_GROUP_VOICES] = gEasyChatGroupName_Voices,
+    [EC_GROUP_SPEECH] = gEasyChatGroupName_Speech,
+    [EC_GROUP_ENDINGS] = gEasyChatGroupName_Endings,
+    [EC_GROUP_FEELINGS] = gEasyChatGroupName_Feelings,
+    [EC_GROUP_CONDITIONS] = gEasyChatGroupName_Conditions,
+    [EC_GROUP_ACTIONS] = gEasyChatGroupName_Actions,
+    [EC_GROUP_LIFESTYLE] = gEasyChatGroupName_Lifestyle,
+    [EC_GROUP_HOBBIES] = gEasyChatGroupName_Hobbies,
+    [EC_GROUP_TIME] = gEasyChatGroupName_Time,
+    [EC_GROUP_MISC] = gEasyChatGroupName_Misc,
+    [EC_GROUP_ADJECTIVES] = gEasyChatGroupName_Adjectives,
+    [EC_GROUP_EVENTS] = gEasyChatGroupName_Events,
+    [EC_GROUP_MOVE_1] = gEasyChatGroupName_Move1,
+    [EC_GROUP_MOVE_2] = gEasyChatGroupName_Move2,
+    [EC_GROUP_TRENDY_SAYING] = gEasyChatGroupName_TrendySaying,
+    [EC_GROUP_POKEMON_NATIONAL] = gEasyChatGroupName_Pokemon2,
+};
