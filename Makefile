@@ -756,6 +756,10 @@ $(C_BUILDDIR)/braille_puzzles.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffun
 
 $(C_BUILDDIR)/title_screen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 
+# JP byte matching requires agbcc's debug flag for GenerateInitialRentalMons
+# to retain the original 0x180-byte register allocation.
+$(C_BUILDDIR)/battle_tent.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -g
+
 $(C_BUILDDIR)/title_screen_assets.o: src/title_screen_assets.c graphics/title_screen/rayquaza.4bpp.lz graphics/title_screen/rayquaza.bin.lz \
 	graphics/title_screen/logo_shine.4bpp.lz graphics/title_screen/clouds.4bpp.lz
 	@mkdir -p $(dir $@)
