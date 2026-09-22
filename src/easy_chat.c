@@ -54,6 +54,7 @@
 #define EASY_CHAT_GROUP_MOVE_1_DATA __attribute__((section(".rodata.easy_chat_group_move_1_data"), aligned(1)))
 #define EASY_CHAT_GROUP_MOVE_2_DATA __attribute__((section(".rodata.easy_chat_group_move_2_data"), aligned(1)))
 #define EASY_CHAT_GROUP_TRENDY_SAYING_DATA __attribute__((section(".rodata.easy_chat_group_trendy_saying_data"), aligned(1)))
+#define EASY_CHAT_GROUP_POKEMON_NATIONAL_DATA __attribute__((section(".rodata.easy_chat_group_pokemon_national_data"), aligned(1)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
 
@@ -919,6 +920,7 @@ static const struct SpriteTemplate sSpriteTemplate_ScrollIndicator EASY_CHAT_SPR
 #include "data/easy_chat/easy_chat_group_move_1.h"
 #include "data/easy_chat/easy_chat_group_move_2.h"
 #include "data/easy_chat/easy_chat_group_trendy_saying.h"
+#include "data/easy_chat/easy_chat_group_pokemon_national.h"
 
 // State values for sEasyChatScreen->inputState
 enum {
