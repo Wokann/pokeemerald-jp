@@ -776,6 +776,24 @@ EASY_CHAT_RECTANGLE_CURSOR_GFX const u32 gEasyChatRectangleCursor_Gfx[] = INCBIN
 
 #undef EASY_CHAT_RECTANGLE_CURSOR_GFX
 
+#define EASY_CHAT_BUTTON_WINDOW_PAL __attribute__((section(".rodata.easy_chat_button_window_pal_data"), aligned(1)))
+
+EASY_CHAT_BUTTON_WINDOW_PAL const u16 gEasyChatButtonWindow_Pal[] = INCBIN_U16("graphics/easy_chat/button_window.png.gbapal");
+
+#undef EASY_CHAT_BUTTON_WINDOW_PAL
+
+#define EASY_CHAT_MODE_GFX __attribute__((section(".rodata.easy_chat_mode_gfx_data"), aligned(1)))
+
+EASY_CHAT_MODE_GFX const u32 gEasyChatMode_Gfx[] = INCBIN_U32("graphics/easy_chat/mode.png.4bpp.lz");
+
+#undef EASY_CHAT_MODE_GFX
+
+#define EASY_CHAT_BUTTON_WINDOW_GFX __attribute__((section(".rodata.easy_chat_button_window_gfx_data"), aligned(1)))
+
+EASY_CHAT_BUTTON_WINDOW_GFX const u32 gEasyChatButtonWindow_Gfx[] = INCBIN_U32("graphics/easy_chat/button_window.png.4bpp.lz");
+
+#undef EASY_CHAT_BUTTON_WINDOW_GFX
+
 #define TRADE_MENU_GRAPHICS __attribute__((section(".rodata.trade_menu_graphics"), aligned(1)))
 
 TRADE_MENU_GRAPHICS const u16 gTradeMenu_Pal[] = INCBIN_U16("graphics/trade/menu.gbapal");

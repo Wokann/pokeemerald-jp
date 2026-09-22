@@ -29,11 +29,11 @@ gUnknown_85733B0: @ 0x85733B0
 	@ Unreferenced BGR555 palette; semantic owner has not been established.
 	.incbin "baserom_jp.gba", 0x5733b0, 0x20
 
-	.section .rodata.mid60_tail_after_rectangle_cursor_gfx_data
+	.section .rodata.mid60_tail_after_easy_chat_controls_data
 
-	.globl gUnknown_85735D4
-gUnknown_85735D4: @ 0x85735D4
-	.incbin "baserom_jp.gba", 0x5735d4, 0x890
+	.globl gUnknown_8573D10
+gUnknown_8573D10: @ 0x8573D10
+	.incbin "baserom_jp.gba", 0x573d10, 0x154
 
 	.globl gUnknown_8573E64
 gUnknown_8573E64: @ 0x8573E64

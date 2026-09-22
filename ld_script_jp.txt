@@ -9755,7 +9755,12 @@ SECTIONS {
         src/easy_chat.o(.rodata.easy_chat_triangle_cursor_gfx_data);
         data/data_b2d_mid60.o(.rodata.easy_chat_unreferenced_palette_data);
         src/graphics.o(.rodata.easy_chat_rectangle_cursor_gfx_data);
-        data/data_b2d_mid60.o(.rodata.mid60_tail_after_rectangle_cursor_gfx_data);
+        src/easy_chat.o(.rodata.easy_chat_scroll_indicator_gfx_data);
+        src/easy_chat.o(.rodata.easy_chat_start_select_buttons_gfx_data);
+        src/graphics.o(.rodata.easy_chat_button_window_pal_data);
+        src/graphics.o(.rodata.easy_chat_mode_gfx_data);
+        src/graphics.o(.rodata.easy_chat_button_window_gfx_data);
+        data/data_b2d_mid60.o(.rodata.mid60_tail_after_easy_chat_controls_data);
         src/data/text/region_texts61.o(.rodata);
         data/data_b2d_mid61.o(.rodata);
         sHealLocations = . + 0x4C;

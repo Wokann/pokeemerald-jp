@@ -11,6 +11,8 @@
 #define EASY_CHAT_BERRY_MASTER_WIFE_PHRASES_DATA __attribute__((section(".rodata.easy_chat_berry_master_wife_phrases_data"), aligned(4)))
 #define EASY_CHAT_TRIANGLE_CURSOR_PAL_DATA __attribute__((section(".rodata.easy_chat_triangle_cursor_pal_data"), aligned(4)))
 #define EASY_CHAT_TRIANGLE_CURSOR_GFX_DATA __attribute__((section(".rodata.easy_chat_triangle_cursor_gfx_data"), aligned(4)))
+#define EASY_CHAT_SCROLL_INDICATOR_GFX_DATA __attribute__((section(".rodata.easy_chat_scroll_indicator_gfx_data"), aligned(1)))
+#define EASY_CHAT_START_SELECT_BUTTONS_GFX_DATA __attribute__((section(".rodata.easy_chat_start_select_buttons_gfx_data"), aligned(1)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
 
@@ -309,6 +311,12 @@ static const u32 sTriangleCursor_Gfx[] EASY_CHAT_TRIANGLE_CURSOR_GFX_DATA =
     0x0000CCC0, 0x000CDDC0, 0x00CDDDC0, 0x0CDDDDC0,
     0x0CDDDDC0, 0x00CDDDC0, 0x000CDDC0, 0x0000CCC0,
 };
+
+static const u32 sScrollIndicator_Gfx[] EASY_CHAT_SCROLL_INDICATOR_GFX_DATA =
+    INCGFX_U32("graphics/easy_chat/scroll_indicator.png", ".4bpp");
+
+static const u32 sStartSelectButtons_Gfx[] EASY_CHAT_START_SELECT_BUTTONS_GFX_DATA =
+    INCGFX_U32("graphics/easy_chat/start_select_buttons.png", ".4bpp");
 
 // State values for sEasyChatScreen->inputState
 enum {
