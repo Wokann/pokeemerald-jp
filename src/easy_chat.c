@@ -9,6 +9,8 @@
 #define EASY_CHAT_SCREEN_TEMPLATES_DATA __attribute__((section(".rodata.easy_chat_screen_templates_data"), aligned(4)))
 #define EASY_CHAT_MYSTERY_GIFT_PHRASES_DATA __attribute__((section(".rodata.easy_chat_mystery_gift_phrases_data"), aligned(4)))
 #define EASY_CHAT_BERRY_MASTER_WIFE_PHRASES_DATA __attribute__((section(".rodata.easy_chat_berry_master_wife_phrases_data"), aligned(4)))
+#define EASY_CHAT_TRIANGLE_CURSOR_PAL_DATA __attribute__((section(".rodata.easy_chat_triangle_cursor_pal_data"), aligned(4)))
+#define EASY_CHAT_TRIANGLE_CURSOR_GFX_DATA __attribute__((section(".rodata.easy_chat_triangle_cursor_gfx_data"), aligned(4)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
 
@@ -291,6 +293,21 @@ static const u16 sBerryMasterWifePhrases[5][2] EASY_CHAT_BERRY_MASTER_WIFE_PHRAS
     {0x1422, 0x0197},
     {0x0415, 0x0198},
     {0x281E, 0x2818},
+};
+
+// Retain the JP triangle cursor palette as byte-exact BGR555 data until its source asset is recovered.
+static const u16 sTriangleCursor_Pal[16] EASY_CHAT_TRIANGLE_CURSOR_PAL_DATA =
+{
+    0x4BFF, 0x4B1F, 0x2E3D, 0x1577,
+    0x6B5F, 0x5ADE, 0x4218, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x18C5,
+    0x318C, 0x5AF6, 0x6F5B, 0x7FFF,
+};
+
+static const u32 sTriangleCursor_Gfx[] EASY_CHAT_TRIANGLE_CURSOR_GFX_DATA =
+{
+    0x0000CCC0, 0x000CDDC0, 0x00CDDDC0, 0x0CDDDDC0,
+    0x0CDDDDC0, 0x00CDDDC0, 0x000CDDC0, 0x0000CCC0,
 };
 
 // State values for sEasyChatScreen->inputState

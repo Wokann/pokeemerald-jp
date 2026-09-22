@@ -22,11 +22,17 @@ sGiftRibbonsMonDataIds: @ 0x8569552
 
 	.include "data/field_special_scene/truck_and_ss_tidal.inc"
 
-	.section .rodata.mid60_tail_after_bike_data
+	.section .rodata.easy_chat_rectangle_cursor_pal_data
 
-	.globl gUnknown_8573350
-gUnknown_8573350: @ 0x8573350
-	.incbin "baserom_jp.gba", 0x573350, 0xb14
+	.globl gEasyChatRectangleCursor_Pal
+gEasyChatRectangleCursor_Pal: @ 0x8573370
+	.incbin "baserom_jp.gba", 0x573370, 0x20
+
+	.section .rodata.mid60_tail_after_triangle_cursor_gfx_data
+
+	.globl gUnknown_85733B0
+gUnknown_85733B0: @ 0x85733B0
+	.incbin "baserom_jp.gba", 0x5733b0, 0xab4
 
 	.globl gUnknown_8573E64
 gUnknown_8573E64: @ 0x8573E64
