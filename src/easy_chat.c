@@ -15,6 +15,9 @@
 #define EASY_CHAT_START_SELECT_BUTTONS_GFX_DATA __attribute__((section(".rodata.easy_chat_start_select_buttons_gfx_data"), aligned(1)))
 #define EASY_CHAT_RS_INTERVIEW_FRAME_PAL_DATA __attribute__((section(".rodata.easy_chat_rs_interview_frame_pal_data"), aligned(1)))
 #define EASY_CHAT_RS_INTERVIEW_FRAME_GFX_DATA __attribute__((section(".rodata.easy_chat_rs_interview_frame_gfx_data"), aligned(1)))
+#define EASY_CHAT_TEXT_INPUT_FRAME_ORANGE_PAL_DATA __attribute__((section(".rodata.easy_chat_text_input_frame_orange_pal_data"), aligned(1)))
+#define EASY_CHAT_TEXT_INPUT_FRAME_GREEN_PAL_DATA __attribute__((section(".rodata.easy_chat_text_input_frame_green_pal_data"), aligned(1)))
+#define EASY_CHAT_TEXT_INPUT_FRAME_GFX_DATA __attribute__((section(".rodata.easy_chat_text_input_frame_gfx_data"), aligned(1)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
 
@@ -328,6 +331,15 @@ static const u16 sRSInterviewFrame_Pal[] EASY_CHAT_RS_INTERVIEW_FRAME_PAL_DATA =
 
 static const u32 sRSInterviewFrame_Gfx[] EASY_CHAT_RS_INTERVIEW_FRAME_GFX_DATA =
     INCGFX_U32("graphics/easy_chat/interview_frame.png", ".4bpp.lz");
+
+static const u16 sTextInputFrameOrange_Pal[] EASY_CHAT_TEXT_INPUT_FRAME_ORANGE_PAL_DATA =
+    INCGFX_U16("graphics/easy_chat/text_input_frame_orange.pal", ".gbapal");
+
+static const u16 sTextInputFrameGreen_Pal[] EASY_CHAT_TEXT_INPUT_FRAME_GREEN_PAL_DATA =
+    INCGFX_U16("graphics/easy_chat/text_input_frame_green.pal", ".gbapal");
+
+static const u32 sTextInputFrame_Gfx[] EASY_CHAT_TEXT_INPUT_FRAME_GFX_DATA =
+    INCGFX_U32("graphics/easy_chat/text_input_frame.png", ".4bpp.lz");
 
 // State values for sEasyChatScreen->inputState
 enum {
@@ -4965,7 +4977,7 @@ __attribute__((naked)) bool8 LoadEasyChatScreen(void)
         "	bl CopyBgTilemapBufferToVram\n\t"
         "	b _0811C9E4\n\t"
         "	.align 2, 0\n\t"
-        "_0811C968: .4byte gUnknown_857427C\n\t"
+        "_0811C968: .4byte sTextInputFrame_Gfx\n\t"
         "_0811C96C:\n\t"
         "	bl sub_0811D87C\n\t"
         "	bl sub_0811D990\n\t"
@@ -7006,8 +7018,8 @@ __attribute__((naked)) void LoadEasyChatPalettes(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0811D868: .4byte gEasyChatMode_Pal\n\t"
-        "_0811D86C: .4byte gUnknown_857423C\n\t"
-        "_0811D870: .4byte gUnknown_857425C\n\t"
+        "_0811D86C: .4byte sTextInputFrameOrange_Pal\n\t"
+        "_0811D870: .4byte sTextInputFrameGreen_Pal\n\t"
         "_0811D874: .4byte gUnknown_8574344\n\t"
         "_0811D878: .4byte gUnknown_857434C\n\t"
         ".syntax divided\n\t"
