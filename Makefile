@@ -2105,7 +2105,8 @@ $(C_BUILDDIR)/rotating_gate.o: src/rotating_gate.c graphics/rotating_gates/l1.pn
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/rotating_gate.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/rotating_gate.gen.s
 
-$(C_BUILDDIR)/easy_chat.o: src/easy_chat.c graphics/easy_chat/scroll_indicator.png.4bpp graphics/easy_chat/start_select_buttons.png.4bpp
+$(C_BUILDDIR)/easy_chat.o: src/easy_chat.c graphics/easy_chat/scroll_indicator.png.4bpp graphics/easy_chat/start_select_buttons.png.4bpp \
+	graphics/easy_chat/interview_frame.png.gbapal graphics/easy_chat/interview_frame.png.4bpp.lz
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/easy_chat.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/easy_chat.gen.s | $(AS) $(ASFLAGS) -o $@ -

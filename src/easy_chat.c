@@ -13,6 +13,8 @@
 #define EASY_CHAT_TRIANGLE_CURSOR_GFX_DATA __attribute__((section(".rodata.easy_chat_triangle_cursor_gfx_data"), aligned(4)))
 #define EASY_CHAT_SCROLL_INDICATOR_GFX_DATA __attribute__((section(".rodata.easy_chat_scroll_indicator_gfx_data"), aligned(1)))
 #define EASY_CHAT_START_SELECT_BUTTONS_GFX_DATA __attribute__((section(".rodata.easy_chat_start_select_buttons_gfx_data"), aligned(1)))
+#define EASY_CHAT_RS_INTERVIEW_FRAME_PAL_DATA __attribute__((section(".rodata.easy_chat_rs_interview_frame_pal_data"), aligned(1)))
+#define EASY_CHAT_RS_INTERVIEW_FRAME_GFX_DATA __attribute__((section(".rodata.easy_chat_rs_interview_frame_gfx_data"), aligned(1)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
 
@@ -317,6 +319,15 @@ static const u32 sScrollIndicator_Gfx[] EASY_CHAT_SCROLL_INDICATOR_GFX_DATA =
 
 static const u32 sStartSelectButtons_Gfx[] EASY_CHAT_START_SELECT_BUTTONS_GFX_DATA =
     INCGFX_U32("graphics/easy_chat/start_select_buttons.png", ".4bpp");
+
+// In Ruby/Sapphire Easy Chat screens had a black background, and when the player
+// and interviewer were present on screen the interview frame was shown behind them.
+// In Emerald the filled background leaves this retained resource unused.
+static const u16 sRSInterviewFrame_Pal[] EASY_CHAT_RS_INTERVIEW_FRAME_PAL_DATA =
+    INCGFX_U16("graphics/easy_chat/interview_frame.png", ".gbapal");
+
+static const u32 sRSInterviewFrame_Gfx[] EASY_CHAT_RS_INTERVIEW_FRAME_GFX_DATA =
+    INCGFX_U32("graphics/easy_chat/interview_frame.png", ".4bpp.lz");
 
 // State values for sEasyChatScreen->inputState
 enum {
