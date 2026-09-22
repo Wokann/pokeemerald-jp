@@ -36,19 +36,13 @@ gUnknown_85743B4: @ 0x85743B4
 	@ This auxiliary UI data has no verified semantic owner yet.
 	.incbin "baserom_jp.gba", 0x5743b4, 0x8
 
-	.section .rodata.mid60_tail_after_easy_chat_layout_data
+	.section .rodata.mid60_easy_chat_sprite_metadata_data
 
-	.globl gUnknown_85743CC
-gUnknown_85743CC: @ 0x85743CC
-	.incbin "baserom_jp.gba", 0x5743cc, 0x20
-
-	.globl gUnknown_85743EC
-gUnknown_85743EC: @ 0x85743EC
-	.incbin "baserom_jp.gba", 0x5743ec, 0x28
-
-	.globl gUnknown_8574414
-gUnknown_8574414: @ 0x8574414
-	.incbin "baserom_jp.gba", 0x574414, 0x28
+	.globl gUnknown_8574434
+gUnknown_8574434: @ 0x8574434
+	@ Easy Chat sprite metadata begins here; it remains visible pending its
+	@ dedicated semantic conversion.
+	.incbin "baserom_jp.gba", 0x574434, 0x8
 
 	.globl gUnknown_857443C
 gUnknown_857443C: @ 0x857443C

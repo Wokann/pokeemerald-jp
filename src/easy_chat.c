@@ -1,7 +1,9 @@
 #include "global.h"
 #include "bg.h"
 #include "easy_chat.h"
+#include "graphics.h"
 #include "main.h"
+#include "sprite.h"
 #include "strings.h"
 #include "task.h"
 #include "window.h"
@@ -27,6 +29,9 @@
 #define EASY_CHAT_WINDOW_TEMPLATES_DATA __attribute__((section(".rodata.easy_chat_window_templates_data"), aligned(1)))
 #define EASY_CHAT_YES_NO_WINDOW_TEMPLATE_DATA __attribute__((section(".rodata.easy_chat_yes_no_window_template_data"), aligned(1)))
 #define EASY_CHAT_KEYBOARD_ALPHABET_DATA __attribute__((section(".rodata.easy_chat_keyboard_alphabet_data"), aligned(1)))
+#define EASY_CHAT_SPRITE_SHEETS_DATA __attribute__((section(".rodata.easy_chat_sprite_sheets_data"), aligned(1)))
+#define EASY_CHAT_SPRITE_PALETTES_DATA __attribute__((section(".rodata.easy_chat_sprite_palettes_data"), aligned(1)))
+#define EASY_CHAT_COMPRESSED_SPRITE_SHEETS_DATA __attribute__((section(".rodata.easy_chat_compressed_sprite_sheets_data"), aligned(1)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
 
@@ -63,6 +68,25 @@ enum
     WIN_TITLE,
     WIN_MSG,
     WIN_INPUT_SELECT,
+};
+
+enum
+{
+    PALTAG_TRIANGLE_CURSOR,
+    PALTAG_RECTANGLE_CURSOR,
+    PALTAG_MISC_UI,
+    PALTAG_RS_INTERVIEW_FRAME,
+};
+
+enum
+{
+    GFXTAG_TRIANGLE_CURSOR,
+    GFXTAG_RECTANGLE_CURSOR,
+    GFXTAG_SCROLL_INDICATOR,
+    GFXTAG_START_SELECT_BUTTONS,
+    GFXTAG_MODE_WINDOW,
+    GFXTAG_RS_INTERVIEW_FRAME,
+    GFXTAG_BUTTON_WINDOW,
 };
 
 static const struct EasyChatScreenTemplate sEasyChatScreenTemplates[] EASY_CHAT_SCREEN_TEMPLATES_DATA =
@@ -543,6 +567,71 @@ static const u8 *const sEasyChatKeyboardAlphabet[NUM_ALPHABET_ROWS] EASY_CHAT_KE
     gJPText_EasyChatKanaRow2,
     gJPText_EasyChatKanaRow3,
     gJPText_EasyChatKanaRow4,
+};
+
+static const struct SpriteSheet sSpriteSheets[] EASY_CHAT_SPRITE_SHEETS_DATA =
+{
+    {
+        .data = sTriangleCursor_Gfx,
+        .size = sizeof(sTriangleCursor_Gfx),
+        .tag = GFXTAG_TRIANGLE_CURSOR,
+    },
+    {
+        .data = sScrollIndicator_Gfx,
+        .size = sizeof(sScrollIndicator_Gfx),
+        .tag = GFXTAG_SCROLL_INDICATOR,
+    },
+    {
+        .data = sStartSelectButtons_Gfx,
+        .size = sizeof(sStartSelectButtons_Gfx),
+        .tag = GFXTAG_START_SELECT_BUTTONS,
+    },
+    {0},
+};
+
+static const struct SpritePalette sSpritePalettes[] EASY_CHAT_SPRITE_PALETTES_DATA =
+{
+    {
+        .data = sTriangleCursor_Pal,
+        .tag = PALTAG_TRIANGLE_CURSOR,
+    },
+    {
+        .data = gEasyChatRectangleCursor_Pal,
+        .tag = PALTAG_RECTANGLE_CURSOR,
+    },
+    {
+        .data = gEasyChatButtonWindow_Pal,
+        .tag = PALTAG_MISC_UI,
+    },
+    {
+        .data = sRSInterviewFrame_Pal,
+        .tag = PALTAG_RS_INTERVIEW_FRAME,
+    },
+    {0},
+};
+
+static const struct CompressedSpriteSheet sCompressedSpriteSheets[] EASY_CHAT_COMPRESSED_SPRITE_SHEETS_DATA =
+{
+    {
+        .data = sRSInterviewFrame_Gfx,
+        .size = 0x800,
+        .tag = GFXTAG_RS_INTERVIEW_FRAME,
+    },
+    {
+        .data = gEasyChatRectangleCursor_Gfx,
+        .size = 0x1000,
+        .tag = GFXTAG_RECTANGLE_CURSOR,
+    },
+    {
+        .data = gEasyChatButtonWindow_Gfx,
+        .size = 0x800,
+        .tag = GFXTAG_BUTTON_WINDOW,
+    },
+    {
+        .data = gEasyChatMode_Gfx,
+        .size = 0x1000,
+        .tag = GFXTAG_MODE_WINDOW,
+    },
 };
 
 // State values for sEasyChatScreen->inputState
@@ -9240,9 +9329,9 @@ __attribute__((naked)) void LoadEasyChatGfx(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811E6CC: .4byte gUnknown_85743CC\n\t"
-        "_0811E6D0: .4byte gUnknown_85743EC\n\t"
-        "_0811E6D4: .4byte gUnknown_8574414\n\t"
+        "_0811E6CC: .4byte sSpriteSheets\n\t"
+        "_0811E6D0: .4byte sSpritePalettes\n\t"
+        "_0811E6D4: .4byte sCompressedSpriteSheets\n\t"
         ".syntax divided\n\t"
     );
 }
