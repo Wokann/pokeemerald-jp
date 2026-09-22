@@ -9526,8 +9526,8 @@ easy_chat.s
 0811ca18 StartEasyChatFunction StartEasyChatFunction
 0811ca30 RunEasyChatFunction RunEasyChatFunction
 0811cb94 ReprintPhrase ReprintPhrase
-0811cbcc easy_chat.s sub_0811CBCC_jp
-0811cc88 easy_chat.s sub_0811CC88_jp
+0811cbcc UpdateMainCursor UpdateMainCursor
+0811cc88 UpdateMainCursorOnButtons UpdateMainCursorOnButtons
 0811ccb8 ShowConfirmExitPrompt ShowConfirmExitPrompt
 0811ccfc ShowConfirmPrompt ShowConfirmPrompt
 0811cd40 ShowConfirmDeleteAllPrompt ShowConfirmDeleteAllPrompt
@@ -9592,7 +9592,7 @@ easy_chat.s
 0811e6a4 LoadEasyChatGfx LoadEasyChatGfx
 0811e6d8 easy_chat.s sub_0811E6D8_jp
 0811e734 easy_chat.s sub_0811E734_jp
-0811e76c easy_chat.s sub_0811E76C_jp
+0811e76c SetMainCursorPos SetMainCursorPos
 0811e7a0 StopMainCursorAnim StopMainCursorAnim
 0811e7c0 StartMainCursorAnim StartMainCursorAnim
 0811e7d8 easy_chat.s sub_0811E7D8_jp

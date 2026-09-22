@@ -5707,10 +5707,10 @@ __attribute__((naked)) bool8 RunEasyChatFunction(void)
         "	bl sub_0811CB94\n\t"
         "	b _0811CB88\n\t"
         "_0811CAE2:\n\t"
-        "	bl sub_0811CBCC\n\t"
+        "	bl UpdateMainCursor\n\t"
         "	b _0811CB88\n\t"
         "_0811CAE8:\n\t"
-        "	bl sub_0811CC88\n\t"
+        "	bl UpdateMainCursorOnButtons\n\t"
         "	b _0811CB88\n\t"
         "_0811CAEE:\n\t"
         "	bl sub_0811CD40\n\t"
@@ -5839,7 +5839,7 @@ __attribute__((naked)) bool8 ReprintPhrase(void)
     );
 }
 
-__attribute__((naked)) void sub_0811CBCC(void)
+__attribute__((naked)) void UpdateMainCursor(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5921,7 +5921,7 @@ __attribute__((naked)) void sub_0811CBCC(void)
         "	lsrs r0, r0, #0x18\n\t"
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r1, r1, #0x18\n\t"
-        "	bl sub_0811E76C\n\t"
+        "	bl SetMainCursorPos\n\t"
         "	movs r0, #0\n\t"
         "	pop {r3, r4, r5}\n\t"
         "	mov r8, r3\n\t"
@@ -5936,7 +5936,7 @@ __attribute__((naked)) void sub_0811CBCC(void)
     );
 }
 
-__attribute__((naked)) void sub_0811CC88(void)
+__attribute__((naked)) void UpdateMainCursorOnButtons(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5953,13 +5953,13 @@ __attribute__((naked)) void sub_0811CC88(void)
         "	adds r0, r0, r4\n\t"
         "	ldrb r0, [r0]\n\t"
         "	movs r1, #0xa\n\t"
-        "	bl sub_0811E76C\n\t"
+        "	bl SetMainCursorPos\n\t"
         "	movs r0, #0\n\t"
         "	pop {r4}\n\t"
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0811CCB0: .4byte gUnknown_85743B4\n\t"
+        "_0811CCB0: .4byte sFooterOptionXOffsets\n\t"
         "_0811CCB4: .4byte gUnknown_2039DE8\n\t"
         ".syntax divided\n\t"
     );
@@ -9691,7 +9691,7 @@ __attribute__((naked)) void sub_0811E734(struct Sprite *sprite)
     );
 }
 
-__attribute__((naked)) void sub_0811E76C(void)
+__attribute__((naked)) void SetMainCursorPos(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -7273,8 +7273,8 @@ SECTIONS {
         src/easy_chat.o(.text.StartEasyChatFunction);
         src/easy_chat.o(.text.RunEasyChatFunction);
         src/easy_chat.o(.text.ReprintPhrase);
-        src/easy_chat.o(.text.sub_0811CBCC);
-        src/easy_chat.o(.text.sub_0811CC88);
+        src/easy_chat.o(.text.UpdateMainCursor);
+        src/easy_chat.o(.text.UpdateMainCursorOnButtons);
         src/easy_chat.o(.text.ShowConfirmExitPrompt);
         src/easy_chat.o(.text.ShowConfirmPrompt);
         src/easy_chat.o(.text.ShowConfirmDeleteAllPrompt);
@@ -7339,7 +7339,7 @@ SECTIONS {
         src/easy_chat.o(.text.LoadEasyChatGfx);
         src/easy_chat.o(.text.sub_0811E6D8);
         src/easy_chat.o(.text.sub_0811E734);
-        src/easy_chat.o(.text.sub_0811E76C);
+        src/easy_chat.o(.text.SetMainCursorPos);
         src/easy_chat.o(.text.StopMainCursorAnim);
         src/easy_chat.o(.text.StartMainCursorAnim);
         src/easy_chat.o(.text.sub_0811E7D8);
@@ -9774,7 +9774,7 @@ SECTIONS {
         src/easy_chat.o(.rodata.easy_chat_bg_templates_data);
         src/easy_chat.o(.rodata.easy_chat_window_templates_data);
         src/easy_chat.o(.rodata.easy_chat_yes_no_window_template_data);
-        data/data_b2d_mid60.o(.rodata.easy_chat_unclassified_ui_aux_data);
+        data/data_b2d_mid60.o(.rodata.easy_chat_footer_option_x_offsets_data);
         src/easy_chat.o(.rodata.easy_chat_keyboard_alphabet_data);
         src/easy_chat.o(.rodata.easy_chat_sprite_sheets_data);
         src/easy_chat.o(.rodata.easy_chat_sprite_palettes_data);
