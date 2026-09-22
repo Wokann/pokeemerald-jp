@@ -8,6 +8,7 @@
 #define EASY_CHAT_QUIZ_LADY_DATA __attribute__((section(".rodata.easy_chat_quiz_lady_data"), aligned(4)))
 #define EASY_CHAT_SCREEN_TEMPLATES_DATA __attribute__((section(".rodata.easy_chat_screen_templates_data"), aligned(4)))
 #define EASY_CHAT_MYSTERY_GIFT_PHRASES_DATA __attribute__((section(".rodata.easy_chat_mystery_gift_phrases_data"), aligned(4)))
+#define EASY_CHAT_BERRY_MASTER_WIFE_PHRASES_DATA __attribute__((section(".rodata.easy_chat_berry_master_wife_phrases_data"), aligned(4)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
 
@@ -281,6 +282,15 @@ static const u16 sMysteryGiftPhrase[NUM_QUESTIONNAIRE_WORDS] EASY_CHAT_MYSTERY_G
 static const u16 sMysteryGiftPhrase_JpAlternate[NUM_QUESTIONNAIRE_WORDS] EASY_CHAT_MYSTERY_GIFT_PHRASES_DATA =
 {
     0x0A33, 0x140C, 0x143A, 0x0209,
+};
+
+static const u16 sBerryMasterWifePhrases[5][2] EASY_CHAT_BERRY_MASTER_WIFE_PHRASES_DATA =
+{
+    {0x1421, 0x0618},
+    {0x061F, 0x2204},
+    {0x1422, 0x0197},
+    {0x0415, 0x0198},
+    {0x281E, 0x2818},
 };
 
 // State values for sEasyChatScreen->inputState
@@ -4668,7 +4678,7 @@ __attribute__((naked)) u16 DidPlayerInputABerryMasterWifePhrase(void)
         "	lsrs r0, r5, #0x10\n\t"
         "	b _0811C796\n\t"
         "	.align 2, 0\n\t"
-        "_0811C784: .4byte gUnknown_857333C\n\t"
+        "_0811C784: .4byte sBerryMasterWifePhrases\n\t"
         "_0811C788:\n\t"
         "	movs r0, #0x80\n\t"
         "	lsls r0, r0, #9\n\t"
