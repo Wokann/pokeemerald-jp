@@ -363,21 +363,9 @@ void StartSecretBaseCaveFieldEffect(void)
     FieldEffectStart(FLDEFF_SECRET_POWER_CAVE);
 }
 
-extern const u8 gUnknown_856955C[];
-extern const u8 gUnknown_85695DC[];
-extern const u8 gUnknown_856965C[];
-extern const u8 gUnknown_85696DC[];
-extern const u8 gUnknown_856975C[];
-extern const u8 gUnknown_856981C[];
-extern const u8 gUnknown_856989C[];
-extern const u8 gUnknown_856991C[];
-extern const u8 gUnknown_856999C[];
-extern const u8 gUnknown_8569A1C[];
-extern const u8 gUnknown_8569A9C[];
-extern const u8 gUnknown_8569B1C[];
-extern const u8 gUnknown_8569B9C[];
-extern const u8 gUnknown_8569C1C[];
-extern const u8 gUnknown_8569C9C[];
+extern const u8 sSecretPowerCave_Gfx[];
+extern const u8 sSecretPowerShrub_Gfx[];
+extern const u8 sSecretPowerTree_Gfx[];
 
 static const struct OamData sOam_SecretPower =
 {
@@ -471,29 +459,29 @@ static const union AnimCmd *const sAnimTable_SecretPowerShrub[] =
 
 static const struct SpriteFrameImage sPicTable_SecretPowerCave[] =
 {
-    { gUnknown_856955C, 128, 0 },
-    { gUnknown_85695DC, 128, 0 },
-    { gUnknown_856965C, 128, 0 },
-    { gUnknown_85696DC, 128, 0 },
-    { gUnknown_856975C, 128, 0 },
+    { sSecretPowerCave_Gfx + 0x000, 128, 0 },
+    { sSecretPowerCave_Gfx + 0x080, 128, 0 },
+    { sSecretPowerCave_Gfx + 0x100, 128, 0 },
+    { sSecretPowerCave_Gfx + 0x180, 128, 0 },
+    { sSecretPowerCave_Gfx + 0x200, 128, 0 },
 };
 
 static const struct SpriteFrameImage sPicTable_SecretPowerTree[] =
 {
-    { gUnknown_8569A9C, 128, 0 },
-    { gUnknown_8569B1C, 128, 0 },
-    { gUnknown_8569B9C, 128, 0 },
-    { gUnknown_8569C1C, 128, 0 },
-    { gUnknown_8569C9C, 128, 0 },
+    { sSecretPowerTree_Gfx + 0x000, 128, 0 },
+    { sSecretPowerTree_Gfx + 0x080, 128, 0 },
+    { sSecretPowerTree_Gfx + 0x100, 128, 0 },
+    { sSecretPowerTree_Gfx + 0x180, 128, 0 },
+    { sSecretPowerTree_Gfx + 0x200, 128, 0 },
 };
 
 static const struct SpriteFrameImage sPicTable_SecretPowerShrub[] =
 {
-    { gUnknown_856981C, 128, 0 },
-    { gUnknown_856989C, 128, 0 },
-    { gUnknown_856991C, 128, 0 },
-    { gUnknown_856999C, 128, 0 },
-    { gUnknown_8569A1C, 128, 0 },
+    { sSecretPowerShrub_Gfx + 0x000, 128, 0 },
+    { sSecretPowerShrub_Gfx + 0x080, 128, 0 },
+    { sSecretPowerShrub_Gfx + 0x100, 128, 0 },
+    { sSecretPowerShrub_Gfx + 0x180, 128, 0 },
+    { sSecretPowerShrub_Gfx + 0x200, 128, 0 },
 };
 
 static const struct SpriteTemplate sSpriteTemplate_SecretPowerCave =
