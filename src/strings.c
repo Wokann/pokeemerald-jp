@@ -189,9 +189,9 @@ STRINGS_EASY_CHAT const u8 gText_PokemonNoGenderLv2[] = _("{DYNAMIC 0}　　/{LV
 STRINGS_EASY_CHAT const u8 gText_CombineFourWordsOrPhrases[] = _("4つの　ことばを　くみあわせて");
 STRINGS_EASY_CHAT const u8 gText_AndMakeYourProfile[] = _("プロフィールを　つくろう！");
 // The JP UI combines the two US prompts into one EOS-terminated string.
-STRINGS_EASY_CHAT const u8 gJPText_CombineSixWordsAndMakeAMessage[] = _("6つの　ことばで　メッセージを　つくろう！");
+STRINGS_EASY_CHAT const u8 gText_CombineSixWordsAndMakeAMessage[] = _("6つの　ことばで　メッセージを　つくろう！");
 // JP-only input constraint; the English UI has no corresponding text entry.
-STRINGS_EASY_CHAT const u8 gJPText_SevenCharacterWordsPerLine[] = _("7もじの　ことばは　1ぎょうに　2つまで！");
+STRINGS_EASY_CHAT const u8 gText_SevenCharacterWordsPerLine[] = _("7もじの　ことばは　1ぎょうに　2つまで！");
 STRINGS_EASY_CHAT const u8 gText_FindWordsThatDescribeYour[] = _("いまの　きもちに　ぴったりあう");
 STRINGS_EASY_CHAT const u8 gText_FeelingsRightNow[] = _("ことばを　みつけよう！");
 STRINGS_EASY_CHAT const u8 gText_WithFourPhrases[] = _("4つの　ことばで"); // Unused

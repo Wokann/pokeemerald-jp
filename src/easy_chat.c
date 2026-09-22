@@ -3,16 +3,273 @@
 #include "main.h"
 #include "strings.h"
 #include "task.h"
+#include "constants/easy_chat.h"
 
 #define EASY_CHAT_QUIZ_LADY_DATA __attribute__((section(".rodata.easy_chat_quiz_lady_data"), aligned(4)))
+#define EASY_CHAT_SCREEN_TEMPLATES_DATA __attribute__((section(".rodata.easy_chat_screen_templates_data"), aligned(4)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
-extern const struct EasyChatScreenTemplate sEasyChatScreenTemplates[];
 
 void DoQuizAnswerEasyChatScreen(void);
 void DoQuizQuestionEasyChatScreen(void);
 void DoQuizSetAnswerEasyChatScreen(void);
 void DoQuizSetQuestionEasyChatScreen(void);
+
+static const struct EasyChatScreenTemplate sEasyChatScreenTemplates[] EASY_CHAT_SCREEN_TEMPLATES_DATA =
+{
+    {
+        .type = EASY_CHAT_TYPE_PROFILE,
+        .numColumns = 2,
+        .numRows = 2,
+        .frameId = 0,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_Profile,
+        .instructionsText1 = gText_CombineFourWordsOrPhrases,
+        .instructionsText2 = gText_AndMakeYourProfile,
+        .confirmText1 = gText_YourProfile,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_BATTLE_START,
+        .numColumns = 3,
+        .numRows = 2,
+        .frameId = 1,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_AtTheBattlesStart,
+        .instructionsText1 = gText_CombineSixWordsAndMakeAMessage,
+        .instructionsText2 = gText_SevenCharacterWordsPerLine,
+        .confirmText1 = gText_YourFeelingAtTheBattlesStart,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_BATTLE_WON,
+        .numColumns = 3,
+        .numRows = 2,
+        .frameId = 1,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_UponWinningABattle,
+        .instructionsText1 = gText_CombineSixWordsAndMakeAMessage,
+        .instructionsText2 = gText_SevenCharacterWordsPerLine,
+        .confirmText1 = gText_WhatYouSayIfYouWin,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_BATTLE_LOST,
+        .numColumns = 3,
+        .numRows = 2,
+        .frameId = 1,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_UponLosingABattle,
+        .instructionsText1 = gText_CombineSixWordsAndMakeAMessage,
+        .instructionsText2 = gText_SevenCharacterWordsPerLine,
+        .confirmText1 = gText_WhatYouSayIfYouLose,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_MAIL,
+        .numColumns = 3,
+        .numRows = 3,
+        .frameId = 2,
+        .fourFooterOptions = FALSE,
+        .titleText = NULL,
+        .instructionsText1 = gText_CombineNineWordsOrPhrases,
+        .instructionsText2 = gText_AndMakeAMessage2,
+        .confirmText1 = gText_TheMailMessage,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_INTERVIEW,
+        .numColumns = 2,
+        .numRows = 2,
+        .frameId = 5,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_Interview,
+        .instructionsText1 = gText_CombineFourWordsOrPhrases,
+        .instructionsText2 = gText_LetsReplyToTheInterview,
+        .confirmText1 = gText_TheAnswer,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_BARD_SONG,
+        .numColumns = 3,
+        .numRows = 2,
+        .frameId = 1,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_TheBardsSong,
+        .instructionsText1 = gText_ChangeJustOneWordOrPhrase,
+        .instructionsText2 = gText_AndImproveTheBardsSong,
+        .confirmText1 = gText_TheBardsSong2,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_FAN_CLUB,
+        .numColumns = 1,
+        .numRows = 1,
+        .frameId = 4,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_Interview,
+        .instructionsText1 = gText_FindWordsThatDescribeYour,
+        .instructionsText2 = gText_FeelingsRightNow,
+        .confirmText1 = gText_TheAnswer,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_TRENDY_PHRASE,
+        .numColumns = 2,
+        .numRows = 1,
+        .frameId = 3,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_WhatsHipAndHappening,
+        .instructionsText1 = gText_CombineTwoWordsOrPhrases,
+        .instructionsText2 = gText_AndMakeATrendySaying,
+        .confirmText1 = gText_TheTrendySaying,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_QUIZ_QUESTION,
+        .numColumns = 3,
+        .numRows = 3,
+        .frameId = 7,
+        .fourFooterOptions = TRUE,
+        .titleText = NULL,
+        .instructionsText1 = gText_AfterYouHaveReadTheQuiz,
+        .instructionsText2 = gText_QuestionPressTheAButton,
+        .confirmText1 = NULL,
+        .confirmText2 = NULL,
+    },
+    {
+        .type = EASY_CHAT_TYPE_QUIZ_ANSWER,
+        .numColumns = 1,
+        .numRows = 1,
+        .frameId = 6,
+        .fourFooterOptions = TRUE,
+        .titleText = gText_TheQuizAnswerIs,
+        .instructionsText1 = gText_OutOfTheListedChoices,
+        .instructionsText2 = gText_SelectTheAnswerToTheQuiz,
+        .confirmText1 = gText_TheAnswerColon,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_QUIZ_SET_QUESTION,
+        .numColumns = 3,
+        .numRows = 3,
+        .frameId = 8,
+        .fourFooterOptions = TRUE,
+        .titleText = NULL,
+        .instructionsText1 = gText_CombineNineWordsOrPhrases,
+        .instructionsText2 = gText_AndCreateAQuiz,
+        .confirmText1 = gText_IsThisQuizOK,
+        .confirmText2 = NULL,
+    },
+    {
+        .type = EASY_CHAT_TYPE_QUIZ_SET_ANSWER,
+        .numColumns = 1,
+        .numRows = 1,
+        .frameId = 6,
+        .fourFooterOptions = TRUE,
+        .titleText = gText_TheQuizAnswerIs,
+        .instructionsText1 = gText_PickAWordOrPhraseAnd,
+        .instructionsText2 = gText_SetTheQuizAnswer,
+        .confirmText1 = gText_IsThisQuizOK,
+        .confirmText2 = NULL,
+    },
+    {
+        .type = EASY_CHAT_TYPE_BARD_SONG,
+        .numColumns = 3,
+        .numRows = 2,
+        .frameId = 1,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_TheBardsSong,
+        .instructionsText1 = gText_ChangeJustOneWordOrPhrase,
+        .instructionsText2 = gText_AndImproveTheBardsSong,
+        .confirmText1 = gText_TheBardsSong2,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_APPRENTICE,
+        .numColumns = 3,
+        .numRows = 2,
+        .frameId = 1,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_ApprenticesPhrase,
+        .instructionsText1 = gText_FindWordsWhichFit,
+        .instructionsText2 = gText_TheTrainersImage,
+        .confirmText1 = gText_ApprenticePhrase,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_GOOD_SAYING,
+        .numColumns = 2,
+        .numRows = 1,
+        .frameId = 3,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_GoodSaying,
+        .instructionsText1 = gText_CombineTwoWordsOrPhrases2,
+        .instructionsText2 = gText_ToTeachHerAGoodSaying,
+        .confirmText1 = gText_TheAnswer,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_GABBY_AND_TY,
+        .numColumns = 1,
+        .numRows = 1,
+        .frameId = 4,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_Interview,
+        .instructionsText1 = gText_FindWordsThatDescribeYour,
+        .instructionsText2 = gText_FeelingsRightNow,
+        .confirmText1 = gText_TheAnswer,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_BATTLE_TOWER_INTERVIEW,
+        .numColumns = 1,
+        .numRows = 1,
+        .frameId = 4,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_Interview,
+        .instructionsText1 = gText_FindWordsThatDescribeYour,
+        .instructionsText2 = gText_FeelingsRightNow,
+        .confirmText1 = gText_TheAnswer,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_CONTEST_INTERVIEW,
+        .numColumns = 1,
+        .numRows = 1,
+        .frameId = 4,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_Interview,
+        .instructionsText1 = gText_FindWordsThatDescribeYour,
+        .instructionsText2 = gText_FeelingsRightNow,
+        .confirmText1 = gText_TheAnswer,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_FAN_QUESTION,
+        .numColumns = 1,
+        .numRows = 1,
+        .frameId = 4,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_FansQuestion,
+        .instructionsText1 = gText_FindWordsWhichFit,
+        .instructionsText2 = gText_TheTrainersImage,
+        .confirmText1 = gText_TheImage,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+    {
+        .type = EASY_CHAT_TYPE_QUESTIONNAIRE,
+        .numColumns = 2,
+        .numRows = 2,
+        .frameId = 0,
+        .fourFooterOptions = FALSE,
+        .titleText = gText_Questionnaire,
+        .instructionsText1 = gText_CombineFourWordsOrPhrases,
+        .instructionsText2 = gText_AndFillOutTheQuestionnaire,
+        .confirmText1 = gText_TheAnswer,
+        .confirmText2 = gText_IsAsShownOkay,
+    },
+};
 
 // State values for sEasyChatScreen->inputState
 enum {
@@ -1167,7 +1424,7 @@ __attribute__((naked)) bool8 InitEasyChatScreenStruct(u8 type, u16 *words, u8 di
         "	bl CpuSet\n\t"
         "	b _0811B2A4\n\t"
         "	.align 2, 0\n\t"
-        "_0811B26C: .4byte gUnknown_8573134\n\t"
+        "_0811B26C: .4byte sEasyChatScreenTemplates\n\t"
         "_0811B270: .4byte sEasyChatScreen\n\t"
         "_0811B274:\n\t"
         "	movs r4, #0\n\t"
@@ -1438,7 +1695,7 @@ __attribute__((naked)) void sub_0811B384(void)
         "	b _0811B4CE\n\t"
         "	.align 2, 0\n\t"
         "_0811B45C: .4byte sEasyChatScreen\n\t"
-        "_0811B460: .4byte gUnknown_8573134\n\t"
+        "_0811B460: .4byte sEasyChatScreenTemplates\n\t"
         "_0811B464:\n\t"
         "	ldr r2, _0811B470\n\t"
         "	ldr r1, [r2]\n\t"
@@ -1627,7 +1884,7 @@ __attribute__((naked)) void sub_0811B4D4(void)
         "	b _0811B60E\n\t"
         "	.align 2, 0\n\t"
         "_0811B5B0: .4byte sEasyChatScreen\n\t"
-        "_0811B5B4: .4byte gUnknown_8573134\n\t"
+        "_0811B5B4: .4byte sEasyChatScreenTemplates\n\t"
         "_0811B5B8:\n\t"
         "	ldr r2, _0811B5C4\n\t"
         "	ldr r1, [r2]\n\t"
@@ -3626,7 +3883,7 @@ __attribute__((naked)) int FooterHasFourOptions(void)
         "	lsrs r0, r0, #7\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0811C258: .4byte gUnknown_8573134\n\t"
+        "_0811C258: .4byte sEasyChatScreenTemplates\n\t"
         "_0811C25C: .4byte sEasyChatScreen\n\t"
         ".syntax divided\n\t"
     );
@@ -3701,7 +3958,7 @@ __attribute__((naked)) void GetEasyChatInstructionsText(const u8 **str1, const u
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811C304: .4byte gUnknown_8573134\n\t"
+        "_0811C304: .4byte sEasyChatScreenTemplates\n\t"
         "_0811C308: .4byte sEasyChatScreen\n\t"
         ".syntax divided\n\t"
     );
@@ -3736,7 +3993,7 @@ __attribute__((naked)) void GetEasyChatConfirmText(const u8 **str1, const u8 **s
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811C33C: .4byte gUnknown_8573134\n\t"
+        "_0811C33C: .4byte sEasyChatScreenTemplates\n\t"
         "_0811C340: .4byte sEasyChatScreen\n\t"
         ".syntax divided\n\t"
     );
@@ -3991,7 +4248,7 @@ __attribute__((naked)) u8 GetEachChatScreenTemplateId(u8 type)
         "	lsrs r0, r0, #0x18\n\t"
         "	b _0811C4F2\n\t"
         "	.align 2, 0\n\t"
-        "_0811C4E4: .4byte gUnknown_8573134\n\t"
+        "_0811C4E4: .4byte sEasyChatScreenTemplates\n\t"
         "_0811C4E8:\n\t"
         "	adds r2, #0x18\n\t"
         "	adds r1, #1\n\t"
