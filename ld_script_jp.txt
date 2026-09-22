@@ -7113,7 +7113,7 @@ SECTIONS {
         src/bike.o(.text.AcroBikeHandleInputWheelieMoving);
         src/bike.o(.text.AcroBikeHandleInputSidewaysJump);
         src/bike.o(.text.AcroBikeHandleInputTurnJump);
-        src/bike.o(.text.AcroBikeTransition_TurnJump);
+        src/bike.o(.text.AcroBikeTransition_FaceDirection);
         src/bike.o(.text.AcroBikeTransition_TurnDirection);
         src/bike.o(.text.AcroBikeTransition_Moving);
         src/bike.o(.text.AcroBikeTransition_NormalToWheelie);
@@ -7122,7 +7122,7 @@ SECTIONS {
         src/bike.o(.text.AcroBikeTransition_WheelieHoppingStanding);
         src/bike.o(.text.AcroBikeTransition_WheelieHoppingMoving);
         src/bike.o(.text.AcroBikeTransition_SideJump);
-        src/bike.o(.text.sub_0811A2E4);
+        src/bike.o(.text.AcroBikeTransition_TurnJump);
         src/bike.o(.text.AcroBikeTransition_WheelieMoving);
         src/bike.o(.text.AcroBikeTransition_WheelieRisingMoving);
         src/bike.o(.text.AcroBikeTransition_WheelieLoweringMoving);
@@ -9749,7 +9749,8 @@ SECTIONS {
         src/battle_anim_normal.o(.rodata);
         src/battle_anim_utility_funcs.o(.rodata);
         src/battle_intro.o(.rodata);
-        data/data_b2d_mid60.o(.rodata.mid60_tail_after_battle_intro_data);
+        src/bike.o(.rodata);
+        data/data_b2d_mid60.o(.rodata.mid60_tail_after_bike_data);
         src/data/text/region_texts61.o(.rodata);
         data/data_b2d_mid61.o(.rodata);
         sHealLocations = . + 0x4C;

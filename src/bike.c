@@ -11,8 +11,8 @@
 #include "constants/songs.h"
 
 // this file's functions
-// JP: These two naked functions share a section because MovePlayerOnMachBike
-// branches through a literal pool stored in AcroBikeTransition_FaceDirection.
+// JP: the complete Mach bike transition dispatcher, including its literal
+// pool, must stay in a dedicated linker-selected section.
 void MovePlayerOnMachBike();
 u8 GetMachBikeTransition(u8 *);
 void MachBikeTransition_FaceDirection(u8);
@@ -28,7 +28,7 @@ u8 AcroBikeHandleInputBunnyHop(u8 *, u16, u16);
 u8 AcroBikeHandleInputWheelieMoving(u8 *, u16, u16);
 u8 AcroBikeHandleInputSidewaysJump(u8 *, u16, u16);
 u8 AcroBikeHandleInputTurnJump(u8 *, u16, u16);
-void AcroBikeTransition_FaceDirection();
+void AcroBikeTransition_FaceDirection(u8);
 void AcroBikeTransition_TurnDirection(u8);
 void AcroBikeTransition_Moving(u8);
 void AcroBikeTransition_NormalToWheelie(u8);
@@ -54,7 +54,7 @@ static u8 CanBikeFaceDirOnMetatile(u8, u8);
 static bool8 WillPlayerCollideWithCollision(u8, u8);
 static void Bike_SetBikeStill(void);
 
-// const rom data (JP: tables live in the JP data section at 0x08573030-0x08573114)
+// const rom data
 /*
     A bike transition is a type of callback for the bike that actually
     modifies the bicycle's direction or momentum or otherwise movement.
@@ -64,22 +64,65 @@ static void Bike_SetBikeStill(void);
     for its complex tricks and actions.
 */
 
-// JP: 4-entry mach transition table at 0x08573030 (gUnknown_8573030)
-extern void (*const sMachBikeTransitions[])(u8);
-// JP: first 3 entries of the combined 16-entry acro table at 0x08573040
-extern void (*const sMachBikeSpeedCallbacks[])(u8);
-// JP: 16-entry combined table at 0x08573040: [PlayerWalkNormal/Fast/Faster,
-//     TurnJump(FaceDirection), TurnDirection, Moving, NormalToWheelie, ...]
-extern void (*const sAcroBikeTransitions[])(u8);
-// JP: 7-entry input handler table at 0x08573080 (gUnknown_8573080)
-extern u8 (*const sAcroBikeInputHandlers[])(u8 *, u16, u16);
-// JP: sMachBikeSpeeds = {PLAYER_SPEED_NORMAL, PLAYER_SPEED_FAST, PLAYER_SPEED_FASTEST}
-//     at 0x0857309C (first 6 bytes of gUnknown_857309C)
-extern const u16 sMachBikeSpeeds[3];
-// JP: sAcroBikeJumpTimerList = {4, 0} at 0x085730A2 (last 2 bytes of gUnknown_857309C)
-extern const u8 sAcroBikeJumpTimerList[2];
-// JP: 4-entry history input table at 0x085730A4 (gUnknown_85730A4)
-extern const struct BikeHistoryInputInfo sAcroBikeTricksList[4];
+static void (*const sMachBikeTransitions[])(u8) =
+{
+    MachBikeTransition_FaceDirection, // Face vs Turn: Face has no anim while Turn does. Turn checks for collision because if you turn right as opposed to face right, if there is a wall there, turn will make a bonk sound effect while face will not.
+    MachBikeTransition_TurnDirection,
+    MachBikeTransition_TrySpeedUp,
+    MachBikeTransition_TrySlowDown,
+};
+
+// bikeFrameCounter is input which is represented by sMachBikeSpeeds in order
+static void (*const sMachBikeSpeedCallbacks[])(u8) =
+{
+    PlayerWalkNormal,
+    PlayerWalkFast,
+    PlayerWalkFaster,
+};
+
+static void (*const sAcroBikeTransitions[])(u8) =
+{
+    AcroBikeTransition_FaceDirection,
+    AcroBikeTransition_TurnDirection,
+    AcroBikeTransition_Moving,
+    AcroBikeTransition_NormalToWheelie,
+    AcroBikeTransition_WheelieToNormal,
+    AcroBikeTransition_WheelieIdle,
+    AcroBikeTransition_WheelieHoppingStanding,
+    AcroBikeTransition_WheelieHoppingMoving,
+    AcroBikeTransition_SideJump,
+    AcroBikeTransition_TurnJump,
+    AcroBikeTransition_WheelieMoving,
+    AcroBikeTransition_WheelieRisingMoving,
+    AcroBikeTransition_WheelieLoweringMoving,
+};
+
+static u8 (*const sAcroBikeInputHandlers[])(u8 *, u16, u16) =
+{
+    AcroBikeHandleInputNormal,
+    AcroBikeHandleInputTurning,
+    AcroBikeHandleInputWheelieStanding,
+    AcroBikeHandleInputBunnyHop,
+    AcroBikeHandleInputWheelieMoving,
+    AcroBikeHandleInputSidewaysJump,
+    AcroBikeHandleInputTurnJump,
+};
+
+// used with bikeFrameCounter from mach bike
+static const u16 sMachBikeSpeeds[] = {PLAYER_SPEED_NORMAL, PLAYER_SPEED_FAST, PLAYER_SPEED_FASTEST};
+
+// this is a list of timers to compare against later, terminated with 0. the only timer being compared against is 4 frames in this list.
+static const u8 sAcroBikeJumpTimerList[] = {4, 0};
+
+// this is a list of history inputs to do in order to do the check to retrieve a jump direction for acro bike. it seems to be an extensible list, so its possible that Game Freak may have intended for the Acro Bike to have more complex tricks at some point. The final list only has the acro jump.
+static const struct BikeHistoryInputInfo sAcroBikeTricksList[] =
+{
+    // the 0xF is a mask performed with each byte of the array in order to perform the check on only the last entry of the history list, otherwise the check wouldn't work as there can be 0xF0 as opposed to 0x0F.
+    {DIR_SOUTH, B_BUTTON, 0xF, 0xF, sAcroBikeJumpTimerList, sAcroBikeJumpTimerList, DIR_SOUTH},
+    {DIR_NORTH, B_BUTTON, 0xF, 0xF, sAcroBikeJumpTimerList, sAcroBikeJumpTimerList, DIR_NORTH},
+    {DIR_WEST, B_BUTTON, 0xF, 0xF, sAcroBikeJumpTimerList, sAcroBikeJumpTimerList, DIR_WEST},
+    {DIR_EAST, B_BUTTON, 0xF, 0xF, sAcroBikeJumpTimerList, sAcroBikeJumpTimerList, DIR_EAST},
+};
 // JP: bike jump-movement action lookup used by AcroBikeTransition_SideJump
 // (JP calls sub_08092E84, not GetJumpMovementAction at 0x080922EC)
 extern u8 sub_08092E84(u32);
@@ -479,9 +522,6 @@ u8 AcroBikeHandleInputTurnJump(u8 *ptr, u16 newKeys, u16 heldKeys)
     return CheckMovementInputAcroBike(ptr, newKeys, heldKeys);
 }
 
-// JP: AcroBikeTransition_FaceDirection (0x08119A10) is an empty stub kept in
-// asm/bike_stub_face.s; its behavior lives in AcroBikeTransition_TurnJump.
-
 void AcroBikeTransition_TurnDirection(u8 direction)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -498,7 +538,7 @@ void AcroBikeTransition_Moving(u8 direction)
 
     if (CanBikeFaceDirOnMetatile(direction, playerObjEvent->currentMetatileBehavior) == 0)
     {
-        AcroBikeTransition_TurnJump(playerObjEvent->movementDirection);
+        AcroBikeTransition_FaceDirection(playerObjEvent->movementDirection);
         return;
     }
     collision = GetBikeCollision(direction);
@@ -611,15 +651,13 @@ void AcroBikeTransition_SideJump(u8 direction)
     PlayerSetAnimId(sub_08092E84(direction), COPY_MOVE_WALK);
 }
 
-void AcroBikeTransition_TurnJump(u8 direction)
+void AcroBikeTransition_FaceDirection(u8 direction)
 {
-    // JP: AcroBikeTransition_TurnJump faces the direction instead (0x0811A034).
     PlayerFaceDirection(direction);
 }
 
-void sub_0811A2E4(u8 direction)
+void AcroBikeTransition_TurnJump(u8 direction)
 {
-    // JP: turn-jump behavior lives at 0x0811A2E4 (called from the JP table).
     PlayerAcroTurnJump(direction);
 }
 
@@ -1039,7 +1077,7 @@ __attribute__((naked, section(".text.bike_stub_face"))) void MovePlayerOnMachBik
     );
 }
 
-__attribute__((naked, section(".text.bike_stub_face"))) void AcroBikeTransition_FaceDirection(void)
+__attribute__((naked, section(".text.bike_stub_face"))) void MovePlayerOnMachBike_Return(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
