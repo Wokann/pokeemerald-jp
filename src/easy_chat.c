@@ -7,6 +7,7 @@
 
 #define EASY_CHAT_QUIZ_LADY_DATA __attribute__((section(".rodata.easy_chat_quiz_lady_data"), aligned(4)))
 #define EASY_CHAT_SCREEN_TEMPLATES_DATA __attribute__((section(".rodata.easy_chat_screen_templates_data"), aligned(4)))
+#define EASY_CHAT_MYSTERY_GIFT_PHRASES_DATA __attribute__((section(".rodata.easy_chat_mystery_gift_phrases_data"), aligned(4)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
 
@@ -269,6 +270,17 @@ static const struct EasyChatScreenTemplate sEasyChatScreenTemplates[] EASY_CHAT_
         .confirmText1 = gText_TheAnswer,
         .confirmText2 = gText_IsAsShownOkay,
     },
+};
+
+static const u16 sMysteryGiftPhrase[NUM_QUESTIONNAIRE_WORDS] EASY_CHAT_MYSTERY_GIFT_PHRASES_DATA =
+{
+    0x143A, 0x1817, 0x2023, 0x200F,
+};
+
+// JP-only alternate questionnaire phrase. Its word IDs are deliberately retained byte-exact.
+static const u16 sMysteryGiftPhrase_JpAlternate[NUM_QUESTIONNAIRE_WORDS] EASY_CHAT_MYSTERY_GIFT_PHRASES_DATA =
+{
+    0x0A33, 0x140C, 0x143A, 0x0209,
 };
 
 // State values for sEasyChatScreen->inputState
@@ -4608,7 +4620,7 @@ __attribute__((naked)) int DidPlayerInputMysteryGiftPhrase(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0811C740: .4byte gUnknown_857332C\n\t"
+        "_0811C740: .4byte sMysteryGiftPhrase\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4631,7 +4643,7 @@ __attribute__((naked)) int sub_0811C744(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0811C760: .4byte gUnknown_8573334\n\t"
+        "_0811C760: .4byte sMysteryGiftPhrase_JpAlternate\n\t"
         ".syntax divided\n\t"
     );
 }

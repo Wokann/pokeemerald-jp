@@ -24,14 +24,6 @@ sGiftRibbonsMonDataIds: @ 0x8569552
 
 	.section .rodata.mid60_tail_after_bike_data
 
-	.globl gUnknown_857332C
-gUnknown_857332C: @ 0x857332C
-	.incbin "baserom_jp.gba", 0x57332c, 0x8
-
-	.globl gUnknown_8573334
-gUnknown_8573334: @ 0x8573334
-	.incbin "baserom_jp.gba", 0x573334, 0x8
-
 	.globl gUnknown_857333C
 gUnknown_857333C: @ 0x857333C
 	.incbin "baserom_jp.gba", 0x57333c, 0xb28
