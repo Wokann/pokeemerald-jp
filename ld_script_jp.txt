@@ -9872,7 +9872,7 @@ SECTIONS {
         src/battle_transition.o(.rodata.battle_transition_frontier_state_data);
         gUnknown_85A9544 = .;
         src/battle_controller_link_partner.o(.rodata.link_partner_commands_data);
-        data/data_b2d_mid65.o(.rodata);
+        data/battle_message_text.o(.rodata);
         src/data/text/region_texts.o(.rodata);
         data/data_b2d_rest.o(.rodata);
         src/data/text/region_texts67.o(.rodata);
