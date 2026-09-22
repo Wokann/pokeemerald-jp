@@ -1,8 +1,10 @@
 #include "global.h"
+#include "bg.h"
 #include "easy_chat.h"
 #include "main.h"
 #include "strings.h"
 #include "task.h"
+#include "window.h"
 #include "constants/easy_chat.h"
 
 #define EASY_CHAT_QUIZ_LADY_DATA __attribute__((section(".rodata.easy_chat_quiz_lady_data"), aligned(4)))
@@ -20,6 +22,11 @@
 #define EASY_CHAT_TEXT_INPUT_FRAME_GFX_DATA __attribute__((section(".rodata.easy_chat_text_input_frame_gfx_data"), aligned(1)))
 #define EASY_CHAT_TITLE_TEXT_PAL_DATA __attribute__((section(".rodata.easy_chat_title_text_pal_data"), aligned(1)))
 #define EASY_CHAT_TEXT_PAL_DATA __attribute__((section(".rodata.easy_chat_text_pal_data"), aligned(1)))
+#define EASY_CHAT_PHRASE_FRAME_DIMENSIONS_DATA __attribute__((section(".rodata.easy_chat_phrase_frame_dimensions_data"), aligned(1)))
+#define EASY_CHAT_BG_TEMPLATES_DATA __attribute__((section(".rodata.easy_chat_bg_templates_data"), aligned(1)))
+#define EASY_CHAT_WINDOW_TEMPLATES_DATA __attribute__((section(".rodata.easy_chat_window_templates_data"), aligned(1)))
+#define EASY_CHAT_YES_NO_WINDOW_TEMPLATE_DATA __attribute__((section(".rodata.easy_chat_yes_no_window_template_data"), aligned(1)))
+#define EASY_CHAT_KEYBOARD_ALPHABET_DATA __attribute__((section(".rodata.easy_chat_keyboard_alphabet_data"), aligned(1)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
 
@@ -27,6 +34,36 @@ void DoQuizAnswerEasyChatScreen(void);
 void DoQuizQuestionEasyChatScreen(void);
 void DoQuizSetAnswerEasyChatScreen(void);
 void DoQuizSetQuestionEasyChatScreen(void);
+
+#define NUM_ALPHABET_ROWS 4
+
+enum
+{
+    FRAMEID_GENERAL_2x2,
+    FRAMEID_GENERAL_2x3,
+    FRAMEID_MAIL,
+    FRAMEID_COMBINE_TWO_WORDS,
+    FRAMEID_INTERVIEW_SHOW_PERSON,
+    FRAMEID_INTERVIEW,
+    FRAMEID_QUIZ_ANSWER,
+    FRAMEID_QUIZ_QUESTION,
+    FRAMEID_QUIZ_SET_QUESTION,
+};
+
+enum
+{
+    FOOTER_NORMAL,
+    FOOTER_QUIZ,
+    FOOTER_ANSWER,
+    NUM_FOOTER_TYPES,
+};
+
+enum
+{
+    WIN_TITLE,
+    WIN_MSG,
+    WIN_INPUT_SELECT,
+};
 
 static const struct EasyChatScreenTemplate sEasyChatScreenTemplates[] EASY_CHAT_SCREEN_TEMPLATES_DATA =
 {
@@ -348,6 +385,165 @@ static const u16 sTitleText_Pal[] EASY_CHAT_TITLE_TEXT_PAL_DATA =
 
 static const u16 sText_Pal[] EASY_CHAT_TEXT_PAL_DATA =
     INCGFX_U16("graphics/easy_chat/text.pal", ".gbapal");
+
+static const struct EasyChatPhraseFrameDimensions sPhraseFrameDimensions[] EASY_CHAT_PHRASE_FRAME_DIMENSIONS_DATA =
+{
+    // JP text uses a distinct, byte-exact set of frame dimensions.
+    [FRAMEID_GENERAL_2x2] = {
+        .left = 6,
+        .top = 4,
+        .width = 18,
+        .height = 4,
+        .footerId = FOOTER_NORMAL,
+    },
+    [FRAMEID_GENERAL_2x3] = {
+        .left = 1,
+        .top = 4,
+        .width = 27,
+        .height = 4,
+        .footerId = FOOTER_NORMAL,
+    },
+    [FRAMEID_MAIL] = {
+        .left = 1,
+        .top = 2,
+        .width = 28,
+        .height = 6,
+        .footerId = FOOTER_NORMAL,
+    },
+    [FRAMEID_COMBINE_TWO_WORDS] = {
+        .left = 6,
+        .top = 4,
+        .width = 18,
+        .height = 2,
+        .footerId = FOOTER_NORMAL,
+    },
+    [FRAMEID_INTERVIEW_SHOW_PERSON] = {
+        .left = 16,
+        .top = 4,
+        .width = 9,
+        .height = 2,
+        .footerId = FOOTER_NORMAL,
+    },
+    [FRAMEID_INTERVIEW] = {
+        .left = 11,
+        .top = 4,
+        .width = 18,
+        .height = 4,
+        .footerId = FOOTER_NORMAL,
+    },
+    [FRAMEID_QUIZ_ANSWER] = {
+        .left = 10,
+        .top = 4,
+        .width = 10,
+        .height = 2,
+        .footerId = FOOTER_QUIZ,
+    },
+    [FRAMEID_QUIZ_QUESTION] = {
+        .left = 1,
+        .top = 6,
+        .width = 28,
+        .height = 6,
+        .footerId = NUM_FOOTER_TYPES,
+    },
+    [FRAMEID_QUIZ_SET_QUESTION] = {
+        .left = 1,
+        .top = 2,
+        .width = 28,
+        .height = 6,
+        .footerId = FOOTER_ANSWER,
+    },
+};
+
+static const struct BgTemplate sEasyChatBgTemplates[] EASY_CHAT_BG_TEMPLATES_DATA =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 28,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 29,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0x80,
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0,
+    },
+};
+
+static const struct WindowTemplate sEasyChatWindowTemplates[] EASY_CHAT_WINDOW_TEMPLATES_DATA =
+{
+    [WIN_TITLE] = {
+        .bg = 1,
+        .tilemapLeft = 7,
+        .tilemapTop = 0,
+        .width = 16,
+        .height = 2,
+        .paletteNum = 10,
+        .baseBlock = 0x10,
+    },
+    [WIN_MSG] = {
+        .bg = 0,
+        .tilemapLeft = 4,
+        .tilemapTop = 15,
+        .width = 22,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0xA,
+    },
+    [WIN_INPUT_SELECT] = {
+        .bg = 2,
+        .tilemapLeft = 1,
+        .tilemapTop = 0,
+        .width = 28,
+        .height = 32,
+        .paletteNum = 3,
+        .baseBlock = 0,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+static const struct WindowTemplate sEasyChatYesNoWindowTemplate EASY_CHAT_YES_NO_WINDOW_TEMPLATE_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 22,
+    .tilemapTop = 9,
+    .width = 5,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 0x62,
+};
+
+static const u8 *const sEasyChatKeyboardAlphabet[NUM_ALPHABET_ROWS] EASY_CHAT_KEYBOARD_ALPHABET_DATA =
+{
+    gJPText_EasyChatKanaRow1,
+    gJPText_EasyChatKanaRow2,
+    gJPText_EasyChatKanaRow3,
+    gJPText_EasyChatKanaRow4,
+};
 
 // State values for sEasyChatScreen->inputState
 enum {
@@ -4940,10 +5136,10 @@ __attribute__((naked)) bool8 LoadEasyChatScreen(void)
         "	bl CpuFastSet\n\t"
         "	b _0811C9E4\n\t"
         "	.align 2, 0\n\t"
-        "_0811C8F4: .4byte gUnknown_857437C\n\t"
+        "_0811C8F4: .4byte sEasyChatBgTemplates\n\t"
         "_0811C8F8: .4byte gUnknown_2039DE8\n\t"
         "_0811C8FC: .4byte 0x00000AFC\n\t"
-        "_0811C900: .4byte gUnknown_857438C\n\t"
+        "_0811C900: .4byte sEasyChatWindowTemplates\n\t"
         "_0811C904: .4byte 0x01000100\n\t"
         "_0811C908:\n\t"
         "	ldr r1, _0811C944\n\t"
@@ -5339,7 +5535,7 @@ __attribute__((naked)) void sub_0811CBCC(void)
         "	adds r0, r0, r1\n\t"
         "	b _0811CC46\n\t"
         "	.align 2, 0\n\t"
-        "_0811CC3C: .4byte gUnknown_8574358\n\t"
+        "_0811CC3C: .4byte sPhraseFrameDimensions\n\t"
         "_0811CC40: .4byte 0x0000FFFF\n\t"
         "_0811CC44:\n\t"
         "	adds r0, r4, #7\n\t"
@@ -5376,7 +5572,7 @@ __attribute__((naked)) void sub_0811CBCC(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0811CC84: .4byte gUnknown_8574358\n\t"
+        "_0811CC84: .4byte sPhraseFrameDimensions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7386,7 +7582,7 @@ __attribute__((naked)) void sub_0811DAE4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811DB0C: .4byte gUnknown_85743AC\n\t"
+        "_0811DB0C: .4byte sEasyChatYesNoWindowTemplate\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7455,7 +7651,7 @@ __attribute__((naked)) void AddPhraseWindow(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0811DB8C: .4byte 0xFFFFFF00\n\t"
-        "_0811DB90: .4byte gUnknown_8574358\n\t"
+        "_0811DB90: .4byte sPhraseFrameDimensions\n\t"
         "_0811DB94: .4byte 0xFFFF00FF\n\t"
         "_0811DB98: .4byte 0xFF00FFFF\n\t"
         "_0811DB9C: .4byte 0x00FFFFFF\n\t"
@@ -7769,7 +7965,7 @@ __attribute__((naked)) void sub_0811DCAC(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0811DDEC: .4byte 0x01000200\n\t"
-        "_0811DDF0: .4byte gUnknown_8574358\n\t"
+        "_0811DDF0: .4byte sPhraseFrameDimensions\n\t"
         "_0811DDF4: .4byte 0x00001001\n\t"
         "_0811DDF8: .4byte 0x00001002\n\t"
         "_0811DDFC: .4byte 0x00001003\n\t"
@@ -7805,7 +8001,7 @@ __attribute__((naked)) void AdjustBgTilemapForFooter(void)
         "	beq _0811DE54\n\t"
         "	b _0811DE84\n\t"
         "	.align 2, 0\n\t"
-        "_0811DE3C: .4byte gUnknown_8574358\n\t"
+        "_0811DE3C: .4byte sPhraseFrameDimensions\n\t"
         "_0811DE40:\n\t"
         "	cmp r1, #3\n\t"
         "	beq _0811DE70\n\t"
@@ -8024,7 +8220,7 @@ __attribute__((naked)) void sub_0811DF70(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811DFA8: .4byte gUnknown_85743BC\n\t"
+        "_0811DFA8: .4byte sEasyChatKeyboardAlphabet\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9092,7 +9288,7 @@ __attribute__((naked)) void sub_0811E6D8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811E724: .4byte gUnknown_8574358\n\t"
+        "_0811E724: .4byte sPhraseFrameDimensions\n\t"
         "_0811E728: .4byte gUnknown_857443C\n\t"
         "_0811E72C: .4byte gUnknown_2039DE8\n\t"
         "_0811E730: .4byte gSprites\n\t"
