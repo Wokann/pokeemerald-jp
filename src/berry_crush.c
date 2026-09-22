@@ -2388,6 +2388,9 @@ void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
     AddTextPrinterParameterized3(windowId, FONT_NORMAL, left, 0, sTextColorTable[colorId], 0, string);
 }
 
+// JP 0x08021FC0: the C reconstruction reaches the original 0x270 size, but
+// state 1 still changes agbcc's r10/r5 literal and loop-register allocation.
+// Retain the byte-exact asm until a matching C shape is demonstrated.
 __attribute__((naked)) void sub_08021FC0(void)
 {
     __asm__(".syntax unified\n\t"
@@ -2742,6 +2745,9 @@ u32 Cmd_BeginNormalPaletteFade(struct BerryCrushGame *game, u8 *args)
     return 0;
 }
 
+// JP 0x08023A40: the US-equivalent C form is 0x3a4 versus the original 0x3d0
+// (865 differing bytes); forcing the game base into r8 grows it to 0x450.
+// Retain the byte-exact asm until a matching C shape is demonstrated.
 __attribute__((naked)) u32 Cmd_TabulateResults(struct BerryCrushGame *game, u8 *args)
 {
     __asm__(".syntax unified\n\t"
@@ -3238,6 +3244,9 @@ __attribute__((naked)) u32 Cmd_TabulateResults(struct BerryCrushGame *game, u8 *
 }
 
 
+// JP 0x08021758: unlike the US form, all three pages use the supplied baseY
+// with 13-pixel rows and a separate x - 33 player label, rather than centred
+// 14-pixel rows. This changes allocation across its page branches; retain asm.
 __attribute__((naked)) void sub_08021758(void)
 {
     __asm__(".syntax unified\n\t"
@@ -3655,6 +3664,9 @@ __attribute__((naked)) void sub_08021758(void)
     );
 }
 
+// JP 0x08021ABC: the semantic C form is 0x31c rather than 0x320 and diverges
+// at +0x0a from agbcc's saved-register/local allocation (676 differing bytes).
+// Retain the byte-exact asm until a matching C shape is demonstrated.
 __attribute__((naked)) void sub_08021ABC(void)
 {
     __asm__(".syntax unified\n\t"
