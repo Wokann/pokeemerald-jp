@@ -22,20 +22,6 @@ sGiftRibbonsMonDataIds: @ 0x8569552
 
 	.include "data/field_special_scene/truck_and_ss_tidal.inc"
 
-	.section .rodata.mid60_tail_before_battle_anim_effects_1_data
-
-	.globl gUnknown_856DCBC
-gUnknown_856DCBC: @ 0x856DCBC
-	.incbin "baserom_jp.gba", 0x56dcbc, 0xc
-
-	.globl gUnknown_856DCC8
-gUnknown_856DCC8: @ 0x856DCC8
-	.incbin "baserom_jp.gba", 0x56dcc8, 0x4
-
-	.globl gUnknown_856DCCC
-gUnknown_856DCCC: @ 0x856DCCC
-	.incbin "baserom_jp.gba", 0x56dccc, 0x8
-
 	.section .rodata.mid60_tail_after_bike_data
 
 	.globl gUnknown_8573114

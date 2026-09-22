@@ -9725,7 +9725,7 @@ SECTIONS {
         src/fldeff_misc.o(.rodata);
         data/data_b2d_mid60.o(.rodata.mid60_tail_prefix);
         src/rotating_gate.o(.rodata.rotating_gate_data);
-        data/data_b2d_mid60.o(.rodata.mid60_tail_before_battle_anim_effects_1_data);
+        src/item_use.o(.rodata.item_use_mid60_tail_data);
         src/battle_anim_effects_1.o(.rodata);
         src/battle_anim_effects_2.o(.rodata);
         src/battle_anim_water.o(.rodata);

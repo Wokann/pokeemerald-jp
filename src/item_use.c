@@ -1,5 +1,41 @@
 #include "global.h"
 #include "item_use.h"
+#include "item_menu.h"
+#include "menu_helpers.h"
+#include "overworld.h"
+#include "party_menu.h"
+#include "constants/global.h"
+#include "constants/items.h"
+
+#define ITEM_USE_MID60_TAIL_DATA __attribute__((section(".rodata.item_use_mid60_tail_data"), aligned(4)))
+
+extern void BagMenu_InitListsMenu(u8 taskId);
+
+void UseTMHMYesNo(u8 taskId);
+void UseTMHM(u8 taskId);
+
+// UB here if an item with type ITEM_USE_MAIL or ITEM_USE_BAG_MENU uses SetUpItemUseCallback.
+// Never occurs in vanilla, but can occur with improperly created items.
+static const MainCallback sItemUseCallbacks[] ITEM_USE_MID60_TAIL_DATA =
+{
+    [ITEM_USE_PARTY_MENU - 1]  = CB2_ShowPartyMenuForItemUse,
+    [ITEM_USE_FIELD - 1]       = CB2_ReturnToField,
+    [ITEM_USE_PBLOCK_CASE - 1] = NULL,
+};
+
+static const u8 sClockwiseDirections[] ITEM_USE_MID60_TAIL_DATA =
+{
+    DIR_NORTH,
+    DIR_EAST,
+    DIR_SOUTH,
+    DIR_WEST,
+};
+
+static const struct YesNoFuncTable sUseTMHMYesNoFuncTable ITEM_USE_MID60_TAIL_DATA =
+{
+    .yesFunc = UseTMHM,
+    .noFunc = BagMenu_InitListsMenu,
+};
 
 __attribute__((naked)) void SetUpItemUseCallback(void)
 {
@@ -45,7 +81,7 @@ __attribute__((naked)) void SetUpItemUseCallback(void)
         "	b _080FD920\n\t"
         "	.align 2, 0\n\t"
         "_080FD904: .4byte gUnknown_203CB20\n\t"
-        "_080FD908: .4byte gUnknown_856DCBC\n\t"
+        "_080FD908: .4byte sItemUseCallbacks\n\t"
         "_080FD90C:\n\t"
         "	ldr r0, _080FD928\n\t"
         "	ldr r2, [r0]\n\t"
@@ -62,7 +98,7 @@ __attribute__((naked)) void SetUpItemUseCallback(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FD928: .4byte gUnknown_203CBF8\n\t"
-        "_080FD92C: .4byte gUnknown_856DCBC\n\t"
+        "_080FD92C: .4byte sItemUseCallbacks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -726,7 +762,7 @@ __attribute__((naked)) void sub_080FDD58(void)
         "	b _080FDE16\n\t"
         "	.align 2, 0\n\t"
         "_080FDDAC: .4byte gUnknown_3005B68\n\t"
-        "_080FDDB0: .4byte gUnknown_856DCC8\n\t"
+        "_080FDDB0: .4byte sClockwiseDirections\n\t"
         "_080FDDB4: .4byte sub_080FE2E8 + 1\n\t"
         "_080FDDB8:\n\t"
         "	bl GetPlayerFacingDirection\n\t"
@@ -761,7 +797,7 @@ __attribute__((naked)) void sub_080FDD58(void)
         "	strh r0, [r4, #4]\n\t"
         "	b _080FDE16\n\t"
         "	.align 2, 0\n\t"
-        "_080FDDF4: .4byte gUnknown_856DCC8\n\t"
+        "_080FDDF4: .4byte sClockwiseDirections\n\t"
         "_080FDDF8: .4byte gTasks\n\t"
         "_080FDDFC: .4byte sub_080FE330 + 1\n\t"
         "_080FDE00:\n\t"
@@ -1594,7 +1630,7 @@ __attribute__((naked)) void sub_080FE330(void)
         "	.align 2, 0\n\t"
         "_080FE3AC: .4byte gUnknown_3005B68\n\t"
         "_080FE3B0: .4byte gObjectEvents\n\t"
-        "_080FE3B4: .4byte gUnknown_856DCC8\n\t"
+        "_080FE3B4: .4byte sClockwiseDirections\n\t"
         "_080FE3B8: .4byte gUnknown_85C942E + 0x188\n\t"
         "_080FE3BC: .4byte sub_080FDE20 + 1\n\t"
         ".syntax divided\n\t"
@@ -2275,12 +2311,12 @@ __attribute__((naked)) void task08_0809AD8C(void)
         "_080FE864: .4byte gMoveNames\n\t"
         "_080FE868: .4byte gStringVar4\n\t"
         "_080FE86C: .4byte gUnknown_85C942E + 0x1EF\n\t"
-        "_080FE870: .4byte sub_080FE874 + 1\n\t"
+        "_080FE870: .4byte UseTMHMYesNo + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_080FE874(void)
+__attribute__((naked)) void UseTMHMYesNo(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2293,12 +2329,12 @@ __attribute__((naked)) void sub_080FE874(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FE888: .4byte gUnknown_856DCCC\n\t"
+        "_080FE888: .4byte sUseTMHMYesNoFuncTable\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_080FE88C(void)
+__attribute__((naked)) void UseTMHM(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
