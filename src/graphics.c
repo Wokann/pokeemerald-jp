@@ -794,6 +794,18 @@ EASY_CHAT_MODE_PAL const u16 gEasyChatMode_Pal[] = INCBIN_U16("graphics/easy_cha
 
 #undef EASY_CHAT_MODE_PAL
 
+#define EASY_CHAT_WINDOW_GFX __attribute__((section(".rodata.easy_chat_window_gfx_data"), aligned(1)))
+
+EASY_CHAT_WINDOW_GFX const u32 gEasyChatWindow_Gfx[] = INCBIN_U32("graphics/easy_chat/window.png.4bpp.lz");
+
+#undef EASY_CHAT_WINDOW_GFX
+
+#define EASY_CHAT_WINDOW_TILEMAP __attribute__((section(".rodata.easy_chat_window_tilemap_data"), aligned(1)))
+
+EASY_CHAT_WINDOW_TILEMAP const u32 gEasyChatWindow_Tilemap[] = INCBIN_U32("graphics/easy_chat/window.bin.lz");
+
+#undef EASY_CHAT_WINDOW_TILEMAP
+
 #define EASY_CHAT_BUTTON_WINDOW_GFX __attribute__((section(".rodata.easy_chat_button_window_gfx_data"), aligned(1)))
 
 EASY_CHAT_BUTTON_WINDOW_GFX const u32 gEasyChatButtonWindow_Gfx[] = INCBIN_U32("graphics/easy_chat/button_window.png.4bpp.lz");

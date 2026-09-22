@@ -1366,7 +1366,7 @@ $(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c graphics/su
 	@rm -f $(C_BUILDDIR)/pokemon_summary_screen.gen.s
 $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/graphics/pokeballs.h src/data/text_window.h src/data/scrcmd_data.h \
 	graphics/easy_chat/rectangle_cursor.png.gbapal graphics/easy_chat/rectangle_cursor.png.4bpp.lz \
-	graphics/easy_chat/button_window.png.gbapal graphics/easy_chat/mode.png.gbapal graphics/easy_chat/mode.png.4bpp.lz graphics/easy_chat/button_window.png.4bpp.lz \
+	graphics/easy_chat/button_window.png.gbapal graphics/easy_chat/mode.png.gbapal graphics/easy_chat/mode.png.4bpp.lz graphics/easy_chat/window.png.4bpp.lz graphics/easy_chat/window.bin.lz graphics/easy_chat/button_window.png.4bpp.lz \
 	graphics/text_window/message_box_jp.4bpp \
 	graphics/interface/menu_info1.gbapal graphics/interface/menu_info2.gbapal graphics/interface/menu_info3.gbapal graphics/interface/menu_info.4bpp \
 	graphics/battle_frontier/factory_screen/menu.png.4bpp graphics/battle_frontier/factory_screen/menu.bin graphics/battle_frontier/factory_screen/menu.pal.gbapal \
