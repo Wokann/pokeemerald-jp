@@ -9780,7 +9780,8 @@ SECTIONS {
         src/easy_chat.o(.rodata.easy_chat_sprite_palettes_data);
         src/easy_chat.o(.rodata.easy_chat_compressed_sprite_sheets_data);
         src/easy_chat.o(.rodata.easy_chat_sprite_metadata_data);
-        data/data_b2d_mid60.o(.rodata.mid60_tail_after_easy_chat_sprite_metadata_data);
+        src/easy_chat.o(.rodata.easy_chat_group_pokemon_data);
+        data/data_b2d_mid60.o(.rodata.mid60_tail_after_easy_chat_group_pokemon_data);
         src/data/text/region_texts61.o(.rodata);
         data/data_b2d_mid61.o(.rodata);
         sHealLocations = . + 0x4C;
