@@ -18,15 +18,7 @@ sGiftRibbonsMonDataIds: @ 0x8569552
 	.section .rodata.mid60_tail_prefix
 	.include "data/field_effects/secret_power_descriptors.inc"
 
-	.incbin "baserom_jp.gba", 0x56a290, 0x1b8
-
-	.globl sSpritePalette_RecordMixLights
-sSpritePalette_RecordMixLights: @ 0x856A448
-	.incbin "baserom_jp.gba", 0x56a448, 0x1c
-
-	.globl sSpriteTemplate_RecordMixLights
-sSpriteTemplate_RecordMixLights: @ 0x856A464
-	.incbin "baserom_jp.gba", 0x56a464, 0x18
+	.include "data/field_effects/record_mix_lights.inc"
 
 	.globl sTruckCamera_HorizontalTable
 sTruckCamera_HorizontalTable: @ 0x856A47C
