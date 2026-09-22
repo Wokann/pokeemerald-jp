@@ -7005,7 +7005,7 @@ __attribute__((naked)) void LoadEasyChatPalettes(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811D868: .4byte gUnknown_8573E64\n\t"
+        "_0811D868: .4byte gEasyChatMode_Pal\n\t"
         "_0811D86C: .4byte gUnknown_857423C\n\t"
         "_0811D870: .4byte gUnknown_857425C\n\t"
         "_0811D874: .4byte gUnknown_8574344\n\t"
