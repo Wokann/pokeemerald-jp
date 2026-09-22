@@ -14,5 +14,20 @@ const u8 gText_DontRemoveCableTurnOff[] = _(
 
 const u8 gText_EventSafelyLoaded[] = _(
     "できごとの　よみこみが\n"
-    "せいじょうに　しゅうりょう　しました$せつぞく　できない　ききの　ようです\n"
+    "せいじょうに　しゅうりょう　しました");
+
+const u8 gText_MysteryEventIncorrectDevice[] = _(
+    "せつぞく　できない　ききの　ようです\n"
     "ただしい　ききと　やりなおしてください");
+
+const u8 gText_LoadErrorEndingSession[] = _(
+    "エラーがはっせいしました\n"
+    "しゅうりょうします");
+
+const u8 gText_MysteryEventPressA[] = _("Aボタンを　おしてください");
+const u8 gText_MysteryEventConnected[] = _("つながりました");
+const u8 gText_MysteryEventDataReceived[] = _("データを　じゅしんしました");
+const u8 gText_MysteryEventSaveFailed[] = _("セーブできませんでした");
+const u8 gText_MysteryEventSaveSucceeded[] = _("セーブできました");
+const u8 gText_MysteryEventLoadFailed[] = _("ロードできませんでした");
+const u8 gText_MysteryEventLoadSucceeded[] = _("ロードできました");
