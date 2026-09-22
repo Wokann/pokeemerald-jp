@@ -55,6 +55,7 @@
 #define EASY_CHAT_GROUP_MOVE_2_DATA __attribute__((section(".rodata.easy_chat_group_move_2_data"), aligned(1)))
 #define EASY_CHAT_GROUP_TRENDY_SAYING_DATA __attribute__((section(".rodata.easy_chat_group_trendy_saying_data"), aligned(1)))
 #define EASY_CHAT_GROUP_POKEMON_NATIONAL_DATA __attribute__((section(".rodata.easy_chat_group_pokemon_national_data"), aligned(1)))
+#define EASY_CHAT_GROUPS_DATA __attribute__((section(".rodata.easy_chat_groups_data"), aligned(1)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
 
@@ -899,28 +900,7 @@ static const struct SpriteTemplate sSpriteTemplate_ScrollIndicator EASY_CHAT_SPR
     .callback = SpriteCallbackDummy,
 };
 
-#include "data/easy_chat/easy_chat_group_pokemon.h"
-#include "data/easy_chat/easy_chat_group_trainer.h"
-#include "data/easy_chat/easy_chat_group_status.h"
-#include "data/easy_chat/easy_chat_group_battle.h"
-#include "data/easy_chat/easy_chat_group_greetings.h"
-#include "data/easy_chat/easy_chat_group_people.h"
-#include "data/easy_chat/easy_chat_group_voices.h"
-#include "data/easy_chat/easy_chat_group_speech.h"
-#include "data/easy_chat/easy_chat_group_endings.h"
-#include "data/easy_chat/easy_chat_group_feelings.h"
-#include "data/easy_chat/easy_chat_group_conditions.h"
-#include "data/easy_chat/easy_chat_group_actions.h"
-#include "data/easy_chat/easy_chat_group_lifestyle.h"
-#include "data/easy_chat/easy_chat_group_hobbies.h"
-#include "data/easy_chat/easy_chat_group_time.h"
-#include "data/easy_chat/easy_chat_group_misc.h"
-#include "data/easy_chat/easy_chat_group_adjectives.h"
-#include "data/easy_chat/easy_chat_group_events.h"
-#include "data/easy_chat/easy_chat_group_move_1.h"
-#include "data/easy_chat/easy_chat_group_move_2.h"
-#include "data/easy_chat/easy_chat_group_trendy_saying.h"
-#include "data/easy_chat/easy_chat_group_pokemon_national.h"
+#include "data/easy_chat/easy_chat_groups.h"
 
 // State values for sEasyChatScreen->inputState
 enum {
@@ -11098,7 +11078,7 @@ __attribute__((naked)) u16 EasyChat_GetNumWordsInGroup(u8 groupId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0811F0BC: .4byte gUnknown_8578D14\n\t"
+        "_0811F0BC: .4byte gEasyChatGroups\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11132,7 +11112,7 @@ __attribute__((naked)) bool8 IsEasyChatWordInvalid(u16 easyChatWord)
         "	.align 2, 0\n\t"
         "_0811F0EC: .4byte 0x0000FFFF\n\t"
         "_0811F0F0: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_0811F0F4: .4byte gUnknown_8578D14\n\t"
+        "_0811F0F4: .4byte gEasyChatGroups\n\t"
         "_0811F0F8:\n\t"
         "	cmp r3, #0x15\n\t"
         "	bne _0811F11C\n\t"
@@ -11219,7 +11199,7 @@ __attribute__((naked)) const u8 *GetEasyChatWord(u8 groupId, u16 index)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0811F17C: .4byte gUnknown_8578D14\n\t"
+        "_0811F17C: .4byte gEasyChatGroups\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11509,7 +11489,7 @@ __attribute__((naked)) u16 GetRandomEasyChatWordFromGroup(u16 groupId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0811F368: .4byte gUnknown_8578D14\n\t"
+        "_0811F368: .4byte gEasyChatGroups\n\t"
         "_0811F36C: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         ".syntax divided\n\t"
     );
@@ -11962,7 +11942,7 @@ __attribute__((naked)) u16 GetRandomUnlockedEasyChatPokemon(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0811F65C: .4byte gUnknown_8578D14\n\t"
+        "_0811F65C: .4byte gEasyChatGroups\n\t"
         "_0811F660: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
     );
@@ -12705,7 +12685,7 @@ __attribute__((naked)) u16 SetSelectedWordGroup_GroupMode(u16 word)
         "	blo _0811FB5E\n\t"
         "	b _0811FBF0\n\t"
         "	.align 2, 0\n\t"
-        "_0811FB94: .4byte gUnknown_8578D14\n\t"
+        "_0811FB94: .4byte gEasyChatGroups\n\t"
         "_0811FB98: .4byte gUnknown_2039DEC\n\t"
         "_0811FB9C: .4byte 0x00002AE4\n\t"
         "_0811FBA0: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
@@ -12958,7 +12938,7 @@ __attribute__((naked)) bool8 IsEasyChatIndexAndGroupUnlocked(u16 word, u8 groupI
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0811FD88: .4byte gUnknown_8578D14\n\t"
+        "_0811FD88: .4byte gEasyChatGroups\n\t"
         ".syntax divided\n\t"
     );
 }
