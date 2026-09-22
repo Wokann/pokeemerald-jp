@@ -20,18 +20,7 @@ sGiftRibbonsMonDataIds: @ 0x8569552
 
 	.include "data/field_effects/record_mix_lights.inc"
 
-	.globl sTruckCamera_HorizontalTable
-sTruckCamera_HorizontalTable: @ 0x856A47C
-	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x02, 0x02
-	.byte 0x02, 0x02, 0x02, 0xFF, 0xFF, 0xFF, 0x00
-
-	.globl sSSTidalSailEastMovementScript
-sSSTidalSailEastMovementScript: @ 0x856A48F
-	.byte 0x18, 0xFE
-
-	.globl sSSTidalSailWestMovementScript
-sSSTidalSailWestMovementScript: @ 0x856A491
-	.byte 0x17, 0xFE, 0x00
+	.include "data/field_special_scene/truck_and_ss_tidal.inc"
 
 	.section .rodata.mid60_tail_before_battle_anim_effects_1_data
 
