@@ -1,37 +1,53 @@
 #include "global.h"
 #include "battle_factory.h"
+#include "battle_setup.h"
+#include "battle_tower.h"
+#include "event_data.h"
+#include "pokemon.h"
+#include "constants/battle_ai.h"
+#include "constants/battle_frontier.h"
+#include "constants/battle_frontier_mons.h"
+#include "constants/battle_tent.h"
+#include "constants/items.h"
+#include "constants/layouts.h"
+#include "constants/moves.h"
+#include "constants/pokemon.h"
+#include "constants/species.h"
+#include "constants/trainers.h"
+#include <stddef.h>
 
 #define BATTLE_FACTORY_DATA __attribute__((section(".rodata.battle_factory_data")))
 
-__attribute__((naked)) void CallBattleFactoryFunction()
+extern const u8 gUnknown_85DD958[];
+extern const u8 gUnknown_85DD7F8[];
+extern const u8 gUnknown_85DD93C[];
+extern const u8 gUnknown_85DD9BC[];
+extern u16 gSpecialVar_0x8004;
+extern u8 gUnknown_3001284;
+
+// JP asm name for the still-asm frontier save helper; US: SaveGameFrontier.
+void sub_081A482C(void);
+
+u8 GetMoveBattleStyle(u16 move);
+u16 sub_0816245C(u8 challengeNum, u8 battleNum);
+u16 GetMonSetId(u8 lvlMode, u8 challengeNum, bool8 useBetterRange);
+u8 GetNumPastRentalsRank(u8 battleMode, u8 lvlMode);
+u8 GetFactoryMonFixedIV(u8 challengeNum, bool8 isLastBattle);
+void SetMonMoveAvoidReturn(struct Pokemon *mon, u16 moveArg, u8 moveSlot);
+
+void CallBattleFactoryFunction(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _081A5C24\n\t"
-        "	ldr r0, _081A5C28\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	pop {r0}\n\t"
-        ".syntax divided\n\t"
-    );
+    void (*const *funcs)(void) = (void (*const *)(void))gUnknown_85DD958;
+
+    funcs[gSpecialVar_0x8004]();
 }
 
-__attribute__((naked)) void nullsub_75(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5C24: .4byte gUnknown_85DD958\n\t"
-        "_081A5C28: .4byte gSpecialVar_0x8004\n\t"
-        ".syntax divided\n\t"
-    );
-}
+__asm__(".global nullsub_75\n.set nullsub_75, CallBattleFactoryFunction + 0x14\n"
+        ".size CallBattleFactoryFunction, 0x14\n.size nullsub_75, 0xc");
 
+// Kept naked: equivalent C variants consistently reuse the 0xCA9 field offset
+// as +0x33, shortening the active-streak branch by four bytes. The JP object
+// reloads the save pointer and uses a separate 0xCDC literal-pool path.
 __attribute__((naked)) void InitFactoryChallenge(void)
 {
     __asm__(".syntax unified\n\t"
@@ -167,6 +183,9 @@ __attribute__((naked)) void InitFactoryChallenge(void)
     );
 }
 
+// Kept naked: equivalent C preserves the selectors but allocates the live save
+// pointer and modes to r6/r5/r4 and merges the flag-result store. The JP object
+// requires r7/r6/r5 plus the distinct active-flag write path below.
 __attribute__((naked)) void GetBattleFactoryData(void)
 {
     __asm__(".syntax unified\n\t"
@@ -257,6 +276,9 @@ __attribute__((naked)) void GetBattleFactoryData(void)
     );
 }
 
+// Kept naked: both the US-shaped C version and a u32/local-order variant
+// allocate battleMode to r1 and shrink the saved-register set. The JP object
+// requires the r6/r5/r4 layout across all three switch paths.
 __attribute__((naked)) void SetBattleFactoryData(void)
 {
     __asm__(".syntax unified\n\t"
@@ -374,1848 +396,558 @@ __attribute__((naked)) void SetBattleFactoryData(void)
     );
 }
 
-__attribute__((naked)) void sub_081A5ED4(void)
+void sub_081A5ED4(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _081A5F08\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _081A5F0C\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	ldr r2, _081A5F10\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	movs r1, #0\n\t"
-        "	bl VarSet\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r0, _081A5F14\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl sub_081A482C\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5F08: .4byte gSaveBlock2Ptr\n\t"
-        "_081A5F0C: .4byte gSpecialVar_0x8005\n\t"
-        "_081A5F10: .4byte 0x00000CA8\n\t"
-        "_081A5F14: .4byte 0x00000CA9\n\t"
-        ".syntax divided\n\t"
-    );
+    gSaveBlock2Ptr->frontier.challengeStatus = gSpecialVar_0x8005;
+    VarSet(VAR_TEMP_CHALLENGE_STATUS, 0);
+    gSaveBlock2Ptr->frontier.challengePaused = TRUE;
+    sub_081A482C();
 }
 
 void sub_081A5F18(void) {}
 void nullsub_123(void) {}
-__attribute__((naked)) void SelectInitialRentalMons(void)
+void SelectInitialRentalMons(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl ZeroPlayerPartyMons\n\t"
-        "	bl DoBattleFactorySelectScreen\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ZeroPlayerPartyMons();
+    DoBattleFactorySelectScreen();
 }
 
-__attribute__((naked)) void sub_081A5F30(void)
+void sub_081A5F30(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl DoBattleFactorySwapScreen\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    DoBattleFactorySwapScreen();
 }
 
-__attribute__((naked)) void SetPerformedRentalSwap(void)
+void SetPerformedRentalSwap(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _081A5F44\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_081A5F44: .4byte gUnknown_3001284\n\t"
-        ".syntax divided\n\t"
-    );
+    gUnknown_3001284 = TRUE;
 }
 
-__attribute__((naked)) void sub_081A5F48(void)
+void sub_081A5F48(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x28\n\t"
-        "	ldr r4, _081A611C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _081A6120\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1e\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "	ldr r0, _081A6124\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r3, [sp, #0x10]\n\t"
-        "	lsls r2, r3, #1\n\t"
-        "	lsrs r0, r0, #0xe\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r6, _081A6128\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	movs r1, #7\n\t"
-        "	bl __udivsi3\n\t"
-        "	ldr r2, _081A612C\n\t"
-        "	ldr r1, _081A6130\n\t"
-        "	str r1, [r2]\n\t"
-        "	ldr r5, _081A6134\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	str r0, [sp, #0x20]\n\t"
-        "	mov r8, r0\n\t"
-        "_081A5F92:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	mov r2, r8\n\t"
-        "	lsrs r0, r2, #0x18\n\t"
-        "	bl sub_0816245C\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	ldr r6, [sp, #0x10]\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	str r6, [sp, #0x1c]\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r7, r0\n\t"
-        "	bge _081A5FDC\n\t"
-        "	ldr r2, _081A6138\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldr r6, _081A611C\n\t"
-        "	cmp r0, r3\n\t"
-        "	beq _081A5FDC\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldr r6, _081A6134\n\t"
-        "	adds r0, r1, r6\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	ldr r0, _081A6138\n\t"
-        "	adds r1, r1, r0\n\t"
-        "_081A5FCE:\n\t"
-        "	adds r1, #2\n\t"
-        "	adds r7, #1\n\t"
-        "	cmp r7, r2\n\t"
-        "	bge _081A5FDC\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, r3\n\t"
-        "	bne _081A5FCE\n\t"
-        "_081A5FDC:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _081A6134\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r6, _081A611C\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r7, r0\n\t"
-        "	bne _081A5F92\n\t"
-        "	ldr r0, _081A613C\n\t"
-        "	strh r3, [r0]\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _081A6004\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldr r4, _081A6138\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r3, [r0]\n\t"
-        "_081A6004:\n\t"
-        "	movs r7, #0\n\t"
-        "	mov sl, sp\n\t"
-        "	movs r6, #0\n\t"
-        "	lsls r6, r6, #1\n\t"
-        "	str r6, [sp, #0x14]\n\t"
-        "	add r6, sp\n\t"
-        "	str r6, [sp, #0x18]\n\t"
-        "_081A6012:\n\t"
-        "	ldr r1, [sp, #0x1c]\n\t"
-        "	lsrs r0, r1, #0x18\n\t"
-        "	ldr r2, [sp, #0x20]\n\t"
-        "	lsrs r1, r2, #0x18\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonSetId\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r4, _081A6140\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0xc9\n\t"
-        "	beq _081A6106\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r6, _081A611C\n\t"
-        "	mov r8, r1\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r1, [r6]\n\t"
-        "_081A603E:\n\t"
-        "	movs r4, #0xe7\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _081A6058\n\t"
-        "	adds r1, #0xc\n\t"
-        "	adds r3, #1\n\t"
-        "	cmp r3, #5\n\t"
-        "	ble _081A603E\n\t"
-        "_081A6058:\n\t"
-        "	cmp r3, #6\n\t"
-        "	bne _081A6106\n\t"
-        "	ldr r6, [sp, #0x10]\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _081A6068\n\t"
-        "	ldr r0, _081A6144\n\t"
-        "	cmp sb, r0\n\t"
-        "	bhi _081A6106\n\t"
-        "_081A6068:\n\t"
-        "	movs r2, #0\n\t"
-        "	adds r4, r2, r7\n\t"
-        "	cmp r2, r4\n\t"
-        "	bge _081A609A\n\t"
-        "	ldr r1, [sp, #0x18]\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, r5\n\t"
-        "	beq _081A609A\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	ldr r3, _081A6140\n\t"
-        "	mov ip, r3\n\t"
-        "	mov r5, r8\n\t"
-        "	ldr r3, [sp, #0x14]\n\t"
-        "	add r3, sp\n\t"
-        "_081A6084:\n\t"
-        "	adds r3, #2\n\t"
-        "	adds r2, #1\n\t"
-        "	cmp r2, r6\n\t"
-        "	bge _081A609A\n\t"
-        "	mov r1, ip\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrh r1, [r3]\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081A6084\n\t"
-        "_081A609A:\n\t"
-        "	cmp r2, r4\n\t"
-        "	bne _081A6106\n\t"
-        "	movs r2, #0\n\t"
-        "	cmp r2, r4\n\t"
-        "	bge _081A60D6\n\t"
-        "	ldr r3, _081A6148\n\t"
-        "	mov ip, r3\n\t"
-        "	add r0, sp, #8\n\t"
-        "	ldr r6, [sp, #0x14]\n\t"
-        "	adds r3, r0, r6\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp, #0x24]\n\t"
-        "	adds r5, r4, #0\n\t"
-        "_081A60B4:\n\t"
-        "	ldrh r1, [r3]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081A60CE\n\t"
-        "	ldr r6, _081A6140\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldr r6, [sp, #0x24]\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, ip\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081A60D6\n\t"
-        "_081A60CE:\n\t"
-        "	adds r3, #2\n\t"
-        "	adds r2, #1\n\t"
-        "	cmp r2, r5\n\t"
-        "	blt _081A60B4\n\t"
-        "_081A60D6:\n\t"
-        "	cmp r2, r4\n\t"
-        "	bne _081A6106\n\t"
-        "	lsls r4, r7, #1\n\t"
-        "	ldr r0, _081A6140\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	add r1, r8\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	mov r2, sl\n\t"
-        "	strh r0, [r2]\n\t"
-        "	add r2, sp, #8\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	ldr r3, _081A6148\n\t"
-        "	ldrb r0, [r1, #0xa]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r0, _081A614C\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	mov r3, sb\n\t"
-        "	strh r3, [r4]\n\t"
-        "	movs r4, #2\n\t"
-        "	add sl, r4\n\t"
-        "	adds r7, #1\n\t"
-        "_081A6106:\n\t"
-        "	cmp r7, #3\n\t"
-        "	bne _081A6012\n\t"
-        "	add sp, #0x28\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A611C: .4byte gSaveBlock2Ptr\n\t"
-        "_081A6120: .4byte 0x00000CA9\n\t"
-        "_081A6124: .4byte 0x000040CE\n\t"
-        "_081A6128: .4byte 0x00000DE2\n\t"
-        "_081A612C: .4byte gFacilityTrainers\n\t"
-        "_081A6130: .4byte gBattleFrontierTrainers\n\t"
-        "_081A6134: .4byte 0x00000CB2\n\t"
-        "_081A6138: .4byte 0x00000CB4\n\t"
-        "_081A613C: .4byte gTrainerBattleOpponent_A\n\t"
-        "_081A6140: .4byte gFacilityTrainerMons\n\t"
-        "_081A6144: .4byte 0x00000351\n\t"
-        "_081A6148: .4byte gBattleFrontierHeldItems\n\t"
-        "_081A614C: .4byte gFrontierTempParty\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+    int j;
+    int k;
+    u16 species[FRONTIER_PARTY_SIZE];
+    u16 heldItems[FRONTIER_PARTY_SIZE];
+    int firstMonId = 0;
+    u16 trainerId = 0;
+    u32 lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
+    u32 battleMode = VarGet(VAR_FRONTIER_BATTLE_MODE);
+    u32 winStreak = gSaveBlock2Ptr->frontier.factoryWinStreaks[battleMode][lvlMode];
+    u32 challengeNum = winStreak / FRONTIER_STAGES_PER_CHALLENGE;
+
+    gFacilityTrainers = gBattleFrontierTrainers;
+    do
+    {
+        trainerId = sub_0816245C(challengeNum, gSaveBlock2Ptr->frontier.curChallengeBattleNum);
+        for (i = 0; i < gSaveBlock2Ptr->frontier.curChallengeBattleNum; i++)
+        {
+            if (gSaveBlock2Ptr->frontier.trainerIds[i] == trainerId)
+                break;
+        }
+    } while (i != gSaveBlock2Ptr->frontier.curChallengeBattleNum);
+
+    gTrainerBattleOpponent_A = trainerId;
+    if (gSaveBlock2Ptr->frontier.curChallengeBattleNum < FRONTIER_STAGES_PER_CHALLENGE - 1)
+        gSaveBlock2Ptr->frontier.trainerIds[gSaveBlock2Ptr->frontier.curChallengeBattleNum] = trainerId;
+
+    i = 0;
+    while (i != FRONTIER_PARTY_SIZE)
+    {
+        u16 monId = GetMonSetId(lvlMode, challengeNum, FALSE);
+
+        if (gFacilityTrainerMons[monId].species == SPECIES_UNOWN)
+            continue;
+
+        for (j = 0; j < (int)ARRAY_COUNT(gSaveBlock2Ptr->frontier.rentalMons); j++)
+        {
+            if (gFacilityTrainerMons[monId].species
+                == gFacilityTrainerMons[gSaveBlock2Ptr->frontier.rentalMons[j].monId].species)
+            {
+                break;
+            }
+        }
+        if (j != (int)ARRAY_COUNT(gSaveBlock2Ptr->frontier.rentalMons))
+            continue;
+
+        if (lvlMode == FRONTIER_LVL_50 && monId > FRONTIER_MONS_HIGH_TIER)
+            continue;
+
+        for (k = firstMonId; k < firstMonId + i; k++)
+        {
+            if (species[k] == gFacilityTrainerMons[monId].species)
+                break;
+        }
+        if (k != firstMonId + i)
+            continue;
+
+        for (k = firstMonId; k < firstMonId + i; k++)
+        {
+            if (heldItems[k] != ITEM_NONE
+                && heldItems[k] == gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId])
+            {
+                break;
+            }
+        }
+        if (k != firstMonId + i)
+            continue;
+
+        species[i] = gFacilityTrainerMons[monId].species;
+        heldItems[i] = gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId];
+        gFrontierTempParty[i] = monId;
+        i++;
+    }
 }
 
-__attribute__((naked)) void SetOpponentGfxVar(void)
+void SetOpponentGfxVar(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081A6160\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetBattleFacilityTrainerGfxId\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6160: .4byte gTrainerBattleOpponent_A\n\t"
-        ".syntax divided\n\t"
-    );
+    SetBattleFacilityTrainerGfxId(gTrainerBattleOpponent_A, 0);
 }
 
-__attribute__((naked)) void SetRentalsToOpponentParty(void)
+void SetRentalsToOpponentParty(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	ldr r0, _081A6184\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _081A6188\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081A6194\n\t"
-        "	ldr r1, _081A618C\n\t"
-        "	ldr r0, _081A6190\n\t"
-        "	b _081A6198\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6184: .4byte gSaveBlock2Ptr\n\t"
-        "_081A6188: .4byte 0x00000CA9\n\t"
-        "_081A618C: .4byte gFacilityTrainerMons\n\t"
-        "_081A6190: .4byte gBattleFrontierMons\n\t"
-        "_081A6194:\n\t"
-        "	ldr r1, _081A6238\n\t"
-        "	ldr r0, _081A623C\n\t"
-        "_081A6198:\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r2, _081A6240\n\t"
-        "	mov r8, r2\n\t"
-        "_081A61A0:\n\t"
-        "	mov r0, r8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r7, #3\n\t"
-        "	lsls r4, r0, #1\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r0, _081A6244\n\t"
-        "	lsls r6, r7, #1\n\t"
-        "	adds r6, r6, r0\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	movs r2, #0xe7\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r5, r7, #0\n\t"
-        "	muls r5, r0, r5\n\t"
-        "	ldr r0, _081A6248\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x28\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r2, _081A624C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r2, _081A6250\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	str r0, [r1]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r2, _081A6254\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrh r1, [r6]\n\t"
-        "	ldr r0, _081A6238\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r2, [r1, #0xa]\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldr r0, _081A6258\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #2\n\t"
-        "	bls _081A61A0\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6238: .4byte gFacilityTrainerMons\n\t"
-        "_081A623C: .4byte gSlateportBattleTentMons\n\t"
-        "_081A6240: .4byte gSaveBlock2Ptr\n\t"
-        "_081A6244: .4byte gFrontierTempParty\n\t"
-        "_081A6248: .4byte gEnemyParty\n\t"
-        "_081A624C: .4byte 0x00000E78\n\t"
-        "_081A6250: .4byte 0x00000E74\n\t"
-        "_081A6254: .4byte 0x00000E79\n\t"
-        "_081A6258: .4byte gBattleFrontierHeldItems\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    if (gSaveBlock2Ptr->frontier.lvlMode != FRONTIER_LVL_TENT)
+        gFacilityTrainerMons = gBattleFrontierMons;
+    else
+        gFacilityTrainerMons = gSlateportBattleTentMons;
+
+    for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
+    {
+        gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].monId = gFrontierTempParty[i];
+        gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].ivs = GetBoxMonData(&gEnemyParty[i].box, MON_DATA_ATK_IV, NULL);
+        gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].personality = GetMonData3(&gEnemyParty[i], MON_DATA_PERSONALITY, NULL);
+        gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].abilityNum = GetBoxMonData(&gEnemyParty[i].box, MON_DATA_ABILITY_NUM, NULL);
+        SetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, &gBattleFrontierHeldItems[gFacilityTrainerMons[gFrontierTempParty[i]].itemTableId]);
+    }
 }
 
-__attribute__((naked)) void SetPlayerAndOpponentParties(void)
+void SetPlayerAndOpponentParties(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x24\n\t"
-        "	ldr r0, _081A6288\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _081A628C\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r3, #3\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _081A6298\n\t"
-        "	ldr r1, _081A6290\n\t"
-        "	ldr r0, _081A6294\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r2, #0x1e\n\t"
-        "	str r2, [sp, #0x14]\n\t"
-        "	b _081A62B0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6288: .4byte gSaveBlock2Ptr\n\t"
-        "_081A628C: .4byte 0x00000CA9\n\t"
-        "_081A6290: .4byte gFacilityTrainerMons\n\t"
-        "_081A6294: .4byte gSlateportBattleTentMons\n\t"
-        "_081A6298:\n\t"
-        "	ldr r1, _081A6558\n\t"
-        "	ldr r0, _081A655C\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r4, #0x32\n\t"
-        "	str r4, [sp, #0x14]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A62B0\n\t"
-        "	movs r5, #0x64\n\t"
-        "	str r5, [sp, #0x14]\n\t"
-        "_081A62B0:\n\t"
-        "	ldr r0, _081A6560\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bls _081A62BA\n\t"
-        "	b _081A6404\n\t"
-        "_081A62BA:\n\t"
-        "	bl ZeroPlayerPartyMons\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r1, #0x12\n\t"
-        "	str r1, [sp, #0x1c]\n\t"
-        "	ldr r2, _081A6558\n\t"
-        "	mov sb, r2\n\t"
-        "_081A62CC:\n\t"
-        "	ldr r4, _081A6564\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	mov r5, r8\n\t"
-        "	lsls r5, r5, #1\n\t"
-        "	mov sl, r5\n\t"
-        "	mov r3, sl\n\t"
-        "	add r3, r8\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	movs r4, #0xe7\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrh r7, [r0]\n\t"
-        "	ldr r5, _081A6568\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r6, [r1]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	mov r0, r8\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081A656C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov r4, sb\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	lsls r4, r7, #4\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	movs r5, #1\n\t"
-        "	str r5, [sp]\n\t"
-        "	ldr r5, _081A6570\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	movs r2, #0\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	ldr r2, [sp, #0x14]\n\t"
-        "	adds r3, r6, #0\n\t"
-        "	bl CreateMon\n\t"
-        "	movs r1, #0\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r4, [r4, #0xb]\n\t"
-        "	mov r5, r8\n\t"
-        "	adds r5, #1\n\t"
-        "	str r5, [sp, #0x18]\n\t"
-        "	movs r5, #5\n\t"
-        "_081A632E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A633A\n\t"
-        "	adds r1, #1\n\t"
-        "_081A633A:\n\t"
-        "	lsrs r4, r4, #1\n\t"
-        "	subs r5, #1\n\t"
-        "	cmp r5, #0\n\t"
-        "	bge _081A632E\n\t"
-        "	movs r0, #0xff\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	bl __divsi3\n\t"
-        "	add r1, sp, #0x10\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r4, #1\n\t"
-        "	movs r5, #0\n\t"
-        "	lsls r7, r7, #4\n\t"
-        "	movs r0, #0x64\n\t"
-        "	mov r6, r8\n\t"
-        "	muls r6, r0, r6\n\t"
-        "	ldr r3, _081A656C\n\t"
-        "_081A635C:\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, r7, r0\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A637A\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x1a\n\t"
-        "	adds r0, r6, r3\n\t"
-        "	add r2, sp, #0x10\n\t"
-        "	str r3, [sp, #0x20]\n\t"
-        "	bl SetMonData\n\t"
-        "	ldr r3, [sp, #0x20]\n\t"
-        "_081A637A:\n\t"
-        "	lsls r0, r4, #0x19\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r5, #1\n\t"
-        "	cmp r5, #5\n\t"
-        "	ble _081A635C\n\t"
-        "	movs r2, #0x64\n\t"
-        "	mov r4, r8\n\t"
-        "	muls r4, r2, r4\n\t"
-        "	ldr r5, _081A656C\n\t"
-        "	adds r0, r4, r5\n\t"
-        "	bl CalculateMonStats\n\t"
-        "	movs r0, #0\n\t"
-        "	ldr r1, [sp, #0x1c]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r6, #0\n\t"
-        "_081A639A:\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, r7, r0\n\t"
-        "	lsls r1, r6, #1\n\t"
-        "	adds r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	lsls r2, r6, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, r5\n\t"
-        "	bl SetMonMoveAvoidReturn\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #3\n\t"
-        "	ble _081A639A\n\t"
-        "	movs r5, #0x64\n\t"
-        "	mov r4, r8\n\t"
-        "	muls r4, r5, r4\n\t"
-        "	ldr r0, _081A656C\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	ldr r2, [sp, #0x1c]\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, r7, r0\n\t"
-        "	ldrb r2, [r0, #0xa]\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldr r0, _081A6574\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r2, sl\n\t"
-        "	add r2, r8\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldr r5, _081A6564\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r0, _081A6578\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	bl SetMonData\n\t"
-        "	ldr r1, [sp, #0x18]\n\t"
-        "	mov r8, r1\n\t"
-        "	cmp r1, #2\n\t"
-        "	bgt _081A6404\n\t"
-        "	b _081A62CC\n\t"
-        "_081A6404:\n\t"
-        "	ldr r0, _081A6560\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A6412\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081A6412\n\t"
-        "	b _081A6546\n\t"
-        "_081A6412:\n\t"
-        "	movs r2, #0\n\t"
-        "	mov r8, r2\n\t"
-        "	ldr r4, _081A6558\n\t"
-        "	mov sb, r4\n\t"
-        "_081A641A:\n\t"
-        "	ldr r5, _081A6564\n\t"
-        "	ldr r3, [r5]\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r0, #3\n\t"
-        "	lsls r2, r0, #1\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r1, r3, r2\n\t"
-        "	movs r4, #0xe7\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrh r7, [r0]\n\t"
-        "	ldr r5, _081A6568\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r6, [r1]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	mov r0, r8\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081A657C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov r4, sb\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	lsls r4, r7, #4\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	movs r5, #1\n\t"
-        "	str r5, [sp]\n\t"
-        "	ldr r5, _081A6570\n\t"
-        "	adds r3, r3, r5\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	ldr r2, [r3]\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	movs r2, #0\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	ldr r2, [sp, #0x14]\n\t"
-        "	adds r3, r6, #0\n\t"
-        "	bl CreateMon\n\t"
-        "	movs r1, #0\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r4, [r4, #0xb]\n\t"
-        "	mov r5, r8\n\t"
-        "	lsls r5, r5, #1\n\t"
-        "	mov sl, r5\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [sp, #0x18]\n\t"
-        "	movs r5, #5\n\t"
-        "_081A6480:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A648C\n\t"
-        "	adds r1, #1\n\t"
-        "_081A648C:\n\t"
-        "	lsrs r4, r4, #1\n\t"
-        "	subs r5, #1\n\t"
-        "	cmp r5, #0\n\t"
-        "	bge _081A6480\n\t"
-        "	add r4, sp, #0x10\n\t"
-        "	movs r0, #0xff\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	bl __divsi3\n\t"
-        "	strh r0, [r4]\n\t"
-        "	movs r4, #1\n\t"
-        "	movs r5, #0\n\t"
-        "	lsls r7, r7, #4\n\t"
-        "	movs r0, #0x64\n\t"
-        "	mov r6, r8\n\t"
-        "	muls r6, r0, r6\n\t"
-        "	ldr r3, _081A657C\n\t"
-        "_081A64AE:\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, r7, r0\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A64CC\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x1a\n\t"
-        "	adds r0, r6, r3\n\t"
-        "	add r2, sp, #0x10\n\t"
-        "	str r3, [sp, #0x20]\n\t"
-        "	bl SetMonData\n\t"
-        "	ldr r3, [sp, #0x20]\n\t"
-        "_081A64CC:\n\t"
-        "	lsls r0, r4, #0x19\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r5, #1\n\t"
-        "	cmp r5, #5\n\t"
-        "	ble _081A64AE\n\t"
-        "	movs r2, #0x64\n\t"
-        "	mov r4, r8\n\t"
-        "	muls r4, r2, r4\n\t"
-        "	ldr r5, _081A657C\n\t"
-        "	adds r0, r4, r5\n\t"
-        "	bl CalculateMonStats\n\t"
-        "	movs r6, #0\n\t"
-        "_081A64E6:\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, r7, r0\n\t"
-        "	lsls r1, r6, #1\n\t"
-        "	adds r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	lsls r2, r6, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, r5\n\t"
-        "	bl SetMonMoveAvoidReturn\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #3\n\t"
-        "	ble _081A64E6\n\t"
-        "	movs r2, #0x64\n\t"
-        "	mov r4, r8\n\t"
-        "	muls r4, r2, r4\n\t"
-        "	ldr r0, _081A657C\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	mov r5, sb\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r7, r0\n\t"
-        "	ldrb r2, [r0, #0xa]\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldr r0, _081A6574\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r2, sl\n\t"
-        "	add r2, r8\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldr r1, _081A6564\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r5, _081A6580\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	bl SetMonData\n\t"
-        "	ldr r0, [sp, #0x18]\n\t"
-        "	mov r8, r0\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _081A6546\n\t"
-        "	b _081A641A\n\t"
-        "_081A6546:\n\t"
-        "	add sp, #0x24\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6558: .4byte gFacilityTrainerMons\n\t"
-        "_081A655C: .4byte gBattleFrontierMons\n\t"
-        "_081A6560: .4byte gSpecialVar_0x8005\n\t"
-        "_081A6564: .4byte gSaveBlock2Ptr\n\t"
-        "_081A6568: .4byte 0x00000E78\n\t"
-        "_081A656C: .4byte gPlayerParty\n\t"
-        "_081A6570: .4byte 0x00000E74\n\t"
-        "_081A6574: .4byte gBattleFrontierHeldItems\n\t"
-        "_081A6578: .4byte 0x00000E79\n\t"
-        "_081A657C: .4byte gEnemyParty\n\t"
-        "_081A6580: .4byte 0x00000E9D\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+    int j;
+    int k;
+    int count = 0;
+    u8 bits = 0;
+    u8 monLevel;
+    u16 monId;
+    u16 evs;
+    u8 ivs;
+    u8 friendship;
+
+    if (gSaveBlock2Ptr->frontier.lvlMode == FRONTIER_LVL_TENT)
+    {
+        gFacilityTrainerMons = gSlateportBattleTentMons;
+        monLevel = TENT_MIN_LEVEL;
+    }
+    else
+    {
+        gFacilityTrainerMons = gBattleFrontierMons;
+        if (gSaveBlock2Ptr->frontier.lvlMode != FRONTIER_LVL_50)
+            monLevel = FRONTIER_MAX_LEVEL_OPEN;
+        else
+            monLevel = FRONTIER_MAX_LEVEL_50;
+    }
+
+    if (gSpecialVar_0x8005 < 2)
+    {
+        ZeroPlayerPartyMons();
+        for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
+        {
+            monId = gSaveBlock2Ptr->frontier.rentalMons[i].monId;
+            ivs = gSaveBlock2Ptr->frontier.rentalMons[i].ivs;
+            CreateMon(&gPlayerParty[i],
+                      gFacilityTrainerMons[monId].species,
+                      monLevel,
+                      ivs,
+                      TRUE,
+                      gSaveBlock2Ptr->frontier.rentalMons[i].personality,
+                      OT_ID_PLAYER_ID,
+                      0);
+
+            count = 0;
+            bits = gFacilityTrainerMons[monId].evSpread;
+            for (j = 0; j < NUM_STATS; bits >>= 1, j++)
+            {
+                if (bits & 1)
+                    count++;
+            }
+
+            evs = MAX_TOTAL_EVS / count;
+            bits = 1;
+            for (j = 0; j < NUM_STATS; bits <<= 1, j++)
+            {
+                if (gFacilityTrainerMons[monId].evSpread & bits)
+                    SetMonData(&gPlayerParty[i], MON_DATA_HP_EV + j, &evs);
+            }
+
+            CalculateMonStats(&gPlayerParty[i]);
+            friendship = 0;
+            for (k = 0; k < MAX_MON_MOVES; k++)
+                SetMonMoveAvoidReturn(&gPlayerParty[i], gFacilityTrainerMons[monId].moves[k], k);
+            SetMonData(&gPlayerParty[i], MON_DATA_FRIENDSHIP, &friendship);
+            SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId]);
+            SetMonData(&gPlayerParty[i], MON_DATA_ABILITY_NUM, &gSaveBlock2Ptr->frontier.rentalMons[i].abilityNum);
+        }
+    }
+
+    switch (gSpecialVar_0x8005)
+    {
+    case 0:
+    case 2:
+        for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
+        {
+            monId = gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].monId;
+            ivs = gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].ivs;
+            CreateMon(&gEnemyParty[i],
+                      gFacilityTrainerMons[monId].species,
+                      monLevel,
+                      ivs,
+                      TRUE,
+                      gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].personality,
+                      OT_ID_PLAYER_ID,
+                      0);
+
+            count = 0;
+            bits = gFacilityTrainerMons[monId].evSpread;
+            for (j = 0; j < NUM_STATS; bits >>= 1, j++)
+            {
+                if (bits & 1)
+                    count++;
+            }
+
+            evs = MAX_TOTAL_EVS / count;
+            bits = 1;
+            for (j = 0; j < NUM_STATS; bits <<= 1, j++)
+            {
+                if (gFacilityTrainerMons[monId].evSpread & bits)
+                    SetMonData(&gEnemyParty[i], MON_DATA_HP_EV + j, &evs);
+            }
+
+            CalculateMonStats(&gEnemyParty[i]);
+            for (k = 0; k < MAX_MON_MOVES; k++)
+                SetMonMoveAvoidReturn(&gEnemyParty[i], gFacilityTrainerMons[monId].moves[k], k);
+            SetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, &gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId]);
+            SetMonData(&gEnemyParty[i], MON_DATA_ABILITY_NUM, &gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].abilityNum);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_081A6584(void)
+void sub_081A6584(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x4c\n\t"
-        "	ldr r1, _081A662C\n\t"
-        "	ldr r0, _081A6630\n\t"
-        "	str r0, [r1]\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r0, #0xc\n\t"
-        "	str r0, [sp, #0x38]\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r1, #0x18\n\t"
-        "	str r1, [sp, #0x3c]\n\t"
-        "	ldr r2, _081A6634\n\t"
-        "	mov sb, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r4, #5\n\t"
-        "	mov r8, r4\n\t"
-        "_081A65B2:\n\t"
-        "	strh r2, [r0]\n\t"
-        "	strh r2, [r1]\n\t"
-        "	strh r2, [r3]\n\t"
-        "	adds r3, #2\n\t"
-        "	adds r1, #2\n\t"
-        "	adds r0, #2\n\t"
-        "	movs r5, #1\n\t"
-        "	rsbs r5, r5, #0\n\t"
-        "	add r8, r5\n\t"
-        "	mov r4, r8\n\t"
-        "	cmp r4, #0\n\t"
-        "	bge _081A65B2\n\t"
-        "	mov r5, sb\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r7, _081A6638\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	lsls r4, r4, #0x1e\n\t"
-        "	lsrs r4, r4, #0x1e\n\t"
-        "	ldr r6, _081A663C\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r5, _081A6640\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	movs r1, #7\n\t"
-        "	bl __udivsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #0x24]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081A6610\n\t"
-        "	movs r2, #1\n\t"
-        "_081A6610:\n\t"
-        "	ldr r1, _081A6644\n\t"
-        "	ldr r0, _081A6648\n\t"
-        "	str r0, [r1]\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A664C\n\t"
-        "	movs r4, #1\n\t"
-        "	str r4, [sp, #0x28]\n\t"
-        "	b _081A6650\n\t"
-        "	.align 2, 0\n\t"
-        "_081A662C: .4byte gFacilityTrainers\n\t"
-        "_081A6630: .4byte gBattleFrontierTrainers\n\t"
-        "_081A6634: .4byte gSaveBlock2Ptr\n\t"
-        "_081A6638: .4byte 0x00000CA9\n\t"
-        "_081A663C: .4byte 0x000040CE\n\t"
-        "_081A6640: .4byte 0x00000DE2\n\t"
-        "_081A6644: .4byte gFacilityTrainerMons\n\t"
-        "_081A6648: .4byte gBattleFrontierMons\n\t"
-        "_081A664C:\n\t"
-        "	movs r5, #0\n\t"
-        "	str r5, [sp, #0x28]\n\t"
-        "_081A6650:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ldr r1, [sp, #0x28]\n\t"
-        "	bl GetNumPastRentalsRank\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #0x2c]\n\t"
-        "	movs r0, #0\n\t"
-        "	mov sl, r0\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r1, [sp, #0x3c]\n\t"
-        "	str r1, [sp, #0x40]\n\t"
-        "	mov r2, sp\n\t"
-        "	str r2, [sp, #0x44]\n\t"
-        "	lsls r4, r0, #1\n\t"
-        "	str r4, [sp, #0x30]\n\t"
-        "	ldr r5, [sp, #0x38]\n\t"
-        "	adds r5, r5, r4\n\t"
-        "	str r5, [sp, #0x34]\n\t"
-        "_081A6676:\n\t"
-        "	ldr r0, [sp, #0x2c]\n\t"
-        "	cmp r8, r0\n\t"
-        "	bge _081A6684\n\t"
-        "	ldr r0, [sp, #0x28]\n\t"
-        "	ldr r1, [sp, #0x24]\n\t"
-        "	movs r2, #1\n\t"
-        "	b _081A668A\n\t"
-        "_081A6684:\n\t"
-        "	ldr r0, [sp, #0x28]\n\t"
-        "	ldr r1, [sp, #0x24]\n\t"
-        "	movs r2, #0\n\t"
-        "_081A668A:\n\t"
-        "	bl GetMonSetId\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r7, r0, #0x10\n\t"
-        "	ldr r0, _081A6724\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r2, r7, #4\n\t"
-        "	adds r4, r2, r1\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	mov sb, r2\n\t"
-        "	cmp r1, #0xc9\n\t"
-        "	beq _081A677A\n\t"
-        "	movs r3, #0\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r6, r3, r2\n\t"
-        "	cmp r3, r6\n\t"
-        "	bge _081A66E8\n\t"
-        "	ldr r5, [sp, #0x34]\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	cmp r0, r7\n\t"
-        "	beq _081A66E8\n\t"
-        "	mov ip, r4\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	lsls r4, r3, #1\n\t"
-        "	ldr r1, [sp, #0x30]\n\t"
-        "	add r1, sp\n\t"
-        "	str r6, [sp, #0x48]\n\t"
-        "_081A66C0:\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, r2\n\t"
-        "	bne _081A66D2\n\t"
-        "	mov r0, sl\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081A66E8\n\t"
-        "	mov r5, ip\n\t"
-        "	ldrh r5, [r5]\n\t"
-        "	mov sl, r5\n\t"
-        "_081A66D2:\n\t"
-        "	adds r4, #2\n\t"
-        "	adds r1, #2\n\t"
-        "	adds r3, #1\n\t"
-        "	ldr r0, [sp, #0x48]\n\t"
-        "	cmp r3, r0\n\t"
-        "	bge _081A66E8\n\t"
-        "	ldr r5, [sp, #0x38]\n\t"
-        "	adds r0, r5, r4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, r7\n\t"
-        "	bne _081A66C0\n\t"
-        "_081A66E8:\n\t"
-        "	cmp r3, r6\n\t"
-        "	bne _081A677A\n\t"
-        "	movs r3, #0\n\t"
-        "	cmp r3, r6\n\t"
-        "	bge _081A6734\n\t"
-        "	ldr r0, _081A6728\n\t"
-        "	mov ip, r0\n\t"
-        "	ldr r1, [sp, #0x30]\n\t"
-        "	ldr r2, [sp, #0x3c]\n\t"
-        "	adds r5, r1, r2\n\t"
-        "_081A66FC:\n\t"
-        "	ldrh r4, [r5]\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _081A672C\n\t"
-        "	ldr r1, _081A6724\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	mov r2, sb\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	ldrb r0, [r1, #0xa]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, ip\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r4, r0\n\t"
-        "	bne _081A672C\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, sl\n\t"
-        "	bne _081A6734\n\t"
-        "	movs r4, #0\n\t"
-        "	mov sl, r4\n\t"
-        "	b _081A6734\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6724: .4byte gFacilityTrainerMons\n\t"
-        "_081A6728: .4byte gBattleFrontierHeldItems\n\t"
-        "_081A672C:\n\t"
-        "	adds r5, #2\n\t"
-        "	adds r3, #1\n\t"
-        "	cmp r3, r6\n\t"
-        "	blt _081A66FC\n\t"
-        "_081A6734:\n\t"
-        "	cmp r3, r6\n\t"
-        "	bne _081A677A\n\t"
-        "	ldr r0, _081A6794\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	mov r5, r8\n\t"
-        "	lsls r3, r5, #1\n\t"
-        "	adds r0, r3, r5\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0xe7\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r7, [r1]\n\t"
-        "	ldr r2, _081A6798\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	add r1, sb\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	ldr r4, [sp, #0x44]\n\t"
-        "	strh r0, [r4]\n\t"
-        "	ldr r2, _081A679C\n\t"
-        "	ldrb r0, [r1, #0xa]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldr r5, [sp, #0x40]\n\t"
-        "	strh r0, [r5]\n\t"
-        "	ldr r0, [sp, #0x38]\n\t"
-        "	adds r3, r0, r3\n\t"
-        "	strh r7, [r3]\n\t"
-        "	adds r5, #2\n\t"
-        "	str r5, [sp, #0x40]\n\t"
-        "	adds r4, #2\n\t"
-        "	str r4, [sp, #0x44]\n\t"
-        "	movs r1, #1\n\t"
-        "	add r8, r1\n\t"
-        "_081A677A:\n\t"
-        "	mov r2, r8\n\t"
-        "	cmp r2, #6\n\t"
-        "	beq _081A6782\n\t"
-        "	b _081A6676\n\t"
-        "_081A6782:\n\t"
-        "	add sp, #0x4c\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6794: .4byte gSaveBlock2Ptr\n\t"
-        "_081A6798: .4byte gFacilityTrainerMons\n\t"
-        "_081A679C: .4byte gBattleFrontierHeldItems\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+    int j;
+    u8 firstMonId;
+    u8 battleMode;
+    u8 lvlMode;
+    u8 challengeNum;
+    u8 factoryLvlMode;
+    u8 factoryBattleMode;
+    u8 rentalRank;
+    u16 monId;
+    u16 currSpecies;
+    u16 species[PARTY_SIZE];
+    u16 monIds[PARTY_SIZE];
+    u16 heldItems[PARTY_SIZE];
+
+    gFacilityTrainers = gBattleFrontierTrainers;
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        species[i] = SPECIES_NONE;
+        monIds[i] = 0;
+        heldItems[i] = ITEM_NONE;
+    }
+
+    lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
+    battleMode = VarGet(VAR_FRONTIER_BATTLE_MODE);
+    challengeNum = gSaveBlock2Ptr->frontier.factoryWinStreaks[battleMode][lvlMode]
+        / FRONTIER_STAGES_PER_CHALLENGE;
+    if (VarGet(VAR_FRONTIER_BATTLE_MODE) == FRONTIER_MODE_DOUBLES)
+        factoryBattleMode = FRONTIER_MODE_DOUBLES;
+    else
+        factoryBattleMode = FRONTIER_MODE_SINGLES;
+
+    gFacilityTrainerMons = gBattleFrontierMons;
+    if (gSaveBlock2Ptr->frontier.lvlMode != FRONTIER_LVL_50)
+    {
+        factoryLvlMode = FRONTIER_LVL_OPEN;
+        firstMonId = 0;
+    }
+    else
+    {
+        factoryLvlMode = FRONTIER_LVL_50;
+        firstMonId = 0;
+    }
+
+    rentalRank = GetNumPastRentalsRank(factoryBattleMode, factoryLvlMode);
+    currSpecies = SPECIES_NONE;
+    i = 0;
+    while (i != PARTY_SIZE)
+    {
+        if (i < rentalRank)
+            monId = GetMonSetId(factoryLvlMode, challengeNum, TRUE);
+        else
+            monId = GetMonSetId(factoryLvlMode, challengeNum, FALSE);
+
+        if (gFacilityTrainerMons[monId].species == SPECIES_UNOWN)
+            continue;
+
+        for (j = firstMonId; j < firstMonId + i; j++)
+        {
+            u16 existingMonId = monIds[j];
+
+            if (existingMonId == monId)
+                break;
+            if (species[j] == gFacilityTrainerMons[monId].species)
+            {
+                if (currSpecies == SPECIES_NONE)
+                    currSpecies = gFacilityTrainerMons[monId].species;
+                else
+                    break;
+            }
+        }
+        if (j != firstMonId + i)
+            continue;
+
+        for (j = firstMonId; j < firstMonId + i; j++)
+        {
+            if (heldItems[j] != ITEM_NONE
+                && heldItems[j] == gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId])
+            {
+                if (gFacilityTrainerMons[monId].species == currSpecies)
+                    currSpecies = SPECIES_NONE;
+                break;
+            }
+        }
+        if (j != firstMonId + i)
+            continue;
+
+        gSaveBlock2Ptr->frontier.rentalMons[i].monId = monId;
+        species[i] = gFacilityTrainerMons[monId].species;
+        heldItems[i] = gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId];
+        monIds[i] = monId;
+        i++;
+    }
 }
 
-__attribute__((naked)) void GetOpponentMostCommonMonType(void)
+void GetOpponentMostCommonMonType(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	ldr r1, _081A6830\n\t"
-        "	ldr r0, _081A6834\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r4, #0\n\t"
-        "	add r5, sp, #0x14\n\t"
-        "	ldr r7, _081A6838\n\t"
-        "	movs r1, #0\n\t"
-        "_081A67B6:\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0x11\n\t"
-        "	bls _081A67B6\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r0, _081A683C\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, _081A6830\n\t"
-        "	ldr r6, [r0]\n\t"
-        "	ldr r1, _081A6840\n\t"
-        "	mov ip, r1\n\t"
-        "_081A67D4:\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	add r0, r8\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	mov r2, ip\n\t"
-        "	adds r3, r0, r2\n\t"
-        "	ldrb r2, [r3, #6]\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r1, [r3, #7]\n\t"
-        "	cmp r2, r1\n\t"
-        "	beq _081A6808\n\t"
-        "	ldrb r0, [r3, #7]\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_081A6808:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #2\n\t"
-        "	bls _081A67D4\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r5]\n\t"
-        "	strb r0, [r5, #1]\n\t"
-        "	movs r4, #1\n\t"
-        "	adds r3, r5, #0\n\t"
-        "_081A681C:\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	add r0, sp\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r1, r2, r4\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r2, r0\n\t"
-        "	bhs _081A6844\n\t"
-        "	strb r4, [r5]\n\t"
-        "	b _081A684A\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6830: .4byte gFacilityTrainerMons\n\t"
-        "_081A6834: .4byte gBattleFrontierMons\n\t"
-        "_081A6838: .4byte gSpecialVar_Result\n\t"
-        "_081A683C: .4byte gFrontierTempParty\n\t"
-        "_081A6840: .4byte gSpeciesInfo\n\t"
-        "_081A6844:\n\t"
-        "	cmp r2, r0\n\t"
-        "	bne _081A684A\n\t"
-        "	strb r4, [r3, #1]\n\t"
-        "_081A684A:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0x11\n\t"
-        "	bls _081A681C\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	mov r4, sp\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _081A6872\n\t"
-        "	ldrb r3, [r5, #1]\n\t"
-        "	adds r0, r4, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r2, r0\n\t"
-        "	bhi _081A686E\n\t"
-        "	cmp r1, r3\n\t"
-        "	bne _081A6872\n\t"
-        "_081A686E:\n\t"
-        "	strh r1, [r7]\n\t"
-        "	b _081A6876\n\t"
-        "_081A6872:\n\t"
-        "	movs r0, #0x12\n\t"
-        "	strh r0, [r7]\n\t"
-        "_081A6876:\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 typeCounts[NUMBER_OF_MON_TYPES];
+    u8 mostCommonTypes[2];
+
+    gFacilityTrainerMons = gBattleFrontierMons;
+
+    for (i = TYPE_NORMAL; i < NUMBER_OF_MON_TYPES; i++)
+        typeCounts[i] = 0;
+    for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
+    {
+        u32 species = gFacilityTrainerMons[gFrontierTempParty[i]].species;
+
+        typeCounts[gSpeciesInfo[species].types[0]]++;
+        if (gSpeciesInfo[species].types[0] != gSpeciesInfo[species].types[1])
+            typeCounts[gSpeciesInfo[species].types[1]]++;
+    }
+
+    mostCommonTypes[0] = 0;
+    mostCommonTypes[1] = 0;
+    for (i = 1; i < NUMBER_OF_MON_TYPES; i++)
+    {
+        if (typeCounts[mostCommonTypes[0]] < typeCounts[i])
+            mostCommonTypes[0] = i;
+        else if (typeCounts[mostCommonTypes[0]] == typeCounts[i])
+            mostCommonTypes[1] = i;
+    }
+
+    if (typeCounts[mostCommonTypes[0]] != 0)
+    {
+        if (typeCounts[mostCommonTypes[0]] > typeCounts[mostCommonTypes[1]])
+            gSpecialVar_Result = mostCommonTypes[0];
+        else if (mostCommonTypes[0] == mostCommonTypes[1])
+            gSpecialVar_Result = mostCommonTypes[0];
+        else
+            gSpecialVar_Result = NUMBER_OF_MON_TYPES;
+    }
+    else
+    {
+        gSpecialVar_Result = NUMBER_OF_MON_TYPES;
+    }
 }
 
-__attribute__((naked)) void GetOpponentBattleStyle(void)
+void GetOpponentBattleStyle(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r1, _081A6928\n\t"
-        "	ldr r0, _081A692C\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "_081A6894:\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #7\n\t"
-        "	bls _081A6894\n\t"
-        "	movs r4, #0\n\t"
-        "_081A68A6:\n\t"
-        "	ldr r1, _081A6930\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r6, [r0]\n\t"
-        "	movs r5, #0\n\t"
-        "_081A68B0:\n\t"
-        "	ldr r0, _081A6928\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r6, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r1, r5, #1\n\t"
-        "	adds r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl GetMoveBattleStyle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #3\n\t"
-        "	bls _081A68B0\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #2\n\t"
-        "	bls _081A68A6\n\t"
-        "	ldr r1, _081A6934\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r4, #1\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r3, _081A6938\n\t"
-        "	adds r2, r5, #0\n\t"
-        "_081A68F4:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	subs r1, r4, #1\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	cmp r0, r1\n\t"
-        "	blo _081A690C\n\t"
-        "	strh r4, [r2]\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "_081A690C:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #7\n\t"
-        "	bls _081A68F4\n\t"
-        "	cmp r7, #2\n\t"
-        "	bls _081A691E\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r5]\n\t"
-        "_081A691E:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6928: .4byte gFacilityTrainerMons\n\t"
-        "_081A692C: .4byte gBattleFrontierMons\n\t"
-        "_081A6930: .4byte gFrontierTempParty\n\t"
-        "_081A6934: .4byte gSpecialVar_Result\n\t"
-        "_081A6938: .4byte gUnknown_85DD7F8\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 j;
+    u8 count;
+    u8 stylePoints[8];
+
+    count = 0;
+    gFacilityTrainerMons = gBattleFrontierMons;
+    for (i = 0; i < 8; i++)
+        stylePoints[i] = 0;
+
+    for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
+    {
+        u16 monId = gFrontierTempParty[i];
+
+        for (j = 0; j < MAX_MON_MOVES; j++)
+        {
+            u8 battleStyle = GetMoveBattleStyle(gFacilityTrainerMons[monId].moves[j]);
+
+            stylePoints[battleStyle]++;
+        }
+    }
+
+    gSpecialVar_Result = 0;
+    for (i = 1; i < 8; i++)
+    {
+        if (stylePoints[i] >= gUnknown_85DD7F8[i - 1])
+        {
+            gSpecialVar_Result = i;
+            count++;
+        }
+    }
+
+    if (count > 2)
+        gSpecialVar_Result = 8;
 }
 
-__attribute__((naked)) void GetMoveBattleStyle(void)
+u8 GetMoveBattleStyle(u16 move)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r6, _081A6968\n\t"
-        "_081A6946:\n\t"
-        "	movs r3, #0\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r4, r2, #1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081A697C\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "_081A695A:\n\t"
-        "	lsls r0, r3, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _081A696C\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	b _081A6986\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6968: .4byte gUnknown_85DD93C\n\t"
-        "_081A696C:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	lsls r0, r3, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081A695A\n\t"
-        "_081A697C:\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #6\n\t"
-        "	bls _081A6946\n\t"
-        "	movs r0, #0\n\t"
-        "_081A6986:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    const u16 *moves;
+    u8 i;
+    u8 j;
+
+    for (i = 0; i < 7; i++)
+    {
+        for (j = 0, moves = ((const u16 *const *)gUnknown_85DD93C)[i]; moves[j] != MOVE_NONE; j++)
+        {
+            if (moves[j] == move)
+                return i + 1;
+        }
+    }
+
+    return 0;
 }
 
-__attribute__((naked)) bool8 InBattleFactory()
+bool8 InBattleFactory(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r1, _081A69AC\n\t"
-        "	ldr r3, _081A69B0\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ldrh r1, [r1, #0x12]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bhi _081A69A4\n\t"
-        "	movs r2, #1\n\t"
-        "_081A69A4:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081A69AC: .4byte gMapHeader\n\t"
-        "_081A69B0: .4byte 0xFFFFFEA5\n\t"
-        ".syntax divided\n\t"
-    );
+    return gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM
+        || gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM;
 }
 
-__attribute__((naked)) void RestorePlayerPartyHeldItems(void)
+void RestorePlayerPartyHeldItems(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _081A69D0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _081A69D4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081A69E0\n\t"
-        "	ldr r1, _081A69D8\n\t"
-        "	ldr r0, _081A69DC\n\t"
-        "	b _081A69E4\n\t"
-        "	.align 2, 0\n\t"
-        "_081A69D0: .4byte gSaveBlock2Ptr\n\t"
-        "_081A69D4: .4byte 0x00000CA9\n\t"
-        "_081A69D8: .4byte gFacilityTrainerMons\n\t"
-        "_081A69DC: .4byte gBattleFrontierMons\n\t"
-        "_081A69E0:\n\t"
-        "	ldr r1, _081A6A2C\n\t"
-        "	ldr r0, _081A6A30\n\t"
-        "_081A69E4:\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r4, #0\n\t"
-        "_081A69E8:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _081A6A34\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081A6A38\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	movs r1, #0xe7\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrh r2, [r2]\n\t"
-        "	ldr r1, _081A6A2C\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrb r2, [r2, #0xa]\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldr r1, _081A6A3C\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #2\n\t"
-        "	bls _081A69E8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6A2C: .4byte gFacilityTrainerMons\n\t"
-        "_081A6A30: .4byte gSlateportBattleTentMons\n\t"
-        "_081A6A34: .4byte gPlayerParty\n\t"
-        "_081A6A38: .4byte gSaveBlock2Ptr\n\t"
-        "_081A6A3C: .4byte gBattleFrontierHeldItems\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    if (gSaveBlock2Ptr->frontier.lvlMode != FRONTIER_LVL_TENT)
+        gFacilityTrainerMons = gBattleFrontierMons;
+    else
+        gFacilityTrainerMons = gSlateportBattleTentMons;
+
+    for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
+    {
+        SetMonData(&gPlayerParty[i],
+                   MON_DATA_HELD_ITEM,
+                   &gBattleFrontierHeldItems[gFacilityTrainerMons[gSaveBlock2Ptr->frontier.rentalMons[i].monId].itemTableId]);
+    }
 }
 
-__attribute__((naked)) u8 GetFactoryMonFixedIV(u8 challengeNum, bool8 isLastBattle)
+u8 GetFactoryMonFixedIV(u8 challengeNum, bool8 isLastBattle)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	rsbs r2, r1, #0\n\t"
-        "	orrs r2, r1\n\t"
-        "	lsrs r2, r2, #0x1f\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #8\n\t"
-        "	bls _081A6A56\n\t"
-        "	movs r1, #7\n\t"
-        "_081A6A56:\n\t"
-        "	ldr r0, _081A6A64\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6A64: .4byte gUnknown_85DD9BC\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 ivSet;
+    bool8 useHigherIV = isLastBattle ? TRUE : FALSE;
+
+    if (challengeNum > 8)
+        ivSet = 7;
+    else
+        ivSet = challengeNum;
+
+    return gUnknown_85DD9BC[useHigherIV + ivSet * 2];
 }
 
-__attribute__((naked)) void FillFactoryBrainParty()
+void FillFactoryBrainParty(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x34\n\t"
-        "	ldr r4, _081A6C68\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _081A6C6C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1e\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	str r0, [sp, #0x2c]\n\t"
-        "	ldr r0, _081A6C70\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r3, [sp, #0x2c]\n\t"
-        "	lsls r2, r3, #1\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r7, _081A6C74\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	movs r1, #7\n\t"
-        "	bl __udivsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	str r1, [sp, #0x30]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #0x12\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetFactoryMonFixedIV\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #0x24]\n\t"
-        "	bl SetFacilityPtrsGetLevel\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #0x20]\n\t"
-        "	movs r3, #0\n\t"
-        "	mov sb, r3\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r4, [r1, #0xa]\n\t"
-        "	ldrb r0, [r1, #0xb]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r4, r0\n\t"
-        "	ldrb r0, [r1, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	orrs r4, r0\n\t"
-        "	ldrb r0, [r1, #0xd]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	orrs r4, r0\n\t"
-        "	str r4, [sp, #0x28]\n\t"
-        "_081A6AE4:\n\t"
-        "	ldr r0, [sp, #0x2c]\n\t"
-        "	ldr r1, [sp, #0x30]\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonSetId\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	ldr r7, _081A6C78\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	lsls r0, r5, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0xc9\n\t"
-        "	bne _081A6B02\n\t"
-        "	b _081A6C50\n\t"
-        "_081A6B02:\n\t"
-        "	ldr r0, [sp, #0x20]\n\t"
-        "	cmp r0, #0x32\n\t"
-        "	bne _081A6B10\n\t"
-        "	ldr r0, _081A6C7C\n\t"
-        "	cmp r5, r0\n\t"
-        "	bls _081A6B10\n\t"
-        "	b _081A6C50\n\t"
-        "_081A6B10:\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r1, _081A6C68\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	movs r3, #0xe7\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _081A6B3A\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r1, #0\n\t"
-        "_081A6B26:\n\t"
-        "	adds r1, #0xc\n\t"
-        "	adds r2, #1\n\t"
-        "	cmp r2, #5\n\t"
-        "	bgt _081A6B3A\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r5, r0\n\t"
-        "	bne _081A6B26\n\t"
-        "_081A6B3A:\n\t"
-        "	cmp r2, #6\n\t"
-        "	beq _081A6B40\n\t"
-        "	b _081A6C50\n\t"
-        "_081A6B40:\n\t"
-        "	movs r4, #0\n\t"
-        "	cmp r4, sb\n\t"
-        "	bge _081A6B74\n\t"
-        "	add r2, sp, #0xc\n\t"
-        "	ldr r7, _081A6C78\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	lsls r1, r5, #4\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrh r2, [r2]\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r2, r0\n\t"
-        "	beq _081A6B74\n\t"
-        "	ldr r6, _081A6C78\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	add r2, sp, #0xc\n\t"
-        "_081A6B60:\n\t"
-        "	adds r2, #2\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, sb\n\t"
-        "	bge _081A6B74\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081A6B60\n\t"
-        "_081A6B74:\n\t"
-        "	cmp r4, sb\n\t"
-        "	bne _081A6C50\n\t"
-        "	movs r4, #0\n\t"
-        "	cmp r4, sb\n\t"
-        "	bge _081A6BA4\n\t"
-        "	ldr r7, _081A6C80\n\t"
-        "	ldr r6, _081A6C78\n\t"
-        "	add r2, sp, #0x14\n\t"
-        "	lsls r3, r5, #4\n\t"
-        "_081A6B86:\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081A6B9C\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081A6BA4\n\t"
-        "_081A6B9C:\n\t"
-        "	adds r2, #2\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, sb\n\t"
-        "	blt _081A6B86\n\t"
-        "_081A6BA4:\n\t"
-        "	cmp r4, sb\n\t"
-        "	bne _081A6C50\n\t"
-        "	mov r0, sb\n\t"
-        "	lsls r2, r0, #1\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, #0xc\n\t"
-        "	ldr r3, _081A6C78\n\t"
-        "	ldr r4, [r3]\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	mov r8, r5\n\t"
-        "	add r4, r8\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	add r1, sp, #0x14\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, _081A6C80\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	mov r5, sb\n\t"
-        "	muls r5, r0, r5\n\t"
-        "	ldr r6, _081A6C84\n\t"
-        "	adds r0, r5, r6\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	ldr r7, [sp, #0x20]\n\t"
-        "	lsls r2, r7, #0x18\n\t"
-        "	ldrb r3, [r4, #0xc]\n\t"
-        "	ldr r7, [sp, #0x24]\n\t"
-        "	str r7, [sp]\n\t"
-        "	ldrb r4, [r4, #0xb]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	ldr r4, [sp, #0x28]\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	bl CreateMonWithEVSpreadNatureOTID\n\t"
-        "	add r0, sp, #0x1c\n\t"
-        "	movs r7, #0\n\t"
-        "	strb r7, [r0]\n\t"
-        "	movs r4, #0\n\t"
-        "	mov r7, r8\n\t"
-        "	mov sl, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	add r0, sb\n\t"
-        "	mov r8, r0\n\t"
-        "_081A6C06:\n\t"
-        "	ldr r1, _081A6C78\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, r7, r0\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	adds r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	lsls r2, r4, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r5, r6\n\t"
-        "	bl SetMonMoveAvoidReturn\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #3\n\t"
-        "	ble _081A6C06\n\t"
-        "	movs r0, #0x64\n\t"
-        "	mov r4, sb\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _081A6C84\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	mov r2, sl\n\t"
-        "	bl SetMonData\n\t"
-        "	ldr r2, _081A6C78\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, r7, r0\n\t"
-        "	ldrb r2, [r0, #0xa]\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldr r0, _081A6C80\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl SetMonData\n\t"
-        "	mov sb, r8\n\t"
-        "_081A6C50:\n\t"
-        "	mov r3, sb\n\t"
-        "	cmp r3, #3\n\t"
-        "	beq _081A6C58\n\t"
-        "	b _081A6AE4\n\t"
-        "_081A6C58:\n\t"
-        "	add sp, #0x34\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6C68: .4byte gSaveBlock2Ptr\n\t"
-        "_081A6C6C: .4byte 0x00000CA9\n\t"
-        "_081A6C70: .4byte 0x000040CE\n\t"
-        "_081A6C74: .4byte 0x00000DE2\n\t"
-        "_081A6C78: .4byte gFacilityTrainerMons\n\t"
-        "_081A6C7C: .4byte 0x00000351\n\t"
-        "_081A6C80: .4byte gBattleFrontierHeldItems\n\t"
-        "_081A6C84: .4byte gEnemyParty\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+    int j;
+    int k;
+    u16 species[FRONTIER_PARTY_SIZE];
+    u16 heldItems[FRONTIER_PARTY_SIZE];
+    u8 friendship;
+    int monLevel;
+    u8 fixedIV;
+    u32 otId;
+
+    u8 lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
+    u8 battleMode = VarGet(VAR_FRONTIER_BATTLE_MODE);
+    u8 challengeNum = gSaveBlock2Ptr->frontier.factoryWinStreaks[battleMode][lvlMode]
+        / FRONTIER_STAGES_PER_CHALLENGE;
+
+    fixedIV = GetFactoryMonFixedIV(challengeNum + 2, FALSE);
+    monLevel = SetFacilityPtrsGetLevel();
+    i = 0;
+    otId = T1_READ_32(gSaveBlock2Ptr->playerTrainerId);
+
+    while (i != FRONTIER_PARTY_SIZE)
+    {
+        u16 monId = GetMonSetId(lvlMode, challengeNum, FALSE);
+
+        if (gFacilityTrainerMons[monId].species == SPECIES_UNOWN)
+            continue;
+        if (monLevel == FRONTIER_MAX_LEVEL_50 && monId > FRONTIER_MONS_HIGH_TIER)
+            continue;
+
+        for (j = 0; j < (int)ARRAY_COUNT(gSaveBlock2Ptr->frontier.rentalMons); j++)
+        {
+            if (monId == gSaveBlock2Ptr->frontier.rentalMons[j].monId)
+                break;
+        }
+        if (j != (int)ARRAY_COUNT(gSaveBlock2Ptr->frontier.rentalMons))
+            continue;
+
+        for (k = 0; k < i; k++)
+        {
+            if (species[k] == gFacilityTrainerMons[monId].species)
+                break;
+        }
+        if (k != i)
+            continue;
+
+        for (k = 0; k < i; k++)
+        {
+            if (heldItems[k] != ITEM_NONE
+                && heldItems[k] == gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId])
+            {
+                break;
+            }
+        }
+        if (k != i)
+            continue;
+
+        species[i] = gFacilityTrainerMons[monId].species;
+        heldItems[i] = gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId];
+        CreateMonWithEVSpreadNatureOTID(&gEnemyParty[i],
+                                        gFacilityTrainerMons[monId].species,
+                                        monLevel,
+                                        gFacilityTrainerMons[monId].nature,
+                                        fixedIV,
+                                        gFacilityTrainerMons[monId].evSpread,
+                                        otId);
+
+        friendship = 0;
+        for (k = 0; k < MAX_MON_MOVES; k++)
+            SetMonMoveAvoidReturn(&gEnemyParty[i], gFacilityTrainerMons[monId].moves[k], k);
+        SetMonData(&gEnemyParty[i], MON_DATA_FRIENDSHIP, &friendship);
+        SetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, &gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId]);
+        i++;
+    }
 }
 
-__attribute__((naked)) void GetMonSetId(void)
+// Kept naked: the JP range selector's three literal-pool paths require its original
+// r1/r2/r4 register allocation; equivalent C does not preserve its byte layout.
+__attribute__((naked)) u16 GetMonSetId(u8 lvlMode, u8 challengeNum, bool8 useBetterRange)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2286,128 +1018,66 @@ __attribute__((naked)) void GetMonSetId(void)
     );
 }
 
-__attribute__((naked)) u8 GetNumPastRentalsRank(u8 battleMode, u8 lvlMode)
+u8 GetNumPastRentalsRank(u8 battleMode, u8 lvlMode)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldr r2, _081A6D44\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	lsrs r1, r1, #0x17\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081A6D48\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0\n\t"
-        "	cmp r1, #0xe\n\t"
-        "	bls _081A6D40\n\t"
-        "	movs r0, #1\n\t"
-        "	cmp r1, #0x15\n\t"
-        "	bls _081A6D40\n\t"
-        "	movs r0, #2\n\t"
-        "	cmp r1, #0x1c\n\t"
-        "	bls _081A6D40\n\t"
-        "	movs r0, #3\n\t"
-        "	cmp r1, #0x23\n\t"
-        "	bls _081A6D40\n\t"
-        "	movs r0, #5\n\t"
-        "	cmp r1, #0x2a\n\t"
-        "	bhi _081A6D40\n\t"
-        "	movs r0, #4\n\t"
-        "_081A6D40:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6D44: .4byte gSaveBlock2Ptr\n\t"
-        "_081A6D48: .4byte 0x00000DF2\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 ret;
+    u8 *saveBlock2;
+    u16 index;
+    u8 rents;
+
+    saveBlock2 = (u8 *)gSaveBlock2Ptr;
+    index = lvlMode * 2;
+    index += battleMode * 4;
+    saveBlock2 += offsetof(struct SaveBlock2, frontier.factoryRentsCount);
+    rents = saveBlock2[index];
+
+    if (rents < 15)
+        ret = 0;
+    else if (rents < 22)
+        ret = 1;
+    else if (rents < 29)
+        ret = 2;
+    else if (rents < 36)
+        ret = 3;
+    else if (rents < 43)
+        ret = 4;
+    else
+        ret = 5;
+
+    return ret;
 }
 
-__attribute__((naked)) u32 GetAiScriptsInBattleFactory()
+u32 GetAiScriptsInBattleFactory(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r5, _081A6D94\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r1, _081A6D98\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1e\n\t"
-        "	lsrs r4, r0, #0x1e\n\t"
-        "	cmp r4, #2\n\t"
-        "	beq _081A6D90\n\t"
-        "	ldr r0, _081A6D9C\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	lsls r2, r4, #1\n\t"
-        "	lsrs r0, r0, #0xe\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r0, _081A6DA0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	movs r1, #7\n\t"
-        "	bl __udivsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	ldr r0, _081A6DA4\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r0, _081A6DA8\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081A6DB0\n\t"
-        "	cmp r2, #1\n\t"
-        "	bgt _081A6DAC\n\t"
-        "_081A6D90:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081A6DB6\n\t"
-        "	.align 2, 0\n\t"
-        "_081A6D94: .4byte gSaveBlock2Ptr\n\t"
-        "_081A6D98: .4byte 0x00000CA9\n\t"
-        "_081A6D9C: .4byte 0x000040CE\n\t"
-        "_081A6DA0: .4byte 0x00000DE2\n\t"
-        "_081A6DA4: .4byte gTrainerBattleOpponent_A\n\t"
-        "_081A6DA8: .4byte 0x000003FE\n\t"
-        "_081A6DAC:\n\t"
-        "	cmp r2, #3\n\t"
-        "	ble _081A6DB4\n\t"
-        "_081A6DB0:\n\t"
-        "	movs r0, #7\n\t"
-        "	b _081A6DB6\n\t"
-        "_081A6DB4:\n\t"
-        "	movs r0, #1\n\t"
-        "_081A6DB6:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
+
+    if (lvlMode == FRONTIER_LVL_TENT)
+    {
+        return 0;
+    }
+    else
+    {
+        u16 battleMode = VarGet(VAR_FRONTIER_BATTLE_MODE);
+        int challengeNum = gSaveBlock2Ptr->frontier.factoryWinStreaks[battleMode][lvlMode] / FRONTIER_STAGES_PER_CHALLENGE;
+
+        if (gTrainerBattleOpponent_A == TRAINER_FRONTIER_BRAIN)
+            return AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY;
+        else if (challengeNum < 2)
+            return 0;
+        else if (challengeNum < 4)
+            return AI_SCRIPT_CHECK_BAD_MOVE;
+        else
+            return AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY;
+    }
 }
 
-__attribute__((naked)) void SetMonMoveAvoidReturn(struct Pokemon *mon, u16 moveArg, u8 moveSlot)
+void SetMonMoveAvoidReturn(struct Pokemon *mon, u16 moveArg, u8 moveSlot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0xd8\n\t"
-        "	bne _081A6DCC\n\t"
-        "	movs r1, #0xda\n\t"
-        "_081A6DCC:\n\t"
-        "	bl SetMonMoveSlot\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 move = moveArg;
+
+    if (moveArg == MOVE_RETURN)
+        move = MOVE_FRUSTRATION;
+    SetMonMoveSlot(mon, move, moveSlot);
 }
 
 
