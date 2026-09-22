@@ -4,8 +4,15 @@
 #include "strings.h"
 #include "task.h"
 
+#define EASY_CHAT_QUIZ_LADY_DATA __attribute__((section(".rodata.easy_chat_quiz_lady_data"), aligned(4)))
+
 extern struct EasyChatScreen *sEasyChatScreen;
 extern const struct EasyChatScreenTemplate sEasyChatScreenTemplates[];
+
+void DoQuizAnswerEasyChatScreen(void);
+void DoQuizQuestionEasyChatScreen(void);
+void DoQuizSetAnswerEasyChatScreen(void);
+void DoQuizSetQuestionEasyChatScreen(void);
 
 // State values for sEasyChatScreen->inputState
 enum {
@@ -69,6 +76,30 @@ enum {
     ECFUNC_MSG_CANT_DELETE_LYRICS,
     ECFUNC_MSG_COMBINE_TWO_WORDS,
     ECFUNC_MSG_CANT_EXIT,
+};
+
+static const struct
+{
+    u16 funcId;
+    MainCallback callback;
+} sQuizLadyEasyChatScreens[] EASY_CHAT_QUIZ_LADY_DATA =
+{
+    {
+        .funcId = ECFUNC_QUIZ_ANSWER,
+        .callback = DoQuizAnswerEasyChatScreen,
+    },
+    {
+        .funcId = ECFUNC_QUIZ_QUESTION,
+        .callback = DoQuizQuestionEasyChatScreen,
+    },
+    {
+        .funcId = ECFUNC_SET_QUIZ_ANSWER,
+        .callback = DoQuizSetAnswerEasyChatScreen,
+    },
+    {
+        .funcId = ECFUNC_SET_QUIZ_QUESTION,
+        .callback = DoQuizSetQuestionEasyChatScreen,
+    },
 };
 
 // Task/sprite data aliases matching the US easy_chat.c field names.
@@ -896,7 +927,7 @@ __attribute__((naked)) int GetQuizLadyScreenByFuncId(u16 funcId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0811B0D8: .4byte gUnknown_8573114\n\t"
+        "_0811B0D8: .4byte sQuizLadyEasyChatScreens\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -908,7 +939,7 @@ __attribute__((naked)) bool32 IsFuncIdForQuizLadyScreen(u16 funcId)
         "	push {lr}\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
-        "	bl sub_0811B0B8\n\t"
+        "	bl GetQuizLadyScreenByFuncId\n\t"
         "	adds r1, r0, #0\n\t"
         "	mvns r1, r1\n\t"
         "	rsbs r0, r1, #0\n\t"
@@ -927,7 +958,7 @@ __attribute__((naked)) void EnterQuizLadyScreen(u16 funcId)
         "	push {r4, lr}\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
-        "	bl sub_0811B0B8\n\t"
+        "	bl GetQuizLadyScreenByFuncId\n\t"
         "	adds r4, r0, #0\n\t"
         "	bl ResetTasks\n\t"
         "	ldr r0, _0811B118\n\t"
@@ -940,7 +971,7 @@ __attribute__((naked)) void EnterQuizLadyScreen(u16 funcId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811B118: .4byte gUnknown_8573114\n\t"
+        "_0811B118: .4byte sQuizLadyEasyChatScreens\n\t"
         ".syntax divided\n\t"
     );
 }
