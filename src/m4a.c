@@ -1,150 +1,147 @@
 #include "global.h"
 
-__attribute__((naked)) void SetPokemonCryTone(void)
+struct ToneData
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r0, _0828FCB8\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r7, _0828FCBC\n\t"
-        "	ldr r0, _0828FCC0\n\t"
-        "	mov sl, r0\n\t"
-        "	mov r5, r8\n\t"
-        "	adds r5, #0xc\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, _0828FCC4\n\t"
-        "	mov ip, r0\n\t"
-        "_0828FC22:\n\t"
-        "	mov r0, ip\n\t"
-        "	adds r2, r3, r0\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0828FC38\n\t"
-        "	ldr r0, [r2, #0x20]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0828FC4E\n\t"
-        "	ldr r0, [r0, #0x2c]\n\t"
-        "	cmp r0, r2\n\t"
-        "	bne _0828FC4E\n\t"
-        "_0828FC38:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	cmp r6, r0\n\t"
-        "	bhs _0828FC42\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "_0828FC42:\n\t"
-        "	adds r5, #0x40\n\t"
-        "	adds r3, #0xa0\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #1\n\t"
-        "	ble _0828FC22\n\t"
-        "	adds r4, r1, #0\n\t"
-        "_0828FC4E:\n\t"
-        "	lsls r5, r4, #6\n\t"
-        "	add r5, r8\n\t"
-        "	ldr r0, [r5, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r5, #0x34]\n\t"
-        "	movs r0, #0x34\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	adds r6, r4, r7\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	mov r1, sl\n\t"
-        "	movs r2, #0x34\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r7, #4\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	mov r1, sb\n\t"
-        "	str r1, [r0]\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	adds r1, #8\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r0, #0x11\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	str r0, [r1]\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	adds r1, #0xc\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r0, #0x18\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	str r0, [r1]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r0, #0x14\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	adds r1, #0x1a\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	str r4, [r0]\n\t"
-        "	ldr r0, _0828FCC8\n\t"
-        "	str r0, [r5, #0x34]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl MPlayStart\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0828FCB8: .4byte 0x03007140\n\t"
-        "_0828FCBC: .4byte 0x030070D0\n\t"
-        "_0828FCC0: .4byte 0x03007490\n\t"
-        "_0828FCC4: .4byte 0x03007350\n\t"
-        "_0828FCC8: .4byte 0x68736D53\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 type;
+    u8 key;
+    u8 length;
+    u8 panSweep;
+    void *wave;
+    u8 attack;
+    u8 decay;
+    u8 sustain;
+    u8 release;
+};
+
+struct PokemonCrySong
+{
+    u8 trackCount;
+    u8 blockCount;
+    u8 priority;
+    u8 reverb;
+    struct ToneData *tone;
+    u8 *part[2];
+    u8 gap;
+    u8 part0;
+    u8 tuneValue;
+    u8 gotoCmd;
+    u32 gotoTarget;
+    u8 part1;
+    u8 tuneValue2;
+    u8 cont[2];
+    u8 volCmd;
+    u8 volumeValue;
+    u8 unkCmd0D[2];
+    u32 unkCmd0DParam;
+    u8 xreleCmd[2];
+    u8 releaseValue;
+    u8 panCmd;
+    u8 panValue;
+    u8 tieCmd;
+    u8 tieKeyValue;
+    u8 tieVelocityValue;
+    u8 xwaitCmd[2];
+    u16 length;
+    u8 end[2];
+};
+
+struct MusicPlayerTrack;
+
+struct SoundChannel
+{
+    u8 unused[0x2C];
+    struct MusicPlayerTrack *track;
+};
+
+struct MusicPlayerTrack
+{
+    u8 flags;
+    u8 unused[0x1F];
+    struct SoundChannel *chan;
+    u8 unused2[0x2C];
+};
+
+struct MusicPlayerInfo
+{
+    u8 unused[0xC];
+    u32 clock;
+    u8 unused2[0x1C];
+    struct MusicPlayerTrack *tracks;
+    void *tone;
+    u32 ident;
+    u8 unused3[8];
+};
+
+#define ID_NUMBER 0x68736D53
+#define C_V 0x40
+#define MAX_POKEMON_CRIES 2
+
+extern struct PokemonCrySong gPokemonCrySong;
+extern struct PokemonCrySong gPokemonCrySongs[];
+extern struct MusicPlayerInfo gPokemonCryMusicPlayers[];
+extern struct MusicPlayerTrack gPokemonCryTracks[];
+__asm__(".set gPokemonCrySong, 0x03007490\n"
+        ".set gPokemonCrySongs, 0x030070D0\n"
+        ".set gPokemonCryMusicPlayers, 0x03007140\n"
+        ".set gPokemonCryTracks, 0x03007350");
+
+void MPlayStart();
+
+struct MusicPlayerInfo *SetPokemonCryTone(struct ToneData *tone)
+{
+    u32 maxClock = 0;
+    s32 maxClockIndex = 0;
+    s32 i;
+    struct MusicPlayerInfo *mplayInfo;
+
+    for (i = 0; i < MAX_POKEMON_CRIES; i++)
+    {
+        struct MusicPlayerTrack *track = &gPokemonCryTracks[i * 2];
+
+        if (!track->flags && (!track->chan || track->chan->track != track))
+            goto start_song;
+
+        if (maxClock < gPokemonCryMusicPlayers[i].clock)
+        {
+            maxClock = gPokemonCryMusicPlayers[i].clock;
+            maxClockIndex = i;
+        }
+    }
+
+    i = maxClockIndex;
+
+start_song:
+    mplayInfo = &gPokemonCryMusicPlayers[i];
+    mplayInfo->ident++;
+
+    gPokemonCrySongs[i] = gPokemonCrySong;
+
+    gPokemonCrySongs[i].tone = tone;
+    gPokemonCrySongs[i].part[0] = &gPokemonCrySongs[i].part0;
+    gPokemonCrySongs[i].part[1] = &gPokemonCrySongs[i].part1;
+    gPokemonCrySongs[i].gotoTarget = (u32)&gPokemonCrySongs[i].cont;
+
+    mplayInfo->ident = ID_NUMBER;
+
+    MPlayStart(mplayInfo, (void *)&gPokemonCrySongs[i]);
+
+    return mplayInfo;
 }
 
-__attribute__((naked)) void SetPokemonCryVolume(void)
+void SetPokemonCryVolume(u8 val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0828FCDC\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2, #0x1d]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0828FCDC: .4byte 0x03007490\n\t"
-        ".syntax divided\n\t"
-    );
+    gPokemonCrySong.volumeValue = val & 0x7F;
 }
 
-__attribute__((naked)) void SetPokemonCryPanpot(void)
+void SetPokemonCryPanpot(s8 val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0828FCF4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	adds r0, #0x40\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	adds r2, #0x28\n\t"
-        "	strb r0, [r2]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0828FCF4: .4byte 0x03007490\n\t"
-        ".syntax divided\n\t"
-    );
+    register struct PokemonCrySong *song asm("r2") = &gPokemonCrySong;
+
+    song->panValue = (val + C_V) & 0x7F;
 }
 
+// Kept naked: the direct US C form keeps the 0x38-byte extent but assigns the
+// tune delta and 0x80 intermediate to r1/r2, not the JP r1/r6/r2/r4 sequence.
 __attribute__((naked)) void SetPokemonCryPitch(void)
 {
     __asm__(".syntax unified\n\t"
@@ -181,46 +178,27 @@ __attribute__((naked)) void SetPokemonCryPitch(void)
     );
 }
 
-__attribute__((naked)) void SetPokemonCryLength(void)
+void SetPokemonCryLength(u32 val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _0828FD38\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0828FD38: .4byte 0x03007490\n\t"
-        ".syntax divided\n\t"
-    );
+    register struct PokemonCrySong *song asm("r1") = &gPokemonCrySong;
+
+    song->length = val;
 }
 
-__attribute__((naked)) void SetPokemonCryRelease(void)
+void SetPokemonCryRelease(u8 val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _0828FD44\n\t"
-        "	adds r1, #0x26\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0828FD44: .4byte 0x03007490\n\t"
-        ".syntax divided\n\t"
-    );
+    register struct PokemonCrySong *song asm("r1") = &gPokemonCrySong;
+
+    song->releaseValue = val;
 }
 
-__attribute__((naked)) void SetPokemonCryProgress(void)
+void SetPokemonCryProgress(u32 val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _0828FD50\n\t"
-        "	str r0, [r1, #0x20]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0828FD50: .4byte 0x03007490\n\t"
-        ".syntax divided\n\t"
-    );
+    gPokemonCrySong.unkCmd0DParam = val;
 }
 
+// Kept naked: all direct C forms tested add a leaf-frame push/pop (0x1C bytes),
+// while the JP ROM has this r0/r1-only 0x18-byte Boolean test.
 __attribute__((naked)) void IsPokemonCryPlaying(void)
 {
     __asm__(".syntax unified\n\t"
@@ -243,6 +221,8 @@ __attribute__((naked)) void IsPokemonCryPlaying(void)
     );
 }
 
+// Kept naked: even with the ROM's r2 base binding, agbcc emits a saved-lr
+// frame and merges the two 0x03007490 literal paths (0x28, not JP's 0x2C).
 __attribute__((naked)) void SetPokemonCryChorus(void)
 {
     __asm__(".syntax unified\n\t"
@@ -274,6 +254,8 @@ __attribute__((naked)) void SetPokemonCryChorus(void)
     );
 }
 
+// Kept naked: both direct and r2-bound C forms save lr and reorder the
+// SoundInfo mode loads, producing 0x44 bytes rather than this 0x40-byte JP body.
 __attribute__((naked)) void SetPokemonCryStereo(void)
 {
     __asm__(".syntax unified\n\t"
@@ -312,17 +294,11 @@ __attribute__((naked)) void SetPokemonCryStereo(void)
     );
 }
 
-__attribute__((naked)) void SetPokemonCryPriority(void)
+void SetPokemonCryPriority(u32 val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _0828FDE0\n\t"
-        "	strb r0, [r1, #2]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0828FDE0: .4byte 0x03007490\n\t"
-        ".syntax divided\n\t"
-    );
+    register struct PokemonCrySong *song asm("r1") = &gPokemonCrySong;
+
+    song->priority = val;
 }
 
 __attribute__((naked, section(".text.m4a_tail2"))) void ply_xxx(void)
