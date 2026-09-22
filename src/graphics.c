@@ -762,6 +762,20 @@ BERRY_BLENDER_BACKGROUND_GRAPHICS const u8 gBerryBlenderOuter_Tilemap[] = INCBIN
 
 #undef BERRY_BLENDER_BACKGROUND_GRAPHICS
 
+// The JP ROM interleaves these Easy Chat cursor assets with data that remains
+// unclassified. Dedicated linker sections retain that physical order.
+#define EASY_CHAT_RECTANGLE_CURSOR_PAL __attribute__((section(".rodata.easy_chat_rectangle_cursor_pal_data"), aligned(1)))
+
+EASY_CHAT_RECTANGLE_CURSOR_PAL const u16 gEasyChatRectangleCursor_Pal[] = INCBIN_U16("graphics/easy_chat/rectangle_cursor.png.gbapal");
+
+#undef EASY_CHAT_RECTANGLE_CURSOR_PAL
+
+#define EASY_CHAT_RECTANGLE_CURSOR_GFX __attribute__((section(".rodata.easy_chat_rectangle_cursor_gfx_data"), aligned(1)))
+
+EASY_CHAT_RECTANGLE_CURSOR_GFX const u32 gEasyChatRectangleCursor_Gfx[] = INCBIN_U32("graphics/easy_chat/rectangle_cursor.png.4bpp.lz");
+
+#undef EASY_CHAT_RECTANGLE_CURSOR_GFX
+
 #define TRADE_MENU_GRAPHICS __attribute__((section(".rodata.trade_menu_graphics"), aligned(1)))
 
 TRADE_MENU_GRAPHICS const u16 gTradeMenu_Pal[] = INCBIN_U16("graphics/trade/menu.gbapal");

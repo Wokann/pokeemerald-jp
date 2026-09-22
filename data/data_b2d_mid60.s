@@ -22,17 +22,18 @@ sGiftRibbonsMonDataIds: @ 0x8569552
 
 	.include "data/field_special_scene/truck_and_ss_tidal.inc"
 
-	.section .rodata.easy_chat_rectangle_cursor_pal_data
-
-	.globl gEasyChatRectangleCursor_Pal
-gEasyChatRectangleCursor_Pal: @ 0x8573370
-	.incbin "baserom_jp.gba", 0x573370, 0x20
-
-	.section .rodata.mid60_tail_after_triangle_cursor_gfx_data
+	.section .rodata.easy_chat_unreferenced_palette_data
 
 	.globl gUnknown_85733B0
 gUnknown_85733B0: @ 0x85733B0
-	.incbin "baserom_jp.gba", 0x5733b0, 0xab4
+	@ Unreferenced BGR555 palette; semantic owner has not been established.
+	.incbin "baserom_jp.gba", 0x5733b0, 0x20
+
+	.section .rodata.mid60_tail_after_rectangle_cursor_gfx_data
+
+	.globl gUnknown_85735D4
+gUnknown_85735D4: @ 0x85735D4
+	.incbin "baserom_jp.gba", 0x5735d4, 0x890
 
 	.globl gUnknown_8573E64
 gUnknown_8573E64: @ 0x8573E64
