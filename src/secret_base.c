@@ -1577,7 +1577,7 @@ __attribute__((naked)) void InitSecretBaseDecorationSprites(void)
         "_080EA1C0: .4byte gUnknown_2037286\n\t"
         "_080EA1C4: .4byte gSpecialVar_Result\n\t"
         "_080EA1C8: .4byte 0x00003F20\n\t"
-        "_080EA1CC: .4byte gUnknown_8580CE8\n\t"
+        "_080EA1CC: .4byte gDecorations + 24\n\t"
         "_080EA1D0: .4byte gSaveBlock1Ptr\n\t"
         "_080EA1D4: .4byte 0x00004054\n\t"
         "_080EA1D8:\n\t"

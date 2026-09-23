@@ -2725,7 +2725,7 @@ $(OBJ_DIR)/data/data_b2d_mid60.o: data/data_b2d_mid60.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-$(OBJ_DIR)/data/data_b2d_mid61.o: data/data_b2d_mid61.s baserom_jp.gba
+$(OBJ_DIR)/data/data_b2d_mid61.o: data/data_b2d_mid61.s data/decoration/tiles.inc data/decoration/description.inc data/decoration/header.inc baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 

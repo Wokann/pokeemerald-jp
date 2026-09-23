@@ -1490,7 +1490,7 @@ __attribute__((naked)) void CopyDecorationMenuItemName(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08127428: .4byte gStringVar1\n\t"
-        "_0812742C: .4byte gUnknown_8580CD1\n\t"
+        "_0812742C: .4byte gDecorations + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2628,7 +2628,7 @@ __attribute__((naked)) void ShowDecorationOnMap_(void)
         "	b _08127C1C\n\t"
         "	.align 2, 0\n\t"
         "_08127C10: .4byte gDecorations\n\t"
-        "_08127C14: .4byte gUnknown_8580CE8\n\t"
+        "_08127C14: .4byte gDecorations + 24\n\t"
         "_08127C18:\n\t"
         "	movs r3, #0\n\t"
         "	mov sl, r3\n\t"
@@ -2697,7 +2697,7 @@ __attribute__((naked)) void ShowDecorationOnMap_(void)
         "	.align 2, 0\n\t"
         "_08127C9C: .4byte gDecorations\n\t"
         "_08127CA0: .4byte 0x0000FFFF\n\t"
-        "_08127CA4: .4byte gUnknown_8580CE8\n\t"
+        "_08127CA4: .4byte gDecorations + 24\n\t"
         "_08127CA8:\n\t"
         "	mov r1, r8\n\t"
         "	asrs r0, r1, #0x10\n\t"
@@ -2748,7 +2748,7 @@ __attribute__((naked)) void ShowDecorationOnMap_(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08127D04: .4byte gUnknown_8580CE8\n\t"
+        "_08127D04: .4byte gDecorations + 24\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8135,7 +8135,7 @@ __attribute__((naked)) void sub_0812A3E0(void)
         "_0812A424: .4byte gStringVar1\n\t"
         "_0812A428: .4byte gCurDecorationIndex\n\t"
         "_0812A42C: .4byte gCurDecorationItems\n\t"
-        "_0812A430: .4byte gUnknown_8580CD1\n\t"
+        "_0812A430: .4byte gDecorations + 1\n\t"
         "_0812A434: .4byte gStringVar4\n\t"
         "_0812A438: .4byte gUnknown_85CA70B + 0x107\n\t"
         "_0812A43C: .4byte sub_0812A468 + 1\n\t"

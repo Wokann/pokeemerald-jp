@@ -986,7 +986,7 @@ __attribute__((naked)) void BuyMenuSetListEntry(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080DF590: .4byte gUnknown_8580CD1\n\t"
+        "_080DF590: .4byte gDecorations + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2607,7 +2607,7 @@ __attribute__((naked)) void Task_BuyMenu(void)
         "	b _080E01D0\n\t"
         "	.align 2, 0\n\t"
         "_080E01B4: .4byte gStringVar1\n\t"
-        "_080E01B8: .4byte gUnknown_8580CD1\n\t"
+        "_080E01B8: .4byte gDecorations + 1\n\t"
         "_080E01BC: .4byte gStringVar2\n\t"
         "_080E01C0: .4byte gStringVar4\n\t"
         "_080E01C4: .4byte gUnknown_85C97BD + 0x179\n\t"

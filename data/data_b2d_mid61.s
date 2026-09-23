@@ -389,18 +389,11 @@ gUnknown_857D86C: @ 0x857D86C
 
 	.globl gUnknown_857D884
 gUnknown_857D884: @ 0x857D884
-	.incbin "baserom_jp.gba", 0x57d884, 0x344c
-	.globl gDecorations
-gDecorations: @ 0x8580CD0
-	.incbin "baserom_jp.gba", 0x580cd0, 0x1
+	.incbin "baserom_jp.gba", 0x57d884, 0x2580
 
-	.globl gUnknown_8580CD1
-gUnknown_8580CD1: @ 0x8580CD1
-	.incbin "baserom_jp.gba", 0x580cd1, 0x17
-
-	.globl gUnknown_8580CE8
-gUnknown_8580CE8: @ 0x8580CE8
-	.incbin "baserom_jp.gba", 0x580ce8, 0xd24
+	.include "data/decoration/tiles.inc"
+	.include "data/decoration/description.inc"
+	.include "data/decoration/header.inc"
 
 	.globl gUnknown_8581A0C
 gUnknown_8581A0C: @ 0x8581A0C
