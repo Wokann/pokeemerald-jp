@@ -95,6 +95,8 @@ extern IWRAM_DATA u8 gSelectedObjectEvent;
 extern EWRAM_DATA u32 gRamScriptRetAddr;
 extern IWRAM_DATA u8 sBrailleWindowId;
 
+static void CloseBrailleWindow(void);
+
 // JP adaptation of pokeemerald's src/scrcmd.c: functions kept in JP ROM
 // address order; JP-only handlers implemented from the JP asm.
 bool8 ScrCmd_nop(struct ScriptContext *ctx)
@@ -158,7 +160,6 @@ bool8 ScrCmd_callnative(struct ScriptContext *ctx)
 
 // JP ROM labels aliased to the shared return-FALSE tails of the handlers above.
 __asm__(".set ScrCmd_showelevmenu, ScrCmd_special + 0x14");
-__asm__(".set ScrCmd_cmdDA, ScrCmd_specialvar + 0x28");
 __asm__(".set sub_08098CE0, ScrCmd_callnative + 0x0C");
 
 
@@ -1531,9 +1532,9 @@ bool8 ScrCmd_braillemessage(struct ScriptContext *ctx)
 
 
 
-bool8 ScrCmd_mossdeepgym4(struct ScriptContext *ctx)
+bool8 ScrCmd_closebraillemessage(struct ScriptContext *ctx)
 {
-    ScrCmd_closebraillemessage(ctx);
+    CloseBrailleWindow();
     return FALSE;
 }
 
@@ -2241,7 +2242,7 @@ bool8 ScrCmd_setmonmetlocation(struct ScriptContext *ctx)
     return FALSE;
 }
 
-void ScrCmd_closebraillemessage(struct ScriptContext *ctx)
+static void CloseBrailleWindow(void)
 {
     ClearStdWindowAndFrame(sBrailleWindowId, TRUE);
     RemoveWindow(sBrailleWindowId);

@@ -2138,10 +2138,6 @@
 	.byte SCR_OP_LOCKFORTRAINER
 	.endm
 
-	.macro mossdeepgym4
-	closebraillemessage
-	.endm
-
 	.macro cmdDB address:req
 	.byte SCR_OP_MESSAGEINSTANT
 	.4byte \address

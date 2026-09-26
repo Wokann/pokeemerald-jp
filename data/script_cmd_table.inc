@@ -129,6 +129,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_MULTICHOICE ScrCmd_multichoice @ 0x6F
 	script_cmd_table_entry SCR_OP_MULTICHOICEDEFAULT ScrCmd_multichoicedefault @ 0x70
 	script_cmd_table_entry SCR_OP_MULTICHOICEGRID ScrCmd_multichoicegrid @ 0x71
+	@ JP menu opcodes 0x72-0x74 differ from US; 0x74 skips four bytes.
 	script_cmd_table_entry SCR_OP_ERASEBOX ScrCmd_erasebox @ 0x72
 	script_cmd_table_entry SCR_OP_DRAWBOXTEXT ScrCmd_drawboxtext @ 0x73
 	script_cmd_table_entry SCR_OP_74 ScrCmd_mossdeepgym2 @ 0x74
@@ -178,6 +179,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_CHECKPLAYERGENDER ScrCmd_checkplayergender @ 0xA0
 	script_cmd_table_entry SCR_OP_PLAYMONCRY ScrCmd_playmoncry @ 0xA1
 	script_cmd_table_entry SCR_OP_SETMETATILE ScrCmd_setmetatile @ 0xA2
+	@ JP does weather at 0xA3 and resets it at 0xA5, opposite US.
 	script_cmd_table_entry SCR_OP_DOWEATHER ScrCmd_doweather @ 0xA3
 	script_cmd_table_entry SCR_OP_SETWEATHER ScrCmd_setweather @ 0xA4
 	script_cmd_table_entry SCR_OP_RESETWEATHER ScrCmd_resetweather @ 0xA5
@@ -189,10 +191,12 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_TURNVOBJECT ScrCmd_turnvobject @ 0xAB
 	script_cmd_table_entry SCR_OP_OPENDOOR ScrCmd_opendoor @ 0xAC
 	script_cmd_table_entry SCR_OP_CLOSEDOOR ScrCmd_closedoor @ 0xAD
+	@ JP waitmoncry/waitdooranim occupy the opposite slots from US.
 	script_cmd_table_entry SCR_OP_WAITMONCRY ScrCmd_waitmoncry @ 0xAE
 	script_cmd_table_entry SCR_OP_SETDOOROPEN ScrCmd_setdooropen @ 0xAF
 	script_cmd_table_entry SCR_OP_SETDOORCLOSED ScrCmd_setdoorclosed @ 0xB0
 	script_cmd_table_entry SCR_OP_ADDELEVMENUITEM ScrCmd_addelevmenuitem @ 0xB1
+	@ JP keeps its drawbox no-op at 0xB2, not US showelevmenu.
 	script_cmd_table_entry SCR_OP_DRAWBOX ScrCmd_drawbox @ 0xB2
 	script_cmd_table_entry SCR_OP_CHECKCOINS ScrCmd_checkcoins @ 0xB3
 	script_cmd_table_entry SCR_OP_ADDCOINS ScrCmd_addcoins @ 0xB4
@@ -220,6 +224,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_SIGNMSG ScrCmd_nop1 @ 0xCA
 	script_cmd_table_entry SCR_OP_NORMALMSG ScrCmd_nop1 @ 0xCB
 	script_cmd_table_entry SCR_OP_COMPAREHIDDENVAR ScrCmd_nop1 @ 0xCC
+	@ JP 0xCD/0xCE test obedience, not US modern fateful encounters.
 	script_cmd_table_entry SCR_OP_CD ScrCmd_setmonobedient @ 0xCD
 	script_cmd_table_entry SCR_OP_CE ScrCmd_checkmonobedience @ 0xCE
 	script_cmd_table_entry SCR_OP_TRYWONDERCARDSCRIPT ScrCmd_trywondercardscript @ 0xCF
@@ -233,7 +238,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_WARPMOSSDEEPGYM ScrCmd_warpmossdeepgym @ 0xD7
 	script_cmd_table_entry SCR_OP_SELECTAPPROACHINGTRAINER ScrCmd_selectapproachingtrainer @ 0xD8
 	script_cmd_table_entry SCR_OP_LOCKFORTRAINER ScrCmd_lockfortrainer @ 0xD9
-	script_cmd_table_entry SCR_OP_CLOSEBRAILLEMESSAGE ScrCmd_mossdeepgym4 @ 0xDA
+	script_cmd_table_entry SCR_OP_CLOSEBRAILLEMESSAGE ScrCmd_closebraillemessage @ 0xDA
 	script_cmd_table_entry SCR_OP_MESSAGEINSTANT ScrCmd_messageinstant @ 0xDB
 	script_cmd_table_entry SCR_OP_FADESCREENSWAPBUFFERS ScrCmd_fadescreenswapbuffers @ 0xDC
 	script_cmd_table_entry SCR_OP_BUFFERTRAINERCLASSNAME ScrCmd_buffertrainerclassname @ 0xDD
