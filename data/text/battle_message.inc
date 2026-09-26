@@ -5,10 +5,10 @@
 @ STRINGID_EMPTYSTRING4 is a JP EXP grammar particle, not an empty string.
 
 sText_Trainer1LoseText: @ 0x085A9628
-	.string "{STRING 0x24}$"
+	.string "{B_TRAINER1_LOSE_TEXT}$"
 
 sText_PkmnGainedEXP: @ 0x085A962B
-	.string "{STRING 0x00}{STRING 0x01}　けいけんちを　もらった！\p$"
+	.string "{B_BUFF1}{B_BUFF2}　けいけんちを　もらった！\p$"
 
 sText_ExpGainedNoBonus: @ 0x085A963E
 	.string "は\n$"
@@ -17,277 +17,277 @@ sText_ABoosted: @ 0x085A9641
 	.string "は　おおめに\n$"
 
 sText_PkmnGrewToLv: @ 0x085A9649
-	.string "{STRING 0x00}は\nレベル{STRING 0x01}　に　あがった！{WAIT_SE}\p$"
+	.string "{B_BUFF1}は\nレベル{B_BUFF2}　に　あがった！{WAIT_SE}\p$"
 
 sText_PkmnLearnedMove: @ 0x085A965E
-	.string "{STRING 0x00}は\n{STRING 0x01}を　おぼえた！{WAIT_SE}\p$"
+	.string "{B_BUFF1}は\n{B_BUFF2}を　おぼえた！{WAIT_SE}\p$"
 
 sText_TryToLearnMove1: @ 0x085A966F
-	.string "{STRING 0x00}は　あたらしく\n{STRING 0x01}を　おぼえたい⋯⋯⋯！\p$"
+	.string "{B_BUFF1}は　あたらしく\n{B_BUFF2}を　おぼえたい⋯⋯⋯！\p$"
 
 sText_TryToLearnMove2: @ 0x085A9688
-	.string "しかし　{STRING 0x00}は　わざを　4つ\nおぼえるので　せいいっぱいだ！\p$"
+	.string "しかし　{B_BUFF1}は　わざを　4つ\nおぼえるので　せいいっぱいだ！\p$"
 
 sText_TryToLearnMove3: @ 0x085A96A8
-	.string "{STRING 0x01}の　かわりに\nほかの　わざを　わすれさせますか？$"
+	.string "{B_BUFF2}の　かわりに\nほかの　わざを　わすれさせますか？$"
 
 sText_PkmnForgotMove: @ 0x085A96C3
-	.string "{STRING 0x00}は　{STRING 0x01}の\nつかいかたを　きれいに　わすれた！\p$"
+	.string "{B_BUFF1}は　{B_BUFF2}の\nつかいかたを　きれいに　わすれた！\p$"
 
 sText_StopLearningMove: @ 0x085A96DE
-	.string "{PAUSE 0x20}それでは⋯⋯　{STRING 0x01}を\nおぼえるのを　あきらめますか？$"
+	.string "{PAUSE 0x20}それでは⋯⋯　{B_BUFF2}を\nおぼえるのを　あきらめますか？$"
 
 sText_DidNotLearnMove: @ 0x085A96FC
-	.string "{STRING 0x00}は　{STRING 0x01}を\nおぼえずに　おわった！\p$"
+	.string "{B_BUFF1}は　{B_BUFF2}を\nおぼえずに　おわった！\p$"
 
 sText_UseNextPkmn: @ 0x085A9711
 	.string "つぎの　ポケモンを　つかいますか？$"
 
 sText_AttackMissed: @ 0x085A9723
-	.string "しかし　{STRING 0x0F}の\nこうげきは　はずれた！$"
+	.string "しかし　{B_ATK_NAME_WITH_PREFIX}の\nこうげきは　はずれた！$"
 
 sText_PkmnProtectedItself: @ 0x085A9737
-	.string "{STRING 0x10}は　こうげきから\nみを　まもった！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　こうげきから\nみを　まもった！$"
 
 sText_AvoidedDamage: @ 0x085A974B
-	.string "{STRING 0x10}は　{STRING 0x19}で\nダメージを　うけない！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\nダメージを　うけない！$"
 
 sText_PkmnMakesGroundMiss: @ 0x085A975F
-	.string "{STRING 0x10}は　{STRING 0x19}で\nじめんタイプの　わざが　あたらない！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\nじめんタイプの　わざが　あたらない！$"
 
 sText_PkmnAvoidedAttack: @ 0x085A977A
-	.string "{STRING 0x10}には\nあたらなかった！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}には\nあたらなかった！$"
 
 sText_ItDoesntAffect: @ 0x085A9788
-	.string "{STRING 0x10}には\nこうかが　ない　みたいだ⋯⋯$"
+	.string "{B_DEF_NAME_WITH_PREFIX}には\nこうかが　ない　みたいだ⋯⋯$"
 
 sText_AttackerFainted: @ 0x085A979C
-	.string "{STRING 0x0F}は　たおれた！\p$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は　たおれた！\p$"
 
 sText_TargetFainted: @ 0x085A97A7
-	.string "{STRING 0x10}は　たおれた！\p$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　たおれた！\p$"
 
 sText_PlayerGotMoney: @ 0x085A97B2
-	.string "{STRING 0x23}は　しょうきんとして\n{STRING 0x00}¥　てにいれた！\p$"
+	.string "{B_PLAYER_NAME}は　しょうきんとして\n{B_BUFF1}¥　てにいれた！\p$"
 
 sText_PlayerWhiteout: @ 0x085A97CB
-	.string "{STRING 0x23}の　てもとには\nたたかえる　ポケモンが　いない！\p$"
+	.string "{B_PLAYER_NAME}の　てもとには\nたたかえる　ポケモンが　いない！\p$"
 
 sText_PlayerWhiteout2: @ 0x085A97E7
-	.string "{STRING 0x23}は\nめのまえが　まっくらに　なった！{PAUSE_UNTIL_PRESS}$"
+	.string "{B_PLAYER_NAME}は\nめのまえが　まっくらに　なった！{PAUSE_UNTIL_PRESS}$"
 
 sText_PreventsEscape: @ 0x085A97FE
-	.string "{STRING 0x13}の　{STRING 0x1A}で\nにげられない！\p$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\nにげられない！\p$"
 
 sText_CantEscape2: @ 0x085A980F
 	.string "にげられない！\p$"
 
 sText_AttackerCantEscape: @ 0x085A9818
-	.string "{STRING 0x0F}は　にげられない！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は　にげられない！$"
 
 sText_HitXTimes: @ 0x085A9824
-	.string "{STRING 0x00}かい　あたった！$"
+	.string "{B_BUFF1}かい　あたった！$"
 
 sText_PkmnFellAsleep: @ 0x085A982F
-	.string "{STRING 0x11}は\nねむってしまった！$"
+	.string "{B_EFF_NAME_WITH_PREFIX}は\nねむってしまった！$"
 
 sText_PkmnMadeSleep: @ 0x085A983D
-	.string "{STRING 0x13}の　{STRING 0x1A}で\n{STRING 0x11}は　ねむってしまった！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n{B_EFF_NAME_WITH_PREFIX}は　ねむってしまった！$"
 
 sText_PkmnAlreadyAsleep: @ 0x085A9853
-	.string "{STRING 0x10}は　すでに\nねむっている$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　すでに\nねむっている$"
 
 sText_PkmnAlreadyAsleep2: @ 0x085A9862
-	.string "{STRING 0x0F}は　すでに\nねむっている$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は　すでに\nねむっている$"
 
 sText_PkmnWasntAffected: @ 0x085A9871
-	.string "しかし　{STRING 0x10}には\nきかなかった！$"
+	.string "しかし　{B_DEF_NAME_WITH_PREFIX}には\nきかなかった！$"
 
 sText_PkmnWasPoisoned: @ 0x085A9882
-	.string "{STRING 0x11}は　どくをあびた！$"
+	.string "{B_EFF_NAME_WITH_PREFIX}は　どくをあびた！$"
 
 sText_PkmnPoisonedBy: @ 0x085A988E
-	.string "{STRING 0x13}の　{STRING 0x1A}で\n{STRING 0x11}は　どくをあびた！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n{B_EFF_NAME_WITH_PREFIX}は　どくをあびた！$"
 
 sText_PkmnHurtByPoison: @ 0x085A98A2
-	.string "{STRING 0x0F}は\nどくの　ダメージを　うけている！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nどくの　ダメージを　うけている！$"
 
 sText_PkmnAlreadyPoisoned: @ 0x085A98B7
-	.string "{STRING 0x10}は　すでに\nどくを　あびている$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　すでに\nどくを　あびている$"
 
 sText_PkmnBadlyPoisoned: @ 0x085A98C9
-	.string "{STRING 0x11}は\nもうどくをあびた！$"
+	.string "{B_EFF_NAME_WITH_PREFIX}は\nもうどくをあびた！$"
 
 sText_PkmnEnergyDrained: @ 0x085A98D7
-	.string "{STRING 0x10}から\nたいりょくを　すいとった！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}から\nたいりょくを　すいとった！$"
 
 sText_PkmnWasBurned: @ 0x085A98EA
-	.string "{STRING 0x11}は\nやけどをおった！$"
+	.string "{B_EFF_NAME_WITH_PREFIX}は\nやけどをおった！$"
 
 sText_PkmnBurnedBy: @ 0x085A98F7
-	.string "{STRING 0x13}の　{STRING 0x1A}で\n{STRING 0x11}は　やけどをおった！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n{B_EFF_NAME_WITH_PREFIX}は　やけどをおった！$"
 
 sText_PkmnHurtByBurn: @ 0x085A990C
-	.string "{STRING 0x0F}は\nやけどの　ダメージを　うけている！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nやけどの　ダメージを　うけている！$"
 
 sText_PkmnAlreadyHasBurn: @ 0x085A9922
-	.string "{STRING 0x10}は　すでに\nやけどを　おっている$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　すでに\nやけどを　おっている$"
 
 sText_PkmnWasFrozen: @ 0x085A9935
-	.string "{STRING 0x11}は\nこおりづけになった！$"
+	.string "{B_EFF_NAME_WITH_PREFIX}は\nこおりづけになった！$"
 
 sText_PkmnFrozenBy: @ 0x085A9944
-	.string "{STRING 0x13}の　{STRING 0x1A}で\n{STRING 0x11}は　こおりづけになった！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n{B_EFF_NAME_WITH_PREFIX}は　こおりづけになった！$"
 
 sText_PkmnIsFrozen: @ 0x085A995B
-	.string "{STRING 0x0F}は\nこおって　しまって　うごかない！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nこおって　しまって　うごかない！$"
 
 sText_PkmnWasDefrosted: @ 0x085A9970
-	.string "{STRING 0x10}の\nこおりが　とけた！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}の\nこおりが　とけた！$"
 
 sText_PkmnWasDefrosted2: @ 0x085A997E
-	.string "{STRING 0x0F}の\nこおりが　とけた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}の\nこおりが　とけた！$"
 
 sText_PkmnWasDefrostedBy: @ 0x085A998C
-	.string "{STRING 0x0F}の　こおりが\n{STRING 0x14}で　とけた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}の　こおりが\n{B_CURRENT_MOVE}で　とけた！$"
 
 sText_PkmnWasParalyzed: @ 0x085A999E
-	.string "{STRING 0x11}は　まひして\nわざが　でにくくなった！$"
+	.string "{B_EFF_NAME_WITH_PREFIX}は　まひして\nわざが　でにくくなった！$"
 
 sText_PkmnWasParalyzedBy: @ 0x085A99B4
-	.string "{STRING 0x11}は\n{STRING 0x13}の　{STRING 0x1A}で\lまひして　わざが　でにくくなった！$"
+	.string "{B_EFF_NAME_WITH_PREFIX}は\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\lまひして　わざが　でにくくなった！$"
 
 sText_PkmnIsParalyzed: @ 0x085A99D2
-	.string "{STRING 0x0F}は\nからだが　しびれて　うごけない$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nからだが　しびれて　うごけない$"
 
 sText_PkmnIsAlreadyParalyzed: @ 0x085A99E6
-	.string "{STRING 0x10}は　すでに\nまひしている$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　すでに\nまひしている$"
 
 sText_PkmnHealedParalysis: @ 0x085A99F5
-	.string "{STRING 0x10}の\nまひが　なおった！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}の\nまひが　なおった！$"
 
 sText_PkmnDreamEaten: @ 0x085A9A03
-	.string "{STRING 0x10}の\nゆめを　くった！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}の\nゆめを　くった！$"
 
 sText_StatsWontIncrease: @ 0x085A9A10
-	.string "{STRING 0x0F}の\n{STRING 0x00}は　もうあがらない！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}の\n{B_BUFF1}は　もうあがらない！$"
 
 sText_StatsWontDecrease: @ 0x085A9A21
-	.string "{STRING 0x10}の\n{STRING 0x00}は　もうさがらない！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}の\n{B_BUFF1}は　もうさがらない！$"
 
 sText_TeamStoppedWorking: @ 0x085A9A32
-	.string "みかたの　{STRING 0x00}の\nこうかが　きれた！$"
+	.string "みかたの　{B_BUFF1}の\nこうかが　きれた！$"
 
 sText_FoeStoppedWorking: @ 0x085A9A45
-	.string "あいての　{STRING 0x00}の\nこうかが　きれた！$"
+	.string "あいての　{B_BUFF1}の\nこうかが　きれた！$"
 
 sText_PkmnIsConfused: @ 0x085A9A58
-	.string "{STRING 0x0F}は\nこんらんしている！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nこんらんしている！$"
 
 sText_PkmnHealedConfusion: @ 0x085A9A66
-	.string "{STRING 0x0F}の\nこんらんが　とけた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}の\nこんらんが　とけた！$"
 
 sText_PkmnWasConfused: @ 0x085A9A75
-	.string "{STRING 0x11}は\nこんらんした！$"
+	.string "{B_EFF_NAME_WITH_PREFIX}は\nこんらんした！$"
 
 sText_PkmnAlreadyConfused: @ 0x085A9A81
-	.string "{STRING 0x10}は\nすでに　こんらん　している$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は\nすでに　こんらん　している$"
 
 sText_PkmnFellInLove: @ 0x085A9A93
-	.string "{STRING 0x10}は\nメロメロに　なった！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は\nメロメロに　なった！$"
 
 sText_PkmnInLove: @ 0x085A9AA2
-	.string "{STRING 0x0F}は\n{STRING 0x13}に　メロメロだ！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}に　メロメロだ！$"
 
 sText_PkmnImmobilizedByLove: @ 0x085A9AB1
-	.string "{STRING 0x0F}は　メロメロで\nわざが　だせなかった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は　メロメロで\nわざが　だせなかった！$"
 
 sText_PkmnBlownAway: @ 0x085A9AC7
-	.string "{STRING 0x10}は\nふきとばされた！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は\nふきとばされた！$"
 
 sText_PkmnChangedType: @ 0x085A9AD4
-	.string "{STRING 0x0F}は\n{STRING 0x00}タイプに　なった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\n{B_BUFF1}タイプに　なった！$"
 
 sText_PkmnFlinched: @ 0x085A9AE4
-	.string "{STRING 0x0F}は　ひるんで\nうごけなかった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は　ひるんで\nうごけなかった！$"
 
 sText_PkmnRegainedHealth: @ 0x085A9AF6
-	.string "{STRING 0x10}は　たいりょくを\nかいふくした！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　たいりょくを\nかいふくした！$"
 
 sText_PkmnHPFull: @ 0x085A9B09
-	.string "しかし　{STRING 0x10}の\nたいりょくは　まんたんだ！$"
+	.string "しかし　{B_DEF_NAME_WITH_PREFIX}の\nたいりょくは　まんたんだ！$"
 
 sText_PkmnRaisedSpDef: @ 0x085A9B1F
-	.string "{STRING 0x2A}　{STRING 0x14}で\nとくこうに　つよくなった！$"
+	.string "{B_ATK_PREFIX2}　{B_CURRENT_MOVE}で\nとくこうに　つよくなった！$"
 
 sText_PkmnRaisedSpDefALittle: @ 0x085A9B34
-	.string "{STRING 0x2A}　{STRING 0x14}で\nとくこうに　すこし　つよくなった！$"
+	.string "{B_ATK_PREFIX2}　{B_CURRENT_MOVE}で\nとくこうに　すこし　つよくなった！$"
 
 sText_PkmnRaisedDef: @ 0x085A9B4D
-	.string "{STRING 0x2A}　{STRING 0x14}で\nだげきこうげきに　つよくなった！$"
+	.string "{B_ATK_PREFIX2}　{B_CURRENT_MOVE}で\nだげきこうげきに　つよくなった！$"
 
 sText_PkmnRaisedDefALittle: @ 0x085A9B65
-	.string "{STRING 0x2A}　{STRING 0x14}で\nだげきこうげきに　すこし　つよくなった！$"
+	.string "{B_ATK_PREFIX2}　{B_CURRENT_MOVE}で\nだげきこうげきに　すこし　つよくなった！$"
 
 sText_PkmnCoveredByVeil: @ 0x085A9B81
-	.string "{STRING 0x2A}\nしんぴのベールに　つつまれた！$"
+	.string "{B_ATK_PREFIX2}\nしんぴのベールに　つつまれた！$"
 
 sText_PkmnUsedSafeguard: @ 0x085A9B94
-	.string "{STRING 0x10}は\nしんぴのベールに　まもられている！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は\nしんぴのベールに　まもられている！$"
 
 sText_PkmnSafeguardExpired: @ 0x085A9BAA
-	.string "{STRING 0x2C}　つつんでいた\nしんぴの　ベールが　なくなった！$"
+	.string "{B_ATK_PREFIX3}　つつんでいた\nしんぴの　ベールが　なくなった！$"
 
 sText_PkmnWentToSleep: @ 0x085A9BC5
-	.string "{STRING 0x0F}は\nねむりはじめた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nねむりはじめた！$"
 
 sText_PkmnSleptHealthy: @ 0x085A9BD2
-	.string "{STRING 0x0F}は\nけんこうになって　ねむりはじめた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nけんこうになって　ねむりはじめた！$"
 
 sText_PkmnWhippedWhirlwind: @ 0x085A9BE8
-	.string "{STRING 0x0F}の　まわりで\nくうきが　うずを　まく！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}の　まわりで\nくうきが　うずを　まく！$"
 
 sText_PkmnTookSunlight: @ 0x085A9BFE
-	.string "{STRING 0x0F}は\nひかりを　きゅうしゅうした！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nひかりを　きゅうしゅうした！$"
 
 sText_PkmnLoweredHead: @ 0x085A9C11
-	.string "{STRING 0x0F}は\nくびを　ひっこめた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nくびを　ひっこめた！$"
 
 sText_PkmnIsGlowing: @ 0x085A9C20
-	.string "{STRING 0x0F}を\nはげしい　ひかりが　つつむ！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}を\nはげしい　ひかりが　つつむ！$"
 
 sText_PkmnFlewHigh: @ 0x085A9C33
-	.string "{STRING 0x0F}は\nそらたかく　とびあがった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nそらたかく　とびあがった！$"
 
 sText_PkmnDugHole: @ 0x085A9C45
-	.string "{STRING 0x0F}は\nあなをほって　ちちゅうに　もぐった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nあなをほって　ちちゅうに　もぐった！$"
 
 sText_PkmnHidUnderwater: @ 0x085A9C5C
-	.string "{STRING 0x0F}は\nすいちゅうに　みをひそめた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nすいちゅうに　みをひそめた！$"
 
 sText_PkmnSprangUp: @ 0x085A9C6F
-	.string "{STRING 0x0F}は\nとびはねた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nとびはねた！$"
 
 sText_PkmnSqueezedByBind: @ 0x085A9C7A
-	.string "{STRING 0x10}は　{STRING 0x0F}に\nしめつけられた！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　{B_ATK_NAME_WITH_PREFIX}に\nしめつけられた！$"
 
 sText_PkmnTrappedInVortex: @ 0x085A9C8B
-	.string "{STRING 0x10}は　うずの　なかに\nとじこめられた！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　うずの　なかに\nとじこめられた！$"
 
 sText_PkmnTrappedBySandTomb: @ 0x085A9CA0
-	.string "{STRING 0x10}は　すなじごくに\nとらわれた！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　すなじごくに\nとらわれた！$"
 
 sText_PkmnWrappedBy: @ 0x085A9CB2
-	.string "{STRING 0x10}は　{STRING 0x0F}に\nまきつかれた！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　{B_ATK_NAME_WITH_PREFIX}に\nまきつかれた！$"
 
 sText_PkmnClamped: @ 0x085A9CC2
-	.string "{STRING 0x10}は　{STRING 0x0F}の\nからに　はさまれた！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　{B_ATK_NAME_WITH_PREFIX}の\nからに　はさまれた！$"
 
 sText_PkmnHurtBy: @ 0x085A9CD5
-	.string "{STRING 0x0F}は　{STRING 0x00}の\nダメージを　うけている$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は　{B_BUFF1}の\nダメージを　うけている$"
 
 sText_PkmnFreedFrom: @ 0x085A9CE9
-	.string "{STRING 0x0F}は\n{STRING 0x00}から　かいほうされた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\n{B_BUFF1}から　かいほうされた！$"
 
 sText_PkmnCrashed: @ 0x085A9CFB
-	.string "いきおい　あまって\n{STRING 0x0F}は　じめんに　ぶつかった！$"
+	.string "いきおい　あまって\n{B_ATK_NAME_WITH_PREFIX}は　じめんに　ぶつかった！$"

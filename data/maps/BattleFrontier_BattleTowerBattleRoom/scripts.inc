@@ -475,7 +475,7 @@ BattleFrontier_BattleTowerBattleRoom_Text_RecordYourBattle:
 	.string "フロンティアパスに　きろく　しますか？$"
 
 BattleFrontier_BattleTowerLobby_Text_BattleRecordedOnPass:
-	.string "{MUS_RG_VS_TRAINER}の　たたかいが\n"
+	.string "{PLAYER}の　たたかいが\n"
 	.string "フロンティアパスに　きろく　された！$"
 
 BattleFrontier_BattleTowerBattleRoom_Text_SaveAndQuitGame:
