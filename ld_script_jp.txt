@@ -9449,6 +9449,7 @@ SECTIONS {
     src/pokemon.o(.rodata.pokemon_sprite_template_64x64_oam_data);
     src/pokemon.o(.rodata.pokemon_sprite_template_64x64_data);
     src/trig.o(.rodata.trig_data);
+    src/util.o(.rodata.util_mid47_data);
     data/data_b2d_mid47.o(.rodata.data_b2d_mid47_after_pokemon_hm_data);
         src/util.o(.rodata.util_misc_blank_gfx_data);
     src/data/pokemon/egg_moves.o(.rodata);
