@@ -11967,7 +11967,7 @@ __attribute__((naked)) void ContestDebugDoPrint(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080DC5B0: .4byte gContestResources\n\t"
-        "_080DC5B4: .4byte gUnknown_85C9401\n\t"
+        "_080DC5B4: .4byte gText_OneDash\n\t"
         "_080DC5B8: .4byte gContestantTurnOrder\n\t"
         ".syntax divided\n\t"
     );

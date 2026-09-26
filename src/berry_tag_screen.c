@@ -104,7 +104,6 @@ void PrintBerryNumberAndName(void);
 void PrintBerryFirmness(void);
 void PrintBerryDescription1(void);
 void PrintBerryDescription2(void);
-extern const u8 gUnknown_85C93F5[];
 extern const u8 gUnknown_85C97B5[];
 extern const u8 gUnknown_85C97BD[];
 
@@ -357,7 +356,7 @@ void sub_0817804C(void)
     }
     else
     {
-        AddTextPrinterParameterized(1, 1, gUnknown_85C93F5, 0x28, 2, 0, NULL);
+        AddTextPrinterParameterized(1, 1, gText_ThreeMarks, 0x28, 2, 0, NULL);
     }
 }
 
@@ -369,7 +368,7 @@ void PrintBerryFirmness(void)
     if (berry->firmness != 0)
         AddTextPrinterParameterized(1, 1, sBerryFirmnessStrings[berry->firmness - 1], 0x28, 0x12, 0, NULL);
     else
-        AddTextPrinterParameterized(1, 1, gUnknown_85C93F5, 0x28, 0x12, 0, NULL);
+        AddTextPrinterParameterized(1, 1, gText_ThreeMarks, 0x28, 0x12, 0, NULL);
 }
 
 void PrintBerryDescription1(void)

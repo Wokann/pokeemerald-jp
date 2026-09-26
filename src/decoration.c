@@ -1898,7 +1898,7 @@ __attribute__((naked)) void PrintDecorationItemDescription(void)
         "	.align 2, 0\n\t"
         "_08127710: .4byte gUnknown_2039E54\n\t"
         "_08127714: .4byte gUnknown_2039E1D\n\t"
-        "_08127718: .4byte gUnknown_85C9423\n\t"
+        "_08127718: .4byte gText_GoBackPrevMenu\n\t"
         "_0812771C:\n\t"
         "	ldr r2, _08127750\n\t"
         "	ldr r0, _08127754\n\t"

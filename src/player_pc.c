@@ -2870,7 +2870,7 @@ __attribute__((naked)) void ItemStorage_GetItemPcResponse(void)
         "	ldr r0, _0816C0B8\n\t"
         "	b _0816C102\n\t"
         "	.align 2, 0\n\t"
-        "_0816C0B8: .4byte gUnknown_85C9423\n\t"
+        "_0816C0B8: .4byte gText_GoBackPrevMenu\n\t"
         "_0816C0BC:\n\t"
         "	ldr r0, _0816C0C0\n\t"
         "	b _0816C102\n\t"

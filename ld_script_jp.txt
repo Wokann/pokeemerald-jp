@@ -34,7 +34,6 @@ gText_ThrowAwayItemsInPC = 0x085CA900;
 gText_Read = 0x085CA959;
 gText_MoveToBag = 0x085CA962;
 gText_Give2 = 0x085CA96B;
-gText_GoBackPrevMenu = 0x085C9423;
 gTypeNamesJP = gTypeNames;
 LoadWallyZigzagoon = PutZigzagoonInPlayerParty;
 BattleGfxSfxDummy2 = sub_0805DB50;
