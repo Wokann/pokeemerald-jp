@@ -9,6 +9,7 @@
 #define STRINGS_POKEDEX __attribute__((section(".rodata.strings_pokedex"), aligned(1)))
 #define STRINGS_HOF_TEXT __attribute__((section(".rodata.strings_hall_of_fame"), aligned(1)))
 #define STRINGS_POKEBLOCK_TEXT __attribute__((section(".rodata.strings_pokeblock_text"), aligned(1)))
+#define STRINGS_SHOP_TEXT __attribute__((section(".rodata.strings_shop_text"), aligned(1)))
 #define STRINGS_MAIN_MENU __attribute__((section(".rodata.strings_main_menu")))
 #define STRINGS_EASY_CHAT __attribute__((section(".rodata.strings_easy_chat")))
 #define STRINGS_POKENAV_STORAGE __attribute__((section(".rodata.strings_pokenav_storage")))
@@ -384,6 +385,86 @@ STRINGS_BIRCH_MENU const u8 gMenuText_Toss[] = _("すてる");
 STRINGS_BIRCH_MENU const u8 gMenuText_Register[] = _("とうろく");
 STRINGS_BIRCH_MENU const u8 gMenuText_Give[] = _("もたせる");
 STRINGS_BIRCH_MENU const u8 gMenuText_CheckTag[] = _("タグをみる");
+
+STRINGS_SHOP_TEXT const u8 gText_ShopBuy[] = _("かいに　きた");
+STRINGS_SHOP_TEXT const u8 gText_ShopSell[] = _("うりに　きた");
+STRINGS_SHOP_TEXT const u8 gText_ShopQuit[] = _("なんでもないです");
+
+STRINGS_SHOP_TEXT const u8 gText_InBagVar1[] = _("もってるかず　{STR_VAR_1}コ");
+
+STRINGS_SHOP_TEXT const u8 gText_QuitShopping[] = _("かいもの　を　やめます");
+
+STRINGS_SHOP_TEXT const u8 gText_Var1CertainlyHowMany[] = _(
+    "{STR_VAR_1}　を\n"
+    "いくつ　おかいあげに　なりますか？");
+
+STRINGS_SHOP_TEXT const u8 gText_Var1CertainlyHowMany2[] = _(
+    "{STR_VAR_1}　‘{STR_VAR_2}'　を\n"
+    "いくつ　おかいあげに　なりますか？");
+
+STRINGS_SHOP_TEXT const u8 gText_Var1AndYouWantedVar2[] = _(
+    "{STR_VAR_1}を　{STR_VAR_2}コで\n"
+    "{STR_VAR_3}¥　おかいあげですか？");
+
+STRINGS_SHOP_TEXT const u8 gText_Var1IsItThatllBeVar2[] = _(
+    "{STR_VAR_1}　だね！\n"
+    "{STR_VAR_2}¥　だけど　かうかい？");
+
+STRINGS_SHOP_TEXT const u8 gText_YouWantedVar1ThatllBeVar2[] = _(
+    "{STR_VAR_1}　ですね！\n"
+    "{STR_VAR_2}¥　だけど　かいますか？");
+
+STRINGS_SHOP_TEXT const u8 gText_HereYouGoThankYou[] = _(
+    "はい　まいど！\n"
+    "ありがとう　ございます");
+
+STRINGS_SHOP_TEXT const u8 gText_ThankYouIllSendItHome[] = _(
+    "どうも　ありがとう！\n"
+    "じたくの　パソコンに　おくって　おきますね！");
+
+STRINGS_SHOP_TEXT const u8 gText_ThanksIllSendItHome[] = _(
+    "どうも　ありがとう！\n"
+    "じたくの　パソコンに　おくって　おくね！");
+
+STRINGS_SHOP_TEXT const u8 gText_YouDontHaveMoney[] = _("おかねが　たりないですよ！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_SHOP_TEXT const u8 gText_NoMoreRoomForThis[] = _(
+    "それ　いじょう\n"
+    "もちきれない　ですよ！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_SHOP_TEXT const u8 gText_SpaceForVar1Full[] = _(
+    "{STR_VAR_1}　を\n"
+    "いれる　ばしょが　いっぱいです{PAUSE_UNTIL_PRESS}");
+
+STRINGS_SHOP_TEXT const u8 gText_AnythingElseICanHelp[] = _(
+    "その　ほかに　わたしどもで\n"
+    "なにか　おちからに　なれることは？");
+
+STRINGS_SHOP_TEXT const u8 gText_CanIHelpWithAnythingElse[] = _(
+    "その　ほかに\n"
+    "なにか　ちからに　なれることは？");
+
+STRINGS_SHOP_TEXT const u8 gText_ThrowInPremierBall[] = _(
+    "プレミアボール　1コ\n"
+    "おまけ　しておきますね！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_SHOP_TEXT const u8 gText_CantBuyKeyItem[] = _(
+    "{STR_VAR_2}を\n"
+    "かいとるわけには　いきません！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_SHOP_TEXT const u8 gText_HowManyToSell[] = _(
+    "{STR_VAR_2}を\n"
+    "いくつ　うりますか？");
+
+STRINGS_SHOP_TEXT const u8 gText_ICanPayVar1[] = _(
+    "{STR_VAR_1}¥で　ひきとらせて　いただきます\n"
+    "よろしいですか？");
+
+STRINGS_SHOP_TEXT const u8 gText_TurnedOverVar1ForVar2[] = _(
+    "{STR_VAR_2}　を　わたして\n"
+    "{STR_VAR_1}¥　うけとった！");
+
+STRINGS_SHOP_TEXT const u8 gText_PokedollarVar1[] = _("{STR_VAR_1}¥");
 
 STRINGS_COMMON const u8 gMenuText_Confirm[] = _("けってい");
 STRINGS_COMMON const u8 gMenuText_Walk[] = _("おりる");
