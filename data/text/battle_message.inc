@@ -1,6 +1,6 @@
 @ JP Battle Strings payload (0x085A9628-0x085A9D15).
-@ Pointer-table ownership remains in data/data_b2d_rest.s until all 369 entries
-@ can be moved as one byte-exact battle-message table.
+@ The battle-message ID lookup tables are in src/battle_message.c;
+@ later JP battle strings remain in data/data_b2d_rest.s.
 @ Every string below is decoded from the JP ROM and round-trips through preproc.
 @ STRINGID_EMPTYSTRING4 is a JP EXP grammar particle, not an empty string.
 

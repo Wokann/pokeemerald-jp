@@ -9938,6 +9938,8 @@ SECTIONS {
         data/battle_message_text.o(.rodata);
         src/data/text/region_texts.o(.rodata);
         data/data_b2d_rest.o(.rodata);
+        src/battle_message.o(.rodata.battle_message_string_id_data);
+        data/data_b2d_rest.o(.rodata.battle_message_suffix);
         src/data/text/region_texts67.o(.rodata);
         data/data_b2d.o(.rodata.mid66);
         src/data/text/region_texts68.o(.rodata);
