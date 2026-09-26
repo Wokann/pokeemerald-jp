@@ -8,6 +8,7 @@
 #define STRINGS_BIRCH_MENU __attribute__((section(".rodata.strings_birch_menu"), aligned(1)))
 #define STRINGS_POKEDEX __attribute__((section(".rodata.strings_pokedex"), aligned(1)))
 #define STRINGS_HOF_TEXT __attribute__((section(".rodata.strings_hall_of_fame"), aligned(1)))
+#define STRINGS_POKEBLOCK_TEXT __attribute__((section(".rodata.strings_pokeblock_text"), aligned(1)))
 #define STRINGS_MAIN_MENU __attribute__((section(".rodata.strings_main_menu")))
 #define STRINGS_EASY_CHAT __attribute__((section(".rodata.strings_easy_chat")))
 #define STRINGS_POKENAV_STORAGE __attribute__((section(".rodata.strings_pokenav_storage")))
@@ -176,6 +177,31 @@ STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_Soft[] = _("やわらかい
 STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_Hard[] = _("かたい");
 STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_VeryHard[] = _("とても　かたい");
 STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_SuperHard[] = _("とてつもなく　かたい");
+
+STRINGS_POKEBLOCK_TEXT const u8 gText_Spicy[] = _("からい");
+STRINGS_POKEBLOCK_TEXT const u8 gText_Dry[] = _("しぶい");
+STRINGS_POKEBLOCK_TEXT const u8 gText_Sweet[] = _("あまい");
+STRINGS_POKEBLOCK_TEXT const u8 gText_Bitter[] = _("にがい");
+STRINGS_POKEBLOCK_TEXT const u8 gText_Sour[] = _("すっぱい");
+STRINGS_POKEBLOCK_TEXT const u8 gText_Tasty[] = _("うまい"); // Unused
+STRINGS_POKEBLOCK_TEXT const u8 gText_Feel[] = _("こまかさ"); // Unused
+STRINGS_POKEBLOCK_TEXT const u8 gText_StowCase[] = _("ケースをしまう");
+STRINGS_POKEBLOCK_TEXT const u8 gText_LvVar1[] = _("{LV_2}{STR_VAR_1}");
+STRINGS_POKEBLOCK_TEXT const u8 gText_ThrowAwayVar1[] = _(
+    "{STR_VAR_1}を\n"
+    "すてても　よろしいですか？");
+STRINGS_POKEBLOCK_TEXT const u8 gText_Var1ThrownAway[] = _(
+    "{STR_VAR_1}を\n"
+    "すてました");
+STRINGS_POKEBLOCK_TEXT const u8 gText_Var1AteTheVar2[] = _(
+    "{STR_VAR_1}は　{STR_VAR_2}を\n"
+    "たべた！{PAUSE_UNTIL_PRESS}");
+STRINGS_POKEBLOCK_TEXT const u8 gText_Var1HappilyAteVar2[] = _(
+    "{STR_VAR_1}は　{STR_VAR_2}を\n"
+    "よろこんで　たべた！{PAUSE_UNTIL_PRESS}");
+STRINGS_POKEBLOCK_TEXT const u8 gText_Var1DisdainfullyAteVar2[] = _(
+    "{STR_VAR_1}は　{STR_VAR_2}を\n"
+    "いやそうに　たべた！{PAUSE_UNTIL_PRESS}");
 
 STRINGS_POKEDEX const u8 gText_ThisIsAPokemon[] = _(
     "ポケットモンスター\n"

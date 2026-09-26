@@ -347,4 +347,3 @@ gUnknown_85C97B5: @ 0x85C97B5
 	.globl gUnknown_85C97BD
 gUnknown_85C97BD: @ 0x85C97BD
 	.string "きのみのタグ$"
-	.globl gUnknown_85C983E
