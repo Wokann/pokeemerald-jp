@@ -122,21 +122,6 @@ gUnknown_8566E40: @ 0x8566E40
 gUnknown_8566E58: @ 0x8566E58
 	.incbin "baserom_jp.gba", 0x566e58, 0x5
 
-	.section .rodata.mid67
-
-	.globl gUnknown_85ABD18
-gUnknown_85ABD18: @ 0x85ABD18
-	.string "バトルトーナメント$1かい$2かい$じゅんけっしょう$けっしょう$　　　"
-
-	.globl gUnknown_85ABD3C
-gUnknown_85ABD3C: @ 0x85ABD3C
-	.string "めCコくよCコくれCコくぉCコくきたいの　おおがた　しんじん！\p"
-	.string "$ひがんの　はつ　ゆうしょう　なるか！？\p"
-	.string "$もと　チャンピオン！\p"
-	.string "$ぜんかい　チャンピオン！\p"
-	.string "$むてきの　チャンピオン！\p$"
-	.globl gUnknown_85ABD9A
-
 	.section .rodata.mid97_prefix
 
 	.globl gJPText_WriteErrorUnableToSaveData

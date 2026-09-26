@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_arena.h"
+#include "battle_message.h"
 #include "battle_script_commands.h"
 #include "battle_setup.h"
 #include "battle_tower.h"
@@ -38,20 +39,6 @@ extern const struct CompressedSpriteSheet sArenaJudgmentSymbolsSpriteSheet[];
 asm("sArenaJudgmentSymbolsSpriteSheet = gUnknown_85DD7AC");
 extern const u32 sArenaJudgmentSymbolsPalette[];
 asm("sArenaJudgmentSymbolsPalette = gUnknown_8D855CC");
-extern const u8 sArenaTextPlayerMon1Name[];
-asm("sArenaTextPlayerMon1Name = gUnknown_85ABD3C + 0x5E");
-extern const u8 sArenaTextVs[];
-asm("sArenaTextVs = gUnknown_85ABD3C + 0x61");
-extern const u8 sArenaTextOpponentMon1Name[];
-asm("sArenaTextOpponentMon1Name = gUnknown_85ABD3C + 0x64");
-extern const u8 sArenaTextMind[];
-asm("sArenaTextMind = gUnknown_85ABD3C + 0x67");
-extern const u8 sArenaTextSkill[];
-asm("sArenaTextSkill = gUnknown_85ABD3C + 0x6B");
-extern const u8 sArenaTextBody[];
-asm("sArenaTextBody = gUnknown_85ABD3C + 0x6E");
-extern const u8 sArenaTextJudgment[];
-asm("sArenaTextJudgment = gUnknown_85ABD3C + 0x72");
 
 extern void TryGetStatusString(const u8 *text);
 extern void sub_0814FA04(const u8 *text, u8 windowId);
@@ -96,15 +83,15 @@ u8 BattleArena_ShowJudgmentWindow(u8 *state)
             gBattleTextBuff1[1] = 0xFF;
             gBattleTextBuff2[0] = 0xA1;
             gBattleTextBuff2[1] = 0xFF;
-            TryGetStatusString(sArenaTextPlayerMon1Name);
+            TryGetStatusString(gText_PlayerMon1Name);
             sub_0814FA04(gDisplayedStringBattle, 15);
-            sub_0814FA04(sArenaTextVs, 16);
-            TryGetStatusString(sArenaTextOpponentMon1Name);
+            sub_0814FA04(gText_Vs, 16);
+            TryGetStatusString(gText_OpponentMon1Name);
             sub_0814FA04(gDisplayedStringBattle, 17);
-            sub_0814FA04(sArenaTextMind, 18);
-            sub_0814FA04(sArenaTextSkill, 19);
-            sub_0814FA04(sArenaTextBody, 20);
-            TryGetStatusString(sArenaTextJudgment);
+            sub_0814FA04(gText_Mind, 18);
+            sub_0814FA04(gText_Skill, 19);
+            sub_0814FA04(gText_Body, 20);
+            TryGetStatusString(gText_Judgment);
             sub_0814FA04(gDisplayedStringBattle, 21);
             (*state)++;
         }
@@ -126,7 +113,7 @@ u8 BattleArena_ShowJudgmentWindow(u8 *state)
         PlaySE(SE_ARENA_TIMEUP1);
         ShowJudgmentSprite(80, 40, 0, 0);
         ShowJudgmentSprite(160, 40, 0, 1);
-        TryGetStatusString(sArenaTextJudgment);
+        TryGetStatusString(gText_Judgment);
         sub_0814FA04(gDisplayedStringBattle, 21);
         (*state)++;
         result = 1;
@@ -135,7 +122,7 @@ u8 BattleArena_ShowJudgmentWindow(u8 *state)
         PlaySE(SE_ARENA_TIMEUP1);
         ShowJudgmentSprite(80, 56, 1, 0);
         ShowJudgmentSprite(160, 56, 1, 1);
-        TryGetStatusString(sArenaTextJudgment);
+        TryGetStatusString(gText_Judgment);
         sub_0814FA04(gDisplayedStringBattle, 21);
         (*state)++;
         result = 1;
@@ -144,7 +131,7 @@ u8 BattleArena_ShowJudgmentWindow(u8 *state)
         PlaySE(SE_ARENA_TIMEUP1);
         ShowJudgmentSprite(80, 72, 2, 0);
         ShowJudgmentSprite(160, 72, 2, 1);
-        TryGetStatusString(sArenaTextJudgment);
+        TryGetStatusString(gText_Judgment);
         sub_0814FA04(gDisplayedStringBattle, 21);
         (*state)++;
         result = 1;

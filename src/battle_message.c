@@ -10,6 +10,7 @@
 #include "text.h"
 #include "window.h"
 #include "constants/battle_string_ids.h"
+#include "constants/battle_dome.h"
 #include "constants/characters.h"
 #include "constants/moves.h"
 #include "constants/trainers.h"
@@ -49,6 +50,10 @@ struct BattleWindowText
 #define BATTLE_MESSAGE_STAT_NAME_POINTER_DATA __attribute__((section(".rodata.battle_message_stat_name_pointer_data"), aligned(4), used))
 #define BATTLE_MESSAGE_STATUS_TEXT_DATA __attribute__((section(".rodata.battle_message_status_text_data"), aligned(1)))
 #define BATTLE_MESSAGE_TYPE_MOVE_DATA __attribute__((section(".rodata.battle_message_type_move_data"), aligned(1), used))
+#define BATTLE_MESSAGE_DOME_ROUND_TEXT_DATA __attribute__((section(".rodata.battle_message_dome_round_text_data"), aligned(1)))
+#define BATTLE_MESSAGE_DOME_ROUND_POINTER_DATA __attribute__((section(".rodata.battle_message_dome_round_pointer_data"), aligned(4)))
+#define BATTLE_MESSAGE_DOME_HEADLINE_TEXT_DATA __attribute__((section(".rodata.battle_message_dome_headline_text_data"), aligned(1)))
+#define BATTLE_MESSAGE_ARENA_TEXT_DATA __attribute__((section(".rodata.battle_message_arena_text_data"), aligned(1), used))
 
 const u16 gTrappingMoves[NUM_TRAPPING_MOVES + 1] BATTLE_MESSAGE_TRAPPING_MOVES_DATA =
 {
@@ -159,6 +164,50 @@ static const u8 sATypeMove_Table[NUMBER_OF_MON_TYPES][7] BATTLE_MESSAGE_TYPE_MOV
     [TYPE_DRAGON]   = _("ドラゴンわざ"),
     [TYPE_DARK]     = _("あくわざ$$$"),
 };
+
+const u8 gText_BattleTourney[] BATTLE_MESSAGE_DOME_ROUND_TEXT_DATA = _("バトルトーナメント");
+static const u8 sText_Round1[] BATTLE_MESSAGE_DOME_ROUND_TEXT_DATA = _("1かい");
+static const u8 sText_Round2[] BATTLE_MESSAGE_DOME_ROUND_TEXT_DATA = _("2かい");
+static const u8 sText_Semifinal[] BATTLE_MESSAGE_DOME_ROUND_TEXT_DATA = _("じゅんけっしょう");
+static const u8 sText_Final[] BATTLE_MESSAGE_DOME_ROUND_TEXT_DATA = _("けっしょう");
+
+const u8 *const gRoundsStringTable[DOME_ROUNDS_COUNT] BATTLE_MESSAGE_DOME_ROUND_POINTER_DATA =
+{
+    [DOME_ROUND1]    = sText_Round1,
+    [DOME_ROUND2]    = sText_Round2,
+    [DOME_SEMIFINAL] = sText_Semifinal,
+    [DOME_FINAL]     = sText_Final
+};
+
+const u8 gText_TheGreatNewHope[] BATTLE_MESSAGE_DOME_HEADLINE_TEXT_DATA = _("きたいの　おおがた　しんじん！\p");
+const u8 gText_WillChampionshipDreamComeTrue[] BATTLE_MESSAGE_DOME_HEADLINE_TEXT_DATA = _("ひがんの　はつ　ゆうしょう　なるか！？\p");
+const u8 gText_AFormerChampion[] BATTLE_MESSAGE_DOME_HEADLINE_TEXT_DATA = _("もと　チャンピオン！\p");
+const u8 gText_ThePreviousChampion[] BATTLE_MESSAGE_DOME_HEADLINE_TEXT_DATA = _("ぜんかい　チャンピオン！\p");
+const u8 gText_TheUnbeatenChampion[] BATTLE_MESSAGE_DOME_HEADLINE_TEXT_DATA = _("むてきの　チャンピオン！\p");
+
+const u8 gText_PlayerMon1Name[] BATTLE_MESSAGE_ARENA_TEXT_DATA = _("{B_PLAYER_MON1_NAME}");
+const u8 gText_Vs[] BATTLE_MESSAGE_ARENA_TEXT_DATA = _("vs");
+const u8 gText_OpponentMon1Name[] BATTLE_MESSAGE_ARENA_TEXT_DATA = _("{B_OPPONENT_MON1_NAME}");
+const u8 gText_Mind[] BATTLE_MESSAGE_ARENA_TEXT_DATA = _("こころ");
+const u8 gText_Skill[] BATTLE_MESSAGE_ARENA_TEXT_DATA = _("わざ");
+const u8 gText_Body[] BATTLE_MESSAGE_ARENA_TEXT_DATA = _("からだ");
+const u8 gText_Judgment[] BATTLE_MESSAGE_ARENA_TEXT_DATA = _("{B_BUFF1}　　はんてい　　{B_BUFF2}");
+static const u8 sText_TwoTrainersSentPkmn[] BATTLE_MESSAGE_ARENA_TEXT_DATA = _(
+    "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+    "{B_OPPONENT_MON1_NAME}を　くりだした！\p"
+    "{B_TRAINER2_CLASS}の　{B_TRAINER2_NAME}は\n"
+    "{B_OPPONENT_MON2_NAME}を　くりだした！");
+static const u8 sText_Trainer2SentOutPkmn[] BATTLE_MESSAGE_ARENA_TEXT_DATA = _(
+    "{B_TRAINER2_CLASS}の　{B_TRAINER2_NAME}は\n"
+    "{B_BUFF1}を　くりだした！");
+static const u8 sText_TwoTrainersWantToBattle[] BATTLE_MESSAGE_ARENA_TEXT_DATA = _(
+    "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}と\n"
+    "{B_TRAINER2_CLASS}の　{B_TRAINER2_NAME}が\l"
+    "しょうぶを　しかけてきた！\p");
+static const u8 sText_InGamePartnerSentOutZGoN[] BATTLE_MESSAGE_ARENA_TEXT_DATA = _(
+    "{B_PARTNER_CLASS}の　{B_PARTNER_NAME}は\n"
+    "{B_PLAYER_MON2_NAME}を　くりだした！\l"
+    "ゆけっ！　{B_PLAYER_MON1_NAME}！");
 
 // Battle message ID lookup tables have the same order and values as US.
 const u16 gMissStringIds[] BATTLE_MESSAGE_STRING_ID_DATA =
@@ -2277,10 +2326,6 @@ extern const u8 sText_Trainer1WithdrewPkmn[];
 extern const u8 sText_LinkTrainer1WithdrewPkmn[];
 extern const u8 sText_LinkTrainer2WithdrewPkmn[];
 extern const u8 sText_AttackerUsedX[];
-extern const u8 sText_TwoTrainersSentPkmn[];
-extern const u8 sText_Trainer2SentOutPkmn[];
-extern const u8 sText_TwoTrainersWantToBattle[];
-extern const u8 sText_InGamePartnerSentOutZGoN[];
 extern const u8 sText_TwoInGameTrainersDefeated[];
 extern const u8 sText_PlayerLostAgainstTrainer1[];
 extern const u8 sText_PlayerBattledToDrawTrainer1[];
@@ -2979,7 +3024,7 @@ __attribute__((naked, section(".text.battle_message_tail"))) void BufferStringBa
         "	b _0814E788\n\t"
         "	.align 2, 0\n\t"
         "_0814E30C: .4byte gUnknown_85A9544 + 0x1924\n\t"
-        "_0814E310: .4byte gUnknown_85ABD3C + 0xB8\n\t"
+        "_0814E310: .4byte sText_TwoTrainersWantToBattle\n\t"
         "_0814E314:\n\t"
         "	movs r0, #0x80\n\t"
         "	lsls r0, r0, #6\n\t"
@@ -3035,7 +3080,7 @@ __attribute__((naked, section(".text.battle_message_tail"))) void BufferStringBa
         "	b _0814E788\n\t"
         "	.align 2, 0\n\t"
         "_0814E37C: .4byte 0x02022C90\n\t"
-        "_0814E380: .4byte gUnknown_85ABD3C + 0xD7\n\t"
+        "_0814E380: .4byte sText_InGamePartnerSentOutZGoN\n\t"
         "_0814E384:\n\t"
         "	movs r0, #0x80\n\t"
         "	lsls r0, r0, #8\n\t"
@@ -3086,7 +3131,7 @@ __attribute__((naked, section(".text.battle_message_tail"))) void BufferStringBa
         "	b _0814E788\n\t"
         "	.align 2, 0\n\t"
         "_0814E3DC: .4byte 0x02022C90\n\t"
-        "_0814E3E0: .4byte gUnknown_85ABD3C + 0x7F\n\t"
+        "_0814E3E0: .4byte sText_TwoTrainersSentPkmn\n\t"
         "_0814E3E4:\n\t"
         "	movs r0, #0x40\n\t"
         "	ands r0, r1\n\t"
@@ -3312,7 +3357,7 @@ __attribute__((naked, section(".text.battle_message_tail"))) void BufferStringBa
         "_0814E59A:\n\t"
         "	b _0814E574\n\t"
         "	.align 2, 0\n\t"
-        "_0814E59C: .4byte gUnknown_85ABD3C + 0xA5\n\t"
+        "_0814E59C: .4byte sText_Trainer2SentOutPkmn\n\t"
         "_0814E5A0:\n\t"
         "	mov r0, sb\n\t"
         "	bl ChooseMoveUsedParticle\n\t"

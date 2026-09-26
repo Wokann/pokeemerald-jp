@@ -9945,8 +9945,10 @@ SECTIONS {
         src/battle_message.o(.rodata.battle_message_stat_name_pointer_data);
         src/battle_message.o(.rodata.battle_message_status_text_data);
         src/battle_message.o(.rodata.battle_message_type_move_data);
-        data/data_b2d.o(.rodata.mid67);
-        src/data/text/region_texts69.o(.rodata);
+        src/battle_message.o(.rodata.battle_message_dome_round_text_data);
+        src/battle_message.o(.rodata.battle_message_dome_round_pointer_data);
+        src/battle_message.o(.rodata.battle_message_dome_headline_text_data);
+        src/battle_message.o(.rodata.battle_message_arena_text_data);
         data/data_b2d.o(.rodata.mid68);
         src/data/text/region_texts72.o(.rodata);
         src/data/text/region_texts70.o(.rodata);
