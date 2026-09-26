@@ -1097,17 +1097,8 @@ Common_EventScript_LegendaryFlewAway::
 
 	.include "data/scripts/berry_tree.inc"
 
-	@ 0x08244F02
-	.include "data/text/berry_tree.inc"
-
 	@ 0x0824506B
 	.include "data/scripts/secret_base.inc"
-
-	@ 0x08246378
-	.include "data/scripts/secret_power_tm.inc"
-
-	@ 0x082465BD
-	.include "data/text/shared_secret_base.inc"
 
 	@ 0x082467CD
 	.include "data/scripts/cable_club.inc"

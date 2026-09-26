@@ -96,11 +96,3 @@ Route111_Movement_SecretPowerManExitNorth:
 	walk_down
 	walk_down
 	step_end
-
-SecretBase_EventScript_DollInteract::
-	special CheckInteractedWithFriendsDollDecor
-	end
-
-SecretBase_EventScript_CushionInteract::
-	special CheckInteractedWithFriendsCushionDecor
-	end

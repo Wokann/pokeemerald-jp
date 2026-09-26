@@ -1,5 +1,5 @@
 @ Shared Secret Base scripts (JP @ 0x0821D372).
-@ Their text is physically emitted later in data/text/shared_secret_base.inc.
+@ Their text is physically emitted later in data/scripts/secret_base.inc.
 
 SecretBase_MapScripts::
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, SecretBase_OnWarp
