@@ -2994,7 +2994,7 @@ __attribute__((naked)) void SetDecoration(void)
         "_08127EE0: .4byte gUnknown_2039E5C\n\t"
         "_08127EE4: .4byte gUnknown_203A700\n\t"
         "_08127EE8: .4byte gUnknown_203A702\n\t"
-        "_08127EEC: .4byte gUnknown_2037286\n\t"
+        "_08127EEC: .4byte gSpecialVar_0x8007\n\t"
         "_08127EF0:\n\t"
         "	adds r0, r6, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"

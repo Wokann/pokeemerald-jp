@@ -72,12 +72,28 @@
 	.include "data/script_cmd_table.inc"
 
 gSpecialVars:: @ 0x81DAF34
-	.4byte 0x02037278, 0x0203727A, 0x0203727C, 0x0203727E
-	.4byte 0x02037280, 0x02037282, 0x02037284, 0x02037286
-	.4byte 0x02037288, 0x0203728A, 0x0203728C, 0x0203728E
-	.4byte 0x02037294, 0x02037290, 0x0203CB48, 0x02037292
-	.4byte 0x02039BCE, 0x02039BCC, 0x02037296, 0x02037298
-	.4byte 0x0203729A, 0x0203886A
+	.4byte gSpecialVar_0x8000
+	.4byte gSpecialVar_0x8001
+	.4byte gSpecialVar_0x8002
+	.4byte gSpecialVar_0x8003
+	.4byte gSpecialVar_0x8004
+	.4byte gSpecialVar_0x8005
+	.4byte gSpecialVar_0x8006
+	.4byte gSpecialVar_0x8007
+	.4byte gSpecialVar_0x8008
+	.4byte gSpecialVar_0x8009
+	.4byte gSpecialVar_0x800A
+	.4byte gSpecialVar_0x800B
+	.4byte gSpecialVar_Facing
+	.4byte gSpecialVar_Result
+	.4byte gSpecialVar_ItemId
+	.4byte gSpecialVar_LastTalked
+	.4byte gSpecialVar_ContestRank
+	.4byte gSpecialVar_ContestCategory
+	.4byte gSpecialVar_MonBoxId
+	.4byte gSpecialVar_MonBoxPos
+	.4byte gSpecialVar_Unused_0x8014
+	.4byte gTrainerBattleOpponent_A
 
 	.set ALLOCATE_SPECIAL_TABLE, 1
 	.include "data/specials.inc"

@@ -419,7 +419,7 @@ __attribute__((naked)) void GetSecretBaseTypeInFrontOfPlayer(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E9938: .4byte gUnknown_2037286\n\t"
+        "_080E9938: .4byte gSpecialVar_0x8007\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1574,7 +1574,7 @@ __attribute__((naked)) void InitSecretBaseDecorationSprites(void)
         "_080EA1B4: .4byte gMapHeader\n\t"
         "_080EA1B8: .4byte gSpecialVar_0x8004\n\t"
         "_080EA1BC: .4byte gSpecialVar_0x8006\n\t"
-        "_080EA1C0: .4byte gUnknown_2037286\n\t"
+        "_080EA1C0: .4byte gSpecialVar_0x8007\n\t"
         "_080EA1C4: .4byte gSpecialVar_Result\n\t"
         "_080EA1C8: .4byte 0x00003F20\n\t"
         "_080EA1CC: .4byte gDecorations + 24\n\t"

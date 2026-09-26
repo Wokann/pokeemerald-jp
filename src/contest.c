@@ -7493,7 +7493,7 @@ __attribute__((naked)) u8 GetContestEntryEligibility(struct Pokemon *pkmn)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080DA620: .4byte gUnknown_2039BCE\n\t"
+        "_080DA620: .4byte gSpecialVar_ContestRank\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -16357,7 +16357,7 @@ __attribute__((naked)) void sub_080DE4B0(void)
         "	strb r1, [r0]\n\t"
         "	b _080DE696\n\t"
         "	.align 2, 0\n\t"
-        "_080DE628: .4byte gUnknown_2039BCE\n\t"
+        "_080DE628: .4byte gSpecialVar_ContestRank\n\t"
         "_080DE62C: .4byte 0x00002EAE\n\t"
         "_080DE630: .4byte gSaveBlock1Ptr\n\t"
         "_080DE634: .4byte gSpecialVar_ContestCategory\n\t"

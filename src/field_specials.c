@@ -2753,7 +2753,7 @@ __attribute__((naked)) void ShakeCamera(void)
         "_08139618: .4byte gTasks\n\t"
         "_0813961C: .4byte gSpecialVar_0x8005\n\t"
         "_08139620: .4byte gSpecialVar_0x8006\n\t"
-        "_08139624: .4byte gUnknown_2037286\n\t"
+        "_08139624: .4byte gSpecialVar_0x8007\n\t"
         "_08139628: .4byte gSpecialVar_0x8004\n\t"
         ".syntax divided\n\t"
     );
@@ -3892,7 +3892,7 @@ __attribute__((naked)) void BufferVarsForIVRater(void)
         "_08139E80: .4byte gPlayerParty\n\t"
         "_08139E84: .4byte gSpecialVar_0x8005\n\t"
         "_08139E88: .4byte gSpecialVar_0x8006\n\t"
-        "_08139E8C: .4byte gUnknown_2037286\n\t"
+        "_08139E8C: .4byte gSpecialVar_0x8007\n\t"
         "_08139E90:\n\t"
         "	cmp r1, r0\n\t"
         "	bne _08139EAA\n\t"

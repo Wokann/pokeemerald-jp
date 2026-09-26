@@ -1154,7 +1154,7 @@ __attribute__((naked)) void UpdatePyramidLightRadius(void)
         "	strh r0, [r1]\n\t"
         "	b _081A94CC\n\t"
         "	.align 2, 0\n\t"
-        "_081A9480: .4byte gUnknown_2037286\n\t"
+        "_081A9480: .4byte gSpecialVar_0x8007\n\t"
         "_081A9484: .4byte gSpecialVar_Result\n\t"
         "_081A9488:\n\t"
         "	ldr r1, _081A94BC\n\t"
