@@ -93,13 +93,6 @@ extern const struct TrainerMoney gTrainerMoneyTable[];
 extern const u8 gAbilityNames[][ABILITY_NAME_LENGTH + 1];
 extern const u8 gAbilityDescriptions[ABILITIES_COUNT][19];
 
-extern const u8 gStatusConditionString_PoisonJpn[8];
-extern const u8 gStatusConditionString_SleepJpn[8];
-extern const u8 gStatusConditionString_ParalysisJpn[8];
-extern const u8 gStatusConditionString_BurnJpn[8];
-extern const u8 gStatusConditionString_IceJpn[8];
-extern const u8 gStatusConditionString_ConfusionJpn[8];
-extern const u8 gStatusConditionString_LoveJpn[8];
 
 extern const u8 *const gStatusConditionStringsTable[7][2];
 

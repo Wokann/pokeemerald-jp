@@ -44,6 +44,11 @@ struct BattleWindowText
 #define BATTLE_MESSAGE_TAIL_TEXT_DATA __attribute__((section(".rodata.battle_message_tail_text_data"), aligned(1)))
 #define BATTLE_MESSAGE_TRAPPING_MOVES_DATA __attribute__((section(".rodata.battle_message_trapping_moves_data"), aligned(2)))
 #define BATTLE_MESSAGE_MENU_TEXT_DATA __attribute__((section(".rodata.battle_message_menu_text_data"), aligned(1)))
+#define BATTLE_MESSAGE_CHOICE_TEXT_DATA __attribute__((section(".rodata.battle_message_choice_text_data"), aligned(1)))
+#define BATTLE_MESSAGE_STAT_NAME_TEXT_DATA __attribute__((section(".rodata.battle_message_stat_name_text_data"), aligned(1)))
+#define BATTLE_MESSAGE_STAT_NAME_POINTER_DATA __attribute__((section(".rodata.battle_message_stat_name_pointer_data"), aligned(4), used))
+#define BATTLE_MESSAGE_STATUS_TEXT_DATA __attribute__((section(".rodata.battle_message_status_text_data"), aligned(1)))
+#define BATTLE_MESSAGE_TYPE_MOVE_DATA __attribute__((section(".rodata.battle_message_type_move_data"), aligned(1), used))
 
 const u16 gTrappingMoves[NUM_TRAPPING_MOVES + 1] BATTLE_MESSAGE_TRAPPING_MOVES_DATA =
 {
@@ -85,6 +90,75 @@ const u8 gText_MoveInterfaceDynamicColors[] BATTLE_MESSAGE_MENU_TEXT_DATA = _("{
 const u8 gText_WhichMoveToForget4[] BATTLE_MESSAGE_MENU_TEXT_DATA = _(
     "{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW DYNAMIC_COLOR4 DYNAMIC_COLOR5 DYNAMIC_COLOR6}どの　わざを\n"
     "わすれさせたい？");
+
+const u8 gText_BattleYesNoChoice[] BATTLE_MESSAGE_CHOICE_TEXT_DATA = _(
+    "{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW DYNAMIC_COLOR4 DYNAMIC_COLOR5 DYNAMIC_COLOR6}はい\n"
+    "いいえ");
+const u8 gText_BattleSwitchWhich[] BATTLE_MESSAGE_CHOICE_TEXT_DATA = _(
+    "{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW DYNAMIC_COLOR4 DYNAMIC_COLOR5 DYNAMIC_COLOR6}いれかえる　わざを\n"
+    "えらんで　ください");
+const u8 gText_BattleSwitchWhich2[] BATTLE_MESSAGE_CHOICE_TEXT_DATA = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW DYNAMIC_COLOR4 DYNAMIC_COLOR5 DYNAMIC_COLOR6}");
+const u8 gText_BattleSwitchWhich3[] BATTLE_MESSAGE_CHOICE_TEXT_DATA = _("{RIGHT_ARROW}");
+const u8 gText_BattleSwitchWhich4[] BATTLE_MESSAGE_CHOICE_TEXT_DATA = _("{ESCAPE 4}");
+const u8 gText_BattleSwitchWhich5[] BATTLE_MESSAGE_CHOICE_TEXT_DATA = _("ー");
+
+static const u8 sText_HP[] BATTLE_MESSAGE_STAT_NAME_TEXT_DATA = _("HP　　");
+static const u8 sText_Attack[] BATTLE_MESSAGE_STAT_NAME_TEXT_DATA = _("こうげき");
+static const u8 sText_Defense[] BATTLE_MESSAGE_STAT_NAME_TEXT_DATA = _("ぼうぎょ");
+static const u8 sText_SpAtk[] BATTLE_MESSAGE_STAT_NAME_TEXT_DATA = _("とくこう");
+static const u8 sText_SpDef[] BATTLE_MESSAGE_STAT_NAME_TEXT_DATA = _("とくぼう");
+
+extern const u8 sText_Speed[];
+static const u8 *const sStatNamesTable2[] BATTLE_MESSAGE_STAT_NAME_POINTER_DATA =
+{
+    sText_HP, sText_SpAtk, sText_Attack,
+    sText_SpDef, sText_Defense, sText_Speed
+};
+
+const u8 gText_SafariBalls[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("{HIGHLIGHT 2}サファリボール");
+const u8 gText_SafariBallLeft[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("{HIGHLIGHT 2}のこり　");
+const u8 gText_SafariBallsLeft2[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("{HIGHLIGHT 2}こ");
+const u8 gText_Sleep[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("ねむり");
+const u8 gText_Poison[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("どく");
+const u8 gText_Burn[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("やけど");
+const u8 gText_Paralysis[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("まひ");
+const u8 gText_Ice[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("こおり");
+const u8 gText_Confusion[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("こんらん");
+const u8 gText_Love[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("メロメロ");
+const u8 gText_SpaceAndSpace[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("　");
+const u8 gText_LineBreak[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("\l");
+const u8 gText_NewLine[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("\n");
+const u8 gText_Are[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("は\n");
+const u8 gText_Are2[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("は\l");
+const u8 gText_BadEgg[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("ダメタマゴ");
+const u8 gText_BattleWallyName[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("ミツル");
+const u8 gText_Win[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("{HIGHLIGHT 0}かち");
+const u8 gText_Loss[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("{HIGHLIGHT 0}まけ");
+const u8 gText_Draw[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("{HIGHLIGHT 0}ひきわけ");
+static const u8 sText_SpaceIs[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("は");
+static const u8 sText_ApostropheS[] BATTLE_MESSAGE_STATUS_TEXT_DATA = _("の");
+
+static const u8 sATypeMove_Table[NUMBER_OF_MON_TYPES][7] BATTLE_MESSAGE_TYPE_MOVE_DATA =
+{
+    [TYPE_NORMAL]   = _("ノーマルわざ"),
+    [TYPE_FIGHTING] = _("かくとうわざ"),
+    [TYPE_FLYING]   = _("ひこうわざ$$"),
+    [TYPE_POISON]   = _("どくわざ$$$"),
+    [TYPE_GROUND]   = _("じめんわざ$$"),
+    [TYPE_ROCK]     = _("いわわざ$$$"),
+    [TYPE_BUG]      = _("むしわざ$$$"),
+    [TYPE_GHOST]    = _("ゴーストわざ"),
+    [TYPE_STEEL]    = _("はがねわざ$$"),
+    [TYPE_MYSTERY]  = _("はてなわざ$$"),
+    [TYPE_FIRE]     = _("ほのおわざ$$"),
+    [TYPE_WATER]    = _("みずわざ$$$"),
+    [TYPE_GRASS]    = _("くさわざ$$$"),
+    [TYPE_ELECTRIC] = _("でんきわざ$$"),
+    [TYPE_PSYCHIC]  = _("エスパーわざ"),
+    [TYPE_ICE]      = _("こおりわざ$$"),
+    [TYPE_DRAGON]   = _("ドラゴンわざ"),
+    [TYPE_DARK]     = _("あくわざ$$$"),
+};
 
 // Battle message ID lookup tables have the same order and values as US.
 const u16 gMissStringIds[] BATTLE_MESSAGE_STRING_ID_DATA =
@@ -2161,7 +2235,6 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT - BATTLESTRINGS_TABLE_ST
 extern void TryGetStatusString(const u8 *text);
 extern void ChooseMoveUsedParticle(u8 *dest);
 extern void ChooseTypeOfMoveUsedString(u8 *dest);
-extern const u8 sATypeMove_Table[][12];
 extern u8 sBattlerAbilities[MAX_BATTLERS_COUNT];
 
 extern const u8 sText_GotAwaySafely[];
@@ -2259,8 +2332,6 @@ const u16 sGrammarMoveUsedTable[] BATTLE_MESSAGE_GRAMMAR_MOVE_DATA =
 
 #undef BATTLE_MESSAGE_GRAMMAR_MOVE_DATA
 
-extern const u8 sText_SpaceIs[];
-extern const u8 sText_ApostropheS[];
 extern const u8 sText_ExclamationMark[];
 extern const u8 sText_ExclamationMark2[];
 extern const u8 sText_ExclamationMark3[];
@@ -3267,7 +3338,7 @@ __attribute__((naked, section(".text.battle_message_tail"))) void BufferStringBa
         "_0814E5CC: .4byte 0x0203A874\n\t"
         "_0814E5D0: .4byte 0x02022C1C\n\t"
         "_0814E5D4: .4byte 0x02024140\n\t"
-        "_0814E5D8: .4byte gUnknown_85ABBD8 + 0xC2\n\t"
+        "_0814E5D8: .4byte sATypeMove_Table\n\t"
         "_0814E5DC:\n\t"
         "	ldr r0, _0814E5F4\n\t"
         "	ldrh r1, [r2]\n\t"
@@ -4402,7 +4473,7 @@ __attribute__((naked, section(".text.battle_message_tail"))) u32 BattleStringExp
         "	.align 2, 0\n\t"
         "_0814EF94: .4byte 0x0203A874\n\t"
         "_0814EF98: .4byte 0x02024140\n\t"
-        "_0814EF9C: .4byte gUnknown_85ABBD8 + 0xC2\n\t"
+        "_0814EF9C: .4byte sATypeMove_Table\n\t"
         "_0814EFA0:\n\t"
         "	ldrh r0, [r2, #2]\n\t"
         "_0814EFA2:\n\t"

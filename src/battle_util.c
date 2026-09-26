@@ -1967,15 +1967,15 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                     if ((gBattleMons[battler].status1 & STATUS1_ANY) && (Random() % 3) == 0)
                     {
                         if (gBattleMons[battler].status1 & (STATUS1_POISON | STATUS1_TOXIC_POISON))
-                            StringCopy(gBattleTextBuff1, gStatusConditionString_PoisonJpn);
+                            StringCopy(gBattleTextBuff1, gText_Poison);
                         if (gBattleMons[battler].status1 & STATUS1_SLEEP)
-                            StringCopy(gBattleTextBuff1, gStatusConditionString_SleepJpn);
+                            StringCopy(gBattleTextBuff1, gText_Sleep);
                         if (gBattleMons[battler].status1 & STATUS1_PARALYSIS)
-                            StringCopy(gBattleTextBuff1, gStatusConditionString_ParalysisJpn);
+                            StringCopy(gBattleTextBuff1, gText_Paralysis);
                         if (gBattleMons[battler].status1 & STATUS1_BURN)
-                            StringCopy(gBattleTextBuff1, gStatusConditionString_BurnJpn);
+                            StringCopy(gBattleTextBuff1, gText_Burn);
                         if (gBattleMons[battler].status1 & STATUS1_FREEZE)
-                            StringCopy(gBattleTextBuff1, gStatusConditionString_IceJpn);
+                            StringCopy(gBattleTextBuff1, gText_Ice);
                         gBattleMons[battler].status1 = 0;
                         gBattleMons[battler].status2 &= ~STATUS2_NIGHTMARE;  // fix nightmare glitch
                         gBattleScripting.battler = gActiveBattler = battler;
@@ -2224,21 +2224,21 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                 case ABILITY_IMMUNITY:
                     if (gBattleMons[battler].status1 & (STATUS1_POISON | STATUS1_TOXIC_POISON | STATUS1_TOXIC_COUNTER))
                     {
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_PoisonJpn);
+                        StringCopy(gBattleTextBuff1, gText_Poison);
                         effect = 1;
                     }
                     break;
                 case ABILITY_OWN_TEMPO:
                     if (gBattleMons[battler].status2 & STATUS2_CONFUSION)
                     {
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_ConfusionJpn);
+                        StringCopy(gBattleTextBuff1, gText_Confusion);
                         effect = 2;
                     }
                     break;
                 case ABILITY_LIMBER:
                     if (gBattleMons[battler].status1 & STATUS1_PARALYSIS)
                     {
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_ParalysisJpn);
+                        StringCopy(gBattleTextBuff1, gText_Paralysis);
                         effect = 1;
                     }
                     break;
@@ -2247,28 +2247,28 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                     if (gBattleMons[battler].status1 & STATUS1_SLEEP)
                     {
                         gBattleMons[battler].status2 &= ~STATUS2_NIGHTMARE;
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_SleepJpn);
+                        StringCopy(gBattleTextBuff1, gText_Sleep);
                         effect = 1;
                     }
                     break;
                 case ABILITY_WATER_VEIL:
                     if (gBattleMons[battler].status1 & STATUS1_BURN)
                     {
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_BurnJpn);
+                        StringCopy(gBattleTextBuff1, gText_Burn);
                         effect = 1;
                     }
                     break;
                 case ABILITY_MAGMA_ARMOR:
                     if (gBattleMons[battler].status1 & STATUS1_FREEZE)
                     {
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_IceJpn);
+                        StringCopy(gBattleTextBuff1, gText_Ice);
                         effect = 1;
                     }
                     break;
                 case ABILITY_OBLIVIOUS:
                     if (gBattleMons[battler].status2 & STATUS2_INFATUATION)
                     {
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_LoveJpn);
+                        StringCopy(gBattleTextBuff1, gText_Love);
                         effect = 3;
                     }
                     break;
@@ -2897,33 +2897,33 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
                     i = 0;
                     if (gBattleMons[battler].status1 & STATUS1_PSN_ANY)
                     {
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_PoisonJpn);
+                        StringCopy(gBattleTextBuff1, gText_Poison);
                         i++;
                     }
                     if (gBattleMons[battler].status1 & STATUS1_SLEEP)
                     {
                         gBattleMons[battler].status2 &= ~STATUS2_NIGHTMARE;
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_SleepJpn);
+                        StringCopy(gBattleTextBuff1, gText_Sleep);
                         i++;
                     }
                     if (gBattleMons[battler].status1 & STATUS1_PARALYSIS)
                     {
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_ParalysisJpn);
+                        StringCopy(gBattleTextBuff1, gText_Paralysis);
                         i++;
                     }
                     if (gBattleMons[battler].status1 & STATUS1_BURN)
                     {
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_BurnJpn);
+                        StringCopy(gBattleTextBuff1, gText_Burn);
                         i++;
                     }
                     if (gBattleMons[battler].status1 & STATUS1_FREEZE)
                     {
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_IceJpn);
+                        StringCopy(gBattleTextBuff1, gText_Ice);
                         i++;
                     }
                     if (gBattleMons[battler].status2 & STATUS2_CONFUSION)
                     {
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_ConfusionJpn);
+                        StringCopy(gBattleTextBuff1, gText_Confusion);
                         i++;
                     }
                     if (i <= 1)
@@ -2940,7 +2940,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
                 if (gBattleMons[battler].status2 & STATUS2_INFATUATION)
                 {
                     gBattleMons[battler].status2 &= ~STATUS2_INFATUATION;
-                    StringCopy(gBattleTextBuff1, gStatusConditionString_LoveJpn);
+                    StringCopy(gBattleTextBuff1, gText_Love);
                     BattleScriptExecute(BattleScript_BerryCureChosenStatusEnd2);
                     gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_CURED_PROBLEM;
                     effect = ITEM_EFFECT_OTHER;
@@ -3043,7 +3043,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
                 if (gBattleMons[battler].status2 & STATUS2_INFATUATION)
                 {
                     gBattleMons[battler].status2 &= ~STATUS2_INFATUATION;
-                    StringCopy(gBattleTextBuff1, gStatusConditionString_LoveJpn);
+                    StringCopy(gBattleTextBuff1, gText_Love);
                     BattleScriptPushCursor();
                     gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_CURED_PROBLEM;
                     gBattlescriptCurrInstr = BattleScript_BerryCureChosenStatusRet;
@@ -3054,25 +3054,25 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
                 if (gBattleMons[battler].status1 & STATUS1_ANY || gBattleMons[battler].status2 & STATUS2_CONFUSION)
                 {
                     if (gBattleMons[battler].status1 & STATUS1_PSN_ANY)
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_PoisonJpn);
+                        StringCopy(gBattleTextBuff1, gText_Poison);
 
                     if (gBattleMons[battler].status1 & STATUS1_SLEEP)
                     {
                         gBattleMons[battler].status2 &= ~STATUS2_NIGHTMARE;
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_SleepJpn);
+                        StringCopy(gBattleTextBuff1, gText_Sleep);
                     }
 
                     if (gBattleMons[battler].status1 & STATUS1_PARALYSIS)
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_ParalysisJpn);
+                        StringCopy(gBattleTextBuff1, gText_Paralysis);
 
                     if (gBattleMons[battler].status1 & STATUS1_BURN)
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_BurnJpn);
+                        StringCopy(gBattleTextBuff1, gText_Burn);
 
                     if (gBattleMons[battler].status1 & STATUS1_FREEZE)
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_IceJpn);
+                        StringCopy(gBattleTextBuff1, gText_Ice);
 
                     if (gBattleMons[battler].status2 & STATUS2_CONFUSION)
-                        StringCopy(gBattleTextBuff1, gStatusConditionString_ConfusionJpn);
+                        StringCopy(gBattleTextBuff1, gText_Confusion);
 
                     gBattleMons[battler].status1 = 0;
                     gBattleMons[battler].status2 &= ~STATUS2_CONFUSION;

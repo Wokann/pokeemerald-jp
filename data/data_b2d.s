@@ -122,19 +122,6 @@ gUnknown_8566E40: @ 0x8566E40
 gUnknown_8566E58: @ 0x8566E58
 	.incbin "baserom_jp.gba", 0x566e58, 0x5
 
-	.section .rodata.mid66
-
-	.globl gUnknown_85ABBC9
-gUnknown_85ABBC9: @ 0x85ABBC9
-	.string "{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}はい\n"
-	.string "いいえ$"
-	.globl gUnknown_85ABBD8
-gUnknown_85ABBD8: @ 0x85ABBD8
-	.string "{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}いれかえる　わざを\n"
-	.string "えらんで　ください${PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}${ESCAPE 3}${ESCAPE 4}$ー$HP　　$こうげき$ぼうぎょ$とくこう$とくぼう$きBコくにBコくしBコくひBコくちBコくヘ⋯コく"
-
-	.globl gText_SafariBalls
-
 	.section .rodata.mid67
 
 	.globl gUnknown_85ABD18

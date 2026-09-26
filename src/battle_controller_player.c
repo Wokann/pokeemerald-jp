@@ -1554,7 +1554,7 @@ __attribute__((naked)) void HandleInputChooseMove(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08057BB8: .4byte gUnknown_3005AD4\n\t"
-        "_08057BBC: .4byte gUnknown_85ABBD8\n\t"
+        "_08057BBC: .4byte gText_BattleSwitchWhich\n\t"
         "_08057BC0: .4byte gBattlerControllerFuncs\n\t"
         "_08057BC4: .4byte gActiveBattler\n\t"
         "_08057BC8: .4byte HandleMoveSwitching + 1\n\t"
