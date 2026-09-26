@@ -403,6 +403,201 @@ const u16 gCaughtMonStringIds[] BATTLE_MESSAGE_STRING_ID_DATA =
     [B_MSG_LANETTES_BOX_FULL] = STRINGID_PKMNBOXLANETTESPCFULL,
 };
 
+// Japanese battle strings at 0x085A9628-0x085A9D15, in ROM order.
+#define BATTLE_MESSAGE_TEXT_DATA __attribute__((section(".rodata.battle_message_text_data"), aligned(1)))
+// 0x085A9628
+const u8 sText_Trainer1LoseText[] BATTLE_MESSAGE_TEXT_DATA = _("{B_TRAINER1_LOSE_TEXT}");
+// 0x085A962B
+const u8 sText_PkmnGainedEXP[] BATTLE_MESSAGE_TEXT_DATA = _("{B_BUFF1}{B_BUFF2}　けいけんちを　もらった！\p");
+// 0x085A963E
+const u8 sText_ExpGainedNoBonus[] BATTLE_MESSAGE_TEXT_DATA = _("は\n");
+// 0x085A9641
+const u8 sText_ABoosted[] BATTLE_MESSAGE_TEXT_DATA = _("は　おおめに\n");
+// 0x085A9649
+const u8 sText_PkmnGrewToLv[] BATTLE_MESSAGE_TEXT_DATA = _("{B_BUFF1}は\nレベル{B_BUFF2}　に　あがった！{WAIT_SE}\p");
+// 0x085A965E
+const u8 sText_PkmnLearnedMove[] BATTLE_MESSAGE_TEXT_DATA = _("{B_BUFF1}は\n{B_BUFF2}を　おぼえた！{WAIT_SE}\p");
+// 0x085A966F
+const u8 sText_TryToLearnMove1[] BATTLE_MESSAGE_TEXT_DATA = _("{B_BUFF1}は　あたらしく\n{B_BUFF2}を　おぼえたい⋯⋯⋯！\p");
+// 0x085A9688
+const u8 sText_TryToLearnMove2[] BATTLE_MESSAGE_TEXT_DATA = _("しかし　{B_BUFF1}は　わざを　4つ\nおぼえるので　せいいっぱいだ！\p");
+// 0x085A96A8
+const u8 sText_TryToLearnMove3[] BATTLE_MESSAGE_TEXT_DATA = _("{B_BUFF2}の　かわりに\nほかの　わざを　わすれさせますか？");
+// 0x085A96C3
+const u8 sText_PkmnForgotMove[] BATTLE_MESSAGE_TEXT_DATA = _("{B_BUFF1}は　{B_BUFF2}の\nつかいかたを　きれいに　わすれた！\p");
+// 0x085A96DE
+const u8 sText_StopLearningMove[] BATTLE_MESSAGE_TEXT_DATA = _("{PAUSE 0x20}それでは⋯⋯　{B_BUFF2}を\nおぼえるのを　あきらめますか？");
+// 0x085A96FC
+const u8 sText_DidNotLearnMove[] BATTLE_MESSAGE_TEXT_DATA = _("{B_BUFF1}は　{B_BUFF2}を\nおぼえずに　おわった！\p");
+// 0x085A9711
+const u8 sText_UseNextPkmn[] BATTLE_MESSAGE_TEXT_DATA = _("つぎの　ポケモンを　つかいますか？");
+// 0x085A9723
+const u8 sText_AttackMissed[] BATTLE_MESSAGE_TEXT_DATA = _("しかし　{B_ATK_NAME_WITH_PREFIX}の\nこうげきは　はずれた！");
+// 0x085A9737
+const u8 sText_PkmnProtectedItself[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は　こうげきから\nみを　まもった！");
+// 0x085A974B
+const u8 sText_AvoidedDamage[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\nダメージを　うけない！");
+// 0x085A975F
+const u8 sText_PkmnMakesGroundMiss[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\nじめんタイプの　わざが　あたらない！");
+// 0x085A977A
+const u8 sText_PkmnAvoidedAttack[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}には\nあたらなかった！");
+// 0x085A9788
+const u8 sText_ItDoesntAffect[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}には\nこうかが　ない　みたいだ⋯⋯");
+// 0x085A979C
+const u8 sText_AttackerFainted[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　たおれた！\p");
+// 0x085A97A7
+const u8 sText_TargetFainted[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は　たおれた！\p");
+// 0x085A97B2
+const u8 sText_PlayerGotMoney[] BATTLE_MESSAGE_TEXT_DATA = _("{B_PLAYER_NAME}は　しょうきんとして\n{B_BUFF1}¥　てにいれた！\p");
+// 0x085A97CB
+const u8 sText_PlayerWhiteout[] BATTLE_MESSAGE_TEXT_DATA = _("{B_PLAYER_NAME}の　てもとには\nたたかえる　ポケモンが　いない！\p");
+// 0x085A97E7
+const u8 sText_PlayerWhiteout2[] BATTLE_MESSAGE_TEXT_DATA = _("{B_PLAYER_NAME}は\nめのまえが　まっくらに　なった！{PAUSE_UNTIL_PRESS}");
+// 0x085A97FE
+const u8 sText_PreventsEscape[] BATTLE_MESSAGE_TEXT_DATA = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\nにげられない！\p");
+// 0x085A980F
+const u8 sText_CantEscape2[] BATTLE_MESSAGE_TEXT_DATA = _("にげられない！\p");
+// 0x085A9818
+const u8 sText_AttackerCantEscape[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　にげられない！");
+// 0x085A9824
+const u8 sText_HitXTimes[] BATTLE_MESSAGE_TEXT_DATA = _("{B_BUFF1}かい　あたった！");
+// 0x085A982F
+const u8 sText_PkmnFellAsleep[] BATTLE_MESSAGE_TEXT_DATA = _("{B_EFF_NAME_WITH_PREFIX}は\nねむってしまった！");
+// 0x085A983D
+const u8 sText_PkmnMadeSleep[] BATTLE_MESSAGE_TEXT_DATA = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n{B_EFF_NAME_WITH_PREFIX}は　ねむってしまった！");
+// 0x085A9853
+const u8 sText_PkmnAlreadyAsleep[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は　すでに\nねむっている");
+// 0x085A9862
+const u8 sText_PkmnAlreadyAsleep2[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　すでに\nねむっている");
+// 0x085A9871
+const u8 sText_PkmnWasntAffected[] BATTLE_MESSAGE_TEXT_DATA = _("しかし　{B_DEF_NAME_WITH_PREFIX}には\nきかなかった！");
+// 0x085A9882
+const u8 sText_PkmnWasPoisoned[] BATTLE_MESSAGE_TEXT_DATA = _("{B_EFF_NAME_WITH_PREFIX}は　どくをあびた！");
+// 0x085A988E
+const u8 sText_PkmnPoisonedBy[] BATTLE_MESSAGE_TEXT_DATA = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n{B_EFF_NAME_WITH_PREFIX}は　どくをあびた！");
+// 0x085A98A2
+const u8 sText_PkmnHurtByPoison[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\nどくの　ダメージを　うけている！");
+// 0x085A98B7
+const u8 sText_PkmnAlreadyPoisoned[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は　すでに\nどくを　あびている");
+// 0x085A98C9
+const u8 sText_PkmnBadlyPoisoned[] BATTLE_MESSAGE_TEXT_DATA = _("{B_EFF_NAME_WITH_PREFIX}は\nもうどくをあびた！");
+// 0x085A98D7
+const u8 sText_PkmnEnergyDrained[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}から\nたいりょくを　すいとった！");
+// 0x085A98EA
+const u8 sText_PkmnWasBurned[] BATTLE_MESSAGE_TEXT_DATA = _("{B_EFF_NAME_WITH_PREFIX}は\nやけどをおった！");
+// 0x085A98F7
+const u8 sText_PkmnBurnedBy[] BATTLE_MESSAGE_TEXT_DATA = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n{B_EFF_NAME_WITH_PREFIX}は　やけどをおった！");
+// 0x085A990C
+const u8 sText_PkmnHurtByBurn[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\nやけどの　ダメージを　うけている！");
+// 0x085A9922
+const u8 sText_PkmnAlreadyHasBurn[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は　すでに\nやけどを　おっている");
+// 0x085A9935
+const u8 sText_PkmnWasFrozen[] BATTLE_MESSAGE_TEXT_DATA = _("{B_EFF_NAME_WITH_PREFIX}は\nこおりづけになった！");
+// 0x085A9944
+const u8 sText_PkmnFrozenBy[] BATTLE_MESSAGE_TEXT_DATA = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n{B_EFF_NAME_WITH_PREFIX}は　こおりづけになった！");
+// 0x085A995B
+const u8 sText_PkmnIsFrozen[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\nこおって　しまって　うごかない！");
+// 0x085A9970
+const u8 sText_PkmnWasDefrosted[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}の\nこおりが　とけた！");
+// 0x085A997E
+const u8 sText_PkmnWasDefrosted2[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}の\nこおりが　とけた！");
+// 0x085A998C
+const u8 sText_PkmnWasDefrostedBy[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}の　こおりが\n{B_CURRENT_MOVE}で　とけた！");
+// 0x085A999E
+const u8 sText_PkmnWasParalyzed[] BATTLE_MESSAGE_TEXT_DATA = _("{B_EFF_NAME_WITH_PREFIX}は　まひして\nわざが　でにくくなった！");
+// 0x085A99B4
+const u8 sText_PkmnWasParalyzedBy[] BATTLE_MESSAGE_TEXT_DATA = _("{B_EFF_NAME_WITH_PREFIX}は\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\lまひして　わざが　でにくくなった！");
+// 0x085A99D2
+const u8 sText_PkmnIsParalyzed[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\nからだが　しびれて　うごけない");
+// 0x085A99E6
+const u8 sText_PkmnIsAlreadyParalyzed[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は　すでに\nまひしている");
+// 0x085A99F5
+const u8 sText_PkmnHealedParalysis[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}の\nまひが　なおった！");
+// 0x085A9A03
+const u8 sText_PkmnDreamEaten[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}の\nゆめを　くった！");
+// 0x085A9A10
+const u8 sText_StatsWontIncrease[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}の\n{B_BUFF1}は　もうあがらない！");
+// 0x085A9A21
+const u8 sText_StatsWontDecrease[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}の\n{B_BUFF1}は　もうさがらない！");
+// 0x085A9A32
+const u8 sText_TeamStoppedWorking[] BATTLE_MESSAGE_TEXT_DATA = _("みかたの　{B_BUFF1}の\nこうかが　きれた！");
+// 0x085A9A45
+const u8 sText_FoeStoppedWorking[] BATTLE_MESSAGE_TEXT_DATA = _("あいての　{B_BUFF1}の\nこうかが　きれた！");
+// 0x085A9A58
+const u8 sText_PkmnIsConfused[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\nこんらんしている！");
+// 0x085A9A66
+const u8 sText_PkmnHealedConfusion[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}の\nこんらんが　とけた！");
+// 0x085A9A75
+const u8 sText_PkmnWasConfused[] BATTLE_MESSAGE_TEXT_DATA = _("{B_EFF_NAME_WITH_PREFIX}は\nこんらんした！");
+// 0x085A9A81
+const u8 sText_PkmnAlreadyConfused[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は\nすでに　こんらん　している");
+// 0x085A9A93
+const u8 sText_PkmnFellInLove[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は\nメロメロに　なった！");
+// 0x085A9AA2
+const u8 sText_PkmnInLove[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}に　メロメロだ！");
+// 0x085A9AB1
+const u8 sText_PkmnImmobilizedByLove[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　メロメロで\nわざが　だせなかった！");
+// 0x085A9AC7
+const u8 sText_PkmnBlownAway[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は\nふきとばされた！");
+// 0x085A9AD4
+const u8 sText_PkmnChangedType[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\n{B_BUFF1}タイプに　なった！");
+// 0x085A9AE4
+const u8 sText_PkmnFlinched[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　ひるんで\nうごけなかった！");
+// 0x085A9AF6
+const u8 sText_PkmnRegainedHealth[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は　たいりょくを\nかいふくした！");
+// 0x085A9B09
+const u8 sText_PkmnHPFull[] BATTLE_MESSAGE_TEXT_DATA = _("しかし　{B_DEF_NAME_WITH_PREFIX}の\nたいりょくは　まんたんだ！");
+// 0x085A9B1F
+const u8 sText_PkmnRaisedSpDef[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_PREFIX2}　{B_CURRENT_MOVE}で\nとくこうに　つよくなった！");
+// 0x085A9B34
+const u8 sText_PkmnRaisedSpDefALittle[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_PREFIX2}　{B_CURRENT_MOVE}で\nとくこうに　すこし　つよくなった！");
+// 0x085A9B4D
+const u8 sText_PkmnRaisedDef[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_PREFIX2}　{B_CURRENT_MOVE}で\nだげきこうげきに　つよくなった！");
+// 0x085A9B65
+const u8 sText_PkmnRaisedDefALittle[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_PREFIX2}　{B_CURRENT_MOVE}で\nだげきこうげきに　すこし　つよくなった！");
+// 0x085A9B81
+const u8 sText_PkmnCoveredByVeil[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_PREFIX2}\nしんぴのベールに　つつまれた！");
+// 0x085A9B94
+const u8 sText_PkmnUsedSafeguard[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は\nしんぴのベールに　まもられている！");
+// 0x085A9BAA
+const u8 sText_PkmnSafeguardExpired[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_PREFIX3}　つつんでいた\nしんぴの　ベールが　なくなった！");
+// 0x085A9BC5
+const u8 sText_PkmnWentToSleep[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\nねむりはじめた！");
+// 0x085A9BD2
+const u8 sText_PkmnSleptHealthy[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\nけんこうになって　ねむりはじめた！");
+// 0x085A9BE8
+const u8 sText_PkmnWhippedWhirlwind[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}の　まわりで\nくうきが　うずを　まく！");
+// 0x085A9BFE
+const u8 sText_PkmnTookSunlight[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\nひかりを　きゅうしゅうした！");
+// 0x085A9C11
+const u8 sText_PkmnLoweredHead[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\nくびを　ひっこめた！");
+// 0x085A9C20
+const u8 sText_PkmnIsGlowing[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}を\nはげしい　ひかりが　つつむ！");
+// 0x085A9C33
+const u8 sText_PkmnFlewHigh[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\nそらたかく　とびあがった！");
+// 0x085A9C45
+const u8 sText_PkmnDugHole[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\nあなをほって　ちちゅうに　もぐった！");
+// 0x085A9C5C
+const u8 sText_PkmnHidUnderwater[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\nすいちゅうに　みをひそめた！");
+// 0x085A9C6F
+const u8 sText_PkmnSprangUp[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\nとびはねた！");
+// 0x085A9C7A
+const u8 sText_PkmnSqueezedByBind[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は　{B_ATK_NAME_WITH_PREFIX}に\nしめつけられた！");
+// 0x085A9C8B
+const u8 sText_PkmnTrappedInVortex[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は　うずの　なかに\nとじこめられた！");
+// 0x085A9CA0
+const u8 sText_PkmnTrappedBySandTomb[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は　すなじごくに\nとらわれた！");
+// 0x085A9CB2
+const u8 sText_PkmnWrappedBy[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は　{B_ATK_NAME_WITH_PREFIX}に\nまきつかれた！");
+// 0x085A9CC2
+const u8 sText_PkmnClamped[] BATTLE_MESSAGE_TEXT_DATA = _("{B_DEF_NAME_WITH_PREFIX}は　{B_ATK_NAME_WITH_PREFIX}の\nからに　はさまれた！");
+// 0x085A9CD5
+const u8 sText_PkmnHurtBy[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　{B_BUFF1}の\nダメージを　うけている");
+// 0x085A9CE9
+const u8 sText_PkmnFreedFrom[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は\n{B_BUFF1}から　かいほうされた！");
+// 0x085A9CFB
+const u8 sText_PkmnCrashed[] BATTLE_MESSAGE_TEXT_DATA = _("いきおい　あまって\n{B_ATK_NAME_WITH_PREFIX}は　じめんに　ぶつかった！");
+
 // JP text-expand helper (US: BattleStringExpandPlaceholdersToDisplayedString)
 extern void TryGetStatusString(const u8 *text);
 extern void ChooseMoveUsedParticle(u8 *dest);
