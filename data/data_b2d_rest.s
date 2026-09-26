@@ -69,10 +69,6 @@ gUnknown_85AB28D: @ 0x85AB28D
 gUnknown_85AB3BD: @ 0x85AB3BD
 	.string "　$ここで　ボールを　なげるんだね\n"
 	.string "ぼく⋯⋯　やってみるよ！$"
-	.globl gUnknown_85AB3DC
-gUnknown_85AB3DC: @ 0x85AB3DC
-	.incbin "baserom_jp.gba", 0x5ab3dc, 0x5c4
-
 	.section .rodata.battle_message_suffix,"a",%progbits
 	.globl gUnknown_85ABAEE
 gUnknown_85ABAEE: @ 0x85ABAEE
