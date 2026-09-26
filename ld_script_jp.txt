@@ -9811,7 +9811,8 @@ SECTIONS {
         src/easy_chat.o(.rodata.easy_chat_group_names_data);
         data/data_b2d_mid60.o(.rodata.mid60_tail_after_easy_chat_group_names_data);
         src/data/text/region_texts61.o(.rodata);
-        data/data_b2d_mid61.o(.rodata);
+        data/data_b2d_mid61.o(.rodata.data_b2d_mid61_before_mail_data);
+        src/mail.o(.rodata.mail_data);
         sHealLocations = . + 0x4C;
         src/menu_helpers.o(.rodata.menu_helpers_swap_line_data);
         data/data_b2d_mid61.o(.rodata.data_b2d_mid61_after_swap_line);
