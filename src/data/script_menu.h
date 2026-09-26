@@ -20,7 +20,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ContestIn
     {gText_WhatsAContest},
     {gText_TypesOfContests},
     {gText_Ranks},
-    {gText_Cancel2},
+    {gText_Exit},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ContestType[] =
@@ -53,7 +53,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_RegisterM
     {gMenuText_Register},
     {gText_Registry},
     {gText_Information},
-    {gText_Cancel2},
+    {gText_Exit},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_Bike[] =
@@ -256,7 +256,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_UnusedAsh
     {gText_BlackFlute2},
     {gText_GlassChair},
     {gText_GlassDesk},
-    {gText_Cancel2},
+    {gText_Exit},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_GameCornerDolls[] =
@@ -541,7 +541,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_LinkConte
     {gText_LinkContest},
     {gText_AboutE_Mode},
     {gText_AboutG_Mode},
-    {gText_Cancel2},
+    {gText_Exit},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_LinkContestMode[] =

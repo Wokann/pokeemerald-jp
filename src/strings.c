@@ -5,6 +5,7 @@
 #include "constants/songs.h"
 
 #define STRINGS_COMMON __attribute__((section(".rodata.strings_common")))
+#define STRINGS_BIRCH_MENU __attribute__((section(".rodata.strings_birch_menu"), aligned(1)))
 #define STRINGS_MAIN_MENU __attribute__((section(".rodata.strings_main_menu")))
 #define STRINGS_EASY_CHAT __attribute__((section(".rodata.strings_easy_chat")))
 #define STRINGS_POKENAV_STORAGE __attribute__((section(".rodata.strings_pokenav_storage")))
@@ -173,6 +174,20 @@ STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_Soft[] = _("やわらかい
 STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_Hard[] = _("かたい");
 STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_VeryHard[] = _("とても　かたい");
 STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_SuperHard[] = _("とてつもなく　かたい");
+
+STRINGS_BIRCH_MENU const u8 gText_Name[] = _("なまえ");
+STRINGS_BIRCH_MENU const u8 gText_IDNumber[] = _("IDNo,");
+STRINGS_BIRCH_MENU const u8 gText_BirchInTrouble[] = _(
+    "オダマキはかせが　ピンチだ！\n"
+    "ポケモンを　だして　たすけてあげよう！");
+STRINGS_BIRCH_MENU const u8 gText_ConfirmStarterChoice[] = _("このポケモンにしますか？");
+STRINGS_BIRCH_MENU const u8 gText_Pokemon4[] = _("ポケモン");
+STRINGS_BIRCH_MENU const u8 gText_FlyToWhere[] = _("どこへ　とびますか？");
+STRINGS_BIRCH_MENU const u8 gMenuText_Use[] = _("つかう");
+STRINGS_BIRCH_MENU const u8 gMenuText_Toss[] = _("すてる");
+STRINGS_BIRCH_MENU const u8 gMenuText_Register[] = _("とうろく");
+STRINGS_BIRCH_MENU const u8 gMenuText_Give[] = _("もたせる");
+STRINGS_BIRCH_MENU const u8 gMenuText_CheckTag[] = _("タグをみる");
 
 STRINGS_COMMON const u8 gMenuText_Confirm[] = _("けってい");
 STRINGS_COMMON const u8 gMenuText_Walk[] = _("おりる");

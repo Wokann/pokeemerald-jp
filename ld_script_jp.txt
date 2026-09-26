@@ -10025,7 +10025,7 @@ SECTIONS {
         src/strings.o(.rodata.strings_main_menu);
         src/data/text/region_texts76.o(.rodata);
         data/data_b2d.o(.rodata.mid73);
-        src/data/text/region_texts77.o(.rodata);
+        src/strings.o(.rodata.strings_birch_menu);
         src/strings.o(.rodata.strings_common);
         src/data/text/region_texts66.o(.rodata);
         src/strings.o(.rodata.strings_bag_return_text);

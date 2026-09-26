@@ -180,8 +180,6 @@ gUnknown_85C934B: @ 0x85C934B
 gUnknown_85C934F: @ 0x85C934F
 	.string "Lv$IDNo,/$"
 
-	.globl gUnknown_85C9359
-
 	.section .rodata.mid78
 
 	.globl gUnknown_85CA276

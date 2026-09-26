@@ -13,7 +13,6 @@
 
 enum { WIN_LIST, WIN_INFO, WIN_MSG, WIN_TOSS_NUM };
 
-extern const u8 gUnknown_85C9398[];
 void PyramidBagMoveCursorFunc(void);
 void PrintItemQuantity(void);
 void BagAction_UseOnField(void);
@@ -23,10 +22,6 @@ void BagAction_Cancel(void);
 void BagAction_UseInBattle(void);
 void TossItem(void);
 void DontTossItem(void);
-#define gMenuText_Use (gUnknown_85C9398 + 0xB)
-#define gMenuText_Toss (gUnknown_85C9398 + 0xF)
-#define gMenuText_Give (gUnknown_85C9398 + 0x18)
-#define gText_Cancel2 gText_Exit
 #define PYRAMID_BAG_DATA __attribute__((section(".rodata.battle_pyramid_bag_data")))
 
 PYRAMID_BAG_DATA static const struct BgTemplate sBgTemplates[] =
@@ -96,7 +91,7 @@ PYRAMID_BAG_DATA static const struct MenuAction sMenuActions[] =
     [ACTION_USE_FIELD] =    { gMenuText_Use, {BagAction_UseOnField} },
     [ACTION_TOSS] =         { gMenuText_Toss, {BagAction_Toss} },
     [ACTION_GIVE] =         { gMenuText_Give, {BagAction_Give} },
-    [ACTION_CANCEL] =       { gText_Cancel2, {BagAction_Cancel} },
+    [ACTION_CANCEL] =       { gText_Exit, {BagAction_Cancel} },
     [ACTION_USE_BATTLE] =   { gMenuText_Use, {BagAction_UseInBattle} },
     [ACTION_DUMMY] =        { gText_EmptyString2, {NULL} },
 };

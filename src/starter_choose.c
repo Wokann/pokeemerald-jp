@@ -56,7 +56,7 @@ STARTER_CHOOSE_GRAPHICS const u32 sStarterCircle_Gfx[] = INCBIN_U32("graphics/st
 // owner.
 extern u16 sStarterLabelWindowId;
 extern const u8 *sub_080BFB68(u16 nationalDexNum);
-extern const u8 gStarterCategorySuffix[];
+extern const u8 gText_Pokemon4[];
 // JP note: the JP yes/no menu entry (menu_helpers asm, 0x08198D44) takes
 // (window, u8 mode, u16 tileNum, u8 paletteNum), unlike the US
 // CreateYesNoMenu signature.
@@ -687,7 +687,7 @@ void CreateStarterPokemonLabel(u8 selection)
         categoryText[count] = categoryName[i];
 
     for (i = 0; i <= 4; i++, count++)
-        categoryText[count] = gStarterCategorySuffix[i];
+        categoryText[count] = gText_Pokemon4[i];
 
     categoryText[count] = EOS;
 
