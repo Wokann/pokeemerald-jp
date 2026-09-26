@@ -78,10 +78,10 @@ FIELD_EFFECT_HELPERS_DATA const u16 sBobbingIntervals[] =
 
 #undef FIELD_EFFECT_HELPERS_DATA
 
-#define FIELD_EFFECT_HELPERS_FIGURE8_DATA __attribute__((section(".rodata.field_effect_helpers_figure8_data")))
+#define FIELD_EFFECT_HELPERS_FIGURE8_DATA __attribute__((section(".rodata.field_effect_helpers_figure8_data"), aligned(1), used))
 
-// JP keeps these unused Figure-8 lookup tables in ROM for field effects.
-FIELD_EFFECT_HELPERS_FIGURE8_DATA const s8 sFigure8XOffsets[FIGURE_8_LENGTH] =
+// The JP ROM retains this unused duplicate of event_object_movement's tables.
+static const s8 sFigure8XOffsets[FIGURE_8_LENGTH] FIELD_EFFECT_HELPERS_FIGURE8_DATA =
 {
     1, 2, 2, 2, 2, 2, 2, 2,
     2, 2, 2, 1, 2, 2, 1, 2,
@@ -94,7 +94,7 @@ FIELD_EFFECT_HELPERS_FIGURE8_DATA const s8 sFigure8XOffsets[FIGURE_8_LENGTH] =
     0, 1, 0, 0, 0, 0, 0, 0,
 };
 
-FIELD_EFFECT_HELPERS_FIGURE8_DATA const s8 sFigure8YOffsets[FIGURE_8_LENGTH] =
+static const s8 sFigure8YOffsets[FIGURE_8_LENGTH] FIELD_EFFECT_HELPERS_FIGURE8_DATA =
 {
      0,  0,  1,  0,  0,  1,  0,  0,
      1,  0,  1,  1,  0,  1,  1,  0,
@@ -1781,7 +1781,3 @@ void UpdateGrassFieldEffectSubpriority(struct Sprite *sprite, u8 elevation, u8 s
         }
     }
 }
-
-// JP ROM data (see ld_script_jp.txt)
-extern const s8 sFigure8XOffsets[FIGURE_8_LENGTH];
-extern const s8 sFigure8YOffsets[FIGURE_8_LENGTH];

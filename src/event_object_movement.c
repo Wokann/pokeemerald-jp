@@ -740,9 +740,6 @@ extern u16 gUnknown_2037256; // sCurrentSpecialObjectPaletteTag
 extern const struct Coords16 sDirectionToVectors[];
 static u8 GetCollisionInDirection(struct ObjectEvent *, u8);
 extern u32 state_to_direction(u8, u8, u8);
-// Figure-8 animation offsets (defined in field_effect_helpers_rest.c).
-extern const s8 sFigure8XOffsets[];
-extern const s8 sFigure8YOffsets[];
 struct ObjectEvent;
 struct Sprite;
 
@@ -864,7 +861,35 @@ enum
 #undef EVENT_OBJECT_MOVEMENT_JUMP_DATA
 #undef EVENT_OBJECT_MOVEMENT_GROUND_EFFECT_DATA
 
-#define FIGURE_8_LENGTH 72
+#define EVENT_OBJECT_MOVEMENT_FIGURE8_DATA __attribute__((section(".rodata.event_object_movement_figure8_data"), aligned(1)))
+
+static const s8 sFigure8XOffsets[FIGURE_8_LENGTH] EVENT_OBJECT_MOVEMENT_FIGURE8_DATA =
+{
+    1, 2, 2, 2, 2, 2, 2, 2,
+    2, 2, 2, 1, 2, 2, 1, 2,
+    2, 1, 2, 2, 1, 2, 1, 1,
+    2, 1, 1, 2, 1, 1, 2, 1,
+    1, 2, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1,
+    0, 1, 1, 1, 0, 1, 1, 0,
+    1, 0, 1, 0, 1, 0, 0, 0,
+    0, 1, 0, 0, 0, 0, 0, 0,
+};
+
+static const s8 sFigure8YOffsets[FIGURE_8_LENGTH] EVENT_OBJECT_MOVEMENT_FIGURE8_DATA =
+{
+     0,  0,  1,  0,  0,  1,  0,  0,
+     1,  0,  1,  1,  0,  1,  1,  0,
+     1,  1,  0,  1,  1,  0,  1,  1,
+     0,  0,  1,  0,  0,  1,  0,  0,
+     1,  0,  0,  0,  0,  0,  0,  0,
+     0,  0,  0,  0,  0,  0,  0,  0,
+     0,  0, -1,  0,  0, -1,  0,  0,
+    -1,  0, -1, -1,  0, -1, -1,  0,
+    -1, -1, -1, -1, -1, -1, -1, -2,
+};
+
+#undef EVENT_OBJECT_MOVEMENT_FIGURE8_DATA
 
 extern bool8 MovementAction_AcroWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern bool8 MovementAction_AcroWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);

@@ -9552,7 +9552,7 @@ SECTIONS {
         src/event_object_movement.o(.rodata.event_object_movement_direction_composition_data);
         src/event_object_movement.o(.rodata.event_object_movement_action_function_tables);
         src/event_object_movement.o(.rodata.event_object_movement_ground_effect_data);
-        src/field_effect_helpers.o(.rodata.field_effect_helpers_figure8_data);
+        src/event_object_movement.o(.rodata.event_object_movement_figure8_data);
         sJumpY_High = .;
         src/event_object_movement.o(.rodata.event_object_movement_jump_data);
         sJumpY_Low = sJumpY_High + 0x10;
@@ -9960,7 +9960,7 @@ SECTIONS {
         src/cable_car.o(.rodata.cable_car_sprite_data);
         src/save.o(.rodata.save_slot_layout);
         src/field_effect_helpers.o(.rodata.field_effect_helpers_data);
-        data/data_b2d_mid69.o(.rodata.data_b2d_mid69_after_field_effect_helpers);
+        src/field_effect_helpers.o(.rodata.field_effect_helpers_figure8_data);
         src/contest_ai.o(.rodata.contest_ai_dispatch_data);
         src/battle_controller_safari.o(.rodata.safari_dispatch_data);
         src/battle_anim_effects_3.o(.rodata.battle_anim_effects_3_initial_data);
