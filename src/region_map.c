@@ -3794,7 +3794,7 @@ __attribute__((naked)) void MCB2_FlyMap(void)
         "	b _081248A8\n\t"
         "	.align 2, 0\n\t"
         "_08124850: .4byte gUnknown_857D528\n\t"
-        "_08124854: .4byte gUnknown_85C934F + 0x49\n\t"
+        "_08124854: .4byte gText_FlyToWhere\n\t"
         "_08124858:\n\t"
         "	bl sub_08124A58\n\t"
         "	b _081248A8\n\t"

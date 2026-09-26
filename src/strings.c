@@ -7,6 +7,7 @@
 #define STRINGS_COMMON __attribute__((section(".rodata.strings_common")))
 #define STRINGS_BIRCH_MENU __attribute__((section(".rodata.strings_birch_menu"), aligned(1)))
 #define STRINGS_POKEDEX __attribute__((section(".rodata.strings_pokedex"), aligned(1)))
+#define STRINGS_HOF_TEXT __attribute__((section(".rodata.strings_hall_of_fame"), aligned(1)))
 #define STRINGS_MAIN_MENU __attribute__((section(".rodata.strings_main_menu")))
 #define STRINGS_EASY_CHAT __attribute__((section(".rodata.strings_easy_chat")))
 #define STRINGS_POKENAV_STORAGE __attribute__((section(".rodata.strings_pokenav_storage")))
@@ -323,6 +324,26 @@ STRINGS_POKEDEX const u8 gText_DexSearchDontSpecify[] = _("してい　しない
 STRINGS_POKEDEX const u8 gText_DexSearchTypeNone[] = _("なし");
 STRINGS_POKEDEX const u8 gText_SelectorArrow[] = _("▶");
 STRINGS_POKEDEX const u8 gText_EmptySpace[] = _("　"); // Unused
+
+STRINGS_HOF_TEXT const u8 gText_WelcomeToHOF[] = _("でんどういり　おめでとう！");
+STRINGS_HOF_TEXT const u8 gText_HOFDexRating[] = _(
+    "みつけた　ポケモン　{STR_VAR_1}！\n"
+    "つかまえた　ポケモン　{STR_VAR_2}！\p"
+    "オダマキはかせの\n"
+    "ポケモンずかん　ひょうか！\p"
+    "オダマキ“どれどれ\p");
+STRINGS_HOF_TEXT const u8 gText_HOFDexSaving[] = _(
+    "ここまでの　レポートを　かきしるしています！\n"
+    "でんげんを　きらないでください");
+STRINGS_HOF_TEXT const u8 gText_HOFCorrupted[] = _("でんどういりの　きろくが　こわれています！");
+// This JP-only leading space has no terminator and precedes the referenced text.
+STRINGS_HOF_TEXT const u8 gHofNumberLeadingSpace[] = {0x00};
+STRINGS_HOF_TEXT const u8 gText_HOFNumber[] = _("だい{STR_VAR_1}かい　でんどういり！");
+STRINGS_HOF_TEXT const u8 gText_LeagueChamp[] = _("リーグ　チャンピオン！　おめでとう！");
+STRINGS_HOF_TEXT const u8 gText_HOFUnusedEmpty[] = _("");
+STRINGS_HOF_TEXT const u8 gText_Number[] = _("No,");
+STRINGS_HOF_TEXT const u8 gText_Level[] = _("Lv");
+STRINGS_HOF_TEXT const u8 gText_IdNumberSlash[] = _("IDNo,/"); // Unused
 
 STRINGS_BIRCH_MENU const u8 gText_Name[] = _("なまえ");
 STRINGS_BIRCH_MENU const u8 gText_IDNumber[] = _("IDNo,");
