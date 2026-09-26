@@ -61,14 +61,6 @@ static const struct WindowTemplate sDiplomaWinTemplates[2] =
 __attribute__((section(".rodata.diploma")))
 static const u8 sDiplomaTextColors[4] = {0, 2, 3, 0};
 
-__attribute__((section(".rodata.diploma")))
-const u8 gUnknown_85C8C24[] = {EOS};
-
-__attribute__((section(".rodata.diploma")))
-const u8 gUnknown_85C8C25[] = {0x08, 0x2E, EOS};
-
-__attribute__((section(".rodata.diploma")))
-const u8 gUnknown_85C8C28[] = {0x11, 0x34, 0x2E, EOS, 0x5B, 0x6C, 0x7F, 0x52, 0x51, EOS, 0x79, 0x97, 0xAE, EOS};
 void VBlankCB_SelectScreen(void);
 bool16 HasAllMons(void);
 

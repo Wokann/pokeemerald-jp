@@ -258,7 +258,7 @@ static const struct MatchCallBirch sProfBirchMatchCallHeader MATCH_CALL_STRUCT_D
     .mapSec = 0,
     .flag = 0x0119,
     .desc = sText_ProfBirchMatchCallDesc,
-    .name = (const u8 *)0x085C8C6B,
+    .name = gText_ProfBirchMatchCallName,
 };
 
 static const match_call_text_data_t sMomTextScripts[] MATCH_CALL_STRUCT_DATA =

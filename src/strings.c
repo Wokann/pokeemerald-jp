@@ -19,6 +19,27 @@
 #define STRINGS_DECORATION_TEXT __attribute__((section(".rodata.strings_decoration_text"), aligned(1)))
 #define STRINGS_MOVE_RELEARNER_TEXT __attribute__((section(".rodata.strings_move_relearner_text"), aligned(1), used))
 #define STRINGS_DIPLOMA_TEXT __attribute__((section(".rodata.strings_diploma_text"), aligned(1), used))
+#define STRINGS_EXPANDED_PLACEHOLDER_TEXT __attribute__((section(".rodata.strings_expanded_placeholder_text"), aligned(1), used))
+#define STRINGS_POKEMON_NAMES_TEXT __attribute__((section(".rodata.strings_pokemon_names_text"), aligned(1), used))
+
+const u8 gText_ExpandedPlaceholder_Empty[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("");
+const u8 gText_ExpandedPlaceholder_Kun[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("くん");
+const u8 gText_ExpandedPlaceholder_Chan[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("ちゃん");
+const u8 gText_ExpandedPlaceholder_Sapphire[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("サファイア");
+const u8 gText_ExpandedPlaceholder_Ruby[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("ルビー");
+const u8 gText_ExpandedPlaceholder_Emerald[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("エメラルド");
+const u8 gText_ExpandedPlaceholder_Aqua[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("アクア");
+const u8 gText_ExpandedPlaceholder_Magma[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("マグマ");
+const u8 gText_ExpandedPlaceholder_Archie[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("アオギリ");
+const u8 gText_ExpandedPlaceholder_Maxie[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("マツブサ");
+const u8 gText_ExpandedPlaceholder_Kyogre[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("カイオーガ");
+const u8 gText_ExpandedPlaceholder_Groudon[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("グラードン");
+const u8 gText_ExpandedPlaceholder_Brendan[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("ユウキ");
+const u8 gText_ExpandedPlaceholder_May[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("ハルカ");
+
+const u8 gText_EggNickname[] STRINGS_POKEMON_NAMES_TEXT = _("タマゴ");
+const u8 gText_Pokemon[] STRINGS_POKEMON_NAMES_TEXT = _("ポケモン");
+const u8 gText_ProfBirchMatchCallName[] STRINGS_POKEMON_NAMES_TEXT = _("オダマキ");
 
 const u8 gText_Diploma_1[] STRINGS_DIPLOMA_TEXT = _("プレイヤー");
 const u8 gText_Diploma_2[] STRINGS_DIPLOMA_TEXT = _("さま");
