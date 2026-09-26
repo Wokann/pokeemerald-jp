@@ -95,16 +95,16 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_CHECKDECOR ScrCmd_checkdecor @ 0x4D
 	script_cmd_table_entry SCR_OP_CHECKDECORSPACE ScrCmd_checkdecorspace @ 0x4E
 	script_cmd_table_entry SCR_OP_APPLYMOVEMENT ScrCmd_applymovement @ 0x4F
-	script_cmd_table_entry SCR_OP_APPLYMOVEMENTAT ScrCmd_applymovement_at @ 0x50
+	script_cmd_table_entry SCR_OP_APPLYMOVEMENTAT ScrCmd_applymovementat @ 0x50
 	script_cmd_table_entry SCR_OP_WAITMOVEMENT ScrCmd_waitmovement @ 0x51
-	script_cmd_table_entry SCR_OP_WAITMOVEMENTAT ScrCmd_waitmovement_at @ 0x52
+	script_cmd_table_entry SCR_OP_WAITMOVEMENTAT ScrCmd_waitmovementat @ 0x52
 	script_cmd_table_entry SCR_OP_REMOVEOBJECT ScrCmd_removeobject @ 0x53
-	script_cmd_table_entry SCR_OP_REMOVEOBJECTAT ScrCmd_removeobject_at @ 0x54
+	script_cmd_table_entry SCR_OP_REMOVEOBJECTAT ScrCmd_removeobjectat @ 0x54
 	script_cmd_table_entry SCR_OP_ADDOBJECT ScrCmd_addobject @ 0x55
-	script_cmd_table_entry SCR_OP_ADDOBJECTAT ScrCmd_addobject_at @ 0x56
+	script_cmd_table_entry SCR_OP_ADDOBJECTAT ScrCmd_addobjectat @ 0x56
 	script_cmd_table_entry SCR_OP_SETOBJECTXY ScrCmd_setobjectxy @ 0x57
-	script_cmd_table_entry SCR_OP_SHOWOBJECTAT ScrCmd_showobject_at @ 0x58
-	script_cmd_table_entry SCR_OP_HIDEOBJECTAT ScrCmd_hideobject_at @ 0x59
+	script_cmd_table_entry SCR_OP_SHOWOBJECTAT ScrCmd_showobjectat @ 0x58
+	script_cmd_table_entry SCR_OP_HIDEOBJECTAT ScrCmd_hideobjectat @ 0x59
 	script_cmd_table_entry SCR_OP_FACEPLAYER ScrCmd_faceplayer @ 0x5A
 	script_cmd_table_entry SCR_OP_TURNOBJECT ScrCmd_turnobject @ 0x5B
 	script_cmd_table_entry SCR_OP_TRAINERBATTLE ScrCmd_trainerbattle @ 0x5C
@@ -159,8 +159,8 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_SHOWCONTESTRESULTS ScrCmd_showcontestresults @ 0x8D
 	script_cmd_table_entry SCR_OP_CONTESTLINKTRANSFER ScrCmd_contestlinktransfer @ 0x8E
 	script_cmd_table_entry SCR_OP_RANDOM ScrCmd_random @ 0x8F
-	script_cmd_table_entry SCR_OP_90 ScrCmd_givemoney @ 0x90
-	script_cmd_table_entry SCR_OP_REMOVEMONEY ScrCmd_takemoney @ 0x91
+	script_cmd_table_entry SCR_OP_ADDMONEY ScrCmd_addmoney @ 0x90
+	script_cmd_table_entry SCR_OP_REMOVEMONEY ScrCmd_removemoney @ 0x91
 	script_cmd_table_entry SCR_OP_CHECKMONEY ScrCmd_checkmoney @ 0x92
 	script_cmd_table_entry SCR_OP_SHOWMONEYBOX ScrCmd_showmoneybox @ 0x93
 	script_cmd_table_entry SCR_OP_HIDEMONEYBOX ScrCmd_hidemoneybox @ 0x94
@@ -168,11 +168,11 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_GETPOKENEWSACTIVE ScrCmd_getpricereduction @ 0x96
 	script_cmd_table_entry SCR_OP_FADESCREEN ScrCmd_fadescreen @ 0x97
 	script_cmd_table_entry SCR_OP_FADESCREENSPEED ScrCmd_fadescreenspeed @ 0x98
-	script_cmd_table_entry SCR_OP_SETFLASHLEVEL ScrCmd_setflashradius @ 0x99
+	script_cmd_table_entry SCR_OP_SETFLASHLEVEL ScrCmd_setflashlevel @ 0x99
 	script_cmd_table_entry SCR_OP_ANIMATEFLASH ScrCmd_animateflash @ 0x9A
 	script_cmd_table_entry SCR_OP_MESSAGEAUTOSCROLL ScrCmd_messageautoscroll @ 0x9B
 	script_cmd_table_entry SCR_OP_DOFIELDEFFECT ScrCmd_dofieldeffect @ 0x9C
-	script_cmd_table_entry SCR_OP_9D ScrCmd_setfieldeffectarg @ 0x9D
+	script_cmd_table_entry SCR_OP_SETFIELDEFFECTARGUMENT ScrCmd_setfieldeffectargument @ 0x9D
 	script_cmd_table_entry SCR_OP_WAITFIELDEFFECT ScrCmd_waitfieldeffect @ 0x9E
 	script_cmd_table_entry SCR_OP_SETRESPAWN ScrCmd_setrespawn @ 0x9F
 	script_cmd_table_entry SCR_OP_CHECKPLAYERGENDER ScrCmd_checkplayergender @ 0xA0
@@ -195,8 +195,8 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_ADDELEVMENUITEM ScrCmd_addelevmenuitem @ 0xB1
 	script_cmd_table_entry SCR_OP_DRAWBOX ScrCmd_drawbox @ 0xB2
 	script_cmd_table_entry SCR_OP_CHECKCOINS ScrCmd_checkcoins @ 0xB3
-	script_cmd_table_entry SCR_OP_ADDCOINS ScrCmd_givecoins @ 0xB4
-	script_cmd_table_entry SCR_OP_REMOVECOINS ScrCmd_takecoins @ 0xB5
+	script_cmd_table_entry SCR_OP_ADDCOINS ScrCmd_addcoins @ 0xB4
+	script_cmd_table_entry SCR_OP_REMOVECOINS ScrCmd_removecoins @ 0xB5
 	script_cmd_table_entry SCR_OP_SETWILDBATTLE ScrCmd_setwildbattle @ 0xB6
 	script_cmd_table_entry SCR_OP_DOWILDBATTLE ScrCmd_dowildbattle @ 0xB7
 	script_cmd_table_entry SCR_OP_SETVADDRESS ScrCmd_setvaddress @ 0xB8
@@ -205,7 +205,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_VGOTO_IF ScrCmd_vgoto_if @ 0xBB
 	script_cmd_table_entry SCR_OP_VCALL_IF ScrCmd_vcall_if @ 0xBC
 	script_cmd_table_entry SCR_OP_VMESSAGE ScrCmd_vmessage @ 0xBD
-	script_cmd_table_entry SCR_OP_BE ScrCmd_vloadword @ 0xBE
+	script_cmd_table_entry SCR_OP_VBUFFERMESSAGE ScrCmd_vbuffermessage @ 0xBE
 	script_cmd_table_entry SCR_OP_VBUFFERSTRING ScrCmd_vbufferstring @ 0xBF
 	script_cmd_table_entry SCR_OP_SHOWCOINSBOX ScrCmd_showcoinsbox @ 0xC0
 	script_cmd_table_entry SCR_OP_HIDECOINSBOX ScrCmd_hidecoinsbox @ 0xC1
@@ -226,22 +226,20 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_SETWORLDMAPFLAG ScrCmd_nop1 @ 0xD0
 	script_cmd_table_entry SCR_OP_WARPSPINENTER ScrCmd_warpspinenter @ 0xD1
 	script_cmd_table_entry SCR_OP_SETMONMETLOCATION ScrCmd_setmonmetlocation @ 0xD2
-	@ These five retained JP handler names implement the canonical Emerald
-	@ rotating-tile / Mossdeep Gym commands named in script_commands.h.
-	script_cmd_table_entry SCR_OP_MOVEROTATINGTILEOBJECTS ScrCmd_mossdeepgym1 @ 0xD3
-	script_cmd_table_entry SCR_OP_TURNROTATINGTILEOBJECTS sub_0809B48C @ 0xD4
-	script_cmd_table_entry SCR_OP_INITROTATINGTILEPUZZLE ScrCmd_mossdeepgym3 @ 0xD5
-	script_cmd_table_entry SCR_OP_FREEROTATINGTILEPUZZLE ScrCmd_buffercontesttype @ 0xD6
-	script_cmd_table_entry SCR_OP_WARPMOSSDEEPGYM ScrCmd_warpD7 @ 0xD7
+	script_cmd_table_entry SCR_OP_MOVEROTATINGTILEOBJECTS ScrCmd_moverotatingtileobjects @ 0xD3
+	script_cmd_table_entry SCR_OP_TURNROTATINGTILEOBJECTS ScrCmd_turnrotatingtileobjects @ 0xD4
+	script_cmd_table_entry SCR_OP_INITROTATINGTILEPUZZLE ScrCmd_initrotatingtilepuzzle @ 0xD5
+	script_cmd_table_entry SCR_OP_FREEROTATINGTILEPUZZLE ScrCmd_freerotatingtilepuzzle @ 0xD6
+	script_cmd_table_entry SCR_OP_WARPMOSSDEEPGYM ScrCmd_warpmossdeepgym @ 0xD7
 	script_cmd_table_entry SCR_OP_SELECTAPPROACHINGTRAINER ScrCmd_selectapproachingtrainer @ 0xD8
 	script_cmd_table_entry SCR_OP_LOCKFORTRAINER ScrCmd_lockfortrainer @ 0xD9
 	script_cmd_table_entry SCR_OP_CLOSEBRAILLEMESSAGE ScrCmd_mossdeepgym4 @ 0xDA
-	script_cmd_table_entry SCR_OP_MESSAGEINSTANT ScrCmd_cmdDB @ 0xDB
+	script_cmd_table_entry SCR_OP_MESSAGEINSTANT ScrCmd_messageinstant @ 0xDB
 	script_cmd_table_entry SCR_OP_FADESCREENSWAPBUFFERS ScrCmd_fadescreenswapbuffers @ 0xDC
 	script_cmd_table_entry SCR_OP_BUFFERTRAINERCLASSNAME ScrCmd_buffertrainerclassname @ 0xDD
 	script_cmd_table_entry SCR_OP_BUFFERTRAINERNAME ScrCmd_buffertrainername @ 0xDE
 	script_cmd_table_entry SCR_OP_POKENAVCALL ScrCmd_pokenavcall @ 0xDF
-	script_cmd_table_entry SCR_OP_WARPWHITEFADE ScrCmd_warpE0 @ 0xE0
+	script_cmd_table_entry SCR_OP_WARPWHITEFADE ScrCmd_warpwhitefade @ 0xE0
 
 	.if ALLOCATE_SCRIPT_CMD_TABLE
 gScriptCmdTableEnd::

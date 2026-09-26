@@ -37,9 +37,9 @@ SeafloorCavern_Room9_EventScript_ArchieAwakenKyogre:: @ 0x082189FE
 	special WaitWeather
 	setvar VAR_RESULT, 0x1
 	playse SE_M_DETECT
-	setfieldeffectarg 0, 16
-	setfieldeffectarg 1, 42
-	setfieldeffectarg 2, 0
+	setfieldeffectargument 0, 16
+	setfieldeffectargument 1, 42
+	setfieldeffectargument 2, 0
 	dofieldeffect FLDEFF_SPARKLE
 	waitfieldeffect FLDEFF_SPARKLE
 	closemessage

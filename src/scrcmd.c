@@ -638,7 +638,7 @@ bool8 ScrCmd_animateflash(struct ScriptContext *ctx)
     return TRUE;
 }
 
-bool8 ScrCmd_setflashradius(struct ScriptContext *ctx)
+bool8 ScrCmd_setflashlevel(struct ScriptContext *ctx)
 {
     Overworld_SetFlashLevel(VarGet(ScriptReadHalfword(ctx)));
     return FALSE;
@@ -838,7 +838,7 @@ bool8 ScrCmd_warpteleport(struct ScriptContext *ctx)
     return TRUE;
 }
 
-bool8 ScrCmd_warpD7(struct ScriptContext *ctx)
+bool8 ScrCmd_warpmossdeepgym(struct ScriptContext *ctx)
 {
     s8 mapGroup = *ctx->scriptPtr++;
     s8 mapNum = *ctx->scriptPtr++;
@@ -1027,7 +1027,7 @@ bool8 ScrCmd_applymovement(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_applymovement_at(struct ScriptContext *ctx)
+bool8 ScrCmd_applymovementat(struct ScriptContext *ctx)
 {
     u16 localId = VarGet(ScriptReadHalfword(ctx));
     const u8 *movements = (const u8 *)ScriptReadWord(ctx);
@@ -1056,7 +1056,7 @@ bool8 ScrCmd_waitmovement(struct ScriptContext *ctx)
     return TRUE;
 }
 
-bool8 ScrCmd_waitmovement_at(struct ScriptContext *ctx)
+bool8 ScrCmd_waitmovementat(struct ScriptContext *ctx)
 {
     u16 localId = VarGet(ScriptReadHalfword(ctx));
     u8 mapGroup, mapNum;
@@ -1079,7 +1079,7 @@ bool8 ScrCmd_removeobject(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_removeobject_at(struct ScriptContext *ctx)
+bool8 ScrCmd_removeobjectat(struct ScriptContext *ctx)
 {
     u16 localId = VarGet(ScriptReadHalfword(ctx));
     u8 mapGroup = *ctx->scriptPtr++;
@@ -1097,7 +1097,7 @@ bool8 ScrCmd_addobject(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_addobject_at(struct ScriptContext *ctx)
+bool8 ScrCmd_addobjectat(struct ScriptContext *ctx)
 {
     u16 localId = VarGet(ScriptReadHalfword(ctx));
     u8 mapGroup = *ctx->scriptPtr++;
@@ -1135,7 +1135,7 @@ bool8 ScrCmd_moveobjectoffscreen(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_showobject_at(struct ScriptContext *ctx)
+bool8 ScrCmd_showobjectat(struct ScriptContext *ctx)
 {
     u16 localId = VarGet(ScriptReadHalfword(ctx));
     u8 mapGroup = *ctx->scriptPtr++;
@@ -1145,7 +1145,7 @@ bool8 ScrCmd_showobject_at(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_hideobject_at(struct ScriptContext *ctx)
+bool8 ScrCmd_hideobjectat(struct ScriptContext *ctx)
 {
     u16 localId = VarGet(ScriptReadHalfword(ctx));
     u8 mapGroup = *ctx->scriptPtr++;
@@ -1321,7 +1321,7 @@ bool8 ScrCmd_messageautoscroll(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_cmdDB(struct ScriptContext *ctx)
+bool8 ScrCmd_messageinstant(struct ScriptContext *ctx)
 {
     u32 text = ScriptReadWord(ctx);
 
@@ -1632,7 +1632,7 @@ bool8 ScrCmd_bufferstring(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_vloadword(struct ScriptContext *ctx)
+bool8 ScrCmd_vbuffermessage(struct ScriptContext *ctx)
 {
     u32 value = ScriptReadWord(ctx) - sAddressOffset;
 
@@ -1712,7 +1712,7 @@ bool8 ScrCmd_checkpartymove(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_givemoney(struct ScriptContext *ctx)
+bool8 ScrCmd_addmoney(struct ScriptContext *ctx)
 {
     u32 amount = ScriptReadWord(ctx);
     u8 silent = *ctx->scriptPtr++;
@@ -1722,7 +1722,7 @@ bool8 ScrCmd_givemoney(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_takemoney(struct ScriptContext *ctx)
+bool8 ScrCmd_removemoney(struct ScriptContext *ctx)
 {
     u32 amount = ScriptReadWord(ctx);
     u8 silent = *ctx->scriptPtr++;
@@ -1959,7 +1959,7 @@ bool8 ScrCmd_dofieldeffect(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_setfieldeffectarg(struct ScriptContext *ctx)
+bool8 ScrCmd_setfieldeffectargument(struct ScriptContext *ctx)
 {
     u8 index = *ctx->scriptPtr++;
     u16 value = VarGet(ScriptReadHalfword(ctx));
@@ -2117,7 +2117,7 @@ bool8 ScrCmd_checkcoins(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_givecoins(struct ScriptContext *ctx)
+bool8 ScrCmd_addcoins(struct ScriptContext *ctx)
 {
     u16 amount = VarGet(ScriptReadHalfword(ctx));
 
@@ -2128,7 +2128,7 @@ bool8 ScrCmd_givecoins(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_takecoins(struct ScriptContext *ctx)
+bool8 ScrCmd_removecoins(struct ScriptContext *ctx)
 {
     u16 amount = VarGet(ScriptReadHalfword(ctx));
 
@@ -2139,7 +2139,7 @@ bool8 ScrCmd_takecoins(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_mossdeepgym1(struct ScriptContext *ctx)
+bool8 ScrCmd_moverotatingtileobjects(struct ScriptContext *ctx)
 {
     u16 a = VarGet(ScriptReadHalfword(ctx));
 
@@ -2147,13 +2147,13 @@ bool8 ScrCmd_mossdeepgym1(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 sub_0809B48C(struct ScriptContext *ctx)
+bool8 ScrCmd_turnrotatingtileobjects(struct ScriptContext *ctx)
 {
     TurnRotatingTileObjects();
     return FALSE;
 }
 
-bool8 ScrCmd_mossdeepgym3(struct ScriptContext *ctx)
+bool8 ScrCmd_initrotatingtilepuzzle(struct ScriptContext *ctx)
 {
     u16 a = VarGet(ScriptReadHalfword(ctx));
 
@@ -2161,7 +2161,7 @@ bool8 ScrCmd_mossdeepgym3(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_buffercontesttype(struct ScriptContext *ctx)
+bool8 ScrCmd_freerotatingtilepuzzle(struct ScriptContext *ctx)
 {
     FreeRotatingTilePuzzle();
     return FALSE;
@@ -2270,7 +2270,7 @@ void sub_0809B720(u16 a)
     sMovingNpcId = a;
 }
 
-bool8 ScrCmd_warpE0(struct ScriptContext *ctx)
+bool8 ScrCmd_warpwhitefade(struct ScriptContext *ctx)
 {
     s8 mapGroup = *ctx->scriptPtr++;
     s8 mapNum = *ctx->scriptPtr++;

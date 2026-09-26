@@ -1351,7 +1351,7 @@
 
 	@ Sets the field effect argument at index 'argNum' to 'value.'
 	.macro setfieldeffectargument argNum:req, value:req
-	.byte SCR_OP_9D
+	.byte SCR_OP_SETFIELDEFFECTARGUMENT
 	.byte \argNum
 	.2byte \value
 	.endm
@@ -2111,47 +2111,9 @@
 	.byte SCR_OP_74
 	.endm
 
-	.macro givemoney amount:req, silent=0
-	.byte SCR_OP_90
-	.4byte \amount
-	.byte \silent
-	.endm
-
-	.macro takemoney amount:req, silent=0
-	.byte SCR_OP_REMOVEMONEY
-	.4byte \amount
-	.byte \silent
-	.endm
-
 	.macro getpricereduction item:req
 	.byte SCR_OP_GETPOKENEWSACTIVE
 	.2byte \item
-	.endm
-
-	.macro setflashradius radius:req
-	.byte SCR_OP_SETFLASHLEVEL
-	.2byte \radius
-	.endm
-
-	.macro setfieldeffectarg index:req, value:req
-	.byte SCR_OP_9D
-	.byte \index
-	.2byte \value
-	.endm
-
-	.macro givecoins coins:req
-	.byte SCR_OP_ADDCOINS
-	.2byte \coins
-	.endm
-
-	.macro takecoins coins:req
-	.byte SCR_OP_REMOVECOINS
-	.2byte \coins
-	.endm
-
-	.macro vloadword address:req
-	.byte SCR_OP_BE
-	.4byte \address
 	.endm
 
 	.macro setmonobedient partySlot:req

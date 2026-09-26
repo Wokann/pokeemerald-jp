@@ -383,7 +383,7 @@ LilycoveCity_EventScript_RivalFlyAway::
 	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 50
-	setfieldeffectarg 0, 1
+	setfieldeffectargument 0, 1
 	dofieldeffect FLDEFF_NPCFLY_OUT
 	delay 15
 	removeobject VAR_LAST_TALKED
