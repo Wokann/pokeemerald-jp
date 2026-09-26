@@ -15,6 +15,7 @@
 #include "secret_base.h"
 #include "constants/vars.h"
 #include "string_util.h"
+#include "strings.h"
 #include "task.h"
 extern void StartSecretBaseCaveFieldEffect(void);
 extern void StartSecretBaseShrubFieldEffect(void);
@@ -50,7 +51,6 @@ extern void Task_WateringBerryTreeAnim_3(u8 taskId);
 extern u8 sub_0808B634(void);
 extern void sub_0808BB8C(u8 direction);
 extern u8 sub_08092F08(u32 direction);
-extern const u8 gUnknown_85CA70B[];
 extern void CaveEntranceSpriteCallback1(struct Sprite *sprite);
 extern void CaveEntranceSpriteCallback2(struct Sprite *sprite);
 extern void CaveEntranceSpriteCallbackEnd(struct Sprite *sprite);
@@ -1049,7 +1049,7 @@ void InteractWithShieldOrTVDecoration(void)
     {
     case METATILE_SecretBase_GoldShield_Base1:
         ConvertIntToDecimalStringN(gStringVar1, 100, 0, 3);
-        StringCopy(gStringVar2, gUnknown_85CA70B + 0x34);
+        StringCopy(gStringVar2, gText_Gold);
         gSpecialVar_Result = 0;
         if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
         {
@@ -1058,7 +1058,7 @@ void InteractWithShieldOrTVDecoration(void)
         break;
     case METATILE_SecretBase_SilverShield_Base1:
         ConvertIntToDecimalStringN(gStringVar1, 50, 0, 2);
-        StringCopy(gStringVar2, gUnknown_85CA70B + 0x37);
+        StringCopy(gStringVar2, gText_Silver);
         gSpecialVar_Result = 0;
         if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
         {

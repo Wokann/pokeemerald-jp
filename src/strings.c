@@ -110,6 +110,75 @@ STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_TheseThreePkmnOkay[] = _("いじ
 STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_Yes2[] = _("はい");
 STRINGS_BATTLE_FACTORY_SELECTION const u8 gText_No2[] = _("いいえ");
 
+STRINGS_DECORATION_TEXT const u8 gText_ApostropheSBase[] = _("　きち");
+
+STRINGS_DECORATION_TEXT const u8 gText_OkayToDeleteFromRegistry[] = _(
+    "{STR_VAR_1}　の　とうろくを\n"
+    "かいじょ　しても　よろしい　ですか？");
+
+STRINGS_DECORATION_TEXT const u8 gText_RegisteredDataDeleted[] = _("とうろくを　かいじょ　しました{PAUSE_UNTIL_PRESS}");
+
+STRINGS_DECORATION_TEXT const u8 gText_NoRegistry[] = _("とうろく　リストは　ありません{PAUSE_UNTIL_PRESS}");
+STRINGS_DECORATION_TEXT const u8 gText_DelRegist[] = _("とうろく　かいじょ");
+
+STRINGS_DECORATION_TEXT const u8 gText_Var3Var1SlashVar2[] = _("{STR_VAR_3}{STR_VAR_1}/{STR_VAR_2}");
+
+STRINGS_DECORATION_TEXT const u8 gText_Decorate[] = _("グッズを　おく");
+
+STRINGS_DECORATION_TEXT const u8 gText_PutAway[] = _("グッズを　もどす");
+
+STRINGS_DECORATION_TEXT const u8 gText_Toss2[] = _("グッズを　すてる");
+
+STRINGS_DECORATION_TEXT const u8 gText_Color161Shadow161[] = _("{COLOR 161}{SHADOW 161}");
+
+STRINGS_DECORATION_TEXT const u8 gText_PutOutSelectedDecorItem[] = _("えらんだ　グッズを　へやに　おきます！");
+
+STRINGS_DECORATION_TEXT const u8 gText_StoreChosenDecorInPC[] = _("えらんだ　グッズを　パソコンに　もどします！");
+
+STRINGS_DECORATION_TEXT const u8 gText_ThrowAwayUnwantedDecors[] = _("いらなくなった　グッズを　すてます！");
+
+STRINGS_DECORATION_TEXT const u8 gText_NoDecorations[] = _("グッズは　ありません！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_DECORATION_TEXT const u8 gText_Desk[] = _("つくえ");
+
+STRINGS_DECORATION_TEXT const u8 gText_Chair[] = _("いす");
+
+STRINGS_DECORATION_TEXT const u8 gText_Plant[] = _("はちうえ");
+
+STRINGS_DECORATION_TEXT const u8 gText_Ornament[] = _("おきもの");
+
+STRINGS_DECORATION_TEXT const u8 gText_Mat[] = _("マット");
+
+STRINGS_DECORATION_TEXT const u8 gText_Poster[] = _("ポスター");
+
+STRINGS_DECORATION_TEXT const u8 gText_Doll[] = _("ぬいぐるみ");
+
+STRINGS_DECORATION_TEXT const u8 gText_Cushion[] = _("クッション");
+
+STRINGS_DECORATION_TEXT const u8 gText_Gold[] = _("きん");
+
+STRINGS_DECORATION_TEXT const u8 gText_Silver[] = _("ぎん");
+
+STRINGS_DECORATION_TEXT const u8 gText_PlaceItHere[] = _("ここに　おきますか？");
+
+STRINGS_DECORATION_TEXT const u8 gText_CantBePlacedHere[] = _("ここには　おけません！");
+
+STRINGS_DECORATION_TEXT const u8 gText_CancelDecorating[] = _("おくのを　やめますか？");
+
+STRINGS_DECORATION_TEXT const u8 gText_InUseAlready[] = _("すでに　おかれて　います！");
+
+STRINGS_DECORATION_TEXT const u8 gText_NoMoreDecorations[] = _(
+    "これいじょう　おけません\n"
+    "ひみつきちに　おけるのは　{STR_VAR_1}こ　までです");
+
+STRINGS_DECORATION_TEXT const u8 gText_NoMoreDecorations2[] = _(
+    "これいじょう　おけません\n"
+    "へやに　おけるのは　{STR_VAR_1}こ　までです");
+
+STRINGS_DECORATION_TEXT const u8 gText_MustBePlacedOnDesk[] = _(
+    "ここには　おけません！\n"
+    "つくえの　うえなどに　おいてください！");
+
 STRINGS_DECORATION_TEXT const u8 gText_CantPlaceInRoom[] = _(
     "この　グッズは\n"
     "じぶんの　へやには　おけません！");
