@@ -2,6 +2,7 @@
 #include "strings.h"
 #include "battle_pyramid_bag.h"
 #include "item_menu.h"
+#include "constants/songs.h"
 
 #define STRINGS_COMMON __attribute__((section(".rodata.strings_common")))
 #define STRINGS_MAIN_MENU __attribute__((section(".rodata.strings_main_menu")))
@@ -16,6 +17,39 @@
 #define STRINGS_MENU_SELECTOR_ARROW3 __attribute__((section(".rodata.strings_menu_selector_arrow3"), aligned(1)))
 #define STRINGS_BATTLE_FACTORY_SELECTION __attribute__((section(".rodata.strings_battle_factory_selection"), aligned(1)))
 #define STRINGS_DECORATION_TEXT __attribute__((section(".rodata.strings_decoration_text"), aligned(1)))
+#define STRINGS_MOVE_RELEARNER_TEXT __attribute__((section(".rodata.strings_move_relearner_text"), aligned(1), used))
+
+const u8 gText_TeachWhichMoveToPkmn[] STRINGS_MOVE_RELEARNER_TEXT = _("{STR_VAR_1}に　どのわざを　おぼえさせる？");
+const u8 gText_MoveRelearnerTeachMoveConfirm[] STRINGS_MOVE_RELEARNER_TEXT = _("{STR_VAR_2}を　おぼえさせますか？");
+const u8 gText_MoveRelearnerPkmnLearnedMove[] STRINGS_MOVE_RELEARNER_TEXT = _(
+    "{STR_VAR_1}は　あたらしく\n"
+    "{STR_VAR_2}を　おぼえた！");
+const u8 gText_MoveRelearnerPkmnTryingToLearnMove[] STRINGS_MOVE_RELEARNER_TEXT = _(
+    "{STR_VAR_1}は　あたらしく　\n"
+    "{STR_VAR_2}を　おぼえたい⋯！\p"
+    "しかし　{STR_VAR_1}は　わざを　4つ\n"
+    "おぼえているので　せいいっぱいだ！\p"
+    "{STR_VAR_2}の　かわりに　ほかの　わざを\n"
+    "わすれさせますか？");
+const u8 gText_MoveRelearnerStopTryingToTeachMove[] STRINGS_MOVE_RELEARNER_TEXT = _(
+    "それでは⋯⋯　{STR_VAR_2}を\n"
+    "おぼえるのを　あきらめますか？");
+const u8 gText_MoveRelearnerAndPoof[] STRINGS_MOVE_RELEARNER_TEXT = _(
+    "{PAUSE 32}1　{PAUSE 15}2の　{PAUSE 15}⋯{PAUSE 15}⋯{PAUSE 15}⋯　"
+    "{PAUSE 15}{PLAY_SE SE_BALL_BOUNCE_1}ポカン！\p");
+const u8 gText_MoveRelearnerPkmnForgotMoveAndLearnedNew[] STRINGS_MOVE_RELEARNER_TEXT = _(
+    "{STR_VAR_1}は　{STR_VAR_3}の　つかいかたを\n"
+    "きれいに　わすれた！\p"
+    "そして⋯！\p"
+    "{STR_VAR_1}は　あたらしく\n"
+    "{STR_VAR_2}を　おぼえた！");
+const u8 gText_MoveRelearnedPkmnDidNotLearnMove[] STRINGS_MOVE_RELEARNER_TEXT = _("{STR_VAR_1}は　{STR_VAR_2}を　おぼえずに　おわった！");
+const u8 gText_MoveRelearnerGiveUp[] STRINGS_MOVE_RELEARNER_TEXT = _(
+    "{STR_VAR_1}に　わざを　おぼえさせるのを\n"
+    "あきらめますか？");
+const u8 gText_MoveRelearnerWhichMoveToForget[] STRINGS_MOVE_RELEARNER_TEXT = _(
+    "どの　わざを\n"
+    "わすれさせたい？\p");
 
 STRINGS_MENU_YES_NO const u8 gText_YesNo[] = _("はい\nいいえ");
 STRINGS_MENU_SELECTOR_ARROW3 const u8 gText_SelectorArrow3[] = _("▶");

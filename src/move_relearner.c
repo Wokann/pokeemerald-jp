@@ -73,6 +73,7 @@ enum {
 
 #define MAX_RELEARNER_MOVES max(MAX_LEVEL_UP_MOVES, 25)
 #define MOVE_RELEARNER_UI_DATA __attribute__((section(".rodata.move_relearner_ui_data")))
+#define MOVE_RELEARNER_OAM_DATA __attribute__((section(".rodata.move_relearner_oam_data"), aligned(4), used))
 #define MOVE_RELEARNER_STATIC_DATA __attribute__((section(".rodata.move_relearner_static_data")))
 
 // The UI art is byte-identical to pokeemerald's graphics/interface asset.
@@ -80,6 +81,57 @@ enum {
 // SpritePalette records refer to them from data_b2d_mid70.s.
 const u16 sUI_Pal[16] MOVE_RELEARNER_UI_DATA = INCBIN_U16("graphics/interface/ui_learn_move.gbapal");
 const u8 sUI_Tiles[0x180] MOVE_RELEARNER_UI_DATA = INCBIN_U8("graphics/interface/ui_learn_move.4bpp");
+
+static const struct OamData sHeartSpriteOamData MOVE_RELEARNER_OAM_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sUnusedOam1 MOVE_RELEARNER_OAM_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sUnusedOam2 MOVE_RELEARNER_OAM_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
 
 // JP note: the EWRAM state structs and all static tables live in the JP
 // ROM data region; they are bound via ld aliases (sMoveRelearner*).
@@ -104,11 +156,6 @@ extern struct {
     u16 listRow;
     bool8 showContestInfo;
 } sMoveRelearnerMenuState;
-
-// The JP fixed-width tail of gText_MoveRelearnerWhichMoveToForget overlaps
-// the three upstream OAM records.  Only the first is referenced at runtime;
-// it remains a linker alias rather than duplicating or moving those bytes.
-extern const struct OamData sHeartSpriteOamData;
 
 static const struct SpriteSheet sMoveRelearnerSpriteSheet MOVE_RELEARNER_STATIC_DATA =
 {

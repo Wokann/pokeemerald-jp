@@ -59,7 +59,6 @@ gSelectedMonPartyId = gUnknown_203CBB5;
 sBikeCyclingTimer = gUnknown_203A824;
 gUnknown_85AD800 = sUI_Pal;
 gUnknown_85AD820 = sUI_Tiles;
-sHeartSpriteOamData = gText_MoveRelearnerWhichMoveToForget + 0x13;
 sPrimaryTilesetAnimCounter = gUnknown_3000F36;
 sPrimaryTilesetAnimCounterMax = gUnknown_3000F38;
 sPrimaryTilesetAnimCallback = gUnknown_3000F40;
@@ -9965,8 +9964,8 @@ SECTIONS {
         src/battle_controller_safari.o(.rodata.safari_dispatch_data);
         src/battle_anim_effects_3.o(.rodata.battle_anim_effects_3_initial_data);
         src/move_relearner.o(.rodata.move_relearner_ui_data);
-        src/data/text/region_texts71.o(.rodata);
-        src/data/text/region_texts71.o(.rodata.region_texts71_move_relearner_tail);
+        src/strings.o(.rodata.strings_move_relearner_text);
+        src/move_relearner.o(.rodata.move_relearner_oam_data);
         src/move_relearner.o(.rodata.move_relearner_static_data);
         src/roamer.o(.rodata.roamer_locations_data);
         src/battle_tower.o(.rodata.battle_frontier_held_items_data);
