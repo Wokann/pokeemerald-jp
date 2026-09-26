@@ -14,6 +14,8 @@
 #define STRINGS_TRADE_TEXT_PREFIX __attribute__((section(".rodata.strings_trade_text_prefix"), aligned(1)))
 #define STRINGS_TRADE_TEXT_BODY_START __attribute__((section(".rodata.strings_trade_text_body"), aligned(4)))
 #define STRINGS_TRADE_TEXT_BODY __attribute__((section(".rodata.strings_trade_text_body"), aligned(1)))
+#define STRINGS_SUMMARY_TEXT __attribute__((section(".rodata.strings_summary_text"), aligned(1)))
+#define STRINGS_SUMMARY_EGG_TEXT __attribute__((section(".rodata.strings_summary_egg_text"), aligned(1)))
 #define STRINGS_MAIN_MENU __attribute__((section(".rodata.strings_main_menu")))
 #define STRINGS_EASY_CHAT __attribute__((section(".rodata.strings_easy_chat")))
 #define STRINGS_POKENAV_STORAGE __attribute__((section(".rodata.strings_pokenav_storage")))
@@ -832,6 +834,101 @@ STRINGS_TRADE_TEXT_BODY const u8 gText_NotPkmnOtherTrainerWants[] = _(
     "ポケモンでは　ありません");
 
 STRINGS_TRADE_TEXT_BODY const u8 gText_ThatIsntAnEgg[] = _("　それは　タマゴでは　ありません");
+
+STRINGS_SUMMARY_TEXT const u8 gText_Register[] = _("とうろくする");
+
+STRINGS_SUMMARY_TEXT const u8 gText_Attack3[] = _("こうげき");
+
+STRINGS_SUMMARY_TEXT const u8 gText_Defense3[] = _("ぼうぎょ");
+
+STRINGS_SUMMARY_TEXT const u8 gText_SpAtk4[] = _("とくこう");
+
+STRINGS_SUMMARY_TEXT const u8 gText_SpDef4[] = _("とくぼう");
+
+STRINGS_SUMMARY_TEXT const u8 gText_Speed2[] = _("すばやさ");
+
+STRINGS_SUMMARY_TEXT const u8 gText_HP4[] = _("HP");
+
+STRINGS_SUMMARY_TEXT const u8 gText_Remaining[] = _("あと");
+
+STRINGS_SUMMARY_TEXT const u8 gText_OTSlash[] = _("おや/");
+
+STRINGS_SUMMARY_TEXT const u8 gText_RentalPkmn[] = _("レンタルポケモン");
+
+STRINGS_SUMMARY_TEXT const u8 gText_TypeSlash[] = _("タイプ/");
+
+STRINGS_SUMMARY_TEXT const u8 gText_Power[] = _("いりょく");
+
+STRINGS_SUMMARY_TEXT const u8 gText_Accuracy2[] = _("めいちゅう");
+
+STRINGS_SUMMARY_TEXT const u8 gText_Appeal[] = _("アピール");
+
+STRINGS_SUMMARY_TEXT const u8 gText_Jam[] = _("ぼうがい");
+
+STRINGS_SUMMARY_TEXT const u8 gText_Status[] = _("じょうたい");
+
+STRINGS_SUMMARY_TEXT const u8 gText_ExpPoints[] = _("げんざいのけいけんち");
+
+STRINGS_SUMMARY_TEXT const u8 gText_NextLv[] = _("レベルアップまで");
+
+STRINGS_SUMMARY_TEXT const u8 gText_RibbonsVar1[] = _("げんざい　{STR_VAR_1}こ");
+
+// The following empty string supplies the EOS for this JP nature suffix.
+STRINGS_SUMMARY_TEXT const u8 gText_NatureAdjectiveEnding[] = __("な");
+STRINGS_SUMMARY_TEXT const u8 gText_EmptyString5[] = _("");
+STRINGS_SUMMARY_TEXT const u8 gText_Events[] = _("イベント");
+
+STRINGS_SUMMARY_TEXT const u8 gText_Switch[] = _("いれかえ");
+
+STRINGS_SUMMARY_TEXT const u8 gText_PkmnInfo[] = _("ポケモンじょうほう");
+
+STRINGS_SUMMARY_TEXT const u8 gText_PkmnSkills[] = _("ポケモンのうりょく");
+
+STRINGS_SUMMARY_TEXT const u8 gText_BattleMoves[] = _("たたかうわざ");
+
+STRINGS_SUMMARY_TEXT const u8 gText_ContestMoves[] = _("コンテストわざ");
+
+STRINGS_SUMMARY_TEXT const u8 gText_Info[] = _("きりかえ");
+
+STRINGS_SUMMARY_TEXT const u8 gText_EggWillTakeALongTime[] = _(
+    "この　タマゴは\n"
+    "うまれるまで　かなり　かかりそう");
+
+STRINGS_SUMMARY_TEXT const u8 gText_EggWillTakeSomeTime[] = _(
+    "なにが　うまれて　くるのかな？\n"
+    "うまれる　まで　まだまだ　かかりそう");
+
+STRINGS_SUMMARY_TEXT const u8 gText_EggWillHatchSoon[] = _(
+    "ときどき　うごいて　いるようだ\n"
+    "うまれる　まで　もうちょっと　かな？");
+
+STRINGS_SUMMARY_TEXT const u8 gText_EggAboutToHatch[] = _(
+    "なかから　おとが　きこえてくる\n"
+    "もうすぐ　うまれそう！");
+
+STRINGS_SUMMARY_TEXT const u8 gText_HMMovesCantBeForgotten2[] = _(
+    "それは　たいせつなわざです\n"
+    "わすれさせることは　できません！");
+
+STRINGS_SUMMARY_EGG_TEXT const u8 gText_OddEggFoundByCouple[] = _(
+    "そだてや　ふうふ　から　もらった\n"
+    "ふしぎな　ポケモンのタマゴ");
+
+STRINGS_SUMMARY_EGG_TEXT const u8 gText_PeculiarEggNicePlace[] = _(
+    "ステキな　ばしょで　てにいれた\n"
+    "ふしぎな　ふしぎな　ポケモンのタマゴ");
+
+STRINGS_SUMMARY_EGG_TEXT const u8 gText_PeculiarEggTrade[] = _(
+    "つうしんこうかんで　てにいれた\n"
+    "ふしぎな　ポケモンのタマゴ");
+
+STRINGS_SUMMARY_EGG_TEXT const u8 gText_EggFromHotSprings[] = _(
+    "おんせんばあさん　から　もらった\n"
+    "ふしぎな　ポケモンのタマゴ");
+
+STRINGS_SUMMARY_EGG_TEXT const u8 gText_EggFromTraveler[] = _(
+    "たびの　おじさん　から　もらった\n"
+    "ふしぎな　ポケモンのタマゴ");
 
 STRINGS_COMMON const u8 gMenuText_Confirm[] = _("けってい");
 STRINGS_COMMON const u8 gMenuText_Walk[] = _("おりる");

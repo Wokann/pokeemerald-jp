@@ -44,18 +44,6 @@ gUnknown_830F760: @ 0x830F760
 
 	.globl gUnknown_830F766
 
-	.section .rodata.mid79
-
-	.globl gUnknown_85CA3D8
-gUnknown_85CA3D8: @ 0x85CA3D8
-	.incbin "baserom_jp.gba", 0x5ca3d8, 0x1
-
-	.globl gUnknown_85CA3D9
-gUnknown_85CA3D9: @ 0x85CA3D9
-	.string "$イベント$"
-
-	.globl gUnknown_85CA3DF
-
 	.section .rodata.mid35
 
 	.globl gUnknown_8566D64
@@ -147,12 +135,6 @@ gUnknown_85CA6C6: @ 0x85CA6C6
 gUnknown_85CA70B: @ 0x85CA70B
 	.string "グッズは　ありません！{PAUSE_UNTIL_PRESS}$つくえ$いす$はちうえ$おきもの$マット$ポスター$ぬいぐるみ$クッション$"
 	.globl gUnknown_85CA73F
-
-	.section .rodata.mid78
-
-	.globl gText_Register
-gText_Register: @ 0x85CA368
-	.string "とうろくする$"
 
 	.section .rodata.mid93
 
