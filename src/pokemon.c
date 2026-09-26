@@ -13050,7 +13050,7 @@ __attribute__((naked)) void sub_0806C9E8(void)
         "_0806CA1C: .4byte gBattlerTarget\n\t"
         "_0806CA20: .4byte gBattlerInMenuId\n\t"
         "_0806CA24: .4byte gBattleTextBuff1\n\t"
-        "_0806CA28: .4byte gUnknown_85AB08C\n\t"
+        "_0806CA28: .4byte gStatNamesTable\n\t"
         "_0806CA2C: .4byte sStatsToRaise\n\t"
         "_0806CA30: .4byte gBattleTextBuff2\n\t"
         "_0806CA34: .4byte gUnknown_85A9544 + 0x1333\n\t"
