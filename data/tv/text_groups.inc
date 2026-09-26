@@ -1,4 +1,4 @@
-@ TV read-only data kept in its original mid37 physical section.
+@ TV read-only data kept at its original physical address.
 @ Text payloads remain independently organized in data/text/tv/*.inc.
 @ Keep these tables in ROM order until src/tv.c owns the matching rodata.
 

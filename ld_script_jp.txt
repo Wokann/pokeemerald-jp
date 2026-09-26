@@ -9717,9 +9717,10 @@ SECTIONS {
         src/data/text/region_texts36.o(.rodata);
         data/data_b2d.o(.rodata.mid36);
         src/data/text/region_texts37.o(.rodata);
-        data/data_b2d_mid37.o(.rodata.mid37_before_secret_base_registry);
+        data/sound_check.o(.rodata.sound_check_data);
         src/secret_base.o(.rodata.secret_base_registry);
-        data/data_b2d_mid37.o(.rodata.mid37_after_secret_base_registry);
+        data/tv.o(.rodata.tv_text_groups);
+        data/contest_results.o(.rodata.contest_results_data);
         src/pokemon_size_record.o(.rodata.pokemon_size_record_data);
         src/data/text/region_texts60.o(.rodata);
         data/data_b2d_mid60.o(.rodata);

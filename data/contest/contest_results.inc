@@ -1,4 +1,4 @@
-@ Contest Results UI data retained in its original mid37 physical section.
+@ Contest Results UI data retained at its original physical address.
 @ The Japanese release keeps its title tilemaps here and uses nine window
 @ templates. Keep the physical order and JP bytes exact until contest_util.c
 @ owns the matching rodata.
