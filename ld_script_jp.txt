@@ -9942,7 +9942,7 @@ SECTIONS {
         src/battle_message.o(.rodata.battle_message_string_pointer_data);
         src/battle_message.o(.rodata.battle_message_string_id_data);
         src/battle_message.o(.rodata.battle_message_trapping_moves_data);
-        src/data/text/region_texts67.o(.rodata);
+        src/battle_message.o(.rodata.battle_message_menu_text_data);
         data/data_b2d.o(.rodata.mid66);
         src/data/text/region_texts68.o(.rodata);
         data/data_b2d.o(.rodata.mid67);

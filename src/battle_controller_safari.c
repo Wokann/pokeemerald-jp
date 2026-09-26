@@ -41,8 +41,6 @@ extern void TryGetStatusString(const u8 *text);
 extern void PlayCry1(u16 species, s8 pan);
 extern bool8 gUnknown_202415D;
 extern u16 gUnknown_2022D0A[][0x100];
-extern const u8 gUnknown_85ABB86[];
-extern const u8 gUnknown_85ABB4D[];
 extern const SafariBufferCommandFunc sSafariBufferCommands[CONTROLLER_TERMINATOR_NOP + 1];
 
 void SpriteCB_Null4(void) {}
@@ -355,13 +353,13 @@ void SafariHandleChooseAction(void)
     s32 i;
 
     gBattlerControllerFuncs[gActiveBattler] = sub_08159990;
-    sub_0814FA04(gUnknown_85ABB86, 2);
+    sub_0814FA04(gText_SafariZoneMenu, 2);
 
     for (i = 0; i < 4; i++)
         ActionSelectionDestroyCursorAt(i);
 
     SetCB2ToReshowScreenAfterMenu(gActionSelectionCursor[gActiveBattler], 0);
-    TryGetStatusString(gUnknown_85ABB4D);
+    TryGetStatusString(gText_WhatWillPkmnDo2);
     sub_0814FA04(gDisplayedStringBattle, 1);
 }
 

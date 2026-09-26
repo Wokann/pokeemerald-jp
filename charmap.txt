@@ -407,9 +407,9 @@ FONT_SMALL_NARROW = FC 06 08
 @DYNAMIC_COLOR1 = 0A @ white
 @DYNAMIC_COLOR2 = 0B @ white with a tinge of green
 @DYNAMIC_COLOR3 = 0C @ white 2
-@DYNAMIC_COLOR4 = 0D @ aquamarine
-@DYNAMIC_COLOR5 = 0E @ blue-green
-@DYNAMIC_COLOR6 = 0F @ cerulean
+DYNAMIC_COLOR4 = 0D @ aquamarine
+DYNAMIC_COLOR5 = 0E @ blue-green
+DYNAMIC_COLOR6 = 0F @ cerulean
 
 @ sound and music
 

@@ -43,6 +43,7 @@ struct BattleWindowText
 #define BATTLE_MESSAGE_FLAVOR_POINTER_DATA __attribute__((section(".rodata.battle_message_flavor_pointer_data"), aligned(4)))
 #define BATTLE_MESSAGE_TAIL_TEXT_DATA __attribute__((section(".rodata.battle_message_tail_text_data"), aligned(1)))
 #define BATTLE_MESSAGE_TRAPPING_MOVES_DATA __attribute__((section(".rodata.battle_message_trapping_moves_data"), aligned(2)))
+#define BATTLE_MESSAGE_MENU_TEXT_DATA __attribute__((section(".rodata.battle_message_menu_text_data"), aligned(1)))
 
 const u16 gTrappingMoves[NUM_TRAPPING_MOVES + 1] BATTLE_MESSAGE_TRAPPING_MOVES_DATA =
 {
@@ -54,6 +55,36 @@ const u16 gTrappingMoves[NUM_TRAPPING_MOVES + 1] BATTLE_MESSAGE_TRAPPING_MOVES_D
     MOVE_SAND_TOMB,
     0xFFFF // Never read
 };
+
+const u8 gText_PkmnIsEvolving[] BATTLE_MESSAGE_MENU_TEXT_DATA = _(
+    "⋯⋯おや！？\n"
+    "{STR_VAR_1}の　ようすが⋯⋯！");
+
+const u8 gText_CongratsPkmnEvolved[] BATTLE_MESSAGE_MENU_TEXT_DATA = _(
+    "おめでとう！　{STR_VAR_1}は\n"
+    "{STR_VAR_2}に　しんかした！{WAIT_SE}\p");
+
+const u8 gText_PkmnStoppedEvolving[] BATTLE_MESSAGE_MENU_TEXT_DATA = _(
+    "あれ⋯⋯？\n"
+    "{STR_VAR_1}の　へんかが　とまった！\p");
+
+const u8 gText_EllipsisQuestionMark[] BATTLE_MESSAGE_MENU_TEXT_DATA = _("⋯⋯？\p");
+const u8 gText_WhatWillPkmnDo[] BATTLE_MESSAGE_MENU_TEXT_DATA = _("{B_ACTIVE_NAME_WITH_PREFIX}は　どうする？");
+const u8 gText_WhatWillPkmnDo2[] BATTLE_MESSAGE_MENU_TEXT_DATA = _("{B_PLAYER_NAME}は　どうする？");
+const u8 gText_WhatWillWallyDo[] BATTLE_MESSAGE_MENU_TEXT_DATA = _("ミツルは　どうする？");
+const u8 gText_LinkStandby[] BATTLE_MESSAGE_MENU_TEXT_DATA = _("{PAUSE 16}つうしんたいきちゅう⋯⋯");
+const u8 gText_BattleMenu[] BATTLE_MESSAGE_MENU_TEXT_DATA = _(
+    "たたかう　　バッグ\n"
+    "ポケモン　　にげる");
+const u8 gText_SafariZoneMenu[] BATTLE_MESSAGE_MENU_TEXT_DATA = _(
+    "ボール　　　ポロック\n"
+    "ちかづく　　にげる");
+const u8 gText_MoveInterfacePP[] BATTLE_MESSAGE_MENU_TEXT_DATA = _("PP　　　");
+const u8 gText_MoveInterfaceType[] BATTLE_MESSAGE_MENU_TEXT_DATA = _("わざタイプ/");
+const u8 gText_MoveInterfaceDynamicColors[] BATTLE_MESSAGE_MENU_TEXT_DATA = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW DYNAMIC_COLOR4 DYNAMIC_COLOR5 DYNAMIC_COLOR6}");
+const u8 gText_WhichMoveToForget4[] BATTLE_MESSAGE_MENU_TEXT_DATA = _(
+    "{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW DYNAMIC_COLOR4 DYNAMIC_COLOR5 DYNAMIC_COLOR6}どの　わざを\n"
+    "わすれさせたい？");
 
 // Battle message ID lookup tables have the same order and values as US.
 const u16 gMissStringIds[] BATTLE_MESSAGE_STRING_ID_DATA =

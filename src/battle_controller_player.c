@@ -5076,8 +5076,8 @@ __attribute__((naked)) void PlayerHandleTwoReturnValues(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08059760: .4byte gDisplayedStringBattle\n\t"
-        "_08059764: .4byte gUnknown_85ABB9B\n\t"
-        "_08059768: .4byte gUnknown_85ABBA1\n\t"
+        "_08059764: .4byte gText_MoveInterfacePP\n\t"
+        "_08059768: .4byte gText_MoveInterfaceType\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5470,7 +5470,7 @@ __attribute__((naked)) void PrintLinkStandbyMsg(void)
         "_08059A00: .4byte gBattleTypeFlags\n\t"
         "_08059A04: .4byte gBattle_BG0_X\n\t"
         "_08059A08: .4byte gBattle_BG0_Y\n\t"
-        "_08059A0C: .4byte gUnknown_85ABB62\n\t"
+        "_08059A0C: .4byte gText_LinkStandby\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9724,9 +9724,9 @@ __attribute__((naked)) void PlayerHandleChooseAction(void)
         "_0805BCB0: .4byte gBattlerControllerFuncs\n\t"
         "_0805BCB4: .4byte gActiveBattler\n\t"
         "_0805BCB8: .4byte sub_0805BC20 + 1\n\t"
-        "_0805BCBC: .4byte gUnknown_85ABB72\n\t"
+        "_0805BCBC: .4byte gText_BattleMenu\n\t"
         "_0805BCC0: .4byte gActionSelectionCursor\n\t"
-        "_0805BCC4: .4byte gUnknown_85ABB43\n\t"
+        "_0805BCC4: .4byte gText_WhatWillPkmnDo\n\t"
         "_0805BCC8: .4byte gDisplayedStringBattle\n\t"
         ".syntax divided\n\t"
     );
