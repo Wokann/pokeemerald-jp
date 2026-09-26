@@ -316,7 +316,7 @@ Route113_GlassWorkshop_Text_NotEnoughAshNeedX:
 	.string "うーん⋯⋯\n"
 	.string "かざんばいが　すくないよ　ペコペコ！\l"
 	.string "ガラスのどうぐ　できないよ　ペコペコ！\p"
-	.string "あと　{STRING 0x02}ほ　あるけば\n"
+	.string "あと　{STR_VAR_1}ほ　あるけば\n"
 	.string "あおいビードロ　つくれるよ　ペコペコ！$"
 
 Route113_GlassWorkshop_Text_WhichGlassItemWoudYouLike:
@@ -326,23 +326,23 @@ Route113_GlassWorkshop_Text_WhichGlassItemWoudYouLike:
 	.string "どれが　いいかね　ペコペコ$"
 
 Route113_GlassWorkshop_Text_IsThatTheItemForYou:
-	.string "{STRING 0x02}　だね　ペコペコ！\n"
+	.string "{STR_VAR_1}　だね　ペコペコ！\n"
 	.string "ほんとうに　それで　いいんだね？　ペコペコ$"
 
 Route113_GlassWorkshop_Text_WhichWouldYouLike:
 	.string "どれが　いいかね　ペコペコ$"
 
 Route113_GlassWorkshop_Text_IllMakeItemForYou:
-	.string "{STRING 0x02}　だね　ペコペコ！\p"
+	.string "{STR_VAR_1}　だね　ペコペコ！\p"
 	.string "よしっ！　どうぐを　つくるよ　ペコペコ！\n"
 	.string "ちょっと　まってなさいよ　ペコペコ$"
 
 Route113_GlassWorkshop_Text_NotEnoughAshToMakeItem:
-	.string "{STRING 0x02}　だね　ペコペコ！\p"
+	.string "{STR_VAR_1}　だね　ペコペコ！\p"
 	.string "だけど　それを　つくるには\n"
 	.string "かざんばいが　たりないよ　ペコペコ！\p"
 	.string "かざんばいの　つもっている　ところを\n"
-	.string "あと　{STRING 0x03}ほ　あるかないと　ペコペコ！\p"
+	.string "あと　{STR_VAR_2}ほ　あるかないと　ペコペコ！\p"
 	.string "どれが　いいかね　ペコペコ$"
 
 Route113_GlassWorkshop_Text_AllThatAshButDontWantAnything:
@@ -350,7 +350,7 @@ Route113_GlassWorkshop_Text_AllThatAshButDontWantAnything:
 	.string "ほしい　ものは　ないのかね　ペコペコ⋯⋯$"
 
 Route113_GlassWorkshop_Text_IveFinishedGlassItem:
-	.string "おお　{STRING 0x02}　できたよ\n"
+	.string "おお　{STR_VAR_1}　できたよ\n"
 	.string "もって　いきなさいよ　ペコペコ$"
 
 Route113_GlassWorkshop_Text_NoRoomInBag:
