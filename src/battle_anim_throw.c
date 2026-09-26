@@ -1,13 +1,27 @@
 #include "global.h"
+#include "battle.h"
 #include "battle_anim.h"
+#include "battle_controllers.h"
+#include "battle_interface.h"
+#include "data.h"
 #include "graphics.h"
+#include "gpu_regs.h"
+#include "main.h"
+#include "m4a.h"
+#include "palette.h"
 #include "pokeball.h"
+#include "pokemon.h"
 #include "sprite.h"
 #include "task.h"
+#include "util.h"
 #include "constants/battle_anim.h"
+#include "constants/items.h"
+#include "constants/moves.h"
 #include "constants/rgb.h"
+#include "constants/songs.h"
 
 #define BATTLE_ANIM_THROW_STATIC_DATA __attribute__((section(".rodata.battle_anim_throw_static_data")))
+#define SPECIAL_FoundBlackGlasses 0x13B
 
 struct CaptureStar
 {
@@ -17,6 +31,12 @@ struct CaptureStar
 };
 
 extern void PokeBallOpenParticleAnimation(u8 taskId);
+extern u32 gUnknown_300601C;
+extern u16 gUnknown_3006020;
+extern u16 gUnknown_3006024;
+extern bool8 gUnknown_202415D;
+extern u32 sub_080A6E74(bool8, bool8, bool8, bool8, bool8, bool8, bool8);
+extern u32 CosAsU32(s16 angle, s16 magnitude) __asm__("Cos");
 extern void GreatBallOpenParticleAnimation(u8 taskId);
 extern void SafariBallOpenParticleAnimation(u8 taskId);
 extern void UltraBallOpenParticleAnimation(u8 taskId);
@@ -25,7 +45,46 @@ extern void DiveBallOpenParticleAnimation(u8 taskId);
 extern void RepeatBallOpenParticleAnimation(u8 taskId);
 extern void TimerBallOpenParticleAnimation(u8 taskId);
 extern void PremierBallOpenParticleAnimation(u8 taskId);
-extern void SpriteCB_PokeBlock_Throw(struct Sprite *sprite);
+void SpriteCB_PokeBlock_Throw(struct Sprite *sprite);
+void sub_08173180(struct Sprite *sprite);
+void sub_081731B8(struct Sprite *sprite);
+void sub_081731E4(struct Sprite *sprite);
+void sub_08170CD4(u8 taskId);
+void sub_08170E14(u8 taskId);
+void sub_08170E8C(u8 taskId);
+void sub_08170EE8(struct Sprite *sprite);
+void sub_08170F18(struct Sprite *sprite);
+void sub_08170FCC(struct Sprite *sprite);
+void sub_08171024(struct Sprite *sprite);
+void sub_08171170(struct Sprite *sprite);
+void sub_081711B4(struct Sprite *sprite);
+void sub_081712B8(struct Sprite *sprite);
+void sub_08171304(struct Sprite *sprite);
+void sub_08171598(struct Sprite *sprite);
+void sub_081715DC(struct Sprite *sprite);
+void sub_081716BC(struct Sprite *sprite);
+void sub_081717D0(struct Sprite *sprite);
+void sub_081717A4(struct Sprite *sprite);
+void sub_08171890(struct Sprite *sprite);
+void sub_081718C8(struct Sprite *sprite);
+void sub_08171990(struct Sprite *sprite);
+void sub_08171B44(u8 ballId);
+void PokeBallOpenParticleAnimation_Step1(struct Sprite *sprite);
+void PokeBallOpenParticleAnimation_Step2(struct Sprite *sprite);
+void FanOutBallOpenParticles_Step1(struct Sprite *sprite);
+void RepeatBallOpenParticleAnimation_Step1(struct Sprite *sprite);
+void PremierBallOpenParticleAnimation_Step1(struct Sprite *sprite);
+void DestroyBallOpenAnimationParticle(struct Sprite *sprite);
+extern const struct SpriteTemplate gWishStarSpriteTemplate;
+extern const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate;
+extern void sub_080A4044(bool8 toBG2);
+extern void sub_080A63F8(struct BattleAnimBgData *out);
+extern const u32 gUnknown_8C2EAF4[];
+extern const u32 gUnknown_8C2EB40[];
+void sub_08171A90(struct Sprite *sprite);
+void sub_08171ACC(struct Sprite *sprite);
+void sub_08170618(u8 *paletteId1, u8 *paletteId2, u8 battler);
+void sub_0817081C(u8 taskId);
 
 BATTLE_ANIM_THROW_STATIC_DATA static const struct CaptureStar sCaptureStars[] =
 {
@@ -346,2188 +405,632 @@ BATTLE_ANIM_THROW_STATIC_DATA static const struct SpriteTemplate sSafariRockSpri
     .callback = SpriteCB_PokeBlock_Throw,
 };
 
-__attribute__((naked)) void unref_sub_8170478(void)
+void sub_08170444(u8 taskId);
+
+void unref_sub_8170478(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x1c\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "	ldr r0, _08170404\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	ldr r0, _08170408\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _0817040C\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r1, _08170410\n\t"
-        "	movs r0, #0x48\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _08170414\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuRegBits\n\t"
-        "	ldr r1, _08170418\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #4\n\t"
-        "	movs r2, #0\n\t"
-        "	bl SetAnimBgAttribute\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl SetAnimBgAttribute\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #1\n\t"
-        "	bl SetAnimBgAttribute\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #3\n\t"
-        "	movs r2, #1\n\t"
-        "	bl SetAnimBgAttribute\n\t"
-        "	ldr r0, _0817041C\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	ldr r1, _08170420\n\t"
-        "	mov sb, r1\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	add r4, sb\n\t"
-        "	ldrb r7, [r4, #6]\n\t"
-        "	ldrh r6, [r4, #0x38]\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	ldr r0, _08170424\n\t"
-        "	bl CreateInvisibleSpriteWithCallback\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #0x14]\n\t"
-        "	ldr r0, _08170424\n\t"
-        "	bl CreateInvisibleSpriteWithCallback\n\t"
-        "	mov sl, r0\n\t"
-        "	mov r2, sl\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov sl, r2\n\t"
-        "	ldrb r1, [r4, #5]\n\t"
-        "	movs r3, #0xd\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	mov r8, r1\n\t"
-        "	mov r2, r8\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r4, #5]\n\t"
-        "	lsls r5, r7, #4\n\t"
-        "	adds r5, r5, r7\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	add r5, sb\n\t"
-        "	ldrb r1, [r5, #5]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	lsls r1, r6, #4\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	add r1, sb\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	mov r2, r8\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldr r0, [sp, #0x14]\n\t"
-        "	lsls r6, r0, #4\n\t"
-        "	adds r6, r6, r0\n\t"
-        "	lsls r6, r6, #2\n\t"
-        "	mov r1, sb\n\t"
-        "	adds r7, r6, r1\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0x44\n\t"
-        "	str r3, [sp, #0x18]\n\t"
-        "	bl memcpy\n\t"
-        "	mov r2, sl\n\t"
-        "	lsls r4, r2, #4\n\t"
-        "	add r4, sl\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	add r0, sb\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0x44\n\t"
-        "	bl memcpy\n\t"
-        "	ldrb r1, [r7, #1]\n\t"
-        "	ldr r3, [sp, #0x18]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r7, #1]\n\t"
-        "	mov r2, r8\n\t"
-        "	ldrb r0, [r2, #1]\n\t"
-        "	ands r3, r0\n\t"
-        "	orrs r3, r1\n\t"
-        "	strb r3, [r2, #1]\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	add sb, r0\n\t"
-        "	add r6, sb\n\t"
-        "	ldr r1, _08170424\n\t"
-        "	str r1, [r6]\n\t"
-        "	add r4, sb\n\t"
-        "	str r1, [r4]\n\t"
-        "	mov r0, sp\n\t"
-        "	bl sub_080A63F8\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0, #9]\n\t"
-        "	ldr r1, _08170428\n\t"
-        "	bl AnimLoadCompressedBgTilemap\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0, #9]\n\t"
-        "	ldr r1, _0817042C\n\t"
-        "	mov r2, sp\n\t"
-        "	ldrh r2, [r2, #0xa]\n\t"
-        "	bl AnimLoadCompressedBgGfx\n\t"
-        "	ldr r0, _08170430\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrb r1, [r1, #8]\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	ldr r1, _08170434\n\t"
-        "	ldrh r0, [r7, #0x20]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	adds r0, #0x20\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _08170438\n\t"
-        "	ldrh r0, [r7, #0x22]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	subs r0, #0x20\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _0817043C\n\t"
-        "	ldr r2, [sp, #0x10]\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	strh r1, [r0, #0xa]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrh r1, [r1, #0x14]\n\t"
-        "	strh r1, [r0, #8]\n\t"
-        "	mov r2, sl\n\t"
-        "	strh r2, [r0, #0xc]\n\t"
-        "	ldr r1, _08170440\n\t"
-        "	str r1, [r0]\n\t"
-        "	add sp, #0x1c\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08170404: .4byte gBattleAnimAttacker\n\t"
-        "_08170408: .4byte gBattle_WIN0H\n\t"
-        "_0817040C: .4byte gBattle_WIN0V\n\t"
-        "_08170410: .4byte 0x00003F3F\n\t"
-        "_08170414: .4byte 0x00003F3D\n\t"
-        "_08170418: .4byte 0x00003F42\n\t"
-        "_0817041C: .4byte gHealthboxSpriteIds\n\t"
-        "_08170420: .4byte gSprites\n\t"
-        "_08170424: .4byte SpriteCallbackDummy + 1\n\t"
-        "_08170428: .4byte gUnknown_8C2EB40\n\t"
-        "_0817042C: .4byte gUnknown_8C2EAF4\n\t"
-        "_08170430: .4byte gCureBubblesPal\n\t"
-        "_08170434: .4byte gBattle_BG1_X\n\t"
-        "_08170438: .4byte gBattle_BG1_Y\n\t"
-        "_0817043C: .4byte gTasks\n\t"
-        "_08170440: .4byte sub_08170444 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct BattleAnimBgData animBgData;
+    u8 healthBoxSpriteId;
+    u8 battler;
+    u8 spriteId1;
+    u8 spriteId2;
+    u8 spriteId3;
+    u8 spriteId4;
+
+    battler = gBattleAnimAttacker;
+    gBattle_WIN0H = 0;
+    gBattle_WIN0V = 0;
+    SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+    SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG0 | WINOUT_WIN01_BG2 | WINOUT_WIN01_BG3 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR);
+    SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_OBJWIN_ON);
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(0, 16));
+    SetAnimBgAttribute(1, BG_ANIM_PRIORITY, 0);
+    SetAnimBgAttribute(1, BG_ANIM_SCREEN_SIZE, 0);
+    SetAnimBgAttribute(1, BG_ANIM_AREA_OVERFLOW_MODE, 1);
+    SetAnimBgAttribute(1, BG_ANIM_CHAR_BASE_BLOCK, 1);
+
+    healthBoxSpriteId = gHealthboxSpriteIds[battler];
+    spriteId1 = gSprites[healthBoxSpriteId].oam.affineParam;
+    spriteId2 = gSprites[healthBoxSpriteId].data[5];
+    spriteId3 = CreateInvisibleSpriteWithCallback(SpriteCallbackDummy);
+    spriteId4 = CreateInvisibleSpriteWithCallback(SpriteCallbackDummy);
+    gSprites[healthBoxSpriteId].oam.priority = 1;
+    gSprites[spriteId1].oam.priority = 1;
+    gSprites[spriteId2].oam.priority = 1;
+    gSprites[spriteId3] = gSprites[healthBoxSpriteId];
+    gSprites[spriteId4] = gSprites[spriteId1];
+    gSprites[spriteId3].oam.objMode = ST_OAM_OBJ_WINDOW;
+    gSprites[spriteId4].oam.objMode = ST_OAM_OBJ_WINDOW;
+    gSprites[spriteId3].callback = SpriteCallbackDummy;
+    gSprites[spriteId4].callback = SpriteCallbackDummy;
+
+    sub_080A63F8(&animBgData);
+    AnimLoadCompressedBgTilemap(animBgData.bgId, gUnknown_8C2EB40);
+    AnimLoadCompressedBgGfx(animBgData.bgId, gUnknown_8C2EAF4, animBgData.tilesOffset);
+    LoadCompressedPalette(gCureBubblesPal, BG_PLTT_ID(animBgData.paletteId), PLTT_SIZE_4BPP);
+
+    gBattle_BG1_X = -gSprites[spriteId3].x + 32;
+    gBattle_BG1_Y = -gSprites[spriteId3].y - 32;
+    gTasks[taskId].data[1] = 640;
+    gTasks[taskId].data[0] = spriteId3;
+    gTasks[taskId].data[2] = spriteId4;
+    gTasks[taskId].func = sub_08170444;
 }
 
-__attribute__((naked)) void sub_08170444(void)
+void sub_08170444(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r0, _0817048C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r1, _08170490\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrh r1, [r5, #0xa]\n\t"
-        "	ldrh r0, [r5, #0x22]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r1, [r5, #0x22]\n\t"
-        "	ldr r2, _08170494\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r4, [r2]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r0, [r2]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	ands r1, r0\n\t"
-        "	strh r1, [r5, #0x22]\n\t"
-        "	movs r1, #0x26\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081704D4\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _08170498\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817049E\n\t"
-        "	b _081705F8\n\t"
-        "	.align 2, 0\n\t"
-        "_0817048C: .4byte gBattleAnimAttacker\n\t"
-        "_08170490: .4byte gTasks\n\t"
-        "_08170494: .4byte gBattle_BG1_Y\n\t"
-        "_08170498:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081704EC\n\t"
-        "	b _081705F8\n\t"
-        "_0817049E:\n\t"
-        "	ldrh r0, [r5, #0x1e]\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	strh r1, [r5, #0x1e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _081704AE\n\t"
-        "	b _081705F8\n\t"
-        "_081704AE:\n\t"
-        "	strh r3, [r5, #0x1e]\n\t"
-        "	ldrh r1, [r5, #0x20]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r5, #0x20]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r2, #0x20\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r0, #8\n\t"
-        "	beq _081704D2\n\t"
-        "	b _081705F8\n\t"
-        "_081704D2:\n\t"
-        "	b _081704E4\n\t"
-        "_081704D4:\n\t"
-        "	ldrh r0, [r5, #0x1c]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x1c]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x1e\n\t"
-        "	beq _081704E4\n\t"
-        "	b _081705F8\n\t"
-        "_081704E4:\n\t"
-        "	ldrh r0, [r5, #0x26]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	b _081705F8\n\t"
-        "_081704EC:\n\t"
-        "	ldrh r0, [r5, #0x1e]\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	strh r1, [r5, #0x1e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _081705F8\n\t"
-        "	strh r3, [r5, #0x1e]\n\t"
-        "	ldrh r1, [r5, #0x20]\n\t"
-        "	subs r1, #1\n\t"
-        "	strh r1, [r5, #0x20]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ldrsh r4, [r5, r0]\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _081705F8\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080A4044\n\t"
-        "	ldr r0, _08170604\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r0, _08170608\n\t"
-        "	strh r4, [r0]\n\t"
-        "	ldr r4, _0817060C\n\t"
-        "	movs r0, #0x48\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	bl IsContest\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08170550\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #3\n\t"
-        "	movs r2, #0\n\t"
-        "	bl SetAnimBgAttribute\n\t"
-        "_08170550:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetGpuReg\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #8\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	eors r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x52\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r4, #8\n\t"
-        "	ldrsh r1, [r5, r4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r6, _08170610\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	bl DestroySprite\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	bl DestroySprite\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	bl SetAnimBgAttribute\n\t"
-        "	ldr r0, _08170614\n\t"
-        "	add r0, r8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	ldrb r2, [r1, #6]\n\t"
-        "	mov r8, r2\n\t"
-        "	ldrh r4, [r1, #0x38]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldrb r3, [r1, #5]\n\t"
-        "	movs r2, #0xd\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	movs r5, #4\n\t"
-        "	orrs r0, r5\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	add r1, r8\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	ldrb r3, [r1, #5]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	orrs r0, r5\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	ands r2, r1\n\t"
-        "	orrs r2, r5\n\t"
-        "	strb r2, [r0, #5]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "_081705F8:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08170604: .4byte gBattle_WIN0H\n\t"
-        "_08170608: .4byte gBattle_WIN0V\n\t"
-        "_0817060C: .4byte 0x00003F3F\n\t"
-        "_08170610: .4byte gSprites\n\t"
-        "_08170614: .4byte gHealthboxSpriteIds\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId1;
+    u8 spriteId2;
+    u8 battler;
+
+    battler = gBattleAnimAttacker;
+    gTasks[taskId].data[13] += gTasks[taskId].data[1];
+    gBattle_BG1_Y += (u16)gTasks[taskId].data[13] >> 8;
+    gTasks[taskId].data[13] &= 0xFF;
+
+    switch (gTasks[taskId].data[15])
+    {
+    case 0:
+        if (gTasks[taskId].data[11]++ > 1)
+        {
+            gTasks[taskId].data[11] = 0;
+            gTasks[taskId].data[12]++;
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gTasks[taskId].data[12], 16 - gTasks[taskId].data[12]));
+            if (gTasks[taskId].data[12] == 8)
+                gTasks[taskId].data[15]++;
+        }
+        break;
+    case 1:
+        if (++gTasks[taskId].data[10] == 30)
+            gTasks[taskId].data[15]++;
+        break;
+    case 2:
+        if (gTasks[taskId].data[11]++ > 1)
+        {
+            gTasks[taskId].data[11] = 0;
+            gTasks[taskId].data[12]--;
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gTasks[taskId].data[12], 16 - gTasks[taskId].data[12]));
+            if (gTasks[taskId].data[12] == 0)
+            {
+                sub_080A4044(FALSE);
+                gBattle_WIN0H = 0;
+                gBattle_WIN0V = 0;
+                SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+                SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR);
+                if (!IsContest())
+                    SetAnimBgAttribute(1, BG_ANIM_CHAR_BASE_BLOCK, 0);
+
+                SetGpuReg(REG_OFFSET_DISPCNT, GetGpuReg(REG_OFFSET_DISPCNT) ^ DISPCNT_OBJWIN_ON);
+                SetGpuReg(REG_OFFSET_BLDCNT, 0);
+                SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(0, 0));
+                DestroySprite(&gSprites[gTasks[taskId].data[0]]);
+                DestroySprite(&gSprites[gTasks[taskId].data[2]]);
+                SetAnimBgAttribute(1, BG_ANIM_AREA_OVERFLOW_MODE, 0);
+                spriteId1 = gSprites[gHealthboxSpriteIds[battler]].oam.affineParam;
+                spriteId2 = gSprites[gHealthboxSpriteIds[battler]].data[5];
+                gSprites[gHealthboxSpriteIds[battler]].oam.priority = 1;
+                gSprites[spriteId1].oam.priority = 1;
+                gSprites[spriteId2].oam.priority = 1;
+                DestroyAnimVisualTask(taskId);
+            }
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_08170618(void)
+void sub_08170618(u8 *paletteId1, u8 *paletteId2, u8 battler)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov sb, r0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r0, _081706F0\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r5, r0, #4\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	ldr r0, _081706F4\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	ldrb r1, [r5, #6]\n\t"
-        "	mov sl, r1\n\t"
-        "	ldrh r4, [r5, #0x38]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _081706F8\n\t"
-        "	bl AllocSpritePalette\n\t"
-        "	mov r2, sb\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, _081706FC\n\t"
-        "	bl AllocSpritePalette\n\t"
-        "	strb r0, [r7]\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	orrs r0, r3\n\t"
-        "	lsls r6, r4, #4\n\t"
-        "	adds r6, r6, r4\n\t"
-        "	lsls r6, r6, #2\n\t"
-        "	ldr r2, _081706F4\n\t"
-        "	adds r6, r6, r2\n\t"
-        "	ldrb r4, [r6, #5]\n\t"
-        "	lsrs r4, r4, #4\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	orrs r4, r3\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ldr r1, _08170700\n\t"
-        "	mov r8, r1\n\t"
-        "	add r0, r8\n\t"
-        "	mov r2, sb\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r1, r3, r1\n\t"
-        "	movs r2, #0x20\n\t"
-        "	str r3, [sp]\n\t"
-        "	bl LoadPalette\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	add r4, r8\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	ldr r3, [sp]\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	mov r0, sb\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ldrb r2, [r5, #5]\n\t"
-        "	movs r3, #0xf\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	mov r2, sl\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	add r1, sl\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _081706F4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	mov r0, sb\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	ldrb r4, [r1, #5]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r0, r4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	ldrb r1, [r6, #5]\n\t"
-        "	ands r3, r1\n\t"
-        "	orrs r3, r0\n\t"
-        "	strb r3, [r6, #5]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081706F0: .4byte gHealthboxSpriteIds\n\t"
-        "_081706F4: .4byte gSprites\n\t"
-        "_081706F8: .4byte 0x0000D709\n\t"
-        "_081706FC: .4byte 0x0000D70A\n\t"
-        "_08170700: .4byte gPlttBufferUnfaded\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 healthBoxSpriteId;
+    u8 spriteId1;
+    u8 spriteId2;
+    u16 offset1;
+    u16 offset2;
+
+    healthBoxSpriteId = gHealthboxSpriteIds[battler];
+    spriteId1 = gSprites[healthBoxSpriteId].oam.affineParam;
+    spriteId2 = gSprites[healthBoxSpriteId].data[5];
+    *paletteId1 = AllocSpritePalette(TAG_HEALTHBOX_PALS_1);
+    *paletteId2 = AllocSpritePalette(TAG_HEALTHBOX_PALS_2);
+
+    offset1 = OBJ_PLTT_ID(gSprites[healthBoxSpriteId].oam.paletteNum);
+    offset2 = OBJ_PLTT_ID(gSprites[spriteId2].oam.paletteNum);
+    LoadPalette(&gPlttBufferUnfaded[offset1], OBJ_PLTT_ID(*paletteId1), PLTT_SIZE_4BPP);
+    LoadPalette(&gPlttBufferUnfaded[offset2], OBJ_PLTT_ID(*paletteId2), PLTT_SIZE_4BPP);
+
+    gSprites[healthBoxSpriteId].oam.paletteNum = *paletteId1;
+    gSprites[spriteId1].oam.paletteNum = *paletteId1;
+    gSprites[spriteId2].oam.paletteNum = *paletteId2;
 }
 
-__attribute__((naked)) void AnimTask_LoadHealthboxPalsForLevelUp(void)
+void AnimTask_LoadHealthboxPalsForLevelUp(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r1, #1\n\t"
-        "	ldr r0, _0817072C\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	mov r0, sp\n\t"
-        "	bl sub_08170618\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817072C: .4byte gBattleAnimAttacker\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 paletteId1;
+    u8 paletteId2;
+
+    sub_08170618(&paletteId1, &paletteId2, gBattleAnimAttacker);
+    DestroyAnimVisualTask(taskId);
 }
 
-__attribute__((naked)) void sub_08170730(void)
+void sub_08170730(u8 battler)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _081707B8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, _081707BC\n\t"
-        "	mov r8, r1\n\t"
-        "	lsls r5, r0, #4\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	add r5, r8\n\t"
-        "	ldrb r0, [r5, #6]\n\t"
-        "	mov sb, r0\n\t"
-        "	ldrh r6, [r5, #0x38]\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	ldr r0, _081707C0\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "	ldr r0, _081707C4\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "	ldr r0, _081707C8\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _081707CC\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	ldrb r2, [r5, #5]\n\t"
-        "	movs r3, #0xf\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r4\n\t"
-        "	strb r1, [r5, #5]\n\t"
-        "	mov r1, sb\n\t"
-        "	lsls r2, r1, #4\n\t"
-        "	add r2, sb\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	add r2, r8\n\t"
-        "	ldrb r5, [r2, #5]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	ands r1, r5\n\t"
-        "	orrs r1, r4\n\t"
-        "	strb r1, [r2, #5]\n\t"
-        "	lsls r1, r6, #4\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	add r1, r8\n\t"
-        "	lsrs r0, r0, #0x14\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	ands r3, r2\n\t"
-        "	orrs r3, r0\n\t"
-        "	strb r3, [r1, #5]\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081707B8: .4byte gHealthboxSpriteIds\n\t"
-        "_081707BC: .4byte gSprites\n\t"
-        "_081707C0: .4byte 0x0000D709\n\t"
-        "_081707C4: .4byte 0x0000D70A\n\t"
-        "_081707C8: .4byte 0x0000D6FF\n\t"
-        "_081707CC: .4byte 0x0000D704\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 healthBoxSpriteId;
+    u8 spriteId1;
+    u8 spriteId2;
+    u8 paletteId1;
+    u8 paletteId2;
+
+    healthBoxSpriteId = gHealthboxSpriteIds[battler];
+    spriteId1 = gSprites[healthBoxSpriteId].oam.affineParam;
+    spriteId2 = gSprites[healthBoxSpriteId].data[5];
+
+    FreeSpritePaletteByTag(TAG_HEALTHBOX_PALS_1);
+    FreeSpritePaletteByTag(TAG_HEALTHBOX_PALS_2);
+    paletteId1 = IndexOfSpritePaletteTag(TAG_HEALTHBOX_PAL);
+    paletteId2 = IndexOfSpritePaletteTag(TAG_HEALTHBAR_PAL);
+    gSprites[healthBoxSpriteId].oam.paletteNum = paletteId1;
+    gSprites[spriteId1].oam.paletteNum = paletteId1;
+    gSprites[spriteId2].oam.paletteNum = paletteId2;
 }
 
-__attribute__((naked)) void AnimTask_FreeHealthboxPalsForLevelUp(void)
+void AnimTask_FreeHealthboxPalsForLevelUp(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _081707EC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl sub_08170730\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081707EC: .4byte gBattleAnimAttacker\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_08170730(gBattleAnimAttacker);
+    DestroyAnimVisualTask(taskId);
 }
 
-__attribute__((naked)) void AnimTask_FlashHealthboxOnLevelUp(void)
+void AnimTask_FlashHealthboxOnLevelUp(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _08170810\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, _08170814\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	strh r0, [r1, #0x1c]\n\t"
-        "	ldrh r0, [r2, #2]\n\t"
-        "	strh r0, [r1, #0x1e]\n\t"
-        "	ldr r0, _08170818\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08170810: .4byte gTasks\n\t"
-        "_08170814: .4byte gBattleAnimArgs\n\t"
-        "_08170818: .4byte sub_0817081C + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gTasks[taskId].data[10] = gBattleAnimArgs[0];
+    gTasks[taskId].data[11] = gBattleAnimArgs[1];
+    gTasks[taskId].func = sub_0817081C;
 }
 
-__attribute__((naked)) void sub_0817081C(void)
+void sub_0817081C(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r1, _08170868\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r6, #0\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	strh r1, [r4, #8]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r2, #0x1e\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	cmp r0, r1\n\t"
-        "	blt _081708DC\n\t"
-        "	strh r6, [r4, #8]\n\t"
-        "	ldr r0, _0817086C\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	movs r3, #0x1c\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	movs r1, #2\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817085A\n\t"
-        "	movs r1, #6\n\t"
-        "_0817085A:\n\t"
-        "	movs r3, #0xa\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08170870\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081708AC\n\t"
-        "	b _081708DC\n\t"
-        "	.align 2, 0\n\t"
-        "_08170868: .4byte gTasks\n\t"
-        "_0817086C: .4byte 0x0000D709\n\t"
-        "_08170870:\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	ble _08170882\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "_08170882:\n\t"
-        "	lsls r0, r2, #4\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	ldrb r2, [r4, #0xc]\n\t"
-        "	ldr r3, _081708A8\n\t"
-        "	movs r1, #1\n\t"
-        "	bl BlendPalette\n\t"
-        "	movs r3, #0xc\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	bne _081708DC\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	b _081708DC\n\t"
-        "	.align 2, 0\n\t"
-        "_081708A8: .4byte 0x00007F74\n\t"
-        "_081708AC:\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	subs r0, #2\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081708BA\n\t"
-        "	strh r6, [r4, #0xc]\n\t"
-        "_081708BA:\n\t"
-        "	lsls r0, r2, #4\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	ldrb r2, [r4, #0xc]\n\t"
-        "	ldr r3, _081708E4\n\t"
-        "	movs r1, #1\n\t"
-        "	bl BlendPalette\n\t"
-        "	movs r3, #0xc\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081708DC\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "_081708DC:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081708E4: .4byte 0x00007F74\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 paletteNum;
+    u32 paletteOffset;
+    u32 colorOffset;
+
+    gTasks[taskId].data[0]++;
+    if (gTasks[taskId].data[0]++ >= gTasks[taskId].data[11])
+    {
+        gTasks[taskId].data[0] = 0;
+        paletteNum = IndexOfSpritePaletteTag(TAG_HEALTHBOX_PALS_1);
+        colorOffset = gTasks[taskId].data[10] == 0 ? 6 : 2;
+        switch (gTasks[taskId].data[1])
+        {
+        case 0:
+            gTasks[taskId].data[2] += 2;
+            if (gTasks[taskId].data[2] > 16)
+                gTasks[taskId].data[2] = 16;
+
+            paletteOffset = OBJ_PLTT_ID(paletteNum);
+            BlendPalette(paletteOffset + colorOffset, 1, gTasks[taskId].data[2], RGB(20, 27, 31));
+            if (gTasks[taskId].data[2] == 16)
+                gTasks[taskId].data[1]++;
+            break;
+        case 1:
+            gTasks[taskId].data[2] -= 2;
+            if (gTasks[taskId].data[2] < 0)
+                gTasks[taskId].data[2] = 0;
+
+            paletteOffset = OBJ_PLTT_ID(paletteNum);
+            BlendPalette(paletteOffset + colorOffset, 1, gTasks[taskId].data[2], RGB(20, 27, 31));
+            if (gTasks[taskId].data[2] == 0)
+                DestroyAnimVisualTask(taskId);
+            break;
+        }
+    }
 }
 
-__attribute__((naked)) void AnimTask_SwitchOutShrinkMon(void)
+void AnimTask_SwitchOutShrinkMon(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r1, _08170914\n\t"
-        "	ldr r0, _08170918\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r5, [r0]\n\t"
-        "	ldr r1, _0817091C\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08170936\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _08170920\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08170926\n\t"
-        "	b _08170988\n\t"
-        "	.align 2, 0\n\t"
-        "_08170914: .4byte gBattlerSpriteIds\n\t"
-        "_08170918: .4byte gBattleAnimAttacker\n\t"
-        "_0817091C: .4byte gTasks\n\t"
-        "_08170920:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08170968\n\t"
-        "	b _08170988\n\t"
-        "_08170926:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl PrepareBattlerSpriteForRotScale\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	strh r0, [r4, #0x1c]\n\t"
-        "	b _0817095A\n\t"
-        "_08170936:\n\t"
-        "	ldrh r0, [r4, #0x1c]\n\t"
-        "	adds r0, #0x30\n\t"
-        "	strh r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl SetSpriteRotScale\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl SetBattlerSpriteYOffsetFromYScale\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	ldr r0, _08170964\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _08170988\n\t"
-        "_0817095A:\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	b _08170988\n\t"
-        "	.align 2, 0\n\t"
-        "_08170964: .4byte 0x000002CF\n\t"
-        "_08170968:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ResetSpriteRotScale\n\t"
-        "	ldr r1, _08170990\n\t"
-        "	lsls r0, r5, #4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "_08170988:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08170990: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+
+    spriteId = gBattlerSpriteIds[gBattleAnimAttacker];
+    switch (gTasks[taskId].data[0])
+    {
+    case 0:
+        PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_NORMAL);
+        gTasks[taskId].data[10] = 0x100;
+        gTasks[taskId].data[0]++;
+        break;
+    case 1:
+        gTasks[taskId].data[10] += 0x30;
+        SetSpriteRotScale(spriteId, gTasks[taskId].data[10], gTasks[taskId].data[10], 0);
+        SetBattlerSpriteYOffsetFromYScale(spriteId);
+        if (gTasks[taskId].data[10] >= 0x2D0)
+            gTasks[taskId].data[0]++;
+        break;
+    case 2:
+        ResetSpriteRotScale(spriteId);
+        gSprites[spriteId].invisible = TRUE;
+        DestroyAnimVisualTask(taskId);
+        break;
+    }
 }
 
-__attribute__((naked)) void AnimTask_SwitchOutBallEffect(void)
+void AnimTask_SwitchOutBallEffect(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r1, _081709CC\n\t"
-        "	ldr r4, _081709D0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	mov sb, r1\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081709DC\n\t"
-        "	ldr r1, _081709D4\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081709D8\n\t"
-        "	b _081709EC\n\t"
-        "	.align 2, 0\n\t"
-        "_081709CC: .4byte gBattlerSpriteIds\n\t"
-        "_081709D0: .4byte gBattleAnimAttacker\n\t"
-        "_081709D4: .4byte gBattlerPartyIndexes\n\t"
-        "_081709D8: .4byte gPlayerParty\n\t"
-        "_081709DC:\n\t"
-        "	ldr r1, _08170A1C\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08170A20\n\t"
-        "_081709EC:\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x26\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl ItemIdToBallId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r2, _08170A24\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r6, r0, r2\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r7, [r6, r0]\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _08170A28\n\t"
-        "	cmp r7, #1\n\t"
-        "	beq _08170AA8\n\t"
-        "	b _08170AD2\n\t"
-        "	.align 2, 0\n\t"
-        "_08170A1C: .4byte gBattlerPartyIndexes\n\t"
-        "_08170A20: .4byte gEnemyParty\n\t"
-        "_08170A24: .4byte gTasks\n\t"
-        "_08170A28:\n\t"
-        "	ldr r5, _08170AA0\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldr r2, _08170AA4\n\t"
-        "	mov r3, sb\n\t"
-        "	lsls r0, r3, #4\n\t"
-        "	add r0, sb\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r2, [r0, #5]\n\t"
-        "	lsls r2, r2, #0x1c\n\t"
-        "	lsrs r2, r2, #0x1e\n\t"
-        "	adds r0, #0x43\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x16\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl AnimateBallOpenParticles\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r6, #0x1c]\n\t"
-        "	str r7, [sp]\n\t"
-        "	str r7, [sp, #4]\n\t"
-        "	str r7, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_080A6E74\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r3, r8\n\t"
-        "	bl LaunchBallFadeMonTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r6, #0x1e]\n\t"
-        "	ldrh r0, [r6, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #8]\n\t"
-        "	b _08170AD2\n\t"
-        "	.align 2, 0\n\t"
-        "_08170AA0: .4byte gBattleAnimAttacker\n\t"
-        "_08170AA4: .4byte gSprites\n\t"
-        "_08170AA8:\n\t"
-        "	movs r1, #0x1c\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r0, [r1, #4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08170AD2\n\t"
-        "	movs r3, #0x1e\n\t"
-        "	ldrsh r0, [r6, r3]\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r0, [r1, #4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08170AD2\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "_08170AD2:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+    u16 ball;
+    u8 ballId;
+    u8 x;
+    u8 y;
+    u8 priority;
+    u8 subpriority;
+    u32 selectedPalettes;
+
+    spriteId = gBattlerSpriteIds[gBattleAnimAttacker];
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+        ball = GetMonData3(&gPlayerParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_POKEBALL);
+    else
+        ball = GetMonData3(&gEnemyParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_POKEBALL);
+
+    ballId = ItemIdToBallId(ball);
+    switch (gTasks[taskId].data[0])
+    {
+    case 0:
+        x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+        y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
+        priority = gSprites[spriteId].oam.priority;
+        subpriority = gSprites[spriteId].subpriority;
+        gTasks[taskId].data[10] = AnimateBallOpenParticles(x, y + 32, priority, subpriority, ballId);
+        selectedPalettes = sub_080A6E74(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE);
+        gTasks[taskId].data[11] = LaunchBallFadeMonTask(FALSE, gBattleAnimAttacker, selectedPalettes, ballId);
+        gTasks[taskId].data[0]++;
+        break;
+    case 1:
+        if (!gTasks[gTasks[taskId].data[10]].isActive && !gTasks[gTasks[taskId].data[11]].isActive)
+            DestroyAnimVisualTask(taskId);
+        break;
+    }
 }
 
-__attribute__((naked)) void AnimTask_LoadBallGfx(void)
+void AnimTask_LoadBallGfx(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _08170B04\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemIdToBallId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl LoadBallGfx\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08170B04: .4byte gLastUsedItem\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 ballId = ItemIdToBallId(gLastUsedItem);
+
+    LoadBallGfx(ballId);
+    DestroyAnimVisualTask(taskId);
 }
 
-__attribute__((naked)) void AnimTask_FreeBallGfx(void)
+void AnimTask_FreeBallGfx(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _08170B2C\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemIdToBallId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl FreeBallGfx\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08170B2C: .4byte gLastUsedItem\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 ballId = ItemIdToBallId(gLastUsedItem);
+
+    FreeBallGfx(ballId);
+    DestroyAnimVisualTask(taskId);
 }
 
-__attribute__((naked)) void AnimTask_IsBallBlockedByTrainer(void)
+void AnimTask_IsBallBlockedByTrainer(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r0, _08170B48\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bne _08170B54\n\t"
-        "	ldr r1, _08170B4C\n\t"
-        "	ldr r0, _08170B50\n\t"
-        "	b _08170B58\n\t"
-        "	.align 2, 0\n\t"
-        "_08170B48: .4byte gBattleSpritesDataPtr\n\t"
-        "_08170B4C: .4byte gBattleAnimArgs\n\t"
-        "_08170B50: .4byte 0x0000FFFF\n\t"
-        "_08170B54:\n\t"
-        "	ldr r1, _08170B64\n\t"
-        "	movs r0, #0\n\t"
-        "_08170B58:\n\t"
-        "	strh r0, [r1, #0xe]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08170B64: .4byte gBattleAnimArgs\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gBattleSpritesDataPtr->animationData->ballThrowCaseId == BALL_TRAINER_BLOCK)
+        gBattleAnimArgs[ARG_RET_ID] = -1;
+    else
+        gBattleAnimArgs[ARG_RET_ID] = 0;
+
+    DestroyAnimVisualTask(taskId);
 }
 
-__attribute__((naked)) u8 ItemIdToBallId(u16 ballItem)
+u8 ItemIdToBallId(u16 ballItem)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	bhi _08170BE0\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08170B80\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08170B80: .4byte _08170B84\n\t"
-        "_08170B84:\n\t"
-        "	.4byte _08170BB4\n\t"
-        "	.4byte _08170BB8\n\t"
-        "	.4byte _08170BBC\n\t"
-        "	.4byte _08170BE0\n\t"
-        "	.4byte _08170BC0\n\t"
-        "	.4byte _08170BC4\n\t"
-        "	.4byte _08170BC8\n\t"
-        "	.4byte _08170BCC\n\t"
-        "	.4byte _08170BD0\n\t"
-        "	.4byte _08170BD4\n\t"
-        "	.4byte _08170BD8\n\t"
-        "	.4byte _08170BDC\n\t"
-        "_08170BB4:\n\t"
-        "	movs r0, #4\n\t"
-        "	b _08170BE2\n\t"
-        "_08170BB8:\n\t"
-        "	movs r0, #3\n\t"
-        "	b _08170BE2\n\t"
-        "_08170BBC:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08170BE2\n\t"
-        "_08170BC0:\n\t"
-        "	movs r0, #2\n\t"
-        "	b _08170BE2\n\t"
-        "_08170BC4:\n\t"
-        "	movs r0, #5\n\t"
-        "	b _08170BE2\n\t"
-        "_08170BC8:\n\t"
-        "	movs r0, #6\n\t"
-        "	b _08170BE2\n\t"
-        "_08170BCC:\n\t"
-        "	movs r0, #7\n\t"
-        "	b _08170BE2\n\t"
-        "_08170BD0:\n\t"
-        "	movs r0, #8\n\t"
-        "	b _08170BE2\n\t"
-        "_08170BD4:\n\t"
-        "	movs r0, #9\n\t"
-        "	b _08170BE2\n\t"
-        "_08170BD8:\n\t"
-        "	movs r0, #0xa\n\t"
-        "	b _08170BE2\n\t"
-        "_08170BDC:\n\t"
-        "	movs r0, #0xb\n\t"
-        "	b _08170BE2\n\t"
-        "_08170BE0:\n\t"
-        "	movs r0, #0\n\t"
-        "_08170BE2:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (ballItem)
+    {
+    case ITEM_MASTER_BALL:
+        return BALL_MASTER;
+    case ITEM_ULTRA_BALL:
+        return BALL_ULTRA;
+    case ITEM_GREAT_BALL:
+        return BALL_GREAT;
+    case ITEM_SAFARI_BALL:
+        return BALL_SAFARI;
+    case ITEM_NET_BALL:
+        return BALL_NET;
+    case ITEM_DIVE_BALL:
+        return BALL_DIVE;
+    case ITEM_NEST_BALL:
+        return BALL_NEST;
+    case ITEM_REPEAT_BALL:
+        return BALL_REPEAT;
+    case ITEM_TIMER_BALL:
+        return BALL_TIMER;
+    case ITEM_LUXURY_BALL:
+        return BALL_LUXURY;
+    case ITEM_PREMIER_BALL:
+        return BALL_PREMIER;
+    case ITEM_POKE_BALL:
+    default:
+        return BALL_POKE;
+    }
 }
 
-__attribute__((naked)) void AnimTask_ThrowBall(void)
+void AnimTask_ThrowBall(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sl\n\t"
-        "	mov r5, sb\n\t"
-        "	mov r4, r8\n\t"
-        "	push {r4, r5, r6}\n\t"
-        "	mov sl, r0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	ldr r0, _08170CB0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemIdToBallId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _08170CB4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x20\n\t"
-        "	movs r2, #0x50\n\t"
-        "	movs r3, #0x1d\n\t"
-        "	bl CreateSprite\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r1, _08170CB8\n\t"
-        "	mov sb, r1\n\t"
-        "	lsls r4, r5, #4\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r6, r4, r1\n\t"
-        "	movs r0, #0x22\n\t"
-        "	strh r0, [r6, #0x2e]\n\t"
-        "	ldr r2, _08170CBC\n\t"
-        "	mov r8, r2\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r6, #0x30]\n\t"
-        "	mov r1, r8\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	subs r0, #0x10\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _08170CC0\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r0, _08170CC4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r3, [r0, #8]\n\t"
-        "	ldr r1, _08170CC8\n\t"
-        "	mov r2, r8\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, sb\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r1, r1, #0x1d\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldrb r2, [r3, #9]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #9]\n\t"
-        "	ldr r1, _08170CCC\n\t"
-        "	mov r2, sl\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	add r0, sl\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r5, [r0, #8]\n\t"
-        "	ldr r1, _08170CD0\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08170CB0: .4byte gLastUsedItem\n\t"
-        "_08170CB4: .4byte gBallSpriteTemplates\n\t"
-        "_08170CB8: .4byte gSprites\n\t"
-        "_08170CBC: .4byte gBattleAnimTarget\n\t"
-        "_08170CC0: .4byte sub_08170EE8 + 1\n\t"
-        "_08170CC4: .4byte gBattleSpritesDataPtr\n\t"
-        "_08170CC8: .4byte gBattlerSpriteIds\n\t"
-        "_08170CCC: .4byte gTasks\n\t"
-        "_08170CD0: .4byte sub_08170CD4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 ballId;
+    u8 spriteId;
+
+    ballId = ItemIdToBallId(gLastUsedItem);
+    spriteId = CreateSprite(&gBallSpriteTemplates[ballId], 32, 80, 29);
+    gSprites[spriteId].data[0] = 34;
+    gSprites[spriteId].data[1] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+    gSprites[spriteId].data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) - 16;
+    gSprites[spriteId].callback = sub_08170EE8;
+    gBattleSpritesDataPtr->animationData->wildMonInvisible = gSprites[gBattlerSpriteIds[gBattleAnimTarget]].invisible;
+    gTasks[taskId].data[0] = spriteId;
+    gTasks[taskId].func = sub_08170CD4;
 }
 
-__attribute__((naked)) void sub_08170CD4(void)
+void sub_08170CD4(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	ldr r1, _08170D04\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0, #8]\n\t"
-        "	ldr r2, _08170D08\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	ldr r0, _08170D0C\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08170CFE\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "_08170CFE:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08170D04: .4byte gTasks\n\t"
-        "_08170D08: .4byte gSprites\n\t"
-        "_08170D0C: .4byte 0x0000FFFF\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = gTasks[taskId].data[0];
+
+    if ((u16)gSprites[spriteId].data[0] == 0xFFFF)
+        DestroyAnimVisualTask(taskId);
 }
 
-__attribute__((naked)) void AnimTask_ThrowBall_StandingTrainer(void)
+void AnimTask_ThrowBall_StandingTrainer(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r0, _08170D30\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08170D34\n\t"
-        "	movs r6, #0x20\n\t"
-        "	movs r5, #0xb\n\t"
-        "	b _08170D38\n\t"
-        "	.align 2, 0\n\t"
-        "_08170D30: .4byte gBattleTypeFlags\n\t"
-        "_08170D34:\n\t"
-        "	movs r6, #0x17\n\t"
-        "	movs r5, #5\n\t"
-        "_08170D38:\n\t"
-        "	ldr r0, _08170DF0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemIdToBallId\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetBattlerSpriteSubpriority\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #1\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _08170DF4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r1, #0x20\n\t"
-        "	movs r2, #0x50\n\t"
-        "	orrs r5, r2\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r0, _08170DF8\n\t"
-        "	mov sb, r0\n\t"
-        "	lsls r4, r5, #4\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r6, r4, r0\n\t"
-        "	movs r0, #0x22\n\t"
-        "	strh r0, [r6, #0x2e]\n\t"
-        "	ldr r1, _08170DFC\n\t"
-        "	mov r8, r1\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r6, #0x30]\n\t"
-        "	mov r1, r8\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	subs r0, #0x10\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	add sb, r0\n\t"
-        "	add r4, sb\n\t"
-        "	ldr r0, _08170E00\n\t"
-        "	str r0, [r4]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	ldr r1, _08170E04\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, sb\n\t"
-        "	ldr r1, _08170E08\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r1, _08170E0C\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r5, [r0, #8]\n\t"
-        "	ldr r1, _08170E10\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08170DF0: .4byte gLastUsedItem\n\t"
-        "_08170DF4: .4byte gBallSpriteTemplates\n\t"
-        "_08170DF8: .4byte gSprites\n\t"
-        "_08170DFC: .4byte gBattleAnimTarget\n\t"
-        "_08170E00: .4byte SpriteCallbackDummy + 1\n\t"
-        "_08170E04: .4byte gBattlerSpriteIds\n\t"
-        "_08170E08: .4byte SpriteCB_TrainerThrowObject + 1\n\t"
-        "_08170E0C: .4byte gTasks\n\t"
-        "_08170E10: .4byte sub_08170E14 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 x;
+    s16 y;
+    u8 ballId;
+    u8 subpriority;
+    u8 spriteId;
+
+    if (gBattleTypeFlags & BATTLE_TYPE_WALLY_TUTORIAL)
+    {
+        x = 32;
+        y = 11;
+    }
+    else
+    {
+        x = 23;
+        y = 5;
+    }
+
+    ballId = ItemIdToBallId(gLastUsedItem);
+    subpriority = GetBattlerSpriteSubpriority(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT)) + 1;
+    spriteId = CreateSprite(&gBallSpriteTemplates[ballId], x + 32, y | 80, subpriority);
+    gSprites[spriteId].data[0] = 34;
+    gSprites[spriteId].data[1] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+    gSprites[spriteId].data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) - 16;
+    gSprites[spriteId].callback = SpriteCallbackDummy;
+    gSprites[gBattlerSpriteIds[GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)]].callback = SpriteCB_TrainerThrowObject;
+    gTasks[taskId].data[0] = spriteId;
+    gTasks[taskId].func = sub_08170E14;
 }
 
-__attribute__((naked)) void sub_08170E14(void)
+void sub_08170E14(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r6, _08170E74\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	ldr r1, _08170E78\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	adds r0, #0x2b\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08170E6E\n\t"
-        "	movs r0, #0x3d\n\t"
-        "	movs r1, #0\n\t"
-        "	bl PlaySE12WithPanning\n\t"
-        "	ldr r0, _08170E7C\n\t"
-        "	lsls r4, r5, #2\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08170E80\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r0, _08170E84\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl CreateTask\n\t"
-        "	ldr r0, _08170E88\n\t"
-        "	str r0, [r4]\n\t"
-        "_08170E6E:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08170E74: .4byte gSprites\n\t"
-        "_08170E78: .4byte gBattlerSpriteIds\n\t"
-        "_08170E7C: .4byte gTasks\n\t"
-        "_08170E80: .4byte sub_08170EE8 + 1\n\t"
-        "_08170E84: .4byte sub_08170E8C + 1\n\t"
-        "_08170E88: .4byte sub_08170CD4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[gBattlerSpriteIds[GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)]].animCmdIndex == 1)
+    {
+        PlaySE12WithPanning(SE_BALL_THROW, 0);
+        gSprites[gTasks[taskId].data[0]].callback = sub_08170EE8;
+        CreateTask(sub_08170E8C, 10);
+        gTasks[taskId].func = sub_08170CD4;
+    }
 }
 
-__attribute__((naked)) void sub_08170E8C(void)
+void sub_08170E8C(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r6, _08170EE0\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	ldr r4, _08170EE4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08170ED8\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_08170ED8:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08170EE0: .4byte gSprites\n\t"
-        "_08170EE4: .4byte gBattlerSpriteIds\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[gBattlerSpriteIds[GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)]].animEnded)
+    {
+        StartSpriteAnim(&gSprites[gBattlerSpriteIds[GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)]], 0);
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void sub_08170EE8(void)
+void sub_08170EE8(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x30]\n\t"
-        "	ldrh r2, [r4, #0x32]\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	strh r1, [r4, #0x32]\n\t"
-        "	ldrh r0, [r4, #0x22]\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	strh r2, [r4, #0x36]\n\t"
-        "	ldr r0, _08170F10\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl InitAnimArcTranslation\n\t"
-        "	ldr r0, _08170F14\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08170F10: .4byte 0x0000FFD8\n\t"
-        "_08170F14: .4byte sub_08170F18 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 targetX = sprite->data[1];
+    u16 targetY = sprite->data[2];
+
+    sprite->data[1] = sprite->x;
+    sprite->data[2] = targetX;
+    sprite->data[3] = sprite->y;
+    sprite->data[4] = targetY;
+    sprite->data[5] = -40;
+    InitAnimArcTranslation(sprite);
+    sprite->callback = sub_08170F18;
 }
 
-__attribute__((naked)) void sub_08170F18(void)
+void sub_08170F18(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl TranslateAnimHorizontalArc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08170FB6\n\t"
-        "	ldr r0, _08170F3C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bne _08170F44\n\t"
-        "	ldr r0, _08170F40\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08170FB6\n\t"
-        "	.align 2, 0\n\t"
-        "_08170F3C: .4byte gBattleSpritesDataPtr\n\t"
-        "_08170F40: .4byte sub_08171A90 + 1\n\t"
-        "_08170F44:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	ldrh r1, [r4, #0x20]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	ldrh r2, [r4, #0x22]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "	strh r1, [r4, #0x26]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x2e\n\t"
-        "	movs r2, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x3c\n\t"
-        "_08170F6C:\n\t"
-        "	strh r2, [r0]\n\t"
-        "	subs r0, #2\n\t"
-        "	cmp r0, r1\n\t"
-        "	bge _08170F6C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	ldr r0, _08170FC0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	ldr r0, _08170FC4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemIdToBallId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0xb\n\t"
-        "	bgt _08170FB6\n\t"
-        "	cmp r5, #0\n\t"
-        "	blt _08170FB6\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r4, #0x22]\n\t"
-        "	subs r1, #5\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	str r5, [sp]\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0x1c\n\t"
-        "	bl AnimateBallOpenParticles\n\t"
-        "	ldr r0, _08170FC8\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #0xe\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl LaunchBallFadeMonTask\n\t"
-        "_08170FB6:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08170FC0: .4byte sub_08170FCC + 1\n\t"
-        "_08170FC4: .4byte gLastUsedItem\n\t"
-        "_08170FC8: .4byte gBattleAnimTarget\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+    u8 ballId;
+
+    if (TranslateAnimHorizontalArc(sprite))
+    {
+        if (gBattleSpritesDataPtr->animationData->ballThrowCaseId == BALL_TRAINER_BLOCK)
+        {
+            sprite->callback = sub_08171A90;
+        }
+        else
+        {
+            StartSpriteAnim(sprite, 1);
+            sprite->x += sprite->x2;
+            sprite->y += sprite->y2;
+            sprite->x2 = 0;
+            sprite->y2 = 0;
+
+            for (i = 0; i < 8; i++)
+                sprite->data[i] = 0;
+
+            sprite->data[5] = 0;
+            sprite->callback = sub_08170FCC;
+
+            ballId = ItemIdToBallId(gLastUsedItem);
+            switch (ballId)
+            {
+            case 0 ... POKEBALL_COUNT - 1:
+                AnimateBallOpenParticles(sprite->x, sprite->y - 5, 1, 28, ballId);
+                LaunchBallFadeMonTask(FALSE, gBattleAnimTarget, 14, ballId);
+                break;
+            }
+        }
+    }
 }
 
-__attribute__((naked)) void sub_08170FCC(void)
+void sub_08170FCC(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bne _08171008\n\t"
-        "	ldr r0, _08171010\n\t"
-        "	movs r1, #0x32\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	ldr r0, _08171014\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	ldr r2, _08171018\n\t"
-        "	ldr r1, _0817101C\n\t"
-        "	ldr r0, _08171020\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0, #0x30]\n\t"
-        "_08171008:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08171010: .4byte TaskDummy + 1\n\t"
-        "_08171014: .4byte sub_08171024 + 1\n\t"
-        "_08171018: .4byte gSprites\n\t"
-        "_0817101C: .4byte gBattlerSpriteIds\n\t"
-        "_08171020: .4byte gBattleAnimTarget\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++sprite->data[5] == 10)
+    {
+        sprite->data[5] = CreateTask(TaskDummy, 50);
+        sprite->callback = sub_08171024;
+        gSprites[gBattlerSpriteIds[gBattleAnimTarget]].data[1] = 0;
+    }
 }
 
-__attribute__((naked)) void sub_08171024(void)
+void sub_08171024(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	ldr r1, _08171068\n\t"
-        "	ldr r0, _0817106C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	ldrh r0, [r7, #0x38]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r1, _08171070\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrh r0, [r5, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	bne _08171056\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	bl PlaySE\n\t"
-        "_08171056:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081710CC\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _08171074\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817107A\n\t"
-        "	b _08171138\n\t"
-        "	.align 2, 0\n\t"
-        "_08171068: .4byte gBattlerSpriteIds\n\t"
-        "_0817106C: .4byte gBattleAnimTarget\n\t"
-        "_08171070: .4byte gTasks\n\t"
-        "_08171074:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08171110\n\t"
-        "	b _08171138\n\t"
-        "_0817107A:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl PrepareBattlerSpriteForRotScale\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	strh r0, [r5, #0x1c]\n\t"
-        "	ldr r1, _081710BC\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r2, _081710C0\n\t"
-        "	ldr r1, _081710C4\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	ldrh r0, [r0, #0x22]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r7, #0x26]\n\t"
-        "	ldrh r7, [r7, #0x22]\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r2]\n\t"
-        "	ldr r4, _081710C8\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	movs r1, #0x1c\n\t"
-        "	bl __udivsi3\n\t"
-        "	strh r0, [r4]\n\t"
-        "	strh r0, [r5, #0xc]\n\t"
-        "	b _0817112A\n\t"
-        "	.align 2, 0\n\t"
-        "_081710BC: .4byte gUnknown_300601C\n\t"
-        "_081710C0: .4byte gUnknown_3006024\n\t"
-        "_081710C4: .4byte gSprites\n\t"
-        "_081710C8: .4byte gUnknown_3006020\n\t"
-        "_081710CC:\n\t"
-        "	ldrh r0, [r5, #0x1c]\n\t"
-        "	adds r0, #0x20\n\t"
-        "	strh r0, [r5, #0x1c]\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	ldrsh r2, [r5, r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl SetSpriteRotScale\n\t"
-        "	ldrh r0, [r5, #0xc]\n\t"
-        "	ldrh r1, [r5, #0xe]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5, #0xe]\n\t"
-        "	ldr r0, _08171108\n\t"
-        "	lsls r1, r4, #4\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #0xe\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	ldr r0, _0817110C\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _08171160\n\t"
-        "	b _0817112A\n\t"
-        "	.align 2, 0\n\t"
-        "_08171108: .4byte gSprites\n\t"
-        "_0817110C: .4byte 0x0000047F\n\t"
-        "_08171110:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ResetSpriteRotScale\n\t"
-        "	ldr r1, _08171134\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "_0817112A:\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	b _08171160\n\t"
-        "	.align 2, 0\n\t"
-        "_08171134: .4byte gSprites\n\t"
-        "_08171138:\n\t"
-        "	ldr r0, _08171168\n\t"
-        "	lsls r1, r6, #2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	ble _08171160\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r7, #0x38]\n\t"
-        "	ldr r0, _0817116C\n\t"
-        "	str r0, [r7, #0x1c]\n\t"
-        "_08171160:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08171168: .4byte gTasks\n\t"
-        "_0817116C: .4byte sub_08171170 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 battlerSpriteId;
+    u8 taskId;
+
+    battlerSpriteId = gBattlerSpriteIds[gBattleAnimTarget];
+    taskId = sprite->data[5];
+
+    if (++gTasks[taskId].data[1] == 11)
+        PlaySE(SE_BALL_TRADE);
+
+    switch (gTasks[taskId].data[0])
+    {
+    case 0:
+        PrepareBattlerSpriteForRotScale(battlerSpriteId, 0);
+        gTasks[taskId].data[10] = 0x100;
+        gUnknown_300601C = 28;
+        gUnknown_3006024 = gSprites[battlerSpriteId].y + gSprites[battlerSpriteId].y2
+                           - (sprite->y + sprite->y2);
+        gUnknown_3006020 = ((u32)gUnknown_3006024 << 8) / 28;
+        gTasks[taskId].data[2] = gUnknown_3006020;
+        gTasks[taskId].data[0]++;
+        break;
+    case 1:
+        gTasks[taskId].data[10] += 32;
+        SetSpriteRotScale(battlerSpriteId, gTasks[taskId].data[10], gTasks[taskId].data[10], 0);
+        gTasks[taskId].data[3] += gTasks[taskId].data[2];
+        gSprites[battlerSpriteId].y2 = -gTasks[taskId].data[3] >> 8;
+        if (gTasks[taskId].data[10] > 0x47F)
+            gTasks[taskId].data[0]++;
+        break;
+    case 2:
+        ResetSpriteRotScale(battlerSpriteId);
+        gSprites[battlerSpriteId].invisible = TRUE;
+        gTasks[taskId].data[0]++;
+        break;
+    default:
+        if (gTasks[taskId].data[1] > 10)
+        {
+            DestroyTask(taskId);
+            StartSpriteAnim(sprite, 2);
+            sprite->data[5] = 0;
+            sprite->callback = sub_08171170;
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_08171170(void)
+void sub_08171170(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081711AA\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r4, #0x34]\n\t"
-        "	movs r0, #0x28\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r1, [r4, #0x38]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl Cos\n\t"
-        "	ldrh r1, [r4, #0x22]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	movs r0, #0x36\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl Cos\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldr r0, _081711B0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_081711AA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081711B0: .4byte sub_081711B4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 phase;
+    u32 yOffset;
+
+    if (sprite->animEnded)
+    {
+        sprite->data[3] = 0;
+        sprite->data[4] = 40;
+        sprite->data[5] = 0;
+        phase = 0;
+        yOffset = CosAsU32(phase, 40);
+        yOffset += (u16)sprite->y;
+        sprite->y = yOffset;
+        sprite->y2 = -Cos(phase, sprite->data[4]);
+        sprite->callback = sub_081711B4;
+    }
 }
 
-__attribute__((naked)) void sub_081711B4(void)
+void sub_081711B4(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081711CA\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _0817123E\n\t"
-        "	b _0817126A\n\t"
-        "_081711CA:\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Cos\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r1, [r4, #0x38]\n\t"
-        "	adds r1, #4\n\t"
-        "	ldrh r2, [r4, #0x34]\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r1, [r4, #0x38]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0x3f\n\t"
-        "	ble _0817126A\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	subs r0, #0xa\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	ldr r1, _08171214\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _08171206\n\t"
-        "	movs r5, #1\n\t"
-        "_08171206:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08171226\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _08171218\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0817121E\n\t"
-        "	b _08171236\n\t"
-        "	.align 2, 0\n\t"
-        "_08171214: .4byte SPECIAL_RetrieveLotteryNumber\n\t"
-        "_08171218:\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _0817122E\n\t"
-        "	b _08171236\n\t"
-        "_0817121E:\n\t"
-        "	movs r0, #0x38\n\t"
-        "	bl PlaySE\n\t"
-        "	b _0817126A\n\t"
-        "_08171226:\n\t"
-        "	movs r0, #0x39\n\t"
-        "	bl PlaySE\n\t"
-        "	b _0817126A\n\t"
-        "_0817122E:\n\t"
-        "	movs r0, #0x3a\n\t"
-        "	bl PlaySE\n\t"
-        "	b _0817126A\n\t"
-        "_08171236:\n\t"
-        "	movs r0, #0x3b\n\t"
-        "	bl PlaySE\n\t"
-        "	b _0817126A\n\t"
-        "_0817123E:\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Cos\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r1, [r4, #0x38]\n\t"
-        "	subs r1, #4\n\t"
-        "	ldrh r2, [r4, #0x34]\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r4, #0x38]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _0817126A\n\t"
-        "	strh r5, [r4, #0x38]\n\t"
-        "	ldr r0, _08171298\n\t"
-        "	ands r0, r2\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "_0817126A:\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _081712AE\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r5, [r4, #0x34]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl Cos\n\t"
-        "	ldrh r1, [r4, #0x22]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	strh r5, [r4, #0x26]\n\t"
-        "	ldr r0, _0817129C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081712A4\n\t"
-        "	strh r5, [r4, #0x38]\n\t"
-        "	ldr r0, _081712A0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _081712AE\n\t"
-        "	.align 2, 0\n\t"
-        "_08171298: .4byte 0xFFFFFF00\n\t"
-        "_0817129C: .4byte gBattleSpritesDataPtr\n\t"
-        "_081712A0: .4byte sub_08171598 + 1\n\t"
-        "_081712A4:\n\t"
-        "	ldr r0, _081712B4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r5, [r4, #0x38]\n\t"
-        "_081712AE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081712B4: .4byte sub_081712B8 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 r5 = FALSE;
+    u32 yOffset;
+
+    switch (sprite->data[3] & 0xFF)
+    {
+    case 0:
+        sprite->y2 = -Cos(sprite->data[5], sprite->data[4]);
+        sprite->data[5] += 4 + (sprite->data[3] >> 8);
+        if (sprite->data[5] >= 64)
+        {
+            sprite->data[4] -= 10;
+            sprite->data[3] += 0x101;
+            if (sprite->data[3] >> 8 == 4)
+                r5 = TRUE;
+
+            switch (sprite->data[3] >> 8)
+            {
+            case 1:
+                PlaySE(SE_BALL_BOUNCE_1);
+                break;
+            case 2:
+                PlaySE(SE_BALL_BOUNCE_2);
+                break;
+            case 3:
+                PlaySE(SE_BALL_BOUNCE_3);
+                break;
+            default:
+                PlaySE(SE_BALL_BOUNCE_4);
+                break;
+            }
+        }
+        break;
+    case 1:
+        sprite->y2 = -Cos(sprite->data[5], sprite->data[4]);
+        sprite->data[5] -= 4 + (sprite->data[3] >> 8);
+        if (sprite->data[5] <= 0)
+        {
+            sprite->data[5] = 0;
+            sprite->data[3] &= 0xFF00;
+        }
+        break;
+    }
+
+    if (r5)
+    {
+        sprite->data[3] = 0;
+        yOffset = CosAsU32(64, 40);
+        yOffset += (u16)sprite->y;
+        sprite->y = yOffset;
+        sprite->y2 = 0;
+        if (gBattleSpritesDataPtr->animationData->ballThrowCaseId == 0)
+        {
+            sprite->data[5] = 0;
+            sprite->callback = sub_08171598;
+        }
+        else
+        {
+            sprite->callback = sub_081712B8;
+            sprite->data[4] = 1;
+            sprite->data[5] = 0;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_081712B8(void)
+void sub_081712B8(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	bne _081712F4\n\t"
-        "	strh r5, [r4, #0x34]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	ldr r0, _081712FC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	strh r5, [r0, #0xc]\n\t"
-        "	ldr r0, _08171300\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0x17\n\t"
-        "	bl PlaySE\n\t"
-        "_081712F4:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081712FC: .4byte gBattleSpritesDataPtr\n\t"
-        "_08171300: .4byte sub_08171304 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++sprite->data[3] == 31)
+    {
+        sprite->data[3] = 0;
+        sprite->affineAnimPaused = TRUE;
+        StartSpriteAffineAnim(sprite, 1);
+        gBattleSpritesDataPtr->animationData->ballSubpx = 0;
+        sprite->callback = sub_08171304;
+        PlaySE(SE_BALL);
+    }
 }
 
-__attribute__((naked)) void sub_08171304(void)
+// JP-specific seven-state capture/shake protocol uses ballSubpx. The US counterpart
+// has a different state layout, so retain this naked implementation pending an exact match.
+__attribute__((naked)) void sub_08171304(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2870,3981 +1373,1173 @@ __attribute__((naked)) void sub_08171304(void)
     );
 }
 
-__attribute__((naked)) void sub_08171598(void)
+void sub_08171598(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r1, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x38]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	bne _081715B2\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x38]\n\t"
-        "	ldr r0, _081715B8\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "_081715B2:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081715B8: .4byte sub_081718C8 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++sprite->data[5] == 31)
+    {
+        sprite->data[5] = 0;
+        sprite->callback = sub_081718C8;
+    }
 }
 
-__attribute__((naked)) void sub_081715BC(void)
+void sub_081715BC(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #0x2c\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r2, #0x40\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r3]\n\t"
-        "	ldr r1, _081715D8\n\t"
-        "	str r1, [r0, #0x1c]\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0, #0x34]\n\t"
-        "	strh r1, [r0, #0x36]\n\t"
-        "	strh r1, [r0, #0x38]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_081715D8: .4byte sub_081715DC + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->animPaused = TRUE;
+    sprite->callback = sub_081715DC;
+    sprite->data[3] = 0;
+    sprite->data[4] = 0;
+    sprite->data[5] = 0;
 }
 
-__attribute__((naked)) void sub_081715DC(void)
+void sub_081715DC(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldr r7, _0817161C\n\t"
-        "	ldrh r0, [r6, #0x36]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	mov r8, r1\n\t"
-        "	strh r0, [r6, #0x36]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	cmp r1, #0x28\n\t"
-        "	bne _08171620\n\t"
-        "	movs r0, #0xfe\n\t"
-        "	bl PlaySE\n\t"
-        "	ldrb r1, [r6, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	lsls r0, r1\n\t"
-        "	movs r1, #6\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_081717D0\n\t"
-        "	b _081716A0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817161C: .4byte gBattleAnimTarget\n\t"
-        "_08171620:\n\t"
-        "	cmp r1, #0x3c\n\t"
-        "	bne _0817163E\n\t"
-        "	ldrb r1, [r6, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	lsls r0, r1\n\t"
-        "	mov r1, r8\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #2\n\t"
-        "	movs r2, #6\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	b _081716A0\n\t"
-        "_0817163E:\n\t"
-        "	cmp r1, #0x5f\n\t"
-        "	bne _08171664\n\t"
-        "	ldr r0, _0817165C\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl UpdateOamPriorityInAllHealthboxes\n\t"
-        "	bl m4aMPlayAllStop\n\t"
-        "	ldr r0, _08171660\n\t"
-        "	bl PlaySE\n\t"
-        "	b _081716A0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817165C: .4byte gUnknown_202415D\n\t"
-        "_08171660: .4byte 0x00000213\n\t"
-        "_08171664:\n\t"
-        "	ldr r0, _081716AC\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081716A0\n\t"
-        "	ldr r5, _081716B0\n\t"
-        "	ldr r4, _081716B4\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0, #3]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	bl FreeOamMatrix\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	bl DestroySprite\n\t"
-        "	mov r0, r8\n\t"
-        "	strh r0, [r6, #0x2e]\n\t"
-        "	ldr r0, _081716B8\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "_081716A0:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081716AC: .4byte SPECIAL_FoundBlackGlasses\n\t"
-        "_081716B0: .4byte gSprites\n\t"
-        "_081716B4: .4byte gBattlerSpriteIds\n\t"
-        "_081716B8: .4byte sub_081716BC + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 *battler = &gBattleAnimTarget;
+
+    sprite->data[4]++;
+    if (sprite->data[4] == 40)
+    {
+        PlaySE(SE_RG_BALL_CLICK);
+        BlendPalettes(0x10000 << sprite->oam.paletteNum, 6, RGB_BLACK);
+        sub_081717D0(sprite);
+    }
+    else if (sprite->data[4] == 60)
+    {
+        BeginNormalPaletteFade(0x10000 << sprite->oam.paletteNum, 2, 6, 0, RGB_BLACK);
+    }
+    else if (sprite->data[4] == 95)
+    {
+        gUnknown_202415D = FALSE;
+        UpdateOamPriorityInAllHealthboxes(1);
+        m4aMPlayAllStop();
+        PlaySE(MUS_RG_CAUGHT_INTRO);
+    }
+    else if (sprite->data[4] == SPECIAL_FoundBlackGlasses)
+    {
+        FreeOamMatrix(gSprites[gBattlerSpriteIds[*battler]].oam.matrixNum);
+        DestroySprite(&gSprites[gBattlerSpriteIds[*battler]]);
+
+        sprite->data[0] = 0;
+        sprite->callback = sub_081716BC;
+    }
 }
 
-__attribute__((naked)) void sub_081716BC(void)
+void sub_081716BC(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08171728\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _081716D4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081716DA\n\t"
-        "	b _0817176E\n\t"
-        "_081716D4:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _0817175A\n\t"
-        "	b _0817176E\n\t"
-        "_081716DA:\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	movs r1, #0xfd\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x52\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, [r4, #0x14]\n\t"
-        "	ldrh r0, [r0, #2]\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r0, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	lsls r1, r0\n\t"
-        "	ldr r0, _08171724\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	b _08171766\n\t"
-        "	.align 2, 0\n\t"
-        "_08171724: .4byte 0x00007FFF\n\t"
-        "_08171728:\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	strh r1, [r4, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _08171794\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	ldrh r2, [r4, #0x32]\n\t"
-        "	adds r2, #1\n\t"
-        "	strh r2, [r4, #0x32]\n\t"
-        "	lsls r1, r2, #8\n\t"
-        "	movs r0, #0x10\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	bne _08171794\n\t"
-        "	b _08171766\n\t"
-        "_0817175A:\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08171766:\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	b _08171794\n\t"
-        "_0817176E:\n\t"
-        "	ldr r0, _0817179C\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08171794\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x52\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	strh r5, [r4, #0x2e]\n\t"
-        "	ldr r0, _081717A0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08171794:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817179C: .4byte gPaletteFade\n\t"
-        "_081717A0: .4byte sub_081717A4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 paletteIndex;
+
+    switch (sprite->data[0])
+    {
+    case 0:
+        sprite->data[1] = 0;
+        sprite->data[2] = 0;
+        sprite->oam.objMode = ST_OAM_OBJ_BLEND;
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL);
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 0));
+        paletteIndex = IndexOfSpritePaletteTag(sprite->template->paletteTag);
+        BeginNormalPaletteFade(1 << (paletteIndex + 0x10), 0, 0, 16, RGB_WHITE);
+        sprite->data[0]++;
+        break;
+    case 1:
+        if (sprite->data[1]++ > 0)
+        {
+            sprite->data[1] = 0;
+            sprite->data[2]++;
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16 - sprite->data[2], sprite->data[2]));
+            if (sprite->data[2] == 16)
+                sprite->data[0]++;
+        }
+        break;
+    case 2:
+        sprite->invisible = TRUE;
+        sprite->data[0]++;
+        break;
+    default:
+        if (!gPaletteFade.active)
+        {
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+            sprite->data[0] = 0;
+            sprite->callback = sub_081717A4;
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_081717A4(void)
+void sub_081717A4(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x2e]\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081717BC\n\t"
-        "	ldr r0, _081717B8\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	b _081717C8\n\t"
-        "	.align 2, 0\n\t"
-        "_081717B8: .4byte 0x0000FFFF\n\t"
-        "_081717BC:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FreeSpriteOamMatrix\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_081717C8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[0] == 0)
+    {
+        sprite->data[0] = -1;
+    }
+    else
+    {
+        FreeSpriteOamMatrix(sprite);
+        DestroySprite(sprite);
+    }
 }
 
-__attribute__((naked)) void sub_081717D0(void)
+void sub_081717D0(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r1, #0x43\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081717F0\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	b _081717F8\n\t"
-        "_081717F0:\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_081717F8:\n\t"
-        "	movs r0, #4\n\t"
-        "	bl sub_08171B44\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r2, _0817187C\n\t"
-        "	mov sb, r2\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	add r0, sb\n\t"
-        "	mov sl, r0\n\t"
-        "_0817180A:\n\t"
-        "	movs r2, #0x20\n\t"
-        "	ldrsh r1, [r6, r2]\n\t"
-        "	movs r0, #0x22\n\t"
-        "	ldrsh r2, [r6, r0]\n\t"
-        "	ldr r0, _08171880\n\t"
-        "	mov r3, r8\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _08171866\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	mov r2, sb\n\t"
-        "	adds r5, r4, r2\n\t"
-        "	movs r0, #0x18\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	ldr r0, _08171884\n\t"
-        "	lsls r1, r7, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	ldrh r2, [r6, #0x20]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	ldrh r2, [r6, #0x22]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r5, #0x36]\n\t"
-        "	movs r0, #2\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	strh r0, [r5, #0x38]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl InitAnimArcTranslation\n\t"
-        "	add r4, sl\n\t"
-        "	ldr r0, _08171888\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r0, _0817188C\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_08171866:\n\t"
-        "	adds r7, #1\n\t"
-        "	cmp r7, #2\n\t"
-        "	bls _0817180A\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817187C: .4byte gSprites\n\t"
-        "_08171880: .4byte sBallParticleSpriteTemplates + 0x60\n\t"
-        "_08171884: .4byte sCaptureStars\n\t"
-        "_08171888: .4byte sub_08171890 + 1\n\t"
-        "_0817188C: .4byte sBallParticleAnimNums\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 i;
+    u8 subpriority;
+
+    if (sprite->subpriority)
+    {
+        subpriority = sprite->subpriority - 1;
+    }
+    else
+    {
+        subpriority = 0;
+        sprite->subpriority = 1;
+    }
+
+    sub_08171B44(BALL_MASTER);
+    for (i = 0; i < ARRAY_COUNT(sCaptureStars); i++)
+    {
+        u8 spriteId = CreateSprite(&sBallParticleSpriteTemplates[BALL_MASTER], sprite->x, sprite->y, subpriority);
+
+        if (spriteId != MAX_SPRITES)
+        {
+            gSprites[spriteId].data[0] = 24;
+            gSprites[spriteId].data[2] = sprite->x + sCaptureStars[i].xOffset;
+            gSprites[spriteId].data[4] = sprite->y + sCaptureStars[i].yOffset;
+            gSprites[spriteId].data[5] = sCaptureStars[i].amplitude;
+            InitAnimArcTranslation(&gSprites[spriteId]);
+            gSprites[spriteId].callback = sub_08171890;
+            StartSpriteAnim(&gSprites[spriteId], sBallParticleAnimNums[BALL_MASTER]);
+        }
+    }
 }
 
-__attribute__((naked)) void sub_08171890(void)
+void sub_08171890(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x3e\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	lsrs r1, r2, #2\n\t"
-        "	movs r0, #1\n\t"
-        "	eors r1, r0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl TranslateAnimHorizontalArc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081718C0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_081718C0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->invisible = !sprite->invisible;
+
+    if (TranslateAnimHorizontalArc(sprite))
+        DestroySprite(sprite);
 }
 
-__attribute__((naked)) void sub_081718C8(void)
+void sub_081718C8(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	ldr r0, _0817197C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	ldr r0, _08171980\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemIdToBallId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0xb\n\t"
-        "	bgt _0817191A\n\t"
-        "	cmp r5, #0\n\t"
-        "	blt _0817191A\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r4, #0x22]\n\t"
-        "	subs r1, #5\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	str r5, [sp]\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0x1c\n\t"
-        "	bl AnimateBallOpenParticles\n\t"
-        "	ldr r0, _08171984\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r2, #0xe\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl LaunchBallFadeMonTask\n\t"
-        "_0817191A:\n\t"
-        "	ldr r6, _08171988\n\t"
-        "	ldr r5, _0817198C\n\t"
-        "	ldr r4, _08171984\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	bl AnimateSprite\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	strh r1, [r0, #0x30]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817197C: .4byte sub_08171990 + 1\n\t"
-        "_08171980: .4byte gLastUsedItem\n\t"
-        "_08171984: .4byte gBattleAnimTarget\n\t"
-        "_08171988: .4byte gSprites\n\t"
-        "_0817198C: .4byte gBattlerSpriteIds\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 ballId;
+
+    StartSpriteAnim(sprite, 1);
+    StartSpriteAffineAnim(sprite, 0);
+    sprite->callback = sub_08171990;
+
+    ballId = ItemIdToBallId(gLastUsedItem);
+    switch (ballId)
+    {
+    case 0 ... POKEBALL_COUNT - 1:
+        AnimateBallOpenParticles(sprite->x, sprite->y - 5, 1, 28, ballId);
+        LaunchBallFadeMonTask(TRUE, gBattleAnimTarget, 14, ballId);
+        break;
+    }
+
+    gSprites[gBattlerSpriteIds[gBattleAnimTarget]].invisible = FALSE;
+    StartSpriteAffineAnim(&gSprites[gBattlerSpriteIds[gBattleAnimTarget]], BATTLER_AFFINE_EMERGE);
+    AnimateSprite(&gSprites[gBattlerSpriteIds[gBattleAnimTarget]]);
+    gSprites[gBattlerSpriteIds[gBattleAnimTarget]].data[1] = 4096;
 }
 
-__attribute__((naked)) void sub_08171990(void)
+void sub_08171990(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081719AE\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_081719AE:\n\t"
-        "	ldr r4, _081719DC\n\t"
-        "	ldr r3, _081719E0\n\t"
-        "	ldr r2, _081719E4\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r4\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081719E8\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	movs r5, #1\n\t"
-        "	b _08171A08\n\t"
-        "	.align 2, 0\n\t"
-        "_081719DC: .4byte gSprites\n\t"
-        "_081719E0: .4byte gBattlerSpriteIds\n\t"
-        "_081719E4: .4byte gBattleAnimTarget\n\t"
-        "_081719E8:\n\t"
-        "	ldr r6, _08171A74\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	ldrh r6, [r1, #0x30]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrh r0, [r1, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "_08171A08:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08171A6E\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _08171A6E\n\t"
-        "	ldr r4, _08171A78\n\t"
-        "	ldr r3, _08171A7C\n\t"
-        "	ldr r2, _08171A80\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r5, [r0, #0x26]\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	ldr r0, _08171A84\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	ldrb r1, [r0, #9]\n\t"
-        "	lsls r1, r1, #0x1e\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldrb r3, [r2]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	strh r5, [r7, #0x2e]\n\t"
-        "	ldr r0, _08171A88\n\t"
-        "	str r0, [r7, #0x1c]\n\t"
-        "	ldr r0, _08171A8C\n\t"
-        "	strb r6, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl UpdateOamPriorityInAllHealthboxes\n\t"
-        "_08171A6E:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08171A74: .4byte 0xFFFFFEE0\n\t"
-        "_08171A78: .4byte gSprites\n\t"
-        "_08171A7C: .4byte gBattlerSpriteIds\n\t"
-        "_08171A80: .4byte gBattleAnimTarget\n\t"
-        "_08171A84: .4byte gBattleSpritesDataPtr\n\t"
-        "_08171A88: .4byte sub_081717A4 + 1\n\t"
-        "_08171A8C: .4byte gUnknown_202415D\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 released = FALSE;
+
+    if (sprite->animEnded)
+        sprite->invisible = TRUE;
+
+    if (gSprites[gBattlerSpriteIds[gBattleAnimTarget]].affineAnimEnded)
+    {
+        StartSpriteAffineAnim(&gSprites[gBattlerSpriteIds[gBattleAnimTarget]], 0);
+        released = TRUE;
+    }
+    else
+    {
+        gSprites[gBattlerSpriteIds[gBattleAnimTarget]].data[1] -= 288;
+        gSprites[gBattlerSpriteIds[gBattleAnimTarget]].y2 = gSprites[gBattlerSpriteIds[gBattleAnimTarget]].data[1] >> 8;
+    }
+
+    if (sprite->animEnded && released)
+    {
+        gSprites[gBattlerSpriteIds[gBattleAnimTarget]].y2 = 0;
+        gSprites[gBattlerSpriteIds[gBattleAnimTarget]].invisible = gBattleSpritesDataPtr->animationData->wildMonInvisible;
+        sprite->data[0] = 0;
+        sprite->callback = sub_081717A4;
+        gUnknown_202415D = FALSE;
+        UpdateOamPriorityInAllHealthboxes(1);
+    }
 }
 
-__attribute__((naked)) void sub_08171A90(void)
+void sub_08171A90(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r0, [r2, #0x24]\n\t"
-        "	ldrh r1, [r2, #0x20]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	ldrh r0, [r2, #0x26]\n\t"
-        "	ldrh r3, [r2, #0x22]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r2, #0x22]\n\t"
-        "	strh r1, [r2, #0x26]\n\t"
-        "	strh r1, [r2, #0x24]\n\t"
-        "	ldr r4, _08171AC8\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r1, #5\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x38\n\t"
-        "_08171AB4:\n\t"
-        "	strh r3, [r0]\n\t"
-        "	subs r0, #2\n\t"
-        "	subs r1, #1\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08171AB4\n\t"
-        "	str r4, [r2, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08171AC8: .4byte sub_08171ACC + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+    s16 zero;
+    void (*callback)(struct Sprite *);
+
+    sprite->x += sprite->x2;
+    sprite->y += sprite->y2;
+    sprite->y2 = 0;
+    sprite->x2 = 0;
+
+    callback = sub_08171ACC;
+    zero = 0;
+
+    for (i = 5; i >= 0; i--)
+        sprite->data[i] = zero;
+
+    sprite->callback = callback;
 }
 
-__attribute__((naked)) void sub_08171ACC(void)
+void sub_08171ACC(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x2e]\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	movs r0, #0xd0\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x30]\n\t"
-        "	adds r3, r3, r1\n\t"
-        "	lsls r1, r3, #0x10\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r4, #0x26]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	ands r2, r0\n\t"
-        "	strh r2, [r4, #0x2e]\n\t"
-        "	ands r3, r0\n\t"
-        "	strh r3, [r4, #0x30]\n\t"
-        "	movs r2, #0x22\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	cmp r0, #0xa0\n\t"
-        "	bgt _08171B22\n\t"
-        "	movs r1, #0x20\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x24\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bge _08171B36\n\t"
-        "_08171B22:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r0, _08171B3C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	ldr r1, _08171B40\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl UpdateOamPriorityInAllHealthboxes\n\t"
-        "_08171B36:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08171B3C: .4byte sub_081717A4 + 1\n\t"
-        "_08171B40: .4byte gUnknown_202415D\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] += 0x800;
+    sprite->data[1] += 0x680;
+    sprite->x2 -= sprite->data[1] >> 8;
+    sprite->y2 += sprite->data[0] >> 8;
+    sprite->data[0] &= 0xFF;
+    sprite->data[1] &= 0xFF;
+
+    if (sprite->y + sprite->y2 > 160 || sprite->x + sprite->x2 < -8)
+    {
+        sprite->data[0] = 0;
+        sprite->callback = sub_081717A4;
+        gUnknown_202415D = FALSE;
+        UpdateOamPriorityInAllHealthboxes(1);
+    }
 }
 
-__attribute__((naked)) void sub_08171B44(void)
+void sub_08171B44(u8 ballId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _08171B70\n\t"
-        "	lsrs r5, r0, #0x15\n\t"
-        "	adds r4, r5, r1\n\t"
-        "	ldrh r0, [r4, #6]\n\t"
-        "	bl GetSpriteTileStartByTag\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldr r1, _08171B74\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _08171B6A\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl LoadCompressedSpriteSheetUsingHeap\n\t"
-        "	ldr r0, _08171B78\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	bl LoadCompressedSpritePaletteUsingHeap\n\t"
-        "_08171B6A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08171B70: .4byte sBallParticleSpriteSheets\n\t"
-        "_08171B74: .4byte 0xFFFF0000\n\t"
-        "_08171B78: .4byte sBallParticlePalettes\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetSpriteTileStartByTag(sBallParticleSpriteSheets[ballId].tag) == 0xFFFF)
+    {
+        LoadCompressedSpriteSheetUsingHeap(&sBallParticleSpriteSheets[ballId]);
+        LoadCompressedSpritePaletteUsingHeap(&sBallParticlePalettes[ballId]);
+    }
 }
 
-__attribute__((naked)) u8 AnimateBallOpenParticles(u8 x, u8 y, u8 priority, u8 subpriority, u8 ballId)
+u8 AnimateBallOpenParticles(u8 x, u8 y, u8 priority, u8 subpriority, u8 ballId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sl\n\t"
-        "	mov r5, sb\n\t"
-        "	mov r4, r8\n\t"
-        "	push {r4, r5, r6}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	mov r8, r1\n\t"
-        "	mov sb, r2\n\t"
-        "	mov sl, r3\n\t"
-        "	ldr r5, [sp, #0x1c]\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	mov r1, sb\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov sb, r1\n\t"
-        "	mov r0, sl\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_08171B44\n\t"
-        "	ldr r1, _08171BFC\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	bl CreateTask\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r1, _08171C00\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r6, [r0, #0xa]\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r1, [r0, #0xc]\n\t"
-        "	mov r1, sb\n\t"
-        "	strh r1, [r0, #0xe]\n\t"
-        "	mov r1, sl\n\t"
-        "	strh r1, [r0, #0x10]\n\t"
-        "	strh r5, [r0, #0x26]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08171BFC: .4byte sBallParticleAnimationFuncs\n\t"
-        "_08171C00: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId;
+
+    sub_08171B44(ballId);
+    taskId = CreateTask(sBallParticleAnimationFuncs[ballId], 5);
+    gTasks[taskId].data[1] = x;
+    gTasks[taskId].data[2] = y;
+    gTasks[taskId].data[3] = priority;
+    gTasks[taskId].data[4] = subpriority;
+    gTasks[taskId].data[15] = ballId;
+    PlaySE(SE_BALL_OPEN);
+    return taskId;
 }
 
-__attribute__((naked)) void sub_08171C04(void)
+void sub_08171C04(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08171C28\n\t"
-        "	ldr r1, _08171C2C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08171C22\n\t"
-        "	ldr r0, _08171C30\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, [r0, #8]\n\t"
-        "	ldrb r0, [r1, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1, #0xa]\n\t"
-        "_08171C22:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08171C28: .4byte gMain\n\t"
-        "_08171C2C: .4byte 0x00000439\n\t"
-        "_08171C30: .4byte gBattleSpritesDataPtr\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gMain.inBattle)
+        gBattleSpritesDataPtr->animationData->numBallParticles++;
 }
 
-__attribute__((naked)) void PokeBallOpenParticleAnimation(u8 taskId)
+void PokeBallOpenParticleAnimation(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r1, _08171D10\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r6, r0, r1\n\t"
-        "	ldrh r0, [r6, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bgt _08171D2C\n\t"
-        "	ldrb r1, [r6, #0xa]\n\t"
-        "	ldrb r2, [r6, #0xc]\n\t"
-        "	ldrb r4, [r6, #0xe]\n\t"
-        "	mov sb, r4\n\t"
-        "	ldrb r3, [r6, #0x10]\n\t"
-        "	ldr r4, [sp]\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r4, _08171D14\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _08171CD0\n\t"
-        "	bl sub_08171C04\n\t"
-        "	mov r0, sl\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	add r4, sl\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r5, _08171D18\n\t"
-        "	adds r7, r4, r5\n\t"
-        "	ldr r0, _08171D1C\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	adds r5, #0x1c\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	ldr r0, _08171D20\n\t"
-        "	str r0, [r4]\n\t"
-        "	movs r0, #3\n\t"
-        "	mov r2, sb\n\t"
-        "	ands r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldrb r1, [r7, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r7, #5]\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	cmp r0, #7\n\t"
-        "	bls _08171CCC\n\t"
-        "	subs r0, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_08171CCC:\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	strh r0, [r7, #0x2e]\n\t"
-        "_08171CD0:\n\t"
-        "	ldr r0, _08171D10\n\t"
-        "	mov r4, r8\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	add r1, r8\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r1, r2]\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	cmp r1, #0xf\n\t"
-        "	bne _08171D2C\n\t"
-        "	ldr r0, _08171D24\n\t"
-        "	ldr r4, _08171D28\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08171D06\n\t"
-        "	ldr r0, _08171D18\n\t"
-        "	mov r2, sl\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	add r1, sl\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x3c]\n\t"
-        "_08171D06:\n\t"
-        "	mov r0, r8\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _08171D3C\n\t"
-        "	.align 2, 0\n\t"
-        "_08171D10: .4byte gTasks\n\t"
-        "_08171D14: .4byte sBallParticleSpriteTemplates\n\t"
-        "_08171D18: .4byte gSprites\n\t"
-        "_08171D1C: .4byte sBallParticleAnimNums\n\t"
-        "_08171D20: .4byte PokeBallOpenParticleAnimation_Step1 + 1\n\t"
-        "_08171D24: .4byte gMain\n\t"
-        "_08171D28: .4byte 0x00000439\n\t"
-        "_08171D2C:\n\t"
-        "	mov r4, r8\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #8]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r0, #8]\n\t"
-        "_08171D3C:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+    u8 x;
+    u8 y;
+    u8 priority;
+    u8 subpriority;
+    u8 ballId;
+    u8 var0;
+
+    ballId = gTasks[taskId].data[15];
+    if (gTasks[taskId].data[0] < 16)
+    {
+        x = gTasks[taskId].data[1];
+        y = gTasks[taskId].data[2];
+        priority = gTasks[taskId].data[3];
+        subpriority = gTasks[taskId].data[4];
+
+        spriteId = CreateSprite(&sBallParticleSpriteTemplates[ballId], x, y, subpriority);
+        if (spriteId != MAX_SPRITES)
+        {
+            sub_08171C04();
+            StartSpriteAnim(&gSprites[spriteId], sBallParticleAnimNums[ballId]);
+            gSprites[spriteId].callback = PokeBallOpenParticleAnimation_Step1;
+            gSprites[spriteId].oam.priority = priority;
+
+            var0 = (u8)gTasks[taskId].data[0];
+            if (var0 >= 8)
+                var0 -= 8;
+
+            gSprites[spriteId].data[0] = var0 * 32;
+        }
+
+        if (gTasks[taskId].data[0] == 15)
+        {
+            if (!gMain.inBattle)
+                gSprites[spriteId].data[7] = 1;
+
+            DestroyTask(taskId);
+            return;
+        }
+    }
+
+    gTasks[taskId].data[0]++;
 }
 
-__attribute__((naked)) void PokeBallOpenParticleAnimation_Step1(void)
+void PokeBallOpenParticleAnimation_Step1(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r2, [r1, #0x30]\n\t"
-        "	movs r3, #0x30\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08171D64\n\t"
-        "	ldr r0, _08171D60\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "	b _08171D68\n\t"
-        "	.align 2, 0\n\t"
-        "_08171D60: .4byte PokeBallOpenParticleAnimation_Step2 + 1\n\t"
-        "_08171D64:\n\t"
-        "	subs r0, r2, #1\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "_08171D68:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[1] == 0)
+        sprite->callback = PokeBallOpenParticleAnimation_Step2;
+    else
+        sprite->data[1]--;
 }
 
-__attribute__((naked)) void PokeBallOpenParticleAnimation_Step2(void)
+void PokeBallOpenParticleAnimation_Step2(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x32\n\t"
-        "	bne _08171DA0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyBallOpenAnimationParticle\n\t"
-        "_08171DA0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x2 = Sin(sprite->data[0], sprite->data[1]);
+    sprite->y2 = Cos(sprite->data[0], sprite->data[1]);
+    sprite->data[1] += 2;
+    if (sprite->data[1] == 50)
+        DestroyBallOpenAnimationParticle(sprite);
 }
 
-__attribute__((naked)) void TimerBallOpenParticleAnimation(u8 taskId)
+void TimerBallOpenParticleAnimation(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r0, _08171E8C\n\t"
-        "	mov r2, sb\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	add r1, sb\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldrb r3, [r1, #0xa]\n\t"
-        "	str r3, [sp]\n\t"
-        "	ldrb r0, [r1, #0xc]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldrb r2, [r1, #0xe]\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	ldrb r1, [r1, #0x10]\n\t"
-        "	str r1, [sp, #0xc]\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r3, _08171E90\n\t"
-        "	mov sl, r3\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "_08171DEE:\n\t"
-        "	ldr r0, _08171E94\n\t"
-        "	ldr r2, [sp, #0x10]\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	ldr r3, [sp, #0xc]\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0x40\n\t"
-        "	beq _08171E4E\n\t"
-        "	bl sub_08171C04\n\t"
-        "	lsls r4, r6, #4\n\t"
-        "	adds r4, r4, r6\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	mov r3, sl\n\t"
-        "	adds r5, r4, r3\n\t"
-        "	ldr r0, _08171E98\n\t"
-        "	add r0, r8\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r0, _08171E9C\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _08171EA0\n\t"
-        "	str r0, [r4]\n\t"
-        "	movs r0, #3\n\t"
-        "	ldr r2, [sp, #8]\n\t"
-        "	ands r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	movs r3, #0xd\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	lsls r0, r7, #5\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r5, #0x36]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x38]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x3a]\n\t"
-        "_08171E4E:\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #7\n\t"
-        "	bls _08171DEE\n\t"
-        "	ldr r0, _08171EA4\n\t"
-        "	ldr r1, _08171EA8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08171E76\n\t"
-        "	ldr r0, _08171E90\n\t"
-        "	lsls r1, r6, #4\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x3c]\n\t"
-        "_08171E76:\n\t"
-        "	mov r0, sb\n\t"
-        "	bl DestroyTask\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08171E8C: .4byte gTasks\n\t"
-        "_08171E90: .4byte gSprites\n\t"
-        "_08171E94: .4byte sBallParticleSpriteTemplates\n\t"
-        "_08171E98: .4byte sBallParticleAnimNums\n\t"
-        "_08171E9C: .4byte gUnknown_20205C8\n\t"
-        "_08171EA0: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
-        "_08171EA4: .4byte gMain\n\t"
-        "_08171EA8: .4byte 0x00000439\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 x;
+    u8 y;
+    u8 priority;
+    u8 subpriority;
+    u8 ballId;
+    u8 spriteId;
+
+    ballId = gTasks[taskId].data[15];
+    x = gTasks[taskId].data[1];
+    y = gTasks[taskId].data[2];
+    priority = gTasks[taskId].data[3];
+    subpriority = gTasks[taskId].data[4];
+
+    for (i = 0; i < 8; i++)
+    {
+        spriteId = CreateSprite(&sBallParticleSpriteTemplates[ballId], x, y, subpriority);
+        if (spriteId != MAX_SPRITES)
+        {
+            sub_08171C04();
+            StartSpriteAnim(&gSprites[spriteId], sBallParticleAnimNums[ballId]);
+            gSprites[spriteId].callback = FanOutBallOpenParticles_Step1;
+            gSprites[spriteId].oam.priority = priority;
+            gSprites[spriteId].data[0] = i * 32;
+            gSprites[spriteId].data[4] = 10;
+            gSprites[spriteId].data[5] = 2;
+            gSprites[spriteId].data[6] = 1;
+        }
+    }
+
+    if (!gMain.inBattle)
+        gSprites[spriteId].data[7] = 1;
+
+    DestroyTask(taskId);
 }
 
-__attribute__((naked)) void DiveBallOpenParticleAnimation(u8 taskId)
+void DiveBallOpenParticleAnimation(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r0, _08171F90\n\t"
-        "	mov r2, sb\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	add r1, sb\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldrb r3, [r1, #0xa]\n\t"
-        "	str r3, [sp]\n\t"
-        "	ldrb r0, [r1, #0xc]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldrb r2, [r1, #0xe]\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	ldrb r1, [r1, #0x10]\n\t"
-        "	str r1, [sp, #0xc]\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r3, _08171F94\n\t"
-        "	mov sl, r3\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "_08171EF2:\n\t"
-        "	ldr r0, _08171F98\n\t"
-        "	ldr r2, [sp, #0x10]\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	ldr r3, [sp, #0xc]\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0x40\n\t"
-        "	beq _08171F52\n\t"
-        "	bl sub_08171C04\n\t"
-        "	lsls r4, r6, #4\n\t"
-        "	adds r4, r4, r6\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	mov r3, sl\n\t"
-        "	adds r5, r4, r3\n\t"
-        "	ldr r0, _08171F9C\n\t"
-        "	add r0, r8\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r0, _08171FA0\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _08171FA4\n\t"
-        "	str r0, [r4]\n\t"
-        "	movs r0, #3\n\t"
-        "	ldr r2, [sp, #8]\n\t"
-        "	ands r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	movs r3, #0xd\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	lsls r0, r7, #5\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r5, #0x36]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x38]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x3a]\n\t"
-        "_08171F52:\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #7\n\t"
-        "	bls _08171EF2\n\t"
-        "	ldr r0, _08171FA8\n\t"
-        "	ldr r1, _08171FAC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08171F7A\n\t"
-        "	ldr r0, _08171F94\n\t"
-        "	lsls r1, r6, #4\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x3c]\n\t"
-        "_08171F7A:\n\t"
-        "	mov r0, sb\n\t"
-        "	bl DestroyTask\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08171F90: .4byte gTasks\n\t"
-        "_08171F94: .4byte gSprites\n\t"
-        "_08171F98: .4byte sBallParticleSpriteTemplates\n\t"
-        "_08171F9C: .4byte sBallParticleAnimNums\n\t"
-        "_08171FA0: .4byte gUnknown_20205C8\n\t"
-        "_08171FA4: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
-        "_08171FA8: .4byte gMain\n\t"
-        "_08171FAC: .4byte 0x00000439\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 x;
+    u8 y;
+    u8 priority;
+    u8 subpriority;
+    u8 ballId;
+    u8 spriteId;
+
+    ballId = gTasks[taskId].data[15];
+    x = gTasks[taskId].data[1];
+    y = gTasks[taskId].data[2];
+    priority = gTasks[taskId].data[3];
+    subpriority = gTasks[taskId].data[4];
+
+    for (i = 0; i < 8; i++)
+    {
+        spriteId = CreateSprite(&sBallParticleSpriteTemplates[ballId], x, y, subpriority);
+        if (spriteId != MAX_SPRITES)
+        {
+            sub_08171C04();
+            StartSpriteAnim(&gSprites[spriteId], sBallParticleAnimNums[ballId]);
+            gSprites[spriteId].callback = FanOutBallOpenParticles_Step1;
+            gSprites[spriteId].oam.priority = priority;
+            gSprites[spriteId].data[0] = i * 32;
+            gSprites[spriteId].data[4] = 10;
+            gSprites[spriteId].data[5] = 1;
+            gSprites[spriteId].data[6] = 2;
+        }
+    }
+
+    if (!gMain.inBattle)
+        gSprites[spriteId].data[7] = 1;
+
+    DestroyTask(taskId);
 }
 
-__attribute__((naked)) void SafariBallOpenParticleAnimation(u8 taskId)
+void SafariBallOpenParticleAnimation(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r1, _08172090\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, sb\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrb r2, [r0, #0xa]\n\t"
-        "	str r2, [sp]\n\t"
-        "	ldrb r3, [r0, #0xc]\n\t"
-        "	str r3, [sp, #4]\n\t"
-        "	ldrb r2, [r0, #0xe]\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	ldrb r0, [r0, #0x10]\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r7, #0\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "	ldr r3, _08172094\n\t"
-        "	mov r8, r3\n\t"
-        "	ldr r0, _08172098\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	mov sl, r1\n\t"
-        "_08171FF6:\n\t"
-        "	ldr r0, _0817209C\n\t"
-        "	ldr r1, [sp, #0x10]\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	ldr r3, [sp, #0xc]\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0x40\n\t"
-        "	beq _08172052\n\t"
-        "	bl sub_08171C04\n\t"
-        "	lsls r4, r6, #4\n\t"
-        "	adds r4, r4, r6\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r5, r4, r2\n\t"
-        "	mov r3, sl\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r0, _081720A0\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _081720A4\n\t"
-        "	str r0, [r4]\n\t"
-        "	movs r0, #3\n\t"
-        "	ldr r2, [sp, #8]\n\t"
-        "	ands r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	movs r3, #0xd\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	lsls r0, r7, #5\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0x36]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x38]\n\t"
-        "	strh r0, [r5, #0x3a]\n\t"
-        "_08172052:\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #7\n\t"
-        "	bls _08171FF6\n\t"
-        "	ldr r0, _081720A8\n\t"
-        "	ldr r1, _081720AC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817207A\n\t"
-        "	ldr r0, _08172094\n\t"
-        "	lsls r1, r6, #4\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x3c]\n\t"
-        "_0817207A:\n\t"
-        "	mov r0, sb\n\t"
-        "	bl DestroyTask\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08172090: .4byte gTasks\n\t"
-        "_08172094: .4byte gSprites\n\t"
-        "_08172098: .4byte sBallParticleAnimNums\n\t"
-        "_0817209C: .4byte sBallParticleSpriteTemplates\n\t"
-        "_081720A0: .4byte gUnknown_20205C8\n\t"
-        "_081720A4: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
-        "_081720A8: .4byte gMain\n\t"
-        "_081720AC: .4byte 0x00000439\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 x;
+    u8 y;
+    u8 priority;
+    u8 subpriority;
+    u8 ballId;
+    u8 spriteId;
+
+    ballId = gTasks[taskId].data[15];
+    x = gTasks[taskId].data[1];
+    y = gTasks[taskId].data[2];
+    priority = gTasks[taskId].data[3];
+    subpriority = gTasks[taskId].data[4];
+
+    for (i = 0; i < 8; i++)
+    {
+        spriteId = CreateSprite(&sBallParticleSpriteTemplates[ballId], x, y, subpriority);
+        if (spriteId != MAX_SPRITES)
+        {
+            sub_08171C04();
+            StartSpriteAnim(&gSprites[spriteId], sBallParticleAnimNums[ballId]);
+            gSprites[spriteId].callback = FanOutBallOpenParticles_Step1;
+            gSprites[spriteId].oam.priority = priority;
+            gSprites[spriteId].data[0] = i * 32;
+            gSprites[spriteId].data[4] = 4;
+            gSprites[spriteId].data[5] = 1;
+            gSprites[spriteId].data[6] = 1;
+        }
+    }
+
+    if (!gMain.inBattle)
+        gSprites[spriteId].data[7] = 1;
+
+    DestroyTask(taskId);
 }
 
-__attribute__((naked)) void UltraBallOpenParticleAnimation(u8 taskId)
+void UltraBallOpenParticleAnimation(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r0, _08172198\n\t"
-        "	mov r2, sb\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	add r1, sb\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldrb r3, [r1, #0xa]\n\t"
-        "	str r3, [sp]\n\t"
-        "	ldrb r0, [r1, #0xc]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldrb r2, [r1, #0xe]\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	ldrb r1, [r1, #0x10]\n\t"
-        "	str r1, [sp, #0xc]\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r3, _0817219C\n\t"
-        "	mov sl, r3\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "_081720F6:\n\t"
-        "	ldr r0, _081721A0\n\t"
-        "	ldr r2, [sp, #0x10]\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	ldr r3, [sp, #0xc]\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0x40\n\t"
-        "	beq _0817215A\n\t"
-        "	bl sub_08171C04\n\t"
-        "	lsls r4, r6, #4\n\t"
-        "	adds r4, r4, r6\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	mov r3, sl\n\t"
-        "	adds r5, r4, r3\n\t"
-        "	ldr r0, _081721A4\n\t"
-        "	add r0, r8\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r0, _081721A8\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _081721AC\n\t"
-        "	str r0, [r4]\n\t"
-        "	movs r0, #3\n\t"
-        "	ldr r2, [sp, #8]\n\t"
-        "	ands r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	movs r3, #0xd\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	lsls r0, r7, #1\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	movs r0, #5\n\t"
-        "	strh r0, [r5, #0x36]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x38]\n\t"
-        "	strh r0, [r5, #0x3a]\n\t"
-        "_0817215A:\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #9\n\t"
-        "	bls _081720F6\n\t"
-        "	ldr r0, _081721B0\n\t"
-        "	ldr r1, _081721B4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08172182\n\t"
-        "	ldr r0, _0817219C\n\t"
-        "	lsls r1, r6, #4\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x3c]\n\t"
-        "_08172182:\n\t"
-        "	mov r0, sb\n\t"
-        "	bl DestroyTask\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08172198: .4byte gTasks\n\t"
-        "_0817219C: .4byte gSprites\n\t"
-        "_081721A0: .4byte sBallParticleSpriteTemplates\n\t"
-        "_081721A4: .4byte sBallParticleAnimNums\n\t"
-        "_081721A8: .4byte gUnknown_20205C8\n\t"
-        "_081721AC: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
-        "_081721B0: .4byte gMain\n\t"
-        "_081721B4: .4byte 0x00000439\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 x;
+    u8 y;
+    u8 priority;
+    u8 subpriority;
+    u8 ballId;
+    u8 spriteId;
+
+    ballId = gTasks[taskId].data[15];
+    x = gTasks[taskId].data[1];
+    y = gTasks[taskId].data[2];
+    priority = gTasks[taskId].data[3];
+    subpriority = gTasks[taskId].data[4];
+
+    for (i = 0; i < 10; i++)
+    {
+        spriteId = CreateSprite(&sBallParticleSpriteTemplates[ballId], x, y, subpriority);
+        if (spriteId != MAX_SPRITES)
+        {
+            sub_08171C04();
+            StartSpriteAnim(&gSprites[spriteId], sBallParticleAnimNums[ballId]);
+            gSprites[spriteId].callback = FanOutBallOpenParticles_Step1;
+            gSprites[spriteId].oam.priority = priority;
+            gSprites[spriteId].data[0] = i * 25;
+            gSprites[spriteId].data[4] = 5;
+            gSprites[spriteId].data[5] = 1;
+            gSprites[spriteId].data[6] = 1;
+        }
+    }
+
+    if (!gMain.inBattle)
+        gSprites[spriteId].data[7] = 1;
+
+    DestroyTask(taskId);
 }
 
-__attribute__((naked)) void GreatBallOpenParticleAnimation(u8 taskId)
+void GreatBallOpenParticleAnimation(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r1, _081721E4\n\t"
-        "	lsls r2, r0, #2\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r3, r0, r1\n\t"
-        "	ldrh r1, [r3, #0x16]\n\t"
-        "	movs r4, #0x16\n\t"
-        "	ldrsh r0, [r3, r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081721E8\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r3, #0x16]\n\t"
-        "	b _081722BA\n\t"
-        "	.align 2, 0\n\t"
-        "_081721E4: .4byte gTasks\n\t"
-        "_081721E8:\n\t"
-        "	ldrh r0, [r3, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrb r1, [r3, #0xa]\n\t"
-        "	str r1, [sp]\n\t"
-        "	ldrb r4, [r3, #0xc]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	ldrb r1, [r3, #0xe]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	ldrb r3, [r3, #0x10]\n\t"
-        "	str r3, [sp, #0xc]\n\t"
-        "	movs r7, #0\n\t"
-        "	str r2, [sp, #0x14]\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	str r1, [sp, #0x10]\n\t"
-        "	ldr r3, _081722CC\n\t"
-        "	mov sb, r3\n\t"
-        "	ldr r1, _081722D0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov sl, r0\n\t"
-        "_08172214:\n\t"
-        "	ldr r0, _081722D4\n\t"
-        "	ldr r4, [sp, #0x10]\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	ldr r3, [sp, #0xc]\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0x40\n\t"
-        "	beq _08172270\n\t"
-        "	bl sub_08171C04\n\t"
-        "	lsls r4, r6, #4\n\t"
-        "	adds r4, r4, r6\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r5, r4, r0\n\t"
-        "	mov r3, sl\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r0, _081722D8\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _081722DC\n\t"
-        "	str r0, [r4]\n\t"
-        "	movs r0, #3\n\t"
-        "	ldr r2, [sp, #8]\n\t"
-        "	ands r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	movs r3, #0xd\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	lsls r0, r7, #5\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r5, #0x36]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x38]\n\t"
-        "	strh r0, [r5, #0x3a]\n\t"
-        "_08172270:\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #7\n\t"
-        "	bls _08172214\n\t"
-        "	ldr r0, _081722E0\n\t"
-        "	ldr r1, [sp, #0x14]\n\t"
-        "	add r1, r8\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r1, #0x16]\n\t"
-        "	ldrh r0, [r1, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r2, r0, #0x10\n\t"
-        "	cmp r2, #2\n\t"
-        "	bne _081722BA\n\t"
-        "	ldr r0, _081722E4\n\t"
-        "	ldr r4, _081722E8\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081722B4\n\t"
-        "	ldr r0, _081722CC\n\t"
-        "	lsls r1, r6, #4\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x3c]\n\t"
-        "_081722B4:\n\t"
-        "	mov r0, r8\n\t"
-        "	bl DestroyTask\n\t"
-        "_081722BA:\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081722CC: .4byte gSprites\n\t"
-        "_081722D0: .4byte sBallParticleAnimNums\n\t"
-        "_081722D4: .4byte sBallParticleSpriteTemplates\n\t"
-        "_081722D8: .4byte gUnknown_20205C8\n\t"
-        "_081722DC: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
-        "_081722E0: .4byte gTasks\n\t"
-        "_081722E4: .4byte gMain\n\t"
-        "_081722E8: .4byte 0x00000439\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 x;
+    u8 y;
+    u8 priority;
+    u8 subpriority;
+    u8 ballId;
+    u8 spriteId;
+
+    if (gTasks[taskId].data[7])
+    {
+        gTasks[taskId].data[7]--;
+    }
+    else
+    {
+        ballId = gTasks[taskId].data[15];
+        x = gTasks[taskId].data[1];
+        y = gTasks[taskId].data[2];
+        priority = gTasks[taskId].data[3];
+        subpriority = gTasks[taskId].data[4];
+
+        for (i = 0; i < 8; i++)
+        {
+            spriteId = CreateSprite(&sBallParticleSpriteTemplates[ballId], x, y, subpriority);
+            if (spriteId != MAX_SPRITES)
+            {
+                sub_08171C04();
+                StartSpriteAnim(&gSprites[spriteId], sBallParticleAnimNums[ballId]);
+                gSprites[spriteId].callback = FanOutBallOpenParticles_Step1;
+                gSprites[spriteId].oam.priority = priority;
+                gSprites[spriteId].data[0] = i * 32;
+                gSprites[spriteId].data[4] = 8;
+                gSprites[spriteId].data[5] = 2;
+                gSprites[spriteId].data[6] = 2;
+            }
+        }
+
+        gTasks[taskId].data[7] = 8;
+        if (++gTasks[taskId].data[0] == 2)
+        {
+            if (!gMain.inBattle)
+                gSprites[spriteId].data[7] = 1;
+
+            DestroyTask(taskId);
+        }
+    }
 }
 
-__attribute__((naked)) void FanOutBallOpenParticles_Step1(void)
+void FanOutBallOpenParticles_Step1(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	ldrh r1, [r4, #0x2e]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	ldrh r2, [r4, #0x30]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x33\n\t"
-        "	bne _0817233C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyBallOpenAnimationParticle\n\t"
-        "_0817233C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x2 = Sin(sprite->data[0], sprite->data[1]);
+    sprite->y2 = Cos(sprite->data[0], sprite->data[2]);
+    sprite->data[0] = (sprite->data[0] + sprite->data[4]) & 0xFF;
+    sprite->data[1] += sprite->data[5];
+    sprite->data[2] += sprite->data[6];
+    if (++sprite->data[3] == 51)
+        DestroyBallOpenAnimationParticle(sprite);
 }
 
-__attribute__((naked)) void RepeatBallOpenParticleAnimation(u8 taskId)
+void RepeatBallOpenParticleAnimation(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r1, _08172420\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, sb\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrb r2, [r0, #0xa]\n\t"
-        "	str r2, [sp]\n\t"
-        "	ldrb r3, [r0, #0xc]\n\t"
-        "	str r3, [sp, #4]\n\t"
-        "	ldrb r2, [r0, #0xe]\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	ldrb r0, [r0, #0x10]\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r7, #0\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "	ldr r3, _08172424\n\t"
-        "	mov r8, r3\n\t"
-        "	ldr r0, _08172428\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	mov sl, r1\n\t"
-        "_0817238A:\n\t"
-        "	ldr r0, _0817242C\n\t"
-        "	ldr r1, [sp, #0x10]\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	ldr r3, [sp, #0xc]\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0x40\n\t"
-        "	beq _081723E2\n\t"
-        "	bl sub_08171C04\n\t"
-        "	lsls r4, r6, #4\n\t"
-        "	adds r4, r4, r6\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r5, r4, r2\n\t"
-        "	mov r3, sl\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r0, _08172430\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _08172434\n\t"
-        "	str r0, [r4]\n\t"
-        "	movs r0, #3\n\t"
-        "	ldr r2, [sp, #8]\n\t"
-        "	ands r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	movs r3, #0xd\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "_081723E2:\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #0xb\n\t"
-        "	bls _0817238A\n\t"
-        "	ldr r0, _08172438\n\t"
-        "	ldr r1, _0817243C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817240A\n\t"
-        "	ldr r0, _08172424\n\t"
-        "	lsls r1, r6, #4\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x3c]\n\t"
-        "_0817240A:\n\t"
-        "	mov r0, sb\n\t"
-        "	bl DestroyTask\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08172420: .4byte gTasks\n\t"
-        "_08172424: .4byte gSprites\n\t"
-        "_08172428: .4byte sBallParticleAnimNums\n\t"
-        "_0817242C: .4byte sBallParticleSpriteTemplates\n\t"
-        "_08172430: .4byte gUnknown_20205C8\n\t"
-        "_08172434: .4byte RepeatBallOpenParticleAnimation_Step1 + 1\n\t"
-        "_08172438: .4byte gMain\n\t"
-        "_0817243C: .4byte 0x00000439\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 x;
+    u8 y;
+    u8 priority;
+    u8 subpriority;
+    u8 ballId;
+    u8 spriteId;
+
+    ballId = gTasks[taskId].data[15];
+    x = gTasks[taskId].data[1];
+    y = gTasks[taskId].data[2];
+    priority = gTasks[taskId].data[3];
+    subpriority = gTasks[taskId].data[4];
+
+    for (i = 0; i < 12; i++)
+    {
+        spriteId = CreateSprite(&sBallParticleSpriteTemplates[ballId], x, y, subpriority);
+        if (spriteId != MAX_SPRITES)
+        {
+            sub_08171C04();
+            StartSpriteAnim(&gSprites[spriteId], sBallParticleAnimNums[ballId]);
+            gSprites[spriteId].callback = RepeatBallOpenParticleAnimation_Step1;
+            gSprites[spriteId].oam.priority = priority;
+            gSprites[spriteId].data[0] = i * 21;
+        }
+    }
+
+    if (!gMain.inBattle)
+        gSprites[spriteId].data[7] = 1;
+
+    DestroyTask(taskId);
 }
 
-__attribute__((naked)) void RepeatBallOpenParticleAnimation_Step1(void)
+void RepeatBallOpenParticleAnimation_Step1(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r4, [r5, r0]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Sin\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	ldrh r0, [r5, #0x2e]\n\t"
-        "	adds r0, #6\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	ldrh r0, [r5, #0x30]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	ldrh r0, [r5, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	ldrh r0, [r5, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x33\n\t"
-        "	bne _08172498\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyBallOpenAnimationParticle\n\t"
-        "_08172498:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x2 = Sin(sprite->data[0], sprite->data[1]);
+    sprite->y2 = Cos(sprite->data[0], (s16)Sin(sprite->data[0], sprite->data[2]));
+    sprite->data[0] = (sprite->data[0] + 6) & 0xFF;
+    sprite->data[1]++;
+    sprite->data[2]++;
+    if (++sprite->data[3] == 51)
+        DestroyBallOpenAnimationParticle(sprite);
 }
 
-__attribute__((naked)) void MasterBallOpenParticleAnimation(u8 taskId)
+void MasterBallOpenParticleAnimation(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _08172554\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	ldrb r3, [r1, #0xa]\n\t"
-        "	str r3, [sp, #4]\n\t"
-        "	ldrb r0, [r1, #0xc]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	ldrb r2, [r1, #0xe]\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	ldrb r1, [r1, #0x10]\n\t"
-        "	str r1, [sp, #0x10]\n\t"
-        "	movs r3, #0\n\t"
-        "	mov r8, r3\n\t"
-        "	mov r1, sb\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	add r0, sb\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	str r0, [sp, #0x14]\n\t"
-        "_081724E4:\n\t"
-        "	movs r7, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	add r2, r8\n\t"
-        "	mov sl, r2\n\t"
-        "_081724EC:\n\t"
-        "	ldr r0, _08172558\n\t"
-        "	ldr r3, [sp, #0x14]\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	ldr r1, [sp, #4]\n\t"
-        "	ldr r2, [sp, #8]\n\t"
-        "	ldr r3, [sp, #0x10]\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0x40\n\t"
-        "	beq _08172574\n\t"
-        "	bl sub_08171C04\n\t"
-        "	lsls r4, r6, #4\n\t"
-        "	adds r4, r4, r6\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0817255C\n\t"
-        "	adds r5, r4, r0\n\t"
-        "	ldr r0, _08172560\n\t"
-        "	add r0, sb\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r1, _08172564\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	ldr r0, _08172568\n\t"
-        "	str r0, [r4]\n\t"
-        "	movs r0, #3\n\t"
-        "	ldr r1, [sp, #0xc]\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	movs r3, #0xd\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	lsls r0, r7, #5\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r5, #0x36]\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817256C\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x38]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08172572\n\t"
-        "	.align 2, 0\n\t"
-        "_08172554: .4byte gTasks\n\t"
-        "_08172558: .4byte sBallParticleSpriteTemplates\n\t"
-        "_0817255C: .4byte gSprites\n\t"
-        "_08172560: .4byte sBallParticleAnimNums\n\t"
-        "_08172564: .4byte gUnknown_20205C8\n\t"
-        "_08172568: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
-        "_0817256C:\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x38]\n\t"
-        "	movs r0, #2\n\t"
-        "_08172572:\n\t"
-        "	strh r0, [r5, #0x3a]\n\t"
-        "_08172574:\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #7\n\t"
-        "	bls _081724EC\n\t"
-        "	mov r1, sl\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	cmp r0, #1\n\t"
-        "	bls _081724E4\n\t"
-        "	ldr r0, _081725C0\n\t"
-        "	ldr r2, _081725C4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081725A8\n\t"
-        "	ldr r0, _081725C8\n\t"
-        "	lsls r1, r6, #4\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x3c]\n\t"
-        "_081725A8:\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	bl DestroyTask\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081725C0: .4byte gMain\n\t"
-        "_081725C4: .4byte 0x00000439\n\t"
-        "_081725C8: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 j;
+    u8 x;
+    u8 y;
+    u8 priority;
+    u8 subpriority;
+    u8 ballId;
+    u8 spriteId;
+
+    ballId = gTasks[taskId].data[15];
+    x = gTasks[taskId].data[1];
+    y = gTasks[taskId].data[2];
+    priority = gTasks[taskId].data[3];
+    subpriority = gTasks[taskId].data[4];
+
+    for (j = 0; j < 2; j++)
+    {
+        for (i = 0; i < 8; i++)
+        {
+            spriteId = CreateSprite(&sBallParticleSpriteTemplates[ballId], x, y, subpriority);
+            if (spriteId != MAX_SPRITES)
+            {
+                sub_08171C04();
+                StartSpriteAnim(&gSprites[spriteId], sBallParticleAnimNums[ballId]);
+                gSprites[spriteId].callback = FanOutBallOpenParticles_Step1;
+                gSprites[spriteId].oam.priority = priority;
+                gSprites[spriteId].data[0] = i * 32;
+                gSprites[spriteId].data[4] = 8;
+
+                if (j == 0)
+                {
+                    gSprites[spriteId].data[5] = 2;
+                    gSprites[spriteId].data[6] = 1;
+                }
+                else
+                {
+                    gSprites[spriteId].data[5] = 1;
+                    gSprites[spriteId].data[6] = 2;
+                }
+            }
+        }
+    }
+
+    if (!gMain.inBattle)
+        gSprites[spriteId].data[7] = 1;
+
+    DestroyTask(taskId);
 }
 
-__attribute__((naked)) void PremierBallOpenParticleAnimation(u8 taskId)
+void PremierBallOpenParticleAnimation(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r1, _081726A4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, sb\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrb r2, [r0, #0xa]\n\t"
-        "	str r2, [sp]\n\t"
-        "	ldrb r3, [r0, #0xc]\n\t"
-        "	str r3, [sp, #4]\n\t"
-        "	ldrb r2, [r0, #0xe]\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	ldrb r0, [r0, #0x10]\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r7, #0\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "	ldr r3, _081726A8\n\t"
-        "	mov r8, r3\n\t"
-        "	ldr r0, _081726AC\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	mov sl, r1\n\t"
-        "_08172612:\n\t"
-        "	ldr r0, _081726B0\n\t"
-        "	ldr r1, [sp, #0x10]\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	ldr r3, [sp, #0xc]\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0x40\n\t"
-        "	beq _08172664\n\t"
-        "	bl sub_08171C04\n\t"
-        "	lsls r4, r6, #4\n\t"
-        "	adds r4, r4, r6\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r5, r4, r2\n\t"
-        "	mov r3, sl\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r0, _081726B4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _081726B8\n\t"
-        "	str r0, [r4]\n\t"
-        "	movs r0, #3\n\t"
-        "	ldr r2, [sp, #8]\n\t"
-        "	ands r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	movs r3, #0xd\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	lsls r0, r7, #5\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "_08172664:\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #7\n\t"
-        "	bls _08172612\n\t"
-        "	ldr r0, _081726BC\n\t"
-        "	ldr r1, _081726C0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817268C\n\t"
-        "	ldr r0, _081726A8\n\t"
-        "	lsls r1, r6, #4\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x3c]\n\t"
-        "_0817268C:\n\t"
-        "	mov r0, sb\n\t"
-        "	bl DestroyTask\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081726A4: .4byte gTasks\n\t"
-        "_081726A8: .4byte gSprites\n\t"
-        "_081726AC: .4byte sBallParticleAnimNums\n\t"
-        "_081726B0: .4byte sBallParticleSpriteTemplates\n\t"
-        "_081726B4: .4byte gUnknown_20205C8\n\t"
-        "_081726B8: .4byte PremierBallOpenParticleAnimation_Step1 + 1\n\t"
-        "_081726BC: .4byte gMain\n\t"
-        "_081726C0: .4byte 0x00000439\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 x;
+    u8 y;
+    u8 priority;
+    u8 subpriority;
+    u8 ballId;
+    u8 spriteId;
+
+    ballId = gTasks[taskId].data[15];
+    x = gTasks[taskId].data[1];
+    y = gTasks[taskId].data[2];
+    priority = gTasks[taskId].data[3];
+    subpriority = gTasks[taskId].data[4];
+
+    for (i = 0; i < 8; i++)
+    {
+        spriteId = CreateSprite(&sBallParticleSpriteTemplates[ballId], x, y, subpriority);
+        if (spriteId != MAX_SPRITES)
+        {
+            sub_08171C04();
+            StartSpriteAnim(&gSprites[spriteId], sBallParticleAnimNums[ballId]);
+            gSprites[spriteId].callback = PremierBallOpenParticleAnimation_Step1;
+            gSprites[spriteId].oam.priority = priority;
+            gSprites[spriteId].data[0] = i * 32;
+        }
+    }
+
+    if (!gMain.inBattle)
+        gSprites[spriteId].data[7] = 1;
+
+    DestroyTask(taskId);
 }
 
-__attribute__((naked)) void PremierBallOpenParticleAnimation_Step1(void)
+void PremierBallOpenParticleAnimation_Step1(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r4, [r5, r0]\n\t"
-        "	ldrh r1, [r5, #0x2e]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	bl Sin\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	ldrh r0, [r5, #0x2e]\n\t"
-        "	adds r0, #0xa\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	ldrh r0, [r5, #0x30]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	ldrh r0, [r5, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	ldrh r0, [r5, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x33\n\t"
-        "	bne _08172720\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyBallOpenAnimationParticle\n\t"
-        "_08172720:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x2 = Sin(sprite->data[0], sprite->data[1]);
+    sprite->y2 = Cos(sprite->data[0], (s16)Sin(sprite->data[0] & 0x3F, sprite->data[2]));
+    sprite->data[0] = (sprite->data[0] + 10) & 0xFF;
+    sprite->data[1]++;
+    sprite->data[2]++;
+    if (++sprite->data[3] == 51)
+        DestroyBallOpenAnimationParticle(sprite);
 }
 
-__attribute__((naked)) void DestroyBallOpenAnimationParticle(void)
+void DestroyBallOpenAnimationParticle(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	ldr r0, _0817274C\n\t"
-        "	ldr r1, _08172750\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08172754\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r7, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081727AE\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl DestroySpriteAndFreeResources\n\t"
-        "	b _081727C6\n\t"
-        "	.align 2, 0\n\t"
-        "_0817274C: .4byte gMain\n\t"
-        "_08172750: .4byte 0x00000439\n\t"
-        "_08172754:\n\t"
-        "	ldr r2, _08172770\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, [r0, #8]\n\t"
-        "	ldrb r0, [r1, #0xa]\n\t"
-        "	subs r0, #1\n\t"
-        "	strb r0, [r1, #0xa]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081727C0\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r5, _08172774\n\t"
-        "	b _0817277C\n\t"
-        "	.align 2, 0\n\t"
-        "_08172770: .4byte gBattleSpritesDataPtr\n\t"
-        "_08172774: .4byte sBallParticleAnimationFuncs\n\t"
-        "_08172778:\n\t"
-        "	adds r5, #4\n\t"
-        "	adds r4, #1\n\t"
-        "_0817277C:\n\t"
-        "	cmp r4, #0xb\n\t"
-        "	bgt _0817278E\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08172778\n\t"
-        "_0817278E:\n\t"
-        "	cmp r4, #0xc\n\t"
-        "	bne _081727AE\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r5, _081727B8\n\t"
-        "	ldr r4, _081727BC\n\t"
-        "_08172798:\n\t"
-        "	ldrh r0, [r5, #6]\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "	ldrh r0, [r4, #4]\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "	adds r5, #8\n\t"
-        "	adds r4, #8\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #0xb\n\t"
-        "	ble _08172798\n\t"
-        "_081727AE:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "	b _081727C6\n\t"
-        "	.align 2, 0\n\t"
-        "_081727B8: .4byte sBallParticleSpriteSheets\n\t"
-        "_081727BC: .4byte sBallParticlePalettes\n\t"
-        "_081727C0:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_081727C6:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+    s32 j;
+
+    if (!gMain.inBattle)
+    {
+        if (sprite->data[7] == 1)
+            DestroySpriteAndFreeResources(sprite);
+        else
+            DestroySprite(sprite);
+    }
+    else
+    {
+        gBattleSpritesDataPtr->animationData->numBallParticles--;
+        if (gBattleSpritesDataPtr->animationData->numBallParticles == 0)
+        {
+            for (i = 0; i < POKEBALL_COUNT; i++)
+            {
+                if (FuncIsActiveTask(sBallParticleAnimationFuncs[i]) == TRUE)
+                    break;
+            }
+
+            if (i == POKEBALL_COUNT)
+            {
+                for (j = 0; j < POKEBALL_COUNT; j++)
+                {
+                    FreeSpriteTilesByTag(sBallParticleSpriteSheets[j].tag);
+                    FreeSpritePaletteByTag(sBallParticlePalettes[j].tag);
+                }
+            }
+
+            DestroySprite(sprite);
+        }
+        else
+        {
+            DestroySprite(sprite);
+        }
+    }
 }
 
-__attribute__((naked)) u8 LaunchBallFadeMonTask(bool8 unfadeLater, u8 spritePalNum, u32 selectedPalettes, u8 ballId)
+void sub_08172894(u8 taskId);
+void sub_08172924(u8 taskId);
+void sub_08172974(u8 taskId);
+
+u8 LaunchBallFadeMonTask(bool8 unfadeLater, u8 spritePalNum, u32 selectedPalettes, u8 ballId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	mov sb, r2\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r7, r3, #0x18\n\t"
-        "	ldr r0, _08172830\n\t"
-        "	movs r1, #5\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r1, _08172834\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	strh r7, [r5, #0x26]\n\t"
-        "	strh r6, [r5, #0xe]\n\t"
-        "	mov r0, sb\n\t"
-        "	strh r0, [r5, #0x1c]\n\t"
-        "	mov r1, sb\n\t"
-        "	lsrs r0, r1, #0x10\n\t"
-        "	strh r0, [r5, #0x1e]\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _0817283C\n\t"
-        "	lsls r0, r6, #0x14\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #0x11\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldr r2, _08172838\n\t"
-        "	lsls r1, r7, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r3, [r1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalette\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	b _08172862\n\t"
-        "	.align 2, 0\n\t"
-        "_08172830: .4byte sub_08172894 + 1\n\t"
-        "_08172834: .4byte gTasks\n\t"
-        "_08172838: .4byte gBallOpenFadeColors\n\t"
-        "_0817283C:\n\t"
-        "	lsls r0, r6, #0x14\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldr r2, _08172884\n\t"
-        "	lsls r1, r7, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r3, [r1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl BlendPalette\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	ldr r0, _08172888\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	ldr r0, _0817288C\n\t"
-        "	str r0, [r5]\n\t"
-        "_08172862:\n\t"
-        "	ldr r0, _08172890\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r0, sb\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	mov r0, r8\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08172884: .4byte gBallOpenFadeColors\n\t"
-        "_08172888: .4byte 0x0000FFFF\n\t"
-        "_0817288C: .4byte sub_08172924 + 1\n\t"
-        "_08172890: .4byte 0x00007FFF\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId;
+
+    taskId = CreateTask(sub_08172894, 5);
+    gTasks[taskId].data[15] = ballId;
+    gTasks[taskId].data[3] = spritePalNum;
+    gTasks[taskId].data[10] = selectedPalettes;
+    gTasks[taskId].data[11] = selectedPalettes >> 16;
+
+    if (!unfadeLater)
+    {
+        BlendPalette(OBJ_PLTT_ID(spritePalNum), 16, 0, gBallOpenFadeColors[ballId]);
+        gTasks[taskId].data[1] = 1;
+    }
+    else
+    {
+        BlendPalette(OBJ_PLTT_ID(spritePalNum), 16, 16, gBallOpenFadeColors[ballId]);
+        gTasks[taskId].data[0] = 16;
+        gTasks[taskId].data[1] = -1;
+        gTasks[taskId].func = sub_08172924;
+    }
+
+    BeginNormalPaletteFade(selectedPalettes, 0, 0, 16, RGB_WHITE);
+    return taskId;
 }
 
-__attribute__((naked)) void sub_08172894(void)
+void sub_08172894(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r1, _081728E4\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	movs r2, #0xc\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	bgt _081728EC\n\t"
-        "	movs r2, #0xe\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #0x14\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #0x11\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldrb r2, [r4, #8]\n\t"
-        "	ldr r3, _081728E8\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrh r3, [r1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalette\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	ldrh r1, [r4, #8]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	b _08172914\n\t"
-        "	.align 2, 0\n\t"
-        "_081728E4: .4byte gTasks\n\t"
-        "_081728E8: .4byte gBallOpenFadeColors\n\t"
-        "_081728EC:\n\t"
-        "	ldr r0, _0817291C\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08172914\n\t"
-        "	ldrh r0, [r4, #0x1c]\n\t"
-        "	ldrh r1, [r4, #0x1e]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	orrs r0, r1\n\t"
-        "	ldr r1, _08172920\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_08172914:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817291C: .4byte gPaletteFade\n\t"
-        "_08172920: .4byte 0x00007FFF\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 ballId = gTasks[taskId].data[15];
+
+    if (gTasks[taskId].data[2] <= 16)
+    {
+        BlendPalette(OBJ_PLTT_ID(gTasks[taskId].data[3]), 16, gTasks[taskId].data[0], gBallOpenFadeColors[ballId]);
+        gTasks[taskId].data[0] += gTasks[taskId].data[1];
+        gTasks[taskId].data[2]++;
+    }
+    else if (!gPaletteFade.active)
+    {
+        u32 selectedPalettes = (u16)gTasks[taskId].data[10] | ((u16)gTasks[taskId].data[11] << 16);
+
+        BeginNormalPaletteFade(selectedPalettes, 0, 16, 0, RGB_WHITE);
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void sub_08172924(void)
+void sub_08172924(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r0, _08172964\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817295C\n\t"
-        "	ldr r0, _08172968\n\t"
-        "	lsls r4, r2, #2\n\t"
-        "	adds r4, r4, r2\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrh r0, [r4, #0x1c]\n\t"
-        "	ldrh r1, [r4, #0x1e]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	orrs r0, r1\n\t"
-        "	ldr r1, _0817296C\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _08172970\n\t"
-        "	str r0, [r4]\n\t"
-        "_0817295C:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08172964: .4byte gPaletteFade\n\t"
-        "_08172968: .4byte gTasks\n\t"
-        "_0817296C: .4byte 0x00007FFF\n\t"
-        "_08172970: .4byte sub_08172974 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        u32 selectedPalettes = (u16)gTasks[taskId].data[10] | ((u16)gTasks[taskId].data[11] << 16);
+
+        BeginNormalPaletteFade(selectedPalettes, 0, 16, 0, RGB_WHITE);
+        gTasks[taskId].func = sub_08172974;
+    }
 }
 
-__attribute__((naked)) void sub_08172974(void)
+void sub_08172974(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r1, _081729C0\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	movs r3, #0xc\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	bgt _081729C8\n\t"
-        "	movs r2, #0xe\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #0x14\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #0x11\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldrb r2, [r4, #8]\n\t"
-        "	ldr r3, _081729C4\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrh r3, [r1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalette\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	ldrh r1, [r4, #8]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	b _081729CE\n\t"
-        "	.align 2, 0\n\t"
-        "_081729C0: .4byte gTasks\n\t"
-        "_081729C4: .4byte gBallOpenFadeColors\n\t"
-        "_081729C8:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_081729CE:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 ballId = gTasks[taskId].data[15];
+
+    if (gTasks[taskId].data[2] <= 16)
+    {
+        BlendPalette(OBJ_PLTT_ID(gTasks[taskId].data[3]), 16, gTasks[taskId].data[0], gBallOpenFadeColors[ballId]);
+        gTasks[taskId].data[0] += gTasks[taskId].data[1];
+        gTasks[taskId].data[2]++;
+    }
+    else
+    {
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void AnimTask_SwapMonSpriteToFromSubstitute(void)
+void AnimTask_SwapMonSpriteToFromSubstitute(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, _08172A08\n\t"
-        "	ldr r3, _08172A0C\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldrb r6, [r0]\n\t"
-        "	ldr r1, _08172A10\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	movs r1, #0x1c\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08172AAC\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _08172A14\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08172A1A\n\t"
-        "	b _08172B6E\n\t"
-        "	.align 2, 0\n\t"
-        "_08172A08: .4byte gBattlerSpriteIds\n\t"
-        "_08172A0C: .4byte gBattleAnimAttacker\n\t"
-        "_08172A10: .4byte gTasks\n\t"
-        "_08172A14:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08172ABE\n\t"
-        "	b _08172B6E\n\t"
-        "_08172A1A:\n\t"
-        "	ldr r0, _08172A54\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r5, #0x1e]\n\t"
-        "	movs r2, #0xa0\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ldrh r4, [r5, #8]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08172A5C\n\t"
-        "	ldr r2, _08172A58\n\t"
-        "	lsls r3, r6, #4\n\t"
-        "	adds r1, r3, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	ldrh r4, [r1, #0x24]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r0, [r1, #0x24]\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	b _08172A74\n\t"
-        "	.align 2, 0\n\t"
-        "_08172A54: .4byte gBattleAnimArgs\n\t"
-        "_08172A58: .4byte gSprites\n\t"
-        "_08172A5C:\n\t"
-        "	ldr r3, _08172AA4\n\t"
-        "	lsls r4, r6, #4\n\t"
-        "	adds r2, r4, r6\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrh r1, [r5, #8]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	ldrh r0, [r2, #0x24]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x24]\n\t"
-        "	adds r2, r3, #0\n\t"
-        "_08172A74:\n\t"
-        "	ldr r1, _08172AA8\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r3, r0, r1\n\t"
-        "	ldrb r0, [r3, #8]\n\t"
-        "	strh r0, [r3, #8]\n\t"
-        "	adds r0, r4, r6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #0x20\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	movs r4, #0x24\n\t"
-        "	ldrsh r0, [r0, r4]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, #0x20\n\t"
-        "	movs r0, #0x98\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bls _08172B6E\n\t"
-        "	ldrh r0, [r3, #0x1c]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x1c]\n\t"
-        "	b _08172B6E\n\t"
-        "	.align 2, 0\n\t"
-        "_08172AA4: .4byte gSprites\n\t"
-        "_08172AA8: .4byte gTasks\n\t"
-        "_08172AAC:\n\t"
-        "	ldrb r1, [r5, #0x1e]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl LoadBattleMonGfxAndAnimate\n\t"
-        "	ldrh r0, [r5, #0x1c]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x1c]\n\t"
-        "	b _08172B6E\n\t"
-        "_08172ABE:\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ldrh r2, [r5, #8]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08172AF4\n\t"
-        "	ldr r0, _08172AF0\n\t"
-        "	lsls r3, r6, #4\n\t"
-        "	adds r2, r3, r6\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrh r1, [r5, #8]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	ldrh r0, [r2, #0x24]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x24]\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	b _08172B0C\n\t"
-        "	.align 2, 0\n\t"
-        "_08172AF0: .4byte gSprites\n\t"
-        "_08172AF4:\n\t"
-        "	ldr r0, _08172B40\n\t"
-        "	lsls r2, r6, #4\n\t"
-        "	adds r1, r2, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	ldrh r3, [r1, #0x24]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r1, #0x24]\n\t"
-        "	adds r4, r2, #0\n\t"
-        "_08172B0C:\n\t"
-        "	ldr r1, _08172B44\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0, #8]\n\t"
-        "	strh r1, [r0, #8]\n\t"
-        "	ldr r0, _08172B48\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _08172B4C\n\t"
-        "	ldr r0, _08172B40\n\t"
-        "	adds r1, r4, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r4, #0x24\n\t"
-        "	ldrsh r0, [r1, r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bgt _08172B62\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x24]\n\t"
-        "	b _08172B68\n\t"
-        "	.align 2, 0\n\t"
-        "_08172B40: .4byte gSprites\n\t"
-        "_08172B44: .4byte gTasks\n\t"
-        "_08172B48: .4byte gBattleAnimAttacker\n\t"
-        "_08172B4C:\n\t"
-        "	ldr r0, _08172B78\n\t"
-        "	adds r1, r4, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r3, #0x24\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _08172B62\n\t"
-        "	strh r2, [r1, #0x24]\n\t"
-        "	movs r4, #1\n\t"
-        "	mov r8, r4\n\t"
-        "_08172B62:\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08172B6E\n\t"
-        "_08172B68:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "_08172B6E:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08172B78: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+    u32 x;
+    u32 done = FALSE;
+
+    spriteId = gBattlerSpriteIds[gBattleAnimAttacker];
+    switch (gTasks[taskId].data[10])
+    {
+    case 0:
+        gTasks[taskId].data[11] = gBattleAnimArgs[0];
+        gTasks[taskId].data[0] += 0x500;
+        if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+            gSprites[spriteId].x2 += gTasks[taskId].data[0] >> 8;
+        else
+            gSprites[spriteId].x2 -= gTasks[taskId].data[0] >> 8;
+
+        gTasks[taskId].data[0] &= 0xFF;
+        x = gSprites[spriteId].x + gSprites[spriteId].x2 + 32;
+        if (x > DISPLAY_WIDTH + 64)
+            gTasks[taskId].data[10]++;
+        break;
+    case 1:
+        LoadBattleMonGfxAndAnimate(gBattleAnimAttacker, gTasks[taskId].data[11], spriteId);
+        gTasks[taskId].data[10]++;
+        break;
+    case 2:
+        gTasks[taskId].data[0] += 0x500;
+        if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+            gSprites[spriteId].x2 -= gTasks[taskId].data[0] >> 8;
+        else
+            gSprites[spriteId].x2 += gTasks[taskId].data[0] >> 8;
+
+        gTasks[taskId].data[0] &= 0xFF;
+        if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+        {
+            if (gSprites[spriteId].x2 <= 0)
+            {
+                gSprites[spriteId].x2 = 0;
+                done = TRUE;
+            }
+        }
+        else
+        {
+            if (gSprites[spriteId].x2 >= 0)
+            {
+                gSprites[spriteId].x2 = 0;
+                done = TRUE;
+            }
+        }
+
+        if (done)
+            DestroyAnimVisualTask(taskId);
+
+        break;
+    }
 }
 
-__attribute__((naked)) void AnimTask_SubstituteFadeToInvisible(void)
+void AnimTask_SubstituteFadeToInvisible(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r1, _08172BA0\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r1, #0x26\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08172BF8\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _08172BA4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08172BAA\n\t"
-        "	b _08172C68\n\t"
-        "	.align 2, 0\n\t"
-        "_08172BA0: .4byte gTasks\n\t"
-        "_08172BA4:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08172C32\n\t"
-        "	b _08172C68\n\t"
-        "_08172BAA:\n\t"
-        "	ldr r0, _08172BC4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBattlerSpriteBGPriorityRank\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08172BCC\n\t"
-        "	ldr r1, _08172BC8\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl SetGpuReg\n\t"
-        "	b _08172BD4\n\t"
-        "	.align 2, 0\n\t"
-        "_08172BC4: .4byte gBattleAnimAttacker\n\t"
-        "_08172BC8: .4byte 0x00003F42\n\t"
-        "_08172BCC:\n\t"
-        "	ldr r1, _08172BF0\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl SetGpuReg\n\t"
-        "_08172BD4:\n\t"
-        "	movs r0, #0x52\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _08172BF4\n\t"
-        "	lsls r1, r5, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	b _08172C68\n\t"
-        "	.align 2, 0\n\t"
-        "_08172BF0: .4byte 0x00003F44\n\t"
-        "_08172BF4: .4byte gTasks\n\t"
-        "_08172BF8:\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	strh r1, [r4, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _08172C68\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	ldrh r2, [r4, #8]\n\t"
-        "	adds r2, #1\n\t"
-        "	strh r2, [r4, #8]\n\t"
-        "	lsls r1, r2, #8\n\t"
-        "	movs r0, #0x10\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	bne _08172C68\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	b _08172C68\n\t"
-        "_08172C32:\n\t"
-        "	ldr r1, _08172C70\n\t"
-        "	ldr r4, _08172C74\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldr r2, _08172C78\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #4]\n\t"
-        "	lsls r1, r1, #0x16\n\t"
-        "	lsrs r1, r1, #0x11\n\t"
-        "	ldr r0, _08172C7C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl RequestDma3Fill\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl ClearBehindSubstituteBit\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "_08172C68:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08172C70: .4byte gBattlerSpriteIds\n\t"
-        "_08172C74: .4byte gBattleAnimAttacker\n\t"
-        "_08172C78: .4byte gSprites\n\t"
-        "_08172C7C: .4byte 0x06010000\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+
+    switch (gTasks[taskId].data[15])
+    {
+    case 0:
+        if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == B_POSITION_OPPONENT_LEFT)
+            SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL);
+        else
+            SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG2 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL);
+
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 0));
+        gTasks[taskId].data[15]++;
+        break;
+    case 1:
+        if (gTasks[taskId].data[1]++ > 1)
+        {
+            gTasks[taskId].data[1] = 0;
+            gTasks[taskId].data[0]++;
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16 - gTasks[taskId].data[0], gTasks[taskId].data[0]));
+            if (gTasks[taskId].data[0] == 16)
+                gTasks[taskId].data[15]++;
+        }
+        break;
+    case 2:
+        spriteId = gBattlerSpriteIds[gBattleAnimAttacker];
+        RequestDma3Fill(0, (void *)OBJ_VRAM0 + gSprites[spriteId].oam.tileNum * TILE_SIZE_4BPP, MON_PIC_SIZE, 1);
+        ClearBehindSubstituteBit(gBattleAnimAttacker);
+        DestroyAnimVisualTask(taskId);
+        break;
+    }
 }
 
-__attribute__((naked)) void AnimTask_IsAttackerBehindSubstitute(void)
+void AnimTask_IsAttackerBehindSubstitute(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r3, _08172CA8\n\t"
-        "	ldr r1, _08172CAC\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldr r1, _08172CB0\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	lsls r1, r1, #0x1d\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	strh r1, [r3, #0xe]\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08172CA8: .4byte gBattleAnimArgs\n\t"
-        "_08172CAC: .4byte gBattleSpritesDataPtr\n\t"
-        "_08172CB0: .4byte gBattleAnimAttacker\n\t"
-        ".syntax divided\n\t"
-    );
+    gBattleAnimArgs[ARG_RET_ID] = gBattleSpritesDataPtr->battlerData[gBattleAnimAttacker].behindSubstitute;
+    DestroyAnimVisualTask(taskId);
 }
 
-__attribute__((naked)) void AnimTask_SetTargetToEffectBattler(void)
+void AnimTask_SetTargetToEffectBattler(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _08172CCC\n\t"
-        "	ldr r1, _08172CD0\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	strb r1, [r2]\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08172CCC: .4byte gBattleAnimTarget\n\t"
-        "_08172CD0: .4byte gEffectBattler\n\t"
-        ".syntax divided\n\t"
-    );
+    gBattleAnimTarget = gEffectBattler;
+    DestroyAnimVisualTask(taskId);
 }
 
-__attribute__((naked)) void sub_08172CD4(void)
+void sub_08172DD0(u8 taskId);
+void sub_08172F94(u8 taskId);
+void sub_08172FE0(struct Sprite *sprite);
+void sub_08173034(struct Sprite *sprite);
+
+void sub_08172CD4(u8 battler, struct Pokemon *mon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, _08172D90\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	lsls r0, r6, #1\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl IsBattlerSpriteVisible\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08172DAC\n\t"
-        "	lsrs r0, r5, #0x10\n\t"
-        "	ldr r7, _08172D94\n\t"
-        "	ands r5, r7\n\t"
-        "	eors r0, r5\n\t"
-        "	lsrs r1, r4, #0x10\n\t"
-        "	eors r0, r1\n\t"
-        "	ands r4, r7\n\t"
-        "	eors r0, r4\n\t"
-        "	cmp r0, #7\n\t"
-        "	bhi _08172D32\n\t"
-        "	movs r0, #1\n\t"
-        "	mov r8, r0\n\t"
-        "_08172D32:\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08172DAC\n\t"
-        "	ldr r0, _08172D98\n\t"
-        "	bl GetSpriteTileStartByTag\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, r7\n\t"
-        "	bne _08172D52\n\t"
-        "	ldr r0, _08172D9C\n\t"
-        "	bl LoadCompressedSpriteSheetUsingHeap\n\t"
-        "	ldr r0, _08172DA0\n\t"
-        "	bl LoadCompressedSpritePaletteUsingHeap\n\t"
-        "_08172D52:\n\t"
-        "	ldr r5, _08172DA4\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl CreateTask\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r3, _08172DA8\n\t"
-        "	lsls r2, r4, #2\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	movs r4, #0\n\t"
-        "	strh r6, [r2, #8]\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	strh r6, [r1, #8]\n\t"
-        "	strh r4, [r2, #0xa]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	b _08172DC2\n\t"
-        "	.align 2, 0\n\t"
-        "_08172D90: .4byte gBattleSpritesDataPtr\n\t"
-        "_08172D94: .4byte 0x0000FFFF\n\t"
-        "_08172D98: .4byte 0x000027F9\n\t"
-        "_08172D9C: .4byte gBattleAnimPicTable + 0x748\n\t"
-        "_08172DA0: .4byte gBattleAnimPaletteTable + 0x748\n\t"
-        "_08172DA4: .4byte sub_08172DD0 + 1\n\t"
-        "_08172DA8: .4byte gTasks\n\t"
-        "_08172DAC:\n\t"
-        "	ldr r0, _08172DCC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	lsls r0, r6, #1\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	movs r2, #1\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #1]\n\t"
-        "_08172DC2:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08172DCC: .4byte gBattleSpritesDataPtr\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 isShiny;
+    u32 otId;
+    u32 personality;
+    u32 shinyValue;
+    u8 taskCirc;
+    u8 taskDgnl;
+
+    isShiny = FALSE;
+    gBattleSpritesDataPtr->healthBoxesData[battler].triedShinyMonAnim = TRUE;
+    otId = GetMonData3(mon, MON_DATA_OT_ID);
+    personality = GetMonData3(mon, MON_DATA_PERSONALITY);
+
+    if (IsBattlerSpriteVisible(battler))
+    {
+        shinyValue = GET_SHINY_VALUE(otId, personality);
+        if (shinyValue < SHINY_ODDS)
+            isShiny = TRUE;
+
+        if (isShiny)
+        {
+            if (GetSpriteTileStartByTag(ANIM_TAG_GOLD_STARS) == 0xFFFF)
+            {
+                LoadCompressedSpriteSheetUsingHeap(&gBattleAnimPicTable[ANIM_TAG_GOLD_STARS - ANIM_SPRITES_START]);
+                LoadCompressedSpritePaletteUsingHeap(&gBattleAnimPaletteTable[ANIM_TAG_GOLD_STARS - ANIM_SPRITES_START]);
+            }
+
+            taskCirc = CreateTask(sub_08172DD0, 10);
+            taskDgnl = CreateTask(sub_08172DD0, 10);
+            gTasks[taskCirc].data[0] = battler;
+            gTasks[taskDgnl].data[0] = battler;
+            gTasks[taskCirc].data[1] = 0;
+            gTasks[taskDgnl].data[1] = 1;
+            return;
+        }
+    }
+
+    gBattleSpritesDataPtr->healthBoxesData[battler].finishedShinyMonAnim = TRUE;
 }
 
-__attribute__((naked)) void sub_08172DD0(void)
+void sub_08172DD0(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r1, _08172DF8\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldrh r1, [r4, #0x22]\n\t"
-        "	movs r2, #0x22\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x3b\n\t"
-        "	bgt _08172DFC\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	b _08172F74\n\t"
-        "	.align 2, 0\n\t"
-        "_08172DF8: .4byte gTasks\n\t"
-        "_08172DFC:\n\t"
-        "	ldr r0, _08172E50\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08172E0A\n\t"
-        "	b _08172F74\n\t"
-        "_08172E0A:\n\t"
-        "	ldrh r0, [r4, #0x1c]\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	strh r1, [r4, #0x1c]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _08172E1E\n\t"
-        "	b _08172F74\n\t"
-        "_08172E1E:\n\t"
-        "	ldrb r0, [r4, #8]\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08172E58\n\t"
-        "	ldr r0, _08172E54\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r3, #5\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	b _08172EBA\n\t"
-        "	.align 2, 0\n\t"
-        "_08172E50: .4byte gBattleSpritesDataPtr\n\t"
-        "_08172E54: .4byte gWishStarSpriteTemplate\n\t"
-        "_08172E58:\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _08172E8C\n\t"
-        "	cmp r0, #3\n\t"
-        "	bgt _08172E8C\n\t"
-        "	ldr r0, _08172E84\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r3, #5\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _08172E88\n\t"
-        "	lsls r2, r5, #4\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrh r3, [r2, #4]\n\t"
-        "	lsls r1, r3, #0x16\n\t"
-        "	lsrs r1, r1, #0x16\n\t"
-        "	adds r1, #4\n\t"
-        "	b _08172EAC\n\t"
-        "	.align 2, 0\n\t"
-        "_08172E84: .4byte gMiniTwinklingStarSpriteTemplate\n\t"
-        "_08172E88: .4byte gSprites\n\t"
-        "_08172E8C:\n\t"
-        "	ldr r0, _08172EE4\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r3, #5\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _08172EE8\n\t"
-        "	lsls r2, r5, #4\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrh r3, [r2, #4]\n\t"
-        "	lsls r1, r3, #0x16\n\t"
-        "	lsrs r1, r1, #0x16\n\t"
-        "	adds r1, #5\n\t"
-        "_08172EAC:\n\t"
-        "	ldr r4, _08172EEC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _08172EF0\n\t"
-        "	ands r0, r3\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2, #4]\n\t"
-        "_08172EBA:\n\t"
-        "	ldr r2, _08172EF4\n\t"
-        "	lsls r1, r7, #2\n\t"
-        "	adds r0, r1, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r6, r0, r2\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	mov sb, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08172EFC\n\t"
-        "	ldr r1, _08172EE8\n\t"
-        "	lsls r2, r5, #4\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08172EF8\n\t"
-        "	str r1, [r0]\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	b _08172F44\n\t"
-        "	.align 2, 0\n\t"
-        "_08172EE4: .4byte gMiniTwinklingStarSpriteTemplate\n\t"
-        "_08172EE8: .4byte gSprites\n\t"
-        "_08172EEC: .4byte 0x000003FF\n\t"
-        "_08172EF0: .4byte 0xFFFFFC00\n\t"
-        "_08172EF4: .4byte gTasks\n\t"
-        "_08172EF8: .4byte sub_08172FE0 + 1\n\t"
-        "_08172EFC:\n\t"
-        "	ldr r3, _08172F80\n\t"
-        "	lsls r4, r5, #4\n\t"
-        "	adds r1, r4, r5\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r2, _08172F84\n\t"
-        "	str r2, [r0]\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r0, _08172F88\n\t"
-        "	strh r0, [r1, #0x24]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08172F44\n\t"
-        "	mov r0, r8\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08172F3A\n\t"
-        "	movs r1, #0xc0\n\t"
-        "_08172F3A:\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	movs r0, #0x66\n\t"
-        "	bl PlaySE12WithPanning\n\t"
-        "_08172F44:\n\t"
-        "	ldr r1, _08172F80\n\t"
-        "	adds r0, r4, r5\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r7, [r0, #0x2e]\n\t"
-        "	ldr r1, _08172F8C\n\t"
-        "	mov r2, sb\n\t"
-        "	adds r0, r2, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrh r0, [r1, #0x1e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x1e]\n\t"
-        "	cmp r5, #0x40\n\t"
-        "	beq _08172F68\n\t"
-        "	ldrh r0, [r1, #0x20]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "_08172F68:\n\t"
-        "	movs r4, #0x1e\n\t"
-        "	ldrsh r0, [r1, r4]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bne _08172F74\n\t"
-        "	ldr r0, _08172F90\n\t"
-        "	str r0, [r1]\n\t"
-        "_08172F74:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08172F80: .4byte gSprites\n\t"
-        "_08172F84: .4byte sub_08173034 + 1\n\t"
-        "_08172F88: .4byte 0x0000FFE0\n\t"
-        "_08172F8C: .4byte gTasks\n\t"
-        "_08172F90: .4byte sub_08172F94 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 battler;
+    u8 x;
+    u8 y;
+    u8 spriteId;
+    u16 timer;
+    s16 starIdx;
+    s8 pan;
+
+    if (gTasks[taskId].data[13] < 60)
+    {
+        gTasks[taskId].data[13]++;
+        return;
+    }
+
+    if (gBattleSpritesDataPtr->animationData->numBallParticles)
+        return;
+
+    timer = gTasks[taskId].data[10]++;
+    if (timer % 4)
+        return;
+
+    battler = gTasks[taskId].data[0];
+    x = GetBattlerSpriteCoord(battler, BATTLER_COORD_X);
+    y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y);
+
+    starIdx = gTasks[taskId].data[11];
+    if (starIdx == 0)
+    {
+        spriteId = CreateSprite(&gWishStarSpriteTemplate, x, y, 5);
+    }
+    else if (starIdx >= 0 && gTasks[taskId].data[11] < 4)
+    {
+        spriteId = CreateSprite(&gMiniTwinklingStarSpriteTemplate, x, y, 5);
+        gSprites[spriteId].oam.tileNum += 4;
+    }
+    else
+    {
+        spriteId = CreateSprite(&gMiniTwinklingStarSpriteTemplate, x, y, 5);
+        gSprites[spriteId].oam.tileNum += 5;
+    }
+
+    if (gTasks[taskId].data[1] == 0)
+    {
+        gSprites[spriteId].callback = sub_08172FE0;
+    }
+    else
+    {
+        gSprites[spriteId].callback = sub_08173034;
+        gSprites[spriteId].x2 = -32;
+        gSprites[spriteId].y2 = 32;
+        gSprites[spriteId].invisible = TRUE;
+        if (gTasks[taskId].data[11] == 0)
+        {
+            if (GetBattlerSide(battler) == B_SIDE_PLAYER)
+                pan = -64;
+            else
+                pan = 63;
+
+            PlaySE12WithPanning(SE_SHINY, pan);
+        }
+    }
+
+    gSprites[spriteId].data[0] = taskId;
+    gTasks[taskId].data[11]++;
+    if (spriteId != MAX_SPRITES)
+        gTasks[taskId].data[12]++;
+
+    if (gTasks[taskId].data[11] == 5)
+        gTasks[taskId].func = sub_08172F94;
 }
 
-__attribute__((naked)) void sub_08172F94(void)
+void sub_08172F94(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldr r1, _08172FD8\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	movs r2, #0x20\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08172FD4\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08172FCE\n\t"
-        "	ldrb r1, [r1, #8]\n\t"
-        "	ldr r0, _08172FDC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, [r0, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	movs r2, #1\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #1]\n\t"
-        "_08172FCE:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_08172FD4:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08172FD8: .4byte gTasks\n\t"
-        "_08172FDC: .4byte gBattleSpritesDataPtr\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 battler;
+
+    if (gTasks[taskId].data[12] == 0)
+    {
+        if (gTasks[taskId].data[1] == 1)
+        {
+            battler = gTasks[taskId].data[0];
+            gBattleSpritesDataPtr->healthBoxesData[battler].finishedShinyMonAnim = TRUE;
+        }
+
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void sub_08172FE0(void)
+void sub_08172FE0(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x18\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x18\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	ble _0817302A\n\t"
-        "	ldr r2, _08173030\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #0x20]\n\t"
-        "	subs r1, #1\n\t"
-        "	strh r1, [r0, #0x20]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FreeSpriteOamMatrix\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_0817302A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08173030: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x2 = Sin(sprite->data[1], 24);
+    sprite->y2 = Cos(sprite->data[1], 24);
+    sprite->data[1] += 12;
+    if (sprite->data[1] > 255)
+    {
+        gTasks[sprite->data[0]].data[12]--;
+        FreeSpriteOamMatrix(sprite);
+        DestroySprite(sprite);
+    }
 }
 
-__attribute__((naked)) void sub_08173034(void)
+void sub_08173034(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x30]\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bgt _08173048\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	b _0817308A\n\t"
-        "_08173048:\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrh r1, [r4, #0x24]\n\t"
-        "	adds r1, #5\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	subs r0, #5\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0x20\n\t"
-        "	ble _0817308A\n\t"
-        "	ldr r2, _08173090\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #0x20]\n\t"
-        "	subs r1, #1\n\t"
-        "	strh r1, [r0, #0x20]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FreeSpriteOamMatrix\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_0817308A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08173090: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[1] < 4)
+    {
+        sprite->data[1]++;
+    }
+    else
+    {
+        sprite->invisible = FALSE;
+        sprite->x2 += 5;
+        sprite->y2 -= 5;
+        if (sprite->x2 > 32)
+        {
+            gTasks[sprite->data[0]].data[12]--;
+            FreeSpriteOamMatrix(sprite);
+            DestroySprite(sprite);
+        }
+    }
 }
 
-__attribute__((naked)) void AnimTask_LoadPokeblockGfx(void)
+void AnimTask_LoadPokeblockGfx(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _081730BC\n\t"
-        "	bl LoadCompressedSpriteSheetUsingHeap\n\t"
-        "	ldr r0, _081730C0\n\t"
-        "	bl LoadCompressedSpritePaletteUsingHeap\n\t"
-        "	ldr r0, _081730C4\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081730BC: .4byte gBattleAnimPicTable + 0x868\n\t"
-        "_081730C0: .4byte gBattleAnimPaletteTable + 0x868\n\t"
-        "_081730C4: .4byte 0x0000281D\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 UNUSED paletteIndex;
+
+    LoadCompressedSpriteSheetUsingHeap(&gBattleAnimPicTable[ANIM_TAG_POKEBLOCK - ANIM_SPRITES_START]);
+    LoadCompressedSpritePaletteUsingHeap(&gBattleAnimPaletteTable[ANIM_TAG_POKEBLOCK - ANIM_SPRITES_START]);
+    paletteIndex = IndexOfSpritePaletteTag(ANIM_TAG_POKEBLOCK);
+    DestroyAnimVisualTask(taskId);
 }
 
-__attribute__((naked)) void AnimTask_FreePokeblockGfx(void)
+void AnimTask_FreePokeblockGfx(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r5, _081730EC\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081730EC: .4byte 0x0000281D\n\t"
-        ".syntax divided\n\t"
-    );
+    FreeSpriteTilesByTag(ANIM_TAG_POKEBLOCK);
+    FreeSpritePaletteByTag(ANIM_TAG_POKEBLOCK);
+    DestroyAnimVisualTask(taskId);
 }
 
-__attribute__((naked)) void SpriteCB_PokeBlock_Throw(struct Sprite *sprite)
+void SpriteCB_PokeBlock_Throw(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl InitSpritePosToAnimAttacker\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r5, _08173164\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r5, #4]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r5, [r5, #6]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	ldr r0, _08173168\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl InitAnimArcTranslation\n\t"
-        "	ldr r2, _0817316C\n\t"
-        "	ldr r1, _08173170\n\t"
-        "	ldr r0, _08173174\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, _08173178\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r0, _0817317C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08173164: .4byte gBattleAnimArgs\n\t"
-        "_08173168: .4byte 0x0000FFE0\n\t"
-        "_0817316C: .4byte gSprites\n\t"
-        "_08173170: .4byte gBattlerSpriteIds\n\t"
-        "_08173174: .4byte gBattleAnimAttacker\n\t"
-        "_08173178: .4byte SpriteCB_TrainerThrowObject + 1\n\t"
-        "_0817317C: .4byte sub_08173180 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitSpritePosToAnimAttacker(sprite, FALSE);
+    sprite->data[0] = 30;
+    sprite->data[2] = GetBattlerSpriteCoord(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), BATTLER_COORD_X) + gBattleAnimArgs[2];
+    sprite->data[4] = GetBattlerSpriteCoord(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), BATTLER_COORD_Y) + gBattleAnimArgs[3];
+    sprite->data[5] = -32;
+    InitAnimArcTranslation(sprite);
+    gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].callback = SpriteCB_TrainerThrowObject;
+    sprite->callback = sub_08173180;
 }
 
-__attribute__((naked)) void sub_08173180(void)
+void sub_08173180(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldr r2, _081731A8\n\t"
-        "	ldr r1, _081731AC\n\t"
-        "	ldr r0, _081731B0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, #0x2b\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081731A4\n\t"
-        "	ldr r0, _081731B4\n\t"
-        "	str r0, [r3, #0x1c]\n\t"
-        "_081731A4:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081731A8: .4byte gSprites\n\t"
-        "_081731AC: .4byte gBattlerSpriteIds\n\t"
-        "_081731B0: .4byte gBattleAnimAttacker\n\t"
-        "_081731B4: .4byte sub_081731B8 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].animCmdIndex == 1)
+        sprite->callback = sub_081731B8;
 }
 
-__attribute__((naked)) void sub_081731B8(void)
+void sub_081731B8(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl TranslateAnimHorizontalArc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081731DA\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, _081731E0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_081731DA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081731E0: .4byte sub_081731E4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (TranslateAnimHorizontalArc(sprite))
+    {
+        sprite->data[0] = 0;
+        sprite->invisible = TRUE;
+        sprite->callback = sub_081731E4;
+    }
 }
 
-__attribute__((naked)) void sub_081731E4(void)
+void sub_081731E4(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r5, _08173234\n\t"
-        "	ldr r3, _08173238\n\t"
-        "	ldr r2, _0817323C\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0817322C\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _0817322C\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyAnimSprite\n\t"
-        "_0817322C:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08173234: .4byte gSprites\n\t"
-        "_08173238: .4byte gBattlerSpriteIds\n\t"
-        "_0817323C: .4byte gBattleAnimAttacker\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].animEnded)
+    {
+        if (++sprite->data[0] > 0)
+        {
+            StartSpriteAnim(&gSprites[gBattlerSpriteIds[gBattleAnimAttacker]], 0);
+            DestroyAnimSprite(sprite);
+        }
+    }
 }
 
-__attribute__((naked)) void AnimTask_SetAttackerTargetLeftPos(void)
+void AnimTask_SetAttackerTargetLeftPos(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _08173258\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817325C\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08173270\n\t"
-        "	b _08173284\n\t"
-        "	.align 2, 0\n\t"
-        "_08173258: .4byte gBattleAnimArgs\n\t"
-        "_0817325C:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	ldr r1, _0817326C\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0817327C\n\t"
-        "	.align 2, 0\n\t"
-        "_0817326C: .4byte gBattleAnimAttacker\n\t"
-        "_08173270:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	ldr r1, _08173290\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "_0817327C:\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	ldr r1, _08173294\n\t"
-        "	strb r0, [r1]\n\t"
-        "_08173284:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08173290: .4byte gBattleAnimAttacker\n\t"
-        "_08173294: .4byte gBattleAnimTarget\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gBattleAnimArgs[0])
+    {
+    case 0:
+        gBattleAnimAttacker = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
+        gBattleAnimTarget = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+        break;
+    case 1:
+        gBattleAnimAttacker = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+        gBattleAnimTarget = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
+        break;
+    }
+
+    DestroyAnimVisualTask(taskId);
 }
 
-__attribute__((naked)) void AnimTask_GetTrappedMoveAnimId(void)
+void AnimTask_GetTrappedMoveAnimId(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r0, _081732B0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	cmp r1, #0x53\n\t"
-        "	bne _081732B8\n\t"
-        "	ldr r1, _081732B4\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081732F0\n\t"
-        "	.align 2, 0\n\t"
-        "_081732B0: .4byte gBattleSpritesDataPtr\n\t"
-        "_081732B4: .4byte gBattleAnimArgs\n\t"
-        "_081732B8:\n\t"
-        "	cmp r1, #0xfa\n\t"
-        "	bne _081732C8\n\t"
-        "	ldr r1, _081732C4\n\t"
-        "	movs r0, #2\n\t"
-        "	b _081732F0\n\t"
-        "	.align 2, 0\n\t"
-        "_081732C4: .4byte gBattleAnimArgs\n\t"
-        "_081732C8:\n\t"
-        "	cmp r1, #0x80\n\t"
-        "	bne _081732D8\n\t"
-        "	ldr r1, _081732D4\n\t"
-        "	movs r0, #3\n\t"
-        "	b _081732F0\n\t"
-        "	.align 2, 0\n\t"
-        "_081732D4: .4byte gBattleAnimArgs\n\t"
-        "_081732D8:\n\t"
-        "	movs r0, #0xa4\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081732EC\n\t"
-        "	ldr r1, _081732E8\n\t"
-        "	movs r0, #4\n\t"
-        "	b _081732F0\n\t"
-        "	.align 2, 0\n\t"
-        "_081732E8: .4byte gBattleAnimArgs\n\t"
-        "_081732EC:\n\t"
-        "	ldr r1, _081732FC\n\t"
-        "	movs r0, #0\n\t"
-        "_081732F0:\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081732FC: .4byte gBattleAnimArgs\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gBattleSpritesDataPtr->animationData->animArg == MOVE_FIRE_SPIN)
+        gBattleAnimArgs[0] = TRAP_ANIM_FIRE_SPIN;
+    else if (gBattleSpritesDataPtr->animationData->animArg == MOVE_WHIRLPOOL)
+        gBattleAnimArgs[0] = TRAP_ANIM_WHIRLPOOL;
+    else if (gBattleSpritesDataPtr->animationData->animArg == MOVE_CLAMP)
+        gBattleAnimArgs[0] = TRAP_ANIM_CLAMP;
+    else if (gBattleSpritesDataPtr->animationData->animArg == MOVE_SAND_TOMB)
+        gBattleAnimArgs[0] = TRAP_ANIM_SAND_TOMB;
+    else
+        gBattleAnimArgs[0] = TRAP_ANIM_BIND;
+
+    DestroyAnimVisualTask(taskId);
 }
 
-__attribute__((naked)) void AnimTask_GetBattlersFromArg(void)
+void AnimTask_GetBattlersFromArg(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r3, _08173324\n\t"
-        "	ldr r1, _08173328\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldr r1, [r2, #8]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	strb r1, [r3]\n\t"
-        "	ldr r3, _0817332C\n\t"
-        "	ldr r1, [r2, #8]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	lsrs r1, r1, #8\n\t"
-        "	strb r1, [r3]\n\t"
-        "	bl DestroyAnimVisualTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08173324: .4byte gBattleAnimAttacker\n\t"
-        "_08173328: .4byte gBattleSpritesDataPtr\n\t"
-        "_0817332C: .4byte gBattleAnimTarget\n\t"
-        ".syntax divided\n\t"
-    );
+    gBattleAnimAttacker = gBattleSpritesDataPtr->animationData->animArg;
+    gBattleAnimTarget = gBattleSpritesDataPtr->animationData->animArg >> 8;
+    DestroyAnimVisualTask(taskId);
 }
