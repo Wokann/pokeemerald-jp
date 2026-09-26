@@ -6708,7 +6708,7 @@ trainer_card.s
 080c3b0c trainer_card.s sub_080C3B0C_jp
 080c3be4 PrintNameOnCard2 PrintStickersOnCard
 080c3c6c sub_080C3C6C_jp LoadStickerGfx
-080c3cc8 DrawTrainerCardWindow DrawTrainerCardWindow
+080c3cc8 PrintHofDebutStringOnCard PrintHofDebutStringOnCard
 080c3ce4 trainer_card.s SetCardBgsAndPals
 080c3e84 sub_080C3E84 DrawCardScreenBackground
 080c3ef4 sub_080C3EF4 DrawCardFrontOrBack
@@ -7906,10 +7906,10 @@ record_mixing.s
 080e81e0 GetRecordMixingDaycareMail GetRecordMixingDaycareMail
 080e823c record_mixing.s SanitizeEmeraldBattleTowerRecord
 080e8290 record_mixing.s sub_080E8290_jp
-080e82dc SanitizeRubyBattleTowerRecord sub_080E82DC_jp
-080e82f4 record_mixing.s sub_080E82F4_jp
-080e8320 record_mixing.s sub_080E8320_jp
-080e84a4 record_mixing.s SanitizeDayCareMailForRuby
+080e82dc CB2_SoundCheck CB2_SoundCheck
+080e82f4 VBlankCB_SoundCheck VBlankCB_SoundCheck
+080e8320 CB2_InitSoundCheck CB2_InitSoundCheck
+080e84a4 Task_SoundCheck Task_SoundCheck
 080e85f4 record_mixing.s sub_080E85F4_jp
 080e8688 record_mixing.s sub_080E8688
 080e8878 Task_HandleMainMenuInput Task_HandleMainMenuInput
@@ -7931,8 +7931,8 @@ record_mixing.s
 080e96a8 record_mixing.s sub_080E96A8
 080e96c8 sub_080E96C8 ResetWindowDimensions
 080e96dc sub_080E96DC ResetAllBgsCoordinates
-080e9734 DrawTrainerCardWindow DrawTrainerCardWindow
-080e9750 battle_palace.s sub_080E9750
+080e9734 SoundCheck_PutWindowTilemapAndCopy SoundCheck_PutWindowTilemapAndCopy
+080e9750 SoundCheck_ClearAndRemoveWindow SoundCheck_ClearAndRemoveWindow
 secret_base.s
 080e977c ClearSecretBase ClearSecretBase
 080e97b4 ClearSecretBases ClearSecretBases

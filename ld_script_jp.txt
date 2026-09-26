@@ -6133,6 +6133,7 @@ SECTIONS {
         src/contest_effect.o(.text.RoundTowardsZero);
         src/contest_effect.o(.text.RoundUp);
         src/record_mixing.o(.text);
+        src/sound_check.o(.text);
         src/secret_base.o(.text);
         src/tv.o(.text.ClearTVShowData);
         src/tv.o(.text.GetRandomActiveShowIdx);
