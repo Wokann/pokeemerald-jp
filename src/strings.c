@@ -10,6 +10,7 @@
 #define STRINGS_HOF_TEXT __attribute__((section(".rodata.strings_hall_of_fame"), aligned(1)))
 #define STRINGS_POKEBLOCK_TEXT __attribute__((section(".rodata.strings_pokeblock_text"), aligned(1)))
 #define STRINGS_SHOP_TEXT __attribute__((section(".rodata.strings_shop_text"), aligned(1)))
+#define STRINGS_PARTY_MENU_TEXT __attribute__((section(".rodata.strings_party_menu_text"), aligned(1)))
 #define STRINGS_MAIN_MENU __attribute__((section(".rodata.strings_main_menu")))
 #define STRINGS_EASY_CHAT __attribute__((section(".rodata.strings_easy_chat")))
 #define STRINGS_POKENAV_STORAGE __attribute__((section(".rodata.strings_pokenav_storage")))
@@ -465,6 +466,335 @@ STRINGS_SHOP_TEXT const u8 gText_TurnedOverVar1ForVar2[] = _(
     "{STR_VAR_1}¥　うけとった！");
 
 STRINGS_SHOP_TEXT const u8 gText_PokedollarVar1[] = _("{STR_VAR_1}¥");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_Shift[] = _("いれかえる");
+STRINGS_PARTY_MENU_TEXT const u8 gText_SendOut[] = _("せんとうにだす");
+STRINGS_PARTY_MENU_TEXT const u8 gText_Switch2[] = _("ならびかえ");
+STRINGS_PARTY_MENU_TEXT const u8 gText_Summary5[] = _("つよさをみる");
+STRINGS_PARTY_MENU_TEXT const u8 gText_Moves[] = _("つかえるわざ");
+STRINGS_PARTY_MENU_TEXT const u8 gText_Enter[] = _("さんかする");
+STRINGS_PARTY_MENU_TEXT const u8 gText_NoEntry[] = _("さんかしない");
+STRINGS_PARTY_MENU_TEXT const u8 gText_Take2[] = _("メールを　とる");
+STRINGS_PARTY_MENU_TEXT const u8 gText_Read2[] = _("メールを　よむ");
+STRINGS_PARTY_MENU_TEXT const u8 gText_Trade4[] = _("こうかんする");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_HP3[] = _("たいりょく");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_SpAtk3[] = _("とくこう");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_SpDef3[] = _("とくぼう");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_WontHaveEffect[] = _("つかっても　こうかがないよ{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_CantBeUsedOnPkmn[] = _(
+    "そのポケモンには\n"
+    "つかえません！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnCantSwitchOut[] = _(
+    "{STR_VAR_1}を　もどすことが\n"
+    "できない！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnAlreadyInBattle[] = _(
+    "{STR_VAR_1}は　すでに\n"
+    "せんとうに　でています{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnAlreadySelected[] = _(
+    "{STR_VAR_1}は　すでに\n"
+    "せんたく　されています{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnHasNoEnergy[] = _(
+    "{STR_VAR_1}は　たたかうための\n"
+    "げんきが　のこっていません！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_CantSwitchWithAlly[] = _(
+    "{STR_VAR_1}の　ポケモンは　じぶんの\n"
+    "ポケモンと　いれかえることは　できません！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_EggCantBattle[] = _(
+    "タマゴを\n"
+    "せんとうに　だすことは　できません！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_CantUseUntilNewBadge[] = _(
+    "あたらしい　バッジを　てにするまで\n"
+    "まだ　つかえません{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_NoMoreThanVar1Pkmn[] = _(
+    "さんか　できる　ポケモンは\n"
+    "{STR_VAR_1}ひき　まで　です！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_SendMailToPC[] = _(
+    "とった　メールを　パソコンに\n"
+    "てんそうしますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_MailSentToPC[] = _(
+    "メールを　パソコンに\n"
+    "てんそうしました{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PCMailboxFull[] = _(
+    "パソコンの　メールボックスが\n"
+    "いっぱいです！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_MailMessageWillBeLost[] = _(
+    "メールを　とると　メッセージが\n"
+    "きえてしまいますが　よろしいですか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_RemoveMailBeforeItem[] = _(
+    "メールを　はずさないと\n"
+    "どうぐは　もてません！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnWasGivenItem[] = _(
+    "{STR_VAR_1}に\n"
+    "{STR_VAR_2}を　もたせた！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnAlreadyHoldingItemSwitch[] = _(
+    "{STR_VAR_1}は　すでに\n"
+    "{STR_VAR_2}を　もっています\p"
+    "もっている　どうぐを\n"
+    "とりかえますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnNotHolding[] = _(
+    "{STR_VAR_1}は　なにも\n"
+    "どうぐを　もって　いません！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_ReceivedItemFromPkmn[] = _(
+    "{STR_VAR_1}から\n"
+    "{STR_VAR_2}を　あずかりました！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_MailTakenFromPkmn[] = _(
+    "ポケモンから　メールを\n"
+    "とりました！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_SwitchedPkmnItem[] = _(
+    "{STR_VAR_2}を　あずかって\n"
+    "あらたに　{STR_VAR_1}を　もたせました！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnHoldingItemCantHoldMail[] = _(
+    "すでに　どうぐを　もっているので\n"
+    "メールを　もたせることが　できません{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_MailTransferredFromMailbox[] = _("ボックスから　メールを　うつしました{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_BagFullCouldNotRemoveItem[] = _(
+    "バッグが　いっぱいで\n"
+    "ポケモンの　どうぐを　うけとれません！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnLearnedMove3[] = _(
+    "{STR_VAR_1}は　あたらしく\n"
+    "{STR_VAR_2}を　おぼえた！");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnCantLearnMove[] = _(
+    "{STR_VAR_1}と　{STR_VAR_2}は\n"
+    "あいしょうが　わるかった！\p"
+    "{STR_VAR_2}は　おぼえられない！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnNeedsToReplaceMove[] = _(
+    "{STR_VAR_1}は　あたらしく\n"
+    "{STR_VAR_2}を　おぼえたい⋯⋯！\p"
+    "しかし　{STR_VAR_1}は　わざを　4つ\n"
+    "おぼえるので　せいいっぱいだ！\p"
+    "{STR_VAR_2}の　かわりに\n"
+    "ほかの　わざを　わすれさせますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_StopLearningMove2[] = _(
+    "それでは⋯⋯　{STR_VAR_2}を\n"
+    "おぼえるのを　あきらめますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_MoveNotLearned[] = _(
+    "{STR_VAR_1}は　{STR_VAR_2}を\n"
+    "おぼえずに　おわった！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_WhichMoveToForget[] = _(
+    "どの　わざを\n"
+    "わすれさせたい？{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_12PoofForgotMove[] = _(
+    "1　{PAUSE 15}2の　{PAUSE 15}⋯{PAUSE 15}⋯{PAUSE 15}⋯　{PAUSE 15}{PLAY_SE 56}　ポカン！\p"
+    "{STR_VAR_1}は　{STR_VAR_2}の\n"
+    "つかいかたを　きれいに　わすれた！\p"
+    "そして⋯⋯！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnAlreadyKnows[] = _(
+    "{STR_VAR_1}は　すでに\n"
+    "{STR_VAR_2}を　おぼえています{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnHPRestoredByVar2[] = _(
+    "{STR_VAR_1}の　たいりょくが\n"
+    "{STR_VAR_2}　かいふくした{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnCuredOfPoison[] = _(
+    "{STR_VAR_1}の　どくは\n"
+    "きれい　さっぱり　なくなった！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnCuredOfParalysis[] = _(
+    "{STR_VAR_1}の　からだの\n"
+    "しびれが　とれた{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnWokeUp2[] = _(
+    "{STR_VAR_1}は\n"
+    "めを　さました{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnBurnHealed[] = _(
+    "{STR_VAR_1}の\n"
+    "やけどが　なおった{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnThawedOut[] = _(
+    "{STR_VAR_1}の　からだの\n"
+    "こおりが　とけた{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PPWasRestored[] = _(
+    "わざポイントが\n"
+    "かいふくした！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnRegainhedHealth[] = _(
+    "{STR_VAR_1}は\n"
+    "げんきを　とりもどした！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnBecameHealthy[] = _(
+    "{STR_VAR_1}は\n"
+    "けんこうになった！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_MovesPPIncreased[] = _(
+    "{STR_VAR_1}の\n"
+    "わざポイントが　ふえた！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnElevatedToLvVar2[] = _(
+    "{STR_VAR_1}の\n"
+    "レベルが　{STR_VAR_2}になった！");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnBaseVar2StatIncreased[] = _(
+    "{STR_VAR_1}の　{STR_VAR_2}の\n"
+    "きそ　ポイントが　あがった！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnFriendlyBaseVar2Fell[] = _(
+    "{STR_VAR_1}が　ちょっと　なついた！\n"
+    "{STR_VAR_2}の　きそポイントが　さがった！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnAdoresBaseVar2Fell[] = _(
+    "{STR_VAR_1}は　さいこうに　なついている！\n"
+    "{STR_VAR_2}の　きそポイントが　さがった！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnFriendlyBaseVar2CantFall[] = _(
+    "{STR_VAR_1}は　ちょっと　なついた！\n"
+    "{STR_VAR_2}の　きそポイントは　もうさがらない！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnSnappedOutOfConfusion[] = _(
+    "{STR_VAR_1}の\n"
+    "こんらんが　とけた{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnGotOverInfatuation[] = _(
+    "{STR_VAR_1}の\n"
+    "メロメロが　とけた{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_ThrowAwayItem[] = _(
+    "{STR_VAR_1}を\n"
+    "すてても　よろしいですか");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_ItemThrownAway[] = _(
+    "{STR_VAR_1}を\n"
+    "すてました{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_TeachWhichPokemon2[] = _("どのポケモンに　おぼえさせますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_ChoosePokemon[] = _("ポケモンを　えらんで　ください");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_MoveToWhere[] = _("どこに　いどうしますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_TeachWhichPokemon[] = _("どのポケモンに　おしえますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_UseOnWhichPokemon[] = _("どのポケモンに　つかいますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_GiveToWhichPokemon[] = _("どのポケモンに　もたせますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_DoWhatWithPokemon[] = _("{STR_VAR_1}を　どうする？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_NothingToCut[] = _("きれるものが　ありません！");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_CantSurfHere[] = _("ここでは　のれません");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_AlreadySurfing[] = _("すでに　なみのり　しています");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_CantUseHere[] = _("ここでは　つかえません");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_RestoreWhichMove[] = _("どれを　かいふくする？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_BoostPP[] = _("どれを　ふやす？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_DoWhatWithItem[] = _("もちものを　どうしますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_NoPokemonForBattle[] = _("これでは　たたかえません！");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_ChoosePokemon2[] = _("どのポケモンを　あずけますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_NotEnoughHp[] = _("たいりょくが　たりません⋯⋯");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PokemonAreNeeded[] = _("{STR_VAR_1}ひき　そろっていません");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PokemonCantBeSame[] = _("おなじ　ポケモンが　います！");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_NoIdenticalHoldItems[] = _("おなじ　どうぐを　もってます");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_CurrentIsTooFast[] = _("ながれが　はやくて　ダメだ！");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_DoWhatWithMail[] = _("メールを　どうしますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_ChoosePokemonCancel[] = _("ポケモンか　もどるを　せんたく");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_ChoosePokemonConfirm[] = _("ポケモンを　えらんで　けってい");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_EnjoyCycling[] = _("サイクリングを　たのしもう！");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_InUseAlready_PM[] = _("すでに　つかっています！");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_AlreadyHoldingOne[] = _(
+    "{STR_VAR_1}は\n"
+    "{STR_VAR_2}を　もっています");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_NoUse[] = _("つかえません");
+
+// JP labels an eligible but unselected party member as not participating, unlike US "ABLE".
+STRINGS_PARTY_MENU_TEXT const u8 gText_NotParticipating[] = _("さんかしない");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_First_PM[] = _("いちばんめ");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_Second_PM[] = _("にばんめ");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_Third_PM[] = _("さんばんめ");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_Able2[] = _("でられます");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_NotAble[] = _("でられません");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_Able3[] = _("おぼえられる！");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_NotAble2[] = _("おぼえられない");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_Learned[] = _("もうおぼえてる");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_Have[] = _("もっている");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_DontHave[] = _("もっていない");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_Fourth[] = _("よんばんめ");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PkmnCantParticipate[] = _("その　ポケモンは　さんか　できません{PAUSE_UNTIL_PRESS}");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_CancelParticipation[] = _("さんかを　やめますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_CancelBattle[] = _("たいせんを　やめますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_ReturnToWaitingRoom[] = _("ひかえしつに　もどりますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_CancelChallenge[] = _("ちょうせんを　やめますか？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_EscapeFromHere[] = _(
+    "ここを　だっしゅつ　して\n"
+    "{STR_VAR_1}に　もどる？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_ReturnToHealingSpot[] = _(
+    "さいごに　やすんだ\n"
+    "{STR_VAR_1}に　テレポートする？");
+
+STRINGS_PARTY_MENU_TEXT const u8 gText_PauseUntilPress[] = _("{PAUSE_UNTIL_PRESS}");
 
 STRINGS_COMMON const u8 gMenuText_Confirm[] = _("けってい");
 STRINGS_COMMON const u8 gMenuText_Walk[] = _("おりる");
