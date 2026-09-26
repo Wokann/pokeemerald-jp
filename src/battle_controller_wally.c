@@ -52,7 +52,8 @@ extern void sub_0805E7B8(u8 affineMode);
 extern void sub_0814FA04(const u8 *text, u8 windowId);
 extern void TryGetStatusString(const u8 *text);
 extern u16 gUnknown_2022D0A[][0x100];
-extern const u8 gUnknown_85ABAEE[];
+extern const u8 gUnknown_85ABB72[];
+extern const u8 gUnknown_85ABB57[];
 extern u8 gUnknown_3005ADC[];
 extern void sub_08172CD4(u8 battler, struct Pokemon *mon);
 extern void sub_08076320(u8 battler);
@@ -1106,13 +1107,13 @@ void WallyHandleChooseAction(void)
     s32 i;
 
     gBattlerControllerFuncs[gActiveBattler] = HandleChooseActionAfterDma3;
-    sub_0814FA04(gUnknown_85ABAEE + 0x84, 2);
+    sub_0814FA04(gUnknown_85ABB72, 2);
 
     for (i = 0; i < 4; i++)
         ActionSelectionDestroyCursorAt(i);
 
     SetCB2ToReshowScreenAfterMenu(gActionSelectionCursor[gActiveBattler], 0);
-    TryGetStatusString(gUnknown_85ABAEE + 0x69);
+    TryGetStatusString(gUnknown_85ABB57);
     sub_0814FA04(gDisplayedStringBattle, 1);
 }
 

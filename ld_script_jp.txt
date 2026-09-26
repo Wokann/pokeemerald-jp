@@ -757,7 +757,6 @@ gUnknown_8DBC568 = gCableCarCable_Gfx;
 GetPCBoxToSendMon = get_unknown_box_id;
 ShouldShowBoxWasFullMessage = sub_0813B254;
 DisplayCaughtMonDexPage = CreateDexDisplayMonDataTask;
-gTrappingMoves = gUnknown_85ABAEE;
 GetMoveSlotToReplace = sub_081C14C8;
 RecordedBattle_SetPlaybackFinished = sub_0818619C;
 TryPutBreakingNewsOnAir = sub_080EECA4;
@@ -9942,7 +9941,7 @@ SECTIONS {
         src/battle_message.o(.rodata.battle_message_tail_text_data);
         src/battle_message.o(.rodata.battle_message_string_pointer_data);
         src/battle_message.o(.rodata.battle_message_string_id_data);
-        data/data_b2d_rest.o(.rodata.battle_message_suffix);
+        src/battle_message.o(.rodata.battle_message_trapping_moves_data);
         src/data/text/region_texts67.o(.rodata);
         data/data_b2d.o(.rodata.mid66);
         src/data/text/region_texts68.o(.rodata);

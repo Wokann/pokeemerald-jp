@@ -42,6 +42,18 @@ struct BattleWindowText
 #define BATTLE_MESSAGE_FLAVOR_TEXT_DATA __attribute__((section(".rodata.battle_message_flavor_text_data"), aligned(1)))
 #define BATTLE_MESSAGE_FLAVOR_POINTER_DATA __attribute__((section(".rodata.battle_message_flavor_pointer_data"), aligned(4)))
 #define BATTLE_MESSAGE_TAIL_TEXT_DATA __attribute__((section(".rodata.battle_message_tail_text_data"), aligned(1)))
+#define BATTLE_MESSAGE_TRAPPING_MOVES_DATA __attribute__((section(".rodata.battle_message_trapping_moves_data"), aligned(2)))
+
+const u16 gTrappingMoves[NUM_TRAPPING_MOVES + 1] BATTLE_MESSAGE_TRAPPING_MOVES_DATA =
+{
+    MOVE_BIND,
+    MOVE_WRAP,
+    MOVE_FIRE_SPIN,
+    MOVE_CLAMP,
+    MOVE_WHIRLPOOL,
+    MOVE_SAND_TOMB,
+    0xFFFF // Never read
+};
 
 // Battle message ID lookup tables have the same order and values as US.
 const u16 gMissStringIds[] BATTLE_MESSAGE_STRING_ID_DATA =
