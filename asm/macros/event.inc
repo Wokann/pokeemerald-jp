@@ -2102,18 +2102,8 @@
 	map \map
 	.endm
 
-	.macro moveobjectoffscreen localId:req
-	.byte SCR_OP_COPYOBJECTXYTOPERM
-	.2byte \localId
-	.endm
-
 	.macro mossdeepgym2
 	.byte SCR_OP_74
-	.endm
-
-	.macro getpricereduction item:req
-	.byte SCR_OP_GETPOKENEWSACTIVE
-	.2byte \item
 	.endm
 
 	.macro setmonobedient partySlot:req

@@ -115,7 +115,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_SETTRAINERFLAG ScrCmd_settrainerflag @ 0x61
 	script_cmd_table_entry SCR_OP_CLEARTRAINERFLAG ScrCmd_cleartrainerflag @ 0x62
 	script_cmd_table_entry SCR_OP_SETOBJECTXYPERM ScrCmd_setobjectxyperm @ 0x63
-	script_cmd_table_entry SCR_OP_COPYOBJECTXYTOPERM ScrCmd_moveobjectoffscreen @ 0x64
+	script_cmd_table_entry SCR_OP_COPYOBJECTXYTOPERM ScrCmd_copyobjectxytoperm @ 0x64
 	script_cmd_table_entry SCR_OP_SETOBJECTMOVEMENTTYPE ScrCmd_setobjectmovementtype @ 0x65
 	script_cmd_table_entry SCR_OP_WAITMESSAGE ScrCmd_waitmessage @ 0x66
 	script_cmd_table_entry SCR_OP_MESSAGE ScrCmd_message @ 0x67
@@ -165,7 +165,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_SHOWMONEYBOX ScrCmd_showmoneybox @ 0x93
 	script_cmd_table_entry SCR_OP_HIDEMONEYBOX ScrCmd_hidemoneybox @ 0x94
 	script_cmd_table_entry SCR_OP_UPDATEMONEYBOX ScrCmd_updatemoneybox @ 0x95
-	script_cmd_table_entry SCR_OP_GETPOKENEWSACTIVE ScrCmd_getpricereduction @ 0x96
+	script_cmd_table_entry SCR_OP_GETPOKENEWSACTIVE ScrCmd_getpokenewsactive @ 0x96
 	script_cmd_table_entry SCR_OP_FADESCREEN ScrCmd_fadescreen @ 0x97
 	script_cmd_table_entry SCR_OP_FADESCREENSPEED ScrCmd_fadescreenspeed @ 0x98
 	script_cmd_table_entry SCR_OP_SETFLASHLEVEL ScrCmd_setflashlevel @ 0x99
@@ -214,12 +214,12 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_SETESCAPEWARP ScrCmd_setescapewarp @ 0xC4
 	script_cmd_table_entry SCR_OP_WAITDOORANIM ScrCmd_waitdooranim @ 0xC5
 	script_cmd_table_entry SCR_OP_BUFFERBOXNAME ScrCmd_bufferboxname @ 0xC6
-	script_cmd_table_entry SCR_OP_C7 ScrCmd_nop1 @ 0xC7
-	script_cmd_table_entry SCR_OP_C8 ScrCmd_nop1 @ 0xC8
-	script_cmd_table_entry SCR_OP_C9 ScrCmd_nop1 @ 0xC9
-	script_cmd_table_entry SCR_OP_CA ScrCmd_nop1 @ 0xCA
-	script_cmd_table_entry SCR_OP_CB ScrCmd_nop1 @ 0xCB
-	script_cmd_table_entry SCR_OP_CC ScrCmd_nop1 @ 0xCC
+	script_cmd_table_entry SCR_OP_TEXTCOLOR ScrCmd_nop1 @ 0xC7
+	script_cmd_table_entry SCR_OP_LOADHELP ScrCmd_nop1 @ 0xC8
+	script_cmd_table_entry SCR_OP_UNLOADHELP ScrCmd_nop1 @ 0xC9
+	script_cmd_table_entry SCR_OP_SIGNMSG ScrCmd_nop1 @ 0xCA
+	script_cmd_table_entry SCR_OP_NORMALMSG ScrCmd_nop1 @ 0xCB
+	script_cmd_table_entry SCR_OP_COMPAREHIDDENVAR ScrCmd_nop1 @ 0xCC
 	script_cmd_table_entry SCR_OP_CD ScrCmd_setmonobedient @ 0xCD
 	script_cmd_table_entry SCR_OP_CE ScrCmd_checkmonobedience @ 0xCE
 	script_cmd_table_entry SCR_OP_TRYWONDERCARDSCRIPT ScrCmd_trywondercardscript @ 0xCF
