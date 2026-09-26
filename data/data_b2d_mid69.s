@@ -8,12 +8,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.section .rodata.data_b2d_mid69_after_battle_message_alignment
-
-	.globl gUnknown_85AC232
-gUnknown_85AC232: @ 0x85AC232
-	.incbin "baserom_jp.gba", 0x5ac232, 0x2
-
 	.section .rodata.data_b2d_mid69_after_field_effect_helpers
 	.incbin "baserom_jp.gba", 0x5aca76, 0x92
 

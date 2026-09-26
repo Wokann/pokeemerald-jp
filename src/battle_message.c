@@ -30,7 +30,7 @@ struct BattleWindowText
     u8 shadowColor;
 };
 
-#define BATTLE_MESSAGE_NORMAL_WINDOW_TEXT_DATA __attribute__((section(".rodata.battle_message_normal_window_text_data")))
+#define BATTLE_MESSAGE_NORMAL_WINDOW_TEXT_DATA __attribute__((section(".rodata.battle_message_normal_window_text_data"), aligned(4)))
 #define BATTLE_MESSAGE_ARENA_WINDOW_TEXT_DATA __attribute__((section(".rodata.battle_message_arena_window_text_data")))
 #define BATTLE_MESSAGE_WINDOW_TEXT_POINTER_DATA __attribute__((section(".rodata.battle_message_window_text_pointer_data")))
 #define BATTLE_MESSAGE_RECORDED_TEXT_SPEED_DATA __attribute__((section(".rodata.battle_message_recorded_text_speed_data")))
@@ -54,6 +54,11 @@ struct BattleWindowText
 #define BATTLE_MESSAGE_DOME_ROUND_POINTER_DATA __attribute__((section(".rodata.battle_message_dome_round_pointer_data"), aligned(4)))
 #define BATTLE_MESSAGE_DOME_HEADLINE_TEXT_DATA __attribute__((section(".rodata.battle_message_dome_headline_text_data"), aligned(1)))
 #define BATTLE_MESSAGE_ARENA_TEXT_DATA __attribute__((section(".rodata.battle_message_arena_text_data"), aligned(1), used))
+#define BATTLE_MESSAGE_PALACE_TEXT_DATA __attribute__((section(".rodata.battle_message_palace_text_data"), aligned(1), used))
+#define BATTLE_MESSAGE_PALACE_POINTER_DATA __attribute__((section(".rodata.battle_message_palace_pointer_data"), aligned(2), used))
+#define BATTLE_MESSAGE_REFEREE_TEXT_DATA __attribute__((section(".rodata.battle_message_referee_text_data"), aligned(1), used))
+#define BATTLE_MESSAGE_REFEREE_POINTER_DATA __attribute__((section(".rodata.battle_message_referee_pointer_data"), aligned(4), used))
+#define BATTLE_MESSAGE_RESULT_TEXT_DATA __attribute__((section(".rodata.battle_message_result_text_data"), aligned(1), used))
 
 const u16 gTrappingMoves[NUM_TRAPPING_MOVES + 1] BATTLE_MESSAGE_TRAPPING_MOVES_DATA =
 {
@@ -208,6 +213,107 @@ static const u8 sText_InGamePartnerSentOutZGoN[] BATTLE_MESSAGE_ARENA_TEXT_DATA 
     "{B_PARTNER_CLASS}の　{B_PARTNER_NAME}は\n"
     "{B_PLAYER_MON2_NAME}を　くりだした！\l"
     "ゆけっ！　{B_PLAYER_MON1_NAME}！");
+
+static const u8 sText_TwoInGameTrainersDefeated[] BATTLE_MESSAGE_PALACE_TEXT_DATA = _(
+    "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}と\n"
+    "{B_TRAINER2_CLASS}の　{B_TRAINER2_NAME}\l"
+    "との　しょうぶに　かった！\p");
+static const u8 sText_Trainer2LoseText[] BATTLE_MESSAGE_PALACE_TEXT_DATA = _("{B_TRAINER2_LOSE_TEXT}");
+static const u8 sText_PkmnIncapableOfPower[] BATTLE_MESSAGE_PALACE_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "じぶんの　ちからを　はっき　できない　ようだ！");
+static const u8 sText_GlintAppearsInEye[] BATTLE_MESSAGE_PALACE_TEXT_DATA = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　めの　いろが　かわっていく！");
+static const u8 sText_PkmnGettingIntoPosition[] BATTLE_MESSAGE_PALACE_TEXT_DATA = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　たいせいを　たてなおしている！");
+static const u8 sText_PkmnBeganGrowlingDeeply[] BATTLE_MESSAGE_PALACE_TEXT_DATA = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　ひくく　うなり　はじめた！");
+static const u8 sText_PkmnEagerForMore[] BATTLE_MESSAGE_PALACE_TEXT_DATA = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　まだまだ　やるきだ！");
+
+const u16 gBattlePalaceFlavorTextTable[] BATTLE_MESSAGE_PALACE_POINTER_DATA =
+{
+    [B_MSG_GLINT_IN_EYE]   = STRINGID_GLINTAPPEARSINEYE,
+    [B_MSG_GETTING_IN_POS] = STRINGID_PKMNGETTINGINTOPOSITION,
+    [B_MSG_GROWL_DEEPLY]   = STRINGID_PKMNBEGANGROWLINGDEEPLY,
+    [B_MSG_EAGER_FOR_MORE] = STRINGID_PKMNEAGERFORMORE,
+};
+
+static const u8 sText_RefIfNothingIsDecided[] BATTLE_MESSAGE_REFEREE_TEXT_DATA = _(
+    "しんぱん“あと　3ターンで　けっちゃくが\n"
+    "つかないと　はんていに　なります！");
+static const u8 sText_RefThatsIt[] BATTLE_MESSAGE_REFEREE_TEXT_DATA = _(
+    "しんぱん“そこまでーーー！\n"
+    "この　たいけつは　はんていに　なります！");
+static const u8 sText_RefJudgeMind[] BATTLE_MESSAGE_REFEREE_TEXT_DATA = _(
+    "しんぱん“はんてい　その1！　‘こころ’！\n"
+    "せめる　きもちを　みせたもの！\p");
+static const u8 sText_RefJudgeSkill[] BATTLE_MESSAGE_REFEREE_TEXT_DATA = _(
+    "しんぱん“はんてい　その2！　‘わざ’！\n"
+    "てきかくに　わざを　くりだしたもの！\p");
+static const u8 sText_RefJudgeBody[] BATTLE_MESSAGE_REFEREE_TEXT_DATA = _(
+    "しんぱん“はんてい　その3！　‘からだ’！\n"
+    "あふれる　たいりょくを　もちえるもの！\p");
+static const u8 sText_RefPlayerWon[] BATTLE_MESSAGE_REFEREE_TEXT_DATA = _(
+    "しんぱん“はんてい　{B_BUFF1}　たい　{B_BUFF2}\n"
+    "しょうしゃ！　{B_PLAYER_NAME}の　{B_PLAYER_MON1_NAME}！\p");
+static const u8 sText_RefOpponentWon[] BATTLE_MESSAGE_REFEREE_TEXT_DATA = _(
+    "しんぱん“はんてい　{B_BUFF1}　たい　{B_BUFF2}\n"
+    "しょうしゃ！　{B_TRAINER1_NAME}の　{B_OPPONENT_MON1_NAME}！\p");
+static const u8 sText_RefDraw[] BATTLE_MESSAGE_REFEREE_TEXT_DATA = _(
+    "しんぱん“はんてい　3　たい　3\n"
+    "ひきわけーーー！\p");
+static const u8 sText_DefeatedOpponentByReferee[] BATTLE_MESSAGE_REFEREE_TEXT_DATA = _(
+    "{B_PLAYER_MON1_NAME}は　はんていで\n"
+    "あいての　{B_OPPONENT_MON1_NAME}に　かった！");
+static const u8 sText_LostToOpponentByReferee[] BATTLE_MESSAGE_REFEREE_TEXT_DATA = _(
+    "{B_PLAYER_MON1_NAME}は　はんていで\n"
+    "あいての　{B_OPPONENT_MON1_NAME}に　まけた！");
+static const u8 sText_TiedOpponentByReferee[] BATTLE_MESSAGE_REFEREE_TEXT_DATA = _(
+    "{B_PLAYER_MON1_NAME}は　はんていで\n"
+    "あいての　{B_OPPONENT_MON1_NAME}と　ひきわけた！");
+static const u8 sText_RefCommenceBattle[] BATTLE_MESSAGE_REFEREE_TEXT_DATA = _(
+    "しんぱん“{B_PLAYER_MON1_NAME}　VS　{B_OPPONENT_MON1_NAME}\n"
+    "しょうぶ！　はじめーーー！！");
+
+const u8 *const gRefereeStringsTable[] BATTLE_MESSAGE_REFEREE_POINTER_DATA =
+{
+    [B_MSG_REF_NOTHING_IS_DECIDED] = sText_RefIfNothingIsDecided,
+    [B_MSG_REF_THATS_IT]           = sText_RefThatsIt,
+    [B_MSG_REF_JUDGE_MIND]         = sText_RefJudgeMind,
+    [B_MSG_REF_JUDGE_SKILL]        = sText_RefJudgeSkill,
+    [B_MSG_REF_JUDGE_BODY]         = sText_RefJudgeBody,
+    [B_MSG_REF_PLAYER_WON]         = sText_RefPlayerWon,
+    [B_MSG_REF_OPPONENT_WON]       = sText_RefOpponentWon,
+    [B_MSG_REF_DRAW]               = sText_RefDraw,
+    [B_MSG_REF_COMMENCE_BATTLE]    = sText_RefCommenceBattle,
+};
+
+static const u8 sText_QuestionForfeitMatch[] BATTLE_MESSAGE_RESULT_TEXT_DATA = _(
+    "しょうぶを　あきらめて\n"
+    "こうさん　しますか？");
+static const u8 sText_ForfeitedMatch[] BATTLE_MESSAGE_RESULT_TEXT_DATA = _(
+    "{B_PLAYER_NAME}は\n"
+    "しょうぶを　あきらめた！");
+static const u8 sText_Trainer1WinText[] BATTLE_MESSAGE_RESULT_TEXT_DATA = _("{B_TRAINER1_WIN_TEXT}");
+static const u8 sText_Trainer2WinText[] BATTLE_MESSAGE_RESULT_TEXT_DATA = _("{B_TRAINER2_WIN_TEXT}");
+static const u8 sText_Trainer1Fled[] BATTLE_MESSAGE_RESULT_TEXT_DATA = _(
+    "{PLAY_SE SE_FLEE}{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+    "にげだした！");
+static const u8 sText_PlayerLostAgainstTrainer1[] BATTLE_MESSAGE_RESULT_TEXT_DATA = _(
+    "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}\n"
+    "との　しょうぶに　まけた！");
+static const u8 sText_PlayerBattledToDrawTrainer1[] BATTLE_MESSAGE_RESULT_TEXT_DATA = _(
+    "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}\n"
+    "との　しょうぶに　ひきわけた！");
+const u8 gText_RecordBattleToPass[] BATTLE_MESSAGE_RESULT_TEXT_DATA = _(
+    "いまの　たたかいを　フロンティアパスに\n"
+    "きろく　しますか？");
+const u8 gText_BattleRecordedOnPass[] BATTLE_MESSAGE_RESULT_TEXT_DATA = _(
+    "{B_PLAYER_NAME}の　たたかいが\n"
+    "フロンティアパスに　きろく　された！");
+static const u8 sText_LinkTrainerWantsToBattlePause[] BATTLE_MESSAGE_RESULT_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}が\n"
+    "しょうぶを　しかけてきた！{PAUSE 49}");
+static const u8 sText_TwoLinkTrainersWantToBattlePause[] BATTLE_MESSAGE_RESULT_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}が\n"
+    "しょうぶを　しかけてきた！{PAUSE 49}");
 
 // Battle message ID lookup tables have the same order and values as US.
 const u16 gMissStringIds[] BATTLE_MESSAGE_STRING_ID_DATA =
@@ -2260,24 +2366,24 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT - BATTLESTRINGS_TABLE_ST
     [STRINGID_PKMNOBTAINEDXYOBTAINEDZ - BATTLESTRINGS_TABLE_START] = sText_PkmnObtainedXYObtainedZ,
     [STRINGID_BUTNOEFFECT - BATTLESTRINGS_TABLE_START] = sText_ButNoEffect,
     [STRINGID_PKMNSXHADNOEFFECTONY - BATTLESTRINGS_TABLE_START] = sText_PkmnsXHadNoEffectOnY,
-    [STRINGID_TWOENEMIESDEFEATED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085ABE2F, // US: sText_TwoInGameTrainersDefeated; JP target still needs a semantic label
-    [STRINGID_TRAINER2LOSETEXT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085ABE4D, // US: sText_Trainer2LoseText; JP target still needs a semantic label
-    [STRINGID_PKMNINCAPABLEOFPOWER - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085ABE50, // US: sText_PkmnIncapableOfPower; JP target still needs a semantic label
-    [STRINGID_GLINTAPPEARSINEYE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085ABE6C, // US: sText_GlintAppearsInEye; JP target still needs a semantic label
-    [STRINGID_PKMNGETTINGINTOPOSITION - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085ABE7F, // US: sText_PkmnGettingIntoPosition; JP target still needs a semantic label
-    [STRINGID_PKMNBEGANGROWLINGDEEPLY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085ABE93, // US: sText_PkmnBeganGrowlingDeeply; JP target still needs a semantic label
-    [STRINGID_PKMNEAGERFORMORE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085ABEA5, // US: sText_PkmnEagerForMore; JP target still needs a semantic label
-    [STRINGID_DEFEATEDOPPONENTBYREFEREE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085ABFE2, // US: sText_DefeatedOpponentByReferee; JP target still needs a semantic label
-    [STRINGID_LOSTTOOPPONENTBYREFEREE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085ABFFA, // US: sText_LostToOpponentByReferee; JP target still needs a semantic label
-    [STRINGID_TIEDOPPONENTBYREFEREE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AC012, // US: sText_TiedOpponentByReferee; JP target still needs a semantic label
-    [STRINGID_QUESTIONFORFEITMATCH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AC070, // US: sText_QuestionForfeitMatch; JP target still needs a semantic label
-    [STRINGID_FORFEITEDMATCH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AC087, // US: sText_ForfeitedMatch; JP target still needs a semantic label
+    [STRINGID_TWOENEMIESDEFEATED - BATTLESTRINGS_TABLE_START] = sText_TwoInGameTrainersDefeated,
+    [STRINGID_TRAINER2LOSETEXT - BATTLESTRINGS_TABLE_START] = sText_Trainer2LoseText,
+    [STRINGID_PKMNINCAPABLEOFPOWER - BATTLESTRINGS_TABLE_START] = sText_PkmnIncapableOfPower,
+    [STRINGID_GLINTAPPEARSINEYE - BATTLESTRINGS_TABLE_START] = sText_GlintAppearsInEye,
+    [STRINGID_PKMNGETTINGINTOPOSITION - BATTLESTRINGS_TABLE_START] = sText_PkmnGettingIntoPosition,
+    [STRINGID_PKMNBEGANGROWLINGDEEPLY - BATTLESTRINGS_TABLE_START] = sText_PkmnBeganGrowlingDeeply,
+    [STRINGID_PKMNEAGERFORMORE - BATTLESTRINGS_TABLE_START] = sText_PkmnEagerForMore,
+    [STRINGID_DEFEATEDOPPONENTBYREFEREE - BATTLESTRINGS_TABLE_START] = sText_DefeatedOpponentByReferee,
+    [STRINGID_LOSTTOOPPONENTBYREFEREE - BATTLESTRINGS_TABLE_START] = sText_LostToOpponentByReferee,
+    [STRINGID_TIEDOPPONENTBYREFEREE - BATTLESTRINGS_TABLE_START] = sText_TiedOpponentByReferee,
+    [STRINGID_QUESTIONFORFEITMATCH - BATTLESTRINGS_TABLE_START] = sText_QuestionForfeitMatch,
+    [STRINGID_FORFEITEDMATCH - BATTLESTRINGS_TABLE_START] = sText_ForfeitedMatch,
     [STRINGID_PKMNTRANSFERREDSOMEONESPC - BATTLESTRINGS_TABLE_START] = (const u8 *)0x08243E08, // US: gText_PkmnTransferredSomeonesPC; JP target still needs a semantic label
     [STRINGID_PKMNTRANSFERREDLANETTESPC - BATTLESTRINGS_TABLE_START] = (const u8 *)0x08243E2A, // US: gText_PkmnTransferredLanettesPC; JP target still needs a semantic label
     [STRINGID_PKMNBOXSOMEONESPCFULL - BATTLESTRINGS_TABLE_START] = (const u8 *)0x08243E4C, // US: gText_PkmnTransferredSomeonesPCBoxFull; JP target still needs a semantic label
     [STRINGID_PKMNBOXLANETTESPCFULL - BATTLESTRINGS_TABLE_START] = (const u8 *)0x08243E80, // US: gText_PkmnTransferredLanettesPCBoxFull; JP target still needs a semantic label
-    [STRINGID_TRAINER1WINTEXT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AC098, // US: sText_Trainer1WinText; JP target still needs a semantic label
-    [STRINGID_TRAINER2WINTEXT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AC09B, // US: sText_Trainer2WinText; JP target still needs a semantic label
+    [STRINGID_TRAINER1WINTEXT - BATTLESTRINGS_TABLE_START] = sText_Trainer1WinText,
+    [STRINGID_TRAINER2WINTEXT - BATTLESTRINGS_TABLE_START] = sText_Trainer2WinText,
 };
 
 // JP text-expand helper (US: BattleStringExpandPlaceholdersToDisplayedString)
@@ -2301,8 +2407,6 @@ extern const u8 sText_LegendaryPkmnAppeared[];
 extern const u8 sText_WildPkmnAppeared[];
 extern const u8 sText_TwoWildPkmnAppeared[];
 extern const u8 sText_Trainer1WantsToBattle[];
-extern const u8 sText_LinkTrainerWantsToBattlePause[];
-extern const u8 sText_TwoLinkTrainersWantToBattlePause[];
 extern const u8 sText_Trainer1SentOutPkmn[];
 extern const u8 sText_Trainer1SentOutTwoPkmn[];
 extern const u8 sText_Trainer1SentOutPkmn2[];
@@ -2326,9 +2430,6 @@ extern const u8 sText_Trainer1WithdrewPkmn[];
 extern const u8 sText_LinkTrainer1WithdrewPkmn[];
 extern const u8 sText_LinkTrainer2WithdrewPkmn[];
 extern const u8 sText_AttackerUsedX[];
-extern const u8 sText_TwoInGameTrainersDefeated[];
-extern const u8 sText_PlayerLostAgainstTrainer1[];
-extern const u8 sText_PlayerBattledToDrawTrainer1[];
 extern const u8 sText_LinkTrainerWantsToBattle[];
 extern const u8 sText_TwoLinkTrainersWantToBattle[];
 
@@ -2979,7 +3080,7 @@ __attribute__((naked, section(".text.battle_message_tail"))) void BufferStringBa
         "_0814E2AC: .4byte 0x02022C90\n\t"
         "_0814E2B0: .4byte 0x02000002\n\t"
         "_0814E2B4: .4byte gUnknown_85A9544 + 0x194D\n\t"
-        "_0814E2B8: .4byte gUnknown_85ABE2F + 0x2FE\n\t"
+        "_0814E2B8: .4byte sText_TwoLinkTrainersWantToBattlePause\n\t"
         "_0814E2BC:\n\t"
         "	ldr r0, _0814E2CC\n\t"
         "	ldrh r1, [r0]\n\t"
@@ -3005,7 +3106,7 @@ __attribute__((naked, section(".text.battle_message_tail"))) void BufferStringBa
         "	b _0814E788\n\t"
         "	.align 2, 0\n\t"
         "_0814E2E8: .4byte gUnknown_85A9544 + 0x193B\n\t"
-        "_0814E2EC: .4byte gUnknown_85ABE2F + 0x2E9\n\t"
+        "_0814E2EC: .4byte sText_LinkTrainerWantsToBattlePause\n\t"
         "_0814E2F0:\n\t"
         "	movs r0, #0x80\n\t"
         "	lsls r0, r0, #0xf\n\t"
@@ -3506,7 +3607,7 @@ __attribute__((naked, section(".text.battle_message_tail"))) void BufferStringBa
         "	b _0814E788\n\t"
         "	.align 2, 0\n\t"
         "_0814E6D0: .4byte gUnknown_85A9544 + 0x1492\n\t"
-        "_0814E6D4: .4byte gUnknown_85ABE2F\n\t"
+        "_0814E6D4: .4byte sText_TwoInGameTrainersDefeated\n\t"
         "_0814E6D8:\n\t"
         "	ldr r7, _0814E6DC\n\t"
         "	b _0814E788\n\t"
@@ -3549,12 +3650,12 @@ __attribute__((naked, section(".text.battle_message_tail"))) void BufferStringBa
         "	ldr r7, _0814E724\n\t"
         "	b _0814E788\n\t"
         "	.align 2, 0\n\t"
-        "_0814E724: .4byte gUnknown_85ABE2F + 0x282\n\t"
+        "_0814E724: .4byte sText_PlayerLostAgainstTrainer1\n\t"
         "_0814E728:\n\t"
         "	ldr r7, _0814E72C\n\t"
         "	b _0814E788\n\t"
         "	.align 2, 0\n\t"
-        "_0814E72C: .4byte gUnknown_85ABE2F + 0x297\n\t"
+        "_0814E72C: .4byte sText_PlayerBattledToDrawTrainer1\n\t"
         "_0814E730:\n\t"
         "	ldr r0, _0814E744\n\t"
         "	ldrb r0, [r0]\n\t"
