@@ -769,7 +769,7 @@ const u8 sText_PkmnTookFoe[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
 
 const u8 sText_PkmnReducedPP[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_DEF_NAME_WITH_PREFIX}の\n"
-    "{B_BUFF1}を　{PLAYER}けずった！");
+    "{B_BUFF1}を　{B_BUFF2}けずった！");
 
 const u8 sText_PkmnStoleItem[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}から\n"
@@ -900,13 +900,13 @@ const u8 sText_PkmnObtainedX[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "てに　いれた！");
 
 const u8 sText_PkmnObtainedX2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
-    "{B_DEF_NAME_WITH_PREFIX}は　{PLAYER}を\n"
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_BUFF2}を\n"
     "てに　いれた！");
 
 const u8 sText_PkmnObtainedXYObtainedZ[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_ATK_NAME_WITH_PREFIX}は　{B_BUFF1}を\n"
     "てに　いれた！\p"
-    "{B_DEF_NAME_WITH_PREFIX}は　{PLAYER}を\n"
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_BUFF2}を\n"
     "てに　いれた！");
 
 const u8 sText_PkmnCopiedFoe[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
@@ -983,7 +983,7 @@ const u8 sText_SoothingAroma[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ここちよ
 
 const u8 sText_ItemsCantBeUsedNow[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "ここでは　どうぐを　つかうことは\n"
-    "できません！{PAUSE}ぞ");
+    "できません！{PAUSE 64}");
 
 const u8 sText_ForXCommaYZ[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LAST_ITEM}は　{B_SCR_ACTIVE_NAME_WITH_PREFIX}には\n"
@@ -1091,7 +1091,7 @@ const u8 sText_PkmnHurtsWith[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
 
 const u8 sText_PkmnTraced[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_BUFF1}の\n"
-    "{PLAYER}を　トレースした！");
+    "{B_BUFF2}を　トレースした！");
 
 const u8 sText_PkmnsXPreventsBurns[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_EFF_NAME_WITH_PREFIX}は　{B_EFF_ABILITY}で\n"
@@ -1143,9 +1143,9 @@ const u8 sText_PkmnsXTookAttack[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
     "こうげきを　うけた！");
 
-const u8 gUnknown_85AA7DF[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 gText_PkmnsXPreventsSwitching[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_BUFF1}の　{B_LAST_ABILITY}で\n"
-    "{PLAYER}を　もどすことが　できない！\p");
+    "{B_BUFF2}を　もどすことが　できない！\p");
 
 const u8 sText_PreventedFromWorking[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_DEF_NAME_WITH_PREFIX}の　{B_DEF_ABILITY}で\n"
@@ -1181,23 +1181,23 @@ const u8 sText_StatFell[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("さがった！")
 
 const u8 sText_AttackersStatRose[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_ATK_NAME_WITH_PREFIX}の\n"
-    "{B_BUFF1}が　{PLAYER}");
+    "{B_BUFF1}が　{B_BUFF2}");
 
 const u8 gText_DefendersStatRose[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_DEF_NAME_WITH_PREFIX}の\n"
-    "{B_BUFF1}が　{PLAYER}");
+    "{B_BUFF1}が　{B_BUFF2}");
 
 const u8 sText_UsingItemTheStatOfPkmnRose[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
-    "{B_BUFF1}が　{PLAYER}");
+    "{B_BUFF1}が　{B_BUFF2}");
 
 const u8 sText_AttackersStatFell[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_ATK_NAME_WITH_PREFIX}の\n"
-    "{B_BUFF1}が　{PLAYER}");
+    "{B_BUFF1}が　{B_BUFF2}");
 
 const u8 sText_DefendersStatFell[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_DEF_NAME_WITH_PREFIX}の\n"
-    "{B_BUFF1}が　{PLAYER}");
+    "{B_BUFF1}が　{B_BUFF2}");
 
 const u8 sText_StatsWontIncrease2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_ATK_NAME_WITH_PREFIX}の　のうりょくは\n"
@@ -1211,7 +1211,7 @@ const u8 sText_CriticalHit[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("きゅうし�
 
 const u8 sText_OneHitKO[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("いちげき　ひっさつ！");
 
-const u8 sText_123Poof[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{PAUSE}み1　{PAUSE}そ2の　{PAUSE}そ⋯{PAUSE}そ⋯{PAUSE}そ⋯　{PAUSE}そ{PLAY_SE}ぎ　ポカン！\p");
+const u8 sText_123Poof[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{PAUSE 32}1　{PAUSE 15}2の　{PAUSE 15}⋯{PAUSE 15}⋯{PAUSE 15}⋯　{PAUSE 15}{PLAY_SE SE_BALL_BOUNCE_1}ポカン！\p");
 
 const u8 sText_AndEllipsis[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("そして⋯⋯！\p");
 
@@ -1223,46 +1223,46 @@ const u8 sText_NotVeryEffective[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("こうか
 
 const u8 sText_SuperEffective[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("こうかは　ばつぐんだ！");
 
-const u8 sText_GotAwaySafely[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{PLAY_SE}ち　うまく　にげきれた！\p");
+const u8 sText_GotAwaySafely[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{PLAY_SE SE_FLEE}うまく　にげきれた！\p");
 
 const u8 sText_PkmnFledUsingIts[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
-    "{PLAY_SE}ち　{B_ATK_NAME_WITH_PREFIX}は　もっていた\n"
+    "{PLAY_SE SE_FLEE}{B_ATK_NAME_WITH_PREFIX}は　もっていた\n"
     "{B_LAST_ITEM}を　つかって　にげた\p");
 
 const u8 sText_PkmnFledUsing[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
-    "{PLAY_SE}ち　{B_ATK_NAME_WITH_PREFIX}は\n"
+    "{PLAY_SE SE_FLEE}{B_ATK_NAME_WITH_PREFIX}は\n"
     "{B_ATK_ABILITY}を　つかって　にげた\p");
 
-const u8 sText_WildPkmnFled[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{PLAY_SE}ち　やせいの　{B_BUFF1}は　にげだした！");
+const u8 sText_WildPkmnFled[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{PLAY_SE SE_FLEE}やせいの　{B_BUFF1}は　にげだした！");
 
-const u8 gUnknown_85AA9C6[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_PlayerDefeatedLinkTrainer[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LINK_OPPONENT1_NAME}との\n"
     "しょうぶに　かった！");
 
-const u8 gUnknown_85AA9D6[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_TwoLinkTrainersDefeated[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}との\n"
     "しょうぶに　かった！");
 
-const u8 gUnknown_85AA9EA[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_PlayerLostAgainstLinkTrainer[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LINK_OPPONENT1_NAME}との\n"
     "しょうぶに　まけた！");
 
-const u8 gUnknown_85AA9FA[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_PlayerLostToTwo[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}との\n"
     "しょうぶに　まけた！");
 
-const u8 gUnknown_85AAA0E[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_PlayerBattledToDrawLinkTrainer[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LINK_OPPONENT1_NAME}との\n"
     "しょうぶに　ひきわけた！");
 
-const u8 gUnknown_85AAA20[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_PlayerBattledToDrawVsTwo[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}との\n"
     "しょうぶに　ひきわけた！");
 
-const u8 gUnknown_85AAA36[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{PLAY_SE}ち　{B_LINK_OPPONENT1_NAME}は　にげだした！");
+const u8 sText_WildFled[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{PLAY_SE SE_FLEE}{B_LINK_OPPONENT1_NAME}は　にげだした！");
 
-const u8 gUnknown_85AAA45[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
-    "{PLAY_SE}ち　{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}は\n"
+const u8 sText_TwoWildFled[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{PLAY_SE SE_FLEE}{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}は\n"
     "にげだした！");
 
 const u8 sText_NoRunningFromTrainers[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
@@ -1363,7 +1363,7 @@ const u8 sText_PkmnPretendNotNotice[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{B_AT
 
 const u8 sText_EnemyAboutToSwitchPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
-    "{PLAYER}を　くりだそうと　している\p"
+    "{B_BUFF2}を　くりだそうと　している\p"
     "{B_PLAYER_NAME}も　ポケモンを\n"
     "いれかえますか？");
 
@@ -1377,171 +1377,173 @@ const u8 sText_PlayerDefeatedLinkTrainerTrainer1[] BATTLE_MESSAGE_REGION_TEXT_DA
 
 const u8 sText_CreptCloser[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_PLAYER_NAME}は\n"
-    "{RIVAL}に　ちかづいた！");
+    "{B_OPPONENT_MON1_NAME}に　ちかづいた！");
 
 const u8 sText_CantGetCloser[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_PLAYER_NAME}は\n"
     "これいじょう　ちかづけない！");
 
 const u8 sText_PkmnWatchingCarefully[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
-    "{RIVAL}は\n"
+    "{B_OPPONENT_MON1_NAME}は\n"
     "こちらの　ようすを　うかがっている！");
 
 const u8 sText_PkmnCuriousAboutX[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
-    "{RIVAL}は　{B_BUFF1}に\n"
+    "{B_OPPONENT_MON1_NAME}は　{B_BUFF1}に\n"
     "きょうみを　しめしている　ようだ！");
 
 const u8 sText_PkmnEnthralledByX[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
-    "{RIVAL}は　{B_BUFF1}に\n"
+    "{B_OPPONENT_MON1_NAME}は　{B_BUFF1}に\n"
     "むちゅうに　なっている　ようだ！");
 
 const u8 sText_PkmnIgnoredX[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
-    "{RIVAL}は　{B_BUFF1}に\n"
+    "{B_OPPONENT_MON1_NAME}は　{B_BUFF1}に\n"
     "みむきも　しない　ようだ！");
 
 const u8 sText_ThrewPokeblockAtPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_PLAYER_NAME}は\n"
-    "{RIVAL}に　ポロックを　なげた！");
+    "{B_OPPONENT_MON1_NAME}に　ポロックを　なげた！");
 
 const u8 sText_OutOfSafariBalls[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
-    "{PLAY_SE}べ　アナウンス“ピンポーン！　サファリボールが\n"
+    "{PLAY_SE SE_DING_DONG}アナウンス“ピンポーン！　サファリボールが\n"
     "なくなったので　しゅうりょうでーす！\p");
 
-const u8 gUnknown_85AAD22_sub9[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あ！　{RIVAL}が　とびだしてきた！\p");
+const u8 sText_OpponentMon1Appeared[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あ！　{B_OPPONENT_MON1_NAME}が　とびだしてきた！\p");
 
-const u8 gUnknown_85AAE0C[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_WildPkmnAppeared[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "あ！　やせいの\n"
-    "{RIVAL}が　とびだしてきた！\p");
+    "{B_OPPONENT_MON1_NAME}が　とびだしてきた！\p");
 
-const u8 gUnknown_85AAE22[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_LegendaryPkmnAppeared[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "あ！　やせいの\n"
-    "{RIVAL}が　あらわれた！\p");
+    "{B_OPPONENT_MON1_NAME}が　あらわれた！\p");
 
-const u8 gUnknown_85AAE36[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_WildPkmnAppearedPause[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "あ！　やせいの\n"
-    "{RIVAL}が　とびだしてきた！{PAUSE}ァ");
+    "{B_OPPONENT_MON1_NAME}が　とびだしてきた！{PAUSE 127}");
 
-const u8 gUnknown_85AAE4E[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_TwoWildPkmnAppeared[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "あ！　やせいの\n"
-    "{RIVAL}と　{AQUA}が　とびだしてきた！\p");
+    "{B_OPPONENT_MON1_NAME}と　{B_OPPONENT_MON2_NAME}が　とびだしてきた！\p");
 
-const u8 gUnknown_85AAE68[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_Trainer1WantsToBattle[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}が\n"
     "しょうぶを　しかけてきた！\p");
 
-const u8 gUnknown_85AAE7F[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_LinkTrainerWantsToBattle[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LINK_OPPONENT1_NAME}が\n"
     "しょうぶを　しかけてきた！");
 
-const u8 gUnknown_85AAE91[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_TwoLinkTrainersWantToBattle[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}が\n"
     "しょうぶを　しかけてきた！");
 
-const u8 gUnknown_85AAEA7[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_Trainer1SentOutPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
-    "{RIVAL}を　くりだした！");
+    "{B_OPPONENT_MON1_NAME}を　くりだした！");
 
-const u8 gUnknown_85AAEBA[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_Trainer1SentOutTwoPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
-    "{RIVAL}と　{AQUA}を　くりだした！");
+    "{B_OPPONENT_MON1_NAME}と　{B_OPPONENT_MON2_NAME}を　くりだした！");
 
-const u8 gUnknown_85AAED1[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_Trainer1SentOutPkmn2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
     "{B_BUFF1}を　くりだした！");
 
-const u8 gUnknown_85AAEE4[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_LinkTrainerSentOutPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LINK_OPPONENT1_NAME}は\n"
-    "{RIVAL}を　くりだした！");
+    "{B_OPPONENT_MON1_NAME}を　くりだした！");
 
-const u8 gUnknown_85AAEF3[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_LinkTrainerSentOutTwoPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LINK_OPPONENT1_NAME}は\n"
-    "{RIVAL}と　{AQUA}を　くりだした！");
+    "{B_OPPONENT_MON1_NAME}と　{B_OPPONENT_MON2_NAME}を　くりだした！");
 
-const u8 gUnknown_85AAF06[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
-    "{B_LINK_OPPONENT1_NAME}は　{ARCHIE}を　くりだした！\n"
-    "{B_LINK_OPPONENT2_NAME}は　{KYOGRE}を　くりだした！");
+const u8 sText_TwoLinkTrainersSentOutPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}は　{B_LINK_OPPONENT_MON1_NAME}を　くりだした！\n"
+    "{B_LINK_OPPONENT2_NAME}は　{B_LINK_OPPONENT_MON2_NAME}を　くりだした！");
 
-const u8 gUnknown_85AAF24[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_LinkTrainerSentOutPkmn2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LINK_OPPONENT1_NAME}は\n"
     "{B_BUFF1}を　くりだした！");
 
-const u8 gUnknown_85AAF33[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_LinkTrainerMultiSentOutPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LINK_SCR_TRAINER_NAME}は\n"
     "{B_BUFF1}を　くりだした！");
 
-const u8 gUnknown_85AAF42[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ゆけっ！　{KUN}！");
+const u8 sText_GoPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ゆけっ！　{B_PLAYER_MON1_NAME}！");
 
-const u8 gUnknown_85AAF4B[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ゆけっ！　{KUN}と　{VERSION}！");
+const u8 sText_GoTwoPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ゆけっ！　{B_PLAYER_MON1_NAME}と　{B_PLAYER_MON2_NAME}！");
 
-const u8 gUnknown_85AAF58[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ゆけっ！　{B_BUFF1}！");
+const u8 sText_GoPkmn2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ゆけっ！　{B_BUFF1}！");
 
-const u8 gUnknown_85AAF61[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("いってこい！　{B_BUFF1}！");
+const u8 sText_DoItPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("いってこい！　{B_BUFF1}！");
 
-const u8 gUnknown_85AAF6C[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("がんばれ！　{B_BUFF1}！");
+const u8 sText_GoForItPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("がんばれ！　{B_BUFF1}！");
 
-const u8 gUnknown_85AAF76[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_YourFoesWeakGetEmPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "あいてが　よわっている！\n"
     "チャンスだ！　{B_BUFF1}！");
 
-const u8 gUnknown_85AAF8E[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
-    "{B_LINK_PARTNER_NAME}は　{MAXIE}を　くりだした！\n"
-    "ゆけっ！　{MAGMA}！");
+const u8 sText_LinkPartnerSentOutPkmnGoPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_PARTNER_NAME}は　{B_LINK_PLAYER_MON2_NAME}を　くりだした！\n"
+    "ゆけっ！　{B_LINK_PLAYER_MON1_NAME}！");
 
-const u8 gUnknown_85AAFA6[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_PkmnThatsEnough[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_BUFF1}　もういい！\n"
     "もどれ！");
 
-const u8 gUnknown_85AAFB4[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_PkmnComeBack[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_BUFF1}\n"
     "もどれ！");
 
-const u8 gUnknown_85AAFBC[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_PkmnOkComeBack[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_BUFF1}　いいぞ！\n"
     "もどれ！");
 
-const u8 gUnknown_85AAFC9[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_PkmnGoodComeBack[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_BUFF1}　よくやった！\n"
     "もどれ！");
 
-const u8 gUnknown_85AAFD8[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_Trainer1WithdrewPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
     "{B_BUFF1}を　ひっこめた！");
 
-const u8 gUnknown_85AAFEB[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_LinkTrainer1WithdrewPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LINK_OPPONENT1_NAME}は\n"
     "{B_BUFF1}を　ひっこめた！");
 
-const u8 gUnknown_85AAFFA[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_LinkTrainer2WithdrewPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_LINK_SCR_TRAINER_NAME}は\n"
     "{B_BUFF1}を　ひっこめた！");
 
-const u8 gUnknown_85AB009[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("やせいの　");
+const u8 sText_WildPkmnPrefix[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("やせいの　");
 
-const u8 gUnknown_85AB00F[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あいての　$");
+const u8 sText_FoePkmnPrefix[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あいての　");
 
-const u8 gUnknown_85AB016[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あいての");
+const u8 sText_EmptyString8[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("");
 
-const u8 gUnknown_85AB01B[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("みかたの");
+const u8 sText_FoePkmnPrefix2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あいての");
 
-const u8 gUnknown_85AB020[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あいては");
+const u8 sText_AllyPkmnPrefix[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("みかたの");
 
-const u8 gUnknown_85AB025[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("みかたは");
+const u8 sText_FoePkmnPrefix3[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あいては");
 
-const u8 gUnknown_85AB02A[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あいてを");
+const u8 sText_AllyPkmnPrefix2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("みかたは");
 
-const u8 gUnknown_85AB02F[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("みかたを");
+const u8 sText_FoePkmnPrefix4[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あいてを");
 
-const u8 gUnknown_85AB034[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+const u8 sText_AllyPkmnPrefix3[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("みかたを");
+
+const u8 sText_AttackerUsedX[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
     "{B_ATK_NAME_WITH_PREFIX}{B_BUFF1}\n"
-    "{PLAYER}");
+    "{B_BUFF2}");
 
-const u8 gUnknown_85AB03C[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("を　つかった！");
+const u8 sText_ExclamationMark[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("を　つかった！");
 
-const u8 gUnknown_85AB044[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("した！");
+const u8 sText_ExclamationMark2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("した！");
 
-const u8 gUnknown_85AB048[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("を　した！");
+const u8 sText_ExclamationMark3[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("を　した！");
 
-const u8 gUnknown_85AB04E[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("　こうげき！");
+const u8 sText_ExclamationMark4[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("　こうげき！");
 
 const u8 sText_ExclamationMark5[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("！");
 
