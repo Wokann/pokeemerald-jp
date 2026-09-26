@@ -366,12 +366,12 @@ const u8 *const sTradeMessages[] TRADE_ANIMATION_RESOURCES =
     [MSG_STANDBY]                    = sText_CommunicationStandby,
     [MSG_CANCELED]                   = sText_TheTradeHasBeenCanceled,
     [MSG_ONLY_MON1]                  = sText_OnlyPkmnForBattle,
-    [MSG_ONLY_MON2]                  = gUnknown_85CA294,
+    [MSG_ONLY_MON2]                  = gText_OnlyPkmnForBattle,
     [MSG_WAITING_FOR_FRIEND]         = sText_WaitingForYourFriend,
     [MSG_FRIEND_WANTS_TO_TRADE]      = sText_YourFriendWantsToTrade,
-    [MSG_MON_CANT_BE_TRADED]         = gUnknown_85CA2B4,
-    [MSG_EGG_CANT_BE_TRADED]         = gUnknown_85CA2CC,
-    [MSG_FRIENDS_MON_CANT_BE_TRADED] = gUnknown_85CA2CC + 0x14,
+    [MSG_MON_CANT_BE_TRADED]         = gText_PkmnCantBeTradedNow,
+    [MSG_EGG_CANT_BE_TRADED]         = gText_EggCantBeTradedNow,
+    [MSG_FRIENDS_MON_CANT_BE_TRADED] = gText_OtherTrainersPkmnCantBeTraded,
 };
 
 const u8 sTradeTextColors[] TRADE_ANIMATION_RESOURCES =

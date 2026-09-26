@@ -3,14 +3,11 @@
 #include "graphics.h"
 #include "menu.h"
 #include "sprite.h"
+#include "strings.h"
 #include "constants/characters.h"
 
 extern void Task_DrawSelectionSummary(u8 taskId);
 extern void Task_DrawSelectionTrade(u8 taskId);
-extern const u8 gUnknown_85CA294[];
-extern const u8 gUnknown_85CA2B4[];
-extern const u8 gUnknown_85CA2CC[];
-
 // This JP data owner is compiled separately from src/trade.c.
 enum
 {

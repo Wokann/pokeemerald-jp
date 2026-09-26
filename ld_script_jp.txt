@@ -10037,6 +10037,8 @@ SECTIONS {
         src/strings.o(.rodata.strings_pokeblock_text);
         src/strings.o(.rodata.strings_shop_text);
         src/strings.o(.rodata.strings_party_menu_text);
+        src/strings.o(.rodata.strings_trade_text_prefix);
+        src/strings.o(.rodata.strings_trade_text_body);
         data/data_b2d.o(.rodata.mid78);
         src/data/text/region_texts85.o(.rodata);
         data/data_b2d.o(.rodata.mid79);

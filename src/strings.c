@@ -11,6 +11,9 @@
 #define STRINGS_POKEBLOCK_TEXT __attribute__((section(".rodata.strings_pokeblock_text"), aligned(1)))
 #define STRINGS_SHOP_TEXT __attribute__((section(".rodata.strings_shop_text"), aligned(1)))
 #define STRINGS_PARTY_MENU_TEXT __attribute__((section(".rodata.strings_party_menu_text"), aligned(1)))
+#define STRINGS_TRADE_TEXT_PREFIX __attribute__((section(".rodata.strings_trade_text_prefix"), aligned(1)))
+#define STRINGS_TRADE_TEXT_BODY_START __attribute__((section(".rodata.strings_trade_text_body"), aligned(4)))
+#define STRINGS_TRADE_TEXT_BODY __attribute__((section(".rodata.strings_trade_text_body"), aligned(1)))
 #define STRINGS_MAIN_MENU __attribute__((section(".rodata.strings_main_menu")))
 #define STRINGS_EASY_CHAT __attribute__((section(".rodata.strings_easy_chat")))
 #define STRINGS_POKENAV_STORAGE __attribute__((section(".rodata.strings_pokenav_storage")))
@@ -795,6 +798,40 @@ STRINGS_PARTY_MENU_TEXT const u8 gText_ReturnToHealingSpot[] = _(
     "{STR_VAR_1}に　テレポートする？");
 
 STRINGS_PARTY_MENU_TEXT const u8 gText_PauseUntilPress[] = _("{PAUSE_UNTIL_PRESS}");
+
+STRINGS_TRADE_TEXT_PREFIX const u8 gJPText_AreYouSureYouWantToSpinTradeMon[] = _(
+    "{STR_VAR_1}を　ぐるぐるこうかんに\n"
+    "だして　よろしいですか？");
+
+STRINGS_TRADE_TEXT_BODY_START const u8 gText_OnlyPkmnForBattle[] = _(
+    "そのポケモンを　こうかんすると\n"
+    "せんとうできなくなっちゃうよ！");
+
+STRINGS_TRADE_TEXT_BODY const u8 gText_PkmnCantBeTradedNow[] = _(
+    "その　ポケモンは　いま\n"
+    "こうかんに　だせません");
+
+STRINGS_TRADE_TEXT_BODY const u8 gText_EggCantBeTradedNow[] = _(
+    "タマゴは　いま\n"
+    "こうかんに　だせません");
+
+STRINGS_TRADE_TEXT_BODY const u8 gText_OtherTrainersPkmnCantBeTraded[] = _(
+    "あいての　ポケモンとは\n"
+    "いまは　こうかん　できません");
+
+STRINGS_TRADE_TEXT_BODY const u8 gText_OtherTrainerCantAcceptPkmn[] = _(
+    "　いまは　そのポケモンを　\n"
+    "あいては　うけとることが　できません");
+
+STRINGS_TRADE_TEXT_BODY const u8 gText_CantTradeWithTrainer[] = _(
+    "その　あいてとは　いまは　\n"
+    "こうかん　できません");
+
+STRINGS_TRADE_TEXT_BODY const u8 gText_NotPkmnOtherTrainerWants[] = _(
+    "　　　あいての　ほしがっている　タイプの\n"
+    "ポケモンでは　ありません");
+
+STRINGS_TRADE_TEXT_BODY const u8 gText_ThatIsntAnEgg[] = _("　それは　タマゴでは　ありません");
 
 STRINGS_COMMON const u8 gMenuText_Confirm[] = _("けってい");
 STRINGS_COMMON const u8 gMenuText_Walk[] = _("おりる");

@@ -150,27 +150,6 @@ gUnknown_85CA70B: @ 0x85CA70B
 
 	.section .rodata.mid78
 
-	.globl gUnknown_85CA276
-gUnknown_85CA276: @ 0x85CA276
-	.incbin "baserom_jp.gba", 0x5ca276, 0x1e
-
-	.globl gUnknown_85CA294
-gUnknown_85CA294: @ 0x85CA294
-	.string "そのポケモンを　こうかんすると\n"
-	.string "せんとうできなくなっちゃうよ！$"
-	.globl gUnknown_85CA2B4
-gUnknown_85CA2B4: @ 0x85CA2B4
-	.string "その　ポケモンは　いま\n"
-	.string "こうかんに　だせません$"
-	.globl gUnknown_85CA2CC
-gUnknown_85CA2CC: @ 0x85CA2CC
-	.string "タマゴは　いま\n"
-	.string "こうかんに　だせません$あいての　ポケモンとは\n"
-	.string "いまは　こうかん　できません$　いまは　そのポケモンを　\n"
-	.string "あいては　うけとることが　できません$その　あいてとは　いまは　\n"
-	.string "こうかん　できません$　　　あいての　ほしがっている　タイプの\n"
-	.string "ポケモンでは　ありません$　それは　タマゴでは　ありません$"
-
 	.globl gText_Register
 gText_Register: @ 0x85CA368
 	.string "とうろくする$"

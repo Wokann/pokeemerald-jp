@@ -3710,11 +3710,6 @@ static void CursorCb_Store(u8 taskId)
     Task_ClosePartyMenu(taskId);
 }
 
-extern const u8 gUnknown_85CA2B4[];
-extern const u8 gUnknown_85CA2CC[];
-extern const u8 gUnknown_85CA294[];
-extern const u8 gUnknown_85CA276[];
-
 static void CursorCb_Register(u8 taskId)
 {
     u16 species2 = GetMonData(&gPlayerParty[gPartyMenu.slotId], MON_DATA_SPECIES_OR_EGG);
@@ -3724,10 +3719,10 @@ static void CursorCb_Register(u8 taskId)
     switch (CanRegisterMonForTradingBoard(*(struct RfuGameCompatibilityData *)GetHostRfuGameData(), species2, species, isModernFatefulEncounter))
     {
     case CANT_REGISTER_MON:
-        StringExpandPlaceholders(gStringVar4, gUnknown_85CA2B4);
+        StringExpandPlaceholders(gStringVar4, gText_PkmnCantBeTradedNow);
         break;
     case CANT_REGISTER_EGG:
-        StringExpandPlaceholders(gStringVar4, gUnknown_85CA2CC);
+        StringExpandPlaceholders(gStringVar4, gText_EggCantBeTradedNow);
         break;
     default:
         PlaySE(SE_SELECT);
@@ -3773,18 +3768,18 @@ static void CursorCb_Trade2(u8 taskId)
     switch (CanSpinTradeMon(gPlayerParty, gPartyMenu.slotId))
     {
     case CANT_TRADE_LAST_MON:
-        StringExpandPlaceholders(gStringVar4, gUnknown_85CA294);
+        StringExpandPlaceholders(gStringVar4, gText_OnlyPkmnForBattle);
         break;
     case CANT_TRADE_NATIONAL:
-        StringExpandPlaceholders(gStringVar4, gUnknown_85CA2B4);
+        StringExpandPlaceholders(gStringVar4, gText_PkmnCantBeTradedNow);
         break;
     case CANT_TRADE_EGG_YET:
-        StringExpandPlaceholders(gStringVar4, gUnknown_85CA2CC);
+        StringExpandPlaceholders(gStringVar4, gText_EggCantBeTradedNow);
         break;
     default: // CAN_TRADE_MON
         PlaySE(SE_SELECT);
         GetMonNickname(&gPlayerParty[gPartyMenu.slotId], gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gUnknown_85CA276);
+        StringExpandPlaceholders(gStringVar4, gJPText_AreYouSureYouWantToSpinTradeMon);
         DisplayPartyMenuMessage(gStringVar4, TRUE);
         gTasks[taskId].func = Task_SpinTradeYesNo;
         return;
