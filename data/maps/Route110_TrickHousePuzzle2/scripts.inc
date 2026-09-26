@@ -100,7 +100,7 @@ Route110_TrickHousePuzzle2_EventScript_Georgia::
 	end
 
 Route110_TrickHousePuzzle2_Text_WroteSecretCodeLockOpened:
-	.string "{STRING 0x01}は　あいことばを\n"
+	.string "{PLAYER}は　あいことばを\n"
 	.string "とびらに　かきつけた！\p"
 	.string "‘カラクリだいおう　さま　かしこい’\p"
 	.string "⋯⋯　⋯⋯　⋯⋯\p"

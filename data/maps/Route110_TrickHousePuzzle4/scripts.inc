@@ -28,7 +28,7 @@ Route110_TrickHousePuzzle4_EventScript_Paula::
 	end
 
 Route110_TrickHousePuzzle4_Text_WroteSecretCodeLockOpened:
-	.string "{STRING 0x01}は　あいことばを\n"
+	.string "{PLAYER}は　あいことばを\n"
 	.string "とびらに　かきつけた！\p"
 	.string "‘カラクリだいおう　さま　かっこいい’\p"
 	.string "⋯⋯　⋯⋯　⋯⋯\p"

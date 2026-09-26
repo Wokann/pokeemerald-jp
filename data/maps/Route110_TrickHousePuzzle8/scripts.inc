@@ -28,7 +28,7 @@ Route110_TrickHousePuzzle8_EventScript_Leroy::
 	end
 
 Route110_TrickHousePuzzle8_Text_WroteSecretCodeLockOpened::
-	.string "{STRING 0x01}は　あいことばを\n"
+	.string "{PLAYER}は　あいことばを\n"
 	.string "とびらに　かきつけた！\p"
 	.string "‘カラクリだいおう　さま　あいしてる’\p"
 	.string "⋯⋯　⋯⋯　⋯⋯\p"
