@@ -1,6 +1,39 @@
 #include "global.h"
 #include "evolution_graphics.h"
 #include "sprite.h"
+#include "trig.h"
+#include "random.h"
+#include "decompress.h"
+#include "task.h"
+#include "sound.h"
+#include "constants/songs.h"
+#include "palette.h"
+#include "constants/rgb.h"
+
+extern u16 gUnknown_20373F4[];
+extern u16 gUnknown_20377F4[];
+extern u16 gUnknown_20379B4[];
+
+void EvoTask_BeginPreSet1_FadeAndPlaySE(u8 taskId);
+void EvoTask_CreatePreEvoSparkleSet1(u8 taskId);
+void EvoTask_WaitForPre1SparklesToGoUp(u8 taskId);
+void EvoTask_BeginPreSparklesSet2(u8 taskId);
+void EvoTask_CreatePreEvoSparklesSet2(u8 taskId);
+void EvoTask_DestroyPreSet2Task(u8 taskId);
+void EvoTask_BeginPostSparklesSet1(u8 taskId);
+void EvoTask_CreatePostEvoSparklesSet1(u8 taskId);
+void EvoTask_DestroyPostSet1Task(u8 taskId);
+void EvoTask_BeginPostSparklesSet2_AndFlash(u8 taskId);
+void EvoTask_CreatePostEvoSparklesSet2_AndFlash(u8 taskId);
+void EvoTask_DestroyPostSet2AndFlashTask(u8 taskId);
+void EvoTask_BeginPostSparklesSet2_AndFlash_Trade(u8 taskId);
+void EvoTask_CreatePostEvoSparklesSet2_AndFlash_Trade(u8 taskId);
+
+void sub_0817C3AC(u8 taskId);
+void sub_0817C3D0(u8 taskId);
+void sub_0817C420(u8 taskId);
+void PreEvoInvisible_PostEvoVisible_KillTask(u8 taskId);
+void PreEvoVisible_PostEvoInvisible_KillTask(u8 taskId);
 
 #define TAG_SPARKLE 1001
 #define EVO_SPARKLE_DATA __attribute__((section(".rodata.mid98_suffix_before_species_to_back_anim_set"), aligned(1)))
@@ -81,1957 +114,513 @@ static const s16 sUnused[] EVO_SPARKLE_DATA =
      4, 0x10,
 };
 
-__attribute__((naked)) void SetEvoSparklesMatrices(void)
+void SetEvoSparklesMatrices(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r5, _0817B938\n\t"
-        "_0817B90C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl SetOamMatrix\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0xb\n\t"
-        "	bls _0817B90C\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817B938: .4byte sEvoSparkleMatrices\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    for (i = 0; i < ARRAY_COUNT(sEvoSparkleMatrices); i++)
+        SetOamMatrix(20 + i, sEvoSparkleMatrices[i], 0, 0, sEvoSparkleMatrices[i]);
 }
 
-__attribute__((naked)) void SpriteCB_PreEvoSparkleSet1(void)
+void SpriteCB_PreEvoSparkleSet1(struct Sprite* sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x22\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #8\n\t"
-        "	ble _0817B9EA\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl __divsi3\n\t"
-        "	movs r1, #0x58\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r4, #0x22]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0817B976\n\t"
-        "	adds r0, #3\n\t"
-        "_0817B976:\n\t"
-        "	asrs r0, r0, #2\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817B9A0\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "_0817B9A0:\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r1, #0x26\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _0817B9B6\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x43\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0817B9BC\n\t"
-        "_0817B9B6:\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x43\n\t"
-        "	movs r0, #0x14\n\t"
-        "_0817B9BC:\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0817B9C8\n\t"
-        "	adds r0, #3\n\t"
-        "_0817B9C8:\n\t"
-        "	asrs r0, r0, #2\n\t"
-        "	adds r0, #0x14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0x1f\n\t"
-        "	bls _0817B9D6\n\t"
-        "	movs r2, #0x1f\n\t"
-        "_0817B9D6:\n\t"
-        "	movs r0, #0x1f\n\t"
-        "	ands r2, r0\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrb r1, [r4, #3]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r4, #3]\n\t"
-        "	b _0817B9F0\n\t"
-        "_0817B9EA:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_0817B9F0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->y > 8)
+    {
+        u8 matrixNum;
+
+        sprite->y = 88 - (sprite->data[7] * sprite->data[7]) / 80;
+        sprite->y2 = Sin((u8)(sprite->data[6]), sprite->data[5]) / 4;
+        sprite->x2 = Cos((u8)(sprite->data[6]), sprite->data[5]);
+        sprite->data[6] += 4;
+        if (sprite->data[7] & 1)
+            sprite->data[5]--;
+        sprite->data[7]++;
+        if (sprite->y2 > 0)
+            sprite->subpriority = 1;
+        else
+            sprite->subpriority = 20;
+        matrixNum = sprite->data[5] / 4 + 20;
+        if (matrixNum > 31)
+            matrixNum = 31;
+        sprite->oam.matrixNum = matrixNum;
+    }
+    else
+        DestroySprite(sprite);
 }
 
-__attribute__((naked)) void CreatePreEvoSparkleSet1(void)
+void CreatePreEvoSparkleSet1(u8 arg0)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _0817BA48\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x58\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _0817BA42\n\t"
-        "	ldr r4, _0817BA4C\n\t"
-        "	lsls r3, r0, #4\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r2, r3, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r0, #0x30\n\t"
-        "	strh r0, [r2, #0x38]\n\t"
-        "	strh r5, [r2, #0x3a]\n\t"
-        "	strh r1, [r2, #0x3c]\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	subs r0, #0x34\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	ldrb r0, [r2, #3]\n\t"
-        "	movs r1, #0x3e\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #3]\n\t"
-        "	adds r4, #0x1c\n\t"
-        "	adds r3, r3, r4\n\t"
-        "	ldr r0, _0817BA50\n\t"
-        "	str r0, [r3]\n\t"
-        "_0817BA42:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BA48: .4byte sEvoSparkleSpriteTemplate\n\t"
-        "_0817BA4C: .4byte gSprites\n\t"
-        "_0817BA50: .4byte SpriteCB_PreEvoSparkleSet1 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteID = CreateSprite(&sEvoSparkleSpriteTemplate, 120, 88, 0);
+    if (spriteID != MAX_SPRITES)
+    {
+        gSprites[spriteID].data[5] = 48;
+        gSprites[spriteID].data[6] = arg0;
+        gSprites[spriteID].data[7] = 0;
+        gSprites[spriteID].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+        gSprites[spriteID].oam.matrixNum = 31;
+        gSprites[spriteID].callback = SpriteCB_PreEvoSparkleSet1;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_PreEvoSparkleSet2(void)
+void SpriteCB_PreEvoSparkleSet2(struct Sprite* sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x22\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x57\n\t"
-        "	bgt _0817BABA\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #5\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0817BA8C\n\t"
-        "	adds r0, #3\n\t"
-        "_0817BA8C:\n\t"
-        "	asrs r0, r0, #2\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl Sin\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	b _0817BAC0\n\t"
-        "_0817BABA:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_0817BAC0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->y < 88)
+    {
+        sprite->y = 8 + (sprite->data[7] * sprite->data[7]) / 5;
+        sprite->y2 = Sin((u8)(sprite->data[6]), sprite->data[5]) / 4;
+        sprite->x2 = Cos((u8)(sprite->data[6]), sprite->data[5]);
+        sprite->data[5] = 8 + Sin((u8)(sprite->data[7] * 4), 40);
+        sprite->data[7]++;
+    }
+    else
+        DestroySprite(sprite);
 }
 
-__attribute__((naked)) void CreatePreEvoSparkleSet2(void)
+void CreatePreEvoSparkleSet2(u8 arg0)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _0817BB24\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _0817BB1E\n\t"
-        "	ldr r4, _0817BB28\n\t"
-        "	lsls r3, r0, #4\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r2, r3, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r2, #0x38]\n\t"
-        "	strh r5, [r2, #0x3a]\n\t"
-        "	strh r1, [r2, #0x3c]\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	subs r0, #0xc\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	ldrb r1, [r2, #3]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x32\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #3]\n\t"
-        "	adds r2, #0x43\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r4, #0x1c\n\t"
-        "	adds r3, r3, r4\n\t"
-        "	ldr r0, _0817BB2C\n\t"
-        "	str r0, [r3]\n\t"
-        "_0817BB1E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BB24: .4byte sEvoSparkleSpriteTemplate\n\t"
-        "_0817BB28: .4byte gSprites\n\t"
-        "_0817BB2C: .4byte SpriteCB_PreEvoSparkleSet2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteID = CreateSprite(&sEvoSparkleSpriteTemplate, 120, 8, 0);
+    if (spriteID != MAX_SPRITES)
+    {
+        gSprites[spriteID].data[5] = 8;
+        gSprites[spriteID].data[6] = arg0;
+        gSprites[spriteID].data[7] = 0;
+        gSprites[spriteID].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+        gSprites[spriteID].oam.matrixNum = 25;
+        gSprites[spriteID].subpriority = 1;
+        gSprites[spriteID].callback = SpriteCB_PreEvoSparkleSet2;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_PostEvoSparkleSet1(void)
+void SpriteCB_PostEvoSparkleSet1(struct Sprite* sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #8\n\t"
-        "	ble _0817BB6C\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	ldrh r1, [r4, #0x34]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	b _0817BB72\n\t"
-        "_0817BB6C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_0817BB72:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[5] > 8)
+    {
+        sprite->y2 = Sin((u8)(sprite->data[6]), sprite->data[5]);
+        sprite->x2 = Cos((u8)(sprite->data[6]), sprite->data[5]);
+        sprite->data[5] -= sprite->data[3];
+        sprite->data[6] += 4;
+    }
+    else
+        DestroySprite(sprite);
 }
 
-__attribute__((naked)) void CreatePostEvoSparkleSet1(void)
+void CreatePostEvoSparkleSet1(u8 arg0, u8 arg1)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	ldr r0, _0817BBD4\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x38\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _0817BBCE\n\t"
-        "	ldr r4, _0817BBD8\n\t"
-        "	lsls r3, r0, #4\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r2, r3, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r5, [r2, #0x34]\n\t"
-        "	movs r0, #0x78\n\t"
-        "	strh r0, [r2, #0x38]\n\t"
-        "	strh r6, [r2, #0x3a]\n\t"
-        "	strh r1, [r2, #0x3c]\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	subs r0, #0x7c\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	ldrb r0, [r2, #3]\n\t"
-        "	movs r1, #0x3e\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #3]\n\t"
-        "	adds r2, #0x43\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r4, #0x1c\n\t"
-        "	adds r3, r3, r4\n\t"
-        "	ldr r0, _0817BBDC\n\t"
-        "	str r0, [r3]\n\t"
-        "_0817BBCE:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BBD4: .4byte sEvoSparkleSpriteTemplate\n\t"
-        "_0817BBD8: .4byte gSprites\n\t"
-        "_0817BBDC: .4byte SpriteCB_PostEvoSparkleSet1 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteID = CreateSprite(&sEvoSparkleSpriteTemplate, 120, 56, 0);
+    if (spriteID != MAX_SPRITES)
+    {
+        gSprites[spriteID].data[3] = arg1;
+        gSprites[spriteID].data[5] = 120;
+        gSprites[spriteID].data[6] = arg0;
+        gSprites[spriteID].data[7] = 0;
+        gSprites[spriteID].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+        gSprites[spriteID].oam.matrixNum = 31;
+        gSprites[spriteID].subpriority = 1;
+        gSprites[spriteID].callback = SpriteCB_PostEvoSparkleSet1;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_PostEvoSparkleSet2(void)
+void SpriteCB_PostEvoSparkleSet2(struct Sprite* sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817BBF4\n\t"
-        "	ldrh r0, [r4, #0x22]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "_0817BBF4:\n\t"
-        "	ldrh r1, [r4, #0x3a]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x7f\n\t"
-        "	bgt _0817BCA4\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r5, #0x38\n\t"
-        "	ldrsh r1, [r4, r5]\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r0, #0x34\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r0, #0x78\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	adds r3, r0, #1\n\t"
-        "	strh r3, [r4, #0x3a]\n\t"
-        "	movs r5, #0x3a\n\t"
-        "	ldrsh r1, [r4, r5]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0817BC38\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_0817BC38:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	movs r1, #0x1f\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r2, r1, #0x18\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	ble _0817BC54\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x43\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0817BC84\n\t"
-        "_0817BC54:\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x3e\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x43\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrh r1, [r4, #0x3a]\n\t"
-        "	movs r5, #0x3a\n\t"
-        "	ldrsh r0, [r4, r5]\n\t"
-        "	cmp r0, #0x70\n\t"
-        "	ble _0817BC84\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817BC84\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "_0817BC84:\n\t"
-        "	cmp r2, #0x13\n\t"
-        "	bhi _0817BC8A\n\t"
-        "	movs r2, #0x14\n\t"
-        "_0817BC8A:\n\t"
-        "	movs r0, #0x1f\n\t"
-        "	ands r2, r0\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrb r1, [r4, #3]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r4, #3]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	b _0817BCAA\n\t"
-        "_0817BCA4:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_0817BCAA:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!(sprite->data[7] & 3))
+        sprite->y++;
+    if (sprite->data[6] < 128)
+    {
+        u8 matrixNum;
+
+        sprite->y2 = -Sin((u8)(sprite->data[6]), sprite->data[5]);
+        sprite->x = 120 + (sprite->data[3] * sprite->data[7]) / 3;
+        sprite->data[6]++;
+        matrixNum = 31 - (sprite->data[6] * 12 / 128);
+        if (sprite->data[6] > 64)
+            sprite->subpriority = 1;
+        else
+        {
+            sprite->invisible = FALSE;
+            sprite->subpriority = 20;
+            if (sprite->data[6] > 112 && sprite->data[6] & 1)
+                sprite->invisible = TRUE;
+        }
+        if (matrixNum < 20)
+            matrixNum = 20;
+        sprite->oam.matrixNum = matrixNum;
+        sprite->data[7]++;
+    }
+    else
+        DestroySprite(sprite);
 }
 
-__attribute__((naked)) void CreatePostEvoSparkleSet2(void)
+void CreatePostEvoSparkleSet2(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	ldr r0, _0817BD2C\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x38\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0x40\n\t"
-        "	beq _0817BD20\n\t"
-        "	bl Random\n\t"
-        "	ldr r6, _0817BD30\n\t"
-        "	lsls r5, r4, #4\n\t"
-        "	adds r5, r5, r4\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	adds r4, r5, r6\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #7\n\t"
-        "	bl __umodsi3\n\t"
-        "	movs r1, #3\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	strh r1, [r4, #0x34]\n\t"
-        "	bl Random\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	ands r1, r0\n\t"
-        "	adds r1, #0x30\n\t"
-        "	strh r1, [r4, #0x38]\n\t"
-        "	mov r0, r8\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r0, #4\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	movs r1, #0x3e\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #3]\n\t"
-        "	adds r4, #0x43\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strb r0, [r4]\n\t"
-        "	adds r6, #0x1c\n\t"
-        "	adds r5, r5, r6\n\t"
-        "	ldr r0, _0817BD34\n\t"
-        "	str r0, [r5]\n\t"
-        "_0817BD20:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BD2C: .4byte sEvoSparkleSpriteTemplate\n\t"
-        "_0817BD30: .4byte gSprites\n\t"
-        "_0817BD34: .4byte SpriteCB_PostEvoSparkleSet2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteID = CreateSprite(&sEvoSparkleSpriteTemplate, 120, 56, 0);
+    if (spriteID != MAX_SPRITES)
+    {
+        gSprites[spriteID].data[3] = 3 - (Random() % 7);
+        gSprites[spriteID].data[5] = 48 + (Random() & 0x3F);
+        gSprites[spriteID].data[7] = 0;
+        gSprites[spriteID].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+        gSprites[spriteID].oam.matrixNum = 31;
+        gSprites[spriteID].subpriority = 20;
+        gSprites[spriteID].callback = SpriteCB_PostEvoSparkleSet2;
+    }
 }
 
-__attribute__((naked)) void LoadEvoSparkleSpriteAndPal(void)
+void LoadEvoSparkleSpriteAndPal(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0817BD4C\n\t"
-        "	bl LoadCompressedSpriteSheetUsingHeap\n\t"
-        "	ldr r0, _0817BD50\n\t"
-        "	bl LoadSpritePalettes\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BD4C: .4byte sEvoSparkleSpriteSheets\n\t"
-        "_0817BD50: .4byte sEvoSparkleSpritePals\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadCompressedSpriteSheetUsingHeap(&sEvoSparkleSpriteSheets[0]);
+    LoadSpritePalettes(sEvoSparkleSpritePals);
 }
 
-__attribute__((naked)) void LaunchTask_PreEvoSparklesSet1(void)
+u8 LaunchTask_PreEvoSparklesSet1(u16 palNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r0, _0817BD7C\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0817BD80\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r4, [r1, #0xa]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BD7C: .4byte EvoTask_BeginPreSet1_FadeAndPlaySE + 1\n\t"
-        "_0817BD80: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateTask(EvoTask_BeginPreSet1_FadeAndPlaySE, 0);
+    gTasks[taskId].data[1] = palNum;
+    return taskId;
 }
 
-__attribute__((naked)) void EvoTask_BeginPreSet1_FadeAndPlaySE(void)
+void EvoTask_BeginPreSet1_FadeAndPlaySE(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl SetEvoSparklesMatrices\n\t"
-        "	ldr r0, _0817BDC8\n\t"
-        "	lsls r5, r4, #2\n\t"
-        "	adds r5, r5, r4\n\t"
-        "	lsls r5, r5, #3\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	movs r0, #3\n\t"
-        "	lsls r0, r1\n\t"
-        "	ldr r1, _0817BDCC\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _0817BDD0\n\t"
-        "	str r0, [r5]\n\t"
-        "	movs r0, #0x8c\n\t"
-        "	bl PlaySE\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BDC8: .4byte gTasks\n\t"
-        "_0817BDCC: .4byte 0x00007FFF\n\t"
-        "_0817BDD0: .4byte EvoTask_CreatePreEvoSparkleSet1 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    SetEvoSparklesMatrices();
+    gTasks[taskId].data[15] = 0;
+    BeginNormalPaletteFade(3 << gTasks[taskId].data[1], 0xA, 0, 0x10, RGB_WHITE);
+    gTasks[taskId].func = EvoTask_CreatePreEvoSparkleSet1;
+    PlaySE(SE_M_MEGA_KICK); // 'Charging up' sound for the sparkles as they spiral upwards
 }
 
-__attribute__((naked)) void EvoTask_CreatePreEvoSparkleSet1(void)
+void EvoTask_CreatePreEvoSparkleSet1(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r1, _0817BE2C\n\t"
-        "	lsls r3, r5, #2\n\t"
-        "	adds r0, r3, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrh r2, [r1, #0x26]\n\t"
-        "	movs r4, #0x26\n\t"
-        "	ldrsh r0, [r1, r4]\n\t"
-        "	cmp r0, #0x3f\n\t"
-        "	bgt _0817BE30\n\t"
-        "	movs r0, #7\n\t"
-        "	ands r0, r2\n\t"
-        "	adds r7, r3, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817BE1A\n\t"
-        "	movs r4, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "_0817BDFC:\n\t"
-        "	ldrh r1, [r6, #0x26]\n\t"
-        "	movs r0, #0x78\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	lsls r1, r4, #6\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl CreatePreEvoSparkleSet1\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #3\n\t"
-        "	bls _0817BDFC\n\t"
-        "_0817BE1A:\n\t"
-        "	ldr r0, _0817BE2C\n\t"
-        "	adds r1, r7, r5\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	b _0817BE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BE2C: .4byte gTasks\n\t"
-        "_0817BE30:\n\t"
-        "	movs r0, #0x60\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	ldr r0, _0817BE40\n\t"
-        "	str r0, [r1]\n\t"
-        "_0817BE38:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BE40: .4byte EvoTask_WaitForPre1SparklesToGoUp + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gTasks[taskId].data[15] < 64)
+    {
+        if (!(gTasks[taskId].data[15] & 7))
+        {
+            u8 i;
+            for (i = 0; i < 4; i++)
+                CreatePreEvoSparkleSet1((0x78 & gTasks[taskId].data[15]) * 2 + i * 64);
+        }
+        gTasks[taskId].data[15]++;
+    }
+    else
+    {
+        gTasks[taskId].data[15] = 96;
+        gTasks[taskId].func = EvoTask_WaitForPre1SparklesToGoUp;
+    }
 }
 
-__attribute__((naked)) void EvoTask_WaitForPre1SparklesToGoUp(void)
+void EvoTask_WaitForPre1SparklesToGoUp(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r1, _0817BE64\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrh r3, [r1, #0x26]\n\t"
-        "	movs r4, #0x26\n\t"
-        "	ldrsh r0, [r1, r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817BE68\n\t"
-        "	subs r0, r3, #1\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	b _0817BE6E\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BE64: .4byte gTasks\n\t"
-        "_0817BE68:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_0817BE6E:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gTasks[taskId].data[15] != 0)
+        gTasks[taskId].data[15]--;
+    else
+        DestroyTask(taskId);
 }
 
-__attribute__((naked)) void LaunchTask_PostEvoSparklesSet1(void)
+u8 LaunchTask_PostEvoSparklesSet1(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0817BE88\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BE88: .4byte EvoTask_BeginPreSparklesSet2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    return CreateTask(EvoTask_BeginPreSparklesSet2, 0);
 }
 
-__attribute__((naked)) void EvoTask_BeginPreSparklesSet2(void)
+void EvoTask_BeginPreSparklesSet2(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl SetEvoSparklesMatrices\n\t"
-        "	ldr r1, _0817BEB8\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	ldr r1, _0817BEBC\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r0, #0xb7\n\t"
-        "	bl PlaySE\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BEB8: .4byte gTasks\n\t"
-        "_0817BEBC: .4byte EvoTask_CreatePreEvoSparklesSet2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    SetEvoSparklesMatrices();
+    gTasks[taskId].data[15] = 0;
+    gTasks[taskId].func = EvoTask_CreatePreEvoSparklesSet2;
+    PlaySE(SE_M_BUBBLE_BEAM2);
 }
 
-__attribute__((naked)) void EvoTask_CreatePreEvoSparklesSet2(void)
+void EvoTask_CreatePreEvoSparklesSet2(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r1, _0817BF04\n\t"
-        "	lsls r2, r5, #2\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	movs r3, #0x26\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #0x5f\n\t"
-        "	bgt _0817BF08\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	cmp r0, #5\n\t"
-        "	bgt _0817BEF2\n\t"
-        "	movs r4, #0\n\t"
-        "_0817BEE0:\n\t"
-        "	lsls r0, r4, #0x1c\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl CreatePreEvoSparkleSet2\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #8\n\t"
-        "	bls _0817BEE0\n\t"
-        "_0817BEF2:\n\t"
-        "	ldr r0, _0817BF04\n\t"
-        "	adds r1, r6, r5\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	b _0817BF0C\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BF04: .4byte gTasks\n\t"
-        "_0817BF08:\n\t"
-        "	ldr r0, _0817BF14\n\t"
-        "	str r0, [r1]\n\t"
-        "_0817BF0C:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BF14: .4byte EvoTask_DestroyPreSet2Task + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gTasks[taskId].data[15] < 96)
+    {
+        if (gTasks[taskId].data[15] < 6)
+        {
+            u8 i;
+            for (i = 0; i < 9; i++)
+                CreatePreEvoSparkleSet2(i * 16);
+        }
+        gTasks[taskId].data[15]++;
+    }
+    else
+        gTasks[taskId].func = EvoTask_DestroyPreSet2Task;
 }
 
-__attribute__((naked)) void EvoTask_DestroyPreSet2Task(void)
+void EvoTask_DestroyPreSet2Task(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    DestroyTask(taskId);
 }
 
-__attribute__((naked)) void LaunchTask_PreEvoSparklesSet2(void)
+u8 LaunchTask_PreEvoSparklesSet2(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0817BF3C\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BF3C: .4byte EvoTask_BeginPostSparklesSet1 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    return CreateTask(EvoTask_BeginPostSparklesSet1, 0);
 }
 
-__attribute__((naked)) void EvoTask_BeginPostSparklesSet1(void)
+void EvoTask_BeginPostSparklesSet1(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl SetEvoSparklesMatrices\n\t"
-        "	ldr r1, _0817BF6C\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	ldr r1, _0817BF70\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r0, #0x66\n\t"
-        "	bl PlaySE\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BF6C: .4byte gTasks\n\t"
-        "_0817BF70: .4byte EvoTask_CreatePostEvoSparklesSet1 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    SetEvoSparklesMatrices();
+    gTasks[taskId].data[15] = 0;
+    gTasks[taskId].func = EvoTask_CreatePostEvoSparklesSet1;
+    PlaySE(SE_SHINY);
 }
 
-__attribute__((naked)) void EvoTask_CreatePostEvoSparklesSet1(void)
+void EvoTask_CreatePostEvoSparklesSet1(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r1, _0817BFE0\n\t"
-        "	lsls r2, r5, #2\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	movs r3, #0x26\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #0x2f\n\t"
-        "	bgt _0817BFE4\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817BFA8\n\t"
-        "	movs r4, #0\n\t"
-        "_0817BF94:\n\t"
-        "	lsls r0, r4, #0x1c\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #4\n\t"
-        "	bl CreatePostEvoSparkleSet1\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0xf\n\t"
-        "	bls _0817BF94\n\t"
-        "_0817BFA8:\n\t"
-        "	ldr r0, _0817BFE0\n\t"
-        "	adds r1, r6, r5\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0x20\n\t"
-        "	bne _0817BFCE\n\t"
-        "	movs r4, #0\n\t"
-        "_0817BFBA:\n\t"
-        "	lsls r0, r4, #0x1c\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #8\n\t"
-        "	bl CreatePostEvoSparkleSet1\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0xf\n\t"
-        "	bls _0817BFBA\n\t"
-        "_0817BFCE:\n\t"
-        "	ldr r0, _0817BFE0\n\t"
-        "	adds r1, r6, r5\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	b _0817BFE8\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BFE0: .4byte gTasks\n\t"
-        "_0817BFE4:\n\t"
-        "	ldr r0, _0817BFF0\n\t"
-        "	str r0, [r1]\n\t"
-        "_0817BFE8:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817BFF0: .4byte EvoTask_DestroyPostSet1Task + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gTasks[taskId].data[15] < 48)
+    {
+        if (gTasks[taskId].data[15] == 0)
+        {
+            u8 i;
+            for (i = 0; i < 16; i++)
+                CreatePostEvoSparkleSet1(i * 16, 4);
+        }
+        if (gTasks[taskId].data[15] == 32)
+        {
+            u8 i;
+            for (i = 0; i < 16; i++)
+                CreatePostEvoSparkleSet1(i * 16, 8);
+        }
+        gTasks[taskId].data[15]++;
+    }
+    else
+        gTasks[taskId].func = EvoTask_DestroyPostSet1Task;
 }
 
-__attribute__((naked)) void EvoTask_DestroyPostSet1Task(void)
+void EvoTask_DestroyPostSet1Task(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    DestroyTask(taskId);
 }
 
-__attribute__((naked)) void LaunchTask_PostEvoSparklesSet2AndFlash(void)
+u8 LaunchTask_PostEvoSparklesSet2AndFlash(u16 species)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r0, _0817C02C\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0817C030\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r4, [r1, #0xc]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C02C: .4byte EvoTask_BeginPostSparklesSet2_AndFlash + 1\n\t"
-        "_0817C030: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateTask(EvoTask_BeginPostSparklesSet2_AndFlash, 0);
+    gTasks[taskId].data[2] = species;
+    return taskId;
 }
 
-__attribute__((naked)) void EvoTask_BeginPostSparklesSet2_AndFlash(void)
+void EvoTask_BeginPostSparklesSet2_AndFlash(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl SetEvoSparklesMatrices\n\t"
-        "	ldr r0, _0817C07C\n\t"
-        "	lsls r5, r4, #2\n\t"
-        "	adds r5, r5, r4\n\t"
-        "	lsls r5, r5, #3\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	ldr r0, _0817C080\n\t"
-        "	ldr r1, _0817C084\n\t"
-        "	movs r2, #0x30\n\t"
-        "	bl CpuSet\n\t"
-        "	ldr r0, _0817C088\n\t"
-        "	ldr r1, _0817C08C\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _0817C090\n\t"
-        "	str r0, [r5]\n\t"
-        "	movs r0, #0xca\n\t"
-        "	bl PlaySE\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C07C: .4byte gTasks\n\t"
-        "_0817C080: .4byte gUnknown_20377F4\n\t"
-        "_0817C084: .4byte gUnknown_20373F4\n\t"
-        "_0817C088: .4byte 0xFFF9041C\n\t"
-        "_0817C08C: .4byte 0x00007FFF\n\t"
-        "_0817C090: .4byte EvoTask_CreatePostEvoSparklesSet2_AndFlash + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    SetEvoSparklesMatrices();
+    gTasks[taskId].data[15] = 0;
+    CpuSet(gUnknown_20377F4, gUnknown_20373F4, 0x30);
+    BeginNormalPaletteFade(0xFFF9041C, 0, 0, 0x10, RGB_WHITE); // was 0xFFF9001C in R/S
+    gTasks[taskId].func = EvoTask_CreatePostEvoSparklesSet2_AndFlash;
+    PlaySE(SE_M_PETAL_DANCE);
 }
 
-__attribute__((naked)) void EvoTask_CreatePostEvoSparklesSet2_AndFlash(void)
+void EvoTask_CreatePostEvoSparklesSet2_AndFlash(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r1, _0817C0CC\n\t"
-        "	lsls r5, r6, #2\n\t"
-        "	adds r0, r5, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	movs r0, #0x26\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	cmp r2, #0x7f\n\t"
-        "	bgt _0817C110\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817C0D0\n\t"
-        "	cmp r0, #0x20\n\t"
-        "	beq _0817C0E4\n\t"
-        "	cmp r2, #0x31\n\t"
-        "	bgt _0817C0F4\n\t"
-        "	bl Random\n\t"
-        "	movs r1, #7\n\t"
-        "	ands r0, r1\n\t"
-        "	bl CreatePostEvoSparkleSet2\n\t"
-        "	b _0817C0F4\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C0CC: .4byte gTasks\n\t"
-        "_0817C0D0:\n\t"
-        "	movs r4, #0\n\t"
-        "_0817C0D2:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CreatePostEvoSparkleSet2\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #7\n\t"
-        "	bls _0817C0D2\n\t"
-        "	b _0817C0F4\n\t"
-        "_0817C0E4:\n\t"
-        "	ldr r0, _0817C104\n\t"
-        "	ldr r1, _0817C108\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "_0817C0F4:\n\t"
-        "	ldr r0, _0817C10C\n\t"
-        "	adds r1, r5, r6\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	b _0817C114\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C104: .4byte 0xFFFF041C\n\t"
-        "_0817C108: .4byte 0x00007FFF\n\t"
-        "_0817C10C: .4byte gTasks\n\t"
-        "_0817C110:\n\t"
-        "	ldr r0, _0817C11C\n\t"
-        "	str r0, [r1]\n\t"
-        "_0817C114:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C11C: .4byte EvoTask_DestroyPostSet2AndFlashTask + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gTasks[taskId].data[15] < 128)
+    {
+        u8 i;
+        switch (gTasks[taskId].data[15])
+        {
+        default:
+            if (gTasks[taskId].data[15] < 50)
+                CreatePostEvoSparkleSet2(Random() & 7);
+            break;
+        case 0:
+            for (i = 0; i < 8; i++)
+                CreatePostEvoSparkleSet2(i);
+            break;
+        case 32:
+            BeginNormalPaletteFade(0xFFFF041C, 0x10, 0x10, 0, RGB_WHITE); // was 0xFFF9001C in R/S
+            break;
+        }
+        gTasks[taskId].data[15]++;
+    }
+    else
+        gTasks[taskId].func = EvoTask_DestroyPostSet2AndFlashTask;
 }
 
-__attribute__((naked)) void EvoTask_DestroyPostSet2AndFlashTask(void)
+void EvoTask_DestroyPostSet2AndFlashTask(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r0, _0817C13C\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817C138\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_0817C138:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C13C: .4byte gPaletteFade\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+        DestroyTask(taskId);
 }
 
-__attribute__((naked)) void LaunchTask_PostEvoSparklesSet2AndFlash_Trade(void)
+u8 LaunchTask_PostEvoSparklesSet2AndFlash_Trade(u16 species)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r0, _0817C168\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0817C16C\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r4, [r1, #0xc]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C168: .4byte EvoTask_BeginPostSparklesSet2_AndFlash_Trade + 1\n\t"
-        "_0817C16C: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateTask(EvoTask_BeginPostSparklesSet2_AndFlash_Trade, 0);
+    gTasks[taskId].data[2] = species;
+    return taskId;
 }
 
-__attribute__((naked)) void EvoTask_BeginPostSparklesSet2_AndFlash_Trade(void)
+void EvoTask_BeginPostSparklesSet2_AndFlash_Trade(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl SetEvoSparklesMatrices\n\t"
-        "	ldr r0, _0817C1B8\n\t"
-        "	lsls r5, r4, #2\n\t"
-        "	adds r5, r5, r4\n\t"
-        "	lsls r5, r5, #3\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	ldr r0, _0817C1BC\n\t"
-        "	ldr r1, _0817C1C0\n\t"
-        "	movs r2, #0x30\n\t"
-        "	bl CpuSet\n\t"
-        "	ldr r0, _0817C1C4\n\t"
-        "	ldr r1, _0817C1C8\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _0817C1CC\n\t"
-        "	str r0, [r5]\n\t"
-        "	movs r0, #0xca\n\t"
-        "	bl PlaySE\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C1B8: .4byte gTasks\n\t"
-        "_0817C1BC: .4byte gUnknown_20377F4\n\t"
-        "_0817C1C0: .4byte gUnknown_20373F4\n\t"
-        "_0817C1C4: .4byte 0xFFF90400\n\t"
-        "_0817C1C8: .4byte 0x00007FFF\n\t"
-        "_0817C1CC: .4byte EvoTask_CreatePostEvoSparklesSet2_AndFlash_Trade + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    SetEvoSparklesMatrices();
+    gTasks[taskId].data[15] = 0;
+    CpuSet(gUnknown_20377F4, gUnknown_20373F4, 0x30);
+    BeginNormalPaletteFade(0xFFF90400, 0, 0, 0x10, RGB_WHITE); // was 0xFFFF0001 in R/S
+    gTasks[taskId].func = EvoTask_CreatePostEvoSparklesSet2_AndFlash_Trade;
+    PlaySE(SE_M_PETAL_DANCE);
 }
 
-__attribute__((naked)) void EvoTask_CreatePostEvoSparklesSet2_AndFlash_Trade(void)
+void EvoTask_CreatePostEvoSparklesSet2_AndFlash_Trade(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r1, _0817C208\n\t"
-        "	lsls r5, r6, #2\n\t"
-        "	adds r0, r5, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	movs r0, #0x26\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	cmp r2, #0x7f\n\t"
-        "	bgt _0817C24C\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817C20C\n\t"
-        "	cmp r0, #0x20\n\t"
-        "	beq _0817C220\n\t"
-        "	cmp r2, #0x31\n\t"
-        "	bgt _0817C230\n\t"
-        "	bl Random\n\t"
-        "	movs r1, #7\n\t"
-        "	ands r0, r1\n\t"
-        "	bl CreatePostEvoSparkleSet2\n\t"
-        "	b _0817C230\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C208: .4byte gTasks\n\t"
-        "_0817C20C:\n\t"
-        "	movs r4, #0\n\t"
-        "_0817C20E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CreatePostEvoSparkleSet2\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #7\n\t"
-        "	bls _0817C20E\n\t"
-        "	b _0817C230\n\t"
-        "_0817C220:\n\t"
-        "	ldr r0, _0817C240\n\t"
-        "	ldr r1, _0817C244\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "_0817C230:\n\t"
-        "	ldr r0, _0817C248\n\t"
-        "	adds r1, r5, r6\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	b _0817C250\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C240: .4byte 0xFFFF0400\n\t"
-        "_0817C244: .4byte 0x00007FFF\n\t"
-        "_0817C248: .4byte gTasks\n\t"
-        "_0817C24C:\n\t"
-        "	ldr r0, _0817C258\n\t"
-        "	str r0, [r1]\n\t"
-        "_0817C250:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C258: .4byte EvoTask_DestroyPostSet2AndFlashTask + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gTasks[taskId].data[15] < 128)
+    {
+        u8 i;
+        switch (gTasks[taskId].data[15])
+        {
+        default:
+            if (gTasks[taskId].data[15] < 50)
+                CreatePostEvoSparkleSet2(Random() & 7);
+            break;
+        case 0:
+            for (i = 0; i < 8; i++)
+                CreatePostEvoSparkleSet2(i);
+            break;
+        case 32:
+            BeginNormalPaletteFade(0xFFFF0400, 0x10, 0x10, 0, RGB_WHITE); // was 0xFFFF0001 in R/S
+            break;
+        }
+        gTasks[taskId].data[15]++;
+    }
+    else
+        gTasks[taskId].func = EvoTask_DestroyPostSet2AndFlashTask;
 }
 
-void EvoSparkle_DummySpriteCb(void) {}
-__attribute__((naked)) void sub_0817C260(void)
+void EvoSparkle_DummySpriteCb(struct Sprite *sprite) {}
+u8 sub_0817C260(u8 preEvoSpriteId, u8 postEvoSpriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x28\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r3, _0817C394\n\t"
-        "	ldr r2, _0817C398\n\t"
-        "_0817C27A:\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	add r0, sp\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r2, [r0]\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	cmp r1, #0xf\n\t"
-        "	bls _0817C27A\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	mov r8, r0\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, _0817C39C\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r6, r1, #2\n\t"
-        "	add r6, r8\n\t"
-        "	lsls r6, r6, #3\n\t"
-        "	adds r6, r6, r0\n\t"
-        "	strh r5, [r6, #0xa]\n\t"
-        "	strh r7, [r6, #0xc]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	strh r1, [r6, #0xe]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r6, #0x10]\n\t"
-        "	movs r4, #0x80\n\t"
-        "	lsls r4, r4, #9\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl SetOamMatrix\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ldrsh r1, [r6, r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r0, #0x1f\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl SetOamMatrix\n\t"
-        "	ldr r1, _0817C3A0\n\t"
-        "	mov sb, r1\n\t"
-        "	lsls r2, r5, #4\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	mov r3, sb\n\t"
-        "	adds r3, #0x1c\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldr r1, _0817C3A4\n\t"
-        "	str r1, [r0]\n\t"
-        "	add r2, sb\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	movs r4, #4\n\t"
-        "	rsbs r4, r4, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	ldrb r1, [r2, #3]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #3]\n\t"
-        "	movs r0, #0x3e\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	mov sl, r0\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r5, #5\n\t"
-        "	rsbs r5, r5, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	mov r1, sl\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	ldr r0, _0817C3A8\n\t"
-        "	mov sl, r0\n\t"
-        "	add r1, sl\n\t"
-        "	add r0, sp, #4\n\t"
-        "	movs r2, #0x10\n\t"
-        "	str r3, [sp, #0x24]\n\t"
-        "	bl CpuSet\n\t"
-        "	lsls r1, r7, #4\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r3, [sp, #0x24]\n\t"
-        "	adds r3, r1, r3\n\t"
-        "	ldr r0, _0817C3A4\n\t"
-        "	str r0, [r3]\n\t"
-        "	add r1, sb\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	ands r4, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	orrs r4, r0\n\t"
-        "	strb r4, [r1, #1]\n\t"
-        "	ldrb r0, [r1, #3]\n\t"
-        "	movs r2, #0x3e\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #3]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	ands r5, r0\n\t"
-        "	strb r5, [r2]\n\t"
-        "	ldrb r1, [r1, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	add r1, sl\n\t"
-        "	add r0, sp, #4\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl CpuSet\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r6, #0x18]\n\t"
-        "	mov r0, r8\n\t"
-        "	add sp, #0x28\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C394: .4byte sub_0817C3AC + 1\n\t"
-        "_0817C398: .4byte 0x00007FFF\n\t"
-        "_0817C39C: .4byte gTasks\n\t"
-        "_0817C3A0: .4byte gSprites\n\t"
-        "_0817C3A4: .4byte EvoSparkle_DummySpriteCb + 1\n\t"
-        "_0817C3A8: .4byte gUnknown_20379B4\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+    u16 monPalette[16];
+    u8 taskId;
+    s32 toDiv;
+
+    for (i = 0; i < ARRAY_COUNT(monPalette); i++)
+        monPalette[i] = RGB_WHITE;
+
+    taskId = CreateTask(sub_0817C3AC, 0);
+    gTasks[taskId].data[1] = preEvoSpriteId;
+    gTasks[taskId].data[2] = postEvoSpriteId;
+    gTasks[taskId].data[3] = 256;
+    gTasks[taskId].data[4] = 16;
+
+    toDiv = 65536;
+    SetOamMatrix(30, 256, 0, 0, 256);
+    SetOamMatrix(31, toDiv / gTasks[taskId].data[4], 0, 0, toDiv / gTasks[taskId].data[4]);
+
+    gSprites[preEvoSpriteId].callback = EvoSparkle_DummySpriteCb;
+    gSprites[preEvoSpriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    gSprites[preEvoSpriteId].oam.matrixNum = 30;
+    gSprites[preEvoSpriteId].invisible = FALSE;
+    CpuSet(monPalette, &gUnknown_20379B4[gSprites[preEvoSpriteId].oam.paletteNum * 16], 16);
+
+    gSprites[postEvoSpriteId].callback = EvoSparkle_DummySpriteCb;
+    gSprites[postEvoSpriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    gSprites[postEvoSpriteId].oam.matrixNum = 31;
+    gSprites[postEvoSpriteId].invisible = FALSE;
+    CpuSet(monPalette, &gUnknown_20379B4[gSprites[postEvoSpriteId].oam.paletteNum * 16], 16);
+
+    gTasks[taskId].data[8] = FALSE;
+    return taskId;
 }
 
-__attribute__((naked)) void sub_0817C3AC(void)
+void sub_0817C3AC(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0817C3C8\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x12]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r1, #0x14]\n\t"
-        "	ldr r0, _0817C3CC\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C3C8: .4byte gTasks\n\t"
-        "_0817C3CC: .4byte sub_0817C3D0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gTasks[taskId].data[5] = FALSE;
+    gTasks[taskId].data[6] = 8;
+    gTasks[taskId].func = sub_0817C3D0;
 }
 
-__attribute__((naked)) void sub_0817C3D0(void)
+void sub_0817C3D0(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	ldr r1, _0817C3F0\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	movs r1, #0x18\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817C3F4\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl PreEvoVisible_PostEvoInvisible_KillTask\n\t"
-        "	b _0817C416\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C3F0: .4byte gTasks\n\t"
-        "_0817C3F4:\n\t"
-        "	ldrh r1, [r2, #0x14]\n\t"
-        "	movs r4, #0x14\n\t"
-        "	ldrsh r0, [r2, r4]\n\t"
-        "	cmp r0, #0x80\n\t"
-        "	bne _0817C406\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl PreEvoInvisible_PostEvoVisible_KillTask\n\t"
-        "	b _0817C416\n\t"
-        "_0817C406:\n\t"
-        "	adds r0, r1, #2\n\t"
-        "	strh r0, [r2, #0x14]\n\t"
-        "	ldrh r0, [r2, #0x12]\n\t"
-        "	movs r1, #1\n\t"
-        "	eors r0, r1\n\t"
-        "	strh r0, [r2, #0x12]\n\t"
-        "	ldr r0, _0817C41C\n\t"
-        "	str r0, [r2]\n\t"
-        "_0817C416:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C41C: .4byte sub_0817C420 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gTasks[taskId].data[8])
+        PreEvoVisible_PostEvoInvisible_KillTask(taskId);
+    else if (gTasks[taskId].data[6] == 128)
+        PreEvoInvisible_PostEvoVisible_KillTask(taskId);
+    else
+    {
+        gTasks[taskId].data[6] += 2;
+        gTasks[taskId].data[5] ^= 1;
+        gTasks[taskId].func = sub_0817C420;
+    }
 }
 
-__attribute__((naked)) void sub_0817C420(void)
+void sub_0817C420(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _0817C444\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	movs r3, #0x18\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817C44C\n\t"
-        "	ldr r0, _0817C448\n\t"
-        "	str r0, [r2]\n\t"
-        "	b _0817C530\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C444: .4byte gTasks\n\t"
-        "_0817C448: .4byte PreEvoVisible_PostEvoInvisible_KillTask + 1\n\t"
-        "_0817C44C:\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r7, #0x12\n\t"
-        "	ldrsh r0, [r2, r7]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817C49C\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r2, r0]\n\t"
-        "	movs r3, #0x14\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	subs r0, r3, r0\n\t"
-        "	cmp r1, r0\n\t"
-        "	bge _0817C472\n\t"
-        "	ldrh r0, [r2, #0x14]\n\t"
-        "	ldrh r7, [r2, #0xe]\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	strh r0, [r2, #0xe]\n\t"
-        "	b _0817C476\n\t"
-        "_0817C472:\n\t"
-        "	strh r3, [r2, #0xe]\n\t"
-        "	movs r6, #1\n\t"
-        "_0817C476:\n\t"
-        "	lsls r2, r4, #2\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r3, r0, r5\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	movs r7, #0x14\n\t"
-        "	ldrsh r0, [r3, r7]\n\t"
-        "	adds r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0817C496\n\t"
-        "	ldrh r0, [r3, #0x10]\n\t"
-        "	ldrh r1, [r3, #0x14]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r3, #0x10]\n\t"
-        "	b _0817C4E6\n\t"
-        "_0817C496:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r3, #0x10]\n\t"
-        "	b _0817C4E0\n\t"
-        "_0817C49C:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ldrsh r1, [r2, r0]\n\t"
-        "	movs r3, #0x14\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	subs r0, r3, r0\n\t"
-        "	cmp r1, r0\n\t"
-        "	bge _0817C4B8\n\t"
-        "	ldrh r0, [r2, #0x14]\n\t"
-        "	ldrh r7, [r2, #0x10]\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	strh r0, [r2, #0x10]\n\t"
-        "	b _0817C4BC\n\t"
-        "_0817C4B8:\n\t"
-        "	strh r3, [r2, #0x10]\n\t"
-        "	movs r6, #1\n\t"
-        "_0817C4BC:\n\t"
-        "	lsls r2, r4, #2\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r3, r0, r5\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	movs r7, #0x14\n\t"
-        "	ldrsh r0, [r3, r7]\n\t"
-        "	adds r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0817C4DC\n\t"
-        "	ldrh r0, [r3, #0xe]\n\t"
-        "	ldrh r1, [r3, #0x14]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r3, #0xe]\n\t"
-        "	b _0817C4E6\n\t"
-        "_0817C4DC:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r3, #0xe]\n\t"
-        "_0817C4E0:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "_0817C4E6:\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r5, r0, r5\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	movs r4, #0x80\n\t"
-        "	lsls r4, r4, #9\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl SetOamMatrix\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r1, [r5, r3]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r0, #0x1f\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl SetOamMatrix\n\t"
-        "	cmp r6, #2\n\t"
-        "	bne _0817C530\n\t"
-        "	ldr r0, _0817C538\n\t"
-        "	str r0, [r5]\n\t"
-        "_0817C530:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C538: .4byte sub_0817C3D0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gTasks[taskId].data[8])
+        gTasks[taskId].func = PreEvoVisible_PostEvoInvisible_KillTask;
+    else
+    {
+        u16 oamMatrixArg;
+        u8 numSpritesFinished = 0;
+        if (!gTasks[taskId].data[5])
+        {
+            // Set pre-evo sprite growth
+            if (gTasks[taskId].data[3] < 256 - gTasks[taskId].data[6])
+                gTasks[taskId].data[3] += gTasks[taskId].data[6];
+            else
+            {
+                gTasks[taskId].data[3] = 256;
+                numSpritesFinished++;
+            }
+
+            // Set post-evo sprite shrink
+            if (gTasks[taskId].data[4] > 16 + gTasks[taskId].data[6])
+                gTasks[taskId].data[4]  -= gTasks[taskId].data[6];
+            else
+            {
+                gTasks[taskId].data[4] = 16;
+                numSpritesFinished++;
+            }
+        }
+        else
+        {
+            // Set post-evo sprite growth
+            if (gTasks[taskId].data[4] < 256 - gTasks[taskId].data[6])
+                gTasks[taskId].data[4] += gTasks[taskId].data[6];
+            else
+            {
+                gTasks[taskId].data[4] = 256;
+                numSpritesFinished++;
+            }
+
+            // Set pre-evo sprite shrink
+            if (gTasks[taskId].data[3] > 16 + gTasks[taskId].data[6])
+                gTasks[taskId].data[3]  -= gTasks[taskId].data[6];
+            else
+            {
+                gTasks[taskId].data[3] = 16;
+                numSpritesFinished++;
+            }
+        }
+
+        // Grow/shrink pre-evo sprite
+        oamMatrixArg = 65536 / gTasks[taskId].data[3];
+        SetOamMatrix(30, oamMatrixArg, 0, 0, oamMatrixArg);
+
+        // Grow/shrink post-evo sprite
+        oamMatrixArg = 65536 / gTasks[taskId].data[4];
+        SetOamMatrix(31, oamMatrixArg, 0, 0, oamMatrixArg);
+
+        // Both sprites have reached their size extreme
+        if (numSpritesFinished == 2)
+            gTasks[taskId].func = sub_0817C3D0;
+    }
 }
 
-__attribute__((naked)) void PreEvoInvisible_PostEvoVisible_KillTask(void)
+void PreEvoInvisible_PostEvoVisible_KillTask(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _0817C5E4\n\t"
-        "	mov r8, r1\n\t"
-        "	ldr r1, _0817C5E8\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	lsls r2, r1, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	add r2, r8\n\t"
-        "	ldrb r3, [r2, #1]\n\t"
-        "	movs r6, #4\n\t"
-        "	rsbs r6, r6, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	ands r1, r3\n\t"
-        "	strb r1, [r2, #1]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	lsls r2, r1, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	add r2, r8\n\t"
-        "	ldrb r3, [r2, #3]\n\t"
-        "	movs r5, #0x3f\n\t"
-        "	rsbs r5, r5, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	ands r1, r3\n\t"
-        "	strb r1, [r2, #3]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	add r1, r8\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	movs r3, #4\n\t"
-        "	orrs r2, r3\n\t"
-        "	strb r2, [r1]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	add r1, r8\n\t"
-        "	ldrb r2, [r1, #1]\n\t"
-        "	ands r6, r2\n\t"
-        "	strb r6, [r1, #1]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	add r1, r8\n\t"
-        "	ldrb r2, [r1, #3]\n\t"
-        "	ands r5, r2\n\t"
-        "	strb r5, [r1, #3]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	add r1, r8\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	movs r2, #5\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	ands r2, r3\n\t"
-        "	strb r2, [r1]\n\t"
-        "	bl DestroyTask\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C5E4: .4byte gSprites\n\t"
-        "_0817C5E8: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    gSprites[gTasks[taskId].data[1]].oam.affineMode = ST_OAM_AFFINE_OFF;
+    gSprites[gTasks[taskId].data[1]].oam.matrixNum = 0;
+    gSprites[gTasks[taskId].data[1]].invisible = TRUE;
+
+    gSprites[gTasks[taskId].data[2]].oam.affineMode = ST_OAM_AFFINE_OFF;
+    gSprites[gTasks[taskId].data[2]].oam.matrixNum = 0;
+    gSprites[gTasks[taskId].data[2]].invisible = FALSE;
+
+    DestroyTask(taskId);
 }
 
-__attribute__((naked)) void PreEvoVisible_PostEvoInvisible_KillTask(void)
+void PreEvoVisible_PostEvoInvisible_KillTask(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _0817C694\n\t"
-        "	mov r8, r1\n\t"
-        "	ldr r1, _0817C698\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	lsls r2, r1, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	add r2, r8\n\t"
-        "	ldrb r3, [r2, #1]\n\t"
-        "	movs r6, #4\n\t"
-        "	rsbs r6, r6, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	ands r1, r3\n\t"
-        "	strb r1, [r2, #1]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	lsls r2, r1, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	add r2, r8\n\t"
-        "	ldrb r3, [r2, #3]\n\t"
-        "	movs r5, #0x3f\n\t"
-        "	rsbs r5, r5, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	ands r1, r3\n\t"
-        "	strb r1, [r2, #3]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	add r1, r8\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	movs r2, #5\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	ands r2, r3\n\t"
-        "	strb r2, [r1]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	add r1, r8\n\t"
-        "	ldrb r2, [r1, #1]\n\t"
-        "	ands r6, r2\n\t"
-        "	strb r6, [r1, #1]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	add r1, r8\n\t"
-        "	ldrb r2, [r1, #3]\n\t"
-        "	ands r5, r2\n\t"
-        "	strb r5, [r1, #3]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	add r1, r8\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	movs r3, #4\n\t"
-        "	orrs r2, r3\n\t"
-        "	strb r2, [r1]\n\t"
-        "	bl DestroyTask\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817C694: .4byte gSprites\n\t"
-        "_0817C698: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    gSprites[gTasks[taskId].data[1]].oam.affineMode = ST_OAM_AFFINE_OFF;
+    gSprites[gTasks[taskId].data[1]].oam.matrixNum = 0;
+    gSprites[gTasks[taskId].data[1]].invisible = FALSE;
+
+    gSprites[gTasks[taskId].data[2]].oam.affineMode = ST_OAM_AFFINE_OFF;
+    gSprites[gTasks[taskId].data[2]].oam.matrixNum = 0;
+    gSprites[gTasks[taskId].data[2]].invisible = TRUE;
+
+    DestroyTask(taskId);
 }
