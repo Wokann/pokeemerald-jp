@@ -1,13 +1,70 @@
 #include "global.h"
+#include "battle_gfx_sfx_util.h"
+#include "battle.h"
 #include "bg.h"
+#include "data.h"
+#include "decompress.h"
 #include "graphics.h"
+#include "item_menu.h"
+#include "m4a.h"
+#include "main.h"
+#include "malloc.h"
+#include "menu_helpers.h"
+#include "palette.h"
 #include "pokeblock.h"
+#include "pokemon.h"
 #include "sprite.h"
+#include "sound.h"
+#include "task.h"
+#include "text.h"
+#include "trig.h"
+#include "menu.h"
+#include "string_util.h"
 #include "window.h"
+#include "constants/rgb.h"
 
 #define POKEBLOCK_FEED_DATA __attribute__((section(".rodata.pokeblock_feed_data")))
 
 void SpriteCB_ThrownPokeblock(struct Sprite *sprite);
+void sub_0817A320(struct Sprite *sprite);
+void sub_0817A484(void);
+void sub_0817A4EC(void);
+bool8 sub_0817A7D4(void);
+bool8 sub_0817A89C(void);
+bool8 FreeMonSpriteOamMatrix(void);
+void sub_0817A90C(void);
+void sub_0817AA20(void);
+void PrepareMonToMoveToPokeblock(u8 spriteId);
+void DoPokeblockCaseThrowEffect(u8 spriteId, bool8 horizontalThrow);
+u8 CreatePokeblockSprite(void);
+void Task_HandlePokeblockFeed(u8 taskId);
+void Task_HandleMonAtePokeblock(u8 taskId);
+void Task_PaletteFadeToReturn(u8 taskId);
+void Task_ReturnAfterPaletteFade(u8 taskId);
+void HandleInitBackgrounds(void);
+bool8 LoadMonAndSceneGfx(struct Pokemon *mon);
+void HandleInitWindows(void);
+void SetPokeblockSpritePal(u8 pokeblockCaseId);
+u8 CreatePokeblockCaseSpriteForFeeding(void);
+u8 CreateMonSprite(struct Pokemon *mon);
+void LaunchPokeblockFeedTask(void);
+
+extern u8 *gUnknown_203B9E4;
+extern struct CompressedSpritePalette gUnknown_203B9E8;
+extern u8 gUnknown_203B968;
+extern s16 gUnknown_203B96A;
+extern const u8 gUnknown_85C97BD[];
+extern s16 sub_0813700C(const struct Pokeblock *pokeblock, u8 field);
+extern s16 sub_08137054(u8 nature, const struct Pokeblock *pokeblock);
+extern void sub_081370B4(const struct Pokeblock *pokeblock, u8 *dest);
+extern u8 sub_08136484(s16 x, s16 y, u8 subpriority);
+extern void PlayCry1(u16 species, s8 pan);
+
+#define sPokeblockFeed ((struct PokeblockFeed *)gUnknown_203B9E4)
+#define sPokeblockSpritePal gUnknown_203B9E8
+#define sSpeed data[0]
+#define sAccel data[1]
+#define sSpecies data[2]
 
 // - 1 excludes PBLOCK_CLR_NONE.
 static const u32 *const sPokeblocksPals[] POKEBLOCK_FEED_DATA =
@@ -172,6 +229,37 @@ enum
     AFFINE_UNUSED_2,
     AFFINE_UNUSED_3,
     NUM_MON_AFFINES,
+};
+
+struct PokeblockFeed
+{
+    struct Sprite *monSpritePtr;
+    struct Sprite savedMonSprite;
+    u8 tilemapBuffer[BG_SCREEN_SIZE];
+    u8 unused1[8];
+    s16 monAnimX[0x200];
+    s16 monAnimY[0x200];
+    u8 animRunState;
+    u8 animId;
+    u8 unused2;
+    bool8 noMonFlip;
+    u16 species;
+    u16 monAnimLength;
+    u16 timer;
+    u8 nature;
+    u8 monSpriteId_;
+    u8 unused3;
+    u8 monSpriteId;
+    u8 pokeblockCaseSpriteId;
+    u8 pokeblockSpriteId;
+    s16 animData[NUM_ANIMDATA];
+    s16 monInitX;
+    s16 monInitY;
+    s16 maxAnimStageTime;
+    s16 monX;
+    s16 monY;
+    s16 loadGfxState;
+    u8 unused4;
 };
 
 // The animation the Pokémon does during the feeding scene depends on their nature.
@@ -530,2160 +618,558 @@ static const struct WindowTemplate sWindowTemplates[] POKEBLOCK_FEED_ANIM_DATA =
 
 #undef POKEBLOCK_FEED_ANIM_DATA
 
-__attribute__((naked)) void CB2_PokeblockFeed(void)
+void CB2_PokeblockFeed(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RunTasks\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl DoScheduledBgTilemapCopiesToVram\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    DoScheduledBgTilemapCopiesToVram();
+    UpdatePaletteFade();
 }
 
-__attribute__((naked)) void VBlankCB_PokeblockFeed(void)
+void VBlankCB_PokeblockFeed(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LoadOam\n\t"
-        "	bl ProcessSpriteCopyRequests\n\t"
-        "	bl TransferPlttBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
 }
 
-__attribute__((naked)) void TransitionToPokeblockFeedScene(void)
+bool8 TransitionToPokeblockFeedScene(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _08179A70\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xd\n\t"
-        "	bls _08179A64\n\t"
-        "	b _08179C04\n\t"
-        "_08179A64:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08179A74\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08179A70: .4byte gMain\n\t"
-        "_08179A74: .4byte _08179A78\n\t"
-        "_08179A78:\n\t"
-        "	.4byte _08179AB0\n\t"
-        "	.4byte _08179AD8\n\t"
-        "	.4byte _08179AEC\n\t"
-        "	.4byte _08179B00\n\t"
-        "	.4byte _08179B06\n\t"
-        "	.4byte _08179B18\n\t"
-        "	.4byte _08179B1E\n\t"
-        "	.4byte _08179B30\n\t"
-        "	.4byte _08179B50\n\t"
-        "	.4byte _08179B68\n\t"
-        "	.4byte _08179B94\n\t"
-        "	.4byte _08179BB0\n\t"
-        "	.4byte _08179BB6\n\t"
-        "	.4byte _08179BD0\n\t"
-        "_08179AB0:\n\t"
-        "	ldr r4, _08179ACC\n\t"
-        "	ldr r0, _08179AD0\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	bl SetVBlankHBlankCallbacksToNull\n\t"
-        "	bl ClearScheduledBgCopiesToVram\n\t"
-        "	ldr r1, _08179AD4\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _08179BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08179ACC: .4byte gUnknown_203B9E4\n\t"
-        "_08179AD0: .4byte 0x00001084\n\t"
-        "_08179AD4: .4byte gMain\n\t"
-        "_08179AD8:\n\t"
-        "	bl ResetPaletteFade\n\t"
-        "	ldr r2, _08179AE8\n\t"
-        "	ldrb r0, [r2, #8]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	b _08179BE8\n\t"
-        "	.align 2, 0\n\t"
-        "_08179AE8: .4byte gPaletteFade\n\t"
-        "_08179AEC:\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	ldr r1, _08179AFC\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _08179BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08179AFC: .4byte gMain\n\t"
-        "_08179B00:\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	b _08179BEA\n\t"
-        "_08179B06:\n\t"
-        "	bl AllocateMonSpritesGfx\n\t"
-        "	ldr r1, _08179B14\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _08179BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08179B14: .4byte gMain\n\t"
-        "_08179B18:\n\t"
-        "	bl HandleInitBackgrounds\n\t"
-        "	b _08179BEA\n\t"
-        "_08179B1E:\n\t"
-        "	bl HandleInitWindows\n\t"
-        "	ldr r1, _08179B2C\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _08179BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08179B2C: .4byte gMain\n\t"
-        "_08179B30:\n\t"
-        "	ldr r0, _08179B48\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08179B4C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl LoadMonAndSceneGfx\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08179C1C\n\t"
-        "	b _08179BEA\n\t"
-        "	.align 2, 0\n\t"
-        "_08179B48: .4byte gUnknown_203B968\n\t"
-        "_08179B4C: .4byte gPlayerParty\n\t"
-        "_08179B50:\n\t"
-        "	bl CreatePokeblockCaseSpriteForFeeding\n\t"
-        "	ldr r1, _08179B60\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r2, _08179B64\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _08179BEA\n\t"
-        "	.align 2, 0\n\t"
-        "_08179B60: .4byte gUnknown_203B9E4\n\t"
-        "_08179B64: .4byte 0x0000105E\n\t"
-        "_08179B68:\n\t"
-        "	ldr r0, _08179B84\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08179B88\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl CreateMonSprite\n\t"
-        "	ldr r1, _08179B8C\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r2, _08179B90\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _08179BEA\n\t"
-        "	.align 2, 0\n\t"
-        "_08179B84: .4byte gUnknown_203B968\n\t"
-        "_08179B88: .4byte gPlayerParty\n\t"
-        "_08179B8C: .4byte gUnknown_203B9E4\n\t"
-        "_08179B90: .4byte 0x0000105D\n\t"
-        "_08179B94:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl DrawStdFrameWithCustomTileAndPalette\n\t"
-        "	ldr r1, _08179BAC\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _08179BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08179BAC: .4byte gMain\n\t"
-        "_08179BB0:\n\t"
-        "	bl LaunchPokeblockFeedTask\n\t"
-        "	b _08179BEA\n\t"
-        "_08179BB6:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "	ldr r1, _08179BCC\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _08179BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08179BCC: .4byte gMain\n\t"
-        "_08179BD0:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r2, _08179BFC\n\t"
-        "	ldrb r1, [r2, #8]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "_08179BE8:\n\t"
-        "	strb r0, [r2, #8]\n\t"
-        "_08179BEA:\n\t"
-        "	ldr r1, _08179C00\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "_08179BF2:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _08179C1C\n\t"
-        "	.align 2, 0\n\t"
-        "_08179BFC: .4byte gPaletteFade\n\t"
-        "_08179C00: .4byte gMain\n\t"
-        "_08179C04:\n\t"
-        "	ldr r0, _08179C14\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	ldr r0, _08179C18\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08179C1E\n\t"
-        "	.align 2, 0\n\t"
-        "_08179C14: .4byte VBlankCB_PokeblockFeed + 1\n\t"
-        "_08179C18: .4byte 0x08179A21\n\t"
-        "_08179C1C:\n\t"
-        "	movs r0, #0\n\t"
-        "_08179C1E:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gMain.state)
+    {
+    case 0:
+        gUnknown_203B9E4 = AllocZeroed(sizeof(*sPokeblockFeed));
+        SetVBlankHBlankCallbacksToNull();
+        ClearScheduledBgCopiesToVram();
+        gMain.state++;
+        break;
+    case 1:
+        ResetPaletteFade();
+        gPaletteFade.bufferTransferDisabled = TRUE;
+        gMain.state++;
+        break;
+    case 2:
+        ResetSpriteData();
+        gMain.state++;
+        break;
+    case 3:
+        FreeAllSpritePalettes();
+        gMain.state++;
+        break;
+    case 4:
+        AllocateMonSpritesGfx();
+        gMain.state++;
+        break;
+    case 5:
+        HandleInitBackgrounds();
+        gMain.state++;
+        break;
+    case 6:
+        HandleInitWindows();
+        gMain.state++;
+        break;
+    case 7:
+        if (LoadMonAndSceneGfx(&gPlayerParty[gUnknown_203B968]))
+            gMain.state++;
+        break;
+    case 8:
+        sPokeblockFeed->pokeblockCaseSpriteId = CreatePokeblockCaseSpriteForFeeding();
+        gMain.state++;
+        break;
+    case 9:
+        sPokeblockFeed->monSpriteId = CreateMonSprite(&gPlayerParty[gUnknown_203B968]);
+        gMain.state++;
+        break;
+    case 10:
+        DrawStdFrameWithCustomTileAndPalette(0, TRUE, 1, 14);
+        gMain.state++;
+        break;
+    case 11:
+        LaunchPokeblockFeedTask();
+        gMain.state++;
+        break;
+    case 12:
+        BlendPalettes(PALETTES_ALL, 16, 0);
+        gMain.state++;
+        break;
+    case 13:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        gPaletteFade.bufferTransferDisabled = FALSE;
+        gMain.state++;
+        break;
+    default:
+        SetVBlankCallback(VBlankCB_PokeblockFeed);
+        SetMainCallback2(CB2_PokeblockFeed);
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void CB2_PreparePokeblockFeedScene(void)
+void CB2_PreparePokeblockFeedScene(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "_08179C2A:\n\t"
-        "	bl sub_081221F8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08179C4E\n\t"
-        "	bl TransitionToPokeblockFeedScene\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08179C4E\n\t"
-        "	bl sub_081221B8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08179C2A\n\t"
-        "_08179C4E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    while (TRUE)
+    {
+        if (MenuHelpers_ShouldWaitForLinkRecv() == TRUE)
+            break;
+        if (TransitionToPokeblockFeedScene() == TRUE)
+            break;
+        if (MenuHelpers_IsLinkActive() == TRUE)
+            break;
+    }
 }
 
-__attribute__((naked)) void HandleInitBackgrounds(void)
+void HandleInitBackgrounds(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl ResetVramOamAndBgCntRegs\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ResetBgsAndClearDma3BusyFlags\n\t"
-        "	ldr r1, _08179CA4\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl InitBgsFromTemplates\n\t"
-        "	ldr r0, _08179CA8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x48\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	bl ResetAllBgsCoordinates\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	movs r1, #0x82\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08179CA4: .4byte sBackgroundTemplates\n\t"
-        "_08179CA8: .4byte gUnknown_203B9E4\n\t"
-        ".syntax divided\n\t"
-    );
+    ResetVramOamAndBgCntRegs();
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, sBackgroundTemplates, ARRAY_COUNT(sBackgroundTemplates));
+    SetBgTilemapBuffer(1, gUnknown_203B9E4 + 0x48);
+    ResetAllBgsCoordinates();
+    ScheduleBgCopyTilemapToVram(1);
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+    ShowBg(0);
+    ShowBg(1);
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
 }
 
-__attribute__((naked)) void LoadMonAndSceneGfx(void)
+bool8 LoadMonAndSceneGfx(struct Pokemon *mon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldr r0, _08179CD0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _08179CD4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #8\n\t"
-        "	bls _08179CC4\n\t"
-        "	b _08179E58\n\t"
-        "_08179CC4:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08179CD8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08179CD0: .4byte gUnknown_203B9E4\n\t"
-        "_08179CD4: .4byte 0x0000107E\n\t"
-        "_08179CD8: .4byte _08179CDC\n\t"
-        "_08179CDC:\n\t"
-        "	.4byte _08179D00\n\t"
-        "	.4byte _08179D3C\n\t"
-        "	.4byte _08179D7C\n\t"
-        "	.4byte _08179D90\n\t"
-        "	.4byte _08179DA4\n\t"
-        "	.4byte _08179DB8\n\t"
-        "	.4byte _08179DD8\n\t"
-        "	.4byte _08179DFC\n\t"
-        "	.4byte _08179E30\n\t"
-        "_08179D00:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r0, r5, #3\n\t"
-        "	ldr r1, _08179D30\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08179D34\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r1, [r1, #8]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl HandleLoadSpecialPokePic_2\n\t"
-        "	ldr r0, _08179D38\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _08179E16\n\t"
-        "	.align 2, 0\n\t"
-        "_08179D30: .4byte gMonFrontPicTable\n\t"
-        "_08179D34: .4byte gMonSpritesGfxPtr\n\t"
-        "_08179D38: .4byte gUnknown_203B9E4\n\t"
-        "_08179D3C:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl GetMonSpritePalStructFromOtIdPersonality\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl LoadCompressedSpritePalette\n\t"
-        "	ldrh r0, [r4, #4]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetMultiuseSpriteTemplateToPokemon\n\t"
-        "	ldr r0, _08179D78\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _08179E16\n\t"
-        "	.align 2, 0\n\t"
-        "_08179D78: .4byte gUnknown_203B9E4\n\t"
-        "_08179D7C:\n\t"
-        "	ldr r0, _08179D88\n\t"
-        "	bl LoadCompressedSpriteSheet\n\t"
-        "	ldr r0, _08179D8C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _08179E16\n\t"
-        "	.align 2, 0\n\t"
-        "_08179D88: .4byte gPokeblockCase_SpriteSheet\n\t"
-        "_08179D8C: .4byte gUnknown_203B9E4\n\t"
-        "_08179D90:\n\t"
-        "	ldr r0, _08179D9C\n\t"
-        "	bl LoadCompressedSpritePalette\n\t"
-        "	ldr r0, _08179DA0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _08179E16\n\t"
-        "	.align 2, 0\n\t"
-        "_08179D9C: .4byte gPokeblockCase_SpritePal\n\t"
-        "_08179DA0: .4byte gUnknown_203B9E4\n\t"
-        "_08179DA4:\n\t"
-        "	ldr r0, _08179DB0\n\t"
-        "	bl LoadCompressedSpriteSheet\n\t"
-        "	ldr r0, _08179DB4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _08179E16\n\t"
-        "	.align 2, 0\n\t"
-        "_08179DB0: .4byte sSpriteSheet_Pokeblock\n\t"
-        "_08179DB4: .4byte gUnknown_203B9E4\n\t"
-        "_08179DB8:\n\t"
-        "	ldr r0, _08179DCC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetPokeblockSpritePal\n\t"
-        "	ldr r0, _08179DD0\n\t"
-        "	bl LoadCompressedSpritePalette\n\t"
-        "	ldr r0, _08179DD4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _08179E16\n\t"
-        "	.align 2, 0\n\t"
-        "_08179DCC: .4byte gSpecialVar_ItemId\n\t"
-        "_08179DD0: .4byte gUnknown_203B9E8\n\t"
-        "_08179DD4: .4byte gUnknown_203B9E4\n\t"
-        "_08179DD8:\n\t"
-        "	bl ResetTempTileDataBuffers\n\t"
-        "	ldr r1, _08179DF4\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl DecompressAndCopyTileDataToVram\n\t"
-        "	ldr r0, _08179DF8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _08179E16\n\t"
-        "	.align 2, 0\n\t"
-        "_08179DF4: .4byte gBattleEnvironmentTiles_Building\n\t"
-        "_08179DF8: .4byte gUnknown_203B9E4\n\t"
-        "_08179DFC:\n\t"
-        "	bl FreeTempTileDataBuffersIfPossible\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08179E58\n\t"
-        "	ldr r0, _08179E24\n\t"
-        "	ldr r4, _08179E28\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x48\n\t"
-        "	bl LZDecompressVram\n\t"
-        "	ldr r1, [r4]\n\t"
-        "_08179E16:\n\t"
-        "	ldr r0, _08179E2C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _08179E58\n\t"
-        "	.align 2, 0\n\t"
-        "_08179E24: .4byte gPokeblockFeedBg_Tilemap\n\t"
-        "_08179E28: .4byte gUnknown_203B9E4\n\t"
-        "_08179E2C: .4byte 0x0000107E\n\t"
-        "_08179E30:\n\t"
-        "	ldr r0, _08179E4C\n\t"
-        "	movs r1, #0x20\n\t"
-        "	movs r2, #0x60\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	ldr r0, _08179E50\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _08179E54\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08179E5A\n\t"
-        "	.align 2, 0\n\t"
-        "_08179E4C: .4byte gBattleEnvironmentPalette_Frontier\n\t"
-        "_08179E50: .4byte gUnknown_203B9E4\n\t"
-        "_08179E54: .4byte 0x0000107E\n\t"
-        "_08179E58:\n\t"
-        "	movs r0, #0\n\t"
-        "_08179E5A:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 species;
+    u32 personality;
+    u32 trainerId;
+    const struct CompressedSpritePalette *palette;
+
+    switch (sPokeblockFeed->loadGfxState)
+    {
+    case 0:
+        species = GetMonData3(mon, 0x41);
+        personality = GetMonData3(mon, 0);
+        HandleLoadSpecialPokePic_2(&gMonFrontPicTable[species], gMonSpritesGfxPtr->sprites.ptr[1], species, personality);
+        sPokeblockFeed->loadGfxState++;
+        break;
+    case 1:
+        species = GetMonData3(mon, 0x41);
+        personality = GetMonData3(mon, 0);
+        trainerId = GetMonData3(mon, 1);
+        palette = GetMonSpritePalStructFromOtIdPersonality(species, trainerId, personality);
+        LoadCompressedSpritePalette(palette);
+        SetMultiuseSpriteTemplateToPokemon(palette->tag, 1);
+        sPokeblockFeed->loadGfxState++;
+        break;
+    case 2:
+        LoadCompressedSpriteSheet(&gPokeblockCase_SpriteSheet);
+        sPokeblockFeed->loadGfxState++;
+        break;
+    case 3:
+        LoadCompressedSpritePalette(&gPokeblockCase_SpritePal);
+        sPokeblockFeed->loadGfxState++;
+        break;
+    case 4:
+        LoadCompressedSpriteSheet(&sSpriteSheet_Pokeblock);
+        sPokeblockFeed->loadGfxState++;
+        break;
+    case 5:
+        SetPokeblockSpritePal(gSpecialVar_ItemId);
+        LoadCompressedSpritePalette(&sPokeblockSpritePal);
+        sPokeblockFeed->loadGfxState++;
+        break;
+    case 6:
+        ResetTempTileDataBuffers();
+        DecompressAndCopyTileDataToVram(1, gBattleEnvironmentTiles_Building, 0, 0, 0);
+        sPokeblockFeed->loadGfxState++;
+        break;
+    case 7:
+        if (FreeTempTileDataBuffersIfPossible() != TRUE)
+        {
+            LZDecompressVram(gPokeblockFeedBg_Tilemap, sPokeblockFeed->tilemapBuffer);
+            sPokeblockFeed->loadGfxState++;
+        }
+        break;
+    case 8:
+        LoadCompressedPalette(gBattleEnvironmentPalette_Frontier, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+        sPokeblockFeed->loadGfxState = 0;
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void HandleInitWindows(void)
+void HandleInitWindows(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08179E9C\n\t"
-        "	bl InitWindows\n\t"
-        "	bl DeactivateAllTextPrinters\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0xe0\n\t"
-        "	bl LoadUserWindowBorderGfx\n\t"
-        "	ldr r0, _08179EA0\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	movs r0, #0\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08179E9C: .4byte sWindowTemplates\n\t"
-        "_08179EA0: .4byte gStandardMenuPalette\n\t"
-        ".syntax divided\n\t"
-    );
+    InitWindows(sWindowTemplates);
+    DeactivateAllTextPrinters();
+    LoadUserWindowBorderGfx(0, 1, BG_PLTT_ID(14));
+    LoadPalette(gStandardMenuPalette, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+    FillWindowPixelBuffer(0, PIXEL_FILL(0));
+    PutWindowTilemap(0);
+    ScheduleBgCopyTilemapToVram(0);
 }
 
-__attribute__((naked)) void SetPokeblockSpritePal(void)
+void SetPokeblockSpritePal(u8 pokeblockCaseId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _08179ED4\n\t"
-        "	lsrs r0, r0, #0x15\n\t"
-        "	ldr r2, _08179ED8\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_0813700C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r2, _08179EDC\n\t"
-        "	ldr r1, _08179EE0\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	subs r0, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r2]\n\t"
-        "	ldr r0, _08179EE4\n\t"
-        "	strh r0, [r2, #4]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08179ED4: .4byte gSaveBlock1Ptr\n\t"
-        "_08179ED8: .4byte 0x00000848\n\t"
-        "_08179EDC: .4byte gUnknown_203B9E8\n\t"
-        "_08179EE0: .4byte sPokeblocksPals\n\t"
-        "_08179EE4: .4byte 0x000039E2\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 colorId = sub_0813700C(&gSaveBlock1Ptr->pokeblocks[pokeblockCaseId], PBLOCK_COLOR);
+
+    gUnknown_203B9E8.data = sPokeblocksPals[colorId - 1];
+    gUnknown_203B9E8.tag = 0x39E2;
 }
 
-__attribute__((naked)) void Task_HandlePokeblockFeed(void)
+#define STATE_START_THROW  255
+#define STATE_SPAWN_PBLOCK (STATE_START_THROW + 14)
+#define STATE_START_JUMP   (STATE_SPAWN_PBLOCK + 12)
+#define STATE_PRINT_MSG    (STATE_START_JUMP + 16)
+
+void Task_HandlePokeblockFeed(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _08179F20\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08179EFC\n\t"
-        "	b _0817A00C\n\t"
-        "_08179EFC:\n\t"
-        "	ldr r0, _08179F24\n\t"
-        "	lsls r2, r4, #2\n\t"
-        "	adds r1, r2, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r3, [r1, r0]\n\t"
-        "	ldr r0, _08179F28\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	cmp r3, r0\n\t"
-        "	beq _08179F80\n\t"
-        "	cmp r3, r0\n\t"
-        "	bgt _08179F2C\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _08179F40\n\t"
-        "	cmp r3, #0xff\n\t"
-        "	beq _08179F64\n\t"
-        "	b _08179FBC\n\t"
-        "	.align 2, 0\n\t"
-        "_08179F20: .4byte gPaletteFade\n\t"
-        "_08179F24: .4byte gTasks\n\t"
-        "_08179F28: .4byte SPECIAL_CheckLeadMonTough\n\t"
-        "_08179F2C:\n\t"
-        "	ldr r0, _08179F3C\n\t"
-        "	cmp r3, r0\n\t"
-        "	beq _08179F98\n\t"
-        "	adds r0, #0x10\n\t"
-        "	cmp r3, r0\n\t"
-        "	beq _08179FB0\n\t"
-        "	b _08179FBC\n\t"
-        "	.align 2, 0\n\t"
-        "_08179F3C: .4byte SPECIAL_DoOrbEffect\n\t"
-        "_08179F40:\n\t"
-        "	ldr r0, _08179F58\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r2, _08179F5C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r3, [r1]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _08179F60\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r3, [r0]\n\t"
-        "	bl sub_0817A484\n\t"
-        "	b _08179FBC\n\t"
-        "	.align 2, 0\n\t"
-        "_08179F58: .4byte gUnknown_203B9E4\n\t"
-        "_08179F5C: .4byte 0x00001050\n\t"
-        "_08179F60: .4byte 0x00001058\n\t"
-        "_08179F64:\n\t"
-        "	ldr r0, _08179F78\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _08179F7C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldrb r1, [r1, #0xa]\n\t"
-        "	bl DoPokeblockCaseThrowEffect\n\t"
-        "	b _08179FBC\n\t"
-        "	.align 2, 0\n\t"
-        "_08179F78: .4byte gUnknown_203B9E4\n\t"
-        "_08179F7C: .4byte 0x0000105E\n\t"
-        "_08179F80:\n\t"
-        "	bl CreatePokeblockSprite\n\t"
-        "	ldr r1, _08179F90\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r2, _08179F94\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _08179FBC\n\t"
-        "	.align 2, 0\n\t"
-        "_08179F90: .4byte gUnknown_203B9E4\n\t"
-        "_08179F94: .4byte 0x0000105F\n\t"
-        "_08179F98:\n\t"
-        "	ldr r0, _08179FA8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _08179FAC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl PrepareMonToMoveToPokeblock\n\t"
-        "	b _08179FBC\n\t"
-        "	.align 2, 0\n\t"
-        "_08179FA8: .4byte gUnknown_203B9E4\n\t"
-        "_08179FAC: .4byte 0x0000105D\n\t"
-        "_08179FB0:\n\t"
-        "	ldr r0, _08179FB8\n\t"
-        "	str r0, [r1]\n\t"
-        "	b _0817A00C\n\t"
-        "	.align 2, 0\n\t"
-        "_08179FB8: .4byte Task_HandleMonAtePokeblock + 1\n\t"
-        "_08179FBC:\n\t"
-        "	ldr r0, _08179FD8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _08179FDC\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	subs r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bhs _08179FE0\n\t"
-        "	bl sub_0817A4EC\n\t"
-        "	b _08179FF0\n\t"
-        "	.align 2, 0\n\t"
-        "_08179FD8: .4byte gUnknown_203B9E4\n\t"
-        "_08179FDC: .4byte 0x00001058\n\t"
-        "_08179FE0:\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08179FF0\n\t"
-        "	ldr r0, _0817A014\n\t"
-        "	adds r1, r5, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0xfe\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "_08179FF0:\n\t"
-        "	ldr r0, _0817A018\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _0817A01C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _0817A014\n\t"
-        "	adds r1, r5, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "_0817A00C:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A014: .4byte gTasks\n\t"
-        "_0817A018: .4byte gUnknown_203B9E4\n\t"
-        "_0817A01C: .4byte 0x00001058\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        switch (gTasks[taskId].data[0])
+        {
+        case 0:
+            sPokeblockFeed->animRunState = 0;
+            sPokeblockFeed->timer = 0;
+            sub_0817A484();
+            break;
+        case STATE_START_THROW:
+            DoPokeblockCaseThrowEffect(sPokeblockFeed->pokeblockCaseSpriteId, gTasks[taskId].data[1]);
+            break;
+        case STATE_SPAWN_PBLOCK:
+            sPokeblockFeed->pokeblockSpriteId = CreatePokeblockSprite();
+            break;
+        case STATE_START_JUMP:
+            PrepareMonToMoveToPokeblock(sPokeblockFeed->monSpriteId);
+            break;
+        case STATE_PRINT_MSG:
+            gTasks[taskId].func = Task_HandleMonAtePokeblock;
+            return;
+        }
+
+        if (sPokeblockFeed->timer < sPokeblockFeed->monAnimLength)
+            sub_0817A4EC();
+        else if (sPokeblockFeed->timer == sPokeblockFeed->monAnimLength)
+            gTasks[taskId].data[0] = STATE_START_THROW - 1;
+
+        sPokeblockFeed->timer++;
+        gTasks[taskId].data[0]++;
+    }
 }
 
-__attribute__((naked)) void LaunchPokeblockFeedTask(void)
+#undef STATE_START_THROW
+#undef STATE_SPAWN_PBLOCK
+#undef STATE_START_JUMP
+#undef STATE_PRINT_MSG
+void LaunchPokeblockFeedTask(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0817A044\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0817A048\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A044: .4byte Task_HandlePokeblockFeed + 1\n\t"
-        "_0817A048: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateTask(Task_HandlePokeblockFeed, 0);
+
+    gTasks[taskId].data[0] = 0;
+    gTasks[taskId].data[1] = TRUE;
 }
 
-__attribute__((naked)) void Task_WaitForAtePokeblockText(void)
+void Task_WaitForAtePokeblockText(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	bl RunTextPrintersRetIsActive\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0817A06E\n\t"
-        "	ldr r0, _0817A074\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _0817A078\n\t"
-        "	str r0, [r1]\n\t"
-        "_0817A06E:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A074: .4byte gTasks\n\t"
-        "_0817A078: .4byte Task_PaletteFadeToReturn + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (RunTextPrintersRetIsActive(0) != TRUE)
+        gTasks[taskId].func = Task_PaletteFadeToReturn;
 }
 
-__attribute__((naked)) void Task_HandleMonAtePokeblock(void)
+void Task_HandleMonAtePokeblock(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r0, _0817A0D8\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	muls r5, r0, r5\n\t"
-        "	ldr r0, _0817A0DC\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	ldr r1, _0817A0E0\n\t"
-        "	ldr r0, _0817A0E4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r2, _0817A0E8\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r4, [r1]\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetNature\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl sub_08137054\n\t"
-        "	ldr r6, _0817A0EC\n\t"
-        "	strh r0, [r6]\n\t"
-        "	ldr r1, _0817A0F0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetMonNickname\n\t"
-        "	ldr r1, _0817A0F4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081370B4\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817A100\n\t"
-        "	ldr r0, _0817A0F8\n\t"
-        "	ldr r1, _0817A0FC\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _0817A120\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A0D8: .4byte gUnknown_203B968\n\t"
-        "_0817A0DC: .4byte gPlayerParty\n\t"
-        "_0817A0E0: .4byte gSaveBlock1Ptr\n\t"
-        "_0817A0E4: .4byte gSpecialVar_ItemId\n\t"
-        "_0817A0E8: .4byte 0x00000848\n\t"
-        "_0817A0EC: .4byte gUnknown_203B96A\n\t"
-        "_0817A0F0: .4byte gStringVar1\n\t"
-        "_0817A0F4: .4byte gStringVar2\n\t"
-        "_0817A0F8: .4byte gStringVar4\n\t"
-        "_0817A0FC: .4byte gUnknown_85C97BD + 0xC8\n\t"
-        "_0817A100:\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _0817A118\n\t"
-        "	ldr r0, _0817A110\n\t"
-        "	ldr r1, _0817A114\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _0817A120\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A110: .4byte gStringVar4\n\t"
-        "_0817A114: .4byte gUnknown_85C97BD + 0xD7\n\t"
-        "_0817A118:\n\t"
-        "	ldr r0, _0817A164\n\t"
-        "	ldr r1, _0817A168\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "_0817A120:\n\t"
-        "	ldr r2, _0817A16C\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	bl GetPlayerTextSpeedDelay\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldr r2, _0817A164\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #3\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AddTextPrinterParameterized2\n\t"
-        "	ldr r1, _0817A170\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0817A174\n\t"
-        "	str r1, [r0]\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A164: .4byte gStringVar4\n\t"
-        "_0817A168: .4byte gUnknown_85C97BD + 0xEC\n\t"
-        "_0817A16C: .4byte gTextFlags\n\t"
-        "_0817A170: .4byte gTasks\n\t"
-        "_0817A174: .4byte Task_WaitForAtePokeblockText + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *mon = &gPlayerParty[gUnknown_203B968];
+    struct Pokeblock *pokeblock = &gSaveBlock1Ptr->pokeblocks[gSpecialVar_ItemId];
+
+    gUnknown_203B96A = sub_08137054(GetNature(mon), pokeblock);
+    GetMonNickname(mon, gStringVar1);
+    sub_081370B4(pokeblock, gStringVar2);
+
+    if (gUnknown_203B96A == 0)
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0xC8);
+    else if (gUnknown_203B96A > 0)
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0xD7);
+    else
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0xEC);
+
+    gTextFlags.canABSpeedUpPrint = TRUE;
+    AddTextPrinterParameterized2(0, FONT_NORMAL, gStringVar4, GetPlayerTextSpeedDelay(), NULL, 2, 1, 3);
+    gTasks[taskId].func = Task_WaitForAtePokeblockText;
+}
+void Task_ReturnAfterPaletteFade(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        ResetSpriteData();
+        FreeAllSpritePalettes();
+        m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 0x100);
+        SetMainCallback2(gMain.savedCallback);
+        DestroyTask(taskId);
+        FreeAllWindowBuffers();
+        Free(gUnknown_203B9E4);
+        FreeMonSpritesGfx();
+    }
 }
 
-__attribute__((naked)) void Task_ReturnAfterPaletteFade(void)
+void Task_PaletteFadeToReturn(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _0817A1C4\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817A1BC\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	ldr r0, _0817A1C8\n\t"
-        "	ldr r1, _0817A1CC\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	bl m4aMPlayVolumeControl\n\t"
-        "	ldr r0, _0817A1D0\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	bl FreeAllWindowBuffers\n\t"
-        "	ldr r0, _0817A1D4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl Free\n\t"
-        "	bl FreeMonSpritesGfx\n\t"
-        "_0817A1BC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A1C4: .4byte gPaletteFade\n\t"
-        "_0817A1C8: .4byte gMPlayInfo_BGM\n\t"
-        "_0817A1CC: .4byte 0x0000FFFF\n\t"
-        "_0817A1D0: .4byte gMain\n\t"
-        "_0817A1D4: .4byte gUnknown_203B9E4\n\t"
-        ".syntax divided\n\t"
-    );
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+    gTasks[taskId].func = Task_ReturnAfterPaletteFade;
 }
 
-__attribute__((naked)) void Task_PaletteFadeToReturn(void)
+u8 CreateMonSprite(struct Pokemon *mon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, _0817A208\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0817A20C\n\t"
-        "	str r1, [r0]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A208: .4byte gTasks\n\t"
-        "_0817A20C: .4byte Task_ReturnAfterPaletteFade + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 species = GetMonData3(mon, 0x41);
+    u8 spriteId = CreateSprite(&gMultiuseSpriteTemplate, 48, 80, 2);
+
+    sPokeblockFeed->species = species;
+    sPokeblockFeed->monSpriteId_ = spriteId;
+    sPokeblockFeed->nature = GetNature(mon);
+    gSprites[spriteId].sSpecies = species;
+    gSprites[spriteId].callback = SpriteCallbackDummy;
+    sPokeblockFeed->noMonFlip = TRUE;
+    if (!IsMonSpriteNotFlipped(species))
+    {
+        gSprites[spriteId].affineAnims = sSpriteAffineAnimTable_MonNoFlip;
+        gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+        CalcCenterToCornerVec(&gSprites[spriteId], gSprites[spriteId].oam.shape, gSprites[spriteId].oam.size, gSprites[spriteId].oam.affineMode);
+        sPokeblockFeed->noMonFlip = FALSE;
+    }
+
+    return spriteId;
+}
+void PrepareMonToMoveToPokeblock(u8 spriteId)
+{
+    gSprites[spriteId].x = 48;
+    gSprites[spriteId].y = 80;
+    gSprites[spriteId].sSpeed = -8;
+    gSprites[spriteId].sAccel = 1;
+    gSprites[spriteId].callback = sub_0817A320;
+}
+void sub_0817A320(struct Sprite *sprite)
+{
+    sprite->x += 4;
+    sprite->y += sprite->sSpeed;
+    sprite->sSpeed += sprite->sAccel;
+    if (sprite->sSpeed == 0)
+        PlayCry1(sprite->sSpecies, 0);
+
+    if (sprite->sSpeed == 9)
+        sprite->callback = SpriteCallbackDummy;
+}
+u8 CreatePokeblockCaseSpriteForFeeding(void)
+{
+    u8 spriteId = sub_08136484(188, 100, 2);
+
+    gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    gSprites[spriteId].affineAnims = sAffineAnims_PokeblockCase_Still;
+    gSprites[spriteId].callback = SpriteCallbackDummy;
+    InitSpriteAffineAnim(&gSprites[spriteId]);
+    return spriteId;
+}
+void DoPokeblockCaseThrowEffect(u8 spriteId, bool8 horizontalThrow)
+{
+    FreeOamMatrix(gSprites[spriteId].oam.matrixNum);
+    gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+
+    if (!horizontalThrow)
+        gSprites[spriteId].affineAnims = sAffineAnims_PokeblockCase_ThrowFromVertical;
+    else
+        gSprites[spriteId].affineAnims = sAffineAnims_PokeblockCase_ThrowFromHorizontal;
+
+    InitSpriteAffineAnim(&gSprites[spriteId]);
+}
+u8 CreatePokeblockSprite(void)
+{
+    u8 spriteId = CreateSprite(&sSpriteTemplate_Pokeblock, 174, 84, 1);
+
+    gSprites[spriteId].sSpeed = -12;
+    gSprites[spriteId].sAccel = 1;
+    return spriteId;
+}
+void SpriteCB_ThrownPokeblock(struct Sprite *sprite)
+{
+    sprite->x -= 4;
+    sprite->y += sprite->sSpeed;
+    sprite->sSpeed += sprite->sAccel;
+    if (sprite->sSpeed == 10)
+        DestroySprite(sprite);
 }
 
-__attribute__((naked)) void CreateMonSprite(void)
+#undef sSpeed
+#undef sAccel
+#undef sSpecies
+void sub_0817A484(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r0, _0817A2C8\n\t"
-        "	movs r1, #0x30\n\t"
-        "	movs r2, #0x50\n\t"
-        "	movs r3, #2\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, _0817A2CC\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _0817A2D0\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	strh r4, [r1]\n\t"
-        "	ldr r1, _0817A2D4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov r2, r8\n\t"
-        "	strb r2, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetNature\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r2, _0817A2D8\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r7, _0817A2DC\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r5, r0, #2\n\t"
-        "	adds r6, r5, r7\n\t"
-        "	strh r4, [r6, #0x32]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldr r1, _0817A2E0\n\t"
-        "	str r1, [r0]\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _0817A2E4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl IsMonSpriteNotFlipped\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817A2BA\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r0, #0x10\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldr r1, _0817A2E8\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldrb r3, [r6, #1]\n\t"
-        "	movs r0, #3\n\t"
-        "	orrs r3, r0\n\t"
-        "	strb r3, [r6, #1]\n\t"
-        "	lsrs r1, r3, #6\n\t"
-        "	ldrb r2, [r6, #3]\n\t"
-        "	lsrs r2, r2, #6\n\t"
-        "	lsls r3, r3, #0x1e\n\t"
-        "	lsrs r3, r3, #0x1e\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl CalcCenterToCornerVec\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _0817A2E4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "_0817A2BA:\n\t"
-        "	mov r0, r8\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A2C8: .4byte gMultiuseSpriteTemplate\n\t"
-        "_0817A2CC: .4byte gUnknown_203B9E4\n\t"
-        "_0817A2D0: .4byte 0x00001054\n\t"
-        "_0817A2D4: .4byte 0x0000105B\n\t"
-        "_0817A2D8: .4byte 0x0000105A\n\t"
-        "_0817A2DC: .4byte gSprites\n\t"
-        "_0817A2E0: .4byte SpriteCallbackDummy + 1\n\t"
-        "_0817A2E4: .4byte 0x00001053\n\t"
-        "_0817A2E8: .4byte sSpriteAffineAnimTable_MonNoFlip\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    u8 animId;
+    u8 i;
+    struct PokeblockFeed *pokeblockFeed = sPokeblockFeed;
 
-__attribute__((naked)) void PrepareMonToMoveToPokeblock(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r3, _0817A314\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r2, r1, r3\n\t"
-        "	movs r0, #0x30\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	movs r0, #0x50\n\t"
-        "	strh r0, [r2, #0x22]\n\t"
-        "	ldr r0, _0817A318\n\t"
-        "	strh r0, [r2, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	adds r3, #0x1c\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r0, _0817A31C\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A314: .4byte gSprites\n\t"
-        "_0817A318: .4byte 0x0000FFF8\n\t"
-        "_0817A31C: .4byte sub_0817A320 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    pokeblockFeed->monAnimLength = 1;
+    animId = sNatureToMonPokeblockAnim[pokeblockFeed->nature][0];
+    for (i = 0; i < 8; i++, animId++)
+    {
+        pokeblockFeed->monAnimLength += sMonPokeblockAnims[animId][ANIMDATA_TIME];
+        if (sMonPokeblockAnims[animId][ANIMDATA_IS_LAST] == TRUE)
+            break;
+    }
 }
-
-__attribute__((naked)) void sub_0817A320(void)
+void sub_0817A4EC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	ldrh r2, [r4, #0x22]\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	strh r1, [r4, #0x22]\n\t"
-        "	ldrh r1, [r4, #0x30]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817A346\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl PlayCry1\n\t"
-        "_0817A346:\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #9\n\t"
-        "	bne _0817A352\n\t"
-        "	ldr r0, _0817A358\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_0817A352:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A358: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct PokeblockFeed *pokeblockFeed = sPokeblockFeed;
+
+    switch (pokeblockFeed->animRunState)
+    {
+    case 0:
+        pokeblockFeed->animId = sNatureToMonPokeblockAnim[pokeblockFeed->nature][0];
+        pokeblockFeed->monSpritePtr = &gSprites[pokeblockFeed->monSpriteId_];
+        pokeblockFeed->savedMonSprite = *pokeblockFeed->monSpritePtr;
+        pokeblockFeed->animRunState = 10;
+        break;
+    case 1 ... 9:
+        break;
+    case 10:
+        sub_0817A7D4();
+        if (sNatureToMonPokeblockAnim[pokeblockFeed->nature][1] != AFFINE_NONE)
+        {
+            pokeblockFeed->monSpritePtr->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+            pokeblockFeed->monSpritePtr->oam.matrixNum = 0;
+            pokeblockFeed->monSpritePtr->affineAnims = sAffineAnims_Mon;
+            InitSpriteAffineAnim(pokeblockFeed->monSpritePtr);
+        }
+        pokeblockFeed->animRunState = 50;
+    case 50:
+        if (sNatureToMonPokeblockAnim[pokeblockFeed->nature][1] != AFFINE_NONE)
+        {
+            if (!pokeblockFeed->noMonFlip)
+                StartSpriteAffineAnim(pokeblockFeed->monSpritePtr, sNatureToMonPokeblockAnim[pokeblockFeed->nature][1] + NUM_MON_AFFINES);
+            else
+                StartSpriteAffineAnim(pokeblockFeed->monSpritePtr, sNatureToMonPokeblockAnim[pokeblockFeed->nature][1]);
+        }
+        pokeblockFeed->animRunState = 60;
+        break;
+    case 60:
+        if (sub_0817A89C() == TRUE)
+        {
+            if (!pokeblockFeed->animData[ANIMDATA_IS_LAST])
+            {
+                pokeblockFeed->animId++;
+                sub_0817A7D4();
+                pokeblockFeed->animRunState = 60;
+            }
+            else
+            {
+                FreeOamMatrix(pokeblockFeed->monSpritePtr->oam.matrixNum);
+                pokeblockFeed->animRunState = 70;
+            }
+        }
+        break;
+    case 70:
+        FreeMonSpriteOamMatrix();
+        pokeblockFeed->animId = 0;
+        pokeblockFeed->animRunState = 0;
+        break;
+    case 71 ... 90:
+        break;
+    }
 }
-
-__attribute__((naked)) void CreatePokeblockCaseSpriteForFeeding(void)
+bool8 sub_0817A7D4(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r0, #0xbc\n\t"
-        "	movs r1, #0x64\n\t"
-        "	movs r2, #2\n\t"
-        "	bl sub_08136484\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r5, _0817A3A4\n\t"
-        "	lsls r3, r4, #4\n\t"
-        "	adds r3, r3, r4\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r0, r3, r5\n\t"
-        "	ldrb r2, [r0, #1]\n\t"
-        "	movs r1, #4\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	movs r2, #1\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #1]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x10\n\t"
-        "	adds r1, r3, r1\n\t"
-        "	ldr r2, _0817A3A8\n\t"
-        "	str r2, [r1]\n\t"
-        "	adds r5, #0x1c\n\t"
-        "	adds r3, r3, r5\n\t"
-        "	ldr r1, _0817A3AC\n\t"
-        "	str r1, [r3]\n\t"
-        "	bl InitSpriteAffineAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A3A4: .4byte gSprites\n\t"
-        "_0817A3A8: .4byte sAffineAnims_PokeblockCase_Still\n\t"
-        "_0817A3AC: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct PokeblockFeed *pokeblockFeed = sPokeblockFeed;
+    u8 i;
+
+    for (i = 0; i < NUM_ANIMDATA; i++)
+        pokeblockFeed->animData[i] = sMonPokeblockAnims[pokeblockFeed->animId][i];
+    if (pokeblockFeed->animData[ANIMDATA_TIME] == 0)
+    {
+        return TRUE;
+    }
+    else
+    {
+        pokeblockFeed->monInitX = Sin(pokeblockFeed->animData[ANIMDATA_ROT_IDX], pokeblockFeed->animData[ANIMDATA_SIN_AMPLITUDE]);
+        pokeblockFeed->monInitY = Cos(pokeblockFeed->animData[ANIMDATA_ROT_IDX], pokeblockFeed->animData[ANIMDATA_COS_AMPLITUDE]);
+        pokeblockFeed->maxAnimStageTime = pokeblockFeed->animData[ANIMDATA_TIME];
+        pokeblockFeed->monX = pokeblockFeed->monSpritePtr->x2;
+        pokeblockFeed->monY = pokeblockFeed->monSpritePtr->y2;
+        sub_0817AA20();
+        pokeblockFeed->animData[ANIMDATA_TIME] = pokeblockFeed->maxAnimStageTime;
+        sub_0817A90C();
+        pokeblockFeed->animData[ANIMDATA_TIME] = pokeblockFeed->maxAnimStageTime;
+        return FALSE;
+    }
 }
-
-__attribute__((naked)) void DoPokeblockCaseThrowEffect(void)
+bool8 sub_0817A89C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r0, _0817A3F0\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r0, r7, #4\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r6, r0, #2\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r4, r6, r0\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	bl FreeOamMatrix\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #3\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0817A3F8\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r0, #0x10\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	ldr r1, _0817A3F4\n\t"
-        "	b _0817A400\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A3F0: .4byte gSprites\n\t"
-        "_0817A3F4: .4byte sAffineAnims_PokeblockCase_ThrowFromVertical\n\t"
-        "_0817A3F8:\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r0, #0x10\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	ldr r1, _0817A41C\n\t"
-        "_0817A400:\n\t"
-        "	str r1, [r0]\n\t"
-        "	lsls r0, r7, #4\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0817A420\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl InitSpriteAffineAnim\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A41C: .4byte sAffineAnims_PokeblockCase_ThrowFromHorizontal\n\t"
-        "_0817A420: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 time = sPokeblockFeed->maxAnimStageTime - sPokeblockFeed->animData[ANIMDATA_TIME];
+
+    sPokeblockFeed->monSpritePtr->x2 = sPokeblockFeed->monAnimX[time];
+    sPokeblockFeed->monSpritePtr->y2 = sPokeblockFeed->monAnimY[time];
+    if (--sPokeblockFeed->animData[ANIMDATA_TIME] == 0)
+        return TRUE;
+    else
+        return FALSE;
 }
-
-__attribute__((naked)) void CreatePokeblockSprite(void)
+bool8 FreeMonSpriteOamMatrix(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0817A44C\n\t"
-        "	movs r1, #0xae\n\t"
-        "	movs r2, #0x54\n\t"
-        "	movs r3, #1\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0817A450\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, _0817A454\n\t"
-        "	strh r2, [r1, #0x2e]\n\t"
-        "	movs r2, #1\n\t"
-        "	strh r2, [r1, #0x30]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A44C: .4byte sSpriteTemplate_Pokeblock\n\t"
-        "_0817A450: .4byte gSprites\n\t"
-        "_0817A454: .4byte 0x0000FFF4\n\t"
-        ".syntax divided\n\t"
-    );
+    FreeSpriteOamMatrix(sPokeblockFeed->monSpritePtr);
+    return FALSE;
 }
-
-__attribute__((naked)) void SpriteCB_ThrownPokeblock(struct Sprite *sprite)
+void sub_0817A90C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r0, [r2, #0x20]\n\t"
-        "	subs r0, #4\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	ldrh r0, [r2, #0x2e]\n\t"
-        "	ldrh r3, [r2, #0x22]\n\t"
-        "	adds r1, r0, r3\n\t"
-        "	strh r1, [r2, #0x22]\n\t"
-        "	ldrh r1, [r2, #0x30]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bne _0817A47E\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_0817A47E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct PokeblockFeed *pokeblockFeed = sPokeblockFeed;
+    u16 i;
+    u16 approachTime = pokeblockFeed->animData[ANIMDATA_APPR_TIME];
+    u16 time = pokeblockFeed->maxAnimStageTime - approachTime;
+    s16 x = pokeblockFeed->monX + pokeblockFeed->animData[ANIMDATA_TARGET_X];
+    s16 y = pokeblockFeed->monY + pokeblockFeed->animData[ANIMDATA_TARGET_Y];
+
+    for (i = 0; i < time - 1; i++)
+    {
+        s16 xOffset = pokeblockFeed->monAnimX[approachTime + i] - x;
+        s16 yOffset = pokeblockFeed->monAnimY[approachTime + i] - y;
+
+        pokeblockFeed->monAnimX[approachTime + i] -= xOffset * (i + 1) / time;
+        pokeblockFeed->monAnimY[approachTime + i] -= yOffset * (i + 1) / time;
+    }
+
+    pokeblockFeed->monAnimX[approachTime + time - 1] = x;
+    pokeblockFeed->monAnimY[approachTime + time - 1] = y;
 }
-
-__attribute__((naked)) void sub_0817A484(void)
+void sub_0817AA20(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	ldr r0, _0817A4D8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _0817A4DC\n\t"
-        "	adds r3, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r3]\n\t"
-        "	ldr r2, _0817A4E0\n\t"
-        "	ldr r7, _0817A4E4\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r5, _0817A4E8\n\t"
-        "	adds r6, r5, #0\n\t"
-        "	subs r6, #0xa\n\t"
-        "_0817A4A8:\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r1, r6\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldrh r7, [r3]\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	strh r0, [r3]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	movs r7, #0\n\t"
-        "	ldrsh r0, [r1, r7]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0817A4D2\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r4, #7\n\t"
-        "	bls _0817A4A8\n\t"
-        "_0817A4D2:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A4D8: .4byte gUnknown_203B9E4\n\t"
-        "_0817A4DC: .4byte 0x00001056\n\t"
-        "_0817A4E0: .4byte sNatureToMonPokeblockAnim\n\t"
-        "_0817A4E4: .4byte 0x0000105A\n\t"
-        "_0817A4E8: .4byte sMonPokeblockAnims + 0x12\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    struct PokeblockFeed *pokeblockFeed = sPokeblockFeed;
+    bool8 negative = FALSE;
+    s16 x = pokeblockFeed->monX - pokeblockFeed->monInitX;
+    s16 y = pokeblockFeed->monY - pokeblockFeed->monInitY;
 
-__attribute__((naked)) void sub_0817A4EC(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _0817A508\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	ldr r1, _0817A50C\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x5a\n\t"
-        "	bls _0817A4FE\n\t"
-        "	b _0817A7C6\n\t"
-        "_0817A4FE:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0817A510\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A508: .4byte gUnknown_203B9E4\n\t"
-        "_0817A50C: .4byte 0x00001050\n\t"
-        "_0817A510: .4byte _0817A514\n\t"
-        "_0817A514:\n\t"
-        "	.4byte _0817A680\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A6D0\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A710\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A75A\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7B4\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "	.4byte _0817A7C6\n\t"
-        "_0817A680:\n\t"
-        "	ldr r1, _0817A6B8\n\t"
-        "	ldr r2, _0817A6BC\n\t"
-        "	adds r0, r4, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldr r3, _0817A6C0\n\t"
-        "	adds r0, r4, r3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r1, _0817A6C4\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _0817A6C8\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	stm r0!, {r1}\n\t"
-        "	movs r2, #0x44\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r2, _0817A6CC\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0817A7C6\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A6B8: .4byte sNatureToMonPokeblockAnim\n\t"
-        "_0817A6BC: .4byte 0x0000105A\n\t"
-        "_0817A6C0: .4byte 0x00001051\n\t"
-        "_0817A6C4: .4byte 0x0000105B\n\t"
-        "_0817A6C8: .4byte gSprites\n\t"
-        "_0817A6CC: .4byte 0x00001050\n\t"
-        "_0817A6D0:\n\t"
-        "	bl sub_0817A7D4\n\t"
-        "	ldr r1, _0817A73C\n\t"
-        "	ldr r3, _0817A740\n\t"
-        "	adds r0, r4, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817A708\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldrb r0, [r2, #1]\n\t"
-        "	movs r1, #3\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldrb r1, [r2, #3]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2, #3]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _0817A744\n\t"
-        "	str r1, [r0, #0x10]\n\t"
-        "	bl InitSpriteAffineAnim\n\t"
-        "_0817A708:\n\t"
-        "	ldr r0, _0817A748\n\t"
-        "	adds r1, r4, r0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0817A710:\n\t"
-        "	ldr r1, _0817A73C\n\t"
-        "	ldr r2, _0817A740\n\t"
-        "	adds r0, r4, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r1, #1\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0817A780\n\t"
-        "	ldr r3, _0817A74C\n\t"
-        "	adds r0, r4, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817A750\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r1, #0xa\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	b _0817A780\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A73C: .4byte sNatureToMonPokeblockAnim\n\t"
-        "_0817A740: .4byte 0x0000105A\n\t"
-        "_0817A744: .4byte sAffineAnims_Mon\n\t"
-        "_0817A748: .4byte 0x00001050\n\t"
-        "_0817A74C: .4byte 0x00001053\n\t"
-        "_0817A750:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	b _0817A780\n\t"
-        "_0817A75A:\n\t"
-        "	bl sub_0817A89C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0817A7C6\n\t"
-        "	ldr r1, _0817A78C\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817A798\n\t"
-        "	ldr r3, _0817A790\n\t"
-        "	adds r1, r4, r3\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl sub_0817A7D4\n\t"
-        "_0817A780:\n\t"
-        "	ldr r0, _0817A794\n\t"
-        "	adds r1, r4, r0\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0817A7C6\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A78C: .4byte 0x00001072\n\t"
-        "_0817A790: .4byte 0x00001051\n\t"
-        "_0817A794: .4byte 0x00001050\n\t"
-        "_0817A798:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #3]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	bl FreeOamMatrix\n\t"
-        "	ldr r2, _0817A7B0\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	movs r0, #0x46\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0817A7C6\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A7B0: .4byte 0x00001050\n\t"
-        "_0817A7B4:\n\t"
-        "	bl FreeMonSpriteOamMatrix\n\t"
-        "	ldr r3, _0817A7CC\n\t"
-        "	adds r0, r4, r3\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r2, _0817A7D0\n\t"
-        "	adds r0, r4, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "_0817A7C6:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A7CC: .4byte 0x00001051\n\t"
-        "_0817A7D0: .4byte 0x00001050\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    while (TRUE)
+    {
+        u16 amplitude;
+        u16 time;
+        u16 acceleration;
 
-__attribute__((naked)) void sub_0817A7D4(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	ldr r0, _0817A878\n\t"
-        "	ldr r5, [r0]\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r0, #0x83\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	adds r7, r5, r0\n\t"
-        "	ldr r1, _0817A87C\n\t"
-        "	mov ip, r1\n\t"
-        "	ldr r2, _0817A880\n\t"
-        "	adds r6, r5, r2\n\t"
-        "_0817A7EA:\n\t"
-        "	lsls r2, r4, #1\n\t"
-        "	adds r3, r7, r2\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	add r2, ip\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	strh r0, [r3]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #9\n\t"
-        "	bls _0817A7EA\n\t"
-        "	ldr r0, _0817A884\n\t"
-        "	adds r6, r5, r0\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817A894\n\t"
-        "	movs r2, #0x83\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	adds r4, r5, r2\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	adds r2, #4\n\t"
-        "	adds r1, r5, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r1, r2]\n\t"
-        "	bl Sin\n\t"
-        "	ldr r2, _0817A888\n\t"
-        "	adds r1, r5, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	subs r2, #0xe\n\t"
-        "	adds r1, r5, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r1, r2]\n\t"
-        "	bl Cos\n\t"
-        "	ldr r2, _0817A88C\n\t"
-        "	adds r1, r5, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	ldr r1, _0817A890\n\t"
-        "	adds r4, r5, r1\n\t"
-        "	strh r0, [r4]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrh r1, [r0, #0x24]\n\t"
-        "	adds r2, #4\n\t"
-        "	adds r0, r5, r2\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	adds r2, #2\n\t"
-        "	adds r0, r5, r2\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bl sub_0817AA20\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	strh r0, [r6]\n\t"
-        "	bl sub_0817A90C\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	strh r0, [r6]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0817A896\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A878: .4byte gUnknown_203B9E4\n\t"
-        "_0817A87C: .4byte sMonPokeblockAnims\n\t"
-        "_0817A880: .4byte 0x00001051\n\t"
-        "_0817A884: .4byte 0x00001068\n\t"
-        "_0817A888: .4byte 0x00001074\n\t"
-        "_0817A88C: .4byte 0x00001076\n\t"
-        "_0817A890: .4byte 0x00001078\n\t"
-        "_0817A894:\n\t"
-        "	movs r0, #1\n\t"
-        "_0817A896:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
+        acceleration = abs(pokeblockFeed->animData[ANIMDATA_ROT_ACCEL]);
+        amplitude = acceleration + pokeblockFeed->animData[ANIMDATA_COS_AMPLITUDE];
+        pokeblockFeed->animData[ANIMDATA_COS_AMPLITUDE] = amplitude;
+        if (pokeblockFeed->animData[ANIMDATA_SIN_AMPLITUDE] < 0)
+            negative = TRUE;
 
-__attribute__((naked)) void sub_0817A89C(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _0817A8E0\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r1, _0817A8E4\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldr r5, _0817A8E8\n\t"
-        "	adds r4, r2, r5\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	ldr r3, [r2]\n\t"
-        "	lsrs r1, r1, #0xf\n\t"
-        "	movs r5, #0x85\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r3, #0x24]\n\t"
-        "	ldr r3, [r2]\n\t"
-        "	movs r0, #0xc5\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	strh r0, [r3, #0x26]\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817A8EC\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0817A8EE\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A8E0: .4byte gUnknown_203B9E4\n\t"
-        "_0817A8E4: .4byte 0x00001078\n\t"
-        "_0817A8E8: .4byte 0x00001068\n\t"
-        "_0817A8EC:\n\t"
-        "	movs r0, #1\n\t"
-        "_0817A8EE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
+        time = pokeblockFeed->maxAnimStageTime - pokeblockFeed->animData[ANIMDATA_TIME];
+        if (pokeblockFeed->animData[ANIMDATA_TIME] == 0)
+            break;
+        if (!negative)
+        {
+            pokeblockFeed->monAnimX[time] = Sin(pokeblockFeed->animData[ANIMDATA_ROT_IDX],
+                                                pokeblockFeed->animData[ANIMDATA_SIN_AMPLITUDE] + amplitude / 0x100) + x;
+            pokeblockFeed->monAnimY[time] = Cos(pokeblockFeed->animData[ANIMDATA_ROT_IDX],
+                                                pokeblockFeed->animData[ANIMDATA_COS_AMPLITUDE] + amplitude / 0x100) + y;
+        }
+        else
+        {
+            pokeblockFeed->monAnimX[time] = Sin(pokeblockFeed->animData[ANIMDATA_ROT_IDX],
+                                                pokeblockFeed->animData[ANIMDATA_SIN_AMPLITUDE] - amplitude / 0x100) + x;
+            pokeblockFeed->monAnimY[time] = Cos(pokeblockFeed->animData[ANIMDATA_ROT_IDX],
+                                                pokeblockFeed->animData[ANIMDATA_COS_AMPLITUDE] - amplitude / 0x100) + y;
+        }
 
-__attribute__((naked)) void FreeMonSpriteOamMatrix(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0817A908\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl FreeSpriteOamMatrix\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0817A908: .4byte gUnknown_203B9E4\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_0817A90C(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	ldr r0, _0817AA0C\n\t"
-        "	ldr r7, [r0]\n\t"
-        "	ldr r1, _0817AA10\n\t"
-        "	adds r0, r7, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r2, _0817AA14\n\t"
-        "	adds r0, r7, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	mov r3, sb\n\t"
-        "	subs r0, r0, r3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r4, _0817AA18\n\t"
-        "	adds r1, r7, r4\n\t"
-        "	subs r2, #0xc\n\t"
-        "	adds r0, r7, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r3, _0817AA1C\n\t"
-        "	adds r1, r7, r3\n\t"
-        "	subs r4, #0xc\n\t"
-        "	adds r0, r7, r4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r5, #0\n\t"
-        "	mov r0, r8\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r5, r0\n\t"
-        "	bge _0817A9D8\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	mov sl, r0\n\t"
-        "_0817A976:\n\t"
-        "	mov r3, sb\n\t"
-        "	adds r0, r3, r5\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r4, #0x85\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r2, r7, r4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrh r6, [r2]\n\t"
-        "	ldr r3, [sp, #8]\n\t"
-        "	subs r1, r6, r3\n\t"
-        "	movs r4, #0xc5\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r3, r7, r4\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	ldrh r4, [r3]\n\t"
-        "	mov r0, sl\n\t"
-        "	subs r4, r4, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r5, #1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	mov r1, r8\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	str r3, [sp, #0x10]\n\t"
-        "	bl __divsi3\n\t"
-        "	subs r6, r6, r0\n\t"
-        "	ldr r2, [sp, #0xc]\n\t"
-        "	strh r6, [r2]\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	mov r1, r8\n\t"
-        "	bl __divsi3\n\t"
-        "	ldr r3, [sp, #0x10]\n\t"
-        "	ldrh r1, [r3]\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r3]\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	mov r0, r8\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r5, r0\n\t"
-        "	blt _0817A976\n\t"
-        "_0817A9D8:\n\t"
-        "	mov r0, sb\n\t"
-        "	add r0, r8\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r2, #0x85\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r1, r7, r2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	mov r3, sp\n\t"
-        "	ldrh r3, [r3]\n\t"
-        "	strh r3, [r1]\n\t"
-        "	movs r4, #0xc5\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r1, r7, r4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrh r0, [r0, #4]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817AA0C: .4byte gUnknown_203B9E4\n\t"
-        "_0817AA10: .4byte 0x00001070\n\t"
-        "_0817AA14: .4byte 0x00001078\n\t"
-        "_0817AA18: .4byte 0x0000107A\n\t"
-        "_0817AA1C: .4byte 0x0000107C\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_0817AA20(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	ldr r0, _0817AAE4\n\t"
-        "	ldr r6, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r1, _0817AAE8\n\t"
-        "	adds r0, r6, r1\n\t"
-        "	ldr r2, _0817AAEC\n\t"
-        "	adds r1, r6, r2\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	subs r2, r2, r0\n\t"
-        "	ldr r3, _0817AAF0\n\t"
-        "	adds r0, r6, r3\n\t"
-        "	ldr r1, _0817AAF4\n\t"
-        "	adds r3, r6, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldrh r0, [r3]\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	ldr r3, _0817AAF8\n\t"
-        "	adds r3, r3, r6\n\t"
-        "	mov sb, r3\n\t"
-        "	movs r0, #0x83\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	mov sl, r1\n\t"
-        "_0817AA6A:\n\t"
-        "	ldr r1, _0817AAFC\n\t"
-        "	adds r0, r6, r1\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0817AA78\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_0817AA78:\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldr r3, _0817AB00\n\t"
-        "	adds r7, r6, r3\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldrh r1, [r7]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r4, r0, #0x10\n\t"
-        "	strh r0, [r7]\n\t"
-        "	ldr r2, _0817AB04\n\t"
-        "	adds r0, r6, r2\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r0, [r0, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0817AA9A\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "_0817AA9A:\n\t"
-        "	ldr r1, _0817AB08\n\t"
-        "	adds r0, r6, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	mov r3, sb\n\t"
-        "	ldrh r1, [r3]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0817AB70\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817AB0C\n\t"
-        "	mov r1, r8\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r1, r2, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	lsls r5, r5, #1\n\t"
-        "	movs r2, #0x85\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r1, r6, r2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldr r3, [sp, #4]\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	mov r1, r8\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	ldrh r1, [r7]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	b _0817AB38\n\t"
-        "	.align 2, 0\n\t"
-        "_0817AAE4: .4byte gUnknown_203B9E4\n\t"
-        "_0817AAE8: .4byte 0x0000107A\n\t"
-        "_0817AAEC: .4byte 0x00001074\n\t"
-        "_0817AAF0: .4byte 0x0000107C\n\t"
-        "_0817AAF4: .4byte 0x00001076\n\t"
-        "_0817AAF8: .4byte 0x00001068\n\t"
-        "_0817AAFC: .4byte 0x0000106A\n\t"
-        "_0817AB00: .4byte 0x00001066\n\t"
-        "_0817AB04: .4byte 0x00001064\n\t"
-        "_0817AB08: .4byte 0x00001078\n\t"
-        "_0817AB0C:\n\t"
-        "	mov r1, r8\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	subs r1, r2, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	lsls r5, r5, #1\n\t"
-        "	movs r2, #0x85\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r1, r6, r2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldr r3, [sp, #4]\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	mov r1, r8\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	ldrh r1, [r7]\n\t"
-        "	subs r1, r1, r4\n\t"
-        "_0817AB38:\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl Cos\n\t"
-        "	movs r3, #0xc5\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	adds r1, r6, r3\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	add r0, sl\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _0817AB6C\n\t"
-        "	adds r0, r6, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	mov r2, r8\n\t"
-        "	ldrh r2, [r2]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	mov r3, r8\n\t"
-        "	strh r0, [r3]\n\t"
-        "	mov r1, sb\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _0817AA6A\n\t"
-        "	.align 2, 0\n\t"
-        "_0817AB6C: .4byte 0x00001062\n\t"
-        "_0817AB70:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+        pokeblockFeed->animData[ANIMDATA_ROT_IDX] = (pokeblockFeed->animData[ANIMDATA_ROT_IDX] + pokeblockFeed->animData[ANIMDATA_ROT_SPEED]) & 0xFF;
+        pokeblockFeed->animData[ANIMDATA_TIME]--;
+    }
 }
