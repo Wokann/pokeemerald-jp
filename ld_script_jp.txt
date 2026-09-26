@@ -10023,7 +10023,6 @@ SECTIONS {
         src/diploma.o(.rodata.diploma);
         src/strings.o(.rodata.strings_expanded_placeholder_text);
         src/strings.o(.rodata.strings_pokemon_names_text);
-        src/data/text/region_texts75.o(.rodata);
         src/strings.o(.rodata.strings_main_menu);
         src/data/text/region_texts76.o(.rodata);
         data/data_b2d.o(.rodata.mid73);

@@ -29,6 +29,7 @@
 #include "sound.h"
 #include "sprite.h"
 #include "string_util.h"
+#include "strings.h"
 #include "task.h"
 #include "text.h"
 #include "text_window.h"
@@ -42,16 +43,6 @@ extern const u16 sMainMenuTextPal[];
 extern const struct BgTemplate sMainMenuBgTemplates[];
 extern const struct WindowTemplate sWindowTemplates_MainMenu[];
 
-extern const u8 gUnknown_85C8D93[];
-extern const u8 gUnknown_85C8C70[];
-extern const u8 gUnknown_85C8C7C[];
-extern const u8 gUnknown_85C8C87[];
-extern const u8 gUnknown_85C8C91[];
-extern const u8 gUnknown_85C8C9C[];
-extern const u8 gUnknown_85C8CA7[];
-extern const u8 gUnknown_85C8CB1[];
-extern const u8 gUnknown_85C8CC7[];
-extern const u8 gUnknown_85C8CEB[];
 extern const struct BgTemplate sBirchBgTemplate;
 extern const u32 sBirchSpeechShadowGfx[];
 extern const u8 sBirchSpeechBgMap[]; // 0x12A bytes (not 4-aligned in JP ROM)
@@ -335,7 +326,7 @@ static void Task_MainMenuCheckBattery(u8 taskId)
         }
         else
         {
-            CreateMainMenuErrorWindow(gUnknown_85C8D93);
+            CreateMainMenuErrorWindow(gText_BatteryRunDry);
             gTasks[taskId].func = Task_WaitForSaveFileErrorWindow;
         }
     }
@@ -398,8 +389,8 @@ static void Task_DisplayMainMenu(u8 taskId)
             default:
                 FillWindowPixelBuffer(0, PIXEL_FILL(0xA));
                 FillWindowPixelBuffer(1, PIXEL_FILL(0xA));
-                AddTextPrinterParameterized3(0, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8C70);
-                AddTextPrinterParameterized3(1, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8C87);
+                AddTextPrinterParameterized3(0, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuNewGame);
+                AddTextPrinterParameterized3(1, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuOption);
                 PutWindowTilemap(0);
                 PutWindowTilemap(1);
                 CopyWindowToVram(0, COPYWIN_GFX);
@@ -411,9 +402,9 @@ static void Task_DisplayMainMenu(u8 taskId)
                 FillWindowPixelBuffer(2, PIXEL_FILL(0xA));
                 FillWindowPixelBuffer(3, PIXEL_FILL(0xA));
                 FillWindowPixelBuffer(4, PIXEL_FILL(0xA));
-                AddTextPrinterParameterized3(2, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8C7C);
-                AddTextPrinterParameterized3(3, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8C70);
-                AddTextPrinterParameterized3(4, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8C87);
+                AddTextPrinterParameterized3(2, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuContinue);
+                AddTextPrinterParameterized3(3, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuNewGame);
+                AddTextPrinterParameterized3(4, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuOption);
                 MainMenu_FormatSavegameText();
                 PutWindowTilemap(2);
                 PutWindowTilemap(3);
@@ -430,15 +421,15 @@ static void Task_DisplayMainMenu(u8 taskId)
                 FillWindowPixelBuffer(3, PIXEL_FILL(0xA));
                 FillWindowPixelBuffer(4, PIXEL_FILL(0xA));
                 FillWindowPixelBuffer(5, PIXEL_FILL(0xA));
-                AddTextPrinterParameterized3(2, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8C7C);
-                AddTextPrinterParameterized3(3, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8C70);
+                AddTextPrinterParameterized3(2, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuContinue);
+                AddTextPrinterParameterized3(3, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuNewGame);
                 if (tWirelessAdapterConnected)
-                    AddTextPrinterParameterized3(4, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8C91);
+                    AddTextPrinterParameterized3(4, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuMysteryGift);
                 else if (IsMysteryEventEnabled())
-                    AddTextPrinterParameterized3(4, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8CA7);
+                    AddTextPrinterParameterized3(4, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuMysteryEvents);
                 else
-                    AddTextPrinterParameterized3(4, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8C9C);
-                AddTextPrinterParameterized3(5, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8C87);
+                    AddTextPrinterParameterized3(4, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuMysteryGift2);
+                AddTextPrinterParameterized3(5, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuOption);
                 MainMenu_FormatSavegameText();
                 PutWindowTilemap(2);
                 PutWindowTilemap(3);
@@ -459,11 +450,11 @@ static void Task_DisplayMainMenu(u8 taskId)
                 FillWindowPixelBuffer(4, PIXEL_FILL(0xA));
                 FillWindowPixelBuffer(5, PIXEL_FILL(0xA));
                 FillWindowPixelBuffer(6, PIXEL_FILL(0xA));
-                AddTextPrinterParameterized3(2, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8C7C);
-                AddTextPrinterParameterized3(3, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8C70);
-                AddTextPrinterParameterized3(4, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8C9C);
-                AddTextPrinterParameterized3(5, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8CA7);
-                AddTextPrinterParameterized3(6, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gUnknown_85C8C87);
+                AddTextPrinterParameterized3(2, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuContinue);
+                AddTextPrinterParameterized3(3, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuNewGame);
+                AddTextPrinterParameterized3(4, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuMysteryGift2);
+                AddTextPrinterParameterized3(5, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuMysteryEvents);
+                AddTextPrinterParameterized3(6, FONT_NORMAL, 0, 2, &sTextColor_Headers, -1, gText_MainMenuOption);
                 MainMenu_FormatSavegameText();
                 PutWindowTilemap(2);
                 PutWindowTilemap(3);
@@ -772,13 +763,13 @@ static void Task_DisplayMainMenuInvalidActionError(u8 taskId)
             switch (gTasks[taskId].tMenuType)
             {
                 case 0:
-                    CreateMainMenuErrorWindow(gUnknown_85C8CB1);
+                    CreateMainMenuErrorWindow(gText_WirelessNotConnected);
                     break;
                 case 1:
-                    CreateMainMenuErrorWindow(gUnknown_85C8CC7);
+                    CreateMainMenuErrorWindow(gText_MysteryGiftCantUse);
                     break;
                 case 2:
-                    CreateMainMenuErrorWindow(gUnknown_85C8CEB);
+                    CreateMainMenuErrorWindow(gText_MysteryEventsCantUse);
                     break;
             }
             gTasks[taskId].tCurrItem++;
@@ -1931,9 +1922,6 @@ static void Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox(u8 taskId)
 #define tItemCount                 data[12]
 #define tWirelessAdapterConnected  data[15]
 
-extern const u8 gUnknown_85C8D44[];
-extern const u8 gUnknown_85C8D6B[];
-extern const u8 gUnknown_85C8D80[];
 extern u8 gUnknown_3005B68[];
 
 void Task_MainMenuCheckSaveFile(u8 taskId)
@@ -1991,13 +1979,13 @@ void Task_MainMenuCheckSaveFile(u8 taskId)
             gTasks[taskId].func = Task_MainMenuCheckBattery;
             break;
         case SAVE_STATUS_CORRUPT:
-            CreateMainMenuErrorWindow(gUnknown_85C8D6B);
+            CreateMainMenuErrorWindow(gText_SaveFileErased);
             tMenuType = paletteFadeActive;
             address = gUnknown_3005B68 - 8 + taskOffset;
             ((struct Task *)address)->func = Task_WaitForBatteryDryErrorWindow;
             break;
         case SAVE_STATUS_ERROR:
-            CreateMainMenuErrorWindow(gUnknown_85C8D44);
+            CreateMainMenuErrorWindow(gText_SaveFileCorrupted);
             address = gUnknown_3005B68 - 8 + taskOffset;
             ((struct Task *)address)->func = Task_WaitForBatteryDryErrorWindow;
             tMenuType = HAS_SAVED_GAME;
@@ -2012,7 +2000,7 @@ void Task_MainMenuCheckSaveFile(u8 taskId)
             gTasks[taskId].func = Task_MainMenuCheckBattery;
             break;
         case SAVE_STATUS_NO_FLASH:
-            CreateMainMenuErrorWindow(gUnknown_85C8D80);
+            CreateMainMenuErrorWindow(gJPText_No1MSubCircuit);
             address = gUnknown_3005B68 - 8 + taskOffset;
             ((struct Task *)address)->tMenuType = paletteFadeActive;
             ((struct Task *)address)->func = Task_WaitForBatteryDryErrorWindow;
