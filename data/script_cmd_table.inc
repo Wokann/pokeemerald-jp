@@ -222,7 +222,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_CC ScrCmd_nop1 @ 0xCC
 	script_cmd_table_entry SCR_OP_CD ScrCmd_setmonobedient @ 0xCD
 	script_cmd_table_entry SCR_OP_CE ScrCmd_checkmonobedience @ 0xCE
-	script_cmd_table_entry SCR_OP_CF ScrCmd_gotoram @ 0xCF
+	script_cmd_table_entry SCR_OP_TRYWONDERCARDSCRIPT ScrCmd_trywondercardscript @ 0xCF
 	script_cmd_table_entry SCR_OP_SETWORLDMAPFLAG ScrCmd_nop1 @ 0xD0
 	script_cmd_table_entry SCR_OP_WARPSPINENTER ScrCmd_warpspinenter @ 0xD1
 	script_cmd_table_entry SCR_OP_SETMONMETLOCATION ScrCmd_setmonmetlocation @ 0xD2

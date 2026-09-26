@@ -444,7 +444,7 @@ BattleFrontier_BattleTowerBattleRoom_Text_RestoreMonsToFullHealth:
 
 @ Unused
 BattleFrontier_BattleTowerBattleRoom_Text_ReadyForOpponent:
-	.string "つぎは　{STRING 0x02}にんめの　あいてです\n"
+	.string "つぎは　{STR_VAR_1}にんめの　あいてです\n"
 	.string "じゅんびは　いいですか？$"
 BattleFrontier_BattleTowerBattleRoom_Text_ReadyFor2ndOpponent:
 	.string "つぎは　2にんめの　あいてです\n"

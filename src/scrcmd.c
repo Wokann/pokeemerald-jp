@@ -2204,7 +2204,7 @@ bool8 ScrCmd_checkmonobedience(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_gotoram(struct ScriptContext *ctx)
+bool8 ScrCmd_trywondercardscript(struct ScriptContext *ctx)
 {
     void *script = GetSavedRamScriptIfValid();
 

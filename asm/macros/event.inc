@@ -2164,10 +2164,6 @@
 	.2byte \partySlot
 	.endm
 
-	.macro gotoram
-	.byte SCR_OP_CF
-	.endm
-
 	.macro mossdeepgym1 a:req
 	.byte SCR_OP_MOVEROTATINGTILEOBJECTS
 	.2byte \a
