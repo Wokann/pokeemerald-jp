@@ -119,3 +119,10 @@ EventScript_EndTrainerBattle::
 	gotobeatenscript
 	releaseall
 	end
+
+Std_MsgboxAutoclose::
+	message NULL
+	waitmessage
+	waitbuttonpress
+	release
+	return
