@@ -18,6 +18,18 @@
 #define STRINGS_BATTLE_FACTORY_SELECTION __attribute__((section(".rodata.strings_battle_factory_selection"), aligned(1)))
 #define STRINGS_DECORATION_TEXT __attribute__((section(".rodata.strings_decoration_text"), aligned(1)))
 #define STRINGS_MOVE_RELEARNER_TEXT __attribute__((section(".rodata.strings_move_relearner_text"), aligned(1), used))
+#define STRINGS_DIPLOMA_TEXT __attribute__((section(".rodata.strings_diploma_text"), aligned(1), used))
+
+const u8 gText_Diploma_1[] STRINGS_DIPLOMA_TEXT = _("プレイヤー");
+const u8 gText_Diploma_2[] STRINGS_DIPLOMA_TEXT = _("さま");
+const u8 gText_Diploma_Hoenn[] STRINGS_DIPLOMA_TEXT = _("ホウエン");
+const u8 gText_Diploma_National[] STRINGS_DIPLOMA_TEXT = _("ぜんこく");
+const u8 gText_Diploma_3[] STRINGS_DIPLOMA_TEXT = _(
+    "　　　　　ポケモンずかんを\n"
+    "みごと　かんせい　させた\n"
+    "いだいなこうせきを　たたえ\n"
+    "ここに　しょうめい　します");
+const u8 gText_Diploma_4[] STRINGS_DIPLOMA_TEXT = _("{COLOR 4}{SHADOW 5}ゲームフリーク");
 
 const u8 gText_TeachWhichMoveToPkmn[] STRINGS_MOVE_RELEARNER_TEXT = _("{STR_VAR_1}に　どのわざを　おぼえさせる？");
 const u8 gText_MoveRelearnerTeachMoveConfirm[] STRINGS_MOVE_RELEARNER_TEXT = _("{STR_VAR_2}を　おぼえさせますか？");
