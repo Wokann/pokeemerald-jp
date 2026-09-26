@@ -36,6 +36,7 @@ struct BattleWindowText
 #define BATTLE_MESSAGE_GRAMMAR_MOVE_DATA __attribute__((section(".rodata.battle_message_grammar_move_data"), aligned(2)))
 #define BATTLE_MESSAGE_STRING_ID_DATA __attribute__((section(".rodata.battle_message_string_id_data"), aligned(2)))
 #define BATTLE_MESSAGE_STRING_POINTER_DATA __attribute__((section(".rodata.battle_message_string_pointer_data"), aligned(4)))
+#define BATTLE_MESSAGE_REGION_TEXT_DATA __attribute__((section(".rodata.battle_message_region_text_data"), aligned(1)))
 
 // Battle message ID lookup tables have the same order and values as US.
 const u16 gMissStringIds[] BATTLE_MESSAGE_STRING_ID_DATA =
@@ -599,6 +600,951 @@ const u8 sText_PkmnFreedFrom[] BATTLE_MESSAGE_TEXT_DATA = _("{B_ATK_NAME_WITH_PR
 // 0x085A9CFB
 const u8 sText_PkmnCrashed[] BATTLE_MESSAGE_TEXT_DATA = _("いきおい　あまって\n{B_ATK_NAME_WITH_PREFIX}は　じめんに　ぶつかった！");
 
+// Japanese battle strings at 0x085A9D15-0x085AB057, in ROM order.
+const u8 gText_PkmnShroudedInMist[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_PREFIX2}\n"
+    "しろいきりに　つつまれた！");
+
+const u8 sText_PkmnProtectedByMist[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　しろいきりに\n"
+    "まもられている");
+
+const u8 gText_PkmnGettingPumped[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "はりきっている！");
+
+const u8 sText_PkmnHitWithRecoil[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　こうげきの\n"
+    "はんどうを　うけた！");
+
+const u8 sText_PkmnProtectedItself2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "まもりの　たいせいに　はいった！");
+
+const u8 sText_PkmnBuffetedBySandstorm[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "すなあらしが　{B_ATK_NAME_WITH_PREFIX}を\n"
+    "おそう！");
+
+const u8 sText_PkmnPeltedByHail[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "あられが　{B_ATK_NAME_WITH_PREFIX}を\n"
+    "おそう！");
+
+const u8 sText_PkmnsXWoreOff[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_PREFIX1}　{B_BUFF1}の\n"
+    "こうかが　きれた！");
+
+const u8 sText_PkmnSeeded[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}に\n"
+    "たねを　うえつけた！");
+
+const u8 sText_PkmnEvadedAttack[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は\n"
+    "こうげきを　かわした！");
+
+const u8 sText_PkmnSappedByLeechSeed[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "やどりぎが　{B_ATK_NAME_WITH_PREFIX}の\n"
+    "たいりょくを　うばう！");
+
+const u8 sText_PkmnFastAsleep[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "ぐうぐう　ねむっている");
+
+const u8 sText_PkmnWokeUp[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　めを　さました！");
+
+const u8 sText_PkmnUproarKeptAwake[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "しかし　{B_SCR_ACTIVE_NAME_WITH_PREFIX}が\n"
+    "さわいでいて　ねむれなかった！");
+
+const u8 sText_PkmnWokeUpInUproar[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　さわがしくて\n"
+    "めが　さめた！");
+
+const u8 sText_PkmnCausedUproar[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　さわぎだした！");
+
+const u8 sText_PkmnMakingUproar[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　さわいでいる！");
+
+const u8 sText_PkmnCalmedDown[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "おとなしくなった");
+
+const u8 sText_PkmnCantSleepInUproar[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "しかし{B_DEF_NAME_WITH_PREFIX}は\n"
+    "さわいでいて　ねむらない！");
+
+const u8 sText_PkmnStockpiled[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　{B_BUFF1}つたくわえた！");
+
+const u8 sText_PkmnCantStockpile[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　もう　これいじょう\n"
+    "たくわえられない！");
+
+const u8 sText_PkmnCantSleepInUproar2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "しかし　{B_DEF_NAME_WITH_PREFIX}は\n"
+    "さわいでいて　ねむらない！");
+
+const u8 sText_UproarKeptPkmnAwake[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "しかし　{B_DEF_NAME_WITH_PREFIX}は\n"
+    "さわがしくて　ねむれない！");
+
+const u8 sText_PkmnStayedAwakeUsing[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は\n"
+    "{B_DEF_ABILITY}で　ねむらない！");
+
+const u8 sText_PkmnStoringEnergy[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　がまんしている");
+
+const u8 sText_PkmnUnleashedEnergy[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}の\n"
+    "がまんが　とかれた！");
+
+const u8 sText_PkmnFatigueConfusion[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "つかれはてて　こんらんした！");
+
+const u8 sText_PlayerPickedUpMoney[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_PLAYER_NAME}は　{B_BUFF1}¥\n"
+    "ひろった！\p");
+
+const u8 sText_PkmnUnaffected[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}には\n"
+    "ぜんぜんきいてない！");
+
+const u8 sText_PkmnTransformedInto[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "{B_BUFF1}に　へんしんした！");
+
+const u8 sText_PkmnMadeSubstitute[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}の\n"
+    "ぶんしんが　あらわれた");
+
+const u8 sText_PkmnHasSubstitute[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "しかし　{B_ATK_NAME_WITH_PREFIX}の\n"
+    "みがわりは　すでに　でていた！");
+
+const u8 sText_SubstituteDamaged[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}に　かわって\n"
+    "ぶんしんが　こうげきを　うけた！\p");
+
+const u8 sText_PkmnSubstituteFaded[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}の　ぶんしんは\n"
+    "きえてしまった⋯⋯\p");
+
+const u8 sText_PkmnMustRecharge[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "こうげきの　はんどうで\n"
+    "{B_ATK_NAME_WITH_PREFIX}は　うごけない！");
+
+const u8 sText_PkmnRageBuilding[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}の　いかりの\n"
+    "ボルテージが　あがっていく！");
+
+const u8 sText_PkmnMoveWasDisabled[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}の\n"
+    "{B_BUFF1}を　ふうじこめた！");
+
+const u8 sText_PkmnMoveDisabledNoMore[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}の\n"
+    "かなしばりが　とけた！");
+
+const u8 sText_PkmnGotEncore[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は\n"
+    "アンコールを　うけた！");
+
+const u8 sText_PkmnEncoreEnded[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}の\n"
+    "アンコールじょうたいが　とけた！");
+
+const u8 sText_PkmnTookAim[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}に\n"
+    "ねらいを　さだめた！");
+
+const u8 sText_PkmnSketchedMove[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "{B_BUFF1}を　スケッチした！");
+
+const u8 sText_PkmnTryingToTakeFoe[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　あいてを\n"
+    "みちづれに　しようとしている");
+
+const u8 sText_PkmnTookFoe[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_ATK_NAME_WITH_PREFIX}を\n"
+    "みちづれに　した！");
+
+const u8 sText_PkmnReducedPP[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}の\n"
+    "{B_BUFF1}を　{PLAYER}けずった！");
+
+const u8 sText_PkmnStoleItem[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}から\n"
+    "{B_LAST_ITEM}を　うばいとった！");
+
+const u8 sText_TargetCantEscapeNow[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は\n"
+    "もう　にげられない！");
+
+const u8 sText_PkmnFellIntoNightmare[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は\n"
+    "あくむを　みはじめた！");
+
+const u8 sText_PkmnLockedInNightmare[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "あくむに　うなされている！");
+
+const u8 sText_PkmnLaidCurse[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　じぶんの　たいりょくを\n"
+    "けずって　{B_DEF_NAME_WITH_PREFIX}に　のろいを　かけた！");
+
+const u8 sText_PkmnAfflictedByCurse[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "のろわれている！");
+
+const u8 sText_SpikesScattered[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_PREFIX1}　あしもとに\n"
+    "まきびしが　ちらばった！");
+
+const u8 sText_PkmnHurtBySpikes[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　まきびしの\n"
+    "ダメージを　うけた！");
+
+const u8 sText_PkmnIdentified[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}の\n"
+    "しょうたいを　みやぶった！");
+
+const u8 sText_PkmnPerishCountFell[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}の　ほろびの\n"
+    "カウントが　{B_BUFF1}になった！");
+
+const u8 sText_PkmnBracedItself[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　こらえる\n"
+    "たいせいに　はいった！");
+
+const u8 sText_PkmnEnduredHit[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　こうげきを\n"
+    "こらえた！");
+
+const u8 sText_MagnitudeStrength[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("マグニチュード{B_BUFF1}！！");
+
+const u8 sText_PkmnCutHPMaxedAttack[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　たいりょくを　けずって\n"
+    "パワーぜんかいに　なった！");
+
+const u8 sText_PkmnCopiedStatChanges[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}の\n"
+    "ほじょこうかを　コピーした！");
+
+const u8 sText_PkmnGotFree[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}の\n"
+    "{B_BUFF1}から　かいほうされた！");
+
+const u8 sText_PkmnShedLeechSeed[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "やどりぎのタネを　ふきとばした！");
+
+const u8 sText_PkmnBlewAwaySpikes[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　まきびしを\n"
+    "ふきとばした！");
+
+const u8 sText_PkmnFledFromBattle[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　せんとうから\n"
+    "りだつした！");
+
+const u8 sText_PkmnForesawAttack[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　みらいに\n"
+    "こうげきを　よちした！");
+
+const u8 sText_PkmnTookAttack[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_BUFF1}の\n"
+    "こうげきを　うけた！");
+
+const u8 sText_PkmnChoseXAsDestiny[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_CURRENT_MOVE}を\n"
+    "みらいに　たくした！");
+
+const u8 sText_PkmnAttack[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{B_BUFF1}の　こうげき！");
+
+const u8 sText_PkmnCenterAttention[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "ちゅうもくの　まとに　なった！");
+
+const u8 sText_PkmnChargingPower[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "じゅうでんを　はじめた！");
+
+const u8 sText_NaturePowerTurnedInto[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "しぜんのちからは\n"
+    "{B_CURRENT_MOVE}に　なった！");
+
+const u8 sText_PkmnStatusNormal[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}の　じょうたいいじょうが\n"
+    "なおった！");
+
+const u8 sText_PkmnSubjectedToTorment[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は\n"
+    "いちゃもんを　つけられた！");
+
+const u8 sText_PkmnTighteningFocus[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "しゅうちゅうりょくを　たかめている！");
+
+const u8 sText_PkmnFellForTaunt[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　\n"
+    "ちょうはつに　のってしまった！");
+
+const u8 sText_PkmnReadyToHelp[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}を\n"
+    "てだすけ　する　たいせいに　はいった！");
+
+const u8 sText_PkmnSwitchedItems[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　おたがいの\n"
+    "どうぐを　いれかえた！");
+
+const u8 sText_PkmnObtainedX[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_BUFF1}を\n"
+    "てに　いれた！");
+
+const u8 sText_PkmnObtainedX2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　{PLAYER}を\n"
+    "てに　いれた！");
+
+const u8 sText_PkmnObtainedXYObtainedZ[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_BUFF1}を\n"
+    "てに　いれた！\p"
+    "{B_DEF_NAME_WITH_PREFIX}は　{PLAYER}を\n"
+    "てに　いれた！");
+
+const u8 sText_PkmnCopiedFoe[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}の\n"
+    "{B_DEF_ABILITY}を　コピーした！");
+
+const u8 sText_PkmnMadeWish[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "ねがいごとを　した！");
+
+const u8 sText_PkmnWishCameTrue[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_BUFF1}の\n"
+    "ねがいごとが　かなった！");
+
+const u8 sText_PkmnPlantedRoots[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　ねを　はった！");
+
+const u8 sText_PkmnAbsorbedNutrients[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　ねから\n"
+    "ようぶんを　すいとった！");
+
+const u8 sText_PkmnAnchoredItself[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　ねを　はって\n"
+    "うごかない！");
+
+const u8 sText_PkmnWasMadeDrowsy[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}の\n"
+    "ねむけを　さそった！");
+
+const u8 sText_PkmnKnockedOff[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}の\n"
+    "{B_LAST_ITEM}を　はたきおとした！");
+
+const u8 sText_PkmnSwappedAbilities[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　おたがいの\n"
+    "とくせいを　いれかえた！");
+
+const u8 sText_PkmnSealedOpponentMove[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　あいての\n"
+    "わざを　ふういんした！");
+
+const u8 sText_PkmnWantsGrudge[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　あいてに\n"
+    "おんねんを　かけようと　している！");
+
+const u8 sText_PkmnLostPPGrudge[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}の　{B_BUFF1}は\n"
+    "おんねんで　わざポイントが　0に　なった！");
+
+const u8 sText_PkmnShroudedItself[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "{B_CURRENT_MOVE}に　つつまれた！");
+
+const u8 sText_PkmnMoveBounced[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}の　{B_CURRENT_MOVE}は\n"
+    "マジックコートに　はねかえされた！");
+
+const u8 sText_PkmnWaitsForTarget[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "あいての　でかたを　うかがっている！");
+
+const u8 sText_PkmnSnatchedMove[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_SCR_ACTIVE_NAME_WITH_PREFIX}の\n"
+    "わざを　よこどりした！");
+
+const u8 sText_ElectricityWeakened[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("でんきの　いりょくが　よわまった！");
+
+const u8 sText_FireWeakened[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ほのおの　いりょくが　よわまった！");
+
+const u8 sText_XFoundOneY[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_LAST_ITEM}を\n"
+    "ひろってきた！");
+
+const u8 sText_SoothingAroma[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ここちよい　かおりが　ひろがった！");
+
+const u8 sText_ItemsCantBeUsedNow[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "ここでは　どうぐを　つかうことは\n"
+    "できません！{PAUSE}ぞ");
+
+const u8 sText_ForXCommaYZ[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LAST_ITEM}は　{B_SCR_ACTIVE_NAME_WITH_PREFIX}には\n"
+    "{B_BUFF1}");
+
+const u8 sText_PkmnUsedXToGetPumped[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}を　つかって\n"
+    "はりきり　だした！");
+
+const u8 sText_PkmnLostFocus[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　しゅうちゅうりょくが\n"
+    "とぎれて　わざが　だせなかった！");
+
+const u8 sText_PkmnWasDraggedOut[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　せんとうに\n"
+    "ひきずりだされた！\p");
+
+const u8 sText_TheWallShattered[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("かべが　こわれた！");
+
+const u8 sText_ButNoEffect[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("しかし　こうかが　なかった！");
+
+const u8 sText_PkmnHasNoMovesLeft[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ACTIVE_NAME_WITH_PREFIX}は　だすことの　できる\n"
+    "わざが　ない！\p");
+
+const u8 sText_PkmnMoveIsDisabled[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ACTIVE_NAME_WITH_PREFIX}は　かなしばりで\n"
+    "{B_CURRENT_MOVE}が　だせない！\p");
+
+const u8 sText_PkmnCantUseMoveTorment[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ACTIVE_NAME_WITH_PREFIX}は　いちゃもんを　つけられたので\n"
+    "つづけて　おなじ　わざが　だせない！\p");
+
+const u8 sText_PkmnCantUseMoveTaunt[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ACTIVE_NAME_WITH_PREFIX}は　ちょうはつ　されて\n"
+    "{B_CURRENT_MOVE}が　だせない！\p");
+
+const u8 sText_PkmnCantUseMoveSealed[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ACTIVE_NAME_WITH_PREFIX}は　ふういんで\n"
+    "{B_CURRENT_MOVE}が　だせない！\p");
+
+const u8 sText_PkmnMadeItRain[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n"
+    "あめが　ふりはじめた！");
+
+const u8 sText_PkmnRaisedSpeed[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_SCR_ACTIVE_ABILITY}で\n"
+    "すばやさが　あがった！");
+
+const u8 sText_PkmnProtectedBy[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+    "きかなかった！");
+
+const u8 sText_PkmnPreventsUsage[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}の　{B_DEF_ABILITY}で\n"
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_CURRENT_MOVE}が　できない！");
+
+const u8 sText_PkmnRestoredHPUsing[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+    "かいふくした！");
+
+const u8 sText_PkmnsXMadeYUseless[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}の　{B_DEF_ABILITY}で\n"
+    "{B_CURRENT_MOVE}は　こうかが　なかった！");
+
+const u8 sText_PkmnChangedTypeWith[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+    "{B_BUFF1}タイプに　なった！");
+
+const u8 sText_PkmnPreventsParalysisWith[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_EFF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+    "まひしない！");
+
+const u8 sText_PkmnPreventsRomanceWith[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+    "メロメロに　ならない！");
+
+const u8 sText_PkmnPreventsPoisoningWith[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_EFF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+    "どくを　うけない！");
+
+const u8 sText_PkmnPreventsConfusionWith[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+    "こんらんしない！");
+
+const u8 sText_PkmnRaisedFirePowerWith[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+    "ほのおの　いりょくが　あがった！");
+
+const u8 sText_PkmnAnchorsItselfWith[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+    "はりついている！");
+
+const u8 sText_PkmnCutsAttackWith[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n"
+    "{B_DEF_NAME_WITH_PREFIX}の　こうげきりょくが　さがった！");
+
+const u8 sText_PkmnPreventsStatLossWith[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_SCR_ACTIVE_ABILITY}で\n"
+    "のうりょくが　さがらない！");
+
+const u8 sText_PkmnHurtsWith[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}の　{B_DEF_ABILITY}で\n"
+    "{B_ATK_NAME_WITH_PREFIX}は　きずついた！");
+
+const u8 sText_PkmnTraced[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_BUFF1}の\n"
+    "{PLAYER}を　トレースした！");
+
+const u8 sText_PkmnsXPreventsBurns[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_EFF_NAME_WITH_PREFIX}は　{B_EFF_ABILITY}で\n"
+    "やけどしない！");
+
+const u8 sText_PkmnsXBlocksY[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+    "{B_CURRENT_MOVE}を　うけない！");
+
+const u8 sText_PkmnsXBlocksY2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_SCR_ACTIVE_ABILITY}で\n"
+    "{B_CURRENT_MOVE}を　うけない！");
+
+const u8 sText_PkmnsXRestoredHPALittle2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　{B_ATK_ABILITY}で\n"
+    "すこし　かいふく");
+
+const u8 sText_PkmnsXWhippedUpSandstorm[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n"
+    "すなあらしに　なった！");
+
+const u8 sText_PkmnsXIntensifiedSun[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n"
+    "ひざしが　つよくなった！");
+
+const u8 sText_PkmnsXPreventsYLoss[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_SCR_ACTIVE_ABILITY}で\n"
+    "{B_BUFF1}が　さがらない！");
+
+const u8 sText_PkmnsXInfatuatedY[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}の　{B_DEF_ABILITY}で\n"
+    "{B_ATK_NAME_WITH_PREFIX}は　メロメロに　なった！");
+
+const u8 sText_PkmnsXMadeYIneffective[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+    "{B_CURRENT_MOVE}が　きかない！");
+
+const u8 sText_PkmnsXCuredYProblem[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_SCR_ACTIVE_ABILITY}で\n"
+    "{B_BUFF1}じょうたいが　なおった！");
+
+const u8 sText_ItSuckedLiquidOoze[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ヘドロえきを　すいとった！");
+
+const u8 sText_PkmnTransformed[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　すがたが\n"
+    "へんかした！");
+
+const u8 sText_PkmnsXTookAttack[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+    "こうげきを　うけた！");
+
+const u8 gUnknown_85AA7DF[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_BUFF1}の　{B_LAST_ABILITY}で\n"
+    "{PLAYER}を　もどすことが　できない！\p");
+
+const u8 sText_PreventedFromWorking[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}の　{B_DEF_ABILITY}で\n"
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_BUFF1}は　きかなかった！");
+
+const u8 sText_PkmnsXMadeItIneffective[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n"
+    "うまく　きまらなかった！");
+
+const u8 sText_PkmnsXPreventsFlinching[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_EFF_NAME_WITH_PREFIX}は　{B_EFF_ABILITY}で\n"
+    "ひるまない！");
+
+const u8 sText_PkmnsXPreventsYsZ[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}の　{B_ATK_ABILITY}で\n"
+    "{B_DEF_NAME_WITH_PREFIX}の　{B_DEF_ABILITY}は　きかない！");
+
+const u8 sText_PkmnsXCuredItsYProblem[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_SCR_ACTIVE_ABILITY}で\n"
+    "{B_BUFF1}が　なおった！");
+
+const u8 sText_PkmnsXHadNoEffectOnY[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}は\n"
+    "{B_EFF_NAME_WITH_PREFIX}に　きかなかった！");
+
+const u8 sText_StatSharply[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ぐーんと　");
+
+const u8 gText_StatRose[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あがった！");
+
+const u8 sText_StatHarshly[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("がくっと　");
+
+const u8 sText_StatFell[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("さがった！");
+
+const u8 sText_AttackersStatRose[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}の\n"
+    "{B_BUFF1}が　{PLAYER}");
+
+const u8 gText_DefendersStatRose[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}の\n"
+    "{B_BUFF1}が　{PLAYER}");
+
+const u8 sText_UsingItemTheStatOfPkmnRose[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+    "{B_BUFF1}が　{PLAYER}");
+
+const u8 sText_AttackersStatFell[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}の\n"
+    "{B_BUFF1}が　{PLAYER}");
+
+const u8 sText_DefendersStatFell[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}の\n"
+    "{B_BUFF1}が　{PLAYER}");
+
+const u8 sText_StatsWontIncrease2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}の　のうりょくは\n"
+    "もう　あがらない！");
+
+const u8 sText_StatsWontDecrease2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_DEF_NAME_WITH_PREFIX}の　のうりょくは\n"
+    "もう　さがらない！");
+
+const u8 sText_CriticalHit[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("きゅうしょに　あたった！");
+
+const u8 sText_OneHitKO[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("いちげき　ひっさつ！");
+
+const u8 sText_123Poof[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{PAUSE}み1　{PAUSE}そ2の　{PAUSE}そ⋯{PAUSE}そ⋯{PAUSE}そ⋯　{PAUSE}そ{PLAY_SE}ぎ　ポカン！\p");
+
+const u8 sText_AndEllipsis[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("そして⋯⋯！\p");
+
+const u8 sText_HMMovesCantBeForgotten[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "それは　たいせつな　わざです\n"
+    "わすれさせることは　できません！\p");
+
+const u8 sText_NotVeryEffective[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("こうかは　いまひとつの　ようだ");
+
+const u8 sText_SuperEffective[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("こうかは　ばつぐんだ！");
+
+const u8 sText_GotAwaySafely[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{PLAY_SE}ち　うまく　にげきれた！\p");
+
+const u8 sText_PkmnFledUsingIts[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{PLAY_SE}ち　{B_ATK_NAME_WITH_PREFIX}は　もっていた\n"
+    "{B_LAST_ITEM}を　つかって　にげた\p");
+
+const u8 sText_PkmnFledUsing[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{PLAY_SE}ち　{B_ATK_NAME_WITH_PREFIX}は\n"
+    "{B_ATK_ABILITY}を　つかって　にげた\p");
+
+const u8 sText_WildPkmnFled[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{PLAY_SE}ち　やせいの　{B_BUFF1}は　にげだした！");
+
+const u8 gUnknown_85AA9C6[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}との\n"
+    "しょうぶに　かった！");
+
+const u8 gUnknown_85AA9D6[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}との\n"
+    "しょうぶに　かった！");
+
+const u8 gUnknown_85AA9EA[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}との\n"
+    "しょうぶに　まけた！");
+
+const u8 gUnknown_85AA9FA[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}との\n"
+    "しょうぶに　まけた！");
+
+const u8 gUnknown_85AAA0E[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}との\n"
+    "しょうぶに　ひきわけた！");
+
+const u8 gUnknown_85AAA20[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}との\n"
+    "しょうぶに　ひきわけた！");
+
+const u8 gUnknown_85AAA36[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{PLAY_SE}ち　{B_LINK_OPPONENT1_NAME}は　にげだした！");
+
+const u8 gUnknown_85AAA45[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{PLAY_SE}ち　{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}は\n"
+    "にげだした！");
+
+const u8 sText_NoRunningFromTrainers[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "ダメだ！　しょうぶの　さいちゅうに\n"
+    "あいてに　せなかは　みせられない！\p");
+
+const u8 sText_CantEscape[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("にげることが　できない！\p");
+
+const u8 sText_DontLeaveBirch[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("オダマキ“み　みすてないでくれー！”\p");
+
+const u8 sText_ButNothingHappened[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("しかし　なにもおこらない");
+
+const u8 sText_ButItFailed[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("しかし　うまく　きまらなかった！");
+
+const u8 sText_ItHurtConfusion[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "わけも　わからず\n"
+    "じぶんを　こうげきした！");
+
+const u8 sText_MirrorMoveFailed[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "しかし　オウムがえしは\n"
+    "しっぱいにおわった！");
+
+const u8 sText_StartedToRain[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あめが　ふりはじめた！");
+
+const u8 sText_DownpourStarted[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("おおあめに　なった！");
+
+const u8 sText_RainContinues[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あめが　ふりつづいている");
+
+const u8 sText_DownpourContinues[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("おおあめが　ふりつづいている");
+
+const u8 sText_RainStopped[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あめが　ふりやんだ！");
+
+const u8 sText_SandstormBrewed[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("すなあらしが　ふきはじめた！");
+
+const u8 sText_SandstormRages[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("すなあらしが　ふきあれる");
+
+const u8 sText_SandstormSubsided[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("すなあらしが　おさまった！");
+
+const u8 sText_SunlightGotBright[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ひざしが　つよくなった！");
+
+const u8 sText_SunlightStrong[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ひざしが　つよい");
+
+const u8 sText_SunlightFaded[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ひざしが　よわくなった！");
+
+const u8 sText_StartedHail[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あられが　ふりはじめた！");
+
+const u8 sText_HailContinues[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あられが　ふりつづいている");
+
+const u8 sText_HailStopped[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あられが　ふりやんだ！");
+
+const u8 sText_FailedToSpitUp[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("しかし　なにも　はきだせなかった！");
+
+const u8 sText_FailedToSwallow[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("しかし　なにも　のみこめなかった！");
+
+const u8 sText_WindBecameHeatWave[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("かぜは　ねっぷうに　なった！");
+
+const u8 sText_StatChangesGone[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "すべての　ステータスが\n"
+    "もとに　もどった！");
+
+const u8 sText_CoinsScattered[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("こばんが　あたりに　ちらばった！");
+
+const u8 sText_TooWeakForSubstitute[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "しかし　ぶんしんを　だすには\n"
+    "たいりょくが　たりなかった！");
+
+const u8 sText_SharedPain[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "おたがいの　たいりょくを\n"
+    "わかちあった！");
+
+const u8 sText_BellChimed[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("すずのねが　ひびきわたった！");
+
+const u8 sText_FaintInThree[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "おたがいのポケモンは\n"
+    "3ターンごに　ほろびてしまう！");
+
+const u8 sText_NoPPLeft[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("わざの　のこりポイントが　ない！\p");
+
+const u8 sText_ButNoPPLeft[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "しかし\n"
+    "わざの　のこりポイントが　なかった！");
+
+const u8 sText_PkmnIgnoresAsleep[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は　ねむったまま\n"
+    "めいれいを　むしした！");
+
+const u8 sText_PkmnIgnoredOrders[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　めいれいを　むしした！");
+
+const u8 sText_PkmnBeganToNap[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　ひるねを　はじめた！");
+
+const u8 sText_PkmnLoafing[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　なまけている！");
+
+const u8 sText_PkmnWontObey[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　いうことを　きかない！");
+
+const u8 sText_PkmnTurnedAway[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　そっぽを　むいた！");
+
+const u8 sText_PkmnPretendNotNotice[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("{B_ATK_NAME_WITH_PREFIX}は　しらんぷりした！");
+
+const u8 sText_EnemyAboutToSwitchPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+    "{PLAYER}を　くりだそうと　している\p"
+    "{B_PLAYER_NAME}も　ポケモンを\n"
+    "いれかえますか？");
+
+const u8 sText_PkmnLearnedMove2[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}は\n"
+    "{B_BUFF1}を　おぼえた！");
+
+const u8 sText_PlayerDefeatedLinkTrainerTrainer1[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}\n"
+    "との　しょうぶに　かった！\p");
+
+const u8 sText_CreptCloser[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_PLAYER_NAME}は\n"
+    "{RIVAL}に　ちかづいた！");
+
+const u8 sText_CantGetCloser[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_PLAYER_NAME}は\n"
+    "これいじょう　ちかづけない！");
+
+const u8 sText_PkmnWatchingCarefully[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{RIVAL}は\n"
+    "こちらの　ようすを　うかがっている！");
+
+const u8 sText_PkmnCuriousAboutX[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{RIVAL}は　{B_BUFF1}に\n"
+    "きょうみを　しめしている　ようだ！");
+
+const u8 sText_PkmnEnthralledByX[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{RIVAL}は　{B_BUFF1}に\n"
+    "むちゅうに　なっている　ようだ！");
+
+const u8 sText_PkmnIgnoredX[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{RIVAL}は　{B_BUFF1}に\n"
+    "みむきも　しない　ようだ！");
+
+const u8 sText_ThrewPokeblockAtPkmn[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_PLAYER_NAME}は\n"
+    "{RIVAL}に　ポロックを　なげた！");
+
+const u8 sText_OutOfSafariBalls[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{PLAY_SE}べ　アナウンス“ピンポーン！　サファリボールが\n"
+    "なくなったので　しゅうりょうでーす！\p");
+
+const u8 gUnknown_85AAD22_sub9[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あ！　{RIVAL}が　とびだしてきた！\p");
+
+const u8 gUnknown_85AAE0C[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "あ！　やせいの\n"
+    "{RIVAL}が　とびだしてきた！\p");
+
+const u8 gUnknown_85AAE22[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "あ！　やせいの\n"
+    "{RIVAL}が　あらわれた！\p");
+
+const u8 gUnknown_85AAE36[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "あ！　やせいの\n"
+    "{RIVAL}が　とびだしてきた！{PAUSE}ァ");
+
+const u8 gUnknown_85AAE4E[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "あ！　やせいの\n"
+    "{RIVAL}と　{AQUA}が　とびだしてきた！\p");
+
+const u8 gUnknown_85AAE68[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}が\n"
+    "しょうぶを　しかけてきた！\p");
+
+const u8 gUnknown_85AAE7F[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}が\n"
+    "しょうぶを　しかけてきた！");
+
+const u8 gUnknown_85AAE91[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}が\n"
+    "しょうぶを　しかけてきた！");
+
+const u8 gUnknown_85AAEA7[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+    "{RIVAL}を　くりだした！");
+
+const u8 gUnknown_85AAEBA[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+    "{RIVAL}と　{AQUA}を　くりだした！");
+
+const u8 gUnknown_85AAED1[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+    "{B_BUFF1}を　くりだした！");
+
+const u8 gUnknown_85AAEE4[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}は\n"
+    "{RIVAL}を　くりだした！");
+
+const u8 gUnknown_85AAEF3[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}は\n"
+    "{RIVAL}と　{AQUA}を　くりだした！");
+
+const u8 gUnknown_85AAF06[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}は　{ARCHIE}を　くりだした！\n"
+    "{B_LINK_OPPONENT2_NAME}は　{KYOGRE}を　くりだした！");
+
+const u8 gUnknown_85AAF24[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}は\n"
+    "{B_BUFF1}を　くりだした！");
+
+const u8 gUnknown_85AAF33[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_SCR_TRAINER_NAME}は\n"
+    "{B_BUFF1}を　くりだした！");
+
+const u8 gUnknown_85AAF42[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ゆけっ！　{KUN}！");
+
+const u8 gUnknown_85AAF4B[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ゆけっ！　{KUN}と　{VERSION}！");
+
+const u8 gUnknown_85AAF58[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("ゆけっ！　{B_BUFF1}！");
+
+const u8 gUnknown_85AAF61[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("いってこい！　{B_BUFF1}！");
+
+const u8 gUnknown_85AAF6C[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("がんばれ！　{B_BUFF1}！");
+
+const u8 gUnknown_85AAF76[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "あいてが　よわっている！\n"
+    "チャンスだ！　{B_BUFF1}！");
+
+const u8 gUnknown_85AAF8E[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_PARTNER_NAME}は　{MAXIE}を　くりだした！\n"
+    "ゆけっ！　{MAGMA}！");
+
+const u8 gUnknown_85AAFA6[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_BUFF1}　もういい！\n"
+    "もどれ！");
+
+const u8 gUnknown_85AAFB4[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_BUFF1}\n"
+    "もどれ！");
+
+const u8 gUnknown_85AAFBC[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_BUFF1}　いいぞ！\n"
+    "もどれ！");
+
+const u8 gUnknown_85AAFC9[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_BUFF1}　よくやった！\n"
+    "もどれ！");
+
+const u8 gUnknown_85AAFD8[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+    "{B_BUFF1}を　ひっこめた！");
+
+const u8 gUnknown_85AAFEB[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_OPPONENT1_NAME}は\n"
+    "{B_BUFF1}を　ひっこめた！");
+
+const u8 gUnknown_85AAFFA[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_LINK_SCR_TRAINER_NAME}は\n"
+    "{B_BUFF1}を　ひっこめた！");
+
+const u8 gUnknown_85AB009[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("やせいの　");
+
+const u8 gUnknown_85AB00F[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あいての　$");
+
+const u8 gUnknown_85AB016[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あいての");
+
+const u8 gUnknown_85AB01B[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("みかたの");
+
+const u8 gUnknown_85AB020[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あいては");
+
+const u8 gUnknown_85AB025[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("みかたは");
+
+const u8 gUnknown_85AB02A[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("あいてを");
+
+const u8 gUnknown_85AB02F[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("みかたを");
+
+const u8 gUnknown_85AB034[] BATTLE_MESSAGE_REGION_TEXT_DATA = _(
+    "{B_ATK_NAME_WITH_PREFIX}{B_BUFF1}\n"
+    "{PLAYER}");
+
+const u8 gUnknown_85AB03C[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("を　つかった！");
+
+const u8 gUnknown_85AB044[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("した！");
+
+const u8 gUnknown_85AB048[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("を　した！");
+
+const u8 gUnknown_85AB04E[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("　こうげき！");
+
+const u8 sText_ExclamationMark5[] BATTLE_MESSAGE_REGION_TEXT_DATA = _("！");
+
 // Battle string ID order follows the shared JP/US constants. JP pointer
 // targets below come from the JP ROM, not from US text addresses.
 const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT - BATTLESTRINGS_TABLE_START] BATTLE_MESSAGE_STRING_POINTER_DATA =
@@ -613,10 +1559,10 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT - BATTLESTRINGS_TABLE_ST
     [STRINGID_PKMNFORGOTMOVE - BATTLESTRINGS_TABLE_START] = sText_PkmnForgotMove,
     [STRINGID_STOPLEARNINGMOVE - BATTLESTRINGS_TABLE_START] = sText_StopLearningMove,
     [STRINGID_DIDNOTLEARNMOVE - BATTLESTRINGS_TABLE_START] = sText_DidNotLearnMove,
-    [STRINGID_PKMNLEARNEDMOVE2 - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAD14, // US: sText_PkmnLearnedMove2; JP target still needs a semantic label
+    [STRINGID_PKMNLEARNEDMOVE2 - BATTLESTRINGS_TABLE_START] = sText_PkmnLearnedMove2,
     [STRINGID_ATTACKMISSED - BATTLESTRINGS_TABLE_START] = sText_AttackMissed,
     [STRINGID_PKMNPROTECTEDITSELF - BATTLESTRINGS_TABLE_START] = sText_PkmnProtectedItself,
-    [STRINGID_STATSWONTINCREASE2 - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA8C4, // US: sText_StatsWontIncrease2; JP target still needs a semantic label
+    [STRINGID_STATSWONTINCREASE2 - BATTLESTRINGS_TABLE_START] = sText_StatsWontIncrease2,
     [STRINGID_AVOIDEDDAMAGE - BATTLESTRINGS_TABLE_START] = sText_AvoidedDamage,
     [STRINGID_ITDOESNTAFFECT - BATTLESTRINGS_TABLE_START] = sText_ItDoesntAffect,
     [STRINGID_ATTACKERFAINTED - BATTLESTRINGS_TABLE_START] = sText_AttackerFainted,
@@ -688,166 +1634,166 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT - BATTLESTRINGS_TABLE_ST
     [STRINGID_PKMNHURTBY - BATTLESTRINGS_TABLE_START] = sText_PkmnHurtBy,
     [STRINGID_PKMNFREEDFROM - BATTLESTRINGS_TABLE_START] = sText_PkmnFreedFrom,
     [STRINGID_PKMNCRASHED - BATTLESTRINGS_TABLE_START] = sText_PkmnCrashed,
-    [STRINGID_PKMNSHROUDEDINMIST - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9D15, // US: gText_PkmnShroudedInMist; JP target still needs a semantic label
-    [STRINGID_PKMNPROTECTEDBYMIST - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9D26, // US: sText_PkmnProtectedByMist; JP target still needs a semantic label
-    [STRINGID_PKMNGETTINGPUMPED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9D39, // US: gText_PkmnGettingPumped; JP target still needs a semantic label
-    [STRINGID_PKMNHITWITHRECOIL - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9D46, // US: sText_PkmnHitWithRecoil; JP target still needs a semantic label
-    [STRINGID_PKMNPROTECTEDITSELF2 - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9D5B, // US: sText_PkmnProtectedItself2; JP target still needs a semantic label
-    [STRINGID_PKMNBUFFETEDBYSANDSTORM - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9D70, // US: sText_PkmnBuffetedBySandstorm; JP target still needs a semantic label
-    [STRINGID_PKMNPELTEDBYHAIL - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9D80, // US: sText_PkmnPeltedByHail; JP target still needs a semantic label
-    [STRINGID_PKMNSEEDED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9D9F, // US: sText_PkmnSeeded; JP target still needs a semantic label
-    [STRINGID_PKMNEVADEDATTACK - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9DAE, // US: sText_PkmnEvadedAttack; JP target still needs a semantic label
-    [STRINGID_PKMNSAPPEDBYLEECHSEED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9DBE, // US: sText_PkmnSappedByLeechSeed; JP target still needs a semantic label
-    [STRINGID_PKMNFASTASLEEP - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9DD4, // US: sText_PkmnFastAsleep; JP target still needs a semantic label
-    [STRINGID_PKMNWOKEUP - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9DE4, // US: sText_PkmnWokeUp; JP target still needs a semantic label
-    [STRINGID_PKMNUPROARKEPTAWAKE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9DF1, // US: sText_PkmnUproarKeptAwake; JP target still needs a semantic label
-    [STRINGID_PKMNWOKEUPINUPROAR - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9E09, // US: sText_PkmnWokeUpInUproar; JP target still needs a semantic label
-    [STRINGID_PKMNCAUSEDUPROAR - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9E1C, // US: sText_PkmnCausedUproar; JP target still needs a semantic label
-    [STRINGID_PKMNMAKINGUPROAR - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9E28, // US: sText_PkmnMakingUproar; JP target still needs a semantic label
-    [STRINGID_PKMNCALMEDDOWN - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9E34, // US: sText_PkmnCalmedDown; JP target still needs a semantic label
-    [STRINGID_PKMNCANTSLEEPINUPROAR - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9E41, // US: sText_PkmnCantSleepInUproar; JP target still needs a semantic label
-    [STRINGID_PKMNSTOCKPILED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9E56, // US: sText_PkmnStockpiled; JP target still needs a semantic label
-    [STRINGID_PKMNCANTSTOCKPILE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9E64, // US: sText_PkmnCantStockpile; JP target still needs a semantic label
-    [STRINGID_PKMNCANTSLEEPINUPROAR2 - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9E7C, // US: sText_PkmnCantSleepInUproar2; JP target still needs a semantic label
-    [STRINGID_UPROARKEPTPKMNAWAKE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9E92, // US: sText_UproarKeptPkmnAwake; JP target still needs a semantic label
-    [STRINGID_PKMNSTAYEDAWAKEUSING - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9EA8, // US: sText_PkmnStayedAwakeUsing; JP target still needs a semantic label
-    [STRINGID_PKMNSTORINGENERGY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9EB7, // US: sText_PkmnStoringEnergy; JP target still needs a semantic label
-    [STRINGID_PKMNUNLEASHEDENERGY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9EC3, // US: sText_PkmnUnleashedEnergy; JP target still needs a semantic label
-    [STRINGID_PKMNFATIGUECONFUSION - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9ED2, // US: sText_PkmnFatigueConfusion; JP target still needs a semantic label
-    [STRINGID_PLAYERPICKEDUPMONEY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9EE5, // US: sText_PlayerPickedUpMoney; JP target still needs a semantic label
-    [STRINGID_PKMNUNAFFECTED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9EF4, // US: sText_PkmnUnaffected; JP target still needs a semantic label
-    [STRINGID_PKMNTRANSFORMEDINTO - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9F04, // US: sText_PkmnTransformedInto; JP target still needs a semantic label
-    [STRINGID_PKMNMADESUBSTITUTE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9F14, // US: sText_PkmnMadeSubstitute; JP target still needs a semantic label
-    [STRINGID_PKMNHASSUBSTITUTE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9F24, // US: sText_PkmnHasSubstitute; JP target still needs a semantic label
-    [STRINGID_SUBSTITUTEDAMAGED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9F3C, // US: sText_SubstituteDamaged; JP target still needs a semantic label
-    [STRINGID_PKMNSUBSTITUTEFADED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9F57, // US: sText_PkmnSubstituteFaded; JP target still needs a semantic label
-    [STRINGID_PKMNMUSTRECHARGE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9F6C, // US: sText_PkmnMustRecharge; JP target still needs a semantic label
-    [STRINGID_PKMNRAGEBUILDING - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9F83, // US: sText_PkmnRageBuilding; JP target still needs a semantic label
-    [STRINGID_PKMNMOVEWASDISABLED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9F9B, // US: sText_PkmnMoveWasDisabled; JP target still needs a semantic label
-    [STRINGID_PKMNMOVEISDISABLED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA531, // US: sText_PkmnMoveIsDisabled; JP target still needs a semantic label
-    [STRINGID_PKMNMOVEDISABLEDNOMORE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9FAB, // US: sText_PkmnMoveDisabledNoMore; JP target still needs a semantic label
-    [STRINGID_PKMNGOTENCORE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9FBB, // US: sText_PkmnGotEncore; JP target still needs a semantic label
-    [STRINGID_PKMNENCOREENDED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9FCB, // US: sText_PkmnEncoreEnded; JP target still needs a semantic label
-    [STRINGID_PKMNTOOKAIM - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9FE0, // US: sText_PkmnTookAim; JP target still needs a semantic label
-    [STRINGID_PKMNSKETCHEDMOVE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9FF3, // US: sText_PkmnSketchedMove; JP target still needs a semantic label
-    [STRINGID_PKMNTRYINGTOTAKEFOE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA003, // US: sText_PkmnTryingToTakeFoe; JP target still needs a semantic label
-    [STRINGID_PKMNTOOKFOE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA01B, // US: sText_PkmnTookFoe; JP target still needs a semantic label
-    [STRINGID_PKMNREDUCEDPP - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA02D, // US: sText_PkmnReducedPP; JP target still needs a semantic label
-    [STRINGID_PKMNSTOLEITEM - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA03D, // US: sText_PkmnStoleItem; JP target still needs a semantic label
-    [STRINGID_TARGETCANTESCAPENOW - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA052, // US: sText_TargetCantEscapeNow; JP target still needs a semantic label
-    [STRINGID_PKMNFELLINTONIGHTMARE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA061, // US: sText_PkmnFellIntoNightmare; JP target still needs a semantic label
-    [STRINGID_PKMNLOCKEDINNIGHTMARE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA071, // US: sText_PkmnLockedInNightmare; JP target still needs a semantic label
-    [STRINGID_PKMNLAIDCURSE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA083, // US: sText_PkmnLaidCurse; JP target still needs a semantic label
-    [STRINGID_PKMNAFFLICTEDBYCURSE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA0A6, // US: sText_PkmnAfflictedByCurse; JP target still needs a semantic label
-    [STRINGID_SPIKESSCATTERED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA0B3, // US: sText_SpikesScattered; JP target still needs a semantic label
-    [STRINGID_PKMNHURTBYSPIKES - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA0C9, // US: sText_PkmnHurtBySpikes; JP target still needs a semantic label
-    [STRINGID_PKMNIDENTIFIED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA0DE, // US: sText_PkmnIdentified; JP target still needs a semantic label
-    [STRINGID_PKMNPERISHCOUNTFELL - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA0F4, // US: sText_PkmnPerishCountFell; JP target still needs a semantic label
-    [STRINGID_PKMNBRACEDITSELF - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA10B, // US: sText_PkmnBracedItself; JP target still needs a semantic label
-    [STRINGID_PKMNENDUREDHIT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA120, // US: sText_PkmnEnduredHit; JP target still needs a semantic label
-    [STRINGID_MAGNITUDESTRENGTH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA130, // US: sText_MagnitudeStrength; JP target still needs a semantic label
-    [STRINGID_PKMNCUTHPMAXEDATTACK - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA13C, // US: sText_PkmnCutHPMaxedAttack; JP target still needs a semantic label
-    [STRINGID_PKMNCOPIEDSTATCHANGES - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA15A, // US: sText_PkmnCopiedStatChanges; JP target still needs a semantic label
-    [STRINGID_PKMNGOTFREE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA171, // US: sText_PkmnGotFree; JP target still needs a semantic label
-    [STRINGID_PKMNSHEDLEECHSEED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA187, // US: sText_PkmnShedLeechSeed; JP target still needs a semantic label
-    [STRINGID_PKMNBLEWAWAYSPIKES - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA19C, // US: sText_PkmnBlewAwaySpikes; JP target still needs a semantic label
-    [STRINGID_PKMNFLEDFROMBATTLE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA1AE, // US: sText_PkmnFledFromBattle; JP target still needs a semantic label
-    [STRINGID_PKMNFORESAWATTACK - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA1C0, // US: sText_PkmnForesawAttack; JP target still needs a semantic label
-    [STRINGID_PKMNTOOKATTACK - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA1D5, // US: sText_PkmnTookAttack; JP target still needs a semantic label
-    [STRINGID_PKMNATTACK - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA1FB, // US: sText_PkmnAttack; JP target still needs a semantic label
-    [STRINGID_PKMNCENTERATTENTION - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA205, // US: sText_PkmnCenterAttention; JP target still needs a semantic label
-    [STRINGID_PKMNCHARGINGPOWER - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA219, // US: sText_PkmnChargingPower; JP target still needs a semantic label
-    [STRINGID_NATUREPOWERTURNEDINTO - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA22A, // US: sText_NaturePowerTurnedInto; JP target still needs a semantic label
-    [STRINGID_PKMNSTATUSNORMAL - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA23C, // US: sText_PkmnStatusNormal; JP target still needs a semantic label
-    [STRINGID_PKMNHASNOMOVESLEFT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA51A, // US: sText_PkmnHasNoMovesLeft; JP target still needs a semantic label
-    [STRINGID_PKMNSUBJECTEDTOTORMENT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA251, // US: sText_PkmnSubjectedToTorment; JP target still needs a semantic label
-    [STRINGID_PKMNCANTUSEMOVETORMENT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA547, // US: sText_PkmnCantUseMoveTorment; JP target still needs a semantic label
-    [STRINGID_PKMNTIGHTENINGFOCUS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA263, // US: sText_PkmnTighteningFocus; JP target still needs a semantic label
-    [STRINGID_PKMNFELLFORTAUNT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA27A, // US: sText_PkmnFellForTaunt; JP target still needs a semantic label
-    [STRINGID_PKMNCANTUSEMOVETAUNT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA56E, // US: sText_PkmnCantUseMoveTaunt; JP target still needs a semantic label
-    [STRINGID_PKMNREADYTOHELP - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA28F, // US: sText_PkmnReadyToHelp; JP target still needs a semantic label
-    [STRINGID_PKMNSWITCHEDITEMS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA2AB, // US: sText_PkmnSwitchedItems; JP target still needs a semantic label
-    [STRINGID_PKMNCOPIEDFOE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA301, // US: sText_PkmnCopiedFoe; JP target still needs a semantic label
-    [STRINGID_PKMNMADEWISH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA314, // US: sText_PkmnMadeWish; JP target still needs a semantic label
-    [STRINGID_PKMNWISHCAMETRUE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA323, // US: sText_PkmnWishCameTrue; JP target still needs a semantic label
-    [STRINGID_PKMNPLANTEDROOTS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA334, // US: sText_PkmnPlantedRoots; JP target still needs a semantic label
-    [STRINGID_PKMNABSORBEDNUTRIENTS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA340, // US: sText_PkmnAbsorbedNutrients; JP target still needs a semantic label
-    [STRINGID_PKMNANCHOREDITSELF - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA355, // US: sText_PkmnAnchoredItself; JP target still needs a semantic label
-    [STRINGID_PKMNWASMADEDROWSY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA367, // US: sText_PkmnWasMadeDrowsy; JP target still needs a semantic label
-    [STRINGID_PKMNKNOCKEDOFF - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA37A, // US: sText_PkmnKnockedOff; JP target still needs a semantic label
-    [STRINGID_PKMNSWAPPEDABILITIES - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA38F, // US: sText_PkmnSwappedAbilities; JP target still needs a semantic label
-    [STRINGID_PKMNSEALEDOPPONENTMOVE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA3A6, // US: sText_PkmnSealedOpponentMove; JP target still needs a semantic label
-    [STRINGID_PKMNCANTUSEMOVESEALED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA587, // US: sText_PkmnCantUseMoveSealed; JP target still needs a semantic label
-    [STRINGID_PKMNWANTSGRUDGE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA3BB, // US: sText_PkmnWantsGrudge; JP target still needs a semantic label
-    [STRINGID_PKMNLOSTPPGRUDGE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA3D6, // US: sText_PkmnLostPPGrudge; JP target still needs a semantic label
-    [STRINGID_PKMNSHROUDEDITSELF - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA3F4, // US: sText_PkmnShroudedItself; JP target still needs a semantic label
-    [STRINGID_PKMNMOVEBOUNCED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA403, // US: sText_PkmnMoveBounced; JP target still needs a semantic label
-    [STRINGID_PKMNWAITSFORTARGET - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA41D, // US: sText_PkmnWaitsForTarget; JP target still needs a semantic label
-    [STRINGID_PKMNSNATCHEDMOVE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA434, // US: sText_PkmnSnatchedMove; JP target still needs a semantic label
-    [STRINGID_PKMNMADEITRAIN - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA59C, // US: sText_PkmnMadeItRain; JP target still needs a semantic label
-    [STRINGID_PKMNRAISEDSPEED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA5B0, // US: sText_PkmnRaisedSpeed; JP target still needs a semantic label
-    [STRINGID_PKMNPROTECTEDBY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA5C4, // US: sText_PkmnProtectedBy; JP target still needs a semantic label
-    [STRINGID_PKMNPREVENTSUSAGE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA5D4, // US: sText_PkmnPreventsUsage; JP target still needs a semantic label
-    [STRINGID_PKMNRESTOREDHPUSING - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA5EA, // US: sText_PkmnRestoredHPUsing; JP target still needs a semantic label
-    [STRINGID_PKMNCHANGEDTYPEWITH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA611, // US: sText_PkmnChangedTypeWith; JP target still needs a semantic label
-    [STRINGID_PKMNPREVENTSPARALYSISWITH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA625, // US: sText_PkmnPreventsParalysisWith; JP target still needs a semantic label
-    [STRINGID_PKMNPREVENTSROMANCEWITH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA634, // US: sText_PkmnPreventsRomanceWith; JP target still needs a semantic label
-    [STRINGID_PKMNPREVENTSPOISONINGWITH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA648, // US: sText_PkmnPreventsPoisoningWith; JP target still needs a semantic label
-    [STRINGID_PKMNPREVENTSCONFUSIONWITH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA65A, // US: sText_PkmnPreventsConfusionWith; JP target still needs a semantic label
-    [STRINGID_PKMNRAISEDFIREPOWERWITH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA66B, // US: sText_PkmnRaisedFirePowerWith; JP target still needs a semantic label
-    [STRINGID_PKMNANCHORSITSELFWITH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA684, // US: sText_PkmnAnchorsItselfWith; JP target still needs a semantic label
-    [STRINGID_PKMNCUTSATTACKWITH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA695, // US: sText_PkmnCutsAttackWith; JP target still needs a semantic label
-    [STRINGID_PKMNPREVENTSSTATLOSSWITH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA6B0, // US: sText_PkmnPreventsStatLossWith; JP target still needs a semantic label
-    [STRINGID_PKMNHURTSWITH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA6C6, // US: sText_PkmnHurtsWith; JP target still needs a semantic label
-    [STRINGID_PKMNTRACED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA6D9, // US: sText_PkmnTraced; JP target still needs a semantic label
-    [STRINGID_STATSHARPLY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA871, // US: sText_StatSharply; JP target still needs a semantic label
-    [STRINGID_STATROSE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA877, // US: gText_StatRose; JP target still needs a semantic label
-    [STRINGID_STATHARSHLY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA87D, // US: sText_StatHarshly; JP target still needs a semantic label
-    [STRINGID_STATFELL - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA883, // US: sText_StatFell; JP target still needs a semantic label
-    [STRINGID_ATTACKERSSTATROSE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA889, // US: sText_AttackersStatRose; JP target still needs a semantic label
-    [STRINGID_DEFENDERSSTATROSE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA894, // US: gText_DefendersStatRose; JP target still needs a semantic label
-    [STRINGID_ATTACKERSSTATFELL - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA8AE, // US: sText_AttackersStatFell; JP target still needs a semantic label
-    [STRINGID_DEFENDERSSTATFELL - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA8B9, // US: sText_DefendersStatFell; JP target still needs a semantic label
-    [STRINGID_CRITICALHIT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA8EE, // US: sText_CriticalHit; JP target still needs a semantic label
-    [STRINGID_ONEHITKO - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA8FB, // US: sText_OneHitKO; JP target still needs a semantic label
-    [STRINGID_123POOF - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA906, // US: sText_123Poof; JP target still needs a semantic label
-    [STRINGID_ANDELLIPSIS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA92B, // US: sText_AndEllipsis; JP target still needs a semantic label
-    [STRINGID_NOTVERYEFFECTIVE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA954, // US: sText_NotVeryEffective; JP target still needs a semantic label
-    [STRINGID_SUPEREFFECTIVE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA964, // US: sText_SuperEffective; JP target still needs a semantic label
-    [STRINGID_GOTAWAYSAFELY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA970, // US: sText_GotAwaySafely; JP target still needs a semantic label
-    [STRINGID_WILDPKMNFLED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA9B2, // US: sText_WildPkmnFled; JP target still needs a semantic label
-    [STRINGID_NORUNNINGFROMTRAINERS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAA58, // US: sText_NoRunningFromTrainers; JP target still needs a semantic label
-    [STRINGID_CANTESCAPE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAA7D, // US: sText_CantEscape; JP target still needs a semantic label
-    [STRINGID_DONTLEAVEBIRCH - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAA8B, // US: sText_DontLeaveBirch; JP target still needs a semantic label
-    [STRINGID_BUTNOTHINGHAPPENED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAA9F, // US: sText_ButNothingHappened; JP target still needs a semantic label
-    [STRINGID_BUTITFAILED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAAAC, // US: sText_ButItFailed; JP target still needs a semantic label
-    [STRINGID_ITHURTCONFUSION - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAABD, // US: sText_ItHurtConfusion; JP target still needs a semantic label
-    [STRINGID_MIRRORMOVEFAILED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAAD3, // US: sText_MirrorMoveFailed; JP target still needs a semantic label
-    [STRINGID_STARTEDTORAIN - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAAEA, // US: sText_StartedToRain; JP target still needs a semantic label
-    [STRINGID_DOWNPOURSTARTED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAAF6, // US: sText_DownpourStarted; JP target still needs a semantic label
-    [STRINGID_RAINCONTINUES - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAB01, // US: sText_RainContinues; JP target still needs a semantic label
-    [STRINGID_DOWNPOURCONTINUES - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAB0E, // US: sText_DownpourContinues; JP target still needs a semantic label
-    [STRINGID_RAINSTOPPED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAB1D, // US: sText_RainStopped; JP target still needs a semantic label
-    [STRINGID_SANDSTORMBREWED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAB28, // US: sText_SandstormBrewed; JP target still needs a semantic label
-    [STRINGID_SANDSTORMRAGES - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAB37, // US: sText_SandstormRages; JP target still needs a semantic label
-    [STRINGID_SANDSTORMSUBSIDED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAB44, // US: sText_SandstormSubsided; JP target still needs a semantic label
-    [STRINGID_SUNLIGHTGOTBRIGHT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAB52, // US: sText_SunlightGotBright; JP target still needs a semantic label
-    [STRINGID_SUNLIGHTSTRONG - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAB5F, // US: sText_SunlightStrong; JP target still needs a semantic label
-    [STRINGID_SUNLIGHTFADED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAB68, // US: sText_SunlightFaded; JP target still needs a semantic label
-    [STRINGID_STARTEDHAIL - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAB75, // US: sText_StartedHail; JP target still needs a semantic label
-    [STRINGID_HAILCONTINUES - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAB82, // US: sText_HailContinues; JP target still needs a semantic label
-    [STRINGID_HAILSTOPPED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAB90, // US: sText_HailStopped; JP target still needs a semantic label
-    [STRINGID_FAILEDTOSPITUP - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAB9C, // US: sText_FailedToSpitUp; JP target still needs a semantic label
-    [STRINGID_FAILEDTOSWALLOW - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AABAE, // US: sText_FailedToSwallow; JP target still needs a semantic label
-    [STRINGID_WINDBECAMEHEATWAVE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AABC0, // US: sText_WindBecameHeatWave; JP target still needs a semantic label
-    [STRINGID_STATCHANGESGONE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AABCF, // US: sText_StatChangesGone; JP target still needs a semantic label
-    [STRINGID_COINSSCATTERED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AABE5, // US: sText_CoinsScattered; JP target still needs a semantic label
-    [STRINGID_TOOWEAKFORSUBSTITUTE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AABF6, // US: sText_TooWeakForSubstitute; JP target still needs a semantic label
-    [STRINGID_SHAREDPAIN - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAC14, // US: sText_SharedPain; JP target still needs a semantic label
-    [STRINGID_BELLCHIMED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAC29, // US: sText_BellChimed; JP target still needs a semantic label
-    [STRINGID_FAINTINTHREE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAC38, // US: sText_FaintInThree; JP target still needs a semantic label
-    [STRINGID_NOPPLEFT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAC53, // US: sText_NoPPLeft; JP target still needs a semantic label
-    [STRINGID_BUTNOPPLEFT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAC65, // US: sText_ButNoPPLeft; JP target still needs a semantic label
+    [STRINGID_PKMNSHROUDEDINMIST - BATTLESTRINGS_TABLE_START] = gText_PkmnShroudedInMist,
+    [STRINGID_PKMNPROTECTEDBYMIST - BATTLESTRINGS_TABLE_START] = sText_PkmnProtectedByMist,
+    [STRINGID_PKMNGETTINGPUMPED - BATTLESTRINGS_TABLE_START] = gText_PkmnGettingPumped,
+    [STRINGID_PKMNHITWITHRECOIL - BATTLESTRINGS_TABLE_START] = sText_PkmnHitWithRecoil,
+    [STRINGID_PKMNPROTECTEDITSELF2 - BATTLESTRINGS_TABLE_START] = sText_PkmnProtectedItself2,
+    [STRINGID_PKMNBUFFETEDBYSANDSTORM - BATTLESTRINGS_TABLE_START] = sText_PkmnBuffetedBySandstorm,
+    [STRINGID_PKMNPELTEDBYHAIL - BATTLESTRINGS_TABLE_START] = sText_PkmnPeltedByHail,
+    [STRINGID_PKMNSEEDED - BATTLESTRINGS_TABLE_START] = sText_PkmnSeeded,
+    [STRINGID_PKMNEVADEDATTACK - BATTLESTRINGS_TABLE_START] = sText_PkmnEvadedAttack,
+    [STRINGID_PKMNSAPPEDBYLEECHSEED - BATTLESTRINGS_TABLE_START] = sText_PkmnSappedByLeechSeed,
+    [STRINGID_PKMNFASTASLEEP - BATTLESTRINGS_TABLE_START] = sText_PkmnFastAsleep,
+    [STRINGID_PKMNWOKEUP - BATTLESTRINGS_TABLE_START] = sText_PkmnWokeUp,
+    [STRINGID_PKMNUPROARKEPTAWAKE - BATTLESTRINGS_TABLE_START] = sText_PkmnUproarKeptAwake,
+    [STRINGID_PKMNWOKEUPINUPROAR - BATTLESTRINGS_TABLE_START] = sText_PkmnWokeUpInUproar,
+    [STRINGID_PKMNCAUSEDUPROAR - BATTLESTRINGS_TABLE_START] = sText_PkmnCausedUproar,
+    [STRINGID_PKMNMAKINGUPROAR - BATTLESTRINGS_TABLE_START] = sText_PkmnMakingUproar,
+    [STRINGID_PKMNCALMEDDOWN - BATTLESTRINGS_TABLE_START] = sText_PkmnCalmedDown,
+    [STRINGID_PKMNCANTSLEEPINUPROAR - BATTLESTRINGS_TABLE_START] = sText_PkmnCantSleepInUproar,
+    [STRINGID_PKMNSTOCKPILED - BATTLESTRINGS_TABLE_START] = sText_PkmnStockpiled,
+    [STRINGID_PKMNCANTSTOCKPILE - BATTLESTRINGS_TABLE_START] = sText_PkmnCantStockpile,
+    [STRINGID_PKMNCANTSLEEPINUPROAR2 - BATTLESTRINGS_TABLE_START] = sText_PkmnCantSleepInUproar2,
+    [STRINGID_UPROARKEPTPKMNAWAKE - BATTLESTRINGS_TABLE_START] = sText_UproarKeptPkmnAwake,
+    [STRINGID_PKMNSTAYEDAWAKEUSING - BATTLESTRINGS_TABLE_START] = sText_PkmnStayedAwakeUsing,
+    [STRINGID_PKMNSTORINGENERGY - BATTLESTRINGS_TABLE_START] = sText_PkmnStoringEnergy,
+    [STRINGID_PKMNUNLEASHEDENERGY - BATTLESTRINGS_TABLE_START] = sText_PkmnUnleashedEnergy,
+    [STRINGID_PKMNFATIGUECONFUSION - BATTLESTRINGS_TABLE_START] = sText_PkmnFatigueConfusion,
+    [STRINGID_PLAYERPICKEDUPMONEY - BATTLESTRINGS_TABLE_START] = sText_PlayerPickedUpMoney,
+    [STRINGID_PKMNUNAFFECTED - BATTLESTRINGS_TABLE_START] = sText_PkmnUnaffected,
+    [STRINGID_PKMNTRANSFORMEDINTO - BATTLESTRINGS_TABLE_START] = sText_PkmnTransformedInto,
+    [STRINGID_PKMNMADESUBSTITUTE - BATTLESTRINGS_TABLE_START] = sText_PkmnMadeSubstitute,
+    [STRINGID_PKMNHASSUBSTITUTE - BATTLESTRINGS_TABLE_START] = sText_PkmnHasSubstitute,
+    [STRINGID_SUBSTITUTEDAMAGED - BATTLESTRINGS_TABLE_START] = sText_SubstituteDamaged,
+    [STRINGID_PKMNSUBSTITUTEFADED - BATTLESTRINGS_TABLE_START] = sText_PkmnSubstituteFaded,
+    [STRINGID_PKMNMUSTRECHARGE - BATTLESTRINGS_TABLE_START] = sText_PkmnMustRecharge,
+    [STRINGID_PKMNRAGEBUILDING - BATTLESTRINGS_TABLE_START] = sText_PkmnRageBuilding,
+    [STRINGID_PKMNMOVEWASDISABLED - BATTLESTRINGS_TABLE_START] = sText_PkmnMoveWasDisabled,
+    [STRINGID_PKMNMOVEISDISABLED - BATTLESTRINGS_TABLE_START] = sText_PkmnMoveIsDisabled,
+    [STRINGID_PKMNMOVEDISABLEDNOMORE - BATTLESTRINGS_TABLE_START] = sText_PkmnMoveDisabledNoMore,
+    [STRINGID_PKMNGOTENCORE - BATTLESTRINGS_TABLE_START] = sText_PkmnGotEncore,
+    [STRINGID_PKMNENCOREENDED - BATTLESTRINGS_TABLE_START] = sText_PkmnEncoreEnded,
+    [STRINGID_PKMNTOOKAIM - BATTLESTRINGS_TABLE_START] = sText_PkmnTookAim,
+    [STRINGID_PKMNSKETCHEDMOVE - BATTLESTRINGS_TABLE_START] = sText_PkmnSketchedMove,
+    [STRINGID_PKMNTRYINGTOTAKEFOE - BATTLESTRINGS_TABLE_START] = sText_PkmnTryingToTakeFoe,
+    [STRINGID_PKMNTOOKFOE - BATTLESTRINGS_TABLE_START] = sText_PkmnTookFoe,
+    [STRINGID_PKMNREDUCEDPP - BATTLESTRINGS_TABLE_START] = sText_PkmnReducedPP,
+    [STRINGID_PKMNSTOLEITEM - BATTLESTRINGS_TABLE_START] = sText_PkmnStoleItem,
+    [STRINGID_TARGETCANTESCAPENOW - BATTLESTRINGS_TABLE_START] = sText_TargetCantEscapeNow,
+    [STRINGID_PKMNFELLINTONIGHTMARE - BATTLESTRINGS_TABLE_START] = sText_PkmnFellIntoNightmare,
+    [STRINGID_PKMNLOCKEDINNIGHTMARE - BATTLESTRINGS_TABLE_START] = sText_PkmnLockedInNightmare,
+    [STRINGID_PKMNLAIDCURSE - BATTLESTRINGS_TABLE_START] = sText_PkmnLaidCurse,
+    [STRINGID_PKMNAFFLICTEDBYCURSE - BATTLESTRINGS_TABLE_START] = sText_PkmnAfflictedByCurse,
+    [STRINGID_SPIKESSCATTERED - BATTLESTRINGS_TABLE_START] = sText_SpikesScattered,
+    [STRINGID_PKMNHURTBYSPIKES - BATTLESTRINGS_TABLE_START] = sText_PkmnHurtBySpikes,
+    [STRINGID_PKMNIDENTIFIED - BATTLESTRINGS_TABLE_START] = sText_PkmnIdentified,
+    [STRINGID_PKMNPERISHCOUNTFELL - BATTLESTRINGS_TABLE_START] = sText_PkmnPerishCountFell,
+    [STRINGID_PKMNBRACEDITSELF - BATTLESTRINGS_TABLE_START] = sText_PkmnBracedItself,
+    [STRINGID_PKMNENDUREDHIT - BATTLESTRINGS_TABLE_START] = sText_PkmnEnduredHit,
+    [STRINGID_MAGNITUDESTRENGTH - BATTLESTRINGS_TABLE_START] = sText_MagnitudeStrength,
+    [STRINGID_PKMNCUTHPMAXEDATTACK - BATTLESTRINGS_TABLE_START] = sText_PkmnCutHPMaxedAttack,
+    [STRINGID_PKMNCOPIEDSTATCHANGES - BATTLESTRINGS_TABLE_START] = sText_PkmnCopiedStatChanges,
+    [STRINGID_PKMNGOTFREE - BATTLESTRINGS_TABLE_START] = sText_PkmnGotFree,
+    [STRINGID_PKMNSHEDLEECHSEED - BATTLESTRINGS_TABLE_START] = sText_PkmnShedLeechSeed,
+    [STRINGID_PKMNBLEWAWAYSPIKES - BATTLESTRINGS_TABLE_START] = sText_PkmnBlewAwaySpikes,
+    [STRINGID_PKMNFLEDFROMBATTLE - BATTLESTRINGS_TABLE_START] = sText_PkmnFledFromBattle,
+    [STRINGID_PKMNFORESAWATTACK - BATTLESTRINGS_TABLE_START] = sText_PkmnForesawAttack,
+    [STRINGID_PKMNTOOKATTACK - BATTLESTRINGS_TABLE_START] = sText_PkmnTookAttack,
+    [STRINGID_PKMNATTACK - BATTLESTRINGS_TABLE_START] = sText_PkmnAttack,
+    [STRINGID_PKMNCENTERATTENTION - BATTLESTRINGS_TABLE_START] = sText_PkmnCenterAttention,
+    [STRINGID_PKMNCHARGINGPOWER - BATTLESTRINGS_TABLE_START] = sText_PkmnChargingPower,
+    [STRINGID_NATUREPOWERTURNEDINTO - BATTLESTRINGS_TABLE_START] = sText_NaturePowerTurnedInto,
+    [STRINGID_PKMNSTATUSNORMAL - BATTLESTRINGS_TABLE_START] = sText_PkmnStatusNormal,
+    [STRINGID_PKMNHASNOMOVESLEFT - BATTLESTRINGS_TABLE_START] = sText_PkmnHasNoMovesLeft,
+    [STRINGID_PKMNSUBJECTEDTOTORMENT - BATTLESTRINGS_TABLE_START] = sText_PkmnSubjectedToTorment,
+    [STRINGID_PKMNCANTUSEMOVETORMENT - BATTLESTRINGS_TABLE_START] = sText_PkmnCantUseMoveTorment,
+    [STRINGID_PKMNTIGHTENINGFOCUS - BATTLESTRINGS_TABLE_START] = sText_PkmnTighteningFocus,
+    [STRINGID_PKMNFELLFORTAUNT - BATTLESTRINGS_TABLE_START] = sText_PkmnFellForTaunt,
+    [STRINGID_PKMNCANTUSEMOVETAUNT - BATTLESTRINGS_TABLE_START] = sText_PkmnCantUseMoveTaunt,
+    [STRINGID_PKMNREADYTOHELP - BATTLESTRINGS_TABLE_START] = sText_PkmnReadyToHelp,
+    [STRINGID_PKMNSWITCHEDITEMS - BATTLESTRINGS_TABLE_START] = sText_PkmnSwitchedItems,
+    [STRINGID_PKMNCOPIEDFOE - BATTLESTRINGS_TABLE_START] = sText_PkmnCopiedFoe,
+    [STRINGID_PKMNMADEWISH - BATTLESTRINGS_TABLE_START] = sText_PkmnMadeWish,
+    [STRINGID_PKMNWISHCAMETRUE - BATTLESTRINGS_TABLE_START] = sText_PkmnWishCameTrue,
+    [STRINGID_PKMNPLANTEDROOTS - BATTLESTRINGS_TABLE_START] = sText_PkmnPlantedRoots,
+    [STRINGID_PKMNABSORBEDNUTRIENTS - BATTLESTRINGS_TABLE_START] = sText_PkmnAbsorbedNutrients,
+    [STRINGID_PKMNANCHOREDITSELF - BATTLESTRINGS_TABLE_START] = sText_PkmnAnchoredItself,
+    [STRINGID_PKMNWASMADEDROWSY - BATTLESTRINGS_TABLE_START] = sText_PkmnWasMadeDrowsy,
+    [STRINGID_PKMNKNOCKEDOFF - BATTLESTRINGS_TABLE_START] = sText_PkmnKnockedOff,
+    [STRINGID_PKMNSWAPPEDABILITIES - BATTLESTRINGS_TABLE_START] = sText_PkmnSwappedAbilities,
+    [STRINGID_PKMNSEALEDOPPONENTMOVE - BATTLESTRINGS_TABLE_START] = sText_PkmnSealedOpponentMove,
+    [STRINGID_PKMNCANTUSEMOVESEALED - BATTLESTRINGS_TABLE_START] = sText_PkmnCantUseMoveSealed,
+    [STRINGID_PKMNWANTSGRUDGE - BATTLESTRINGS_TABLE_START] = sText_PkmnWantsGrudge,
+    [STRINGID_PKMNLOSTPPGRUDGE - BATTLESTRINGS_TABLE_START] = sText_PkmnLostPPGrudge,
+    [STRINGID_PKMNSHROUDEDITSELF - BATTLESTRINGS_TABLE_START] = sText_PkmnShroudedItself,
+    [STRINGID_PKMNMOVEBOUNCED - BATTLESTRINGS_TABLE_START] = sText_PkmnMoveBounced,
+    [STRINGID_PKMNWAITSFORTARGET - BATTLESTRINGS_TABLE_START] = sText_PkmnWaitsForTarget,
+    [STRINGID_PKMNSNATCHEDMOVE - BATTLESTRINGS_TABLE_START] = sText_PkmnSnatchedMove,
+    [STRINGID_PKMNMADEITRAIN - BATTLESTRINGS_TABLE_START] = sText_PkmnMadeItRain,
+    [STRINGID_PKMNRAISEDSPEED - BATTLESTRINGS_TABLE_START] = sText_PkmnRaisedSpeed,
+    [STRINGID_PKMNPROTECTEDBY - BATTLESTRINGS_TABLE_START] = sText_PkmnProtectedBy,
+    [STRINGID_PKMNPREVENTSUSAGE - BATTLESTRINGS_TABLE_START] = sText_PkmnPreventsUsage,
+    [STRINGID_PKMNRESTOREDHPUSING - BATTLESTRINGS_TABLE_START] = sText_PkmnRestoredHPUsing,
+    [STRINGID_PKMNCHANGEDTYPEWITH - BATTLESTRINGS_TABLE_START] = sText_PkmnChangedTypeWith,
+    [STRINGID_PKMNPREVENTSPARALYSISWITH - BATTLESTRINGS_TABLE_START] = sText_PkmnPreventsParalysisWith,
+    [STRINGID_PKMNPREVENTSROMANCEWITH - BATTLESTRINGS_TABLE_START] = sText_PkmnPreventsRomanceWith,
+    [STRINGID_PKMNPREVENTSPOISONINGWITH - BATTLESTRINGS_TABLE_START] = sText_PkmnPreventsPoisoningWith,
+    [STRINGID_PKMNPREVENTSCONFUSIONWITH - BATTLESTRINGS_TABLE_START] = sText_PkmnPreventsConfusionWith,
+    [STRINGID_PKMNRAISEDFIREPOWERWITH - BATTLESTRINGS_TABLE_START] = sText_PkmnRaisedFirePowerWith,
+    [STRINGID_PKMNANCHORSITSELFWITH - BATTLESTRINGS_TABLE_START] = sText_PkmnAnchorsItselfWith,
+    [STRINGID_PKMNCUTSATTACKWITH - BATTLESTRINGS_TABLE_START] = sText_PkmnCutsAttackWith,
+    [STRINGID_PKMNPREVENTSSTATLOSSWITH - BATTLESTRINGS_TABLE_START] = sText_PkmnPreventsStatLossWith,
+    [STRINGID_PKMNHURTSWITH - BATTLESTRINGS_TABLE_START] = sText_PkmnHurtsWith,
+    [STRINGID_PKMNTRACED - BATTLESTRINGS_TABLE_START] = sText_PkmnTraced,
+    [STRINGID_STATSHARPLY - BATTLESTRINGS_TABLE_START] = sText_StatSharply,
+    [STRINGID_STATROSE - BATTLESTRINGS_TABLE_START] = gText_StatRose,
+    [STRINGID_STATHARSHLY - BATTLESTRINGS_TABLE_START] = sText_StatHarshly,
+    [STRINGID_STATFELL - BATTLESTRINGS_TABLE_START] = sText_StatFell,
+    [STRINGID_ATTACKERSSTATROSE - BATTLESTRINGS_TABLE_START] = sText_AttackersStatRose,
+    [STRINGID_DEFENDERSSTATROSE - BATTLESTRINGS_TABLE_START] = gText_DefendersStatRose,
+    [STRINGID_ATTACKERSSTATFELL - BATTLESTRINGS_TABLE_START] = sText_AttackersStatFell,
+    [STRINGID_DEFENDERSSTATFELL - BATTLESTRINGS_TABLE_START] = sText_DefendersStatFell,
+    [STRINGID_CRITICALHIT - BATTLESTRINGS_TABLE_START] = sText_CriticalHit,
+    [STRINGID_ONEHITKO - BATTLESTRINGS_TABLE_START] = sText_OneHitKO,
+    [STRINGID_123POOF - BATTLESTRINGS_TABLE_START] = sText_123Poof,
+    [STRINGID_ANDELLIPSIS - BATTLESTRINGS_TABLE_START] = sText_AndEllipsis,
+    [STRINGID_NOTVERYEFFECTIVE - BATTLESTRINGS_TABLE_START] = sText_NotVeryEffective,
+    [STRINGID_SUPEREFFECTIVE - BATTLESTRINGS_TABLE_START] = sText_SuperEffective,
+    [STRINGID_GOTAWAYSAFELY - BATTLESTRINGS_TABLE_START] = sText_GotAwaySafely,
+    [STRINGID_WILDPKMNFLED - BATTLESTRINGS_TABLE_START] = sText_WildPkmnFled,
+    [STRINGID_NORUNNINGFROMTRAINERS - BATTLESTRINGS_TABLE_START] = sText_NoRunningFromTrainers,
+    [STRINGID_CANTESCAPE - BATTLESTRINGS_TABLE_START] = sText_CantEscape,
+    [STRINGID_DONTLEAVEBIRCH - BATTLESTRINGS_TABLE_START] = sText_DontLeaveBirch,
+    [STRINGID_BUTNOTHINGHAPPENED - BATTLESTRINGS_TABLE_START] = sText_ButNothingHappened,
+    [STRINGID_BUTITFAILED - BATTLESTRINGS_TABLE_START] = sText_ButItFailed,
+    [STRINGID_ITHURTCONFUSION - BATTLESTRINGS_TABLE_START] = sText_ItHurtConfusion,
+    [STRINGID_MIRRORMOVEFAILED - BATTLESTRINGS_TABLE_START] = sText_MirrorMoveFailed,
+    [STRINGID_STARTEDTORAIN - BATTLESTRINGS_TABLE_START] = sText_StartedToRain,
+    [STRINGID_DOWNPOURSTARTED - BATTLESTRINGS_TABLE_START] = sText_DownpourStarted,
+    [STRINGID_RAINCONTINUES - BATTLESTRINGS_TABLE_START] = sText_RainContinues,
+    [STRINGID_DOWNPOURCONTINUES - BATTLESTRINGS_TABLE_START] = sText_DownpourContinues,
+    [STRINGID_RAINSTOPPED - BATTLESTRINGS_TABLE_START] = sText_RainStopped,
+    [STRINGID_SANDSTORMBREWED - BATTLESTRINGS_TABLE_START] = sText_SandstormBrewed,
+    [STRINGID_SANDSTORMRAGES - BATTLESTRINGS_TABLE_START] = sText_SandstormRages,
+    [STRINGID_SANDSTORMSUBSIDED - BATTLESTRINGS_TABLE_START] = sText_SandstormSubsided,
+    [STRINGID_SUNLIGHTGOTBRIGHT - BATTLESTRINGS_TABLE_START] = sText_SunlightGotBright,
+    [STRINGID_SUNLIGHTSTRONG - BATTLESTRINGS_TABLE_START] = sText_SunlightStrong,
+    [STRINGID_SUNLIGHTFADED - BATTLESTRINGS_TABLE_START] = sText_SunlightFaded,
+    [STRINGID_STARTEDHAIL - BATTLESTRINGS_TABLE_START] = sText_StartedHail,
+    [STRINGID_HAILCONTINUES - BATTLESTRINGS_TABLE_START] = sText_HailContinues,
+    [STRINGID_HAILSTOPPED - BATTLESTRINGS_TABLE_START] = sText_HailStopped,
+    [STRINGID_FAILEDTOSPITUP - BATTLESTRINGS_TABLE_START] = sText_FailedToSpitUp,
+    [STRINGID_FAILEDTOSWALLOW - BATTLESTRINGS_TABLE_START] = sText_FailedToSwallow,
+    [STRINGID_WINDBECAMEHEATWAVE - BATTLESTRINGS_TABLE_START] = sText_WindBecameHeatWave,
+    [STRINGID_STATCHANGESGONE - BATTLESTRINGS_TABLE_START] = sText_StatChangesGone,
+    [STRINGID_COINSSCATTERED - BATTLESTRINGS_TABLE_START] = sText_CoinsScattered,
+    [STRINGID_TOOWEAKFORSUBSTITUTE - BATTLESTRINGS_TABLE_START] = sText_TooWeakForSubstitute,
+    [STRINGID_SHAREDPAIN - BATTLESTRINGS_TABLE_START] = sText_SharedPain,
+    [STRINGID_BELLCHIMED - BATTLESTRINGS_TABLE_START] = sText_BellChimed,
+    [STRINGID_FAINTINTHREE - BATTLESTRINGS_TABLE_START] = sText_FaintInThree,
+    [STRINGID_NOPPLEFT - BATTLESTRINGS_TABLE_START] = sText_NoPPLeft,
+    [STRINGID_BUTNOPPLEFT - BATTLESTRINGS_TABLE_START] = sText_ButNoPPLeft,
     [STRINGID_PLAYERUSEDITEM - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB0E4, // US: sText_PlayerUsedItem; JP target still needs a semantic label
     [STRINGID_WALLYUSEDITEM - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB0F3, // US: sText_WallyUsedItem; JP target still needs a semantic label
     [STRINGID_TRAINERBLOCKEDBALL - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB115, // US: sText_TrainerBlockedBall; JP target still needs a semantic label
@@ -866,22 +1812,22 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT - BATTLESTRINGS_TABLE_ST
     [STRINGID_ITISRAINING - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB251, // US: sText_ItIsRaining; JP target still needs a semantic label
     [STRINGID_SANDSTORMISRAGING - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB25B, // US: sText_SandstormIsRaging; JP target still needs a semantic label
     [STRINGID_CANTESCAPE2 - BATTLESTRINGS_TABLE_START] = sText_CantEscape2,
-    [STRINGID_PKMNIGNORESASLEEP - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAC7C, // US: sText_PkmnIgnoresAsleep; JP target still needs a semantic label
-    [STRINGID_PKMNIGNOREDORDERS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAC93, // US: sText_PkmnIgnoredOrders; JP target still needs a semantic label
-    [STRINGID_PKMNBEGANTONAP - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AACA3, // US: sText_PkmnBeganToNap; JP target still needs a semantic label
-    [STRINGID_PKMNLOAFING - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AACB2, // US: sText_PkmnLoafing; JP target still needs a semantic label
-    [STRINGID_PKMNWONTOBEY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AACBE, // US: sText_PkmnWontObey; JP target still needs a semantic label
-    [STRINGID_PKMNTURNEDAWAY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AACCE, // US: sText_PkmnTurnedAway; JP target still needs a semantic label
-    [STRINGID_PKMNPRETENDNOTNOTICE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AACDC, // US: sText_PkmnPretendNotNotice; JP target still needs a semantic label
-    [STRINGID_ENEMYABOUTTOSWITCHPKMN - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AACE9, // US: sText_EnemyAboutToSwitchPkmn; JP target still needs a semantic label
-    [STRINGID_CREPTCLOSER - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAD38, // US: sText_CreptCloser; JP target still needs a semantic label
-    [STRINGID_CANTGETCLOSER - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAD47, // US: sText_CantGetCloser; JP target still needs a semantic label
-    [STRINGID_PKMNWATCHINGCAREFULLY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAD5A, // US: sText_PkmnWatchingCarefully; JP target still needs a semantic label
-    [STRINGID_PKMNCURIOUSABOUTX - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAD71, // US: sText_PkmnCuriousAboutX; JP target still needs a semantic label
-    [STRINGID_PKMNENTHRALLEDBYX - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAD8B, // US: sText_PkmnEnthralledByX; JP target still needs a semantic label
-    [STRINGID_PKMNIGNOREDX - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AADA4, // US: sText_PkmnIgnoredX; JP target still needs a semantic label
-    [STRINGID_THREWPOKEBLOCKATPKMN - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AADBA, // US: sText_ThrewPokeblockAtPkmn; JP target still needs a semantic label
-    [STRINGID_OUTOFSAFARIBALLS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AADCD, // US: sText_OutOfSafariBalls; JP target still needs a semantic label
+    [STRINGID_PKMNIGNORESASLEEP - BATTLESTRINGS_TABLE_START] = sText_PkmnIgnoresAsleep,
+    [STRINGID_PKMNIGNOREDORDERS - BATTLESTRINGS_TABLE_START] = sText_PkmnIgnoredOrders,
+    [STRINGID_PKMNBEGANTONAP - BATTLESTRINGS_TABLE_START] = sText_PkmnBeganToNap,
+    [STRINGID_PKMNLOAFING - BATTLESTRINGS_TABLE_START] = sText_PkmnLoafing,
+    [STRINGID_PKMNWONTOBEY - BATTLESTRINGS_TABLE_START] = sText_PkmnWontObey,
+    [STRINGID_PKMNTURNEDAWAY - BATTLESTRINGS_TABLE_START] = sText_PkmnTurnedAway,
+    [STRINGID_PKMNPRETENDNOTNOTICE - BATTLESTRINGS_TABLE_START] = sText_PkmnPretendNotNotice,
+    [STRINGID_ENEMYABOUTTOSWITCHPKMN - BATTLESTRINGS_TABLE_START] = sText_EnemyAboutToSwitchPkmn,
+    [STRINGID_CREPTCLOSER - BATTLESTRINGS_TABLE_START] = sText_CreptCloser,
+    [STRINGID_CANTGETCLOSER - BATTLESTRINGS_TABLE_START] = sText_CantGetCloser,
+    [STRINGID_PKMNWATCHINGCAREFULLY - BATTLESTRINGS_TABLE_START] = sText_PkmnWatchingCarefully,
+    [STRINGID_PKMNCURIOUSABOUTX - BATTLESTRINGS_TABLE_START] = sText_PkmnCuriousAboutX,
+    [STRINGID_PKMNENTHRALLEDBYX - BATTLESTRINGS_TABLE_START] = sText_PkmnEnthralledByX,
+    [STRINGID_PKMNIGNOREDX - BATTLESTRINGS_TABLE_START] = sText_PkmnIgnoredX,
+    [STRINGID_THREWPOKEBLOCKATPKMN - BATTLESTRINGS_TABLE_START] = sText_ThrewPokeblockAtPkmn,
+    [STRINGID_OUTOFSAFARIBALLS - BATTLESTRINGS_TABLE_START] = sText_OutOfSafariBalls,
     [STRINGID_PKMNSITEMCUREDPARALYSIS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB290, // US: sText_PkmnsItemCuredParalysis; JP target still needs a semantic label
     [STRINGID_PKMNSITEMCUREDPOISON - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB2A2, // US: sText_PkmnsItemCuredPoison; JP target still needs a semantic label
     [STRINGID_PKMNSITEMHEALEDBURN - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB2B4, // US: sText_PkmnsItemHealedBurn; JP target still needs a semantic label
@@ -896,64 +1842,64 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT - BATTLESTRINGS_TABLE_ST
     [STRINGID_ITEMALLOWSONLYYMOVE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB393, // US: sText_ItemAllowsOnlyYMove; JP target still needs a semantic label
     [STRINGID_PKMNHUNGONWITHX - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB3AD, // US: sText_PkmnHungOnWithX; JP target still needs a semantic label
     [STRINGID_EMPTYSTRING3 - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB3BD, // US: gText_EmptyString3; JP target still needs a semantic label
-    [STRINGID_PKMNSXPREVENTSBURNS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA6ED, // US: sText_PkmnsXPreventsBurns; JP target still needs a semantic label
-    [STRINGID_PKMNSXBLOCKSY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA6FD, // US: sText_PkmnsXBlocksY; JP target still needs a semantic label
-    [STRINGID_PKMNSXRESTOREDHPALITTLE2 - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA721, // US: sText_PkmnsXRestoredHPALittle2; JP target still needs a semantic label
-    [STRINGID_PKMNSXWHIPPEDUPSANDSTORM - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA732, // US: sText_PkmnsXWhippedUpSandstorm; JP target still needs a semantic label
-    [STRINGID_PKMNSXPREVENTSYLOSS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA75B, // US: sText_PkmnsXPreventsYLoss; JP target still needs a semantic label
-    [STRINGID_PKMNSXINFATUATEDY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA76E, // US: sText_PkmnsXInfatuatedY; JP target still needs a semantic label
-    [STRINGID_PKMNSXMADEYINEFFECTIVE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA785, // US: sText_PkmnsXMadeYIneffective; JP target still needs a semantic label
-    [STRINGID_PKMNSXCUREDYPROBLEM - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA797, // US: sText_PkmnsXCuredYProblem; JP target still needs a semantic label
-    [STRINGID_ITSUCKEDLIQUIDOOZE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA7AE, // US: sText_ItSuckedLiquidOoze; JP target still needs a semantic label
-    [STRINGID_PKMNTRANSFORMED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA7BC, // US: sText_PkmnTransformed; JP target still needs a semantic label
-    [STRINGID_ELECTRICITYWEAKENED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA448, // US: sText_ElectricityWeakened; JP target still needs a semantic label
-    [STRINGID_FIREWEAKENED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA45A, // US: sText_FireWeakened; JP target still needs a semantic label
+    [STRINGID_PKMNSXPREVENTSBURNS - BATTLESTRINGS_TABLE_START] = sText_PkmnsXPreventsBurns,
+    [STRINGID_PKMNSXBLOCKSY - BATTLESTRINGS_TABLE_START] = sText_PkmnsXBlocksY,
+    [STRINGID_PKMNSXRESTOREDHPALITTLE2 - BATTLESTRINGS_TABLE_START] = sText_PkmnsXRestoredHPALittle2,
+    [STRINGID_PKMNSXWHIPPEDUPSANDSTORM - BATTLESTRINGS_TABLE_START] = sText_PkmnsXWhippedUpSandstorm,
+    [STRINGID_PKMNSXPREVENTSYLOSS - BATTLESTRINGS_TABLE_START] = sText_PkmnsXPreventsYLoss,
+    [STRINGID_PKMNSXINFATUATEDY - BATTLESTRINGS_TABLE_START] = sText_PkmnsXInfatuatedY,
+    [STRINGID_PKMNSXMADEYINEFFECTIVE - BATTLESTRINGS_TABLE_START] = sText_PkmnsXMadeYIneffective,
+    [STRINGID_PKMNSXCUREDYPROBLEM - BATTLESTRINGS_TABLE_START] = sText_PkmnsXCuredYProblem,
+    [STRINGID_ITSUCKEDLIQUIDOOZE - BATTLESTRINGS_TABLE_START] = sText_ItSuckedLiquidOoze,
+    [STRINGID_PKMNTRANSFORMED - BATTLESTRINGS_TABLE_START] = sText_PkmnTransformed,
+    [STRINGID_ELECTRICITYWEAKENED - BATTLESTRINGS_TABLE_START] = sText_ElectricityWeakened,
+    [STRINGID_FIREWEAKENED - BATTLESTRINGS_TABLE_START] = sText_FireWeakened,
     [STRINGID_PKMNHIDUNDERWATER - BATTLESTRINGS_TABLE_START] = sText_PkmnHidUnderwater,
     [STRINGID_PKMNSPRANGUP - BATTLESTRINGS_TABLE_START] = sText_PkmnSprangUp,
-    [STRINGID_HMMOVESCANTBEFORGOTTEN - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA933, // US: sText_HMMovesCantBeForgotten; JP target still needs a semantic label
-    [STRINGID_XFOUNDONEY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA46C, // US: sText_XFoundOneY; JP target still needs a semantic label
-    [STRINGID_PLAYERDEFEATEDTRAINER1 - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AAD22, // US: sText_PlayerDefeatedLinkTrainerTrainer1; JP target still needs a semantic label
-    [STRINGID_SOOTHINGAROMA - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA47C, // US: sText_SoothingAroma; JP target still needs a semantic label
-    [STRINGID_ITEMSCANTBEUSEDNOW - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA48E, // US: sText_ItemsCantBeUsedNow; JP target still needs a semantic label
-    [STRINGID_FORXCOMMAYZ - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA4A9, // US: sText_ForXCommaYZ; JP target still needs a semantic label
-    [STRINGID_USINGITEMSTATOFPKMNROSE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA89F, // US: sText_UsingItemTheStatOfPkmnRose; JP target still needs a semantic label
-    [STRINGID_PKMNUSEDXTOGETPUMPED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA4B5, // US: sText_PkmnUsedXToGetPumped; JP target still needs a semantic label
-    [STRINGID_PKMNSXMADEYUSELESS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA5FA, // US: sText_PkmnsXMadeYUseless; JP target still needs a semantic label
+    [STRINGID_HMMOVESCANTBEFORGOTTEN - BATTLESTRINGS_TABLE_START] = sText_HMMovesCantBeForgotten,
+    [STRINGID_XFOUNDONEY - BATTLESTRINGS_TABLE_START] = sText_XFoundOneY,
+    [STRINGID_PLAYERDEFEATEDTRAINER1 - BATTLESTRINGS_TABLE_START] = sText_PlayerDefeatedLinkTrainerTrainer1,
+    [STRINGID_SOOTHINGAROMA - BATTLESTRINGS_TABLE_START] = sText_SoothingAroma,
+    [STRINGID_ITEMSCANTBEUSEDNOW - BATTLESTRINGS_TABLE_START] = sText_ItemsCantBeUsedNow,
+    [STRINGID_FORXCOMMAYZ - BATTLESTRINGS_TABLE_START] = sText_ForXCommaYZ,
+    [STRINGID_USINGITEMSTATOFPKMNROSE - BATTLESTRINGS_TABLE_START] = sText_UsingItemTheStatOfPkmnRose,
+    [STRINGID_PKMNUSEDXTOGETPUMPED - BATTLESTRINGS_TABLE_START] = sText_PkmnUsedXToGetPumped,
+    [STRINGID_PKMNSXMADEYUSELESS - BATTLESTRINGS_TABLE_START] = sText_PkmnsXMadeYUseless,
     [STRINGID_PKMNTRAPPEDBYSANDTOMB - BATTLESTRINGS_TABLE_START] = sText_PkmnTrappedBySandTomb,
     [STRINGID_EMPTYSTRING4 - BATTLESTRINGS_TABLE_START] = sText_ExpGainedNoBonus, // JP EXP particle; US has an empty string
     [STRINGID_ABOOSTED - BATTLESTRINGS_TABLE_START] = sText_ABoosted,
-    [STRINGID_PKMNSXINTENSIFIEDSUN - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA746, // US: sText_PkmnsXIntensifiedSun; JP target still needs a semantic label
+    [STRINGID_PKMNSXINTENSIFIEDSUN - BATTLESTRINGS_TABLE_START] = sText_PkmnsXIntensifiedSun,
     [STRINGID_PKMNMAKESGROUNDMISS - BATTLESTRINGS_TABLE_START] = sText_PkmnMakesGroundMiss,
     [STRINGID_YOUTHROWABALLNOWRIGHT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB3BF, // US: sText_YouThrowABallNowRight; JP target still needs a semantic label
-    [STRINGID_PKMNSXTOOKATTACK - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA7CC, // US: sText_PkmnsXTookAttack; JP target still needs a semantic label
-    [STRINGID_PKMNCHOSEXASDESTINY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA1E8, // US: sText_PkmnChoseXAsDestiny; JP target still needs a semantic label
-    [STRINGID_PKMNLOSTFOCUS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA4CC, // US: sText_PkmnLostFocus; JP target still needs a semantic label
+    [STRINGID_PKMNSXTOOKATTACK - BATTLESTRINGS_TABLE_START] = sText_PkmnsXTookAttack,
+    [STRINGID_PKMNCHOSEXASDESTINY - BATTLESTRINGS_TABLE_START] = sText_PkmnChoseXAsDestiny,
+    [STRINGID_PKMNLOSTFOCUS - BATTLESTRINGS_TABLE_START] = sText_PkmnLostFocus,
     [STRINGID_USENEXTPKMN - BATTLESTRINGS_TABLE_START] = sText_UseNextPkmn,
-    [STRINGID_PKMNFLEDUSINGITS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA980, // US: sText_PkmnFledUsingIts; JP target still needs a semantic label
-    [STRINGID_PKMNFLEDUSING - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA99C, // US: sText_PkmnFledUsing; JP target still needs a semantic label
-    [STRINGID_PKMNWASDRAGGEDOUT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA4EC, // US: sText_PkmnWasDraggedOut; JP target still needs a semantic label
-    [STRINGID_PREVENTEDFROMWORKING - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA7F9, // US: sText_PreventedFromWorking; JP target still needs a semantic label
+    [STRINGID_PKMNFLEDUSINGITS - BATTLESTRINGS_TABLE_START] = sText_PkmnFledUsingIts,
+    [STRINGID_PKMNFLEDUSING - BATTLESTRINGS_TABLE_START] = sText_PkmnFledUsing,
+    [STRINGID_PKMNWASDRAGGEDOUT - BATTLESTRINGS_TABLE_START] = sText_PkmnWasDraggedOut,
+    [STRINGID_PREVENTEDFROMWORKING - BATTLESTRINGS_TABLE_START] = sText_PreventedFromWorking,
     [STRINGID_PKMNSITEMNORMALIZEDSTATUS - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB31D, // US: sText_PkmnsItemNormalizedStatus; JP target still needs a semantic label
     [STRINGID_TRAINER1USEDITEM - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB103, // US: sText_Trainer1UsedItem; JP target still needs a semantic label
     [STRINGID_BOXISFULL - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AB26A, // US: sText_BoxIsFull; JP target still needs a semantic label
     [STRINGID_PKMNAVOIDEDATTACK - BATTLESTRINGS_TABLE_START] = sText_PkmnAvoidedAttack,
-    [STRINGID_PKMNSXMADEITINEFFECTIVE - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA811, // US: sText_PkmnsXMadeItIneffective; JP target still needs a semantic label
-    [STRINGID_PKMNSXPREVENTSFLINCHING - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA826, // US: sText_PkmnsXPreventsFlinching; JP target still needs a semantic label
+    [STRINGID_PKMNSXMADEITINEFFECTIVE - BATTLESTRINGS_TABLE_START] = sText_PkmnsXMadeItIneffective,
+    [STRINGID_PKMNSXPREVENTSFLINCHING - BATTLESTRINGS_TABLE_START] = sText_PkmnsXPreventsFlinching,
     [STRINGID_PKMNALREADYHASBURN - BATTLESTRINGS_TABLE_START] = sText_PkmnAlreadyHasBurn,
-    [STRINGID_STATSWONTDECREASE2 - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA8D9, // US: sText_StatsWontDecrease2; JP target still needs a semantic label
-    [STRINGID_PKMNSXBLOCKSY2 - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA70F, // US: sText_PkmnsXBlocksY2; JP target still needs a semantic label
-    [STRINGID_PKMNSXWOREOFF - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085A9D8E, // US: sText_PkmnsXWoreOff; JP target still needs a semantic label
+    [STRINGID_STATSWONTDECREASE2 - BATTLESTRINGS_TABLE_START] = sText_StatsWontDecrease2,
+    [STRINGID_PKMNSXBLOCKSY2 - BATTLESTRINGS_TABLE_START] = sText_PkmnsXBlocksY2,
+    [STRINGID_PKMNSXWOREOFF - BATTLESTRINGS_TABLE_START] = sText_PkmnsXWoreOff,
     [STRINGID_PKMNRAISEDDEFALITTLE - BATTLESTRINGS_TABLE_START] = sText_PkmnRaisedDefALittle,
     [STRINGID_PKMNRAISEDSPDEFALITTLE - BATTLESTRINGS_TABLE_START] = sText_PkmnRaisedSpDefALittle,
-    [STRINGID_THEWALLSHATTERED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA501, // US: sText_TheWallShattered; JP target still needs a semantic label
-    [STRINGID_PKMNSXPREVENTSYSZ - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA835, // US: sText_PkmnsXPreventsYsZ; JP target still needs a semantic label
-    [STRINGID_PKMNSXCUREDITSYPROBLEM - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA84B, // US: sText_PkmnsXCuredItsYProblem; JP target still needs a semantic label
+    [STRINGID_THEWALLSHATTERED - BATTLESTRINGS_TABLE_START] = sText_TheWallShattered,
+    [STRINGID_PKMNSXPREVENTSYSZ - BATTLESTRINGS_TABLE_START] = sText_PkmnsXPreventsYsZ,
+    [STRINGID_PKMNSXCUREDITSYPROBLEM - BATTLESTRINGS_TABLE_START] = sText_PkmnsXCuredItsYProblem,
     [STRINGID_ATTACKERCANTESCAPE - BATTLESTRINGS_TABLE_START] = sText_AttackerCantEscape,
-    [STRINGID_PKMNOBTAINEDX - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA2C1, // US: sText_PkmnObtainedX; JP target still needs a semantic label
-    [STRINGID_PKMNOBTAINEDX2 - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA2D1, // US: sText_PkmnObtainedX2; JP target still needs a semantic label
-    [STRINGID_PKMNOBTAINEDXYOBTAINEDZ - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA2E1, // US: sText_PkmnObtainedXYObtainedZ; JP target still needs a semantic label
-    [STRINGID_BUTNOEFFECT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA50B, // US: sText_ButNoEffect; JP target still needs a semantic label
-    [STRINGID_PKMNSXHADNOEFFECTONY - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085AA85D, // US: sText_PkmnsXHadNoEffectOnY; JP target still needs a semantic label
+    [STRINGID_PKMNOBTAINEDX - BATTLESTRINGS_TABLE_START] = sText_PkmnObtainedX,
+    [STRINGID_PKMNOBTAINEDX2 - BATTLESTRINGS_TABLE_START] = sText_PkmnObtainedX2,
+    [STRINGID_PKMNOBTAINEDXYOBTAINEDZ - BATTLESTRINGS_TABLE_START] = sText_PkmnObtainedXYObtainedZ,
+    [STRINGID_BUTNOEFFECT - BATTLESTRINGS_TABLE_START] = sText_ButNoEffect,
+    [STRINGID_PKMNSXHADNOEFFECTONY - BATTLESTRINGS_TABLE_START] = sText_PkmnsXHadNoEffectOnY,
     [STRINGID_TWOENEMIESDEFEATED - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085ABE2F, // US: sText_TwoInGameTrainersDefeated; JP target still needs a semantic label
     [STRINGID_TRAINER2LOSETEXT - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085ABE4D, // US: sText_Trainer2LoseText; JP target still needs a semantic label
     [STRINGID_PKMNINCAPABLEOFPOWER - BATTLESTRINGS_TABLE_START] = (const u8 *)0x085ABE50, // US: sText_PkmnIncapableOfPower; JP target still needs a semantic label
