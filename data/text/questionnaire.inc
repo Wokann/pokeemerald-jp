@@ -30,3 +30,17 @@ Questionnaire_Text_YouKnowThoseWordsEvent::
 Questionnaire_Text_YouCanAccessMysteryEvent::
 	.string "レポートをかくと　ふしぎなできごと　が\n"
 	.string "つかえるように　なります$"
+
+MysteryGift_Text_TheresATicketForYou::
+	.string "ふしぎなできごと　を　ごりよう\n"
+	.string "いただき　ありがとう　ございます！\l"
+	.string "{PLAYER}さま　ですね\p"
+	.string "あなたさま　あてに\n"
+	.string "この　チケットが\l"
+	.string "おくられて　きました$"
+
+MysteryGift_Text_TryUsingItAtLilycovePort::
+	.string "ミナモシティの　ふなつきば　で\n"
+	.string "つかえる　ようですね\p"
+	.string "ぜひ　ごりよう　してみては\n"
+	.string "いかがでしょうか？$"

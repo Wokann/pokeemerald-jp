@@ -978,20 +978,6 @@ gText_LegendaryFlewAway:: @ 0x08243DF4
 	@ 0x08243EEE
 	.include "data/text/questionnaire.inc"
 
-MysteryGift_Text_TheresATicketForYou:: @ 0x08244040
-	.string "ふしぎなできごと　を　ごりよう\n"
-	.string "いただき　ありがとう　ございます！\l"
-	.string "{PLAYER}さま　ですね\p"
-	.string "あなたさま　あてに\n"
-	.string "この　チケットが\l"
-	.string "おくられて　きました$"
-
-MysteryGift_Text_TryUsingItAtLilycovePort:: @ 0x08244089
-	.string "ミナモシティの　ふなつきば　で\n"
-	.string "つかえる　ようですね\p"
-	.string "ぜひ　ごりよう　してみては\n"
-	.string "いかがでしょうか？$"
-
 	@ 0x082440BC
 	.include "data/text/abnormal_weather.inc"
 
