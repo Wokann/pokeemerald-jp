@@ -6087,7 +6087,7 @@ __attribute__((naked)) void ScrollableMultichoice_RedrawPersistentMenu(void)
         "_0813AEDC: .4byte gTasks\n\t"
         "_0813AEE0: .4byte gUnknown_859274C\n\t"
         "_0813AEE4: .4byte gSpecialVar_0x8004\n\t"
-        "_0813AEE8: .4byte gUnknown_85C9299\n\t"
+        "_0813AEE8: .4byte gText_SelectorArrow\n\t"
         ".syntax divided\n\t"
     );
 }

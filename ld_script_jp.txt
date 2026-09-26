@@ -10023,7 +10023,7 @@ SECTIONS {
         src/strings.o(.rodata.strings_expanded_placeholder_text);
         src/strings.o(.rodata.strings_pokemon_names_text);
         src/strings.o(.rodata.strings_main_menu);
-        src/data/text/region_texts76.o(.rodata);
+        src/strings.o(.rodata.strings_pokedex);
         data/data_b2d.o(.rodata.mid73);
         src/strings.o(.rodata.strings_birch_menu);
         src/strings.o(.rodata.strings_common);

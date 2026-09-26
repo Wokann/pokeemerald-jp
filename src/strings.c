@@ -6,6 +6,7 @@
 
 #define STRINGS_COMMON __attribute__((section(".rodata.strings_common")))
 #define STRINGS_BIRCH_MENU __attribute__((section(".rodata.strings_birch_menu"), aligned(1)))
+#define STRINGS_POKEDEX __attribute__((section(".rodata.strings_pokedex"), aligned(1)))
 #define STRINGS_MAIN_MENU __attribute__((section(".rodata.strings_main_menu")))
 #define STRINGS_EASY_CHAT __attribute__((section(".rodata.strings_easy_chat")))
 #define STRINGS_POKENAV_STORAGE __attribute__((section(".rodata.strings_pokenav_storage")))
@@ -174,6 +175,154 @@ STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_Soft[] = _("やわらかい
 STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_Hard[] = _("かたい");
 STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_VeryHard[] = _("とても　かたい");
 STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_SuperHard[] = _("とてつもなく　かたい");
+
+STRINGS_POKEDEX const u8 gText_ThisIsAPokemon[] = _(
+    "ポケットモンスター\n"
+    "⋯⋯すなわち　ポケモン{PAUSE 96}\p");
+
+STRINGS_POKEDEX const u8 gText_5MarksPokemon[] = _("？？？？？ポケモン");
+
+STRINGS_POKEDEX const u8 gText_UnkHeight[] = _("？？？,？m");
+
+STRINGS_POKEDEX const u8 gText_UnkWeight[] = _("？？？,？kg");
+
+STRINGS_POKEDEX const u8 gText_EmptyPkmnCategory[] = _("　　　　　ポケモン");
+
+STRINGS_POKEDEX const u8 gText_EmptyHeight[] = _("　　　,　m");
+
+STRINGS_POKEDEX const u8 gText_EmptyWeight[] = _("　　　,　kg");
+
+STRINGS_POKEDEX const u8 gText_EmptyPokedexInfo1[] = _("の");
+
+STRINGS_POKEDEX const u8 gText_CryOf[] = _("なきごえ");
+
+STRINGS_POKEDEX const u8 gText_EmptyPokedexInfo2[] = _("と");
+
+STRINGS_POKEDEX const u8 gText_SizeComparedTo[] = _("の　おおきさくらべ");
+
+STRINGS_POKEDEX const u8 gText_PokedexRegistration[] = _("ポケモンずかんの　とうろく　かんりょう！");
+
+STRINGS_POKEDEX const u8 gText_SearchingPleaseWait[] = _("けんさくを　しています⋯⋯");
+
+STRINGS_POKEDEX const u8 gText_SearchCompleted[] = _("けんさくが　しゅうりょう　しました！");
+
+STRINGS_POKEDEX const u8 gText_NoMatchingPkmnWereFound[] = _("がいとう　する　ポケモンは　いませんでした⋯⋯");
+
+STRINGS_POKEDEX const u8 gText_SearchForPkmnBasedOnParameters[] = _(
+    "じょうけんを　していして\n"
+    "ポケモンの　けんさくを　します");
+
+STRINGS_POKEDEX const u8 gText_SwitchPokedexListings[] = _("ずかんリストの　ならびを　きりかえます");
+
+STRINGS_POKEDEX const u8 gText_ReturnToPokedex[] = _("ずかんに　もどります");
+
+STRINGS_POKEDEX const u8 gText_SelectPokedexMode[] = _("ずかんモードを　してい　します");
+
+STRINGS_POKEDEX const u8 gText_SelectPokedexListingMode[] = _("ずかんの　ならびを　してい　します");
+
+STRINGS_POKEDEX const u8 gText_ListByFirstLetter[] = _(
+    "なまえの　さいしょの　もじを　してい　します\n"
+    "　/みつけたポケモンのみ");
+
+STRINGS_POKEDEX const u8 gText_ListByBodyColor[] = _(
+    "からだの　いろを　してい　します\n"
+    "　/みつけたポケモンのみ");
+
+STRINGS_POKEDEX const u8 gText_ListByType[] = _(
+    "タイプを　してい　します\n"
+    "　/つかまえたポケモンのみ");
+
+STRINGS_POKEDEX const u8 gText_ExecuteSearchSwitch[] = _("けんさく/きりかえを　じっこうします");
+
+STRINGS_POKEDEX const u8 gText_DexHoennTitle[] = _("ホウエン　ずかん");
+
+STRINGS_POKEDEX const u8 gText_DexNatTitle[] = _("ぜんこく　ずかん");
+
+STRINGS_POKEDEX const u8 gText_DexSortNumericalTitle[] = _("ばんごう　じゅん");
+
+STRINGS_POKEDEX const u8 gText_DexSortAtoZTitle[] = _("ごじゅうおん　じゅん");
+
+STRINGS_POKEDEX const u8 gText_DexSortHeaviestTitle[] = _("おもい　じゅん");
+
+STRINGS_POKEDEX const u8 gText_DexSortLightestTitle[] = _("かるい　じゅん");
+
+STRINGS_POKEDEX const u8 gText_DexSortTallestTitle[] = _("たかい　じゅん");
+
+STRINGS_POKEDEX const u8 gText_DexSortSmallestTitle[] = _("ひくい　じゅん");
+
+STRINGS_POKEDEX const u8 gText_DexSearchAlphaABC[] = _("あいうえお");
+
+STRINGS_POKEDEX const u8 gText_DexSearchAlphaDEF[] = _("かきくけこ");
+
+STRINGS_POKEDEX const u8 gText_DexSearchAlphaGHI[] = _("さしすせそ");
+
+STRINGS_POKEDEX const u8 gText_DexSearchAlphaJKL[] = _("たちつてと");
+
+STRINGS_POKEDEX const u8 gText_DexSearchAlphaMNO[] = _("なにぬねの");
+
+STRINGS_POKEDEX const u8 gText_DexSearchAlphaPQR[] = _("はひふへほ");
+
+STRINGS_POKEDEX const u8 gText_DexSearchAlphaSTU[] = _("まみむめも");
+
+STRINGS_POKEDEX const u8 gText_DexSearchAlphaVWX[] = _("らりるれろ");
+
+STRINGS_POKEDEX const u8 gText_DexSearchAlphaYZ[] = _("やゆよわをん");
+
+STRINGS_POKEDEX const u8 gText_DexSearchColorRed[] = _("あか");
+
+STRINGS_POKEDEX const u8 gText_DexSearchColorBlue[] = _("あお");
+
+STRINGS_POKEDEX const u8 gText_DexSearchColorYellow[] = _("きいろ");
+
+STRINGS_POKEDEX const u8 gText_DexSearchColorGreen[] = _("みどり");
+
+STRINGS_POKEDEX const u8 gText_DexSearchColorBlack[] = _("くろ");
+
+STRINGS_POKEDEX const u8 gText_DexSearchColorBrown[] = _("ちゃいろ");
+
+STRINGS_POKEDEX const u8 gText_DexSearchColorPurple[] = _("むらさき");
+
+STRINGS_POKEDEX const u8 gText_DexSearchColorGray[] = _("はいいろ");
+
+STRINGS_POKEDEX const u8 gText_DexSearchColorWhite[] = _("しろ");
+
+STRINGS_POKEDEX const u8 gText_DexSearchColorPink[] = _("ピンク");
+
+STRINGS_POKEDEX const u8 gText_DexHoennDescription[] = _("ホウエンちほう　ばん　ポケモンずかん");
+
+STRINGS_POKEDEX const u8 gText_DexNatDescription[] = _("ぜんこく　ばん　ポケモンずかん");
+
+STRINGS_POKEDEX const u8 gText_DexSortNumericalDescription[] = _(
+    "ポケモンを\n"
+    "ばんごうじゅんで　ひょうじ　します");
+
+STRINGS_POKEDEX const u8 gText_DexSortAtoZDescription[] = _(
+    "みつけたポケモンの　なまえを\n"
+    "ごじゅうおんじゅんで　ひょうじ　します");
+
+STRINGS_POKEDEX const u8 gText_DexSortHeaviestDescription[] = _(
+    "つかまえたポケモンを\n"
+    "おもい　じゅんばんで　ひょうじ　します");
+
+STRINGS_POKEDEX const u8 gText_DexSortLightestDescription[] = _(
+    "つかまえたポケモンを\n"
+    "かるい　じゅんばんで　ひょうじ　します");
+
+STRINGS_POKEDEX const u8 gText_DexSortTallestDescription[] = _(
+    "つかまえたポケモンを\n"
+    "しんちょうのたかい　じゅんばんで　ひょうじ　します");
+
+STRINGS_POKEDEX const u8 gText_DexSortSmallestDescription[] = _(
+    "つかまえたポケモンを\n"
+    "しんちょうのひくい　じゅんばんで　ひょうじ　します");
+
+STRINGS_POKEDEX const u8 gText_DexEmptyString[] = _("");
+
+STRINGS_POKEDEX const u8 gText_DexSearchDontSpecify[] = _("してい　しない");
+
+STRINGS_POKEDEX const u8 gText_DexSearchTypeNone[] = _("なし");
+STRINGS_POKEDEX const u8 gText_SelectorArrow[] = _("▶");
+STRINGS_POKEDEX const u8 gText_EmptySpace[] = _("　"); // Unused
 
 STRINGS_BIRCH_MENU const u8 gText_Name[] = _("なまえ");
 STRINGS_BIRCH_MENU const u8 gText_IDNumber[] = _("IDNo,");

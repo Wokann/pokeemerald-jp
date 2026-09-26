@@ -150,9 +150,6 @@ gUnknown_85CA70B: @ 0x85CA70B
 
 	.section .rodata.mid73
 
-.globl gUnknown_85C9299
-gUnknown_85C9299: @ 0x85C9299
-	.string "▶$　$"
 	.globl gUnknown_85C929D
 gUnknown_85C929D: @ 0x85C929D
 	.string "でんどういり　おめでとう！$みつけた　ポケモン　{B_COPY_VAR_1}！\n"
