@@ -22,17 +22,275 @@ static void SpriteCB_Marking(struct Sprite *);
 static void SpriteCB_Cursor(struct Sprite *);
 static struct Sprite *CreateMarkingComboSprite(u16, u16, const u16 *, u16);
 
-// JP ROM data tables (the US sources define these statically).
+#define MON_MARKINGS_DATA __attribute__((section(".rodata.mon_markings_data")))
+
+// This file uses the standard C rule, which does not run the INCBIN expander.
+// The four named graphics assets therefore remain in data_b2d_mid61.s.
 extern const u16 sMonMarkings_Pal[];
 extern const ALIGNED(4) u8 sMonMarkings_Gfx[];
 extern const u8 gMonMarkingsMenu_Gfx[];
 extern const u16 gMonMarkingsMenu_Pal[];
-extern const struct OamData sOamData_MenuWindow;
-extern const struct OamData sOamData_8x8;
-extern const struct OamData sOamData_MarkingCombo;
-extern const union AnimCmd *const sAnims_MenuWindow[];
-extern const union AnimCmd *const sAnims_MenuSprite[];
-extern const union AnimCmd *const sAnims_MarkingCombo[];
+
+MON_MARKINGS_DATA const struct OamData sOamData_MenuWindow =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+MON_MARKINGS_DATA const struct OamData sOamData_8x8 =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_Marking_CircleOff[] =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_Marking_CircleOn[] =
+{
+    ANIMCMD_FRAME(1, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_Marking_SquareOff[] =
+{
+    ANIMCMD_FRAME(2, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_Marking_SquareOn[] =
+{
+    ANIMCMD_FRAME(3, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_Marking_TriangleOff[] =
+{
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_Marking_TriangleOn[] =
+{
+    ANIMCMD_FRAME(5, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_Marking_HeartOff[] =
+{
+    ANIMCMD_FRAME(6, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_Marking_HeartOn[] =
+{
+    ANIMCMD_FRAME(7, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_Cursor[] =
+{
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_OKCancelText[] =
+{
+    ANIMCMD_FRAME(9, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA const union AnimCmd *const sAnims_MenuSprite[] =
+{
+    sAnim_Marking_CircleOff,
+    sAnim_Marking_CircleOn,
+    sAnim_Marking_SquareOff,
+    sAnim_Marking_SquareOn,
+    sAnim_Marking_TriangleOff,
+    sAnim_Marking_TriangleOn,
+    sAnim_Marking_HeartOff,
+    sAnim_Marking_HeartOn,
+    [ANIM_CURSOR] = sAnim_Cursor,
+    [ANIM_TEXT] = sAnim_OKCancelText,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MenuWindow_UpperHalf[] =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MenuWindow_LowerHalf[] =
+{
+    ANIMCMD_FRAME(64, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA const union AnimCmd *const sAnims_MenuWindow[] =
+{
+    sAnim_MenuWindow_UpperHalf,
+    sAnim_MenuWindow_LowerHalf,
+};
+
+MON_MARKINGS_DATA const struct OamData sOamData_MarkingCombo =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_AllOff[] =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_Circle[] =
+{
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_Square[] =
+{
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_CircleSquare[] =
+{
+    ANIMCMD_FRAME(12, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_Triangle[] =
+{
+    ANIMCMD_FRAME(16, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_CircleTriangle[] =
+{
+    ANIMCMD_FRAME(20, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_SquareTriangle[] =
+{
+    ANIMCMD_FRAME(24, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_CircleSquareTriangle[] =
+{
+    ANIMCMD_FRAME(28, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_Heart[] =
+{
+    ANIMCMD_FRAME(32, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_CircleHeart[] =
+{
+    ANIMCMD_FRAME(36, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_SquareHeart[] =
+{
+    ANIMCMD_FRAME(40, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_CircleSquareHeart[] =
+{
+    ANIMCMD_FRAME(44, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_TriangleHeart[] =
+{
+    ANIMCMD_FRAME(48, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_CircleTriangleHeart[] =
+{
+    ANIMCMD_FRAME(52, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_SquareTriangleHeart[] =
+{
+    ANIMCMD_FRAME(56, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA static const union AnimCmd sAnim_MarkingCombo_AllOn[] =
+{
+    ANIMCMD_FRAME(60, 5),
+    ANIMCMD_END,
+};
+
+MON_MARKINGS_DATA const union AnimCmd *const sAnims_MarkingCombo[] =
+{
+    sAnim_MarkingCombo_AllOff,
+    sAnim_MarkingCombo_Circle,
+    sAnim_MarkingCombo_Square,
+    sAnim_MarkingCombo_CircleSquare,
+    sAnim_MarkingCombo_Triangle,
+    sAnim_MarkingCombo_CircleTriangle,
+    sAnim_MarkingCombo_SquareTriangle,
+    sAnim_MarkingCombo_CircleSquareTriangle,
+    sAnim_MarkingCombo_Heart,
+    sAnim_MarkingCombo_CircleHeart,
+    sAnim_MarkingCombo_SquareHeart,
+    sAnim_MarkingCombo_CircleSquareHeart,
+    sAnim_MarkingCombo_TriangleHeart,
+    sAnim_MarkingCombo_CircleTriangleHeart,
+    sAnim_MarkingCombo_SquareTriangleHeart,
+    sAnim_MarkingCombo_AllOn,
+};
+
+#undef MON_MARKINGS_DATA
 
 extern struct MonMarkingsMenu *sMenu;
 
