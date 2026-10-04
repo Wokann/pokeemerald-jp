@@ -180,6 +180,9 @@ class JapaneseScriptTextCodec:
             tuple(name for name in self.constants if name.startswith("EMOJI_")),
             expected_prefix=0xF9,
         )
+        # Only add ROM/renderer-verified glyphs. Sound and music constants
+        # share F9-valued sequences in charmap.txt and are not text glyphs.
+        self.extra_symbols = self._named_sequences(("LV_2",), expected_prefix=0xF9)
         self._validate_charmap_contract()
 
     def _named_sequences(self, names: tuple[str, ...], expected_prefix: int) -> dict[bytes, str]:
@@ -194,7 +197,7 @@ class JapaneseScriptTextCodec:
         return sequences
 
     def _validate_charmap_contract(self) -> None:
-        required = {"STRING": b"\xFD", "DYNAMIC": b"\xF7"}
+        required = {"STRING": b"\xFD", "DYNAMIC": b"\xF7", "LV_2": b"\xF9\x05"}
         for code, (name, _) in EXT_CTRL_SPECS.items():
             required[name] = bytes((0xFC, code))
         for name, expected in required.items():
@@ -255,7 +258,7 @@ class JapaneseScriptTextCodec:
             if pos + 1 >= len(data):
                 raise TextDecodeError("truncated extra-symbol control (F9)")
             sequence = data[pos : pos + 2]
-            name = self.emoji.get(sequence)
+            name = self.extra_symbols.get(sequence) or self.emoji.get(sequence)
             if name is None:
                 raise TextDecodeError(f"unknown extra-symbol control {sequence.hex().upper()}")
             return "{" + name + "}", pos + 2, False
