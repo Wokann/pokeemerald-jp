@@ -1958,7 +1958,7 @@ __attribute__((naked)) u8 *GetSecretBaseMapName(u8 *dest)
         "	.align 2, 0\n\t"
         "_080EA460: .4byte gSaveBlock1Ptr\n\t"
         "_080EA464: .4byte 0x00001A9E\n\t"
-        "_080EA468: .4byte gUnknown_85CA593 + 0xC1\n\t"
+        "_080EA468: .4byte gText_ApostropheSBase\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2676,7 +2676,7 @@ __attribute__((naked)) void Task_ShowSecretBaseRegistryMenu(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080EA984: .4byte gUnknown_85CA593 + 0xF5\n\t"
+        "_080EA984: .4byte gText_NoRegistry\n\t"
         "_080EA988: .4byte GoToSecretBasePCMainMenu + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -3099,7 +3099,7 @@ __attribute__((naked)) void ShowRegistryMenuDeleteConfirmation(void)
         "_080EACA0: .4byte gUnknown_3005B68\n\t"
         "_080EACA4: .4byte gStringVar1\n\t"
         "_080EACA8: .4byte gStringVar4\n\t"
-        "_080EACAC: .4byte gUnknown_85CA593 + 0xC5\n\t"
+        "_080EACAC: .4byte gText_OkayToDeleteFromRegistry\n\t"
         "_080EACB0: .4byte ShowRegistryMenuDeleteYesNo + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -3213,7 +3213,7 @@ __attribute__((naked)) void sub_080EAD68(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080EAD7C: .4byte gUnknown_85CA593 + 0xE3\n\t"
+        "_080EAD7C: .4byte gText_RegisteredDataDeleted\n\t"
         "_080EAD80: .4byte DeleteRegistry_Yes_Callback + 1\n\t"
         ".syntax divided\n\t"
     );

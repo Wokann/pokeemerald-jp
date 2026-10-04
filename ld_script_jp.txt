@@ -10030,8 +10030,6 @@ SECTIONS {
         src/strings.o(.rodata.strings_trade_text_prefix);
         src/strings.o(.rodata.strings_trade_text_body);
         src/strings.o(.rodata.strings_summary_text);
-        data/data_b2d.o(.rodata.mid80);
-        src/strings.o(.rodata.strings_summary_egg_text);
         src/strings.o(.rodata.strings_decoration_text);
         src/strings.o(.rodata.strings_pc_text);
         src/strings.o(.rodata.strings_shared_name_text);

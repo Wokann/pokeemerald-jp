@@ -15,7 +15,6 @@
 #define STRINGS_TRADE_TEXT_BODY_START __attribute__((section(".rodata.strings_trade_text_body"), aligned(4)))
 #define STRINGS_TRADE_TEXT_BODY __attribute__((section(".rodata.strings_trade_text_body"), aligned(1)))
 #define STRINGS_SUMMARY_TEXT __attribute__((section(".rodata.strings_summary_text"), aligned(1)))
-#define STRINGS_SUMMARY_EGG_TEXT __attribute__((section(".rodata.strings_summary_egg_text"), aligned(1)))
 #define STRINGS_MAIN_MENU __attribute__((section(".rodata.strings_main_menu")))
 #define STRINGS_EASY_CHAT __attribute__((section(".rodata.strings_easy_chat")))
 #define STRINGS_POKENAV_STORAGE __attribute__((section(".rodata.strings_pokenav_storage")))
@@ -1028,23 +1027,53 @@ STRINGS_SUMMARY_TEXT const u8 gText_HMMovesCantBeForgotten2[] = _(
     "それは　たいせつなわざです\n"
     "わすれさせることは　できません！");
 
-STRINGS_SUMMARY_EGG_TEXT const u8 gText_OddEggFoundByCouple[] = _(
+STRINGS_SUMMARY_TEXT const u8 gText_XNatureMetAtYZ[] = _(
+    "{DYNAMIC 0}{DYNAMIC 2}{DYNAMIC 1}{DYNAMIC 5}せいかく　{LV_2}{DYNAMIC 0}{DYNAMIC 3}{DYNAMIC 1}のとき\n"
+    "{DYNAMIC 0}{DYNAMIC 4}{DYNAMIC 1}で　であった");
+
+STRINGS_SUMMARY_TEXT const u8 gText_XNatureHatchedAtYZ[] = _(
+    "{DYNAMIC 0}{DYNAMIC 2}{DYNAMIC 1}{DYNAMIC 5}せいかく　{LV_2}{DYNAMIC 0}{DYNAMIC 3}{DYNAMIC 1}のとき\n"
+    "{DYNAMIC 0}{DYNAMIC 4}{DYNAMIC 1}で　かえった");
+
+STRINGS_SUMMARY_TEXT const u8 gText_XNatureObtainedInTrade[] = _(
+    "{DYNAMIC 0}{DYNAMIC 2}{DYNAMIC 1}{DYNAMIC 5}せいかく\n"
+    "つうしんこうかんに　よって　であった");
+
+STRINGS_SUMMARY_TEXT const u8 gText_XNatureFatefulEncounter[] = _(
+    "{DYNAMIC 0}{DYNAMIC 2}{DYNAMIC 1}{DYNAMIC 5}せいかく　{LV_2}{DYNAMIC 0}{DYNAMIC 3}{DYNAMIC 1}のとき\n"
+    "うんめいてきな　であいを　した");
+
+STRINGS_SUMMARY_TEXT const u8 gText_XNatureProbablyMetAt[] = _(
+    "{DYNAMIC 0}{DYNAMIC 2}{DYNAMIC 1}{DYNAMIC 5}せいかく　{LV_2}{DYNAMIC 0}{DYNAMIC 3}{DYNAMIC 1}のとき\n"
+    "{DYNAMIC 0}{DYNAMIC 4}{DYNAMIC 1}で　あったようだ");
+
+STRINGS_SUMMARY_TEXT const u8 gText_XNature[] = _("{DYNAMIC 0}{DYNAMIC 2}{DYNAMIC 1}{DYNAMIC 5}せいかく");
+
+STRINGS_SUMMARY_TEXT const u8 gText_XNatureMetSomewhereAt[] = _(
+    "{DYNAMIC 0}{DYNAMIC 2}{DYNAMIC 1}{DYNAMIC 5}せいかく　{LV_2}{DYNAMIC 0}{DYNAMIC 3}{DYNAMIC 1}のとき\n"
+    "どこかで　であった");
+
+STRINGS_SUMMARY_TEXT const u8 gText_XNatureHatchedSomewhereAt[] = _(
+    "{DYNAMIC 0}{DYNAMIC 2}{DYNAMIC 1}{DYNAMIC 5}せいかく　{LV_2}{DYNAMIC 0}{DYNAMIC 3}{DYNAMIC 1}のとき\n"
+    "どこかで　かえった");
+
+STRINGS_SUMMARY_TEXT const u8 gText_OddEggFoundByCouple[] = _(
     "そだてや　ふうふ　から　もらった\n"
     "ふしぎな　ポケモンのタマゴ");
 
-STRINGS_SUMMARY_EGG_TEXT const u8 gText_PeculiarEggNicePlace[] = _(
+STRINGS_SUMMARY_TEXT const u8 gText_PeculiarEggNicePlace[] = _(
     "ステキな　ばしょで　てにいれた\n"
     "ふしぎな　ふしぎな　ポケモンのタマゴ");
 
-STRINGS_SUMMARY_EGG_TEXT const u8 gText_PeculiarEggTrade[] = _(
+STRINGS_SUMMARY_TEXT const u8 gText_PeculiarEggTrade[] = _(
     "つうしんこうかんで　てにいれた\n"
     "ふしぎな　ポケモンのタマゴ");
 
-STRINGS_SUMMARY_EGG_TEXT const u8 gText_EggFromHotSprings[] = _(
+STRINGS_SUMMARY_TEXT const u8 gText_EggFromHotSprings[] = _(
     "おんせんばあさん　から　もらった\n"
     "ふしぎな　ポケモンのタマゴ");
 
-STRINGS_SUMMARY_EGG_TEXT const u8 gText_EggFromTraveler[] = _(
+STRINGS_SUMMARY_TEXT const u8 gText_EggFromTraveler[] = _(
     "たびの　おじさん　から　もらった\n"
     "ふしぎな　ポケモンのタマゴ");
 
