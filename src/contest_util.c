@@ -6009,7 +6009,7 @@ __attribute__((naked)) void GetContestPlayerId(void)
     );
 }
 
-__attribute__((naked)) void sub_080F8D48(void)
+__attribute__((naked)) void sub_080F8D48(u8 category)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6682,7 +6682,7 @@ __attribute__((naked)) void ShouldReadyContestArtist(void)
     );
 }
 
-__attribute__((naked)) void CountPlayerMuseumPaintings(void)
+__attribute__((naked)) u8 CountPlayerMuseumPaintings(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
