@@ -9,7 +9,6 @@ SootopolisCity_LotadAndSeedotHouse_EventScript_SeedotBrother:: @ 0x0820F862
 	faceplayer
 	msgbox SootopolisCity_LotadAndSeedotHouse_Text_PleaseShowMeBigSeedot, MSGBOX_DEFAULT
 	special ChoosePartyMon
-	waitstate
 	copyvar VAR_RESULT, VAR_0x8004
 	goto_if_eq VAR_RESULT, PARTY_NOTHING_CHOSEN, SootopolisCity_LotadAndSeedotHouse_EventScript_CancelShowSeedot
 	special CompareSeedotSize
@@ -53,7 +52,6 @@ SootopolisCity_LotadAndSeedotHouse_EventScript_LotadBrother:: @ 0x0820F8F3
 	faceplayer
 	msgbox SootopolisCity_LotadAndSeedotHouse_Text_PleaseShowMeBigLotad, MSGBOX_DEFAULT
 	special ChoosePartyMon
-	waitstate
 	copyvar VAR_RESULT, VAR_0x8004
 	goto_if_eq VAR_RESULT, PARTY_NOTHING_CHOSEN, SootopolisCity_LotadAndSeedotHouse_EventScript_CancelShowLotad
 	special CompareLotadSize

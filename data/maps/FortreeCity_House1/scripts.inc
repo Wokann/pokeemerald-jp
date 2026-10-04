@@ -16,7 +16,6 @@ FortreeCity_House1_EventScript_Trader:: @ 0x082041CB
 	msgbox FortreeCity_House1_Text_YouWillTradeWontYou, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, FortreeCity_House1_EventScript_DeclineTrade
 	special ChoosePartyMon
-	waitstate
 	copyvar VAR_0x800A, VAR_0x8004
 	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, FortreeCity_House1_EventScript_DeclineTrade
 	copyvar VAR_0x8005, VAR_0x800A

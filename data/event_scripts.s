@@ -817,8 +817,6 @@ Common_EventScript_FerryDepartIsland::
 Common_EventScript_NameReceivedPartyMon::
 	fadescreen FADE_TO_BLACK
 	special ChangePokemonNickname
-	@ The JP nickname screen script waits for the special task here.
-	waitstate
 	return
 
 Common_EventScript_PlayerHandedOverTheItem::
