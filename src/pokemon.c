@@ -13773,7 +13773,7 @@ __attribute__((naked)) u16 NationalToHoennOrder(u16 nationalNum)
     );
 }
 
-__attribute__((naked)) u16 HoennToNationalOrder(u16 hoennNum)
+__attribute__((naked)) u16 SpeciesToNationalPokedexNum(u16 species)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -13827,7 +13827,7 @@ __attribute__((naked)) u16 SpeciesToHoennPokedexNum(u16 species)
     );
 }
 
-__attribute__((naked)) u16 SpeciesToNationalPokedexNum(u16 species)
+__attribute__((naked)) u16 HoennToNationalOrder(u16 hoennNum)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -15936,7 +15936,7 @@ __attribute__((naked)) u16 SpeciesToPokedexNum(u16 species)
         "	cmp r0, #0\n\t"
         "	beq _0806DE6E\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl HoennToNationalOrder\n\t"
+        "	bl SpeciesToNationalPokedexNum\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
         "	b _0806DE86\n\t"

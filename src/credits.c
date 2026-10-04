@@ -4217,7 +4217,7 @@ __attribute__((naked)) void DeterminePokemonToShow(void)
         "	bl GetStarterPokemon\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
-        "	bl HoennToNationalOrder\n\t"
+        "	bl SpeciesToNationalPokedexNum\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
         "	mov sl, r0\n\t"

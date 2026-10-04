@@ -69,17 +69,15 @@ const u8 *GetPokedexRatingText(u16 count)
         return gBirchDexRatingText_LessThan200;
     if (count == 200)
     {
-        // JP variant: calls HoennToNationalOrder (pokeemerald uses
-        // SpeciesToNationalPokedexNum, a different function).
-        if (GetSetPokedexFlag(HoennToNationalOrder(SPECIES_JIRACHI), FLAG_GET_CAUGHT)
-         || GetSetPokedexFlag(HoennToNationalOrder(SPECIES_DEOXYS), FLAG_GET_CAUGHT))
+        if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_JIRACHI), FLAG_GET_CAUGHT)
+         || GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_DEOXYS), FLAG_GET_CAUGHT))
             return gBirchDexRatingText_LessThan200;
         return gBirchDexRatingText_DexCompleted;
     }
     if (count == HOENN_DEX_COUNT - 1)
     {
-        if (GetSetPokedexFlag(HoennToNationalOrder(SPECIES_JIRACHI), FLAG_GET_CAUGHT)
-         && GetSetPokedexFlag(HoennToNationalOrder(SPECIES_DEOXYS), FLAG_GET_CAUGHT))
+        if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_JIRACHI), FLAG_GET_CAUGHT)
+         && GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_DEOXYS), FLAG_GET_CAUGHT))
             return gBirchDexRatingText_LessThan200;
         return gBirchDexRatingText_DexCompleted;
     }

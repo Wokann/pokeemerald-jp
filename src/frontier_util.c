@@ -4813,7 +4813,7 @@ __attribute__((naked)) void sub_081A3B68(void)
         "	adds r5, r0, #0\n\t"
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r4, r1, #0x18\n\t"
-        "	bl HoennToNationalOrder\n\t"
+        "	bl SpeciesToNationalPokedexNum\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
         "	movs r1, #1\n\t"

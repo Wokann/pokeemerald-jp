@@ -205,7 +205,9 @@ InitLotadSizeRecord, GetLotadSizeRecordInfo, CompareLotadSize) and
 src/give_gift_ribbon_to_party.c (GiveGiftRibbonToParty) finish the JP
 field_poison region.  JP variants handled: FormatMonSizeRecord copies the
 2-byte decimal point to a local before appending; species names use 6-byte
-rows (gSpeciesNames 0x082EA31C) and GetMonSize uses HoennToNationalOrder.
+rows (gSpeciesNames 0x082EA31C). GetMonSize uses SpeciesToNationalPokedexNum
+at 0x0806CF68; its earlier HoennToNationalOrder label was a naming error,
+not a different JP conversion algorithm.
 Added sBigMonSizeTable (0x085694D0), gText_DecimalPoint (0x08569550),
 gText_Marco (0x085CC31B) and sGiftRibbonsMonDataIds (0x08569552); specials.inc
 updated (sub_080FA300/31C/358/374 -> GetSeedotSizeRecordInfo/CompareSeedotSize/

@@ -1871,7 +1871,7 @@ __attribute__((naked)) void sub_080F6ED8(void)
         "	movs r4, #3\n\t"
         "_080F6EFE:\n\t"
         "	ldrh r0, [r5]\n\t"
-        "	bl HoennToNationalOrder\n\t"
+        "	bl SpeciesToNationalPokedexNum\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
         "	movs r1, #2\n\t"

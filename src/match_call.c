@@ -2021,9 +2021,9 @@ static u8 GetPokedexRatingLevel(u16 numSeen)
     if (numSeen < 200)
         return 19;
 
-    if (GetSetPokedexFlag(HoennToNationalOrder(SPECIES_DEOXYS), FLAG_GET_CAUGHT))
+    if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_DEOXYS), FLAG_GET_CAUGHT))
         numSeen--;
-    if (GetSetPokedexFlag(HoennToNationalOrder(SPECIES_JIRACHI), FLAG_GET_CAUGHT))
+    if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_JIRACHI), FLAG_GET_CAUGHT))
         numSeen--;
 
     if (numSeen < 200)

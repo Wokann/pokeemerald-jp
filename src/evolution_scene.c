@@ -442,8 +442,8 @@ void CreateShedinja(u16 preEvoSpecies, struct Pokemon *mon)
         CalculateMonStats(&gPlayerParty[gPlayerPartyCount]);
         CalculatePlayerPartyCount();
 
-        GetSetPokedexFlag(HoennToNationalOrder(gEvolutionTable[preEvoSpecies][1].targetSpecies), FLAG_SET_SEEN);
-        GetSetPokedexFlag(HoennToNationalOrder(gEvolutionTable[preEvoSpecies][1].targetSpecies), FLAG_SET_CAUGHT);
+        GetSetPokedexFlag(SpeciesToNationalPokedexNum(gEvolutionTable[preEvoSpecies][1].targetSpecies), FLAG_SET_SEEN);
+        GetSetPokedexFlag(SpeciesToNationalPokedexNum(gEvolutionTable[preEvoSpecies][1].targetSpecies), FLAG_SET_CAUGHT);
     }
 }
 
@@ -955,13 +955,13 @@ __attribute__((naked)) void Task_EvolutionScene(u8 taskId)
         "	mov r0, sb\n\t"
         "	bl sub_0806D23C\n\t"
         "	ldrh r0, [r4, #0xc]\n\t"
-        "	bl HoennToNationalOrder\n\t"
+        "	bl SpeciesToNationalPokedexNum\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
         "	movs r1, #2\n\t"
         "	bl GetSetPokedexFlag\n\t"
         "	ldrh r0, [r4, #0xc]\n\t"
-        "	bl HoennToNationalOrder\n\t"
+        "	bl SpeciesToNationalPokedexNum\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
         "	movs r1, #3\n\t"
@@ -2250,13 +2250,13 @@ __attribute__((naked)) void Task_TradeEvolutionScene(u8 taskId)
         "	mov r0, sb\n\t"
         "	bl sub_0806D23C\n\t"
         "	ldrh r0, [r4, #0xc]\n\t"
-        "	bl HoennToNationalOrder\n\t"
+        "	bl SpeciesToNationalPokedexNum\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
         "	movs r1, #2\n\t"
         "	bl GetSetPokedexFlag\n\t"
         "	ldrh r0, [r4, #0xc]\n\t"
-        "	bl HoennToNationalOrder\n\t"
+        "	bl SpeciesToNationalPokedexNum\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
         "	movs r1, #3\n\t"

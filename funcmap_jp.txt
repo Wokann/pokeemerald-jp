@@ -2720,9 +2720,9 @@ pokemon.s
 0806ce84 pokemon.s HoennPokedexNumToSpecies
 0806ced0 pokemon.s NationalPokedexNumToSpecies
 0806cf1c pokemon.s NationalToHoennOrder
-0806cf68 pokemon.s HoennToNationalOrder
+0806cf68 pokemon.s SpeciesToNationalPokedexNum
 0806cf8c pokemon.s SpeciesToHoennPokedexNum
-0806cfb0 pokemon.s SpeciesToNationalPokedexNum
+0806cfb0 pokemon.s HoennToNationalOrder
 0806cfd4 pokemon.s SpeciesToCryId
 0806d008 pokemon.s sub_0806D008
 0806d128 pokemon.s DrawSpindaSpots

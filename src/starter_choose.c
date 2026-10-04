@@ -681,7 +681,7 @@ void CreateStarterPokemonLabel(u8 selection)
     u8 labelBottom;
 
     species = GetStarterPokemon(selection);
-    categoryName = sub_080BFB68(HoennToNationalOrder(species));
+    categoryName = sub_080BFB68(SpeciesToNationalPokedexNum(species));
 
     for (i = 0, count = 0; categoryName[i] != '\0' && i <= 4; i++, count++)
         categoryText[count] = categoryName[i];

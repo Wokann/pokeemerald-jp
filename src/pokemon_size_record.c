@@ -82,9 +82,7 @@ static u32 GetMonSize(u16 species, u16 b)
     u32 height;
     u32 var;
 
-    // JP variant: uses HoennToNationalOrder (as in birch_pc) rather than
-    // SpeciesToNationalPokedexNum
-    height = GetPokedexHeightWeight(HoennToNationalOrder(species), 0);
+    height = GetPokedexHeightWeight(SpeciesToNationalPokedexNum(species), 0);
     var = TranslateBigMonSizeTableIndex(b);
     unk0 = sBigMonSizeTable[var].unk0;
     unk2 = sBigMonSizeTable[var].unk2;
