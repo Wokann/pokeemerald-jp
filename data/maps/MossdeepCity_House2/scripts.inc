@@ -28,13 +28,11 @@ MossdeepCity_House2_EventScript_Wingull:: @ 0x0820C3E5
 	end
 
 MossdeepCity_House2_EventScript_WingullExitNorth:: @ 0x0820C418
-	applymovement LOCALID_MOSSDEEP_HOUSE_WINGULL, MossdeepCity_House2_Movement_WingullExitNorth
-	waitmovement 0
+	applywaitmovement LOCALID_MOSSDEEP_HOUSE_WINGULL, MossdeepCity_House2_Movement_WingullExitNorth
 	return
 
 MossdeepCity_House2_EventScript_WingullExitWest:: @ 0x0820C423
-	applymovement LOCALID_MOSSDEEP_HOUSE_WINGULL, MossdeepCity_House2_Movement_WingullExitEast
-	waitmovement 0
+	applywaitmovement LOCALID_MOSSDEEP_HOUSE_WINGULL, MossdeepCity_House2_Movement_WingullExitEast
 	return
 
 MossdeepCity_House2_Movement_WingullExitNorth:

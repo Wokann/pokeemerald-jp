@@ -907,5 +907,121 @@ class ReviewedMapShorthandTest(unittest.TestCase):
         self.assertNotIn('.set ', generated)
 
 
+    def test_mossdeep_houses_regeneration_retains_sequential_movement_helpers(self):
+        for name, count in (('MossdeepCity_House2', 2),
+                            ('MossdeepCity_StevensHouse', 5)):
+            for tag, source in (
+                    ('JP generated', render_map(name)),
+                    ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                        encoding='utf-8'))):
+                with self.subTest(map=name, source=tag):
+                    self.assertEqual(source.count('\tapplywaitmovement '), count)
+                    self.assertNotIn('\tapplymovement ', source)
+                    self.assertNotIn('\twaitmovement ', source)
+
+    def test_mossdeep_wingull_regeneration_retains_mail_and_facing_routes(self):
+        name = 'MossdeepCity_House2'
+        for tag, source in (
+                ('JP generated', render_map(name)),
+                ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                    encoding='utf-8'))):
+            with self.subTest(source=tag):
+                self.assertIn('\tplaymoncry SPECIES_WINGULL, CRY_MODE_NORMAL\n'
+                              '\tmsgbox ' + name + '_Text_Wingull, MSGBOX_DEFAULT\n'
+                              '\twaitmoncry\n\tclosemessage\n'
+                              '\tsetflag FLAG_WINGULL_DELIVERED_MAIL\n'
+                              '\tclearflag FLAG_HIDE_FORTREE_CITY_HOUSE_4_WINGULL\n',
+                              source)
+                for direction, suffix in (('NORTH', 'North'), ('WEST', 'West')):
+                    self.assertIn('\tcall_if_eq VAR_FACING, DIR_' + direction
+                                  + ', ' + name + '_EventScript_WingullExit' + suffix
+                                  + '\n', source)
+                self.assertIn('\tremoveobject LOCALID_MOSSDEEP_HOUSE_WINGULL\n'
+                              '\trelease\n\tend\n', source)
+                self.assertRegex(source, name + '_Movement_WingullExitNorth:'
+                                 r'[^\n]*\n\twalk_fast_right\n\twalk_fast_down\n'
+                                 r'\twalk_fast_down\n\twalk_fast_left\n'
+                                 r'\twalk_fast_down\n\tdelay_8\n\tstep_end\n')
+                self.assertRegex(source, name + '_Movement_WingullExitEast:'
+                                 r'[^\n]*\n(?:\twalk_fast_down\n){3}'
+                                 r'\tdelay_8\n\tstep_end\n')
+
+
+    def test_stevens_house_regeneration_retains_dive_and_beldum_gift_paths(self):
+        name = 'MossdeepCity_StevensHouse'
+        for tag, source in (
+                ('JP generated', render_map(name)),
+                ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                    encoding='utf-8'))):
+            source = re.sub(r'\b0x([0-9A-Fa-f]+)\b',
+                            lambda m: str(int(m.group(1), 16)), source)
+            with self.subTest(source=tag):
+                self.assertIn('\tcall_if_unset FLAG_SYS_GAME_CLEAR, ' + name
+                              + '_EventScript_HideStevensNote\n', source)
+                self.assertIn('\tmap_script_2 VAR_STEVENS_HOUSE_STATE, 1, '
+                              + name + '_EventScript_StevenGivesDive\n', source)
+                self.assertIn('\tgiveitem ITEM_HM_DIVE\n'
+                              '\tsetflag FLAG_RECEIVED_HM_DIVE\n'
+                              '\tsetflag FLAG_OMIT_DIVE_FROM_STEVEN_LETTER\n', source)
+                self.assertIn('\tsetflag FLAG_HIDE_MOSSDEEP_CITY_SCOTT\n'
+                              '\tsetflag FLAG_HIDE_SEAFLOOR_CAVERN_ENTRANCE_AQUA_GRUNT\n'
+                              '\tsetvar VAR_STEVENS_HOUSE_STATE, 2\n', source)
+                self.assertIn('\tsetvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_BELDUM\n'
+                              '\tgivemon SPECIES_BELDUM, 5\n'
+                              '\tgoto_if_eq VAR_RESULT, MON_GIVEN_TO_PARTY, ' + name
+                              + '_EventScript_SendBeldumParty\n'
+                              '\tgoto_if_eq VAR_RESULT, MON_GIVEN_TO_PC, ' + name
+                              + '_EventScript_SendBeldumPC\n'
+                              '\tgoto Common_EventScript_NoMoreRoomForPokemon\n', source)
+                self.assertIn('\tcall Common_EventScript_GetGiftMonPartySlot\n'
+                              '\tcall Common_EventScript_NameReceivedPartyMon\n', source)
+                self.assertIn('\tcall Common_EventScript_NameReceivedBoxMon\n', source)
+                self.assertIn('\tsetflag FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_BELDUM_POKEBALL\n'
+                              '\tsetflag FLAG_RECEIVED_BELDUM\n\treleaseall\n\tend\n',
+                              source)
+                # Retained RS gift and unused no-space text are real JP bytes.
+                self.assertRegex(source, name + '_EventScript_DiveItemBall:'
+                                 r':?[^\n]*\n\tfinditem ITEM_HM_DIVE\n'
+                                 r'\tsetflag FLAG_RECEIVED_HM_DIVE\n\tend\n')
+                self.assertRegex(source, r'(?m)^' + name + '_Text_NoSpaceForAnotherMon:')
+
+
+    def test_mossdeep_interiors_regeneration_retains_labels_jp_text_and_json(self):
+        family = (('House1', 4), ('House2', 3), ('PokemonCenter_1F', 2),
+                  ('PokemonCenter_2F', 1), ('Mart', 3), ('House3', 5),
+                  ('StevensHouse', 9), ('House4', 5))
+        total_labels = total_texts = 0
+        for suffix, count in family:
+            name = 'MossdeepCity_' + suffix
+            generated = render_map(name)
+            checked = (ROOT / 'data/maps' / name / 'scripts.inc').read_text(
+                encoding='utf-8')
+            reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                encoding='utf-8')
+            with self.subTest(map=name):
+                labels = re.findall(r'^(\w+):{1,2}', generated, re.M)
+                self.assertEqual(labels, re.findall(r'^(\w+):{1,2}', reference, re.M))
+                pattern = r'^(' + name + r'_Text_\w+):{1,2}[^\n]*\n(.*?)'
+                pattern += r'(?=^\w+:{1,2}|\Z)'
+                texts = re.findall(pattern, generated, re.M | re.S)
+                self.assertEqual(len(texts), count)
+                self.assertEqual([(label, body.strip()) for label, body in texts],
+                                 [(label, body.strip()) for label, body in
+                                  re.findall(pattern, checked, re.M | re.S)])
+                self.assertNotIn('{STRING ', generated)
+                self.assertNotIn('{ESCAPE ', generated)
+                self.assertNotIn('.incbin', generated)
+                self.assertNotIn('.set ', generated)
+                actual_json = json.loads((ROOT / 'data/maps' / name / 'map.json').read_text(
+                    encoding='utf-8'))
+                reference_json = json.loads((emitter.US_MAPS / name / 'map.json').read_text(
+                    encoding='utf-8'))
+                self.assertEqual(actual_json, reference_json)
+                total_labels += len(labels)
+                total_texts += len(texts)
+        self.assertEqual(total_labels, 91)
+        self.assertEqual(total_texts, 32)
+
+
 if __name__ == '__main__':
     unittest.main()
