@@ -485,6 +485,87 @@ class ReviewedMapShorthandTest(unittest.TestCase):
                         strings = '\n'.join(line for line in block.group(1).splitlines()
                                             if line.lstrip().startswith('.string'))
                         self.assertEqual(re.findall(r'\{[^}]+\}', strings), placeholders)
+    def test_harbor_regeneration_retains_both_parallel_boarding_sequences(self):
+        name = 'LilycoveCity_Harbor'
+        generated = render_map(name)
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        for tag, source in (('JP generated', generated), ('US reference', reference)):
+            with self.subTest(source=tag):
+                self.assertEqual(source.count('\tapplywaitmovement '), 17)
+                for direction in ('North', 'East'):
+                    with self.subTest(direction=direction):
+                        parallel = (
+                            '\tapplymovement LOCALID_LILYCOVE_HARBOR_BRINEY, '
+                            + name + '_Movement_BrineyBoardFerry\n'
+                            '\tapplymovement LOCALID_PLAYER, ' + name
+                            + '_Movement_PlayerBoardWithBriney' + direction + '\n'
+                            '\tapplymovement LOCALID_LILYCOVE_HARBOR_FERRY_SAILOR, '
+                            + name + '_Movement_SailorBoardWithBriney' + direction
+                            + '\n\twaitmovement 0\n\treturn\n')
+                        self.assertEqual(source.count(parallel), 1)
+
+    def test_harbor_regeneration_retains_ticket_priority_bits_and_menu_wait(self):
+        name = 'LilycoveCity_Harbor'
+        generated = render_map(name)
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        priority = (
+            '\tgoto_if_eq VAR_TEMP_C, 2, ' + name + '_EventScript_OldSeaMapFirstTime\n'
+            '\tgoto_if_eq VAR_TEMP_B, 1, ' + name + '_EventScript_EonTicketFirstTime\n'
+            '\tgoto_if_eq VAR_TEMP_B, 2, ' + name + '_EventScript_AuroraTicketFirstTime\n'
+            '\tgoto_if_eq VAR_TEMP_B, 4, ' + name + '_EventScript_OldSeaMapFirstTime\n'
+            '\tgoto_if_eq VAR_TEMP_B, 8, ' + name + '_EventScript_MysticTicketFirstTime\n')
+        for tag, source in (('JP generated', generated), ('US reference', reference)):
+            with self.subTest(source=tag):
+                self.assertIn(priority, source)
+                for temporary, ticket, bit in (('E', 'EonTicket', 1),
+                                               ('D', 'AuroraTicket', 2),
+                                               ('C', 'OldSeaMap', 4),
+                                               ('9', 'MysticTicket', 8)):
+                    with self.subTest(ticket=ticket):
+                        self.assertIn('\tcall_if_eq VAR_TEMP_' + temporary + ', 2, '
+                                      + name + '_EventScript_SetFirstTimeShowing'
+                                      + ticket + '\n', source)
+                        self.assertIn('\tcall_if_eq VAR_TEMP_' + temporary + ', 1, '
+                                      + name + '_EventScript_SetHas' + ticket + '\n',
+                                      source)
+                        self.assertEqual(source.count('\taddvar VAR_TEMP_B, '
+                                                      + str(bit) + '\n'), 1)
+                        self.assertEqual(source.count('\taddvar VAR_TEMP_A, '
+                                                      + str(bit) + '\n'), 1)
+                for menu_mode in (0, 1):
+                    self.assertIn(
+                        '\tsetvar VAR_0x8004, ' + str(menu_mode) + '\n'
+                        '\tspecial ScriptMenu_CreateLilycoveSSTidalMultichoice\n'
+                        '\tspecial GetLilycoveSSTidalSelection\n\tswitch VAR_RESULT\n',
+                        source)
+                self.assertNotIn(
+                    '\tspecial ScriptMenu_CreateLilycoveSSTidalMultichoice\n'
+                    '\twaitstate\n', source)
+        specials = (ROOT / 'data' / 'specials.inc').read_text(encoding='utf-8')
+        self.assertRegex(specials,
+                         r'(?m)^\s*def_special ScriptMenu_CreateLilycoveSSTidalMultichoice, '
+                         r'waitstate=1\s*$')
+        self.assertRegex(specials,
+                         r'(?m)^\s*def_special GetLilycoveSSTidalSelection\s*$')
+
+    def test_harbor_ticket_placeholders_retain_original_jp_text_controls(self):
+        name = 'LilycoveCity_Harbor'
+        generated = render_map(name)
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        for tag, source in (('JP generated', generated), ('US reference', reference)):
+            with self.subTest(source=tag):
+                for suffix in ('NoTicket', 'FlashTicketWhereTo'):
+                    label = name + '_Text_' + suffix
+                    block = re.search(
+                        r'^' + re.escape(label)
+                        + r':{1,2}[^\n]*\n(.*?)(?=^\w+:{1,2}|\Z)',
+                        source, re.M | re.S)
+                    self.assertIsNotNone(block)
+                    self.assertEqual(re.findall(r'\{[^}]+\}', block.group(1)),
+                                     ['{PLAYER}'])
+                    if tag == 'JP generated':
+                        self.assertIn('\t.string "{PLAYER}は\\n"\n', block.group(1))
+                        self.assertEqual(block.group(1).count('\\p'), 2)
 
 
 if __name__ == '__main__':
