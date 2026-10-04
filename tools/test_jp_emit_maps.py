@@ -410,6 +410,81 @@ class ReviewedMapShorthandTest(unittest.TestCase):
                 strings = '\n'.join(line for line in block.group(1).splitlines()
                                     if line.lstrip().startswith('.string'))
                 self.assertEqual(re.findall(r'\{[^}]+\}', strings), ['{STR_VAR_2}'])
+    def test_fan_club_regeneration_retains_first_fans_parallel_movement(self):
+        name = 'LilycoveCity_PokemonTrainerFanClub'
+        generated = render_map(name)
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        parallel = (
+            '\tapplymovement LOCALID_TRAINER_FAN_CLUB_LITTLE_GIRL, ' + name
+            + '_Movement_LittleGirlWatchPlayer\n'
+            '\tapplymovement LOCALID_TRAINER_FAN_CLUB_MAN, ' + name
+            + '_Movement_FanApproachPlayer\n\twaitmovement 0\n')
+        for tag, source in (('JP generated', generated), ('US reference', reference)):
+            with self.subTest(source=tag):
+                self.assertEqual(source.count('\tapplywaitmovement '), 5)
+                self.assertEqual(source.count(parallel), 1)
+                self.assertIn(
+                    '\tapplywaitmovement LOCALID_TRAINER_FAN_CLUB_LITTLE_GIRL, '
+                    + name + '_Movement_LittleGirlHideFromPlayer\n'
+                    '\tsetvar VAR_LILYCOVE_FAN_CLUB_STATE, 2\n', source)
+
+    def test_fan_club_regeneration_retains_fan_count_and_interview_wait_contract(self):
+        name = 'LilycoveCity_PokemonTrainerFanClub'
+        generated = render_map(name)
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        label = name + '_EventScript_CheckSetUpTVShow'
+        pattern = (r'^' + re.escape(label)
+                   + r':{1,2}[^\n]*\n(.*?)(?=^\w+:{1,2}|\Z)')
+        for tag, source in (('JP generated', generated), ('US reference', reference)):
+            with self.subTest(source=tag):
+                block = re.search(pattern, source, re.M | re.S)
+                self.assertIsNotNone(block)
+                self.assertIn('\tsetvar VAR_0x8005, NUM_TRAINER_FAN_CLUB_MEMBERS\n',
+                              block.group(1))
+                self.assertEqual(
+                    re.findall(r'\tsetvar VAR_0x8004, FANCLUB_MEMBER([1-8])\n',
+                               block.group(1)), list('12345678'))
+                self.assertEqual(block.group(1).count(
+                    '\tcall_if_eq VAR_RESULT, FALSE, ' + name
+                    + '_EventScript_CountNotPlayersFan\n'), 8)
+                self.assertIn('\tgoto_if_ge VAR_0x8005, 5, ' + name
+                              + '_EventScript_TrySetUpTVShow\n', block.group(1))
+                self.assertIn(
+                    '\tspecial ShowScrollableMultichoice\n'
+                    '\tsetvar VAR_0x8004, FANCLUB_MEMBER1\n\tswitch VAR_RESULT\n',
+                    source)
+                self.assertNotIn(
+                    '\tspecial ShowScrollableMultichoice\n\twaitstate\n', source)
+        specials = (ROOT / 'data' / 'specials.inc').read_text(encoding='utf-8')
+        self.assertRegex(specials,
+                         r'(?m)^\s*def_special ShowScrollableMultichoice, waitstate=1\s*$')
+
+    def test_fan_club_placeholders_follow_player_and_trainer_buffers(self):
+        name = 'LilycoveCity_PokemonTrainerFanClub'
+        generated = render_map(name)
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        expected = {
+            'OhWowItsPlayer': ['{PLAYER}'],
+            'TrainersPowerIsOutOfTheOrdinary': ['{STR_VAR_1}'],
+            'NeverGoingToStopBeingTrainersFan': ['{STR_VAR_1}', '{STR_VAR_1}'],
+        }
+        for tag, source in (('JP generated', generated), ('US reference', reference)):
+            with self.subTest(source=tag):
+                self.assertIn(
+                    '\tsetvar VAR_0x8004, FANCLUB_MEMBER1\n'
+                    '\tspecial BufferFanClubTrainerName\n\tmsgbox ' + name
+                    + '_Text_WhatsYourOpinionOfTrainer, MSGBOX_DEFAULT\n', source)
+                for suffix, placeholders in expected.items():
+                    with self.subTest(text=suffix):
+                        label = name + '_Text_' + suffix
+                        block = re.search(
+                            r'^' + re.escape(label)
+                            + r':{1,2}[^\n]*\n(.*?)(?=^\w+:{1,2}|\Z)',
+                            source, re.M | re.S)
+                        self.assertIsNotNone(block)
+                        strings = '\n'.join(line for line in block.group(1).splitlines()
+                                            if line.lstrip().startswith('.string'))
+                        self.assertEqual(re.findall(r'\{[^}]+\}', strings), placeholders)
 
 
 if __name__ == '__main__':
