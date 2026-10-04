@@ -34,8 +34,7 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_NotInterested:: @ 0x08205C3E
 
 LilycoveCity_LilycoveMuseum_1F_EventScript_InterestedInPaintings:: @ 0x08205C48
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_ExcellentCanYouComeWithMe, MSGBOX_SIGN
-	applymovement LOCALID_MUSEUM_1F_CURATOR, LilycoveCity_LilycoveMuseum_1F_Movement_CuratorEnterStairs
-	waitmovement 0
+	applywaitmovement LOCALID_MUSEUM_1F_CURATOR, LilycoveCity_LilycoveMuseum_1F_Movement_CuratorEnterStairs
 	removeobject LOCALID_MUSEUM_1F_CURATOR
 	switch VAR_FACING
 	case DIR_NORTH, LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorNorth
@@ -45,24 +44,21 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_InterestedInPaintings:: @ 0x08205C48
 
 LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorNorth:: @ 0x08205C84
 	lockall
-	applymovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorNorth
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorNorth
 	warp MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F, 11, 8
 	waitstate
 	end
 
 LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorWest:: @ 0x08205C99
 	lockall
-	applymovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorWest
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorWest
 	warp MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F, 11, 8
 	waitstate
 	end
 
 LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorEast:: @ 0x08205CAE
 	lockall
-	applymovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorEast
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorEast
 	warp MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F, 11, 8
 	waitstate
 	end
@@ -151,8 +147,7 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_Artist2:: @ 0x08205D55
 	faceplayer
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_AimToSeeGreatPaintings, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_MUSEUM_1F_ARTIST_2, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement LOCALID_MUSEUM_1F_ARTIST_2, Common_Movement_FaceOriginalDirection
 	release
 	end
 

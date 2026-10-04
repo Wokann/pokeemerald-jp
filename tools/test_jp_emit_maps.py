@@ -283,6 +283,42 @@ class ReviewedMapShorthandTest(unittest.TestCase):
                                     if line.lstrip().startswith('.string'))
                 self.assertEqual(re.findall(r'\{[^}]+\}', strings), expected)
 
+    def test_museum_regeneration_retains_parallel_and_scheduled_movements(self):
+        first = 'LilycoveCity_LilycoveMuseum_1F'
+        second = 'LilycoveCity_LilycoveMuseum_2F'
+        generated_first = render_map(first)
+        generated_second = render_map(second)
+        self.assertEqual(generated_first.count('\tapplywaitmovement '), 5)
+        self.assertEqual(generated_second.count('\tapplywaitmovement '), 5)
+        self.assertIn(
+            '\tapplymovement LOCALID_MUSEUM_1F_CURATOR, Common_Movement_FacePlayer\n'
+            '\tmessage ' + first + '_Text_ImCuratorHaveYouViewedOurPaintings\n',
+            generated_first)
+        self.assertIn(
+            '\tapplymovement LOCALID_MUSEUM_2F_CURATOR, Common_Movement_FacePlayer\n'
+            '\tapplymovement LOCALID_PLAYER, '
+            + second + '_Movement_PlayerWalkInPlaceLeft\n\twaitmovement 0\n',
+            generated_second)
+        for movement, text in (
+            (second + '_Movement_FaceExhibitHall', '_Text_PaintingsAttractedMoreGuests'),
+            ('Common_Movement_FacePlayer', '_Text_TokenOfGratitude'),
+        ):
+            with self.subTest(movement=movement, text=text):
+                self.assertIn(
+                    '\tapplymovement LOCALID_MUSEUM_2F_CURATOR, ' + movement
+                    + '\n\tmsgbox ' + second + text + ', MSGBOX_DEFAULT\n',
+                    generated_second)
+
+    def test_museum_regeneration_retains_rom_state_copy_without_importing_bugfix(self):
+        name = 'LilycoveCity_LilycoveMuseum_2F'
+        checked_in = (ROOT / 'data' / 'maps' / name / 'scripts.inc').read_text(
+            encoding='utf-8')
+        for tag, source in (('JP source', checked_in), ('JP generated', render_map(name))):
+            with self.subTest(source=tag):
+                self.assertIn('\tcopyvar VAR_LILYCOVE_MUSEUM_2F_STATE, 1, warn=FALSE\n',
+                              source)
+                self.assertNotIn('\tsetvar VAR_LILYCOVE_MUSEUM_2F_STATE, 1\n', source)
+
 
 if __name__ == '__main__':
     unittest.main()
