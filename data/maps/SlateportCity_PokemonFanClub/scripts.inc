@@ -16,20 +16,20 @@ SlateportCity_PokemonFanClub_EventScript_Chairman:: @ 0x081FC028
 	end
 
 SlateportCity_PokemonFanClub_EventScript_ChairmanFirstAssessment:: @ 0x081FC064
-	setvar VAR_SLATEPORT_FAN_CLUB_STATE, 0x1
+	setvar VAR_SLATEPORT_FAN_CLUB_STATE, 1
 	msgbox SlateportCity_PokemonFanClub_Text_AllowMeToExamineYourPokemon, MSGBOX_DEFAULT
 	goto SlateportCity_PokemonFanClub_EventScript_ChairmanAssessLeadMon
 	end
 
 SlateportCity_PokemonFanClub_EventScript_ChairmanTryAssessPokemon:: @ 0x081FC077
-	setvar VAR_TEMP_2, 0x0
+	setvar VAR_TEMP_2, 0
 	call_if_set FLAG_RECEIVED_YELLOW_SCARF, SlateportCity_PokemonFanClub_EventScript_CountReceivedScarf
 	call_if_set FLAG_RECEIVED_GREEN_SCARF, SlateportCity_PokemonFanClub_EventScript_CountReceivedScarf
 	call_if_set FLAG_RECEIVED_PINK_SCARF, SlateportCity_PokemonFanClub_EventScript_CountReceivedScarf
 	call_if_set FLAG_RECEIVED_BLUE_SCARF, SlateportCity_PokemonFanClub_EventScript_CountReceivedScarf
 	call_if_set FLAG_RECEIVED_RED_SCARF, SlateportCity_PokemonFanClub_EventScript_CountReceivedScarf
 	call_if_eq VAR_TEMP_2, CONTEST_CATEGORIES_COUNT, SlateportCity_PokemonFanClub_EventScript_ReceivedAllScarves
-	goto_if_eq VAR_SLATEPORT_FAN_CLUB_STATE, 0x2, SlateportCity_PokemonFanClub_EventScript_NoMoreScarves
+	goto_if_eq VAR_SLATEPORT_FAN_CLUB_STATE, 2, SlateportCity_PokemonFanClub_EventScript_NoMoreScarves
 	msgbox SlateportCity_PokemonFanClub_Text_HowIsYourPokemonGrowing, MSGBOX_DEFAULT
 	goto SlateportCity_PokemonFanClub_EventScript_ChairmanAssessLeadMon
 	end
@@ -41,7 +41,7 @@ SlateportCity_PokemonFanClub_EventScript_NoMoreScarves:: @ 0x081FC0CD
 
 SlateportCity_PokemonFanClub_EventScript_ChairmanAssessLeadMon:: @ 0x081FC0D7
 	msgbox SlateportCity_PokemonFanClub_Text_HmHmISee, MSGBOX_DEFAULT
-	setvar VAR_TEMP_1, 0x0
+	setvar VAR_TEMP_1, 0
 	call_if_unset FLAG_RECEIVED_YELLOW_SCARF, SlateportCity_PokemonFanClub_EventScript_CheckMonTough
 	call_if_unset FLAG_RECEIVED_GREEN_SCARF, SlateportCity_PokemonFanClub_EventScript_CheckMonSmart
 	call_if_unset FLAG_RECEIVED_PINK_SCARF, SlateportCity_PokemonFanClub_EventScript_CheckMonCute
@@ -59,11 +59,11 @@ SlateportCity_PokemonFanClub_EventScript_ChairmanAssessLeadMon:: @ 0x081FC0D7
 	end
 
 SlateportCity_PokemonFanClub_EventScript_ReceivedAllScarves:: @ 0x081FC15C
-	setvar VAR_SLATEPORT_FAN_CLUB_STATE, 0x2
+	setvar VAR_SLATEPORT_FAN_CLUB_STATE, 2
 	return
 
 SlateportCity_PokemonFanClub_EventScript_CountReceivedScarf:: @ 0x081FC162
-	addvar VAR_TEMP_2, 0x1
+	addvar VAR_TEMP_2, 1
 	return
 
 SlateportCity_PokemonFanClub_EventScript_NoHighConditions:: @ 0x081FC168
@@ -132,7 +132,7 @@ SlateportCity_PokemonFanClub_EventScript_CheckMonCool:: @ 0x081FC271
 	return
 
 SlateportCity_PokemonFanClub_EventScript_SetMonCool:: @ 0x081FC282
-	setvar VAR_TEMP_1, 0x1
+	setvar VAR_TEMP_1, 1
 	return
 
 SlateportCity_PokemonFanClub_EventScript_CheckMonBeauty:: @ 0x081FC288
@@ -141,7 +141,7 @@ SlateportCity_PokemonFanClub_EventScript_CheckMonBeauty:: @ 0x081FC288
 	return
 
 SlateportCity_PokemonFanClub_EventScript_SetMonBeauty:: @ 0x081FC299
-	setvar VAR_TEMP_1, 0x2
+	setvar VAR_TEMP_1, 2
 	return
 
 SlateportCity_PokemonFanClub_EventScript_CheckMonCute:: @ 0x081FC29F
@@ -150,7 +150,7 @@ SlateportCity_PokemonFanClub_EventScript_CheckMonCute:: @ 0x081FC29F
 	return
 
 SlateportCity_PokemonFanClub_EventScript_SetMonCute:: @ 0x081FC2B0
-	setvar VAR_TEMP_1, 0x3
+	setvar VAR_TEMP_1, 3
 	return
 
 SlateportCity_PokemonFanClub_EventScript_CheckMonSmart:: @ 0x081FC2B6
@@ -159,7 +159,7 @@ SlateportCity_PokemonFanClub_EventScript_CheckMonSmart:: @ 0x081FC2B6
 	return
 
 SlateportCity_PokemonFanClub_EventScript_SetMonSmart:: @ 0x081FC2C7
-	setvar VAR_TEMP_1, 0x4
+	setvar VAR_TEMP_1, 4
 	return
 
 SlateportCity_PokemonFanClub_EventScript_CheckMonTough:: @ 0x081FC2CD
@@ -168,7 +168,7 @@ SlateportCity_PokemonFanClub_EventScript_CheckMonTough:: @ 0x081FC2CD
 	return
 
 SlateportCity_PokemonFanClub_EventScript_SetMonTough:: @ 0x081FC2DE
-	setvar VAR_TEMP_1, 0x5
+	setvar VAR_TEMP_1, 5
 	return
 
 SlateportCity_PokemonFanClub_EventScript_ChairmanNotEnteredContest:: @ 0x081FC2E4
@@ -200,10 +200,8 @@ SlateportCity_PokemonFanClub_EventScript_SootheBellWoman:: @ 0x081FC310
 
 SlateportCity_PokemonFanClub_EventScript_GiveSootheBell:: @ 0x081FC335
 	playse SE_PIN
-	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement VAR_LAST_TALKED, Common_Movement_Delay48
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_Delay48
 	msgbox SlateportCity_PokemonFanClub_Text_PokemonAdoresYou, MSGBOX_DEFAULT
 	giveitem ITEM_SOOTHE_BELL
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
