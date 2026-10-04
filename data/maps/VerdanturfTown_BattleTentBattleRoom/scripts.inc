@@ -16,6 +16,8 @@ VerdanturfTown_BattleTentBattleRoom_EventScript_SetPlayerGfx:: @ 0x081F6CBB
 	goto_if_eq VAR_RESULT, FEMALE, VerdanturfTown_BattleTentBattleRoom_EventScript_SetPlayerGfxFemale
 	return
 
+@ JP initializes only the player graphics variable in these two branches.
+@ The US-only writes to VAR_OBJ_GFX_ID_0 are not present in the JP ROM.
 VerdanturfTown_BattleTentBattleRoom_EventScript_SetPlayerGfxMale:: @ 0x081F6CD3
 	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL
 	return
@@ -25,21 +27,19 @@ VerdanturfTown_BattleTentBattleRoom_EventScript_SetPlayerGfxFemale:: @ 0x081F6CD
 	return
 
 VerdanturfTown_BattleTentBattleRoom_OnFrame:: @ 0x081F6CDF
-	map_script_2 VAR_TEMP_0, 0x0, VerdanturfTown_BattleTentBattleRoom_EventScript_EnterRoom
+	map_script_2 VAR_TEMP_0, 0, VerdanturfTown_BattleTentBattleRoom_EventScript_EnterRoom
 	.2byte 0
 
 VerdanturfTown_BattleTentBattleRoom_EventScript_EnterRoom:: @ 0x081F6CE9
 	showobjectat LOCALID_VERDANTURF_TENT_BATTLE_PLAYER, MAP_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM
-	applymovement LOCALID_VERDANTURF_TENT_BATTLE_PLAYER, VerdanturfTown_BattleTentBattleRoom_Movement_PlayerEnter
-	waitmovement 0
+	applywaitmovement LOCALID_VERDANTURF_TENT_BATTLE_PLAYER, VerdanturfTown_BattleTentBattleRoom_Movement_PlayerEnter
 	frontier_get FRONTIER_DATA_BATTLE_NUM
-	goto_if_ne VAR_RESULT, 0x0, VerdanturfTown_BattleTentBattleRoom_EventScript_AskContinueChallenge
+	goto_if_ne VAR_RESULT, 0, VerdanturfTown_BattleTentBattleRoom_EventScript_AskContinueChallenge
 
 VerdanturfTown_BattleTentBattleRoom_EventScript_NextOpponentEnter:: @ 0x081F6D10
 	tower_setopponent
 	addobject LOCALID_VERDANTURF_TENT_BATTLE_OPPONENT
-	applymovement LOCALID_VERDANTURF_TENT_BATTLE_OPPONENT, VerdanturfTown_BattleTentBattleRoom_Movement_OpponentEnter
-	waitmovement 0
+	applywaitmovement LOCALID_VERDANTURF_TENT_BATTLE_OPPONENT, VerdanturfTown_BattleTentBattleRoom_Movement_OpponentEnter
 	battletent_getopponentintro
 	msgbox gStringVar4, MSGBOX_DEFAULT
 	waitmessage
@@ -50,17 +50,16 @@ VerdanturfTown_BattleTentBattleRoom_EventScript_NextOpponentEnter:: @ 0x081F6D10
 VerdanturfTown_BattleTentBattleRoom_EventScript_WarpToLobbyLost:: @ 0x081F6D4B
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST
 	special LoadPlayerParty
-	warp MAP_VERDANTURF_TOWN_BATTLE_TENT_LOBBY, 0x6, 0x6
+	warp MAP_VERDANTURF_TOWN_BATTLE_TENT_LOBBY, 6, 6
 	waitstate
 
 VerdanturfTown_BattleTentBattleRoom_EventScript_DefeatedOpponent:: @ 0x081F6D69
 	frontier_get FRONTIER_DATA_BATTLE_NUM
-	addvar VAR_RESULT, 0x1
+	addvar VAR_RESULT, 1
 	frontier_set FRONTIER_DATA_BATTLE_NUM, VAR_RESULT
 	switch VAR_RESULT
 	case 3, VerdanturfTown_BattleTentBattleRoom_EventScript_WarpToLobbyWon
-	applymovement LOCALID_VERDANTURF_TENT_BATTLE_OPPONENT, VerdanturfTown_BattleTentBattleRoom_Movement_OpponentExit
-	waitmovement 0
+	applywaitmovement LOCALID_VERDANTURF_TENT_BATTLE_OPPONENT, VerdanturfTown_BattleTentBattleRoom_Movement_OpponentExit
 	removeobject LOCALID_VERDANTURF_TENT_BATTLE_OPPONENT
 	applymovement LOCALID_VERDANTURF_TENT_BATTLE_ATTENDANT, Common_Movement_WalkInPlaceFasterDown
 	applymovement LOCALID_VERDANTURF_TENT_BATTLE_PLAYER, Common_Movement_WalkInPlaceFasterUp
@@ -75,9 +74,9 @@ VerdanturfTown_BattleTentBattleRoom_EventScript_DefeatedOpponent:: @ 0x081F6D69
 
 VerdanturfTown_BattleTentBattleRoom_EventScript_AskContinueChallenge:: @ 0x081F6DDD
 	frontier_get FRONTIER_DATA_BATTLE_NUM
-	call_if_eq VAR_RESULT, 0x1, VerdanturfTown_BattleTentBattleRoom_EventScript_ReadyFor2ndOpponent
-	call_if_eq VAR_RESULT, 0x2, VerdanturfTown_BattleTentBattleRoom_EventScript_ReadyFor3rdOpponent
-	multichoice 0x14, 0x6, MULTI_GO_ON_REST_RETIRE, TRUE
+	call_if_eq VAR_RESULT, 1, VerdanturfTown_BattleTentBattleRoom_EventScript_ReadyFor2ndOpponent
+	call_if_eq VAR_RESULT, 2, VerdanturfTown_BattleTentBattleRoom_EventScript_ReadyFor3rdOpponent
+	multichoice 20, 6, MULTI_GO_ON_REST_RETIRE, TRUE
 	switch VAR_RESULT
 	case 0, VerdanturfTown_BattleTentBattleRoom_EventScript_ContinueChallenge
 	case 1, VerdanturfTown_BattleTentBattleRoom_EventScript_AskPauseChallenge
@@ -93,7 +92,7 @@ VerdanturfTown_BattleTentBattleRoom_EventScript_AskPauseChallenge:: @ 0x081F6E2B
 VerdanturfTown_BattleTentBattleRoom_EventScript_AskRetireChallenge:: @ 0x081F6E59
 	message BattleFrontier_BattlePalaceBattleRoom_Text_WishToQuitChallenge
 	waitmessage
-	multichoicedefault 0x14, 0x8, MULTI_YESNO, 0x1, FALSE
+	multichoicedefault 20, 8, MULTI_YESNO, 1, FALSE
 	switch VAR_RESULT
 	case 1, VerdanturfTown_BattleTentBattleRoom_EventScript_AskContinueChallenge
 	case 0, VerdanturfTown_BattleTentBattleRoom_EventScript_WarpToLobbyLost
@@ -109,7 +108,7 @@ VerdanturfTown_BattleTentBattleRoom_EventScript_ContinueChallenge:: @ 0x081F6E8B
 VerdanturfTown_BattleTentBattleRoom_EventScript_WarpToLobbyWon:: @ 0x081F6EA2
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_WON
 	special LoadPlayerParty
-	warp MAP_VERDANTURF_TOWN_BATTLE_TENT_LOBBY, 0x6, 0x6
+	warp MAP_VERDANTURF_TOWN_BATTLE_TENT_LOBBY, 6, 6
 	waitstate
 
 VerdanturfTown_BattleTentBattleRoom_EventScript_PauseChallenge:: @ 0x081F6EC0
@@ -123,13 +122,13 @@ VerdanturfTown_BattleTentBattleRoom_EventScript_PauseChallenge:: @ 0x081F6EC0
 	end
 
 VerdanturfTown_BattleTentBattleRoom_OnWarp:: @ 0x081F6EE2
-	map_script_2 VAR_TEMP_1, 0x0, VerdanturfTown_BattleTentBattleRoom_EventScript_SetUpObjects
+	map_script_2 VAR_TEMP_1, 0, VerdanturfTown_BattleTentBattleRoom_EventScript_SetUpObjects
 	.2byte 0
 
 VerdanturfTown_BattleTentBattleRoom_EventScript_SetUpObjects:: @ 0x081F6EEC
 	hideobjectat LOCALID_VERDANTURF_TENT_BATTLE_PLAYER, MAP_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM
 	call VerdanturfTown_BattleTentBattleRoom_EventScript_SetPlayerGfx
-	setvar VAR_TEMP_1, 0x1
+	setvar VAR_TEMP_1, 1
 	applymovement LOCALID_PLAYER, VerdanturfTown_BattleTentBattleRoom_Movement_SetInvisible
 	removeobject LOCALID_VERDANTURF_TENT_BATTLE_OPPONENT
 	end
