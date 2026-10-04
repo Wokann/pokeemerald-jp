@@ -31,9 +31,9 @@ US_ONLY_SPECIALS = (
 
 MACRO_RE = re.compile(r"^\s*\.macro\s+(\w+)(.*)$")
 SPECIAL_RE = re.compile(r"^\s*def_special\s+(\w+)(?:,\s*waitstate=(\d+))?")
-OPCODE_HEADER_RE = re.compile(r"\b(SCR_OP_\w+)\s*=\s*0x([0-9A-Fa-f]+)")
+OPCODE_HEADER_RE = re.compile(r"\b(SCR_OP_\w+)\s*=\s*(0[xX][0-9A-Fa-f]+|\d+)")
 OPCODE_TABLE_RE = re.compile(
-    r"script_cmd_table_entry\s+(SCR_OP_\w+)\s+\w+\s+@\s+0x([0-9A-Fa-f]+)"
+    r"^\s*script_cmd_table_entry\s+(SCR_OP_\w+)[,\s]+(\w+)\b"
 )
 SPECIAL_CALL_RE = re.compile(r"^\s*(?:special\s+|specialvar\s+[^,]+,\s+)(\w+)\b")
 RAW_VAR_RE = re.compile(
@@ -193,29 +193,87 @@ def special_report(jp_root: Path, us_root: Path) -> dict[str, object]:
     }
 
 
+def parse_opcode_header(path: Path) -> list[dict[str, object]]:
+    source = path.read_text(encoding="utf-8")
+    source = re.sub(r"/\*.*?\*/|//[^\n]*", "", source, flags=re.S)
+    return [
+        {"name": match.group(1), "value": int(match.group(2), 0)}
+        for match in OPCODE_HEADER_RE.finditer(source)
+    ]
+
+
+def parse_opcode_table(path: Path) -> list[dict[str, object]]:
+    """Use enum_start's actual entry order, never the optional @ comments."""
+    entries: list[dict[str, object]] = []
+    for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if re.match(r"^\s*gScriptCmdTableEnd:{1,2}", line):
+            break
+        instruction, _separator, comment = line.partition("@")
+        match = OPCODE_TABLE_RE.match(instruction)
+        if match:
+            annotated = re.match(r"\s*0[xX]([0-9A-Fa-f]+)\b", comment)
+            entries.append({
+                "name": match.group(1),
+                "value": len(entries),
+                "handler": match.group(2),
+                "line": line_number,
+                "comment_value": int(annotated.group(1), 16) if annotated else None,
+            })
+    return entries
+
+
 def opcode_report(jp_root: Path) -> dict[str, object]:
-    header = {
-        match.group(1): int(match.group(2), 16)
-        for match in OPCODE_HEADER_RE.finditer(
-            (jp_root / "include/constants/script_commands.h").read_text(encoding="utf-8")
-        )
-    }
-    table = {
-        match.group(1): int(match.group(2), 16)
-        for match in OPCODE_TABLE_RE.finditer(
-            (jp_root / "data/script_cmd_table.inc").read_text(encoding="utf-8")
-        )
-    }
+    header_entries = parse_opcode_header(jp_root / "include/constants/script_commands.h")
+    table_entries = parse_opcode_table(jp_root / "data/script_cmd_table.inc")
+    header = {entry["name"]: entry["value"] for entry in header_entries}
+    table = {entry["name"]: entry["value"] for entry in table_entries}
+    header_counts = Counter(entry["name"] for entry in header_entries)
+    table_counts = Counter(entry["name"] for entry in table_entries)
+    header_values = Counter(entry["value"] for entry in header_entries)
     shared = sorted(header.keys() & table.keys())
+    divergent = [
+        {"name": name, "header": header[name], "table": table[name]}
+        for name in shared if header[name] != table[name]
+    ]
+    header_only = sorted(header.keys() - table.keys())
+    table_only = sorted(table.keys() - header.keys())
+    duplicate_header_names = sorted(name for name, count in header_counts.items() if count > 1)
+    duplicate_table_names = sorted(name for name, count in table_counts.items() if count > 1)
+    duplicate_header_values = sorted(value for value, count in header_values.items() if count > 1)
+    outside_table = [entry for entry in header_entries
+                     if not 0 <= entry["value"] < len(table_entries)]
+    comment_mismatches = [
+        {"name": entry["name"], "ordinal": entry["value"],
+         "comment": entry["comment_value"], "line": entry["line"]}
+        for entry in table_entries
+        if entry["comment_value"] is not None and entry["comment_value"] != entry["value"]
+    ]
+    header_order = [entry["name"] for entry in header_entries]
+    table_order = [entry["name"] for entry in table_entries]
+    order_matches = header_order == table_order
+    complete = bool(table_entries) and not any((
+        divergent, header_only, table_only, duplicate_header_names, duplicate_table_names,
+        duplicate_header_values, outside_table, comment_mismatches,
+    )) and order_matches
     return {
+        "status": "complete" if complete else "divergent",
+        "table_value_source": "entry_ordinal",
         "header_opcodes": len(header),
         "table_opcodes": len(table),
+        "header_entries": len(header_entries),
+        "table_entries": len(table_entries),
+        "table_range": {"first": 0, "last": len(table_entries) - 1} if table_entries else None,
         "shared_opcodes": len(shared),
-        "divergent_values": [
-            {"name": name, "header": header[name], "table": table[name]}
-            for name in shared
-            if header[name] != table[name]
-        ],
+        "divergent_values": divergent,
+        "header_only_opcodes": header_only,
+        "table_only_opcodes": table_only,
+        "duplicate_header_names": duplicate_header_names,
+        "duplicate_table_names": duplicate_table_names,
+        "duplicate_header_values": duplicate_header_values,
+        "header_values_outside_table": outside_table,
+        "table_comment_mismatches": comment_mismatches,
+        "header_order_matches_table": order_matches,
+        "entries": table_entries,
     }
 
 
@@ -281,6 +339,10 @@ def print_summary(report: dict[str, object]) -> None:
     print(f"special aliases to US:      {len(specials['aliases'])}")
     print(f"waitstate differences:      {len(specials['waitstate_differences'])}")
     print(f"opcode header divergences:  {len(opcodes['divergent_values'])}")
+    print(f"opcode metadata contract:  {opcodes['status']} ({opcodes['table_entries']} JP entries)")
+    print(f"opcode header/table-only:  {len(opcodes['header_only_opcodes'])}/"
+          f"{len(opcodes['table_only_opcodes'])}")
+    print(f"opcode comment mismatches: {len(opcodes['table_comment_mismatches'])}")
     print(f"vars.h identical to US:     {constants['vars.h']['identical']}")
     print(f"flags.h identical to US:    {constants['flags.h']['identical']}")
     print(f"structured map scripts:     {maps['structured_map_scripts']}")
