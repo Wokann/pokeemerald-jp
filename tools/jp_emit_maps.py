@@ -13171,6 +13171,7 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'vars': {
                 0x4000: 'VAR_TEMP_0',
                 0x4001: 'VAR_TEMP_1',
+                0x8000: 'VAR_0x8000',
                 0x800D: 'VAR_RESULT',
             },
             'script_var_values': {

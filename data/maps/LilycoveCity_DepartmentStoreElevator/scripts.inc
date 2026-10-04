@@ -111,8 +111,7 @@ LilycoveCity_DepartmentStoreElevator_EventScript_ExitFloorSelect:: @ 0x0820B349
 LilycoveCity_DepartmentStoreElevator_EventScript_MoveElevator:: @ 0x0820B34E
 	special CloseDeptStoreElevatorWindow
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
 	waitse
 	special MoveElevator
 	setflag FLAG_TEMP_2

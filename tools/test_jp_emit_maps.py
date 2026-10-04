@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Regression coverage for source-proven semantic recovery in jp_emit_maps."""
 import difflib
+import json
 import re
 import sys
 import tempfile
@@ -654,6 +655,177 @@ class ReviewedMapShorthandTest(unittest.TestCase):
                             '\tgoto_if_eq VAR_RESULT, FALSE, '
                             'Common_EventScript_ShowBagIsFull\n'
                             '\tsetflag FLAG_RECEIVED_TM_REST\n', source)
+
+
+    def test_department_store_regeneration_retains_sequential_movement_helpers(self):
+        for name, count in (('LilycoveCity_DepartmentStore_1F', 2),
+                            ('LilycoveCity_DepartmentStore_5F', 2),
+                            ('LilycoveCity_DepartmentStoreElevator', 1)):
+            generated = render_map(name)
+            reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                encoding='utf-8')
+            for tag, source in (('JP generated', generated), ('US reference', reference)):
+                with self.subTest(map=name, source=tag):
+                    self.assertEqual(source.count('\tapplywaitmovement '), count)
+                    self.assertNotIn('\tapplymovement ', source)
+                    self.assertNotIn('\twaitmovement ', source)
+
+    def test_lottery_regeneration_retains_pending_prize_and_daily_ticket_guards(self):
+        name = 'LilycoveCity_DepartmentStore_1F'
+        generated = render_map(name)
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        for tag, source in (('JP generated', generated), ('US reference', reference)):
+            with self.subTest(source=tag):
+                self.assertIn(
+                    '\tdotimebasedevents\n'
+                    '\tgoto_if_ne VAR_POKELOT_PRIZE_ITEM, ITEM_NONE, '
+                    + name + '_EventScript_GivePrizeFromEarlier\n'
+                    '\tgoto_if_set FLAG_DAILY_PICKED_LOTO_TICKET, '
+                    + name + '_EventScript_ComeBackTomorrow\n', source)
+                self.assertIn(
+                    '\tgiveitem VAR_0x8005\n'
+                    '\tgoto_if_eq VAR_RESULT, FALSE, '
+                    + name + '_EventScript_RecordPrizeNoRoom\n'
+                    '\tspecial TryPutLotteryWinnerReportOnAir\n', source)
+                self.assertIn(
+                    '\tcopyvar VAR_POKELOT_PRIZE_PLACE, VAR_0x8004\n'
+                    '\tcopyvar VAR_POKELOT_PRIZE_ITEM, VAR_0x8005\n'
+                    '\tgoto ' + name + '_EventScript_NoRoomForPrize\n', source)
+                self.assertIn(
+                    '\tgiveitem VAR_POKELOT_PRIZE_ITEM\n'
+                    '\tgoto_if_eq VAR_RESULT, FALSE, '
+                    + name + '_EventScript_NoRoomForPrize\n'
+                    '\tcopyvar VAR_0x8004, VAR_POKELOT_PRIZE_PLACE\n'
+                    '\tcopyvar VAR_0x8005, VAR_POKELOT_PRIZE_ITEM\n'
+                    '\tspecial TryPutLotteryWinnerReportOnAir\n'
+                    '\tsetvar VAR_POKELOT_PRIZE_ITEM, ITEM_NONE\n'
+                    '\tsetvar VAR_POKELOT_PRIZE_PLACE, 0\n', source)
+                for value, suffix in enumerate(('TwoDigitMatch', 'ThreeDigitMatch',
+                                                'FourDigitMatch', 'FullMatch'), 1):
+                    self.assertIn('\tcall_if_eq VAR_0x8004, ' + str(value) + ', '
+                                  + name + '_EventScript_' + suffix + '\n', source)
+                self.assertNotRegex(source,
+                                    r'(?m)^' + name + r'_Text_LotteryCornerDrawTicket:')
+
+    def test_department_store_fifth_floor_retains_legendary_weather_gate(self):
+        name = 'LilycoveCity_DepartmentStore_5F'
+        for tag, source in (
+                ('JP generated', render_map(name)),
+                ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                    encoding='utf-8'))):
+            with self.subTest(source=tag):
+                for value in (1, 2, 3):
+                    self.assertIn('\tmap_script_2 VAR_SOOTOPOLIS_CITY_STATE, '
+                                  + str(value) + ', ' + name
+                                  + '_EventScript_BlockRoofStairs\n', source)
+                self.assertIn(
+                    '\tsetobjectxy LOCALID_DEPARTMENT_STORE_STAIRS_WOMAN, 16, 2\n'
+                    '\tturnobject LOCALID_DEPARTMENT_STORE_STAIRS_WOMAN, DIR_NORTH\n',
+                    source)
+                self.assertIn(
+                    '\tgoto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0, '
+                    + name + '_EventScript_WomanNormal\n'
+                    '\tgoto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 4, '
+                    + name + '_EventScript_WomanNormal\n', source)
+
+
+    def test_rooftop_regeneration_retains_drink_dispatch_payment_and_bonus(self):
+        name = 'LilycoveCity_DepartmentStoreRooftop'
+        for tag, source in (
+                ('JP generated', render_map(name)),
+                ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                    encoding='utf-8'))):
+            with self.subTest(source=tag):
+                self.assertIn('\tcopyvar VAR_TEMP_1, VAR_RESULT\n'
+                              '\tswitch VAR_TEMP_1\n', source)
+                for value, drink in enumerate(('FreshWater', 'SodaPop', 'Lemonade')):
+                    self.assertIn('\tcase ' + str(value) + ', ' + name
+                                  + '_EventScript_' + drink + '\n', source)
+                    price = (200, 300, 350)[value]
+                    for command in ('checkmoney', 'removemoney'):
+                        self.assertEqual(source.count('\t' + command + ' '
+                                                      + str(price) + '\n'), 1)
+                self.assertLess(source.index('\tcheckitemspace VAR_TEMP_0\n'),
+                                source.index('\tcall_if_eq VAR_TEMP_1, 0, '
+                                             + name + '_EventScript_RemoveMoneyFreshWater\n'))
+                self.assertEqual(len(re.findall(r'^\s*random 64\b', source, re.M)), 2)
+                self.assertEqual(source.count('\tadditem VAR_TEMP_0\n'), 3)
+                self.assertEqual(source.count('\tbufferitemname STR_VAR_2, VAR_TEMP_0\n'), 3)
+                self.assertIn('\thidemoneybox\n\treleaseall\n\tend\n', source)
+                for suffix in ('CanOfDrinkDroppedDown', 'ExtraCanOfDrinkDroppedDown'):
+                    block = re.search(
+                        r'^' + name + '_Text_' + suffix
+                        + r':{1,2}[^\n]*\n(.*?)(?=^\w+:{1,2}|\Z)',
+                        source, re.M | re.S)
+                    self.assertIsNotNone(block)
+                    self.assertEqual(re.findall(r'\{[^}]+\}', block.group(1)),
+                                     ['{STR_VAR_1}'])
+                    if tag == 'JP generated':
+                        self.assertEqual(block.group(1).count('\\p'), 1)
+                        self.assertEqual(block.group(1).count('\\n'),
+                                         int(suffix.startswith('Extra')))
+
+    def test_elevator_regeneration_retains_default_cursor_cancel_and_floor_warps(self):
+        name = 'LilycoveCity_DepartmentStoreElevator'
+        for tag, source in (
+                ('JP generated', render_map(name)),
+                ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                    encoding='utf-8'))):
+            with self.subTest(source=tag):
+                self.assertEqual(source.count('\tswitch VAR_RESULT\n'), 2)
+                for value, floor in enumerate(('5th', '4th', '3rd', '2nd', '1st')):
+                    self.assertIn('\tcase ' + str(value) + ', ' + name
+                                  + '_EventScript_ChooseFloorFrom' + floor + '\n', source)
+                    block = re.search(
+                        r'^' + name + '_EventScript_ChooseFloorFrom' + floor
+                        + r':{1,2}[^\n]*\n(.*?)(?=^\w+:{1,2}|\Z)',
+                        source, re.M | re.S)
+                    self.assertIsNotNone(block)
+                    # JP keeps equivalent hexadecimal literals in this menu.
+                    match = re.search(r'^\s*multichoicedefault (.*)$', block.group(1), re.M)
+                    self.assertIsNotNone(match)
+                    arguments = [part.strip() for part in match.group(1).split(',')]
+                    self.assertEqual([int(arguments[index], 0) for index in (0, 1, 3)],
+                                     [0, 0, value])
+                    self.assertEqual(arguments[2], 'MULTI_FLOORS')
+                    self.assertEqual(arguments[4], 'FALSE')
+                for value in ('5', 'MULTI_B_PRESSED'):
+                    self.assertIn('\tcase ' + value + ', ' + name
+                                  + '_EventScript_ExitFloorSelect\n', source)
+                for floor in range(1, 6):
+                    self.assertRegex(source, r'\tsetdynamicwarp MAP_LILYCOVE_CITY_DEPARTMENT_STORE_'
+                                     + str(floor) + r'F, (?:0x)?2, (?:0x)?1\n')
+                    self.assertIn('\tgoto_if_eq VAR_DEPT_STORE_FLOOR, DEPT_STORE_FLOORNUM_'
+                                  + str(floor) + 'F, ' + name
+                                  + '_EventScript_ExitFloorSelect\n', source)
+                self.assertIn('\tcall_if_unset FLAG_TEMP_2, ' + name
+                              + '_EventScript_SetFloor\n', source)
+                self.assertIn('\tspecial MoveElevator\n\tsetflag FLAG_TEMP_2\n', source)
+                self.assertNotIn('\tspecial MoveElevator\n\twaitstate\n', source)
+        specials = (ROOT / 'data' / 'specials.inc').read_text(encoding='utf-8')
+        self.assertRegex(specials, r'(?m)^\s*def_special MoveElevator, waitstate=1\s*$')
+
+    def test_department_store_json_retains_rom_proven_jp_npc_movement(self):
+        names = tuple('LilycoveCity_DepartmentStore_' + str(floor) + 'F'
+                      for floor in range(1, 6)) + (
+                          'LilycoveCity_DepartmentStoreRooftop',
+                          'LilycoveCity_DepartmentStoreElevator')
+        for name in names:
+            actual = json.loads((ROOT / 'data/maps' / name / 'map.json').read_text(
+                encoding='utf-8'))
+            reference = json.loads((emitter.US_MAPS / name / 'map.json').read_text(
+                encoding='utf-8'))
+            with self.subTest(map=name):
+                if name.endswith('_1F'):
+                    npc = actual['object_events'][4]
+                    self.assertEqual(npc['script'], name + '_EventScript_PokefanM')
+                    self.assertEqual(npc['movement_type'], 'MOVEMENT_TYPE_WANDER_AROUND')
+                    self.assertEqual(reference['object_events'][4]['movement_type'],
+                                     'MOVEMENT_TYPE_LOOK_AROUND')
+                    # JP Object 5: 24-byte object record, movement byte at +9.
+                    self.assertEqual(emitter.ROM[0x50A821], 2)
+                    npc['movement_type'] = 'MOVEMENT_TYPE_LOOK_AROUND'
+                self.assertEqual(actual, reference)
 
 
 if __name__ == '__main__':

@@ -75,10 +75,10 @@ LilycoveCity_DepartmentStoreRooftop_EventScript_VendingMachine:: @ 0x0820AEE1
 LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseDrink:: @ 0x0820AEF2
 	multichoice 16, 0, MULTI_VENDING_MACHINE, FALSE
 	copyvar VAR_TEMP_1, VAR_RESULT
-	copyvar 0x8000, VAR_TEMP_1
-	goto_if_eq 0x8000, 0, LilycoveCity_DepartmentStoreRooftop_EventScript_FreshWater
-	goto_if_eq 0x8000, 1, LilycoveCity_DepartmentStoreRooftop_EventScript_SodaPop
-	goto_if_eq 0x8000, 2, LilycoveCity_DepartmentStoreRooftop_EventScript_Lemonade
+	switch VAR_TEMP_1
+	case 0, LilycoveCity_DepartmentStoreRooftop_EventScript_FreshWater
+	case 1, LilycoveCity_DepartmentStoreRooftop_EventScript_SodaPop
+	case 2, LilycoveCity_DepartmentStoreRooftop_EventScript_Lemonade
 	msgbox LilycoveCity_DepartmentStoreRooftop_Text_DecidedAgainstBuyingDrink, MSGBOX_DEFAULT
 	goto LilycoveCity_DepartmentStoreRooftop_EventScript_ExitVendingMachine
 	end
@@ -126,7 +126,7 @@ LilycoveCity_DepartmentStoreRooftop_EventScript_TryBuyDrink:: @ 0x0820AF7B
 	call_if_eq VAR_TEMP_1, 0, LilycoveCity_DepartmentStoreRooftop_EventScript_CheckMoneyFreshWater
 	call_if_eq VAR_TEMP_1, 1, LilycoveCity_DepartmentStoreRooftop_EventScript_CheckMoneySodaPop
 	call_if_eq VAR_TEMP_1, 2, LilycoveCity_DepartmentStoreRooftop_EventScript_CheckMoneyLemonade
-	goto_if_eq VAR_RESULT, 0, LilycoveCity_DepartmentStoreRooftop_EventScript_NotEnoughMoneyForDrink
+	goto_if_eq VAR_RESULT, FALSE, LilycoveCity_DepartmentStoreRooftop_EventScript_NotEnoughMoneyForDrink
 	checkitemspace VAR_TEMP_0
 	goto_if_eq VAR_RESULT, FALSE, LilycoveCity_DepartmentStoreRooftop_EventScript_NoRoomForDrink
 	call_if_eq VAR_TEMP_1, 0, LilycoveCity_DepartmentStoreRooftop_EventScript_RemoveMoneyFreshWater
