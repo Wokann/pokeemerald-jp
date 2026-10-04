@@ -9,37 +9,34 @@ SlateportCity_OceanicMuseum_1F_EventScript_EntranceAttendant:: @ 0x081FCA3F
 
 SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFeeLeft:: @ 0x081FCA48
 	lockall
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	goto SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFee
 	end
 
 SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFeeRight:: @ 0x081FCA59
 	lockall
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	goto SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFee
 	end
 
 SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFee:: @ 0x081FCA6A
-	showmoneybox 0x0, 0x0
+	showmoneybox 0, 0
 	msgbox SlateportCity_OceanicMuseum_1F_Text_WouldYouLikeToEnter, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, SlateportCity_OceanicMuseum_1F_EventScript_CheckMoneyForFee
 	closemessage
 	hidemoneybox
-	applymovement LOCALID_PLAYER, SlateportCity_OceanicMuseum_1F_Movement_PushPlayerBackFromCounter
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, SlateportCity_OceanicMuseum_1F_Movement_PushPlayerBackFromCounter
 	releaseall
 	end
 
 SlateportCity_OceanicMuseum_1F_EventScript_CheckMoneyForFee:: @ 0x081FCA91
-	checkmoney 0x32
+	checkmoney 50
 	goto_if_eq VAR_RESULT, FALSE, SlateportCity_OceanicMuseum_1F_EventScript_NotEnoughMoney
 	playse SE_SHOP
-	removemoney 0x32
+	removemoney 50
 	updatemoneybox
 	msgbox SlateportCity_OceanicMuseum_1F_Text_PleaseEnjoyYourself, MSGBOX_DEFAULT
-	setvar VAR_SLATEPORT_MUSEUM_1F_STATE, 0x1
+	setvar VAR_SLATEPORT_MUSEUM_1F_STATE, 1
 	hidemoneybox
 	releaseall
 	end
@@ -49,14 +46,13 @@ SlateportCity_OceanicMuseum_1F_EventScript_NotEnoughMoney:: @ 0x081FCAC1
 	msgbox SlateportCity_OceanicMuseum_1F_Text_NotEnoughMoney, MSGBOX_DEFAULT
 	closemessage
 	hidemoneybox
-	applymovement LOCALID_PLAYER, SlateportCity_OceanicMuseum_1F_Movement_PushPlayerBackFromCounter
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, SlateportCity_OceanicMuseum_1F_Movement_PushPlayerBackFromCounter
 	releaseall
 	end
 
 SlateportCity_OceanicMuseum_1F_EventScript_AllowEntranceAnyway:: @ 0x081FCAE2
 	msgbox SlateportCity_OceanicMuseum_1F_Text_CatchUpWithYourGroup, MSGBOX_DEFAULT
-	setvar VAR_SLATEPORT_MUSEUM_1F_STATE, 0x1
+	setvar VAR_SLATEPORT_MUSEUM_1F_STATE, 1
 	hidemoneybox
 	releaseall
 	end
@@ -144,15 +140,13 @@ SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron4:: @ 0x081FCB98
 SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGrunt:: @ 0x081FCBA1
 	lock
 	faceplayer
-	delay 0x8
+	delay 8
 	playse SE_PIN
-	applymovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, Common_Movement_Delay48
-	waitmovement 0
+	applywaitmovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, Common_Movement_ExclamationMark
+	applywaitmovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, Common_Movement_Delay48
 	msgbox SlateportCity_OceanicMuseum_1F_Text_RememberMeTakeThis, MSGBOX_DEFAULT
-	giveitem ITEM_TM46
-	goto_if_eq VAR_RESULT, 0x0, SlateportCity_OceanicMuseum_1F_EventScript_NoRoomForThief
+	giveitem ITEM_TM_THIEF
+	goto_if_eq VAR_RESULT, 0, SlateportCity_OceanicMuseum_1F_EventScript_NoRoomForThief
 	setflag FLAG_RECEIVED_TM_THIEF
 	msgbox SlateportCity_OceanicMuseum_1F_Text_HopeINeverSeeYouAgain, MSGBOX_DEFAULT
 	closemessage
@@ -170,8 +164,7 @@ SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitNorth:: @ 0x081FCC15
 	end
 
 SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitSouth:: @ 0x081FCC2C
-	applymovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExit
-	waitmovement 0
+	applywaitmovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExit
 	goto SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExited
 	end
 
