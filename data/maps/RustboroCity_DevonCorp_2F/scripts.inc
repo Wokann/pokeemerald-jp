@@ -72,10 +72,8 @@ RustboroCity_DevonCorp_2F_EventScript_FossilScientist:: @ 0x082014C3
 RustboroCity_DevonCorp_2F_EventScript_NoticeRootFossil:: @ 0x08201505
 	closemessage
 	playse SE_PIN
-	applymovement LOCALID_FOSSIL_SCIENTIST, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement LOCALID_FOSSIL_SCIENTIST, Common_Movement_Delay48
-	waitmovement 0
+	applywaitmovement LOCALID_FOSSIL_SCIENTIST, Common_Movement_ExclamationMark
+	applywaitmovement LOCALID_FOSSIL_SCIENTIST, Common_Movement_Delay48
 	msgbox RustboroCity_DevonCorp_2F_Text_WantToBringFossilBackToLife, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RustboroCity_DevonCorp_2F_EventScript_DeclineGiveFossil
 	checkitem ITEM_CLAW_FOSSIL
@@ -95,10 +93,8 @@ RustboroCity_DevonCorp_2F_EventScript_GiveRootFossil:: @ 0x08201546
 RustboroCity_DevonCorp_2F_EventScript_NoticeClawFossil:: @ 0x08201563
 	closemessage
 	playse SE_PIN
-	applymovement LOCALID_FOSSIL_SCIENTIST, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement LOCALID_FOSSIL_SCIENTIST, Common_Movement_Delay48
-	waitmovement 0
+	applywaitmovement LOCALID_FOSSIL_SCIENTIST, Common_Movement_ExclamationMark
+	applywaitmovement LOCALID_FOSSIL_SCIENTIST, Common_Movement_Delay48
 	msgbox RustboroCity_DevonCorp_2F_Text_WantToBringFossilBackToLife, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RustboroCity_DevonCorp_2F_EventScript_DeclineGiveFossil
 	checkitem ITEM_ROOT_FOSSIL

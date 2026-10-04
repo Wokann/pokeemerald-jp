@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Regression coverage for source-proven semantic recovery in jp_emit_maps."""
 import difflib
+import re
 import sys
 import tempfile
 import unittest
@@ -205,6 +206,33 @@ class ReviewedMapShorthandTest(unittest.TestCase):
                 generated = render_map(name)
                 self.assertIn(required, generated)
                 self.assertNotIn(forbidden, generated)
+
+    def test_devon_text_placeholders_match_their_calling_context_and_us_labels(self):
+        cases = {
+            'RustboroCity_DevonCorp_2F': {
+                'HandedFossilToResearcher': ['{PLAYER}', '{STR_VAR_1}'],
+                'FossilizedMonBroughtBackToLife': ['{STR_VAR_2}'],
+                'ReceivedMonFromResearcher': ['{PLAYER}', '{STR_VAR_2}'],
+            },
+            'RustboroCity_DevonCorp_3F': {
+                'ReceivedPokenav': ['{PLAYER}'],
+                'MrStoneGoWithCautionAndCare': ['{PLAYER}', '{KUN}'],
+            },
+        }
+        for name, labels in cases.items():
+            generated = render_map(name)
+            reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+            for suffix, expected in labels.items():
+                label = name + '_Text_' + suffix
+                pattern = (r'^' + re.escape(label)
+                           + r':{1,2}[^\n]*\n(.*?)(?=^\w+:{1,2}|\Z)')
+                for tag, source in (('JP generated', generated), ('US reference', reference)):
+                    with self.subTest(map=name, label=label, source=tag):
+                        block = re.search(pattern, source, re.M | re.S)
+                        self.assertIsNotNone(block)
+                        strings = '\n'.join(line for line in block.group(1).splitlines()
+                                            if line.lstrip().startswith('.string'))
+                        self.assertEqual(re.findall(r'\{[^}]+\}', strings), expected)
 
 
 if __name__ == '__main__':
