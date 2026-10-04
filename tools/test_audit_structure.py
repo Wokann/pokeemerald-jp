@@ -2,6 +2,8 @@
 """Regression checks for ``audit_structure.py``."""
 
 import json
+import os
+import struct
 import sys
 import tempfile
 import unittest
@@ -10,6 +12,31 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import audit_structure as audit
+
+
+def elf_fixture(symbols):
+    """Minimal real ELF32 symbol table, including STT_FILE/local/global rows."""
+    strings = bytearray(b"\0")
+    table = bytearray(16)
+    for name, address, info, section in symbols:
+        offset = len(strings)
+        strings.extend(name.encode("utf-8") + b"\0")
+        table.extend(struct.pack("<IIIBBH", offset, address, 0, info, 0, section))
+    code_offset = 52
+    string_offset = code_offset + 0x100
+    table_offset = string_offset + len(strings)
+    sections_offset = table_offset + len(table)
+    header = struct.pack("<16sHHIIIIIHHHHHH", b"\x7fELF\x01\x01" + bytes(10),
+                         2, 40, 1, 0x08000101, 0, sections_offset, 0, 52,
+                         0, 0, 40, 4, 0)
+    sections = [
+        (0,) * 10,
+        (0, 1, 6, 0x08000100, code_offset, 0x100, 0, 0, 4, 0),
+        (0, 3, 0, 0, string_offset, len(strings), 0, 0, 1, 0),
+        (0, 2, 0, 0, table_offset, len(table), 2, 1, 4, 16),
+    ]
+    return header + bytes(0x100) + strings + table + b"".join(
+        struct.pack("<10I", *section) for section in sections)
 
 
 class StructureAuditTests(unittest.TestCase):
@@ -103,6 +130,202 @@ class StructureAuditTests(unittest.TestCase):
         self.assertEqual(ambiguous, [])
         self.assertEqual([entry.address for entry in resolved[definitions[0]]], [0x08000000])
         self.assertEqual([entry.address for entry in resolved[definitions[1]]], [0x08000004])
+
+    def test_unowned_static_names_do_not_fan_out_without_linked_evidence(self):
+        definitions = [audit.FunctionDef("one.c", "SharedStatic", False),
+                       audit.FunctionDef("two.c", "SharedStatic", True)]
+        entries = [audit.FuncmapEntry(0x08000100, None, "SharedStatic", "SharedStatic"),
+                   audit.FuncmapEntry(0x08000110, None, "SharedStatic", "SharedStatic")]
+        resolved, ambiguous = audit.resolve_funcmap_entries(definitions, entries)
+        self.assertEqual(resolved, {})
+        linked = {("SharedStatic", 0x08000100): {"one.c"},
+                  ("SharedStatic", 0x08000110): {"two.c"}}
+        resolved, ambiguous = audit.resolve_funcmap_entries(definitions, entries, linked)
+        self.assertEqual(ambiguous, [])
+        self.assertEqual([entry.address for entry in resolved[definitions[0]]], [0x08000100])
+        self.assertEqual([entry.address for entry in resolved[definitions[1]]], [0x08000110])
+        diagnostic = audit.legacy_binding_audit(definitions, entries, linked, resolved)
+        self.assertEqual(diagnostic["legacy_name_fanout"]["natural_strict_naked_overlap"], 2)
+        self.assertEqual(diagnostic["verified_owner_bindings"]["natural_strict_naked_overlap"], 0)
+        self.assertEqual(diagnostic["rejected_assignment_counts"], {"confirmed_wrong_owner": 2})
+
+    def test_swapped_current_standard_aliases_bind_by_actual_jp_name_address(self):
+        definitions = [audit.FunctionDef("decompress.c", "Handle", False),
+                       audit.FunctionDef("decompress.c", "Handle_2", True)]
+        entries = [audit.FuncmapEntry(0x08000100, None, "Handle", "Handle_2"),
+                   audit.FuncmapEntry(0x08000110, None, "Handle_2", "Handle")]
+        linked = {("Handle", 0x08000100): {"decompress.c"},
+                  ("Handle_2", 0x08000110): {"decompress.c"}}
+        resolved, _ = audit.resolve_funcmap_entries(definitions, entries, linked)
+        self.assertEqual([entry.address for entry in resolved[definitions[0]]], [0x08000100])
+        self.assertEqual([entry.address for entry in resolved[definitions[1]]], [0x08000110])
+        diagnostic = audit.legacy_binding_audit(definitions, entries, linked, resolved)
+        self.assertEqual(diagnostic["rejected_assignment_counts"], {"confirmed_wrong_address": 2})
+
+    def test_verified_jp_address_does_not_require_a_current_funcmap_alias_name(self):
+        definition = audit.FunctionDef("one.c", "NewJpName", False)
+        entry = audit.FuncmapEntry(0x08000100, None, "sub_08000100", "UsCandidate")
+        resolved, _ = audit.resolve_funcmap_entries(
+            [definition], [entry], {("NewJpName", 0x08000100): {"one.c"}})
+        self.assertEqual(resolved, {definition: [entry]})
+
+    def test_missing_or_conflicting_evidence_remains_unresolved(self):
+        definition = audit.FunctionDef("one.c", "Known", False)
+        entry = audit.FuncmapEntry(0x08000100, "one.s", "Known", "Known")
+        for linked in ({}, {("Known", 0x08000100): {"one.c", "two.c"}}):
+            resolved, _ = audit.resolve_funcmap_entries([definition], [entry], linked)
+            self.assertEqual(resolved, {})
+        diagnostic = audit.legacy_binding_audit([definition], [entry], {}, {})
+        self.assertEqual(diagnostic["rejected_assignment_counts"], {"evidence_gap": 1})
+
+    def test_same_source_same_name_multiple_addresses_are_not_silently_bound(self):
+        definition = audit.FunctionDef("one.c", "Shared", False)
+        entries = [audit.FuncmapEntry(address, None, "Shared", "Shared")
+                   for address in (0x08000100, 0x08000110)]
+        linked = {("Shared", entry.address): {"one.c"} for entry in entries}
+        resolved, ambiguous = audit.resolve_funcmap_entries([definition], entries, linked)
+        self.assertEqual(resolved, {})
+        self.assertEqual(ambiguous, ["one.c:Shared"])
+
+    def test_funcmap_source_owner_uses_full_path_not_basename(self):
+        definition = audit.FunctionDef("libc/one.c", "Shared", False)
+        self.assertTrue(audit.source_matches_definition("asm/libc/one.s", definition))
+        self.assertFalse(audit.source_matches_definition("asm/other/one.s", definition))
+
+    def test_same_address_alias_rows_preserve_conflicting_standard_names(self):
+        definition = audit.FunctionDef("one.c", "Jp", False)
+        entries = [audit.FuncmapEntry(0x08000100, None, "Jp", standard)
+                   for standard in ("First", "Second")]
+        resolved, _ = audit.resolve_funcmap_entries(
+            [definition], entries, {("Jp", 0x08000100): {"one.c"}})
+        self.assertEqual(set(resolved[definition]), set(entries))
+        manifest = audit.module_manifest([definition], {}, set(), resolved, set())
+        item = manifest[0]["unmatched_functions"][0]
+        self.assertIsNone(item["us_standard_name"])
+        self.assertEqual(item["us_standard_names"], ["First", "Second"])
+        self.assertEqual(item["classification"], "ambiguous_us_standard_names")
+
+    def test_elf_file_context_is_local_only_and_thumb_addresses_are_canonical(self):
+        symbols = audit.elf_code_symbols(elf_fixture([
+            ("one.c", 0, 4, 0xFFF1), ("Shared", 0x08000101, 2, 1),
+            ("two.c", 0, 4, 0xFFF1), ("Shared", 0x08000111, 2, 1),
+            ("Global", 0x08000121, 0x12, 1),
+            ("AbsoluteAlias", 0x08000121, 0x12, 0xFFF1),
+        ]))
+        self.assertEqual(symbols, [("Global", 0x08000120, None),
+                                   ("Shared", 0x08000100, "one.c"),
+                                   ("Shared", 0x08000110, "two.c")])
+
+    def test_linker_ranges_keep_nested_source_paths_and_exclude_data(self):
+        ranges = audit.linker_code_ranges(
+            " .text 0x08000100 0x10 src/libc/one.o\n"
+            " .text.extra\n 0x08000110 0x4 build/jp/src/two.o\n"
+            " .rodata 0x08000114 0x4 src/three.o\n"
+            " .text 0x00000000 0x0 src/discarded.o\n")
+        self.assertEqual(ranges, [(0x08000100, 0x08000110, "libc/one.c"),
+                                  (0x08000110, 0x08000114, "two.c")])
+
+    def test_linked_evidence_joins_real_elf_local_global_and_input_ranges(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "src").mkdir()
+            for name in ("one", "two"):
+                (root / "src" / (name + ".c")).write_text("void Shared(void) {}\n")
+            definitions = [audit.FunctionDef("one.c", "Shared", False),
+                           audit.FunctionDef("two.c", "Shared", True),
+                           audit.FunctionDef("one.c", "Global", False)]
+            (root / "pokeemerald_jp.map").write_text(
+                " .text 0x08000100 0x10 src/one.o\n"
+                " .text 0x08000110 0x10 src/two.o\n"
+                " .text.more 0x08000120 0x10 src/one.o\n")
+            (root / "pokeemerald_jp.elf").write_bytes(elf_fixture([
+                ("one.c", 0, 4, 0xFFF1), ("Shared", 0x08000101, 2, 1),
+                ("two.c", 0, 4, 0xFFF1), ("Shared", 0x08000111, 2, 1),
+                ("Global", 0x08000121, 0x12, 1),
+            ]))
+            linked, metadata = audit.linked_function_evidence(root, definitions)
+            self.assertEqual(linked, {("Shared", 0x08000100): {"one.c"},
+                                      ("Shared", 0x08000110): {"two.c"},
+                                      ("Global", 0x08000120): {"one.c"}})
+            self.assertEqual(metadata["status"], "available")
+            (root / "pokeemerald_jp.map").unlink()
+            self.assertEqual(audit.linked_function_evidence(root, definitions)[0], {})
+
+    def test_conflicting_object_ranges_and_local_file_context_reject_bindings(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "src").mkdir()
+            for name in ("one", "two"):
+                (root / "src" / (name + ".c")).write_text("void Shared(void) {}\n")
+            definitions = [audit.FunctionDef("one.c", "Shared", False),
+                           audit.FunctionDef("two.c", "Shared", False)]
+            (root / "pokeemerald_jp.elf").write_bytes(elf_fixture([
+                ("two.c", 0, 4, 0xFFF1), ("Shared", 0x08000101, 2, 1)]))
+            (root / "pokeemerald_jp.map").write_text(" .text 0x08000100 0x10 src/one.o\n")
+            linked, metadata = audit.linked_function_evidence(root, definitions)
+            self.assertEqual(linked, {})
+            self.assertEqual(metadata["owner_conflicts"], 1)
+            (root / "pokeemerald_jp.map").write_text(
+                " .text 0x08000100 0x10 src/one.o\n"
+                " .text 0x08000100 0x10 src/two.o\n")
+            self.assertEqual(audit.linked_function_evidence(root, definitions)[0], {})
+
+    def test_source_newer_than_elf_is_not_bound_as_a_verified_build(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "src").mkdir()
+            source = root / "src" / "one.c"
+            source.write_text("void Shared(void) {}\n")
+            (root / "pokeemerald_jp.map").write_text(" .text 0x08000100 0x10 src/one.o\n")
+            elf = root / "pokeemerald_jp.elf"
+            elf.write_bytes(elf_fixture([("Shared", 0x08000101, 0x12, 1)]))
+            newer = elf.stat().st_mtime_ns + 1000000000
+            os.utime(source, ns=(newer, newer))
+            linked, metadata = audit.linked_function_evidence(
+                root, [audit.FunctionDef("one.c", "Shared", False)])
+            self.assertEqual(linked, {})
+            self.assertEqual(metadata["stale_source_owners"], ["one.c"])
+
+    def test_missing_and_invalid_elf_are_explicit_not_name_only_fallbacks(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.assertEqual(audit.linked_function_evidence(root, [])[1]["reason"], "missing_jp_elf")
+            (root / "pokeemerald_jp.elf").write_bytes(b"not an ELF")
+            linked, metadata = audit.linked_function_evidence(root, [])
+            self.assertEqual(linked, {})
+            self.assertEqual(metadata["status"], "unavailable")
+            self.assertIn("ELF32", metadata["reason"])
+        self.assertEqual(audit.percentage(None), "unavailable")
+
+    def test_path_only_inventory_is_not_the_semantic_gap_manifest(self):
+        definitions = [audit.FunctionDef("exclusive.c", "Plain", False),
+                       audit.FunctionDef("same.c", "NoUsCounterpart", False)]
+        resolved = {definition: [audit.FuncmapEntry(0x08000100 + index * 4, None,
+                                                   definition.name, definition.name)]
+                    for index, definition in enumerate(definitions)}
+        paths = audit.path_only_c_manifest(
+            {"src/exclusive.c", "src/same.c", "src/data_wrapper.c"}, {"src/same.c"},
+            definitions, resolved)
+        self.assertEqual([item["path"] for item in paths], ["src/data_wrapper.c", "src/exclusive.c"])
+        self.assertEqual(paths[0]["address_binding_status"], "no_function_definitions")
+        gaps = audit.module_manifest(definitions, {}, set(), resolved, set())
+        self.assertEqual([item["path"] for item in gaps], ["exclusive.c", "same.c"])
+
+    def test_path_manifest_cli_is_explicit_and_rejects_markdown(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary) / "paths.json"
+            report = {"jp_path_only_c_manifest": [{"path": "src/exclusive.c"}]}
+            with mock.patch.object(sys, "argv", ["audit_structure.py", "--json",
+                                                  "--jp-path-manifest", str(destination)]), \
+                 mock.patch.object(audit, "build_report", return_value=report):
+                audit.main()
+            self.assertEqual(json.loads(destination.read_text()), report["jp_path_only_c_manifest"])
+            with mock.patch.object(sys, "argv", ["audit_structure.py", "--jp-path-manifest",
+                                                  str(destination.with_suffix(".md"))]), \
+                 mock.patch.object(audit, "build_report") as build:
+                with self.assertRaises(SystemExit):
+                    audit.main()
+            self.assertFalse(build.called)
 
     def test_manifest_separates_placeholders_and_runtime(self):
         definitions = [

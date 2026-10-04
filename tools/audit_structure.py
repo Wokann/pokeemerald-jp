@@ -8,8 +8,10 @@ means that its source is strict C or that its module has reached its upstream
 home.  This script reports those facts independently instead of blending them
 into a single percentage.
 
-The source/file/function metrics do not use build artefacts.  The map-owner
-metric intentionally parses the matching ``baserom_jp.gba`` through the
+Source inventories do not require a build.  Function-address metrics require
+the JP ELF symbol table and linker input-object ranges; absent or ambiguous
+evidence remains unresolved, rather than being guessed from US names.
+The map-owner metric parses the matching ``baserom_jp.gba`` through the
 repository map emitter.  The default is a short human-readable report;
 ``--json`` is the stable machine-readable form and ``--manifest`` writes the
 JP-only code-module inventory used to plan migrations.
@@ -18,9 +20,12 @@ JP-only code-module inventory used to plan migrations.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
+import struct
 import tempfile
+from bisect import bisect_right
 from collections import Counter, defaultdict
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -318,7 +323,7 @@ def parse_funcmap(path: Path) -> tuple[list[FuncmapEntry], int]:
         fields = line.split()
         if len(fields) < 2 or not ADDRESS_RE.fullmatch(fields[0]):
             continue
-        address = int(fields[0], 16)
+        address = int(fields[0], 16) & ~1
         # Retained asm rows can have either ``address file.s symbol`` or
         # ``address file.s JP-name US-name``.  Neither source field is a
         # function alias.
@@ -337,31 +342,292 @@ def parse_funcmap(path: Path) -> tuple[list[FuncmapEntry], int]:
 
 def source_matches_definition(source: str, definition: FunctionDef) -> bool:
     """Match a retained ``foo.s`` funcmap owner to ``src/foo.c``."""
-    return Path(source).stem == Path(definition.path).stem
+    path = source.replace("\\", "/")
+    for prefix in ("src/", "asm/"):
+        if path.startswith(prefix):
+            path = path[len(prefix):]
+    return Path(path).with_suffix(".c").as_posix() == definition.path
+
+
+def linker_code_ranges(text: str) -> list[tuple[int, int, str]]:
+    """Read actual C input-object intervals, never neighboring US addresses."""
+    ranges = set()
+    section = ""
+    for line in text.splitlines():
+        match = re.fullmatch(r"\s+(\.[^\s]+)\s*", line)
+        if match:
+            section = match.group(1)
+        match = re.fullmatch(
+            r"\s*(?:(\.[^\s]+)\s+)?(0x[0-9A-Fa-f]+)\s+"
+            r"(0x[0-9A-Fa-f]+)\s+(\S+\.o)\s*", line)
+        if not match:
+            continue
+        current, start, size, owner = match.groups()
+        current = current or section
+        owner = owner.replace("\\", "/")
+        if not current.startswith((".text", ".iwram")) or "/src/" not in "/" + owner:
+            continue
+        source = owner[owner.index("src/") + 4:-2] + ".c"
+        start, size = int(start, 16), int(size, 16)
+        if start and size:
+            ranges.add((start, start + size, source))
+    return sorted(ranges)
+
+
+def elf_code_symbols(data: bytes) -> list[tuple[str, int, str | None]]:
+    """Retain local/global executable symbols and local STT_FILE contexts.
+
+    GNU ld groups locals by STT_FILE but places globals after those groups.
+    Carrying the last file into a global entry would fabricate its owner.
+    Thumb's low address bit is not part of the physical ROM address.
+    """
+    if len(data) < 52 or data[:6] != b"\x7fELF\x01\x01":
+        raise ValueError("expected an ELF32 little-endian file")
+    header = struct.unpack_from("<16sHHIIIIIHHHHHH", data)
+    offset, stride, count = header[6], header[11], header[12]
+    if stride < 40 or not count or offset + stride * count > len(data):
+        raise ValueError("invalid ELF section headers")
+    sections = [struct.unpack_from("<10I", data, offset + index * stride)
+                for index in range(count)]
+    symbols = []
+    for section in sections:
+        if section[1] != 2:  # SHT_SYMTAB
+            continue
+        if section[6] >= count or section[9] != 16 or section[5] % 16:
+            raise ValueError("invalid ELF symbol table")
+        strings = sections[section[6]]
+        if (section[4] + section[5] > len(data)
+                or strings[4] + strings[5] > len(data)):
+            raise ValueError("truncated ELF symbol/string table")
+        table = data[strings[4]:strings[4] + strings[5]]
+        local_file = None
+        for position in range(section[4], section[4] + section[5], 16):
+            name_at, address, _size, info, _other, index = struct.unpack_from(
+                "<IIIBBH", data, position)
+            if name_at >= len(table):
+                raise ValueError("invalid ELF symbol name")
+            end = table.find(b"\0", name_at)
+            if end < 0:
+                raise ValueError("unterminated ELF symbol name")
+            name = table[name_at:end].decode("utf-8", errors="replace")
+            kind, binding = info & 15, info >> 4
+            if kind == 4:  # STT_FILE is only a local-symbol context.
+                local_file = name
+                continue
+            if (not name or index >= count or kind not in (0, 2)
+                    or not sections[index][2] & 4):  # SHF_EXECINSTR
+                continue
+            address &= ~1
+            code = sections[index]
+            if not code[3] <= address < code[3] + code[5]:
+                continue
+            symbols.append((name, address, local_file if binding == 0 else None))
+    return sorted(set(symbols), key=lambda item: (item[0], item[1], item[2] or ""))
+
+
+def linked_function_evidence(
+    root: Path, definitions: list[FunctionDef],
+) -> tuple[dict[tuple[str, int], set[str]], dict[str, object]]:
+    """Bind JP names/addresses to exact C owners, exposing absent evidence."""
+    elf_path, map_path = root / "pokeemerald_jp.elf", root / "pokeemerald_jp.map"
+    metadata = {
+        "method": "JP ELF executable symbols + JP linker input-object intervals; local STT_FILE is auxiliary",
+        "status": "unavailable",
+        "inputs": {},
+        "object_ranges": 0,
+        "owner_conflicts": 0,
+        "stale_source_owners": [],
+        "source_definition_sha256": hashlib.sha256(json.dumps(
+            [asdict(definition) for definition in definitions], sort_keys=True,
+            separators=(",", ":")).encode("utf-8")).hexdigest(),
+    }
+    if not elf_path.is_file():
+        metadata["reason"] = "missing_jp_elf"
+        return {}, metadata
+    data = elf_path.read_bytes()
+    metadata["inputs"]["elf"] = {
+        "path": "pokeemerald_jp.elf", "sha256": hashlib.sha256(data).hexdigest()}
+    try:
+        symbols = elf_code_symbols(data)
+    except ValueError as error:
+        metadata["reason"] = str(error)
+        return {}, metadata
+    ranges = []
+    if map_path.is_file():
+        map_data = map_path.read_bytes()
+        ranges = linker_code_ranges(map_data.decode("utf-8", errors="replace"))
+        metadata["inputs"]["link_map"] = {
+            "path": "pokeemerald_jp.map", "sha256": hashlib.sha256(map_data).hexdigest()}
+    else:
+        metadata["reason"] = "missing_jp_link_map"
+    metadata["object_ranges"] = len(ranges)
+    source_paths = {definition.path for definition in definitions}
+    wanted_names = {definition.name for definition in definitions}
+    starts = [start for start, _end, _owner in ranges]
+    maximum_ends = []
+    for _start, end, _owner in ranges:
+        maximum_ends.append(max(end, maximum_ends[-1] if maximum_ends else end))
+    by_basename = defaultdict(set)
+    for path in source_paths:
+        by_basename[Path(path).name].add(path)
+    stale = {path for path in source_paths if (root / "src" / path).is_file()
+             and (root / "src" / path).stat().st_mtime_ns > elf_path.stat().st_mtime_ns}
+    metadata["stale_source_owners"] = sorted(stale)
+    evidence: dict[tuple[str, int], set[str]] = defaultdict(set)
+    conflicts = set()
+    for name, address, local_file in symbols:
+        if name not in wanted_names:
+            continue
+        owners = set()
+        position = bisect_right(starts, address) - 1
+        while position >= 0 and maximum_ends[position] > address:
+            start, end, owner = ranges[position]
+            if start <= address < end:
+                owners.add(owner)
+            position -= 1
+        local_owners = by_basename.get(Path(local_file).name, set()) if local_file else set()
+        if local_file:
+            exact_file = local_file.removeprefix("src/")
+            if exact_file in source_paths:
+                local_owners = {exact_file}
+        if len(owners) > 1 or (owners and local_owners and not owners & local_owners):
+            conflicts.add((name, address))
+            continue
+        if len(owners) == 1 and owners <= source_paths and not owners & stale:
+            evidence[(name, address)].update(owners)
+    for key in conflicts:
+        evidence.pop(key, None)
+    metadata["owner_conflicts"] = len(conflicts)
+    metadata["status"] = "available" if evidence else "unavailable"
+    if not evidence and "reason" not in metadata:
+        metadata["reason"] = "no_verified_jp_source_bindings"
+    metadata["bound_name_address_pairs"] = len(evidence)
+    metadata["rule"] = "No name-only, US-index, or neighboring-address fallback; unverified definitions remain unresolved."
+    return dict(evidence), metadata
 
 
 def resolve_funcmap_entries(
     definitions: list[FunctionDef], entries: list[FuncmapEntry],
+    linked_owners: dict[tuple[str, int], set[str]] | None = None,
 ) -> tuple[dict[FunctionDef, list[FuncmapEntry]], list[str]]:
-    """Resolve definitions while retaining all legitimate same-name addresses."""
+    """Resolve one physical definition without cross-owner name fan-out.
+
+    Reports always provide linked evidence, including an empty dictionary
+    when it is unavailable.  The legacy direct-call form accepts only an
+    explicit, exact funcmap source owner, never an unowned name match.
+    """
     by_name: dict[str, list[FuncmapEntry]] = defaultdict(list)
+    by_address: dict[int, list[FuncmapEntry]] = defaultdict(list)
     for entry in entries:
+        by_address[entry.address & ~1].append(entry)
         by_name[entry.current].append(entry)
         if entry.standard != entry.current:
             by_name[entry.standard].append(entry)
     resolved: dict[FunctionDef, list[FuncmapEntry]] = {}
     multi_address = []
+    linked_addresses = defaultdict(set)
+    for (name, address), owners in (linked_owners or {}).items():
+        if len(owners) == 1:
+            linked_addresses[(name, next(iter(owners)))].add(address)
     for definition in definitions:
         candidates = by_name.get(definition.name, [])
         owner_candidates = [entry for entry in candidates if entry.source and
                             source_matches_definition(entry.source, definition)]
-        selected = owner_candidates or candidates
-        unique = {entry.address: entry for entry in selected}
-        if unique:
-            resolved[definition] = list(unique.values())
-            if len(unique) > 1:
-                multi_address.append(f"{definition.path}:{definition.name}")
+        actual_addresses = linked_addresses[(definition.name, definition.path)]
+        if linked_owners is not None and len(actual_addresses) > 1:
+            multi_address.append(f"{definition.path}:{definition.name}")
+            continue
+        # The current JP name can have changed since funcmap's alias columns.
+        # A proved JP owner/name/address binds the address directly; neither
+        # column's US-name spelling is used to invent a JP address.
+        selected = owner_candidates if linked_owners is None else [
+            entry for address in actual_addresses for entry in by_address.get(address, [])]
+        addresses = {entry.address & ~1 for entry in selected}
+        if len(addresses) > 1:
+            multi_address.append(f"{definition.path}:{definition.name}")
+            continue
+        if addresses:
+            resolved[definition] = sorted(set(selected), key=lambda entry: (
+                entry.address, entry.source or "", entry.current, entry.standard))
     return resolved, sorted(multi_address)
+
+
+def legacy_binding_audit(
+    definitions: list[FunctionDef], entries: list[FuncmapEntry],
+    linked: dict[tuple[str, int], set[str]],
+    resolved: dict[FunctionDef, list[FuncmapEntry]],
+) -> dict[str, object]:
+    """Diagnose the superseded fan-out model, never use it for progress.
+
+    A rejected assignment is a proved wrong owner/address only when JP linked
+    evidence confirms a different binding.  Missing symbols remain evidence
+    gaps, not claimed mistakes.  The natural strict/naked intersection is
+    shown before exclusion so a disjoint-set guard cannot conceal pollution.
+    """
+    by_name = defaultdict(list)
+    for entry in entries:
+        by_name[entry.current].append(entry)
+        if entry.standard != entry.current:
+            by_name[entry.standard].append(entry)
+    legacy = {}
+    known_definitions = {(definition.name, definition.path) for definition in definitions}
+    by_definition = defaultdict(set)
+    for (name, address), owners in linked.items():
+        if len(owners) == 1:
+            owner = next(iter(owners))
+            by_definition[(name, owner)].add(address)
+    rejected = []
+    for definition in definitions:
+        candidates = by_name.get(definition.name, [])
+        # Exactly reproduce the old stem-only owner preference for diagnosis.
+        preferred = [entry for entry in candidates if entry.source and
+                     Path(entry.source).stem == Path(definition.path).stem]
+        selected = {entry.address: entry for entry in (preferred or candidates)}
+        if selected:
+            legacy[definition] = list(selected.values())
+        accepted = {entry.address for entry in resolved.get(definition, [])}
+        for address in sorted(set(selected) - accepted):
+            owners = linked.get((definition.name, address), set())
+            own_addresses = by_definition[(definition.name, definition.path)]
+            reason = "evidence_gap"
+            if owners and definition.path not in owners and any(
+                    (definition.name, owner) in known_definitions for owner in owners):
+                reason = "confirmed_wrong_owner"
+            elif own_addresses and address not in own_addresses:
+                reason = "confirmed_wrong_address"
+            rejected.append({
+                "source_owner": definition.path,
+                "name": definition.name,
+                "naked": definition.naked,
+                "candidate_address": "0x%08X" % address,
+                "reason": reason,
+                "verified_owners_at_name_address": sorted(owners),
+                "verified_addresses_for_source_name": ["0x%08X" % value
+                                                        for value in sorted(own_addresses)],
+            })
+
+    def counts(bindings):
+        naked = {entry.address for definition, values in bindings.items()
+                 if definition.naked for entry in values}
+        strict = {entry.address for definition, values in bindings.items()
+                  if not definition.naked for entry in values}
+        return {
+            "bound_definitions": len(bindings),
+            "strict_before_naked_exclusion": len(strict),
+            "naked_addresses": len(naked),
+            "natural_strict_naked_overlap": len(strict & naked),
+            "strict_after_naked_exclusion": len(strict - naked),
+        }
+
+    return {
+        "legacy_metrics_invalid": True,
+        "interpretation": "A decrease after binding correction is a measurement correction, not decompilation regression.",
+        "legacy_name_fanout": counts(legacy),
+        "verified_owner_bindings": counts(resolved),
+        "rejected_assignment_counts": dict(sorted(Counter(
+            item["reason"] for item in rejected).items())),
+        "rejected_assignments": rejected,
+    }
 
 
 def index_us_functions(definitions: list[FunctionDef]) -> dict[str, set[str]]:
@@ -409,9 +675,12 @@ def module_manifest(
         for name in unmatched:
             standards = {entry.standard for definition in definitions if definition.name == name
                          for entry in resolved[definition]}
-            standard = sorted(standards)[0]
-            variant = NUMERIC_VARIANT_RE.fullmatch(standard)
-            if standard in us_symbols:
+            standard = next(iter(standards)) if len(standards) == 1 else None
+            variant = NUMERIC_VARIANT_RE.fullmatch(standard) if standard else None
+            if standard is None:
+                classification = "ambiguous_us_standard_names"
+                action = "review_conflicting_funcmap_aliases"
+            elif standard in us_symbols:
                 classification = "us_binary_only"
                 action = "locate_us_non_c_or_symbol_owner"
             elif path.startswith(("libc/", "libagbsyscall")):
@@ -429,6 +698,7 @@ def module_manifest(
             functions.append({
                 "name": name,
                 "us_standard_name": standard,
+                "us_standard_names": sorted(standards),
                 "classification": classification,
                 "suggested_action": action,
             })
@@ -441,7 +711,7 @@ def module_manifest(
             category = "placeholder_only"
         elif classes == {"numbered_variant"}:
             category = "numbered_variant_only"
-        elif "jp_specific_or_unmapped_us" in classes:
+        elif classes & {"jp_specific_or_unmapped_us", "ambiguous_us_standard_names"}:
             category = "needs_counterpart_review"
         else:
             category = "mixed_non_mainline"
@@ -452,6 +722,44 @@ def module_manifest(
             "unmatched_functions": functions,
         })
     return manifest
+
+
+def path_only_c_manifest(
+    jp_files: set[str], us_files: set[str], definitions: list[FunctionDef],
+    resolved: dict[FunctionDef, list[FuncmapEntry]],
+) -> list[dict[str, object]]:
+    """List every literal JP-exclusive .c path, including data-only wrappers.
+
+    This scope is independent of the semantic-gap migration queue, whose
+    modules may already have an identically named US path.
+    """
+    by_path = defaultdict(list)
+    for definition in definitions:
+        by_path["src/" + definition.path].append(definition)
+    paths = sorted(path for path in jp_files - us_files
+                   if path.startswith("src/") and path.endswith(".c"))
+    records = []
+    for path in paths:
+        values = by_path[path]
+        strict = {entry.address for definition in values if not definition.naked
+                  for entry in resolved.get(definition, [])}
+        naked = {entry.address for definition in values if definition.naked
+                 for entry in resolved.get(definition, [])}
+        unresolved = sorted(definition.name for definition in values if definition not in resolved)
+        records.append({
+            "path": path,
+            "scope": "literal_jp_exclusive_c_path",
+            "source_function_definitions": len(values),
+            "source_non_naked_definitions": sum(not definition.naked for definition in values),
+            "source_naked_definitions": sum(definition.naked for definition in values),
+            "verified_strict_addresses": ["0x%08X" % address for address in sorted(strict - naked)],
+            "verified_naked_addresses": ["0x%08X" % address for address in sorted(naked)],
+            "unresolved_function_names": unresolved,
+            "address_binding_status": ("no_function_definitions" if not values else
+                                       "partial_or_unresolved" if unresolved else "all_definitions_bound"),
+            "semantic_review": "not_recorded",
+        })
+    return records
 
 
 def transition_files(files: set[str]) -> dict[str, list[str]]:
@@ -1523,7 +1831,9 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
     jp_defs = c_inventory(root)
     us_defs = c_inventory(us_root)
     funcmap_entries, total_functions = parse_funcmap(root / "funcmap_jp.txt")
-    resolved, multi_address_c_definitions = resolve_funcmap_entries(jp_defs, funcmap_entries)
+    linked, binding_evidence = linked_function_evidence(root, jp_defs)
+    resolved, multi_address_c_definitions = resolve_funcmap_entries(jp_defs, funcmap_entries, linked)
+    binding_audit = legacy_binding_audit(jp_defs, funcmap_entries, linked, resolved)
     us_owners = index_us_functions(us_defs)
     us_symbols = us_binary_symbols(us_root)
 
@@ -1535,10 +1845,32 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
     binary_only_addresses = set()
     function_owners = []
     strict_records = []
+    unresolved_bindings = []
+    candidates_by_name = defaultdict(set)
+    actual_by_definition = defaultdict(set)
+    for (name, address), owners in linked.items():
+        if len(owners) == 1:
+            actual_by_definition[(name, next(iter(owners)))].add(address)
+    for entry in funcmap_entries:
+        candidates_by_name[entry.current].add(entry.address)
+        candidates_by_name[entry.standard].add(entry.address)
     for definition in jp_defs:
         entries = resolved.get(definition)
         if entries is None:
             unmapped_c_definitions.append(f"{definition.path}:{definition.name}")
+            candidate_addresses = candidates_by_name[definition.name]
+            actual_addresses = actual_by_definition[(definition.name, definition.path)]
+            unresolved_bindings.append({
+                "source_owner": definition.path, "name": definition.name,
+                "naked": definition.naked,
+                "reason": ("ambiguous_linked_addresses" if
+                           f"{definition.path}:{definition.name}" in multi_address_c_definitions else
+                           "stale_source_owner" if definition.path in binding_evidence["stale_source_owners"] else
+                           "linked_address_missing_from_funcmap" if actual_addresses else
+                           "linked_name_owner_address_not_verified"),
+                "candidate_addresses": ["0x%08X" % value for value in sorted(candidate_addresses)],
+                "verified_source_addresses": ["0x%08X" % value for value in sorted(actual_addresses)],
+            })
             continue
         for entry in entries:
             if definition.naked:
@@ -1562,6 +1894,7 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
             "us_standard_name": standard,
             "us_owners": sorted(owners),
             "us_binary_symbol": standard in us_symbols,
+            "jp_binding_evidence": "elf_symbol_and_linker_source_owner",
         })
         if owners:
             standard_owned_addresses.add(address)
@@ -1583,7 +1916,7 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
     script_data = script_data_progress(root, us_root)
 
     return {
-        "schema": 3,
+        "schema": 4,
         "roots": {"jp": str(root), "us": str(us_root)},
         "files": {
             "jp": {"directories": directory_counts(jp_files), "suffixes": extension_counts(jp_files)},
@@ -1599,14 +1932,21 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
         "functions": {
             "funcmap_unique_addresses": total_functions,
             "c_definitions": len(jp_defs),
+            "source_non_naked_definitions": sum(not definition.naked for definition in jp_defs),
+            "source_naked_definitions": sum(definition.naked for definition in jp_defs),
+            "bound_c_definitions": len(resolved),
+            "binding_evidence": binding_evidence,
+            "binding_audit": binding_audit,
+            "unresolved_bindings": unresolved_bindings,
+            "metric_status": ("conservative_verified_lower_bound" if linked else "unavailable"),
             "strict_c_addresses": len(strict_addresses),
             "naked_assembly_addresses": len(naked_addresses),
-            "strict_c_rate": len(strict_addresses) / max(total_functions, 1),
+            "strict_c_rate": len(strict_addresses) / max(total_functions, 1) if linked else None,
             "standard_owned_addresses": len(standard_owned_addresses),
             "module_aligned_addresses": len(aligned_addresses),
             "us_binary_only_addresses": len(binary_only_addresses),
-            "module_home_rate": len(standard_owned_addresses) / max(len(strict_addresses), 1),
-            "path_alignment_rate": len(aligned_addresses) / max(len(strict_addresses), 1),
+            "module_home_rate": len(standard_owned_addresses) / len(strict_addresses) if strict_addresses else None,
+            "path_alignment_rate": len(aligned_addresses) / len(strict_addresses) if strict_addresses else None,
             "unmapped_c_definitions": sorted(unmapped_c_definitions),
             "multi_address_c_definitions": multi_address_c_definitions,
             "strict_naked_address_overlap": len(strict_addresses & naked_addresses),
@@ -1622,7 +1962,16 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
         "map_convergence": convergence,
         "script_data": script_data,
         "jp_only_c_manifest": manifest,
+        "jp_path_only_c_manifest": path_only_c_manifest(jp_files, us_files, jp_defs, resolved),
+        "c_manifest_scopes": {
+            "jp_path_only_c_manifest": "Every JP .c path absent from the US source tree, including zero-function wrappers.",
+            "jp_only_c_manifest": "Legacy field name: verified non-naked function modules lacking US standard C owners; NOT the JP-exclusive path inventory.",
+        },
     }
+
+
+def percentage(value: float | None) -> str:
+    return "unavailable" if value is None else "%.2f%%" % (value * 100)
 
 
 def print_report(report: dict[str, object]) -> None:
@@ -1634,21 +1983,29 @@ def print_report(report: dict[str, object]) -> None:
     script_data = report["script_data"]
     incbin = report["incbin"]
     assets = report["asset_naming"]
-    print("Structural audit (source inventory; no build artefacts)")
+    print("Structural audit (source inventory + evidence-bound JP function addresses)")
     print("file paths: JP=%d US=%d same=%d JP-only=%d US-only=%d" % (
         sum(files["jp"]["directories"].values()), sum(files["us"]["directories"].values()),
         files["same_path"], files["jp_only"], files["us_only"]))
     print("C modules: JP=%d US=%d same-path=%d JP-only=%d US-only=%d" % (
         modules["jp"], modules["us"], modules["same_path"], modules["jp_only"], modules["us_only"]))
-    print("strict C: %d/%d = %.2f%% (naked asm addresses: %d)" % (
+    print("source C definitions: non-naked=%d naked=%d; bound=%d unresolved=%d; address-metric=%s" % (
+        functions["source_non_naked_definitions"], functions["source_naked_definitions"],
+        functions["bound_c_definitions"], len(functions["unresolved_bindings"]), functions["metric_status"]))
+    print("strict C (verified lower bound): %d/%d = %s (naked asm addresses: %d)" % (
         functions["strict_c_addresses"], functions["funcmap_unique_addresses"],
-        functions["strict_c_rate"] * 100, functions["naked_assembly_addresses"]))
-    print("module home: %d strict addresses = %.2f%%; path alignment: %d = %.2f%%; US binary-only: %d" % (
-        functions["standard_owned_addresses"], functions["module_home_rate"] * 100,
-        functions["module_aligned_addresses"], functions["path_alignment_rate"] * 100,
+        percentage(functions["strict_c_rate"]), functions["naked_assembly_addresses"]))
+    print("module home (funcmap US-name candidates): %d strict addresses = %s; path alignment: %d = %s; US binary-only: %d" % (
+        functions["standard_owned_addresses"], percentage(functions["module_home_rate"]),
+        functions["module_aligned_addresses"], percentage(functions["path_alignment_rate"]),
         functions["us_binary_only_addresses"]))
-    print("JP-only C migration records (dynamic, not legacy fixed count): %d" %
-          len(report["jp_only_c_manifest"]))
+    print("JP-exclusive .c paths: %d; non-US-function semantic-gap modules: %d (different scopes)" % (
+        len(report["jp_path_only_c_manifest"]), len(report["jp_only_c_manifest"])))
+    binding = functions["binding_audit"]
+    print("legacy fan-out metrics invalid: natural strict/naked overlap old=%d verified=%d; rejected=%s" % (
+        binding["legacy_name_fanout"]["natural_strict_naked_overlap"],
+        binding["verified_owner_bindings"]["natural_strict_naked_overlap"],
+        binding["rejected_assignment_counts"]))
     print("transition files: " + ", ".join(
         "%s=%d" % (name, value["count"])
         for name, value in report["transition_files"].items()))
@@ -1713,12 +2070,19 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "## 当前快照",
         "",
         f"- 严格 C：{functions['strict_c_addresses']}/{functions['funcmap_unique_addresses']} "
-        f"({functions['strict_c_rate'] * 100:.2f}%)；naked 汇编地址：{functions['naked_assembly_addresses']}；"
+        f"({percentage(functions['strict_c_rate'])}，保守可证下界)；naked 汇编地址：{functions['naked_assembly_addresses']}；"
         f"strict/naked 交集：{functions['strict_naked_address_overlap']}。",
+        f"- 源码函数体库存：非 naked {functions['source_non_naked_definitions']}、naked "
+        f"{functions['source_naked_definitions']}；地址已绑定 {functions['bound_c_definitions']}、"
+        f"未解析 {len(functions['unresolved_bindings'])}；指标证据状态：{functions['metric_status']}。",
+        "- 旧名称 fan-out 指标已失效；修正绑定导致计数下降属于测量纠错，不是反编译退步。"
+        f"排除 naked 前自然交集：旧 {functions['binding_audit']['legacy_name_fanout']['natural_strict_naked_overlap']}、"
+        f"新 {functions['binding_audit']['verified_owner_bindings']['natural_strict_naked_overlap']}。",
         f"- 模块归位：{functions['standard_owned_addresses']}/{functions['strict_c_addresses']} "
-        f"({functions['module_home_rate'] * 100:.2f}%)；路径对齐：{functions['module_aligned_addresses']}/"
-        f"{functions['strict_c_addresses']} ({functions['path_alignment_rate'] * 100:.2f}%)。",
-        f"- JP 独有 C 迁移记录：{len(report['jp_only_c_manifest'])}（动态清单，不沿用旧固定数）；同名多地址 C 定义："
+        f"({percentage(functions['module_home_rate'])})；路径对齐：{functions['module_aligned_addresses']}/"
+        f"{functions['strict_c_addresses']} ({percentage(functions['path_alignment_rate'])})；US 标准名仍为 funcmap 候选，并非语义复核结论。",
+        f"- JP 路径独有 C 清单：{len(report['jp_path_only_c_manifest'])}；无 US 标准函数 owner 的语义缺口模块："
+        f"{len(report['jp_only_c_manifest'])}（两种口径，不沿用旧固定数）；同一源同名多地址未解析定义："
         f"{len(functions['multi_address_c_definitions'])}。",
         f"- 过渡文件：tail={transitions['tail']['count']}、rest={transitions['rest']['count']}、"
         f"mid={transitions['mid']['count']}、stub={transitions['stub']['count']}、"
@@ -1758,8 +2122,8 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "",
         "| 指标 | 口径 |",
         "| --- | --- |",
-        "| 严格 C 转换率 | 默认预处理分支中有 C 函数体、非 `naked` 且不与 selected naked 定义重叠的唯一 funcmap ROM 地址 / funcmap 唯一地址；同名 static 按 source owner 和地址保留，不建立名称→地址覆盖表。 |",
-        "| 模块归位率 | 严格 C 地址中能按 US 标准名在 US 源树找到定义的地址 / 严格 C 地址。 |",
+        "| 严格 C 转换率 | 默认分支有非 `naked` C 函数体，经 JP ELF 同名可执行符号与 JP linker 输入对象范围验证 owner 的唯一 funcmap 地址 / funcmap 唯一地址；同名 static 按 source owner 和地址保留，不建立名称→地址覆盖表。缺证保留 unresolved，因此仅为保守可证下界；没有 ELF 证据时百分比 unavailable，不报 0% 退步。 |",
+        "| 模块归位率 | 已证实 JP owner 的严格 C 地址中，funcmap US 标准名候选在 US 源树有定义的地址 / 严格 C 地址；不代表该候选已逐函数语义复核。 |",
         "| 路径对齐率 | 上述地址中 JP 相对 `src/` 路径也属于 US owner 的地址 / 严格 C 地址。 |",
         "| 过渡文件 | 文件名包含 tail、rest、mid、stub 或地址式片段；分类可重叠。 |",
         "| incbin | `.incbin` 与 `INCBIN_*` 的引用数。裸 `.bin/.gba`、asset 根目录外的压缩流，以及 `gUnknown`/`unknown`/`unk` 命名的压缩资产记为原始；`graphics/`、`sound/` 内其余具名 `.lz/.rl/.huff` 记为已结构化编码资产。另列显式 `baserom_jp.gba, offset, size` 指令的可见字节和未限定范围数；该字节值不含无法判定范围的指令，不是总 ROM 转换率。 |",
@@ -1769,7 +2133,8 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "| 地图语义复核 | 仅接受未来版本化复核清单的显式记录；当前为 `not_recorded`，绝不从目录或 include 推断。 |",
         "| 三流地图会合 | 以 `data/event_scripts.s`、`data/map_events.s`（旧树回退 `data/data_b2d_mid26.s`）和 `data/maps.s` 的同图记录连接 scripts、events、地图头/布局/tileset。别名和 baserom 范围均为待办，不构成完成。 |",
         "| script_data 顶层分区 | US linker 提供 8 个对象的目标 owner 顺序；JP linker map 提供实际范围和锚点。只在 JP 起止标签、末尾位置与 ROM 比对均成立时，才允许拆出一个 owner。 |",
-        "| JP 独有 C 迁移清单 | 已映射、非裸汇编、但无 US 标准 C owner 的函数模块；动态分类，不沿用失效的固定“38 个”计数。 |",
+        "| JP 路径独有 C 清单 | JP src/**/*.c 路径与 US 的差集；包含零函数的文本/数据包装文件。独立于无 US 标准函数 owner 的语义缺口模块清单。 |",
+        "| 无 US 函数 owner 语义缺口清单 | 已证实 JP 地址绑定、非裸汇编、但无 US 标准 C owner 的函数模块；旧 jp_only_c_manifest 字段和 --manifest 保留此兼容口径，不是完整路径独有模块清单。 |",
         "",
         "## 复现与输入",
         "",
@@ -1778,6 +2143,7 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "python3 tools/audit_structure.py --json --output build/audit-structure.json \\",
         "    --manifest build/jp-only-c-manifest.json",
         "python3 tools/audit_structure.py --transition-manifest build/transition-file-manifest.json",
+        "python3 tools/audit_structure.py --jp-path-manifest build/jp-exclusive-c-paths.json",
         "python3 tools/audit_structure.py --map-convergence-manifest build/map-convergence-manifest.json",
         "python3 tools/audit_structure.py --script-data-manifest build/script-data-manifest.json",
         "python3 tools/audit_structure.py --markdown-output DECOMP_PROGRESS.md",
@@ -1785,7 +2151,9 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "python3 tools/audit_structure.py --us-root /path/to/pokeemerald --markdown-output DECOMP_PROGRESS.md",
         "```",
         "",
-        "源文件、funcmap 和 incbin 清单不读取 `build/`。完整报告仍需要匹配的 "
+        "源码库存、funcmap 和 incbin 清单不需要构建。函数地址指标读取匹配的 "
+        "`pokeemerald_jp.elf` 与 `pokeemerald_jp.map`，JSON 记录输入 SHA-256、未解析原因和旧/新绑定诊断；"
+        "缺失证据不按名字猜测。采样这些生成文件时须持有共享构建锁，避免 make clean 窗口。完整报告仍需要匹配的 "
         "`baserom_jp.gba` 来解析地图 owner；US 二进制符号统计使用指定 US 树的 "
         "`pokeemerald.sym`（若存在），资源存在性检查也依赖本地提取资源。",
         "",
@@ -1827,7 +2195,10 @@ def main() -> None:
     parser.add_argument("--us-root", type=Path, default=DEFAULT_US_ROOT)
     parser.add_argument("--json", action="store_true", help="print stable JSON")
     parser.add_argument("--output", type=Path, help="write the full JSON report (never Markdown)")
-    parser.add_argument("--manifest", type=Path, help="write only the JP-only C manifest JSON")
+    parser.add_argument("--manifest", type=Path,
+                        help="write the legacy non-US-function semantic-gap manifest (not JP-exclusive paths)")
+    parser.add_argument("--jp-path-manifest", type=Path,
+                        help="write every literal JP-exclusive .c path as JSON")
     parser.add_argument("--transition-manifest", type=Path,
                         help="write only the transition-file manifest JSON")
     parser.add_argument("--map-convergence-manifest", type=Path,
@@ -1841,6 +2212,8 @@ def main() -> None:
         require_destination_kind(args.output, "json")
     if args.manifest:
         require_destination_kind(args.manifest, "json")
+    if args.jp_path_manifest:
+        require_destination_kind(args.jp_path_manifest, "json")
     if args.transition_manifest:
         require_destination_kind(args.transition_manifest, "json")
     if args.map_convergence_manifest:
@@ -1858,6 +2231,9 @@ def main() -> None:
     if args.manifest:
         write_output(args.manifest, json.dumps(report["jp_only_c_manifest"], ensure_ascii=False,
                                                 indent=2, sort_keys=True) + "\n")
+    if args.jp_path_manifest:
+        write_output(args.jp_path_manifest, json.dumps(report["jp_path_only_c_manifest"], ensure_ascii=False,
+                                                        indent=2, sort_keys=True) + "\n")
     if args.transition_manifest:
         write_output(args.transition_manifest, json.dumps(report["transition_manifest"], ensure_ascii=False,
                                                            indent=2, sort_keys=True) + "\n")
