@@ -10029,14 +10029,11 @@ SECTIONS {
         src/strings.o(.rodata.strings_decoration_text);
         src/strings.o(.rodata.strings_pc_text);
         src/strings.o(.rodata.strings_shared_name_text);
-        src/data/text/region_texts91.o(.rodata.script_menu_text);
-        data/data_b2d.o(.rodata.mid83);
-        src/data/text/region_texts92.o(.rodata);
-        src/data/text/region_texts93.o(.rodata);
-        src/data/text/region_texts94.o(.rodata);
-        data/data_b2d.o(.rodata.mid85);
+        src/strings.o(.rodata.strings_script_menu_text);
         src/data/text/region_texts95.o(.rodata);
         src/data/text/region_texts96.o(.rodata);
+        src/strings.o(.rodata.strings_elevator_text);
+        src/strings.o(.rodata.strings_menu_price_text);
         src/strings.o(.rodata.strings_pokenav_storage);
         src/data/text/region_texts97.o(.rodata);
         src/data/text/region_texts98.o(.rodata);

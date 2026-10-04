@@ -124,52 +124,6 @@ gUnknown_85CC672: @ 0x85CC672
 	.string "になりますが　よろしいですか？$"
 	.globl gUnknown_85CC769
 
-	.section .rodata.mid83
-
-	.globl gText_Yes
-gText_Yes: @ 0x85CAAD8
-	.string "はい$"
-	.globl gText_No
-gText_No: @ 0x85CAADB
-	.string "いいえ$せつめい$シングルバトル$ダブルバトル$マルチバトル$ハギ$ちょうせんする$せつめいをきく$"
-	.globl gUnknown_85CAB0D
-gUnknown_85CAB0D: @ 0x85CAB0D
-	.string "レベル50$"
-
-	.globl gUnknown_85CAB13
-gUnknown_85CAB13: @ 0x85CAB13
-	.string "オープンレベル$おいしいみず　200¥$サイコソーダ　300¥$ミックスオレ　350¥$はしりかた$まがるコツ$すなのさか$ウイリー$ダニエル$ジャンプ$まんぞく$ふまん$しんかいのキバ$しんかいのウロコ$あおいビードロ$きいろビードロ$あかいビードロ$しろいビードロ$くろいビードロ$ガラスのいす$ガラスのつくえ$キモリドール　　　1000まい$アチャモドール　　1000まい$ミズゴロウドール　1000まい$　50まい　　1000¥$500まい　10000¥$ばつぐん$あんまり$あかいかけら$きいろいかけら$あおいかけら$みどりのかけら$"
-	.globl gText_BattleFrontier
-gText_BattleFrontier: @ 0x85CAC23
-	.string "バトルフロンティア$みぎ$ひだり$わざマシン32　　1500まい$わざマシン29　　3500まい$わざマシン35　　4000まい$わざマシン24　　4000まい$わざマシン13　　4000まい$"
-	.globl gUnknown_85CAC84
-
-	.section .rodata.mid85
-
-	.globl gUnknown_85CADC6
-gUnknown_85CADC6: @ 0x85CADC6
-	.string "レポート$"
-
-	.globl gUnknown_85CADCB
-gUnknown_85CADCB: @ 0x85CADCB
-	.string "せってい$"
-	.globl gUnknown_85CADD0
-gUnknown_85CADD0: @ 0x85CADD0
-	.string "とじる$　5BP$10BP$15BP$あかいテント$あおいテント$"
-	.globl gText_SouthernIsland
-gText_SouthernIsland: @ 0x85CADF1
-	.string "みなみのことう$"
-	.globl gText_BirthIsland
-gText_BirthIsland: @ 0x85CADF9
-	.string "たんじょうのしま$"
-	.globl gText_FarawayIsland
-gText_FarawayIsland: @ 0x85CAE02
-	.string "さいはてのことう$"
-	.globl gText_NavelRock
-gText_NavelRock: @ 0x85CAE0B
-	.string "へそのいわ$ツメのかせき$ねっこのかせき$いいえ　$これからしょうぶだ！$しょうぶにかった！$しょうぶにまけた！$おしえない$トレードセンター$コロシアム$レコードコーナー$きのみクラッシュ$ぐるぐるこうかん$ミニポケモンでジャンプ$ドードリオのきのみどり$リーダーになる$グループにはいる$2つのコース$レベル50$オープンレベル$ポケモンのしゅるいとかず$もたせるどうぐ$シンボル$たいせんのきろく$バトルポイント$タワーについて$つれていくポケモン$バトルサロン$つうしんマルチ$バトルでの　ちゅうい$はんてい‘こころ'$はんてい‘わざ'$はんてい‘からだ'$くみあわせ$トーナメントひょう$ダブルノックアウト$きほんルール$トレード　あいて$トレード　かいすう$トレード　ちゅうい$オープンレベル$たたかいのきほん$ポケモンのせいかく$ポケモンのわざ$ちからをはっきできない$ピンチになったら$ピラミッドの　ポケモン$ピラミッドの　トレーナー$ピラミッドの　めいろ$バトルバッグ$ポケナビと　バッグ$もたせた　どうぐ$ポケモンの　じゅんばん$でてくるポケモン$たたかう　トレーナー$つづける$きろくする$やすむ$リタイア$"
-	.globl gUnknown_85CB00E
-
 	.section .rodata.mid94
 
 	.globl gUnknown_85CC874
