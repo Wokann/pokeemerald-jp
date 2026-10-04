@@ -15,8 +15,7 @@ SootopolisCity_MysteryEventsHouse_B1F_OnFrame:: @ 0x08210143
 
 SootopolisCity_MysteryEventsHouse_B1F_EventScript_BattleVisitingTrainer:: @ 0x0821014D
 	lockall
-	applymovement LOCALID_PLAYER, SootopolisCity_MysteryEventsHouse_B1F_Movement_PlayerEnterBasement
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, SootopolisCity_MysteryEventsHouse_B1F_Movement_PlayerEnterBasement
 	special CopyEReaderTrainerGreeting
 	msgbox gStringVar4, MSGBOX_DEFAULT
 	closemessage
@@ -28,8 +27,7 @@ SootopolisCity_MysteryEventsHouse_B1F_EventScript_BattleVisitingTrainer:: @ 0x08
 	call_if_eq VAR_RESULT, B_OUTCOME_LOST, SootopolisCity_MysteryEventsHouse_B1F_EventScript_BattleLost
 	closemessage
 	special HealPlayerParty
-	applymovement LOCALID_PLAYER, SootopolisCity_MysteryEventsHouse_B1F_Movement_PlayerExitBasement
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, SootopolisCity_MysteryEventsHouse_B1F_Movement_PlayerExitBasement
 	special LoadPlayerParty
 	setvar VAR_TEMP_1, 1
 	warp MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F, 0x3, 0x1

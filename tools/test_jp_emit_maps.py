@@ -1258,5 +1258,138 @@ class ReviewedMapShorthandTest(unittest.TestCase):
         self.assertEqual(total_texts, 46)
 
 
+    def test_mystery_events_house_regeneration_retains_sequential_movement_helpers(self):
+        for floor, count in (('1F', 3), ('B1F', 2)):
+            name = 'SootopolisCity_MysteryEventsHouse_' + floor
+            for tag, source in (
+                    ('JP generated', render_map(name)),
+                    ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                        encoding='utf-8'))):
+                with self.subTest(map=name, source=tag):
+                    self.assertEqual(source.count('\tapplywaitmovement '), count)
+                    if floor == '1F':
+                        self.assertIn('\tlockall\n\tapplywaitmovement LOCALID_PLAYER, '
+                                      + name + '_Movement_PlayerExitStairs\n'
+                                      '\tapplywaitmovement LOCALID_MYSTERY_EVENTS_OLD_MAN, '
+                                      + name + '_Movement_OldManWalkBehindPlayer\n'
+                                      '\tcopyobjectxytoperm LOCALID_MYSTERY_EVENTS_OLD_MAN\n'
+                                      '\tapplywaitmovement LOCALID_PLAYER, '
+                                      'Common_Movement_WalkInPlaceFasterUp\n', source)
+                    else:
+                        for direction in ('Enter', 'Exit'):
+                            self.assertIn('\tapplywaitmovement LOCALID_PLAYER, ' + name
+                                          + '_Movement_Player' + direction + 'Basement\n', source)
+                        self.assertNotIn('\tapplymovement ', source)
+                        self.assertNotIn('\twaitmovement ', source)
+
+    def test_mystery_events_house_regeneration_retains_parallel_basement_entry(self):
+        name = 'SootopolisCity_MysteryEventsHouse_1F'
+        for tag, source in (
+                ('JP generated', render_map(name)),
+                ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                    encoding='utf-8'))):
+            with self.subTest(source=tag):
+                self.assertEqual(source.count('\tapplymovement '), 6)
+                self.assertEqual(source.count('\twaitmovement 0\n'), 3)
+                for facing, aside in (('North', 'Left'), ('East', 'Right'), ('West', 'Left')):
+                    self.assertRegex(
+                        source, name + '_EventScript_EnterBasement' + facing
+                        + r':{1,2}[^\n]*\n\tapplymovement VAR_LAST_TALKED, '
+                        + name + '_Movement_OldManMoveAside' + aside
+                        + '\n\tapplymovement LOCALID_PLAYER, ' + name
+                        + '_Movement_PlayerEnterBasement' + facing
+                        + '\n\twaitmovement 0\n\treturn\n')
+
+    def test_mystery_events_house_regeneration_retains_selection_and_restore_routes(self):
+        name = 'SootopolisCity_MysteryEventsHouse_1F'
+        for tag, source in (
+                ('JP generated', render_map(name)),
+                ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                    encoding='utf-8'))):
+            source = re.sub(r'\b0x([0-9A-Fa-f]+)\b',
+                            lambda m: str(int(m.group(1), 16)), source)
+            with self.subTest(source=tag):
+                self.assertIn('\tsetmaplayoutindex '
+                              'LAYOUT_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_STAIRS_UNBLOCKED\n',
+                              source)
+                self.assertIn('\tcall ' + name + '_EventScript_ChooseParty\n'
+                              '\tgoto_if_eq VAR_RESULT, 0, ' + name
+                              + '_EventScript_DeclineBattle\n', source)
+                self.assertIn('\tspecial LoadPlayerParty\n'
+                              '\tcall Common_EventScript_SaveGame\n'
+                              '\tgoto_if_eq VAR_RESULT, FALSE, ' + name
+                              + '_EventScript_DeclineBattle\n'
+                              '\tspecial SavePlayerParty\n'
+                              '\tspecial ReducePlayerPartyToSelectedMons\n', source)
+                self.assertRegex(source, name + r'_EventScript_DeclineBattle:{1,2}[^\n]*\n'
+                                 r'\tspecial LoadPlayerParty\n\tmsgbox ' + name
+                                 + '_Text_YouWontBattle, MSGBOX_DEFAULT\n\trelease\n\tend\n')
+                self.assertIn('\tfadescreen FADE_TO_BLACK\n'
+                              '\tspecial ChooseHalfPartyForBattle\n\treturn\n', source)
+                self.assertIn('\tspecial LoadPlayerParty\n'
+                              '\tsetvar VAR_SOOTOPOLIS_MYSTERY_EVENTS_STATE, 0\n'
+                              '\treleaseall\n\tend\n', source)
+                self.assertIn('\twarp MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F, 3, 1\n'
+                              '\twaitstate\n\trelease\n\tend\n', source)
+
+    def test_mystery_events_house_regeneration_retains_battle_results_and_implicit_waits(self):
+        name = 'SootopolisCity_MysteryEventsHouse_B1F'
+        for tag, source in (
+                ('JP generated', render_map(name)),
+                ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                    encoding='utf-8'))):
+            source = re.sub(r'\b0x([0-9A-Fa-f]+)\b',
+                            lambda m: str(int(m.group(1), 16)), source)
+            with self.subTest(source=tag):
+                self.assertIn('\tsetvar VAR_0x8004, SPECIAL_BATTLE_EREADER\n'
+                              '\tsetvar VAR_0x8005, 0\n\tspecial DoSpecialTrainerBattle\n'
+                              '\tcall_if_eq VAR_RESULT, B_OUTCOME_DREW, ' + name
+                              + '_EventScript_BattleTie\n', source)
+                for outcome, suffix, state in (('DREW', 'Tie', 3), ('WON', 'Won', 1),
+                                               ('LOST', 'Lost', 2)):
+                    self.assertIn('\tcall_if_eq VAR_RESULT, B_OUTCOME_' + outcome
+                                  + ', ' + name + '_EventScript_Battle' + suffix + '\n', source)
+                    self.assertRegex(source, name + '_EventScript_Battle' + suffix
+                                     + r':{1,2}[^\n]*\n\tsetvar '
+                                     'VAR_SOOTOPOLIS_MYSTERY_EVENTS_STATE, ' + str(state) + '\n')
+                self.assertIn('\tspecial HealPlayerParty\n'
+                              '\tapplywaitmovement LOCALID_PLAYER, ' + name
+                              + '_Movement_PlayerExitBasement\n\tspecial LoadPlayerParty\n'
+                              '\tsetvar VAR_TEMP_1, 1\n'
+                              '\twarp MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F, 3, 1\n'
+                              '\twaitstate\n\treleaseall\n\tend\n', source)
+        specials = (ROOT / 'data/specials.inc').read_text(encoding='utf-8')
+        for special in ('ChooseHalfPartyForBattle', 'DoSpecialTrainerBattle'):
+            self.assertRegex(specials, r'(?m)^\s*def_special ' + special
+                             + r',\s*waitstate=1\s*(?:@[^\n]*)?$')
+
+    def test_mystery_events_house_regeneration_retains_text_ownership_and_json(self):
+        for floor, count in (('1F', 14), ('B1F', 0)):
+            name = 'SootopolisCity_MysteryEventsHouse_' + floor
+            generated = render_map(name)
+            checked = (ROOT / 'data/maps' / name / 'scripts.inc').read_text(encoding='utf-8')
+            reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+            with self.subTest(map=name):
+                labels = re.findall(r'^(\w+):{1,2}', generated, re.M)
+                self.assertEqual(labels, re.findall(r'^(\w+):{1,2}', reference, re.M))
+                pattern = r'^(\w+):{1,2}[^\n]*\n((?:\t\.string [^\n]*\n)+)'
+                texts = re.findall(pattern, generated, re.M)
+                self.assertEqual(len(texts), count)
+                self.assertEqual(texts, re.findall(pattern, checked, re.M))
+                self.assertNotIn('{STRING ', generated)
+                self.assertNotIn('{ESCAPE ', generated)
+                self.assertNotIn('.incbin', generated)
+                self.assertNotIn('.set ', generated)
+                if floor == '1F':
+                    self.assertIn('SootopolisCity_MysteryEventsHouse_B1F_Text_MatchEndedUpDraw',
+                                  dict(texts))
+                    for suffix in ('Tie', 'Won', 'Lost'):
+                        self.assertEqual(dict(texts)[name + '_Text_StrVar1' + suffix],
+                                         '\t.string "{STR_VAR_1}$"\n')
+                self.assertEqual(
+                    json.loads((ROOT / 'data/maps' / name / 'map.json').read_text(encoding='utf-8')),
+                    json.loads((emitter.US_MAPS / name / 'map.json').read_text(encoding='utf-8')))
+
+
 if __name__ == '__main__':
     unittest.main()
