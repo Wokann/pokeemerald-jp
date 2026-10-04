@@ -34,7 +34,10 @@ INCINBIN_RE = re.compile(
 def build_opcode_table():
     entries = []
     for line in CMD_TABLE.read_text(encoding="utf-8").splitlines():
-        m = re.match(r"\s*script_cmd_table_entry\s+(\S+)\s+(\S+)\s*@", line)
+        if re.match(r"\s*gScriptCmdTableEnd:{1,2}", line):
+            break
+        m = re.match(r"\s*script_cmd_table_entry\s+(SCR_OP_\w+)[,\s]+(\w+)\b",
+                     line.partition("@")[0])
         if m:
             entries.append((m.group(1), m.group(2)))
     return {const: i for i, (const, handler) in enumerate(entries)}

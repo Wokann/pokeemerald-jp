@@ -43,7 +43,10 @@ TEXT_POINTER_ARGUMENTS = {
 def build_opcode_table():
     entries = []
     for line in CMD_TABLE.read_text(encoding='utf-8').splitlines():
-        m = re.match(r'\s*script_cmd_table_entry\s+(\S+)\s+(\S+)\s*@', line)
+        if re.match(r'\s*gScriptCmdTableEnd:{1,2}', line):
+            break
+        m = re.match(r'\s*script_cmd_table_entry\s+(SCR_OP_\w+)[,\s]+(\w+)\b',
+                     line.partition('@')[0])
         if m:
             entries.append((m.group(1), m.group(2)))
     return {const: i for i, (const, _) in enumerate(entries)}
@@ -345,6 +348,9 @@ def _decode_trainerbattle(addr):
 
 def decode_instruction(addr):
     """Return (size, name, args, refs) or None if undecodable."""
+    offset = addr - 0x08000000
+    if not 0 <= offset < len(ROM):
+        return None
     if addr in INSTRUCTION_OVERRIDES:
         return INSTRUCTION_OVERRIDES[addr]
     op = rd8(addr)
@@ -355,6 +361,8 @@ def decode_instruction(addr):
         return None
     name, argfmt = fmt
     base = 1 + sum(sz for sz, _, _ in argfmt)
+    if offset + base > len(ROM) or addr + base > REGION[1]:
+        return None
     refs = []
     pos = addr + 1
     vals = []
