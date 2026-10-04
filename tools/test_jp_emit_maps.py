@@ -1023,5 +1023,150 @@ class ReviewedMapShorthandTest(unittest.TestCase):
         self.assertEqual(total_texts, 32)
 
 
+    def test_space_center_regeneration_retains_sequential_movement_helpers(self):
+        for floor, count in (('1F', 11), ('2F', 14)):
+            name = 'MossdeepCity_SpaceCenter_' + floor
+            for tag, source in (
+                    ('JP generated', render_map(name)),
+                    ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                        encoding='utf-8'))):
+                with self.subTest(map=name, source=tag):
+                    self.assertEqual(source.count('\tapplywaitmovement '), count)
+                    self.assertEqual(source.count('\tapplymovement '),
+                                     4 if floor == '2F' else 0)
+                    self.assertEqual(source.count('\twaitmovement '),
+                                     2 if floor == '2F' else 0)
+
+    def test_space_center_regeneration_retains_parallel_maxie_tabitha_movements(self):
+        name = 'MossdeepCity_SpaceCenter_2F'
+        for tag, source in (
+                ('JP generated', render_map(name)),
+                ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                    encoding='utf-8'))):
+            with self.subTest(source=tag):
+                for maxie, tabitha in (('Left', 'Down'), ('Up', 'Right')):
+                    self.assertIn(
+                        '\tapplymovement LOCALID_SPACE_CENTER_MAXIE, '
+                        'Common_Movement_WalkInPlaceFaster' + maxie + '\n'
+                        '\tapplymovement LOCALID_SPACE_CENTER_TABITHA, '
+                        'Common_Movement_WalkInPlaceFaster' + tabitha + '\n'
+                        '\twaitmovement 0\n', source)
+                self.assertNotIn('\tapplywaitmovement LOCALID_SPACE_CENTER_MAXIE,', source)
+                self.assertNotIn('\tapplywaitmovement LOCALID_SPACE_CENTER_TABITHA,', source)
+
+    def test_space_center_regeneration_retains_sun_stone_failure_and_stair_states(self):
+        name = 'MossdeepCity_SpaceCenter_1F'
+        source = render_map(name)
+        source = re.sub(r'\b0x([0-9A-Fa-f]+)\b',
+                        lambda m: str(int(m.group(1), 16)), source)
+        self.assertEqual(source.count(
+            '\tgiveitem ITEM_SUN_STONE\n'
+            '\tgoto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull\n'
+            '\tsetflag FLAG_RECEIVED_SUN_STONE_MOSSDEEP\n'), 2)
+        # The duplicate DIR_WEST is the original JP/default-US behavior.
+        self.assertIn('\tswitch VAR_FACING\n'
+                      '\tcase DIR_WEST, ' + name + '_EventScript_MoveGruntFromStairsWest\n'
+                      '\tcase DIR_WEST, ' + name + '_EventScript_MoveGruntFromStairsEast\n',
+                      source)
+        self.assertNotIn('\tcase DIR_EAST, ' + name
+                         + '_EventScript_MoveGruntFromStairsEast\n', source)
+        for suffix, state in (('West', 1), ('', 2), ('East', 3)):
+            self.assertIn('\tapplywaitmovement LOCALID_SPACE_CENTER_1F_STAIR_GRUNT, '
+                          + name + '_Movement_MoveGruntFromStairs' + suffix + '\n'
+                          '\tsetvar VAR_MOSSDEEP_SPACE_CENTER_STAIR_GUARD_STATE, ' + str(state)
+                          + '\n', source)
+
+    def test_space_center_regeneration_retains_three_grunt_and_refusal_routes(self):
+        name = 'MossdeepCity_SpaceCenter_2F'
+        source = render_map(name)
+        source = re.sub(r'\b0x([0-9A-Fa-f]+)\b',
+                        lambda m: str(int(m.group(1), 16)), source)
+        self.assertIn('\tmap_script_2 VAR_MOSSDEEP_SPACE_CENTER_STATE, 1, '
+                      + name + '_EventScript_ThreeMagmaGrunts\n', source)
+        self.assertIn('\tapplywaitmovement LOCALID_PLAYER, ' + name
+                      + '_Movement_PlayerExit\n'
+                      '\twarp MAP_MOSSDEEP_CITY_SPACE_CENTER_1F, 13, 1\n'
+                      '\twaitstate\n\treleaseall\n\tend\n', source)
+        positions = []
+        for grunt in (5, 6, 7):
+            sequence = ('\ttrainerbattle_no_intro TRAINER_GRUNT_SPACE_CENTER_'
+                        + str(grunt) + ', ' + name + '_Text_Grunt' + str(grunt)
+                        + 'Defeat\n\tapplywaitmovement LOCALID_SPACE_CENTER_GRUNT_'
+                        + str(grunt) + ', ' + name + '_Movement_Grunt' + str(grunt)
+                        + 'Defeated\n')
+            self.assertIn(sequence, source)
+            positions.append(source.index(sequence))
+        self.assertEqual(positions, sorted(positions))
+        self.assertIn('\tsetvar VAR_MOSSDEEP_SPACE_CENTER_STATE, 2\n'
+                      '\tcopyobjectxytoperm LOCALID_SPACE_CENTER_GRUNT_6\n'
+                      '\tcopyobjectxytoperm LOCALID_SPACE_CENTER_GRUNT_7\n'
+                      '\tcopyobjectxytoperm LOCALID_SPACE_CENTER_GRUNT_5\n', source)
+
+    def test_space_center_regeneration_retains_steven_party_and_special_wait_contracts(self):
+        name = 'MossdeepCity_SpaceCenter_2F'
+        source = render_map(name)
+        source = re.sub(r'\b0x([0-9A-Fa-f]+)\b',
+                        lambda m: str(int(m.group(1), 16)), source)
+        self.assertIn('\tspecial SavePlayerParty\n\tfadescreen FADE_TO_BLACK\n'
+                      '\tspecial ChooseHalfPartyForBattle\n'
+                      '\tgoto_if_ne VAR_RESULT, 0, ' + name + '_EventScript_DoStevenMultiBattle\n'
+                      '\tspecial LoadPlayerParty\n\tgoto ' + name
+                      + '_EventScript_ReadyForBattlePrompt\n', source)
+        self.assertIn('\tspecial ReducePlayerPartyToSelectedMons\n'
+                      '\tfrontier_set FRONTIER_DATA_SELECTED_MON_ORDER\n'
+                      '\tsetvar VAR_0x8004, SPECIAL_BATTLE_STEVEN\n'
+                      '\tsetvar VAR_0x8005, 0\n\tspecial DoSpecialTrainerBattle\n'
+                      '\tfrontier_saveparty\n\tspecial LoadPlayerParty\n'
+                      '\tswitch VAR_RESULT\n\tcase 1, ' + name
+                      + '_EventScript_DefeatedMaxieTabitha\n'
+                      '\tfadescreen FADE_TO_BLACK\n\tspecial SetCB2WhiteOut\n', source)
+        specials = (ROOT / 'data/specials.inc').read_text(encoding='utf-8')
+        for special in ('ChooseHalfPartyForBattle', 'DoSpecialTrainerBattle', 'SetCB2WhiteOut'):
+            with self.subTest(special=special):
+                self.assertRegex(specials, r'(?m)^\s*def_special ' + special
+                                 + r',\s*waitstate=1\s*$')
+                self.assertNotIn('\tspecial ' + special + '\n\twaitstate\n', source)
+        self.assertIn('\tsetvar VAR_MOSSDEEP_CITY_STATE, 3\n', source)
+        self.assertIn('\tsetvar VAR_MOSSDEEP_SPACE_CENTER_STATE, 3\n', source)
+        self.assertIn('\tclearflag FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_STEVEN\n'
+                      '\tsetvar VAR_STEVENS_HOUSE_STATE, 1\n', source)
+        # Do not add US's optional BUGFIX releaseall to the byte-exact JP ending.
+        self.assertIn('\taddobject LOCALID_SPACE_CENTER_2F_SCIENTIST\n'
+                      '\tfadescreen FADE_FROM_BLACK\n\tend\n', source)
+        for trainer, letter, text in (
+                ('Maxie', 'A', name + '_Text_JustWantToExpandLand'),
+                ('Tabitha', 'B', 'MossdeepCity_SpaceCenter_Text_TabithaDefeat')):
+            self.assertRegex(source, name + '_EventScript_' + trainer + r'Trainer:'
+                             r':?[^\n]*\n\ttrainerbattle TRAINER_BATTLE_SET_TRAINER_'
+                             + letter + ', TRAINER_' + trainer.upper() + '_MOSSDEEP, '
+                             'LOCALID_NONE, ' + text + ', ' + text + r'\n\tend\n')
+
+    def test_space_center_regeneration_retains_labels_jp_text_and_json(self):
+        total_labels = total_texts = 0
+        for floor in ('1F', '2F'):
+            name = 'MossdeepCity_SpaceCenter_' + floor
+            generated = render_map(name)
+            checked = (ROOT / 'data/maps' / name / 'scripts.inc').read_text(encoding='utf-8')
+            reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+            with self.subTest(map=name):
+                labels = re.findall(r'^(\w+):{1,2}', generated, re.M)
+                self.assertEqual(labels, re.findall(r'^(\w+):{1,2}', reference, re.M))
+                pattern = r'^(\w+):{1,2}[^\n]*\n((?:\t\.string [^\n]*\n)+)'
+                texts = re.findall(pattern, generated, re.M)
+                self.assertEqual(len(texts), 28)
+                self.assertEqual(texts, re.findall(pattern, checked, re.M))
+                self.assertNotIn('{STRING ', generated)
+                self.assertNotIn('{ESCAPE ', generated)
+                self.assertNotIn('.incbin', generated)
+                self.assertNotIn('.set ', generated)
+                self.assertEqual(
+                    json.loads((ROOT / 'data/maps' / name / 'map.json').read_text(encoding='utf-8')),
+                    json.loads((emitter.US_MAPS / name / 'map.json').read_text(encoding='utf-8')))
+                total_labels += len(labels)
+                total_texts += len(texts)
+        self.assertEqual(total_labels, 135)
+        self.assertEqual(total_texts, 56)
+
+
 if __name__ == '__main__':
     unittest.main()
