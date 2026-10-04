@@ -53,8 +53,7 @@ Route111_WinstrateFamilysHouse_EventScript_AlreadySpokenTo:: @ 0x08211B86
 
 Route111_WinstrateFamilysHouse_EventScript_FaceOriginalDirection:: @ 0x08211B94
 	closemessage
-	applymovement VAR_0x8008, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement VAR_0x8008, Common_Movement_FaceOriginalDirection
 	release
 	end
 

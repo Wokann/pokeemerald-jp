@@ -10,8 +10,7 @@ Route121_SafariZoneEntrance_OnFrame:: @ 0x082129EB
 
 Route121_SafariZoneEntrance_EventScript_ExitSafariZone:: @ 0x082129F5
 	lockall
-	applymovement LOCALID_PLAYER, Route121_SafariZoneEntrance_Movement_ExitSafariZone
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Route121_SafariZoneEntrance_Movement_ExitSafariZone
 	setvar VAR_SAFARI_ZONE_STATE, 0
 	releaseall
 	end
@@ -47,8 +46,7 @@ Route121_SafariZoneEntrance_EventScript_FirstTimeInfo:: @ 0x08212A38
 
 Route121_SafariZoneEntrance_EventScript_EntranceCounterTrigger:: @ 0x08212A42
 	lockall
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	showmoneybox 0, 0
 	msgbox Route121_SafariZoneEntrance_Text_WouldYouLikeToPlay, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, Route121_SafariZoneEntrance_EventScript_TryEnterSafariZone
@@ -61,7 +59,7 @@ Route121_SafariZoneEntrance_EventScript_TryEnterSafariZone:: @ 0x08212A72
 	goto_if_eq VAR_RESULT, 0, Route121_SafariZoneEntrance_EventScript_NoPokeblockCase
 	call Route121_SafariZoneEntrance_EventScript_CheckHasRoomForPokemon
 	checkmoney 500
-	goto_if_eq VAR_RESULT, 0, Route121_SafariZoneEntrance_EventScript_NotEnoughMoney
+	goto_if_eq VAR_RESULT, FALSE, Route121_SafariZoneEntrance_EventScript_NotEnoughMoney
 	playse SE_SHOP
 	msgbox Route121_SafariZoneEntrance_Text_ThatWillBe500Please, MSGBOX_DEFAULT
 	removemoney 500
@@ -73,8 +71,7 @@ Route121_SafariZoneEntrance_EventScript_TryEnterSafariZone:: @ 0x08212A72
 	msgbox Route121_SafariZoneEntrance_Text_PleaseEnjoyYourself, MSGBOX_DEFAULT
 	closemessage
 	hidemoneybox
-	applymovement LOCALID_PLAYER, Route121_SafariZoneEntrance_Movement_EnterSafariZone
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Route121_SafariZoneEntrance_Movement_EnterSafariZone
 	special EnterSafariMode
 	setvar VAR_SAFARI_ZONE_STATE, 2
 	clearflag FLAG_GOOD_LUCK_SAFARI_ZONE
@@ -107,8 +104,7 @@ Route121_SafariZoneEntrance_EventScript_NotEnoughMoney:: @ 0x08212B22
 Route121_SafariZoneEntrance_EventScript_MovePlayerBackFromCounter:: @ 0x08212B30
 	closemessage
 	hidemoneybox
-	applymovement LOCALID_PLAYER, Route121_SafariZoneEntrance_Movement_BackAwayFromCounter
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Route121_SafariZoneEntrance_Movement_BackAwayFromCounter
 	releaseall
 	end
 

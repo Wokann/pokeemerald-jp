@@ -24,8 +24,7 @@ RusturfTunnel_EventScript_Wanda:: @ 0x08213628
 	faceplayer
 	msgbox RusturfTunnel_Text_BoyfriendOnOtherSideOfRock, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	release
 	end
 
@@ -36,16 +35,14 @@ RusturfTunnel_EventScript_WandasBoyfriend:: @ 0x0821363F
 	setflag FLAG_TEMP_1
 	msgbox RusturfTunnel_Text_WhyCantTheyKeepDigging, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	release
 	end
 
 RusturfTunnel_EventScript_AlreadySpokenTo:: @ 0x08213662
 	msgbox RusturfTunnel_Text_ToGetToVerdanturf, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	release
 	end
 
@@ -84,28 +81,23 @@ RusturfTunnel_EventScript_BoyfriendApproachWanda2:: @ 0x08213738
 	applymovement LOCALID_PLAYER, RusturfTunnel_Movement_PlayerWatchBoyfriend
 	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, RusturfTunnel_Movement_BoyfriendApproachWanda
 	waitmovement 0
-	applymovement LOCALID_RUSTURF_TUNNEL_WANDA, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0
+	applywaitmovement LOCALID_RUSTURF_TUNNEL_WANDA, Common_Movement_WalkInPlaceFasterDown
 	return
 
 RusturfTunnel_EventScript_BoyfriendApproachWanda3:: @ 0x08213754
 	applymovement LOCALID_PLAYER, RusturfTunnel_Movement_PlayerWatchBoyfriend
 	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, RusturfTunnel_Movement_BoyfriendApproachWanda
 	waitmovement 0
-	applymovement LOCALID_RUSTURF_TUNNEL_WANDA, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0
+	applywaitmovement LOCALID_RUSTURF_TUNNEL_WANDA, Common_Movement_WalkInPlaceFasterDown
 	return
 
 RusturfTunnel_EventScript_FaceWandasBoyfriend1:: @ 0x08213770
-	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0
+	applywaitmovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, Common_Movement_WalkInPlaceFasterUp
+	applywaitmovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	return
 
 RusturfTunnel_EventScript_FaceWandasBoyfriend2:: @ 0x08213785
-	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, RusturfTunnel_Movement_BoyfriendFaceRight
-	waitmovement 0
+	applywaitmovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, RusturfTunnel_Movement_BoyfriendFaceRight
 	return
 
 RusturfTunnel_EventScript_FaceWandasBoyfriend3:: @ 0x08213790
@@ -113,8 +105,7 @@ RusturfTunnel_EventScript_FaceWandasBoyfriend3:: @ 0x08213790
 
 RusturfTunnel_EventScript_WandasBoyfriendApproachPlayer:: @ 0x08213791
 	closemessage
-	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, RusturfTunnel_Movement_WandasBoyfriendApproachPlayer
-	waitmovement 0
+	applywaitmovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, RusturfTunnel_Movement_WandasBoyfriendApproachPlayer
 	return
 
 RusturfTunnel_EventScript_WandaAndBoyfriendExit1:: @ 0x0821379D
@@ -132,10 +123,8 @@ RusturfTunnel_EventScript_WandaAndBoyfriendExit:: @ 0x082137AF
 
 RusturfTunnel_EventScript_WandasBoyfriendNotice:: @ 0x082137C8
 	playse SE_PIN
-	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, Common_Movement_Delay48
-	waitmovement 0
+	applywaitmovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, Common_Movement_ExclamationMark
+	applywaitmovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, Common_Movement_Delay48
 	return
 
 RusturfTunnel_Movement_WandaExit1:
@@ -312,14 +301,12 @@ RusturfTunnel_EventScript_Grunt:: @ 0x0821388B
 	removeobject LOCALID_RUSTURF_TUNNEL_GRUNT
 	delay 50
 	addobject LOCALID_RUSTURF_TUNNEL_BRINEY
-	applymovement LOCALID_RUSTURF_TUNNEL_BRINEY, RusturfTunnel_Movement_BrineyApproachPeeko1
-	waitmovement 0
+	applywaitmovement LOCALID_RUSTURF_TUNNEL_BRINEY, RusturfTunnel_Movement_BrineyApproachPeeko1
 	applymovement LOCALID_PLAYER, RusturfTunnel_Movement_PlayerMoveAsideForBriney
 	applymovement LOCALID_RUSTURF_TUNNEL_BRINEY, RusturfTunnel_Movement_BrineyApproachPeeko2
 	waitmovement 0
 	msgbox RusturfTunnel_Text_PeekoGladToSeeYouSafe, MSGBOX_DEFAULT
-	applymovement LOCALID_RUSTURF_TUNNEL_BRINEY, Common_Movement_FacePlayer
-	waitmovement 0
+	applywaitmovement LOCALID_RUSTURF_TUNNEL_BRINEY, Common_Movement_FacePlayer
 	message RusturfTunnel_Text_ThankYouLetsGoHomePeeko
 	waitmessage
 	waitse
