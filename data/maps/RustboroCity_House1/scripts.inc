@@ -3,8 +3,6 @@
 RustboroCity_House1_MapScripts::
 	.byte 0
 
-@ JP only: ChoosePartyMon requires explicit waitstate; the special table differs from US.
-
 RustboroCity_House1_EventScript_Trader:: @ 0x08203BC9
 	lock
 	faceplayer

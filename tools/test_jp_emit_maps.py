@@ -234,6 +234,17 @@ class ReviewedMapShorthandTest(unittest.TestCase):
                                             if line.lstrip().startswith('.string'))
                         self.assertEqual(re.findall(r'\{[^}]+\}', strings), expected)
 
+    def test_rustboro_trade_regeneration_uses_current_special_wait_policy(self):
+        generated = render_map('RustboroCity_House1')
+        self.assertNotIn('ChoosePartyMon requires explicit waitstate', generated)
+        self.assertIn('\tspecial ChoosePartyMon\n'
+                      '\tcopyvar VAR_0x800A, VAR_0x8004\n', generated)
+        for root in (ROOT, emitter.US_MAPS.parents[1]):
+            with self.subTest(root=root):
+                specials = (root / 'data' / 'specials.inc').read_text(encoding='utf-8')
+                self.assertRegex(specials,
+                                 r'(?m)^\s*def_special ChoosePartyMon, waitstate=1\s*$')
+
 
 if __name__ == '__main__':
     unittest.main()

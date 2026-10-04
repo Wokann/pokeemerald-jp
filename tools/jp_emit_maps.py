@@ -11343,9 +11343,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08203C72: {0x02: 'STR_VAR_1', 0x03: 'STR_VAR_2'},
             0x08203CDF: {0x02: 'STR_VAR_1'},
         },
-        'preamble': (
-            '@ JP only: ChoosePartyMon requires explicit waitstate; the special table differs from US.',
-        ),
         'symbols': {
             'flags': {0x0099: 'FLAG_RUSTBORO_NPC_TRADE_COMPLETED'},
             'vars': {
