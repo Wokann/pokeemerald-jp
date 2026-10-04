@@ -1,2082 +1,708 @@
 #include "global.h"
+#include "main.h"
+#include "event_data.h"
+#include "field_effect.h"
+#include "field_specials.h"
+#include "item.h"
 #include "menu.h"
+#include "palette.h"
+#include "script.h"
 #include "script_menu.h"
+#include "sound.h"
+#include "string_util.h"
 #include "strings.h"
+#include "task.h"
+#include "text.h"
+#include "constants/field_specials.h"
+#include "constants/flags.h"
+#include "constants/items.h"
+#include "constants/songs.h"
 
 #include "data/script_menu.h"
 
-__attribute__((naked)) bool8 ScriptMenu_Multichoice(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress)
+// Keep the existing JP RAM owners rather than defining new state here.
+extern u8 gUnknown_2039C30;
+extern u8 gUnknown_3001124[SSTIDAL_SELECTION_COUNT];
+#define sProcessInputDelay gUnknown_2039C30
+#define sLilycoveSSTidalSelections gUnknown_3001124
+
+// The JP menu APIs retain explicit spacing parameters.
+void sub_08197650(u8 windowId, bool8 copyToVram);
+u8 sub_081984B0(u8 windowId, u8 fontId, u8 left, u8 top, u8 cursorHeight, u8 count, u8 cursorPos);
+void sub_081988CC(u8 windowId, u8 fontId, u8 left, u8 top, u8 lineHeight, u8 count, const struct MenuAction *actions, u8 letterSpacing, u8 lineSpacing);
+void sub_08198DA4(u8 windowId, u8 fontId, u8 left, u8 top, u8 optionWidth, u8 rowHeight, u8 columns, u8 rows, const struct MenuAction *actions);
+u8 sub_081990E4(u8 windowId, u8 fontId, u8 left, u8 top, u8 optionWidth, u8 columns, u8 rows, u8 cursorPos);
+s8 Menu_ProcessInputGridLayout(void);
+
+void Task_HandleMultichoiceInput(u8 taskId);
+void Task_HandleYesNoInput(u8 taskId);
+void Task_HandleMultichoiceGridInput(u8 taskId);
+void Task_PokemonPicWindow(u8 taskId);
+void DrawMultichoiceMenu(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 cursorPos);
+void InitMultichoiceCheckWrap(bool8 ignoreBPress, u8 count, u8 windowId, u8 multichoiceId);
+void DrawLinkServicesMultichoiceMenu(u8 multichoiceId);
+void CreatePCMultichoice(void);
+void CreateLilycoveSSTidalMultichoice(void);
+bool8 IsPicboxClosed(void);
+void CreateStartMenuForPokenavTutorial(void);
+void InitMultichoiceNoWrap(bool8 ignoreBPress, u8 unusedCount, u8 windowId, u8 multichoiceId);
+
+#define tLeft data[0]
+#define tTop data[1]
+#define tRight data[2]
+#define tBottom data[3]
+#define tIgnoreBPress data[4]
+#define tDoWrap data[5]
+#define tWindowId data[6]
+#define tMultichoiceId data[7]
+
+bool8 ScriptMenu_Multichoice(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r5, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r4, r3, #0x18\n\t"
-        "	ldr r0, _080E1304\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080E130C\n\t"
-        "	ldr r0, _080E1308\n\t"
-        "	movs r1, #0xff\n\t"
-        "	strh r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl DrawMultichoiceMenu\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080E130E\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1304: .4byte Task_HandleMultichoiceInput + 1\n\t"
-        "_080E1308: .4byte gSpecialVar_Result\n\t"
-        "_080E130C:\n\t"
-        "	movs r0, #0\n\t"
-        "_080E130E:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FuncIsActiveTask(Task_HandleMultichoiceInput) == TRUE)
+    {
+        return FALSE;
+    }
+    else
+    {
+        gSpecialVar_Result = 0xFF;
+        DrawMultichoiceMenu(left, top, multichoiceId, ignoreBPress, 0);
+        return TRUE;
+    }
 }
 
-__attribute__((naked)) bool8 ScriptMenu_MultichoiceWithDefault(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 defaultChoice)
+bool8 ScriptMenu_MultichoiceWithDefault(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 defaultChoice)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r4, [sp, #0x1c]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r6, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r5, r3, #0x18\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _080E1360\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080E1368\n\t"
-        "	ldr r1, _080E1364\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strh r0, [r1]\n\t"
-        "	str r4, [sp]\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl DrawMultichoiceMenu\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080E136A\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1360: .4byte Task_HandleMultichoiceInput + 1\n\t"
-        "_080E1364: .4byte gSpecialVar_Result\n\t"
-        "_080E1368:\n\t"
-        "	movs r0, #0\n\t"
-        "_080E136A:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FuncIsActiveTask(Task_HandleMultichoiceInput) == TRUE)
+    {
+        return FALSE;
+    }
+    else
+    {
+        gSpecialVar_Result = 0xFF;
+        DrawMultichoiceMenu(left, top, multichoiceId, ignoreBPress, defaultChoice);
+        return TRUE;
+    }
 }
 
-__attribute__((naked)) void sub_080E1378(void)
+u16 GetLengthWithExpandedPlayerName(const u8 *str)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	b _080E13AC\n\t"
-        "_080E1380:\n\t"
-        "	cmp r1, #0xfd\n\t"
-        "	bne _080E13A4\n\t"
-        "	adds r4, #1\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080E13AC\n\t"
-        "	ldr r0, _080E13A0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl StringLength\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r4, #1\n\t"
-        "	b _080E13AC\n\t"
-        "	.align 2, 0\n\t"
-        "_080E13A0: .4byte gSaveBlock2Ptr\n\t"
-        "_080E13A4:\n\t"
-        "	adds r4, #1\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "_080E13AC:\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _080E1380\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 length = 0;
+
+    while (*str != EOS)
+    {
+        if (*str == PLACEHOLDER_BEGIN)
+        {
+            str++;
+            if (*str == PLACEHOLDER_ID_PLAYER)
+            {
+                length += StringLength(gSaveBlock2Ptr->playerName);
+                str++;
+            }
+        }
+        else
+        {
+            str++;
+            length++;
+        }
+    }
+
+    return length;
 }
 
-__attribute__((naked)) void ScrSpecial_CreatePCMenu(void)
+u8 GetMaxMultichoiceWidth(const struct MenuAction *actions, u8 count)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	lsls r4, r1, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	bl sub_080E1378\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	movs r5, #1\n\t"
-        "	cmp r5, r4\n\t"
-        "	bhs _080E13F2\n\t"
-        "_080E13D4:\n\t"
-        "	lsls r0, r5, #3\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl sub_080E1378\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r6, r0\n\t"
-        "	bhs _080E13E8\n\t"
-        "	adds r6, r0, #0\n\t"
-        "_080E13E8:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, r4\n\t"
-        "	blo _080E13D4\n\t"
-        "_080E13F2:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    // JP measures characters after expanding PLAYER, not US pixel widths.
+    u16 i;
+    u8 width = GetLengthWithExpandedPlayerName(actions[0].text);
+
+    for (i = 1; i < count; i++)
+    {
+        u8 length = GetLengthWithExpandedPlayerName(actions[i].text);
+        if (width < length)
+            width = length;
+    }
+
+    return width;
 }
 
-__attribute__((naked)) void DrawMultichoiceMenu(void)
+void DrawMultichoiceMenu(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 cursorPos)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	mov sb, r2\n\t"
-        "	mov sl, r3\n\t"
-        "	ldr r0, [sp, #0x34]\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov sb, r2\n\t"
-        "	mov r0, sl\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	mov r2, r8\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r8, r2\n\t"
-        "	ldr r1, _080E14C8\n\t"
-        "	mov r2, sb\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r6, [r0, #4]\n\t"
-        "	ldr r7, [r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl ScrSpecial_CreatePCMenu\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r6, #0x19\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl CreateWindowFromRect\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetStandardWindowBorderStyle\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r5, #0x10\n\t"
-        "	str r5, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r7, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_081988CC\n\t"
-        "	str r5, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	mov r2, r8\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_081984B0\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	mov r0, sl\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	mov r3, sb\n\t"
-        "	bl sub_080E14CC\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E14C8: .4byte sMultichoiceLists\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 count = sMultichoiceLists[multichoiceId].count;
+    const struct MenuAction *actions = sMultichoiceLists[multichoiceId].list;
+    u8 width = GetMaxMultichoiceWidth(actions, count);
+    u8 windowId;
+
+    // JP list menus add one tile; the grid menu below adds two.
+    width += 1;
+    windowId = CreateWindowFromRect(left, top, width, count * 2);
+
+    SetStandardWindowBorderStyle(windowId, FALSE);
+    sub_081988CC(windowId, FONT_NORMAL, GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_WIDTH), 2, 16, count, actions, 0, 0);
+    sub_081984B0(windowId, FONT_NORMAL, 0, 2, 16, count, cursorPos);
+    ScheduleBgCopyTilemapToVram(0);
+    InitMultichoiceCheckWrap(ignoreBPress, count, windowId, multichoiceId);
 }
 
-__attribute__((naked)) void sub_080E14CC(void)
+void InitMultichoiceCheckWrap(bool8 ignoreBPress, u8 count, u8 windowId, u8 multichoiceId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov sb, r2\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r4, r3, #0x18\n\t"
-        "	ldr r1, _080E152C\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r6, _080E1530\n\t"
-        "	ldr r5, _080E1534\n\t"
-        "	movs r3, #0xc\n\t"
-        "_080E14F6:\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, r4\n\t"
-        "	bne _080E1500\n\t"
-        "	strb r3, [r1]\n\t"
-        "_080E1500:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #5\n\t"
-        "	bls _080E14F6\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r1, _080E1538\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	mov r0, r8\n\t"
-        "	strh r0, [r1, #0x10]\n\t"
-        "	cmp r7, #3\n\t"
-        "	bls _080E153C\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080E153E\n\t"
-        "	.align 2, 0\n\t"
-        "_080E152C: .4byte gUnknown_2039C30\n\t"
-        "_080E1530: .4byte Task_HandleMultichoiceInput + 1\n\t"
-        "_080E1534: .4byte sLinkServicesMultichoiceIds\n\t"
-        "_080E1538: .4byte gTasks\n\t"
-        "_080E153C:\n\t"
-        "	movs r0, #0\n\t"
-        "_080E153E:\n\t"
-        "	strh r0, [r1, #0x12]\n\t"
-        "	ldr r1, _080E1564\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov r1, sb\n\t"
-        "	strh r1, [r0, #0x14]\n\t"
-        "	strh r4, [r0, #0x16]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080E1F88\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1564: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 taskId;
+    sProcessInputDelay = 2;
+
+    for (i = 0; i < ARRAY_COUNT(sLinkServicesMultichoiceIds); i++)
+    {
+        if (sLinkServicesMultichoiceIds[i] == multichoiceId)
+        {
+            sProcessInputDelay = 12;
+        }
+    }
+
+    taskId = CreateTask(Task_HandleMultichoiceInput, 80);
+
+    gTasks[taskId].tIgnoreBPress = ignoreBPress;
+
+    if (count > 3)
+        gTasks[taskId].tDoWrap = TRUE;
+    else
+        gTasks[taskId].tDoWrap = FALSE;
+
+    gTasks[taskId].tWindowId = windowId;
+    gTasks[taskId].tMultichoiceId = multichoiceId;
+
+    DrawLinkServicesMultichoiceMenu(multichoiceId);
 }
 
-__attribute__((naked)) void Task_HandleMultichoiceInput(void)
+void Task_HandleMultichoiceInput(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080E1594\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldr r0, _080E1598\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E160C\n\t"
-        "	ldr r1, _080E159C\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E15A0\n\t"
-        "	subs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080E160C\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1594: .4byte gUnknown_3005B68\n\t"
-        "_080E1598: .4byte gPaletteFade\n\t"
-        "_080E159C: .4byte gUnknown_2039C30\n\t"
-        "_080E15A0:\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E15AE\n\t"
-        "	bl Menu_ProcessInputNoWrap\n\t"
-        "	b _080E15B2\n\t"
-        "_080E15AE:\n\t"
-        "	bl Menu_ProcessInput\n\t"
-        "_080E15B2:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _080E15F0\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E15C8\n\t"
-        "	ldrb r0, [r5, #0xe]\n\t"
-        "	bl sub_080E1F88\n\t"
-        "_080E15C8:\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080E160C\n\t"
-        "	adds r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080E15F8\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E160C\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r1, _080E15F4\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _080E15FC\n\t"
-        "	.align 2, 0\n\t"
-        "_080E15F0: .4byte gMain\n\t"
-        "_080E15F4: .4byte gSpecialVar_Result\n\t"
-        "_080E15F8:\n\t"
-        "	ldr r0, _080E1614\n\t"
-        "	strh r1, [r0]\n\t"
-        "_080E15FC:\n\t"
-        "	ldrb r0, [r5, #0xc]\n\t"
-        "	bl ClearToTransparentAndRemoveWindow\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "_080E160C:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1614: .4byte gSpecialVar_Result\n\t"
-        ".syntax divided\n\t"
-    );
+    s8 selection;
+    s16 *data = gTasks[taskId].data;
+
+    if (!gPaletteFade.active)
+    {
+        if (sProcessInputDelay)
+        {
+            sProcessInputDelay--;
+        }
+        else
+        {
+            if (!tDoWrap)
+                selection = Menu_ProcessInputNoWrap();
+            else
+                selection = Menu_ProcessInput();
+
+            if (JOY_NEW(DPAD_UP | DPAD_DOWN))
+            {
+                DrawLinkServicesMultichoiceMenu(tMultichoiceId);
+            }
+
+            if (selection != MENU_NOTHING_CHOSEN)
+            {
+                if (selection == MENU_B_PRESSED)
+                {
+                    if (tIgnoreBPress)
+                        return;
+                    PlaySE(SE_SELECT);
+                    gSpecialVar_Result = MULTI_B_PRESSED;
+                }
+                else
+                {
+                    gSpecialVar_Result = selection;
+                }
+                ClearToTransparentAndRemoveWindow(tWindowId);
+                DestroyTask(taskId);
+                ScriptContext_Enable();
+            }
+        }
+    }
 }
 
-__attribute__((naked)) bool8 ScriptMenu_YesNo(u8 left, u8 top)
+bool8 ScriptMenu_YesNo(u8 left, u8 top)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080E1640\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080E1648\n\t"
-        "	ldr r1, _080E1644\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl DisplayYesNoMenuDefaultYes\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080E164A\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1640: .4byte Task_HandleYesNoInput + 1\n\t"
-        "_080E1644: .4byte gSpecialVar_Result\n\t"
-        "_080E1648:\n\t"
-        "	movs r0, #0\n\t"
-        "_080E164A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId;
+
+    if (FuncIsActiveTask(Task_HandleYesNoInput) == TRUE)
+    {
+        return FALSE;
+    }
+    else
+    {
+        gSpecialVar_Result = 0xFF;
+        DisplayYesNoMenuDefaultYes();
+        taskId = CreateTask(Task_HandleYesNoInput, 0x50);
+        return TRUE;
+    }
 }
 
-__attribute__((naked)) void IsScriptActive(void)
+bool8 IsScriptActive(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080E1660\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _080E1664\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080E1666\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1660: .4byte gSpecialVar_Result\n\t"
-        "_080E1664:\n\t"
-        "	movs r0, #0\n\t"
-        "_080E1666:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSpecialVar_Result == 0xFF)
+        return FALSE;
+    else
+        return TRUE;
 }
 
-__attribute__((naked)) void Task_HandleYesNoInput(void)
+void Task_HandleYesNoInput(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _080E168C\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrh r2, [r1, #0xc]\n\t"
-        "	movs r3, #0xc\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bgt _080E1690\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r1, #0xc]\n\t"
-        "	b _080E16D4\n\t"
-        "	.align 2, 0\n\t"
-        "_080E168C: .4byte gTasks\n\t"
-        "_080E1690:\n\t"
-        "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080E16B4\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _080E16AC\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080E16D4\n\t"
-        "	b _080E16CA\n\t"
-        "_080E16AC:\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080E16C4\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _080E16CA\n\t"
-        "_080E16B4:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r1, _080E16C0\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080E16C8\n\t"
-        "	.align 2, 0\n\t"
-        "_080E16C0: .4byte gSpecialVar_Result\n\t"
-        "_080E16C4:\n\t"
-        "	ldr r1, _080E16DC\n\t"
-        "	movs r0, #1\n\t"
-        "_080E16C8:\n\t"
-        "	strh r0, [r1]\n\t"
-        "_080E16CA:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "_080E16D4:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E16DC: .4byte gSpecialVar_Result\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gTasks[taskId].tRight < 5)
+    {
+        gTasks[taskId].tRight++;
+        return;
+    }
+
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+    case MENU_NOTHING_CHOSEN:
+        return;
+    case MENU_B_PRESSED:
+    case 1:
+        PlaySE(SE_SELECT);
+        gSpecialVar_Result = 0;
+        break;
+    case 0:
+        gSpecialVar_Result = 1;
+        break;
+    }
+
+    DestroyTask(taskId);
+    ScriptContext_Enable();
 }
 
-__attribute__((naked)) void sp106_CreateStartMenu(void)
+bool8 ScriptMenu_MultichoiceGrid(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 columnCount)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x1c\n\t"
-        "	ldr r4, [sp, #0x3c]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #0x14]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	str r1, [sp, #0x18]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r5, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	mov sl, r3\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r7, r4, #0x18\n\t"
-        "	ldr r0, _080E17C8\n\t"
-        "	mov sb, r0\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080E17D8\n\t"
-        "	ldr r1, _080E17CC\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080E17D0\n\t"
-        "	lsls r0, r5, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	mov r8, r1\n\t"
-        "	ldrb r5, [r0, #4]\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl ScrSpecial_CreatePCMenu\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r4, #2\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl __udivsi3\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	mov r0, sb\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080E17D4\n\t"
-        "	lsls r5, r0, #2\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	lsls r5, r5, #3\n\t"
-        "	adds r5, r5, r1\n\t"
-        "	movs r0, #0\n\t"
-        "	mov sb, r0\n\t"
-        "	mov r1, sl\n\t"
-        "	strh r1, [r5, #0x10]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	muls r2, r7, r2\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r6, #0x19\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldr r0, [sp, #0x14]\n\t"
-        "	ldr r1, [sp, #0x18]\n\t"
-        "	bl CreateWindowFromRect\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r5, #0x14]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetStandardWindowBorderStyle\n\t"
-        "	ldrb r0, [r5, #0x14]\n\t"
-        "	lsls r4, r4, #0x1b\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	str r7, [sp, #8]\n\t"
-        "	str r6, [sp, #0xc]\n\t"
-        "	mov r1, r8\n\t"
-        "	str r1, [sp, #0x10]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_08198DA4\n\t"
-        "	ldrb r0, [r5, #0x14]\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r7, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	mov r1, sb\n\t"
-        "	str r1, [sp, #0xc]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_081990E4\n\t"
-        "	ldrb r0, [r5, #0x14]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080E17DA\n\t"
-        "	.align 2, 0\n\t"
-        "_080E17C8: .4byte Task_HandleMultichoiceGridInput + 1\n\t"
-        "_080E17CC: .4byte gSpecialVar_Result\n\t"
-        "_080E17D0: .4byte sMultichoiceLists\n\t"
-        "_080E17D4: .4byte gTasks\n\t"
-        "_080E17D8:\n\t"
-        "	movs r0, #0\n\t"
-        "_080E17DA:\n\t"
-        "	add sp, #0x1c\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FuncIsActiveTask(Task_HandleMultichoiceGridInput) == TRUE)
+    {
+        return FALSE;
+    }
+    else
+    {
+        u8 taskId;
+        u8 rowCount, width;
+
+        gSpecialVar_Result = 0xFF;
+        width = GetMaxMultichoiceWidth(sMultichoiceLists[multichoiceId].list, sMultichoiceLists[multichoiceId].count) + 2;
+        rowCount = sMultichoiceLists[multichoiceId].count / columnCount;
+        taskId = CreateTask(Task_HandleMultichoiceGridInput, 80);
+        gTasks[taskId].tIgnoreBPress = ignoreBPress;
+        gTasks[taskId].tWindowId = CreateWindowFromRect(left, top, width * columnCount, rowCount * 2);
+        SetStandardWindowBorderStyle(gTasks[taskId].tWindowId, FALSE);
+        sub_08198DA4(gTasks[taskId].tWindowId, FONT_NORMAL, 8, 2, width * 8, 16, columnCount, rowCount, sMultichoiceLists[multichoiceId].list);
+        sub_081990E4(gTasks[taskId].tWindowId, FONT_NORMAL, 0, 2, width * 8, columnCount, rowCount, 0);
+        CopyWindowToVram(gTasks[taskId].tWindowId, COPYWIN_FULL);
+        return TRUE;
+    }
 }
 
-__attribute__((naked)) void Task_HandleMultichoiceGridInput(void)
+void Task_HandleMultichoiceGridInput(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080E1828\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	bl Menu_ProcessInputGridLayout\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080E1844\n\t"
-        "	adds r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080E1830\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E1844\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r1, _080E182C\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _080E1834\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1828: .4byte gUnknown_3005B68\n\t"
-        "_080E182C: .4byte gSpecialVar_Result\n\t"
-        "_080E1830:\n\t"
-        "	ldr r0, _080E184C\n\t"
-        "	strh r1, [r0]\n\t"
-        "_080E1834:\n\t"
-        "	ldrb r0, [r5, #0xc]\n\t"
-        "	bl ClearToTransparentAndRemoveWindow\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "_080E1844:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E184C: .4byte gSpecialVar_Result\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+    s8 selection = Menu_ProcessInputGridLayout();
+
+    switch (selection)
+    {
+    case MENU_NOTHING_CHOSEN:
+        return;
+    case MENU_B_PRESSED:
+        if (tIgnoreBPress)
+            return;
+        PlaySE(SE_SELECT);
+        gSpecialVar_Result = MULTI_B_PRESSED;
+        break;
+    default:
+        gSpecialVar_Result = selection;
+        break;
+    }
+
+    ClearToTransparentAndRemoveWindow(tWindowId);
+    DestroyTask(taskId);
+    ScriptContext_Enable();
 }
 
-__attribute__((naked)) bool16 ScriptMenu_CreatePCMultichoice()
+bool16 ScriptMenu_CreatePCMultichoice(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080E1870\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080E1878\n\t"
-        "	ldr r1, _080E1874\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl CreatePCMenu\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080E187A\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1870: .4byte Task_HandleMultichoiceInput + 1\n\t"
-        "_080E1874: .4byte gSpecialVar_Result\n\t"
-        "_080E1878:\n\t"
-        "	movs r0, #0\n\t"
-        "_080E187A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FuncIsActiveTask(Task_HandleMultichoiceInput) == TRUE)
+    {
+        return FALSE;
+    }
+    else
+    {
+        gSpecialVar_Result = 0xFF;
+        CreatePCMultichoice();
+        return TRUE;
+    }
 }
 
-__attribute__((naked)) void CreatePCMenu(void)
+void CreatePCMultichoice(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	adds r0, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	ldr r0, _080E18BC\n\t"
-        "	bl sub_080E1378\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	ldr r0, _080E18C0\n\t"
-        "	bl sub_080E1378\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r4, r0\n\t"
-        "	bls _080E18C4\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	b _080E18C6\n\t"
-        "	.align 2, 0\n\t"
-        "_080E18BC: .4byte gUnknown_85CAB13 + 0x1EB\n\t"
-        "_080E18C0: .4byte gUnknown_85CAB13 + 0x1D9\n\t"
-        "_080E18C4:\n\t"
-        "	movs r4, #8\n\t"
-        "_080E18C6:\n\t"
-        "	ldr r0, _080E1924\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _080E1930\n\t"
-        "	movs r0, #4\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r2, r4, #4\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r3, #8\n\t"
-        "	bl CreateWindowFromRect\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetStandardWindowBorderStyle\n\t"
-        "	ldr r2, _080E1928\n\t"
-        "	movs r0, #0x22\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r5, #0xff\n\t"
-        "	str r5, [sp, #4]\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	ldr r2, _080E192C\n\t"
-        "	movs r0, #0x32\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r5, [sp, #4]\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	b _080E1966\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1924: .4byte 0x00000864\n\t"
-        "_080E1928: .4byte gUnknown_85CAB13 + 0x1F3\n\t"
-        "_080E192C: .4byte gUnknown_85CAB13 + 0x1FA\n\t"
-        "_080E1930:\n\t"
-        "	movs r0, #3\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r2, r4, #4\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r3, #6\n\t"
-        "	bl CreateWindowFromRect\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetStandardWindowBorderStyle\n\t"
-        "	ldr r2, _080E1990\n\t"
-        "	movs r0, #0x22\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "_080E1966:\n\t"
-        "	ldr r0, _080E1994\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080E199C\n\t"
-        "	ldr r2, _080E1998\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	b _080E19B2\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1990: .4byte gUnknown_85CAB13 + 0x1FA\n\t"
-        "_080E1994: .4byte 0x000008AB\n\t"
-        "_080E1998: .4byte gUnknown_85CAB13 + 0x1E2\n\t"
-        "_080E199C:\n\t"
-        "	ldr r2, _080E1A00\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "_080E19B2:\n\t"
-        "	ldr r4, _080E1A04\n\t"
-        "	ldr r1, _080E1A08\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	movs r3, #0x12\n\t"
-        "	bl PrintPlayerNameOnWindow\n\t"
-        "	movs r0, #0x10\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_081984B0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_080E14CC\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1A00: .4byte gUnknown_85CAB13 + 0x1D9\n\t"
-        "_080E1A04: .4byte gStringVar4\n\t"
-        "_080E1A08: .4byte gUnknown_85CAB13 + 0x1EB\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 x = GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_WIDTH) + 1;
+    u16 playerNameLength;
+    u8 width;
+    u8 numChoices;
+    u8 windowId;
+
+    GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT);
+    playerNameLength = GetLengthWithExpandedPlayerName(gText_PlayersPC);
+    if (playerNameLength > GetLengthWithExpandedPlayerName(gText_SomeonesPC))
+        width = playerNameLength;
+    else
+        width = 8;
+
+    if (FlagGet(FLAG_SYS_GAME_CLEAR))
+    {
+        numChoices = 4;
+        windowId = CreateWindowFromRect(0, 0, width + 4, 8);
+        SetStandardWindowBorderStyle(windowId, FALSE);
+        AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_HallOfFame, x, 34, TEXT_SKIP_DRAW, NULL);
+        AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_LogOff, x, 50, TEXT_SKIP_DRAW, NULL);
+    }
+    else
+    {
+        numChoices = 3;
+        windowId = CreateWindowFromRect(0, 0, width + 4, 6);
+        SetStandardWindowBorderStyle(windowId, FALSE);
+        AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_LogOff, x, 34, TEXT_SKIP_DRAW, NULL);
+    }
+
+    if (FlagGet(FLAG_SYS_PC_LANETTE))
+        AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_LanettesPC, x, 2, TEXT_SKIP_DRAW, NULL);
+    else
+        AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_SomeonesPC, x, 2, TEXT_SKIP_DRAW, NULL);
+
+    StringExpandPlaceholders(gStringVar4, gText_PlayersPC);
+    PrintPlayerNameOnWindow(windowId, gStringVar4, x, 18);
+    sub_081984B0(windowId, FONT_NORMAL, 0, 2, 16, numChoices, 0);
+    CopyWindowToVram(windowId, COPYWIN_FULL);
+    InitMultichoiceCheckWrap(FALSE, numChoices, windowId, MULTI_PC);
 }
 
-__attribute__((naked)) void ScriptMenu_DisplayPCStartupPrompt()
+void ScriptMenu_DisplayPCStartupPrompt(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl sub_08197650\n\t"
-        "	ldr r2, _080E1A3C\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #3\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized2\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1A3C: .4byte gText_WhichPCShouldBeAccessed\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_08197650(0, TRUE);
+    AddTextPrinterParameterized2(0, FONT_NORMAL, gText_WhichPCShouldBeAccessed, 0, NULL, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
 }
 
-__attribute__((naked)) bool8 ScriptMenu_CreateLilycoveSSTidalMultichoice(void)
+bool8 ScriptMenu_CreateLilycoveSSTidalMultichoice(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080E1A60\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080E1A68\n\t"
-        "	ldr r1, _080E1A64\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl sub_080E1A70\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080E1A6A\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1A60: .4byte Task_HandleMultichoiceInput + 1\n\t"
-        "_080E1A64: .4byte gSpecialVar_Result\n\t"
-        "_080E1A68:\n\t"
-        "	movs r0, #0\n\t"
-        "_080E1A6A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FuncIsActiveTask(Task_HandleMultichoiceInput) == TRUE)
+    {
+        return FALSE;
+    }
+    else
+    {
+        gSpecialVar_Result = 0xFF;
+        CreateLilycoveSSTidalMultichoice();
+        return TRUE;
+    }
 }
 
-__attribute__((naked)) void sub_080E1A70(void)
+void CreateLilycoveSSTidalMultichoice(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r3, _080E1C94\n\t"
-        "	movs r2, #0xff\n\t"
-        "_080E1A84:\n\t"
-        "	adds r0, r4, r3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #6\n\t"
-        "	bls _080E1A84\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	ldr r0, _080E1C98\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _080E1ACE\n\t"
-        "	movs r6, #6\n\t"
-        "	ldr r4, _080E1C94\n\t"
-        "	adds r0, r5, r4\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r0, #0xe8\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _080E1ACE\n\t"
-        "	adds r0, r5, r4\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "_080E1ACE:\n\t"
-        "	ldr r0, _080E1C9C\n\t"
-        "	movs r1, #1\n\t"
-        "	bl CheckBagHasItem\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080E1B30\n\t"
-        "	ldr r0, _080E1CA0\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080E1B30\n\t"
-        "	ldr r2, _080E1C98\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E1B04\n\t"
-        "	movs r6, #7\n\t"
-        "	ldr r0, _080E1C94\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	movs r1, #2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "_080E1B04:\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080E1B30\n\t"
-        "	movs r4, #0xd7\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E1B30\n\t"
-        "	movs r6, #7\n\t"
-        "	ldr r0, _080E1C94\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	movs r1, #2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FlagSet\n\t"
-        "_080E1B30:\n\t"
-        "	movs r0, #0xb9\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl CheckBagHasItem\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080E1B90\n\t"
-        "	movs r0, #0x8e\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080E1B90\n\t"
-        "	ldr r2, _080E1C98\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E1B68\n\t"
-        "	ldr r0, _080E1C94\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	movs r1, #3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "_080E1B68:\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080E1B90\n\t"
-        "	ldr r4, _080E1CA4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E1B90\n\t"
-        "	ldr r0, _080E1C94\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	movs r1, #3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FlagSet\n\t"
-        "_080E1B90:\n\t"
-        "	ldr r0, _080E1CA8\n\t"
-        "	movs r1, #1\n\t"
-        "	bl CheckBagHasItem\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080E1BF0\n\t"
-        "	ldr r0, _080E1CAC\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080E1BF0\n\t"
-        "	ldr r2, _080E1C98\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E1BC6\n\t"
-        "	movs r6, #8\n\t"
-        "	ldr r0, _080E1C94\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	movs r1, #4\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "_080E1BC6:\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080E1BF0\n\t"
-        "	ldr r4, _080E1CB0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E1BF0\n\t"
-        "	movs r6, #8\n\t"
-        "	ldr r0, _080E1C94\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	movs r1, #4\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FlagSet\n\t"
-        "_080E1BF0:\n\t"
-        "	movs r0, #0xbc\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl CheckBagHasItem\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080E1C54\n\t"
-        "	ldr r0, _080E1CB4\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080E1C54\n\t"
-        "	ldr r2, _080E1C98\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E1C28\n\t"
-        "	movs r6, #8\n\t"
-        "	ldr r0, _080E1C94\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	movs r1, #5\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "_080E1C28:\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080E1C54\n\t"
-        "	movs r4, #0xd8\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E1C54\n\t"
-        "	movs r6, #8\n\t"
-        "	ldr r0, _080E1C94\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	movs r1, #5\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FlagSet\n\t"
-        "_080E1C54:\n\t"
-        "	ldr r0, _080E1C94\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	movs r1, #6\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _080E1C98\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080E1C7C\n\t"
-        "	movs r0, #0xe8\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080E1C7C\n\t"
-        "	movs r6, #9\n\t"
-        "_080E1C7C:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	adds r7, r5, #0\n\t"
-        "	cmp r7, #7\n\t"
-        "	bne _080E1CB8\n\t"
-        "	ldr r1, _080E1C98\n\t"
-        "	movs r0, #0xb\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl ShowScrollableMultichoice\n\t"
-        "	b _080E1D54\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1C94: .4byte gUnknown_3001124\n\t"
-        "_080E1C98: .4byte gSpecialVar_0x8004\n\t"
-        "_080E1C9C: .4byte SPECIAL_SpawnCameraObject\n\t"
-        "_080E1CA0: .4byte 0x000008B3\n\t"
-        "_080E1CA4: .4byte SPECIAL_GetBattleFrontierTutorMoveIndex\n\t"
-        "_080E1CA8: .4byte 0x173\n\t"
-        "_080E1CAC: .4byte 0x000008D5\n\t"
-        "_080E1CB0: .4byte SPECIAL_BufferVarsForIVRater\n\t"
-        "_080E1CB4: .4byte 0x000008D6\n\t"
-        "_080E1CB8:\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	subs r0, r0, r6\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #6\n\t"
-        "	subs r1, r1, r7\n\t"
-        "	lsls r1, r1, #0x19\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r3, r7, #0x19\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl CreateWindowFromRect\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetStandardWindowBorderStyle\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r4, #0\n\t"
-        "	subs r0, r7, #1\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r1, _080E1D64\n\t"
-        "	mov sb, r1\n\t"
-        "_080E1CEA:\n\t"
-        "	ldr r0, _080E1D68\n\t"
-        "	adds r1, r4, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _080E1D1C\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, sb\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	lsls r0, r5, #4\n\t"
-        "	adds r0, #2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #8\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "_080E1D1C:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #6\n\t"
-        "	bls _080E1CEA\n\t"
-        "	movs r0, #0x10\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r7, [sp, #4]\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_081984B0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	movs r3, #8\n\t"
-        "	bl sub_080E14CC\n\t"
-        "_080E1D54:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1D64: .4byte sLilycoveSSTidalDestinations\n\t"
-        "_080E1D68: .4byte gUnknown_3001124\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 width = 0;
+    u8 selectionCount = 0;
+    u8 count;
+    u8 windowId;
+    u8 i;
+
+    for (i = 0; i < SSTIDAL_SELECTION_COUNT; i++)
+    {
+        sLilycoveSSTidalSelections[i] |= 0xFF;
+    }
+
+    GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_WIDTH);
+
+    if (gSpecialVar_0x8004 == 0)
+    {
+        width = 6;
+        sLilycoveSSTidalSelections[selectionCount] = SSTIDAL_SELECTION_SLATEPORT;
+        selectionCount++;
+
+        if (FlagGet(FLAG_MET_SCOTT_ON_SS_TIDAL) == TRUE)
+        {
+            sLilycoveSSTidalSelections[selectionCount] = SSTIDAL_SELECTION_BATTLE_FRONTIER;
+            selectionCount++;
+        }
+    }
+
+    if (CheckBagHasItem(ITEM_EON_TICKET, 1) == TRUE && FlagGet(FLAG_ENABLE_SHIP_SOUTHERN_ISLAND) == TRUE)
+    {
+        if (gSpecialVar_0x8004 == 0)
+        {
+            width = 7;
+            sLilycoveSSTidalSelections[selectionCount] = SSTIDAL_SELECTION_SOUTHERN_ISLAND;
+            selectionCount++;
+        }
+
+        if (gSpecialVar_0x8004 == 1 && FlagGet(FLAG_SHOWN_EON_TICKET) == FALSE)
+        {
+            width = 7;
+            sLilycoveSSTidalSelections[selectionCount] = SSTIDAL_SELECTION_SOUTHERN_ISLAND;
+            selectionCount++;
+            FlagSet(FLAG_SHOWN_EON_TICKET);
+        }
+    }
+
+    if (CheckBagHasItem(ITEM_MYSTIC_TICKET, 1) == TRUE && FlagGet(FLAG_ENABLE_SHIP_NAVEL_ROCK) == TRUE)
+    {
+        if (gSpecialVar_0x8004 == 0)
+        {
+            sLilycoveSSTidalSelections[selectionCount] = SSTIDAL_SELECTION_NAVEL_ROCK;
+            selectionCount++;
+        }
+
+        if (gSpecialVar_0x8004 == 1 && FlagGet(FLAG_SHOWN_MYSTIC_TICKET) == FALSE)
+        {
+            sLilycoveSSTidalSelections[selectionCount] = SSTIDAL_SELECTION_NAVEL_ROCK;
+            selectionCount++;
+            FlagSet(FLAG_SHOWN_MYSTIC_TICKET);
+        }
+    }
+
+    if (CheckBagHasItem(ITEM_AURORA_TICKET, 1) == TRUE && FlagGet(FLAG_ENABLE_SHIP_BIRTH_ISLAND) == TRUE)
+    {
+        if (gSpecialVar_0x8004 == 0)
+        {
+            width = 8;
+            sLilycoveSSTidalSelections[selectionCount] = SSTIDAL_SELECTION_BIRTH_ISLAND;
+            selectionCount++;
+        }
+
+        if (gSpecialVar_0x8004 == 1 && FlagGet(FLAG_SHOWN_AURORA_TICKET) == FALSE)
+        {
+            width = 8;
+            sLilycoveSSTidalSelections[selectionCount] = SSTIDAL_SELECTION_BIRTH_ISLAND;
+            selectionCount++;
+            FlagSet(FLAG_SHOWN_AURORA_TICKET);
+        }
+    }
+
+    if (CheckBagHasItem(ITEM_OLD_SEA_MAP, 1) == TRUE && FlagGet(FLAG_ENABLE_SHIP_FARAWAY_ISLAND) == TRUE)
+    {
+        if (gSpecialVar_0x8004 == 0)
+        {
+            width = 8;
+            sLilycoveSSTidalSelections[selectionCount] = SSTIDAL_SELECTION_FARAWAY_ISLAND;
+            selectionCount++;
+        }
+
+        if (gSpecialVar_0x8004 == 1 && FlagGet(FLAG_SHOWN_OLD_SEA_MAP) == FALSE)
+        {
+            width = 8;
+            sLilycoveSSTidalSelections[selectionCount] = SSTIDAL_SELECTION_FARAWAY_ISLAND;
+            selectionCount++;
+            FlagSet(FLAG_SHOWN_OLD_SEA_MAP);
+        }
+    }
+
+    sLilycoveSSTidalSelections[selectionCount] = SSTIDAL_SELECTION_EXIT;
+    selectionCount++;
+
+    if (gSpecialVar_0x8004 == 0 && FlagGet(FLAG_MET_SCOTT_ON_SS_TIDAL) == TRUE)
+    {
+        width = 9;
+    }
+
+    width++;
+    count = selectionCount;
+    if (count == SSTIDAL_SELECTION_COUNT)
+    {
+        gSpecialVar_0x8004 = SCROLL_MULTI_SS_TIDAL_DESTINATION;
+        ShowScrollableMultichoice();
+    }
+    else
+    {
+        windowId = CreateWindowFromRect(MAX_MULTICHOICE_WIDTH - width, (6 - count) * 2, width, count * 2);
+        SetStandardWindowBorderStyle(windowId, FALSE);
+
+        for (selectionCount = 0, i = 0; i < SSTIDAL_SELECTION_COUNT; i++)
+        {
+            if (sLilycoveSSTidalSelections[i] != 0xFF)
+            {
+                AddTextPrinterParameterized(windowId, FONT_NORMAL, sLilycoveSSTidalDestinations[sLilycoveSSTidalSelections[i]], 8, selectionCount * 16 + 2, TEXT_SKIP_DRAW, NULL);
+                selectionCount++;
+            }
+        }
+
+        sub_081984B0(windowId, FONT_NORMAL, 0, 2, 16, count, count - 1);
+        CopyWindowToVram(windowId, COPYWIN_FULL);
+        InitMultichoiceCheckWrap(FALSE, count, windowId, MULTI_SSTIDAL_LILYCOVE);
+    }
 }
 
-__attribute__((naked)) void GetLilycoveSSTidalSelection(void)
+void GetLilycoveSSTidalSelection(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _080E1D84\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	cmp r0, #0x7f\n\t"
-        "	beq _080E1D80\n\t"
-        "	ldr r0, _080E1D88\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	strh r0, [r2]\n\t"
-        "_080E1D80:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1D84: .4byte gSpecialVar_Result\n\t"
-        "_080E1D88: .4byte gUnknown_3001124\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSpecialVar_Result != MULTI_B_PRESSED)
+    {
+        gSpecialVar_Result = sLilycoveSSTidalSelections[gSpecialVar_Result];
+    }
 }
 
-__attribute__((naked)) void Task_PokemonPicWindow(void)
+#undef tWindowId
+#define tState data[0]
+#define tMonSpecies data[1]
+#define tMonSpriteId data[2]
+#define tWindowX data[3]
+#define tWindowY data[4]
+#define tWindowId data[5]
+
+void Task_PokemonPicWindow(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080E1DB0\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080E1DEC\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080E1DB4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080E1DD2\n\t"
-        "	b _080E1DEC\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1DB0: .4byte gTasks\n\t"
-        "_080E1DB4:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080E1DBE\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080E1DE0\n\t"
-        "	b _080E1DEC\n\t"
-        "_080E1DBE:\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080E1DDC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r4, #0xc]\n\t"
-        "	bl FreeResourcesAndDestroySprite\n\t"
-        "_080E1DD2:\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	b _080E1DEC\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1DDC: .4byte gSprites\n\t"
-        "_080E1DE0:\n\t"
-        "	ldrb r0, [r4, #0x12]\n\t"
-        "	bl ClearToTransparentAndRemoveWindow\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_080E1DEC:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->tState)
+    {
+    case 0:
+        task->tState++;
+        break;
+    case 1:
+        // Wait until state is advanced by ScriptMenu_HidePokemonPic
+        break;
+    case 2:
+        FreeResourcesAndDestroySprite(&gSprites[task->tMonSpriteId], task->tMonSpriteId);
+        task->tState++;
+        break;
+    case 3:
+        ClearToTransparentAndRemoveWindow(task->tWindowId);
+        DestroyTask(taskId);
+        break;
+    }
 }
 
-__attribute__((naked)) bool8 ScriptMenu_ShowPokemonPic(u16 species, u8 x, u8 y)
+bool8 ScriptMenu_ShowPokemonPic(u16 species, u8 x, u8 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r6, r2, #0x18\n\t"
-        "	ldr r4, _080E1E9C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _080E1EAC\n\t"
-        "	lsls r1, r7, #0x13\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	lsls r0, r0, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	lsls r2, r6, #0x13\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateMonSprite_PicBox\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #8\n\t"
-        "	bl CreateWindowFromRect\n\t"
-        "	ldr r1, _080E1EA0\n\t"
-        "	lsls r3, r4, #2\n\t"
-        "	adds r3, r3, r4\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r3, r3, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r3, #0x12]\n\t"
-        "	strh r1, [r3, #8]\n\t"
-        "	mov r0, r8\n\t"
-        "	strh r0, [r3, #0xa]\n\t"
-        "	strh r5, [r3, #0xc]\n\t"
-        "	ldr r4, _080E1EA4\n\t"
-        "	lsls r1, r5, #4\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r2, _080E1EA8\n\t"
-        "	str r2, [r0]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldrb r0, [r3, #0x12]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetStandardWindowBorderStyle\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080E1EAE\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1E9C: .4byte Task_PokemonPicWindow + 1\n\t"
-        "_080E1EA0: .4byte gTasks\n\t"
-        "_080E1EA4: .4byte gSprites\n\t"
-        "_080E1EA8: .4byte SpriteCallbackDummy + 1\n\t"
-        "_080E1EAC:\n\t"
-        "	movs r0, #0\n\t"
-        "_080E1EAE:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId;
+    u8 spriteId;
+
+    if (FindTaskIdByFunc(Task_PokemonPicWindow) != TASK_NONE)
+    {
+        return FALSE;
+    }
+    else
+    {
+        spriteId = CreateMonSprite_PicBox(species, x * 8 + 40, y * 8 + 40, 0);
+        taskId = CreateTask(Task_PokemonPicWindow, 0x50);
+        gTasks[taskId].tWindowId = CreateWindowFromRect(x, y, 8, 8);
+        gTasks[taskId].tState = 0;
+        gTasks[taskId].tMonSpecies = species;
+        gTasks[taskId].tMonSpriteId = spriteId;
+        gSprites[spriteId].callback = SpriteCallbackDummy;
+        gSprites[spriteId].oam.priority = 0;
+        SetStandardWindowBorderStyle(gTasks[taskId].tWindowId, TRUE);
+        ScheduleBgCopyTilemapToVram(0);
+        return TRUE;
+    }
 }
 
-__attribute__((naked)) void ScriptMenu_GetPicboxWaitFunc(void)
+bool8 (*ScriptMenu_HidePokemonPic(void))(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080E1EDC\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0xff\n\t"
-        "	beq _080E1EE8\n\t"
-        "	ldr r0, _080E1EE0\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	ldr r0, _080E1EE4\n\t"
-        "	b _080E1EEA\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1EDC: .4byte Task_PokemonPicWindow + 1\n\t"
-        "_080E1EE0: .4byte gTasks\n\t"
-        "_080E1EE4: .4byte IsPicboxClosed + 1\n\t"
-        "_080E1EE8:\n\t"
-        "	movs r0, #0\n\t"
-        "_080E1EEA:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = FindTaskIdByFunc(Task_PokemonPicWindow);
+
+    if (taskId == TASK_NONE)
+        return NULL;
+    gTasks[taskId].tState++;
+    return IsPicboxClosed;
 }
 
-__attribute__((naked)) void IsPicboxClosed(void)
+bool8 IsPicboxClosed(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080E1F04\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _080E1F08\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080E1F0A\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1F04: .4byte Task_PokemonPicWindow + 1\n\t"
-        "_080E1F08:\n\t"
-        "	movs r0, #1\n\t"
-        "_080E1F0A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FindTaskIdByFunc(Task_PokemonPicWindow) == TASK_NONE)
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) u8 CreateWindowFromRect(u8 x, u8 y, u8 width, u8 height)
+#undef tWindowId
+#define tWindowId data[6]
+
+u8 CreateWindowFromRect(u8 x, u8 y, u8 width, u8 height)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x20\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	str r2, [sp]\n\t"
-        "	str r3, [sp, #4]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0x5c\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	add r0, sp, #0x10\n\t"
-        "	movs r1, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl CreateWindowTemplate\n\t"
-        "	ldr r0, [sp, #0x10]\n\t"
-        "	ldr r1, [sp, #0x14]\n\t"
-        "	str r0, [sp, #0x18]\n\t"
-        "	str r1, [sp, #0x1c]\n\t"
-        "	add r0, sp, #0x18\n\t"
-        "	bl AddWindow\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	add sp, #0x20\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct WindowTemplate template = CreateWindowTemplate(0, x + 1, y + 1, width, height, 15, 0x5C);
+    u8 windowId = AddWindow(&template);
+    PutWindowTilemap(windowId);
+    return windowId;
 }
 
-__attribute__((naked)) void ClearToTransparentAndRemoveWindow(u8 windowId)
+void ClearToTransparentAndRemoveWindow(u8 windowId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ClearStdWindowAndFrameToTransparent\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl RemoveWindow\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearStdWindowAndFrameToTransparent(windowId, TRUE);
+    RemoveWindow(windowId);
 }
 
-__attribute__((naked)) void sub_080E1F88(void)
+void DrawLinkServicesMultichoiceMenu(u8 multichoiceId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	subs r0, #0x4a\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _080E2064\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080E1FA0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1FA0: .4byte _080E1FA4\n\t"
-        "_080E1FA4:\n\t"
-        "	.4byte _080E2034\n\t"
-        "	.4byte _080E1FFC\n\t"
-        "	.4byte _080E1FCC\n\t"
-        "	.4byte _080E1FBC\n\t"
-        "	.4byte _080E1FDC\n\t"
-        "	.4byte _080E1FEC\n\t"
-        "_080E1FBC:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r4, _080E1FC8\n\t"
-        "	b _080E2006\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1FC8: .4byte sWirelessOptionsNoBerryCrush\n\t"
-        "_080E1FCC:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r4, _080E1FD8\n\t"
-        "	b _080E2006\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1FD8: .4byte sCableClubOptions_WithRecordMix\n\t"
-        "_080E1FDC:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r4, _080E1FE8\n\t"
-        "	b _080E2006\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1FE8: .4byte sWirelessOptions_NoRecordMix\n\t"
-        "_080E1FEC:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r4, _080E1FF8\n\t"
-        "	b _080E2006\n\t"
-        "	.align 2, 0\n\t"
-        "_080E1FF8: .4byte sWirelessOptions_AllServices\n\t"
-        "_080E1FFC:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r4, _080E2030\n\t"
-        "_080E2006:\n\t"
-        "	bl Menu_GetCursorPos\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #3\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized2\n\t"
-        "	b _080E2064\n\t"
-        "	.align 2, 0\n\t"
-        "_080E2030: .4byte sWirelessOptions_NoRecordMixBerryCrush\n\t"
-        "_080E2034:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r4, _080E206C\n\t"
-        "	bl Menu_GetCursorPos\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #3\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized2\n\t"
-        "_080E2064:\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E206C: .4byte sCableClubOptions_NoRecordMix\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (multichoiceId)
+    {
+    case MULTI_WIRELESS_NO_BERRY:
+        FillWindowPixelBuffer(0, PIXEL_FILL(1));
+        AddTextPrinterParameterized2(0, FONT_NORMAL, sWirelessOptionsNoBerryCrush[Menu_GetCursorPos()], 0, NULL, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+        break;
+    case MULTI_CABLE_CLUB_WITH_RECORD_MIX:
+        FillWindowPixelBuffer(0, PIXEL_FILL(1));
+        AddTextPrinterParameterized2(0, FONT_NORMAL, sCableClubOptions_WithRecordMix[Menu_GetCursorPos()], 0, NULL, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+        break;
+    case MULTI_WIRELESS_NO_RECORD:
+        FillWindowPixelBuffer(0, PIXEL_FILL(1));
+        AddTextPrinterParameterized2(0, FONT_NORMAL, sWirelessOptions_NoRecordMix[Menu_GetCursorPos()], 0, NULL, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+        break;
+    case MULTI_WIRELESS_ALL_SERVICES:
+        FillWindowPixelBuffer(0, PIXEL_FILL(1));
+        AddTextPrinterParameterized2(0, FONT_NORMAL, sWirelessOptions_AllServices[Menu_GetCursorPos()], 0, NULL, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+        break;
+    case MULTI_WIRELESS_NO_RECORD_BERRY:
+        FillWindowPixelBuffer(0, PIXEL_FILL(1));
+        AddTextPrinterParameterized2(0, FONT_NORMAL, sWirelessOptions_NoRecordMixBerryCrush[Menu_GetCursorPos()], 0, NULL, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+        break;
+    case MULTI_CABLE_CLUB_NO_RECORD_MIX:
+        FillWindowPixelBuffer(0, PIXEL_FILL(1));
+        AddTextPrinterParameterized2(0, FONT_NORMAL, sCableClubOptions_NoRecordMix[Menu_GetCursorPos()], 0, NULL, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+        break;
+    }
 }
 
-__attribute__((naked)) void ScriptMenu_CreateStartMenuForPokenavTutorial(void)
+bool16 ScriptMenu_CreateStartMenuForPokenavTutorial(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080E2090\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080E2098\n\t"
-        "	ldr r1, _080E2094\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl CreateStartMenuForPokenavTutorial\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080E209A\n\t"
-        "	.align 2, 0\n\t"
-        "_080E2090: .4byte Task_HandleMultichoiceInput + 1\n\t"
-        "_080E2094: .4byte gSpecialVar_Result\n\t"
-        "_080E2098:\n\t"
-        "	movs r0, #0\n\t"
-        "_080E209A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FuncIsActiveTask(Task_HandleMultichoiceInput) == TRUE)
+    {
+        return FALSE;
+    }
+    else
+    {
+        gSpecialVar_Result = 0xFF;
+        CreateStartMenuForPokenavTutorial();
+        return TRUE;
+    }
 }
 
-__attribute__((naked)) void CreateStartMenuForPokenavTutorial(void)
+void CreateStartMenuForPokenavTutorial(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sl\n\t"
-        "	mov r5, sb\n\t"
-        "	mov r4, r8\n\t"
-        "	push {r4, r5, r6}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r5, #1\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	movs r0, #8\n\t"
-        "	mov sl, r0\n\t"
-        "	movs r0, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r0, #0x16\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #6\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl CreateWindowFromRect\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetStandardWindowBorderStyle\n\t"
-        "	ldr r2, _080E21D8\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	mov r8, r0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r6, #0\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	ldr r2, _080E21DC\n\t"
-        "	movs r0, #0x12\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	ldr r2, _080E21E0\n\t"
-        "	movs r0, #0x22\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	ldr r2, _080E21E4\n\t"
-        "	movs r0, #0x32\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	ldr r0, _080E21E8\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r0, #0x42\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	ldr r2, _080E21EC\n\t"
-        "	movs r0, #0x52\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	ldr r2, _080E21F0\n\t"
-        "	movs r0, #0x62\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	ldr r2, _080E21F4\n\t"
-        "	movs r0, #0x72\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	mov r0, sb\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r0, sl\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_081984B0\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	movs r3, #0x56\n\t"
-        "	bl sub_080E21F8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E21D8: .4byte gUnknown_85CAB13 + 0x29B\n\t"
-        "_080E21DC: .4byte gUnknown_85CAB13 + 0x29F\n\t"
-        "_080E21E0: .4byte gUnknown_85CAB13 + 0x2A4\n\t"
-        "_080E21E4: .4byte gUnknown_85CAB13 + 0x2A8\n\t"
-        "_080E21E8: .4byte gSaveBlock2Ptr\n\t"
-        "_080E21EC: .4byte gUnknown_85CADC6\n\t"
-        "_080E21F0: .4byte gUnknown_85CADCB\n\t"
-        "_080E21F4: .4byte gUnknown_85CADD0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 x = GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_WIDTH) + 1;
+    u8 windowId;
+    u8 count;
+    u8 height;
+
+    GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT);
+    count = ARRAY_COUNT(MultichoiceList_ForcedStartMenu);
+    height = 16;
+    windowId = CreateWindowFromRect(22, 0, 6, height);
+    SetStandardWindowBorderStyle(windowId, FALSE);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_MenuOptionPokedex, x, 2, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_MenuOptionPokemon, x, 18, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_MenuOptionBag, x, 34, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_MenuOptionPokenav, x, 50, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gSaveBlock2Ptr->playerName, x, 66, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_MenuOptionSave, x, 82, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_MenuOptionOption, x, 98, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_MenuOptionExit, x, 114, TEXT_SKIP_DRAW, NULL);
+    sub_081984B0(windowId, FONT_NORMAL, 0, 2, height, count, 0);
+    InitMultichoiceNoWrap(FALSE, count, windowId, MULTI_FORCED_START_MENU);
+    CopyWindowToVram(windowId, COPYWIN_FULL);
 }
 
-__attribute__((naked)) void sub_080E21F8(void)
+void InitMultichoiceNoWrap(bool8 ignoreBPress, u8 unusedCount, u8 windowId, u8 multichoiceId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	adds r6, r3, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	ldr r1, _080E2238\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _080E223C\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080E2240\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r4, [r1, #0x10]\n\t"
-        "	strh r0, [r1, #0x12]\n\t"
-        "	strh r5, [r1, #0x14]\n\t"
-        "	strh r6, [r1, #0x16]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080E2238: .4byte gUnknown_2039C30\n\t"
-        "_080E223C: .4byte Task_HandleMultichoiceInput + 1\n\t"
-        "_080E2240: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId;
+    sProcessInputDelay = 2;
+    taskId = CreateTask(Task_HandleMultichoiceInput, 80);
+    gTasks[taskId].tIgnoreBPress = ignoreBPress;
+    gTasks[taskId].tDoWrap = 0;
+    gTasks[taskId].tWindowId = windowId;
+    gTasks[taskId].tMultichoiceId = multichoiceId;
 }
