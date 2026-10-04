@@ -33,8 +33,7 @@ Route110_EventScript_AquaGrunt1:: @ 0x081E8E8A
 	lock
 	faceplayer
 	msgbox Route110_Text_WeCantTalkAboutAquaActivities, MSGBOX_DEFAULT
-	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	release
 	end
 
@@ -42,8 +41,7 @@ Route110_EventScript_AquaGrunt2:: @ 0x081E8EA0
 	lock
 	faceplayer
 	msgbox Route110_Text_KickUpARuckus, MSGBOX_DEFAULT
-	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	release
 	end
 
@@ -51,8 +49,7 @@ Route110_EventScript_AquaGrunt3:: @ 0x081E8EB6
 	lock
 	faceplayer
 	msgbox Route110_Text_MyFirstJobInAqua, MSGBOX_DEFAULT
-	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	release
 	end
 
@@ -60,8 +57,7 @@ Route110_EventScript_AquaGrunt4:: @ 0x081E8ECC
 	lock
 	faceplayer
 	msgbox Route110_Text_AquaActionsBringSmiles, MSGBOX_DEFAULT
-	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	release
 	end
 
@@ -301,8 +297,7 @@ Route110_EventScript_Alyssa:: @ 0x081E922A
 
 Route110_EventScript_CyclingChallengeEnd:: @ 0x081E9241
 	lockall
-	applymovement LOCALID_CHALLENGE_BIKER, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
+	applywaitmovement LOCALID_CHALLENGE_BIKER, Common_Movement_WalkInPlaceFasterRight
 	call Route110_EventScript_CyclingChallengeResults
 	releaseall
 	end
@@ -375,12 +370,9 @@ Route110_EventScript_RivalScene:: @ 0x081E934E
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, Route110_EventScript_PlayMayMusic
 	call_if_eq VAR_RESULT, FEMALE, Route110_EventScript_PlayBrendanMusic
-	applymovement LOCALID_ROUTE110_RIVAL, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0
-	applymovement LOCALID_ROUTE110_RIVAL, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement LOCALID_ROUTE110_RIVAL, Common_Movement_Delay48
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_RIVAL, Common_Movement_WalkInPlaceFasterDown
+	applywaitmovement LOCALID_ROUTE110_RIVAL, Common_Movement_ExclamationMark
+	applywaitmovement LOCALID_ROUTE110_RIVAL, Common_Movement_Delay48
 	delay 0x1E
 	call_if_eq VAR_0x8008, 0x1, Route110_EventScript_RivalApproachPlayer1
 	call_if_eq VAR_0x8008, 0x2, Route110_EventScript_RivalApproachPlayer2
@@ -484,33 +476,27 @@ Route110_EventScript_RivalExit:: @ 0x081E94CC
 	end
 
 Route110_EventScript_RivalApproachPlayer1:: @ 0x081E952E
-	applymovement LOCALID_ROUTE110_RIVAL, Route110_Movement_RivalApproachPlayer1
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_RIVAL, Route110_Movement_RivalApproachPlayer1
 	return
 
 Route110_EventScript_RivalApproachPlayer2:: @ 0x081E9539
-	applymovement LOCALID_ROUTE110_RIVAL, Route110_Movement_RivalApproachPlayer2
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_RIVAL, Route110_Movement_RivalApproachPlayer2
 	return
 
 Route110_EventScript_RivalApproachPlayer3:: @ 0x081E9544
-	applymovement LOCALID_ROUTE110_RIVAL, Route110_Movement_RivalApproachPlayer3
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_RIVAL, Route110_Movement_RivalApproachPlayer3
 	return
 
 Route110_EventScript_RivalExit1:: @ 0x081E954F
-	applymovement LOCALID_ROUTE110_RIVAL_ON_BIKE, Route110_Movement_RivalExit1
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_RIVAL_ON_BIKE, Route110_Movement_RivalExit1
 	return
 
 Route110_EventScript_RivalExit2:: @ 0x081E955A
-	applymovement LOCALID_ROUTE110_RIVAL_ON_BIKE, Route110_Movement_RivalExit2
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_RIVAL_ON_BIKE, Route110_Movement_RivalExit2
 	return
 
 Route110_EventScript_RivalExit3:: @ 0x081E9565
-	applymovement LOCALID_ROUTE110_RIVAL_ON_BIKE, Route110_Movement_RivalExit3
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_RIVAL_ON_BIKE, Route110_Movement_RivalExit3
 	return
 
 Route110_EventScript_MoveRival1:: @ 0x081E9570
@@ -594,13 +580,10 @@ Route110_EventScript_BirchScene4:: @ 0x081E95CC
 
 Route110_EventScript_BirchScene:: @ 0x081E95D7
 	addobject LOCALID_ROUTE110_BIRCH
-	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchEntrance
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchEntrance
 	playse SE_PIN
-	applymovement LOCALID_ROUTE110_BIRCH, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement LOCALID_ROUTE110_BIRCH, Common_Movement_Delay48
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_BIRCH, Common_Movement_ExclamationMark
+	applywaitmovement LOCALID_ROUTE110_BIRCH, Common_Movement_Delay48
 	call_if_eq VAR_0x8008, 0x1, Route110_EventScript_BirchApproachPlayer1
 	call_if_eq VAR_0x8008, 0x2, Route110_EventScript_BirchApproachPlayer2
 	call_if_eq VAR_0x8008, 0x3, Route110_EventScript_BirchApproachPlayer3
@@ -608,14 +591,11 @@ Route110_EventScript_BirchScene:: @ 0x081E95D7
 	msgbox Route110_Text_ImagineSeeingYouHere, MSGBOX_DEFAULT
 	closemessage
 	delay 0x14
-	applymovement LOCALID_ROUTE110_BIRCH, Common_Movement_WalkInPlaceFasterLeft
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_BIRCH, Common_Movement_WalkInPlaceFasterLeft
 	delay 0xA
-	applymovement LOCALID_ROUTE110_BIRCH, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_BIRCH, Common_Movement_WalkInPlaceFasterRight
 	delay 0x14
-	applymovement LOCALID_ROUTE110_BIRCH, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_BIRCH, Common_Movement_WalkInPlaceFasterDown
 	delay 0x1E
 	msgbox Route110_Text_HeardYouInstallMatchCall, MSGBOX_DEFAULT
 	closemessage
@@ -638,43 +618,35 @@ Route110_EventScript_BirchScene:: @ 0x081E95D7
 	end
 
 Route110_EventScript_BirchApproachPlayer1:: @ 0x081E96B8
-	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchApproachPlayer1
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchApproachPlayer1
 	return
 
 Route110_EventScript_BirchApproachPlayer2:: @ 0x081E96C3
-	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchApproachPlayer2
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchApproachPlayer2
 	return
 
 Route110_EventScript_BirchApproachPlayer3:: @ 0x081E96CE
-	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchApproachPlayer3
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchApproachPlayer3
 	return
 
 Route110_EventScript_BirchApproachPlayer4:: @ 0x081E96D9
-	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchApproachPlayer4
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchApproachPlayer4
 	return
 
 Route110_EventScript_BirchExit1:: @ 0x081E96E4
-	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchExit1
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchExit1
 	return
 
 Route110_EventScript_BirchExit2:: @ 0x081E96EF
-	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchExit2
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchExit2
 	return
 
 Route110_EventScript_BirchExit3:: @ 0x081E96FA
-	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchExit3
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchExit3
 	return
 
 Route110_EventScript_BirchExit4:: @ 0x081E9705
-	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchExit4
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchExit4
 	return
 
 Route110_Movement_BirchEntrance:

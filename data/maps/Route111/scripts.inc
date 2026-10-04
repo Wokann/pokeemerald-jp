@@ -204,23 +204,19 @@ Route111_EventScript_PreventRouteAccess:: @ 0x081EA3EB
 	end
 
 Route111_EventScript_PushUpFromRoute:: @ 0x081EA422
-	applymovement LOCALID_PLAYER, Route111_Movement_PushUpFromRoute
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Route111_Movement_PushUpFromRoute
 	return
 
 Route111_EventScript_PushDownFromRoute:: @ 0x081EA42D
-	applymovement LOCALID_PLAYER, Route111_Movement_PushDownFromRoute
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Route111_Movement_PushDownFromRoute
 	return
 
 Route111_EventScript_PushLeftFromRoute:: @ 0x081EA438
-	applymovement LOCALID_PLAYER, Route111_Movement_PushLeftFromRoute
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Route111_Movement_PushLeftFromRoute
 	return
 
 Route111_EventScript_PushRightFromRoute:: @ 0x081EA443
-	applymovement LOCALID_PLAYER, Route111_Movement_PushRightFromRoute
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Route111_Movement_PushRightFromRoute
 	return
 
 Route111_Movement_PushUpFromRoute:
@@ -265,67 +261,53 @@ Route111_EventScript_Victor:: @ 0x081EA46B
 Route111_EventScript_BattleWinstrates:: @ 0x081EA48D
 	msgbox Route111_Text_VictorIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_VICTOR, Route111_Text_VictorDefeat
-	applymovement LOCALID_ROUTE111_VICTOR, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE111_VICTOR, Common_Movement_WalkInPlaceFasterUp
 	call Route111_EventScript_OpenWinstrateDoor
 	msgbox Route111_Text_VictorPostBattle, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE111_VICTOR, Route111_Movement_WinstrateEnterHouse
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE111_VICTOR, Route111_Movement_WinstrateEnterHouse
 	removeobject LOCALID_ROUTE111_VICTOR
 	call Route111_EventScript_CloseWinstrateDoor
-	applymovement LOCALID_PLAYER, Route111_Movement_WaitForNextWinstrate
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Route111_Movement_WaitForNextWinstrate
 	call Route111_EventScript_OpenWinstrateDoor
 	addobject LOCALID_ROUTE111_VICTORIA
-	applymovement LOCALID_ROUTE111_VICTORIA, Route111_Movement_WinstrateExitHouse
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE111_VICTORIA, Route111_Movement_WinstrateExitHouse
 	call Route111_EventScript_CloseWinstrateDoor
 	msgbox Route111_Text_VictoriaIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_VICTORIA, Route111_Text_VictoriaDefeat
-	applymovement LOCALID_ROUTE111_VICTORIA, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE111_VICTORIA, Common_Movement_WalkInPlaceFasterUp
 	call Route111_EventScript_OpenWinstrateDoor
 	msgbox Route111_Text_VictoriaPostBattle, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE111_VICTORIA, Route111_Movement_WinstrateEnterHouse
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE111_VICTORIA, Route111_Movement_WinstrateEnterHouse
 	removeobject LOCALID_ROUTE111_VICTORIA
 	call Route111_EventScript_CloseWinstrateDoor
-	applymovement LOCALID_PLAYER, Route111_Movement_WaitForNextWinstrate
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Route111_Movement_WaitForNextWinstrate
 	call Route111_EventScript_OpenWinstrateDoor
 	addobject LOCALID_ROUTE111_VIVI
-	applymovement LOCALID_ROUTE111_VIVI, Route111_Movement_WinstrateExitHouse
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE111_VIVI, Route111_Movement_WinstrateExitHouse
 	call Route111_EventScript_CloseWinstrateDoor
 	msgbox Route111_Text_ViviIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_VIVI, Route111_Text_ViviDefeat
-	applymovement LOCALID_ROUTE111_VIVI, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE111_VIVI, Common_Movement_WalkInPlaceFasterUp
 	call Route111_EventScript_OpenWinstrateDoor
 	msgbox Route111_Text_ViviPostBattle, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE111_VIVI, Route111_Movement_WinstrateEnterHouse
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE111_VIVI, Route111_Movement_WinstrateEnterHouse
 	removeobject LOCALID_ROUTE111_VIVI
 	call Route111_EventScript_CloseWinstrateDoor
-	applymovement LOCALID_PLAYER, Route111_Movement_WaitForNextWinstrate
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Route111_Movement_WaitForNextWinstrate
 	call Route111_EventScript_OpenWinstrateDoor
 	addobject LOCALID_ROUTE111_VICKY
-	applymovement LOCALID_ROUTE111_VICKY, Route111_Movement_WinstrateExitHouse
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE111_VICKY, Route111_Movement_WinstrateExitHouse
 	call Route111_EventScript_CloseWinstrateDoor
 	msgbox Route111_Text_VickyIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_VICKY, Route111_Text_VickyDefeat
 	msgbox Route111_Text_VickyPostBattle, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE111_VICKY, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE111_VICKY, Common_Movement_WalkInPlaceFasterUp
 	call Route111_EventScript_OpenWinstrateDoor
-	applymovement LOCALID_ROUTE111_VICKY, Route111_Movement_WinstrateEnterHouse
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE111_VICKY, Route111_Movement_WinstrateEnterHouse
 	removeobject LOCALID_ROUTE111_VICKY
 	call Route111_EventScript_CloseWinstrateDoor
 	release
@@ -415,12 +397,10 @@ Route111_EventScript_HikerMirageTowerVisible:: @ 0x081EA680
 
 Route111_EventScript_RockSmashTipFatMan:: @ 0x081EA68A
 	lockall
-	applymovement LOCALID_ROUTE111_ROCK_SMASH_MAN, Common_Movement_FacePlayer
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE111_ROCK_SMASH_MAN, Common_Movement_FacePlayer
 	msgbox Route111_Text_MauvilleUncleToldMeToTakeRockSmash, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE111_ROCK_SMASH_MAN, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE111_ROCK_SMASH_MAN, Common_Movement_FaceOriginalDirection
 	releaseall
 	end
 
