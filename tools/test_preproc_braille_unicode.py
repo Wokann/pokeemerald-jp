@@ -90,8 +90,8 @@ class UnicodeBraillePreprocessorTests(unittest.TestCase):
     def setUpClass(cls):
         subprocess.run(["make", "-C", str(ROOT / "tools" / "preproc")], check=True)
 
-    def run_preproc(self, source):
-        with tempfile.TemporaryDirectory() as directory:
+    def run_preproc(self, source, directory_prefix='jp-braille-'):
+        with tempfile.TemporaryDirectory(prefix=directory_prefix) as directory:
             path = Path(directory) / "braille.s"
             path.write_text(source, encoding="utf-8")
             return subprocess.run(
@@ -103,7 +103,22 @@ class UnicodeBraillePreprocessorTests(unittest.TestCase):
 
     @staticmethod
     def output_bytes(result):
-        return bytes(int(value, 16) for value in re.findall(r"0x([0-9A-F]{2})", result.stdout))
+        data = []
+        for line in result.stdout.splitlines():
+            directive = re.match(r'\s*\.byte\s+(.*)$', line)
+            if directive is not None:
+                operands = directive.group(1).partition('@')[0]
+                data.extend(int(value.strip(), 0) for value in operands.split(','))
+        return bytes(data)
+
+    def test_hexadecimal_filename_is_not_interpreted_as_braille_payload(self):
+        result = self.run_preproc('\t.braille "トビラヲ アケヨ$"\n',
+                                  directory_prefix='jp-braille-0x33-')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('jp-braille-0x33-', result.stdout)
+        self.assertEqual(self.output_bytes(result),
+                         bytes((0x1E, 0x08, 0x35, 0x09, 0x18, 0x00,
+                                0x01, 0x27, 0x1A, 0xFF)))
 
     def test_unicode_cells_use_the_documented_dot_order(self):
         result = self.run_preproc('\t.braille "⠪⠐⠟⠀⠁⠡⠛$"\n')
