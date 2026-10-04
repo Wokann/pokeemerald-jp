@@ -2664,7 +2664,7 @@ pokemon.s
 08068cf0 GiveMoveToBattleMon GiveMoveToBattleMon
 08068d34 SetMonMoveSlot SetMonMoveSlot
 08068d74 SetBattleMonMoveSlot SetBattleMonMoveSlot
-08068da4 MonRestorePP GiveMonInitialMoveset
+08068da4 GiveMonInitialMoveset GiveMonInitialMoveset
 08068db0 GiveBoxMonInitialMoveset GiveBoxMonInitialMoveset
 08068e58 MonTryLearningNewMove MonTryLearningNewMove
 08068f64 DeleteFirstMoveAndGiveMoveToMon DeleteFirstMoveAndGiveMoveToMon
@@ -2764,7 +2764,7 @@ pokemon.s
 0806e30c sub_0806E30C_jp GetFlavorRelationByPersonality
 0806e334 IsTradedMon IsTradedMon
 0806e360 IsOtherTrainer IsOtherTrainer
-0806e3b0 GiveMonInitialMoveset MonRestorePP
+0806e3b0 MonRestorePP MonRestorePP
 0806e3bc BoxMonRestorePP BoxMonRestorePP
 0806e420 SetMonPreventsSwitchingString SetMonPreventsSwitchingString
 0806e4cc pokemon.s GetWildMonTableIdInAlteringCave

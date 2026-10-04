@@ -3194,7 +3194,7 @@ __attribute__((naked)) void CreateBattleTowerMon(struct Pokemon *mon, struct Bat
         "	add r2, sp, #0x10\n\t"
         "	bl SetMonData\n\t"
         "	adds r0, r7, #0\n\t"
-        "	bl GiveMonInitialMoveset\n\t"
+        "	bl MonRestorePP\n\t"
         "	adds r0, r7, #0\n\t"
         "	bl CalculateMonStats\n\t"
         "	add sp, #0x14\n\t"
@@ -3394,7 +3394,7 @@ __attribute__((naked)) void CreateBattleTowerMon2(void)
         "	add r2, sp, #0x10\n\t"
         "	bl SetMonData\n\t"
         "	adds r0, r7, #0\n\t"
-        "	bl GiveMonInitialMoveset\n\t"
+        "	bl MonRestorePP\n\t"
         "	adds r0, r7, #0\n\t"
         "	bl CalculateMonStats\n\t"
         "	add sp, #0x30\n\t"
@@ -5136,7 +5136,7 @@ __attribute__((naked)) void SetBattleMonMoveSlot(struct BattlePokemon *mon, u16 
         ".syntax divided\n\t"
     );
 }
-__attribute__((naked)) void MonRestorePP(struct Pokemon *mon)
+__attribute__((naked)) void GiveMonInitialMoveset(struct Pokemon *mon)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9586,7 +9586,7 @@ __attribute__((naked)) void SendMonToPC(void)
         "	cmp r0, #0\n\t"
         "	bne _0806AFDC\n\t"
         "	mov r0, r8\n\t"
-        "	bl GiveMonInitialMoveset\n\t"
+        "	bl MonRestorePP\n\t"
         "	adds r0, r4, #0\n\t"
         "	mov r1, r8\n\t"
         "	movs r2, #0x50\n\t"
@@ -16676,7 +16676,7 @@ __attribute__((naked)) bool8 IsOtherTrainer(u32 otId, u8 *otName)
         ".syntax divided\n\t"
     );
 }
-__attribute__((naked)) void GiveMonInitialMoveset(struct Pokemon *mon)
+__attribute__((naked)) void MonRestorePP(struct Pokemon *mon)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
