@@ -5,11 +5,12 @@
 
 ## 当前快照
 
-- 严格 C：10081/16023 (62.92%，保守可证下界)；naked 汇编地址：5567；strict/naked 交集：0。
-- 源码函数体库存：非 naked 10106、naked 5588；地址已绑定 15648、未解析 46；指标证据状态：conservative_verified_lower_bound。
+- 严格 C：10096/16023 (63.01%，保守可证下界)；naked 汇编地址：5578；strict/naked 交集：0。
+- 源码函数体库存：非 naked 10106、naked 5588；地址已绑定 15674、未解析 20；指标证据状态：conservative_verified_lower_bound。
+- inline 源码定义：5；对象证实无独立入口 5；其他未解析 15。这些是源码库存单位，不是 ROM 分母。
 - 旧名称 fan-out 指标已失效；修正绑定导致计数下降属于测量纠错，不是反编译退步。排除 naked 前自然交集：旧 64、新 0。
-- 模块归位：9406/10081 (93.30%)；路径对齐：9247/10081 (91.73%)；US 标准名仍为 funcmap 候选，并非语义复核结论。
-- JP 路径独有 C 清单：164；无 US 标准函数 owner 的语义缺口模块：108（两种口径，不沿用旧固定数）；同一源同名多地址未解析定义：0。
+- 模块归位：9409/10096 (93.20%)；路径对齐：9250/10096 (91.62%)；US 标准名仍为 funcmap 候选，并非语义复核结论。
+- JP 路径独有 C 清单：164；无 US 标准函数 owner 的语义缺口模块：116（两种口径，不沿用旧固定数）；同一源同名多地址未解析定义：0。
 - 过渡文件：tail=0、rest=3、mid=5、stub=0、address=0。
 - incbin：7560 引用、7017 条唯一路径、原始二进制 996、非原始 6564、缺失资源 0；可见 baserom 范围 542 条/0x4B01C8 字节，未限定范围 0 条。
 - 资产命名：4904 条 graphics/sound 引用中，精确 US 路径 35、唯一 basename 候选 18、歧义 0。
@@ -51,7 +52,7 @@ python3 tools/audit_structure.py --markdown-output DECOMP_PROGRESS.md
 python3 tools/audit_structure.py --us-root /path/to/pokeemerald --markdown-output DECOMP_PROGRESS.md
 ```
 
-源码库存、funcmap 和 incbin 清单不需要构建。函数地址指标读取匹配的 `pokeemerald_jp.elf` 与 `pokeemerald_jp.map`，JSON 记录输入 SHA-256、未解析原因和旧/新绑定诊断；缺失证据不按名字猜测。采样这些生成文件时须持有共享构建锁，避免 make clean 窗口。完整报告仍需要匹配的 `baserom_jp.gba` 来解析地图 owner；US 二进制符号统计使用指定 US 树的 `pokeemerald.sym`（若存在），资源存在性检查也依赖本地提取资源。
+源码库存、funcmap 和 incbin 清单不需要构建。函数地址指标读取匹配的 `pokeemerald_jp.elf` 与 `pokeemerald_jp.map`；输入 section 补证还读取对应 JP 对象的 STT_FUNC，libc 宏名称展开读取真实 include 链。JSON 记录这些输入 SHA-256、未解析原因和旧/新绑定诊断；缺失证据不按名字猜测。采样这些生成文件时须持有共享构建锁，避免 make clean 窗口。完整报告仍需要匹配的 `baserom_jp.gba` 来解析地图 owner；US 二进制符号统计使用指定 US 树的 `pokeemerald.sym`（若存在），资源存在性检查也依赖本地提取资源。
 
 涉及源码或链接输入的变更须执行：
 
