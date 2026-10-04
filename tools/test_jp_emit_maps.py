@@ -2,8 +2,10 @@
 """Regression coverage for source-proven semantic recovery in jp_emit_maps."""
 import difflib
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,6 +48,56 @@ def render_map(name):
 
 
 class Route111SemanticRecoveryTest(unittest.TestCase):
+    def collapse_movement(self, generated, reviewed):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            owner = root / 'data/maps/Map'
+            owner.mkdir(parents=True)
+            (owner / 'scripts.inc').write_text(reviewed, encoding='utf-8')
+            with patch.object(emitter, 'ROOT', root):
+                overrides = emitter.reviewed_operand_overrides('Map', generated)
+                named = emitter.apply_reviewed_operand_overrides(generated, overrides)
+                return emitter.collapse_reviewed_movement_wait_macros('Map', named)
+
+    def test_movement_helper_retains_address_scoped_operands(self):
+        generated = ('Map_First:: @ 0x08100000\n'
+                     '\tapplymovement 0x1, 0x08100100\n\twaitmovement 0x0\n'
+                     'Map_Second:: @ 0x08100010\n'
+                     '\tapplymovement 0x1, 0x08100100\n\twaitmovement 0x0\n')
+        reviewed = ('Map_First:: @ 0x08100000\n'
+                    '\tapplywaitmovement LOCALID_MAP_NPC, Map_Movement\n'
+                    'Map_Second:: @ 0x08100010\n'
+                    '\tapplymovement 0x1, 0x08100100\n\twaitmovement 0x0\n')
+        self.assertEqual(self.collapse_movement(generated, reviewed), reviewed)
+
+    def test_movement_helper_does_not_collapse_nonzero_wait(self):
+        generated = ('Map_First:: @ 0x08100000\n'
+                     '\tapplymovement 1, Movement\n\twaitmovement 1\n')
+        reviewed = ('Map_First:: @ 0x08100000\n'
+                    '\tapplywaitmovement 1, Movement\n')
+        self.assertEqual(self.collapse_movement(generated, reviewed), generated)
+
+    def test_movement_helper_does_not_cross_a_label_or_comment(self):
+        reviewed = ('Map_First:: @ 0x08100000\n'
+                    '\tapplywaitmovement 1, Movement\n')
+        for separator in ('Map_Second:: @ 0x08100007\n', '\t@ keep this boundary\n'):
+            generated = ('Map_First:: @ 0x08100000\n\tapplymovement 1, Movement\n'
+                         + separator + '\twaitmovement 0\n')
+            with self.subTest(separator=separator):
+                self.assertEqual(self.collapse_movement(generated, reviewed), generated)
+
+    def test_movement_helper_preserves_parallel_and_optional_map_commands(self):
+        for generated, reviewed in (
+            ('\tapplymovement 1, Movement\n\tapplymovement 2, Other\n\twaitmovement 0\n',
+             '\tapplymovement 1, Movement\n\tapplymovement 2, Other\n\twaitmovement 0\n'),
+            ('\tapplymovement_at 1, Movement, MAP_OTHER\n\twaitmovement 0\n',
+             '\tapplywaitmovement 1, Movement, MAP_OTHER\n'),
+        ):
+            prefix = 'Map_First:: @ 0x08100000\n'
+            with self.subTest(generated=generated):
+                self.assertEqual(self.collapse_movement(prefix + generated, prefix + reviewed),
+                                 prefix + generated)
+
     def test_overrides_are_address_and_command_scoped(self):
         generated = (
             'Map_Script:: @ 0x08100000\n'
@@ -87,7 +139,7 @@ class Route111SemanticRecoveryTest(unittest.TestCase):
             'trainerbattle_single ',               # trainer battle macro
             'giveitem ITEM_RAZZ_BERRY',            # item macro
             'register_matchcall TRAINER_DUSTY_1',  # match-call macro
-            'applymovement LOCALID_PLAYER, Route111_Movement_PushUpFromRoute',
+            'applywaitmovement LOCALID_PLAYER, Route111_Movement_PushUpFromRoute',
         )
         for spelling in required:
             with self.subTest(spelling=spelling):

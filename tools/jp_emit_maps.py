@@ -17706,7 +17706,7 @@ _REVIEWED_COMMAND_RE = re.compile(
 _NUMERIC_OPERAND_RE = re.compile(r'^(?:0x[0-9A-Fa-f]+|\d+)$')
 
 
-def _reviewed_commands_by_address(source):
+def _reviewed_commands_by_address(source, expand_movement_waits=False):
     """Return decoded source commands keyed by their JP-addressed label.
 
     This deliberately reads only labels that carry an explicit JP ROM address.
@@ -17725,7 +17725,11 @@ def _reviewed_commands_by_address(source):
         name, args = command.groups()
         if name.startswith('.') or name in ('global', 'set'):
             continue
-        commands[address].append((name, args or ''))
+        if (expand_movement_waits and name == 'applywaitmovement'
+                and len((args or '').split(',')) == 2):
+            commands[address].extend((('applymovement', args), ('waitmovement', '0')))
+        else:
+            commands[address].append((name, args or ''))
     return commands
 
 
@@ -17739,6 +17743,9 @@ def _add_reviewed_operand(candidates, address, name, index, raw, reviewed):
     """Record one source-proven operand spelling, rejecting ambiguity."""
     value = _numeric_operand(raw)
     if value is None or raw == reviewed:
+        return
+    reviewed_value = _numeric_operand(reviewed)
+    if reviewed_value is not None and reviewed_value != value:
         return
     candidates[(address, name, index, value)].add(reviewed)
 
@@ -17762,7 +17769,7 @@ def reviewed_operand_overrides(mname, generated_source):
     if not reviewed_path.is_file():
         return {}
     reviewed = _reviewed_commands_by_address(
-        reviewed_path.read_text(encoding='utf-8'))
+        reviewed_path.read_text(encoding='utf-8'), expand_movement_waits=True)
     generated = _reviewed_commands_by_address(generated_source)
     candidates = collections.defaultdict(set)
 
@@ -17964,6 +17971,80 @@ def collapse_reviewed_high_level_macros(mname, generated_source):
     return '\n'.join(out) + ('\n' if generated_source.endswith('\n') else '')
 
 
+def collapse_reviewed_movement_wait_macros(mname, generated_source):
+    """Retain reviewed two-argument movement helpers without changing operands.
+
+    Both expanded commands must match under the same JP-addressed label, and
+    their generated source lines must be adjacent. Parallel movement sequences,
+    nonzero waits, and optional-map variants are not inferred as helpers.
+    """
+    reviewed_path = ROOT / 'data' / 'maps' / mname / 'scripts.inc'
+    if not reviewed_path.is_file():
+        return generated_source
+    reviewed = _reviewed_commands_by_address(reviewed_path.read_text(encoding='utf-8'))
+    generated = _reviewed_commands_by_address(generated_source)
+
+    def command_key(command):
+        name, args = command
+        operands = [part.strip() for part in args.split(',')] if args else []
+        if name == 'waitmovement' and not operands:
+            operands = ['0']
+        return name, tuple(_numeric_operand(part) if _numeric_operand(part) is not None
+                           else part for part in operands)
+
+    replacements = set()
+    for address in sorted(set(reviewed) & set(generated)):
+        expanded = []
+        helpers = []
+        for name, args in reviewed[address]:
+            if name == 'applywaitmovement' and len(args.split(',')) == 2:
+                helpers.append(len(expanded))
+                expanded.extend((('applymovement', args), ('waitmovement', '0')))
+            else:
+                expanded.append((name, args))
+        matcher = SequenceMatcher(
+            None, [command_key(command) for command in generated[address]],
+            [command_key(command) for command in expanded], autojunk=False)
+        matched = {}
+        for block in matcher.get_matching_blocks():
+            for offset in range(block.size):
+                matched[block.b + offset] = block.a + offset
+        for helper in helpers:
+            first = matched.get(helper)
+            if first is not None and matched.get(helper + 1) == first + 1:
+                replacements.add((address, first))
+
+    lines = generated_source.splitlines()
+    out = []
+    address = None
+    ordinal = 0
+    index = 0
+    while index < len(lines):
+        line = lines[index]
+        label = _REVIEWED_LABEL_RE.match(line)
+        if label is not None:
+            address = int(label.group(1), 16)
+            ordinal = 0
+        command = _REVIEWED_COMMAND_RE.match(line)
+        if command is not None and address is not None:
+            name, args = command.groups()
+            if not name.startswith('.') and name not in ('global', 'set'):
+                following = (_REVIEWED_COMMAND_RE.match(lines[index + 1])
+                             if index + 1 < len(lines) else None)
+                if ((address, ordinal) in replacements and name == 'applymovement'
+                        and following is not None and following.group(1) == 'waitmovement'
+                        and _numeric_operand((following.group(2) or '0').strip()) == 0):
+                    indent = line[:len(line) - len(line.lstrip())]
+                    out.append('%sapplywaitmovement %s' % (indent, args))
+                    ordinal += 2
+                    index += 2
+                    continue
+                ordinal += 1
+        out.append(line)
+        index += 1
+    return '\n'.join(out) + ('\n' if generated_source.endswith('\n') else '')
+
+
 def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
              text_label_map, region_labels=None, std_addrs=None, events_addr=None):
     """Emit a map and retain source-proven semantic operand spellings.
@@ -17976,7 +18057,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         text_label_map, region_labels, std_addrs, events_addr)
     overrides = reviewed_operand_overrides(mname, result[0])
     source = apply_reviewed_operand_overrides(result[0], overrides)
-    return (collapse_reviewed_high_level_macros(mname, source), *result[1:])
+    source = collapse_reviewed_high_level_macros(mname, source)
+    return (collapse_reviewed_movement_wait_macros(mname, source), *result[1:])
 
 
 def collect_all_text_ptrs(entries):
