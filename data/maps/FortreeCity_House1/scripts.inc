@@ -58,7 +58,7 @@ FortreeCity_House1_EventScript_Zigzagoon:: @ 0x08204278
 	waitse
 	playmoncry SPECIES_ZIGZAGOON, CRY_MODE_NORMAL
 	msgbox FortreeCity_House1_Text_Zigzagoon, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

@@ -190,8 +190,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_TURNVOBJECT ScrCmd_turnvobject @ 0xAB
 	script_cmd_table_entry SCR_OP_OPENDOOR ScrCmd_opendoor @ 0xAC
 	script_cmd_table_entry SCR_OP_CLOSEDOOR ScrCmd_closedoor @ 0xAD
-	@ JP waitmoncry/waitdooranim occupy the opposite slots from US.
-	script_cmd_table_entry SCR_OP_WAITMONCRY ScrCmd_waitmoncry @ 0xAE
+	script_cmd_table_entry SCR_OP_WAITDOORANIM ScrCmd_waitdooranim @ 0xAE
 	script_cmd_table_entry SCR_OP_SETDOOROPEN ScrCmd_setdooropen @ 0xAF
 	script_cmd_table_entry SCR_OP_SETDOORCLOSED ScrCmd_setdoorclosed @ 0xB0
 	script_cmd_table_entry SCR_OP_ADDELEVMENUITEM ScrCmd_addelevmenuitem @ 0xB1
@@ -215,7 +214,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_UPDATECOINSBOX ScrCmd_updatecoinsbox @ 0xC2
 	script_cmd_table_entry SCR_OP_INCREMENTGAMESTAT ScrCmd_incrementgamestat @ 0xC3
 	script_cmd_table_entry SCR_OP_SETESCAPEWARP ScrCmd_setescapewarp @ 0xC4
-	script_cmd_table_entry SCR_OP_WAITDOORANIM ScrCmd_waitdooranim @ 0xC5
+	script_cmd_table_entry SCR_OP_WAITMONCRY ScrCmd_waitmoncry @ 0xC5
 	script_cmd_table_entry SCR_OP_BUFFERBOXNAME ScrCmd_bufferboxname @ 0xC6
 	script_cmd_table_entry SCR_OP_TEXTCOLOR ScrCmd_nop1 @ 0xC7
 	script_cmd_table_entry SCR_OP_LOADHELP ScrCmd_nop1 @ 0xC8

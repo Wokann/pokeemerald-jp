@@ -35,7 +35,7 @@ AquaHideout_B1F_EventScript_Electrode1:: @ 0x08217CF4
 	waitse
 	playmoncry SPECIES_ELECTRODE, CRY_MODE_ENCOUNTER
 	delay 0x28
-	waitmoncry_jp
+	waitmoncry
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	dowildbattle
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
@@ -59,7 +59,7 @@ AquaHideout_B1F_EventScript_Electrode2:: @ 0x08217D41
 	waitse
 	playmoncry SPECIES_ELECTRODE, CRY_MODE_ENCOUNTER
 	delay 0x28
-	waitmoncry_jp
+	waitmoncry
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	dowildbattle
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE

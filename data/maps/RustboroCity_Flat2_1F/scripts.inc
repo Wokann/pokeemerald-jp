@@ -13,7 +13,7 @@ RustboroCity_Flat2_1F_EventScript_Skitty:: @ 0x08203FA3
 	waitse
 	playmoncry SPECIES_SKITTY, CRY_MODE_NORMAL
 	msgbox RustboroCity_Flat2_1F_Text_Skitty, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

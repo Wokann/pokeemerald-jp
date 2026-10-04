@@ -70,8 +70,7 @@ EventScript_BattleKecleon::
 	waitse
 	playmoncry SPECIES_KECLEON, CRY_MODE_ENCOUNTER
 	delay 40
-	@ The JP script uses the waitdooranim opcode at this cry-wait site.
-	waitmoncry_jp
+	waitmoncry
 	setwildbattle SPECIES_KECLEON, 30
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	dowildbattle

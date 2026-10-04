@@ -25,12 +25,12 @@ BattleFrontier_BattlePalaceCorridor_EventScript_WalkThroughCorridor::
 	applymovement LOCALID_PLAYER, BattleFrontier_BattlePalaceCorridor_Movement_PlayerWalkTo50BattleRoom
 	waitmovement 0
 	opendoor 6, 3
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_PALACE_CORRIDOR_ATTENDANT, BattleFrontier_BattlePalaceCorridor_Movement_AttendantEnterBattleRoom
 	applymovement LOCALID_PLAYER, BattleFrontier_BattlePalaceCorridor_Movement_PlayerEnterBattleRoom
 	waitmovement 0
 	closedoor 6, 3
-	waitdooranim_jp
+	waitdooranim
 	goto BattleFrontier_BattlePalaceCorridor_EventScript_WarpToBattleRoom
 
 BattleFrontier_BattlePalaceCorridor_EventScript_WalkToOpenBattleRoom::
@@ -38,12 +38,12 @@ BattleFrontier_BattlePalaceCorridor_EventScript_WalkToOpenBattleRoom::
 	applymovement LOCALID_PLAYER, BattleFrontier_BattlePalaceCorridor_Movement_PlayerWalkToOpenBattleRoom
 	waitmovement 0
 	opendoor 10, 3
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_PALACE_CORRIDOR_ATTENDANT, BattleFrontier_BattlePalaceCorridor_Movement_AttendantEnterBattleRoom
 	applymovement LOCALID_PLAYER, BattleFrontier_BattlePalaceCorridor_Movement_PlayerEnterBattleRoom
 	waitmovement 0
 	closedoor 10, 3
-	waitdooranim_jp
+	waitdooranim
 BattleFrontier_BattlePalaceCorridor_EventScript_WarpToBattleRoom::
 	warp MAP_BATTLE_FRONTIER_BATTLE_PALACE_BATTLE_ROOM, 7, 4
 	waitstate

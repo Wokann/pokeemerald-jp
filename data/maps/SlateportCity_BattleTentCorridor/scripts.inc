@@ -43,12 +43,12 @@ SlateportCity_BattleTentCorridor_EventScript_EnterBattleRoom:: @ 0x081FB622
 	applymovement LOCALID_SLATEPORT_TENT_CORRIDOR_ATTENDANT, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	opendoor 0x2, 0x1
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_SLATEPORT_TENT_CORRIDOR_ATTENDANT, SlateportCity_BattleTentCorridor_Movement_AttendantExit
 	applymovement LOCALID_PLAYER, SlateportCity_BattleTentCorridor_Movement_PlayerExit
 	waitmovement 0
 	closedoor 0x2, 0x1
-	waitdooranim_jp
+	waitdooranim
 	warp MAP_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM, 0x4, 0x4
 	waitstate
 	end

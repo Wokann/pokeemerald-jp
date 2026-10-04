@@ -46,7 +46,7 @@ NavelRock_Top_EventScript_HoOh::
 	waitse
 	playmoncry SPECIES_HO_OH, CRY_MODE_ENCOUNTER
 	delay 30
-	waitmoncry_jp
+	waitmoncry
 	delay 60
 	setvar VAR_0x8004, 3  @ num loops
 	setvar VAR_0x8005, 35 @ delay

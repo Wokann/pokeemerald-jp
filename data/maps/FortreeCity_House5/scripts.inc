@@ -3,7 +3,6 @@
 FortreeCity_House5_MapScripts::
 	.byte 0
 
-@ JP uses the waitdooranim opcode (0xC5) where US uses waitmoncry.
 
 FortreeCity_House5_EventScript_PokefanF:: @ 0x08205344
 	msgbox FortreeCity_House5_Text_TreeHousesAreGreat, MSGBOX_NPC
@@ -19,7 +18,7 @@ FortreeCity_House5_EventScript_Zigzagoon:: @ 0x08205356
 	waitse
 	playmoncry SPECIES_ZIGZAGOON, CRY_MODE_NORMAL
 	msgbox FortreeCity_House5_Text_Zigzagoon, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

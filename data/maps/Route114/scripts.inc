@@ -66,7 +66,7 @@ Route114_EventScript_Poochyena::
 	playmoncry SPECIES_POOCHYENA, CRY_MODE_ENCOUNTER
 	msgbox Route114_Text_Poochyena, MSGBOX_DEFAULT
 	@ JP opcode 0xC5 is a cry wait at this site; US uses SCR_OP_WAITMONCRY.
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

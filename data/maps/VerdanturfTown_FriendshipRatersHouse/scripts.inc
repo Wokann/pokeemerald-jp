@@ -60,7 +60,7 @@ VerdanturfTown_FriendshipRatersHouse_EventScript_Pikachu:: @ 0x081F7600
 	waitse
 	playmoncry SPECIES_PIKACHU, CRY_MODE_NORMAL
 	msgbox VerdanturfTown_FriendshipRatersHouse_Text_Pikachu, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

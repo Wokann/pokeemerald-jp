@@ -62,7 +62,7 @@ DesertRuins_EventScript_Regirock:: @ 0x08213E86
 	waitse
 	playmoncry SPECIES_REGIROCK, CRY_MODE_ENCOUNTER
 	delay 40
-	waitmoncry_jp
+	waitmoncry
 	setwildbattle SPECIES_REGIROCK, 40
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special StartRegiBattle

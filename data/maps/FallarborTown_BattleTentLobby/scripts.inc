@@ -194,12 +194,12 @@ FallarborTown_BattleTentLobby_EventScript_WalkToDoor::
 	applymovement LOCALID_PLAYER, FallarborTown_BattleTentLobby_Movement_PlayerWalkToDoor
 	waitmovement 0
 	opendoor 6, 1
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_FALLARBOR_TENT_ATTENDANT, FallarborTown_BattleTentLobby_Movement_AttendantEnterDoor
 	applymovement LOCALID_PLAYER, FallarborTown_BattleTentLobby_Movement_PlayerEnterDoor
 	waitmovement 0
 	closedoor 6, 1
-	waitdooranim_jp
+	waitdooranim
 	return
 
 FallarborTown_BattleTentLobby_Movement_AttendantWalkToDoor:

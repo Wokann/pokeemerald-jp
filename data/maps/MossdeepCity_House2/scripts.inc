@@ -17,7 +17,7 @@ MossdeepCity_House2_EventScript_Wingull:: @ 0x0820C3E5
 	waitse
 	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
 	msgbox MossdeepCity_House2_Text_Wingull, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	closemessage
 	setflag FLAG_WINGULL_DELIVERED_MAIL
 	clearflag FLAG_HIDE_FORTREE_CITY_HOUSE_4_WINGULL

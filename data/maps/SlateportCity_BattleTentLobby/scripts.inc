@@ -145,12 +145,12 @@ SlateportCity_BattleTentLobby_EventScript_WalkToDoor:: @ 0x081FB2CC
 	applymovement LOCALID_PLAYER, SlateportCity_BattleTentLobby_Movement_PlayerWalkToDoor
 	waitmovement 0
 	opendoor 0x6, 0x1
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_SLATEPORT_TENT_ATTENDANT, SlateportCity_BattleTentLobby_Movement_AttendantEnterDoor
 	applymovement LOCALID_PLAYER, SlateportCity_BattleTentLobby_Movement_PlayerEnterDoor
 	waitmovement 0
 	closedoor 0x6, 0x1
-	waitdooranim_jp
+	waitdooranim
 	return
 
 SlateportCity_BattleTentLobby_Movement_AttendantWalkToDoor:

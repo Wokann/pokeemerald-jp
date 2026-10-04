@@ -17,7 +17,7 @@ RustboroCity_House3_EventScript_Pekachu:: @ 0x0820412A
 	waitse
 	playmoncry SPECIES_PIKACHU, CRY_MODE_NORMAL
 	msgbox RustboroCity_House3_Text_Pekachu, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

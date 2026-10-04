@@ -62,7 +62,7 @@ AncientTomb_EventScript_Registeel:: @ 0x0821B99F
 	waitse
 	playmoncry SPECIES_REGISTEEL, CRY_MODE_ENCOUNTER
 	delay 40
-	waitmoncry_jp
+	waitmoncry
 	setwildbattle SPECIES_REGISTEEL, 40
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special StartRegiBattle

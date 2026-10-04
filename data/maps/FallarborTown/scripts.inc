@@ -38,7 +38,7 @@ FallarborTown_EventScript_Azurill::
 	playmoncry SPECIES_AZURILL, CRY_MODE_NORMAL
 	msgbox FallarborTown_Text_Azurill, MSGBOX_DEFAULT
 	@ JP opcode 0xC5 is a cry wait at this site; US uses SCR_OP_WAITMONCRY.
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

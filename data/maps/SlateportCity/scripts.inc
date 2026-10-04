@@ -829,13 +829,13 @@ SlateportCity_EventScript_ScottBattleTentScene::
 	applywaitmovement LOCALID_PLAYER, Common_Movement_FaceUp
 	opendoor 10, 12
 	@ JP uses SCR_OP_WAITMONCRY (0xAE) for this door-animation wait.
-	waitdooranim_jp
+	waitdooranim
 	addobject LOCALID_SLATEPORT_SCOTT
 	applymovement LOCALID_PLAYER, SlateportCity_Movement_PushPlayerDown
 	applymovement LOCALID_SLATEPORT_SCOTT, SlateportCity_Movement_ScottExitBattleTent
 	waitmovement 0
 	closedoor 10, 12
-	waitdooranim_jp
+	waitdooranim
 	msgbox SlateportCity_Text_TakingBattleTentChallenge, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_PLAYER, SlateportCity_Movement_PlayerWatchScottExit

@@ -47,7 +47,7 @@ SkyPillar_Top_EventScript_Rayquaza::
 	waitse
 	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
 	delay 40
-	waitmoncry_jp
+	waitmoncry
 	setwildbattle SPECIES_RAYQUAZA, 70, 0
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
@@ -113,7 +113,7 @@ SkyPillar_Top_EventScript_AwakenRayquaza::
 	setvar VAR_0x8007, 5
 	special ShakeCamera
 	waitstate
-	waitmoncry_jp
+	waitmoncry
 	applymovement LOCALID_RAYQUAZA_SLEEPING, SkyPillar_Top_Movement_RayquazaFlyOff
 	waitmovement 0
 	removeobject LOCALID_RAYQUAZA_SLEEPING

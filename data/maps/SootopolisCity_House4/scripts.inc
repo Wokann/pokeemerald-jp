@@ -17,7 +17,7 @@ SootopolisCity_House4_EventScript_Azumarill:: @ 0x0820F5A6
 	waitse
 	playmoncry SPECIES_AZUMARILL, CRY_MODE_NORMAL
 	msgbox SootopolisCity_House4_Text_Azumarill, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

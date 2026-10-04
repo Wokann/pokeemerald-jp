@@ -15,12 +15,12 @@ BattleFrontier_BattleDomeCorridor_EventScript_EnterCorridor::
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleDomeCorridor_Movement_PlayerWalkToDoorLv50
 	waitmovement 0
 	opendoor 13, 3
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_DOME_CORRIDOR_ATTENDANT, BattleFrontier_BattleDomeCorridor_Movement_AttendantEnterDoorLv50
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleDomeCorridor_Movement_PlayerEnterDoorLv50
 	waitmovement 0
 	closedoor 13, 3
-	waitdooranim_jp
+	waitdooranim
 	goto BattleFrontier_BattleDomeCorridor_EventScript_WarpToPreBattleRoom
 
 BattleFrontier_BattleDomeCorridor_EventScript_WalkToBattleRoomLvOpen::
@@ -28,12 +28,12 @@ BattleFrontier_BattleDomeCorridor_EventScript_WalkToBattleRoomLvOpen::
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleDomeCorridor_Movement_PlayerWalkToDoorLvOpen
 	waitmovement 0
 	opendoor 37, 3
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_DOME_CORRIDOR_ATTENDANT, BattleFrontier_BattleDomeCorridor_Movement_AttendantEnterDoorLvOpen
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleDomeCorridor_Movement_PlayerEnterDoorLvOpen
 	waitmovement 0
 	closedoor 37, 3
-	waitdooranim_jp
+	waitdooranim
 BattleFrontier_BattleDomeCorridor_EventScript_WarpToPreBattleRoom::
 	waitmovement 0
 	setvar VAR_0x8006, 0

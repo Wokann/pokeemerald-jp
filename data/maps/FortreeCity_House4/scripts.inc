@@ -3,7 +3,6 @@
 FortreeCity_House4_MapScripts::
 	.byte 0
 
-@ JP uses the waitdooranim opcode (0xC5) where US uses waitmoncry.
 
 FortreeCity_House4_EventScript_Woman:: @ 0x082051A3
 	msgbox FortreeCity_House4_Text_BringsWorldCloserTogether, MSGBOX_NPC
@@ -62,7 +61,7 @@ FortreeCity_House4_EventScript_Wingull:: @ 0x08205242
 	waitse
 	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
 	msgbox FortreeCity_House4_Text_Wingull, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

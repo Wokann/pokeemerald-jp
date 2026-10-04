@@ -352,12 +352,12 @@ CableClub_EventScript_EnterColosseum::
 	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
 	waitmovement 0
 	opendoor 9, 1
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
 	waitmovement 0
 	hideplayer
 	closedoor 9, 1
-	waitdooranim_jp
+	waitdooranim
 	release
 	goto_if_eq VAR_0x8004, USING_MULTI_BATTLE, CableClub_EventScript_WarpTo4PColosseum
 	special SetCableClubWarp
@@ -443,12 +443,12 @@ CableClub_EventScript_EnterTradeCenter::
 	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
 	waitmovement 0
 	opendoor 9, 1
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
 	waitmovement 0
 	hideplayer
 	closedoor 9, 1
-	waitdooranim_jp
+	waitdooranim
 	release
 	special SetCableClubWarp
 	setwarp MAP_TRADE_CENTER, 5, 8
@@ -503,12 +503,12 @@ CableClub_EventScript_EnterRecordCorner::
 	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
 	waitmovement 0
 	opendoor 9, 1
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
 	waitmovement 0
 	hideplayer
 	closedoor 9, 1
-	waitdooranim_jp
+	waitdooranim
 	release
 	special SetCableClubWarp
 	setwarp MAP_RECORD_CORNER, 8, 9
@@ -862,12 +862,12 @@ CableClub_EventScript_EnterUnionRoom::
 	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
 	waitmovement 0
 	opendoor 5, 1
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
 	waitmovement 0
 	hideplayer
 	closedoor 5, 1
-	waitdooranim_jp
+	waitdooranim
 	special Script_ResetUnionRoomTrade
 	special SetCableClubWarp
 	warpspinenter MAP_UNION_ROOM, 7, 11
@@ -1160,12 +1160,12 @@ CableClub_EventScript_EnterWirelessLinkRoom::
 	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
 	waitmovement 0
 	opendoor 9, 1
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
 	waitmovement 0
 	hideplayer
 	closedoor 9, 1
-	waitdooranim_jp
+	waitdooranim
 	release
 	waitstate
 	end

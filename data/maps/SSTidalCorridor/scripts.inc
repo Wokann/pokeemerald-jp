@@ -89,7 +89,7 @@ SSTidalCorridor_EventScript_Peeko::
 	waitse
 	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
 	msgbox SSTidalCorridor_Text_Peeko, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

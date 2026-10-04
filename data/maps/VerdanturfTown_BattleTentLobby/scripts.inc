@@ -200,12 +200,12 @@ VerdanturfTown_BattleTentLobby_EventScript_WalkToDoor:: @ 0x081F66D6
 	applymovement LOCALID_PLAYER, VerdanturfTown_BattleTentLobby_Movement_WalkToDoor
 	waitmovement 0
 	opendoor 0x6, 0x1
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_VERDANTURF_TENT_ATTENDANT, VerdanturfTown_BattleTentLobby_Movement_AttendantEnterDoor
 	applymovement LOCALID_PLAYER, VerdanturfTown_BattleTentLobby_Movement_PlayerEnterDoor
 	waitmovement 0
 	closedoor 0x6, 0x1
-	waitdooranim_jp
+	waitdooranim
 	return
 
 VerdanturfTown_BattleTentLobby_Movement_WalkToDoor:

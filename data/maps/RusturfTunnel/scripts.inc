@@ -293,7 +293,7 @@ RusturfTunnel_EventScript_Peeko:: @ 0x08213878
 	waitse
 	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
 	msgbox RusturfTunnel_Text_Peeko, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 
@@ -325,7 +325,7 @@ RusturfTunnel_EventScript_Grunt:: @ 0x0821388B
 	waitse
 	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
 	waitbuttonpress
-	waitmoncry_jp
+	waitmoncry
 	closemessage
 	applymovement LOCALID_PLAYER, RusturfTunnel_Movement_PlayerWatchBrineyExit
 	applymovement LOCALID_RUSTURF_TUNNEL_BRINEY, RusturfTunnel_Movement_BrineyExit

@@ -72,7 +72,7 @@ BattleFrontier_OutsideEast_EventScript_Zigzagoon::
 	playmoncry SPECIES_ZIGZAGOON, CRY_MODE_NORMAL
 	msgbox BattleFrontier_OutsideEast_Text_ZigzagoonLooksVacant, MSGBOX_DEFAULT
 	@ JP encodes this Pokémon-cry wait with SCR_OP_WAITDOORANIM.
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 
@@ -126,7 +126,7 @@ BattleFrontier_OutsideEast_EventScript_WaterSudowoodo::
 	playmoncry SPECIES_SUDOWOODO, CRY_MODE_ENCOUNTER
 	delay 40
 	@ JP encodes this Pokémon-cry wait with SCR_OP_WAITDOORANIM.
-	waitmoncry_jp
+	waitmoncry
 	setvar VAR_LAST_TALKED, LOCALID_FRONTIER_SUDOWOODO
 	setwildbattle SPECIES_SUDOWOODO, 40
 	setflag FLAG_SYS_CTRL_OBJ_DELETE

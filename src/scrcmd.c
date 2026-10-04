@@ -2007,9 +2007,9 @@ bool8 ScrCmd_playmoncry(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_waitdooranim(struct ScriptContext *ctx)
+bool8 ScrCmd_waitmoncry(struct ScriptContext *ctx)
 {
-    SetupNativeScript(ctx, (bool8 (*)(void))0x080A2F41);
+    SetupNativeScript(ctx, IsCryFinished);
     return TRUE;
 }
 
@@ -2061,9 +2061,9 @@ static bool8 IsDoorAnimationStopped(void)
         return FALSE;
 }
 
-bool8 ScrCmd_waitmoncry(struct ScriptContext *ctx)
+bool8 ScrCmd_waitdooranim(struct ScriptContext *ctx)
 {
-    SetupNativeScript(ctx, (bool8 (*)(void))0x0809B2E5);
+    SetupNativeScript(ctx, IsDoorAnimationStopped);
     return TRUE;
 }
 

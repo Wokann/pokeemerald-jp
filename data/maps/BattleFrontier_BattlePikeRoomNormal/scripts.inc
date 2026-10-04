@@ -288,7 +288,7 @@ BattleFrontier_BattlePikeRoomNormal_EventScript_KirliaAttack::
 	closemessage
 	waitse
 	playmoncry SPECIES_KIRLIA, CRY_MODE_NORMAL
-	waitdooranim
+	waitmoncry
 	pike_getstatus
 	call_if_eq VAR_RESULT, PIKE_STATUS_TOXIC, BattleFrontier_BattlePikeRoomNormal_EventScript_KirliaUsedToxic
 	call_if_eq VAR_RESULT, PIKE_STATUS_BURN, BattleFrontier_BattlePikeRoomNormal_EventScript_KirliaUsedWillOWisp
@@ -302,11 +302,11 @@ BattleFrontier_BattlePikeRoomNormal_EventScript_KirliaAttack::
 	waitmovement 0
 	waitse
 	playmoncry SPECIES_KIRLIA, CRY_MODE_NORMAL
-	waitdooranim
+	waitmoncry
 	msgbox BattleFrontier_BattlePikeRoomNormal_Text_ThatsEnough, MSGBOX_DEFAULT
 	waitse
 	playmoncry SPECIES_KIRLIA, CRY_MODE_NORMAL
-	waitdooranim
+	waitmoncry
 	closemessage
 	applymovement LOCALID_PIKE_ROOM_NPC_2, BattleFrontier_BattlePikeRoomNormal_Movement_MonMoveAside
 	applymovement LOCALID_PIKE_ROOM_NPC_1, BattleFrontier_BattlePikeRoomNormal_Movement_StatusNPCApproachPlayer
@@ -319,7 +319,7 @@ BattleFrontier_BattlePikeRoomNormal_EventScript_DusclopsAttack::
 	closemessage
 	waitse
 	playmoncry SPECIES_DUSCLOPS, CRY_MODE_NORMAL
-	waitdooranim
+	waitmoncry
 	pike_getstatus
 	call_if_eq VAR_RESULT, PIKE_STATUS_FREEZE, BattleFrontier_BattlePikeRoomNormal_EventScript_DusclopsUsedIceBeam
 	call_if_eq VAR_RESULT, PIKE_STATUS_BURN, BattleFrontier_BattlePikeRoomNormal_EventScript_DusclopsUsedWillOWisp
@@ -331,11 +331,11 @@ BattleFrontier_BattlePikeRoomNormal_EventScript_DusclopsAttack::
 	waitmovement 0
 	waitse
 	playmoncry SPECIES_DUSCLOPS, CRY_MODE_NORMAL
-	waitdooranim
+	waitmoncry
 	msgbox BattleFrontier_BattlePikeRoomNormal_Text_ThatsEnough, MSGBOX_DEFAULT
 	waitse
 	playmoncry SPECIES_DUSCLOPS, CRY_MODE_NORMAL
-	waitdooranim
+	waitmoncry
 	closemessage
 	applymovement LOCALID_PIKE_ROOM_NPC_2, BattleFrontier_BattlePikeRoomNormal_Movement_MonMoveAside
 	applymovement LOCALID_PIKE_ROOM_NPC_1, BattleFrontier_BattlePikeRoomNormal_Movement_StatusNPCApproachPlayer

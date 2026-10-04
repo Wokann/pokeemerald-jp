@@ -2551,11 +2551,6 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
         'specials': {
             0x080F9D20: 'ChoosePartyForBattleFrontier',
         },
-        # In this JP script range, SCR_OP_WAITMONCRY is used at the two
-        # matching US door-animation wait sites.
-        'command_aliases': {
-            0x081F54EE: {'waitmoncry': 'waitdooranim_jp'},
-        },
         'symbols': {
             'vars': {
                 0x4000: 'VAR_TEMP_CHALLENGE_STATUS',
@@ -6607,9 +6602,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
-        'command_aliases': {
-            0x081F2C23: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'symbols': {
             'species': {0x0120: 'SPECIES_ZIGZAGOON'},
             'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
@@ -7306,13 +7298,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08244178: 'Common_EventScript_NopReturn',
             0x08244197: 'Common_EventScript_RemoveStaticPokemon',
         },
-        'command_aliases': {
-            # JP opcode 0xC5 is the matching Pokémon-cry wait in these
-            # scripts, even though the JP command-table name is swapped.
-            0x0821A80A: {'waitdooranim': 'waitmoncry_jp'},
-            0x0821A857: {'waitdooranim': 'waitmoncry_jp'},
-            0x0821A8A4: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
         'symbols': {
@@ -7936,8 +7921,7 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
 })
 
 # Lavaridge House follows the Gym basement. Its two local interactions and
-# two contiguous texts match the US source; JP's cry-wait opcode is emitted
-# through the dedicated byte-exact waitmoncry_jp macro.
+# two contiguous texts match the US source.
 MAP_VERIFIED_SEMANTIC_LABELS.update({
     'LavaridgeTown_House': {
         'scripts': {
@@ -7950,9 +7934,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
-        'command_aliases': {
-            0x081F4E57: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'symbols': {
             'species': {0x0120: 'SPECIES_ZIGZAGOON'},
             'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
@@ -8070,8 +8051,7 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
 
 # Fallarbor Mart follows the Lavaridge Cable Club floor. Its twelve-item
 # stock list, four local interactions, and three text records match the US
-# owner in physical JP ROM order. The Skitty cry wait uses the JP command
-# slot alias while retaining the matching US waitmoncry semantics.
+# owner in physical JP ROM order.
 MAP_POKEMART_LISTS.update({
     'FallarborTown_Mart': (
         (0x081F50B0, 'FallarborTown_Mart_Pokemart', (
@@ -8110,9 +8090,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
-        'command_aliases': {
-            0x081F50DE: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'symbols': {
             'species': {0x013B: 'SPECIES_SKITTY'},
             'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
@@ -8163,9 +8140,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
-        'command_aliases': {
-            0x081F57E8: {'waitmoncry': 'waitdooranim_jp'},
-        },
         'symbols': {
             'vars': {
                 0x4000: 'VAR_TEMP_0',
@@ -8531,9 +8505,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'field_placeholders': {
             0x081F6A5B: {0x01: 'PLAYER', 0x05: 'KUN'},
         },
-        'command_aliases': {
-            0x081F66D6: {'waitmoncry': 'waitdooranim_jp'},
-        },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
         'allow_single_case_switch': True,
@@ -8712,9 +8683,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
-        'command_aliases': {
-            0x081F6B22: {'waitmoncry': 'waitdooranim_jp'},
-        },
         'symbols': {
             'vars': {
                 0x4000: 'VAR_TEMP_0',
@@ -9069,9 +9037,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
-        'command_aliases': {
-            0x081F7600: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'symbols': {
             'vars': {
                 0x8000: 'VAR_0x8000',
@@ -9230,10 +9195,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         },
         'field_placeholders': {
             0x081F7C8C: {0x02: 'STR_VAR_1'},
-        },
-        'command_aliases': {
-            0x081F7AFF: {'waitdooranim': 'waitmoncry_jp'},
-            0x081F7B1A: {'waitdooranim': 'waitmoncry_jp'},
         },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
@@ -9737,11 +9698,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x082423E9: 'Common_EventScript_SaveGame',
             0x082430E0: 'Common_EventScript_ShowBagIsFull',
         },
-        # The JP ROM uses SCR_OP_WAITMONCRY where US uses waitdooranim for
-        # the matching two door animation waits.
-        'command_aliases': {
-            0x081FB2CC: {'waitmoncry': 'waitdooranim_jp'},
-        },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
         'allow_single_case_switch': True,
@@ -9910,9 +9866,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'external_labels': {
             0x081FBD14: 'SlateportCity_BattleTent_EventScript_WarpToLobbyLost',
             0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
-        },
-        'command_aliases': {
-            0x081FB622: {'waitmoncry': 'waitdooranim_jp'},
         },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
@@ -10171,11 +10124,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08244178: 'Common_EventScript_NopReturn',
             0x08244197: 'Common_EventScript_RemoveStaticPokemon',
             0x082441A0: 'Common_EventScript_LegendaryFlewAway',
-        },
-        'command_aliases': {
-            # JP stores the legacy door-wait opcode where US waits for the
-            # Regirock cry; this macro preserves the reviewed JP byte.
-            0x08213E86: {'waitdooranim': 'waitmoncry_jp'},
         },
         'symbols': {
             'flags': {
@@ -10741,11 +10689,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x082570AF: 'AquaHideout_B1F_EventScript_ItemMasterBall',
             0x082570BC: 'AquaHideout_B1F_EventScript_ItemNugget',
             0x082570C9: 'AquaHideout_B1F_EventScript_ItemMaxElixir',
-        },
-        'command_aliases': {
-            # JP opcode 0xC5 is a cry wait at both Electrode encounters.
-            0x08217CF4: {'waitdooranim': 'waitmoncry_jp'},
-            0x08217D41: {'waitdooranim': 'waitmoncry_jp'},
         },
         'symbols': {
             'flags': {
@@ -11468,9 +11411,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08203FB6: 'RustboroCity_Flat2_1F_Text_DevonWorkersLiveHere',
             0x08203FDE: 'RustboroCity_Flat2_1F_Text_Skitty',
         },
-        'command_aliases': {
-            0x08203FA3: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'symbols': {
             'species': {0x013B: 'SPECIES_SKITTY'},
             'cry_modes': {0x00: 'CRY_MODE_NORMAL'},
@@ -11530,9 +11470,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x0820416F: 'RustboroCity_House3_Text_NamingPikachuPekachu',
             0x082041BF: 'RustboroCity_House3_Text_Pekachu',
         },
-        'command_aliases': {
-            0x0820412A: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'symbols': {
             'species': {0x0019: 'SPECIES_PIKACHU'},
             'cry_modes': {0x00: 'CRY_MODE_NORMAL'},
@@ -11566,9 +11503,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'preamble': (
             '@ JP only: ChoosePartyMon requires explicit waitstate; the special table differs from US.',
         ),
-        'command_aliases': {
-            0x08204278: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'symbols': {
             'flags': {0x009B: 'FLAG_FORTREE_NPC_TRADE_COMPLETED'},
             'vars': {
@@ -11727,12 +11661,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x082430E0: 'Common_EventScript_ShowBagIsFull',
             0x08243621: 'Common_Movement_FacePlayer',
         },
-        'preamble': (
-            '@ JP uses the waitdooranim opcode (0xC5) where US uses waitmoncry.',
-        ),
-        'command_aliases': {
-            0x08205242: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'symbols': {
             'flags': {
                 0x00DE: 'FLAG_WINGULL_SENT_ON_ERRAND',
@@ -11769,12 +11697,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08205369: 'FortreeCity_House5_Text_TreeHousesAreGreat',
             0x082053A4: 'FortreeCity_House5_Text_AdaptedToNature',
             0x082053E4: 'FortreeCity_House5_Text_Zigzagoon',
-        },
-        'preamble': (
-            '@ JP uses the waitdooranim opcode (0xC5) where US uses waitmoncry.',
-        ),
-        'command_aliases': {
-            0x08205356: {'waitdooranim': 'waitmoncry_jp'},
         },
         'symbols': {
             'species': {0x0120: 'SPECIES_ZIGZAGOON'},
@@ -12861,16 +12783,11 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
 })
 
 # House1 immediately follows Move Deleter's House. Its two scripts and two
-# text records match the US source in physical order. The JP command-table
-# slots for waitdooranim/waitmoncry are swapped, so only the audited Kecleon
-# cry site uses the dedicated byte-exact semantic macro.
+# text records match the US source in physical order.
 MAP_VERIFIED_SEMANTIC_LABELS.update({
     'LilycoveCity_House1': {
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
-        'command_aliases': {
-            0x08209F70: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'symbols': {
             'species': {0x013D: 'SPECIES_KECLEON'},
             'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
@@ -13011,9 +12928,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'external_labels': {
             0x08243621: 'Common_Movement_FacePlayer',
             0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
-        },
-        'command_aliases': {
-            0x0820A767: {'waitdooranim': 'waitmoncry_jp'},
         },
         'specials': {
             'sub_080EEDEC': 'TryPutLotteryWinnerReportOnAir',
@@ -13488,16 +13402,11 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
-# Mossdeep House 2 follows House 1 directly. The cry wait is emitted through
-# the JP byte-exact semantic alias because the JP command-table slots for cry
-# and door waits are swapped while the matching US source is waitmoncry.
+# Mossdeep House 2 follows House 1 directly.
 MAP_VERIFIED_SEMANTIC_LABELS.update({
     'MossdeepCity_House2': {
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
-        'command_aliases': {
-            0x0820C3E5: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'symbols': {
             'flags': {
                 0x00E0: 'FLAG_WINGULL_DELIVERED_MAIL',
@@ -13663,9 +13572,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     'MossdeepCity_House4': {
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
-        'command_aliases': {
-            0x0820CCA2: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'field_placeholders': {
             0x0820CD10: {0x02: 'STR_VAR_1'},
         },
@@ -14053,9 +13959,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'external_labels': {
             0x082430E0: 'Common_EventScript_ShowBagIsFull',
         },
-        'command_aliases': {
-            0x0820F342: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'symbols': {
             'flags': {0x0079: 'FLAG_RECEIVED_TM_BRICK_BREAK'},
             'vars': {
@@ -14101,9 +14004,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     'SootopolisCity_House4': {
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
-        'command_aliases': {
-            0x0820F5A6: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'symbols': {
             'species': {0x00B8: 'SPECIES_AZUMARILL'},
             'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
@@ -14687,15 +14587,10 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     # Route 104 Mr. Briney's House is the next physical EventScript owner.
     # The US source establishes all twelve script and nine text labels by
     # exact local order; this map-specific table only supplies reviewed JP
-    # constants, field placeholders, and the JP command-slot alias.
+    # constants and field placeholders.
     'Route104_MrBrineysHouse': {
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
-        'command_aliases': {
-            # JP's opcode slot is named waitdooranim globally, but the matched
-            # local Peeko sequence waits for the Wingull cry as in US source.
-            0x0821171F: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'external_labels': {
             0x08242F21: 'EventScript_BackupMrBrineyLocation',
         },
@@ -15213,11 +15108,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x0825667C: 'EventScript_RockSmash',
             0x08256E8D: 'RusturfTunnel_EventScript_ItemPokeBall',
             0x08256E9A: 'RusturfTunnel_EventScript_ItemMaxEther',
-        },
-        'command_aliases': {
-            # JP uses the door-wait opcode at these Wingull cry waits.
-            0x08213878: {'waitdooranim': 'waitmoncry_jp'},
-            0x0821388B: {'waitdooranim': 'waitmoncry_jp'},
         },
         'symbols': {
             'flags': {
@@ -18523,11 +18413,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'field_placeholders': {
             0x081FC6CB: {0x02: 'STR_VAR_1'},
         },
-        'command_aliases': {
-            0x081FC38C: {'waitdooranim': 'waitmoncry_jp'},
-            0x081FC39F: {'waitdooranim': 'waitmoncry_jp'},
-            0x081FC3B2: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
         'result_condition_values': {
@@ -20308,9 +20193,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08244197: 'Common_EventScript_RemoveStaticPokemon',
             0x082441A0: 'Common_EventScript_LegendaryFlewAway',
         },
-        'command_aliases': {
-            0x0821B89D: {'waitdooranim': 'waitmoncry_jp'},
-        },
         'symbols': {
             'flags': {
                 0x0002: 'FLAG_TEMP_REGICE_PUZZLE_STARTED',
@@ -20376,9 +20258,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08244178: 'Common_EventScript_NopReturn',
             0x08244197: 'Common_EventScript_RemoveStaticPokemon',
             0x082441A0: 'Common_EventScript_LegendaryFlewAway',
-        },
-        'command_aliases': {
-            0x0821B99F: {'waitdooranim': 'waitmoncry_jp'},
         },
         'symbols': {
             'flags': {

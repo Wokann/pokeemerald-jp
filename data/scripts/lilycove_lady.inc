@@ -387,7 +387,7 @@ LilycoveCity_PokemonCenter_1F_EventScript_FeedPokeblock::
 	waitse
 	playmoncry VAR_0x8005, CRY_MODE_NORMAL
 	delay 120
-	waitmoncry_jp
+	waitmoncry
 	goto_if_eq VAR_0x8004, 1, LilycoveCity_PokemonCenter_1F_EventScript_MonEnjoyPokeblock
 	goto LilycoveCity_PokemonCenter_1F_EventScript_FinishFeedPokeblock
 	end
@@ -476,7 +476,7 @@ LilycoveCity_PokemonCenter_1F_EventScript_Zigzagoon::
 	waitse
 	playmoncry VAR_0x8005, CRY_MODE_NORMAL
 	msgbox LilycoveCity_PokemonCenter_1F_Text_Zigzagoon, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 
@@ -486,7 +486,7 @@ LilycoveCity_PokemonCenter_1F_EventScript_Skitty::
 	waitse
 	playmoncry VAR_0x8005, CRY_MODE_NORMAL
 	msgbox LilycoveCity_PokemonCenter_1F_Text_Skitty, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 
@@ -496,7 +496,7 @@ LilycoveCity_PokemonCenter_1F_EventScript_Poochyena::
 	waitse
 	playmoncry VAR_0x8005, CRY_MODE_NORMAL
 	msgbox LilycoveCity_PokemonCenter_1F_Text_Poochyena, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 
@@ -506,7 +506,7 @@ LilycoveCity_PokemonCenter_1F_EventScript_Kecleon::
 	waitse
 	playmoncry VAR_0x8005, CRY_MODE_NORMAL
 	msgbox LilycoveCity_PokemonCenter_1F_Text_Kecleon, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 
@@ -516,7 +516,7 @@ LilycoveCity_PokemonCenter_1F_EventScript_Pikachu::
 	waitse
 	playmoncry VAR_0x8005, CRY_MODE_NORMAL
 	msgbox LilycoveCity_PokemonCenter_1F_Text_Pikachu, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

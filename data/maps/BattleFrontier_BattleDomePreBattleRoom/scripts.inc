@@ -152,11 +152,11 @@ BattleFrontier_BattleDomePreBattleRoom_EventScript_ContinueChallenge::
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleDomePreBattleRoom_Movement_PlayerWalkToDoor
 	waitmovement 0
 	opendoor 5, 1
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleDomePreBattleRoom_Movement_PlayerEnterDoor
 	waitmovement 0
 	closedoor 5, 1
-	waitdooranim_jp
+	waitdooranim
 	warp MAP_BATTLE_FRONTIER_BATTLE_DOME_BATTLE_ROOM, 9, 5
 	setvar VAR_TEMP_0, 0
 	waitstate

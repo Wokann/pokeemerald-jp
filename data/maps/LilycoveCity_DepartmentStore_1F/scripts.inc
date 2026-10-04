@@ -132,7 +132,7 @@ LilycoveCity_DepartmentStore_1F_EventScript_Azumarill:: @ 0x0820A767
 	waitse
 	playmoncry SPECIES_AZUMARILL, CRY_MODE_NORMAL
 	msgbox LilycoveCity_DepartmentStore_1F_Text_Azumarill, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

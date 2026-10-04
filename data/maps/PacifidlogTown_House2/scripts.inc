@@ -76,7 +76,7 @@ PacifidlogTown_House2_EventScript_HappyAzurill:: @ 0x081F7AFF
 	waitse
 	playmoncry SPECIES_AZURILL, CRY_MODE_NORMAL
 	msgbox PacifidlogTown_House2_Text_Rurii, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	msgbox PacifidlogTown_House2_Text_VeryFriendlyWithTrainer, MSGBOX_DEFAULT
 	release
 	end
@@ -87,7 +87,7 @@ PacifidlogTown_House2_EventScript_UnhappyAzurill:: @ 0x081F7B1A
 	waitse
 	playmoncry SPECIES_AZURILL, CRY_MODE_ENCOUNTER
 	msgbox PacifidlogTown_House2_Text_Rururi, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	msgbox PacifidlogTown_House2_Text_DoesntLikeTrainerVeryMuch, MSGBOX_DEFAULT
 	release
 	end

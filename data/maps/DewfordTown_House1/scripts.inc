@@ -17,7 +17,7 @@ DewfordTown_House1_EventScript_Zigzagoon:: @ 0x081F2C23
 	waitse
 	playmoncry SPECIES_ZIGZAGOON, CRY_MODE_NORMAL
 	msgbox DewfordTown_House1_Text_Zigzagoon, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

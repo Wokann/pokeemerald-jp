@@ -103,10 +103,10 @@ BattleFrontier_BattleTowerMultiPartnerRoom_EventScript_EnterElevator::
 	applymovement LOCALID_TOWER_PARTNER_ROOM_ATTENDANT, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0x0
 	opendoor 10, 1
-	waitdooranim_jp
+	waitdooranim
 	call BattleFrontier_BattleTowerMultiPartnerRoom_EventScript_MoveToElevator
 	closedoor 10, 1
-	waitdooranim_jp
+	waitdooranim
 	warp MAP_BATTLE_FRONTIER_BATTLE_TOWER_ELEVATOR, 1, 6
 	waitstate
 	releaseall

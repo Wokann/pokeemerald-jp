@@ -49,7 +49,7 @@ NavelRock_Bottom_EventScript_Lugia::
 	delay 50
 	waitse
 	playmoncry SPECIES_LUGIA, CRY_MODE_ENCOUNTER
-	waitmoncry_jp
+	waitmoncry
 	delay 20
 	seteventmon SPECIES_LUGIA, 70
 	setflag FLAG_SYS_CTRL_OBJ_DELETE

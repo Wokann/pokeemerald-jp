@@ -613,12 +613,12 @@ BattleFrontier_BattleTowerLobby_EventScript_WalkToElevator::
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerLobby_Movement_WalkToElevator
 	waitmovement 0
 	opendoor VAR_0x8004, 1
-	waitdooranim_jp
+	waitdooranim
 	applymovement VAR_LAST_TALKED, BattleFrontier_BattleTowerLobby_Movement_AttendantEnterElevator
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerLobby_Movement_PlayerEnterElevator
 	waitmovement 0
 	closedoor VAR_0x8004, 1
-	waitdooranim_jp
+	waitdooranim
 	return
 
 BattleFrontier_BattleTowerLobby_Movement_WalkToElevator:

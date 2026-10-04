@@ -13,7 +13,7 @@ LilycoveCity_House1_EventScript_Kecleon:: @ 0x08209F70
 	waitse
 	playmoncry SPECIES_KECLEON, CRY_MODE_NORMAL
 	msgbox LilycoveCity_House1_Text_Kecleon, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

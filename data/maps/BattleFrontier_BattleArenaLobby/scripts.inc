@@ -202,12 +202,12 @@ BattleFrontier_BattleArenaLobby_EventScript_WalkToDoorLv50::
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleArenaLobby_Movement_PlayerWalkToLeftDoor
 	waitmovement 0
 	opendoor 2, 2
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_ARENA_ATTENDANT, BattleFrontier_BattleArenaLobby_Movement_AttendantEnterDoor
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleArenaLobby_Movement_PlayerEnterDoor
 	waitmovement 0
 	closedoor 2, 2
-	waitdooranim_jp
+	waitdooranim
 	return
 
 BattleFrontier_BattleArenaLobby_Movement_AttendantWalkToLeftDoor:
@@ -251,12 +251,12 @@ BattleFrontier_BattleArenaLobby_EventScript_WalkToDoorLvOpen::
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleArenaLobby_Movement_PlayerWalkToRightDoor
 	waitmovement 0
 	opendoor 11, 2
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_ARENA_ATTENDANT, BattleFrontier_BattleArenaLobby_Movement_AttendantEnterDoor
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleArenaLobby_Movement_PlayerEnterDoor
 	waitmovement 0
 	closedoor 11, 2
-	waitdooranim_jp
+	waitdooranim
 	return
 
 BattleFrontier_BattleArenaLobby_Movement_AttendantWalkToRightDoor:

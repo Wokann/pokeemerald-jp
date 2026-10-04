@@ -315,12 +315,12 @@ Route111_EventScript_BattleWinstrates:: @ 0x081EA48D
 
 Route111_EventScript_OpenWinstrateDoor:: @ 0x081EA5E2
 	opendoor 13, 113
-	waitdooranim_jp
+	waitdooranim
 	return
 
 Route111_EventScript_CloseWinstrateDoor:: @ 0x081EA5E9
 	closedoor 13, 113
-	waitdooranim_jp
+	waitdooranim
 	return
 
 Route111_Movement_WinstrateEnterHouse:

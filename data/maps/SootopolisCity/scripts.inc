@@ -494,7 +494,7 @@ SootopolisCity_EventScript_RayquazaSceneFromPokeCenter::
 	special ShakeCamera
 	waitstate
 	@ JP opcode 0xC5 is a verified Pokemon-cry wait at this site.
-	waitmoncry_jp
+	waitmoncry
 	setweather WEATHER_NONE
 	doweather
 	applywaitmovement LOCALID_SOOTOPOLIS_RAYQUAZA, SootopolisCity_Movement_RayquazaFlyOff
@@ -544,7 +544,7 @@ SootopolisCity_EventScript_RayquazaSceneFromDive::
 	special ShakeCamera
 	waitstate
 	@ JP opcode 0xC5 is a verified Pokemon-cry wait at this site.
-	waitmoncry_jp
+	waitmoncry
 	setweather WEATHER_NONE
 	doweather
 	applywaitmovement LOCALID_SOOTOPOLIS_RAYQUAZA, SootopolisCity_Movement_RayquazaFlyOff

@@ -230,7 +230,7 @@ SlateportCity_PokemonFanClub_EventScript_Skitty:: @ 0x081FC38C
 	waitse
 	playmoncry SPECIES_SKITTY, CRY_MODE_NORMAL
 	msgbox SlateportCity_PokemonFanClub_Text_Skitty, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 
@@ -240,7 +240,7 @@ SlateportCity_PokemonFanClub_EventScript_Zigzagoon:: @ 0x081FC39F
 	waitse
 	playmoncry SPECIES_ZIGZAGOON, CRY_MODE_NORMAL
 	msgbox SlateportCity_PokemonFanClub_Text_Zigzagoon, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 
@@ -250,7 +250,7 @@ SlateportCity_PokemonFanClub_EventScript_Azumarill:: @ 0x081FC3B2
 	waitse
 	playmoncry SPECIES_AZUMARILL, CRY_MODE_NORMAL
 	msgbox SlateportCity_PokemonFanClub_Text_Azumarill, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

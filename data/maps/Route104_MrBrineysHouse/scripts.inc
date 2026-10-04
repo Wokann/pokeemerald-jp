@@ -92,7 +92,7 @@ Route104_MrBrineysHouse_EventScript_Peeko:: @ 0x0821171F
 	waitse
 	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
 	msgbox Route104_MrBrineysHouse_Text_Peeko, MSGBOX_DEFAULT
-	waitmoncry_jp
+	waitmoncry
 	release
 	end
 

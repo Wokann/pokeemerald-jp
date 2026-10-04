@@ -15,12 +15,12 @@ FallarborTown_BattleTentCorridor_EventScript_EnterCorridor:: @ 0x081F57E8
 	applymovement LOCALID_PLAYER, FallarborTown_BattleTentCorridor_Movement_WalkToDoor
 	waitmovement 0
 	opendoor 0x2, 0x1
-	waitdooranim_jp
+	waitdooranim
 	applymovement LOCALID_FALLARBOR_TENT_CORRIDOR_ATTENDANT, FallarborTown_BattleTentCorridor_Movement_AttendantEnterDoor
 	applymovement LOCALID_PLAYER, FallarborTown_BattleTentCorridor_Movement_PlayerEnterDoor
 	waitmovement 0
 	closedoor 0x2, 0x1
-	waitdooranim_jp
+	waitdooranim
 	setvar VAR_0x8006, 0x0
 	warp MAP_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM, 0x4, 0x4
 	waitstate

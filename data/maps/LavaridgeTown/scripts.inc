@@ -105,11 +105,11 @@ LavaridgeTown_EventScript_RivalNoticePlayer::
 
 LavaridgeTown_EventScript_RivalExitHerbShop::
 	opendoor 12, 15
-	waitdooranim_jp
+	waitdooranim
 	addobject LOCALID_LAVARIDGE_RIVAL
 	applywaitmovement LOCALID_LAVARIDGE_RIVAL, LavaridgeTown_Movement_RivalExitHerbShop
 	closedoor 12, 15
-	waitdooranim_jp
+	waitdooranim
 	applywaitmovement LOCALID_LAVARIDGE_RIVAL, Common_Movement_WalkInPlaceFasterLeft
 	playse SE_PIN
 	applywaitmovement LOCALID_LAVARIDGE_RIVAL, Common_Movement_ExclamationMark
