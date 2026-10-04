@@ -319,6 +319,98 @@ class ReviewedMapShorthandTest(unittest.TestCase):
                               source)
                 self.assertNotIn('\tsetvar VAR_LILYCOVE_MUSEUM_2F_STATE, 1\n', source)
 
+    def test_contest_lobby_regeneration_retains_parallel_and_object_specific_waits(self):
+        name = 'LilycoveCity_ContestLobby'
+        generated = render_map(name)
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        for tag, source in (('JP generated', generated), ('US reference', reference)):
+            with self.subTest(source=tag):
+                self.assertEqual(source.count('\tapplywaitmovement '), 21)
+                for prefix in ('', 'LINK_'):
+                    artist = 'LOCALID_CONTEST_LOBBY_' + prefix + 'ARTIST'
+                    movement = 'LinkArtist' if prefix else 'Artist'
+                    self.assertIn(
+                        '\tapplymovement ' + artist + ', ' + name
+                        + '_Movement_' + movement + 'ApproachPlayer\n'
+                        '\twaitmovement ' + artist + '\n', source)
+                    receptionist = 'LOCALID_CONTEST_LOBBY_' + prefix + 'RECEPTIONIST'
+                    movement = 'LinkReceptionist' if prefix else 'Receptionist'
+                    player_movement = 'PlayerWalkToLinkContestHall' if prefix else (
+                        'PlayerWalkToContestHall')
+                    self.assertIn(
+                        '\tapplymovement ' + receptionist + ', ' + name
+                        + '_Movement_' + movement + 'WalkToContestHall\n'
+                        '\tapplymovement LOCALID_PLAYER, ' + name + '_Movement_'
+                        + player_movement + '\n\twaitmovement 0\n', source)
+
+    def test_contest_lobby_regeneration_retains_debug_copy_and_link_wait_contracts(self):
+        name = 'LilycoveCity_ContestLobby'
+        generated = render_map(name)
+        self.assertIn('\tcopyvar VAR_LILYCOVE_MUSEUM_2F_STATE, 1, warn=FALSE\n',
+                      generated)
+        self.assertNotIn('\tsetvar VAR_LILYCOVE_MUSEUM_2F_STATE, 1\n', generated)
+        specials = (ROOT / 'data' / 'specials.inc').read_text(encoding='utf-8')
+        for special in ('TryContestEModeLinkup', 'TryContestGModeLinkup',
+                        'TryBecomeLinkLeader', 'TryJoinLinkGroup'):
+            with self.subTest(special=special):
+                self.assertRegex(specials,
+                                 r'(?m)^\s*def_special ' + special + r', waitstate=1\s*$')
+                self.assertIn('\tspecial ' + special + '\n\treturn\n', generated)
+        for command in ('choosecontestmon', 'contestlinktransfer'):
+            with self.subTest(command=command):
+                self.assertIn('\t' + command + '\n', generated)
+                self.assertNotIn('\t' + command + '\n\twaitstate\n', generated)
+
+    def test_contest_hall_regeneration_retains_cute_audience_dialogue_order(self):
+        name = 'LilycoveCity_ContestHall'
+        generated = render_map(name)
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        sequence = (
+            '\tapplywaitmovement LOCALID_CUTE_AUDIENCE_1, Common_Movement_FacePlayer\n'
+            '\tmsgbox ' + name + '_Text_MyChildIsInContest, MSGBOX_DEFAULT\n'
+            '\tclosemessage\n'
+            '\tapplywaitmovement LOCALID_CUTE_AUDIENCE_1, '
+            'Common_Movement_FaceOriginalDirection\n'
+            '\tdelay 25\n'
+            '\tmsgbox ' + name + '_Text_ComeOnDear, MSGBOX_DEFAULT\n')
+        for tag, source in (('JP generated', generated), ('US reference', reference)):
+            with self.subTest(source=tag):
+                self.assertEqual(source.count('\tapplywaitmovement '), 28)
+                self.assertIn(sequence, source)
+
+    def test_contest_lobby_placeholders_match_artist_and_link_entry_buffers(self):
+        name = 'LilycoveCity_ContestLobby'
+        generated = render_map(name)
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        link_number = (
+            '\tspecial GetContestPlayerId\n\taddvar VAR_0x8004, 1\n'
+            '\tbuffernumberstring STR_VAR_2, VAR_0x8004\n'
+            '\tmessageautoscroll ' + name + '_Text_YourMonIsEntryNumX\n')
+        for tag, source in (('JP generated', generated), ('US reference', reference)):
+            with self.subTest(source=tag):
+                self.assertIn(link_number, source)
+                label = name + '_Text_PutTheRibbonOnMon'
+                block = re.search(r'^' + re.escape(label)
+                                  + r':{1,2}[^\n]*\n(.*?)(?=^\w+:{1,2}|\Z)',
+                                  source, re.M | re.S)
+                self.assertIsNotNone(block)
+                strings = '\n'.join(line for line in block.group(1).splitlines()
+                                    if line.lstrip().startswith('.string'))
+                self.assertEqual(re.findall(r'\{[^}]+\}', strings),
+                                 ['{PLAYER}', '{STR_VAR_1}'])
+        for root in (ROOT, emitter.US_MAPS.parents[1]):
+            with self.subTest(root=root):
+                shared = (root / 'data' / 'scripts' / 'contest_hall.inc').read_text(
+                    encoding='utf-8')
+                label = name + '_Text_YourMonIsEntryNumX'
+                block = re.search(r'^' + re.escape(label)
+                                  + r':{1,2}[^\n]*\n(.*?)(?=^\w+:{1,2}|\Z)',
+                                  shared, re.M | re.S)
+                self.assertIsNotNone(block)
+                strings = '\n'.join(line for line in block.group(1).splitlines()
+                                    if line.lstrip().startswith('.string'))
+                self.assertEqual(re.findall(r'\{[^}]+\}', strings), ['{STR_VAR_2}'])
+
 
 if __name__ == '__main__':
     unittest.main()
