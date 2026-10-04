@@ -66,22 +66,6 @@ sFishingMoreDotsChance: @ 0x846F9DC
 gUnknown_830F6FD: @ 0x830F6FD
 	.incbin "baserom_jp.gba", 0x30f6fd, 0x51
 
-	.section .rodata.mid82
-
-	.globl gUnknown_85CA8B5
-gUnknown_85CA8B5: @ 0x85CA8B5
-	.string "メールボックス$どうぐを　あずける$"
-	.globl gUnknown_85CA8C7
-gUnknown_85CA8C7: @ 0x85CA8C7
-	.string "どうぐを　ひきだす$"
-	.globl gUnknown_85CA8D1
-gUnknown_85CA8D1: @ 0x85CA8D1
-	.string "どうぐを　すてる$パソコン　に\n"
-	.string "どうぐを　あずけます$パソコン　から\n"
-	.string "どうぐを　ひきだします$パソコン　に　あずけている\n"
-	.string "どうぐを　すてます$"
-	.globl gUnknown_85CA918
-
 	.section .rodata.mid34_suffix
 
 	.globl gUnknown_8566D08

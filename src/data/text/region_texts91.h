@@ -1,19 +1,3 @@
-const u8 gUnknown_85CA976[] = _("メールは　1つうも　ありません{PAUSE_UNTIL_PRESS}");
-
-const u8 gUnknown_85CA988[] = _(
-    "{STR_VAR_1}　の\n"
-    "メールを　どうしますか？");
-
-const u8 gUnknown_85CA99A[] = _(
-    "ないようは　きえてしまいますが\n"
-    "よろしいですか？");
-
-const u8 gUnknown_85CA9B3[] = _("バッグが　いっぱいです！{PAUSE_UNTIL_PRESS}");
-
-const u8 gUnknown_85CA9C2[] = _(
-    "ないようを　けした　メールを\n"
-    "バッグに　いれました{PAUSE_UNTIL_PRESS}");
-
 #define SCRIPT_MENU_TEXT __attribute__((section(".rodata.script_menu_text"), aligned(1)))
 
 SCRIPT_MENU_TEXT const u8 gText_Petalburg[] = _("トウカ$カイナ$ミシロ$ミナモ$ムロ$さんか　する$せつめいをきく$ポケモンコンテストって？$コンテストの　しゅるい$ランクに　ついて$しんさいんに　ついて$かっこよさコンテスト$うつくしさコンテスト$かわいさコンテスト$かしこさコンテスト$たくましさコンテスト$もようがえ$ひっこし$カウント$とうろく　リスト$とうろく　せつめい$マッハ$ダート$どく$まひ$ねむり$やけど$こおり$どくどく$ふつう$よむのを　やめる$みました$これから");

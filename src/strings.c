@@ -28,6 +28,7 @@
 #define STRINGS_MENU_SELECTOR_ARROW3 __attribute__((section(".rodata.strings_menu_selector_arrow3"), aligned(1)))
 #define STRINGS_BATTLE_FACTORY_SELECTION __attribute__((section(".rodata.strings_battle_factory_selection"), aligned(1)))
 #define STRINGS_DECORATION_TEXT __attribute__((section(".rodata.strings_decoration_text"), aligned(1)))
+#define STRINGS_PC_TEXT __attribute__((section(".rodata.strings_pc_text"), aligned(1)))
 #define STRINGS_SHARED_NAME_TEXT __attribute__((section(".rodata.strings_shared_name_text"), aligned(1)))
 #define STRINGS_MOVE_RELEARNER_TEXT __attribute__((section(".rodata.strings_move_relearner_text"), aligned(1), used))
 #define STRINGS_DIPLOMA_TEXT __attribute__((section(".rodata.strings_diploma_text"), aligned(1), used))
@@ -202,6 +203,44 @@ STRINGS_DECORATION_TEXT const u8 gText_Roberto[] = _("サダハル");
 STRINGS_DECORATION_TEXT const u8 gText_TurnOff[] = _("せつぞくを　きる");
 STRINGS_DECORATION_TEXT const u8 gText_Decoration[] = _("もようがえ");
 STRINGS_DECORATION_TEXT const u8 gText_ItemStorage[] = _("どうぐ　あずかり");
+
+STRINGS_PC_TEXT const u8 gText_Mailbox[] = _("メールボックス");
+STRINGS_PC_TEXT const u8 gText_DepositItem[] = _("どうぐを　あずける");
+STRINGS_PC_TEXT const u8 gText_WithdrawItem[] = _("どうぐを　ひきだす");
+STRINGS_PC_TEXT const u8 gText_TossItem[] = _("どうぐを　すてる");
+STRINGS_PC_TEXT const u8 gText_StoreItemsInPC[] = _(
+    "パソコン　に\n"
+    "どうぐを　あずけます");
+STRINGS_PC_TEXT const u8 gText_TakeOutItemsFromPC[] = _(
+    "パソコン　から\n"
+    "どうぐを　ひきだします");
+STRINGS_PC_TEXT const u8 gText_ThrowAwayItemsInPC[] = _(
+    "パソコン　に　あずけている\n"
+    "どうぐを　すてます");
+STRINGS_PC_TEXT const u8 gText_NoItems[] = _("なにも　ありません！{PAUSE_UNTIL_PRESS}");
+STRINGS_PC_TEXT const u8 gText_NoRoomInBag[] = _(
+    "これいじょう\n"
+    "バッグに　はいりません");
+STRINGS_PC_TEXT const u8 gText_WithdrawHowManyItems[] = _(
+    "{STR_VAR_1}を\n"
+    "いくつ　ひきだしますか？");
+STRINGS_PC_TEXT const u8 gText_WithdrawXItems[] = _(
+    "{STR_VAR_1}を\n"
+    "{STR_VAR_2}コ　ひきだしました");
+STRINGS_PC_TEXT const u8 gText_Read[] = _("ないようを　よむ");
+STRINGS_PC_TEXT const u8 gText_MoveToBag[] = _("バッグに　もどす");
+STRINGS_PC_TEXT const u8 gText_Give2[] = _("ポケモンに　もたせる");
+STRINGS_PC_TEXT const u8 gText_NoMailHere[] = _("メールは　1つうも　ありません{PAUSE_UNTIL_PRESS}");
+STRINGS_PC_TEXT const u8 gText_WhatToDoWithVar1sMail[] = _(
+    "{STR_VAR_1}　の\n"
+    "メールを　どうしますか？");
+STRINGS_PC_TEXT const u8 gText_MessageWillBeLost[] = _(
+    "ないようは　きえてしまいますが\n"
+    "よろしいですか？");
+STRINGS_PC_TEXT const u8 gText_BagIsFull[] = _("バッグが　いっぱいです！{PAUSE_UNTIL_PRESS}");
+STRINGS_PC_TEXT const u8 gText_MailToBagMessageErased[] = _(
+    "ないようを　けした　メールを\n"
+    "バッグに　いれました{PAUSE_UNTIL_PRESS}");
 
 STRINGS_SHARED_NAME_TEXT const u8 gText_Dad[] = _("パパ");
 STRINGS_SHARED_NAME_TEXT const u8 gText_Mom[] = _("ママ");
