@@ -12,12 +12,12 @@ DewfordTown_Gym_EventScript_SetFlashLevel:: @ 0x081F2D93
 	goto_if_defeated TRAINER_BRAWLY_1, DewfordTown_Gym_EventScript_SetLightsOn
 	call DewfordTown_Gym_EventScript_CountTrainersDefeated
 	copyvar VAR_0x8001, VAR_0x8000
-	goto_if_eq VAR_0x8000, 0x0, DewfordTown_Gym_EventScript_SetFlashLevel7
-	goto_if_eq VAR_0x8000, 0x1, DewfordTown_Gym_EventScript_SetFlashLevel6
-	goto_if_eq VAR_0x8000, 0x2, DewfordTown_Gym_EventScript_SetFlashLevel5
-	goto_if_eq VAR_0x8000, 0x3, DewfordTown_Gym_EventScript_SetFlashLevel4
-	goto_if_eq VAR_0x8000, 0x4, DewfordTown_Gym_EventScript_SetFlashLevel3
-	goto_if_eq VAR_0x8000, 0x5, DewfordTown_Gym_EventScript_SetFlashLevel2
+	goto_if_eq VAR_0x8000, 0, DewfordTown_Gym_EventScript_SetFlashLevel7
+	goto_if_eq VAR_0x8000, 1, DewfordTown_Gym_EventScript_SetFlashLevel6
+	goto_if_eq VAR_0x8000, 2, DewfordTown_Gym_EventScript_SetFlashLevel5
+	goto_if_eq VAR_0x8000, 3, DewfordTown_Gym_EventScript_SetFlashLevel4
+	goto_if_eq VAR_0x8000, 4, DewfordTown_Gym_EventScript_SetFlashLevel3
+	goto_if_eq VAR_0x8000, 5, DewfordTown_Gym_EventScript_SetFlashLevel2
 	goto DewfordTown_Gym_EventScript_SetFlashLevel1
 
 DewfordTown_Gym_EventScript_SetLightsOn:: @ 0x081F2DED
@@ -57,12 +57,12 @@ DewfordTown_Gym_EventScript_BrightenRoom:: @ 0x081F2E0D
 	nop1
 	goto_if_eq VAR_0x8000, VAR_0x8001, DewfordTown_Gym_EventScript_NoLightChange
 	copyvar VAR_0x8001, VAR_0x8000
-	goto_if_eq VAR_0x8000, 0x1, DewfordTown_Gym_EventScript_AnimateFlash1Trainer
-	goto_if_eq VAR_0x8000, 0x2, DewfordTown_Gym_EventScript_AnimateFlash2Trainers
-	goto_if_eq VAR_0x8000, 0x3, DewfordTown_Gym_EventScript_AnimateFlash3Trainers
-	goto_if_eq VAR_0x8000, 0x4, DewfordTown_Gym_EventScript_AnimateFlash4Trainers
-	goto_if_eq VAR_0x8000, 0x5, DewfordTown_Gym_EventScript_AnimateFlash5Trainers
-	goto_if_eq VAR_0x8000, 0x6, DewfordTown_Gym_EventScript_AnimateFlash6Trainers
+	goto_if_eq VAR_0x8000, 1, DewfordTown_Gym_EventScript_AnimateFlash1Trainer
+	goto_if_eq VAR_0x8000, 2, DewfordTown_Gym_EventScript_AnimateFlash2Trainers
+	goto_if_eq VAR_0x8000, 3, DewfordTown_Gym_EventScript_AnimateFlash3Trainers
+	goto_if_eq VAR_0x8000, 4, DewfordTown_Gym_EventScript_AnimateFlash4Trainers
+	goto_if_eq VAR_0x8000, 5, DewfordTown_Gym_EventScript_AnimateFlash5Trainers
+	goto_if_eq VAR_0x8000, 6, DewfordTown_Gym_EventScript_AnimateFlash6Trainers
 
 DewfordTown_Gym_EventScript_NoLightChange:: @ 0x081F2E65
 	return
@@ -155,7 +155,7 @@ DewfordTown_Gym_EventScript_BrawlyDefeated:: @ 0x081F2F42
 	setflag FLAG_DEFEATED_DEWFORD_GYM
 	setflag FLAG_BADGE02_GET
 	addvar VAR_PETALBURG_GYM_STATE, 1
-	call_if_eq VAR_PETALBURG_GYM_STATE, 0x6, Common_EventScript_ReadyPetalburgGymForBattle
+	call_if_eq VAR_PETALBURG_GYM_STATE, 6, Common_EventScript_ReadyPetalburgGymForBattle
 	setvar VAR_0x8008, 2
 	call Common_EventScript_SetGymTrainers
 	call DewfordTown_Gym_EventScript_GiveBulkUp
@@ -174,14 +174,14 @@ DewfordTown_Gym_EventScript_BrawlyDefeated:: @ 0x081F2F42
 
 DewfordTown_Gym_EventScript_GiveBulkUp:: @ 0x081F2FA0
 	giveitem ITEM_TM_BULK_UP
-	goto_if_eq VAR_RESULT, 0x0, Common_EventScript_BagIsFull
+	goto_if_eq VAR_RESULT, 0, Common_EventScript_BagIsFull
 	msgbox DewfordTown_Gym_Text_ExplainBulkUp, MSGBOX_DEFAULT
 	setflag FLAG_RECEIVED_TM_BULK_UP
 	return
 
 DewfordTown_Gym_EventScript_GiveBulkUp2: @ 0x081F2FC3
 	giveitem ITEM_TM_BULK_UP
-	goto_if_eq VAR_RESULT, 0x0, Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, 0, Common_EventScript_ShowBagIsFull
 	msgbox DewfordTown_Gym_Text_ExplainBulkUp, MSGBOX_DEFAULT
 	setflag FLAG_RECEIVED_TM_BULK_UP
 	release
