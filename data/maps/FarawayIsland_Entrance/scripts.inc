@@ -8,12 +8,12 @@ FarawayIsland_Entrance_OnTransition:
 
 FarawayIsland_Entrance_EventScript_SetCloudsWeather::
 	setweather WEATHER_SUNNY_CLOUDS
-	resetweather
+	doweather
 	end
 
 FarawayIsland_Entrance_EventScript_ClearWeather::
 	setweather WEATHER_NONE
-	resetweather
+	doweather
 	end
 
 FarawayIsland_Entrance_EventScript_Sailor::

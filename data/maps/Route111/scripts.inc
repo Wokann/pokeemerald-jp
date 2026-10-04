@@ -242,14 +242,14 @@ Route111_Movement_PushRightFromRoute:
 Route111_EventScript_SunTrigger:: @ 0x081EA456
 	setweather WEATHER_SUNNY
 	fadenewbgm MUS_ROUTE110
-	resetweather
+	doweather
 	setvar VAR_TEMP_3, FALSE
 	end
 
 Route111_EventScript_SandstormTrigger:: @ 0x081EA463
 	setweather WEATHER_SANDSTORM
 	fadenewbgm MUS_DESERT
-	resetweather
+	doweather
 	end
 
 Route111_EventScript_Victor:: @ 0x081EA46B

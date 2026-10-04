@@ -19,10 +19,10 @@ MtPyre_Exterior_EventScript_EnterFromSummit:: @ 0x08216B66
 
 MtPyre_Exterior_EventScript_FogTrigger:: @ 0x08216B6A
 	setweather WEATHER_FOG_HORIZONTAL
-	resetweather
+	doweather
 	end
 
 MtPyre_Exterior_EventScript_SunTrigger:: @ 0x08216B6F
 	setweather WEATHER_SUNNY
-	resetweather
+	doweather
 	end

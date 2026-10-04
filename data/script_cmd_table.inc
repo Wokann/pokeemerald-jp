@@ -179,10 +179,9 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_CHECKPLAYERGENDER ScrCmd_checkplayergender @ 0xA0
 	script_cmd_table_entry SCR_OP_PLAYMONCRY ScrCmd_playmoncry @ 0xA1
 	script_cmd_table_entry SCR_OP_SETMETATILE ScrCmd_setmetatile @ 0xA2
-	@ JP does weather at 0xA3 and resets it at 0xA5, opposite US.
-	script_cmd_table_entry SCR_OP_DOWEATHER ScrCmd_doweather @ 0xA3
+	script_cmd_table_entry SCR_OP_RESETWEATHER ScrCmd_resetweather @ 0xA3
 	script_cmd_table_entry SCR_OP_SETWEATHER ScrCmd_setweather @ 0xA4
-	script_cmd_table_entry SCR_OP_RESETWEATHER ScrCmd_resetweather @ 0xA5
+	script_cmd_table_entry SCR_OP_DOWEATHER ScrCmd_doweather @ 0xA5
 	script_cmd_table_entry SCR_OP_SETSTEPCALLBACK ScrCmd_setstepcallback @ 0xA6
 	script_cmd_table_entry SCR_OP_SETMAPLAYOUTINDEX ScrCmd_setmaplayoutindex @ 0xA7
 	script_cmd_table_entry SCR_OP_SETOBJECTSUBPRIORITY ScrCmd_setobjectsubpriority @ 0xA8

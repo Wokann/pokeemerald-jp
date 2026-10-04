@@ -4968,8 +4968,8 @@ scrcmd.s
 08099798 ScrCmd_dotimebasedevents ScrCmd_dotimebasedevents
 080997a4 ScrCmd_gettime ScrCmd_gettime
 080997dc ScrCmd_setweather ScrCmd_setweather
-080997f8 ScrCmd_doweather ScrCmd_resetweather
-08099804 ScrCmd_resetweather ScrCmd_doweather
+080997f8 ScrCmd_resetweather ScrCmd_resetweather
+08099804 ScrCmd_doweather ScrCmd_doweather
 08099810 ScrCmd_setstepcallback ScrCmd_setstepcallback
 08099828 ScrCmd_setmaplayoutindex ScrCmd_setmaplayoutindex
 08099844 ScrCmd_warp ScrCmd_warp

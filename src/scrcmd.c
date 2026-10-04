@@ -740,15 +740,15 @@ bool8 ScrCmd_setweather(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_doweather(struct ScriptContext *ctx)
-{
-    SetSav1WeatherFromCurrMapHeader();
-    return FALSE;
-}
-
 bool8 ScrCmd_resetweather(struct ScriptContext *ctx)
 {
     SetSavedWeatherFromCurrMapHeader();
+    return FALSE;
+}
+
+bool8 ScrCmd_doweather(struct ScriptContext *ctx)
+{
+    DoCurrentWeather();
     return FALSE;
 }
 

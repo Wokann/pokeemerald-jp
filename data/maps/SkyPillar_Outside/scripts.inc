@@ -73,8 +73,7 @@ SkyPillar_Outside_EventScript_WallaceScene::
 	closemessage
 	setflag FLAG_SYS_WEATHER_CTRL
 	setweather WEATHER_ABNORMAL
-	@ JP uses resetweather here (0xA5), unlike the US doweather command.
-	resetweather
+	doweather
 	special WaitWeather
 	delay 30
 	msgbox SkyPillar_Outside_Text_GotToGoBackForSootopolis, MSGBOX_DEFAULT

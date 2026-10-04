@@ -42,7 +42,7 @@ NavelRock_Top_EventScript_HoOh::
 	waitmovement 0
 	delay 50
 	setweather WEATHER_NONE
-	resetweather
+	doweather
 	waitse
 	playmoncry SPECIES_HO_OH, CRY_MODE_ENCOUNTER
 	delay 30

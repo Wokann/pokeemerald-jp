@@ -31,7 +31,7 @@ SeafloorCavern_Room9_EventScript_ArchieAwakenKyogre:: @ 0x082189FE
 	trainerbattle_no_intro TRAINER_ARCHIE, SeafloorCavern_Room9_Text_ArchieDefeat
 	msgbox SeafloorCavern_Room9_Text_ArchieWithThisRedOrb, MSGBOX_DEFAULT
 	setweather WEATHER_NONE
-	resetweather
+	doweather
 	special Script_FadeOutMapMusic
 	msgbox SeafloorCavern_Room9_Text_RedOrbShinesByItself, MSGBOX_DEFAULT
 	special WaitWeather

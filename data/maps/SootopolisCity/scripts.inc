@@ -185,7 +185,7 @@ SootopolisCity_EventScript_LegendariesSceneFromPokeCenter::
 	delay 60
 	fadescreenspeed FADE_TO_BLACK, 8
 	setweather WEATHER_ABNORMAL
-	resetweather
+	doweather
 	setvar VAR_0x8004, FALSE
 	special Script_DoRayquazaScene
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, Common_Movement_WalkInPlaceFasterLeft
@@ -283,7 +283,7 @@ SootopolisCity_EventScript_LegendariesSceneFromDive::
 	delay 60
 	fadescreenspeed FADE_TO_BLACK, 8
 	setweather WEATHER_ABNORMAL
-	resetweather
+	doweather
 	setvar VAR_0x8004, FALSE
 	special Script_DoRayquazaScene
 	applymovement LOCALID_SOOTOPOLIS_KYOGRE, Common_Movement_WalkInPlaceFasterLeft
@@ -496,7 +496,7 @@ SootopolisCity_EventScript_RayquazaSceneFromPokeCenter::
 	@ JP opcode 0xC5 is a verified Pokemon-cry wait at this site.
 	waitmoncry_jp
 	setweather WEATHER_NONE
-	resetweather
+	doweather
 	applywaitmovement LOCALID_SOOTOPOLIS_RAYQUAZA, SootopolisCity_Movement_RayquazaFlyOff
 	removeobject LOCALID_SOOTOPOLIS_RAYQUAZA
 	special WaitWeather
@@ -546,7 +546,7 @@ SootopolisCity_EventScript_RayquazaSceneFromDive::
 	@ JP opcode 0xC5 is a verified Pokemon-cry wait at this site.
 	waitmoncry_jp
 	setweather WEATHER_NONE
-	resetweather
+	doweather
 	applywaitmovement LOCALID_SOOTOPOLIS_RAYQUAZA, SootopolisCity_Movement_RayquazaFlyOff
 	removeobject LOCALID_SOOTOPOLIS_RAYQUAZA
 	special WaitWeather

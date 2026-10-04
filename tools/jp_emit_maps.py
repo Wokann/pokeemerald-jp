@@ -10644,8 +10644,8 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
         },
     },
-    # Mt. Pyre Exterior is a complete small owner. Keep JP resetweather where
-    # the ROM uses it, while applying US-aligned names to its weather flow.
+    # Mt. Pyre Exterior is a complete small owner. Its weather opcodes and
+    # command semantics match US; retain the JP byte stream and local names.
     'MtPyre_Exterior': {
         'preserve_region_script_aliases': False,
         'external_labels': {

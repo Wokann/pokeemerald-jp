@@ -180,8 +180,7 @@ AbnormalWeather_EventScript_EndEventAndCleanup_2::
 	closemessage
 	fadescreenswapbuffers FADE_TO_BLACK
 	setweather WEATHER_SUNNY
-	@ JP uses the resetweather opcode here rather than the US doweather opcode.
-	resetweather
+	doweather
 	call AbnormalWeather_EventScript_CleanupMapTiles
 	special DrawWholeMapView
 	setvar VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_NONE

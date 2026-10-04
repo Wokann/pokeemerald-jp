@@ -26,7 +26,7 @@ JaggedPass_OnTransition:: @ 0x08215B27
 
 JaggedPass_EventScript_SetWeatherAsh:: @ 0x08215B33
 	setweather WEATHER_VOLCANIC_ASH
-	resetweather
+	doweather
 	return
 
 JaggedPass_OnLoad:: @ 0x08215B38
