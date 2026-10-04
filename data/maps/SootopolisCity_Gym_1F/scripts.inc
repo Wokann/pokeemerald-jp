@@ -72,8 +72,7 @@ SootopolisCity_Gym_1F_EventScript_UnlockThirdStairs:: @ 0x0820E2ED
 SootopolisCity_Gym_1F_EventScript_FallThroughIce:: @ 0x0820E301
 	lockall
 	delay 0x14
-	applymovement LOCALID_PLAYER, SootopolisCity_Gym_1F_Movement_FallThroughIce
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, SootopolisCity_Gym_1F_Movement_FallThroughIce
 	playse SE_FALL
 	delay 0x3C
 	warphole MAP_SOOTOPOLIS_CITY_GYM_B1F

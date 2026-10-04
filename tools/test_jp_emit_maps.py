@@ -1168,5 +1168,95 @@ class ReviewedMapShorthandTest(unittest.TestCase):
         self.assertEqual(total_texts, 56)
 
 
+    def test_sootopolis_gym_regeneration_retains_ice_counts_and_fall_waits(self):
+        name = 'SootopolisCity_Gym_1F'
+        for tag, source in (
+                ('JP generated', render_map(name)),
+                ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                    encoding='utf-8'))):
+            source = re.sub(r'\b0x([0-9A-Fa-f]+)\b',
+                            lambda m: str(int(m.group(1), 16)), source)
+            with self.subTest(source=tag):
+                self.assertIn('\tsetvar VAR_ICE_STEP_COUNT, 1\n\tend\n', source)
+                self.assertIn('\tsetstepcallback STEP_CB_SOOTOPOLIS_ICE\n\tend\n', source)
+                self.assertIn('\tspecial SetSootopolisGymCrackedIceMetatiles\n', source)
+                for count, suffix in ((8, 'First'), (28, 'Second'), (67, 'Third')):
+                    self.assertIn('\tmap_script_2 VAR_ICE_STEP_COUNT, ' + str(count)
+                                  + ', ' + name + '_EventScript_Unlock' + suffix + 'Stairs\n',
+                                  source)
+                self.assertIn('\tmap_script_2 VAR_ICE_STEP_COUNT, 0, ' + name
+                              + '_EventScript_FallThroughIce\n', source)
+                self.assertEqual(source.count('\taddvar VAR_ICE_STEP_COUNT, 1\n'), 3)
+                self.assertEqual(source.count('\tdelay 40\n\tplayse SE_ICE_STAIRS\n'), 3)
+                for x, y in ((8, 4), (8, 5), (8, 10), (8, 11), (8, 15), (8, 16)):
+                    self.assertIn('\tsetmetatile ' + str(x) + ', ' + str(y)
+                                  + ', METATILE_SootopolisGym_Stairs, FALSE\n', source)
+                self.assertIn('\tlockall\n\tdelay 20\n\tapplywaitmovement LOCALID_PLAYER, '
+                              + name + '_Movement_FallThroughIce\n'
+                              '\tplayse SE_FALL\n\tdelay 60\n'
+                              '\twarphole MAP_SOOTOPOLIS_CITY_GYM_B1F\n'
+                              '\twaitstate\n\tend\n', source)
+                self.assertEqual(source.count('\tapplywaitmovement '), 1)
+                self.assertNotIn('\tapplymovement ', source)
+                self.assertNotIn('\twaitmovement ', source)
+
+    def test_sootopolis_gym_regeneration_retains_badge_tm_and_rematch_routes(self):
+        name = 'SootopolisCity_Gym_1F'
+        for tag, source in (
+                ('JP generated', render_map(name)),
+                ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                    encoding='utf-8'))):
+            source = re.sub(r'\b0x([0-9A-Fa-f]+)\b',
+                            lambda m: str(int(m.group(1), 16)), source)
+            with self.subTest(source=tag):
+                self.assertIn('\ttrainerbattle_single TRAINER_JUAN_1, ' + name
+                              + '_Text_JuanIntro, ' + name + '_Text_JuanDefeat, '
+                              + name + '_EventScript_JuanDefeated, NO_MUSIC\n', source)
+                self.assertIn('\tsetflag FLAG_DEFEATED_SOOTOPOLIS_GYM\n'
+                              '\tsetflag FLAG_BADGE08_GET\n', source)
+                self.assertIn('\tsetvar VAR_SOOTOPOLIS_CITY_STATE, 6\n'
+                              '\tclearflag FLAG_HIDE_SOOTOPOLIS_CITY_MAN_1\n'
+                              '\tsetvar VAR_0x8008, 8\n', source)
+                for failure in ('BagIsFull', 'ShowBagIsFull'):
+                    self.assertIn('\tgiveitem ITEM_TM_WATER_PULSE\n'
+                                  '\tgoto_if_eq VAR_RESULT, FALSE, Common_EventScript_'
+                                  + failure + '\n\tmsgbox ' + name
+                                  + '_Text_ExplainWaterPulse, MSGBOX_DEFAULT\n'
+                                  '\tsetflag FLAG_RECEIVED_TM_WATER_PULSE\n', source)
+                self.assertIn('\tgoto_if_unset FLAG_BADGE06_GET, ' + name
+                              + '_EventScript_GoGetFortreeBadge\n', source)
+                self.assertIn('\tsetflag FLAG_ENABLE_JUAN_MATCH_CALL\n', source)
+                self.assertIn('\ttrainerbattle_rematch_double TRAINER_JUAN_1, '
+                              + name + '_Text_JuanPreRematch, ' + name
+                              + '_Text_JuanRematchDefeat, ' + name
+                              + '_Text_JuanRematchNeedTwoMons\n', source)
+
+    def test_sootopolis_gym_regeneration_retains_labels_jp_text_and_json(self):
+        total_labels = total_texts = 0
+        for floor, count in (('1F', 16), ('B1F', 30)):
+            name = 'SootopolisCity_Gym_' + floor
+            generated = render_map(name)
+            checked = (ROOT / 'data/maps' / name / 'scripts.inc').read_text(encoding='utf-8')
+            reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+            with self.subTest(map=name):
+                labels = re.findall(r'^(\w+):{1,2}', generated, re.M)
+                self.assertEqual(labels, re.findall(r'^(\w+):{1,2}', reference, re.M))
+                pattern = r'^(\w+):{1,2}[^\n]*\n((?:\t\.string [^\n]*\n)+)'
+                texts = re.findall(pattern, generated, re.M)
+                self.assertEqual(len(texts), count)
+                self.assertEqual(texts, re.findall(pattern, checked, re.M))
+                self.assertNotIn('{STRING ', generated)
+                self.assertNotIn('{ESCAPE ', generated)
+                self.assertNotIn('.incbin', generated)
+                self.assertNotIn('.set ', generated)
+                self.assertEqual(
+                    json.loads((ROOT / 'data/maps' / name / 'map.json').read_text(encoding='utf-8')),
+                    json.loads((emitter.US_MAPS / name / 'map.json').read_text(encoding='utf-8')))
+                total_labels += len(labels)
+                total_texts += len(texts)
+        self.assertEqual(total_labels, 83)
+        self.assertEqual(total_texts, 46)
+
+
 if __name__ == '__main__':
     unittest.main()
