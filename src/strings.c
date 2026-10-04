@@ -28,6 +28,7 @@
 #define STRINGS_MENU_SELECTOR_ARROW3 __attribute__((section(".rodata.strings_menu_selector_arrow3"), aligned(1)))
 #define STRINGS_BATTLE_FACTORY_SELECTION __attribute__((section(".rodata.strings_battle_factory_selection"), aligned(1)))
 #define STRINGS_DECORATION_TEXT __attribute__((section(".rodata.strings_decoration_text"), aligned(1)))
+#define STRINGS_SHARED_NAME_TEXT __attribute__((section(".rodata.strings_shared_name_text"), aligned(1)))
 #define STRINGS_MOVE_RELEARNER_TEXT __attribute__((section(".rodata.strings_move_relearner_text"), aligned(1), used))
 #define STRINGS_DIPLOMA_TEXT __attribute__((section(".rodata.strings_diploma_text"), aligned(1), used))
 #define STRINGS_EXPANDED_PLACEHOLDER_TEXT __attribute__((section(".rodata.strings_expanded_placeholder_text"), aligned(1), used))
@@ -201,6 +202,15 @@ STRINGS_DECORATION_TEXT const u8 gText_Roberto[] = _("サダハル");
 STRINGS_DECORATION_TEXT const u8 gText_TurnOff[] = _("せつぞくを　きる");
 STRINGS_DECORATION_TEXT const u8 gText_Decoration[] = _("もようがえ");
 STRINGS_DECORATION_TEXT const u8 gText_ItemStorage[] = _("どうぐ　あずかり");
+
+STRINGS_SHARED_NAME_TEXT const u8 gText_Dad[] = _("パパ");
+STRINGS_SHARED_NAME_TEXT const u8 gText_Mom[] = _("ママ");
+STRINGS_SHARED_NAME_TEXT const u8 gText_Wallace[] = _("ミクリ");
+STRINGS_SHARED_NAME_TEXT const u8 gText_Steven[] = _("ダイゴ");
+STRINGS_SHARED_NAME_TEXT const u8 gText_Brawly[] = _("トウキ");
+STRINGS_SHARED_NAME_TEXT const u8 gText_Winona[] = _("ナギ");
+STRINGS_SHARED_NAME_TEXT const u8 gText_Phoebe[] = _("フヨウ");
+STRINGS_SHARED_NAME_TEXT const u8 gText_Glacia[] = _("プリム");
 
 STRINGS_DAYCARE const u8 gDaycareText_GetAlongVeryWell[] = _("2ひきの　なかは\nとっても　よい　ようじゃ");
 STRINGS_DAYCARE const u8 gDaycareText_GetAlong[] = _("2ひきの　なかは\nまずまずの　ようじゃ");
