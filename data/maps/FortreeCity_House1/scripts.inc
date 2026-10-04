@@ -3,8 +3,6 @@
 FortreeCity_House1_MapScripts::
 	.byte 0
 
-@ JP only: ChoosePartyMon requires explicit waitstate; the special table differs from US.
-
 FortreeCity_House1_EventScript_Trader:: @ 0x082041CB
 	lock
 	faceplayer

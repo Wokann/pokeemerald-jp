@@ -11497,9 +11497,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x082042E3: {0x02: 'STR_VAR_1', 0x03: 'STR_VAR_2'},
             0x08204305: {0x02: 'STR_VAR_1'},
         },
-        'preamble': (
-            '@ JP only: ChoosePartyMon requires explicit waitstate; the special table differs from US.',
-        ),
         'symbols': {
             'flags': {0x009B: 'FLAG_FORTREE_NPC_TRADE_COMPLETED'},
             'vars': {
