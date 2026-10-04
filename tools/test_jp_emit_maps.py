@@ -828,5 +828,84 @@ class ReviewedMapShorthandTest(unittest.TestCase):
                 self.assertEqual(actual, reference)
 
 
+    def test_mossdeep_gym_regeneration_retains_unused_switch_movement_helpers(self):
+        name = 'MossdeepCity_Gym'
+        generated = render_map(name)
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        for tag, source in (('JP generated', generated), ('US reference', reference)):
+            with self.subTest(source=tag):
+                self.assertEqual(source.count(
+                    '\tapplywaitmovement LOCALID_PLAYER, '
+                    + name + '_Movement_WaitAfterSwitchUse\n'), 8)
+                self.assertNotIn('\tapplymovement ', source)
+                self.assertRegex(source, name + '_Movement_WaitAfterSwitchUse:'
+                                 r'[^\n]*\n\tdelay_16\n\tdelay_16\n\tstep_end\n')
+                for number in range(1, 5):
+                    flag = 'FLAG_MOSSDEEP_GYM_SWITCH_' + str(number)
+                    self.assertEqual(source.count('\tsetflag ' + flag + '\n'), 1)
+                    self.assertEqual(source.count('\tclearflag ' + flag + '\n'), 1)
+        self.assertEqual(emitter.ROM[0x20B799:0x20B79C], bytes((0x14, 0x14, 0xFE)))
+
+    def test_mossdeep_gym_regeneration_retains_explicit_rotating_tile_waits(self):
+        name = 'MossdeepCity_Gym'
+        generated = render_map(name)
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        for number, color in enumerate(('Yellow', 'Blue', 'Green', 'Purple', 'Red')):
+            label = name + '_EventScript_' + color + 'FloorSwitch'
+            for tag, source in (('JP generated', generated), ('US reference', reference)):
+                with self.subTest(color=color, source=tag):
+                    match = re.search(r'^' + label + r':{1,2}[^\n]*\n(.*?)'
+                                      r'(?=^\w+:{1,2}|\Z)', source, re.M | re.S)
+                    self.assertIsNotNone(match)
+                    block = match.group(1)
+                    block = re.sub(r'\b0x([0-9A-Fa-f]+)\b',
+                                   lambda m: str(int(m.group(1), 16)), block)
+                    wait = '\twaitmovement 0\n' if tag == 'JP generated' else ''
+                    self.assertEqual(block.strip(), (
+                        '\tplayse SE_SWITCH\n\twaitse\n\tplayse SE_REPEL\n'
+                        '\tinitrotatingtilepuzzle FALSE\n'
+                        '\tmoverotatingtileobjects ' + str(number) + '\n'
+                        + wait + '\tturnrotatingtileobjects\n' + wait
+                        + '\tfreerotatingtilepuzzle\n\tend').strip())
+        self.assertEqual(generated.count('\twaitmovement 0\n'), 10)
+        # Unlike upstream, current JP primitive macros do not emit waits.
+        # Keep the source waits until the entire macro/caller contract migrates.
+        for tag, path in (
+                ('JP', ROOT / 'asm/macros/event.inc'),
+                ('US', emitter.US_MAPS.parents[1] / 'asm/macros/event.inc')):
+            macros = path.read_text(encoding='utf-8')
+            for command in ('moverotatingtileobjects', 'turnrotatingtileobjects'):
+                with self.subTest(source=tag, macro=command):
+                    body = re.search(r'^\s*\.macro ' + command + r'[^\n]*\n'
+                                     r'(.*?)^\s*\.endm', macros, re.M | re.S)
+                    self.assertIsNotNone(body)
+                    self.assertEqual(len(re.findall(r'^\s*waitmovement\b',
+                                                    body.group(1), re.M)),
+                                     int(tag == 'US'))
+
+    def test_mossdeep_gym_regeneration_retains_jp_text_and_label_boundaries(self):
+        name = 'MossdeepCity_Gym'
+        generated = render_map(name)
+        checked = (ROOT / 'data/maps' / name / 'scripts.inc').read_text(encoding='utf-8')
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        label_pattern = r'^(\w+):{1,2}'
+        self.assertEqual(re.findall(label_pattern, generated, re.M),
+                         re.findall(label_pattern, reference, re.M))
+        text_pattern = r'^(' + name + r'_Text_\w+):{1,2}[^\n]*\n(.*?)'
+        text_pattern += r'(?=^\w+:{1,2}|\Z)'
+        emitted_texts = re.findall(text_pattern, generated, re.M | re.S)
+        checked_texts = re.findall(text_pattern, checked, re.M | re.S)
+        self.assertEqual(len(emitted_texts), 52)
+        self.assertEqual([(label, body.strip()) for label, body in emitted_texts],
+                         [(label, body.strip()) for label, body in checked_texts])
+        self.assertEqual(re.findall(r'\{[^}]+\}', ''.join(
+            body for _, body in emitted_texts)), ['{PLAYER}'] * 3)
+        self.assertIn('フウ“へへへ', generated)
+        self.assertNotIn('{STRING ', generated)
+        self.assertNotIn('{ESCAPE ', generated)
+        self.assertNotIn('.incbin', generated)
+        self.assertNotIn('.set ', generated)
+
+
 if __name__ == '__main__':
     unittest.main()
