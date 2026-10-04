@@ -2006,9 +2006,9 @@ void BattleAICmd_get_hold_effect(void)
         battler = gBattlerTarget;
 
     if (gActiveBattler != battler)
-        gBattleResources->ai->funcResult = GetItemHoldEffect(gBattleResources->battleHistory->itemEffects[battler]);
+        gBattleResources->ai->funcResult = ItemId_GetHoldEffect(gBattleResources->battleHistory->itemEffects[battler]);
     else
-        gBattleResources->ai->funcResult = GetItemHoldEffect(gBattleMons[battler].item);
+        gBattleResources->ai->funcResult = ItemId_GetHoldEffect(gBattleMons[battler].item);
 
     gUnknown_203A804 += 2;
 }

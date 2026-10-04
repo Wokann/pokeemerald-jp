@@ -7052,7 +7052,7 @@ __attribute__((naked)) void sub_080EFF10(void)
         "	ldrh r0, [r1]\n\t"
         "	cmp r0, #0\n\t"
         "	beq _080EFF42\n\t"
-        "	bl sub_080D6CD4\n\t"
+        "	bl ItemId_GetPrice\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
         "	adds r1, r6, #0\n\t"

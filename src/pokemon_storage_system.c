@@ -746,7 +746,7 @@ extern bool8 sub_080CCDD0(void);
 extern void BoxSetMosaic(void);
 extern u8 SetMenuTexts_Mon(void);
 extern u8 SetMenuTexts_Item(void);
-extern const u8 *ItemId_GetHoldEffect(u16 itemId);
+extern const u8 *ItemId_GetDescription(u16 itemId);
 extern void sub_080D0EA4(u8 id, u8 callbackId, u8 cursorArea, u8 cursorPos);
 extern void sub_080D1378(struct Sprite *sprite);
 extern u8 sub_080D0C10(u8 cursorArea, u8 cursorPos);
@@ -8196,9 +8196,9 @@ void Cb_HandleMovingMonFromParty(void)
     const u8 *description;
 
     if (IsActiveItemMoving())
-        description = ItemId_GetHoldEffect(sStorage->movingItemId);
+        description = ItemId_GetDescription(sStorage->movingItemId);
     else
-        description = ItemId_GetHoldEffect(sStorage->displayMonItemId);
+        description = ItemId_GetDescription(sStorage->displayMonItemId);
 
     FillWindowPixelBuffer(2, PIXEL_FILL(1));
     AddTextPrinterParameterized5(2, 1, description, 4, 0, 0, NULL, 0, 1);

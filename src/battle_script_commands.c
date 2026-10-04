@@ -723,8 +723,8 @@ void Cmd_accuracycheck(void)
         }
         else
         {
-            holdEffect = GetItemHoldEffect(gBattleMons[gBattlerTarget].item);
-            param = GetItemHoldEffectParam(gBattleMons[gBattlerTarget].item);
+            holdEffect = ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item);
+            param = ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item);
         }
 
         gPotentialItemEffectBattler = gBattlerTarget;
@@ -820,7 +820,7 @@ void Cmd_critcalc(void)
     if (item == ITEM_ENIGMA_BERRY)
         holdEffect = gEnigmaBerries[gBattlerAttacker].holdEffect;
     else
-        holdEffect = GetItemHoldEffect(item);
+        holdEffect = ItemId_GetHoldEffect(item);
 
     gPotentialItemEffectBattler = gBattlerAttacker;
 
@@ -1227,8 +1227,8 @@ void Cmd_adjustnormaldamage(void)
     }
     else
     {
-        holdEffect = GetItemHoldEffect(gBattleMons[gBattlerTarget].item);
-        param = GetItemHoldEffectParam(gBattleMons[gBattlerTarget].item);
+        holdEffect = ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item);
+        param = ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item);
     }
 
     gPotentialItemEffectBattler = gBattlerTarget;
@@ -1270,8 +1270,8 @@ void Cmd_adjustnormaldamage2(void)
     }
     else
     {
-        holdEffect = GetItemHoldEffect(gBattleMons[gBattlerTarget].item);
-        param = GetItemHoldEffectParam(gBattleMons[gBattlerTarget].item);
+        holdEffect = ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item);
+        param = ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item);
     }
 
     gPotentialItemEffectBattler = gBattlerTarget;
@@ -1914,8 +1914,8 @@ void Cmd_trainerslideout(void);
 void HandleBattleWindow(u8 xStart, u8 yStart, u8 xEnd, u8 yEnd, u8 flags);
 void BattleCreateYesNoCursorAt(u8 cursorPosition);
 void BattleDestroyYesNoCursorAt(u8 cursorPosition);
-u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
-u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
+u8 ItemId_GetHoldEffect(u16 item); // JP ItemId_GetHoldEffect
+u8 ItemId_GetHoldEffectParam(u16 item); // JP ItemId_GetHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
 void BtlController_EmitCmd55(u8 bufferId, u8 battleOutcome);
 void sub_0814FA04(const u8 *text, u8 windowId);
@@ -2992,7 +2992,7 @@ void Cmd_getexp(void)
                 if (item == ITEM_ENIGMA_BERRY)
                     holdEffect = gSaveBlock1Ptr->enigmaBerry.holdEffect;
                 else
-                    holdEffect = GetItemHoldEffect(item);
+                    holdEffect = ItemId_GetHoldEffect(item);
 
                 if (holdEffect == HOLD_EFFECT_EXP_SHARE)
                     viaExpShare++;
@@ -3031,7 +3031,7 @@ void Cmd_getexp(void)
             if (item == ITEM_ENIGMA_BERRY)
                 holdEffect = gSaveBlock1Ptr->enigmaBerry.holdEffect;
             else
-                holdEffect = GetItemHoldEffect(item);
+                holdEffect = ItemId_GetHoldEffect(item);
 
             if (holdEffect != HOLD_EFFECT_EXP_SHARE && !(gBattleStruct->sentInPokes & 1))
             {
@@ -3919,7 +3919,7 @@ void Cmd_moveend(void)
     if (gBattleMons[gBattlerAttacker].item == ITEM_ENIGMA_BERRY)
         holdEffectAtk = gEnigmaBerries[gBattlerAttacker].holdEffect;
     else
-        holdEffectAtk = GetItemHoldEffect(gBattleMons[gBattlerAttacker].item);
+        holdEffectAtk = ItemId_GetHoldEffect(gBattleMons[gBattlerAttacker].item);
 
     choicedMoveAtk = &gBattleStruct->choicedMove[gBattlerAttacker];
     GET_MOVE_TYPE(gCurrentMove, moveType);
@@ -5559,8 +5559,8 @@ void Cmd_adjustsetdamage(void)
     }
     else
     {
-        holdEffect = GetItemHoldEffect(gBattleMons[gBattlerTarget].item);
-        param = GetItemHoldEffectParam(gBattleMons[gBattlerTarget].item);
+        holdEffect = ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item);
+        param = ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item);
     }
 
     gPotentialItemEffectBattler = gBattlerTarget;
@@ -7124,8 +7124,8 @@ void Cmd_tryKO(void)
     }
     else
     {
-        holdEffect = sub_080D6CF8(gBattleMons[gBattlerTarget].item);
-        param = sub_080D6D1C(gBattleMons[gBattlerTarget].item);
+        holdEffect = ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item);
+        param = ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item);
     }
 
     gPotentialItemEffectBattler = gBattlerTarget;
