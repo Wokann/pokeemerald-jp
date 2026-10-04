@@ -16,16 +16,14 @@ LilycoveCity_House3_EventScript_PokefanF:: @ 0x0820A074
 	goto_if_eq VAR_RESULT, NO, LilycoveCity_House3_EventScript_DeclinePokeblockLearn
 	msgbox LilycoveCity_House3_Text_ExplainPokeblocks, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	release
 	end
 
 LilycoveCity_House3_EventScript_DeclinePokeblockLearn:: @ 0x0820A09E
 	msgbox LilycoveCity_House3_Text_OhAreYouSure, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	release
 	end
 
@@ -34,8 +32,7 @@ LilycoveCity_House3_EventScript_Man:: @ 0x0820A0B3
 	faceplayer
 	msgbox LilycoveCity_House3_Text_HappyToHaveQuadruplets, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	release
 	end
 

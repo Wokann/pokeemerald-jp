@@ -566,6 +566,94 @@ class ReviewedMapShorthandTest(unittest.TestCase):
                     if tag == 'JP generated':
                         self.assertIn('\t.string "{PLAYER}は\\n"\n', block.group(1))
                         self.assertEqual(block.group(1).count('\\p'), 2)
+    def test_lilycove_interior_regeneration_retains_npc_facing_helpers(self):
+        for name, count in (('LilycoveCity_MoveDeletersHouse', 1),
+                            ('LilycoveCity_House3', 3)):
+            generated = render_map(name)
+            reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                encoding='utf-8')
+            for tag, source in (('JP generated', generated), ('US reference', reference)):
+                with self.subTest(map=name, source=tag):
+                    self.assertEqual(source.count('\tapplywaitmovement '), count)
+                    if name.endswith('House3'):
+                        self.assertEqual(source.count(
+                            '\tclosemessage\n'
+                            '\tapplywaitmovement VAR_LAST_TALKED, '
+                            'Common_Movement_FaceOriginalDirection\n'
+                            '\trelease\n\tend\n'), 3)
+                    else:
+                        self.assertIn(
+                            '\tlockall\n\tapplywaitmovement LOCALID_MOVE_DELETER, '
+                            'Common_Movement_FacePlayer\n\tmsgbox ', source)
+
+    def test_move_deleter_regeneration_retains_selection_guards_and_wait_contract(self):
+        name = 'LilycoveCity_MoveDeletersHouse'
+        generated = render_map(name)
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        guards = (
+            '\tspecial ChoosePartyMon\n'
+            '\tgoto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, '
+            + name + '_EventScript_ComeAgain\n'
+            '\tspecial IsSelectedMonEgg\n\tgoto_if_eq VAR_RESULT, TRUE, '
+            + name + '_EventScript_EggCantForgetMoves\n'
+            '\tspecial GetNumMovesSelectedMonHas\n\tgoto_if_eq VAR_RESULT, 1, '
+            + name + '_EventScript_MonOnlyKnowsOneMove\n')
+        for tag, source in (('JP generated', generated), ('US reference', reference)):
+            with self.subTest(source=tag):
+                self.assertIn(guards, source)
+                self.assertIn(
+                    '\tfadescreen FADE_TO_BLACK\n'
+                    '\tspecial MoveDeleterChooseMoveToForget\n'
+                    '\tfadescreen FADE_FROM_BLACK\n'
+                    '\tgoto_if_eq VAR_0x8005, MAX_MON_MOVES, '
+                    + name + '_EventScript_ChooseMonAndMoveToForget\n', source)
+                self.assertIn(
+                    '\tspecial IsLastMonThatKnowsSurf\n'
+                    '\tgoto_if_eq VAR_RESULT, TRUE, '
+                    + name + '_EventScript_LastMonWithSurf\n'
+                    '\tspecial MoveDeleterForgetMove\n', source)
+                self.assertNotIn('\tspecial ChoosePartyMon\n\twaitstate\n', source)
+                for suffix in ('MonsMoveShouldBeForgotten', 'MonHasForgottenMove'):
+                    label = name + '_Text_' + suffix
+                    block = re.search(
+                        r'^' + re.escape(label)
+                        + r':{1,2}[^\n]*\n(.*?)(?=^\w+:{1,2}|\Z)',
+                        source, re.M | re.S)
+                    self.assertIsNotNone(block)
+                    self.assertEqual(re.findall(r'\{[^}]+\}', block.group(1)),
+                                     ['{STR_VAR_1}', '{STR_VAR_2}'])
+        specials = (ROOT / 'data' / 'specials.inc').read_text(encoding='utf-8')
+        self.assertRegex(specials,
+                         r'(?m)^\s*def_special ChoosePartyMon, waitstate=1\s*$')
+        self.assertRegex(specials,
+                         r'(?m)^\s*def_special MoveDeleterChooseMoveToForget\s*$')
+
+    def test_residential_regeneration_retains_shared_activity_and_rest_gift(self):
+        activity = 'LilycoveCity_House3'
+        rest = 'LilycoveCity_House2'
+        for name in (activity, rest):
+            generated = render_map(name)
+            reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                encoding='utf-8')
+            for tag, source in (('JP generated', generated), ('US reference', reference)):
+                with self.subTest(map=name, source=tag):
+                    if name == activity:
+                        self.assertEqual(source.count(
+                            '\trandom 4\n\tcopyvar VAR_TEMP_1, VAR_RESULT\n'), 1)
+                        self.assertEqual(source.count('\tswitch VAR_TEMP_1\n'), 4)
+                        for value, suffix in enumerate(('WereDoingMultiBattle',
+                                                        'WereMixingRecords',
+                                                        'WereBlendingBerries',
+                                                        'WereDoingContest')):
+                            self.assertEqual(source.count('\tcase ' + str(value) + ', '
+                                                          + activity + '_EventScript_'
+                                                          + suffix + '\n'), 4)
+                    else:
+                        self.assertIn(
+                            '\tgiveitem ITEM_TM_REST\n'
+                            '\tgoto_if_eq VAR_RESULT, FALSE, '
+                            'Common_EventScript_ShowBagIsFull\n'
+                            '\tsetflag FLAG_RECEIVED_TM_REST\n', source)
 
 
 if __name__ == '__main__':
