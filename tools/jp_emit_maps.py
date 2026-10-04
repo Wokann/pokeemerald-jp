@@ -10650,6 +10650,12 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x0395: 'FLAG_HIDE_MT_PYRE_SUMMIT_TEAM_AQUA',
             },
             'items': {0x0177: 'ITEM_MAGMA_EMBLEM'},
+            'trainers': {
+                0x0017: 'TRAINER_GRUNT_MT_PYRE_1',
+                0x0018: 'TRAINER_GRUNT_MT_PYRE_2',
+                0x0019: 'TRAINER_GRUNT_MT_PYRE_3',
+                0x0239: 'TRAINER_GRUNT_MT_PYRE_4',
+            },
             'local_ids': {
                 0x02: 'LOCALID_MT_PYRE_SUMMIT_ARCHIE',
                 0x03: 'LOCALID_MT_PYRE_SUMMIT_OLD_LADY',

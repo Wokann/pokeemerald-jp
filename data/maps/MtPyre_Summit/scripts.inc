@@ -33,10 +33,8 @@ MtPyre_Summit_EventScript_TeamAquaTrigger2:: @ 0x08216BAD
 
 MtPyre_Summit_EventScript_TeamAquaExits:: @ 0x08216BB9
 	playbgm MUS_ENCOUNTER_AQUA, FALSE
-	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
-	waitmovement 0
-	applymovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Common_Movement_FaceUp
+	applywaitmovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, Common_Movement_WalkInPlaceFasterDown
 	delay 0x32
 	call_if_eq VAR_0x8008, 0x0, MtPyre_Summit_EventScript_ArchieFacePlayer0
 	call_if_eq VAR_0x8008, 0x1, MtPyre_Summit_EventScript_ArchieFacePlayer1
@@ -66,35 +64,28 @@ MtPyre_Summit_EventScript_TeamAquaExits:: @ 0x08216BB9
 	end
 
 MtPyre_Summit_EventScript_ArchieFacePlayer0:: @ 0x08216C5D
-	applymovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, MtPyre_Summit_Movement_ArchieFacePlayer0
-	waitmovement 0
+	applywaitmovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, MtPyre_Summit_Movement_ArchieFacePlayer0
 	return
 
 MtPyre_Summit_EventScript_ArchieFacePlayer1:: @ 0x08216C68
 	return
 
 MtPyre_Summit_EventScript_ArchieFacePlayer2:: @ 0x08216C69
-	applymovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, MtPyre_Summit_Movement_ArchieFacePlayer2
-	waitmovement 0
+	applywaitmovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, MtPyre_Summit_Movement_ArchieFacePlayer2
 	return
 
 MtPyre_Summit_EventScript_OldLadyApproachPlayer0:: @ 0x08216C74
-	applymovement LOCALID_MT_PYRE_SUMMIT_OLD_LADY, MtPyre_Summit_Movement_OldLadyApproachPlayer0
-	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
+	applywaitmovement LOCALID_MT_PYRE_SUMMIT_OLD_LADY, MtPyre_Summit_Movement_OldLadyApproachPlayer0
+	applywaitmovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	return
 
 MtPyre_Summit_EventScript_OldLadyApproachPlayer1:: @ 0x08216C89
-	applymovement LOCALID_MT_PYRE_SUMMIT_OLD_LADY, MtPyre_Summit_Movement_OldLadyApproachPlayer1
-	waitmovement 0
+	applywaitmovement LOCALID_MT_PYRE_SUMMIT_OLD_LADY, MtPyre_Summit_Movement_OldLadyApproachPlayer1
 	return
 
 MtPyre_Summit_EventScript_OldLadyApproachPlayer2:: @ 0x08216C94
-	applymovement LOCALID_MT_PYRE_SUMMIT_OLD_LADY, MtPyre_Summit_Movement_OldLadyApproachPlayer2
-	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
-	waitmovement 0
+	applywaitmovement LOCALID_MT_PYRE_SUMMIT_OLD_LADY, MtPyre_Summit_Movement_OldLadyApproachPlayer2
+	applywaitmovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	return
 
 MtPyre_Summit_Movement_OldLadyApproachPlayer0:
@@ -197,17 +188,14 @@ MtPyre_Summit_EventScript_ArchieMaxieTrigger2:: @ 0x08216D81
 	end
 
 MtPyre_Summit_EventScript_ArchieMaxieReturnOrbs:: @ 0x08216D8D
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	delay 0x3C
 	call_if_eq VAR_0x8008, 0x0, MtPyre_Summit_EventScript_ArchieMaxieBeginExit0
 	call_if_eq VAR_0x8008, 0x1, MtPyre_Summit_EventScript_ArchieMaxieBeginExit1
 	call_if_eq VAR_0x8008, 0x2, MtPyre_Summit_EventScript_ArchieMaxieBeginExit2
 	playse SE_PIN
-	applymovement LOCALID_MT_PYRE_SUMMIT_MAXIE, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement LOCALID_MT_PYRE_SUMMIT_MAXIE, Common_Movement_Delay48
-	waitmovement 0
+	applywaitmovement LOCALID_MT_PYRE_SUMMIT_MAXIE, Common_Movement_ExclamationMark
+	applywaitmovement LOCALID_MT_PYRE_SUMMIT_MAXIE, Common_Movement_Delay48
 	delay 0x1E
 	call_if_eq VAR_0x8008, 0x0, MtPyre_Summit_EventScript_MaxieApproachPlayer0
 	call_if_eq VAR_0x8008, 0x1, MtPyre_Summit_EventScript_MaxieApproachPlayer1
@@ -273,24 +261,21 @@ MtPyre_Summit_EventScript_MaxieApproachArchie0:: @ 0x08216ED7
 	applymovement LOCALID_PLAYER, MtPyre_Summit_Movement_PlayerWatchMaxie
 	applymovement LOCALID_MT_PYRE_SUMMIT_MAXIE, MtPyre_Summit_Movement_MaxieApproachArchie0
 	waitmovement 0
-	applymovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
+	applywaitmovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, Common_Movement_WalkInPlaceFasterRight
 	return
 
 MtPyre_Summit_EventScript_MaxieApproachArchie1:: @ 0x08216EF3
 	applymovement LOCALID_PLAYER, MtPyre_Summit_Movement_PlayerWatchMaxie
 	applymovement LOCALID_MT_PYRE_SUMMIT_MAXIE, MtPyre_Summit_Movement_MaxieApproachArchie1
 	waitmovement 0
-	applymovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
+	applywaitmovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, Common_Movement_WalkInPlaceFasterRight
 	return
 
 MtPyre_Summit_EventScript_MaxieApproachArchie2:: @ 0x08216F0F
 	applymovement LOCALID_PLAYER, MtPyre_Summit_Movement_PlayerWatchMaxie
 	applymovement LOCALID_MT_PYRE_SUMMIT_MAXIE, MtPyre_Summit_Movement_MaxieApproachArchie2
 	waitmovement 0
-	applymovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
+	applywaitmovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, Common_Movement_WalkInPlaceFasterRight
 	return
 
 MtPyre_Summit_Movement_PlayerFaceMaxie0:
@@ -403,22 +388,22 @@ MtPyre_Summit_Movement_MaxieApproachArchie2:
 	step_end
 
 MtPyre_Summit_EventScript_Grunt1:: @ 0x08216F7A
-	trainerbattle_single 0x17, MtPyre_Summit_Text_Grunt1Intro, MtPyre_Summit_Text_Grunt1Defeat
+	trainerbattle_single TRAINER_GRUNT_MT_PYRE_1, MtPyre_Summit_Text_Grunt1Intro, MtPyre_Summit_Text_Grunt1Defeat
 	msgbox MtPyre_Summit_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
 	end
 
 MtPyre_Summit_EventScript_Grunt2:: @ 0x08216F91
-	trainerbattle_single 0x18, MtPyre_Summit_Text_Grunt2Intro, MtPyre_Summit_Text_Grunt2Defeat
+	trainerbattle_single TRAINER_GRUNT_MT_PYRE_2, MtPyre_Summit_Text_Grunt2Intro, MtPyre_Summit_Text_Grunt2Defeat
 	msgbox MtPyre_Summit_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
 	end
 
 MtPyre_Summit_EventScript_Grunt3:: @ 0x08216FA8
-	trainerbattle_single 0x19, MtPyre_Summit_Text_Grunt3Intro, MtPyre_Summit_Text_Grunt3Defeat
+	trainerbattle_single TRAINER_GRUNT_MT_PYRE_3, MtPyre_Summit_Text_Grunt3Intro, MtPyre_Summit_Text_Grunt3Defeat
 	msgbox MtPyre_Summit_Text_Grunt3PostBattle, MSGBOX_AUTOCLOSE
 	end
 
 MtPyre_Summit_EventScript_Grunt4:: @ 0x08216FBF
-	trainerbattle_single 0x239, MtPyre_Summit_Text_Grunt4Intro, MtPyre_Summit_Text_Grunt4Defeat
+	trainerbattle_single TRAINER_GRUNT_MT_PYRE_4, MtPyre_Summit_Text_Grunt4Intro, MtPyre_Summit_Text_Grunt4Defeat
 	msgbox MtPyre_Summit_Text_Grunt4PostBattle, MSGBOX_AUTOCLOSE
 	end
 
