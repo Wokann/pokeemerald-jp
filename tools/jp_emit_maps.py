@@ -16458,7 +16458,8 @@ def collapse_battle_tent_macros(lines, enabled=False):
         if index + 1 < len(lines):
             first, second = lines[index:index + 2]
             if (is_set(first, 'VAR_0x8004', 'BATTLE_TOWER_FUNC_SET_OPPONENT')
-                    and second == ('special', 'sub_08161E88')):
+                    and second in (('special', 'CallBattleTowerFunc'),
+                                   ('special', 'sub_08161E88'))):
                 out.append(('tower_setopponent', ''))
                 index += 2
                 continue
@@ -16705,7 +16706,9 @@ def collapse_player_visibility_macros(lines):
     out = []
     for name, argstr in lines:
         args = [part.strip() for part in argstr.split(',')] if argstr else []
-        if name == 'hideobjectat' and args == ['LOCALID_PLAYER', 'MAP_NONE']:
+        if (name == 'hideobjectat' and len(args) == 2
+                and (args[0] == 'LOCALID_PLAYER' or _numeric_operand(args[0]) == 0xFF)
+                and (args[1] == 'MAP_NONE' or _numeric_operand(args[1]) == 0)):
             out.append(('hideplayer', ''))
         else:
             out.append((name, argstr))
@@ -18599,7 +18602,7 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x800C: 'VAR_FACING',
                 0x800D: 'VAR_RESULT',
             },
-            'items': {0x014E: 'ITEM_TM46'},
+            'items': {0x014E: 'ITEM_TM_THIEF'},
             'local_ids': {
                 0x0D: 'LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT',
                 0xFF: 'LOCALID_PLAYER',

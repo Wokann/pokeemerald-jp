@@ -149,5 +149,62 @@ class Route111SemanticRecoveryTest(unittest.TestCase):
         self.assertEqual(render_map('Route111'), render_map('Route111'))
 
 
+class ReviewedMapShorthandTest(unittest.TestCase):
+    def test_hideplayer_accepts_only_exact_player_and_zero_map(self):
+        for args in ('LOCALID_PLAYER, MAP_NONE', '0xFF, 0x0',
+                     '255, 0', '0xff, MAP_NONE', 'LOCALID_PLAYER, 0'):
+            with self.subTest(args=args):
+                self.assertEqual(
+                    emitter.collapse_player_visibility_macros([('hideobjectat', args)]),
+                    [('hideplayer', '')])
+
+    def test_hideplayer_retains_other_objects_maps_and_commands(self):
+        for line in (('hideobjectat', '1, 0'),
+                     ('hideobjectat', 'LOCALID_PLAYER, MAP_OTHER'),
+                     ('hideobjectat', '0xFF, 1'),
+                     ('hideobjectat', 'VAR_LAST_TALKED, MAP_NONE'),
+                     ('hideobjectat', '0xFF, 0, 1'),
+                     ('showobjectat', '0xFF, 0')):
+            with self.subTest(line=line):
+                self.assertEqual(emitter.collapse_player_visibility_macros([line]), [line])
+
+    def test_tower_opponent_uses_current_and_legacy_special_names(self):
+        for special in ('CallBattleTowerFunc', 'sub_08161E88'):
+            lines = [('setvar', 'VAR_0x8004, BATTLE_TOWER_FUNC_SET_OPPONENT'),
+                     ('special', special)]
+            with self.subTest(special=special):
+                self.assertEqual(emitter.collapse_battle_tent_macros(lines, enabled=True),
+                                 [('tower_setopponent', '')])
+                self.assertEqual(emitter.collapse_battle_tent_macros(lines), lines)
+
+    def test_tower_opponent_does_not_match_another_function_or_special(self):
+        for lines in (
+            [('setvar', 'VAR_0x8004, BATTLE_TOWER_FUNC_INIT'),
+             ('special', 'CallBattleTowerFunc')],
+            [('setvar', 'VAR_0x8004, BATTLE_TOWER_FUNC_SET_OPPONENT'),
+             ('special', 'CallOtherFunction')],
+            [('setvar', 'VAR_0x8005, BATTLE_TOWER_FUNC_SET_OPPONENT'),
+             ('special', 'CallBattleTowerFunc')],
+            [('setvar', 'VAR_0x8004, BATTLE_TOWER_FUNC_SET_OPPONENT'),
+             ('waitstate', ''), ('special', 'CallBattleTowerFunc')],
+        ):
+            with self.subTest(lines=lines):
+                self.assertEqual(emitter.collapse_battle_tent_macros(lines, enabled=True),
+                                 lines)
+
+    def test_reviewed_shorthand_survives_actual_map_regeneration(self):
+        expected = {
+            'SlateportCity_OceanicMuseum_1F': ('giveitem ITEM_TM_THIEF', 'giveitem ITEM_TM46'),
+            'SlateportCity_Harbor': ('\thideplayer\n', 'hideobjectat 0xFF, 0x0'),
+            'VerdanturfTown_BattleTentBattleRoom': ('\ttower_setopponent\n',
+                                                 'special CallBattleTowerFunc'),
+        }
+        for name, (required, forbidden) in expected.items():
+            with self.subTest(map=name):
+                generated = render_map(name)
+                self.assertIn(required, generated)
+                self.assertNotIn(forbidden, generated)
+
+
 if __name__ == '__main__':
     unittest.main()
