@@ -6,20 +6,20 @@ SlateportCity_BattleTentLobby_MapScripts::
 	.byte 0
 
 SlateportCity_BattleTentLobby_OnWarp:: @ 0x081FB03E
-	map_script_2 VAR_TEMP_1, 0x0, SlateportCity_BattleTentLobby_EventScript_TurnPlayerNorth
+	map_script_2 VAR_TEMP_1, 0, SlateportCity_BattleTentLobby_EventScript_TurnPlayerNorth
 	.2byte 0
 
 SlateportCity_BattleTentLobby_EventScript_TurnPlayerNorth:: @ 0x081FB048
-	setvar VAR_TEMP_1, 0x1
+	setvar VAR_TEMP_1, 1
 	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
 SlateportCity_BattleTentLobby_OnFrame:: @ 0x081FB052
-	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0x0, SlateportCity_BattleTentLobby_EventScript_GetChallengeStatus
-	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0x1, SlateportCity_BattleTentLobby_EventScript_QuitWithoutSaving
-	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0x2, SlateportCity_BattleTentLobby_EventScript_ResumeChallenge
-	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0x3, SlateportCity_BattleTentLobby_EventScript_WonChallenge
-	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0x4, SlateportCity_BattleTentLobby_EventScript_LostChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0, SlateportCity_BattleTentLobby_EventScript_GetChallengeStatus
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING, SlateportCity_BattleTentLobby_EventScript_QuitWithoutSaving
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_PAUSED, SlateportCity_BattleTentLobby_EventScript_ResumeChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_WON, SlateportCity_BattleTentLobby_EventScript_WonChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST, SlateportCity_BattleTentLobby_EventScript_LostChallenge
 	.2byte 0
 
 SlateportCity_BattleTentLobby_EventScript_GetChallengeStatus:: @ 0x081FB07C
@@ -31,7 +31,7 @@ SlateportCity_BattleTentLobby_EventScript_QuitWithoutSaving:: @ 0x081FB085
 	msgbox SlateportCity_BattleTentLobby_Text_DidntSaveBeforeQuitting, MSGBOX_DEFAULT
 	closemessage
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
-	setvar VAR_TEMP_CHALLENGE_STATUS, 0xFF
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	frontier_set FRONTIER_DATA_LVL_MODE, FRONTIER_LVL_50
 	releaseall
 	end
@@ -74,7 +74,7 @@ SlateportCity_BattleTentLobby_EventScript_LostChallenge:: @ 0x081FB13A
 SlateportCity_BattleTentLobby_EventScript_EndGivePrize:: @ 0x081FB164
 	msgbox SlateportCity_BattleTentLobby_Text_LookForwardToNextVisit, MSGBOX_DEFAULT
 	closemessage
-	setvar VAR_TEMP_CHALLENGE_STATUS, 0xFF
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
@@ -86,8 +86,8 @@ SlateportCity_BattleTentLobby_EventScript_ResumeChallenge:: @ 0x081FB174
 	playse SE_SAVE
 	waitse
 	frontier_set FRONTIER_DATA_PAUSED, FALSE
-	setvar VAR_TEMP_CHALLENGE_STATUS, 0xFF
-	setvar VAR_0x8006, 0x2
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	setvar VAR_0x8006, 2
 	goto SlateportCity_BattleTentLobby_EventScript_EnterChallenge
 
 SlateportCity_BattleTentLobby_EventScript_Attendant:: @ 0x081FB1AD
@@ -101,7 +101,7 @@ SlateportCity_BattleTentLobby_EventScript_Attendant:: @ 0x081FB1AD
 SlateportCity_BattleTentLobby_EventScript_AskEnterChallenge:: @ 0x081FB1CD
 	message SlateportCity_BattleTentLobby_Text_TakeChallenge
 	waitmessage
-	multichoice 0x11, 0x6, MULTI_CHALLENGEINFO, FALSE
+	multichoice 17, 6, MULTI_CHALLENGEINFO, FALSE
 	switch VAR_RESULT
 	case 0, SlateportCity_BattleTentLobby_EventScript_TryEnterChallenge
 	case 1, SlateportCity_BattleTentLobby_EventScript_ExplainChallenge
@@ -119,24 +119,24 @@ SlateportCity_BattleTentLobby_EventScript_TryEnterChallenge:: @ 0x081FB209
 	case MULTI_B_PRESSED, SlateportCity_BattleTentLobby_EventScript_LoadPartyCancelChallenge
 
 SlateportCity_BattleTentLobby_EventScript_SaveBeforeChallenge:: @ 0x081FB253
-	setvar VAR_TEMP_CHALLENGE_STATUS, 0x0
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
 	frontier_set FRONTIER_DATA_SELECTED_MON_ORDER
 	slateporttent_init
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING
 	frontier_set FRONTIER_DATA_PAUSED, FALSE
 	closemessage
-	delay 0x2
+	delay 2
 	call Common_EventScript_SaveGame
-	setvar VAR_TEMP_CHALLENGE_STATUS, 0xFF
-	goto_if_eq VAR_RESULT, 0x0, SlateportCity_BattleTentLobby_EventScript_CancelChallengeSaveFailed
-	setvar VAR_0x8006, 0x0
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	goto_if_eq VAR_RESULT, 0, SlateportCity_BattleTentLobby_EventScript_CancelChallengeSaveFailed
+	setvar VAR_0x8006, 0
 
 SlateportCity_BattleTentLobby_EventScript_EnterChallenge:: @ 0x081FB2AF
 	msgbox SlateportCity_BattleTentLobby_Text_StepThisWay, MSGBOX_DEFAULT
 	closemessage
 	call SlateportCity_BattleTentLobby_EventScript_WalkToDoor
-	warp MAP_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR, 0x2, 0x7
-	setvar VAR_TEMP_CHALLENGE_STATUS, 0x0
+	warp MAP_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR, 2, 7
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
 	waitstate
 	end
 
@@ -144,12 +144,12 @@ SlateportCity_BattleTentLobby_EventScript_WalkToDoor:: @ 0x081FB2CC
 	applymovement LOCALID_SLATEPORT_TENT_ATTENDANT, SlateportCity_BattleTentLobby_Movement_AttendantWalkToDoor
 	applymovement LOCALID_PLAYER, SlateportCity_BattleTentLobby_Movement_PlayerWalkToDoor
 	waitmovement 0
-	opendoor 0x6, 0x1
+	opendoor 6, 1
 	waitdooranim
 	applymovement LOCALID_SLATEPORT_TENT_ATTENDANT, SlateportCity_BattleTentLobby_Movement_AttendantEnterDoor
 	applymovement LOCALID_PLAYER, SlateportCity_BattleTentLobby_Movement_PlayerEnterDoor
 	waitmovement 0
-	closedoor 0x6, 0x1
+	closedoor 6, 1
 	waitdooranim
 	return
 
@@ -237,7 +237,7 @@ SlateportCity_BattleTentLobby_EventScript_RulesBoard:: @ 0x081FB39C
 SlateportCity_BattleTentLobby_EventScript_ReadRulesBoard:: @ 0x081FB3AB
 	message BattleFrontier_BattleFactoryLobby_Text_ReadWhichHeading
 	waitmessage
-	multichoice 0x11, 0x0, MULTI_SLATEPORT_TENT_RULES, FALSE
+	multichoice 17, 0, MULTI_SLATEPORT_TENT_RULES, FALSE
 	switch VAR_RESULT
 	case 0, SlateportCity_BattleTentLobby_EventScript_RulesBasics
 	case 1, SlateportCity_BattleTentLobby_EventScript_RulesSwapPartner
