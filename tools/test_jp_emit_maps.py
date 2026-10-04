@@ -247,6 +247,42 @@ class ReviewedMapShorthandTest(unittest.TestCase):
                 self.assertRegex(specials,
                                  r'(?m)^\s*def_special ChoosePartyMon, waitstate=1\s*$')
 
+    def test_motel_tv_push_retains_parallel_movements_during_regeneration(self):
+        name = 'LilycoveCity_CoveLilyMotel_1F'
+        generated = render_map(name)
+        reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
+        parallel = (
+            '\tapplymovement LOCALID_PLAYER, '
+            + name + '_Movement_PlayerPushFromTV\n'
+            '\tapplymovement LOCALID_MOTEL_OWNER, '
+            + name + '_Movement_OwnerPushPlayer\n'
+            '\twaitmovement 0\n')
+        for tag, source in (('JP generated', generated), ('US reference', reference)):
+            with self.subTest(source=tag):
+                self.assertEqual(source.count(parallel), 1)
+                self.assertEqual(source.count('\tapplywaitmovement '), 10)
+
+    def test_motel_scott_retains_jp_placeholder_repetition(self):
+        name = 'LilycoveCity_CoveLilyMotel_2F'
+        label = name + '_Text_SnoozingPreferBattles'
+        pattern = (r'^' + re.escape(label)
+                   + r':{1,2}[^\n]*\n(.*?)(?=^\w+:{1,2}|\Z)')
+        jp_expected = ['{PLAYER}', '{KUN}', '{PLAYER}', '{KUN}']
+        cases = (
+            ('JP source', (ROOT / 'data' / 'maps' / name / 'scripts.inc').read_text(
+                encoding='utf-8'), jp_expected),
+            ('JP generated', render_map(name), jp_expected),
+            ('US reference', (emitter.US_MAPS / name / 'scripts.inc').read_text(
+                encoding='utf-8'), ['{PLAYER}', '{KUN}']),
+        )
+        for tag, source, expected in cases:
+            with self.subTest(source=tag):
+                block = re.search(pattern, source, re.M | re.S)
+                self.assertIsNotNone(block)
+                strings = '\n'.join(line for line in block.group(1).splitlines()
+                                    if line.lstrip().startswith('.string'))
+                self.assertEqual(re.findall(r'\{[^}]+\}', strings), expected)
+
 
 if __name__ == '__main__':
     unittest.main()
