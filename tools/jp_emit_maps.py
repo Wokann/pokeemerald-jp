@@ -19340,7 +19340,7 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
 
 MAP_VERIFIED_SEMANTIC_LABELS.update({
     # The Rock Smash Dude owner follows the Bike Shop in physical ROM order.
-    # ITEM_HM06 is Rock Smash in the JP item table.
+    # Rock Smash is HM06 in the JP item table.
     'MauvilleCity_House1': {
         'scripts': {
             0x081FFD78: 'MauvilleCity_House1_EventScript_RockSmashDude',
@@ -19362,7 +19362,7 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x8000: 'VAR_0x8000',
                 0x8001: 'VAR_0x8001',
             },
-            'items': {0x0158: 'ITEM_HM06'},
+            'items': {0x0158: 'ITEM_HM_ROCK_SMASH'},
         },
     },
 })

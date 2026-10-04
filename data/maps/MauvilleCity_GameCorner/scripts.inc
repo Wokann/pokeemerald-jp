@@ -483,8 +483,7 @@ MauvilleCity_GameCorner_EventScript_Man:: @ 0x082005C8
 
 MauvilleCity_GameCorner_EventScript_NPCReturnToSlots:: @ 0x082005D8
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	release
 	end
 

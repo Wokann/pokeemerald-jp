@@ -15,10 +15,8 @@ MauvilleCity_House2_EventScript_Woman:: @ 0x08200C5B
 
 MauvilleCity_House2_EventScript_AskToTradeForHarborMail:: @ 0x08200C80
 	playse SE_PIN
-	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement VAR_LAST_TALKED, Common_Movement_Delay48
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_Delay48
 	msgbox MauvilleCity_House2_Text_TradeHarborMailForCoinCase, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, MauvilleCity_House2_EventScript_AcceptTrade
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_House2_EventScript_DeclineTrade

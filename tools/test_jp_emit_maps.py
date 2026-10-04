@@ -195,6 +195,7 @@ class ReviewedMapShorthandTest(unittest.TestCase):
     def test_reviewed_shorthand_survives_actual_map_regeneration(self):
         expected = {
             'SlateportCity_OceanicMuseum_1F': ('giveitem ITEM_TM_THIEF', 'giveitem ITEM_TM46'),
+            'MauvilleCity_House1': ('giveitem ITEM_HM_ROCK_SMASH', 'giveitem ITEM_HM06'),
             'SlateportCity_Harbor': ('\thideplayer\n', 'hideobjectat 0xFF, 0x0'),
             'VerdanturfTown_BattleTentBattleRoom': ('\ttower_setopponent\n',
                                                  'special CallBattleTowerFunc'),
