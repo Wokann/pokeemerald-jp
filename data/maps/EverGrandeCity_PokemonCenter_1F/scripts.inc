@@ -48,13 +48,11 @@ EverGrandeCity_PokemonCenter_1F_EventScript_Scott:: @ 0x08211441
 	end
 
 EverGrandeCity_PokemonCenter_1F_EventScript_ScottExitNorth:: @ 0x0821147E
-	applymovement LOCALID_EVER_GRANDE_SCOTT, EverGrandeCity_PokemonCenter_1F_Movement_ScottExitNorth
-	waitmovement 0
+	applywaitmovement LOCALID_EVER_GRANDE_SCOTT, EverGrandeCity_PokemonCenter_1F_Movement_ScottExitNorth
 	return
 
 EverGrandeCity_PokemonCenter_1F_EventScript_ScottExit:: @ 0x08211489
-	applymovement LOCALID_EVER_GRANDE_SCOTT, EverGrandeCity_PokemonCenter_1F_Movement_ScottExit
-	waitmovement 0
+	applywaitmovement LOCALID_EVER_GRANDE_SCOTT, EverGrandeCity_PokemonCenter_1F_Movement_ScottExit
 	return
 
 EverGrandeCity_PokemonCenter_1F_Movement_ScottExitNorth:

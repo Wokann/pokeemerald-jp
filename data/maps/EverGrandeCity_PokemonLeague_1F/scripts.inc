@@ -72,13 +72,11 @@ EverGrandeCity_PokemonLeague_1F_EventScript_DoorGuard:: @ 0x08211136
 	end
 
 EverGrandeCity_PokemonLeague_1F_EventScript_PlayerMoveToFrontFromRight:: @ 0x08211198
-	applymovement LOCALID_PLAYER, EverGrandeCity_PokemonLeague_1F_Movement_MoveToFrontFromRight
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, EverGrandeCity_PokemonLeague_1F_Movement_MoveToFrontFromRight
 	return
 
 EverGrandeCity_PokemonLeague_1F_EventScript_PlayerMoveToFrontFromLeft:: @ 0x082111A3
-	applymovement LOCALID_PLAYER, EverGrandeCity_PokemonLeague_1F_Movement_MoveToFrontFromLeft
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, EverGrandeCity_PokemonLeague_1F_Movement_MoveToFrontFromLeft
 	return
 
 EverGrandeCity_PokemonLeague_1F_EventScript_NotAllBadges:: @ 0x082111AE
@@ -88,12 +86,10 @@ EverGrandeCity_PokemonLeague_1F_EventScript_NotAllBadges:: @ 0x082111AE
 	end
 
 EverGrandeCity_PokemonLeague_1F_EventScript_GoForth:: @ 0x082111BB
-	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_FacePlayer
 	msgbox EverGrandeCity_PokemonLeague_1F_Text_GoForth, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	releaseall
 	end
 

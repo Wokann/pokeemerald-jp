@@ -255,6 +255,17 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'AbandonedShip_HiddenFloorRooms': 17,
 }
 
+# Each connecting League hall is a verified 21-byte JP owner: a six-byte
+# map-script table, a ten-byte OnWarp table, and TurnPlayerNorth. These five
+# pointers come from the JP ROM, not the US layout or map source order.
+MAP_VERIFIED_LEAGUE_HALL_TABLES = {
+    'EverGrandeCity_Hall1': 0x08211071,
+    'EverGrandeCity_Hall2': 0x08211086,
+    'EverGrandeCity_Hall3': 0x0821109B,
+    'EverGrandeCity_Hall4': 0x082110B0,
+    'EverGrandeCity_Hall5': 0x082110C5,
+}
+
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
 # their existing matcher behavior, and opt audited maps into only the hooks
 # whose JP entries were checked one-to-one against the US source sequence.
@@ -14208,6 +14219,22 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x082101CD: {0x40C0: {0x02: '2'}},
             },
         },
+    },
+    **{
+        mname: {
+            'preserve_region_script_aliases': False,
+            'preserve_region_text_aliases': False,
+            'tables': {table: mname + '_OnWarp'},
+            'local_tables': (table,),
+            'scripts': {table + 10: mname + '_EventScript_TurnPlayerNorth'},
+            'symbols': {
+                'vars': {0x4001: 'VAR_TEMP_1'},
+                'map_script_values': {0x4001: {0: '0'}},
+                'local_ids': {0xFF: 'LOCALID_PLAYER'},
+                'directions': {0x02: 'DIR_NORTH'},
+            },
+        }
+        for mname, table in MAP_VERIFIED_LEAGUE_HALL_TABLES.items()
     },
     # Sidney's room is the next physical map-script owner. The local scripts
     # call retained Elite Four helpers; expose their US labels through exact
