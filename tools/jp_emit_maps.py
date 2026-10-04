@@ -3542,6 +3542,7 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
         'scripts': {
             0x082189FE: 'SeafloorCavern_Room9_EventScript_ArchieAwakenKyogre',
         },
+        'field_effect_macros': True,
         'texts': {
             0x08218C94: 'SeafloorCavern_Room9_Text_ArchieHoldItRightThere',
             0x08218CA1: 'SeafloorCavern_Room9_Text_ArchieSoItWasYou',
@@ -3596,6 +3597,26 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
                 0x4000: 'FLAG_HIDE_MAP_NAME_POPUP',
             },
             'trainers': {0x0022: 'TRAINER_ARCHIE'},
+            # These variables also hold camera-shake parameters in this same
+            # script. Name object IDs only at the proved JP assignments.
+            'instruction_var_values': {
+                0x082189FF: {0x8004: {0x02: 'LOCALID_SEAFLOOR_CAVERN_ARCHIE'}},
+                0x08218A04: {0x8005: {0x03: 'LOCALID_SEAFLOOR_CAVERN_MAXIE'}},
+                0x08218A09: {0x8006: {0x04: 'LOCALID_SEAFLOOR_CAVERN_GRUNT_1'}},
+                0x08218A0E: {0x8007: {0x05: 'LOCALID_SEAFLOOR_CAVERN_GRUNT_2'}},
+                0x08218AF2: {0x8004: {0x01: '1'}},
+                0x08218AF7: {0x8005: {0x01: '1'}},
+                0x08218AFC: {0x8006: {0x08: '8'}},
+                0x08218B01: {0x8007: {0x05: '5'}},
+                0x08218B1A: {0x8004: {0x02: '2'}},
+                0x08218B1F: {0x8005: {0x02: '2'}},
+                0x08218B24: {0x8006: {0x08: '8'}},
+                0x08218B29: {0x8007: {0x05: '5'}},
+                0x08218B35: {0x8004: {0x02: 'LOCALID_SEAFLOOR_CAVERN_ARCHIE'}},
+                0x08218B3A: {0x8005: {0x03: 'LOCALID_SEAFLOOR_CAVERN_MAXIE'}},
+                0x08218B3F: {0x8006: {0x04: 'LOCALID_SEAFLOOR_CAVERN_GRUNT_1'}},
+                0x08218B44: {0x8007: {0x05: 'LOCALID_SEAFLOOR_CAVERN_GRUNT_2'}},
+            },
             'songs': {
                 0x0184: 'MUS_AWAKEN_LEGEND',
                 0x01A3: 'MUS_ENCOUNTER_AQUA',
@@ -10765,6 +10786,13 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x8008: 'VAR_0x8008',
                 0x8009: 'VAR_0x8009',
             },
+            'script_var_values': {
+                0x08217FB5: {0x8008: {0x01: 'LOCALID_AQUA_HIDEOUT_MATT'}},
+                0x08217FF5: {
+                    0x8008: {0x01: 'LOCALID_AQUA_HIDEOUT_MATT'},
+                    0x8009: {0x04: 'LOCALID_AQUA_HIDEOUT_SUBMARINE'},
+                },
+            },
             'local_ids': {
                 0x01: 'LOCALID_AQUA_HIDEOUT_MATT',
                 0x04: 'LOCALID_AQUA_HIDEOUT_SUBMARINE',
@@ -10829,6 +10857,36 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 'setescapewarp': (2, 3),
             },
         },
+    },
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'CaveOfOrigin_Entrance': {
+        'scripts': {0x082190B5: 'CaveOfOrigin_Entrance_OnResume'},
+        'symbols': {
+            'maps': {0x0007: 'MAP_SOOTOPOLIS_CITY'},
+            'decimal_arguments': {'setescapewarp': (2, 3)},
+        },
+    },
+    'CaveOfOrigin_1F': {
+        'scripts': {0x082190C4: 'CaveOfOrigin_1F_OnTransition'},
+        'external_labels': {0x08243344: 'CaveOfOrigin_EventScript_DisableTriggers'},
+        'symbols': {'flags': {0x0071: 'FLAG_UNUSED_RS_LEGENDARY_BATTLE_DONE'}},
+    },
+    'CaveOfOrigin_UnusedRubySapphireMap1': {
+        'scripts': {0x082190D4: 'CaveOfOrigin_UnusedRubySapphireMap1_OnTransition'},
+        'external_labels': {0x08243344: 'CaveOfOrigin_EventScript_DisableTriggers'},
+        'symbols': {'flags': {0x0071: 'FLAG_UNUSED_RS_LEGENDARY_BATTLE_DONE'}},
+    },
+    'CaveOfOrigin_UnusedRubySapphireMap2': {
+        'scripts': {0x082190E4: 'CaveOfOrigin_UnusedRubySapphireMap2_OnTransition'},
+        'external_labels': {0x08243344: 'CaveOfOrigin_EventScript_DisableTriggers'},
+        'symbols': {'flags': {0x0071: 'FLAG_UNUSED_RS_LEGENDARY_BATTLE_DONE'}},
+    },
+    'CaveOfOrigin_UnusedRubySapphireMap3': {
+        'scripts': {0x082190F4: 'CaveOfOrigin_UnusedRubySapphireMap3_OnTransition'},
+        'external_labels': {0x08243344: 'CaveOfOrigin_EventScript_DisableTriggers'},
+        'symbols': {'flags': {0x0071: 'FLAG_UNUSED_RS_LEGENDARY_BATTLE_DONE'}},
     },
 })
 
@@ -16755,13 +16813,18 @@ ITEM_ARGUMENTS = {
 }
 
 
-def semantic_symbol_formatter(mname, script_addr=None):
+def semantic_symbol_formatter(mname, script_addr=None, instruction_addr=None):
     """Return a conservative formatter for reviewed map-script constants."""
     symbols = MAP_VERIFIED_SEMANTIC_LABELS.get(mname, {}).get('symbols', {})
     if not symbols:
         return None
 
     def format_symbol(name, index, value, args):
+        if name == 'setvar' and index == 1 and args:
+            reviewed = (symbols.get('instruction_var_values', {})
+                        .get(instruction_addr, {}).get(args[0], {}).get(value))
+            if reviewed is not None:
+                return reviewed
         reviewed = (symbols.get('script_literal_values', {})
                     .get(script_addr, {}).get(name, {})
                     .get(index, {}).get(value))
@@ -17477,8 +17540,18 @@ def _emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             label_terminator = ':' if addr in semantic.get('local_scripts', ()) else '::'
             lines.append('%s%s @ 0x%08X' % (label_map[addr], label_terminator, addr))
             symbol_formatter = semantic_symbol_formatter(mname, addr)
-            decoded_lines = sp.decode_script_lines(
-                scripts[addr], reference_label_map, reference_text_label_map, symbol_formatter)
+            if semantic.get('symbols', {}).get('instruction_var_values'):
+                decoded_lines = []
+                for instruction in scripts[addr]:
+                    instruction_formatter = semantic_symbol_formatter(
+                        mname, addr, addr + instruction[0])
+                    decoded_lines.extend(sp.decode_script_lines(
+                        [instruction], reference_label_map,
+                        reference_text_label_map, instruction_formatter))
+            else:
+                decoded_lines = sp.decode_script_lines(
+                    scripts[addr], reference_label_map,
+                    reference_text_label_map, symbol_formatter)
             command_aliases = semantic.get('command_aliases', {}).get(addr, {})
             decoded_lines = [
                 (command_aliases.get(

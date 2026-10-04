@@ -9,24 +9,18 @@ SeafloorCavern_Room9_EventScript_ArchieAwakenKyogre:: @ 0x082189FE
 	setvar VAR_0x8005, LOCALID_SEAFLOOR_CAVERN_MAXIE
 	setvar VAR_0x8006, LOCALID_SEAFLOOR_CAVERN_GRUNT_1
 	setvar VAR_0x8007, LOCALID_SEAFLOOR_CAVERN_GRUNT_2
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0x0
-	applymovement LOCALID_PLAYER, SeafloorCavern_Room9_Movement_Delay32
-	waitmovement 0x0
+	applywaitmovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	applywaitmovement LOCALID_PLAYER, SeafloorCavern_Room9_Movement_Delay32
 	playbgm MUS_ENCOUNTER_AQUA, FALSE
 	msgbox SeafloorCavern_Room9_Text_ArchieHoldItRightThere, MSGBOX_DEFAULT
 	closemessage
 	addobject VAR_0x8004
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
-	waitmovement 0x0
-	applymovement VAR_0x8004, SeafloorCavern_Room9_Movement_ArchieApproachPlayer
-	waitmovement 0x0
+	applywaitmovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	applywaitmovement VAR_0x8004, SeafloorCavern_Room9_Movement_ArchieApproachPlayer
 	msgbox SeafloorCavern_Room9_Text_ArchieSoItWasYou, MSGBOX_DEFAULT
-	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0x0
+	applywaitmovement VAR_0x8004, Common_Movement_WalkInPlaceFasterUp
 	msgbox SeafloorCavern_Room9_Text_ArchieBeholdKyogre, MSGBOX_DEFAULT
-	applymovement VAR_0x8004, Common_Movement_FacePlayer
-	waitmovement 0x0
+	applywaitmovement VAR_0x8004, Common_Movement_FacePlayer
 	msgbox SeafloorCavern_Room9_Text_ArchieYouMustDisappear, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_ARCHIE, SeafloorCavern_Room9_Text_ArchieDefeat
 	msgbox SeafloorCavern_Room9_Text_ArchieWithThisRedOrb, MSGBOX_DEFAULT
@@ -37,10 +31,7 @@ SeafloorCavern_Room9_EventScript_ArchieAwakenKyogre:: @ 0x082189FE
 	special WaitWeather
 	setvar VAR_RESULT, 0x1
 	playse SE_M_DETECT
-	setfieldeffectargument 0, 16
-	setfieldeffectargument 1, 42
-	setfieldeffectargument 2, 0
-	dofieldeffect FLDEFF_SPARKLE
+	dofieldeffectsparkle 16, 42, 0
 	waitfieldeffect FLDEFF_SPARKLE
 	closemessage
 	setvar VAR_RESULT, 0x0
@@ -55,8 +46,7 @@ SeafloorCavern_Room9_EventScript_ArchieAwakenKyogre:: @ 0x082189FE
 	addobject LOCALID_SEAFLOOR_CAVERN_KYOGRE
 	waitstate
 	delay 0x3C
-	applymovement LOCALID_SEAFLOOR_CAVERN_KYOGRE, SeafloorCavern_Room9_Movement_KyogreApproach
-	waitmovement 0x0
+	applywaitmovement LOCALID_SEAFLOOR_CAVERN_KYOGRE, SeafloorCavern_Room9_Movement_KyogreApproach
 	special FadeOutOrbEffect
 	setvar VAR_0x8004, 1  @ vertical pan
 	setvar VAR_0x8005, 1  @ horizontal pan
@@ -64,8 +54,7 @@ SeafloorCavern_Room9_EventScript_ArchieAwakenKyogre:: @ 0x082189FE
 	setvar VAR_0x8007, 5  @ shake delay
 	special ShakeCamera
 	waitstate
-	applymovement LOCALID_SEAFLOOR_CAVERN_KYOGRE, SeafloorCavern_Room9_Movement_KyogreExit
-	waitmovement 0x0
+	applywaitmovement LOCALID_SEAFLOOR_CAVERN_KYOGRE, SeafloorCavern_Room9_Movement_KyogreExit
 	removeobject LOCALID_SEAFLOOR_CAVERN_KYOGRE
 	delay 0x4
 	setvar VAR_0x8004, 2  @ vertical pan
@@ -81,18 +70,15 @@ SeafloorCavern_Room9_EventScript_ArchieAwakenKyogre:: @ 0x082189FE
 	setvar VAR_0x8007, LOCALID_SEAFLOOR_CAVERN_GRUNT_2
 	msgbox SeafloorCavern_Room9_Text_ArchieWhereDidKyogreGo, MSGBOX_DEFAULT
 	playse SE_PC_LOGIN
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
-	waitmovement 0x0
+	applywaitmovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	msgbox SeafloorCavern_Room9_Text_ArchieAMessageFromOutside, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_0x8004, SeafloorCavern_Room9_Movement_ArchieListenMessage
-	waitmovement 0x0
+	applywaitmovement VAR_0x8004, SeafloorCavern_Room9_Movement_ArchieListenMessage
 	msgbox SeafloorCavern_Room9_Text_ArchieWhatRainingTooHard, MSGBOX_DEFAULT
 	closemessage
 	playse SE_PC_OFF
 	delay 0x14
-	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0x0
+	applywaitmovement VAR_0x8004, Common_Movement_WalkInPlaceFasterDown
 	msgbox SeafloorCavern_Room9_Text_ArchieWhyDidKyogreDisappear, MSGBOX_DEFAULT
 	closemessage
 	addobject VAR_0x8005
@@ -102,14 +88,11 @@ SeafloorCavern_Room9_EventScript_ArchieAwakenKyogre:: @ 0x082189FE
 	applymovement VAR_0x8006, SeafloorCavern_Room9_Movement_MagmaGruntArrive
 	applymovement VAR_0x8005, SeafloorCavern_Room9_Movement_MaxieArrive
 	waitmovement 0x0
-	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterLeft
-	waitmovement 0x0
+	applywaitmovement VAR_0x8004, Common_Movement_WalkInPlaceFasterLeft
 	msgbox SeafloorCavern_Room9_Text_MaxieWhatHaveYouWrought, MSGBOX_DEFAULT
 	playse SE_PIN
-	applymovement VAR_0x8004, Common_Movement_ExclamationMark
-	waitmovement 0x0
-	applymovement VAR_0x8004, Common_Movement_Delay48
-	waitmovement 0x0
+	applywaitmovement VAR_0x8004, Common_Movement_ExclamationMark
+	applywaitmovement VAR_0x8004, Common_Movement_Delay48
 	msgbox SeafloorCavern_Room9_Text_ArchieDontGetAllHighAndMighty, MSGBOX_DEFAULT
 	msgbox SeafloorCavern_Room9_Text_MaxieWeDontHaveTimeToArgue, MSGBOX_DEFAULT
 	closemessage
