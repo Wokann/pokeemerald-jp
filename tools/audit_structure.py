@@ -106,6 +106,11 @@ class FunctionDef:
     path: str
     name: str
     naked: bool
+    inline: bool = False
+    declared_name: str | None = None
+    macro: str | None = None
+    macro_verified: bool = True
+    name_inputs: tuple[tuple[str, str], ...] = ()
 
 
 @dataclass(frozen=True)
@@ -142,7 +147,7 @@ def eval_preprocessor_condition(expression: str, macros: dict[str, int]) -> bool
         return False
 
 
-def active_preprocessor_text(text: str) -> str:
+def active_preprocessor_text(text: str, *, keep_directives: bool = False) -> str:
     """Blank inactive branches while preserving offsets and line positions.
 
     The audit uses the repository's default configuration: feature macros such
@@ -150,7 +155,7 @@ def active_preprocessor_text(text: str) -> str:
     available.  This prevents the mutually exclusive C and NAKED branches
     from being counted together.
     """
-    macros = {"__STDC_VERSION__": 199901}
+    macros = {"__STDC__": 1, "__STDC_VERSION__": 199901}
     active = True
     frames: list[dict[str, bool]] = []
     result = []
@@ -186,12 +191,70 @@ def active_preprocessor_text(text: str) -> str:
                     macros[fields[0]] = int(fields[1], 0) if len(fields) == 2 and fields[1].isdigit() else 1
             elif command == "undef" and active:
                 macros.pop(argument, None)
-            result.append("\n" if line.endswith("\n") else "")
+            if keep_directives and active and command in {"define", "include", "undef"}:
+                result.append(line)
+            else:
+                result.append("".join("\n" if char == "\n" else " " for char in line))
         elif active:
             result.append(line)
         else:
             result.append("".join("\n" if char == "\n" else " " for char in line))
     return "".join(result)
+
+
+def libc_function_macros(path: Path, root: Path, text: str) -> tuple[set[str], dict[str, str | None], tuple[tuple[str, str], ...]]:
+    """Read supported libc naming macros from actual local build headers.
+
+    These are the include directories used by the repository libc recipes,
+    not a guessed US-name table.  Follow actual includes (string.h also
+    includes _ansi.h); only identifier-to-identifier aliases are supported.
+    Missing/unknown macro
+    definitions remain unverified and cannot contribute to address metrics.
+    """
+    verified, aliases, inputs, visited = set(), {}, [], set()
+    def scan(current: Path, selected: str) -> None:
+        for line in selected.splitlines():
+            include = re.fullmatch(r'\s*#\s*include\s*([<"])([^>"]+)[>"]\s*', line)
+            if include:
+                kind, header = include.groups()
+                if Path(header).is_absolute() or ".." in Path(header).parts:
+                    continue
+                directories = ((current.parent,) if kind == '"' else ()) + (
+                    root / "tools/agbcc-src/libc/include", root / "tools/agbcc-src/ginclude",
+                    root / "tools/agbcc-src/libc/stdlib")
+                found = next((directory / header for directory in directories if (directory / header).is_file()), None)
+                if found is not None and found not in visited:
+                    visited.add(found)
+                    data = found.read_bytes()
+                    inputs.append((found.relative_to(root).as_posix(), hashlib.sha256(data).hexdigest()))
+                    scan(found, active_preprocessor_text(data.decode("utf-8", errors="replace"), keep_directives=True))
+                continue
+            undef = re.fullmatch(r'\s*#\s*undef\s+([A-Za-z_]\w*)\s*', line)
+            if undef:
+                aliases.pop(undef.group(1), None)
+                verified.discard(undef.group(1))
+                continue
+            function = re.fullmatch(r'\s*#\s*define\s+(_DEFUN|_DEFUN_VOID)\(([^)]*)\)\s+(.+?)\s*', line)
+            if function:
+                name, args, value = function.groups()
+                verified.discard(name)
+                args = re.sub(r'\s+', '', args)
+                value = re.sub(r'\s+', '', value)
+                if ((name == "_DEFUN" and args == "name,arglist,args" and value == "name(args)")
+                        or (name == "_DEFUN_VOID" and args == "name" and value in {"name(_NOARGS)", "name()"})):
+                    verified.add(name)
+                continue
+            alias = re.fullmatch(r'\s*#\s*define\s+([A-Za-z_]\w*)\s+([A-Za-z_]\w*)\s*', line)
+            if alias:
+                aliases[alias.group(1)] = alias.group(2)
+                continue
+            unknown = re.match(r'\s*#\s*define\s+([A-Za-z_]\w*)', line)
+            if unknown:
+                # Unsupported redefinitions must not leave an earlier
+                # identifier alias looking verified.
+                aliases[unknown.group(1)] = None
+    scan(path, text)
+    return verified, aliases, tuple(sorted(set(inputs)))
 
 
 def skip_balanced(text: str, open_pos: int) -> int | None:
@@ -235,7 +298,9 @@ def has_naked_macro_prefix(text: str, before: int) -> bool:
 
 def function_definitions(path: Path, root: Path) -> list[FunctionDef]:
     """Find C definitions without counting prototypes or control statements."""
-    text = active_preprocessor_text(path.read_text(encoding="utf-8", errors="replace"))
+    original = path.read_text(encoding="utf-8", errors="replace")
+    text = active_preprocessor_text(original)
+    selected_directives = active_preprocessor_text(original, keep_directives=True) if "_DEFUN" in text else ""
     result: list[FunctionDef] = []
     ignored = {"if", "for", "while", "switch", "sizeof"}
     for match in FUNCTION_HEAD_RE.finditer(text):
@@ -273,10 +338,34 @@ def function_definitions(path: Path, root: Path) -> list[FunctionDef]:
         # The expression consumes leading GNU attributes as part of this
         # declaration, so never scan into an earlier declaration for them.
         header = text[match.start("head"):probe]
+        macro = name if name in {"_DEFUN", "_DEFUN_VOID"} else None
+        declared_name = None
+        macro_verified = True
+        name_inputs = ()
+        if macro:
+            # Macro names are expanded at this definition, not using a
+            # redefine/include/undef that appears later in the source.
+            macros, aliases, name_inputs = libc_function_macros(
+                path, root, selected_directives[:match.start("head")])
+            first_argument = text[open_pos + 1:end - 1].split(",", 1)[0].strip()
+            if not re.fullmatch(r"[A-Za-z_]\w*", first_argument):
+                continue
+            declared_name, name = first_argument, first_argument
+            macro_verified = macro in macros
+            visited = set()
+            while name in aliases:
+                if name in visited or aliases[name] is None:
+                    macro_verified = False
+                    break
+                visited.add(name)
+                name = aliases[name]
         result.append(FunctionDef(
             path=path.relative_to(root / "src").as_posix(),
             name=name,
             naked="naked" in header or has_naked_macro_prefix(text, match.start("head")),
+            inline=bool(re.search(r"\binline\b", header)),
+            declared_name=declared_name, macro=macro, macro_verified=macro_verified,
+            name_inputs=name_inputs if macro else (),
         ))
     return result
 
@@ -284,6 +373,19 @@ def function_definitions(path: Path, root: Path) -> list[FunctionDef]:
 def c_inventory(root: Path) -> list[FunctionDef]:
     return [definition for path in sorted((root / "src").glob("**/*.c"))
             for definition in function_definitions(path, root)]
+
+
+def standalone_asm_inventory(root: Path) -> list[dict[str, str]]:
+    """Source owner/name inventory, not a ROM-address denominator."""
+    result = set()
+    pattern = re.compile(r'^\s*(thumb|arm)_func_start\s+([A-Za-z_]\w*)\s*$')
+    for path in sorted((root / "asm").glob("**/*.s")):
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+            match = pattern.match(line)
+            if match:
+                result.add((path.relative_to(root).as_posix(), match.group(2), match.group(1)))
+    return [{"source_owner": owner, "name": name, "instruction_set": mode}
+            for owner, name, mode in sorted(result)]
 
 
 def source_files(root: Path) -> set[str]:
@@ -349,8 +451,8 @@ def source_matches_definition(source: str, definition: FunctionDef) -> bool:
     return Path(path).with_suffix(".c").as_posix() == definition.path
 
 
-def linker_code_ranges(text: str) -> list[tuple[int, int, str]]:
-    """Read actual C input-object intervals, never neighboring US addresses."""
+def linker_code_inputs(text: str) -> list[tuple[int, int, str, str, str]]:
+    """Keep each input's address range, full C owner, section and object."""
     ranges = set()
     section = ""
     for line in text.splitlines():
@@ -370,17 +472,18 @@ def linker_code_ranges(text: str) -> list[tuple[int, int, str]]:
         source = owner[owner.index("src/") + 4:-2] + ".c"
         start, size = int(start, 16), int(size, 16)
         if start and size:
-            ranges.add((start, start + size, source))
+            ranges.add((start, start + size, source, current, owner))
     return sorted(ranges)
 
 
-def elf_code_symbols(data: bytes) -> list[tuple[str, int, str | None]]:
-    """Retain local/global executable symbols and local STT_FILE contexts.
+def linker_code_ranges(text: str) -> list[tuple[int, int, str]]:
+    """Compatibility view of actual C input-object intervals."""
+    return sorted({(start, end, source) for start, end, source, _section, _object
+                   in linker_code_inputs(text)})
 
-    GNU ld groups locals by STT_FILE but places globals after those groups.
-    Carrying the last file into a global entry would fabricate its owner.
-    Thumb's low address bit is not part of the physical ROM address.
-    """
+
+def elf_tables(data: bytes) -> tuple[tuple, list[tuple], list[tuple]]:
+    """Read bounded ELF32 tables, retaining symbol type/section/size."""
     if len(data) < 52 or data[:6] != b"\x7fELF\x01\x01":
         raise ValueError("expected an ELF32 little-endian file")
     header = struct.unpack_from("<16sHHIIIIIHHHHHH", data)
@@ -402,7 +505,7 @@ def elf_code_symbols(data: bytes) -> list[tuple[str, int, str | None]]:
         table = data[strings[4]:strings[4] + strings[5]]
         local_file = None
         for position in range(section[4], section[4] + section[5], 16):
-            name_at, address, _size, info, _other, index = struct.unpack_from(
+            name_at, address, size, info, _other, index = struct.unpack_from(
                 "<IIIBBH", data, position)
             if name_at >= len(table):
                 raise ValueError("invalid ELF symbol name")
@@ -414,15 +517,59 @@ def elf_code_symbols(data: bytes) -> list[tuple[str, int, str | None]]:
             if kind == 4:  # STT_FILE is only a local-symbol context.
                 local_file = name
                 continue
-            if (not name or index >= count or kind not in (0, 2)
-                    or not sections[index][2] & 4):  # SHF_EXECINSTR
-                continue
-            address &= ~1
-            code = sections[index]
-            if not code[3] <= address < code[3] + code[5]:
-                continue
-            symbols.append((name, address, local_file if binding == 0 else None))
+            symbols.append((name, address, size, info, index, local_file if binding == 0 else None))
+    return header, sections, symbols
+
+
+def elf_code_symbols(data: bytes) -> list[tuple[str, int, str | None]]:
+    """Retain executable local/global symbols, never ABS aliases.
+
+    STT_FILE is auxiliary for locals only; Thumb's low bit is not an address.
+    """
+    _header, sections, rows = elf_tables(data)
+    symbols = []
+    for name, address, _size, info, index, local_file in rows:
+        if (not name or index >= len(sections) or info & 15 not in (0, 2)
+                or not sections[index][2] & 4):
+            continue
+        address &= ~1
+        code = sections[index]
+        if code[3] <= address < code[3] + code[5]:
+            symbols.append((name, address, local_file))
     return sorted(set(symbols), key=lambda item: (item[0], item[1], item[2] or ""))
+
+
+def elf_object_functions(data: bytes) -> list[tuple[str, str, int, int, int]]:
+    """Return ET_REL STT_FUNC names with exact executable section offsets.
+
+    A mapping/data/ABS symbol or a function-like section name alone is not
+    evidence.  Section sizes are retained to check the final map interval.
+    """
+    header, sections, rows = elf_tables(data)
+    if header[1] != 1 or not 0 < header[13] < len(sections):
+        raise ValueError("expected an ET_REL object with section names")
+    if not any(section[1] == 2 for section in sections):
+        raise ValueError("missing ELF object symbol table")
+    strings = sections[header[13]]
+    if strings[1] != 3 or strings[4] + strings[5] > len(data):
+        raise ValueError("invalid ELF section-name table")
+    names = data[strings[4]:strings[4] + strings[5]]
+    result = []
+    for name, address, size, info, index, _local_file in rows:
+        if not name or info & 15 != 2 or not 0 < index < len(sections):
+            continue
+        section = sections[index]
+        if not section[2] & 4 or section[0] >= len(names):
+            continue
+        end = names.find(b"\0", section[0])
+        if end < 0:
+            raise ValueError("unterminated ELF section name")
+        offset = (address & ~1) - section[3]
+        if not 0 <= offset < section[5] or offset + size > section[5]:
+            continue
+        result.append((name, names[section[0]:end].decode("utf-8", errors="replace"),
+                       offset, size, section[5]))
+    return sorted(set(result))
 
 
 def linked_function_evidence(
@@ -431,12 +578,17 @@ def linked_function_evidence(
     """Bind JP names/addresses to exact C owners, exposing absent evidence."""
     elf_path, map_path = root / "pokeemerald_jp.elf", root / "pokeemerald_jp.map"
     metadata = {
-        "method": "JP ELF executable symbols + JP linker input-object intervals; local STT_FILE is auxiliary",
+        "method": "JP ELF executable symbols + JP linker input-object intervals; exact input-section/object STT_FUNC supplement; local STT_FILE is auxiliary",
         "status": "unavailable",
         "inputs": {},
         "object_ranges": 0,
         "owner_conflicts": 0,
         "stale_source_owners": [],
+        "unverified_function_macros": sorted({f"{item.path}:{item.declared_name}"
+                                               for item in definitions if not item.macro_verified}),
+        "input_section_bindings": [],
+        "input_object_errors": {},
+        "inline_not_emitted": [],
         "source_definition_sha256": hashlib.sha256(json.dumps(
             [asdict(definition) for definition in definitions], sort_keys=True,
             separators=(",", ":")).encode("utf-8")).hexdigest(),
@@ -452,17 +604,19 @@ def linked_function_evidence(
     except ValueError as error:
         metadata["reason"] = str(error)
         return {}, metadata
-    ranges = []
+    ranges, code_inputs = [], []
     if map_path.is_file():
         map_data = map_path.read_bytes()
-        ranges = linker_code_ranges(map_data.decode("utf-8", errors="replace"))
+        code_inputs = linker_code_inputs(map_data.decode("utf-8", errors="replace"))
+        ranges = sorted({(start, end, owner) for start, end, owner, _section, _object in code_inputs})
         metadata["inputs"]["link_map"] = {
             "path": "pokeemerald_jp.map", "sha256": hashlib.sha256(map_data).hexdigest()}
     else:
         metadata["reason"] = "missing_jp_link_map"
     metadata["object_ranges"] = len(ranges)
     source_paths = {definition.path for definition in definitions}
-    wanted_names = {definition.name for definition in definitions}
+    verified_definitions = {(item.name, item.path) for item in definitions if item.macro_verified}
+    wanted_names = {name for name, _path in verified_definitions}
     starts = [start for start, _end, _owner in ranges]
     maximum_ends = []
     for _start, end, _owner in ranges:
@@ -472,12 +626,19 @@ def linked_function_evidence(
         by_basename[Path(path).name].add(path)
     stale = {path for path in source_paths if (root / "src" / path).is_file()
              and (root / "src" / path).stat().st_mtime_ns > elf_path.stat().st_mtime_ns}
+    name_dependencies = dict(item for definition in definitions for item in definition.name_inputs)
+    metadata["inputs"]["name_macro_headers"] = dict(sorted(name_dependencies.items()))
+    for definition in definitions:
+        for relative, expected_hash in definition.name_inputs:
+            header_path = root / relative
+            if (not header_path.is_file()
+                    or hashlib.sha256(header_path.read_bytes()).hexdigest() != expected_hash
+                    or header_path.stat().st_mtime_ns > elf_path.stat().st_mtime_ns):
+                stale.add(definition.path)
     metadata["stale_source_owners"] = sorted(stale)
     evidence: dict[tuple[str, int], set[str]] = defaultdict(set)
     conflicts = set()
-    for name, address, local_file in symbols:
-        if name not in wanted_names:
-            continue
+    def owners_at(address: int) -> set[str]:
         owners = set()
         position = bisect_right(starts, address) - 1
         while position >= 0 and maximum_ends[position] > address:
@@ -485,6 +646,12 @@ def linked_function_evidence(
             if start <= address < end:
                 owners.add(owner)
             position -= 1
+        return owners
+
+    for name, address, local_file in symbols:
+        if name not in wanted_names:
+            continue
+        owners = owners_at(address)
         local_owners = by_basename.get(Path(local_file).name, set()) if local_file else set()
         if local_file:
             exact_file = local_file.removeprefix("src/")
@@ -493,10 +660,86 @@ def linked_function_evidence(
         if len(owners) > 1 or (owners and local_owners and not owners & local_owners):
             conflicts.add((name, address))
             continue
-        if len(owners) == 1 and owners <= source_paths and not owners & stale:
+        if (len(owners) == 1 and owners <= source_paths and not owners & stale
+                and (name, next(iter(owners))) in verified_definitions):
             evidence[(name, address)].update(owners)
     for key in conflicts:
         evidence.pop(key, None)
+
+    # GNU ld may replace a source function symbol with an ABS name while
+    # retaining its real input section.  Supplement only from the matching
+    # built object, never from that ABS name or an address in funcmap.
+    by_owner = defaultdict(list)
+    for item in code_inputs:
+        by_owner[item[2]].append(item)
+    bound = {(name, owner) for (name, _address), owners in evidence.items() for owner in owners}
+    object_cache = {}
+    object_symbol_names = {}
+    metadata["inputs"]["input_objects"] = {}
+    _header, final_sections, _rows = elf_tables(data)
+    executable_ranges = [(item[3], item[3] + item[5]) for item in final_sections if item[2] & 4]
+
+    def object_functions(object_name: str) -> list[tuple] | None:
+        if object_name in object_cache:
+            return object_cache[object_name]
+        candidates = (root / object_name, root / "build/pokeemerald-jp" / object_name)
+        target = next((item for item in candidates if item.is_file()), None)
+        reason = None
+        if target is None:
+            reason = "missing_input_object"
+        elif not target.resolve().is_relative_to(root.resolve()):
+            reason = "input_object_outside_jp_root"
+        elif target.stat().st_mtime_ns > elf_path.stat().st_mtime_ns:
+            reason = "input_object_newer_than_elf"
+        if reason:
+            metadata["input_object_errors"][object_name] = reason
+            object_cache[object_name] = None
+            return None
+        object_data = target.read_bytes()
+        try:
+            functions = elf_object_functions(object_data)
+        except ValueError as error:
+            metadata["input_object_errors"][object_name] = str(error)
+            object_cache[object_name] = None
+            return None
+        metadata["inputs"]["input_objects"][target.relative_to(root).as_posix()] = hashlib.sha256(object_data).hexdigest()
+        object_symbol_names[object_name] = {name for name, _address, _file in elf_code_symbols(object_data)}
+        object_cache[object_name] = functions
+        return functions
+
+    for definition in definitions:
+        if (not definition.macro_verified or definition.path in stale
+                or (definition.name, definition.path) in bound):
+            continue
+        inputs = by_owner[definition.path]
+        candidates, object_records = set(), {}
+        for start, end, owner, section, object_name in inputs:
+            records = object_functions(object_name)
+            object_records[object_name] = records
+            if records is None or section != ".text." + definition.name:
+                continue
+            for name, actual_section, offset, _size, section_size in records:
+                address = start + offset
+                if (name == definition.name and actual_section == section
+                        and section_size == end - start
+                        and owners_at(address) == {owner}
+                        and any(a <= address < b for a, b in executable_ranges)):
+                    candidates.add((address, section, object_name))
+        if len(candidates) == 1:
+            address, section, object_name = next(iter(candidates))
+            if (definition.name, address) not in conflicts:
+                evidence[(definition.name, address)].add(definition.path)
+                metadata["input_section_bindings"].append({
+                    "source_owner": definition.path, "name": definition.name,
+                    "address": "0x%08X" % address, "input_section": section,
+                    "input_object": object_name, "evidence": "exact_input_section_and_object_STT_FUNC"})
+        elif (not candidates and definition.inline and inputs and object_records
+              and all(records is not None for records in object_records.values())
+              and all(definition.name not in object_symbol_names[object_name]
+                      for object_name in object_records)):
+            metadata["inline_not_emitted"].append({"source_owner": definition.path, "name": definition.name})
+    metadata["input_section_bindings"].sort(key=lambda item: (item["source_owner"], item["name"], item["address"]))
+    metadata["inline_not_emitted"].sort(key=lambda item: (item["source_owner"], item["name"]))
     metadata["owner_conflicts"] = len(conflicts)
     metadata["status"] = "available" if evidence else "unavailable"
     if not evidence and "reason" not in metadata:
@@ -530,6 +773,8 @@ def resolve_funcmap_entries(
         if len(owners) == 1:
             linked_addresses[(name, next(iter(owners)))].add(address)
     for definition in definitions:
+        if not definition.macro_verified:
+            continue
         candidates = by_name.get(definition.name, [])
         owner_candidates = [entry for entry in candidates if entry.source and
                             source_matches_definition(entry.source, definition)]
@@ -550,6 +795,69 @@ def resolve_funcmap_entries(
             resolved[definition] = sorted(set(selected), key=lambda entry: (
                 entry.address, entry.source or "", entry.current, entry.standard))
     return resolved, sorted(multi_address)
+
+
+def function_binding_inventory(
+    definitions: list[FunctionDef], entries: list[FuncmapEntry],
+    linked: dict[tuple[str, int], set[str]], metadata: dict[str, object],
+    resolved: dict[FunctionDef, list[FuncmapEntry]], multi_address: list[str],
+) -> dict[str, object]:
+    """Shared source inventory and conservative JP address metric contract.
+
+    Keep the all-unbound legacy list, but separate proved inline non-emission
+    from emitted/unknown unresolved definitions.  Neither is guessed into
+    the funcmap denominator.
+    """
+    candidates, actual = defaultdict(set), defaultdict(set)
+    for item in entries:
+        candidates[item.current].add(item.address)
+        candidates[item.standard].add(item.address)
+    for (name, address), owners in linked.items():
+        if len(owners) == 1:
+            actual[(name, next(iter(owners)))].add(address)
+    inline_keys = {(item["source_owner"], item["name"])
+                   for item in metadata.get("inline_not_emitted", [])}
+    unresolved = []
+    for definition in definitions:
+        if definition in resolved:
+            continue
+        key = (definition.path, definition.name)
+        addresses = actual[(definition.name, definition.path)]
+        reason = ("function_macro_unverified" if not definition.macro_verified else
+                  "ambiguous_linked_addresses" if f"{definition.path}:{definition.name}" in multi_address else
+                  "stale_source_owner" if definition.path in metadata.get("stale_source_owners", []) else
+                  "inline_not_emitted" if key in inline_keys else
+                  "linked_address_missing_from_funcmap" if addresses else
+                  "linked_name_owner_address_not_verified")
+        unresolved.append({
+            "source_owner": definition.path, "name": definition.name,
+            "naked": definition.naked, "inline": definition.inline,
+            "declared_name": definition.declared_name, "reason": reason,
+            "candidate_addresses": ["0x%08X" % value for value in sorted(candidates[definition.name])],
+            "verified_source_addresses": ["0x%08X" % value for value in sorted(addresses)],
+        })
+    naked = {entry.address for definition, values in resolved.items() if definition.naked for entry in values}
+    strict = {entry.address for definition, values in resolved.items() if not definition.naked
+              for entry in values} - naked
+    total = len({entry.address for entry in entries})
+    return {
+        "funcmap_unique_addresses": total,
+        "c_definitions": len(definitions),
+        "source_non_naked_definitions": sum(not item.naked for item in definitions),
+        "source_naked_definitions": sum(item.naked for item in definitions),
+        "source_inline_definitions": sum(item.inline for item in definitions),
+        "source_inventory_unit": "default-branch source definition; not ROM addresses",
+        "bound_c_definitions": len(resolved), "binding_evidence": metadata,
+        "unresolved_bindings": unresolved,
+        "inline_not_emitted_definitions": [item for item in unresolved if item["reason"] == "inline_not_emitted"],
+        "unresolved_emitted_or_unknown_bindings": [item for item in unresolved if item["reason"] != "inline_not_emitted"],
+        "metric_status": "conservative_verified_lower_bound" if linked and total else "unavailable",
+        "strict_c_addresses": len(strict), "naked_assembly_addresses": len(naked),
+        "strict_c_rate": len(strict) / total if linked and total else None,
+        "unmapped_c_definitions": sorted(f"{item['source_owner']}:{item['name']}" for item in unresolved),
+        "multi_address_c_definitions": multi_address,
+        "strict_naked_address_overlap": len(strict & naked),
+    }
 
 
 def legacy_binding_audit(
@@ -1826,6 +2134,8 @@ def map_progress(root: Path, us_root: Path, convergence: dict[str, object]) -> d
 
 
 def build_report(root: Path, us_root: Path) -> dict[str, object]:
+    if not (us_root / "src").is_dir():
+        raise ValueError("US source root is missing src/: %s" % us_root)
     jp_files = source_files(root)
     us_files = source_files(us_root)
     jp_defs = c_inventory(root)
@@ -1833,6 +2143,8 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
     funcmap_entries, total_functions = parse_funcmap(root / "funcmap_jp.txt")
     linked, binding_evidence = linked_function_evidence(root, jp_defs)
     resolved, multi_address_c_definitions = resolve_funcmap_entries(jp_defs, funcmap_entries, linked)
+    inventory = function_binding_inventory(jp_defs, funcmap_entries, linked, binding_evidence,
+                                          resolved, multi_address_c_definitions)
     binding_audit = legacy_binding_audit(jp_defs, funcmap_entries, linked, resolved)
     us_owners = index_us_functions(us_defs)
     us_symbols = us_binary_symbols(us_root)
@@ -1845,32 +2157,10 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
     binary_only_addresses = set()
     function_owners = []
     strict_records = []
-    unresolved_bindings = []
-    candidates_by_name = defaultdict(set)
-    actual_by_definition = defaultdict(set)
-    for (name, address), owners in linked.items():
-        if len(owners) == 1:
-            actual_by_definition[(name, next(iter(owners)))].add(address)
-    for entry in funcmap_entries:
-        candidates_by_name[entry.current].add(entry.address)
-        candidates_by_name[entry.standard].add(entry.address)
     for definition in jp_defs:
         entries = resolved.get(definition)
         if entries is None:
             unmapped_c_definitions.append(f"{definition.path}:{definition.name}")
-            candidate_addresses = candidates_by_name[definition.name]
-            actual_addresses = actual_by_definition[(definition.name, definition.path)]
-            unresolved_bindings.append({
-                "source_owner": definition.path, "name": definition.name,
-                "naked": definition.naked,
-                "reason": ("ambiguous_linked_addresses" if
-                           f"{definition.path}:{definition.name}" in multi_address_c_definitions else
-                           "stale_source_owner" if definition.path in binding_evidence["stale_source_owners"] else
-                           "linked_address_missing_from_funcmap" if actual_addresses else
-                           "linked_name_owner_address_not_verified"),
-                "candidate_addresses": ["0x%08X" % value for value in sorted(candidate_addresses)],
-                "verified_source_addresses": ["0x%08X" % value for value in sorted(actual_addresses)],
-            })
             continue
         for entry in entries:
             if definition.naked:
@@ -1894,7 +2184,10 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
             "us_standard_name": standard,
             "us_owners": sorted(owners),
             "us_binary_symbol": standard in us_symbols,
-            "jp_binding_evidence": "elf_symbol_and_linker_source_owner",
+            "jp_binding_evidence": ("exact_input_section_and_object_STT_FUNC" if any(
+                item["name"] == definition.name and item["source_owner"] == definition.path
+                and item["address"] == "0x%08X" % address
+                for item in binding_evidence["input_section_bindings"]) else "elf_symbol_and_linker_source_owner"),
         })
         if owners:
             standard_owned_addresses.add(address)
@@ -1916,7 +2209,7 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
     script_data = script_data_progress(root, us_root)
 
     return {
-        "schema": 4,
+        "schema": 5,
         "roots": {"jp": str(root), "us": str(us_root)},
         "files": {
             "jp": {"directories": directory_counts(jp_files), "suffixes": extension_counts(jp_files)},
@@ -1930,18 +2223,11 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
             "jp_only": len(jp_modules - us_modules), "us_only": len(us_modules - jp_modules),
         },
         "functions": {
-            "funcmap_unique_addresses": total_functions,
-            "c_definitions": len(jp_defs),
-            "source_non_naked_definitions": sum(not definition.naked for definition in jp_defs),
-            "source_naked_definitions": sum(definition.naked for definition in jp_defs),
-            "bound_c_definitions": len(resolved),
-            "binding_evidence": binding_evidence,
+            **inventory,
             "binding_audit": binding_audit,
-            "unresolved_bindings": unresolved_bindings,
-            "metric_status": ("conservative_verified_lower_bound" if linked else "unavailable"),
             "strict_c_addresses": len(strict_addresses),
             "naked_assembly_addresses": len(naked_addresses),
-            "strict_c_rate": len(strict_addresses) / max(total_functions, 1) if linked else None,
+            "strict_c_rate": inventory["strict_c_rate"],
             "standard_owned_addresses": len(standard_owned_addresses),
             "module_aligned_addresses": len(aligned_addresses),
             "us_binary_only_addresses": len(binary_only_addresses),
@@ -1995,6 +2281,9 @@ def print_report(report: dict[str, object]) -> None:
     print("strict C (verified lower bound): %d/%d = %s (naked asm addresses: %d)" % (
         functions["strict_c_addresses"], functions["funcmap_unique_addresses"],
         percentage(functions["strict_c_rate"]), functions["naked_assembly_addresses"]))
+    print("source inline definitions=%d; proved inline_not_emitted=%d; other unresolved=%d (source units, not ROM addresses)" % (
+        functions["source_inline_definitions"], len(functions["inline_not_emitted_definitions"]),
+        len(functions["unresolved_emitted_or_unknown_bindings"])))
     print("module home (funcmap US-name candidates): %d strict addresses = %s; path alignment: %d = %s; US binary-only: %d" % (
         functions["standard_owned_addresses"], percentage(functions["module_home_rate"]),
         functions["module_aligned_addresses"], percentage(functions["path_alignment_rate"]),
@@ -2075,6 +2364,9 @@ def render_markdown_report(report: dict[str, object]) -> str:
         f"- 源码函数体库存：非 naked {functions['source_non_naked_definitions']}、naked "
         f"{functions['source_naked_definitions']}；地址已绑定 {functions['bound_c_definitions']}、"
         f"未解析 {len(functions['unresolved_bindings'])}；指标证据状态：{functions['metric_status']}。",
+        f"- inline 源码定义：{functions['source_inline_definitions']}；对象证实无独立入口 "
+        f"{len(functions['inline_not_emitted_definitions'])}；其他未解析 "
+        f"{len(functions['unresolved_emitted_or_unknown_bindings'])}。这些是源码库存单位，不是 ROM 分母。",
         "- 旧名称 fan-out 指标已失效；修正绑定导致计数下降属于测量纠错，不是反编译退步。"
         f"排除 naked 前自然交集：旧 {functions['binding_audit']['legacy_name_fanout']['natural_strict_naked_overlap']}、"
         f"新 {functions['binding_audit']['verified_owner_bindings']['natural_strict_naked_overlap']}。",
@@ -2152,7 +2444,8 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "```",
         "",
         "源码库存、funcmap 和 incbin 清单不需要构建。函数地址指标读取匹配的 "
-        "`pokeemerald_jp.elf` 与 `pokeemerald_jp.map`，JSON 记录输入 SHA-256、未解析原因和旧/新绑定诊断；"
+        "`pokeemerald_jp.elf` 与 `pokeemerald_jp.map`；输入 section 补证还读取对应 JP 对象的 STT_FUNC，"
+        "libc 宏名称展开读取真实 include 链。JSON 记录这些输入 SHA-256、未解析原因和旧/新绑定诊断；"
         "缺失证据不按名字猜测。采样这些生成文件时须持有共享构建锁，避免 make clean 窗口。完整报告仍需要匹配的 "
         "`baserom_jp.gba` 来解析地图 owner；US 二进制符号统计使用指定 US 树的 "
         "`pokeemerald.sym`（若存在），资源存在性检查也依赖本地提取资源。",

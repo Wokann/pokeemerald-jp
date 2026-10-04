@@ -39,7 +39,203 @@ def elf_fixture(symbols):
         struct.pack("<10I", *section) for section in sections)
 
 
+def object_fixture(name, section=None, *, info=0x12, offset=1):
+    """ET_REL fixture: typed function, executable named input section."""
+    section = section or ".text." + name
+    names = ("\0" + section + "\0").encode()
+    strings = ("\0" + name + "\0").encode()
+    table = bytes(16) + struct.pack("<IIIBBH", 1, offset, 0x10, info, 0, 1)
+    names_at, strings_at = 52 + 0x20, 52 + 0x20 + len(names)
+    table_at = strings_at + len(strings)
+    sections_at = table_at + len(table)
+    header = struct.pack("<16sHHIIIIIHHHHHH", b"\x7fELF\x01\x01" + bytes(10),
+                         1, 40, 1, 0, 0, sections_at, 0, 52, 0, 0, 40, 5, 4)
+    sections = [(0,) * 10,
+                (1, 1, 6, 0, 52, 0x20, 0, 0, 4, 0),
+                (0, 3, 0, 0, strings_at, len(strings), 0, 0, 1, 0),
+                (0, 2, 0, 0, table_at, len(table), 2, 1, 4, 16),
+                (0, 3, 0, 0, names_at, len(names), 0, 0, 1, 0)]
+    return header + bytes(0x20) + names + strings + table + b"".join(
+        struct.pack("<10I", *item) for item in sections)
+
+
 class StructureAuditTests(unittest.TestCase):
+    def test_defun_follows_transitive_string_header_and_header_cycles(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "src/libc/sample.c"
+            source.parent.mkdir(parents=True)
+            headers = root / "tools/agbcc-src/libc/include"
+            headers.mkdir(parents=True)
+            (headers / "string.h").write_text('#include "_ansi.h"\n')
+            (headers / "_ansi.h").write_text('#include "string.h"\n#define _DEFUN(name, arglist, args) name(args)\n')
+            source.write_text('#include <string.h>\nvoid _DEFUN(memset, (p), void *p) {}\n')
+            definition = audit.function_definitions(source, root)[0]
+        self.assertEqual(definition.name, "memset")
+        self.assertTrue(definition.macro_verified)
+        self.assertEqual(len(definition.name_inputs), 2)
+
+    def test_defun_functions_keep_real_names_naked_state_and_header_aliases(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "src/libc/sample.c"
+            source.parent.mkdir(parents=True)
+            ansi = root / "tools/agbcc-src/libc/include/_ansi.h"
+            ansi.parent.mkdir(parents=True)
+            ansi.write_text("#ifdef __STDC__\n#define _DEFUN(name, arglist, args) name(args)\n"
+                            "#define _DEFUN_VOID(name) name(_NOARGS)\n#endif\n")
+            header = root / "tools/agbcc-src/libc/stdlib/mprec.h"
+            header.parent.mkdir(parents=True)
+            header.write_text("#define Balloc _Balloc\n#define mult _multiply\n")
+            source.write_text('#include <_ansi.h>\n#include "mprec.h"\n'
+                              "void _DEFUN(Balloc, (k), int k) {}\n"
+                              "__attribute__((naked)) void _DEFUN(mult, (k), int k) { asm(\"\"); }\n"
+                              "void _DEFUN_VOID(Zero) {}\nvoid _DEFUN_VOID(Prototype);\n")
+            definitions = audit.function_definitions(source, root)
+        self.assertEqual([(item.name, item.naked, item.macro_verified) for item in definitions],
+                         [("_Balloc", False, True), ("_multiply", True, True), ("Zero", False, True)])
+        self.assertEqual([item.declared_name for item in definitions], ["Balloc", "mult", "Zero"])
+        self.assertEqual(len(definitions[0].name_inputs), 2)
+
+    def test_missing_unknown_or_cyclic_defun_macros_cannot_bind_addresses(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "src").mkdir()
+            source = root / "src/sample.c"
+            source.write_text("void _DEFUN(Plain, (), void) {}\n")
+            definition = audit.function_definitions(source, root)[0]
+            self.assertFalse(definition.macro_verified)
+            entries = [audit.FuncmapEntry(0x08000100, "sample.s", "Plain", "Plain")]
+            self.assertEqual(audit.resolve_funcmap_entries(
+                [definition], entries, {("Plain", 0x08000100): {"sample.c"}})[0], {})
+            (root / "src/_ansi.h").write_text("#define _DEFUN(name, arglist, args) unrelated(args)\n")
+            source.write_text('#include "_ansi.h"\nvoid _DEFUN(Plain, (), void) {}\n')
+            self.assertFalse(audit.function_definitions(source, root)[0].macro_verified)
+            (root / "src/_ansi.h").write_text("#define _DEFUN(name, arglist, args) name(args)\n")
+            (root / "src/mprec.h").write_text("#define Plain Other\n#define Other Plain\n")
+            source.write_text('#include "_ansi.h"\n#include "mprec.h"\nvoid _DEFUN(Plain, (), void) {}\n')
+            self.assertFalse(audit.function_definitions(source, root)[0].macro_verified)
+
+    def test_defun_macro_expansion_uses_definition_order_and_rejects_unknown_redefinition(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "src").mkdir()
+            (root / "src/_ansi.h").write_text("#define _DEFUN_VOID(name) name()\n")
+            source = root / "src/sample.c"
+            source.write_text('#include "_ansi.h"\n#define Name Before\n'
+                              "void _DEFUN_VOID(Name) {}\n#undef Name\n#define Name After\n"
+                              "NAKED\nvoid _DEFUN_VOID(Name) {}\n"
+                              "#define _DEFUN_VOID(name) unrelated()\nvoid _DEFUN_VOID(Unknown) {}\n"
+                              "#undef _DEFUN_VOID\nvoid _DEFUN_VOID(Unset) {}\n"
+                              "#define _DEFUN_VOID(name) name()\n#define Alias Old\n"
+                              "#define Alias 42\nvoid _DEFUN_VOID(Alias) {}\n")
+            definitions = audit.function_definitions(source, root)
+        self.assertEqual([(item.name, item.naked, item.macro_verified) for item in definitions],
+                         [("Before", False, True), ("After", True, True),
+                          ("Unknown", False, False), ("Unset", False, False), ("Alias", False, False)])
+
+    def test_exact_object_function_section_binds_real_entry_not_abs_alias(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "src").mkdir()
+            (root / "src/one.c").write_text("void Source(void) {}\n")
+            (root / "src/one.o").write_bytes(object_fixture("Source"))
+            (root / "pokeemerald_jp.map").write_text(" .text.Source 0x08000140 0x20 src/one.o\n")
+            (root / "pokeemerald_jp.elf").write_bytes(elf_fixture([
+                ("Source", 0x08000121, 0x12, 0xFFF1), ("RealAlias", 0x08000141, 0x10, 1)]))
+            definition = audit.FunctionDef("one.c", "Source", False)
+            linked, metadata = audit.linked_function_evidence(root, [definition])
+            self.assertEqual(linked, {("Source", 0x08000140): {"one.c"}})
+            self.assertEqual(len(metadata["input_section_bindings"]), 1)
+            entries = [audit.FuncmapEntry(0x08000120, None, "Source", "Wrong"),
+                       audit.FuncmapEntry(0x08000140, None, "RealAlias", "Correct")]
+            resolved, _multiple = audit.resolve_funcmap_entries([definition], entries, linked)
+            self.assertEqual([item.address for item in resolved[definition]], [0x08000140])
+            (root / "pokeemerald_jp.map").write_text(
+                " .text.Source 0x08000140 0x20 src/one.o\n .text.Other 0x08000140 0x20 src/two.o\n")
+            self.assertEqual(audit.linked_function_evidence(root, [definition])[0], {})
+
+    def test_input_section_requires_typed_matching_fresh_object(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "src").mkdir()
+            (root / "src/one.c").write_text("void Source(void) {}\n")
+            obj = root / "src/one.o"
+            elf = root / "pokeemerald_jp.elf"
+            (root / "pokeemerald_jp.map").write_text(" .text.Source 0x08000140 0x20 src/one.o\n")
+            definition = audit.FunctionDef("one.c", "Source", False)
+            for data in (object_fixture("Source", info=0x10), object_fixture("Source", ".text.Wrong")):
+                obj.write_bytes(data)
+                elf.write_bytes(elf_fixture([("RealAlias", 0x08000141, 0x10, 1)]))
+                self.assertEqual(audit.linked_function_evidence(root, [definition])[0], {})
+            obj.write_bytes(object_fixture("Source"))
+            elf.write_bytes(elf_fixture([("RealAlias", 0x08000141, 0x10, 1)]))
+            newer = elf.stat().st_mtime_ns + 1000000000
+            os.utime(obj, ns=(newer, newer))
+            linked, metadata = audit.linked_function_evidence(root, [definition])
+            self.assertEqual(linked, {})
+            self.assertEqual(metadata["input_object_errors"]["src/one.o"], "input_object_newer_than_elf")
+
+    def test_function_macro_inputs_must_be_verified_and_older_than_the_build(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "src").mkdir()
+            source = root / "src/one.c"
+            header = root / "src/_ansi.h"
+            source.write_text('#include "_ansi.h"\nvoid _DEFUN(Plain, (), void) {}\n')
+            header.write_text("#define _DEFUN(name, arglist, args) name(args)\n")
+            (root / "pokeemerald_jp.map").write_text(" .text 0x08000100 0x20 src/one.o\n")
+            elf = root / "pokeemerald_jp.elf"
+            elf.write_bytes(elf_fixture([("Plain", 0x08000101, 0x12, 1)]))
+            definitions = audit.function_definitions(source, root)
+            self.assertEqual(audit.linked_function_evidence(root, definitions)[0],
+                             {("Plain", 0x08000100): {"one.c"}})
+            newer = elf.stat().st_mtime_ns + 1000000000
+            os.utime(header, ns=(newer, newer))
+            self.assertEqual(audit.linked_function_evidence(root, definitions)[0], {})
+            header.write_text("#define _DEFUN(name, arglist, args) unknown(args)\n")
+            elf.write_bytes(elf_fixture([("Plain", 0x08000101, 0x12, 1)]))
+            self.assertEqual(audit.linked_function_evidence(root, audit.function_definitions(source, root))[0], {})
+
+    def test_inline_non_emission_is_proved_from_built_object_not_guessed(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "src").mkdir()
+            (root / "src/one.c").write_text("void Helper(void) {}\nstatic inline void Inline(void) {}\n")
+            (root / "src/one.o").write_bytes(object_fixture("Helper"))
+            (root / "pokeemerald_jp.map").write_text(" .text.Helper 0x08000100 0x20 src/one.o\n")
+            (root / "pokeemerald_jp.elf").write_bytes(elf_fixture([("Helper", 0x08000101, 0x12, 1)]))
+            definitions = audit.function_definitions(root / "src/one.c", root)
+            linked, metadata = audit.linked_function_evidence(root, definitions)
+            self.assertEqual(metadata["inline_not_emitted"], [{"source_owner": "one.c", "name": "Inline"}])
+            entries = [audit.FuncmapEntry(0x08000100, None, "Helper", "Helper")]
+            resolved, multiple = audit.resolve_funcmap_entries(definitions, entries, linked)
+            summary = audit.function_binding_inventory(definitions, entries, linked, metadata, resolved, multiple)
+            self.assertEqual(len(summary["unresolved_bindings"]), 1)
+            self.assertEqual(len(summary["inline_not_emitted_definitions"]), 1)
+            self.assertEqual(summary["unresolved_emitted_or_unknown_bindings"], [])
+            (root / "src/one.o").unlink()
+            self.assertEqual(audit.linked_function_evidence(root, definitions)[1]["inline_not_emitted"], [])
+
+    def test_inline_without_typed_function_or_object_symbol_table_is_not_proved_absent(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "src").mkdir()
+            source = root / "src/one.c"
+            source.write_text("static inline void Inline(void) {}\n")
+            (root / "pokeemerald_jp.map").write_text(" .text.Inline 0x08000100 0x20 src/one.o\n")
+            definition = audit.function_definitions(source, root)[0]
+            untyped = object_fixture("Inline", info=0x10)
+            stripped = bytearray(object_fixture("Helper"))
+            section_headers = struct.unpack_from("<I", stripped, 32)[0]
+            struct.pack_into("<I", stripped, section_headers + 3 * 40 + 4, 0)
+            for data in (untyped, bytes(stripped)):
+                (root / "src/one.o").write_bytes(data)
+                (root / "pokeemerald_jp.elf").write_bytes(elf_fixture([]))
+                linked, metadata = audit.linked_function_evidence(root, [definition])
+                self.assertEqual(linked, {})
+                self.assertEqual(metadata["inline_not_emitted"], [])
+
     def test_naked_definition_is_not_a_strict_c_definition(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
