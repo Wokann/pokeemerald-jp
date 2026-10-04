@@ -159,8 +159,8 @@ LilycoveCity_EventScript_MotelSign::
 LilycoveCity_EventScript_MuseumSign::
 	lockall
 	specialvar VAR_0x8004, CountPlayerMuseumPaintings
-	copyvar VAR_0x8000, VAR_0x8004
-	goto_if_eq VAR_0x8000, 0, LilycoveCity_EventScript_MuseumSignNoPaintings
+	switch VAR_0x8004
+	case 0, LilycoveCity_EventScript_MuseumSignNoPaintings
 	msgbox LilycoveCity_Text_MuseumSignPlayersExhibit, MSGBOX_DEFAULT
 	releaseall
 	end
@@ -240,10 +240,10 @@ LilycoveCity_EventScript_May::
 	call_if_unset FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE, LilycoveCity_EventScript_MayAskToBattle
 	goto_if_eq VAR_RESULT, NO, LilycoveCity_EventScript_DeclineMayBattle
 	msgbox LilycoveCity_Text_MayWontBeBeaten, MSGBOX_DEFAULT
-	copyvar VAR_0x8000, VAR_STARTER_MON
-	goto_if_eq VAR_0x8000, 0, LilycoveCity_EventScript_BattleMayTreecko
-	goto_if_eq VAR_0x8000, 1, LilycoveCity_EventScript_BattleMayTorchic
-	goto_if_eq VAR_0x8000, 2, LilycoveCity_EventScript_BattleMayMudkip
+	switch VAR_STARTER_MON
+	case 0, LilycoveCity_EventScript_BattleMayTreecko
+	case 1, LilycoveCity_EventScript_BattleMayTorchic
+	case 2, LilycoveCity_EventScript_BattleMayMudkip
 	end
 
 LilycoveCity_EventScript_MayAskToBattleAgain::
@@ -268,10 +268,10 @@ LilycoveCity_EventScript_Brendan::
 	call_if_unset FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE, LilycoveCity_EventScript_BrendanAskToBattle
 	goto_if_eq VAR_RESULT, NO, LilycoveCity_EventScript_DeclineBrendanBattle
 	msgbox LilycoveCity_Text_BrendanWontBeBeaten, MSGBOX_DEFAULT
-	copyvar VAR_0x8000, VAR_STARTER_MON
-	goto_if_eq VAR_0x8000, 0, LilycoveCity_EventScript_BattleBrendanTreecko
-	goto_if_eq VAR_0x8000, 1, LilycoveCity_EventScript_BattleBrendanTorchic
-	goto_if_eq VAR_0x8000, 2, LilycoveCity_EventScript_BattleBrendanMudkip
+	switch VAR_STARTER_MON
+	case 0, LilycoveCity_EventScript_BattleBrendanTreecko
+	case 1, LilycoveCity_EventScript_BattleBrendanTorchic
+	case 2, LilycoveCity_EventScript_BattleBrendanMudkip
 	end
 
 LilycoveCity_EventScript_BrendanAskToBattleAgain::
