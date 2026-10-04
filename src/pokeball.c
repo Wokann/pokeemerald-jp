@@ -1,7 +1,47 @@
 #include "global.h"
+#include "battle.h"
+#include "battle_anim.h"
+#include "battle_gfx_sfx_util.h"
+#include "decompress.h"
 #include "graphics.h"
+#include "main.h"
+#include "m4a.h"
 #include "pokeball.h"
+#include "pokemon.h"
+#include "sound.h"
 #include "sprite.h"
+#include "task.h"
+#include "trig.h"
+#include "util.h"
+#include "data.h"
+#include "constants/songs.h"
+
+void Task_DoPokeballSendOutAnim(u8 taskId);
+void SpriteCB_PlayerMonSendOut_1(struct Sprite *sprite);
+void SpriteCB_PlayerMonSendOut_2(struct Sprite *sprite);
+void SpriteCB_OpponentMonSendOut(struct Sprite *sprite);
+static void SpriteCB_BallThrow(struct Sprite *sprite);
+void SpriteCB_BallThrow_ReachMon(struct Sprite *sprite);
+void SpriteCB_BallThrow_StartShrinkMon(struct Sprite *sprite);
+void SpriteCB_BallThrow_ShrinkMon(struct Sprite *sprite);
+void SpriteCB_BallThrow_Close(struct Sprite *sprite);
+void SpriteCB_BallThrow_FallToGround(struct Sprite *sprite);
+void SpriteCB_BallThrow_StartShakes(struct Sprite *sprite);
+void SpriteCB_BallThrow_Shake(struct Sprite *sprite);
+void SpriteCB_BallThrow_StartCaptureMon(struct Sprite *sprite);
+void SpriteCB_BallThrow_CaptureMon(struct Sprite *sprite);
+void SpriteCB_ReleaseMonFromBall(struct Sprite *sprite);
+void SpriteCB_ReleaseMon2FromBall(struct Sprite *sprite);
+void HandleBallAnimEnd(struct Sprite *sprite);
+void SpriteCB_PokeballReleaseMon(struct Sprite *sprite);
+void SpriteCB_ReleasedMonFlyOut(struct Sprite *sprite);
+void SpriteCB_TradePokeball(struct Sprite *sprite);
+void SpriteCB_TradePokeballSendOff(struct Sprite *sprite);
+void SpriteCB_TradePokeballEnd(struct Sprite *sprite);
+void SpriteCB_HealthboxSlideInDelayed(struct Sprite *sprite);
+void SpriteCB_HealthboxSlideIn(struct Sprite *sprite);
+void SpriteCB_HitAnimHealthoxEffect(struct Sprite *sprite);
+u16 GetBattlerPokeballItemId(u8 battler);
 
 #define GFX_TAG_POKE_BALL    55000
 #define GFX_TAG_GREAT_BALL   55001
@@ -18,7 +58,6 @@
 
 #define POKEBALL_STATIC_DATA __attribute__((section(".rodata.pokeball_static_data"), aligned(1)))
 
-static void SpriteCB_BallThrow(struct Sprite *sprite);
 
 const struct CompressedSpriteSheet gBallSpriteSheets[POKEBALL_COUNT] POKEBALL_STATIC_DATA =
 {
@@ -287,3142 +326,1018 @@ const struct SpriteTemplate gBallSpriteTemplates[POKEBALL_COUNT] POKEBALL_STATIC
     },
 };
 
-__attribute__((naked)) u8 DoPokeballSendOutAnimation(s16 pan, u8 kindOfThrow)
+
+#define tFrames          data[0]
+#define tPan             data[1]
+#define tThrowId         data[2]
+#define tBattler         data[3]
+#define tOpponentBattler data[4]
+
+u8 DoPokeballSendOutAnimation(s16 pan, u8 kindOfThrow)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r1, _08074E44\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _08074E48\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r6, _08074E4C\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	ldr r2, [r0, #4]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #8\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _08074E50\n\t"
-        "	movs r1, #5\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _08074E54\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r4, [r1, #0xa]\n\t"
-        "	strh r5, [r1, #0xc]\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	strh r0, [r1, #0xe]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08074E44: .4byte gUnknown_202415D\n\t"
-        "_08074E48: .4byte gBattleSpritesDataPtr\n\t"
-        "_08074E4C: .4byte gActiveBattler\n\t"
-        "_08074E50: .4byte Task_DoPokeballSendOutAnim + 1\n\t"
-        "_08074E54: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId;
+
+    gDoingBattleAnim = TRUE;
+    gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].ballAnimActive = TRUE;
+
+    taskId = CreateTask(Task_DoPokeballSendOutAnim, 5);
+    gTasks[taskId].tPan = pan;
+    gTasks[taskId].tThrowId = kindOfThrow;
+    gTasks[taskId].tBattler = gActiveBattler;
+
+    return 0;
 }
 
-__attribute__((naked)) void Task_DoPokeballSendOutAnim(void)
+#define sBattler         data[6]
+
+void Task_DoPokeballSendOutAnim(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r1, _08074E8C\n\t"
-        "	mov r2, sl\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	add r0, sl\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrh r2, [r1, #8]\n\t"
-        "	movs r3, #8\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08074E90\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	b _0807500A\n\t"
-        "	.align 2, 0\n\t"
-        "_08074E8C: .4byte gTasks\n\t"
-        "_08074E90:\n\t"
-        "	ldrh r0, [r1, #0xc]\n\t"
-        "	mov r8, r0\n\t"
-        "	ldrb r5, [r1, #0xe]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08074EBC\n\t"
-        "	ldr r1, _08074EB4\n\t"
-        "	lsls r0, r5, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08074EB8\n\t"
-        "	b _08074ECA\n\t"
-        "	.align 2, 0\n\t"
-        "_08074EB4: .4byte gBattlerPartyIndexes\n\t"
-        "_08074EB8: .4byte gEnemyParty\n\t"
-        "_08074EBC:\n\t"
-        "	ldr r1, _08074F38\n\t"
-        "	lsls r0, r5, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08074F3C\n\t"
-        "_08074ECA:\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x26\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl ItemIdToBallId\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl LoadBallGfx\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _08074F40\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x20\n\t"
-        "	movs r2, #0x50\n\t"
-        "	movs r3, #0x1d\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r2, _08074F44\n\t"
-        "	mov sb, r2\n\t"
-        "	lsls r0, r7, #4\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r6, r0, #2\n\t"
-        "	adds r4, r6, r2\n\t"
-        "	movs r0, #0x80\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r3, [r4, #0x30]\n\t"
-        "	mov r0, r8\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	mov r2, r8\n\t"
-        "	cmp r2, #0xfe\n\t"
-        "	beq _08074F50\n\t"
-        "	cmp r2, #0xff\n\t"
-        "	bne _08074F8C\n\t"
-        "	ldr r0, _08074F48\n\t"
-        "	strb r5, [r0]\n\t"
-        "	movs r0, #0x18\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	movs r0, #0x44\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	ldr r1, _08074F4C\n\t"
-        "	str r1, [r0]\n\t"
-        "	b _08074F9A\n\t"
-        "	.align 2, 0\n\t"
-        "_08074F38: .4byte gBattlerPartyIndexes\n\t"
-        "_08074F3C: .4byte gPlayerParty\n\t"
-        "_08074F40: .4byte gBallSpriteTemplates\n\t"
-        "_08074F44: .4byte gSprites\n\t"
-        "_08074F48: .4byte gBattlerTarget\n\t"
-        "_08074F4C: .4byte SpriteCB_PlayerMonSendOut_1 + 1\n\t"
-        "_08074F50:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r0, #0x18\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	ldr r0, _08074F84\n\t"
-        "	strb r5, [r0]\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r3, [r4, #0x2e]\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	ldr r1, _08074F88\n\t"
-        "	str r1, [r0]\n\t"
-        "	b _08074F9A\n\t"
-        "	.align 2, 0\n\t"
-        "_08074F84: .4byte gBattlerTarget\n\t"
-        "_08074F88: .4byte SpriteCB_OpponentMonSendOut + 1\n\t"
-        "_08074F8C:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	ldr r1, _08074FB8\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "_08074F9A:\n\t"
-        "	ldr r0, _08074FBC\n\t"
-        "	lsls r1, r7, #4\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	ldr r5, _08074FB8\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _08074FC0\n\t"
-        "	mov r0, sl\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _0807500A\n\t"
-        "	.align 2, 0\n\t"
-        "_08074FB8: .4byte gBattlerTarget\n\t"
-        "_08074FBC: .4byte gSprites\n\t"
-        "_08074FC0:\n\t"
-        "	movs r0, #0x22\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	subs r0, #0x10\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	ldr r0, _0807501C\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl InitAnimArcTranslation\n\t"
-        "	mov r3, sl\n\t"
-        "	strh r3, [r4, #6]\n\t"
-        "	ldr r1, _08075020\n\t"
-        "	mov r2, sl\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	add r0, sl\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	strh r1, [r0, #0x10]\n\t"
-        "	ldr r1, _08075024\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r0, #0x3d\n\t"
-        "	bl PlaySE\n\t"
-        "_0807500A:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807501C: .4byte 0x0000FFD8\n\t"
-        "_08075020: .4byte gTasks\n\t"
-        "_08075024: .4byte TaskDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 throwCaseId;
+    u8 battler;
+    u16 itemId, ballId;
+    u8 ballSpriteId;
+    bool8 notSendOut = FALSE;
+
+    if (gTasks[taskId].tFrames == 0)
+    {
+        gTasks[taskId].tFrames++;
+        return;
+    }
+
+    throwCaseId = gTasks[taskId].tThrowId;
+    battler = gTasks[taskId].tBattler;
+
+    if (GetBattlerSide(battler) != B_SIDE_PLAYER)
+        itemId = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_POKEBALL);
+    else
+        itemId = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_POKEBALL);
+
+    ballId = ItemIdToBallId(itemId);
+    LoadBallGfx(ballId);
+    ballSpriteId = CreateSprite(&gBallSpriteTemplates[ballId], 32, 80, 29);
+    gSprites[ballSpriteId].data[0] = 0x80;
+    gSprites[ballSpriteId].data[1] = 0;
+    gSprites[ballSpriteId].data[7] = throwCaseId;
+
+    switch (throwCaseId)
+    {
+    case POKEBALL_PLAYER_SENDOUT:
+        gBattlerTarget = battler;
+        gSprites[ballSpriteId].x = 24;
+        gSprites[ballSpriteId].y = 68;
+        gSprites[ballSpriteId].callback = SpriteCB_PlayerMonSendOut_1;
+        break;
+    case POKEBALL_OPPONENT_SENDOUT:
+        gSprites[ballSpriteId].x = GetBattlerSpriteCoord(battler, BATTLER_COORD_X);
+        gSprites[ballSpriteId].y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y) + 24;
+        gBattlerTarget = battler;
+        gSprites[ballSpriteId].data[0] = 0;
+        gSprites[ballSpriteId].callback = SpriteCB_OpponentMonSendOut;
+        break;
+    default:
+        gBattlerTarget = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+        notSendOut = TRUE;
+        break;
+    }
+
+    gSprites[ballSpriteId].sBattler = gBattlerTarget;
+    if (!notSendOut)
+    {
+        DestroyTask(taskId);
+        return;
+    }
+
+    // this will perform an unused ball throw animation
+    gSprites[ballSpriteId].data[0] = 34;
+    gSprites[ballSpriteId].data[2] = GetBattlerSpriteCoord(gBattlerTarget, BATTLER_COORD_X);
+    gSprites[ballSpriteId].data[4] = GetBattlerSpriteCoord(gBattlerTarget, BATTLER_COORD_Y) - 16;
+    gSprites[ballSpriteId].data[5] = -40;
+    InitAnimArcTranslation(&gSprites[ballSpriteId]);
+    gSprites[ballSpriteId].oam.affineParam = taskId;
+    gTasks[taskId].tOpponentBattler = gBattlerTarget;
+    gTasks[taskId].func = TaskDummy;
+    PlaySE(SE_BALL_THROW);
 }
 
-__attribute__((naked)) void SpriteCB_BallThrow(struct Sprite *sprite)
+// This sequence of functions is very similar to those that get run when
+// a Pokéball gets thrown at a wild Pokémon, starting at SpriteCB_Ball_Arc.
+// These do not seem to get run.
+static void SpriteCB_BallThrow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	bl TranslateAnimHorizontalArc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080750C8\n\t"
-        "	ldrb r6, [r7, #6]\n\t"
-        "	ldr r1, _080750D4\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r5, [r0, #0x10]\n\t"
-        "	ldrb r0, [r0, #0xc]\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrh r0, [r7, #0x24]\n\t"
-        "	ldrh r1, [r7, #0x20]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r7, #0x20]\n\t"
-        "	ldrh r0, [r7, #0x26]\n\t"
-        "	ldrh r2, [r7, #0x22]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r7, #0x22]\n\t"
-        "	strh r1, [r7, #0x24]\n\t"
-        "	strh r1, [r7, #0x26]\n\t"
-        "	strh r1, [r7, #0x38]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetBattlerPokeballItemId\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl ItemIdToBallId\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r7, #0x20]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r7, #0x22]\n\t"
-        "	subs r1, #5\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0x1c\n\t"
-        "	bl AnimateBallOpenParticles\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0xe\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl LaunchBallFadeMonTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r7, #0x2e]\n\t"
-        "	strh r5, [r7, #0x3a]\n\t"
-        "	mov r0, r8\n\t"
-        "	strh r0, [r7, #0x3c]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	ldr r0, _080750D8\n\t"
-        "	str r0, [r7, #0x1c]\n\t"
-        "_080750C8:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080750D4: .4byte gTasks\n\t"
-        "_080750D8: .4byte SpriteCB_BallThrow_ReachMon + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (TranslateAnimHorizontalArc(sprite))
+    {
+        u16 ballId;
+        u8 taskId = sprite->oam.affineParam;
+        u8 opponentBattler = gTasks[taskId].tOpponentBattler;
+        u8 noOfShakes = gTasks[taskId].tThrowId;
+
+        StartSpriteAnim(sprite, 1);
+        sprite->affineAnimPaused = TRUE;
+        sprite->x += sprite->x2;
+        sprite->y += sprite->y2;
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->data[5] = 0;
+        ballId = ItemIdToBallId(GetBattlerPokeballItemId(opponentBattler));
+        AnimateBallOpenParticles(sprite->x, sprite->y - 5, 1, 28, ballId);
+        sprite->data[0] = LaunchBallFadeMonTask(FALSE, opponentBattler, 14, ballId);
+        sprite->sBattler = opponentBattler;
+        sprite->data[7] = noOfShakes;
+        DestroyTask(taskId);
+        sprite->callback = SpriteCB_BallThrow_ReachMon;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_BallThrow_ReachMon(void)
+#undef tFrames
+#undef tPan
+#undef tThrowId
+#undef tBattler
+#undef tOpponentBattler
+
+void SpriteCB_BallThrow_ReachMon(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080750E4\n\t"
-        "	str r1, [r0, #0x1c]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080750E4: .4byte SpriteCB_BallThrow_StartShrinkMon + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->callback = SpriteCB_BallThrow_StartShrinkMon;
 }
 
-__attribute__((naked)) void SpriteCB_BallThrow_StartShrinkMon(void)
+void SpriteCB_BallThrow_StartShrinkMon(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldrh r0, [r6, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r7, #0\n\t"
-        "	strh r0, [r6, #0x38]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bne _08075142\n\t"
-        "	strh r7, [r6, #0x38]\n\t"
-        "	ldr r0, _08075148\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "	ldr r5, _0807514C\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _08075150\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #2\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl AnimateSprite\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r7, [r0, #0x30]\n\t"
-        "_08075142:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08075148: .4byte SpriteCB_BallThrow_ShrinkMon + 1\n\t"
-        "_0807514C: .4byte gBattlerSpriteIds\n\t"
-        "_08075150: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++sprite->data[5] == 10)
+    {
+        sprite->data[5] = 0;
+        sprite->callback = SpriteCB_BallThrow_ShrinkMon;
+        StartSpriteAffineAnim(&gSprites[gBattlerSpriteIds[sprite->sBattler]], BATTLER_AFFINE_RETURN);
+        AnimateSprite(&gSprites[gBattlerSpriteIds[sprite->sBattler]]);
+        gSprites[gBattlerSpriteIds[sprite->sBattler]].data[1] = 0;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_BallThrow_ShrinkMon(void)
+void SpriteCB_BallThrow_ShrinkMon(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	bne _0807516C\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	bl PlaySE\n\t"
-        "_0807516C:\n\t"
-        "	ldr r6, _080751B8\n\t"
-        "	ldr r5, _080751BC\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r6\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080751C4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	ldr r0, _080751C0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _080751E4\n\t"
-        "	.align 2, 0\n\t"
-        "_080751B8: .4byte gSprites\n\t"
-        "_080751BC: .4byte gBattlerSpriteIds\n\t"
-        "_080751C0: .4byte SpriteCB_BallThrow_Close + 1\n\t"
-        "_080751C4:\n\t"
-        "	ldrh r0, [r1, #0x30]\n\t"
-        "	adds r0, #0x60\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "_080751E4:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[5]++;
+    if (sprite->data[5] == 11)
+        PlaySE(SE_BALL_TRADE);
+
+    if (gSprites[gBattlerSpriteIds[sprite->sBattler]].affineAnimEnded)
+    {
+        StartSpriteAnim(sprite, 2);
+        gSprites[gBattlerSpriteIds[sprite->sBattler]].invisible = TRUE;
+        sprite->data[5] = 0;
+        sprite->callback = SpriteCB_BallThrow_Close;
+    }
+    else
+    {
+        gSprites[gBattlerSpriteIds[sprite->sBattler]].data[1] += 0x60;
+        gSprites[gBattlerSpriteIds[sprite->sBattler]].y2 = -gSprites[gBattlerSpriteIds[sprite->sBattler]].data[1] >> 8;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_BallThrow_Close(void)
+void SpriteCB_BallThrow_Close(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08075234\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08075234\n\t"
-        "	strh r1, [r4, #0x34]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r1, [r4, #0x38]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Cos\n\t"
-        "	ldrh r1, [r4, #0x22]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	movs r0, #0x36\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl Cos\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldr r0, _0807523C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08075234:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807523C: .4byte SpriteCB_BallThrow_FallToGround + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->animEnded)
+    {
+        sprite->data[5]++;
+        if (sprite->data[5] == 1)
+        {
+            sprite->data[3] = 0;
+            sprite->data[4] = 32;
+            sprite->data[5] = 0;
+            sprite->y += Cos(0, 32);
+            sprite->y2 = -Cos(0, sprite->data[4]);
+            sprite->callback = SpriteCB_BallThrow_FallToGround;
+        }
+    }
 }
 
-__attribute__((naked)) void SpriteCB_BallThrow_FallToGround(void)
+void SpriteCB_BallThrow_FallToGround(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _08075256\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080752CA\n\t"
-        "	b _080752F6\n\t"
-        "_08075256:\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Cos\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r1, [r4, #0x38]\n\t"
-        "	adds r1, #4\n\t"
-        "	ldrh r2, [r4, #0x34]\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r1, [r4, #0x38]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0x3f\n\t"
-        "	ble _080752F6\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	subs r0, #0xa\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	ldr r1, _080752A0\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _08075292\n\t"
-        "	movs r5, #1\n\t"
-        "_08075292:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080752B2\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _080752A4\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080752AA\n\t"
-        "	b _080752C2\n\t"
-        "	.align 2, 0\n\t"
-        "_080752A0: .4byte SPECIAL_RetrieveLotteryNumber\n\t"
-        "_080752A4:\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080752BA\n\t"
-        "	b _080752C2\n\t"
-        "_080752AA:\n\t"
-        "	movs r0, #0x38\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080752F6\n\t"
-        "_080752B2:\n\t"
-        "	movs r0, #0x39\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080752F6\n\t"
-        "_080752BA:\n\t"
-        "	movs r0, #0x3a\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080752F6\n\t"
-        "_080752C2:\n\t"
-        "	movs r0, #0x3b\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080752F6\n\t"
-        "_080752CA:\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Cos\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r1, [r4, #0x38]\n\t"
-        "	subs r1, #4\n\t"
-        "	ldrh r2, [r4, #0x34]\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r4, #0x38]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _080752F6\n\t"
-        "	strh r5, [r4, #0x38]\n\t"
-        "	ldr r0, _0807531C\n\t"
-        "	ands r0, r2\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "_080752F6:\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _0807532E\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r5, [r4, #0x34]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Cos\n\t"
-        "	ldrh r1, [r4, #0x22]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	strh r5, [r4, #0x26]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08075324\n\t"
-        "	ldr r0, _08075320\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _0807532E\n\t"
-        "	.align 2, 0\n\t"
-        "_0807531C: .4byte 0xFFFFFF00\n\t"
-        "_08075320: .4byte SpriteCB_ReleaseMonFromBall + 1\n\t"
-        "_08075324:\n\t"
-        "	ldr r0, _08075334\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r5, [r4, #0x38]\n\t"
-        "_0807532E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08075334: .4byte SpriteCB_BallThrow_StartShakes + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 r5 = FALSE;
+
+    switch (sprite->data[3] & 0xFF)
+    {
+    case 0:
+        sprite->y2 = -Cos(sprite->data[5], sprite->data[4]);
+        sprite->data[5] += 4 + (sprite->data[3] >> 8);
+        if (sprite->data[5] >= 64)
+        {
+            sprite->data[4] -= 10;
+            sprite->data[3] += 0x101;
+            if (sprite->data[3] >> 8 == 4)
+                r5 = TRUE;
+            switch (sprite->data[3] >> 8)
+            {
+            case 1:
+                PlaySE(SE_BALL_BOUNCE_1);
+                break;
+            case 2:
+                PlaySE(SE_BALL_BOUNCE_2);
+                break;
+            case 3:
+                PlaySE(SE_BALL_BOUNCE_3);
+                break;
+            default:
+                PlaySE(SE_BALL_BOUNCE_4);
+                break;
+            }
+        }
+        break;
+    case 1:
+        sprite->y2 = -Cos(sprite->data[5], sprite->data[4]);
+        sprite->data[5] -= 4 + (sprite->data[3] >> 8);
+        if (sprite->data[5] <= 0)
+        {
+            sprite->data[5] = 0;
+            sprite->data[3] &= 0xFF00;
+        }
+        break;
+    }
+    if (r5)
+    {
+        sprite->data[3] = 0;
+        sprite->y += Cos(64, 32);
+        sprite->y2 = 0;
+        if (sprite->data[7] == 0)
+        {
+            sprite->callback = SpriteCB_ReleaseMonFromBall;
+        }
+        else
+        {
+            sprite->callback = SpriteCB_BallThrow_StartShakes;
+            sprite->data[4] = 1;
+            sprite->data[5] = 0;
+        }
+    }
 }
 
-__attribute__((naked)) void SpriteCB_BallThrow_StartShakes(void)
+void SpriteCB_BallThrow_StartShakes(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	bne _0807536C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	ldr r0, _08075374\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0x17\n\t"
-        "	bl PlaySE\n\t"
-        "_0807536C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08075374: .4byte SpriteCB_BallThrow_Shake + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[3]++;
+    if (sprite->data[3] == 31)
+    {
+        sprite->data[3] = 0;
+        sprite->affineAnimPaused = TRUE;
+        StartSpriteAffineAnim(sprite, 1);
+        sprite->callback = SpriteCB_BallThrow_Shake;
+        PlaySE(SE_BALL);
+    }
 }
 
-__attribute__((naked)) void SpriteCB_BallThrow_Shake(void)
+void SpriteCB_BallThrow_Shake(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #4\n\t"
-        "	bhi _08075478\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	ldr r1, _08075390\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08075390: .4byte _08075394\n\t"
-        "_08075394:\n\t"
-        "	.4byte _080753A8\n\t"
-        "	.4byte _080753DA\n\t"
-        "	.4byte _080753A8\n\t"
-        "	.4byte _0807542E\n\t"
-        "	.4byte _08075478\n\t"
-        "_080753A8:\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	ldrh r2, [r4, #0x24]\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "	ldrh r1, [r4, #0x38]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #6\n\t"
-        "	bls _080754BE\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	b _080754BE\n\t"
-        "_080753DA:\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08075420\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08075416\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl ChangeSpriteAffineAnim\n\t"
-        "	b _080754BE\n\t"
-        "_08075416:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ChangeSpriteAffineAnim\n\t"
-        "	b _080754BE\n\t"
-        "_08075420:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x2c\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _080754BE\n\t"
-        "_0807542E:\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ldrh r2, [r4, #0x34]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _08075450\n\t"
-        "	ldr r0, _0807544C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _080754BE\n\t"
-        "	.align 2, 0\n\t"
-        "_0807544C: .4byte SpriteCB_ReleaseMonFromBall + 1\n\t"
-        "_08075450:\n\t"
-        "	cmp r1, #4\n\t"
-        "	bne _08075464\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _08075464\n\t"
-        "	ldr r0, _08075460\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _0807546A\n\t"
-        "	.align 2, 0\n\t"
-        "_08075460: .4byte SpriteCB_BallThrow_StartCaptureMon + 1\n\t"
-        "_08075464:\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "_0807546A:\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	b _080754BE\n\t"
-        "_08075478:\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	bne _080754BE\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	ldrh r1, [r4, #0x34]\n\t"
-        "	ldr r0, _080754AC\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080754B0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	b _080754B8\n\t"
-        "	.align 2, 0\n\t"
-        "_080754AC: .4byte 0xFFFFFF00\n\t"
-        "_080754B0:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "_080754B8:\n\t"
-        "	movs r0, #0x17\n\t"
-        "	bl PlaySE\n\t"
-        "_080754BE:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->data[3] & 0xFF)
+    {
+    case 0:
+    case 2:
+        sprite->x2 += sprite->data[4];
+        sprite->data[5] += sprite->data[4];
+        sprite->affineAnimPaused = FALSE;
+        if (sprite->data[5] > 3 || sprite->data[5] < -3)
+        {
+            sprite->data[3]++;
+            sprite->data[5] = 0;
+        }
+        break;
+    case 1:
+        sprite->data[5]++;
+        if (sprite->data[5] == 1)
+        {
+            sprite->data[5] = 0;
+            sprite->data[4] = -sprite->data[4];
+            sprite->data[3]++;
+            sprite->affineAnimPaused = FALSE;
+            if (sprite->data[4] < 0)
+                ChangeSpriteAffineAnim(sprite, 2);
+            else
+                ChangeSpriteAffineAnim(sprite, 1);
+        }
+        else
+        {
+            sprite->affineAnimPaused = TRUE;
+        }
+        break;
+    case 3:
+        sprite->data[3] += 0x100;
+        if (sprite->data[3] >> 8 == sprite->data[7])
+        {
+            sprite->callback = SpriteCB_ReleaseMonFromBall;
+        }
+        else
+        {
+            if (sprite->data[7] == 4 && sprite->data[3] >> 8 == 3)
+            {
+                sprite->callback = SpriteCB_BallThrow_StartCaptureMon;
+                sprite->affineAnimPaused = TRUE;
+            }
+            else
+            {
+                sprite->data[3]++;
+                sprite->affineAnimPaused = TRUE;
+            }
+        }
+        break;
+    case 4:
+    default:
+        sprite->data[5]++;
+        if (sprite->data[5] == 31)
+        {
+            sprite->data[5] = 0;
+            sprite->data[3] &= 0xFF00;
+            StartSpriteAffineAnim(sprite, 3);
+            if (sprite->data[4] < 0)
+                StartSpriteAffineAnim(sprite, 2);
+            else
+                StartSpriteAffineAnim(sprite, 1);
+
+            PlaySE(SE_BALL);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Task_PlayCryWhenReleasedFromBall(void)
+#define tCryTaskSpecies         data[0]
+#define tCryTaskPan             data[1]
+#define tCryTaskWantedCry       data[2]
+#define tCryTaskBattler         data[3]
+#define tCryTaskMonSpriteId     data[4]
+#define tCryTaskMonPtr1         data[5]
+#define tCryTaskMonPtr2         data[6]
+#define tCryTaskFrames          data[10]
+#define tCryTaskState           data[15]
+
+void Task_PlayCryWhenReleasedFromBall(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r2, _08075504\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0, #0xc]\n\t"
-        "	mov ip, r1\n\t"
-        "	ldrb r5, [r0, #0xa]\n\t"
-        "	ldrh r6, [r0, #8]\n\t"
-        "	ldrb r3, [r0, #0xe]\n\t"
-        "	mov r8, r3\n\t"
-        "	ldrb r7, [r0, #0x10]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	lsls r3, r1, #0x10\n\t"
-        "	ldrh r1, [r0, #0x14]\n\t"
-        "	orrs r3, r1\n\t"
-        "	movs r1, #0x26\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0x20\n\t"
-        "	bhi _08075590\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08075508\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08075504: .4byte gTasks\n\t"
-        "_08075508: .4byte _0807550C\n\t"
-        "_0807550C:\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _080755BC\n\t"
-        "	.4byte _080755E2\n\t"
-        "	.4byte _0807565C\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075600\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _08075590\n\t"
-        "	.4byte _0807566E\n\t"
-        "	.4byte _08075686\n\t"
-        "	.4byte _080756B0\n\t"
-        "_08075590:\n\t"
-        "	ldr r0, _080755B8\n\t"
-        "	lsls r1, r7, #4\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, #0x3f\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _080755A6\n\t"
-        "	b _0807570C\n\t"
-        "_080755A6:\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	b _0807570C\n\t"
-        "	.align 2, 0\n\t"
-        "_080755B8: .4byte gSprites\n\t"
-        "_080755BC:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl ShouldPlayNormalMonCry\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080755D4\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl PlayCry3\n\t"
-        "	b _08075636\n\t"
-        "_080755D4:\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r2, #0xb\n\t"
-        "	bl PlayCry3\n\t"
-        "	b _08075636\n\t"
-        "_080755E2:\n\t"
-        "	bl StopCryAndClearCrySongs\n\t"
-        "	ldr r1, _080755FC\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #3\n\t"
-        "	strh r1, [r0, #0x1c]\n\t"
-        "	movs r1, #0x14\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	b _0807570C\n\t"
-        "	.align 2, 0\n\t"
-        "_080755FC: .4byte gTasks\n\t"
-        "_08075600:\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrh r2, [r1, #0x1c]\n\t"
-        "	movs r7, #0x1c\n\t"
-        "	ldrsh r0, [r1, r7]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080756C2\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl ShouldPlayNormalMonCry\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0807562A\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl PlayCry4\n\t"
-        "	b _08075636\n\t"
-        "_0807562A:\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r2, #0xc\n\t"
-        "	bl PlayCry4\n\t"
-        "_08075636:\n\t"
-        "	ldr r0, _08075658\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	mov r2, r8\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	add r1, r8\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r2, [r1, #1]\n\t"
-        "	movs r0, #0x41\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _0807570C\n\t"
-        "	.align 2, 0\n\t"
-        "_08075658: .4byte gBattleSpritesDataPtr\n\t"
-        "_0807565C:\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #6\n\t"
-        "	strh r1, [r0, #0x1c]\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	b _0807570C\n\t"
-        "_0807566E:\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrh r2, [r1, #0x1c]\n\t"
-        "	movs r3, #0x1c\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080756C2\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "_08075686:\n\t"
-        "	bl IsCryPlayingOrClearCrySongs\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807570C\n\t"
-        "	bl StopCryAndClearCrySongs\n\t"
-        "	ldr r0, _080756AC\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r1, #0x1c]\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	b _0807570C\n\t"
-        "	.align 2, 0\n\t"
-        "_080756AC: .4byte gTasks\n\t"
-        "_080756B0:\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrh r2, [r1, #0x1c]\n\t"
-        "	movs r7, #0x1c\n\t"
-        "	ldrsh r0, [r1, r7]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080756C8\n\t"
-        "_080756C2:\n\t"
-        "	subs r0, r2, #1\n\t"
-        "	strh r0, [r1, #0x1c]\n\t"
-        "	b _0807570C\n\t"
-        "_080756C8:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl ShouldPlayNormalMonCry\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080756E0\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl PlayCry4\n\t"
-        "	b _080756EC\n\t"
-        "_080756E0:\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r2, #0xb\n\t"
-        "	bl PlayCry4\n\t"
-        "_080756EC:\n\t"
-        "	ldr r0, _08075718\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	mov r2, r8\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	add r1, r8\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r2, [r1, #1]\n\t"
-        "	movs r0, #0x41\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_0807570C:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08075718: .4byte gBattleSpritesDataPtr\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 wantedCry = gTasks[taskId].tCryTaskWantedCry;
+    s8 pan = gTasks[taskId].tCryTaskPan;
+    u16 species = gTasks[taskId].tCryTaskSpecies;
+    u8 battler = gTasks[taskId].tCryTaskBattler;
+    u8 monSpriteId = gTasks[taskId].tCryTaskMonSpriteId;
+    struct Pokemon *mon = (void *)(u32)((gTasks[taskId].tCryTaskMonPtr1 << 16) | (u16)(gTasks[taskId].tCryTaskMonPtr2));
+
+    switch (gTasks[taskId].tCryTaskState)
+    {
+    case 0:
+    default:
+        if (gSprites[monSpriteId].affineAnimEnded)
+            gTasks[taskId].tCryTaskState = wantedCry + 1;
+        break;
+    case 1:
+        // Play single cry
+        if (ShouldPlayNormalMonCry(mon) == TRUE)
+            PlayCry_ByMode(species, pan, CRY_MODE_NORMAL);
+        else
+            PlayCry_ByMode(species, pan, CRY_MODE_WEAK);
+        gBattleSpritesDataPtr->healthBoxesData[battler].waitForCry = FALSE;
+        DestroyTask(taskId);
+        break;
+    case 2:
+        StopCryAndClearCrySongs();
+        gTasks[taskId].tCryTaskFrames = 3;
+        gTasks[taskId].tCryTaskState = 20;
+        break;
+    case 20:
+        if (gTasks[taskId].tCryTaskFrames == 0)
+        {
+            // Play first doubles cry
+            if (ShouldPlayNormalMonCry(mon) == TRUE)
+                PlayCry_ReleaseDouble(species, pan, CRY_MODE_DOUBLES);
+            else
+                PlayCry_ReleaseDouble(species, pan, CRY_MODE_WEAK_DOUBLES);
+
+            gBattleSpritesDataPtr->healthBoxesData[battler].waitForCry = FALSE;
+            DestroyTask(taskId);
+        }
+        else
+        {
+            gTasks[taskId].tCryTaskFrames--;
+        }
+        break;
+    case 3:
+        gTasks[taskId].tCryTaskFrames = 6;
+        gTasks[taskId].tCryTaskState = 30;
+        break;
+    case 30:
+        if (gTasks[taskId].tCryTaskFrames != 0)
+        {
+            gTasks[taskId].tCryTaskFrames--;
+            break;
+        }
+        gTasks[taskId].tCryTaskState++;
+        // fall through
+    case 31:
+        if (!IsCryPlayingOrClearCrySongs())
+        {
+            StopCryAndClearCrySongs();
+            gTasks[taskId].tCryTaskFrames = 3;
+            gTasks[taskId].tCryTaskState++;
+        }
+        break;
+    case 32:
+        // JP uses the release-double player for the second cry as well.
+        if (gTasks[taskId].tCryTaskFrames != 0)
+        {
+            gTasks[taskId].tCryTaskFrames--;
+            break;
+        }
+        // Play second doubles cry
+        if (ShouldPlayNormalMonCry(mon) == TRUE)
+            PlayCry_ReleaseDouble(species, pan, CRY_MODE_NORMAL);
+        else
+            PlayCry_ReleaseDouble(species, pan, CRY_MODE_WEAK);
+
+        gBattleSpritesDataPtr->healthBoxesData[battler].waitForCry = FALSE;
+        DestroyTask(taskId);
+        break;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_ReleaseMonFromBall(void)
+void SpriteCB_ReleaseMonFromBall(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldrh r0, [r6, #0x3a]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetBattlerPokeballItemId\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl ItemIdToBallId\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r6, #0x20]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r6, #0x22]\n\t"
-        "	subs r1, #5\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0x1c\n\t"
-        "	bl AnimateBallOpenParticles\n\t"
-        "	ldrh r1, [r6, #0x3a]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r2, #0xe\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl LaunchBallFadeMonTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r6, #0x2e]\n\t"
-        "	ldr r0, _080757B4\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "	ldr r0, _080757B8\n\t"
-        "	ldr r1, _080757BC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08075790\n\t"
-        "	b _080758FC\n\t"
-        "_08075790:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080757C8\n\t"
-        "	ldr r0, _080757C0\n\t"
-        "	lsls r2, r5, #1\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _080757C4\n\t"
-        "	adds r7, r1, r0\n\t"
-        "	movs r4, #0x19\n\t"
-        "	mov sl, r4\n\t"
-        "	b _080757DC\n\t"
-        "	.align 2, 0\n\t"
-        "_080757B4: .4byte HandleBallAnimEnd + 1\n\t"
-        "_080757B8: .4byte gMain\n\t"
-        "_080757BC: .4byte 0x00000439\n\t"
-        "_080757C0: .4byte gBattlerPartyIndexes\n\t"
-        "_080757C4: .4byte gEnemyParty\n\t"
-        "_080757C8:\n\t"
-        "	ldr r0, _08075840\n\t"
-        "	lsls r2, r5, #1\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _08075844\n\t"
-        "	adds r7, r1, r0\n\t"
-        "	movs r0, #0xe7\n\t"
-        "	mov sl, r0\n\t"
-        "_080757DC:\n\t"
-        "	mov r8, r2\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _08075808\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r5, r0\n\t"
-        "	bne _0807585E\n\t"
-        "_08075808:\n\t"
-        "	bl IsDoubleBattle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807585E\n\t"
-        "	ldr r0, _08075848\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	ldrb r1, [r0, #9]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807585E\n\t"
-        "	ldr r0, _0807584C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x42\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0x42\n\t"
-        "	bne _08075854\n\t"
-        "	bl IsBGMPlaying\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807585E\n\t"
-        "	ldr r0, _08075850\n\t"
-        "	bl m4aMPlayStop\n\t"
-        "	b _0807585E\n\t"
-        "	.align 2, 0\n\t"
-        "_08075840: .4byte gBattlerPartyIndexes\n\t"
-        "_08075844: .4byte gPlayerParty\n\t"
-        "_08075848: .4byte gBattleSpritesDataPtr\n\t"
-        "_0807584C: .4byte gBattleTypeFlags\n\t"
-        "_08075850: .4byte gMPlayInfo_BGM\n\t"
-        "_08075854:\n\t"
-        "	ldr r0, _0807587C\n\t"
-        "	ldr r1, _08075880\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl m4aMPlayVolumeControl\n\t"
-        "_0807585E:\n\t"
-        "	bl IsDoubleBattle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08075878\n\t"
-        "	ldr r0, _08075884\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	ldrb r1, [r0, #9]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08075888\n\t"
-        "_08075878:\n\t"
-        "	movs r4, #0\n\t"
-        "	b _080758AA\n\t"
-        "	.align 2, 0\n\t"
-        "_0807587C: .4byte gMPlayInfo_BGM\n\t"
-        "_08075880: .4byte 0x0000FFFF\n\t"
-        "_08075884: .4byte gBattleSpritesDataPtr\n\t"
-        "_08075888:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _080758A4\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r5, r0\n\t"
-        "	bne _080758A8\n\t"
-        "_080758A4:\n\t"
-        "	movs r4, #1\n\t"
-        "	b _080758AA\n\t"
-        "_080758A8:\n\t"
-        "	movs r4, #2\n\t"
-        "_080758AA:\n\t"
-        "	ldr r0, _08075940\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r1, r2, r5\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	movs r2, #0x40\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	ldr r0, _08075944\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _08075948\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r3, #0\n\t"
-        "	mov r0, sb\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	mov r2, sl\n\t"
-        "	lsls r0, r2, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	strh r4, [r1, #0xc]\n\t"
-        "	strh r5, [r1, #0xe]\n\t"
-        "	ldr r2, _0807594C\n\t"
-        "	movs r4, #0x3a\n\t"
-        "	ldrsh r0, [r6, r4]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	strh r0, [r1, #0x10]\n\t"
-        "	lsrs r0, r7, #0x10\n\t"
-        "	strh r0, [r1, #0x12]\n\t"
-        "	strh r7, [r1, #0x14]\n\t"
-        "	strh r3, [r1, #0x26]\n\t"
-        "_080758FC:\n\t"
-        "	ldr r4, _0807594C\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r5, _08075950\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	ldrh r0, [r6, #0x3a]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08075958\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _08075954\n\t"
-        "	b _0807596E\n\t"
-        "	.align 2, 0\n\t"
-        "_08075940: .4byte gBattleSpritesDataPtr\n\t"
-        "_08075944: .4byte Task_PlayCryWhenReleasedFromBall + 1\n\t"
-        "_08075948: .4byte gTasks\n\t"
-        "_0807594C: .4byte gBattlerSpriteIds\n\t"
-        "_08075950: .4byte gSprites\n\t"
-        "_08075954: .4byte SpriteCB_OpponentMonFromBall + 1\n\t"
-        "_08075958:\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080759B0\n\t"
-        "_0807596E:\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r5, _080759B4\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _080759B8\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl AnimateSprite\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	strh r1, [r0, #0x30]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080759B0: .4byte SpriteCB_PlayerMonFromBall + 1\n\t"
-        "_080759B4: .4byte gBattlerSpriteIds\n\t"
-        "_080759B8: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 battler = sprite->sBattler;
+    u32 ballId;
+
+    StartSpriteAnim(sprite, 1);
+    ballId = ItemIdToBallId(GetBattlerPokeballItemId(battler));
+    AnimateBallOpenParticles(sprite->x, sprite->y - 5, 1, 28, ballId);
+    sprite->data[0] = LaunchBallFadeMonTask(TRUE, sprite->sBattler, 14, ballId);
+    sprite->callback = HandleBallAnimEnd;
+
+    if (gMain.inBattle)
+    {
+        struct Pokemon *mon;
+        u16 species;
+        s8 pan;
+        u16 wantedCryCase;
+        u8 taskId;
+
+        if (GetBattlerSide(battler) != B_SIDE_PLAYER)
+        {
+            mon = &gEnemyParty[gBattlerPartyIndexes[battler]];
+            pan = 25;
+        }
+        else
+        {
+            mon = &gPlayerParty[gBattlerPartyIndexes[battler]];
+            pan = -25;
+        }
+
+        species = GetMonData(mon, MON_DATA_SPECIES);
+        if ((battler == GetBattlerAtPosition(B_POSITION_PLAYER_LEFT) || battler == GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT))
+         && IsDoubleBattle() && gBattleSpritesDataPtr->animationData->introAnimActive)
+        {
+            if (gBattleTypeFlags & BATTLE_TYPE_MULTI && gBattleTypeFlags & BATTLE_TYPE_LINK)
+            {
+                if (IsBGMPlaying())
+                    m4aMPlayStop(&gMPlayInfo_BGM);
+            }
+            else
+            {
+                m4aMPlayVolumeControl(&gMPlayInfo_BGM, TRACKS_ALL, 128);
+            }
+        }
+
+        if (!IsDoubleBattle() || !gBattleSpritesDataPtr->animationData->introAnimActive)
+            wantedCryCase = 0;
+        else if (battler == GetBattlerAtPosition(B_POSITION_PLAYER_LEFT) || battler == GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT))
+            wantedCryCase = 1;
+        else
+            wantedCryCase = 2;
+
+        gBattleSpritesDataPtr->healthBoxesData[battler].waitForCry = TRUE;
+
+        taskId = CreateTask(Task_PlayCryWhenReleasedFromBall, 3);
+        gTasks[taskId].tCryTaskSpecies = species;
+        gTasks[taskId].tCryTaskPan = pan;
+        gTasks[taskId].tCryTaskWantedCry = wantedCryCase;
+        gTasks[taskId].tCryTaskBattler = battler;
+        gTasks[taskId].tCryTaskMonSpriteId = gBattlerSpriteIds[sprite->sBattler];
+        gTasks[taskId].tCryTaskMonPtr1 = (u32)(mon) >> 16;
+        gTasks[taskId].tCryTaskMonPtr2 = (u32)(mon);
+        gTasks[taskId].tCryTaskState = 0;
+    }
+
+    StartSpriteAffineAnim(&gSprites[gBattlerSpriteIds[sprite->sBattler]], BATTLER_AFFINE_EMERGE);
+
+    if (GetBattlerSide(sprite->sBattler) == B_SIDE_OPPONENT)
+        gSprites[gBattlerSpriteIds[sprite->sBattler]].callback = SpriteCB_OpponentMonFromBall;
+    else
+        gSprites[gBattlerSpriteIds[sprite->sBattler]].callback = SpriteCB_PlayerMonFromBall;
+
+    AnimateSprite(&gSprites[gBattlerSpriteIds[sprite->sBattler]]);
+    gSprites[gBattlerSpriteIds[sprite->sBattler]].data[1] = 0x1000;
 }
 
-__attribute__((naked)) void SpriteCB_BallThrow_StartCaptureMon(void)
+#undef tCryTaskSpecies
+#undef tCryTaskPan
+#undef tCryTaskWantedCry
+#undef tCryTaskBattler
+#undef tCryTaskMonSpriteId
+#undef tCryTaskMonPtr1
+#undef tCryTaskMonPtr2
+#undef tCryTaskFrames
+#undef tCryTaskState
+
+void SpriteCB_BallThrow_StartCaptureMon(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #0x2c\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r2, #0x40\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r3]\n\t"
-        "	ldr r1, _080759D8\n\t"
-        "	str r1, [r0, #0x1c]\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0, #0x34]\n\t"
-        "	strh r1, [r0, #0x36]\n\t"
-        "	strh r1, [r0, #0x38]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080759D8: .4byte SpriteCB_BallThrow_CaptureMon + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->animPaused = TRUE;
+    sprite->callback = SpriteCB_BallThrow_CaptureMon;
+    sprite->data[3] = 0;
+    sprite->data[4] = 0;
+    sprite->data[5] = 0;
 }
 
-__attribute__((naked)) void HandleBallAnimEnd(void)
+void HandleBallAnimEnd(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r7, #0\n\t"
-        "	ldrh r0, [r5, #0x3a]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r4, _08075A40\n\t"
-        "	ldr r0, _08075A44\n\t"
-        "	adds r3, r6, r0\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08075A1E\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08075A1E:\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08075A48\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	movs r7, #1\n\t"
-        "	b _08075A64\n\t"
-        "	.align 2, 0\n\t"
-        "_08075A40: .4byte gSprites\n\t"
-        "_08075A44: .4byte gBattlerSpriteIds\n\t"
-        "_08075A48:\n\t"
-        "	ldr r2, _08075AEC\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ldrh r2, [r1, #0x30]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrh r0, [r1, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "_08075A64:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08075AE6\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _08075AE6\n\t"
-        "	ldr r2, _08075AF0\n\t"
-        "	ldr r0, _08075AF4\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	ldr r0, _08075AF8\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldr r4, _08075AFC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	lsls r1, r6, #1\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	movs r0, #9\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl FreeSpriteOamMatrix\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r2, [r0, #4]\n\t"
-        "	movs r5, #8\n\t"
-        "	movs r4, #3\n\t"
-        "_08075ABE:\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08075ACA\n\t"
-        "	adds r3, #1\n\t"
-        "_08075ACA:\n\t"
-        "	adds r2, #0xc\n\t"
-        "	subs r4, #1\n\t"
-        "	cmp r4, #0\n\t"
-        "	bge _08075ABE\n\t"
-        "	cmp r3, #4\n\t"
-        "	bne _08075AE6\n\t"
-        "	movs r4, #0\n\t"
-        "_08075AD8:\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl FreeBallGfx\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #0xb\n\t"
-        "	ble _08075AD8\n\t"
-        "_08075AE6:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08075AEC: .4byte 0xFFFFFEE0\n\t"
-        "_08075AF0: .4byte gSprites\n\t"
-        "_08075AF4: .4byte gBattlerSpriteIds\n\t"
-        "_08075AF8: .4byte gUnknown_202415D\n\t"
-        "_08075AFC: .4byte gBattleSpritesDataPtr\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 affineAnimEnded = FALSE;
+    u8 battler = sprite->sBattler;
+
+    gSprites[gBattlerSpriteIds[battler]].invisible = FALSE;
+    if (sprite->animEnded)
+        sprite->invisible = TRUE;
+    if (gSprites[gBattlerSpriteIds[battler]].affineAnimEnded)
+    {
+        StartSpriteAffineAnim(&gSprites[gBattlerSpriteIds[battler]], BATTLER_AFFINE_NORMAL);
+        affineAnimEnded = TRUE;
+    }
+    else
+    {
+        gSprites[gBattlerSpriteIds[battler]].data[1] -= 288;
+        gSprites[gBattlerSpriteIds[battler]].y2 = gSprites[gBattlerSpriteIds[battler]].data[1] >> 8;
+    }
+    if (sprite->animEnded && affineAnimEnded)
+    {
+        s32 i, doneBattlers;
+
+        gSprites[gBattlerSpriteIds[battler]].y2 = 0;
+        gDoingBattleAnim = FALSE;
+        gBattleSpritesDataPtr->healthBoxesData[battler].ballAnimActive = FALSE;
+        FreeSpriteOamMatrix(sprite);
+        DestroySprite(sprite);
+
+        for (doneBattlers = 0, i = 0; i < MAX_BATTLERS_COUNT; i++)
+        {
+            if (gBattleSpritesDataPtr->healthBoxesData[i].ballAnimActive == FALSE)
+                doneBattlers++;
+        }
+        if (doneBattlers == MAX_BATTLERS_COUNT)
+        {
+            for (i = 0; i < POKEBALL_COUNT; i++)
+                FreeBallGfx(i);
+        }
+    }
 }
 
-__attribute__((naked)) void SpriteCB_BallThrow_CaptureMon(void)
+void SpriteCB_BallThrow_CaptureMon(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldrh r0, [r6, #0x3a]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldrh r0, [r6, #0x36]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #0x36]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	cmp r1, #0x28\n\t"
-        "	beq _08075B9E\n\t"
-        "	cmp r1, #0x5f\n\t"
-        "	bne _08075B38\n\t"
-        "	ldr r0, _08075B30\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bl m4aMPlayAllStop\n\t"
-        "	ldr r0, _08075B34\n\t"
-        "	bl PlaySE\n\t"
-        "	b _08075B9E\n\t"
-        "	.align 2, 0\n\t"
-        "_08075B30: .4byte gUnknown_202415D\n\t"
-        "_08075B34: .4byte 0x173\n\t"
-        "_08075B38:\n\t"
-        "	ldr r0, _08075BA4\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08075B9E\n\t"
-        "	ldr r5, _08075BA8\n\t"
-        "	ldr r4, _08075BAC\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0, #3]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	bl FreeOamMatrix\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	bl DestroySprite\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl DestroySpriteAndFreeResources\n\t"
-        "	ldr r0, _08075BB0\n\t"
-        "	ldr r1, _08075BB4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08075B9E\n\t"
-        "	ldr r0, _08075BB8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	lsls r1, r7, #1\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	movs r0, #9\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "_08075B9E:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08075BA4: .4byte SPECIAL_FoundBlackGlasses\n\t"
-        "_08075BA8: .4byte gSprites\n\t"
-        "_08075BAC: .4byte gBattlerSpriteIds\n\t"
-        "_08075BB0: .4byte gMain\n\t"
-        "_08075BB4: .4byte 0x00000439\n\t"
-        "_08075BB8: .4byte gBattleSpritesDataPtr\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 battler = sprite->sBattler;
+
+    sprite->data[4]++;
+    if (sprite->data[4] == 40)
+    {
+        return;
+    }
+    else if (sprite->data[4] == 95)
+    {
+        gDoingBattleAnim = FALSE;
+        m4aMPlayAllStop();
+        PlaySE(MUS_EVOLVED);
+    }
+    else if (sprite->data[4] == 315)
+    {
+        FreeOamMatrix(gSprites[gBattlerSpriteIds[sprite->sBattler]].oam.matrixNum);
+        DestroySprite(&gSprites[gBattlerSpriteIds[sprite->sBattler]]);
+        DestroySpriteAndFreeResources(sprite);
+        if (gMain.inBattle)
+            gBattleSpritesDataPtr->healthBoxesData[battler].ballAnimActive = FALSE;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_PlayerMonSendOut_1(void)
+void SpriteCB_PlayerMonSendOut_1(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x19\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #3\n\t"
-        "	bl GetBattlerSpriteCoord\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r0, #0x18\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	ldr r0, _08075C04\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	strh r0, [r4, #6]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl InitAnimArcTranslation\n\t"
-        "	ldr r0, _08075C08\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08075C04: .4byte 0x0000FFE2\n\t"
-        "_08075C08: .4byte SpriteCB_PlayerMonSendOut_2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] = 25;
+    sprite->data[2] = GetBattlerSpriteCoord(sprite->sBattler, BATTLER_COORD_X_2);
+    sprite->data[4] = GetBattlerSpriteCoord(sprite->sBattler, BATTLER_COORD_Y_PIC_OFFSET) + 24;
+    sprite->data[5] = -30;
+    sprite->oam.affineParam = sprite->sBattler;
+    InitAnimArcTranslation(sprite);
+    sprite->callback = SpriteCB_PlayerMonSendOut_2;
 }
 
-__attribute__((naked)) void SpriteCB_PlayerMonSendOut_2(void)
+#define HIBYTE(x) (((x) >> 8) & 0xFF)
+
+void SpriteCB_PlayerMonSendOut_2(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r0, [r5, #0x3c]\n\t"
-        "	movs r1, #0xff\n\t"
-        "	mov r8, r1\n\t"
-        "	lsrs r0, r0, #8\n\t"
-        "	subs r0, #0x23\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x2c\n\t"
-        "	bhi _08075D00\n\t"
-        "	ldrh r1, [r5, #6]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08075C6E\n\t"
-        "	ldrh r0, [r5, #0x30]\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	ands r6, r0\n\t"
-        "	ldrh r0, [r5, #0x32]\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	ands r7, r0\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl __divsi3\n\t"
-        "	movs r1, #2\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ands r0, r4\n\t"
-        "	orrs r6, r0\n\t"
-        "	strh r6, [r5, #0x30]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl __divsi3\n\t"
-        "	ands r0, r4\n\t"
-        "	orrs r7, r0\n\t"
-        "	strh r7, [r5, #0x32]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #4\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "_08075C6E:\n\t"
-        "	ldrh r4, [r5, #0x2e]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl AnimTranslateLinear\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r5, #0x3c]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5, #0x3c]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	mov r2, r8\n\t"
-        "	ands r0, r2\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	bl Sin\n\t"
-        "	ldrh r1, [r5, #0x26]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ldrh r1, [r5, #6]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5, #6]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #3\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08075CBE\n\t"
-        "	strh r4, [r5, #0x2e]\n\t"
-        "	b _08075CC6\n\t"
-        "_08075CBE:\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "_08075CC6:\n\t"
-        "	ldrh r0, [r5, #0x3c]\n\t"
-        "	lsrs r0, r0, #8\n\t"
-        "	cmp r0, #0x4f\n\t"
-        "	ble _08075D6C\n\t"
-        "	ldrh r0, [r5, #0x30]\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	ands r6, r0\n\t"
-        "	ldrh r0, [r5, #0x32]\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	ands r7, r0\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #2\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r6\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r7\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	b _08075D6C\n\t"
-        "_08075D00:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl TranslateAnimHorizontalArc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08075D6C\n\t"
-        "	ldrh r0, [r5, #0x24]\n\t"
-        "	ldrh r1, [r5, #0x20]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r5, #0x20]\n\t"
-        "	ldrh r0, [r5, #0x26]\n\t"
-        "	ldrh r2, [r5, #0x22]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r5, #0x22]\n\t"
-        "	strh r1, [r5, #0x26]\n\t"
-        "	strh r1, [r5, #0x24]\n\t"
-        "	ldrb r0, [r5, #6]\n\t"
-        "	strh r0, [r5, #0x3a]\n\t"
-        "	strh r1, [r5, #0x2e]\n\t"
-        "	bl IsDoubleBattle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08075D60\n\t"
-        "	ldr r0, _08075D58\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	ldrb r1, [r0, #9]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08075D60\n\t"
-        "	movs r0, #0x3a\n\t"
-        "	ldrsh r4, [r5, r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	bne _08075D60\n\t"
-        "	ldr r0, _08075D5C\n\t"
-        "	b _08075D62\n\t"
-        "	.align 2, 0\n\t"
-        "_08075D58: .4byte gBattleSpritesDataPtr\n\t"
-        "_08075D5C: .4byte SpriteCB_ReleaseMon2FromBall + 1\n\t"
-        "_08075D60:\n\t"
-        "	ldr r0, _08075D78\n\t"
-        "_08075D62:\n\t"
-        "	str r0, [r5, #0x1c]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "_08075D6C:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08075D78: .4byte SpriteCB_ReleaseMonFromBall + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 r6;
+    u32 r7;
+
+    if (HIBYTE(sprite->data[7]) >= 35 && HIBYTE(sprite->data[7]) < 80)
+    {
+        s16 r4;
+
+        if ((sprite->oam.affineParam & 0xFF00) == 0)
+        {
+            r6 = sprite->data[1] & 1;
+            r7 = sprite->data[2] & 1;
+            sprite->data[1] = ((sprite->data[1] / 3) & ~1) | r6;
+            sprite->data[2] = ((sprite->data[2] / 3) & ~1) | r7;
+            StartSpriteAffineAnim(sprite, 4);
+        }
+        r4 = sprite->data[0];
+        AnimTranslateLinear(sprite);
+        sprite->data[7] += sprite->sBattler / 3;
+        sprite->y2 += Sin(HIBYTE(sprite->data[7]), sprite->data[5]);
+        sprite->oam.affineParam += 0x100;
+        if ((sprite->oam.affineParam >> 8) % 3 != 0)
+            sprite->data[0] = r4;
+        else
+            sprite->data[0] = r4 - 1;
+        if (HIBYTE(sprite->data[7]) >= 80)
+        {
+            r6 = sprite->data[1] & 1;
+            r7 = sprite->data[2] & 1;
+            sprite->data[1] = ((sprite->data[1] * 3) & ~1) | r6;
+            sprite->data[2] = ((sprite->data[2] * 3) & ~1) | r7;
+        }
+    }
+    else
+    {
+        if (TranslateAnimHorizontalArc(sprite))
+        {
+            sprite->x += sprite->x2;
+            sprite->y += sprite->y2;
+            sprite->y2 = 0;
+            sprite->x2 = 0;
+            sprite->sBattler = sprite->oam.affineParam & 0xFF;
+            sprite->data[0] = 0;
+
+            if (IsDoubleBattle() && gBattleSpritesDataPtr->animationData->introAnimActive
+             && sprite->sBattler == GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT))
+                sprite->callback = SpriteCB_ReleaseMon2FromBall;
+            else
+                sprite->callback = SpriteCB_ReleaseMonFromBall;
+
+            StartSpriteAffineAnim(sprite, 0);
+        }
+    }
 }
 
-__attribute__((naked)) void SpriteCB_ReleaseMon2FromBall(void)
+#undef HIBYTE
+
+void SpriteCB_ReleaseMon2FromBall(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r0, [r2, #0x2e]\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	strh r1, [r2, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x18\n\t"
-        "	ble _08075D96\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2, #0x2e]\n\t"
-        "	ldr r0, _08075D9C\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "_08075D96:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08075D9C: .4byte SpriteCB_ReleaseMonFromBall + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[0]++ > 24)
+    {
+        sprite->data[0] = 0;
+        sprite->callback = SpriteCB_ReleaseMonFromBall;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_OpponentMonSendOut(void)
+void SpriteCB_OpponentMonSendOut(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r0, [r5, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	ble _08075DF4\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	bl IsDoubleBattle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08075DF0\n\t"
-        "	ldr r0, _08075DE8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	ldrb r1, [r0, #9]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08075DF0\n\t"
-        "	movs r0, #0x3a\n\t"
-        "	ldrsh r4, [r5, r0]\n\t"
-        "	movs r0, #3\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	bne _08075DF0\n\t"
-        "	ldr r0, _08075DEC\n\t"
-        "	b _08075DF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08075DE8: .4byte gBattleSpritesDataPtr\n\t"
-        "_08075DEC: .4byte SpriteCB_ReleaseMon2FromBall + 1\n\t"
-        "_08075DF0:\n\t"
-        "	ldr r0, _08075DFC\n\t"
-        "_08075DF2:\n\t"
-        "	str r0, [r5, #0x1c]\n\t"
-        "_08075DF4:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08075DFC: .4byte SpriteCB_ReleaseMonFromBall + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0]++;
+    if (sprite->data[0] > 15)
+    {
+        sprite->data[0] = 0;
+        if (IsDoubleBattle() && gBattleSpritesDataPtr->animationData->introAnimActive
+         && sprite->sBattler == GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT))
+            sprite->callback = SpriteCB_ReleaseMon2FromBall;
+        else
+            sprite->callback = SpriteCB_ReleaseMonFromBall;
+    }
 }
 
-__attribute__((naked)) void AnimateBallOpenParticlesForPokeball(void)
+#undef sBattler
+
+u8 AnimateBallOpenParticlesForPokeball(u8 x, u8 y, u8 kindOfStars, u8 subpriority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp]\n\t"
-        "	bl AnimateBallOpenParticles\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return AnimateBallOpenParticles(x, y, kindOfStars, subpriority, BALL_POKE);
 }
 
-__attribute__((naked)) void LaunchBallFadeMonTaskForPokeball(void)
+u8 LaunchBallFadeMonTaskForPokeball(bool8 unFadeLater, u8 spritePalNum, u32 selectedPalettes)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r3, #0\n\t"
-        "	bl LaunchBallFadeMonTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return LaunchBallFadeMonTask(unFadeLater, spritePalNum, selectedPalettes, BALL_POKE);
 }
 
-__attribute__((naked)) void CreatePokeballSpriteToReleaseMon(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, u8 oamPriority, u8 subpriority, u8 delay, u32 fadePalettes, u16 species)
+// Sprite data for the Pokémon
+#define sSpecies data[7]
+
+// Sprite data for the Poké Ball
+#define sMonSpriteId data[0]
+#define sDelay       data[1]
+#define sMonPalNum   data[2]
+#define sFadePalsLo  data[3]
+#define sFadePalsHi  data[4]
+#define sFinalMonX   data[5]
+#define sFinalMonY   data[6]
+#define sTrigIdx     data[7]
+
+// Poké Ball in Birch intro, and when receiving via trade
+void CreatePokeballSpriteToReleaseMon(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, u8 oamPriority, u8 subpriority, u8 delay, u32 fadePalettes, u16 species)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	mov sb, r2\n\t"
-        "	mov sl, r3\n\t"
-        "	ldr r6, [sp, #0x28]\n\t"
-        "	ldr r4, [sp, #0x2c]\n\t"
-        "	ldr r0, [sp, #0x30]\n\t"
-        "	ldr r2, [sp, #0x38]\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	str r1, [sp]\n\t"
-        "	mov r1, sb\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov sb, r1\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	mov sl, r3\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	lsrs r7, r0, #0x10\n\t"
-        "	ldr r0, _08075F18\n\t"
-        "	bl LoadCompressedSpriteSheetUsingHeap\n\t"
-        "	ldr r0, _08075F1C\n\t"
-        "	bl LoadCompressedSpritePaletteUsingHeap\n\t"
-        "	ldr r0, _08075F20\n\t"
-        "	mov r1, sb\n\t"
-        "	mov r2, sl\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _08075F24\n\t"
-        "	mov r8, r1\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r2, r4, r1\n\t"
-        "	strh r5, [r2, #0x2e]\n\t"
-        "	lsls r1, r5, #4\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	add r1, r8\n\t"
-        "	ldrh r0, [r1, #0x20]\n\t"
-        "	strh r0, [r2, #0x38]\n\t"
-        "	ldrh r0, [r1, #0x22]\n\t"
-        "	strh r0, [r2, #0x3a]\n\t"
-        "	mov r3, sb\n\t"
-        "	strh r3, [r1, #0x20]\n\t"
-        "	mov r0, sl\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "	strh r7, [r1, #0x3c]\n\t"
-        "	mov r3, sp\n\t"
-        "	ldrh r3, [r3, #4]\n\t"
-        "	strh r3, [r2, #0x30]\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r2, #0x32]\n\t"
-        "	mov r3, sp\n\t"
-        "	ldrh r3, [r3, #0x34]\n\t"
-        "	strh r3, [r2, #0x34]\n\t"
-        "	ldr r3, [sp, #0x34]\n\t"
-        "	lsrs r0, r3, #0x10\n\t"
-        "	strh r0, [r2, #0x36]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r6, r0\n\t"
-        "	lsls r6, r6, #2\n\t"
-        "	ldrb r3, [r2, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	orrs r0, r6\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	add r8, r0\n\t"
-        "	add r4, r8\n\t"
-        "	ldr r0, _08075F28\n\t"
-        "	str r0, [r4]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08075F18: .4byte gBallSpriteSheets\n\t"
-        "_08075F1C: .4byte gBallSpritePalettes\n\t"
-        "_08075F20: .4byte gBallSpriteTemplates\n\t"
-        "_08075F24: .4byte gSprites\n\t"
-        "_08075F28: .4byte SpriteCB_PokeballReleaseMon + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+
+    LoadCompressedSpriteSheetUsingHeap(&gBallSpriteSheets[BALL_POKE]);
+    LoadCompressedSpritePaletteUsingHeap(&gBallSpritePalettes[BALL_POKE]);
+    spriteId = CreateSprite(&gBallSpriteTemplates[BALL_POKE], x, y, subpriority);
+
+    gSprites[spriteId].sMonSpriteId = monSpriteId;
+    gSprites[spriteId].sFinalMonX = gSprites[monSpriteId].x;
+    gSprites[spriteId].sFinalMonY = gSprites[monSpriteId].y;
+
+    gSprites[monSpriteId].x = x;
+    gSprites[monSpriteId].y = y;
+    gSprites[monSpriteId].sSpecies = species;
+
+    gSprites[spriteId].sDelay = delay;
+    gSprites[spriteId].sMonPalNum = monPalNum;
+    gSprites[spriteId].sFadePalsLo = fadePalettes;
+    gSprites[spriteId].sFadePalsHi = fadePalettes >> 16;
+    gSprites[spriteId].oam.priority = oamPriority;
+    gSprites[spriteId].callback = SpriteCB_PokeballReleaseMon;
+
+    gSprites[monSpriteId].invisible = TRUE;
 }
 
-__attribute__((naked)) void SpriteCB_PokeballReleaseMon(void)
+void SpriteCB_PokeballReleaseMon(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldrh r1, [r6, #0x30]\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08075FD8\n\t"
-        "	ldrh r0, [r6, #0x2e]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldrh r0, [r6, #0x32]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldrh r4, [r6, #0x34]\n\t"
-        "	ldrh r0, [r6, #0x36]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	orrs r4, r0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r0, #0x43\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08075F66\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	b _08075F68\n\t"
-        "_08075F66:\n\t"
-        "	movs r5, #0\n\t"
-        "_08075F68:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldrh r0, [r6, #0x20]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r6, #0x22]\n\t"
-        "	subs r1, #5\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrb r2, [r6, #5]\n\t"
-        "	lsls r2, r2, #0x1c\n\t"
-        "	lsrs r2, r2, #0x1e\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl AnimateBallOpenParticlesForPokeball\n\t"
-        "	movs r0, #1\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl LaunchBallFadeMonTaskForPokeball\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r0, [r6, #0x30]\n\t"
-        "	ldr r0, _08075FD0\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "	ldr r0, _08075FD4\n\t"
-        "	lsls r4, r7, #4\n\t"
-        "	adds r4, r4, r7\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl AnimateSprite\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	strh r5, [r6, #0x3c]\n\t"
-        "	b _08075FDC\n\t"
-        "	.align 2, 0\n\t"
-        "_08075FD0: .4byte SpriteCB_ReleasedMonFlyOut + 1\n\t"
-        "_08075FD4: .4byte gSprites\n\t"
-        "_08075FD8:\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r6, #0x30]\n\t"
-        "_08075FDC:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->sDelay == 0)
+    {
+        u8 subpriority;
+        u8 spriteId = sprite->sMonSpriteId;
+        u8 monPalNum = sprite->sMonPalNum;
+        u32 selectedPalettes = (u16)sprite->sFadePalsLo | ((u16)sprite->sFadePalsHi << 16);
+
+        if (sprite->subpriority != 0)
+            subpriority = sprite->subpriority - 1;
+        else
+            subpriority = 0;
+
+        StartSpriteAnim(sprite, 1);
+        AnimateBallOpenParticlesForPokeball(sprite->x, sprite->y - 5, sprite->oam.priority, subpriority);
+        // sDelay re-used to store task id but never read
+        sprite->sDelay = LaunchBallFadeMonTaskForPokeball(TRUE, monPalNum, selectedPalettes);
+        sprite->callback = SpriteCB_ReleasedMonFlyOut;
+        gSprites[spriteId].invisible = FALSE;
+        StartSpriteAffineAnim(&gSprites[spriteId], BATTLER_AFFINE_EMERGE);
+        AnimateSprite(&gSprites[spriteId]);
+        gSprites[spriteId].data[1] = 0x1000;
+        sprite->sTrigIdx = 0;
+    }
+    else
+    {
+        sprite->sDelay--;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_ReleasedMonFlyOut(void)
+void SpriteCB_ReleasedMonFlyOut(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	mov ip, r0\n\t"
-        "	movs r7, #0\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08076018\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08076018:\n\t"
-        "	ldr r1, _080760AC\n\t"
-        "	lsls r2, r6, #4\n\t"
-        "	adds r0, r2, r6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	mov r8, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0807603C\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	movs r1, #1\n\t"
-        "	mov ip, r1\n\t"
-        "_0807603C:\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r3, #0x20\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	muls r0, r2, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08076052\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_08076052:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	ldrh r3, [r4, #0x20]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r3, #0x22\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	muls r0, r2, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08076070\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_08076070:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	ldrh r1, [r4, #0x22]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov r2, sb\n\t"
-        "	strh r2, [r5, #0x20]\n\t"
-        "	strh r0, [r5, #0x22]\n\t"
-        "	ldrh r2, [r4, #0x3c]\n\t"
-        "	movs r3, #0x3c\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #0x7f\n\t"
-        "	bgt _080760B4\n\t"
-        "	ldr r1, _080760B0\n\t"
-        "	lsls r0, r2, #0x18\n\t"
-        "	lsrs r0, r0, #0x17\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08076098\n\t"
-        "	adds r0, #7\n\t"
-        "_08076098:\n\t"
-        "	asrs r0, r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r1, r2, #4\n\t"
-        "	strh r1, [r4, #0x3c]\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	b _080760C2\n\t"
-        "	.align 2, 0\n\t"
-        "_080760AC: .4byte gSprites\n\t"
-        "_080760B0: .4byte gSineTable\n\t"
-        "_080760B4:\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	strh r0, [r5, #0x20]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	strh r0, [r5, #0x22]\n\t"
-        "	strh r7, [r5, #0x24]\n\t"
-        "	strh r7, [r5, #0x26]\n\t"
-        "	movs r7, #1\n\t"
-        "_080760C2:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08076116\n\t"
-        "	mov r2, ip\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _08076116\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _08076116\n\t"
-        "	ldr r1, _08076100\n\t"
-        "	mov r3, r8\n\t"
-        "	adds r0, r3, r6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r2, r0]\n\t"
-        "	movs r0, #0xce\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08076104\n\t"
-        "	ldrh r1, [r2, #0x3c]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl DoMonFrontSpriteAnimation\n\t"
-        "	b _08076110\n\t"
-        "	.align 2, 0\n\t"
-        "_08076100: .4byte gSprites\n\t"
-        "_08076104:\n\t"
-        "	ldrh r1, [r2, #0x3c]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl DoMonFrontSpriteAnimation\n\t"
-        "_08076110:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySpriteAndFreeResources\n\t"
-        "_08076116:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 emergeAnimFinished = FALSE;
+    bool8 atFinalPosition = FALSE;
+    u8 monSpriteId = sprite->sMonSpriteId;
+    u16 x, y;
+
+    if (sprite->animEnded)
+        sprite->invisible = TRUE;
+
+    if (gSprites[monSpriteId].affineAnimEnded)
+    {
+        StartSpriteAffineAnim(&gSprites[monSpriteId], BATTLER_AFFINE_NORMAL);
+        emergeAnimFinished = TRUE;
+    }
+
+    x = (sprite->sFinalMonX - sprite->x) * sprite->sTrigIdx / 128 + sprite->x;
+    y = (sprite->sFinalMonY - sprite->y) * sprite->sTrigIdx / 128 + sprite->y;
+    gSprites[monSpriteId].x = x;
+    gSprites[monSpriteId].y = y;
+
+    if (sprite->sTrigIdx < 128)
+    {
+        s16 sine = -(gSineTable[(u8)sprite->sTrigIdx] / 8);
+
+        sprite->sTrigIdx += 4;
+        gSprites[monSpriteId].x2 = sine;
+        gSprites[monSpriteId].y2 = sine;
+    }
+    else
+    {
+        gSprites[monSpriteId].x = sprite->sFinalMonX;
+        gSprites[monSpriteId].y = sprite->sFinalMonY;
+        gSprites[monSpriteId].x2 = 0;
+        gSprites[monSpriteId].y2 = 0;
+        atFinalPosition = TRUE;
+    }
+    if (sprite->animEnded && emergeAnimFinished && atFinalPosition)
+    {
+        if (gSprites[monSpriteId].sSpecies == SPECIES_EGG)
+            DoMonFrontSpriteAnimation(&gSprites[monSpriteId], gSprites[monSpriteId].sSpecies, TRUE, 0);
+        else
+            DoMonFrontSpriteAnimation(&gSprites[monSpriteId], gSprites[monSpriteId].sSpecies, FALSE, 0);
+
+        DestroySpriteAndFreeResources(sprite);
+    }
 }
 
-__attribute__((naked)) u8 CreateTradePokeballSprite(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, u8 oamPriority, u8 subPriority, u8 delay, u32 fadePalettes)
+#undef sSpecies
+#undef sFinalMonX
+#undef sFinalMonY
+#undef sTrigIdx
+
+#define sTimer       data[5]
+
+u8 CreateTradePokeballSprite(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, u8 oamPriority, u8 subPriority, u8 delay, u32 fadePalettes)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	mov sl, r0\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	mov r8, r3\n\t"
-        "	ldr r5, [sp, #0x20]\n\t"
-        "	ldr r4, [sp, #0x24]\n\t"
-        "	ldr r0, [sp, #0x28]\n\t"
-        "	mov sb, r0\n\t"
-        "	mov r0, sl\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov r8, r1\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	mov r0, sb\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r0, _080761C8\n\t"
-        "	bl LoadCompressedSpriteSheetUsingHeap\n\t"
-        "	ldr r0, _080761CC\n\t"
-        "	bl LoadCompressedSpritePaletteUsingHeap\n\t"
-        "	ldr r0, _080761D0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r6, _080761D4\n\t"
-        "	lsls r3, r0, #4\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r2, r3, r6\n\t"
-        "	mov r1, sl\n\t"
-        "	strh r1, [r2, #0x2e]\n\t"
-        "	mov r4, sb\n\t"
-        "	strh r4, [r2, #0x30]\n\t"
-        "	strh r7, [r2, #0x32]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrh r1, [r1, #0x2c]\n\t"
-        "	strh r1, [r2, #0x34]\n\t"
-        "	ldr r4, [sp, #0x2c]\n\t"
-        "	lsrs r1, r4, #0x10\n\t"
-        "	strh r1, [r2, #0x36]\n\t"
-        "	movs r1, #3\n\t"
-        "	ands r5, r1\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	ldrb r4, [r2, #5]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r4\n\t"
-        "	orrs r1, r5\n\t"
-        "	strb r1, [r2, #5]\n\t"
-        "	adds r6, #0x1c\n\t"
-        "	adds r3, r3, r6\n\t"
-        "	ldr r1, _080761D8\n\t"
-        "	str r1, [r3]\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080761C8: .4byte gBallSpriteSheets\n\t"
-        "_080761CC: .4byte gBallSpritePalettes\n\t"
-        "_080761D0: .4byte gBallSpriteTemplates\n\t"
-        "_080761D4: .4byte gSprites\n\t"
-        "_080761D8: .4byte SpriteCB_TradePokeball + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+
+    LoadCompressedSpriteSheetUsingHeap(&gBallSpriteSheets[BALL_POKE]);
+    LoadCompressedSpritePaletteUsingHeap(&gBallSpritePalettes[BALL_POKE]);
+    spriteId = CreateSprite(&gBallSpriteTemplates[BALL_POKE], x, y, subPriority);
+    gSprites[spriteId].sMonSpriteId = monSpriteId;
+    gSprites[spriteId].sDelay = delay;
+    gSprites[spriteId].sMonPalNum = monPalNum;
+    gSprites[spriteId].sFadePalsLo = fadePalettes;
+    gSprites[spriteId].sFadePalsHi = fadePalettes >> 16;
+    gSprites[spriteId].oam.priority = oamPriority;
+    gSprites[spriteId].callback = SpriteCB_TradePokeball;
+    return spriteId;
 }
 
-__attribute__((naked)) void SpriteCB_TradePokeball(void)
+void SpriteCB_TradePokeball(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x30]\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08076274\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldrh r5, [r4, #0x34]\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	orrs r5, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x43\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08076216\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	b _08076218\n\t"
-        "_08076216:\n\t"
-        "	movs r6, #0\n\t"
-        "_08076218:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r4, #0x22]\n\t"
-        "	subs r1, #5\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrb r2, [r4, #5]\n\t"
-        "	lsls r2, r2, #0x1c\n\t"
-        "	lsrs r2, r2, #0x1e\n\t"
-        "	adds r3, r6, #0\n\t"
-        "	bl AnimateBallOpenParticlesForPokeball\n\t"
-        "	movs r0, #1\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl LaunchBallFadeMonTaskForPokeball\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	ldr r0, _0807626C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	lsls r4, r7, #4\n\t"
-        "	adds r4, r4, r7\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _08076270\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl AnimateSprite\n\t"
-        "	strh r5, [r4, #0x30]\n\t"
-        "	b _08076278\n\t"
-        "	.align 2, 0\n\t"
-        "_0807626C: .4byte SpriteCB_TradePokeballSendOff + 1\n\t"
-        "_08076270: .4byte gSprites\n\t"
-        "_08076274:\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "_08076278:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->sDelay == 0)
+    {
+        u8 subpriority;
+        u8 monSpriteId = sprite->sMonSpriteId;
+        u8 monPalNum = sprite->sMonPalNum;
+        u32 selectedPalettes = (u16)sprite->sFadePalsLo | ((u16)sprite->sFadePalsHi << 16);
+
+        if (sprite->subpriority != 0)
+            subpriority = sprite->subpriority - 1;
+        else
+            subpriority = 0;
+
+        StartSpriteAnim(sprite, 1);
+        AnimateBallOpenParticlesForPokeball(sprite->x, sprite->y - 5, sprite->oam.priority, subpriority);
+        // sDelay re-used to store task id but never read
+        sprite->sDelay = LaunchBallFadeMonTaskForPokeball(TRUE, monPalNum, selectedPalettes);
+        sprite->callback = SpriteCB_TradePokeballSendOff;
+        StartSpriteAffineAnim(&gSprites[monSpriteId], BATTLER_AFFINE_RETURN);
+        AnimateSprite(&gSprites[monSpriteId]);
+        gSprites[monSpriteId].data[1] = 0;
+    }
+    else
+    {
+        sprite->sDelay--;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_TradePokeballSendOff(void)
+void SpriteCB_TradePokeballSendOff(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r0, [r5, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x38]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	bne _0807629C\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	bl PlaySE\n\t"
-        "_0807629C:\n\t"
-        "	ldrh r1, [r5, #0x2e]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r2, _080762D8\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r4, r0, r2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080762E0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x38]\n\t"
-        "	ldr r0, _080762DC\n\t"
-        "	str r0, [r5, #0x1c]\n\t"
-        "	b _080762F0\n\t"
-        "	.align 2, 0\n\t"
-        "_080762D8: .4byte gSprites\n\t"
-        "_080762DC: .4byte SpriteCB_TradePokeballEnd + 1\n\t"
-        "_080762E0:\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	adds r0, #0x60\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_080762F0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 monSpriteId;
+
+    sprite->sTimer++;
+    if (sprite->sTimer == 11)
+        PlaySE(SE_BALL_TRADE);
+
+    monSpriteId = sprite->sMonSpriteId;
+    if (gSprites[monSpriteId].affineAnimEnded)
+    {
+        StartSpriteAnim(sprite, 2);
+        gSprites[monSpriteId].invisible = TRUE;
+        sprite->sTimer = 0;
+        sprite->callback = SpriteCB_TradePokeballEnd;
+    }
+    else
+    {
+        gSprites[monSpriteId].data[1] += 96;
+        gSprites[monSpriteId].y2 = -gSprites[monSpriteId].data[1] >> 8;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_TradePokeballEnd(void)
+void SpriteCB_TradePokeballEnd(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807630C\n\t"
-        "	ldr r0, _08076310\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "_0807630C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08076310: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->animEnded)
+        sprite->callback = SpriteCallbackDummy;
 }
 
-__attribute__((naked)) void DestroySpriteAndFreeResources_Ball(void)
+#undef sMonSpriteId
+#undef sDelay
+#undef sMonPalNum
+#undef sFadePalsLo
+#undef sFadePalsHi
+#undef sTimer
+
+// Unreferenced here and in RS, but used in FRLG, possibly by mistake.
+void UNUSED DestroySpriteAndFreeResources_Ball(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl DestroySpriteAndFreeResources\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    DestroySpriteAndFreeResources(sprite);
 }
 
-__attribute__((naked)) void StartHealthboxSlideIn(u8 battler)
+#define sSpeedX data[0]
+#define sSpeedY data[1]
+
+#define sDelayTimer data[1]
+
+void StartHealthboxSlideIn(u8 battler)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r0, _080763A0\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r6, _080763A4\n\t"
-        "	adds r4, r0, r6\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r0, #5\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	strh r1, [r4, #0x30]\n\t"
-        "	movs r0, #0x73\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	strh r1, [r4, #0x26]\n\t"
-        "	ldr r0, _080763A8\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807636E\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_0807636E:\n\t"
-        "	movs r0, #0x38\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetBattlerPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08076398\n\t"
-        "	ldr r0, _080763AC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08076398:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080763A0: .4byte gHealthboxSpriteIds\n\t"
-        "_080763A4: .4byte gSprites\n\t"
-        "_080763A8: .4byte SpriteCB_HealthboxSlideIn + 1\n\t"
-        "_080763AC: .4byte SpriteCB_HealthboxSlideInDelayed + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *healthboxSprite = &gSprites[gHealthboxSpriteIds[battler]];
+
+    healthboxSprite->sSpeedX = 5;
+    healthboxSprite->sSpeedY = 0;
+    healthboxSprite->x2 = 0x73;
+    healthboxSprite->y2 = 0;
+    healthboxSprite->callback = SpriteCB_HealthboxSlideIn;
+    if (GetBattlerSide(battler) != B_SIDE_PLAYER)
+    {
+        healthboxSprite->sSpeedX = -healthboxSprite->sSpeedX;
+        healthboxSprite->sSpeedY = -healthboxSprite->sSpeedY;
+        healthboxSprite->x2 = -healthboxSprite->x2;
+        healthboxSprite->y2 = -healthboxSprite->y2;
+    }
+    gSprites[healthboxSprite->data[5]].callback(&gSprites[healthboxSprite->data[5]]);
+    if (GetBattlerPosition(battler) == B_POSITION_PLAYER_RIGHT)
+        healthboxSprite->callback = SpriteCB_HealthboxSlideInDelayed;
 }
 
-__attribute__((naked)) void SpriteCB_HealthboxSlideInDelayed(void)
+void SpriteCB_HealthboxSlideInDelayed(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r1, #0x30]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	bne _080763CA\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	ldr r0, _080763D0\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "_080763CA:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080763D0: .4byte SpriteCB_HealthboxSlideIn + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->sDelayTimer++;
+    if (sprite->sDelayTimer == 20)
+    {
+        sprite->sDelayTimer = 0;
+        sprite->callback = SpriteCB_HealthboxSlideIn;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_HealthboxSlideIn(void)
+void SpriteCB_HealthboxSlideIn(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r0, [r2, #0x24]\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x24]\n\t"
-        "	ldrh r0, [r2, #0x26]\n\t"
-        "	ldrh r1, [r2, #0x30]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "	ldr r0, [r2, #0x24]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080763F2\n\t"
-        "	ldr r0, _080763F8\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "_080763F2:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080763F8: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x2 -= sprite->sSpeedX;
+    sprite->y2 -= sprite->sSpeedY;
+    if (sprite->x2 == 0 && sprite->y2 == 0)
+        sprite->callback = SpriteCallbackDummy;
 }
 
-__attribute__((naked)) void DoHitAnimHealthboxEffect(u8 battler)
+#undef sSpeedX
+#undef sSpeedY
+#undef sDelayTimer
+
+void DoHitAnimHealthboxEffect(u8 battler)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r5, _08076434\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl CreateInvisibleSpriteWithCallback\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _08076438\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r3, r1, r2\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r3, #0x2e]\n\t"
-        "	ldr r0, _0807643C\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	strh r0, [r3, #0x30]\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	str r5, [r1]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08076434: .4byte SpriteCB_HitAnimHealthoxEffect + 1\n\t"
-        "_08076438: .4byte gSprites\n\t"
-        "_0807643C: .4byte gHealthboxSpriteIds\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+
+    spriteId = CreateInvisibleSpriteWithCallback(SpriteCB_HitAnimHealthoxEffect);
+    gSprites[spriteId].data[0] = 1;
+    gSprites[spriteId].data[1] = gHealthboxSpriteIds[battler];
+    gSprites[spriteId].callback = SpriteCB_HitAnimHealthoxEffect;
 }
 
-__attribute__((naked)) void SpriteCB_HitAnimHealthoxEffect(void)
+void SpriteCB_HitAnimHealthoxEffect(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldrh r1, [r3, #0x30]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r2, _0807647C\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrh r0, [r3, #0x2e]\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	ldrh r0, [r3, #0x2e]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r3, #0x2e]\n\t"
-        "	ldrh r0, [r3, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x15\n\t"
-        "	bne _08076478\n\t"
-        "	strh r2, [r1, #0x24]\n\t"
-        "	strh r2, [r1, #0x26]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_08076478:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807647C: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 r1 = sprite->data[1];
+
+    gSprites[r1].y2 = sprite->data[0];
+    sprite->data[0] = -sprite->data[0];
+    sprite->data[2]++;
+    if (sprite->data[2] == 21)
+    {
+        gSprites[r1].x2 = 0;
+        gSprites[r1].y2 = 0;
+        DestroySprite(sprite);
+    }
 }
 
-__attribute__((naked)) void LoadBallGfx(u8 ballId)
+void LoadBallGfx(u8 ballId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _080764DC\n\t"
-        "	lsls r6, r4, #3\n\t"
-        "	adds r5, r6, r0\n\t"
-        "	ldrh r0, [r5, #6]\n\t"
-        "	bl GetSpriteTileStartByTag\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldr r1, _080764E0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _080764A8\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl LoadCompressedSpriteSheetUsingHeap\n\t"
-        "	ldr r0, _080764E4\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	bl LoadCompressedSpritePaletteUsingHeap\n\t"
-        "_080764A8:\n\t"
-        "	cmp r4, #6\n\t"
-        "	beq _080764D4\n\t"
-        "	cmp r4, #6\n\t"
-        "	blt _080764B8\n\t"
-        "	cmp r4, #0xb\n\t"
-        "	bgt _080764B8\n\t"
-        "	cmp r4, #0xa\n\t"
-        "	bge _080764D4\n\t"
-        "_080764B8:\n\t"
-        "	ldr r1, _080764DC\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0, #6]\n\t"
-        "	bl GetSpriteTileStartByTag\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	ldr r0, _080764E8\n\t"
-        "	lsrs r1, r1, #0xb\n\t"
-        "	ldr r2, _080764EC\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	bl LZDecompressWram\n\t"
-        "_080764D4:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080764DC: .4byte gBallSpriteSheets\n\t"
-        "_080764E0: .4byte 0xFFFF0000\n\t"
-        "_080764E4: .4byte gBallSpritePalettes\n\t"
-        "_080764E8: .4byte gOpenPokeballGfx\n\t"
-        "_080764EC: .4byte 0x06010100\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 var;
+
+    if (GetSpriteTileStartByTag(gBallSpriteSheets[ballId].tag) == 0xFFFF)
+    {
+        LoadCompressedSpriteSheetUsingHeap(&gBallSpriteSheets[ballId]);
+        LoadCompressedSpritePaletteUsingHeap(&gBallSpritePalettes[ballId]);
+    }
+
+    switch (ballId)
+    {
+    case BALL_DIVE:
+// BUGFIX: The thrown Timer Ball has a unique fully open sprite that is never used, as it was never included in this case
+    case BALL_LUXURY:
+    case BALL_PREMIER:
+        break;
+    default:
+        var = GetSpriteTileStartByTag(gBallSpriteSheets[ballId].tag);
+        // Keep the JP WRAM decompressor call, including its OBJ VRAM destination.
+        LZDecompressWram(gOpenPokeballGfx, (void *)(OBJ_VRAM0 + 0x100 + var * 32));
+        break;
+    }
 }
 
-__attribute__((naked)) void FreeBallGfx(u8 ballId)
+void FreeBallGfx(u8 ballId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	ldr r0, _08076514\n\t"
-        "	lsrs r4, r4, #0x15\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldrh r0, [r0, #6]\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "	ldr r0, _08076518\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrh r0, [r4, #4]\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08076514: .4byte gBallSpriteSheets\n\t"
-        "_08076518: .4byte gBallSpritePalettes\n\t"
-        ".syntax divided\n\t"
-    );
+    FreeSpriteTilesByTag(gBallSpriteSheets[ballId].tag);
+    FreeSpritePaletteByTag(gBallSpritePalettes[ballId].tag);
 }
 
-__attribute__((naked)) void GetBattlerPokeballItemId(void)
+u16 GetBattlerPokeballItemId(u8 battler)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08076548\n\t"
-        "	ldr r1, _08076540\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08076544\n\t"
-        "	b _08076556\n\t"
-        "	.align 2, 0\n\t"
-        "_08076540: .4byte gBattlerPartyIndexes\n\t"
-        "_08076544: .4byte gEnemyParty\n\t"
-        "_08076548:\n\t"
-        "	ldr r1, _08076568\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _0807656C\n\t"
-        "_08076556:\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x26\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08076568: .4byte gBattlerPartyIndexes\n\t"
-        "_0807656C: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetBattlerSide(battler) == B_SIDE_PLAYER)
+        return GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_POKEBALL);
+    else
+        return GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_POKEBALL);
 }
