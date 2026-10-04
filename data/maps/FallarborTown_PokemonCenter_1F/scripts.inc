@@ -37,14 +37,12 @@ FallarborTown_PokemonCenter_1F_EventScript_Lanette:: @ 0x081F5C82
 	end
 
 FallarborTown_PokemonCenter_1F_EventScript_LanetteExitNorth:: @ 0x081F5CA9
-	applymovement LOCALID_FALLARBOR_LANETTE, FallarborTown_PokemonCenter_1F_Movement_LanetteExitNorth
-	waitmovement 0
+	applywaitmovement LOCALID_FALLARBOR_LANETTE, FallarborTown_PokemonCenter_1F_Movement_LanetteExitNorth
 	goto FallarborTown_PokemonCenter_1F_EventScript_LanetteExited
 	end
 
 FallarborTown_PokemonCenter_1F_EventScript_LanetteExitWest:: @ 0x081F5CB9
-	applymovement LOCALID_FALLARBOR_LANETTE, FallarborTown_PokemonCenter_1F_Movement_LanetteExitWest
-	waitmovement 0
+	applywaitmovement LOCALID_FALLARBOR_LANETTE, FallarborTown_PokemonCenter_1F_Movement_LanetteExitWest
 	goto FallarborTown_PokemonCenter_1F_EventScript_LanetteExited
 	end
 

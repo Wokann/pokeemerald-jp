@@ -5,24 +5,24 @@ FallarborTown_BattleTentCorridor_MapScripts::
 	.byte 0
 
 FallarborTown_BattleTentCorridor_OnFrame:: @ 0x081F57DE
-	map_script_2 VAR_TEMP_0, 0x0, FallarborTown_BattleTentCorridor_EventScript_EnterCorridor
+	map_script_2 VAR_TEMP_0, 0, FallarborTown_BattleTentCorridor_EventScript_EnterCorridor
 	.2byte 0
 
 FallarborTown_BattleTentCorridor_EventScript_EnterCorridor:: @ 0x081F57E8
 	lockall
-	setvar VAR_TEMP_0, 0x1
+	setvar VAR_TEMP_0, 1
 	applymovement LOCALID_FALLARBOR_TENT_CORRIDOR_ATTENDANT, FallarborTown_BattleTentCorridor_Movement_WalkToDoor
 	applymovement LOCALID_PLAYER, FallarborTown_BattleTentCorridor_Movement_WalkToDoor
 	waitmovement 0
-	opendoor 0x2, 0x1
+	opendoor 2, 1
 	waitdooranim
 	applymovement LOCALID_FALLARBOR_TENT_CORRIDOR_ATTENDANT, FallarborTown_BattleTentCorridor_Movement_AttendantEnterDoor
 	applymovement LOCALID_PLAYER, FallarborTown_BattleTentCorridor_Movement_PlayerEnterDoor
 	waitmovement 0
-	closedoor 0x2, 0x1
+	closedoor 2, 1
 	waitdooranim
-	setvar VAR_0x8006, 0x0
-	warp MAP_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM, 0x4, 0x4
+	setvar VAR_0x8006, 0
+	warp MAP_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM, 4, 4
 	waitstate
 	releaseall
 	end
