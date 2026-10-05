@@ -6,7 +6,7 @@ MirageTower_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, MirageTower_2F_SetHoleWarp
 	.byte 0
 
-MirageTower_2F_SetHoleWarp::
+MirageTower_2F_SetHoleWarp:: @ 0x0821CDE6
 	setstepcallback STEP_CB_CRACKED_FLOOR
 	setholewarp MAP_MIRAGE_TOWER_1F
 	end

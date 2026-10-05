@@ -5,31 +5,29 @@ MarineCave_End_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, MarineCave_End_OnTransition
 	.byte 0
 
-MarineCave_End_OnResume::
+MarineCave_End_OnResume:: @ 0x0821D00F
 	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, MarineCave_End_EventScript_TryRemoveKyogre
 	end
 
-MarineCave_End_EventScript_TryRemoveKyogre::
+MarineCave_End_EventScript_TryRemoveKyogre:: @ 0x0821D019
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
 	removeobject LOCALID_MARINE_CAVE_KYOGRE
 	return
 
-MarineCave_End_OnTransition::
+MarineCave_End_OnTransition:: @ 0x0821D02D
 	call_if_unset FLAG_DEFEATED_KYOGRE, MarineCave_End_EventScript_ShowKyogre
 	end
 
-MarineCave_End_EventScript_ShowKyogre::
+MarineCave_End_EventScript_ShowKyogre:: @ 0x0821D037
 	clearflag FLAG_HIDE_MARINE_CAVE_KYOGRE
 	setvar VAR_TEMP_1, 1
 	return
 
-MarineCave_End_EventScript_Kyogre::
+MarineCave_End_EventScript_Kyogre:: @ 0x0821D040
 	lockall
-	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
-	waitmovement 0
-	applymovement LOCALID_MARINE_CAVE_KYOGRE, MarineCave_End_Movement_KyogreApproach
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Common_Movement_FaceUp
+	applywaitmovement LOCALID_MARINE_CAVE_KYOGRE, MarineCave_End_Movement_KyogreApproach
 	waitse
 	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
 	delay 40
@@ -49,18 +47,18 @@ MarineCave_End_EventScript_Kyogre::
 	releaseall
 	end
 
-MarineCave_End_EventScript_DefeatedKyogre::
+MarineCave_End_EventScript_DefeatedKyogre:: @ 0x0821D0A9
 	setvar VAR_SHOULD_END_ABNORMAL_WEATHER, 1
 	setflag FLAG_DEFEATED_KYOGRE
 	goto Common_EventScript_RemoveStaticPokemon
 	end
 
-MarineCave_End_EventScript_RanFromKyogre::
+MarineCave_End_EventScript_RanFromKyogre:: @ 0x0821D0B7
 	setvar VAR_0x8004, SPECIES_KYOGRE
 	goto Common_EventScript_LegendaryFlewAway
 	end
 
-MarineCave_End_Movement_KyogreApproach::
+MarineCave_End_Movement_KyogreApproach:: @ 0x0821D0C2
 	init_affine_anim
 	walk_down_start_affine
 	delay_16

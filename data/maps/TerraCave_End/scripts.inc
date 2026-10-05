@@ -5,31 +5,29 @@ TerraCave_End_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, TerraCave_End_OnTransition
 	.byte 0
 
-TerraCave_End_OnResume::
+TerraCave_End_OnResume:: @ 0x0821D0E0
 	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, TerraCave_End_EventScript_TryRemoveGroudon
 	end
 
-TerraCave_End_EventScript_TryRemoveGroudon::
+TerraCave_End_EventScript_TryRemoveGroudon:: @ 0x0821D0EA
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
 	removeobject LOCALID_TERRA_CAVE_GROUDON
 	return
 
-TerraCave_End_OnTransition::
+TerraCave_End_OnTransition:: @ 0x0821D0FE
 	call_if_unset FLAG_DEFEATED_GROUDON, TerraCave_End_EventScript_ShowGroudon
 	end
 
-TerraCave_End_EventScript_ShowGroudon::
+TerraCave_End_EventScript_ShowGroudon:: @ 0x0821D108
 	clearflag FLAG_HIDE_TERRA_CAVE_GROUDON
 	setvar VAR_TEMP_1, 1
 	return
 
-TerraCave_End_EventScript_Groudon::
+TerraCave_End_EventScript_Groudon:: @ 0x0821D111
 	lockall
-	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
-	waitmovement 0
-	applymovement LOCALID_TERRA_CAVE_GROUDON, TerraCave_End_Movement_GroudonApproach
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Common_Movement_FaceUp
+	applywaitmovement LOCALID_TERRA_CAVE_GROUDON, TerraCave_End_Movement_GroudonApproach
 	waitse
 	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
 	delay 40
@@ -49,18 +47,18 @@ TerraCave_End_EventScript_Groudon::
 	releaseall
 	end
 
-TerraCave_End_EventScript_DefeatedGroudon::
+TerraCave_End_EventScript_DefeatedGroudon:: @ 0x0821D17A
 	setvar VAR_SHOULD_END_ABNORMAL_WEATHER, 1
 	setflag FLAG_DEFEATED_GROUDON
 	goto Common_EventScript_RemoveStaticPokemon
 	end
 
-TerraCave_End_EventScript_RanFromGroudon::
+TerraCave_End_EventScript_RanFromGroudon:: @ 0x0821D188
 	setvar VAR_0x8004, SPECIES_GROUDON
 	goto Common_EventScript_LegendaryFlewAway
 	end
 
-TerraCave_End_Movement_GroudonApproach::
+TerraCave_End_Movement_GroudonApproach:: @ 0x0821D193
 	init_affine_anim
 	walk_down_start_affine
 	delay_16

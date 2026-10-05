@@ -386,7 +386,15 @@ def region_end(entries, selected, last_map_end):
     next_index = selected + 1
     while next_index < len(entries) and entries[next_index][0] == start:
         next_index += 1
-    return entries[next_index][0] if next_index < len(entries) else last_map_end
+    natural_end = entries[next_index][0] if next_index < len(entries) else last_map_end
+    name = entries[selected][1]
+    end = emitter.MAP_SOURCE_REGION_ENDS.get(name, natural_end)
+    if not start < end <= natural_end:
+        raise VerificationError(
+            f"{name} source end 0x{end:08X} is outside "
+            f"(0x{start:08X}, 0x{natural_end:08X}]"
+        )
+    return end
 
 
 def map_context(map_name: str) -> tuple[int, int, str, int, int]:

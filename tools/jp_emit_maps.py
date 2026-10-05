@@ -37,6 +37,10 @@ MAP_SOURCE_REGION_ENDS = {
     # Likewise, the next raw owner begins immediately after this one map
     # script table; it must not be absorbed by a full --write regeneration.
     'ScorchedSlab': 0x0821BBE0,
+    # The next map table is BattleColosseum_2P, but shared Secret Base code
+    # owns [0x0821D372, 0x0821D626) between it and Steven's Cave. The JP
+    # linked SecretBase_MapScripts and the cave's final EOS agree on this end.
+    'MeteorFalls_StevensCave': 0x0821D372,
 }
 
 # These maps have had their JP and US map-local script entry sequences checked
@@ -18039,6 +18043,21 @@ def collapse_reviewed_movement_wait_macros(mname, generated_source):
     return '\n'.join(out) + ('\n' if generated_source.endswith('\n') else '')
 
 
+def preserve_reviewed_cracked_ground_fix(mname, generated_source):
+    """Keep the reviewed upstream UBFIX alternative, not just its ROM branch."""
+    branch = (
+        '#ifdef UBFIX\n\tsetvar VAR_ICE_STEP_COUNT, 1\n#else\n'
+        '\tcopyvar VAR_ICE_STEP_COUNT, 1, warn=FALSE\n#endif')
+    source = (ROOT / 'data' / 'maps' / mname / 'scripts.inc').read_text(encoding='utf-8')
+    commands = ('\tsetvar VAR_ICE_STEP_COUNT, 1',
+                '\tcopyvar VAR_ICE_STEP_COUNT, 1, warn=FALSE')
+    matches = [command for command in commands if generated_source.count(command) == 1]
+    if (source.count(branch) != 1 or len(matches) != 1
+            or sum(generated_source.count(command) for command in commands) != 1):
+        raise RuntimeError('reviewed cracked-ground branch mismatch for %s' % mname)
+    return generated_source.replace(matches[0], branch, 1)
+
+
 def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
              text_label_map, region_labels=None, std_addrs=None, events_addr=None):
     """Emit a map and retain source-proven semantic operand spellings.
@@ -18052,7 +18071,10 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
     overrides = reviewed_operand_overrides(mname, result[0])
     source = apply_reviewed_operand_overrides(result[0], overrides)
     source = collapse_reviewed_high_level_macros(mname, source)
-    return (collapse_reviewed_movement_wait_macros(mname, source), *result[1:])
+    source = collapse_reviewed_movement_wait_macros(mname, source)
+    if MAP_VERIFIED_SEMANTIC_LABELS.get(mname, {}).get('ubfix_ice_step_count'):
+        source = preserve_reviewed_cracked_ground_fix(mname, source)
+    return (source, *result[1:])
 
 
 def collect_all_text_ptrs(entries):
@@ -20505,6 +20527,466 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         },
     },
 })
+
+
+# The remaining contiguous dungeon maps through Steven's Cave were
+# checked against US command/label semantics and independently assembled as
+# [0x0821BBE0, 0x0821D372). Addresses below come from the byte-exact JP
+# sources and linked JP labels, never from US ROM offsets.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SkyPillar_Entrance': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821BBE9: 'SkyPillar_Entrance_OnTransition',
+        },
+        'local_scripts': (0x0821BBE9,),
+    },
+    'SkyPillar_Outside': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821BBFD: 'SkyPillar_Outside_OnTransition',
+            0x0821BC14: 'SkyPillar_Outside_EventScript_HideMapNamePopup',
+            0x0821BC18: 'SkyPillar_Outside_EventScript_CheckSetAbnormalWeather',
+            0x0821BC22: 'SkyPillar_Outside_OnLoad',
+            0x0821BC2C: 'SkyPillar_Outside_EventScript_OpenDoor',
+            0x0821BC49: 'SkyPillar_Outside_EventScript_WallaceScene',
+            0x0821BD3D: 'SkyPillar_Outside_EventScript_Wallace',
+            0x0821BD3E: 'SkyPillar_Outside_EventScript_ClosedDoor',
+        },
+        'tables': {
+            0x0821BC3F: 'SkyPillar_Outside_OnFrame',
+        },
+        'texts': {
+            0x0821BD47: 'SkyPillar_Outside_Text_DoorIsClosed',
+            0x0821BD56: 'SkyPillar_Outside_Text_OpenedDoorToSkyPillar',
+            0x0821BDB5: 'SkyPillar_Outside_Text_EarthquakeNotMomentToWaste',
+            0x0821BDD5: 'SkyPillar_Outside_Text_SituationGettingWorse',
+            0x0821BDF8: 'SkyPillar_Outside_Text_GotToGoBackForSootopolis',
+        },
+        'local_scripts': (0x0821BBFD, 0x0821BC22),
+        'local_tables': (0x0821BC3F,),
+        'field_placeholders': {
+            0x0821BD56: {
+                0x01: 'PLAYER',
+                0x05: 'KUN',
+            },
+            0x0821BDF8: {
+                0x01: 'PLAYER',
+                0x05: 'KUN',
+            },
+        },
+    },
+    'SkyPillar_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821BE8B: 'SkyPillar_1F_OnTransition',
+            0x0821BE97: 'SkyPillar_1F_EventScript_CleanFloor',
+        },
+        'local_scripts': (0x0821BE8B,),
+    },
+    'SkyPillar_2F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821BEAB: 'SkyPillar_2F_OnTransition',
+            0x0821BEBC: 'SkyPillar_2F_EventScript_CleanFloor',
+            0x0821BEC0: 'SkyPillar_2F_SetHoleWarp',
+        },
+        'local_scripts': (0x0821BEAB, 0x0821BEC0),
+    },
+    'SkyPillar_3F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821BED1: 'SkyPillar_3F_OnTransition',
+            0x0821BEDD: 'SkyPillar_3F_EventScript_CleanFloor',
+        },
+        'local_scripts': (0x0821BED1,),
+    },
+    'SkyPillar_4F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821BEF1: 'SkyPillar_4F_OnTransition',
+            0x0821BF02: 'SkyPillar_4F_EventScript_CleanFloor',
+            0x0821BF06: 'SkyPillar_4F_SetHoleWarp',
+        },
+        'local_scripts': (0x0821BEF1, 0x0821BF06),
+    },
+    'SkyPillar_5F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821BF18: 'SkyPillar_5F_OnTransition',
+            0x0821BF24: 'SkyPillar_5F_EventScript_CleanFloor',
+        },
+        'local_scripts': (0x0821BF18,),
+    },
+    'SkyPillar_Top': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821BF38: 'SkyPillar_Top_OnResume',
+            0x0821BF42: 'SkyPillar_Top_EventScript_TryRemoveRayquaza',
+            0x0821BF56: 'SkyPillar_Top_OnTransition',
+            0x0821BF6D: 'SkyPillar_Top_EventScript_SetCleanLayout',
+            0x0821BF75: 'SkyPillar_Top_EventScript_TryShowRayquaza',
+            0x0821BF7F: 'SkyPillar_Top_EventScript_ShowRayquaza',
+            0x0821BF8D: 'SkyPillar_Top_EventScript_RayquazaFaceDown',
+            0x0821BF92: 'SkyPillar_Top_EventScript_Rayquaza',
+            0x0821BFD8: 'SkyPillar_Top_EventScript_DefeatedRayquaza',
+            0x0821BFE1: 'SkyPillar_Top_EventScript_RanFromRayquaza',
+            0x0821BFEC: 'SkyPillar_Top_EventScript_DefeatedRayquaza2',
+            0x0821BFF5: 'SkyPillar_Top_EventScript_RanFromRayquaza2',
+            0x0821C00A: 'SkyPillar_Top_EventScript_AwakenRayquaza',
+        },
+        'tables': {
+            0x0821BF83: 'SkyPillar_Top_OnWarp',
+        },
+        'texts': {
+            0x0821C0D0: 'SkyPillar_Top_Text_RayquazaFlewOff',
+        },
+    },
+    'MagmaHideout_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821C0F9: 'MagmaHideout_1F_OnTransition',
+            0x0821C0FF: 'MagmaHideout_1F_EventScript_Grunt1',
+            0x0821C116: 'MagmaHideout_1F_EventScript_Grunt2',
+        },
+        'texts': {
+            0x0821C12D: 'MagmaHideout_1F_Text_Grunt1Intro',
+            0x0821C196: 'MagmaHideout_1F_Text_Grunt1Defeat',
+            0x0821C1B7: 'MagmaHideout_1F_Text_Grunt1PostBattle',
+            0x0821C1D5: 'MagmaHideout_1F_Text_Grunt2Intro',
+            0x0821C22E: 'MagmaHideout_1F_Text_Grunt2Defeat',
+            0x0821C23E: 'MagmaHideout_1F_Text_Grunt2PostBattle',
+        },
+    },
+    'MagmaHideout_2F_1R': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821C287: 'MagmaHideout_2F_1R_EventScript_Grunt14',
+            0x0821C29E: 'MagmaHideout_2F_1R_EventScript_Grunt3',
+            0x0821C2B5: 'MagmaHideout_2F_1R_EventScript_Grunt4',
+            0x0821C2CC: 'MagmaHideout_2F_1R_EventScript_Grunt5',
+        },
+        'texts': {
+            0x0821C2E3: 'MagmaHideout_2F_1R_Text_Grunt14Intro',
+            0x0821C344: 'MagmaHideout_2F_1R_Text_Grunt14Defeat',
+            0x0821C35A: 'MagmaHideout_2F_1R_Text_Grunt14PostBattle',
+            0x0821C375: 'MagmaHideout_2F_1R_Text_Grunt3Intro',
+            0x0821C39F: 'MagmaHideout_2F_1R_Text_Grunt3Defeat',
+            0x0821C3AC: 'MagmaHideout_2F_1R_Text_Grunt3PostBattle',
+            0x0821C3CF: 'MagmaHideout_2F_1R_Text_Grunt4Intro',
+            0x0821C3DD: 'MagmaHideout_2F_1R_Text_Grunt4Defeat',
+            0x0821C3E3: 'MagmaHideout_2F_1R_Text_Grunt4PostBattle',
+            0x0821C40E: 'MagmaHideout_2F_1R_Text_Grunt5Intro',
+            0x0821C41C: 'MagmaHideout_2F_1R_Text_Grunt5Defeat',
+            0x0821C422: 'MagmaHideout_2F_1R_Text_Grunt5PostBattle',
+        },
+    },
+    'MagmaHideout_2F_2R': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821C446: 'MagmaHideout_2F_2R_EventScript_Grunt15',
+            0x0821C45D: 'MagmaHideout_2F_2R_EventScript_Grunt6',
+            0x0821C474: 'MagmaHideout_2F_2R_EventScript_Grunt7',
+            0x0821C48B: 'MagmaHideout_2F_2R_EventScript_Grunt8',
+        },
+        'texts': {
+            0x0821C4A2: 'MagmaHideout_2F_2R_Text_Grunt15Intro',
+            0x0821C4C0: 'MagmaHideout_2F_2R_Text_Grunt15Defeat',
+            0x0821C4CD: 'MagmaHideout_2F_2R_Text_Grunt15PostBattle',
+            0x0821C507: 'MagmaHideout_2F_2R_Text_Grunt6Intro',
+            0x0821C534: 'MagmaHideout_2F_2R_Text_Grunt6Defeat',
+            0x0821C54E: 'MagmaHideout_2F_2R_Text_Grunt6PostBattle',
+            0x0821C56E: 'MagmaHideout_2F_2R_Text_Grunt7Intro',
+            0x0821C5AD: 'MagmaHideout_2F_2R_Text_Grunt7Defeat',
+            0x0821C5C3: 'MagmaHideout_2F_2R_Text_Grunt7PostBattle',
+            0x0821C5F4: 'MagmaHideout_2F_2R_Text_Grunt8Intro',
+            0x0821C635: 'MagmaHideout_2F_2R_Text_Grunt8Defeat',
+            0x0821C643: 'MagmaHideout_2F_2R_Text_Grunt8PostBattle',
+        },
+    },
+    'MagmaHideout_3F_1R': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821C669: 'MagmaHideout_3F_1R_EventScript_Grunt9',
+            0x0821C680: 'MagmaHideout_3F_1R_EventScript_Grunt16',
+        },
+        'texts': {
+            0x0821C697: 'MagmaHideout_3F_1R_Text_Grunt9Intro',
+            0x0821C6C6: 'MagmaHideout_3F_1R_Text_Grunt9Defeat',
+            0x0821C6D2: 'MagmaHideout_3F_1R_Text_Grunt9PostBattle',
+            0x0821C6FB: 'MagmaHideout_3F_1R_Text_Grunt16Intro',
+            0x0821C75D: 'MagmaHideout_3F_1R_Text_Grunt16Defeat',
+            0x0821C76C: 'MagmaHideout_3F_1R_Text_Grunt16PostBattle',
+        },
+    },
+    'MagmaHideout_3F_2R': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821C7A5: 'MagmaHideout_3F_2R_EventScript_Grunt10',
+        },
+        'texts': {
+            0x0821C7BC: 'MagmaHideout_3F_2R_Text_Grunt10Intro',
+            0x0821C831: 'MagmaHideout_3F_2R_Text_Grunt10Defeat',
+            0x0821C846: 'MagmaHideout_3F_2R_Text_Grunt10PostBattle',
+        },
+    },
+    'MagmaHideout_4F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821C881: 'MagmaHideout_4F_EventScript_Maxie',
+            0x0821C9AD: 'MagmaHideout_4F_EventScript_Grunt11',
+            0x0821C9C4: 'MagmaHideout_4F_EventScript_Grunt12',
+            0x0821C9DB: 'MagmaHideout_4F_EventScript_Grunt13',
+            0x0821C9F2: 'MagmaHideout_4F_EventScript_Tabitha',
+        },
+        'texts': {
+            0x0821CA09: 'MagmaHideout_4F_Text_Grunt11Intro',
+            0x0821CA50: 'MagmaHideout_4F_Text_Grunt11Defeat',
+            0x0821CA72: 'MagmaHideout_4F_Text_Grunt11PostBattle',
+            0x0821CA92: 'MagmaHideout_4F_Text_Grunt12Intro',
+            0x0821CAB8: 'MagmaHideout_4F_Text_Grunt12Defeat',
+            0x0821CAC9: 'MagmaHideout_4F_Text_Grunt12PostBattle',
+            0x0821CAE2: 'MagmaHideout_4F_Text_Grunt13Intro',
+            0x0821CAFB: 'MagmaHideout_4F_Text_Grunt13Defeat',
+            0x0821CB0F: 'MagmaHideout_4F_Text_Grunt13PostBattle',
+            0x0821CB21: 'MagmaHideout_4F_Text_TabithaIntro',
+            0x0821CB96: 'MagmaHideout_4F_Text_TabithaDefeat',
+            0x0821CBA5: 'MagmaHideout_4F_Text_TabithaPostBattle',
+            0x0821CBDC: 'MagmaHideout_4F_Text_MaxieAwakenGroudon',
+            0x0821CC62: 'MagmaHideout_4F_Text_MaxieGroudonWhatsWrong',
+            0x0821CCB0: 'MagmaHideout_4F_Text_MaxieOhItWasYou',
+            0x0821CCFF: 'MagmaHideout_4F_Text_MaxieDefeat',
+            0x0821CD20: 'MagmaHideout_4F_Text_MaxieImGoingAfterGroudon',
+        },
+    },
+    'MirageTower_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821CDCC: 'MirageTower_1F_OnTransition',
+        },
+    },
+    'MirageTower_2F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821CDE6: 'MirageTower_2F_SetHoleWarp',
+        },
+    },
+    'MirageTower_3F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821CE01: 'MirageTower_3F_SetHoleWarp',
+        },
+    },
+    'MirageTower_4F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821CE0D: 'MirageTower_4F_EventScript_RootFossil',
+            0x0821CE44: 'MirageTower_4F_EventScript_LeaveRootFossil',
+            0x0821CE4E: 'MirageTower_4F_EventScript_ClawFossil',
+            0x0821CE85: 'MirageTower_4F_EventScript_LeaveClawFossil',
+            0x0821CE8F: 'MirageTower_4F_EventScript_CollapseMirageTower',
+        },
+        'texts': {
+            0x0821CEBE: 'MirageTower_4F_Text_TakeRootFossil',
+            0x0821CEFD: 'MirageTower_4F_Text_LeftRootFossilAlone',
+            0x0821CF16: 'MirageTower_4F_Text_TakeClawFossil',
+            0x0821CF53: 'MirageTower_4F_Text_LeaveClawFossilAlone',
+        },
+        'field_placeholders': {
+            0x0821CEFD: {
+                0x01: 'PLAYER',
+            },
+            0x0821CF53: {
+                0x01: 'PLAYER',
+            },
+        },
+    },
+    'DesertUnderpass': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821CF71: 'DesertUnderpass_OnTransition',
+            0x0821CF75: 'DesertUnderpass_EventScript_Fossil',
+            0x0821CF8B: 'DesertUnderpass_EventScript_GiveClawFossil',
+            0x0821CF9C: 'DesertUnderpass_EventScript_GiveRootFossil',
+        },
+        'texts': {
+            0x0821CFAD: 'DesertUnderpass_Text_FoundRootFossil',
+            0x0821CFC0: 'DesertUnderpass_Text_FoundClawFossil',
+        },
+        'field_placeholders': {
+            0x0821CFAD: {
+                0x01: 'PLAYER',
+            },
+            0x0821CFC0: {
+                0x01: 'PLAYER',
+            },
+        },
+    },
+    'ArtisanCave_B1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821CFD8: 'ArtisanCave_B1F_OnTransition',
+        },
+    },
+    'Underwater_MarineCave': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821CFE8: 'Underwater_MarineCave_OnTransition',
+            0x0821CFEC: 'Underwater_MarineCave_OnResume',
+        },
+    },
+    'MarineCave_Entrance': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821CFFB: 'MarineCave_Entrance_OnResume',
+        },
+    },
+    'MarineCave_End': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821D00F: 'MarineCave_End_OnResume',
+            0x0821D019: 'MarineCave_End_EventScript_TryRemoveKyogre',
+            0x0821D02D: 'MarineCave_End_OnTransition',
+            0x0821D037: 'MarineCave_End_EventScript_ShowKyogre',
+            0x0821D040: 'MarineCave_End_EventScript_Kyogre',
+            0x0821D0A9: 'MarineCave_End_EventScript_DefeatedKyogre',
+            0x0821D0B7: 'MarineCave_End_EventScript_RanFromKyogre',
+        },
+    },
+    'TerraCave_Entrance': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821D0D1: 'TerraCave_Entrance_OnTransition',
+        },
+    },
+    'TerraCave_End': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821D0E0: 'TerraCave_End_OnResume',
+            0x0821D0EA: 'TerraCave_End_EventScript_TryRemoveGroudon',
+            0x0821D0FE: 'TerraCave_End_OnTransition',
+            0x0821D108: 'TerraCave_End_EventScript_ShowGroudon',
+            0x0821D111: 'TerraCave_End_EventScript_Groudon',
+            0x0821D17A: 'TerraCave_End_EventScript_DefeatedGroudon',
+            0x0821D188: 'TerraCave_End_EventScript_RanFromGroudon',
+        },
+    },
+    'AlteringCave': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821D1A2: 'AlteringCave_OnTransition',
+        },
+    },
+    'MeteorFalls_StevensCave': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0821D1A7: 'MeteorFalls_StevensCave_EventScript_Steven',
+            0x0821D1F2: 'MeteorFalls_StevensCave_EventScript_Defeated',
+        },
+        'texts': {
+            0x0821D206: 'MeteorFalls_StevensCave_Text_ShouldKnowHowGoodIAmExpectWorst',
+            0x0821D2B0: 'MeteorFalls_StevensCave_Text_StevenDefeat',
+            0x0821D2CA: 'MeteorFalls_StevensCave_Text_MyPredictionCameTrue',
+        },
+        'field_placeholders': {
+            0x0821D206: {
+                0x01: 'PLAYER',
+                0x05: 'KUN',
+            },
+        },
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'SkyPillar_Outside': {
+        0x0821BD18: 'SkyPillar_Outside_Movement_WallaceApproachPlayer',
+        0x0821BD23: 'SkyPillar_Outside_Movement_WallaceClimbSkyPillar',
+        0x0821BD30: 'SkyPillar_Outside_Movement_PlayerClimbSkyPillar',
+    },
+    'SkyPillar_Top': {
+        0x0821C0AA: 'SkyPillar_Top_Movement_RayquazaStir',
+        0x0821C0BB: 'SkyPillar_Top_Movement_RayquazaFlyOff',
+        0x0821C0C8: 'SkyPillar_Top_Movement_CameraPanUp',
+        0x0821C0CC: 'SkyPillar_Top_Movement_CameraPanDown',
+    },
+    'MagmaHideout_4F': {
+        0x0821C993: 'MagmaHideout_4F_Movement_GroudonApproach',
+        0x0821C99E: 'MagmaHideout_4F_Movement_GroudonExit',
+        0x0821C9A1: 'MagmaHideout_4F_Movement_MaxieLookAround',
+    },
+    'MarineCave_End': {
+        0x0821D0C2: 'MarineCave_End_Movement_KyogreApproach',
+    },
+    'TerraCave_End': {
+        0x0821D193: 'TerraCave_End_Movement_GroudonApproach',
+    },
+})
+
+# Retain the ClosedDoor entry missed by traversal and both unused Underpass texts.
+MAP_AUXILIARY_SCRIPT_ADDRESSES.update({
+    'SkyPillar_Outside': (0x0821BD3E,),
+})
+MAP_AUXILIARY_TEXT_ADDRESSES.update({
+    'SkyPillar_Outside': (0x0821BD47,),
+    'DesertUnderpass': (0x0821CFAD, 0x0821CFC0),
+})
+
+
+# Context-specific spellings and source alternatives for the reviewed scenes.
+for _dungeon_camera_map in ('SkyPillar_Outside', 'SkyPillar_Top',
+                            'MagmaHideout_4F', 'MirageTower_4F'):
+    MAP_VERIFIED_SEMANTIC_LABELS[_dungeon_camera_map].setdefault(
+        'symbols', {}).setdefault('decimal_arguments', {})['setvar'] = (1,)
+
+for _dungeon_cracked_map in ('SkyPillar_2F', 'SkyPillar_4F',
+                            'MirageTower_2F', 'MirageTower_3F'):
+    MAP_VERIFIED_SEMANTIC_LABELS[_dungeon_cracked_map]['external_labels'] = {
+        0x0826432F: 'CaveHole_CheckFallDownHole',
+        0x08264339: 'CaveHole_FixCrackedGround',
+    }
+for _dungeon_cracked_map in ('SkyPillar_2F', 'SkyPillar_4F'):
+    MAP_VERIFIED_SEMANTIC_LABELS[_dungeon_cracked_map]['ubfix_ice_step_count'] = True
+
+MAP_VERIFIED_SEMANTIC_LABELS['SkyPillar_Top']['symbols']['species'] = {
+    0x0196: 'SPECIES_RAYQUAZA',
+}
+MAP_VERIFIED_SEMANTIC_LABELS['SkyPillar_Top']['symbols']['decimal_arguments'][
+    'setwildbattle'] = (1,)
+MAP_VERIFIED_SEMANTIC_LABELS['MagmaHideout_4F']['field_effect_macros'] = True
+for _dungeon_cave_map, _dungeon_mon_localid in (
+    ('MarineCave_End', 'LOCALID_MARINE_CAVE_KYOGRE'),
+    ('TerraCave_End', 'LOCALID_TERRA_CAVE_GROUDON'),
+):
+    MAP_VERIFIED_SEMANTIC_LABELS[_dungeon_cave_map]['symbols'] = {
+        'var_values': {0x800F: {0x01: _dungeon_mon_localid}},
+    }
 
 
 def main():

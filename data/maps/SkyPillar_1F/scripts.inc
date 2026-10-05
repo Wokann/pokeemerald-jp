@@ -4,10 +4,10 @@ SkyPillar_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, SkyPillar_1F_OnTransition
 	.byte 0
 
-SkyPillar_1F_OnTransition:
+SkyPillar_1F_OnTransition: @ 0x0821BE8B
 	call_if_lt VAR_SKY_PILLAR_STATE, 2, SkyPillar_1F_EventScript_CleanFloor
 	end
 
-SkyPillar_1F_EventScript_CleanFloor::
+SkyPillar_1F_EventScript_CleanFloor:: @ 0x0821BE97
 	setmaplayoutindex LAYOUT_SKY_PILLAR_1F_CLEAN
 	return

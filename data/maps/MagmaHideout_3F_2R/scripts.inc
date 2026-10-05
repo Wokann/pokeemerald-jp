@@ -3,12 +3,12 @@
 MagmaHideout_3F_2R_MapScripts::
 	.byte 0
 
-MagmaHideout_3F_2R_EventScript_Grunt10::
+MagmaHideout_3F_2R_EventScript_Grunt10:: @ 0x0821C7A5
 	trainerbattle_single TRAINER_GRUNT_MAGMA_HIDEOUT_10, MagmaHideout_3F_2R_Text_Grunt10Intro, MagmaHideout_3F_2R_Text_Grunt10Defeat
 	msgbox MagmaHideout_3F_2R_Text_Grunt10PostBattle, MSGBOX_AUTOCLOSE
 	end
 
-MagmaHideout_3F_2R_Text_Grunt10Intro::
+MagmaHideout_3F_2R_Text_Grunt10Intro:: @ 0x0821C7BC
 	.string "あのな　リーダーの　いうことは\n"
 	.string "オレにも　よく　わかるんだけど　な\p"
 	.string "ちょうこだいポケモンを　ほりだしたり\n"
@@ -17,10 +17,10 @@ MagmaHideout_3F_2R_Text_Grunt10Intro::
 	.string "のような　きもするんだよ　な\p"
 	.string "おまえ　どう　おもう？$"
 
-MagmaHideout_3F_2R_Text_Grunt10Defeat::
+MagmaHideout_3F_2R_Text_Grunt10Defeat:: @ 0x0821C831
 	.string "やっぱり　なんか　まちがってる　よなあ？$"
 
-MagmaHideout_3F_2R_Text_Grunt10PostBattle::
+MagmaHideout_3F_2R_Text_Grunt10PostBattle:: @ 0x0821C846
 	.string "しょうぶに　まけて　スッキリしたよ！\p"
 	.string "オレも　こんど　リーダーに　あったら\n"
 	.string "じっさい　どうなのか　きいて　みるよ！$"

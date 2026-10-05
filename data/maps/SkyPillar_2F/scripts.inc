@@ -6,7 +6,7 @@ SkyPillar_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, SkyPillar_2F_SetHoleWarp
 	.byte 0
 
-SkyPillar_2F_OnTransition:
+SkyPillar_2F_OnTransition: @ 0x0821BEAB
 	call_if_lt VAR_SKY_PILLAR_STATE, 2, SkyPillar_2F_EventScript_CleanFloor
 #ifdef UBFIX
 	setvar VAR_ICE_STEP_COUNT, 1
@@ -15,11 +15,11 @@ SkyPillar_2F_OnTransition:
 #endif
 	end
 
-SkyPillar_2F_EventScript_CleanFloor::
+SkyPillar_2F_EventScript_CleanFloor:: @ 0x0821BEBC
 	setmaplayoutindex LAYOUT_SKY_PILLAR_2F_CLEAN
 	return
 
-SkyPillar_2F_SetHoleWarp:
+SkyPillar_2F_SetHoleWarp: @ 0x0821BEC0
 	setstepcallback STEP_CB_CRACKED_FLOOR
 	setholewarp MAP_SKY_PILLAR_1F
 	end

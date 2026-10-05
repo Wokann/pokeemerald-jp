@@ -4,6 +4,6 @@ SkyPillar_Entrance_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, SkyPillar_Entrance_OnTransition
 	.byte 0
 
-SkyPillar_Entrance_OnTransition:
+SkyPillar_Entrance_OnTransition: @ 0x0821BBE9
 	setflag FLAG_LANDMARK_SKY_PILLAR
 	end

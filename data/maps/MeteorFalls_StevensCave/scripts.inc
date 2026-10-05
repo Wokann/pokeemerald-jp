@@ -3,17 +3,14 @@
 MeteorFalls_StevensCave_MapScripts::
 	.byte 0
 
-MeteorFalls_StevensCave_EventScript_Steven::
+MeteorFalls_StevensCave_EventScript_Steven:: @ 0x0821D1A7
 	lock
 	goto_if_set FLAG_DEFEATED_METEOR_FALLS_STEVEN, MeteorFalls_StevensCave_EventScript_Defeated
 	waitse
 	playse SE_PIN
-	applymovement LOCALID_METEOR_FALLS_STEVEN, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement LOCALID_METEOR_FALLS_STEVEN, Common_Movement_Delay48
-	waitmovement 0
-	applymovement LOCALID_METEOR_FALLS_STEVEN, Common_Movement_FacePlayer
-	waitmovement 0
+	applywaitmovement LOCALID_METEOR_FALLS_STEVEN, Common_Movement_ExclamationMark
+	applywaitmovement LOCALID_METEOR_FALLS_STEVEN, Common_Movement_Delay48
+	applywaitmovement LOCALID_METEOR_FALLS_STEVEN, Common_Movement_FacePlayer
 	msgbox MeteorFalls_StevensCave_Text_ShouldKnowHowGoodIAmExpectWorst, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_STEVEN, MeteorFalls_StevensCave_Text_StevenDefeat
 	msgbox MeteorFalls_StevensCave_Text_MyPredictionCameTrue, MSGBOX_DEFAULT
@@ -21,14 +18,13 @@ MeteorFalls_StevensCave_EventScript_Steven::
 	release
 	end
 
-MeteorFalls_StevensCave_EventScript_Defeated::
-	applymovement LOCALID_METEOR_FALLS_STEVEN, Common_Movement_FacePlayer
-	waitmovement 0
+MeteorFalls_StevensCave_EventScript_Defeated:: @ 0x0821D1F2
+	applywaitmovement LOCALID_METEOR_FALLS_STEVEN, Common_Movement_FacePlayer
 	msgbox MeteorFalls_StevensCave_Text_MyPredictionCameTrue, MSGBOX_DEFAULT
 	release
 	end
 
-MeteorFalls_StevensCave_Text_ShouldKnowHowGoodIAmExpectWorst::
+MeteorFalls_StevensCave_Text_ShouldKnowHowGoodIAmExpectWorst:: @ 0x0821D206
 	.string "ダイゴ“へぇ　{PLAYER}{KUN}\n"
 	.string "ボクが　ここにいるって　よく　わかったね\p"
 	.string "もしかして　きみ⋯⋯　ボクを\n"
@@ -41,11 +37,11 @@ MeteorFalls_StevensCave_Text_ShouldKnowHowGoodIAmExpectWorst::
 	.string "ほんきで　しょうぶ　するなら\n"
 	.string "かくごして　くれよな！$"
 
-MeteorFalls_StevensCave_Text_StevenDefeat::
+MeteorFalls_StevensCave_Text_StevenDefeat:: @ 0x0821D2B0
 	.string "きみは⋯⋯\n"
 	.string "これほどまでに　つよくなって　いたのか$"
 
-MeteorFalls_StevensCave_Text_MyPredictionCameTrue::
+MeteorFalls_StevensCave_Text_MyPredictionCameTrue:: @ 0x0821D2CA
 	.string "ダイゴ“そういえば⋯⋯\n"
 	.string "ムロ　タウンの　いしのどうくつで\l"
 	.string "はじめて　あった　ときから\p"
