@@ -16,12 +16,12 @@ EventScript_PCMainMenu::
 
 EventScript_AccessPC::
 	@ The JP byte stream uses an explicit menu-result dispatch.
-	copyvar VAR_0x8000, VAR_RESULT
-	goto_if_eq VAR_0x8000, 0, EventScript_AccessPokemonStorage
-	goto_if_eq VAR_0x8000, 1, EventScript_AccessPlayersPC
-	goto_if_eq VAR_0x8000, 2, EventScript_AccessHallOfFame
-	goto_if_eq VAR_0x8000, 3, EventScript_TurnOffPC
-	goto_if_eq VAR_0x8000, MULTI_B_PRESSED, EventScript_TurnOffPC
+	switch VAR_RESULT
+	case 0, EventScript_AccessPokemonStorage
+	case 1, EventScript_AccessPlayersPC
+	case 2, EventScript_AccessHallOfFame
+	case 3, EventScript_TurnOffPC
+	case MULTI_B_PRESSED, EventScript_TurnOffPC
 	end
 
 EventScript_AccessPlayersPC::

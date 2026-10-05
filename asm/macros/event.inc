@@ -1014,9 +1014,13 @@
 	.byte SCR_OP_DRAWBOX
 	.endm
 
-	@ JP opcode 0x72 is a no-op and consumes no parameters.
-	.macro erasebox
+	@ Nopped in Emerald, but still consumes parameters.
+	.macro erasebox left:req, top:req, right:req, bottom:req
 	.byte SCR_OP_ERASEBOX
+	.byte \left
+	.byte \top
+	.byte \right
+	.byte \bottom
 	.endm
 
 	@ Nopped in Emerald, but still consumes parameters.
@@ -2086,13 +2090,9 @@
 	map \map
 	.endm
 
-	@ JP opcode 0x74 skips four unused parameter bytes.
-	.macro mossdeepgym2 unused1:req, unused2:req, unused3:req, unused4:req
-	.byte SCR_OP_74
-	.byte \unused1
-	.byte \unused2
-	.byte \unused3
-	.byte \unused4
+	@ JP keeps a separate no-argument no-op in the US showelevmenu slot.
+	.macro drawbox_jp
+	.byte SCR_OP_DRAWBOX_JP
 	.endm
 
 	.macro setmonobedient partySlot:req

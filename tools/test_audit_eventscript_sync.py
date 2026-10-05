@@ -161,11 +161,11 @@ class EventScriptSyncTests(unittest.TestCase):
         header = {entry["name"]: entry["value"] for entry in audit.parse_opcode_header(
             audit.ROOT / "include/constants/script_commands.h")}
         self.assertEqual(header, actual)
-        self.assertEqual(actual["SCR_OP_ERASEBOX"], 0x72)
-        self.assertEqual(actual["SCR_OP_DRAWBOXTEXT"], 0x73)
-        self.assertEqual(actual["SCR_OP_74"], 0x74)
+        self.assertEqual(actual["SCR_OP_DRAWBOX"], 0x72)
+        self.assertEqual(actual["SCR_OP_ERASEBOX"], 0x73)
+        self.assertEqual(actual["SCR_OP_DRAWBOXTEXT"], 0x74)
         self.assertEqual(actual["SCR_OP_CHECKPARTYMOVE"], 0x7C)
-        self.assertEqual(actual["SCR_OP_DRAWBOX"], 0xB2)
+        self.assertEqual(actual["SCR_OP_DRAWBOX_JP"], 0xB2)
         self.assertEqual(actual["SCR_OP_CD"], 0xCD)
         self.assertEqual(actual["SCR_OP_CE"], 0xCE)
         for name in ("SCR_OP_SHOWELEVMENU", "SCR_OP_CHECKFIELDMOVE",

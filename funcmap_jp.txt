@@ -5033,10 +5033,10 @@ scrcmd.s
 0809a65c ScrCmd_yesnobox ScrCmd_yesnobox
 0809a688 scrcmd.s ScrCmd_multichoice
 0809a6c4 scrcmd.s ScrCmd_multichoicedefault
-0809a714 scrcmd.s ScrCmd_erasebox
+0809a714 scrcmd.s ScrCmd_drawbox
 0809a718 scrcmd.s ScrCmd_multichoicegrid
-0809a768 scrcmd.s ScrCmd_drawboxtext
-0809a774 scrcmd.s ScrCmd_mossdeepgym2
+0809a768 scrcmd.s ScrCmd_erasebox
+0809a774 scrcmd.s ScrCmd_drawboxtext
 0809a780 ScrCmd_showmonpic ScrCmd_showmonpic
 0809a7b0 ScrCmd_hidemonpic ScrCmd_hidemonpic
 0809a7d0 ScrCmd_showcontestpainting ScrCmd_showcontestpainting
@@ -5103,7 +5103,7 @@ scrcmd.s
 0809b310 ScrCmd_setdooropen ScrCmd_setdooropen
 0809b354 ScrCmd_setdoorclosed ScrCmd_setdoorclosed
 0809b398 ScrCmd_addelevmenuitem ScrCmd_addelevmenuitem
-0809b3d4 scrcmd.s ScrCmd_drawbox
+0809b3d4 scrcmd.s ScrCmd_drawbox_jp
 0809b3d8 ScrCmd_checkcoins ScrCmd_checkcoins
 0809b3f8 ScrCmd_givecoins ScrCmd_addcoins
 0809b430 ScrCmd_takecoins ScrCmd_removecoins

@@ -118,7 +118,7 @@ CableClub_EventScript_ExitLinkRoom::
 	call CableClub_EventScript_CloseDirectCornerBarrier
 	special DrawWholeMapView
 	playse SE_CLICK
-	drawboxtext 0, 0, 29, 19
+	erasebox 0, 0, 29, 19
 	releaseall
 	end
 
@@ -128,7 +128,7 @@ CableClub_EventScript_ExitMinigameRoom::
 	call EventScript_CloseMossdeepGameCornerBarrier
 	special DrawWholeMapView
 	playse SE_CLICK
-	drawboxtext 0, 0, 29, 19
+	erasebox 0, 0, 29, 19
 	releaseall
 	end
 
@@ -136,12 +136,9 @@ CableClub_EventScript_CloseLinkAndExitLinkRoom::
 	special CloseLink
 	setvar VAR_CABLE_CLUB_STATE, 0
 	goto_if_eq VAR_0x8007, 0, CableClub_EventScript_PlayerExitLinkRoom
-	applymovement VAR_0x8007, Movement_AttendantFaceLeft
-	waitmovement 0
-	applymovement LOCALID_PLAYER, Movement_PlayerExitLinkRoom
-	waitmovement 0
-	applymovement VAR_0x8007, Movement_AttendantFaceDown
-	waitmovement 0
+	applywaitmovement VAR_0x8007, Movement_AttendantFaceLeft
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerExitLinkRoom
+	applywaitmovement VAR_0x8007, Movement_AttendantFaceDown
 	return
 
 CableClub_EventScript_ExitTradeCenter::
@@ -150,7 +147,7 @@ CableClub_EventScript_ExitTradeCenter::
 	call CableClub_EventScript_CloseDirectCornerBarrier
 	special DrawWholeMapView
 	playse SE_CLICK
-	drawboxtext 0, 0, 29, 19
+	erasebox 0, 0, 29, 19
 	releaseall
 	end
 
@@ -158,10 +155,8 @@ CableClub_EventScript_PlayerExitTradeCenter::
 	special CloseLink
 	setvar VAR_CABLE_CLUB_STATE, 0
 	goto_if_eq VAR_0x8007, 0, CableClub_EventScript_PlayerExitLinkRoom
-	applymovement LOCALID_PLAYER, Movement_PlayerFaceAttendantRight
-	waitmovement 0
-	applymovement VAR_0x8007, Movement_AttendantFaceLeft
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerFaceAttendantRight
+	applywaitmovement VAR_0x8007, Movement_AttendantFaceLeft
 	call CableClub_EventScript_TrainerCardDataOverwritten
 	return
 
@@ -171,18 +166,16 @@ CableClub_EventScript_ExitRecordCorner::
 	call CableClub_EventScript_CloseDirectCornerBarrier
 	special DrawWholeMapView
 	playse SE_CLICK
-	drawboxtext 0, 0, 29, 19
+	erasebox 0, 0, 29, 19
 	releaseall
 	end
 
 CableClub_EventScript_PlayerExitRecordCorner::
 	special CloseLink
 	setvar VAR_CABLE_CLUB_STATE, 0
-	applymovement LOCALID_PLAYER, Movement_PlayerExitLinkRoom
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerExitLinkRoom
 	goto_if_eq VAR_0x8007, 0, CableClub_EventScript_ExitRecordCornerRet
-	applymovement VAR_0x8007, Movement_AttendantFaceDown
-	waitmovement 0
+	applywaitmovement VAR_0x8007, Movement_AttendantFaceDown
 CableClub_EventScript_ExitRecordCornerRet::
 	return
 
@@ -192,17 +185,15 @@ CableClub_EventScript_ExitUnionRoom::
 	call CableClub_EventScript_CloseUnionRoomBarrier
 	special DrawWholeMapView
 	playse SE_CLICK
-	drawboxtext 0, 0, 29, 19
+	erasebox 0, 0, 29, 19
 	releaseall
 	end
 
 CableClub_EventScript_PlayerExitUnionRoom::
 	setvar VAR_CABLE_CLUB_STATE, 0
 	goto_if_eq VAR_0x8007, 0, CableClub_EventScript_PlayerExitLinkRoom
-	applymovement LOCALID_PLAYER, Movement_PlayerFaceAttendantRight
-	waitmovement 0
-	applymovement VAR_0x8007, Movement_AttendantFaceLeft
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerFaceAttendantRight
+	applywaitmovement VAR_0x8007, Movement_AttendantFaceLeft
 	call CableClub_EventScript_TrainerCardDataOverwritten
 	return
 
@@ -213,25 +204,20 @@ CableClub_EventScript_TrainerCardDataOverwritten::
 	@ The JP flow advances immediately after the confirmation sound.
 	message CableClub_Text_HopeToSeeYouAgain
 	waitmessage
-	applymovement LOCALID_PLAYER, Movement_PlayerExitLinkRoom
-	waitmovement 0
-	applymovement VAR_0x8007, Movement_AttendantFaceDown
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerExitLinkRoom
+	applywaitmovement VAR_0x8007, Movement_AttendantFaceDown
 	return
 
 CableClub_EventScript_PlayerExitLinkRoom::
-	applymovement LOCALID_PLAYER, Movement_PlayerExitLinkRoom
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerExitLinkRoom
 	return
 
 CableClub_EventScript_Tutorial::
 	lockall
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	msgbox CableClub_Text_FirstTimeRightThisWay, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_PLAYER, CableClub_Movement_PlayerApproachCounter
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, CableClub_Movement_PlayerApproachCounter
 	delay 30
 	msgbox CableClub_Text_ExplainWirelessClubFirstTime, MSGBOX_DEFAULT
 	setvar VAR_CABLE_CLUB_TUTORIAL_STATE, 2
@@ -346,15 +332,12 @@ CableClub_EventScript_EnterColosseum::
 	special DrawWholeMapView
 	playse SE_CLICK
 	delay 60
-	applymovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
 	closemessage
-	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
 	opendoor 9, 1
 	waitdooranim
-	applymovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
 	hideplayer
 	closedoor 9, 1
 	waitdooranim
@@ -367,8 +350,7 @@ CableClub_EventScript_EnterColosseum::
 
 @ Unused
 CableClub_EventScript_PlayerApproachLinkRoomRight::
-	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomRight
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomRight
 	return
 
 CableClub_EventScript_WarpTo4PColosseum::
@@ -437,15 +419,12 @@ CableClub_EventScript_EnterTradeCenter::
 	special DrawWholeMapView
 	playse SE_CLICK
 	delay 60
-	applymovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
 	closemessage
-	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
 	opendoor 9, 1
 	waitdooranim
-	applymovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
 	hideplayer
 	closedoor 9, 1
 	waitdooranim
@@ -497,15 +476,12 @@ CableClub_EventScript_EnterRecordCorner::
 	special DrawWholeMapView
 	playse SE_CLICK
 	delay 60
-	applymovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
 	closemessage
-	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
 	opendoor 9, 1
 	waitdooranim
-	applymovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
 	hideplayer
 	closedoor 9, 1
 	waitdooranim
@@ -797,8 +773,7 @@ RecordCorner_EventScript_AlreadyMixed::
 EventScript_ConfirmLeaveCableClubRoom::
 	msgbox Text_TerminateLinkConfirmation, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, EventScript_TerminateLink
-	@ JP redraws the whole text box here rather than using erasebox.
-	drawboxtext 0, 0, 29, 19
+	erasebox 0, 0, 29, 19
 	releaseall
 	end
 
@@ -857,14 +832,11 @@ CableClub_EventScript_EnterUnionRoom::
 	special DrawWholeMapView
 	playse SE_CLICK
 	delay 60
-	applymovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
-	waitmovement 0
-	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
 	opendoor 5, 1
 	waitdooranim
-	applymovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
 	hideplayer
 	closedoor 5, 1
 	waitdooranim
@@ -1154,15 +1126,12 @@ CableClub_EventScript_EnterWirelessLinkRoom::
 	special DrawWholeMapView
 	playse SE_CLICK
 	delay 60
-	applymovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
 	closemessage
-	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
 	opendoor 9, 1
 	waitdooranim
-	applymovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
 	hideplayer
 	closedoor 9, 1
 	waitdooranim
@@ -1333,11 +1302,9 @@ MossdeepCity_GameCorner_1F_EventScript_EnterMinigameRoom::
 	special DrawWholeMapView
 	playse SE_CLICK
 	delay 60
-	applymovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
-	waitmovement 0
+	applywaitmovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
 	closemessage
-	applymovement LOCALID_PLAYER, Movement_PlayerEnterMinigameRoom
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_PlayerEnterMinigameRoom
 	hideplayer
 	release
 	waitstate

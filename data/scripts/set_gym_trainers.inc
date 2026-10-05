@@ -1,14 +1,14 @@
 Common_EventScript_SetGymTrainers::
 	@ The JP byte stream uses an explicit gym-selector dispatch.
-	copyvar VAR_0x8000, VAR_0x8008
-	goto_if_eq VAR_0x8000, 1, RustboroCity_Gym_SetGymTrainers
-	goto_if_eq VAR_0x8000, 2, DewfordTown_Gym_SetGymTrainers
-	goto_if_eq VAR_0x8000, 3, MauvilleCity_Gym_SetGymTrainers
-	goto_if_eq VAR_0x8000, 4, LavaridgeTown_Gym_SetGymTrainers
-	goto_if_eq VAR_0x8000, 5, PetalburgCity_Gym_SetGymTrainers
-	goto_if_eq VAR_0x8000, 6, FortreeCity_Gym_SetGymTrainers
-	goto_if_eq VAR_0x8000, 7, MossdeepCity_Gym_SetGymTrainers
-	goto_if_eq VAR_0x8000, 8, SootopolisCity_Gym_SetGymTrainers
+	switch VAR_0x8008
+	case 1, RustboroCity_Gym_SetGymTrainers
+	case 2, DewfordTown_Gym_SetGymTrainers
+	case 3, MauvilleCity_Gym_SetGymTrainers
+	case 4, LavaridgeTown_Gym_SetGymTrainers
+	case 5, PetalburgCity_Gym_SetGymTrainers
+	case 6, FortreeCity_Gym_SetGymTrainers
+	case 7, MossdeepCity_Gym_SetGymTrainers
+	case 8, SootopolisCity_Gym_SetGymTrainers
 	end
 
 RustboroCity_Gym_SetGymTrainers::

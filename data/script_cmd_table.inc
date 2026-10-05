@@ -129,10 +129,9 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_MULTICHOICE ScrCmd_multichoice @ 0x6F
 	script_cmd_table_entry SCR_OP_MULTICHOICEDEFAULT ScrCmd_multichoicedefault @ 0x70
 	script_cmd_table_entry SCR_OP_MULTICHOICEGRID ScrCmd_multichoicegrid @ 0x71
-	@ JP menu opcodes 0x72-0x74 differ from US; 0x74 skips four bytes.
-	script_cmd_table_entry SCR_OP_ERASEBOX ScrCmd_erasebox @ 0x72
-	script_cmd_table_entry SCR_OP_DRAWBOXTEXT ScrCmd_drawboxtext @ 0x73
-	script_cmd_table_entry SCR_OP_74 ScrCmd_mossdeepgym2 @ 0x74
+	script_cmd_table_entry SCR_OP_DRAWBOX ScrCmd_drawbox @ 0x72
+	script_cmd_table_entry SCR_OP_ERASEBOX ScrCmd_erasebox @ 0x73
+	script_cmd_table_entry SCR_OP_DRAWBOXTEXT ScrCmd_drawboxtext @ 0x74
 	script_cmd_table_entry SCR_OP_SHOWMONPIC ScrCmd_showmonpic @ 0x75
 	script_cmd_table_entry SCR_OP_HIDEMONPIC ScrCmd_hidemonpic @ 0x76
 	script_cmd_table_entry SCR_OP_SHOWCONTESTPAINTING ScrCmd_showcontestpainting @ 0x77
@@ -194,8 +193,8 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_SETDOOROPEN ScrCmd_setdooropen @ 0xAF
 	script_cmd_table_entry SCR_OP_SETDOORCLOSED ScrCmd_setdoorclosed @ 0xB0
 	script_cmd_table_entry SCR_OP_ADDELEVMENUITEM ScrCmd_addelevmenuitem @ 0xB1
-	@ JP keeps its drawbox no-op at 0xB2, not US showelevmenu.
-	script_cmd_table_entry SCR_OP_DRAWBOX ScrCmd_drawbox @ 0xB2
+	@ JP keeps a separate no-argument no-op here, not US showelevmenu.
+	script_cmd_table_entry SCR_OP_DRAWBOX_JP ScrCmd_drawbox_jp @ 0xB2
 	script_cmd_table_entry SCR_OP_CHECKCOINS ScrCmd_checkcoins @ 0xB3
 	script_cmd_table_entry SCR_OP_ADDCOINS ScrCmd_addcoins @ 0xB4
 	script_cmd_table_entry SCR_OP_REMOVECOINS ScrCmd_removecoins @ 0xB5

@@ -1,8 +1,7 @@
 .set ITEMID, VAR_0x8000
 .set AMOUNT, VAR_0x8001
-.set ITEM_TYPE, VAR_0x8000
 
-@ The JP byte stream uses bufferitemname and an explicit pocket dispatch.
+@ JP uses bufferitemname rather than the US plural item-name command.
 
 Std_ObtainItem::
 	additem ITEMID, AMOUNT
@@ -19,12 +18,12 @@ EventScript_ObtainItemMessage::
 	return
 
 EventScript_BufferPocketNameAndTryFanfare::
-	copyvar ITEM_TYPE, VAR_RESULT
-	goto_if_eq ITEM_TYPE, POCKET_ITEMS, EventScript_BufferItemsPocket
-	goto_if_eq ITEM_TYPE, POCKET_KEY_ITEMS, EventScript_BufferKeyItemsPocket
-	goto_if_eq ITEM_TYPE, POCKET_POKE_BALLS, EventScript_BufferPokeballsPocket
-	goto_if_eq ITEM_TYPE, POCKET_TM_HM, EventScript_BufferTMHMsPocket
-	goto_if_eq ITEM_TYPE, POCKET_BERRIES, EventScript_BufferBerriesPocket
+	switch VAR_RESULT
+	case POCKET_ITEMS,      EventScript_BufferItemsPocket
+	case POCKET_KEY_ITEMS,  EventScript_BufferKeyItemsPocket
+	case POCKET_POKE_BALLS, EventScript_BufferPokeballsPocket
+	case POCKET_TM_HM,      EventScript_BufferTMHMsPocket
+	case POCKET_BERRIES,    EventScript_BufferBerriesPocket
 	end
 EventScript_BufferItemsPocket::
 	bufferstdstring STR_VAR_3, STDSTRING_ITEMS

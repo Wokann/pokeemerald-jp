@@ -753,8 +753,7 @@ Common_EventScript_StopBrineysBoatMusic::
 
 Common_EventScript_FerryDepart::
 	delay 60
-	applymovement VAR_0x8004, Movement_FerryDepart
-	waitmovement 0
+	applywaitmovement VAR_0x8004, Movement_FerryDepart
 	return
 
 Movement_FerryDepart:
@@ -790,12 +789,10 @@ RusturfTunnel_EventScript_SetRusturfTunnelOpen::
 
 EventScript_UnusedBoardFerry::
 	delay 30
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	showplayer
 	delay 30
-	applymovement LOCALID_PLAYER, Movement_UnusedBoardFerry
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, Movement_UnusedBoardFerry
 	delay 30
 	return
 

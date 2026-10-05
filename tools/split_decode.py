@@ -38,7 +38,7 @@ SMALL_ARG_CMDS = re.compile(
     r"setmonmove|setmonmetlocation|checkmonobedience|"
     r"setdoorclosed|opendoor|setberrytree|initclock|braillemessage|"
     r"yesnobox|multichoice|multichoicedefault|multichoicegrid|"
-    r"drawboxtext|warphole|gotonative|callnative)\b")
+    r"erasebox|drawboxtext|warphole|gotonative|callnative)\b")
 
 SCRIPT_OPENERS = re.compile(
     r"^\s*(lockall|lock|faceplayer|special|specialvar|setvar|goto|goto_if|"

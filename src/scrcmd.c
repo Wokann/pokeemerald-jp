@@ -1415,7 +1415,7 @@ bool8 ScrCmd_multichoicedefault(struct ScriptContext *ctx)
     }
 }
 
-bool8 ScrCmd_erasebox(struct ScriptContext *ctx)
+bool8 ScrCmd_drawbox(struct ScriptContext *ctx)
 {
     return FALSE;
 }
@@ -1440,22 +1440,18 @@ bool8 ScrCmd_multichoicegrid(struct ScriptContext *ctx)
     }
 }
 
-bool8 ScrCmd_drawboxtext(struct ScriptContext *ctx)
+bool8 ScrCmd_erasebox(struct ScriptContext *ctx)
 {
     u8 left = ScriptReadByte(ctx);
     u8 top = ScriptReadByte(ctx);
-    u8 multichoiceId = ScriptReadByte(ctx);
-    bool8 ignoreBPress = ScriptReadByte(ctx);
+    u8 right = ScriptReadByte(ctx);
+    u8 bottom = ScriptReadByte(ctx);
 
-    /*if (Multichoice(left, top, multichoiceId, ignoreBPress) == TRUE)
-    {
-        ScriptContext_Stop();
-        return TRUE;
-    }*/
+    // EraseWindowRect(left, top, right, bottom);
     return FALSE;
 }
 
-bool8 ScrCmd_mossdeepgym2(struct ScriptContext *ctx)
+bool8 ScrCmd_drawboxtext(struct ScriptContext *ctx)
 {
     ctx->scriptPtr += 4;
     return FALSE;
@@ -2100,14 +2096,9 @@ bool8 ScrCmd_addelevmenuitem(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_drawbox(struct ScriptContext *ctx)
+bool8 ScrCmd_drawbox_jp(struct ScriptContext *ctx)
 {
-    /*u8 left = ScriptReadByte(ctx);
-    u8 top = ScriptReadByte(ctx);
-    u8 right = ScriptReadByte(ctx);
-    u8 bottom = ScriptReadByte(ctx);
-
-    MenuDrawTextWindow(left, top, right, bottom);*/
+    // JP's separate 0xB2 no-op does not consume the US elevator-menu pointer.
     return FALSE;
 }
 
