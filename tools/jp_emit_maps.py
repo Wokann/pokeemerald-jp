@@ -17702,6 +17702,43 @@ _REVIEWED_LABEL_RE = re.compile(
 _REVIEWED_COMMAND_RE = re.compile(
     r'^\s+([A-Za-z_][A-Za-z0-9_]*)(?:\s+(.*?))?\s*$')
 _NUMERIC_OPERAND_RE = re.compile(r'^(?:0x[0-9A-Fa-f]+|\d+)$')
+_SOURCE_LABEL_RE = re.compile(r'^([A-Za-z_][A-Za-z0-9_]*)(:{1,2})(.*)$')
+
+
+def reviewed_map_source(mname):
+    """Attach configured JP addresses in memory, never infer them from US.
+
+    Reviewed semantic metadata is sufficient to anchor an existing JP label;
+    its source does not need redundant address comments. Unknown labels stay
+    unanchored and conflicting explicit addresses are rejected.
+    """
+    source = (ROOT / 'data' / 'maps' / mname / 'scripts.inc').read_text(encoding='utf-8')
+    semantic = MAP_VERIFIED_SEMANTIC_LABELS.get(mname, {})
+    addresses = {}
+    for group in (semantic.get(category, {}) for category in
+                  ('scripts', 'tables', 'texts', 'external_labels', 'external_texts')):
+        for address, name in group.items():
+            if name in addresses and addresses[name] != address:
+                raise RuntimeError('conflicting reviewed JP addresses for %s' % name)
+            addresses[name] = address
+    for address, name in MAP_MOVEMENT_SCRIPT_LABELS.get(mname, {}).items():
+        if name in addresses and addresses[name] != address:
+            raise RuntimeError('conflicting reviewed JP addresses for %s' % name)
+        addresses[name] = address
+    lines = []
+    for line in source.splitlines():
+        label = _SOURCE_LABEL_RE.match(line)
+        if label is not None and label.group(1) in addresses:
+            name, colons, suffix = label.groups()
+            address = addresses[name]
+            explicit = _REVIEWED_LABEL_RE.match(line)
+            if explicit is not None:
+                if int(explicit.group(1), 16) != address:
+                    raise RuntimeError('reviewed JP source address mismatch for %s' % name)
+            else:
+                line = '%s%s @ 0x%08X%s' % (name, colons, address, suffix)
+        lines.append(line)
+    return '\n'.join(lines) + ('\n' if source.endswith('\n') else '')
 
 
 def _reviewed_commands_by_address(source, expand_movement_waits=False):
@@ -17716,6 +17753,9 @@ def _reviewed_commands_by_address(source, expand_movement_waits=False):
         label = _REVIEWED_LABEL_RE.match(line)
         if label is not None:
             address = int(label.group(1), 16)
+            continue
+        if _SOURCE_LABEL_RE.match(line) is not None:
+            address = None
             continue
         command = _REVIEWED_COMMAND_RE.match(line)
         if command is None or address is None:
@@ -17767,7 +17807,7 @@ def reviewed_operand_overrides(mname, generated_source):
     if not reviewed_path.is_file():
         return {}
     reviewed = _reviewed_commands_by_address(
-        reviewed_path.read_text(encoding='utf-8'), expand_movement_waits=True)
+        reviewed_map_source(mname), expand_movement_waits=True)
     generated = _reviewed_commands_by_address(generated_source)
     candidates = collections.defaultdict(set)
 
@@ -17882,7 +17922,7 @@ def collapse_reviewed_high_level_macros(mname, generated_source):
     if not reviewed_path.is_file():
         return generated_source
     reviewed = _reviewed_commands_by_address(
-        reviewed_path.read_text(encoding='utf-8'))
+        reviewed_map_source(mname))
     lines = generated_source.splitlines()
     out = []
     index = 0
@@ -17979,7 +18019,7 @@ def collapse_reviewed_movement_wait_macros(mname, generated_source):
     reviewed_path = ROOT / 'data' / 'maps' / mname / 'scripts.inc'
     if not reviewed_path.is_file():
         return generated_source
-    reviewed = _reviewed_commands_by_address(reviewed_path.read_text(encoding='utf-8'))
+    reviewed = _reviewed_commands_by_address(reviewed_map_source(mname))
     generated = _reviewed_commands_by_address(generated_source)
 
     def command_key(command):
@@ -20987,6 +21027,419 @@ for _dungeon_cave_map, _dungeon_mon_localid in (
     MAP_VERIFIED_SEMANTIC_LABELS[_dungeon_cave_map]['symbols'] = {
         'var_values': {0x800F: {0x01: _dungeon_mon_localid}},
     }
+
+
+
+# Reviewed contiguous post-dungeon owners. JP source assembles exactly
+# to its ROM interval; all non-text instructions match the US owner.
+# Addresses below come from that verified JP ELF, never from US offsets.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'ContestHall': {
+        'scripts': {
+            0x0821D644: 'ContestHall_OnReturn',
+            0x0821D648: 'ContestHall_OnTransition',
+            0x0821D658: 'ContestHall_EventScript_ReadyContestMusic',
+            0x0821D698: 'ContestHall_EventScript_SaveContestMusicPlayer1',
+            0x0821D69C: 'ContestHall_EventScript_SaveContestMusicPlayer2',
+            0x0821D6A0: 'ContestHall_EventScript_SaveContestMusicPlayer3',
+            0x0821D6A4: 'ContestHall_EventScript_SaveContestMusicPlayer4',
+            0x0821D6A8: 'ContestHall_EventScript_SaveContestMusic',
+            0x0821D6AC: 'ContestHall_OnResume',
+            0x0821D6B8: 'ContestHall_EventScript_ReShowAudience',
+            0x0821D6D2: 'ContestHall_EventScript_Contest',
+            0x0821D6DD: 'ContestHall_EventScript_SetContestObjects',
+            0x0821D6EB: 'ContestHall_EventScript_AddRandomAudienceMembers',
+            0x0821D701: 'ContestHall_EventScript_SetRandomAudienceGfx',
+            0x0821D754: 'ContestHall_EventScript_SetRandomAudience1',
+            0x0821D75F: 'ContestHall_EventScript_SetRandomAudience2',
+            0x0821D76A: 'ContestHall_EventScript_SetRandomAudience3',
+            0x0821D775: 'ContestHall_EventScript_SetRandomAudience4',
+            0x0821D780: 'ContestHall_EventScript_SetRandomAudience5',
+            0x0821D78B: 'ContestHall_EventScript_SetRandomAudience6',
+            0x0821D796: 'ContestHall_EventScript_SetRandomAudience7',
+            0x0821D7A1: 'ContestHall_EventScript_GetRandomAudienceGfxId',
+            0x0821D914: 'ContestHall_EventScript_RandomAudienceNinjaBoy',
+            0x0821D91A: 'ContestHall_EventScript_RandomAudienceTwin',
+            0x0821D920: 'ContestHall_EventScript_RandomAudienceBoy1',
+            0x0821D926: 'ContestHall_EventScript_RandomAudienceGirl1',
+            0x0821D92C: 'ContestHall_EventScript_RandomAudienceGirl2',
+            0x0821D932: 'ContestHall_EventScript_RandomAudienceLittleBoy',
+            0x0821D938: 'ContestHall_EventScript_RandomAudienceGirl',
+            0x0821D93E: 'ContestHall_EventScript_RandomAudienceBoy3',
+            0x0821D944: 'ContestHall_EventScript_RandomAudienceGirl3',
+            0x0821D94A: 'ContestHall_EventScript_RandomAudienceRichBoy',
+            0x0821D950: 'ContestHall_EventScript_RandomAudienceFatMan',
+            0x0821D956: 'ContestHall_EventScript_RandomAudiencePokefanF',
+            0x0821D95C: 'ContestHall_EventScript_RandomAudienceMan1',
+            0x0821D962: 'ContestHall_EventScript_RandomAudienceWoman2',
+            0x0821D968: 'ContestHall_EventScript_RandomAudienceExpertM',
+            0x0821D96E: 'ContestHall_EventScript_RandomAudienceExpertF',
+            0x0821D974: 'ContestHall_EventScript_RandomAudiencePokefanM',
+            0x0821D97A: 'ContestHall_EventScript_RandomAudienceWoman4',
+            0x0821D980: 'ContestHall_EventScript_RandomAudienceCook',
+            0x0821D986: 'ContestHall_EventScript_RandomAudienceLass',
+            0x0821D98C: 'ContestHall_EventScript_RandomAudienceOldWoman',
+            0x0821D992: 'ContestHall_EventScript_RandomAudienceCamper',
+            0x0821D998: 'ContestHall_EventScript_RandomAudiencePicnicker',
+            0x0821D99E: 'ContestHall_EventScript_RandomAudienceMan3',
+            0x0821D9A4: 'ContestHall_EventScript_RandomAudienceWoman5',
+            0x0821D9AA: 'ContestHall_EventScript_RandomAudienceYoungster',
+            0x0821D9B0: 'ContestHall_EventScript_RandomAudienceBugCatcher',
+            0x0821D9B6: 'ContestHall_EventScript_RandomAudiencePsychicM',
+            0x0821D9BC: 'ContestHall_EventScript_RandomAudienceSchoolKidM',
+            0x0821D9C2: 'ContestHall_EventScript_RandomAudienceBlackBelt',
+            0x0821D9C8: 'ContestHall_EventScript_RandomAudienceBeauty',
+            0x0821D9CE: 'ContestHall_EventScript_RandomAudienceScientist1',
+            0x0821D9D4: 'ContestHall_EventScript_CreateAudience',
+            0x0821DA21: 'ContestHall_EventScript_CreateNormalContestAudience',
+            0x0821DA34: 'ContestHall_EventScript_CreateSuperContestAudience',
+            0x0821DA8F: 'ContestHall_EventScript_CreateHyperContestAudience',
+            0x0821DB3B: 'ContestHall_EventScript_CreateMasterContestAudience',
+            0x0821DC2F: 'ContestHall_EventScript_CreateWirelessContestAudience',
+            0x0821DCED: 'ContestHall_EventScript_SetExitWarp',
+            0x0821DD2D: 'ContestHall_EventScript_SetExitWarpNormalContest',
+            0x0821DD37: 'ContestHall_EventScript_SetExitWarpSuperContest',
+            0x0821DD41: 'ContestHall_EventScript_SetExitWarpHyperContest',
+            0x0821DD4B: 'ContestHall_EventScript_SetExitWarpMasterContest',
+            0x0821DD55: 'ContestHall_EventScript_SetExitWarpLinkContest',
+            0x0821DD5F: 'LilycoveCity_ContestLobby_EventScript_SetPlayerGfx',
+            0x0821DD77: 'LilycoveCity_ContestLobby_EventScript_SetPlayerGfxBrendan',
+            0x0821DD7D: 'LilycoveCity_ContestLobby_EventScript_SetPlayerGfxMay',
+        },
+        'tables': {
+            0x0821D6BE: 'ContestHall_OnFrame',
+            0x0821D6C8: 'ContestHall_OnWarp',
+        },
+        'external_labels': {
+            0x08248DC6: 'ContestHall_EventScript_DoContest',
+            0x08248F62: 'ContestHall_EventScript_TryWaitForLink',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+    'InsideOfTruck': {
+        'scripts': {
+            0x0821DD8E: 'InsideOfTruck_OnLoad',
+            0x0821DDAA: 'InsideOfTruck_OnResume',
+            0x0821DDAD: 'InsideOfTruck_EventScript_SetIntroFlags',
+            0x0821DDC9: 'InsideOfTruck_EventScript_SetIntroFlagsMale',
+            0x0821DDEF: 'InsideOfTruck_EventScript_SetIntroFlagsFemale',
+            0x0821DE15: 'InsideOfTruck_EventScript_MovingBox',
+        },
+        'texts': {
+            0x0821DE1E: 'InsideOfTruck_Text_BoxPrintedWithMonLogo',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+    'SSTidalCorridor': {
+        'scripts': {
+            0x0821DE76: 'SSTidalCorridor_EventScript_DepartSlateportForLilycove',
+            0x0821DE8C: 'SSTidalCorridor_EventScript_DepartLilycoveForSlateport',
+            0x0821DE9F: 'SSTidalRooms_EventScript_HalfwayToSlateport',
+            0x0821DEB3: 'SSTidalRooms_EventScript_ArrivedInLilycove',
+            0x0821DEC7: 'SSTidalCorridor_EventScript_ReachedStepCount',
+            0x0821DEDE: 'SSTidalCorridor_EventScript_HalfwayToLilycove',
+            0x0821DEF4: 'SSTidalCorridor_EventScript_ArrivedInSlateport',
+            0x0821DF0A: 'SSTidalRooms_EventScript_ArrivedInSlateport',
+            0x0821DF1E: 'SSTidalRooms_EventScript_ProgessCruiseAfterBed',
+            0x0821DF50: 'SSTidalCorridor_EventScript_Briney',
+            0x0821DF59: 'SSTidalCorridor_EventScript_Peeko',
+            0x0821DF6C: 'SSTidalCorridor_EventScript_Cabin1Sign',
+            0x0821DF75: 'SSTidalCorridor_EventScript_Cabin2Sign',
+            0x0821DF7E: 'SSTidalCorridor_EventScript_Cabin3Sign',
+            0x0821DF87: 'SSTidalCorridor_EventScript_Cabin4Sign',
+            0x0821DF90: 'SSTidalCorridor_EventScript_ExitSailor',
+            0x0821DFB2: 'SSTidalCorridor_EventScript_ExitLilycove',
+            0x0821DFD1: 'SSTidalCorridor_EventScript_ExitSlateport',
+            0x0821DFF0: 'SSTidalCorridor_EventScript_HideSnatchGiver',
+            0x0821DFF4: 'SSTidalCorridor_EventScript_Porthole',
+            0x0821E015: 'SSTidalCorridor_EventScript_LookThroughPorthole',
+            0x0821E01A: 'SSTidalCorridor_EventScript_Sailor',
+            0x0821E034: 'SSTidalCorridor_EventScript_EnjoyYourCruise',
+            0x0821E03E: 'SSTidalCorridor_EventScript_CheckIfTrainersDefeated',
+            0x0821E08F: 'SSTidalCorridor_EventScript_TrainerNotDefeated',
+            0x0821E090: 'SSTidalCorridor_EventScript_ScottScene',
+        },
+        'tables': {
+            0x0821DE4C: 'SSTidalCorridor_OnFrame',
+        },
+        'texts': {
+            0x0821E106: 'SSTidalCorridor_Text_ScottBattleFrontierInvite',
+            0x0821E201: 'SSTidal_Text_FastCurrentsHopeYouEnjoyVoyage',
+            0x0821E227: 'SSTidal_Text_HopeYouEnjoyVoyage',
+            0x0821E248: 'SSTidal_Text_MadeLandInSlateport',
+            0x0821E269: 'SSTidal_Text_MadeLandInLilycove',
+            0x0821E28A: 'SSTidalCorridor_Text_CanRestInCabin2',
+            0x0821E2E5: 'SSTidalCorridor_Text_WeveArrived',
+            0x0821E2F0: 'SSTidalCorridor_Text_VisitOtherCabins',
+            0x0821E324: 'SSTidalCorridor_Text_EnjoyYourCruise',
+            0x0821E336: 'SSTidalCorridor_Text_HorizonSpreadsBeyondPorthole',
+            0x0821E350: 'SSTidalCorridor_Text_BrineyWelcomeAboard',
+            0x0821E3B8: 'SSTidalCorridor_Text_Peeko',
+            0x0821E3C9: 'SSTidalCorridor_Text_Cabin1',
+            0x0821E3CF: 'SSTidalCorridor_Text_Cabin2',
+            0x0821E3D5: 'SSTidalCorridor_Text_Cabin3',
+            0x0821E3DB: 'SSTidalCorridor_Text_Cabin4',
+        },
+        'external_labels': {
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+    'SSTidalLowerDeck': {
+        'scripts': {
+            0x0821E3E2: 'SSTidalLowerDeck_EventScript_Phillip',
+            0x0821E3F9: 'SSTidalLowerDeck_EventScript_Leonard',
+        },
+        'texts': {
+            0x0821E410: 'SSTidalLowerDeck_Text_PhillipIntro',
+            0x0821E43E: 'SSTidalLowerDeck_Text_PhillipDefeat',
+            0x0821E44C: 'SSTidalLowerDeck_Text_PhillipPostBattle',
+            0x0821E47F: 'SSTidalLowerDeck_Text_LeonardIntro',
+            0x0821E4A8: 'SSTidalLowerDeck_Text_LeonardDefeat',
+            0x0821E4B5: 'SSTidalLowerDeck_Text_LeonardPostBattle',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+    'SSTidalRooms': {
+        'scripts': {
+            0x0821E4E9: 'SSTidalRooms_EventScript_SnatchGiver',
+            0x0821E520: 'SSTidalRooms_EventScript_ExplainSnatch',
+            0x0821E52A: 'SSTidalRooms_EventScript_Bed',
+            0x0821E540: 'SSTidalRooms_EventScript_Colton',
+            0x0821E557: 'SSTidalRooms_EventScript_Micah',
+            0x0821E56E: 'SSTidalRooms_EventScript_Thomas',
+            0x0821E585: 'SSTidalRooms_EventScript_Jed',
+            0x0821E5A0: 'SSTidalRooms_EventScript_Lea',
+            0x0821E5BB: 'SSTidalRooms_EventScript_Garret',
+            0x0821E5D2: 'SSTidalRooms_EventScript_Naomi',
+        },
+        'texts': {
+            0x0821E5E9: 'SSTidalRooms_Text_TakeRestOnBed',
+            0x0821E5FB: 'SSTidalRooms_Text_ColtonIntro',
+            0x0821E628: 'SSTidalRooms_Text_ColtonDefeat',
+            0x0821E637: 'SSTidalRooms_Text_ColtonPostBattle',
+            0x0821E65F: 'SSTidalRooms_Text_MicahIntro',
+            0x0821E671: 'SSTidalRooms_Text_MicahDefeat',
+            0x0821E67E: 'SSTidalRooms_Text_MicahPostBattle',
+            0x0821E6B2: 'SSTidalRooms_Text_ThomasIntro',
+            0x0821E6C4: 'SSTidalRooms_Text_ThomasDefeat',
+            0x0821E6D3: 'SSTidalRooms_Text_ThomasPostBattle',
+            0x0821E6F4: 'SSTidalRooms_Text_JedIntro',
+            0x0821E71A: 'SSTidalRooms_Text_JedDefeat',
+            0x0821E722: 'SSTidalRooms_Text_JedPostBattle',
+            0x0821E75A: 'SSTidalRooms_Text_JedNotEnoughMons',
+            0x0821E776: 'SSTidalRooms_Text_LeaIntro',
+            0x0821E79C: 'SSTidalRooms_Text_LeaDefeat',
+            0x0821E7A3: 'SSTidalRooms_Text_LeaPostBattle',
+            0x0821E7D3: 'SSTidalRooms_Text_LeaNotEnoughMons',
+            0x0821E7F6: 'SSTidalRooms_Text_GarretIntro',
+            0x0821E82B: 'SSTidalRooms_Text_GarretDefeat',
+            0x0821E834: 'SSTidalRooms_Text_GarretPostBattle',
+            0x0821E86B: 'SSTidalRooms_Text_NaomiIntro',
+            0x0821E894: 'SSTidalRooms_Text_NaomiDefeat',
+            0x0821E8A3: 'SSTidalRooms_Text_NaomiPostBattle',
+            0x0821E8E3: 'SSTidalRooms_Text_NotSuspiciousTakeThis',
+            0x0821E935: 'SSTidalRooms_Text_ExplainSnatch',
+        },
+        'external_labels': {
+            0x0821DF1E: 'SSTidalRooms_EventScript_ProgessCruiseAfterBed',
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x0824310F: 'Common_EventScript_OutOfCenterPartyHeal',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+    'UnionRoom': {
+        'scripts': {
+            0x0821E971: 'UnionRoom_OnResume',
+            0x0821E9A5: 'UnionRoom_OnTransition',
+            0x0821E9A6: 'UnionRoom_EventScript_Player1',
+            0x0821E9B0: 'UnionRoom_EventScript_Player2',
+            0x0821E9BA: 'UnionRoom_EventScript_Player3',
+            0x0821E9C4: 'UnionRoom_EventScript_Player4',
+            0x0821E9CE: 'UnionRoom_EventScript_Player5',
+            0x0821E9D8: 'UnionRoom_EventScript_Player6',
+            0x0821E9E2: 'UnionRoom_EventScript_Player7',
+            0x0821E9EC: 'UnionRoom_EventScript_Player8',
+            0x0821E9F6: 'UnionRoom_EventScript_Attendant',
+            0x0821EA00: 'UnionRoom_EventScript_Unused',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+    'SafariZone_Northwest': {
+        'scripts': {
+            0x0821EA0A: 'SafariZone_Northwest_EventScript_Man',
+        },
+        'external_texts': {
+            0x082628E5: 'SafariZone_Northwest_Text_Man',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+    'SafariZone_North': {
+        'scripts': {
+            0x0821EA14: 'SafariZone_North_EventScript_Fisherman',
+            0x0821EA1D: 'SafariZone_North_EventScript_Man',
+        },
+        'external_texts': {
+            0x08262922: 'SafariZone_North_Text_Fisherman',
+            0x0826295B: 'SafariZone_North_Text_Man',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+    'SafariZone_Southwest': {
+        'scripts': {
+            0x0821EA27: 'SafariZone_Southwest_EventScript_Woman',
+            0x0821EA30: 'SafariZone_Southwest_EventScript_RestHouseSign',
+        },
+        'external_texts': {
+            0x082628AB: 'SafariZone_Southwest_Text_Woman',
+            0x082629FC: 'SafariZone_Southwest_Text_RestHouseSign',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+    'SafariZone_South': {
+        'scripts': {
+            0x0821EA4E: 'SafariZone_South_EventScript_EnterSafariZone',
+            0x0821EA71: 'SafariZone_South_OnTransition',
+            0x0821EA7D: 'SafariZone_South_EventScript_SetExitAttendantAside',
+            0x0821EA8A: 'SafariZone_South_EventScript_Boy',
+            0x0821EA93: 'SafariZone_South_EventScript_Man',
+            0x0821EA9C: 'SafariZone_South_EventScript_Youngster',
+            0x0821EAA5: 'SafariZone_South_EventScript_ExitAttendant',
+            0x0821EACD: 'SafariZone_South_EventScript_GoodLuck',
+            0x0821EADA: 'SafariZone_South_EventScript_ExitEarly',
+            0x0821EAFF: 'SafariZone_South_EventScript_ExitEarlyNorth',
+            0x0821EB19: 'SafariZone_South_EventScript_ExitEarlyEast',
+            0x0821EB33: 'SafariZone_South_EventScript_Exit',
+            0x0821EB50: 'SafariZone_South_EventScript_ConstructionWorker1',
+            0x0821EB59: 'SafariZone_Southeast_EventScript_ExpansionZoneAttendant',
+            0x0821EB62: 'SafariZone_South_EventScript_ConstructionWorker2',
+            0x0821EB6B: 'SafariZone_Southeast_EventScript_LittleGirl',
+            0x0821EB74: 'SafariZone_Southeast_EventScript_FatMan',
+            0x0821EB7D: 'SafariZone_Southeast_EventScript_RichBoy',
+            0x0821EB86: 'SafariZone_Northeast_EventScript_Boy',
+            0x0821EB8F: 'SafariZone_Northeast_EventScript_Woman',
+            0x0821EB98: 'SafariZone_Northeast_EventScript_Girl',
+        },
+        'tables': {
+            0x0821EA44: 'SafariZone_South_OnFrame',
+        },
+        'external_texts': {
+            0x0826279C: 'SafariZone_South_Text_StillHaveTimeExit',
+            0x082627BD: 'SafariZone_South_Text_EnjoyTheRestOfYourAdventure',
+            0x082627D2: 'SafariZone_South_Text_ExitEarlyThankYouForPlaying',
+            0x0826280D: 'SafariZone_South_Text_GoodLuck',
+            0x0826283A: 'SafariZone_South_Text_Boy',
+            0x08262869: 'SafariZone_South_Text_Man',
+            0x08262987: 'SafariZone_South_Text_Youngster',
+            0x08262AEF: 'SafariZone_South_Text_AreaOffLimits1',
+            0x08262B16: 'SafariZone_Southeast_Text_ExpansionIsFinished',
+            0x08262B4E: 'SafariZone_South_Text_AreaOffLimits2',
+            0x08262B75: 'SafariZone_Southeast_Text_LittleGirl',
+            0x08262B92: 'SafariZone_Southeast_Text_FatMan',
+            0x08262BD6: 'SafariZone_Southeast_Text_RichBoy',
+            0x08262C05: 'SafariZone_Northeast_Text_Boy',
+            0x08262C36: 'SafariZone_Northeast_Text_Woman',
+            0x08262C5B: 'SafariZone_Northeast_Text_Girl',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'SSTidalCorridor': {
+        0x0821E0E4: 'SSTidalCorridor_Movement_ScottApproachPlayer',
+        0x0821E0EC: 'SSTidalCorridor_Movement_ScottExit',
+        0x0821E0F4: 'SSTidalCorridor_Movement_PlayerWatchScottExit',
+        0x0821E0FB: 'SSTidalCorridor_Movement_SailorMoveForScott',
+        0x0821E102: 'SSTidalCorridor_Movement_SailorReturn',
+    },
+    'SafariZone_South': {
+        0x0821EA85: 'SafariZone_South_Movement_PlayerEnter',
+        0x0821EA87: 'SafariZone_South_Movement_ExitAttendantBlockDoor',
+        0x0821EB45: 'SafariZone_South_Movement_PlayerExitNorth',
+        0x0821EB47: 'SafariZone_South_Movement_PlayerExitEast',
+        0x0821EB4A: 'SafariZone_South_Movement_MoveExitAttendantNorth',
+        0x0821EB4D: 'SafariZone_South_Movement_MoveExitAttendantEast',
+    },
+})
+
+MAP_AUXILIARY_SCRIPT_ADDRESSES.update({
+    'ContestHall': (0x0821D644, 0x0821D648, 0x0821D658, 0x0821D698, 0x0821D69C, 0x0821D6A0, 0x0821D6A4, 0x0821D6A8, 0x0821D6AC, 0x0821D6B8, 0x0821D6D2, 0x0821D6DD, 0x0821D6EB, 0x0821D701, 0x0821D754, 0x0821D75F, 0x0821D76A, 0x0821D775, 0x0821D780, 0x0821D78B, 0x0821D796, 0x0821D7A1, 0x0821D914, 0x0821D91A, 0x0821D920, 0x0821D926, 0x0821D92C, 0x0821D932, 0x0821D938, 0x0821D93E, 0x0821D944, 0x0821D94A, 0x0821D950, 0x0821D956, 0x0821D95C, 0x0821D962, 0x0821D968, 0x0821D96E, 0x0821D974, 0x0821D97A, 0x0821D980, 0x0821D986, 0x0821D98C, 0x0821D992, 0x0821D998, 0x0821D99E, 0x0821D9A4, 0x0821D9AA, 0x0821D9B0, 0x0821D9B6, 0x0821D9BC, 0x0821D9C2, 0x0821D9C8, 0x0821D9CE, 0x0821D9D4, 0x0821DA21, 0x0821DA34, 0x0821DA8F, 0x0821DB3B, 0x0821DC2F, 0x0821DCED, 0x0821DD2D, 0x0821DD37, 0x0821DD41, 0x0821DD4B, 0x0821DD55, 0x0821DD5F, 0x0821DD77, 0x0821DD7D,),
+    'InsideOfTruck': (0x0821DD8E, 0x0821DDAA, 0x0821DDAD, 0x0821DDC9, 0x0821DDEF, 0x0821DE15,),
+    'SSTidalCorridor': (0x0821DE76, 0x0821DE8C, 0x0821DE9F, 0x0821DEB3, 0x0821DEC7, 0x0821DEDE, 0x0821DEF4, 0x0821DF0A, 0x0821DF1E, 0x0821DF50, 0x0821DF59, 0x0821DF6C, 0x0821DF75, 0x0821DF7E, 0x0821DF87, 0x0821DF90, 0x0821DFB2, 0x0821DFD1, 0x0821DFF0, 0x0821DFF4, 0x0821E015, 0x0821E01A, 0x0821E034, 0x0821E03E, 0x0821E08F, 0x0821E090,),
+    'SSTidalLowerDeck': (0x0821E3E2, 0x0821E3F9,),
+    'SSTidalRooms': (0x0821E4E9, 0x0821E520, 0x0821E52A, 0x0821E540, 0x0821E557, 0x0821E56E, 0x0821E585, 0x0821E5A0, 0x0821E5BB, 0x0821E5D2,),
+    'UnionRoom': (0x0821E971, 0x0821E9A5, 0x0821E9A6, 0x0821E9B0, 0x0821E9BA, 0x0821E9C4, 0x0821E9CE, 0x0821E9D8, 0x0821E9E2, 0x0821E9EC, 0x0821E9F6, 0x0821EA00,),
+    'SafariZone_Northwest': (0x0821EA0A,),
+    'SafariZone_North': (0x0821EA14, 0x0821EA1D,),
+    'SafariZone_Southwest': (0x0821EA27, 0x0821EA30,),
+    'SafariZone_South': (0x0821EA4E, 0x0821EA71, 0x0821EA7D, 0x0821EA8A, 0x0821EA93, 0x0821EA9C, 0x0821EAA5, 0x0821EACD, 0x0821EADA, 0x0821EAFF, 0x0821EB19, 0x0821EB33, 0x0821EB50, 0x0821EB59, 0x0821EB62, 0x0821EB6B, 0x0821EB74, 0x0821EB7D, 0x0821EB86, 0x0821EB8F, 0x0821EB98,),
+})
+
+MAP_AUXILIARY_TEXT_ADDRESSES.update({
+    'InsideOfTruck': (0x0821DE1E,),
+    'SSTidalCorridor': (0x0821E106, 0x0821E201, 0x0821E227, 0x0821E248, 0x0821E269, 0x0821E28A, 0x0821E2E5, 0x0821E2F0, 0x0821E324, 0x0821E336, 0x0821E350, 0x0821E3B8, 0x0821E3C9, 0x0821E3CF, 0x0821E3D5, 0x0821E3DB,),
+    'SSTidalLowerDeck': (0x0821E410, 0x0821E43E, 0x0821E44C, 0x0821E47F, 0x0821E4A8, 0x0821E4B5,),
+    'SSTidalRooms': (0x0821E5E9, 0x0821E5FB, 0x0821E628, 0x0821E637, 0x0821E65F, 0x0821E671, 0x0821E67E, 0x0821E6B2, 0x0821E6C4, 0x0821E6D3, 0x0821E6F4, 0x0821E71A, 0x0821E722, 0x0821E75A, 0x0821E776, 0x0821E79C, 0x0821E7A3, 0x0821E7D3, 0x0821E7F6, 0x0821E82B, 0x0821E834, 0x0821E86B, 0x0821E894, 0x0821E8A3, 0x0821E8E3, 0x0821E935,),
+})
+
+
+
+# Keep source-proven variable namespaces before switch/case folding.
+MAP_VERIFIED_SEMANTIC_LABELS['ContestHall'].setdefault('symbols', {})['vars'] = {
+    0x4000: 'VAR_TEMP_0',
+    0x4001: 'VAR_TEMP_1',
+    0x4009: 'VAR_TEMP_9',
+    0x4013: 'VAR_OBJ_GFX_ID_3',
+    0x4014: 'VAR_OBJ_GFX_ID_4',
+    0x4015: 'VAR_OBJ_GFX_ID_5',
+    0x4016: 'VAR_OBJ_GFX_ID_6',
+    0x4017: 'VAR_OBJ_GFX_ID_7',
+    0x4018: 'VAR_OBJ_GFX_ID_8',
+    0x4019: 'VAR_OBJ_GFX_ID_9',
+    0x401A: 'VAR_OBJ_GFX_ID_A',
+    0x4086: 'VAR_CONTEST_HALL_STATE',
+    0x4088: 'VAR_CONTEST_TYPE',
+    0x8000: 'VAR_0x8000',
+    0x800D: 'VAR_RESULT',
+}
+MAP_VERIFIED_SEMANTIC_LABELS['InsideOfTruck'].setdefault('symbols', {})['vars'] = {
+    0x4082: 'VAR_LITTLEROOT_HOUSES_STATE_MAY',
+    0x408C: 'VAR_LITTLEROOT_HOUSES_STATE_BRENDAN',
+    0x4092: 'VAR_LITTLEROOT_INTRO_STATE',
+    0x800D: 'VAR_RESULT',
+}
+MAP_VERIFIED_SEMANTIC_LABELS['SSTidalCorridor'].setdefault('symbols', {})['vars'] = {
+    0x40B4: 'VAR_SS_TIDAL_STATE',
+    0x40D4: 'VAR_SS_TIDAL_SCOTT_STATE',
+    0x8000: 'VAR_0x8000',
+}
+MAP_VERIFIED_SEMANTIC_LABELS['SSTidalCorridor']['field_placeholders'] = {
+    0x0821E106: {0x01: 'PLAYER', 0x05: 'KUN'},
+    0x0821E350: {0x01: 'PLAYER', 0x05: 'KUN'},
+}
+MAP_VERIFIED_SEMANTIC_LABELS['SSTidalRooms'].setdefault('symbols', {})['vars'] = {
+    0x800D: 'VAR_RESULT',
+}
+MAP_VERIFIED_SEMANTIC_LABELS['UnionRoom'].setdefault('symbols', {})['vars'] = {
+    0x800D: 'VAR_RESULT',
+}
+MAP_VERIFIED_SEMANTIC_LABELS['SafariZone_South'].setdefault('symbols', {})['vars'] = {
+    0x40A4: 'VAR_SAFARI_ZONE_STATE',
+    0x8000: 'VAR_0x8000',
+    0x800C: 'VAR_FACING',
+    0x800D: 'VAR_RESULT',
+}
 
 
 def main():
