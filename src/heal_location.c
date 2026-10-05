@@ -2,39 +2,36 @@
 #include "heal_location.h"
 #include "constants/heal_locations.h"
 
-// JP layout: 23 entries at 0x0857B104, [0] is a placeholder, real
-// locations are [1..22] (pokeemerald stores them 0-based without the
-// placeholder).
-extern const struct HealLocation sHealLocations[NUM_HEAL_LOCATIONS];
+#include "data/heal_locations.h"
 
 u32 GetHealLocationIndexByMap(u16 mapGroup, u16 mapNum)
 {
-    u32 i = 0;
-    const struct HealLocation *loc = &sHealLocations[1];
+    u32 i;
 
-    for (; i < NUM_HEAL_LOCATIONS - 1; i++)
+    for (i = 0; i < ARRAY_COUNT(sHealLocations); i++)
     {
-        if (loc->mapGroup == mapGroup && loc->mapNum == mapNum)
+        if (sHealLocations[i].mapGroup == mapGroup && sHealLocations[i].mapNum == mapNum)
             return i + 1;
-        loc++;
     }
-    return 0;
+    return HEAL_LOCATION_NONE;
 }
 
 const struct HealLocation *GetHealLocationByMap(u16 mapGroup, u16 mapNum)
 {
     u32 index = GetHealLocationIndexByMap(mapGroup, mapNum);
 
-    if (index == 0)
+    if (index == HEAL_LOCATION_NONE)
         return NULL;
-    return &sHealLocations[index];
+    else
+        return &sHealLocations[index - 1];
 }
 
 const struct HealLocation *GetHealLocation(u32 index)
 {
-    if (index == 0)
+    if (index == HEAL_LOCATION_NONE)
         return NULL;
-    if (index > NUM_HEAL_LOCATIONS - 1)
+    else if (index > ARRAY_COUNT(sHealLocations))
         return NULL;
-    return &sHealLocations[index];
+    else
+        return &sHealLocations[index - 1];
 }

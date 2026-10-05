@@ -31,9 +31,7 @@ sMonMarkings_Gfx: @ 0x857A298
 
 	.section .rodata.data_b2d_mid61_after_swap_line
 
-	.globl gUnknown_857B10C
-gUnknown_857B10C: @ 0x857B10C
-	.incbin "baserom_jp.gba", 0x57b10c, 0xd0
+	.incbin "baserom_jp.gba", 0x57b1bc, 0x20
 
 	.globl gUnknown_857B1DC
 gUnknown_857B1DC: @ 0x857B1DC

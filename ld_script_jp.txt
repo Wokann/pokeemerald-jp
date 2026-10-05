@@ -9787,8 +9787,8 @@ SECTIONS {
         src/mon_markings.o(.rodata.mon_markings_data);
         src/mauville_old_man.o(.rodata.mauville_old_man_data);
         src/mail.o(.rodata.mail_data);
-        sHealLocations = . + 0x4C;
         src/menu_helpers.o(.rodata.menu_helpers_swap_line_data);
+        src/heal_location.o(.rodata);
         data/data_b2d_mid61.o(.rodata.data_b2d_mid61_after_swap_line);
         src/data/region_map_tables.o(.rodata);
         data/data_b2d_mid61.o(.rodata.857D49C);

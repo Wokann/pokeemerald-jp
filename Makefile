@@ -72,6 +72,19 @@ src/data/wild_encounters.h: src/data/wild_encounters.json src/data/wild_encounte
 
 $(C_BUILDDIR)/wild_encounter.o: src/data/wild_encounters.h
 
+JP_GENERATED_HEAL_LOCATION_HEADERS := src/data/heal_locations.h include/constants/heal_locations.h
+
+src/data/heal_locations.h: src/data/heal_locations.json src/data/heal_locations.json.txt | tools
+	$(JSONPROC) $^ $@
+
+include/constants/heal_locations.h: src/data/heal_locations.json src/data/heal_locations.constants.json.txt | tools
+	$(JSONPROC) $^ $@
+
+$(C_BUILDDIR)/heal_location.o: $(JP_GENERATED_HEAL_LOCATION_HEADERS)
+$(C_BUILDDIR)/post_battle_event_funcs.o: include/constants/heal_locations.h
+$(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o \
+$(OBJ_DIR)/data/event_scripts.d $(OBJ_DIR)/data/battle_scripts_1.d: include/constants/heal_locations.h
+
 # Maps already migrated to the canonical map.json event-data structure.
 # Layout metadata and every map header/connection now share their local JSON
 # source of truth; this list only controls the remaining event-data migration.
@@ -1111,6 +1124,7 @@ compare: $(ROM)
 clean: clean-tools
 	rm -rf build $(ROM) $(ELF)
 	rm -f $(JP_MAP_GROUP_AGGREGATES)
+	rm -f $(JP_GENERATED_HEAL_LOCATION_HEADERS)
 
 # All build artifacts wait for the host-tool chain, so a fresh checkout can
 # safely use `make -j` without racing the C/asset rules against tool builds.
