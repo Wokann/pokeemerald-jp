@@ -17,14 +17,11 @@ BattleFrontier_ReceptionGate_EventScript_FirstTimeEntering:: @ 0x0823A245
 	lockall
 	setvar VAR_HAS_ENTERED_BATTLE_FRONTIER, TRUE
 	playse SE_PIN
-	applymovement LOCALID_FRONTIER_RECEPTION_GREETER, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement LOCALID_FRONTIER_RECEPTION_GREETER, Common_Movement_Delay48
-	waitmovement 0
+	applywaitmovement LOCALID_FRONTIER_RECEPTION_GREETER, Common_Movement_ExclamationMark
+	applywaitmovement LOCALID_FRONTIER_RECEPTION_GREETER, Common_Movement_Delay48
 	msgbox BattleFrontier_ReceptionGate_Text_FirstTimeHereThisWay, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_PLAYER, BattleFrontier_ReceptionGate_Movement_PlayerApproachCounter
-	waitmovement 0
+	applywaitmovement LOCALID_PLAYER, BattleFrontier_ReceptionGate_Movement_PlayerApproachCounter
 	goto BattleFrontier_ReceptionGate_EventScript_ScottScene
 	end
 
@@ -58,8 +55,7 @@ BattleFrontier_ReceptionGate_EventScript_ScottScene:: @ 0x0823A27B
 	waitmovement 0
 	msgbox BattleFrontier_ReceptionGate_Text_ScottGreatToSeeYouHere, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_FRONTIER_RECEPTION_SCOTT, BattleFrontier_ReceptionGate_Movement_ScottExit
-	waitmovement 0
+	applywaitmovement LOCALID_FRONTIER_RECEPTION_SCOTT, BattleFrontier_ReceptionGate_Movement_ScottExit
 	removeobject LOCALID_FRONTIER_RECEPTION_SCOTT
 	releaseall
 	end
@@ -141,18 +137,18 @@ BattleFrontier_ReceptionGate_EventScript_ChooseFacilityToLearnAbout:: @ 0x0823A3
 	waitmessage
 	setvar VAR_0x8004, SCROLL_MULTI_BF_RECEPTIONIST
 	special ShowScrollableMultichoice
-	copyvar VAR_0x8000, VAR_RESULT
-	goto_if_eq VAR_0x8000, 0x0, BattleFrontier_ReceptionGate_EventScript_BattleTower
-	goto_if_eq VAR_0x8000, 0x1, BattleFrontier_ReceptionGate_EventScript_BattleDome
-	goto_if_eq VAR_0x8000, 0x2, BattleFrontier_ReceptionGate_EventScript_BattlePalace
-	goto_if_eq VAR_0x8000, 0x3, BattleFrontier_ReceptionGate_EventScript_BattleArena
-	goto_if_eq VAR_0x8000, 0x4, BattleFrontier_ReceptionGate_EventScript_BattleFactory
-	goto_if_eq VAR_0x8000, 0x5, BattleFrontier_ReceptionGate_EventScript_BattlePike
-	goto_if_eq VAR_0x8000, 0x6, BattleFrontier_ReceptionGate_EventScript_BattlePyramid
-	goto_if_eq VAR_0x8000, 0x7, BattleFrontier_ReceptionGate_EventScript_RankingHall
-	goto_if_eq VAR_0x8000, 0x8, BattleFrontier_ReceptionGate_EventScript_ExchangeCorner
-	goto_if_eq VAR_0x8000, 0x9, BattleFrontier_ReceptionGate_EventScript_ExitFacilityGuide
-	goto_if_eq VAR_0x8000, MULTI_B_PRESSED, BattleFrontier_ReceptionGate_EventScript_ExitFacilityGuide
+	switch VAR_RESULT
+	case 0, BattleFrontier_ReceptionGate_EventScript_BattleTower
+	case 1, BattleFrontier_ReceptionGate_EventScript_BattleDome
+	case 2, BattleFrontier_ReceptionGate_EventScript_BattlePalace
+	case 3, BattleFrontier_ReceptionGate_EventScript_BattleArena
+	case 4, BattleFrontier_ReceptionGate_EventScript_BattleFactory
+	case 5, BattleFrontier_ReceptionGate_EventScript_BattlePike
+	case 6, BattleFrontier_ReceptionGate_EventScript_BattlePyramid
+	case 7, BattleFrontier_ReceptionGate_EventScript_RankingHall
+	case 8, BattleFrontier_ReceptionGate_EventScript_ExchangeCorner
+	case 9, BattleFrontier_ReceptionGate_EventScript_ExitFacilityGuide
+	case MULTI_B_PRESSED, BattleFrontier_ReceptionGate_EventScript_ExitFacilityGuide
 	end
 
 BattleFrontier_ReceptionGate_EventScript_BattleTower:: @ 0x0823A400
@@ -216,14 +212,14 @@ BattleFrontier_ReceptionGate_EventScript_ChooseRuleToLearnAbout:: @ 0x0823A498
 	message BattleFrontier_ReceptionGate_Text_LearnAboutWhat
 	waitmessage
 	multichoice 15, 0, MULTI_FRONTIER_RULES, FALSE
-	copyvar VAR_0x8000, VAR_RESULT
-	goto_if_eq VAR_0x8000, 0x0, BattleFrontier_ReceptionGate_EventScript_LevelMode
-	goto_if_eq VAR_0x8000, 0x1, BattleFrontier_ReceptionGate_EventScript_Level50
-	goto_if_eq VAR_0x8000, 0x2, BattleFrontier_ReceptionGate_EventScript_OpenLevel
-	goto_if_eq VAR_0x8000, 0x3, BattleFrontier_ReceptionGate_EventScript_MonEntry
-	goto_if_eq VAR_0x8000, 0x4, BattleFrontier_ReceptionGate_EventScript_HoldItems
-	goto_if_eq VAR_0x8000, 0x5, BattleFrontier_ReceptionGate_EventScript_ExitRulesGuide
-	goto_if_eq VAR_0x8000, MULTI_B_PRESSED, BattleFrontier_ReceptionGate_EventScript_ExitRulesGuide
+	switch VAR_RESULT
+	case 0, BattleFrontier_ReceptionGate_EventScript_LevelMode
+	case 1, BattleFrontier_ReceptionGate_EventScript_Level50
+	case 2, BattleFrontier_ReceptionGate_EventScript_OpenLevel
+	case 3, BattleFrontier_ReceptionGate_EventScript_MonEntry
+	case 4, BattleFrontier_ReceptionGate_EventScript_HoldItems
+	case 5, BattleFrontier_ReceptionGate_EventScript_ExitRulesGuide
+	case MULTI_B_PRESSED, BattleFrontier_ReceptionGate_EventScript_ExitRulesGuide
 	end
 
 BattleFrontier_ReceptionGate_EventScript_LevelMode:: @ 0x0823A4F6
@@ -267,12 +263,12 @@ BattleFrontier_ReceptionGate_EventScript_ChooseFrontierPassInfoToLearnAbout:: @ 
 	message BattleFrontier_ReceptionGate_Text_LearnAboutWhich1
 	waitmessage
 	multichoice 16, 4, MULTI_FRONTIER_PASS_INFO, FALSE
-	copyvar VAR_0x8000, VAR_RESULT
-	goto_if_eq VAR_0x8000, 0x0, BattleFrontier_ReceptionGate_EventScript_Symbols
-	goto_if_eq VAR_0x8000, 0x1, BattleFrontier_ReceptionGate_EventScript_RecordBattle
-	goto_if_eq VAR_0x8000, 0x2, BattleFrontier_ReceptionGate_EventScript_BattlePoints
-	goto_if_eq VAR_0x8000, 0x3, BattleFrontier_ReceptionGate_EventScript_ExitFrontierPassGuide
-	goto_if_eq VAR_0x8000, MULTI_B_PRESSED, BattleFrontier_ReceptionGate_EventScript_ExitFrontierPassGuide
+	switch VAR_RESULT
+	case 0, BattleFrontier_ReceptionGate_EventScript_Symbols
+	case 1, BattleFrontier_ReceptionGate_EventScript_RecordBattle
+	case 2, BattleFrontier_ReceptionGate_EventScript_BattlePoints
+	case 3, BattleFrontier_ReceptionGate_EventScript_ExitFrontierPassGuide
+	case MULTI_B_PRESSED, BattleFrontier_ReceptionGate_EventScript_ExitFrontierPassGuide
 	end
 
 BattleFrontier_ReceptionGate_EventScript_Symbols:: @ 0x0823A59E

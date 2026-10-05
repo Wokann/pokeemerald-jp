@@ -24,23 +24,22 @@ BattleFrontier_Lounge7_EventScript_ChooseLeftTutorMove:: @ 0x082397A8
 	special ShowBattlePointsWindow
 	setvar VAR_TEMP_FRONTIER_TUTOR_ID, 0
 	setvar VAR_0x8004, SCROLL_MULTI_BF_MOVE_TUTOR_1
-	@ JP omits the US VAR_0x8006 redraw state and waits explicitly for this menu.
-	special_no_wait ShowScrollableMultichoice
-	waitstate
+	@ JP omits the US VAR_0x8006 redraw state.
+	special ShowScrollableMultichoice
 	copyvar VAR_TEMP_FRONTIER_TUTOR_SELECTION, VAR_RESULT
-	copyvar VAR_0x8000, VAR_RESULT
-	goto_if_eq VAR_0x8000, 0x0, BattleFrontier_Lounge7_EventScript_Softboiled
-	goto_if_eq VAR_0x8000, 0x1, BattleFrontier_Lounge7_EventScript_SeismicToss
-	goto_if_eq VAR_0x8000, 0x2, BattleFrontier_Lounge7_EventScript_DreamEater
-	goto_if_eq VAR_0x8000, 0x3, BattleFrontier_Lounge7_EventScript_MegaPunch
-	goto_if_eq VAR_0x8000, 0x4, BattleFrontier_Lounge7_EventScript_MegaKick
-	goto_if_eq VAR_0x8000, 0x5, BattleFrontier_Lounge7_EventScript_BodySlam
-	goto_if_eq VAR_0x8000, 0x6, BattleFrontier_Lounge7_EventScript_RockSlide
-	goto_if_eq VAR_0x8000, 0x7, BattleFrontier_Lounge7_EventScript_Counter
-	goto_if_eq VAR_0x8000, 0x8, BattleFrontier_Lounge7_EventScript_ThunderWave
-	goto_if_eq VAR_0x8000, 0x9, BattleFrontier_Lounge7_EventScript_SwordsDance
-	goto_if_eq VAR_0x8000, 0xA, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
-	goto_if_eq VAR_0x8000, 0x7F, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
+	switch VAR_RESULT
+	case 0, BattleFrontier_Lounge7_EventScript_Softboiled
+	case 1, BattleFrontier_Lounge7_EventScript_SeismicToss
+	case 2, BattleFrontier_Lounge7_EventScript_DreamEater
+	case 3, BattleFrontier_Lounge7_EventScript_MegaPunch
+	case 4, BattleFrontier_Lounge7_EventScript_MegaKick
+	case 5, BattleFrontier_Lounge7_EventScript_BodySlam
+	case 6, BattleFrontier_Lounge7_EventScript_RockSlide
+	case 7, BattleFrontier_Lounge7_EventScript_Counter
+	case 8, BattleFrontier_Lounge7_EventScript_ThunderWave
+	case 9, BattleFrontier_Lounge7_EventScript_SwordsDance
+	case 10, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
+	case MULTI_B_PRESSED, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
 	end
 
 BattleFrontier_Lounge7_EventScript_ChooseNewLeftTutorMove:: @ 0x0823984E
@@ -48,22 +47,21 @@ BattleFrontier_Lounge7_EventScript_ChooseNewLeftTutorMove:: @ 0x0823984E
 	waitmessage
 	setvar VAR_TEMP_FRONTIER_TUTOR_ID, 0
 	setvar VAR_0x8004, SCROLL_MULTI_BF_MOVE_TUTOR_1
-	special_no_wait ShowScrollableMultichoice
-	waitstate
+	special ShowScrollableMultichoice
 	copyvar VAR_TEMP_FRONTIER_TUTOR_SELECTION, VAR_RESULT
-	copyvar VAR_0x8000, VAR_RESULT
-	goto_if_eq VAR_0x8000, 0x0, BattleFrontier_Lounge7_EventScript_Softboiled
-	goto_if_eq VAR_0x8000, 0x1, BattleFrontier_Lounge7_EventScript_SeismicToss
-	goto_if_eq VAR_0x8000, 0x2, BattleFrontier_Lounge7_EventScript_DreamEater
-	goto_if_eq VAR_0x8000, 0x3, BattleFrontier_Lounge7_EventScript_MegaPunch
-	goto_if_eq VAR_0x8000, 0x4, BattleFrontier_Lounge7_EventScript_MegaKick
-	goto_if_eq VAR_0x8000, 0x5, BattleFrontier_Lounge7_EventScript_BodySlam
-	goto_if_eq VAR_0x8000, 0x6, BattleFrontier_Lounge7_EventScript_RockSlide
-	goto_if_eq VAR_0x8000, 0x7, BattleFrontier_Lounge7_EventScript_Counter
-	goto_if_eq VAR_0x8000, 0x8, BattleFrontier_Lounge7_EventScript_ThunderWave
-	goto_if_eq VAR_0x8000, 0x9, BattleFrontier_Lounge7_EventScript_SwordsDance
-	goto_if_eq VAR_0x8000, 0xA, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
-	goto_if_eq VAR_0x8000, 0x7F, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
+	switch VAR_RESULT
+	case 0, BattleFrontier_Lounge7_EventScript_Softboiled
+	case 1, BattleFrontier_Lounge7_EventScript_SeismicToss
+	case 2, BattleFrontier_Lounge7_EventScript_DreamEater
+	case 3, BattleFrontier_Lounge7_EventScript_MegaPunch
+	case 4, BattleFrontier_Lounge7_EventScript_MegaKick
+	case 5, BattleFrontier_Lounge7_EventScript_BodySlam
+	case 6, BattleFrontier_Lounge7_EventScript_RockSlide
+	case 7, BattleFrontier_Lounge7_EventScript_Counter
+	case 8, BattleFrontier_Lounge7_EventScript_ThunderWave
+	case 9, BattleFrontier_Lounge7_EventScript_SwordsDance
+	case 10, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
+	case MULTI_B_PRESSED, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
 	end
 
 BattleFrontier_Lounge7_EventScript_Softboiled:: @ 0x082398F1
@@ -137,22 +135,21 @@ BattleFrontier_Lounge7_EventScript_ChooseRightTutorMove:: @ 0x0823998E
 	special ShowBattlePointsWindow
 	setvar VAR_TEMP_FRONTIER_TUTOR_ID, 1
 	setvar VAR_0x8004, SCROLL_MULTI_BF_MOVE_TUTOR_2
-	special_no_wait ShowScrollableMultichoice
-	waitstate
+	special ShowScrollableMultichoice
 	copyvar VAR_TEMP_FRONTIER_TUTOR_SELECTION, VAR_RESULT
-	copyvar VAR_0x8000, VAR_RESULT
-	goto_if_eq VAR_0x8000, 0x0, BattleFrontier_Lounge7_EventScript_DefenseCurl
-	goto_if_eq VAR_0x8000, 0x1, BattleFrontier_Lounge7_EventScript_Snore
-	goto_if_eq VAR_0x8000, 0x2, BattleFrontier_Lounge7_EventScript_MudSlap
-	goto_if_eq VAR_0x8000, 0x3, BattleFrontier_Lounge7_EventScript_Swift
-	goto_if_eq VAR_0x8000, 0x4, BattleFrontier_Lounge7_EventScript_IcyWind
-	goto_if_eq VAR_0x8000, 0x5, BattleFrontier_Lounge7_EventScript_Endure
-	goto_if_eq VAR_0x8000, 0x6, BattleFrontier_Lounge7_EventScript_PsychUp
-	goto_if_eq VAR_0x8000, 0x7, BattleFrontier_Lounge7_EventScript_IcePunch
-	goto_if_eq VAR_0x8000, 0x8, BattleFrontier_Lounge7_EventScript_ThunderPunch
-	goto_if_eq VAR_0x8000, 0x9, BattleFrontier_Lounge7_EventScript_FirePunch
-	goto_if_eq VAR_0x8000, 0xA, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
-	goto_if_eq VAR_0x8000, 0x7F, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
+	switch VAR_RESULT
+	case 0, BattleFrontier_Lounge7_EventScript_DefenseCurl
+	case 1, BattleFrontier_Lounge7_EventScript_Snore
+	case 2, BattleFrontier_Lounge7_EventScript_MudSlap
+	case 3, BattleFrontier_Lounge7_EventScript_Swift
+	case 4, BattleFrontier_Lounge7_EventScript_IcyWind
+	case 5, BattleFrontier_Lounge7_EventScript_Endure
+	case 6, BattleFrontier_Lounge7_EventScript_PsychUp
+	case 7, BattleFrontier_Lounge7_EventScript_IcePunch
+	case 8, BattleFrontier_Lounge7_EventScript_ThunderPunch
+	case 9, BattleFrontier_Lounge7_EventScript_FirePunch
+	case 10, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
+	case MULTI_B_PRESSED, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
 	end
 
 BattleFrontier_Lounge7_EventScript_ChooseNewRightTutorMove:: @ 0x08239A34
@@ -160,22 +157,21 @@ BattleFrontier_Lounge7_EventScript_ChooseNewRightTutorMove:: @ 0x08239A34
 	waitmessage
 	setvar VAR_TEMP_FRONTIER_TUTOR_ID, 1
 	setvar VAR_0x8004, SCROLL_MULTI_BF_MOVE_TUTOR_2
-	special_no_wait ShowScrollableMultichoice
-	waitstate
+	special ShowScrollableMultichoice
 	copyvar VAR_TEMP_FRONTIER_TUTOR_SELECTION, VAR_RESULT
-	copyvar VAR_0x8000, VAR_RESULT
-	goto_if_eq VAR_0x8000, 0x0, BattleFrontier_Lounge7_EventScript_DefenseCurl
-	goto_if_eq VAR_0x8000, 0x1, BattleFrontier_Lounge7_EventScript_Snore
-	goto_if_eq VAR_0x8000, 0x2, BattleFrontier_Lounge7_EventScript_MudSlap
-	goto_if_eq VAR_0x8000, 0x3, BattleFrontier_Lounge7_EventScript_Swift
-	goto_if_eq VAR_0x8000, 0x4, BattleFrontier_Lounge7_EventScript_IcyWind
-	goto_if_eq VAR_0x8000, 0x5, BattleFrontier_Lounge7_EventScript_Endure
-	goto_if_eq VAR_0x8000, 0x6, BattleFrontier_Lounge7_EventScript_PsychUp
-	goto_if_eq VAR_0x8000, 0x7, BattleFrontier_Lounge7_EventScript_IcePunch
-	goto_if_eq VAR_0x8000, 0x8, BattleFrontier_Lounge7_EventScript_ThunderPunch
-	goto_if_eq VAR_0x8000, 0x9, BattleFrontier_Lounge7_EventScript_FirePunch
-	goto_if_eq VAR_0x8000, 0xA, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
-	goto_if_eq VAR_0x8000, 0x7F, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
+	switch VAR_RESULT
+	case 0, BattleFrontier_Lounge7_EventScript_DefenseCurl
+	case 1, BattleFrontier_Lounge7_EventScript_Snore
+	case 2, BattleFrontier_Lounge7_EventScript_MudSlap
+	case 3, BattleFrontier_Lounge7_EventScript_Swift
+	case 4, BattleFrontier_Lounge7_EventScript_IcyWind
+	case 5, BattleFrontier_Lounge7_EventScript_Endure
+	case 6, BattleFrontier_Lounge7_EventScript_PsychUp
+	case 7, BattleFrontier_Lounge7_EventScript_IcePunch
+	case 8, BattleFrontier_Lounge7_EventScript_ThunderPunch
+	case 9, BattleFrontier_Lounge7_EventScript_FirePunch
+	case 10, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
+	case MULTI_B_PRESSED, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
 	end
 
 BattleFrontier_Lounge7_EventScript_DefenseCurl:: @ 0x08239AD7
@@ -257,11 +253,11 @@ BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection:: @ 0x08239B5F
 BattleFrontier_Lounge7_EventScript_TeachTutorMove:: @ 0x08239BA6
 	msgbox BattleFrontier_Lounge7_Text_TeachMoveToWhichMon, MSGBOX_DEFAULT
 	special GetBattleFrontierTutorMoveIndex
-	fadescreen 0x1
+	fadescreen FADE_TO_BLACK
 	special CloseBattlePointsWindow
 	special CloseBattleFrontierTutorWindow
 	special ChooseMonForMoveTutor
-	goto_if_eq VAR_RESULT, NO, BattleFrontier_Lounge7_EventScript_CancelChooseMon
+	goto_if_eq VAR_RESULT, 0, BattleFrontier_Lounge7_EventScript_CancelChooseMon
 	msgbox BattleFrontier_Lounge7_Text_IllTakeBattlePoints, MSGBOX_DEFAULT
 	copyvar VAR_0x8004, VAR_0x8008
 	special TakeFrontierBattlePoints
