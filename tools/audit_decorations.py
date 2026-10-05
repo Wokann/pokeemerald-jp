@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Verify the byte-level JP decoration manifest without extracting assets.
 
-The decoration data is physically contiguous in the Japanese ROM, even while
-its source is still split across temporary ``data_b2d_mid61.s`` labels.  This
-tool records the invariant layout and validates it directly from input ROM
+The decoration records, descriptions and tiles are physically contiguous in
+the Japanese ROM and owned by ``src/data/decoration/``.  This tool records the
+invariant layout and validates it directly from input ROM
 bytes.  It never writes extracted data: use its deterministic JSON output as a
 reviewable manifest, and optionally compare a linked candidate ROM against the
 same baseline slices after a source migration.

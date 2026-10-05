@@ -9791,6 +9791,8 @@ SECTIONS {
         src/heal_location.o(.rodata);
         src/region_map.o(.rodata.region_map_data);
         data/data_b2d_mid61.o(.rodata.data_b2d_mid61_after_region_map);
+        src/decoration.o(.rodata.decoration_data);
+        data/data_b2d_mid61.o(.rodata.data_b2d_mid61_after_decoration);
         src/data/slot_machine.o(.rodata.85843A8);
         src/slot_machine.o(.rodata.sWindowTemplate_InfoBox);
         src/slot_machine.o(.rodata.sColors_ReeltimeHelp);
@@ -10319,6 +10321,8 @@ SECTIONS {
         src/graphics.o(.rodata.rayquaza_scene_4_graphics);
         src/graphics.o(.rodata.rayquaza_scene_5_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_after_chases_away);
+        src/graphics.o(.rodata.decoration_icons);
+        data/data_rest2c.o(.rodata.data_rest2c_after_decoration_icons);
         src/graphics.o(.rodata.cable_car_bg_palette);
         src/graphics.o(.rodata.cable_car_sprite_palette);
         src/graphics.o(.rodata.cable_car_bg_gfx);

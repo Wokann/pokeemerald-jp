@@ -1,6 +1,374 @@
 #include "global.h"
 #include "decoration.h"
 
+#include "window.h"
+#include "strings.h"
+#include "fieldmap.h"
+#include "graphics.h"
+#include "list_menu.h"
+#include "menu.h"
+#include "menu_helpers.h"
+#include "task.h"
+#include "constants/decorations.h"
+#include "constants/event_objects.h"
+#include "constants/metatile_labels.h"
+
+#define DECORATION_DATA __attribute__((section(".rodata.decoration_data")))
+#define PLACE_DECORATION_SELECTOR_TAG 0x0BE5
+#define PLACE_DECORATION_PLAYER_TAG 0x0008
+
+enum Windows
+{
+    WINDOW_MAIN_MENU,
+    WINDOW_DECORATION_CATEGORIES,
+    WINDOW_DECORATION_CATEGORY_SUMMARY,
+    WINDOW_DECORATION_CATEGORY_ITEMS,
+    WINDOW_COUNT
+};
+
+struct PlaceDecorationGraphicsDataBuffer
+{
+    const struct Decoration *decoration;
+    u16 tiles[0x40];
+    u8 image[0x800];
+    u16 palette[16];
+};
+
+extern struct PlaceDecorationGraphicsDataBuffer gUnknown_2039E5C;
+extern struct OamData gUnknown_203A708;
+
+void DecorationMenuAction_Decorate(u8 taskId);
+void DecorationMenuAction_PutAway(u8 taskId);
+void DecorationMenuAction_Toss(u8 taskId);
+void DecorationMenuAction_Cancel(u8 taskId);
+void sub_08127F3C(u8 taskId);
+void sub_08127A3C(u8 taskId);
+void sub_0812A3E0(u8 taskId);
+void DecorationItemsMenuAction_Trade(u8 taskId);
+void DecorationItemsMenu_OnCursorMove(s32 itemIndex, bool8 flag, struct ListMenu *menu);
+void sub_08127450(u8 windowId, u32 itemIndex, u8 y);
+void sub_081289CC(u8 taskId);
+void sub_08128FB8(u8 taskId);
+void sub_08128B80(u8 taskId);
+void sub_08128394(u8 taskId);
+void sub_081283EC(u8 taskId);
+void sub_08129BBC(u8 taskId);
+void sub_08129BE8(u8 taskId);
+void sub_0812A1CC(u8 taskId);
+void sub_08129B24(u8 taskId);
+void sub_0812A21C(u8 taskId);
+void sub_0812A488(u8 taskId);
+void sub_081279E0(u8 taskId);
+void sub_0812A378(struct Sprite *sprite);
+
+#include "data/decoration/tiles.h"
+#include "data/decoration/description.h"
+#include "data/decoration/header.h"
+
+DECORATION_DATA static const u8 *const sDecorationCategoryNames[] =
+{
+    gText_Desk,
+    gText_Chair,
+    gText_Plant,
+    gText_Ornament,
+    gText_Mat,
+    gText_Poster,
+    gText_Doll,
+    gText_Cushion
+};
+
+DECORATION_DATA static const struct MenuAction sDecorationMainMenuActions[] =
+{
+    {
+        .text = gText_Decorate,
+        .func = { .void_u8 = DecorationMenuAction_Decorate },
+    },
+    {
+        .text = gText_PutAway,
+        .func = { .void_u8 = DecorationMenuAction_PutAway },
+    },
+    {
+        .text = gText_Toss2,
+        .func = { .void_u8 = DecorationMenuAction_Toss },
+    },
+    {
+        .text = gText_Cancel,
+        .func = { .void_u8 = DecorationMenuAction_Cancel },
+    },
+};
+
+DECORATION_DATA static const u8 *const sSecretBasePCMenuItemDescriptions[] =
+{
+    gText_PutOutSelectedDecorItem,
+    gText_StoreChosenDecorInPC,
+    gText_ThrowAwayUnwantedDecors,
+    gText_GoBackPrevMenu
+};
+
+DECORATION_DATA static const TaskFunc sSecretBasePC_SelectedDecorationActions[][2] =
+{
+   { sub_08127F3C, sub_08127A3C },
+   { sub_0812A3E0,  sub_08127A3C },
+   { DecorationItemsMenuAction_Trade,        sub_08127A3C },
+};
+
+DECORATION_DATA static const struct WindowTemplate sDecorationWindowTemplates[WINDOW_COUNT] =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 1,
+        .width = 9,
+        .height = 8,
+        .paletteNum = 15,
+        .baseBlock = 0x0001,
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 1,
+        .width = 13,
+        .height = 18,
+        .paletteNum = 13,
+        .baseBlock = 0x0049,
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 18,
+        .tilemapTop = 1,
+        .width = 11,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x0133,
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 17,
+        .tilemapTop = 13,
+        .width = 12,
+        .height = 6,
+        .paletteNum = 15,
+        .baseBlock = 0x0149,
+    },
+};
+
+DECORATION_DATA static const u16 sDecorationMenuPalette[] = INCBIN_U16("graphics/decorations/decoration_menu.gbapal");
+
+DECORATION_DATA static const struct ListMenuTemplate sDecorationItemsListMenuTemplate =
+{
+    .items = NULL,
+    .moveCursorFunc = DecorationItemsMenu_OnCursorMove,
+    .itemPrintFunc = sub_08127450,
+    .totalItems = 0,
+    .maxShowed = 0,
+    .windowId = 0,
+    .header_X = 0,
+    .item_X = 8,
+    .cursor_X = 0,
+    .upText_Y = 10,
+    .cursorPal = 2,
+    .fillValue = 1,
+    .cursorShadowPal = 3,
+    .lettersSpacing = FALSE,
+    .itemVerticalPadding = 0,
+    .scrollMultiple = LIST_NO_MULTIPLE_SCROLL,
+    .fontId = FONT_NORMAL,
+    .cursorKind = CURSOR_BLACK_ARROW,
+};
+
+#include "data/decoration/icon.h"
+#include "data/decoration/tilemaps.h"
+
+DECORATION_DATA static const struct {
+    u8 shape;
+    u8 size;
+    u8 cameraX;
+    u8 cameraY;
+} sDecorationMovementInfo[] =
+{
+    [DECORSHAPE_1x1] = {SPRITE_SHAPE(16x16), SPRITE_SIZE(16x16), 120, 78},
+    [DECORSHAPE_2x1] = {SPRITE_SHAPE(32x16), SPRITE_SIZE(32x16), 128, 78},
+    [DECORSHAPE_3x1] = {SPRITE_SHAPE(64x32), SPRITE_SIZE(64x32), 144, 86},
+    [DECORSHAPE_4x2] = {SPRITE_SHAPE(64x32), SPRITE_SIZE(64x32), 144, 70},
+    [DECORSHAPE_2x2] = {SPRITE_SHAPE(32x32), SPRITE_SIZE(32x32), 128, 70},
+    [DECORSHAPE_1x2] = {SPRITE_SHAPE(16x32), SPRITE_SIZE(16x32), 120, 70},
+    [DECORSHAPE_1x3] = {SPRITE_SHAPE(32x64), SPRITE_SIZE(32x64), 128, 86},
+    [DECORSHAPE_2x4] = {SPRITE_SHAPE(32x64), SPRITE_SIZE(32x64), 128, 54},
+    [DECORSHAPE_3x3] = {SPRITE_SHAPE(64x64), SPRITE_SIZE(64x64), 144, 70},
+    [DECORSHAPE_3x2] = {SPRITE_SHAPE(64x32), SPRITE_SIZE(64x32), 144, 70},
+};
+
+DECORATION_DATA static const union AnimCmd sDecorSelectorAnimCmd0[] =
+{
+    ANIMCMD_FRAME(0, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+
+DECORATION_DATA static const union AnimCmd *const sDecorSelectorAnimCmds[] = { sDecorSelectorAnimCmd0 };
+
+DECORATION_DATA static const struct SpriteFrameImage sDecorSelectorSpriteFrameImages =
+{
+    .data = (const u8 *)&gUnknown_2039E5C.image,
+    .size = 0x800,
+};
+
+DECORATION_DATA static const struct SpriteTemplate sDecorationSelectorSpriteTemplate =
+{
+    TAG_NONE,
+    PLACE_DECORATION_SELECTOR_TAG,
+    &gUnknown_203A708,
+    sDecorSelectorAnimCmds,
+    &sDecorSelectorSpriteFrameImages,
+    gDummySpriteAffineAnimTable,
+    SpriteCallbackDummy
+};
+
+DECORATION_DATA static const struct SpriteTemplate sDecorWhilePlacingSpriteTemplate =
+{
+    0x0000,
+    0x0000,
+    &gUnknown_203A708,
+    sDecorSelectorAnimCmds,
+    NULL,
+    gDummySpriteAffineAnimTable,
+    SpriteCallbackDummy
+};
+
+DECORATION_DATA static const struct SpritePalette sSpritePal_PlaceDecoration =
+{
+    .data = (const u16 *)&gUnknown_2039E5C.palette,
+    .tag = PLACE_DECORATION_SELECTOR_TAG,
+};
+
+DECORATION_DATA static const struct YesNoFuncTable sPlaceDecorationYesNoFunctions =
+{
+    .yesFunc = sub_081289CC,
+    .noFunc = sub_08128FB8,
+};
+
+DECORATION_DATA static const struct YesNoFuncTable sCancelDecoratingYesNoFunctions =
+{
+    .yesFunc = sub_08128B80,
+    .noFunc = sub_08128FB8,
+};
+
+DECORATION_DATA static const struct YesNoFuncTable sPlacePutAwayYesNoFunctions[] =
+{
+    {
+        .yesFunc = sub_08128394,
+        .noFunc = sub_081283EC,
+    },
+    {
+        .yesFunc = sub_08129BBC,
+        .noFunc = sub_08129BE8,
+    }
+};
+
+DECORATION_DATA static const u8 sDecorationStandElevations[] =
+{
+    4, 4, 4, 4,
+    0, 3, 3, 0
+};
+
+DECORATION_DATA static const u8 sDecorationSlideElevation[] =
+{
+    4, 4,
+    4, 4,
+    0, 4,
+    3, 0,
+};
+
+DECORATION_DATA static const u16 sDecorShapeSizes[] = {
+    [DECORSHAPE_1x1] = 4,
+    [DECORSHAPE_2x1] = 8,
+    [DECORSHAPE_3x1] = 16,
+    [DECORSHAPE_4x2] = 32,
+    [DECORSHAPE_2x2] = 16,
+    [DECORSHAPE_1x2] = 8,
+    [DECORSHAPE_1x3] = 16,
+    [DECORSHAPE_2x4] = 32,
+    [DECORSHAPE_3x3] = 64,
+    [DECORSHAPE_3x2] = 32,
+};
+
+DECORATION_DATA static const u16 sBrendanPalette[] = INCBIN_U16("graphics/decorations/brendan.gbapal");
+
+DECORATION_DATA static const u16 sMayPalette[] = INCBIN_U16("graphics/decorations/may.gbapal");
+
+DECORATION_DATA static const struct YesNoFuncTable sReturnDecorationYesNoFunctions =
+{
+    .yesFunc = sub_0812A1CC,
+    .noFunc = sub_08129B24,
+};
+
+DECORATION_DATA static const struct YesNoFuncTable sStopPuttingAwayDecorationsYesNoFunctions =
+{
+    .yesFunc = sub_0812A21C,
+    .noFunc = sub_08129B24,
+};
+
+DECORATION_DATA static const u8 sDecorationPuttingAwayCursor[] = INCBIN_U8("graphics/decorations/put_away_cursor.4bpp");
+
+DECORATION_DATA static const struct SpritePalette sSpritePal_PuttingAwayCursorBrendan =
+{
+    .data = sBrendanPalette,
+    .tag = PLACE_DECORATION_PLAYER_TAG,
+};
+
+DECORATION_DATA static const struct SpritePalette sSpritePal_PuttingAwayCursorMay =
+{
+    .data = sMayPalette,
+    .tag = PLACE_DECORATION_PLAYER_TAG,
+};
+
+DECORATION_DATA static const struct OamData sPuttingAwayCursorOamData =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+};
+
+DECORATION_DATA static const union AnimCmd sPuttingAwayCursorAnimCmd0[] =
+{
+    ANIMCMD_FRAME(0, 0, 0),
+    ANIMCMD_END
+};
+
+DECORATION_DATA static const union AnimCmd *const sPuttingAwayCursorAnimCmds[] =
+{
+    sPuttingAwayCursorAnimCmd0,
+};
+
+DECORATION_DATA static const struct SpriteFrameImage sPuttingAwayCursorPicTable =
+{
+    .data = sDecorationPuttingAwayCursor,
+    .size = sizeof(sDecorationPuttingAwayCursor),
+};
+
+DECORATION_DATA static const struct SpriteTemplate sPuttingAwayCursorSpriteTemplate =
+{
+    TAG_NONE,
+    PLACE_DECORATION_PLAYER_TAG,
+    &sPuttingAwayCursorOamData,
+    sPuttingAwayCursorAnimCmds,
+    &sPuttingAwayCursorPicTable,
+    gDummySpriteAffineAnimTable,
+    sub_0812A378
+};
+
+DECORATION_DATA static const struct YesNoFuncTable sTossDecorationYesNoFunctions =
+{
+    .yesFunc = sub_0812A488,
+    .noFunc = sub_081279E0,
+};
+
 __attribute__((naked)) void InitDecorationContextItems()
 {
     __asm__(".syntax unified\n\t"
@@ -86,7 +454,7 @@ __attribute__((naked)) void sub_081269BC(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081269F0: .4byte gUnknown_2039E54\n\t"
-        "_081269F4: .4byte gUnknown_8581A74\n\t"
+        "_081269F4: .4byte sDecorationWindowTemplates\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -161,7 +529,7 @@ __attribute__((naked)) void AddDecorationActionsWindow(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08126A7C: .4byte gUnknown_8581A2C\n\t"
+        "_08126A7C: .4byte sDecorationMainMenuActions\n\t"
         "_08126A80: .4byte gUnknown_2039E1C\n\t"
         ".syntax divided\n\t"
     );
@@ -312,7 +680,7 @@ __attribute__((naked)) void HandleDecorationActionsMenuInput(void)
         "	b _08126BC8\n\t"
         "	.align 2, 0\n\t"
         "_08126B94: .4byte gPaletteFade\n\t"
-        "_08126B98: .4byte gUnknown_8581A2C\n\t"
+        "_08126B98: .4byte sDecorationMainMenuActions\n\t"
         "_08126B9C: .4byte gUnknown_2039E1C\n\t"
         "_08126BA0:\n\t"
         "	bl Menu_GetCursorPos\n\t"
@@ -372,13 +740,13 @@ __attribute__((naked)) void PrintCurMainMenuDescription(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08126C08: .4byte gUnknown_8581A4C\n\t"
+        "_08126C08: .4byte sSecretBasePCMenuItemDescriptions\n\t"
         "_08126C0C: .4byte gUnknown_2039E1C\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void DecorationMenuAction_Decorate(void)
+__attribute__((naked)) void DecorationMenuAction_Decorate(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -426,7 +794,7 @@ __attribute__((naked)) void DecorationMenuAction_Decorate(void)
     );
 }
 
-__attribute__((naked)) void DecorationMenuAction_PutAway(void)
+__attribute__((naked)) void DecorationMenuAction_PutAway(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -480,7 +848,7 @@ __attribute__((naked)) void DecorationMenuAction_PutAway(void)
     );
 }
 
-__attribute__((naked)) void DecorationMenuAction_Toss(void)
+__attribute__((naked)) void DecorationMenuAction_Toss(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -528,7 +896,7 @@ __attribute__((naked)) void DecorationMenuAction_Toss(void)
     );
 }
 
-__attribute__((naked)) void DecorationMenuAction_Cancel(void)
+__attribute__((naked)) void DecorationMenuAction_Cancel(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -609,7 +977,7 @@ __attribute__((naked)) void SecretBasePC_PrepMenuForSelectingStoredDecors(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08126DC0: .4byte gUnknown_8581A94\n\t"
+        "_08126DC0: .4byte sDecorationMenuPalette\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -900,7 +1268,7 @@ __attribute__((naked)) void PrintDecorationCategoryMenuItem(void)
         "	.align 2, 0\n\t"
         "_08126FF4: .4byte gStringVar3\n\t"
         "_08126FF8: .4byte gStringVar4\n\t"
-        "_08126FFC: .4byte gUnknown_8581A0C\n\t"
+        "_08126FFC: .4byte sDecorationCategoryNames\n\t"
         "_08127000: .4byte gStringVar1\n\t"
         "_08127004: .4byte gStringVar2\n\t"
         "_08127008: .4byte gDecorationInventories\n\t"
@@ -1182,7 +1550,7 @@ __attribute__((naked)) void ShowDecorationCategoriesWindow(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081271FC: .4byte gUnknown_8581A94\n\t"
+        "_081271FC: .4byte sDecorationMenuPalette\n\t"
         "_08127200: .4byte gTasks\n\t"
         "_08127204: .4byte gUnknown_2039E3F\n\t"
         ".syntax divided\n\t"
@@ -1203,7 +1571,7 @@ __attribute__((naked)) void CopyDecorationCategoryName(u8 *dest, u8 category)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812721C: .4byte gUnknown_8581A0C\n\t"
+        "_0812721C: .4byte sDecorationCategoryNames\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1461,7 +1829,7 @@ __attribute__((naked)) void PrintDecorationItemMenuItems(void)
         "_081273EC: .4byte gCurDecorationItems\n\t"
         "_081273F0: .4byte gText_Cancel\n\t"
         "_081273F4: .4byte gMultiuseListMenuTemplate\n\t"
-        "_081273F8: .4byte gUnknown_8581AB4\n\t"
+        "_081273F8: .4byte sDecorationItemsListMenuTemplate\n\t"
         "_081273FC: .4byte gUnknown_2039E54\n\t"
         "_08127400: .4byte 0x000003D9\n\t"
         ".syntax divided\n\t"
@@ -1495,7 +1863,7 @@ __attribute__((naked)) void CopyDecorationMenuItemName(void)
     );
 }
 
-__attribute__((naked)) void DecorationItemsMenu_OnCursorMove(void)
+__attribute__((naked)) void DecorationItemsMenu_OnCursorMove(s32 itemIndex, bool8 flag, struct ListMenu *menu)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1518,7 +1886,7 @@ __attribute__((naked)) void DecorationItemsMenu_OnCursorMove(void)
     );
 }
 
-__attribute__((naked)) void sub_08127450(void)
+__attribute__((naked)) void sub_08127450(u8 windowId, u32 itemIndex, u8 y)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1810,7 +2178,7 @@ __attribute__((naked)) void HandleDecorationItemsMenuInput(void)
         "	bl _call_via_r1\n\t"
         "	b _081276AC\n\t"
         "	.align 2, 0\n\t"
-        "_0812766C: .4byte gUnknown_8581A5C\n\t"
+        "_0812766C: .4byte sSecretBasePC_SelectedDecorationActions\n\t"
         "_08127670:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -1844,7 +2212,7 @@ __attribute__((naked)) void HandleDecorationItemsMenuInput(void)
         "	.align 2, 0\n\t"
         "_081276B8: .4byte gCurDecorationIndex\n\t"
         "_081276BC: .4byte gUnknown_2039E58\n\t"
-        "_081276C0: .4byte gUnknown_8581A5C\n\t"
+        "_081276C0: .4byte sSecretBasePC_SelectedDecorationActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2310,7 +2678,7 @@ __attribute__((naked)) void sub_081279C4(void)
     );
 }
 
-__attribute__((naked)) void sub_081279E0(void)
+__attribute__((naked)) void sub_081279E0(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2368,7 +2736,7 @@ __attribute__((naked)) void sub_08127A0C(void)
     );
 }
 
-__attribute__((naked)) void sub_08127A3C(void)
+__attribute__((naked)) void sub_08127A3C(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2500,7 +2868,7 @@ __attribute__((naked)) void GetDecorationElevation(void)
         "	b _08127B36\n\t"
         "	.align 2, 0\n\t"
         "_08127B24: .4byte 0x0000FFFF\n\t"
-        "_08127B28: .4byte gUnknown_85821C8\n\t"
+        "_08127B28: .4byte sDecorationStandElevations\n\t"
         "_08127B2C:\n\t"
         "	ldr r0, _08127B3C\n\t"
         "	adds r0, r1, r0\n\t"
@@ -2511,7 +2879,7 @@ __attribute__((naked)) void GetDecorationElevation(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08127B3C: .4byte gUnknown_85821D0\n\t"
+        "_08127B3C: .4byte sDecorationSlideElevation\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3050,7 +3418,7 @@ __attribute__((naked)) void sub_08127F0C(void)
     );
 }
 
-__attribute__((naked)) void sub_08127F3C(void)
+__attribute__((naked)) void sub_08127F3C(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3325,7 +3693,7 @@ __attribute__((naked)) void ConfigureCameraObjectForPlacingDecoration(void)
         "_0812816C: .4byte gSprites\n\t"
         "_08128170: .4byte gFieldCamera\n\t"
         "_08128174: .4byte sub_081292B0 + 1\n\t"
-        "_08128178: .4byte gUnknown_8582134\n\t"
+        "_08128178: .4byte sDecorationMovementInfo\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3380,7 +3748,7 @@ __attribute__((naked)) void SetUpPlacingDecorationPlayerAvatar(void)
         "	b _081281E8\n\t"
         "	.align 2, 0\n\t"
         "_081281D0: .4byte gTasks\n\t"
-        "_081281D4: .4byte gUnknown_8582134\n\t"
+        "_081281D4: .4byte sDecorationMovementInfo\n\t"
         "_081281D8: .4byte gSaveBlock2Ptr\n\t"
         "_081281DC: .4byte SpriteCallbackDummy + 1\n\t"
         "_081281E0:\n\t"
@@ -3601,7 +3969,7 @@ __attribute__((naked)) void sub_08128240(void)
     );
 }
 
-__attribute__((naked)) void sub_08128394(void)
+__attribute__((naked)) void sub_08128394(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3647,7 +4015,7 @@ __attribute__((naked)) void sub_08128394(void)
     );
 }
 
-__attribute__((naked)) void sub_081283EC(void)
+__attribute__((naked)) void sub_081283EC(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4436,12 +4804,12 @@ __attribute__((naked)) void sub_081289AC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081289C8: .4byte gUnknown_85821A8\n\t"
+        "_081289C8: .4byte sPlaceDecorationYesNoFunctions\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_081289CC(void)
+__attribute__((naked)) void sub_081289CC(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4665,12 +5033,12 @@ __attribute__((naked)) void sub_08128B60(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08128B7C: .4byte gUnknown_85821B0\n\t"
+        "_08128B7C: .4byte sCancelDecoratingYesNoFunctions\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_08128B80(void)
+__attribute__((naked)) void sub_08128B80(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5080,7 +5448,7 @@ __attribute__((naked)) void sub_08128DF8(void)
         "_08128E38: .4byte gUnknown_3005B68\n\t"
         "_08128E3C: .4byte gSprites\n\t"
         "_08128E40: .4byte gUnknown_203A704\n\t"
-        "_08128E44: .4byte gUnknown_85821B8\n\t"
+        "_08128E44: .4byte sPlacePutAwayYesNoFunctions\n\t"
         "_08128E48:\n\t"
         "	cmp r0, #2\n\t"
         "	bne _08128E68\n\t"
@@ -5096,7 +5464,7 @@ __attribute__((naked)) void sub_08128DF8(void)
         "	bl _call_via_r1\n\t"
         "	b _08128F9A\n\t"
         "	.align 2, 0\n\t"
-        "_08128E64: .4byte gUnknown_85821B8\n\t"
+        "_08128E64: .4byte sPlacePutAwayYesNoFunctions\n\t"
         "_08128E68:\n\t"
         "	ldr r2, _08128FA4\n\t"
         "	ldrh r1, [r2, #0x2c]\n\t"
@@ -5272,7 +5640,7 @@ __attribute__((naked)) void sub_08128DF8(void)
     );
 }
 
-__attribute__((naked)) void sub_08128FB8(void)
+__attribute__((naked)) void sub_08128FB8(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5652,7 +6020,7 @@ __attribute__((naked)) void sub_081291C8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08129238: .4byte gUnknown_8582094\n\t"
+        "_08129238: .4byte sDecorTilemaps\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5713,7 +6081,7 @@ __attribute__((naked)) void SetDecorSelectionBoxOamAttributes(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081292A0: .4byte gUnknown_203A708\n\t"
-        "_081292A4: .4byte gUnknown_8582134\n\t"
+        "_081292A4: .4byte sDecorationMovementInfo\n\t"
         "_081292A8: .4byte 0xFFFFFE00\n\t"
         "_081292AC: .4byte 0xFFFFFC00\n\t"
         ".syntax divided\n\t"
@@ -5844,8 +6212,8 @@ __attribute__((naked)) void gpu_pal_decompress_alloc_tag_and_upload(void)
         "_08129384: .4byte 0x00000BE5\n\t"
         "_08129388: .4byte 0x00000884\n\t"
         "_0812938C: .4byte gTilesetPointer_SecretBaseRedCave\n\t"
-        "_08129390: .4byte gUnknown_85821A0\n\t"
-        "_08129394: .4byte gUnknown_8582170\n\t"
+        "_08129390: .4byte sSpritePal_PlaceDecoration\n\t"
+        "_08129394: .4byte sDecorationSelectorSpriteTemplate\n\t"
         "_08129398:\n\t"
         "	ldr r0, [r1, #0x18]\n\t"
         "	ldrh r0, [r0]\n\t"
@@ -5983,7 +6351,7 @@ __attribute__((naked)) void GetDecorationIconPicOrPalette(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081294A0: .4byte gUnknown_8581ACC\n\t"
+        "_081294A0: .4byte gDecorIconTable\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6089,9 +6457,9 @@ __attribute__((naked)) void AddDecorationIconObjectFromEventObject(void)
         "_08129574: .4byte gDecorations\n\t"
         "_08129578: .4byte 0x00000884\n\t"
         "_0812957C: .4byte gTilesetPointer_SecretBaseRedCave\n\t"
-        "_08129580: .4byte gUnknown_85821D8\n\t"
+        "_08129580: .4byte sDecorShapeSizes\n\t"
         "_08129584: .4byte 0xFFFF0000\n\t"
-        "_08129588: .4byte gUnknown_8582188\n\t"
+        "_08129588: .4byte sDecorWhilePlacingSpriteTemplate\n\t"
         "_0812958C:\n\t"
         "	ldr r0, [r1, #0x18]\n\t"
         "	ldrh r0, [r0]\n\t"
@@ -6206,7 +6574,7 @@ __attribute__((naked)) u8 AddDecorationIconObject(u8 decor, s16 x, s16 y, u8 pri
         "	strh r0, [r5, #0x26]\n\t"
         "	b _081296A4\n\t"
         "	.align 2, 0\n\t"
-        "_08129660: .4byte gUnknown_8581ACC\n\t"
+        "_08129660: .4byte gDecorIconTable\n\t"
         "_08129664: .4byte gSprites\n\t"
         "_08129668:\n\t"
         "	strh r7, [r5, #0x26]\n\t"
@@ -6729,7 +7097,7 @@ __attribute__((naked)) void SetUpPuttingAwayDecorationPlayerAvatar(void)
         "_08129A14: .4byte gUnknown_203A704\n\t"
         "_08129A18: .4byte gSprites\n\t"
         "_08129A1C: .4byte gFieldCamera\n\t"
-        "_08129A20: .4byte gUnknown_85822E8\n\t"
+        "_08129A20: .4byte sPuttingAwayCursorSpriteTemplate\n\t"
         "_08129A24: .4byte gSaveBlock2Ptr\n\t"
         "_08129A28: .4byte SpriteCallbackDummy + 1\n\t"
         "_08129A2C:\n\t"
@@ -6862,7 +7230,7 @@ __attribute__((naked)) void sub_08129AAC(void)
     );
 }
 
-__attribute__((naked)) void sub_08129B24(void)
+__attribute__((naked)) void sub_08129B24(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6939,7 +7307,7 @@ __attribute__((naked)) void sub_08129B24(void)
     );
 }
 
-__attribute__((naked)) void sub_08129BBC(void)
+__attribute__((naked)) void sub_08129BBC(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6966,7 +7334,7 @@ __attribute__((naked)) void sub_08129BBC(void)
     );
 }
 
-__attribute__((naked)) void sub_08129BE8(void)
+__attribute__((naked)) void sub_08129BE8(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7763,12 +8131,12 @@ __attribute__((naked)) void sub_0812A1AC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A1C8: .4byte gUnknown_858222C\n\t"
+        "_0812A1C8: .4byte sReturnDecorationYesNoFunctions\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_0812A1CC(void)
+__attribute__((naked)) void sub_0812A1CC(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7814,12 +8182,12 @@ __attribute__((naked)) void sub_0812A1FC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A218: .4byte gUnknown_8582234\n\t"
+        "_0812A218: .4byte sStopPuttingAwayDecorationsYesNoFunctions\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_0812A21C(void)
+__attribute__((naked)) void sub_0812A21C(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8022,7 +8390,7 @@ __attribute__((naked)) void sub_0812A340(void)
     );
 }
 
-__attribute__((naked)) void sub_0812A378(void)
+__attribute__((naked)) void sub_0812A378(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8071,7 +8439,7 @@ __attribute__((naked)) void sub_0812A3A8(void)
         "	b _0812A3CA\n\t"
         "	.align 2, 0\n\t"
         "_0812A3BC: .4byte gSaveBlock2Ptr\n\t"
-        "_0812A3C0: .4byte gUnknown_85822BC\n\t"
+        "_0812A3C0: .4byte sSpritePal_PuttingAwayCursorBrendan\n\t"
         "_0812A3C4:\n\t"
         "	ldr r0, _0812A3D0\n\t"
         "	bl LoadSpritePalette\n\t"
@@ -8079,7 +8447,7 @@ __attribute__((naked)) void sub_0812A3A8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A3D0: .4byte gUnknown_85822C4\n\t"
+        "_0812A3D0: .4byte sSpritePal_PuttingAwayCursorMay\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8097,7 +8465,7 @@ __attribute__((naked)) void sub_0812A3D4(void)
     );
 }
 
-__attribute__((naked)) void sub_0812A3E0(void)
+__attribute__((naked)) void sub_0812A3E0(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8176,12 +8544,12 @@ __attribute__((naked)) void sub_0812A468(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A484: .4byte gUnknown_8582300\n\t"
+        "_0812A484: .4byte sTossDecorationYesNoFunctions\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_0812A488(void)
+__attribute__((naked)) void sub_0812A488(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

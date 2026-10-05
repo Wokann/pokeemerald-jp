@@ -3,6 +3,10 @@
 #include "string_util.h"
 #include "constants/comparison_operators.h"
 
+#define DECORATION_ICONS_GRAPHICS __attribute__((section(".rodata.decoration_icons"), aligned(4)))
+#include "data/graphics/decorations.h"
+#undef DECORATION_ICONS_GRAPHICS
+
 #define TITLE_SCREEN_PRESS_START_GRAPHICS __attribute__((section(".rodata.title_screen_press_start_graphics"), aligned(1)))
 
 // The localized JP Press Start tile stream is byte-exact source data.

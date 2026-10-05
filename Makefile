@@ -120,6 +120,107 @@ $(OBJ_DIR)/data/event_scripts.d $(OBJ_DIR)/data/battle_scripts_1.d: include/cons
 
 $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o: include/constants/region_map_sections.h
 
+JP_DECORATION_ICON_ASSETS := graphics/decorations/heavy_desk.4bpp.lz \
+	graphics/decorations/heavy_desk.gbapal.lz \
+	graphics/decorations/ragged_desk.4bpp.lz \
+	graphics/decorations/ragged_desk.gbapal.lz \
+	graphics/decorations/comfort_desk.4bpp.lz \
+	graphics/decorations/comfort_desk.gbapal.lz \
+	graphics/decorations/pretty_desk.4bpp.lz \
+	graphics/decorations/pretty_desk.gbapal.lz \
+	graphics/decorations/brick_desk.4bpp.lz \
+	graphics/decorations/brick_desk.gbapal.lz \
+	graphics/decorations/camp_desk.4bpp.lz \
+	graphics/decorations/camp_desk.gbapal.lz \
+	graphics/decorations/hard_desk.4bpp.lz \
+	graphics/decorations/hard_desk.gbapal.lz \
+	graphics/decorations/red_plant.4bpp.lz \
+	graphics/decorations/red_plant.gbapal.lz \
+	graphics/decorations/tropical_plant.4bpp.lz \
+	graphics/decorations/tropical_plant.gbapal.lz \
+	graphics/decorations/pretty_flowers.4bpp.lz \
+	graphics/decorations/pretty_flowers.gbapal.lz \
+	graphics/decorations/colorful_plant.4bpp.lz \
+	graphics/decorations/colorful_plant.gbapal.lz \
+	graphics/decorations/big_plant.4bpp.lz \
+	graphics/decorations/big_plant.gbapal.lz \
+	graphics/decorations/gorgeous_plant.4bpp.lz \
+	graphics/decorations/gorgeous_plant.gbapal.lz \
+	graphics/decorations/red_brick.4bpp.lz \
+	graphics/decorations/red_brick.gbapal.lz \
+	graphics/decorations/yellow_brick.4bpp.lz \
+	graphics/decorations/yellow_brick.gbapal.lz \
+	graphics/decorations/blue_brick.4bpp.lz \
+	graphics/decorations/blue_brick.gbapal.lz \
+	graphics/decorations/red_tent.4bpp.lz \
+	graphics/decorations/red_tent.gbapal.lz \
+	graphics/decorations/blue_tent.4bpp.lz \
+	graphics/decorations/blue_tent.gbapal.lz \
+	graphics/decorations/solid_board.4bpp.lz \
+	graphics/decorations/solid_board.gbapal.lz \
+	graphics/decorations/slide.4bpp.lz \
+	graphics/decorations/slide.gbapal.lz \
+	graphics/decorations/tire.4bpp.lz \
+	graphics/decorations/tire.gbapal.lz \
+	graphics/decorations/stand.4bpp.lz \
+	graphics/decorations/stand.gbapal.lz \
+	graphics/decorations/breakable_door.4bpp.lz \
+	graphics/decorations/breakable_door.gbapal.lz \
+	graphics/decorations/sand_ornament.4bpp.lz \
+	graphics/decorations/sand_ornament.gbapal.lz \
+	graphics/decorations/glass_ornament.4bpp.lz \
+	graphics/decorations/glass_ornament.gbapal.lz \
+	graphics/decorations/surf_mat.4bpp.lz \
+	graphics/decorations/surf_mat.gbapal.lz \
+	graphics/decorations/thunder_mat.4bpp.lz \
+	graphics/decorations/thunder_mat.gbapal.lz \
+	graphics/decorations/fire_blast_mat.4bpp.lz \
+	graphics/decorations/fire_blast_mat.gbapal.lz \
+	graphics/decorations/powder_snow_mat.4bpp.lz \
+	graphics/decorations/powder_snow_mat.gbapal.lz \
+	graphics/decorations/attract_mat.4bpp.lz \
+	graphics/decorations/attract_mat.gbapal.lz \
+	graphics/decorations/fissure_mat.4bpp.lz \
+	graphics/decorations/fissure_mat.gbapal.lz \
+	graphics/decorations/spikes_mat.4bpp.lz \
+	graphics/decorations/spikes_mat.gbapal.lz \
+	graphics/decorations/snorlax_doll.4bpp.lz \
+	graphics/decorations/snorlax_doll.gbapal.lz \
+	graphics/decorations/rhydon_doll.4bpp.lz \
+	graphics/decorations/rhydon_doll.gbapal.lz \
+	graphics/decorations/lapras_doll.4bpp.lz \
+	graphics/decorations/lapras_doll.gbapal.lz \
+	graphics/decorations/venusaur_doll.4bpp.lz \
+	graphics/decorations/venusaur_doll.gbapal.lz \
+	graphics/decorations/charizard_doll.4bpp.lz \
+	graphics/decorations/charizard_doll.gbapal.lz \
+	graphics/decorations/blastoise_doll.4bpp.lz \
+	graphics/decorations/blastoise_doll.gbapal.lz \
+	graphics/decorations/wailmer_doll.4bpp.lz \
+	graphics/decorations/wailmer_doll.gbapal.lz \
+	graphics/decorations/regice_doll.4bpp.lz \
+	graphics/decorations/regice_doll.gbapal.lz \
+	graphics/decorations/regirock_doll.4bpp.lz \
+	graphics/decorations/regirock_doll.gbapal.lz \
+	graphics/decorations/registeel_doll.4bpp.lz \
+	graphics/decorations/registeel_doll.gbapal.lz
+JP_DECORATION_CORE_ASSETS := graphics/decorations/decoration_menu.gbapal \
+	graphics/decorations/brendan.gbapal \
+	graphics/decorations/may.gbapal \
+	graphics/decorations/put_away_cursor.4bpp
+JP_DECORATION_ICON_INTERMEDIATES := $(JP_DECORATION_ICON_ASSETS:.lz=)
+
+$(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/decorations.h $(JP_DECORATION_ICON_ASSETS)
+
+$(C_BUILDDIR)/decoration.o: src/decoration.c charmap.txt $(JP_DECORATION_CORE_ASSETS) \
+	src/data/decoration/tiles.h src/data/decoration/description.h src/data/decoration/header.h \
+	src/data/decoration/icon.h src/data/decoration/tilemaps.h
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/decoration.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/decoration.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/decoration.gen.s
+
+
 # Maps already migrated to the canonical map.json event-data structure.
 # Layout metadata and every map header/connection now share their local JSON
 # source of truth; this list only controls the remaining event-data migration.
@@ -1161,6 +1262,7 @@ clean: clean-tools
 	rm -f $(JP_MAP_GROUP_AGGREGATES)
 	rm -f $(JP_GENERATED_HEAL_LOCATION_HEADERS)
 	rm -f $(JP_GENERATED_REGION_MAP_HEADERS) $(JP_REGION_MAP_ASSETS) $(JP_REGION_MAP_INTERMEDIATES)
+	rm -f $(JP_DECORATION_ICON_ASSETS) $(JP_DECORATION_CORE_ASSETS) $(JP_DECORATION_ICON_INTERMEDIATES)
 
 # All build artifacts wait for the host-tool chain, so a fresh checkout can
 # safely use `make -j` without racing the C/asset rules against tool builds.
@@ -2787,7 +2889,7 @@ $(OBJ_DIR)/data/data_b2d_mid60.o: data/data_b2d_mid60.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-$(OBJ_DIR)/data/data_b2d_mid61.o: data/data_b2d_mid61.s data/decoration/tiles.inc data/decoration/description.inc data/decoration/header.inc baserom_jp.gba
+$(OBJ_DIR)/data/data_b2d_mid61.o: data/data_b2d_mid61.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
