@@ -7,9 +7,8 @@ heal_locations.h
 wild_encounter.h
 
 # Other generated constants are still tracked for compatibility.
-# Heal-location constants rebuild from JSON and remain ignored.
+# Heal-location and region-map constants rebuild from JSON and remain ignored.
 !map_groups.h
 !layouts.h
-!region_map_sections.h
 !map_event_ids.h
 !wild_encounter.h

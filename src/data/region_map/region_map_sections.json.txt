@@ -1,0 +1,23 @@
+{{ doNotModifyHeader }}
+#ifndef GUARD_DATA_REGION_MAP_REGION_MAP_ENTRIES_H
+#define GUARD_DATA_REGION_MAP_REGION_MAP_ENTRIES_H
+
+## for map_section in map_sections
+{% if map_section.name_owner %}
+REGION_MAP_DATA static const u8 {{ map_section.name_symbol }}[] = _("{{ map_section.name }}");
+{% endif %}
+## endfor
+
+REGION_MAP_DATA const struct RegionMapLocation gRegionMapEntries[] = {
+## for map_section in map_sections
+    [{{ map_section.id }}] = {
+        .x = {% if existsIn(map_section, "x") %}{{ map_section.x }}{% else %}0{% endif %},
+        .y = {% if existsIn(map_section, "y") %}{{ map_section.y }}{% else %}0{% endif %},
+        .width = {% if existsIn(map_section, "width") %}{{ map_section.width }}{% else %}1{% endif %},
+        .height = {% if existsIn(map_section, "height") %}{{ map_section.height }}{% else %}1{% endif %},
+        .name = {{ map_section.name_symbol }},
+    },
+## endfor
+};
+
+#endif // GUARD_DATA_REGION_MAP_REGION_MAP_ENTRIES_H

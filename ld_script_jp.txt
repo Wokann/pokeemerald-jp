@@ -9789,9 +9789,8 @@ SECTIONS {
         src/mail.o(.rodata.mail_data);
         src/menu_helpers.o(.rodata.menu_helpers_swap_line_data);
         src/heal_location.o(.rodata);
-        data/data_b2d_mid61.o(.rodata.data_b2d_mid61_after_swap_line);
-        src/data/region_map_tables.o(.rodata);
-        data/data_b2d_mid61.o(.rodata.857D49C);
+        src/region_map.o(.rodata.region_map_data);
+        data/data_b2d_mid61.o(.rodata.data_b2d_mid61_after_region_map);
         src/data/slot_machine.o(.rodata.85843A8);
         src/slot_machine.o(.rodata.sWindowTemplate_InfoBox);
         src/slot_machine.o(.rodata.sColors_ReeltimeHelp);

@@ -1,0 +1,1662 @@
+{
+  "map_sections": [
+    {
+      "id": "MAPSEC_LITTLEROOT_TOWN",
+      "name": "ミシロタウン",
+      "x": 4,
+      "y": 11,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_LITTLEROOT_TOWN"
+    },
+    {
+      "id": "MAPSEC_OLDALE_TOWN",
+      "name": "コトキタウン",
+      "x": 4,
+      "y": 9,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_OLDALE_TOWN"
+    },
+    {
+      "id": "MAPSEC_DEWFORD_TOWN",
+      "name": "ムロタウン",
+      "x": 2,
+      "y": 14,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_DEWFORD_TOWN"
+    },
+    {
+      "id": "MAPSEC_LAVARIDGE_TOWN",
+      "name": "フエンタウン",
+      "x": 5,
+      "y": 3,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_LAVARIDGE_TOWN"
+    },
+    {
+      "id": "MAPSEC_FALLARBOR_TOWN",
+      "name": "ハジツゲタウン",
+      "x": 3,
+      "y": 0,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_FALLARBOR_TOWN"
+    },
+    {
+      "id": "MAPSEC_VERDANTURF_TOWN",
+      "name": "シダケタウン",
+      "x": 4,
+      "y": 6,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_VERDANTURF_TOWN"
+    },
+    {
+      "id": "MAPSEC_PACIFIDLOG_TOWN",
+      "name": "キナギタウン",
+      "x": 17,
+      "y": 10,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_PACIFIDLOG_TOWN"
+    },
+    {
+      "id": "MAPSEC_PETALBURG_CITY",
+      "name": "トウカシティ",
+      "x": 1,
+      "y": 9,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_PETALBURG_CITY"
+    },
+    {
+      "id": "MAPSEC_SLATEPORT_CITY",
+      "name": "カイナシティ",
+      "x": 8,
+      "y": 10,
+      "width": 1,
+      "height": 2,
+      "name_owner": true,
+      "name_symbol": "sMapName_SLATEPORT_CITY"
+    },
+    {
+      "id": "MAPSEC_MAUVILLE_CITY",
+      "name": "キンセツシティ",
+      "x": 8,
+      "y": 6,
+      "width": 2,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_MAUVILLE_CITY"
+    },
+    {
+      "id": "MAPSEC_RUSTBORO_CITY",
+      "name": "カナズミシティ",
+      "x": 0,
+      "y": 5,
+      "width": 1,
+      "height": 2,
+      "name_owner": true,
+      "name_symbol": "sMapName_RUSTBORO_CITY"
+    },
+    {
+      "id": "MAPSEC_FORTREE_CITY",
+      "name": "ヒワマキシティ",
+      "x": 12,
+      "y": 0,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_FORTREE_CITY"
+    },
+    {
+      "id": "MAPSEC_LILYCOVE_CITY",
+      "name": "ミナモシティ",
+      "x": 18,
+      "y": 3,
+      "width": 2,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_LILYCOVE_CITY"
+    },
+    {
+      "id": "MAPSEC_MOSSDEEP_CITY",
+      "name": "トクサネシティ",
+      "x": 24,
+      "y": 5,
+      "width": 2,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_MOSSDEEP_CITY"
+    },
+    {
+      "id": "MAPSEC_SOOTOPOLIS_CITY",
+      "name": "ルネシティ",
+      "x": 21,
+      "y": 7,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_SOOTOPOLIS_CITY"
+    },
+    {
+      "id": "MAPSEC_EVER_GRANDE_CITY",
+      "name": "サイユウシティ",
+      "x": 27,
+      "y": 8,
+      "width": 1,
+      "height": 2,
+      "name_owner": true,
+      "name_symbol": "sMapName_EVER_GRANDE_CITY"
+    },
+    {
+      "id": "MAPSEC_ROUTE_101",
+      "name": "101ばん　どうろ",
+      "x": 4,
+      "y": 10,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_101"
+    },
+    {
+      "id": "MAPSEC_ROUTE_102",
+      "name": "102ばん　どうろ",
+      "x": 2,
+      "y": 9,
+      "width": 2,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_102"
+    },
+    {
+      "id": "MAPSEC_ROUTE_103",
+      "name": "103ばん　どうろ",
+      "x": 4,
+      "y": 8,
+      "width": 4,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_103"
+    },
+    {
+      "id": "MAPSEC_ROUTE_104",
+      "name": "104ばん　どうろ",
+      "x": 0,
+      "y": 7,
+      "width": 1,
+      "height": 3,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_104"
+    },
+    {
+      "id": "MAPSEC_ROUTE_105",
+      "name": "105ばん　すいどう",
+      "x": 0,
+      "y": 10,
+      "width": 1,
+      "height": 3,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_105"
+    },
+    {
+      "id": "MAPSEC_ROUTE_106",
+      "name": "106ばん　すいどう",
+      "x": 0,
+      "y": 13,
+      "width": 2,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_106"
+    },
+    {
+      "id": "MAPSEC_ROUTE_107",
+      "name": "107ばん　すいどう",
+      "x": 3,
+      "y": 14,
+      "width": 3,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_107"
+    },
+    {
+      "id": "MAPSEC_ROUTE_108",
+      "name": "108ばん　すいどう",
+      "x": 6,
+      "y": 14,
+      "width": 2,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_108"
+    },
+    {
+      "id": "MAPSEC_ROUTE_109",
+      "name": "109ばん　すいどう",
+      "x": 8,
+      "y": 12,
+      "width": 1,
+      "height": 3,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_109"
+    },
+    {
+      "id": "MAPSEC_ROUTE_110",
+      "name": "110ばん　どうろ",
+      "x": 8,
+      "y": 7,
+      "width": 1,
+      "height": 3,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_110"
+    },
+    {
+      "id": "MAPSEC_ROUTE_111",
+      "name": "111ばん　どうろ",
+      "x": 8,
+      "y": 0,
+      "width": 1,
+      "height": 6,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_111"
+    },
+    {
+      "id": "MAPSEC_ROUTE_112",
+      "name": "112ばん　どうろ",
+      "x": 6,
+      "y": 3,
+      "width": 2,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_112"
+    },
+    {
+      "id": "MAPSEC_ROUTE_113",
+      "name": "113ばん　どうろ",
+      "x": 4,
+      "y": 0,
+      "width": 4,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_113"
+    },
+    {
+      "id": "MAPSEC_ROUTE_114",
+      "name": "114ばん　どうろ",
+      "x": 1,
+      "y": 0,
+      "width": 2,
+      "height": 3,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_114"
+    },
+    {
+      "id": "MAPSEC_ROUTE_115",
+      "name": "115ばん　どうろ",
+      "x": 0,
+      "y": 2,
+      "width": 1,
+      "height": 3,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_115"
+    },
+    {
+      "id": "MAPSEC_ROUTE_116",
+      "name": "116ばん　どうろ",
+      "x": 1,
+      "y": 5,
+      "width": 4,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_116"
+    },
+    {
+      "id": "MAPSEC_ROUTE_117",
+      "name": "117ばん　どうろ",
+      "x": 5,
+      "y": 6,
+      "width": 3,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_117"
+    },
+    {
+      "id": "MAPSEC_ROUTE_118",
+      "name": "118ばん　どうろ",
+      "x": 10,
+      "y": 6,
+      "width": 2,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_118"
+    },
+    {
+      "id": "MAPSEC_ROUTE_119",
+      "name": "119ばん　どうろ",
+      "x": 11,
+      "y": 0,
+      "width": 1,
+      "height": 6,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_119"
+    },
+    {
+      "id": "MAPSEC_ROUTE_120",
+      "name": "120ばん　どうろ",
+      "x": 13,
+      "y": 0,
+      "width": 1,
+      "height": 4,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_120"
+    },
+    {
+      "id": "MAPSEC_ROUTE_121",
+      "name": "121ばん　どうろ",
+      "x": 14,
+      "y": 3,
+      "width": 4,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_121"
+    },
+    {
+      "id": "MAPSEC_ROUTE_122",
+      "name": "122ばん　すいどう",
+      "x": 16,
+      "y": 4,
+      "width": 1,
+      "height": 2,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_122"
+    },
+    {
+      "id": "MAPSEC_ROUTE_123",
+      "name": "123ばん　どうろ",
+      "x": 12,
+      "y": 6,
+      "width": 5,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_123"
+    },
+    {
+      "id": "MAPSEC_ROUTE_124",
+      "name": "124ばん　すいどう",
+      "x": 20,
+      "y": 3,
+      "width": 4,
+      "height": 3,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_124"
+    },
+    {
+      "id": "MAPSEC_ROUTE_125",
+      "name": "125ばん　すいどう",
+      "x": 24,
+      "y": 3,
+      "width": 2,
+      "height": 2,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_125"
+    },
+    {
+      "id": "MAPSEC_ROUTE_126",
+      "name": "126ばん　すいどう",
+      "x": 20,
+      "y": 6,
+      "width": 3,
+      "height": 3,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_126"
+    },
+    {
+      "id": "MAPSEC_ROUTE_127",
+      "name": "127ばん　すいどう",
+      "x": 23,
+      "y": 6,
+      "width": 3,
+      "height": 3,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_127"
+    },
+    {
+      "id": "MAPSEC_ROUTE_128",
+      "name": "128ばん　すいどう",
+      "x": 23,
+      "y": 9,
+      "width": 4,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_128"
+    },
+    {
+      "id": "MAPSEC_ROUTE_129",
+      "name": "129ばん　すいどう",
+      "x": 24,
+      "y": 10,
+      "width": 2,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_129"
+    },
+    {
+      "id": "MAPSEC_ROUTE_130",
+      "name": "130ばん　すいどう",
+      "x": 21,
+      "y": 10,
+      "width": 3,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_130"
+    },
+    {
+      "id": "MAPSEC_ROUTE_131",
+      "name": "131ばん　すいどう",
+      "x": 18,
+      "y": 10,
+      "width": 3,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_131"
+    },
+    {
+      "id": "MAPSEC_ROUTE_132",
+      "name": "132ばん　すいどう",
+      "x": 15,
+      "y": 10,
+      "width": 2,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_132"
+    },
+    {
+      "id": "MAPSEC_ROUTE_133",
+      "name": "133ばん　すいどう",
+      "x": 12,
+      "y": 10,
+      "width": 3,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_133"
+    },
+    {
+      "id": "MAPSEC_ROUTE_134",
+      "name": "134ばん　すいどう",
+      "x": 9,
+      "y": 10,
+      "width": 3,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_134"
+    },
+    {
+      "id": "MAPSEC_UNDERWATER_124",
+      "name": "すいちゅう",
+      "x": 20,
+      "y": 3,
+      "width": 4,
+      "height": 3,
+      "name_owner": true,
+      "name_symbol": "sMapName_UNDERWATER"
+    },
+    {
+      "id": "MAPSEC_UNDERWATER_126",
+      "name": "すいちゅう",
+      "x": 20,
+      "y": 6,
+      "width": 3,
+      "height": 3,
+      "name_owner": false,
+      "name_symbol": "sMapName_UNDERWATER"
+    },
+    {
+      "id": "MAPSEC_UNDERWATER_127",
+      "name": "すいちゅう",
+      "x": 23,
+      "y": 6,
+      "width": 3,
+      "height": 3,
+      "name_owner": false,
+      "name_symbol": "sMapName_UNDERWATER"
+    },
+    {
+      "id": "MAPSEC_UNDERWATER_128",
+      "name": "すいちゅう",
+      "x": 23,
+      "y": 9,
+      "width": 4,
+      "height": 1,
+      "name_owner": false,
+      "name_symbol": "sMapName_UNDERWATER"
+    },
+    {
+      "id": "MAPSEC_UNDERWATER_SOOTOPOLIS",
+      "name": "すいちゅう",
+      "x": 21,
+      "y": 7,
+      "width": 1,
+      "height": 1,
+      "name_owner": false,
+      "name_symbol": "sMapName_UNDERWATER"
+    },
+    {
+      "id": "MAPSEC_GRANITE_CAVE",
+      "name": "いしのどうくつ",
+      "x": 1,
+      "y": 13,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_GRANITE_CAVE"
+    },
+    {
+      "id": "MAPSEC_MT_CHIMNEY",
+      "name": "えんとつやま",
+      "x": 6,
+      "y": 2,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_MT__CHIMNEY"
+    },
+    {
+      "id": "MAPSEC_SAFARI_ZONE",
+      "name": "サファリゾーン",
+      "x": 16,
+      "y": 2,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_SAFARI_ZONE"
+    },
+    {
+      "id": "MAPSEC_BATTLE_FRONTIER",
+      "name": "バトルフロンティア",
+      "x": 22,
+      "y": 12,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_BATTLE_FRONTIER"
+    },
+    {
+      "id": "MAPSEC_PETALBURG_WOODS",
+      "name": "トウカのもり",
+      "x": 0,
+      "y": 8,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_PETALBURG_WOODS"
+    },
+    {
+      "id": "MAPSEC_RUSTURF_TUNNEL",
+      "name": "カナシダトンネル",
+      "x": 2,
+      "y": 5,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_RUSTURF_TUNNEL"
+    },
+    {
+      "id": "MAPSEC_ABANDONED_SHIP",
+      "name": "すてられぶね",
+      "x": 6,
+      "y": 14,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ABANDONED_SHIP"
+    },
+    {
+      "id": "MAPSEC_NEW_MAUVILLE",
+      "name": "ニューキンセツ",
+      "x": 8,
+      "y": 7,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_NEW_MAUVILLE"
+    },
+    {
+      "id": "MAPSEC_METEOR_FALLS",
+      "name": "りゅうせいのたき",
+      "x": 0,
+      "y": 3,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_METEOR_FALLS"
+    },
+    {
+      "id": "MAPSEC_METEOR_FALLS2",
+      "name": "りゅうせいのたき",
+      "x": 1,
+      "y": 2,
+      "width": 1,
+      "height": 1,
+      "name_owner": false,
+      "name_symbol": "sMapName_METEOR_FALLS"
+    },
+    {
+      "id": "MAPSEC_MT_PYRE",
+      "name": "おくりびやま",
+      "x": 16,
+      "y": 4,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_MT__PYRE"
+    },
+    {
+      "id": "MAPSEC_AQUA_HIDEOUT_OLD",
+      "name": "{STRING 0x08}だん　アジト",
+      "x": 19,
+      "y": 3,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName__AQUA__HIDEOUT_Clone"
+    },
+    {
+      "id": "MAPSEC_SHOAL_CAVE",
+      "name": "あさせのほらあな",
+      "x": 24,
+      "y": 4,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_SHOAL_CAVE"
+    },
+    {
+      "id": "MAPSEC_SEAFLOOR_CAVERN",
+      "name": "かいていどうくつ",
+      "x": 24,
+      "y": 9,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_SEAFLOOR_CAVERN"
+    },
+    {
+      "id": "MAPSEC_UNDERWATER_SEAFLOOR_CAVERN",
+      "name": "すいちゅう",
+      "x": 24,
+      "y": 9,
+      "width": 1,
+      "height": 1,
+      "name_owner": false,
+      "name_symbol": "sMapName_UNDERWATER"
+    },
+    {
+      "id": "MAPSEC_VICTORY_ROAD",
+      "name": "チャンピオンロード",
+      "x": 27,
+      "y": 9,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_VICTORY_ROAD"
+    },
+    {
+      "id": "MAPSEC_MIRAGE_ISLAND",
+      "name": "まぼろしじま",
+      "x": 17,
+      "y": 10,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_MIRAGE_ISLAND"
+    },
+    {
+      "id": "MAPSEC_CAVE_OF_ORIGIN",
+      "name": "めざめのほこら",
+      "x": 21,
+      "y": 7,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_CAVE_OF_ORIGIN"
+    },
+    {
+      "id": "MAPSEC_SOUTHERN_ISLAND",
+      "name": "みなみの　ことう",
+      "x": 12,
+      "y": 14,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_SOUTHERN_ISLAND"
+    },
+    {
+      "id": "MAPSEC_FIERY_PATH",
+      "name": "ほのおのぬけみち",
+      "x": 6,
+      "y": 3,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_FIERY_PATH"
+    },
+    {
+      "id": "MAPSEC_FIERY_PATH2",
+      "name": "ほのおのぬけみち",
+      "x": 7,
+      "y": 3,
+      "width": 1,
+      "height": 1,
+      "name_owner": false,
+      "name_symbol": "sMapName_FIERY_PATH"
+    },
+    {
+      "id": "MAPSEC_JAGGED_PASS",
+      "name": "デコボコさんどう",
+      "x": 6,
+      "y": 3,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_JAGGED_PASS"
+    },
+    {
+      "id": "MAPSEC_JAGGED_PASS2",
+      "name": "デコボコさんどう",
+      "x": 7,
+      "y": 2,
+      "width": 1,
+      "height": 1,
+      "name_owner": false,
+      "name_symbol": "sMapName_JAGGED_PASS"
+    },
+    {
+      "id": "MAPSEC_SEALED_CHAMBER",
+      "name": "おふれのせきしつ",
+      "x": 11,
+      "y": 10,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_SEALED_CHAMBER"
+    },
+    {
+      "id": "MAPSEC_UNDERWATER_SEALED_CHAMBER",
+      "name": "すいちゅう",
+      "x": 11,
+      "y": 10,
+      "width": 1,
+      "height": 1,
+      "name_owner": false,
+      "name_symbol": "sMapName_UNDERWATER"
+    },
+    {
+      "id": "MAPSEC_SCORCHED_SLAB",
+      "name": "ひでりのいわと",
+      "x": 13,
+      "y": 0,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_SCORCHED_SLAB"
+    },
+    {
+      "id": "MAPSEC_ISLAND_CAVE",
+      "name": "こじまのよこあな",
+      "x": 0,
+      "y": 10,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ISLAND_CAVE"
+    },
+    {
+      "id": "MAPSEC_DESERT_RUINS",
+      "name": "さばくいせき",
+      "x": 8,
+      "y": 3,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_DESERT_RUINS"
+    },
+    {
+      "id": "MAPSEC_ANCIENT_TOMB",
+      "name": "こだいづか",
+      "x": 13,
+      "y": 2,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ANCIENT_TOMB"
+    },
+    {
+      "id": "MAPSEC_INSIDE_OF_TRUCK",
+      "name": "トラックのなか",
+      "name_owner": true,
+      "name_symbol": "sMapName_INSIDE_OF_TRUCK"
+    },
+    {
+      "id": "MAPSEC_SKY_PILLAR",
+      "name": "そらのはしら",
+      "x": 19,
+      "y": 10,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_SKY_PILLAR"
+    },
+    {
+      "id": "MAPSEC_SECRET_BASE",
+      "name": "ひみつきち",
+      "name_owner": true,
+      "name_symbol": "sMapName_SECRET_BASE"
+    },
+    {
+      "id": "MAPSEC_DYNAMIC",
+      "name": "とくしゅ",
+      "name_owner": true,
+      "name_symbol": "sMapName_DYNAMIC"
+    },
+    {
+      "id": "MAPSEC_PALLET_TOWN",
+      "name": "マサラタウン",
+      "name_owner": true,
+      "name_symbol": "sMapName_PALLET_TOWN"
+    },
+    {
+      "id": "MAPSEC_VIRIDIAN_CITY",
+      "name": "トキワシティ",
+      "name_owner": true,
+      "name_symbol": "sMapName_VIRIDIAN_CITY"
+    },
+    {
+      "id": "MAPSEC_PEWTER_CITY",
+      "name": "ニビシティ",
+      "name_owner": true,
+      "name_symbol": "sMapName_PEWTER_CITY"
+    },
+    {
+      "id": "MAPSEC_CERULEAN_CITY",
+      "name": "ハナダシティ",
+      "name_owner": true,
+      "name_symbol": "sMapName_CERULEAN_CITY"
+    },
+    {
+      "id": "MAPSEC_LAVENDER_TOWN",
+      "name": "シオンタウン",
+      "name_owner": true,
+      "name_symbol": "sMapName_LAVENDER_TOWN"
+    },
+    {
+      "id": "MAPSEC_VERMILION_CITY",
+      "name": "クチバシティ",
+      "name_owner": true,
+      "name_symbol": "sMapName_VERMILION_CITY"
+    },
+    {
+      "id": "MAPSEC_CELADON_CITY",
+      "name": "タマムシシティ",
+      "name_owner": true,
+      "name_symbol": "sMapName_CELADON_CITY"
+    },
+    {
+      "id": "MAPSEC_FUCHSIA_CITY",
+      "name": "セキチクシティ",
+      "name_owner": true,
+      "name_symbol": "sMapName_FUCHSIA_CITY"
+    },
+    {
+      "id": "MAPSEC_CINNABAR_ISLAND",
+      "name": "グレンじま",
+      "name_owner": true,
+      "name_symbol": "sMapName_CINNABAR_ISLAND"
+    },
+    {
+      "id": "MAPSEC_INDIGO_PLATEAU",
+      "name": "セキエイこうげん",
+      "name_owner": true,
+      "name_symbol": "sMapName_INDIGO_PLATEAU"
+    },
+    {
+      "id": "MAPSEC_SAFFRON_CITY",
+      "name": "ヤマブキシティ",
+      "name_owner": true,
+      "name_symbol": "sMapName_SAFFRON_CITY"
+    },
+    {
+      "id": "MAPSEC_ROUTE_4_POKECENTER",
+      "name": "4ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_4_Clone"
+    },
+    {
+      "id": "MAPSEC_ROUTE_10_POKECENTER",
+      "name": "10ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_10_Clone"
+    },
+    {
+      "id": "MAPSEC_ROUTE_1",
+      "name": "1ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_1"
+    },
+    {
+      "id": "MAPSEC_ROUTE_2",
+      "name": "2ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_2"
+    },
+    {
+      "id": "MAPSEC_ROUTE_3",
+      "name": "3ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_3"
+    },
+    {
+      "id": "MAPSEC_ROUTE_4",
+      "name": "4ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_4"
+    },
+    {
+      "id": "MAPSEC_ROUTE_5",
+      "name": "5ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_5"
+    },
+    {
+      "id": "MAPSEC_ROUTE_6",
+      "name": "6ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_6"
+    },
+    {
+      "id": "MAPSEC_ROUTE_7",
+      "name": "7ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_7"
+    },
+    {
+      "id": "MAPSEC_ROUTE_8",
+      "name": "8ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_8"
+    },
+    {
+      "id": "MAPSEC_ROUTE_9",
+      "name": "9ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_9"
+    },
+    {
+      "id": "MAPSEC_ROUTE_10",
+      "name": "10ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_10"
+    },
+    {
+      "id": "MAPSEC_ROUTE_11",
+      "name": "11ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_11"
+    },
+    {
+      "id": "MAPSEC_ROUTE_12",
+      "name": "12ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_12"
+    },
+    {
+      "id": "MAPSEC_ROUTE_13",
+      "name": "13ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_13"
+    },
+    {
+      "id": "MAPSEC_ROUTE_14",
+      "name": "14ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_14"
+    },
+    {
+      "id": "MAPSEC_ROUTE_15",
+      "name": "15ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_15"
+    },
+    {
+      "id": "MAPSEC_ROUTE_16",
+      "name": "16ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_16"
+    },
+    {
+      "id": "MAPSEC_ROUTE_17",
+      "name": "17ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_17"
+    },
+    {
+      "id": "MAPSEC_ROUTE_18",
+      "name": "18ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_18"
+    },
+    {
+      "id": "MAPSEC_ROUTE_19",
+      "name": "19ばん　すいどう",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_19"
+    },
+    {
+      "id": "MAPSEC_ROUTE_20",
+      "name": "20ばん　すいどう",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_20"
+    },
+    {
+      "id": "MAPSEC_ROUTE_21",
+      "name": "21ばん　すいどう",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_21"
+    },
+    {
+      "id": "MAPSEC_ROUTE_22",
+      "name": "22ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_22"
+    },
+    {
+      "id": "MAPSEC_ROUTE_23",
+      "name": "23ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_23"
+    },
+    {
+      "id": "MAPSEC_ROUTE_24",
+      "name": "24ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_24"
+    },
+    {
+      "id": "MAPSEC_ROUTE_25",
+      "name": "25ばん　どうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROUTE_25"
+    },
+    {
+      "id": "MAPSEC_VIRIDIAN_FOREST",
+      "name": "トキワのもり",
+      "name_owner": true,
+      "name_symbol": "sMapName_VIRIDIAN_FOREST"
+    },
+    {
+      "id": "MAPSEC_MT_MOON",
+      "name": "オツキミやま",
+      "name_owner": true,
+      "name_symbol": "sMapName_MT__MOON"
+    },
+    {
+      "id": "MAPSEC_S_S_ANNE",
+      "name": "サント·アンヌごう",
+      "name_owner": true,
+      "name_symbol": "sMapName_S_S__ANNE"
+    },
+    {
+      "id": "MAPSEC_UNDERGROUND_PATH",
+      "name": "ちかつうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_UNDERGROUND_PATH"
+    },
+    {
+      "id": "MAPSEC_UNDERGROUND_PATH_2",
+      "name": "ちかつうろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_UNDERGROUND_PATH_Clone"
+    },
+    {
+      "id": "MAPSEC_DIGLETTS_CAVE",
+      "name": "ディグダのあな",
+      "name_owner": true,
+      "name_symbol": "sMapName_DIGLETT_S_CAVE"
+    },
+    {
+      "id": "MAPSEC_KANTO_VICTORY_ROAD",
+      "name": "チャンピオンロード",
+      "name_owner": true,
+      "name_symbol": "sMapName_VICTORY_ROAD_Clone"
+    },
+    {
+      "id": "MAPSEC_ROCKET_HIDEOUT",
+      "name": "ロケットだんアジト",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROCKET_HIDEOUT"
+    },
+    {
+      "id": "MAPSEC_SILPH_CO",
+      "name": "シルフカンパニー",
+      "name_owner": true,
+      "name_symbol": "sMapName_SILPH_CO_"
+    },
+    {
+      "id": "MAPSEC_POKEMON_MANSION",
+      "name": "ポケモンやしき",
+      "name_owner": true,
+      "name_symbol": "sMapName_POK__MON_MANSION"
+    },
+    {
+      "id": "MAPSEC_KANTO_SAFARI_ZONE",
+      "name": "サファリゾーン",
+      "name_owner": true,
+      "name_symbol": "sMapName_SAFARI_ZONE_Clone"
+    },
+    {
+      "id": "MAPSEC_POKEMON_LEAGUE",
+      "name": "ポケモンリーグ",
+      "name_owner": true,
+      "name_symbol": "sMapName_POK__MON_LEAGUE"
+    },
+    {
+      "id": "MAPSEC_ROCK_TUNNEL",
+      "name": "イワヤマトンネル",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROCK_TUNNEL"
+    },
+    {
+      "id": "MAPSEC_SEAFOAM_ISLANDS",
+      "name": "ふたごじま",
+      "name_owner": true,
+      "name_symbol": "sMapName_SEAFOAM_ISLANDS"
+    },
+    {
+      "id": "MAPSEC_POKEMON_TOWER",
+      "name": "ポケモンタワー",
+      "name_owner": true,
+      "name_symbol": "sMapName_POK__MON_TOWER"
+    },
+    {
+      "id": "MAPSEC_CERULEAN_CAVE",
+      "name": "ハナダのどうくつ",
+      "name_owner": true,
+      "name_symbol": "sMapName_CERULEAN_CAVE"
+    },
+    {
+      "id": "MAPSEC_POWER_PLANT",
+      "name": "むじんはつでんしょ",
+      "name_owner": true,
+      "name_symbol": "sMapName_POWER_PLANT"
+    },
+    {
+      "id": "MAPSEC_ONE_ISLAND",
+      "name": "1のしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_ONE_ISLAND"
+    },
+    {
+      "id": "MAPSEC_TWO_ISLAND",
+      "name": "2のしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_TWO_ISLAND"
+    },
+    {
+      "id": "MAPSEC_THREE_ISLAND",
+      "name": "3のしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_THREE_ISLAND"
+    },
+    {
+      "id": "MAPSEC_FOUR_ISLAND",
+      "name": "4のしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_FOUR_ISLAND"
+    },
+    {
+      "id": "MAPSEC_FIVE_ISLAND",
+      "name": "5のしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_FIVE_ISLAND"
+    },
+    {
+      "id": "MAPSEC_SEVEN_ISLAND",
+      "name": "7のしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_SEVEN_ISLAND"
+    },
+    {
+      "id": "MAPSEC_SIX_ISLAND",
+      "name": "6のしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_SIX_ISLAND"
+    },
+    {
+      "id": "MAPSEC_KINDLE_ROAD",
+      "name": "ほてりのみち",
+      "name_owner": true,
+      "name_symbol": "sMapName_KINDLE_ROAD"
+    },
+    {
+      "id": "MAPSEC_TREASURE_BEACH",
+      "name": "たからのはま",
+      "name_owner": true,
+      "name_symbol": "sMapName_TREASURE_BEACH"
+    },
+    {
+      "id": "MAPSEC_CAPE_BRINK",
+      "name": "きわのみさき",
+      "name_owner": true,
+      "name_symbol": "sMapName_CAPE_BRINK"
+    },
+    {
+      "id": "MAPSEC_BOND_BRIDGE",
+      "name": "きずなばし",
+      "name_owner": true,
+      "name_symbol": "sMapName_BOND_BRIDGE"
+    },
+    {
+      "id": "MAPSEC_THREE_ISLE_PORT",
+      "name": "3のしま　みなと",
+      "name_owner": true,
+      "name_symbol": "sMapName_THREE_ISLE_PORT"
+    },
+    {
+      "id": "MAPSEC_SEVII_ISLE_6",
+      "name": "6ばん　ななしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_SEVII_ISLE_6"
+    },
+    {
+      "id": "MAPSEC_SEVII_ISLE_7",
+      "name": "7ばん　ななしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_SEVII_ISLE_7"
+    },
+    {
+      "id": "MAPSEC_SEVII_ISLE_8",
+      "name": "8ばん　ななしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_SEVII_ISLE_8"
+    },
+    {
+      "id": "MAPSEC_SEVII_ISLE_9",
+      "name": "9ばん　ななしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_SEVII_ISLE_9"
+    },
+    {
+      "id": "MAPSEC_RESORT_GORGEOUS",
+      "name": "ゴージャスリゾート",
+      "name_owner": true,
+      "name_symbol": "sMapName_RESORT_GORGEOUS"
+    },
+    {
+      "id": "MAPSEC_WATER_LABYRINTH",
+      "name": "みずのめいろ",
+      "name_owner": true,
+      "name_symbol": "sMapName_WATER_LABYRINTH"
+    },
+    {
+      "id": "MAPSEC_FIVE_ISLE_MEADOW",
+      "name": "5のしま　あきち",
+      "name_owner": true,
+      "name_symbol": "sMapName_FIVE_ISLE_MEADOW"
+    },
+    {
+      "id": "MAPSEC_MEMORIAL_PILLAR",
+      "name": "おもいでのとう",
+      "name_owner": true,
+      "name_symbol": "sMapName_MEMORIAL_PILLAR"
+    },
+    {
+      "id": "MAPSEC_OUTCAST_ISLAND",
+      "name": "はずれのしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_OUTCAST_ISLAND"
+    },
+    {
+      "id": "MAPSEC_GREEN_PATH",
+      "name": "みどりのさんぽみち",
+      "name_owner": true,
+      "name_symbol": "sMapName_GREEN_PATH"
+    },
+    {
+      "id": "MAPSEC_WATER_PATH",
+      "name": "みずのさんぽみち",
+      "name_owner": true,
+      "name_symbol": "sMapName_WATER_PATH"
+    },
+    {
+      "id": "MAPSEC_RUIN_VALLEY",
+      "name": "いせきのたに",
+      "name_owner": true,
+      "name_symbol": "sMapName_RUIN_VALLEY"
+    },
+    {
+      "id": "MAPSEC_TRAINER_TOWER",
+      "name": "トレーナータワー",
+      "name_owner": true,
+      "name_symbol": "sMapName_TRAINER_TOWER"
+    },
+    {
+      "id": "MAPSEC_CANYON_ENTRANCE",
+      "name": "けいこくいりぐち",
+      "name_owner": true,
+      "name_symbol": "sMapName_CANYON_ENTRANCE"
+    },
+    {
+      "id": "MAPSEC_SEVAULT_CANYON",
+      "name": "しっぽうけいこく",
+      "name_owner": true,
+      "name_symbol": "sMapName_SEVAULT_CANYON"
+    },
+    {
+      "id": "MAPSEC_TANOBY_RUINS",
+      "name": "アスカナいせき",
+      "name_owner": true,
+      "name_symbol": "sMapName_TANOBY_RUINS"
+    },
+    {
+      "id": "MAPSEC_SEVII_ISLE_22",
+      "name": "22ばん　ななしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_SEVII_ISLE_22"
+    },
+    {
+      "id": "MAPSEC_SEVII_ISLE_23",
+      "name": "23ばん　ななしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_SEVII_ISLE_23"
+    },
+    {
+      "id": "MAPSEC_SEVII_ISLE_24",
+      "name": "24ばん　ななしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_SEVII_ISLE_24"
+    },
+    {
+      "id": "MAPSEC_NAVEL_ROCK_FRLG",
+      "name": "へそのいわ",
+      "name_owner": true,
+      "name_symbol": "sMapName_NAVEL_ROCK"
+    },
+    {
+      "id": "MAPSEC_MT_EMBER",
+      "name": "ともしびやま",
+      "name_owner": true,
+      "name_symbol": "sMapName_MT__EMBER"
+    },
+    {
+      "id": "MAPSEC_BERRY_FOREST",
+      "name": "きのみのもり",
+      "name_owner": true,
+      "name_symbol": "sMapName_BERRY_FOREST"
+    },
+    {
+      "id": "MAPSEC_ICEFALL_CAVE",
+      "name": "いてだきのどうくつ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ICEFALL_CAVE"
+    },
+    {
+      "id": "MAPSEC_ROCKET_WAREHOUSE",
+      "name": "ロケットだんそうこ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ROCKET_WAREHOUSE"
+    },
+    {
+      "id": "MAPSEC_TRAINER_TOWER_2",
+      "name": "トレーナータワー",
+      "name_owner": true,
+      "name_symbol": "sMapName_TRAINER_TOWER_Clone"
+    },
+    {
+      "id": "MAPSEC_DOTTED_HOLE",
+      "name": "てんのあな",
+      "name_owner": true,
+      "name_symbol": "sMapName_DOTTED_HOLE"
+    },
+    {
+      "id": "MAPSEC_LOST_CAVE",
+      "name": "かえらずのあな",
+      "name_owner": true,
+      "name_symbol": "sMapName_LOST_CAVE"
+    },
+    {
+      "id": "MAPSEC_PATTERN_BUSH",
+      "name": "しるしのはやし",
+      "name_owner": true,
+      "name_symbol": "sMapName_PATTERN_BUSH"
+    },
+    {
+      "id": "MAPSEC_ALTERING_CAVE_FRLG",
+      "name": "へんげのどうくつ",
+      "name_owner": true,
+      "name_symbol": "sMapName_ALTERING_CAVE"
+    },
+    {
+      "id": "MAPSEC_TANOBY_CHAMBERS",
+      "name": "アスカナのせきしつ",
+      "name_owner": true,
+      "name_symbol": "sMapName_TANOBY_CHAMBERS"
+    },
+    {
+      "id": "MAPSEC_THREE_ISLE_PATH",
+      "name": "3のしま　よこあな",
+      "name_owner": true,
+      "name_symbol": "sMapName_THREE_ISLE_PATH"
+    },
+    {
+      "id": "MAPSEC_TANOBY_KEY",
+      "name": "アスカナのかぎ",
+      "name_owner": true,
+      "name_symbol": "sMapName_TANOBY_KEY"
+    },
+    {
+      "id": "MAPSEC_BIRTH_ISLAND_FRLG",
+      "name": "たんじょうのしま",
+      "name_owner": true,
+      "name_symbol": "sMapName_BIRTH_ISLAND"
+    },
+    {
+      "id": "MAPSEC_MONEAN_CHAMBER",
+      "name": "イレスのせきしつ",
+      "name_owner": true,
+      "name_symbol": "sMapName_MONEAN_CHAMBER"
+    },
+    {
+      "id": "MAPSEC_LIPTOO_CHAMBER",
+      "name": "ナザンのせきしつ",
+      "name_owner": true,
+      "name_symbol": "sMapName_LIPTOO_CHAMBER"
+    },
+    {
+      "id": "MAPSEC_WEEPTH_CHAMBER",
+      "name": "ユゴのせきしつ",
+      "name_owner": true,
+      "name_symbol": "sMapName_WEEPTH_CHAMBER"
+    },
+    {
+      "id": "MAPSEC_DILFORD_CHAMBER",
+      "name": "アレボカのせきしつ",
+      "name_owner": true,
+      "name_symbol": "sMapName_DILFORD_CHAMBER"
+    },
+    {
+      "id": "MAPSEC_SCUFIB_CHAMBER",
+      "name": "コトーのせきしつ",
+      "name_owner": true,
+      "name_symbol": "sMapName_SCUFIB_CHAMBER"
+    },
+    {
+      "id": "MAPSEC_RIXY_CHAMBER",
+      "name": "アヌザのせきしつ",
+      "name_owner": true,
+      "name_symbol": "sMapName_RIXY_CHAMBER"
+    },
+    {
+      "id": "MAPSEC_VIAPOIS_CHAMBER",
+      "name": "オリフのせきしつ",
+      "name_owner": true,
+      "name_symbol": "sMapName_VIAPOIS_CHAMBER"
+    },
+    {
+      "id": "MAPSEC_EMBER_SPA",
+      "name": "ともしびおんせん",
+      "name_owner": true,
+      "name_symbol": "sMapName_EMBER_SPA"
+    },
+    {
+      "id": "MAPSEC_SPECIAL_AREA",
+      "name": "あかみどりとくしゅ",
+      "name_owner": true,
+      "name_symbol": "sMapName_SPECIAL_AREA"
+    },
+    {
+      "id": "MAPSEC_AQUA_HIDEOUT",
+      "name": "アクアだん　アジト",
+      "x": 19,
+      "y": 3,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_AQUA_HIDEOUT"
+    },
+    {
+      "id": "MAPSEC_MAGMA_HIDEOUT",
+      "name": "マグマだん　アジト",
+      "x": 6,
+      "y": 3,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_MAGMA_HIDEOUT"
+    },
+    {
+      "id": "MAPSEC_MIRAGE_TOWER",
+      "name": "げんえいのとう",
+      "x": 8,
+      "y": 2,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_MIRAGE_TOWER"
+    },
+    {
+      "id": "MAPSEC_BIRTH_ISLAND",
+      "name": "たんじょうのしま",
+      "name_owner": false,
+      "name_symbol": "sMapName_BIRTH_ISLAND"
+    },
+    {
+      "id": "MAPSEC_FARAWAY_ISLAND",
+      "name": "さいはてのことう",
+      "name_owner": true,
+      "name_symbol": "sMapName_FARAWAY_ISLAND"
+    },
+    {
+      "id": "MAPSEC_ARTISAN_CAVE",
+      "name": "アトリエのあな",
+      "x": 22,
+      "y": 12,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_ARTISAN_CAVE"
+    },
+    {
+      "id": "MAPSEC_MARINE_CAVE",
+      "name": "うみのどうくつ",
+      "name_owner": true,
+      "name_symbol": "sMapName_MARINE_CAVE"
+    },
+    {
+      "id": "MAPSEC_UNDERWATER_MARINE_CAVE",
+      "name": "すいちゅう",
+      "name_owner": false,
+      "name_symbol": "sMapName_UNDERWATER"
+    },
+    {
+      "id": "MAPSEC_TERRA_CAVE",
+      "name": "りくのどうくつ",
+      "name_owner": true,
+      "name_symbol": "sMapName_TERRA_CAVE"
+    },
+    {
+      "id": "MAPSEC_UNDERWATER_105",
+      "name": "すいちゅう",
+      "x": 0,
+      "y": 10,
+      "width": 1,
+      "height": 3,
+      "name_owner": false,
+      "name_symbol": "sMapName_UNDERWATER"
+    },
+    {
+      "id": "MAPSEC_UNDERWATER_125",
+      "name": "すいちゅう",
+      "x": 24,
+      "y": 3,
+      "width": 2,
+      "height": 2,
+      "name_owner": false,
+      "name_symbol": "sMapName_UNDERWATER"
+    },
+    {
+      "id": "MAPSEC_UNDERWATER_129",
+      "name": "すいちゅう",
+      "x": 24,
+      "y": 10,
+      "width": 2,
+      "height": 1,
+      "name_owner": false,
+      "name_symbol": "sMapName_UNDERWATER"
+    },
+    {
+      "id": "MAPSEC_DESERT_UNDERPASS",
+      "name": "さばくのちかどう",
+      "x": 2,
+      "y": 0,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_DESERT_UNDERPASS"
+    },
+    {
+      "id": "MAPSEC_ALTERING_CAVE",
+      "name": "へんげのどうくつ",
+      "x": 6,
+      "y": 8,
+      "width": 1,
+      "height": 1,
+      "name_owner": false,
+      "name_symbol": "sMapName_ALTERING_CAVE"
+    },
+    {
+      "id": "MAPSEC_NAVEL_ROCK",
+      "name": "へそのいわ",
+      "name_owner": false,
+      "name_symbol": "sMapName_NAVEL_ROCK"
+    },
+    {
+      "id": "MAPSEC_TRAINER_HILL",
+      "name": "トレーナーヒル",
+      "x": 8,
+      "y": 4,
+      "width": 1,
+      "height": 1,
+      "name_owner": true,
+      "name_symbol": "sMapName_TRAINER_HILL"
+    }
+  ]
+}

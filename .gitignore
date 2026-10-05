@@ -135,6 +135,8 @@ tools/br_ips/ips_patch
 # Generated from the canonical heal-location JSON and templates.
 src/data/heal_locations.h
 include/constants/heal_locations.h
+src/data/region_map/region_map_entries.h
+include/constants/region_map_sections.h
 *.bat
 *.dump
 *.sa*

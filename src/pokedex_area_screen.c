@@ -101,17 +101,6 @@ extern s16 gUnknown_3001200;
 extern s16 gUnknown_3001202;
 extern s16 gUnknown_3001204;
 
-struct JPRegionMapEntry
-{
-    u8 x;
-    u8 y;
-    u8 width;
-    u8 height;
-    u8 unused[4];
-};
-
-extern const struct JPRegionMapEntry gUnknown_857CD6C[];
-
 static const u16 sSpeciesHiddenFromAreaScreen[] POKEDEX_AREA_SCREEN_DATA =
 {
     SPECIES_WYNAUT,
@@ -1100,10 +1089,10 @@ void CreateAreaMarkerSprites(void)
     for (gUnknown_3001200 = 0; gUnknown_3001200 < gUnknown_203A848->numSpecialAreas; gUnknown_3001200++)
     {
         gUnknown_3001202 = gUnknown_203A848->specialAreaRegionMapSectionIds[gUnknown_3001200];
-        gUnknown_30011FC = 8 * (gUnknown_857CD6C[gUnknown_3001202].x + 1) + 4;
-        gUnknown_30011FE = 8 * gUnknown_857CD6C[gUnknown_3001202].y + 28;
-        gUnknown_30011FC += 4 * (gUnknown_857CD6C[gUnknown_3001202].width - 1);
-        gUnknown_30011FE += 4 * (gUnknown_857CD6C[gUnknown_3001202].height - 1);
+        gUnknown_30011FC = 8 * (gRegionMapEntries[gUnknown_3001202].x + 1) + 4;
+        gUnknown_30011FE = 8 * gRegionMapEntries[gUnknown_3001202].y + 28;
+        gUnknown_30011FC += 4 * (gRegionMapEntries[gUnknown_3001202].width - 1);
+        gUnknown_30011FE += 4 * (gRegionMapEntries[gUnknown_3001202].height - 1);
         spriteId = CreateSprite(&sAreaMarkerSpriteTemplate, gUnknown_30011FC, gUnknown_30011FE, 0);
         if (spriteId != MAX_SPRITES)
         {

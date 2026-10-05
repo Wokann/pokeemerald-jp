@@ -4,6 +4,437 @@
 #include "constants/region_map_sections.h"
 #include "constants/weather.h"
 
+#include "bg.h"
+#include "window.h"
+#include "strings.h"
+#include "constants/flags.h"
+#include "constants/heal_locations.h"
+#include "constants/maps.h"
+
+#define REGION_MAP_DATA __attribute__((section(".rodata.region_map_data")))
+
+#define MAP_WIDTH 28
+#define MAP_HEIGHT 15
+#define MAPCURSOR_X_MIN 1
+#define MAPCURSOR_Y_MIN 2
+#define MAPCURSOR_X_MAX (MAPCURSOR_X_MIN + MAP_WIDTH - 1)
+#define MAPCURSOR_Y_MAX (MAPCURSOR_Y_MIN + MAP_HEIGHT - 1)
+
+#define FLYDESTICON_RED_OUTLINE 6
+
+enum {
+    TAG_CURSOR,
+    TAG_PLAYER_ICON,
+    TAG_FLY_ICON,
+};
+
+// Window IDs for the fly map
+enum {
+    WIN_MAPSEC_NAME,
+    WIN_MAPSEC_NAME_TALL, // For fly destinations with subtitles (just Ever Grande)
+    WIN_FLY_TO_WHERE,
+};
+
+struct MultiNameFlyDest
+{
+    const u8 *const *name;
+    mapsec_u16_t mapSecId;
+    u16 flag;
+};
+
+static void SpriteCB_CursorMapFull(struct Sprite *sprite);
+static void CB_ExitFlyMap(void);
+
+REGION_MAP_DATA static const u16 sRegionMapCursorPal[] = INCBIN_U16("graphics/pokenav/region_map/cursor.gbapal");
+REGION_MAP_DATA static const u32 sRegionMapCursorSmallGfxLZ[] = INCBIN_U32("graphics/pokenav/region_map/cursor_small.4bpp.lz");
+REGION_MAP_DATA static const u32 sRegionMapCursorLargeGfxLZ[] = INCBIN_U32("graphics/pokenav/region_map/cursor_large.4bpp.lz");
+REGION_MAP_DATA static const u16 sRegionMapBg_Pal[] = INCBIN_U16("graphics/pokenav/region_map/map.gbapal");
+REGION_MAP_DATA static const u32 sRegionMapBg_GfxLZ[] = INCBIN_U32("graphics/pokenav/region_map/map.8bpp.lz");
+REGION_MAP_DATA static const u32 sRegionMapBg_TilemapLZ[] = INCBIN_U32("graphics/pokenav/region_map/map.bin.lz");
+REGION_MAP_DATA static const u16 sRegionMapPlayerIcon_BrendanPal[] = INCBIN_U16("graphics/pokenav/region_map/brendan_icon.gbapal");
+REGION_MAP_DATA static const u8 sRegionMapPlayerIcon_BrendanGfx[] = INCBIN_U8("graphics/pokenav/region_map/brendan_icon.4bpp");
+REGION_MAP_DATA static const u16 sRegionMapPlayerIcon_MayPal[] = INCBIN_U16("graphics/pokenav/region_map/may_icon.gbapal");
+REGION_MAP_DATA static const u8 sRegionMapPlayerIcon_MayGfx[] = INCBIN_U8("graphics/pokenav/region_map/may_icon.4bpp");
+
+#include "data/region_map/region_map_layout.h"
+#include "data/region_map/region_map_entries.h"
+
+REGION_MAP_DATA static const mapsec_u16_t sRegionMap_SpecialPlaceLocations[][2] =
+{
+    {MAPSEC_UNDERWATER_105,             MAPSEC_ROUTE_105},
+    {MAPSEC_UNDERWATER_124,             MAPSEC_ROUTE_124},
+    #ifdef BUGFIX
+    {MAPSEC_UNDERWATER_125,             MAPSEC_ROUTE_125},
+    #else
+    {MAPSEC_UNDERWATER_125,             MAPSEC_ROUTE_129}, // BUG: Map will incorrectly display the name of Route 129 when diving on Route 125 (for Marine Cave only)
+    #endif
+    {MAPSEC_UNDERWATER_126,             MAPSEC_ROUTE_126},
+    {MAPSEC_UNDERWATER_127,             MAPSEC_ROUTE_127},
+    {MAPSEC_UNDERWATER_128,             MAPSEC_ROUTE_128},
+    {MAPSEC_UNDERWATER_129,             MAPSEC_ROUTE_129},
+    {MAPSEC_UNDERWATER_SOOTOPOLIS,      MAPSEC_SOOTOPOLIS_CITY},
+    {MAPSEC_UNDERWATER_SEAFLOOR_CAVERN, MAPSEC_ROUTE_128},
+    {MAPSEC_AQUA_HIDEOUT,               MAPSEC_LILYCOVE_CITY},
+    {MAPSEC_AQUA_HIDEOUT_OLD,           MAPSEC_LILYCOVE_CITY},
+    {MAPSEC_MAGMA_HIDEOUT,              MAPSEC_ROUTE_112},
+    {MAPSEC_UNDERWATER_SEALED_CHAMBER,  MAPSEC_ROUTE_134},
+    {MAPSEC_PETALBURG_WOODS,            MAPSEC_ROUTE_104},
+    {MAPSEC_JAGGED_PASS,                MAPSEC_ROUTE_112},
+    {MAPSEC_MT_PYRE,                    MAPSEC_ROUTE_122},
+    {MAPSEC_SKY_PILLAR,                 MAPSEC_ROUTE_131},
+    {MAPSEC_MIRAGE_TOWER,               MAPSEC_ROUTE_111},
+    {MAPSEC_TRAINER_HILL,               MAPSEC_ROUTE_111},
+    {MAPSEC_DESERT_UNDERPASS,           MAPSEC_ROUTE_114},
+    {MAPSEC_ALTERING_CAVE,              MAPSEC_ROUTE_103},
+    {MAPSEC_ARTISAN_CAVE,               MAPSEC_ROUTE_103},
+    {MAPSEC_ABANDONED_SHIP,             MAPSEC_ROUTE_108},
+    {MAPSEC_NONE,                       MAPSEC_NONE}
+};
+
+REGION_MAP_DATA static const mapsec_u16_t sMarineCaveMapSecIds[] =
+{
+    MAPSEC_MARINE_CAVE,
+    MAPSEC_UNDERWATER_MARINE_CAVE,
+    MAPSEC_UNDERWATER_MARINE_CAVE
+};
+
+REGION_MAP_DATA static const mapsec_u16_t sTerraOrMarineCaveMapSecIds[ABNORMAL_WEATHER_LOCATIONS] =
+{
+    [ABNORMAL_WEATHER_ROUTE_114_NORTH - 1] = MAPSEC_ROUTE_114,
+    [ABNORMAL_WEATHER_ROUTE_114_SOUTH - 1] = MAPSEC_ROUTE_114,
+    [ABNORMAL_WEATHER_ROUTE_115_WEST  - 1] = MAPSEC_ROUTE_115,
+    [ABNORMAL_WEATHER_ROUTE_115_EAST  - 1] = MAPSEC_ROUTE_115,
+    [ABNORMAL_WEATHER_ROUTE_116_NORTH - 1] = MAPSEC_ROUTE_116,
+    [ABNORMAL_WEATHER_ROUTE_116_SOUTH - 1] = MAPSEC_ROUTE_116,
+    [ABNORMAL_WEATHER_ROUTE_118_EAST  - 1] = MAPSEC_ROUTE_118,
+    [ABNORMAL_WEATHER_ROUTE_118_WEST  - 1] = MAPSEC_ROUTE_118,
+    [ABNORMAL_WEATHER_ROUTE_105_NORTH - 1] = MAPSEC_ROUTE_105,
+    [ABNORMAL_WEATHER_ROUTE_105_SOUTH - 1] = MAPSEC_ROUTE_105,
+    [ABNORMAL_WEATHER_ROUTE_125_WEST  - 1] = MAPSEC_ROUTE_125,
+    [ABNORMAL_WEATHER_ROUTE_125_EAST  - 1] = MAPSEC_ROUTE_125,
+    [ABNORMAL_WEATHER_ROUTE_127_NORTH - 1] = MAPSEC_ROUTE_127,
+    [ABNORMAL_WEATHER_ROUTE_127_SOUTH - 1] = MAPSEC_ROUTE_127,
+    [ABNORMAL_WEATHER_ROUTE_129_WEST  - 1] = MAPSEC_ROUTE_129,
+    [ABNORMAL_WEATHER_ROUTE_129_EAST  - 1] = MAPSEC_ROUTE_129
+};
+
+#define MARINE_CAVE_COORD(location) (ABNORMAL_WEATHER_##location - MARINE_CAVE_LOCATIONS_START)
+
+REGION_MAP_DATA ALIGNED(4) static const struct UCoords16 sMarineCaveLocationCoords[MARINE_CAVE_LOCATIONS] =
+{
+    [MARINE_CAVE_COORD(ROUTE_105_NORTH)] = {0, 10},
+    [MARINE_CAVE_COORD(ROUTE_105_SOUTH)] = {0, 12},
+    [MARINE_CAVE_COORD(ROUTE_125_WEST)]  = {24, 3},
+    [MARINE_CAVE_COORD(ROUTE_125_EAST)]  = {25, 4},
+    [MARINE_CAVE_COORD(ROUTE_127_NORTH)] = {25, 6},
+    [MARINE_CAVE_COORD(ROUTE_127_SOUTH)] = {25, 7},
+    [MARINE_CAVE_COORD(ROUTE_129_WEST)]  = {24, 10},
+    [MARINE_CAVE_COORD(ROUTE_129_EAST)]  = {24, 10}
+};
+
+REGION_MAP_DATA static const mapsec_u8_t sMapSecAquaHideoutOld[] =
+{
+    MAPSEC_AQUA_HIDEOUT_OLD
+};
+
+REGION_MAP_DATA static const struct OamData sRegionMapCursorOam =
+{
+    .shape = SPRITE_SHAPE(16x16),
+    .size = SPRITE_SIZE(16x16),
+    .priority = 1
+};
+
+REGION_MAP_DATA static const union AnimCmd sRegionMapCursorAnim1[] =
+{
+    ANIMCMD_FRAME(0, 20),
+    ANIMCMD_FRAME(4, 20),
+    ANIMCMD_JUMP(0)
+};
+
+REGION_MAP_DATA static const union AnimCmd sRegionMapCursorAnim2[] =
+{
+    ANIMCMD_FRAME( 0, 10),
+    ANIMCMD_FRAME(16, 10),
+    ANIMCMD_FRAME(32, 10),
+    ANIMCMD_FRAME(16, 10),
+    ANIMCMD_JUMP(0)
+};
+
+REGION_MAP_DATA static const union AnimCmd *const sRegionMapCursorAnimTable[] =
+{
+    sRegionMapCursorAnim1,
+    sRegionMapCursorAnim2
+};
+
+REGION_MAP_DATA static const struct SpritePalette sRegionMapCursorSpritePalette =
+{
+    .data = sRegionMapCursorPal,
+    .tag = TAG_CURSOR
+};
+
+REGION_MAP_DATA static const struct SpriteTemplate sRegionMapCursorSpriteTemplate =
+{
+    .tileTag = TAG_CURSOR,
+    .paletteTag = TAG_CURSOR,
+    .oam = &sRegionMapCursorOam,
+    .anims = sRegionMapCursorAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_CursorMapFull
+};
+
+REGION_MAP_DATA static const struct OamData sRegionMapPlayerIconOam =
+{
+    .shape = SPRITE_SHAPE(16x16),
+    .size = SPRITE_SIZE(16x16),
+    .priority = 2
+};
+
+REGION_MAP_DATA static const union AnimCmd sRegionMapPlayerIconAnim1[] =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END
+};
+
+REGION_MAP_DATA static const union AnimCmd *const sRegionMapPlayerIconAnimTable[] =
+{
+    sRegionMapPlayerIconAnim1
+};
+
+// Event islands that don't appear on map. (Southern Island does)
+REGION_MAP_DATA static const mapsec_u8_t sMapSecIdsOffMap[] =
+{
+    MAPSEC_BIRTH_ISLAND,
+    MAPSEC_FARAWAY_ISLAND,
+    MAPSEC_NAVEL_ROCK
+};
+
+REGION_MAP_DATA static const u16 sRegionMapFramePal[] = INCBIN_U16("graphics/pokenav/region_map/frame.gbapal");
+REGION_MAP_DATA static const u32 sRegionMapFrameGfxLZ[] = INCBIN_U32("graphics/pokenav/region_map/frame.4bpp.lz");
+REGION_MAP_DATA static const u32 sRegionMapFrameTilemapLZ[] = INCBIN_U32("graphics/pokenav/region_map/frame.bin.lz");
+REGION_MAP_DATA static const u16 sFlyTargetIcons_Pal[] = INCBIN_U16("graphics/pokenav/region_map/fly_target_icons.gbapal");
+REGION_MAP_DATA static const u32 sFlyTargetIcons_Gfx[] = INCBIN_U32("graphics/pokenav/region_map/fly_target_icons.4bpp.lz");
+
+REGION_MAP_DATA static const u8 sMapHealLocations[][3] =
+{
+    [MAPSEC_LITTLEROOT_TOWN] = {MAP_GROUP(MAP_LITTLEROOT_TOWN), MAP_NUM(MAP_LITTLEROOT_TOWN), HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F},
+    [MAPSEC_OLDALE_TOWN] = {MAP_GROUP(MAP_OLDALE_TOWN), MAP_NUM(MAP_OLDALE_TOWN), HEAL_LOCATION_OLDALE_TOWN},
+    [MAPSEC_DEWFORD_TOWN] = {MAP_GROUP(MAP_DEWFORD_TOWN), MAP_NUM(MAP_DEWFORD_TOWN), HEAL_LOCATION_DEWFORD_TOWN},
+    [MAPSEC_LAVARIDGE_TOWN] = {MAP_GROUP(MAP_LAVARIDGE_TOWN), MAP_NUM(MAP_LAVARIDGE_TOWN), HEAL_LOCATION_LAVARIDGE_TOWN},
+    [MAPSEC_FALLARBOR_TOWN] = {MAP_GROUP(MAP_FALLARBOR_TOWN), MAP_NUM(MAP_FALLARBOR_TOWN), HEAL_LOCATION_FALLARBOR_TOWN},
+    [MAPSEC_VERDANTURF_TOWN] = {MAP_GROUP(MAP_VERDANTURF_TOWN), MAP_NUM(MAP_VERDANTURF_TOWN), HEAL_LOCATION_VERDANTURF_TOWN},
+    [MAPSEC_PACIFIDLOG_TOWN] = {MAP_GROUP(MAP_PACIFIDLOG_TOWN), MAP_NUM(MAP_PACIFIDLOG_TOWN), HEAL_LOCATION_PACIFIDLOG_TOWN},
+    [MAPSEC_PETALBURG_CITY] = {MAP_GROUP(MAP_PETALBURG_CITY), MAP_NUM(MAP_PETALBURG_CITY), HEAL_LOCATION_PETALBURG_CITY},
+    [MAPSEC_SLATEPORT_CITY] = {MAP_GROUP(MAP_SLATEPORT_CITY), MAP_NUM(MAP_SLATEPORT_CITY), HEAL_LOCATION_SLATEPORT_CITY},
+    [MAPSEC_MAUVILLE_CITY] = {MAP_GROUP(MAP_MAUVILLE_CITY), MAP_NUM(MAP_MAUVILLE_CITY), HEAL_LOCATION_MAUVILLE_CITY},
+    [MAPSEC_RUSTBORO_CITY] = {MAP_GROUP(MAP_RUSTBORO_CITY), MAP_NUM(MAP_RUSTBORO_CITY), HEAL_LOCATION_RUSTBORO_CITY},
+    [MAPSEC_FORTREE_CITY] = {MAP_GROUP(MAP_FORTREE_CITY), MAP_NUM(MAP_FORTREE_CITY), HEAL_LOCATION_FORTREE_CITY},
+    [MAPSEC_LILYCOVE_CITY] = {MAP_GROUP(MAP_LILYCOVE_CITY), MAP_NUM(MAP_LILYCOVE_CITY), HEAL_LOCATION_LILYCOVE_CITY},
+    [MAPSEC_MOSSDEEP_CITY] = {MAP_GROUP(MAP_MOSSDEEP_CITY), MAP_NUM(MAP_MOSSDEEP_CITY), HEAL_LOCATION_MOSSDEEP_CITY},
+    [MAPSEC_SOOTOPOLIS_CITY] = {MAP_GROUP(MAP_SOOTOPOLIS_CITY), MAP_NUM(MAP_SOOTOPOLIS_CITY), HEAL_LOCATION_SOOTOPOLIS_CITY},
+    [MAPSEC_EVER_GRANDE_CITY] = {MAP_GROUP(MAP_EVER_GRANDE_CITY), MAP_NUM(MAP_EVER_GRANDE_CITY), HEAL_LOCATION_EVER_GRANDE_CITY},
+    [MAPSEC_ROUTE_101] = {MAP_GROUP(MAP_ROUTE101), MAP_NUM(MAP_ROUTE101), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_102] = {MAP_GROUP(MAP_ROUTE102), MAP_NUM(MAP_ROUTE102), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_103] = {MAP_GROUP(MAP_ROUTE103), MAP_NUM(MAP_ROUTE103), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_104] = {MAP_GROUP(MAP_ROUTE104), MAP_NUM(MAP_ROUTE104), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_105] = {MAP_GROUP(MAP_ROUTE105), MAP_NUM(MAP_ROUTE105), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_106] = {MAP_GROUP(MAP_ROUTE106), MAP_NUM(MAP_ROUTE106), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_107] = {MAP_GROUP(MAP_ROUTE107), MAP_NUM(MAP_ROUTE107), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_108] = {MAP_GROUP(MAP_ROUTE108), MAP_NUM(MAP_ROUTE108), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_109] = {MAP_GROUP(MAP_ROUTE109), MAP_NUM(MAP_ROUTE109), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_110] = {MAP_GROUP(MAP_ROUTE110), MAP_NUM(MAP_ROUTE110), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_111] = {MAP_GROUP(MAP_ROUTE111), MAP_NUM(MAP_ROUTE111), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_112] = {MAP_GROUP(MAP_ROUTE112), MAP_NUM(MAP_ROUTE112), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_113] = {MAP_GROUP(MAP_ROUTE113), MAP_NUM(MAP_ROUTE113), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_114] = {MAP_GROUP(MAP_ROUTE114), MAP_NUM(MAP_ROUTE114), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_115] = {MAP_GROUP(MAP_ROUTE115), MAP_NUM(MAP_ROUTE115), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_116] = {MAP_GROUP(MAP_ROUTE116), MAP_NUM(MAP_ROUTE116), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_117] = {MAP_GROUP(MAP_ROUTE117), MAP_NUM(MAP_ROUTE117), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_118] = {MAP_GROUP(MAP_ROUTE118), MAP_NUM(MAP_ROUTE118), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_119] = {MAP_GROUP(MAP_ROUTE119), MAP_NUM(MAP_ROUTE119), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_120] = {MAP_GROUP(MAP_ROUTE120), MAP_NUM(MAP_ROUTE120), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_121] = {MAP_GROUP(MAP_ROUTE121), MAP_NUM(MAP_ROUTE121), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_122] = {MAP_GROUP(MAP_ROUTE122), MAP_NUM(MAP_ROUTE122), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_123] = {MAP_GROUP(MAP_ROUTE123), MAP_NUM(MAP_ROUTE123), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_124] = {MAP_GROUP(MAP_ROUTE124), MAP_NUM(MAP_ROUTE124), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_125] = {MAP_GROUP(MAP_ROUTE125), MAP_NUM(MAP_ROUTE125), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_126] = {MAP_GROUP(MAP_ROUTE126), MAP_NUM(MAP_ROUTE126), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_127] = {MAP_GROUP(MAP_ROUTE127), MAP_NUM(MAP_ROUTE127), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_128] = {MAP_GROUP(MAP_ROUTE128), MAP_NUM(MAP_ROUTE128), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_129] = {MAP_GROUP(MAP_ROUTE129), MAP_NUM(MAP_ROUTE129), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_130] = {MAP_GROUP(MAP_ROUTE130), MAP_NUM(MAP_ROUTE130), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_131] = {MAP_GROUP(MAP_ROUTE131), MAP_NUM(MAP_ROUTE131), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_132] = {MAP_GROUP(MAP_ROUTE132), MAP_NUM(MAP_ROUTE132), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_133] = {MAP_GROUP(MAP_ROUTE133), MAP_NUM(MAP_ROUTE133), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_134] = {MAP_GROUP(MAP_ROUTE134), MAP_NUM(MAP_ROUTE134), HEAL_LOCATION_NONE},
+};
+
+REGION_MAP_DATA static const u8 *const sEverGrandeCityNames[] =
+{
+    gText_PokemonLeague,
+    gText_PokemonCenter
+};
+
+REGION_MAP_DATA static const struct MultiNameFlyDest sMultiNameFlyDestinations[] =
+{
+    {
+        .name = sEverGrandeCityNames,
+        .mapSecId = MAPSEC_EVER_GRANDE_CITY,
+        .flag = FLAG_LANDMARK_POKEMON_LEAGUE
+    }
+};
+
+REGION_MAP_DATA static const struct BgTemplate sFlyMapBgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 28,
+        .screenSize = 2,
+        .paletteMode = 1,
+        .priority = 2
+    }
+};
+
+// JP uses narrower fly-map name and title windows.
+REGION_MAP_DATA static const struct WindowTemplate sFlyMapWindowTemplates[] =
+{
+    [WIN_MAPSEC_NAME] = {
+        .bg = 0,
+        .tilemapLeft = 19,
+        .tilemapTop = 17,
+        .width = 10,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x01
+    },
+    [WIN_MAPSEC_NAME_TALL] = {
+        .bg = 0,
+        .tilemapLeft = 19,
+        .tilemapTop = 15,
+        .width = 10,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0x15
+    },
+    [WIN_FLY_TO_WHERE] = {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 18,
+        .width = 10,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x3D
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+REGION_MAP_DATA static const struct SpritePalette sFlyTargetIconsSpritePalette =
+{
+    .data = sFlyTargetIcons_Pal,
+    .tag = TAG_FLY_ICON
+};
+
+REGION_MAP_DATA static const mapsec_u16_t sRedOutlineFlyDestinations[][2] =
+{
+    {
+        FLAG_LANDMARK_BATTLE_FRONTIER,
+        MAPSEC_BATTLE_FRONTIER
+    },
+    {
+        -1,
+        MAPSEC_NONE
+    }
+};
+
+REGION_MAP_DATA static const struct OamData sFlyDestIcon_OamData =
+{
+    .shape = SPRITE_SHAPE(8x8),
+    .size = SPRITE_SIZE(8x8),
+    .priority = 2
+};
+
+REGION_MAP_DATA static const union AnimCmd sFlyDestIcon_Anim_8x8CanFly[] =
+{
+    ANIMCMD_FRAME( 0, 5),
+    ANIMCMD_END
+};
+
+REGION_MAP_DATA static const union AnimCmd sFlyDestIcon_Anim_16x8CanFly[] =
+{
+    ANIMCMD_FRAME( 1, 5),
+    ANIMCMD_END
+};
+
+REGION_MAP_DATA static const union AnimCmd sFlyDestIcon_Anim_8x16CanFly[] =
+{
+    ANIMCMD_FRAME( 3, 5),
+    ANIMCMD_END
+};
+
+REGION_MAP_DATA static const union AnimCmd sFlyDestIcon_Anim_8x8CantFly[] =
+{
+    ANIMCMD_FRAME( 5, 5),
+    ANIMCMD_END
+};
+
+REGION_MAP_DATA static const union AnimCmd sFlyDestIcon_Anim_16x8CantFly[] =
+{
+    ANIMCMD_FRAME( 6, 5),
+    ANIMCMD_END
+};
+
+REGION_MAP_DATA static const union AnimCmd sFlyDestIcon_Anim_8x16CantFly[] =
+{
+    ANIMCMD_FRAME( 8, 5),
+    ANIMCMD_END
+};
+
+// Only used by Battle Frontier
+REGION_MAP_DATA static const union AnimCmd sFlyDestIcon_Anim_RedOutline[] =
+{
+    ANIMCMD_FRAME(10, 5),
+    ANIMCMD_END
+};
+
+REGION_MAP_DATA static const union AnimCmd *const sFlyDestIcon_Anims[] =
+{
+    [SPRITE_SHAPE(8x8)]       = sFlyDestIcon_Anim_8x8CanFly,
+    [SPRITE_SHAPE(16x8)]      = sFlyDestIcon_Anim_16x8CanFly,
+    [SPRITE_SHAPE(8x16)]      = sFlyDestIcon_Anim_8x16CanFly,
+    [SPRITE_SHAPE(8x8)  + 3]  = sFlyDestIcon_Anim_8x8CantFly,
+    [SPRITE_SHAPE(16x8) + 3]  = sFlyDestIcon_Anim_16x8CantFly,
+    [SPRITE_SHAPE(8x16) + 3]  = sFlyDestIcon_Anim_8x16CantFly,
+    [FLYDESTICON_RED_OUTLINE] = sFlyDestIcon_Anim_RedOutline
+};
+
+REGION_MAP_DATA static const struct SpriteTemplate sFlyDestIconSpriteTemplate =
+{
+    .tileTag = TAG_FLY_ICON,
+    .paletteTag = TAG_FLY_ICON,
+    .oam = &sFlyDestIcon_OamData,
+    .anims = sFlyDestIcon_Anims,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
 __attribute__((naked)) void InitRegionMap(struct RegionMap *regionMap, bool8 zoomed)
 {
     __asm__(".syntax unified\n\t"
@@ -181,14 +612,14 @@ __attribute__((naked)) bool8 LoadRegionMapGfx()
         "	b _08122E5E\n\t"
         "	.align 2, 0\n\t"
         "_08122E1C: .4byte gUnknown_2039E10\n\t"
-        "_08122E20: .4byte gUnknown_857B34C\n\t"
+        "_08122E20: .4byte sRegionMapBg_GfxLZ\n\t"
         "_08122E24:\n\t"
         "	ldr r0, _08122E30\n\t"
         "	ldr r1, _08122E34\n\t"
         "	bl LZ77UnCompVram\n\t"
         "	b _08123020\n\t"
         "	.align 2, 0\n\t"
-        "_08122E30: .4byte gUnknown_857B34C\n\t"
+        "_08122E30: .4byte sRegionMapBg_GfxLZ\n\t"
         "_08122E34: .4byte 0x06008000\n\t"
         "_08122E38:\n\t"
         "	ldr r4, _08122E68\n\t"
@@ -216,14 +647,14 @@ __attribute__((naked)) bool8 LoadRegionMapGfx()
         "	b _08123020\n\t"
         "	.align 2, 0\n\t"
         "_08122E68: .4byte gUnknown_2039E10\n\t"
-        "_08122E6C: .4byte gUnknown_857C0B0\n\t"
+        "_08122E6C: .4byte sRegionMapBg_TilemapLZ\n\t"
         "_08122E70:\n\t"
         "	ldr r0, _08122E7C\n\t"
         "	ldr r1, _08122E80\n\t"
         "	bl LZ77UnCompVram\n\t"
         "	b _08123020\n\t"
         "	.align 2, 0\n\t"
-        "_08122E7C: .4byte gUnknown_857C0B0\n\t"
+        "_08122E7C: .4byte sRegionMapBg_TilemapLZ\n\t"
         "_08122E80: .4byte 0x0600E000\n\t"
         "_08122E84:\n\t"
         "	bl FreeTempTileDataBuffersIfPossible\n\t"
@@ -238,7 +669,7 @@ __attribute__((naked)) bool8 LoadRegionMapGfx()
         "	bl LoadPalette\n\t"
         "	b _08123020\n\t"
         "	.align 2, 0\n\t"
-        "_08122E9C: .4byte gUnknown_857B30C\n\t"
+        "_08122E9C: .4byte sRegionMapBg_Pal\n\t"
         "_08122EA0:\n\t"
         "	ldr r0, _08122EB4\n\t"
         "	ldr r1, _08122EB8\n\t"
@@ -249,7 +680,7 @@ __attribute__((naked)) bool8 LoadRegionMapGfx()
         "	bl LZ77UnCompWram\n\t"
         "	b _08123020\n\t"
         "	.align 2, 0\n\t"
-        "_08122EB4: .4byte gUnknown_857B1DC\n\t"
+        "_08122EB4: .4byte sRegionMapCursorSmallGfxLZ\n\t"
         "_08122EB8: .4byte gUnknown_2039E10\n\t"
         "_08122EBC:\n\t"
         "	ldr r0, _08122ED0\n\t"
@@ -261,7 +692,7 @@ __attribute__((naked)) bool8 LoadRegionMapGfx()
         "	bl LZ77UnCompWram\n\t"
         "	b _08123020\n\t"
         "	.align 2, 0\n\t"
-        "_08122ED0: .4byte gUnknown_857B220\n\t"
+        "_08122ED0: .4byte sRegionMapCursorLargeGfxLZ\n\t"
         "_08122ED4: .4byte gUnknown_2039E10\n\t"
         "_08122ED8:\n\t"
         "	bl RegionMap_InitializeStateBasedOnPlayerLocation\n\t"
@@ -1643,7 +2074,7 @@ __attribute__((naked)) void GetRegionMapSectionIdAt_Internal(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081238B4: .4byte gUnknown_857C53C\n\t"
+        "_081238B4: .4byte sRegionMap_MapSectionLayout\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1969,7 +2400,7 @@ __attribute__((naked)) void RegionMap_InitializeStateBasedOnPlayerLocation(void)
         "	beq _08123BA0\n\t"
         "	b _08123BD2\n\t"
         "	.align 2, 0\n\t"
-        "_08123B50: .4byte gUnknown_857CD6C\n\t"
+        "_08123B50: .4byte gRegionMapEntries\n\t"
         "_08123B54: .4byte gUnknown_2039E10\n\t"
         "_08123B58:\n\t"
         "	cmp r7, #0x33\n\t"
@@ -2244,7 +2675,7 @@ __attribute__((naked)) void RegionMap_InitializeStateBasedOnSSTidalLocation(void
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08123D5C: .4byte gUnknown_2039E10\n\t"
-        "_08123D60: .4byte gUnknown_857CD6C\n\t"
+        "_08123D60: .4byte gRegionMapEntries\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2462,10 +2893,6 @@ __attribute__((naked)) void GetRegionMapSectionIdAt(void)
     );
 }
 
-extern const mapsec_u16_t sRegionMap_SpecialPlaceLocations[][2];
-extern const mapsec_u16_t sMarineCaveMapSecIds[3];
-extern const mapsec_u16_t sTerraOrMarineCaveMapSecIds[];
-
 static mapsec_u16_t GetTerraOrMarineCaveMapSecId(void);
 
 static mapsec_u16_t CorrectSpecialMapSecId_Internal(mapsec_u16_t mapSecId)
@@ -2536,7 +2963,7 @@ __attribute__((naked)) void RegionMap_GetMarineCaveCoords(void)
         "	.align 2, 0\n\t"
         "_08123F74: .4byte 0x00004037\n\t"
         "_08123F78: .4byte 0xFFF70000\n\t"
-        "_08123F7C: .4byte gUnknown_857D49C\n\t"
+        "_08123F7C: .4byte sMarineCaveLocationCoords\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2558,7 +2985,7 @@ __attribute__((naked)) void RegionMap_IsPlayerInCave(void)
         "	movs r0, #1\n\t"
         "	b _08123FA4\n\t"
         "	.align 2, 0\n\t"
-        "_08123F98: .4byte gUnknown_857D4BC\n\t"
+        "_08123F98: .4byte sMapSecAquaHideoutOld\n\t"
         "_08123F9C:\n\t"
         "	adds r1, #1\n\t"
         "	cmp r1, #0\n\t"
@@ -2717,7 +3144,7 @@ __attribute__((naked)) void RegionMap_IsMapSecIdInNextRow(void)
     );
 }
 
-__attribute__((naked)) void SpriteCallback_CursorFull(void)
+__attribute__((naked)) static void SpriteCB_CursorMapFull(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2824,11 +3251,11 @@ __attribute__((naked)) void CreateRegionMapCursor(u16 tileTag, u16 paletteTag)
         "	ldr r0, _08124160\n\t"
         "	b _0812417A\n\t"
         "	.align 2, 0\n\t"
-        "_08124150: .4byte gUnknown_857D4F0\n\t"
-        "_08124154: .4byte gUnknown_857D4F8\n\t"
+        "_08124150: .4byte sRegionMapCursorSpritePalette\n\t"
+        "_08124154: .4byte sRegionMapCursorSpriteTemplate\n\t"
         "_08124158: .4byte gUnknown_2039E10\n\t"
         "_0812415C: .4byte 0xFFFF0000\n\t"
-        "_08124160: .4byte SpriteCallback_CursorFull + 1\n\t"
+        "_08124160: .4byte SpriteCB_CursorMapFull + 1\n\t"
         "_08124164:\n\t"
         "	movs r3, #0xa1\n\t"
         "	lsls r3, r3, #2\n\t"
@@ -3050,11 +3477,11 @@ __attribute__((naked)) void CreateRegionMapPlayerIcon(u16 tileTag, u16 paletteTa
         "	str r5, [r0, #0x20]\n\t"
         "	b _081243B0\n\t"
         "	.align 2, 0\n\t"
-        "_081242EC: .4byte gUnknown_857C41C\n\t"
-        "_081242F0: .4byte gUnknown_857C3FC\n\t"
+        "_081242EC: .4byte sRegionMapPlayerIcon_BrendanGfx\n\t"
+        "_081242F0: .4byte sRegionMapPlayerIcon_BrendanPal\n\t"
         "_081242F4: .4byte 0xFFFF0000\n\t"
-        "_081242F8: .4byte gUnknown_857D510\n\t"
-        "_081242FC: .4byte gUnknown_857D520\n\t"
+        "_081242F8: .4byte sRegionMapPlayerIconOam\n\t"
+        "_081242FC: .4byte sRegionMapPlayerIconAnimTable\n\t"
         "_08124300: .4byte gDummySpriteAffineAnimTable\n\t"
         "_08124304: .4byte SpriteCallbackDummy + 1\n\t"
         "_08124308: .4byte gMapHeader\n\t"
@@ -3112,8 +3539,8 @@ __attribute__((naked)) void CreateRegionMapPlayerIcon(u16 tileTag, u16 paletteTa
         "	b _081243AE\n\t"
         "	.align 2, 0\n\t"
         "_08124378: .4byte gSaveBlock2Ptr\n\t"
-        "_0812437C: .4byte gUnknown_857C4BC\n\t"
-        "_08124380: .4byte gUnknown_857C49C\n\t"
+        "_0812437C: .4byte sRegionMapPlayerIcon_MayGfx\n\t"
+        "_08124380: .4byte sRegionMapPlayerIcon_MayPal\n\t"
         "_08124384: .4byte gUnknown_2039E10\n\t"
         "_08124388: .4byte gSprites\n\t"
         "_0812438C: .4byte RegionMapPlayerIconSpriteCallback_Full + 1\n\t"
@@ -3447,7 +3874,7 @@ __attribute__((naked)) u8 *GetMapName(u8 *dest, mapsec_u16_t regionMapId, u16 pa
         "	adds r1, r0, #0\n\t"
         "	b _081245BE\n\t"
         "	.align 2, 0\n\t"
-        "_081245A8: .4byte gUnknown_857CD6C\n\t"
+        "_081245A8: .4byte gRegionMapEntries\n\t"
         "_081245AC:\n\t"
         "	cmp r4, #0\n\t"
         "	bne _081245B2\n\t"
@@ -3566,7 +3993,7 @@ __attribute__((naked)) void sub_0812463C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08124660: .4byte gUnknown_857CD6C\n\t"
+        "_08124660: .4byte gRegionMapEntries\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3603,7 +4030,7 @@ __attribute__((naked)) bool32 IsEventIslandMapSecId(mapsec_u8_t mapSecId)
         "	movs r0, #1\n\t"
         "	b _08124698\n\t"
         "	.align 2, 0\n\t"
-        "_0812468C: .4byte gUnknown_857D524\n\t"
+        "_0812468C: .4byte sMapSecIdsOffMap\n\t"
         "_08124690:\n\t"
         "	adds r1, #1\n\t"
         "	cmp r1, #2\n\t"
@@ -3709,14 +4136,14 @@ __attribute__((naked)) void MCB2_FlyMap(void)
         "	bl InitBgsFromTemplates\n\t"
         "	b _081248A8\n\t"
         "	.align 2, 0\n\t"
-        "_08124784: .4byte gUnknown_857D7D4\n\t"
+        "_08124784: .4byte sFlyMapBgTemplates\n\t"
         "_08124788:\n\t"
         "	ldr r0, _08124794\n\t"
         "	bl InitWindows\n\t"
         "	bl DeactivateAllTextPrinters\n\t"
         "	b _081248A8\n\t"
         "	.align 2, 0\n\t"
-        "_08124794: .4byte gUnknown_857D7E0\n\t"
+        "_08124794: .4byte sFlyMapWindowTemplates\n\t"
         "_08124798:\n\t"
         "	movs r0, #0\n\t"
         "	movs r1, #0x51\n\t"
@@ -3759,7 +4186,7 @@ __attribute__((naked)) void MCB2_FlyMap(void)
         "	bl LZ77UnCompVram\n\t"
         "	b _081248A8\n\t"
         "	.align 2, 0\n\t"
-        "_081247FC: .4byte gUnknown_857D548\n\t"
+        "_081247FC: .4byte sRegionMapFrameGfxLZ\n\t"
         "_08124800: .4byte 0x0600C000\n\t"
         "_08124804:\n\t"
         "	ldr r0, _08124810\n\t"
@@ -3767,7 +4194,7 @@ __attribute__((naked)) void MCB2_FlyMap(void)
         "	bl LZ77UnCompVram\n\t"
         "	b _081248A8\n\t"
         "	.align 2, 0\n\t"
-        "_08124810: .4byte gUnknown_857D580\n\t"
+        "_08124810: .4byte sRegionMapFrameTilemapLZ\n\t"
         "_08124814: .4byte 0x0600F000\n\t"
         "_08124818:\n\t"
         "	ldr r0, _08124850\n\t"
@@ -3793,7 +4220,7 @@ __attribute__((naked)) void MCB2_FlyMap(void)
         "	bl ScheduleBgCopyTilemapToVram\n\t"
         "	b _081248A8\n\t"
         "	.align 2, 0\n\t"
-        "_08124850: .4byte gUnknown_857D528\n\t"
+        "_08124850: .4byte sRegionMapFramePal\n\t"
         "_08124854: .4byte gText_FlyToWhere\n\t"
         "_08124858:\n\t"
         "	bl sub_08124A58\n\t"
@@ -3988,7 +4415,7 @@ __attribute__((naked)) void sub_08124910(void)
         "	b _081249CA\n\t"
         "	.align 2, 0\n\t"
         "_081249B4: .4byte gUnknown_2039E14\n\t"
-        "_081249B8: .4byte gUnknown_857D7CC\n\t"
+        "_081249B8: .4byte sMultiNameFlyDestinations\n\t"
         "_081249BC: .4byte gUnknown_3001180\n\t"
         "_081249C0:\n\t"
         "	adds r0, r3, #1\n\t"
@@ -4103,12 +4530,12 @@ __attribute__((naked)) void sub_08124A58(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08124AA4: .4byte gUnknown_857D658\n\t"
+        "_08124AA4: .4byte sFlyTargetIcons_Gfx\n\t"
         "_08124AA8: .4byte gUnknown_2039E14\n\t"
         "_08124AAC: .4byte 0x0000088C\n\t"
         "_08124AB0: .4byte 0xFFFF0000\n\t"
         "_08124AB4: .4byte 0x0000FFFF\n\t"
-        "_08124AB8: .4byte gUnknown_857D800\n\t"
+        "_08124AB8: .4byte sFlyTargetIconsSpritePalette\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4212,7 +4639,7 @@ __attribute__((naked)) void sub_08124ABC(void)
         "	str r1, [r0]\n\t"
         "	b _08124B8A\n\t"
         "	.align 2, 0\n\t"
-        "_08124B78: .4byte gUnknown_857D86C\n\t"
+        "_08124B78: .4byte sFlyDestIconSpriteTemplate\n\t"
         "_08124B7C: .4byte gSprites\n\t"
         "_08124B80: .4byte sub_08124CA4 + 1\n\t"
         "_08124B84:\n\t"
@@ -4361,9 +4788,9 @@ __attribute__((naked)) void sub_08124BCC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08124C94: .4byte gUnknown_857D808\n\t"
+        "_08124C94: .4byte sRedOutlineFlyDestinations\n\t"
         "_08124C98: .4byte gSprites\n\t"
-        "_08124C9C: .4byte gUnknown_857D86C\n\t"
+        "_08124C9C: .4byte sFlyDestIconSpriteTemplate\n\t"
         "_08124CA0: .4byte sub_08124CA4 + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -4525,7 +4952,7 @@ __attribute__((naked)) void sub_08124D4C(void)
         "	.align 2, 0\n\t"
         "_08124DBC: .4byte gUnknown_2039E14\n\t"
         "_08124DC0: .4byte 0x00000A72\n\t"
-        "_08124DC4: .4byte 0x08124DF5\n\t"
+        "_08124DC4: .4byte CB_ExitFlyMap + 1\n\t"
         "_08124DC8:\n\t"
         "	movs r0, #5\n\t"
         "	bl m4aSongNumStart\n\t"
@@ -4544,7 +4971,157 @@ __attribute__((naked)) void sub_08124D4C(void)
         "	.align 2, 0\n\t"
         "_08124DE8: .4byte gUnknown_2039E14\n\t"
         "_08124DEC: .4byte 0x00000A72\n\t"
-        "_08124DF0: .4byte 0x08124DF5\n\t"
+        "_08124DF0: .4byte CB_ExitFlyMap + 1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) static void CB_ExitFlyMap(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	sub sp, #4\n\t"
+        "	ldr r4, _08124E08\n\t"
+        "	ldr r0, [r4]\n\t"
+        "	ldrh r1, [r0, #4]\n\t"
+        "	cmp r1, #0\n\t"
+        "	beq _08124E0C\n\t"
+        "	cmp r1, #1\n\t"
+        "	beq _08124E26\n\t"
+        "	b _08124F02\n\t"
+        "	.align 2, 0\n\t"
+        "_08124E08: .4byte gUnknown_2039E14\n\t"
+        "_08124E0C:\n\t"
+        "	movs r0, #1\n\t"
+        "	rsbs r0, r0, #0\n\t"
+        "	str r1, [sp]\n\t"
+        "	movs r1, #0\n\t"
+        "	movs r2, #0\n\t"
+        "	movs r3, #0x10\n\t"
+        "	bl BeginNormalPaletteFade\n\t"
+        "	ldr r1, [r4]\n\t"
+        "	ldrh r0, [r1, #4]\n\t"
+        "	adds r0, #1\n\t"
+        "	strh r0, [r1, #4]\n\t"
+        "	b _08124F02\n\t"
+        "_08124E26:\n\t"
+        "	bl UpdatePaletteFade\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _08124F02\n\t"
+        "	bl FreeRegionMapIconResources\n\t"
+        "	ldr r1, [r4]\n\t"
+        "	ldr r2, _08124E50\n\t"
+        "	adds r0, r1, r2\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	cmp r0, #0\n\t"
+        "	beq _08124EE8\n\t"
+        "	ldrh r0, [r1, #8]\n\t"
+        "	cmp r0, #0xf\n\t"
+        "	beq _08124E80\n\t"
+        "	cmp r0, #0xf\n\t"
+        "	bgt _08124E54\n\t"
+        "	cmp r0, #0\n\t"
+        "	beq _08124E6C\n\t"
+        "	b _08124EA4\n\t"
+        "	.align 2, 0\n\t"
+        "_08124E50: .4byte 0x00000A72\n\t"
+        "_08124E54:\n\t"
+        "	cmp r0, #0x3a\n\t"
+        "	beq _08124E64\n\t"
+        "	cmp r0, #0x49\n\t"
+        "	bne _08124EA4\n\t"
+        "	movs r0, #0x15\n\t"
+        "	bl SetWarpDestinationToHealLocation\n\t"
+        "	b _08124EE2\n\t"
+        "_08124E64:\n\t"
+        "	movs r0, #0x16\n\t"
+        "	bl SetWarpDestinationToHealLocation\n\t"
+        "	b _08124EE2\n\t"
+        "_08124E6C:\n\t"
+        "	ldr r0, _08124E7C\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	ldrb r0, [r0, #8]\n\t"
+        "	movs r1, #0xd\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _08124E98\n\t"
+        "	movs r1, #0xc\n\t"
+        "	b _08124E98\n\t"
+        "	.align 2, 0\n\t"
+        "_08124E7C: .4byte gSaveBlock2Ptr\n\t"
+        "_08124E80:\n\t"
+        "	ldr r0, _08124EA0\n\t"
+        "	bl FlagGet\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	movs r1, #0xb\n\t"
+        "	cmp r0, #0\n\t"
+        "	beq _08124E98\n\t"
+        "	ldr r0, [r4]\n\t"
+        "	ldrb r0, [r0, #0xb]\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _08124E98\n\t"
+        "	movs r1, #0x14\n\t"
+        "_08124E98:\n\t"
+        "	adds r0, r1, #0\n\t"
+        "	bl SetWarpDestinationToHealLocation\n\t"
+        "	b _08124EE2\n\t"
+        "	.align 2, 0\n\t"
+        "_08124EA0: .4byte 0x000008B4\n\t"
+        "_08124EA4:\n\t"
+        "	ldr r3, _08124EC0\n\t"
+        "	ldr r0, _08124EC4\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	ldrh r1, [r0, #8]\n\t"
+        "	lsls r0, r1, #1\n\t"
+        "	adds r2, r0, r1\n\t"
+        "	adds r0, r3, #2\n\t"
+        "	adds r1, r2, r0\n\t"
+        "	ldrb r0, [r1]\n\t"
+        "	cmp r0, #0\n\t"
+        "	beq _08124EC8\n\t"
+        "	bl SetWarpDestinationToHealLocation\n\t"
+        "	b _08124EE2\n\t"
+        "	.align 2, 0\n\t"
+        "_08124EC0: .4byte sMapHealLocations\n\t"
+        "_08124EC4: .4byte gUnknown_2039E14\n\t"
+        "_08124EC8:\n\t"
+        "	adds r0, r2, r3\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	asrs r0, r0, #0x18\n\t"
+        "	adds r1, r3, #1\n\t"
+        "	adds r1, r2, r1\n\t"
+        "	ldrb r1, [r1]\n\t"
+        "	lsls r1, r1, #0x18\n\t"
+        "	asrs r1, r1, #0x18\n\t"
+        "	movs r2, #1\n\t"
+        "	rsbs r2, r2, #0\n\t"
+        "	bl SetWarpDestinationToMapWarp\n\t"
+        "_08124EE2:\n\t"
+        "	bl sub_080B6134\n\t"
+        "	b _08124EEE\n\t"
+        "_08124EE8:\n\t"
+        "	ldr r0, _08124F0C\n\t"
+        "	bl SetMainCallback2\n\t"
+        "_08124EEE:\n\t"
+        "	ldr r4, _08124F10\n\t"
+        "	ldr r0, [r4]\n\t"
+        "	cmp r0, #0\n\t"
+        "	beq _08124EFE\n\t"
+        "	bl Free\n\t"
+        "	movs r0, #0\n\t"
+        "	str r0, [r4]\n\t"
+        "_08124EFE:\n\t"
+        "	bl FreeAllWindowBuffers\n\t"
+        "_08124F02:\n\t"
+        "	add sp, #4\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_08124F0C: .4byte CB2_ReturnToPartyMenuFromFlyMap + 1\n\t"
+        "_08124F10: .4byte gUnknown_2039E14\n\t"
         ".syntax divided\n\t"
     );
 }

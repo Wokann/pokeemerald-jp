@@ -47,12 +47,12 @@ class HealLocationGenerationTests(unittest.TestCase):
         self.assertLess(linker.index('src/menu_helpers.o(.rodata.menu_helpers_swap_line_data)'),
                         linker.index('src/heal_location.o(.rodata)'))
         self.assertLess(linker.index('src/heal_location.o(.rodata)'),
-                        linker.index('data/data_b2d_mid61.o(.rodata.data_b2d_mid61_after_swap_line)'))
+                        linker.index('src/region_map.o(.rodata.region_map_data)'))
         self.assertNotIn('placeholder', source)
         self.assertNotIn('extern const struct HealLocation', source)
         self.assertNotIn('gUnknown_857B10C', mid)
-        self.assertIn('.incbin "baserom_jp.gba", 0x57b1bc, 0x20', mid)
-        self.assertIn('gUnknown_857B1DC:', mid)
+        self.assertIn('gUnknown_857D884:', mid)
+        self.assertIn('sRegionMapCursorPal[]', (ROOT / 'src/region_map.c').read_text())
 
     def test_build_generates_both_headers_and_cleans_them_not_the_json_sources(self):
         makefile = (ROOT / 'Makefile').read_text()
