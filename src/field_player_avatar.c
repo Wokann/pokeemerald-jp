@@ -20,9 +20,8 @@
 
 void DoPlayerAvatarTransition(void);
 
-// JP-only helpers still in asm (field_player_avatar.s / event_object_movement.s)
-void sub_0808BBE4(struct ObjectEvent *objectEvent);   // JP: HideShowWarpArrow
-u8 sub_0808A98C(u8 direction);                        // JP: CheckForPlayerAvatarStaticCollision
+// The separately compiled tail retains the existing JP linker names.
+void HideShowWarpArrow(struct ObjectEvent *objectEvent) asm("sub_0808BBE4");
 void MovePlayerNotOnBike(u8 direction, u16 heldKeys);
 
 // JP ROM tables: 18 forced-movement test funcs @ 0x0846F81C,
@@ -30,8 +29,7 @@ void MovePlayerNotOnBike(u8 direction, u16 heldKeys);
 extern bool8 (*const sForcedMovementTestFuncs[18])(u16 metatileBehavior);
 extern bool8 (*const sForcedMovementFuncs[18])(void);
 
-// JP: these are global because the remaining asm in field_player_avatar.s
-// still calls them by their JP names (aliased in ld_script_jp.txt)
+// Global bindings preserve JP call sites across the main and tail objects.
 u8 ObjectEventCB2_NoMovement2(void);
 bool8 TryInterruptObjectEventSpecialAnim(struct ObjectEvent *playerObjEvent, u8 direction);
 void npc_clear_strange_bits(struct ObjectEvent *objEvent);
@@ -43,7 +41,7 @@ bool8 CanStopSurfing(s16 x, s16 y, u8 direction);
 bool8 ShouldJumpLedge(s16 x, s16 y, u8 direction);
 void CheckAcroBikeCollision(s16 x, s16 y, u8 metatileBehavior, u8 *collision);
 u8 CheckForObjectEventStaticCollision(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 direction, u8 metatileBehavior);
-bool8 sub_0808AB9C(s16 x, s16 y, u8 direction); // JP: TryPushBoulder
+bool8 TryPushBoulder(s16 x, s16 y, u8 direction) asm("sub_0808AB9C");
 void MovePlayerNotOnBike(u8 direction, u16 heldKeys);
 u8 CheckMovementInputNotOnBike(u8 direction);
 void PlayerNotOnBikeNotMoving(u8 direction, u16 heldKeys);
@@ -73,7 +71,7 @@ void PlayerStep(u8 direction, u16 newKeys, u16 heldKeys)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
-    sub_0808BBE4(playerObjEvent); // JP: HideShowWarpArrow
+    HideShowWarpArrow(playerObjEvent);
     if (gPlayerAvatar.preventStep == FALSE)
     {
         Bike_TryAcroBikeHistoryUpdate(newKeys, heldKeys);
@@ -109,7 +107,7 @@ bool8 TryInterruptObjectEventSpecialAnim(struct ObjectEvent *playerObjEvent, u8 
                 return FALSE;
             }
 
-            if (sub_0808A98C(direction) == COLLISION_NONE) // JP: CheckForPlayerAvatarStaticCollision
+            if (CheckForPlayerAvatarStaticCollision(direction) == COLLISION_NONE)
             {
                 ObjectEventClearHeldMovement(playerObjEvent);
                 return FALSE;
@@ -451,7 +449,7 @@ u8 CheckForObjectEventCollision(struct ObjectEvent *objectEvent, s16 x, s16 y, u
         IncrementGameStat(GAME_STAT_JUMPED_DOWN_LEDGES);
         return COLLISION_LEDGE_JUMP;
     }
-    if (collision == COLLISION_OBJECT_EVENT && sub_0808AB9C(x, y, direction)) // JP: TryPushBoulder
+    if (collision == COLLISION_OBJECT_EVENT && TryPushBoulder(x, y, direction))
         return COLLISION_PUSHED_BOULDER;
 
     if (collision == COLLISION_NONE)
@@ -906,368 +904,273 @@ void PlayerGetDestCoords(s16 *x, s16 *y)
 }
 #else
 #include "global.h"
+#include "main.h"
+#include "bike.h"
+#include "event_data.h"
+#include "event_object_movement.h"
+#include "field_camera.h"
+#include "field_effect.h"
+#include "field_effect_helpers.h"
+#include "field_player_avatar.h"
+#include "fieldmap.h"
+#include "window.h"
+#include "menu.h"
+#include "metatile_behavior.h"
+#include "overworld.h"
+#include "party_menu.h"
+#include "random.h"
+#include "rotating_gate.h"
+#include "script.h"
+#include "sound.h"
+#include "sprite.h"
+#include "strings.h"
+#include "task.h"
+#include "tv.h"
+#include "wild_encounter.h"
+#include "constants/abilities.h"
+#include "constants/event_objects.h"
+#include "constants/event_object_movement.h"
+#include "constants/field_effects.h"
+#include "constants/items.h"
+#include "constants/moves.h"
+#include "constants/songs.h"
+#include "constants/trainer_types.h"
 
-__attribute__((naked, section(".text.sub_0808AB9C"))) void sub_0808AB9C(void)
+// The tail is compiled separately to preserve the JP contiguous text layout.
+// Shared state and tables remain at their existing JP RAM/ROM owners.
+extern u8 sSpinStartFacingDir asm("gUnknown_2036FEC");
+extern const u8 sRivalAvatarGfxIds[8][2];
+extern const u8 sPlayerAvatarGfxIds[8][2];
+extern const u8 sFRLGAvatarGfxIds[2];
+extern const u8 sRSAvatarGfxIds[2];
+extern const u8 sPlayerAvatarGfxToStateFlag[2][5][2];
+extern bool8 (*const sArrowWarpMetatileBehaviorChecks2[4])(u8);
+extern bool8 (*const sPushBoulderFuncs[3])(struct Task *, struct ObjectEvent *, struct ObjectEvent *);
+extern u8 (*const sPlayerAvatarSecretBaseMatJump[1])(struct Task *, struct ObjectEvent *);
+extern bool8 (*const sPlayerAvatarSecretBaseMatSpin[4])(struct Task *, struct ObjectEvent *);
+extern const u8 sSecretBaseMatSpinDirections[4];
+extern const u8 sSecretBaseMatSpinActions[5];
+extern bool8 (*const sFishingStateFuncs[16])(struct Task *);
+extern const s16 sFishingMinRounds1[3], sFishingMinRounds2[3];
+extern const s16 sFishingReelTimeouts[3], sFishingMoreDotsChance[3][2];
+extern const u8 sSpinDirections[5];
+extern const u8 gText_FishingDot[];
+bool8 ForcedMovement_None(void);
+void DoPlayerAvatarTransition(void);
+void npc_clear_strange_bits(struct ObjectEvent *);
+void MoveEventObjectToMapCoords(struct ObjectEvent *, s16, s16);
+void SetEventObjectDirection(struct ObjectEvent *, u8);
+u8 GetEventObjectIdByXY(s16, s16);
+u8 SpawnSpecialEventObject(struct ObjectEventTemplate *);
+void EventObjectTurn(struct ObjectEvent *, u8);
+// JP animation lookup call targets differ from the current US helper labels.
+u8 GetFishingDirectionAnimNumJP(u32) asm("GetWalkInPlaceNormalMovementAction");
+u8 GetAcroWheelieDirectionAnimNumJP(u32) asm("GetSlideMovementAction");
+u8 GetFaceDirectionAnimNumJP(u32) asm("GetJumpInPlaceMovementAction");
+u8 GetFishingBiteDirectionAnimNumJP(u32) asm("GetWalkNormalMovementAction");
+u8 GetFishingNoCatchDirectionAnimNumJP(u32) asm("GetWalkInPlaceSlowMovementAction");
+u8 GetWalkInPlaceNormalMovementActionJP(u32) asm("sub_08092F08");
+u8 GetWalkSlowMovementActionJP(u32) asm("sub_08092CCC");
+u8 GetJumpInPlaceMovementActionJP(u32) asm("sub_08092E2C");
+u8 GetJumpSpecialMovementActionJP(u32) asm("sub_08092EB0");
+void CameraObjectFreezeJP(void) asm("CameraObjectReset2");
+void LoadMessageBoxAndFrameGfxJP(u8, bool8) asm("sub_08197650");
+void RecordFishingAttemptForTVJP(bool8) asm("sub_080EE470");
+
+#define tState             data[0]
+#define tBoulderObjId      data[1]
+#define tDirection         data[2]
+#define tStep              data[0]
+#define tFrameCounter      data[1]
+#define tNumDots           data[2]
+#define tDotsRequired      data[3]
+#define tRoundsPlayed      data[12]
+#define tMinRoundsRequired data[13]
+#define tPlayerGfxId       data[14]
+#define tFishingRod        data[15]
+#define FISHING_START_ROUND 3
+#define FISHING_GOT_BITE    6
+#define FISHING_ON_HOOK     9
+#define FISHING_NO_BITE     11
+#define FISHING_GOT_AWAY    12
+#define FISHING_SHOW_RESULT 13
+#define tSpinDelayTimer    data[1]
+#define tSpeed             data[2]
+#define tCurY              data[3]
+#define tDestY             data[4]
+#define tStartDir          data[5]
+#define tPriority          data[6]
+#define tSubpriority       data[7]
+#define tGroundTimer       data[8]
+
+bool8 TryPushBoulder(s16 x, s16 y, u8 direction) asm("sub_0808AB9C");
+u8 player_get_pos_including_state_based_drift(s16 *x, s16 *y);
+u8 GetPlayerFacingDirection(void);
+u8 GetPlayerMovementDirection(void);
+u8 PlayerGetElevation(void);
+void MovePlayerToMapCoords(s16 x, s16 y) asm("sub_0808B5F4");
+u8 TestPlayerAvatarFlags(u8 flag);
+u8 GetPlayerAvatarFlags(void) asm("sub_0808B634");
+u8 GetPlayerAvatarSpriteId(void);
+void StopPlayerAvatar(void) asm("sub_0808B658");
+u8 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender);
+u8 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender);
+u8 GetFRLGAvatarGraphicsIdByGender(u8 gender);
+u8 GetRSAvatarGraphicsIdByGender(u8 gender);
+u8 GetPlayerAvatarGraphicsIdByStateId(u8 state);
+u8 unref_GetRivalAvatarGenderByGraphicsId(u8 gfxId);
+u8 GetPlayerAvatarGenderByGraphicsId(u8 gfxId);
+bool8 PartyHasMonWithSurf(void);
+bool8 IsPlayerSurfingNorth(void);
+bool8 IsPlayerFacingSurfableFishableWater(void);
+void ClearPlayerAvatarInfo(void);
+void SetPlayerAvatarStateMask(u8 flags);
+u8 GetPlayerAvatarStateTransitionByGraphicsId(u8 graphicsId, u8 gender);
+u8 GetPlayerAvatarGraphicsIdByCurrentState(void);
+void SetPlayerAvatarExtraStateTransition(u8 graphicsId, u8 transitionFlag);
+void InitPlayerAvatar(s16 x, s16 y, u8 direction, u8 gender);
+void SetPlayerInvisibility(bool8 invisible);
+void SetPlayerAvatarFieldMove(void);
+void SetPlayerAvatarFishing(u8 direction) asm("sub_0808BAC0");
+void PlayerUseAcroBikeOnBumpySlope(u8 direction) asm("sub_0808BB18");
+void SetPlayerAvatarWatering(u8 direction) asm("sub_0808BB8C");
+void HideShowWarpArrow(struct ObjectEvent *objectEvent) asm("sub_0808BBE4");
+void StartStrengthAnim(u8 objectEventId, u8 direction);
+void Task_PushBoulder(u8 taskId);
+bool8 PushBoulder_Start(struct Task *task, struct ObjectEvent *player, struct ObjectEvent *boulder);
+bool8 PushBoulder_Move(struct Task *task, struct ObjectEvent *player, struct ObjectEvent *boulder);
+bool8 PushBoulder_End(struct Task *task, struct ObjectEvent *player, struct ObjectEvent *boulder);
+void DoPlayerMatJump(void);
+void DoPlayerAvatarSecretBaseMatJump(u8 taskId);
+u8 PlayerAvatar_DoSecretBaseMatJump(struct Task *task, struct ObjectEvent *objectEvent);
+void DoPlayerMatSpin(void);
+void PlayerAvatar_DoSecretBaseMatSpin(u8 taskId);
+bool8 PlayerAvatar_SecretBaseMatSpinStep0(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 PlayerAvatar_SecretBaseMatSpinStep1(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 PlayerAvatar_SecretBaseMatSpinStep2(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 PlayerAvatar_SecretBaseMatSpinStep3(struct Task *task, struct ObjectEvent *objectEvent);
+void CreateStopSurfingTask(u8 direction) asm("sub_0808C0B4");
+void Task_StopSurfingInit(u8 taskId) asm("taskFF_0805D1D4");
+void Task_WaitStopSurfing(u8 taskId) asm("sub_0808C178");
+void StartFishing(u8 rod);
+void Task_Fishing(u8 taskId);
+bool8 Fishing_Init(struct Task *task);
+bool8 Fishing_GetRodOut(struct Task *task);
+bool8 Fishing_WaitBeforeDots(struct Task *task);
+bool8 Fishing_InitDots(struct Task *task);
+bool8 Fishing_ShowDots(struct Task *task);
+bool8 Fishing_CheckForBite(struct Task *task);
+bool8 Fishing_GotBite(struct Task *task);
+bool8 Fishing_WaitForA(struct Task *task);
+bool8 Fishing_CheckMoreDots(struct Task *task);
+bool8 Fishing_MonOnHook(struct Task *task);
+bool8 Fishing_StartEncounter(struct Task *task);
+bool8 Fishing_NotEvenNibble(struct Task *task);
+bool8 Fishing_GotAway(struct Task *task);
+bool8 Fishing_NoMon(struct Task *task);
+bool8 Fishing_PutRodAway(struct Task *task);
+bool8 Fishing_EndNoMon(struct Task *task);
+void AlignFishingAnimationFrames(void);
+void SetSpinStartFacingDir(u8 direction) asm("sub_0808C9E4");
+u8 GetSpinStartFacingDir(void) asm("sub_0808C9F0");
+void Task_DoPlayerSpinExit(u8 taskId);
+void DoPlayerSpinEntrance(void);
+bool32 IsPlayerSpinEntranceActive(void);
+void DoPlayerSpinExit(void);
+bool32 IsPlayerSpinExitActive(void);
+void Task_DoPlayerSpinEntrance(u8 taskId);
+u8 TrySpinPlayerForWarp(struct ObjectEvent *object, s16 *delayTimer) asm("sub_0808CCFC");
+
+__attribute__((section(".text.sub_0808AB9C"))) bool8 TryPushBoulder(s16 x, s16 y, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov r3, sp\n\t"
-        "	strh r0, [r3]\n\t"
-        "	mov r5, sp\n\t"
-        "	adds r5, #2\n\t"
-        "	strh r1, [r5]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r7, r2, #0x18\n\t"
-        "	ldr r0, _0808AC34\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808AC3C\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	bl GetEventObjectIdByXY\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0x10\n\t"
-        "	beq _0808AC3C\n\t"
-        "	ldr r0, _0808AC38\n\t"
-        "	lsls r1, r6, #3\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	cmp r0, #0x57\n\t"
-        "	bne _0808AC3C\n\t"
-        "	ldrh r1, [r4, #0x10]\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldrh r0, [r4, #0x12]\n\t"
-        "	strh r0, [r5]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl MoveCoords\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r2, [r5, r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl GetCollisionAtCoords\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808AC3C\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl MetatileBehavior_IsNonAnimDoor\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808AC3C\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl StartStrengthAnim\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808AC3E\n\t"
-        "	.align 2, 0\n\t"
-        "_0808AC34: .4byte 0x00000889\n\t"
-        "_0808AC38: .4byte 0x02036FF0\n\t"
-        "_0808AC3C:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808AC3E:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FlagGet(FLAG_SYS_USE_STRENGTH))
+    {
+        u8 objectEventId = GetEventObjectIdByXY(x, y);
+
+        if (objectEventId != OBJECT_EVENTS_COUNT && gObjectEvents[objectEventId].graphicsId == OBJ_EVENT_GFX_PUSHABLE_BOULDER)
+        {
+            x = gObjectEvents[objectEventId].currentCoords.x;
+            y = gObjectEvents[objectEventId].currentCoords.y;
+            MoveCoords(direction, &x, &y);
+            if (GetCollisionAtCoords(&gObjectEvents[objectEventId], x, y, direction) == COLLISION_NONE
+             && MetatileBehavior_IsNonAnimDoor(MapGridGetMetatileBehaviorAt(x, y)) == FALSE)
+            {
+                StartStrengthAnim(objectEventId, direction);
+                return TRUE;
+            }
+        }
+    }
+    return FALSE;
 }
 
-__attribute__((naked, section(".text.player_get_pos_including_state_based_drift"))) void player_get_pos_including_state_based_drift(void)
+__attribute__((section(".text.player_get_pos_including_state_based_drift"))) u8 player_get_pos_including_state_based_drift(s16 *x, s16 *y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r0, _0808B494\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808B498\n\t"
-        "	adds r3, r0, r1\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _0808B460\n\t"
-        "	b _0808B588\n\t"
-        "_0808B460:\n\t"
-        "	ldr r2, _0808B49C\n\t"
-        "	ldrb r1, [r3, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808B476\n\t"
-        "	b _0808B588\n\t"
-        "_0808B476:\n\t"
-        "	ldrh r0, [r3, #0x10]\n\t"
-        "	strh r0, [r4]\n\t"
-        "	ldrh r0, [r3, #0x12]\n\t"
-        "	strh r0, [r5]\n\t"
-        "	ldrb r0, [r3, #0x1c]\n\t"
-        "	subs r0, #8\n\t"
-        "	cmp r0, #0x30\n\t"
-        "	bls _0808B488\n\t"
-        "	b _0808B588\n\t"
-        "_0808B488:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808B4A0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B494: .4byte 0x02037230\n\t"
-        "_0808B498: .4byte 0x02036FF0\n\t"
-        "_0808B49C: .4byte 0x020205AC\n\t"
-        "_0808B4A0: .4byte 0x0808B4A4\n\t"
-        "_0808B4A4:\n\t"
-        "	.4byte _0808B568\n\t"
-        "	.4byte _0808B56E\n\t"
-        "	.4byte _0808B578\n\t"
-        "	.4byte _0808B57E\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B588\n\t"
-        "	.4byte _0808B568\n\t"
-        "	.4byte _0808B56E\n\t"
-        "	.4byte _0808B578\n\t"
-        "	.4byte _0808B57E\n\t"
-        "_0808B568:\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r0, #1\n\t"
-        "	b _0808B572\n\t"
-        "_0808B56E:\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	subs r0, #1\n\t"
-        "_0808B572:\n\t"
-        "	strh r0, [r5]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808B594\n\t"
-        "_0808B578:\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	subs r0, #1\n\t"
-        "	b _0808B582\n\t"
-        "_0808B57E:\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "_0808B582:\n\t"
-        "	strh r0, [r4]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808B594\n\t"
-        "_0808B588:\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	strh r0, [r4]\n\t"
-        "	strh r0, [r5]\n\t"
-        "	movs r0, #0\n\t"
-        "_0808B594:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *object = &gObjectEvents[gPlayerAvatar.objectEventId];
+
+    if (object->heldMovementActive && !object->heldMovementFinished && !gSprites[object->spriteId].data[2])
+    {
+        *x = object->currentCoords.x;
+        *y = object->currentCoords.y;
+
+        switch (object->movementActionId)
+        {
+        case MOVEMENT_ACTION_WALK_NORMAL_DOWN:
+        case MOVEMENT_ACTION_PLAYER_RUN_DOWN:
+            (*y)++;
+            return TRUE;
+        case MOVEMENT_ACTION_WALK_NORMAL_UP:
+        case MOVEMENT_ACTION_PLAYER_RUN_UP:
+            (*y)--;
+            return TRUE;
+        case MOVEMENT_ACTION_WALK_NORMAL_LEFT:
+        case MOVEMENT_ACTION_PLAYER_RUN_LEFT:
+            (*x)--;
+            return TRUE;
+        case MOVEMENT_ACTION_WALK_NORMAL_RIGHT:
+        case MOVEMENT_ACTION_PLAYER_RUN_RIGHT:
+            (*x)++;
+            return TRUE;
+        }
+    }
+
+    *x = -1;
+    *y = -1;
+    return FALSE;
 }
 
-__attribute__((naked)) void GetPlayerFacingDirection(void)
+u8 GetPlayerFacingDirection(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0808B5B4\n\t"
-        "	ldr r0, _0808B5B8\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B5B4: .4byte 0x02036FF0\n\t"
-        "_0808B5B8: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
+    return gObjectEvents[gPlayerAvatar.objectEventId].facingDirection;
 }
 
-__attribute__((naked)) void GetPlayerMovementDirection(void)
+u8 GetPlayerMovementDirection(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0808B5D0\n\t"
-        "	ldr r0, _0808B5D4\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0, #0x18]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B5D0: .4byte 0x02036FF0\n\t"
-        "_0808B5D4: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
+    return gObjectEvents[gPlayerAvatar.objectEventId].movementDirection;
 }
 
-__attribute__((naked)) void PlayerGetElevation(void)
+u8 PlayerGetElevation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0808B5EC\n\t"
-        "	ldr r0, _0808B5F0\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B5EC: .4byte 0x02036FF0\n\t"
-        "_0808B5F0: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
+    return gObjectEvents[gPlayerAvatar.objectEventId].previousElevation;
 }
 
-__attribute__((naked)) void sub_0808B5F4(void)
+void MovePlayerToMapCoords(s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	ldr r0, _0808B61C\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808B620\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl MoveEventObjectToMapCoords\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B61C: .4byte 0x02037230\n\t"
-        "_0808B620: .4byte 0x02036FF0\n\t"
-        ".syntax divided\n\t"
-    );
+    MoveEventObjectToMapCoords(&gObjectEvents[gPlayerAvatar.objectEventId], x, y);
 }
 
-__attribute__((naked)) void TestPlayerAvatarFlags(void)
+u8 TestPlayerAvatarFlags(u8 flag)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _0808B630\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	ands r1, r0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B630: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
+    return gPlayerAvatar.flags & flag;
 }
 
-__attribute__((naked)) void sub_0808B634(void)
+u8 GetPlayerAvatarFlags(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0808B63C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B63C: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
+    return gPlayerAvatar.flags;
 }
 
-__attribute__((naked)) void GetPlayerAvatarSpriteId(void)
+u8 GetPlayerAvatarSpriteId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0808B648\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B648: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
+    return gPlayerAvatar.spriteId;
 }
 
 void CancelPlayerForcedMovement(void)
@@ -1275,3295 +1178,954 @@ void CancelPlayerForcedMovement(void)
     ForcedMovement_None();
 }
 
-__attribute__((naked)) void sub_0808B658(void)
+void StopPlayerAvatar(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _0808B698\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808B69C\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl npc_clear_strange_bits\n\t"
-        "	ldrb r1, [r4, #0x18]\n\t"
-        "	lsls r1, r1, #0x1c\n\t"
-        "	lsrs r1, r1, #0x1c\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	movs r0, #6\n\t"
-        "	bl TestPlayerAvatarFlags\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808B690\n\t"
-        "	bl Bike_HandleBumpySlopeJump\n\t"
-        "	movs r0, #0\n\t"
-        "	bl Bike_UpdateBikeCounterSpeed\n\t"
-        "_0808B690:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B698: .4byte 0x02037230\n\t"
-        "_0808B69C: .4byte 0x02036FF0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r2, _0808B6B4\n\t"
-        "	lsrs r0, r0, #0x17\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B6B4: .4byte sRivalAvatarGfxIds\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r2, _0808B6CC\n\t"
-        "	lsrs r0, r0, #0x17\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B6CC: .4byte sPlayerAvatarGfxIds\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 GetFRLGAvatarGraphicsIdByGender(u8 gender)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _0808B6DC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B6DC: .4byte sFRLGAvatarGfxIds\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 GetRSAvatarGraphicsIdByGender(u8 gender)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _0808B6EC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B6EC: .4byte sRSAvatarGfxIds\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void GetPlayerAvatarGraphicsIdByStateId(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _0808B708\n\t"
-        "	ldrb r1, [r1, #7]\n\t"
-        "	bl GetPlayerAvatarGraphicsIdByStateIdAndGender\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B708: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void unref_GetRivalAvatarGenderByGraphicsId(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r0, #0x70\n\t"
-        "	beq _0808B72E\n\t"
-        "	cmp r0, #0x70\n\t"
-        "	bgt _0808B726\n\t"
-        "	cmp r0, #0x6d\n\t"
-        "	bgt _0808B732\n\t"
-        "	cmp r0, #0x69\n\t"
-        "	blt _0808B732\n\t"
-        "	b _0808B72E\n\t"
-        "_0808B726:\n\t"
-        "	cmp r1, #0x8a\n\t"
-        "	beq _0808B72E\n\t"
-        "	cmp r1, #0xc0\n\t"
-        "	bne _0808B732\n\t"
-        "_0808B72E:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808B734\n\t"
-        "_0808B732:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808B734:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void GetPlayerAvatarGenderByGraphicsId(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r0, #0x70\n\t"
-        "	beq _0808B75A\n\t"
-        "	cmp r0, #0x70\n\t"
-        "	bgt _0808B752\n\t"
-        "	cmp r0, #0x5d\n\t"
-        "	bgt _0808B75E\n\t"
-        "	cmp r0, #0x59\n\t"
-        "	blt _0808B75E\n\t"
-        "	b _0808B75A\n\t"
-        "_0808B752:\n\t"
-        "	cmp r1, #0x8a\n\t"
-        "	beq _0808B75A\n\t"
-        "	cmp r1, #0xc0\n\t"
-        "	bne _0808B75E\n\t"
-        "_0808B75A:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808B760\n\t"
-        "_0808B75E:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808B760:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void PartyHasMonWithSurf(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r0, #8\n\t"
-        "	bl TestPlayerAvatarFlags\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808B7A8\n\t"
-        "	movs r5, #0\n\t"
-        "	b _0808B78E\n\t"
-        "_0808B776:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl MonKnowsMove\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808B788\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808B7AA\n\t"
-        "_0808B788:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "_0808B78E:\n\t"
-        "	cmp r5, #5\n\t"
-        "	bhi _0808B7A8\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _0808B7B0\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808B776\n\t"
-        "_0808B7A8:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808B7AA:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B7B0: .4byte 0x02024190\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void IsPlayerSurfingNorth(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetPlayerMovementDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _0808B7D2\n\t"
-        "	movs r0, #8\n\t"
-        "	bl TestPlayerAvatarFlags\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808B7D2\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808B7D4\n\t"
-        "_0808B7D2:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808B7D4:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void IsPlayerFacingSurfableFishableWater(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _0808B850\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808B854\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrh r1, [r4, #0x10]\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldrh r0, [r4, #0x12]\n\t"
-        "	mov r5, sp\n\t"
-        "	adds r5, #2\n\t"
-        "	strh r0, [r5]\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl MoveCoords\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r2, [r5, r0]\n\t"
-        "	ldrb r3, [r4, #0x18]\n\t"
-        "	lsls r3, r3, #0x1c\n\t"
-        "	lsrs r3, r3, #0x1c\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetCollisionAtCoords\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _0808B858\n\t"
-        "	bl PlayerGetElevation\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _0808B858\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl MetatileBehavior_IsSurfableFishableWater\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808B858\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808B85A\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B850: .4byte 0x02037230\n\t"
-        "_0808B854: .4byte 0x02036FF0\n\t"
-        "_0808B858:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808B85A:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
-__attribute__((naked)) void ClearPlayerAvatarInfo(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0808B874\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x24\n\t"
-        "	bl memset\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B874: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
+    npc_clear_strange_bits(playerObjEvent);
+    SetEventObjectDirection(playerObjEvent, playerObjEvent->facingDirection);
+    if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE | PLAYER_AVATAR_FLAG_ACRO_BIKE))
+    {
+        Bike_HandleBumpySlopeJump();
+        Bike_UpdateBikeCounterSpeed(0);
+    }
 }
 
-__attribute__((naked)) void SetPlayerAvatarStateMask(void)
+u8 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r3, _0808B88C\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	movs r1, #0xe0\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B88C: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
+    return sRivalAvatarGfxIds[state][gender];
 }
 
-__attribute__((naked)) void GetPlayerAvatarStateTransitionByGraphicsId(void)
+u8 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r3, _0808B8B8\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r4, r0, #1\n\t"
-        "	adds r6, r3, #1\n\t"
-        "_0808B8A6:\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r1, r0, r4\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _0808B8BC\n\t"
-        "	adds r0, r1, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	b _0808B8C8\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B8B8: .4byte sPlayerAvatarGfxToStateFlag\n\t"
-        "_0808B8BC:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #4\n\t"
-        "	bls _0808B8A6\n\t"
-        "	movs r0, #1\n\t"
-        "_0808B8C8:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return sPlayerAvatarGfxIds[state][gender];
 }
 
-__attribute__((naked)) void GetPlayerAvatarGraphicsIdByCurrentState(void)
+u8 GetFRLGAvatarGraphicsIdByGender(u8 gender)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r0, _0808B8F8\n\t"
-        "	ldrb r5, [r0]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r3, _0808B8FC\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r4, r0, #1\n\t"
-        "	adds r6, r3, #1\n\t"
-        "_0808B8E4:\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r1, r0, r4\n\t"
-        "	adds r0, r1, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ands r0, r5\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808B900\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	b _0808B90C\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B8F8: .4byte 0x02037230\n\t"
-        "_0808B8FC: .4byte sPlayerAvatarGfxToStateFlag\n\t"
-        "_0808B900:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #4\n\t"
-        "	bls _0808B8E4\n\t"
-        "	movs r0, #0\n\t"
-        "_0808B90C:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return sFRLGAvatarGfxIds[gender];
 }
 
-__attribute__((naked)) void SetPlayerAvatarExtraStateTransition(void)
+u8 GetRSAvatarGraphicsIdByGender(u8 gender)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r5, _0808B940\n\t"
-        "	ldrb r1, [r5, #7]\n\t"
-        "	bl GetPlayerAvatarStateTransitionByGraphicsId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	orrs r0, r4\n\t"
-        "	ldrb r1, [r5, #1]\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r5, #1]\n\t"
-        "	bl DoPlayerAvatarTransition\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808B940: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
+    return sRSAvatarGfxIds[gender];
 }
 
-__attribute__((naked)) void InitPlayerAvatar(void)
+u8 GetPlayerAvatarGraphicsIdByStateId(u8 state)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	mov sb, r2\n\t"
-        "	mov r8, r3\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	mov r0, sb\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov r8, r1\n\t"
-        "	mov r1, sp\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r1, r8\n\t"
-        "	bl GetPlayerAvatarGraphicsIdByStateIdAndGender\n\t"
-        "	mov r1, sp\n\t"
-        "	movs r3, #0\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	mov r0, sp\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	subs r4, #7\n\t"
-        "	movs r6, #0\n\t"
-        "	strh r4, [r0, #4]\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	subs r5, #7\n\t"
-        "	strh r5, [r0, #6]\n\t"
-        "	strb r6, [r0, #8]\n\t"
-        "	movs r0, #0xb\n\t"
-        "	strb r0, [r1, #9]\n\t"
-        "	mov r2, sp\n\t"
-        "	ldrb r1, [r2, #0xa]\n\t"
-        "	subs r0, #0x1b\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2, #0xa]\n\t"
-        "	mov r0, sp\n\t"
-        "	strb r6, [r0, #0xa]\n\t"
-        "	strh r3, [r0, #0xc]\n\t"
-        "	strh r3, [r0, #0xe]\n\t"
-        "	str r3, [sp, #0x10]\n\t"
-        "	strh r3, [r0, #0x14]\n\t"
-        "	bl SpawnSpecialEventObject\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r4, r5, #3\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808BA04\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "	bl CreateWarpArrowSprite\n\t"
-        "	strb r0, [r4, #0x1b]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, sb\n\t"
-        "	bl EventObjectTurn\n\t"
-        "	bl ClearPlayerAvatarInfo\n\t"
-        "	ldr r0, _0808BA08\n\t"
-        "	strb r6, [r0, #2]\n\t"
-        "	strb r6, [r0, #3]\n\t"
-        "	strb r5, [r0, #5]\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	strb r1, [r0, #4]\n\t"
-        "	mov r1, r8\n\t"
-        "	strb r1, [r0, #7]\n\t"
-        "	movs r0, #0x21\n\t"
-        "	bl SetPlayerAvatarStateMask\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BA04: .4byte 0x02036FF0\n\t"
-        "_0808BA08: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetPlayerAvatarGraphicsIdByStateIdAndGender(state, gPlayerAvatar.gender);
 }
 
-__attribute__((naked)) void SetPlayerInvisibility(void)
+u8 unref_GetRivalAvatarGenderByGraphicsId(u8 gfxId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r6, _0808BA6C\n\t"
-        "	ldr r5, _0808BA70\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r4, r0\n\t"
-        "	lsls r3, r4, #5\n\t"
-        "	ldrb r2, [r1, #1]\n\t"
-        "	movs r0, #0x21\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r3\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	movs r0, #8\n\t"
-        "	bl TestPlayerAvatarFlags\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808BA64\n\t"
-        "	ldr r2, _0808BA74\n\t"
-        "	ldrb r1, [r5, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r0, [r0, #0x1a]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	lsls r3, r4, #2\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r3\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0808BA64:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BA6C: .4byte 0x02036FF0\n\t"
-        "_0808BA70: .4byte 0x02037230\n\t"
-        "_0808BA74: .4byte 0x020205AC\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gfxId)
+    {
+    case OBJ_EVENT_GFX_RIVAL_MAY_NORMAL:
+    case OBJ_EVENT_GFX_RIVAL_MAY_MACH_BIKE:
+    case OBJ_EVENT_GFX_RIVAL_MAY_ACRO_BIKE:
+    case OBJ_EVENT_GFX_RIVAL_MAY_SURFING:
+    case OBJ_EVENT_GFX_RIVAL_MAY_FIELD_MOVE:
+    case OBJ_EVENT_GFX_MAY_UNDERWATER:
+    case OBJ_EVENT_GFX_MAY_FISHING:
+    case OBJ_EVENT_GFX_MAY_WATERING:
+        return FEMALE;
+    default:
+        return MALE;
+    }
 }
 
-__attribute__((naked)) void SetPlayerAvatarFieldMove(void)
+u8 GetPlayerAvatarGenderByGraphicsId(u8 gfxId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r5, _0808BAB4\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808BAB8\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	movs r0, #5\n\t"
-        "	bl GetPlayerAvatarGraphicsIdByStateId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetGraphicsId\n\t"
-        "	ldrb r1, [r5, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808BABC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BAB4: .4byte 0x02037230\n\t"
-        "_0808BAB8: .4byte 0x02036FF0\n\t"
-        "_0808BABC: .4byte 0x020205AC\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gfxId)
+    {
+    case OBJ_EVENT_GFX_MAY_NORMAL:
+    case OBJ_EVENT_GFX_MAY_MACH_BIKE:
+    case OBJ_EVENT_GFX_MAY_ACRO_BIKE:
+    case OBJ_EVENT_GFX_MAY_SURFING:
+    case OBJ_EVENT_GFX_MAY_FIELD_MOVE:
+    case OBJ_EVENT_GFX_MAY_UNDERWATER:
+    case OBJ_EVENT_GFX_MAY_FISHING:
+    case OBJ_EVENT_GFX_MAY_WATERING:
+        return FEMALE;
+    default:
+        return MALE;
+    }
 }
 
-__attribute__((naked)) void sub_0808BAC0(void)
+bool8 PartyHasMonWithSurf(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r6, _0808BB0C\n\t"
-        "	ldrb r0, [r6, #5]\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808BB10\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	movs r0, #6\n\t"
-        "	bl GetPlayerAvatarGraphicsIdByStateId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetGraphicsId\n\t"
-        "	ldrb r0, [r6, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808BB14\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetWalkInPlaceNormalMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BB0C: .4byte 0x02037230\n\t"
-        "_0808BB10: .4byte 0x02036FF0\n\t"
-        "_0808BB14: .4byte 0x020205AC\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    u8 i;
 
-__attribute__((naked)) void sub_0808BB18(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r6, _0808BB80\n\t"
-        "	ldrb r0, [r6, #5]\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808BB84\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetPlayerAvatarGraphicsIdByStateId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetGraphicsId\n\t"
-        "	ldrb r0, [r6, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808BB88\n\t"
-        "	mov r8, r0\n\t"
-        "	add r4, r8\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetSlideMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldrb r1, [r6, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, r8\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SeekSpriteAnim\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BB80: .4byte 0x02037230\n\t"
-        "_0808BB84: .4byte 0x02036FF0\n\t"
-        "_0808BB88: .4byte 0x020205AC\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING))
+    {
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (GetMonData3(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
+                break;
+            if (MonKnowsMove(&gPlayerParty[i], MOVE_SURF))
+                return TRUE;
+        }
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_0808BB8C(void)
+bool8 IsPlayerSurfingNorth(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r6, _0808BBD8\n\t"
-        "	ldrb r0, [r6, #5]\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808BBDC\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	movs r0, #7\n\t"
-        "	bl GetPlayerAvatarGraphicsIdByStateId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetGraphicsId\n\t"
-        "	ldrb r0, [r6, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808BBE0\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetJumpInPlaceMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BBD8: .4byte 0x02037230\n\t"
-        "_0808BBDC: .4byte 0x02036FF0\n\t"
-        "_0808BBE0: .4byte 0x020205AC\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetPlayerMovementDirection() == DIR_NORTH && TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING))
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) void sub_0808BBE4(void)
+bool8 IsPlayerFacingSurfableFishableWater(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrb r0, [r5, #0x1e]\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r1, #0\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r1, [r0]\n\t"
-        "	movs r6, #1\n\t"
-        "	ldr r1, _0808BC48\n\t"
-        "	mov sb, r1\n\t"
-        "	mov r4, sp\n\t"
-        "	mov r7, sp\n\t"
-        "	adds r7, #2\n\t"
-        "_0808BC06:\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, sb\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	mov r0, r8\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808BC4C\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	cmp r6, r0\n\t"
-        "	bne _0808BC4C\n\t"
-        "	ldrh r0, [r5, #0x10]\n\t"
-        "	strh r0, [r4]\n\t"
-        "	ldrh r0, [r5, #0x12]\n\t"
-        "	strh r0, [r7]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	bl MoveCoords\n\t"
-        "	ldrb r0, [r5, #0x1b]\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r3, [r7, r1]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl ShowWarpArrowSprite\n\t"
-        "	b _0808BC66\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BC48: .4byte sArrowWarpMetatileBehaviorChecks2\n\t"
-        "_0808BC4C:\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r4]\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #3\n\t"
-        "	ble _0808BC06\n\t"
-        "	ldrb r0, [r5, #0x1b]\n\t"
-        "	bl SetSpriteInvisible\n\t"
-        "_0808BC66:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    s16 x = playerObjEvent->currentCoords.x;
+    s16 y = playerObjEvent->currentCoords.y;
 
-__attribute__((naked)) void StartStrengthAnim(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r6, _0808BCA8\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0808BCAC\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r4, [r1, #0xa]\n\t"
-        "	strh r5, [r1, #0xc]\n\t"
-        "	bl _call_via_r6\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BCA8: .4byte Task_PushBoulder + 1\n\t"
-        "_0808BCAC: .4byte 0x03005B60\n\t"
-        ".syntax divided\n\t"
-    );
+    MoveCoords(playerObjEvent->facingDirection, &x, &y);
+    if (GetCollisionAtCoords(playerObjEvent, x, y, playerObjEvent->facingDirection) == COLLISION_ELEVATION_MISMATCH
+     && PlayerGetElevation() == ELEVATION_DEFAULT
+     && MetatileBehavior_IsSurfableFishableWater(MapGridGetMetatileBehaviorAt(x, y)))
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) void Task_PushBoulder(void)
+void ClearPlayerAvatarInfo(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r6, _0808BCF8\n\t"
-        "	ldr r2, _0808BCFC\n\t"
-        "	ldr r5, _0808BD00\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_0808BCC4:\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r3, [r4, r0]\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r3, r3, r6\n\t"
-        "	ldr r0, _0808BD04\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r2, r0, #3\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldr r3, [r3]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808BCC4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BCF8: .4byte sPushBoulderFuncs\n\t"
-        "_0808BCFC: .4byte 0x03005B60\n\t"
-        "_0808BD00: .4byte 0x02036FF0\n\t"
-        "_0808BD04: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
+    memset(&gPlayerAvatar, 0, sizeof(struct PlayerAvatar));
 }
 
-__attribute__((naked)) void PushBoulder_Start(void)
+void SetPlayerAvatarStateMask(u8 flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	ldr r1, _0808BD24\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1, #6]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BD24: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
+    gPlayerAvatar.flags &= (PLAYER_AVATAR_FLAG_DASH | PLAYER_AVATAR_FLAG_FORCED_MOVE | PLAYER_AVATAR_FLAG_CONTROLLABLE);
+    gPlayerAvatar.flags |= flags;
 }
 
-__attribute__((naked)) void PushBoulder_Move(void)
+u8 GetPlayerAvatarStateTransitionByGraphicsId(u8 graphicsId, u8 gender)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventIsHeldMovementActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808BD42\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "_0808BD42:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventIsHeldMovementActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808BD54\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "_0808BD54:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventIsMovementOverridden\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808BDD6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventIsMovementOverridden\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808BDD6\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	ldrb r0, [r6, #0xc]\n\t"
-        "	bl sub_08092F08\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldrb r0, [r6, #0xc]\n\t"
-        "	bl sub_08092CCC\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldr r2, _0808BDE0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	str r0, [r2]\n\t"
-        "	movs r1, #0x12\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	str r0, [r2, #4]\n\t"
-        "	ldrb r0, [r4, #0xb]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	str r0, [r2, #8]\n\t"
-        "	ldr r3, _0808BDE4\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	str r0, [r2, #0xc]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	movs r0, #0xd6\n\t"
-        "	bl PlaySE\n\t"
-        "	ldrh r0, [r6, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #8]\n\t"
-        "_0808BDD6:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BDE0: .4byte 0x020388A8\n\t"
-        "_0808BDE4: .4byte 0x020205AC\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    u8 i;
 
-__attribute__((naked)) void PushBoulder_End(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventCheckHeldMovementStatus\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808BE2A\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventCheckHeldMovementStatus\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808BE2A\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	ldr r1, _0808BE34\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #6]\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	ldr r0, _0808BE38\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_0808BE2A:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BE34: .4byte 0x02037230\n\t"
-        "_0808BE38: .4byte Task_PushBoulder + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    for (i = 0; i < ARRAY_COUNT(sPlayerAvatarGfxToStateFlag[0]); i++)
+    {
+        if (sPlayerAvatarGfxToStateFlag[gender][i][0] == graphicsId)
+            return sPlayerAvatarGfxToStateFlag[gender][i][1];
+    }
+    return PLAYER_AVATAR_FLAG_ON_FOOT;
 }
 
-__attribute__((naked)) void DoPlayerMatJump(void)
+u8 GetPlayerAvatarGraphicsIdByCurrentState(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0808BE58\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl _call_via_r4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BE58: .4byte DoPlayerAvatarSecretBaseMatJump + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    u8 i;
+    u8 flags = gPlayerAvatar.flags;
 
-__attribute__((naked)) void DoPlayerAvatarSecretBaseMatJump(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _0808BE98\n\t"
-        "	ldr r2, _0808BE9C\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_0808BE6E:\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldr r0, _0808BEA0\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _0808BEA4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r2\n\t"
-        ".syntax divided\n\t"
-    );
+    for (i = 0; i < ARRAY_COUNT(sPlayerAvatarGfxToStateFlag[0]); i++)
+    {
+        if (sPlayerAvatarGfxToStateFlag[gPlayerAvatar.gender][i][1] & flags)
+            return sPlayerAvatarGfxToStateFlag[gPlayerAvatar.gender][i][0];
+    }
+    return 0;
 }
 
-__attribute__((naked)) void sub_0808BE8C(void)
+void SetPlayerAvatarExtraStateTransition(u8 graphicsId, u8 transitionFlag)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808BE6E\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BE98: .4byte sPlayerAvatarSecretBaseMatJump\n\t"
-        "_0808BE9C: .4byte 0x03005B60\n\t"
-        "_0808BEA0: .4byte 0x02037230\n\t"
-        "_0808BEA4: .4byte 0x02036FF0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    u8 stateFlag = GetPlayerAvatarStateTransitionByGraphicsId(graphicsId, gPlayerAvatar.gender);
 
-__attribute__((naked)) void PlayerAvatar_DoSecretBaseMatJump(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldr r5, _0808BF0C\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r5, #6]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808BF04\n\t"
-        "	movs r0, #0xa\n\t"
-        "	bl PlaySE\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl sub_08092E2C\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldrh r0, [r6, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _0808BF04\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r5, #6]\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r5, #1]\n\t"
-        "	ldr r0, _0808BF10\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_0808BF04:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BF0C: .4byte 0x02037230\n\t"
-        "_0808BF10: .4byte DoPlayerAvatarSecretBaseMatJump + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gPlayerAvatar.transitionFlags |= stateFlag | transitionFlag;
+    DoPlayerAvatarTransition();
 }
 
-__attribute__((naked)) void DoPlayerMatSpin(void)
+void InitPlayerAvatar(s16 x, s16 y, u8 direction, u8 gender)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0808BF30\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl _call_via_r4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BF30: .4byte 0x0808BF35\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    struct ObjectEventTemplate playerObjEventTemplate;
+    u8 objectEventId;
+    struct ObjectEvent *objectEvent;
 
-__attribute__((naked)) void PlayerAvatar_DoSecretBaseMatSpin(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _0808BF70\n\t"
-        "	ldr r2, _0808BF74\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_0808BF46:\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldr r0, _0808BF78\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _0808BF7C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r2\n\t"
-        ".syntax divided\n\t"
-    );
+    playerObjEventTemplate.localId = LOCALID_PLAYER;
+    playerObjEventTemplate.graphicsId = GetPlayerAvatarGraphicsIdByStateIdAndGender(PLAYER_AVATAR_STATE_NORMAL, gender);
+    playerObjEventTemplate.x = x - MAP_OFFSET;
+    playerObjEventTemplate.y = y - MAP_OFFSET;
+    playerObjEventTemplate.elevation = ELEVATION_TRANSITION;
+    playerObjEventTemplate.movementType = MOVEMENT_TYPE_PLAYER;
+    playerObjEventTemplate.movementRangeX = 0;
+    playerObjEventTemplate.movementRangeY = 0;
+    playerObjEventTemplate.trainerType = TRAINER_TYPE_NONE;
+    playerObjEventTemplate.trainerRange_berryTreeId = 0;
+    playerObjEventTemplate.script = NULL;
+    playerObjEventTemplate.flagId = 0;
+    objectEventId = SpawnSpecialEventObject(&playerObjEventTemplate);
+    objectEvent = &gObjectEvents[objectEventId];
+    objectEvent->isPlayer = TRUE;
+    objectEvent->warpArrowSpriteId = CreateWarpArrowSprite();
+    EventObjectTurn(objectEvent, direction);
+    ClearPlayerAvatarInfo();
+    gPlayerAvatar.runningState = NOT_MOVING;
+    gPlayerAvatar.tileTransitionState = T_NOT_MOVING;
+    gPlayerAvatar.objectEventId = objectEventId;
+    gPlayerAvatar.spriteId = objectEvent->spriteId;
+    gPlayerAvatar.gender = gender;
+    SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_CONTROLLABLE | PLAYER_AVATAR_FLAG_ON_FOOT);
 }
 
-__attribute__((naked)) void sub_0808BF64(void)
+void SetPlayerInvisibility(bool8 invisible)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808BF46\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BF70: .4byte sPlayerAvatarSecretBaseMatSpin\n\t"
-        "_0808BF74: .4byte 0x03005B60\n\t"
-        "_0808BF78: .4byte 0x02037230\n\t"
-        "_0808BF7C: .4byte 0x02036FF0\n\t"
-        ".syntax divided\n\t"
-    );
+    gObjectEvents[gPlayerAvatar.objectEventId].invisible = invisible;
+    if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING))
+        gSprites[gObjectEvents[gPlayerAvatar.objectEventId].fieldEffectSpriteId].invisible = invisible;
 }
 
-__attribute__((naked)) void PlayerAvatar_SecretBaseMatSpinStep0(void)
+void SetPlayerAvatarFieldMove(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrh r2, [r0, #8]\n\t"
-        "	adds r2, #1\n\t"
-        "	strh r2, [r0, #8]\n\t"
-        "	ldrb r1, [r1, #0x18]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	strh r1, [r0, #0xa]\n\t"
-        "	ldr r1, _0808BFA4\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1, #6]\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	movs r0, #0x2d\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808BFA4: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
+    ObjectEventSetGraphicsId(&gObjectEvents[gPlayerAvatar.objectEventId], GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_FIELD_MOVE));
+    StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], ANIM_FIELD_MOVE);
 }
 
-__attribute__((naked)) void PlayerAvatar_SecretBaseMatSpinStep1(void)
+void SetPlayerAvatarFishing(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _0808C01C\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808C010\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	subs r0, #1\n\t"
-        "	add r0, sp\n\t"
-        "	ldrb r6, [r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetFaceDirectionMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	cmp r6, r0\n\t"
-        "	bne _0808BFEE\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "_0808BFEE:\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _0808C010\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	bl GetOppositeDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r6, r0\n\t"
-        "	bne _0808C010\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_0808C010:\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C01C: .4byte sSecretBaseMatSpinDirections\n\t"
-        ".syntax divided\n\t"
-    );
+    ObjectEventSetGraphicsId(&gObjectEvents[gPlayerAvatar.objectEventId], GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_FISHING));
+    StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], GetFishingDirectionAnimNumJP(direction));
 }
 
-__attribute__((naked)) void PlayerAvatar_SecretBaseMatSpinStep2(void)
+void PlayerUseAcroBikeOnBumpySlope(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldr r1, _0808C05C\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808C050\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	add r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "_0808C050:\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C05C: .4byte sSecretBaseMatSpinActions\n\t"
-        ".syntax divided\n\t"
-    );
+    ObjectEventSetGraphicsId(&gObjectEvents[gPlayerAvatar.objectEventId], GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_ACRO_BIKE));
+    StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], GetAcroWheelieDirectionAnimNumJP(direction));
+    SeekSpriteAnim(&gSprites[gPlayerAvatar.spriteId], 1);
 }
 
-__attribute__((naked)) void PlayerAvatar_SecretBaseMatSpinStep3(void)
+void SetPlayerAvatarWatering(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808C0A4\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	bl GetOppositeDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl sub_08092CCC\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	ldr r1, _0808C0AC\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #6]\n\t"
-        "	ldr r0, _0808C0B0\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_0808C0A4:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C0AC: .4byte 0x02037230\n\t"
-        "_0808C0B0: .4byte 0x0808BF35\n\t"
-        ".syntax divided\n\t"
-    );
+    ObjectEventSetGraphicsId(&gObjectEvents[gPlayerAvatar.objectEventId], GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_WATERING));
+    StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], GetFaceDirectionAnimNumJP(direction));
 }
 
-__attribute__((naked)) void sub_0808C0B4(void)
+void HideShowWarpArrow(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	bl Overworld_ClearSavedMusic\n\t"
-        "	bl Overworld_ChangeMusicToDefault\n\t"
-        "	ldr r2, _0808C100\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0xf7\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r2, #6]\n\t"
-        "	ldr r5, _0808C104\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0808C108\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r4, [r1, #8]\n\t"
-        "	bl _call_via_r5\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C100: .4byte 0x02037230\n\t"
-        "_0808C104: .4byte 0x0808C10D\n\t"
-        "_0808C108: .4byte 0x03005B60\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    s16 x;
+    s16 y;
+    u8 direction;
+    u8 metatileBehavior = objectEvent->currentMetatileBehavior;
 
-__attribute__((naked)) void taskFF_0805D1D4(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r0, _0808C168\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808C16C\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventIsMovementOverridden\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808C138\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808C160\n\t"
-        "_0808C138:\n\t"
-        "	ldrb r0, [r5, #0x1a]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl SetSurfBlob_BobState\n\t"
-        "	ldr r0, _0808C170\n\t"
-        "	lsls r4, r6, #2\n\t"
-        "	adds r4, r4, r6\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r0, [r4, #8]\n\t"
-        "	bl sub_08092EB0\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldr r0, _0808C174\n\t"
-        "	str r0, [r4]\n\t"
-        "_0808C160:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C168: .4byte 0x02037230\n\t"
-        "_0808C16C: .4byte 0x02036FF0\n\t"
-        "_0808C170: .4byte 0x03005B60\n\t"
-        "_0808C174: .4byte 0x0808C179\n\t"
-        ".syntax divided\n\t"
-    );
+    for (x = 0, direction = DIR_SOUTH; x < 4; x++, direction++)
+    {
+        if (sArrowWarpMetatileBehaviorChecks2[x](metatileBehavior) && direction == objectEvent->movementDirection)
+        {
+            // Show warp arrow if applicable
+            x = objectEvent->currentCoords.x;
+            y = objectEvent->currentCoords.y;
+            MoveCoords(direction, &x, &y);
+            ShowWarpArrowSprite(objectEvent->warpArrowSpriteId, direction, x, y);
+            return;
+        }
+    }
+    SetSpriteInvisible(objectEvent->warpArrowSpriteId);
 }
 
-__attribute__((naked)) void sub_0808C178(void)
+void StartStrengthAnim(u8 objectEventId, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r6, _0808C1E4\n\t"
-        "	ldrb r1, [r6, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808C1E8\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808C1DE\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetPlayerAvatarGraphicsIdByStateId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetGraphicsId\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl GetFaceDirectionMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r6, #6]\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	ldrb r1, [r4, #0x1a]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808C1EC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl DestroySprite\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_0808C1DE:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C1E4: .4byte 0x02037230\n\t"
-        "_0808C1E8: .4byte 0x02036FF0\n\t"
-        "_0808C1EC: .4byte 0x020205AC\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    TaskFunc taskFunc = Task_PushBoulder;
+    u8 taskId = CreateTask(taskFunc, 0xFF);
 
-__attribute__((naked)) void StartFishing(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r5, _0808C21C\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0808C220\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r4, [r1, #0x26]\n\t"
-        "	bl _call_via_r5\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C21C: .4byte 0x0808C225\n\t"
-        "_0808C220: .4byte 0x03005B60\n\t"
-        ".syntax divided\n\t"
-    );
+    gTasks[taskId].tBoulderObjId = objectEventId;
+    gTasks[taskId].tDirection = direction;
+    taskFunc(taskId);
 }
 
-__attribute__((naked)) void Task_Fishing(void)
+void Task_PushBoulder(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _0808C254\n\t"
-        "	ldr r2, _0808C258\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_0808C236:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808C236\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C254: .4byte sFishingStateFuncs\n\t"
-        "_0808C258: .4byte 0x03005B60\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sPushBoulderFuncs[gTasks[taskId].tState](&gTasks[taskId],
+                                                     &gObjectEvents[gPlayerAvatar.objectEventId],
+                                                     &gObjectEvents[gTasks[taskId].tBoulderObjId]))
+        ;
 }
 
-__attribute__((naked)) void Fishing_Init(void)
+bool8 PushBoulder_Start(struct Task *task, struct ObjectEvent *player, struct ObjectEvent *boulder)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	ldr r1, _0808C278\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1, #6]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C278: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
+    LockPlayerFieldControls();
+    gPlayerAvatar.preventStep = TRUE;
+    task->tState++;
+    return FALSE;
 }
 
-__attribute__((naked)) void Fishing_GetRodOut(void)
+bool8 PushBoulder_Move(struct Task *task, struct ObjectEvent *player, struct ObjectEvent *boulder)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r1, _0808C304\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #6\n\t"
-        "	bl memcpy\n\t"
-        "	add r4, sp, #8\n\t"
-        "	ldr r1, _0808C308\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #6\n\t"
-        "	bl memcpy\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x20]\n\t"
-        "	bl Random\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r6, r2, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl __modsi3\n\t"
-        "	ldrh r1, [r6]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r1, [r5, #0x22]\n\t"
-        "	ldr r3, _0808C30C\n\t"
-        "	ldr r2, _0808C310\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	ldrb r0, [r2, #5]\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r4, r4, r3\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfActive\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl sub_0808BAC0\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C304: .4byte sFishingMinRounds1\n\t"
-        "_0808C308: .4byte sFishingMinRounds2\n\t"
-        "_0808C30C: .4byte 0x02036FF0\n\t"
-        "_0808C310: .4byte 0x02037230\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    if (ObjectEventIsHeldMovementActive(player))
+        ObjectEventClearHeldMovementIfFinished(player);
 
-__attribute__((naked)) void Fishing_WaitBeforeDots(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl AlignFishingAnimationFrames\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x3b\n\t"
-        "	ble _0808C330\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_0808C330:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    if (ObjectEventIsHeldMovementActive(boulder))
+        ObjectEventClearHeldMovementIfFinished(boulder);
 
-__attribute__((naked)) void Fishing_InitDots(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl sub_08197650\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	strh r1, [r4, #0xa]\n\t"
-        "	strh r1, [r4, #0xc]\n\t"
-        "	bl Random\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __umodsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	movs r2, #0x20\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808C370\n\t"
-        "	adds r0, r1, #4\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "_0808C370:\n\t"
-        "	movs r1, #0xe\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #9\n\t"
-        "	ble _0808C37C\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "_0808C37C:\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!ObjectEventIsMovementOverridden(player)
+     && !ObjectEventIsMovementOverridden(boulder))
+    {
+        ObjectEventClearHeldMovementIfFinished(player);
+        ObjectEventClearHeldMovementIfFinished(boulder);
+        ObjectEventSetHeldMovement(player, GetWalkInPlaceNormalMovementActionJP((u8)task->tDirection));
+        ObjectEventSetHeldMovement(boulder, GetWalkSlowMovementActionJP((u8)task->tDirection));
+        gFieldEffectArguments[0] = boulder->currentCoords.x;
+        gFieldEffectArguments[1] = boulder->currentCoords.y;
+        gFieldEffectArguments[2] = boulder->previousElevation;
+        gFieldEffectArguments[3] = gSprites[boulder->spriteId].oam.priority;
+        FieldEffectStart(FLDEFF_DUST);
+        PlaySE(SE_M_STRENGTH);
+        task->tState++;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void Fishing_ShowDots(void)
+bool8 PushBoulder_End(struct Task *task, struct ObjectEvent *player, struct ObjectEvent *boulder)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0808C3C0\n\t"
-        "	add r0, sp, #0xc\n\t"
-        "	movs r2, #2\n\t"
-        "	bl memcpy\n\t"
-        "	bl AlignFishingAnimationFrames\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	strh r1, [r4, #0xa]\n\t"
-        "	ldr r0, _0808C3C4\n\t"
-        "	ldrh r0, [r0, #0x2e]\n\t"
-        "	movs r2, #1\n\t"
-        "	ands r2, r0\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _0808C3C8\n\t"
-        "	movs r0, #0xb\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808C3BA\n\t"
-        "	movs r0, #0xc\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_0808C3BA:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808C41A\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C3C0: .4byte gText_FishingDot\n\t"
-        "_0808C3C4: .4byte 0x03002360\n\t"
-        "_0808C3C8:\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x13\n\t"
-        "	ble _0808C418\n\t"
-        "	strh r2, [r4, #0xa]\n\t"
-        "	movs r3, #0xc\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	movs r3, #0xe\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	blt _0808C3F8\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	strh r1, [r4, #8]\n\t"
-        "	ldrh r2, [r4, #0x20]\n\t"
-        "	movs r3, #0x20\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808C3F2\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_0808C3F2:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	b _0808C418\n\t"
-        "_0808C3F8:\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r3, [r4, r0]\n\t"
-        "	lsls r3, r3, #0x1b\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	add r2, sp, #0xc\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "_0808C418:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808C41A:\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventCheckHeldMovementStatus(player)
+     && ObjectEventCheckHeldMovementStatus(boulder))
+    {
+        ObjectEventClearHeldMovementIfFinished(player);
+        ObjectEventClearHeldMovementIfFinished(boulder);
+        gPlayerAvatar.preventStep = FALSE;
+        UnlockPlayerFieldControls();
+        DestroyTask(FindTaskIdByFunc(Task_PushBoulder));
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void Fishing_CheckForBite(void)
+void DoPlayerMatJump(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	bl AlignFishingAnimationFrames\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r6, #0\n\t"
-        "	bl DoesCurrentMapHaveFishingMons\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808C444\n\t"
-        "	movs r0, #0xb\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	b _0808C4C4\n\t"
-        "_0808C444:\n\t"
-        "	ldr r4, _0808C494\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808C47C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetMonAbility\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x15\n\t"
-        "	beq _0808C464\n\t"
-        "	cmp r0, #0x3c\n\t"
-        "	bne _0808C47C\n\t"
-        "_0808C464:\n\t"
-        "	bl Random\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x64\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xe\n\t"
-        "	bls _0808C47C\n\t"
-        "	movs r6, #1\n\t"
-        "_0808C47C:\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _0808C49A\n\t"
-        "	bl Random\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0808C498\n\t"
-        "	movs r0, #0xb\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	b _0808C49A\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C494: .4byte 0x02024190\n\t"
-        "_0808C498:\n\t"
-        "	movs r6, #1\n\t"
-        "_0808C49A:\n\t"
-        "	cmp r6, #1\n\t"
-        "	bne _0808C4C4\n\t"
-        "	ldr r0, _0808C4CC\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808C4D0\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetWalkNormalMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_0808C4C4:\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C4CC: .4byte 0x02037230\n\t"
-        "_0808C4D0: .4byte 0x020205AC\n\t"
-        ".syntax divided\n\t"
-    );
+    TaskFunc taskFunc = DoPlayerAvatarSecretBaseMatJump;
+    taskFunc(CreateTask(taskFunc, 0xFF));
 }
 
-__attribute__((naked)) void Fishing_GotBite(void)
+void DoPlayerAvatarSecretBaseMatJump(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r1, _0808C510\n\t"
-        "	add r0, sp, #0xc\n\t"
-        "	movs r2, #0xc\n\t"
-        "	bl memcpy\n\t"
-        "	bl AlignFishingAnimationFrames\n\t"
-        "	movs r0, #0x12\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	add r2, sp, #0xc\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	strh r4, [r5, #0xa]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C510: .4byte gText_OhABite\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sPlayerAvatarSecretBaseMatJump[gTasks[taskId].data[0]](&gTasks[taskId], &gObjectEvents[gPlayerAvatar.objectEventId]))
+        ;
 }
 
-__attribute__((naked)) void Fishing_WaitForA(void)
+u8 PlayerAvatar_DoSecretBaseMatJump(struct Task *task, struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0808C548\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #6\n\t"
-        "	bl memcpy\n\t"
-        "	bl AlignFishingAnimationFrames\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r4, #0xa]\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, sp\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	blt _0808C54C\n\t"
-        "	movs r0, #0xc\n\t"
-        "	b _0808C55C\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C548: .4byte sFishingReelTimeouts\n\t"
-        "_0808C54C:\n\t"
-        "	ldr r0, _0808C568\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808C55E\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "_0808C55C:\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_0808C55E:\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C568: .4byte 0x03002360\n\t"
-        ".syntax divided\n\t"
-    );
+    gPlayerAvatar.preventStep = TRUE;
+    if (ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        PlaySE(SE_LEDGE);
+        ObjectEventSetHeldMovement(objectEvent, GetJumpInPlaceMovementActionJP(objectEvent->facingDirection));
+        task->data[1]++;
+        if (task->data[1] > 1)
+        {
+            gPlayerAvatar.preventStep = FALSE;
+            gPlayerAvatar.transitionFlags |= PLAYER_AVATAR_FLAG_CONTROLLABLE;
+            DestroyTask(FindTaskIdByFunc(DoPlayerAvatarSecretBaseMatJump));
+        }
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void Fishing_CheckMoreDots(void)
+void DoPlayerMatSpin(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0808C5D0\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #0xc\n\t"
-        "	bl memcpy\n\t"
-        "	bl AlignFishingAnimationFrames\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r2, #0x22\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	blt _0808C5C2\n\t"
-        "	cmp r1, #1\n\t"
-        "	bgt _0808C5C6\n\t"
-        "	bl Random\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x64\n\t"
-        "	bl __umodsi3\n\t"
-        "	movs r3, #0x20\n\t"
-        "	ldrsh r2, [r4, r3]\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	movs r3, #0x26\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	mov r3, sp\n\t"
-        "	adds r1, r3, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r1, r2]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0808C5C6\n\t"
-        "_0808C5C2:\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_0808C5C6:\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C5D0: .4byte sFishingMoreDotsChance\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    TaskFunc taskFunc = PlayerAvatar_DoSecretBaseMatSpin;
+    u8 taskId = CreateTask(taskFunc, 0xFF);
 
-__attribute__((naked)) void Fishing_MonOnHook(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl AlignFishingAnimationFrames\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r2, _0808C614\n\t"
-        "	movs r5, #0\n\t"
-        "	str r5, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #3\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #1\n\t"
-        "	bl AddTextPrinterParameterized2\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	strh r5, [r4, #0xa]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C614: .4byte gText_PokemonOnHook\n\t"
-        ".syntax divided\n\t"
-    );
+    taskFunc(taskId);
 }
 
-__attribute__((naked)) void Fishing_StartEncounter(void)
+void PlayerAvatar_DoSecretBaseMatSpin(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808C62C\n\t"
-        "	bl AlignFishingAnimationFrames\n\t"
-        "_0808C62C:\n\t"
-        "	bl RunTextPrinters\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808C6C8\n\t"
-        "	movs r0, #0\n\t"
-        "	bl IsTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _0808C6C0\n\t"
-        "	ldr r7, _0808C6B4\n\t"
-        "	ldrb r0, [r7, #5]\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808C6B8\n\t"
-        "	mov r8, r0\n\t"
-        "	add r4, r8\n\t"
-        "	ldrh r1, [r5, #0x24]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetGraphicsId\n\t"
-        "	ldrb r1, [r4, #0x18]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectTurn\n\t"
-        "	ldrb r1, [r7]\n\t"
-        "	movs r0, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808C68A\n\t"
-        "	ldrb r0, [r7, #5]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	add r1, r8\n\t"
-        "	ldrb r0, [r1, #0x1a]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl SetSurfBlob_PlayerOffset\n\t"
-        "_0808C68A:\n\t"
-        "	ldr r2, _0808C6BC\n\t"
-        "	ldrb r1, [r7, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r6, [r0, #0x24]\n\t"
-        "	ldrb r1, [r7, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r6, [r0, #0x26]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ClearDialogWindowAndFrame\n\t"
-        "	ldrh r0, [r5, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	b _0808C6F0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C6B4: .4byte 0x02037230\n\t"
-        "_0808C6B8: .4byte 0x02036FF0\n\t"
-        "_0808C6BC: .4byte 0x020205AC\n\t"
-        "_0808C6C0:\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808C6F0\n\t"
-        "_0808C6C8:\n\t"
-        "	ldr r1, _0808C6FC\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #6]\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	ldrh r0, [r5, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl FishingWildEncounter\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080EE470\n\t"
-        "	ldr r0, _0808C700\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_0808C6F0:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C6FC: .4byte 0x02037230\n\t"
-        "_0808C700: .4byte 0x0808C225\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sPlayerAvatarSecretBaseMatSpin[gTasks[taskId].data[0]](&gTasks[taskId], &gObjectEvents[gPlayerAvatar.objectEventId]))
+        ;
 }
 
-__attribute__((naked)) void Fishing_NotEvenNibble(void)
+bool8 PlayerAvatar_SecretBaseMatSpinStep0(struct Task *task, struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	bl AlignFishingAnimationFrames\n\t"
-        "	ldr r0, _0808C768\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808C76C\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetWalkInPlaceSlowMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r2, _0808C770\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #3\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #1\n\t"
-        "	bl AddTextPrinterParameterized2\n\t"
-        "	movs r0, #0xd\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C768: .4byte 0x02037230\n\t"
-        "_0808C76C: .4byte 0x020205AC\n\t"
-        "_0808C770: .4byte gText_NotEvenANibble\n\t"
-        ".syntax divided\n\t"
-    );
+    task->data[0]++;
+    task->data[1] = objectEvent->movementDirection;
+    gPlayerAvatar.preventStep = TRUE;
+    LockPlayerFieldControls();
+    PlaySE(SE_WARP_IN);
+    return TRUE;
 }
 
-__attribute__((naked)) void Fishing_GotAway(void)
+bool8 PlayerAvatar_SecretBaseMatSpinStep1(struct Task *task, struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	bl AlignFishingAnimationFrames\n\t"
-        "	ldr r0, _0808C7D8\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808C7DC\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetWalkInPlaceSlowMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r2, _0808C7E0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #3\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #1\n\t"
-        "	bl AddTextPrinterParameterized2\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C7D8: .4byte 0x02037230\n\t"
-        "_0808C7DC: .4byte 0x020205AC\n\t"
-        "_0808C7E0: .4byte gText_ItGotAway\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    u8 directions[4];
 
-__attribute__((naked)) void Fishing_NoMon(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl AlignFishingAnimationFrames\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    memcpy(directions, sSecretBaseMatSpinDirections, sizeof(directions));
 
-__attribute__((naked)) void Fishing_PutRodAway(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	bl AlignFishingAnimationFrames\n\t"
-        "	ldr r7, _0808C890\n\t"
-        "	ldr r5, _0808C894\n\t"
-        "	ldrb r0, [r5, #4]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	adds r1, #0x3f\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0808C882\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808C898\n\t"
-        "	mov r8, r0\n\t"
-        "	add r4, r8\n\t"
-        "	ldrh r1, [r6, #0x24]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetGraphicsId\n\t"
-        "	ldrb r1, [r4, #0x18]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectTurn\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	movs r0, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808C862\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	add r1, r8\n\t"
-        "	ldrb r0, [r1, #0x1a]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl SetSurfBlob_PlayerOffset\n\t"
-        "_0808C862:\n\t"
-        "	ldrb r1, [r5, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r0, #0x24]\n\t"
-        "	ldrb r1, [r5, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	strh r2, [r0, #0x26]\n\t"
-        "	ldrh r0, [r6, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #8]\n\t"
-        "_0808C882:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C890: .4byte 0x020205AC\n\t"
-        "_0808C894: .4byte 0x02037230\n\t"
-        "_0808C898: .4byte 0x02036FF0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    if (ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        u8 direction;
 
-__attribute__((naked)) void Fishing_EndNoMon(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RunTextPrinters\n\t"
-        "	movs r0, #0\n\t"
-        "	bl IsTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0808C8D8\n\t"
-        "	ldr r0, _0808C8E0\n\t"
-        "	strb r1, [r0, #6]\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	bl UnfreezeObjectEvents\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ClearDialogWindowAndFrame\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080EE470\n\t"
-        "	ldr r0, _0808C8E4\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_0808C8D8:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C8E0: .4byte 0x02037230\n\t"
-        "_0808C8E4: .4byte 0x0808C225\n\t"
-        ".syntax divided\n\t"
-    );
+        ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(direction = directions[objectEvent->movementDirection - 1]));
+        if (direction == (u8)task->data[1])
+            task->data[2]++;
+        task->data[0]++;
+        if (task->data[2] > 3 && direction == GetOppositeDirection(task->data[1]))
+            task->data[0]++;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void AlignFishingAnimationFrames(void)
+bool8 PlayerAvatar_SecretBaseMatSpinStep2(struct Task *task, struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	ldr r0, _0808C9D4\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808C9D8\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl AnimateSprite\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x2b\n\t"
-        "	ldrb r5, [r0]\n\t"
-        "	movs r0, #0x2a\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	mov ip, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, [r4, #8]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r6, r5, #2\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r7, #1\n\t"
-        "	rsbs r7, r7, #0\n\t"
-        "	cmp r0, r7\n\t"
-        "	beq _0808C95A\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x2c\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	lsls r1, r2, #0x1a\n\t"
-        "	lsrs r1, r1, #0x1a\n\t"
-        "	adds r1, #1\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #0x40\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	mov r1, ip\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	ldr r1, [r4, #8]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, r7\n\t"
-        "	bne _0808C960\n\t"
-        "_0808C95A:\n\t"
-        "	subs r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "_0808C960:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x2a\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, [r4, #8]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r5, [r0]\n\t"
-        "	subs r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #2\n\t"
-        "	bhi _0808C992\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _0808C992\n\t"
-        "	ldr r0, _0808C9DC\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "_0808C992:\n\t"
-        "	cmp r5, #5\n\t"
-        "	bne _0808C99A\n\t"
-        "	ldr r0, _0808C9DC\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_0808C99A:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	subs r0, #0xa\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bhi _0808C9AA\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_0808C9AA:\n\t"
-        "	ldr r3, _0808C9D4\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r0, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808C9CE\n\t"
-        "	ldr r2, _0808C9E0\n\t"
-        "	ldrb r1, [r3, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0, #0x1a]\n\t"
-        "	movs r1, #0x26\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetSurfBlob_PlayerOffset\n\t"
-        "_0808C9CE:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C9D4: .4byte 0x02037230\n\t"
-        "_0808C9D8: .4byte 0x020205AC\n\t"
-        "_0808C9DC: .4byte 0x0000FFF8\n\t"
-        "_0808C9E0: .4byte 0x02036FF0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    u8 actions[5];
 
-__attribute__((naked)) void sub_0808C9E4(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _0808C9EC\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808C9EC: .4byte 0x02036FEC\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    memcpy(actions, sSecretBaseMatSpinActions, sizeof(actions));
 
-__attribute__((naked)) void sub_0808C9F0(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _0808CA00\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808C9FC\n\t"
-        "	movs r0, #1\n\t"
-        "_0808C9FC:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808CA00: .4byte 0x02036FEC\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        ObjectEventSetHeldMovement(objectEvent, actions[task->data[2]]);
+        task->data[0] = 1;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_DoPlayerSpinExit(void)
+bool8 PlayerAvatar_SecretBaseMatSpinStep3(struct Task *task, struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r0, _0808CA48\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808CA4C\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808CA50\n\t"
-        "	adds r7, r0, r1\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _0808CA54\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r6, [r5, r0]\n\t"
-        "	cmp r6, #1\n\t"
-        "	beq _0808CABA\n\t"
-        "	cmp r6, #1\n\t"
-        "	bgt _0808CA58\n\t"
-        "	cmp r6, #0\n\t"
-        "	beq _0808CA5E\n\t"
-        "	b _0808CAFA\n\t"
-        "	.align 2, 0\n\t"
-        "_0808CA48: .4byte 0x02037230\n\t"
-        "_0808CA4C: .4byte 0x02036FF0\n\t"
-        "_0808CA50: .4byte 0x020205AC\n\t"
-        "_0808CA54: .4byte 0x03005B68\n\t"
-        "_0808CA58:\n\t"
-        "	cmp r6, #2\n\t"
-        "	beq _0808CAF4\n\t"
-        "	b _0808CAFA\n\t"
-        "_0808CA5E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808CAFA\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl sub_0808C9E4\n\t"
-        "	movs r1, #0\n\t"
-        "	mov r8, r1\n\t"
-        "	strh r6, [r5, #2]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #4]\n\t"
-        "	ldrh r0, [r7, #0x26]\n\t"
-        "	ldrh r2, [r7, #0x22]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r5, #6]\n\t"
-        "	strh r6, [r7, #0x26]\n\t"
-        "	bl CameraObjectReset2\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #3]\n\t"
-        "	ldrb r1, [r7, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r7, #5]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r0, #0x43\n\t"
-        "	mov r1, r8\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	adds r2, #0x42\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5]\n\t"
-        "_0808CABA:\n\t"
-        "	adds r1, r5, #2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0808CCFC\n\t"
-        "	ldrh r0, [r5, #6]\n\t"
-        "	ldrh r1, [r5, #4]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r5, #6]\n\t"
-        "	adds r1, #3\n\t"
-        "	strh r1, [r5, #4]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x14\n\t"
-        "	strh r0, [r7, #0x22]\n\t"
-        "	movs r2, #0x22\n\t"
-        "	ldrsh r1, [r7, r2]\n\t"
-        "	ldr r0, _0808CAF0\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0x20\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	bge _0808CAFA\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5]\n\t"
-        "	b _0808CAFA\n\t"
-        "	.align 2, 0\n\t"
-        "_0808CAF0: .4byte 0x03005B48\n\t"
-        "_0808CAF4:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_0808CAFA:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        ObjectEventSetHeldMovement(objectEvent, GetWalkSlowMovementActionJP(GetOppositeDirection(task->data[1])));
+        UnlockPlayerFieldControls();
+        gPlayerAvatar.preventStep = FALSE;
+        DestroyTask(FindTaskIdByFunc(PlayerAvatar_DoSecretBaseMatSpin));
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void DoPlayerSpinEntrance(void)
+void CreateStopSurfingTask(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0808CB20\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl _call_via_r4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808CB20: .4byte 0x0808CB6D\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    TaskFunc taskFunc;
+    u8 taskId;
 
-__attribute__((naked)) void IsPlayerSpinEntranceActive(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0808CB34\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808CB34: .4byte 0x0808CB6D\n\t"
-        ".syntax divided\n\t"
-    );
+    LockPlayerFieldControls();
+    Overworld_ClearSavedMusic();
+    Overworld_ChangeMusicToDefault();
+    gPlayerAvatar.flags &= ~PLAYER_AVATAR_FLAG_SURFING;
+    gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_ON_FOOT;
+    gPlayerAvatar.preventStep = TRUE;
+    taskFunc = Task_StopSurfingInit;
+    taskId = CreateTask(taskFunc, 0xFF);
+    gTasks[taskId].data[0] = direction;
+    taskFunc(taskId);
 }
 
-__attribute__((naked)) void DoPlayerSpinExit(void)
+void Task_StopSurfingInit(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0808CB54\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl _call_via_r4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808CB54: .4byte 0x0808CA05\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
-__attribute__((naked)) void IsPlayerSpinExitActive(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0808CB68\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808CB68: .4byte 0x0808CA05\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventIsMovementOverridden(playerObjEvent))
+    {
+        if (!ObjectEventClearHeldMovementIfFinished(playerObjEvent))
+            return;
+    }
+    SetSurfBlob_BobState(playerObjEvent->fieldEffectSpriteId, BOB_JUST_MON);
+    ObjectEventSetHeldMovement(playerObjEvent, GetJumpSpecialMovementActionJP((u8)gTasks[taskId].data[0]));
+    gTasks[taskId].func = Task_WaitStopSurfing;
 }
 
-__attribute__((naked)) void Task_DoPlayerSpinEntrance(void)
+void Task_WaitStopSurfing(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, _0808CBB4\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808CBB8\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808CBBC\n\t"
-        "	adds r7, r0, r1\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _0808CBC0\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r6, [r5, r2]\n\t"
-        "	cmp r6, #1\n\t"
-        "	beq _0808CC4E\n\t"
-        "	cmp r6, #1\n\t"
-        "	bgt _0808CBC4\n\t"
-        "	cmp r6, #0\n\t"
-        "	beq _0808CBCE\n\t"
-        "	b _0808CCEE\n\t"
-        "	.align 2, 0\n\t"
-        "_0808CBB4: .4byte 0x02037230\n\t"
-        "_0808CBB8: .4byte 0x02036FF0\n\t"
-        "_0808CBBC: .4byte 0x020205AC\n\t"
-        "_0808CBC0: .4byte 0x03005B68\n\t"
-        "_0808CBC4:\n\t"
-        "	cmp r6, #2\n\t"
-        "	beq _0808CC8C\n\t"
-        "	cmp r6, #3\n\t"
-        "	beq _0808CCAA\n\t"
-        "	b _0808CCEE\n\t"
-        "_0808CBCE:\n\t"
-        "	bl sub_0808C9F0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	ldr r1, _0808CC88\n\t"
-        "	movs r3, #0xa\n\t"
-        "	ldrsh r0, [r5, r3]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetFaceDirectionMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventForceSetHeldMovement\n\t"
-        "	movs r0, #0\n\t"
-        "	mov sb, r0\n\t"
-        "	strh r6, [r5, #2]\n\t"
-        "	movs r0, #0x74\n\t"
-        "	strh r0, [r5, #4]\n\t"
-        "	ldrh r0, [r7, #0x22]\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	ldrb r0, [r7, #5]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	strh r0, [r5, #0xc]\n\t"
-        "	movs r1, #0x43\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	mov r8, r1\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	strh r0, [r5, #0xe]\n\t"
-        "	ldrh r0, [r7, #0x26]\n\t"
-        "	adds r0, #0x20\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r5, #6]\n\t"
-        "	strh r6, [r7, #0x26]\n\t"
-        "	bl CameraObjectReset2\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r4, #3]\n\t"
-        "	ldrb r1, [r7, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r7, #5]\n\t"
-        "	mov r3, sb\n\t"
-        "	mov r2, r8\n\t"
-        "	strb r3, [r2]\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	adds r2, #0x42\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5]\n\t"
-        "_0808CC4E:\n\t"
-        "	adds r1, r5, #2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0808CCFC\n\t"
-        "	ldrh r0, [r5, #4]\n\t"
-        "	ldrh r2, [r5, #6]\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	strh r1, [r5, #6]\n\t"
-        "	subs r0, #3\n\t"
-        "	strh r0, [r5, #4]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #3\n\t"
-        "	bgt _0808CC6E\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #4]\n\t"
-        "_0808CC6E:\n\t"
-        "	ldrh r0, [r5, #6]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x14\n\t"
-        "	strh r0, [r7, #0x22]\n\t"
-        "	ldrh r2, [r5, #8]\n\t"
-        "	movs r3, #8\n\t"
-        "	ldrsh r1, [r5, r3]\n\t"
-        "	cmp r0, r1\n\t"
-        "	blt _0808CCEE\n\t"
-        "	strh r2, [r7, #0x22]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x10]\n\t"
-        "	b _0808CCA2\n\t"
-        "	.align 2, 0\n\t"
-        "_0808CC88: .4byte sSpinDirections\n\t"
-        "_0808CC8C:\n\t"
-        "	adds r1, r5, #2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0808CCFC\n\t"
-        "	ldrh r0, [r5, #0x10]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #8\n\t"
-        "	ble _0808CCEE\n\t"
-        "_0808CCA2:\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5]\n\t"
-        "	b _0808CCEE\n\t"
-        "_0808CCAA:\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r6, [r5, r0]\n\t"
-        "	adds r1, r5, #2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0808CCFC\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r6, r0\n\t"
-        "	bne _0808CCEE\n\t"
-        "	ldrb r1, [r4, #3]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #3]\n\t"
-        "	movs r0, #3\n\t"
-        "	ldrb r1, [r5, #0xc]\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldrb r2, [r7, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r7, #5]\n\t"
-        "	ldrh r1, [r5, #0xe]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r0, #0x43\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bl CameraObjectReset\n\t"
-        "	mov r0, r8\n\t"
-        "	bl DestroyTask\n\t"
-        "_0808CCEE:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
-__attribute__((naked)) void sub_0808CCFC(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	ldrh r1, [r6]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	cmp r0, #7\n\t"
-        "	bgt _0808CD18\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r6]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #7\n\t"
-        "	ble _0808CD54\n\t"
-        "_0808CD18:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventCheckHeldMovementStatus\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808CD54\n\t"
-        "	ldr r4, _0808CD50\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetFaceDirectionMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventForceSetHeldMovement\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r6]\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	b _0808CD5A\n\t"
-        "	.align 2, 0\n\t"
-        "_0808CD50: .4byte sSpinDirections\n\t"
-        "_0808CD54:\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "_0808CD5A:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    if (ObjectEventClearHeldMovementIfFinished(playerObjEvent))
+    {
+        ObjectEventSetGraphicsId(playerObjEvent, GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_NORMAL));
+        ObjectEventSetHeldMovement(playerObjEvent, GetFaceDirectionMovementAction(playerObjEvent->facingDirection));
+        gPlayerAvatar.preventStep = FALSE;
+        UnlockPlayerFieldControls();
+        DestroySprite(&gSprites[playerObjEvent->fieldEffectSpriteId]);
+#ifdef BUGFIX
+        // If this is not defined but the player steps into grass from surfing, they will appear over the grass instead of in the grass.
+        playerObjEvent->triggerGroundEffectsOnMove = TRUE;
 #endif
+        DestroyTask(taskId);
+    }
+}
+
+void StartFishing(u8 rod)
+{
+    TaskFunc taskFunc = Task_Fishing;
+    u8 taskId = CreateTask(taskFunc, 0xFF);
+
+    gTasks[taskId].tFishingRod = rod;
+    taskFunc(taskId);
+}
+
+void Task_Fishing(u8 taskId)
+{
+    while (sFishingStateFuncs[gTasks[taskId].tStep](&gTasks[taskId]))
+        ;
+}
+
+bool8 Fishing_Init(struct Task *task)
+{
+    LockPlayerFieldControls();
+    gPlayerAvatar.preventStep = TRUE;
+    task->tStep++;
+    return FALSE;
+}
+
+bool8 Fishing_GetRodOut(struct Task *task)
+{
+    struct ObjectEvent *playerObjEvent;
+    s16 minRounds1[3];
+    s16 minRounds2[3];
+
+    memcpy(minRounds1, sFishingMinRounds1, sizeof(minRounds1));
+    memcpy(minRounds2, sFishingMinRounds2, sizeof(minRounds2));
+
+    task->tRoundsPlayed = 0;
+    task->tMinRoundsRequired = minRounds1[task->tFishingRod] + (Random() % minRounds2[task->tFishingRod]);
+    task->tPlayerGfxId = gObjectEvents[gPlayerAvatar.objectEventId].graphicsId;
+    playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    ObjectEventClearHeldMovementIfActive(playerObjEvent);
+    playerObjEvent->enableAnim = TRUE;
+    SetPlayerAvatarFishing(playerObjEvent->facingDirection);
+    task->tStep++;
+    return FALSE;
+}
+
+bool8 Fishing_WaitBeforeDots(struct Task *task)
+{
+    AlignFishingAnimationFrames();
+
+    // Wait one second
+    task->tFrameCounter++;
+    if (task->tFrameCounter >= 60)
+        task->tStep++;
+    return FALSE;
+}
+
+bool8 Fishing_InitDots(struct Task *task)
+{
+    u32 randVal;
+
+    LoadMessageBoxAndFrameGfxJP(0, TRUE);
+    task->tStep++;
+    task->tFrameCounter = 0;
+    task->tNumDots = 0;
+    randVal = Random();
+    randVal %= 10;
+    task->tDotsRequired = randVal + 1;
+    if (task->tRoundsPlayed == 0)
+        task->tDotsRequired = randVal + 4;
+    if (task->tDotsRequired >= 10)
+        task->tDotsRequired = 10;
+    return TRUE;
+}
+
+bool8 Fishing_ShowDots(struct Task *task)
+{
+    u8 dot[2];
+
+    memcpy(dot, gText_FishingDot, sizeof(dot));
+
+    AlignFishingAnimationFrames();
+    task->tFrameCounter++;
+    if (JOY_NEW(A_BUTTON))
+    {
+        task->tStep = FISHING_NO_BITE;
+        if (task->tRoundsPlayed != 0)
+            task->tStep = FISHING_GOT_AWAY;
+        return TRUE;
+    }
+    else
+    {
+        if (task->tFrameCounter >= 20)
+        {
+            task->tFrameCounter = 0;
+            if (task->tNumDots >= task->tDotsRequired)
+            {
+                task->tStep++;
+                if (task->tRoundsPlayed != 0)
+                    task->tStep++;
+                task->tRoundsPlayed++;
+            }
+            else
+            {
+                AddTextPrinterParameterized(0, FONT_NORMAL, dot, task->tNumDots * 8, 2, 0, NULL);
+                task->tNumDots++;
+            }
+        }
+        return FALSE;
+    }
+}
+
+bool8 Fishing_CheckForBite(struct Task *task)
+{
+    bool8 bite;
+
+    AlignFishingAnimationFrames();
+    task->tStep++;
+    bite = FALSE;
+
+    if (!DoesCurrentMapHaveFishingMons())
+    {
+        task->tStep = FISHING_NO_BITE;
+    }
+    else
+    {
+        if (!GetMonData3(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG))
+        {
+            u8 ability = GetMonAbility(&gPlayerParty[0]);
+            if (ability == ABILITY_SUCTION_CUPS || ability  == ABILITY_STICKY_HOLD)
+            {
+                if (Random() % 100 > 14)
+                    bite = TRUE;
+            }
+        }
+
+        if (!bite)
+        {
+            if (Random() & 1)
+                task->tStep = FISHING_NO_BITE;
+            else
+                bite = TRUE;
+        }
+
+        if (bite == TRUE)
+            StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], GetFishingBiteDirectionAnimNumJP(GetPlayerFacingDirection()));
+    }
+    return TRUE;
+}
+
+bool8 Fishing_GotBite(struct Task *task)
+{
+    u8 text[12];
+
+    memcpy(text, gText_OhABite, sizeof(text));
+    AlignFishingAnimationFrames();
+    AddTextPrinterParameterized(0, FONT_NORMAL, text, 0, 18, 0, NULL);
+    task->tStep++;
+    task->tFrameCounter = 0;
+    return FALSE;
+}
+
+bool8 Fishing_WaitForA(struct Task *task)
+{
+    s16 reelTimeouts[3];
+
+    memcpy(reelTimeouts, sFishingReelTimeouts, sizeof(reelTimeouts));
+
+    AlignFishingAnimationFrames();
+    task->tFrameCounter++;
+    if (task->tFrameCounter >= reelTimeouts[task->tFishingRod])
+        task->tStep = FISHING_GOT_AWAY;
+    else if (JOY_NEW(A_BUTTON))
+        task->tStep++;
+    return FALSE;
+}
+
+bool8 Fishing_CheckMoreDots(struct Task *task)
+{
+    s16 moreDotsChance[3][2];
+
+    memcpy(moreDotsChance, sFishingMoreDotsChance, sizeof(moreDotsChance));
+
+    AlignFishingAnimationFrames();
+    task->tStep++;
+    if (task->tRoundsPlayed < task->tMinRoundsRequired)
+    {
+        task->tStep = FISHING_START_ROUND;
+    }
+    else if (task->tRoundsPlayed < 2)
+    {
+        // probability of having to play another round
+        s16 probability = Random() % 100;
+
+        if (moreDotsChance[task->tFishingRod][task->tRoundsPlayed] > probability)
+            task->tStep = FISHING_START_ROUND;
+    }
+    return FALSE;
+}
+
+bool8 Fishing_MonOnHook(struct Task *task)
+{
+    AlignFishingAnimationFrames();
+    FillWindowPixelBuffer(0, PIXEL_FILL(1));
+    AddTextPrinterParameterized2(0, FONT_NORMAL, gText_PokemonOnHook, 1, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+    task->tStep++;
+    task->tFrameCounter = 0;
+    return FALSE;
+}
+
+bool8 Fishing_StartEncounter(struct Task *task)
+{
+    if (task->tFrameCounter == 0)
+        AlignFishingAnimationFrames();
+
+    RunTextPrinters();
+
+    if (task->tFrameCounter == 0)
+    {
+        if (!IsTextPrinterActive(0))
+        {
+            struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+
+            ObjectEventSetGraphicsId(playerObjEvent, task->tPlayerGfxId);
+            EventObjectTurn(playerObjEvent, playerObjEvent->movementDirection);
+            if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
+                SetSurfBlob_PlayerOffset(gObjectEvents[gPlayerAvatar.objectEventId].fieldEffectSpriteId, FALSE, 0);
+            gSprites[gPlayerAvatar.spriteId].x2 = 0;
+            gSprites[gPlayerAvatar.spriteId].y2 = 0;
+            ClearDialogWindowAndFrame(0, TRUE);
+            task->tFrameCounter++;
+            return FALSE;
+        }
+    }
+
+    if (task->tFrameCounter != 0)
+    {
+        gPlayerAvatar.preventStep = FALSE;
+        UnlockPlayerFieldControls();
+        FishingWildEncounter(task->tFishingRod);
+        RecordFishingAttemptForTVJP(TRUE);
+        DestroyTask(FindTaskIdByFunc(Task_Fishing));
+    }
+    return FALSE;
+}
+
+bool8 Fishing_NotEvenNibble(struct Task *task)
+{
+    AlignFishingAnimationFrames();
+    StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], GetFishingNoCatchDirectionAnimNumJP(GetPlayerFacingDirection()));
+    FillWindowPixelBuffer(0, PIXEL_FILL(1));
+    AddTextPrinterParameterized2(0, FONT_NORMAL, gText_NotEvenANibble, 1, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+    task->tStep = FISHING_SHOW_RESULT;
+    return TRUE;
+}
+
+bool8 Fishing_GotAway(struct Task *task)
+{
+    AlignFishingAnimationFrames();
+    StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], GetFishingNoCatchDirectionAnimNumJP(GetPlayerFacingDirection()));
+    FillWindowPixelBuffer(0, PIXEL_FILL(1));
+    AddTextPrinterParameterized2(0, FONT_NORMAL, gText_ItGotAway, 1, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+    task->tStep++;
+    return TRUE;
+}
+
+bool8 Fishing_NoMon(struct Task *task)
+{
+    AlignFishingAnimationFrames();
+    task->tStep++;
+    return FALSE;
+}
+
+bool8 Fishing_PutRodAway(struct Task *task)
+{
+    AlignFishingAnimationFrames();
+    if (gSprites[gPlayerAvatar.spriteId].animEnded)
+    {
+        struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+
+        ObjectEventSetGraphicsId(playerObjEvent, task->tPlayerGfxId);
+        EventObjectTurn(playerObjEvent, playerObjEvent->movementDirection);
+        if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
+            SetSurfBlob_PlayerOffset(gObjectEvents[gPlayerAvatar.objectEventId].fieldEffectSpriteId, FALSE, 0);
+        gSprites[gPlayerAvatar.spriteId].x2 = 0;
+        gSprites[gPlayerAvatar.spriteId].y2 = 0;
+        task->tStep++;
+    }
+    return FALSE;
+}
+
+bool8 Fishing_EndNoMon(struct Task *task)
+{
+    RunTextPrinters();
+    if (!IsTextPrinterActive(0))
+    {
+        gPlayerAvatar.preventStep = FALSE;
+        UnlockPlayerFieldControls();
+        UnfreezeObjectEvents();
+        ClearDialogWindowAndFrame(0, TRUE);
+        RecordFishingAttemptForTVJP(FALSE);
+        DestroyTask(FindTaskIdByFunc(Task_Fishing));
+    }
+    return FALSE;
+}
+
+void AlignFishingAnimationFrames(void)
+{
+    struct Sprite *playerSprite = &gSprites[gPlayerAvatar.spriteId];
+    u8 animCmdIndex;
+    u8 animType;
+
+    AnimateSprite(playerSprite);
+    playerSprite->x2 = 0;
+    playerSprite->y2 = 0;
+    animCmdIndex = playerSprite->animCmdIndex;
+    if (playerSprite->anims[playerSprite->animNum][animCmdIndex].type == -1)
+    {
+        animCmdIndex--;
+    }
+    else
+    {
+        playerSprite->animDelayCounter++;
+        if (playerSprite->anims[playerSprite->animNum][animCmdIndex].type == -1)
+            animCmdIndex--;
+    }
+    animType = playerSprite->anims[playerSprite->animNum][animCmdIndex].type;
+    if (animType == 1 || animType == 2 || animType == 3)
+    {
+        playerSprite->x2 = 8;
+        if (GetPlayerFacingDirection() == 3)
+            playerSprite->x2 = -8;
+    }
+    if (animType == 5)
+        playerSprite->y2 = -8;
+    if (animType == 10 || animType == 11)
+        playerSprite->y2 = 8;
+    if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
+        SetSurfBlob_PlayerOffset(gObjectEvents[gPlayerAvatar.objectEventId].fieldEffectSpriteId, TRUE, playerSprite->y2);
+}
+
+void SetSpinStartFacingDir(u8 direction)
+{
+    sSpinStartFacingDir = direction;
+}
+
+u8 GetSpinStartFacingDir(void)
+{
+    if (sSpinStartFacingDir == DIR_NONE)
+        return DIR_SOUTH;
+
+    return sSpinStartFacingDir;
+}
+
+void Task_DoPlayerSpinExit(u8 taskId)
+{
+    struct ObjectEvent *object = &gObjectEvents[gPlayerAvatar.objectEventId];
+    struct Sprite *sprite = &gSprites[object->spriteId];
+    s16 *data = gTasks[taskId].data;
+
+    switch (tState)
+    {
+        case 0: // Init
+            if (!ObjectEventClearHeldMovementIfFinished(object))
+                return;
+
+            SetSpinStartFacingDir(object->facingDirection);
+            tSpinDelayTimer = 0;
+            tSpeed = 1;
+            tCurY = (u16)(sprite->y + sprite->y2) << 4;
+            sprite->y2 = 0;
+            CameraObjectFreezeJP();
+            object->fixedPriority = TRUE;
+            sprite->oam.priority = 0;
+            sprite->subpriority = 0;
+            sprite->subspriteMode = SUBSPRITES_OFF;
+            tState++;
+        case 1: // Spin while rising
+            TrySpinPlayerForWarp(object, &tSpinDelayTimer);
+
+            // Rise and accelerate
+            tCurY -= tSpeed;
+            tSpeed += 3;
+            sprite->y = tCurY >> 4;
+
+            // Check if offscreen
+            if (sprite->y + (s16)gTotalCameraPixelOffsetY < -32)
+                tState++;
+            break;
+        case 2:
+            DestroyTask(taskId);
+            break;
+    }
+}
+
+void DoPlayerSpinEntrance(void)
+{
+    TaskFunc taskFunc = Task_DoPlayerSpinEntrance;
+    taskFunc(CreateTask(taskFunc, 0));
+}
+
+bool32 IsPlayerSpinEntranceActive(void)
+{
+    return FuncIsActiveTask(Task_DoPlayerSpinEntrance);
+}
+
+void DoPlayerSpinExit(void)
+{
+    TaskFunc taskFunc = Task_DoPlayerSpinExit;
+    taskFunc(CreateTask(taskFunc, 0));
+}
+
+bool32 IsPlayerSpinExitActive(void)
+{
+    return FuncIsActiveTask(Task_DoPlayerSpinExit);
+}
+
+void Task_DoPlayerSpinEntrance(u8 taskId)
+{
+    struct ObjectEvent *object = &gObjectEvents[gPlayerAvatar.objectEventId];
+    struct Sprite *sprite = &gSprites[object->spriteId];
+    s16 *data = gTasks[taskId].data;
+
+    switch (tState)
+    {
+        case 0:
+            // Because the spin start facing direction is never set for this
+            // warp type, the player will always exit the warp facing South.
+            // This may have been intentional, unclear
+            tStartDir = GetSpinStartFacingDir();
+            ObjectEventForceSetHeldMovement(object, GetFaceDirectionMovementAction(sSpinDirections[tStartDir]));
+            tSpinDelayTimer = 0;
+            tSpeed = 116;
+            tDestY = sprite->y;
+            tPriority = sprite->oam.priority;
+            tSubpriority = sprite->subpriority;
+            tCurY = -((u16)sprite->y2 + 32) * 16;
+            sprite->y2 = 0;
+            CameraObjectFreezeJP();
+            object->fixedPriority = TRUE;
+            sprite->oam.priority = 1;
+            sprite->subpriority = 0;
+            sprite->subspriteMode = SUBSPRITES_OFF;
+            tState++;
+        case 1: // Spin while descending
+            TrySpinPlayerForWarp(object, &tSpinDelayTimer);
+
+            // Fall and decelerate
+            tCurY += tSpeed;
+            tSpeed -= 3;
+            if (tSpeed < 4)
+                tSpeed = 4;
+            sprite->y = tCurY >> 4;
+
+            // Check if reached dest
+            if (sprite->y >= tDestY)
+            {
+                sprite->y = tDestY;
+                tGroundTimer = 0;
+                tState++;
+            }
+            break;
+        case 2: // Spin on ground
+            TrySpinPlayerForWarp(object, &tSpinDelayTimer);
+            if (++tGroundTimer > 8)
+                tState++;
+            break;
+        case 3: // Spin until facing original direction
+            if (tStartDir == TrySpinPlayerForWarp(object, &tSpinDelayTimer))
+            {
+                object->fixedPriority = 0;
+                sprite->oam.priority = tPriority;
+                sprite->subpriority = tSubpriority;
+                CameraObjectReset();
+                DestroyTask(taskId);
+            }
+            break;
+    }
+}
+
+u8 TrySpinPlayerForWarp(struct ObjectEvent *object, s16 *delayTimer)
+{
+    if (*delayTimer < 8 && ++(*delayTimer) < 8)
+        return object->facingDirection;
+
+    if (!ObjectEventCheckHeldMovementStatus(object))
+        return object->facingDirection;
+
+    ObjectEventForceSetHeldMovement(object, GetFaceDirectionMovementAction(sSpinDirections[object->facingDirection]));
+    *delayTimer = 0;
+    return sSpinDirections[object->facingDirection];
+}
+
+#endif // FIELD_PLAYER_AVATAR_TAIL
