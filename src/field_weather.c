@@ -1,6 +1,14 @@
 #include "global.h"
 #include "field_weather.h"
+#include "constants/rgb.h"
+#include "constants/songs.h"
 #include "constants/weather.h"
+#include "gpu_regs.h"
+#include "palette.h"
+#include "sound.h"
+#include "task.h"
+#include "trig.h"
+#include "util.h"
 
 #define FIELD_WEATHER_DROUGHT_DATA __attribute__((section(".rodata.field_weather_drought_data")))
 #define FIELD_WEATHER_POINTER_DATA __attribute__((section(".rodata.field_weather_pointer_data")))
@@ -17,12 +25,47 @@ struct WeatherCallbacks
 // EWRAM storage remains pinned by the JP linker symbol layout.
 struct Weather *const gWeatherPtr FIELD_WEATHER_POINTER_DATA = &gWeather;
 
+#define DROUGHT_COLOR_INDEX(color) ((((color) >> 1) & 0xF) | (((color) >> 2) & 0xF0) | (((color) >> 3) & 0xF00))
+
+struct RGBColor
+{
+    u16 r:5;
+    u16 g:5;
+    u16 b:5;
+};
+
+// These private variables retain their original JP linker-owned RAM slots.
+// The weather-effect palettes follow gWeather rather than belonging to it.
+extern const u8 *sPaletteColorMapTypes asm("gUnknown_3000F50");
+extern u8 sFieldEffectPaletteColorMapTypes[32] asm("gUnknown_2038844");
+
+// Keep JP assembly linkage for callers in weather effects and overworld.
+void Task_WeatherInit(u8 taskId);
+void Task_WeatherMain(u8 taskId);
 void None_Init(void);
-void sub_080AAB88(void);
+void None_Main(void) asm("sub_080AAB88");
 bool8 None_Finish(void);
-void UpdateWeatherGammaShift(void);
+void BuildColorMaps(void) asm("BuildGammaShiftTables");
+void UpdateWeatherColorMap(void) asm("UpdateWeatherGammaShift");
 void FadeInScreenWithWeather(void);
+bool8 FadeInScreen_RainShowShade(void);
+bool8 FadeInScreen_Drought(void);
+bool8 FadeInScreen_FogHorizontal(void) asm("FadeInScreen_Fog1");
 void DoNothing(void);
+void ApplyColorMap(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex) asm("ApplyGammaShift");
+void ApplyColorMapWithBlend(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex, u8 blendCoeff, u16 blendColor) asm("ApplyGammaShiftWithBlend");
+void ApplyDroughtColorMapWithBlend(s8 colorMapIndex, u8 blendCoeff, u16 blendColor) asm("ApplyDroughtGammaShiftWithBlend");
+void ApplyFogBlend(u8 blendCoeff, u16 blendColor);
+void MarkFogSpritePalToLighten(u8 paletteIndex);
+bool8 LightenSpritePaletteInFog(u8 paletteIndex);
+void ApplyWeatherColorMapIfIdle(s8 colorMapIndex) asm("sub_080AB544");
+void ApplyWeatherColorMapIfIdle_Gradual(u8 colorMapIndex, u8 targetColorMapIndex, u8 colorMapStepDelay) asm("sub_080AB578");
+void ApplyWeatherColorMapToPal(u8 paletteIndex) asm("ApplyWeatherGammaShiftToPal");
+bool8 IsFirstFrameOfWeatherFadeIn(void) asm("sub_080AB81C");
+void SetDroughtColorMap(s8 colorMapIndex) asm("sub_080AB8DC");
+void DroughtStateInit(void) asm("sub_080AB8EC");
+void DroughtStateRun(void) asm("sub_080AB918");
+void SetFieldWeather(u8 weather) asm("sub_080ABB70");
 
 void LightRain_InitVars(void);
 void LightRain_InitAll(void);
@@ -56,7 +99,7 @@ static const u16 sDroughtWeatherColors[][0x1000] FIELD_WEATHER_DROUGHT_DATA = IN
 // byte-exact static-data migration.
 static const struct WeatherCallbacks sWeatherFuncs[] FIELD_WEATHER_STATIC_DATA =
 {
-    [WEATHER_NONE]               = {None_Init,              sub_080AAB88,      None_Init,             None_Finish},
+    [WEATHER_NONE]               = {None_Init,              None_Main,      None_Init,             None_Finish},
     [WEATHER_SUNNY_CLOUDS]       = {Clouds_InitVars,        Clouds_Main,        Clouds_InitAll,         Clouds_Finish},
     [WEATHER_SUNNY]              = {Sunny_InitVars,         Sunny_Main,         Sunny_InitAll,          Shade_Finish},
     [WEATHER_RAIN]               = {LightRain_InitVars,     LightRain_Main,     LightRain_InitAll,      LightRain_Finish},
@@ -75,7 +118,7 @@ static const struct WeatherCallbacks sWeatherFuncs[] FIELD_WEATHER_STATIC_DATA =
 
 void (*const gWeatherPalStateFuncs[])(void) FIELD_WEATHER_STATIC_DATA =
 {
-    [WEATHER_PAL_STATE_CHANGING_WEATHER]  = UpdateWeatherGammaShift,
+    [WEATHER_PAL_STATE_CHANGING_WEATHER]  = UpdateWeatherColorMap,
     [WEATHER_PAL_STATE_SCREEN_FADING_IN]  = FadeInScreenWithWeather,
     [WEATHER_PAL_STATE_SCREEN_FADING_OUT] = DoNothing,
     [WEATHER_PAL_STATE_IDLE]              = DoNothing,
@@ -128,400 +171,112 @@ static const u8 ALIGNED(2) sBasePaletteColorMapTypes[32] FIELD_WEATHER_STATIC_DA
 
 const u16 ALIGNED(4) gFogPalette[] FIELD_WEATHER_STATIC_DATA = INCBIN_U16("graphics/field_effects/gFogPalette.bin");
 
-__attribute__((naked)) void StartWeather()
+void StartWeather(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r0, _080AA964\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _080AA95C\n\t"
-        "	movs r0, #0x90\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	bl AllocSpritePalette\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r0, _080AA968\n\t"
-        "	lsls r1, r5, #5\n\t"
-        "	ldr r2, _080AA96C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, _080AA970\n\t"
-        "	bl CpuSet\n\t"
-        "	bl BuildGammaShiftTables\n\t"
-        "	ldr r4, _080AA974\n\t"
-        "	ldr r1, _080AA978\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	strb r5, [r0]\n\t"
-        "	ldr r0, _080AA97C\n\t"
-        "	bl AllocSpritePalette\n\t"
-        "	ldr r2, _080AA980\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, _080AA984\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	strb r6, [r0]\n\t"
-        "	adds r2, #4\n\t"
-        "	adds r0, r4, r2\n\t"
-        "	strb r6, [r0]\n\t"
-        "	adds r1, #4\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	strb r6, [r0]\n\t"
-        "	adds r2, #0xc\n\t"
-        "	adds r0, r4, r2\n\t"
-        "	strb r6, [r0]\n\t"
-        "	adds r1, #0x22\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	strb r6, [r0]\n\t"
-        "	adds r2, #0x17\n\t"
-        "	adds r0, r4, r2\n\t"
-        "	strb r6, [r0]\n\t"
-        "	adds r1, #0x24\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	strb r6, [r0]\n\t"
-        "	adds r2, #0x1b\n\t"
-        "	adds r0, r4, r2\n\t"
-        "	strb r6, [r0]\n\t"
-        "	subs r1, #0xd\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	strb r6, [r0]\n\t"
-        "	adds r2, #0x18\n\t"
-        "	adds r0, r4, r2\n\t"
-        "	strb r6, [r0]\n\t"
-        "	subs r1, #0x1d\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	strb r6, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	movs r1, #0\n\t"
-        "	bl Weather_SetBlendCoeffs\n\t"
-        "	movs r2, #0xda\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r4, r2\n\t"
-        "	strb r6, [r0]\n\t"
-        "	ldr r0, _080AA988\n\t"
-        "	adds r1, r4, r0\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r1, #0xd9\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	strb r6, [r0]\n\t"
-        "	adds r2, #3\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _080AA98C\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	ldr r1, _080AA990\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "_080AA95C:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AA964: .4byte Task_WeatherMain + 1\n\t"
-        "_080AA968: .4byte gFogPalette\n\t"
-        "_080AA96C: .4byte gUnknown_20375B4\n\t"
-        "_080AA970: .4byte 0x04000008\n\t"
-        "_080AA974: .4byte gWeather\n\t"
-        "_080AA978: .4byte 0x000006D5\n\t"
-        "_080AA97C: .4byte 0x00001201\n\t"
-        "_080AA980: .4byte 0x000006D4\n\t"
-        "_080AA984: .4byte 0x000006DA\n\t"
-        "_080AA988: .4byte 0x000006C6\n\t"
-        "_080AA98C: .4byte Task_WeatherInit + 1\n\t"
-        "_080AA990: .4byte 0x000006C9\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!FuncIsActiveTask(Task_WeatherMain))
+    {
+        u8 index = AllocSpritePalette(PALTAG_WEATHER);
+        CpuCopy32(gFogPalette, &gPlttBufferUnfaded[OBJ_PLTT_ID(index)], PLTT_SIZE_4BPP);
+        BuildColorMaps();
+        gWeatherPtr->contrastColorMapSpritePalIndex = index;
+        gWeatherPtr->weatherPicSpritePalIndex = AllocSpritePalette(PALTAG_WEATHER_2);
+        gWeatherPtr->rainSpriteCount = 0;
+        gWeatherPtr->curRainSpriteIndex = 0;
+        gWeatherPtr->cloudSpritesCreated = 0;
+        gWeatherPtr->snowflakeSpriteCount = 0;
+        gWeatherPtr->ashSpritesCreated = 0;
+        gWeatherPtr->fogHSpritesCreated = 0;
+        gWeatherPtr->fogDSpritesCreated = 0;
+        gWeatherPtr->sandstormSpritesCreated = 0;
+        gWeatherPtr->sandstormSwirlSpritesCreated = 0;
+        gWeatherPtr->bubblesSpritesCreated = 0;
+        gWeatherPtr->lightenedFogSpritePalsCount = 0;
+        Weather_SetBlendCoeffs(16, 0);
+        gWeatherPtr->currWeather = 0;
+        gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
+        gWeatherPtr->readyForInit = FALSE;
+        gWeatherPtr->weatherChangeComplete = TRUE;
+        gWeatherPtr->taskId = CreateTask(Task_WeatherInit, 80);
+    }
 }
 
-__attribute__((naked)) void SetNextWeather(u8 weather)
+void SetNextWeather(u8 weather)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #3\n\t"
-        "	beq _080AA9AA\n\t"
-        "	cmp r4, #5\n\t"
-        "	beq _080AA9AA\n\t"
-        "	cmp r4, #0xd\n\t"
-        "	beq _080AA9AA\n\t"
-        "	bl PlayRainStoppingSoundEffect\n\t"
-        "_080AA9AA:\n\t"
-        "	ldr r1, _080AA9EC\n\t"
-        "	ldr r2, _080AA9F0\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, r4\n\t"
-        "	beq _080AA9CE\n\t"
-        "	movs r3, #0xda\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, r4\n\t"
-        "	bne _080AA9CE\n\t"
-        "	ldr r0, _080AA9F4\n\t"
-        "	lsls r1, r4, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	bl _call_via_r0\n\t"
-        "_080AA9CE:\n\t"
-        "	ldr r1, _080AA9EC\n\t"
-        "	ldr r2, _080AA9F8\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldr r3, _080AA9F0\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, _080AA9FC\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r2, [r1]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AA9EC: .4byte gWeather\n\t"
-        "_080AA9F0: .4byte 0x000006D1\n\t"
-        "_080AA9F4: .4byte sWeatherFuncs\n\t"
-        "_080AA9F8: .4byte 0x000006D3\n\t"
-        "_080AA9FC: .4byte 0x000006CE\n\t"
-        ".syntax divided\n\t"
-    );
+    if (weather != WEATHER_RAIN && weather != WEATHER_RAIN_THUNDERSTORM && weather != WEATHER_DOWNPOUR)
+    {
+        PlayRainStoppingSoundEffect();
+    }
+
+    if (gWeatherPtr->nextWeather != weather && gWeatherPtr->currWeather == weather)
+    {
+        sWeatherFuncs[weather].initVars();
+    }
+
+    gWeatherPtr->weatherChangeComplete = FALSE;
+    gWeatherPtr->nextWeather = weather;
+    gWeatherPtr->finishStep = 0;
 }
 
-__attribute__((naked)) void SetCurrentAndNextWeather(u8 weather)
+void SetCurrentAndNextWeather(u8 weather)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl PlayRainStoppingSoundEffect\n\t"
-        "	ldr r0, _080AAA24\n\t"
-        "	movs r2, #0xda\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	strb r4, [r1]\n\t"
-        "	ldr r1, _080AAA28\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r4, [r0]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAA24: .4byte gWeather\n\t"
-        "_080AAA28: .4byte 0x000006D1\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayRainStoppingSoundEffect();
+    gWeatherPtr->currWeather = weather;
+    gWeatherPtr->nextWeather = weather;
 }
 
-__attribute__((naked)) void SetCurrentAndNextWeatherNoDelay(u8 weather)
+void SetCurrentAndNextWeatherNoDelay(u8 weather)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl PlayRainStoppingSoundEffect\n\t"
-        "	ldr r1, _080AAA58\n\t"
-        "	movs r2, #0xda\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	strb r4, [r0]\n\t"
-        "	adds r2, #1\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	strb r4, [r0]\n\t"
-        "	movs r0, #0xd9\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAA58: .4byte gWeather\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayRainStoppingSoundEffect();
+    gWeatherPtr->currWeather = weather;
+    gWeatherPtr->nextWeather = weather;
+    // Overrides the normal delay during screen fading.
+    gWeatherPtr->readyForInit = TRUE;
 }
 
-__attribute__((naked)) void Task_WeatherInit(void)
+void Task_WeatherInit(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r2, _080AAA9C\n\t"
-        "	movs r1, #0xd9\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080AAA94\n\t"
-        "	ldr r1, _080AAAA0\n\t"
-        "	movs r3, #0xda\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r1, #8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	ldr r1, _080AAAA4\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080AAAA8\n\t"
-        "	str r1, [r0]\n\t"
-        "_080AAA94:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAA9C: .4byte gWeather\n\t"
-        "_080AAAA0: .4byte sWeatherFuncs\n\t"
-        "_080AAAA4: .4byte gTasks\n\t"
-        "_080AAAA8: .4byte Task_WeatherMain + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    // Waits until it's ok to initialize weather.
+    // When the screen fades in, this is set to TRUE.
+    if (gWeatherPtr->readyForInit)
+    {
+        sWeatherFuncs[gWeatherPtr->currWeather].initAll();
+        gTasks[taskId].func = Task_WeatherMain;
+    }
 }
 
-__attribute__((naked)) void Task_WeatherMain(void)
+// The original None_Main label split off this task's epilogue and literal pool;
+// it was not an independently callable weather callback.
+void Task_WeatherMain(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	ldr r5, _080AAB14\n\t"
-        "	movs r0, #0xda\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r6, r5, r0\n\t"
-        "	ldr r1, _080AAB18\n\t"
-        "	adds r7, r5, r1\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	ldrb r2, [r7]\n\t"
-        "	cmp r0, r2\n\t"
-        "	beq _080AAB28\n\t"
-        "	ldr r0, _080AAB1C\n\t"
-        "	mov sb, r0\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	mov r1, sb\n\t"
-        "	adds r1, #0xc\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080AAB38\n\t"
-        "	ldr r1, _080AAB20\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	mov r8, r1\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080AAB38\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	add r0, sb\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	ldr r2, _080AAB24\n\t"
-        "	adds r0, r5, r2\n\t"
-        "	strb r4, [r0]\n\t"
-        "	mov r0, r8\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	strb r0, [r6]\n\t"
-        "	adds r2, #0x10\n\t"
-        "	adds r1, r5, r2\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080AAB38\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAB14: .4byte gWeather\n\t"
-        "_080AAB18: .4byte 0x000006D1\n\t"
-        "_080AAB1C: .4byte sWeatherFuncs\n\t"
-        "_080AAB20: .4byte 0x000006C6\n\t"
-        "_080AAB24: .4byte 0x000006C3\n\t"
-        "_080AAB28:\n\t"
-        "	ldr r0, _080AAB58\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	bl _call_via_r0\n\t"
-        "_080AAB38:\n\t"
-        "	ldr r1, _080AAB5C\n\t"
-        "	ldr r0, _080AAB60\n\t"
-        "	ldr r2, _080AAB64\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl _call_via_r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWeatherPtr->currWeather != gWeatherPtr->nextWeather)
+    {
+        if (!sWeatherFuncs[gWeatherPtr->currWeather].finish()
+            && gWeatherPtr->palProcessingState != WEATHER_PAL_STATE_SCREEN_FADING_OUT)
+        {
+            // Finished cleaning up previous weather. Now transition to next weather.
+            sWeatherFuncs[gWeatherPtr->nextWeather].initVars();
+            gWeatherPtr->colorMapStepCounter = 0;
+            gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_CHANGING_WEATHER;
+            gWeatherPtr->currWeather = gWeatherPtr->nextWeather;
+            gWeatherPtr->weatherChangeComplete = TRUE;
+        }
+    }
+    else
+    {
+        sWeatherFuncs[gWeatherPtr->currWeather].main();
+    }
+
+    gWeatherPalStateFuncs[gWeatherPtr->palProcessingState]();
 }
 
-__attribute__((naked)) void None_Main(void)
+
+void None_Init(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAB58: .4byte sWeatherFuncs\n\t"
-        "_080AAB5C: .4byte gWeatherPalStateFuncs\n\t"
-        "_080AAB60: .4byte gWeather\n\t"
-        "_080AAB64: .4byte 0x000006C6\n\t"
-        ".syntax divided\n\t"
-    );
+    gWeatherPtr->targetColorMapIndex = 0;
+    gWeatherPtr->colorMapStepDelay = 0;
 }
 
-__attribute__((naked)) void None_Init(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080AAB7C\n\t"
-        "	ldr r2, _080AAB80\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r1]\n\t"
-        "	ldr r1, _080AAB84\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r2, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAB7C: .4byte gWeather\n\t"
-        "_080AAB80: .4byte 0x000006C1\n\t"
-        "_080AAB84: .4byte 0x000006C2\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-void sub_080AAB88(void) {}
+void None_Main(void) {}
 
 u8 None_Finish(void)
 {
@@ -529,1790 +284,596 @@ u8 None_Finish(void)
 }
 
 
-__attribute__((naked)) void BuildGammaShiftTables(void)
+void BuildColorMaps(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	ldr r1, _080AABD0\n\t"
-        "	ldr r0, _080AABD4\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	mov ip, r0\n\t"
-        "	ldr r1, _080AABD8\n\t"
-        "	mov sl, r1\n\t"
-        "_080AABA8:\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r0, ip\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080AABB4\n\t"
-        "	ldr r1, _080AABDC\n\t"
-        "	adds r7, r7, r1\n\t"
-        "_080AABB4:\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	add r0, ip\n\t"
-        "	mov sb, r0\n\t"
-        "_080AABBC:\n\t"
-        "	lsls r1, r5, #8\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	mov r0, ip\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080AABE0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	lsls r0, r0, #0xc\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	b _080AABE2\n\t"
-        "	.align 2, 0\n\t"
-        "_080AABD0: .4byte gUnknown_3000F50\n\t"
-        "_080AABD4: .4byte sBasePaletteColorMapTypes\n\t"
-        "_080AABD8: .4byte gUnknown_2038554\n\t"
-        "_080AABDC: .4byte 0xFFFFFDA0\n\t"
-        "_080AABE0:\n\t"
-        "	movs r4, #0\n\t"
-        "_080AABE2:\n\t"
-        "	movs r3, #0\n\t"
-        "	adds r1, r5, #1\n\t"
-        "	mov r8, r1\n\t"
-        "_080AABE8:\n\t"
-        "	subs r1, r2, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r2, r1, #0x10\n\t"
-        "	lsls r0, r3, #5\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	cmp r3, #2\n\t"
-        "	bls _080AABE8\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	movs r0, #0xf8\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080AAC10\n\t"
-        "	adds r0, #0xf\n\t"
-        "_080AAC10:\n\t"
-        "	lsls r0, r0, #0xc\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r5, #0xb\n\t"
-        "	bhi _080AAC5A\n\t"
-        "	cmp r3, #0x12\n\t"
-        "	bhi _080AAC80\n\t"
-        "_080AAC1C:\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	subs r0, r2, r6\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	ble _080AAC38\n\t"
-        "	lsrs r0, r0, #0x1f\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "_080AAC38:\n\t"
-        "	lsls r0, r3, #5\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	adds r1, r0, r5\n\t"
-        "	lsrs r0, r2, #8\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	bls _080AAC4E\n\t"
-        "	movs r0, #0x1f\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080AAC4E:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	cmp r3, #0x12\n\t"
-        "	bls _080AAC1C\n\t"
-        "	b _080AAC80\n\t"
-        "_080AAC5A:\n\t"
-        "	cmp r3, #0x12\n\t"
-        "	bhi _080AAC80\n\t"
-        "	movs r6, #0x1f\n\t"
-        "_080AAC60:\n\t"
-        "	adds r1, r2, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r2, r1, #0x10\n\t"
-        "	lsls r0, r3, #5\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	strb r1, [r0]\n\t"
-        "	cmp r1, #0x1f\n\t"
-        "	bls _080AAC76\n\t"
-        "	strb r6, [r0]\n\t"
-        "_080AAC76:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	cmp r3, #0x12\n\t"
-        "	bls _080AAC60\n\t"
-        "_080AAC80:\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #0x1f\n\t"
-        "	bls _080AABBC\n\t"
-        "	mov r1, sb\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov ip, r0\n\t"
-        "	cmp r0, #1\n\t"
-        "	bls _080AABA8\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+    u8 (*colorMaps)[32];
+    u16 colorVal;
+    u16 curBrightness;
+    u16 brightnessDelta;
+    u16 colorMapIndex;
+    u16 baseBrightness;
+    s16 diff;
+
+    sPaletteColorMapTypes = sBasePaletteColorMapTypes;
+    for (i = 0; i < 2; i++)
+    {
+        if (i == 0)
+            colorMaps = gWeatherPtr->darkenedContrastColorMaps;
+        else
+            colorMaps = gWeatherPtr->contrastColorMaps;
+
+        for (colorVal = 0; colorVal < 32; colorVal++)
+        {
+            curBrightness = colorVal << 8;
+            if (i == 0)
+                brightnessDelta = (colorVal << 8) / 16;
+            else
+                brightnessDelta = 0;
+
+            // First three color mappings are simple brightness modifiers which are
+            // progressively darker, according to brightnessDelta.
+            for (colorMapIndex = 0; colorMapIndex < 3; colorMapIndex++)
+            {
+                curBrightness -= brightnessDelta;
+                colorMaps[colorMapIndex][colorVal] = curBrightness >> 8;
+            }
+
+            baseBrightness = curBrightness;
+            brightnessDelta = (0x1f00 - curBrightness) / (NUM_WEATHER_COLOR_MAPS - 3);
+            if (colorVal < 12)
+            {
+                // For shadows (color values < 12), the remaining color mappings are
+                // brightness modifiers, which are increased at a significantly lower rate
+                // than the midtones and highlights (color values >= 12). This creates a
+                // high contrast effect, used in the thunderstorm weather.
+                for (; colorMapIndex < NUM_WEATHER_COLOR_MAPS; colorMapIndex++)
+                {
+                    curBrightness += brightnessDelta;
+                    diff = curBrightness - baseBrightness;
+                    if (diff > 0)
+                        curBrightness -= diff / 2;
+                    colorMaps[colorMapIndex][colorVal] = curBrightness >> 8;
+                    if (colorMaps[colorMapIndex][colorVal] > 31)
+                        colorMaps[colorMapIndex][colorVal] = 31;
+                }
+            }
+            else
+            {
+                // For midtones and highlights (color values >= 12), the remaining
+                // color mappings are simple brightness modifiers which are
+                // progressively brighter, hitting exactly 31 at the last mapping.
+                for (; colorMapIndex < NUM_WEATHER_COLOR_MAPS; colorMapIndex++)
+                {
+                    curBrightness += brightnessDelta;
+                    colorMaps[colorMapIndex][colorVal] = curBrightness >> 8;
+                    if (colorMaps[colorMapIndex][colorVal] > 31)
+                        colorMaps[colorMapIndex][colorVal] = 31;
+                }
+            }
+        }
+    }
 }
 
-__attribute__((naked)) void UpdateWeatherGammaShift(void)
+void UpdateWeatherColorMap(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	ldr r0, _080AACD4\n\t"
-        "	ldr r1, _080AACD8\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	cmp r1, #2\n\t"
-        "	beq _080AAD28\n\t"
-        "	movs r7, #0xd8\n\t"
-        "	lsls r7, r7, #3\n\t"
-        "	adds r4, r3, r7\n\t"
-        "	ldr r1, _080AACDC\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	ldrb r7, [r4]\n\t"
-        "	mov ip, r7\n\t"
-        "	movs r6, #0\n\t"
-        "	ldrsb r6, [r4, r6]\n\t"
-        "	movs r5, #0\n\t"
-        "	ldrsb r5, [r0, r5]\n\t"
-        "	cmp r6, r5\n\t"
-        "	bne _080AACE0\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "	b _080AAD28\n\t"
-        "	.align 2, 0\n\t"
-        "_080AACD4: .4byte gWeather\n\t"
-        "_080AACD8: .4byte 0x000006C6\n\t"
-        "_080AACDC: .4byte 0x000006C1\n\t"
-        "_080AACE0:\n\t"
-        "	ldr r0, _080AAD08\n\t"
-        "	adds r2, r3, r0\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r7, _080AAD0C\n\t"
-        "	adds r1, r3, r7\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	cmp r0, r1\n\t"
-        "	blo _080AAD28\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r2]\n\t"
-        "	mov r0, ip\n\t"
-        "	cmp r6, r5\n\t"
-        "	bge _080AAD10\n\t"
-        "	adds r0, #1\n\t"
-        "	b _080AAD14\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAD08: .4byte 0x000006C3\n\t"
-        "_080AAD0C: .4byte 0x000006C2\n\t"
-        "_080AAD10:\n\t"
-        "	mov r0, ip\n\t"
-        "	subs r0, #1\n\t"
-        "_080AAD14:\n\t"
-        "	strb r0, [r4]\n\t"
-        "	movs r1, #0xd8\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsb r2, [r0, r2]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl ApplyGammaShift\n\t"
-        "_080AAD28:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWeatherPtr->palProcessingState != WEATHER_PAL_STATE_SCREEN_FADING_OUT)
+    {
+        if (gWeatherPtr->colorMapIndex == gWeatherPtr->targetColorMapIndex)
+        {
+            gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
+        }
+        else
+        {
+            if (++gWeatherPtr->colorMapStepCounter >= gWeatherPtr->colorMapStepDelay)
+            {
+                gWeatherPtr->colorMapStepCounter = 0;
+                if (gWeatherPtr->colorMapIndex < gWeatherPtr->targetColorMapIndex)
+                    gWeatherPtr->colorMapIndex++;
+                else
+                    gWeatherPtr->colorMapIndex--;
+
+                ApplyColorMap(0, 32, gWeatherPtr->colorMapIndex);
+            }
+        }
+    }
 }
 
-__attribute__((naked)) void FadeInScreenWithWeather(void)
+void FadeInScreenWithWeather(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _080AAD68\n\t"
-        "	ldr r0, _080AAD6C\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bls _080AAD4E\n\t"
-        "	ldr r3, _080AAD70\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080AAD4E:\n\t"
-        "	movs r1, #0xda\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	subs r0, #3\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bhi _080AAE18\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080AAD74\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAD68: .4byte gWeather\n\t"
-        "_080AAD6C: .4byte 0x000006CB\n\t"
-        "_080AAD70: .4byte 0x000006CA\n\t"
-        "_080AAD74: .4byte _080AAD78\n\t"
-        "_080AAD78:\n\t"
-        "	.4byte _080AADA4\n\t"
-        "	.4byte _080AADA4\n\t"
-        "	.4byte _080AADA4\n\t"
-        "	.4byte _080AADF0\n\t"
-        "	.4byte _080AAE18\n\t"
-        "	.4byte _080AAE18\n\t"
-        "	.4byte _080AAE18\n\t"
-        "	.4byte _080AAE18\n\t"
-        "	.4byte _080AADA4\n\t"
-        "	.4byte _080AADCC\n\t"
-        "	.4byte _080AADA4\n\t"
-        "_080AADA4:\n\t"
-        "	bl FadeInScreen_RainShowShade\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080AAE38\n\t"
-        "	ldr r0, _080AADC4\n\t"
-        "	movs r2, #0xd8\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	movs r2, #3\n\t"
-        "	strb r2, [r1]\n\t"
-        "	ldr r3, _080AADC8\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strb r2, [r0]\n\t"
-        "	b _080AAE38\n\t"
-        "	.align 2, 0\n\t"
-        "_080AADC4: .4byte gWeather\n\t"
-        "_080AADC8: .4byte 0x000006C6\n\t"
-        "_080AADCC:\n\t"
-        "	bl FadeInScreen_Drought\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080AAE38\n\t"
-        "	ldr r1, _080AADE8\n\t"
-        "	movs r0, #0xd8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	movs r0, #0xfa\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r2, _080AADEC\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _080AAE34\n\t"
-        "	.align 2, 0\n\t"
-        "_080AADE8: .4byte gWeather\n\t"
-        "_080AADEC: .4byte 0x000006C6\n\t"
-        "_080AADF0:\n\t"
-        "	bl FadeInScreen_Fog1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _080AAE38\n\t"
-        "	ldr r0, _080AAE10\n\t"
-        "	movs r3, #0xd8\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r1, r0, r3\n\t"
-        "	strb r2, [r1]\n\t"
-        "	ldr r1, _080AAE14\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _080AAE38\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAE10: .4byte gWeather\n\t"
-        "_080AAE14: .4byte 0x000006C6\n\t"
-        "_080AAE18:\n\t"
-        "	ldr r0, _080AAE3C\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080AAE38\n\t"
-        "	ldr r3, _080AAE40\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	subs r3, #1\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _080AAE44\n\t"
-        "	adds r1, r2, r0\n\t"
-        "_080AAE34:\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080AAE38:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAE3C: .4byte gPaletteFade\n\t"
-        "_080AAE40: .4byte 0x000006C1\n\t"
-        "_080AAE44: .4byte 0x000006C6\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++gWeatherPtr->fadeInTimer > 1)
+        gWeatherPtr->fadeInFirstFrame = FALSE;
+
+    switch (gWeatherPtr->currWeather)
+    {
+    case WEATHER_RAIN:
+    case WEATHER_RAIN_THUNDERSTORM:
+    case WEATHER_DOWNPOUR:
+    case WEATHER_SNOW:
+    case WEATHER_SHADE:
+        if (FadeInScreen_RainShowShade() == FALSE)
+        {
+            gWeatherPtr->colorMapIndex = 3;
+            gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
+        }
+        break;
+    case WEATHER_DROUGHT:
+        if (FadeInScreen_Drought() == FALSE)
+        {
+            gWeatherPtr->colorMapIndex = -6;
+            gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
+        }
+        break;
+    case WEATHER_FOG_HORIZONTAL:
+        if (FadeInScreen_FogHorizontal() == FALSE)
+        {
+            gWeatherPtr->colorMapIndex = 0;
+            gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
+        }
+        break;
+    case WEATHER_VOLCANIC_ASH:
+    case WEATHER_SANDSTORM:
+    case WEATHER_FOG_DIAGONAL:
+    case WEATHER_UNDERWATER:
+    default:
+        if (!gPaletteFade.active)
+        {
+            gWeatherPtr->colorMapIndex = gWeatherPtr->targetColorMapIndex;
+            gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void FadeInScreen_RainShowShade(void)
+bool8 FadeInScreen_RainShowShade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r2, _080AAE84\n\t"
-        "	ldr r0, _080AAE88\n\t"
-        "	adds r4, r2, r0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	beq _080AAE9E\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	strb r1, [r4]\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bhi _080AAE90\n\t"
-        "	movs r3, #0x10\n\t"
-        "	subs r3, r3, r1\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldr r1, _080AAE8C\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	movs r2, #3\n\t"
-        "	bl ApplyGammaShiftWithBlend\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080AAEA0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAE84: .4byte gWeather\n\t"
-        "_080AAE88: .4byte 0x000006C7\n\t"
-        "_080AAE8C: .4byte 0x000006C4\n\t"
-        "_080AAE90:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	movs r2, #3\n\t"
-        "	bl ApplyGammaShift\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strb r0, [r4]\n\t"
-        "_080AAE9E:\n\t"
-        "	movs r0, #0\n\t"
-        "_080AAEA0:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWeatherPtr->fadeScreenCounter == 16)
+        return FALSE;
+
+    if (++gWeatherPtr->fadeScreenCounter >= 16)
+    {
+        ApplyColorMap(0, 32, 3);
+        gWeatherPtr->fadeScreenCounter = 16;
+        return FALSE;
+    }
+
+    ApplyColorMapWithBlend(0, 32, 3, 16 - gWeatherPtr->fadeScreenCounter, gWeatherPtr->fadeDestColor);
+    return TRUE;
 }
 
-__attribute__((naked)) void FadeInScreen_Drought(void)
+bool8 FadeInScreen_Drought(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r2, _080AAEDC\n\t"
-        "	ldr r0, _080AAEE0\n\t"
-        "	adds r4, r2, r0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	beq _080AAEF8\n\t"
-        "	adds r3, r0, #1\n\t"
-        "	strb r3, [r4]\n\t"
-        "	lsls r0, r3, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bhi _080AAEE8\n\t"
-        "	movs r0, #6\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	subs r1, r1, r3\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080AAEE4\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrh r2, [r2]\n\t"
-        "	bl ApplyDroughtGammaShiftWithBlend\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080AAEFA\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAEDC: .4byte gWeather\n\t"
-        "_080AAEE0: .4byte 0x000006C7\n\t"
-        "_080AAEE4: .4byte 0x000006C4\n\t"
-        "_080AAEE8:\n\t"
-        "	movs r2, #6\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl ApplyGammaShift\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strb r0, [r4]\n\t"
-        "_080AAEF8:\n\t"
-        "	movs r0, #0\n\t"
-        "_080AAEFA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWeatherPtr->fadeScreenCounter == 16)
+        return FALSE;
+
+    if (++gWeatherPtr->fadeScreenCounter >= 16)
+    {
+        ApplyColorMap(0, 32, -6);
+        gWeatherPtr->fadeScreenCounter = 16;
+        return FALSE;
+    }
+
+    ApplyDroughtColorMapWithBlend(-6, 16 - gWeatherPtr->fadeScreenCounter, gWeatherPtr->fadeDestColor);
+    return TRUE;
 }
 
-__attribute__((naked)) void FadeInScreen_Fog1(void)
+bool8 FadeInScreen_FogHorizontal(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _080AAF28\n\t"
-        "	ldr r1, _080AAF2C\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	cmp r1, #0x10\n\t"
-        "	beq _080AAF34\n\t"
-        "	adds r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r3, _080AAF30\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	bl ApplyFogBlend\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080AAF36\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAF28: .4byte gWeather\n\t"
-        "_080AAF2C: .4byte 0x000006C7\n\t"
-        "_080AAF30: .4byte 0x000006C4\n\t"
-        "_080AAF34:\n\t"
-        "	movs r0, #0\n\t"
-        "_080AAF36:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWeatherPtr->fadeScreenCounter == 16)
+        return FALSE;
+
+    gWeatherPtr->fadeScreenCounter++;
+    ApplyFogBlend(16 - gWeatherPtr->fadeScreenCounter, gWeatherPtr->fadeDestColor);
+    return TRUE;
 }
 
 void DoNothing(void) {}
-__attribute__((naked)) void ApplyGammaShift(void)
+void ApplyColorMap(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov sb, r1\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	asrs r0, r2, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _080AB050\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	lsls r6, r3, #4\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	cmp r4, sb\n\t"
-        "	blo _080AAF78\n\t"
-        "	b _080AB12A\n\t"
-        "_080AAF78:\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	asrs r0, r0, #0x13\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "_080AAF80:\n\t"
-        "	ldr r0, _080AAFB0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080AAFBC\n\t"
-        "	lsls r1, r6, #1\n\t"
-        "	ldr r0, _080AAFB4\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r2, _080AAFB8\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	bl CpuFastSet\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r0, #0x10\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	mov r2, sb\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	mov r8, r2\n\t"
-        "	adds r4, #1\n\t"
-        "	mov ip, r4\n\t"
-        "	b _080AB03A\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAFB0: .4byte gUnknown_3000F50\n\t"
-        "_080AAFB4: .4byte gPlttBufferUnfaded\n\t"
-        "_080AAFB8: .4byte gPlttBufferFaded\n\t"
-        "_080AAFBC:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080AAFD0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	subs r1, #0x10\n\t"
-        "	ldr r2, _080AAFD4\n\t"
-        "	ldr r3, _080AAFD8\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080AAFE0\n\t"
-        "_080AAFD0:\n\t"
-        "	ldr r0, _080AAFDC\n\t"
-        "	b _080AAFE6\n\t"
-        "	.align 2, 0\n\t"
-        "_080AAFD4: .4byte gWeather\n\t"
-        "_080AAFD8: .4byte 0x000006D5\n\t"
-        "_080AAFDC: .4byte gUnknown_2038554\n\t"
-        "_080AAFE0:\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r0, r2, r3\n\t"
-        "_080AAFE6:\n\t"
-        "	ldr r1, [sp, #4]\n\t"
-        "	adds r5, r1, r0\n\t"
-        "	movs r7, #0\n\t"
-        "	mov r2, sb\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	mov r8, r2\n\t"
-        "	adds r4, #1\n\t"
-        "	mov ip, r4\n\t"
-        "	ldr r3, _080AB048\n\t"
-        "	mov sl, r3\n\t"
-        "_080AAFFA:\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	ldr r1, _080AB04C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r1, #0x1b\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	lsls r0, r1, #0x16\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	lsrs r1, r1, #0x1b\n\t"
-        "	adds r1, r5, r1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	add r2, sl\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	lsls r3, r3, #5\n\t"
-        "	orrs r1, r3\n\t"
-        "	orrs r1, r4\n\t"
-        "	strh r1, [r2]\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r7, r0, #0x10\n\t"
-        "	cmp r7, #0xf\n\t"
-        "	bls _080AAFFA\n\t"
-        "_080AB03A:\n\t"
-        "	mov r2, ip\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r0, r8\n\t"
-        "	blo _080AAF80\n\t"
-        "	b _080AB12A\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB048: .4byte gPlttBufferFaded\n\t"
-        "_080AB04C: .4byte gPlttBufferUnfaded\n\t"
-        "_080AB050:\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080AB118\n\t"
-        "	mvns r0, r0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	lsls r6, r3, #4\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	cmp r4, sb\n\t"
-        "	bhs _080AB12A\n\t"
-        "_080AB06C:\n\t"
-        "	ldr r0, _080AB09C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080AB0A8\n\t"
-        "	lsls r1, r6, #1\n\t"
-        "	ldr r0, _080AB0A0\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r2, _080AB0A4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	bl CpuFastSet\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r0, #0x10\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	mov r3, sb\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	mov r8, r3\n\t"
-        "	adds r4, #1\n\t"
-        "	mov ip, r4\n\t"
-        "	b _080AB100\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB09C: .4byte gUnknown_3000F50\n\t"
-        "_080AB0A0: .4byte gPlttBufferUnfaded\n\t"
-        "_080AB0A4: .4byte gPlttBufferFaded\n\t"
-        "_080AB0A8:\n\t"
-        "	movs r7, #0\n\t"
-        "	mov r0, sb\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r4, #1\n\t"
-        "	mov ip, r4\n\t"
-        "	ldr r1, _080AB10C\n\t"
-        "	mov sl, r1\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	lsls r0, r2, #0x18\n\t"
-        "	asrs r5, r0, #0xb\n\t"
-        "_080AB0BE:\n\t"
-        "	lsls r0, r6, #1\n\t"
-        "	ldr r3, _080AB110\n\t"
-        "	adds r4, r0, r3\n\t"
-        "	ldr r1, _080AB114\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r3, [r0]\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r0, r3, #0x11\n\t"
-        "	movs r1, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	lsrs r1, r3, #0x12\n\t"
-        "	movs r2, #0xf0\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	lsrs r3, r3, #0x13\n\t"
-        "	movs r2, #0xf0\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	ands r3, r1\n\t"
-        "	orrs r0, r3\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	add r0, sl\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r4]\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r7, r0, #0x10\n\t"
-        "	cmp r7, #0xf\n\t"
-        "	bls _080AB0BE\n\t"
-        "_080AB100:\n\t"
-        "	mov r3, ip\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r0, r8\n\t"
-        "	blo _080AB06C\n\t"
-        "	b _080AB12A\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB10C: .4byte sDroughtWeatherColors\n\t"
-        "_080AB110: .4byte gPlttBufferFaded\n\t"
-        "_080AB114: .4byte gPlttBufferUnfaded\n\t"
-        "_080AB118:\n\t"
-        "	lsls r1, r4, #5\n\t"
-        "	ldr r0, _080AB13C\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r2, _080AB140\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	mov r3, sb\n\t"
-        "	lsls r2, r3, #3\n\t"
-        "	bl CpuFastSet\n\t"
-        "_080AB12A:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB13C: .4byte gPlttBufferUnfaded\n\t"
-        "_080AB140: .4byte gPlttBufferFaded\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 curPalIndex;
+    u16 palOffset;
+    u8 *colorMap;
+    u16 i;
+
+    if (colorMapIndex > 0)
+    {
+        colorMapIndex--;
+        palOffset = PLTT_ID(startPalIndex);
+        numPalettes += startPalIndex;
+        curPalIndex = startPalIndex;
+
+        // Loop through the specified palette range and apply necessary color maps.
+        while (curPalIndex < numPalettes)
+        {
+            if (sPaletteColorMapTypes[curPalIndex] == COLOR_MAP_NONE)
+            {
+                // No palette change.
+                CpuFastCopy(&gPlttBufferUnfaded[palOffset], &gPlttBufferFaded[palOffset], PLTT_SIZE_4BPP);
+                palOffset += 16;
+            }
+            else
+            {
+                u8 r, g, b;
+
+                if (sPaletteColorMapTypes[curPalIndex] == COLOR_MAP_CONTRAST || curPalIndex - 16 == gWeatherPtr->contrastColorMapSpritePalIndex)
+                    colorMap = gWeatherPtr->contrastColorMaps[colorMapIndex];
+                else
+                    colorMap = gWeatherPtr->darkenedContrastColorMaps[colorMapIndex];
+
+                for (i = 0; i < 16; i++)
+                {
+                    // Apply color map to the original color.
+                    struct RGBColor baseColor = *(struct RGBColor *)&gPlttBufferUnfaded[palOffset];
+                    r = colorMap[baseColor.r];
+                    g = colorMap[baseColor.g];
+                    b = colorMap[baseColor.b];
+                    gPlttBufferFaded[palOffset++] = RGB2(r, g, b);
+                }
+            }
+
+            curPalIndex++;
+        }
+    }
+    else if (colorMapIndex < 0)
+    {
+        // A negative colorMapIndex value means that the blending will come from the special Drought weather's palette tables.
+        colorMapIndex = -colorMapIndex - 1;
+        palOffset = PLTT_ID(startPalIndex);
+        numPalettes += startPalIndex;
+        curPalIndex = startPalIndex;
+
+        while (curPalIndex < numPalettes)
+        {
+            if (sPaletteColorMapTypes[curPalIndex] == COLOR_MAP_NONE)
+            {
+                // No palette change.
+                CpuFastCopy(&gPlttBufferUnfaded[palOffset], &gPlttBufferFaded[palOffset], PLTT_SIZE_4BPP);
+                palOffset += 16;
+            }
+            else
+            {
+                for (i = 0; i < 16; i++)
+                {
+                    gPlttBufferFaded[palOffset] = sDroughtWeatherColors[colorMapIndex][DROUGHT_COLOR_INDEX(gPlttBufferUnfaded[palOffset])];
+                    palOffset++;
+                }
+            }
+
+            curPalIndex++;
+        }
+    }
+    else
+    {
+        // No palette blending.
+        CpuFastCopy(&gPlttBufferUnfaded[PLTT_ID(startPalIndex)], &gPlttBufferFaded[PLTT_ID(startPalIndex)], numPalettes * PLTT_SIZE_4BPP);
+    }
 }
 
-__attribute__((naked)) void ApplyGammaShiftWithBlend(void)
+void ApplyColorMapWithBlend(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex, u8 blendCoeff, u16 blendColor)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	ldr r4, [sp, #0x34]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov sl, r1\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	mov r8, r3\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r4, [r1]\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	lsls r3, r1, #0x1b\n\t"
-        "	lsrs r3, r3, #0x1b\n\t"
-        "	str r3, [sp, #4]\n\t"
-        "	lsls r3, r1, #0x16\n\t"
-        "	lsrs r3, r3, #0x1b\n\t"
-        "	str r3, [sp, #8]\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	lsrs r1, r1, #0x1b\n\t"
-        "	str r1, [sp, #0xc]\n\t"
-        "	lsls r6, r0, #4\n\t"
-        "	mov r3, sl\n\t"
-        "	adds r1, r3, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov sl, r1\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	movs r1, #0xff\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	cmp r4, sl\n\t"
-        "	bhs _080AB270\n\t"
-        "	lsls r0, r2, #0x18\n\t"
-        "	asrs r0, r0, #0x13\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "_080AB19C:\n\t"
-        "	ldr r0, _080AB1CC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080AB1D0\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrh r3, [r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	mov r2, r8\n\t"
-        "	bl BlendPalette\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r0, #0x10\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	mov r3, sl\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	mov sb, r3\n\t"
-        "	adds r4, #1\n\t"
-        "	mov ip, r4\n\t"
-        "	b _080AB266\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB1CC: .4byte gUnknown_3000F50\n\t"
-        "_080AB1D0:\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080AB1E0\n\t"
-        "	ldr r0, _080AB1DC\n\t"
-        "	ldr r1, [sp, #0x10]\n\t"
-        "	adds r5, r1, r0\n\t"
-        "	b _080AB1E6\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB1DC: .4byte gUnknown_20382F4\n\t"
-        "_080AB1E0:\n\t"
-        "	ldr r0, _080AB280\n\t"
-        "	ldr r3, [sp, #0x10]\n\t"
-        "	adds r5, r3, r0\n\t"
-        "_080AB1E6:\n\t"
-        "	movs r7, #0\n\t"
-        "	mov r0, sl\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	adds r4, #1\n\t"
-        "	mov ip, r4\n\t"
-        "_080AB1F2:\n\t"
-        "	adds r4, r6, #0\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	ldr r1, _080AB284\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r1, #0x1b\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	lsls r0, r1, #0x16\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	lsrs r1, r1, #0x1b\n\t"
-        "	adds r1, r5, r1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	ldr r6, [sp, #4]\n\t"
-        "	subs r0, r6, r3\n\t"
-        "	mov r6, r8\n\t"
-        "	muls r6, r0, r6\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	asrs r0, r0, #4\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldr r6, [sp, #8]\n\t"
-        "	subs r0, r6, r2\n\t"
-        "	mov r6, r8\n\t"
-        "	muls r6, r0, r6\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	asrs r0, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	ldr r6, [sp, #0xc]\n\t"
-        "	subs r0, r6, r1\n\t"
-        "	mov r6, r8\n\t"
-        "	muls r6, r0, r6\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	asrs r0, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	ldr r0, _080AB288\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	lsrs r2, r2, #0x13\n\t"
-        "	orrs r1, r2\n\t"
-        "	orrs r1, r3\n\t"
-        "	strh r1, [r4]\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r7, r0, #0x10\n\t"
-        "	cmp r7, #0xf\n\t"
-        "	bls _080AB1F2\n\t"
-        "_080AB266:\n\t"
-        "	mov r1, ip\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r0, sb\n\t"
-        "	blo _080AB19C\n\t"
-        "_080AB270:\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB280: .4byte gUnknown_2038554\n\t"
-        "_080AB284: .4byte gPlttBufferUnfaded\n\t"
-        "_080AB288: .4byte gPlttBufferFaded\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 palOffset;
+    u16 curPalIndex;
+    u16 i;
+    struct RGBColor color = *(struct RGBColor *)&blendColor;
+    u8 rBlend = color.r;
+    u8 gBlend = color.g;
+    u8 bBlend = color.b;
+
+    palOffset = PLTT_ID(startPalIndex);
+    numPalettes += startPalIndex;
+    colorMapIndex--;
+    curPalIndex = startPalIndex;
+
+    while (curPalIndex < numPalettes)
+    {
+        if (sPaletteColorMapTypes[curPalIndex] == COLOR_MAP_NONE)
+        {
+            // No color map. Simply blend the colors.
+            BlendPalette(palOffset, 16, blendCoeff, blendColor);
+            palOffset += 16;
+        }
+        else
+        {
+            u8 *colorMap;
+
+            if (sPaletteColorMapTypes[curPalIndex] == COLOR_MAP_DARK_CONTRAST)
+                colorMap = gWeatherPtr->darkenedContrastColorMaps[colorMapIndex];
+            else
+                colorMap = gWeatherPtr->contrastColorMaps[colorMapIndex];
+
+            for (i = 0; i < 16; i++)
+            {
+                struct RGBColor baseColor = *(struct RGBColor *)&gPlttBufferUnfaded[palOffset];
+                u8 r = colorMap[baseColor.r];
+                u8 g = colorMap[baseColor.g];
+                u8 b = colorMap[baseColor.b];
+
+                // Apply color map and target blend color to the original color.
+                r += ((rBlend - r) * blendCoeff) >> 4;
+                g += ((gBlend - g) * blendCoeff) >> 4;
+                b += ((bBlend - b) * blendCoeff) >> 4;
+                gPlttBufferFaded[palOffset++] = RGB2(r, g, b);
+            }
+        }
+
+        curPalIndex++;
+    }
 }
 
-__attribute__((naked)) void ApplyDroughtGammaShiftWithBlend(void)
+void ApplyDroughtColorMapWithBlend(s8 colorMapIndex, u8 blendCoeff, u16 blendColor)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r2, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	movs r1, #0xff\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	eors r0, r1\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	lsls r1, r0, #0x1b\n\t"
-        "	lsrs r1, r1, #0x1b\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	lsls r1, r0, #0x16\n\t"
-        "	lsrs r1, r1, #0x1b\n\t"
-        "	str r1, [sp, #0xc]\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	mov sl, r0\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r4, #0\n\t"
-        "_080AB2C4:\n\t"
-        "	ldr r0, _080AB2EC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080AB2F0\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrh r3, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl BlendPalette\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x10\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r4, #1\n\t"
-        "	mov r8, r4\n\t"
-        "	b _080AB386\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB2EC: .4byte gUnknown_3000F50\n\t"
-        "_080AB2F0:\n\t"
-        "	movs r0, #0\n\t"
-        "	mov ip, r0\n\t"
-        "	ldr r1, [sp, #4]\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	adds r4, #1\n\t"
-        "	mov r8, r4\n\t"
-        "	movs r7, #0x1e\n\t"
-        "	asrs r0, r0, #0xb\n\t"
-        "	mov sb, r0\n\t"
-        "_080AB302:\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	ldr r5, _080AB3A0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r2, r0, #0x1b\n\t"
-        "	lsrs r2, r2, #0x1b\n\t"
-        "	lsls r1, r0, #0x16\n\t"
-        "	lsrs r1, r1, #0x1b\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	ands r0, r7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	ands r1, r7\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	orrs r0, r1\n\t"
-        "	ands r2, r7\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	orrs r0, r2\n\t"
-        "	add r0, sb\n\t"
-        "	ldr r1, _080AB3A4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r3, r1, #0x1b\n\t"
-        "	lsrs r3, r3, #0x1b\n\t"
-        "	lsls r2, r1, #0x16\n\t"
-        "	lsrs r2, r2, #0x1b\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	lsrs r1, r1, #0x1b\n\t"
-        "	ldr r5, [sp, #8]\n\t"
-        "	subs r0, r5, r3\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	asrs r0, r0, #4\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldr r5, [sp, #0xc]\n\t"
-        "	subs r0, r5, r2\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	asrs r0, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	mov r5, sl\n\t"
-        "	subs r0, r5, r1\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	asrs r0, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	ldr r0, _080AB3A8\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	lsrs r2, r2, #0x13\n\t"
-        "	orrs r1, r2\n\t"
-        "	orrs r1, r3\n\t"
-        "	strh r1, [r4]\n\t"
-        "	mov r0, ip\n\t"
-        "	adds r0, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov ip, r0\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bls _080AB302\n\t"
-        "_080AB386:\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0x1f\n\t"
-        "	bls _080AB2C4\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB3A0: .4byte gPlttBufferUnfaded\n\t"
-        "_080AB3A4: .4byte sDroughtWeatherColors\n\t"
-        "_080AB3A8: .4byte gPlttBufferFaded\n\t"
-        ".syntax divided\n\t"
-    );
+    struct RGBColor color;
+    u8 rBlend;
+    u8 gBlend;
+    u8 bBlend;
+    u16 curPalIndex;
+    u16 palOffset;
+    u16 i;
+
+    colorMapIndex = -colorMapIndex - 1;
+    color = *(struct RGBColor *)&blendColor;
+    rBlend = color.r;
+    gBlend = color.g;
+    bBlend = color.b;
+    palOffset = 0;
+    for (curPalIndex = 0; curPalIndex < 32; curPalIndex++)
+    {
+        if (sPaletteColorMapTypes[curPalIndex] == COLOR_MAP_NONE)
+        {
+            // No color map. Simply blend the colors.
+            BlendPalette(palOffset, 16, blendCoeff, blendColor);
+            palOffset += 16;
+        }
+        else
+        {
+            for (i = 0; i < 16; i++)
+            {
+                u32 offset;
+                struct RGBColor color1;
+                struct RGBColor color2;
+                u8 r1, g1, b1;
+                u8 r2, g2, b2;
+
+                color1 = *(struct RGBColor *)&gPlttBufferUnfaded[palOffset];
+                r1 = color1.r;
+                g1 = color1.g;
+                b1 = color1.b;
+
+                offset = ((b1 & 0x1E) << 7) | ((g1 & 0x1E) << 3) | ((r1 & 0x1E) >> 1);
+                color2 = *(struct RGBColor *)&sDroughtWeatherColors[colorMapIndex][offset];
+                r2 = color2.r;
+                g2 = color2.g;
+                b2 = color2.b;
+
+                r2 += ((rBlend - r2) * blendCoeff) >> 4;
+                g2 += ((gBlend - g2) * blendCoeff) >> 4;
+                b2 += ((bBlend - b2) * blendCoeff) >> 4;
+
+                gPlttBufferFaded[palOffset++] = RGB2(r2, g2, b2);
+            }
+        }
+    }
 }
 
-__attribute__((naked)) void ApplyFogBlend(void)
+void ApplyFogBlend(u8 blendCoeff, u16 blendColor)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r3, [r0]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	bl BlendPalette\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	lsls r1, r0, #0x1b\n\t"
-        "	lsrs r1, r1, #0x1b\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	lsls r1, r0, #0x16\n\t"
-        "	lsrs r1, r1, #0x1b\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	mov sl, r0\n\t"
-        "	movs r4, #0x10\n\t"
-        "_080AB3E8:\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl LightenSpritePaletteInFog\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080AB498\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r1, r0, #0x14\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov ip, r1\n\t"
-        "	lsls r1, r4, #0x14\n\t"
-        "	lsrs r6, r1, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	cmp r6, ip\n\t"
-        "	bhs _080AB4AC\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	mov r8, r0\n\t"
-        "_080AB40C:\n\t"
-        "	lsls r5, r6, #1\n\t"
-        "	ldr r0, _080AB490\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	lsls r4, r2, #0x1b\n\t"
-        "	lsrs r4, r4, #0x1b\n\t"
-        "	lsls r3, r2, #0x16\n\t"
-        "	lsrs r3, r3, #0x1b\n\t"
-        "	lsls r2, r2, #0x11\n\t"
-        "	lsrs r2, r2, #0x1b\n\t"
-        "	mov r0, r8\n\t"
-        "	subs r1, r0, r4\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r1, #0x1f\n\t"
-        "	subs r1, r1, r3\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #2\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	mov r0, r8\n\t"
-        "	subs r1, r0, r2\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r1, [sp, #4]\n\t"
-        "	subs r0, r1, r4\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	asrs r0, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r1, [sp, #8]\n\t"
-        "	subs r0, r1, r3\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	asrs r0, r0, #4\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	mov r1, sl\n\t"
-        "	subs r0, r1, r2\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	asrs r0, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	ldr r0, _080AB494\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	lsrs r2, r2, #0xe\n\t"
-        "	lsrs r3, r3, #0x13\n\t"
-        "	orrs r2, r3\n\t"
-        "	orrs r2, r4\n\t"
-        "	strh r2, [r5]\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, ip\n\t"
-        "	blo _080AB40C\n\t"
-        "	b _080AB4AC\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB490: .4byte gPlttBufferUnfaded\n\t"
-        "_080AB494: .4byte gPlttBufferFaded\n\t"
-        "_080AB498:\n\t"
-        "	lsls r0, r4, #0x14\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrh r3, [r1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	bl BlendPalette\n\t"
-        "	adds r4, #1\n\t"
-        "	mov sb, r4\n\t"
-        "_080AB4AC:\n\t"
-        "	mov r1, sb\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0x1f\n\t"
-        "	bls _080AB3E8\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct RGBColor color;
+    u8 rBlend;
+    u8 gBlend;
+    u8 bBlend;
+    u16 curPalIndex;
+
+    BlendPalette(BG_PLTT_ID(0), 16 * 16, blendCoeff, blendColor);
+    color = *(struct RGBColor *)&blendColor;
+    rBlend = color.r;
+    gBlend = color.g;
+    bBlend = color.b;
+
+    for (curPalIndex = 16; curPalIndex < 32; curPalIndex++)
+    {
+        if (LightenSpritePaletteInFog(curPalIndex))
+        {
+            u16 palEnd = PLTT_ID(curPalIndex + 1);
+            u16 palOffset = PLTT_ID(curPalIndex);
+
+            while (palOffset < palEnd)
+            {
+                struct RGBColor color = *(struct RGBColor *)&gPlttBufferUnfaded[palOffset];
+                u8 r = color.r;
+                u8 g = color.g;
+                u8 b = color.b;
+
+                r += ((28 - r) * 3) >> 2;
+                g += ((31 - g) * 3) >> 2;
+                b += ((28 - b) * 3) >> 2;
+
+                r += ((rBlend - r) * blendCoeff) >> 4;
+                g += ((gBlend - g) * blendCoeff) >> 4;
+                b += ((bBlend - b) * blendCoeff) >> 4;
+
+                gPlttBufferFaded[palOffset] = RGB2(r, g, b);
+                palOffset++;
+            }
+        }
+        else
+        {
+            BlendPalette(PLTT_ID(curPalIndex), 16, blendCoeff, blendColor);
+        }
+    }
 }
 
-__attribute__((naked)) void MarkFogSpritePalToLighten(void)
+void MarkFogSpritePalToLighten(u8 paletteIndex)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r3, _080AB4F0\n\t"
-        "	ldr r0, _080AB4F4\n\t"
-        "	adds r1, r3, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _080AB4EA\n\t"
-        "	ldr r4, _080AB4F8\n\t"
-        "	adds r0, r3, r4\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080AB4EA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB4F0: .4byte gWeather\n\t"
-        "_080AB4F4: .4byte 0x000006FA\n\t"
-        "_080AB4F8: .4byte 0x000006F4\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWeatherPtr->lightenedFogSpritePalsCount < 6)
+    {
+        gWeatherPtr->lightenedFogSpritePals[gWeatherPtr->lightenedFogSpritePalsCount] = paletteIndex;
+        gWeatherPtr->lightenedFogSpritePalsCount++;
+    }
 }
 
-__attribute__((naked)) void LightenSpritePaletteInFog(void)
+bool8 LightenSpritePaletteInFog(u8 paletteIndex)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r2, _080AB524\n\t"
-        "	ldr r4, _080AB528\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bhs _080AB53A\n\t"
-        "	ldr r5, _080AB52C\n\t"
-        "	adds r4, r2, r5\n\t"
-        "	adds r2, r0, #0\n\t"
-        "_080AB516:\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, r3\n\t"
-        "	bne _080AB530\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080AB53C\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB524: .4byte gWeather\n\t"
-        "_080AB528: .4byte 0x000006FA\n\t"
-        "_080AB52C: .4byte 0x000006F4\n\t"
-        "_080AB530:\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	cmp r1, r2\n\t"
-        "	blo _080AB516\n\t"
-        "_080AB53A:\n\t"
-        "	movs r0, #0\n\t"
-        "_080AB53C:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    for (i = 0; i < gWeatherPtr->lightenedFogSpritePalsCount; i++)
+    {
+        if (gWeatherPtr->lightenedFogSpritePals[i] == paletteIndex)
+            return TRUE;
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_080AB544(void)
+void ApplyWeatherColorMapIfIdle(s8 colorMapIndex)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r5, _080AB570\n\t"
-        "	ldr r1, _080AB574\n\t"
-        "	adds r0, r5, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080AB56A\n\t"
-        "	lsls r2, r4, #0x18\n\t"
-        "	asrs r2, r2, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl ApplyGammaShift\n\t"
-        "	movs r1, #0xd8\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r5, r1\n\t"
-        "	strb r4, [r0]\n\t"
-        "_080AB56A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB570: .4byte gWeather\n\t"
-        "_080AB574: .4byte 0x000006C6\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWeatherPtr->palProcessingState == WEATHER_PAL_STATE_IDLE)
+    {
+        ApplyColorMap(0, 32, colorMapIndex);
+        gWeatherPtr->colorMapIndex = colorMapIndex;
+    }
 }
 
-__attribute__((naked)) void sub_080AB578(void)
+void ApplyWeatherColorMapIfIdle_Gradual(u8 colorMapIndex, u8 targetColorMapIndex, u8 colorMapStepDelay)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r6, r2, #0x18\n\t"
-        "	ldr r3, _080AB5C0\n\t"
-        "	ldr r0, _080AB5C4\n\t"
-        "	adds r2, r3, r0\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080AB5B8\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r2]\n\t"
-        "	movs r2, #0xd8\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r3, r2\n\t"
-        "	strb r4, [r0]\n\t"
-        "	adds r2, #1\n\t"
-        "	adds r0, r3, r2\n\t"
-        "	strb r5, [r0]\n\t"
-        "	adds r2, #2\n\t"
-        "	adds r0, r3, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r1, _080AB5C8\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	strb r6, [r0]\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bl sub_080AB544\n\t"
-        "_080AB5B8:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB5C0: .4byte gWeather\n\t"
-        "_080AB5C4: .4byte 0x000006C6\n\t"
-        "_080AB5C8: .4byte 0x000006C2\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWeatherPtr->palProcessingState == WEATHER_PAL_STATE_IDLE)
+    {
+        gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_CHANGING_WEATHER;
+        gWeatherPtr->colorMapIndex = colorMapIndex;
+        gWeatherPtr->targetColorMapIndex = targetColorMapIndex;
+        gWeatherPtr->colorMapStepCounter = 0;
+        gWeatherPtr->colorMapStepDelay = colorMapStepDelay;
+        ApplyWeatherColorMapIfIdle(colorMapIndex);
+    }
 }
 
-__attribute__((naked)) void FadeScreen(u8 mode, s8 delay)
+void FadeScreen(u8 mode, s8 delay)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080AB604\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080AB5E8\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080AB5F2\n\t"
-        "	b _080AB6E0\n\t"
-        "_080AB5E8:\n\t"
-        "	cmp r2, #2\n\t"
-        "	beq _080AB5F8\n\t"
-        "	cmp r2, #3\n\t"
-        "	beq _080AB608\n\t"
-        "	b _080AB6E0\n\t"
-        "_080AB5F2:\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	b _080AB60C\n\t"
-        "_080AB5F8:\n\t"
-        "	ldr r4, _080AB600\n\t"
-        "	movs r1, #0\n\t"
-        "	b _080AB60C\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB600: .4byte 0x0000FFFF\n\t"
-        "_080AB604:\n\t"
-        "	movs r4, #0\n\t"
-        "	b _080AB60A\n\t"
-        "_080AB608:\n\t"
-        "	ldr r4, _080AB62C\n\t"
-        "_080AB60A:\n\t"
-        "	movs r1, #1\n\t"
-        "_080AB60C:\n\t"
-        "	ldr r0, _080AB630\n\t"
-        "	movs r2, #0xda\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #3\n\t"
-        "	blt _080AB634\n\t"
-        "	cmp r0, #6\n\t"
-        "	ble _080AB626\n\t"
-        "	cmp r0, #0xd\n\t"
-        "	bgt _080AB634\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	blt _080AB634\n\t"
-        "_080AB626:\n\t"
-        "	movs r2, #1\n\t"
-        "	b _080AB636\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB62C: .4byte 0x0000FFFF\n\t"
-        "_080AB630: .4byte gWeather\n\t"
-        "_080AB634:\n\t"
-        "	movs r2, #0\n\t"
-        "_080AB636:\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080AB678\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _080AB64A\n\t"
-        "	ldr r0, _080AB668\n\t"
-        "	ldr r1, _080AB66C\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	bl CpuFastSet\n\t"
-        "_080AB64A:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _080AB670\n\t"
-        "	ldr r3, _080AB674\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	movs r1, #2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _080AB6E0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB668: .4byte gPlttBufferFaded\n\t"
-        "_080AB66C: .4byte gPlttBufferUnfaded\n\t"
-        "_080AB670: .4byte gWeather\n\t"
-        "_080AB674: .4byte 0x000006C6\n\t"
-        "_080AB678:\n\t"
-        "	ldr r1, _080AB690\n\t"
-        "	ldr r3, _080AB694\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	strh r4, [r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _080AB69C\n\t"
-        "	ldr r0, _080AB698\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080AB6AE\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB690: .4byte gWeather\n\t"
-        "_080AB694: .4byte 0x000006C4\n\t"
-        "_080AB698: .4byte 0x000006C7\n\t"
-        "_080AB69C:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "_080AB6AE:\n\t"
-        "	ldr r4, _080AB6E8\n\t"
-        "	ldr r1, _080AB6EC\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r5, #1\n\t"
-        "	strb r5, [r0]\n\t"
-        "	ldr r2, _080AB6F0\n\t"
-        "	adds r0, r4, r2\n\t"
-        "	strb r5, [r0]\n\t"
-        "	ldr r3, _080AB6F4\n\t"
-        "	adds r0, r4, r3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r1, #0xe6\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r2, #0x68\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	bl Weather_SetBlendCoeffs\n\t"
-        "	movs r3, #0xd9\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r4, r4, r3\n\t"
-        "	strb r5, [r4]\n\t"
-        "_080AB6E0:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB6E8: .4byte gWeather\n\t"
-        "_080AB6EC: .4byte 0x000006C6\n\t"
-        "_080AB6F0: .4byte 0x000006CA\n\t"
-        "_080AB6F4: .4byte 0x000006CB\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 fadeColor;
+    bool8 fadeOut;
+    bool8 useWeatherPal;
+
+    switch (mode)
+    {
+    case FADE_FROM_BLACK:
+        fadeColor = RGB_BLACK;
+        fadeOut = FALSE;
+        break;
+    case FADE_FROM_WHITE:
+        fadeColor = RGB_WHITEALPHA;
+        fadeOut = FALSE;
+        break;
+    case FADE_TO_BLACK:
+        fadeColor = RGB_BLACK;
+        fadeOut = TRUE;
+        break;
+    case FADE_TO_WHITE:
+        fadeColor = RGB_WHITEALPHA;
+        fadeOut = TRUE;
+        break;
+    default:
+        return;
+    }
+
+    switch (gWeatherPtr->currWeather)
+    {
+    case WEATHER_RAIN:
+    case WEATHER_RAIN_THUNDERSTORM:
+    case WEATHER_DOWNPOUR:
+    case WEATHER_SNOW:
+    case WEATHER_FOG_HORIZONTAL:
+    case WEATHER_SHADE:
+    case WEATHER_DROUGHT:
+        useWeatherPal = TRUE;
+        break;
+    default:
+        useWeatherPal = FALSE;
+        break;
+    }
+
+    if (fadeOut)
+    {
+        if (useWeatherPal)
+            CpuFastCopy(gPlttBufferFaded, gPlttBufferUnfaded, PLTT_SIZE);
+
+        BeginNormalPaletteFade(PALETTES_ALL, delay, 0, 16, fadeColor);
+        gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_SCREEN_FADING_OUT;
+    }
+    else
+    {
+        gWeatherPtr->fadeDestColor = fadeColor;
+        if (useWeatherPal)
+            gWeatherPtr->fadeScreenCounter = 0;
+        else
+            BeginNormalPaletteFade(PALETTES_ALL, delay, 16, 0, fadeColor);
+
+        gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_SCREEN_FADING_IN;
+        gWeatherPtr->fadeInFirstFrame = TRUE;
+        gWeatherPtr->fadeInTimer = 0;
+        Weather_SetBlendCoeffs(gWeatherPtr->currBlendEVA, gWeatherPtr->currBlendEVB);
+        gWeatherPtr->readyForInit = TRUE;
+    }
 }
 
-__attribute__((naked)) bool8 IsWeatherNotFadingIn()
+bool8 IsWeatherNotFadingIn(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080AB70C\n\t"
-        "	ldr r1, _080AB710\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	eors r1, r0\n\t"
-        "	rsbs r0, r1, #0\n\t"
-        "	orrs r0, r1\n\t"
-        "	lsrs r0, r0, #0x1f\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB70C: .4byte gWeather\n\t"
-        "_080AB710: .4byte 0x000006C6\n\t"
-        ".syntax divided\n\t"
-    );
+    return (gWeatherPtr->palProcessingState != WEATHER_PAL_STATE_SCREEN_FADING_IN);
 }
 
-__attribute__((naked)) void UpdateSpritePaletteWithWeather(u8 spritePaletteIndex)
+void UpdateSpritePaletteWithWeather(u8 spritePaletteIndex)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #8\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0xd\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	ldr r5, _080AB754\n\t"
-        "	ldr r2, _080AB758\n\t"
-        "	adds r0, r5, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080AB75C\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080AB7A8\n\t"
-        "	adds r2, #0xa\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #6\n\t"
-        "	beq _080AB7E0\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	subs r2, #0x10\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsb r2, [r1, r2]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ApplyGammaShift\n\t"
-        "	b _080AB7F0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB754: .4byte gWeather\n\t"
-        "_080AB758: .4byte 0x000006C6\n\t"
-        "_080AB75C:\n\t"
-        "	ldr r2, _080AB79C\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080AB7F0\n\t"
-        "	adds r2, #6\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _080AB778\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl MarkFogSpritePalToLighten\n\t"
-        "_080AB778:\n\t"
-        "	lsls r0, r4, #0x14\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r6, _080AB7A0\n\t"
-        "	ldr r0, _080AB7A4\n\t"
-        "	adds r3, r5, r0\n\t"
-        "_080AB784:\n\t"
-        "	adds r0, r4, r2\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrh r1, [r3]\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #0xf\n\t"
-        "	bls _080AB784\n\t"
-        "	b _080AB7F0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB79C: .4byte 0x000006CA\n\t"
-        "_080AB7A0: .4byte gPlttBufferFaded\n\t"
-        "_080AB7A4: .4byte 0x000006C4\n\t"
-        "_080AB7A8:\n\t"
-        "	lsls r0, r4, #0x14\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	ldr r0, _080AB7D4\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r2, _080AB7D8\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	bl CpuFastSet\n\t"
-        "	ldr r0, _080AB7DC\n\t"
-        "	ldrh r2, [r0, #4]\n\t"
-        "	lsls r2, r2, #0x15\n\t"
-        "	lsrs r2, r2, #0x1b\n\t"
-        "	ldrh r3, [r0, #6]\n\t"
-        "	lsls r3, r3, #0x11\n\t"
-        "	lsrs r3, r3, #0x11\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalette\n\t"
-        "	b _080AB7F0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB7D4: .4byte gPlttBufferFaded\n\t"
-        "_080AB7D8: .4byte gPlttBufferUnfaded\n\t"
-        "_080AB7DC: .4byte gPaletteFade\n\t"
-        "_080AB7E0:\n\t"
-        "	lsls r0, r4, #0x14\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	ldr r3, _080AB7F8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0xc\n\t"
-        "	bl BlendPalette\n\t"
-        "_080AB7F0:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB7F8: .4byte 0x000073FC\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 paletteIndex = 16 + spritePaletteIndex;
+    u16 i;
+
+    switch (gWeatherPtr->palProcessingState)
+    {
+    case WEATHER_PAL_STATE_SCREEN_FADING_IN:
+        if (gWeatherPtr->fadeInFirstFrame)
+        {
+            if (gWeatherPtr->currWeather == WEATHER_FOG_HORIZONTAL)
+                MarkFogSpritePalToLighten(paletteIndex);
+            paletteIndex = PLTT_ID(paletteIndex);
+            for (i = 0; i < 16; i++)
+                gPlttBufferFaded[paletteIndex + i] = gWeatherPtr->fadeDestColor;
+        }
+        break;
+    case WEATHER_PAL_STATE_SCREEN_FADING_OUT:
+        paletteIndex = PLTT_ID(paletteIndex);
+        CpuFastCopy(&gPlttBufferFaded[paletteIndex], &gPlttBufferUnfaded[paletteIndex], PLTT_SIZE_4BPP);
+        BlendPalette(paletteIndex, 16, gPaletteFade.y, gPaletteFade.blendColor);
+        break;
+    // WEATHER_PAL_STATE_CHANGING_WEATHER
+    // WEATHER_PAL_STATE_CHANGING_IDLE
+    default:
+        if (gWeatherPtr->currWeather != WEATHER_FOG_HORIZONTAL)
+        {
+            ApplyColorMap(paletteIndex, 1, gWeatherPtr->colorMapIndex);
+        }
+        else
+        {
+            paletteIndex = PLTT_ID(paletteIndex);
+            BlendPalette(paletteIndex, 16, 12, RGB(28, 31, 28));
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void ApplyWeatherGammaShiftToPal(void)
+void ApplyWeatherColorMapToPal(u8 paletteIndex)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080AB818\n\t"
-        "	movs r2, #0xd8\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsb r2, [r1, r2]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ApplyGammaShift\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB818: .4byte gWeather\n\t"
-        ".syntax divided\n\t"
-    );
+    ApplyColorMap(paletteIndex, 1, gWeatherPtr->colorMapIndex);
 }
 
-__attribute__((naked)) void sub_080AB81C(void)
+bool8 IsFirstFrameOfWeatherFadeIn(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _080AB830\n\t"
-        "	ldr r2, _080AB834\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080AB838\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080AB83E\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB830: .4byte gWeather\n\t"
-        "_080AB834: .4byte 0x000006C6\n\t"
-        "_080AB838:\n\t"
-        "	ldr r2, _080AB844\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "_080AB83E:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB844: .4byte 0x000006CA\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWeatherPtr->palProcessingState == WEATHER_PAL_STATE_SCREEN_FADING_IN)
+        return gWeatherPtr->fadeInFirstFrame;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) void LoadCustomWeatherSpritePalette(const u16 *palette)
+void LoadCustomWeatherSpritePalette(const u16 *palette)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080AB870\n\t"
-        "	ldr r1, _080AB874\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r1, r1, #0x14\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #0x11\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl UpdateSpritePaletteWithWeather\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB870: .4byte gWeather\n\t"
-        "_080AB874: .4byte 0x000006D4\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadPalette(palette, OBJ_PLTT_ID(gWeatherPtr->weatherPicSpritePalIndex), PLTT_SIZE_4BPP);
+    UpdateSpritePaletteWithWeather(gWeatherPtr->weatherPicSpritePalIndex);
 }
 
 
@@ -2323,703 +884,235 @@ void LoadDroughtWeatherPalette(u8 *palsIndex, u8 *palsOffset)
 }
 
 
-__attribute__((naked)) void ResetDroughtWeatherPaletteLoading()
+void ResetDroughtWeatherPaletteLoading(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080AB894\n\t"
-        "	ldr r2, _080AB898\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	movs r2, #1\n\t"
-        "	strb r2, [r1]\n\t"
-        "	ldr r1, _080AB89C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r2, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB894: .4byte gWeather\n\t"
-        "_080AB898: .4byte 0x0000074D\n\t"
-        "_080AB89C: .4byte 0x0000074E\n\t"
-        ".syntax divided\n\t"
-    );
+    gWeatherPtr->loadDroughtPalsIndex = 1;
+    gWeatherPtr->loadDroughtPalsOffset = 1;
 }
 
-__attribute__((naked)) bool8 LoadDroughtWeatherPalettes()
+bool8 LoadDroughtWeatherPalettes(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r1, _080AB8C8\n\t"
-        "	ldr r0, _080AB8CC\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	bgt _080AB8D4\n\t"
-        "	ldr r0, _080AB8D0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl LoadDroughtWeatherPalette\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	bgt _080AB8D4\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080AB8D6\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB8C8: .4byte gWeather\n\t"
-        "_080AB8CC: .4byte 0x0000074D\n\t"
-        "_080AB8D0: .4byte 0x0000074E\n\t"
-        "_080AB8D4:\n\t"
-        "	movs r0, #0\n\t"
-        "_080AB8D6:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWeatherPtr->loadDroughtPalsIndex < 32)
+    {
+        LoadDroughtWeatherPalette(&gWeatherPtr->loadDroughtPalsIndex, &gWeatherPtr->loadDroughtPalsOffset);
+        if (gWeatherPtr->loadDroughtPalsIndex < 32)
+            return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_080AB8DC(void)
+void SetDroughtColorMap(s8 colorMapIndex)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	mvns r0, r0\n\t"
-        "	bl sub_080AB544\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    ApplyWeatherColorMapIfIdle(-colorMapIndex - 1);
 }
 
-__attribute__((naked)) void sub_080AB8EC(void)
+void DroughtStateInit(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080AB90C\n\t"
-        "	ldr r2, _080AB910\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r0]\n\t"
-        "	movs r3, #0xe8\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	strh r2, [r0]\n\t"
-        "	adds r3, #2\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	strh r2, [r0]\n\t"
-        "	ldr r0, _080AB914\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r2, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB90C: .4byte gWeather\n\t"
-        "_080AB910: .4byte 0x0000073C\n\t"
-        "_080AB914: .4byte 0x0000073E\n\t"
-        ".syntax divided\n\t"
-    );
+    gWeatherPtr->droughtBrightnessStage = 0;
+    gWeatherPtr->droughtTimer = 0;
+    gWeatherPtr->droughtState = 0;
+    gWeatherPtr->droughtLastBrightnessStage = 0;
 }
 
-__attribute__((naked)) void sub_080AB918(void)
+void DroughtStateRun(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	ldr r5, _080AB934\n\t"
-        "	ldr r0, _080AB938\n\t"
-        "	adds r7, r5, r0\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r7, r2]\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080AB98C\n\t"
-        "	cmp r1, #1\n\t"
-        "	bgt _080AB93C\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080AB942\n\t"
-        "	b _080ABA14\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB934: .4byte gWeather\n\t"
-        "_080AB938: .4byte 0x00000742\n\t"
-        "_080AB93C:\n\t"
-        "	cmp r1, #2\n\t"
-        "	beq _080AB9E0\n\t"
-        "	b _080ABA14\n\t"
-        "_080AB942:\n\t"
-        "	movs r3, #0xe8\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r6, r5, r3\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #5\n\t"
-        "	ble _080ABA14\n\t"
-        "	strh r1, [r6]\n\t"
-        "	ldr r0, _080AB984\n\t"
-        "	adds r4, r5, r0\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	strh r1, [r4]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bl sub_080AB8DC\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #5\n\t"
-        "	ble _080ABA14\n\t"
-        "	ldr r3, _080AB988\n\t"
-        "	adds r0, r5, r3\n\t"
-        "	strh r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r7]\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	strh r0, [r6]\n\t"
-        "	b _080ABA14\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB984: .4byte 0x0000073C\n\t"
-        "_080AB988: .4byte 0x0000073E\n\t"
-        "_080AB98C:\n\t"
-        "	movs r0, #0xe8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r2, r5, r0\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	adds r0, #3\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r1, _080AB9D4\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	asrs r0, r0, #6\n\t"
-        "	adds r0, #2\n\t"
-        "	ldr r2, _080AB9D8\n\t"
-        "	adds r6, r5, r2\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	strh r0, [r6]\n\t"
-        "	ldr r3, _080AB9DC\n\t"
-        "	adds r4, r5, r3\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _080AB9CC\n\t"
-        "	lsls r0, r2, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bl sub_080AB8DC\n\t"
-        "_080AB9CC:\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	strh r0, [r4]\n\t"
-        "	b _080ABA14\n\t"
-        "	.align 2, 0\n\t"
-        "_080AB9D4: .4byte gSineTable\n\t"
-        "_080AB9D8: .4byte 0x0000073C\n\t"
-        "_080AB9DC: .4byte 0x0000073E\n\t"
-        "_080AB9E0:\n\t"
-        "	movs r0, #0xe8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r5, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r6, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #5\n\t"
-        "	ble _080ABA14\n\t"
-        "	strh r6, [r1]\n\t"
-        "	ldr r1, _080ABA1C\n\t"
-        "	adds r4, r5, r1\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bl sub_080AB8DC\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080ABA14\n\t"
-        "	strh r6, [r7]\n\t"
-        "_080ABA14:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABA1C: .4byte 0x0000073C\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gWeatherPtr->droughtState)
+    {
+    case 0:
+        if (++gWeatherPtr->droughtTimer > 5)
+        {
+            gWeatherPtr->droughtTimer = 0;
+            SetDroughtColorMap(gWeatherPtr->droughtBrightnessStage++);
+            if (gWeatherPtr->droughtBrightnessStage > 5)
+            {
+                gWeatherPtr->droughtLastBrightnessStage = gWeatherPtr->droughtBrightnessStage;
+                gWeatherPtr->droughtState = 1;
+                gWeatherPtr->droughtTimer = 60;
+            }
+        }
+        break;
+    case 1:
+        gWeatherPtr->droughtTimer = (gWeatherPtr->droughtTimer + 3) & 0x7F;
+        gWeatherPtr->droughtBrightnessStage = ((gSineTable[gWeatherPtr->droughtTimer] - 1) >> 6) + 2;
+        if (gWeatherPtr->droughtBrightnessStage != gWeatherPtr->droughtLastBrightnessStage)
+            SetDroughtColorMap(gWeatherPtr->droughtBrightnessStage);
+        gWeatherPtr->droughtLastBrightnessStage = gWeatherPtr->droughtBrightnessStage;
+        break;
+    case 2:
+        if (++gWeatherPtr->droughtTimer > 5)
+        {
+            gWeatherPtr->droughtTimer = 0;
+            SetDroughtColorMap(--gWeatherPtr->droughtBrightnessStage);
+            if (gWeatherPtr->droughtBrightnessStage == 3)
+                gWeatherPtr->droughtState = 0;
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Weather_SetBlendCoeffs(u8 eva, u8 evb)
+void Weather_SetBlendCoeffs(u8 eva, u8 evb)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080ABA58\n\t"
-        "	movs r4, #0xe6\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r2, r3, r4\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r4, #2\n\t"
-        "	adds r2, r3, r4\n\t"
-        "	strh r1, [r2]\n\t"
-        "	adds r4, #2\n\t"
-        "	adds r2, r3, r4\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r2, _080ABA5C\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	strh r1, [r3]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	orrs r1, r0\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABA58: .4byte gWeather\n\t"
-        "_080ABA5C: .4byte 0x00000736\n\t"
-        ".syntax divided\n\t"
-    );
+    gWeatherPtr->currBlendEVA = eva;
+    gWeatherPtr->currBlendEVB = evb;
+    gWeatherPtr->targetBlendEVA = eva;
+    gWeatherPtr->targetBlendEVB = evb;
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(eva, evb));
 }
 
-__attribute__((naked)) void Weather_SetTargetBlendCoeffs(u8 eva, u8 evb, int delay)
+void Weather_SetTargetBlendCoeffs(u8 eva, u8 evb, int delay)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080ABA94\n\t"
-        "	ldr r5, _080ABA98\n\t"
-        "	adds r4, r3, r5\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r0, [r4]\n\t"
-        "	ldr r4, _080ABA9C\n\t"
-        "	adds r0, r3, r4\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r1, _080ABAA0\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	strb r2, [r0]\n\t"
-        "	adds r4, #3\n\t"
-        "	adds r0, r3, r4\n\t"
-        "	strb r5, [r0]\n\t"
-        "	movs r0, #0xe7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	strb r5, [r3]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABA94: .4byte gWeather\n\t"
-        "_080ABA98: .4byte 0x00000734\n\t"
-        "_080ABA9C: .4byte 0x00000736\n\t"
-        "_080ABAA0: .4byte 0x0000073A\n\t"
-        ".syntax divided\n\t"
-    );
+    gWeatherPtr->targetBlendEVA = eva;
+    gWeatherPtr->targetBlendEVB = evb;
+    gWeatherPtr->blendDelay = delay;
+    gWeatherPtr->blendFrameCounter = 0;
+    gWeatherPtr->blendUpdateCounter = 0;
 }
 
-__attribute__((naked)) bool8 Weather_UpdateBlend()
+bool8 Weather_UpdateBlend(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r0, _080ABAFC\n\t"
-        "	movs r1, #0xe6\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r3, r0, r1\n\t"
-        "	ldr r2, [r3]\n\t"
-        "	ldr r6, _080ABB00\n\t"
-        "	adds r4, r0, r6\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	cmp r2, r1\n\t"
-        "	beq _080ABB68\n\t"
-        "	ldr r0, _080ABB04\n\t"
-        "	adds r2, r5, r0\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r6, _080ABB08\n\t"
-        "	adds r1, r5, r6\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bls _080ABB34\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #0xe7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r5, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080ABB0C\n\t"
-        "	ldrh r1, [r3]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	cmp r2, r0\n\t"
-        "	bhs _080ABB2C\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	b _080ABB32\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABAFC: .4byte gWeather\n\t"
-        "_080ABB00: .4byte 0x00000734\n\t"
-        "_080ABB04: .4byte 0x00000739\n\t"
-        "_080ABB08: .4byte 0x0000073A\n\t"
-        "_080ABB0C:\n\t"
-        "	ldr r1, _080ABB24\n\t"
-        "	adds r3, r5, r1\n\t"
-        "	ldr r2, _080ABB28\n\t"
-        "	adds r0, r5, r2\n\t"
-        "	ldrh r1, [r3]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r2, r0\n\t"
-        "	bhs _080ABB2C\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	b _080ABB32\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABB24: .4byte 0x00000732\n\t"
-        "_080ABB28: .4byte 0x00000736\n\t"
-        "_080ABB2C:\n\t"
-        "	cmp r2, r0\n\t"
-        "	bls _080ABB34\n\t"
-        "	subs r0, r1, #1\n\t"
-        "_080ABB32:\n\t"
-        "	strh r0, [r3]\n\t"
-        "_080ABB34:\n\t"
-        "	ldr r6, _080ABB60\n\t"
-        "	adds r0, r5, r6\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	movs r0, #0xe6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r4, r5, r0\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _080ABB64\n\t"
-        "	adds r0, r5, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080ABB68\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080ABB6A\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABB60: .4byte 0x00000732\n\t"
-        "_080ABB64: .4byte 0x00000734\n\t"
-        "_080ABB68:\n\t"
-        "	movs r0, #1\n\t"
-        "_080ABB6A:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWeatherPtr->currBlendEVA == gWeatherPtr->targetBlendEVA
+     && gWeatherPtr->currBlendEVB == gWeatherPtr->targetBlendEVB)
+        return TRUE;
+
+    if (++gWeatherPtr->blendFrameCounter > gWeatherPtr->blendDelay)
+    {
+        gWeatherPtr->blendFrameCounter = 0;
+        gWeatherPtr->blendUpdateCounter++;
+
+        // Update currBlendEVA and currBlendEVB on alternate frames
+        if (gWeatherPtr->blendUpdateCounter & 1)
+        {
+            if (gWeatherPtr->currBlendEVA < gWeatherPtr->targetBlendEVA)
+                gWeatherPtr->currBlendEVA++;
+            else if (gWeatherPtr->currBlendEVA > gWeatherPtr->targetBlendEVA)
+                gWeatherPtr->currBlendEVA--;
+        }
+        else
+        {
+            if (gWeatherPtr->currBlendEVB < gWeatherPtr->targetBlendEVB)
+                gWeatherPtr->currBlendEVB++;
+            else if (gWeatherPtr->currBlendEVB > gWeatherPtr->targetBlendEVB)
+                gWeatherPtr->currBlendEVB--;
+        }
+    }
+
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gWeatherPtr->currBlendEVA, gWeatherPtr->currBlendEVB));
+
+    if (gWeatherPtr->currBlendEVA == gWeatherPtr->targetBlendEVA
+     && gWeatherPtr->currBlendEVB == gWeatherPtr->targetBlendEVB)
+        return TRUE;
+
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_080ABB70(void)
+void SetFieldWeather(u8 weather)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r0, #9\n\t"
-        "	bhi _080ABC02\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080ABB88\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABB88: .4byte _080ABB8C\n\t"
-        "_080ABB8C:\n\t"
-        "	.4byte _080ABBB4\n\t"
-        "	.4byte _080ABBBC\n\t"
-        "	.4byte _080ABBC4\n\t"
-        "	.4byte _080ABBCC\n\t"
-        "	.4byte _080ABBD4\n\t"
-        "	.4byte _080ABBDC\n\t"
-        "	.4byte _080ABBE4\n\t"
-        "	.4byte _080ABBEC\n\t"
-        "	.4byte _080ABBF4\n\t"
-        "	.4byte _080ABBFC\n\t"
-        "_080ABBB4:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetWeather\n\t"
-        "	b _080ABC02\n\t"
-        "_080ABBBC:\n\t"
-        "	movs r0, #2\n\t"
-        "	bl SetWeather\n\t"
-        "	b _080ABC02\n\t"
-        "_080ABBC4:\n\t"
-        "	movs r0, #3\n\t"
-        "	bl SetWeather\n\t"
-        "	b _080ABC02\n\t"
-        "_080ABBCC:\n\t"
-        "	movs r0, #4\n\t"
-        "	bl SetWeather\n\t"
-        "	b _080ABC02\n\t"
-        "_080ABBD4:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl SetWeather\n\t"
-        "	b _080ABC02\n\t"
-        "_080ABBDC:\n\t"
-        "	movs r0, #6\n\t"
-        "	bl SetWeather\n\t"
-        "	b _080ABC02\n\t"
-        "_080ABBE4:\n\t"
-        "	movs r0, #9\n\t"
-        "	bl SetWeather\n\t"
-        "	b _080ABC02\n\t"
-        "_080ABBEC:\n\t"
-        "	movs r0, #7\n\t"
-        "	bl SetWeather\n\t"
-        "	b _080ABC02\n\t"
-        "_080ABBF4:\n\t"
-        "	movs r0, #8\n\t"
-        "	bl SetWeather\n\t"
-        "	b _080ABC02\n\t"
-        "_080ABBFC:\n\t"
-        "	movs r0, #0xb\n\t"
-        "	bl SetWeather\n\t"
-        "_080ABC02:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (weather)
+    {
+    case COORD_EVENT_WEATHER_SUNNY_CLOUDS:
+        SetWeather(WEATHER_SUNNY_CLOUDS);
+        break;
+    case COORD_EVENT_WEATHER_SUNNY:
+        SetWeather(WEATHER_SUNNY);
+        break;
+    case COORD_EVENT_WEATHER_RAIN:
+        SetWeather(WEATHER_RAIN);
+        break;
+    case COORD_EVENT_WEATHER_SNOW:
+        SetWeather(WEATHER_SNOW);
+        break;
+    case COORD_EVENT_WEATHER_RAIN_THUNDERSTORM:
+        SetWeather(WEATHER_RAIN_THUNDERSTORM);
+        break;
+    case COORD_EVENT_WEATHER_FOG_HORIZONTAL:
+        SetWeather(WEATHER_FOG_HORIZONTAL);
+        break;
+    case COORD_EVENT_WEATHER_FOG_DIAGONAL:
+        SetWeather(WEATHER_FOG_DIAGONAL);
+        break;
+    case COORD_EVENT_WEATHER_VOLCANIC_ASH:
+        SetWeather(WEATHER_VOLCANIC_ASH);
+        break;
+    case COORD_EVENT_WEATHER_SANDSTORM:
+        SetWeather(WEATHER_SANDSTORM);
+        break;
+    case COORD_EVENT_WEATHER_SHADE:
+        SetWeather(WEATHER_SHADE);
+        break;
+    }
 }
 
-__attribute__((naked)) u8 GetCurrentWeather()
+u8 GetCurrentWeather(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080ABC14\n\t"
-        "	movs r1, #0xda\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABC14: .4byte gWeather\n\t"
-        ".syntax divided\n\t"
-    );
+    return gWeatherPtr->currWeather;
 }
 
-__attribute__((naked)) void SetRainStrengthFromSoundEffect(u16 soundEffect)
+void SetRainStrengthFromSoundEffect(u16 soundEffect)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	ldr r1, _080ABC38\n\t"
-        "	ldr r3, _080ABC3C\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080ABC6A\n\t"
-        "	cmp r2, #0x53\n\t"
-        "	beq _080ABC50\n\t"
-        "	cmp r2, #0x53\n\t"
-        "	bgt _080ABC40\n\t"
-        "	cmp r2, #0x51\n\t"
-        "	beq _080ABC5C\n\t"
-        "	b _080ABC6A\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABC38: .4byte gWeather\n\t"
-        "_080ABC3C: .4byte 0x000006C6\n\t"
-        "_080ABC40:\n\t"
-        "	cmp r2, #0x55\n\t"
-        "	bne _080ABC6A\n\t"
-        "	ldr r0, _080ABC4C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080ABC62\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABC4C: .4byte 0x000006DD\n\t"
-        "_080ABC50:\n\t"
-        "	ldr r3, _080ABC58\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080ABC62\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABC58: .4byte 0x000006DD\n\t"
-        "_080ABC5C:\n\t"
-        "	ldr r0, _080ABC70\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #2\n\t"
-        "_080ABC62:\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl PlaySE\n\t"
-        "_080ABC6A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABC70: .4byte 0x000006DD\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWeatherPtr->palProcessingState != WEATHER_PAL_STATE_SCREEN_FADING_OUT)
+    {
+        switch (soundEffect)
+        {
+        case SE_RAIN:
+            gWeatherPtr->rainStrength = 0;
+            break;
+        case SE_DOWNPOUR:
+            gWeatherPtr->rainStrength = 1;
+            break;
+        case SE_THUNDERSTORM:
+            gWeatherPtr->rainStrength = 2;
+            break;
+        default:
+            return;
+        }
+
+        PlaySE(soundEffect);
+    }
 }
 
-__attribute__((naked)) void PlayRainStoppingSoundEffect()
+void PlayRainStoppingSoundEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl IsSpecialSEPlaying\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080ABCB2\n\t"
-        "	ldr r0, _080ABC9C\n\t"
-        "	ldr r1, _080ABCA0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080ABCA4\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080ABCAC\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080ABCAC\n\t"
-        "	movs r0, #0x56\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080ABCB2\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABC9C: .4byte gWeather\n\t"
-        "_080ABCA0: .4byte 0x000006DD\n\t"
-        "_080ABCA4:\n\t"
-        "	movs r0, #0x54\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080ABCB2\n\t"
-        "_080ABCAC:\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl PlaySE\n\t"
-        "_080ABCB2:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsSpecialSEPlaying())
+    {
+        switch (gWeatherPtr->rainStrength)
+        {
+        case 0:
+            PlaySE(SE_RAIN_STOP);
+            break;
+        case 1:
+            PlaySE(SE_DOWNPOUR_STOP);
+            break;
+        case 2:
+        default:
+            PlaySE(SE_THUNDERSTORM_STOP);
+            break;
+        }
+    }
 }
 
-__attribute__((naked)) u8 IsWeatherChangeComplete()
+u8 IsWeatherChangeComplete(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080ABCC4\n\t"
-        "	ldr r1, _080ABCC8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABCC4: .4byte gWeather\n\t"
-        "_080ABCC8: .4byte 0x000006D3\n\t"
-        ".syntax divided\n\t"
-    );
+    return gWeatherPtr->weatherChangeComplete;
 }
 
-__attribute__((naked)) void SetWeatherScreenFadeOut()
+void SetWeatherScreenFadeOut(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080ABCD8\n\t"
-        "	ldr r1, _080ABCDC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABCD8: .4byte gWeather\n\t"
-        "_080ABCDC: .4byte 0x000006C6\n\t"
-        ".syntax divided\n\t"
-    );
+    gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_SCREEN_FADING_OUT;
 }
 
-__attribute__((naked)) void SetWeatherPalStateIdle()
+void SetWeatherPalStateIdle(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080ABCEC\n\t"
-        "	ldr r1, _080ABCF0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABCEC: .4byte gWeather\n\t"
-        "_080ABCF0: .4byte 0x000006C6\n\t"
-        ".syntax divided\n\t"
-    );
+    gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
 }
 
-__attribute__((naked)) void PreservePaletteInWeather(u8 preservedPalIndex)
+void PreservePaletteInWeather(u8 preservedPalIndex)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _080ABD18\n\t"
-        "	ldr r5, _080ABD1C\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl CpuSet\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldr r0, _080ABD20\n\t"
-        "	str r5, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABD18: .4byte sBasePaletteColorMapTypes\n\t"
-        "_080ABD1C: .4byte gUnknown_2038844\n\t"
-        "_080ABD20: .4byte gUnknown_3000F50\n\t"
-        ".syntax divided\n\t"
-    );
+    CpuCopy16(sBasePaletteColorMapTypes, sFieldEffectPaletteColorMapTypes, 32);
+    sFieldEffectPaletteColorMapTypes[preservedPalIndex] = COLOR_MAP_NONE;
+    sPaletteColorMapTypes = sFieldEffectPaletteColorMapTypes;
 }
 
-__attribute__((naked)) void ResetPreservedPalettesInWeather()
+void ResetPreservedPalettesInWeather(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080ABD2C\n\t"
-        "	ldr r0, _080ABD30\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080ABD2C: .4byte gUnknown_3000F50\n\t"
-        "_080ABD30: .4byte sBasePaletteColorMapTypes\n\t"
-        ".syntax divided\n\t"
-    );
+    sPaletteColorMapTypes = sBasePaletteColorMapTypes;
 }
