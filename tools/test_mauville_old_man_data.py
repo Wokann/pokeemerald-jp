@@ -45,7 +45,8 @@ class MauvilleOldManDataTests(unittest.TestCase):
         cls.source = (ROOT / 'src/mauville_old_man.c').read_text()
 
     def test_complete_owner_is_in_the_us_c_module_with_one_linker_input(self):
-        mid = (ROOT / 'data/data_b2d_mid61.s').read_text()
+        self.assertFalse((ROOT / 'data/data_b2d_mid61.s').exists())
+        mid = (ROOT / 'Makefile').read_text()
         linker = (ROOT / 'ld_script_jp.txt').read_text()
         for name in LEGACY:
             self.assertNotIn(name, self.source)

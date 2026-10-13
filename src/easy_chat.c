@@ -8,6 +8,7 @@
 #include "task.h"
 #include "window.h"
 #include "constants/easy_chat.h"
+#include "constants/species.h"
 
 #define EASY_CHAT_QUIZ_LADY_DATA __attribute__((section(".rodata.easy_chat_quiz_lady_data"), aligned(4)))
 #define EASY_CHAT_SCREEN_TEMPLATES_DATA __attribute__((section(".rodata.easy_chat_screen_templates_data"), aligned(4)))
@@ -58,6 +59,8 @@
 #define EASY_CHAT_GROUPS_DATA __attribute__((section(".rodata.easy_chat_groups_data"), aligned(1)))
 #define EASY_CHAT_WORDS_BY_LETTER_DATA __attribute__((section(".rodata.easy_chat_words_by_letter_data"), aligned(1)))
 #define EASY_CHAT_GROUP_NAMES_DATA __attribute__((section(".rodata.easy_chat_group_names_data"), aligned(1)))
+#define EASY_CHAT_FOOTER_OPTION_X_OFFSETS_DATA __attribute__((section(".rodata.easy_chat_footer_option_x_offsets_data"), aligned(1)))
+#define EASY_CHAT_RESTRICTED_WORD_SPECIES_DATA __attribute__((section(".rodata.easy_chat_restricted_word_species_data"), aligned(4)))
 
 extern struct EasyChatScreen *sEasyChatScreen;
 
@@ -391,6 +394,18 @@ static const u16 sBerryMasterWifePhrases[5][2] EASY_CHAT_BERRY_MASTER_WIFE_PHRAS
     {0x1422, 0x0197},
     {0x0415, 0x0198},
     {0x281E, 0x2818},
+};
+
+// JP selects these tile-column rows with its fourFooterOptions flag.
+static const u8 sFooterOptionXOffsets[2][4] EASY_CHAT_FOOTER_OPTION_X_OFFSETS_DATA =
+{
+    {3, 10, 17, 17},
+    {3, 10, 15, 21},
+};
+
+static const u16 sRestrictedWordSpecies[] EASY_CHAT_RESTRICTED_WORD_SPECIES_DATA =
+{
+    SPECIES_DEOXYS,
 };
 
 // Retain the JP triangle cursor palette as byte-exact BGR555 data until its source asset is recovered.
@@ -12906,7 +12921,7 @@ __attribute__((naked)) bool8 IsEasyChatIndexAndGroupUnlocked(u16 word, u8 groupI
         "	b _0811FD80\n\t"
         "_0811FD42:\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl GetFooterOptionXOffset\n\t"
+        "	bl IsRestrictedWordSpecies\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0811FD5C\n\t"
         "	adds r0, r4, #0\n\t"
@@ -12945,7 +12960,7 @@ __attribute__((naked)) bool8 IsEasyChatIndexAndGroupUnlocked(u16 word, u8 groupI
     );
 }
 
-__attribute__((naked)) int GetFooterOptionXOffset(int option)
+__attribute__((naked)) int IsRestrictedWordSpecies(u16 species)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -12961,7 +12976,7 @@ __attribute__((naked)) int GetFooterOptionXOffset(int option)
         "	movs r0, #1\n\t"
         "	b _0811FDAE\n\t"
         "	.align 2, 0\n\t"
-        "_0811FDA0: .4byte gUnknown_8579F34\n\t"
+        "_0811FDA0: .4byte sRestrictedWordSpecies\n\t"
         "_0811FDA4:\n\t"
         "	adds r1, #2\n\t"
         "	adds r2, #1\n\t"

@@ -29,7 +29,4 @@ gUnknown_85733B0: @ 0x85733B0
 	@ Unreferenced BGR555 palette; semantic owner has not been established.
 	.incbin "baserom_jp.gba", 0x5733b0, 0x20
 
-	.section .rodata.easy_chat_footer_option_x_offsets_data
-	.include "data/easy_chat/footer_option_x_offsets.inc"
-
 	.section .rodata.mid60_tail_after_easy_chat_group_names_data

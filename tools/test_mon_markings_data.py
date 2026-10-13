@@ -31,7 +31,8 @@ class MonMarkingsDataTests(unittest.TestCase):
     def test_complete_resources_have_native_us_owners_and_no_temporary_aliases(self):
         graphics = (ROOT / "src/graphics.c").read_text()
         markings = (ROOT / "src/mon_markings.c").read_text()
-        mid = (ROOT / "data/data_b2d_mid61.s").read_text()
+        self.assertFalse((ROOT / "data/data_b2d_mid61.s").exists())
+        mid = (ROOT / "Makefile").read_text()
         linker = (ROOT / "ld_script_jp.txt").read_text()
         for symbol, kind in (("gMonMarkingsMenu_Pal", "U16"),
                              ("gMonMarkingsMenu_Gfx", "U8")):
@@ -48,7 +49,7 @@ class MonMarkingsDataTests(unittest.TestCase):
         self.assertNotIn("graphics/mon_markings/", graphics + markings + mid)
         self.assertNotIn("__attribute__((naked))", markings)
         owners = (
-            "data/data_b2d_mid61.o(.rodata.data_b2d_mid61_before_mon_markings_data)",
+            "src/easy_chat.o(.rodata.easy_chat_restricted_word_species_data)",
             "src/graphics.o(.rodata.mon_markings_menu_graphics)",
             "src/mon_markings.o(.rodata.mon_markings_graphics_data)",
             "src/mon_markings.o(.rodata.mon_markings_data)",
@@ -57,8 +58,7 @@ class MonMarkingsDataTests(unittest.TestCase):
             self.assertEqual(linker.count(owner), 1)
         self.assertEqual([linker.index(owner) for owner in owners],
                          sorted(linker.index(owner) for owner in owners))
-        self.assertEqual(re.findall(r'\.incbin\s+"([^"]+)",\s*(0x[0-9a-fA-F]+),\s*(0x[0-9a-fA-F]+)', mid),
-                         [("baserom_jp.gba", "0x579f34", "0x4")])
+        self.assertNotIn("data/data_b2d_mid61", mid + linker)
 
     def test_clean_build_has_both_png_encoders_and_explicit_native_dependencies(self):
         makefile = (ROOT / "Makefile").read_text()

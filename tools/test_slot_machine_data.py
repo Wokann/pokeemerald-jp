@@ -67,7 +67,8 @@ class SlotMachineDataTests(unittest.TestCase):
         strings = (ROOT / 'src/strings.c').read_text()
         make = (ROOT / 'Makefile').read_text()
         linker = (ROOT / 'ld_script_jp.txt').read_text()
-        mid = (ROOT / 'data/data_b2d_mid61.s').read_text()
+        self.assertFalse((ROOT / 'data/data_b2d_mid61.s').exists())
+        mid = (ROOT / 'Makefile').read_text()
         for path in OBSOLETE:
             self.assertFalse((ROOT / path).exists(), path)
         self.assertIn('#include "data/graphics/slot_machine.h"', graphics)

@@ -38,7 +38,8 @@ class PointillismDataTests(unittest.TestCase):
     def test_complete_table_has_one_canonical_owner_and_complete_build_dependencies(self):
         source = (ROOT / 'src/image_processing_effects.c').read_text()
         header = (ROOT / HEADER).read_text()
-        mid = (ROOT / 'data/data_b2d_mid61.s').read_text()
+        self.assertFalse((ROOT / 'data/data_b2d_mid61.s').exists())
+        mid = (ROOT / 'Makefile').read_text()
         linker = (ROOT / 'ld_script_jp.txt').read_text()
         makefile = (ROOT / 'Makefile').read_text()
         owner = 'src/image_processing_effects.o(' + SECTION + ')'
@@ -53,7 +54,7 @@ class PointillismDataTests(unittest.TestCase):
         self.assertIn('#include "data/pointillism_points.h"', source)
         self.assertIn('static const u8 sPointillismPoints[][3] IMAGE_PROCESSING_EFFECTS_DATA = {', header)
         self.assertIn('$(C_BUILDDIR)/image_processing_effects.o: src/image_processing_effects.c ' + HEADER, makefile)
-        self.assertIn('gUnknown_8579F34:', mid)
+        self.assertIn('src/easy_chat.o(.rodata.easy_chat_restricted_word_species_data)', linker)
         self.assertNotIn('gMonMarkingsMenu_Pal:', mid)
         self.assertIn('src/graphics.o(.rodata.mon_markings_menu_graphics)', linker)
         self.assertIn('gMonMarkingsMenu_Pal[] = INCGFX_U16("graphics/interface/mon_markings_menu.png", ".gbapal")',

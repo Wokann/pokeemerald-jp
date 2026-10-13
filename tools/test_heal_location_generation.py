@@ -41,7 +41,8 @@ class HealLocationGenerationTests(unittest.TestCase):
     def test_real_table_no_longer_borrows_a_placeholder_from_the_ui_owner(self):
         linker = (ROOT / 'ld_script_jp.txt').read_text()
         source = (ROOT / 'src/heal_location.c').read_text()
-        mid = (ROOT / 'data/data_b2d_mid61.s').read_text()
+        self.assertFalse((ROOT / 'data/data_b2d_mid61.s').exists())
+        mid = (ROOT / 'Makefile').read_text()
         self.assertNotRegex(linker, r'(?m)^\s*sHealLocations\s*=')
         self.assertEqual(linker.count('src/heal_location.o(.rodata)'), 1)
         self.assertLess(linker.index('src/menu_helpers.o(.rodata.menu_helpers_swap_line_data)'),

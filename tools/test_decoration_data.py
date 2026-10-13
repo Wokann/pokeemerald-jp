@@ -74,7 +74,8 @@ class DecorationDataTests(unittest.TestCase):
     def test_single_canonical_owner_and_protected_neighbor_boundaries(self):
         source = (ROOT / 'src/decoration.c').read_text()
         linker = (ROOT / 'ld_script_jp.txt').read_text()
-        mid = (ROOT / 'data/data_b2d_mid61.s').read_text()
+        self.assertFalse((ROOT / 'data/data_b2d_mid61.s').exists())
+        mid = (ROOT / 'Makefile').read_text()
         rest = (ROOT / 'data/data_rest2c.s').read_text()
         for name in HEADERS:
             self.assertIn('#include "data/decoration/' + name + '.h"', source)

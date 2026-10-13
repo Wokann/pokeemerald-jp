@@ -72,7 +72,8 @@ class RegionMapGenerationTests(unittest.TestCase):
     def test_complete_owner_replaces_all_old_mid_tables_and_the_helper_module(self):
         source = (ROOT / 'src/region_map.c').read_text()
         linker = (ROOT / 'ld_script_jp.txt').read_text()
-        mid = (ROOT / 'data/data_b2d_mid61.s').read_text()
+        self.assertFalse((ROOT / 'data/data_b2d_mid61.s').exists())
+        mid = (ROOT / 'Makefile').read_text()
         self.assertFalse((ROOT / 'src/data/region_map_tables.c').exists())
         self.assertNotIn('src/data/region_map_tables.o', linker)
         self.assertNotRegex(source + mid, r'gUnknown_857(?:B|C)[0-9A-F]+')
