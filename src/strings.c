@@ -1548,3 +1548,23 @@ STRINGS_POKENAV_STORAGE const u8 gText_NumberOfBattles[] = {0x10, 0x02, 0x0E, 0x
 
 STRINGS_CLEAR_SAVE const u8 gText_ClearAllSaveData[] = {0x0D, 0x49, 0x13, 0x19, 0x00, 0x5E, 0xAE, 0x98, 0x94, 0xAE, 0x60, 0x54, 0x78, 0x51, 0x2D, 0xFE, 0x58, 0x78, 0x51, 0x00, 0x0C, 0x1F, 0x0D, 0x06, 0xAC, 0xFF};
 STRINGS_CLEAR_SAVE const u8 gText_ClearingData[] = {0x58, 0x78, 0x51, 0x00, 0x0C, 0x13, 0x02, 0x1F, 0x0D, 0xFE, 0x05, 0x1F, 0x11, 0x00, 0x08, 0x41, 0x0B, 0x02, 0xFF, 0x00, 0x00, 0x00};
+
+#define STRINGS_SLOT_MACHINE __attribute__((section(".rodata.strings_slot_machine"), aligned(1)))
+
+STRINGS_SLOT_MACHINE const u8 gText_QuitTheGame[] = _("ゲームを　やめますか？");
+STRINGS_SLOT_MACHINE const u8 gText_YouveGot9999Coins[] = _(
+    "コインが　9999まい\n"
+    "たまって　います");
+STRINGS_SLOT_MACHINE const u8 gText_YouveRunOutOfCoins[] = _(
+    "コインが　ありません\n"
+    "ゲームを　しゅうりょうします");
+STRINGS_SLOT_MACHINE const u8 gText_YouDontHaveThreeCoins[] = _("コインが　3まい　ありません！");
+STRINGS_SLOT_MACHINE const u8 gText_ReelTimeHelp[] = __(
+    "BDタイム\n"
+    "じっくり　ねらえば　どんな　マークも\n"
+    "とめられる　チャンスゲームだ！\n"
+    "ちゅうせん　された　かいすうだけ\n"
+    "BDタイムが　つづくぞ！\n"
+    "ビッグボーナスがでると　しゅうりょう$　");
+
+#undef STRINGS_SLOT_MACHINE

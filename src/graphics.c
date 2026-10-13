@@ -1556,3 +1556,5 @@ TILESET_GENERAL_DATA const u16 gTilesetPalettes_General[][16] =
 };
 
 #undef TILESET_GENERAL_DATA
+
+#include "data/graphics/slot_machine.h"

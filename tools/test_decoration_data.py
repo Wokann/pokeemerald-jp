@@ -87,14 +87,17 @@ class DecorationDataTests(unittest.TestCase):
         self.assertEqual(source.count('__attribute__((naked))'), 135)
         for section in ('src/decoration.o(.rodata.decoration_data);',
                         'src/graphics.o(.rodata.decoration_icons);',
-                        'data/data_b2d_mid61.o(.rodata.data_b2d_mid61_after_decoration);',
+                        'src/graphics.o(.rodata.slot_machine_gfx.gSlotMachineReelSymbol1Tiles);',
                         'data/data_rest2c.o(.rodata.data_rest2c_after_decoration_icons);'):
             self.assertEqual(linker.count(section), 1)
         self.assertIn('src/image_processing_effects.o(.rodata.image_processing_effects);', linker)
         self.assertLess(linker.index('src/image_processing_effects.o(.rodata.image_processing_effects);'),
                         linker.index('src/decoration.o(.rodata.decoration_data);'))
+        self.assertLess(linker.index('src/decoration.o(.rodata.decoration_data);'),
+                        linker.index('src/graphics.o(.rodata.slot_machine_gfx.gSlotMachineReelSymbol1Tiles);'))
         self.assertNotIn('.incbin "baserom_jp.gba", 0x57d884, 0x2580', mid)
-        self.assertIn('.incbin "baserom_jp.gba", 0x582308, 0x20a0', mid)
+        self.assertNotIn('.incbin "baserom_jp.gba", 0x582308, 0x20a0', mid)
+        self.assertFalse((ROOT / 'data/slot_machine/jp').exists())
         self.assertIn('gItemIcon_QuestionMark:: @ 0x08DAB300', rest)
         self.assertIn('gItemIconPalette_QuestionMark:: @ 0x08DAB378', rest)
         self.assertIn('.incbin "baserom_jp.gba", 0xdab38c, 0xc9bc', rest)

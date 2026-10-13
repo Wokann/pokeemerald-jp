@@ -55,7 +55,8 @@ class PointillismDataTests(unittest.TestCase):
         self.assertIn('$(C_BUILDDIR)/image_processing_effects.o: src/image_processing_effects.c ' + HEADER, makefile)
         self.assertIn('gUnknown_8579F34:', mid)
         self.assertIn('gMonMarkingsMenu_Pal:', mid)
-        self.assertIn('.incbin "baserom_jp.gba", 0x582308, 0x20a0', mid)
+        self.assertNotIn('.incbin "baserom_jp.gba", 0x582308, 0x20a0', mid)
+        self.assertIn('src/graphics.o(.rodata.slot_machine_gfx.gSlotMachineReelSymbol1Tiles)', linker)
         self.assertNotIn('__attribute__((naked))', source)
         self.assertEqual(len(re.findall(r'(?m)^(?:void|u16) \w+\([^;\n]*\)\n\{', source)), 38)
         for name in RAM:
