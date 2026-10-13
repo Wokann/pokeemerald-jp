@@ -81,9 +81,9 @@ class RegionMapGenerationTests(unittest.TestCase):
         self.assertLess(linker.index('src/heal_location.o(.rodata)'),
                         linker.index('src/region_map.o(.rodata.region_map_data)'))
         self.assertLess(linker.index('src/region_map.o(.rodata.region_map_data)'),
-                        linker.index('data/data_b2d_mid61.o(.rodata.data_b2d_mid61_after_region_map)'))
-        self.assertIn('gUnknown_857D884:', mid)
-        self.assertIn('.incbin "baserom_jp.gba", 0x57d884, 0x2580', mid)
+                        linker.index('src/image_processing_effects.o(.rodata.image_processing_effects)'))
+        self.assertNotIn('gUnknown_857D884:', mid)
+        self.assertNotIn('.incbin "baserom_jp.gba", 0x57d884, 0x2580', mid)
         self.assertIn('.tilemapLeft = 19,', source)
         self.assertIn('.width = 10,', source)
         self.assertIn('.baseBlock = 0x3D', source)

@@ -56,7 +56,8 @@ class MauvilleOldManDataTests(unittest.TestCase):
         self.assertNotIn('gUnknown_857AC', mid)
         # Mail and all later owners remain outside this conversion.
         self.assertIn('src/mail.o(.rodata.mail_data)', linker)
-        self.assertIn('gUnknown_857D884:', mid)
+        self.assertIn('src/image_processing_effects.o(.rodata.image_processing_effects)', linker)
+        self.assertNotIn('gUnknown_857D884:', mid)
         for name in DATA_OBJECTS:
             self.assertRegex(self.source, r'static const [^;=\n]*\b' + name + r'\b')
 

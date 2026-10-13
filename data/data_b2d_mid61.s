@@ -29,12 +29,5 @@ sMonMarkings_Pal: @ 0x857A278
 sMonMarkings_Gfx: @ 0x857A298
 	.incbin "graphics/mon_markings/sMonMarkings_Gfx.bin"
 
-	.section .rodata.data_b2d_mid61_after_region_map
-
-
-	.globl gUnknown_857D884
-gUnknown_857D884: @ 0x857D884
-	.incbin "baserom_jp.gba", 0x57d884, 0x2580
-
 	.section .rodata.data_b2d_mid61_after_decoration
 	.incbin "baserom_jp.gba", 0x582308, 0x20a0

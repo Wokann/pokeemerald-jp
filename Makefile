@@ -212,6 +212,8 @@ JP_DECORATION_ICON_INTERMEDIATES := $(JP_DECORATION_ICON_ASSETS:.lz=)
 
 $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/decorations.h $(JP_DECORATION_ICON_ASSETS)
 
+$(C_BUILDDIR)/image_processing_effects.o: src/image_processing_effects.c src/data/pointillism_points.h
+
 $(C_BUILDDIR)/decoration.o: src/decoration.c charmap.txt $(JP_DECORATION_CORE_ASSETS) \
 	src/data/decoration/tiles.h src/data/decoration/description.h src/data/decoration/header.h \
 	src/data/decoration/icon.h src/data/decoration/tilemaps.h

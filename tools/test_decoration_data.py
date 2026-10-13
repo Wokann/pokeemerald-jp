@@ -90,7 +90,10 @@ class DecorationDataTests(unittest.TestCase):
                         'data/data_b2d_mid61.o(.rodata.data_b2d_mid61_after_decoration);',
                         'data/data_rest2c.o(.rodata.data_rest2c_after_decoration_icons);'):
             self.assertEqual(linker.count(section), 1)
-        self.assertIn('.incbin "baserom_jp.gba", 0x57d884, 0x2580', mid)
+        self.assertIn('src/image_processing_effects.o(.rodata.image_processing_effects);', linker)
+        self.assertLess(linker.index('src/image_processing_effects.o(.rodata.image_processing_effects);'),
+                        linker.index('src/decoration.o(.rodata.decoration_data);'))
+        self.assertNotIn('.incbin "baserom_jp.gba", 0x57d884, 0x2580', mid)
         self.assertIn('.incbin "baserom_jp.gba", 0x582308, 0x20a0', mid)
         self.assertIn('gItemIcon_QuestionMark:: @ 0x08DAB300', rest)
         self.assertIn('gItemIconPalette_QuestionMark:: @ 0x08DAB378', rest)

@@ -9790,7 +9790,7 @@ SECTIONS {
         src/menu_helpers.o(.rodata.menu_helpers_swap_line_data);
         src/heal_location.o(.rodata);
         src/region_map.o(.rodata.region_map_data);
-        data/data_b2d_mid61.o(.rodata.data_b2d_mid61_after_region_map);
+        src/image_processing_effects.o(.rodata.image_processing_effects);
         src/decoration.o(.rodata.decoration_data);
         data/data_b2d_mid61.o(.rodata.data_b2d_mid61_after_decoration);
         src/data/slot_machine.o(.rodata.85843A8);

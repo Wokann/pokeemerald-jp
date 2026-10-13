@@ -51,7 +51,8 @@ class HealLocationGenerationTests(unittest.TestCase):
         self.assertNotIn('placeholder', source)
         self.assertNotIn('extern const struct HealLocation', source)
         self.assertNotIn('gUnknown_857B10C', mid)
-        self.assertIn('gUnknown_857D884:', mid)
+        self.assertIn('src/image_processing_effects.o(.rodata.image_processing_effects)', linker)
+        self.assertNotIn('gUnknown_857D884:', mid)
         self.assertIn('sRegionMapCursorPal[]', (ROOT / 'src/region_map.c').read_text())
 
     def test_build_generates_both_headers_and_cleans_them_not_the_json_sources(self):

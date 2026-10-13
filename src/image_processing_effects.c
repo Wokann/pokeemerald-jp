@@ -14,12 +14,10 @@ extern u8 gCanvasWidth;
 extern u16 *gCanvasPalette;
 extern u16 gCanvasPaletteStart;
 
-// Keep the existing ROM data owner at 0x0857D884.
-extern const u8 gUnknown_857D884[3200][3];
-#define sPointillismPoints gUnknown_857D884
-#define GET_POINT_OFFSET_DL(bits)  (((bits) >> 0) & 1)
-#define GET_POINT_COLOR_TYPE(bits) (((bits) >> 1) & 3)
-#define GET_POINT_DELTA(bits)      (((bits) >> 3) & 7)
+#define IMAGE_PROCESSING_EFFECTS_DATA __attribute__((section(".rodata.image_processing_effects"), aligned(4)))
+#include "data/pointillism_points.h"
+#undef IMAGE_PROCESSING_EFFECTS_DATA
+
 #define MAX_DIMENSION 64
 
 struct PointillismPoint
