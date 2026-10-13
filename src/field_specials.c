@@ -1,4 +1,13 @@
 #include "global.h"
+#include "pokemon.h"
+#include "random.h"
+#include "data.h"
+#include "link.h"
+#include "region_map.h"
+#include "field_camera.h"
+#include "menu.h"
+#include "constants/items.h"
+#include "constants/heal_locations.h"
 #include "constants/field_specials.h"
 #include "constants/event_object_movement.h"
 #include "constants/metatile_labels.h"
@@ -30,11 +39,49 @@ extern void Task_PCTurnOnEffect(u8 taskId);
 #include "data/field_specials.h"
 #include "window.h"
 extern u32 sBikeCyclingTimer;
+extern u8 gUnknown_203A82A;
+extern u16 gUnknown_203A82C;
+extern u16 gUnknown_203A82E;
+extern u8 gUnknown_203A839;
+extern u8 gUnknown_203A83A;
+extern const u8 gUnknown_8592E5C[];
+extern const u8 gUnknown_8592E7C[];
+extern u16 ItemIdToBattleMoveId(u16 itemId);
+extern s32 GetRematchIdxByTrainerIdx(u16 trainerId);
+extern void TV_PrintIntToStringVar(u8 stringVarIndex, s32 value);
+void PCTurnOnEffect(struct Task *task);
+void PCTurnOnEffect_SetMetatile(s16 isScreenOn, s8 dx, s8 dy);
+void LotteryCornerComputerEffect(struct Task *task);
+void TryLoseFansFromPlayTime(void);
+u16 GetNumFansOfPlayerInTrainerFanClub(void);
+u16 sub_0813BBAC(void);
+u16 sub_0813BC38(void);
+void sub_0813BDBC(void);
+void sub_0813BE68(struct LinkBattleRecords *linkRecords, u8 whichLinkTrainer, u8 whichNPCTrainer);
+bool8 DidPlayerGetFirstFans(void);
+
+#define FANCLUB_BITFIELD (gSaveBlock1Ptr->vars[VAR_FANCLUB_FAN_COUNTER - VARS_START])
+#define FANCLUB_COUNTER 0x007F
+#define GET_TRAINER_FAN_CLUB_FLAG(flag) (FANCLUB_BITFIELD >> (flag) & 1)
+#define SET_TRAINER_FAN_CLUB_FLAG(flag) (FANCLUB_BITFIELD |= 1 << (flag))
+#define FLIP_TRAINER_FAN_CLUB_FLAG(flag) (FANCLUB_BITFIELD ^= 1 << (flag))
+#define GET_TRAINER_FAN_CLUB_COUNTER (FANCLUB_BITFIELD & FANCLUB_COUNTER)
+#define SET_TRAINER_FAN_CLUB_COUNTER(count) (FANCLUB_BITFIELD = (FANCLUB_BITFIELD & ~FANCLUB_COUNTER) | (count))
+#define INCR_TRAINER_FAN_CLUB_COUNTER(count) (FANCLUB_BITFIELD += (count))
+#define CLEAR_TRAINER_FAN_CLUB_COUNTER (FANCLUB_BITFIELD &= ~FANCLUB_COUNTER)
 extern void Task_DeoxysRockInteraction(u8 taskId);
 
 extern u8 sub_081370D8(u8 nature, u8 *dest);
 extern void GetEreaderTrainerName(u8 *dest);
 #include "field_specials.h"
+#include "constants/characters.h"
+#include "constants/map_types.h"
+#include "constants/battle_frontier.h"
+
+extern const u8 gUnknown_85CB025[];
+extern const u8 gUnknown_85CB00E[];
+extern const u8 gUnknown_85CB021[];
+extern const u8 gUnknown_85CB018[];
 
 #define FIELD_SPECIALS_DATA __attribute__((section(".rodata.field_specials_data")))
 #define FIELD_SPECIALS_DATA_EARLY __attribute__((section(".rodata.field_specials_data_early")))
@@ -85,143 +132,57 @@ u16 GetPlayerAvatarBike(void)
     return 0;
 }
 
-__attribute__((naked)) void DetermineCyclingRoadResults(u32 numFrames, u16 bikeCollisions)
+void DetermineCyclingRoadResults(u32 numFrames, u16 bikeCollisions)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	cmp r6, #0x63\n\t"
-        "	bhi _08137DF8\n\t"
-        "	ldr r4, _08137DF0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	ldr r1, _08137DF4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringAppend\n\t"
-        "	b _08137E00\n\t"
-        "	.align 2, 0\n\t"
-        "_08137DF0: .4byte gStringVar1\n\t"
-        "_08137DF4: .4byte gUnknown_85CB025\n\t"
-        "_08137DF8:\n\t"
-        "	ldr r0, _08137E4C\n\t"
-        "	ldr r1, _08137E50\n\t"
-        "	bl StringCopy\n\t"
-        "_08137E00:\n\t"
-        "	ldr r0, _08137E54\n\t"
-        "	cmp r7, r0\n\t"
-        "	bhi _08137E60\n\t"
-        "	ldr r4, _08137E58\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	bl __udivsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	movs r0, #0xb8\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "	adds r5, r4, #3\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	bl __umodsi3\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	bl __udivsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #2\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	ldr r1, _08137E5C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringAppend\n\t"
-        "	b _08137E68\n\t"
-        "	.align 2, 0\n\t"
-        "_08137E4C: .4byte gStringVar1\n\t"
-        "_08137E50: .4byte gUnknown_85CB00E\n\t"
-        "_08137E54: .4byte 0x00000E0F\n\t"
-        "_08137E58: .4byte gStringVar2\n\t"
-        "_08137E5C: .4byte gUnknown_85CB021\n\t"
-        "_08137E60:\n\t"
-        "	ldr r0, _08137E74\n\t"
-        "	ldr r1, _08137E78\n\t"
-        "	bl StringCopy\n\t"
-        "_08137E68:\n\t"
-        "	movs r4, #0\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _08137E7C\n\t"
-        "	movs r4, #5\n\t"
-        "	b _08137E9A\n\t"
-        "	.align 2, 0\n\t"
-        "_08137E74: .4byte gStringVar2\n\t"
-        "_08137E78: .4byte gUnknown_85CB018\n\t"
-        "_08137E7C:\n\t"
-        "	cmp r6, #3\n\t"
-        "	bhi _08137E84\n\t"
-        "	movs r4, #4\n\t"
-        "	b _08137E9A\n\t"
-        "_08137E84:\n\t"
-        "	cmp r6, #9\n\t"
-        "	bhi _08137E8C\n\t"
-        "	movs r4, #3\n\t"
-        "	b _08137E9A\n\t"
-        "_08137E8C:\n\t"
-        "	cmp r6, #0x13\n\t"
-        "	bhi _08137E94\n\t"
-        "	movs r4, #2\n\t"
-        "	b _08137E9A\n\t"
-        "_08137E94:\n\t"
-        "	cmp r6, #0x63\n\t"
-        "	bhi _08137E9A\n\t"
-        "	movs r4, #1\n\t"
-        "_08137E9A:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	bl __udivsi3\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bhi _08137EAA\n\t"
-        "	adds r0, r4, #5\n\t"
-        "	b _08137EC8\n\t"
-        "_08137EAA:\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bhi _08137EB2\n\t"
-        "	adds r0, r4, #4\n\t"
-        "	b _08137EC8\n\t"
-        "_08137EB2:\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	bhi _08137EBA\n\t"
-        "	adds r0, r4, #3\n\t"
-        "	b _08137EC8\n\t"
-        "_08137EBA:\n\t"
-        "	cmp r0, #0x28\n\t"
-        "	bhi _08137EC2\n\t"
-        "	adds r0, r4, #2\n\t"
-        "	b _08137EC8\n\t"
-        "_08137EC2:\n\t"
-        "	cmp r0, #0x3b\n\t"
-        "	bhi _08137ECC\n\t"
-        "	adds r0, r4, #1\n\t"
-        "_08137EC8:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_08137ECC:\n\t"
-        "	ldr r0, _08137ED8\n\t"
-        "	strh r4, [r0]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08137ED8: .4byte gSpecialVar_Result\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 numBikeCollisions = bikeCollisions;
+    u8 result;
+
+    if (numBikeCollisions < 100)
+    {
+        ConvertIntToDecimalStringN(gStringVar1, numBikeCollisions, STR_CONV_MODE_LEFT_ALIGN, 2);
+        StringAppend(gStringVar1, gUnknown_85CB025);
+    }
+    else
+    {
+        StringCopy(gStringVar1, gUnknown_85CB00E);
+    }
+
+    if (numFrames < 3600)
+    {
+        ConvertIntToDecimalStringN(gStringVar2, numFrames / 60, STR_CONV_MODE_RIGHT_ALIGN, 2);
+        gStringVar2[2] = CHAR_COMMA;
+        ConvertIntToDecimalStringN(&gStringVar2[3], ((numFrames % 60) * 100) / 60, STR_CONV_MODE_LEADING_ZEROS, 2);
+        StringAppend(gStringVar2, gUnknown_85CB021);
+    }
+    else
+    {
+        StringCopy(gStringVar2, gUnknown_85CB018);
+    }
+
+    result = 0;
+    if (numBikeCollisions == 0)
+        result = 5;
+    else if (numBikeCollisions < 4)
+        result = 4;
+    else if (numBikeCollisions < 10)
+        result = 3;
+    else if (numBikeCollisions < 20)
+        result = 2;
+    else if (numBikeCollisions < 100)
+        result = 1;
+
+    if (numFrames / 60 <= 10)
+        result += 5;
+    else if (numFrames / 60 <= 15)
+        result += 4;
+    else if (numFrames / 60 <= 20)
+        result += 3;
+    else if (numFrames / 60 <= 40)
+        result += 2;
+    else if (numFrames / 60 < 60)
+        result += 1;
+
+    gSpecialVar_Result = result;
 }
 
 void FinishCyclingRoadChallenge(void)
@@ -232,94 +193,32 @@ void FinishCyclingRoadChallenge(void)
     RecordCyclingRoadResults(numFrames, gBikeCollisions);
 }
 
-__attribute__((naked)) void RecordCyclingRoadResults(u32 numFrames, u16 bikeCollisions)
+void RecordCyclingRoadResults(u32 numFrames, u16 bikeCollisions)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov r8, r1\n\t"
-        "	ldr r6, _08137F60\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl VarGet\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r7, _08137F64\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	cmp r4, r5\n\t"
-        "	bhi _08137F3C\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _08137F56\n\t"
-        "_08137F3C:\n\t"
-        "	lsls r1, r5, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl VarSet\n\t"
-        "	lsrs r1, r5, #0x10\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl VarSet\n\t"
-        "	ldr r0, _08137F68\n\t"
-        "	mov r1, r8\n\t"
-        "	bl VarSet\n\t"
-        "_08137F56:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08137F60: .4byte 0x00004028\n\t"
-        "_08137F64: .4byte 0x00004029\n\t"
-        "_08137F68: .4byte 0x00004027\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 numBikeCollisions = bikeCollisions;
+    u16 low = VarGet(VAR_CYCLING_ROAD_RECORD_TIME_L);
+    u16 high = VarGet(VAR_CYCLING_ROAD_RECORD_TIME_H);
+    u32 framesRecord = low + (high << 16);
+
+    if (framesRecord > numFrames || framesRecord == 0)
+    {
+        VarSet(VAR_CYCLING_ROAD_RECORD_TIME_L, numFrames);
+        VarSet(VAR_CYCLING_ROAD_RECORD_TIME_H, numFrames >> 16);
+        VarSet(VAR_CYCLING_ROAD_RECORD_COLLISIONS, numBikeCollisions);
+    }
 }
 
-__attribute__((naked)) void GetRecordedCyclingRoadResults(void)
+u16 GetRecordedCyclingRoadResults(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _08137FA0\n\t"
-        "	bl VarGet\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r0, _08137FA4\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _08137FAC\n\t"
-        "	ldr r0, _08137FA8\n\t"
-        "	bl VarGet\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DetermineCyclingRoadResults\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08137FAE\n\t"
-        "	.align 2, 0\n\t"
-        "_08137FA0: .4byte 0x00004028\n\t"
-        "_08137FA4: .4byte 0x00004029\n\t"
-        "_08137FA8: .4byte 0x00004027\n\t"
-        "_08137FAC:\n\t"
-        "	movs r0, #0\n\t"
-        "_08137FAE:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 low = VarGet(VAR_CYCLING_ROAD_RECORD_TIME_L);
+    u16 high = VarGet(VAR_CYCLING_ROAD_RECORD_TIME_H);
+    u32 framesRecord = low + (high << 16);
+
+    if (framesRecord == 0)
+        return FALSE;
+
+    DetermineCyclingRoadResults(framesRecord, (u8)VarGet(VAR_CYCLING_ROAD_RECORD_COLLISIONS));
+    return TRUE;
 }
 
 void UpdateCyclingRoadState(void)
@@ -345,41 +244,12 @@ void ResetSSTidalFlag(void)
     FlagClear(FLAG_SYS_CRUISE_MODE);
 }
 
-__attribute__((naked)) bool32 CountSSTidalStep(u16 delta)
+bool32 CountSSTidalStep(u16 delta)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	ldr r0, _0813805C\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08138056\n\t"
-        "	ldr r0, _08138060\n\t"
-        "	bl GetVarPointer\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	strh r1, [r0]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0xcc\n\t"
-        "	bhi _08138064\n\t"
-        "_08138056:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08138066\n\t"
-        "	.align 2, 0\n\t"
-        "_0813805C: .4byte 0x0000088D\n\t"
-        "_08138060: .4byte 0x0000404A\n\t"
-        "_08138064:\n\t"
-        "	movs r0, #1\n\t"
-        "_08138066:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!FlagGet(FLAG_SYS_CRUISE_MODE) || (*GetVarPointer(VAR_CRUISE_STEP_COUNT) += delta) < SS_TIDAL_MAX_STEPS)
+        return FALSE;
+
+    return TRUE;
 }
 
 u8 GetSSTidalLocation(s8 *mapGroup, s8 *mapNum, s16 *x, s16 *y)
@@ -439,224 +309,129 @@ u8 GetSSTidalLocation(s8 *mapGroup, s8 *mapNum, s16 *x, s16 *y)
     return SS_TIDAL_LOCATION_CURRENTS;
 }
 
-__attribute__((naked)) bool32 ShouldDoWallyCall()
+bool32 ShouldDoWallyCall(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0x88\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0813817A\n\t"
-        "	ldr r0, _08138180\n\t"
-        "	ldrb r0, [r0, #0x17]\n\t"
-        "	cmp r0, #1\n\t"
-        "	blt _0813817A\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _08138166\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _0813817A\n\t"
-        "_08138166:\n\t"
-        "	ldr r0, _08138184\n\t"
-        "	bl GetVarPointer\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r0]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0xf9\n\t"
-        "	bhi _08138188\n\t"
-        "_0813817A:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0813818A\n\t"
-        "	.align 2, 0\n\t"
-        "_08138180: .4byte gMapHeader\n\t"
-        "_08138184: .4byte 0x000040F2\n\t"
-        "_08138188:\n\t"
-        "	movs r0, #1\n\t"
-        "_0813818A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FlagGet(FLAG_ENABLE_FIRST_WALLY_POKENAV_CALL))
+    {
+        switch (gMapHeader.mapType)
+        {
+        case MAP_TYPE_TOWN:
+        case MAP_TYPE_CITY:
+        case MAP_TYPE_ROUTE:
+        case MAP_TYPE_OCEAN_ROUTE:
+            if (++(*GetVarPointer(VAR_WALLY_CALL_STEP_COUNTER)) < 250)
+                return FALSE;
+            break;
+        default:
+            return FALSE;
+        }
+    }
+    else
+    {
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void ShouldDoWinonaCall(void)
+bool32 ShouldDoWinonaCall(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0x8a\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081381C2\n\t"
-        "	ldr r0, _081381C8\n\t"
-        "	ldrb r0, [r0, #0x17]\n\t"
-        "	cmp r0, #1\n\t"
-        "	blt _081381C2\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _081381AE\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _081381C2\n\t"
-        "_081381AE:\n\t"
-        "	ldr r0, _081381CC\n\t"
-        "	bl GetVarPointer\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r0]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	cmp r1, #9\n\t"
-        "	bhi _081381D0\n\t"
-        "_081381C2:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081381D2\n\t"
-        "	.align 2, 0\n\t"
-        "_081381C8: .4byte gMapHeader\n\t"
-        "_081381CC: .4byte 0x000040F3\n\t"
-        "_081381D0:\n\t"
-        "	movs r0, #1\n\t"
-        "_081381D2:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FlagGet(FLAG_SCOTT_CALL_FORTREE_GYM))
+    {
+        switch (gMapHeader.mapType)
+        {
+        case MAP_TYPE_TOWN:
+        case MAP_TYPE_CITY:
+        case MAP_TYPE_ROUTE:
+        case MAP_TYPE_OCEAN_ROUTE:
+            if (++(*GetVarPointer(VAR_SCOTT_FORTREE_CALL_STEP_COUNTER)) < 10)
+                return FALSE;
+            break;
+        default:
+            return FALSE;
+        }
+    }
+    else
+    {
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void ShouldDoScottCall(void)
+bool32 ShouldDoScottCall(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0x72\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0813820A\n\t"
-        "	ldr r0, _08138210\n\t"
-        "	ldrb r0, [r0, #0x17]\n\t"
-        "	cmp r0, #1\n\t"
-        "	blt _0813820A\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _081381F6\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _0813820A\n\t"
-        "_081381F6:\n\t"
-        "	ldr r0, _08138214\n\t"
-        "	bl GetVarPointer\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r0]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	cmp r1, #9\n\t"
-        "	bhi _08138218\n\t"
-        "_0813820A:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0813821A\n\t"
-        "	.align 2, 0\n\t"
-        "_08138210: .4byte gMapHeader\n\t"
-        "_08138214: .4byte 0x000040F5\n\t"
-        "_08138218:\n\t"
-        "	movs r0, #1\n\t"
-        "_0813821A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FlagGet(FLAG_SCOTT_CALL_BATTLE_FRONTIER))
+    {
+        switch (gMapHeader.mapType)
+        {
+        case MAP_TYPE_TOWN:
+        case MAP_TYPE_CITY:
+        case MAP_TYPE_ROUTE:
+        case MAP_TYPE_OCEAN_ROUTE:
+            if (++(*GetVarPointer(VAR_SCOTT_BF_CALL_STEP_COUNTER)) < 10)
+                return FALSE;
+            break;
+        default:
+            return FALSE;
+        }
+    }
+    else
+    {
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) bool32 ShouldDoRoxanneCall()
+bool32 ShouldDoRoxanneCall(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0x80\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08138252\n\t"
-        "	ldr r0, _08138258\n\t"
-        "	ldrb r0, [r0, #0x17]\n\t"
-        "	cmp r0, #1\n\t"
-        "	blt _08138252\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _0813823E\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _08138252\n\t"
-        "_0813823E:\n\t"
-        "	ldr r0, _0813825C\n\t"
-        "	bl GetVarPointer\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r0]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0xf9\n\t"
-        "	bhi _08138260\n\t"
-        "_08138252:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08138262\n\t"
-        "	.align 2, 0\n\t"
-        "_08138258: .4byte gMapHeader\n\t"
-        "_0813825C: .4byte 0x000040F4\n\t"
-        "_08138260:\n\t"
-        "	movs r0, #1\n\t"
-        "_08138262:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FlagGet(FLAG_ENABLE_ROXANNE_FIRST_CALL))
+    {
+        switch (gMapHeader.mapType)
+        {
+        case MAP_TYPE_TOWN:
+        case MAP_TYPE_CITY:
+        case MAP_TYPE_ROUTE:
+        case MAP_TYPE_OCEAN_ROUTE:
+            if (++(*GetVarPointer(VAR_ROXANNE_CALL_STEP_COUNTER)) < 250)
+                return FALSE;
+            break;
+        default:
+            return FALSE;
+        }
+    }
+    else
+    {
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) bool32 ShouldDoRivalRayquazaCall()
+bool32 ShouldDoRivalRayquazaCall(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0x75\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0813829A\n\t"
-        "	ldr r0, _081382A0\n\t"
-        "	ldrb r0, [r0, #0x17]\n\t"
-        "	cmp r0, #1\n\t"
-        "	blt _0813829A\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _08138286\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _0813829A\n\t"
-        "_08138286:\n\t"
-        "	ldr r0, _081382A4\n\t"
-        "	bl GetVarPointer\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r0]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0xf9\n\t"
-        "	bhi _081382A8\n\t"
-        "_0813829A:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081382AA\n\t"
-        "	.align 2, 0\n\t"
-        "_081382A0: .4byte gMapHeader\n\t"
-        "_081382A4: .4byte 0x000040F6\n\t"
-        "_081382A8:\n\t"
-        "	movs r0, #1\n\t"
-        "_081382AA:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FlagGet(FLAG_DEFEATED_MAGMA_SPACE_CENTER))
+    {
+        switch (gMapHeader.mapType)
+        {
+        case MAP_TYPE_TOWN:
+        case MAP_TYPE_CITY:
+        case MAP_TYPE_ROUTE:
+        case MAP_TYPE_OCEAN_ROUTE:
+            if (++(*GetVarPointer(VAR_RIVAL_RAYQUAZA_CALL_STEP_COUNTER)) < 250)
+                return FALSE;
+            break;
+        default:
+            return FALSE;
+        }
+    }
+    else
+    {
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
 __attribute__((naked)) void GetLinkPartnerNames(void)
@@ -1833,20 +1608,9 @@ void CableCarWarp(void)
         SetWarpDestination(MAP_GROUP(MAP_MT_CHIMNEY_CABLE_CAR_STATION), MAP_NUM(MAP_MT_CHIMNEY_CABLE_CAR_STATION), WARP_ID_NONE, 6, 4);
 }
 
-__attribute__((naked)) void SetHiddenItemFlag(void)
+void SetHiddenItemFlag(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08138C48\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl FlagSet\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08138C48: .4byte gSpecialVar_0x8004\n\t"
-        ".syntax divided\n\t"
-    );
+    FlagSet(gSpecialVar_0x8004);
 }
 
 u16 GetWeekCount(void)
@@ -1877,19 +1641,9 @@ u8 GetLeadMonFriendshipScore(void)
     return FRIENDSHIP_NONE;
 }
 
-__attribute__((naked)) void CB2_FieldShowRegionMap(void)
+void CB2_FieldShowRegionMap(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08138D00\n\t"
-        "	bl FieldInitRegionMap\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08138D00: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic\n\t"
-        ".syntax divided\n\t"
-    );
+    FieldInitRegionMap(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
 void FieldShowRegionMap(void)
@@ -1910,188 +1664,77 @@ void DoPCTurnOnEffect(void)
     }
 }
 
-__attribute__((naked)) void Task_PCTurnOnEffect(u8 taskId)
+void Task_PCTurnOnEffect(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _08138D7C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08138D76\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl PCTurnOnEffect\n\t"
-        "_08138D76:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08138D7C: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task = &gTasks[taskId];
+    if (!task->tPaused)
+        PCTurnOnEffect(task);
 }
 
-__attribute__((naked)) void PCTurnOnEffect(void)
+void PCTurnOnEffect(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r1, #0xe\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _08138DEC\n\t"
-        "	strh r5, [r4, #0xe]\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _08138DB4\n\t"
-        "	cmp r0, #3\n\t"
-        "	bgt _08138DAA\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08138DB0\n\t"
-        "	b _08138DBC\n\t"
-        "_08138DAA:\n\t"
-        "	cmp r1, #4\n\t"
-        "	beq _08138DB8\n\t"
-        "	b _08138DBC\n\t"
-        "_08138DB0:\n\t"
-        "	movs r6, #0\n\t"
-        "	b _08138DBA\n\t"
-        "_08138DB4:\n\t"
-        "	movs r6, #0xff\n\t"
-        "	b _08138DBA\n\t"
-        "_08138DB8:\n\t"
-        "	movs r6, #1\n\t"
-        "_08138DBA:\n\t"
-        "	movs r5, #0xff\n\t"
-        "_08138DBC:\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r1, r6, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	lsls r2, r5, #0x18\n\t"
-        "	asrs r2, r2, #0x18\n\t"
-        "	bl PCTurnOnEffect_SetMetatile\n\t"
-        "	bl DrawWholeMapView\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	movs r1, #1\n\t"
-        "	eors r0, r1\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #5\n\t"
-        "	bne _08138DEC\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	bl DestroyTask\n\t"
-        "_08138DEC:\n\t"
-        "	ldrh r0, [r4, #0xe]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 playerDirection;
+    s8 dx = 0;
+    s8 dy = 0;
+    if (task->tTimer == 6)
+    {
+        task->tTimer = 0;
+
+        // Get where the PC should be, depending on where the player is looking.
+        playerDirection = GetPlayerFacingDirection();
+        switch (playerDirection)
+        {
+        case DIR_NORTH:
+            dx = 0;
+            dy = -1;
+            break;
+        case DIR_WEST:
+            dx = -1;
+            dy = -1;
+            break;
+        case DIR_EAST:
+            dx = 1;
+            dy = -1;
+            break;
+        }
+
+        // Update map
+        PCTurnOnEffect_SetMetatile(task->tIsScreenOn, dx, dy);
+        DrawWholeMapView();
+
+        // Screen flickers 5 times. Odd number and starting with the
+        // screen off means the animation ends with the screen on.
+        task->tIsScreenOn ^= 1;
+        if (++task->tFlickerCount == 5)
+            DestroyTask(task->tTaskId);
+    }
+    task->tTimer++;
 }
 
-__attribute__((naked)) void PCTurnOnEffect_SetMetatile(void)
+void PCTurnOnEffect_SetMetatile(s16 isScreenOn, s8 dx, s8 dy)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r4, r2, #0x18\n\t"
-        "	movs r3, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08138E34\n\t"
-        "	ldr r0, _08138E18\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08138E1C\n\t"
-        "	movs r3, #4\n\t"
-        "	b _08138E56\n\t"
-        "	.align 2, 0\n\t"
-        "_08138E18: .4byte gSpecialVar_0x8004\n\t"
-        "_08138E1C:\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08138E28\n\t"
-        "	ldr r3, _08138E24\n\t"
-        "	b _08138E56\n\t"
-        "	.align 2, 0\n\t"
-        "_08138E24: .4byte 0x0000025A\n\t"
-        "_08138E28:\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08138E56\n\t"
-        "	ldr r3, _08138E30\n\t"
-        "	b _08138E56\n\t"
-        "	.align 2, 0\n\t"
-        "_08138E30: .4byte 0x00000259\n\t"
-        "_08138E34:\n\t"
-        "	ldr r0, _08138E40\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08138E44\n\t"
-        "	movs r3, #5\n\t"
-        "	b _08138E56\n\t"
-        "	.align 2, 0\n\t"
-        "_08138E40: .4byte gSpecialVar_0x8004\n\t"
-        "_08138E44:\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08138E50\n\t"
-        "	ldr r3, _08138E4C\n\t"
-        "	b _08138E56\n\t"
-        "	.align 2, 0\n\t"
-        "_08138E4C: .4byte 0x0000027F\n\t"
-        "_08138E50:\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08138E56\n\t"
-        "	ldr r3, _08138E88\n\t"
-        "_08138E56:\n\t"
-        "	ldr r0, _08138E8C\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r5, #0\n\t"
-        "	ldrsh r0, [r2, r5]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, #7\n\t"
-        "	movs r5, #2\n\t"
-        "	ldrsh r1, [r2, r5]\n\t"
-        "	lsls r2, r4, #0x18\n\t"
-        "	asrs r2, r2, #0x18\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, #7\n\t"
-        "	movs r4, #0xc0\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	orrs r3, r2\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08138E88: .4byte 0x0000027E\n\t"
-        "_08138E8C: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 metatileId = 0;
+    if (isScreenOn)
+    {
+        // Screen is on, set it off
+        if (gSpecialVar_0x8004 == PC_LOCATION_OTHER)
+            metatileId = METATILE_Building_PC_Off;
+        else if (gSpecialVar_0x8004 == PC_LOCATION_BRENDANS_HOUSE)
+            metatileId = METATILE_BrendansMaysHouse_BrendanPC_Off;
+        else if (gSpecialVar_0x8004 == PC_LOCATION_MAYS_HOUSE)
+            metatileId = METATILE_BrendansMaysHouse_MayPC_Off;
+    }
+    else
+    {
+        // Screen is off, set it on
+        if (gSpecialVar_0x8004 == PC_LOCATION_OTHER)
+            metatileId = METATILE_Building_PC_On;
+        else if (gSpecialVar_0x8004 == PC_LOCATION_BRENDANS_HOUSE)
+            metatileId = METATILE_BrendansMaysHouse_BrendanPC_On;
+        else if (gSpecialVar_0x8004 == PC_LOCATION_MAYS_HOUSE)
+            metatileId = METATILE_BrendansMaysHouse_MayPC_On;
+    }
+    MapGridSetMetatileIdAt(gSaveBlock1Ptr->pos.x + dx + MAP_OFFSET, gSaveBlock1Ptr->pos.y + dy + MAP_OFFSET, metatileId | MAPGRID_IMPASSABLE);
 }
 
 void DoPCTurnOffEffect(void)
@@ -2100,89 +1743,39 @@ void DoPCTurnOffEffect(void)
 }
 
 
-__attribute__((naked)) void PCTurnOffEffect(void)
+void PCTurnOffEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r4, #0\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _08138EC6\n\t"
-        "	cmp r0, #3\n\t"
-        "	bgt _08138EBC\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08138EC2\n\t"
-        "	b _08138ECE\n\t"
-        "_08138EBC:\n\t"
-        "	cmp r1, #4\n\t"
-        "	beq _08138ECA\n\t"
-        "	b _08138ECE\n\t"
-        "_08138EC2:\n\t"
-        "	movs r6, #0\n\t"
-        "	b _08138ECC\n\t"
-        "_08138EC6:\n\t"
-        "	movs r6, #0xff\n\t"
-        "	b _08138ECC\n\t"
-        "_08138ECA:\n\t"
-        "	movs r6, #1\n\t"
-        "_08138ECC:\n\t"
-        "	movs r5, #0xff\n\t"
-        "_08138ECE:\n\t"
-        "	ldr r0, _08138EDC\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08138EE0\n\t"
-        "	movs r4, #4\n\t"
-        "	b _08138EF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08138EDC: .4byte gSpecialVar_0x8004\n\t"
-        "_08138EE0:\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08138EEC\n\t"
-        "	ldr r4, _08138EE8\n\t"
-        "	b _08138EF2\n\t"
-        "	.align 2, 0\n\t"
-        "_08138EE8: .4byte 0x0000025A\n\t"
-        "_08138EEC:\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08138EF2\n\t"
-        "	ldr r4, _08138F28\n\t"
-        "_08138EF2:\n\t"
-        "	ldr r0, _08138F2C\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	lsls r1, r6, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, #7\n\t"
-        "	movs r3, #2\n\t"
-        "	ldrsh r1, [r2, r3]\n\t"
-        "	lsls r2, r5, #0x18\n\t"
-        "	asrs r2, r2, #0x18\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, #7\n\t"
-        "	movs r3, #0xc0\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	orrs r4, r2\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	bl DrawWholeMapView\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08138F28: .4byte 0x00000259\n\t"
-        "_08138F2C: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    s8 dx = 0;
+    s8 dy = 0;
+    u16 metatileId = 0;
+
+    // Get where the PC should be, depending on where the player is looking.
+    u8 playerDirection = GetPlayerFacingDirection();
+    switch (playerDirection)
+    {
+    case DIR_NORTH:
+        dx = 0;
+        dy = -1;
+        break;
+    case DIR_WEST:
+        dx = -1;
+        dy = -1;
+        break;
+    case DIR_EAST:
+        dx = 1;
+        dy = -1;
+        break;
+    }
+
+    if (gSpecialVar_0x8004 == PC_LOCATION_OTHER)
+        metatileId = METATILE_Building_PC_Off;
+    else if (gSpecialVar_0x8004 == PC_LOCATION_BRENDANS_HOUSE)
+        metatileId = METATILE_BrendansMaysHouse_BrendanPC_Off;
+    else if (gSpecialVar_0x8004 == PC_LOCATION_MAYS_HOUSE)
+        metatileId = METATILE_BrendansMaysHouse_MayPC_Off;
+
+    MapGridSetMetatileIdAt(gSaveBlock1Ptr->pos.x + dx + MAP_OFFSET, gSaveBlock1Ptr->pos.y + dy + MAP_OFFSET, metatileId | MAPGRID_IMPASSABLE);
+    DrawWholeMapView();
 }
 
 void DoLotteryCornerComputerEffect(void)
@@ -2198,97 +1791,39 @@ void DoLotteryCornerComputerEffect(void)
     }
 }
 
-__attribute__((naked)) void Task_LotteryCornerComputerEffect(u8 taskId)
+void Task_LotteryCornerComputerEffect(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _08138F98\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08138F92\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl LotteryCornerComputerEffect\n\t"
-        "_08138F92:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08138F98: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task = &gTasks[taskId];
+    if (!task->tPaused)
+        LotteryCornerComputerEffect(task);
 }
 
-__attribute__((naked)) void LotteryCornerComputerEffect(void)
+void LotteryCornerComputerEffect(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0xe\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _0813900A\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08138FD4\n\t"
-        "	ldr r2, _08138FCC\n\t"
-        "	movs r0, #0x12\n\t"
-        "	movs r1, #8\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	ldr r2, _08138FD0\n\t"
-        "	movs r0, #0x12\n\t"
-        "	movs r1, #9\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	b _08138FEA\n\t"
-        "	.align 2, 0\n\t"
-        "_08138FCC: .4byte 0x00000E9D\n\t"
-        "_08138FD0: .4byte 0x00000EA5\n\t"
-        "_08138FD4:\n\t"
-        "	ldr r2, _08139018\n\t"
-        "	movs r0, #0x12\n\t"
-        "	movs r1, #8\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	movs r2, #0xe6\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	movs r0, #0x12\n\t"
-        "	movs r1, #9\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "_08138FEA:\n\t"
-        "	bl DrawWholeMapView\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	movs r1, #1\n\t"
-        "	eors r0, r1\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #5\n\t"
-        "	bne _0813900A\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	bl DestroyTask\n\t"
-        "_0813900A:\n\t"
-        "	ldrh r0, [r4, #0xe]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08139018: .4byte 0x00000E58\n\t"
-        ".syntax divided\n\t"
-    );
+    if (task->tTimer == 6)
+    {
+        task->tTimer = 0;
+        if (task->tIsScreenOn)
+        {
+            // Screen is on, set it off
+            MapGridSetMetatileIdAt(11 + MAP_OFFSET, 1 + MAP_OFFSET, METATILE_Shop_Laptop1_Normal | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt(11 + MAP_OFFSET, 2 + MAP_OFFSET, METATILE_Shop_Laptop2_Normal | MAPGRID_IMPASSABLE);
+        }
+        else
+        {
+            // Screen is off, set it on
+            MapGridSetMetatileIdAt(11 + MAP_OFFSET, 1 + MAP_OFFSET, METATILE_Shop_Laptop1_Flash | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt(11 + MAP_OFFSET, 2 + MAP_OFFSET, METATILE_Shop_Laptop2_Flash | MAPGRID_IMPASSABLE);
+        }
+        DrawWholeMapView();
+
+        // Screen flickers 5 times. Odd number and starting with the
+        // screen off means the animation ends with the screen on.
+        task->tIsScreenOn ^= 1;
+        if (++task->tFlickerCount == 5)
+            DestroyTask(task->tTaskId);
+    }
+    task->tTimer++;
 }
 
 void EndLotteryCornerComputerEffect(void)
@@ -2298,40 +1833,20 @@ void EndLotteryCornerComputerEffect(void)
     DrawWholeMapView();
 }
 
-__attribute__((naked)) void SetTrickHouseNuggetFlag(void)
+void SetTrickHouseNuggetFlag(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _08139054\n\t"
-        "	ldr r0, _08139058\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl FlagSet\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08139054: .4byte gSpecialVar_0x8004\n\t"
-        "_08139058: .4byte SPECIAL_ShouldDistributeEonTicket\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *specVar = &gSpecialVar_0x8004;
+    u16 flag = FLAG_HIDDEN_ITEM_TRICK_HOUSE_NUGGET;
+    *specVar = flag;
+    FlagSet(flag);
 }
 
-__attribute__((naked)) void ResetTrickHouseNuggetFlag(void)
+void ResetTrickHouseNuggetFlag(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _0813906C\n\t"
-        "	ldr r0, _08139070\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl FlagClear\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813906C: .4byte gSpecialVar_0x8004\n\t"
-        "_08139070: .4byte SPECIAL_ShouldDistributeEonTicket\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *specVar = &gSpecialVar_0x8004;
+    u16 flag = FLAG_HIDDEN_ITEM_TRICK_HOUSE_NUGGET;
+    *specVar = flag;
+    FlagClear(flag);
 }
 
 bool8 CheckLeadMonCool(void)
@@ -2883,132 +2398,48 @@ u16 SetPacifidlogTMReceivedDay(void)
     return gLocalTime.days;
 }
 
-__attribute__((naked)) bool8 MonOTNameNotPlayer(void)
+bool8 MonOTNameNotPlayer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _0813980C\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08139810\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r4, _08139814\n\t"
-        "	movs r1, #7\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r0, _08139818\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl StringCompare\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0813981C\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0813981E\n\t"
-        "	.align 2, 0\n\t"
-        "_0813980C: .4byte gSpecialVar_0x8004\n\t"
-        "_08139810: .4byte gPlayerParty\n\t"
-        "_08139814: .4byte gStringVar1\n\t"
-        "_08139818: .4byte gSaveBlock2Ptr\n\t"
-        "_0813981C:\n\t"
-        "	movs r0, #0\n\t"
-        "_0813981E:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    GetMonData3(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_OT_NAME, gStringVar1);
+
+    if (!StringCompare(gSaveBlock2Ptr->playerName, gStringVar1))
+        return FALSE;
+
+    return TRUE;
 }
 
-__attribute__((naked)) void BufferLottoTicketNumber(void)
+void BufferLottoTicketNumber(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r2, _08139838\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	ldr r0, _0813983C\n\t"
-        "	cmp r1, r0\n\t"
-        "	bls _08139840\n\t"
-        "	movs r0, #0\n\t"
-        "	bl TV_PrintIntToStringVar\n\t"
-        "	b _081398C2\n\t"
-        "	.align 2, 0\n\t"
-        "_08139838: .4byte gSpecialVar_Result\n\t"
-        "_0813983C: .4byte 0x0000270F\n\t"
-        "_08139840:\n\t"
-        "	ldr r0, _08139850\n\t"
-        "	cmp r1, r0\n\t"
-        "	bls _08139858\n\t"
-        "	ldr r4, _08139854\n\t"
-        "	movs r0, #0xa1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	adds r4, #1\n\t"
-        "	b _0813987C\n\t"
-        "	.align 2, 0\n\t"
-        "_08139850: .4byte 0x000003E7\n\t"
-        "_08139854: .4byte gStringVar1\n\t"
-        "_08139858:\n\t"
-        "	cmp r1, #0x63\n\t"
-        "	bls _0813986C\n\t"
-        "	ldr r4, _08139868\n\t"
-        "	movs r0, #0xa1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	adds r4, #2\n\t"
-        "	b _0813987C\n\t"
-        "	.align 2, 0\n\t"
-        "_08139868: .4byte gStringVar1\n\t"
-        "_0813986C:\n\t"
-        "	cmp r1, #9\n\t"
-        "	bls _0813989C\n\t"
-        "	ldr r4, _08139898\n\t"
-        "	movs r0, #0xa1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "	adds r4, #3\n\t"
-        "_0813987C:\n\t"
-        "	ldrh r5, [r2]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl CountDigits\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	b _081398C2\n\t"
-        "	.align 2, 0\n\t"
-        "_08139898: .4byte gStringVar1\n\t"
-        "_0813989C:\n\t"
-        "	ldr r4, _081398C8\n\t"
-        "	movs r0, #0xa1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "	strb r0, [r4, #3]\n\t"
-        "	adds r4, #4\n\t"
-        "	ldrh r5, [r2]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl CountDigits\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "_081398C2:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081398C8: .4byte gStringVar1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSpecialVar_Result >= 10000)
+    {
+        TV_PrintIntToStringVar(0, gSpecialVar_Result);
+    }
+    else if (gSpecialVar_Result >= 1000)
+    {
+        gStringVar1[0] = CHAR_0;
+        ConvertIntToDecimalStringN(gStringVar1 + 1, gSpecialVar_Result, STR_CONV_MODE_LEFT_ALIGN, CountDigits(gSpecialVar_Result));
+    }
+    else if (gSpecialVar_Result >= 100)
+    {
+        gStringVar1[0] = CHAR_0;
+        gStringVar1[1] = CHAR_0;
+        ConvertIntToDecimalStringN(gStringVar1 + 2, gSpecialVar_Result, STR_CONV_MODE_LEFT_ALIGN, CountDigits(gSpecialVar_Result));
+    }
+    else if (gSpecialVar_Result >= 10)
+    {
+        gStringVar1[0] = CHAR_0;
+        gStringVar1[1] = CHAR_0;
+        gStringVar1[2] = CHAR_0;
+        ConvertIntToDecimalStringN(gStringVar1 + 3, gSpecialVar_Result, STR_CONV_MODE_LEFT_ALIGN, CountDigits(gSpecialVar_Result));
+    }
+    else
+    {
+        gStringVar1[0] = CHAR_0;
+        gStringVar1[1] = CHAR_0;
+        gStringVar1[2] = CHAR_0;
+        gStringVar1[3] = CHAR_0;
+        ConvertIntToDecimalStringN(gStringVar1 + 4, gSpecialVar_Result, STR_CONV_MODE_LEFT_ALIGN, CountDigits(gSpecialVar_Result));
+    }
 }
 
 // JP-specific source-location diagnostics retained by GetMysteryGiftCardStat.
@@ -3075,87 +2506,29 @@ __attribute__((naked)) u16 GetMysteryGiftCardStat(void)
     );
 }
 
-__attribute__((naked)) void BufferTMHMMoveName(void)
+bool8 BufferTMHMMoveName(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r1, _08139950\n\t"
-        "	ldr r2, _08139954\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x39\n\t"
-        "	bls _08139958\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08139972\n\t"
-        "	.align 2, 0\n\t"
-        "_08139950: .4byte gSpecialVar_0x8004\n\t"
-        "_08139954: .4byte 0xFFFFFEDF\n\t"
-        "_08139958:\n\t"
-        "	ldr r4, _08139978\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	bl ItemIdToBattleMoveId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0xd\n\t"
-        "	ldr r0, _0813997C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	movs r0, #1\n\t"
-        "_08139972:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08139978: .4byte gStringVar2\n\t"
-        "_0813997C: .4byte gMoveNames\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSpecialVar_0x8004 >= ITEM_TM01 && gSpecialVar_0x8004 <= ITEM_HM08)
+    {
+        StringCopy(gStringVar2, gMoveNames[ItemIdToBattleMoveId(gSpecialVar_0x8004)]);
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void IsBadEggInParty(void)
+bool8 IsBadEggInParty(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r4, #0\n\t"
-        "	cmp r4, r5\n\t"
-        "	bhs _081399B6\n\t"
-        "_08139990:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _081399A8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081399AC\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081399B8\n\t"
-        "	.align 2, 0\n\t"
-        "_081399A8: .4byte gPlayerParty\n\t"
-        "_081399AC:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, r5\n\t"
-        "	blo _08139990\n\t"
-        "_081399B6:\n\t"
-        "	movs r0, #0\n\t"
-        "_081399B8:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 partyCount = CalculatePlayerPartyCount();
+    u8 i;
+
+    for (i = 0; i < partyCount; i++)
+    {
+        if (GetMonData3(&gPlayerParty[i], MON_DATA_SANITY_IS_BAD_EGG) == TRUE)
+            return TRUE;
+    }
+
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 InMultiPartnerRoom(void)
@@ -3191,150 +2564,75 @@ __attribute__((naked)) bool8 InMultiPartnerRoom(void)
     );
 }
 
-__attribute__((naked)) void OffsetCameraForBattle(void)
+void OffsetCameraForBattle(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetCameraPanningCallback\n\t"
-        "	movs r0, #8\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetCameraPanning\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetCameraPanningCallback(NULL);
+    SetCameraPanning(8, 0);
 }
 
-__attribute__((naked)) void SetDeptStoreFloor(void)
+void SetDeptStoreFloor(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08139A24\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #0x15]\n\t"
-        "	subs r0, #0x10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _08139A58\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08139A28\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08139A24: .4byte gSaveBlock1Ptr\n\t"
-        "_08139A28: .4byte _08139A2C\n\t"
-        "_08139A2C:\n\t"
-        "	.4byte _08139A58\n\t"
-        "	.4byte _08139A44\n\t"
-        "	.4byte _08139A48\n\t"
-        "	.4byte _08139A4C\n\t"
-        "	.4byte _08139A50\n\t"
-        "	.4byte _08139A54\n\t"
-        "_08139A44:\n\t"
-        "	movs r1, #5\n\t"
-        "	b _08139A5A\n\t"
-        "_08139A48:\n\t"
-        "	movs r1, #6\n\t"
-        "	b _08139A5A\n\t"
-        "_08139A4C:\n\t"
-        "	movs r1, #7\n\t"
-        "	b _08139A5A\n\t"
-        "_08139A50:\n\t"
-        "	movs r1, #8\n\t"
-        "	b _08139A5A\n\t"
-        "_08139A54:\n\t"
-        "	movs r1, #0xf\n\t"
-        "	b _08139A5A\n\t"
-        "_08139A58:\n\t"
-        "	movs r1, #4\n\t"
-        "_08139A5A:\n\t"
-        "	ldr r0, _08139A64\n\t"
-        "	bl VarSet\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08139A64: .4byte 0x00004043\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 deptStoreFloor;
+    switch (gSaveBlock1Ptr->dynamicWarp.mapNum)
+    {
+    case MAP_NUM(MAP_LILYCOVE_CITY_DEPARTMENT_STORE_1F):
+        deptStoreFloor = DEPT_STORE_FLOORNUM_1F;
+        break;
+    case MAP_NUM(MAP_LILYCOVE_CITY_DEPARTMENT_STORE_2F):
+        deptStoreFloor = DEPT_STORE_FLOORNUM_2F;
+        break;
+    case MAP_NUM(MAP_LILYCOVE_CITY_DEPARTMENT_STORE_3F):
+        deptStoreFloor = DEPT_STORE_FLOORNUM_3F;
+        break;
+    case MAP_NUM(MAP_LILYCOVE_CITY_DEPARTMENT_STORE_4F):
+        deptStoreFloor = DEPT_STORE_FLOORNUM_4F;
+        break;
+    case MAP_NUM(MAP_LILYCOVE_CITY_DEPARTMENT_STORE_5F):
+        deptStoreFloor = DEPT_STORE_FLOORNUM_5F;
+        break;
+    case MAP_NUM(MAP_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP):
+        deptStoreFloor = DEPT_STORE_FLOORNUM_ROOFTOP;
+        break;
+    default:
+        deptStoreFloor = DEPT_STORE_FLOORNUM_1F;
+        break;
+    }
+    VarSet(VAR_DEPT_STORE_FLOOR, deptStoreFloor);
 }
 
-__attribute__((naked)) u16 GetDeptStoreDefaultFloorChoice(void)
+u16 GetDeptStoreDefaultFloorChoice(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r2, _08139A98\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r1, _08139A9C\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _08139AA0\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	ldrsb r0, [r3, r0]\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	cmp r0, #0xd\n\t"
-        "	bne _08139AE2\n\t"
-        "	ldrb r0, [r3, #0x15]\n\t"
-        "	subs r0, #0x10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #4\n\t"
-        "	bhi _08139AE2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08139AA4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08139A98: .4byte gUnknown_203A82C\n\t"
-        "_08139A9C: .4byte gUnknown_203A82E\n\t"
-        "_08139AA0: .4byte gSaveBlock1Ptr\n\t"
-        "_08139AA4: .4byte _08139AA8\n\t"
-        "_08139AA8:\n\t"
-        "	.4byte _08139ADA\n\t"
-        "	.4byte _08139AD2\n\t"
-        "	.4byte _08139ACA\n\t"
-        "	.4byte _08139AC2\n\t"
-        "	.4byte _08139ABC\n\t"
-        "_08139ABC:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	b _08139AE0\n\t"
-        "_08139AC2:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08139AE0\n\t"
-        "_08139ACA:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	movs r0, #2\n\t"
-        "	b _08139AE0\n\t"
-        "_08139AD2:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	movs r0, #3\n\t"
-        "	b _08139AE0\n\t"
-        "_08139ADA:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	movs r0, #4\n\t"
-        "_08139AE0:\n\t"
-        "	strh r0, [r4]\n\t"
-        "_08139AE2:\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    gUnknown_203A82C = 0;
+    gUnknown_203A82E = 0;
+
+    if (gSaveBlock1Ptr->dynamicWarp.mapGroup == MAP_GROUP(MAP_LILYCOVE_CITY_DEPARTMENT_STORE_1F))
+    {
+        switch (gSaveBlock1Ptr->dynamicWarp.mapNum)
+        {
+        case MAP_NUM(MAP_LILYCOVE_CITY_DEPARTMENT_STORE_5F):
+            gUnknown_203A82C = 0;
+            gUnknown_203A82E = 0;
+            break;
+        case MAP_NUM(MAP_LILYCOVE_CITY_DEPARTMENT_STORE_4F):
+            gUnknown_203A82C = 0;
+            gUnknown_203A82E = 1;
+            break;
+        case MAP_NUM(MAP_LILYCOVE_CITY_DEPARTMENT_STORE_3F):
+            gUnknown_203A82C = 0;
+            gUnknown_203A82E = 2;
+            break;
+        case MAP_NUM(MAP_LILYCOVE_CITY_DEPARTMENT_STORE_2F):
+            gUnknown_203A82C = 0;
+            gUnknown_203A82E = 3;
+            break;
+        case MAP_NUM(MAP_LILYCOVE_CITY_DEPARTMENT_STORE_1F):
+            gUnknown_203A82C = 0;
+            gUnknown_203A82E = 4;
+            break;
+        }
+    }
+
+    return gUnknown_203A82E;
 }
 
 // Kept externally visible while the Department Store elevator routines remain
@@ -3590,24 +2888,10 @@ __attribute__((naked)) void ShowDeptStoreElevatorFloorSelect(void)
     );
 }
 
-__attribute__((naked)) void CloseDeptStoreElevatorWindow(void)
+void CloseDeptStoreElevatorWindow(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _08139C64\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ClearStdWindowAndFrameToTransparent\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl RemoveWindow\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08139C64: .4byte gUnknown_203A82A\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearStdWindowAndFrameToTransparent(gUnknown_203A82A, TRUE);
+    RemoveWindow(gUnknown_203A82A);
 }
 
 __attribute__((naked)) void sub_08139C68(void)
@@ -3970,30 +3254,12 @@ __attribute__((naked)) void warp0_in_pokecenter(void)
     );
 }
 
-__attribute__((naked)) void PlayerNotAtTrainerHillEntrance(void)
+bool32 PlayerNotAtTrainerHillEntrance(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08139F20\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r1, [r0, #4]\n\t"
-        "	ldr r0, _08139F24\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _08139F28\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08139F2A\n\t"
-        "	.align 2, 0\n\t"
-        "_08139F20: .4byte gSaveBlock1Ptr\n\t"
-        "_08139F24: .4byte 0x00003C1A\n\t"
-        "_08139F28:\n\t"
-        "	movs r0, #0\n\t"
-        "_08139F2A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_TRAINER_HILL_ENTRANCE) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_TRAINER_HILL_ENTRANCE))
+        return FALSE;
+
+    return TRUE;
 }
 
 void UpdateFrontierManiac(u16 daysSince)
@@ -5075,49 +4341,16 @@ __attribute__((naked)) void sub_0813A740(void)
 void ShowGlassWorkshopMenu(void)
 {
 }
-__attribute__((naked)) void SetBattleTowerLinkPlayerGfx(void)
+void SetBattleTowerLinkPlayerGfx(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r6, _0813A79C\n\t"
-        "	ldr r0, _0813A7A0\n\t"
-        "	adds r5, r0, #0\n\t"
-        "_0813A77E:\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	subs r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r0, [r0, #0x13]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0813A7A4\n\t"
-        "	subs r0, r5, r4\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #0\n\t"
-        "	bl VarSet\n\t"
-        "	b _0813A7B0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813A79C: .4byte gLinkPlayers\n\t"
-        "_0813A7A0: .4byte 0x0000401F\n\t"
-        "_0813A7A4:\n\t"
-        "	subs r0, r5, r4\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x69\n\t"
-        "	bl VarSet\n\t"
-        "_0813A7B0:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #1\n\t"
-        "	bls _0813A77E\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    for (i = 0; i < 2; i++)
+    {
+        if (gLinkPlayers[i].gender == MALE)
+            VarSet(VAR_OBJ_GFX_ID_F - i, OBJ_EVENT_GFX_BRENDAN_NORMAL);
+        else
+            VarSet(VAR_OBJ_GFX_ID_F - i, OBJ_EVENT_GFX_RIVAL_MAY_NORMAL);
+    }
 }
 
 __attribute__((naked)) void ShowNatureGirlMessage(void)
@@ -5382,104 +4615,31 @@ __attribute__((naked)) void UpdateBattlePointsWindow(void)
     );
 }
 
-__attribute__((naked)) void CloseBattlePointsWindow(void)
+void CloseBattlePointsWindow(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0813A9EC\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ClearStdWindowAndFrameToTransparent\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl RemoveWindow\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813A9EC: .4byte gUnknown_203A839\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearStdWindowAndFrameToTransparent(gUnknown_203A839, TRUE);
+    RemoveWindow(gUnknown_203A839);
 }
 
-__attribute__((naked)) void TakeFrontierBattlePoints(void)
+void TakeFrontierBattlePoints(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0813AA08\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _0813AA0C\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldr r0, _0813AA10\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r2, r0\n\t"
-        "	bhs _0813AA14\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0813AA16\n\t"
-        "	.align 2, 0\n\t"
-        "_0813AA08: .4byte gSaveBlock2Ptr\n\t"
-        "_0813AA0C: .4byte 0x00000EB8\n\t"
-        "_0813AA10: .4byte gSpecialVar_0x8004\n\t"
-        "_0813AA14:\n\t"
-        "	subs r0, r2, r0\n\t"
-        "_0813AA16:\n\t"
-        "	strh r0, [r1]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSaveBlock2Ptr->frontier.battlePoints < gSpecialVar_0x8004)
+        gSaveBlock2Ptr->frontier.battlePoints = 0;
+    else
+        gSaveBlock2Ptr->frontier.battlePoints -= gSpecialVar_0x8004;
 }
 
-__attribute__((naked)) void GiveFrontierBattlePoints(void)
+void GiveFrontierBattlePoints(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0813AA38\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _0813AA3C\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	ldr r0, _0813AA40\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _0813AA44\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0813AA48\n\t"
-        "	strh r0, [r2]\n\t"
-        "	b _0813AA4A\n\t"
-        "	.align 2, 0\n\t"
-        "_0813AA38: .4byte gSaveBlock2Ptr\n\t"
-        "_0813AA3C: .4byte 0x00000EB8\n\t"
-        "_0813AA40: .4byte gSpecialVar_0x8004\n\t"
-        "_0813AA44: .4byte 0x0000270F\n\t"
-        "_0813AA48:\n\t"
-        "	strh r1, [r2]\n\t"
-        "_0813AA4A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSaveBlock2Ptr->frontier.battlePoints + gSpecialVar_0x8004 > MAX_BATTLE_FRONTIER_POINTS)
+        gSaveBlock2Ptr->frontier.battlePoints = MAX_BATTLE_FRONTIER_POINTS;
+    else
+        gSaveBlock2Ptr->frontier.battlePoints = gSaveBlock2Ptr->frontier.battlePoints + gSpecialVar_0x8004;
 }
 
-__attribute__((naked)) void GetFrontierBattlePoints(void)
+u16 GetFrontierBattlePoints(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0813AA5C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _0813AA60\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0813AA5C: .4byte gSaveBlock2Ptr\n\t"
-        "_0813AA60: .4byte 0x00000EB8\n\t"
-        ".syntax divided\n\t"
-    );
+    return gSaveBlock2Ptr->frontier.battlePoints;
 }
 
 __attribute__((naked)) void ShowFrontierExchangeCornerItemIconWindow(void)
@@ -5507,24 +4667,10 @@ __attribute__((naked)) void ShowFrontierExchangeCornerItemIconWindow(void)
     );
 }
 
-__attribute__((naked)) void CloseFrontierExchangeCornerItemIconWindow(void)
+void CloseFrontierExchangeCornerItemIconWindow(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0813AAA8\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ClearStdWindowAndFrameToTransparent\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl RemoveWindow\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813AAA8: .4byte gUnknown_203A83A\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearStdWindowAndFrameToTransparent(gUnknown_203A83A, TRUE);
+    RemoveWindow(gUnknown_203A83A);
 }
 
 __attribute__((naked)) void sub_0813AAAC(void)
@@ -5962,24 +5108,10 @@ __attribute__((naked)) void sub_0813AD6C(void)
     );
 }
 
-__attribute__((naked)) void CloseBattleFrontierTutorWindow(void)
+void CloseBattleFrontierTutorWindow(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0813AE08\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ClearStdWindowAndFrameToTransparent\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl RemoveWindow\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813AE08: .4byte gUnknown_203A82A\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearStdWindowAndFrameToTransparent(gUnknown_203A82A, TRUE);
+    RemoveWindow(gUnknown_203A82A);
 }
 
 __attribute__((naked)) void ScrollableMultichoice_RedrawPersistentMenu(void)
@@ -6696,39 +5828,16 @@ __attribute__((naked)) void CreateAbnormalWeatherEvent(void)
     );
 }
 
-__attribute__((naked)) bool8 GetAbnormalWeatherMapNameAndType(void)
+bool32 GetAbnormalWeatherMapNameAndType(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _0813B3D4\n\t"
-        "	bl VarGet\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r0, _0813B3D8\n\t"
-        "	ldr r2, _0813B3DC\n\t"
-        "	subs r1, r4, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMapName\n\t"
-        "	cmp r4, #8\n\t"
-        "	bls _0813B3E0\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0813B3E2\n\t"
-        "	.align 2, 0\n\t"
-        "_0813B3D4: .4byte 0x00004037\n\t"
-        "_0813B3D8: .4byte gStringVar1\n\t"
-        "_0813B3DC: .4byte gUnknown_8592E5C\n\t"
-        "_0813B3E0:\n\t"
-        "	movs r0, #0\n\t"
-        "_0813B3E2:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 abnormalWeather = VarGet(VAR_ABNORMAL_WEATHER_LOCATION);
+
+    GetMapName(gStringVar1, gUnknown_8592E5C[abnormalWeather - 1], 0);
+
+    if (abnormalWeather < MARINE_CAVE_LOCATIONS_START)
+        return FALSE;
+    else
+        return TRUE;
 }
 
 __attribute__((naked)) bool8 AbnormalWeatherHasExpired(void)
@@ -6846,112 +5955,37 @@ void Unused_SetWeatherSunny(void)
     SetCurrentAndNextWeather(WEATHER_SUNNY);
 }
 
-__attribute__((naked)) u32 GetMartEmployeeObjectEventId(void)
+u32 GetMartEmployeeObjectEventId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, _0813B4FC\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	movs r6, #4\n\t"
-        "	ldrsb r6, [r4, r6]\n\t"
-        "	ldr r5, _0813B500\n\t"
-        "	adds r0, r5, #2\n\t"
-        "	mov ip, r0\n\t"
-        "	adds r7, r5, #1\n\t"
-        "_0813B4DC:\n\t"
-        "	lsls r0, r3, #1\n\t"
-        "	adds r2, r0, r3\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	bne _0813B504\n\t"
-        "	movs r1, #5\n\t"
-        "	ldrsb r1, [r4, r1]\n\t"
-        "	adds r0, r2, r7\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0813B504\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	b _0813B510\n\t"
-        "	.align 2, 0\n\t"
-        "_0813B4FC: .4byte gSaveBlock1Ptr\n\t"
-        "_0813B500: .4byte gUnknown_8592E7C\n\t"
-        "_0813B504:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #0xb\n\t"
-        "	bls _0813B4DC\n\t"
-        "	movs r0, #1\n\t"
-        "_0813B510:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    for (i = 0; i < 12; i++)
+    {
+        if (gSaveBlock1Ptr->location.mapGroup == gUnknown_8592E7C[i * 3])
+        {
+            if (gSaveBlock1Ptr->location.mapNum == (gUnknown_8592E7C + 1)[i * 3])
+                return (gUnknown_8592E7C + 2)[i * 3];
+        }
+    }
+    return 1;
 }
 
-__attribute__((naked)) bool32 IsTrainerRegistered(void)
+bool32 IsTrainerRegistered(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0813B540\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl GetRematchIdxByTrainerIdx\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _0813B544\n\t"
-        "	movs r1, #0xae\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0813B544\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0813B546\n\t"
-        "	.align 2, 0\n\t"
-        "_0813B540: .4byte gSpecialVar_0x8004\n\t"
-        "_0813B544:\n\t"
-        "	movs r0, #0\n\t"
-        "_0813B546:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    int index = GetRematchIdxByTrainerIdx(gSpecialVar_0x8004);
+    if (index >= 0)
+    {
+        if (FlagGet(TRAINER_REGISTERED_FLAGS_START + index) == TRUE)
+            return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void ShouldDistributeEonTicket(void)
+bool32 ShouldDistributeEonTicket(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0813B560\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0813B564\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0813B566\n\t"
-        "	.align 2, 0\n\t"
-        "_0813B560: .4byte 0x0000403F\n\t"
-        "_0813B564:\n\t"
-        "	movs r0, #0\n\t"
-        "_0813B566:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!VarGet(VAR_DISTRIBUTE_EON_TICKET))
+        return FALSE;
+
+    return TRUE;
 }
 
 __attribute__((naked)) void BattleTowerReconnectLink(void)
@@ -7543,27 +6577,10 @@ __attribute__((naked)) void GetBattlePyramidHint(void)
     );
 }
 
-__attribute__((naked)) void ResetHealLocationFromDewford(void)
+void ResetHealLocationFromDewford(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0813B9F4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r1, [r0, #0x1c]\n\t"
-        "	movs r0, #0xb0\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0813B9EE\n\t"
-        "	movs r0, #3\n\t"
-        "	bl SetLastHealLocationWarp\n\t"
-        "_0813B9EE:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813B9F4: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSaveBlock1Ptr->lastHealLocation.mapGroup == MAP_GROUP(MAP_DEWFORD_TOWN) && gSaveBlock1Ptr->lastHealLocation.mapNum == MAP_NUM(MAP_DEWFORD_TOWN))
+        SetLastHealLocationWarp(HEAL_LOCATION_PETALBURG_CITY);
 }
 
 __attribute__((naked)) bool8 InPokemonCenter()
@@ -7622,746 +6639,255 @@ void ResetFanClub(void)
     gSaveBlock1Ptr->vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] = 0;
 }
 
-__attribute__((naked)) void TryLoseFansFromPlayTimeAfterLinkBattle(void)
+void TryLoseFansFromPlayTimeAfterLinkBattle(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl DidPlayerGetFirstFans\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0813BA8A\n\t"
-        "	bl TryLoseFansFromPlayTime\n\t"
-        "	ldr r0, _0813BA90\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _0813BA94\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r0, [r0, #0xe]\n\t"
-        "	movs r2, #0xa1\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "_0813BA8A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BA90: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BA94: .4byte gSaveBlock2Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DidPlayerGetFirstFans())
+    {
+        TryLoseFansFromPlayTime();
+        gSaveBlock1Ptr->vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] = gSaveBlock2Ptr->playTimeHours;
+    }
 }
 
-__attribute__((naked)) void UpdateTrainerFanClubGameClear(void)
+void UpdateTrainerFanClubGameClear(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0813BAF4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _0813BAF8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsrs r0, r0, #7\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0813BAEE\n\t"
-        "	bl SetPlayerGotFirstFans\n\t"
-        "	bl sub_0813BDBC\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r0, _0813BAFC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r0, [r0, #0xe]\n\t"
-        "	movs r2, #0xa1\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _0813BB00\n\t"
-        "	bl FlagClear\n\t"
-        "	ldr r0, _0813BB04\n\t"
-        "	bl FlagClear\n\t"
-        "	ldr r0, _0813BB08\n\t"
-        "	bl FlagClear\n\t"
-        "	movs r0, #0xc6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	bl FlagClear\n\t"
-        "	ldr r0, _0813BB0C\n\t"
-        "	bl FlagClear\n\t"
-        "	ldr r0, _0813BB10\n\t"
-        "	movs r1, #1\n\t"
-        "	bl VarSet\n\t"
-        "_0813BAEE:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BAF4: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BAF8: .4byte 0x0000141E\n\t"
-        "_0813BAFC: .4byte gSaveBlock2Ptr\n\t"
-        "_0813BB00: .4byte 0x00000315\n\t"
-        "_0813BB04: .4byte 0x00000316\n\t"
-        "_0813BB08: .4byte 0x00000317\n\t"
-        "_0813BB0C: .4byte 0x000002DA\n\t"
-        "_0813BB10: .4byte 0x00004095\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!GET_TRAINER_FAN_CLUB_FLAG(FANCLUB_GOT_FIRST_FANS))
+    {
+        SetPlayerGotFirstFans();
+        sub_0813BDBC();
+        gSaveBlock1Ptr->vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] = gSaveBlock2Ptr->playTimeHours;
+        FlagClear(FLAG_HIDE_FANCLUB_OLD_LADY);
+        FlagClear(FLAG_HIDE_FANCLUB_BOY);
+        FlagClear(FLAG_HIDE_FANCLUB_LITTLE_BOY);
+        FlagClear(FLAG_HIDE_FANCLUB_LADY);
+        FlagClear(FLAG_HIDE_LILYCOVE_FAN_CLUB_INTERVIEWER);
+        VarSet(VAR_LILYCOVE_FAN_CLUB_STATE, 1);
+    }
 }
 
-__attribute__((naked)) void sub_0813BB14(void)
+u8 sub_0813BB14(u8 incrementId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r0, _0813BB60\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _0813BB90\n\t"
-        "	ldr r4, _0813BB64\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r5, _0813BB68\n\t"
-        "	adds r3, r0, r5\n\t"
-        "	ldrh r2, [r3]\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	ands r1, r2\n\t"
-        "	ldr r0, _0813BB6C\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	cmp r1, #0x13\n\t"
-        "	ble _0813BB8C\n\t"
-        "	bl GetNumFansOfPlayerInTrainerFanClub\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #2\n\t"
-        "	bhi _0813BB74\n\t"
-        "	bl sub_0813BBAC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	ldr r1, _0813BB70\n\t"
-        "	ands r1, r2\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _0813BB90\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BB60: .4byte 0x00004095\n\t"
-        "_0813BB64: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BB68: .4byte 0x0000141E\n\t"
-        "_0813BB6C: .4byte gUnknown_8592ECC\n\t"
-        "_0813BB70: .4byte 0x0000FF80\n\t"
-        "_0813BB74:\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	ldr r0, _0813BB88\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x14\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	b _0813BB90\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BB88: .4byte 0x0000FF80\n\t"
-        "_0813BB8C:\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	strh r0, [r3]\n\t"
-        "_0813BB90:\n\t"
-        "	ldr r0, _0813BBA4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _0813BBA8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BBA4: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BBA8: .4byte 0x0000141E\n\t"
-        ".syntax divided\n\t"
-    );
+    if (VarGet(VAR_LILYCOVE_FAN_CLUB_STATE) == 2)
+    {
+        if (GET_TRAINER_FAN_CLUB_COUNTER + sFanClubCounterIncrements[incrementId] > 19)
+        {
+            if (GetNumFansOfPlayerInTrainerFanClub() < 3)
+            {
+                sub_0813BBAC();
+                CLEAR_TRAINER_FAN_CLUB_COUNTER;
+            }
+            else
+            {
+                SET_TRAINER_FAN_CLUB_COUNTER(20);
+            }
+        }
+        else
+        {
+            INCR_TRAINER_FAN_CLUB_COUNTER(sFanClubCounterIncrements[incrementId]);
+        }
+    }
+
+    return GET_TRAINER_FAN_CLUB_COUNTER;
 }
 
-__attribute__((naked)) void sub_0813BBAC(void)
+u16 sub_0813BBAC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r7, _0813BBF4\n\t"
-        "	ldr r2, _0813BBF8\n\t"
-        "	movs r6, #1\n\t"
-        "_0813BBBA:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r0, _0813BBFC\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	asrs r1, r4\n\t"
-        "	ands r1, r6\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0813BC00\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	str r2, [sp]\n\t"
-        "	str r3, [sp, #4]\n\t"
-        "	bl Random\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	ldr r3, [sp, #4]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0813BC00\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	lsls r1, r4\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	orrs r1, r2\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _0813BC22\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BBF4: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BBF8: .4byte 0x0000141E\n\t"
-        "_0813BBFC: .4byte gUnknown_8592ED0\n\t"
-        "_0813BC00:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #7\n\t"
-        "	bls _0813BBBA\n\t"
-        "	ldr r0, _0813BC2C\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _0813BC30\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r1, _0813BC34\n\t"
-        "	adds r1, r3, r1\n\t"
-        "	movs r0, #1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r0, r1\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "_0813BC22:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BC2C: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BC30: .4byte 0x0000141E\n\t"
-        "_0813BC34: .4byte gUnknown_8592ED0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 idx = 0;
+
+    for (i = 0; i < ARRAY_COUNT(sFanClubGainOrder); i++)
+    {
+        if (!GET_TRAINER_FAN_CLUB_FLAG(sFanClubGainOrder[i]))
+        {
+            idx = i;
+            if (Random() & 1)
+            {
+                SET_TRAINER_FAN_CLUB_FLAG(sFanClubGainOrder[idx]);
+                return idx;
+            }
+        }
+    }
+    SET_TRAINER_FAN_CLUB_FLAG(sFanClubGainOrder[idx]);
+    return idx;
 }
 
-__attribute__((naked)) void sub_0813BC38(void)
+u16 sub_0813BC38(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	movs r0, #0\n\t"
-        "	mov sl, r0\n\t"
-        "	bl GetNumFansOfPlayerInTrainerFanClub\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0813BC66\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0813BCC6\n\t"
-        "_0813BC56:\n\t"
-        "	mov r1, r8\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	add r0, sb\n\t"
-        "	lsls r4, r6\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	eors r4, r1\n\t"
-        "	strh r4, [r0]\n\t"
-        "	b _0813BCC4\n\t"
-        "_0813BC66:\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r2, _0813BCD4\n\t"
-        "	mov r8, r2\n\t"
-        "	ldr r0, _0813BCD8\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r4, #1\n\t"
-        "_0813BC72:\n\t"
-        "	mov r1, r8\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	add r0, sb\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r7, _0813BCDC\n\t"
-        "	adds r0, r5, r7\n\t"
-        "	ldrb r6, [r0]\n\t"
-        "	asrs r1, r6\n\t"
-        "	ands r1, r4\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0813BC96\n\t"
-        "	mov sl, r5\n\t"
-        "	bl Random\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0813BC56\n\t"
-        "_0813BC96:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #7\n\t"
-        "	bls _0813BC72\n\t"
-        "	ldr r0, _0813BCD4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _0813BCD8\n\t"
-        "	adds r4, r0, r2\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	mov r2, sl\n\t"
-        "	adds r0, r2, r7\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	asrs r0, r2\n\t"
-        "	movs r3, #1\n\t"
-        "	ands r0, r3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0813BCC4\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	lsls r0, r2\n\t"
-        "	eors r1, r0\n\t"
-        "	strh r1, [r4]\n\t"
-        "_0813BCC4:\n\t"
-        "	mov r0, sl\n\t"
-        "_0813BCC6:\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BCD4: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BCD8: .4byte 0x0000141E\n\t"
-        "_0813BCDC: .4byte gUnknown_8592ED8\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 idx = 0;
+
+    if (GetNumFansOfPlayerInTrainerFanClub() == 1)
+        return 0;
+
+    for (i = 0; i < ARRAY_COUNT(sFanClubLossOrder); i++)
+    {
+        if (GET_TRAINER_FAN_CLUB_FLAG(sFanClubLossOrder[i]))
+        {
+            idx = i;
+            if (Random() & 1)
+            {
+                FLIP_TRAINER_FAN_CLUB_FLAG(sFanClubLossOrder[idx]);
+                return idx;
+            }
+        }
+    }
+
+    if (GET_TRAINER_FAN_CLUB_FLAG(sFanClubLossOrder[idx]))
+        FLIP_TRAINER_FAN_CLUB_FLAG(sFanClubLossOrder[idx]);
+
+    return idx;
 }
 
-__attribute__((naked)) void GetNumFansOfPlayerInTrainerFanClub(void)
+u16 GetNumFansOfPlayerInTrainerFanClub(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r0, _0813BD18\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _0813BD1C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r4, [r0]\n\t"
-        "	movs r5, #1\n\t"
-        "_0813BCF2:\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	asrs r0, r1\n\t"
-        "	ands r0, r5\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0813BD06\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "_0813BD06:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #7\n\t"
-        "	bls _0813BCF2\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BD18: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BD1C: .4byte 0x0000141E\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 numFans = 0;
+
+    for (i = 0; i < NUM_TRAINER_FAN_CLUB_MEMBERS; i++)
+    {
+        if (GET_TRAINER_FAN_CLUB_FLAG(i + FANCLUB_MEMBER1))
+            numFans++;
+    }
+
+    return numFans;
 }
 
-__attribute__((naked)) void TryLoseFansFromPlayTime(void)
+void TryLoseFansFromPlayTime(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r2, _0813BD34\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldrh r1, [r0, #0xe]\n\t"
-        "	ldr r0, _0813BD38\n\t"
-        "	cmp r1, r0\n\t"
-        "	bhi _0813BD90\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	b _0813BD6A\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BD34: .4byte gSaveBlock2Ptr\n\t"
-        "_0813BD38: .4byte 0x000003E6\n\t"
-        "_0813BD3C:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldrh r1, [r0, #0xe]\n\t"
-        "	ldr r4, _0813BD88\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r2, #0xa1\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	cmp r1, #0xb\n\t"
-        "	ble _0813BD90\n\t"
-        "	bl sub_0813BC38\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #0xa1\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	adds r1, #0xc\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "_0813BD6A:\n\t"
-        "	bl GetNumFansOfPlayerInTrainerFanClub\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	bhi _0813BD8C\n\t"
-        "	ldr r0, _0813BD88\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldrh r0, [r0, #0xe]\n\t"
-        "	movs r2, #0xa1\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _0813BD90\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BD88: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BD8C:\n\t"
-        "	cmp r5, #8\n\t"
-        "	bne _0813BD3C\n\t"
-        "_0813BD90:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i = 0;
+    if (gSaveBlock2Ptr->playTimeHours < 999)
+    {
+        while (TRUE)
+        {
+            if (GetNumFansOfPlayerInTrainerFanClub() < 5)
+            {
+                gSaveBlock1Ptr->vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] = gSaveBlock2Ptr->playTimeHours;
+                break;
+            }
+            else if (i == NUM_TRAINER_FAN_CLUB_MEMBERS)
+            {
+                break;
+            }
+            else if (gSaveBlock2Ptr->playTimeHours - gSaveBlock1Ptr->vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] < 12)
+            {
+                return;
+            }
+            sub_0813BC38();
+            gSaveBlock1Ptr->vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] += 12;
+            i++;
+        }
+    }
 }
 
-__attribute__((naked)) void IsFanClubMemberFanOfPlayer(void)
+bool8 IsFanClubMemberFanOfPlayer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0813BDB0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _0813BDB4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldr r1, _0813BDB8\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	asrs r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BDB0: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BDB4: .4byte 0x0000141E\n\t"
-        "_0813BDB8: .4byte gSpecialVar_0x8004\n\t"
-        ".syntax divided\n\t"
-    );
+    return GET_TRAINER_FAN_CLUB_FLAG(gSpecialVar_0x8004);
 }
 
-__attribute__((naked)) void sub_0813BDBC(void)
+void sub_0813BDBC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0813BDE4\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _0813BDE8\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #6\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	orrs r0, r1\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	orrs r0, r1\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BDE4: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BDE8: .4byte 0x0000141E\n\t"
-        ".syntax divided\n\t"
-    );
+    SET_TRAINER_FAN_CLUB_FLAG(FANCLUB_MEMBER6);
+    SET_TRAINER_FAN_CLUB_FLAG(FANCLUB_MEMBER1);
+    SET_TRAINER_FAN_CLUB_FLAG(FANCLUB_MEMBER3);
 }
 
-__attribute__((naked)) void BufferFanClubTrainerName(void)
+void BufferFanClubTrainerName(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r0, _0813BE08\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	subs r0, #8\n\t"
-        "	cmp r0, #7\n\t"
-        "	bhi _0813BE4C\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0813BE0C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BE08: .4byte gSpecialVar_0x8004\n\t"
-        "_0813BE0C: .4byte _0813BE10\n\t"
-        "_0813BE10:\n\t"
-        "	.4byte _0813BE4C\n\t"
-        "	.4byte _0813BE4C\n\t"
-        "	.4byte _0813BE30\n\t"
-        "	.4byte _0813BE36\n\t"
-        "	.4byte _0813BE3C\n\t"
-        "	.4byte _0813BE42\n\t"
-        "	.4byte _0813BE48\n\t"
-        "	.4byte _0813BE4C\n\t"
-        "_0813BE30:\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	b _0813BE4C\n\t"
-        "_0813BE36:\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	b _0813BE4C\n\t"
-        "_0813BE3C:\n\t"
-        "	movs r3, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	b _0813BE4C\n\t"
-        "_0813BE42:\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	b _0813BE4C\n\t"
-        "_0813BE48:\n\t"
-        "	movs r3, #1\n\t"
-        "	movs r2, #5\n\t"
-        "_0813BE4C:\n\t"
-        "	ldr r0, _0813BE60\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _0813BE64\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl sub_0813BE68\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BE60: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BE64: .4byte 0x00003150\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 whichLinkTrainer = 0;
+    u8 whichNPCTrainer = 0;
+    switch (gSpecialVar_0x8004)
+    {
+    case FANCLUB_MEMBER1:
+        break;
+    case FANCLUB_MEMBER2:
+        break;
+    case FANCLUB_MEMBER3:
+        whichLinkTrainer = 0;
+        whichNPCTrainer = 3;
+        break;
+    case FANCLUB_MEMBER4:
+        whichLinkTrainer = 0;
+        whichNPCTrainer = 1;
+        break;
+    case FANCLUB_MEMBER5:
+        whichLinkTrainer = 1;
+        whichNPCTrainer = 0;
+        break;
+    case FANCLUB_MEMBER6:
+        whichLinkTrainer = 0;
+        whichNPCTrainer = 4;
+        break;
+    case FANCLUB_MEMBER7:
+        whichLinkTrainer = 1;
+        whichNPCTrainer = 5;
+        break;
+    case FANCLUB_MEMBER8:
+        break;
+    }
+    sub_0813BE68(&gSaveBlock1Ptr->linkBattleRecords, whichLinkTrainer, whichNPCTrainer);
 }
 
-__attribute__((naked)) void sub_0813BE68(void)
+void sub_0813BE68(struct LinkBattleRecords *linkRecords, u8 whichLinkTrainer, u8 whichNPCTrainer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsrs r1, r1, #0x14\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _0813BF1C\n\t"
-        "	cmp r2, #5\n\t"
-        "	bhi _0813BF08\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	ldr r1, _0813BE88\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BE88: .4byte _0813BE8C\n\t"
-        "_0813BE8C:\n\t"
-        "	.4byte _0813BF08\n\t"
-        "	.4byte _0813BEA4\n\t"
-        "	.4byte _0813BEB8\n\t"
-        "	.4byte _0813BECC\n\t"
-        "	.4byte _0813BEE0\n\t"
-        "	.4byte _0813BEF4\n\t"
-        "_0813BEA4:\n\t"
-        "	ldr r0, _0813BEB0\n\t"
-        "	ldr r1, _0813BEB4\n\t"
-        "	bl StringCopy\n\t"
-        "	b _0813BF2A\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BEB0: .4byte gStringVar1\n\t"
-        "_0813BEB4: .4byte gText_Steven\n\t"
-        "_0813BEB8:\n\t"
-        "	ldr r0, _0813BEC4\n\t"
-        "	ldr r1, _0813BEC8\n\t"
-        "	bl StringCopy\n\t"
-        "	b _0813BF2A\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BEC4: .4byte gStringVar1\n\t"
-        "_0813BEC8: .4byte gText_Brawly\n\t"
-        "_0813BECC:\n\t"
-        "	ldr r0, _0813BED8\n\t"
-        "	ldr r1, _0813BEDC\n\t"
-        "	bl StringCopy\n\t"
-        "	b _0813BF2A\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BED8: .4byte gStringVar1\n\t"
-        "_0813BEDC: .4byte gText_Winona\n\t"
-        "_0813BEE0:\n\t"
-        "	ldr r0, _0813BEEC\n\t"
-        "	ldr r1, _0813BEF0\n\t"
-        "	bl StringCopy\n\t"
-        "	b _0813BF2A\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BEEC: .4byte gStringVar1\n\t"
-        "_0813BEF0: .4byte gText_Phoebe\n\t"
-        "_0813BEF4:\n\t"
-        "	ldr r0, _0813BF00\n\t"
-        "	ldr r1, _0813BF04\n\t"
-        "	bl StringCopy\n\t"
-        "	b _0813BF2A\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BF00: .4byte gStringVar1\n\t"
-        "_0813BF04: .4byte gText_Glacia\n\t"
-        "_0813BF08:\n\t"
-        "	ldr r0, _0813BF14\n\t"
-        "	ldr r1, _0813BF18\n\t"
-        "	bl StringCopy\n\t"
-        "	b _0813BF2A\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BF14: .4byte gStringVar1\n\t"
-        "_0813BF18: .4byte gText_Wallace\n\t"
-        "_0813BF1C:\n\t"
-        "	ldr r4, _0813BF30\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #7\n\t"
-        "	bl StringCopyN\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r4, #7]\n\t"
-        "_0813BF2A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BF30: .4byte gStringVar1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct LinkBattleRecord *record = &linkRecords->entries[whichLinkTrainer];
+    if (record->name[0] == EOS)
+    {
+        switch (whichNPCTrainer)
+        {
+        case 0:
+            StringCopy(gStringVar1, gText_Wallace);
+            break;
+        case 1:
+            StringCopy(gStringVar1, gText_Steven);
+            break;
+        case 2:
+            StringCopy(gStringVar1, gText_Brawly);
+            break;
+        case 3:
+            StringCopy(gStringVar1, gText_Winona);
+            break;
+        case 4:
+            StringCopy(gStringVar1, gText_Phoebe);
+            break;
+        case 5:
+            StringCopy(gStringVar1, gText_Glacia);
+            break;
+        default:
+            StringCopy(gStringVar1, gText_Wallace);
+            break;
+        }
+    }
+    else
+    {
+        StringCopyN(gStringVar1, record->name, PLAYER_NAME_LENGTH);
+        gStringVar1[PLAYER_NAME_LENGTH] = EOS;
+    }
 }
 
-__attribute__((naked)) void sub_0813BF34(void)
+void sub_0813BF34(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0813BF58\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _0813BF64\n\t"
-        "	bl TryLoseFansFromPlayTimeAfterLinkBattle\n\t"
-        "	ldr r0, _0813BF5C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0813BF60\n\t"
-        "	bl sub_0813BBAC\n\t"
-        "	b _0813BF64\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BF58: .4byte 0x00004095\n\t"
-        "_0813BF5C: .4byte gBattleOutcome\n\t"
-        "_0813BF60:\n\t"
-        "	bl sub_0813BC38\n\t"
-        "_0813BF64:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (VarGet(VAR_LILYCOVE_FAN_CLUB_STATE) == 2)
+    {
+        TryLoseFansFromPlayTimeAfterLinkBattle();
+        if (gBattleOutcome == B_OUTCOME_WON)
+            sub_0813BBAC();
+        else
+            sub_0813BC38();
+    }
 }
 
-__attribute__((naked)) void DidPlayerGetFirstFans(void)
+bool8 DidPlayerGetFirstFans(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0813BF7C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _0813BF80\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsrs r0, r0, #7\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BF7C: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BF80: .4byte 0x0000141E\n\t"
-        ".syntax divided\n\t"
-    );
+    return GET_TRAINER_FAN_CLUB_FLAG(FANCLUB_GOT_FIRST_FANS);
 }
 
-__attribute__((naked)) void SetPlayerGotFirstFans(void)
+void SetPlayerGotFirstFans(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0813BF98\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _0813BF9C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	orrs r0, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BF98: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BF9C: .4byte 0x0000141E\n\t"
-        ".syntax divided\n\t"
-    );
+    SET_TRAINER_FAN_CLUB_FLAG(FANCLUB_GOT_FIRST_FANS);
 }
 
-__attribute__((naked)) void Script_TryGainNewFanFromCounter(void)
+u8 Script_TryGainNewFanFromCounter(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0813BFB4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl sub_0813BB14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BFB4: .4byte gSpecialVar_0x8004\n\t"
-        ".syntax divided\n\t"
-    );
+    return sub_0813BB14(gSpecialVar_0x8004);
 }
 
 
