@@ -27,7 +27,7 @@ import struct
 import tempfile
 from bisect import bisect_right
 from collections import Counter, defaultdict
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 
 try:
@@ -111,6 +111,13 @@ class FunctionDef:
     macro: str | None = None
     macro_verified: bool = True
     name_inputs: tuple[tuple[str, str], ...] = ()
+    link_name: str | None = None
+    link_name_verified: bool = True
+
+    @property
+    def emitted_name(self) -> str:
+        """The ELF spelling, never a replacement for the C source name."""
+        return self.link_name if self.link_name is not None else self.name
 
 
 @dataclass(frozen=True)
@@ -296,10 +303,91 @@ def has_naked_macro_prefix(text: str, before: int) -> bool:
     return False
 
 
+def function_declaration_suffix(text: str, probe: int) -> tuple[int, list[str | None]]:
+    """Skip GNU attributes/asm names after a balanced parameter list.
+
+    Only a literal assembler identifier is supported.  An expression, escaped
+    spelling or unknown macro is not expanded or guessed into a link name.
+    """
+    names = []
+    while True:
+        while probe < len(text) and text[probe].isspace():
+            probe += 1
+        if probe < len(text) and text[probe] == "#":
+            line_end = text.find("\n", probe)
+            probe = len(text) if line_end == -1 else line_end + 1
+            continue
+        suffix = re.match(r"(?:__attribute__|asm|__asm|__asm__)\s*\(", text[probe:])
+        if suffix is None:
+            return probe, names
+        open_pos = probe + suffix.end() - 1
+        if suffix.group().startswith("__attribute__"):
+            end = skip_balanced(text, open_pos)
+        else:
+            depth, end = 0, None
+            for token in re.finditer(r'"(?:\\.|[^"\\])*"|[()]', text[open_pos:]):
+                if token.group() == "(":
+                    depth += 1
+                elif token.group() == ")":
+                    depth -= 1
+                    if depth == 0:
+                        end = open_pos + token.end()
+                        break
+        if end is None:
+            return len(text), names + [None]
+        if not suffix.group().startswith("__attribute__"):
+            literal = re.fullmatch(r'\s*"([A-Za-z_]\w*)"\s*', text[open_pos + 1:end - 1])
+            names.append(literal.group(1) if literal else None)
+        probe = end
+
+
+def function_link_names(text: str) -> dict[str, tuple[str | None, bool, int]]:
+    """Collect explicit link names from this translation unit's declarations.
+
+    Input is already default-branch selected.  Comments, strings and nested
+    scopes cannot supply a declaration; variables/function-pointer objects
+    with an asm name are not function declarations.  Conflicting/unsupported
+    declarations remain unverified instead of falling back to the C name.
+    """
+    quoted_or_comment = re.compile(
+        r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//[^\n]*|/\*[\s\S]*?\*/')
+    clean = quoted_or_comment.sub(
+        lambda match: "".join("\n" if char == "\n" else " " for char in match.group())
+        if match.group().startswith(("//", "/*")) else match.group(), text)
+    heads = quoted_or_comment.sub(
+        lambda match: "".join("\n" if char == "\n" else " " for char in match.group()), clean)
+    positions, depths, depth = [], [], 0
+    for match in re.finditer(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|[{}]', clean):
+        if match.group() in {"{", "}"}:
+            depth += 1 if match.group() == "{" else -1
+            positions.append(match.start())
+            depths.append(depth)
+    declarations, first_declarations = defaultdict(list), {}
+    ignored = {"asm", "__asm", "__asm__", "__attribute__", "if", "for", "while", "switch", "sizeof"}
+    for match in FUNCTION_HEAD_RE.finditer(heads):
+        position = bisect_right(positions, match.start()) - 1
+        if (position >= 0 and depths[position] != 0) or match.group("name") in ignored:
+            continue
+        end = skip_balanced(clean, match.end("head") - 1)
+        if end is None:
+            continue
+        probe, names = function_declaration_suffix(clean, end)
+        if names and probe < len(clean) and clean[probe] in ";{":
+            declarations[match.group("name")].extend(names)
+            first_declarations.setdefault(match.group("name"), match.start("head"))
+    result = {}
+    for name, values in declarations.items():
+        unique = set(values)
+        verified = len(unique) == 1 and None not in unique
+        result[name] = (values[0] if verified else None, verified, first_declarations[name])
+    return result
+
+
 def function_definitions(path: Path, root: Path) -> list[FunctionDef]:
     """Find C definitions without counting prototypes or control statements."""
     original = path.read_text(encoding="utf-8", errors="replace")
     text = active_preprocessor_text(original)
+    link_names = function_link_names(text)
     selected_directives = active_preprocessor_text(original, keep_directives=True) if "_DEFUN" in text else ""
     result: list[FunctionDef] = []
     ignored = {"if", "for", "while", "switch", "sizeof"}
@@ -314,25 +402,7 @@ def function_definitions(path: Path, root: Path) -> list[FunctionDef]:
         end = skip_balanced(text, open_pos)
         if end is None:
             continue
-        probe = end
-        while True:
-            while probe < len(text) and text[probe].isspace():
-                probe += 1
-            # A conditional signature can leave ``#endif`` between the
-            # selected parameter list and its common function body.
-            if probe < len(text) and text[probe] == "#":
-                line_end = text.find("\n", probe)
-                probe = len(text) if line_end == -1 else line_end + 1
-                continue
-            if not text.startswith("__attribute__", probe):
-                break
-            attr_open = text.find("(", probe + len("__attribute__"))
-            if attr_open < 0:
-                break
-            attr_end = skip_balanced(text, attr_open)
-            if attr_end is None:
-                break
-            probe = attr_end
+        probe, _suffix_names = function_declaration_suffix(text, end)
         if probe >= len(text) or text[probe] != "{":
             continue
         # The expression consumes leading GNU attributes as part of this
@@ -359,6 +429,10 @@ def function_definitions(path: Path, root: Path) -> list[FunctionDef]:
                     break
                 visited.add(name)
                 name = aliases[name]
+        link_name, link_name_verified, first_declaration = link_names.get(name, (None, True, -1))
+        # A later asm declaration may be ignored by the compiler.  It cannot
+        # retroactively redirect a definition to another function's symbol.
+        link_name_verified = link_name_verified and first_declaration <= match.start("head")
         result.append(FunctionDef(
             path=path.relative_to(root / "src").as_posix(),
             name=name,
@@ -366,8 +440,13 @@ def function_definitions(path: Path, root: Path) -> list[FunctionDef]:
             inline=bool(re.search(r"\binline\b", header)),
             declared_name=declared_name, macro=macro, macro_verified=macro_verified,
             name_inputs=name_inputs if macro else (),
+            link_name=link_name, link_name_verified=link_name_verified,
         ))
-    return result
+    counts = Counter(item.emitted_name for item in result if item.link_name_verified)
+    collisions = {item.emitted_name for item in result
+                  if item.link_name is not None and item.link_name_verified and counts[item.emitted_name] > 1}
+    return [replace(item, link_name_verified=False) if item.emitted_name in collisions else item
+            for item in result]
 
 
 def c_inventory(root: Path) -> list[FunctionDef]:
@@ -586,6 +665,9 @@ def linked_function_evidence(
         "stale_source_owners": [],
         "unverified_function_macros": sorted({f"{item.path}:{item.declared_name}"
                                                for item in definitions if not item.macro_verified}),
+        "unverified_asm_link_names": sorted({f"{item.path}:{item.name}"
+                                            for item in definitions if not item.link_name_verified}),
+        "asm_link_name_bindings": [],
         "input_section_bindings": [],
         "input_object_errors": {},
         "inline_not_emitted": [],
@@ -615,8 +697,21 @@ def linked_function_evidence(
         metadata["reason"] = "missing_jp_link_map"
     metadata["object_ranges"] = len(ranges)
     source_paths = {definition.path for definition in definitions}
-    verified_definitions = {(item.name, item.path) for item in definitions if item.macro_verified}
-    wanted_names = {name for name, _path in verified_definitions}
+    by_emitted_owner = defaultdict(list)
+    for item in definitions:
+        if item.macro_verified and item.link_name_verified:
+            by_emitted_owner[(item.emitted_name, item.path)].append(item)
+    ambiguous_link_names = {key for key, values in by_emitted_owner.items()
+                            if len(values) > 1 and any(item.link_name is not None for item in values)}
+    metadata["unverified_asm_link_names"] = sorted(set(metadata["unverified_asm_link_names"]) | {
+        f"{item.path}:{item.name}" for key in ambiguous_link_names for item in by_emitted_owner[key]})
+    wanted_names = {name for name, owner in by_emitted_owner if (name, owner) not in ambiguous_link_names}
+    _header, final_sections, final_rows = elf_tables(data)
+    typed_symbols = {(name, address & ~1) for name, address, _size, info, index, _file in final_rows
+                     if (info & 15 == 2 and 0 < index < len(final_sections)
+                         and final_sections[index][2] & 4
+                         and final_sections[index][3] <= (address & ~1)
+                         < final_sections[index][3] + final_sections[index][5])}
     starts = [start for start, _end, _owner in ranges]
     maximum_ends = []
     for _start, end, _owner in ranges:
@@ -660,11 +755,27 @@ def linked_function_evidence(
         if len(owners) > 1 or (owners and local_owners and not owners & local_owners):
             conflicts.add((name, address))
             continue
-        if (len(owners) == 1 and owners <= source_paths and not owners & stale
-                and (name, next(iter(owners))) in verified_definitions):
-            evidence[(name, address)].update(owners)
-    for key in conflicts:
-        evidence.pop(key, None)
+        if len(owners) == 1 and owners <= source_paths and not owners & stale:
+            owner = next(iter(owners))
+            if (name, owner) in ambiguous_link_names:
+                continue
+            for definition in by_emitted_owner.get((name, owner), []):
+                # A variable/NOTYPE symbol cannot verify an explicit function
+                # asm name.  The exact typed object supplement remains below.
+                if definition.link_name is not None and (name, address) not in typed_symbols:
+                    continue
+                evidence[(definition.name, address)].add(owner)
+                if definition.link_name is not None:
+                    metadata["asm_link_name_bindings"].append({
+                        "source_owner": owner, "name": definition.name, "link_name": name,
+                        "address": "0x%08X" % address,
+                        "evidence": "JP_ELF_STT_FUNC_and_unique_linker_input_owner"})
+    for name, address in conflicts:
+        for definition in definitions:
+            if definition.emitted_name == name:
+                evidence.pop((definition.name, address), None)
+    metadata["asm_link_name_bindings"] = [item for item in metadata["asm_link_name_bindings"]
+                                         if (item["link_name"], int(item["address"], 16)) not in conflicts]
 
     # GNU ld may replace a source function symbol with an ABS name while
     # retaining its real input section.  Supplement only from the matching
@@ -676,7 +787,6 @@ def linked_function_evidence(
     object_cache = {}
     object_symbol_names = {}
     metadata["inputs"]["input_objects"] = {}
-    _header, final_sections, _rows = elf_tables(data)
     executable_ranges = [(item[3], item[3] + item[5]) for item in final_sections if item[2] & 4]
 
     def object_functions(object_name: str) -> list[tuple] | None:
@@ -708,7 +818,9 @@ def linked_function_evidence(
         return functions
 
     for definition in definitions:
-        if (not definition.macro_verified or definition.path in stale
+        if (not definition.macro_verified or not definition.link_name_verified
+                or (definition.emitted_name, definition.path) in ambiguous_link_names
+                or definition.path in stale
                 or (definition.name, definition.path) in bound):
             continue
         inputs = by_owner[definition.path]
@@ -716,30 +828,39 @@ def linked_function_evidence(
         for start, end, owner, section, object_name in inputs:
             records = object_functions(object_name)
             object_records[object_name] = records
-            if records is None or section != ".text." + definition.name:
+            if (records is None or (definition.link_name is None
+                                    and section != ".text." + definition.name)):
                 continue
             for name, actual_section, offset, _size, section_size in records:
                 address = start + offset
-                if (name == definition.name and actual_section == section
+                if (name == definition.emitted_name and actual_section == section
                         and section_size == end - start
                         and owners_at(address) == {owner}
                         and any(a <= address < b for a, b in executable_ranges)):
                     candidates.add((address, section, object_name))
         if len(candidates) == 1:
             address, section, object_name = next(iter(candidates))
-            if (definition.name, address) not in conflicts:
+            if (definition.emitted_name, address) not in conflicts:
                 evidence[(definition.name, address)].add(definition.path)
                 metadata["input_section_bindings"].append({
                     "source_owner": definition.path, "name": definition.name,
                     "address": "0x%08X" % address, "input_section": section,
                     "input_object": object_name, "evidence": "exact_input_section_and_object_STT_FUNC"})
+                if definition.link_name is not None:
+                    metadata["asm_link_name_bindings"].append({
+                        "source_owner": definition.path, "name": definition.name,
+                        "link_name": definition.link_name, "address": "0x%08X" % address,
+                        "input_section": section, "input_object": object_name,
+                        "evidence": "exact_input_section_and_object_STT_FUNC"})
         elif (not candidates and definition.inline and inputs and object_records
               and all(records is not None for records in object_records.values())
-              and all(definition.name not in object_symbol_names[object_name]
+              and all(definition.emitted_name not in object_symbol_names[object_name]
+                      and definition.name not in object_symbol_names[object_name]
                       for object_name in object_records)):
             metadata["inline_not_emitted"].append({"source_owner": definition.path, "name": definition.name})
     metadata["input_section_bindings"].sort(key=lambda item: (item["source_owner"], item["name"], item["address"]))
     metadata["inline_not_emitted"].sort(key=lambda item: (item["source_owner"], item["name"]))
+    metadata["asm_link_name_bindings"].sort(key=lambda item: (item["source_owner"], item["name"], item["address"]))
     metadata["owner_conflicts"] = len(conflicts)
     metadata["status"] = "available" if evidence else "unavailable"
     if not evidence and "reason" not in metadata:
@@ -758,6 +879,7 @@ def resolve_funcmap_entries(
     Reports always provide linked evidence, including an empty dictionary
     when it is unavailable.  The legacy direct-call form accepts only an
     explicit, exact funcmap source owner, never an unowned name match.
+    An explicit asm link name always requires actual linked evidence.
     """
     by_name: dict[str, list[FuncmapEntry]] = defaultdict(list)
     by_address: dict[int, list[FuncmapEntry]] = defaultdict(list)
@@ -773,7 +895,8 @@ def resolve_funcmap_entries(
         if len(owners) == 1:
             linked_addresses[(name, next(iter(owners)))].add(address)
     for definition in definitions:
-        if not definition.macro_verified:
+        if (not definition.macro_verified or not definition.link_name_verified
+                or (definition.link_name is not None and linked_owners is None)):
             continue
         candidates = by_name.get(definition.name, [])
         owner_candidates = [entry for entry in candidates if entry.source and
@@ -824,6 +947,8 @@ def function_binding_inventory(
         key = (definition.path, definition.name)
         addresses = actual[(definition.name, definition.path)]
         reason = ("function_macro_unverified" if not definition.macro_verified else
+                  "asm_link_name_unverified" if (not definition.link_name_verified
+                       or f"{definition.path}:{definition.name}" in metadata.get("unverified_asm_link_names", [])) else
                   "ambiguous_linked_addresses" if f"{definition.path}:{definition.name}" in multi_address else
                   "stale_source_owner" if definition.path in metadata.get("stale_source_owners", []) else
                   "inline_not_emitted" if key in inline_keys else
@@ -833,6 +958,7 @@ def function_binding_inventory(
             "source_owner": definition.path, "name": definition.name,
             "naked": definition.naked, "inline": definition.inline,
             "declared_name": definition.declared_name, "reason": reason,
+            "link_name": definition.link_name, "link_name_verified": definition.link_name_verified,
             "candidate_addresses": ["0x%08X" % value for value in sorted(candidates[definition.name])],
             "verified_source_addresses": ["0x%08X" % value for value in sorted(addresses)],
         })
@@ -2414,7 +2540,7 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "",
         "| 指标 | 口径 |",
         "| --- | --- |",
-        "| 严格 C 转换率 | 默认分支有非 `naked` C 函数体，经 JP ELF 同名可执行符号与 JP linker 输入对象范围验证 owner 的唯一 funcmap 地址 / funcmap 唯一地址；同名 static 按 source owner 和地址保留，不建立名称→地址覆盖表。缺证保留 unresolved，因此仅为保守可证下界；没有 ELF 证据时百分比 unavailable，不报 0% 退步。 |",
+        "| 严格 C 转换率 | 默认分支有非 `naked` C 函数体，经 JP ELF 符号与 JP linker 输入对象范围验证 owner 的唯一 funcmap 地址 / funcmap 唯一地址；源码名与显式 `asm`/`__asm__` 链接名分开保留，显式链接名必须有 ELF/object STT_FUNC 证据。同名 static 按 source owner 和地址保留，不建立名称→地址覆盖表。缺证保留 unresolved，因此仅为保守可证下界；没有 ELF 证据时百分比 unavailable，不报 0% 退步。 |",
         "| 模块归位率 | 已证实 JP owner 的严格 C 地址中，funcmap US 标准名候选在 US 源树有定义的地址 / 严格 C 地址；不代表该候选已逐函数语义复核。 |",
         "| 路径对齐率 | 上述地址中 JP 相对 `src/` 路径也属于 US owner 的地址 / 严格 C 地址。 |",
         "| 过渡文件 | 文件名包含 tail、rest、mid、stub 或地址式片段；分类可重叠。 |",

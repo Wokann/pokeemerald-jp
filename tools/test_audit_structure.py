@@ -7,6 +7,7 @@ import struct
 import sys
 import tempfile
 import unittest
+from contextlib import contextmanager
 from unittest import mock
 from pathlib import Path
 
@@ -57,6 +58,256 @@ def object_fixture(name, section=None, *, info=0x12, offset=1):
                 (0, 3, 0, 0, names_at, len(names), 0, 0, 1, 0)]
     return header + bytes(0x20) + names + strings + table + b"".join(
         struct.pack("<10I", *item) for item in sections)
+
+
+class AsmLinkNameTests(unittest.TestCase):
+    @contextmanager
+    def fixture(self, sources, symbols, map_text=" .text 0x08000100 0x20 src/one.o\n", objects=None):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "src").mkdir()
+            for name, text in sources.items():
+                (root / "src" / name).write_text(text)
+            for name, data in (objects or {}).items():
+                (root / name).write_bytes(data)
+            (root / "pokeemerald_jp.map").write_text(map_text)
+            (root / "pokeemerald_jp.elf").write_bytes(elf_fixture(symbols))
+            yield root, audit.c_inventory(root)
+
+    def inventory(self, root, definitions, entries):
+        linked, metadata = audit.linked_function_evidence(root, definitions)
+        resolved, multiple = audit.resolve_funcmap_entries(definitions, entries, linked)
+        result = audit.function_binding_inventory(definitions, entries, linked, metadata, resolved, multiple)
+        return linked, metadata, resolved, result
+
+    def test_asm_spellings_attributes_and_multiline_declarations_keep_both_names(self):
+        for keyword in ("asm", "__asm", "__asm__"):
+            with self.subTest(keyword=keyword), self.fixture(
+                {"one.c": f'void Source(int arg)\n {keyword}("Linked")\n __attribute__((unused));\n'
+                          'void Source(int arg) {}\n'}, [("Linked", 0x08000101, 0x12, 1)]) as (root, definitions):
+                self.assertEqual(len(definitions), 1)
+                definition = definitions[0]
+                self.assertEqual((definition.name, definition.link_name, definition.emitted_name),
+                                 ("Source", "Linked", "Linked"))
+                linked, metadata, resolved, result = self.inventory(
+                    root, definitions, [audit.FuncmapEntry(0x08000100, None, "Old", "US")])
+                self.assertEqual(linked, {("Source", 0x08000100): {"one.c"}})
+                self.assertIn(definition, resolved)
+                self.assertEqual(result["strict_c_addresses"], 1)
+                self.assertEqual(metadata["asm_link_name_bindings"], [{
+                    "source_owner": "one.c", "name": "Source", "link_name": "Linked",
+                    "address": "0x08000100", "evidence": "JP_ELF_STT_FUNC_and_unique_linker_input_owner"}])
+
+    def test_default_branch_selects_asm_name_without_inactive_conflicts(self):
+        source = '#ifdef NONMATCHING\nvoid Source(void) asm("Wrong");\n#else\n' \
+                 'void Source(void) __asm__("Linked");\n#endif\n' \
+                 '#if 0\nvoid Source(void) asm("AlsoWrong");\n#endif\nvoid Source(void) {}\n'
+        with self.fixture({"one.c": source}, []) as (_root, definitions):
+            self.assertEqual([(d.name, d.link_name, d.link_name_verified) for d in definitions],
+                             [("Source", "Linked", True)])
+
+    def test_asm_declaration_after_definition_cannot_redirect_existing_body(self):
+        source = 'void Source(void) {}\nvoid Source(void) asm("Linked");\nvoid Linked(void) {}\n'
+        with self.fixture({"one.c": source}, [("Source", 0x08000101, 0x12, 1),
+                ("Linked", 0x08000111, 0x12, 1)]) as (root, definitions):
+            source_def, linked_def = definitions
+            self.assertFalse(source_def.link_name_verified)
+            self.assertTrue(linked_def.link_name_verified)
+            self.assertEqual(audit.linked_function_evidence(root, definitions)[0],
+                             {("Linked", 0x08000110): {"one.c"}})
+
+    def test_repeated_asm_declaration_after_body_keeps_prior_verified_name(self):
+        source = 'void Source(void) asm("Linked");\nvoid Source(void) {}\nvoid Source(void) asm("Linked");\n'
+        with self.fixture({"one.c": source}, [("Linked", 0x08000101, 0x12, 1)]) as (root, definitions):
+            self.assertTrue(definitions[0].link_name_verified)
+            self.assertEqual(audit.linked_function_evidence(root, definitions)[0],
+                             {("Source", 0x08000100): {"one.c"}})
+
+    def test_comments_strings_variables_and_nested_prototypes_do_not_supply_names(self):
+        source = '/* void Source(void) asm("Comment"); */\n' \
+                 'const char *text = "void Source(void) asm(\\\"String\\\");";\n' \
+                 'extern int RAM asm("Source");\nextern void (*Pointer)(void) asm("Source");\n' \
+                 'void Container(void) {\nvoid Source(void) asm("Nested");\n}\nvoid Source(void) {}\n'
+        with self.fixture({"one.c": source}, []) as (_root, definitions):
+            self.assertEqual([(d.name, d.link_name, d.link_name_verified) for d in definitions],
+                             [("Container", None, True), ("Source", None, True)])
+
+    def test_conflicting_declarations_cannot_fall_back_to_source_or_either_alias(self):
+        source = 'void Source(void) asm("First");\nvoid Source(void) __asm__("Second");\nvoid Source(void) {}\n'
+        with self.fixture({"one.c": source}, [("Source", 0x08000101, 0x12, 1),
+                ("First", 0x08000105, 0x12, 1), ("Second", 0x08000109, 0x12, 1)]) as (root, definitions):
+            entries = [audit.FuncmapEntry(0x08000100, "one.s", "Source", "Source")]
+            linked, metadata, resolved, result = self.inventory(root, definitions, entries)
+            self.assertFalse(definitions[0].link_name_verified)
+            self.assertEqual((linked, resolved), ({}, {}))
+            self.assertEqual(metadata["unverified_asm_link_names"], ["one.c:Source"])
+            self.assertEqual(result["unresolved_bindings"][0]["reason"], "asm_link_name_unverified")
+
+    def test_unsupported_asm_expressions_and_spellings_are_unverified(self):
+        for argument in ('LINK_MACRO', '"Linked" "Suffix"', '"Linked.label"', '"bad("', r'"Escaped\x41"'):
+            with self.subTest(argument=argument), self.fixture(
+                {"one.c": f'void Source(void) asm({argument});\nvoid Source(void) {{}}\n'},
+                [("Source", 0x08000101, 0x12, 1)]) as (root, definitions):
+                self.assertFalse(definitions[0].link_name_verified)
+                self.assertEqual(audit.linked_function_evidence(root, definitions)[0], {})
+
+    def test_two_c_names_for_one_emitted_name_in_one_owner_are_not_fanned_out(self):
+        source = 'void First(void) asm("Linked");\nvoid Second(void) asm("Linked");\n' \
+                 'void First(void) {}\nvoid Second(void) {}\n'
+        with self.fixture({"one.c": source}, [("Linked", 0x08000101, 0x12, 1)]) as (root, definitions):
+            self.assertTrue(all(not d.link_name_verified for d in definitions))
+            self.assertEqual(audit.linked_function_evidence(root, definitions)[0], {})
+            # Also reject a manually supplied ambiguous inventory.
+            manual = [audit.FunctionDef("one.c", name, False, link_name="Linked")
+                      for name in ("First", "Second")]
+            self.assertEqual(audit.linked_function_evidence(root, manual)[0], {})
+
+    def test_equal_source_and_link_names_across_owners_keep_distinct_addresses(self):
+        sources = {"one.c": 'static void Source(void) asm("Linked");\nstatic void Source(void) {}\n',
+                   "two.c": 'static void Source(void) asm("Linked");\nNAKED\nstatic void Source(void) {}\n'}
+        symbols = [("one.c", 0, 4, 0xFFF1), ("Linked", 0x08000101, 2, 1),
+                   ("two.c", 0, 4, 0xFFF1), ("Linked", 0x08000141, 2, 1)]
+        map_text = " .text 0x08000100 0x20 src/one.o\n .text 0x08000140 0x20 src/two.o\n"
+        with self.fixture(sources, symbols, map_text) as (root, definitions):
+            entries = [audit.FuncmapEntry(address, None, "Linked", "US") for address in (0x08000100, 0x08000140)]
+            linked, _metadata, _resolved, result = self.inventory(root, definitions, entries)
+            self.assertEqual(linked, {("Source", 0x08000100): {"one.c"}, ("Source", 0x08000140): {"two.c"}})
+            self.assertEqual((result["bound_c_definitions"], result["strict_c_addresses"],
+                              result["naked_assembly_addresses"]), (2, 1, 1))
+            self.assertEqual(result["strict_naked_address_overlap"], 0)
+
+    def test_same_owner_link_name_with_multiple_addresses_is_unresolved(self):
+        source = 'void Source(void) asm("Linked");\nvoid Source(void) asm("Linked");\nvoid Source(void) {}\n'
+        with self.fixture({"one.c": source}, [("Linked", 0x08000101, 0x12, 1),
+                ("Linked", 0x08000141, 0x12, 1)], " .text 0x08000100 0x60 src/one.o\n") as (root, definitions):
+            self.assertTrue(definitions[0].link_name_verified)
+            entries = [audit.FuncmapEntry(address, "one.s", "Source", "Linked")
+                       for address in (0x08000100, 0x08000140)]
+            _linked, _metadata, resolved, result = self.inventory(root, definitions, entries)
+            self.assertEqual(resolved, {})
+            self.assertEqual(result["strict_c_addresses"], 0)
+            self.assertEqual(result["unresolved_bindings"][0]["reason"], "ambiguous_linked_addresses")
+            self.assertEqual(audit.resolve_funcmap_entries(definitions, entries)[0], {})
+
+    def test_asm_name_takes_precedence_when_source_names_also_exist_in_elf(self):
+        source = 'void First(void) asm("Second");\nvoid Second(void) asm("First");\n' \
+                 'void First(void) {}\nvoid Second(void) {}\n'
+        with self.fixture({"one.c": source}, [("First", 0x08000101, 0x12, 1),
+                ("Second", 0x08000141, 0x12, 1)], " .text 0x08000100 0x60 src/one.o\n") as (root, definitions):
+            entries = [audit.FuncmapEntry(address, None, name, name)
+                       for address, name in ((0x08000100, "First"), (0x08000140, "Second"))]
+            linked, _metadata, _resolved, result = self.inventory(root, definitions, entries)
+            self.assertEqual(linked, {("First", 0x08000140): {"one.c"}, ("Second", 0x08000100): {"one.c"}})
+            self.assertEqual(result["strict_c_addresses"], 2)
+
+    def test_asm_bindings_require_unique_owner_and_consistent_local_file_context(self):
+        sources = {name: 'void Source(void) asm("Linked");\nvoid Source(void) {}\n'
+                   for name in ("one.c", "two.c")}
+        cases = [( [("Linked", 0x08000101, 0x12, 1)],
+                   " .text 0x08000100 0x20 src/one.o\n .text 0x08000100 0x20 src/two.o\n"),
+                 ( [("two.c", 0, 4, 0xFFF1), ("Linked", 0x08000101, 2, 1)],
+                   " .text 0x08000100 0x20 src/one.o\n")]
+        for symbols, map_text in cases:
+            with self.subTest(map_text=map_text), self.fixture(sources, symbols, map_text) as (root, definitions):
+                linked, metadata = audit.linked_function_evidence(root, definitions)
+                self.assertEqual(linked, {})
+                self.assertEqual(metadata["owner_conflicts"], 1)
+
+    def test_notype_object_and_absolute_names_are_not_function_evidence(self):
+        source = 'void Source(void) asm("Linked");\nvoid Source(void) {}\n'
+        for symbols in ([ ("Linked", 0x08000101, 0x10, 1)],
+                        [ ("Linked", 0x08000101, 0x11, 1)],
+                        [ ("Linked", 0x08000101, 0x12, 0xFFF1)],
+                        [ ("Linked", 0x08000101, 0x10, 1), ("Linked", 0x08000101, 0x12, 0xFFF1)]):
+            with self.subTest(symbols=symbols), self.fixture({"one.c": source}, symbols) as (root, definitions):
+                entries = [audit.FuncmapEntry(0x08000100, "one.s", "Linked", "Source")]
+                linked, _metadata, _resolved, result = self.inventory(root, definitions, entries)
+                self.assertEqual(linked, {})
+                self.assertEqual(result["strict_c_addresses"], 0)
+                self.assertEqual(len(result["unresolved_emitted_or_unknown_bindings"]), 1)
+
+    def test_missing_elf_map_or_wrong_owner_never_uses_funcmap_fallback(self):
+        source = 'void Source(void) asm("Linked");\nvoid Source(void) {}\n'
+        for missing in ("elf", "map", "owner"):
+            with self.subTest(missing=missing), self.fixture(
+                {"one.c": source}, [("Linked", 0x08000101, 0x12, 1)]) as (root, definitions):
+                if missing in {"elf", "map"}:
+                    (root / ("pokeemerald_jp." + missing)).unlink()
+                else:
+                    (root / "pokeemerald_jp.map").write_text(" .text 0x08000100 0x20 src/other.o\n")
+                linked, _metadata, _resolved, result = self.inventory(root, definitions, [
+                    audit.FuncmapEntry(0x08000100, "one.s", "Linked", "Source")])
+                self.assertEqual(linked, {})
+                self.assertEqual(result["bound_c_definitions"], 0)
+
+    def test_exact_typed_object_section_offset_not_abs_alias_binds_asm_name(self):
+        source = 'void Source(void) asm("Linked");\nvoid Source(void) {}\n'
+        for section in (".text", ".text.Source", ".text.Linked"):
+            with self.subTest(section=section), self.fixture({"one.c": source}, [
+                    ("Linked", 0x08000121, 0x12, 0xFFF1), ("Other", 0x08000141, 0x10, 1)],
+                    f" {section} 0x08000140 0x20 src/one.o\n",
+                    {"src/one.o": object_fixture("Linked", section, offset=5)}) as (root, definitions):
+                linked, metadata = audit.linked_function_evidence(root, definitions)
+                self.assertEqual(linked, {("Source", 0x08000144): {"one.c"}})
+                self.assertEqual(metadata["asm_link_name_bindings"][0]["input_section"], section)
+                self.assertEqual(metadata["asm_link_name_bindings"][0]["link_name"], "Linked")
+
+    def test_asm_object_supplement_rejects_wrong_name_type_or_section(self):
+        source = 'void Source(void) asm("Linked");\nvoid Source(void) {}\n'
+        for data in (object_fixture("Other", ".text"), object_fixture("Linked", ".text", info=0x10),
+                     object_fixture("Linked", ".text.Wrong")):
+            with self.subTest(data=data[:52]), self.fixture({"one.c": source}, [],
+                    objects={"src/one.o": data}) as (root, definitions):
+                self.assertEqual(audit.linked_function_evidence(root, definitions)[0], {})
+
+    def test_asm_source_or_object_newer_than_elf_remains_unverified(self):
+        source = 'void Source(void) asm("Linked");\nvoid Source(void) {}\n'
+        for target in ("src/one.c", "src/one.o"):
+            with self.subTest(target=target), self.fixture({"one.c": source}, [],
+                    objects={"src/one.o": object_fixture("Linked", ".text")}) as (root, definitions):
+                newer = (root / "pokeemerald_jp.elf").stat().st_mtime_ns + 1000000000
+                os.utime(root / target, ns=(newer, newer))
+                linked, metadata = audit.linked_function_evidence(root, definitions)
+                self.assertEqual(linked, {})
+                if target.endswith(".c"):
+                    self.assertEqual(metadata["stale_source_owners"], ["one.c"])
+                else:
+                    self.assertEqual(metadata["input_object_errors"], {"src/one.o": "input_object_newer_than_elf"})
+
+    def test_asm_inline_non_emission_checks_link_and_source_names_in_real_object(self):
+        source = 'static inline void Source(void) asm("Linked");\nstatic inline void Source(void) {}\n'
+        for object_name, proved_absent in (("Helper", True), ("Source", False), ("Linked", False)):
+            with self.subTest(object_name=object_name), self.fixture({"one.c": source}, [],
+                    objects={"src/one.o": object_fixture(object_name, ".text", info=0x10 if object_name == "Linked" else 0x12)}) as (root, definitions):
+                linked, metadata = audit.linked_function_evidence(root, definitions)
+                self.assertEqual(linked, {})
+                self.assertEqual(bool(metadata["inline_not_emitted"]), proved_absent)
+
+    def test_weather_fifteen_asm_names_bind_rom_addresses_without_name_guessing(self):
+        pairs = [
+            ("None_Main", "sub_080AAB88"), ("BuildColorMaps", "BuildGammaShiftTables"),
+            ("UpdateWeatherColorMap", "UpdateWeatherGammaShift"), ("FadeInScreen_FogHorizontal", "FadeInScreen_Fog1"),
+            ("ApplyColorMap", "ApplyGammaShift"), ("ApplyColorMapWithBlend", "ApplyGammaShiftWithBlend"),
+            ("ApplyDroughtColorMapWithBlend", "ApplyDroughtGammaShiftWithBlend"),
+            ("ApplyWeatherColorMapIfIdle", "sub_080AB544"), ("ApplyWeatherColorMapIfIdle_Gradual", "sub_080AB578"),
+            ("ApplyWeatherColorMapToPal", "ApplyWeatherGammaShiftToPal"), ("IsFirstFrameOfWeatherFadeIn", "sub_080AB81C"),
+            ("SetDroughtColorMap", "sub_080AB8DC"), ("DroughtStateInit", "sub_080AB8EC"),
+            ("DroughtStateRun", "sub_080AB918"), ("SetFieldWeather", "sub_080ABB70")]
+        source = "".join(f'void {name}(void) asm("{link}");\nvoid {name}(void) {{}}\n' for name, link in pairs)
+        symbols = [(link, 0x08000101 + index * 4, 0x12, 1) for index, (_name, link) in enumerate(pairs)]
+        # Addresses deliberately differ from the numeric suffixes.  The old
+        # source-name candidate for None_Main must not steal its binding.
+        entries = [audit.FuncmapEntry(address & ~1, None, link, name)
+                   for (name, link), (_symbol, address, _info, _section) in zip(pairs, symbols)]
+        entries.append(audit.FuncmapEntry(0x08000180, "one.s", "None_Main", "None_Main"))
+        with self.fixture({"one.c": source}, symbols, " .text 0x08000100 0x40 src/one.o\n") as (root, definitions):
+            _linked, metadata, resolved, result = self.inventory(root, definitions, entries)
+            self.assertEqual(result["bound_c_definitions"], 15)
+            self.assertEqual(result["strict_c_addresses"], 15)
+            self.assertEqual(len(metadata["asm_link_name_bindings"]), 15)
+            self.assertEqual(result["unresolved_bindings"], [])
+            none = next(item for item in definitions if item.name == "None_Main")
+            self.assertEqual([item.address for item in resolved[none]], [0x08000100])
 
 
 class StructureAuditTests(unittest.TestCase):
