@@ -12,8 +12,8 @@
 - 模块归位：9845/10549 (93.33%)；路径对齐：9677/10549 (91.73%)；US 标准名仍为 funcmap 候选，并非语义复核结论。
 - JP 路径独有 C 清单：158；无 US 标准函数 owner 的语义缺口模块：117（两种口径，不沿用旧固定数）；同一源同名多地址未解析定义：0。
 - 过渡文件：tail=0、rest=3、mid=5、stub=0、address=0。
-- incbin：7652 引用、7184 条唯一路径、原始二进制 923、非原始 6729、缺失资源 0；可见 baserom 范围 467 条/0x49F368 字节，未限定范围 0 条。
-- 资产命名：5074 条 graphics/sound 引用中，精确 US 路径 40、唯一 basename 候选 19、歧义 0。
+- incbin：7648 引用、7180 条唯一路径、原始二进制 919、非原始 6729、缺失资源 0；可见 baserom 范围 467 条/0x49F368 字节，未限定范围 0 条。
+- 资产命名：5070 条 graphics/sound 引用中，精确 US 路径 40、唯一 basename 候选 19、歧义 0。
 - 地图脚本：468/469 (99.79%) 个首 owner 有 scripts.inc；非 owner scripts.inc：0；结构完整地图：518（直接物理文件满足者 468；合法共享 scripts/events owner 50/11；其中首 owner 469）；map.json 总数：518。
 - 地图语义复核：not_recorded。没有版本化复核清单前，任何 scripts.inc、map.json 或 events.inc 都不计入语义已审计。
 - 三流地图会合：scripts 流 468、events 流 518、共有 468、地图头 518；事件指针状态 direct=507、shared=11；地图内裸 baserom 范围（脚本/事件/资源）=0/0/0。

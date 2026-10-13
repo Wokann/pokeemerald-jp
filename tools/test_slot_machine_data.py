@@ -94,7 +94,10 @@ class SlotMachineDataTests(unittest.TestCase):
         last = linker.index('src/strings.o(.rodata.strings_slot_machine)')
         self.assertLess(first, last)
         self.assertLess(last, linker.index('src/contest_painting.o(.rodata.contest_painting_data)'))
-        self.assertIn('gMonMarkingsMenu_Pal:', mid)
+        self.assertNotIn('gMonMarkingsMenu_Pal:', mid)
+        self.assertIn('src/graphics.o(.rodata.mon_markings_menu_graphics)', linker)
+        self.assertIn('gMonMarkingsMenu_Pal[] = INCGFX_U16("graphics/interface/mon_markings_menu.png", ".gbapal")',
+                      (ROOT / 'src/graphics.c').read_text())
 
     @unittest.skipUnless((ROOT / 'baserom_jp.gba').exists(), 'JP ROM required')
     def test_every_native_graphic_round_trips_from_its_editable_source(self):

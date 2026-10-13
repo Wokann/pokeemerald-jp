@@ -54,7 +54,10 @@ class PointillismDataTests(unittest.TestCase):
         self.assertIn('static const u8 sPointillismPoints[][3] IMAGE_PROCESSING_EFFECTS_DATA = {', header)
         self.assertIn('$(C_BUILDDIR)/image_processing_effects.o: src/image_processing_effects.c ' + HEADER, makefile)
         self.assertIn('gUnknown_8579F34:', mid)
-        self.assertIn('gMonMarkingsMenu_Pal:', mid)
+        self.assertNotIn('gMonMarkingsMenu_Pal:', mid)
+        self.assertIn('src/graphics.o(.rodata.mon_markings_menu_graphics)', linker)
+        self.assertIn('gMonMarkingsMenu_Pal[] = INCGFX_U16("graphics/interface/mon_markings_menu.png", ".gbapal")',
+                      (ROOT / 'src/graphics.c').read_text())
         self.assertNotIn('.incbin "baserom_jp.gba", 0x582308, 0x20a0', mid)
         self.assertIn('src/graphics.o(.rodata.slot_machine_gfx.gSlotMachineReelSymbol1Tiles)', linker)
         self.assertNotIn('__attribute__((naked))', source)

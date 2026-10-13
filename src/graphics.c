@@ -1558,3 +1558,10 @@ TILESET_GENERAL_DATA const u16 gTilesetPalettes_General[][16] =
 #undef TILESET_GENERAL_DATA
 
 #include "data/graphics/slot_machine.h"
+
+#define MON_MARKINGS_MENU_GRAPHICS __attribute__((section(".rodata.mon_markings_menu_graphics"), aligned(1)))
+
+MON_MARKINGS_MENU_GRAPHICS const u16 gMonMarkingsMenu_Pal[] = INCGFX_U16("graphics/interface/mon_markings_menu.png", ".gbapal");
+MON_MARKINGS_MENU_GRAPHICS const u8 gMonMarkingsMenu_Gfx[] = INCGFX_U8("graphics/interface/mon_markings_menu.png", ".4bpp");
+
+#undef MON_MARKINGS_MENU_GRAPHICS

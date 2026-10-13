@@ -1268,6 +1268,7 @@ clean: clean-tools
 	rm -f $(JP_SLOT_MACHINE_ASSETS) $(JP_SLOT_MACHINE_INTERMEDIATES)
 	rm -f $(JP_CONTEST_PAINTING_ASSETS) $(JP_CONTEST_PAINTING_INTERMEDIATES)
 	rm -f $(JP_BATTLE_RECORDS_ASSETS)
+	rm -f $(JP_MON_MARKINGS_ASSETS)
 
 # All build artifacts wait for the host-tool chain, so a fresh checkout can
 # safely use `make -j` without racing the C/asset rules against tool builds.
@@ -1370,6 +1371,12 @@ graphics/battle_anims/sprites/ice_cube.4bpp: graphics/battle_anims/sprites/ice_c
 	$(GFX) $< $@
 
 graphics/interface/%.pal.gbapal: graphics/interface/%.pal | tools
+	$(GFX) $< $@
+
+graphics/interface/%.png.4bpp: graphics/interface/%.png | tools
+	$(GFX) $< $@
+
+graphics/interface/%.png.gbapal: graphics/interface/%.png | tools
 	$(GFX) $< $@
 
 # Keep the JP Egg Hatch graphics reproducible from tracked PNG/PAL inputs.
@@ -3057,6 +3064,26 @@ graphics/picture_frame/%.rl: graphics/picture_frame/% | tools
 
 JP_BATTLE_RECORDS_ASSETS := graphics/trainer_hill/records_window.4bpp \
     graphics/trainer_hill/records_window.gbapal
+
+JP_MON_MARKINGS_MENU_ASSETS := graphics/interface/mon_markings_menu.png.gbapal \
+    graphics/interface/mon_markings_menu.png.4bpp
+JP_MON_MARKINGS_COMBO_ASSETS := graphics/interface/mon_markings.png.gbapal \
+    graphics/interface/mon_markings.png.4bpp
+JP_MON_MARKINGS_ASSETS := $(JP_MON_MARKINGS_MENU_ASSETS) $(JP_MON_MARKINGS_COMBO_ASSETS)
+
+$(C_BUILDDIR)/graphics.o: $(JP_MON_MARKINGS_MENU_ASSETS)
+
+$(C_BUILDDIR)/mon_markings.d: src/mon_markings.c | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -I include -I "" $<
+
+-include $(C_BUILDDIR)/mon_markings.d
+
+$(C_BUILDDIR)/mon_markings.o: src/mon_markings.c charmap.txt $(JP_MON_MARKINGS_COMBO_ASSETS)
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/mon_markings.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/mon_markings.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/mon_markings.gen.s
 
 $(C_BUILDDIR)/battle_records.o: src/battle_records.c charmap.txt $(JP_BATTLE_RECORDS_ASSETS) graphics/trainer_hill/records_window.bin
 	@mkdir -p $(dir $@)

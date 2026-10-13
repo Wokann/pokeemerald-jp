@@ -9784,6 +9784,8 @@ SECTIONS {
         data/data_b2d_mid60.o(.rodata.mid60_tail_after_easy_chat_group_names_data);
         src/data/text/region_texts61.o(.rodata);
         data/data_b2d_mid61.o(.rodata.data_b2d_mid61_before_mon_markings_data);
+        src/graphics.o(.rodata.mon_markings_menu_graphics);
+        src/mon_markings.o(.rodata.mon_markings_graphics_data);
         src/mon_markings.o(.rodata.mon_markings_data);
         src/mauville_old_man.o(.rodata.mauville_old_man_data);
         src/mail.o(.rodata.mail_data);

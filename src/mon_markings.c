@@ -24,12 +24,15 @@ static struct Sprite *CreateMarkingComboSprite(u16, u16, const u16 *, u16);
 
 #define MON_MARKINGS_DATA __attribute__((section(".rodata.mon_markings_data")))
 
-// This file uses the standard C rule, which does not run the INCBIN expander.
-// The four named graphics assets therefore remain in data_b2d_mid61.s.
-extern const u16 sMonMarkings_Pal[];
-extern const ALIGNED(4) u8 sMonMarkings_Gfx[];
-extern const u8 gMonMarkingsMenu_Gfx[];
-extern const u16 gMonMarkingsMenu_Pal[];
+#define MON_MARKINGS_GRAPHICS_DATA __attribute__((section(".rodata.mon_markings_graphics_data")))
+
+MON_MARKINGS_GRAPHICS_DATA static const u16 sMonMarkings_Pal[] = INCGFX_U16("graphics/interface/mon_markings.png", ".gbapal");
+MON_MARKINGS_GRAPHICS_DATA static const ALIGNED(4) u8 sMonMarkings_Gfx[] = INCGFX_U8("graphics/interface/mon_markings.png", ".4bpp"); // dma
+
+// JP retains an unused confirmation string immediately after the marking tiles.
+MON_MARKINGS_GRAPHICS_DATA static const u8 sText_Confirm[] = _("けってい");
+
+#undef MON_MARKINGS_GRAPHICS_DATA
 
 MON_MARKINGS_DATA const struct OamData sOamData_MenuWindow =
 {
