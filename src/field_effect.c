@@ -1,10 +1,281 @@
 #include "global.h"
+#include "data.h"
+#include "decompress.h"
+#include "event_object_movement.h"
+#include "field_camera.h"
+#include "field_control_avatar.h"
 #include "field_effect.h"
-#include "sprite.h"
+#include "field_effect_helpers.h"
+#include "field_player_avatar.h"
+#include "field_screen_effect.h"
+#include "field_weather.h"
+#include "fieldmap.h"
+#include "fldeff.h"
+#include "gpu_regs.h"
 #include "main.h"
+#include "mirage_tower.h"
+#include "window.h"
+#include "menu.h"
+#include "metatile_behavior.h"
+#include "overworld.h"
+#include "palette.h"
+#include "party_menu.h"
+#include "pokemon.h"
+#include "script.h"
+#include "sound.h"
+#include "sprite.h"
 #include "task.h"
+#include "trainer_pokemon_sprites.h"
+#include "trig.h"
+#include "util.h"
 #include "constants/field_effects.h"
 #include "constants/event_object_movement.h"
+#include "constants/metatile_behaviors.h"
+#include "constants/rgb.h"
+#include "constants/songs.h"
+
+
+// Preserve the original JP exports and linker section identities. The healing
+// task names were historically exchanged; C names now follow their real role.
+extern u8 *gFieldEffectScriptPointers[];
+extern const volatile struct CompressedSpritePalette sMonPaletteTableJP[] asm("gMonPaletteTable");
+
+// Use the original JP entry points while retaining the semantic C interfaces.
+void CameraObjectFreeze(void) asm("CameraObjectReset2");
+u8 GetWalkNormalMovementAction(u32 direction) asm("sub_08092CF8");
+u8 GetWalkSlowMovementAction(u32 direction) asm("sub_08092CCC");
+u8 GetJumpMovementAction(u32 direction) asm("sub_08092E84");
+u8 GetJumpSpecialMovementAction(u32 direction) asm("sub_08092EB0");
+u8 GetWalkInPlaceFasterMovementAction(u32 direction) asm("sub_08092F60");
+void MoveObjectEventToMapCoords(struct ObjectEvent *objectEvent, s16 x, s16 y) asm("MoveEventObjectToMapCoords");
+void ShiftObjectEventCoords(struct ObjectEvent *objectEvent, s16 x, s16 y) asm("ShiftEventObjectCoords");
+
+u32 FieldEffectStart(u8 id);
+bool8 FieldEffectCmd_loadtiles(u8 **script, u32 *val);
+bool8 FieldEffectCmd_loadfadedpal(u8 **script, u32 *val);
+bool8 FieldEffectCmd_loadpal(u8 **script, u32 *val);
+bool8 FieldEffectCmd_callnative(u8 **script, u32 *val);
+bool8 FieldEffectCmd_end(u8 **script, u32 *val);
+bool8 FieldEffectCmd_loadgfx_callnative(u8 **script, u32 *val);
+bool8 FieldEffectCmd_loadtiles_callnative(u8 **script, u32 *val);
+bool8 FieldEffectCmd_loadfadedpal_callnative(u8 **script, u32 *val);
+u32 FieldEffectScript_ReadWord(u8 **script);
+void FieldEffectScript_LoadTiles(u8 **script);
+void FieldEffectScript_LoadFadedPalette(u8 **script);
+void FieldEffectScript_LoadPalette(u8 **script);
+void FieldEffectScript_CallNative(u8 **script, u32 *val);
+void FieldEffectFreeGraphicsResources(struct Sprite *sprite);
+void FieldEffectStop(struct Sprite *sprite, u8 id);
+void FieldEffectFreeTilesIfUnused(u16 tileStart);
+void FieldEffectFreePaletteIfUnused(u8 paletteNum);
+void FieldEffectActiveListClear(void);
+void FieldEffectActiveListAdd(u8 id);
+void FieldEffectActiveListRemove(u8 id);
+bool8 FieldEffectActiveListContains(u8 id);
+u8 CreateTrainerSprite(u8 trainerSpriteID, s16 x, s16 y, u8 subpriority, u8 *buffer);
+void LoadTrainerGfx_TrainerCard(u8 gender, u16 palOffset, u8 *dest);
+u8 AddNewGameBirchObject(s16 x, s16 y, u8 subpriority);
+u8 CreateMonSprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority);
+u8 CreateMonSprite_FieldMove(u16 species, u32 otId, u32 personality, s16 x, s16 y, u8 subpriority);
+void FreeResourcesAndDestroySprite(struct Sprite *sprite, u8 spriteId);
+void MultiplyInvertedPaletteRGBComponents(u16 i, u8 r, u8 g, u8 b);
+void MultiplyPaletteRGBComponents(u16 i, u8 r, u8 g, u8 b);
+bool8 FldEff_PokecenterHeal(void);
+void Task_PokecenterHeal(u8 taskId) asm("Task_HallOfFameRecord") __attribute__((section(".text.Task_HallOfFameRecord")));
+void PokecenterHealEffect_Init(struct Task *task);
+void PokecenterHealEffect_WaitForBallPlacement(struct Task *task);
+void PokecenterHealEffect_WaitForBallFlashing(struct Task *task) asm("PokecenterHealEffect_2") __attribute__((section(".text.PokecenterHealEffect_2")));
+void PokecenterHealEffect_WaitForSoundAndEnd(struct Task *task);
+bool8 FldEff_HallOfFameRecord(void);
+void Task_HallOfFameRecord(u8 taskId) asm("Task_PokecenterHeal") __attribute__((section(".text.Task_PokecenterHeal")));
+void HallOfFameRecordEffect_Init(struct Task *task);
+void HallOfFameRecordEffect_WaitForBallPlacement(struct Task *task);
+void HallOfFameRecordEffect_WaitForBallFlashing(struct Task *task) asm("HallOfFameRecordEffect_2") __attribute__((section(".text.HallOfFameRecordEffect_2")));
+void HallOfFameRecordEffect_WaitForSoundAndEnd(struct Task *task);
+u8 CreateGlowingPokeballsEffect(s16 numMons, s16 x, s16 y, bool16 playHealSe);
+void SpriteCB_PokeballGlowEffect(struct Sprite *sprite);
+void PokeballGlowEffect_PlaceBalls(struct Sprite *sprite);
+void PokeballGlowEffect_TryPlaySe(struct Sprite *sprite);
+void PokeballGlowEffect_Flash1(struct Sprite *sprite);
+void PokeballGlowEffect_Flash2(struct Sprite *sprite);
+void PokeballGlowEffect_WaitAfterFlash(struct Sprite *sprite) asm("PokeballGlowEffect_4") __attribute__((section(".text.PokeballGlowEffect_4")));
+void PokeballGlowEffect_Dummy(struct Sprite *sprite);
+void PokeballGlowEffect_WaitForSound(struct Sprite *sprite) asm("PokeballGlowEffect_6") __attribute__((section(".text.PokeballGlowEffect_6")));
+void PokeballGlowEffect_Idle(struct Sprite *sprite) asm("PokeballGlowEffect_7") __attribute__((section(".text.PokeballGlowEffect_7")));
+void SpriteCB_PokeballGlow(struct Sprite *sprite);
+u8 CreatePokecenterMonitorSprite(s16 x, s16 y);
+void SpriteCB_PokecenterMonitor(struct Sprite *sprite);
+void CreateHofMonitorSprite(s16 taskId, s16 x, s16 y, bool8 isSmallMonitor);
+void SpriteCB_HallOfFameMonitor(struct Sprite *sprite);
+void ReturnToFieldFromFlyMapSelect(void);
+void FieldCallback_UseFly(void);
+void Task_UseFly(u8 taskId);
+void FieldCallback_FlyIntoMap(void);
+void Task_FlyIntoMap(u8 taskId);
+void FieldCB_FallWarpExit(void);
+void Task_FallWarpFieldEffect(u8 taskId);
+bool8 FallWarpEffect_Init(struct Task *task);
+bool8 FallWarpEffect_WaitWeather(struct Task *task);
+bool8 FallWarpEffect_StartFall(struct Task *task);
+bool8 FallWarpEffect_Fall(struct Task *task);
+bool8 FallWarpEffect_Land(struct Task *task);
+bool8 FallWarpEffect_CameraShake(struct Task *task);
+bool8 FallWarpEffect_End(struct Task *task);
+void StartEscalatorWarp(u8 metatileBehavior, u8 priority);
+void Task_EscalatorWarpOut(u8 taskId);
+bool8 EscalatorWarpOut_Init(struct Task *task);
+bool8 EscalatorWarpOut_WaitForPlayer(struct Task *task);
+bool8 EscalatorWarpOut_Up_Ride(struct Task *task);
+bool8 EscalatorWarpOut_Up_End(struct Task *task);
+bool8 EscalatorWarpOut_Down_Ride(struct Task *task);
+bool8 EscalatorWarpOut_Down_End(struct Task *task);
+void RideUpEscalatorOut(struct Task *task);
+void RideDownEscalatorOut(struct Task *task);
+void FadeOutAtEndOfEscalator(void);
+void WarpAtEndOfEscalator(void);
+void FieldCallback_EscalatorWarpIn(void);
+void Task_EscalatorWarpIn(u8 taskId);
+bool8 EscalatorWarpIn_Init(struct Task *task);
+bool8 EscalatorWarpIn_Down_Init(struct Task *task);
+bool8 EscalatorWarpIn_Down_Ride(struct Task *task);
+bool8 EscalatorWarpIn_Up_Init(struct Task *task);
+bool8 EscalatorWarpIn_Up_Ride(struct Task *task);
+bool8 EscalatorWarpIn_WaitForMovement(struct Task *task);
+bool8 EscalatorWarpIn_End(struct Task *task);
+bool8 FldEff_UseWaterfall(void);
+void Task_UseWaterfall(u8 taskId) asm("sub_080B6ADC") __attribute__((section(".text.sub_080B6ADC")));
+bool8 WaterfallFieldEffect_Init(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 WaterfallFieldEffect_ShowMon(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 WaterfallFieldEffect_WaitForShowMon(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 WaterfallFieldEffect_RideUp(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 WaterfallFieldEffect_ContinueRideOrEnd(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 FldEff_UseDive(void);
+void Task_UseDive(u8 taskId);
+bool8 DiveFieldEffect_Init(struct Task *task);
+bool8 DiveFieldEffect_ShowMon(struct Task *task);
+bool8 DiveFieldEffect_TryWarp(struct Task *task);
+void StartLavaridgeGymB1FWarp(u8 priority);
+void Task_LavaridgeGymB1FWarp(u8 taskId);
+bool8 LavaridgeGymB1FWarpEffect_Init(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpEffect_CameraShake(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpEffect_Launch(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpEffect_Rise(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpEffect_FadeOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpEffect_Warp(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void FieldCB_LavaridgeGymB1FWarpExit(void);
+void Task_LavaridgeGymB1FWarpExit(u8 taskId);
+bool8 LavaridgeGymB1FWarpExitEffect_Init(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpExitEffect_StartPopOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpExitEffect_PopOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGymB1FWarpExitEffect_End(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+u8 FldEff_AshLaunch(void);
+void SpriteCB_AshLaunch(struct Sprite *sprite);
+void StartLavaridgeGym1FWarp(u8 priority);
+void Task_LavaridgeGym1FWarp(u8 taskId);
+bool8 LavaridgeGym1FWarpEffect_Init(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGym1FWarpEffect_AshPuff(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGym1FWarpEffect_Disappear(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGym1FWarpEffect_FadeOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 LavaridgeGym1FWarpEffect_Warp(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite);
+u8 FldEff_AshPuff(void);
+void SpriteCB_AshPuff(struct Sprite *sprite);
+void StartEscapeRopeFieldEffect(void);
+void Task_EscapeRopeWarpOut(u8 taskId);
+void EscapeRopeWarpOutEffect_Init(struct Task *task);
+void EscapeRopeWarpOutEffect_Spin(struct Task *task);
+void FieldCallback_EscapeRopeWarpIn(void);
+void Task_EscapeRopeWarpIn(u8 taskId);
+void EscapeRopeWarpInEffect_Init(struct Task *task);
+void EscapeRopeWarpInEffect_Spin(struct Task *task);
+void FldEff_TeleportWarpOut(void);
+void Task_TeleportWarpOut(u8 taskId);
+void TeleportWarpOutFieldEffect_Init(struct Task *task);
+void TeleportWarpOutFieldEffect_SpinGround(struct Task *task);
+void TeleportWarpOutFieldEffect_SpinExit(struct Task *task);
+void TeleportWarpOutFieldEffect_End(struct Task *task);
+void FieldCallback_TeleportWarpIn(void);
+void Task_TeleportWarpIn(u8 taskId);
+void TeleportWarpInFieldEffect_Init(struct Task *task);
+void TeleportWarpInFieldEffect_SpinEnter(struct Task *task);
+void TeleportWarpInFieldEffect_SpinGround(struct Task *task);
+bool8 FldEff_FieldMoveShowMon(void);
+bool8 FldEff_FieldMoveShowMonInit(void);
+void Task_FieldMoveShowMonOutdoors(u8 taskId);
+void FieldMoveShowMonOutdoorsEffect_Init(struct Task *task);
+void FieldMoveShowMonOutdoorsEffect_LoadGfx(struct Task *task);
+void FieldMoveShowMonOutdoorsEffect_CreateBanner(struct Task *task);
+void FieldMoveShowMonOutdoorsEffect_WaitForMon(struct Task *task);
+void FieldMoveShowMonOutdoorsEffect_ShrinkBanner(struct Task *task);
+void FieldMoveShowMonOutdoorsEffect_RestoreBg(struct Task *task);
+void FieldMoveShowMonOutdoorsEffect_End(struct Task *task);
+void VBlankCB_FieldMoveShowMonOutdoors(void) asm("sub_080B7F64") __attribute__((section(".text.sub_080B7F64")));
+void LoadFieldMoveOutdoorStreaksTilemap(u16 offs);
+void Task_FieldMoveShowMonIndoors(u8 taskId);
+void FieldMoveShowMonIndoorsEffect_Init(struct Task *task);
+void FieldMoveShowMonIndoorsEffect_LoadGfx(struct Task *task);
+void FieldMoveShowMonIndoorsEffect_SlideBannerOn(struct Task *task);
+void FieldMoveShowMonIndoorsEffect_WaitForMon(struct Task *task);
+void FieldMoveShowMonIndoorsEffect_RestoreBg(struct Task *task);
+void FieldMoveShowMonIndoorsEffect_SlideBannerOff(struct Task *task);
+void FieldMoveShowMonIndoorsEffect_End(struct Task *task);
+void VBlankCB_FieldMoveShowMonIndoors(void) asm("sub_080B8238") __attribute__((section(".text.sub_080B8238")));
+void AnimateIndoorShowMonBg(struct Task *task) asm("sub_080B8280") __attribute__((section(".text.sub_080B8280")));
+bool8 SlideIndoorBannerOnscreen(struct Task *task);
+bool8 SlideIndoorBannerOffscreen(struct Task *task);
+u8 InitFieldMoveMonSprite(u32 species, u32 otId, u32 personality);
+void SpriteCB_FieldMoveMonSlideOnscreen(struct Sprite *sprite);
+void SpriteCB_FieldMoveMonWaitAfterCry(struct Sprite *sprite);
+void SpriteCB_FieldMoveMonSlideOffscreen(struct Sprite *sprite) asm("sub_080B8478") __attribute__((section(".text.sub_080B8478")));
+u8 FldEff_UseSurf(void);
+void Task_SurfFieldEffect(u8 taskId);
+void SurfFieldEffect_Init(struct Task *task);
+void SurfFieldEffect_FieldMovePose(struct Task *task);
+void SurfFieldEffect_ShowMon(struct Task *task);
+void SurfFieldEffect_JumpOnSurfBlob(struct Task *task);
+void SurfFieldEffect_End(struct Task *task);
+u8 FldEff_RayquazaSpotlight(void);
+u8 FldEff_NPCFlyOut(void);
+void SpriteCB_NPCFlyOut(struct Sprite *sprite);
+u8 FldEff_UseFly(void);
+void Task_FlyOut(u8 taskId);
+void FlyOutFieldEffect_FieldMovePose(struct Task *task);
+void FlyOutFieldEffect_ShowMon(struct Task *task);
+void FlyOutFieldEffect_BirdLeaveBall(struct Task *task);
+void FlyOutFieldEffect_WaitBirdLeave(struct Task *task);
+void FlyOutFieldEffect_BirdSwoopDown(struct Task *task);
+void FlyOutFieldEffect_JumpOnBird(struct Task *task);
+void FlyOutFieldEffect_FlyOffWithBird(struct Task *task);
+void FlyOutFieldEffect_WaitFlyOff(struct Task *task);
+void FlyOutFieldEffect_End(struct Task *task);
+u8 CreateFlyBirdSprite(void);
+u8 GetFlyBirdAnimCompleted(u8 spriteId);
+void StartFlyBirdSwoopDown(u8 spriteId);
+void SetFlyBirdPlayerSpriteId(u8 birdSpriteId, u8 playerSpriteId);
+void SpriteCB_FlyBirdLeaveBall(struct Sprite *sprite);
+void SpriteCB_FlyBirdSwoopDown(struct Sprite *sprite);
+void SpriteCB_FlyBirdReturnToBall(struct Sprite *sprite);
+void StartFlyBirdReturnToBall(u8 spriteId);
+u8 FldEff_FlyIn(void);
+void Task_FlyIn(u8 taskId);
+void FlyInFieldEffect_BirdSwoopDown(struct Task *task);
+void FlyInFieldEffect_FlyInWithBird(struct Task *task);
+void FlyInFieldEffect_JumpOffBird(struct Task *task);
+void FlyInFieldEffect_FieldMovePose(struct Task *task);
+void FlyInFieldEffect_BirdReturnToBall(struct Task *task);
+void FlyInFieldEffect_WaitBirdReturn(struct Task *task);
+void FlyInFieldEffect_End(struct Task *task);
+bool8 FldEff_DestroyDeoxysRock(void);
+void Task_DeoxysRockCameraShake(u8 taskId);
+void StartEndingDeoxysRockCameraShake(u8 taskId);
+void Task_DestroyDeoxysRock(u8 taskId) asm("sub_080B9340") __attribute__((section(".text.sub_080B9340")));
+void DestroyDeoxysRockEffect_CameraShake(s16 *data, u8 taskId);
+void DestroyDeoxysRockEffect_RockFragments(s16 *data, u8 taskId);
+void DestroyDeoxysRockEffect_WaitAndEnd(s16 *data, u8 taskId);
+void CreateDeoxysRockFragments(struct Sprite *sprite);
+void SpriteCB_DeoxysRockFragment(struct Sprite *sprite);
+bool8 FldEff_MoveDeoxysRock(struct Sprite *sprite);
+void Task_MoveDeoxysRock(u8 taskId);
+
 
 #define FIELD_EFFECT_GRAPHICS_DATA __attribute__((section(".rodata.field_effect_graphics_data")))
 #define FIELD_EFFECT_GRAPHICS_RESOURCE_DATA __attribute__((section(".rodata.field_effect_graphics_resource_data")))
@@ -339,20 +610,20 @@ static const struct SpriteTemplate sSpriteTemplate_HofMonitorSmall FIELD_EFFECT_
 
 void PokecenterHealEffect_Init(struct Task *task);
 void PokecenterHealEffect_WaitForBallPlacement(struct Task *task);
-void PokecenterHealEffect_2(struct Task *task);
+void PokecenterHealEffect_WaitForBallFlashing(struct Task *task);
 void PokecenterHealEffect_WaitForSoundAndEnd(struct Task *task);
 void HallOfFameRecordEffect_Init(struct Task *task);
 void HallOfFameRecordEffect_WaitForBallPlacement(struct Task *task);
-void HallOfFameRecordEffect_2(struct Task *task);
+void HallOfFameRecordEffect_WaitForBallFlashing(struct Task *task);
 void HallOfFameRecordEffect_WaitForSoundAndEnd(struct Task *task);
 void PokeballGlowEffect_PlaceBalls(struct Sprite *sprite);
 void PokeballGlowEffect_TryPlaySe(struct Sprite *sprite);
 void PokeballGlowEffect_Flash1(struct Sprite *sprite);
 void PokeballGlowEffect_Flash2(struct Sprite *sprite);
-void PokeballGlowEffect_4(struct Sprite *sprite);
+void PokeballGlowEffect_WaitAfterFlash(struct Sprite *sprite);
 void PokeballGlowEffect_Dummy(struct Sprite *sprite);
-void PokeballGlowEffect_6(struct Sprite *sprite);
-void PokeballGlowEffect_7(struct Sprite *sprite);
+void PokeballGlowEffect_WaitForSound(struct Sprite *sprite);
+void PokeballGlowEffect_Idle(struct Sprite *sprite);
 bool8 FallWarpEffect_Init(struct Task *task);
 bool8 FallWarpEffect_WaitWeather(struct Task *task);
 bool8 FallWarpEffect_StartFall(struct Task *task);
@@ -451,7 +722,7 @@ static void (*const sPokecenterHealEffectFuncs[])(struct Task *) FIELD_EFFECT_RU
 {
     PokecenterHealEffect_Init,
     PokecenterHealEffect_WaitForBallPlacement,
-    PokecenterHealEffect_2,
+    PokecenterHealEffect_WaitForBallFlashing,
     PokecenterHealEffect_WaitForSoundAndEnd,
 };
 
@@ -459,7 +730,7 @@ static void (*const sHallOfFameRecordEffectFuncs[])(struct Task *) FIELD_EFFECT_
 {
     HallOfFameRecordEffect_Init,
     HallOfFameRecordEffect_WaitForBallPlacement,
-    HallOfFameRecordEffect_2,
+    HallOfFameRecordEffect_WaitForBallFlashing,
     HallOfFameRecordEffect_WaitForSoundAndEnd,
 };
 
@@ -469,10 +740,10 @@ static void (*const sPokeballGlowEffectFuncs[])(struct Sprite *) FIELD_EFFECT_RU
     PokeballGlowEffect_TryPlaySe,
     PokeballGlowEffect_Flash1,
     PokeballGlowEffect_Flash2,
-    PokeballGlowEffect_4,
+    PokeballGlowEffect_WaitAfterFlash,
     PokeballGlowEffect_Dummy,
-    PokeballGlowEffect_6,
-    PokeballGlowEffect_7,
+    PokeballGlowEffect_WaitForSound,
+    PokeballGlowEffect_Idle,
 };
 
 static const struct Coords16 sPokeballCoordOffsets[PARTY_SIZE] FIELD_EFFECT_RUNTIME_STATIC_DATA =
@@ -755,55 +1026,27 @@ static const struct SpriteTemplate sSpriteTemplate_DeoxysRockFragment FIELD_EFFE
     .callback = SpriteCB_DeoxysRockFragment,
 };
 
-extern u8 gUnknown_3000F58[32]; // sActiveList
+// Keep the existing JP IWRAM allocation; do not emit replacement state.
+extern u8 sActiveList[32] asm("gUnknown_3000F58");
 
 
 // Sprite/task data aliases matching the US field_effect.c field names.
 #define sState      data[0]
 #define sPlayerSpriteId data[6]
 #define tEnding     data[7]
-__attribute__((naked)) u32 FieldEffectStart(u8 id)
+u32 FieldEffectStart(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FieldEffectActiveListAdd\n\t"
-        "	ldr r0, _080B52B0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	str r0, [sp]\n\t"
-        "	add r4, sp, #4\n\t"
-        "	ldr r5, _080B52B4\n\t"
-        "_080B528E:\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl _call_via_r2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B528E\n\t"
-        "	ldr r0, [sp, #4]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B52B0: .4byte gFieldEffectScriptPointers\n\t"
-        "_080B52B4: .4byte gFieldEffectScriptFuncs\n\t"
+    u8 *script;
+    u32 val;
 
-        ".syntax divided\n\t"
+    FieldEffectActiveListAdd(id);
 
-    );
+    script = gFieldEffectScriptPointers[id];
+
+    while (gFieldEffectScriptFuncs[*script](&script, &val))
+        ;
+
+    return val;
 }
 
 
@@ -845,79 +1088,31 @@ bool8 FieldEffectCmd_callnative(u8 **script, u32 *val)
 
 bool8 FieldEffectCmd_end(u8 **script, u32 *val)
 {
-    return 0;
+    return FALSE;
 }
-__attribute__((naked)) bool8 FieldEffectCmd_loadgfx_callnative(u8 **script, u32 *val)
+bool8 FieldEffectCmd_loadgfx_callnative(u8 **script, u32 *val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FieldEffectScript_LoadTiles\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FieldEffectScript_LoadFadedPalette\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl FieldEffectScript_CallNative\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    (*script)++;
+    FieldEffectScript_LoadTiles(script);
+    FieldEffectScript_LoadFadedPalette(script);
+    FieldEffectScript_CallNative(script, val);
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 FieldEffectCmd_loadtiles_callnative(u8 **script, u32 *val)
+bool8 FieldEffectCmd_loadtiles_callnative(u8 **script, u32 *val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FieldEffectScript_LoadTiles\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl FieldEffectScript_CallNative\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    (*script)++;
+    FieldEffectScript_LoadTiles(script);
+    FieldEffectScript_CallNative(script, val);
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 FieldEffectCmd_loadfadedpal_callnative(u8 **script, u32 *val)
+bool8 FieldEffectCmd_loadfadedpal_callnative(u8 **script, u32 *val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FieldEffectScript_LoadFadedPalette\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl FieldEffectScript_CallNative\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    (*script)++;
+    FieldEffectScript_LoadFadedPalette(script);
+    FieldEffectScript_CallNative(script, val);
+    return TRUE;
 }
 
 
@@ -930,97 +1125,34 @@ u32 FieldEffectScript_ReadWord(u8 **script)
 }
 
 
-__attribute__((naked)) void FieldEffectScript_LoadTiles(u8 **script)
+void FieldEffectScript_LoadTiles(u8 **script)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl FieldEffectScript_ReadWord\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r0, [r5, #6]\n\t"
-        "	bl GetSpriteTileStartByTag\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldr r1, _080B53C0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _080B53B2\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "_080B53B2:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #4\n\t"
-        "	str r0, [r4]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B53C0: .4byte 0xFFFF0000\n\t"
-        ".syntax divided\n\t"
-    );
+    struct SpriteSheet *sheet = (struct SpriteSheet *)FieldEffectScript_ReadWord(script);
+    if (GetSpriteTileStartByTag(sheet->tag) == 0xFFFF)
+        LoadSpriteSheet(sheet);
+    (*script) += 4;
 }
 
-__attribute__((naked)) void FieldEffectScript_LoadFadedPalette(u8 **script)
+void FieldEffectScript_LoadFadedPalette(u8 **script)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	bl FieldEffectScript_ReadWord\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	ldrh r0, [r4, #4]\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl UpdateSpritePaletteWithWeather\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #4\n\t"
-        "	str r0, [r5]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct SpritePalette *palette = (struct SpritePalette *)FieldEffectScript_ReadWord(script);
+    LoadSpritePalette(palette);
+    UpdateSpritePaletteWithWeather(IndexOfSpritePaletteTag(palette->tag));
+    (*script) += 4;
 }
 
-__attribute__((naked)) void FieldEffectScript_LoadPalette(u8 **script)
+void FieldEffectScript_LoadPalette(u8 **script)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl FieldEffectScript_ReadWord\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #4\n\t"
-        "	str r0, [r4]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct SpritePalette *palette = (struct SpritePalette *)FieldEffectScript_ReadWord(script);
+    LoadSpritePalette(palette);
+    (*script) += 4;
 }
 
-__attribute__((naked)) void FieldEffectScript_CallNative(u8 **script, u32 *val)
+void FieldEffectScript_CallNative(u8 **script, u32 *val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl FieldEffectScript_ReadWord\n\t"
-        "	bl _call_via_r0\n\t"
-        "	str r0, [r5]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #4\n\t"
-        "	str r0, [r4]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-
-        ".syntax divided\n\t"
-
-    );
+    u32 (*func)(void) = (u32 (*)(void))FieldEffectScript_ReadWord(script);
+    *val = func();
+    (*script) += 4;
 }
 
 
@@ -1073,18 +1205,18 @@ void FieldEffectFreePaletteIfUnused(u8 paletteNum)
 void FieldEffectActiveListClear(void)
 {
     u8 i;
-    for (i = 0; i < 32; i++)
-        gUnknown_3000F58[i] = 0xFF;
+    for (i = 0; i < ARRAY_COUNT(sActiveList); i++)
+        sActiveList[i] = 0xFF;
 }
 
 void FieldEffectActiveListAdd(u8 id)
 {
     u8 i;
-    for (i = 0; i < 32; i++)
+    for (i = 0; i < ARRAY_COUNT(sActiveList); i++)
     {
-        if (gUnknown_3000F58[i] == 0xFF)
+        if (sActiveList[i] == 0xFF)
         {
-            gUnknown_3000F58[i] = id;
+            sActiveList[i] = id;
             return;
         }
     }
@@ -1093,11 +1225,11 @@ void FieldEffectActiveListAdd(u8 id)
 void FieldEffectActiveListRemove(u8 id)
 {
     u8 i;
-    for (i = 0; i < 32; i++)
+    for (i = 0; i < ARRAY_COUNT(sActiveList); i++)
     {
-        if (gUnknown_3000F58[i] == id)
+        if (sActiveList[i] == id)
         {
-            gUnknown_3000F58[i] = 0xFF;
+            sActiveList[i] = 0xFF;
             return;
         }
     }
@@ -1106,3327 +1238,972 @@ void FieldEffectActiveListRemove(u8 id)
 bool8 FieldEffectActiveListContains(u8 id)
 {
     u8 i;
-    for (i = 0; i < 32; i++)
-        if (gUnknown_3000F58[i] == id)
+    for (i = 0; i < ARRAY_COUNT(sActiveList); i++)
+        if (sActiveList[i] == id)
             return TRUE;
     return FALSE;
 }
 
-__attribute__((naked)) u8 CreateTrainerSprite(u8 trainerSpriteID, s16 x, s16 y, u8 subpriority, u8 *buffer)
+u8 CreateTrainerSprite(u8 trainerSpriteID, s16 x, s16 y, u8 subpriority, u8 *buffer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	mov sb, r3\n\t"
-        "	ldr r7, [sp, #0x34]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	lsrs r6, r6, #0x10\n\t"
-        "	mov r0, sb\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	lsrs r4, r4, #0x15\n\t"
-        "	ldr r3, _080B564C\n\t"
-        "	mov r8, r3\n\t"
-        "	add r8, r4\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl LoadCompressedSpritePaletteOverrideBuffer\n\t"
-        "	ldr r0, _080B5650\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl LoadCompressedSpriteSheetOverrideBuffer\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrh r0, [r4, #6]\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	mov r3, r8\n\t"
-        "	ldrh r0, [r3, #4]\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	ldr r0, _080B5654\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _080B5658\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	ldr r0, _080B565C\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "	ldr r0, _080B5660\n\t"
-        "	str r0, [sp, #0x14]\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	asrs r6, r6, #0x10\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	mov r3, sb\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B564C: .4byte gTrainerFrontPicPaletteTable\n\t"
-        "_080B5650: .4byte gTrainerFrontPicTable\n\t"
-        "_080B5654: .4byte sOam_64x64\n\t"
-        "_080B5658: .4byte gDummySpriteAnimTable\n\t"
-        "_080B565C: .4byte gDummySpriteAffineAnimTable\n\t"
-        "_080B5660: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct SpriteTemplate spriteTemplate;
+    LoadCompressedSpritePaletteOverrideBuffer(&gTrainerFrontPicPaletteTable[trainerSpriteID], buffer);
+    LoadCompressedSpriteSheetOverrideBuffer(&gTrainerFrontPicTable[trainerSpriteID], buffer);
+    spriteTemplate.tileTag = gTrainerFrontPicTable[trainerSpriteID].tag;
+    spriteTemplate.paletteTag = gTrainerFrontPicPaletteTable[trainerSpriteID].tag;
+    spriteTemplate.oam = &sOam_64x64;
+    spriteTemplate.anims = gDummySpriteAnimTable;
+    spriteTemplate.images = NULL;
+    spriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
+    spriteTemplate.callback = SpriteCallbackDummy;
+    return CreateSprite(&spriteTemplate, x, y, subpriority);
 }
 
-__attribute__((naked)) void LoadTrainerGfx_TrainerCard(u8 gender, u16 palOffset, u8 *dest)
+void LoadTrainerGfx_TrainerCard(u8 gender, u16 palOffset, u8 *dest)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	ldr r0, _080B5694\n\t"
-        "	lsrs r4, r4, #0x15\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl LZDecompressWram\n\t"
-        "	ldr r0, _080B5698\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5694: .4byte gTrainerFrontPicTable\n\t"
-        "_080B5698: .4byte gTrainerFrontPicPaletteTable\n\t"
-        ".syntax divided\n\t"
-    );
+    LZDecompressWram(gTrainerFrontPicTable[gender].data, dest);
+    LoadCompressedPalette(gTrainerFrontPicPaletteTable[gender].data, palOffset, PLTT_SIZE_4BPP);
 }
 
-__attribute__((naked)) u8 AddNewGameBirchObject(s16 x, s16 y, u8 subpriority)
+u8 AddNewGameBirchObject(s16 x, s16 y, u8 subpriority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	ldr r0, _080B56D4\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	ldr r0, _080B56D8\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r6, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B56D4: .4byte sSpritePalette_NewGameBirch\n\t"
-        "_080B56D8: .4byte sSpriteTemplate_NewGameBirch\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadSpritePalette(&sSpritePalette_NewGameBirch);
+    return CreateSprite(&sSpriteTemplate_NewGameBirch, x, y, subpriority);
 }
 
-__attribute__((naked)) u8 CreateMonSprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority)
+u8 CreateMonSprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #8\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	str r1, [sp]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	ldr r1, _080B572C\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	ldrh r1, [r4, #4]\n\t"
-        "	str r1, [sp, #0xc]\n\t"
-        "	movs r1, #0\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl CreateMonPicSprite_HandleDeoxys\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	ldrh r0, [r4, #4]\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	adds r0, #0x10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl PreservePaletteInWeather\n\t"
-        "	ldr r0, _080B5730\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _080B5734\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _080B5736\n\t"
-        "	.align 2, 0\n\t"
-        "_080B572C: .4byte 0x082D6F08\n\t"
-        "_080B5730: .4byte 0x0000FFFF\n\t"
-        "_080B5734:\n\t"
-        "	movs r0, #0x40\n\t"
-        "_080B5736:\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    // Retain both palette-tag reads made by the JP implementation.
+    s32 spriteId = CreateMonPicSprite_HandleDeoxys(species, 0, 0x8000, TRUE, x, y, 0, sMonPaletteTableJP[species].tag);
+    PreservePaletteInWeather(IndexOfSpritePaletteTag(sMonPaletteTableJP[species].tag) + 0x10);
+    if (spriteId == 0xFFFF)
+        return MAX_SPRITES;
+    else
+        return spriteId;
 }
 
-__attribute__((naked)) u8 CreateMonSprite_FieldMove(u16 species, u32 otId, u32 personality, s16 x, s16 y, u8 subpriority)
+u8 CreateMonSprite_FieldMove(u16 species, u32 otId, u32 personality, s16 x, s16 y, u8 subpriority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sl\n\t"
-        "	mov r5, sb\n\t"
-        "	mov r4, r8\n\t"
-        "	push {r4, r5, r6}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	mov sb, r1\n\t"
-        "	mov sl, r2\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	ldr r5, [sp, #0x2c]\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	lsrs r6, r6, #0x10\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetMonSpritePalStructFromOtIdPersonality\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	str r4, [sp]\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	str r5, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	mov r1, r8\n\t"
-        "	ldrh r0, [r1, #4]\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	mov r1, sb\n\t"
-        "	mov r2, sl\n\t"
-        "	movs r3, #1\n\t"
-        "	bl CreateMonPicSprite_HandleDeoxys\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	mov r1, r8\n\t"
-        "	ldrh r0, [r1, #4]\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	adds r0, #0x10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl PreservePaletteInWeather\n\t"
-        "	ldr r0, _080B57B0\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _080B57B4\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _080B57B6\n\t"
-        "	.align 2, 0\n\t"
-        "_080B57B0: .4byte 0x0000FFFF\n\t"
-        "_080B57B4:\n\t"
-        "	movs r0, #0x40\n\t"
-        "_080B57B6:\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct CompressedSpritePalette *spritePalette = GetMonSpritePalStructFromOtIdPersonality(species, otId, personality);
+    u16 spriteId = CreateMonPicSprite_HandleDeoxys(species, otId, personality, TRUE, x, y, 0, spritePalette->tag);
+    PreservePaletteInWeather(IndexOfSpritePaletteTag(spritePalette->tag) + 0x10);
+    if (spriteId == 0xFFFF)
+        return MAX_SPRITES;
+    else
+        return spriteId;
 }
 
-__attribute__((naked)) void FreeResourcesAndDestroySprite(struct Sprite *sprite, u8 spriteId)
+void FreeResourcesAndDestroySprite(struct Sprite *sprite, u8 spriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	bl ResetPreservedPalettesInWeather\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	lsls r0, r0, #0x1e\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B57E6\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	bl FreeOamMatrix\n\t"
-        "_080B57E6:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl FreeAndDestroyMonPicSprite\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ResetPreservedPalettesInWeather();
+    if (sprite->oam.affineMode != ST_OAM_AFFINE_OFF)
+    {
+        FreeOamMatrix(sprite->oam.matrixNum);
+    }
+    FreeAndDestroyMonPicSprite(spriteId);
 }
 
-__attribute__((naked)) void MultiplyInvertedPaletteRGBComponents(u16 i, u8 r, u8 g, u8 b)
+void MultiplyInvertedPaletteRGBComponents(u16 i, u8 r, u8 g, u8 b)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldr r4, _080B5878\n\t"
-        "	lsrs r0, r0, #0xf\n\t"
-        "	adds r4, r0, r4\n\t"
-        "	ldrh r4, [r4]\n\t"
-        "	movs r5, #0x1f\n\t"
-        "	mov sb, r5\n\t"
-        "	mov r8, r4\n\t"
-        "	mov r6, r8\n\t"
-        "	ands r6, r5\n\t"
-        "	mov r8, r6\n\t"
-        "	movs r6, #0xf8\n\t"
-        "	lsls r6, r6, #2\n\t"
-        "	ands r6, r4\n\t"
-        "	lsrs r6, r6, #5\n\t"
-        "	movs r5, #0xf8\n\t"
-        "	lsls r5, r5, #7\n\t"
-        "	ands r4, r5\n\t"
-        "	lsrs r4, r4, #0xa\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	subs r7, r7, r5\n\t"
-        "	mov ip, r7\n\t"
-        "	mov r7, ip\n\t"
-        "	muls r7, r1, r7\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	asrs r1, r1, #4\n\t"
-        "	add r8, r1\n\t"
-        "	mov r5, sb\n\t"
-        "	subs r1, r5, r6\n\t"
-        "	muls r1, r2, r1\n\t"
-        "	asrs r1, r1, #4\n\t"
-        "	adds r6, r6, r1\n\t"
-        "	subs r5, r5, r4\n\t"
-        "	mov sb, r5\n\t"
-        "	mov r1, sb\n\t"
-        "	muls r1, r3, r1\n\t"
-        "	asrs r1, r1, #4\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	mov r7, r8\n\t"
-        "	lsls r7, r7, #0x10\n\t"
-        "	lsls r6, r6, #0x15\n\t"
-        "	orrs r6, r7\n\t"
-        "	lsls r4, r4, #0x1a\n\t"
-        "	orrs r4, r6\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r1, _080B587C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r4, [r0]\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5878: .4byte gPlttBufferUnfaded\n\t"
-        "_080B587C: .4byte gPlttBufferFaded\n\t"
-        ".syntax divided\n\t"
-    );
+    int curRed, curGreen, curBlue;
+    u16 color = gPlttBufferUnfaded[i];
+
+    curRed   = (color & RGB_RED);
+    curGreen = (color & RGB_GREEN) >>  5;
+    curBlue  = (color & RGB_BLUE)  >> 10;
+
+    curRed   += (((0x1F - curRed)   * r) >> 4);
+    curGreen += (((0x1F - curGreen) * g) >> 4);
+    curBlue  += (((0x1F - curBlue)  * b) >> 4);
+
+    color  = curRed;
+    color |= (curGreen <<  5);
+    color |= (curBlue  << 10);
+
+    gPlttBufferFaded[i] = color;
 }
 
-__attribute__((naked)) void MultiplyPaletteRGBComponents(u16 i, u8 r, u8 g, u8 b)
+void MultiplyPaletteRGBComponents(u16 i, u8 r, u8 g, u8 b)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldr r4, _080B58F0\n\t"
-        "	lsrs r0, r0, #0xf\n\t"
-        "	adds r4, r0, r4\n\t"
-        "	ldrh r4, [r4]\n\t"
-        "	movs r5, #0x1f\n\t"
-        "	mov r8, r5\n\t"
-        "	mov r6, r8\n\t"
-        "	ands r6, r4\n\t"
-        "	mov r8, r6\n\t"
-        "	movs r5, #0xf8\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	ands r5, r4\n\t"
-        "	lsrs r5, r5, #5\n\t"
-        "	movs r6, #0xf8\n\t"
-        "	lsls r6, r6, #7\n\t"
-        "	ands r4, r6\n\t"
-        "	lsrs r4, r4, #0xa\n\t"
-        "	mov r6, r8\n\t"
-        "	muls r6, r1, r6\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	asrs r1, r1, #4\n\t"
-        "	mov r6, r8\n\t"
-        "	subs r6, r6, r1\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	muls r1, r2, r1\n\t"
-        "	asrs r1, r1, #4\n\t"
-        "	subs r5, r5, r1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	muls r1, r3, r1\n\t"
-        "	asrs r1, r1, #4\n\t"
-        "	subs r4, r4, r1\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	lsls r5, r5, #0x15\n\t"
-        "	orrs r5, r6\n\t"
-        "	lsls r4, r4, #0x1a\n\t"
-        "	orrs r4, r5\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r1, _080B58F4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r4, [r0]\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B58F0: .4byte gPlttBufferUnfaded\n\t"
-        "_080B58F4: .4byte gPlttBufferFaded\n\t"
-        ".syntax divided\n\t"
-    );
+    int curRed, curGreen, curBlue;
+    u16 color = gPlttBufferUnfaded[i];
+
+    curRed   = (color & RGB_RED);
+    curGreen = (color & RGB_GREEN) >>  5;
+    curBlue  = (color & RGB_BLUE)  >> 10;
+
+    curRed   -= ((curRed   * r) >> 4);
+    curGreen -= ((curGreen * g) >> 4);
+    curBlue  -= ((curBlue  * b) >> 4);
+
+    color  = curRed;
+    color |= (curGreen <<  5);
+    color |= (curBlue  << 10);
+
+    gPlttBufferFaded[i] = color;
 }
 
-__attribute__((naked)) bool8 FldEff_PokecenterHeal(void)
+bool8 FldEff_PokecenterHeal(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _080B5934\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _080B5938\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r4, [r1, #0xa]\n\t"
-        "	movs r0, #0x5d\n\t"
-        "	strh r0, [r1, #0xc]\n\t"
-        "	movs r0, #0x24\n\t"
-        "	strh r0, [r1, #0xe]\n\t"
-        "	movs r0, #0x7c\n\t"
-        "	strh r0, [r1, #0x10]\n\t"
-        "	movs r0, #0x18\n\t"
-        "	strh r0, [r1, #0x12]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5934: .4byte Task_HallOfFameRecord + 1\n\t"
-        "_080B5938: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 nPokemon;
+    struct Task *task;
+
+    nPokemon = CalculatePlayerPartyCount();
+    task = &gTasks[CreateTask(Task_PokecenterHeal, 0xff)];
+    task->data[1] = nPokemon;
+    task->data[2] = 93;
+    task->data[3] = 36;
+    task->data[4] = 124;
+    task->data[5] = 24;
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_HallOfFameRecord(u8 taskId)
+void Task_PokecenterHeal(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _080B5964\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, _080B5968\n\t"
-        "	movs r3, #8\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl _call_via_r2\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5964: .4byte gTasks\n\t"
-        "_080B5968: .4byte sPokecenterHealEffectFuncs\n\t"
-
-        ".syntax divided\n\t"
-
-    );
+    struct Task *task;
+    task = &gTasks[taskId];
+    sPokecenterHealEffectFuncs[task->data[0]](task);
 }
 
 
-__attribute__((naked)) void PokecenterHealEffect_Init(struct Task *task)
+void PokecenterHealEffect_Init(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0xc\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	movs r3, #0xe\n\t"
-        "	ldrsh r2, [r4, r3]\n\t"
-        "	movs r3, #1\n\t"
-        "	bl CreatePokeballGlowSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl PokecenterHealEffectHelper\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x16]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    task->data[0]++;
+    task->data[6] = CreateGlowingPokeballsEffect(task->data[1], task->data[2], task->data[3], TRUE);
+    task->data[7] = CreatePokecenterMonitorSprite(task->data[4], task->data[5]);
 }
 
-__attribute__((naked)) void PokecenterHealEffect_WaitForBallPlacement(struct Task *task)
+void PokecenterHealEffect_WaitForBallPlacement(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r3, _080B59E0\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	movs r4, #0x2e\n\t"
-        "	ldrsh r0, [r1, r4]\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _080B59DA\n\t"
-        "	movs r0, #0x16\n\t"
-        "	ldrsh r1, [r2, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r0, #0x2e]\n\t"
-        "	ldrh r0, [r2, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2, #8]\n\t"
-        "_080B59DA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B59E0: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[task->data[6]].data[0] > 1)
+    {
+        gSprites[task->data[7]].data[0]++;
+        task->data[0]++;
+    }
 }
 
-__attribute__((naked)) void PokecenterHealEffect_2(struct Task *task)
+void PokecenterHealEffect_WaitForBallFlashing(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldr r2, _080B5A08\n\t"
-        "	movs r0, #0x14\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _080B5A04\n\t"
-        "	ldrh r0, [r3, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #8]\n\t"
-        "_080B5A04:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5A08: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[task->data[6]].data[0] > 4)
+    {
+        task->data[0]++;
+    }
 }
 
-__attribute__((naked)) void PokecenterHealEffect_WaitForSoundAndEnd(struct Task *task)
+void PokecenterHealEffect_WaitForSoundAndEnd(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _080B5A44\n\t"
-        "	movs r3, #0x14\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #6\n\t"
-        "	ble _080B5A3E\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "	movs r0, #0x19\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	ldr r0, _080B5A48\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B5A3E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5A44: .4byte gSprites\n\t"
-        "_080B5A48: .4byte Task_HallOfFameRecord + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[task->data[6]].data[0] > 6)
+    {
+        DestroySprite(&gSprites[task->data[6]]);
+        FieldEffectActiveListRemove(FLDEFF_POKECENTER_HEAL);
+        DestroyTask(FindTaskIdByFunc(Task_PokecenterHeal));
+    }
 }
 
-__attribute__((naked)) bool8 FldEff_HallOfFameRecord(void)
+bool8 FldEff_HallOfFameRecord(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _080B5A80\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _080B5A84\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r4, [r1, #0xa]\n\t"
-        "	movs r0, #0x75\n\t"
-        "	strh r0, [r1, #0xc]\n\t"
-        "	movs r0, #0x34\n\t"
-        "	strh r0, [r1, #0xe]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5A80: .4byte Task_PokecenterHeal + 1\n\t"
-        "_080B5A84: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 nPokemon;
+    struct Task *task;
+
+    nPokemon = CalculatePlayerPartyCount();
+    task = &gTasks[CreateTask(Task_HallOfFameRecord, 0xff)];
+    task->data[1] = nPokemon;
+    task->data[2] = 117;
+    task->data[3] = 52;
+    return FALSE;
 }
 
 
-__attribute__((naked)) void Task_PokecenterHeal(u8 taskId)
+void Task_HallOfFameRecord(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _080B5AB0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, _080B5AB4\n\t"
-        "	movs r3, #8\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl _call_via_r2\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5AB0: .4byte gTasks\n\t"
-        "_080B5AB4: .4byte sHallOfFameRecordEffectFuncs\n\t"
-
-        ".syntax divided\n\t"
-
-    );
+    struct Task *task;
+    task = &gTasks[taskId];
+    sHallOfFameRecordEffectFuncs[task->data[0]](task);
 }
 
 
-__attribute__((naked)) void HallOfFameRecordEffect_Init(struct Task *task)
+void HallOfFameRecordEffect_Init(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0xc\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	movs r3, #0xe\n\t"
-        "	ldrsh r2, [r4, r3]\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreatePokeballGlowSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	ldr r0, _080B5B28\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x18\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HallOfFameRecordEffectHelper\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x28\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #1\n\t"
-        "	bl HallOfFameRecordEffectHelper\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x48\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #1\n\t"
-        "	bl HallOfFameRecordEffectHelper\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xa8\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #1\n\t"
-        "	bl HallOfFameRecordEffectHelper\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xc8\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #1\n\t"
-        "	bl HallOfFameRecordEffectHelper\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5B28: .4byte Task_PokecenterHeal + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId;
+    task->data[0]++;
+    task->data[6] = CreateGlowingPokeballsEffect(task->data[1], task->data[2], task->data[3], FALSE);
+    taskId = FindTaskIdByFunc(Task_HallOfFameRecord);
+    CreateHofMonitorSprite(taskId, 120, 24, FALSE);
+    CreateHofMonitorSprite(taskId, 40, 8, TRUE);
+    CreateHofMonitorSprite(taskId, 72, 8, TRUE);
+    CreateHofMonitorSprite(taskId, 168, 8, TRUE);
+    CreateHofMonitorSprite(taskId, 200, 8, TRUE);
 }
 
-__attribute__((naked)) void HallOfFameRecordEffect_WaitForBallPlacement(struct Task *task)
+void HallOfFameRecordEffect_WaitForBallPlacement(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldr r2, _080B5B58\n\t"
-        "	movs r0, #0x14\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _080B5B52\n\t"
-        "	ldrh r0, [r3, #0x26]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x26]\n\t"
-        "	ldrh r0, [r3, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #8]\n\t"
-        "_080B5B52:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5B58: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[task->data[6]].data[0] > 1)
+    {
+        task->data[15]++;
+        task->data[0]++;
+    }
 }
 
-__attribute__((naked)) void HallOfFameRecordEffect_2(struct Task *task)
+void HallOfFameRecordEffect_WaitForBallFlashing(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldr r2, _080B5B80\n\t"
-        "	movs r0, #0x14\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _080B5B7C\n\t"
-        "	ldrh r0, [r3, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #8]\n\t"
-        "_080B5B7C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5B80: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[task->data[6]].data[0] > 4)
+    {
+        task->data[0]++;
+    }
 }
 
-__attribute__((naked)) void HallOfFameRecordEffect_WaitForSoundAndEnd(struct Task *task)
+void HallOfFameRecordEffect_WaitForSoundAndEnd(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _080B5BBC\n\t"
-        "	movs r3, #0x14\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #6\n\t"
-        "	ble _080B5BB6\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "	movs r0, #0x3e\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	ldr r0, _080B5BC0\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B5BB6:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5BBC: .4byte gSprites\n\t"
-        "_080B5BC0: .4byte Task_PokecenterHeal + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[task->data[6]].data[0] > 6)
+    {
+        DestroySprite(&gSprites[task->data[6]]);
+        FieldEffectActiveListRemove(FLDEFF_HALL_OF_FAME_RECORD);
+        DestroyTask(FindTaskIdByFunc(Task_HallOfFameRecord));
+    }
 }
 
-__attribute__((naked)) u8 CreateGlowingPokeballsEffect(s16 a0, s16 a1, s16 a2, bool16 a3)
+u8 CreateGlowingPokeballsEffect(s16 numMons, s16 x, s16 y, bool16 playHealSe)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	adds r6, r3, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	lsrs r6, r6, #0x10\n\t"
-        "	ldr r0, _080B5C10\n\t"
-        "	bl CreateInvisibleSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r2, _080B5C14\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r4, [r1, #0x24]\n\t"
-        "	strh r5, [r1, #0x26]\n\t"
-        "	strh r6, [r1, #0x38]\n\t"
-        "	mov r2, r8\n\t"
-        "	strh r2, [r1, #0x3a]\n\t"
-        "	strh r0, [r1, #0x3c]\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5C10: .4byte SpriteCB_PokeballGlowEffect + 1\n\t"
-        "_080B5C14: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+    struct Sprite *sprite;
+    spriteId = CreateInvisibleSprite(SpriteCB_PokeballGlowEffect);
+    sprite = &gSprites[spriteId];
+    sprite->x2 = x;
+    sprite->y2 = y;
+    sprite->data[5] = playHealSe;
+    sprite->data[6] = numMons;
+    sprite->data[7] = spriteId;
+    return spriteId;
 }
 
-__attribute__((naked)) void SpriteCB_PokeballGlowEffect(struct Sprite *sprite)
+void SpriteCB_PokeballGlowEffect(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _080B5C30\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5C30: .4byte sPokeballGlowEffectFuncs\n\t"
-        ".syntax divided\n\t"
-    );
+    sPokeballGlowEffectFuncs[sprite->data[0]](sprite);
 }
 
-__attribute__((naked)) void PokeballGlowEffect_PlaceBalls(struct Sprite *sprite)
+void PokeballGlowEffect_PlaceBalls(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x30]\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B5C4C\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B5CA8\n\t"
-        "_080B5C4C:\n\t"
-        "	movs r0, #0x19\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	ldr r0, _080B5CC0\n\t"
-        "	ldr r1, _080B5CC4\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r3, [r4, r2]\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r3, r3, r1\n\t"
-        "	ldrh r1, [r4, #0x24]\n\t"
-        "	ldrh r2, [r3]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrh r2, [r4, #0x26]\n\t"
-        "	ldrh r3, [r3, #2]\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSpriteAtEnd\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080B5CC8\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r0, #0x17\n\t"
-        "	bl PlaySE\n\t"
-        "_080B5CA8:\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B5CBA\n\t"
-        "	movs r0, #0x20\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "_080B5CBA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5CC0: .4byte sSpriteTemplate_PokeballGlow\n\t"
-        "_080B5CC4: .4byte sPokeballCoordOffsets\n\t"
-        "_080B5CC8: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+    if (sprite->data[1] == 0 || (--sprite->data[1]) == 0)
+    {
+        sprite->data[1] = 25;
+        spriteId = CreateSpriteAtEnd(&sSpriteTemplate_PokeballGlow, sPokeballCoordOffsets[sprite->data[2]].x + sprite->x2, sPokeballCoordOffsets[sprite->data[2]].y + sprite->y2, 0);
+        gSprites[spriteId].oam.priority = 2;
+        gSprites[spriteId].data[0] = sprite->data[7];
+        sprite->data[2]++;
+        sprite->data[6]--;
+        PlaySE(SE_BALL);
+    }
+    if (sprite->data[6] == 0)
+    {
+        sprite->data[1] = 32;
+        sprite->data[0]++;
+    }
 }
 
-__attribute__((naked)) void PokeballGlowEffect_TryPlaySe(struct Sprite *sprite)
+void PokeballGlowEffect_TryPlaySe(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r1, #0x30]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r2, r0, #0x10\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _080B5CFC\n\t"
-        "	ldrh r0, [r1, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	strh r2, [r1, #0x32]\n\t"
-        "	strh r2, [r1, #0x34]\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B5CFC\n\t"
-        "	movs r0, #0xb8\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	bl PlayFanfare\n\t"
-        "_080B5CFC:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((--sprite->data[1]) == 0)
+    {
+        sprite->data[0]++;
+        sprite->data[1] = 8;
+        sprite->data[2] = 0;
+        sprite->data[3] = 0;
+        if (sprite->data[5])
+        {
+            PlayFanfare(MUS_HEAL);
+        }
+    }
 }
 
-__attribute__((naked)) void PokeballGlowEffect_Flash1(struct Sprite *sprite)
+void PokeballGlowEffect_Flash1(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	ldrh r0, [r7, #0x30]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r7, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B5D30\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r7, #0x30]\n\t"
-        "	ldrh r0, [r7, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r7, #0x32]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B5D30\n\t"
-        "	ldrh r0, [r7, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r7, #0x34]\n\t"
-        "_080B5D30:\n\t"
-        "	ldrh r4, [r7, #0x32]\n\t"
-        "	adds r4, #3\n\t"
-        "	movs r0, #3\n\t"
-        "	mov r8, r0\n\t"
-        "	mov r1, r8\n\t"
-        "	ands r4, r1\n\t"
-        "	ldr r3, _080B5E28\n\t"
-        "	mov sl, r3\n\t"
-        "	mov r0, sl\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	movs r1, #0x84\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldr r6, _080B5E2C\n\t"
-        "	adds r1, r4, r6\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	ldr r5, _080B5E30\n\t"
-        "	adds r2, r4, r5\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	ldr r3, _080B5E34\n\t"
-        "	mov sb, r3\n\t"
-        "	add r4, sb\n\t"
-        "	ldrb r3, [r4]\n\t"
-        "	bl MultiplyInvertedPaletteRGBComponents\n\t"
-        "	ldrh r4, [r7, #0x32]\n\t"
-        "	adds r4, #2\n\t"
-        "	mov r0, r8\n\t"
-        "	ands r4, r0\n\t"
-        "	mov r0, sl\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	movs r1, #0x83\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r1, r4, r6\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r2, r4, r5\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	add r4, sb\n\t"
-        "	ldrb r3, [r4]\n\t"
-        "	bl MultiplyInvertedPaletteRGBComponents\n\t"
-        "	ldrh r4, [r7, #0x32]\n\t"
-        "	adds r4, #1\n\t"
-        "	mov r3, r8\n\t"
-        "	ands r4, r3\n\t"
-        "	mov r0, sl\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	movs r1, #0x81\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r1, r4, r6\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r2, r4, r5\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	add r4, sb\n\t"
-        "	ldrb r3, [r4]\n\t"
-        "	bl MultiplyInvertedPaletteRGBComponents\n\t"
-        "	ldrh r4, [r7, #0x32]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	mov r0, sl\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	ldr r3, _080B5E38\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r6, r4, r6\n\t"
-        "	ldrb r6, [r6]\n\t"
-        "	adds r5, r4, r5\n\t"
-        "	ldrb r5, [r5]\n\t"
-        "	add r4, sb\n\t"
-        "	ldrb r4, [r4]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl MultiplyInvertedPaletteRGBComponents\n\t"
-        "	mov r0, sl\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	ldr r1, _080B5E3C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl MultiplyInvertedPaletteRGBComponents\n\t"
-        "	movs r3, #0x34\n\t"
-        "	ldrsh r0, [r7, r3]\n\t"
-        "	cmp r0, #2\n\t"
-        "	ble _080B5E1A\n\t"
-        "	ldrh r0, [r7, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r7, #0x2e]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r7, #0x30]\n\t"
-        "	strh r1, [r7, #0x32]\n\t"
-        "_080B5E1A:\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5E28: .4byte 0x00001007\n\t"
-        "_080B5E2C: .4byte sPokeballGlowReds\n\t"
-        "_080B5E30: .4byte sPokeballGlowGreens\n\t"
-        "_080B5E34: .4byte sPokeballGlowBlues\n\t"
-        "_080B5E38: .4byte 0x01050000\n\t"
-        "_080B5E3C: .4byte 0x01030000\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 phase;
+    if ((--sprite->data[1]) == 0)
+    {
+        sprite->data[1] = 8;
+        sprite->data[2]++;
+        sprite->data[2] &= 3;
+
+        if (sprite->data[2] == 0)
+            sprite->data[3]++;
+    }
+    phase = (sprite->data[2] + 3) & 3;
+    MultiplyInvertedPaletteRGBComponents(OBJ_PLTT_ID(IndexOfSpritePaletteTag(FLDEFF_PAL_TAG_POKEBALL_GLOW)) + 8, sPokeballGlowReds[phase], sPokeballGlowGreens[phase], sPokeballGlowBlues[phase]);
+    phase = (sprite->data[2] + 2) & 3;
+    MultiplyInvertedPaletteRGBComponents(OBJ_PLTT_ID(IndexOfSpritePaletteTag(FLDEFF_PAL_TAG_POKEBALL_GLOW)) + 6, sPokeballGlowReds[phase], sPokeballGlowGreens[phase], sPokeballGlowBlues[phase]);
+    phase = (sprite->data[2] + 1) & 3;
+    MultiplyInvertedPaletteRGBComponents(OBJ_PLTT_ID(IndexOfSpritePaletteTag(FLDEFF_PAL_TAG_POKEBALL_GLOW)) + 2, sPokeballGlowReds[phase], sPokeballGlowGreens[phase], sPokeballGlowBlues[phase]);
+    phase = sprite->data[2];
+    MultiplyInvertedPaletteRGBComponents(OBJ_PLTT_ID(IndexOfSpritePaletteTag(FLDEFF_PAL_TAG_POKEBALL_GLOW)) + 5, sPokeballGlowReds[phase], sPokeballGlowGreens[phase], sPokeballGlowBlues[phase]);
+    MultiplyInvertedPaletteRGBComponents(OBJ_PLTT_ID(IndexOfSpritePaletteTag(FLDEFF_PAL_TAG_POKEBALL_GLOW)) + 3, sPokeballGlowReds[phase], sPokeballGlowGreens[phase], sPokeballGlowBlues[phase]);
+    if (sprite->data[3] > 2)
+    {
+        sprite->data[0]++;
+        sprite->data[1] = 8;
+        sprite->data[2] = 0;
+    }
 }
 
-__attribute__((naked)) void PokeballGlowEffect_Flash2(struct Sprite *sprite)
+void PokeballGlowEffect_Flash2(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r0, [r2, #0x30]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B5E70\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	ldrh r0, [r2, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r2, #0x32]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080B5E70\n\t"
-        "	ldrh r0, [r2, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2, #0x2e]\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "_080B5E70:\n\t"
-        "	ldrh r4, [r2, #0x32]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _080B5F1C\n\t"
-        "	mov r8, r0\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	movs r1, #0x84\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldr r1, _080B5F20\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	ldrb r6, [r1]\n\t"
-        "	ldr r1, _080B5F24\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	ldrb r5, [r1]\n\t"
-        "	ldr r1, _080B5F28\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	ldrb r4, [r4]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl MultiplyInvertedPaletteRGBComponents\n\t"
-        "	mov r0, r8\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	movs r1, #0x83\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl MultiplyInvertedPaletteRGBComponents\n\t"
-        "	mov r0, r8\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	movs r1, #0x81\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl MultiplyInvertedPaletteRGBComponents\n\t"
-        "	mov r0, r8\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	ldr r1, _080B5F2C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl MultiplyInvertedPaletteRGBComponents\n\t"
-        "	mov r0, r8\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	ldr r1, _080B5F30\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl MultiplyInvertedPaletteRGBComponents\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5F1C: .4byte 0x00001007\n\t"
-        "_080B5F20: .4byte sPokeballGlowReds\n\t"
-        "_080B5F24: .4byte sPokeballGlowGreens\n\t"
-        "_080B5F28: .4byte sPokeballGlowBlues\n\t"
-        "_080B5F2C: .4byte 0x01050000\n\t"
-        "_080B5F30: .4byte 0x01030000\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 phase;
+    if ((--sprite->data[1]) == 0)
+    {
+        sprite->data[1] = 8;
+        sprite->data[2]++;
+        sprite->data[2] &= 3;
+        if (sprite->data[2] == 3)
+        {
+            sprite->data[0]++;
+            sprite->data[1] = 30;
+        }
+    }
+    phase = sprite->data[2];
+    MultiplyInvertedPaletteRGBComponents(OBJ_PLTT_ID(IndexOfSpritePaletteTag(FLDEFF_PAL_TAG_POKEBALL_GLOW)) + 8, sPokeballGlowReds[phase], sPokeballGlowGreens[phase], sPokeballGlowBlues[phase]);
+    MultiplyInvertedPaletteRGBComponents(OBJ_PLTT_ID(IndexOfSpritePaletteTag(FLDEFF_PAL_TAG_POKEBALL_GLOW)) + 6, sPokeballGlowReds[phase], sPokeballGlowGreens[phase], sPokeballGlowBlues[phase]);
+    MultiplyInvertedPaletteRGBComponents(OBJ_PLTT_ID(IndexOfSpritePaletteTag(FLDEFF_PAL_TAG_POKEBALL_GLOW)) + 2, sPokeballGlowReds[phase], sPokeballGlowGreens[phase], sPokeballGlowBlues[phase]);
+    MultiplyInvertedPaletteRGBComponents(OBJ_PLTT_ID(IndexOfSpritePaletteTag(FLDEFF_PAL_TAG_POKEBALL_GLOW)) + 5, sPokeballGlowReds[phase], sPokeballGlowGreens[phase], sPokeballGlowBlues[phase]);
+    MultiplyInvertedPaletteRGBComponents(OBJ_PLTT_ID(IndexOfSpritePaletteTag(FLDEFF_PAL_TAG_POKEBALL_GLOW)) + 3, sPokeballGlowReds[phase], sPokeballGlowGreens[phase], sPokeballGlowBlues[phase]);
 }
 
-__attribute__((naked)) void PokeballGlowEffect_4(struct Sprite *sprite)
+void PokeballGlowEffect_WaitAfterFlash(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r1, #0x30]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B5F4A\n\t"
-        "	ldrh r0, [r1, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "_080B5F4A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((--sprite->data[1]) == 0)
+        sprite->data[0]++;
 }
 
 void PokeballGlowEffect_Dummy(struct Sprite *sprite)
 {
-    sprite->sState++;
+    sprite->data[0]++;
 }
 
-__attribute__((naked)) void PokeballGlowEffect_6(struct Sprite *sprite)
+void PokeballGlowEffect_WaitForSound(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B5F6E\n\t"
-        "	bl IsFanfareTaskInactive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B5F74\n\t"
-        "_080B5F6E:\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "_080B5F74:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[5] == FALSE || IsFanfareTaskInactive())
+    {
+        sprite->data[0]++;
+    }
 }
 
-void PokeballGlowEffect_7(struct Sprite *sprite) {}
-__attribute__((naked)) void SpriteCB_PokeballGlow(struct Sprite *sprite)
+void PokeballGlowEffect_Idle(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldr r2, _080B5FA4\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _080B5FA0\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl FieldEffectFreeGraphicsResources\n\t"
-        "_080B5FA0:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5FA4: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    // Idle until destroyed
+}
+void SpriteCB_PokeballGlow(struct Sprite *sprite)
+{
+    if (gSprites[sprite->data[0]].data[0] > 4)
+    {
+        FieldEffectFreeGraphicsResources(sprite);
+    }
 }
 
-__attribute__((naked)) u8 CreatePokecenterMonitorSprite(s16 x, s16 y)
+u8 CreatePokecenterMonitorSprite(s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	ldr r0, _080B5FF8\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSpriteAtEnd\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B5FFC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r2, [r0, #5]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #5]\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #0x3e\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r3]\n\t"
-        "	ldr r1, _080B6000\n\t"
-        "	bl SetSubspriteTables\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B5FF8: .4byte sSpriteTemplate_PokecenterMonitor\n\t"
-        "_080B5FFC: .4byte gSprites\n\t"
-        "_080B6000: .4byte sSubspriteTable_PokecenterMonitor\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+    struct Sprite *sprite;
+    spriteId = CreateSpriteAtEnd(&sSpriteTemplate_PokecenterMonitor, x, y, 0);
+    sprite = &gSprites[spriteId];
+    sprite->oam.priority = 2;
+    sprite->invisible = TRUE;
+    SetSubspriteTables(sprite, &sSubspriteTable_PokecenterMonitor);
+    return spriteId;
 }
 
-__attribute__((naked)) void SpriteCB_PokecenterMonitor(struct Sprite *sprite)
+void SpriteCB_PokecenterMonitor(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B6028\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	subs r0, #5\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_080B6028:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B603C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FieldEffectFreeGraphicsResources\n\t"
-        "_080B603C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[0] != 0)
+    {
+        sprite->data[0] = 0;
+        sprite->invisible = FALSE;
+        StartSpriteAnim(sprite, 1);
+    }
+    if (sprite->animEnded)
+    {
+        FieldEffectFreeGraphicsResources(sprite);
+    }
 }
 
-__attribute__((naked)) void CreateHofMonitorSprite(s16 a0, s16 a1, s16 a2, bool8 a3)
+void CreateHofMonitorSprite(s16 taskId, s16 x, s16 y, bool8 isSmallMonitor)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	cmp r3, #0\n\t"
-        "	bne _080B608C\n\t"
-        "	ldr r0, _080B6080\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSpriteAtEnd\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B6084\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080B6088\n\t"
-        "	bl SetSubspriteTables\n\t"
-        "	b _080B60A0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6080: .4byte sSpriteTemplate_HofMonitorBig\n\t"
-        "_080B6084: .4byte gSprites\n\t"
-        "_080B6088: .4byte sSubspriteTable_HofMonitorBig\n\t"
-        "_080B608C:\n\t"
-        "	ldr r0, _080B60C0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSpriteAtEnd\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_080B60A0:\n\t"
-        "	ldr r1, _080B60C4\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #0x3e\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r3]\n\t"
-        "	strh r5, [r0, #0x2e]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B60C0: .4byte sSpriteTemplate_HofMonitorSmall\n\t"
-        "_080B60C4: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+    if (!isSmallMonitor)
+    {
+        spriteId = CreateSpriteAtEnd(&sSpriteTemplate_HofMonitorBig, x, y, 0);
+        SetSubspriteTables(&gSprites[spriteId], &sSubspriteTable_HofMonitorBig);
+    }
+    else
+    {
+        spriteId = CreateSpriteAtEnd(&sSpriteTemplate_HofMonitorSmall, x, y, 0);
+    }
+    gSprites[spriteId].invisible = TRUE;
+    gSprites[spriteId].data[0] = taskId;
 }
 
 
-__attribute__((naked)) void SpriteCB_HallOfFameMonitor(struct Sprite *sprite)
+void SpriteCB_HallOfFameMonitor(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldr r2, _080B6130\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x26\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B611E\n\t"
-        "	ldrh r1, [r3, #0x30]\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r3, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B60F6\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r3, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6118\n\t"
-        "_080B60F6:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r3, #0x30]\n\t"
-        "	movs r0, #0x3e\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	mov ip, r0\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	lsls r0, r2, #0x1d\n\t"
-        "	lsrs r0, r0, #0x1f\n\t"
-        "	movs r1, #1\n\t"
-        "	eors r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	mov r1, ip\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080B6118:\n\t"
-        "	ldrh r0, [r3, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x32]\n\t"
-        "_080B611E:\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r3, r2]\n\t"
-        "	cmp r0, #0x7f\n\t"
-        "	ble _080B612C\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl FieldEffectFreeGraphicsResources\n\t"
-        "_080B612C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6130: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gTasks[sprite->data[0]].data[15])
+    {
+        if (sprite->data[1] == 0 || (--sprite->data[1]) == 0)
+        {
+            sprite->data[1] = 16;
+            sprite->invisible ^= 1;
+        }
+        sprite->data[2]++;
+    }
+    if (sprite->data[2] > 127)
+    {
+        FieldEffectFreeGraphicsResources(sprite);
+    }
 }
 
-__attribute__((naked)) void ReturnToFieldFromFlyMapSelect(void)
+void ReturnToFieldFromFlyMapSelect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080B6148\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r1, _080B614C\n\t"
-        "	ldr r0, _080B6150\n\t"
-        "	str r0, [r1]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6148: .4byte CB2_ReturnToField + 1\n\t"
-        "_080B614C: .4byte gFieldCallback\n\t"
-        "_080B6150: .4byte FieldCallback_UseFly + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    SetMainCallback2(CB2_ReturnToField);
+    gFieldCallback = FieldCallback_UseFly;
 }
 
-__attribute__((naked)) void FieldCallback_UseFly(void)
+void FieldCallback_UseFly(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl FadeInFromBlack\n\t"
-        "	ldr r0, _080B6174\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	bl FreezeObjectEvents\n\t"
-        "	ldr r1, _080B6178\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6174: .4byte Task_UseFly + 1\n\t"
-        "_080B6178: .4byte gFieldCallback\n\t"
-        ".syntax divided\n\t"
-    );
+    FadeInFromBlack();
+    CreateTask(Task_UseFly, 0);
+    LockPlayerFieldControls();
+    FreezeObjectEvents();
+    gFieldCallback = NULL;
 }
 
-__attribute__((naked)) void Task_UseFly(u8 taskId)
+void Task_UseFly(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080B61E8\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r6, [r4, r0]\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _080B61BC\n\t"
-        "	bl IsWeatherNotFadingIn\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B61E2\n\t"
-        "	bl GetCursorSelectionMonId\n\t"
-        "	ldr r1, _080B61EC\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [r1]\n\t"
-        "	cmp r0, #5\n\t"
-        "	ble _080B61B0\n\t"
-        "	str r6, [r1]\n\t"
-        "_080B61B0:\n\t"
-        "	movs r0, #0x1f\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B61BC:\n\t"
-        "	movs r0, #0x1f\n\t"
-        "	bl FieldEffectActiveListContains\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B61E2\n\t"
-        "	bl Overworld_ResetStateAfterFly\n\t"
-        "	bl WarpIntoMap\n\t"
-        "	ldr r0, _080B61F0\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r1, _080B61F4\n\t"
-        "	ldr r0, _080B61F8\n\t"
-        "	str r0, [r1]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B61E2:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B61E8: .4byte gTasks\n\t"
-        "_080B61EC: .4byte gFieldEffectArguments\n\t"
-        "_080B61F0: .4byte CB2_LoadMap + 1\n\t"
-        "_080B61F4: .4byte gFieldCallback\n\t"
-        "_080B61F8: .4byte FieldCallback_FlyIntoMap + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task;
+    task = &gTasks[taskId];
+    if (!task->data[0])
+    {
+        if (!IsWeatherNotFadingIn())
+            return;
+
+        gFieldEffectArguments[0] = GetCursorSelectionMonId();
+        if ((int)gFieldEffectArguments[0] > PARTY_SIZE - 1)
+            gFieldEffectArguments[0] = 0;
+
+        FieldEffectStart(FLDEFF_USE_FLY);
+        task->data[0]++;
+    }
+    if (!FieldEffectActiveListContains(FLDEFF_USE_FLY))
+    {
+        Overworld_ResetStateAfterFly();
+        WarpIntoMap();
+        SetMainCallback2(CB2_LoadMap);
+        gFieldCallback = FieldCallback_FlyIntoMap;
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void FieldCallback_FlyIntoMap(void)
+void FieldCallback_FlyIntoMap(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl Overworld_PlaySpecialMapMusic\n\t"
-        "	bl FadeInFromBlack\n\t"
-        "	ldr r0, _080B6254\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	ldr r4, _080B6258\n\t"
-        "	ldr r3, _080B625C\n\t"
-        "	ldrb r1, [r3, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	movs r2, #0x20\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #1]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r0, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B623E\n\t"
-        "	ldrb r1, [r3, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #3\n\t"
-        "	bl EventObjectTurn\n\t"
-        "_080B623E:\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	bl FreezeObjectEvents\n\t"
-        "	ldr r1, _080B6260\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6254: .4byte Task_FlyIntoMap + 1\n\t"
-        "_080B6258: .4byte gObjectEvents\n\t"
-        "_080B625C: .4byte gPlayerAvatar\n\t"
-        "_080B6260: .4byte gFieldCallback\n\t"
-        ".syntax divided\n\t"
-    );
+    Overworld_PlaySpecialMapMusic();
+    FadeInFromBlack();
+    CreateTask(Task_FlyIntoMap, 0);
+    gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
+    if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
+    {
+        ObjectEventTurn(&gObjectEvents[gPlayerAvatar.objectEventId], DIR_WEST);
+    }
+    LockPlayerFieldControls();
+    FreezeObjectEvents();
+    gFieldCallback = NULL;
 }
 
-__attribute__((naked)) void Task_FlyIntoMap(u8 taskId)
+void Task_FlyIntoMap(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080B62B8\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6296\n\t"
-        "	ldr r0, _080B62BC\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B62B0\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B6296:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl FieldEffectActiveListContains\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B62B0\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	bl UnfreezeObjectEvents\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B62B0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B62B8: .4byte gTasks\n\t"
-        "_080B62BC: .4byte gPaletteFade\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task;
+    task = &gTasks[taskId];
+    if (task->data[0] == 0)
+    {
+        if (gPaletteFade.active)
+        {
+            return;
+        }
+        FieldEffectStart(FLDEFF_FLY_IN);
+        task->data[0]++;
+    }
+    if (!FieldEffectActiveListContains(FLDEFF_FLY_IN))
+    {
+        UnlockPlayerFieldControls();
+        UnfreezeObjectEvents();
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void FieldCB_FallWarpExit(void)
+void FieldCB_FallWarpExit(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl Overworld_PlaySpecialMapMusic\n\t"
-        "	bl WarpFadeInScreen\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	bl FreezeObjectEvents\n\t"
-        "	ldr r0, _080B62E4\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	ldr r1, _080B62E8\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B62E4: .4byte Task_FallWarpFieldEffect + 1\n\t"
-        "_080B62E8: .4byte gFieldCallback\n\t"
-        ".syntax divided\n\t"
-    );
+    Overworld_PlaySpecialMapMusic();
+    WarpFadeInScreen();
+    LockPlayerFieldControls();
+    FreezeObjectEvents();
+    CreateTask(Task_FallWarpFieldEffect, 0);
+    gFieldCallback = NULL;
 }
 
-__attribute__((naked)) void Task_FallWarpFieldEffect(u8 taskId)
+void Task_FallWarpFieldEffect(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _080B631C\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	ldr r5, _080B6320\n\t"
-        "_080B62FE:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B62FE\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B631C: .4byte gTasks\n\t"
-        "_080B6320: .4byte sFallWarpFieldEffectFuncs\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task;
+    task = &gTasks[taskId];
+    while (sFallWarpFieldEffectFuncs[task->data[0]](task));
 }
 
-__attribute__((naked)) bool8 FallWarpEffect_Init(struct Task *task)
+bool8 FallWarpEffect_Init(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6}\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r6, _080B63C0\n\t"
-        "	ldrb r0, [r6, #5]\n\t"
-        "	lsls r5, r0, #3\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	ldr r0, _080B63C4\n\t"
-        "	mov r8, r0\n\t"
-        "	add r5, r8\n\t"
-        "	ldrb r0, [r6, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B63C8\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	bl CameraObjectReset2\n\t"
-        "	ldrb r1, [r6, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, r8\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	movs r2, #0x20\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #1]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r6, #6]\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetFaceDirectionMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x42\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	lsrs r0, r0, #6\n\t"
-        "	mov r1, sb\n\t"
-        "	strh r0, [r1, #0x10]\n\t"
-        "	ldrb r0, [r5, #3]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r5, #3]\n\t"
-        "	ldrb r1, [r4, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r4, #5]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	mov r1, sb\n\t"
-        "	ldrh r0, [r1, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B63C0: .4byte gPlayerAvatar\n\t"
-        "_080B63C4: .4byte gObjectEvents\n\t"
-        "_080B63C8: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *playerObject;
+    struct Sprite *playerSprite;
+    playerObject = &gObjectEvents[gPlayerAvatar.objectEventId];
+    playerSprite = &gSprites[gPlayerAvatar.spriteId];
+    CameraObjectFreeze();
+    gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
+    gPlayerAvatar.preventStep = TRUE;
+    ObjectEventSetHeldMovement(playerObject, GetFaceDirectionMovementAction(GetPlayerFacingDirection()));
+    task->data[4] = playerSprite->subspriteMode;
+    playerObject->fixedPriority = 1;
+    playerSprite->oam.priority = 1;
+    playerSprite->subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
+    task->data[0]++;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 FallWarpEffect_WaitWeather(struct Task *task)
+bool8 FallWarpEffect_WaitWeather(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl IsWeatherNotFadingIn\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B63E0\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B63E0:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsWeatherNotFadingIn())
+        task->data[0]++;
+
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 FallWarpEffect_StartFall(struct Task *task)
+bool8 FallWarpEffect_StartFall(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r6, _080B644C\n\t"
-        "	ldrb r0, [r6, #4]\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldr r0, _080B6450\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x29\n\t"
-        "	movs r4, #0\n\t"
-        "	ldrsb r4, [r0, r4]\n\t"
-        "	lsls r0, r4, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ldrh r1, [r2, #0x22]\n\t"
-        "	ldr r3, _080B6454\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrh r3, [r3]\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	strh r1, [r5, #0xc]\n\t"
-        "	ldr r2, _080B6458\n\t"
-        "	ldrb r0, [r6, #5]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r2, [r1, #1]\n\t"
-        "	movs r0, #0x21\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	movs r0, #0x2b\n\t"
-        "	bl PlaySE\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B644C: .4byte gPlayerAvatar\n\t"
-        "_080B6450: .4byte gSprites\n\t"
-        "_080B6454: .4byte gSpriteCoordOffsetY\n\t"
-        "_080B6458: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite;
+    s16 centerToCornerVecY;
+    sprite = &gSprites[gPlayerAvatar.spriteId];
+    centerToCornerVecY = -(sprite->centerToCornerVecY << 1);
+    sprite->y2 = -(sprite->y + sprite->centerToCornerVecY + gSpriteCoordOffsetY + centerToCornerVecY);
+    task->data[1] = 1;
+    task->data[2] = 0;
+    gObjectEvents[gPlayerAvatar.objectEventId].invisible = FALSE;
+    PlaySE(SE_FALL);
+    task->data[0]++;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 FallWarpEffect_Fall(struct Task *task)
+bool8 FallWarpEffect_Fall(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r2, _080B6508\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B650C\n\t"
-        "	adds r6, r0, r1\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B6510\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	ldrh r1, [r5, #0x26]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	ldrh r2, [r4, #0xa]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #7\n\t"
-        "	bgt _080B649E\n\t"
-        "	ldrh r1, [r4, #0xc]\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	movs r1, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B649E\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "_080B649E:\n\t"
-        "	ldrh r2, [r4, #0xe]\n\t"
-        "	movs r1, #0xe\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B64DC\n\t"
-        "	movs r0, #0x26\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	blt _080B64DC\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	ldrb r1, [r6, #3]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6, #3]\n\t"
-        "	ldrb r1, [r4, #0x10]\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	adds r3, #0x42\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "_080B64DC:\n\t"
-        "	movs r1, #0x26\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _080B6500\n\t"
-        "	movs r0, #0xd6\n\t"
-        "	bl PlaySE\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	movs r1, #0x20\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B6500:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6508: .4byte gPlayerAvatar\n\t"
-        "_080B650C: .4byte gObjectEvents\n\t"
-        "_080B6510: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *objectEvent;
+    struct Sprite *sprite;
+
+    objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    sprite = &gSprites[gPlayerAvatar.spriteId];
+    sprite->y2 += task->data[1];
+    if (task->data[1] < 8)
+    {
+        task->data[2] += task->data[1];
+
+        if (task->data[2] & 0xf)
+            task->data[1] <<= 1;
+    }
+    if (task->data[3] == FALSE && sprite->y2 >= -16)
+    {
+        task->data[3]++;
+        objectEvent->fixedPriority = 0;
+        sprite->subspriteMode = task->data[4];
+        objectEvent->triggerGroundEffectsOnMove = 1;
+    }
+    if (sprite->y2 >= 0)
+    {
+        PlaySE(SE_M_STRENGTH);
+        objectEvent->triggerGroundEffectsOnStop = 1;
+        objectEvent->landingJump = 1;
+        sprite->y2 = 0;
+        task->data[0]++;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 FallWarpEffect_Land(struct Task *task)
+bool8 FallWarpEffect_Land(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrh r1, [r0, #8]\n\t"
-        "	adds r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r1, [r0, #8]\n\t"
-        "	movs r1, #4\n\t"
-        "	strh r1, [r0, #0xa]\n\t"
-        "	strh r2, [r0, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetCameraPanningCallback\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    task->data[0]++;
+    task->data[1] = 4;
+    task->data[2] = 0;
+    SetCameraPanningCallback(NULL);
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 FallWarpEffect_CameraShake(struct Task *task)
+bool8 FallWarpEffect_CameraShake(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetCameraPanning\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	rsbs r2, r0, #0\n\t"
-        "	strh r2, [r4, #0xa]\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	movs r1, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6558\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "_080B6558:\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6566\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B6566:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetCameraPanning(0, task->data[1]);
+    task->data[1] = -task->data[1];
+    task->data[2]++;
+
+    if ((task->data[2] & 3) == 0)
+        task->data[1] >>= 1;
+
+    if (task->data[1] == 0)
+        task->data[0]++;
+
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 FallWarpEffect_End(struct Task *task)
+bool8 FallWarpEffect_End(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _080B659C\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #6]\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	bl CameraObjectReset\n\t"
-        "	bl UnfreezeObjectEvents\n\t"
-        "	bl InstallCameraPanAheadCallback\n\t"
-        "	ldr r0, _080B65A0\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B659C: .4byte gPlayerAvatar\n\t"
-        "_080B65A0: .4byte Task_FallWarpFieldEffect + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gPlayerAvatar.preventStep = FALSE;
+    UnlockPlayerFieldControls();
+    CameraObjectReset();
+    UnfreezeObjectEvents();
+    InstallCameraPanAheadCallback();
+    DestroyTask(FindTaskIdByFunc(Task_FallWarpFieldEffect));
+    return FALSE;
 }
 
-__attribute__((naked)) void StartEscalatorWarp(u8 metatileBehavior, u8 priority)
+void StartEscalatorWarp(u8 metatileBehavior, u8 priority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r0, _080B65D8\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080B65DC\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	cmp r4, #0x6a\n\t"
-        "	bne _080B65D0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "_080B65D0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B65D8: .4byte Task_EscalatorWarpOut + 1\n\t"
-        "_080B65DC: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId;
+    taskId = CreateTask(Task_EscalatorWarpOut, priority);
+    gTasks[taskId].data[1] = FALSE;
+    if (metatileBehavior == MB_UP_ESCALATOR)
+    {
+        gTasks[taskId].data[1] = TRUE;
+    }
 }
 
-__attribute__((naked)) void Task_EscalatorWarpOut(u8 taskId)
+void Task_EscalatorWarpOut(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _080B6610\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	ldr r5, _080B6614\n\t"
-        "_080B65F2:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B65F2\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6610: .4byte gTasks\n\t"
-        "_080B6614: .4byte sEscalatorWarpOutFieldEffectFuncs\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task;
+    task = &gTasks[taskId];
+    while (sEscalatorWarpOutFieldEffectFuncs[task->data[0]](task));
 }
 
-__attribute__((naked)) bool8 EscalatorWarpOut_Init(struct Task *task)
+bool8 EscalatorWarpOut_Init(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl FreezeObjectEvents\n\t"
-        "	bl CameraObjectReset2\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	bl StartEscalator\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    FreezeObjectEvents();
+    CameraObjectFreeze();
+    StartEscalator(task->data[1]);
+    task->data[0]++;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 EscalatorWarpOut_WaitForPlayer(struct Task *task)
+bool8 EscalatorWarpOut_WaitForPlayer(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r0, _080B66A0\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B66A4\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventIsMovementOverridden\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B6662\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B6696\n\t"
-        "_080B6662:\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetFaceDirectionMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	strh r1, [r5, #0xc]\n\t"
-        "	strh r1, [r5, #0xe]\n\t"
-        "	ldrb r0, [r5, #0xa]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6690\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "_080B6690:\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl PlaySE\n\t"
-        "_080B6696:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B66A0: .4byte gPlayerAvatar\n\t"
-        "_080B66A4: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *objectEvent;
+    objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if (!ObjectEventIsMovementOverridden(objectEvent) || ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(GetPlayerFacingDirection()));
+        task->data[0]++;
+        task->data[2] = 0;
+        task->data[3] = 0;
+        if ((u8)task->data[1] == FALSE)
+        {
+            task->data[0] = 4; // jump to EscalatorWarpOut_Down_Ride
+        }
+        PlaySE(SE_ESCALATOR);
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 EscalatorWarpOut_Up_Ride(struct Task *task)
+bool8 EscalatorWarpOut_Up_Ride(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_080B6710\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _080B66C2\n\t"
-        "	bl sub_080B67A8\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B66C2:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RideUpEscalatorOut(task);
+    if (task->data[2] > 3)
+    {
+        FadeOutAtEndOfEscalator();
+        task->data[0]++;
+    }
+    return FALSE;
 }
 
 
-__attribute__((naked)) bool8 EscalatorWarpOut_Up_End(struct Task *task)
+bool8 EscalatorWarpOut_Up_End(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl sub_080B6710\n\t"
-        "	bl sub_080B67B8\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    RideUpEscalatorOut(task);
+    WarpAtEndOfEscalator();
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 EscalatorWarpOut_Down_Ride(struct Task *task)
+bool8 EscalatorWarpOut_Down_Ride(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_080B675C\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _080B66F6\n\t"
-        "	bl sub_080B67A8\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B66F6:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RideDownEscalatorOut(task);
+    if (task->data[2] > 3)
+    {
+        FadeOutAtEndOfEscalator();
+        task->data[0]++;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 EscalatorWarpOut_Down_End(struct Task *task)
+bool8 EscalatorWarpOut_Down_End(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl sub_080B675C\n\t"
-        "	bl sub_080B67B8\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    RideDownEscalatorOut(task);
+    WarpAtEndOfEscalator();
+    return FALSE;
 }
 
-__attribute__((naked)) void RideUpEscalatorOut(struct Task *task)
+void RideUpEscalatorOut(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r0, _080B6754\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B6758\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	movs r0, #0x84\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	movs r0, #0x94\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r5, #0xe]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0xe]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B674E\n\t"
-        "	ldrh r0, [r5, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0xc]\n\t"
-        "_080B674E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6754: .4byte gPlayerAvatar\n\t"
-        "_080B6758: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite;
+    sprite = &gSprites[gPlayerAvatar.spriteId];
+    sprite->x2 = Cos(0x84, task->data[2]);
+    sprite->y2 = Sin(0x94, task->data[2]);
+    task->data[3]++;
+    if (task->data[3] & 1)
+    {
+        task->data[2]++;
+    }
 }
 
-__attribute__((naked)) void RideDownEscalatorOut(struct Task *task)
+void RideDownEscalatorOut(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r0, _080B67A0\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B67A4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	movs r0, #0x7c\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	movs r0, #0x76\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r5, #0xe]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0xe]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B679A\n\t"
-        "	ldrh r0, [r5, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0xc]\n\t"
-        "_080B679A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B67A0: .4byte gPlayerAvatar\n\t"
-        "_080B67A4: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite;
+    sprite = &gSprites[gPlayerAvatar.spriteId];
+    sprite->x2 = Cos(0x7c, task->data[2]);
+    sprite->y2 = Sin(0x76, task->data[2]);
+    task->data[3]++;
+    if (task->data[3] & 1)
+    {
+        task->data[2]++;
+    }
 }
 
-__attribute__((naked)) void FadeOutAtEndOfEscalator(void)
+void FadeOutAtEndOfEscalator(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl TryFadeOutOldMapMusic\n\t"
-        "	bl WarpFadeOutScreen\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    TryFadeOutOldMapMusic();
+    WarpFadeOutScreen();
 }
 
-__attribute__((naked)) void WarpAtEndOfEscalator(void)
+void WarpAtEndOfEscalator(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080B67F8\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B67F4\n\t"
-        "	bl BGMusicStopped\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080B67F4\n\t"
-        "	bl StopEscalator\n\t"
-        "	bl WarpIntoMap\n\t"
-        "	ldr r1, _080B67FC\n\t"
-        "	ldr r0, _080B6800\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _080B6804\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r0, _080B6808\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B67F4:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B67F8: .4byte gPaletteFade\n\t"
-        "_080B67FC: .4byte gFieldCallback\n\t"
-        "_080B6800: .4byte FieldCallback_EscalatorWarpIn + 1\n\t"
-        "_080B6804: .4byte CB2_LoadMap + 1\n\t"
-        "_080B6808: .4byte Task_EscalatorWarpOut + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active && BGMusicStopped() == TRUE)
+    {
+        StopEscalator();
+        WarpIntoMap();
+        gFieldCallback = FieldCallback_EscalatorWarpIn;
+        SetMainCallback2(CB2_LoadMap);
+        DestroyTask(FindTaskIdByFunc(Task_EscalatorWarpOut));
+    }
 }
 
-__attribute__((naked)) void FieldCallback_EscalatorWarpIn(void)
+void FieldCallback_EscalatorWarpIn(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl Overworld_PlaySpecialMapMusic\n\t"
-        "	bl WarpFadeInScreen\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	ldr r0, _080B682C\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	ldr r1, _080B6830\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B682C: .4byte Task_EscalatorWarpIn + 1\n\t"
-        "_080B6830: .4byte gFieldCallback\n\t"
-        ".syntax divided\n\t"
-    );
+    Overworld_PlaySpecialMapMusic();
+    WarpFadeInScreen();
+    LockPlayerFieldControls();
+    CreateTask(Task_EscalatorWarpIn, 0);
+    gFieldCallback = NULL;
 }
 
-__attribute__((naked)) void Task_EscalatorWarpIn(u8 taskId)
+void Task_EscalatorWarpIn(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _080B6864\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	ldr r5, _080B6868\n\t"
-        "_080B6846:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6846\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6864: .4byte gTasks\n\t"
-        "_080B6868: .4byte sEscalatorWarpInFieldEffectFuncs\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task;
+    task = &gTasks[taskId];
+    while (sEscalatorWarpInFieldEffectFuncs[task->data[0]](task));
 }
 
-__attribute__((naked)) bool8 EscalatorWarpIn_Init(struct Task *task)
+bool8 EscalatorWarpIn_Init(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	bl CameraObjectReset2\n\t"
-        "	ldr r0, _080B68CC\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B68D0\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	movs r0, #4\n\t"
-        "	bl GetFaceDirectionMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	mov r4, sp\n\t"
-        "	adds r4, #2\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl PlayerGetDestCoords\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	cmp r1, #0x6b\n\t"
-        "	bne _080B68D4\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	b _080B68D6\n\t"
-        "	.align 2, 0\n\t"
-        "_080B68CC: .4byte gPlayerAvatar\n\t"
-        "_080B68D0: .4byte gObjectEvents\n\t"
-        "_080B68D4:\n\t"
-        "	movs r1, #0\n\t"
-        "_080B68D6:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl StartEscalator\n\t"
-        "	movs r0, #1\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *objectEvent;
+    s16 x;
+    s16 y;
+    u8 behavior;
+    CameraObjectFreeze();
+    objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(DIR_EAST));
+    PlayerGetDestCoords(&x, &y);
+    behavior = MapGridGetMetatileBehaviorAt(x, y);
+    task->data[0]++;
+    task->data[1] = 16;
+
+    if (behavior == MB_DOWN_ESCALATOR)
+    {
+        // If dest is down escalator tile, player is riding up
+        behavior = TRUE;
+        task->data[0] = 3; // jump to EscalatorWarpIn_Up_Init
+    }
+    else // MB_UP_ESCALATOR
+    {
+        // If dest is up escalator tile, player is riding down
+        behavior = FALSE;
+    }
+    StartEscalator(behavior);
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 EscalatorWarpIn_Down_Init(struct Task *task)
+bool8 EscalatorWarpIn_Down_Init(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r0, _080B6920\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B6924\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	movs r0, #0x84\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	movs r0, #0x94\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6920: .4byte gPlayerAvatar\n\t"
-        "_080B6924: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite;
+    sprite = &gSprites[gPlayerAvatar.spriteId];
+    sprite->x2 = Cos(0x84, task->data[1]);
+    sprite->y2 = Sin(0x94, task->data[1]);
+    task->data[0]++;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 EscalatorWarpIn_Down_Ride(struct Task *task)
+bool8 EscalatorWarpIn_Down_Ride(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _080B6980\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B6984\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x84\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x94\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B6966\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "_080B6966:\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6976\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	movs r0, #5\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B6976:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6980: .4byte gPlayerAvatar\n\t"
-        "_080B6984: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite;
+    sprite = &gSprites[gPlayerAvatar.spriteId];
+    sprite->x2 = Cos(0x84, task->data[1]);
+    sprite->y2 = Sin(0x94, task->data[1]);
+    task->data[2]++;
+    if (task->data[2] & 1)
+    {
+        task->data[1]--;
+    }
+    if (task->data[1] == 0)
+    {
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        task->data[0] = 5;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 EscalatorWarpIn_Up_Init(struct Task *task)
+bool8 EscalatorWarpIn_Up_Init(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r0, _080B69C0\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B69C4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	movs r0, #0x7c\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	movs r0, #0x76\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B69C0: .4byte gPlayerAvatar\n\t"
-        "_080B69C4: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite;
+    sprite = &gSprites[gPlayerAvatar.spriteId];
+    sprite->x2 = Cos(0x7c, task->data[1]);
+    sprite->y2 = Sin(0x76, task->data[1]);
+    task->data[0]++;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 EscalatorWarpIn_Up_Ride(struct Task *task)
+bool8 EscalatorWarpIn_Up_Ride(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _080B6A20\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B6A24\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x7c\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x76\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B6A06\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "_080B6A06:\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6A18\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B6A18:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6A20: .4byte gPlayerAvatar\n\t"
-        "_080B6A24: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite;
+    sprite = &gSprites[gPlayerAvatar.spriteId];
+    sprite->x2 = Cos(0x7c, task->data[1]);
+    sprite->y2 = Sin(0x76, task->data[1]);
+    task->data[2]++;
+    if (task->data[2] & 1)
+    {
+        task->data[1]--;
+    }
+    if (task->data[1] == 0)
+    {
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        task->data[0]++;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 EscalatorWarpIn_WaitForMovement(struct Task *task)
+bool8 EscalatorWarpIn_WaitForMovement(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl IsEscalatorMoving\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6A44\n\t"
-        "	bl StopEscalator\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080B6A46\n\t"
-        "_080B6A44:\n\t"
-        "	movs r0, #0\n\t"
-        "_080B6A46:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsEscalatorMoving())
+    {
+        return FALSE;
+    }
+    StopEscalator();
+    task->data[0]++;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 EscalatorWarpIn_End(struct Task *task)
+bool8 EscalatorWarpIn_End(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080B6A98\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B6A9C\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B6A90\n\t"
-        "	bl CameraObjectReset\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	movs r0, #4\n\t"
-        "	bl sub_08092CF8\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldr r0, _080B6AA0\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B6A90:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6A98: .4byte gPlayerAvatar\n\t"
-        "_080B6A9C: .4byte gObjectEvents\n\t"
-        "_080B6AA0: .4byte Task_EscalatorWarpIn + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *objectEvent;
+    objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if (ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        CameraObjectReset();
+        UnlockPlayerFieldControls();
+        ObjectEventSetHeldMovement(objectEvent, GetWalkNormalMovementAction(DIR_EAST));
+        DestroyTask(FindTaskIdByFunc(Task_EscalatorWarpIn));
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 FldEff_UseWaterfall(void)
+bool8 FldEff_UseWaterfall(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080B6AD0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080B6AD4\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, _080B6AD8\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	strh r2, [r1, #0xa]\n\t"
-        "	bl _call_via_r4\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6AD0: .4byte sub_080B6ADC + 1\n\t"
-        "_080B6AD4: .4byte gTasks\n\t"
-        "_080B6AD8: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId;
+    taskId = CreateTask(Task_UseWaterfall, 0xff);
+    gTasks[taskId].data[1] = gFieldEffectArguments[0];
+    Task_UseWaterfall(taskId);
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_080B6ADC(u8 taskId)
+void Task_UseWaterfall(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _080B6B18\n\t"
-        "	ldr r2, _080B6B1C\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_080B6AEE:\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldr r0, _080B6B20\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _080B6B24\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6AEE\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6B18: .4byte sWaterfallFieldEffectFuncs\n\t"
-        "_080B6B1C: .4byte gTasks\n\t"
-        "_080B6B20: .4byte gPlayerAvatar\n\t"
-        "_080B6B24: .4byte gObjectEvents\n\t"
-
-        ".syntax divided\n\t"
-
-    );
+    while (sWaterfallFieldEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId], &gObjectEvents[gPlayerAvatar.objectEventId]));
 }
 
 
-__attribute__((naked)) bool8 WaterfallFieldEffect_Init(struct Task *task, struct ObjectEvent *objectEvent)
+bool8 WaterfallFieldEffect_Init(struct Task *task, struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	ldr r1, _080B6B44\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1, #6]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6B44: .4byte gPlayerAvatar\n\t"
-        ".syntax divided\n\t"
-    );
+    LockPlayerFieldControls();
+    gPlayerAvatar.preventStep = TRUE;
+    task->data[0]++;
+    return FALSE;
 }
 
 
-__attribute__((naked)) bool8 WaterfallFieldEffect_ShowMon(struct Task *task, struct ObjectEvent *objectEvent)
+bool8 WaterfallFieldEffect_ShowMon(struct Task *task, struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventIsMovementOverridden\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6B78\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	ldr r1, _080B6B80\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #0x3b\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B6B78:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6B80: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    LockPlayerFieldControls();
+    if (!ObjectEventIsMovementOverridden(objectEvent))
+    {
+        ObjectEventClearHeldMovementIfFinished(objectEvent);
+        gFieldEffectArguments[0] = task->data[1];
+        FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
+        task->data[0]++;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 WaterfallFieldEffect_WaitForShowMon(struct Task *task, struct ObjectEvent *objectEvent)
+bool8 WaterfallFieldEffect_WaitForShowMon(struct Task *task, struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #6\n\t"
-        "	bl FieldEffectActiveListContains\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6B9E\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080B6BA0\n\t"
-        "_080B6B9E:\n\t"
-        "	movs r0, #0\n\t"
-        "_080B6BA0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FieldEffectActiveListContains(FLDEFF_FIELD_MOVE_SHOW_MON))
+    {
+        return FALSE;
+    }
+    task->data[0]++;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 WaterfallFieldEffect_RideUp(struct Task *task, struct ObjectEvent *objectEvent)
+bool8 WaterfallFieldEffect_RideUp(struct Task *task, struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_08092CCC\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ObjectEventSetHeldMovement(objectEvent, GetWalkSlowMovementAction(DIR_NORTH));
+    task->data[0]++;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 WaterfallFieldEffect_ContinueRideOrEnd(struct Task *task, struct ObjectEvent *objectEvent)
+bool8 WaterfallFieldEffect_ContinueRideOrEnd(struct Task *task, struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6BE6\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080B6C22\n\t"
-        "_080B6BE6:\n\t"
-        "	ldrb r0, [r4, #0x1e]\n\t"
-        "	bl MetatileBehavior_IsWaterfall\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080B6C1C\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	ldr r0, _080B6C14\n\t"
-        "	strb r4, [r0, #6]\n\t"
-        "	ldr r0, _080B6C18\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "	movs r0, #0x2b\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080B6C22\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6C14: .4byte gPlayerAvatar\n\t"
-        "_080B6C18: .4byte sub_080B6ADC + 1\n\t"
-        "_080B6C1C:\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "_080B6C22:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!ObjectEventClearHeldMovementIfFinished(objectEvent))
+        return FALSE;
+
+    if (MetatileBehavior_IsWaterfall(objectEvent->currentMetatileBehavior))
+    {
+        // Still ascending waterfall, back to WaterfallFieldEffect_RideUp
+        task->data[0] = 3;
+        return TRUE;
+    }
+
+    UnlockPlayerFieldControls();
+    gPlayerAvatar.preventStep = FALSE;
+    DestroyTask(FindTaskIdByFunc(Task_UseWaterfall));
+    FieldEffectActiveListRemove(FLDEFF_USE_WATERFALL);
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 FldEff_UseDive(void)
+bool8 FldEff_UseDive(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080B6C58\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080B6C5C\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r3, _080B6C60\n\t"
-        "	ldr r2, [r3]\n\t"
-        "	strh r2, [r1, #0x26]\n\t"
-        "	ldr r2, [r3, #4]\n\t"
-        "	strh r2, [r1, #0x24]\n\t"
-        "	bl _call_via_r4\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6C58: .4byte Task_UseDive + 1\n\t"
-        "_080B6C5C: .4byte gTasks\n\t"
-        "_080B6C60: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId;
+    taskId = CreateTask(Task_UseDive, 0xff);
+    gTasks[taskId].data[15] = gFieldEffectArguments[0];
+    gTasks[taskId].data[14] = gFieldEffectArguments[1];
+    Task_UseDive(taskId);
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_UseDive(u8 taskId)
+void Task_UseDive(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _080B6C94\n\t"
-        "	ldr r2, _080B6C98\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_080B6C76:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6C76\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6C94: .4byte sDiveFieldEffectFuncs\n\t"
-        "_080B6C98: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sDiveFieldEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId]));
 }
 
 bool8 DiveFieldEffect_Init(struct Task *task)
@@ -4436,5940 +2213,1723 @@ bool8 DiveFieldEffect_Init(struct Task *task)
     return FALSE;
 }
 
-__attribute__((naked)) bool8 DiveFieldEffect_ShowMon(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	ldr r1, _080B6CD4\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #0x3b\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6CD4: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 DiveFieldEffect_TryWarp(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r1, #2\n\t"
-        "	mov r0, sp\n\t"
-        "	bl PlayerGetDestCoords\n\t"
-        "	movs r0, #6\n\t"
-        "	bl FieldEffectActiveListContains\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6D1C\n\t"
-        "	ldr r2, _080B6D24\n\t"
-        "	ldr r0, _080B6D28\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0, #0x1e]\n\t"
-        "	mov r0, sp\n\t"
-        "	bl dive_warp\n\t"
-        "	ldr r0, _080B6D2C\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "	movs r0, #0x2c\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "_080B6D1C:\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6D24: .4byte gObjectEvents\n\t"
-        "_080B6D28: .4byte gPlayerAvatar\n\t"
-        "_080B6D2C: .4byte Task_UseDive + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void StartLavaridgeGym1FWarp(u8 priority)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r0, _080B6D44\n\t"
-        "	bl CreateTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6D44: .4byte Task_LavaridgeGymB1FWarp + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Task_LavaridgeGymB1FWarp(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r6, _080B6D90\n\t"
-        "	ldr r2, _080B6D94\n\t"
-        "	ldr r5, _080B6D98\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_080B6D5C:\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r3, [r4, r0]\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r3, r3, r6\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _080B6D9C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r5, #4]\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldr r0, _080B6DA0\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r3, [r3]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6D5C\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6D90: .4byte sLavaridgeGymB1FWarpEffectFuncs\n\t"
-        "_080B6D94: .4byte gTasks\n\t"
-        "_080B6D98: .4byte gPlayerAvatar\n\t"
-        "_080B6D9C: .4byte gObjectEvents\n\t"
-        "_080B6DA0: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 LavaridgeGymB1FWarpEffect_Init(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl FreezeObjectEvents\n\t"
-        "	bl CameraObjectReset2\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetCameraPanningCallback\n\t"
-        "	ldr r0, _080B6DD8\n\t"
-        "	movs r2, #1\n\t"
-        "	strb r2, [r0, #6]\n\t"
-        "	ldrb r0, [r5, #3]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r5, #3]\n\t"
-        "	strh r2, [r4, #0xa]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6DD8: .4byte gPlayerAvatar\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 LavaridgeGymB1FWarpEffect_CameraShake(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetCameraPanning\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #7\n\t"
-        "	ble _080B6E08\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B6E08:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 LavaridgeGymB1FWarpEffect_Launch(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	ldr r3, _080B6E58\n\t"
-        "	movs r5, #0x10\n\t"
-        "	ldrsh r0, [r1, r5]\n\t"
-        "	str r0, [r3]\n\t"
-        "	movs r5, #0x12\n\t"
-        "	ldrsh r0, [r1, r5]\n\t"
-        "	str r0, [r3, #4]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x43\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	str r0, [r3, #8]\n\t"
-        "	ldrb r0, [r2, #5]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	str r0, [r3, #0xc]\n\t"
-        "	movs r0, #0x32\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	movs r0, #0xb2\n\t"
-        "	bl PlaySE\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6E58: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 LavaridgeGymB1FWarpEffect_Rise(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetCameraPanning\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	rsbs r2, r0, #0\n\t"
-        "	strh r2, [r4, #0xa]\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	strh r1, [r4, #0xc]\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x11\n\t"
-        "	bgt _080B6E96\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _080B6EA8\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #3\n\t"
-        "	bgt _080B6EA8\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	b _080B6EA6\n\t"
-        "_080B6E96:\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _080B6EA8\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _080B6EA8\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "_080B6EA6:\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "_080B6EA8:\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #6\n\t"
-        "	ble _080B6EF4\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x29\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	lsls r2, r1, #0x11\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	movs r7, #0x26\n\t"
-        "	ldrsh r3, [r5, r7]\n\t"
-        "	movs r7, #0x22\n\t"
-        "	ldrsh r0, [r5, r7]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080B6EEC\n\t"
-        "	movs r7, #0\n\t"
-        "	ldrsh r1, [r1, r7]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	cmn r3, r0\n\t"
-        "	ble _080B6EF0\n\t"
-        "	ldrh r0, [r5, #0x26]\n\t"
-        "	ldrh r1, [r4, #0xe]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #7\n\t"
-        "	bgt _080B6EF4\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	b _080B6EF4\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6EEC: .4byte gSpriteCoordOffsetY\n\t"
-        "_080B6EF0:\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "_080B6EF4:\n\t"
-        "	ldrh r2, [r4, #0x12]\n\t"
-        "	movs r1, #0x12\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6F32\n\t"
-        "	movs r7, #0x26\n\t"
-        "	ldrsh r1, [r5, r7]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	bge _080B6F32\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	ldrb r0, [r6, #3]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r6, #3]\n\t"
-        "	ldrb r1, [r5, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x42\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080B6F32:\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6F48\n\t"
-        "	movs r7, #0x10\n\t"
-        "	ldrsh r0, [r4, r7]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B6F48\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B6F48:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 LavaridgeGymB1FWarpEffect_FadeOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl TryFadeOutOldMapMusic\n\t"
-        "	bl WarpFadeOutScreen\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 LavaridgeGymB1FWarpEffect_Warp(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080B6FAC\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6FA4\n\t"
-        "	bl BGMusicStopped\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080B6FA4\n\t"
-        "	bl WarpIntoMap\n\t"
-        "	ldr r1, _080B6FB0\n\t"
-        "	ldr r0, _080B6FB4\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _080B6FB8\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r0, _080B6FBC\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B6FA4:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6FAC: .4byte gPaletteFade\n\t"
-        "_080B6FB0: .4byte gFieldCallback\n\t"
-        "_080B6FB4: .4byte FieldCB_LavaridgeGymB1FWarpExit + 1\n\t"
-        "_080B6FB8: .4byte CB2_LoadMap + 1\n\t"
-        "_080B6FBC: .4byte Task_LavaridgeGymB1FWarp + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldCB_LavaridgeGymB1FWarpExit(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl Overworld_PlaySpecialMapMusic\n\t"
-        "	bl WarpFadeInScreen\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	ldr r0, _080B6FE0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r0, _080B6FE4\n\t"
-        "	bl CreateTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6FE0: .4byte gFieldCallback\n\t"
-        "_080B6FE4: .4byte Task_LavaridgeGymB1FWarpExit + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Task_LavaridgeGymB1FWarpExit(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r6, _080B7030\n\t"
-        "	ldr r2, _080B7034\n\t"
-        "	ldr r5, _080B7038\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_080B6FFC:\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r3, [r4, r0]\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r3, r3, r6\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _080B703C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r5, #4]\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldr r0, _080B7040\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r3, [r3]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B6FFC\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7030: .4byte sLavaridgeGymB1FWarpExitEffectFuncs\n\t"
-        "_080B7034: .4byte gTasks\n\t"
-        "_080B7038: .4byte gPlayerAvatar\n\t"
-        "_080B703C: .4byte gObjectEvents\n\t"
-        "_080B7040: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 LavaridgeGymB1FWarpExitEffect_Init(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl CameraObjectReset2\n\t"
-        "	bl FreezeObjectEvents\n\t"
-        "	ldr r1, _080B7070\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1, #6]\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7070: .4byte gPlayerAvatar\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) bool8 LavaridgeGymB1FWarpExitEffect_StartPopOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	bl IsWeatherNotFadingIn\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B70B4\n\t"
-        "	ldr r1, _080B70BC\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r0, #0x43\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldrb r0, [r6, #5]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	str r0, [r1, #0xc]\n\t"
-        "	movs r0, #0x31\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B70B4:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B70BC: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 LavaridgeGymB1FWarpExitEffect_PopOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r2, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B7110\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, #0x2b\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bls _080B7108\n\t"
-        "	ldrh r0, [r2, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2, #8]\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r0, #0x21\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	bl CameraObjectReset\n\t"
-        "	movs r0, #0xaf\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #4\n\t"
-        "	bl sub_08092E84\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "_080B7108:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7110: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 LavaridgeGymB1FWarpExitEffect_End(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B713E\n\t"
-        "	ldr r1, _080B7144\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #6]\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	bl UnfreezeObjectEvents\n\t"
-        "	ldr r0, _080B7148\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B713E:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7144: .4byte gPlayerAvatar\n\t"
-        "_080B7148: .4byte Task_LavaridgeGymB1FWarpExit + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 FldEff_AshLaunch(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080B71A4\n\t"
-        "	adds r1, r4, #4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #8\n\t"
-        "	bl SetSpritePosToOffsetMapCoords\n\t"
-        "	ldr r0, _080B71A8\n\t"
-        "	adds r0, #0x84\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	movs r3, #4\n\t"
-        "	ldrsh r2, [r4, r3]\n\t"
-        "	ldrb r3, [r4, #8]\n\t"
-        "	bl CreateSpriteAtEnd\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080B71AC\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	movs r1, #3\n\t"
-        "	ldrb r3, [r4, #0xc]\n\t"
-        "	ands r3, r1\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	ldrb r4, [r2, #5]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r4\n\t"
-        "	orrs r1, r3\n\t"
-        "	strb r1, [r2, #5]\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r3, #2\n\t"
-        "	orrs r1, r3\n\t"
-        "	strb r1, [r2]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B71A4: .4byte gFieldEffectArguments\n\t"
-        "_080B71A8: .4byte gFieldEffectObjectTemplatePointers\n\t"
-        "_080B71AC: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SpriteCB_AshLaunch(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B71C8\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	bl FieldEffectStop\n\t"
-        "_080B71C8:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void StartLavaridgeGymB1FWarp(u8 priority)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r0, _080B71E0\n\t"
-        "	bl CreateTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B71E0: .4byte Task_LavaridgeGym1FWarp + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Task_LavaridgeGym1FWarp(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r6, _080B722C\n\t"
-        "	ldr r2, _080B7230\n\t"
-        "	ldr r5, _080B7234\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_080B71F8:\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r3, [r4, r0]\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r3, r3, r6\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _080B7238\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r5, #4]\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldr r0, _080B723C\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r3, [r3]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B71F8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B722C: .4byte sLavaridgeGym1FWarpEffectFuncs\n\t"
-        "_080B7230: .4byte gTasks\n\t"
-        "_080B7234: .4byte gPlayerAvatar\n\t"
-        "_080B7238: .4byte gObjectEvents\n\t"
-        "_080B723C: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 LavaridgeGym1FWarpEffect_Init(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl FreezeObjectEvents\n\t"
-        "	bl CameraObjectReset2\n\t"
-        "	ldr r1, _080B726C\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1, #6]\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #3]\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B726C: .4byte gPlayerAvatar\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 LavaridgeGym1FWarpEffect_AshPuff(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B72E4\n\t"
-        "	ldrh r1, [r5, #0xa]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _080B72C4\n\t"
-        "	ldr r1, _080B72C0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r0, #0x43\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldrb r0, [r6, #5]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	str r0, [r1, #0xc]\n\t"
-        "	movs r0, #0x31\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	b _080B72E4\n\t"
-        "	.align 2, 0\n\t"
-        "_080B72C0: .4byte gFieldEffectArguments\n\t"
-        "_080B72C4:\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl sub_08092F60\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	movs r0, #0x27\n\t"
-        "	bl PlaySE\n\t"
-        "_080B72E4:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 LavaridgeGym1FWarpEffect_Disappear(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldr r2, _080B7320\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, #0x2b\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080B7316\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	ldrh r0, [r3, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #8]\n\t"
-        "_080B7316:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7320: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 LavaridgeGym1FWarpEffect_FadeOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x31\n\t"
-        "	bl FieldEffectActiveListContains\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B7342\n\t"
-        "	bl TryFadeOutOldMapMusic\n\t"
-        "	bl WarpFadeOutScreen\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B7342:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 LavaridgeGym1FWarpEffect_Warp(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080B738C\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B7384\n\t"
-        "	bl BGMusicStopped\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080B7384\n\t"
-        "	bl WarpIntoMap\n\t"
-        "	ldr r1, _080B7390\n\t"
-        "	ldr r0, _080B7394\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _080B7398\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r0, _080B739C\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B7384:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B738C: .4byte gPaletteFade\n\t"
-        "_080B7390: .4byte gFieldCallback\n\t"
-        "_080B7394: .4byte FieldCB_FallWarpExit + 1\n\t"
-        "_080B7398: .4byte CB2_LoadMap + 1\n\t"
-        "_080B739C: .4byte Task_LavaridgeGym1FWarp + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 FldEff_AshPuff(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080B73F8\n\t"
-        "	adds r1, r4, #4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #8\n\t"
-        "	bl SetSpritePosToOffsetMapCoords\n\t"
-        "	ldr r0, _080B73FC\n\t"
-        "	adds r0, #0x80\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	movs r3, #4\n\t"
-        "	ldrsh r2, [r4, r3]\n\t"
-        "	ldrb r3, [r4, #8]\n\t"
-        "	bl CreateSpriteAtEnd\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080B7400\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	movs r1, #3\n\t"
-        "	ldrb r3, [r4, #0xc]\n\t"
-        "	ands r3, r1\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	ldrb r4, [r2, #5]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r4\n\t"
-        "	orrs r1, r3\n\t"
-        "	strb r1, [r2, #5]\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r3, #2\n\t"
-        "	orrs r1, r3\n\t"
-        "	strb r1, [r2]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B73F8: .4byte gFieldEffectArguments\n\t"
-        "_080B73FC: .4byte gFieldEffectObjectTemplatePointers\n\t"
-        "_080B7400: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SpriteCB_AshPuff(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B741C\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	movs r1, #0x31\n\t"
-        "	bl FieldEffectStop\n\t"
-        "_080B741C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void StartEscapeRopeFieldEffect(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	bl FreezeObjectEvents\n\t"
-        "	ldr r0, _080B7438\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7438: .4byte Task_EscapeRopeWarpOut + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Task_EscapeRopeWarpOut(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080B7464\n\t"
-        "	ldr r2, _080B7468\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7464: .4byte sEscapeRopeWarpOutEffectFuncs\n\t"
-        "_080B7468: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void EscapeRopeWarpOutEffect_Init(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void EscapeRopeWarpOutEffect_Spin(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _080B7530\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	ldrh r1, [r4, #0x24]\n\t"
-        "	movs r2, #0x24\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B74B8\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B74B8\n\t"
-        "	bl TryFadeOutOldMapMusic\n\t"
-        "	bl WarpFadeOutScreen\n\t"
-        "_080B74B8:\n\t"
-        "	ldr r0, _080B7534\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B7538\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventIsMovementOverridden\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B74DE\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B7598\n\t"
-        "_080B74DE:\n\t"
-        "	movs r1, #0x24\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B7550\n\t"
-        "	ldr r0, _080B753C\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B7550\n\t"
-        "	bl BGMusicStopped\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080B7550\n\t"
-        "	ldrh r1, [r4, #0x26]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	bl SetWarpDestinationToEscapeWarp\n\t"
-        "	bl WarpIntoMap\n\t"
-        "	ldr r1, _080B7540\n\t"
-        "	ldr r0, _080B7544\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _080B7548\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r0, _080B754C\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _080B7598\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7530: .4byte sEscapeRopeSpinDirections\n\t"
-        "_080B7534: .4byte gPlayerAvatar\n\t"
-        "_080B7538: .4byte gObjectEvents\n\t"
-        "_080B753C: .4byte gPaletteFade\n\t"
-        "_080B7540: .4byte gFieldCallback\n\t"
-        "_080B7544: .4byte FieldCallback_EscapeRopeWarpIn + 1\n\t"
-        "_080B7548: .4byte CB2_LoadMap + 1\n\t"
-        "_080B754C: .4byte Task_EscapeRopeWarpOut + 1\n\t"
-        "_080B7550:\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B7564\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B7598\n\t"
-        "_080B7564:\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	add r0, sp\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetFaceDirectionMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldrh r1, [r4, #0xc]\n\t"
-        "	movs r2, #0xc\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	bgt _080B758C\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "_080B758C:\n\t"
-        "	ldrh r1, [r4, #0xc]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x12\n\t"
-        "	movs r0, #8\n\t"
-        "	asrs r0, r1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "_080B7598:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldCallback_EscapeRopeWarpIn(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl Overworld_PlaySpecialMapMusic\n\t"
-        "	bl WarpFadeInScreen\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	bl FreezeObjectEvents\n\t"
-        "	ldr r1, _080B75DC\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r2, _080B75E0\n\t"
-        "	ldr r0, _080B75E4\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	movs r2, #0x20\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #1]\n\t"
-        "	ldr r0, _080B75E8\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B75DC: .4byte gFieldCallback\n\t"
-        "_080B75E0: .4byte gObjectEvents\n\t"
-        "_080B75E4: .4byte gPlayerAvatar\n\t"
-        "_080B75E8: .4byte Task_EscapeRopeWarpIn + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Task_EscapeRopeWarpIn(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080B7614\n\t"
-        "	ldr r2, _080B7618\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7614: .4byte sEscapeRopeWarpInEffectFuncs\n\t"
-        "_080B7618: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) void EscapeRopeWarpInEffect_Init(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl IsWeatherNotFadingIn\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B763A\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_080B763A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void EscapeRopeWarpInEffect_Spin(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r1, _080B76C4\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r0, _080B76C8\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B76CC\n\t"
-        "	adds r6, r0, r1\n\t"
-        "	ldrh r1, [r5, #0xa]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B7672\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B7704\n\t"
-        "_080B7672:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl ObjectEventIsMovementOverridden\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B768A\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B7718\n\t"
-        "_080B768A:\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	ble _080B76D4\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r4, [r5, r2]\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	bne _080B76D4\n\t"
-        "	ldrb r1, [r6, #1]\n\t"
-        "	movs r0, #0x21\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6, #1]\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	bl UnfreezeObjectEvents\n\t"
-        "	ldr r0, _080B76D0\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _080B7718\n\t"
-        "	.align 2, 0\n\t"
-        "_080B76C4: .4byte sEscapeRopeSpinDirections\n\t"
-        "_080B76C8: .4byte gPlayerAvatar\n\t"
-        "_080B76CC: .4byte gObjectEvents\n\t"
-        "_080B76D0: .4byte Task_EscapeRopeWarpIn + 1\n\t"
-        "_080B76D4:\n\t"
-        "	ldrb r0, [r6, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	add r0, sp\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetFaceDirectionMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldrh r1, [r5, #0xc]\n\t"
-        "	movs r2, #0xc\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	bgt _080B76FC\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r5, #0xc]\n\t"
-        "_080B76FC:\n\t"
-        "	ldrh r0, [r5, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x12\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "_080B7704:\n\t"
-        "	ldrb r2, [r6, #1]\n\t"
-        "	lsls r1, r2, #0x1a\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	movs r0, #1\n\t"
-        "	eors r1, r0\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	subs r0, #0x22\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r6, #1]\n\t"
-        "_080B7718:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FldEff_TeleportWarpOut(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080B7730\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7730: .4byte Task_TeleportWarpOut + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Task_TeleportWarpOut(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080B775C\n\t"
-        "	ldr r2, _080B7760\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B775C: .4byte sTeleportWarpOutFieldEffectFuncs\n\t"
-        "_080B7760: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TeleportWarpOutFieldEffect_Init(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	bl FreezeObjectEvents\n\t"
-        "	bl CameraObjectReset2\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TeleportWarpOutFieldEffect_SpinGround(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _080B7810\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r0, _080B7814\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B7818\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B77BE\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B77D8\n\t"
-        "_080B77BE:\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	add r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl EventObjectTurn\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "_080B77D8:\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #7\n\t"
-        "	ble _080B7806\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080B7806\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	movs r0, #0x2d\n\t"
-        "	bl PlaySE\n\t"
-        "_080B7806:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7810: .4byte sEscapeRopeSpinDirections\n\t"
-        "_080B7814: .4byte gPlayerAvatar\n\t"
-        "_080B7818: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TeleportWarpOutFieldEffect_SpinExit(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _080B78E0\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r2, _080B78E4\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B78E8\n\t"
-        "	adds r3, r0, r1\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B78EC\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bgt _080B7866\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	ldrb r0, [r3, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	add r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl EventObjectTurn\n\t"
-        "_080B7866:\n\t"
-        "	ldrh r0, [r5, #0x22]\n\t"
-        "	ldrh r1, [r4, #0xe]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r5, #0x22]\n\t"
-        "	ldrh r1, [r4, #0xe]\n\t"
-        "	ldrh r2, [r4, #0x10]\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bgt _080B7892\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #7\n\t"
-        "	bgt _080B7892\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "_080B7892:\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #8\n\t"
-        "	ble _080B78C0\n\t"
-        "	ldrb r1, [r5, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x42\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B78C0\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080B78C0:\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0xa7\n\t"
-        "	ble _080B78D6\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	bl TryFadeOutOldMapMusic\n\t"
-        "	bl WarpFadeOutScreen\n\t"
-        "_080B78D6:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B78E0: .4byte sEscapeRopeSpinDirections\n\t"
-        "_080B78E4: .4byte gPlayerAvatar\n\t"
-        "_080B78E8: .4byte gObjectEvents\n\t"
-        "_080B78EC: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TeleportWarpOutFieldEffect_End(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _080B7944\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B793E\n\t"
-        "	movs r1, #0x12\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B7910\n\t"
-        "	bl ClearMirageTowerPulseBlendEffect\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "_080B7910:\n\t"
-        "	bl BGMusicStopped\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080B793E\n\t"
-        "	bl SetWarpDestinationToLastHealLocation\n\t"
-        "	bl WarpIntoMap\n\t"
-        "	ldr r0, _080B7948\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r1, _080B794C\n\t"
-        "	ldr r0, _080B7950\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _080B7954\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B793E:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7944: .4byte gPaletteFade\n\t"
-        "_080B7948: .4byte CB2_LoadMap + 1\n\t"
-        "_080B794C: .4byte gFieldCallback\n\t"
-        "_080B7950: .4byte FieldCallback_TeleportWarpIn + 1\n\t"
-        "_080B7954: .4byte Task_TeleportWarpOut + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldCallback_TeleportWarpIn(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl Overworld_PlaySpecialMapMusic\n\t"
-        "	bl WarpFadeInScreen\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	bl FreezeObjectEvents\n\t"
-        "	ldr r1, _080B7998\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r2, _080B799C\n\t"
-        "	ldr r0, _080B79A0\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	movs r2, #0x20\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #1]\n\t"
-        "	bl CameraObjectReset2\n\t"
-        "	ldr r0, _080B79A4\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7998: .4byte gFieldCallback\n\t"
-        "_080B799C: .4byte gObjectEvents\n\t"
-        "_080B79A0: .4byte gPlayerAvatar\n\t"
-        "_080B79A4: .4byte Task_TeleportWarpIn + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Task_TeleportWarpIn(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080B79D0\n\t"
-        "	ldr r2, _080B79D4\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B79D0: .4byte sTeleportWarpInFieldEffectFuncs\n\t"
-        "_080B79D4: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TeleportWarpInFieldEffect_Init(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	bl IsWeatherNotFadingIn\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B7A4E\n\t"
-        "	ldr r5, _080B7A54\n\t"
-        "	ldrb r0, [r5, #4]\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldr r0, _080B7A58\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x29\n\t"
-        "	movs r4, #0\n\t"
-        "	ldrsb r4, [r0, r4]\n\t"
-        "	lsls r0, r4, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ldrh r1, [r2, #0x22]\n\t"
-        "	ldr r3, _080B7A5C\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrh r3, [r3]\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "	ldr r3, _080B7A60\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r3, [r1, #1]\n\t"
-        "	movs r0, #0x21\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	ldrh r0, [r6, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #8]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r6, #0xa]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r6, #0xc]\n\t"
-        "	adds r2, #0x42\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsrs r0, r0, #6\n\t"
-        "	strh r0, [r6, #0x24]\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r6, #0x26]\n\t"
-        "	movs r0, #0x2d\n\t"
-        "	bl PlaySE\n\t"
-        "_080B7A4E:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7A54: .4byte gPlayerAvatar\n\t"
-        "_080B7A58: .4byte gSprites\n\t"
-        "_080B7A5C: .4byte gSpriteCoordOffsetY\n\t"
-        "_080B7A60: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TeleportWarpInFieldEffect_SpinEnter(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _080B7ACC\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r2, _080B7AD0\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B7AD4\n\t"
-        "	adds r6, r0, r1\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B7AD8\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	ldrh r1, [r5, #0x26]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #8\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	blt _080B7ADC\n\t"
-        "	ldrh r1, [r4, #0x22]\n\t"
-        "	movs r2, #0x22\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B7B02\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	ldrh r1, [r4, #0x24]\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	adds r3, #0x42\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	b _080B7B02\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7ACC: .4byte sEscapeRopeSpinDirections\n\t"
-        "_080B7AD0: .4byte gPlayerAvatar\n\t"
-        "_080B7AD4: .4byte gObjectEvents\n\t"
-        "_080B7AD8: .4byte gSprites\n\t"
-        "_080B7ADC:\n\t"
-        "	ldrb r1, [r5, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x42\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B7B02\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080B7B02:\n\t"
-        "	ldrh r2, [r5, #0x26]\n\t"
-        "	movs r3, #0x26\n\t"
-        "	ldrsh r1, [r5, r3]\n\t"
-        "	movs r0, #0x30\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	blt _080B7B26\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	movs r3, #0xa\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _080B7B26\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B7B26\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "_080B7B26:\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	subs r0, #1\n\t"
-        "	movs r7, #0\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B7B48\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	ldrb r0, [r6, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	add r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl EventObjectTurn\n\t"
-        "_080B7B48:\n\t"
-        "	movs r1, #0x26\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _080B7B5E\n\t"
-        "	strh r7, [r5, #0x26]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	strh r7, [r4, #0xc]\n\t"
-        "_080B7B5E:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TeleportWarpInFieldEffect_SpinGround(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _080B7BE4\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r0, _080B7BE8\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B7BEC\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B7BDC\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	add r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl EventObjectTurn\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _080B7BDC\n\t"
-        "	movs r0, #0x24\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080B7BDC\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	bl CameraObjectReset\n\t"
-        "	bl UnfreezeObjectEvents\n\t"
-        "	ldr r0, _080B7BF0\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B7BDC:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7BE4: .4byte sEscapeRopeSpinDirections\n\t"
-        "_080B7BE8: .4byte gPlayerAvatar\n\t"
-        "_080B7BEC: .4byte gObjectEvents\n\t"
-        "_080B7BF0: .4byte Task_TeleportWarpIn + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 FldEff_FieldMoveShowMon(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl GetCurrentMapType\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl IsMapTypeOutdoors\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080B7C14\n\t"
-        "	ldr r0, _080B7C10\n\t"
-        "	b _080B7C16\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7C10: .4byte Task_FieldMoveShowMonOutdoors + 1\n\t"
-        "_080B7C14:\n\t"
-        "	ldr r0, _080B7C44\n\t"
-        "_080B7C16:\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r2, _080B7C48\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, [r2, #4]\n\t"
-        "	ldr r2, [r2, #8]\n\t"
-        "	bl sub_080B83B8\n\t"
-        "	ldr r2, _080B7C4C\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7C44: .4byte Task_FieldMoveShowMonIndoors + 1\n\t"
-        "_080B7C48: .4byte gFieldEffectArguments\n\t"
-        "_080B7C4C: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 FldEff_FieldMoveShowMonInit(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r5, _080B7CA4\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r6, #0x80\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	ands r6, r0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	muls r4, r1, r4\n\t"
-        "	ldr r0, _080B7CA8\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	str r0, [r5]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetMonData3\n\t"
-        "	str r0, [r5, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	str r0, [r5, #8]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	orrs r0, r6\n\t"
-        "	str r0, [r5]\n\t"
-        "	movs r0, #6\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	movs r0, #0x3b\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7CA4: .4byte gFieldEffectArguments\n\t"
-        "_080B7CA8: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Task_FieldMoveShowMonOutdoors(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080B7CD4\n\t"
-        "	ldr r2, _080B7CD8\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7CD4: .4byte sFieldMoveShowMonOutdoorsEffectFuncs\n\t"
-        "_080B7CD8: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldMoveShowMonOutdoorsEffect_Init(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _080B7D38\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r4, #0x1e]\n\t"
-        "	ldr r0, _080B7D3C\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x22\n\t"
-        "	ldr r1, _080B7D40\n\t"
-        "	ldr r1, [r1, #0xc]\n\t"
-        "	bl StoreWordInTwoHalfwords\n\t"
-        "	ldr r1, _080B7D44\n\t"
-        "	strh r1, [r4, #0xa]\n\t"
-        "	ldr r0, _080B7D48\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	movs r0, #0x3e\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0xc]\n\t"
-        "	movs r0, #0x44\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0xe]\n\t"
-        "	movs r0, #0x48\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0x10]\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _080B7D4C\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7D38: .4byte 0x04000048\n\t"
-        "_080B7D3C: .4byte 0x0400004A\n\t"
-        "_080B7D40: .4byte gMain\n\t"
-        "_080B7D44: .4byte 0x0000F0F1\n\t"
-        "_080B7D48: .4byte 0x00005051\n\t"
-        "_080B7D4C: .4byte sub_080B7F64 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldMoveShowMonOutdoorsEffect_LoadGfx(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldr r0, _080B7DA8\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	lsrs r1, r1, #2\n\t"
-        "	lsls r1, r1, #0x1e\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	ldrh r4, [r0]\n\t"
-        "	lsrs r4, r4, #8\n\t"
-        "	lsls r4, r4, #0x1b\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r0, _080B7DAC\n\t"
-        "	movs r5, #0xc0\n\t"
-        "	lsls r5, r5, #0x13\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	bl CpuSet\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r5, r4, r5\n\t"
-        "	ldr r2, _080B7DB0\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl CpuSet\n\t"
-        "	ldr r0, _080B7DB4\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080B7FCC\n\t"
-        "	ldrh r0, [r6, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #8]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7DA8: .4byte 0x04000008\n\t"
-        "_080B7DAC: .4byte sFieldMoveStreaksOutdoors_Gfx\n\t"
-        "_080B7DB0: .4byte 0x05000200\n\t"
-        "_080B7DB4: .4byte sFieldMoveStreaksOutdoors_Pal\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldMoveShowMonOutdoorsEffect_CreateBanner(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldrh r0, [r3, #0x12]\n\t"
-        "	subs r0, #0x10\n\t"
-        "	strh r0, [r3, #0x12]\n\t"
-        "	ldrh r6, [r3, #0xa]\n\t"
-        "	ldrh r2, [r3, #0xc]\n\t"
-        "	movs r7, #0xff\n\t"
-        "	lsrs r1, r6, #8\n\t"
-        "	subs r1, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r0, r2, #8\n\t"
-        "	subs r0, #2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	adds r5, r0, #2\n\t"
-        "	lsrs r2, r1, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _080B7DE4\n\t"
-        "	movs r2, #0\n\t"
-        "_080B7DE4:\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x27\n\t"
-        "	bgt _080B7DEE\n\t"
-        "	movs r4, #0x28\n\t"
-        "_080B7DEE:\n\t"
-        "	cmp r5, #0x78\n\t"
-        "	ble _080B7DF4\n\t"
-        "	movs r5, #0x78\n\t"
-        "_080B7DF4:\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	lsls r1, r2, #8\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	ands r0, r6\n\t"
-        "	orrs r1, r0\n\t"
-        "	strh r1, [r3, #0xa]\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	lsls r0, r4, #8\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r3, #0xc]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _080B7E34\n\t"
-        "	cmp r4, #0x28\n\t"
-        "	bne _080B7E34\n\t"
-        "	cmp r1, #0x78\n\t"
-        "	bne _080B7E34\n\t"
-        "	ldr r2, _080B7E3C\n\t"
-        "	movs r0, #0x26\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, _080B7E40\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldrh r0, [r3, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #8]\n\t"
-        "_080B7E34:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7E3C: .4byte gSprites\n\t"
-        "_080B7E40: .4byte SpriteCB_FieldMoveMonSlideOnscreen + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldMoveShowMonOutdoorsEffect_WaitForMon(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldrh r0, [r3, #0x12]\n\t"
-        "	subs r0, #0x10\n\t"
-        "	strh r0, [r3, #0x12]\n\t"
-        "	ldr r2, _080B7E70\n\t"
-        "	movs r0, #0x26\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B7E6A\n\t"
-        "	ldrh r0, [r3, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #8]\n\t"
-        "_080B7E6A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7E70: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) void FieldMoveShowMonOutdoorsEffect_ShrinkBanner(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldrh r0, [r3, #0x12]\n\t"
-        "	subs r0, #0x10\n\t"
-        "	strh r0, [r3, #0x12]\n\t"
-        "	ldrh r2, [r3, #0xc]\n\t"
-        "	lsls r1, r2, #0x10\n\t"
-        "	movs r0, #0xff\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r1, #6\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	ands r0, r2\n\t"
-        "	subs r0, #6\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	lsrs r4, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0x50\n\t"
-        "	ble _080B7E9C\n\t"
-        "	movs r4, #0x50\n\t"
-        "_080B7E9C:\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x50\n\t"
-        "	bgt _080B7EA6\n\t"
-        "	movs r2, #0x51\n\t"
-        "_080B7EA6:\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	lsls r1, r0, #8\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	orrs r1, r2\n\t"
-        "	strh r1, [r3, #0xc]\n\t"
-        "	cmp r0, #0x50\n\t"
-        "	bne _080B7EC2\n\t"
-        "	cmp r2, #0x51\n\t"
-        "	bne _080B7EC2\n\t"
-        "	ldrh r0, [r3, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #8]\n\t"
-        "_080B7EC2:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldMoveShowMonOutdoorsEffect_RestoreBg(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _080B7F08\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	lsrs r1, r1, #8\n\t"
-        "	lsls r1, r1, #0x1b\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #0x13\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, _080B7F0C\n\t"
-        "	mov r0, sp\n\t"
-        "	bl CpuSet\n\t"
-        "	movs r0, #0xf1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	movs r0, #0xa1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	ldrh r0, [r4, #0x1e]\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7F08: .4byte 0x04000008\n\t"
-        "_080B7F0C: .4byte 0x05000200\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldMoveShowMonOutdoorsEffect_End(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r0, #0x22\n\t"
-        "	mov r1, sp\n\t"
-        "	bl LoadWordFromTwoHalfwords\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	bl sub_08196DF4\n\t"
-        "	movs r0, #0x26\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B7F5C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r4, #0x26]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl FreeResourcesAndDestroySprite\n\t"
-        "	movs r0, #6\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	ldr r0, _080B7F60\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7F5C: .4byte gSprites\n\t"
-        "_080B7F60: .4byte Task_FieldMoveShowMonOutdoors + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_080B7F64(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _080B7FC4\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	ldr r0, _080B7FC8\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x22\n\t"
-        "	mov r1, sp\n\t"
-        "	bl LoadWordFromTwoHalfwords\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0xc]\n\t"
-        "	movs r0, #0x44\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0xe]\n\t"
-        "	movs r0, #0x48\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0x10]\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0x12]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0x14]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	bl SetGpuReg\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B7FC4: .4byte Task_FieldMoveShowMonOutdoors + 1\n\t"
-        "_080B7FC8: .4byte gTasks\n\t"
-
-        ".syntax divided\n\t"
-
-    );
-}
-
-
-__attribute__((naked)) void LoadFieldMoveOutdoorStreaksTilemap(u16 a0)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldr r1, _080B8000\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r5, _080B8004\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r3, _080B8008\n\t"
-        "_080B7FE2:\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	orrs r0, r4\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	adds r2, #2\n\t"
-        "	cmp r1, r3\n\t"
-        "	bls _080B7FE2\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8000: .4byte 0x06000140\n\t"
-        "_080B8004: .4byte sFieldMoveStreaksOutdoors_Tilemap\n\t"
-        "_080B8008: .4byte SPECIAL_ShowContestEntryMonPic\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Task_FieldMoveShowMonIndoors(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080B8034\n\t"
-        "	ldr r2, _080B8038\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8034: .4byte sFieldMoveShowMonIndoorsEffectFuncs\n\t"
-        "_080B8038: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldMoveShowMonIndoorsEffect_Init(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0xc]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	bl SetGpuReg\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x22\n\t"
-        "	ldr r1, _080B8070\n\t"
-        "	ldr r1, [r1, #0xc]\n\t"
-        "	bl StoreWordInTwoHalfwords\n\t"
-        "	ldr r0, _080B8074\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8070: .4byte gMain\n\t"
-        "_080B8074: .4byte sub_080B8238 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldMoveShowMonIndoorsEffect_LoadGfx(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldr r0, _080B80D4\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	lsrs r1, r1, #2\n\t"
-        "	lsls r1, r1, #0x1e\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	ldrh r4, [r0]\n\t"
-        "	lsrs r4, r4, #8\n\t"
-        "	lsls r4, r4, #0x1b\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	strh r4, [r6, #0x20]\n\t"
-        "	ldr r0, _080B80D8\n\t"
-        "	movs r5, #0xc0\n\t"
-        "	lsls r5, r5, #0x13\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	movs r2, #0x40\n\t"
-        "	bl CpuSet\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	ldr r2, _080B80DC\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl CpuSet\n\t"
-        "	ldr r0, _080B80E0\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrh r0, [r6, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #8]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B80D4: .4byte 0x04000008\n\t"
-        "_080B80D8: .4byte sFieldMoveStreaksIndoors_Gfx\n\t"
-        "_080B80DC: .4byte 0x05000200\n\t"
-        "_080B80E0: .4byte sFieldMoveStreaksIndoors_Pal\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldMoveShowMonIndoorsEffect_SlideBannerOn(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_080B8290\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B811C\n\t"
-        "	movs r0, #0x42\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _080B8128\n\t"
-        "	movs r0, #0x46\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r2, _080B812C\n\t"
-        "	movs r0, #0x26\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, _080B8130\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B811C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080B8280\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8128: .4byte 0x00002878\n\t"
-        "_080B812C: .4byte gSprites\n\t"
-        "_080B8130: .4byte SpriteCB_FieldMoveMonSlideOnscreen + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldMoveShowMonIndoorsEffect_WaitForMon(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_080B8280\n\t"
-        "	ldr r2, _080B8160\n\t"
-        "	movs r0, #0x26\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B8158\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B8158:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8160: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldMoveShowMonIndoorsEffect_RestoreBg(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_080B8280\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	movs r0, #7\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	strh r1, [r4, #0x10]\n\t"
-        "	ldr r5, _080B8198\n\t"
-        "	movs r0, #0x42\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x46\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8198: .4byte 0x0000FFFF\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldMoveShowMonIndoorsEffect_SlideBannerOff(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_080B8280\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080B8348\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B81B6\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B81B6:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FieldMoveShowMonIndoorsEffect_End(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _080B8228\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	lsrs r1, r1, #8\n\t"
-        "	lsls r1, r1, #0x1b\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #0x13\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, _080B822C\n\t"
-        "	mov r0, sp\n\t"
-        "	bl CpuSet\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x22\n\t"
-        "	add r1, sp, #4\n\t"
-        "	bl LoadWordFromTwoHalfwords\n\t"
-        "	ldr r0, [sp, #4]\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	bl sub_08196DF4\n\t"
-        "	movs r0, #0x26\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B8230\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r4, #0x26]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl FreeResourcesAndDestroySprite\n\t"
-        "	movs r0, #6\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	ldr r0, _080B8234\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8228: .4byte 0x04000008\n\t"
-        "_080B822C: .4byte 0x05000200\n\t"
-        "_080B8230: .4byte gSprites\n\t"
-        "_080B8234: .4byte Task_FieldMoveShowMonIndoors + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_080B8238(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _080B8278\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	ldr r0, _080B827C\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x22\n\t"
-        "	mov r1, sp\n\t"
-        "	bl LoadWordFromTwoHalfwords\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0xc]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	bl SetGpuReg\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8278: .4byte Task_FieldMoveShowMonIndoors + 1\n\t"
-        "_080B827C: .4byte gTasks\n\t"
-
-        ".syntax divided\n\t"
-
-    );
-}
-
-
-__attribute__((naked)) void sub_080B8280(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrh r1, [r0, #0xa]\n\t"
-        "	subs r1, #0x10\n\t"
-        "	strh r1, [r0, #0xa]\n\t"
-        "	ldrh r1, [r0, #0xe]\n\t"
-        "	adds r1, #0x10\n\t"
-        "	strh r1, [r0, #0xe]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 SlideIndoorBannerOnscreen(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r2, [r5, #0x10]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	ble _080B82AC\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080B8330\n\t"
-        "_080B82AC:\n\t"
-        "	ldrh r0, [r5, #0xe]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r3, r0, #0x13\n\t"
-        "	movs r1, #0x1f\n\t"
-        "	ands r3, r1\n\t"
-        "	movs r4, #0x10\n\t"
-        "	ldrsh r0, [r5, r4]\n\t"
-        "	cmp r3, r0\n\t"
-        "	blt _080B832E\n\t"
-        "	movs r0, #0x20\n\t"
-        "	subs r3, r0, r3\n\t"
-        "	ands r3, r1\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	mov ip, r0\n\t"
-        "	mov r7, ip\n\t"
-        "	ands r7, r1\n\t"
-        "	mov ip, r7\n\t"
-        "	ldrh r0, [r5, #0x20]\n\t"
-        "	ldr r1, _080B8340\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	mov r8, r1\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r7, _080B8344\n\t"
-        "	mov sl, r7\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	mov sb, r0\n\t"
-        "	adds r1, r3, #1\n\t"
-        "	movs r0, #0x1f\n\t"
-        "	ands r1, r0\n\t"
-        "	str r1, [sp]\n\t"
-        "	mov r6, ip\n\t"
-        "	adds r6, #1\n\t"
-        "	ands r6, r0\n\t"
-        "_080B82F0:\n\t"
-        "	lsls r1, r4, #5\n\t"
-        "	adds r2, r1, r3\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	add r2, r8\n\t"
-        "	mov r7, ip\n\t"
-        "	adds r0, r7, r1\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, sl\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	mov r7, sb\n\t"
-        "	orrs r0, r7\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	add r2, r8\n\t"
-        "	adds r1, r6, r1\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	add r1, sl\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	mov r1, sb\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #9\n\t"
-        "	bls _080B82F0\n\t"
-        "	ldrh r0, [r5, #0x10]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r5, #0x10]\n\t"
-        "_080B832E:\n\t"
-        "	movs r0, #0\n\t"
-        "_080B8330:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8340: .4byte 0x06000140\n\t"
-        "_080B8344: .4byte sFieldMoveStreaksIndoors_Tilemap\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 SlideIndoorBannerOffscreen(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	ble _080B8358\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080B83AC\n\t"
-        "_080B8358:\n\t"
-        "	ldrh r0, [r5, #0xe]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x13\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r2, r0\n\t"
-        "	blt _080B83AA\n\t"
-        "	ldrh r0, [r5, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r2, r0, #0x13\n\t"
-        "	movs r0, #0x1f\n\t"
-        "	ands r2, r0\n\t"
-        "	ldrh r0, [r5, #0x20]\n\t"
-        "	ldr r1, _080B83B4\n\t"
-        "	adds r6, r0, r1\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	adds r4, r2, #1\n\t"
-        "	movs r0, #0x1f\n\t"
-        "	ands r4, r0\n\t"
-        "_080B8388:\n\t"
-        "	lsls r0, r3, #5\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	strh r7, [r1]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	strh r7, [r0]\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	cmp r3, #9\n\t"
-        "	bls _080B8388\n\t"
-        "	ldrh r0, [r5, #0x10]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r5, #0x10]\n\t"
-        "_080B83AA:\n\t"
-        "	movs r0, #0\n\t"
-        "_080B83AC:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B83B4: .4byte 0x06000140\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 InitFieldMoveMonSprite(u32 a0, u32 a1, u32 a2)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	ands r5, r6\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	ldr r0, _080B840C\n\t"
-        "	ands r6, r0\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r3, #0xa0\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	movs r4, #0x50\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	bl CreateMonSprite_FieldMove\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldr r1, _080B8410\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldr r1, _080B8414\n\t"
-        "	str r1, [r2, #0x1c]\n\t"
-        "	ldrb r3, [r2, #5]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r3\n\t"
-        "	strb r1, [r2, #5]\n\t"
-        "	strh r6, [r2, #0x2e]\n\t"
-        "	strh r5, [r2, #0x3a]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B840C: .4byte 0x7FFFFFFF\n\t"
-        "_080B8410: .4byte gSprites\n\t"
-        "_080B8414: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) void SpriteCB_FieldMoveMonSlideOnscreen(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r1, #0x20]\n\t"
-        "	subs r0, #0x14\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x78\n\t"
-        "	bgt _080B8458\n\t"
-        "	movs r0, #0x78\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	ldr r0, _080B844C\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B8450\n\t"
-        "	ldrh r0, [r1, #0x2e]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x7d\n\t"
-        "	movs r3, #0xa\n\t"
-        "	bl PlayCry_NormalNoDucking\n\t"
-        "	b _080B8458\n\t"
-        "	.align 2, 0\n\t"
-        "_080B844C: .4byte SpriteCB_FieldMoveMonWaitAfterCry + 1\n\t"
-        "_080B8450:\n\t"
-        "	ldrh r0, [r1, #0x2e]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl PlayCry1\n\t"
-        "_080B8458:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SpriteCB_FieldMoveMonWaitAfterCry(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r1, #0x30]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B8470\n\t"
-        "	ldr r0, _080B8474\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "_080B8470:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8474: .4byte sub_080B8478 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_080B8478(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r3, [r2, #0x20]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ldrsh r1, [r2, r0]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	bge _080B8490\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r2, #0x3c]\n\t"
-        "	b _080B8496\n\t"
-        "_080B8490:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	subs r0, #0x14\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "_080B8496:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 FldEff_UseSurf(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080B84CC\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080B84D0\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r0, _080B84D4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	bl Overworld_ClearSavedMusic\n\t"
-        "	ldr r0, _080B84D8\n\t"
-        "	bl Overworld_ChangeMusicTo\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B84CC: .4byte Task_SurfFieldEffect + 1\n\t"
-        "_080B84D0: .4byte gTasks\n\t"
-        "_080B84D4: .4byte gFieldEffectArguments\n\t"
-        "_080B84D8: .4byte SPECIAL_HasAnotherPlayerGivenFavorLadyItem\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Task_SurfFieldEffect(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080B8504\n\t"
-        "	ldr r2, _080B8508\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8504: .4byte sSurfFieldEffectFuncs\n\t"
-        "_080B8508: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SurfFieldEffect_Init(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	bl FreezeObjectEvents\n\t"
-        "	ldr r5, _080B8564\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r5, #6]\n\t"
-        "	movs r0, #8\n\t"
-        "	bl SetPlayerAvatarStateMask\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	adds r6, #0xa\n\t"
-        "	movs r0, #0xc\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	mov r1, r8\n\t"
-        "	bl PlayerGetDestCoords\n\t"
-        "	ldr r2, _080B8568\n\t"
-        "	ldrb r1, [r5, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0, #0x18]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	mov r2, r8\n\t"
-        "	bl MoveCoords\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8564: .4byte gPlayerAvatar\n\t"
-        "_080B8568: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SurfFieldEffect_FieldMovePose(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r0, _080B85B0\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B85B4\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventIsMovementOverridden\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B8596\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B85A8\n\t"
-        "_080B8596:\n\t"
-        "	bl SetPlayerAvatarFieldMove\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "_080B85A8:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B85B0: .4byte gPlayerAvatar\n\t"
-        "_080B85B4: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SurfFieldEffect_ShowMon(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _080B85F4\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B85F8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl ObjectEventCheckHeldMovementStatus\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B85EE\n\t"
-        "	ldr r2, _080B85FC\n\t"
-        "	movs r1, #0x26\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r2]\n\t"
-        "	movs r0, #0x3b\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B85EE:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B85F4: .4byte gPlayerAvatar\n\t"
-        "_080B85F8: .4byte gObjectEvents\n\t"
-        "_080B85FC: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SurfFieldEffect_JumpOnSurfBlob(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r0, #6\n\t"
-        "	bl FieldEffectActiveListContains\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B866A\n\t"
-        "	ldr r5, _080B8670\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B8674\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	movs r0, #3\n\t"
-        "	bl GetPlayerAvatarGraphicsIdByStateId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetGraphicsId\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	bl sub_08092EB0\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldr r1, _080B8678\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r2, #0xc\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	movs r0, #8\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	strb r0, [r4, #0x1a]\n\t"
-        "	ldrh r0, [r6, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #8]\n\t"
-        "_080B866A:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8670: .4byte gPlayerAvatar\n\t"
-        "_080B8674: .4byte gObjectEvents\n\t"
-        "_080B8678: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SurfFieldEffect_End(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r5, _080B86E4\n\t"
-        "	ldrb r1, [r5, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B86E8\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B86DC\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r5, #6]\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	movs r0, #0xdf\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r5]\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	bl GetFaceDirectionMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldrb r0, [r4, #0x1a]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetSurfBlob_BobState\n\t"
-        "	bl UnfreezeObjectEvents\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	movs r0, #9\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	ldr r0, _080B86EC\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B86DC:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B86E4: .4byte gPlayerAvatar\n\t"
-        "_080B86E8: .4byte gObjectEvents\n\t"
-        "_080B86EC: .4byte Task_SurfFieldEffect + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 FldEff_RayquazaSpotlight(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	ldr r0, _080B87F4\n\t"
-        "	adds r0, #0x90\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0x18\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r3, #1\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	add r1, r8\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _080B87F8\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	movs r2, #0xf\n\t"
-        "	ands r0, r2\n\t"
-        "	movs r2, #0x40\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r1, #0x2e]\n\t"
-        "	strh r2, [r1, #0x30]\n\t"
-        "	strh r2, [r1, #0x32]\n\t"
-        "	ldr r0, _080B87FC\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "	ldrh r0, [r1, #0x22]\n\t"
-        "	strh r0, [r1, #0x36]\n\t"
-        "	strh r2, [r1, #0x38]\n\t"
-        "	ldr r1, _080B8800\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _080B8804\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _080B8808\n\t"
-        "	movs r0, #0x48\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _080B880C\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	movs r0, #0x12\n\t"
-        "	movs r1, #0x78\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r4, #3\n\t"
-        "	ldr r7, _080B8810\n\t"
-        "	ldr r0, _080B8814\n\t"
-        "	adds r6, r0, #0\n\t"
-        "_080B8772:\n\t"
-        "	movs r2, #0xc\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	lsls r5, r4, #5\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r3, r0, #1\n\t"
-        "_080B877C:\n\t"
-        "	adds r0, r5, r2\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	adds r1, r2, r6\n\t"
-        "	adds r1, r3, r1\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0x11\n\t"
-        "	bls _080B877C\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0xe\n\t"
-        "	bls _080B8772\n\t"
-        "	movs r0, #0\n\t"
-        "	ldr r5, _080B8818\n\t"
-        "_080B87A2:\n\t"
-        "	movs r4, #0\n\t"
-        "	adds r7, r0, #1\n\t"
-        "	lsls r6, r0, #5\n\t"
-        "_080B87A8:\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r6, r1\n\t"
-        "	ldr r0, _080B881C\n\t"
-        "	adds r3, r1, r0\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	lsls r2, r2, #8\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r3]\n\t"
-        "	ldr r0, _080B8820\n\t"
-        "	adds r3, r1, r0\n\t"
-        "	adds r0, r1, #3\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	lsls r2, r2, #8\n\t"
-        "	adds r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r3]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #7\n\t"
-        "	bls _080B87A8\n\t"
-        "	lsls r0, r7, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x59\n\t"
-        "	bls _080B87A2\n\t"
-        "	mov r0, r8\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B87F4: .4byte gFieldEffectObjectTemplatePointers\n\t"
-        "_080B87F8: .4byte gSprites\n\t"
-        "_080B87FC: .4byte 0x0000FFFF\n\t"
-        "_080B8800: .4byte 0x00003E41\n\t"
-        "_080B8804: .4byte 0x00000E0E\n\t"
-        "_080B8808: .4byte 0x00003F3F\n\t"
-        "_080B880C: .4byte sSpotlight_Pal\n\t"
-        "_080B8810: .4byte 0x0600F800\n\t"
-        "_080B8814: .4byte 0x0000BFF4\n\t"
-        "_080B8818: .4byte sSpotlight_Gfx\n\t"
-        "_080B881C: .4byte 0x06008020\n\t"
-        "_080B8820: .4byte 0x06008022\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 FldEff_NPCFlyOut(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080B8870\n\t"
-        "	ldr r0, [r0, #0x68]\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl CreateSprite\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r2, r4, #4\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldr r0, _080B8874\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "	ldr r0, _080B8878\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "	ldr r0, _080B887C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	movs r0, #0x9e\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8870: .4byte gFieldEffectObjectTemplatePointers\n\t"
-        "_080B8874: .4byte gSprites\n\t"
-        "_080B8878: .4byte SpriteCB_NPCFlyOut + 1\n\t"
-        "_080B887C: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SpriteCB_NPCFlyOut(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x8c\n\t"
-        "	bl Cos\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #0x48\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #4\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B88E2\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _080B88F8\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #0x3e\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r3]\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	ldrh r2, [r4, #0x20]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	ldrh r2, [r4, #0x22]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	subs r0, #8\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "	strh r5, [r1, #0x24]\n\t"
-        "	strh r5, [r1, #0x26]\n\t"
-        "_080B88E2:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x7f\n\t"
-        "	ble _080B88F2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	bl FieldEffectStop\n\t"
-        "_080B88F2:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B88F8: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 FldEff_UseFly(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080B8920\n\t"
-        "	movs r1, #0xfe\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080B8924\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r0, _080B8928\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8920: .4byte Task_FlyOut + 1\n\t"
-        "_080B8924: .4byte gTasks\n\t"
-        "_080B8928: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Task_FlyOut(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080B8954\n\t"
-        "	ldr r2, _080B8958\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8954: .4byte sFlyOutFieldEffectFuncs\n\t"
-        "_080B8958: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FlyOutFieldEffect_FieldMovePose(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r6, _080B89AC\n\t"
-        "	ldrb r1, [r6, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B89B0\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventIsMovementOverridden\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B8986\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B89A4\n\t"
-        "_080B8986:\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r6, #6]\n\t"
-        "	bl SetPlayerAvatarStateMask\n\t"
-        "	bl SetPlayerAvatarFieldMove\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "_080B89A4:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B89AC: .4byte gPlayerAvatar\n\t"
-        "_080B89B0: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FlyOutFieldEffect_ShowMon(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _080B89EC\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B89F0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B89E4\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	ldr r1, _080B89F4\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #0x3b\n\t"
-        "	bl FieldEffectStart\n\t"
-        "_080B89E4:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B89EC: .4byte gPlayerAvatar\n\t"
-        "_080B89F0: .4byte gObjectEvents\n\t"
-        "_080B89F4: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FlyOutFieldEffect_BirdLeaveBall(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #6\n\t"
-        "	bl FieldEffectActiveListContains\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B8A40\n\t"
-        "	ldr r0, _080B8A48\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B8A4C\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrh r1, [r4, #0x26]\n\t"
-        "	movs r0, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B8A30\n\t"
-        "	ldrb r0, [r5, #0x1a]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl SetSurfBlob_BobState\n\t"
-        "	ldrb r0, [r5, #0x1a]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetSurfBlob_DontSyncAnim\n\t"
-        "_080B8A30:\n\t"
-        "	bl sub_080B8C1C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B8A40:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8A48: .4byte gPlayerAvatar\n\t"
-        "_080B8A4C: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FlyOutFieldEffect_WaitBirdLeave(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	bl sub_080B8C60\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B8A84\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetPlayerAvatarTransitionFlags\n\t"
-        "	ldr r0, _080B8A8C\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B8A90\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #2\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "_080B8A84:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8A8C: .4byte gPlayerAvatar\n\t"
-        "_080B8A90: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FlyOutFieldEffect_BirdSwoopDown(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _080B8AE0\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B8AE4\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	ldrh r1, [r4, #0xc]\n\t"
-        "	movs r3, #0xc\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B8ABA\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B8AD8\n\t"
-        "_080B8ABA:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B8AD8\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #0x9e\n\t"
-        "	bl PlaySE\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	bl sub_080B8C7C\n\t"
-        "_080B8AD8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8AE0: .4byte gPlayerAvatar\n\t"
-        "_080B8AE4: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) void FlyOutFieldEffect_JumpOnBird(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r0, [r5, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #7\n\t"
-        "	ble _080B8B5E\n\t"
-        "	ldr r0, _080B8B64\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B8B68\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r0, #3\n\t"
-        "	bl GetPlayerAvatarGraphicsIdByStateId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetGraphicsId\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r6, _080B8B6C\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	movs r1, #0x16\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x48\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldrh r1, [r5, #0x26]\n\t"
-        "	movs r0, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B8B54\n\t"
-        "	ldrb r1, [r4, #0x1a]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	bl DestroySprite\n\t"
-        "_080B8B54:\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0xc]\n\t"
-        "_080B8B5E:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8B64: .4byte gPlayerAvatar\n\t"
-        "_080B8B68: .4byte gObjectEvents\n\t"
-        "_080B8B6C: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FlyOutFieldEffect_FlyOffWithBird(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r0, [r5, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #9\n\t"
-        "	ble _080B8BBC\n\t"
-        "	ldr r0, _080B8BC4\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B8BC8\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfActive\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	movs r0, #0x41\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "	ldrb r0, [r5, #0xa]\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	bl sub_080B8CB8\n\t"
-        "	bl CameraObjectReset2\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "_080B8BBC:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8BC4: .4byte gPlayerAvatar\n\t"
-        "_080B8BC8: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FlyOutFieldEffect_WaitFlyOff(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	bl sub_080B8C60\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B8BE6\n\t"
-        "	bl WarpFadeOutScreen\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B8BE6:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FlyOutFieldEffect_End(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080B8C14\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B8C0E\n\t"
-        "	movs r0, #0x1f\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	ldr r0, _080B8C18\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B8C0E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8C14: .4byte gPaletteFade\n\t"
-        "_080B8C18: .4byte Task_FlyOut + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 CreateFlyBirdSprite(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080B8C54\n\t"
-        "	ldr r0, [r0, #0x68]\n\t"
-        "	movs r1, #0xff\n\t"
-        "	movs r2, #0xb4\n\t"
-        "	movs r3, #1\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldr r1, _080B8C58\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrb r3, [r2, #5]\n\t"
-        "	movs r1, #0xf\n\t"
-        "	ands r1, r3\n\t"
-        "	movs r3, #0xd\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	ands r1, r3\n\t"
-        "	movs r3, #4\n\t"
-        "	orrs r1, r3\n\t"
-        "	strb r1, [r2, #5]\n\t"
-        "	ldr r1, _080B8C5C\n\t"
-        "	str r1, [r2, #0x1c]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8C54: .4byte gFieldEffectObjectTemplatePointers\n\t"
-        "_080B8C58: .4byte gSprites\n\t"
-        "_080B8C5C: .4byte SpriteCB_FlyBirdLeaveBall + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 GetFlyBirdAnimCompleted(u8 a0)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080B8C78\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r0, [r1, #0x3c]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8C78: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void StartFlyBirdSwoopDown(u8 a0)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B8CB0\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _080B8CB4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r0, #0x78\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	strh r1, [r4, #0x22]\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "	strh r1, [r4, #0x26]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x2e\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl memset\n\t"
-        "	movs r0, #0x40\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8CB0: .4byte gSprites\n\t"
-        "_080B8CB4: .4byte SpriteCB_FlyBirdSwoopDown + 1\n\t"
-        ".syntax divided\n\t"
-    );
+bool8 DiveFieldEffect_ShowMon(struct Task *task)
+{
+    LockPlayerFieldControls();
+    gFieldEffectArguments[0] = task->data[15];
+    FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
+    task->data[0]++;
+    return FALSE;
+}
+
+bool8 DiveFieldEffect_TryWarp(struct Task *task)
+{
+    struct MapPosition mapPosition;
+    PlayerGetDestCoords(&mapPosition.x, &mapPosition.y);
+
+    // Wait for show mon first
+    if (!FieldEffectActiveListContains(FLDEFF_FIELD_MOVE_SHOW_MON))
+    {
+        TryDoDiveWarp(&mapPosition, gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior);
+        DestroyTask(FindTaskIdByFunc(Task_UseDive));
+        FieldEffectActiveListRemove(FLDEFF_USE_DIVE);
+    }
+    return FALSE;
+}
+
+void StartLavaridgeGym1FWarp(u8 priority)
+{
+    // JP starts the rising B1F effect from the 1F warp entry.
+    CreateTask(Task_LavaridgeGymB1FWarp, priority);
+}
+
+void Task_LavaridgeGymB1FWarp(u8 taskId)
+{
+    while (sLavaridgeGymB1FWarpEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId], &gObjectEvents[gPlayerAvatar.objectEventId], &gSprites[gPlayerAvatar.spriteId]));
+}
+
+bool8 LavaridgeGymB1FWarpEffect_Init(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    FreezeObjectEvents();
+    CameraObjectFreeze();
+    SetCameraPanningCallback(NULL);
+    gPlayerAvatar.preventStep = TRUE;
+    objectEvent->fixedPriority = 1;
+    task->data[1] = 1;
+    task->data[0]++;
+    return TRUE;
+}
+
+bool8 LavaridgeGymB1FWarpEffect_CameraShake(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    SetCameraPanning(0, task->data[1]);
+    task->data[1] = -task->data[1];
+    task->data[2]++;
+    if (task->data[2] > 7)
+    {
+        task->data[2] = 0;
+        task->data[0]++;
+    }
+    return FALSE;
+}
+
+bool8 LavaridgeGymB1FWarpEffect_Launch(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    sprite->y2 = 0;
+    task->data[3] = 1;
+    gFieldEffectArguments[0] = objectEvent->currentCoords.x;
+    gFieldEffectArguments[1] = objectEvent->currentCoords.y;
+    gFieldEffectArguments[2] = sprite->subpriority - 1;
+    gFieldEffectArguments[3] = sprite->oam.priority;
+    FieldEffectStart(FLDEFF_ASH_LAUNCH);
+    PlaySE(SE_M_EXPLOSION);
+    task->data[0]++;
+    return TRUE;
+}
+
+bool8 LavaridgeGymB1FWarpEffect_Rise(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    s16 centerToCornerVecY;
+    SetCameraPanning(0, task->data[1]);
+    if (task->data[1] = -task->data[1], ++task->data[2] <= 17)
+    {
+        if (!(task->data[2] & 1) && (task->data[1] <= 3))
+        {
+            task->data[1] <<= 1;
+        }
+    }
+    else if (!(task->data[2] & 4) && (task->data[1] > 0))
+    {
+        task->data[1] >>= 1;
+    }
+    if (task->data[2] > 6)
+    {
+        centerToCornerVecY = -(sprite->centerToCornerVecY << 1);
+        if (sprite->y2 > -(sprite->y + sprite->centerToCornerVecY + gSpriteCoordOffsetY + centerToCornerVecY))
+        {
+            sprite->y2 -= task->data[3];
+            if (task->data[3] <= 7)
+            {
+                task->data[3]++;
+            }
+        }
+        else
+        {
+            task->data[4] = 1;
+        }
+    }
+    if (task->data[5] == 0 && sprite->y2 < -0x10)
+    {
+        task->data[5]++;
+        objectEvent->fixedPriority = 1;
+        sprite->oam.priority = 1;
+        sprite->subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
+    }
+    if (task->data[1] == 0 && task->data[4] != 0)
+    {
+        task->data[0]++;
+    }
+    return FALSE;
+}
+
+bool8 LavaridgeGymB1FWarpEffect_FadeOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    TryFadeOutOldMapMusic();
+    WarpFadeOutScreen();
+    task->data[0]++;
+    return FALSE;
+}
+
+bool8 LavaridgeGymB1FWarpEffect_Warp(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    if (!gPaletteFade.active && BGMusicStopped() == TRUE)
+    {
+        WarpIntoMap();
+        gFieldCallback = FieldCB_LavaridgeGymB1FWarpExit;
+        SetMainCallback2(CB2_LoadMap);
+        DestroyTask(FindTaskIdByFunc(Task_LavaridgeGymB1FWarp));
+    }
+    return FALSE;
+}
+
+void FieldCB_LavaridgeGymB1FWarpExit(void)
+{
+    Overworld_PlaySpecialMapMusic();
+    WarpFadeInScreen();
+    LockPlayerFieldControls();
+    gFieldCallback = NULL;
+    CreateTask(Task_LavaridgeGymB1FWarpExit, 0);
+}
+
+void Task_LavaridgeGymB1FWarpExit(u8 taskId)
+{
+    while (sLavaridgeGymB1FWarpExitEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId], &gObjectEvents[gPlayerAvatar.objectEventId], &gSprites[gPlayerAvatar.spriteId]));
+}
+
+bool8 LavaridgeGymB1FWarpExitEffect_Init(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    CameraObjectFreeze();
+    FreezeObjectEvents();
+    gPlayerAvatar.preventStep = TRUE;
+    objectEvent->invisible = TRUE;
+    task->data[0]++;
+    return FALSE;
+}
+
+
+bool8 LavaridgeGymB1FWarpExitEffect_StartPopOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    if (IsWeatherNotFadingIn())
+    {
+        gFieldEffectArguments[0] = objectEvent->currentCoords.x;
+        gFieldEffectArguments[1] = objectEvent->currentCoords.y;
+        gFieldEffectArguments[2] = sprite->subpriority - 1;
+        gFieldEffectArguments[3] = sprite->oam.priority;
+        task->data[1] = FieldEffectStart(FLDEFF_ASH_PUFF);
+        task->data[0]++;
+    }
+    return FALSE;
+}
+
+bool8 LavaridgeGymB1FWarpExitEffect_PopOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    sprite = &gSprites[task->data[1]];
+    if (sprite->animCmdIndex > 1)
+    {
+        task->data[0]++;
+        objectEvent->invisible = FALSE;
+        CameraObjectReset();
+        PlaySE(SE_M_DIG);
+        ObjectEventSetHeldMovement(objectEvent, GetJumpMovementAction(DIR_EAST));
+    }
+    return FALSE;
+}
+
+bool8 LavaridgeGymB1FWarpExitEffect_End(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    if (ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        gPlayerAvatar.preventStep = FALSE;
+        UnlockPlayerFieldControls();
+        UnfreezeObjectEvents();
+        DestroyTask(FindTaskIdByFunc(Task_LavaridgeGymB1FWarpExit));
+    }
+    return FALSE;
+}
+
+u8 FldEff_AshLaunch(void)
+{
+    u8 spriteId;
+    SetSpritePosToOffsetMapCoords((s16 *)&gFieldEffectArguments[0], (s16 *)&gFieldEffectArguments[1], 8, 8);
+    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_ASH_LAUNCH], gFieldEffectArguments[0], gFieldEffectArguments[1], gFieldEffectArguments[2]);
+    gSprites[spriteId].oam.priority = gFieldEffectArguments[3];
+    gSprites[spriteId].coordOffsetEnabled = TRUE;
+    return spriteId;
+}
+
+void SpriteCB_AshLaunch(struct Sprite *sprite)
+{
+    if (sprite->animEnded)
+        FieldEffectStop(sprite, FLDEFF_ASH_LAUNCH);
+}
+
+void StartLavaridgeGymB1FWarp(u8 priority)
+{
+    // JP starts the disappearing 1F effect from the B1F warp entry.
+    CreateTask(Task_LavaridgeGym1FWarp, priority);
+}
+
+void Task_LavaridgeGym1FWarp(u8 taskId)
+{
+    while(sLavaridgeGym1FWarpEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId], &gObjectEvents[gPlayerAvatar.objectEventId], &gSprites[gPlayerAvatar.spriteId]));
+}
+
+bool8 LavaridgeGym1FWarpEffect_Init(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    FreezeObjectEvents();
+    CameraObjectFreeze();
+    gPlayerAvatar.preventStep = TRUE;
+    objectEvent->fixedPriority = 1;
+    task->data[0]++;
+    return FALSE;
+}
+
+bool8 LavaridgeGym1FWarpEffect_AshPuff(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    if (ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        if (task->data[1] > 3)
+        {
+            gFieldEffectArguments[0] = objectEvent->currentCoords.x;
+            gFieldEffectArguments[1] = objectEvent->currentCoords.y;
+            gFieldEffectArguments[2] = sprite->subpriority - 1;
+            gFieldEffectArguments[3] = sprite->oam.priority;
+            task->data[1] = FieldEffectStart(FLDEFF_ASH_PUFF);
+            task->data[0]++;
+        }
+        else
+        {
+            task->data[1]++;
+            ObjectEventSetHeldMovement(objectEvent, GetWalkInPlaceFasterMovementAction(objectEvent->facingDirection));
+            PlaySE(SE_LAVARIDGE_FALL_WARP);
+        }
+    }
+    return FALSE;
+}
+
+bool8 LavaridgeGym1FWarpEffect_Disappear(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    if (gSprites[task->data[1]].animCmdIndex == 2)
+    {
+        objectEvent->invisible = TRUE;
+        task->data[0]++;
+    }
+    return FALSE;
+}
+
+bool8 LavaridgeGym1FWarpEffect_FadeOut(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    if (!FieldEffectActiveListContains(FLDEFF_ASH_PUFF))
+    {
+        TryFadeOutOldMapMusic();
+        WarpFadeOutScreen();
+        task->data[0]++;
+    }
+    return FALSE;
+}
+
+bool8 LavaridgeGym1FWarpEffect_Warp(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    if (!gPaletteFade.active && BGMusicStopped() == TRUE)
+    {
+        WarpIntoMap();
+        gFieldCallback = FieldCB_FallWarpExit;
+        SetMainCallback2(CB2_LoadMap);
+        DestroyTask(FindTaskIdByFunc(Task_LavaridgeGym1FWarp));
+    }
+    return FALSE;
+}
+
+u8 FldEff_AshPuff(void)
+{
+    u8 spriteId;
+    SetSpritePosToOffsetMapCoords((s16 *)&gFieldEffectArguments[0], (s16 *)&gFieldEffectArguments[1], 8, 8);
+    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_ASH_PUFF], gFieldEffectArguments[0], gFieldEffectArguments[1], gFieldEffectArguments[2]);
+    gSprites[spriteId].oam.priority = gFieldEffectArguments[3];
+    gSprites[spriteId].coordOffsetEnabled = TRUE;
+    return spriteId;
+}
+
+void SpriteCB_AshPuff(struct Sprite *sprite)
+{
+    if (sprite->animEnded)
+        FieldEffectStop(sprite, FLDEFF_ASH_PUFF);
+}
+
+void StartEscapeRopeFieldEffect(void)
+{
+    LockPlayerFieldControls();
+    FreezeObjectEvents();
+    CreateTask(Task_EscapeRopeWarpOut, 80);
+}
+
+void Task_EscapeRopeWarpOut(u8 taskId)
+{
+    sEscapeRopeWarpOutEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId]);
+}
+
+void EscapeRopeWarpOutEffect_Init(struct Task *task)
+{
+    task->data[0]++;
+    task->data[14] = 64;
+    task->data[15] = GetPlayerFacingDirection();
+}
+
+void EscapeRopeWarpOutEffect_Spin(struct Task *task)
+{
+    struct ObjectEvent *objectEvent;
+    u8 spinDirections[5];
+    memcpy(spinDirections, sEscapeRopeSpinDirections, sizeof(spinDirections));
+    if (task->data[14] != 0 && (--task->data[14]) == 0)
+    {
+        TryFadeOutOldMapMusic();
+        WarpFadeOutScreen();
+    }
+    objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if (!ObjectEventIsMovementOverridden(objectEvent) || ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        if (task->data[14] == 0 && !gPaletteFade.active && BGMusicStopped() == TRUE)
+        {
+            SetObjectEventDirection(objectEvent, task->data[15]);
+            SetWarpDestinationToEscapeWarp();
+            WarpIntoMap();
+            gFieldCallback = FieldCallback_EscapeRopeWarpIn;
+            SetMainCallback2(CB2_LoadMap);
+            DestroyTask(FindTaskIdByFunc(Task_EscapeRopeWarpOut));
+        }
+        else if (task->data[1] == 0 || (--task->data[1]) == 0)
+        {
+            ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(spinDirections[objectEvent->facingDirection]));
+            if (task->data[2] < 12)
+                task->data[2]++;
+            task->data[1] = 8 >> (task->data[2] >> 2);
+        }
+    }
+}
+
+void FieldCallback_EscapeRopeWarpIn(void)
+{
+    Overworld_PlaySpecialMapMusic();
+    WarpFadeInScreen();
+    LockPlayerFieldControls();
+    FreezeObjectEvents();
+    gFieldCallback = NULL;
+    gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
+    CreateTask(Task_EscapeRopeWarpIn, 0);
+}
+
+void Task_EscapeRopeWarpIn(u8 taskId)
+{
+    sEscapeRopeWarpInEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId]);
+}
+
+
+void EscapeRopeWarpInEffect_Init(struct Task *task)
+{
+    if (IsWeatherNotFadingIn())
+    {
+        task->data[0]++;
+        task->data[15] = GetPlayerFacingDirection();
+    }
+}
+
+void EscapeRopeWarpInEffect_Spin(struct Task *task)
+{
+    u8 spinDirections[5];
+    struct ObjectEvent *objectEvent;
+    memcpy(spinDirections, sEscapeRopeSpinDirections, sizeof(spinDirections));
+    objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if (task->data[1] == 0 || (--task->data[1]) == 0)
+    {
+        if (ObjectEventIsMovementOverridden(objectEvent) && !ObjectEventClearHeldMovementIfFinished(objectEvent))
+        {
+            return;
+        }
+        if (task->data[2] >= 32 && task->data[15] == GetPlayerFacingDirection())
+        {
+            objectEvent->invisible = FALSE;
+            UnlockPlayerFieldControls();
+            UnfreezeObjectEvents();
+            DestroyTask(FindTaskIdByFunc(Task_EscapeRopeWarpIn));
+            return;
+        }
+        ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(spinDirections[objectEvent->facingDirection]));
+        if (task->data[2] < 32)
+            task->data[2]++;
+        task->data[1] = task->data[2] >> 2;
+    }
+    objectEvent->invisible ^= 1;
+}
+
+void FldEff_TeleportWarpOut(void)
+{
+    CreateTask(Task_TeleportWarpOut, 0);
+}
+
+void Task_TeleportWarpOut(u8 taskId)
+{
+    sTeleportWarpOutFieldEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId]);
+}
+
+void TeleportWarpOutFieldEffect_Init(struct Task *task)
+{
+    LockPlayerFieldControls();
+    FreezeObjectEvents();
+    CameraObjectFreeze();
+    task->data[15] = GetPlayerFacingDirection();
+    task->data[0]++;
+}
+
+void TeleportWarpOutFieldEffect_SpinGround(struct Task *task)
+{
+    u8 spinDirections[5];
+    struct ObjectEvent *objectEvent;
+    memcpy(spinDirections, sEscapeRopeSpinDirections, sizeof(spinDirections));
+    objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if (task->data[1] == 0 || (--task->data[1]) == 0)
+    {
+        ObjectEventTurn(objectEvent, spinDirections[objectEvent->facingDirection]);
+        task->data[1] = 8;
+        task->data[2]++;
+    }
+    if (task->data[2] > 7 && task->data[15] == objectEvent->facingDirection)
+    {
+        task->data[0]++;
+        task->data[1] = 4;
+        task->data[2] = 8;
+        task->data[3] = 1;
+        PlaySE(SE_WARP_IN);
+    }
+}
+
+void TeleportWarpOutFieldEffect_SpinExit(struct Task *task)
+{
+    u8 spinDirections[5];
+    struct ObjectEvent *objectEvent;
+    struct Sprite *sprite;
+    memcpy(spinDirections, sEscapeRopeSpinDirections, sizeof(spinDirections));
+    objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    sprite = &gSprites[gPlayerAvatar.spriteId];
+    if ((--task->data[1]) <= 0)
+    {
+        task->data[1] = 4;
+        ObjectEventTurn(objectEvent, spinDirections[objectEvent->facingDirection]);
+    }
+    sprite->y -= task->data[3];
+    task->data[4] += task->data[3];
+    if ((--task->data[2]) <= 0 && (task->data[2] = 4, task->data[3] < 8))
+    {
+        task->data[3] <<= 1;
+    }
+    if (task->data[4] > 8 && (sprite->oam.priority = 1, sprite->subspriteMode != SUBSPRITES_OFF))
+    {
+        sprite->subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
+    }
+    if (task->data[4] >= DISPLAY_HEIGHT + 8)
+    {
+        task->data[0]++;
+        TryFadeOutOldMapMusic();
+        WarpFadeOutScreen();
+    }
+}
+
+void TeleportWarpOutFieldEffect_End(struct Task *task)
+{
+    if (!gPaletteFade.active)
+    {
+        if (task->data[5] == FALSE)
+        {
+            ClearMirageTowerPulseBlendEffect();
+            task->data[5] = TRUE;
+        }
+
+        if (BGMusicStopped() == TRUE)
+        {
+            SetWarpDestinationToLastHealLocation();
+            WarpIntoMap();
+            SetMainCallback2(CB2_LoadMap);
+            gFieldCallback = FieldCallback_TeleportWarpIn;
+            DestroyTask(FindTaskIdByFunc(Task_TeleportWarpOut));
+        }
+    }
+}
+
+void FieldCallback_TeleportWarpIn(void)
+{
+    Overworld_PlaySpecialMapMusic();
+    WarpFadeInScreen();
+    LockPlayerFieldControls();
+    FreezeObjectEvents();
+    gFieldCallback = NULL;
+    gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
+    CameraObjectFreeze();
+    CreateTask(Task_TeleportWarpIn, 0);
+}
+
+void Task_TeleportWarpIn(u8 taskId)
+{
+    sTeleportWarpInFieldEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId]);
+}
+
+void TeleportWarpInFieldEffect_Init(struct Task *task)
+{
+    struct Sprite *sprite;
+    s16 centerToCornerVecY;
+    if (IsWeatherNotFadingIn())
+    {
+        sprite = &gSprites[gPlayerAvatar.spriteId];
+        centerToCornerVecY = -(sprite->centerToCornerVecY << 1);
+        sprite->y2 = -(sprite->y + sprite->centerToCornerVecY + gSpriteCoordOffsetY + centerToCornerVecY);
+        gObjectEvents[gPlayerAvatar.objectEventId].invisible = FALSE;
+        task->data[0]++;
+        task->data[1] = 8;
+        task->data[2] = 1;
+        task->data[14] = sprite->subspriteMode;
+        task->data[15] = GetPlayerFacingDirection();
+        PlaySE(SE_WARP_IN);
+    }
+}
+
+void TeleportWarpInFieldEffect_SpinEnter(struct Task *task)
+{
+    u8 spinDirections[5];
+    struct ObjectEvent *objectEvent;
+    struct Sprite *sprite;
+    memcpy(spinDirections, sEscapeRopeSpinDirections, sizeof(spinDirections));
+    objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    sprite = &gSprites[gPlayerAvatar.spriteId];
+    if ((sprite->y2 += task->data[1]) >= -8)
+    {
+        if (task->data[13] == 0)
+        {
+            task->data[13]++;
+            objectEvent->triggerGroundEffectsOnMove = TRUE;
+            sprite->subspriteMode = task->data[14];
+        }
+    }
+    else
+    {
+        sprite->oam.priority = 1;
+        if (sprite->subspriteMode != SUBSPRITES_OFF)
+        {
+            sprite->subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
+        }
+    }
+    if (sprite->y2 >= -0x30 && task->data[1] > 1 && !(sprite->y2 & 1))
+    {
+        task->data[1]--;
+    }
+    if ((--task->data[2]) == 0)
+    {
+        task->data[2] = 4;
+        ObjectEventTurn(objectEvent, spinDirections[objectEvent->facingDirection]);
+    }
+    if (sprite->y2 >= 0)
+    {
+        sprite->y2 = 0;
+        task->data[0]++;
+        task->data[1] = 1;
+        task->data[2] = 0;
+    }
+}
+
+void TeleportWarpInFieldEffect_SpinGround(struct Task *task)
+{
+    u8 spinDirections[5];
+    struct ObjectEvent *objectEvent;
+    memcpy(spinDirections, sEscapeRopeSpinDirections, sizeof(spinDirections));
+    objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if ((--task->data[1]) == 0)
+    {
+        ObjectEventTurn(objectEvent, spinDirections[objectEvent->facingDirection]);
+        task->data[1] = 8;
+        if ((++task->data[2]) > 4 && task->data[14] == objectEvent->facingDirection)
+        {
+            UnlockPlayerFieldControls();
+            CameraObjectReset();
+            UnfreezeObjectEvents();
+            DestroyTask(FindTaskIdByFunc(Task_TeleportWarpIn));
+        }
+    }
+}
+
+bool8 FldEff_FieldMoveShowMon(void)
+{
+    u8 taskId;
+    if (IsMapTypeOutdoors(GetCurrentMapType()) == TRUE)
+        taskId = CreateTask(Task_FieldMoveShowMonOutdoors, 0xff);
+    else
+        taskId = CreateTask(Task_FieldMoveShowMonIndoors, 0xff);
+
+    gTasks[taskId].data[15] = InitFieldMoveMonSprite(gFieldEffectArguments[0], gFieldEffectArguments[1], gFieldEffectArguments[2]);
+    return FALSE;
+}
+
+bool8 FldEff_FieldMoveShowMonInit(void)
+{
+    struct Pokemon *pokemon;
+    bool32 noDucking = gFieldEffectArguments[0] & (1 << 31);
+    pokemon = &gPlayerParty[(u8)gFieldEffectArguments[0]];
+    gFieldEffectArguments[0] = GetMonData(pokemon, MON_DATA_SPECIES);
+    gFieldEffectArguments[1] = GetMonData(pokemon, MON_DATA_OT_ID);
+    gFieldEffectArguments[2] = GetMonData(pokemon, MON_DATA_PERSONALITY);
+    gFieldEffectArguments[0] |= noDucking;
+    FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON);
+    FieldEffectActiveListRemove(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
+    return FALSE;
+}
+
+void Task_FieldMoveShowMonOutdoors(u8 taskId)
+{
+    sFieldMoveShowMonOutdoorsEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId]);
+}
+
+void FieldMoveShowMonOutdoorsEffect_Init(struct Task *task)
+{
+    task->data[11] = REG_WININ;
+    task->data[12] = REG_WINOUT;
+    StoreWordInTwoHalfwords((u16*) &task->data[13], (u32)gMain.vblankCallback);
+    task->data[1] = WIN_RANGE(DISPLAY_WIDTH, DISPLAY_WIDTH + 1);
+    task->data[2] = WIN_RANGE(DISPLAY_HEIGHT / 2, DISPLAY_HEIGHT / 2 + 1);
+    task->data[3] = WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR;
+    task->data[4] = WINOUT_WIN01_BG1 | WINOUT_WIN01_BG2 | WINOUT_WIN01_BG3 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR;
+    SetGpuReg(REG_OFFSET_WIN0H, task->data[1]);
+    SetGpuReg(REG_OFFSET_WIN0V, task->data[2]);
+    SetGpuReg(REG_OFFSET_WININ, task->data[3]);
+    SetGpuReg(REG_OFFSET_WINOUT, task->data[4]);
+    SetVBlankCallback(VBlankCB_FieldMoveShowMonOutdoors);
+    task->data[0]++;
+}
+
+void FieldMoveShowMonOutdoorsEffect_LoadGfx(struct Task *task)
+{
+    u16 offset = ((REG_BG0CNT >> 2) << 14);
+    u16 delta = ((REG_BG0CNT >> 8) << 11);
+    CpuCopy16(sFieldMoveStreaksOutdoors_Gfx, (void *)(VRAM + offset), 0x200);
+    CpuFill32(0, (void *)(VRAM + delta), 0x800);
+    LoadPalette(sFieldMoveStreaksOutdoors_Pal, BG_PLTT_ID(15), sizeof(sFieldMoveStreaksOutdoors_Pal));
+    LoadFieldMoveOutdoorStreaksTilemap(delta);
+    task->data[0]++;
+}
+
+void FieldMoveShowMonOutdoorsEffect_CreateBanner(struct Task *task)
+{
+    s16 horiz;
+    s16 vertHi;
+    s16 vertLo;
+    task->data[5] -= 16;
+    horiz = ((u16)task->data[1] >> 8);
+    vertHi = ((u16)task->data[2] >> 8);
+    vertLo = ((u16)task->data[2] & 0xff);
+    horiz -= 16;
+    vertHi -= 2;
+    vertLo += 2;
+
+    if (horiz < 0)
+        horiz = 0;
+
+    if (vertHi < DISPLAY_HEIGHT / 4)
+        vertHi = DISPLAY_HEIGHT / 4;
+
+    if (vertLo > DISPLAY_WIDTH / 2)
+        vertLo = DISPLAY_WIDTH / 2;
+
+    task->data[1] = (horiz << 8) | (task->data[1] & 0xff);
+    task->data[2] = (vertHi << 8) | vertLo;
+    if (horiz == 0 && vertHi == DISPLAY_HEIGHT / 4 && vertLo == DISPLAY_WIDTH / 2)
+    {
+        gSprites[task->data[15]].callback = SpriteCB_FieldMoveMonSlideOnscreen;
+        task->data[0]++;
+    }
+}
+
+void FieldMoveShowMonOutdoorsEffect_WaitForMon(struct Task *task)
+{
+    task->data[5] -= 16;
+
+    if (gSprites[task->data[15]].data[7])
+        task->data[0]++;
+}
+
+
+void FieldMoveShowMonOutdoorsEffect_ShrinkBanner(struct Task *task)
+{
+    s16 vertHi;
+    s16 vertLo;
+    task->data[5] -= 16;
+    vertHi = (task->data[2] >> 8);
+    vertLo = (task->data[2] & 0xFF);
+    vertHi += 6;
+    vertLo -= 6;
+
+    if (vertHi > DISPLAY_HEIGHT / 2)
+        vertHi = DISPLAY_HEIGHT / 2;
+
+    if (vertLo < DISPLAY_HEIGHT / 2 + 1)
+        vertLo = DISPLAY_HEIGHT / 2 + 1;
+
+    task->data[2] = (vertHi << 8) | vertLo;
+
+    if (vertHi == DISPLAY_HEIGHT / 2 && vertLo == DISPLAY_HEIGHT / 2 + 1)
+        task->data[0]++;
+}
+
+void FieldMoveShowMonOutdoorsEffect_RestoreBg(struct Task *task)
+{
+    u16 bg0cnt = (REG_BG0CNT >> 8) << 11;
+    CpuFill32(0, (void *)VRAM + bg0cnt, 0x800);
+    task->data[1] = DISPLAY_WIDTH + 1;
+    task->data[2] = DISPLAY_HEIGHT + 1;
+    task->data[3] = task->data[11];
+    task->data[4] = task->data[12];
+    task->data[0]++;
+}
+
+void FieldMoveShowMonOutdoorsEffect_End(struct Task *task)
+{
+    IntrCallback callback;
+    LoadWordFromTwoHalfwords((u16 *)&task->data[13], (u32 *)&callback);
+    SetVBlankCallback(callback);
+    InitTextBoxGfxAndPrinters();
+    FreeResourcesAndDestroySprite(&gSprites[task->data[15]], task->data[15]);
+    FieldEffectActiveListRemove(FLDEFF_FIELD_MOVE_SHOW_MON);
+    DestroyTask(FindTaskIdByFunc(Task_FieldMoveShowMonOutdoors));
+}
+
+void VBlankCB_FieldMoveShowMonOutdoors(void)
+{
+    IntrCallback callback;
+    struct Task *task = &gTasks[FindTaskIdByFunc(Task_FieldMoveShowMonOutdoors)];
+    LoadWordFromTwoHalfwords((u16 *)&task->data[13], (u32 *)&callback);
+    callback();
+    SetGpuReg(REG_OFFSET_WIN0H, task->data[1]);
+    SetGpuReg(REG_OFFSET_WIN0V, task->data[2]);
+    SetGpuReg(REG_OFFSET_WININ, task->data[3]);
+    SetGpuReg(REG_OFFSET_WINOUT, task->data[4]);
+    SetGpuReg(REG_OFFSET_BG0HOFS, task->data[5]);
+    SetGpuReg(REG_OFFSET_BG0VOFS, task->data[6]);
+}
+
+
+void LoadFieldMoveOutdoorStreaksTilemap(u16 offs)
+{
+    u16 i;
+    u16 *dest;
+    dest = (u16 *)(VRAM + ARRAY_COUNT(sFieldMoveStreaksOutdoors_Tilemap) + offs);
+    for (i = 0; i < ARRAY_COUNT(sFieldMoveStreaksOutdoors_Tilemap); i++, dest++)
+    {
+        *dest = sFieldMoveStreaksOutdoors_Tilemap[i] | 0xF000;
+    }
+}
+
+void Task_FieldMoveShowMonIndoors(u8 taskId)
+{
+    sFieldMoveShowMonIndoorsEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId]);
+}
+
+void FieldMoveShowMonIndoorsEffect_Init(struct Task *task)
+{
+    SetGpuReg(REG_OFFSET_BG0HOFS, task->data[1]);
+    SetGpuReg(REG_OFFSET_BG0VOFS, task->data[2]);
+    StoreWordInTwoHalfwords((u16 *)&task->data[13], (u32)gMain.vblankCallback);
+    SetVBlankCallback(VBlankCB_FieldMoveShowMonIndoors);
+    task->data[0]++;
+}
+
+void FieldMoveShowMonIndoorsEffect_LoadGfx(struct Task *task)
+{
+    u16 offset;
+    u16 delta;
+    offset = ((REG_BG0CNT >> 2) << 14);
+    delta = ((REG_BG0CNT >> 8) << 11);
+    task->data[12] = delta;
+    CpuCopy16(sFieldMoveStreaksIndoors_Gfx, (void *)(VRAM + offset), 0x80);
+    CpuFill32(0, (void *)(VRAM + delta), 0x800);
+    LoadPalette(sFieldMoveStreaksIndoors_Pal, BG_PLTT_ID(15), sizeof(sFieldMoveStreaksIndoors_Pal));
+    task->data[0]++;
+}
+
+void FieldMoveShowMonIndoorsEffect_SlideBannerOn(struct Task *task)
+{
+    if (SlideIndoorBannerOnscreen(task))
+    {
+        SetGpuReg(REG_OFFSET_WIN1H, WIN_RANGE(0, DISPLAY_WIDTH));
+        SetGpuReg(REG_OFFSET_WIN1V, WIN_RANGE(DISPLAY_HEIGHT / 4, DISPLAY_HEIGHT - DISPLAY_HEIGHT / 4));
+        gSprites[task->data[15]].callback = SpriteCB_FieldMoveMonSlideOnscreen;
+        task->data[0]++;
+    }
+    AnimateIndoorShowMonBg(task);
+}
+
+void FieldMoveShowMonIndoorsEffect_WaitForMon(struct Task *task)
+{
+    AnimateIndoorShowMonBg(task);
+    if (gSprites[task->data[15]].data[7])
+        task->data[0]++;
+}
+
+void FieldMoveShowMonIndoorsEffect_RestoreBg(struct Task *task)
+{
+    AnimateIndoorShowMonBg(task);
+    task->data[3] = task->data[1] & 7;
+    task->data[4] = 0;
+    SetGpuReg(REG_OFFSET_WIN1H, WIN_RANGE(0xFF, 0xFF));
+    SetGpuReg(REG_OFFSET_WIN1V, WIN_RANGE(0xFF, 0xFF));
+    task->data[0]++;
+}
+
+void FieldMoveShowMonIndoorsEffect_SlideBannerOff(struct Task *task)
+{
+    AnimateIndoorShowMonBg(task);
+    if (SlideIndoorBannerOffscreen(task))
+        task->data[0]++;
+}
+
+void FieldMoveShowMonIndoorsEffect_End(struct Task *task)
+{
+    IntrCallback intrCallback;
+    u16 bg0cnt;
+    bg0cnt = (REG_BG0CNT >> 8) << 11;
+    CpuFill32(0, (void *)VRAM + bg0cnt, 0x800);
+    LoadWordFromTwoHalfwords((u16 *)&task->data[13], (u32 *)&intrCallback);
+    SetVBlankCallback(intrCallback);
+    InitTextBoxGfxAndPrinters();
+    FreeResourcesAndDestroySprite(&gSprites[task->data[15]], task->data[15]);
+    FieldEffectActiveListRemove(FLDEFF_FIELD_MOVE_SHOW_MON);
+    DestroyTask(FindTaskIdByFunc(Task_FieldMoveShowMonIndoors));
+}
+
+void VBlankCB_FieldMoveShowMonIndoors(void)
+{
+    IntrCallback intrCallback;
+    struct Task *task;
+    task = &gTasks[FindTaskIdByFunc(Task_FieldMoveShowMonIndoors)];
+    LoadWordFromTwoHalfwords((u16 *)&task->data[13], (u32 *)&intrCallback);
+    intrCallback();
+    SetGpuReg(REG_OFFSET_BG0HOFS, task->data[1]);
+    SetGpuReg(REG_OFFSET_BG0VOFS, task->data[2]);
+}
+
+
+void AnimateIndoorShowMonBg(struct Task *task)
+{
+    task->data[1] -= 16;
+    task->data[3] += 16;
+}
+
+bool8 SlideIndoorBannerOnscreen(struct Task *task)
+{
+    u16 i;
+    u16 srcOffs;
+    u16 dstOffs;
+    u16 *dest;
+
+    if (task->data[4] >= 32)
+        return TRUE;
+
+    dstOffs = (task->data[3] >> 3) & 0x1f;
+    if (dstOffs >= task->data[4])
+    {
+        dstOffs = (32 - dstOffs) & 0x1f;
+        srcOffs = (32 - task->data[4]) & 0x1f;
+        dest = (u16 *)(VRAM + 0x140 + (u16)task->data[12]);
+        for (i = 0; i < 10; i++)
+        {
+            dest[dstOffs + i * 32] = sFieldMoveStreaksIndoors_Tilemap[srcOffs + i * 32];
+            dest[dstOffs + i * 32] |= 0xf000;
+
+            dest[((dstOffs + 1) & 0x1f) + i * 32] = sFieldMoveStreaksIndoors_Tilemap[((srcOffs + 1) & 0x1f) + i * 32] | 0xf000;
+            dest[((dstOffs + 1) & 0x1f) + i * 32] |= 0xf000;
+        }
+        task->data[4] += 2;
+    }
+    return FALSE;
+}
+
+bool8 SlideIndoorBannerOffscreen(struct Task *task)
+{
+    u16 i;
+    u16 dstOffs;
+    u16 *dest;
+
+    if (task->data[4] >= 32)
+        return TRUE;
+
+    dstOffs = task->data[3] >> 3;
+    if (dstOffs >= task->data[4])
+    {
+        dstOffs = (task->data[1] >> 3) & 0x1f;
+        dest = (u16 *)(VRAM + 0x140 + (u16)task->data[12]);
+        for (i = 0; i < 10; i++)
+        {
+            dest[dstOffs + i * 32] = 0xf000;
+            dest[((dstOffs + 1) & 0x1f) + i * 32] = 0xf000;
+        }
+        task->data[4] += 2;
+    }
+    return FALSE;
+}
+
+u8 InitFieldMoveMonSprite(u32 species, u32 otId, u32 personality)
+{
+    bool16 noDucking;
+    u8 monSprite;
+    struct Sprite *sprite;
+    noDucking = (species & (1 << 31)) >> 16;
+    species &= ~(1 << 31);
+    monSprite = CreateMonSprite_FieldMove(species, otId, personality, 320, 80, 0);
+    sprite = &gSprites[monSprite];
+    sprite->callback = SpriteCallbackDummy;
+    sprite->oam.priority = 0;
+    sprite->data[0] = species;
+    sprite->data[6] = noDucking;
+    return monSprite;
+}
+
+
+void SpriteCB_FieldMoveMonSlideOnscreen(struct Sprite *sprite)
+{
+    if ((sprite->x -= 20) <= DISPLAY_WIDTH / 2)
+    {
+        sprite->x = DISPLAY_WIDTH / 2;
+        sprite->data[1] = 30;
+        sprite->callback = SpriteCB_FieldMoveMonWaitAfterCry;
+        if (sprite->data[6])
+            PlayCry_NormalNoDucking(sprite->data[0], 0, CRY_VOLUME_RS, CRY_PRIORITY_NORMAL);
+        else
+            PlayCry_Normal(sprite->data[0], 0);
+    }
+}
+
+void SpriteCB_FieldMoveMonWaitAfterCry(struct Sprite *sprite)
+{
+    if ((--sprite->data[1]) == 0)
+        sprite->callback = SpriteCB_FieldMoveMonSlideOffscreen;
+}
+
+void SpriteCB_FieldMoveMonSlideOffscreen(struct Sprite *sprite)
+{
+    if (sprite->x < -64)
+        sprite->data[7] = TRUE;
+    else
+        sprite->x -= 20;
+}
+
+u8 FldEff_UseSurf(void)
+{
+    u8 taskId = CreateTask(Task_SurfFieldEffect, 0xff);
+    gTasks[taskId].data[15] = gFieldEffectArguments[0];
+    Overworld_ClearSavedMusic();
+    Overworld_ChangeMusicTo(MUS_SURF);
+    return FALSE;
+}
+
+void Task_SurfFieldEffect(u8 taskId)
+{
+    sSurfFieldEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId]);
+}
+
+void SurfFieldEffect_Init(struct Task *task)
+{
+    LockPlayerFieldControls();
+    FreezeObjectEvents();
+    gPlayerAvatar.preventStep = TRUE;
+    SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_SURFING);
+    PlayerGetDestCoords(&task->data[1], &task->data[2]);
+    MoveCoords(gObjectEvents[gPlayerAvatar.objectEventId].movementDirection, &task->data[1], &task->data[2]);
+    task->data[0]++;
+}
+
+void SurfFieldEffect_FieldMovePose(struct Task *task)
+{
+    struct ObjectEvent *objectEvent;
+    objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if (!ObjectEventIsMovementOverridden(objectEvent) || ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        SetPlayerAvatarFieldMove();
+        ObjectEventSetHeldMovement(objectEvent, MOVEMENT_ACTION_START_ANIM_IN_DIRECTION);
+        task->data[0]++;
+    }
+}
+
+void SurfFieldEffect_ShowMon(struct Task *task)
+{
+    struct ObjectEvent *objectEvent;
+    objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if (ObjectEventCheckHeldMovementStatus(objectEvent))
+    {
+        gFieldEffectArguments[0] = task->data[15] | (1 << 31);
+        FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
+        task->data[0]++;
+    }
+}
+
+void SurfFieldEffect_JumpOnSurfBlob(struct Task *task)
+{
+    struct ObjectEvent *objectEvent;
+    if (!FieldEffectActiveListContains(FLDEFF_FIELD_MOVE_SHOW_MON))
+    {
+        objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+        ObjectEventSetGraphicsId(objectEvent, GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_SURFING));
+        ObjectEventClearHeldMovementIfFinished(objectEvent);
+        ObjectEventSetHeldMovement(objectEvent, GetJumpSpecialMovementAction(objectEvent->movementDirection));
+        gFieldEffectArguments[0] = task->data[1];
+        gFieldEffectArguments[1] = task->data[2];
+        gFieldEffectArguments[2] = gPlayerAvatar.objectEventId;
+        objectEvent->fieldEffectSpriteId = FieldEffectStart(FLDEFF_SURF_BLOB);
+        task->data[0]++;
+    }
+}
+
+void SurfFieldEffect_End(struct Task *task)
+{
+    struct ObjectEvent *objectEvent;
+    objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if (ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        gPlayerAvatar.preventStep = FALSE;
+        gPlayerAvatar.flags &= ~PLAYER_AVATAR_FLAG_CONTROLLABLE;
+        ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(objectEvent->movementDirection));
+        SetSurfBlob_BobState(objectEvent->fieldEffectSpriteId, BOB_PLAYER_AND_MON);
+        UnfreezeObjectEvents();
+        UnlockPlayerFieldControls();
+        FieldEffectActiveListRemove(FLDEFF_USE_SURF);
+        DestroyTask(FindTaskIdByFunc(Task_SurfFieldEffect));
+    }
+}
+
+u8 FldEff_RayquazaSpotlight(void)
+{
+    u8 i, j, k;
+    u8 spriteId = CreateSprite(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_RAYQUAZA], 120, -24, 1);
+    struct Sprite *sprite = &gSprites[spriteId];
+
+    sprite->oam.priority = 1;
+    sprite->oam.paletteNum = 4;
+    sprite->data[0] = 0;
+    sprite->data[1] = 0;
+    sprite->data[2] = 0;
+    sprite->data[3] = -1;
+    sprite->data[4] = sprite->y;
+    sprite->data[5] = 0;
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ | BLDCNT_TGT2_BD);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(14, 14));
+    SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+    LoadPalette(sSpotlight_Pal, BG_PLTT_ID(12), sizeof(sSpotlight_Pal));
+    SetGpuReg(REG_OFFSET_BG0VOFS, 120);
+    for (i = 3; i < 15; i++)
+    {
+        for (j = 12; j < 18; j++)
+        {
+            ((u16 *)(BG_SCREEN_ADDR(31)))[i * 32 + j] = 0xBFF4 + i * 6 + j + 1;
+        }
+    }
+    for (k = 0; k < 90; k++)
+    {
+        for (i = 0; i < 8; i++)
+        {
+            *(u16 *)(BG_CHAR_ADDR(2) + (k + 1) * 32 + i * 4) = (sSpotlight_Gfx[k * 32 + i * 4 + 1] << 8) + sSpotlight_Gfx[k * 32 + i * 4];
+            *(u16 *)(BG_CHAR_ADDR(2) + (k + 1) * 32 + i * 4 + 2) = (sSpotlight_Gfx[k * 32 + i * 4 + 3] << 8) + sSpotlight_Gfx[k * 32 + i * 4 + 2];
+        }
+    }
+    return spriteId;
+}
+
+u8 FldEff_NPCFlyOut(void)
+{
+    u8 spriteId = CreateSprite(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_BIRD], 0x78, 0, 1);
+    struct Sprite *sprite = &gSprites[spriteId];
+
+    sprite->oam.paletteNum = 0;
+    sprite->oam.priority = 1;
+    sprite->callback = SpriteCB_NPCFlyOut;
+    sprite->data[1] = gFieldEffectArguments[0];
+    PlaySE(SE_M_FLY);
+    return spriteId;
+}
+
+void SpriteCB_NPCFlyOut(struct Sprite *sprite)
+{
+    struct Sprite *npcSprite;
+
+    sprite->x2 = Cos(sprite->data[2], 0x8c);
+    sprite->y2 = Sin(sprite->data[2], 0x48);
+    sprite->data[2] = (sprite->data[2] + 4) & 0xff;
+    if (sprite->data[0])
+    {
+        npcSprite = &gSprites[sprite->data[1]];
+        npcSprite->coordOffsetEnabled = FALSE;
+        npcSprite->x = sprite->x + sprite->x2;
+        npcSprite->y = sprite->y + sprite->y2 - 8;
+        npcSprite->x2 = 0;
+        npcSprite->y2 = 0;
+    }
+
+    if (sprite->data[2] >= 0x80)
+        FieldEffectStop(sprite, FLDEFF_NPCFLY_OUT);
+}
+
+u8 FldEff_UseFly(void)
+{
+    u8 taskId = CreateTask(Task_FlyOut, 254);
+    gTasks[taskId].data[1] = gFieldEffectArguments[0];
+    return 0;
+}
+
+void Task_FlyOut(u8 taskId)
+{
+    sFlyOutFieldEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId]);
+}
+
+void FlyOutFieldEffect_FieldMovePose(struct Task *task)
+{
+    struct ObjectEvent *objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if (!ObjectEventIsMovementOverridden(objectEvent) || ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        task->data[15] = gPlayerAvatar.flags;
+        gPlayerAvatar.preventStep = TRUE;
+        SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_ON_FOOT);
+        SetPlayerAvatarFieldMove();
+        ObjectEventSetHeldMovement(objectEvent, MOVEMENT_ACTION_START_ANIM_IN_DIRECTION);
+        task->data[0]++;
+    }
+}
+
+void FlyOutFieldEffect_ShowMon(struct Task *task)
+{
+    struct ObjectEvent *objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if (ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        task->data[0]++;
+        gFieldEffectArguments[0] = task->data[1];
+        FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
+    }
+}
+
+void FlyOutFieldEffect_BirdLeaveBall(struct Task *task)
+{
+    if (!FieldEffectActiveListContains(FLDEFF_FIELD_MOVE_SHOW_MON))
+    {
+        struct ObjectEvent *objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+        if (task->data[15] & PLAYER_AVATAR_FLAG_SURFING)
+        {
+            SetSurfBlob_BobState(objectEvent->fieldEffectSpriteId, BOB_JUST_MON);
+            SetSurfBlob_DontSyncAnim(objectEvent->fieldEffectSpriteId, FALSE);
+        }
+        task->data[1] = CreateFlyBirdSprite(); // Does "leave ball" animation by default
+        task->data[0]++;
+    }
+}
+
+void FlyOutFieldEffect_WaitBirdLeave(struct Task *task)
+{
+    if (GetFlyBirdAnimCompleted(task->data[1]))
+    {
+        task->data[0]++;
+        task->data[2] = 16;
+        SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ON_FOOT);
+        ObjectEventSetHeldMovement(&gObjectEvents[gPlayerAvatar.objectEventId], MOVEMENT_ACTION_FACE_LEFT);
+    }
+}
+
+void FlyOutFieldEffect_BirdSwoopDown(struct Task *task)
+{
+    struct ObjectEvent *objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if ((task->data[2] == 0 || (--task->data[2]) == 0) && ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        task->data[0]++;
+        PlaySE(SE_M_FLY);
+        StartFlyBirdSwoopDown(task->data[1]);
+    }
+}
+
+
+void FlyOutFieldEffect_JumpOnBird(struct Task *task)
+{
+    if ((++task->data[2]) >= 8)
+    {
+        struct ObjectEvent *objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+        ObjectEventSetGraphicsId(objectEvent, GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_SURFING));
+        StartSpriteAnim(&gSprites[objectEvent->spriteId], ANIM_GET_ON_OFF_POKEMON_WEST);
+        objectEvent->inanimate = TRUE;
+        ObjectEventSetHeldMovement(objectEvent, MOVEMENT_ACTION_JUMP_IN_PLACE_LEFT);
+        if (task->data[15] & PLAYER_AVATAR_FLAG_SURFING)
+        {
+            DestroySprite(&gSprites[objectEvent->fieldEffectSpriteId]);
+        }
+        task->data[0]++;
+        task->data[2] = 0;
+    }
+}
+
+void FlyOutFieldEffect_FlyOffWithBird(struct Task *task)
+{
+    if ((++task->data[2]) >= 10)
+    {
+        struct ObjectEvent *objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+        ObjectEventClearHeldMovementIfActive(objectEvent);
+        objectEvent->inanimate = FALSE;
+        objectEvent->hasShadow = FALSE;
+        SetFlyBirdPlayerSpriteId(task->data[1], objectEvent->spriteId);
+        CameraObjectFreeze();
+        task->data[0]++;
+    }
+}
+
+void FlyOutFieldEffect_WaitFlyOff(struct Task *task)
+{
+    if (GetFlyBirdAnimCompleted(task->data[1]))
+    {
+        WarpFadeOutScreen();
+        task->data[0]++;
+    }
+}
+
+void FlyOutFieldEffect_End(struct Task *task)
+{
+    if (!gPaletteFade.active)
+    {
+        FieldEffectActiveListRemove(FLDEFF_USE_FLY);
+        DestroyTask(FindTaskIdByFunc(Task_FlyOut));
+    }
+}
+
+u8 CreateFlyBirdSprite(void)
+{
+    u8 spriteId;
+    struct Sprite *sprite;
+    spriteId = CreateSprite(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_BIRD], 0xff, 0xb4, 0x1);
+    sprite = &gSprites[spriteId];
+    sprite->oam.paletteNum = 0;
+    sprite->oam.priority = 1;
+    sprite->callback = SpriteCB_FlyBirdLeaveBall;
+    return spriteId;
+}
+
+u8 GetFlyBirdAnimCompleted(u8 spriteId)
+{
+    return gSprites[spriteId].data[7];
+}
+
+void StartFlyBirdSwoopDown(u8 spriteId)
+{
+    struct Sprite *sprite;
+    sprite = &gSprites[spriteId];
+    sprite->callback = SpriteCB_FlyBirdSwoopDown;
+    sprite->x = DISPLAY_WIDTH / 2;
+    sprite->y = 0;
+    sprite->x2 = 0;
+    sprite->y2 = 0;
+    memset(&sprite->data[0], 0, 8 * sizeof(u16) /* zero all data cells */);
+    sprite->data[6] = MAX_SPRITES;
 }
 
 void SetFlyBirdPlayerSpriteId(u8 birdSpriteId, u8 playerSpriteId)
 {
-    gSprites[birdSpriteId].sPlayerSpriteId = playerSpriteId;
+    gSprites[birdSpriteId].data[6] = playerSpriteId;
 }
 
-__attribute__((naked)) void SpriteCB_FlyBirdLeaveBall(struct Sprite *sprite)
+void SpriteCB_FlyBirdLeaveBall(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B8D80\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B8D18\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #3\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	ldr r0, _080B8D88\n\t"
-        "	str r0, [r4, #0x10]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl InitSpriteAffineAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	movs r0, #0x76\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	ldr r0, _080B8D8C\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	adds r0, #0xc0\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_080B8D18:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r4, #0x30]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x78\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x78\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r2, [r4, #0x32]\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	ldr r0, _080B8D90\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _080B8D4E\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x60\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_080B8D4E:\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x81\n\t"
-        "	ble _080B8D80\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r0, #4\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	bl FreeOamMatrix\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	lsrs r1, r1, #6\n\t"
-        "	ldrb r2, [r4, #3]\n\t"
-        "	lsrs r2, r2, #6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CalcCenterToCornerVec\n\t"
-        "_080B8D80:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8D88: .4byte sAffineAnims_FlyBird\n\t"
-        "_080B8D8C: .4byte 0x0000FFD0\n\t"
-        "_080B8D90: .4byte 0x000007FF\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[7] == FALSE)
+    {
+        if (sprite->data[0] == 0)
+        {
+            sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+            sprite->affineAnims = sAffineAnims_FlyBird;
+            InitSpriteAffineAnim(sprite);
+            StartSpriteAffineAnim(sprite, 0);
+            sprite->x = 0x76;
+            sprite->y = -0x30;
+            sprite->data[0]++;
+            sprite->data[1] = 0x40;
+            sprite->data[2] = 0x100;
+        }
+        sprite->data[1] += (sprite->data[2] >> 8);
+        sprite->x2 = Cos(sprite->data[1], 0x78);
+        sprite->y2 = Sin(sprite->data[1], 0x78);
+        if (sprite->data[2] < 0x800)
+        {
+            sprite->data[2] += 0x60;
+        }
+        if (sprite->data[1] > 0x81)
+        {
+            sprite->data[7]++;
+            sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
+            FreeOamMatrix(sprite->oam.matrixNum);
+            CalcCenterToCornerVec(sprite, sprite->oam.shape, sprite->oam.size, ST_OAM_AFFINE_OFF);
+        }
+    }
 }
 
-__attribute__((naked)) void SpriteCB_FlyBirdSwoopDown(struct Sprite *sprite)
+void SpriteCB_FlyBirdSwoopDown(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x8c\n\t"
-        "	bl Cos\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #0x48\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #4\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _080B8DF2\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _080B8E04\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #0x3e\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r3]\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	ldrh r2, [r4, #0x20]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	ldrh r2, [r4, #0x22]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	subs r0, #8\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "	strh r5, [r1, #0x24]\n\t"
-        "	strh r5, [r1, #0x26]\n\t"
-        "_080B8DF2:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x7f\n\t"
-        "	ble _080B8DFE\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_080B8DFE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8E04: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x2 = Cos(sprite->data[2], 0x8c);
+    sprite->y2 = Sin(sprite->data[2], 0x48);
+    sprite->data[2] = (sprite->data[2] + 4) & 0xff;
+    if (sprite->data[6] != MAX_SPRITES)
+    {
+        struct Sprite *sprite1 = &gSprites[sprite->data[6]];
+        sprite1->coordOffsetEnabled = FALSE;
+        sprite1->x = sprite->x + sprite->x2;
+        sprite1->y = sprite->y + sprite->y2 - 8;
+        sprite1->x2 = 0;
+        sprite1->y2 = 0;
+    }
+    if (sprite->data[2] >= 0x80)
+    {
+        sprite->data[7] = TRUE;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_FlyBirdReturnToBall(struct Sprite *sprite)
+void SpriteCB_FlyBirdReturnToBall(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B8EDC\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B8E52\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #3\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	ldr r0, _080B8EE4\n\t"
-        "	str r0, [r4, #0x10]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl InitSpriteAffineAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	movs r0, #0x5e\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	ldr r0, _080B8EE8\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "_080B8E52:\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	ldrh r2, [r4, #0x30]\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	ands r2, r0\n\t"
-        "	strh r2, [r4, #0x30]\n\t"
-        "	movs r3, #0x30\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x78\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	cmp r0, r2\n\t"
-        "	ble _080B8E94\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_080B8E94:\n\t"
-        "	ldrh r1, [r4, #0x36]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bgt _080B8EA4\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x18\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "_080B8EA4:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bgt _080B8EAE\n\t"
-        "	strh r2, [r4, #0x32]\n\t"
-        "_080B8EAE:\n\t"
-        "	movs r2, #0x34\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x3b\n\t"
-        "	ble _080B8EDC\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r0, #4\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	bl FreeOamMatrix\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080B8EDC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8EE4: .4byte sAffineAnims_FlyBird\n\t"
-        "_080B8EE8: .4byte 0x0000FFE0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[7] == FALSE)
+    {
+        if (sprite->data[0] == 0)
+        {
+            sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+            sprite->affineAnims = sAffineAnims_FlyBird;
+            InitSpriteAffineAnim(sprite);
+            StartSpriteAffineAnim(sprite, 1);
+            sprite->x = 0x5e;
+            sprite->y = -0x20;
+            sprite->data[0]++;
+            sprite->data[1] = 0xf0;
+            sprite->data[2] = 0x800;
+            sprite->data[4] = 0x80;
+        }
+        sprite->data[1] += sprite->data[2] >> 8;
+        sprite->data[3] += sprite->data[2] >> 8;
+        sprite->data[1] &= 0xff;
+        sprite->x2 = Cos(sprite->data[1], 0x20);
+        sprite->y2 = Sin(sprite->data[1], 0x78);
+        if (sprite->data[2] > 0x100)
+        {
+            sprite->data[2] -= sprite->data[4];
+        }
+        if (sprite->data[4] < 0x100)
+        {
+            sprite->data[4] += 24;
+        }
+        if (sprite->data[2] < 0x100)
+        {
+            sprite->data[2] = 0x100;
+        }
+        if (sprite->data[3] >= 60)
+        {
+            sprite->data[7]++;
+            sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
+            FreeOamMatrix(sprite->oam.matrixNum);
+            sprite->invisible = TRUE;
+        }
+    }
 }
 
-__attribute__((naked)) void StartFlyBirdReturnToBall(u8 spriteId)
+void StartFlyBirdReturnToBall(u8 spriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080B8C7C\n\t"
-        "	ldr r1, _080B8F10\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080B8F14\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8F10: .4byte gSprites\n\t"
-        "_080B8F14: .4byte SpriteCB_FlyBirdReturnToBall + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    StartFlyBirdSwoopDown(spriteId); // Set up is the same, but overrwrites the callback below
+    gSprites[spriteId].callback = SpriteCB_FlyBirdReturnToBall;
 }
 
-__attribute__((naked)) u8 FldEff_FlyIn(void)
+u8 FldEff_FlyIn(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080B8F28\n\t"
-        "	movs r1, #0xfe\n\t"
-        "	bl CreateTask\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8F28: .4byte Task_FlyIn + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    CreateTask(Task_FlyIn, 254);
+    return 0;
 }
 
-__attribute__((naked)) void Task_FlyIn(u8 taskId)
+void Task_FlyIn(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080B8F54\n\t"
-        "	ldr r2, _080B8F58\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8F54: .4byte sFlyInFieldEffectFuncs\n\t"
-        "_080B8F58: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    sFlyInFieldEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId]);
 }
 
-__attribute__((naked)) void FlyInFieldEffect_BirdSwoopDown(struct Task *task)
+void FlyInFieldEffect_BirdSwoopDown(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r6, _080B9004\n\t"
-        "	ldrb r1, [r6, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B9008\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventIsMovementOverridden\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B8F86\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B8FFE\n\t"
-        "_080B8F86:\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	strh r0, [r5, #0xc]\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r6, #6]\n\t"
-        "	bl SetPlayerAvatarStateMask\n\t"
-        "	ldrh r1, [r5, #0x26]\n\t"
-        "	movs r0, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B8FAE\n\t"
-        "	ldrb r0, [r4, #0x1a]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetSurfBlob_BobState\n\t"
-        "_080B8FAE:\n\t"
-        "	movs r0, #3\n\t"
-        "	bl GetPlayerAvatarGraphicsIdByStateId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetGraphicsId\n\t"
-        "	bl CameraObjectReset2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl EventObjectTurn\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B900C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x16\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r0, #0x21\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	bl sub_080B8C1C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	bl sub_080B8C7C\n\t"
-        "	ldrb r0, [r5, #0xa]\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	bl sub_080B8CB8\n\t"
-        "_080B8FFE:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9004: .4byte gPlayerAvatar\n\t"
-        "_080B9008: .4byte gObjectEvents\n\t"
-        "_080B900C: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *objectEvent;
+    objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if (!ObjectEventIsMovementOverridden(objectEvent) || ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        task->data[0]++;
+        task->data[2] = 17;
+        task->data[15] = gPlayerAvatar.flags;
+        gPlayerAvatar.preventStep = TRUE;
+        SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_ON_FOOT);
+        if (task->data[15] & PLAYER_AVATAR_FLAG_SURFING)
+        {
+            SetSurfBlob_BobState(objectEvent->fieldEffectSpriteId, BOB_NONE);
+        }
+        ObjectEventSetGraphicsId(objectEvent, GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_SURFING));
+        CameraObjectFreeze();
+        ObjectEventTurn(objectEvent, DIR_WEST);
+        StartSpriteAnim(&gSprites[objectEvent->spriteId], ANIM_GET_ON_OFF_POKEMON_WEST);
+        objectEvent->invisible = FALSE;
+        task->data[1] = CreateFlyBirdSprite();
+        StartFlyBirdSwoopDown(task->data[1]);
+        SetFlyBirdPlayerSpriteId(task->data[1], objectEvent->spriteId);
+    }
 }
 
-__attribute__((naked)) void FlyInFieldEffect_FlyInWithBird(struct Task *task)
+void FlyInFieldEffect_FlyInWithBird(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r1, [r5, #0xc]\n\t"
-        "	movs r2, #0xc\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B9028\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r5, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B9068\n\t"
-        "_080B9028:\n\t"
-        "	ldr r0, _080B9070\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B9074\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B9078\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r0, [r5, #0xa]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	bl sub_080B8CB8\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	ldrh r1, [r4, #0x20]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	ldrh r2, [r4, #0x22]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "	strh r1, [r4, #0x26]\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	strh r1, [r5, #0xc]\n\t"
-        "_080B9068:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9070: .4byte gPlayerAvatar\n\t"
-        "_080B9074: .4byte gObjectEvents\n\t"
-        "_080B9078: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *objectEvent;
+    struct Sprite *sprite;
+    if (task->data[2] == 0 || (--task->data[2]) == 0)
+    {
+        objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+        sprite = &gSprites[objectEvent->spriteId];
+        SetFlyBirdPlayerSpriteId(task->data[1], MAX_SPRITES);
+        sprite->x += sprite->x2;
+        sprite->y += sprite->y2;
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        task->data[0]++;
+        task->data[2] = 0;
+    }
 }
 
-__attribute__((naked)) void FlyInFieldEffect_JumpOffBird(struct Task *task)
+void FlyInFieldEffect_JumpOffBird(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0x24\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _080B90C4\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #0x24\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r0, _080B90C8\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _080B90CC\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #0xc\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, sp\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x11\n\t"
-        "	ble _080B90BA\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080B90BA:\n\t"
-        "	add sp, #0x24\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B90C4: .4byte sFlyInYPositions\n\t"
-        "_080B90C8: .4byte gPlayerAvatar\n\t"
-        "_080B90CC: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 yPositions[ARRAY_COUNT(sFlyInYPositions)];
+    struct Sprite *sprite;
+
+    memcpy(yPositions, sFlyInYPositions, sizeof(yPositions));
+    sprite = &gSprites[gPlayerAvatar.spriteId];
+    sprite->y2 = yPositions[task->data[2]];
+
+    if ((++task->data[2]) >= (int)ARRAY_COUNT(yPositions))
+        task->data[0]++;
 }
 
-__attribute__((naked)) void FlyInFieldEffect_FieldMovePose(struct Task *task)
+void FlyInFieldEffect_FieldMovePose(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldrb r0, [r6, #0xa]\n\t"
-        "	bl sub_080B8C60\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B9134\n\t"
-        "	ldr r0, _080B913C\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	lsls r5, r0, #3\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	ldr r0, _080B9140\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	ldrb r0, [r5, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B9144\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r1, [r5, #1]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r5, #1]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	ldrsh r2, [r5, r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl MoveEventObjectToMapCoords\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	adds r4, #0x3e\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	bl SetPlayerAvatarFieldMove\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldrh r0, [r6, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #8]\n\t"
-        "_080B9134:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B913C: .4byte gPlayerAvatar\n\t"
-        "_080B9140: .4byte gObjectEvents\n\t"
-        "_080B9144: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *objectEvent;
+    struct Sprite *sprite;
+    if (GetFlyBirdAnimCompleted(task->data[1]))
+    {
+        objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+        sprite = &gSprites[objectEvent->spriteId];
+        objectEvent->inanimate = FALSE;
+        MoveObjectEventToMapCoords(objectEvent, objectEvent->currentCoords.x, objectEvent->currentCoords.y);
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->coordOffsetEnabled = TRUE;
+        SetPlayerAvatarFieldMove();
+        ObjectEventSetHeldMovement(objectEvent, MOVEMENT_ACTION_START_ANIM_IN_DIRECTION);
+        task->data[0]++;
+    }
 }
 
-__attribute__((naked)) void FlyInFieldEffect_BirdReturnToBall(struct Task *task)
+void FlyInFieldEffect_BirdReturnToBall(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _080B9178\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B917C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B9170\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	bl sub_080B8EEC\n\t"
-        "_080B9170:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9178: .4byte gPlayerAvatar\n\t"
-        "_080B917C: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventClearHeldMovementIfFinished(&gObjectEvents[gPlayerAvatar.objectEventId]))
+    {
+        task->data[0]++;
+        StartFlyBirdReturnToBall(task->data[1]);
+    }
 }
 
-__attribute__((naked)) void FlyInFieldEffect_WaitBirdReturn(struct Task *task)
+void FlyInFieldEffect_WaitBirdReturn(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	bl sub_080B8C60\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B91AC\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B91B4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "_080B91AC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B91B4: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetFlyBirdAnimCompleted(task->data[1]))
+    {
+        DestroySprite(&gSprites[task->data[1]]);
+        task->data[0]++;
+        task->data[1] = 16;
+    }
 }
 
 
-__attribute__((naked)) void FlyInFieldEffect_End(struct Task *task)
+void FlyInFieldEffect_End(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r0, [r5, #0xa]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B9222\n\t"
-        "	ldr r6, _080B9228\n\t"
-        "	ldrb r1, [r6, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B922C\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r7, #0\n\t"
-        "	ldrh r1, [r5, #0x26]\n\t"
-        "	movs r0, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B91EC\n\t"
-        "	movs r7, #3\n\t"
-        "	ldrb r0, [r4, #0x1a]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetSurfBlob_BobState\n\t"
-        "_080B91EC:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl GetPlayerAvatarGraphicsIdByStateId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetGraphicsId\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl EventObjectTurn\n\t"
-        "	ldrh r0, [r5, #0x26]\n\t"
-        "	strb r0, [r6]\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r6, #6]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	ldr r0, _080B9230\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B9222:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9228: .4byte gPlayerAvatar\n\t"
-        "_080B922C: .4byte gObjectEvents\n\t"
-        "_080B9230: .4byte Task_FlyIn + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 state;
+    struct ObjectEvent *objectEvent;
+    if ((--task->data[1]) == 0)
+    {
+        objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+        state = PLAYER_AVATAR_STATE_NORMAL;
+        if (task->data[15] & PLAYER_AVATAR_FLAG_SURFING)
+        {
+            state = PLAYER_AVATAR_STATE_SURFING;
+            SetSurfBlob_BobState(objectEvent->fieldEffectSpriteId, BOB_PLAYER_AND_MON);
+        }
+        ObjectEventSetGraphicsId(objectEvent, GetPlayerAvatarGraphicsIdByStateId(state));
+        ObjectEventTurn(objectEvent, DIR_SOUTH);
+        gPlayerAvatar.flags = task->data[15];
+        gPlayerAvatar.preventStep = FALSE;
+        FieldEffectActiveListRemove(FLDEFF_FLY_IN);
+        DestroyTask(FindTaskIdByFunc(Task_FlyIn));
+    }
 }
 
-__attribute__((naked)) bool8 FldEff_DestroyDeoxysRock(void)
+bool8 FldEff_DestroyDeoxysRock(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r4, _080B9278\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	ldrb r2, [r4, #8]\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B9284\n\t"
-        "	ldr r0, _080B927C\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080B9280\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	strh r0, [r1, #0xc]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	strh r0, [r1, #0x14]\n\t"
-        "	ldr r0, [r4, #4]\n\t"
-        "	strh r0, [r1, #0x16]\n\t"
-        "	ldr r0, [r4, #8]\n\t"
-        "	strh r0, [r1, #0x18]\n\t"
-        "	b _080B928A\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9278: .4byte gFieldEffectArguments\n\t"
-        "_080B927C: .4byte sub_080B9340 + 1\n\t"
-        "_080B9280: .4byte gTasks\n\t"
-        "_080B9284:\n\t"
-        "	movs r0, #0x41\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "_080B928A:\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId;
+    u8 objectEventId;
+    if (!TryGetObjectEventIdByLocalIdAndMap(gFieldEffectArguments[0], gFieldEffectArguments[1], gFieldEffectArguments[2], &objectEventId))
+    {
+        taskId = CreateTask(Task_DestroyDeoxysRock, 80);
+        gTasks[taskId].data[2] = objectEventId;
+        gTasks[taskId].data[6] = gFieldEffectArguments[0];
+        gTasks[taskId].data[7] = gFieldEffectArguments[1];
+        gTasks[taskId].data[8] = gFieldEffectArguments[2];
+    }
+    else
+    {
+        FieldEffectActiveListRemove(FLDEFF_DESTROY_DEOXYS_ROCK);
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_DeoxysRockCameraShake(u8 taskId)
+void Task_DeoxysRockCameraShake(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080B92CC\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r1, #0xe\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B92D0\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	ble _080B92D4\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B92D4\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	b _080B92D2\n\t"
-        "	.align 2, 0\n\t"
-        "_080B92CC: .4byte gUnknown_3005B68\n\t"
-        "_080B92D0:\n\t"
-        "	movs r0, #4\n\t"
-        "_080B92D2:\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "_080B92D4:\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _080B930E\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4]\n\t"
-        "	ldrh r0, [r4, #2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #2]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B9304\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetCameraPanning\n\t"
-        "	b _080B930E\n\t"
-        "_080B9304:\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetCameraPanning\n\t"
-        "_080B930E:\n\t"
-        "	bl UpdateCameraPanning\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B9320\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B9320:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+    if (data[7])
+    {
+        if (++data[6] > 20)
+        {
+            data[6] = 0;
+            if (data[5] != 0)
+                data[5]--;
+        }
+    }
+    else
+    {
+        data[5] = 4;
+    }
+
+    if (++data[0] > 1)
+    {
+        data[0] = 0;
+
+        if (++data[1] & 1)
+            SetCameraPanning(0, -data[5]);
+        else
+            SetCameraPanning(0, data[5]);
+    }
+    UpdateCameraPanning();
+    if (data[5] == 0)
+        DestroyTask(taskId);
 }
 
 void StartEndingDeoxysRockCameraShake(u8 taskId)
 {
-    gTasks[taskId].tEnding = TRUE;
+    gTasks[taskId].data[7] = TRUE;
 }
 
-__attribute__((naked)) void sub_080B9340(u8 a0)
+void Task_DestroyDeoxysRock(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r4, r5, #2\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	ldr r0, _080B9378\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	bl InstallCameraPanAheadCallback\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetCameraPanningCallback\n\t"
-        "	ldr r1, _080B937C\n\t"
-        "	movs r2, #2\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl _call_via_r2\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9378: .4byte gUnknown_3005B68\n\t"
-        "_080B937C: .4byte sDestroyDeoxysRockEffectFuncs\n\t"
-
-        ".syntax divided\n\t"
-
-    );
+    s16 *data = gTasks[taskId].data;
+    InstallCameraPanAheadCallback();
+    SetCameraPanningCallback(0);
+    sDestroyDeoxysRockEffectFuncs[data[1]](data, taskId);
 }
 
 
-__attribute__((naked)) void DestroyDeoxysRockEffect_CameraShake(s16 *a0, u8 a1)
+void DestroyDeoxysRockEffect_CameraShake(s16 *data, u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r0, _080B93A8\n\t"
-        "	movs r1, #0x5a\n\t"
-        "	bl CreateTask\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r0, #0x58\n\t"
-        "	bl PlaySE\n\t"
-        "	strh r4, [r5, #0xa]\n\t"
-        "	ldrh r0, [r5, #2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #2]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B93A8: .4byte Task_DeoxysRockCameraShake + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 newTaskId = CreateTask(Task_DeoxysRockCameraShake, 90);
+    PlaySE(SE_THUNDER2);
+    data[5] = newTaskId;
+    data[1]++;
 }
 
-__attribute__((naked)) void DestroyDeoxysRockEffect_RockFragments(s16 *a0, u8 a1)
+void DestroyDeoxysRockEffect_RockFragments(s16 *data, u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	ldrh r0, [r7, #6]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r7, #6]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x78\n\t"
-        "	ble _080B941A\n\t"
-        "	ldr r2, _080B9424\n\t"
-        "	movs r1, #4\n\t"
-        "	ldrsh r0, [r7, r1]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r0, [r1, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B9428\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	movs r2, #0x20\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	ldr r6, _080B942C\n\t"
-        "	ldr r5, _080B9430\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "	str r5, [sp]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080B947C\n\t"
-        "	movs r0, #0x57\n\t"
-        "	bl PlaySE\n\t"
-        "	ldrb r0, [r7, #0xa]\n\t"
-        "	bl sub_080B9328\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r7, #6]\n\t"
-        "	ldrh r0, [r7, #2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r7, #2]\n\t"
-        "_080B941A:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9424: .4byte gObjectEvents\n\t"
-        "_080B9428: .4byte gSprites\n\t"
-        "_080B942C: .4byte 0x0000FFFF\n\t"
-        "_080B9430: .4byte 0x00007FFF\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++data[3] > 120)
+    {
+        struct Sprite *sprite = &gSprites[gObjectEvents[data[2]].spriteId];
+        gObjectEvents[data[2]].invisible = TRUE;
+        BlendPalettes(PALETTES_BG, 0x10, RGB_WHITE);
+        BeginNormalPaletteFade(PALETTES_BG, 0, 0x10, 0, RGB_WHITE);
+        CreateDeoxysRockFragments(sprite);
+        PlaySE(SE_THUNDER);
+        StartEndingDeoxysRockCameraShake(data[5]);
+        data[3] = 0;
+        data[1]++;
+    }
 }
 
-__attribute__((naked)) void DestroyDeoxysRockEffect_WaitAndEnd(s16 *a0, u8 a1)
+void DestroyDeoxysRockEffect_WaitAndEnd(s16 *data, u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	ldr r0, _080B9474\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B946E\n\t"
-        "	ldr r0, _080B9478\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B946E\n\t"
-        "	bl InstallCameraPanAheadCallback\n\t"
-        "	ldrb r0, [r4, #0xc]\n\t"
-        "	ldrb r1, [r4, #0xe]\n\t"
-        "	ldrb r2, [r4, #0x10]\n\t"
-        "	bl RemoveObjectEventByLocalIdAndMap\n\t"
-        "	movs r0, #0x41\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B946E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9474: .4byte gPaletteFade\n\t"
-        "_080B9478: .4byte Task_DeoxysRockCameraShake + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active && !FuncIsActiveTask(Task_DeoxysRockCameraShake))
+    {
+        InstallCameraPanAheadCallback();
+        RemoveObjectEventByLocalIdAndMap(data[6], data[7], data[8]);
+        FieldEffectActiveListRemove(FLDEFF_DESTROY_DEOXYS_ROCK);
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void CreateDeoxysRockFragments(struct Sprite *sprite)
+void CreateDeoxysRockFragments(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldr r0, _080B9500\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r2, [r0, r1]\n\t"
-        "	movs r3, #0x20\n\t"
-        "	ldrsh r0, [r6, r3]\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	movs r1, #0x24\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r0, _080B9504\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r0, [r0, r3]\n\t"
-        "	movs r3, #0x22\n\t"
-        "	ldrsh r1, [r6, r3]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r3, #0x26\n\t"
-        "	ldrsh r1, [r6, r3]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	subs r0, #4\n\t"
-        "	movs r5, #0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	mov r8, r2\n\t"
-        "	lsls r7, r0, #0x10\n\t"
-        "_080B94B2:\n\t"
-        "	ldr r0, _080B9508\n\t"
-        "	mov r2, r8\n\t"
-        "	asrs r1, r2, #0x10\n\t"
-        "	asrs r2, r7, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _080B94EE\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B950C\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	strh r5, [r4, #0x2e]\n\t"
-        "	ldrb r1, [r6, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ldrb r2, [r4, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #5]\n\t"
-        "_080B94EE:\n\t"
-        "	adds r5, #1\n\t"
-        "	cmp r5, #3\n\t"
-        "	ble _080B94B2\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9500: .4byte gTotalCameraPixelOffsetX\n\t"
-        "_080B9504: .4byte gTotalCameraPixelOffsetY\n\t"
-        "_080B9508: .4byte sSpriteTemplate_DeoxysRockFragment\n\t"
-        "_080B950C: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+    int xPos = (s16)gTotalCameraPixelOffsetX + sprite->x + sprite->x2;
+    int yPos = (s16)gTotalCameraPixelOffsetY + sprite->y + sprite->y2 - 4;
+
+    for (i = 0; i < 4; i++)
+    {
+        u8 spriteId = CreateSprite(&sSpriteTemplate_DeoxysRockFragment, xPos, yPos, 0);
+        if (spriteId != MAX_SPRITES)
+        {
+            StartSpriteAnim(&gSprites[spriteId], i);
+            gSprites[spriteId].data[0] = i;
+            gSprites[spriteId].oam.paletteNum = sprite->oam.paletteNum;
+        }
+    }
 }
 
-__attribute__((naked)) void SpriteCB_DeoxysRockFragment(struct Sprite *sprite)
+void SpriteCB_DeoxysRockFragment(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B953C\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080B9526\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B9530\n\t"
-        "	b _080B955A\n\t"
-        "_080B9526:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080B9548\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080B954E\n\t"
-        "	b _080B955A\n\t"
-        "_080B9530:\n\t"
-        "	ldrh r0, [r1, #0x20]\n\t"
-        "	subs r0, #0x10\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "	ldrh r0, [r1, #0x22]\n\t"
-        "	subs r0, #0xc\n\t"
-        "	b _080B9558\n\t"
-        "_080B953C:\n\t"
-        "	ldrh r0, [r1, #0x20]\n\t"
-        "	adds r0, #0x10\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "	ldrh r0, [r1, #0x22]\n\t"
-        "	subs r0, #0xc\n\t"
-        "	b _080B9558\n\t"
-        "_080B9548:\n\t"
-        "	ldrh r0, [r1, #0x20]\n\t"
-        "	subs r0, #0x10\n\t"
-        "	b _080B9552\n\t"
-        "_080B954E:\n\t"
-        "	ldrh r0, [r1, #0x20]\n\t"
-        "	adds r0, #0x10\n\t"
-        "_080B9552:\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "	ldrh r0, [r1, #0x22]\n\t"
-        "	adds r0, #0xc\n\t"
-        "_080B9558:\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "_080B955A:\n\t"
-        "	ldrh r0, [r1, #0x20]\n\t"
-        "	adds r0, #4\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xf8\n\t"
-        "	bhi _080B9576\n\t"
-        "	movs r0, #0x22\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	movs r0, #4\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r2, r0\n\t"
-        "	blt _080B9576\n\t"
-        "	cmp r2, #0xa4\n\t"
-        "	ble _080B957C\n\t"
-        "_080B9576:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_080B957C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    // 1 case for each fragment, fly off in 4 different directions
+    switch (sprite->data[0])
+    {
+    case 0:
+        sprite->x -= 16;
+        sprite->y -= 12;
+        break;
+    case 1:
+        sprite->x += 16;
+        sprite->y -= 12;
+        break;
+    case 2:
+        sprite->x -= 16;
+        sprite->y += 12;
+        break;
+    case 3:
+        sprite->x += 16;
+        sprite->y += 12;
+        break;
+    }
+    if (sprite->x < -4 || sprite->x > DISPLAY_WIDTH + 4 || sprite->y < -4 || sprite->y > DISPLAY_HEIGHT + 4)
+        DestroySprite(sprite);
 }
 
-__attribute__((naked)) bool8 FldEff_MoveDeoxysRock(struct Sprite *sprite)
+bool8 FldEff_MoveDeoxysRock(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r7, _080B9620\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	ldrb r1, [r7, #4]\n\t"
-        "	ldrb r2, [r7, #8]\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B9616\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B9624\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	subs r5, #7\n\t"
-        "	movs r0, #0x12\n\t"
-        "	ldrsh r6, [r4, r0]\n\t"
-        "	subs r6, #7\n\t"
-        "	ldr r1, [r7, #0xc]\n\t"
-        "	subs r5, r1, r5\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	ldr r2, [r7, #0x10]\n\t"
-        "	subs r6, r2, r6\n\t"
-        "	lsls r6, r6, #4\n\t"
-        "	adds r1, #7\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r2, #7\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ShiftEventObjectCoords\n\t"
-        "	ldr r0, _080B9628\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080B962C\n\t"
-        "	lsls r2, r0, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrb r0, [r4, #4]\n\t"
-        "	strh r0, [r2, #0xa]\n\t"
-        "	ldr r3, _080B9630\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r0, [r0, #0x20]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r0, [r2, #0xc]\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r0, [r0, #0x22]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	strh r0, [r2, #0xe]\n\t"
-        "	ldr r0, [r7, #0x14]\n\t"
-        "	strh r0, [r2, #0x18]\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	strh r0, [r2, #0x1a]\n\t"
-        "_080B9616:\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9620: .4byte gFieldEffectArguments\n\t"
-        "_080B9624: .4byte gObjectEvents\n\t"
-        "_080B9628: .4byte Task_MoveDeoxysRock + 1\n\t"
-        "_080B962C: .4byte gTasks\n\t"
-        "_080B9630: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+    if (!TryGetObjectEventIdByLocalIdAndMap(gFieldEffectArguments[0], gFieldEffectArguments[1], gFieldEffectArguments[2], &objectEventId))
+    {
+        struct ObjectEvent *object;
+        int xPos, yPos;
+        u8 taskId;
+        object = &gObjectEvents[objectEventId];
+        xPos = object->currentCoords.x - MAP_OFFSET;
+        yPos = object->currentCoords.y - MAP_OFFSET;
+        xPos = (gFieldEffectArguments[3] - xPos) * 16;
+        yPos = (gFieldEffectArguments[4] - yPos) * 16;
+        ShiftObjectEventCoords(object, gFieldEffectArguments[3] + MAP_OFFSET, gFieldEffectArguments[4] + MAP_OFFSET);
+        taskId = CreateTask(Task_MoveDeoxysRock, 80);
+        gTasks[taskId].data[1] = object->spriteId;
+        gTasks[taskId].data[2] = gSprites[object->spriteId].x + xPos;
+        gTasks[taskId].data[3] = gSprites[object->spriteId].y + yPos;
+        gTasks[taskId].data[8] = gFieldEffectArguments[5];
+        gTasks[taskId].data[9] = objectEventId;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_MoveDeoxysRock(u8 taskId)
+void Task_MoveDeoxysRock(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080B9660\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	movs r0, #2\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B9664\n\t"
-        "	adds r6, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B9668\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B96A6\n\t"
-        "	b _080B9704\n\t"
-        "	.align 2, 0\n\t"
-        "_080B9660: .4byte gUnknown_3005B68\n\t"
-        "_080B9664: .4byte gSprites\n\t"
-        "_080B9668:\n\t"
-        "	ldrh r0, [r6, #0x20]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	ldrh r0, [r6, #0x22]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	movs r2, #4\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	bl __divsi3\n\t"
-        "	strh r0, [r5, #0xc]\n\t"
-        "	movs r1, #6\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	bl __divsi3\n\t"
-        "	strh r0, [r5, #0xe]\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5]\n\t"
-        "_080B96A6:\n\t"
-        "	ldrh r1, [r5, #0x10]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B96D4\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r5, #0x10]\n\t"
-        "	ldrh r1, [r5, #0xc]\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r1, [r5, #8]\n\t"
-        "	ldrh r0, [r5, #0xe]\n\t"
-        "	ldrh r2, [r5, #0xa]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x14\n\t"
-        "	strh r1, [r6, #0x20]\n\t"
-        "	ldrh r0, [r5, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x14\n\t"
-        "	strh r0, [r6, #0x22]\n\t"
-        "	b _080B9704\n\t"
-        "_080B96D4:\n\t"
-        "	movs r1, #0x12\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _080B970C\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrh r0, [r5, #4]\n\t"
-        "	strh r0, [r6, #0x20]\n\t"
-        "	ldrh r0, [r5, #6]\n\t"
-        "	strh r0, [r6, #0x22]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ShiftStillEventObjectCoords\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	movs r0, #0x42\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B9704:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B970C: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+    struct Sprite *sprite = &gSprites[data[1]];
+    switch (data[0])
+    {
+        case 0:
+            data[4] = sprite->x << 4;
+            data[5] = sprite->y << 4;
+            data[6] = SAFE_DIV(data[2] * 16 - data[4], data[8]);
+            data[7] = SAFE_DIV(data[3] * 16 - data[5], data[8]);
+            data[0]++;
+            // fallthrough
+        case 1:
+            if (data[8] != 0)
+            {
+                data[8]--;
+                data[4] += data[6];
+                data[5] += data[7];
+                sprite->x = data[4] >> 4;
+                sprite->y = data[5] >> 4;
+            }
+            else
+            {
+                struct ObjectEvent *object = &gObjectEvents[data[9]];
+                sprite->x = data[2];
+                sprite->y = data[3];
+                ShiftStillObjectEventCoords(object);
+                object->triggerGroundEffectsOnStop = TRUE;
+                FieldEffectActiveListRemove(FLDEFF_MOVE_DEOXYS_ROCK);
+                DestroyTask(taskId);
+            }
+            break;
+    }
 }
