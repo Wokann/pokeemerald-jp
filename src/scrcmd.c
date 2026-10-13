@@ -158,8 +158,7 @@ bool8 ScrCmd_callnative(struct ScriptContext *ctx)
     return FALSE;
 }
 
-// JP ROM labels aliased to the shared return-FALSE tails of the handlers above.
-__asm__(".set ScrCmd_showelevmenu, ScrCmd_special + 0x14");
+// JP ROM label for the shared return-FALSE tail of ScrCmd_callnative.
 __asm__(".set sub_08098CE0, ScrCmd_callnative + 0x0C");
 
 
@@ -2096,9 +2095,8 @@ bool8 ScrCmd_addelevmenuitem(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_drawbox_jp(struct ScriptContext *ctx)
+bool8 ScrCmd_showelevmenu(struct ScriptContext *ctx)
 {
-    // JP's separate 0xB2 no-op does not consume the US elevator-menu pointer.
     return FALSE;
 }
 

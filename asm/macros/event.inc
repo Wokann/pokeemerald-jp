@@ -1669,17 +1669,14 @@
 	.4byte \value
 	.endm
 
-	@ Sets the modernFatefulEncounter bit for the Pokemon in the specified slot of the player's party.
+	@ JP 0xCD implements setmonobedient, not the US modern-fateful command.
 	.macro setmodernfatefulencounter slot:req
-	.byte SCR_OP_SETMODERNFATEFULENCOUNTER
-	.2byte \slot
+	.error "setmodernfatefulencounter is not supported by the JP script engine"
 	.endm
 
-	@ Checks if the modernFatefulEncounter bit is set for the Pokemon in the specified slot of the player's party. If it isn't set,
-	@ VAR_RESULT is TRUE. If the bit is set (or if the specified slot is empty or invalid), VAR_RESULT is FALSE.
+	@ JP 0xCE implements checkmonobedience, not the US modern-fateful command.
 	.macro checkmodernfatefulencounter slot:req
-	.byte SCR_OP_CHECKMODERNFATEFULENCOUNTER
-	.2byte \slot
+	.error "checkmodernfatefulencounter is not supported by the JP script engine"
 	.endm
 
 	@ Jumps to the ram script saved from a Wonder Card. If there is no valid saved Wonder Card or if the
@@ -1804,22 +1801,14 @@
 	formatwarp \map, \a, \b, \c
 	.endm
 
-	@ Buffers the name of the contest category to the buffer.
-	@ For example a category of CONTEST_CATEGORY_COOL will buffer the string "COOLNESS CONTEST".
+	@ US 0xE1 is outside the JP command table.
 	.macro buffercontestname stringVarId:req, category:req
-	.byte SCR_OP_BUFFERCONTESTNAME
-	stringvar \stringVarId
-	.2byte \category
+	.error "buffercontestname is not supported by the JP script engine"
 	.endm
 
-	@ Writes the name of the specified item to the specified buffer. If 'item' is a Berry or ITEM_POKE_BALL
-	@ and if the quantity is 2 or more, the buffered string will be pluralized ("IES" or "S" appended).
-	@ If the specified item is >= ITEMS_COUNT then the name of ITEM_NONE ("????????") is buffered instead.
+	@ US 0xE2 is outside the JP command table.
 	.macro bufferitemnameplural stringVarId:req, item:req, quantity:req
-	.byte SCR_OP_BUFFERITEMNAMEPLURAL
-	stringvar \stringVarId
-	.2byte \item
-	.2byte \quantity
+	.error "bufferitemnameplural is not supported by the JP script engine"
 	.endm
 
 
@@ -2090,18 +2079,13 @@
 	map \map
 	.endm
 
-	@ JP keeps a separate no-argument no-op in the US showelevmenu slot.
-	.macro drawbox_jp
-	.byte SCR_OP_DRAWBOX_JP
-	.endm
-
 	.macro setmonobedient partySlot:req
-	.byte SCR_OP_CD
+	.byte SCR_OP_SETMONOBEDIENT
 	.2byte \partySlot
 	.endm
 
 	.macro checkmonobedience partySlot:req
-	.byte SCR_OP_CE
+	.byte SCR_OP_CHECKMONOBEDIENCE
 	.2byte \partySlot
 	.endm
 

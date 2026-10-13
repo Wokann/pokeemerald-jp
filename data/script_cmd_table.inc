@@ -193,8 +193,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_SETDOOROPEN ScrCmd_setdooropen @ 0xAF
 	script_cmd_table_entry SCR_OP_SETDOORCLOSED ScrCmd_setdoorclosed @ 0xB0
 	script_cmd_table_entry SCR_OP_ADDELEVMENUITEM ScrCmd_addelevmenuitem @ 0xB1
-	@ JP keeps a separate no-argument no-op here, not US showelevmenu.
-	script_cmd_table_entry SCR_OP_DRAWBOX_JP ScrCmd_drawbox_jp @ 0xB2
+	script_cmd_table_entry SCR_OP_SHOWELEVMENU ScrCmd_showelevmenu @ 0xB2
 	script_cmd_table_entry SCR_OP_CHECKCOINS ScrCmd_checkcoins @ 0xB3
 	script_cmd_table_entry SCR_OP_ADDCOINS ScrCmd_addcoins @ 0xB4
 	script_cmd_table_entry SCR_OP_REMOVECOINS ScrCmd_removecoins @ 0xB5
@@ -222,8 +221,8 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_NORMALMSG ScrCmd_nop1 @ 0xCB
 	script_cmd_table_entry SCR_OP_COMPAREHIDDENVAR ScrCmd_nop1 @ 0xCC
 	@ JP 0xCD/0xCE test obedience, not US modern fateful encounters.
-	script_cmd_table_entry SCR_OP_CD ScrCmd_setmonobedient @ 0xCD
-	script_cmd_table_entry SCR_OP_CE ScrCmd_checkmonobedience @ 0xCE
+	script_cmd_table_entry SCR_OP_SETMONOBEDIENT ScrCmd_setmonobedient @ 0xCD
+	script_cmd_table_entry SCR_OP_CHECKMONOBEDIENCE ScrCmd_checkmonobedience @ 0xCE
 	script_cmd_table_entry SCR_OP_TRYWONDERCARDSCRIPT ScrCmd_trywondercardscript @ 0xCF
 	script_cmd_table_entry SCR_OP_SETWORLDMAPFLAG ScrCmd_nop1 @ 0xD0
 	script_cmd_table_entry SCR_OP_WARPSPINENTER ScrCmd_warpspinenter @ 0xD1

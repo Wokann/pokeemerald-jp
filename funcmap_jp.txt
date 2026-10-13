@@ -4896,7 +4896,6 @@ scrcmd.s
 08098c5c ScrCmd_end ScrCmd_end
 08098c68 ScrCmd_gotonative ScrCmd_gotonative
 08098c80 scrcmd.s ScrCmd_special
-08098c94 scrcmd.s ScrCmd_showelevmenu
 08098ca0 scrcmd.s ScrCmd_specialvar
 08098cc8 scrcmd.s ScrCmd_cmdDA
 08098cd4 ScrCmd_callnative ScrCmd_callnative
@@ -5103,7 +5102,7 @@ scrcmd.s
 0809b310 ScrCmd_setdooropen ScrCmd_setdooropen
 0809b354 ScrCmd_setdoorclosed ScrCmd_setdoorclosed
 0809b398 ScrCmd_addelevmenuitem ScrCmd_addelevmenuitem
-0809b3d4 scrcmd.s ScrCmd_drawbox_jp
+0809b3d4 scrcmd.s ScrCmd_showelevmenu
 0809b3d8 ScrCmd_checkcoins ScrCmd_checkcoins
 0809b3f8 ScrCmd_givecoins ScrCmd_addcoins
 0809b430 ScrCmd_takecoins ScrCmd_removecoins
@@ -5113,8 +5112,8 @@ scrcmd.s
 0809b4b4 ScrCmd_buffercontesttype ScrCmd_freerotatingtilepuzzle
 0809b4c0 ScrCmd_selectapproachingtrainer ScrCmd_selectapproachingtrainer
 0809b4d4 ScrCmd_lockfortrainer ScrCmd_lockfortrainer
-0809b51c ScrCmd_setmodernfatefulencounter ScrCmd_setmodernfatefulencounter
-0809b554 ScrCmd_checkmodernfatefulencounter ScrCmd_checkmodernfatefulencounter
+0809b51c scrcmd.s ScrCmd_setmonobedient
+0809b554 scrcmd.s ScrCmd_checkmonobedience
 0809b58c ScrCmd_trywondercardscript ScrCmd_trywondercardscript
 0809b5b4 ScrCmd_warpspinenter ScrCmd_warpspinenter
 0809b648 ScrCmd_setmonmetlocation ScrCmd_setmonmetlocation

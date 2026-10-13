@@ -48,14 +48,14 @@ class ScriptMenuCommandTests(unittest.TestCase):
                 ('drawbox\n', bytes.fromhex('72')),
                 ('erasebox 0, 0, 29, 19\n', bytes.fromhex('73 00 00 1D 13')),
                 ('drawboxtext 1, 2, 3, 4\n', bytes.fromhex('74 01 02 03 04')),
-                ('drawbox_jp\n', bytes.fromhex('B2'))):
+                ('showelevmenu\n', bytes.fromhex('B2'))):
             with self.subTest(source=source):
                 self.assertEqual(gate.assemble_candidate(source, 0x08000000), expected)
 
     def test_both_decoders_infer_the_handler_parameter_lengths(self):
         for formats in (parser.FORMATS, self.formats):
             for opcode, name, size in ((0x72, 'drawbox', 1), (0x73, 'erasebox', 5),
-                                      (0x74, 'drawboxtext', 5), (0xB2, 'drawbox_jp', 1)):
+                                      (0x74, 'drawboxtext', 5), (0xB2, 'showelevmenu', 1)):
                 with self.subTest(decoder=id(formats), opcode=opcode):
                     self.assertEqual(formats[opcode][0], name)
                     self.assertEqual(1 + sum(arg[0] for arg in formats[opcode][1]), size)
@@ -65,7 +65,7 @@ class ScriptMenuCommandTests(unittest.TestCase):
                 (bytes.fromhex('72'), 'drawbox', []),
                 (bytes.fromhex('73 02 03 04 05'), 'erasebox', [2, 3, 4, 5]),
                 (bytes.fromhex('74 02 03 04 05'), 'drawboxtext', [2, 3, 4, 5]),
-                (bytes.fromhex('B2'), 'drawbox_jp', [])):
+                (bytes.fromhex('B2'), 'showelevmenu', [])):
             with self.subTest(command=command.hex()), patch.object(parser, 'ROM', command + b'\x02'):
                 self.assertEqual(parser.decode_instruction(0x08000000),
                                  (len(command), name, args, []))
@@ -90,7 +90,7 @@ class ScriptMenuCommandTests(unittest.TestCase):
         for command, name in ((bytes.fromhex('72'), 'drawbox'),
                               (bytes.fromhex('73 02 03 04 05'), 'erasebox'),
                               (bytes.fromhex('74 02 03 04 05'), 'drawboxtext'),
-                              (bytes.fromhex('B2'), 'drawbox_jp')):
+                              (bytes.fromhex('B2'), 'showelevmenu')):
             raw = command + b'\x02'
             with self.subTest(command=command.hex()):
                 decoded = legacy.decode_chunk(raw, self.formats, self.specials)
@@ -101,7 +101,8 @@ class ScriptMenuCommandTests(unittest.TestCase):
 
     def test_wrong_macro_argument_counts_are_rejected_by_the_encoder(self):
         for source in ('drawbox 0x0, 0x0, 0x1D, 0x13\n', 'erasebox\n',
-                       'drawboxtext\n', 'drawbox_jp 0x08000000\n', 'mossdeepgym2\n'):
+                       'drawboxtext\n', 'showelevmenu 0x08000000\n',
+                       'drawbox_jp\n', 'mossdeepgym2\n'):
             with self.subTest(source=source), self.assertRaisesRegex(ValueError, 'unknown command'):
                 legacy.encode_lines(source, self.by_name, self.specials)
 
@@ -125,13 +126,13 @@ class ScriptMenuCommandTests(unittest.TestCase):
         self.assertEqual(rom[0x9B3D4:0x9B3D8], bytes.fromhex('00 20 70 47'))
         source = (ROOT / 'src/scrcmd.c').read_text(encoding='utf-8')
         bodies = {}
-        for handler in ('drawbox', 'erasebox', 'drawboxtext', 'drawbox_jp'):
+        for handler in ('drawbox', 'erasebox', 'drawboxtext', 'showelevmenu'):
             match = re.search(r'bool8 ScrCmd_' + handler
                               + r'\(struct ScriptContext \*ctx\)\s*\{(.*?)\n\}', source, re.S)
             self.assertIsNotNone(match)
             bodies[handler] = re.sub(r'//[^\n]*', '', match.group(1))
         self.assertEqual(bodies['drawbox'].split(), ['return', 'FALSE;'])
-        self.assertEqual(bodies['drawbox_jp'].split(), ['return', 'FALSE;'])
+        self.assertEqual(bodies['showelevmenu'].split(), ['return', 'FALSE;'])
         self.assertEqual(bodies['erasebox'].count('ScriptReadByte(ctx)'), 4)
         self.assertEqual(bodies['drawboxtext'].split(),
                          ['ctx->scriptPtr', '+=', '4;', 'return', 'FALSE;'])
@@ -151,7 +152,7 @@ class ScriptMenuCommandTests(unittest.TestCase):
         for address, handler in ((0x0809A714, 'ScrCmd_drawbox'),
                                  (0x0809A768, 'ScrCmd_erasebox'),
                                  (0x0809A774, 'ScrCmd_drawboxtext'),
-                                 (0x0809B3D4, 'ScrCmd_drawbox_jp')):
+                                 (0x0809B3D4, 'ScrCmd_showelevmenu')):
             with self.subTest(handler=handler):
                 self.assertIn('%08x scrcmd.s %s\n' % (address, handler), funcmap)
                 self.assertIn('thumb_func 0x%x %s\n' % (address, handler), config)

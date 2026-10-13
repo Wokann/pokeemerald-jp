@@ -165,10 +165,10 @@ class EventScriptSyncTests(unittest.TestCase):
         self.assertEqual(actual["SCR_OP_ERASEBOX"], 0x73)
         self.assertEqual(actual["SCR_OP_DRAWBOXTEXT"], 0x74)
         self.assertEqual(actual["SCR_OP_CHECKPARTYMOVE"], 0x7C)
-        self.assertEqual(actual["SCR_OP_DRAWBOX_JP"], 0xB2)
-        self.assertEqual(actual["SCR_OP_CD"], 0xCD)
-        self.assertEqual(actual["SCR_OP_CE"], 0xCE)
-        for name in ("SCR_OP_SHOWELEVMENU", "SCR_OP_CHECKFIELDMOVE",
+        self.assertEqual(actual["SCR_OP_SHOWELEVMENU"], 0xB2)
+        self.assertEqual(actual["SCR_OP_SETMONOBEDIENT"], 0xCD)
+        self.assertEqual(actual["SCR_OP_CHECKMONOBEDIENCE"], 0xCE)
+        for name in ("SCR_OP_DRAWBOX_JP", "SCR_OP_CD", "SCR_OP_CE", "SCR_OP_CHECKFIELDMOVE",
                      "SCR_OP_SETMODERNFATEFULENCOUNTER", "SCR_OP_CHECKMODERNFATEFULENCOUNTER",
                      "SCR_OP_BUFFERCONTESTNAME", "SCR_OP_BUFFERITEMNAMEPLURAL",
                      "SCR_OP_DYNMULTICHOICE", "SCR_OP_DYNMULTIPUSH",
