@@ -1363,6 +1363,8 @@ class StructureAuditTests(unittest.TestCase):
         self.assertIn("--markdown-output DECOMP_PROGRESS.md", rendered)
         self.assertIn("--output` 只写 JSON", rendered)
         self.assertIn("同名 static 按 source owner 和地址保留", rendered)
+        self.assertIn("| C 多对象编译 |", rendered)
+        self.assertIn("CPP/CC/AS 配方", rendered)
         self.assertIn("地图语义复核：not_recorded", rendered)
         self.assertIn("transition-manifest", rendered)
         self.assertIn("script-data-manifest", rendered)

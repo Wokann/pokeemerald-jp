@@ -5,15 +5,15 @@
 
 ## 当前快照
 
-- 严格 C：10096/16023 (63.01%，保守可证下界)；naked 汇编地址：5578；strict/naked 交集：0。
-- 源码函数体库存：非 naked 10106、naked 5588；地址已绑定 15674、未解析 20；指标证据状态：conservative_verified_lower_bound。
+- 严格 C：10549/16022 (65.84%，保守可证下界)；naked 汇编地址：5228；strict/naked 交集：0。
+- 源码函数体库存：非 naked 10559、naked 5238；地址已绑定 15777、未解析 20；指标证据状态：conservative_verified_lower_bound。
 - inline 源码定义：5；对象证实无独立入口 5；其他未解析 15。这些是源码库存单位，不是 ROM 分母。
-- 旧名称 fan-out 指标已失效；修正绑定导致计数下降属于测量纠错，不是反编译退步。排除 naked 前自然交集：旧 64、新 0。
-- 模块归位：9409/10096 (93.20%)；路径对齐：9250/10096 (91.62%)；US 标准名仍为 funcmap 候选，并非语义复核结论。
-- JP 路径独有 C 清单：164；无 US 标准函数 owner 的语义缺口模块：116（两种口径，不沿用旧固定数）；同一源同名多地址未解析定义：0。
+- 旧名称 fan-out 指标已失效；修正绑定导致计数下降属于测量纠错，不是反编译退步。排除 naked 前自然交集：旧 61、新 0。
+- 模块归位：9845/10549 (93.33%)；路径对齐：9677/10549 (91.73%)；US 标准名仍为 funcmap 候选，并非语义复核结论。
+- JP 路径独有 C 清单：158；无 US 标准函数 owner 的语义缺口模块：117（两种口径，不沿用旧固定数）；同一源同名多地址未解析定义：0。
 - 过渡文件：tail=0、rest=3、mid=5、stub=0、address=0。
-- incbin：7560 引用、7017 条唯一路径、原始二进制 996、非原始 6564、缺失资源 0；可见 baserom 范围 542 条/0x4B01C8 字节，未限定范围 0 条。
-- 资产命名：4904 条 graphics/sound 引用中，精确 US 路径 35、唯一 basename 候选 18、歧义 0。
+- incbin：7652 引用、7184 条唯一路径、原始二进制 923、非原始 6729、缺失资源 0；可见 baserom 范围 467 条/0x49F368 字节，未限定范围 0 条。
+- 资产命名：5074 条 graphics/sound 引用中，精确 US 路径 40、唯一 basename 候选 19、歧义 0。
 - 地图脚本：468/469 (99.79%) 个首 owner 有 scripts.inc；非 owner scripts.inc：0；结构完整地图：518（直接物理文件满足者 468；合法共享 scripts/events owner 50/11；其中首 owner 469）；map.json 总数：518。
 - 地图语义复核：not_recorded。没有版本化复核清单前，任何 scripts.inc、map.json 或 events.inc 都不计入语义已审计。
 - 三流地图会合：scripts 流 468、events 流 518、共有 468、地图头 518；事件指针状态 direct=507、shared=11；地图内裸 baserom 范围（脚本/事件/资源）=0/0/0。
@@ -23,7 +23,8 @@
 
 | 指标 | 口径 |
 | --- | --- |
-| 严格 C 转换率 | 默认分支有非 `naked` C 函数体，经 JP ELF 同名可执行符号与 JP linker 输入对象范围验证 owner 的唯一 funcmap 地址 / funcmap 唯一地址；同名 static 按 source owner 和地址保留，不建立名称→地址覆盖表。缺证保留 unresolved，因此仅为保守可证下界；没有 ELF 证据时百分比 unavailable，不报 0% 退步。 |
+| 严格 C 转换率 | 默认分支及由明确 Makefile 规则证实的附加编译分支中，非 `naked` C 函数体经 JP ELF 符号与 JP linker 输入对象范围验证 owner 的唯一 funcmap 地址 / funcmap 唯一地址；源码名与显式 `asm`/`__asm__` 链接名分开保留，显式链接名必须有 ELF/object STT_FUNC 证据。同名 static 按 source owner 和地址保留，不建立名称→地址覆盖表。缺证保留 unresolved，因此仅为保守可证下界；没有 ELF 证据时百分比 unavailable，不报 0% 退步。 |
+| C 多对象编译 | 同一 C 源码的额外宏编译只接受无条件 Makefile 规则、唯一首 C 输入、字面量整数宏和明确 CPP/CC/AS 配方；每个附加地址仍须通过真实 ET_REL STT_FUNC、输入段、offset/段大小和最终链接 owner 核验。相同定义不按编译次数重复计数；不支持的规则不猜测，不能把所有未选中分支直接并入 C 进度。JSON 保留规则、宏、真实源码 owner、输入对象与 Makefile 哈希；规则或对象晚于 ELF 则不绑定。 |
 | 模块归位率 | 已证实 JP owner 的严格 C 地址中，funcmap US 标准名候选在 US 源树有定义的地址 / 严格 C 地址；不代表该候选已逐函数语义复核。 |
 | 路径对齐率 | 上述地址中 JP 相对 `src/` 路径也属于 US owner 的地址 / 严格 C 地址。 |
 | 过渡文件 | 文件名包含 tail、rest、mid、stub 或地址式片段；分类可重叠。 |
