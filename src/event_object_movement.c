@@ -46,15 +46,29 @@
 #include "event_object_movement.h"
 #include "field_effect.h"
 #include "field_effect_helpers.h"
+#include "faraway_island.h"
 #include "overworld.h"
 #include "field_camera.h"
+#include "field_player_avatar.h"
+#include "fieldmap.h"
 #include "metatile_behavior.h"
 #include "palette.h"
+#include "malloc.h"
+#include "task.h"
+#include "util.h"
+#include "berry.h"
+#include "battle_pyramid.h"
+#include "trainer_hill.h"
+#include "event_data.h"
+#include "decoration.h"
+#include "random.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
 #include "constants/field_effects.h"
 #include "constants/items.h"
 #include "constants/mauville_old_man.h"
+#include "constants/trainer_types.h"
+#include "constants/decorations.h"
 
 extern void MovementType_Hidden(struct Sprite *sprite);
 void ObjectCB_CameraObject(struct Sprite *sprite);
@@ -828,7 +842,208 @@ enum {
     BERRYTREEFUNC_SPARKLE_END,
 };
 
-#define GROUND_EFFECT_FLAG_PUDDLE (1 << 10)
+#define GROUND_EFFECT_FLAG_TALL_GRASS_ON_SPAWN   (1 << 0)
+#define GROUND_EFFECT_FLAG_TALL_GRASS_ON_MOVE    (1 << 1)
+#define GROUND_EFFECT_FLAG_LONG_GRASS_ON_SPAWN   (1 << 2)
+#define GROUND_EFFECT_FLAG_LONG_GRASS_ON_MOVE    (1 << 3)
+#define GROUND_EFFECT_FLAG_WATER_REFLECTION      (1 << 4)
+#define GROUND_EFFECT_FLAG_ICE_REFLECTION        (1 << 5)
+#define GROUND_EFFECT_FLAG_SHALLOW_FLOWING_WATER (1 << 6)
+#define GROUND_EFFECT_FLAG_SAND                  (1 << 7)
+#define GROUND_EFFECT_FLAG_DEEP_SAND             (1 << 8)
+#define GROUND_EFFECT_FLAG_RIPPLES               (1 << 9)
+#define GROUND_EFFECT_FLAG_PUDDLE                (1 << 10)
+#define GROUND_EFFECT_FLAG_SAND_PILE             (1 << 11)
+#define GROUND_EFFECT_FLAG_LAND_IN_TALL_GRASS    (1 << 12)
+#define GROUND_EFFECT_FLAG_LAND_IN_LONG_GRASS    (1 << 13)
+#define GROUND_EFFECT_FLAG_LAND_IN_SHALLOW_WATER (1 << 14)
+#define GROUND_EFFECT_FLAG_LAND_IN_DEEP_WATER    (1 << 15)
+#define GROUND_EFFECT_FLAG_LAND_ON_NORMAL_GROUND (1 << 16)
+#define GROUND_EFFECT_FLAG_SHORT_GRASS           (1 << 17)
+#define GROUND_EFFECT_FLAG_HOT_SPRINGS           (1 << 18)
+#define GROUND_EFFECT_FLAG_SEAWEED               (1 << 19)
+
+void EventObjectUpdateMetatileBehaviors(struct ObjectEvent *objectEvent);
+bool8 EventObjectCheckForReflectiveSurface(struct ObjectEvent *objectEvent);
+bool8 MovementType_CopyPlayer_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 MovementType_CopyPlayer_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 MovementType_CopyPlayerInGrass_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+u8 GetTrainerFacingDirectionMovementType(u8 direction);
+u8 GetCollisionInDirection(struct ObjectEvent *objectEvent, u8 direction);
+u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 dir);
+u8 GetCollisionFlagsAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 direction);
+bool8 IsCoordOutsideObjectEventMovementRange(struct ObjectEvent *objectEvent, s16 x, s16 y);
+bool8 IsMetatileDirectionallyImpassable(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 direction);
+bool8 DoesObjectCollideWithObjectAt(struct ObjectEvent *objectEvent, s16 x, s16 y);
+bool8 IsBerryTreeSparkling(u8 localId, u8 mapNum, u8 mapGroup);
+void MoveCoordsInDirection(u8 direction, s16 *x, s16 *y, s16 deltaX, s16 deltaY);
+u8 ObjectEventClearHeldMovementIfFinished(struct ObjectEvent *objectEvent);
+// JP allocates 0x14 bytes; these handlers use the IDs and count, not the last three bytes.
+struct EventObjectLockedAnimState
+{
+    u8 localIds[OBJECT_EVENTS_COUNT];
+    u8 count;
+    u8 reserved[3];
+};
+extern struct EventObjectLockedAnimState *gUnknown_2037258;
+void EventObjectClearHeldMovement(struct ObjectEvent *objectEvent);
+void UpdateEventObjectSpriteAnimPause(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void TryEnableEventObjectAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void UpdateEventObjSpriteVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 IsZCoordMismatchAt(u8 elevation, s16 x, s16 y);
+void InitObjectPriorityByZCoord(struct Sprite *sprite, u8 elevation);
+bool8 FreezeEventObject(struct ObjectEvent *objectEvent);
+void FreezeEventObjectsExceptOne(u8 objectEventId);
+void UnfreezeEventObject(struct ObjectEvent *objectEvent);
+u8 MovementAction_StoreAndLockAnim_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+u8 MovementAction_FreeAndUnlockAnim_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 MovementAction_DestroyExtraTaskIfAtTop_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void ApplyLevitateMovement(u8 taskId);
+void EventObjectExecHeldMovementAction(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+u8 zffu_offset_calc(u8 a, u8 b);
+u8 sub_08091FFC(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 AnimateSpriteInFigure8(struct Sprite *sprite);
+void InitSpriteForFigure8Anim(struct Sprite *sprite);
+bool8 sub_0809547C(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void maybe_shadow_1(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 distance, u8 type);
+void InitAcroPopWheelieMove(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed);
+s16 sub_08097190(s16 i, u8 type);
+void sub_080976D8(struct Sprite *sprite);
+extern const s8 *const sJumpYTable[3];
+extern const s16 sJumpDistanceToTime[3];
+extern const u8 sJumpDistanceToShift[3];
+extern const s16 sJumpSpecialDistanceToTime[3];
+extern const u8 sJumpSpecialDistanceToShift[3];
+extern const char sEventObjectMovementSourceFile[];
+extern const char sVirtualObjectAnimAssertExpression[];
+void DoShadowFieldEffect(struct ObjectEvent *objectEvent);
+void DoRippleFieldEffect(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void sub_08096A54(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void sub_0808DCFC(struct ObjectEvent *objectEvent);
+extern const u8 SecretBase_EventScript_DollInteract[];
+extern const u8 SecretBase_EventScript_CushionInteract[];
+void RemoveObjectEventByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup);
+void RemoveEventObjectInternal(struct ObjectEvent *objectEvent);
+void get_berry_tree_graphics(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+const struct ObjectEventGraphicsInfo *GetObjectEventGraphicsInfo(u8 graphicsId);
+void npc_by_local_id_and_map_set_field_1_bit_x20(u8 localId, u8 mapNum, u8 mapGroup, bool8 invisible);
+void sub_0808E19C(u8 localId, u8 mapNum, u8 mapGroup, s16 x, s16 y);
+void LoadEventObjectPalette(u16 paletteTag);
+u8 FindEventObjectPaletteIndexByTag(u16 tag);
+bool8 GetAvailableEventObjectId(u16 localId, u8 mapNum, u8 mapGroup, u8 *objectEventId);
+void ClearEventObject(struct ObjectEvent *objectEvent);
+void SetEventObjectDynamicGraphicsId(struct ObjectEvent *objectEvent);
+u8 InitEventObjectStateFromTemplate(const struct ObjectEventTemplate *template, u8 mapNum, u8 mapGroup);
+u8 TrySetupEventObjectSprite(const struct ObjectEventTemplate *objectEventTemplate, struct SpriteTemplate *spriteTemplate, u8 mapNum, u8 mapGroup, s16 cameraX, s16 cameraY);
+u8 TrySpawnObjectEventTemplate(const struct ObjectEventTemplate *objectEventTemplate, u8 mapNum, u8 mapGroup, s16 cameraX, s16 cameraY);
+u8 SpawnSpecialEventObject(struct ObjectEventTemplate *objectEventTemplate);
+void sub_0808DB28(u8 objectEventId, s16 x, s16 y);
+void sub_0808D6C0(struct ObjectEventTemplate *template, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables);
+void MakeObjectTemplateFromEventObjectGraphicsInfoWithCallbackIndex(u16 graphicsId, u16 callbackIndex, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables);
+void CopyObjectGraphicsInfoToSpriteTemplate(u16 graphicsId, void (*callback)(struct Sprite *), struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables);
+void SetPlayerAvatarEventObjectIdAndObjectId(u8 objectEventId, u8 spriteId);
+u8 GetNumBattlePyramidEventObjects(void);
+void SpriteCB_VirtualObject(struct Sprite *sprite);
+extern const u8 gUnknown_84DDA21[NUM_MOVEMENT_TYPES];
+extern const bool8 gUnknown_84DD9D0[NUM_MOVEMENT_TYPES];
+void LoadObjectEventPaletteSet(u16 *paletteTags);
+u8 sub_0808E264(const struct SpritePalette *spritePalette);
+void MoveEventObjectToMapCoords(struct ObjectEvent *objectEvent, s16 x, s16 y);
+void TryMoveEventObjectToMapCoords(u8 localId, u8 mapNum, u8 mapGroup, s16 x, s16 y);
+void UpdateEventObjectCoordsForCameraUpdate(void);
+struct Sprite *FindCameraObject(void);
+u8 CopySprite(struct Sprite *sprite, s16 x, s16 y, u8 subpriority);
+u8 CreateCopySpriteAt(struct Sprite *sprite, s16 x, s16 y, u8 subpriority);
+const u8 *GetEventObjectScriptPointerByEventObjectId(u8 objectEventId);
+u16 GetEventObjectFlagIdByEventObjectId(u8 objectEventId);
+u8 sub_0808E9F0(u8 localId, u8 mapNum, u8 mapGroup);
+u8 sub_0808EA44(u8 localId, u8 mapNum, u8 mapGroup);
+struct ObjectEventTemplate *GetEventObjectTemplateByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup);
+const struct ObjectEventTemplate *FindEventObjectTemplateByLocalId(u8 localId, const struct ObjectEventTemplate *templates, u8 count);
+void OverrideTemplateCoordsForObjectEvent(const struct ObjectEvent *objectEvent);
+void TryOverrideEventObjectTemplateCoords(u8 localId, u8 mapNum, u8 mapGroup);
+void OverrideSecretBaseDecorationSpriteScript(u8 localId, u8 mapNum, u8 mapGroup, u8 decorationCategory);
+void InitEventObjectPalettes(u8 reflectionType);
+u16 GetObjectPaletteTag(u8 palSlot);
+void GetEventObjectMovingCameraOffset(s16 *x, s16 *y);
+void sub_08097460(void);
+void sub_080928D0(u8 direction, s16 *destX, s16 *destY);
+void sub_08092860(u8 localId, u8 mapNum, u8 mapGroup);
+bool8 AreElevationsCompatible(u8 a, u8 b);
+bool8 UpdateWalkSlowAnim(struct Sprite *sprite);
+void oamt_npc_ministep_reset(struct Sprite *sprite, u8 direction, u8 speed);
+void sub_0809704C(struct Sprite *sprite, u8 direction);
+const struct StepAnimTable *sub_080923BC(const union AnimCmd *const *anims);
+void npc_apply_anim_looping(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 animNum);
+void obj_npc_animation_step(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 animNum);
+bool8 ObjectEventExecSingleMovementAction(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void FaceDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction);
+void npc_apply_direction(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed);
+void InitMovementNormal(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed);
+void StartRunningAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction);
+bool8 UpdateMovementNormal(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void sub_08093460(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction);
+void InitWalkSlow(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction);
+bool8 UpdateWalkSlow(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void sub_08093934(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 distance, u8 type);
+void InitJumpSpecial(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction);
+bool8 MovementAction_JumpInPlaceDownUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 MovementAction_JumpInPlaceUpDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 MovementAction_JumpInPlaceLeftRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 MovementAction_JumpInPlaceRightLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void InitFigure8Anim(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 MovementAction_AcroWheelieJumpDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 MovementAction_AcroWheelieJumpUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 MovementAction_AcroWheelieJumpLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+bool8 MovementAction_AcroWheelieJumpRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void InitAcroWheelieMove(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed);
+void InitAcroEndWheelie(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed);
+bool8 obj_npc_ministep(struct Sprite *sprite);
+void sub_080971AC(struct Sprite *sprite, u8 direction, u8 distance, u8 type);
+u8 FindLockedEventObjectIndex(struct ObjectEvent *objectEvent);
+void UpdateObjectEventOffscreen(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void GetAllGroundEffectFlags_OnSpawn(struct ObjectEvent *objEvent, u32 *flags);
+void GetAllGroundEffectFlags_OnBeginStep(struct ObjectEvent *objEvent, u32 *flags);
+void GetAllGroundEffectFlags_OnFinishStep(struct ObjectEvent *objEvent, u32 *flags);
+void GetGroundEffectFlags_Reflection(struct ObjectEvent *objEvent, u32 *flags);
+void GetGroundEffectFlags_TallGrassOnSpawn(struct ObjectEvent *objEvent, u32 *flags);
+void GetGroundEffectFlags_LongGrassOnSpawn(struct ObjectEvent *objEvent, u32 *flags);
+void sub_0809615C(struct ObjectEvent *objEvent, u32 *flags);
+void GetGroundEffectFlags_LongGrassOnBeginStep(struct ObjectEvent *objEvent, u32 *flags);
+void GetGroundEffectFlags_Tracks(struct ObjectEvent *objEvent, u32 *flags);
+void GetGroundEffectFlags_SandHeap(struct ObjectEvent *objEvent, u32 *flags);
+void GetGroundEffectFlags_ShallowFlowingWater(struct ObjectEvent *objEvent, u32 *flags);
+void GetGroundEffectFlags_Puddle(struct ObjectEvent *objEvent, u32 *flags);
+void GetGroundEffectFlags_Ripple(struct ObjectEvent *objEvent, u32 *flags);
+void GetGroundEffectFlags_ShortGrass(struct ObjectEvent *objEvent, u32 *flags);
+void GetGroundEffectFlags_HotSprings(struct ObjectEvent *objEvent, u32 *flags);
+void GetGroundEffectFlags_Seaweed(struct ObjectEvent *objEvent, u32 *flags);
+void GetGroundEffectFlags_JumpLanding(struct ObjectEvent *objEvent, u32 *flags);
+u8 GetReflectionTypeByMetatileBehavior(u32 metatileBehavior);
+u8 GetLedgeJumpDirection(s16 x, s16 y, u8 direction);
+void SetEventObjectSpriteOamTableForLongGrass(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void UpdateEventObjectZCoordAndPriority(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void EventObjectUpdateZCoord(struct ObjectEvent *objectEvent);
+void SetObjectSubpriorityByElevation(u8 elevation, struct Sprite *sprite, u8 subpriority);
+void GroundEffect_SpawnOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite);
+void GroundEffect_StepOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite);
+void GroundEffect_SpawnOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *sprite);
+void GroundEffect_StepOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *sprite);
+void GroundEffect_SandTracks(struct ObjectEvent *objEvent, struct Sprite *sprite);
+void sub_08096984(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void DoTracksGroundEffect_Footprints(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a);
+void DoTracksGroundEffect_BikeTireTracks(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a);
+void GroundEffect_JumpOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite);
+void GroundEffect_JumpOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *sprite);
+void GroundEffect_JumpOnShallowWater(struct ObjectEvent *objEvent, struct Sprite *sprite);
+void GroundEffect_JumpOnWater(struct ObjectEvent *objEvent, struct Sprite *sprite);
+void GroundEffect_JumpLandingDust(struct ObjectEvent *objEvent, struct Sprite *sprite);
+void GroundEffect_Seaweed(struct ObjectEvent *objEvent, struct Sprite *sprite);
+void DoFlaggedGroundEffects(struct ObjectEvent *objEvent, struct Sprite *sprite, u32 flags);
+void filters_out_some_ground_effects(struct ObjectEvent *objEvent, u32 *flags);
+void DoGroundEffects_OnSpawn(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void DoGroundEffects_OnBeginStep(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void DoGroundEffects_OnFinishStep(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 
 enum {
     MOVE_SPEED_NORMAL, // walking
@@ -918,7 +1133,7 @@ extern bool8 MovementAction_SlideRight_Step1(struct ObjectEvent *objectEvent, st
 extern bool8 MovementAction_SlideUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern void SetUpReflection(struct ObjectEvent *objEvent, struct Sprite *sprite, u8 mode);
 extern u32 StartFieldEffectForObjectEvent(u8 fieldEffectId, struct ObjectEvent *objectEvent);
-extern bool8 ClearEventObjectMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern void ClearEventObjectMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern u8 MovementType_None_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern void RemoveEventObjectInternal(struct ObjectEvent *objectEvent);
 extern void UpdateObjectEventOffscreen(struct ObjectEvent *objectEvent, struct Sprite *sprite);
@@ -1018,7 +1233,7 @@ extern u8 sub_08092F34(u8 direction);
 extern u8 sub_08092F08(u8 direction);
 extern u8 sub_08092EDC(u8 direction);
 extern u8 sub_08092F60(u8 direction);
-extern bool8 sub_08093EC4(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 animNum, u16 delay);
+extern void sub_08093EC4(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 animNum, u16 delay);
 extern void sub_080B3CD0(struct ObjectEvent *objectEvent);
 extern bool8 MovementAction_AcroPopWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern bool8 MovementAction_AcroPopWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
@@ -1052,87 +1267,19 @@ void ResetEventObjects(void)
     CreateReflectionEffectSprites();
 }
 
-__attribute__((naked)) void CreateReflectionEffectSprites(void)
+void CreateReflectionEffectSprites(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sl\n\t"
-        "	mov r5, sb\n\t"
-        "	mov r4, r8\n\t"
-        "	push {r4, r5, r6}\n\t"
-        "	ldr r0, _0808CE5C\n\t"
-        "	ldr r0, [r0, #0x54]\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x1f\n\t"
-        "	bl CreateSpriteAtEnd\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _0808CE60\n\t"
-        "	mov sl, r1\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	add r4, sl\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r5, #4\n\t"
-        "	rsbs r5, r5, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	mov r8, r1\n\t"
-        "	mov r1, r8\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl InitSpriteAffineAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	adds r4, #0x3e\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r6, #4\n\t"
-        "	orrs r0, r6\n\t"
-        "	strb r0, [r4]\n\t"
-        "	mov r0, sb\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x1f\n\t"
-        "	bl CreateSpriteAtEnd\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	add r4, sl\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	ands r5, r0\n\t"
-        "	mov r0, r8\n\t"
-        "	orrs r5, r0\n\t"
-        "	strb r5, [r4, #1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl InitSpriteAffineAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	adds r4, #0x3e\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	orrs r0, r6\n\t"
-        "	strb r0, [r4]\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808CE5C: .4byte gFieldEffectObjectTemplatePointers\n\t"
-        "_0808CE60: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_REFLECTION_DISTORTION], 0, 0, 31);
+    gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    InitSpriteAffineAnim(&gSprites[spriteId]);
+    StartSpriteAffineAnim(&gSprites[spriteId], 0);
+    gSprites[spriteId].invisible = TRUE;
+
+    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_REFLECTION_DISTORTION], 0, 0, 31);
+    gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    InitSpriteAffineAnim(&gSprites[spriteId]);
+    StartSpriteAffineAnim(&gSprites[spriteId], 1);
+    gSprites[spriteId].invisible = TRUE;
 }
 
 u8 GetFirstInactiveEventObjectId(void)
@@ -1203,250 +1350,75 @@ u8 GetEventObjectIdByLocalId(u8 localId)
     return OBJECT_EVENTS_COUNT;
 }
 
-__attribute__((naked)) void InitEventObjectStateFromTemplate(void)
+u8 InitEventObjectStateFromTemplate(const struct ObjectEventTemplate *template, u8 mapNum, u8 mapGroup)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r7, r2, #0x18\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	mov r3, sp\n\t"
-        "	bl GetAvailableEventObjectId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808CFDE\n\t"
-        "	movs r0, #0x10\n\t"
-        "	b _0808D0D2\n\t"
-        "_0808CFDE:\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808D0E0\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ClearEventObject\n\t"
-        "	ldrh r3, [r5, #4]\n\t"
-        "	adds r3, #7\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	ldrh r2, [r5, #6]\n\t"
-        "	adds r2, #7\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	strb r0, [r4, #5]\n\t"
-        "	ldrb r0, [r5, #9]\n\t"
-        "	strb r0, [r4, #6]\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	strb r0, [r4, #8]\n\t"
-        "	strb r6, [r4, #9]\n\t"
-        "	strb r7, [r4, #0xa]\n\t"
-        "	strh r3, [r4, #0xc]\n\t"
-        "	strh r2, [r4, #0xe]\n\t"
-        "	strh r3, [r4, #0x10]\n\t"
-        "	strh r2, [r4, #0x12]\n\t"
-        "	strh r3, [r4, #0x14]\n\t"
-        "	strh r2, [r4, #0x16]\n\t"
-        "	ldrb r0, [r5, #8]\n\t"
-        "	movs r7, #0xf\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	ldrb r2, [r4, #0xb]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #0xb]\n\t"
-        "	ldrb r1, [r5, #8]\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ands r0, r7\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #0xb]\n\t"
-        "	ldrb r1, [r5, #0xa]\n\t"
-        "	lsls r1, r1, #0x1c\n\t"
-        "	movs r0, #0xf\n\t"
-        "	mov sb, r0\n\t"
-        "	lsrs r1, r1, #0x1c\n\t"
-        "	ldrb r2, [r4, #0x19]\n\t"
-        "	mov r0, r8\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #0x19]\n\t"
-        "	ldrb r1, [r5, #0xa]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ands r0, r7\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #0x19]\n\t"
-        "	ldrh r0, [r5, #0xc]\n\t"
-        "	strb r0, [r4, #7]\n\t"
-        "	ldrh r0, [r5, #0xe]\n\t"
-        "	strb r0, [r4, #0x1d]\n\t"
-        "	ldr r1, _0808D0E4\n\t"
-        "	ldrb r0, [r5, #9]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x20\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetEventObjectDynamicGraphicsId\n\t"
-        "	ldr r1, _0808D0E8\n\t"
-        "	ldrb r0, [r4, #6]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808D0CE\n\t"
-        "	ldrb r2, [r4, #0x19]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808D0B6\n\t"
-        "	lsls r0, r2, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	adds r0, #1\n\t"
-        "	mov r1, sb\n\t"
-        "	ands r0, r1\n\t"
-        "	mov r1, r8\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r4, #0x19]\n\t"
-        "_0808D0B6:\n\t"
-        "	ldrb r2, [r4, #0x19]\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808D0CE\n\t"
-        "	lsrs r1, r2, #4\n\t"
-        "	adds r1, #1\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #0x19]\n\t"
-        "_0808D0CE:\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "_0808D0D2:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D0E0: .4byte gObjectEvents\n\t"
-        "_0808D0E4: .4byte gUnknown_84DDA21\n\t"
-        "_0808D0E8: .4byte gUnknown_84DD9D0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *objectEvent;
+    u8 objectEventId;
+    s16 x;
+    s16 y;
+
+    if (GetAvailableEventObjectId(template->localId, mapNum, mapGroup, &objectEventId))
+        return OBJECT_EVENTS_COUNT;
+    objectEvent = &gObjectEvents[objectEventId];
+    ClearEventObject(objectEvent);
+    x = template->x + MAP_OFFSET;
+    y = template->y + MAP_OFFSET;
+    objectEvent->active = TRUE;
+    objectEvent->triggerGroundEffectsOnMove = TRUE;
+    objectEvent->graphicsId = template->graphicsId;
+    objectEvent->movementType = template->movementType;
+    objectEvent->localId = template->localId;
+    objectEvent->mapNum = mapNum;
+    objectEvent->mapGroup = mapGroup;
+    objectEvent->initialCoords.x = x;
+    objectEvent->initialCoords.y = y;
+    objectEvent->currentCoords.x = x;
+    objectEvent->currentCoords.y = y;
+    objectEvent->previousCoords.x = x;
+    objectEvent->previousCoords.y = y;
+    objectEvent->currentElevation = template->elevation;
+    objectEvent->previousElevation = template->elevation;
+    objectEvent->range.rangeX = template->movementRangeX;
+    objectEvent->range.rangeY = template->movementRangeY;
+    objectEvent->trainerType = template->trainerType;
+    objectEvent->mapNum = mapNum;
+    objectEvent->trainerRange_berryTreeId = template->trainerRange_berryTreeId;
+    objectEvent->previousMovementDirection = gUnknown_84DDA21[template->movementType];
+    SetEventObjectDirection(objectEvent, objectEvent->previousMovementDirection);
+    SetEventObjectDynamicGraphicsId(objectEvent);
+    if (gUnknown_84DD9D0[objectEvent->movementType])
+    {
+        if (objectEvent->range.rangeX == 0)
+            objectEvent->range.rangeX++;
+        if (objectEvent->range.rangeY == 0)
+            objectEvent->range.rangeY++;
+    }
+    return objectEventId;
 }
 
-__attribute__((naked)) void Unref_TryInitLocalEventObject(void)
+u8 Unref_TryInitLocalEventObject(u8 localId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r4, _0808D114\n\t"
-        "	ldr r0, [r4, #4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808D16E\n\t"
-        "	bl CurrentBattlePyramidLocation\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808D118\n\t"
-        "	bl GetNumBattlePyramidEventObjects\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	b _0808D13A\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D114: .4byte gMapHeader\n\t"
-        "_0808D118:\n\t"
-        "	bl InTrainerHill\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808D136\n\t"
-        "	movs r6, #2\n\t"
-        "	b _0808D13A\n\t"
-        "_0808D124:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	ldrb r2, [r0, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl InitEventObjectStateFromTemplate\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _0808D170\n\t"
-        "_0808D136:\n\t"
-        "	ldr r0, [r4, #4]\n\t"
-        "	ldrb r6, [r0]\n\t"
-        "_0808D13A:\n\t"
-        "	movs r5, #0\n\t"
-        "	cmp r5, r6\n\t"
-        "	bhs _0808D16E\n\t"
-        "	ldr r7, _0808D17C\n\t"
-        "_0808D142:\n\t"
-        "	lsls r0, r5, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	movs r1, #0xc7\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	cmp r0, r8\n\t"
-        "	bne _0808D164\n\t"
-        "	ldrh r0, [r4, #0x14]\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808D124\n\t"
-        "_0808D164:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, r6\n\t"
-        "	blo _0808D142\n\t"
-        "_0808D16E:\n\t"
-        "	movs r0, #0x10\n\t"
-        "_0808D170:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D17C: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 objectEventCount;
+    struct ObjectEventTemplate *template;
+
+    if (gMapHeader.events != NULL)
+    {
+        if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
+            objectEventCount = GetNumBattlePyramidEventObjects();
+        else if (InTrainerHill())
+            objectEventCount = HILL_TRAINERS_PER_FLOOR;
+        else
+            objectEventCount = gMapHeader.events->objectEventCount;
+
+        for (i = 0; i < objectEventCount; i++)
+        {
+            template = &gSaveBlock1Ptr->objectEventTemplates[i];
+            if (template->localId == localId && !FlagGet(template->flagId))
+                return InitEventObjectStateFromTemplate(template, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup);
+        }
+    }
+    return OBJECT_EVENTS_COUNT;
 }
 
 bool8 GetAvailableEventObjectId(u16 localId, u8 mapNum, u8 mapGroup, u8 *objectEventId)
@@ -1476,87 +1448,22 @@ void RemoveObjectEvent(struct ObjectEvent *objectEvent)
 
 
 
-__attribute__((naked)) void RemoveObjectEventByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
+void RemoveObjectEventByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808D272\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetEventObjectFlagIdByEventObjectId\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl FlagSet\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808D278\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl RemoveObjectEvent\n\t"
-        "_0808D272:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D278: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+    if (!TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId))
+    {
+        FlagSet(GetEventObjectFlagIdByEventObjectId(objectEventId));
+        RemoveObjectEvent(&gObjectEvents[objectEventId]);
+    }
 }
 
-__attribute__((naked)) void RemoveEventObjectInternal(struct ObjectEvent *objectEvent)
+void RemoveEventObjectInternal(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	ldrh r2, [r0, #6]\n\t"
-        "	ldr r1, _0808D2C0\n\t"
-        "	ldr r0, [sp, #4]\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r2, _0808D2C4\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0xc\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov r1, sp\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	bl DestroySprite\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D2C0: .4byte 0xFFFF0000\n\t"
-        "_0808D2C4: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct SpriteFrameImage image;
+    image.size = GetObjectEventGraphicsInfo(objectEvent->graphicsId)->size;
+    gSprites[objectEvent->spriteId].images = &image;
+    DestroySprite(&gSprites[objectEvent->spriteId]);
 }
 
 void RemoveAllEventObjectsExceptPlayer(void)
@@ -1570,472 +1477,130 @@ void RemoveAllEventObjectsExceptPlayer(void)
     }
 }
 
-__attribute__((naked)) void TrySetupEventObjectSprite(void)
+u8 TrySetupEventObjectSprite(const struct ObjectEventTemplate *objectEventTemplate, struct SpriteTemplate *spriteTemplate, u8 mapNum, u8 mapGroup, s16 cameraX, s16 cameraY)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov r8, r1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	ldr r3, [sp, #0x24]\n\t"
-        "	ldr r4, [sp, #0x28]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	mov sl, r3\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	str r4, [sp]\n\t"
-        "	bl InitEventObjectStateFromTemplate\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	bne _0808D338\n\t"
-        "	movs r0, #0x10\n\t"
-        "	b _0808D49C\n\t"
-        "_0808D338:\n\t"
-        "	mov r0, sb\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808D360\n\t"
-        "	adds r6, r0, r1\n\t"
-        "	ldrb r0, [r6, #5]\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	ldrb r0, [r7, #0xc]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r5, r0, #0x1c\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0808D364\n\t"
-        "	ldrh r0, [r7, #2]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl LoadPlayerObjectReflectionPalette\n\t"
-        "	b _0808D386\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D360: .4byte gObjectEvents\n\t"
-        "_0808D364:\n\t"
-        "	cmp r5, #0xa\n\t"
-        "	bne _0808D372\n\t"
-        "	ldrh r0, [r7, #2]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl LoadSpecialObjectReflectionPalette\n\t"
-        "	b _0808D386\n\t"
-        "_0808D372:\n\t"
-        "	cmp r5, #0xf\n\t"
-        "	bls _0808D386\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	subs r0, #0x10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldrh r0, [r7, #2]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl _PatchObjectPalette\n\t"
-        "_0808D386:\n\t"
-        "	ldrb r0, [r6, #6]\n\t"
-        "	cmp r0, #0x4c\n\t"
-        "	bne _0808D394\n\t"
-        "	ldrb r0, [r6, #1]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r6, #1]\n\t"
-        "_0808D394:\n\t"
-        "	ldr r1, _0808D3CC\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	mov r2, r8\n\t"
-        "	strh r0, [r2, #2]\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	bne _0808D3D4\n\t"
-        "	ldr r0, _0808D3D0\n\t"
-        "	mov r2, sb\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	movs r0, #2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	b _0808D49C\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D3CC: .4byte 0x0000FFFF\n\t"
-        "_0808D3D0: .4byte gObjectEvents\n\t"
-        "_0808D3D4:\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808D4AC\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	mov r2, sl\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	ldrh r1, [r6, #0x10]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	lsls r1, r2, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrh r2, [r6, #0x12]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x20\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x22\n\t"
-        "	bl GetMapCoordsFromSpritePos\n\t"
-        "	ldrh r0, [r7, #8]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x28\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrh r0, [r7, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x29\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	ldrh r1, [r4, #0x22]\n\t"
-        "	adds r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	lsls r2, r5, #4\n\t"
-        "	ldrb r1, [r4, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r4, #5]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	mov r0, sb\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	mov r1, r8\n\t"
-        "	strb r1, [r6, #4]\n\t"
-        "	ldrb r1, [r7, #0xc]\n\t"
-        "	lsls r1, r1, #0x19\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ldrb r2, [r6, #1]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r6, #1]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _0808D486\n\t"
-        "	ldrb r0, [r6, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl GetJumpInPlaceMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_0808D486:\n\t"
-        "	ldrb r0, [r6, #0xb]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl SetObjectSubpriorityByElevation\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl UpdateObjectEventVisibility\n\t"
-        "	mov r0, sb\n\t"
-        "_0808D49C:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D4AC: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+    u8 paletteSlot;
+    u8 objectEventId;
+    struct Sprite *sprite;
+    struct ObjectEvent *objectEvent;
+    const struct ObjectEventGraphicsInfo *graphicsInfo;
+
+    objectEventId = InitEventObjectStateFromTemplate(objectEventTemplate, mapNum, mapGroup);
+    if (objectEventId == OBJECT_EVENTS_COUNT)
+        return OBJECT_EVENTS_COUNT;
+
+    objectEvent = &gObjectEvents[objectEventId];
+    graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
+    paletteSlot = graphicsInfo->paletteSlot;
+    if (paletteSlot == PALSLOT_PLAYER)
+    {
+        LoadPlayerObjectReflectionPalette(graphicsInfo->paletteTag, paletteSlot);
+    }
+    else if (paletteSlot == PALSLOT_NPC_SPECIAL)
+    {
+        LoadSpecialObjectReflectionPalette(graphicsInfo->paletteTag, paletteSlot);
+    }
+    else if (paletteSlot >= 16)
+    {
+        paletteSlot -= 16;
+        _PatchObjectPalette(graphicsInfo->paletteTag, paletteSlot);
+    }
+
+    if (objectEvent->movementType == MOVEMENT_TYPE_INVISIBLE)
+        objectEvent->invisible = TRUE;
+
+    *(u16 *)&spriteTemplate->paletteTag = TAG_NONE;
+    spriteId = CreateSprite(spriteTemplate, 0, 0, 0);
+    if (spriteId == MAX_SPRITES)
+    {
+        gObjectEvents[objectEventId].active = FALSE;
+        return OBJECT_EVENTS_COUNT;
+    }
+
+    sprite = &gSprites[spriteId];
+    GetMapCoordsFromSpritePos(objectEvent->currentCoords.x + cameraX, objectEvent->currentCoords.y + cameraY, &sprite->x, &sprite->y);
+    sprite->centerToCornerVecX = -(graphicsInfo->width >> 1);
+    sprite->centerToCornerVecY = -(graphicsInfo->height >> 1);
+    sprite->x += 8;
+    sprite->y += 16 + sprite->centerToCornerVecY;
+    sprite->oam.paletteNum = paletteSlot;
+    sprite->coordOffsetEnabled = TRUE;
+    sprite->data[0] = objectEventId;
+    objectEvent->spriteId = spriteId;
+    objectEvent->inanimate = graphicsInfo->inanimate;
+    if (!objectEvent->inanimate)
+        StartSpriteAnim(sprite, GetJumpInPlaceMovementAction(objectEvent->facingDirection));
+
+    SetObjectSubpriorityByElevation(objectEvent->previousElevation, sprite, 1);
+    UpdateObjectEventVisibility(objectEvent, sprite);
+    return objectEventId;
 }
 
-__attribute__((naked)) void TrySpawnObjectEventTemplate(void)
+u8 TrySpawnObjectEventTemplate(const struct ObjectEventTemplate *objectEventTemplate, u8 mapNum, u8 mapGroup, s16 cameraX, s16 cameraY)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #0x2c\n\t"
-        "	mov sb, r0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	mov r8, r2\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	ldr r5, [sp, #0x48]\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #0x20]\n\t"
-        "	mov r1, sb\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	add r2, sp, #0x20\n\t"
-        "	mov r0, sb\n\t"
-        "	add r1, sp, #8\n\t"
-        "	bl sub_0808D6C0\n\t"
-        "	ldrh r3, [r7, #6]\n\t"
-        "	ldr r2, _0808D528\n\t"
-        "	add r1, sp, #0x24\n\t"
-        "	ldr r0, [r1, #4]\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r3\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	str r1, [sp, #0x14]\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	str r4, [sp]\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	str r5, [sp, #4]\n\t"
-        "	mov r0, sb\n\t"
-        "	add r1, sp, #8\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	mov r3, r8\n\t"
-        "	bl TrySetupEventObjectSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	cmp r2, #0x10\n\t"
-        "	bne _0808D52C\n\t"
-        "	movs r0, #0x10\n\t"
-        "	b _0808D562\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D528: .4byte 0xFFFF0000\n\t"
-        "_0808D52C:\n\t"
-        "	ldr r4, _0808D570\n\t"
-        "	ldr r1, _0808D574\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r3, r0, r1\n\t"
-        "	ldrb r1, [r3, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0xc\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r7, #0x1c]\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r2, [sp, #0x20]\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _0808D560\n\t"
-        "	ldrb r1, [r3, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl SetSubspriteTables\n\t"
-        "_0808D560:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "_0808D562:\n\t"
-        "	add sp, #0x2c\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D570: .4byte gSprites\n\t"
-        "_0808D574: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+    struct SpriteTemplate spriteTemplate;
+    struct SpriteFrameImage spriteFrameImage;
+    const struct ObjectEventGraphicsInfo *graphicsInfo;
+    const struct SubspriteTable *subspriteTables = NULL;
+
+    graphicsInfo = GetObjectEventGraphicsInfo(objectEventTemplate->graphicsId);
+    sub_0808D6C0(objectEventTemplate, &spriteTemplate, &subspriteTables);
+    spriteFrameImage.size = graphicsInfo->size;
+    spriteTemplate.images = &spriteFrameImage;
+    objectEventId = TrySetupEventObjectSprite(objectEventTemplate, &spriteTemplate, mapNum, mapGroup, cameraX, cameraY);
+    if (objectEventId == OBJECT_EVENTS_COUNT)
+        return OBJECT_EVENTS_COUNT;
+
+    gSprites[gObjectEvents[objectEventId].spriteId].images = graphicsInfo->images;
+    if (subspriteTables)
+        SetSubspriteTables(&gSprites[gObjectEvents[objectEventId].spriteId], subspriteTables);
+
+    return objectEventId;
 }
 
-__attribute__((naked)) void SpawnSpecialEventObject(void)
+u8 SpawnSpecialEventObject(struct ObjectEventTemplate *objectEventTemplate)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	mov r4, sp\n\t"
-        "	adds r4, #6\n\t"
-        "	add r0, sp, #4\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetEventObjectMovingCameraOffset\n\t"
-        "	ldr r0, _0808D5B0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	ldrb r2, [r0, #4]\n\t"
-        "	add r0, sp, #4\n\t"
-        "	movs r6, #0\n\t"
-        "	ldrsh r3, [r0, r6]\n\t"
-        "	movs r6, #0\n\t"
-        "	ldrsh r0, [r4, r6]\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl TrySpawnObjectEventTemplate\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D5B0: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 cameraX;
+    s16 cameraY;
+
+    GetEventObjectMovingCameraOffset(&cameraX, &cameraY);
+    return TrySpawnObjectEventTemplate(objectEventTemplate, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, cameraX, cameraY);
 }
 
 
-__attribute__((naked)) u8 SpawnSpecialObjectEventParameterized(u8 graphicsId, u8 movementBehavior, u8 localId, s16 x, s16 y, u8 elevation)
+u8 SpawnSpecialObjectEventParameterized(u8 graphicsId, u8 movementBehavior, u8 localId, s16 x, s16 y, u8 elevation)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	ldr r4, [sp, #0x2c]\n\t"
-        "	ldr r5, [sp, #0x30]\n\t"
-        "	mov r8, r5\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	ldr r5, _0808D618\n\t"
-        "	adds r3, r3, r5\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	mov r5, sp\n\t"
-        "	movs r6, #0\n\t"
-        "	strb r2, [r5]\n\t"
-        "	mov r2, sp\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	mov r0, sp\n\t"
-        "	strb r6, [r0, #2]\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r3, [r0, #4]\n\t"
-        "	strh r4, [r0, #6]\n\t"
-        "	mov r2, r8\n\t"
-        "	strb r2, [r0, #8]\n\t"
-        "	strb r1, [r0, #9]\n\t"
-        "	mov r2, sp\n\t"
-        "	ldrb r1, [r2, #0xa]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2, #0xa]\n\t"
-        "	mov r0, sp\n\t"
-        "	strb r5, [r0, #0xa]\n\t"
-        "	strh r6, [r0, #0xc]\n\t"
-        "	strh r6, [r0, #0xe]\n\t"
-        "	bl SpawnSpecialEventObject\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D618: .4byte 0xFFF90000\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEventTemplate objectEventTemplate;
+
+    x -= MAP_OFFSET;
+    y -= MAP_OFFSET;
+    objectEventTemplate.localId = localId;
+    objectEventTemplate.graphicsId = graphicsId;
+    objectEventTemplate.kind = OBJ_KIND_NORMAL;
+    objectEventTemplate.x = x;
+    objectEventTemplate.y = y;
+    objectEventTemplate.elevation = elevation;
+    objectEventTemplate.movementType = movementBehavior;
+    objectEventTemplate.movementRangeX = 0;
+    objectEventTemplate.movementRangeY = 0;
+    objectEventTemplate.trainerType = TRAINER_TYPE_NONE;
+    objectEventTemplate.trainerRange_berryTreeId = 0;
+    return SpawnSpecialEventObject(&objectEventTemplate);
 }
 
-__attribute__((naked)) u8 TrySpawnObjectEvent(u8 localId, u8 mapNum, u8 mapGroup)
+u8 TrySpawnObjectEvent(u8 localId, u8 mapNum, u8 mapGroup)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r6, r2, #0x18\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl GetEventObjectTemplateByLocalIdAndMap\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _0808D662\n\t"
-        "	mov r4, sp\n\t"
-        "	adds r4, #6\n\t"
-        "	add r0, sp, #4\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetEventObjectMovingCameraOffset\n\t"
-        "	add r0, sp, #4\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r3, [r0, r1]\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl TrySpawnObjectEventTemplate\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _0808D664\n\t"
-        "_0808D662:\n\t"
-        "	movs r0, #0x10\n\t"
-        "_0808D664:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct ObjectEventTemplate *objectEventTemplate;
+    s16 cameraX, cameraY;
+
+    objectEventTemplate = GetEventObjectTemplateByLocalIdAndMap(localId, mapNum, mapGroup);
+    if (!objectEventTemplate)
+        return OBJECT_EVENTS_COUNT;
+
+    GetEventObjectMovingCameraOffset(&cameraX, &cameraY);
+    return TrySpawnObjectEventTemplate(objectEventTemplate, mapNum, mapGroup, cameraX, cameraY);
 }
 
 void CopyObjectGraphicsInfoToSpriteTemplate(u16 graphicsId, void (*callback)(struct Sprite *), struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
@@ -2062,415 +1627,105 @@ void sub_0808D6C0(struct ObjectEventTemplate *template, struct SpriteTemplate *s
     MakeObjectTemplateFromEventObjectGraphicsInfoWithCallbackIndex(template->graphicsId, template->movementType, spriteTemplate, subspriteTables);
 }
 
-__attribute__((naked)) void AddPseudoEventObject(void)
+u8 AddPseudoEventObject(u16 graphicsId, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r0, [sp, #0x20]\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	mov r8, r2\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r7, r3, #0x10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r0, #0x18\n\t"
-        "	bl Alloc\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	mov r3, sp\n\t"
-        "	bl CopyObjectGraphicsInfoToSpriteTemplate\n\t"
-        "	ldrh r1, [r6, #2]\n\t"
-        "	ldr r0, _0808D774\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0808D71E\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl LoadEventObjectPalette\n\t"
-        "_0808D71E:\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	lsls r2, r7, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	mov r3, sb\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl Free\n\t"
-        "	cmp r5, #0x40\n\t"
-        "	beq _0808D762\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0808D762\n\t"
-        "	lsls r4, r5, #4\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0808D778\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetSubspriteTables\n\t"
-        "	adds r4, #0x42\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "_0808D762:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D774: .4byte 0x0000FFFF\n\t"
-        "_0808D778: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct SpriteTemplate *spriteTemplate;
+    const struct SubspriteTable *subspriteTables;
+    struct Sprite *sprite;
+    u8 spriteId;
+
+    spriteTemplate = Alloc(sizeof(struct SpriteTemplate));
+    CopyObjectGraphicsInfoToSpriteTemplate(graphicsId, callback, spriteTemplate, &subspriteTables);
+    if (spriteTemplate->paletteTag != TAG_NONE)
+        LoadEventObjectPalette(spriteTemplate->paletteTag);
+
+    spriteId = CreateSprite(spriteTemplate, x, y, subpriority);
+    Free(spriteTemplate);
+
+    if (spriteId != MAX_SPRITES && subspriteTables != NULL)
+    {
+        sprite = &gSprites[spriteId];
+        SetSubspriteTables(sprite, subspriteTables);
+        sprite->subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
+    }
+    return spriteId;
 }
 
-__attribute__((naked)) void sprite_new(void)
+u8 sprite_new(u8 graphicsId, u8 virtualObjId, s16 x, s16 y, u8 elevation, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x20\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r0, [sp, #0x40]\n\t"
-        "	ldr r4, [sp, #0x44]\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov sb, r1\n\t"
-        "	add r1, sp, #0x18\n\t"
-        "	mov r8, r1\n\t"
-        "	strh r2, [r1]\n\t"
-        "	mov r6, sp\n\t"
-        "	adds r6, #0x1a\n\t"
-        "	strh r3, [r6]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	mov sl, r4\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0808D87C\n\t"
-        "	add r3, sp, #0x1c\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl CopyObjectGraphicsInfoToSpriteTemplate\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r2, _0808D880\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	mov r1, r8\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	adds r0, #7\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	adds r0, #7\n\t"
-        "	strh r0, [r6]\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl SetSpritePosToOffsetMapCoords\n\t"
-        "	mov r2, r8\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r2, r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r2, [r6, r0]\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSpriteAtEnd\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0x40\n\t"
-        "	beq _0808D8DC\n\t"
-        "	lsls r0, r6, #4\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808D884\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x28\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	adds r1, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	ldrh r1, [r5, #0x22]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5, #0x22]\n\t"
-        "	ldrb r0, [r4, #0xc]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrb r1, [r5, #5]\n\t"
-        "	movs r3, #0xf\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	ands r2, r1\n\t"
-        "	orrs r2, r0\n\t"
-        "	strb r2, [r5, #5]\n\t"
-        "	lsls r1, r2, #0x18\n\t"
-        "	lsrs r0, r1, #0x1c\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bls _0808D854\n\t"
-        "	subs r0, #0x10\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	ands r2, r3\n\t"
-        "	orrs r2, r0\n\t"
-        "	strb r2, [r5, #5]\n\t"
-        "_0808D854:\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	mov r2, sb\n\t"
-        "	strh r2, [r5, #0x2e]\n\t"
-        "	strh r7, [r5, #0x30]\n\t"
-        "	ldrb r1, [r4, #0xc]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bne _0808D888\n\t"
-        "	ldrh r0, [r4, #2]\n\t"
-        "	lsls r1, r1, #0x1c\n\t"
-        "	lsrs r1, r1, #0x1c\n\t"
-        "	bl LoadSpecialObjectReflectionPalette\n\t"
-        "	b _0808D89C\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D87C: .4byte SpriteCB_VirtualObject + 1\n\t"
-        "_0808D880: .4byte 0x0000FFFF\n\t"
-        "_0808D884: .4byte gSprites\n\t"
-        "_0808D888:\n\t"
-        "	lsls r1, r1, #0x1c\n\t"
-        "	lsrs r0, r1, #0x1c\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bls _0808D89C\n\t"
-        "	ldrh r0, [r4, #2]\n\t"
-        "	lsrs r2, r1, #0x1c\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	orrs r1, r2\n\t"
-        "	bl _PatchObjectPalette\n\t"
-        "_0808D89C:\n\t"
-        "	ldr r1, [sp, #0x1c]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0808D8B8\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl SetSubspriteTables\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x42\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #0x80\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r2]\n\t"
-        "_0808D8B8:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl InitObjectPriorityByZCoord\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl SetObjectSubpriorityByElevation\n\t"
-        "	mov r0, sl\n\t"
-        "	bl GetJumpInPlaceMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_0808D8DC:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	add sp, #0x20\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+    struct Sprite *sprite;
+    struct SpriteTemplate spriteTemplate;
+    const struct SubspriteTable *subspriteTables;
+    const struct ObjectEventGraphicsInfo *graphicsInfo;
+
+    graphicsInfo = GetObjectEventGraphicsInfo(graphicsId);
+    CopyObjectGraphicsInfoToSpriteTemplate(graphicsId, SpriteCB_VirtualObject, &spriteTemplate, &subspriteTables);
+    *(u16 *)&spriteTemplate.paletteTag = TAG_NONE;
+    x += MAP_OFFSET;
+    y += MAP_OFFSET;
+    SetSpritePosToOffsetMapCoords(&x, &y, 8, 16);
+    spriteId = CreateSpriteAtEnd(&spriteTemplate, x, y, 0);
+    if (spriteId != MAX_SPRITES)
+    {
+        sprite = &gSprites[spriteId];
+        sprite->centerToCornerVecX = -(graphicsInfo->width >> 1);
+        sprite->centerToCornerVecY = -(graphicsInfo->height >> 1);
+        sprite->y += sprite->centerToCornerVecY;
+        sprite->oam.paletteNum = graphicsInfo->paletteSlot;
+        if (sprite->oam.paletteNum >= 16)
+            sprite->oam.paletteNum -= 16;
+
+        sprite->coordOffsetEnabled = TRUE;
+        sprite->data[0] = virtualObjId;
+        sprite->data[1] = elevation;
+        if (graphicsInfo->paletteSlot == PALSLOT_NPC_SPECIAL)
+            LoadSpecialObjectReflectionPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
+        else if (graphicsInfo->paletteSlot >= 16)
+            _PatchObjectPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot | 0xf0);
+
+        if (subspriteTables != NULL)
+        {
+            SetSubspriteTables(sprite, subspriteTables);
+            sprite->subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
+        }
+        InitObjectPriorityByZCoord(sprite, elevation);
+        SetObjectSubpriorityByElevation(elevation, sprite, 1);
+        StartSpriteAnim(sprite, GetJumpInPlaceMovementAction(direction));
+    }
+    return spriteId;
 }
 
-__attribute__((naked)) void TrySpawnObjectEvents(s16 cameraX, s16 cameraY)
+void TrySpawnObjectEvents(s16 cameraX, s16 cameraY)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	ldr r5, _0808D948\n\t"
-        "	ldr r0, [r5, #4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808D9E8\n\t"
-        "	ldr r0, _0808D94C\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	subs r0, r1, #2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r1, #0x11\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	str r1, [sp, #0xc]\n\t"
-        "	ldrh r4, [r2, #2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x10\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sl, r0\n\t"
-        "	bl CurrentBattlePyramidLocation\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808D950\n\t"
-        "	bl GetNumBattlePyramidEventObjects\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	b _0808D960\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D948: .4byte gMapHeader\n\t"
-        "_0808D94C: .4byte gSaveBlock1Ptr\n\t"
-        "_0808D950:\n\t"
-        "	bl InTrainerHill\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808D95C\n\t"
-        "	movs r6, #2\n\t"
-        "	b _0808D960\n\t"
-        "_0808D95C:\n\t"
-        "	ldr r0, [r5, #4]\n\t"
-        "	ldrb r6, [r0]\n\t"
-        "_0808D960:\n\t"
-        "	movs r5, #0\n\t"
-        "	cmp r5, r6\n\t"
-        "	bhs _0808D9E8\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "_0808D974:\n\t"
-        "	lsls r0, r5, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	movs r2, #0xc7\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r3, _0808D9F8\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	ldrh r0, [r4, #4]\n\t"
-        "	adds r0, #7\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	ldrh r0, [r4, #6]\n\t"
-        "	adds r0, #7\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	cmp sb, r1\n\t"
-        "	bgt _0808D9DE\n\t"
-        "	mov r7, sl\n\t"
-        "	lsls r0, r7, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, r1\n\t"
-        "	blt _0808D9DE\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	cmp r8, r1\n\t"
-        "	bgt _0808D9DE\n\t"
-        "	ldr r2, [sp, #0xc]\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, r1\n\t"
-        "	blt _0808D9DE\n\t"
-        "	ldrh r0, [r4, #0x14]\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808D9DE\n\t"
-        "	ldr r3, _0808D9F8\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	ldrb r2, [r0, #4]\n\t"
-        "	ldr r7, [sp, #4]\n\t"
-        "	lsls r3, r7, #0x10\n\t"
-        "	ldr r7, [sp, #8]\n\t"
-        "	lsls r0, r7, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	bl TrySpawnObjectEventTemplate\n\t"
-        "_0808D9DE:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, r6\n\t"
-        "	blo _0808D974\n\t"
-        "_0808D9E8:\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D9F8: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 objectCount;
+
+    if (gMapHeader.events != NULL)
+    {
+        s16 left = gSaveBlock1Ptr->pos.x - 2;
+        s16 right = gSaveBlock1Ptr->pos.x + MAP_OFFSET_W + 2;
+        s16 top = gSaveBlock1Ptr->pos.y;
+        s16 bottom = gSaveBlock1Ptr->pos.y + MAP_OFFSET_H + 2;
+
+        if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
+            objectCount = GetNumBattlePyramidEventObjects();
+        else if (InTrainerHill())
+            objectCount = HILL_TRAINERS_PER_FLOOR;
+        else
+            objectCount = gMapHeader.events->objectEventCount;
+
+        for (i = 0; i < objectCount; i++)
+        {
+            struct ObjectEventTemplate *template = &gSaveBlock1Ptr->objectEventTemplates[i];
+            s16 npcX = template->x + MAP_OFFSET;
+            s16 npcY = template->y + MAP_OFFSET;
+
+            if (top <= npcY && bottom >= npcY && left <= npcX && right >= npcX
+                && !FlagGet(template->flagId))
+                TrySpawnObjectEventTemplate(template, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, cameraX, cameraY);
+        }
+    }
 }
 
 void RemoveEventObjectsOutsideView(void)
@@ -2511,317 +1766,101 @@ void RemoveEventObjectIfOutsideView(struct ObjectEvent *objectEvent)
     RemoveObjectEvent(objectEvent);
 }
 
-__attribute__((naked)) void sub_0808DADC(void)
+void sub_0808DADC(s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	bl ClearPlayerAvatarInfo\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r7, _0808DB24\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "_0808DAF6:\n\t"
-        "	lsls r0, r6, #3\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808DB10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	asrs r1, r4, #0x10\n\t"
-        "	asrs r2, r5, #0x10\n\t"
-        "	bl sub_0808DB28\n\t"
-        "_0808DB10:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0xf\n\t"
-        "	bls _0808DAF6\n\t"
-        "	bl CreateReflectionEffectSprites\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808DB24: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    ClearPlayerAvatarInfo();
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+    {
+        if (gObjectEvents[i].active)
+            sub_0808DB28(i, x, y);
+    }
+    CreateReflectionEffectSprites();
 }
 
-__attribute__((naked)) void sub_0808DB28(void)
+void sub_0808DB28(u8 objectEventId, s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x28\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov sl, r1\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	str r2, [sp, #0x24]\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r2, _0808DBB8\n\t"
-        "_0808DB4A:\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808DB5C\n\t"
-        "	ldrb r1, [r1, #2]\n\t"
-        "	cmp sb, r1\n\t"
-        "	bne _0808DB5C\n\t"
-        "	b _0808DCE4\n\t"
-        "_0808DB5C:\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #3\n\t"
-        "	bls _0808DB4A\n\t"
-        "	mov r1, sb\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	add r0, sb\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808DBBC\n\t"
-        "	adds r6, r0, r1\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #0x20]\n\t"
-        "	ldrb r0, [r6, #5]\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r2, [r5, #6]\n\t"
-        "	ldr r1, _0808DBC0\n\t"
-        "	add r4, sp, #0x18\n\t"
-        "	ldr r0, [r4, #4]\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	str r0, [r4, #4]\n\t"
-        "	ldrb r0, [r6, #5]\n\t"
-        "	ldrb r1, [r6, #6]\n\t"
-        "	add r3, sp, #0x20\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MakeObjectTemplateFromEventObjectGraphicsInfoWithCallbackIndex\n\t"
-        "	str r4, [sp, #0xc]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r2, _0808DBC4\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	ldrb r0, [r5, #0xc]\n\t"
-        "	lsls r1, r0, #0x1c\n\t"
-        "	lsrs r0, r1, #0x1c\n\t"
-        "	mov r8, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808DBC8\n\t"
-        "	ldrh r0, [r5, #2]\n\t"
-        "	lsrs r1, r1, #0x1c\n\t"
-        "	bl LoadPlayerObjectReflectionPalette\n\t"
-        "	b _0808DBEE\n\t"
-        "	.align 2, 0\n\t"
-        "_0808DBB8: .4byte gLinkPlayerObjectEvents\n\t"
-        "_0808DBBC: .4byte gObjectEvents\n\t"
-        "_0808DBC0: .4byte 0xFFFF0000\n\t"
-        "_0808DBC4: .4byte 0x0000FFFF\n\t"
-        "_0808DBC8:\n\t"
-        "	mov r2, r8\n\t"
-        "	cmp r2, #0xa\n\t"
-        "	bne _0808DBD8\n\t"
-        "	ldrh r0, [r5, #2]\n\t"
-        "	lsrs r1, r1, #0x1c\n\t"
-        "	bl LoadSpecialObjectReflectionPalette\n\t"
-        "	b _0808DBEE\n\t"
-        "_0808DBD8:\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bls _0808DBEE\n\t"
-        "	subs r0, #0x10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldrh r0, [r5, #2]\n\t"
-        "	mov r1, r8\n\t"
-        "	bl _PatchObjectPalette\n\t"
-        "_0808DBEE:\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r2, _0808DCF4\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #0x40\n\t"
-        "	beq _0808DCE4\n\t"
-        "	lsls r0, r7, #4\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808DCF8\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	mov r1, sl\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	ldrh r2, [r6, #0x10]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	ldr r2, [sp, #0x24]\n\t"
-        "	lsls r1, r2, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrh r2, [r6, #0x12]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x20\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x22\n\t"
-        "	bl GetMapCoordsFromSpritePos\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x28\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrh r0, [r5, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x29\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	ldrh r1, [r4, #0x22]\n\t"
-        "	adds r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	ldr r0, [r5, #0x1c]\n\t"
-        "	str r0, [r4, #0xc]\n\t"
-        "	ldrb r0, [r6, #6]\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	bne _0808DC82\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl SetPlayerAvatarEventObjectIdAndObjectId\n\t"
-        "	bl CreateWarpArrowSprite\n\t"
-        "	strb r0, [r6, #0x1b]\n\t"
-        "_0808DC82:\n\t"
-        "	ldr r1, [sp, #0x20]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0808DC8E\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetSubspriteTables\n\t"
-        "_0808DC8E:\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	ldrb r1, [r4, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r4, #5]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	mov r1, sb\n\t"
-        "	strh r1, [r4, #0x2e]\n\t"
-        "	strb r7, [r6, #4]\n\t"
-        "	ldrb r0, [r6, #1]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _0808DCD2\n\t"
-        "	ldrb r0, [r6, #6]\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	beq _0808DCD2\n\t"
-        "	ldrb r0, [r6, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl GetJumpInPlaceMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_0808DCD2:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0808DCFC\n\t"
-        "	ldrb r0, [r6, #0xb]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl SetObjectSubpriorityByElevation\n\t"
-        "_0808DCE4:\n\t"
-        "	add sp, #0x28\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808DCF4: .4byte 0x0000FFFF\n\t"
-        "_0808DCF8: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 paletteSlot;
+    struct Sprite *sprite;
+    struct ObjectEvent *objectEvent;
+    struct SpriteTemplate spriteTemplate;
+    struct SpriteFrameImage spriteFrameImage;
+    const struct SubspriteTable *subspriteTables;
+    const struct ObjectEventGraphicsInfo *graphicsInfo;
+
+    for (i = 0; i < ARRAY_COUNT(gLinkPlayerObjectEvents); i++)
+    {
+        if (gLinkPlayerObjectEvents[i].active && objectEventId == gLinkPlayerObjectEvents[i].objEventId)
+            return;
+    }
+
+    objectEvent = &gObjectEvents[objectEventId];
+    subspriteTables = NULL;
+    graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
+    spriteFrameImage.size = graphicsInfo->size;
+    MakeObjectTemplateFromEventObjectGraphicsInfoWithCallbackIndex(objectEvent->graphicsId, objectEvent->movementType, &spriteTemplate, &subspriteTables);
+    spriteTemplate.images = &spriteFrameImage;
+
+    *(u16 *)&spriteTemplate.paletteTag = TAG_NONE;
+    paletteSlot = graphicsInfo->paletteSlot;
+    if (paletteSlot == PALSLOT_PLAYER)
+    {
+        LoadPlayerObjectReflectionPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
+    }
+    else if (paletteSlot == PALSLOT_NPC_SPECIAL)
+    {
+        LoadSpecialObjectReflectionPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
+    }
+    else if (paletteSlot >= 16)
+    {
+        paletteSlot -= 16;
+        _PatchObjectPalette(graphicsInfo->paletteTag, paletteSlot);
+    }
+    *(u16 *)&spriteTemplate.paletteTag = TAG_NONE;
+
+    i = CreateSprite(&spriteTemplate, 0, 0, 0);
+    if (i != MAX_SPRITES)
+    {
+        sprite = &gSprites[i];
+        GetMapCoordsFromSpritePos(x + objectEvent->currentCoords.x, y + objectEvent->currentCoords.y, &sprite->x, &sprite->y);
+        sprite->centerToCornerVecX = -(graphicsInfo->width >> 1);
+        sprite->centerToCornerVecY = -(graphicsInfo->height >> 1);
+        sprite->x += 8;
+        sprite->y += 16 + sprite->centerToCornerVecY;
+        sprite->images = graphicsInfo->images;
+        if (objectEvent->movementType == MOVEMENT_TYPE_PLAYER)
+        {
+            SetPlayerAvatarEventObjectIdAndObjectId(objectEventId, i);
+            objectEvent->warpArrowSpriteId = CreateWarpArrowSprite();
+        }
+        if (subspriteTables != NULL)
+            SetSubspriteTables(sprite, subspriteTables);
+
+        sprite->oam.paletteNum = paletteSlot;
+        sprite->coordOffsetEnabled = TRUE;
+        sprite->data[0] = objectEventId;
+        objectEvent->spriteId = i;
+        if (!objectEvent->inanimate && objectEvent->movementType != MOVEMENT_TYPE_PLAYER)
+            StartSpriteAnim(sprite, GetJumpInPlaceMovementAction(objectEvent->facingDirection));
+
+        sub_0808DCFC(objectEvent);
+        SetObjectSubpriorityByElevation(objectEvent->previousElevation, sprite, 1);
+    }
 }
 
-__attribute__((naked)) void sub_0808DCFC(void)
+void sub_0808DCFC(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r3, #3\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldrb r2, [r0, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	ands r1, r3\n\t"
-        "	movs r2, #5\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	subs r2, #4\n\t"
-        "	ands r1, r2\n\t"
-        "	subs r2, #8\n\t"
-        "	ands r1, r2\n\t"
-        "	subs r2, #0x10\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0, #2]\n\t"
-        "	bl EventObjectClearHeldMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->singleMovementActive = FALSE;
+    objectEvent->triggerGroundEffectsOnMove = TRUE;
+    objectEvent->hasShadow = FALSE;
+    objectEvent->hasReflection = FALSE;
+    objectEvent->inShortGrass = FALSE;
+    objectEvent->inShallowFlowingWater = FALSE;
+    objectEvent->inSandPile = FALSE;
+    objectEvent->inHotSprings = FALSE;
+    EventObjectClearHeldMovement(objectEvent);
 }
 
 void SetPlayerAvatarEventObjectIdAndObjectId(u8 objectEventId, u8 spriteId)
@@ -2902,133 +1941,48 @@ void PlayerObjectTurn(struct PlayerAvatar *playerAvatar, u8 direction)
     EventObjectTurn(&gObjectEvents[playerAvatar->objectEventId], direction);
 }
 
-__attribute__((naked)) void get_berry_tree_graphics(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void get_berry_tree_graphics(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r5, #1]\n\t"
-        "	adds r4, r7, #0\n\t"
-        "	adds r4, #0x3e\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldrb r0, [r5, #0x1d]\n\t"
-        "	bl GetStageByBerryTreeId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0\n\t"
-        "	beq _0808DFF0\n\t"
-        "	ldrb r1, [r5, #1]\n\t"
-        "	movs r0, #0x21\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r5, #1]\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldrb r0, [r5, #0x1d]\n\t"
-        "	bl GetBerryTypeByBerryTreeId\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	subs r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r4, #0x2b\n\t"
-        "	bls _0808DFB8\n\t"
-        "	movs r4, #0\n\t"
-        "_0808DFB8:\n\t"
-        "	ldr r0, _0808DFF8\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventSetGraphicsId\n\t"
-        "	ldr r0, _0808DFFC\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r7, #0xc]\n\t"
-        "	ldr r0, _0808E000\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ldrb r2, [r7, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r7, #5]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_0808DFF0:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808DFF8: .4byte gBerryTreeObjectEventGraphicsIdTablePointers\n\t"
-        "_0808DFFC: .4byte gBerryTreePicTablePointers\n\t"
-        "_0808E000: .4byte gBerryTreePaletteSlotTablePointers\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 berryStage;
+    u8 berryId;
+
+    objectEvent->invisible = TRUE;
+    sprite->invisible = TRUE;
+    berryStage = GetStageByBerryTreeId(objectEvent->trainerRange_berryTreeId);
+    if (berryStage != BERRY_STAGE_NO_BERRY)
+    {
+        objectEvent->invisible = FALSE;
+        sprite->invisible = FALSE;
+        berryId = GetBerryTypeByBerryTreeId(objectEvent->trainerRange_berryTreeId) - 1;
+        berryStage--;
+        if (berryId > ITEM_TO_BERRY(LAST_BERRY_INDEX))
+            berryId = 0;
+
+        ObjectEventSetGraphicsId(objectEvent, gBerryTreeObjectEventGraphicsIdTablePointers[berryId][berryStage]);
+        sprite->images = gBerryTreePicTablePointers[berryId];
+        sprite->oam.paletteNum = gBerryTreePaletteSlotTablePointers[berryId][berryStage];
+        StartSpriteAnim(sprite, berryStage);
+    }
 }
 
 
-__attribute__((naked)) const struct ObjectEventGraphicsInfo *GetObjectEventGraphicsInfo(u8 graphicsId)
+const struct ObjectEventGraphicsInfo *GetObjectEventGraphicsInfo(u8 graphicsId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0xef\n\t"
-        "	bls _0808E01C\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl VarGetObjectEventGraphicsId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "_0808E01C:\n\t"
-        "	cmp r1, #0x45\n\t"
-        "	bne _0808E034\n\t"
-        "	bl GetCurrentMauvilleOldMan\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _0808E030\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	b _0808E042\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E030: .4byte gMauvilleOldManGraphicsInfoPointers\n\t"
-        "_0808E034:\n\t"
-        "	cmp r1, #0xee\n\t"
-        "	bls _0808E03A\n\t"
-        "	movs r1, #5\n\t"
-        "_0808E03A:\n\t"
-        "	ldr r0, _0808E048\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "_0808E042:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E048: .4byte gObjectEventGraphicsInfoPointers\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 bard;
+
+    if (graphicsId >= OBJ_EVENT_GFX_VARS)
+        graphicsId = VarGetObjectEventGraphicsId(graphicsId - OBJ_EVENT_GFX_VARS);
+
+    if (graphicsId == OBJ_EVENT_GFX_BARD)
+    {
+        bard = GetCurrentMauvilleOldMan();
+        return gMauvilleOldManGraphicsInfoPointers[bard];
+    }
+
+    if (graphicsId >= NUM_OBJ_EVENT_GFX)
+        graphicsId = OBJ_EVENT_GFX_NINJA_BOY;
+
+    return gObjectEventGraphicsInfoPointers[graphicsId];
 }
 
 void SetEventObjectDynamicGraphicsId(struct ObjectEvent *objectEvent)
@@ -3038,51 +1992,12 @@ void SetEventObjectDynamicGraphicsId(struct ObjectEvent *objectEvent)
         objectEvent->graphicsId = VarGetObjectEventGraphicsId((u8)(objectEvent->graphicsId + 0x10));
 }
 
-__attribute__((naked)) void npc_by_local_id_and_map_set_field_1_bit_x20(void)
+void npc_by_local_id_and_map_set_field_1_bit_x20(u8 localId, u8 mapNum, u8 mapGroup, bool8 invisible)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r4, r3, #0x18\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808E0AA\n\t"
-        "	ldr r2, _0808E0B4\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #1\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	ands r2, r0\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	ldrb r3, [r1, #1]\n\t"
-        "	movs r0, #0x21\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "_0808E0AA:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E0B4: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+
+    if (!TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId))
+        gObjectEvents[objectEventId].invisible = invisible;
 }
 
 
@@ -3135,53 +2050,17 @@ void ResetObjectSubpriority(u8 localId, u8 mapNum, u8 mapGroup)
     }
 }
 
-__attribute__((naked)) void sub_0808E19C(void)
+void sub_0808E19C(u8 localId, u8 mapNum, u8 mapGroup, s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r4, [sp, #0x10]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r5, r3, #0x10\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808E1E0\n\t"
-        "	ldr r2, _0808E1E8\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808E1EC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r5, [r0, #0x24]\n\t"
-        "	strh r4, [r0, #0x26]\n\t"
-        "_0808E1E0:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E1E8: .4byte gObjectEvents\n\t"
-        "_0808E1EC: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+    struct Sprite *sprite;
+
+    if (!TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId))
+    {
+        sprite = &gSprites[gObjectEvents[objectEventId].spriteId];
+        sprite->x2 = x;
+        sprite->y2 = y;
+    }
 }
 
 void FreeAndReserveObjectSpritePalettes(void)
@@ -3190,94 +2069,29 @@ void FreeAndReserveObjectSpritePalettes(void)
     gReservedSpritePaletteCount = 12; // OBJ_PALSLOT_COUNT
 }
 
-__attribute__((naked)) void LoadEventObjectPalette(void)
+void LoadEventObjectPalette(u16 paletteTag)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl FindEventObjectPaletteIndexByTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	ldr r0, _0808E228\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0808E222\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	ldr r1, _0808E22C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl sub_0808E264\n\t"
-        "_0808E222:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E228: .4byte 0x000011FF\n\t"
-        "_0808E22C: .4byte sObjectEventSpritePalettes\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = FindEventObjectPaletteIndexByTag(paletteTag);
+
+    // Preserve JP's 0x11FF sentinel check, although lookup failure returns 0xFF.
+    if (i != OBJ_EVENT_PAL_TAG_NONE)
+        sub_0808E264(&sObjectEventSpritePalettes[i]);
 }
 
-__attribute__((naked)) void LoadObjectEventPaletteSet(void)
+void LoadObjectEventPaletteSet(u16 *paletteTags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r4, #0\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	ldr r1, _0808E260\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _0808E25A\n\t"
-        "	adds r6, r1, #0\n\t"
-        "_0808E240:\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl LoadEventObjectPalette\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, r6\n\t"
-        "	bne _0808E240\n\t"
-        "_0808E25A:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E260: .4byte 0x000011FF\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; paletteTags[i] != OBJ_EVENT_PAL_TAG_NONE; i++)
+        LoadEventObjectPalette(paletteTags[i]);
 }
 
-__attribute__((naked)) u8 sub_0808E264(const struct SpritePalette *palette)
+u8 sub_0808E264(const struct SpritePalette *spritePalette)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #4]\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _0808E282\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _0808E284\n\t"
-        "_0808E282:\n\t"
-        "	movs r0, #0xff\n\t"
-        "_0808E284:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IndexOfSpritePaletteTag(spritePalette->tag) != 0xFF)
+        return 0xFF;
+
+    return LoadSpritePalette(spritePalette);
 }
 
 void PatchObjectPalette(u16 paletteTag, u8 paletteSlot)
@@ -3370,137 +2184,33 @@ void SetEventObjectCoords(struct ObjectEvent *objectEvent, s16 x, s16 y)
     objectEvent->currentCoords.y = y;
 }
 
-__attribute__((naked)) void MoveEventObjectToMapCoords(void)
+void MoveEventObjectToMapCoords(struct ObjectEvent *objectEvent, s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	ldrb r1, [r6, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808E514\n\t"
-        "	adds r7, r0, r1\n\t"
-        "	ldrb r0, [r6, #5]\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl SetEventObjectCoords\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r1, [r6, r2]\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	adds r2, #0x20\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	adds r3, #0x22\n\t"
-        "	bl SetSpritePosToMapCoords\n\t"
-        "	mov r1, r8\n\t"
-        "	ldrh r0, [r1, #8]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	adds r1, #0x28\n\t"
-        "	strb r0, [r1]\n\t"
-        "	mov r2, r8\n\t"
-        "	ldrh r0, [r2, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	adds r2, #0x29\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrh r0, [r7, #0x20]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r7, #0x20]\n\t"
-        "	ldrh r1, [r7, #0x22]\n\t"
-        "	adds r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r7, #0x22]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0808DCFC\n\t"
-        "	ldrb r0, [r6, #1]\n\t"
-        "	lsrs r0, r0, #7\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808E50A\n\t"
-        "	bl CameraObjectReset\n\t"
-        "_0808E50A:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E514: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite;
+    const struct ObjectEventGraphicsInfo *graphicsInfo;
+
+    sprite = &gSprites[objectEvent->spriteId];
+    graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
+    SetEventObjectCoords(objectEvent, x, y);
+    SetSpritePosToMapCoords(objectEvent->currentCoords.x, objectEvent->currentCoords.y, &sprite->x, &sprite->y);
+    sprite->centerToCornerVecX = -(graphicsInfo->width >> 1);
+    sprite->centerToCornerVecY = -(graphicsInfo->height >> 1);
+    sprite->x += 8;
+    sprite->y += 16 + sprite->centerToCornerVecY;
+    sub_0808DCFC(objectEvent);
+    if (objectEvent->trackedByCamera)
+        CameraObjectReset();
 }
 
-__attribute__((naked)) void TryMoveEventObjectToMapCoords(void)
+void TryMoveEventObjectToMapCoords(u8 localId, u8 mapNum, u8 mapGroup, s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r4, [sp, #0x10]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r5, r3, #0x10\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808E560\n\t"
-        "	lsls r1, r5, #0x10\n\t"
-        "	lsls r2, r4, #0x10\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	lsls r0, r3, #3\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r3, _0808E568\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	movs r3, #0xe0\n\t"
-        "	lsls r3, r3, #0xb\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	bl MoveEventObjectToMapCoords\n\t"
-        "_0808E560:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E568: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+    if (!TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId))
+    {
+        x += MAP_OFFSET;
+        y += MAP_OFFSET;
+        MoveEventObjectToMapCoords(&gObjectEvents[objectEventId], x, y);
+    }
 }
 
 void ShiftStillEventObjectCoords(struct ObjectEvent *objectEvent)
@@ -3508,65 +2218,29 @@ void ShiftStillEventObjectCoords(struct ObjectEvent *objectEvent)
     ShiftEventObjectCoords(objectEvent, objectEvent->currentCoords.x, objectEvent->currentCoords.y);
 }
 
-__attribute__((naked)) void UpdateEventObjectCoordsForCameraUpdate(void)
+void UpdateEventObjectCoordsForCameraUpdate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r2, _0808E5E0\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808E5D8\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r5, _0808E5E4\n\t"
-        "	movs r0, #4\n\t"
-        "	ldrsh r4, [r2, r0]\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r1, [r2, r0]\n\t"
-        "_0808E59A:\n\t"
-        "	lsls r0, r3, #3\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, r0, r5\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808E5CE\n\t"
-        "	ldrh r0, [r2, #0xc]\n\t"
-        "	subs r0, r0, r4\n\t"
-        "	strh r0, [r2, #0xc]\n\t"
-        "	ldrh r0, [r2, #0xe]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r2, #0xe]\n\t"
-        "	ldrh r0, [r2, #0x10]\n\t"
-        "	subs r0, r0, r4\n\t"
-        "	strh r0, [r2, #0x10]\n\t"
-        "	ldrh r0, [r2, #0x12]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x12]\n\t"
-        "	ldrh r0, [r2, #0x14]\n\t"
-        "	subs r0, r0, r4\n\t"
-        "	strh r0, [r2, #0x14]\n\t"
-        "	ldrh r0, [r2, #0x16]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x16]\n\t"
-        "_0808E5CE:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #0xf\n\t"
-        "	bls _0808E59A\n\t"
-        "_0808E5D8:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E5E0: .4byte gCamera\n\t"
-        "_0808E5E4: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    s16 dx;
+    s16 dy;
+
+    if (gCamera.active)
+    {
+        dx = gCamera.x;
+        dy = gCamera.y;
+        for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+        {
+            if (gObjectEvents[i].active)
+            {
+                gObjectEvents[i].initialCoords.x -= dx;
+                gObjectEvents[i].initialCoords.y -= dy;
+                gObjectEvents[i].currentCoords.x -= dx;
+                gObjectEvents[i].currentCoords.y -= dy;
+                gObjectEvents[i].previousCoords.x -= dx;
+                gObjectEvents[i].previousCoords.y -= dy;
+            }
+        }
+    }
 }
 
 u8 GetObjectEventIdByPosition(u16 x, u16 y, u8 elevation)
@@ -3647,50 +2321,16 @@ void CameraObject_2(struct Sprite *sprite)
     sprite->sCamera_MoveY = 0;
 }
 
-__attribute__((naked)) struct Sprite *FindCameraObject(void)
+struct Sprite *FindCameraObject(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r4, _0808E7E0\n\t"
-        "	adds r5, r4, #0\n\t"
-        "	adds r5, #0x1c\n\t"
-        "_0808E7BE:\n\t"
-        "	lsls r0, r3, #4\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r2, r1, r4\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808E7E8\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _0808E7E4\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0808E7E8\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	b _0808E7F4\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E7E0: .4byte gSprites\n\t"
-        "_0808E7E4: .4byte ObjectCB_CameraObject + 1\n\t"
-        "_0808E7E8:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #0x3f\n\t"
-        "	bls _0808E7BE\n\t"
-        "	movs r0, #0\n\t"
-        "_0808E7F4:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i < MAX_SPRITES; i++)
+    {
+        if (gSprites[i].inUse && gSprites[i].callback == ObjectCB_CameraObject)
+            return &gSprites[i];
+    }
+    return NULL;
 }
 
 void CameraObjectReset(void)
@@ -3727,128 +2367,40 @@ void CameraObjectReset2(void)
     FindCameraObject()->sTypeFuncId = 2;
 }
 
-__attribute__((naked)) void CopySprite(void)
+u8 CopySprite(struct Sprite *sprite, s16 x, s16 y, u8 subpriority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	mov ip, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov r8, r1\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r6, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r7, r3, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r1, _0808E8A4\n\t"
-        "_0808E876:\n\t"
-        "	lsls r0, r5, #4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808E8A8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, ip\n\t"
-        "	movs r2, #0x44\n\t"
-        "	bl memcpy\n\t"
-        "	mov r0, r8\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	strh r6, [r4, #0x22]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x43\n\t"
-        "	strb r7, [r0]\n\t"
-        "	b _0808E8B2\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E8A4: .4byte gSprites\n\t"
-        "_0808E8A8:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0x3f\n\t"
-        "	bls _0808E876\n\t"
-        "_0808E8B2:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i < MAX_SPRITES; i++)
+    {
+        if (!gSprites[i].inUse)
+        {
+            gSprites[i] = *sprite;
+            gSprites[i].x = x;
+            gSprites[i].y = y;
+            gSprites[i].subpriority = subpriority;
+            break;
+        }
+    }
+    return i;
 }
 
-__attribute__((naked)) u8 CreateCopySpriteAt(struct Sprite *sprite, s16 x, s16 y, u8 subpriority)
+u8 CreateCopySpriteAt(struct Sprite *sprite, s16 x, s16 y, u8 subpriority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	mov ip, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov r8, r1\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r6, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r7, r3, #0x18\n\t"
-        "	movs r5, #0x3f\n\t"
-        "	ldr r3, _0808E914\n\t"
-        "	movs r2, #1\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "_0808E8DE:\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r4, r0, r3\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808E918\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, ip\n\t"
-        "	movs r2, #0x44\n\t"
-        "	bl memcpy\n\t"
-        "	mov r0, r8\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	strh r6, [r4, #0x22]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x43\n\t"
-        "	strb r7, [r0]\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _0808E926\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E914: .4byte gSprites\n\t"
-        "_0808E918:\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, r2\n\t"
-        "	bgt _0808E8DE\n\t"
-        "	movs r0, #0x40\n\t"
-        "_0808E926:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 i;
+
+    for (i = MAX_SPRITES - 1; i > -1; i--)
+    {
+        if (!gSprites[i].inUse)
+        {
+            gSprites[i] = *sprite;
+            gSprites[i].x = x;
+            gSprites[i].y = y;
+            gSprites[i].subpriority = subpriority;
+            return i;
+        }
+    }
+    return MAX_SPRITES;
 }
 
 
@@ -3869,28 +2421,9 @@ const u8 *GetObjectEventScriptPointerByLocalIdAndMap(u8 localId, u8 mapNum, u8 m
     return GetEventObjectTemplateByLocalIdAndMap(localId, mapNum, mapGroup)->script;
 }
 
-__attribute__((naked)) void GetEventObjectScriptPointerByEventObjectId(void)
+const u8 *GetEventObjectScriptPointerByEventObjectId(u8 objectEventId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _0808E9AC\n\t"
-        "	lsls r2, r0, #3\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrb r0, [r2, #8]\n\t"
-        "	ldrb r1, [r2, #9]\n\t"
-        "	ldrb r2, [r2, #0xa]\n\t"
-        "	bl GetObjectEventScriptPointerByLocalIdAndMap\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E9AC: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetObjectEventScriptPointerByLocalIdAndMap(gObjectEvents[objectEventId].localId, gObjectEvents[objectEventId].mapNum, gObjectEvents[objectEventId].mapGroup);
 }
 
 u16 GetObjectEventFlagIdByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
@@ -3898,68 +2431,19 @@ u16 GetObjectEventFlagIdByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
     return GetEventObjectTemplateByLocalIdAndMap(localId, mapNum, mapGroup)->flagId;
 }
 
-__attribute__((naked)) void GetEventObjectFlagIdByEventObjectId(void)
+u16 GetEventObjectFlagIdByEventObjectId(u8 objectEventId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _0808E9EC\n\t"
-        "	lsls r2, r0, #3\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrb r0, [r2, #8]\n\t"
-        "	ldrb r1, [r2, #9]\n\t"
-        "	ldrb r2, [r2, #0xa]\n\t"
-        "	bl GetObjectEventFlagIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E9EC: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetObjectEventFlagIdByLocalIdAndMap(gObjectEvents[objectEventId].localId, gObjectEvents[objectEventId].mapNum, gObjectEvents[objectEventId].mapGroup);
 }
 
-__attribute__((naked)) void sub_0808E9F0(void)
+u8 sub_0808E9F0(u8 localId, u8 mapNum, u8 mapGroup)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808EA24\n\t"
-        "	ldr r2, _0808EA20\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0, #7]\n\t"
-        "	b _0808EA26\n\t"
-        "	.align 2, 0\n\t"
-        "_0808EA20: .4byte gObjectEvents\n\t"
-        "_0808EA24:\n\t"
-        "	movs r0, #0xff\n\t"
-        "_0808EA26:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+
+    if (TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId))
+        return 0xFF;
+
+    return gObjectEvents[objectEventId].trainerType;
 }
 
 u8 GetObjectTrainerTypeByObjectEventId(u8 objectEventId)
@@ -3967,42 +2451,14 @@ u8 GetObjectTrainerTypeByObjectEventId(u8 objectEventId)
     return gObjectEvents[objectEventId].trainerType;
 }
 
-__attribute__((naked)) void sub_0808EA44(void)
+u8 sub_0808EA44(u8 localId, u8 mapNum, u8 mapGroup)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808EA78\n\t"
-        "	ldr r2, _0808EA74\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0, #0x1d]\n\t"
-        "	b _0808EA7A\n\t"
-        "	.align 2, 0\n\t"
-        "_0808EA74: .4byte gObjectEvents\n\t"
-        "_0808EA78:\n\t"
-        "	movs r0, #0xff\n\t"
-        "_0808EA7A:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+
+    if (TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId))
+        return 0xFF;
+
+    return gObjectEvents[objectEventId].trainerRange_berryTreeId;
 }
 
 u8 GetObjectEventBerryTreeId(u8 objectEventId)
@@ -4010,92 +2466,36 @@ u8 GetObjectEventBerryTreeId(u8 objectEventId)
     return gObjectEvents[objectEventId].trainerRange_berryTreeId;
 }
 
-__attribute__((naked)) struct ObjectEventTemplate *GetEventObjectTemplateByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
+struct ObjectEventTemplate *GetEventObjectTemplateByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r3, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r0, _0808EAC8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #5\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	cmp r0, r3\n\t"
-        "	bne _0808EAD0\n\t"
-        "	movs r0, #4\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	cmp r0, r2\n\t"
-        "	bne _0808EAD0\n\t"
-        "	movs r0, #0xc7\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _0808EACC\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	b _0808EADC\n\t"
-        "	.align 2, 0\n\t"
-        "_0808EAC8: .4byte gSaveBlock1Ptr\n\t"
-        "_0808EACC: .4byte gMapHeader\n\t"
-        "_0808EAD0:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl Overworld_GetMapHeaderByGroupAndId\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "_0808EADC:\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FindEventObjectTemplateByLocalId\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct ObjectEventTemplate *templates;
+    const struct MapHeader *mapHeader;
+    u8 count;
+
+    if (gSaveBlock1Ptr->location.mapNum == mapNum && gSaveBlock1Ptr->location.mapGroup == mapGroup)
+    {
+        templates = gSaveBlock1Ptr->objectEventTemplates;
+        count = gMapHeader.events->objectEventCount;
+    }
+    else
+    {
+        mapHeader = Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum);
+        templates = mapHeader->events->objectEvents;
+        count = mapHeader->events->objectEventCount;
+    }
+    return FindEventObjectTemplateByLocalId(localId, templates, count);
 }
 
-__attribute__((naked)) void FindEventObjectTemplateByLocalId(void)
+const struct ObjectEventTemplate *FindEventObjectTemplateByLocalId(u8 localId, const struct ObjectEventTemplate *templates, u8 count)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	cmp r1, r2\n\t"
-        "	bhs _0808EB1A\n\t"
-        "_0808EAFE:\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r3, r0, r5\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	cmp r0, r4\n\t"
-        "	bne _0808EB10\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	b _0808EB1C\n\t"
-        "_0808EB10:\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, r2\n\t"
-        "	blo _0808EAFE\n\t"
-        "_0808EB1A:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808EB1C:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i < count; i++)
+    {
+        if (templates[i].localId == localId)
+            return &templates[i];
+    }
+    return NULL;
 }
 
 struct ObjectEventTemplate *GetBaseTemplateForObjectEvent(const struct ObjectEvent *objectEvent)
@@ -4115,28 +2515,16 @@ struct ObjectEventTemplate *GetBaseTemplateForObjectEvent(const struct ObjectEve
 }
 
 
-__attribute__((naked)) void OverrideTemplateCoordsForObjectEvent(const struct ObjectEvent *objectEvent)
+void OverrideTemplateCoordsForObjectEvent(const struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl GetBaseTemplateForObjectEvent\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0808EB92\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	subs r0, #7\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	ldrh r0, [r4, #0x12]\n\t"
-        "	subs r0, #7\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "_0808EB92:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEventTemplate *objectEventTemplate;
+
+    objectEventTemplate = GetBaseTemplateForObjectEvent(objectEvent);
+    if (objectEventTemplate != NULL)
+    {
+        objectEventTemplate->x = objectEvent->currentCoords.x - MAP_OFFSET;
+        objectEventTemplate->y = objectEvent->currentCoords.y - MAP_OFFSET;
+    }
 }
 void OverrideObjectEventTemplateScript(const struct ObjectEvent *objectEvent, const u8 *script)
 {
@@ -4159,226 +2547,59 @@ void TryOverrideTemplateCoordsForObjectEvent(const struct ObjectEvent *objectEve
         objectEventTemplate->movementType = movementType;
 }
 
-__attribute__((naked)) void TryOverrideEventObjectTemplateCoords(void)
+void TryOverrideEventObjectTemplateCoords(u8 localId, u8 mapNum, u8 mapGroup)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808EBF2\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808EBF8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl OverrideTemplateCoordsForObjectEvent\n\t"
-        "_0808EBF2:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808EBF8: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+    if (!TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId))
+        OverrideTemplateCoordsForObjectEvent(&gObjectEvents[objectEventId]);
 }
 
-__attribute__((naked)) void OverrideSecretBaseDecorationSpriteScript(u8 localId, u8 mapNum, u8 mapGroup, u8 decorationCategory)
+void OverrideSecretBaseDecorationSpriteScript(u8 localId, u8 mapNum, u8 mapGroup, u8 decorationCategory)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r4, r3, #0x18\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808EC58\n\t"
-        "	cmp r4, #6\n\t"
-        "	beq _0808EC26\n\t"
-        "	cmp r4, #7\n\t"
-        "	beq _0808EC44\n\t"
-        "	b _0808EC58\n\t"
-        "_0808EC26:\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808EC3C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0808EC40\n\t"
-        "	bl OverrideObjectEventTemplateScript\n\t"
-        "	b _0808EC58\n\t"
-        "	.align 2, 0\n\t"
-        "_0808EC3C: .4byte gObjectEvents\n\t"
-        "_0808EC40: .4byte SecretBase_EventScript_DollInteract\n\t"
-        "_0808EC44:\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808EC60\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0808EC64\n\t"
-        "	bl OverrideObjectEventTemplateScript\n\t"
-        "_0808EC58:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808EC60: .4byte gObjectEvents\n\t"
-        "_0808EC64: .4byte SecretBase_EventScript_CushionInteract\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+    if (!TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId))
+    {
+        switch (decorationCategory)
+        {
+        case DECORCAT_DOLL:
+            OverrideObjectEventTemplateScript(&gObjectEvents[objectEventId], SecretBase_EventScript_DollInteract);
+            break;
+        case DECORCAT_CUSHION:
+            OverrideObjectEventTemplateScript(&gObjectEvents[objectEventId], SecretBase_EventScript_CushionInteract);
+            break;
+        }
+    }
 }
 
-__attribute__((naked)) void InitEventObjectPalettes(void)
+void InitEventObjectPalettes(u8 reflectionType)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl FreeAndReserveObjectSpritePalettes\n\t"
-        "	ldr r1, _0808ECA0\n\t"
-        "	ldr r2, _0808ECA4\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r2, _0808ECA8\n\t"
-        "	strb r4, [r2]\n\t"
-        "	cmp r4, #1\n\t"
-        "	bne _0808ECB4\n\t"
-        "	ldr r1, _0808ECAC\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #6\n\t"
-        "	bl PatchObjectPaletteRange\n\t"
-        "	ldr r1, _0808ECB0\n\t"
-        "	movs r0, #8\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0808ECC6\n\t"
-        "	.align 2, 0\n\t"
-        "_0808ECA0: .4byte gUnknown_2037256\n\t"
-        "_0808ECA4: .4byte 0x000011FF\n\t"
-        "_0808ECA8: .4byte gUnknown_2037254\n\t"
-        "_0808ECAC: .4byte sObjectPaletteTagSets\n\t"
-        "_0808ECB0: .4byte gReservedSpritePaletteCount\n\t"
-        "_0808ECB4:\n\t"
-        "	ldr r0, _0808ECCC\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0xa\n\t"
-        "	bl PatchObjectPaletteRange\n\t"
-        "_0808ECC6:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808ECCC: .4byte sObjectPaletteTagSets\n\t"
-        ".syntax divided\n\t"
-    );
+    FreeAndReserveObjectSpritePalettes();
+    gUnknown_2037256 = OBJ_EVENT_PAL_TAG_NONE;
+    gUnknown_2037254 = reflectionType;
+    if (reflectionType == 1)
+    {
+        PatchObjectPaletteRange(sObjectPaletteTagSets[gUnknown_2037254], PALSLOT_PLAYER, PALSLOT_NPC_4 + 1);
+        gReservedSpritePaletteCount = 8;
+    }
+    else
+    {
+        PatchObjectPaletteRange(sObjectPaletteTagSets[gUnknown_2037254], PALSLOT_PLAYER, PALSLOT_NPC_4_REFLECTION + 1);
+    }
 }
 
-__attribute__((naked)) u16 GetObjectPaletteTag(u8 palSlot)
+u16 GetObjectPaletteTag(u8 palSlot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #9\n\t"
-        "	bhi _0808ED0C\n\t"
-        "	ldr r1, _0808ECEC\n\t"
-        "	ldr r0, _0808ECF0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	b _0808ED00\n\t"
-        "	.align 2, 0\n\t"
-        "_0808ECEC: .4byte sObjectPaletteTagSets\n\t"
-        "_0808ECF0: .4byte gUnknown_2037254\n\t"
-        "_0808ECF4:\n\t"
-        "	adds r1, r4, #4\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	ldr r0, _0808ED08\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "_0808ED00:\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	b _0808ED3E\n\t"
-        "	.align 2, 0\n\t"
-        "_0808ED08: .4byte gUnknown_2037254\n\t"
-        "_0808ED0C:\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, _0808ED44\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r2, _0808ED48\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	cmp r1, r2\n\t"
-        "	beq _0808ED3C\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	ldr r0, _0808ED4C\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	adds r5, r2, #0\n\t"
-        "_0808ED22:\n\t"
-        "	lsls r2, r3, #3\n\t"
-        "	adds r0, r2, r6\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _0808ECF4\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	lsls r0, r3, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _0808ED22\n\t"
-        "_0808ED3C:\n\t"
-        "	ldr r0, _0808ED48\n\t"
-        "_0808ED3E:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808ED44: .4byte sSpecialObjectReflectionPaletteSets\n\t"
-        "_0808ED48: .4byte 0x000011FF\n\t"
-        "_0808ED4C: .4byte gUnknown_2037256\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    if (palSlot < PALSLOT_NPC_SPECIAL)
+        return sObjectPaletteTagSets[gUnknown_2037254][palSlot];
+
+    for (i = 0; sSpecialObjectReflectionPaletteSets[i].tag != OBJ_EVENT_PAL_TAG_NONE; i++)
+    {
+        if (sSpecialObjectReflectionPaletteSets[i].tag == gUnknown_2037256)
+            return sSpecialObjectReflectionPaletteSets[i].data[gUnknown_2037254];
+    }
+    return OBJ_EVENT_PAL_TAG_NONE;
 }
 
 void MovementType_None(struct Sprite *sprite)
@@ -4416,40 +2637,13 @@ bool8 MovementType_WanderAround_Step1(struct ObjectEvent *objectEvent, struct Sp
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_WanderAround_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderAround_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808EE30\n\t"
-        "	ldr r5, _0808EE2C\n\t"
-        "	bl Random\n\t"
-        "	movs r4, #3\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	strh r4, [r6, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808EE32\n\t"
-        "	.align 2, 0\n\t"
-        "_0808EE2C: .4byte sMovementDelaysMedium\n\t"
-        "_0808EE30:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808EE32:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!ObjectEventExecSingleMovementAction(objectEvent, sprite))
+        return FALSE;
+    SetMovementDelay(sprite, sMovementDelaysMedium[Random() % ARRAY_COUNT(sMovementDelaysMedium)]);
+    sprite->sTypeFuncId = 3;
+    return TRUE;
 }
 
 bool8 MovementType_WanderAround_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -4497,76 +2691,35 @@ bool8 MovementType_WanderAround_Step6(struct ObjectEvent *objectEvent, struct Sp
     return FALSE;
 }
 
-__attribute__((naked)) bool8 EventObjectIsTrainerAndCloseToPlayer(struct ObjectEvent *objectEvent)
+bool8 EventObjectIsTrainerAndCloseToPlayer(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r0, #0x80\n\t"
-        "	bl TestPlayerAvatarFlags\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808EF68\n\t"
-        "	ldrb r0, [r5, #7]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0808EF18\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _0808EF68\n\t"
-        "_0808EF18:\n\t"
-        "	mov r7, sp\n\t"
-        "	adds r7, #2\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl PlayerGetDestCoords\n\t"
-        "	ldrh r2, [r5, #0x10]\n\t"
-        "	ldrh r4, [r5, #0x12]\n\t"
-        "	ldrb r1, [r5, #0x1d]\n\t"
-        "	subs r3, r2, r1\n\t"
-        "	subs r0, r4, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r2, r1, r2\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r6, r1, #0x10\n\t"
-        "	mov r0, sp\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r4, [r0, r1]\n\t"
-        "	cmp r3, r4\n\t"
-        "	bgt _0808EF68\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, r4\n\t"
-        "	blt _0808EF68\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r7, r2]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bgt _0808EF68\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, r1\n\t"
-        "	bge _0808EF6C\n\t"
-        "_0808EF68:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0808EF6E\n\t"
-        "_0808EF6C:\n\t"
-        "	movs r0, #1\n\t"
-        "_0808EF6E:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 playerX;
+    s16 playerY;
+    s16 objX;
+    s16 objY;
+    s16 minX;
+    s16 maxX;
+    s16 minY;
+    s16 maxY;
+
+    if (!TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_DASH))
+        return FALSE;
+
+    if (objectEvent->trainerType != TRAINER_TYPE_NORMAL && objectEvent->trainerType != TRAINER_TYPE_BURIED)
+        return FALSE;
+
+    PlayerGetDestCoords(&playerX, &playerY);
+    objX = objectEvent->currentCoords.x;
+    objY = objectEvent->currentCoords.y;
+    minX = objX - objectEvent->trainerRange_berryTreeId;
+    minY = objY - objectEvent->trainerRange_berryTreeId;
+    maxX = objX + objectEvent->trainerRange_berryTreeId;
+    maxY = objY + objectEvent->trainerRange_berryTreeId;
+    if (minX > playerX || maxX < playerX
+     || minY > playerY || maxY < playerY)
+        return FALSE;
+
+    return TRUE;
 }
 
 u8 GetVectorDirection(s16 dx, s16 dy, s16 absdx, s16 absdy)
@@ -4778,43 +2931,15 @@ bool8 MovementType_LookAround_Step1(struct ObjectEvent *objectEvent, struct Spri
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_LookAround_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_LookAround_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808F36E\n\t"
-        "	ldr r4, _0808F378\n\t"
-        "	bl Random\n\t"
-        "	movs r5, #3\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	strh r5, [r7, #0x30]\n\t"
-        "_0808F36E:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F378: .4byte sMovementDelaysMedium\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        SetMovementDelay(sprite, sMovementDelaysMedium[Random() % ARRAY_COUNT(sMovementDelaysMedium)]);
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 3;
+    }
+    return FALSE;
 }
 
 bool8 MovementType_LookAround_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -4865,40 +2990,14 @@ bool8 MovementType_WanderUpAndDown_Step1(struct ObjectEvent *objectEvent, struct
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_WanderUpAndDown_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderUpAndDown_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808F4AC\n\t"
-        "	ldr r5, _0808F4A8\n\t"
-        "	bl Random\n\t"
-        "	movs r4, #3\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	strh r4, [r6, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808F4AE\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F4A8: .4byte sMovementDelaysMedium\n\t"
-        "_0808F4AC:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808F4AE:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!ObjectEventExecSingleMovementAction(objectEvent, sprite))
+        return FALSE;
+
+    SetMovementDelay(sprite, sMovementDelaysMedium[Random() % ARRAY_COUNT(sMovementDelaysMedium)]);
+    sprite->sTypeFuncId = 3;
+    return TRUE;
 }
 
 bool8 MovementType_WanderUpAndDown_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -4913,47 +3012,18 @@ bool8 MovementType_WanderUpAndDown_Step3(struct ObjectEvent *objectEvent, struct
     return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementType_WanderUpAndDown_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderUpAndDown_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	ldr r1, _0808F51C\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #2\n\t"
-        "	bl memcpy\n\t"
-        "	bl Random\n\t"
-        "	movs r7, #1\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	movs r0, #5\n\t"
-        "	strh r0, [r6, #0x30]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetCollisionInDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808F512\n\t"
-        "	strh r7, [r6, #0x30]\n\t"
-        "_0808F512:\n\t"
-        "	movs r0, #1\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F51C: .4byte gUpAndDownDirections\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+    u8 directions[2];
+    memcpy(directions, gUpAndDownDirections, sizeof directions);
+    direction = directions[Random() & 1];
+    SetEventObjectDirection(objectEvent, direction);
+    sprite->sTypeFuncId = 5;
+    if (GetCollisionInDirection(objectEvent, direction))
+        sprite->sTypeFuncId = 1;
+
+    return TRUE;
 }
 
 
@@ -4999,40 +3069,14 @@ bool8 MovementType_WanderLeftAndRight_Step1(struct ObjectEvent *objectEvent, str
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_WanderLeftAndRight_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderLeftAndRight_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808F630\n\t"
-        "	ldr r5, _0808F62C\n\t"
-        "	bl Random\n\t"
-        "	movs r4, #3\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	strh r4, [r6, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808F632\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F62C: .4byte sMovementDelaysMedium\n\t"
-        "_0808F630:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808F632:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!ObjectEventExecSingleMovementAction(objectEvent, sprite))
+        return FALSE;
+
+    SetMovementDelay(sprite, sMovementDelaysMedium[Random() % ARRAY_COUNT(sMovementDelaysMedium)]);
+    sprite->sTypeFuncId = 3;
+    return TRUE;
 }
 
 bool8 MovementType_WanderLeftAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -5047,47 +3091,18 @@ bool8 MovementType_WanderLeftAndRight_Step3(struct ObjectEvent *objectEvent, str
     return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementType_WanderLeftAndRight_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderLeftAndRight_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	ldr r1, _0808F6A0\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #2\n\t"
-        "	bl memcpy\n\t"
-        "	bl Random\n\t"
-        "	movs r7, #1\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	movs r0, #5\n\t"
-        "	strh r0, [r6, #0x30]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetCollisionInDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808F696\n\t"
-        "	strh r7, [r6, #0x30]\n\t"
-        "_0808F696:\n\t"
-        "	movs r0, #1\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F6A0: .4byte gLeftAndRightDirections\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+    u8 directions[2];
+    memcpy(directions, gLeftAndRightDirections, sizeof directions);
+    direction = directions[Random() & 1];
+    SetEventObjectDirection(objectEvent, direction);
+    sprite->sTypeFuncId = 5;
+    if (GetCollisionInDirection(objectEvent, direction))
+        sprite->sTypeFuncId = 1;
+
+    return TRUE;
 }
 
 bool8 MovementType_WanderLeftAndRight_Step5(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -5144,67 +3159,22 @@ bool8 MovementType_Invisible_Step2(struct ObjectEvent *objectEvent, struct Sprit
 }
 
 
-__attribute__((naked)) void MovementType_BerryTreeGrowth(struct Sprite *sprite)
+void MovementType_BerryTreeGrowth(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808F7D8\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808F7C8\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl get_berry_tree_graphics\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	movs r0, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_0808F7C8:\n\t"
-        "	ldr r2, _0808F7DC\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F7D8: .4byte gObjectEvents\n\t"
-        "_0808F7DC: .4byte MovementType_FaceDownAndUp_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *objectEvent;
+
+    objectEvent = &gObjectEvents[sprite->sObjEventId];
+    if (!(sprite->data[7] & 1))
+    {
+        get_berry_tree_graphics(objectEvent, sprite);
+        sprite->data[7] |= 1;
+    }
+    UpdateEventObjectCurrentMovement(objectEvent, sprite, MovementType_FaceDownAndUp_callback);
 }
 
-__attribute__((naked)) u8 MovementType_FaceDownAndUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_FaceDownAndUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r3, _0808F7FC\n\t"
-        "	movs r4, #0x30\n\t"
-        "	ldrsh r2, [r1, r4]\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	bl _call_via_r2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F7FC: .4byte gMovementTypeFuncs_BerryTreeGrowth\n\t"
-        ".syntax divided\n\t"
-    );
+    return gMovementTypeFuncs_BerryTreeGrowth[sprite->sTypeFuncId](objectEvent, sprite);
 }
 
 
@@ -5322,43 +3292,15 @@ bool8 MovementType_FaceDownAndUp_Step1(struct ObjectEvent *objectEvent, struct S
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownAndUp_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownAndUp_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808FA7A\n\t"
-        "	ldr r4, _0808FA84\n\t"
-        "	bl Random\n\t"
-        "	movs r5, #3\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	strh r5, [r7, #0x30]\n\t"
-        "_0808FA7A:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808FA84: .4byte sMovementDelaysMedium\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        SetMovementDelay(sprite, sMovementDelaysMedium[Random() % ARRAY_COUNT(sMovementDelaysMedium)]);
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 3;
+    }
+    return FALSE;
 }
 
 bool8 MovementType_FaceDownAndUp_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -5408,43 +3350,15 @@ bool8 MovementType_FaceLeftAndRight_Step1(struct ObjectEvent *objectEvent, struc
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_FaceLeftAndRight_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceLeftAndRight_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808FBBA\n\t"
-        "	ldr r4, _0808FBC4\n\t"
-        "	bl Random\n\t"
-        "	movs r5, #3\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	strh r5, [r7, #0x30]\n\t"
-        "_0808FBBA:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808FBC4: .4byte sMovementDelaysMedium\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        SetMovementDelay(sprite, sMovementDelaysMedium[Random() % ARRAY_COUNT(sMovementDelaysMedium)]);
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 3;
+    }
+    return FALSE;
 }
 
 bool8 MovementType_FaceLeftAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -5495,43 +3409,15 @@ bool8 MovementType_FaceUpAndLeft_Step1(struct ObjectEvent *objectEvent, struct S
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_FaceUpAndLeft_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceUpAndLeft_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808FCFA\n\t"
-        "	ldr r4, _0808FD04\n\t"
-        "	bl Random\n\t"
-        "	movs r5, #3\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	strh r5, [r7, #0x30]\n\t"
-        "_0808FCFA:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808FD04: .4byte sMovementDelaysShort\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        SetMovementDelay(sprite, sMovementDelaysShort[Random() % ARRAY_COUNT(sMovementDelaysShort)]);
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 3;
+    }
+    return FALSE;
 }
 
 bool8 MovementType_FaceUpAndLeft_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -5581,43 +3467,15 @@ bool8 MovementType_FaceUpAndRight_Step1(struct ObjectEvent *objectEvent, struct 
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_FaceUpAndRight_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceUpAndRight_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808FE3A\n\t"
-        "	ldr r4, _0808FE44\n\t"
-        "	bl Random\n\t"
-        "	movs r5, #3\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	strh r5, [r7, #0x30]\n\t"
-        "_0808FE3A:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808FE44: .4byte sMovementDelaysShort\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        SetMovementDelay(sprite, sMovementDelaysShort[Random() % ARRAY_COUNT(sMovementDelaysShort)]);
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 3;
+    }
+    return FALSE;
 }
 
 bool8 MovementType_FaceUpAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -5668,43 +3526,15 @@ bool8 MovementType_FaceDownAndLeft_Step1(struct ObjectEvent *objectEvent, struct
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownAndLeft_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownAndLeft_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808FF7A\n\t"
-        "	ldr r4, _0808FF84\n\t"
-        "	bl Random\n\t"
-        "	movs r5, #3\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	strh r5, [r7, #0x30]\n\t"
-        "_0808FF7A:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808FF84: .4byte sMovementDelaysShort\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        SetMovementDelay(sprite, sMovementDelaysShort[Random() % ARRAY_COUNT(sMovementDelaysShort)]);
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 3;
+    }
+    return FALSE;
 }
 
 bool8 MovementType_FaceDownAndLeft_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -5754,43 +3584,15 @@ bool8 MovementType_FaceDownAndRight_Step1(struct ObjectEvent *objectEvent, struc
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownAndRight_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownAndRight_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080900BA\n\t"
-        "	ldr r4, _080900C4\n\t"
-        "	bl Random\n\t"
-        "	movs r5, #3\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	strh r5, [r7, #0x30]\n\t"
-        "_080900BA:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080900C4: .4byte sMovementDelaysShort\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        SetMovementDelay(sprite, sMovementDelaysShort[Random() % ARRAY_COUNT(sMovementDelaysShort)]);
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 3;
+    }
+    return FALSE;
 }
 
 bool8 MovementType_FaceDownAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -5840,43 +3642,15 @@ bool8 MovementType_FaceDownUpAndLeft_Step1(struct ObjectEvent *objectEvent, stru
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownUpAndLeft_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownUpAndLeft_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080901FA\n\t"
-        "	ldr r4, _08090204\n\t"
-        "	bl Random\n\t"
-        "	movs r5, #3\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	strh r5, [r7, #0x30]\n\t"
-        "_080901FA:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08090204: .4byte sMovementDelaysShort\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        SetMovementDelay(sprite, sMovementDelaysShort[Random() % ARRAY_COUNT(sMovementDelaysShort)]);
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 3;
+    }
+    return FALSE;
 }
 
 bool8 MovementType_FaceDownUpAndLeft_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -5927,43 +3701,15 @@ bool8 MovementType_FaceDownUpAndRight_Step1(struct ObjectEvent *objectEvent, str
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownUpAndRight_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownUpAndRight_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809033A\n\t"
-        "	ldr r4, _08090344\n\t"
-        "	bl Random\n\t"
-        "	movs r5, #3\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	strh r5, [r7, #0x30]\n\t"
-        "_0809033A:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08090344: .4byte sMovementDelaysShort\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        SetMovementDelay(sprite, sMovementDelaysShort[Random() % ARRAY_COUNT(sMovementDelaysShort)]);
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 3;
+    }
+    return FALSE;
 }
 
 bool8 MovementType_FaceDownUpAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -6013,43 +3759,15 @@ bool8 MovementType_FaceUpLeftAndRight_Step1(struct ObjectEvent *objectEvent, str
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_FaceUpLeftAndRight_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceUpLeftAndRight_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809047A\n\t"
-        "	ldr r4, _08090484\n\t"
-        "	bl Random\n\t"
-        "	movs r5, #3\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	strh r5, [r7, #0x30]\n\t"
-        "_0809047A:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08090484: .4byte sMovementDelaysShort\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        SetMovementDelay(sprite, sMovementDelaysShort[Random() % ARRAY_COUNT(sMovementDelaysShort)]);
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 3;
+    }
+    return FALSE;
 }
 
 bool8 MovementType_FaceUpLeftAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -6100,43 +3818,15 @@ bool8 MovementType_FaceDownLeftAndRight_Step1(struct ObjectEvent *objectEvent, s
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownLeftAndRight_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownLeftAndRight_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080905BA\n\t"
-        "	ldr r4, _080905C4\n\t"
-        "	bl Random\n\t"
-        "	movs r5, #3\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	strh r5, [r7, #0x30]\n\t"
-        "_080905BA:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080905C4: .4byte sMovementDelaysShort\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        SetMovementDelay(sprite, sMovementDelaysShort[Random() % ARRAY_COUNT(sMovementDelaysShort)]);
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 3;
+    }
+    return FALSE;
 }
 
 bool8 MovementType_FaceDownLeftAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -6875,86 +4565,22 @@ bool8 MovementType_CopyPlayer_Step0(struct ObjectEvent *objectEvent, struct Spri
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_CopyPlayer_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_CopyPlayer_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	ldr r2, _08091854\n\t"
-        "	ldr r3, _08091858\n\t"
-        "	ldrb r1, [r3, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0, #0x1c]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _08091850\n\t"
-        "	ldrb r0, [r3, #3]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _0809185C\n\t"
-        "_08091850:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08091884\n\t"
-        "	.align 2, 0\n\t"
-        "_08091854: .4byte gObjectEvents\n\t"
-        "_08091858: .4byte gPlayerAvatar\n\t"
-        "_0809185C:\n\t"
-        "	ldr r5, _0809188C\n\t"
-        "	bl PlayerGetCopyableMovement\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x16\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	bl GetPlayerMovementDirection\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r4, [r4]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl _call_via_r4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_08091884:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0809188C: .4byte gCopyPlayerMovementFuncs\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gObjectEvents[gPlayerAvatar.objectEventId].movementActionId == MOVEMENT_ACTION_NONE || gPlayerAvatar.tileTransitionState == T_TILE_CENTER)
+        return FALSE;
+
+    return gCopyPlayerMovementFuncs[PlayerGetCopyableMovement()](objectEvent, sprite, GetPlayerMovementDirection(), NULL);
 }
 
-__attribute__((naked)) bool8 MovementType_CopyPlayer_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_CopyPlayer_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080918AE\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #3\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "_080918AE:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 1;
+    }
+    return FALSE;
 }
 
 bool8 CopyablePlayerMovement_None(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
@@ -6969,6 +4595,9 @@ bool8 CopyablePlayerMovement_FaceDirection(struct ObjectEvent *objectEvent, stru
     return TRUE;
 }
 
+// Keep the JP copy-movement handlers in asm: the narrow US result contract
+// changes an existing C caller, and preserving the 32-bit JP contract changes
+// agbcc input-mask/register scheduling even with size-matched wide locals.
 __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed0(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
 {
     __asm__(".syntax unified\n\t"
@@ -7624,59 +5253,12 @@ u8 StartFieldEffectForEventObject(struct ObjectEvent *objectEvent, struct Sprite
     return gMovementTypeFuncs_CopyPlayerInGrass[sprite->sTypeFuncId](objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementType_CopyPlayerInGrass_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_CopyPlayerInGrass_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	ldr r2, _08091E6C\n\t"
-        "	ldr r3, _08091E70\n\t"
-        "	ldrb r1, [r3, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0, #0x1c]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _08091E68\n\t"
-        "	ldrb r0, [r3, #3]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08091E74\n\t"
-        "_08091E68:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08091E9C\n\t"
-        "	.align 2, 0\n\t"
-        "_08091E6C: .4byte gObjectEvents\n\t"
-        "_08091E70: .4byte gPlayerAvatar\n\t"
-        "_08091E74:\n\t"
-        "	ldr r5, _08091EA4\n\t"
-        "	bl PlayerGetCopyableMovement\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x16\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	bl GetPlayerMovementDirection\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r3, _08091EA8\n\t"
-        "	ldr r4, [r4]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl _call_via_r4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_08091E9C:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08091EA4: .4byte gCopyPlayerMovementFuncs\n\t"
-        "_08091EA8: .4byte MetatileBehavior_IsPokeGrass + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gObjectEvents[gPlayerAvatar.objectEventId].movementActionId == MOVEMENT_ACTION_NONE || gPlayerAvatar.tileTransitionState == T_TILE_CENTER)
+        return FALSE;
+
+    return gCopyPlayerMovementFuncs[PlayerGetCopyableMovement()](objectEvent, sprite, GetPlayerMovementDirection(), MetatileBehavior_IsPokeGrass);
 }
 
 void MovementType_TreeDisguise(struct Sprite *sprite)
@@ -7716,83 +5298,21 @@ void MovementType_MountainDisguise(struct Sprite *sprite)
     UpdateObjectEventCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_Disguise_Callback);
 }
 
-__attribute__((naked)) void MovementType_Hidden(struct Sprite *sprite)
+void MovementType_Hidden(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r3, r1]\n\t"
-        "	ldr r4, _08091FF4\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08091FD8\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0, #3]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #3]\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	adds r2, #0x42\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrb r0, [r3, #5]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #5]\n\t"
-        "	ldrh r0, [r3, #0x3c]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x3c]\n\t"
-        "_08091FD8:\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r2, _08091FF8\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08091FF4: .4byte gObjectEvents\n\t"
-        "_08091FF8: .4byte sub_08091FFC + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!sprite->data[7])
+    {
+        gObjectEvents[sprite->sObjEventId].fixedPriority = TRUE;
+        sprite->subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
+        sprite->oam.priority = 3;
+        sprite->data[7]++;
+    }
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, sub_08091FFC);
 }
 
-__attribute__((naked)) u8 sub_08091FFC(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 sub_08091FFC(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r3, _08092018\n\t"
-        "	movs r4, #0x30\n\t"
-        "	ldrsh r2, [r1, r4]\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	bl _call_via_r2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092018: .4byte gMovementTypeFuncs_Buried\n\t"
-        ".syntax divided\n\t"
-    );
+    return gMovementTypeFuncs_Buried[sprite->sTypeFuncId](objectEvent, sprite);
 }
 
 bool8 MovementType_Hidden_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7920,28 +5440,13 @@ bool8 MovementType_FaceDirection_Step2(struct ObjectEvent *objectEvent, struct S
 }
 
 
-__attribute__((naked)) bool8 ClearEventObjectMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void ClearEventObjectMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	movs r2, #3\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	ands r2, r3\n\t"
-        "	movs r3, #0x41\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	ands r2, r3\n\t"
-        "	movs r3, #0x7f\n\t"
-        "	ands r2, r3\n\t"
-        "	strb r2, [r0]\n\t"
-        "	movs r2, #0xff\n\t"
-        "	strb r2, [r0, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->singleMovementActive = FALSE;
+    objectEvent->heldMovementActive = FALSE;
+    objectEvent->heldMovementFinished = FALSE;
+    objectEvent->movementActionId = MOVEMENT_ACTION_NONE;
+    sprite->sTypeFuncId = 0;
 }
 
 u8 GetJumpInPlaceMovementAction(u32 direction)
@@ -8035,120 +5540,56 @@ u8 GetWalkSlowMovementAction(u32 direction)
     return gWalkSlowMovementActions[dir];
 }
 
-__attribute__((naked)) void *sub_080923BC(u32 id)
+const struct StepAnimTable *sub_080923BC(const union AnimCmd *const *anims)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r1, _080923C4\n\t"
-        "	b _080923D4\n\t"
-        "	.align 2, 0\n\t"
-        "_080923C4: .4byte sStepAnimTables\n\t"
-        "_080923C8:\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	cmp r0, r2\n\t"
-        "	bne _080923D2\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	b _080923DC\n\t"
-        "_080923D2:\n\t"
-        "	adds r1, #8\n\t"
-        "_080923D4:\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080923C8\n\t"
-        "	movs r0, #0\n\t"
-        "_080923DC:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct StepAnimTable *stepTable;
+
+    for (stepTable = sStepAnimTables; stepTable->anims != NULL; stepTable++)
+    {
+        if (stepTable->anims == anims)
+            return stepTable;
+    }
+    return NULL;
 }
 
-__attribute__((naked)) void npc_apply_anim_looping(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 animNum)
+void npc_apply_anim_looping(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 animNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _08092422\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x2a\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldr r0, [r4, #8]\n\t"
-        "	bl sub_080923BC\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x2b\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809241A\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	ldrb r3, [r0, #4]\n\t"
-        "	cmp r2, r3\n\t"
-        "	bne _08092410\n\t"
-        "	ldrb r0, [r0, #7]\n\t"
-        "	b _08092418\n\t"
-        "_08092410:\n\t"
-        "	ldrb r3, [r0, #5]\n\t"
-        "	cmp r2, r3\n\t"
-        "	bne _0809241A\n\t"
-        "	ldrb r0, [r0, #6]\n\t"
-        "_08092418:\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0809241A:\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SeekSpriteAnim\n\t"
-        "_08092422:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct StepAnimTable *stepTable;
+
+    if (!objectEvent->inanimate)
+    {
+        sprite->animNum = animNum;
+        stepTable = sub_080923BC(sprite->anims);
+        if (stepTable != NULL)
+        {
+            if (sprite->animCmdIndex == stepTable->animPos[0])
+                sprite->animCmdIndex  = stepTable->animPos[3];
+            else if (sprite->animCmdIndex == stepTable->animPos[1])
+                sprite->animCmdIndex = stepTable->animPos[2];
+        }
+        SeekSpriteAnim(sprite, sprite->animCmdIndex);
+    }
 }
 
-__attribute__((naked)) void obj_npc_animation_step(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 animNum)
+void obj_npc_animation_step(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 animNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _08092460\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x2a\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldr r0, [r4, #8]\n\t"
-        "	bl sub_080923BC\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _08092460\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x2b\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldrb r3, [r2, #4]\n\t"
-        "	cmp r0, r3\n\t"
-        "	bhi _0809245A\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "_0809245A:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SeekSpriteAnim\n\t"
-        "_08092460:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct StepAnimTable *stepTable;
+
+    if (!objectEvent->inanimate)
+    {
+        u8 animPos;
+
+        sprite->animNum = animNum;
+        stepTable = sub_080923BC(sprite->anims);
+        if (stepTable != NULL)
+        {
+            animPos = stepTable->animPos[1];
+            if (sprite->animCmdIndex <= stepTable->animPos[0])
+                animPos = stepTable->animPos[0];
+
+            SeekSpriteAnim(sprite, animPos);
+        }
+    }
 }
 
 u8 GetDirectionToFace(s16 x, s16 y, s16 targetX, s16 targetY)
@@ -8174,341 +5615,80 @@ void SetTrainerMovementType(struct ObjectEvent *objectEvent, u8 movementType)
     gSprites[objectEvent->spriteId].sTypeFuncId = 0;
 }
 
-__attribute__((naked, section(".text.GroundEffect_DeepSandTracks"))) u8 GetTrainerFacingDirectionMovementType(u8 direction)
+__attribute__((section(".text.GroundEffect_DeepSandTracks"))) u8 GetTrainerFacingDirectionMovementType(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080924F4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080924F4: .4byte sEventObjectMovementDirectionData\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEventObjectMovementDirectionData.trainerFacingDirectionMovementTypes[direction];
 }
 
-__attribute__((naked)) u8 GetCollisionInDirection(struct ObjectEvent *objectEvent, u8 direction)
+u8 GetCollisionInDirection(struct ObjectEvent *objectEvent, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r5, r1, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldrh r1, [r6, #0x10]\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldrh r0, [r6, #0x12]\n\t"
-        "	mov r4, sp\n\t"
-        "	adds r4, #2\n\t"
-        "	strh r0, [r4]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl MoveCoords\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl GetCollisionAtCoords\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 x = objectEvent->currentCoords.x;
+    s16 y = objectEvent->currentCoords.y;
+    MoveCoords(direction, &x, &y);
+    return GetCollisionAtCoords(objectEvent, x, y, direction);
 }
 
-__attribute__((naked)) u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 dir)
+u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 dir)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r7, r3, #0x18\n\t"
-        "	mov r8, r7\n\t"
-        "	lsrs r0, r1, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	asrs r5, r1, #0x10\n\t"
-        "	lsrs r0, r2, #0x10\n\t"
-        "	mov sl, r0\n\t"
-        "	asrs r4, r2, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl IsCoordOutsideObjectEventMovementRange\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809256E\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080925EE\n\t"
-        "_0809256E:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl MapGridGetCollisionAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080925B0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetMapBorderIdAt\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _080925B0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl IsMetatileDirectionallyImpassable\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080925B0\n\t"
-        "	ldrb r0, [r6, #1]\n\t"
-        "	lsrs r0, r0, #7\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080925B4\n\t"
-        "	mov r0, r8\n\t"
-        "	bl CanCameraMoveInDirection\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080925B4\n\t"
-        "_080925B0:\n\t"
-        "	movs r0, #2\n\t"
-        "	b _080925EE\n\t"
-        "_080925B4:\n\t"
-        "	ldrb r0, [r6, #0xb]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	mov r2, sb\n\t"
-        "	lsls r1, r2, #0x10\n\t"
-        "	asrs r5, r1, #0x10\n\t"
-        "	mov r2, sl\n\t"
-        "	lsls r1, r2, #0x10\n\t"
-        "	asrs r4, r1, #0x10\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl IsZCoordMismatchAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080925D8\n\t"
-        "	movs r0, #3\n\t"
-        "	b _080925EE\n\t"
-        "_080925D8:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl DoesObjectCollideWithObjectAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080925EC\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080925EE\n\t"
-        "_080925EC:\n\t"
-        "	movs r0, #4\n\t"
-        "_080925EE:\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction = dir;
+
+    if (IsCoordOutsideObjectEventMovementRange(objectEvent, x, y))
+        return COLLISION_OUTSIDE_RANGE;
+    else if (MapGridGetCollisionAt(x, y) || GetMapBorderIdAt(x, y) == CONNECTION_INVALID || IsMetatileDirectionallyImpassable(objectEvent, x, y, direction))
+        return COLLISION_IMPASSABLE;
+    else if (objectEvent->trackedByCamera && !CanCameraMoveInDirection(direction))
+        return COLLISION_IMPASSABLE;
+    else if (IsZCoordMismatchAt(objectEvent->currentElevation, x, y))
+        return COLLISION_ELEVATION_MISMATCH;
+    else if (DoesObjectCollideWithObjectAt(objectEvent, x, y))
+        return COLLISION_OBJECT_EVENT;
+    return COLLISION_NONE;
 }
 
-__attribute__((naked)) u8 GetCollisionFlagsAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 direction)
+u8 GetCollisionFlagsAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	mov r8, r3\n\t"
-        "	lsrs r0, r1, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	asrs r6, r1, #0x10\n\t"
-        "	lsrs r0, r2, #0x10\n\t"
-        "	mov sl, r0\n\t"
-        "	asrs r5, r2, #0x10\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl IsCoordOutsideObjectEventMovementRange\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	rsbs r1, r0, #0\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsrs r4, r1, #0x1f\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MapGridGetCollisionAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08092674\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetMapBorderIdAt\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _08092674\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	mov r3, r8\n\t"
-        "	bl IsMetatileDirectionallyImpassable\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08092674\n\t"
-        "	ldrb r0, [r7, #1]\n\t"
-        "	lsrs r0, r0, #7\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08092678\n\t"
-        "	mov r0, r8\n\t"
-        "	bl CanCameraMoveInDirection\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08092678\n\t"
-        "_08092674:\n\t"
-        "	movs r0, #2\n\t"
-        "	orrs r4, r0\n\t"
-        "_08092678:\n\t"
-        "	ldrb r0, [r7, #0xb]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	mov r2, sb\n\t"
-        "	lsls r1, r2, #0x10\n\t"
-        "	asrs r6, r1, #0x10\n\t"
-        "	mov r2, sl\n\t"
-        "	lsls r1, r2, #0x10\n\t"
-        "	asrs r5, r1, #0x10\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl IsZCoordMismatchAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080926A0\n\t"
-        "	movs r0, #4\n\t"
-        "	orrs r4, r0\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_080926A0:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl DoesObjectCollideWithObjectAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080926B8\n\t"
-        "	movs r0, #8\n\t"
-        "	orrs r4, r0\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_080926B8:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 flags = 0;
+
+    if (IsCoordOutsideObjectEventMovementRange(objectEvent, x, y))
+        flags |= 1 << (COLLISION_OUTSIDE_RANGE - 1);
+    if (MapGridGetCollisionAt(x, y) || GetMapBorderIdAt(x, y) == CONNECTION_INVALID || IsMetatileDirectionallyImpassable(objectEvent, x, y, direction) || (objectEvent->trackedByCamera && !CanCameraMoveInDirection(direction)))
+        flags |= 1 << (COLLISION_IMPASSABLE - 1);
+    if (IsZCoordMismatchAt(objectEvent->currentElevation, x, y))
+        flags |= 1 << (COLLISION_ELEVATION_MISMATCH - 1);
+    if (DoesObjectCollideWithObjectAt(objectEvent, x, y))
+        flags |= 1 << (COLLISION_OBJECT_EVENT - 1);
+    return flags;
 }
 
-__attribute__((naked)) bool8 IsCoordOutsideObjectEventMovementRange(struct ObjectEvent *objectEvent, s16 x, s16 y)
+bool8 IsCoordOutsideObjectEventMovementRange(struct ObjectEvent *objectEvent, s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r3, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r5, r2, #0x10\n\t"
-        "	ldrb r1, [r4, #0x19]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08092700\n\t"
-        "	lsls r1, r1, #0x1c\n\t"
-        "	lsrs r2, r1, #0x1c\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	subs r2, r0, r2\n\t"
-        "	lsrs r1, r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r3, r0, #0x10\n\t"
-        "	cmp r2, r0\n\t"
-        "	bgt _0809272C\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, r3\n\t"
-        "	blt _0809272C\n\t"
-        "_08092700:\n\t"
-        "	ldrb r1, [r4, #0x19]\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08092730\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r2, r1, #0x1c\n\t"
-        "	ldrh r0, [r4, #0xe]\n\t"
-        "	subs r2, r0, r2\n\t"
-        "	lsrs r1, r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r3, r0, #0x10\n\t"
-        "	cmp r2, r0\n\t"
-        "	bgt _0809272C\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, r3\n\t"
-        "	bge _08092730\n\t"
-        "_0809272C:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08092732\n\t"
-        "_08092730:\n\t"
-        "	movs r0, #0\n\t"
-        "_08092732:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 left;
+    s16 right;
+    s16 top;
+    s16 bottom;
+
+    if (objectEvent->range.rangeX != 0)
+    {
+        left = objectEvent->initialCoords.x - objectEvent->range.rangeX;
+        right = objectEvent->initialCoords.x + objectEvent->range.rangeX;
+
+        if (left > x || right < x)
+            return TRUE;
+    }
+    if (objectEvent->range.rangeY != 0)
+    {
+        top = objectEvent->initialCoords.y - objectEvent->range.rangeY;
+        bottom = objectEvent->initialCoords.y + objectEvent->range.rangeY;
+
+        if (top > y || bottom < y)
+            return TRUE;
+    }
+    return FALSE;
 }
 
 
+// Keep the JP asm: agbcc either combines the two packed table bases or
+// emits unaligned member loads, instead of the original two aligned literals.
 __attribute__((naked)) bool8 IsMetatileDirectionallyImpassable(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 direction)
 {
     __asm__(".syntax unified\n\t"
@@ -8559,172 +5739,43 @@ __attribute__((naked)) bool8 IsMetatileDirectionallyImpassable(struct ObjectEven
     );
 }
 
-__attribute__((naked)) bool8 DoesObjectCollideWithObjectAt(struct ObjectEvent *objectEvent, s16 x, s16 y)
+bool8 DoesObjectCollideWithObjectAt(struct ObjectEvent *objectEvent, s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r7, r1, #0x10\n\t"
-        "	movs r4, #0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r5, r2, #0x10\n\t"
-        "_0809279E:\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080927F4\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080927F8\n\t"
-        "	cmp r2, r6\n\t"
-        "	beq _080927F8\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ldrsh r1, [r2, r0]\n\t"
-        "	lsls r0, r7, #0x10\n\t"
-        "	asrs r3, r0, #0x10\n\t"
-        "	cmp r1, r3\n\t"
-        "	bne _080927C8\n\t"
-        "	movs r1, #0x12\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	cmp r0, r5\n\t"
-        "	beq _080927D8\n\t"
-        "_080927C8:\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	cmp r0, r3\n\t"
-        "	bne _080927F8\n\t"
-        "	movs r1, #0x16\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _080927F8\n\t"
-        "_080927D8:\n\t"
-        "	ldrb r0, [r6, #0xb]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	ldrb r1, [r2, #0xb]\n\t"
-        "	lsls r1, r1, #0x1c\n\t"
-        "	lsrs r1, r1, #0x1c\n\t"
-        "	bl AreElevationsCompatible\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080927F8\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08092804\n\t"
-        "	.align 2, 0\n\t"
-        "_080927F4: .4byte gObjectEvents\n\t"
-        "_080927F8:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0xf\n\t"
-        "	bls _0809279E\n\t"
-        "	movs r0, #0\n\t"
-        "_08092804:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    struct ObjectEvent *curObject;
+
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+    {
+        curObject = &gObjectEvents[i];
+        if (curObject->active && curObject != objectEvent)
+        {
+            if ((curObject->currentCoords.x == x && curObject->currentCoords.y == y) || (curObject->previousCoords.x == x && curObject->previousCoords.y == y))
+            {
+                if (AreElevationsCompatible(objectEvent->currentElevation, curObject->currentElevation))
+                    return TRUE;
+            }
+        }
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 IsBerryTreeSparkling(u8 localId, u8 mapNum, u8 mapGroup)
+bool8 IsBerryTreeSparkling(u8 localId, u8 mapNum, u8 mapGroup)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08092858\n\t"
-        "	ldr r3, _08092850\n\t"
-        "	ldr r2, _08092854\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r1, [r0, #0x3c]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08092858\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0809285A\n\t"
-        "	.align 2, 0\n\t"
-        "_08092850: .4byte gSprites\n\t"
-        "_08092854: .4byte gObjectEvents\n\t"
-        "_08092858:\n\t"
-        "	movs r0, #0\n\t"
-        "_0809285A:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+
+    if (!TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId)
+        && gSprites[gObjectEvents[objectEventId].spriteId].data[7] & BERRY_FLAG_SPARKLING)
+        return TRUE;
+
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_08092860(u8 localId, u8 mapNum, u8 mapGroup)
+void sub_08092860(u8 localId, u8 mapNum, u8 mapGroup)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0809289E\n\t"
-        "	ldr r3, _080928A4\n\t"
-        "	ldr r2, _080928A8\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrh r2, [r1, #0x3c]\n\t"
-        "	movs r0, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strh r0, [r1, #0x3c]\n\t"
-        "_0809289E:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080928A4: .4byte gSprites\n\t"
-        "_080928A8: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+
+    if (!TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId))
+        gSprites[gObjectEvents[objectEventId].spriteId].data[7] |= BERRY_FLAG_JUST_PICKED;
 }
 
 void MoveCoords(u8 direction, s16 *x, s16 *y)
@@ -8733,95 +5784,22 @@ void MoveCoords(u8 direction, s16 *x, s16 *y)
     *y += sDirectionToVectors[direction].y;
 }
 
-__attribute__((naked)) void sub_080928D0(u8 direction, s16 *destX, s16 *destY)
+void sub_080928D0(u8 direction, s16 *destX, s16 *destY)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r3, _080928F4\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r3, [r0]\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	ldrh r4, [r1]\n\t"
-        "	adds r3, r3, r4\n\t"
-        "	strh r3, [r1]\n\t"
-        "	ldrh r0, [r0, #2]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080928F4: .4byte sEventObjectMovementDirectionData + 0x29\n\t"
-        ".syntax divided\n\t"
-    );
+    *destX += sDirectionToVectors[direction].x << 4;
+    *destY += sDirectionToVectors[direction].y << 4;
 }
 
-__attribute__((naked)) void MoveCoordsInDirection(u32 direction, s16 *x, s16 *y, s16 deltaX, s16 deltaY)
+void MoveCoordsInDirection(u8 direction, s16 *x, s16 *y, s16 deltaX, s16 deltaY)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldr r1, [sp, #0x14]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r7, r3, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r6, r1, #0x10\n\t"
-        "	mov ip, r6\n\t"
-        "	ldr r1, _0809295C\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	ble _08092924\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	ldrh r3, [r4]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r4]\n\t"
-        "_08092924:\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08092932\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	lsls r0, r7, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r4]\n\t"
-        "_08092932:\n\t"
-        "	movs r0, #2\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	ble _08092944\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	ldrh r3, [r2]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r2]\n\t"
-        "_08092944:\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08092954\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	mov r3, ip\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r2]\n\t"
-        "_08092954:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0809295C: .4byte sEventObjectMovementDirectionData + 0x29\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sDirectionToVectors[direction].x > 0)
+        *x += deltaX;
+    if (sDirectionToVectors[direction].x < 0)
+        *x -= deltaX;
+    if (sDirectionToVectors[direction].y > 0)
+        *y += deltaY;
+    if (sDirectionToVectors[direction].y < 0)
+        *y -= deltaY;
 }
 
 void GetMapCoordsFromSpritePos(s16 x, s16 y, s16 *destX, s16 *destY)
@@ -8859,48 +5837,22 @@ void SetSpritePosToOffsetMapCoords(s16 *x, s16 *y, s16 dx, s16 dy)
     *y += dy;
 }
 
-__attribute__((naked)) void GetEventObjectMovingCameraOffset(s16 *x, s16 *y)
+void GetEventObjectMovingCameraOffset(s16 *x, s16 *y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r3, _08092AD8\n\t"
-        "	ldr r0, [r3, #0x10]\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _08092AB2\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r2]\n\t"
-        "_08092AB2:\n\t"
-        "	ldr r0, [r3, #0x10]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08092ABE\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r2]\n\t"
-        "_08092ABE:\n\t"
-        "	ldr r2, [r3, #0x14]\n\t"
-        "	cmp r2, #0\n\t"
-        "	ble _08092ACA\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "_08092ACA:\n\t"
-        "	cmp r2, #0\n\t"
-        "	bge _08092AD4\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "_08092AD4:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08092AD8: .4byte gFieldCamera\n\t"
-        ".syntax divided\n\t"
-    );
+    *x = 0;
+    *y = 0;
+
+    if (gFieldCamera.x > 0)
+        (*x)++;
+
+    if (gFieldCamera.x < 0)
+        (*x)--;
+
+    if (gFieldCamera.y > 0)
+        (*y)++;
+
+    if (gFieldCamera.y < 0)
+        (*y)--;
 }
 
 void ObjectEventMoveDestCoords(struct ObjectEvent *objectEvent, u32 direction, s16 *x, s16 *y)
@@ -8952,38 +5904,13 @@ void ObjectEventClearHeldMovementIfActive(struct ObjectEvent *objectEvent)
         EventObjectClearHeldMovement(objectEvent);
 }
 
-__attribute__((naked)) void EventObjectClearHeldMovement(struct ObjectEvent *objectEvent)
+void EventObjectClearHeldMovement(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r1, #0xff\n\t"
-        "	strb r1, [r0, #0x1c]\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	movs r2, #0x7f\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r3, _08092BDC\n\t"
-        "	ldrb r2, [r0, #4]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r1, #0x30]\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r2, [r0, #0x32]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08092BDC: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->movementActionId = MOVEMENT_ACTION_NONE;
+    objectEvent->heldMovementActive = FALSE;
+    objectEvent->heldMovementFinished = FALSE;
+    gSprites[objectEvent->spriteId].sTypeFuncId = 0;
+    gSprites[objectEvent->spriteId].sActionFuncId = 0;
 }
 
 u8 ObjectEventCheckHeldMovementStatus(struct ObjectEvent *objectEvent)
@@ -8994,29 +5921,13 @@ u8 ObjectEventCheckHeldMovementStatus(struct ObjectEvent *objectEvent)
     return 16;
 }
 
-__attribute__((naked)) u8 ObjectEventClearHeldMovementIfFinished(struct ObjectEvent *objectEvent)
+u8 ObjectEventClearHeldMovementIfFinished(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	bl ObjectEventCheckHeldMovementStatus\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _08092C0E\n\t"
-        "	cmp r4, #0x10\n\t"
-        "	beq _08092C0E\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfActive\n\t"
-        "_08092C0E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 heldMovementStatus = ObjectEventCheckHeldMovementStatus(objectEvent);
+    if (heldMovementStatus != 0 && heldMovementStatus != 16)
+        ObjectEventClearHeldMovementIfActive(objectEvent);
+
+    return heldMovementStatus;
 }
 
 
@@ -9027,554 +5938,209 @@ u8 EventObjectGetHeldMovementActionId(struct ObjectEvent *objectEvent)
     return MOVEMENT_ACTION_NONE;
 }
 
-__attribute__((naked)) void UpdateEventObjectCurrentMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, bool8 (*callback)(struct ObjectEvent *, struct Sprite *))
+void UpdateEventObjectCurrentMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, bool8 (*callback)(struct ObjectEvent *, struct Sprite *))
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	bl DoGroundEffects_OnSpawn\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl TryEnableEventObjectAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventIsHeldMovementActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08092C5A\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl EventObjectExecHeldMovementAction\n\t"
-        "	b _08092C70\n\t"
-        "_08092C5A:\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08092C70\n\t"
-        "_08092C62:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl _call_via_r6\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08092C62\n\t"
-        "_08092C70:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl DoGroundEffects_OnBeginStep\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl DoGroundEffects_OnFinishStep\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl UpdateEventObjectSpriteAnimPause\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl UpdateObjectEventVisibility\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl ObjectEventUpdateSubpriority\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    DoGroundEffects_OnSpawn(objectEvent, sprite);
+    TryEnableEventObjectAnim(objectEvent, sprite);
+
+    if (ObjectEventIsHeldMovementActive(objectEvent))
+        EventObjectExecHeldMovementAction(objectEvent, sprite);
+    else if (!objectEvent->frozen)
+        while (callback(objectEvent, sprite));
+
+    DoGroundEffects_OnBeginStep(objectEvent, sprite);
+    DoGroundEffects_OnFinishStep(objectEvent, sprite);
+    UpdateEventObjectSpriteAnimPause(objectEvent, sprite);
+    UpdateObjectEventVisibility(objectEvent, sprite);
+    ObjectEventUpdateSubpriority(objectEvent, sprite);
 }
 
-__attribute__((naked)) u8 GetFaceDirectionMovementAction(u32 direction)
+u8 GetFaceDirectionMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092CC8\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092CB8\n\t"
-        "	movs r4, #0\n\t"
-        "_08092CB8:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092CC8: .4byte sFaceDirectionMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sFaceDirectionMovementActions)];
+    u8 dir = direction;
+
+    memcpy(actions, sFaceDirectionMovementActions, sizeof(actions));
+    if (dir > DIR_EAST)
+        dir = DIR_NONE;
+
+    return actions[dir];
 }
 
-__attribute__((naked)) u8 sub_08092CCC(u8 direction)
+u8 sub_08092CCC(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092CF4\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092CE4\n\t"
-        "	movs r4, #0\n\t"
-        "_08092CE4:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092CF4: .4byte sWalkSlowMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sWalkSlowMovementActions)];
+
+    memcpy(actions, sWalkSlowMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092CF8(u8 direction)
+u8 sub_08092CF8(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092D20\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092D10\n\t"
-        "	movs r4, #0\n\t"
-        "_08092D10:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092D20: .4byte sWalkNormalMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sWalkNormalMovementActions)];
+
+    memcpy(actions, sWalkNormalMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092D24(u8 direction)
+u8 sub_08092D24(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092D4C\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092D3C\n\t"
-        "	movs r4, #0\n\t"
-        "_08092D3C:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092D4C: .4byte sWalkFastMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sWalkFastMovementActions)];
+
+    memcpy(actions, sWalkFastMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092D50(u8 direction)
+u8 sub_08092D50(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092D78\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092D68\n\t"
-        "	movs r4, #0\n\t"
-        "_08092D68:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092D78: .4byte sRideWaterCurrentMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sRideWaterCurrentMovementActions)];
+
+    memcpy(actions, sRideWaterCurrentMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092D7C(u8 direction)
+u8 sub_08092D7C(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092DA4\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092D94\n\t"
-        "	movs r4, #0\n\t"
-        "_08092D94:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092DA4: .4byte sWalkFasterMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sWalkFasterMovementActions)];
+
+    memcpy(actions, sWalkFasterMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092DA8(u8 direction)
+u8 sub_08092DA8(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092DD0\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092DC0\n\t"
-        "	movs r4, #0\n\t"
-        "_08092DC0:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092DD0: .4byte sSlideMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sSlideMovementActions)];
+
+    memcpy(actions, sSlideMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092DD4(u8 direction)
+u8 sub_08092DD4(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092DFC\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092DEC\n\t"
-        "	movs r4, #0\n\t"
-        "_08092DEC:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092DFC: .4byte sPlayerRunMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sPlayerRunMovementActions)];
+
+    memcpy(actions, sPlayerRunMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092E00(u8 direction)
+u8 sub_08092E00(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092E28\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092E18\n\t"
-        "	movs r4, #0\n\t"
-        "_08092E18:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092E28: .4byte sJump2MovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sJump2MovementActions)];
+
+    memcpy(actions, sJump2MovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092E2C(u8 direction)
+u8 sub_08092E2C(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092E54\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092E44\n\t"
-        "	movs r4, #0\n\t"
-        "_08092E44:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092E54: .4byte sJumpInPlaceMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sJumpInPlaceMovementActions)];
+
+    memcpy(actions, sJumpInPlaceMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092E58(u8 direction)
+u8 sub_08092E58(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092E80\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092E70\n\t"
-        "	movs r4, #0\n\t"
-        "_08092E70:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092E80: .4byte sJumpInPlaceTurnAroundMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sJumpInPlaceTurnAroundMovementActions)];
+
+    memcpy(actions, sJumpInPlaceTurnAroundMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092E84(u8 direction)
+u8 sub_08092E84(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092EAC\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092E9C\n\t"
-        "	movs r4, #0\n\t"
-        "_08092E9C:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092EAC: .4byte sJumpMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sJumpMovementActions)];
+
+    memcpy(actions, sJumpMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092EB0(u8 direction)
+u8 sub_08092EB0(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092ED8\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092EC8\n\t"
-        "	movs r4, #0\n\t"
-        "_08092EC8:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092ED8: .4byte sJumpSpecialMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sJumpSpecialMovementActions)];
+
+    memcpy(actions, sJumpSpecialMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092EDC(u8 direction)
+u8 sub_08092EDC(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092F04\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092EF4\n\t"
-        "	movs r4, #0\n\t"
-        "_08092EF4:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092F04: .4byte sWalkInPlaceSlowMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sWalkInPlaceSlowMovementActions)];
+
+    memcpy(actions, sWalkInPlaceSlowMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092F08(u8 direction)
+u8 sub_08092F08(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092F30\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092F20\n\t"
-        "	movs r4, #0\n\t"
-        "_08092F20:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092F30: .4byte sWalkInPlaceNormalMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sWalkInPlaceNormalMovementActions)];
+
+    memcpy(actions, sWalkInPlaceNormalMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092F34(u8 direction)
+u8 sub_08092F34(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092F5C\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092F4C\n\t"
-        "	movs r4, #0\n\t"
-        "_08092F4C:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092F5C: .4byte sWalkInPlaceFastMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sWalkInPlaceFastMovementActions)];
+
+    memcpy(actions, sWalkInPlaceFastMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
-__attribute__((naked)) u8 sub_08092F60(u8 direction)
+u8 sub_08092F60(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092F88\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092F78\n\t"
-        "	movs r4, #0\n\t"
-        "_08092F78:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092F88: .4byte sWalkInPlaceFasterMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sWalkInPlaceFasterMovementActions)];
+
+    memcpy(actions, sWalkInPlaceFasterMovementActions, sizeof(actions));
+    if (direction > DIR_EAST)
+        direction = DIR_NONE;
+
+    return actions[direction];
 }
 
 bool8 ObjectEventFaceOppositeDirection(struct ObjectEvent *objectEvent, u8 direction)
@@ -9583,294 +6149,124 @@ bool8 ObjectEventFaceOppositeDirection(struct ObjectEvent *objectEvent, u8 direc
 }
 
 
-__attribute__((naked)) u8 sub_08092FB8(u32 direction)
+u8 sub_08092FB8(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08092FE0\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092FD0\n\t"
-        "	movs r4, #0\n\t"
-        "_08092FD0:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08092FE0: .4byte sAcroWheelieFaceDirectionMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sAcroWheelieFaceDirectionMovementActions)];
+    u8 dir = direction;
+
+    memcpy(actions, sAcroWheelieFaceDirectionMovementActions, sizeof(actions));
+    if (dir > DIR_EAST)
+        dir = DIR_NONE;
+
+    return actions[dir];
 }
 
-__attribute__((naked)) u8 sub_08092FE4(u32 direction)
+u8 sub_08092FE4(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _0809300C\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08092FFC\n\t"
-        "	movs r4, #0\n\t"
-        "_08092FFC:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0809300C: .4byte sAcroPopWheelieFaceDirectionMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sAcroPopWheelieFaceDirectionMovementActions)];
+    u8 dir = direction;
+
+    memcpy(actions, sAcroPopWheelieFaceDirectionMovementActions, sizeof(actions));
+    if (dir > DIR_EAST)
+        dir = DIR_NONE;
+
+    return actions[dir];
 }
 
-__attribute__((naked)) u8 EventObjectExecSingleMovementAction(u32 direction)
+u8 EventObjectExecSingleMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08093038\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08093028\n\t"
-        "	movs r4, #0\n\t"
-        "_08093028:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08093038: .4byte sAcroEndWheelieFaceDirectionMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sAcroEndWheelieFaceDirectionMovementActions)];
+    u8 dir = direction;
+
+    memcpy(actions, sAcroEndWheelieFaceDirectionMovementActions, sizeof(actions));
+    if (dir > DIR_EAST)
+        dir = DIR_NONE;
+
+    return actions[dir];
 }
 
-__attribute__((naked)) u8 sub_0809303C(u32 direction)
+u8 sub_0809303C(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08093064\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08093054\n\t"
-        "	movs r4, #0\n\t"
-        "_08093054:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08093064: .4byte sAcroWheelieHopFaceDirectionMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sAcroWheelieHopFaceDirectionMovementActions)];
+    u8 dir = direction;
+
+    memcpy(actions, sAcroWheelieHopFaceDirectionMovementActions, sizeof(actions));
+    if (dir > DIR_EAST)
+        dir = DIR_NONE;
+
+    return actions[dir];
 }
 
-__attribute__((naked)) u8 GetAcroEndWheelieFaceDirectionMovementAction(u32 direction)
+u8 GetAcroEndWheelieFaceDirectionMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08093090\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08093080\n\t"
-        "	movs r4, #0\n\t"
-        "_08093080:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08093090: .4byte sAcroWheelieHopDirectionMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sAcroWheelieHopDirectionMovementActions)];
+    u8 dir = direction;
+
+    memcpy(actions, sAcroWheelieHopDirectionMovementActions, sizeof(actions));
+    if (dir > DIR_EAST)
+        dir = DIR_NONE;
+
+    return actions[dir];
 }
 
-__attribute__((naked)) u8 sub_08093094(u32 direction)
+u8 sub_08093094(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _080930BC\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _080930AC\n\t"
-        "	movs r4, #0\n\t"
-        "_080930AC:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080930BC: .4byte sAcroWheelieJumpDirectionMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sAcroWheelieJumpDirectionMovementActions)];
+    u8 dir = direction;
+
+    memcpy(actions, sAcroWheelieJumpDirectionMovementActions, sizeof(actions));
+    if (dir > DIR_EAST)
+        dir = DIR_NONE;
+
+    return actions[dir];
 }
 
-__attribute__((naked)) u8 sub_080930C0(u32 direction)
+u8 sub_080930C0(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _080930E8\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _080930D8\n\t"
-        "	movs r4, #0\n\t"
-        "_080930D8:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080930E8: .4byte sAcroWheelieInPlaceDirectionMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sAcroWheelieInPlaceDirectionMovementActions)];
+    u8 dir = direction;
+
+    memcpy(actions, sAcroWheelieInPlaceDirectionMovementActions, sizeof(actions));
+    if (dir > DIR_EAST)
+        dir = DIR_NONE;
+
+    return actions[dir];
 }
 
-__attribute__((naked)) u8 sub_080930EC(u32 direction)
+u8 sub_080930EC(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08093114\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08093104\n\t"
-        "	movs r4, #0\n\t"
-        "_08093104:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08093114: .4byte sAcroPopWheelieMoveDirectionMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sAcroPopWheelieMoveDirectionMovementActions)];
+    u8 dir = direction;
+
+    memcpy(actions, sAcroPopWheelieMoveDirectionMovementActions, sizeof(actions));
+    if (dir > DIR_EAST)
+        dir = DIR_NONE;
+
+    return actions[dir];
 }
 
-__attribute__((naked)) u8 sub_08093118(u32 direction)
+u8 sub_08093118(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08093140\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08093130\n\t"
-        "	movs r4, #0\n\t"
-        "_08093130:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08093140: .4byte sAcroWheelieMoveDirectionMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sAcroWheelieMoveDirectionMovementActions)];
+    u8 dir = direction;
+
+    memcpy(actions, sAcroWheelieMoveDirectionMovementActions, sizeof(actions));
+    if (dir > DIR_EAST)
+        dir = DIR_NONE;
+
+    return actions[dir];
 }
 
-__attribute__((naked)) u8 sub_08093144(u32 direction)
+u8 sub_08093144(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _0809316C\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _0809315C\n\t"
-        "	movs r4, #0\n\t"
-        "_0809315C:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0809316C: .4byte sAcroEndWheelieMoveDirectionMovementActions\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actions[ARRAY_COUNT(sAcroEndWheelieMoveDirectionMovementActions)];
+    u8 dir = direction;
+
+    memcpy(actions, sAcroEndWheelieMoveDirectionMovementActions, sizeof(actions));
+    if (dir > DIR_EAST)
+        dir = DIR_NONE;
+
+    return actions[dir];
 }
 
 u8 GetOppositeDirection(u8 direction)
@@ -9883,142 +6279,36 @@ u8 GetOppositeDirection(u8 direction)
     return directions[direction - 1];
 }
 
-__attribute__((naked)) u8 zffu_offset_calc(u8 a, u8 b)
+u8 zffu_offset_calc(u8 a, u8 b)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r2, _080931B8\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	subs r0, #5\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080931B8: .4byte sDirectionCompositionOffsets\n\t"
-        ".syntax divided\n\t"
-    );
+    return sDirectionCompositionOffsets[a - 1][b - 1];
 }
 
-__attribute__((naked)) u32 state_to_direction(u8 a, u8 b, u8 c)
+u32 state_to_direction(u8 a, u8 b, u8 c)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080931DC\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _080931DC\n\t"
-        "	cmp r1, #4\n\t"
-        "	bhi _080931DC\n\t"
-        "	cmp r2, #4\n\t"
-        "	bls _080931E0\n\t"
-        "_080931DC:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080931F2\n\t"
-        "_080931E0:\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl zffu_offset_calc\n\t"
-        "	ldr r2, _080931F8\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	subs r1, #5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "_080931F2:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080931F8: .4byte sDirectionCompositionResults\n\t"
-        ".syntax divided\n\t"
-    );
+    if (b == DIR_NONE || c == DIR_NONE
+      || b > DIR_EAST || c > DIR_EAST)
+        return DIR_NONE;
+
+    c = zffu_offset_calc(b, c);
+    return sDirectionCompositionResults[a - 1][c - 1];
 }
 
-__attribute__((naked)) u8 EventObjectExecHeldMovementAction(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void EventObjectExecHeldMovementAction(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r2, _08093230\n\t"
-        "	ldrb r0, [r4, #0x1c]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r3, #0x32\n\t"
-        "	ldrsh r2, [r1, r3]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08093228\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "_08093228:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08093230: .4byte gMovementActionFuncs\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gMovementActionFuncs[objectEvent->movementActionId][sprite->sActionFuncId](objectEvent, sprite))
+        objectEvent->heldMovementFinished = TRUE;
 }
 
-__attribute__((naked)) u8 ObjectEventExecSingleMovementAction(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 ObjectEventExecSingleMovementAction(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08093260\n\t"
-        "	ldrb r0, [r4, #0x1c]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl _call_via_r2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093264\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0809326E\n\t"
-        "	.align 2, 0\n\t"
-        "_08093260: .4byte gMovementActionFuncs\n\t"
-        "_08093264:\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_0809326E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gMovementActionFuncs[objectEvent->movementActionId][sprite->sActionFuncId](objectEvent, sprite))
+    {
+        objectEvent->movementActionId = MOVEMENT_ACTION_NONE;
+        sprite->sActionFuncId = 0;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
@@ -10029,42 +6319,13 @@ void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct Sprite
 }
 
 
-__attribute__((naked)) void FaceDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
+void FaceDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r1, r2, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ShiftStillEventObjectCoords\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl GetJumpInPlaceTurnAroundMovementAction\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl obj_npc_animation_step\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetEventObjectDirection(objectEvent, direction);
+    ShiftStillEventObjectCoords(objectEvent);
+    obj_npc_animation_step(objectEvent, sprite, GetJumpInPlaceTurnAroundMovementAction(objectEvent->facingDirection));
+    sprite->animPaused = TRUE;
+    sprite->sActionFuncId = 1;
 }
 
 
@@ -10100,325 +6361,85 @@ bool8 MovementAction_FaceRight_Step0(struct ObjectEvent *objectEvent, struct Spr
 }
 
 
-__attribute__((naked)) void npc_apply_direction(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
+void npc_apply_direction(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	mov r8, r1\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	adds r6, r3, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	ldrh r1, [r7, #0x10]\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldrh r0, [r7, #0x12]\n\t"
-        "	mov r5, sp\n\t"
-        "	adds r5, #2\n\t"
-        "	strh r0, [r5]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl MoveCoords\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r2, [r5, r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl ShiftEventObjectCoords\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl oamt_npc_ministep_reset\n\t"
-        "	mov r4, r8\n\t"
-        "	adds r4, #0x2c\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #0x41\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldr r0, _08093398\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809337E\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl FindLockedEventObjectIndex\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	beq _0809337E\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "_0809337E:\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r7]\n\t"
-        "	movs r0, #1\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08093398: .4byte gUnknown_2037258\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 x;
+    s16 y;
+
+    x = objectEvent->currentCoords.x;
+    y = objectEvent->currentCoords.y;
+    SetEventObjectDirection(objectEvent, direction);
+    MoveCoords(direction, &x, &y);
+    ShiftEventObjectCoords(objectEvent, x, y);
+    oamt_npc_ministep_reset(sprite, direction, speed);
+    sprite->animPaused = FALSE;
+
+    if (gUnknown_2037258 != NULL && FindLockedEventObjectIndex(objectEvent) != OBJECT_EVENTS_COUNT)
+        sprite->animPaused = TRUE;
+
+    objectEvent->triggerGroundEffectsOnMove = TRUE;
+    sprite->sActionFuncId = 1;
 }
 
-__attribute__((naked)) void InitMovementNormal(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
+void InitMovementNormal(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	mov r8, r1\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r0, _080933F4\n\t"
-        "	ldm r0!, {r3, r6, r7}\n\t"
-        "	stm r1!, {r3, r6, r7}\n\t"
-        "	ldm r0!, {r3, r6}\n\t"
-        "	stm r1!, {r3, r6}\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl npc_apply_direction\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	mov r7, sp\n\t"
-        "	adds r1, r7, r4\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	mov r1, r8\n\t"
-        "	bl npc_apply_anim_looping\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080933F4: .4byte sDirectionAnimFuncsBySpeed\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 (*functions[ARRAY_COUNT(sDirectionAnimFuncsBySpeed)])(u8);
+
+    memcpy(functions, sDirectionAnimFuncsBySpeed, sizeof sDirectionAnimFuncsBySpeed);
+    npc_apply_direction(objectEvent, sprite, direction, speed);
+    npc_apply_anim_looping(objectEvent, sprite, functions[speed](objectEvent->facingDirection));
 }
 
-__attribute__((naked)) void StartRunningAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
+void StartRunningAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r3, #1\n\t"
-        "	bl npc_apply_direction\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl GetWalkSlowMovementAction\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl npc_apply_anim_looping\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    npc_apply_direction(objectEvent, sprite, direction, MOVE_SPEED_FAST_1);
+    npc_apply_anim_looping(objectEvent, sprite, GetWalkSlowMovementAction(objectEvent->facingDirection));
 }
 
-__attribute__((naked)) bool8 UpdateMovementNormal(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 UpdateMovementNormal(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl obj_npc_ministep\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0809343E\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0809345A\n\t"
-        "_0809343E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ShiftStillEventObjectCoords\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #1\n\t"
-        "_0809345A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (obj_npc_ministep(sprite))
+    {
+        ShiftStillEventObjectCoords(objectEvent);
+        objectEvent->triggerGroundEffectsOnStop = TRUE;
+        sprite->animPaused = TRUE;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 sub_08093460(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void sub_08093460(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	mov r8, r1\n\t"
-        "	lsls r5, r2, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldrh r1, [r6, #0x10]\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldrh r0, [r6, #0x12]\n\t"
-        "	mov r4, sp\n\t"
-        "	adds r4, #2\n\t"
-        "	strh r0, [r4]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl MoveCoords\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl ShiftEventObjectCoords\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl sub_0809704C\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x41\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	movs r0, #1\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 x;
+    s16 y;
+
+    x = objectEvent->currentCoords.x;
+    y = objectEvent->currentCoords.y;
+    SetEventObjectDirection(objectEvent, direction);
+    MoveCoords(direction, &x, &y);
+    ShiftEventObjectCoords(objectEvent, x, y);
+    sub_0809704C(sprite, direction);
+    sprite->animPaused = FALSE;
+    objectEvent->triggerGroundEffectsOnMove = TRUE;
+    sprite->sActionFuncId = 1;
 }
 
-__attribute__((naked)) bool8 InitWalkSlow(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
+void InitWalkSlow(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	bl sub_08093460\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl GetJumpInPlaceTurnAroundMovementAction\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl npc_apply_anim_looping\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_08093460(objectEvent, sprite, direction);
+    npc_apply_anim_looping(objectEvent, sprite, GetJumpInPlaceTurnAroundMovementAction(objectEvent->facingDirection));
 }
 
-__attribute__((naked)) bool8 UpdateWalkSlow(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 UpdateWalkSlow(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl UpdateWalkSlowAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093512\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0809352E\n\t"
-        "_08093512:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ShiftStillEventObjectCoords\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #1\n\t"
-        "_0809352E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateWalkSlowAnim(sprite))
+    {
+        ShiftStillEventObjectCoords(objectEvent);
+        objectEvent->triggerGroundEffectsOnStop = TRUE;
+        sprite->animPaused = TRUE;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_WalkSlowDiagonalUpLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -10427,29 +6448,14 @@ bool8 MovementAction_WalkSlowDiagonalUpLeft_Step0(struct ObjectEvent *objectEven
     return sub_08093554(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 sub_08093554(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 sub_08093554(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateWalkSlow\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093566\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0809356C\n\t"
-        "_08093566:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_0809356C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateWalkSlow(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_WalkSlowDiagonalUpRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -10694,245 +6700,62 @@ bool8 MovementAction_WalkNormalRight_Step1(struct ObjectEvent *objectEvent, stru
     return FALSE;
 }
 
-__attribute__((naked)) bool8 sub_08093934(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void sub_08093934(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 distance, u8 type)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	mov sl, r1\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	mov r8, r3\n\t"
-        "	ldr r0, [sp, #0x30]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov r8, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r1, _080939EC\n\t"
-        "	add r0, sp, #4\n\t"
-        "	movs r2, #6\n\t"
-        "	bl memcpy\n\t"
-        "	add r5, sp, #0xc\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5]\n\t"
-        "	mov r6, sp\n\t"
-        "	adds r6, #0xe\n\t"
-        "	strh r0, [r6]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	add r0, sp\n\t"
-        "	adds r0, #4\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r3, [r0, r1]\n\t"
-        "	str r3, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl MoveCoordsInDirection\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	ldrh r0, [r7, #0x10]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrh r2, [r6]\n\t"
-        "	ldrh r0, [r7, #0x12]\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl ShiftEventObjectCoords\n\t"
-        "	mov r0, sl\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	mov r2, r8\n\t"
-        "	mov r3, sb\n\t"
-        "	bl sub_080971AC\n\t"
-        "	movs r0, #1\n\t"
-        "	mov r1, sl\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	movs r0, #0x2c\n\t"
-        "	add sl, r0\n\t"
-        "	mov r0, sl\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x41\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	mov r1, sl\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	movs r1, #0x10\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r7]\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080939EC: .4byte sJumpInitDisplacements\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 displacements[ARRAY_COUNT(sJumpInitDisplacements)];
+    s16 x;
+    s16 y;
+
+    memcpy(displacements, sJumpInitDisplacements, sizeof sJumpInitDisplacements);
+    x = 0;
+    y = 0;
+    SetEventObjectDirection(objectEvent, direction);
+    MoveCoordsInDirection(direction, &x, &y, displacements[distance], displacements[distance]);
+    ShiftEventObjectCoords(objectEvent, objectEvent->currentCoords.x + x, objectEvent->currentCoords.y + y);
+    sub_080971AC(sprite, direction, distance, type);
+    sprite->sActionFuncId = 1;
+    sprite->animPaused = FALSE;
+    objectEvent->triggerGroundEffectsOnMove = TRUE;
+    objectEvent->disableCoveringGroundEffects = TRUE;
 }
 
-__attribute__((naked)) bool8 maybe_shadow_1(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 distance, u8 type)
+void maybe_shadow_1(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 distance, u8 type)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r0, [sp, #0x10]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08093934\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl GetJumpInPlaceTurnAroundMovementAction\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl npc_apply_anim_looping\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DoShadowFieldEffect\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_08093934(objectEvent, sprite, direction, distance, type);
+    npc_apply_anim_looping(objectEvent, sprite, GetJumpInPlaceTurnAroundMovementAction(objectEvent->facingDirection));
+    DoShadowFieldEffect(objectEvent);
 }
 
-__attribute__((naked)) u8 sub_08093A34(struct ObjectEvent *objectEvent, struct Sprite *sprite, u32 a)
+u8 sub_08093A34(struct ObjectEvent *objectEvent, struct Sprite *sprite, u32 a)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	ldr r1, _08093AC0\n\t"
-        "	add r0, sp, #4\n\t"
-        "	movs r2, #6\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl _call_via_r4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08093AC4\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r7, r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, sp\n\t"
-        "	adds r0, #4\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08093AC4\n\t"
-        "	add r4, sp, #0xc\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4]\n\t"
-        "	mov r5, sp\n\t"
-        "	adds r5, #0xe\n\t"
-        "	strh r0, [r5]\n\t"
-        "	ldrb r0, [r6, #0x18]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r7, r2]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	add r1, sp\n\t"
-        "	adds r1, #4\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r3, [r1, r2]\n\t"
-        "	str r3, [sp]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl MoveCoordsInDirection\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	ldrh r0, [r6, #0x10]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrh r2, [r5]\n\t"
-        "	ldrh r0, [r6, #0x12]\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl ShiftEventObjectCoords\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	movs r1, #0x10\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	b _08093AE8\n\t"
-        "	.align 2, 0\n\t"
-        "_08093AC0: .4byte sJumpDisplacements\n\t"
-        "_08093AC4:\n\t"
-        "	mov r1, r8\n\t"
-        "	cmp r1, #0xff\n\t"
-        "	bne _08093AE8\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl ShiftStillEventObjectCoords\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	movs r1, #0x20\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08093AE8:\n\t"
-        "	mov r0, r8\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 displacements[ARRAY_COUNT(sJumpDisplacements)];
+    s16 x;
+    s16 y;
+    u8 result;
+
+    memcpy(displacements, sJumpDisplacements, sizeof sJumpDisplacements);
+    result = ((u8 (*)(struct Sprite *))a)(sprite);
+    if (result == JUMP_HALFWAY && displacements[sprite->data[4]] != 0)
+    {
+        x = 0;
+        y = 0;
+        MoveCoordsInDirection(objectEvent->movementDirection, &x, &y, displacements[sprite->data[4]], displacements[sprite->data[4]]);
+        ShiftEventObjectCoords(objectEvent, objectEvent->currentCoords.x + x, objectEvent->currentCoords.y + y);
+        objectEvent->triggerGroundEffectsOnMove = TRUE;
+        objectEvent->disableCoveringGroundEffects = TRUE;
+    }
+    else if (result == JUMP_FINISHED)
+    {
+        ShiftStillEventObjectCoords(objectEvent);
+        objectEvent->triggerGroundEffectsOnStop = TRUE;
+        objectEvent->landingJump = TRUE;
+        sprite->animPaused = TRUE;
+    }
+    return result;
 }
 
-void sub_080971CC(struct ObjectEvent *objectEvent);
-void sub_08097254(struct ObjectEvent *objectEvent);
+u8 sub_080971CC(struct Sprite *sprite);
+u8 sub_08097254(struct Sprite *sprite);
 
 static u8 DoJumpAnimStep(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
@@ -11153,46 +6976,13 @@ bool8 MovementAction_WalkFastRight_Step1(struct ObjectEvent *objectEvent, struct
     return FALSE;
 }
 
-__attribute__((naked)) bool8 sub_08093EC4(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 animNum, u16 delay)
+void sub_08093EC4(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 animNum, u16 duration)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	ldr r5, [sp, #0x14]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl npc_apply_anim_looping\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x41\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	strh r5, [r6, #0x34]\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetEventObjectDirection(objectEvent, direction);
+    npc_apply_anim_looping(objectEvent, sprite, animNum);
+    sprite->animPaused = FALSE;
+    sprite->sActionFuncId = 1;
+    sprite->data[3] = duration;
 }
 
 bool8 MovementAction_WalkInPlace_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -11591,35 +7381,10 @@ bool8 MovementAction_WaitSpriteAnim(struct ObjectEvent *objectEvent, struct Spri
     return FALSE;
 }
 
-__attribute__((naked)) bool8 InitJumpSpecial(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
+void InitJumpSpecial(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r4, r2, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_08093934\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetRideWaterCurrentMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_08093934(objectEvent, sprite, direction, JUMP_DISTANCE_NORMAL, JUMP_TYPE_HIGH);
+    StartSpriteAnim(sprite, GetRideWaterCurrentMovementAction(direction));
 }
 
 bool8 MovementAction_JumpSpecialDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -11885,35 +7650,15 @@ bool8 MovementAction_JumpInPlaceDownUp_Step0(struct ObjectEvent *objectEvent, st
     return MovementAction_JumpInPlaceDownUp_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceDownUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceDownUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpInPlaceAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094C88\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094C98\n\t"
-        "_08094C88:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094C98:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpInPlaceAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = 0;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_JumpInPlaceUpDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -11922,35 +7667,15 @@ bool8 MovementAction_JumpInPlaceUpDown_Step0(struct ObjectEvent *objectEvent, st
     return MovementAction_JumpInPlaceUpDown_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceUpDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceUpDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpInPlaceAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094CE0\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094CF0\n\t"
-        "_08094CE0:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094CF0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpInPlaceAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = 0;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
@@ -11960,35 +7685,15 @@ bool8 MovementAction_JumpInPlaceLeftRight_Step0(struct ObjectEvent *objectEvent,
     return MovementAction_JumpInPlaceLeftRight_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceLeftRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceLeftRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpInPlaceAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094D38\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094D48\n\t"
-        "_08094D38:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094D48:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpInPlaceAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = 0;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_JumpInPlaceRightLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -11997,35 +7702,15 @@ bool8 MovementAction_JumpInPlaceRightLeft_Step0(struct ObjectEvent *objectEvent,
     return MovementAction_JumpInPlaceRightLeft_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceRightLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceRightLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpInPlaceAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094D90\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094DA0\n\t"
-        "_08094D90:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094DA0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpInPlaceAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = 0;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_FaceOriginalDirection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -12412,28 +8097,10 @@ bool8 MovementAction_AcroEndWheelieFaceUp_Step0(struct ObjectEvent *objectEvent,
     return FALSE;
 }
 
-__attribute__((naked)) bool8 sub_08095388(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 sub_08095388(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #3\n\t"
-        "	bl GetWalkFastestMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	bl StartSpriteAnimInDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnimInDirection(objectEvent, sprite, DIR_WEST, GetWalkFastestMovementAction(DIR_WEST));
+    return FALSE;
 }
 
 bool8 MovementAction_AcroEndWheelieFaceRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -12466,60 +8133,21 @@ bool8 MovementAction_UnusedAcroActionRight_Step0(struct ObjectEvent *objectEvent
     return FALSE;
 }
 
-__attribute__((naked)) bool8 InitFigure8Anim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void InitFigure8Anim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl InitSpriteForFigure8Anim\n\t"
-        "	adds r4, #0x2c\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #0x41\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    InitSpriteForFigure8Anim(sprite);
+    sprite->animPaused = FALSE;
 }
-__attribute__((naked)) bool8 sub_0809547C(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 sub_0809547C(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl AnimateSpriteInFigure8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095492\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080954AE\n\t"
-        "_08095492:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ShiftStillEventObjectCoords\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #1\n\t"
-        "_080954AE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (AnimateSpriteInFigure8(sprite))
+    {
+        ShiftStillEventObjectCoords(objectEvent);
+        objectEvent->triggerGroundEffectsOnStop = TRUE;
+        sprite->animPaused = TRUE;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
@@ -12533,67 +8161,21 @@ bool8 MovementAction_Figure8_Step0(struct ObjectEvent *objectEvent, struct Sprit
     return sub_080954D4(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 sub_080954D4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 sub_080954D4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl sub_0809547C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080954E6\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080954EC\n\t"
-        "_080954E6:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080954EC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sub_0809547C(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 sub_080954F4(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 distance, u8 type)
+void sub_080954F4(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 distance, u8 type)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	ldr r0, [sp, #0x14]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl sub_08093934\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetSlideMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StartSpriteAnimIfDifferent\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl DoShadowFieldEffect\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_08093934(objectEvent, sprite, direction, distance, type);
+    StartSpriteAnimIfDifferent(sprite, GetSlideMovementAction(direction));
+    DoShadowFieldEffect(objectEvent);
 }
 
 bool8 MovementAction_AcroWheelieHopFaceDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -12739,35 +8321,15 @@ bool8 MovementAction_AcroWheelieJumpDown_Step0(struct ObjectEvent *objectEvent, 
     return MovementAction_AcroWheelieJumpDown_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroWheelieJumpDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroWheelieJumpDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095838\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095848\n\t"
-        "_08095838:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095848:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = FALSE;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_AcroWheelieJumpUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -12776,35 +8338,15 @@ bool8 MovementAction_AcroWheelieJumpUp_Step0(struct ObjectEvent *objectEvent, st
     return MovementAction_AcroWheelieJumpUp_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroWheelieJumpUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroWheelieJumpUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095890\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080958A0\n\t"
-        "_08095890:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080958A0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = FALSE;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_AcroWheelieJumpLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -12814,35 +8356,15 @@ bool8 MovementAction_AcroWheelieJumpLeft_Step0(struct ObjectEvent *objectEvent, 
 }
 
 
-__attribute__((naked)) bool8 MovementAction_AcroWheelieJumpLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroWheelieJumpLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080958E8\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080958F8\n\t"
-        "_080958E8:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080958F8:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = FALSE;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_AcroWheelieJumpRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -12851,35 +8373,15 @@ bool8 MovementAction_AcroWheelieJumpRight_Step0(struct ObjectEvent *objectEvent,
     return MovementAction_AcroWheelieJumpRight_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroWheelieJumpRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroWheelieJumpRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095940\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095950\n\t"
-        "_08095940:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095950:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = FALSE;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_AcroWheelieInPlaceDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -12906,36 +8408,11 @@ bool8 MovementAction_AcroWheelieInPlaceRight_Step0(struct ObjectEvent *objectEve
     return MovementAction_WalkInPlace_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 InitAcroPopWheelieMove(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
+void InitAcroPopWheelieMove(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	bl npc_apply_direction\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl GetSlideMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SeekSpriteAnim\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    npc_apply_direction(objectEvent, sprite, direction, speed);
+    StartSpriteAnim(sprite, GetSlideMovementAction(objectEvent->facingDirection));
+    SeekSpriteAnim(sprite, 0);
 }
 
 bool8 MovementAction_AcroPopWheelieMoveDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -12987,26 +8464,10 @@ bool8 MovementAction_AcroPopWheelieMoveLeft_Step1(struct ObjectEvent *objectEven
 }
 
 
-__attribute__((naked)) bool8 sub_08095B30(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 sub_08095B30(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	movs r3, #1\n\t"
-        "	bl InitAcroPopWheelieMove\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_AcroPopWheelieMoveRight_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitAcroPopWheelieMove(objectEvent, sprite, DIR_EAST,  1);
+    return MovementAction_AcroPopWheelieMoveRight_Step1(objectEvent, sprite);
 }
 
 
@@ -13021,33 +8482,10 @@ bool8 MovementAction_AcroPopWheelieMoveRight_Step1(struct ObjectEvent *objectEve
     return FALSE;
 }
 
-__attribute__((naked)) bool8 InitAcroWheelieMove(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
+void InitAcroWheelieMove(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	bl npc_apply_direction\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl GetWalkInPlaceFastestMovementAction\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl npc_apply_anim_looping\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    npc_apply_direction(objectEvent, sprite, direction, speed);
+    npc_apply_anim_looping(objectEvent, sprite, GetWalkInPlaceFastestMovementAction(objectEvent->facingDirection));
 }
 
 bool8 MovementAction_AcroWheelieMoveDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -13115,36 +8553,11 @@ bool8 MovementAction_AcroWheelieMoveRight_Step1(struct ObjectEvent *objectEvent,
     return FALSE;
 }
 
-__attribute__((naked)) bool8 InitAcroEndWheelie(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
+void InitAcroEndWheelie(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	bl npc_apply_direction\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl GetWalkFastestMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SeekSpriteAnim\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    npc_apply_direction(objectEvent, sprite, direction, speed);
+    StartSpriteAnim(sprite, GetWalkFastestMovementAction(objectEvent->facingDirection));
+    SeekSpriteAnim(sprite, 0);
 }
 
 bool8 MovementAction_AcroEndWheelieMoveDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -13226,31 +8639,15 @@ bool8 MovementAction_StopLevitate_Step0(struct ObjectEvent *objectEvent, struct 
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_DestroyExtraTaskIfAtTop_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_DestroyExtraTaskIfAtTop_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r1, #0x26\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08095E16\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095E20\n\t"
-        "_08095E16:\n\t"
-        "	ldrb r0, [r2, #0x1b]\n\t"
-        "	bl DestroyExtraMovementTask\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08095E20:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->y2 == 0)
+    {
+        DestroyExtraMovementTask(objectEvent->warpArrowSpriteId);
+        sprite->sActionFuncId = 1;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 sub_08095E28(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -13265,61 +8662,21 @@ bool8 MovementAction_PauseSpriteAnim(struct ObjectEvent *objectEvent, struct Spr
 }
 
 
-__attribute__((naked)) void UpdateEventObjectSpriteAnimPause(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void UpdateEventObjectSpriteAnimPause(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	lsls r0, r0, #0x1d\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08095E52\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x2c\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #0x40\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08095E52:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->disableAnim)
+        sprite->animPaused = TRUE;
 }
 
 
-__attribute__((naked)) void TryEnableEventObjectAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void TryEnableEventObjectAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrb r3, [r4, #1]\n\t"
-        "	lsls r0, r3, #0x1c\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08095E80\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x41\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	movs r1, #9\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "_08095E80:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->enableAnim)
+    {
+        sprite->animPaused = FALSE;
+        objectEvent->disableAnim = FALSE;
+        objectEvent->enableAnim = FALSE;
+    }
 }
 
 void UpdateObjectEventVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -13328,1275 +8685,365 @@ void UpdateObjectEventVisibility(struct ObjectEvent *objectEvent, struct Sprite 
     UpdateEventObjSpriteVisibility(objectEvent, sprite);
 }
 
-__attribute__((naked)) void UpdateObjectEventOffscreen(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void UpdateObjectEventOffscreen(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldrb r1, [r5, #1]\n\t"
-        "	movs r0, #0x41\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r5, #1]\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08095F04\n\t"
-        "	ldrh r1, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x28\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	ldr r2, _08095EFC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r2, [r2]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	ldrh r1, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x22]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x29\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	ldr r2, _08095F00\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r2, [r2]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	b _08095F2C\n\t"
-        "	.align 2, 0\n\t"
-        "_08095EFC: .4byte gSpriteCoordOffsetX\n\t"
-        "_08095F00: .4byte gSpriteCoordOffsetY\n\t"
-        "_08095F04:\n\t"
-        "	ldrh r1, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x28\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	ldrh r1, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x22]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x29\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_08095F2C:\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	ldrh r0, [r6, #8]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	ldrh r0, [r6, #0xa]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bgt _08095F54\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bge _08095F5C\n\t"
-        "_08095F54:\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r5, #1]\n\t"
-        "_08095F5C:\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xaf\n\t"
-        "	bgt _08095F70\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bge _08095F78\n\t"
-        "_08095F70:\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r5, #1]\n\t"
-        "_08095F78:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 x, y;
+    s16 x2, y2;
+    const struct ObjectEventGraphicsInfo *graphicsInfo;
+
+    objectEvent->offScreen = FALSE;
+
+    graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
+    if (sprite->coordOffsetEnabled)
+    {
+        x = sprite->x + sprite->x2 + sprite->centerToCornerVecX + gSpriteCoordOffsetX;
+        y = sprite->y + sprite->y2 + sprite->centerToCornerVecY + gSpriteCoordOffsetY;
+    }
+    else
+    {
+        x = sprite->x + sprite->x2 + sprite->centerToCornerVecX;
+        y = sprite->y + sprite->y2 + sprite->centerToCornerVecY;
+    }
+    x2 = (u16)x + (u16)graphicsInfo->width;
+    y2 = (u16)y + (u16)graphicsInfo->height;
+
+    if (x >= DISPLAY_WIDTH + 16 || x2 < -16)
+        objectEvent->offScreen = TRUE;
+
+    if (y >= DISPLAY_HEIGHT + 16 || y2 < -16)
+        objectEvent->offScreen = TRUE;
 }
 
-__attribute__((naked)) void UpdateEventObjSpriteVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void UpdateEventObjSpriteVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r3, #5\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	ands r3, r1\n\t"
-        "	strb r3, [r2]\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	movs r0, #0x60\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08095FA2\n\t"
-        "	movs r1, #4\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08095FA2:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->invisible = FALSE;
+    if (objectEvent->invisible || objectEvent->offScreen)
+        sprite->invisible = TRUE;
 }
 
-__attribute__((naked)) void GetAllGroundEffectFlags_OnSpawn(struct ObjectEvent *objEvent, u32 *flags)
+void GetAllGroundEffectFlags_OnSpawn(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl EventObjectUpdateMetatileBehaviors\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_Reflection\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_TallGrassOnSpawn\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl sub_0809615C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_SandHeap\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_ShallowFlowingWater\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_ShortGrass\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_HotSprings\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    EventObjectUpdateMetatileBehaviors(objEvent);
+    GetGroundEffectFlags_Reflection(objEvent, flags);
+    GetGroundEffectFlags_TallGrassOnSpawn(objEvent, flags);
+    sub_0809615C(objEvent, flags);
+    GetGroundEffectFlags_SandHeap(objEvent, flags);
+    GetGroundEffectFlags_ShallowFlowingWater(objEvent, flags);
+    GetGroundEffectFlags_ShortGrass(objEvent, flags);
+    GetGroundEffectFlags_HotSprings(objEvent, flags);
 }
 
-__attribute__((naked)) void GetAllGroundEffectFlags_OnBeginStep(struct ObjectEvent *objEvent, u32 *flags)
+void GetAllGroundEffectFlags_OnBeginStep(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl EventObjectUpdateMetatileBehaviors\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_Reflection\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_LongGrassOnSpawn\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_LongGrassOnBeginStep\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_Tracks\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_SandHeap\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_ShallowFlowingWater\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_Puddle\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_ShortGrass\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_HotSprings\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    EventObjectUpdateMetatileBehaviors(objEvent);
+    GetGroundEffectFlags_Reflection(objEvent, flags);
+    GetGroundEffectFlags_LongGrassOnSpawn(objEvent, flags);
+    GetGroundEffectFlags_LongGrassOnBeginStep(objEvent, flags);
+    GetGroundEffectFlags_Tracks(objEvent, flags);
+    GetGroundEffectFlags_SandHeap(objEvent, flags);
+    GetGroundEffectFlags_ShallowFlowingWater(objEvent, flags);
+    GetGroundEffectFlags_Puddle(objEvent, flags);
+    GetGroundEffectFlags_ShortGrass(objEvent, flags);
+    GetGroundEffectFlags_HotSprings(objEvent, flags);
 }
 
-__attribute__((naked)) void GetAllGroundEffectFlags_OnFinishStep(struct ObjectEvent *objEvent, u32 *flags)
+void GetAllGroundEffectFlags_OnFinishStep(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl EventObjectUpdateMetatileBehaviors\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_ShallowFlowingWater\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_SandHeap\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_Puddle\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_Ripple\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_ShortGrass\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_HotSprings\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_Seaweed\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetGroundEffectFlags_JumpLanding\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    EventObjectUpdateMetatileBehaviors(objEvent);
+    GetGroundEffectFlags_ShallowFlowingWater(objEvent, flags);
+    GetGroundEffectFlags_SandHeap(objEvent, flags);
+    GetGroundEffectFlags_Puddle(objEvent, flags);
+    GetGroundEffectFlags_Ripple(objEvent, flags);
+    GetGroundEffectFlags_ShortGrass(objEvent, flags);
+    GetGroundEffectFlags_HotSprings(objEvent, flags);
+    GetGroundEffectFlags_Seaweed(objEvent, flags);
+    GetGroundEffectFlags_JumpLanding(objEvent, flags);
 }
 
-__attribute__((naked)) void EventObjectUpdateMetatileBehaviors(void)
+void EventObjectUpdateMetatileBehaviors(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x16\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	strb r0, [r4, #0x1f]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	strb r0, [r4, #0x1e]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->previousMetatileBehavior = MapGridGetMetatileBehaviorAt(objectEvent->previousCoords.x, objectEvent->previousCoords.y);
+    objectEvent->currentMetatileBehavior = MapGridGetMetatileBehaviorAt(objectEvent->currentCoords.x, objectEvent->currentCoords.y);
 }
 
-__attribute__((naked)) void GetGroundEffectFlags_Reflection(struct ObjectEvent *objEvent, u32 *flags)
+void GetGroundEffectFlags_Reflection(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r0, _08096104\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectCheckForReflectiveSurface\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _08096108\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	lsls r0, r1, #0x1e\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _08096112\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "	subs r0, r2, #1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, sp\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	orrs r1, r0\n\t"
-        "	str r1, [r5]\n\t"
-        "	b _08096112\n\t"
-        "	.align 2, 0\n\t"
-        "_08096104: .4byte sReflectionFlags\n\t"
-        "_08096108:\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "_08096112:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 reflectionFlags[ARRAY_COUNT(sReflectionFlags)];
+    u32 waterFlag = sReflectionFlags[1];
+    u32 iceFlag = sReflectionFlags[0];
+    u8 reflType;
+
+    reflectionFlags[0] = iceFlag;
+    reflectionFlags[1] = waterFlag;
+    reflType = EventObjectCheckForReflectiveSurface(objEvent);
+
+    if (reflType)
+    {
+        if (objEvent->hasReflection == 0)
+        {
+            objEvent->hasReflection++;
+            *flags |= reflectionFlags[reflType - 1];
+        }
+    }
+    else
+    {
+        objEvent->hasReflection = FALSE;
+    }
 }
 
-__attribute__((naked)) void GetGroundEffectFlags_TallGrassOnSpawn(struct ObjectEvent *objEvent, u32 *flags)
+void GetGroundEffectFlags_TallGrassOnSpawn(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldrb r0, [r0, #0x1e]\n\t"
-        "	bl MetatileBehavior_IsTallGrass\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08096134\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r4]\n\t"
-        "_08096134:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (MetatileBehavior_IsTallGrass(objEvent->currentMetatileBehavior))
+        *flags |= GROUND_EFFECT_FLAG_TALL_GRASS_ON_SPAWN;
 }
 
-__attribute__((naked)) void GetGroundEffectFlags_LongGrassOnSpawn(struct ObjectEvent *objEvent, u32 *flags)
+void GetGroundEffectFlags_LongGrassOnSpawn(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldrb r0, [r0, #0x1e]\n\t"
-        "	bl MetatileBehavior_IsTallGrass\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08096154\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r4]\n\t"
-        "_08096154:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (MetatileBehavior_IsTallGrass(objEvent->currentMetatileBehavior))
+        *flags |= GROUND_EFFECT_FLAG_TALL_GRASS_ON_MOVE;
 }
 
-__attribute__((naked)) void sub_0809615C(struct ObjectEvent *objEvent, u32 *flags)
+void sub_0809615C(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldrb r0, [r0, #0x1e]\n\t"
-        "	bl MetatileBehavior_IsLongGrass\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08096174\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r4]\n\t"
-        "_08096174:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (MetatileBehavior_IsLongGrass(objEvent->currentMetatileBehavior))
+        *flags |= GROUND_EFFECT_FLAG_LONG_GRASS_ON_SPAWN;
 }
 
-__attribute__((naked)) void GetGroundEffectFlags_LongGrassOnBeginStep(struct ObjectEvent *objEvent, u32 *flags)
+void GetGroundEffectFlags_LongGrassOnBeginStep(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldrb r0, [r0, #0x1e]\n\t"
-        "	bl MetatileBehavior_IsLongGrass\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08096194\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r4]\n\t"
-        "_08096194:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (MetatileBehavior_IsLongGrass(objEvent->currentMetatileBehavior))
+        *flags |= GROUND_EFFECT_FLAG_LONG_GRASS_ON_MOVE;
 }
 
-__attribute__((naked)) void GetGroundEffectFlags_Tracks(struct ObjectEvent *objEvent, u32 *flags)
+void GetGroundEffectFlags_Tracks(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4, #0x1f]\n\t"
-        "	bl MetatileBehavior_IsDeepSand\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080961B6\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	b _080961D2\n\t"
-        "_080961B6:\n\t"
-        "	ldrb r0, [r4, #0x1f]\n\t"
-        "	bl MetatileBehavior_IsSandOrDeepSand\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080961CE\n\t"
-        "	ldrb r0, [r4, #0x1f]\n\t"
-        "	bl MetatileBehavior_IsFootprints\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080961D6\n\t"
-        "_080961CE:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r1, #0x80\n\t"
-        "_080961D2:\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r5]\n\t"
-        "_080961D6:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (MetatileBehavior_IsDeepSand(objEvent->previousMetatileBehavior))
+        *flags |= GROUND_EFFECT_FLAG_DEEP_SAND;
+    else if (MetatileBehavior_IsSandOrDeepSand(objEvent->previousMetatileBehavior)
+             || MetatileBehavior_IsFootprints(objEvent->previousMetatileBehavior))
+        *flags |= GROUND_EFFECT_FLAG_SAND;
 }
 
-__attribute__((naked)) void GetGroundEffectFlags_SandHeap(struct ObjectEvent *objEvent, u32 *flags)
+void GetGroundEffectFlags_SandHeap(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4, #0x1e]\n\t"
-        "	bl MetatileBehavior_IsDeepSand\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809621A\n\t"
-        "	ldrb r0, [r4, #0x1f]\n\t"
-        "	bl MetatileBehavior_IsDeepSand\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809621A\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	lsls r0, r1, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _08096224\n\t"
-        "	movs r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x10\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r5]\n\t"
-        "	b _08096224\n\t"
-        "_0809621A:\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "_08096224:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (MetatileBehavior_IsDeepSand(objEvent->currentMetatileBehavior)
+        && MetatileBehavior_IsDeepSand(objEvent->previousMetatileBehavior))
+    {
+        if (!objEvent->inSandPile)
+        {
+            objEvent->inSandPile++;
+            *flags |= GROUND_EFFECT_FLAG_SAND_PILE;
+        }
+    }
+    else
+    {
+        objEvent->inSandPile = FALSE;
+    }
 }
 
-__attribute__((naked)) void GetGroundEffectFlags_ShallowFlowingWater(struct ObjectEvent *objEvent, u32 *flags)
+void GetGroundEffectFlags_ShallowFlowingWater(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4, #0x1e]\n\t"
-        "	bl MetatileBehavior_IsShallowFlowingWater\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809624A\n\t"
-        "	ldrb r0, [r4, #0x1f]\n\t"
-        "	bl MetatileBehavior_IsShallowFlowingWater\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08096262\n\t"
-        "_0809624A:\n\t"
-        "	ldrb r0, [r4, #0x1e]\n\t"
-        "	bl MetatileBehavior_IsPacifidlogLog\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08096280\n\t"
-        "	ldrb r0, [r4, #0x1f]\n\t"
-        "	bl MetatileBehavior_IsPacifidlogLog\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08096280\n\t"
-        "_08096262:\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	lsls r0, r1, #0x1c\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _0809628A\n\t"
-        "	movs r0, #9\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r5]\n\t"
-        "	b _0809628A\n\t"
-        "_08096280:\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	movs r0, #9\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "_0809628A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((MetatileBehavior_IsShallowFlowingWater(objEvent->currentMetatileBehavior)
+         && MetatileBehavior_IsShallowFlowingWater(objEvent->previousMetatileBehavior))
+        || (MetatileBehavior_IsPacifidlogLog(objEvent->currentMetatileBehavior)
+            && MetatileBehavior_IsPacifidlogLog(objEvent->previousMetatileBehavior)))
+    {
+        if (!objEvent->inShallowFlowingWater)
+        {
+            objEvent->inShallowFlowingWater++;
+            *flags |= GROUND_EFFECT_FLAG_SHALLOW_FLOWING_WATER;
+        }
+    }
+    else
+    {
+        objEvent->inShallowFlowingWater = FALSE;
+    }
 }
 
-__attribute__((naked)) void GetGroundEffectFlags_Puddle(struct ObjectEvent *objEvent, u32 *flags)
+void GetGroundEffectFlags_Puddle(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4, #0x1e]\n\t"
-        "	bl MetatileBehavior_IsPuddle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080962B8\n\t"
-        "	ldrb r0, [r4, #0x1f]\n\t"
-        "	bl MetatileBehavior_IsPuddle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080962B8\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r5]\n\t"
-        "_080962B8:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (MetatileBehavior_IsPuddle(objEvent->currentMetatileBehavior)
+        && MetatileBehavior_IsPuddle(objEvent->previousMetatileBehavior))
+        *flags |= GROUND_EFFECT_FLAG_PUDDLE;
 }
 
-__attribute__((naked)) void GetGroundEffectFlags_Ripple(struct ObjectEvent *objEvent, u32 *flags)
+void GetGroundEffectFlags_Ripple(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldrb r0, [r0, #0x1e]\n\t"
-        "	bl MetatileBehavior_HasRipples\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080962DA\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r4]\n\t"
-        "_080962DA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (MetatileBehavior_HasRipples(objEvent->currentMetatileBehavior))
+        *flags |= GROUND_EFFECT_FLAG_RIPPLES;
 }
 
-__attribute__((naked)) void GetGroundEffectFlags_ShortGrass(struct ObjectEvent *objEvent, u32 *flags)
+void GetGroundEffectFlags_ShortGrass(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4, #0x1e]\n\t"
-        "	bl MetatileBehavior_IsShortGrass\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809631E\n\t"
-        "	ldrb r0, [r4, #0x1f]\n\t"
-        "	bl MetatileBehavior_IsShortGrass\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809631E\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	lsls r0, r1, #0x1d\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _08096328\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r5]\n\t"
-        "	b _08096328\n\t"
-        "_0809631E:\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "_08096328:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (MetatileBehavior_IsShortGrass(objEvent->currentMetatileBehavior)
+        && MetatileBehavior_IsShortGrass(objEvent->previousMetatileBehavior))
+    {
+        if (!objEvent->inShortGrass)
+        {
+            objEvent->inShortGrass++;
+            *flags |= GROUND_EFFECT_FLAG_SHORT_GRASS;
+        }
+    }
+    else
+    {
+        objEvent->inShortGrass = FALSE;
+    }
 }
 
-__attribute__((naked)) void GetGroundEffectFlags_HotSprings(struct ObjectEvent *objEvent, u32 *flags)
+void GetGroundEffectFlags_HotSprings(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4, #0x1e]\n\t"
-        "	bl MetatileBehavior_IsHotSprings\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809636E\n\t"
-        "	ldrb r0, [r4, #0x1f]\n\t"
-        "	bl MetatileBehavior_IsHotSprings\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809636E\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	lsls r0, r1, #0x1a\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _08096378\n\t"
-        "	movs r0, #0x21\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x20\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0xb\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r5]\n\t"
-        "	b _08096378\n\t"
-        "_0809636E:\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	movs r0, #0x21\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #2]\n\t"
-        "_08096378:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (MetatileBehavior_IsHotSprings(objEvent->currentMetatileBehavior)
+        && MetatileBehavior_IsHotSprings(objEvent->previousMetatileBehavior))
+    {
+        if (!objEvent->inHotSprings)
+        {
+            objEvent->inHotSprings++;
+            *flags |= GROUND_EFFECT_FLAG_HOT_SPRINGS;
+        }
+    }
+    else
+    {
+        objEvent->inHotSprings = FALSE;
+    }
 }
 
 
-__attribute__((naked)) void GetGroundEffectFlags_Seaweed(struct ObjectEvent *objEvent, u32 *flags)
+void GetGroundEffectFlags_Seaweed(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldrb r0, [r0, #0x1e]\n\t"
-        "	bl MetatileBehavior_IsSeaweed\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809639A\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0xc\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r4]\n\t"
-        "_0809639A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (MetatileBehavior_IsSeaweed(objEvent->currentMetatileBehavior))
+        *flags |= GROUND_EFFECT_FLAG_SEAWEED;
 }
 
-__attribute__((naked)) void GetGroundEffectFlags_JumpLanding(struct ObjectEvent *objEvent, u32 *flags)
+void GetGroundEffectFlags_JumpLanding(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldr r1, _080963DC\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0x20\n\t"
-        "	bne _080963F2\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r0, _080963E0\n\t"
-        "	mov r8, r0\n\t"
-        "_080963BA:\n\t"
-        "	lsls r4, r5, #2\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r4, r0\n\t"
-        "	ldrb r0, [r7, #0x1e]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080963E8\n\t"
-        "	ldr r0, _080963E4\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	orrs r1, r0\n\t"
-        "	str r1, [r6]\n\t"
-        "	b _080963F2\n\t"
-        "	.align 2, 0\n\t"
-        "_080963DC: .4byte gUnknown_2000020\n\t"
-        "_080963E0: .4byte sJumpLandingMetatileFuncs\n\t"
-        "_080963E4: .4byte sJumpLandingFlags\n\t"
-        "_080963E8:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #5\n\t"
-        "	bls _080963BA\n\t"
-        "_080963F2:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objEvent->landingJump && !objEvent->disableJumpLandingGroundEffect)
+    {
+        u8 i;
+
+        for (i = 0; i < ARRAY_COUNT(sJumpLandingMetatileFuncs); i++)
+        {
+            if (sJumpLandingMetatileFuncs[i](objEvent->currentMetatileBehavior))
+            {
+                *flags |= sJumpLandingFlags[i];
+                return;
+            }
+        }
+    }
 }
 
-__attribute__((naked)) bool8 EventObjectCheckForReflectiveSurface(struct ObjectEvent *objectEvent)
+#define RETURN_REFLECTION_TYPE_AT(x, y)              \
+    b = MapGridGetMetatileBehaviorAt(x, y);          \
+    result = GetReflectionTypeByMetatileBehavior(b); \
+    if (result != REFL_TYPE_NONE)                    \
+        return result;
+
+bool8 EventObjectCheckForReflectiveSurface(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	adds r1, #8\n\t"
-        "	lsls r1, r1, #0xc\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	adds r0, #8\n\t"
-        "	lsls r0, r0, #0xc\n\t"
-        "	movs r4, #0\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r4, r0\n\t"
-        "	blt _08096432\n\t"
-        "	b _08096538\n\t"
-        "_08096432:\n\t"
-        "	movs r0, #1\n\t"
-        "	mov sl, r0\n\t"
-        "_08096436:\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	add r1, sl\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r6, r4, #0x10\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetReflectionTypeByMetatileBehavior\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0809653A\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r2, #0x16\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	add r1, sl\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetReflectionTypeByMetatileBehavior\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0809653A\n\t"
-        "	movs r2, #1\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	cmp r2, r1\n\t"
-        "	bge _08096526\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	asrs r7, r0, #0x10\n\t"
-        "_08096490:\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	lsls r1, r2, #0x10\n\t"
-        "	asrs r4, r1, #0x10\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetReflectionTypeByMetatileBehavior\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0809653A\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	subs r0, r0, r4\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetReflectionTypeByMetatileBehavior\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0809653A\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r2, #0x16\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetReflectionTypeByMetatileBehavior\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0809653A\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	subs r0, r0, r4\n\t"
-        "	movs r2, #0x16\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetReflectionTypeByMetatileBehavior\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0809653A\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r0, r8\n\t"
-        "	blt _08096490\n\t"
-        "_08096526:\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	add r1, sb\n\t"
-        "	lsrs r4, r1, #0x10\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	bge _08096538\n\t"
-        "	b _08096436\n\t"
-        "_08096538:\n\t"
-        "	movs r0, #0\n\t"
-        "_0809653A:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct ObjectEventGraphicsInfo *info = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
+
+    // Ceil div by tile width. Size / 16 + 1;
+    s16 width = (info->width + 8) >> 4;
+    s16 height = (info->height + 8) >> 4;
+    s16 i, j;
+    u8 result, b; // used by RETURN_REFLECTION_TYPE_AT
+    s16 one = 1; // + 1
+
+    for (i = 0; i < height; i++)
+    {
+        RETURN_REFLECTION_TYPE_AT(objectEvent->currentCoords.x, objectEvent->currentCoords.y + one + i)
+        RETURN_REFLECTION_TYPE_AT(objectEvent->previousCoords.x, objectEvent->previousCoords.y + one + i)
+        for (j = 1; j < width; j++)
+        {
+            RETURN_REFLECTION_TYPE_AT(objectEvent->currentCoords.x + j, objectEvent->currentCoords.y + one + i)
+            RETURN_REFLECTION_TYPE_AT(objectEvent->currentCoords.x - j, objectEvent->currentCoords.y + one + i)
+            RETURN_REFLECTION_TYPE_AT(objectEvent->previousCoords.x + j, objectEvent->previousCoords.y + one + i)
+            RETURN_REFLECTION_TYPE_AT(objectEvent->previousCoords.x - j, objectEvent->previousCoords.y + one + i)
+        }
+    }
+
+    return REFL_TYPE_NONE;
 }
 
-__attribute__((naked)) u8 GetReflectionTypeByMetatileBehavior(u32 metatileBehavior)
+#undef RETURN_REFLECTION_TYPE_AT
+
+u8 GetReflectionTypeByMetatileBehavior(u32 metatileBehavior)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl MetatileBehavior_IsIce_2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08096562\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08096574\n\t"
-        "_08096562:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl MetatileBehavior_IsReflective\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08096572\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08096574\n\t"
-        "_08096572:\n\t"
-        "	movs r0, #2\n\t"
-        "_08096574:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (MetatileBehavior_IsIce_2(metatileBehavior))
+        return REFL_TYPE_ICE;
+    else if (MetatileBehavior_IsReflective(metatileBehavior))
+        return REFL_TYPE_WATER;
+    else
+        return REFL_TYPE_NONE;
 }
 
-__attribute__((naked)) u8 GetLedgeJumpDirection(s16 x, s16 y, u8 direction)
+u8 GetLedgeJumpDirection(s16 x, s16 y, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r4, r2, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080965C2\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08096598\n\t"
-        "	subs r0, r4, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_08096598:\n\t"
-        "	subs r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080965C8\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080965CC\n\t"
-        "_080965C2:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080965D2\n\t"
-        "	.align 2, 0\n\t"
-        "_080965C8: .4byte sLedgeBehaviorFuncs\n\t"
-        "_080965CC:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_080965D2:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 behavior;
+
+    if (direction == DIR_NONE)
+        return DIR_NONE;
+    else if (direction > DIR_EAST)
+        direction -= DIR_EAST;
+
+    direction--;
+    behavior = MapGridGetMetatileBehaviorAt(x, y);
+
+    if (sLedgeBehaviorFuncs[direction](behavior) == TRUE)
+        return direction + 1;
+
+    return DIR_NONE;
 }
 
-__attribute__((naked)) void SetEventObjectSpriteOamTableForLongGrass(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void SetEventObjectSpriteOamTableForLongGrass(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _0809662C\n\t"
-        "	ldrb r0, [r5, #0x1e]\n\t"
-        "	bl MetatileBehavior_IsLongGrass\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809662C\n\t"
-        "	ldrb r0, [r5, #0x1f]\n\t"
-        "	bl MetatileBehavior_IsLongGrass\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809662C\n\t"
-        "	adds r4, #0x42\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r6, #0x40\n\t"
-        "	rsbs r6, r6, #0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldrb r0, [r5, #0xb]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	bl ElevationToPriority\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0809662C\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #5\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r4]\n\t"
-        "_0809662C:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->disableCoveringGroundEffects)
+        return;
+
+    if (!MetatileBehavior_IsLongGrass(objectEvent->currentMetatileBehavior))
+        return;
+
+    if (!MetatileBehavior_IsLongGrass(objectEvent->previousMetatileBehavior))
+        return;
+
+    sprite->subspriteTableNum = 4;
+
+    if (ElevationToPriority(objectEvent->previousElevation) == 1)
+        sprite->subspriteTableNum = 5;
 }
 
-__attribute__((naked)) bool8 IsZCoordMismatchAt(u8 elevation, s16 x, s16 y)
+bool8 IsZCoordMismatchAt(u8 elevation, s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r0, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r1, r2, #0x10\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _08096662\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl MapGridGetElevationAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08096662\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	beq _08096662\n\t"
-        "	cmp r0, r4\n\t"
-        "	bne _08096666\n\t"
-        "_08096662:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08096668\n\t"
-        "_08096666:\n\t"
-        "	movs r0, #1\n\t"
-        "_08096668:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 mapElevation;
+
+    if (elevation == ELEVATION_TRANSITION)
+        return FALSE;
+
+    mapElevation = MapGridGetElevationAt(x, y);
+
+    if (mapElevation == ELEVATION_TRANSITION || mapElevation == ELEVATION_MULTI_LEVEL)
+        return FALSE;
+
+    if (mapElevation != elevation)
+        return TRUE;
+
+    return FALSE;
 }
 
-__attribute__((naked)) void UpdateEventObjectZCoordAndPriority(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void UpdateEventObjectZCoordAndPriority(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	lsls r0, r0, #0x1d\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _080966BE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectUpdateZCoord\n\t"
-        "	ldr r1, _080966C4\n\t"
-        "	ldrb r2, [r4, #0xb]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r0, r2, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	adds r4, #0x42\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	ands r1, r0\n\t"
-        "	ldrb r3, [r4]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldr r0, _080966C8\n\t"
-        "	lsrs r2, r2, #0x1c\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	movs r0, #3\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldrb r2, [r5, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "_080966BE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080966C4: .4byte sElevationToSubspriteTableNum\n\t"
-        "_080966C8: .4byte sElevationToPriority\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->fixedPriority)
+        return;
+
+    EventObjectUpdateZCoord(objectEvent);
+
+    sprite->subspriteTableNum = sElevationToSubspriteTableNum[objectEvent->previousElevation];
+    sprite->oam.priority = sElevationToPriority[objectEvent->previousElevation];
 }
 
-__attribute__((naked)) void InitObjectPriorityByZCoord(struct ObjectEvent *objectEvent, u8 elevation)
+void InitObjectPriorityByZCoord(struct Sprite *sprite, u8 elevation)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r2, _08096710\n\t"
-        "	adds r2, r1, r2\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	movs r3, #0x42\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	mov ip, r3\n\t"
-        "	movs r3, #0x3f\n\t"
-        "	ands r3, r2\n\t"
-        "	mov r2, ip\n\t"
-        "	ldrb r4, [r2]\n\t"
-        "	movs r2, #0x40\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	ands r2, r4\n\t"
-        "	orrs r2, r3\n\t"
-        "	mov r3, ip\n\t"
-        "	strb r2, [r3]\n\t"
-        "	ldr r2, _08096714\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r3, #3\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	ands r2, r3\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldrb r3, [r0, #5]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r3\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #5]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096710: .4byte sElevationToSubspriteTableNum\n\t"
-        "_08096714: .4byte sElevationToPriority\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->subspriteTableNum = sElevationToSubspriteTableNum[elevation];
+    sprite->oam.priority = sElevationToPriority[elevation];
 }
 
 u8 ElevationToPriority(u8 elevation)
@@ -14604,96 +9051,26 @@ u8 ElevationToPriority(u8 elevation)
     return sElevationToPriority[elevation];
 }
 
-__attribute__((naked)) void EventObjectUpdateZCoord(struct ObjectEvent *objectEvent)
+void EventObjectUpdateZCoord(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl MapGridGetElevationAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x16\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl MapGridGetElevationAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r5, #0xf\n\t"
-        "	beq _08096776\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	beq _08096776\n\t"
-        "	movs r3, #0xf\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	ldrb r1, [r4, #0xb]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	ands r2, r1\n\t"
-        "	orrs r2, r0\n\t"
-        "	strb r2, [r4, #0xb]\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _08096776\n\t"
-        "	cmp r5, #0xf\n\t"
-        "	beq _08096776\n\t"
-        "	lsls r0, r5, #4\n\t"
-        "	ands r2, r3\n\t"
-        "	orrs r2, r0\n\t"
-        "	strb r2, [r4, #0xb]\n\t"
-        "_08096776:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 curElevation = MapGridGetElevationAt(objectEvent->currentCoords.x, objectEvent->currentCoords.y);
+    u8 prevElevation = MapGridGetElevationAt(objectEvent->previousCoords.x, objectEvent->previousCoords.y);
+
+    if (curElevation == ELEVATION_MULTI_LEVEL || prevElevation == ELEVATION_MULTI_LEVEL)
+        return;
+
+    objectEvent->currentElevation = curElevation;
+
+    if (curElevation != ELEVATION_TRANSITION && curElevation != ELEVATION_MULTI_LEVEL)
+        objectEvent->previousElevation = curElevation;
 }
 
-__attribute__((naked)) void SetObjectSubpriorityByElevation(u8 elevation, struct Sprite *sprite, u8 subpriority)
+void SetObjectSubpriorityByElevation(u8 elevation, struct Sprite *sprite, u8 subpriority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #0x29\n\t"
-        "	movs r5, #0\n\t"
-        "	ldrsb r5, [r3, r5]\n\t"
-        "	ldrh r4, [r1, #0x22]\n\t"
-        "	ldr r3, _080967BC\n\t"
-        "	subs r4, r4, r5\n\t"
-        "	ldrh r3, [r3]\n\t"
-        "	adds r4, r4, r3\n\t"
-        "	adds r4, #8\n\t"
-        "	movs r3, #0xff\n\t"
-        "	ands r4, r3\n\t"
-        "	lsrs r4, r4, #4\n\t"
-        "	movs r3, #0x10\n\t"
-        "	subs r3, r3, r4\n\t"
-        "	lsls r3, r3, #0x11\n\t"
-        "	ldr r4, _080967C0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	adds r1, #0x43\n\t"
-        "	strb r2, [r1]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080967BC: .4byte gSpriteCoordOffsetY\n\t"
-        "_080967C0: .4byte sElevationToSubpriority\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 y = (sprite->y - sprite->centerToCornerVecY + gSpriteCoordOffsetY + 8) & 0xFF;
+    y = (16 - (y >> 4)) << 1;
+
+    sprite->subpriority = sElevationToSubpriority[elevation] + y + subpriority;
 }
 
 void ObjectEventUpdateSubpriority(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -14715,180 +9092,56 @@ bool8 AreElevationsCompatible(u8 a, u8 b)
     return TRUE;
 }
 
-__attribute__((naked)) void GroundEffect_SpawnOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_SpawnOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r3, _08096844\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	str r1, [r3]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	str r1, [r3, #4]\n\t"
-        "	ldrb r1, [r0, #0xb]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	str r1, [r3, #8]\n\t"
-        "	movs r1, #2\n\t"
-        "	str r1, [r3, #0xc]\n\t"
-        "	ldrb r1, [r0, #8]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldrb r2, [r0, #9]\n\t"
-        "	orrs r1, r2\n\t"
-        "	str r1, [r3, #0x10]\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	str r0, [r3, #0x14]\n\t"
-        "	ldr r0, _08096848\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	ldrb r1, [r1, #4]\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r3, #0x18]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [r3, #0x1c]\n\t"
-        "	movs r0, #4\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096844: .4byte gFieldEffectArguments\n\t"
-        "_08096848: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = objEvent->currentCoords.x;
+    gFieldEffectArguments[1] = objEvent->currentCoords.y;
+    gFieldEffectArguments[2] = objEvent->previousElevation;
+    gFieldEffectArguments[3] = 2; // priority
+    gFieldEffectArguments[4] = objEvent->localId << 8 | objEvent->mapNum;
+    gFieldEffectArguments[5] = objEvent->mapGroup;
+    gFieldEffectArguments[6] = (u8)gSaveBlock1Ptr->location.mapNum << 8 | (u8)gSaveBlock1Ptr->location.mapGroup;
+    gFieldEffectArguments[7] = TRUE; // skip to end of anim
+    FieldEffectStart(FLDEFF_TALL_GRASS);
 }
 
-__attribute__((naked)) void GroundEffect_StepOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_StepOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r3, _08096890\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	str r1, [r3]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	str r1, [r3, #4]\n\t"
-        "	ldrb r1, [r0, #0xb]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	str r1, [r3, #8]\n\t"
-        "	movs r1, #2\n\t"
-        "	str r1, [r3, #0xc]\n\t"
-        "	ldrb r1, [r0, #8]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldrb r2, [r0, #9]\n\t"
-        "	orrs r1, r2\n\t"
-        "	str r1, [r3, #0x10]\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	str r0, [r3, #0x14]\n\t"
-        "	ldr r0, _08096894\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	ldrb r1, [r1, #4]\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r3, #0x18]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r3, #0x1c]\n\t"
-        "	movs r0, #4\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096890: .4byte gFieldEffectArguments\n\t"
-        "_08096894: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = objEvent->currentCoords.x;
+    gFieldEffectArguments[1] = objEvent->currentCoords.y;
+    gFieldEffectArguments[2] = objEvent->previousElevation;
+    gFieldEffectArguments[3] = 2; // priority
+    gFieldEffectArguments[4] = objEvent->localId << 8 | objEvent->mapNum;
+    gFieldEffectArguments[5] = objEvent->mapGroup;
+    gFieldEffectArguments[6] = (u8)gSaveBlock1Ptr->location.mapNum << 8 | (u8)gSaveBlock1Ptr->location.mapGroup;
+    gFieldEffectArguments[7] = FALSE; // don't skip to end of anim
+    FieldEffectStart(FLDEFF_TALL_GRASS);
 }
 
-__attribute__((naked)) void GroundEffect_SpawnOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_SpawnOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r3, _080968DC\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	str r1, [r3]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	str r1, [r3, #4]\n\t"
-        "	ldrb r1, [r0, #0xb]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	str r1, [r3, #8]\n\t"
-        "	movs r1, #2\n\t"
-        "	str r1, [r3, #0xc]\n\t"
-        "	ldrb r1, [r0, #8]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldrb r2, [r0, #9]\n\t"
-        "	orrs r1, r2\n\t"
-        "	str r1, [r3, #0x10]\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	str r0, [r3, #0x14]\n\t"
-        "	ldr r0, _080968E0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	ldrb r1, [r1, #4]\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r3, #0x18]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [r3, #0x1c]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080968DC: .4byte gFieldEffectArguments\n\t"
-        "_080968E0: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = objEvent->currentCoords.x;
+    gFieldEffectArguments[1] = objEvent->currentCoords.y;
+    gFieldEffectArguments[2] = objEvent->previousElevation;
+    gFieldEffectArguments[3] = 2;
+    gFieldEffectArguments[4] = objEvent->localId << 8 | objEvent->mapNum;
+    gFieldEffectArguments[5] = objEvent->mapGroup;
+    gFieldEffectArguments[6] = (u8)gSaveBlock1Ptr->location.mapNum << 8 | (u8)gSaveBlock1Ptr->location.mapGroup;
+    gFieldEffectArguments[7] = 1;
+    FieldEffectStart(FLDEFF_LONG_GRASS);
 }
 
-__attribute__((naked)) void GroundEffect_StepOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_StepOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r3, _08096928\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	str r1, [r3]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	str r1, [r3, #4]\n\t"
-        "	ldrb r1, [r0, #0xb]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	str r1, [r3, #8]\n\t"
-        "	movs r1, #2\n\t"
-        "	str r1, [r3, #0xc]\n\t"
-        "	ldrb r1, [r0, #8]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldrb r2, [r0, #9]\n\t"
-        "	orrs r1, r2\n\t"
-        "	str r1, [r3, #0x10]\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	str r0, [r3, #0x14]\n\t"
-        "	ldr r0, _0809692C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	ldrb r1, [r1, #4]\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r3, #0x18]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r3, #0x1c]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096928: .4byte gFieldEffectArguments\n\t"
-        "_0809692C: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = objEvent->currentCoords.x;
+    gFieldEffectArguments[1] = objEvent->currentCoords.y;
+    gFieldEffectArguments[2] = objEvent->previousElevation;
+    gFieldEffectArguments[3] = 2;
+    gFieldEffectArguments[4] = (objEvent->localId << 8) | objEvent->mapNum;
+    gFieldEffectArguments[5] = objEvent->mapGroup;
+    gFieldEffectArguments[6] = (u8)gSaveBlock1Ptr->location.mapNum << 8 | (u8)gSaveBlock1Ptr->location.mapGroup;
+    gFieldEffectArguments[7] = 0;
+    FieldEffectStart(FLDEFF_LONG_GRASS);
 }
 
 void GroundEffect_WaterReflection(struct ObjectEvent *objEvent, struct Sprite *sprite)
@@ -14907,163 +9160,50 @@ void GroundEffect_FlowingWater(struct ObjectEvent *objEvent, struct Sprite *spri
     StartFieldEffectForObjectEvent(FLDEFF_FEET_IN_FLOWING_WATER, objEvent);
 }
 
-__attribute__((naked)) void GroundEffect_SandTracks(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_SandTracks(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	ldr r1, _08096980\n\t"
-        "	ldrb r0, [r0, #0xd]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl _call_via_r3\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096980: .4byte sGroundEffectTracksFuncs\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct ObjectEventGraphicsInfo *info = GetObjectEventGraphicsInfo(objEvent->graphicsId);
+    sGroundEffectTracksFuncs[info->tracks](objEvent, sprite, FALSE);
 }
 
-__attribute__((naked)) void sub_08096984(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void sub_08096984(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	ldr r1, _080969AC\n\t"
-        "	ldrb r0, [r0, #0xd]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl _call_via_r3\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080969AC: .4byte sGroundEffectTracksFuncs\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct ObjectEventGraphicsInfo *info = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
+    sGroundEffectTracksFuncs[info->tracks](objectEvent, sprite, TRUE);
 }
 
 void DoTracksGroundEffect_None(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a) {}
-__attribute__((naked)) void DoTracksGroundEffect_Footprints(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a)
+void DoTracksGroundEffect_Footprints(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r4, r2, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r1, _080969FC\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r1, _08096A00\n\t"
-        "	movs r2, #0x14\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r2, #0x16\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	movs r0, #0x95\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [r1, #0xc]\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	str r0, [r1, #0x10]\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080969FC: .4byte sSandFootprintsFieldEffectIds\n\t"
-        "_08096A00: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 sandFootprints_FieldEffectData[2];
+
+    memcpy(sandFootprints_FieldEffectData, sSandFootprintsFieldEffectIds, sizeof(sandFootprints_FieldEffectData));
+
+    gFieldEffectArguments[0] = objectEvent->previousCoords.x;
+    gFieldEffectArguments[1] = objectEvent->previousCoords.y;
+    gFieldEffectArguments[2] = 149;
+    gFieldEffectArguments[3] = 2;
+    gFieldEffectArguments[4] = objectEvent->facingDirection;
+    FieldEffectStart(sandFootprints_FieldEffectData[a]);
 }
 
-__attribute__((naked)) void DoTracksGroundEffect_BikeTireTracks(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a)
+void DoTracksGroundEffect_BikeTireTracks(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, [r4, #0x10]\n\t"
-        "	ldr r0, [r4, #0x14]\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _08096A46\n\t"
-        "	ldr r2, _08096A4C\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	str r0, [r2]\n\t"
-        "	movs r1, #0x16\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	str r0, [r2, #4]\n\t"
-        "	movs r0, #0x95\n\t"
-        "	str r0, [r2, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [r2, #0xc]\n\t"
-        "	ldr r3, _08096A50\n\t"
-        "	ldrb r1, [r4, #0x18]\n\t"
-        "	lsls r1, r1, #0x1c\n\t"
-        "	lsrs r1, r1, #0x1c\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x20\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	subs r0, #5\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	str r0, [r2, #0x10]\n\t"
-        "	movs r0, #0x23\n\t"
-        "	bl FieldEffectStart\n\t"
-        "_08096A46:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096A4C: .4byte gFieldEffectArguments\n\t"
-        "_08096A50: .4byte sBikeTireTracksTransitions\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->currentCoords.x != objectEvent->previousCoords.x || objectEvent->currentCoords.y != objectEvent->previousCoords.y)
+    {
+        gFieldEffectArguments[0] = objectEvent->previousCoords.x;
+        gFieldEffectArguments[1] = objectEvent->previousCoords.y;
+        gFieldEffectArguments[2] = 149;
+        gFieldEffectArguments[3] = 2;
+        gFieldEffectArguments[4] =
+            sBikeTireTracksTransitions[objectEvent->previousMovementDirection][objectEvent->facingDirection - 5];
+        FieldEffectStart(FLDEFF_BIKE_TIRE_TRACKS);
+    }
 }
 
-__attribute__((naked)) void sub_08096A54(void)
+void sub_08096A54(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl DoRippleFieldEffect\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    DoRippleFieldEffect(objEvent, sprite);
 }
 
 void GroundEffect_StepOnPuddle(struct ObjectEvent *objEvent, struct Sprite *sprite)
@@ -15076,170 +9216,61 @@ void GroundEffect_SandHeap(struct ObjectEvent *objEvent, struct Sprite *sprite)
     StartFieldEffectForObjectEvent(FLDEFF_SAND_PILE, objEvent);
 }
 
-__attribute__((naked)) void GroundEffect_JumpOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_JumpOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	ldr r1, _08096AD4\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r4, #0x12\n\t"
-        "	ldrsh r0, [r5, r4]\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	ldrb r0, [r5, #0xb]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [r1, #0xc]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	ldrb r0, [r5, #8]\n\t"
-        "	ldrb r1, [r5, #9]\n\t"
-        "	ldrb r2, [r5, #0xa]\n\t"
-        "	movs r7, #0x10\n\t"
-        "	ldrsh r3, [r5, r7]\n\t"
-        "	movs r7, #0x12\n\t"
-        "	ldrsh r4, [r5, r7]\n\t"
-        "	str r4, [sp]\n\t"
-        "	bl FindTallGrassFieldEffectSpriteId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	bne _08096ACA\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl GroundEffect_SpawnOnTallGrass\n\t"
-        "_08096ACA:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096AD4: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+
+    gFieldEffectArguments[0] = objEvent->currentCoords.x;
+    gFieldEffectArguments[1] = objEvent->currentCoords.y;
+    gFieldEffectArguments[2] = objEvent->previousElevation;
+    gFieldEffectArguments[3] = 2;
+    FieldEffectStart(FLDEFF_JUMP_TALL_GRASS);
+
+    spriteId = FindTallGrassFieldEffectSpriteId(
+        objEvent->localId,
+        objEvent->mapNum,
+        objEvent->mapGroup,
+        objEvent->currentCoords.x,
+        objEvent->currentCoords.y);
+
+    if (spriteId == MAX_SPRITES)
+        GroundEffect_SpawnOnTallGrass(objEvent, sprite);
 }
 
-__attribute__((naked)) void GroundEffect_JumpOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_JumpOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _08096AFC\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	str r1, [r2]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	str r1, [r2, #4]\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	str r0, [r2, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [r2, #0xc]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096AFC: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = objEvent->currentCoords.x;
+    gFieldEffectArguments[1] = objEvent->currentCoords.y;
+    gFieldEffectArguments[2] = objEvent->previousElevation;
+    gFieldEffectArguments[3] = 2;
+    FieldEffectStart(FLDEFF_JUMP_LONG_GRASS);
 }
 
-__attribute__((naked)) void GroundEffect_JumpOnShallowWater(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_JumpOnShallowWater(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r3, _08096B2C\n\t"
-        "	movs r4, #0x10\n\t"
-        "	ldrsh r2, [r0, r4]\n\t"
-        "	str r2, [r3]\n\t"
-        "	movs r4, #0x12\n\t"
-        "	ldrsh r2, [r0, r4]\n\t"
-        "	str r2, [r3, #4]\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	str r0, [r3, #8]\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	str r0, [r3, #0xc]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096B2C: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = objEvent->currentCoords.x;
+    gFieldEffectArguments[1] = objEvent->currentCoords.y;
+    gFieldEffectArguments[2] = objEvent->previousElevation;
+    gFieldEffectArguments[3] = sprite->oam.priority;
+    FieldEffectStart(FLDEFF_JUMP_SMALL_SPLASH);
 }
 
-__attribute__((naked)) void GroundEffect_JumpOnWater(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_JumpOnWater(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r3, _08096B5C\n\t"
-        "	movs r4, #0x10\n\t"
-        "	ldrsh r2, [r0, r4]\n\t"
-        "	str r2, [r3]\n\t"
-        "	movs r4, #0x12\n\t"
-        "	ldrsh r2, [r0, r4]\n\t"
-        "	str r2, [r3, #4]\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	str r0, [r3, #8]\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	str r0, [r3, #0xc]\n\t"
-        "	movs r0, #0xe\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096B5C: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = objEvent->currentCoords.x;
+    gFieldEffectArguments[1] = objEvent->currentCoords.y;
+    gFieldEffectArguments[2] = objEvent->previousElevation;
+    gFieldEffectArguments[3] = sprite->oam.priority;
+    FieldEffectStart(FLDEFF_JUMP_BIG_SPLASH);
 }
 
-__attribute__((naked)) void GroundEffect_JumpLandingDust(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_JumpLandingDust(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r3, _08096B8C\n\t"
-        "	movs r4, #0x10\n\t"
-        "	ldrsh r2, [r0, r4]\n\t"
-        "	str r2, [r3]\n\t"
-        "	movs r4, #0x12\n\t"
-        "	ldrsh r2, [r0, r4]\n\t"
-        "	str r2, [r3, #4]\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	str r0, [r3, #8]\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	str r0, [r3, #0xc]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096B8C: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = objEvent->currentCoords.x;
+    gFieldEffectArguments[1] = objEvent->currentCoords.y;
+    gFieldEffectArguments[2] = objEvent->previousElevation;
+    gFieldEffectArguments[3] = sprite->oam.priority;
+    FieldEffectStart(FLDEFF_DUST);
 }
 
 void GroundEffect_ShortGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
@@ -15252,116 +9283,39 @@ void GroundEffect_HotSprings(struct ObjectEvent *objEvent, struct Sprite *sprite
     StartFieldEffectForObjectEvent(FLDEFF_HOT_SPRINGS_WATER, objEvent);
 }
 
-__attribute__((naked)) void GroundEffect_Seaweed(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_Seaweed(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _08096BCC\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	str r1, [r2]\n\t"
-        "	movs r1, #0x12\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	str r0, [r2, #4]\n\t"
-        "	movs r0, #0x35\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096BCC: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = objEvent->currentCoords.x;
+    gFieldEffectArguments[1] = objEvent->currentCoords.y;
+    FieldEffectStart(FLDEFF_BUBBLES);
 }
 
-__attribute__((naked)) void DoFlaggedGroundEffects(struct ObjectEvent *objEvent, struct Sprite *sprite, u32 flags)
+void DoFlaggedGroundEffects(struct ObjectEvent *objEvent, struct Sprite *sprite, u32 flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	bl ObjectEventIsFarawayIslandMew\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08096BF4\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl ShouldMewShakeGrass\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08096C1C\n\t"
-        "_08096BF4:\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r0, _08096C28\n\t"
-        "	mov r8, r0\n\t"
-        "_08096BFA:\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r5\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08096C10\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	add r0, r8\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl _call_via_r2\n\t"
-        "_08096C10:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsrs r5, r5, #1\n\t"
-        "	cmp r4, #0x13\n\t"
-        "	bls _08096BFA\n\t"
-        "_08096C1C:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096C28: .4byte sGroundEffectFuncs\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    if (ObjectEventIsFarawayIslandMew(objEvent) == TRUE && !ShouldMewShakeGrass(objEvent))
+        return;
+
+    for (i = 0; i < ARRAY_COUNT(sGroundEffectFuncs); i++, flags >>= 1)
+        if (flags & 1)
+            sGroundEffectFuncs[i](objEvent, sprite);
 }
 
-__attribute__((naked)) void filters_out_some_ground_effects(struct ObjectEvent *objEvent, u32 *flags)
+void filters_out_some_ground_effects(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08096C5A\n\t"
-        "	ldrb r1, [r2, #2]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x11\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	adds r1, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	subs r1, #0x18\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2, #2]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _08096C60\n\t"
-        "	ands r0, r1\n\t"
-        "	str r0, [r3]\n\t"
-        "_08096C5A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096C60: .4byte 0xFFF9F7BD\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objEvent->disableCoveringGroundEffects)
+    {
+        objEvent->inShortGrass = 0;
+        objEvent->inSandPile = 0;
+        objEvent->inShallowFlowingWater = 0;
+        objEvent->inHotSprings = 0;
+        *flags &= ~(GROUND_EFFECT_FLAG_HOT_SPRINGS
+                  | GROUND_EFFECT_FLAG_SHORT_GRASS
+                  | GROUND_EFFECT_FLAG_SAND_PILE
+                  | GROUND_EFFECT_FLAG_SHALLOW_FLOWING_WATER
+                  | GROUND_EFFECT_FLAG_TALL_GRASS_ON_MOVE);
+    }
 }
 
 void FilterOutStepOnPuddleGroundEffectIfJumping(struct ObjectEvent *objEvent, u32 *flags)
@@ -15371,220 +9325,71 @@ void FilterOutStepOnPuddleGroundEffectIfJumping(struct ObjectEvent *objEvent, u3
 }
 
 
-__attribute__((naked)) void DoGroundEffects_OnSpawn(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void DoGroundEffects_OnSpawn(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #0x1d\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08096CC4\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl UpdateEventObjectZCoordAndPriority\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	bl GetAllGroundEffectFlags_OnSpawn\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl SetEventObjectSpriteOamTableForLongGrass\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl DoFlaggedGroundEffects\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x11\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "_08096CC4:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 flags;
+
+    if (objectEvent->triggerGroundEffectsOnMove)
+    {
+        flags = 0;
+        UpdateEventObjectZCoordAndPriority(objectEvent, sprite);
+        GetAllGroundEffectFlags_OnSpawn(objectEvent, &flags);
+        SetEventObjectSpriteOamTableForLongGrass(objectEvent, sprite);
+        DoFlaggedGroundEffects(objectEvent, sprite, flags);
+        objectEvent->triggerGroundEffectsOnMove = FALSE;
+        objectEvent->disableCoveringGroundEffects = 0;
+    }
 }
 
-__attribute__((naked)) void DoGroundEffects_OnBeginStep(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void DoGroundEffects_OnBeginStep(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #0x1d\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08096D18\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl UpdateEventObjectZCoordAndPriority\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	bl GetAllGroundEffectFlags_OnBeginStep\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl SetEventObjectSpriteOamTableForLongGrass\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	bl filters_out_some_ground_effects\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl DoFlaggedGroundEffects\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x11\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "_08096D18:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 flags;
+
+    if (objectEvent->triggerGroundEffectsOnMove)
+    {
+        flags = 0;
+        UpdateEventObjectZCoordAndPriority(objectEvent, sprite);
+        GetAllGroundEffectFlags_OnBeginStep(objectEvent, &flags);
+        SetEventObjectSpriteOamTableForLongGrass(objectEvent, sprite);
+        filters_out_some_ground_effects(objectEvent, &flags);
+        DoFlaggedGroundEffects(objectEvent, sprite, flags);
+        objectEvent->triggerGroundEffectsOnMove = FALSE;
+        objectEvent->disableCoveringGroundEffects = 0;
+    }
 }
 
-__attribute__((naked)) void DoGroundEffects_OnFinishStep(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void DoGroundEffects_OnFinishStep(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08096D6C\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl UpdateEventObjectZCoordAndPriority\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	bl GetAllGroundEffectFlags_OnFinishStep\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl SetEventObjectSpriteOamTableForLongGrass\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	bl FilterOutStepOnPuddleGroundEffectIfJumping\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl DoFlaggedGroundEffects\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #9\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x21\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "_08096D6C:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 flags;
+
+    if (objectEvent->triggerGroundEffectsOnStop)
+    {
+        flags = 0;
+        UpdateEventObjectZCoordAndPriority(objectEvent, sprite);
+        GetAllGroundEffectFlags_OnFinishStep(objectEvent, &flags);
+        SetEventObjectSpriteOamTableForLongGrass(objectEvent, sprite);
+        FilterOutStepOnPuddleGroundEffectIfJumping(objectEvent, &flags);
+        DoFlaggedGroundEffects(objectEvent, sprite, flags);
+        objectEvent->triggerGroundEffectsOnStop = 0;
+        objectEvent->landingJump = 0;
+    }
 }
 
-__attribute__((naked)) void FreezeEventObject(struct ObjectEvent *objectEvent)
+bool8 FreezeEventObject(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08096DFC\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	movs r4, #1\n\t"
-        "	orrs r0, r4\n\t"
-        "	strb r0, [r5, #1]\n\t"
-        "	ldr r3, _08096DF8\n\t"
-        "	ldrb r1, [r5, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x2c\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r1, r1, #0x19\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	lsls r1, r1, #7\n\t"
-        "	ldrb r2, [r5, #2]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r5, #2]\n\t"
-        "	ldrb r1, [r5, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x2c\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsrs r1, r1, #7\n\t"
-        "	ands r1, r4\n\t"
-        "	ldrb r2, [r5, #3]\n\t"
-        "	movs r0, #2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r5, #3]\n\t"
-        "	ldrb r1, [r5, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x2c\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #0x40\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldrb r1, [r5, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x2c\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08096DFE\n\t"
-        "	.align 2, 0\n\t"
-        "_08096DF8: .4byte gSprites\n\t"
-        "_08096DFC:\n\t"
-        "	movs r0, #1\n\t"
-        "_08096DFE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->heldMovementActive || objectEvent->frozen)
+    {
+        return TRUE;
+    }
+    else
+    {
+        objectEvent->frozen = TRUE;
+        objectEvent->spriteAnimPausedBackup = gSprites[objectEvent->spriteId].animPaused;
+        objectEvent->spriteAffineAnimPausedBackup = gSprites[objectEvent->spriteId].affineAnimPaused;
+        gSprites[objectEvent->spriteId].animPaused = TRUE;
+        gSprites[objectEvent->spriteId].affineAnimPaused = TRUE;
+        return FALSE;
+    }
 }
 
 void FreezeObjectEvents(void)
@@ -15595,105 +9400,22 @@ void FreezeObjectEvents(void)
             FreezeEventObject(&gObjectEvents[i]);
 }
 
-__attribute__((naked)) void FreezeEventObjectsExceptOne(u8 objectEventId)
+void FreezeEventObjectsExceptOne(u8 objectEventId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r6, _08096E7C\n\t"
-        "_08096E4A:\n\t"
-        "	cmp r4, r5\n\t"
-        "	beq _08096E6C\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r6\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08096E6C\n\t"
-        "	ldr r0, _08096E80\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _08096E6C\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl FreezeEventObject\n\t"
-        "_08096E6C:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0xf\n\t"
-        "	bls _08096E4A\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096E7C: .4byte gObjectEvents\n\t"
-        "_08096E80: .4byte gPlayerAvatar\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+        if (i != objectEventId && gObjectEvents[i].active && i != gPlayerAvatar.objectEventId)
+            FreezeEventObject(&gObjectEvents[i]);
 }
 
-__attribute__((naked)) void UnfreezeEventObject(struct ObjectEvent *objectEvent)
+void UnfreezeEventObject(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r2, [r5]\n\t"
-        "	ldr r1, _08096EE4\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _08096EDC\n\t"
-        "	ldrb r1, [r5, #1]\n\t"
-        "	movs r0, #2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r5, #1]\n\t"
-        "	ldr r4, _08096EE8\n\t"
-        "	ldrb r0, [r5, #4]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrb r2, [r5, #2]\n\t"
-        "	adds r1, #0x2c\n\t"
-        "	lsrs r2, r2, #7\n\t"
-        "	lsls r2, r2, #6\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	movs r0, #0x41\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r0, [r5, #4]\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	ldrb r1, [r5, #3]\n\t"
-        "	lsls r1, r1, #0x1f\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	lsls r1, r1, #7\n\t"
-        "	ldrb r3, [r2]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r3\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08096EDC:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096EE4: .4byte SPECIAL_RetrieveLotteryNumber\n\t"
-        "_08096EE8: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->active && objectEvent->frozen)
+    {
+        objectEvent->frozen = 0;
+        gSprites[objectEvent->spriteId].animPaused = objectEvent->spriteAnimPausedBackup;
+        gSprites[objectEvent->spriteId].affineAnimPaused = objectEvent->spriteAffineAnimPausedBackup;
+    }
 }
 
 void UnfreezeObjectEvents(void)
@@ -15728,29 +9450,10 @@ static void Step4(struct Sprite *sprite, u8 dir)
     sprite->y += 4 * (u16) sDirectionToVectors[dir].y;
 }
 
-__attribute__((naked)) void Step8(struct Sprite *sprite, u8 direction)
+void Step8(struct Sprite *sprite, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldr r2, _08096FCC\n\t"
-        "	lsrs r1, r1, #0x16\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	ldrh r3, [r0, #0x20]\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	strh r2, [r0, #0x20]\n\t"
-        "	ldrh r1, [r1, #2]\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldrh r2, [r0, #0x22]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08096FCC: .4byte sEventObjectMovementDirectionData + 0x29\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x += sDirectionToVectors[direction].x << 3;
+    sprite->y += sDirectionToVectors[direction].y << 3;
 }
 
 void oamt_npc_ministep_reset(struct Sprite *sprite, u8 a, u8 b)
@@ -15760,63 +9463,19 @@ void oamt_npc_ministep_reset(struct Sprite *sprite, u8 a, u8 b)
     sprite->data[5] = 0;
 }
 
-__attribute__((naked)) bool8 obj_npc_ministep(struct Sprite *sprite)
+bool8 obj_npc_ministep(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r5, _0809703C\n\t"
-        "	movs r0, #0x36\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r3, #0x38\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r0, [r0, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bge _08097044\n\t"
-        "	ldr r1, _08097040\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrh r1, [r4, #0x34]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r2\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r1, [r1, r3]\n\t"
-        "	cmp r0, r1\n\t"
-        "	blt _08097044\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08097046\n\t"
-        "	.align 2, 0\n\t"
-        "_0809703C: .4byte sStepTimes\n\t"
-        "_08097040: .4byte sNpcStepFuncTables\n\t"
-        "_08097044:\n\t"
-        "	movs r0, #0\n\t"
-        "_08097046:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[5] >= sStepTimes[sprite->data[4]])
+        return FALSE;
+
+    sNpcStepFuncTables[sprite->data[4]][sprite->data[5]](sprite, sprite->sDirection);
+
+    sprite->data[5]++;
+
+    if (sprite->data[5] < sStepTimes[sprite->data[4]])
+        return FALSE;
+
+    return TRUE;
 }
 
 void sub_0809704C(struct Sprite *sprite, u8 a)
@@ -15903,202 +9562,75 @@ bool8 AnimateSpriteInFigure8(struct Sprite *sprite)
 }
 
 
-__attribute__((naked)) s16 sub_08097190(s16 a, u8 b)
+s16 sub_08097190(s16 i, u8 type)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldr r2, _080971A8\n\t"
-        "	lsrs r1, r1, #0x16\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080971A8: .4byte sJumpYTable\n\t"
-        ".syntax divided\n\t"
-    );
+    return sJumpYTable[type][i];
 }
 
-__attribute__((naked)) bool8 sub_080971AC(u8 a, u8 b, u8 c)
+void sub_080971AC(struct Sprite *sprite, u8 direction, u8 distance, u8 type)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	movs r4, #0\n\t"
-        "	strh r1, [r0, #0x34]\n\t"
-        "	strh r2, [r0, #0x36]\n\t"
-        "	strh r3, [r0, #0x38]\n\t"
-        "	strh r4, [r0, #0x3a]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->sDirection = direction;
+    sprite->data[4] = distance;
+    sprite->data[5] = type;
+    sprite->data[6] = 0;
 }
 
-__attribute__((naked)) void sub_080971CC(struct ObjectEvent *objectEvent)
+u8 sub_080971CC(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0809724C\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #6\n\t"
-        "	bl memcpy\n\t"
-        "	add r5, sp, #8\n\t"
-        "	ldr r1, _08097250\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	bl memcpy\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080971FE\n\t"
-        "	ldrh r1, [r4, #0x34]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Step1\n\t"
-        "_080971FE:\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	adds r1, r5, r1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	asrs r0, r1\n\t"
-        "	ldrh r1, [r4, #0x38]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl sub_08097190\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r1, [r4, #0x3a]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r4, #0x3a]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, sp\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r2, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08097238\n\t"
-        "	movs r6, #1\n\t"
-        "_08097238:\n\t"
-        "	cmp r1, r2\n\t"
-        "	blt _08097242\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r6, #0xff\n\t"
-        "_08097242:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0809724C: .4byte sJumpDistanceToTime\n\t"
-        "_08097250: .4byte sJumpDistanceToShift\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 distanceToTime[3];
+    u8 distanceToShift[3];
+    u8 result;
+
+    memcpy(distanceToTime, sJumpDistanceToTime, sizeof(distanceToTime));
+    memcpy(distanceToShift, sJumpDistanceToShift, sizeof(distanceToShift));
+    result = 0;
+
+    if (sprite->data[4] != JUMP_DISTANCE_IN_PLACE)
+        Step1(sprite, sprite->sDirection);
+
+    sprite->y2 = sub_08097190(sprite->data[6] >> distanceToShift[sprite->data[4]], sprite->data[5]);
+
+    sprite->data[6]++;
+
+    if (sprite->data[6] == distanceToTime[sprite->data[4]] >> 1)
+        result = JUMP_HALFWAY;
+
+    if (sprite->data[6] >= distanceToTime[sprite->data[4]])
+    {
+        sprite->y2 = 0;
+        result = JUMP_FINISHED;
+    }
+
+    return result;
 }
 
-__attribute__((naked)) void sub_08097254(struct ObjectEvent *objectEvent)
+u8 sub_08097254(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r1, _080972E0\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #6\n\t"
-        "	bl memcpy\n\t"
-        "	add r4, sp, #8\n\t"
-        "	ldr r1, _080972E4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	bl memcpy\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08097290\n\t"
-        "	ldrh r1, [r5, #0x3a]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08097290\n\t"
-        "	ldrh r1, [r5, #0x34]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl Step1\n\t"
-        "_08097290:\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	asrs r0, r1\n\t"
-        "	ldrh r1, [r5, #0x38]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl sub_08097190\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	ldrh r1, [r5, #0x3a]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r5, #0x3a]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, sp\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r2, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080972CA\n\t"
-        "	movs r6, #1\n\t"
-        "_080972CA:\n\t"
-        "	cmp r1, r2\n\t"
-        "	blt _080972D4\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	movs r6, #0xff\n\t"
-        "_080972D4:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080972E0: .4byte sJumpSpecialDistanceToTime\n\t"
-        "_080972E4: .4byte sJumpSpecialDistanceToShift\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 distanceToTime[3];
+    u8 distanceToShift[3];
+    u8 result;
+
+    memcpy(distanceToTime, sJumpSpecialDistanceToTime, sizeof(distanceToTime));
+    memcpy(distanceToShift, sJumpSpecialDistanceToShift, sizeof(distanceToShift));
+    result = 0;
+
+    if (sprite->data[4] != JUMP_DISTANCE_IN_PLACE && !(sprite->data[6] & 1))
+        Step1(sprite, sprite->sDirection);
+
+    sprite->y2 = sub_08097190(sprite->data[6] >> distanceToShift[sprite->data[4]], sprite->data[5]);
+
+    sprite->data[6]++;
+
+    if (sprite->data[6] == distanceToTime[sprite->data[4]] >> 1)
+        result = JUMP_HALFWAY;
+
+    if (sprite->data[6] >= distanceToTime[sprite->data[4]])
+    {
+        sprite->y2 = 0;
+        result = JUMP_FINISHED;
+    }
+
+    return result;
 }
 
 
@@ -16165,42 +9697,16 @@ void SpriteCB_VirtualObject(struct Sprite *sprite)
     UpdateObjectEventSpriteInvisibility(sprite, sprite->sInvisible);
 }
 
-__attribute__((naked)) void sub_08097460(void)
+void sub_08097460(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r4, #0x3f\n\t"
-        "_08097466:\n\t"
-        "	ldr r0, _08097494\n\t"
-        "	adds r2, r5, r0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08097486\n\t"
-        "	ldr r1, [r2, #0x1c]\n\t"
-        "	ldr r0, _08097498\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08097486\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_08097486:\n\t"
-        "	adds r5, #0x44\n\t"
-        "	subs r4, #1\n\t"
-        "	cmp r4, #0\n\t"
-        "	bge _08097466\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08097494: .4byte gSprites\n\t"
-        "_08097498: .4byte SpriteCB_VirtualObject + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    for (i = 0; i < MAX_SPRITES; i++)
+    {
+        struct Sprite *sprite = &gSprites[i];
+        if(sprite->inUse && sprite->callback == SpriteCB_VirtualObject)
+            DestroySprite(sprite);
+    }
 }
 
 int GetVirtualObjectSpriteId(u8 virtualObjId)
@@ -16267,41 +9773,14 @@ void SetVirtualObjectInvisibility(u8 virtualObjId, bool32 invisible)
         gSprites[spriteId].sInvisible = FALSE;
 }
 
-__attribute__((naked)) bool32 IsVirtualObjectInvisible(u8 virtualObjId)
+bool32 IsVirtualObjectInvisible(u8 virtualObjId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetVirtualObjectSpriteId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0x40\n\t"
-        "	bne _08097612\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0809762A\n\t"
-        "_08097612:\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, _08097630\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08097628\n\t"
-        "	movs r3, #1\n\t"
-        "_08097628:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "_0809762A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08097630: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = GetVirtualObjectSpriteId(virtualObjId);
+
+    if (spriteId == MAX_SPRITES)
+        return FALSE;
+
+    return (gSprites[spriteId].data[2] == TRUE);
 }
 
 void SetVirtualObjectSpriteAnim(u8 virtualObjId, u8 animNum)
@@ -16351,50 +9830,23 @@ void MoveUnionRoomObjectDown(struct Sprite *sprite)
     }
 }
 
-__attribute__((naked)) bool8 sub_080976D8(struct Sprite *sprite)
+void sub_080976D8(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r2, #0x34\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080976F4\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080976EE\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08097714\n\t"
-        "	b _08097704\n\t"
-        "_080976EE:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080976FC\n\t"
-        "	b _08097704\n\t"
-        "_080976F4:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl sub_080976A0\n\t"
-        "	b _08097714\n\t"
-        "_080976FC:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl sub_08097664\n\t"
-        "	b _08097714\n\t"
-        "_08097704:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "	ldr r0, _08097718\n\t"
-        "	ldr r1, _0809771C\n\t"
-        "	ldr r2, _08097720\n\t"
-        "	movs r3, #1\n\t"
-        "	bl AGBAssert\n\t"
-        "_08097714:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08097718: .4byte sEventObjectMovementSourceFile\n\t"
-        "_0809771C: .4byte 0x00003106\n\t"
-        "_08097720: .4byte sVirtualObjectAnimAssertExpression\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->data[3])
+    {
+    case 0:
+        break;
+    case 1:
+        sub_080976A0(sprite);
+        break;
+    case 2:
+        sub_08097664(sprite);
+        break;
+    default:
+        sprite->data[3] = 0;
+        AGBAssert(sEventObjectMovementSourceFile, 0x3106, sVirtualObjectAnimAssertExpression, TRUE);
+        break;
+    }
 }
 
 bool32 IsVirtualObjectAnimating(u8 virtualObjId)
@@ -16435,373 +9887,142 @@ void DoRippleFieldEffect(struct ObjectEvent *objectEvent, struct Sprite *sprite)
     FieldEffectStart(FLDEFF_RIPPLE);
 }
 
-__attribute__((naked)) bool8 MovementAction_StoreAndLockAnim_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementAction_StoreAndLockAnim_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	mov r8, r1\n\t"
-        "	movs r0, #0\n\t"
-        "	mov ip, r0\n\t"
-        "	ldr r0, _08097804\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _08097808\n\t"
-        "	movs r0, #0x14\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r6]\n\t"
-        "	ldrb r1, [r4, #8]\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1, #0x10]\n\t"
-        "	b _08097854\n\t"
-        "	.align 2, 0\n\t"
-        "_08097804: .4byte gUnknown_2037258\n\t"
-        "_08097808:\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	adds r3, r6, #0\n\t"
-        "	b _08097818\n\t"
-        "_08097812:\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "_08097818:\n\t"
-        "	cmp r1, #0xf\n\t"
-        "	bhi _0809783A\n\t"
-        "	cmp r2, #0x10\n\t"
-        "	bne _0809782C\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0809782C\n\t"
-        "	adds r2, r1, #0\n\t"
-        "_0809782C:\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldrb r7, [r4, #8]\n\t"
-        "	cmp r0, r7\n\t"
-        "	bne _08097812\n\t"
-        "	movs r5, #1\n\t"
-        "_0809783A:\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08097856\n\t"
-        "	cmp r2, #0x10\n\t"
-        "	beq _08097856\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r4, #8]\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldrb r0, [r1, #0x10]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1, #0x10]\n\t"
-        "	movs r0, #1\n\t"
-        "_08097854:\n\t"
-        "	mov ip, r0\n\t"
-        "_08097856:\n\t"
-        "	mov r1, ip\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _08097868\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	orrs r0, r1\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "_08097868:\n\t"
-        "	movs r0, #1\n\t"
-        "	mov r7, r8\n\t"
-        "	strh r0, [r7, #0x32]\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    bool32 ableToStore = FALSE;
+    if (gUnknown_2037258 == NULL)
+    {
+        gUnknown_2037258 = AllocZeroed(sizeof(struct EventObjectLockedAnimState));
+        gUnknown_2037258->localIds[0] = objectEvent->localId;
+        gUnknown_2037258->count = 1;
+        ableToStore = TRUE;
+    }
+    else
+    {
+        u8 i;
+        u8 firstFreeSlot = OBJECT_EVENTS_COUNT;
+        bool32 found = FALSE;
+        for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+        {
+            if (firstFreeSlot == OBJECT_EVENTS_COUNT && gUnknown_2037258->localIds[i] == LOCALID_NONE)
+                firstFreeSlot = i;
+
+            if (gUnknown_2037258->localIds[i] == objectEvent->localId)
+            {
+                found = TRUE;
+                break;
+            }
+        }
+
+        if (!found && firstFreeSlot != OBJECT_EVENTS_COUNT)
+        {
+            gUnknown_2037258->localIds[firstFreeSlot] = objectEvent->localId;
+            gUnknown_2037258->count++;
+            ableToStore = TRUE;
+        }
+    }
+
+    if (ableToStore == TRUE)
+    {
+        objectEvent->inanimate = TRUE;
+        objectEvent->facingDirectionLocked = TRUE;
+    }
+
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_FreeAndUnlockAnim_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementAction_FreeAndUnlockAnim_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	mov r8, r1\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	ldr r5, _080978FC\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080978F0\n\t"
-        "	movs r7, #0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl FindLockedEventObjectIndex\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0x10\n\t"
-        "	beq _080978B0\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldrb r0, [r1, #0x10]\n\t"
-        "	subs r0, #1\n\t"
-        "	strb r0, [r1, #0x10]\n\t"
-        "	movs r7, #1\n\t"
-        "_080978B0:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r4, [r0, #0x10]\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080978BE\n\t"
-        "	bl Free\n\t"
-        "	str r4, [r5]\n\t"
-        "_080978BE:\n\t"
-        "	cmp r7, #1\n\t"
-        "	bne _080978F0\n\t"
-        "	ldrb r0, [r6, #5]\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	ldrb r1, [r0, #0xc]\n\t"
-        "	lsls r1, r1, #0x19\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ldrb r2, [r6, #1]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	movs r1, #3\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6, #1]\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x41\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080978F0:\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080978FC: .4byte gUnknown_2037258\n\t"
-        ".syntax divided\n\t"
-    );
+    bool32 ableToStore;
+    u8 index;
+
+    sprite->sActionFuncId = 1;
+    if (gUnknown_2037258 != NULL)
+    {
+        ableToStore = FALSE;
+        index = FindLockedEventObjectIndex(objectEvent);
+        if (index != OBJECT_EVENTS_COUNT)
+        {
+            gUnknown_2037258->localIds[index] = LOCALID_NONE;
+            gUnknown_2037258->count--;
+            ableToStore = TRUE;
+        }
+        if (gUnknown_2037258->count == 0)
+        {
+            Free(gUnknown_2037258);
+            gUnknown_2037258 = NULL;
+        }
+        if (ableToStore == TRUE)
+        {
+            objectEvent->inanimate = GetObjectEventGraphicsInfo(objectEvent->graphicsId)->inanimate;
+            objectEvent->facingDirectionLocked = FALSE;
+            sprite->animPaused = 0;
+        }
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) s8 FindLockedEventObjectIndex(struct ObjectEvent *objectEvent)
+u8 FindLockedEventObjectIndex(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r1, _08097918\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldrb r3, [r0, #8]\n\t"
-        "_0809790A:\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, r3\n\t"
-        "	bne _0809791C\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	b _08097928\n\t"
-        "	.align 2, 0\n\t"
-        "_08097918: .4byte gUnknown_2037258\n\t"
-        "_0809791C:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0xf\n\t"
-        "	bls _0809790A\n\t"
-        "	movs r0, #0x10\n\t"
-        "_08097928:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+    {
+        if (gUnknown_2037258->localIds[i] == objectEvent->localId)
+            return i;
+    }
+    return OBJECT_EVENTS_COUNT;
 }
 
-__attribute__((naked)) void CreateLevitateMovementTask(struct ObjectEvent *objectEvent)
+void CreateLevitateMovementTask(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldr r0, _08097960\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl CreateTask\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r4, r5, #2\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	ldr r0, _08097964\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #8\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl StoreWordInTwoHalfwords\n\t"
-        "	strb r5, [r6, #0x1b]\n\t"
-        "	ldr r0, _08097968\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08097960: .4byte ApplyLevitateMovement + 1\n\t"
-        "_08097964: .4byte gTasks\n\t"
-        "_08097968: .4byte 0x0000FFFF\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateTask(ApplyLevitateMovement, 0xFF);
+    struct Task *task = &gTasks[taskId];
+
+    StoreWordInTwoHalfwords(&task->data[0], (u32)objectEvent);
+    objectEvent->warpArrowSpriteId = taskId;
+    task->data[3] = 0xFFFF;
 }
 
-__attribute__((naked)) void ApplyLevitateMovement(u8 taskId)
+void ApplyLevitateMovement(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _080979C4\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #8\n\t"
-        "	mov r1, sp\n\t"
-        "	bl LoadWordFromTwoHalfwords\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080979C8\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	ldrh r1, [r4, #0xc]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080979A8\n\t"
-        "	ldrh r0, [r4, #0xe]\n\t"
-        "	ldrh r1, [r2, #0x26]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "_080979A8:\n\t"
-        "	ldrh r1, [r4, #0xc]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080979B8\n\t"
-        "	ldrh r0, [r4, #0xe]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "_080979B8:\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080979C4: .4byte gTasks\n\t"
-        "_080979C8: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *objectEvent;
+    struct Sprite *sprite;
+    struct Task *task = &gTasks[taskId];
+
+    LoadWordFromTwoHalfwords(&task->data[0], (u32 *)&objectEvent); // load the map object pointer.
+    sprite = &gSprites[objectEvent->spriteId];
+
+    if(!(task->data[2] & 3))
+        sprite->y2 += task->data[3];
+
+    if(!(task->data[2] & 15))
+        task->data[3] = -task->data[3];
+
+    task->data[2]++;
 }
 
-__attribute__((naked)) void DestroyExtraMovementTask(u8 taskId)
+void DestroyExtraMovementTask(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080979F8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, #8\n\t"
-        "	mov r1, sp\n\t"
-        "	bl LoadWordFromTwoHalfwords\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080979F8: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *objectEvent;
+    struct Task *task = &gTasks[taskId];
+
+    LoadWordFromTwoHalfwords(&task->data[0], (u32 *)&objectEvent); // unused objectEvent
+    DestroyTask(taskId);
 }
 
-__attribute__((naked)) bool8 sub_080979FC(u8 a, u8 b)
+void sub_080979FC(u8 objectEventId1, u8 objectEventId2)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r7, _08097A40\n\t"
-        "_08097A0A:\n\t"
-        "	cmp r4, r6\n\t"
-        "	beq _08097A30\n\t"
-        "	cmp r4, r5\n\t"
-        "	beq _08097A30\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r7\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08097A30\n\t"
-        "	ldr r0, _08097A44\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _08097A30\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl FreezeEventObject\n\t"
-        "_08097A30:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0xf\n\t"
-        "	bls _08097A0A\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08097A40: .4byte gObjectEvents\n\t"
-        "_08097A44: .4byte gPlayerAvatar\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for(i = 0; i < OBJECT_EVENTS_COUNT; i++)
+    {
+        if(i != objectEventId1 && i != objectEventId2 &&
+            gObjectEvents[i].active && i != gPlayerAvatar.objectEventId)
+                FreezeEventObject(&gObjectEvents[i]);
+    }
 }
 
 

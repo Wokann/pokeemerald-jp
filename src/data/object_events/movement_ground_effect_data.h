@@ -16,7 +16,7 @@ extern void GroundEffect_IceReflection(struct ObjectEvent *, struct Sprite *);
 extern void GroundEffect_FlowingWater(struct ObjectEvent *, struct Sprite *);
 extern void GroundEffect_SandTracks(struct ObjectEvent *, struct Sprite *);
 extern void sub_08096984(struct ObjectEvent *, struct Sprite *);
-extern void sub_08096A54(void);
+extern void sub_08096A54(struct ObjectEvent *, struct Sprite *);
 extern void GroundEffect_StepOnPuddle(struct ObjectEvent *, struct Sprite *);
 extern void GroundEffect_SandHeap(struct ObjectEvent *, struct Sprite *);
 extern void GroundEffect_JumpOnTallGrass(struct ObjectEvent *, struct Sprite *);
