@@ -34,14 +34,65 @@ extern u8 gRecordsWindowId;
 extern u8 *sTilemapBuffer;
 
 // JP keeps the trainer-hill window graphics and window templates in ROM.
-extern const u32 sTrainerHillWindowTileset[48];
-extern const u16 sTrainerHillWindowPalette[16];
-extern const u32 sTrainerHillWindowTilemap[];
-extern const struct BgTemplate sTrainerHillRecordsBgTemplates[2];
-extern const struct WindowTemplate sTrainerHillRecordsWindowTemplates[];
-extern const struct WindowTemplate sLinkBattleRecordsWindow;
-extern const u8 sText_DashesNoPlayer[];
-extern const u8 sText_DashesNoScore[];
+#define BATTLE_RECORDS_DATA __attribute__((section(".rodata.battle_records_data"), aligned(1)))
+#define BATTLE_RECORDS_TEXT __attribute__((section(".rodata.battle_records_text"), aligned(1)))
+
+static const u32 sTrainerHillWindowTileset[] BATTLE_RECORDS_DATA = INCBIN_U32("graphics/trainer_hill/records_window.4bpp");
+static const u16 sTrainerHillWindowPalette[] BATTLE_RECORDS_DATA = INCBIN_U16("graphics/trainer_hill/records_window.gbapal");
+static const u32 sTrainerHillWindowTilemap[] BATTLE_RECORDS_DATA = INCBIN_U32("graphics/trainer_hill/records_window.bin");
+
+static const struct BgTemplate sTrainerHillRecordsBgTemplates[] BATTLE_RECORDS_DATA =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0
+    }
+};
+
+static const struct WindowTemplate sTrainerHillRecordsWindowTemplates[] BATTLE_RECORDS_DATA =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 1,
+        .width = 27, // JP window is one tile wider than US.
+        .height = 18,
+        .paletteNum = 15,
+        .baseBlock = 20
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+static const struct WindowTemplate sLinkBattleRecordsWindow BATTLE_RECORDS_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 2,
+    .tilemapTop = 1,
+    .width = 26,
+    .height = 17,
+    .paletteNum = 15,
+    .baseBlock = 1
+};
+
+static const u8 sText_DashesNoPlayer[] BATTLE_RECORDS_TEXT = _("ーーーーー");
+static const u8 sText_DashesNoScore[] BATTLE_RECORDS_TEXT = _("ーーーー");
+
+#undef BATTLE_RECORDS_DATA
+#undef BATTLE_RECORDS_TEXT
 
 // code
 static void ClearLinkBattleRecord(struct LinkBattleRecord *record)
@@ -259,9 +310,6 @@ static void PrintLinkBattleRecord(struct LinkBattleRecord *record, u8 y)
     }
 }
 
-// Kept as naked asm: agbcc cannot reproduce the JP register allocation
-// for the record loop (r4 counter, r5 entry offset, r6 y in the high
-// byte, r7 save-block pointer).
 void ShowLinkBattleRecords(void)
 {
     s32 i;

@@ -1267,6 +1267,7 @@ clean: clean-tools
 	rm -f $(JP_DECORATION_ICON_ASSETS) $(JP_DECORATION_CORE_ASSETS) $(JP_DECORATION_ICON_INTERMEDIATES)
 	rm -f $(JP_SLOT_MACHINE_ASSETS) $(JP_SLOT_MACHINE_INTERMEDIATES)
 	rm -f $(JP_CONTEST_PAINTING_ASSETS) $(JP_CONTEST_PAINTING_INTERMEDIATES)
+	rm -f $(JP_BATTLE_RECORDS_ASSETS)
 
 # All build artifacts wait for the host-tool chain, so a fresh checkout can
 # safely use `make -j` without racing the C/asset rules against tool builds.
@@ -1889,12 +1890,6 @@ $(C_BUILDDIR)/strings.o: src/strings.c charmap.txt
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/strings.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/strings.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/strings.gen.s
-
-$(C_BUILDDIR)/data/battle_records.o: src/data/battle_records.c src/data/battle_records.h $(wildcard graphics/trainer_hill/* data/battle_records/jp/*)
-	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/battle_records.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/battle_records.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/data/battle_records.gen.s
 
 $(C_BUILDDIR)/data/reset_rtc_screen.o: src/data/reset_rtc_screen.c src/data/reset_rtc_screen.h $(wildcard graphics/reset_rtc_screen/* data/reset_rtc_screen/jp/*)
 	@mkdir -p $(dir $@)
@@ -3059,3 +3054,12 @@ graphics/picture_frame/lobby.4bpp: graphics/picture_frame/lobby.png | tools
 
 graphics/picture_frame/%.rl: graphics/picture_frame/% | tools
 	$(GFX) $< $@
+
+JP_BATTLE_RECORDS_ASSETS := graphics/trainer_hill/records_window.4bpp \
+    graphics/trainer_hill/records_window.gbapal
+
+$(C_BUILDDIR)/battle_records.o: src/battle_records.c charmap.txt $(JP_BATTLE_RECORDS_ASSETS) graphics/trainer_hill/records_window.bin
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/battle_records.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/battle_records.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/battle_records.gen.s

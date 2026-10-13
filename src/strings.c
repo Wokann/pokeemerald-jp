@@ -1568,3 +1568,11 @@ STRINGS_SLOT_MACHINE const u8 gText_ReelTimeHelp[] = __(
     "ビッグボーナスがでると　しゅうりょう$　");
 
 #undef STRINGS_SLOT_MACHINE
+
+#define STRINGS_BATTLE_RECORDS __attribute__((section(".rodata.strings_battle_records"), aligned(1)))
+
+STRINGS_BATTLE_RECORDS const u8 gText_PlayersBattleResults[] = _("{PLAYER}　の　たいせん　せいせき");
+STRINGS_BATTLE_RECORDS const u8 gText_TotalRecordWLD[] = _("{STR_VAR_1}しょう　{STR_VAR_2}はい　{STR_VAR_3}ひきわけ");
+STRINGS_BATTLE_RECORDS const u8 gText_WinLoseDraw[] = _("かち　　　　まけ　　　ひきわけ");
+
+#undef STRINGS_BATTLE_RECORDS

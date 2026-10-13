@@ -10104,8 +10104,9 @@ SECTIONS {
         src/field_specials.o(.rodata.field_specials_data);
         src/data/text/region_texts64.o(.rodata);
         src/field_specials.o(.rodata.field_specials_fan_club_data);
-        src/data/battle_records.o(.rodata.battle_records_data);
-        src/data/text/region_texts32.o(.rodata);
+        src/battle_records.o(.rodata.battle_records_data);
+        src/strings.o(.rodata.strings_battle_records);
+        src/battle_records.o(.rodata.battle_records_text);
         data/graphics/pokedex_area_screen.o(.rodata.pokedex_area_screen_graphics_prefix);
         src/pokedex_area_screen.o(.rodata.pokedex_area_screen_data);
         data/graphics/pokedex_area_screen.o(.rodata.pokedex_area_screen_graphics_suffix);
