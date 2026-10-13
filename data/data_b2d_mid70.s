@@ -17,45 +17,25 @@ gUnknown_85BBF1A: @ 0x85BBF1A
 
 	.section .rodata.data_b2d_mid70_after_battle_tower_small_data
 
-	.globl gUnknown_85BE99E
-gUnknown_85BE99E: @ 0x85BE99E
-	.incbin "baserom_jp.gba", 0x5be99e, 0x222
+	.incbin "baserom_jp.gba", 0x5be99e, 0x2
 
-	.globl gUnknown_85BEBC0
-gUnknown_85BEBC0: @ 0x85BEBC0
-	.incbin "baserom_jp.gba", 0x5bebc0, 0xcc0
+	.section .rodata.data_b2d_mid70_after_use_pokeblock_condition_graphics
+	.incbin "baserom_jp.gba", 0x5bed54, 0xb2c
 
-	.globl gUnknown_85BF880
-gUnknown_85BF880: @ 0x85BF880
-	.incbin "baserom_jp.gba", 0x5bf880, 0x40
+	.section .rodata.data_b2d_mid70_after_use_pokeblock_mon_frame_pal
+	.incbin "baserom_jp.gba", 0x5bf8a0, 0x20
 
-	.globl gUnknown_85BF8C0
-gUnknown_85BF8C0: @ 0x85BF8C0
-	.incbin "baserom_jp.gba", 0x5bf8c0, 0xe0
+	.section .rodata.data_b2d_mid70_after_use_pokeblock_graph_palette
+	.incbin "baserom_jp.gba", 0x5bfa6c, 0x40
 
-	.globl gUnknown_85BF9A0
-gUnknown_85BF9A0: @ 0x85BF9A0
-	.incbin "baserom_jp.gba", 0x5bf9a0, 0xac
+	.section .rodata.data_b2d_mid70_after_use_pokeblock_graph_graphics
+	.incbin "baserom_jp.gba", 0x5c03c0, 0x50
 
-	.globl gUnknown_85BFA4C
-gUnknown_85BFA4C: @ 0x85BFA4C
-	.incbin "baserom_jp.gba", 0x5bfa4c, 0x60
+	.section .rodata.data_b2d_mid70_after_use_pokeblock_nature_window
+	.incbin "baserom_jp.gba", 0x5c0468, 0x20
 
-	.globl gUnknown_85BFAAC
-gUnknown_85BFAAC: @ 0x85BFAAC
-	.incbin "baserom_jp.gba", 0x5bfaac, 0x784
-
-	.globl gUnknown_85C0230
-gUnknown_85C0230: @ 0x85C0230
-	.incbin "baserom_jp.gba", 0x5c0230, 0x1e0
-
-	.globl gUnknown_85C0410
-gUnknown_85C0410: @ 0x85C0410
-	.incbin "baserom_jp.gba", 0x5c0410, 0x78
-
-	.globl gUnknown_85C0488
-gUnknown_85C0488: @ 0x85C0488
-	.incbin "baserom_jp.gba", 0x5c0488, 0x50c
+	.section .rodata.data_b2d_mid70_after_use_pokeblock_graph_data_tilemap
+	.incbin "baserom_jp.gba", 0x5c052c, 0x468
 
 	.section .rodata.data_b2d_mid70_after_use_pokeblock_static_data
 

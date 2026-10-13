@@ -1270,6 +1270,7 @@ clean: clean-tools
 	rm -f $(JP_CONTEST_PAINTING_ASSETS) $(JP_CONTEST_PAINTING_INTERMEDIATES)
 	rm -f $(JP_BATTLE_RECORDS_ASSETS)
 	rm -f $(JP_MON_MARKINGS_ASSETS)
+	rm -f $(JP_USE_POKEBLOCK_ASSETS) $(JP_USE_POKEBLOCK_INTERMEDIATES)
 
 # All build artifacts wait for the host-tool chain, so a fresh checkout can
 # safely use `make -j` without racing the C/asset rules against tool builds.
@@ -3069,6 +3070,42 @@ JP_MON_MARKINGS_COMBO_ASSETS := graphics/interface/mon_markings.png.gbapal \
 JP_MON_MARKINGS_ASSETS := $(JP_MON_MARKINGS_MENU_ASSETS) $(JP_MON_MARKINGS_COMBO_ASSETS)
 
 $(C_BUILDDIR)/graphics.o: $(JP_MON_MARKINGS_MENU_ASSETS)
+
+JP_USE_POKEBLOCK_ASSETS := graphics/pokeblock/use_screen/updown.png.gbapal \
+    graphics/pokeblock/use_screen/updown.png.4bpp \
+    graphics/pokeblock/use_screen/condition.png.4bpp.lz \
+    graphics/pokeblock/use_screen/condition.png.gbapal \
+    graphics/pokeblock/use_screen/mon_frame.png.4bpp \
+    graphics/pokeblock/use_screen/mon_frame.bin.lz \
+    graphics/pokeblock/use_screen/graph.png.gbapal \
+    graphics/pokeblock/use_screen/graph.png.4bpp.lz \
+    graphics/pokeblock/use_screen/graph.bin.lz \
+    graphics/pokeblock/use_screen/nature.pal.gbapal \
+    graphics/pokeblock/use_screen/graph_data.bin.lz
+JP_USE_POKEBLOCK_INTERMEDIATES := graphics/pokeblock/use_screen/condition.png.4bpp \
+    graphics/pokeblock/use_screen/graph.png.4bpp
+
+graphics/pokeblock/use_screen/%.png.4bpp: graphics/pokeblock/use_screen/%.png | tools
+	$(GFX) $< $@
+
+graphics/pokeblock/use_screen/%.png.gbapal: graphics/pokeblock/use_screen/%.png | tools
+	$(GFX) $< $@
+
+# The native JP graph contains 125 tiles, rather than the US 208-tile image.
+graphics/pokeblock/use_screen/graph.png.4bpp: graphics/pokeblock/use_screen/graph.png | tools
+	$(GFX) $< $@ -num_tiles 125
+
+graphics/pokeblock/use_screen/nature.pal.gbapal: graphics/pokeblock/use_screen/nature.pal | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/graphics.o: $(JP_USE_POKEBLOCK_ASSETS)
+$(C_BUILDDIR)/use_pokeblock.o: $(JP_USE_POKEBLOCK_ASSETS) graphics/pokeblock/use_screen/mon_frame_pal.bin
+
+$(C_BUILDDIR)/use_pokeblock.o: src/use_pokeblock.c charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/use_pokeblock.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/use_pokeblock.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/use_pokeblock.gen.s
 
 $(C_BUILDDIR)/mon_markings.d: src/mon_markings.c | tools
 	@mkdir -p $(dir $@)

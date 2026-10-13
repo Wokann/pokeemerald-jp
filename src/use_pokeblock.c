@@ -1,5 +1,6 @@
 #include "global.h"
 #include "bg.h"
+#include "graphics.h"
 #include "menu_specialized.h"
 #include "pokemon.h"
 #include "sprite.h"
@@ -21,13 +22,18 @@ enum
 #define TAG_UP_DOWN   0
 #define TAG_CONDITION 1
 
-// These three resources stay in the preceding JP raw resource block for now.
-#define USE_POKEBLOCK_UP_DOWN_PAL    ((const u16 *)(gUnknown_85BE99E + 2))
-#define USE_POKEBLOCK_UP_DOWN_GFX    (gUnknown_85BE99E + 0x22)
-#define USE_POKEBLOCK_CONDITION_PAL  ((const u16 *)(gUnknown_85BEBC0 + 0x174))
+#define USE_POKEBLOCK_MON_FRAME_PAL __attribute__((section(".rodata.use_pokeblock_mon_frame_pal"), aligned(1)))
+#define USE_POKEBLOCK_MON_FRAME_GFX __attribute__((section(".rodata.use_pokeblock_mon_frame_gfx"), aligned(1)))
+#define USE_POKEBLOCK_GRAPH_DATA_TILEMAP __attribute__((section(".rodata.use_pokeblock_graph_data_tilemap"), aligned(1)))
 
-extern const u8 gUnknown_85BE99E[];
-extern const u8 gUnknown_85BEBC0[];
+static const u32 sMonFrame_Pal[] USE_POKEBLOCK_MON_FRAME_PAL = INCBIN_U32("graphics/pokeblock/use_screen/mon_frame_pal.bin");
+static const u32 sMonFrame_Gfx[] USE_POKEBLOCK_MON_FRAME_GFX = INCGFX_U32("graphics/pokeblock/use_screen/mon_frame.png", ".4bpp");
+static const u32 sMonFrame_Tilemap[] USE_POKEBLOCK_MON_FRAME_GFX = INCGFX_U32("graphics/pokeblock/use_screen/mon_frame.bin", ".lz");
+static const u32 sGraphData_Tilemap[] USE_POKEBLOCK_GRAPH_DATA_TILEMAP = INCGFX_U32("graphics/pokeblock/use_screen/graph_data.bin", ".lz");
+
+#undef USE_POKEBLOCK_MON_FRAME_PAL
+#undef USE_POKEBLOCK_MON_FRAME_GFX
+#undef USE_POKEBLOCK_GRAPH_DATA_TILEMAP
 
 void SpriteCB_Condition(struct Sprite *sprite);
 
@@ -151,12 +157,12 @@ static const u8 *const sConditionNames[CONDITION_COUNT] USE_POKEBLOCK_STATIC_DAT
 
 static const struct SpriteSheet sSpriteSheet_UpDown USE_POKEBLOCK_STATIC_DATA =
 {
-    USE_POKEBLOCK_UP_DOWN_GFX, 0x200, TAG_UP_DOWN,
+    gUsePokeblockUpDown_Gfx, 0x200, TAG_UP_DOWN,
 };
 
 static const struct SpritePalette sSpritePalette_UpDown USE_POKEBLOCK_STATIC_DATA =
 {
-    USE_POKEBLOCK_UP_DOWN_PAL, TAG_UP_DOWN,
+    gUsePokeblockUpDown_Pal, TAG_UP_DOWN,
 };
 
 static const s16 sUpDownCoordsOnGraph[CONDITION_COUNT][2] USE_POKEBLOCK_STATIC_DATA =
@@ -263,7 +269,7 @@ static const struct SpriteTemplate sSpriteTemplate_Condition USE_POKEBLOCK_STATI
 
 static const struct SpritePalette sSpritePalette_Condition USE_POKEBLOCK_STATIC_DATA =
 {
-    USE_POKEBLOCK_CONDITION_PAL, TAG_CONDITION,
+    gUsePokeblockCondition_Pal, TAG_CONDITION,
 };
 
 __attribute__((naked)) void ChooseMonToGivePokeblock(void)
@@ -3362,7 +3368,7 @@ __attribute__((naked)) void sub_08167734(void)
         "	ldr r1, _08167848\n\t"
         "	b _081678A4\n\t"
         "	.align 2, 0\n\t"
-        "_08167844: .4byte gUnknown_85BF9A0\n\t"
+        "_08167844: .4byte sMonFrame_Tilemap\n\t"
         "_08167848: .4byte gUnknown_203B974\n\t"
         "_0816784C:\n\t"
         "	ldr r1, _0816785C\n\t"
@@ -3372,7 +3378,7 @@ __attribute__((naked)) void sub_08167734(void)
         "	bl LoadBgTiles\n\t"
         "	b _08167982\n\t"
         "	.align 2, 0\n\t"
-        "_0816785C: .4byte gUnknown_85BF8C0\n\t"
+        "_0816785C: .4byte sMonFrame_Gfx\n\t"
         "_08167860:\n\t"
         "	ldr r0, _08167874\n\t"
         "	ldr r1, [r0]\n\t"
@@ -3397,7 +3403,7 @@ __attribute__((naked)) void sub_08167734(void)
         "	strh r1, [r0]\n\t"
         "	b _08167982\n\t"
         "	.align 2, 0\n\t"
-        "_08167890: .4byte gUnknown_85BF880\n\t"
+        "_08167890: .4byte sMonFrame_Pal\n\t"
         "_08167894: .4byte gUnknown_203B978\n\t"
         "_08167898: .4byte 0x00007B0E\n\t"
         "_0816789C: .4byte 0x0000FFB0\n\t"
@@ -3409,7 +3415,7 @@ __attribute__((naked)) void sub_08167734(void)
         "	bl LZ77UnCompVram\n\t"
         "	b _08167982\n\t"
         "	.align 2, 0\n\t"
-        "_081678AC: .4byte gUnknown_85BFAAC\n\t"
+        "_081678AC: .4byte gUsePokeblockGraph_Gfx\n\t"
         "_081678B0: .4byte gUnknown_203B970\n\t"
         "_081678B4:\n\t"
         "	ldr r0, _081678CC\n\t"
@@ -3422,9 +3428,9 @@ __attribute__((naked)) void sub_08167734(void)
         "	bl LoadPalette\n\t"
         "	b _08167982\n\t"
         "	.align 2, 0\n\t"
-        "_081678CC: .4byte gUnknown_85C0230\n\t"
+        "_081678CC: .4byte gUsePokeblockGraph_Tilemap\n\t"
         "_081678D0: .4byte gUnknown_203B96C\n\t"
-        "_081678D4: .4byte gUnknown_85BFA4C\n\t"
+        "_081678D4: .4byte gUsePokeblockGraph_Pal\n\t"
         "_081678D8:\n\t"
         "	ldr r0, _081678EC\n\t"
         "	ldr r1, [r0]\n\t"
@@ -3456,7 +3462,7 @@ __attribute__((naked)) void sub_08167734(void)
         "	b _08167982\n\t"
         "	.align 2, 0\n\t"
         "_08167918: .4byte gUnknown_203B96C\n\t"
-        "_0816791C: .4byte gUnknown_85C0410\n\t"
+        "_0816791C: .4byte gUsePokeblockNatureWin_Pal\n\t"
         "_08167920:\n\t"
         "	ldr r0, _08167930\n\t"
         "	ldr r1, _08167934\n\t"
@@ -3466,7 +3472,7 @@ __attribute__((naked)) void sub_08167734(void)
         "	bl LZ77UnCompVram\n\t"
         "	b _08167982\n\t"
         "	.align 2, 0\n\t"
-        "_08167930: .4byte gUnknown_85C0488\n\t"
+        "_08167930: .4byte sGraphData_Tilemap\n\t"
         "_08167934: .4byte gUnknown_203B978\n\t"
         "_08167938: .4byte 0x00007304\n\t"
         "_0816793C:\n\t"
@@ -4426,7 +4432,7 @@ __attribute__((naked)) void sub_08168050(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816808C: .4byte sSpritePalette_Condition\n\t"
-        "_08168090: .4byte gUnknown_85BEBC0\n\t"
+        "_08168090: .4byte gUsePokeblockCondition_Gfx\n\t"
         "_08168094: .4byte 0xFFFF0000\n\t"
         "_08168098: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"

@@ -1565,3 +1565,27 @@ MON_MARKINGS_MENU_GRAPHICS const u16 gMonMarkingsMenu_Pal[] = INCGFX_U16("graphi
 MON_MARKINGS_MENU_GRAPHICS const u8 gMonMarkingsMenu_Gfx[] = INCGFX_U8("graphics/interface/mon_markings_menu.png", ".4bpp");
 
 #undef MON_MARKINGS_MENU_GRAPHICS
+
+#define USE_POKEBLOCK_UPDOWN_GRAPHICS __attribute__((section(".rodata.use_pokeblock_updown_graphics"), aligned(1)))
+#define USE_POKEBLOCK_CONDITION_GRAPHICS __attribute__((section(".rodata.use_pokeblock_condition_graphics"), aligned(1)))
+#define USE_POKEBLOCK_GRAPH_PALETTE __attribute__((section(".rodata.use_pokeblock_graph_palette"), aligned(1)))
+#define USE_POKEBLOCK_GRAPH_GRAPHICS __attribute__((section(".rodata.use_pokeblock_graph_graphics"), aligned(1)))
+#define USE_POKEBLOCK_NATURE_WINDOW __attribute__((section(".rodata.use_pokeblock_nature_window"), aligned(1)))
+
+USE_POKEBLOCK_CONDITION_GRAPHICS const u32 gUsePokeblockCondition_Gfx[] = INCGFX_U32("graphics/pokeblock/use_screen/condition.png", ".4bpp.lz");
+USE_POKEBLOCK_CONDITION_GRAPHICS const u16 gUsePokeblockCondition_Pal[] = INCGFX_U16("graphics/pokeblock/use_screen/condition.png", ".gbapal");
+
+USE_POKEBLOCK_UPDOWN_GRAPHICS const u16 gUsePokeblockUpDown_Pal[] = INCGFX_U16("graphics/pokeblock/use_screen/updown.png", ".gbapal");
+USE_POKEBLOCK_UPDOWN_GRAPHICS const u8 gUsePokeblockUpDown_Gfx[] = INCGFX_U8("graphics/pokeblock/use_screen/updown.png", ".4bpp");
+
+USE_POKEBLOCK_GRAPH_PALETTE const u16 gUsePokeblockGraph_Pal[] = INCGFX_U16("graphics/pokeblock/use_screen/graph.png", ".gbapal");
+USE_POKEBLOCK_GRAPH_GRAPHICS const u32 gUsePokeblockGraph_Gfx[] = INCGFX_U32("graphics/pokeblock/use_screen/graph.png", ".4bpp.lz");
+USE_POKEBLOCK_GRAPH_GRAPHICS const u32 gUsePokeblockGraph_Tilemap[] = INCGFX_U32("graphics/pokeblock/use_screen/graph.bin", ".lz");
+// JP uses an 11-column tilemap patch; the US owner retains this palette name.
+USE_POKEBLOCK_NATURE_WINDOW const u16 gUsePokeblockNatureWin_Pal[] = INCGFX_U16("graphics/pokeblock/use_screen/nature.pal", ".gbapal");
+
+#undef USE_POKEBLOCK_UPDOWN_GRAPHICS
+#undef USE_POKEBLOCK_CONDITION_GRAPHICS
+#undef USE_POKEBLOCK_GRAPH_PALETTE
+#undef USE_POKEBLOCK_GRAPH_GRAPHICS
+#undef USE_POKEBLOCK_NATURE_WINDOW
