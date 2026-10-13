@@ -93,7 +93,7 @@ class SlotMachineDataTests(unittest.TestCase):
         first = linker.index('src/graphics.o(.rodata.slot_machine_gfx.gSlotMachineReelSymbol1Tiles)')
         last = linker.index('src/strings.o(.rodata.strings_slot_machine)')
         self.assertLess(first, last)
-        self.assertLess(last, linker.index('data/contest_painting.o(.rodata)'))
+        self.assertLess(last, linker.index('src/contest_painting.o(.rodata.contest_painting_data)'))
         self.assertIn('gMonMarkingsMenu_Pal:', mid)
 
     @unittest.skipUnless((ROOT / 'baserom_jp.gba').exists(), 'JP ROM required')
@@ -158,7 +158,7 @@ class SlotMachineDataTests(unittest.TestCase):
         linker = (ROOT / 'ld_script_jp.txt').read_text()
         code = '\n'.join(re.findall(r'(?m)^\s*src/slot_machine\.o\(\.text\.[^)]+\);', linker))
         start = linker.index('        src/graphics.o(.rodata.slot_machine_gfx.gSlotMachineReelSymbol1Tiles);')
-        end = linker.index('        data/contest_painting.o(.rodata);', start)
+        end = linker.index('        src/contest_painting.o(.rodata.contest_painting_data);', start)
         data = linker[start:end]
         rom = (ROOT / 'baserom_jp.gba').read_bytes()
         with tempfile.TemporaryDirectory(prefix='slot-machine-module-') as directory:

@@ -10073,7 +10073,7 @@ SECTIONS {
         src/graphics.o(.rodata.slot_machine_gfx.gSlotMachineInfoBox_Tilemap);
         src/slot_machine.o(.rodata.sEmptyTilemap);
         src/strings.o(.rodata.strings_slot_machine);
-        data/contest_painting.o(.rodata);
+        src/contest_painting.o(.rodata.contest_painting_data);
         src/battle_ai_script_commands.o(.rodata.battle_ai_tables);
         . = ALIGN(4);
         src/trader.o(.rodata.trader_defaults);

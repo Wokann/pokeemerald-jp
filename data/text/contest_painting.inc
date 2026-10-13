@@ -1,9 +1,8 @@
 gContestHallPaintingCaption::
-	.string "{B_COPY_VAR_1}\n"
-	.string "{B_COPY_VAR_2}　の　{B_COPY_VAR_3}$"
+	.string "{STR_VAR_1}\n"
+	.string "{STR_VAR_2}　の　{STR_VAR_3}$"
 
 @ Unused
-
 gContestPaintingContest::
 	.string "コンテスト$"
 
@@ -39,58 +38,58 @@ gContestToughness::
 
 gContestPaintingCool1::
 	.string "スーパー　クール\n"
-	.string "ノンストップ　{B_COPY_VAR_1}$"
+	.string "ノンストップ　{STR_VAR_1}$"
 
 gContestPaintingCool2::
-	.string "グッドルッキン　ポケモン　{B_COPY_VAR_1}$"
+	.string "グッドルッキン　ポケモン　{STR_VAR_1}$"
 
 gContestPaintingCool3::
 	.string "マーベラス　ワンダフル\n"
-	.string "グレート　{B_COPY_VAR_1}$"
+	.string "グレート　{STR_VAR_1}$"
 
 gContestPaintingBeauty1::
 	.string "こんせいき　さいごの　ビーナス\n"
-	.string "ビューティー　{B_COPY_VAR_1}$"
+	.string "ビューティー　{STR_VAR_1}$"
 
 gContestPaintingBeauty2::
-	.string "{B_COPY_VAR_1}　クンの　マブシイ\n"
+	.string "{STR_VAR_1}　クンの　マブシイ\n"
 	.string "キラキラ　スマイル$"
 
 gContestPaintingBeauty3::
 	.string "ポケモンセンター　の\n"
-	.string "スーパー　アイドル　{B_COPY_VAR_1}$"
+	.string "スーパー　アイドル　{STR_VAR_1}$"
 
 gContestPaintingCute1::
-	.string "ラブリー　スウィート　{B_COPY_VAR_1}　ちゃん$"
+	.string "ラブリー　スウィート　{STR_VAR_1}　ちゃん$"
 
 gContestPaintingCute2::
-	.string "プリティー　{B_COPY_VAR_1}たんの\n"
+	.string "プリティー　{STR_VAR_1}たんの\n"
 	.string "おすまし　ショット$"
 
 gContestPaintingCute3::
 	.string "こっち　むいて！\n"
-	.string "キュート　ポケモン　{B_COPY_VAR_1}　ちゃん$"
+	.string "キュート　ポケモン　{STR_VAR_1}　ちゃん$"
 
 gContestPaintingSmart1::
 	.string "かしこさ　マエストロ\n"
-	.string "ワイズ　ポケモン　{B_COPY_VAR_1}$"
+	.string "ワイズ　ポケモン　{STR_VAR_1}$"
 
 gContestPaintingSmart2::
 	.string "えらばれた　ポケモン⋯\n"
-	.string "ポケモンの　なかの　ポケモン　{B_COPY_VAR_1}$"
+	.string "ポケモンの　なかの　ポケモン　{STR_VAR_1}$"
 
 gContestPaintingSmart3::
-	.string "エクセレント　{B_COPY_VAR_1}　の\n"
+	.string "エクセレント　{STR_VAR_1}　の\n"
 	.string "ゆうがな　ひととき$"
 
 gContestPaintingTough1::
 	.string "パワフル　マッスル\n"
-	.string "ハッスル　{B_COPY_VAR_1}$"
+	.string "ハッスル　{STR_VAR_1}$"
 
 gContestPaintingTough2::
 	.string "ストロング　ストロンガー\n"
-	.string "ストロンゲスト　{B_COPY_VAR_1}$"
+	.string "ストロンゲスト　{STR_VAR_1}$"
 
 gContestPaintingTough3::
 	.string "タフネス　マイティー\n"
-	.string "ハイパーポケモン　{B_COPY_VAR_1}！$"
+	.string "ハイパーポケモン　{STR_VAR_1}！$"
