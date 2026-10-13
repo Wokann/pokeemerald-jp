@@ -154,15 +154,17 @@ def eval_preprocessor_condition(expression: str, macros: dict[str, int]) -> bool
         return False
 
 
-def active_preprocessor_text(text: str, *, keep_directives: bool = False) -> str:
+def active_preprocessor_text(text: str, *, keep_directives: bool = False,
+                             defines: dict[str, int] | None = None) -> str:
     """Blank inactive branches while preserving offsets and line positions.
 
-    The audit uses the repository's default configuration: feature macros such
+    With no explicit defines, use the default configuration: feature macros such
     as ``NONMATCHING`` are undefined, and the C99-era ``__STDC_VERSION__`` is
     available.  This prevents the mutually exclusive C and NAKED branches
-    from being counted together.
+    from being counted together. Literal target-specific build defines select
+    additional proven object modes; arbitrary inactive bodies are never added.
     """
-    macros = {"__STDC__": 1, "__STDC_VERSION__": 199901}
+    macros = {"__STDC__": 1, "__STDC_VERSION__": 199901, **(defines or {})}
     active = True
     frames: list[dict[str, bool]] = []
     result = []
@@ -344,7 +346,7 @@ def function_declaration_suffix(text: str, probe: int) -> tuple[int, list[str | 
 def function_link_names(text: str) -> dict[str, tuple[str | None, bool, int]]:
     """Collect explicit link names from this translation unit's declarations.
 
-    Input is already default-branch selected.  Comments, strings and nested
+    Input is already build-branch selected. Comments, strings and nested
     scopes cannot supply a declaration; variables/function-pointer objects
     with an asm name are not function declarations.  Conflicting/unsupported
     declarations remain unverified instead of falling back to the C name.
@@ -383,12 +385,14 @@ def function_link_names(text: str) -> dict[str, tuple[str | None, bool, int]]:
     return result
 
 
-def function_definitions(path: Path, root: Path) -> list[FunctionDef]:
+def function_definitions(path: Path, root: Path, *,
+                         defines: dict[str, int] | None = None) -> list[FunctionDef]:
     """Find C definitions without counting prototypes or control statements."""
     original = path.read_text(encoding="utf-8", errors="replace")
-    text = active_preprocessor_text(original)
+    text = active_preprocessor_text(original, defines=defines)
     link_names = function_link_names(text)
-    selected_directives = active_preprocessor_text(original, keep_directives=True) if "_DEFUN" in text else ""
+    selected_directives = active_preprocessor_text(
+        original, keep_directives=True, defines=defines) if "_DEFUN" in text else ""
     result: list[FunctionDef] = []
     ignored = {"if", "for", "while", "switch", "sizeof"}
     for match in FUNCTION_HEAD_RE.finditer(text):
@@ -449,9 +453,135 @@ def function_definitions(path: Path, root: Path) -> list[FunctionDef]:
             for item in result]
 
 
+def c_compile_variants(root: Path) -> list[dict[str, object]]:
+    """Read conservative alternate-object bindings from literal Make rules.
+
+    Only unconditional C_BUILDDIR rules with a unique repository-local C
+    first prerequisite, literal target-specific 'CPPFLAGS += -D...' and
+    the project's explicit CPP/CC/AS recipe qualify.
+    No Make expansion, shell execution, conditional selection, include or
+    basename guess is used. Unsupported flags or conflicting rules reject
+    that target. Actual ELF/link-map ownership remains separately required.
+    """
+    makefile = root / "Makefile"
+    if not makefile.is_file():
+        return []
+    data = makefile.read_bytes()
+    target_re = re.compile(
+        r"^\$\(C_BUILDDIR\)/([A-Za-z0-9_/.-]+\.o):\s*(.*?)\s*$")
+    define_re = re.compile(r"-D([A-Za-z_]\w*)(?:=(0[xX][0-9A-Fa-f]+|\d+))?")
+    sources, defines, recipes, rejected = (
+        defaultdict(set), defaultdict(dict), defaultdict(list), set())
+    conditional_depth = 0
+    recipe_target = None
+    for raw in data.decode("utf-8", errors="replace").splitlines():
+        if raw.startswith("\t"):
+            if recipe_target:
+                recipes[recipe_target].append(raw)
+            continue
+        line = raw.split("#", 1)[0].strip()
+        if not line:
+            continue
+        recipe_target = None
+        if re.match(r"^(?:ifdef|ifndef|ifeq|ifneq)\b", line):
+            conditional_depth += 1
+            continue
+        if re.match(r"^endif\b", line):
+            conditional_depth = max(0, conditional_depth - 1)
+            continue
+        match = target_re.fullmatch(line)
+        if match is None:
+            continue
+        target, value = match.groups()
+        if ".." in Path(target).parts or line.endswith("\\"):
+            rejected.add(target)
+            continue
+        cpp_assignment = re.match(r"CPPFLAGS\s*([:+?]?=)\s*(.*)$", value)
+        prerequisites = [item for item in value.split()
+                         if re.fullmatch(r"src/[A-Za-z0-9_/.-]+\.c", item)]
+        if conditional_depth:
+            if cpp_assignment or prerequisites:
+                rejected.add(target)
+            continue
+        if cpp_assignment:
+            operation, flags = cpp_assignment.groups()
+            tokens = flags.split()
+            if operation != "+=" or not tokens:
+                rejected.add(target)
+                continue
+            for token in tokens:
+                flag = define_re.fullmatch(token)
+                if flag is None:
+                    rejected.add(target)
+                    continue
+                name, number = flag.groups()
+                value = (int(number, 16) if number and number.lower().startswith("0x")
+                         else int(number, 10) if number else 1)
+                if name in defines[target] and defines[target][name] != value:
+                    rejected.add(target)
+                defines[target][name] = value
+        elif "=" not in value:
+            if not prerequisites or value.split()[0] != prerequisites[0]:
+                rejected.add(target)
+                continue
+            sources[target].update(prerequisites)
+            recipe_target = target
+    result = []
+    for target in sorted(defines):
+        if target in rejected or len(sources[target]) != 1:
+            continue
+        recipe = "\n".join(recipes[target])
+        if not (re.search(r"\$\(CPP\)\s+\$\(CPPFLAGS\)\s+-P\s+-x\s+c\s+\$<\s+\|", recipe)
+                and "$(or $(CC1),$(CC)) $(CFLAGS) -o - -" in recipe
+                and "$(AS) $(ASFLAGS) -o $@ -" in recipe
+                and "$@.gen.s" in recipe):
+            continue
+        relative = next(iter(sources[target]))
+        source = root / relative
+        if (".." in Path(relative).parts or not source.is_file()
+                or not source.resolve().is_relative_to((root / "src").resolve())):
+            continue
+        owner = relative.removeprefix("src/")
+        if Path(target).with_suffix(".c").as_posix() == owner:
+            continue
+        result.append({
+            "source_owner": owner,
+            "input_object": "src/" + target,
+            "object_owner": Path(target).with_suffix(".c").as_posix(),
+            "defines": dict(sorted(defines[target].items())),
+            "makefile_sha256": hashlib.sha256(data).hexdigest(),
+        })
+    return result
+
+
 def c_inventory(root: Path) -> list[FunctionDef]:
-    return [definition for path in sorted((root / "src").glob("**/*.c"))
-            for definition in function_definitions(path, root)]
+    """Select default bodies plus proven literal alternate compilation guards.
+
+    Identical source definitions present in multiple compilation modes are
+    counted once; different naked/link-name bodies stay distinct and cannot
+    be promoted by a union of inactive configurations.
+    """
+    definitions = [definition for path in sorted((root / "src").glob("**/*.c"))
+                   for definition in function_definitions(path, root)]
+    by_definition = defaultdict(list)
+    for index, definition in enumerate(definitions):
+        by_definition[replace(definition, name_inputs=())].append(index)
+    for variant in c_compile_variants(root):
+        for definition in function_definitions(
+                root / "src" / variant["source_owner"], root, defines=variant["defines"]):
+            inputs = dict(definition.name_inputs)
+            inputs["Makefile"] = variant["makefile_sha256"]
+            key = replace(definition, name_inputs=())
+            if key in by_definition:
+                for index in by_definition[key]:
+                    merged_inputs = dict(definitions[index].name_inputs)
+                    merged_inputs.update(inputs)
+                    definitions[index] = replace(
+                        definitions[index], name_inputs=tuple(sorted(merged_inputs.items())))
+            else:
+                by_definition[key].append(len(definitions))
+                definitions.append(replace(definition, name_inputs=tuple(sorted(inputs.items()))))
+    return definitions
 
 
 def standalone_asm_inventory(root: Path) -> list[dict[str, str]]:
@@ -671,6 +801,7 @@ def linked_function_evidence(
         "input_section_bindings": [],
         "input_object_errors": {},
         "inline_not_emitted": [],
+        "c_compile_variants": c_compile_variants(root),
         "source_definition_sha256": hashlib.sha256(json.dumps(
             [asdict(definition) for definition in definitions], sort_keys=True,
             separators=(",", ":")).encode("utf-8")).hexdigest(),
@@ -690,6 +821,11 @@ def linked_function_evidence(
     if map_path.is_file():
         map_data = map_path.read_bytes()
         code_inputs = linker_code_inputs(map_data.decode("utf-8", errors="replace"))
+        alternate_owners = {item["object_owner"]: item["source_owner"]
+                            for item in metadata["c_compile_variants"]}
+        code_inputs = [
+            (start, end, alternate_owners.get(owner, owner), section, object_name)
+            for start, end, owner, section, object_name in code_inputs]
         ranges = sorted({(start, end, owner) for start, end, owner, _section, _object in code_inputs})
         metadata["inputs"]["link_map"] = {
             "path": "pokeemerald_jp.map", "sha256": hashlib.sha256(map_data).hexdigest()}
@@ -731,59 +867,6 @@ def linked_function_evidence(
                     or header_path.stat().st_mtime_ns > elf_path.stat().st_mtime_ns):
                 stale.add(definition.path)
     metadata["stale_source_owners"] = sorted(stale)
-    evidence: dict[tuple[str, int], set[str]] = defaultdict(set)
-    conflicts = set()
-    def owners_at(address: int) -> set[str]:
-        owners = set()
-        position = bisect_right(starts, address) - 1
-        while position >= 0 and maximum_ends[position] > address:
-            start, end, owner = ranges[position]
-            if start <= address < end:
-                owners.add(owner)
-            position -= 1
-        return owners
-
-    for name, address, local_file in symbols:
-        if name not in wanted_names:
-            continue
-        owners = owners_at(address)
-        local_owners = by_basename.get(Path(local_file).name, set()) if local_file else set()
-        if local_file:
-            exact_file = local_file.removeprefix("src/")
-            if exact_file in source_paths:
-                local_owners = {exact_file}
-        if len(owners) > 1 or (owners and local_owners and not owners & local_owners):
-            conflicts.add((name, address))
-            continue
-        if len(owners) == 1 and owners <= source_paths and not owners & stale:
-            owner = next(iter(owners))
-            if (name, owner) in ambiguous_link_names:
-                continue
-            for definition in by_emitted_owner.get((name, owner), []):
-                # A variable/NOTYPE symbol cannot verify an explicit function
-                # asm name.  The exact typed object supplement remains below.
-                if definition.link_name is not None and (name, address) not in typed_symbols:
-                    continue
-                evidence[(definition.name, address)].add(owner)
-                if definition.link_name is not None:
-                    metadata["asm_link_name_bindings"].append({
-                        "source_owner": owner, "name": definition.name, "link_name": name,
-                        "address": "0x%08X" % address,
-                        "evidence": "JP_ELF_STT_FUNC_and_unique_linker_input_owner"})
-    for name, address in conflicts:
-        for definition in definitions:
-            if definition.emitted_name == name:
-                evidence.pop((definition.name, address), None)
-    metadata["asm_link_name_bindings"] = [item for item in metadata["asm_link_name_bindings"]
-                                         if (item["link_name"], int(item["address"], 16)) not in conflicts]
-
-    # GNU ld may replace a source function symbol with an ABS name while
-    # retaining its real input section.  Supplement only from the matching
-    # built object, never from that ABS name or an address in funcmap.
-    by_owner = defaultdict(list)
-    for item in code_inputs:
-        by_owner[item[2]].append(item)
-    bound = {(name, owner) for (name, _address), owners in evidence.items() for owner in owners}
     object_cache = {}
     object_symbol_names = {}
     metadata["inputs"]["input_objects"] = {}
@@ -817,6 +900,74 @@ def linked_function_evidence(
         object_cache[object_name] = functions
         return functions
 
+    alternate_object_paths = {item["input_object"] for item in metadata["c_compile_variants"]}
+    alternate_inputs = [item for item in code_inputs
+                        if any(("/" + item[4]).endswith("/" + path)
+                               for path in alternate_object_paths)]
+    evidence: dict[tuple[str, int], set[str]] = defaultdict(set)
+    conflicts = set()
+    def owners_at(address: int) -> set[str]:
+        owners = set()
+        position = bisect_right(starts, address) - 1
+        while position >= 0 and maximum_ends[position] > address:
+            start, end, owner = ranges[position]
+            if start <= address < end:
+                owners.add(owner)
+            position -= 1
+        return owners
+
+    for name, address, local_file in symbols:
+        if name not in wanted_names:
+            continue
+        owners = owners_at(address)
+        local_owners = by_basename.get(Path(local_file).name, set()) if local_file else set()
+        if local_file:
+            exact_file = local_file.removeprefix("src/")
+            if exact_file in source_paths:
+                local_owners = {exact_file}
+        if len(owners) > 1 or (owners and local_owners and not owners & local_owners):
+            conflicts.add((name, address))
+            continue
+        if len(owners) == 1 and owners <= source_paths and not owners & stale:
+            owner = next(iter(owners))
+            variant_ranges = [item for item in alternate_inputs if item[0] <= address < item[1]]
+            if variant_ranges:
+                matches = []
+                for start, end, actual_owner, section, object_name in variant_ranges:
+                    for symbol, actual_section, offset, _size, section_size in (
+                            object_functions(object_name) or []):
+                        if (symbol == name and actual_owner == owner and actual_section == section
+                                and start + offset == address and section_size == end - start):
+                            matches.append((section, object_name))
+                if len(set(matches)) != 1:
+                    continue
+            if (name, owner) in ambiguous_link_names:
+                continue
+            for definition in by_emitted_owner.get((name, owner), []):
+                # A variable/NOTYPE symbol cannot verify an explicit function
+                # asm name.  The exact typed object supplement remains below.
+                if definition.link_name is not None and (name, address) not in typed_symbols:
+                    continue
+                evidence[(definition.name, address)].add(owner)
+                if definition.link_name is not None:
+                    metadata["asm_link_name_bindings"].append({
+                        "source_owner": owner, "name": definition.name, "link_name": name,
+                        "address": "0x%08X" % address,
+                        "evidence": "JP_ELF_STT_FUNC_and_unique_linker_input_owner"})
+    for name, address in conflicts:
+        for definition in definitions:
+            if definition.emitted_name == name:
+                evidence.pop((definition.name, address), None)
+    metadata["asm_link_name_bindings"] = [item for item in metadata["asm_link_name_bindings"]
+                                         if (item["link_name"], int(item["address"], 16)) not in conflicts]
+
+    # GNU ld may replace a source function symbol with an ABS name while
+    # retaining its real input section.  Supplement only from the matching
+    # built object, never from that ABS name or an address in funcmap.
+    by_owner = defaultdict(list)
+    for item in code_inputs:
+        by_owner[item[2]].append(item)
+    bound = {(name, owner) for (name, _address), owners in evidence.items() for owner in owners}
     for definition in definitions:
         if (not definition.macro_verified or not definition.link_name_verified
                 or (definition.emitted_name, definition.path) in ambiguous_link_names
@@ -972,7 +1123,7 @@ def function_binding_inventory(
         "source_non_naked_definitions": sum(not item.naked for item in definitions),
         "source_naked_definitions": sum(item.naked for item in definitions),
         "source_inline_definitions": sum(item.inline for item in definitions),
-        "source_inventory_unit": "default-branch source definition; not ROM addresses",
+        "source_inventory_unit": "build-selected source definition; not ROM addresses",
         "bound_c_definitions": len(resolved), "binding_evidence": metadata,
         "unresolved_bindings": unresolved,
         "inline_not_emitted_definitions": [item for item in unresolved if item["reason"] == "inline_not_emitted"],
