@@ -4,6 +4,7 @@
 #include "item_menu.h"
 #include "constants/songs.h"
 
+#define STRINGS_MINIGAME_TEXT __attribute__((section(".rodata.strings_minigame_text"), aligned(1)))
 #define STRINGS_SHARED_MISC_TEXT __attribute__((section(".rodata.strings_shared_misc_text"), aligned(1)))
 #define STRINGS_TRAINER_STATUS_TEXT __attribute__((section(".rodata.strings_trainer_status_text"), aligned(1)))
 #define STRINGS_INTERFACE_TEXT __attribute__((section(".rodata.strings_interface_text"), aligned(1)))
@@ -717,6 +718,63 @@ STRINGS_TRAINER_STATUS_TEXT const u8 gText_ColorBlue[] = _("{COLOR 8}");
 // The final 0xFF is the COLOR parameter and also the StringCopy terminator.
 // __() is required here so that charmap_jp does not append a second EOS.
 STRINGS_TRAINER_STATUS_TEXT const u8 gText_ColorTransparent[] = __("{HIGHLIGHT 0}{COLOR 255}");
+
+STRINGS_MINIGAME_TEXT const u8 gText_ContinueMenuPlayer[] = _("しゅじんこう　{STR_VAR_1}");
+STRINGS_MINIGAME_TEXT const u8 gText_ContinueMenuTime[] = _("プレイじかん　{STR_VAR_1}:{STR_VAR_2}");
+STRINGS_MINIGAME_TEXT const u8 gText_ContinueMenuPokedex[] = _("ポケモンずかん　{STR_VAR_1}ひき");
+STRINGS_MINIGAME_TEXT const u8 gText_ContinueMenuBadges[] = _("もっているバッジ　{STR_VAR_1}こ");
+STRINGS_MINIGAME_TEXT const u8 gText_Powder[] = _("きのみのこな");
+STRINGS_MINIGAME_TEXT const u8 gText_BerryPickingRecords[] = _("ドードリオのきのみどりの　きろく");
+STRINGS_MINIGAME_TEXT const u8 gText_BerriesPicked[] = _("きのみをとった　かいすう");
+STRINGS_MINIGAME_TEXT const u8 gText_BestScore[] = _("さいこう　とくてん");
+STRINGS_MINIGAME_TEXT const u8 gText_BerriesInRowFivePlayers[] = _(
+    "5にんで　きのみを\n"
+    "つづけてとった　かいすう");
+STRINGS_MINIGAME_TEXT const u8 gText_BerryPickingResults[] = _("きのみの　けっか　はっぴょう！！");
+STRINGS_MINIGAME_TEXT const u8 gText_10P30P50P50P[] = _("10P　　30P　　50P　　{EMOJI_MINUS}50P");
+STRINGS_MINIGAME_TEXT const u8 gText_AnnouncingRankings[] = _("じゅんいの　はっぴょう！！");
+STRINGS_MINIGAME_TEXT const u8 gText_AnnouncingPrizes[] = _("しょうひんの　はっぴょう！！");
+STRINGS_MINIGAME_TEXT const u8 gText_1Colon[] = _("1:");
+STRINGS_MINIGAME_TEXT const u8 gText_2Colon[] = _("2:");
+STRINGS_MINIGAME_TEXT const u8 gText_3Colon[] = _("3:");
+STRINGS_MINIGAME_TEXT const u8 gText_4Colon[] = _("4:");
+STRINGS_MINIGAME_TEXT const u8 gText_5Colon[] = _("5:");
+STRINGS_MINIGAME_TEXT const u8 gText_FirstPlacePrize[] = _(
+    "1ばんに　なった　ひとに\n"
+    "{DYNAMIC 0}を　プレゼント！！");
+STRINGS_MINIGAME_TEXT const u8 gText_CantHoldAnyMore[] = _("{DYNAMIC 0}は　いっぱいです⋯");
+STRINGS_MINIGAME_TEXT const u8 gText_FilledStorageSpace[] = _("{DYNAMIC 0}が　いっぱいになってしまった！");
+STRINGS_MINIGAME_TEXT const u8 gText_WantToPlayAgain[] = _("もういちど　あそびますか？");
+STRINGS_MINIGAME_TEXT const u8 gText_SomeoneDroppedOut[] = _(
+    "だれかが　ぬけました\n"
+    "つうしんを　しゅうりょう　します");
+STRINGS_MINIGAME_TEXT const u8 gText_SpacePoints[] = _("てん");
+STRINGS_MINIGAME_TEXT const u8 gText_CommunicationStandby3[] = _("つうしん　たいきちゅうです");
+STRINGS_MINIGAME_TEXT const u8 gText_SpacePoints2[] = _("てん");
+STRINGS_MINIGAME_TEXT const u8 gText_SpaceTimes3[] = _("かい");
+STRINGS_MINIGAME_TEXT const u8 gText_PkmnJumpRecords[] = _("ミニポケモンでジャンプの　きろく");
+STRINGS_MINIGAME_TEXT const u8 gText_JumpsInARow[] = _("さいこう　ジャンプかいすう");
+STRINGS_MINIGAME_TEXT const u8 gText_BestScore2[] = _("さいこう　とくてん");
+STRINGS_MINIGAME_TEXT const u8 gText_ExcellentsInARow[] = _("れんぞく　EXCELLENT");
+STRINGS_MINIGAME_TEXT const u8 gText_AwesomeWonF701F700[] = _(
+    "せいせきが　よかったので\n"
+    "{DYNAMIC 0}を　{DYNAMIC 1}こ　プレゼント！");
+STRINGS_MINIGAME_TEXT const u8 gText_FilledStorageSpace2[] = _(
+    "{DYNAMIC 0}が　いっぱいに\n"
+    "なってしまった！");
+STRINGS_MINIGAME_TEXT const u8 gText_CantHoldMore[] = _("{DYNAMIC 0}は　いっぱいです⋯");
+STRINGS_MINIGAME_TEXT const u8 gText_WantToPlayAgain2[] = _("もういちど　あそびますか？");
+STRINGS_MINIGAME_TEXT const u8 gText_SomeoneDroppedOut2[] = _(
+    "だれかがぬけました\n"
+    "つうしんを　しゅうりょうします");
+STRINGS_MINIGAME_TEXT const u8 gText_CommunicationStandby4[] = _("つうしん　たいきちゅう");
+STRINGS_MINIGAME_TEXT const u8 gText_LinkContestResults[] = _("{PLAYER}の　つうしん　コンテスト　せいせき");
+STRINGS_MINIGAME_TEXT const u8 gText_1st[] = _("1い");
+STRINGS_MINIGAME_TEXT const u8 gText_2nd[] = _("2い");
+STRINGS_MINIGAME_TEXT const u8 gText_3rd[] = _("3い");
+STRINGS_MINIGAME_TEXT const u8 gText_4th[] = _("4い");
+STRINGS_MINIGAME_TEXT const u8 gText_Friend[] = _("someone");
+STRINGS_MINIGAME_TEXT const u8 gText_Pokemon3[] = _("pokemon");
 
 STRINGS_DAYCARE const u8 gDaycareText_GetAlongVeryWell[] = _("2ひきの　なかは\nとっても　よい　ようじゃ");
 STRINGS_DAYCARE const u8 gDaycareText_GetAlong[] = _("2ひきの　なかは\nまずまずの　ようじゃ");

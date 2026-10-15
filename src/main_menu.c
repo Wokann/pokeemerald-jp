@@ -58,10 +58,6 @@ extern const u8 gText_Birch_WhatsYourName[];
 extern const u8 gText_Birch_SoItsPlayer[];
 extern const u8 gText_Birch_YourePlayer[];
 extern const u8 gText_Birch_AreYouReady[];
-extern const u8 gUnknown_85CCCBD[];
-extern const u8 gUnknown_85CCCC7[];
-extern const u8 gUnknown_85CCCD4[];
-extern const u8 gUnknown_85CCCE1[];
 extern const u8 sTextColor_Savegame[];
 extern const union AffineAnimCmd *const sSpriteAffineAnimTable_PlayerShrink[];
 extern const struct MenuAction sMenuActions_Gender[];
@@ -1734,7 +1730,7 @@ static void MainMenu_FormatSavegameText(void)
 static void MainMenu_FormatSavegamePlayer(void)
 {
     StringCopy(gStringVar1, gSaveBlock2Ptr->playerName);
-    StringExpandPlaceholders(gStringVar4, gUnknown_85CCCBD);
+    StringExpandPlaceholders(gStringVar4, gText_ContinueMenuPlayer);
     AddTextPrinterParameterized3(2, FONT_NORMAL, 0, 0x11, sTextColor_Savegame, -1, gStringVar4);
 }
 
@@ -1742,7 +1738,7 @@ static void MainMenu_FormatSavegameTime(void)
 {
     ConvertIntToDecimalStringN(gStringVar1, gSaveBlock2Ptr->playTimeHours, 0, 3);
     ConvertIntToDecimalStringN(gStringVar2, gSaveBlock2Ptr->playTimeMinutes, 2, 2);
-    StringExpandPlaceholders(gStringVar4, gUnknown_85CCCC7);
+    StringExpandPlaceholders(gStringVar4, gText_ContinueMenuTime);
     AddTextPrinterParameterized3(2, FONT_NORMAL, 0x67, 0x11, sTextColor_Savegame, -1, gStringVar4);
 }
 
@@ -1757,7 +1753,7 @@ static void MainMenu_FormatSavegamePokedex(void)
         else
             count = GetHoennPokedexCount(1);
         ConvertIntToDecimalStringN(gStringVar1, count, 0, 3);
-        StringExpandPlaceholders(gStringVar4, gUnknown_85CCCD4);
+        StringExpandPlaceholders(gStringVar4, gText_ContinueMenuPokedex);
         AddTextPrinterParameterized3(2, FONT_NORMAL, 0, 0x21, sTextColor_Savegame, -1, gStringVar4);
     }
 }
@@ -1773,7 +1769,7 @@ static void MainMenu_FormatSavegameBadges(void)
             badgeCount++;
     }
     ConvertIntToDecimalStringN(gStringVar1, badgeCount, 2, 1);
-    StringExpandPlaceholders(gStringVar4, gUnknown_85CCCE1);
+    StringExpandPlaceholders(gStringVar4, gText_ContinueMenuBadges);
     AddTextPrinterParameterized3(2, FONT_NORMAL, 0x6F, 0x21, sTextColor_Savegame, -1, gStringVar4);
 }
 
