@@ -364,354 +364,114 @@ bool32 LoadNextConditionMenuMonData(u8 mode)
     return FALSE;
 }
 
-#ifndef NONMATCHING
-// Verified: agbcc -O2 cannot reproduce the JP loop structure (count handling
-// via 0xFFFF0000 wraparound), so the byte-exact naked asm stays the default.
-__attribute__((naked)) void sub_081CCD0C(u8 *dest, const u8 *src, u16 count)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "lsls r2, r2, #0x10\n\t"
-            "lsrs r2, r2, #0x10\n\t"
-            "b _081CCD24\n\t"
-            "_081CCD16:\n\t"
-            "strb r3, [r4]\n\t"
-            "adds r1, #1\n\t"
-            "adds r4, #1\n\t"
-            "lsls r0, r2, #0x10\n\t"
-            "ldr r2, _081CCD60\n\t"
-            "adds r0, r0, r2\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "_081CCD24:\n\t"
-            "ldrb r3, [r1]\n\t"
-            "adds r0, r3, #0\n\t"
-            "cmp r0, #0xff\n\t"
-            "bne _081CCD16\n\t"
-            "adds r1, r2, #0\n\t"
-            "lsls r0, r1, #0x10\n\t"
-            "ldr r2, _081CCD60\n\t"
-            "adds r0, r0, r2\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "lsls r1, r1, #0x10\n\t"
-            "cmp r1, #0\n\t"
-            "ble _081CCD52\n\t"
-            "movs r3, #0\n\t"
-            "_081CCD3E:\n\t"
-            "strb r3, [r4]\n\t"
-            "adds r4, #1\n\t"
-            "adds r1, r2, #0\n\t"
-            "lsls r0, r1, #0x10\n\t"
-            "ldr r2, _081CCD60\n\t"
-            "adds r0, r0, r2\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "lsls r1, r1, #0x10\n\t"
-            "cmp r1, #0\n\t"
-            "bgt _081CCD3E\n\t"
-            "_081CCD52:\n\t"
-            "movs r0, #0xff\n\t"
-            "strb r0, [r4]\n\t"
-            "adds r0, r4, #0\n\t"
-            "pop {r4}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            "_081CCD60: .4byte 0xFFFF0000");
-}
-#else
-void sub_081CCD0C(u8 *dest, const u8 *src, u16 count)
+// The signed post-decrement preserves JP's halfword wrap and stopping rule.
+u8 *CopyStringLeftAlignedToConditionData(u8 *dst, const u8 *src, s16 n)
 {
     while (*src != EOS)
-    {
-        *dest++ = *src++;
-        count--;
-    }
-    while (count)
-    {
-        *dest++ = 0;
-        count--;
-    }
-    *dest = EOS;
-}
-#endif
+        *dst++ = *src++, n--;
 
-// The direct US C form is only 0x200 bytes while this JP routine is 0x220;
-// its agbcc register/allocation shape is not yet byte-matchable.
-__attribute__((naked)) void sub_081CCD64(u8 *dest, u16 boxId, u8 unused)
+    while (n-- > 0)
+        *dst++ = CHAR_SPACE;
+
+    *dst = EOS;
+    return dst;
+}
+
+// JP pads the five-character nickname instead of using US's pixel skip code.
+u8 *CopyConditionMonNameGender(u8 *str, u16 listId, bool8 skipPadding)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, sl\n\t"
-            "mov r6, sb\n\t"
-            "mov r5, r8\n\t"
-            "push {r5, r6, r7}\n\t"
-            "adds r5, r0, #0\n\t"
-            "adds r4, r1, #0\n\t"
-            "lsls r4, r4, #0x10\n\t"
-            "lsrs r4, r4, #0x10\n\t"
-            "lsls r2, r2, #0x18\n\t"
-            "lsrs r2, r2, #0x18\n\t"
-            "mov sl, r2\n\t"
-            "movs r0, #0x12\n\t"
-            "bl GetSubstructPtr\n\t"
-            "lsls r4, r4, #2\n\t"
-            "adds r0, r0, r4\n\t"
-            "ldrb r4, [r0, #4]\n\t"
-            "mov r8, r4\n\t"
-            "ldrb r6, [r0, #5]\n\t"
-            "mov sb, r6\n\t"
-            "movs r0, #0xfc\n\t"
-            "strb r0, [r5]\n\t"
-            "adds r5, #1\n\t"
-            "movs r0, #4\n\t"
-            "strb r0, [r5]\n\t"
-            "adds r5, #1\n\t"
-            "movs r0, #8\n\t"
-            "strb r0, [r5]\n\t"
-            "adds r5, #1\n\t"
-            "movs r0, #0\n\t"
-            "strb r0, [r5]\n\t"
-            "adds r5, #1\n\t"
-            "movs r0, #9\n\t"
-            "strb r0, [r5]\n\t"
-            "adds r5, #1\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r6, #0\n\t"
-            "movs r2, #0x2d\n\t"
-            "movs r3, #0\n\t"
-            "bl GetBoxOrPartyMonData\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CCDD0\n\t"
-            "ldr r1, _081CCDCC\n\t"
-            "adds r0, r5, #0\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #0xc\n\t"
-            "bl StringCopyPadded\n\t"
-            "b _081CCF6C\n\t"
-            ".align 2, 0\n\t"
-            "_081CCDCC: .4byte gText_EggNickname\n\t"
-            "_081CCDD0:\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r6, #0\n\t"
-            "movs r2, #2\n\t"
-            "adds r3, r5, #0\n\t"
-            "bl GetBoxOrPartyMonData\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl StringGet_Nickname\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r6, #0\n\t"
-            "movs r2, #0xb\n\t"
-            "movs r3, #0\n\t"
-            "bl GetBoxOrPartyMonData\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r7, r0, #0x10\n\t"
-            "cmp r4, #0xe\n\t"
-            "bne _081CCE20\n\t"
-            "movs r0, #0x64\n\t"
-            "adds r4, r6, #0\n\t"
-            "muls r4, r0, r4\n\t"
-            "ldr r0, _081CCE1C\n\t"
-            "adds r4, r4, r0\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r1, #0x38\n\t"
-            "bl GetMonData3\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r0, r0, #0x10\n\t"
-            "mov r8, r0\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl GetMonGender\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r6, r0, #0x18\n\t"
-            "b _081CCE3E\n\t"
-            ".align 2, 0\n\t"
-            "_081CCE1C: .4byte gPlayerParty\n\t"
-            "_081CCE20:\n\t"
-            "mov r0, r8\n\t"
-            "mov r1, sb\n\t"
-            "bl GetBoxedMonPtr\n\t"
-            "adds r4, r0, #0\n\t"
-            "bl GetBoxMonGender\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r6, r0, #0x18\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl GetLevelFromBoxMonExp\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "mov r8, r0\n\t"
-            "_081CCE3E:\n\t"
-            "cmp r7, #0x1d\n\t"
-            "beq _081CCE46\n\t"
-            "cmp r7, #0x20\n\t"
-            "bne _081CCE5C\n\t"
-            "_081CCE46:\n\t"
-            "lsls r1, r7, #1\n\t"
-            "adds r1, r1, r7\n\t"
-            "lsls r1, r1, #1\n\t"
-            "ldr r0, _081CCE64\n\t"
-            "adds r1, r1, r0\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl StringCompare\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CCE5C\n\t"
-            "movs r6, #0xff\n\t"
-            "_081CCE5C:\n\t"
-            "adds r3, r5, #0\n\t"
-            "movs r4, #0\n\t"
-            "b _081CCE70\n\t"
-            ".align 2, 0\n\t"
-            "_081CCE64: .4byte gSpeciesNames\n\t"
-            "_081CCE68:\n\t"
-            "adds r3, #1\n\t"
-            "adds r0, r4, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r4, r0, #0x10\n\t"
-            "_081CCE70:\n\t"
-            "ldrb r0, [r3]\n\t"
-            "cmp r0, #0xff\n\t"
-            "bne _081CCE68\n\t"
-            "adds r1, r4, #0\n\t"
-            "adds r0, r1, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r4, r0, #0x10\n\t"
-            "cmp r1, #4\n\t"
-            "bhi _081CCE94\n\t"
-            "movs r2, #0\n\t"
-            "_081CCE84:\n\t"
-            "strb r2, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "adds r1, r4, #0\n\t"
-            "adds r0, r1, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r4, r0, #0x10\n\t"
-            "cmp r1, #4\n\t"
-            "bls _081CCE84\n\t"
-            "_081CCE94:\n\t"
-            "movs r0, #0\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "cmp r6, #0\n\t"
-            "beq _081CCEA4\n\t"
-            "cmp r6, #0xfe\n\t"
-            "beq _081CCECA\n\t"
-            "b _081CCEEE\n\t"
-            "_081CCEA4:\n\t"
-            "movs r1, #0xfc\n\t"
-            "strb r1, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #1\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #4\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "strb r1, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #3\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #5\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #0xb5\n\t"
-            "b _081CCEEE\n\t"
-            "_081CCECA:\n\t"
-            "movs r1, #0xfc\n\t"
-            "strb r1, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #1\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #6\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "strb r1, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #3\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #7\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #0xb6\n\t"
-            "_081CCEEE:\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #0xfc\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #4\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #8\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r5, #0\n\t"
-            "strb r5, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #9\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #0xba\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #0xf9\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #5\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "adds r4, r3, #0\n\t"
-            "adds r0, r4, #0\n\t"
-            "mov r1, r8\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #3\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "adds r3, r0, #0\n\t"
-            "subs r4, r3, r4\n\t"
-            "lsls r4, r4, #0x10\n\t"
-            "lsrs r4, r4, #0x10\n\t"
-            "strb r5, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "mov r0, sl\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CCF66\n\t"
-            "movs r0, #3\n\t"
-            "subs r0, r0, r4\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "ldr r1, _081CCF7C\n\t"
-            "adds r0, r0, r1\n\t"
-            "lsrs r4, r0, #0x10\n\t"
-            "ldr r0, _081CCF80\n\t"
-            "cmp r4, r0\n\t"
-            "beq _081CCF66\n\t"
-            "movs r2, #0\n\t"
-            "adds r1, r0, #0\n\t"
-            "_081CCF58:\n\t"
-            "strb r2, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "subs r0, r4, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r4, r0, #0x10\n\t"
-            "cmp r4, r1\n\t"
-            "bne _081CCF58\n\t"
-            "_081CCF66:\n\t"
-            "movs r0, #0xff\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r0, r3, #0\n\t"
-            "_081CCF6C:\n\t"
-            "pop {r3, r4, r5}\n\t"
-            "mov r8, r3\n\t"
-            "mov sb, r4\n\t"
-            "mov sl, r5\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            "_081CCF7C: .4byte 0xFFFF0000\n\t"
-            "_081CCF80: .4byte 0x0000FFFF\n\t"
-            ".syntax divided");
+    u16 boxId, monId, gender, species, level, lvlDigits;
+    struct BoxPokemon *boxMon;
+    u8 *txtPtr, *str_;
+    struct PokenavMonList *monListPtr = GetSubstructPtr(POKENAV_SUBSTRUCT_MON_LIST);
+
+    boxId = monListPtr->monData[listId].boxId;
+    monId = monListPtr->monData[listId].monId;
+    *(str++) = EXT_CTRL_CODE_BEGIN;
+    *(str++) = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+    *(str++) = TEXT_COLOR_BLUE;
+    *(str++) = TEXT_COLOR_TRANSPARENT;
+    *(str++) = TEXT_COLOR_LIGHT_BLUE;
+
+    // This display field stays 12 bytes, independent of the nickname limit.
+    if (GetBoxOrPartyMonData(boxId, monId, MON_DATA_IS_EGG, NULL))
+        return StringCopyPadded(str, gText_EggNickname, CHAR_SPACE, 12);
+
+    GetBoxOrPartyMonData(boxId, monId, MON_DATA_NICKNAME, str);
+    StringGet_Nickname(str);
+    species = GetBoxOrPartyMonData(boxId, monId, MON_DATA_SPECIES, NULL);
+    if (boxId == TOTAL_BOXES_COUNT)
+    {
+        level = GetMonData3(&gPlayerParty[monId], MON_DATA_LEVEL);
+        gender = GetMonGender(&gPlayerParty[monId]);
+    }
+    else
+    {
+        boxMon = GetBoxedMonPtr(boxId, monId);
+        gender = GetBoxMonGender(boxMon);
+        level = GetLevelFromBoxMonExp(boxMon);
+    }
+
+    if ((species == SPECIES_NIDORAN_F || species == SPECIES_NIDORAN_M) && !StringCompare(str, gSpeciesNames[species]))
+        gender = MON_GENDERLESS;
+
+    str_ = str;
+    lvlDigits = 0;
+    while (*str_ != EOS)
+    {
+        str_++;
+        lvlDigits++;
+    }
+    while (lvlDigits++ < POKEMON_NAME_LENGTH)
+        *(str_++) = CHAR_SPACE;
+
+    *(str_++) = CHAR_SPACE;
+    switch (gender)
+    {
+    default:
+        *(str_++) = CHAR_SPACE; // Genderless
+        break;
+    case MON_MALE:
+        *(str_++) = EXT_CTRL_CODE_BEGIN;
+        *(str_++) = EXT_CTRL_CODE_COLOR;
+        *(str_++) = TEXT_COLOR_RED;
+        *(str_++) = EXT_CTRL_CODE_BEGIN;
+        *(str_++) = EXT_CTRL_CODE_SHADOW;
+        *(str_++) = TEXT_COLOR_LIGHT_RED;
+        *(str_++) = CHAR_MALE;
+        break;
+    case MON_FEMALE:
+        *(str_++) = EXT_CTRL_CODE_BEGIN;
+        *(str_++) = EXT_CTRL_CODE_COLOR;
+        *(str_++) = TEXT_COLOR_GREEN;
+        *(str_++) = EXT_CTRL_CODE_BEGIN;
+        *(str_++) = EXT_CTRL_CODE_SHADOW;
+        *(str_++) = TEXT_COLOR_LIGHT_GREEN;
+        *(str_++) = CHAR_FEMALE;
+        break;
+    }
+
+    *(str_++) = EXT_CTRL_CODE_BEGIN;
+    *(str_++) = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+    *(str_++) = TEXT_COLOR_BLUE;
+    *(str_++) = TEXT_COLOR_TRANSPARENT;
+    *(str_++) = TEXT_COLOR_LIGHT_BLUE;
+    *(str_++) = CHAR_SLASH;
+    *(str_++) = CHAR_EXTRA_SYMBOL;
+    *(str_++) = CHAR_LV_2;
+    txtPtr = str_;
+    str_ = ConvertIntToDecimalStringN(str_, level, STR_CONV_MODE_LEFT_ALIGN, 3);
+    lvlDigits = str_ - txtPtr;
+    *(str_++) = CHAR_SPACE;
+    if (!skipPadding)
+    {
+        lvlDigits = 3 - lvlDigits;
+        while (lvlDigits-- != 0)
+            *(str_++) = CHAR_SPACE;
+    }
+
+    *str_ = EOS;
+    return str_;
 }
 
 static void CopyMonNameGenderLocation(s16 listId, u8 loadId)
@@ -722,7 +482,7 @@ static void CopyMonNameGenderLocation(s16 listId, u8 loadId)
 
     if (listId != (IsConditionMenuSearchMode() ? monListPtr->listCount : monListPtr->listCount - 1))
     {
-        sub_081CCD64(menu->nameText[loadId], listId, FALSE);
+        CopyConditionMonNameGender(menu->nameText[loadId], listId, FALSE);
         boxId = monListPtr->monData[listId].boxId;
         menu->locationText[loadId][0] = EXT_CTRL_CODE_BEGIN;
         menu->locationText[loadId][1] = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
@@ -730,9 +490,9 @@ static void CopyMonNameGenderLocation(s16 listId, u8 loadId)
         menu->locationText[loadId][3] = TEXT_COLOR_TRANSPARENT;
         menu->locationText[loadId][4] = TEXT_COLOR_LIGHT_BLUE;
         if (boxId == TOTAL_BOXES_COUNT)
-            sub_081CCD0C(&menu->locationText[loadId][5], gText_InParty, BOX_NAME_LENGTH);
+            CopyStringLeftAlignedToConditionData(&menu->locationText[loadId][5], gText_InParty, BOX_NAME_LENGTH);
         else
-            sub_081CCD0C(&menu->locationText[loadId][5], GetBoxNamePtr(boxId), BOX_NAME_LENGTH);
+            CopyStringLeftAlignedToConditionData(&menu->locationText[loadId][5], GetBoxNamePtr(boxId), BOX_NAME_LENGTH);
     }
     else
     {
