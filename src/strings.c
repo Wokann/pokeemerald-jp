@@ -4,6 +4,7 @@
 #include "item_menu.h"
 #include "constants/songs.h"
 
+#define STRINGS_INTERFACE_TEXT __attribute__((section(".rodata.strings_interface_text"), aligned(1)))
 #define STRINGS_COMMON __attribute__((section(".rodata.strings_common")))
 #define STRINGS_BIRCH_MENU __attribute__((section(".rodata.strings_birch_menu"), aligned(1)))
 #define STRINGS_POKEDEX __attribute__((section(".rodata.strings_pokedex"), aligned(1)))
@@ -453,6 +454,40 @@ STRINGS_SCRIPT_MENU_TEXT const u8 gText_GoOn[] = _("つづける");
 STRINGS_SCRIPT_MENU_TEXT const u8 gText_Record2[] = _("きろくする");
 STRINGS_SCRIPT_MENU_TEXT const u8 gText_Rest[] = _("やすむ");
 STRINGS_SCRIPT_MENU_TEXT const u8 gText_Retire[] = _("リタイア");
+
+STRINGS_INTERFACE_TEXT const u8 gText_99TimesPlus[] = _("99かい　いじょう");
+STRINGS_INTERFACE_TEXT const u8 gText_1MinutePlus[] = _("1ぷん　いじょう");
+STRINGS_INTERFACE_TEXT const u8 gText_SpaceSeconds[] = _("びょう");
+STRINGS_INTERFACE_TEXT const u8 gText_SpaceTimes[] = _("かい");
+// JP uses a comma as the decimal separator.
+STRINGS_INTERFACE_TEXT const u8 gText_Dot[] = _(","); // Unused
+STRINGS_INTERFACE_TEXT const u8 gText_BigGuy[] = _("おにいちゃん");
+STRINGS_INTERFACE_TEXT const u8 gText_BigGirl[] = _("おねえちゃん");
+STRINGS_INTERFACE_TEXT const u8 gText_Son[] = _("むすこ");
+STRINGS_INTERFACE_TEXT const u8 gText_Daughter[] = _("むすめ");
+STRINGS_INTERFACE_TEXT const u8 gText_BlueFlute[] = _("あおいビードロ");
+STRINGS_INTERFACE_TEXT const u8 gText_YellowFlute[] = _("きいろビードロ");
+STRINGS_INTERFACE_TEXT const u8 gText_RedFlute[] = _("あかいビードロ");
+STRINGS_INTERFACE_TEXT const u8 gText_WhiteFlute[] = _("しろいビードロ");
+STRINGS_INTERFACE_TEXT const u8 gText_BlackFlute[] = _("くろいビードロ");
+STRINGS_INTERFACE_TEXT const u8 gText_PrettyChair[] = _("きれいなイス");
+STRINGS_INTERFACE_TEXT const u8 gText_PrettyDesk[] = _("きれいなつくえ");
+STRINGS_INTERFACE_TEXT const u8 gText_1F[] = _("1かい");
+STRINGS_INTERFACE_TEXT const u8 gText_2F[] = _("2かい");
+STRINGS_INTERFACE_TEXT const u8 gText_3F[] = _("3かい");
+STRINGS_INTERFACE_TEXT const u8 gText_4F[] = _("4かい");
+STRINGS_INTERFACE_TEXT const u8 gText_5F[] = _("5かい");
+STRINGS_INTERFACE_TEXT const u8 gText_6F[] = _("6かい");
+STRINGS_INTERFACE_TEXT const u8 gText_7F[] = _("7かい");
+STRINGS_INTERFACE_TEXT const u8 gText_8F[] = _("8かい");
+STRINGS_INTERFACE_TEXT const u8 gText_9F[] = _("9かい");
+STRINGS_INTERFACE_TEXT const u8 gText_10F[] = _("10かい");
+STRINGS_INTERFACE_TEXT const u8 gText_11F[] = _("11かい");
+STRINGS_INTERFACE_TEXT const u8 gText_B1F[] = _("ビ1かい");
+STRINGS_INTERFACE_TEXT const u8 gText_B2F[] = _("ビ2かい");
+STRINGS_INTERFACE_TEXT const u8 gText_B3F[] = _("ビ3かい");
+STRINGS_INTERFACE_TEXT const u8 gText_B4F[] = _("ビ4かい");
+STRINGS_INTERFACE_TEXT const u8 gText_Rooftop[] = _("おくじょう");
 
 STRINGS_DAYCARE const u8 gDaycareText_GetAlongVeryWell[] = _("2ひきの　なかは\nとっても　よい　ようじゃ");
 STRINGS_DAYCARE const u8 gDaycareText_GetAlong[] = _("2ひきの　なかは\nまずまずの　ようじゃ");

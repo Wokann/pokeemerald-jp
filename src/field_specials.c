@@ -78,11 +78,6 @@ extern void GetEreaderTrainerName(u8 *dest);
 #include "constants/map_types.h"
 #include "constants/battle_frontier.h"
 
-extern const u8 gUnknown_85CB025[];
-extern const u8 gUnknown_85CB00E[];
-extern const u8 gUnknown_85CB021[];
-extern const u8 gUnknown_85CB018[];
-
 #define FIELD_SPECIALS_DATA __attribute__((section(".rodata.field_specials_data")))
 #define FIELD_SPECIALS_DATA_EARLY __attribute__((section(".rodata.field_specials_data_early")))
 #define FIELD_SPECIALS_DATA_SLOT_MACHINE_SELECTORS __attribute__((section(".rodata.field_specials_slot_machine_selectors")))
@@ -140,11 +135,11 @@ void DetermineCyclingRoadResults(u32 numFrames, u16 bikeCollisions)
     if (numBikeCollisions < 100)
     {
         ConvertIntToDecimalStringN(gStringVar1, numBikeCollisions, STR_CONV_MODE_LEFT_ALIGN, 2);
-        StringAppend(gStringVar1, gUnknown_85CB025);
+        StringAppend(gStringVar1, gText_SpaceTimes);
     }
     else
     {
-        StringCopy(gStringVar1, gUnknown_85CB00E);
+        StringCopy(gStringVar1, gText_99TimesPlus);
     }
 
     if (numFrames < 3600)
@@ -152,11 +147,11 @@ void DetermineCyclingRoadResults(u32 numFrames, u16 bikeCollisions)
         ConvertIntToDecimalStringN(gStringVar2, numFrames / 60, STR_CONV_MODE_RIGHT_ALIGN, 2);
         gStringVar2[2] = CHAR_COMMA;
         ConvertIntToDecimalStringN(&gStringVar2[3], ((numFrames % 60) * 100) / 60, STR_CONV_MODE_LEADING_ZEROS, 2);
-        StringAppend(gStringVar2, gUnknown_85CB021);
+        StringAppend(gStringVar2, gText_SpaceSeconds);
     }
     else
     {
-        StringCopy(gStringVar2, gUnknown_85CB018);
+        StringCopy(gStringVar2, gText_1MinutePlus);
     }
 
     result = 0;

@@ -10255,7 +10255,6 @@ SECTIONS {
         src/strings.o(.rodata.strings_bag_return_text);
         src/strings.o(.rodata.strings_bag_return_tables);
         src/strings.o(.rodata.strings_item_menu_text);
-        src/data/text/region_texts78.o(.rodata);
         data/data_b2d.o(.rodata.mid76_pokeblock_name_text_prefix);
         src/pokeblock.o(.rodata.pokeblock_name_text_data);
         src/strings.o(.rodata.strings_pokeblock_text);
@@ -10268,8 +10267,7 @@ SECTIONS {
         src/strings.o(.rodata.strings_pc_text);
         src/strings.o(.rodata.strings_shared_name_text);
         src/strings.o(.rodata.strings_script_menu_text);
-        src/data/text/region_texts95.o(.rodata);
-        src/data/text/region_texts96.o(.rodata);
+        src/strings.o(.rodata.strings_interface_text);
         src/strings.o(.rodata.strings_elevator_text);
         src/strings.o(.rodata.strings_menu_price_text);
         src/strings.o(.rodata.strings_pokenav_storage);
