@@ -959,7 +959,7 @@ __attribute__((naked)) void SetBagItemsListTemplate(void)
         "_081C4BF8: .4byte 0x0000087C\n\t"
         "_081C4BFC: .4byte 0x00000824\n\t"
         "_081C4C00: .4byte 0x00000828\n\t"
-        "_081C4C04: .4byte gUnknown_85C942E + 0x1A\n\t"
+        "_081C4C04: .4byte gText_CloseBag\n\t"
         "_081C4C08: .4byte gMultiuseListMenuTemplate\n\t"
         "_081C4C0C: .4byte sListMenuTemplate\n\t"
         "_081C4C10: .4byte 0x00000822\n\t"
@@ -1184,7 +1184,7 @@ __attribute__((naked)) void PrintItemQuantity(void)
         "_081C4DC4: .4byte 0x00000CA9\n\t"
         "_081C4DC8: .4byte 0x00000E54\n\t"
         "_081C4DCC: .4byte gStringVar4\n\t"
-        "_081C4DD0: .4byte gUnknown_85C942E + 0xE\n\t"
+        "_081C4DD0: .4byte gText_xVar1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2312,7 +2312,7 @@ __attribute__((naked)) void sub_081C551C(void)
         "_081C5628: .4byte gSpecialVar_ItemId\n\t"
         "_081C562C: .4byte gStringVar1\n\t"
         "_081C5630: .4byte gStringVar4\n\t"
-        "_081C5634: .4byte gUnknown_85C942E + 0x22\n\t"
+        "_081C5634: .4byte gText_Var1IsSelected\n\t"
         "_081C5638:\n\t"
         "	cmp r0, #2\n\t"
         "	bne _081C564C\n\t"
@@ -2859,7 +2859,7 @@ __attribute__((naked)) void BagAction_UseOnField(void)
         "	b _081C5A7E\n\t"
         "	.align 2, 0\n\t"
         "_081C5A48: .4byte gSpecialVar_ItemId\n\t"
-        "_081C5A4C: .4byte gUnknown_85C942E + 0x128\n\t"
+        "_081C5A4C: .4byte gText_DadsAdvice\n\t"
         "_081C5A50: .4byte sub_081C5F24 + 1\n\t"
         "_081C5A54:\n\t"
         "	ldrh r0, [r4]\n\t"
@@ -3008,7 +3008,7 @@ __attribute__((naked)) void BagAction_Toss(void)
         "_081C5B68: .4byte gSpecialVar_ItemId\n\t"
         "_081C5B6C: .4byte gStringVar1\n\t"
         "_081C5B70: .4byte gStringVar4\n\t"
-        "_081C5B74: .4byte gUnknown_85C942E + 0xF5\n\t"
+        "_081C5B74: .4byte gText_TossHowManyVar1s\n\t"
         "_081C5B78: .4byte sub_081C5CC4 + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -3068,7 +3068,7 @@ __attribute__((naked)) void sub_081C5B7C(void)
         "_081C5BE8: .4byte gStringVar1\n\t"
         "_081C5BEC: .4byte gStringVar2\n\t"
         "_081C5BF0: .4byte gStringVar4\n\t"
-        "_081C5BF4: .4byte gUnknown_85C942E + 0x112\n\t"
+        "_081C5BF4: .4byte gText_ConfirmTossItems\n\t"
         "_081C5BF8: .4byte sYesNoTossFuncions\n\t"
         ".syntax divided\n\t"
     );
@@ -3138,7 +3138,7 @@ __attribute__((naked)) void sub_081C5C30(void)
         "	.align 2, 0\n\t"
         "_081C5C70: .4byte gStringVar1\n\t"
         "_081C5C74: .4byte gStringVar4\n\t"
-        "_081C5C78: .4byte gUnknown_85C942E + 0xE\n\t"
+        "_081C5C78: .4byte gText_xVar1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3177,7 +3177,7 @@ __attribute__((naked)) void sub_081C5C7C(void)
         "	.align 2, 0\n\t"
         "_081C5CB8: .4byte gStringVar1\n\t"
         "_081C5CBC: .4byte gStringVar4\n\t"
-        "_081C5CC0: .4byte gUnknown_85C942E + 0xE\n\t"
+        "_081C5CC0: .4byte gText_xVar1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3309,7 +3309,7 @@ __attribute__((naked)) void TossItem(void)
         "_081C5DC8: .4byte gStringVar1\n\t"
         "_081C5DCC: .4byte gStringVar2\n\t"
         "_081C5DD0: .4byte gStringVar4\n\t"
-        "_081C5DD4: .4byte gUnknown_85C942E + 0x104\n\t"
+        "_081C5DD4: .4byte gText_ThrewAwayVar2Var1s\n\t"
         "_081C5DD8: .4byte sub_081C5DDC + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -3396,7 +3396,7 @@ __attribute__((naked)) void BagAction_Give(void)
         "	b _081C5EB6\n\t"
         "	.align 2, 0\n\t"
         "_081C5E80: .4byte gSpecialVar_ItemId\n\t"
-        "_081C5E84: .4byte gUnknown_85C942E + 0x2E\n\t"
+        "_081C5E84: .4byte gText_CantWriteMail\n\t"
         "_081C5E88: .4byte sub_081C5EFC + 1\n\t"
         "_081C5E8C:\n\t"
         "	ldrh r0, [r5]\n\t"
@@ -3452,7 +3452,7 @@ __attribute__((naked)) void sub_081C5EBC(void)
         "_081C5EE8: .4byte gSpecialVar_ItemId\n\t"
         "_081C5EEC: .4byte gStringVar1\n\t"
         "_081C5EF0: .4byte gStringVar4\n\t"
-        "_081C5EF4: .4byte gUnknown_85C942E + 0x60\n\t"
+        "_081C5EF4: .4byte gText_Var1CantBeHeld\n\t"
         "_081C5EF8: .4byte sub_081C5EFC + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -3537,7 +3537,7 @@ __attribute__((naked)) void sub_081C5F5C(void)
         "	b _081C5FA6\n\t"
         "	.align 2, 0\n\t"
         "_081C5F80: .4byte gSpecialVar_ItemId\n\t"
-        "_081C5F84: .4byte gUnknown_85C942E + 0x2E\n\t"
+        "_081C5F84: .4byte gText_CantWriteMail\n\t"
         "_081C5F88: .4byte sub_081C5EFC + 1\n\t"
         "_081C5F8C:\n\t"
         "	ldrh r0, [r5]\n\t"
@@ -3690,7 +3690,7 @@ __attribute__((naked)) void Task_BeginItemSwap(void)
         "_081C60B4: .4byte 0x00000E2C\n\t"
         "_081C60B8: .4byte gStringVar1\n\t"
         "_081C60BC: .4byte gStringVar4\n\t"
-        "_081C60C0: .4byte gUnknown_85C942E + 0x51\n\t"
+        "_081C60C0: .4byte gText_MoveVar1Where\n\t"
         "_081C60C4: .4byte Task_ItemSwapHandleInput + 1\n\t"
         ".syntax divided\n\t"
     );

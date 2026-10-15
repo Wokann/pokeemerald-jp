@@ -1312,7 +1312,130 @@ STRINGS_COMMON const u8 gText_IDNumber2[] = _("{ID}{NO}");
 STRINGS_COMMON const u8 gText_Space[] = _("　");
 STRINGS_COMMON const u8 gText_SelectorArrow2[] = _("▶");
 STRINGS_COMMON const u8 gText_GoBackPrevMenu[] = _("まえに　もどります！");
-STRINGS_COMMON const u8 gUnknown_85C942E[] = {0x15, 0x16, 0x2D, 0x00, 0x0C, 0x1F, 0x0D, 0x06, 0xAC, 0xFF, 0x01, 0x3A, 0x29, 0xFF};
+STRINGS_COMMON const u8 gText_WhatWouldYouLike[] = _("なにを　しますか？");
+STRINGS_COMMON const u8 gMenuText_Give2[] = _("あげる");
+STRINGS_COMMON const u8 gText_xVar1[] = _("×{STR_VAR_1}");
+
+STRINGS_COMMON const u8 gText_Berry2[] = _("のみ");
+
+STRINGS_COMMON const u8 gText_Coins[] = _("{STR_VAR_1}まい");
+
+STRINGS_COMMON const u8 gText_CloseBag[] = _("バッグをとじる");
+
+STRINGS_COMMON const u8 gText_Var1IsSelected[] = _(
+    "{STR_VAR_1}を\n"
+    "どうしますか？");
+
+STRINGS_COMMON const u8 gText_CantWriteMail[] = _(
+    "ここで　メールを\n"
+    "かくことは　できません！");
+
+STRINGS_COMMON const u8 gText_NoPokemon[] = _("ポケモンが　いませんよ！");
+
+STRINGS_COMMON const u8 gText_MoveVar1Where[] = _(
+    "{STR_VAR_1}を\n"
+    "どこに　いれますか？");
+
+STRINGS_COMMON const u8 gText_Var1CantBeHeld[] = _(
+    "{STR_VAR_1}を\n"
+    "もたせることは　できません！");
+
+STRINGS_COMMON const u8 gText_Var1CantBeHeldHere[] = _(
+    "ここでは　{STR_VAR_1}を\n"
+    "もたせることは　できません！");
+
+STRINGS_COMMON const u8 gText_DepositHowManyVar1[] = _(
+    "{STR_VAR_1}　を\n"
+    "いくつ　あずけますか？");
+
+STRINGS_COMMON const u8 gText_DepositedVar2Var1s[] = _(
+    "{STR_VAR_1}　を\n"
+    "{STR_VAR_2}コ　あずけました");
+
+STRINGS_COMMON const u8 gText_NoRoomForItems[] = _(
+    "これいじょう\n"
+    "あずけられません！");
+
+STRINGS_COMMON const u8 gText_CantStoreImportantItems[] = _(
+    "たいせつな　どうぐは\n"
+    "パソコンに　\n"
+    "いれられません！");
+
+STRINGS_COMMON const u8 gText_TooImportantToToss[] = _(
+    "これは　とても\n"
+    "たいせつなモノ　なので\n"
+    "すてられません！");
+
+STRINGS_COMMON const u8 gText_TossHowManyVar1s[] = _(
+    "{STR_VAR_1}を\n"
+    "いくつ　すてますか？");
+
+STRINGS_COMMON const u8 gText_ThrewAwayVar2Var1s[] = _(
+    "{STR_VAR_1}を\n"
+    "{STR_VAR_2}コ　すてました");
+
+STRINGS_COMMON const u8 gText_ConfirmTossItems[] = _(
+    "{STR_VAR_1}を\n"
+    "{STR_VAR_2}コ　すてても\n"
+    "よろしいですか？");
+
+STRINGS_COMMON const u8 gText_DadsAdvice[] = _(
+    "おとうさんの　ことば⋯⋯\n"
+    "{PLAYER}！　こういうものには\l"
+    "つかいどきが　あるんだ！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_COMMON const u8 gText_CantDismountBike[] = _("ここでは　おりられない！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_COMMON const u8 gText_ItemFinderNearby[] = _(
+    "おっ！\n"
+    "マシンが　はんのう　しているぞ！\p"
+    "ちかくに　どうぐが　うまってる！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_COMMON const u8 gText_ItemFinderOnTop[] = _(
+    "マシンが　あしもとで\n"
+    "すごく　はんのう　しているぞ！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_COMMON const u8 gText_ItemFinderNothing[] = _(
+    "⋯⋯　⋯⋯　ふう！\n"
+    "⋯⋯　なんにも　はんのう　しない{PAUSE_UNTIL_PRESS}");
+
+STRINGS_COMMON const u8 gText_CoinCase[] = _(
+    "あなたの　コイン\n"
+    "{STR_VAR_1}まい{PAUSE_UNTIL_PRESS}");
+
+STRINGS_COMMON const u8 gText_BootedUpTM[] = _("わざマシンを　きどうした！");
+
+STRINGS_COMMON const u8 gText_BootedUpHM[] = _("ひでんマシンを　きどうした！");
+
+STRINGS_COMMON const u8 gText_TMHMContainedVar1[] = _(
+    "なかには　{STR_VAR_1}が\n"
+    "きろくされていた！\p"
+    "{STR_VAR_1}を\n"
+    "ポケモンに　おぼえさせますか？");
+
+STRINGS_COMMON const u8 gText_PlayerUsedVar2[] = _(
+    "{PLAYER}は\n"
+    "{STR_VAR_2}を　つかった！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_COMMON const u8 gText_RepelEffectsLingered[] = _(
+    "まだ　まえに　つかった　スプレーの\n"
+    "こうかが　のこってます！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_COMMON const u8 gText_UsedVar2WildLured[] = _(
+    "{PLAYER}は\n"
+    "{STR_VAR_2}を　つかった！\p"
+    "ポケモンと\n"
+    "そうぐう　しやすくなった！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_COMMON const u8 gText_UsedVar2WildRepelled[] = _(
+    "{PLAYER}は\n"
+    "{STR_VAR_2}を　つかった！\p"
+    "ポケモンと\n"
+    "そうぐう　しにくくなった！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_COMMON const u8 gText_BoxFull[] = _("ボックスが　いっぱい　です！{PAUSE_UNTIL_PRESS}");
+
+STRINGS_COMMON const u8 gText_PowderQty[] = _("こなの　りょう　{STR_VAR_1}{PAUSE_UNTIL_PRESS}");
 
 STRINGS_MAIN_MENU const u8 gText_MainMenuNewGame[] = _("さいしょから　はじめる");
 STRINGS_MAIN_MENU const u8 gText_MainMenuContinue[] = _("つづきから　はじめる");

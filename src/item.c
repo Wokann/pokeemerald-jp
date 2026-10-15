@@ -2,6 +2,7 @@
 #include "item.h"
 #include "berry.h"
 #include "string_util.h"
+#include "strings.h"
 #include "event_data.h"
 #include "malloc.h"
 #include "secret_base.h"
@@ -17,8 +18,6 @@ extern struct BagPocket gUnknown_2039A78[];
 extern struct PyramidBagMenuState gUnknown_203CBFC;
 #define gBagPockets gUnknown_2039A78
 #define gPyramidBagMenuState gUnknown_203CBFC
-// JP Berry suffix ("のみ"); its text owner is still region_texts66.h.
-extern const u8 gUnknown_85C9440[];
 
 u16 GetBagItemQuantity(u16 *quantity);
 void SetBagItemQuantity(u16 *quantity, u16 newValue);
@@ -91,7 +90,7 @@ void CopyItemName(u16 itemId, u8 *dst)
     if (itemId == ITEM_ENIGMA_BERRY)
     {
         StringCopy(dst, GetBerryInfo(ITEM_TO_BERRY(itemId))->name);
-        StringAppend(dst, gUnknown_85C9440);
+        StringAppend(dst, gText_Berry2);
     }
     else
     {

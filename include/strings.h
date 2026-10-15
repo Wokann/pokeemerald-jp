@@ -422,6 +422,7 @@ extern const u8 gText_CloseBag[];
 extern const u8 gText_NumberItem_HM[];
 extern const u8 gText_NumberItem_TMBerry[];
 extern const u8 gText_xVar1[];
+extern const u8 gText_Berry2[];
 extern const u8 gText_ReturnToVar1[];
 extern const u8 gText_TheField[];
 extern const u8 gText_TheBattle[];

@@ -3225,7 +3225,7 @@ __attribute__((naked)) void BuyMenuPrintItemQuantityAndPrice(void)
         "_080E06A4: .4byte gUnknown_2039C10\n\t"
         "_080E06A8: .4byte gStringVar1\n\t"
         "_080E06AC: .4byte gStringVar4\n\t"
-        "_080E06B0: .4byte gUnknown_85C942E + 0xE\n\t"
+        "_080E06B0: .4byte gText_xVar1\n\t"
         ".syntax divided\n\t"
     );
 }
