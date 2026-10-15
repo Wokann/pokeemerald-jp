@@ -728,357 +728,7 @@ static void ConditionGraph_CalcLine(struct ConditionGraph *graph, u16 *scanline,
     ptr[dir] = dir + x2;
 }
 
-// JP 0x081D1AEC: kept as asm (compiler register allocation differs from US).
-#ifndef NONMATCHING
-// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
-__attribute__((naked)) static void ConditionGraph_CalcRightHalf(struct ConditionGraph *graph)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "sub sp, #8\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #0x97\n\t"
-            "lsls r0, r0, #1\n\t"
-            "adds r2, r4, r0\n\t"
-            "movs r3, #0x99\n\t"
-            "lsls r3, r3, #1\n\t"
-            "adds r1, r4, r3\n\t"
-            "ldrh r0, [r2]\n\t"
-            "ldrh r3, [r1]\n\t"
-            "cmp r0, r3\n\t"
-            "bhs _081D1B28\n\t"
-            "adds r7, r0, #0\n\t"
-            "movs r0, #0xa0\n\t"
-            "lsls r0, r0, #1\n\t"
-            "adds r1, r4, r0\n\t"
-            "movs r3, #0x96\n\t"
-            "lsls r3, r3, #1\n\t"
-            "adds r2, r4, r3\n\t"
-            "subs r0, #0x10\n\t"
-            "adds r3, r4, r0\n\t"
-            "movs r0, #1\n\t"
-            "str r0, [sp]\n\t"
-            "movs r0, #0\n\t"
-            "str r0, [sp, #4]\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl ConditionGraph_CalcLine\n\t"
-            "b _081D1B48\n\t"
-            "_081D1B28:\n\t"
-            "ldrh r7, [r1]\n\t"
-            "movs r2, #0xa0\n\t"
-            "lsls r2, r2, #1\n\t"
-            "adds r1, r4, r2\n\t"
-            "movs r3, #0x98\n\t"
-            "lsls r3, r3, #1\n\t"
-            "adds r2, r4, r3\n\t"
-            "movs r0, #0x96\n\t"
-            "lsls r0, r0, #1\n\t"
-            "adds r3, r4, r0\n\t"
-            "movs r0, #0\n\t"
-            "str r0, [sp]\n\t"
-            "str r0, [sp, #4]\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl ConditionGraph_CalcLine\n\t"
-            "_081D1B48:\n\t"
-            "movs r1, #0xa0\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r5, r4, r1\n\t"
-            "movs r3, #0x98\n\t"
-            "lsls r3, r3, #1\n\t"
-            "adds r2, r4, r3\n\t"
-            "movs r0, #0x9a\n\t"
-            "lsls r0, r0, #1\n\t"
-            "adds r6, r4, r0\n\t"
-            "movs r0, #1\n\t"
-            "str r0, [sp]\n\t"
-            "movs r0, #0\n\t"
-            "str r0, [sp, #4]\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r3, r6, #0\n\t"
-            "bl ConditionGraph_CalcLine\n\t"
-            "movs r2, #0\n\t"
-            "movs r1, #0x9b\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r0, r4, r1\n\t"
-            "movs r3, #0x9d\n\t"
-            "lsls r3, r3, #1\n\t"
-            "adds r1, r4, r3\n\t"
-            "ldrh r0, [r0]\n\t"
-            "ldrh r1, [r1]\n\t"
-            "cmp r0, r1\n\t"
-            "bhi _081D1B84\n\t"
-            "movs r2, #1\n\t"
-            "_081D1B84:\n\t"
-            "movs r0, #0x9c\n\t"
-            "lsls r0, r0, #1\n\t"
-            "adds r3, r4, r0\n\t"
-            "str r2, [sp]\n\t"
-            "movs r1, #0x92\n\t"
-            "lsls r1, r1, #2\n\t"
-            "adds r0, r4, r1\n\t"
-            "str r0, [sp, #4]\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r2, r6, #0\n\t"
-            "bl ConditionGraph_CalcLine\n\t"
-            "movs r2, #0x38\n\t"
-            "cmp r2, r7\n\t"
-            "bhs _081D1BC6\n\t"
-            "adds r6, r5, #0\n\t"
-            "movs r3, #0\n\t"
-            "movs r0, #0xa1\n\t"
-            "lsls r0, r0, #1\n\t"
-            "adds r5, r4, r0\n\t"
-            "_081D1BAE:\n\t"
-            "adds r0, r2, #0\n\t"
-            "subs r0, #0x38\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r1, r6, r0\n\t"
-            "strh r3, [r1]\n\t"
-            "adds r0, r5, r0\n\t"
-            "strh r3, [r0]\n\t"
-            "adds r0, r2, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "cmp r2, r7\n\t"
-            "blo _081D1BAE\n\t"
-            "_081D1BC6:\n\t"
-            "movs r1, #0x97\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r0, r4, r1\n\t"
-            "ldrh r2, [r0]\n\t"
-            "movs r3, #0xd4\n\t"
-            "lsls r3, r3, #2\n\t"
-            "adds r0, r4, r3\n\t"
-            "ldrh r1, [r0]\n\t"
-            "cmp r2, r1\n\t"
-            "bhi _081D1BFA\n\t"
-            "movs r1, #0xa0\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r3, r4, r1\n\t"
-            "movs r5, #0x9b\n\t"
-            "adds r1, r0, #0\n\t"
-            "_081D1BE4:\n\t"
-            "adds r0, r2, #0\n\t"
-            "subs r0, #0x38\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r0, r3, r0\n\t"
-            "strh r5, [r0]\n\t"
-            "adds r0, r2, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "ldrh r0, [r1]\n\t"
-            "cmp r2, r0\n\t"
-            "bls _081D1BE4\n\t"
-            "_081D1BFA:\n\t"
-            "movs r2, #0x9b\n\t"
-            "lsls r2, r2, #1\n\t"
-            "adds r1, r4, r2\n\t"
-            "movs r3, #0xd4\n\t"
-            "lsls r3, r3, #2\n\t"
-            "adds r0, r4, r3\n\t"
-            "ldrh r0, [r0]\n\t"
-            "ldrh r1, [r1]\n\t"
-            "cmp r0, r1\n\t"
-            "bhs _081D1C10\n\t"
-            "adds r0, r1, #0\n\t"
-            "_081D1C10:\n\t"
-            "adds r0, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "cmp r2, #0x79\n\t"
-            "bhi _081D1C40\n\t"
-            "movs r0, #0xa0\n\t"
-            "lsls r0, r0, #1\n\t"
-            "adds r5, r4, r0\n\t"
-            "movs r3, #0\n\t"
-            "movs r1, #0xa1\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r4, r4, r1\n\t"
-            "_081D1C28:\n\t"
-            "adds r0, r2, #0\n\t"
-            "subs r0, #0x38\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r1, r5, r0\n\t"
-            "strh r3, [r1]\n\t"
-            "adds r0, r4, r0\n\t"
-            "strh r3, [r0]\n\t"
-            "adds r0, r2, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "cmp r2, #0x79\n\t"
-            "bls _081D1C28\n\t"
-            "_081D1C40:\n\t"
-            "add sp, #8\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".syntax divided\n");
-}
-
-// JP 0x081D1C48: kept as asm (compiler register allocation differs from US).
-__attribute__((naked)) static void ConditionGraph_CalcLeftHalf(struct ConditionGraph *graph)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "sub sp, #8\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #0x97\n\t"
-            "lsls r0, r0, #1\n\t"
-            "adds r2, r4, r0\n\t"
-            "movs r3, #0x9f\n\t"
-            "lsls r3, r3, #1\n\t"
-            "adds r1, r4, r3\n\t"
-            "ldrh r0, [r2]\n\t"
-            "ldrh r3, [r1]\n\t"
-            "cmp r0, r3\n\t"
-            "bhs _081D1C84\n\t"
-            "adds r7, r0, #0\n\t"
-            "movs r0, #0x92\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r1, r4, r0\n\t"
-            "movs r3, #0x96\n\t"
-            "lsls r3, r3, #1\n\t"
-            "adds r2, r4, r3\n\t"
-            "movs r0, #0x9e\n\t"
-            "lsls r0, r0, #1\n\t"
-            "adds r3, r4, r0\n\t"
-            "movs r0, #0\n\t"
-            "str r0, [sp]\n\t"
-            "str r0, [sp, #4]\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl ConditionGraph_CalcLine\n\t"
-            "b _081D1CA6\n\t"
-            "_081D1C84:\n\t"
-            "ldrh r7, [r1]\n\t"
-            "movs r2, #0x92\n\t"
-            "lsls r2, r2, #2\n\t"
-            "adds r1, r4, r2\n\t"
-            "movs r3, #0x9e\n\t"
-            "lsls r3, r3, #1\n\t"
-            "adds r2, r4, r3\n\t"
-            "movs r0, #0x96\n\t"
-            "lsls r0, r0, #1\n\t"
-            "adds r3, r4, r0\n\t"
-            "movs r0, #1\n\t"
-            "str r0, [sp]\n\t"
-            "movs r0, #0\n\t"
-            "str r0, [sp, #4]\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl ConditionGraph_CalcLine\n\t"
-            "_081D1CA6:\n\t"
-            "movs r1, #0x92\n\t"
-            "lsls r1, r1, #2\n\t"
-            "adds r5, r4, r1\n\t"
-            "movs r3, #0x9e\n\t"
-            "lsls r3, r3, #1\n\t"
-            "adds r2, r4, r3\n\t"
-            "movs r0, #0x9c\n\t"
-            "lsls r0, r0, #1\n\t"
-            "adds r3, r4, r0\n\t"
-            "movs r0, #0\n\t"
-            "str r0, [sp]\n\t"
-            "str r0, [sp, #4]\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r5, #0\n\t"
-            "bl ConditionGraph_CalcLine\n\t"
-            "movs r2, #0x38\n\t"
-            "cmp r2, r7\n\t"
-            "bhs _081D1CEC\n\t"
-            "adds r6, r5, #0\n\t"
-            "movs r3, #0\n\t"
-            "ldr r1, _081D1D6C\n\t"
-            "adds r5, r4, r1\n\t"
-            "_081D1CD4:\n\t"
-            "adds r0, r2, #0\n\t"
-            "subs r0, #0x38\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r1, r6, r0\n\t"
-            "strh r3, [r1]\n\t"
-            "adds r0, r5, r0\n\t"
-            "strh r3, [r0]\n\t"
-            "adds r0, r2, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "cmp r2, r7\n\t"
-            "blo _081D1CD4\n\t"
-            "_081D1CEC:\n\t"
-            "movs r2, #0x97\n\t"
-            "lsls r2, r2, #1\n\t"
-            "adds r0, r4, r2\n\t"
-            "ldrh r2, [r0]\n\t"
-            "movs r3, #0xd4\n\t"
-            "lsls r3, r3, #2\n\t"
-            "adds r0, r4, r3\n\t"
-            "ldrh r1, [r0]\n\t"
-            "cmp r2, r1\n\t"
-            "bhi _081D1D1E\n\t"
-            "ldr r1, _081D1D6C\n\t"
-            "adds r3, r4, r1\n\t"
-            "movs r5, #0x9b\n\t"
-            "adds r1, r0, #0\n\t"
-            "_081D1D08:\n\t"
-            "adds r0, r2, #0\n\t"
-            "subs r0, #0x38\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r0, r3, r0\n\t"
-            "strh r5, [r0]\n\t"
-            "adds r0, r2, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "ldrh r0, [r1]\n\t"
-            "cmp r2, r0\n\t"
-            "bls _081D1D08\n\t"
-            "_081D1D1E:\n\t"
-            "movs r1, #0x9d\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r0, r4, r1\n\t"
-            "ldrh r0, [r0]\n\t"
-            "adds r1, r0, #1\n\t"
-            "movs r2, #0xd4\n\t"
-            "lsls r2, r2, #2\n\t"
-            "adds r0, r4, r2\n\t"
-            "ldrh r0, [r0]\n\t"
-            "cmp r0, r1\n\t"
-            "bge _081D1D36\n\t"
-            "adds r0, r1, #0\n\t"
-            "_081D1D36:\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "cmp r2, #0x79\n\t"
-            "bhi _081D1D62\n\t"
-            "movs r3, #0x92\n\t"
-            "lsls r3, r3, #2\n\t"
-            "adds r5, r4, r3\n\t"
-            "movs r3, #0\n\t"
-            "ldr r0, _081D1D6C\n\t"
-            "adds r4, r4, r0\n\t"
-            "_081D1D4A:\n\t"
-            "adds r0, r2, #0\n\t"
-            "subs r0, #0x38\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r1, r5, r0\n\t"
-            "strh r3, [r1]\n\t"
-            "adds r0, r4, r0\n\t"
-            "strh r3, [r0]\n\t"
-            "adds r0, r2, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "cmp r2, #0x79\n\t"
-            "bls _081D1D4A\n\t"
-            "_081D1D62:\n\t"
-            "add sp, #8\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D1D6C: .4byte 0x0000024A\n\t"
-            ".syntax divided\n");
-}
-#else
+// JP omits US's final scanline fixups and keeps both halves' indices 16-bit.
 static void ConditionGraph_CalcRightHalf(struct ConditionGraph *graph)
 {
     u16 i, y, bottom;
@@ -1121,16 +771,11 @@ static void ConditionGraph_CalcRightHalf(struct ConditionGraph *graph)
         graph->scanlineRight[i - CONDITION_GRAPH_TOP_Y][1] = 0;
     }
 
-    for (i = CONDITION_GRAPH_TOP_Y; i <= CONDITION_GRAPH_BOTTOM_Y; i++)
-    {
-        if (graph->scanlineRight[i - CONDITION_GRAPH_TOP_Y][0] == 0
-         && graph->scanlineRight[i - CONDITION_GRAPH_TOP_Y][1] != 0)
-            graph->scanlineRight[i - CONDITION_GRAPH_TOP_Y][0] = CONDITION_GRAPH_CENTER_X;
-    }
 }
+
 static void ConditionGraph_CalcLeftHalf(struct ConditionGraph *graph)
 {
-    s32 i, y, bottom;
+    u16 i, y, bottom;
 
     // Calculate Cool -> Tough line
     if (graph->curPositions[GRAPH_COOL].y < graph->curPositions[GRAPH_TOUGH].y)
@@ -1166,16 +811,7 @@ static void ConditionGraph_CalcLeftHalf(struct ConditionGraph *graph)
         graph->scanlineLeft[i - CONDITION_GRAPH_TOP_Y][1] = 0;
     }
 
-    for (i = 0; i < CONDITION_GRAPH_HEIGHT; i++)
-    {
-        if (graph->scanlineLeft[i][0] >= graph->scanlineLeft[i][1])
-        {
-            graph->scanlineLeft[i][1] = 0;
-            graph->scanlineLeft[i][0] = 0;
-        }
-    }
 }
-#endif
 
 
 void ConditionGraph_CalcPositions(u8 *conditions, struct UCoords16 *positions)
@@ -1384,239 +1020,90 @@ s32 GetBoxOrPartyMonData(u16 boxId, u16 monId, s32 request, u8 *dst)
 }
 
 // Gets the name/gender/level string for the condition menu
-// JP 0x081D22E4: kept as asm (compiler register allocation differs from US).
-__attribute__((naked)) static u8 *GetConditionMenuMonString(u8 *dst, u16 boxId, u16 monId)
+// JP uses a five-character padded name and a separate 12-byte Egg field.
+static u8 *GetConditionMenuMonString(u8 *dst, u16 boxId, u16 monId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, r8\n\t"
-            "push {r7}\n\t"
-            "adds r5, r0, #0\n\t"
-            "lsls r1, r1, #0x10\n\t"
-            "lsrs r4, r1, #0x10\n\t"
-            "lsls r2, r2, #0x10\n\t"
-            "lsrs r6, r2, #0x10\n\t"
-            "movs r0, #0xfc\n\t"
-            "strb r0, [r5]\n\t"
-            "adds r5, #1\n\t"
-            "movs r0, #4\n\t"
-            "strb r0, [r5]\n\t"
-            "adds r5, #1\n\t"
-            "movs r0, #8\n\t"
-            "strb r0, [r5]\n\t"
-            "adds r5, #1\n\t"
-            "movs r0, #0\n\t"
-            "strb r0, [r5]\n\t"
-            "adds r5, #1\n\t"
-            "movs r0, #9\n\t"
-            "strb r0, [r5]\n\t"
-            "adds r5, #1\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r6, #0\n\t"
-            "movs r2, #0x2d\n\t"
-            "movs r3, #0\n\t"
-            "bl GetBoxOrPartyMonData\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081D2334\n\t"
-            "ldr r1, _081D2330\n\t"
-            "adds r0, r5, #0\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #0xc\n\t"
-            "bl StringCopyPadded\n\t"
-            "b _081D24A2\n\t"
-            ".align 2, 0\n\t"
-            "_081D2330: .4byte gText_EggNickname\n\t"
-            "_081D2334:\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r6, #0\n\t"
-            "movs r2, #2\n\t"
-            "adds r3, r5, #0\n\t"
-            "bl GetBoxOrPartyMonData\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl StringGet_Nickname\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r6, #0\n\t"
-            "movs r2, #0xb\n\t"
-            "movs r3, #0\n\t"
-            "bl GetBoxOrPartyMonData\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r7, r0, #0x10\n\t"
-            "cmp r4, #0xe\n\t"
-            "bne _081D2384\n\t"
-            "movs r0, #0x64\n\t"
-            "adds r4, r6, #0\n\t"
-            "muls r4, r0, r4\n\t"
-            "ldr r0, _081D2380\n\t"
-            "adds r4, r4, r0\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r1, #0x38\n\t"
-            "bl GetMonData3\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r0, r0, #0x10\n\t"
-            "mov r8, r0\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl GetMonGender\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r6, r0, #0x18\n\t"
-            "b _081D23A6\n\t"
-            ".align 2, 0\n\t"
-            "_081D2380: .4byte gPlayerParty\n\t"
-            "_081D2384:\n\t"
-            "lsls r0, r4, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "lsls r1, r6, #0x18\n\t"
-            "lsrs r1, r1, #0x18\n\t"
-            "bl GetBoxedMonPtr\n\t"
-            "adds r4, r0, #0\n\t"
-            "bl GetBoxMonGender\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r6, r0, #0x18\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl GetLevelFromBoxMonExp\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "mov r8, r0\n\t"
-            "_081D23A6:\n\t"
-            "cmp r7, #0x1d\n\t"
-            "beq _081D23AE\n\t"
-            "cmp r7, #0x20\n\t"
-            "bne _081D23C4\n\t"
-            "_081D23AE:\n\t"
-            "lsls r1, r7, #1\n\t"
-            "adds r1, r1, r7\n\t"
-            "lsls r1, r1, #1\n\t"
-            "ldr r0, _081D23CC\n\t"
-            "adds r1, r1, r0\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl StringCompare\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081D23C4\n\t"
-            "movs r6, #0xff\n\t"
-            "_081D23C4:\n\t"
-            "adds r3, r5, #0\n\t"
-            "movs r2, #0\n\t"
-            "b _081D23D8\n\t"
-            ".align 2, 0\n\t"
-            "_081D23CC: .4byte gSpeciesNames\n\t"
-            "_081D23D0:\n\t"
-            "adds r3, #1\n\t"
-            "adds r0, r2, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "_081D23D8:\n\t"
-            "ldrb r0, [r3]\n\t"
-            "cmp r0, #0xff\n\t"
-            "bne _081D23D0\n\t"
-            "adds r1, r2, #0\n\t"
-            "adds r0, r1, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "cmp r1, #4\n\t"
-            "bhi _081D23FC\n\t"
-            "movs r4, #0\n\t"
-            "_081D23EC:\n\t"
-            "strb r4, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "adds r1, r2, #0\n\t"
-            "adds r0, r1, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "cmp r1, #4\n\t"
-            "bls _081D23EC\n\t"
-            "_081D23FC:\n\t"
-            "movs r0, #0\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "cmp r6, #0\n\t"
-            "beq _081D240C\n\t"
-            "cmp r6, #0xfe\n\t"
-            "beq _081D2432\n\t"
-            "b _081D2456\n\t"
-            "_081D240C:\n\t"
-            "movs r1, #0xfc\n\t"
-            "strb r1, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #1\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #4\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "strb r1, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #3\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #5\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #0xb5\n\t"
-            "b _081D2456\n\t"
-            "_081D2432:\n\t"
-            "movs r1, #0xfc\n\t"
-            "strb r1, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #1\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #6\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "strb r1, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #3\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #7\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #0xb6\n\t"
-            "_081D2456:\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #0xfc\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #4\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #8\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r4, #0\n\t"
-            "strb r4, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #9\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #0xba\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #0xf9\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #5\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "adds r0, r3, #0\n\t"
-            "mov r1, r8\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #3\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "adds r3, r0, #0\n\t"
-            "strb r4, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "movs r0, #0xff\n\t"
-            "strb r0, [r3]\n\t"
-            "adds r0, r3, #0\n\t"
-            "_081D24A2:\n\t"
-            "pop {r3}\n\t"
-            "mov r8, r3\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".syntax divided\n");
+    u16 box, mon, species, level, gender, i;
+    struct BoxPokemon *boxMon;
+    u8 *str;
+
+    box = boxId;
+    mon = monId;
+    *(dst++) = EXT_CTRL_CODE_BEGIN;
+    *(dst++) = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+    *(dst++) = TEXT_COLOR_BLUE;
+    *(dst++) = TEXT_COLOR_TRANSPARENT;
+    *(dst++) = TEXT_COLOR_LIGHT_BLUE;
+    if (GetBoxOrPartyMonData(box, mon, MON_DATA_IS_EGG, NULL))
+        return StringCopyPadded(dst, gText_EggNickname, CHAR_SPACE, POKEMON_NAME_STORAGE_LENGTH + 2);
+    GetBoxOrPartyMonData(box, mon, MON_DATA_NICKNAME, dst);
+    StringGet_Nickname(dst);
+    species = GetBoxOrPartyMonData(box, mon, MON_DATA_SPECIES, NULL);
+    if (box == TOTAL_BOXES_COUNT) // Party mon.
+    {
+        level = GetMonData3(&gPlayerParty[mon], MON_DATA_LEVEL);
+        gender = GetMonGender(&gPlayerParty[mon]);
+    }
+    else
+    {
+        boxMon = GetBoxedMonPtr(box, mon);
+        gender = GetBoxMonGender(boxMon);
+        level = GetLevelFromBoxMonExp(boxMon);
+    }
+
+    if ((species == SPECIES_NIDORAN_F || species == SPECIES_NIDORAN_M) && !StringCompare(dst, gSpeciesNames[species]))
+        gender = MON_GENDERLESS;
+
+    str = dst;
+    i = 0;
+    while (*str != EOS)
+    {
+        str++;
+        i++;
+    }
+    while (i++ < POKEMON_NAME_LENGTH)
+        *(str++) = CHAR_SPACE;
+
+    *(str++) = CHAR_SPACE;
+
+    switch (gender)
+    {
+    default:
+        *(str++) = CHAR_SPACE;
+        break;
+    case MON_MALE:
+        *(str++) = EXT_CTRL_CODE_BEGIN;
+        *(str++) = EXT_CTRL_CODE_COLOR;
+        *(str++) = TEXT_COLOR_RED;
+        *(str++) = EXT_CTRL_CODE_BEGIN;
+        *(str++) = EXT_CTRL_CODE_SHADOW;
+        *(str++) = TEXT_COLOR_LIGHT_RED;
+        *(str++) = CHAR_MALE;
+        break;
+    case MON_FEMALE:
+        *(str++) = EXT_CTRL_CODE_BEGIN;
+        *(str++) = EXT_CTRL_CODE_COLOR;
+        *(str++) = TEXT_COLOR_GREEN;
+        *(str++) = EXT_CTRL_CODE_BEGIN;
+        *(str++) = EXT_CTRL_CODE_SHADOW;
+        *(str++) = TEXT_COLOR_LIGHT_GREEN;
+        *(str++) = CHAR_FEMALE;
+        break;
+    }
+
+    *(str++) = EXT_CTRL_CODE_BEGIN;
+    *(str++) = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+    *(str++) = TEXT_COLOR_BLUE;
+    *(str++) = TEXT_COLOR_TRANSPARENT;
+    *(str++) = TEXT_COLOR_LIGHT_BLUE;
+    *(str++) = CHAR_SLASH;
+    *(str++) = CHAR_EXTRA_SYMBOL;
+    *(str++) = CHAR_LV_2;
+    str = ConvertIntToDecimalStringN(str, level, STR_CONV_MODE_LEFT_ALIGN, 3);
+    *(str++) = CHAR_SPACE;
+    *str = EOS;
+
+    return str;
 }
 
 // Buffers the string in src to dest up to n chars. If src is less than n chars, fill with spaces
@@ -1751,7 +1238,7 @@ bool8 ConditionMenu_UpdateMonExit(struct ConditionGraph *graph, s16 *x)
 }
 
 // Just loads the generic data, up to the caller to load the actual sheet/pal for the specific mon
-// JP 0x081D2800: kept as asm (JP data layout differs from US).
+// Keep the JP descriptor layout.
 void LoadConditionMonPicTemplate(struct SpriteSheet *sheet, struct SpriteTemplate *template, struct SpritePalette *pal)
 {
     struct SpriteSheet dataSheet = sConditionMonPicSheetDescriptor;
@@ -1763,7 +1250,7 @@ void LoadConditionMonPicTemplate(struct SpriteSheet *sheet, struct SpriteTemplat
     *pal = dataPal;
 }
 
-// JP 0x081D284C: kept as asm (JP data layout differs from US).
+// Keep the JP descriptor layout.
 void LoadConditionSelectionIcons(struct SpriteSheet *sheets, struct SpriteTemplate *template, struct SpritePalette *pals)
 {
     u8 i;
@@ -1789,7 +1276,7 @@ void LoadConditionSelectionIcons(struct SpriteSheet *sheets, struct SpriteTempla
 #define sMonSpriteId         data[4]
 #define sNextSparkleSpriteId data[5]
 
-// JP 0x081D28E0: kept as asm (JP data layout differs from US).
+// Keep the JP descriptor layout.
 void LoadConditionSparkle(struct SpriteSheet *sheet, struct SpritePalette *pal)
 {
     struct SpriteSheet dataSheet = sConditionSparkleSheetDescriptor;
@@ -1989,8 +1476,6 @@ static void ShowAllConditionSparkles(struct Sprite *sprite)
 #undef sMonSpriteId
 #undef sNextSparkleSpriteId
 
-// JP 0x081D2C70: the JP build allocates registers differently from the
-// US C port, so this is kept as asm.
 void DrawLevelUpWindowPg1(u16 windowId, u16 *statsBefore, u16 *statsAfter, u8 bgClr, u8 fgClr, u8 shadowClr)
 {
     u16 i, x;
@@ -2045,7 +1530,6 @@ void DrawLevelUpWindowPg1(u16 windowId, u16 *statsBefore, u16 *statsAfter, u8 bg
     }
 }
 
-// JP 0x081D2DB4: kept as asm (compiler register allocation differs from US).
 void DrawLevelUpWindowPg2(u16 windowId, u16 *currStats, u8 bgClr, u8 fgClr, u8 shadowClr)
 {
     u16 i, numDigits, x;
