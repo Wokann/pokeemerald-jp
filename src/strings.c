@@ -4,6 +4,7 @@
 #include "item_menu.h"
 #include "constants/songs.h"
 
+#define STRINGS_TRAINER_STATUS_TEXT __attribute__((section(".rodata.strings_trainer_status_text"), aligned(1)))
 #define STRINGS_INTERFACE_TEXT __attribute__((section(".rodata.strings_interface_text"), aligned(1)))
 #define STRINGS_COMMON __attribute__((section(".rodata.strings_common")))
 #define STRINGS_BIRCH_MENU __attribute__((section(".rodata.strings_birch_menu"), aligned(1)))
@@ -488,6 +489,67 @@ STRINGS_INTERFACE_TEXT const u8 gText_B2F[] = _("ビ2かい");
 STRINGS_INTERFACE_TEXT const u8 gText_B3F[] = _("ビ3かい");
 STRINGS_INTERFACE_TEXT const u8 gText_B4F[] = _("ビ4かい");
 STRINGS_INTERFACE_TEXT const u8 gText_Rooftop[] = _("おくじょう");
+
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_PkmnFainted_FldPsn[] = _(
+    "{STR_VAR_1}は\n"
+    "ちからつきた\p");
+
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_Marco[] = _("コウジ");
+
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_TrainerCardName[] = _("なまえ");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_TrainerCardIDNo[] = _("IDNo,");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_TrainerCardMoney[] = _("おこづかい");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_PokeDollar[] = _("¥"); // Unused
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_TrainerCardPokedex[] = _("ポケモンずかん");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_EmptyString6[] = _("ひき"); // JP Trainer Card caught-Pokémon suffix.
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_Colon2[] = _(":");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_Points[] = _("てん"); // Unused
+
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_TrainerCardTime[] = _("プレイじかん");
+STRINGS_TRAINER_STATUS_TEXT const u8 gJPText_BattlePoints[] = _("ゲームポイント"); // Unused
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_Var1sTrainerCard[] = _("のトレーナーカード");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_HallOfFameDebut[] = _("はじめてのでんどういり　");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_LinkBattles[] = _("つうしんたいせん");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_LinkCableBattles[] = _("ケーブルたいせん");
+
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_WinsLosses[] = _("かち　　　　　まけ");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_PokemonTrades[] = _("ポケモンつうしんこうかん");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_UnionTradesAndBattles[] = _("ユニオンたいせんとこうかん");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_BerryCrush[] = _("きのみクラッシュ");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_WaitingTrainerFinishReading[] = _(
+    "あいてが　カードを　みおわるのを\n"
+    "まっています");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_PokeblocksWithFriends[] = _("ともだちと　つくった　ポロック");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_NumPokeblocks[] = _("{STR_VAR_1}{COLOR 2}{SHADOW 3}こ");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_WonContestsWFriends[] = _("ともだちとコンテスト　ゆうしょう");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_BattlePtsWon[] = _("かちとった　バトルポイント");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_NumBP[] = _("{STR_VAR_1}{COLOR 2}{SHADOW 3}BP");
+
+// Japanese Trainer Cards combine this header with its two column labels.
+STRINGS_TRAINER_STATUS_TEXT const u8 gJPText_BattleTowerWinsStraightHeader[] = _("バトルタワー　　かち　　　　　　かちぬき");
+
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_WinsStraight[] = _("{STR_VAR_1}　　　　　　{STR_VAR_2}");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_BattleTower[] = _("バトルタワー");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_BattleDome[] = _("バトルドーム");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_BattlePalace[] = _("バトルパレス");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_BattleFactory[] = _("バトルファクトリー");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_BattleArena[] = _("バトルアリーナ");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_BattlePike[] = _("バトルチューブ");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_BattlePyramid[] = _("バトルピラミッド");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_FacilitySingle[] = _("　{STR_VAR_1}　シングル");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_FacilityDouble[] = _("{STR_VAR_1}　ダブル");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_FacilityMulti[] = _("　{STR_VAR_1}　マルチ");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_FacilityLink[] = _("　{STR_VAR_1}　つうしん");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_Facility[] = _("{STR_VAR_1}");
+
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_Give[] = _("もたせるべき");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_NoNeed[] = _("もたせない");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_ColorLightShadowDarkGray[] = _("{COLOR 3}{SHADOW 2}");
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_ColorBlue[] = _("{COLOR 8}");
+
+// The final 0xFF is the COLOR parameter and also the StringCopy terminator.
+// __() is required here so that charmap_jp does not append a second EOS.
+STRINGS_TRAINER_STATUS_TEXT const u8 gText_ColorTransparent[] = __("{HIGHLIGHT 0}{COLOR 255}");
 
 STRINGS_DAYCARE const u8 gDaycareText_GetAlongVeryWell[] = _("2ひきの　なかは\nとっても　よい　ようじゃ");
 STRINGS_DAYCARE const u8 gDaycareText_GetAlong[] = _("2ひきの　なかは\nまずまずの　ようじゃ");
