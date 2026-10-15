@@ -4,6 +4,7 @@
 #include "item_menu.h"
 #include "constants/songs.h"
 
+#define STRINGS_SHARED_MISC_TEXT __attribute__((section(".rodata.strings_shared_misc_text"), aligned(1)))
 #define STRINGS_TRAINER_STATUS_TEXT __attribute__((section(".rodata.strings_trainer_status_text"), aligned(1)))
 #define STRINGS_INTERFACE_TEXT __attribute__((section(".rodata.strings_interface_text"), aligned(1)))
 #define STRINGS_COMMON __attribute__((section(".rodata.strings_common")))
@@ -489,6 +490,172 @@ STRINGS_INTERFACE_TEXT const u8 gText_B2F[] = _("ビ2かい");
 STRINGS_INTERFACE_TEXT const u8 gText_B3F[] = _("ビ3かい");
 STRINGS_INTERFACE_TEXT const u8 gText_B4F[] = _("ビ4かい");
 STRINGS_INTERFACE_TEXT const u8 gText_Rooftop[] = _("おくじょう");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_WasEnhanced[] = _("に　みがきが　かかった！");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_NothingChanged[] = _("なにも　かわらなかった！");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_WontEatAnymore[] = _("もう　これいじょう　たべない　みたい⋯");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_SaveFailedCheckingBackup[] = _(
+    "レポートの　かきこみに　しっぱいしました\n"
+    "バックアップカートリッジの　けんさをします\n"
+    "しばらくおまちください{COLOR 4}“1ふんほど　かかります”");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_BackupMemoryDamaged[] = _(
+    "バックアップきのうの　こしょう　または　じゅみょうが\n"
+    "きました。セーブすることは　できませんが　このまま\n"
+    "ゲームを　あそぶことはできます");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_GamePlayCannotBeContinued[] = _(
+    "{COLOR 4}“このまま　ぼうけんをつづけることは　できません\n"
+    "タイトルに　もどります”");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_CheckCompleted[] = _(
+    "けんさが　しゅうりょうしました！\n"
+    "もういちど　レポートを　かきこみます\n"
+    "しばらくおまちください");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_SaveCompleteGameCannotContinue[] = _(
+    "レポートの　かきこみは　しゅうりょうしました\n"
+    "{COLOR 4}“このまま　ぼうけんをつづけることは　できません\n"
+    "タイトルに　もどります”");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_SaveCompletePressA[] = _(
+    "レポートの　かきこみは　しゅうりょうしました\n"
+    "{COLOR 4}“Aボタンを　おしてください”");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Ferry[] = _("れんらくせん");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_SecretBase[] = _("ひみつきち");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Hideout[] = _("アジト");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_ResetRTCConfirmCancel[] = _(
+    "RTCを　リセットします\n"
+    "Aで　けってい　Bで　キャンセル");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_PresentTime[] = _("げんざいの　ゲームない　じかん");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_PreviousTime[] = _("ぜんかいの　ゲームない　じかん");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_PleaseResetTime[] = _("じかんを　さいせってい　してください");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_ClockHasBeenReset[] = _(
+    "じかんを　さいせってい　しました！\n"
+    "レポートを　かいています　おまちください");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_SaveCompleted[] = _("レポートを　かきこみました！");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_SaveFailed[] = _(
+    "レポートの　かきこみに\n"
+    "しっぱい　しました⋯");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_NoSaveFileCantSetTime[] = _(
+    "レポートが　ないので\n"
+    "じかんの　せっていは　できません！");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_InGameClockUsable[] = _(
+    "ゲームない　じかんの　しゅうせい　システムが\n"
+    "つかえる　ように　なりました！");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Slots[] = _("スロット");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Roulette[] = _("ルーレット");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Good[] = _("いい");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_VeryGood[] = _("おいしい");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Excellent[] = _("さいこう");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_SoSo[] = _("いまいち");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Bad[] = _("まずい");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_TheWorst[] = _("さいあく");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Spicy2[] = _("から");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Dry2[] = _("しぶ");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Sweet2[] = _("あま");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Bitter2[] = _("にが");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Sour2[] = _("すっぱ");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Single[] = _("シングル");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Double[] = _("ダブル");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Jackpot[] = _("とく");
+STRINGS_SHARED_MISC_TEXT const u8 gText_0Pts[] = _("　　0てん");
+STRINGS_SHARED_MISC_TEXT const u8 gText_10Pts[] = _("　10てん");
+STRINGS_SHARED_MISC_TEXT const u8 gText_20Pts[] = _("　20てん");
+STRINGS_SHARED_MISC_TEXT const u8 gText_30Pts[] = _("　30てん");
+STRINGS_SHARED_MISC_TEXT const u8 gText_40Pts[] = _("　40てん");
+STRINGS_SHARED_MISC_TEXT const u8 gText_50Pts[] = _("　50てん");
+STRINGS_SHARED_MISC_TEXT const u8 gText_60Pts[] = _("　60てん");
+STRINGS_SHARED_MISC_TEXT const u8 gText_70Pts[] = _("　70てん");
+STRINGS_SHARED_MISC_TEXT const u8 gText_80Pts[] = _("　80てん");
+STRINGS_SHARED_MISC_TEXT const u8 gText_90Pts[] = _("　90てん");
+STRINGS_SHARED_MISC_TEXT const u8 gText_100Pts[] = _("100てん");
+STRINGS_SHARED_MISC_TEXT const u8 gText_QuestionMark[] = _("　　？");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_KissPoster16BP[] = _("キッスポスター　　　16BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_KissCushion32BP[] = _("キッスクッション　　32BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_SmoochumDoll32BP[] = _("ムチュールドール　　32BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_TogepiDoll48BP[] = _("トゲピードール　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_MeowthDoll48BP[] = _("ニャースドール　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_ClefairyDoll48BP[] = _("ピッピドール　　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_DittoDoll48BP[] = _("メタモンドール　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_CyndaquilDoll80BP[] = _("ヒノアラシドール　　80BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_ChikoritaDoll80BP[] = _("チコリータドール　　80BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_TotodileDoll80BP[] = _("ワニノコドール　　　80BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_LaprasDoll128BP[] = _("ラプラスドール　　128BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_SnorlaxDoll128BP[] = _("カビゴンドール　　128BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_VenusaurDoll256BP[] = _("フシギバナドール　256BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_CharizardDoll256BP[] = _("リザードンドール　256BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_BlastoiseDoll256BP[] = _("カメックスドール　256BP");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Protein1BP[] = _("タウリン　　　　　　　1BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_Calcium1BP[] = _("リゾチウム　　　　　　1BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_Iron1BP[] = _("ブロムヘキシン　　　　1BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_Zinc1BP[] = _("キトサン　　　　　　　1BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_Carbos1BP[] = _("インドメタシン　　　　1BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_HpUp1BP[] = _("マックスアップ　　　　1BP");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Leftovers48BP[] = _("たべのこし　　　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_WhiteHerb48BP[] = _("しろいハーブ　　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_QuickClaw48BP[] = _("せんせいのツメ　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_MentalHerb48BP[] = _("メンタルハーブ　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_BrightPowder64BP[] = _("ひかりのこな　　　　64BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_ChoiceBand64BP[] = _("こだわりハチマキ　　64BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_KingsRock64BP[] = _("おうじゃのしるし　　64BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_FocusBand64BP[] = _("きあいのハチマキ　　64BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_ScopeLens64BP[] = _("ピントレンズ　　　　64BP");
+
+STRINGS_SHARED_MISC_TEXT const u8 gText_Softboiled16BP[] = _("タマゴうみ　　　　16BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_SeismicToss24BP[] = _("ちきゅうなげ　　　24BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_DreamEater24BP[] = _("ゆめくい　　　　　24BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_MegaPunch24BP[] = _("メガトンパンチ　　24BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_MegaKick48BP[] = _("メガトンキック　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_BodySlam48BP[] = _("のしかかり　　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_RockSlide48BP[] = _("いわなだれ　　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_Counter48BP[] = _("カウンター　　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_ThunderWave48BP[] = _("でんじは　　　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_SwordsDance48BP[] = _("つるぎのまい　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_DefenseCurl16BP[] = _("まるくなる　　　　16BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_Snore24BP[] = _("いびき　　　　　　24BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_MudSlap24BP[] = _("どろかけ　　　　　24BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_Swift24BP[] = _("スピードスター　　24BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_IcyWind24BP[] = _("こごえるかぜ　　　24BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_Endure48BP[] = _("こらえる　　　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_PsychUp48BP[] = _("じこあんじ　　　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_IcePunch48BP[] = _("れいとうパンチ　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_ThunderPunch48BP[] = _("かみなりパンチ　　48BP");
+STRINGS_SHARED_MISC_TEXT const u8 gText_FirePunch48BP[] = _("ほのおのパンチ　　48BP");
 
 STRINGS_TRAINER_STATUS_TEXT const u8 gText_PkmnFainted_FldPsn[] = _(
     "{STR_VAR_1}は\n"
@@ -1731,11 +1898,6 @@ STRINGS_EASY_CHAT const u8 gText_Beauty3[] = _("うつくしさ");
 STRINGS_EASY_CHAT const u8 gText_Cuteness[] = _("かわいさ");
 STRINGS_EASY_CHAT const u8 gText_Smartness[] = _("かしこさ");
 STRINGS_EASY_CHAT const u8 gText_Toughness[] = _("たくましさ");
-
-// Existing naked routines address later region_texts100 strings from this base.
-__asm__(".global gUnknown_85CBD12\n"
-        ".set gUnknown_85CBD12, gText_GetsAPokeBlockQuestion");
-
 
 STRINGS_ELEVATOR_TEXT const u8 gText_ElevatorNowOn[] = _("げんざいのフロア");
 STRINGS_MENU_PRICE_TEXT const u8 gText_BP[] = _("BP");
