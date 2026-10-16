@@ -1,5 +1,75 @@
 #include "global.h"
 #include "frontier_pass.h"
+#include "strings.h"
+#include "constants/battle_frontier.h"
+
+enum
+{
+    CURSOR_AREA_NOTHING,
+    CURSOR_AREA_MAP,
+    CURSOR_AREA_CARD,
+    CURSOR_AREA_RECORD,
+    CURSOR_AREA_CANCEL,
+    CURSOR_AREA_POINTS,
+    CURSOR_AREA_EARNED_SYMBOLS, // The window containing the symbols
+    CURSOR_AREA_SYMBOL_TOWER,
+    CURSOR_AREA_SYMBOL_DOME,
+    CURSOR_AREA_SYMBOL_PALACE,
+    CURSOR_AREA_SYMBOL_ARENA,
+    CURSOR_AREA_SYMBOL_FACTORY,
+    CURSOR_AREA_SYMBOL_PIKE,
+    CURSOR_AREA_SYMBOL_PYRAMID,
+    CURSOR_AREA_COUNT
+};
+
+// Start of symbol cursor areas
+#define CURSOR_AREA_SYMBOL CURSOR_AREA_SYMBOL_TOWER
+
+enum {
+    MAP_INDICATOR_RECTANGLE,
+    MAP_INDICATOR_SQUARE,
+};
+
+#define FRONTIER_PASS_TEXT_TABLES __attribute__((section(".rodata.frontier_pass_text_tables"), aligned(4), used))
+
+static const u8 *const sPassAreaDescriptions[CURSOR_AREA_COUNT + 1] FRONTIER_PASS_TEXT_TABLES =
+{
+    [CURSOR_AREA_NOTHING]        = gText_ThereIsNoBattleRecord, // NOTHING is re-used for CURSOR_AREA_RECORD when no Record is present
+    [CURSOR_AREA_MAP]            = gText_CheckFrontierMap,
+    [CURSOR_AREA_CARD]           = gText_CheckTrainerCard,
+    [CURSOR_AREA_RECORD]         = gText_ViewRecordedBattle,
+    [CURSOR_AREA_CANCEL]         = gText_PutAwayFrontierPass,
+    [CURSOR_AREA_POINTS]         = gText_CurrentBattlePoints,
+    [CURSOR_AREA_EARNED_SYMBOLS] = gText_CollectedSymbols,
+    [CURSOR_AREA_SYMBOL_TOWER]   = gText_BattleTowerAbilitySymbol,
+    [CURSOR_AREA_SYMBOL_DOME]    = gText_BattleDomeTacticsSymbol,
+    [CURSOR_AREA_SYMBOL_PALACE]  = gText_BattlePalaceSpiritsSymbol,
+    [CURSOR_AREA_SYMBOL_ARENA]   = gText_BattleArenaGutsSymbol,
+    [CURSOR_AREA_SYMBOL_FACTORY] = gText_BattleFactoryKnowledgeSymbol,
+    [CURSOR_AREA_SYMBOL_PIKE]    = gText_BattlePikeLuckSymbol,
+    [CURSOR_AREA_SYMBOL_PYRAMID] = gText_BattlePyramidBraveSymbol,
+    [CURSOR_AREA_COUNT]          = gText_EmptyString7,
+};
+
+struct
+{
+    const u8 *name;
+    const u8 *description;
+    s16 x;
+    s16 y;
+    u8 animNum;
+} static const sMapLandmarks[NUM_FRONTIER_FACILITIES] FRONTIER_PASS_TEXT_TABLES =
+{
+    [FRONTIER_FACILITY_TOWER]   = {gText_BattleTower3,   gText_BattleTowerDesc,    89,  40, MAP_INDICATOR_SQUARE},
+    [FRONTIER_FACILITY_DOME]    = {gText_BattleDome2,    gText_BattleDomeDesc,     33,  42, MAP_INDICATOR_SQUARE},
+    [FRONTIER_FACILITY_PALACE]  = {gText_BattlePalace2,  gText_BattlePalaceDesc,  120,  86, MAP_INDICATOR_RECTANGLE},
+    [FRONTIER_FACILITY_ARENA]   = {gText_BattleArena2,   gText_BattleArenaDesc,   114,  59, MAP_INDICATOR_RECTANGLE},
+    [FRONTIER_FACILITY_FACTORY] = {gText_BattleFactory2, gText_BattleFactoryDesc,  25,  67, MAP_INDICATOR_RECTANGLE},
+    [FRONTIER_FACILITY_PIKE]    = {gText_BattlePike2,    gText_BattlePikeDesc,     57,  57, MAP_INDICATOR_SQUARE},
+    [FRONTIER_FACILITY_PYRAMID] = {gText_BattlePyramid2, gText_BattlePyramidDesc, 134,  41, MAP_INDICATOR_SQUARE},
+};
+
+#undef FRONTIER_PASS_TEXT_TABLES
 
 __attribute__((naked)) void ResetGpuRegsAndBgs(void)
 {
@@ -1771,9 +1841,9 @@ __attribute__((naked)) void ShowAndPrintWindows(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C57A4: .4byte gUnknown_854AF6C\n\t"
-        "_080C57A8: .4byte gUnknown_85CCA7C + 0x17\n\t"
-        "_080C57AC: .4byte gUnknown_85CCA7C + 0x22\n\t"
-        "_080C57B0: .4byte gUnknown_85CCA7C + 0x2C\n\t"
+        "_080C57A8: .4byte gText_SymbolsEarned\n\t"
+        "_080C57AC: .4byte gText_BattleRecord\n\t"
+        "_080C57B0: .4byte gText_BattlePoints\n\t"
         "_080C57B4: .4byte gStringVar4\n\t"
         "_080C57B8: .4byte gUnknown_203998C\n\t"
         ".syntax divided\n\t"
@@ -1815,7 +1885,7 @@ __attribute__((naked)) void PrintAreaDescription(void)
         "	.align 2, 0\n\t"
         "_080C57F8: .4byte gUnknown_203998C\n\t"
         "_080C57FC: .4byte gUnknown_854AF6F\n\t"
-        "_080C5800: .4byte gUnknown_854B138\n\t"
+        "_080C5800: .4byte sPassAreaDescriptions\n\t"
         "_080C5804:\n\t"
         "	cmp r4, #0\n\t"
         "	beq _080C5826\n\t"
@@ -1845,7 +1915,7 @@ __attribute__((naked)) void PrintAreaDescription(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C583C: .4byte gUnknown_854AF6F\n\t"
-        "_080C5840: .4byte gUnknown_854B138\n\t"
+        "_080C5840: .4byte sPassAreaDescriptions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3273,7 +3343,7 @@ __attribute__((naked)) void InitFrontierMapSprites(void)
         "_080C6370: .4byte gUnknown_854B0D8\n\t"
         "_080C6374: .4byte gUnknown_2039994\n\t"
         "_080C6378: .4byte gSprites\n\t"
-        "_080C637C: .4byte gUnknown_854B174\n\t"
+        "_080C637C: .4byte sMapLandmarks\n\t"
         "_080C6380: .4byte gSaveBlock1Ptr\n\t"
         "_080C6384:\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -3449,7 +3519,7 @@ __attribute__((naked)) void PrintOnFrontierMap(void)
         "	bl AddTextPrinterParameterized3\n\t"
         "	b _080C64FA\n\t"
         "	.align 2, 0\n\t"
-        "_080C64D0: .4byte gUnknown_854B174\n\t"
+        "_080C64D0: .4byte sMapLandmarks\n\t"
         "_080C64D4: .4byte gUnknown_2039994\n\t"
         "_080C64D8: .4byte gUnknown_854AF72\n\t"
         "_080C64DC:\n\t"
@@ -3510,7 +3580,7 @@ __attribute__((naked)) void PrintOnFrontierMap(void)
         "	.align 2, 0\n\t"
         "_080C654C: .4byte gUnknown_854AF6F\n\t"
         "_080C6550: .4byte gUnknown_854AF6C\n\t"
-        "_080C6554: .4byte gUnknown_854B174\n\t"
+        "_080C6554: .4byte sMapLandmarks\n\t"
         "_080C6558: .4byte gUnknown_2039994\n\t"
         ".syntax divided\n\t"
     );
@@ -3647,7 +3717,7 @@ __attribute__((naked)) void HandleFrontierMapCursorMove(void)
         "	.align 2, 0\n\t"
         "_080C6660: .4byte gUnknown_2039994\n\t"
         "_080C6664: .4byte gUnknown_854AF6F\n\t"
-        "_080C6668: .4byte gUnknown_854B174\n\t"
+        "_080C6668: .4byte sMapLandmarks\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -9617,6 +9617,7 @@ SECTIONS {
         src/data/trainer_card.o(.rodata.trainer_card_mid56_link_texts);
         src/data/trainer_card.o(.rodata.trainer_card_mid56_suffix);
         src/data/frontier_pass.o(.rodata.frontier_pass_mid56);
+        src/frontier_pass.o(.rodata.frontier_pass_text_tables);
         src/data/pokemon_storage_system.o(.rodata.pokemon_storage_mid56);
         src/data/text/region_texts57.o(.rodata);
         src/data/pokemon_storage_system.o(.rodata.pokemon_storage_mid57a);
@@ -10266,7 +10267,7 @@ SECTIONS {
         src/data/text/region_texts108.o(.rodata);
         src/strings.o(.rodata.strings_chat_profile_text);
         data/data_b2d.o(.rodata.mid94);
-        src/data/text/region_texts105.o(.rodata);
+        src/strings.o(.rodata.strings_frontier_pass_text);
         src/strings.o(.rodata.strings_minigame_text);
         src/strings.o(.rodata.strings_ereader_text);
         data/data_b2d.o(.rodata.mid97_prefix);

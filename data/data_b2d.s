@@ -173,8 +173,6 @@ gUnknown_85CCA70: @ 0x85CCA70
 gUnknown_85CCA7C: @ 0x85CCA7C
 	.incbin "baserom_jp.gba", 0x5cca7c, 0x10
 
-	.globl gUnknown_85CCA8C
-
 	.section .rodata.mid76_pokeblock_name_text_prefix
 
 	.globl gUnknown_85C97B5

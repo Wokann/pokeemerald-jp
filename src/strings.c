@@ -11,6 +11,7 @@
 #define STRINGS_BATTLE_FACTORY_SWAP_TEXT __attribute__((section(".rodata.strings_battle_factory_swap_text"), aligned(1)))
 #define STRINGS_POKENAV_SHARED_TEXT __attribute__((section(".rodata.strings_pokenav_shared_text"), aligned(1)))
 #define STRINGS_CHAT_PROFILE_TEXT __attribute__((section(".rodata.strings_chat_profile_text"), aligned(1)))
+#define STRINGS_FRONTIER_PASS_TEXT __attribute__((section(".rodata.strings_frontier_pass_text"), aligned(1)))
 #define STRINGS_MYSTERY_EVENT_TEXT __attribute__((section(".rodata.strings_mystery_event_text"), aligned(1)))
 #define STRINGS_TRAINER_STATUS_TEXT __attribute__((section(".rodata.strings_trainer_status_text"), aligned(1)))
 #define STRINGS_INTERFACE_TEXT __attribute__((section(".rodata.strings_interface_text"), aligned(1)))
@@ -774,6 +775,55 @@ STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallMay_Strategy[] = _("しょう�
 STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallMay_Pokemon[] = _("どんな　ポケモンでも　つかうわ");
 STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallMay_Intro1[] = _("ポケモン　つれて　おとうさんの");
 STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallMay_Intro2[] = _("けんきゅうを　おてつだい！");
+
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_Var1Players[] = _("{STR_VAR_1}にんよう");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_SymbolsEarned[] = _("てにいれた　シンボル");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattleRecord[] = _("たいせんの　きろく");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattlePoints[] = _("バトルポイント");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_UnusedCancel[] = _("とじる");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_EmptyString7[] = _("");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_CheckFrontierMap[] = _("バトルフロンティアの　マップを　みます");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_CheckTrainerCard[] = _("トレーナーカードを　みます");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_ViewRecordedBattle[] = _("きろくした　たいせんを　みます");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_PutAwayFrontierPass[] = _("フロンティアパスを　とじます");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_CurrentBattlePoints[] = _("いま　たまっている　バトルポイントです");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_CollectedSymbols[] = _("ここに　シンボルを　あつめます");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattleTowerAbilitySymbol[] = _("バトルタワー　アビリティシンボル");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattleDomeTacticsSymbol[] = _("バトルドーム　タクティクスシンボル");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattlePalaceSpiritsSymbol[] = _("バトルパレス　スピリットシンボル");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattleArenaGutsSymbol[] = _("バトルアリーナ　ガッツシンボル");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattleFactoryKnowledgeSymbol[] = _("バトルファクトリー　ノウレッジシンボル");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattlePikeLuckSymbol[] = _("バトルチューブ　ラックシンボル");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattlePyramidBraveSymbol[] = _("バトルピラミッド　ブレイブシンボル");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_ThereIsNoBattleRecord[] = _("げんざい　たいせんきろくは　ありません");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattleTower3[] = _("バトルタワー");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattleDome2[] = _("バトルドーム");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattlePalace2[] = _("バトルパレス");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattleArena2[] = _("バトルアリーナ");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattleFactory2[] = _("バトルファクトリー");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattlePike2[] = _("バトルチューブ");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattlePyramid2[] = _("バトルピラミッド");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattleTowerDesc[] = _(
+    "かちぬき　ひたすら　うえを　めざす。\n"
+    "さいのうを　ためされる。");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattleDomeDesc[] = _(
+    "トーナメントを　かちぬく。\n"
+    "せんじゅつを　ためされる。");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattlePalaceDesc[] = _(
+    "しょうぶを　みまもる。\n"
+    "ポケモンとの　きずなを　ためされる。");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattleArenaDesc[] = _(
+    "つよい　ポケモンの　チームで　しょうりする。\n"
+    "とうしを　ためされる。");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattleFactoryDesc[] = _(
+    "レンタルポケモンで　しょうりする。\n"
+    "ちしきを　ためされる。");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattlePikeDesc[] = _(
+    "3つの　みちから　1つえらび　かちすすむ。\n"
+    "うんを　ためされる。");
+STRINGS_FRONTIER_PASS_TEXT const u8 gText_BattlePyramidDesc[] = _(
+    "ちょうじょうを　めざし　ぼうけんする。\n"
+    "ゆうきを　ためされる。");
 
 STRINGS_MINIGAME_TEXT const u8 gText_ContinueMenuPlayer[] = _("しゅじんこう　{STR_VAR_1}");
 STRINGS_MINIGAME_TEXT const u8 gText_ContinueMenuTime[] = _("プレイじかん　{STR_VAR_1}:{STR_VAR_2}");

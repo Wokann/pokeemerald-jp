@@ -48,8 +48,8 @@ FRONTIER_PASS_MID56_RESOURCE(gUnknown_8549E20, 0xFFC, "graphics/frontier_pass/ma
 FRONTIER_PASS_MID56_RESOURCE(gUnknown_854AE1C, 0xE6, "graphics/frontier_pass/small_map_and_card_affine.bin.lz");
 FRONTIER_PASS_MID56_PADDING(sFrontierPassMid56AffineTilemapPadding, 0x2);
 
-// JP Frontier Pass layout, sprite and text tables.  These are retained as raw
-// data until the matching Frontier Pass routines are safely converted to C.
+// JP layout and sprite tables remain raw until their routines are converted.
+// Text pointer tables are defined in src/frontier_pass.c.
 FRONTIER_PASS_MID56_RESOURCE(gUnknown_854AF04, 0x8, "data/frontier_pass/jp/bg_affine_coords.bin");
 FRONTIER_PASS_MID56_RESOURCE(gUnknown_854AF0C, 0xC, "data/frontier_pass/jp/pass_bg_templates.bin");
 FRONTIER_PASS_MID56_RESOURCE(gUnknown_854AF18, 0xC, "data/frontier_pass/jp/map_bg_templates.bin");
@@ -66,8 +66,6 @@ FRONTIER_PASS_MID56_RESOURCE(gUnknown_854B008, 0xD0, "data/frontier_pass/jp/spri
 FRONTIER_PASS_MID56_RESOURCE(gUnknown_854B0D8, 0x30, "data/frontier_pass/jp/cursor_sprite_templates.bin");
 FRONTIER_PASS_MID56_RESOURCE(gUnknown_854B108, 0x18, "data/frontier_pass/jp/medal_sprite_template.bin");
 FRONTIER_PASS_MID56_RESOURCE(gUnknown_854B120, 0x18, "data/frontier_pass/jp/player_head_sprite_template.bin");
-FRONTIER_PASS_MID56_RESOURCE(gUnknown_854B138, 0x3C, "data/frontier_pass/jp/pass_area_descriptions.bin");
-FRONTIER_PASS_MID56_RESOURCE(gUnknown_854B174, 0x70, "data/frontier_pass/jp/map_landmarks.bin");
 
 #undef FRONTIER_PASS_MID56_PADDING
 #undef FRONTIER_PASS_MID56_RESOURCE
