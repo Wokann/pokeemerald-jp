@@ -30,10 +30,7 @@ class UsePokeblockAssetTests(unittest.TestCase):
         source = (ROOT / 'data/data_b2d_mid70.s').read_text()
         ranges = [(int(start, 0), int(size, 0)) for start, size in re.findall(
             r'\.incbin\s+"baserom_jp\.gba",\s*(0x[0-9a-f]+),\s*(0x[0-9a-f]+)', source)]
-        self.assertEqual(ranges, [(0x5bbf1a, 2), (0x5be99e, 2),
-                                 (0x5bed54, 0xb2c), (0x5bf8a0, 0x20),
-                                 (0x5bfa6c, 0x40), (0x5c03c0, 0x50),
-                                 (0x5c0468, 0x20), (0x5c052c, 0x468)])
+        self.assertEqual(ranges, [(0x5bfa6c, 0x40), (0x5c03c0, 8), (0x5c08c4, 0xd0)])
         self.assertNotIn('.set ', source)
         caller = (ROOT / 'src/use_pokeblock.c').read_text()
         old_names = ['85BE99E', '85BEBC0', '85BF880', '85BF8C0', '85BF9A0',
@@ -44,20 +41,22 @@ class UsePokeblockAssetTests(unittest.TestCase):
     def test_linked_owners_preserve_physical_order(self):
         linker = (ROOT / 'ld_script_jp.txt').read_text()
         owners = [
-            'data/data_b2d_mid70.o(.rodata.data_b2d_mid70_after_battle_tower_small_data)',
+            'src/battle_tower.o(.rodata.battle_tower_small_data)',
             'src/graphics.o(.rodata.use_pokeblock_updown_graphics)',
             'src/graphics.o(.rodata.use_pokeblock_condition_graphics)',
-            'data/data_b2d_mid70.o(.rodata.data_b2d_mid70_after_use_pokeblock_condition_graphics)',
+            'src/graphics.o(.rodata.unused_pokenav_menu_data)',
             'src/use_pokeblock.o(.rodata.use_pokeblock_mon_frame_pal)',
-            'data/data_b2d_mid70.o(.rodata.data_b2d_mid70_after_use_pokeblock_mon_frame_pal)',
+            'src/graphics.o(.rodata.unused_pokenav_mon_frame_palette)',
             'src/use_pokeblock.o(.rodata.use_pokeblock_mon_frame_gfx)',
             'src/graphics.o(.rodata.use_pokeblock_graph_palette)',
             'data/data_b2d_mid70.o(.rodata.data_b2d_mid70_after_use_pokeblock_graph_palette)',
             'src/graphics.o(.rodata.use_pokeblock_graph_graphics)',
             'data/data_b2d_mid70.o(.rodata.data_b2d_mid70_after_use_pokeblock_graph_graphics)',
+            'src/graphics.o(.rodata.unused_pokenav_condition_frame)',
             'src/graphics.o(.rodata.use_pokeblock_nature_window)',
-            'data/data_b2d_mid70.o(.rodata.data_b2d_mid70_after_use_pokeblock_nature_window)',
+            'src/graphics.o(.rodata.unused_pokenav_graph_palette)',
             'src/use_pokeblock.o(.rodata.use_pokeblock_graph_data_tilemap)',
+            'src/graphics.o(.rodata.unused_pokenav_outline_graphics)',
             'data/data_b2d_mid70.o(.rodata.data_b2d_mid70_after_use_pokeblock_graph_data_tilemap)',
             'src/use_pokeblock.o(.rodata.use_pokeblock_static_data)',
         ]
@@ -80,6 +79,68 @@ class UsePokeblockAssetTests(unittest.TestCase):
         self.assertIn('$(PREPROC) -i $< charmap.txt', recipe.group(1))
         rule = re.search(r'(?m)^graphics/pokeblock/use_screen/graph\.png\.4bpp:.*\n(\t[^\n]*)', make)
         self.assertIn('-num_tiles 125', rule.group(1))
+
+    def test_unused_pokenav_family_has_separate_typed_owners(self):
+        header = (ROOT / 'src/data/graphics/unused_pokenav.h').read_text()
+        self.assertEqual(len(re.findall(r'const u(?:16|32) gUnusedPokenav', header)), 19)
+        self.assertNotIn('.set ', header)
+        self.assertIn('gUnusedPokenavMenuHints_Tilemaps[8][2][12]', header)
+        self.assertIn('gUnusedPokenavConditionFrame_Tilemap[4][9]', header)
+        assets = ROOT / 'graphics/pokenav/unused'
+        for name, dims in [('menu', (64, 128)), ('toolbar', (8, 40)),
+                           ('backdrop', (8, 8)), ('outline', (64, 48))]:
+            self.assertEqual(struct.unpack('>IIBB', (assets / (name + '.png')).read_bytes()[16:26]),
+                             (*dims, 4, 3))
+        for name, size in [('menu', 1536), ('toolbar', 1280), ('backdrop', 1360), ('outline', 2048)]:
+            self.assertEqual((assets / (name + '.bin')).stat().st_size, size)
+        make = (ROOT / 'Makefile').read_text()
+        self.assertIn('$(JP_UNUSED_POKENAV_ASSETS) $(JP_UNUSED_POKENAV_INTERMEDIATES)', make)
+        self.assertIn('$(C_BUILDDIR)/graphics.o: src/data/graphics/unused_pokenav.h', make)
+
+    @unittest.skipUnless((ROOT / 'baserom_jp.gba').is_file(), 'requires the local JP baserom')
+    def test_unused_palettes_preserve_rgb_alpha_and_distinct_copies(self):
+        header = (ROOT / 'src/data/graphics/unused_pokenav.h').read_text()
+        rom = (ROOT / 'baserom_jp.gba').read_bytes()
+        for name, start in [('Menu', 0x5bed54), ('Toolbar', 0x5bf628),
+                            ('Backdrop', 0x5bf798), ('MonFrame', 0x5bf8a0),
+                            ('Graph', 0x5c0468), ('Outline', 0x5c052c)]:
+            body = re.search(r'gUnusedPokenav' + name + r'_Pal\[16\][^=]*=\s*\{([^}]+)\}', header).group(1)
+            entries = re.findall(r'RGB\((\d+), (\d+), (\d+)\)(\s*\| RGB_ALPHA)?', body)
+            self.assertEqual(len(entries), 16)
+            words = [int(r) | (int(g) << 5) | (int(b) << 10) | (0x8000 if alpha else 0)
+                     for r, g, b, alpha in entries]
+            self.assertEqual(struct.pack('<16H', *words), rom[start:start + 32], name)
+
+    @unittest.skipUnless(GFX.is_file() and (ROOT / 'baserom_jp.gba').is_file(),
+                         'requires the local JP baserom and built gbagfx')
+    def test_unused_pokenav_editable_inputs_rebuild_all_eight_resources(self):
+        assets = ROOT / 'graphics/pokenav/unused'
+        rom = (ROOT / 'baserom_jp.gba').read_bytes()
+        temp_root = ROOT / '.tmp/agent-work/tests'
+        temp_root.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix='unused-pokenav-', dir=temp_root) as temp:
+            out = Path(temp)
+            for name, start, size, crop, compressed in [
+                ('menu', 0x5bed74, 1400, 127, True),
+                ('toolbar', 0x5bf648, 160, None, False),
+                ('backdrop', 0x5bf7b8, 32, None, False),
+                ('outline', 0x5c054c, 528, 43, True),
+            ]:
+                target = out / (name + '.4bpp')
+                flags = ['-num_tiles', str(crop)] if crop else []
+                subprocess.run([str(GFX), str(assets / (name + '.png')), str(target), *flags],
+                               check=True, capture_output=True)
+                if compressed:
+                    packed = out / (name + '.4bpp.lz')
+                    subprocess.run([str(GFX), str(target), str(packed)], check=True, capture_output=True)
+                    target = packed
+                self.assertEqual(target.read_bytes(), rom[start:start + size], name)
+            for name, start, size in [('menu', 0x5bf2ec, 336), ('toolbar', 0x5bf6e8, 176),
+                                      ('backdrop', 0x5bf7d8, 168), ('outline', 0x5c075c, 360)]:
+                target = out / (name + '.bin.lz')
+                subprocess.run([str(GFX), str(assets / (name + '.bin')), str(target)],
+                               check=True, capture_output=True)
+                self.assertEqual(target.read_bytes(), rom[start:start + size], name)
 
     @unittest.skipUnless(GFX.is_file() and (ROOT / 'baserom_jp.gba').is_file(),
                          'requires the local JP baserom and built gbagfx')

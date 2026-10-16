@@ -1675,3 +1675,5 @@ const u32 gWallpaperTilemap_Ribbon[] RIBBON_WALLPAPER_DATA = INCBIN_U32("graphic
 #undef CROSS_WALLPAPER_ICON_DATA
 #undef BOLT_WALLPAPER_ICON_DATA
 #undef PLUSLE_WALLPAPER_ICON_DATA
+
+#include "data/graphics/unused_pokenav.h"

@@ -1273,6 +1273,7 @@ clean: clean-tools
 	rm -f $(JP_BATTLE_RECORDS_ASSETS)
 	rm -f $(JP_MON_MARKINGS_ASSETS)
 	rm -f $(JP_USE_POKEBLOCK_ASSETS) $(JP_USE_POKEBLOCK_INTERMEDIATES)
+	rm -f $(JP_UNUSED_POKENAV_ASSETS) $(JP_UNUSED_POKENAV_INTERMEDIATES)
 
 # All build artifacts wait for the host-tool chain, so a fresh checkout can
 # safely use `make -j` without racing the C/asset rules against tool builds.
@@ -3904,3 +3905,29 @@ clean: clean-mon-icon-assets
 .PHONY: clean-mon-icon-assets
 clean-mon-icon-assets:
 	rm -f $(JP_MON_ICON_ASSETS)
+
+JP_UNUSED_POKENAV_ASSETS := graphics/pokenav/unused/menu.png_num_tiles_127.4bpp.lz \
+	graphics/pokenav/unused/menu.bin.lz \
+	graphics/pokenav/unused/toolbar.png.4bpp \
+	graphics/pokenav/unused/toolbar.bin.lz \
+	graphics/pokenav/unused/backdrop.png.4bpp \
+	graphics/pokenav/unused/backdrop.bin.lz \
+	graphics/pokenav/unused/outline.png_num_tiles_43.4bpp.lz \
+	graphics/pokenav/unused/outline.bin.lz
+JP_UNUSED_POKENAV_INTERMEDIATES := graphics/pokenav/unused/menu.png_num_tiles_127.4bpp \
+	graphics/pokenav/unused/outline.png_num_tiles_43.4bpp
+
+# The rectangular PNGs retain zero tiles beyond the native JP streams.
+graphics/pokenav/unused/menu.png_num_tiles_127.4bpp: graphics/pokenav/unused/menu.png | tools
+	$(GFX) $< $@ -num_tiles 127
+
+graphics/pokenav/unused/toolbar.png.4bpp: graphics/pokenav/unused/toolbar.png | tools
+	$(GFX) $< $@
+
+graphics/pokenav/unused/backdrop.png.4bpp: graphics/pokenav/unused/backdrop.png | tools
+	$(GFX) $< $@
+
+graphics/pokenav/unused/outline.png_num_tiles_43.4bpp: graphics/pokenav/unused/outline.png | tools
+	$(GFX) $< $@ -num_tiles 43
+
+$(C_BUILDDIR)/graphics.o: src/data/graphics/unused_pokenav.h include/constants/rgb.h $(JP_UNUSED_POKENAV_ASSETS)
