@@ -1,33 +1,13 @@
 #ifndef GUARD_DATA_POKEMON_STORAGE_SYSTEM_H
 #define GUARD_DATA_POKEMON_STORAGE_SYSTEM_H
 
-// This preserves the contiguous JP Pokémon Storage resource stream while
-// moving confirmed graphics into the standard pret hierarchy.  The JP-only
-// layout and pointer tables remain raw until their owning routines are
-// safely converted from naked assembly.
-#define POKEMON_STORAGE_MID56_DATA __attribute__((section(".rodata.pokemon_storage_mid56"), aligned(1)))
+// Remaining JP Storage runtime, wallpaper and sprite resources.
+// The PC main menu and box chooser are defined in pokemon_storage_system.c.
 #define POKEMON_STORAGE_MID57A_DATA __attribute__((section(".rodata.pokemon_storage_mid57a"), aligned(1)))
-#define POKEMON_STORAGE_MID56_RESOURCE(symbol, size, path) \
-    const u8 symbol[size] POKEMON_STORAGE_MID56_DATA = INCBIN_U8(path)
 #define POKEMON_STORAGE_MID57A_RESOURCE(symbol, size, path) \
     const u8 symbol[size] POKEMON_STORAGE_MID57A_DATA = INCBIN_U8(path)
 
-// 0x854B1E4..0x854B258: immediately after Frontier Pass.
-// gUnknown_854B1E4 at 0x0854B1E4.
-POKEMON_STORAGE_MID56_RESOURCE(gUnknown_854B1E4, 0x28, "data/pokemon_storage/jp/0854B1E4.bin");
-// gUnknown_854B20C at 0x0854B20C.
-POKEMON_STORAGE_MID56_RESOURCE(gUnknown_854B20C, 0x28, "data/pokemon_storage/jp/0854B20C.bin");
-// gUnknown_854B234 at 0x0854B234.
-POKEMON_STORAGE_MID56_RESOURCE(gUnknown_854B234, 0x24, "data/pokemon_storage/jp/0854B234.bin");
-
-// region_texts57 remains at 0x854B258..0x854B25C.
-// 0x854B25C..0x85567A4: Pokémon Storage UI, wallpapers and tables.
-// gUnknown_854B25C at 0x0854B25C.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854B25C, 0x20, "graphics/pokemon_storage/box_selection_popup.pal.gbapal");
-// gUnknown_854B27C at 0x0854B27C.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854B27C, 0x800, "graphics/pokemon_storage/box_selection_popup_center.png.4bpp");
-// gUnknown_854BA7C at 0x0854BA7C.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854BA7C, 0x180, "graphics/pokemon_storage/box_selection_popup_sides.png.4bpp");
+// 0x0854BBFC..0x085567A4: Storage runtime, wallpapers and tables.
 // gUnknown_854BBFC at 0x0854BBFC.
 POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854BBFC, 0x98, "graphics/pokemon_storage/scrolling_bg.png.4bpp.lz");
 // gUnknown_854BC94 at 0x0854BC94.
@@ -286,8 +266,6 @@ POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_855676C, 0x18, "data/pokemon_storage/jp
 POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_8556784, 0x20, "data/pokemon_storage/jp/08556784.bin");
 
 #undef POKEMON_STORAGE_MID57A_RESOURCE
-#undef POKEMON_STORAGE_MID56_RESOURCE
 #undef POKEMON_STORAGE_MID57A_DATA
-#undef POKEMON_STORAGE_MID56_DATA
 
 #endif // GUARD_DATA_POKEMON_STORAGE_SYSTEM_H

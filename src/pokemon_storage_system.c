@@ -98,19 +98,19 @@ extern void sub_080D1EE4(u8 id, u8 bg, const void *tilemap, u16 width, u16 heigh
 extern void sub_080D2010(u8 id, u16 x, u16 y);
 extern void sub_080D1E3C(u8 count);
 extern const u8 gUnknown_854BEBC[];
-extern const u8 gUnknown_854B234[];
-extern const u8 gUnknown_854B258[];
-extern const u16 gUnknown_854B25C[];
-extern const u8 gUnknown_854B27C[];
-extern const u8 gUnknown_854BA7C[];
+static const union AnimCmd *const sAnims_ChooseBoxMenu[];
+static const u8 sText_OutOf30[];
+static const u16 sChooseBoxMenu_Pal[];
+static const u8 sChooseBoxMenuCenter_Gfx[];
+static const u8 sChooseBoxMenuSides_Gfx[];
 struct PokemonStorageMenuText
 {
     const u8 *text;
     const u8 *desc;
 };
 
-extern const struct PokemonStorageMenuText gUnknown_854B1E4[];
-extern const struct WindowTemplate gUnknown_854B20C[];
+static const struct PokemonStorageMenuText sMainMenuTexts[];
+static const struct WindowTemplate sWindowTemplate_MainMenu;
 extern void UnkUtil_Init(struct UnkUtil *util, struct UnkUtilData *data, u32 max);
 extern void sub_080D0A34(void);
 extern void Cb_MainPSS(void);
@@ -995,7 +995,7 @@ void Task_PokemonStorageSystemPC(u8 taskId)
         LoadMessageBoxAndBorderGfx();
         DrawDialogueFrame(0, FALSE);
         FillWindowPixelBuffer(0, PIXEL_FILL(1));
-        AddTextPrinterParameterized2(0, 1, gUnknown_854B1E4[task->data[1]].desc, TEXT_SKIP_DRAW, NULL, 2, 1, 3);
+        AddTextPrinterParameterized2(0, 1, sMainMenuTexts[task->data[1]].desc, TEXT_SKIP_DRAW, NULL, 2, 1, 3);
         CopyWindowToVram(0, COPYWIN_FULL);
         CopyWindowToVram(task->data[15], COPYWIN_FULL);
         task->data[0]++;
@@ -1019,7 +1019,7 @@ void Task_PokemonStorageSystemPC(u8 taskId)
             {
                 task->data[1] = task->data[3];
                 FillWindowPixelBuffer(0, PIXEL_FILL(1));
-                AddTextPrinterParameterized2(0, 1, gUnknown_854B1E4[task->data[1]].desc, 0, NULL, 2, 1, 3);
+                AddTextPrinterParameterized2(0, 1, sMainMenuTexts[task->data[1]].desc, 0, NULL, 2, 1, 3);
             }
             break;
         case -1:
@@ -1055,7 +1055,7 @@ void Task_PokemonStorageSystemPC(u8 taskId)
         if (gMain.newKeys & (A_BUTTON | B_BUTTON))
         {
             FillWindowPixelBuffer(0, PIXEL_FILL(1));
-            AddTextPrinterParameterized2(0, 1, gUnknown_854B1E4[task->data[1]].desc, 0, NULL, 2, 1, 3);
+            AddTextPrinterParameterized2(0, 1, sMainMenuTexts[task->data[1]].desc, 0, NULL, 2, 1, 3);
             task->data[0] = 2;
         }
         else if (gMain.newKeys & DPAD_UP)
@@ -1065,7 +1065,7 @@ void Task_PokemonStorageSystemPC(u8 taskId)
             Menu_MoveCursor(-1);
             task->data[1] = Menu_GetCursorPos();
             FillWindowPixelBuffer(0, PIXEL_FILL(1));
-            AddTextPrinterParameterized2(0, 1, gUnknown_854B1E4[task->data[1]].desc, 0, NULL, 2, 1, 3);
+            AddTextPrinterParameterized2(0, 1, sMainMenuTexts[task->data[1]].desc, 0, NULL, 2, 1, 3);
             task->data[0] = 2;
         }
         else if (gMain.newKeys & DPAD_DOWN)
@@ -1075,7 +1075,7 @@ void Task_PokemonStorageSystemPC(u8 taskId)
             Menu_MoveCursor(1);
             task->data[1] = Menu_GetCursorPos();
             FillWindowPixelBuffer(0, PIXEL_FILL(1));
-            AddTextPrinterParameterized2(0, 1, gUnknown_854B1E4[task->data[1]].desc, 0, NULL, 2, 1, 3);
+            AddTextPrinterParameterized2(0, 1, sMainMenuTexts[task->data[1]].desc, 0, NULL, 2, 1, 3);
             task->data[0] = 2;
         }
         break;
@@ -1116,10 +1116,10 @@ void FieldCb_ReturnToPcMenu(void)
 
 void sub_080C6E88(u8 whichMenu, s16 *windowIdPtr)
 {
-    s16 windowId = AddWindow(gUnknown_854B20C);
+    s16 windowId = AddWindow(&sWindowTemplate_MainMenu);
 
     DrawStdWindowFrame(windowId, FALSE);
-    PrintTextArray(windowId, 1, GetFontAttribute(1, 0), 2, 0x10, 5, gUnknown_854B1E4);
+    PrintTextArray(windowId, 1, GetFontAttribute(1, 0), 2, 0x10, 5, sMainMenuTexts);
     sub_081984B0(windowId, 1, 0, 2, 0x10, 5, whichMenu);
     *windowIdPtr = windowId;
 }
@@ -1190,12 +1190,12 @@ void sub_080C7080(struct ChooseBoxMenu *menu, u16 tileTag, u16 paletteTag, u8 su
 {
     struct SpritePalette palette =
     {
-        gUnknown_854B25C, paletteTag
+        sChooseBoxMenu_Pal, paletteTag
     };
     struct SpriteSheet sheets[] =
     {
-        {gUnknown_854B27C, 0x800, tileTag},
-        {gUnknown_854BA7C, 0x180, tileTag + 1},
+        {sChooseBoxMenuCenter_Gfx, 0x800, tileTag},
+        {sChooseBoxMenuSides_Gfx, 0x180, tileTag + 1},
         {}
     };
 
@@ -1268,7 +1268,7 @@ void sub_080C71F0(u8 boxId)
     {
         u8 text[4];
 
-        memcpy(text, gUnknown_854B258, sizeof(text));
+        memcpy(text, sText_OutOf30, sizeof(text));
         gUnknown_20399A4->curBox = boxId;
         template.tileTag = gUnknown_20399A4->tileTag;
         template.paletteTag = gUnknown_20399A4->paletteTag;
@@ -1279,7 +1279,7 @@ void sub_080C71F0(u8 boxId)
         oamData.shape = SPRITE_SHAPE(8x32);
         oamData.size = SPRITE_SIZE(8x32);
         template.tileTag = gUnknown_20399A4->tileTag + 1;
-        template.anims = (const union AnimCmd *const *)gUnknown_854B234;
+        template.anims = (const union AnimCmd *const *)sAnims_ChooseBoxMenu;
         for (i = 0; i < ARRAY_COUNT(gUnknown_20399A4->menuSideSprites); i++)
         {
             u16 anim;
@@ -8975,3 +8975,77 @@ void sub_080D24BC(struct UnkUtilData *data)
         data->dest += 64;
     }
 }
+
+#define STORAGE_MENUS __attribute__((section(".rodata.pokemon_storage_menus"), aligned(4)))
+
+static const struct PokemonStorageMenuText sMainMenuTexts[OPTIONS_COUNT] STORAGE_MENUS =
+{
+    [OPTION_WITHDRAW]   = {gText_WithdrawPokemon, gText_WithdrawMonDescription},
+    [OPTION_DEPOSIT]    = {gText_DepositPokemon,  gText_DepositMonDescription},
+    [OPTION_MOVE_MONS]  = {gText_MovePokemon,     gText_MoveMonDescription},
+    [OPTION_MOVE_ITEMS] = {gText_MoveItems,       gText_MoveItemsDescription},
+    [OPTION_EXIT]       = {gText_SeeYa,           gText_SeeYaDescription}
+};
+
+static const struct WindowTemplate sWindowTemplate_MainMenu STORAGE_MENUS =
+{
+    .bg = 0,
+    .tilemapLeft = 1,
+    .tilemapTop = 1,
+    .width = 17,
+    .height = 10,
+    .paletteNum = 15,
+    .baseBlock = 0x1,
+};
+
+static const union AnimCmd sAnim_ChooseBoxMenu_TopLeft[] STORAGE_MENUS =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_ChooseBoxMenu_BottomLeft[] STORAGE_MENUS =
+{
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_ChooseBoxMenu_TopRight[] STORAGE_MENUS =
+{
+    ANIMCMD_FRAME(6, 5),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_ChooseBoxMenu_BottomRight[] STORAGE_MENUS =
+{
+    ANIMCMD_FRAME(10, 5),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_ChooseBoxMenu[] STORAGE_MENUS =
+{
+    sAnim_ChooseBoxMenu_TopLeft,
+    sAnim_ChooseBoxMenu_BottomLeft,
+    sAnim_ChooseBoxMenu_TopRight,
+    sAnim_ChooseBoxMenu_BottomRight
+};
+
+static const union AffineAnimCmd sAffineAnim_ChooseBoxMenu[] STORAGE_MENUS =
+{
+    AFFINEANIMCMD_FRAME(0xE0, 0xE0, 0, 0),
+    AFFINEANIMCMD_END
+};
+
+// Unused
+static const union AffineAnimCmd *const sAffineAnims_ChooseBoxMenu[] STORAGE_MENUS =
+{
+    sAffineAnim_ChooseBoxMenu
+};
+
+static const u8 sText_OutOf30[] STORAGE_MENUS = _("/30");
+
+static const u16 sChooseBoxMenu_Pal[] STORAGE_MENUS = INCBIN_U16("graphics/pokemon_storage/box_selection_popup.pal.gbapal");
+static const u8 sChooseBoxMenuCenter_Gfx[] STORAGE_MENUS = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_center.png.4bpp");
+static const u8 sChooseBoxMenuSides_Gfx[] STORAGE_MENUS = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_sides.png.4bpp");
+
+#undef STORAGE_MENUS
