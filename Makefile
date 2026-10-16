@@ -1961,11 +1961,14 @@ clean: clean-trainer-card-assets
 clean-trainer-card-assets:
 	rm -f $(JP_TRAINER_CARD_ASSETS)
 
-$(C_BUILDDIR)/data/frontier_pass.o: src/data/frontier_pass.c src/data/frontier_pass.h $(wildcard graphics/frontier_pass/* data/frontier_pass/jp/*)
+JP_FRONTIER_PASS_ASSETS := $(wildcard graphics/frontier_pass/*)
+
+$(C_BUILDDIR)/graphics.o: $(JP_FRONTIER_PASS_ASSETS)
+$(C_BUILDDIR)/frontier_pass.o: src/frontier_pass.c charmap.txt $(JP_FRONTIER_PASS_ASSETS)
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/frontier_pass.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/frontier_pass.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/data/frontier_pass.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/frontier_pass.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/frontier_pass.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/frontier_pass.gen.s
 
 $(C_BUILDDIR)/data/pokemon_storage_system.o: src/data/pokemon_storage_system.c src/data/pokemon_storage_system.h $(shell find graphics/pokemon_storage data/pokemon_storage/jp -type f 2>/dev/null)
 	@mkdir -p $(dir $@)

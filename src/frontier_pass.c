@@ -2,6 +2,39 @@
 #include "frontier_pass.h"
 #include "strings.h"
 #include "constants/battle_frontier.h"
+#include "sprite.h"
+#include "battle_anim.h"
+#include "bg.h"
+#include "window.h"
+#include "graphics.h"
+#include "constants/characters.h"
+
+enum
+{
+    WINDOW_EARNED_SYMBOLS,
+    WINDOW_BATTLE_RECORD,
+    WINDOW_BATTLE_POINTS,
+    WINDOW_DESCRIPTION,
+    WINDOW_DUMMY,
+    WINDOW_COUNT
+};
+
+enum
+{
+    MAP_WINDOW_UNUSED, // Overlaps the "Battle Frontier" title area of the map
+    MAP_WINDOW_NAME,
+    MAP_WINDOW_DESCRIPTION,
+    MAP_WINDOW_COUNT
+};
+
+enum {
+    TAG_CURSOR,
+    TAG_MAP_INDICATOR,
+    TAG_MEDAL_SILVER,
+    TAG_MEDAL_GOLD,
+    TAG_HEAD_MALE,
+    TAG_HEAD_FEMALE,
+};
 
 enum
 {
@@ -524,7 +557,7 @@ __attribute__((naked)) void VblankCb_FrontierPass(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C4D28: .4byte gUnknown_2039990\n\t"
-        "_080C4D2C: .4byte gUnknown_854AF04\n\t"
+        "_080C4D2C: .4byte sBgAffineCoords\n\t"
         "_080C4D30: .4byte gUnknown_203998C\n\t"
         ".syntax divided\n\t"
     );
@@ -659,7 +692,7 @@ __attribute__((naked)) void InitFrontierPass(void)
         "	bl SetBgAttribute\n\t"
         "	b _080C4FF0\n\t"
         "	.align 2, 0\n\t"
-        "_080C4E4C: .4byte gUnknown_854AF0C\n\t"
+        "_080C4E4C: .4byte sPassBgTemplates\n\t"
         "_080C4E50: .4byte gUnknown_2039990\n\t"
         "_080C4E54: .4byte 0x00001032\n\t"
         "_080C4E58: .4byte 0x00002032\n\t"
@@ -669,7 +702,7 @@ __attribute__((naked)) void InitFrontierPass(void)
         "	bl DeactivateAllTextPrinters\n\t"
         "	b _080C4FF0\n\t"
         "	.align 2, 0\n\t"
-        "_080C4E68: .4byte gUnknown_854AF24\n\t"
+        "_080C4E68: .4byte sPassWindowTemplates\n\t"
         "_080C4E6C:\n\t"
         "	ldr r0, _080C4EB4\n\t"
         "	add r1, sp, #8\n\t"
@@ -702,12 +735,12 @@ __attribute__((naked)) void InitFrontierPass(void)
         "	bl DecompressAndCopyTileDataToVram\n\t"
         "	b _080C4FF0\n\t"
         "	.align 2, 0\n\t"
-        "_080C4EB4: .4byte gUnknown_854AE1C\n\t"
+        "_080C4EB4: .4byte sMapAndCard_Zooming_Tilemap\n\t"
         "_080C4EB8: .4byte gUnknown_2039990\n\t"
-        "_080C4EBC: .4byte gUnknown_8549B58\n\t"
-        "_080C4EC0: .4byte gUnknown_8549DE8\n\t"
-        "_080C4EC4: .4byte gUnknown_85469A4\n\t"
-        "_080C4EC8: .4byte gUnknown_8549E20\n\t"
+        "_080C4EBC: .4byte sMapAndCard_ZoomedOut_Tilemap\n\t"
+        "_080C4EC0: .4byte sBattleRecord_Tilemap\n\t"
+        "_080C4EC4: .4byte gFrontierPassBg_Gfx\n\t"
+        "_080C4EC8: .4byte gFrontierPassMapAndCard_Gfx\n\t"
         "_080C4ECC:\n\t"
         "	bl FreeTempTileDataBuffersIfPossible\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -786,7 +819,7 @@ __attribute__((naked)) void InitFrontierPass(void)
         "	movs r0, #1\n\t"
         "	b _080C4FFC\n\t"
         "	.align 2, 0\n\t"
-        "_080C4F78: .4byte gUnknown_85467E4\n\t"
+        "_080C4F78: .4byte gFrontierPassBg_Pal\n\t"
         "_080C4F7C: .4byte gUnknown_203998C\n\t"
         "_080C4F80:\n\t"
         "	movs r1, #0x82\n\t"
@@ -1011,7 +1044,7 @@ __attribute__((naked)) void GetCursorAreaFromCoords(void)
         "	lsrs r0, r0, #0x18\n\t"
         "	b _080C515C\n\t"
         "	.align 2, 0\n\t"
-        "_080C5148: .4byte gUnknown_854AF78\n\t"
+        "_080C5148: .4byte sPassAreasLayout\n\t"
         "_080C514C: .4byte gUnknown_203998C\n\t"
         "_080C5150:\n\t"
         "	adds r0, r4, #1\n\t"
@@ -1840,7 +1873,7 @@ __attribute__((naked)) void ShowAndPrintWindows(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C57A4: .4byte gUnknown_854AF6C\n\t"
+        "_080C57A4: .4byte sTextColors\n\t"
         "_080C57A8: .4byte gText_SymbolsEarned\n\t"
         "_080C57AC: .4byte gText_BattleRecord\n\t"
         "_080C57B0: .4byte gText_BattlePoints\n\t"
@@ -1884,7 +1917,7 @@ __attribute__((naked)) void PrintAreaDescription(void)
         "	b _080C5826\n\t"
         "	.align 2, 0\n\t"
         "_080C57F8: .4byte gUnknown_203998C\n\t"
-        "_080C57FC: .4byte gUnknown_854AF6F\n\t"
+        "_080C57FC: .4byte sTextColors + 3\n\t"
         "_080C5800: .4byte sPassAreaDescriptions\n\t"
         "_080C5804:\n\t"
         "	cmp r4, #0\n\t"
@@ -1914,7 +1947,7 @@ __attribute__((naked)) void PrintAreaDescription(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C583C: .4byte gUnknown_854AF6F\n\t"
+        "_080C583C: .4byte sTextColors + 3\n\t"
         "_080C5840: .4byte sPassAreaDescriptions\n\t"
         ".syntax divided\n\t"
     );
@@ -2066,7 +2099,7 @@ __attribute__((naked)) void sub_080C5844(void)
         "	bl SetBgAffine\n\t"
         "	b _080C59DA\n\t"
         "	.align 2, 0\n\t"
-        "_080C5968: .4byte gUnknown_854AF04\n\t"
+        "_080C5968: .4byte sBgAffineCoords\n\t"
         "_080C596C: .4byte gUnknown_203998C\n\t"
         "_080C5970:\n\t"
         "	movs r4, #0x80\n\t"
@@ -2127,7 +2160,7 @@ __attribute__((naked)) void sub_080C5844(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C59E8: .4byte gUnknown_854AF04\n\t"
+        "_080C59E8: .4byte sBgAffineCoords\n\t"
         "_080C59EC: .4byte gUnknown_203998C\n\t"
         ".syntax divided\n\t"
     );
@@ -2230,7 +2263,7 @@ __attribute__((naked)) void sub_080C59F0(void)
         "	bl CopyToBgTilemapBufferRect_ChangePalette\n\t"
         "	b _080C5ABA\n\t"
         "	.align 2, 0\n\t"
-        "_080C5AAC: .4byte gUnknown_8549DB8\n\t"
+        "_080C5AAC: .4byte gFrontierPassCancelButton_Tilemap\n\t"
         "_080C5AB0:\n\t"
         "	subs r0, r4, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2327,7 +2360,7 @@ __attribute__((naked)) void sub_080C59F0(void)
         "	bl CopyToBgTilemapBufferRect_ChangePalette\n\t"
         "	b _080C5B7A\n\t"
         "	.align 2, 0\n\t"
-        "_080C5B6C: .4byte gUnknown_8549DD0\n\t"
+        "_080C5B6C: .4byte gFrontierPassCancelButtonHighlighted_Tilemap\n\t"
         "_080C5B70:\n\t"
         "	subs r0, r5, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2374,7 +2407,7 @@ __attribute__((naked)) void sub_080C5B88(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C5BC0: .4byte gUnknown_8549610\n\t"
+        "_080C5BC0: .4byte gFrontierPassBg_Tilemap\n\t"
         "_080C5BC4: .4byte gUnknown_203998C\n\t"
         ".syntax divided\n\t"
     );
@@ -2505,15 +2538,15 @@ __attribute__((naked)) void LoadCursorAndSymbolSprites(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C5CC4: .4byte gUnknown_854B008\n\t"
-        "_080C5CC8: .4byte gUnknown_854AFE0\n\t"
-        "_080C5CCC: .4byte gUnknown_854B0D8\n\t"
+        "_080C5CC4: .4byte sSpritePalettes\n\t"
+        "_080C5CC8: .4byte sCursorSpriteSheets\n\t"
+        "_080C5CCC: .4byte sSpriteTemplates_Cursors\n\t"
         "_080C5CD0: .4byte gUnknown_203998C\n\t"
         "_080C5CD4: .4byte gUnknown_2039990\n\t"
         "_080C5CD8: .4byte gSprites\n\t"
-        "_080C5CDC: .4byte gUnknown_854B108\n\t"
+        "_080C5CDC: .4byte sSpriteTemplate_Medal\n\t"
         "_080C5CE0: .4byte 0x0000FFFF\n\t"
-        "_080C5CE4: .4byte gUnknown_854AF78\n\t"
+        "_080C5CE4: .4byte sPassAreasLayout\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2725,7 +2758,7 @@ __attribute__((naked)) void InitFrontierMap(void)
         "	bl CopyBgTilemapBufferToVram\n\t"
         "	b _080C5F04\n\t"
         "	.align 2, 0\n\t"
-        "_080C5E9C: .4byte gUnknown_854AF18\n\t"
+        "_080C5E9C: .4byte sMapBgTemplates\n\t"
         "_080C5EA0: .4byte gUnknown_2039994\n\t"
         "_080C5EA4: .4byte 0x00001012\n\t"
         "_080C5EA8: .4byte 0x00002012\n\t"
@@ -2743,8 +2776,8 @@ __attribute__((naked)) void InitFrontierMap(void)
         "	bl DecompressAndCopyTileDataToVram\n\t"
         "	b _080C5F80\n\t"
         "	.align 2, 0\n\t"
-        "_080C5ECC: .4byte gUnknown_854AF4C\n\t"
-        "_080C5ED0: .4byte gUnknown_8548168\n\t"
+        "_080C5ECC: .4byte sMapWindowTemplates\n\t"
+        "_080C5ED0: .4byte sMapScreen_Gfx\n\t"
         "_080C5ED4:\n\t"
         "	bl FreeTempTileDataBuffersIfPossible\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2770,8 +2803,8 @@ __attribute__((naked)) void InitFrontierMap(void)
         "	bl CopyBgTilemapBufferToVram\n\t"
         "	b _080C5F80\n\t"
         "	.align 2, 0\n\t"
-        "_080C5F0C: .4byte gUnknown_85467E4\n\t"
-        "_080C5F10: .4byte gUnknown_85498F8\n\t"
+        "_080C5F0C: .4byte gFrontierPassBg_Pal\n\t"
+        "_080C5F10: .4byte sMapScreen_Tilemap\n\t"
         "_080C5F14:\n\t"
         "	movs r1, #0x82\n\t"
         "	lsls r1, r1, #5\n\t"
@@ -3338,9 +3371,9 @@ __attribute__((naked)) void InitFrontierMapSprites(void)
         "	movs r5, #0\n\t"
         "	b _080C63DE\n\t"
         "	.align 2, 0\n\t"
-        "_080C6368: .4byte gUnknown_854B008\n\t"
-        "_080C636C: .4byte gUnknown_854AFE0\n\t"
-        "_080C6370: .4byte gUnknown_854B0D8\n\t"
+        "_080C6368: .4byte sSpritePalettes\n\t"
+        "_080C636C: .4byte sCursorSpriteSheets\n\t"
+        "_080C6370: .4byte sSpriteTemplates_Cursors\n\t"
         "_080C6374: .4byte gUnknown_2039994\n\t"
         "_080C6378: .4byte gSprites\n\t"
         "_080C637C: .4byte sMapLandmarks\n\t"
@@ -3418,8 +3451,8 @@ __attribute__((naked)) void InitFrontierMapSprites(void)
         "	b _080C642A\n\t"
         "	.align 2, 0\n\t"
         "_080C6408: .4byte gSaveBlock1Ptr\n\t"
-        "_080C640C: .4byte gUnknown_854AFF8\n\t"
-        "_080C6410: .4byte gUnknown_854B120\n\t"
+        "_080C640C: .4byte sHeadsSpriteSheet\n\t"
+        "_080C6410: .4byte sSpriteTemplate_PlayerHead\n\t"
         "_080C6414: .4byte gSaveBlock2Ptr\n\t"
         "_080C6418:\n\t"
         "	lsls r1, r7, #0x13\n\t"
@@ -3521,7 +3554,7 @@ __attribute__((naked)) void PrintOnFrontierMap(void)
         "	.align 2, 0\n\t"
         "_080C64D0: .4byte sMapLandmarks\n\t"
         "_080C64D4: .4byte gUnknown_2039994\n\t"
-        "_080C64D8: .4byte gUnknown_854AF72\n\t"
+        "_080C64D8: .4byte sTextColors + 6\n\t"
         "_080C64DC:\n\t"
         "	lsls r1, r4, #4\n\t"
         "	adds r3, r1, #2\n\t"
@@ -3578,8 +3611,8 @@ __attribute__((naked)) void PrintOnFrontierMap(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C654C: .4byte gUnknown_854AF6F\n\t"
-        "_080C6550: .4byte gUnknown_854AF6C\n\t"
+        "_080C654C: .4byte sTextColors + 3\n\t"
+        "_080C6550: .4byte sTextColors\n\t"
         "_080C6554: .4byte sMapLandmarks\n\t"
         "_080C6558: .4byte gUnknown_2039994\n\t"
         ".syntax divided\n\t"
@@ -3716,7 +3749,7 @@ __attribute__((naked)) void HandleFrontierMapCursorMove(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C6660: .4byte gUnknown_2039994\n\t"
-        "_080C6664: .4byte gUnknown_854AF6F\n\t"
+        "_080C6664: .4byte sTextColors + 3\n\t"
         "_080C6668: .4byte sMapLandmarks\n\t"
         ".syntax divided\n\t"
     );
@@ -3965,3 +3998,359 @@ __attribute__((naked)) void sub_080C6738(void)
     );
 }
 
+
+static const u16 sMaleHead_Pal[] __attribute__((section(".rodata.frontier_pass_head_palettes"), aligned(4))) = INCBIN_U16("graphics/frontier_pass/map_heads.gbapal");
+static const u16 sFemaleHead_Pal[] __attribute__((section(".rodata.frontier_pass_head_palettes"), aligned(4))) = INCBIN_U16("graphics/frontier_pass/map_heads_female.gbapal");
+static const u32 sMapScreen_Gfx[] __attribute__((section(".rodata.frontier_pass_map_cursor_graphics"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/map_screen.4bpp.lz");
+static const u32 sCursor_Gfx[] __attribute__((section(".rodata.frontier_pass_map_cursor_graphics"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/cursor.4bpp.lz");
+static const u32 sHeads_Gfx[] __attribute__((section(".rodata.frontier_pass_head_cursor_graphics"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/map_heads.4bpp.lz");
+static const u32 sMapCursor_Gfx[] __attribute__((section(".rodata.frontier_pass_head_cursor_graphics"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/map_cursor.4bpp.lz");
+static const u32 sMapScreen_Tilemap[] __attribute__((section(".rodata.frontier_pass_map_tilemaps"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/map_screen.bin.lz");
+static const u32 sMapAndCard_ZoomedOut_Tilemap[] __attribute__((section(".rodata.frontier_pass_map_tilemaps"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/small_map_and_card.bin.lz");
+static const u32 sCardBall_Filled_Tilemap[] __attribute__((section(".rodata.frontier_pass_map_tilemaps"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/card_ball_filled.bin");
+static const u32 sBattleRecord_Tilemap[] __attribute__((section(".rodata.frontier_pass_record_tilemap"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/record_frame.bin.lz");
+static const u32 sMapAndCard_Zooming_Tilemap[] __attribute__((section(".rodata.frontier_pass_affine_tilemap"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/small_map_and_card_affine.bin.lz");
+
+#define FRONTIER_PASS_UI __attribute__((section(".rodata.frontier_pass_ui")))
+
+static const s16 sBgAffineCoords[][2] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    [CURSOR_AREA_MAP - 1]  = {216,  32},
+    [CURSOR_AREA_CARD - 1] = {216, 128}
+};
+
+static const struct BgTemplate sPassBgTemplates[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 29,
+        .screenSize = 1,
+        .paletteMode = 1,
+        .priority = 0,
+        .baseTile = 0
+    },
+};
+
+static const struct BgTemplate sMapBgTemplates[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 29,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    },
+};
+
+static const struct WindowTemplate sPassWindowTemplates[WINDOW_COUNT] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    [WINDOW_EARNED_SYMBOLS] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 3,
+        .width = 12,
+        .height = 3,
+        .paletteNum = 15,
+        .baseBlock = 0x1,
+    },
+    [WINDOW_BATTLE_RECORD] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 10,
+        .width = 12,
+        .height = 3,
+        .paletteNum = 15,
+        .baseBlock = 0x26,
+    },
+    [WINDOW_BATTLE_POINTS] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 13,
+        .width = 12,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0x4B,
+    },
+    [WINDOW_DESCRIPTION] = {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 18,
+        .width = 28,
+        .height = 3,
+        .paletteNum = 15,
+        .baseBlock = 0x7C,
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+static const struct WindowTemplate sMapWindowTemplates[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    [MAP_WINDOW_UNUSED] = {
+        .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 1,
+        .width = 15,
+        .height = 5,
+        .paletteNum = 15,
+        .baseBlock = 0x1,
+    },
+    [MAP_WINDOW_NAME] = {
+        .bg = 0,
+        .tilemapLeft = 20,
+        .tilemapTop = 1,
+        .width = 10,
+        .height = 14,
+        .paletteNum = 15,
+        .baseBlock = 0x4D,
+    },
+    [MAP_WINDOW_DESCRIPTION] = {
+        .bg = 0,
+        .tilemapLeft = 3,
+        .tilemapTop = 16,
+        .width = 26,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0xDA,
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+static const u8 sTextColors[][3] FRONTIER_PASS_UI __attribute__((aligned(1))) =
+{
+    {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY},
+    {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_BLUE},
+    {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_RED, TEXT_COLOR_LIGHT_RED},
+};
+
+struct
+{
+    s16 yStart;
+    s16 yEnd;
+    s16 xStart;
+    s16 xEnd;
+}
+static const sPassAreasLayout[CURSOR_AREA_COUNT - 1] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    [CURSOR_AREA_MAP - 1]            = { 28,  76, 132, 220},
+    [CURSOR_AREA_CARD - 1]           = { 84, 132, 132, 220},
+    [CURSOR_AREA_RECORD - 1]         = { 80, 102,  20, 108},
+    [CURSOR_AREA_CANCEL - 1]         = {  0,  16, 152, 240},
+    [CURSOR_AREA_POINTS - 1]         = {108, 134,  20, 108},
+    [CURSOR_AREA_EARNED_SYMBOLS - 1] = { 24,  48,  20, 108},
+    [CURSOR_AREA_SYMBOL_TOWER - 1]   = { 50,  66,  20,  36},
+    [CURSOR_AREA_SYMBOL_DOME - 1]    = { 66,  82,  32,  48},
+    [CURSOR_AREA_SYMBOL_PALACE - 1]  = { 50,  66,  44,  60},
+    [CURSOR_AREA_SYMBOL_ARENA - 1]   = { 66,  82,  56,  72},
+    [CURSOR_AREA_SYMBOL_FACTORY - 1] = { 50,  66,  68,  84},
+    [CURSOR_AREA_SYMBOL_PIKE - 1]    = { 66,  82,  80,  96},
+    [CURSOR_AREA_SYMBOL_PYRAMID - 1] = { 50,  66,  92, 108},
+};
+
+static const struct CompressedSpriteSheet sCursorSpriteSheets[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    {sCursor_Gfx, 0x100, TAG_CURSOR},
+    {sMapCursor_Gfx, 0x400, TAG_MAP_INDICATOR},
+    {gFrontierPassMedals_Gfx, 0x380, TAG_MEDAL_SILVER},
+};
+
+static const struct CompressedSpriteSheet sHeadsSpriteSheet[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    {sHeads_Gfx, 0x100, TAG_HEAD_MALE},
+    {}
+};
+
+static const struct SpritePalette sSpritePalettes[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    {gFrontierPassCursor_Pal,       TAG_CURSOR},
+    {gFrontierPassMapCursor_Pal,    TAG_MAP_INDICATOR},
+    {gFrontierPassMedalsSilver_Pal, TAG_MEDAL_SILVER},
+    {gFrontierPassMedalsGold_Pal,   TAG_MEDAL_GOLD},
+    {sMaleHead_Pal,                 TAG_HEAD_MALE},
+    {sFemaleHead_Pal,               TAG_HEAD_FEMALE},
+    {}
+};
+
+static const union AnimCmd sAnim_Frame1_Unused[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Frame1[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Frame2[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    ANIMCMD_FRAME(4, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Frame3[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    ANIMCMD_FRAME(8, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Frame4[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    ANIMCMD_FRAME(12, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Frame5[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    ANIMCMD_FRAME(16, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Frame6[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    ANIMCMD_FRAME(20, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Frame7[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    ANIMCMD_FRAME(24, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_MapIndicatorCursor_Rectangle[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    ANIMCMD_FRAME(0, 45),
+    ANIMCMD_FRAME(8, 45),
+    ANIMCMD_JUMP(0)
+};
+
+static const union AnimCmd sAnim_MapIndicatorCursor_Square[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    ANIMCMD_FRAME(16, 45),
+    ANIMCMD_FRAME(24, 45),
+    ANIMCMD_JUMP(0)
+};
+
+// Used both by the cursor and the map head icons
+static const union AnimCmd *const sAnims_TwoFrame[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    sAnim_Frame1,
+    sAnim_Frame2
+};
+
+static const union AnimCmd *const sAnims_Medal[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    [CURSOR_AREA_SYMBOL_TOWER   - CURSOR_AREA_SYMBOL] = sAnim_Frame1,
+    [CURSOR_AREA_SYMBOL_DOME    - CURSOR_AREA_SYMBOL] = sAnim_Frame2,
+    [CURSOR_AREA_SYMBOL_PALACE  - CURSOR_AREA_SYMBOL] = sAnim_Frame3,
+    [CURSOR_AREA_SYMBOL_ARENA   - CURSOR_AREA_SYMBOL] = sAnim_Frame4,
+    [CURSOR_AREA_SYMBOL_FACTORY - CURSOR_AREA_SYMBOL] = sAnim_Frame5,
+    [CURSOR_AREA_SYMBOL_PIKE    - CURSOR_AREA_SYMBOL] = sAnim_Frame6,
+    [CURSOR_AREA_SYMBOL_PYRAMID - CURSOR_AREA_SYMBOL] = sAnim_Frame7
+};
+
+static const union AnimCmd *const sAnims_MapIndicatorCursor[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    [MAP_INDICATOR_RECTANGLE] = sAnim_MapIndicatorCursor_Rectangle,
+    [MAP_INDICATOR_SQUARE]    = sAnim_MapIndicatorCursor_Square
+};
+
+static const union AffineAnimCmd sAffineAnim_Unused[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd *const sAffineAnims_Unused[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    sAffineAnim_Unused
+};
+
+static const struct SpriteTemplate sSpriteTemplates_Cursors[] FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    // Triangular cursor
+    {
+        .tileTag = TAG_CURSOR,
+        .paletteTag = TAG_CURSOR,
+        .oam = &gOamData_AffineOff_ObjNormal_16x16,
+        .anims = sAnims_TwoFrame,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    // Map indicator cursor
+    {
+        .tileTag = TAG_MAP_INDICATOR,
+        .paletteTag = TAG_MAP_INDICATOR,
+        .oam = &gOamData_AffineOff_ObjNormal_32x16,
+        .anims = sAnims_MapIndicatorCursor,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Medal FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    .tileTag = TAG_MEDAL_SILVER,
+    .paletteTag = TAG_MEDAL_SILVER,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = sAnims_Medal,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_PlayerHead FRONTIER_PASS_UI __attribute__((aligned(4))) =
+{
+    .tileTag = TAG_HEAD_MALE,
+    .paletteTag = TAG_HEAD_MALE,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = sAnims_TwoFrame,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    // JP uses the dummy callback for player-head sprites.
+    .callback = (SpriteCallback)SpriteCb_Dummy,
+};
+
+#undef FRONTIER_PASS_UI
