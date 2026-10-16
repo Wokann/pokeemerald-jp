@@ -182,7 +182,7 @@ class JapaneseScriptTextCodec:
         )
         # Only add ROM/renderer-verified glyphs. Sound and music constants
         # share F9-valued sequences in charmap.txt and are not text glyphs.
-        self.extra_symbols = self._named_sequences(("LV_2",), expected_prefix=0xF9)
+        self.extra_symbols = self._named_sequences(("PLUS", "LV_2"), expected_prefix=0xF9)
         self._validate_charmap_contract()
 
     def _named_sequences(self, names: tuple[str, ...], expected_prefix: int) -> dict[bytes, str]:
@@ -197,7 +197,10 @@ class JapaneseScriptTextCodec:
         return sequences
 
     def _validate_charmap_contract(self) -> None:
-        required = {"STRING": b"\xFD", "DYNAMIC": b"\xF7", "LV_2": b"\xF9\x05"}
+        required = {
+            "STRING": b"\xFD", "DYNAMIC": b"\xF7",
+            "PLUS": b"\xF9\x04", "LV_2": b"\xF9\x05",
+        }
         for code, (name, _) in EXT_CTRL_SPECS.items():
             required[name] = bytes((0xFC, code))
         for name, expected in required.items():

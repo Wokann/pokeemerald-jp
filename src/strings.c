@@ -4,6 +4,7 @@
 #include "item_menu.h"
 #include "constants/songs.h"
 
+#define STRINGS_EREADER_TEXT __attribute__((section(".rodata.strings_ereader_text"), aligned(1)))
 #define STRINGS_MINIGAME_TEXT __attribute__((section(".rodata.strings_minigame_text"), aligned(1)))
 #define STRINGS_SHARED_MISC_TEXT __attribute__((section(".rodata.strings_shared_misc_text"), aligned(1)))
 #define STRINGS_TRAINER_STATUS_TEXT __attribute__((section(".rodata.strings_trainer_status_text"), aligned(1)))
@@ -775,6 +776,46 @@ STRINGS_MINIGAME_TEXT const u8 gText_3rd[] = _("3い");
 STRINGS_MINIGAME_TEXT const u8 gText_4th[] = _("4い");
 STRINGS_MINIGAME_TEXT const u8 gText_Friend[] = _("someone");
 STRINGS_MINIGAME_TEXT const u8 gText_Pokemon3[] = _("pokemon");
+
+STRINGS_EREADER_TEXT const u8 gJPText_MysteryGift[] = _("ふしぎなもらいもの");
+STRINGS_EREADER_TEXT const u8 gJPText_DecideStop[] = _("{A_BUTTON}けってい　{B_BUTTON}やめる");
+STRINGS_EREADER_TEXT const u8 gJPText_ReceiveMysteryGiftWithEReader[] = _(
+    "カードeリーダー{PLUS}　で\n"
+    "ふしぎなもらいものを　よみこみます");
+STRINGS_EREADER_TEXT const u8 gJPText_SelectConnectFromEReaderMenu[] = _(
+    "カードeリーダー{PLUS}の　メニューから\n"
+    "‘つうしん’を　えらび");
+STRINGS_EREADER_TEXT const u8 gJPText_SelectConnectWithGBA[] = _(
+    "‘ゲームボーイアドバンスとつうしん’\n"
+    "を　せんたく　してください");
+STRINGS_EREADER_TEXT const u8 gJPText_SelectConnectAndPressA[] = _(
+    "カードeリーダー{PLUS}の　‘つうしん’を\n"
+    "えらんで　Aボタンを　おしてください"); // Unused
+STRINGS_EREADER_TEXT const u8 gJPText_LinkIsIncorrect[] = _("せつぞくが　まちがっています");
+STRINGS_EREADER_TEXT const u8 gJPText_CardReadingHasBeenHalted[] = _(
+    "カードの　よみこみを\n"
+    "ちゅうし　しました");
+STRINGS_EREADER_TEXT const u8 gJPText_UnableConnectWithEReader[] = _(
+    "カードeリーダー{PLUS}と\n"
+    "つうしん　できません"); // Unused
+STRINGS_EREADER_TEXT const u8 gJPText_Connecting[] = _("つうしん　ちゅう　です");
+STRINGS_EREADER_TEXT const u8 gJPText_ConnectionErrorCheckLink[] = _(
+    "つうしん　エラーです\n"
+    "せつぞくを　たしかめて　ください");
+STRINGS_EREADER_TEXT const u8 gJPText_ConnectionErrorTryAgain[] = _(
+    "つうしん　エラーです\n"
+    "はじめから　やりなおして　ください"); // Link error
+STRINGS_EREADER_TEXT const u8 gJPText_AllowEReaderToLoadCard[] = _(
+    "カードeリーダー{PLUS}　に\n"
+    "カードを　よみこませて　ください");
+STRINGS_EREADER_TEXT const u8 gJPText_ConnectionComplete[] = _("つうしん　しゅうりょう！");
+STRINGS_EREADER_TEXT const u8 gJPText_NewTrainerHasComeToHoenn[] = _(
+    "あらたな　トレーナーが\n"
+    "ホウエンに　やってきた！");
+STRINGS_EREADER_TEXT const u8 gJPText_PleaseWaitAMoment[] = _("しばらく　おまちください");
+STRINGS_EREADER_TEXT const u8 gJPText_WriteErrorUnableToSaveData[] = _(
+    "かきこみ　エラー　です\n"
+    "データが　ほぞん　できませんでした");
 
 STRINGS_DAYCARE const u8 gDaycareText_GetAlongVeryWell[] = _("2ひきの　なかは\nとっても　よい　ようじゃ");
 STRINGS_DAYCARE const u8 gDaycareText_GetAlong[] = _("2ひきの　なかは\nまずまずの　ようじゃ");

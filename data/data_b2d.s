@@ -96,10 +96,6 @@ gUnknown_8566E58: @ 0x8566E58
 
 	.section .rodata.mid97_prefix
 
-	.globl gJPText_WriteErrorUnableToSaveData
-gJPText_WriteErrorUnableToSaveData: @ 0x85CD043
-	.string "かきこみ　エラー　です\n"
-	.string "データが　ほぞん　できませんでした$"
 	.globl gText_Red
 gText_Red: @ 0x85CD061
 	.string "あか$"

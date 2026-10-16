@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regressions for the JP Summary text's verified F9 05 / LV_2 glyph.
+"""Regressions for the verified JP Summary and e-Reader extra glyphs.
 
 These six fixtures are the actual LV_2-bearing objects inside ROM offsets
 [0x5CA4A6, 0x5CA5B6). The other two objects do not contain LV_2. Fixtures keep
@@ -95,7 +95,7 @@ class Lv2TextCodecTests(unittest.TestCase):
                 self.assertEqual(rom[start:end], bytes.fromhex(hex_bytes))
 
     def test_unverified_f9_selectors_remain_hard_errors(self):
-        verified_selectors = {5} | {sequence[1] for sequence in self.codec.emoji}
+        verified_selectors = {4, 5} | {sequence[1] for sequence in self.codec.emoji}
         for selector in range(256):
             if selector not in verified_selectors:
                 with self.subTest(selector=f"0x{selector:02X}"):
@@ -123,6 +123,30 @@ class Lv2TextCodecTests(unittest.TestCase):
             with self.subTest(mapping=mapping):
                 self.codec.constants["LV_2"] = mapping
                 with self.assertRaisesRegex(TextDecodeError, "LV_2 must be f905"):
+                    self.codec._validate_charmap_contract()
+
+
+class EReaderTextCodecTests(unittest.TestCase):
+    def setUp(self):
+        self.codec = JapaneseScriptTextCodec()
+
+    def test_plus_decodes_to_the_ereader_glyph_name(self):
+        self.assertEqual(self.codec.constants["PLUS"], b"\xF9\x04")
+        decoded = self.codec.decode_one(b"\xF9\x04\xFF\xF9")
+        self.assertEqual((decoded.source, decoded.consumed, decoded.ended), ("{PLUS}$", 3, True))
+
+    @unittest.skipUnless(PREPROC_PATH.is_file(), "matching JP preproc is required")
+    def test_plus_round_trips_with_native_japanese_ereader_text(self):
+        source = "カードeリーダー{PLUS}と\\nつうしん　できません$"
+        raw = self.codec.preproc_bytes(source)
+        self.assertEqual(raw.count(b"\xF9\x04"), 1)
+        self.assertEqual(self.codec.verify_one(raw).source, source)
+
+    def test_plus_mapping_cannot_silently_drift(self):
+        for mapping in (None, b"\xF9\x05", b"\xF8\x04"):
+            with self.subTest(mapping=mapping):
+                self.codec.constants["PLUS"] = mapping
+                with self.assertRaisesRegex(TextDecodeError, "PLUS must be f904"):
                     self.codec._validate_charmap_contract()
 
 
