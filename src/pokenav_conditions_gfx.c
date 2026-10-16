@@ -428,7 +428,6 @@ enum
 };
 
 extern u8 sInitialLoadId; // JP IWRAM, bound in ld_script_jp.txt
-extern const u8 gText_SearchResultRank[]; // JP 0x085CB81B, bound in ld_script_jp.txt
 
 // JP sign-extends the u8 load id at call sites (pokeemerald gfx.c declared it s8).
 extern s8 GetConditionGraphMenuCurrentLoadIndex(void);
@@ -557,12 +556,6 @@ extern const u16 sListBg_Pal[];
 extern const struct BgTemplate sConditionSearchResultBgTemplates[];
 extern const LoopedTask sSearchResultLoopTaskFuncs[];
 extern const struct WindowTemplate sSearchResultListMenuWindowTemplate;
-extern const u8 sText_MaleSymbol[];
-extern const u8 sText_FemaleSymbol[];
-extern const u8 sText_NoGenderSymbol[];
-extern const u8 sText_ConditionSearchMonMale[];    // JP 0x085CB7D6, "{STR_VAR_1} {COLOR}♂..."
-extern const u8 sText_ConditionSearchMonFemale[];  // JP 0x085CB7EA
-extern const u8 sText_ConditionSearchMonUnknown[]; // JP 0x085CB7FE
 extern const u8 gText_RibbonsMonListCount[];       // JP 0x085F5DCC
 extern const u8 sText_RibbonsMonListItemMale[];    // JP 0x085F5DD3
 extern const u8 sText_RibbonsMonListItemFemale[];  // JP 0x085F5DEB

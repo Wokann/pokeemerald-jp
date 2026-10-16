@@ -2985,6 +2985,11 @@ extern const u8 gText_CutenessContest[];
 extern const u8 gText_SmartnessContest[];
 extern const u8 gText_ToughnessContest[];
 
+// PokéNav condition and ribbon name templates.
+extern const u8 gText_PokemonMaleLv[];
+extern const u8 gText_PokemonFemaleLv[];
+extern const u8 gText_PokemonNoGenderLv[];
+
 // PokéNav Match Call
 extern const u8 gText_CallCantBeMadeHere[];
 extern const u8 gText_NumberRegistered[];

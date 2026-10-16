@@ -112,7 +112,6 @@ enum
 };
 
 extern u8 sInitialLoadId; // JP IWRAM, bound in ld_script_jp.txt
-extern const u8 gText_SearchResultRank[]; // JP 0x085CB81B, bound in ld_script_jp.txt
 
 // JP sign-extends the u8 load id at call sites (pokeemerald gfx.c declared it s8).
 extern s8 GetConditionGraphMenuCurrentLoadIndex(void);
@@ -239,12 +238,6 @@ extern const u16 sListBg_Pal[];
 extern const struct BgTemplate sConditionSearchResultBgTemplates[];
 extern const LoopedTask sSearchResultLoopTaskFuncs[];
 extern const struct WindowTemplate sSearchResultListMenuWindowTemplate;
-extern const u8 sText_MaleSymbol[];
-extern const u8 sText_FemaleSymbol[];
-extern const u8 sText_NoGenderSymbol[];
-extern const u8 sText_ConditionSearchMonMale[];    // JP 0x085CB7D6, "{STR_VAR_1} {COLOR}♂..."
-extern const u8 sText_ConditionSearchMonFemale[];  // JP 0x085CB7EA
-extern const u8 sText_ConditionSearchMonUnknown[]; // JP 0x085CB7FE
 extern const u8 gText_RibbonsMonListCount[];       // JP 0x085F5DCC
 extern const u8 sText_RibbonsMonListItemMale[];    // JP 0x085F5DD3
 extern const u8 sText_RibbonsMonListItemFemale[];  // JP 0x085F5DEB
@@ -796,7 +789,7 @@ void PrintSearchResultListMenuItems(struct Pokenav_SearchResultsGfx *gfx)
     DynamicPlaceholderTextUtil_Reset();
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gStringVar1);
     ConvertIntToDecimalStringN(gStringVar1, rank, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar2, gText_SearchResultRank);
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar2, gText_NumberIndex);
     AddTextPrinterParameterized(gfx->winid, FONT_NORMAL, gStringVar2, 0, 2, 0xFF, NULL);
     CopyWindowToVram(gfx->winid, COPYWIN_GFX);
 }
@@ -851,14 +844,14 @@ static void BufferSearchMonListItem(struct PokenavMonListItem *item, u8 *dest)
     switch (gender)
     {
     case MON_MALE:
-        genderStr = sText_ConditionSearchMonMale;
+        genderStr = gText_PokemonMaleLv;
         break;
     case MON_FEMALE:
-        genderStr = sText_ConditionSearchMonFemale;
+        genderStr = gText_PokemonFemaleLv;
         break;
     case MON_GENDERLESS:
     default:
-        genderStr = sText_ConditionSearchMonUnknown;
+        genderStr = gText_PokemonNoGenderLv;
         break;
     }
     DynamicPlaceholderTextUtil_ExpandPlaceholders(dest, genderStr);

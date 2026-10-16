@@ -200,13 +200,11 @@ static const struct WindowTemplate sMatchCallInfoBoxWindowTemplate =
     .baseBlock = 38
 };
 
-// JP stores the three option labels inside gText_Unknown
-// ("ふめい$よびだし$しょうさい$もどる") as $-separated substrings.
 static const u8 *const sMatchCallOptionTexts[MATCH_CALL_OPTION_COUNT] =
 {
-    [MATCH_CALL_OPTION_CALL]   = gText_Unknown + 4,
-    [MATCH_CALL_OPTION_CHECK]  = gText_Unknown + 9,
-    [MATCH_CALL_OPTION_CANCEL] = gText_Unknown + 15,
+    [MATCH_CALL_OPTION_CALL]   = gText_Call,
+    [MATCH_CALL_OPTION_CHECK]  = gText_Check,
+    [MATCH_CALL_OPTION_CANCEL] = gText_Cancel6,
 };
 
 // JP text carries its own $ and trailing full-width space (no auto

@@ -9,6 +9,7 @@
 #define STRINGS_SHARED_MISC_TEXT __attribute__((section(".rodata.strings_shared_misc_text"), aligned(1)))
 #define STRINGS_FRONTIER_RECORD_TEXT __attribute__((section(".rodata.strings_frontier_record_text"), aligned(1)))
 #define STRINGS_BATTLE_FACTORY_SWAP_TEXT __attribute__((section(".rodata.strings_battle_factory_swap_text"), aligned(1)))
+#define STRINGS_POKENAV_SHARED_TEXT __attribute__((section(".rodata.strings_pokenav_shared_text"), aligned(1)))
 #define STRINGS_MYSTERY_EVENT_TEXT __attribute__((section(".rodata.strings_mystery_event_text"), aligned(1)))
 #define STRINGS_TRAINER_STATUS_TEXT __attribute__((section(".rodata.strings_trainer_status_text"), aligned(1)))
 #define STRINGS_INTERFACE_TEXT __attribute__((section(".rodata.strings_interface_text"), aligned(1)))
@@ -1969,13 +1970,26 @@ STRINGS_MAIN_MENU const u8 gText_DefaultName_Mutsumi[] = __("ムツミ$$$");
 STRINGS_MAIN_MENU const u8 gText_DefaultName_Monica[] = __("モニカ$$$");
 STRINGS_MAIN_MENU const u8 gText_DefaultName_Yuume[] = __("ユウメ$$$");
 
-STRINGS_EASY_CHAT const u8 gText_SearchResultRank[] = _("{DYNAMIC 0}ばんめ");
-// Easy Chat and PokéNav strings are kept in their original JP ROM order.
-STRINGS_EASY_CHAT const u8 gText_RibbonsF700[] = _("リボン　{DYNAMIC 0}こ");
-// JP charmap color operands: 5/1/6 = LIGHT_RED/WHITE/GREEN; 2/1/3 = DARK_GRAY/WHITE/LIGHT_GRAY.
-STRINGS_EASY_CHAT const u8 gText_PokemonMaleLv2[] = _("{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ"); // Unused
-STRINGS_EASY_CHAT const u8 gText_PokemonFemaleLv2[] = _("{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ"); // Unused
-STRINGS_EASY_CHAT const u8 gText_PokemonNoGenderLv2[] = _("{DYNAMIC 0}　　/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ"); // Unused
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_NatureSlash[] = _("せいかく/");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_TrainerCloseBy[] = _(
+    "ちかくに　いるみたいだから\n"
+    "ちょくせつ　あって　はなそう！");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_InParty[] = _("てもちポケモン");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_Number2[] = _("ばんめ");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_Ribbons[] = _("リボン");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_PokemonMaleLv[] = _("{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_PokemonFemaleLv[] = _("{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_PokemonNoGenderLv[] = _("{DYNAMIC 0}　　/{LV_2}{DYNAMIC 1}");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_Unknown[] = _("ふめい");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_Call[] = _("よびだし");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_Check[] = _("しょうさい");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_Cancel6[] = _("もどる");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_NumberIndex[] = _("{DYNAMIC 0}ばんめ");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_RibbonsF700[] = _("リボン　{DYNAMIC 0}こ");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_PokemonMaleLv2[] = _("{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_PokemonFemaleLv2[] = _("{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ");
+STRINGS_POKENAV_SHARED_TEXT const u8 gText_PokemonNoGenderLv2[] = _("{DYNAMIC 0}　　/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ");
+
 STRINGS_EASY_CHAT const u8 gText_CombineFourWordsOrPhrases[] = _("4つの　ことばを　くみあわせて");
 STRINGS_EASY_CHAT const u8 gText_AndMakeYourProfile[] = _("プロフィールを　つくろう！");
 // The JP UI combines the two US prompts into one EOS-terminated string.

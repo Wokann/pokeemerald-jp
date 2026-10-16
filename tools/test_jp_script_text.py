@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regressions for the verified JP Summary and e-Reader extra glyphs.
+"""Regressions for native JP Summary/e-Reader glyphs and PokeNav controls.
 
 These six fixtures are the actual LV_2-bearing objects inside ROM offsets
 [0x5CA4A6, 0x5CA5B6). The other two objects do not contain LV_2. Fixtures keep
@@ -148,6 +148,58 @@ class EReaderTextCodecTests(unittest.TestCase):
                 self.codec.constants["PLUS"] = mapping
                 with self.assertRaisesRegex(TextDecodeError, "PLUS must be f904"):
                     self.codec._validate_charmap_contract()
+
+
+class PokeNavTextCodecTests(unittest.TestCase):
+    TEMPLATES = (
+        (0x5CB7D6, 0x5CB7EA, "{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}$"),
+        (0x5CB7EA, 0x5CB7FE, "{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}$"),
+        (0x5CB7FE, 0x5CB808, "{DYNAMIC 0}　　/{LV_2}{DYNAMIC 1}$"),
+        (0x5CB829, 0x5CB841, "{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ$"),
+        (0x5CB841, 0x5CB859, "{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ$"),
+        (0x5CB859, 0x5CB867, "{DYNAMIC 0}　　/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ$"),
+    )
+
+    def setUp(self):
+        self.codec = JapaneseScriptTextCodec()
+
+    def test_dynamic_slots_never_decode_as_colliding_audio_names(self):
+        self.assertEqual(self.codec.constants["SE_M_HYPER_BEAM2"], b"\xF7\x00")
+        self.assertEqual(self.codec.constants["MUS_RG_ROUTE1"], b"\xF7\x01")
+        self.assertEqual(self.codec.decode(b"\xF7\x00\xF7\x01\xFF"), "{DYNAMIC 0x00}{DYNAMIC 0x01}$")
+
+    @unittest.skipUnless(PREPROC_PATH.is_file(), "matching JP preproc is required")
+    def test_native_name_templates_preserve_dynamic_slots_and_level_font(self):
+        for start, end, source in self.TEMPLATES:
+            with self.subTest(address=f"0x{start:06X}"):
+                raw = self.codec.preproc_bytes(source)
+                self.assertEqual(len(raw), end - start)
+                decoded = self.codec.verify_one(raw + b"\xF9")
+                self.assertEqual(decoded.consumed, len(raw))
+                self.assertIn("{DYNAMIC 0x00}", decoded.source)
+                self.assertIn("{DYNAMIC 0x01}", decoded.source)
+                self.assertIn("{LV_2}", decoded.source)
+                self.assertEqual(decoded.source.count("{DYNAMIC "), source.count("{DYNAMIC "))
+                self.assertNotIn("{SE_", decoded.source)
+                self.assertNotIn("{MUS_", decoded.source)
+
+    @unittest.skipUnless(BASEROM_PATH.is_file() and PREPROC_PATH.is_file(), "matching JP ROM and preproc are required")
+    def test_name_template_fixtures_match_the_actual_jp_rom(self):
+        rom = BASEROM_PATH.read_bytes()
+        for start, end, source in self.TEMPLATES:
+            with self.subTest(address=f"0x{start:06X}"):
+                self.assertEqual(self.codec.preproc_bytes(source), rom[start:end])
+
+    @unittest.skipUnless(PREPROC_PATH.is_file(), "matching JP preproc is required")
+    def test_match_call_menu_items_stop_at_each_independent_eos(self):
+        sources = ("ふめい$", "よびだし$", "しょうさい$", "もどる$")
+        packed = self.codec.preproc_bytes("".join(sources))
+        position = 0
+        for source, size in zip(sources, (4, 5, 6, 4)):
+            decoded = self.codec.decode_one(packed[position:] + b"\xF9")
+            self.assertEqual((decoded.source, decoded.consumed), (source, size))
+            position += decoded.consumed
+        self.assertEqual(position, len(packed))
 
 
 if __name__ == "__main__":

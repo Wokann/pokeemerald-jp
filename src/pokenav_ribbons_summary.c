@@ -34,12 +34,6 @@ struct RibbonData { u8 numBits; u8 numRibbons; u8 ribbonId; bool8 isGiftRibbon; 
 extern const struct RibbonData sRibbonData[16]; // ROM 0x085F5E14, 17 entries (loop runs i<=16)
 extern u32 sRibbonDraw_Total;
 extern u32 sRibbonDraw_Current;
-extern const u8 sText_MaleSymbol[];
-extern const u8 sText_ConditionSearchMonMale[];    // JP 0x085CB7D6
-extern const u8 sText_ConditionSearchMonFemale[];  // JP 0x085CB7EA
-extern const u8 sText_ConditionSearchMonUnknown[]; // JP 0x085CB7FE
-extern const u8 sText_FemaleSymbol[];
-extern const u8 sGenderlessIconString[];
 extern const struct ScanlineEffectParams sConditionGraphScanline[];
 extern const u8 sConditionToLineLength[];
 extern const u32 sConditionPokeball_Gfx[];
@@ -1049,13 +1043,13 @@ void PrintRibbbonsSummaryMonInfo(struct Pokenav_RibbonsSummaryMenu *menu)
     switch (gender)
     {
     case MON_MALE:
-        genderTxt = sText_ConditionSearchMonMale;
+        genderTxt = gText_PokemonMaleLv;
         break;
     case MON_FEMALE:
-        genderTxt = sText_ConditionSearchMonFemale;
+        genderTxt = gText_PokemonFemaleLv;
         break;
     default:
-        genderTxt = sText_ConditionSearchMonUnknown;
+        genderTxt = gText_PokemonNoGenderLv;
         break;
     }
     DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, genderTxt);
