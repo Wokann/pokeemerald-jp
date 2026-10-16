@@ -90,6 +90,24 @@ STRINGS_TRADE_MESSAGES const u8 gText_ByeByeVar1[] = _("ばいばい　{STR_VAR_
 STRINGS_TRADE_MESSAGES const u8 gText_XSentOverY[] = _(
     "{STR_VAR_1}から\n"
     "{STR_VAR_3}が　おくられてきた！");
+#define STRINGS_EVOLUTION_COMMUNICATION __attribute__((section(".rodata.strings_evolution_communication"), aligned(1)))
+
+STRINGS_EVOLUTION_COMMUNICATION const u8 gText_CommunicationStandby5[] = _("つうしんたいきちゅうです");
+STRINGS_EVOLUTION_COMMUNICATION const u8 gJPText_UnusedColoredYesNo[] = _(
+    "{COLOR 0x02}{HIGHLIGHT 0x01}{SHADOW 0x03}はい\n"
+    "いいえ");
+STRINGS_EVOLUTION_COMMUNICATION const u8 gJPText_UnusedTextColors[] = _("{COLOR 0x02}{HIGHLIGHT 0x01}{SHADOW 0x03}");
+
+// The JP slots retain leading space glyphs and their six zero padding bytes.
+STRINGS_EVOLUTION_COMMUNICATION const u8 gJPText_UnusedArrowPatterns[3][10] =
+{
+    _("▶\n　"),
+    _("　\n▶"),
+    _("　\n　"),
+};
+
+#undef STRINGS_EVOLUTION_COMMUNICATION
+
 STRINGS_DAYCARE_MENU const u8 gText_NewLine2[] = _("\n");
 STRINGS_DAYCARE_MENU const u8 gText_Exit4[] = _("やめる");
 

@@ -52,4 +52,4 @@ gPokedexAreaScreenAreaUnknown_Pal: @ 0x08593A9C
 
 	.globl gPokedexAreaScreenAreaUnknown_Gfx
 gPokedexAreaScreenAreaUnknown_Gfx: @ 0x08593ABC
-	.incbin "baserom_jp.gba", 0x593abc, 0x1e4
+	.incbin "baserom_jp.gba", 0x593abc, 0x1c4
