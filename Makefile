@@ -1534,7 +1534,10 @@ $(C_BUILDDIR)/mystery_event_msg.o: src/mystery_event_msg.c charmap.txt
 	@rm -f $(C_BUILDDIR)/mystery_event_msg.gen.s
 graphics/summary_screen/%.png.4bpp: graphics/summary_screen/%.png | tools
 	$(GFX) $< $@
-$(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c graphics/summary_screen/a_button.png.4bpp graphics/summary_screen/b_button.png.4bpp
+$(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c charmap.txt \
+	src/data/text/move_descriptions.h include/pokemon_summary_screen.h \
+	include/constants/moves.h include/graphics.h \
+	graphics/summary_screen/a_button.png.4bpp graphics/summary_screen/b_button.png.4bpp
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokemon_summary_screen.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokemon_summary_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
@@ -1841,7 +1844,7 @@ $(C_BUILDDIR)/pokenav_match_call_list.o: src/pokenav_match_call_list.c src/data/
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_match_call_list.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokenav_match_call_list.gen.s
 
-$(C_BUILDDIR)/menu_specialized.o: src/menu_specialized.c charmap.txt $(wildcard graphics/pokenav/condition/*)
+$(C_BUILDDIR)/menu_specialized.o: src/menu_specialized.c charmap.txt include/pokemon_summary_screen.h $(wildcard graphics/pokenav/condition/*)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/menu_specialized.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/menu_specialized.gen.s | $(AS) $(ASFLAGS) -o $@ -

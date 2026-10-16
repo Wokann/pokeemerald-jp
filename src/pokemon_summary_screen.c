@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/moves.h"
 #include "pokemon_summary_screen.h"
 #include "data/text/move_descriptions.h"
 #include "bg.h"
@@ -146,13 +147,6 @@ SUMMARY_TEXT_DATA static const u8 sStatsRightColumnLayout[] = _("{DYNAMIC 0}\n{D
 SUMMARY_TEXT_DATA static const u8 sMovesPPLayout[] = _("{PP}{DYNAMIC 0}/{DYNAMIC 1}");
 
 #define SUMMARY_SPRITE_DATA __attribute__((section(".rodata.pokemon_summary_sprite_data")))
-
-// JP graphics remain in their original packed resource block for now.
-#define gMoveTypes_Gfx         ((const u32 *)0x08D971CC)
-#define gSummaryMoveSelect_Gfx ((const u32 *)0x08D97CBC)
-#define gSummaryMoveSelect_Pal ((const u32 *)0x08D97DB8)
-#define gStatusGfx_Icons       ((const u32 *)0x08D96F44)
-#define gStatusPal_Icons       ((const u32 *)0x08D971A4)
 
 #define TAG_MOVE_SELECTOR 30000
 #define TAG_MON_STATUS 30001
@@ -1240,7 +1234,7 @@ __attribute__((naked)) void SummaryScreen_DecompressGraphics(void)
         "	bl DecompressAndCopyTileDataToVram\n\t"
         "	b _081BF9A6\n\t"
         "	.align 2, 0\n\t"
-        "_081BF88C: .4byte gUnknown_8D97DD0\n\t"
+        "_081BF88C: .4byte gSummaryScreen_Gfx\n\t"
         "_081BF890:\n\t"
         "	bl FreeTempTileDataBuffersIfPossible\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1259,7 +1253,7 @@ __attribute__((naked)) void SummaryScreen_DecompressGraphics(void)
         "	adds r1, r1, r2\n\t"
         "	b _081BF9AE\n\t"
         "	.align 2, 0\n\t"
-        "_081BF8B4: .4byte gUnknown_8D9888C\n\t"
+        "_081BF8B4: .4byte gSummaryPage_Info_Tilemap\n\t"
         "_081BF8B8: .4byte gUnknown_203CBE8\n\t"
         "_081BF8BC: .4byte 0x000040F0\n\t"
         "_081BF8C0:\n\t"
@@ -1271,7 +1265,7 @@ __attribute__((naked)) void SummaryScreen_DecompressGraphics(void)
         "	ldr r1, [r4]\n\t"
         "	b _081BF9AA\n\t"
         "	.align 2, 0\n\t"
-        "_081BF8D0: .4byte gUnknown_8D98E8C\n\t"
+        "_081BF8D0: .4byte gSummaryPage_InfoEgg_Tilemap\n\t"
         "_081BF8D4: .4byte 0x000008BC\n\t"
         "_081BF8D8:\n\t"
         "	ldr r0, _081BF8E8\n\t"
@@ -1282,7 +1276,7 @@ __attribute__((naked)) void SummaryScreen_DecompressGraphics(void)
         "	ldr r1, [r4]\n\t"
         "	b _081BF9AA\n\t"
         "	.align 2, 0\n\t"
-        "_081BF8E8: .4byte gUnknown_8D98A44\n\t"
+        "_081BF8E8: .4byte gSummaryPage_Skills_Tilemap\n\t"
         "_081BF8EC: .4byte 0x000018BC\n\t"
         "_081BF8F0:\n\t"
         "	ldr r0, _081BF900\n\t"
@@ -1293,7 +1287,7 @@ __attribute__((naked)) void SummaryScreen_DecompressGraphics(void)
         "	ldr r1, [r4]\n\t"
         "	b _081BF9AA\n\t"
         "	.align 2, 0\n\t"
-        "_081BF900: .4byte gUnknown_8D98BA8\n\t"
+        "_081BF900: .4byte gSummaryPage_BattleMoves_Tilemap\n\t"
         "_081BF904: .4byte 0x000028BC\n\t"
         "_081BF908:\n\t"
         "	ldr r0, _081BF918\n\t"
@@ -1304,7 +1298,7 @@ __attribute__((naked)) void SummaryScreen_DecompressGraphics(void)
         "	ldr r1, [r4]\n\t"
         "	b _081BF9AA\n\t"
         "	.align 2, 0\n\t"
-        "_081BF918: .4byte gUnknown_8D98D14\n\t"
+        "_081BF918: .4byte gSummaryPage_ContestMoves_Tilemap\n\t"
         "_081BF91C: .4byte 0x000038BC\n\t"
         "_081BF920:\n\t"
         "	ldr r0, _081BF940\n\t"
@@ -1322,7 +1316,7 @@ __attribute__((naked)) void SummaryScreen_DecompressGraphics(void)
         "	adds r1, r1, r2\n\t"
         "	b _081BF9AE\n\t"
         "	.align 2, 0\n\t"
-        "_081BF940: .4byte gUnknown_8D9879C\n\t"
+        "_081BF940: .4byte gSummaryScreen_Pal\n\t"
         "_081BF944: .4byte gUnknown_8D85604\n\t"
         "_081BF948: .4byte gUnknown_203CBE8\n\t"
         "_081BF94C: .4byte 0x000040F0\n\t"
@@ -1395,7 +1389,7 @@ __attribute__((naked)) void SummaryScreen_DecompressGraphics(void)
         "	movs r0, #1\n\t"
         "	b _081BF9EE\n\t"
         "	.align 2, 0\n\t"
-        "_081BF9E0: .4byte gUnknown_8D97C54\n\t"
+        "_081BF9E0: .4byte gMoveTypes_Pal\n\t"
         "_081BF9E4: .4byte gUnknown_203CBE8\n\t"
         "_081BF9E8: .4byte 0x000040F0\n\t"
         "_081BF9EC:\n\t"
@@ -9309,7 +9303,7 @@ __attribute__((naked)) void PrintMoveDetails(void)
         "_081C3728: .4byte sPageMovesTemplate\n\t"
         "_081C372C: .4byte gUnknown_203CBE8\n\t"
         "_081C3730: .4byte 0x000040C0\n\t"
-        "_081C3734: .4byte gUnknown_85E7FFC\n\t"
+        "_081C3734: .4byte gMoveDescriptions - 56\n\t"
         "_081C3738:\n\t"
         "	ldr r2, _081C3760\n\t"
         "	ldr r1, _081C3764\n\t"

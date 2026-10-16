@@ -5,7 +5,9 @@
 
 extern u8 gLastViewedMonIndex;
 
-extern const u8 *const gMoveDescriptionPointers[];
+#define JP_MOVE_DESCRIPTION_LENGTH 56
+
+extern const u8 gMoveDescriptions[][JP_MOVE_DESCRIPTION_LENGTH];
 extern const u8 *const gNatureNamePointers[];
 
 void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, void (*callback)(void));

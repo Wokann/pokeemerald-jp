@@ -628,25 +628,6 @@ SUMMARY_SCREEN_RESOURCES const u32 gSummaryPage_BattleMoves_Tilemap[] = INCBIN_U
 SUMMARY_SCREEN_RESOURCES const u32 gSummaryPage_ContestMoves_Tilemap[] = INCBIN_U32("graphics/summary_screen/page_contest_moves.bin.lz");
 SUMMARY_SCREEN_RESOURCES const u32 gSummaryPage_InfoEgg_Tilemap[] = INCBIN_U32("graphics/summary_screen/page_info_egg.bin.lz");
 
-// Keep the ROM-locked Summary Screen literal pools on their original names.
-__asm__(
-    ".global gUnknown_8D97C54\n"
-    ".set gUnknown_8D97C54, gMoveTypes_Pal\n"
-    ".global gUnknown_8D97DD0\n"
-    ".set gUnknown_8D97DD0, gSummaryScreen_Gfx\n"
-    ".global gUnknown_8D9879C\n"
-    ".set gUnknown_8D9879C, gSummaryScreen_Pal\n"
-    ".global gUnknown_8D9888C\n"
-    ".set gUnknown_8D9888C, gSummaryPage_Info_Tilemap\n"
-    ".global gUnknown_8D98A44\n"
-    ".set gUnknown_8D98A44, gSummaryPage_Skills_Tilemap\n"
-    ".global gUnknown_8D98BA8\n"
-    ".set gUnknown_8D98BA8, gSummaryPage_BattleMoves_Tilemap\n"
-    ".global gUnknown_8D98D14\n"
-    ".set gUnknown_8D98D14, gSummaryPage_ContestMoves_Tilemap\n"
-    ".global gUnknown_8D98E8C\n"
-    ".set gUnknown_8D98E8C, gSummaryPage_InfoEgg_Tilemap\n"
-);
 
 #undef SUMMARY_SCREEN_RESOURCES
 

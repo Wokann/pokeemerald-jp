@@ -360,8 +360,6 @@ const u8 *const sLvlUpStatStrings[] MENU_SPECIALIZED_CONDITION_DATA =
 };
 
 extern void sub_08198D44(const struct WindowTemplate *template, u8 arg1, u8 arg2, u8 arg3);
-#define JP_MOVE_DESCRIPTION_LENGTH 56
-extern const u8 gMoveDescriptionsJP[]; // JP fixed-width move-description table (0x38-byte entries)
 
 static void MailboxMenu_MoveCursorFunc(s32, bool8, struct ListMenu *);
 static void ConditionGraph_CalcRightHalf(struct ConditionGraph *);
@@ -919,7 +917,7 @@ u8 LoadMoveRelearnerMovesList(const struct ListMenuItem *items, u16 numChoices)
 
 // JP 0x081D200C: the JP build merges the cursor SE, the battle move
 // description and the contest move description into one callback that
-// redraws both windows with FillWindowPixelRect. Kept as asm.
+// redraws both windows with FillWindowPixelRect.
 void sub_081D200C(u32 chosenMove, bool8 onInit)
 {
     u8 buffer[8];
@@ -959,7 +957,7 @@ void sub_081D200C(u32 chosenMove, bool8 onInit)
             ConvertIntToDecimalStringN(buffer, gBattleMoves[chosenMove].accuracy, STR_CONV_MODE_LEFT_ALIGN, 3);
         AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, buffer, 0x78, 0x2A, TEXT_SKIP_DRAW, NULL);
 
-        AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, gMoveDescriptionsJP + chosenMove * JP_MOVE_DESCRIPTION_LENGTH, 0, 0x42, 0, NULL);
+        AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, gMoveDescriptions[chosenMove - 1], 0, 0x42, 0, NULL);
 
         AddTextPrinterParameterized(RELEARNERWIN_DESC_CONTEST, FONT_NORMAL, gContestMoveTypeTextPointers[gContestMoves[chosenMove].contestCategory], 0x20, 0x1A, TEXT_SKIP_DRAW, NULL);
 
