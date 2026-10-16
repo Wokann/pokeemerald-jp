@@ -14,7 +14,11 @@ NM = shutil.which('arm-none-eabi-nm')
 
 def owner():
     source = (ROOT / 'src/graphics.c').read_text()
-    return source.split('#define BATTLE_FRONTIER_GRAPHICS ', 1)[1].split('#undef INTRO_SCENE_2_PLAYER_PALETTE', 1)[0]
+    frontier = source.split('#define BATTLE_FRONTIER_GRAPHICS ', 1)[1].split('#undef BATTLE_FRONTIER_GRAPHICS', 1)[0]
+    intro = (ROOT / 'src/data/graphics/intro_scene.h').read_text()
+    palettes = '\n'.join(line for line in intro.splitlines() if re.search(r'const u16 (?:gIntroGameFreakTextFade_Pal|gIntroPlayer_Pal)\[\]', line))
+    return frontier + palettes
+
 
 
 def resources():
@@ -30,7 +34,7 @@ class FrontierIntroAssetTests(unittest.TestCase):
         raw = (ROOT / 'data/data_rest2c.s').read_text()
         self.assertNotIn('gUnknown_8D85C74', raw)
         self.assertNotIn('data_rest2c_after_battle_environment_graphics', raw)
-        self.assertIn('gUnknown_8D85CB4:', raw)
+        self.assertIn('gIntro3Bg_Pal[16][16]', (ROOT / 'src/data/graphics/intro_scene.h').read_text())
 
     def test_complete_gf_table_and_actual_player_palette_are_distinct(self):
         intro = (ROOT / 'src/intro.c').read_text()
@@ -39,7 +43,7 @@ class FrontierIntroAssetTests(unittest.TestCase):
         self.assertEqual(intro.count('.4byte gIntroGameFreakTextFade_Pal + 64\\n'), 3)
         linker = (ROOT / 'ld_script_jp.txt').read_text()
         self.assertNotIn('gUnknown_8D85C54 = gIntroPlayer_Pal', linker)
-        self.assertEqual(linker.count('src/graphics.o(.rodata.intro_scene_1_text_fade_palette)'), 1)
+        self.assertEqual(linker.count('src/graphics.o(.rodata.intro_scene_graphics)'), 1)
         table = (ROOT / 'data/intro_credits_graphics.s').read_text()
         self.assertEqual(table.count('.4byte gIntroPlayer_Pal\n'), 2)
 

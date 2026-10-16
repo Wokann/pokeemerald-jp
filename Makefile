@@ -1276,6 +1276,7 @@ clean: clean-tools
 	rm -f $(JP_FLDEFF_MISC_ASSETS)
 	rm -f $(JP_BATTLE_ANIM_FAMILY_ASSETS) $(JP_BATTLE_ANIM_FAMILY_INTERMEDIATES)
 	rm -f $(JP_EVOLUTION_SCENE_ASSETS) $(JP_EVOLUTION_SCENE_INTERMEDIATES)
+	rm -f $(JP_INTRO_SCENE_ASSETS) $(JP_INTRO_SCENE_INTERMEDIATES)
 	rm -f $(JP_FRONTIER_UI_ASSETS) $(JP_FRONTIER_UI_INTERMEDIATES)
 
 # All build artifacts wait for the host-tool chain, so a fresh checkout can
@@ -1578,15 +1579,15 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/intro/scene_2/volbeat.png.4bpp.lz graphics/intro/scene_2/torchic.png.4bpp.lz \
 	graphics/intro/scene_2/manectric.png.4bpp.lz graphics/intro/scene_2/flygon.png.4bpp.lz \
 	graphics/intro/scene_2/brendan.png.4bpp.lz graphics/intro/scene_2/may.png.4bpp.lz \
-	graphics/intro/scene_3/groudon.8bpp.lz graphics/intro/scene_3/groudon.bin.lz \
-	graphics/intro/scene_3/kyogre.8bpp.lz graphics/intro/scene_3/kyogre.bin.lz \
-	graphics/intro/scene_3/legend_bg.4bpp.lz graphics/intro/scene_3/groudon_bg.bin.lz \
-	graphics/intro/scene_3/kyogre_bg.bin.lz graphics/intro/scene_3/clouds.4bpp.lz \
+	graphics/intro/scene_3/groudon.png.8bpp.lz graphics/intro/scene_3/groudon.bin.lz \
+	graphics/intro/scene_3/kyogre.png.8bpp.lz graphics/intro/scene_3/kyogre.bin.lz \
+	graphics/intro/scene_3/legend_bg.png.4bpp.lz graphics/intro/scene_3/groudon_bg.bin.lz \
+	graphics/intro/scene_3/kyogre_bg.bin.lz graphics/intro/scene_3/clouds.png.4bpp.lz \
 	graphics/intro/scene_3/clouds_left.bin.lz graphics/intro/scene_3/clouds_right.bin.lz \
 	graphics/intro/scene_3/clouds_sun.bin.lz \
-	graphics/intro/scene_3/rayquaza.4bpp.lz graphics/intro/scene_3/rayquaza.bin.lz \
+	graphics/intro/scene_3/rayquaza.png.4bpp.lz graphics/intro/scene_3/rayquaza.bin.lz \
 	graphics/intro/scene_3/unused_1.bin.lz graphics/intro/scene_3/unused_2.bin.lz \
-	graphics/intro/scene_3/rayquaza_clouds.4bpp.lz graphics/intro/scene_3/rayquaza_clouds.bin.lz \
+	graphics/intro/scene_3/rayquaza_clouds.png.4bpp.lz graphics/intro/scene_3/rayquaza_clouds.bin.lz \
 	graphics/intro/scene_3/lightning.png.4bpp.lz graphics/intro/scene_3/lightning.png.gbapal \
 	graphics/intro/scene_3/bubbles.png.4bpp.lz graphics/intro/scene_3/bubbles.png.gbapal \
 	graphics/intro/scene_1/flygon.png.4bpp.lz graphics/intro/scene_1/sparkle.png.4bpp.lz \
@@ -2997,7 +2998,7 @@ $(OBJ_DIR)/data/battle_textbox.o: data/battle_textbox.s baserom_jp.gba
 
 
 
-$(OBJ_DIR)/data/data_rest2c.o: data/data_rest2c.s baserom_jp.gba graphics/intro/scene_1/flygon.png.4bpp.lz
+$(OBJ_DIR)/data/data_rest2c.o: data/data_rest2c.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
@@ -4614,3 +4615,74 @@ $(filter %.lz,$(JP_FRONTIER_UI_ASSETS)): %.lz: % Makefile | tools
 	$(GFX) $< $@
 
 $(C_BUILDDIR)/graphics.o: $(JP_FRONTIER_UI_ASSETS)
+
+JP_INTRO_SCENE_ASSETS := graphics/intro/scene_1/flygon.png.4bpp.lz \
+	graphics/intro/scene_1/sparkle.png.4bpp.lz \
+	graphics/intro/scene_1/text.pal.gbapal \
+	graphics/intro/scene_2/brendan.png.4bpp.lz \
+	graphics/intro/scene_2/flygon.png.4bpp.lz \
+	graphics/intro/scene_2/flygon.png.gbapal \
+	graphics/intro/scene_2/manectric.png.4bpp.lz \
+	graphics/intro/scene_2/manectric.png.gbapal \
+	graphics/intro/scene_2/may.png.4bpp.lz \
+	graphics/intro/scene_2/player.pal.gbapal \
+	graphics/intro/scene_2/torchic.png.4bpp.lz \
+	graphics/intro/scene_2/torchic.png.gbapal \
+	graphics/intro/scene_2/volbeat.png.4bpp.lz \
+	graphics/intro/scene_2/volbeat.png.gbapal \
+	graphics/intro/scene_3/bg.pal.gbapal \
+	graphics/intro/scene_3/bubbles.png.4bpp.lz \
+	graphics/intro/scene_3/bubbles.png.gbapal \
+	graphics/intro/scene_3/clouds.png.4bpp.lz \
+	graphics/intro/scene_3/clouds_left.bin.lz \
+	graphics/intro/scene_3/clouds_right.bin.lz \
+	graphics/intro/scene_3/clouds_sun.bin.lz \
+	graphics/intro/scene_3/groudon.bin.lz \
+	graphics/intro/scene_3/groudon.png.8bpp.lz \
+	graphics/intro/scene_3/groudon_bg.bin.lz \
+	graphics/intro/scene_3/kyogre.bin.lz \
+	graphics/intro/scene_3/kyogre.png.8bpp.lz \
+	graphics/intro/scene_3/kyogre_bg.bin.lz \
+	graphics/intro/scene_3/legend_bg.png.4bpp.lz \
+	graphics/intro/scene_3/lightning.png.4bpp.lz \
+	graphics/intro/scene_3/lightning.png.gbapal \
+	graphics/intro/scene_3/rayquaza.bin.lz \
+	graphics/intro/scene_3/rayquaza.png.4bpp.lz \
+	graphics/intro/scene_3/rayquaza_clouds.bin.lz \
+	graphics/intro/scene_3/rayquaza_clouds.png.4bpp.lz \
+	graphics/intro/scene_3/unused_1.bin.lz \
+	graphics/intro/scene_3/unused_2.bin.lz
+
+JP_INTRO_SCENE_INTERMEDIATES := graphics/intro/scene_1/flygon.png.4bpp \
+	graphics/intro/scene_1/sparkle.png.4bpp \
+	graphics/intro/scene_2/brendan.png.4bpp \
+	graphics/intro/scene_2/flygon.png.4bpp \
+	graphics/intro/scene_2/manectric.png.4bpp \
+	graphics/intro/scene_2/may.png.4bpp \
+	graphics/intro/scene_2/torchic.png.4bpp \
+	graphics/intro/scene_2/volbeat.png.4bpp \
+	graphics/intro/scene_3/bubbles.png.4bpp \
+	graphics/intro/scene_3/clouds.png.4bpp \
+	graphics/intro/scene_3/groudon.png.8bpp \
+	graphics/intro/scene_3/kyogre.png.8bpp \
+	graphics/intro/scene_3/legend_bg.png.4bpp \
+	graphics/intro/scene_3/lightning.png.4bpp \
+	graphics/intro/scene_3/rayquaza.png.4bpp \
+	graphics/intro/scene_3/rayquaza_clouds.png.4bpp
+
+graphics/intro/scene_1/flygon.png.4bpp graphics/intro/scene_1/sparkle.png.4bpp graphics/intro/scene_2/brendan.png.4bpp graphics/intro/scene_2/flygon.png.4bpp graphics/intro/scene_2/manectric.png.4bpp graphics/intro/scene_2/may.png.4bpp graphics/intro/scene_2/torchic.png.4bpp graphics/intro/scene_2/volbeat.png.4bpp graphics/intro/scene_3/bubbles.png.4bpp graphics/intro/scene_3/clouds.png.4bpp graphics/intro/scene_3/legend_bg.png.4bpp graphics/intro/scene_3/lightning.png.4bpp graphics/intro/scene_3/rayquaza.png.4bpp graphics/intro/scene_3/rayquaza_clouds.png.4bpp: %.png.4bpp: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/intro/scene_3/groudon.png.8bpp graphics/intro/scene_3/kyogre.png.8bpp: %.png.8bpp: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/intro/scene_2/flygon.png.gbapal graphics/intro/scene_2/manectric.png.gbapal graphics/intro/scene_2/torchic.png.gbapal graphics/intro/scene_2/volbeat.png.gbapal graphics/intro/scene_3/bubbles.png.gbapal graphics/intro/scene_3/lightning.png.gbapal: %.png.gbapal: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/intro/scene_3/bg.pal.gbapal: %.pal.gbapal: %.pal Makefile | tools
+	$(GFX) $< $@
+
+$(filter %.lz,$(JP_INTRO_SCENE_ASSETS)): %.lz: % Makefile | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/graphics.o: src/data/graphics/intro_scene.h $(JP_INTRO_SCENE_ASSETS)

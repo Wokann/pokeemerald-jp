@@ -710,87 +710,9 @@ BATTLE_FRONTIER_GRAPHICS const u32 gMultiBattleIntroBg_Player_Tilemap[] = INCGFX
 
 #undef BATTLE_FRONTIER_GRAPHICS
 
-#define INTRO_SCENE_1_TEXT_FADE_PALETTE __attribute__((section(".rodata.intro_scene_1_text_fade_palette")))
-
-INTRO_SCENE_1_TEXT_FADE_PALETTE const u16 gIntroGameFreakTextFade_Pal[] = INCGFX_U16("graphics/intro/scene_1/text.pal", ".gbapal");
-
-#undef INTRO_SCENE_1_TEXT_FADE_PALETTE
-
-#define INTRO_SCENE_2_PLAYER_PALETTE __attribute__((section(".rodata.intro_scene_2_player_palette")))
-
-INTRO_SCENE_2_PLAYER_PALETTE const u16 gIntroPlayer_Pal[] = INCGFX_U16("graphics/intro/scene_2/player.pal", ".gbapal");
-
-#undef INTRO_SCENE_2_PLAYER_PALETTE
-
-#define INTRO_SCENE_2_CHARACTER_GRAPHICS __attribute__((section(".rodata.intro_scene_2_character_graphics")))
-
-// The JP LZ77 files retain their original stream-alignment padding.
-INTRO_SCENE_2_CHARACTER_GRAPHICS const u16 gIntroVolbeat_Pal[] = INCBIN_U16("graphics/intro/scene_2/volbeat.png.gbapal");
-INTRO_SCENE_2_CHARACTER_GRAPHICS const u16 gIntroTorchic_Pal[] = INCBIN_U16("graphics/intro/scene_2/torchic.png.gbapal");
-INTRO_SCENE_2_CHARACTER_GRAPHICS const u16 gIntroManectric_Pal[] = INCBIN_U16("graphics/intro/scene_2/manectric.png.gbapal");
-INTRO_SCENE_2_CHARACTER_GRAPHICS const u16 gIntroFlygon_Pal[] = INCBIN_U16("graphics/intro/scene_2/flygon.png.gbapal");
-INTRO_SCENE_2_CHARACTER_GRAPHICS const u32 gIntroVolbeat_Gfx[] = INCBIN_U32("graphics/intro/scene_2/volbeat.png.4bpp.lz");
-INTRO_SCENE_2_CHARACTER_GRAPHICS const u32 gIntroTorchic_Gfx[] = INCBIN_U32("graphics/intro/scene_2/torchic.png.4bpp.lz");
-INTRO_SCENE_2_CHARACTER_GRAPHICS const u32 gIntroManectric_Gfx[] = INCBIN_U32("graphics/intro/scene_2/manectric.png.4bpp.lz");
-INTRO_SCENE_2_CHARACTER_GRAPHICS const u32 gIntroFlygon_Gfx[] = INCBIN_U32("graphics/intro/scene_2/flygon.png.4bpp.lz");
-INTRO_SCENE_2_CHARACTER_GRAPHICS const u32 gIntroBrendan_Gfx[] = INCBIN_U32("graphics/intro/scene_2/brendan.png.4bpp.lz");
-INTRO_SCENE_2_CHARACTER_GRAPHICS const u32 gIntroMay_Gfx[] = INCBIN_U32("graphics/intro/scene_2/may.png.4bpp.lz");
-
-#undef INTRO_SCENE_2_CHARACTER_GRAPHICS
-
-#define INTRO_SCENE_3_GRAPHICS __attribute__((section(".rodata.intro_scene_3_graphics")))
-
-// The JP LZ77 files retain their original stream-alignment padding.
-INTRO_SCENE_3_GRAPHICS const u32 gIntroGroudon_Gfx[] = INCBIN_U32("graphics/intro/scene_3/groudon.8bpp.lz");
-INTRO_SCENE_3_GRAPHICS const u32 gIntroGroudon_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/groudon.bin.lz");
-INTRO_SCENE_3_GRAPHICS const u32 gIntroKyogre_Gfx[] = INCBIN_U32("graphics/intro/scene_3/kyogre.8bpp.lz");
-INTRO_SCENE_3_GRAPHICS const u32 gIntroKyogre_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/kyogre.bin.lz");
-INTRO_SCENE_3_GRAPHICS const u32 gIntroLegendBg_Gfx[] = INCBIN_U32("graphics/intro/scene_3/legend_bg.4bpp.lz");
-INTRO_SCENE_3_GRAPHICS const u32 gIntroGroudonBg_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/groudon_bg.bin.lz");
-INTRO_SCENE_3_GRAPHICS const u32 gIntroKyogreBg_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/kyogre_bg.bin.lz");
-INTRO_SCENE_3_GRAPHICS const u32 gIntroClouds_Gfx[] = INCBIN_U32("graphics/intro/scene_3/clouds.4bpp.lz");
-INTRO_SCENE_3_GRAPHICS const u32 gIntroCloudsLeft_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/clouds_left.bin.lz");
-INTRO_SCENE_3_GRAPHICS const u32 gIntroCloudsRight_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/clouds_right.bin.lz");
-INTRO_SCENE_3_GRAPHICS const u32 gIntroCloudsSun_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/clouds_sun.bin.lz");
-
-#undef INTRO_SCENE_3_GRAPHICS
-
-#define INTRO_SCENE_3_LIGHTNING_GRAPHICS __attribute__((section(".rodata.intro_scene_3_lightning_graphics")))
-
-// The JP LZ77 graphics stream retains its original stream-alignment padding.
-INTRO_SCENE_3_LIGHTNING_GRAPHICS const u32 gIntroLightning_Gfx[] = INCBIN_U32("graphics/intro/scene_3/lightning.png.4bpp.lz");
-INTRO_SCENE_3_LIGHTNING_GRAPHICS const u16 gIntroLightning_Pal[] = INCBIN_U16("graphics/intro/scene_3/lightning.png.gbapal");
-
-#undef INTRO_SCENE_3_LIGHTNING_GRAPHICS
-
-#define INTRO_SCENE_3_RAYQUAZA_GRAPHICS __attribute__((section(".rodata.intro_scene_3_rayquaza_graphics")))
-
-// The JP LZ77 files retain their original stream-alignment padding.
-INTRO_SCENE_3_RAYQUAZA_GRAPHICS const u32 gIntroRayquaza_Gfx[] = INCBIN_U32("graphics/intro/scene_3/rayquaza.4bpp.lz");
-INTRO_SCENE_3_RAYQUAZA_GRAPHICS const u32 gIntroRayquaza_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/rayquaza.bin.lz");
-INTRO_SCENE_3_RAYQUAZA_GRAPHICS const u32 gIntroUnused1_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/unused_1.bin.lz");
-INTRO_SCENE_3_RAYQUAZA_GRAPHICS const u32 gIntroUnused2_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/unused_2.bin.lz");
-INTRO_SCENE_3_RAYQUAZA_GRAPHICS const u32 gIntroRayquazaClouds_Gfx[] = INCBIN_U32("graphics/intro/scene_3/rayquaza_clouds.4bpp.lz");
-// The JP stream is 0x27A bytes; the following two ROM bytes are unrelated data.
-INTRO_SCENE_3_RAYQUAZA_GRAPHICS const u8 gIntroRayquazaClouds_Tilemap[] = INCBIN_U8("graphics/intro/scene_3/rayquaza_clouds.bin.lz");
-
-#undef INTRO_SCENE_3_RAYQUAZA_GRAPHICS
-
-#define INTRO_SCENE_3_BUBBLES_GRAPHICS __attribute__((section(".rodata.intro_scene_3_bubbles_graphics")))
-
-// The JP LZ77 graphics stream retains its original stream-alignment padding.
-INTRO_SCENE_3_BUBBLES_GRAPHICS const u32 gIntroBubbles_Gfx[] = INCBIN_U32("graphics/intro/scene_3/bubbles.png.4bpp.lz");
-INTRO_SCENE_3_BUBBLES_GRAPHICS const u16 gIntroBubbles_Pal[] = INCBIN_U16("graphics/intro/scene_3/bubbles.png.gbapal");
-
-#undef INTRO_SCENE_3_BUBBLES_GRAPHICS
-
-#define INTRO_SCENE_1_EFFECTS_GRAPHICS __attribute__((section(".rodata.intro_scene_1_effects_graphics")))
-
-// The JP LZ77 graphics streams retain their original stream-alignment padding.
-INTRO_SCENE_1_EFFECTS_GRAPHICS const u32 gIntroFlygonSilhouette_Gfx[] = INCBIN_U32("graphics/intro/scene_1/flygon.png.4bpp.lz");
-INTRO_SCENE_1_EFFECTS_GRAPHICS const u32 gIntroSparkle_Gfx[] = INCBIN_U32("graphics/intro/scene_1/sparkle.png.4bpp.lz");
-
-#undef INTRO_SCENE_1_EFFECTS_GRAPHICS
+#define INTRO_SCENE_GRAPHICS __attribute__((section(".rodata.intro_scene_graphics")))
+#include "data/graphics/intro_scene.h"
+#undef INTRO_SCENE_GRAPHICS
 
 #define BATTLE_ANIM_SANDSTORM_RESOURCES __attribute__((section(".rodata.battle_anim_sandstorm_resources")))
 

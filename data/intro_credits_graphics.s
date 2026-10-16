@@ -202,9 +202,9 @@ gSpritePalettes_IntroPlayerFlygon: @ 0x085D27DC
 	.2byte 0x03EA, 0x0000
 	.4byte gIntroPlayer_Pal
 	.2byte 0x03EB, 0x0000
-	.4byte 0x08D85F14
+	.4byte gIntroFlygon_Pal
 	.2byte 0x03EC, 0x0000
-	.4byte 0x08D85F14
+	.4byte gIntroFlygon_Pal
 	.2byte 0x03ED, 0x0000
 	.4byte 0
 	.2byte 0x0000, 0x0000

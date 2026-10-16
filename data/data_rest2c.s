@@ -27,54 +27,6 @@ gBattleVSFrame_Pal: @ 0x8D77B88
 gVsLettersGfx: @ 0x8D77BB0
 	.incbin "graphics/battle_transitions/vs.4bpp.lz"
 
-	.section .rodata.data_rest2c_after_intro_scene_2_player_palette
-
-	.globl gUnknown_8D85CB4
-gUnknown_8D85CB4: @ 0x8D85CB4
-	.incbin "baserom_jp.gba", 0xd85cb4, 0x182
-
-
-	.globl gUnknown_8D85E36
-gUnknown_8D85E36: @ 0x8D85E36
-	.incbin "baserom_jp.gba", 0xd85e36, 0xa
-
-
-	.globl gUnknown_8D85E40
-gUnknown_8D85E40: @ 0x8D85E40
-	.incbin "baserom_jp.gba", 0xd85e40, 0x16
-
-
-	.globl gUnknown_8D85E56
-gUnknown_8D85E56: @ 0x8D85E56
-	.incbin "baserom_jp.gba", 0xd85e56, 0xa
-
-
-	.globl gUnknown_8D85E60
-gUnknown_8D85E60: @ 0x8D85E60
-	.incbin "baserom_jp.gba", 0xd85e60, 0x54
-
-
-	.section .rodata.data_rest2c_after_intro_scene_2_character_graphics
-
-
-	.section .rodata.data_rest2c_after_intro_scene_3_graphics
-
-
-	.section .rodata.data_rest2c_after_intro_scene_3_lightning_graphics
-
-	.section .rodata.data_rest2c_after_intro_scene_3_rayquaza_graphics
-
-	.globl gUnknown_8D8CF26
-gUnknown_8D8CF26: @ 0x8D8CF26
-	.incbin "baserom_jp.gba", 0xD8CF26, 0x2
-
-
-	.section .rodata.data_rest2c_after_intro_scene_3_bubbles_graphics
-
-
-	.section .rodata.data_rest2c_after_intro_scene_1_effects_graphics
-
-
 	.section .rodata.data_rest2c_after_battle_anim_sandstorm_resources
 
 	.section .rodata.data_rest2c_after_battle_anim_metal_sound_resources
