@@ -1076,7 +1076,7 @@ gTilesetPalettes_InsideShip:
 	.incbin "data/tilesets/secondary/inside_ship/palettes/15.gbapal"
 gTilesetTiles_SecretBase:
 	.incbin "data/tilesets/primary/secret_base/tiles.4bpp"
-gTilesetPalettes_SecretBase:
+gTilesetPalettes_SecretBase::
 	.incbin "data/tilesets/primary/secret_base/palettes/00.gbapal"
 	.incbin "data/tilesets/primary/secret_base/palettes/01.gbapal"
 	.incbin "data/tilesets/primary/secret_base/palettes/02.gbapal"

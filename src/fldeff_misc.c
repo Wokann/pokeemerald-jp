@@ -72,6 +72,257 @@ extern const u8 SecretBase_EventScript_ShrubUseSecretPower[];
 
 #include "fldeff_misc.h"
 
+#define FLDEFF_MISC_DATA __attribute__((section(".rodata.fldeff_misc_data"), aligned(4)))
+
+static const u8 sSecretPowerCave_Gfx[] FLDEFF_MISC_DATA = INCGFX_U8("graphics/field_effects/pics/secret_power_cave.png", ".4bpp", "-mwidth 2 -mheight 2");
+static const u8 sSecretPowerCave_Filler[32] FLDEFF_MISC_DATA = {0};
+static const u16 sSecretPowerCave_Pal[] FLDEFF_MISC_DATA = INCGFX_U16("graphics/field_effects/palettes/secret_power_cave.pal", ".gbapal");
+static const u8 sSecretPowerShrub_Gfx[] FLDEFF_MISC_DATA = INCGFX_U8("graphics/field_effects/pics/secret_power_shrub.png", ".4bpp", "-mwidth 2 -mheight 2");
+static const u8 sSecretPowerTree_Gfx[] FLDEFF_MISC_DATA = INCGFX_U8("graphics/field_effects/pics/secret_power_tree.png", ".4bpp", "-mwidth 2 -mheight 2");
+static const u16 sSecretPowerPlant_Pal[] FLDEFF_MISC_DATA = INCGFX_U16("graphics/field_effects/palettes/secret_power_plant.pal", ".gbapal");
+
+// TODO: These should also be combined into a single image, not matching for some reason
+static const u8 sSandPillar0_Gfx[] FLDEFF_MISC_DATA = INCGFX_U8("graphics/field_effects/pics/sand_pillar/0.png", ".4bpp");
+static const u8 sSandPillar1_Gfx[] FLDEFF_MISC_DATA = INCGFX_U8("graphics/field_effects/pics/sand_pillar/1.png", ".4bpp");
+static const u8 sSandPillar2_Gfx[] FLDEFF_MISC_DATA = INCGFX_U8("graphics/field_effects/pics/sand_pillar/2.png", ".4bpp");
+
+static const struct OamData sOam_SecretPower FLDEFF_MISC_DATA =
+{
+    .y = 0,
+    .x = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .size = SPRITE_SIZE(16x16),
+    .priority = 2,
+};
+
+static const union AnimCmd sAnim_SecretPowerCave[] FLDEFF_MISC_DATA =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(1, 8),
+    ANIMCMD_FRAME(2, 8),
+    ANIMCMD_FRAME(3, 8),
+    ANIMCMD_FRAME(4, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_VineDropLeft[] FLDEFF_MISC_DATA =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(1, 8),
+    ANIMCMD_FRAME(2, 8),
+    ANIMCMD_FRAME(3, 8),
+    ANIMCMD_FRAME(4, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_VineRiseLeft[] FLDEFF_MISC_DATA =
+{
+    ANIMCMD_FRAME(4, 8),
+    ANIMCMD_FRAME(3, 8),
+    ANIMCMD_FRAME(2, 8),
+    ANIMCMD_FRAME(1, 8),
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_VineDropRight[] FLDEFF_MISC_DATA =
+{
+    ANIMCMD_FRAME(0, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(1, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(2, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(3, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(4, 8, .hFlip = TRUE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_VineRiseRight[] FLDEFF_MISC_DATA =
+{
+    ANIMCMD_FRAME(4, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(3, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(2, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(1, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(0, 8, .hFlip = TRUE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_SecretPowerShrub[] FLDEFF_MISC_DATA =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(1, 8),
+    ANIMCMD_FRAME(2, 8),
+    ANIMCMD_FRAME(3, 8),
+    ANIMCMD_FRAME(4, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnimTable_SecretPowerCave[] FLDEFF_MISC_DATA =
+{
+    sAnim_SecretPowerCave,
+};
+
+static const union AnimCmd *const sAnimTable_SecretPowerTree[] FLDEFF_MISC_DATA =
+{
+    sAnim_VineDropLeft,
+    sAnim_VineRiseLeft,
+    sAnim_VineDropRight,
+    sAnim_VineRiseRight,
+};
+
+static const union AnimCmd *const sAnimTable_SecretPowerShrub[] FLDEFF_MISC_DATA =
+{
+    sAnim_SecretPowerShrub,
+};
+
+static const struct SpriteFrameImage sPicTable_SecretPowerCave[] FLDEFF_MISC_DATA =
+{
+    overworld_frame(sSecretPowerCave_Gfx, 2, 2, 0),
+    overworld_frame(sSecretPowerCave_Gfx, 2, 2, 1),
+    overworld_frame(sSecretPowerCave_Gfx, 2, 2, 2),
+    overworld_frame(sSecretPowerCave_Gfx, 2, 2, 3),
+    overworld_frame(sSecretPowerCave_Gfx, 2, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_SecretPowerTree[] FLDEFF_MISC_DATA =
+{
+    overworld_frame(sSecretPowerTree_Gfx, 2, 2, 0),
+    overworld_frame(sSecretPowerTree_Gfx, 2, 2, 1),
+    overworld_frame(sSecretPowerTree_Gfx, 2, 2, 2),
+    overworld_frame(sSecretPowerTree_Gfx, 2, 2, 3),
+    overworld_frame(sSecretPowerTree_Gfx, 2, 2, 4),
+    // 6th frame exists but isnt accessed, the tree vine metatile is used instead
+};
+
+static const struct SpriteFrameImage sPicTable_SecretPowerShrub[] FLDEFF_MISC_DATA =
+{
+    overworld_frame(sSecretPowerShrub_Gfx, 2, 2, 0),
+    overworld_frame(sSecretPowerShrub_Gfx, 2, 2, 1),
+    overworld_frame(sSecretPowerShrub_Gfx, 2, 2, 2),
+    overworld_frame(sSecretPowerShrub_Gfx, 2, 2, 3),
+    overworld_frame(sSecretPowerShrub_Gfx, 2, 2, 4),
+};
+
+static const struct SpriteTemplate sSpriteTemplate_SecretPowerCave FLDEFF_MISC_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_SECRET_POWER_TREE,
+    .oam = &sOam_SecretPower,
+    .anims = sAnimTable_SecretPowerCave,
+    .images = sPicTable_SecretPowerCave,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = CaveEntranceSpriteCallback1,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_SecretPowerTree FLDEFF_MISC_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_SECRET_POWER_PLANT,
+    .oam = &sOam_SecretPower,
+    .anims = sAnimTable_SecretPowerTree,
+    .images = sPicTable_SecretPowerTree,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = TreeEntranceSpriteCallback1,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_SecretPowerShrub FLDEFF_MISC_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_SECRET_POWER_PLANT,
+    .oam = &sOam_SecretPower,
+    .anims = sAnimTable_SecretPowerShrub,
+    .images = sPicTable_SecretPowerShrub,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = ShrubEntranceSpriteCallback1,
+};
+
+const struct SpritePalette gSpritePalette_SecretPower_Cave FLDEFF_MISC_DATA = {sSecretPowerCave_Pal, FLDEFF_PAL_TAG_SECRET_POWER_TREE};
+const struct SpritePalette gSpritePalette_SecretPower_Plant FLDEFF_MISC_DATA = {sSecretPowerPlant_Pal, FLDEFF_PAL_TAG_SECRET_POWER_PLANT};
+
+static const struct OamData sOam_SandPillar FLDEFF_MISC_DATA =
+{
+    .x = 0,
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x32),
+    .size = SPRITE_SIZE(16x32),
+    .priority = 2,
+};
+
+static const union AnimCmd sAnim_SandPillar[] FLDEFF_MISC_DATA =
+{
+    ANIMCMD_FRAME(0, 6),
+    ANIMCMD_FRAME(1, 6),
+    ANIMCMD_FRAME(2, 6),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnimTable_SandPillar[] FLDEFF_MISC_DATA =
+{
+    sAnim_SandPillar,
+};
+
+static const struct SpriteFrameImage sPicTable_SandPillar[] FLDEFF_MISC_DATA =
+{
+    {sSandPillar0_Gfx, sizeof(sSandPillar0_Gfx)},
+    {sSandPillar1_Gfx, sizeof(sSandPillar1_Gfx)},
+    {sSandPillar2_Gfx, sizeof(sSandPillar2_Gfx)},
+};
+
+static const struct SpriteTemplate sSpriteTemplate_SandPillar FLDEFF_MISC_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_SAND_PILLAR,
+    .oam = &sOam_SandPillar,
+    .anims = sAnimTable_SandPillar,
+    .images = sPicTable_SandPillar,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_SandPillar_BreakTop,
+};
+
+const struct SpritePalette gSpritePalette_SandPillar FLDEFF_MISC_DATA = {gTilesetPalettes_SecretBase[5], FLDEFF_PAL_TAG_SAND_PILLAR};
+
+static const u8 sRecordMixLights_Gfx[] FLDEFF_MISC_DATA = INCGFX_U8("graphics/field_effects/pics/record_mix_lights.png", ".4bpp", "-mwidth 4 -mheight 1");
+static const u16 sRecordMixLights_Pal[] FLDEFF_MISC_DATA = INCGFX_U16("graphics/field_effects/palettes/record_mix_lights.pal", ".gbapal");
+
+static const struct SpriteFrameImage sPicTable_RecordMixLights[] FLDEFF_MISC_DATA =
+{
+    overworld_frame(sRecordMixLights_Gfx, 4, 1, 0),
+    overworld_frame(sRecordMixLights_Gfx, 4, 1, 1),
+    overworld_frame(sRecordMixLights_Gfx, 4, 1, 2),
+};
+
+static const struct SpritePalette sSpritePalette_RecordMixLights FLDEFF_MISC_DATA = {sRecordMixLights_Pal, 0x1000};
+
+static const union AnimCmd sAnim_RecordMixLights[] FLDEFF_MISC_DATA =
+{
+    ANIMCMD_FRAME(0, 30),
+    ANIMCMD_FRAME(1, 30),
+    ANIMCMD_FRAME(2, 30),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnimTable_RecordMixLights[] FLDEFF_MISC_DATA =
+{
+    sAnim_RecordMixLights,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_RecordMixLights FLDEFF_MISC_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = 0x1000,
+    .oam = &gObjectEventBaseOam_32x8,
+    .anims = sAnimTable_RecordMixLights,
+    .images = sPicTable_RecordMixLights,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+#undef FLDEFF_MISC_DATA
+
 void ComputerScreenOpenEffect(u16 increment, u16 unused, u8 priority)
 {
     CreateComputerScreenEffectTask(Task_ComputerScreenOpenEffect, increment, unused, priority);
@@ -362,160 +613,6 @@ void StartSecretBaseCaveFieldEffect(void)
     FieldEffectActiveListRemove(FLDEFF_USE_SECRET_POWER_CAVE);
     FieldEffectStart(FLDEFF_SECRET_POWER_CAVE);
 }
-
-extern const u8 sSecretPowerCave_Gfx[];
-extern const u8 sSecretPowerShrub_Gfx[];
-extern const u8 sSecretPowerTree_Gfx[];
-
-static const struct OamData sOam_SecretPower =
-{
-    .y = 0,
-    .x = 0,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_NORMAL,
-    .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(16x16),
-    .size = SPRITE_SIZE(16x16),
-    .priority = 2,
-};
-
-static const union AnimCmd sAnim_SecretPowerCave[] =
-{
-    ANIMCMD_FRAME(0, 8),
-    ANIMCMD_FRAME(1, 8),
-    ANIMCMD_FRAME(2, 8),
-    ANIMCMD_FRAME(3, 8),
-    ANIMCMD_FRAME(4, 8),
-    ANIMCMD_END,
-};
-
-static const union AnimCmd sAnim_VineDropLeft[] =
-{
-    ANIMCMD_FRAME(0, 8),
-    ANIMCMD_FRAME(1, 8),
-    ANIMCMD_FRAME(2, 8),
-    ANIMCMD_FRAME(3, 8),
-    ANIMCMD_FRAME(4, 8),
-    ANIMCMD_END,
-};
-
-static const union AnimCmd sAnim_VineRiseLeft[] =
-{
-    ANIMCMD_FRAME(4, 8),
-    ANIMCMD_FRAME(3, 8),
-    ANIMCMD_FRAME(2, 8),
-    ANIMCMD_FRAME(1, 8),
-    ANIMCMD_FRAME(0, 8),
-    ANIMCMD_END,
-};
-
-static const union AnimCmd sAnim_VineDropRight[] =
-{
-    ANIMCMD_FRAME(0, 8, .hFlip = TRUE),
-    ANIMCMD_FRAME(1, 8, .hFlip = TRUE),
-    ANIMCMD_FRAME(2, 8, .hFlip = TRUE),
-    ANIMCMD_FRAME(3, 8, .hFlip = TRUE),
-    ANIMCMD_FRAME(4, 8, .hFlip = TRUE),
-    ANIMCMD_END,
-};
-
-static const union AnimCmd sAnim_VineRiseRight[] =
-{
-    ANIMCMD_FRAME(4, 8, .hFlip = TRUE),
-    ANIMCMD_FRAME(3, 8, .hFlip = TRUE),
-    ANIMCMD_FRAME(2, 8, .hFlip = TRUE),
-    ANIMCMD_FRAME(1, 8, .hFlip = TRUE),
-    ANIMCMD_FRAME(0, 8, .hFlip = TRUE),
-    ANIMCMD_END,
-};
-
-static const union AnimCmd sAnim_SecretPowerShrub[] =
-{
-    ANIMCMD_FRAME(0, 8),
-    ANIMCMD_FRAME(1, 8),
-    ANIMCMD_FRAME(2, 8),
-    ANIMCMD_FRAME(3, 8),
-    ANIMCMD_FRAME(4, 8),
-    ANIMCMD_END,
-};
-
-static const union AnimCmd *const sAnimTable_SecretPowerCave[] =
-{
-    sAnim_SecretPowerCave,
-};
-
-static const union AnimCmd *const sAnimTable_SecretPowerTree[] =
-{
-    sAnim_VineDropLeft,
-    sAnim_VineRiseLeft,
-    sAnim_VineDropRight,
-    sAnim_VineRiseRight,
-};
-
-static const union AnimCmd *const sAnimTable_SecretPowerShrub[] =
-{
-    sAnim_SecretPowerShrub,
-};
-
-static const struct SpriteFrameImage sPicTable_SecretPowerCave[] =
-{
-    { sSecretPowerCave_Gfx + 0x000, 128, 0 },
-    { sSecretPowerCave_Gfx + 0x080, 128, 0 },
-    { sSecretPowerCave_Gfx + 0x100, 128, 0 },
-    { sSecretPowerCave_Gfx + 0x180, 128, 0 },
-    { sSecretPowerCave_Gfx + 0x200, 128, 0 },
-};
-
-static const struct SpriteFrameImage sPicTable_SecretPowerTree[] =
-{
-    { sSecretPowerTree_Gfx + 0x000, 128, 0 },
-    { sSecretPowerTree_Gfx + 0x080, 128, 0 },
-    { sSecretPowerTree_Gfx + 0x100, 128, 0 },
-    { sSecretPowerTree_Gfx + 0x180, 128, 0 },
-    { sSecretPowerTree_Gfx + 0x200, 128, 0 },
-};
-
-static const struct SpriteFrameImage sPicTable_SecretPowerShrub[] =
-{
-    { sSecretPowerShrub_Gfx + 0x000, 128, 0 },
-    { sSecretPowerShrub_Gfx + 0x080, 128, 0 },
-    { sSecretPowerShrub_Gfx + 0x100, 128, 0 },
-    { sSecretPowerShrub_Gfx + 0x180, 128, 0 },
-    { sSecretPowerShrub_Gfx + 0x200, 128, 0 },
-};
-
-static const struct SpriteTemplate sSpriteTemplate_SecretPowerCave =
-{
-    .tileTag = TAG_NONE,
-    .paletteTag = FLDEFF_PAL_TAG_SECRET_POWER_TREE,
-    .oam = &sOam_SecretPower,
-    .anims = sAnimTable_SecretPowerCave,
-    .images = sPicTable_SecretPowerCave,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = CaveEntranceSpriteCallback1,
-};
-
-static const struct SpriteTemplate sSpriteTemplate_SecretPowerTree =
-{
-    .tileTag = TAG_NONE,
-    .paletteTag = FLDEFF_PAL_TAG_SECRET_POWER_PLANT,
-    .oam = &sOam_SecretPower,
-    .anims = sAnimTable_SecretPowerTree,
-    .images = sPicTable_SecretPowerTree,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = TreeEntranceSpriteCallback1,
-};
-
-static const struct SpriteTemplate sSpriteTemplate_SecretPowerShrub =
-{
-    .tileTag = TAG_NONE,
-    .paletteTag = FLDEFF_PAL_TAG_SECRET_POWER_PLANT,
-    .oam = &sOam_SecretPower,
-    .anims = sAnimTable_SecretPowerShrub,
-    .images = sPicTable_SecretPowerShrub,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = ShrubEntranceSpriteCallback1,
-};
 
 bool8 FldEff_SecretPowerCave(void)
 {
@@ -949,7 +1046,6 @@ void DoSecretBaseGlitterMatSparkle(void)
 }
 
 
-extern const struct SpriteTemplate sSpriteTemplate_SandPillar;
 
 bool8 FldEff_SandPillar(void)
 {
@@ -1202,8 +1298,6 @@ void DoWateringBerryTreeAnim(void)
     CreateTask(Task_WateringBerryTreeAnim_0, 80);
 }
 
-extern const struct SpritePalette sSpritePalette_RecordMixLights;
-extern const struct SpriteTemplate sSpriteTemplate_RecordMixLights;
 
 u8 CreateRecordMixingLights(void)
 {

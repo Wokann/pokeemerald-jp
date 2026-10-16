@@ -1274,6 +1274,7 @@ clean: clean-tools
 	rm -f $(JP_MON_MARKINGS_ASSETS)
 	rm -f $(JP_USE_POKEBLOCK_ASSETS) $(JP_USE_POKEBLOCK_INTERMEDIATES)
 	rm -f $(JP_UNUSED_POKENAV_ASSETS) $(JP_UNUSED_POKENAV_INTERMEDIATES)
+	rm -f $(JP_FLDEFF_MISC_ASSETS)
 
 # All build artifacts wait for the host-tool chain, so a fresh checkout can
 # safely use `make -j` without racing the C/asset rules against tool builds.
@@ -3931,3 +3932,50 @@ graphics/pokenav/unused/outline.png_num_tiles_43.4bpp: graphics/pokenav/unused/o
 	$(GFX) $< $@ -num_tiles 43
 
 $(C_BUILDDIR)/graphics.o: src/data/graphics/unused_pokenav.h include/constants/rgb.h $(JP_UNUSED_POKENAV_ASSETS)
+
+JP_FLDEFF_MISC_ASSETS := graphics/field_effects/pics/secret_power_cave.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/palettes/secret_power_cave.pal.gbapal \
+	graphics/field_effects/pics/secret_power_shrub.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/pics/secret_power_tree.png_mwidth_2__mheight_2.4bpp \
+	graphics/field_effects/palettes/secret_power_plant.pal.gbapal \
+	graphics/field_effects/pics/sand_pillar/0.png.4bpp \
+	graphics/field_effects/pics/sand_pillar/1.png.4bpp \
+	graphics/field_effects/pics/sand_pillar/2.png.4bpp \
+	graphics/field_effects/pics/record_mix_lights.png_mwidth_4__mheight_1.4bpp \
+	graphics/field_effects/palettes/record_mix_lights.pal.gbapal
+
+graphics/field_effects/pics/secret_power_cave.png_mwidth_2__mheight_2.4bpp: graphics/field_effects/pics/secret_power_cave.png | tools
+	$(GFX) $< $@ -mwidth 2 -mheight 2
+
+graphics/field_effects/palettes/secret_power_cave.pal.gbapal: graphics/field_effects/palettes/secret_power_cave.pal | tools
+	$(GFX) $< $@
+
+graphics/field_effects/pics/secret_power_shrub.png_mwidth_2__mheight_2.4bpp: graphics/field_effects/pics/secret_power_shrub.png | tools
+	$(GFX) $< $@ -mwidth 2 -mheight 2
+
+graphics/field_effects/pics/secret_power_tree.png_mwidth_2__mheight_2.4bpp: graphics/field_effects/pics/secret_power_tree.png | tools
+	$(GFX) $< $@ -mwidth 2 -mheight 2
+
+graphics/field_effects/palettes/secret_power_plant.pal.gbapal: graphics/field_effects/palettes/secret_power_plant.pal | tools
+	$(GFX) $< $@
+
+graphics/field_effects/pics/sand_pillar/0.png.4bpp: graphics/field_effects/pics/sand_pillar/0.png | tools
+	$(GFX) $< $@
+
+graphics/field_effects/pics/sand_pillar/1.png.4bpp: graphics/field_effects/pics/sand_pillar/1.png | tools
+	$(GFX) $< $@
+
+graphics/field_effects/pics/sand_pillar/2.png.4bpp: graphics/field_effects/pics/sand_pillar/2.png | tools
+	$(GFX) $< $@
+
+graphics/field_effects/pics/record_mix_lights.png_mwidth_4__mheight_1.4bpp: graphics/field_effects/pics/record_mix_lights.png | tools
+	$(GFX) $< $@ -mwidth 4 -mheight 1
+
+graphics/field_effects/palettes/record_mix_lights.pal.gbapal: graphics/field_effects/palettes/record_mix_lights.pal | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/fldeff_misc.o: src/fldeff_misc.c charmap.txt $(JP_FLDEFF_MISC_ASSETS) include/fldeff_misc.h include/constants/field_effects.h include/event_object_movement.h
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/fldeff_misc.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/fldeff_misc.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/fldeff_misc.gen.s

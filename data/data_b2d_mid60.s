@@ -13,12 +13,9 @@
 sGiftRibbonsMonDataIds: @ 0x8569552
 	.byte 0x48, 0x49, 0x4A, 0x4B, 0x4C, 0x4D, 0x4E, 0x00, 0x00, 0x00
 
-	.include "data/field_effects/secret_power.inc"
 
 	.section .rodata.mid60_tail_prefix
-	.include "data/field_effects/secret_power_descriptors.inc"
 
-	.include "data/field_effects/record_mix_lights.inc"
 
 	.include "data/field_special_scene/truck_and_ss_tidal.inc"
 
