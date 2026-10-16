@@ -44,8 +44,8 @@ class FrontierIntroAssetTests(unittest.TestCase):
         linker = (ROOT / 'ld_script_jp.txt').read_text()
         self.assertNotIn('gUnknown_8D85C54 = gIntroPlayer_Pal', linker)
         self.assertEqual(linker.count('src/graphics.o(.rodata.intro_scene_graphics)'), 1)
-        table = (ROOT / 'data/intro_credits_graphics.s').read_text()
-        self.assertEqual(table.count('.4byte gIntroPlayer_Pal\n'), 2)
+        table = (ROOT / 'src/intro_credits_graphics.c').read_text()
+        self.assertEqual(table.count('.data = gIntroPlayer_Pal,'), 2)
 
     def test_pp_interior_reference_and_jp_sprite_sheet_sizes_are_preserved(self):
         message = (ROOT / 'src/battle_message.c').read_text()

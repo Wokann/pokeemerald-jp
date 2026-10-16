@@ -10271,7 +10271,7 @@ SECTIONS {
         src/pokeblock_feed.o(.rodata.pokeblock_feed_data);
         src/strings.o(.rodata.strings_clear_save);
         src/clear_save_data_screen.o(.rodata.clear_save_data_screen_data);
-        data/intro_credits_graphics.o(.rodata);
+        src/intro_credits_graphics.o(.rodata.intro_credits_graphics_data);
         src/evolution_graphics.o(.rodata.mid98_suffix_before_species_to_back_anim_set);
         src/bard_music.o(.rodata.mid98_suffix_before_species_to_back_anim_set);
         src/battle_tv.o(.rodata.mid98_suffix_before_species_to_back_anim_set);

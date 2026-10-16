@@ -1227,7 +1227,7 @@ $(C_BUILDDIR)/link_rfu_2.o: src/link_rfu_2.c
 include sound/song_order.mk
 SONG_OBJS := $(patsubst sound/songs/midi/%.s,$(OBJ_DIR)/sound/songs/midi/%.o,$(SONG_SRCS))
 
-DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_anim_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o $(OBJ_DIR)/data/field_effect_scripts.o $(OBJ_DIR)/data/battle_scripts_2.o $(OBJ_DIR)/data/battle_ai_scripts.o $(OBJ_DIR)/data/contest_ai_scripts.o $(OBJ_DIR)/data/mystery_event_script_cmd_table.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_b.o $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b2.o $(OBJ_DIR)/data/data_b2b.o $(OBJ_DIR)/data/data_b2d.o $(OBJ_DIR)/data/tilesets.o $(OBJ_DIR)/data/maps.o $(OBJ_DIR)/data/fieldmap.o $(OBJ_DIR)/data/metatile_behavior.o $(OBJ_DIR)/data/field_door.o $(OBJ_DIR)/data/map_events.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid60.o $(OBJ_DIR)/data/data_b2d_mid62.o $(OBJ_DIR)/data/data_b2d_mid33.o $(OBJ_DIR)/data/battle_transition_tilemaps.o $(OBJ_DIR)/data/data_b2d_mid70.o $(OBJ_DIR)/data/intro_credits_graphics.o $(OBJ_DIR)/data/mystery_gift.o $(OBJ_DIR)/data/sound_data.o $(OBJ_DIR)/data/rom_padding.o $(OBJ_DIR)/data/battle_textbox.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_none.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_main.o $(OBJ_DIR)/data/data_rest2c.o $(OBJ_DIR)/data/data_b2d_gfx_front.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
+DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_anim_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o $(OBJ_DIR)/data/field_effect_scripts.o $(OBJ_DIR)/data/battle_scripts_2.o $(OBJ_DIR)/data/battle_ai_scripts.o $(OBJ_DIR)/data/contest_ai_scripts.o $(OBJ_DIR)/data/mystery_event_script_cmd_table.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_b.o $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b2.o $(OBJ_DIR)/data/data_b2b.o $(OBJ_DIR)/data/data_b2d.o $(OBJ_DIR)/data/tilesets.o $(OBJ_DIR)/data/maps.o $(OBJ_DIR)/data/fieldmap.o $(OBJ_DIR)/data/metatile_behavior.o $(OBJ_DIR)/data/field_door.o $(OBJ_DIR)/data/map_events.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid60.o $(OBJ_DIR)/data/data_b2d_mid62.o $(OBJ_DIR)/data/data_b2d_mid33.o $(OBJ_DIR)/data/battle_transition_tilemaps.o $(OBJ_DIR)/data/data_b2d_mid70.o $(OBJ_DIR)/data/mystery_gift.o $(OBJ_DIR)/data/sound_data.o $(OBJ_DIR)/data/rom_padding.o $(OBJ_DIR)/data/battle_textbox.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_none.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_main.o $(OBJ_DIR)/data/data_rest2c.o $(OBJ_DIR)/data/data_b2d_gfx_front.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
 # Migrated data files now build from C or no longer contribute data.
 DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b_mid2b5.o $(OBJ_DIR)/data/data_b_mid2b6.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid62.o,$(DATA_OBJS))
 DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b2d_mid33.o,$(DATA_OBJS))
@@ -1277,6 +1277,7 @@ clean: clean-tools
 	rm -f $(JP_BATTLE_ANIM_FAMILY_ASSETS) $(JP_BATTLE_ANIM_FAMILY_INTERMEDIATES)
 	rm -f $(JP_EVOLUTION_SCENE_ASSETS) $(JP_EVOLUTION_SCENE_INTERMEDIATES)
 	rm -f $(JP_INTRO_SCENE_ASSETS) $(JP_INTRO_SCENE_INTERMEDIATES)
+	rm -f $(JP_INTRO_CREDITS_ASSETS) $(JP_INTRO_CREDITS_INTERMEDIATES)
 	rm -f $(JP_FRONTIER_UI_ASSETS) $(JP_FRONTIER_UI_INTERMEDIATES)
 
 # All build artifacts wait for the host-tool chain, so a fresh checkout can
@@ -2944,9 +2945,6 @@ $(OBJ_DIR)/data/contest_results.o: data/contest_results.s data/contest/contest_r
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-$(OBJ_DIR)/data/intro_credits_graphics.o: data/intro_credits_graphics.s baserom_jp.gba
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 
 	@mkdir -p $(dir $@)
@@ -4686,3 +4684,67 @@ $(filter %.lz,$(JP_INTRO_SCENE_ASSETS)): %.lz: % Makefile | tools
 	$(GFX) $< $@
 
 $(C_BUILDDIR)/graphics.o: src/data/graphics/intro_scene.h $(JP_INTRO_SCENE_ASSETS)
+
+JP_INTRO_CREDITS_ASSETS := graphics/intro/scene_2/bicycle.png.4bpp.lz \
+	graphics/intro/scene_2/brendan_credits.png.4bpp.lz \
+	graphics/intro/scene_2/brendan_credits.png.gbapal \
+	graphics/intro/scene_2/clouds.png.4bpp.lz \
+	graphics/intro/scene_2/clouds.png.gbapal \
+	graphics/intro/scene_2/clouds_bg.pal.gbapal \
+	graphics/intro/scene_2/clouds_bg.png.4bpp.lz \
+	graphics/intro/scene_2/clouds_bg_map.bin.lz \
+	graphics/intro/scene_2/clouds_bg_sunset.pal.gbapal \
+	graphics/intro/scene_2/clouds_sunset.pal.gbapal \
+	graphics/intro/scene_2/grass.png.4bpp.lz \
+	graphics/intro/scene_2/grass.png.gbapal \
+	graphics/intro/scene_2/grass_map.bin.lz \
+	graphics/intro/scene_2/grass_night.pal.gbapal \
+	graphics/intro/scene_2/grass_sunset.pal.gbapal \
+	graphics/intro/scene_2/house_silhouette.png.4bpp.lz \
+	graphics/intro/scene_2/house_silhouette.png.gbapal \
+	graphics/intro/scene_2/houses.pal.gbapal \
+	graphics/intro/scene_2/houses.png.4bpp.lz \
+	graphics/intro/scene_2/houses_map.bin.lz \
+	graphics/intro/scene_2/latias.png.4bpp.lz \
+	graphics/intro/scene_2/latias.png.gbapal \
+	graphics/intro/scene_2/latios.png.4bpp.lz \
+	graphics/intro/scene_2/latios.png.gbapal \
+	graphics/intro/scene_2/may_credits.png.4bpp.lz \
+	graphics/intro/scene_2/may_credits.png.gbapal \
+	graphics/intro/scene_2/trees.png.4bpp.lz \
+	graphics/intro/scene_2/trees.png.gbapal \
+	graphics/intro/scene_2/trees_map.bin.lz \
+	graphics/intro/scene_2/trees_small.png.4bpp.lz \
+	graphics/intro/scene_2/trees_small.png.gbapal \
+	graphics/intro/scene_2/trees_sunset.pal.gbapal
+
+JP_INTRO_CREDITS_INTERMEDIATES := graphics/intro/scene_2/bicycle.png.4bpp \
+	graphics/intro/scene_2/brendan_credits.png.4bpp \
+	graphics/intro/scene_2/clouds.png.4bpp \
+	graphics/intro/scene_2/clouds_bg.png.4bpp \
+	graphics/intro/scene_2/grass.png.4bpp \
+	graphics/intro/scene_2/house_silhouette.png.4bpp \
+	graphics/intro/scene_2/houses.png.4bpp \
+	graphics/intro/scene_2/latias.png.4bpp \
+	graphics/intro/scene_2/latios.png.4bpp \
+	graphics/intro/scene_2/may_credits.png.4bpp \
+	graphics/intro/scene_2/trees.png.4bpp \
+	graphics/intro/scene_2/trees_small.png.4bpp
+
+graphics/intro/scene_2/bicycle.png.4bpp graphics/intro/scene_2/brendan_credits.png.4bpp graphics/intro/scene_2/clouds.png.4bpp graphics/intro/scene_2/clouds_bg.png.4bpp graphics/intro/scene_2/grass.png.4bpp graphics/intro/scene_2/house_silhouette.png.4bpp graphics/intro/scene_2/houses.png.4bpp graphics/intro/scene_2/latias.png.4bpp graphics/intro/scene_2/latios.png.4bpp graphics/intro/scene_2/may_credits.png.4bpp graphics/intro/scene_2/trees.png.4bpp graphics/intro/scene_2/trees_small.png.4bpp: %.png.4bpp: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/intro/scene_2/brendan_credits.png.gbapal graphics/intro/scene_2/clouds.png.gbapal graphics/intro/scene_2/grass.png.gbapal graphics/intro/scene_2/house_silhouette.png.gbapal graphics/intro/scene_2/latias.png.gbapal graphics/intro/scene_2/latios.png.gbapal graphics/intro/scene_2/may_credits.png.gbapal graphics/intro/scene_2/trees.png.gbapal graphics/intro/scene_2/trees_small.png.gbapal: %.png.gbapal: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/intro/scene_2/clouds_bg.pal.gbapal graphics/intro/scene_2/clouds_bg_sunset.pal.gbapal graphics/intro/scene_2/clouds_sunset.pal.gbapal graphics/intro/scene_2/grass_night.pal.gbapal graphics/intro/scene_2/grass_sunset.pal.gbapal graphics/intro/scene_2/houses.pal.gbapal graphics/intro/scene_2/trees_sunset.pal.gbapal: %.pal.gbapal: %.pal Makefile | tools
+	$(GFX) $< $@
+
+$(filter %.lz,$(JP_INTRO_CREDITS_ASSETS)): %.lz: % Makefile | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/intro_credits_graphics.o: src/intro_credits_graphics.c charmap.txt include/intro_credits_graphics.h include/graphics.h $(JP_INTRO_CREDITS_ASSETS)
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/intro_credits_graphics.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/intro_credits_graphics.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/intro_credits_graphics.gen.s

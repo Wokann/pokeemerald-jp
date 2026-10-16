@@ -42,9 +42,9 @@ class IntroSceneAssetTests(unittest.TestCase):
     def test_cloud_tilemap_is_word_typed_and_flygon_pointers_are_real(self):
         self.assertIn('const u32 gIntroRayquazaClouds_Tilemap[]',(ROOT/HEADER).read_text())
         self.assertIn('extern const u32 gIntroRayquazaClouds_Tilemap[];',(ROOT/'include/graphics.h').read_text())
-        table=(ROOT/'data/intro_credits_graphics.s').read_text()
-        self.assertEqual(table.count('.4byte gIntroFlygon_Pal\n'),2)
-        self.assertNotIn('.4byte 0x08D85F14',table)
+        table=(ROOT/'src/intro_credits_graphics.c').read_text()
+        self.assertEqual(table.count('.data = gIntroFlygon_Pal,'),2)
+        self.assertFalse((ROOT/'data/intro_credits_graphics.s').exists())
         self.assertNotRegex((ROOT/'ld_script_jp.txt').read_text(),r'(?m)^gUnknown_[0-9A-F]+ = gIntro\w+;')
 
     def test_generation_dependencies_cover_the_complete_header(self):

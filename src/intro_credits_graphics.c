@@ -26,53 +26,695 @@ struct IntroCreditsSpriteMetadata
     u16 xOff;
 };
 
-extern const u16 sGrass_Pal[16];
-extern const u16 sGrassSunset_Pal[16];
-extern const u16 sGrassNight_Pal[16];
-extern const u32 sGrass_Gfx[];
-extern const u32 sGrass_Tilemap[];
-extern const u16 sCloudsBg_Pal[48];
-extern const u16 sCloudsBgSunset_Pal[48];
-extern const u32 sCloudsBg_Gfx[];
-extern const u32 sCloudsBg_Tilemap[];
-extern const u16 sClouds_Pal[16];
-extern const u16 sCloudsSunset_Pal[16];
-extern const u32 sClouds_Gfx[];
-extern const u16 sTrees_Pal[16];
-extern const u16 sTreesSunset_Pal[16];
-extern const u32 sTrees_Gfx[];
-extern const u32 sTrees_Tilemap[];
-extern const u16 sTreesSmall_Pal[16];
-extern const u32 sTreesSmall_Gfx[];
-extern const u16 sHouses_Pal[32];
-extern const u32 sHouses_Gfx[];
-extern const u16 sHouseSilhouette_Pal[16];
-extern const u32 sHouses_Tilemap[];
-extern const struct SpriteTemplate sSpriteTemplate_MovingScenery;
-extern const struct CompressedSpriteSheet sSpriteSheet_Clouds[];
-extern const union AnimCmd *const sAnims_Clouds[];
-extern const struct IntroCreditsSpriteMetadata sSpriteMetadata_Clouds[];
-extern const struct CompressedSpriteSheet sSpriteSheet_TreesSmall[];
-extern const union AnimCmd *const sAnims_Trees[];
-extern const struct IntroCreditsSpriteMetadata sSpriteMetadata_Trees[];
-extern const struct CompressedSpriteSheet sSpriteSheet_HouseSilhouette[];
-extern const union AnimCmd *const sAnims_HouseSilhouette[];
-extern const struct IntroCreditsSpriteMetadata sSpriteMetadata_HouseSilhouette[];
-extern const struct SpriteTemplate sSpriteTemplate_Brendan;
-extern const struct SpriteTemplate sSpriteTemplate_May;
-extern const struct SpriteTemplate sSpriteTemplate_BrendanBicycle;
-extern const struct SpriteTemplate sSpriteTemplate_MayBicycle;
-extern const struct SpriteTemplate sSpriteTemplate_FlygonLatios;
-extern const struct SpriteTemplate sSpriteTemplate_FlygonLatias;
+#define INTRO_CREDITS_DATA __attribute__((section(".rodata.intro_credits_graphics_data")))
+
+static const u16 sGrass_Pal[] INTRO_CREDITS_DATA             = INCGFX_U16("graphics/intro/scene_2/grass.png", ".gbapal");
+static const u16 sGrassSunset_Pal[] INTRO_CREDITS_DATA       = INCGFX_U16("graphics/intro/scene_2/grass_sunset.pal", ".gbapal");
+static const u16 sGrassNight_Pal[] INTRO_CREDITS_DATA        = INCGFX_U16("graphics/intro/scene_2/grass_night.pal", ".gbapal");
+static const u32 sGrass_Gfx[] INTRO_CREDITS_DATA             = INCGFX_U32("graphics/intro/scene_2/grass.png", ".4bpp.lz");
+static const u32 sGrass_Tilemap[] INTRO_CREDITS_DATA         = INCGFX_U32("graphics/intro/scene_2/grass_map.bin", ".lz");
+static const u16 sCloudsBg_Pal[] INTRO_CREDITS_DATA          = INCGFX_U16("graphics/intro/scene_2/clouds_bg.pal", ".gbapal");
+static const u16 sCloudsBgSunset_Pal[] INTRO_CREDITS_DATA    = INCGFX_U16("graphics/intro/scene_2/clouds_bg_sunset.pal", ".gbapal");
+static const u32 sCloudsBg_Gfx[] INTRO_CREDITS_DATA          = INCGFX_U32("graphics/intro/scene_2/clouds_bg.png", ".4bpp.lz");
+static const u32 sCloudsBg_Tilemap[] INTRO_CREDITS_DATA      = INCGFX_U32("graphics/intro/scene_2/clouds_bg_map.bin", ".lz");
+static const u16 sClouds_Pal[] INTRO_CREDITS_DATA            = INCGFX_U16("graphics/intro/scene_2/clouds.png", ".gbapal");
+static const u16 sCloudsSunset_Pal[] INTRO_CREDITS_DATA      = INCGFX_U16("graphics/intro/scene_2/clouds_sunset.pal", ".gbapal");
+static const u32 sClouds_Gfx[] INTRO_CREDITS_DATA            = INCGFX_U32("graphics/intro/scene_2/clouds.png", ".4bpp.lz");
+static const u16 sTrees_Pal[] INTRO_CREDITS_DATA             = INCGFX_U16("graphics/intro/scene_2/trees.png", ".gbapal");
+static const u16 sTreesSunset_Pal[] INTRO_CREDITS_DATA       = INCGFX_U16("graphics/intro/scene_2/trees_sunset.pal", ".gbapal");
+static const u32 sTrees_Gfx[] INTRO_CREDITS_DATA             = INCGFX_U32("graphics/intro/scene_2/trees.png", ".4bpp.lz");
+static const u32 sTrees_Tilemap[] INTRO_CREDITS_DATA         = INCGFX_U32("graphics/intro/scene_2/trees_map.bin", ".lz");
+static const u16 sTreesSmall_Pal[] INTRO_CREDITS_DATA        = INCGFX_U16("graphics/intro/scene_2/trees_small.png", ".gbapal");
+static const u32 sTreesSmall_Gfx[] INTRO_CREDITS_DATA        = INCGFX_U32("graphics/intro/scene_2/trees_small.png", ".4bpp.lz");
+static const u16 sHouses_Pal[] INTRO_CREDITS_DATA            = INCGFX_U16("graphics/intro/scene_2/houses.pal", ".gbapal");
+static const u32 sHouses_Gfx[] INTRO_CREDITS_DATA            = INCGFX_U32("graphics/intro/scene_2/houses.png", ".4bpp.lz");
+static const u16 sHouseSilhouette_Pal[] INTRO_CREDITS_DATA   = INCGFX_U16("graphics/intro/scene_2/house_silhouette.png", ".gbapal");
+static const u32 sHouses_Tilemap[] INTRO_CREDITS_DATA        = INCGFX_U32("graphics/intro/scene_2/houses_map.bin", ".lz");
+static const u32 sHouseSilhouette_Gfx[] INTRO_CREDITS_DATA   = INCGFX_U32("graphics/intro/scene_2/house_silhouette.png", ".4bpp.lz");
+static const u16 sBrendanCredits_Pal[] INTRO_CREDITS_DATA    = INCGFX_U16("graphics/intro/scene_2/brendan_credits.png", ".gbapal");
+static const u32 sBrendanCredits_Gfx[] INTRO_CREDITS_DATA    = INCGFX_U32("graphics/intro/scene_2/brendan_credits.png", ".4bpp.lz");
+static const u16 sMayCredits_Pal[] INTRO_CREDITS_DATA        = INCGFX_U16("graphics/intro/scene_2/may_credits.png", ".gbapal");
+static const u16 sUnused[0xF0] INTRO_CREDITS_DATA            = {0};
+static const u32 sMayCredits_Gfx[] INTRO_CREDITS_DATA        = INCGFX_U32("graphics/intro/scene_2/may_credits.png", ".4bpp.lz");
+static const u32 sBicycle_Gfx[] INTRO_CREDITS_DATA           = INCGFX_U32("graphics/intro/scene_2/bicycle.png", ".4bpp.lz");
+static const u16 sLatios_Pal[] INTRO_CREDITS_DATA            = INCGFX_U16("graphics/intro/scene_2/latios.png", ".gbapal");
+static const u32 sLatios_Gfx[] INTRO_CREDITS_DATA            = INCGFX_U32("graphics/intro/scene_2/latios.png", ".4bpp.lz");
+static const u16 sLatias_Pal[] INTRO_CREDITS_DATA            = INCGFX_U16("graphics/intro/scene_2/latias.png", ".gbapal");
+static const u32 sLatias_Gfx[] INTRO_CREDITS_DATA            = INCGFX_U32("graphics/intro/scene_2/latias.png", ".4bpp.lz");
+
+static void SpriteCB_MovingScenery(struct Sprite *sprite);
+static void SpriteCB_Player(struct Sprite *sprite);
+static void SpriteCB_Bicycle(struct Sprite *sprite);
+static void SpriteCB_FlygonLeftHalf(struct Sprite *sprite);
+
+static const struct SpriteTemplate sSpriteTemplate_MovingScenery INTRO_CREDITS_DATA =
+{
+    .tileTag = TAG_MOVING_SCENERY,
+    .paletteTag = TAG_NONE,
+    .oam = &gDummyOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_MovingScenery
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_Clouds[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = sClouds_Gfx,
+        .size = 0x400,
+        .tag = TAG_MOVING_SCENERY
+    },
+    {}
+};
+
+static const union AnimCmd sAnim_Cloud_Largest[] INTRO_CREDITS_DATA =
+{
+    ANIMCMD_FRAME( 0, 30),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Cloud_Large[] INTRO_CREDITS_DATA =
+{
+    ANIMCMD_FRAME(16, 30),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Cloud_Small[] INTRO_CREDITS_DATA =
+{
+    ANIMCMD_FRAME(20, 30),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Cloud_Smallest[] INTRO_CREDITS_DATA =
+{
+    ANIMCMD_FRAME(22, 30),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_Clouds[] INTRO_CREDITS_DATA =
+{
+    sAnim_Cloud_Largest,
+    sAnim_Cloud_Large,
+    sAnim_Cloud_Small,
+    sAnim_Cloud_Smallest
+};
+
+static const struct IntroCreditsSpriteMetadata sSpriteMetadata_Clouds[] INTRO_CREDITS_DATA =
+{
+    {
+        .animNum = 0,
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .x = 72,
+        .y = 32,
+        .subpriority = 100,
+        .xOff = 0xc00
+    },
+    {
+        .animNum = 0,
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .x = 158,
+        .y = 32,
+        .subpriority = 100,
+        .xOff = 0xc00
+    },
+    {
+        .animNum = 1,
+        .shape = SPRITE_SHAPE(16x16),
+        .size = SPRITE_SIZE(16x16),
+        .x = 192,
+        .y = 40,
+        .subpriority = 101,
+        .xOff = 0x800
+    },
+    {
+        .animNum = 1,
+        .shape = SPRITE_SHAPE(16x16),
+        .size = SPRITE_SIZE(16x16),
+        .x = 56,
+        .y = 40,
+        .subpriority = 101,
+        .xOff = 0x800
+    },
+    {
+        .animNum = 2,
+        .shape = SPRITE_SHAPE(16x8),
+        .size = SPRITE_SIZE(16x8),
+        .x = 100,
+        .y = 44,
+        .subpriority = 102,
+        .xOff = 0x400
+    },
+    {
+        .animNum = 2,
+        .shape = SPRITE_SHAPE(16x8),
+        .size = SPRITE_SIZE(16x8),
+        .x = 152,
+        .y = 44,
+        .subpriority = 102,
+        .xOff = 0x400
+    },
+    {
+        .animNum = 3,
+        .shape = SPRITE_SHAPE(16x8),
+        .size = SPRITE_SIZE(16x8),
+        .x = 8,
+        .y = 46,
+        .subpriority = 103,
+        .xOff = 0x100
+    },
+    {
+        .animNum = 3,
+        .shape = SPRITE_SHAPE(16x8),
+        .size = SPRITE_SIZE(16x8),
+        .x = 56,
+        .y = 46,
+        .subpriority = 103,
+        .xOff = 0x100
+    },
+    {
+        .animNum = 3,
+        .shape = SPRITE_SHAPE(16x8),
+        .size = SPRITE_SIZE(16x8),
+        .x = 240,
+        .y = 46,
+        .subpriority = 103,
+        .xOff = 0x100
+    },
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_TreesSmall[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = sTreesSmall_Gfx,
+        .size = 0x400,
+        .tag = TAG_MOVING_SCENERY
+    },
+    {}
+};
+
+static const union AnimCmd sAnim_Trees_0[] INTRO_CREDITS_DATA =
+{
+    ANIMCMD_FRAME( 0, 30),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Trees_1[] INTRO_CREDITS_DATA =
+{
+    ANIMCMD_FRAME(16, 30),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Trees_2[] INTRO_CREDITS_DATA =
+{
+    ANIMCMD_FRAME(24, 30),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_Trees[] INTRO_CREDITS_DATA =
+{
+    sAnim_Trees_0,
+    sAnim_Trees_1,
+    sAnim_Trees_2
+};
+
+static const struct IntroCreditsSpriteMetadata sSpriteMetadata_Trees[] INTRO_CREDITS_DATA =
+{
+    {
+        .animNum = 0,
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .x = 16,
+        .y = 88,
+        .subpriority = 100,
+        .xOff = 0x2000,
+    },
+    {
+        .animNum = 0,
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .x = 80,
+        .y = 88,
+        .subpriority = 100,
+        .xOff = 0x2000,
+    },
+    {
+        .animNum = 0,
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .x = 144,
+        .y = 88,
+        .subpriority = 100,
+        .xOff = 0x2000,
+    },
+    {
+        .animNum = 0,
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .x = 208,
+        .y = 88,
+        .subpriority = 100,
+        .xOff = 0x2000,
+    },
+    {
+        .animNum = 1,
+        .shape = SPRITE_SHAPE(16x32),
+        .size = SPRITE_SIZE(16x32),
+        .x = 40,
+        .y = 88,
+        .subpriority = 101,
+        .xOff = 0x1000,
+    },
+    {
+        .animNum = 1,
+        .shape = SPRITE_SHAPE(16x32),
+        .size = SPRITE_SIZE(16x32),
+        .x = 104,
+        .y = 88,
+        .subpriority = 101,
+        .xOff = 0x1000,
+    },
+    {
+        .animNum = 1,
+        .shape = SPRITE_SHAPE(16x32),
+        .size = SPRITE_SIZE(16x32),
+        .x = 168,
+        .y = 88,
+        .subpriority = 101,
+        .xOff = 0x1000,
+    },
+    {
+        .animNum = 1,
+        .shape = SPRITE_SHAPE(16x32),
+        .size = SPRITE_SIZE(16x32),
+        .x = 232,
+        .y = 88,
+        .subpriority = 101,
+        .xOff = 0x1000,
+    },
+    {
+        .animNum = 2,
+        .shape = SPRITE_SHAPE(16x32),
+        .size = SPRITE_SIZE(16x32),
+        .x = 56,
+        .y = 88,
+        .subpriority = 102,
+        .xOff = 0x800,
+    },
+    {
+        .animNum = 2,
+        .shape = SPRITE_SHAPE(16x32),
+        .size = SPRITE_SIZE(16x32),
+        .x = 120,
+        .y = 88,
+        .subpriority = 102,
+        .xOff = 0x800,
+    },
+    {
+        .animNum = 2,
+        .shape = SPRITE_SHAPE(16x32),
+        .size = SPRITE_SIZE(16x32),
+        .x = 184,
+        .y = 88,
+        .subpriority = 102,
+        .xOff = 0x800,
+    },
+    {
+        .animNum = 2,
+        .shape = SPRITE_SHAPE(16x32),
+        .size = SPRITE_SIZE(16x32),
+        .x = 248,
+        .y = 88,
+        .subpriority = 102,
+        .xOff = 0x800,
+    }
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_HouseSilhouette[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = sHouseSilhouette_Gfx,
+        .size = 0x400,
+        .tag = TAG_MOVING_SCENERY
+    },
+    {}
+};
+
+static const union AnimCmd sAnim_HouseSilhouette[] INTRO_CREDITS_DATA =
+{
+    ANIMCMD_FRAME(0, 30),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_HouseSilhouette[] INTRO_CREDITS_DATA =
+{
+    sAnim_HouseSilhouette
+};
+
+static const struct IntroCreditsSpriteMetadata sSpriteMetadata_HouseSilhouette[] INTRO_CREDITS_DATA =
+{
+    {
+        .animNum = 0,
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .x = 24,
+        .y = 88,
+        .subpriority = 100,
+        .xOff = 0x1000,
+    },
+    {
+        .animNum = 0,
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .x = 64,
+        .y = 88,
+        .subpriority = 100,
+        .xOff = 0x1000,
+    },
+    {
+        .animNum = 0,
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .x = 104,
+        .y = 88,
+        .subpriority = 100,
+        .xOff = 0x1000,
+    },
+    {
+        .animNum = 0,
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .x = 144,
+        .y = 88,
+        .subpriority = 100,
+        .xOff = 0x1000,
+    },
+    {
+        .animNum = 0,
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .x = 184,
+        .y = 88,
+        .subpriority = 100,
+        .xOff = 0x1000,
+    },
+    {
+        .animNum = 0,
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .x = 224,
+        .y = 88,
+        .subpriority = 100,
+        .xOff = 0x1000,
+    }
+};
+
+static const struct OamData sOamData_Player INTRO_CREDITS_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .shape = SPRITE_SHAPE(64x64),
+    .size = SPRITE_SIZE(64x64),
+    .priority = 1
+};
+
+static const union AnimCmd sAnim_Player[] INTRO_CREDITS_DATA =
+{
+    ANIMCMD_FRAME(  0, 8),
+    ANIMCMD_FRAME( 64, 8),
+    ANIMCMD_FRAME(128, 8),
+    ANIMCMD_FRAME(192, 8),
+    ANIMCMD_JUMP(0)
+};
+
+static const union AnimCmd *const sAnims_Player[] INTRO_CREDITS_DATA =
+{
+    sAnim_Player
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Brendan INTRO_CREDITS_DATA =
+{
+    .tileTag = TAG_BRENDAN,
+    .paletteTag = TAG_BRENDAN,
+    .oam = &sOamData_Player,
+    .anims = sAnims_Player,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Player
+};
+
+static const struct SpriteTemplate sSpriteTemplate_May INTRO_CREDITS_DATA =
+{
+    .tileTag = TAG_MAY,
+    .paletteTag = TAG_MAY,
+    .oam = &sOamData_Player,
+    .anims = sAnims_Player,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Player
+};
+
+static const struct OamData sOamData_Bicycle INTRO_CREDITS_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .shape = SPRITE_SHAPE(64x32),
+    .size = SPRITE_SIZE(64x32),
+    .priority = 1
+};
+
+static const union AnimCmd sAnim_Bicycle[] INTRO_CREDITS_DATA =
+{
+    ANIMCMD_FRAME(  0, 8),
+    ANIMCMD_FRAME( 32, 8),
+    ANIMCMD_FRAME( 64, 8),
+    ANIMCMD_FRAME( 96, 8),
+    ANIMCMD_JUMP(0)
+};
+
+static const union AnimCmd *const sAnims_Bicycle[] INTRO_CREDITS_DATA =
+{
+    sAnim_Bicycle
+};
+
+static const struct SpriteTemplate sSpriteTemplate_BrendanBicycle INTRO_CREDITS_DATA =
+{
+    .tileTag = TAG_BICYCLE,
+    .paletteTag = TAG_BRENDAN,
+    .oam = &sOamData_Bicycle,
+    .anims = sAnims_Bicycle,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Bicycle
+};
+
+static const struct SpriteTemplate sSpriteTemplate_MayBicycle INTRO_CREDITS_DATA =
+{
+    .tileTag = TAG_BICYCLE,
+    .paletteTag = TAG_MAY,
+    .oam = &sOamData_Bicycle,
+    .anims = sAnims_Bicycle,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Bicycle
+};
+
+static const struct OamData sOamData_Flygon INTRO_CREDITS_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .shape = SPRITE_SHAPE(64x64),
+    .size = SPRITE_SIZE(64x64),
+    .priority = 1
+};
+
+static const union AnimCmd sAnim_FlygonLeft[] INTRO_CREDITS_DATA =
+{
+    ANIMCMD_FRAME(0, 16),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_FlygonRight[] INTRO_CREDITS_DATA =
+{
+    ANIMCMD_FRAME(64, 16),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_Flygon[] INTRO_CREDITS_DATA =
+{
+    sAnim_FlygonLeft,
+    sAnim_FlygonRight
+};
+
+static const struct SpriteTemplate sSpriteTemplate_FlygonLatios INTRO_CREDITS_DATA =
+{
+    .tileTag = TAG_FLYGON_LATIOS,
+    .paletteTag = TAG_FLYGON_LATIOS,
+    .oam = &sOamData_Flygon,
+    .anims = sAnims_Flygon,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_FlygonLeftHalf
+};
+
+static const struct SpriteTemplate sSpriteTemplate_FlygonLatias INTRO_CREDITS_DATA =
+{
+    .tileTag = TAG_FLYGON_LATIAS,
+    .paletteTag = TAG_FLYGON_LATIAS,
+    .oam = &sOamData_Flygon,
+    .anims = sAnims_Flygon,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_FlygonLeftHalf
+};
+
+const struct CompressedSpriteSheet gSpriteSheet_IntroBrendan[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = gIntroBrendan_Gfx,
+        .size = 0x2000,
+        .tag = TAG_BRENDAN
+    },
+    {}
+};
+
+const struct CompressedSpriteSheet gSpriteSheet_IntroMay[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = gIntroMay_Gfx,
+        .size = 0x2000,
+        .tag = TAG_MAY
+    },
+    {}
+};
+
+const struct CompressedSpriteSheet gSpriteSheet_IntroBicycle[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = sBicycle_Gfx,
+        .size = 0x1000,
+        .tag = TAG_BICYCLE
+    },
+    {}
+};
+
+// In RS these were Latios/Latias. In Emerald both are replaced with Flygon and now only 1 is used
+static const struct CompressedSpriteSheet sSpriteSheet_IntroFlygon_Unused[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = gIntroFlygon_Gfx,
+        .size = 0x1000,
+        .tag = TAG_FLYGON_LATIOS
+    },
+    {}
+};
+
+const struct CompressedSpriteSheet gSpriteSheet_IntroFlygon[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = gIntroFlygon_Gfx,
+        .size = 0x1000,
+        .tag = TAG_FLYGON_LATIAS
+    },
+    {}
+};
+
+const struct SpritePalette gSpritePalettes_IntroPlayerFlygon[] INTRO_CREDITS_DATA =
+{
+    { .data = gIntroPlayer_Pal, .tag = TAG_BRENDAN },
+    { .data = gIntroPlayer_Pal, .tag = TAG_MAY },
+    { .data = gIntroFlygon_Pal, .tag = TAG_FLYGON_LATIOS },
+    { .data = gIntroFlygon_Pal, .tag = TAG_FLYGON_LATIAS },
+    {}
+};
+
+const struct CompressedSpriteSheet gSpriteSheet_CreditsBrendan[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = sBrendanCredits_Gfx,
+        .size = 0x3800,
+        .tag = TAG_BRENDAN
+    },
+    {}
+};
+
+const struct CompressedSpriteSheet gSpriteSheet_CreditsMay[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = sMayCredits_Gfx,
+        .size = 0x3800,
+        .tag = TAG_MAY
+    },
+    {}
+};
+
+const struct CompressedSpriteSheet gSpriteSheet_CreditsBicycle[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = sBicycle_Gfx,
+        .size = 0x1000,
+        .tag = TAG_BICYCLE
+    },
+    {}
+};
+
+// Unused
+static const struct CompressedSpriteSheet sSpriteSheet_Latios[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = sLatios_Gfx,
+        .size = 0x1000,
+        .tag = TAG_FLYGON_LATIOS
+    },
+    {}
+};
+
+// Unused
+static const struct CompressedSpriteSheet sSpriteSheet_Latias[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = sLatias_Gfx,
+        .size = 0x1000,
+        .tag = TAG_FLYGON_LATIAS
+    },
+    {}
+};
+
+const struct SpritePalette gSpritePalettes_Credits[] INTRO_CREDITS_DATA =
+{
+    { .data = sBrendanCredits_Pal, .tag = TAG_BRENDAN },
+    { .data = sMayCredits_Pal,     .tag = TAG_MAY },
+    { .data = sLatios_Pal,         .tag = TAG_FLYGON_LATIOS },
+    { .data = sLatias_Pal,         .tag = TAG_FLYGON_LATIAS },
+    {}
+};
+
+const struct CompressedSpriteSheet gSpriteSheet_CreditsRivalBrendan[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = sBrendanCredits_Gfx,
+        .size = 0x2000,
+        .tag = TAG_BRENDAN
+    },
+    {}
+};
+
+const struct CompressedSpriteSheet gSpriteSheet_CreditsRivalMay[] INTRO_CREDITS_DATA =
+{
+    {
+        .data = sMayCredits_Gfx,
+        .size = 0x2000,
+        .tag = TAG_MAY
+    },
+    {}
+};
+
+
+#undef INTRO_CREDITS_DATA
 
 static void CreateCloudSprites(void);
 static void CreateTreeSprites(void);
 static void CreateHouseSprites(void);
 static void Task_BicycleBgAnimation(u8 taskId);
-static void SpriteCB_MovingScenery(struct Sprite *sprite);
-static void SpriteCB_Player(struct Sprite *sprite);
-static void SpriteCB_Bicycle(struct Sprite *sprite);
-static void SpriteCB_FlygonLeftHalf(struct Sprite *sprite);
 static void SpriteCB_FlygonRightHalf(struct Sprite *sprite);
 static u8 UNUSED CreateIntroFlygonSprite_Unused(s16 x, s16 y);
 
