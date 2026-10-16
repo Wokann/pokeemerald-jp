@@ -766,9 +766,9 @@ BATTLE_ANIM_ICE_RESOURCES const u32 gBattleAnimSpritePal_IcicleSpear[] = INCGFX_
 #define CONTEST_NEXT_TURN_RESOURCES __attribute__((section(".rodata.contest_next_turn_resources")))
 
 // The JP Next Turn banner is 32 pixels wide, unlike the 64-pixel US source asset.
-CONTEST_NEXT_TURN_RESOURCES const u32 gContestNextTurnGfx[] = INCBIN_U32("graphics/contest/nextturn.4bpp.lz");
-CONTEST_NEXT_TURN_RESOURCES const u8 gContestNextTurnNumbersGfx[] = INCBIN_U8("graphics/contest/nextturn_numbers.4bpp");
-CONTEST_NEXT_TURN_RESOURCES const u8 gContestNextTurnRandomGfx[] = INCBIN_U8("graphics/contest/nextturn_random.4bpp");
+CONTEST_NEXT_TURN_RESOURCES const u32 gContestNextTurnGfx[] = INCGFX_U32("graphics/contest/nextturn.png", ".4bpp.lz");
+CONTEST_NEXT_TURN_RESOURCES const u8 gContestNextTurnNumbersGfx[] = INCGFX_U8("graphics/contest/nextturn_numbers.png", ".4bpp");
+CONTEST_NEXT_TURN_RESOURCES const u8 gContestNextTurnRandomGfx[] = INCGFX_U8("graphics/contest/nextturn_random.png", ".4bpp");
 
 #undef CONTEST_NEXT_TURN_RESOURCES
 
@@ -785,9 +785,9 @@ BATTLE_ANIM_ORB_AND_POWDER_RESOURCES const u32 gBattleAnimSpritePal_StunSpore[] 
 #define CONTEST_APPLAUSE_RESOURCES __attribute__((section(".rodata.contest_applause_resources")))
 
 // The JP applause artwork retains its original compressed stream.
-CONTEST_APPLAUSE_RESOURCES const u32 gContestApplauseGfx[] = INCBIN_U32("graphics/contest/applause.4bpp.lz");
-CONTEST_APPLAUSE_RESOURCES const u8 gContestApplauseMeterGfx[] = INCBIN_U8("graphics/contest/applause_meter.4bpp");
-CONTEST_APPLAUSE_RESOURCES const u16 gContestPal[] = INCBIN_U16("graphics/contest/nextturn.gbapal");
+CONTEST_APPLAUSE_RESOURCES const u32 gContestApplauseGfx[] = INCGFX_U32("graphics/contest/applause.png", ".4bpp.lz");
+CONTEST_APPLAUSE_RESOURCES const u8 gContestApplauseMeterGfx[] = INCGFX_U8("graphics/contest/applause_meter.png", ".4bpp");
+CONTEST_APPLAUSE_RESOURCES const u16 gContestPal[] = INCGFX_U16("graphics/contest/nextturn.png", ".gbapal");
 
 #undef CONTEST_APPLAUSE_RESOURCES
 
@@ -1158,30 +1158,30 @@ BERRY_CRUSH_GRAPHICS const u32 gBerryCrush_Crusher_Gfx[] = INCBIN_U32("graphics/
 
 #define JP_CONTEST_GFX __attribute__((section(".rodata.jp_contest_graphics")))
 
-JP_CONTEST_GFX const u32 gJPContestGfx1[] = INCBIN_U32("graphics/contest/japanese/composite_1.4bpp.lz");
-JP_CONTEST_GFX const u32 gJPContestPal[] = INCBIN_U32("graphics/contest/japanese/palette.pal.gbapal.lz");
-JP_CONTEST_GFX const u32 gJPContestBgTilemap[] = INCBIN_U32("graphics/contest/japanese/bg.bin.lz");
-JP_CONTEST_GFX const u32 gJPContestWindowsTilemap[] = INCBIN_U32("graphics/contest/japanese/windows.bin.lz");
-JP_CONTEST_GFX const u32 gJPContestGfx2[] = INCBIN_U32("graphics/contest/japanese/composite_2.4bpp.lz");
-JP_CONTEST_GFX const u32 gContestInterfaceAudiencePalette[] = INCBIN_U32("graphics/contest/interface.png.gbapal.lz");
-JP_CONTEST_GFX const u32 gContestAudienceTilemap[] = INCBIN_U32("graphics/contest/audience.bin.lz");
-JP_CONTEST_GFX const u32 gContestInterfaceTilemap[] = INCBIN_U32("graphics/contest/interface.bin.lz");
-JP_CONTEST_GFX const u32 gJPContestInterfaceTilemap[] = INCBIN_U32("graphics/contest/japanese/interface.bin.lz");
-JP_CONTEST_GFX const u32 gJPContestAudienceTilemap[] = INCBIN_U32("graphics/contest/japanese/audience.bin.lz");
-JP_CONTEST_GFX const u32 gContestCurtainTilemap[] = INCBIN_U32("graphics/contest/curtain.bin.lz");
-JP_CONTEST_GFX const u32 gContestInterfaceGfx[] = INCBIN_U32("graphics/contest/interface.png.4bpp.lz");
-JP_CONTEST_GFX const u32 gContestAudienceGfx[] = INCBIN_U32("graphics/contest/audience.png.4bpp.lz");
-JP_CONTEST_GFX const u32 gContestFaces_Gfx[] = INCBIN_U32("graphics/contest/faces.png.4bpp.lz");
-JP_CONTEST_GFX const u32 gContestJudgeSymbolsGfx[] = INCBIN_U32("graphics/contest/judge_symbols.png.4bpp.lz");
-JP_CONTEST_GFX const u32 gContestJudgeSymbolsPal[] = INCBIN_U32("graphics/contest/judge_symbols.png.gbapal.lz");
-JP_CONTEST_GFX const u8 gContestSliderHeart_Gfx[] = INCBIN_U8("graphics/contest/slider_heart.4bpp");
-JP_CONTEST_GFX const u32 gJPContestVoltageGfx[] = INCBIN_U32("graphics/contest/japanese/voltage.4bpp.lz");
-JP_CONTEST_GFX const u32 gJPContestVoltagePal[] = INCBIN_U32("graphics/contest/japanese/voltage.gbapal.lz");
-JP_CONTEST_GFX const u32 gContestResults_Gfx[] = INCBIN_U32("graphics/contest/results_screen/tiles.4bpp.lz");
-JP_CONTEST_GFX const u32 gContestResults_WinnerBanner_Tilemap[] = INCBIN_U32("graphics/contest/results_screen/winner_banner.bin.lz");
-JP_CONTEST_GFX const u32 gContestResults_Interface_Tilemap[] = INCBIN_U32("graphics/contest/results_screen/interface.bin.lz");
-JP_CONTEST_GFX const u32 gContestResults_Bg_Tilemap[] = INCBIN_U32("graphics/contest/results_screen/bg.bin.lz");
-JP_CONTEST_GFX const u32 gContestResults_Pal[] = INCBIN_U32("graphics/contest/results_screen/tiles.png.gbapal.lz");
+JP_CONTEST_GFX const u32 gJPContestGfx1[] = INCGFX_U32("graphics/contest/japanese/composite_1.4bpp", ".lz");
+JP_CONTEST_GFX const u32 gJPContestPal[] = INCGFX_U32("graphics/contest/japanese/palette.pal", ".gbapal.lz");
+JP_CONTEST_GFX const u32 gJPContestBgTilemap[] = INCGFX_U32("graphics/contest/japanese/bg.bin", ".lz");
+JP_CONTEST_GFX const u32 gJPContestWindowsTilemap[] = INCGFX_U32("graphics/contest/japanese/windows.bin", ".lz");
+JP_CONTEST_GFX const u32 gJPContestGfx2[] = INCGFX_U32("graphics/contest/japanese/composite_2.4bpp", ".lz");
+JP_CONTEST_GFX const u32 gContestInterfaceAudiencePalette[] = INCGFX_U32("graphics/contest/interface.png", ".gbapal.lz");
+JP_CONTEST_GFX const u32 gContestAudienceTilemap[] = INCGFX_U32("graphics/contest/audience.bin", ".lz");
+JP_CONTEST_GFX const u32 gContestInterfaceTilemap[] = INCGFX_U32("graphics/contest/interface.bin", ".lz");
+JP_CONTEST_GFX const u32 gJPContestInterfaceTilemap[] = INCGFX_U32("graphics/contest/japanese/interface.bin", ".lz");
+JP_CONTEST_GFX const u32 gJPContestAudienceTilemap[] = INCGFX_U32("graphics/contest/japanese/audience.bin", ".lz");
+JP_CONTEST_GFX const u32 gContestCurtainTilemap[] = INCGFX_U32("graphics/contest/curtain.bin", ".lz");
+JP_CONTEST_GFX const u32 gContestInterfaceGfx[] = INCGFX_U32("graphics/contest/interface.png", ".4bpp.lz");
+JP_CONTEST_GFX const u32 gContestAudienceGfx[] = INCGFX_U32("graphics/contest/audience.png", ".4bpp.lz");
+JP_CONTEST_GFX const u32 gContestFaces_Gfx[] = INCGFX_U32("graphics/contest/faces.png", ".4bpp.lz");
+JP_CONTEST_GFX const u32 gContestJudgeSymbolsGfx[] = INCGFX_U32("graphics/contest/judge_symbols.png", ".4bpp.lz");
+JP_CONTEST_GFX const u32 gContestJudgeSymbolsPal[] = INCGFX_U32("graphics/contest/judge_symbols.png", ".gbapal.lz");
+JP_CONTEST_GFX const u8 gContestSliderHeart_Gfx[] = INCGFX_U8("graphics/contest/slider_heart.png", ".4bpp");
+JP_CONTEST_GFX const u32 gJPContestVoltageGfx[] = INCGFX_U32("graphics/contest/japanese/voltage.png", ".4bpp.lz", "-num_tiles 36 -Wnum_tiles");
+JP_CONTEST_GFX const u32 gJPContestVoltagePal[] = INCGFX_U32("graphics/contest/japanese/voltage.png", ".gbapal.lz");
+JP_CONTEST_GFX const u32 gContestResults_Gfx[] = INCGFX_U32("graphics/contest/results_screen/tiles.png", ".4bpp.lz");
+JP_CONTEST_GFX const u32 gContestResults_WinnerBanner_Tilemap[] = INCGFX_U32("graphics/contest/results_screen/winner_banner.bin", ".lz");
+JP_CONTEST_GFX const u32 gContestResults_Interface_Tilemap[] = INCGFX_U32("graphics/contest/results_screen/interface.bin", ".lz");
+JP_CONTEST_GFX const u32 gContestResults_Bg_Tilemap[] = INCGFX_U32("graphics/contest/results_screen/bg.bin", ".lz");
+JP_CONTEST_GFX const u32 gContestResults_Pal[] = INCGFX_U32("graphics/contest/results_screen/tiles.png", ".gbapal.lz");
 
 #undef JP_CONTEST_GFX
 
@@ -1252,8 +1252,8 @@ BATTLE_ANIM_POST_CONTEST_GFX const u32 gBattleAnimSpritePal_OrangeLightWall[] = 
 BATTLE_ANIM_POST_CONTEST_GFX const u32 gBattleAnimSpriteGfx_BlackBall2[] = INCGFX_U32("graphics/battle_anims/sprites/black_ball_2.png", ".4bpp.lz");
 BATTLE_ANIM_POST_CONTEST_GFX const u32 gBattleAnimSpritePal_BlackBall2[] = INCGFX_U32("graphics/battle_anims/sprites/black_ball_2.png", ".gbapal.lz");
 BATTLE_ANIM_POST_CONTEST_GFX const u32 gBattleAnimSpritePal_PurpleGasCloud[] = INCGFX_U32("graphics/battle_anims/sprites/purple_gas_cloud.pal", ".gbapal.lz");
-BATTLE_ANIM_POST_CONTEST_GFX const u32 gContestJudgeGfx[] = INCBIN_U32("graphics/contest/judge.png.4bpp.lz");
-BATTLE_ANIM_POST_CONTEST_GFX const u32 gContest2Pal[] = INCBIN_U32("graphics/contest/judge.png.gbapal.lz");
+BATTLE_ANIM_POST_CONTEST_GFX const u32 gContestJudgeGfx[] = INCGFX_U32("graphics/contest/judge.png", ".4bpp.lz");
+BATTLE_ANIM_POST_CONTEST_GFX const u32 gContest2Pal[] = INCGFX_U32("graphics/contest/judge.png", ".gbapal.lz");
 BATTLE_ANIM_POST_CONTEST_GFX const u32 gBattleAnimSpriteGfx_Spark[] = INCGFX_U32("graphics/battle_anims/sprites/spark.4bpp", ".lz");
 BATTLE_ANIM_POST_CONTEST_GFX const u32 gBattleAnimSpritePal_Spark[] = INCGFX_U32("graphics/battle_anims/sprites/spark.pal", ".gbapal.lz");
 BATTLE_ANIM_POST_CONTEST_GFX const u32 gBattleAnimSpriteGfx_SparkH[] = INCGFX_U32("graphics/battle_anims/sprites/spark_h.png", ".4bpp.lz");
@@ -1974,3 +1974,74 @@ const u32 gWallpaperTilemap_Ribbon[] RIBBON_WALLPAPER_DATA = INCBIN_U32("graphic
 #undef PLUSLE_WALLPAPER_ICON_DATA
 
 #include "data/graphics/unused_pokenav.h"
+
+#define CONTEST_RESULTS_TITLE_TILEMAPS __attribute__((section(".rodata.contest_results_title_tilemaps")))
+
+// JP title tilemaps are shorter than their localized US counterparts.
+CONTEST_RESULTS_TITLE_TILEMAPS const u16 gContestResultsTitle_Normal_Tilemap[] =
+{
+    0x0020, 0x0021, 0x0022, 0x0023, 0x0008, 0x0009, 0x000A, 0x0010,
+    0x0030, 0x0031, 0x0032, 0x0033, 0x0018, 0x0019, 0x001A, 0x0010,
+};
+
+CONTEST_RESULTS_TITLE_TILEMAPS const u16 gContestResultsTitle_Super_Tilemap[] =
+{
+    0x0024, 0x0021, 0x0025, 0x0021, 0x0008, 0x0009, 0x000A, 0x0010,
+    0x0034, 0x0031, 0x0035, 0x0031, 0x0018, 0x0019, 0x001A, 0x0010,
+};
+
+CONTEST_RESULTS_TITLE_TILEMAPS const u16 gContestResultsTitle_Hyper_Tilemap[] =
+{
+    0x0026, 0x0027, 0x0025, 0x0021, 0x0008, 0x0009, 0x000A, 0x0010,
+    0x0036, 0x0037, 0x0035, 0x0031, 0x0018, 0x0019, 0x001A, 0x0010,
+};
+
+CONTEST_RESULTS_TITLE_TILEMAPS const u16 gContestResultsTitle_Master_Tilemap[] =
+{
+    0x0022, 0x0024, 0x0028, 0x0021, 0x0008, 0x0009, 0x000A, 0x0010,
+    0x0032, 0x0034, 0x0038, 0x0031, 0x0018, 0x0019, 0x001A, 0x0010,
+};
+
+CONTEST_RESULTS_TITLE_TILEMAPS const u16 gContestResultsTitle_Link_Tilemap[] =
+{
+    0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007, 0x0004,
+    0x0011, 0x0012, 0x0013, 0x0014, 0x0015, 0x0016, 0x0017, 0x0014,
+};
+
+CONTEST_RESULTS_TITLE_TILEMAPS const u16 gContestResultsTitle_Cool_Tilemap[] =
+{
+    0x0029, 0x002A, 0x002B, 0x002C, 0x002D, 0x0039, 0x003A, 0x003B,
+    0x003C, 0x003D,
+};
+
+CONTEST_RESULTS_TITLE_TILEMAPS const u16 gContestResultsTitle_Beauty_Tilemap[] =
+{
+    0x1002, 0x1001, 0x102E, 0x1003, 0x102D, 0x1012, 0x1011, 0x103E,
+    0x1013, 0x103D,
+};
+
+CONTEST_RESULTS_TITLE_TILEMAPS const u16 gContestResultsTitle_Cute_Tilemap[] =
+{
+    0x2029, 0x202F, 0x2006, 0x202D, 0x2010, 0x2039, 0x203F, 0x2016,
+    0x203D, 0x2010,
+};
+
+CONTEST_RESULTS_TITLE_TILEMAPS const u16 gContestResultsTitle_Smart_Tilemap[] =
+{
+    0x3029, 0x3003, 0x302B, 0x302D, 0x3010, 0x3039, 0x3013, 0x303B,
+    0x303D, 0x3010,
+};
+
+CONTEST_RESULTS_TITLE_TILEMAPS const u16 gContestResultsTitle_Tough_Tilemap[] =
+{
+    0x4005, 0x402E, 0x4040, 0x4003, 0x402D, 0x4015, 0x403E, 0x4050,
+    0x4013, 0x403D,
+};
+
+CONTEST_RESULTS_TITLE_TILEMAPS const u16 gContestResultsTitle_Tilemap[] =
+{
+    0x000B, 0x000C, 0x000D, 0x000E, 0x000F, 0x001B, 0x001C, 0x001D,
+    0x001E, 0x001F,
+};
+
+#undef CONTEST_RESULTS_TITLE_TILEMAPS

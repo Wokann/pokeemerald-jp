@@ -1231,7 +1231,7 @@ DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_anim_scripts
 # Migrated data files now build from C or no longer contribute data.
 DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b_mid2b5.o $(OBJ_DIR)/data/data_b_mid2b6.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid62.o,$(DATA_OBJS))
 DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b2d_mid33.o,$(DATA_OBJS))
-DATA_OBJS += $(OBJ_DIR)/data/tv.o $(OBJ_DIR)/data/contest_results.o
+DATA_OBJS += $(OBJ_DIR)/data/tv.o
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_regis_resources.o
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_legendary_resources.o
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_frontier_resources.o
@@ -1280,6 +1280,8 @@ clean: clean-tools
 	rm -f $(JP_INTRO_CREDITS_ASSETS) $(JP_INTRO_CREDITS_INTERMEDIATES)
 	rm -f $(JP_BATTLE_ENTRY_ASSETS) $(JP_BATTLE_ENTRY_INTERMEDIATES)
 	rm -f $(JP_BATTLE_ANIM_REMAINING_ASSETS) $(JP_BATTLE_ANIM_REMAINING_INTERMEDIATES)
+	rm -f $(JP_CONTEST_ASSETS) $(JP_CONTEST_INTERMEDIATES)
+	rm -f $(JP_CONTEST_RESULTS_ASSETS)
 	rm -f $(JP_FRONTIER_UI_ASSETS) $(JP_FRONTIER_UI_INTERMEDIATES)
 
 # All build artifacts wait for the host-tool chain, so a fresh checkout can
@@ -1600,10 +1602,10 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_anims/backgrounds/ice.png.4bpp.lz graphics/battle_anims/backgrounds/ice.png.gbapal.lz \
 	graphics/battle_anims/backgrounds/ice.bin.lz graphics/battle_anims/sprites/icicle_spear.png.4bpp.lz \
 	graphics/battle_anims/sprites/icicle_spear.png.gbapal.lz \
-	graphics/contest/nextturn.4bpp.lz graphics/contest/nextturn_numbers.4bpp \
-	graphics/contest/nextturn_random.4bpp \
-	graphics/contest/applause.4bpp.lz graphics/contest/applause_meter.4bpp \
-	graphics/contest/nextturn.gbapal \
+	graphics/contest/nextturn.png.4bpp.lz graphics/contest/nextturn_numbers.png.4bpp \
+	graphics/contest/nextturn_random.png.4bpp \
+	graphics/contest/applause.png.4bpp.lz graphics/contest/applause_meter.png.4bpp \
+	graphics/contest/nextturn.png.gbapal \
 	  \
 	  \
 	  \
@@ -2940,10 +2942,6 @@ $(OBJ_DIR)/data/battle_transition_pre_regi_resources.o: data/battle_transition_p
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(OBJ_DIR)/data/tv.o: data/tv.s data/tv/text_groups.inc
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
-
-$(OBJ_DIR)/data/contest_results.o: data/contest_results.s data/contest/contest_results.inc baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
@@ -5663,3 +5661,100 @@ $(JP_BATTLE_ANIM_REMAINING_ASSETS): %.lz: % Makefile | tools
 	$(GFX) $< $@
 
 $(C_BUILDDIR)/graphics.o: $(JP_BATTLE_ANIM_REMAINING_ASSETS)
+
+JP_CONTEST_ASSETS := graphics/contest/applause.png.4bpp.lz \
+	graphics/contest/applause_meter.png.4bpp \
+	graphics/contest/audience.bin.lz \
+	graphics/contest/audience.png.4bpp.lz \
+	graphics/contest/curtain.bin.lz \
+	graphics/contest/faces.png.4bpp.lz \
+	graphics/contest/interface.bin.lz \
+	graphics/contest/interface.png.4bpp.lz \
+	graphics/contest/interface.png.gbapal.lz \
+	graphics/contest/japanese/audience.bin.lz \
+	graphics/contest/japanese/bg.bin.lz \
+	graphics/contest/japanese/composite_1.4bpp.lz \
+	graphics/contest/japanese/composite_2.4bpp.lz \
+	graphics/contest/japanese/interface.bin.lz \
+	graphics/contest/japanese/palette.pal.gbapal.lz \
+	graphics/contest/japanese/voltage.png.gbapal.lz \
+	graphics/contest/japanese/voltage.png_num_tiles_36__Wnum_tiles.4bpp.lz \
+	graphics/contest/japanese/windows.bin.lz \
+	graphics/contest/judge.png.4bpp.lz \
+	graphics/contest/judge.png.gbapal.lz \
+	graphics/contest/judge_symbols.png.4bpp.lz \
+	graphics/contest/judge_symbols.png.gbapal.lz \
+	graphics/contest/nextturn.png.4bpp.lz \
+	graphics/contest/nextturn.png.gbapal \
+	graphics/contest/nextturn_numbers.png.4bpp \
+	graphics/contest/nextturn_random.png.4bpp \
+	graphics/contest/results_screen/bg.bin.lz \
+	graphics/contest/results_screen/interface.bin.lz \
+	graphics/contest/results_screen/tiles.png.4bpp.lz \
+	graphics/contest/results_screen/tiles.png.gbapal.lz \
+	graphics/contest/results_screen/winner_banner.bin.lz \
+	graphics/contest/slider_heart.png.4bpp
+
+JP_CONTEST_INTERMEDIATES := graphics/contest/applause.png.4bpp \
+	graphics/contest/audience.png.4bpp \
+	graphics/contest/faces.png.4bpp \
+	graphics/contest/interface.png.4bpp \
+	graphics/contest/interface.png.gbapal \
+	graphics/contest/japanese/audience.png.4bpp \
+	graphics/contest/japanese/composite_1.4bpp \
+	graphics/contest/japanese/composite_2.4bpp \
+	graphics/contest/japanese/floor.png.4bpp \
+	graphics/contest/japanese/frame_1.png.4bpp \
+	graphics/contest/japanese/frame_2.png.4bpp \
+	graphics/contest/japanese/interface.png.4bpp \
+	graphics/contest/japanese/letters.png.4bpp \
+	graphics/contest/japanese/meter.png.4bpp \
+	graphics/contest/japanese/numbers.png.4bpp \
+	graphics/contest/japanese/palette.pal.gbapal \
+	graphics/contest/japanese/symbols.png.4bpp \
+	graphics/contest/japanese/voltage.png.gbapal \
+	graphics/contest/japanese/voltage.png_num_tiles_36__Wnum_tiles.4bpp \
+	graphics/contest/judge.png.4bpp \
+	graphics/contest/judge.png.gbapal \
+	graphics/contest/judge_symbols.png.4bpp \
+	graphics/contest/judge_symbols.png.gbapal \
+	graphics/contest/nextturn.png.4bpp \
+	graphics/contest/results_screen/tiles.png.4bpp \
+	graphics/contest/results_screen/tiles.png.gbapal
+
+graphics/contest/applause.png.4bpp graphics/contest/applause_meter.png.4bpp graphics/contest/audience.png.4bpp graphics/contest/faces.png.4bpp graphics/contest/interface.png.4bpp graphics/contest/japanese/audience.png.4bpp graphics/contest/japanese/floor.png.4bpp graphics/contest/japanese/frame_1.png.4bpp graphics/contest/japanese/frame_2.png.4bpp graphics/contest/japanese/interface.png.4bpp graphics/contest/japanese/letters.png.4bpp graphics/contest/japanese/meter.png.4bpp graphics/contest/japanese/numbers.png.4bpp graphics/contest/japanese/symbols.png.4bpp graphics/contest/judge.png.4bpp graphics/contest/judge_symbols.png.4bpp graphics/contest/nextturn.png.4bpp graphics/contest/nextturn_numbers.png.4bpp graphics/contest/nextturn_random.png.4bpp graphics/contest/results_screen/tiles.png.4bpp graphics/contest/slider_heart.png.4bpp: %.png.4bpp: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/contest/interface.png.gbapal graphics/contest/japanese/voltage.png.gbapal graphics/contest/judge.png.gbapal graphics/contest/judge_symbols.png.gbapal graphics/contest/nextturn.png.gbapal graphics/contest/results_screen/tiles.png.gbapal: %.png.gbapal: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/contest/japanese/palette.pal.gbapal: %.pal.gbapal: %.pal Makefile | tools
+	$(GFX) $< $@
+
+graphics/contest/japanese/voltage.png_num_tiles_36__Wnum_tiles.4bpp: graphics/contest/japanese/voltage.png Makefile | tools
+	$(GFX) $< $@ -num_tiles 36 -Wnum_tiles
+
+graphics/contest/japanese/composite_1.4bpp: graphics/contest/japanese/frame_1.png.4bpp graphics/contest/japanese/floor.png.4bpp graphics/contest/japanese/frame_2.png.4bpp graphics/contest/japanese/symbols.png.4bpp graphics/contest/japanese/meter.png.4bpp graphics/contest/japanese/letters.png.4bpp graphics/contest/japanese/numbers.png.4bpp Makefile
+	cat $(filter %.4bpp,$^) >$@
+
+graphics/contest/japanese/composite_2.4bpp: graphics/contest/japanese/interface.png.4bpp graphics/contest/japanese/audience.png.4bpp Makefile
+	cat $(filter %.4bpp,$^) >$@
+
+$(filter %.lz,$(JP_CONTEST_ASSETS)): %.lz: % Makefile | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/graphics.o: $(JP_CONTEST_ASSETS)
+
+JP_CONTEST_RESULTS_ASSETS := graphics/contest/results_screen/text_window.pal.gbapal graphics/contest/results_screen/text_window.png.4bpp graphics/interface/blank.pal.gbapal
+
+graphics/contest/results_screen/text_window.png.4bpp: %.png.4bpp: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/contest/results_screen/text_window.pal.gbapal graphics/interface/blank.pal.gbapal: %.pal.gbapal: %.pal Makefile | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/contest_util.o: src/contest_util.c charmap.txt include/graphics.h include/sprite.h include/bg.h include/window.h include/util.h $(JP_CONTEST_RESULTS_ASSETS)
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/contest_util.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/contest_util.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/contest_util.gen.s

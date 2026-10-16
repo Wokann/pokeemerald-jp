@@ -4,6 +4,284 @@
 #include "overworld.h"
 #include "script_pokemon_util.h"
 
+#include "graphics.h"
+#include "sprite.h"
+#include "bg.h"
+#include "window.h"
+#include "util.h"
+
+#define TAG_TEXT_WINDOW_BASE 3009
+enum {
+    TAG_RESULTS_TEXT_WINDOW_LEFT = TAG_TEXT_WINDOW_BASE,
+    TAG_RESULTS_TEXT_WINDOW_MIDLEFT,
+    TAG_RESULTS_TEXT_WINDOW_MIDRIGHT,
+    TAG_RESULTS_TEXT_WINDOW_RIGHT,
+    TAG_LINK_TEXT_WINDOW_LEFT,
+    TAG_LINK_TEXT_WINDOW_MIDLEFT,
+    TAG_LINK_TEXT_WINDOW_MIDRIGHT,
+    TAG_LINK_TEXT_WINDOW_RIGHT,
+};
+#define TAG_CONFETTI 3017
+#define TAG_WIRELESS_INDICATOR_WINDOW 22222
+
+void sub_080F7FF8(void);
+
+#define CONTEST_RESULTS_PREFIX __attribute__((section(".rodata.contest_results_prefix")))
+
+CONTEST_RESULTS_PREFIX static const u16 sResultsTextWindow_Pal[] = INCGFX_U16("graphics/contest/results_screen/text_window.pal", ".gbapal");
+
+CONTEST_RESULTS_PREFIX static const u8 sResultsTextWindow_Gfx[] = INCGFX_U8("graphics/contest/results_screen/text_window.png", ".4bpp");
+
+CONTEST_RESULTS_PREFIX static const u16 sMiscBlank_Pal[] = INCGFX_U16("graphics/interface/blank.pal", ".gbapal");
+
+CONTEST_RESULTS_PREFIX static const struct OamData sOamData_ResultsTextWindow =
+{
+    .y = 0,
+    .affineMode = 0,
+    .objMode = 0,
+    .mosaic = 0,
+    .bpp = 0,
+    .shape = 1,
+    .x = 0,
+    .matrixNum = 0,
+    .size = 3,
+    .tileNum = 0,
+    .priority = 3,
+    .paletteNum = 2,
+    .affineParam = 0,
+};
+
+CONTEST_RESULTS_PREFIX static const struct SpriteTemplate sSpriteTemplate_ResultsTextWindow =
+{
+    .tileTag = TAG_RESULTS_TEXT_WINDOW_LEFT,
+    .paletteTag = TAG_TEXT_WINDOW_BASE,
+    .oam = &sOamData_ResultsTextWindow,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+CONTEST_RESULTS_PREFIX static const struct SpriteSheet sSpriteSheets_ResultsTextWindow[] =
+{
+    { .data = gMiscBlank_Gfx, .size = 0x400, .tag = TAG_RESULTS_TEXT_WINDOW_LEFT },
+    { .data = gMiscBlank_Gfx, .size = 0x400, .tag = TAG_RESULTS_TEXT_WINDOW_MIDLEFT },
+    { .data = gMiscBlank_Gfx, .size = 0x400, .tag = TAG_RESULTS_TEXT_WINDOW_MIDRIGHT },
+    { .data = gMiscBlank_Gfx, .size = 0x400, .tag = TAG_RESULTS_TEXT_WINDOW_RIGHT },
+    { .data = gMiscBlank_Gfx, .size = 0x400, .tag = TAG_LINK_TEXT_WINDOW_LEFT },
+    { .data = gMiscBlank_Gfx, .size = 0x400, .tag = TAG_LINK_TEXT_WINDOW_MIDLEFT },
+    { .data = gMiscBlank_Gfx, .size = 0x400, .tag = TAG_LINK_TEXT_WINDOW_MIDRIGHT },
+    { .data = gMiscBlank_Gfx, .size = 0x400, .tag = TAG_LINK_TEXT_WINDOW_RIGHT },
+};
+
+CONTEST_RESULTS_PREFIX static const struct SpritePalette sSpritePalette_ResultsTextWindow =
+{
+    .data = sMiscBlank_Pal,
+    .tag = TAG_TEXT_WINDOW_BASE,
+};
+
+CONTEST_RESULTS_PREFIX static const struct OamData sOamData_Confetti =
+{
+    .y = 0,
+    .affineMode = 0,
+    .objMode = 0,
+    .mosaic = 0,
+    .bpp = 0,
+    .shape = 0,
+    .x = 0,
+    .matrixNum = 0,
+    .size = 0,
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+CONTEST_RESULTS_PREFIX static const struct SpriteTemplate sSpriteTemplate_Confetti =
+{
+    .tileTag = TAG_CONFETTI,
+    .paletteTag = TAG_CONFETTI,
+    .oam = &sOamData_Confetti,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)sub_080F7FF8,
+};
+
+CONTEST_RESULTS_PREFIX static const struct CompressedSpriteSheet sSpriteSheet_Confetti =
+{
+    .data = gConfetti_Gfx,
+    .size = 0x220,
+    .tag = TAG_CONFETTI,
+};
+
+CONTEST_RESULTS_PREFIX static const struct CompressedSpritePalette sSpritePalette_Confetti =
+{
+    .data = gConfetti_Pal,
+    .tag = TAG_CONFETTI,
+};
+
+#undef CONTEST_RESULTS_PREFIX
+
+#define CONTEST_RESULTS_SUFFIX __attribute__((section(".rodata.contest_results_suffix")))
+
+CONTEST_RESULTS_SUFFIX static const struct BgTemplate sBgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 24,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0,
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 28,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0,
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 26,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0,
+    },
+};
+
+// JP separates each contestant name into two windows.
+CONTEST_RESULTS_SUFFIX static const struct WindowTemplate sWindowTemplates[] =
+{
+    {
+        .bg = 1,
+        .tilemapLeft = 7,
+        .tilemapTop = 4,
+        .width = 5,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 770,
+    },
+    {
+        .bg = 1,
+        .tilemapLeft = 7,
+        .tilemapTop = 7,
+        .width = 5,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 790,
+    },
+    {
+        .bg = 1,
+        .tilemapLeft = 7,
+        .tilemapTop = 10,
+        .width = 5,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 810,
+    },
+    {
+        .bg = 1,
+        .tilemapLeft = 7,
+        .tilemapTop = 13,
+        .width = 5,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 830,
+    },
+    {
+        .bg = 1,
+        .tilemapLeft = 12,
+        .tilemapTop = 4,
+        .width = 6,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 850,
+    },
+    {
+        .bg = 1,
+        .tilemapLeft = 12,
+        .tilemapTop = 7,
+        .width = 6,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 866,
+    },
+    {
+        .bg = 1,
+        .tilemapLeft = 12,
+        .tilemapTop = 10,
+        .width = 6,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 882,
+    },
+    {
+        .bg = 1,
+        .tilemapLeft = 12,
+        .tilemapTop = 13,
+        .width = 6,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 898,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+CONTEST_RESULTS_SUFFIX static const struct OamData sOamData_WirelessIndicatorWindow =
+{
+    .y = 0,
+    .affineMode = 0,
+    .objMode = 0,
+    .mosaic = 0,
+    .bpp = 0,
+    .shape = 0,
+    .x = 0,
+    .matrixNum = 0,
+    .size = 1,
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+CONTEST_RESULTS_SUFFIX static const struct SpriteTemplate sSpriteTemplate_WirelessIndicatorWindow =
+{
+    .tileTag = TAG_WIRELESS_INDICATOR_WINDOW,
+    .paletteTag = 0,
+    .oam = &sOamData_WirelessIndicatorWindow,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+CONTEST_RESULTS_SUFFIX static const struct SpriteSheet sSpriteSheet_WirelessIndicatorWindow =
+{
+    .data = gMiscBlank_Gfx,
+    .size = 0x200,
+    .tag = TAG_WIRELESS_INDICATOR_WINDOW,
+};
+
+CONTEST_RESULTS_SUFFIX static const u8 sContestLinkTextColors[4] = {3, 4, 5, 14};
+
+#undef CONTEST_RESULTS_SUFFIX
+
 __attribute__((naked)) void sub_080F5FBC(void)
 {
     __asm__(".syntax unified\n\t"
@@ -122,9 +400,9 @@ __attribute__((naked)) void sub_080F5FBC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F60D0: .4byte sContestResultsBgTemplates\n\t"
+        "_080F60D0: .4byte sBgTemplates\n\t"
         "_080F60D4: .4byte gUnknown_2039D00\n\t"
-        "_080F60D8: .4byte sContestResultsWindowTemplates\n\t"
+        "_080F60D8: .4byte sWindowTemplates\n\t"
         "_080F60DC: .4byte 0x00003F3F\n\t"
         "_080F60E0: .4byte 0x00003F2E\n\t"
         "_080F60E4: .4byte gBattle_BG0_X\n\t"
@@ -235,11 +513,11 @@ __attribute__((naked)) void sub_080F6114(void)
         "	adds r5, #2\n\t"
         "	b _080F61EE\n\t"
         "	.align 2, 0\n\t"
-        "_080F61CC: .4byte gUnknown_8C196CC\n\t"
-        "_080F61D0: .4byte gUnknown_8C1A174\n\t"
-        "_080F61D4: .4byte gUnknown_8C1A048\n\t"
-        "_080F61D8: .4byte gUnknown_8C19F34\n\t"
-        "_080F61DC: .4byte gUnknown_8C1A2FC\n\t"
+        "_080F61CC: .4byte gContestResults_Gfx\n\t"
+        "_080F61D0: .4byte gContestResults_Bg_Tilemap\n\t"
+        "_080F61D4: .4byte gContestResults_Interface_Tilemap\n\t"
+        "_080F61D8: .4byte gContestResults_WinnerBanner_Tilemap\n\t"
+        "_080F61DC: .4byte gContestResults_Pal\n\t"
         "_080F61E0: .4byte sResultsTextWindow_Pal\n\t"
         "_080F61E4: .4byte 0x000060B2\n\t"
         "_080F61E8: .4byte 0x000060A4\n\t"
