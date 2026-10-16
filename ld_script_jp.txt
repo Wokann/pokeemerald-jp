@@ -10276,7 +10276,7 @@ SECTIONS {
         src/strings.o(.rodata.strings_ereader_text);
         data/data_b2d.o(.rodata.mid97_prefix);
         src/berry_tag_screen.o(.rodata.berry_tag_screen_data);
-        src/data/text/region_texts112.o(.rodata);
+        src/strings.o(.rodata.strings_mystery_event_text);
         src/mystery_event_menu.o(.rodata.mid98_prefix);
         src/save_failed_screen.o(.rodata.save_failed_screen_data);
         src/braille_puzzles.o(.rodata.mid98_between);

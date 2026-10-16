@@ -7,6 +7,7 @@
 #define STRINGS_EREADER_TEXT __attribute__((section(".rodata.strings_ereader_text"), aligned(1)))
 #define STRINGS_MINIGAME_TEXT __attribute__((section(".rodata.strings_minigame_text"), aligned(1)))
 #define STRINGS_SHARED_MISC_TEXT __attribute__((section(".rodata.strings_shared_misc_text"), aligned(1)))
+#define STRINGS_MYSTERY_EVENT_TEXT __attribute__((section(".rodata.strings_mystery_event_text"), aligned(1)))
 #define STRINGS_TRAINER_STATUS_TEXT __attribute__((section(".rodata.strings_trainer_status_text"), aligned(1)))
 #define STRINGS_INTERFACE_TEXT __attribute__((section(".rodata.strings_interface_text"), aligned(1)))
 #define STRINGS_COMMON __attribute__((section(".rodata.strings_common")))
@@ -816,6 +817,33 @@ STRINGS_EREADER_TEXT const u8 gJPText_PleaseWaitAMoment[] = _("しばらく　�
 STRINGS_EREADER_TEXT const u8 gJPText_WriteErrorUnableToSaveData[] = _(
     "かきこみ　エラー　です\n"
     "データが　ほぞん　できませんでした");
+
+STRINGS_MYSTERY_EVENT_TEXT const u8 gText_LinkStandby2[] = _(
+    "つうしん　たいき　ちゅう　です\n"
+    "⋯⋯Bボタンで　キャンセル　します");
+STRINGS_MYSTERY_EVENT_TEXT const u8 gText_PressAToLoadEvent[] = _(
+    "Aボタンで　できごとを　よみこみます\n"
+    "⋯⋯Bボタンで　キャンセル　します");
+STRINGS_MYSTERY_EVENT_TEXT const u8 gText_LoadingEvent[] = _("できごとを　よみこみちゅう！！");
+STRINGS_MYSTERY_EVENT_TEXT const u8 gText_DontRemoveCableTurnOff[] = _(
+    "つうしんケーブルを　ぬかないで　ください\n"
+    "でんげんを　きらないで　ください");
+STRINGS_MYSTERY_EVENT_TEXT const u8 gText_EventSafelyLoaded[] = _(
+    "できごとの　よみこみが\n"
+    "せいじょうに　しゅうりょう　しました");
+STRINGS_MYSTERY_EVENT_TEXT const u8 gText_MysteryEventIncorrectDevice[] = _(
+    "せつぞく　できない　ききの　ようです\n"
+    "ただしい　ききと　やりなおしてください");
+STRINGS_MYSTERY_EVENT_TEXT const u8 gText_LoadErrorEndingSession[] = _(
+    "エラーがはっせいしました\n"
+    "しゅうりょうします");
+STRINGS_MYSTERY_EVENT_TEXT const u8 gText_MysteryEventPressA[] = _("Aボタンを　おしてください");
+STRINGS_MYSTERY_EVENT_TEXT const u8 gText_MysteryEventConnected[] = _("つながりました");
+STRINGS_MYSTERY_EVENT_TEXT const u8 gText_MysteryEventDataReceived[] = _("データを　じゅしんしました");
+STRINGS_MYSTERY_EVENT_TEXT const u8 gText_MysteryEventSaveFailed[] = _("セーブできませんでした");
+STRINGS_MYSTERY_EVENT_TEXT const u8 gText_MysteryEventSaveSucceeded[] = _("セーブできました");
+STRINGS_MYSTERY_EVENT_TEXT const u8 gText_MysteryEventLoadFailed[] = _("ロードできませんでした");
+STRINGS_MYSTERY_EVENT_TEXT const u8 gText_MysteryEventLoadSucceeded[] = _("ロードできました");
 
 STRINGS_DAYCARE const u8 gDaycareText_GetAlongVeryWell[] = _("2ひきの　なかは\nとっても　よい　ようじゃ");
 STRINGS_DAYCARE const u8 gDaycareText_GetAlong[] = _("2ひきの　なかは\nまずまずの　ようじゃ");
