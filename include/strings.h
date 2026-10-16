@@ -1331,6 +1331,7 @@ extern const u8 CableClub_Text_CanMixRecords[];
 extern const u8 CableClub_Text_CanMakeBerryPowder[];
 
 // Frontier records.
+extern const u8 gText_3Dashes[];
 extern const u8 gText_WinStreak[];
 extern const u8 gText_Record[];
 extern const u8 gText_Current[];
@@ -3047,6 +3048,7 @@ extern const u8 gText_QuitSwapping[];
 extern const u8 gText_AcceptThisPkmn[];
 extern const u8 gText_SelectPkmnToAccept[];
 extern const u8 gText_SelectPkmnToSwap[];
+extern const u8 gText_4Spaces[];
 extern const u8 gText_PkmnSwap[];
 extern const u8 gText_Swap[];
 extern const u8 gText_Summary2[];

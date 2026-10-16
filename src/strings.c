@@ -7,6 +7,8 @@
 #define STRINGS_EREADER_TEXT __attribute__((section(".rodata.strings_ereader_text"), aligned(1)))
 #define STRINGS_MINIGAME_TEXT __attribute__((section(".rodata.strings_minigame_text"), aligned(1)))
 #define STRINGS_SHARED_MISC_TEXT __attribute__((section(".rodata.strings_shared_misc_text"), aligned(1)))
+#define STRINGS_FRONTIER_RECORD_TEXT __attribute__((section(".rodata.strings_frontier_record_text"), aligned(1)))
+#define STRINGS_BATTLE_FACTORY_SWAP_TEXT __attribute__((section(".rodata.strings_battle_factory_swap_text"), aligned(1)))
 #define STRINGS_MYSTERY_EVENT_TEXT __attribute__((section(".rodata.strings_mystery_event_text"), aligned(1)))
 #define STRINGS_TRAINER_STATUS_TEXT __attribute__((section(".rodata.strings_trainer_status_text"), aligned(1)))
 #define STRINGS_INTERFACE_TEXT __attribute__((section(".rodata.strings_interface_text"), aligned(1)))
@@ -844,6 +846,53 @@ STRINGS_MYSTERY_EVENT_TEXT const u8 gText_MysteryEventSaveFailed[] = _("セー�
 STRINGS_MYSTERY_EVENT_TEXT const u8 gText_MysteryEventSaveSucceeded[] = _("セーブできました");
 STRINGS_MYSTERY_EVENT_TEXT const u8 gText_MysteryEventLoadFailed[] = _("ロードできませんでした");
 STRINGS_MYSTERY_EVENT_TEXT const u8 gText_MysteryEventLoadSucceeded[] = _("ロードできました");
+
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_3Dashes[] = _("ーーー");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_SingleBattleRoomResults[] = _("　{PLAYER}　の　シングル　バトルルーム　せいせき");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_DoubleBattleRoomResults[] = _("　　{PLAYER}　の　ダブル　バトルルーム　せいせき");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_MultiBattleRoomResults[] = _("　　{PLAYER}　の　マルチ　バトルルーム　せいせき");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_LinkMultiBattleRoomResults[] = _("{PLAYER}　の　つうしんマルチ　バトルルーム　せいせき");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_SingleBattleTourneyResults[] = _("{PLAYER}　の　シングル　バトルトーナメント　せいせき");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_DoubleBattleTourneyResults[] = _("{PLAYER}　の　ダブル　バトルトーナメント　せいせき");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_SingleBattleHallResults[] = _("{PLAYER}　の　シングル　バトルホール　せいせき");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_DoubleBattleHallResults[] = _("{PLAYER}　の　ダブル　バトルホール　せいせき");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_BattleChoiceResults[] = _("{PLAYER}　の　バトルゲーム　せいせき");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_SetKOTourneyResults[] = _("{PLAYER}　の　かちぬきチームバトル　せいせき");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_BattleSwapSingleResults[] = _("{PLAYER}　の　バトルトレード　シングル　せいせき");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_BattleSwapDoubleResults[] = _("{PLAYER}　の　バトルトレード　ダブル　せいせき");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_BattleQuestResults[] = _("{PLAYER}　の　バトルアドベンチャー　せいせき");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_Lv502[] = _("レベル　50");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_OpenLv[] = _("オープンレベル");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_WinStreak[] = _("{STR_VAR_1}れんしょう");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_Current[] = _("げんざい");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_Record[] = _("さいこう");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_Prev[] = _("ぜんかい");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_FrontierBattle[] = _("バトル");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_RentalSwap[] = _("レンタル/こうかん");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_Total[] = _("つうさん");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_ClearStreak[] = _("{STR_VAR_1}れんぱ");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_Championships[] = _("{STR_VAR_1}かい　ゆうしょう");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_RoomsCleared[] = _("{STR_VAR_1}へや　とっぱ");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_TimesCleared[] = _("{STR_VAR_1}かい　クリア");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_KOsInARow[] = _("{STR_VAR_1}にんぬき");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_TimesVar1[] = _("{STR_VAR_1}かい");
+STRINGS_FRONTIER_RECORD_TEXT const u8 gText_FloorsCleared[] = _("{STR_VAR_1}だん　せいは");
+
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_PkmnSwap[] = _("ポケモンこうかん　　　　　");
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_SelectPkmnToSwap[] = _("てばなすポケモンを　えらんでください");
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_SelectPkmnToAccept[] = _("うけとるポケモンを　えらんでください");
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_Swap[] = _("てばなす");
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_Summary2[] = _("つよさをみる");
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_Rechoose[] = _("べつのにする");
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_QuitSwapping[] = _("こうかんを　ちゅうし　しますか？");
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_Yes3[] = _("はい");
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_No3[] = _("いいえ");
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_PkmnForSwap[] = _("てばなすポケモン");
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_Cancel3[] = _("ちゅうし");
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_Swap2[] = _("てばなす");
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_Accept[] = _("うけとる");
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_AcceptThisPkmn[] = _("このポケモンを　うけとりますか？");
+STRINGS_BATTLE_FACTORY_SWAP_TEXT const u8 gText_4Spaces[] = _("　　　　");
 
 STRINGS_DAYCARE const u8 gDaycareText_GetAlongVeryWell[] = _("2ひきの　なかは\nとっても　よい　ようじゃ");
 STRINGS_DAYCARE const u8 gDaycareText_GetAlong[] = _("2ひきの　なかは\nまずまずの　ようじゃ");

@@ -10336,12 +10336,11 @@ SECTIONS {
         src/battle_factory_screen.o(.rodata.battle_factory_screen_select_sprite_palettes);
         src/strings.o(.rodata.strings_battle_factory_selection);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_data);
-        src/data/text/region_texts114.o(.rodata);
+        src/strings.o(.rodata.strings_battle_factory_swap_text);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_data_late);
         src/apprentice.o(.rodata.apprentice_data);
         src/frontier_util.o(.rodata.frontier_util_data);
-        src/data/text/region_texts115.o(.rodata);
-        src/data/text/region_texts116.o(.rodata);
+        src/strings.o(.rodata.strings_frontier_record_text);
         src/frontier_util.o(.rodata.frontier_util_data_late);
         src/battle_arena.o(.rodata.battle_arena_data);
         src/battle_factory.o(.rodata.battle_factory_data);
