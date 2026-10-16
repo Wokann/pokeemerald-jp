@@ -10309,7 +10309,6 @@ SECTIONS {
         src/trainer_pokemon_sprites.o(.rodata.trainer_pokemon_sprites_data);
         src/lilycove_lady.o(.rodata.lilycove_lady_data);
         src/battle_dome.o(.rodata.battle_dome_data);
-        src/battle_dome.o(.rodata.battle_dome_raw);
         src/battle_palace.o(.rodata.battle_palace_data);
         src/match_call.o(.rodata.match_call_data);
         src/match_call.o(.rodata.match_call_ui_data);

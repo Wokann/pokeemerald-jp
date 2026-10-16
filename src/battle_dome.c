@@ -5,6 +5,11 @@
 #include "constants/moves.h"
 #include "event_data.h"
 #include "window.h"
+#include "graphics.h"
+#include "sprite.h"
+#include "scanline_effect.h"
+#include "strings.h"
+#include "constants/frontier_util.h"
 
 #define BATTLE_DOME_DATA __attribute__((section(".rodata.battle_dome_data")))
 
@@ -30,7 +35,7 @@ enum {
     NUM_INFO_CARD_WINDOWS,
 };
 
-extern void (*const sBattleDomeFunctions[])(void);
+static void (*const sBattleDomeFunctions[])(void);
 
 void CallBattleDomeFunction(void)
 {
@@ -769,163 +774,6 @@ static const struct WindowTemplate sInfoCardWindowTemplates[] BATTLE_DOME_DATA =
     DUMMY_WIN_TEMPLATE,
 };
 
-/*
- * JP physical owner [0x085D3DFC, 0x085D68CC).
- * Keep every verified raw sub-boundary visible here while the Battle Dome
- * tables are progressively recovered as C data in their final source owner.
- */
-__asm__(
-    ".section .rodata.battle_dome_raw,\"a\",%progbits\n"
-    ".align 2\n"
-    "\t.globl gUnknown_85D59F0\n"
-    "gUnknown_85D59F0: @ 0x85D59F0\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d59f0, 0xc\n"
-    "\n"
-    "\t.globl gUnknown_85D59FC\n"
-    "gUnknown_85D59FC: @ 0x85D59FC\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d59fc, 0x58\n"
-    "\n"
-    "\t.globl gUnknown_85D5A54\n"
-    "gUnknown_85D5A54: @ 0x85D5A54\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5a54, 0x30\n"
-    "\n"
-    "\t.globl gUnknown_85D5A84\n"
-    "gUnknown_85D5A84: @ 0x85D5A84\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5a84, 0x48\n"
-    "\n"
-    "\t.globl gUnknown_85D5ACC\n"
-    "gUnknown_85D5ACC: @ 0x85D5ACC\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5acc, 0x18\n"
-    "\n"
-    "\t.globl gUnknown_85D5AE4\n"
-    "gUnknown_85D5AE4: @ 0x85D5AE4\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5ae4, 0x18\n"
-    "\n"
-    "\t.globl sTourneyTreeTrainerIds\n"
-    "sTourneyTreeTrainerIds: @ 0x85D5AFC\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5afc, 0x10\n"
-    "\n"
-    "\t.globl sBattleDomeFunctions\n"
-    "sBattleDomeFunctions: @ 0x85D5B0C\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5b0c, 0x5c\n"
-    "\n"
-    "\t.globl gUnknown_85D5B68\n"
-    "gUnknown_85D5B68: @ 0x85D5B68\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5b68, 0x10\n"
-    "\n"
-    "\t.globl gUnknown_85D5B78\n"
-    "gUnknown_85D5B78: @ 0x85D5B78\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5b78, 0x10\n"
-    "\t.globl gUnknown_85D5B88\n"
-    "gUnknown_85D5B88: @ 0x85D5B88\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5b88, 0x40\n"
-    "\n"
-    "\t.globl sTourneyTreeTrainerOpponentIds\n"
-    "sTourneyTreeTrainerOpponentIds: @ 0x85D5BC8\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5bc8, 0x10\n"
-    "\n"
-    "\t.globl gUnknown_85D5BD8\n"
-    "gUnknown_85D5BD8: @ 0x85D5BD8\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5bd8, 0x40\n"
-    "\n"
-    "\t.globl gUnknown_85D5C18\n"
-    "gUnknown_85D5C18: @ 0x85D5C18\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5c18, 0x4\n"
-    "\n"
-    "\t.globl gUnknown_85D5C1C\n"
-    "gUnknown_85D5C1C: @ 0x85D5C1C\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5c1c, 0x20\n"
-    "\n"
-    "\t.globl sTournamentIdToPairedTrainerIds\n"
-    "sTournamentIdToPairedTrainerIds: @ 0x85D5C3C\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5c3c, 0x10\n"
-    "\n"
-    "\t.globl gUnknown_85D5C4C\n"
-    "gUnknown_85D5C4C: @ 0x85D5C4C\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5c4c, 0x44\n"
-    "\n"
-    "\t.globl gUnknown_85D5C90\n"
-    "gUnknown_85D5C90: @ 0x85D5C90\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5c90, 0x80\n"
-    "\n"
-    "\t.globl gUnknown_85D5D10\n"
-    "gUnknown_85D5D10: @ 0x85D5D10\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5d10, 0xac\n"
-    "\n"
-    "\t.globl gUnknown_85D5DBC\n"
-    "gUnknown_85D5DBC: @ 0x85D5DBC\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5dbc, 0x3\n"
-    "\n"
-    "\t.globl gUnknown_85D5DBF\n"
-    "gUnknown_85D5DBF: @ 0x85D5DBF\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5dbf, 0x3\n"
-    "\n"
-    "\t.globl gUnknown_85D5DC2\n"
-    "gUnknown_85D5DC2: @ 0x85D5DC2\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5dc2, 0x3\n"
-    "\n"
-    "\t.globl gUnknown_85D5DC5\n"
-    "gUnknown_85D5DC5: @ 0x85D5DC5\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5dc5, 0x7\n"
-    "\n"
-    "\t.globl gUnknown_85D5DCC\n"
-    "gUnknown_85D5DCC: @ 0x85D5DCC\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5dcc, 0x3c\n"
-    "\n"
-    "\t.globl gUnknown_85D5E08\n"
-    "gUnknown_85D5E08: @ 0x85D5E08\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5e08, 0x1c\n"
-    "\n"
-    "\t.globl gUnknown_85D5E24\n"
-    "gUnknown_85D5E24: @ 0x85D5E24\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5e24, 0x3\n"
-    "\n"
-    "\t.globl gUnknown_85D5E27\n"
-    "gUnknown_85D5E27: @ 0x85D5E27\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5e27, 0x3\n"
-    "\n"
-    "\t.globl gUnknown_85D5E2A\n"
-    "gUnknown_85D5E2A: @ 0x85D5E2A\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5e2a, 0x3\n"
-    "\n"
-    "\t.globl gUnknown_85D5E2D\n"
-    "gUnknown_85D5E2D: @ 0x85D5E2D\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5e2d, 0x3\n"
-    "\n"
-    "\t.globl sTourneyTreeTrainerIds2\n"
-    "sTourneyTreeTrainerIds2: @ 0x85D5E30\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5e30, 0x10\n"
-    "\n"
-    "\t.globl gUnknown_85D5E40\n"
-    "gUnknown_85D5E40: @ 0x85D5E40\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5e40, 0x2\n"
-    "\n"
-    "\t.globl gUnknown_85D5E42\n"
-    "gUnknown_85D5E42: @ 0x85D5E42\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5e42, 0x2b\n"
-    "\n"
-    "\t.globl gUnknown_85D5E6D\n"
-    "gUnknown_85D5E6D: @ 0x85D5E6D\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5e6d, 0x1\n"
-    "\n"
-    "\t.globl gUnknown_85D5E6E\n"
-    "gUnknown_85D5E6E: @ 0x85D5E6E\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5e6e, 0x1f\n"
-    "\n"
-    "\t.globl gUnknown_85D5E8D\n"
-    "gUnknown_85D5E8D: @ 0x85D5E8D\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d5e8d, 0x8ff\n"
-    "\n"
-    "\t.globl gUnknown_85D678C\n"
-    "gUnknown_85D678C: @ 0x85D678C\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d678c, 0x100\n"
-    "\n"
-    "\t.globl gUnknown_85D688C\n"
-    "gUnknown_85D688C: @ 0x85D688C\n"
-    "\t.incbin \"baserom_jp.gba\", 0x5d688c, 0x40\n"
-    "\n"
-    ".previous\n"
-);
 __attribute__((naked)) void InitDomeChallenge(void)
 {
     __asm__(".syntax unified\n\t"
@@ -1008,7 +856,7 @@ __attribute__((naked)) void InitDomeChallenge(void)
         "_0818E6C4: .4byte 0x000040CE\n\t"
         "_0818E6C8: .4byte 0x00000CA8\n\t"
         "_0818E6CC: .4byte 0x00000CDC\n\t"
-        "_0818E6D0: .4byte gUnknown_85D5B68\n\t"
+        "_0818E6D0: .4byte sWinStreakFlags\n\t"
         "_0818E6D4: .4byte 0x00000D0C\n\t"
         "_0818E6D8: .4byte gSaveBlock1Ptr\n\t"
         "_0818E6DC: .4byte gTrainerBattleOpponent_A\n\t"
@@ -1100,7 +948,7 @@ __attribute__((naked)) void GetDomeData(void)
         "_0818E794: .4byte gSpecialVar_Result\n\t"
         "_0818E798: .4byte gSaveBlock2Ptr\n\t"
         "_0818E79C: .4byte 0x00000CDC\n\t"
-        "_0818E7A0: .4byte gUnknown_85D5B68\n\t"
+        "_0818E7A0: .4byte sWinStreakFlags\n\t"
         "_0818E7A4:\n\t"
         "	ldr r1, _0818E7B4\n\t"
         "	ldr r0, _0818E7B8\n\t"
@@ -1410,7 +1258,7 @@ __attribute__((naked)) void SetDomeData(void)
         "_0818EA34: .4byte gSpecialVar_0x8006\n\t"
         "_0818EA38: .4byte gSaveBlock2Ptr\n\t"
         "_0818EA3C: .4byte 0x00000CDC\n\t"
-        "_0818EA40: .4byte gUnknown_85D5B68\n\t"
+        "_0818EA40: .4byte sWinStreakFlags\n\t"
         "_0818EA44:\n\t"
         "	ldr r0, _0818EA60\n\t"
         "	ldr r2, [r0]\n\t"
@@ -1429,7 +1277,7 @@ __attribute__((naked)) void SetDomeData(void)
         "	.align 2, 0\n\t"
         "_0818EA60: .4byte gSaveBlock2Ptr\n\t"
         "_0818EA64: .4byte 0x00000CDC\n\t"
-        "_0818EA68: .4byte gUnknown_85D5B78\n\t"
+        "_0818EA68: .4byte sWinStreakMasks\n\t"
         "_0818EA6C:\n\t"
         "	ldr r0, _0818EA84\n\t"
         "	ldr r2, [r0]\n\t"
@@ -2490,7 +2338,7 @@ __attribute__((naked)) void InitDomeTrainers(void)
         "_0818F2F0: .4byte 0x00000D24\n\t"
         "_0818F2F4: .4byte gSaveBlock2Ptr\n\t"
         "_0818F2F8: .4byte 0x000003FF\n\t"
-        "_0818F2FC: .4byte gUnknown_85D5E6D\n\t"
+        "_0818F2FC: .4byte sTrainerNamePositions\n\t"
         "_0818F300: .4byte 0xFFFFFC00\n\t"
         "_0818F304: .4byte 0x000003FE\n\t"
         "_0818F308:\n\t"
@@ -4038,7 +3886,7 @@ __attribute__((naked)) void TournamentIdOfOpponent(void)
         "	.align 2, 0\n\t"
         "_0818FE4C: .4byte gSaveBlock2Ptr\n\t"
         "_0818FE50: .4byte 0x00000D24\n\t"
-        "_0818FE54: .4byte gUnknown_85D5B88\n\t"
+        "_0818FE54: .4byte sIdToOpponentId\n\t"
         "_0818FE58:\n\t"
         "	lsls r0, r5, #2\n\t"
         "	adds r1, r3, r0\n\t"
@@ -4560,9 +4408,9 @@ __attribute__((naked)) void Task_ShowOpponentInfo(void)
         "_08190268: .4byte gUnknown_8D83DF4\n\t"
         "_0819026C: .4byte gUnknown_8D84A08\n\t"
         "_08190270: .4byte gUnknown_8D84F98\n\t"
-        "_08190274: .4byte gUnknown_85D59FC\n\t"
+        "_08190274: .4byte sTourneyTreeButtonsSpriteSheet\n\t"
         "_08190278: .4byte gUnknown_8D8533C\n\t"
-        "_0819027C: .4byte gUnknown_8D85428\n\t"
+        "_0819027C: .4byte gDomeTourneyTreeButtons_Pal\n\t"
         "_08190280: .4byte gBattleWindowTextPalette\n\t"
         "_08190284: .4byte gUnknown_8D854AC\n\t"
         "_08190288: .4byte gPlttBufferFaded\n\t"
@@ -4723,9 +4571,9 @@ __attribute__((naked)) void Task_ShowOpponentInfo(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081903E0: .4byte gUnknown_85D5AE4\n\t"
+        "_081903E0: .4byte sVerticalScrollArrowSpriteTemplate\n\t"
         "_081903E4: .4byte gSprites\n\t"
-        "_081903E8: .4byte gUnknown_85D5ACC\n\t"
+        "_081903E8: .4byte sHorizontalScrollArrowSpriteTemplate\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6756,7 +6604,7 @@ __attribute__((naked)) void sub_08190930(void)
         "	.align 2, 0\n\t"
         "_08191394: .4byte gBattle_BG2_X\n\t"
         "_08191398: .4byte gBattle_BG2_Y\n\t"
-        "_0819139C: .4byte gUnknown_85D5BD8\n\t"
+        "_0819139C: .4byte sIdToMatchNumber\n\t"
         "_081913A0: .4byte gTasks\n\t"
         "_081913A4: .4byte gUnknown_203CA44\n\t"
         "_081913A8: .4byte gSprites\n\t"
@@ -7368,7 +7216,7 @@ __attribute__((naked)) void sub_08190930(void)
         "	.align 2, 0\n\t"
         "_08191890: .4byte gBattle_BG2_X\n\t"
         "_08191894: .4byte gBattle_BG2_Y\n\t"
-        "_08191898: .4byte gUnknown_85D5BD8\n\t"
+        "_08191898: .4byte sIdToMatchNumber\n\t"
         "_0819189C: .4byte gUnknown_203CA44\n\t"
         "_081918A0: .4byte gTasks\n\t"
         "_081918A4: .4byte gSprites\n\t"
@@ -8291,7 +8139,7 @@ __attribute__((naked)) void sub_08191E78(void)
         "_08191FEC: .4byte 0x00000D25\n\t"
         "_08191FF0: .4byte gUnknown_203CA44\n\t"
         "_08191FF4: .4byte gTasks\n\t"
-        "_08191FF8: .4byte gUnknown_85D5C1C\n\t"
+        "_08191FF8: .4byte sTrainerAndRoundToLastMatchCardNum\n\t"
         "_08191FFC:\n\t"
         "	lsls r0, r6, #2\n\t"
         "	adds r0, r0, r6\n\t"
@@ -8319,7 +8167,7 @@ __attribute__((naked)) void sub_08191E78(void)
         "	b _08192036\n\t"
         "	.align 2, 0\n\t"
         "_0819202C: .4byte gUnknown_203CA44\n\t"
-        "_08192030: .4byte gUnknown_85D5C18\n\t"
+        "_08192030: .4byte sLastMatchCardNum\n\t"
         "_08192034:\n\t"
         "	subs r5, #1\n\t"
         "_08192036:\n\t"
@@ -8345,7 +8193,7 @@ __attribute__((naked)) void sub_08191E78(void)
         "	b _08192066\n\t"
         "	.align 2, 0\n\t"
         "_0819205C: .4byte gUnknown_203CA44\n\t"
-        "_08192060: .4byte gUnknown_85D5C18\n\t"
+        "_08192060: .4byte sLastMatchCardNum\n\t"
         "_08192064:\n\t"
         "	adds r5, #1\n\t"
         "_08192066:\n\t"
@@ -8656,7 +8504,7 @@ __attribute__((naked)) void DisplayTrainerInfoOnCard(void)
         "_081922AC: .4byte 0x000003FF\n\t"
         "_081922B0: .4byte gSaveBlock2Ptr\n\t"
         "_081922B4: .4byte 0x00000D64\n\t"
-        "_081922B8: .4byte gUnknown_85D5DBC\n\t"
+        "_081922B8: .4byte sInfoTrainerMonX\n\t"
         "_081922BC:\n\t"
         "	ldr r0, _081922DC\n\t"
         "	ldr r3, [sp, #0x24]\n\t"
@@ -8678,7 +8526,7 @@ __attribute__((naked)) void DisplayTrainerInfoOnCard(void)
         "_081922DC: .4byte 0x000003FE\n\t"
         "_081922E0: .4byte gSaveBlock2Ptr\n\t"
         "_081922E4: .4byte 0x00000D64\n\t"
-        "_081922E8: .4byte gUnknown_85D5DBC\n\t"
+        "_081922E8: .4byte sInfoTrainerMonX\n\t"
         "_081922EC:\n\t"
         "	ldr r0, _081923C0\n\t"
         "	ldr r0, [r0]\n\t"
@@ -8791,8 +8639,8 @@ __attribute__((naked)) void DisplayTrainerInfoOnCard(void)
         "_081923C0: .4byte gSaveBlock2Ptr\n\t"
         "_081923C4: .4byte 0x00000D64\n\t"
         "_081923C8: .4byte gFacilityTrainerMons\n\t"
-        "_081923CC: .4byte gUnknown_85D5DBC\n\t"
-        "_081923D0: .4byte gUnknown_85D5DBF\n\t"
+        "_081923CC: .4byte sInfoTrainerMonX\n\t"
+        "_081923D0: .4byte sInfoTrainerMonY\n\t"
         "_081923D4: .4byte SpriteCb_MonIcon + 1\n\t"
         "_081923D8: .4byte 0x000003FF\n\t"
         "_081923DC: .4byte gUnknown_82EFF52\n\t"
@@ -8930,7 +8778,7 @@ __attribute__((naked)) void DisplayTrainerInfoOnCard(void)
         "_081924F4: .4byte gStringVar2\n\t"
         "_081924F8: .4byte gStringVar1\n\t"
         "_081924FC: .4byte gSpeciesNames\n\t"
-        "_08192500: .4byte gUnknown_85D5DC2\n\t"
+        "_08192500: .4byte sSpeciesNameTextYCoords\n\t"
         "_08192504: .4byte 0x000003FF\n\t"
         "_08192508: .4byte gSaveBlock2Ptr\n\t"
         "_0819250C: .4byte 0x00000D64\n\t"
@@ -9007,7 +8855,7 @@ __attribute__((naked)) void DisplayTrainerInfoOnCard(void)
         "_081925A8: .4byte 0x00000D64\n\t"
         "_081925AC: .4byte gFacilityTrainerMons\n\t"
         "_081925B0: .4byte 0x000003FE\n\t"
-        "_081925B4: .4byte gUnknown_85D5C4C\n\t"
+        "_081925B4: .4byte sBattleDomePotentialTexts\n\t"
         "_081925B8:\n\t"
         "	ldr r0, _08192628\n\t"
         "	ldr r2, [sp, #0x20]\n\t"
@@ -9068,7 +8916,7 @@ __attribute__((naked)) void DisplayTrainerInfoOnCard(void)
         "	ldr r2, [sp, #0x48]\n\t"
         "	b _0819268C\n\t"
         "	.align 2, 0\n\t"
-        "_08192628: .4byte gUnknown_85D5C4C\n\t"
+        "_08192628: .4byte sBattleDomePotentialTexts\n\t"
         "_0819262C: .4byte sBattleStyleMovePoints\n\t"
         "_08192630: .4byte 0x000003FE\n\t"
         "_08192634:\n\t"
@@ -9215,7 +9063,7 @@ __attribute__((naked)) void DisplayTrainerInfoOnCard(void)
         "_0819273C: .4byte gSaveBlock2Ptr\n\t"
         "_08192740: .4byte 0x00000D64\n\t"
         "_08192744: .4byte gFacilityTrainerMons\n\t"
-        "_08192748: .4byte gUnknown_85D5C90\n\t"
+        "_08192748: .4byte sBattleDomeOpponentStyleTexts\n\t"
         "_0819274C: .4byte sBattleStyleThresholds\n\t"
         "_08192750: .4byte 0xFFFFFC02\n\t"
         "_08192754: .4byte 0x000003FE\n\t"
@@ -9674,7 +9522,7 @@ __attribute__((naked)) void DisplayTrainerInfoOnCard(void)
         "	adds r7, r1, r0\n\t"
         "	b _08192B06\n\t"
         "	.align 2, 0\n\t"
-        "_08192ABC: .4byte gUnknown_85D5DC5\n\t"
+        "_08192ABC: .4byte sStatTextOffsets\n\t"
         "_08192AC0:\n\t"
         "	cmp r7, #1\n\t"
         "	bne _08192AD0\n\t"
@@ -9702,7 +9550,7 @@ __attribute__((naked)) void DisplayTrainerInfoOnCard(void)
         "	adds r7, #0x15\n\t"
         "	b _08192B06\n\t"
         "	.align 2, 0\n\t"
-        "_08192AF0: .4byte gUnknown_85D5DC5\n\t"
+        "_08192AF0: .4byte sStatTextOffsets\n\t"
         "_08192AF4:\n\t"
         "	cmp r5, #1\n\t"
         "	bne _08192B04\n\t"
@@ -9738,7 +9586,7 @@ __attribute__((naked)) void DisplayTrainerInfoOnCard(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08192B38: .4byte gUnknown_85D5D10\n\t"
+        "_08192B38: .4byte sBattleDomeOpponentStatsTexts\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9806,7 +9654,7 @@ __attribute__((naked)) void sub_08192B3C(void)
         "	bl StringCopy\n\t"
         "	b _08192BEC\n\t"
         "	.align 2, 0\n\t"
-        "_08192BB0: .4byte gUnknown_85D5E40\n\t"
+        "_08192BB0: .4byte sCompetitorRangeByMatch\n\t"
         "_08192BB4: .4byte gSaveBlock2Ptr\n\t"
         "_08192BB8: .4byte 0x000003FF\n\t"
         "_08192BBC: .4byte 0x000003FE\n\t"
@@ -9851,7 +9699,7 @@ __attribute__((naked)) void sub_08192B3C(void)
         "	b _08192D6C\n\t"
         "	.align 2, 0\n\t"
         "_08192C14: .4byte gStringVar1\n\t"
-        "_08192C18: .4byte gUnknown_85D5E40\n\t"
+        "_08192C18: .4byte sCompetitorRangeByMatch\n\t"
         "_08192C1C:\n\t"
         "	mov ip, r3\n\t"
         "	lsls r3, r7, #1\n\t"
@@ -10012,7 +9860,7 @@ __attribute__((naked)) void sub_08192B3C(void)
         "	b _08192D6C\n\t"
         "	.align 2, 0\n\t"
         "_08192D60: .4byte gStringVar1\n\t"
-        "_08192D64: .4byte gUnknown_85D5E40\n\t"
+        "_08192D64: .4byte sCompetitorRangeByMatch\n\t"
         "_08192D68:\n\t"
         "	ldr r0, [sp, #4]\n\t"
         "	adds r0, #2\n\t"
@@ -10197,7 +10045,7 @@ __attribute__((naked)) void DisplayMatchInfoOnCard(void)
         "_08192EB4: .4byte 0xFFFFFF00\n\t"
         "_08192EB8: .4byte gUnknown_203CA44\n\t"
         "_08192EBC: .4byte gSaveBlock2Ptr\n\t"
-        "_08192EC0: .4byte gUnknown_85D5E42\n\t"
+        "_08192EC0: .4byte sCompetitorRangeByMatch + 2\n\t"
         "_08192EC4: .4byte 0x00000D24\n\t"
         "_08192EC8: .4byte 0x00000D25\n\t"
         "_08192ECC:\n\t"
@@ -10578,8 +10426,8 @@ __attribute__((naked)) void DisplayMatchInfoOnCard(void)
         "_081931B8: .4byte gSaveBlock2Ptr\n\t"
         "_081931BC: .4byte 0x00000D64\n\t"
         "_081931C0: .4byte gFacilityTrainerMons\n\t"
-        "_081931C4: .4byte gUnknown_85D5E24\n\t"
-        "_081931C8: .4byte gUnknown_85D5E27\n\t"
+        "_081931C4: .4byte sLeftTrainerMonX\n\t"
+        "_081931C8: .4byte sLeftTrainerMonY\n\t"
         "_081931CC: .4byte SpriteCb_MonIcon + 1\n\t"
         "_081931D0: .4byte gUnknown_203CA44\n\t"
         "_081931D4: .4byte gSprites\n\t"
@@ -10778,11 +10626,11 @@ __attribute__((naked)) void DisplayMatchInfoOnCard(void)
         "_0819335C: .4byte gSaveBlock2Ptr\n\t"
         "_08193360: .4byte 0x00000D64\n\t"
         "_08193364: .4byte gFacilityTrainerMons\n\t"
-        "_08193368: .4byte gUnknown_85D5E2A\n\t"
-        "_0819336C: .4byte gUnknown_85D5E2D\n\t"
+        "_08193368: .4byte sRightTrainerMonX\n\t"
+        "_0819336C: .4byte sRightTrainerMonY\n\t"
         "_08193370: .4byte SpriteCb_MonIcon + 1\n\t"
         "_08193374: .4byte gStringVar4\n\t"
-        "_08193378: .4byte gUnknown_85D5E08\n\t"
+        "_08193378: .4byte sBattleDomeWinTexts\n\t"
         "_0819337C: .4byte 0x000003FF\n\t"
         "_08193380: .4byte gStringVar1\n\t"
         "_08193384:\n\t"
@@ -10897,7 +10745,7 @@ __attribute__((naked)) void DisplayMatchInfoOnCard(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0819347C: .4byte gStringVar1\n\t"
-        "_08193480: .4byte gUnknown_85D5DCC\n\t"
+        "_08193480: .4byte sBattleDomeMatchNumberTexts\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -12363,7 +12211,7 @@ __attribute__((naked)) void Task_ShowTourneyTree(void)
         "_0819403C: .4byte gUnknown_8D83BD0\n\t"
         "_08194040: .4byte gUnknown_8D83CE0\n\t"
         "_08194044: .4byte gUnknown_8D8533C\n\t"
-        "_08194048: .4byte gUnknown_8D85428\n\t"
+        "_08194048: .4byte gDomeTourneyTreeButtons_Pal\n\t"
         "_0819404C: .4byte gBattleWindowTextPalette\n\t"
         "_08194050: .4byte gPlttBufferFaded\n\t"
         "_08194054: .4byte 0x05000100\n\t"
@@ -12400,10 +12248,10 @@ __attribute__((naked)) void Task_ShowTourneyTree(void)
         "	bl SetGpuReg\n\t"
         "	b _0819434A\n\t"
         "	.align 2, 0\n\t"
-        "_0819409C: .4byte gUnknown_85D59FC\n\t"
-        "_081940A0: .4byte gUnknown_85D5E8D\n\t"
-        "_081940A4: .4byte gUnknown_85D5A54\n\t"
-        "_081940A8: .4byte gUnknown_85D5A84\n\t"
+        "_0819409C: .4byte sTourneyTreeButtonsSpriteSheet\n\t"
+        "_081940A0: .4byte sTourneyTreePokeballCoords\n\t"
+        "_081940A4: .4byte sTourneyTreePokeballSpriteTemplate\n\t"
+        "_081940A8: .4byte sCancelButtonSpriteTemplate\n\t"
         "_081940AC: .4byte 0x00007F40\n\t"
         "_081940B0:\n\t"
         "	add r0, sp, #4\n\t"
@@ -12703,7 +12551,7 @@ __attribute__((naked)) void Task_ShowTourneyTree(void)
         "	subs r0, r0, r1\n\t"
         "	b _0819430E\n\t"
         "	.align 2, 0\n\t"
-        "_08194304: .4byte gUnknown_85D5E6D\n\t"
+        "_08194304: .4byte sTrainerNamePositions\n\t"
         "_08194308: .4byte gDisplayedStringBattle\n\t"
         "_0819430C:\n\t"
         "	movs r0, #4\n\t"
@@ -12749,8 +12597,8 @@ __attribute__((naked)) void Task_ShowTourneyTree(void)
         "	b _08194466\n\t"
         "	.align 2, 0\n\t"
         "_0819435C: .4byte gDisplayedStringBattle\n\t"
-        "_08194360: .4byte gUnknown_85D5E6D\n\t"
-        "_08194364: .4byte gUnknown_85D5E6E\n\t"
+        "_08194360: .4byte sTrainerNamePositions\n\t"
+        "_08194364: .4byte sTrainerNamePositions + 1\n\t"
         "_08194368: .4byte gTasks\n\t"
         "_0819436C:\n\t"
         "	movs r0, #0\n\t"
@@ -12880,7 +12728,7 @@ __attribute__((naked)) void Task_ShowTourneyTree(void)
         "_08194478: .4byte gTasks\n\t"
         "_0819447C: .4byte gScanlineEffectRegBuffers\n\t"
         "_08194480: .4byte 0x00001F0A\n\t"
-        "_08194484: .4byte gUnknown_85D59F0\n\t"
+        "_08194484: .4byte sTourneyTreeScanlineEffectParams\n\t"
         "_08194488: .4byte 0x00001F09\n\t"
         "_0819448C: .4byte 0x00000836\n\t"
         ".syntax divided\n\t"
@@ -12937,8 +12785,8 @@ __attribute__((naked)) void sub_08194490(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081944EC: .4byte gUnknown_85D678C\n\t"
-        "_081944F0: .4byte gUnknown_85D688C\n\t"
+        "_081944EC: .4byte sTourneyTreeLineSections\n\t"
+        "_081944F0: .4byte sTourneyTreeLineSectionArrayCounts\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -13092,7 +12940,7 @@ __attribute__((naked)) void sub_081944F4(void)
         "_0819461C: .4byte gDisplayedStringBattle\n\t"
         "_08194620: .4byte 0x00000D25\n\t"
         "_08194624: .4byte 0x00000CB2\n\t"
-        "_08194628: .4byte gUnknown_85D5E6D\n\t"
+        "_08194628: .4byte sTrainerNamePositions\n\t"
         "_0819462C:\n\t"
         "	mov r0, r8\n\t"
         "	adds r1, r4, r0\n\t"
@@ -13170,8 +13018,8 @@ __attribute__((naked)) void sub_081944F4(void)
         "	.align 2, 0\n\t"
         "_081946BC: .4byte gStringVar1\n\t"
         "_081946C0: .4byte gDisplayedStringBattle\n\t"
-        "_081946C4: .4byte gUnknown_85D5E6D\n\t"
-        "_081946C8: .4byte gUnknown_85D5E6E\n\t"
+        "_081946C4: .4byte sTrainerNamePositions\n\t"
+        "_081946C8: .4byte sTrainerNamePositions + 1\n\t"
         "_081946CC: .4byte gSaveBlock2Ptr\n\t"
         "_081946D0: .4byte 0x00000D25\n\t"
         "_081946D4:\n\t"
@@ -14398,7 +14246,7 @@ __attribute__((naked)) void sub_08194FE8(void)
         "	ldrb r0, [r0]\n\t"
         "	b _08195030\n\t"
         "	.align 2, 0\n\t"
-        "_08195024: .4byte gUnknown_85D5C1C\n\t"
+        "_08195024: .4byte sTrainerAndRoundToLastMatchCardNum\n\t"
         "_08195028: .4byte sTournamentIdToPairedTrainerIds\n\t"
         "_0819502C:\n\t"
         "	mov r0, sp\n\t"
@@ -15096,3 +14944,1220 @@ __attribute__((naked)) void CopyDomeBrainTrainerName(void)
         ".syntax divided\n\t"
     );
 }
+
+#define TAG_BUTTONS 0
+
+struct TourneyTreeLineSection
+{
+    u8 x;
+    u8 y;
+    u16 tile;
+};
+#define NUM_POSSIBLE_MATCH_TRAINERS(round) (DOME_TOURNAMENT_TRAINERS_COUNT / (1 << (DOME_ROUNDS_COUNT - round - 1)))
+#define NAME_ROW_HEIGHT 16
+
+#define LINE_PAL           (6 << 12)
+#define LINE_H             (LINE_PAL | 0x21) // Horizontal
+#define LINE_CORNER_R      (LINE_PAL | 0x23) // Horizontal into a right-side vertical
+#define LINE_CORNER_L      (LINE_PAL | 0x25) // Horizontal into a left-side vertical
+#define LINE_V_R           (LINE_PAL | 0x27) // Right-side vertical
+#define LINE_V_L           (LINE_PAL | 0x29) // Left-side vertical
+#define LINE_H_BOTTOM      (LINE_PAL | 0x2B) // Horizontal on the bottom of the tree
+#define LINE_H_LOGO1       (LINE_PAL | 0x2C) // Horizontal, logo behind
+#define LINE_H_LOGO2       (LINE_PAL | 0x2D) // Horizontal, logo behind
+#define LINE_H_LOGO3       (LINE_PAL | 0x2E) // Horizontal, logo behind
+#define LINE_H_LOGO4       (LINE_PAL | 0x2F) // Horizontal, logo behind
+#define LINE_V_R_LOGO1     (LINE_PAL | 0x30) // Right-side vertical, logo behind
+#define LINE_V_R_LOGO2     (LINE_PAL | 0x31) // Right-side vertical, logo behind
+#define LINE_V_R_LOGO3     (LINE_PAL | 0x32) // Right-side vertical, logo behind
+#define LINE_V_R_LOGO4     (LINE_PAL | 0x33) // Right-side vertical, logo behind
+#define LINE_V_L_LOGO1     (LINE_PAL | 0x35) // Left-side vertical, logo behind
+#define LINE_V_L_LOGO2     (LINE_PAL | 0x36) // Left-side vertical, logo behind
+#define LINE_V_L_LOGO3     (LINE_PAL | 0x37) // Left-side vertical, logo behind
+#define LINE_V_L_LOGO4     (LINE_PAL | 0x38) // Left-side vertical, logo behind
+#define LINE_V_R_HALF_LOGO (LINE_PAL | 0x3B) // Right-side vertical, half lit from the top, logo behind
+#define LINE_V_L_HALF_LOGO (LINE_PAL | 0x3C) // Left-side vertical, half lit from the top, logo behind
+#define LINE_CORNER_R_HALF (LINE_PAL | 0x43) // Lit horizontal, unlit right-side vertical
+#define LINE_CORNER_L_HALF (LINE_PAL | 0x45) // Lit horizontal, unlit left-side vertical
+#define LINE_V_R_HALF      (LINE_PAL | 0x47) // Right-side vertical, half lit from the top
+#define LINE_V_L_HALF      (LINE_PAL | 0x49) // Left-side vertical, half lit from the top
+
+// Each of these line sections define the position of the advancement line on the tourney tree for the victor of that round
+// The trainers here are numbered by tourney ID (rank/seed) and ordered according to where they start on the tourney tree
+#define LINESECTION_ROUND1_TRAINER1(lastTile) \
+    {.tile = LINE_H,        .y =  4, .x =  9}, \
+    {.tile = LINE_CORNER_R, .y =  4, .x = 10}, \
+    {.tile = LINE_V_R_HALF, .y =  5, .x = 10}, \
+    {.tile = lastTile,      .y =  5, .x = 11},
+
+#define LINESECTION_ROUND1_TRAINER9(lastTile) \
+    {.tile = LINE_H,   .y =  6, .x =  9}, \
+    {.tile = LINE_H,   .y =  6, .x = 10}, \
+    {.tile = LINE_V_R, .y =  5, .x = 10}, \
+    {.tile = lastTile, .y =  5, .x = 11},
+
+#define LINESECTION_ROUND1_TRAINER13(lastTile) \
+    {.tile = LINE_H,        .y =  8, .x =  9}, \
+    {.tile = LINE_CORNER_R, .y =  8, .x = 10}, \
+    {.tile = LINE_V_R_HALF, .y =  9, .x = 10}, \
+    {.tile = lastTile,      .y =  9, .x = 11},
+
+#define LINESECTION_ROUND1_TRAINER5(lastTile) \
+    {.tile = LINE_H,   .y = 10, .x =  9}, \
+    {.tile = LINE_H,   .y = 10, .x = 10}, \
+    {.tile = LINE_V_R, .y =  9, .x = 10}, \
+    {.tile = lastTile, .y =  9, .x = 11},
+
+#define LINESECTION_ROUND1_TRAINER8(lastTile) \
+    {.tile = LINE_H,        .y = 12, .x =  9}, \
+    {.tile = LINE_CORNER_R, .y = 12, .x = 10}, \
+    {.tile = LINE_V_R_HALF, .y = 13, .x = 10}, \
+    {.tile = lastTile,      .y = 13, .x = 11},
+
+#define LINESECTION_ROUND1_TRAINER16(lastTile) \
+    {.tile = LINE_H,   .y = 14, .x =  9}, \
+    {.tile = LINE_H,   .y = 14, .x = 10}, \
+    {.tile = LINE_V_R, .y = 13, .x = 10}, \
+    {.tile = lastTile, .y = 13, .x = 11},
+
+#define LINESECTION_ROUND1_TRAINER12(lastTile) \
+    {.tile = LINE_H,        .y = 16, .x =  9}, \
+    {.tile = LINE_CORNER_R, .y = 16, .x = 10}, \
+    {.tile = LINE_V_R_HALF, .y = 17, .x = 10}, \
+    {.tile = lastTile,      .y = 17, .x = 11},
+
+#define LINESECTION_ROUND1_TRAINER4(lastTile) \
+    {.tile = LINE_H_BOTTOM, .y = 18, .x =  9}, \
+    {.tile = LINE_H_BOTTOM, .y = 18, .x = 10}, \
+    {.tile = LINE_V_R,      .y = 17, .x = 10}, \
+    {.tile = lastTile,      .y = 17, .x = 11},
+
+#define LINESECTION_ROUND1_TRAINER3(lastTile) \
+    {.tile = LINE_H,        .y =  4, .x = 20}, \
+    {.tile = LINE_CORNER_L, .y =  4, .x = 19}, \
+    {.tile = LINE_V_L_HALF, .y =  5, .x = 19}, \
+    {.tile = lastTile,      .y =  5, .x = 18},
+
+#define LINESECTION_ROUND1_TRAINER11(lastTile) \
+    {.tile = LINE_H,   .y =  6, .x = 20}, \
+    {.tile = LINE_H,   .y =  6, .x = 19}, \
+    {.tile = LINE_V_L, .y =  5, .x = 19}, \
+    {.tile = lastTile, .y =  5, .x = 18},
+
+#define LINESECTION_ROUND1_TRAINER15(lastTile) \
+    {.tile = LINE_H,        .y =  8, .x = 20}, \
+    {.tile = LINE_CORNER_L, .y =  8, .x = 19}, \
+    {.tile = LINE_V_L_HALF, .y =  9, .x = 19}, \
+    {.tile = lastTile,      .y =  9, .x = 18},
+
+#define LINESECTION_ROUND1_TRAINER7(lastTile) \
+    {.tile = LINE_H,   .y = 10, .x = 20}, \
+    {.tile = LINE_H,   .y = 10, .x = 19}, \
+    {.tile = LINE_V_L, .y =  9, .x = 19}, \
+    {.tile = lastTile, .y =  9, .x = 18},
+
+#define LINESECTION_ROUND1_TRAINER6(lastTile) \
+    {.tile = LINE_H,        .y = 12, .x = 20}, \
+    {.tile = LINE_CORNER_L, .y = 12, .x = 19}, \
+    {.tile = LINE_V_L_HALF, .y = 13, .x = 19}, \
+    {.tile = lastTile,      .y = 13, .x = 18},
+
+#define LINESECTION_ROUND1_TRAINER14(lastTile) \
+    {.tile = LINE_H,   .y = 14, .x = 20}, \
+    {.tile = LINE_H,   .y = 14, .x = 19}, \
+    {.tile = LINE_V_L, .y = 13, .x = 19}, \
+    {.tile = lastTile, .y = 13, .x = 18},
+
+#define LINESECTION_ROUND1_TRAINER10(lastTile) \
+    {.tile = LINE_H,        .y = 16, .x = 20}, \
+    {.tile = LINE_CORNER_L, .y = 16, .x = 19}, \
+    {.tile = LINE_V_L_HALF, .y = 17, .x = 19}, \
+    {.tile = lastTile,      .y = 17, .x = 18},
+
+#define LINESECTION_ROUND1_TRAINER2(lastTile) \
+    {.tile = LINE_H_BOTTOM, .y = 18, .x = 20}, \
+    {.tile = LINE_H_BOTTOM, .y = 18, .x = 19}, \
+    {.tile = LINE_V_L,      .y = 17, .x = 19}, \
+    {.tile = lastTile,      .y = 17, .x = 18},
+
+#define LINESECTION_ROUND2_MATCH1(lastTile) \
+    {.tile = LINE_V_R,      .y =  6, .x = 11}, \
+    {.tile = LINE_V_R_HALF, .y =  7, .x = 11}, \
+    {.tile = lastTile,      .y =  7, .x = 12},
+
+#define LINESECTION_ROUND2_MATCH2(lastTile) \
+    {.tile = LINE_V_R, .y =  8, .x = 11}, \
+    {.tile = LINE_V_R, .y =  7, .x = 11}, \
+    {.tile = lastTile, .y =  7, .x = 12},
+
+#define LINESECTION_ROUND2_MATCH3(lastTile) \
+    {.tile = LINE_V_R,      .y = 14, .x = 11}, \
+    {.tile = LINE_V_R_HALF, .y = 15, .x = 11}, \
+    {.tile = lastTile,      .y = 15, .x = 12},
+
+#define LINESECTION_ROUND2_MATCH4(lastTile) \
+    {.tile = LINE_V_R, .y = 16, .x = 11}, \
+    {.tile = LINE_V_R, .y = 15, .x = 11}, \
+    {.tile = lastTile, .y = 15, .x = 12},
+
+#define LINESECTION_ROUND2_MATCH5(lastTile) \
+    {.tile = LINE_V_L,      .y =  6, .x = 18}, \
+    {.tile = LINE_V_L_HALF, .y =  7, .x = 18}, \
+    {.tile = lastTile,      .y =  7, .x = 17},
+
+#define LINESECTION_ROUND2_MATCH6(lastTile) \
+    {.tile = LINE_V_L, .y =  8, .x = 18}, \
+    {.tile = LINE_V_L, .y =  7, .x = 18}, \
+    {.tile = lastTile, .y =  7, .x = 17},
+
+#define LINESECTION_ROUND2_MATCH7(lastTile) \
+    {.tile = LINE_V_L,      .y = 14, .x = 18}, \
+    {.tile = LINE_V_L_HALF, .y = 15, .x = 18}, \
+    {.tile = lastTile,      .y = 15, .x = 17},
+
+#define LINESECTION_ROUND2_MATCH8(lastTile) \
+    {.tile = LINE_V_L, .y = 16, .x = 18}, \
+    {.tile = LINE_V_L, .y = 15, .x = 18}, \
+    {.tile = lastTile, .y = 15, .x = 17},
+
+#define LINESECTION_SEMIFINAL_TOP_LEFT \
+    {.tile = LINE_V_R,           .y =  8, .x = 12}, \
+    {.tile = LINE_V_R,           .y =  9, .x = 12}, \
+    {.tile = LINE_V_R,           .y = 10, .x = 12}, \
+    {.tile = LINE_V_R_HALF_LOGO, .y = 11, .x = 12},
+
+#define LINESECTION_SEMIFINAL_BOTTOM_LEFT \
+    {.tile = LINE_V_R_LOGO4, .y = 14, .x = 12}, \
+    {.tile = LINE_V_R_LOGO3, .y = 13, .x = 12}, \
+    {.tile = LINE_V_R_LOGO2, .y = 12, .x = 12}, \
+    {.tile = LINE_V_R_LOGO1, .y = 11, .x = 12},
+
+#define LINESECTION_SEMIFINAL_TOP_RIGHT \
+    {.tile = LINE_V_L,           .y =  8, .x = 17}, \
+    {.tile = LINE_V_L,           .y =  9, .x = 17}, \
+    {.tile = LINE_V_L,           .y = 10, .x = 17}, \
+    {.tile = LINE_V_L_HALF_LOGO, .y = 11, .x = 17},
+
+#define LINESECTION_SEMIFINAL_BOTTOM_RIGHT \
+    {.tile = LINE_V_L_LOGO4, .y = 14, .x = 17}, \
+    {.tile = LINE_V_L_LOGO3, .y = 13, .x = 17}, \
+    {.tile = LINE_V_L_LOGO2, .y = 12, .x = 17}, \
+    {.tile = LINE_V_L_LOGO1, .y = 11, .x = 17},
+
+#define LINESECTION_FINAL_LEFT \
+    {.tile = LINE_H_LOGO1, .y = 11, .x = 13}, \
+    {.tile = LINE_H_LOGO2, .y = 11, .x = 14},
+
+#define LINESECTION_FINAL_RIGHT \
+    {.tile = LINE_H_LOGO4, .y = 11, .x = 16}, \
+    {.tile = LINE_H_LOGO3, .y = 11, .x = 15},
+
+
+
+static const struct ScanlineEffectParams sTourneyTreeScanlineEffectParams BATTLE_DOME_DATA =
+{
+    .dmaDest = &REG_BG3CNT,
+    .dmaControl = SCANLINE_EFFECT_DMACNT_16BIT,
+    .initState = 1,
+};
+
+static const struct CompressedSpriteSheet sTourneyTreeButtonsSpriteSheet[] BATTLE_DOME_DATA =
+{
+    {.data = gDomeTourneyTreeButtons_Gfx, .size = 0x0400, .tag = TAG_BUTTONS},
+    {},
+};
+
+static const struct CompressedSpritePalette sTourneyTreeButtonsSpritePal[] BATTLE_DOME_DATA =
+{
+    {.data = gDomeTourneyTreeButtons_Pal, .tag = TAG_BUTTONS},
+    {},
+};
+
+static const struct OamData sOamData_TourneyTreePokeball BATTLE_DOME_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sOamData_TourneyTreeCloseButton BATTLE_DOME_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 1,
+    .affineParam = 0,
+};
+
+static const struct OamData sOamData_VerticalScrollArrow BATTLE_DOME_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 2,
+    .affineParam = 0,
+};
+
+static const struct OamData sOamData_HorizontalScrollArrow BATTLE_DOME_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 2,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sSpriteAnim_TourneyTreePokeballNormal[] BATTLE_DOME_DATA =
+{
+    ANIMCMD_FRAME(20, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sSpriteAnim_TourneyTreePokeballSelected[] BATTLE_DOME_DATA =
+{
+    ANIMCMD_FRAME(24, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sSpriteAnimTable_TourneyTreePokeball[] BATTLE_DOME_DATA =
+{
+    sSpriteAnim_TourneyTreePokeballNormal,
+    sSpriteAnim_TourneyTreePokeballSelected,
+};
+
+static const struct SpriteTemplate sTourneyTreePokeballSpriteTemplate BATTLE_DOME_DATA =
+{
+    .tileTag = TAG_BUTTONS,
+    .paletteTag = TAG_NONE,
+    .oam = &sOamData_TourneyTreePokeball,
+    .anims = sSpriteAnimTable_TourneyTreePokeball,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+static const union AnimCmd sSpriteAnim_TourneyTreeCancelButtonNormal[] BATTLE_DOME_DATA =
+{
+    ANIMCMD_FRAME(8, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sSpriteAnim_TourneyTreeCancelButtonSelected[] BATTLE_DOME_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sSpriteAnimTable_TourneyTreeCancelButton[] BATTLE_DOME_DATA =
+{
+    sSpriteAnim_TourneyTreeCancelButtonNormal,
+    sSpriteAnim_TourneyTreeCancelButtonSelected,
+};
+
+static const struct SpriteTemplate sCancelButtonSpriteTemplate BATTLE_DOME_DATA =
+{
+    .tileTag = TAG_BUTTONS,
+    .paletteTag = TAG_NONE,
+    .oam = &sOamData_TourneyTreeCloseButton,
+    .anims = sSpriteAnimTable_TourneyTreeCancelButton,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+static const union AnimCmd sSpriteAnim_UpArrow[] BATTLE_DOME_DATA =
+{
+    ANIMCMD_FRAME(18, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sSpriteAnim_DownArrow[] BATTLE_DOME_DATA =
+{
+    ANIMCMD_FRAME(18, 1, .vFlip = TRUE),
+    ANIMCMD_END,
+ };
+
+static const union AnimCmd sSpriteAnim_LeftArrow[] BATTLE_DOME_DATA =
+{
+    ANIMCMD_FRAME(16, 1, .hFlip = TRUE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sSpriteAnim_RightArrow[] BATTLE_DOME_DATA =
+{
+    ANIMCMD_FRAME(16, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sSpriteAnimTable_VerticalScrollArrow[] BATTLE_DOME_DATA =
+{
+    sSpriteAnim_UpArrow,
+    sSpriteAnim_DownArrow,
+};
+
+static const union AnimCmd *const sSpriteAnimTable_HorizontalScrollArrow[] BATTLE_DOME_DATA =
+{
+    sSpriteAnim_LeftArrow,
+    sSpriteAnim_RightArrow,
+};
+
+static const struct SpriteTemplate sHorizontalScrollArrowSpriteTemplate BATTLE_DOME_DATA =
+{
+    .tileTag = TAG_BUTTONS,
+    .paletteTag = TAG_NONE,
+    .oam = &sOamData_HorizontalScrollArrow,
+    .anims = sSpriteAnimTable_HorizontalScrollArrow,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)sub_0819079C
+};
+
+static const struct SpriteTemplate sVerticalScrollArrowSpriteTemplate BATTLE_DOME_DATA =
+{
+    .tileTag = TAG_BUTTONS,
+    .paletteTag = TAG_NONE,
+    .oam = &sOamData_VerticalScrollArrow,
+    .anims = sSpriteAnimTable_VerticalScrollArrow,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)sub_081908C8
+};
+
+static const u8 sTourneyTreeTrainerIds[DOME_TOURNAMENT_TRAINERS_COUNT] BATTLE_DOME_DATA =
+{0, 8, 12, 4, 7, 15, 11, 3, 2, 10, 14, 6, 5, 13, 9, 1};
+
+static void (*const sBattleDomeFunctions[])(void) BATTLE_DOME_DATA =
+{
+    [BATTLE_DOME_FUNC_INIT]                     = InitDomeChallenge,
+    [BATTLE_DOME_FUNC_GET_DATA]                 = GetDomeData,
+    [BATTLE_DOME_FUNC_SET_DATA]                 = SetDomeData,
+    [BATTLE_DOME_FUNC_GET_ROUND_TEXT]           = BufferDomeRoundText,
+    [BATTLE_DOME_FUNC_GET_OPPONENT_NAME]        = BufferDomeOpponentName,
+    [BATTLE_DOME_FUNC_INIT_OPPONENT_PARTY]      = InitDomeOpponentParty,
+    [BATTLE_DOME_FUNC_SHOW_OPPONENT_INFO]       = ShowDomeOpponentInfo,
+    [BATTLE_DOME_FUNC_SHOW_TOURNEY_TREE]        = ShowDomeTourneyTree,
+    [BATTLE_DOME_FUNC_SHOW_PREV_TOURNEY_TREE]   = ShowPreviousDomeResultsTourneyTree,
+    [BATTLE_DOME_FUNC_SET_OPPONENT_ID]          = SetDomeOpponentId,
+    [BATTLE_DOME_FUNC_SET_OPPONENT_GFX]         = SetDomeOpponentGraphicsId,
+    [BATTLE_DOME_FUNC_SHOW_STATIC_TOURNEY_TREE] = ShowNonInteractiveDomeTourneyTree,
+    [BATTLE_DOME_FUNC_RESOLVE_WINNERS]          = ResolveDomeRoundWinners,
+    [BATTLE_DOME_FUNC_SAVE]                     = sub_0818FF54,
+    [BATTLE_DOME_FUNC_INCREMENT_STREAK]         = UpdateDomeStreaks,
+    [BATTLE_DOME_FUNC_SET_TRAINERS]             = InitDomeFacilityTrainersAndMons,
+    [BATTLE_DOME_FUNC_RESET_SKETCH]             = RestoreDomePlayerParty,
+    [BATTLE_DOME_FUNC_RESTORE_HELD_ITEMS]       = RestoreDomePlayerPartyHeldItems,
+    [BATTLE_DOME_FUNC_REDUCE_PARTY]             = ReduceDomePlayerPartyToSelectedMons,
+    [BATTLE_DOME_FUNC_COMPARE_SEEDS]            = GetPlayerSeededBeforeOpponent,
+    [BATTLE_DOME_FUNC_GET_WINNER_NAME]          = BufferLastDomeWinnerName,
+    [BATTLE_DOME_FUNC_INIT_RESULTS_TREE]        = sub_08194B58,
+    [BATTLE_DOME_FUNC_INIT_TRAINERS]            = InitDomeTrainers,
+};
+
+static const u32 sWinStreakFlags[][2] BATTLE_DOME_DATA =
+{
+    {STREAK_DOME_SINGLES_50, STREAK_DOME_SINGLES_OPEN},
+    {STREAK_DOME_DOUBLES_50, STREAK_DOME_DOUBLES_OPEN},
+};
+
+static const u32 sWinStreakMasks[][2] BATTLE_DOME_DATA =
+{
+    {~(STREAK_DOME_SINGLES_50), ~(STREAK_DOME_SINGLES_OPEN)},
+    {~(STREAK_DOME_DOUBLES_50), ~(STREAK_DOME_DOUBLES_OPEN)},
+};
+
+static const u8 sIdToOpponentId[DOME_TOURNAMENT_TRAINERS_COUNT][DOME_ROUNDS_COUNT] BATTLE_DOME_DATA =
+{
+    [0]  = { 8,  0,  4,  8},
+    [1]  = { 9, 12,  8,  0},
+    [2]  = {10,  8, 12,  0},
+    [3]  = {11,  4,  0,  8},
+    [4]  = {12,  0,  4,  8},
+    [5]  = {13, 12,  8,  0},
+    [6]  = {14,  8, 12,  0},
+    [7]  = {15,  4,  0,  8},
+    [8]  = { 0,  0,  4,  8},
+    [9]  = { 1, 12,  8,  0},
+    [10] = { 2,  8, 12,  0},
+    [11] = { 3,  4,  0,  8},
+    [12] = { 4,  0,  4,  8},
+    [13] = { 5, 12,  8,  0},
+    [14] = { 6,  8, 12,  0},
+    [15] = { 7,  4,  0,  8},
+};
+
+static const u8 sTourneyTreeTrainerOpponentIds[DOME_TOURNAMENT_TRAINERS_COUNT] BATTLE_DOME_DATA =
+{ 0, 8, 4, 12, 7, 15, 3, 11, 2, 10, 6, 14, 5, 13, 1, 9 };
+
+static const u8 sIdToMatchNumber[DOME_TOURNAMENT_TRAINERS_COUNT][DOME_ROUNDS_COUNT] BATTLE_DOME_DATA =
+{
+    { 0,  8, 12, 14},
+    { 0,  8, 12, 14},
+    { 1,  8, 12, 14},
+    { 1,  8, 12, 14},
+    { 2,  9, 12, 14},
+    { 2,  9, 12, 14},
+    { 3,  9, 12, 14},
+    { 3,  9, 12, 14},
+    { 4, 10, 13, 14},
+    { 4, 10, 13, 14},
+    { 5, 10, 13, 14},
+    { 5, 10, 13, 14},
+    { 6, 11, 13, 14},
+    { 6, 11, 13, 14},
+    { 7, 11, 13, 14},
+    { 7, 11, 13, 14},
+};
+
+static const u8 sLastMatchCardNum[DOME_ROUNDS_COUNT] BATTLE_DOME_DATA =
+{
+    [DOME_ROUND1]    = 23,
+    [DOME_ROUND2]    = 27,
+    [DOME_SEMIFINAL] = 29,
+    [DOME_FINAL]     = 30
+};
+
+static const u8 sTrainerAndRoundToLastMatchCardNum[DOME_TOURNAMENT_TRAINERS_COUNT / 2][DOME_ROUNDS_COUNT] BATTLE_DOME_DATA =
+{
+    {16, 24, 28, 30},
+    {17, 24, 28, 30},
+    {18, 25, 28, 30},
+    {19, 25, 28, 30},
+    {20, 26, 29, 30},
+    {21, 26, 29, 30},
+    {22, 27, 29, 30},
+    {23, 27, 29, 30},
+};
+
+static const u8 sTournamentIdToPairedTrainerIds[DOME_TOURNAMENT_TRAINERS_COUNT] BATTLE_DOME_DATA =
+{0, 15, 8, 7, 3, 12, 11, 4, 1, 14, 9, 6, 2, 13, 10, 5};
+
+static const u8 *const sBattleDomePotentialTexts[DOME_TOURNAMENT_TRAINERS_COUNT + 1] BATTLE_DOME_DATA =
+{
+    BattleDome_Text_Potential1,
+    BattleDome_Text_Potential2,
+    BattleDome_Text_Potential3,
+    BattleDome_Text_Potential4,
+    BattleDome_Text_Potential5,
+    BattleDome_Text_Potential6,
+    BattleDome_Text_Potential7,
+    BattleDome_Text_Potential8,
+    BattleDome_Text_Potential9,
+    BattleDome_Text_Potential10,
+    BattleDome_Text_Potential11,
+    BattleDome_Text_Potential12,
+    BattleDome_Text_Potential13,
+    BattleDome_Text_Potential14,
+    BattleDome_Text_Potential15,
+    BattleDome_Text_Potential16,
+    BattleDome_Text_PotentialDomeAceTucker,
+};
+
+static const u8 *const sBattleDomeOpponentStyleTexts[NUM_BATTLE_STYLES] BATTLE_DOME_DATA =
+{
+    [DOME_BATTLE_STYLE_RISKY]           = BattleDome_Text_StyleRiskDisaster,
+    [DOME_BATTLE_STYLE_STALL]           = BattleDome_Text_StyleEndureLongBattles,
+    [DOME_BATTLE_STYLE_VARIED]          = BattleDome_Text_StyleVariesTactics,
+    [DOME_BATTLE_STYLE_COMBO_HIGH]      = BattleDome_Text_StyleToughWinningPattern,
+    [DOME_BATTLE_STYLE_RARE_MOVES]      = BattleDome_Text_StyleUsesVeryRareMove,
+    [DOME_BATTLE_STYLE_RARE_MOVE]       = BattleDome_Text_StyleUsesStartlingMoves,
+    [DOME_BATTLE_STYLE_HP]              = BattleDome_Text_StyleConstantlyWatchesHP,
+    [DOME_BATTLE_STYLE_STORE_POWER]     = BattleDome_Text_StyleStoresAndLoosesPower,
+    [DOME_BATTLE_STYLE_ENFEEBLE_LOW]    = BattleDome_Text_StyleEnfeeblesFoes,
+    [DOME_BATTLE_STYLE_LUCK]            = BattleDome_Text_StylePrefersLuckTactics,
+    [DOME_BATTLE_STYLE_REGAL]           = BattleDome_Text_StyleRegalAtmosphere,
+    [DOME_BATTLE_STYLE_LOW_PP]          = BattleDome_Text_StylePowerfulLowPPMoves,
+    [DOME_BATTLE_STYLE_STATUS_ATK]      = BattleDome_Text_StyleEnfeebleThenAttack,
+    [DOME_BATTLE_STYLE_ENDURE]          = BattleDome_Text_StyleBattlesWhileEnduring,
+    [DOME_BATTLE_STYLE_STATUS]          = BattleDome_Text_StyleUpsetsFoesEmotionally,
+    [DOME_BATTLE_STYLE_STRAIGHTFORWARD] = BattleDome_Text_StyleStrongAndStraightforward,
+    [DOME_BATTLE_STYLE_AGGRESSIVE]      = BattleDome_Text_StyleAggressivelyStrongMoves,
+    [DOME_BATTLE_STYLE_DEF]             = BattleDome_Text_StyleCleverlyDodgesAttacks,
+    [DOME_BATTLE_STYLE_ENFEEBLE_HIGH]   = BattleDome_Text_StyleUsesUpsettingMoves,
+    [DOME_BATTLE_STYLE_POPULAR_POWER]   = BattleDome_Text_StyleUsesPopularMoves,
+    [DOME_BATTLE_STYLE_COMBO_LOW]       = BattleDome_Text_StyleHasPowerfulComboMoves,
+    [DOME_BATTLE_STYLE_ACCURATE]        = BattleDome_Text_StyleUsesHighProbabilityMoves,
+    [DOME_BATTLE_STYLE_POWERFUL]        = BattleDome_Text_StyleAggressivelySpectacularMoves,
+    [DOME_BATTLE_STYLE_ATK_OVER_DEF]    = BattleDome_Text_StyleEmphasizesOffenseOverDefense,
+    [DOME_BATTLE_STYLE_DEF_OVER_ATK]    = BattleDome_Text_StyleEmphasizesDefenseOverOffense,
+    [DOME_BATTLE_STYLE_POPULAR_STRONG]  = BattleDome_Text_StyleAttacksQuicklyStrongMoves,
+    [DOME_BATTLE_STYLE_EFFECTS]         = BattleDome_Text_StyleUsesAddedEffectMoves,
+    [DOME_BATTLE_STYLE_BALANCED]        = BattleDome_Text_StyleUsesBalancedMixOfMoves,
+    [DOME_BATTLE_STYLE_UNUSED1]         = BattleDome_Text_StyleSampleMessage1,
+    [DOME_BATTLE_STYLE_UNUSED2]         = BattleDome_Text_StyleSampleMessage2,
+    [DOME_BATTLE_STYLE_UNUSED3]         = BattleDome_Text_StyleSampleMessage3,
+    [DOME_BATTLE_STYLE_UNUSED4]         = BattleDome_Text_StyleSampleMessage4,
+};
+
+static const u8 *const sBattleDomeOpponentStatsTexts[] BATTLE_DOME_DATA =
+{
+    BattleDome_Text_EmphasizesHPAndAtk,
+    BattleDome_Text_EmphasizesHPAndDef,
+    BattleDome_Text_EmphasizesHPAndSpeed,
+    BattleDome_Text_EmphasizesHPAndSpAtk,
+    BattleDome_Text_EmphasizesHPAndSpDef,
+    BattleDome_Text_EmphasizesAtkAndDef,
+    BattleDome_Text_EmphasizesAtkAndSpeed,
+    BattleDome_Text_EmphasizesAtkAndSpAtk,
+    BattleDome_Text_EmphasizesAtkAndSpDef,
+    BattleDome_Text_EmphasizesDefAndSpeed,
+    BattleDome_Text_EmphasizesDefAndSpAtk,
+    BattleDome_Text_EmphasizesDefAndSpDef,
+    BattleDome_Text_EmphasizesSpeedAndSpAtk,
+    BattleDome_Text_EmphasizesSpeedAndSpDef,
+    BattleDome_Text_EmphasizesSpAtkAndSpDef,
+    BattleDome_Text_EmphasizesHP,
+    BattleDome_Text_EmphasizesAtk,
+    BattleDome_Text_EmphasizesDef,
+    BattleDome_Text_EmphasizesSpeed,
+    BattleDome_Text_EmphasizesSpAtk,
+    BattleDome_Text_EmphasizesSpDef,
+    BattleDome_Text_NeglectsHPAndAtk,
+    BattleDome_Text_NeglectsHPAndDef,
+    BattleDome_Text_NeglectsHPAndSpeed,
+    BattleDome_Text_NeglectsHPAndSpAtk,
+    BattleDome_Text_NeglectsHPAndSpDef,
+    BattleDome_Text_NeglectsAtkAndDef,
+    BattleDome_Text_NeglectsAtkAndSpeed,
+    BattleDome_Text_NeglectsAtkAndSpAtk,
+    BattleDome_Text_NeglectsAtkAndSpDef,
+    BattleDome_Text_NeglectsDefAndSpeed,
+    BattleDome_Text_NeglectsDefAndSpAtk,
+    BattleDome_Text_NeglectsDefAndSpDef,
+    BattleDome_Text_NeglectsSpeedAndSpAtk,
+    BattleDome_Text_NeglectsSpeedAndSpDef,
+    BattleDome_Text_NeglectsSpAtkAndSpDef,
+    BattleDome_Text_NeglectsHP,
+    BattleDome_Text_NeglectsAtk,
+    BattleDome_Text_NeglectsDef,
+    BattleDome_Text_NeglectsSpeed,
+    BattleDome_Text_NeglectsSpAtk,
+    BattleDome_Text_NeglectsSpDef,
+    [DOME_TEXT_WELL_BALANCED] = BattleDome_Text_RaisesMonsWellBalanced,
+};
+
+static const u8 sInfoTrainerMonX[FRONTIER_PARTY_SIZE] BATTLE_DOME_DATA =
+{104, 136, 104};
+
+static const u8 sInfoTrainerMonY[FRONTIER_PARTY_SIZE] BATTLE_DOME_DATA =
+{ 38,  62,  78};
+
+static const u8 sSpeciesNameTextYCoords[] BATTLE_DOME_DATA =
+{1, 5, 1};
+
+static const u8 sStatTextOffsets[NUM_STATS - 1] BATTLE_DOME_DATA =
+{
+    DOME_TEXT_HP,
+    DOME_TEXT_ATK,
+    DOME_TEXT_DEF,
+    DOME_TEXT_SPEED,
+    DOME_TEXT_SPATK
+};
+
+static const u8 *const sBattleDomeMatchNumberTexts[DOME_TOURNAMENT_MATCHES_COUNT] BATTLE_DOME_DATA =
+{
+    BattleDome_Text_Round1Match1,
+    BattleDome_Text_Round1Match2,
+    BattleDome_Text_Round1Match3,
+    BattleDome_Text_Round1Match4,
+    BattleDome_Text_Round1Match5,
+    BattleDome_Text_Round1Match6,
+    BattleDome_Text_Round1Match7,
+    BattleDome_Text_Round1Match8,
+    BattleDome_Text_Round2Match1,
+    BattleDome_Text_Round2Match2,
+    BattleDome_Text_Round2Match3,
+    BattleDome_Text_Round2Match4,
+    BattleDome_Text_SemifinalMatch1,
+    BattleDome_Text_SemifinalMatch2,
+    BattleDome_Text_FinalMatch,
+};
+
+static const u8 *const sBattleDomeWinTexts[] BATTLE_DOME_DATA =
+{
+    [DOME_TEXT_NO_WINNER_YET]    = BattleDome_Text_LetTheBattleBegin,
+    [DOME_TEXT_WON_USING_MOVE]   = BattleDome_Text_TrainerWonUsingMove,
+    [DOME_TEXT_CHAMP_USING_MOVE] = BattleDome_Text_TrainerBecameChamp,
+    [DOME_TEXT_WON_ON_FORFEIT]   = BattleDome_Text_TrainerWonByDefault,
+    [DOME_TEXT_CHAMP_ON_FORFEIT] = BattleDome_Text_TrainerWonOutrightByDefault,
+    [DOME_TEXT_WON_NO_MOVES]     = BattleDome_Text_TrainerWonNoMoves,
+    [DOME_TEXT_CHAMP_NO_MOVES]   = BattleDome_Text_TrainerWonOutrightNoMoves,
+};
+
+static const u8 sLeftTrainerMonX[FRONTIER_PARTY_SIZE] BATTLE_DOME_DATA =
+{ 96,  96,  96};
+
+static const u8 sLeftTrainerMonY[FRONTIER_PARTY_SIZE] BATTLE_DOME_DATA =
+{ 56,  80, 104};
+
+static const u8 sRightTrainerMonX[FRONTIER_PARTY_SIZE] BATTLE_DOME_DATA =
+{144, 144, 144};
+
+static const u8 sRightTrainerMonY[FRONTIER_PARTY_SIZE] BATTLE_DOME_DATA =
+{ 56,  80, 104};
+
+static const u8 sTourneyTreeTrainerIds2[DOME_TOURNAMENT_TRAINERS_COUNT] BATTLE_DOME_DATA =
+{0, 8, 12, 4, 7, 15, 11, 3, 2, 10, 14, 6, 5, 13, 9, 1};
+
+static const u8 sCompetitorRangeByMatch[DOME_TOURNAMENT_MATCHES_COUNT][3] BATTLE_DOME_DATA =
+{
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1) * 0,    NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1),    DOME_ROUND1},
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1) * 1,    NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1),    DOME_ROUND1},
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1) * 2,    NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1),    DOME_ROUND1},
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1) * 3,    NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1),    DOME_ROUND1},
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1) * 4,    NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1),    DOME_ROUND1},
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1) * 5,    NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1),    DOME_ROUND1},
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1) * 6,    NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1),    DOME_ROUND1},
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1) * 7,    NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND1),    DOME_ROUND1},
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND2) * 0,    NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND2),    DOME_ROUND2},
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND2) * 1,    NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND2),    DOME_ROUND2},
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND2) * 2,    NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND2),    DOME_ROUND2},
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND2) * 3,    NUM_POSSIBLE_MATCH_TRAINERS(DOME_ROUND2),    DOME_ROUND2},
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_SEMIFINAL) * 0, NUM_POSSIBLE_MATCH_TRAINERS(DOME_SEMIFINAL), DOME_SEMIFINAL},
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_SEMIFINAL) * 1, NUM_POSSIBLE_MATCH_TRAINERS(DOME_SEMIFINAL), DOME_SEMIFINAL},
+    { NUM_POSSIBLE_MATCH_TRAINERS(DOME_FINAL) * 0,     NUM_POSSIBLE_MATCH_TRAINERS(DOME_FINAL),     DOME_FINAL},
+};
+
+static const u8 sTrainerNamePositions[DOME_TOURNAMENT_TRAINERS_COUNT][2] BATTLE_DOME_DATA =
+{
+    { TOURNEYWIN_NAMES_LEFT,  0 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_RIGHT, 7 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_RIGHT, 0 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_LEFT,  7 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_LEFT,  3 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_RIGHT, 4 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_RIGHT, 3 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_LEFT,  4 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_LEFT,  1 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_RIGHT, 6 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_RIGHT, 1 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_LEFT,  6 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_LEFT,  2 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_RIGHT, 5 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_RIGHT, 2 * NAME_ROW_HEIGHT + 1},
+    { TOURNEYWIN_NAMES_LEFT,  5 * NAME_ROW_HEIGHT + 1},
+};
+
+static const u8 sTourneyTreePokeballCoords[DOME_TOURNAMENT_TRAINERS_COUNT + DOME_TOURNAMENT_MATCHES_COUNT][2] BATTLE_DOME_DATA =
+{
+    { 68,  33},
+    { 68,  49},
+    { 68,  65},
+    { 68,  81},
+    { 68,  97},
+    { 68, 113},
+    { 68, 129},
+    { 68, 145},
+    {172,  33},
+    {172,  49},
+    {172,  65},
+    {172,  81},
+    {172,  97},
+    {172, 113},
+    {172, 129},
+    {172, 145},
+    { 87,  41},
+    { 87,  73},
+    { 87, 105},
+    { 87, 137},
+    {153,  41},
+    {153,  73},
+    {153, 105},
+    {153, 137},
+    { 95,  57},
+    { 95, 121},
+    {145,  57},
+    {145, 121},
+    {103,  89},
+    {137,  89},
+    {120,  89},
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer1Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER1(LINE_CORNER_R_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer1Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER1(LINE_CORNER_R)
+    LINESECTION_ROUND2_MATCH1(LINE_CORNER_R_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer1Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER1(LINE_CORNER_R)
+    LINESECTION_ROUND2_MATCH1(LINE_CORNER_R)
+    LINESECTION_SEMIFINAL_TOP_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer1Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER1(LINE_CORNER_R)
+    LINESECTION_ROUND2_MATCH1(LINE_CORNER_R)
+    LINESECTION_SEMIFINAL_TOP_LEFT
+    LINESECTION_FINAL_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer9Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER9(LINE_CORNER_R_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer9Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER9(LINE_CORNER_R)
+    LINESECTION_ROUND2_MATCH1(LINE_CORNER_R_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer9Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER9(LINE_CORNER_R)
+    LINESECTION_ROUND2_MATCH1(LINE_CORNER_R)
+    LINESECTION_SEMIFINAL_TOP_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer9Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER9(LINE_CORNER_R)
+    LINESECTION_ROUND2_MATCH1(LINE_CORNER_R)
+    LINESECTION_SEMIFINAL_TOP_LEFT
+    LINESECTION_FINAL_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer13Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER13(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer13Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER13(LINE_H)
+    LINESECTION_ROUND2_MATCH2(LINE_CORNER_R_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer13Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER13(LINE_H)
+    LINESECTION_ROUND2_MATCH2(LINE_CORNER_R)
+    LINESECTION_SEMIFINAL_TOP_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer13Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER13(LINE_H)
+    LINESECTION_ROUND2_MATCH2(LINE_CORNER_R)
+    LINESECTION_SEMIFINAL_TOP_LEFT
+    LINESECTION_FINAL_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer5Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER5(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer5Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER5(LINE_H)
+    LINESECTION_ROUND2_MATCH2(LINE_CORNER_R_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer5Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER5(LINE_H)
+    LINESECTION_ROUND2_MATCH2(LINE_CORNER_R)
+    LINESECTION_SEMIFINAL_TOP_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer5Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER5(LINE_H)
+    LINESECTION_ROUND2_MATCH2(LINE_CORNER_R)
+    LINESECTION_SEMIFINAL_TOP_LEFT
+    LINESECTION_FINAL_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer8Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER8(LINE_CORNER_R_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer8Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER8(LINE_CORNER_R)
+    LINESECTION_ROUND2_MATCH3(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer8Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER8(LINE_CORNER_R)
+    LINESECTION_ROUND2_MATCH3(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer8Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER8(LINE_CORNER_R)
+    LINESECTION_ROUND2_MATCH3(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_LEFT
+    LINESECTION_FINAL_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer16Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER16(LINE_CORNER_R_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer16Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER16(LINE_CORNER_R)
+    LINESECTION_ROUND2_MATCH3(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer16Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER16(LINE_CORNER_R)
+    LINESECTION_ROUND2_MATCH3(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer16Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER16(LINE_CORNER_R)
+    LINESECTION_ROUND2_MATCH3(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_LEFT
+    LINESECTION_FINAL_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer12Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER12(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer12Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER12(LINE_H)
+    LINESECTION_ROUND2_MATCH4(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer12Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER12(LINE_H)
+    LINESECTION_ROUND2_MATCH4(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer12Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER12(LINE_H)
+    LINESECTION_ROUND2_MATCH4(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_LEFT
+    LINESECTION_FINAL_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer4Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER4(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer4Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER4(LINE_H)
+    LINESECTION_ROUND2_MATCH4(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer4Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER4(LINE_H)
+    LINESECTION_ROUND2_MATCH4(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer4Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER4(LINE_H)
+    LINESECTION_ROUND2_MATCH4(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_LEFT
+    LINESECTION_FINAL_LEFT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer3Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER3(LINE_CORNER_L_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer3Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER3(LINE_CORNER_L)
+    LINESECTION_ROUND2_MATCH5(LINE_CORNER_L_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer3Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER3(LINE_CORNER_L)
+    LINESECTION_ROUND2_MATCH5(LINE_CORNER_L)
+    LINESECTION_SEMIFINAL_TOP_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer3Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER3(LINE_CORNER_L)
+    LINESECTION_ROUND2_MATCH5(LINE_CORNER_L)
+    LINESECTION_SEMIFINAL_TOP_RIGHT
+    LINESECTION_FINAL_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer11Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER11(LINE_CORNER_L_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer11Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER11(LINE_CORNER_L)
+    LINESECTION_ROUND2_MATCH5(LINE_CORNER_L_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer11Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER11(LINE_CORNER_L)
+    LINESECTION_ROUND2_MATCH5(LINE_CORNER_L)
+    LINESECTION_SEMIFINAL_TOP_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer11Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER11(LINE_CORNER_L)
+    LINESECTION_ROUND2_MATCH5(LINE_CORNER_L)
+    LINESECTION_SEMIFINAL_TOP_RIGHT
+    LINESECTION_FINAL_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer15Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER15(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer15Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER15(LINE_H)
+    LINESECTION_ROUND2_MATCH6(LINE_CORNER_L_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer15Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER15(LINE_H)
+    LINESECTION_ROUND2_MATCH6(LINE_CORNER_L)
+    LINESECTION_SEMIFINAL_TOP_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer15Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER15(LINE_H)
+    LINESECTION_ROUND2_MATCH6(LINE_CORNER_L)
+    LINESECTION_SEMIFINAL_TOP_RIGHT
+    LINESECTION_FINAL_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer7Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER7(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer7Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER7(LINE_H)
+    LINESECTION_ROUND2_MATCH6(LINE_CORNER_L_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer7Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER7(LINE_H)
+    LINESECTION_ROUND2_MATCH6(LINE_CORNER_L)
+    LINESECTION_SEMIFINAL_TOP_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer7Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER7(LINE_H)
+    LINESECTION_ROUND2_MATCH6(LINE_CORNER_L)
+    LINESECTION_SEMIFINAL_TOP_RIGHT
+    LINESECTION_FINAL_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer6Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER6(LINE_CORNER_L_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer6Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER6(LINE_CORNER_L)
+    LINESECTION_ROUND2_MATCH7(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer6Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER6(LINE_CORNER_L)
+    LINESECTION_ROUND2_MATCH7(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer6Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER6(LINE_CORNER_L)
+    LINESECTION_ROUND2_MATCH7(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_RIGHT
+    LINESECTION_FINAL_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer14Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER14(LINE_CORNER_L_HALF)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer14Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER14(LINE_CORNER_L)
+    LINESECTION_ROUND2_MATCH7(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer14Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER14(LINE_CORNER_L)
+    LINESECTION_ROUND2_MATCH7(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer14Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER14(LINE_CORNER_L)
+    LINESECTION_ROUND2_MATCH7(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_RIGHT
+    LINESECTION_FINAL_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer10Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER10(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer10Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER10(LINE_H)
+    LINESECTION_ROUND2_MATCH8(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer10Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER10(LINE_H)
+    LINESECTION_ROUND2_MATCH8(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer10Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER10(LINE_H)
+    LINESECTION_ROUND2_MATCH8(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_RIGHT
+    LINESECTION_FINAL_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer2Round1[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER2(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer2Round2[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER2(LINE_H)
+    LINESECTION_ROUND2_MATCH8(LINE_H)
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer2Semifinal[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER2(LINE_H)
+    LINESECTION_ROUND2_MATCH8(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_RIGHT
+};
+
+static const struct TourneyTreeLineSection sLineSectionTrainer2Final[] BATTLE_DOME_DATA =
+{
+    LINESECTION_ROUND1_TRAINER2(LINE_H)
+    LINESECTION_ROUND2_MATCH8(LINE_H)
+    LINESECTION_SEMIFINAL_BOTTOM_RIGHT
+    LINESECTION_FINAL_RIGHT
+};
+
+static const struct TourneyTreeLineSection *const sTourneyTreeLineSections[DOME_TOURNAMENT_TRAINERS_COUNT][DOME_ROUNDS_COUNT] BATTLE_DOME_DATA =
+{
+    {sLineSectionTrainer1Round1,  sLineSectionTrainer1Round2,  sLineSectionTrainer1Semifinal,  sLineSectionTrainer1Final},
+    {sLineSectionTrainer2Round1,  sLineSectionTrainer2Round2,  sLineSectionTrainer2Semifinal,  sLineSectionTrainer2Final},
+    {sLineSectionTrainer3Round1,  sLineSectionTrainer3Round2,  sLineSectionTrainer3Semifinal,  sLineSectionTrainer3Final},
+    {sLineSectionTrainer4Round1,  sLineSectionTrainer4Round2,  sLineSectionTrainer4Semifinal,  sLineSectionTrainer4Final},
+    {sLineSectionTrainer5Round1,  sLineSectionTrainer5Round2,  sLineSectionTrainer5Semifinal,  sLineSectionTrainer5Final},
+    {sLineSectionTrainer6Round1,  sLineSectionTrainer6Round2,  sLineSectionTrainer6Semifinal,  sLineSectionTrainer6Final},
+    {sLineSectionTrainer7Round1,  sLineSectionTrainer7Round2,  sLineSectionTrainer7Semifinal,  sLineSectionTrainer7Final},
+    {sLineSectionTrainer8Round1,  sLineSectionTrainer8Round2,  sLineSectionTrainer8Semifinal,  sLineSectionTrainer8Final},
+    {sLineSectionTrainer9Round1,  sLineSectionTrainer9Round2,  sLineSectionTrainer9Semifinal,  sLineSectionTrainer9Final},
+    {sLineSectionTrainer10Round1, sLineSectionTrainer10Round2, sLineSectionTrainer10Semifinal, sLineSectionTrainer10Final},
+    {sLineSectionTrainer11Round1, sLineSectionTrainer11Round2, sLineSectionTrainer11Semifinal, sLineSectionTrainer11Final},
+    {sLineSectionTrainer12Round1, sLineSectionTrainer12Round2, sLineSectionTrainer12Semifinal, sLineSectionTrainer12Final},
+    {sLineSectionTrainer13Round1, sLineSectionTrainer13Round2, sLineSectionTrainer13Semifinal, sLineSectionTrainer13Final},
+    {sLineSectionTrainer14Round1, sLineSectionTrainer14Round2, sLineSectionTrainer14Semifinal, sLineSectionTrainer14Final},
+    {sLineSectionTrainer15Round1, sLineSectionTrainer15Round2, sLineSectionTrainer15Semifinal, sLineSectionTrainer15Final},
+    {sLineSectionTrainer16Round1, sLineSectionTrainer16Round2, sLineSectionTrainer16Semifinal, sLineSectionTrainer16Final},
+};
+
+static const u8 sTourneyTreeLineSectionArrayCounts[DOME_TOURNAMENT_TRAINERS_COUNT][DOME_ROUNDS_COUNT] BATTLE_DOME_DATA =
+{
+    {ARRAY_COUNT(sLineSectionTrainer1Round1),  ARRAY_COUNT(sLineSectionTrainer1Round2),  ARRAY_COUNT(sLineSectionTrainer1Semifinal),  ARRAY_COUNT(sLineSectionTrainer1Final)},
+    {ARRAY_COUNT(sLineSectionTrainer2Round1),  ARRAY_COUNT(sLineSectionTrainer2Round2),  ARRAY_COUNT(sLineSectionTrainer2Semifinal),  ARRAY_COUNT(sLineSectionTrainer2Final)},
+    {ARRAY_COUNT(sLineSectionTrainer3Round1),  ARRAY_COUNT(sLineSectionTrainer3Round2),  ARRAY_COUNT(sLineSectionTrainer3Semifinal),  ARRAY_COUNT(sLineSectionTrainer3Final)},
+    {ARRAY_COUNT(sLineSectionTrainer4Round1),  ARRAY_COUNT(sLineSectionTrainer4Round2),  ARRAY_COUNT(sLineSectionTrainer4Semifinal),  ARRAY_COUNT(sLineSectionTrainer4Final)},
+    {ARRAY_COUNT(sLineSectionTrainer5Round1),  ARRAY_COUNT(sLineSectionTrainer5Round2),  ARRAY_COUNT(sLineSectionTrainer5Semifinal),  ARRAY_COUNT(sLineSectionTrainer5Final)},
+    {ARRAY_COUNT(sLineSectionTrainer6Round1),  ARRAY_COUNT(sLineSectionTrainer6Round2),  ARRAY_COUNT(sLineSectionTrainer6Semifinal),  ARRAY_COUNT(sLineSectionTrainer6Final)},
+    {ARRAY_COUNT(sLineSectionTrainer7Round1),  ARRAY_COUNT(sLineSectionTrainer7Round2),  ARRAY_COUNT(sLineSectionTrainer7Semifinal),  ARRAY_COUNT(sLineSectionTrainer7Final)},
+    {ARRAY_COUNT(sLineSectionTrainer8Round1),  ARRAY_COUNT(sLineSectionTrainer8Round2),  ARRAY_COUNT(sLineSectionTrainer8Semifinal),  ARRAY_COUNT(sLineSectionTrainer8Final)},
+    {ARRAY_COUNT(sLineSectionTrainer9Round1),  ARRAY_COUNT(sLineSectionTrainer9Round2),  ARRAY_COUNT(sLineSectionTrainer9Semifinal),  ARRAY_COUNT(sLineSectionTrainer9Final)},
+    {ARRAY_COUNT(sLineSectionTrainer10Round1), ARRAY_COUNT(sLineSectionTrainer10Round2), ARRAY_COUNT(sLineSectionTrainer10Semifinal), ARRAY_COUNT(sLineSectionTrainer10Final)},
+    {ARRAY_COUNT(sLineSectionTrainer11Round1), ARRAY_COUNT(sLineSectionTrainer11Round2), ARRAY_COUNT(sLineSectionTrainer11Semifinal), ARRAY_COUNT(sLineSectionTrainer11Final)},
+    {ARRAY_COUNT(sLineSectionTrainer12Round1), ARRAY_COUNT(sLineSectionTrainer12Round2), ARRAY_COUNT(sLineSectionTrainer12Semifinal), ARRAY_COUNT(sLineSectionTrainer12Final)},
+    {ARRAY_COUNT(sLineSectionTrainer13Round1), ARRAY_COUNT(sLineSectionTrainer13Round2), ARRAY_COUNT(sLineSectionTrainer13Semifinal), ARRAY_COUNT(sLineSectionTrainer13Final)},
+    {ARRAY_COUNT(sLineSectionTrainer14Round1), ARRAY_COUNT(sLineSectionTrainer14Round2), ARRAY_COUNT(sLineSectionTrainer14Semifinal), ARRAY_COUNT(sLineSectionTrainer14Final)},
+    {ARRAY_COUNT(sLineSectionTrainer15Round1), ARRAY_COUNT(sLineSectionTrainer15Round2), ARRAY_COUNT(sLineSectionTrainer15Semifinal), ARRAY_COUNT(sLineSectionTrainer15Final)},
+    {ARRAY_COUNT(sLineSectionTrainer16Round1), ARRAY_COUNT(sLineSectionTrainer16Round2), ARRAY_COUNT(sLineSectionTrainer16Semifinal), ARRAY_COUNT(sLineSectionTrainer16Final)},
+};

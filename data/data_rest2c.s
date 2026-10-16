@@ -67,6 +67,9 @@ gUnknown_8D84A08: @ 0x8D84A08
 	.globl gUnknown_8D84F98
 gUnknown_8D84F98: @ 0x8D84F98
 	.incbin "graphics/misc/gUnknown_8D84F98.4bpp.lz"
+
+	.globl gDomeTourneyTreeButtons_Gfx
+gDomeTourneyTreeButtons_Gfx: @ 0x8D850F0
 	.incbin "baserom_jp.gba", 0xD850F0, 0x24C
 
 
@@ -75,8 +78,8 @@ gUnknown_8D8533C: @ 0x8D8533C
 	.incbin "graphics/misc/gUnknown_8D8533C.4bpp.lz"
 
 
-	.globl gUnknown_8D85428
-gUnknown_8D85428: @ 0x8D85428
+	.globl gDomeTourneyTreeButtons_Pal
+gDomeTourneyTreeButtons_Pal: @ 0x8D85428
 	.incbin "graphics/misc/gUnknown_8D85428.4bpp.lz"
 
 
