@@ -172,3 +172,42 @@ $(WALLPAPERGFXDIR)/%.pal.gbapal: $(WALLPAPERGFXDIR)/%.pal | tools
 
 graphics/pokemon_storage/arrow.png.4bpp: graphics/pokemon_storage/arrow.png | tools
 	$(GFX) $< $@
+
+# Battle animation and retained interface composites.
+
+graphics/battle_anims/sprites/ice_cube.4bpp: graphics/battle_anims/sprites/ice_cube_0.png.4bpp \
+	graphics/battle_anims/sprites/ice_cube_1.png.4bpp \
+	graphics/battle_anims/sprites/ice_cube_2.png.4bpp \
+	graphics/battle_anims/sprites/ice_cube_3.png.4bpp Makefile graphics_file_rules.mk | tools
+	@cat $(filter %.4bpp,$^) >$@
+
+graphics/battle_interface/battle_bar.4bpp: graphics/battle_interface/hpbar_anim_unused.png.4bpp \
+	graphics/battle_interface/numbers1.png.4bpp \
+	graphics/battle_interface/numbers2.png.4bpp Makefile graphics_file_rules.mk | tools
+	@cat $(filter %.4bpp,$^) >$@
+
+graphics/unused/obi1.4bpp: graphics/unused/old_bulbasaur.png.4bpp \
+	graphics/unused/old_charizard.png.4bpp Makefile graphics_file_rules.mk | tools
+	@cat $(filter %.4bpp,$^) >$@
+
+graphics/unused/obi2.4bpp: graphics/unused/old_bulbasaur2.png.4bpp \
+	graphics/unused/old_battle_interface_1.png.4bpp \
+	graphics/unused/old_battle_interface_2.png.4bpp \
+	graphics/unused/old_battle_interface_3.png.4bpp Makefile graphics_file_rules.mk | tools
+	@cat $(filter %.4bpp,$^) >$@
+
+graphics/unused/obi_palpak1.gbapal: graphics/unused/old_pal1.pal.gbapal \
+	graphics/unused/old_pal2.pal.gbapal \
+	graphics/unused/old_pal3.pal.gbapal Makefile graphics_file_rules.mk | tools
+	@cat $(filter %.gbapal,$^) >$@
+
+graphics/unused/obi_palpak3.gbapal: graphics/unused/old_pal5.pal.gbapal \
+	graphics/unused/old_pal6.pal.gbapal \
+	graphics/unused/old_pal7.pal.gbapal Makefile graphics_file_rules.mk | tools
+	@cat $(filter %.gbapal,$^) >$@
+
+graphics/unused/redyellowgreen_frame.bin: graphics/unused/red_frame.bin \
+	graphics/unused/yellow_frame.bin \
+	graphics/unused/green_frame.bin \
+	graphics/unused/blank_frame.bin Makefile graphics_file_rules.mk | tools
+	@cat $(filter %.bin,$^) >$@

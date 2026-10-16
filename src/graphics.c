@@ -40,235 +40,565 @@ TITLE_SCREEN_GRAPHICS_AFTER_TITLE_SCREEN_STATIC_GRAPHICS const u32 gTitleScreenC
 #include "data/graphics/battle_environment.h"
 #undef BATTLE_ENVIRONMENT_GRAPHICS
 
-#define BATTLE_ANIM_A_BASE_GRAPHICS __attribute__((section(".rodata.battle_anim_a_base_graphics"), aligned(1)))
+#define BATTLE_ANIM_GRAPHICS __attribute__((section(".rodata.battle_anim_graphics"), aligned(1)))
 
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Bubble[] = INCBIN_U32("graphics/battle_anims/sprites/bubble.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Bone[] = INCBIN_U32("graphics/battle_anims/sprites/bone.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_AirWave[] = INCBIN_U32("graphics/battle_anims/sprites/air_wave.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Orb[] = INCBIN_U32("graphics/battle_anims/sprites/orb.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Sword[] = INCBIN_U32("graphics/battle_anims/sprites/sword.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Seed[] = INCBIN_U32("graphics/battle_anims/sprites/seed.4bpp.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBlankGfxCompressed[] = INCGFX_U32("graphics/interface/blank.png", ".4bpp.lz");
 
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_RainDrops[] = INCBIN_U32("graphics/battle_anims/sprites/rain_drops.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Bone[] = INCBIN_U32("graphics/battle_anims/sprites/bone.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_AirWave[] = INCBIN_U32("graphics/battle_anims/sprites/air_wave.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Orb[] = INCBIN_U32("graphics/battle_anims/sprites/orb.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Sword[] = INCBIN_U32("graphics/battle_anims/sprites/sword.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Seed[] = INCBIN_U32("graphics/battle_anims/sprites/seed.gbapal.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Bubble[] = INCGFX_U32("graphics/battle_anims/sprites/bubble.png", ".4bpp.lz");
 
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Needle[] = INCBIN_U32("graphics/battle_anims/sprites/needle.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Needle[] = INCBIN_U32("graphics/battle_anims/sprites/needle.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Explosion6[] = INCBIN_U32("graphics/battle_anims/sprites/explosion_6.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Explosion6[] = INCBIN_U32("graphics/battle_anims/sprites/explosion_6.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_PinkOrb[] = INCBIN_U32("graphics/battle_anims/sprites/pink_orb.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_PinkOrb[] = INCBIN_U32("graphics/battle_anims/sprites/pink_orb.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_IceCube[] = INCBIN_U32("graphics/battle_anims/sprites/ice_cube.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_IceCube[] = INCBIN_U32("graphics/battle_anims/sprites/ice_cube.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Gust[] = INCBIN_U32("graphics/battle_anims/sprites/gust.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Gust[] = INCBIN_U32("graphics/battle_anims/sprites/gust.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Spark2[] = INCBIN_U32("graphics/battle_anims/sprites/spark_2.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Spark2[] = INCBIN_U32("graphics/battle_anims/sprites/spark_2.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Orange[] = INCBIN_U32("graphics/battle_anims/sprites/orange.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Orange[] = INCBIN_U32("graphics/battle_anims/sprites/orange.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Spikes[] = INCBIN_U32("graphics/battle_anims/sprites/spikes.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Spikes[] = INCBIN_U32("graphics/battle_anims/sprites/spikes.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_YellowBall[] = INCBIN_U32("graphics/battle_anims/sprites/yellow_ball.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_YellowBall[] = INCBIN_U32("graphics/battle_anims/sprites/yellow_ball.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_TiedBag[] = INCBIN_U32("graphics/battle_anims/sprites/tied_bag.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_TiedBag[] = INCBIN_U32("graphics/battle_anims/sprites/tied_bag.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_BlackSmoke[] = INCBIN_U32("graphics/battle_anims/sprites/black_smoke.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_BlackSmoke[] = INCBIN_U32("graphics/battle_anims/sprites/black_smoke.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_BlackBall[] = INCBIN_U32("graphics/battle_anims/sprites/black_ball.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_BlackBall[] = INCBIN_U32("graphics/battle_anims/sprites/black_ball.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Glass[] = INCBIN_U32("graphics/battle_anims/sprites/glass.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Glass[] = INCBIN_U32("graphics/battle_anims/sprites/glass.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_HornHit[] = INCBIN_U32("graphics/battle_anims/sprites/horn_hit.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_HornHit[] = INCBIN_U32("graphics/battle_anims/sprites/horn_hit.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_BlueShards[] = INCBIN_U32("graphics/battle_anims/sprites/blue_shards.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_BlueShards[] = INCBIN_U32("graphics/battle_anims/sprites/blue_shards.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimUnusedPal_MusicNotes[] = INCBIN_U32("graphics/battle_anims/unused/music_notes.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimUnusedGfx_MusicNotes[] = INCBIN_U32("graphics/battle_anims/unused/music_notes.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Hit[] = INCBIN_U32("graphics/battle_anims/sprites/hit.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Hit[] = INCBIN_U32("graphics/battle_anims/sprites/hit.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Hit2[] = INCBIN_U32("graphics/battle_anims/sprites/hit_2.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_WavingHand[] = INCBIN_U32("graphics/battle_anims/sprites/waving_hand.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_WavingHand[] = INCBIN_U32("graphics/battle_anims/sprites/waving_hand.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_ClosingEye[] = INCBIN_U32("graphics/battle_anims/sprites/closing_eye.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_ClosingEye[] = INCBIN_U32("graphics/battle_anims/sprites/closing_eye.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_BlueStar[] = INCBIN_U32("graphics/battle_anims/sprites/blue_star.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_BlueStar[] = INCBIN_U32("graphics/battle_anims/sprites/blue_star.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_BubbleBurst[] = INCBIN_U32("graphics/battle_anims/sprites/bubble_burst.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_BubbleBurst[] = INCBIN_U32("graphics/battle_anims/sprites/bubble_burst.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_HitDuplicate[] = INCBIN_U32("graphics/battle_anims/sprites/hit_duplicate.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_HitDuplicate[] = INCBIN_U32("graphics/battle_anims/sprites/hit_duplicate.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Leer[] = INCBIN_U32("graphics/battle_anims/sprites/leer.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Leer[] = INCBIN_U32("graphics/battle_anims/sprites/leer.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_BlueBurst[] = INCBIN_U32("graphics/battle_anims/sprites/blue_burst.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_BlueBurst[] = INCBIN_U32("graphics/battle_anims/sprites/blue_burst.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_SmallEmber[] = INCBIN_U32("graphics/battle_anims/sprites/small_ember.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_SmallEmber[] = INCBIN_U32("graphics/battle_anims/sprites/small_ember.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_GraySmoke[] = INCBIN_U32("graphics/battle_anims/sprites/gray_smoke.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_GraySmoke[] = INCBIN_U32("graphics/battle_anims/sprites/gray_smoke.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Fire[] = INCBIN_U32("graphics/battle_anims/sprites/fire.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Fire[] = INCBIN_U32("graphics/battle_anims/sprites/fire.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_SpinningFire[] = INCBIN_U32("graphics/battle_anims/sprites/spinning_fire.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_FirePlume[] = INCBIN_U32("graphics/battle_anims/sprites/fire_plume.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_Lightning2[] = INCBIN_U32("graphics/battle_anims/sprites/lightning_2.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Lightning2[] = INCBIN_U32("graphics/battle_anims/sprites/lightning_2.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_Lightning[] = INCBIN_U32("graphics/battle_anims/sprites/lightning.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpriteGfx_SpinningBall[] = INCBIN_U32("graphics/battle_anims/unused/spinning_ball.4bpp.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_SpinningBall[] = INCBIN_U32("graphics/battle_anims/unused/spinning_ball.gbapal.lz");
-BATTLE_ANIM_A_BASE_GRAPHICS const u32 gBattleAnimSpritePal_SpinningBall2[] = INCBIN_U32("graphics/battle_anims/unused/spinning_ball_2.gbapal.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Bone[] = INCGFX_U32("graphics/battle_anims/sprites/bone.png", ".4bpp.lz");
 
-#undef BATTLE_ANIM_A_BASE_GRAPHICS
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_AirWave[] = INCGFX_U32("graphics/battle_anims/sprites/air_wave.png", ".4bpp.lz");
 
-#define BATTLE_ANIM_A_CLAW_GRAPHICS __attribute__((section(".rodata.battle_anim_a_claw_graphics"), aligned(1)))
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Orb[] = INCGFX_U32("graphics/battle_anims/sprites/orb.png", ".4bpp.lz");
 
-BATTLE_ANIM_A_CLAW_GRAPHICS const u32 gBattleAnimSpritePal_ClawSlash2[] = INCBIN_U32("graphics/battle_anims/sprites/claw_slash_2.gbapal.lz");
-BATTLE_ANIM_A_CLAW_GRAPHICS const u32 gBattleAnimSpritePal_ClawSlash[] = INCBIN_U32("graphics/battle_anims/sprites/claw_slash.gbapal.lz");
-BATTLE_ANIM_A_CLAW_GRAPHICS const u32 gBattleAnimSpriteGfx_ClawSlash2[] = INCBIN_U32("graphics/battle_anims/sprites/claw_slash_2.4bpp.lz");
-BATTLE_ANIM_A_CLAW_GRAPHICS const u32 gBattleAnimSpriteGfx_ClawSlash[] = INCBIN_U32("graphics/battle_anims/sprites/claw_slash.4bpp.lz");
-BATTLE_ANIM_A_CLAW_GRAPHICS const u32 gBattleAnimSpriteGfx_Scratch3[] = INCBIN_U32("graphics/battle_anims/sprites/scratch_3.4bpp.lz");
-BATTLE_ANIM_A_CLAW_GRAPHICS const u32 gBattleAnimSpriteGfx_Scratch2[] = INCBIN_U32("graphics/battle_anims/sprites/scratch_2.4bpp.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Sword[] = INCGFX_U32("graphics/battle_anims/sprites/sword.png", ".4bpp.lz");
 
-#undef BATTLE_ANIM_A_CLAW_GRAPHICS
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Seed[] = INCGFX_U32("graphics/battle_anims/sprites/seed.png", ".4bpp.lz");
 
-#define BATTLE_ANIM_A_BURST_GRAPHICS __attribute__((section(".rodata.battle_anim_a_burst_graphics"), aligned(1)))
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_RainDrops[] = INCGFX_U32("graphics/battle_anims/sprites/rain_drops.png", ".gbapal.lz");
 
-BATTLE_ANIM_A_BURST_GRAPHICS const u32 gBattleAnimSpriteGfx_BubbleBurst2[] = INCBIN_U32("graphics/battle_anims/sprites/bubble_burst_2.4bpp.lz");
-BATTLE_ANIM_A_BURST_GRAPHICS const u32 gBattleAnimSpritePal_BubbleBurst2[] = INCBIN_U32("graphics/battle_anims/sprites/bubble_burst_2.gbapal.lz");
-BATTLE_ANIM_A_BURST_GRAPHICS const u32 gBattleAnimSpriteGfx_IceChunk[] = INCBIN_U32("graphics/battle_anims/sprites/ice_chunk.4bpp.lz");
-BATTLE_ANIM_A_BURST_GRAPHICS const u32 gBattleAnimSpritePal_IceChunk[] = INCBIN_U32("graphics/battle_anims/sprites/ice_chunk.gbapal.lz");
-BATTLE_ANIM_A_BURST_GRAPHICS const u32 gBattleAnimSpritePal_Glass2[] = INCBIN_U32("graphics/battle_anims/sprites/glass_2.gbapal.lz");
-BATTLE_ANIM_A_BURST_GRAPHICS const u32 gBattleAnimSpriteGfx_Glass2[] = INCBIN_U32("graphics/battle_anims/sprites/glass_2.4bpp.lz");
-BATTLE_ANIM_A_BURST_GRAPHICS const u32 gBattleAnimSpritePal_PinkHeart2[] = INCBIN_U32("graphics/battle_anims/sprites/pink_heart_2.gbapal.lz");
-BATTLE_ANIM_A_BURST_GRAPHICS const u32 gBattleAnimSpriteGfx_PinkHeart2[] = INCBIN_U32("graphics/battle_anims/sprites/pink_heart_2.4bpp.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Bone[] = INCGFX_U32("graphics/battle_anims/sprites/bone.png", ".gbapal.lz");
 
-#undef BATTLE_ANIM_A_BURST_GRAPHICS
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_AirWave[] = INCGFX_U32("graphics/battle_anims/sprites/air_wave.png", ".gbapal.lz");
 
-#define BATTLE_ANIM_A_BATTLE_BAR_AND_SAP_DRIP_GRAPHICS __attribute__((section(".rodata.battle_anim_a_battle_bar_and_sap_drip_graphics"), aligned(1)))
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Orb[] = INCGFX_U32("graphics/battle_anims/sprites/orb.png", ".gbapal.lz");
 
-// The JP LZ77 streams retain their original alignment padding.
-BATTLE_ANIM_A_BATTLE_BAR_AND_SAP_DRIP_GRAPHICS const u32 gBattleInterfaceGfx_BattleBar[] = INCBIN_U32("graphics/battle_interface/battle_bar.4bpp.lz");
-BATTLE_ANIM_A_BATTLE_BAR_AND_SAP_DRIP_GRAPHICS const u32 gBattleAnimSpriteGfx_SapDrip[] = INCBIN_U32("graphics/battle_anims/sprites/sap_drip.png.4bpp.lz");
-BATTLE_ANIM_A_BATTLE_BAR_AND_SAP_DRIP_GRAPHICS const u32 gBattleAnimSpritePal_SapDrip[] = INCBIN_U32("graphics/battle_anims/sprites/sap_drip.png.gbapal.lz");
-BATTLE_ANIM_A_BATTLE_BAR_AND_SAP_DRIP_GRAPHICS const u32 gBattleAnimSpritePal_SapDrip2[] = INCBIN_U32("graphics/battle_anims/sprites/sap_drip_2.pal.gbapal.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Sword[] = INCGFX_U32("graphics/battle_anims/sprites/sword.png", ".gbapal.lz");
 
-#undef BATTLE_ANIM_A_BATTLE_BAR_AND_SAP_DRIP_GRAPHICS
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Seed[] = INCGFX_U32("graphics/battle_anims/sprites/seed.png", ".gbapal.lz");
 
-#define BATTLE_ANIM_A_UNUSED_WINDOW2_GRAPHICS __attribute__((section(".rodata.battle_anim_a_unused_window2_graphics"), aligned(1)))
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Needle[] = INCGFX_U32("graphics/battle_anims/sprites/needle.png", ".4bpp.lz");
 
-// The JP LZ77 streams retain their original alignment padding.
-BATTLE_ANIM_A_UNUSED_WINDOW2_GRAPHICS const u32 gBattleInterfaceGfx_UnusedWindow2[] = INCBIN_U32("graphics/battle_interface/unused_window2.png.4bpp.lz");
-BATTLE_ANIM_A_UNUSED_WINDOW2_GRAPHICS const u32 gBattleInterfaceGfx_UnusedWindow2Bar[] = INCBIN_U32("graphics/battle_interface/unused_window2bar.png.4bpp.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Needle[] = INCGFX_U32("graphics/battle_anims/sprites/needle.png", ".gbapal.lz");
 
-#undef BATTLE_ANIM_A_UNUSED_WINDOW2_GRAPHICS
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Explosion6[] = INCGFX_U32("graphics/battle_anims/sprites/explosion_6.png", ".4bpp.lz");
 
-#define BATTLE_ANIM_A_SPARKLE_GRAPHICS __attribute__((section(".rodata.battle_anim_a_sparkle_graphics"), aligned(1)))
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Explosion6[] = INCGFX_U32("graphics/battle_anims/sprites/explosion_6.png", ".gbapal.lz");
 
-// The JP LZ77 streams retain their original alignment padding.
-BATTLE_ANIM_A_SPARKLE_GRAPHICS const u32 gBattleAnimSpriteGfx_Sparkle1[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_1.png.4bpp.lz");
-BATTLE_ANIM_A_SPARKLE_GRAPHICS const u32 gBattleAnimSpritePal_Sparkle1[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_1.png.gbapal.lz");
-BATTLE_ANIM_A_SPARKLE_GRAPHICS const u32 gBattleAnimSpritePal_Sparkle2[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_2.pal.gbapal.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_PinkOrb[] = INCGFX_U32("graphics/battle_anims/sprites/pink_orb.png", ".4bpp.lz");
 
-#undef BATTLE_ANIM_A_SPARKLE_GRAPHICS
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_PinkOrb[] = INCGFX_U32("graphics/battle_anims/sprites/pink_orb.png", ".gbapal.lz");
 
-#define BATTLE_ANIM_A_FOOT_AND_HAND_GRAPHICS __attribute__((section(".rodata.battle_anim_a_foot_and_hand_graphics"), aligned(1)))
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_IceCube[] = INCGFX_U32("graphics/battle_anims/sprites/ice_cube.pal", ".gbapal.lz");
 
-// The JP LZ77 streams retain their original alignment padding.
-BATTLE_ANIM_A_FOOT_AND_HAND_GRAPHICS const u32 gBattleAnimSpritePal_HumanoidFoot[] = INCBIN_U32("graphics/battle_anims/sprites/humanoid_foot.png.gbapal.lz");
-BATTLE_ANIM_A_FOOT_AND_HAND_GRAPHICS const u32 gBattleAnimSpriteGfx_HumanoidFoot[] = INCBIN_U32("graphics/battle_anims/sprites/humanoid_foot.png.4bpp.lz");
-BATTLE_ANIM_A_FOOT_AND_HAND_GRAPHICS const u32 gBattleAnimSpriteGfx_MonsterFoot[] = INCBIN_U32("graphics/battle_anims/sprites/monster_foot.png.4bpp.lz");
-BATTLE_ANIM_A_FOOT_AND_HAND_GRAPHICS const u32 gBattleAnimSpriteGfx_HumanoidHand[] = INCBIN_U32("graphics/battle_anims/sprites/humanoid_hand.png.4bpp.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_IceCube[] = INCGFX_U32("graphics/battle_anims/sprites/ice_cube.4bpp", ".lz");
 
-#undef BATTLE_ANIM_A_FOOT_AND_HAND_GRAPHICS
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Gust[] = INCGFX_U32("graphics/battle_anims/sprites/gust.png", ".4bpp.lz");
 
-#define BATTLE_ANIM_A_IMPACT_GRAPHICS __attribute__((section(".rodata.battle_anim_a_impact_graphics"), aligned(1)))
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Gust[] = INCGFX_U32("graphics/battle_anims/sprites/gust.png", ".gbapal.lz");
 
-// The JP LZ77 streams retain their original alignment padding.
-BATTLE_ANIM_A_IMPACT_GRAPHICS const u32 gBattleAnimSpriteGfx_SlamHit[] = INCBIN_U32("graphics/battle_anims/sprites/slam_hit.png.4bpp.lz");
-BATTLE_ANIM_A_IMPACT_GRAPHICS const u32 gBattleAnimSpritePal_SlamHit[] = INCBIN_U32("graphics/battle_anims/sprites/slam_hit.png.gbapal.lz");
-BATTLE_ANIM_A_IMPACT_GRAPHICS const u32 gBattleAnimSpriteGfx_RedFist[] = INCBIN_U32("graphics/battle_anims/sprites/red_fist.png.4bpp.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Spark2[] = INCGFX_U32("graphics/battle_anims/sprites/spark_2.png", ".4bpp.lz");
 
-#undef BATTLE_ANIM_A_IMPACT_GRAPHICS
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Spark2[] = INCGFX_U32("graphics/battle_anims/sprites/spark_2.png", ".gbapal.lz");
 
-#define BATTLE_ANIM_A_RING_AND_ROCKS_GRAPHICS __attribute__((section(".rodata.battle_anim_a_ring_and_rocks_graphics"), aligned(1)))
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Orange[] = INCGFX_U32("graphics/battle_anims/sprites/orange.png", ".4bpp.lz");
 
-// The JP LZ77 streams retain their original alignment padding.
-BATTLE_ANIM_A_RING_AND_ROCKS_GRAPHICS const u32 gBattleAnimSpriteGfx_Ring[] = INCBIN_U32("graphics/battle_anims/sprites/ring.png.4bpp.lz");
-BATTLE_ANIM_A_RING_AND_ROCKS_GRAPHICS const u32 gBattleAnimSpritePal_Ring[] = INCBIN_U32("graphics/battle_anims/sprites/ring.png.gbapal.lz");
-BATTLE_ANIM_A_RING_AND_ROCKS_GRAPHICS const u32 gBattleAnimSpriteGfx_Rocks[] = INCBIN_U32("graphics/battle_anims/sprites/rocks.png.4bpp.lz");
-BATTLE_ANIM_A_RING_AND_ROCKS_GRAPHICS const u32 gBattleAnimSpritePal_Rocks[] = INCBIN_U32("graphics/battle_anims/sprites/rocks.png.gbapal.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Orange[] = INCGFX_U32("graphics/battle_anims/sprites/orange.png", ".gbapal.lz");
 
-#undef BATTLE_ANIM_A_RING_AND_ROCKS_GRAPHICS
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Spikes[] = INCGFX_U32("graphics/battle_anims/sprites/spikes.png", ".4bpp.lz");
 
-#define BATTLE_ANIM_A_UNUSED_Z_AND_YELLOW_GRAPHICS __attribute__((section(".rodata.battle_anim_a_unused_z_and_yellow_graphics"), aligned(1)))
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Spikes[] = INCGFX_U32("graphics/battle_anims/sprites/spikes.png", ".gbapal.lz");
 
-// The JP LZ77 streams retain their original alignment padding.
-BATTLE_ANIM_A_UNUSED_Z_AND_YELLOW_GRAPHICS const u32 gBattleAnimSpriteGfx_Z[] = INCBIN_U32("graphics/battle_anims/sprites/z.png.4bpp.lz");
-BATTLE_ANIM_A_UNUSED_Z_AND_YELLOW_GRAPHICS const u32 gBattleAnimSpritePal_Z[] = INCBIN_U32("graphics/battle_anims/sprites/z.png.gbapal.lz");
-BATTLE_ANIM_A_UNUSED_Z_AND_YELLOW_GRAPHICS const u32 gBattleAnimSpriteGfx_YellowUnk2[] = INCBIN_U32("graphics/battle_anims/sprites/yellow_unk_2.png.4bpp.lz");
-BATTLE_ANIM_A_UNUSED_Z_AND_YELLOW_GRAPHICS const u32 gBattleAnimSpritePal_YellowUnk2[] = INCBIN_U32("graphics/battle_anims/sprites/yellow_unk_2.png.gbapal.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_YellowBall[] = INCGFX_U32("graphics/battle_anims/sprites/yellow_ball.png", ".4bpp.lz");
 
-#undef BATTLE_ANIM_A_UNUSED_Z_AND_YELLOW_GRAPHICS
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_YellowBall[] = INCGFX_U32("graphics/battle_anims/sprites/yellow_ball.png", ".gbapal.lz");
 
-#define BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS __attribute__((section(".rodata.battle_anim_a_air_and_leaf_graphics"), aligned(1)))
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_TiedBag[] = INCGFX_U32("graphics/battle_anims/sprites/tied_bag.png", ".4bpp.lz");
 
-// The JP LZ77 streams retain their original alignment padding.
-BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS const u32 gBattleAnimSpriteGfx_AirSlash[] = INCBIN_U32("graphics/battle_anims/sprites/air_slash.png.4bpp.lz");
-BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS const u32 gBattleAnimSpritePal_AirSlash[] = INCBIN_U32("graphics/battle_anims/sprites/air_slash.png.gbapal.lz");
-BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS const u32 gBattleAnimSpriteGfx_SpinningGreenOrbs[] = INCBIN_U32("graphics/battle_anims/sprites/spinning_green_orbs.png.4bpp.lz");
-BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS const u32 gBattleAnimSpritePal_SpinningGreenOrbs[] = INCBIN_U32("graphics/battle_anims/sprites/spinning_green_orbs.png.gbapal.lz");
-BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS const u32 gBattleAnimSpriteGfx_Leaf[] = INCBIN_U32("graphics/battle_anims/sprites/leaf.png.4bpp.lz");
-BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS const u32 gBattleAnimSpritePal_Leaf[] = INCBIN_U32("graphics/battle_anims/sprites/leaf.png.gbapal.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_TiedBag[] = INCGFX_U32("graphics/battle_anims/sprites/tied_bag.png", ".gbapal.lz");
 
-#undef BATTLE_ANIM_A_AIR_AND_LEAF_GRAPHICS
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_BlackSmoke[] = INCGFX_U32("graphics/battle_anims/sprites/black_smoke.png", ".4bpp.lz");
 
-#define BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS __attribute__((section(".rodata.battle_anim_a_status_particle_graphics"), aligned(1)))
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_BlackSmoke[] = INCGFX_U32("graphics/battle_anims/sprites/black_smoke.png", ".gbapal.lz");
 
-// The JP LZ77 streams retain their original alignment padding.
-BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS const u32 gBattleAnimSpriteGfx_PoisonPowder[] = INCBIN_U32("graphics/battle_anims/sprites/poison_powder.png.4bpp.lz");
-BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS const u32 gBattleAnimSpritePal_PoisonPowder[] = INCBIN_U32("graphics/battle_anims/sprites/poison_powder.png.gbapal.lz");
-BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS const u32 gBattleAnimSpriteGfx_BrownTriangle[] = INCBIN_U32("graphics/battle_anims/sprites/brown_triangle.png.4bpp.lz");
-BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS const u32 gBattleAnimSpritePal_BrownTriangle[] = INCBIN_U32("graphics/battle_anims/sprites/brown_triangle.png.gbapal.lz");
-BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS const u32 gBattleAnimSpriteGfx_Sparkle3[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_3.png.4bpp.lz");
-BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS const u32 gBattleAnimSpritePal_Sparkle3[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_3.png.gbapal.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_BlackBall[] = INCGFX_U32("graphics/battle_anims/sprites/black_ball.png", ".4bpp.lz");
 
-#undef BATTLE_ANIM_A_STATUS_PARTICLE_GRAPHICS
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_BlackBall[] = INCGFX_U32("graphics/battle_anims/sprites/black_ball.pal", ".gbapal.lz");
 
-#define BATTLE_ANIM_A_REACTION_GRAPHICS __attribute__((section(".rodata.battle_anim_a_reaction_graphics"), aligned(1)))
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Glass[] = INCGFX_U32("graphics/battle_anims/sprites/glass.png", ".gbapal.lz");
 
-// The JP LZ77 streams retain their original alignment padding.
-BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpriteGfx_Sparkle4[] = INCBIN_U32("graphics/battle_anims/sprites/sparkle_4.png.4bpp.lz");
-BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpriteGfx_MusicNotes[] = INCBIN_U32("graphics/battle_anims/sprites/music_notes.png.4bpp.lz");
-BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpritePal_MusicNotes[] = INCBIN_U32("graphics/battle_anims/sprites/music_notes.png.gbapal.lz");
-BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpriteGfx_Duck[] = INCBIN_U32("graphics/battle_anims/sprites/duck.png.4bpp.lz");
-BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpritePal_Duck[] = INCBIN_U32("graphics/battle_anims/sprites/duck.png.gbapal.lz");
-BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpriteGfx_Alert[] = INCBIN_U32("graphics/battle_anims/sprites/alert.png.4bpp.lz");
-BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpritePal_Alert[] = INCBIN_U32("graphics/battle_anims/sprites/alert.png.gbapal.lz");
-BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpriteGfx_Shock4[] = INCBIN_U32("graphics/battle_anims/sprites/shock_4.png.4bpp.lz");
-BATTLE_ANIM_A_REACTION_GRAPHICS const u32 gBattleAnimSpritePal_Shock4[] = INCBIN_U32("graphics/battle_anims/sprites/shock_4.png.gbapal.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Glass[] = INCGFX_U32("graphics/battle_anims/sprites/glass.png", ".4bpp.lz");
 
-#undef BATTLE_ANIM_A_REACTION_GRAPHICS
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_HornHit[] = INCGFX_U32("graphics/battle_anims/sprites/horn_hit.png", ".4bpp.lz");
 
-#define BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS __attribute__((section(".rodata.battle_anim_a_shock_through_blue_lines_graphics"), aligned(1)))
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_HornHit[] = INCGFX_U32("graphics/battle_anims/sprites/horn_hit.png", ".gbapal.lz");
 
-// The JP LZ77 streams retain their original alignment padding.
-BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimSpriteGfx_Shock[] = INCBIN_U32("graphics/battle_anims/sprites/shock.png.4bpp.lz");
-BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimSpriteGfx_Bell2[] = INCBIN_U32("graphics/battle_anims/sprites/bell_2.png.4bpp.lz");
-BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimSpritePal_Bell2[] = INCBIN_U32("graphics/battle_anims/sprites/bell_2.png.gbapal.lz");
-BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimSpriteGfx_PinkGlove[] = INCBIN_U32("graphics/battle_anims/sprites/pink_glove.png.4bpp.lz");
-BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimSpritePal_PinkGlove[] = INCBIN_U32("graphics/battle_anims/sprites/pink_glove.png.gbapal.lz");
-BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u16 gBattleAnimUnused_Unknown1[] = INCBIN_U16("graphics/battle_anims/unused/unknown_1.bin");
-BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u16 gBattleAnimUnused_Unknown2[] = INCBIN_U16("graphics/battle_anims/unused/unknown_2.bin");
-BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u16 gBattleAnimUnused_Unknown3[] = INCBIN_U16("graphics/battle_anims/unused/unknown_3.bin");
-BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimUnusedGfx_LineSketch2[] = INCBIN_U32("graphics/battle_anims/unused/line_sketch_2.png.8bpp.lz");
-BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimUnusedPal_LineSketch2[] = INCBIN_U32("graphics/battle_anims/unused/line_sketch_2.pal.gbapal.lz");
-BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimUnusedTilemap_LineSketch2[] = INCBIN_U32("graphics/battle_anims/unused/line_sketch_2.bin.lz");
-BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimSpriteGfx_BlueLines[] = INCBIN_U32("graphics/battle_anims/sprites/blue_lines.png.4bpp.lz");
-BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS const u32 gBattleAnimSpritePal_BlueLines[] = INCBIN_U32("graphics/battle_anims/sprites/blue_lines.png.gbapal.lz");
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_BlueShards[] = INCGFX_U32("graphics/battle_anims/sprites/blue_shards.png", ".gbapal.lz");
 
-#undef BATTLE_ANIM_A_SHOCK_THROUGH_BLUE_LINES_GRAPHICS
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_BlueShards[] = INCGFX_U32("graphics/battle_anims/sprites/blue_shards.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimUnusedPal_MusicNotes[] = INCGFX_U32("graphics/battle_anims/unused/music_notes.pal", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimUnusedGfx_MusicNotes[] = INCGFX_U32("graphics/battle_anims/unused/music_notes.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Hit[] = INCGFX_U32("graphics/battle_anims/sprites/hit.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Hit[] = INCGFX_U32("graphics/battle_anims/sprites/hit.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Hit2[] = INCGFX_U32("graphics/battle_anims/sprites/hit_2.pal", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_WavingHand[] = INCGFX_U32("graphics/battle_anims/sprites/waving_hand.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_WavingHand[] = INCGFX_U32("graphics/battle_anims/sprites/waving_hand.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_ClosingEye[] = INCGFX_U32("graphics/battle_anims/sprites/closing_eye.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_ClosingEye[] = INCGFX_U32("graphics/battle_anims/sprites/closing_eye.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_BlueStar[] = INCGFX_U32("graphics/battle_anims/sprites/blue_star.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_BlueStar[] = INCGFX_U32("graphics/battle_anims/sprites/blue_star.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_BubbleBurst[] = INCGFX_U32("graphics/battle_anims/sprites/bubble_burst.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_BubbleBurst[] = INCGFX_U32("graphics/battle_anims/sprites/bubble_burst.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_HitDuplicate[] = INCGFX_U32("graphics/battle_anims/sprites/hit_duplicate.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_HitDuplicate[] = INCGFX_U32("graphics/battle_anims/sprites/hit_duplicate.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Leer[] = INCGFX_U32("graphics/battle_anims/sprites/leer.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Leer[] = INCGFX_U32("graphics/battle_anims/sprites/leer.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_BlueBurst[] = INCGFX_U32("graphics/battle_anims/sprites/blue_burst.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_BlueBurst[] = INCGFX_U32("graphics/battle_anims/sprites/blue_burst.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_SmallEmber[] = INCGFX_U32("graphics/battle_anims/sprites/small_ember.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_SmallEmber[] = INCGFX_U32("graphics/battle_anims/sprites/small_ember.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_GraySmoke[] = INCGFX_U32("graphics/battle_anims/sprites/gray_smoke.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_GraySmoke[] = INCGFX_U32("graphics/battle_anims/sprites/gray_smoke.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Fire[] = INCGFX_U32("graphics/battle_anims/sprites/fire.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Fire[] = INCGFX_U32("graphics/battle_anims/sprites/fire.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_SpinningFire[] = INCGFX_U32("graphics/battle_anims/sprites/spinning_fire.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_FirePlume[] = INCGFX_U32("graphics/battle_anims/sprites/fire_plume.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Lightning2[] = INCGFX_U32("graphics/battle_anims/sprites/lightning_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Lightning2[] = INCGFX_U32("graphics/battle_anims/sprites/lightning_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Lightning[] = INCGFX_U32("graphics/battle_anims/sprites/lightning.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_SpinningBall[] = INCGFX_U32("graphics/battle_anims/unused/spinning_ball.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_SpinningBall[] = INCGFX_U32("graphics/battle_anims/unused/spinning_ball.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_SpinningBall2[] = INCGFX_U32("graphics/battle_anims/unused/spinning_ball_2.pal", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gOldBattleInterfaceGfx[] = INCGFX_U32("graphics/unused/obi1.4bpp", ".lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gOldBattleInterfacePal_1_2_3[] = INCGFX_U32("graphics/unused/obi_palpak1.gbapal", ".lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gOldBattleInterfacePal4[] = INCGFX_U32("graphics/unused/old_pal4.pal", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gOldBattleInterfacePal_5_6_7[] = INCGFX_U32("graphics/unused/obi_palpak3.gbapal", ".lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gOldBattleInterfaceGfx2[] = INCGFX_U32("graphics/unused/obi2.4bpp", ".lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gOldBattleInterfaceTilemap[] = INCGFX_U32("graphics/unused/old_battle_interface_tilemap.bin", ".lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_ClawSlash2[] = INCGFX_U32("graphics/battle_anims/sprites/claw_slash_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_ClawSlash[] = INCGFX_U32("graphics/battle_anims/sprites/claw_slash.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_ClawSlash2[] = INCGFX_U32("graphics/battle_anims/sprites/claw_slash_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_ClawSlash[] = INCGFX_U32("graphics/battle_anims/sprites/claw_slash.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Scratch3[] = INCGFX_U32("graphics/battle_anims/sprites/scratch_3.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Scratch2[] = INCGFX_U32("graphics/battle_anims/sprites/scratch_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gUnusedHpBar_Gfx[] = INCGFX_U32("graphics/battle_interface/hpbar_unused.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_BubbleBurst2[] = INCGFX_U32("graphics/battle_anims/sprites/bubble_burst_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_BubbleBurst2[] = INCGFX_U32("graphics/battle_anims/sprites/bubble_burst_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_IceChunk[] = INCGFX_U32("graphics/battle_anims/sprites/ice_chunk.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_IceChunk[] = INCGFX_U32("graphics/battle_anims/sprites/ice_chunk.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Glass2[] = INCGFX_U32("graphics/battle_anims/sprites/glass_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Glass2[] = INCGFX_U32("graphics/battle_anims/sprites/glass_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_PinkHeart2[] = INCGFX_U32("graphics/battle_anims/sprites/pink_heart_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_PinkHeart2[] = INCGFX_U32("graphics/battle_anims/sprites/pink_heart_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleInterfaceGfx_UnusedWindow1[] = INCGFX_U32("graphics/battle_interface/unused_window.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleInterfacePal_UnusedWindow1[] = INCGFX_U32("graphics/battle_interface/unused_window.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleInterfaceGfx_BattleBar[] = INCGFX_U32("graphics/battle_interface/battle_bar.4bpp", ".lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_SapDrip[] = INCGFX_U32("graphics/battle_anims/sprites/sap_drip.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_SapDrip[] = INCGFX_U32("graphics/battle_anims/sprites/sap_drip.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_SapDrip2[] = INCGFX_U32("graphics/battle_anims/sprites/sap_drip_2.pal", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleInterfaceGfx_UnusedWindow2[] = INCGFX_U32("graphics/battle_interface/unused_window2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleInterfaceGfx_UnusedWindow2Bar[] = INCGFX_U32("graphics/battle_interface/unused_window2bar.png", ".4bpp.lz", "-num_tiles 5 -Wnum_tiles");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Sparkle1[] = INCGFX_U32("graphics/battle_anims/sprites/sparkle_1.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Sparkle1[] = INCGFX_U32("graphics/battle_anims/sprites/sparkle_1.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Sparkle2[] = INCGFX_U32("graphics/battle_anims/sprites/sparkle_2.pal", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_HumanoidFoot[] = INCGFX_U32("graphics/battle_anims/sprites/humanoid_foot.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_HumanoidFoot[] = INCGFX_U32("graphics/battle_anims/sprites/humanoid_foot.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_MonsterFoot[] = INCGFX_U32("graphics/battle_anims/sprites/monster_foot.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_HumanoidHand[] = INCGFX_U32("graphics/battle_anims/sprites/humanoid_hand.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_LineSketch[] = INCGFX_U32("graphics/battle_anims/unused/line_sketch.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_LineSketch[] = INCGFX_U32("graphics/battle_anims/unused/line_sketch.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_YellowUnk[] = INCGFX_U32("graphics/battle_anims/sprites/yellow_unk.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_YellowUnk[] = INCGFX_U32("graphics/battle_anims/sprites/yellow_unk.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_SlamHit[] = INCGFX_U32("graphics/battle_anims/sprites/slam_hit.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_SlamHit[] = INCGFX_U32("graphics/battle_anims/sprites/slam_hit.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_RedFist[] = INCGFX_U32("graphics/battle_anims/sprites/red_fist.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Ring[] = INCGFX_U32("graphics/battle_anims/sprites/ring.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Ring[] = INCGFX_U32("graphics/battle_anims/sprites/ring.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Rocks[] = INCGFX_U32("graphics/battle_anims/sprites/rocks.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Rocks[] = INCGFX_U32("graphics/battle_anims/sprites/rocks.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Z[] = INCGFX_U32("graphics/battle_anims/sprites/z.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Z[] = INCGFX_U32("graphics/battle_anims/sprites/z.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_YellowUnk2[] = INCGFX_U32("graphics/battle_anims/sprites/yellow_unk_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_YellowUnk2[] = INCGFX_U32("graphics/battle_anims/sprites/yellow_unk_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_AirSlash[] = INCGFX_U32("graphics/battle_anims/sprites/air_slash.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_AirSlash[] = INCGFX_U32("graphics/battle_anims/sprites/air_slash.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_SpinningGreenOrbs[] = INCGFX_U32("graphics/battle_anims/sprites/spinning_green_orbs.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_SpinningGreenOrbs[] = INCGFX_U32("graphics/battle_anims/sprites/spinning_green_orbs.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Leaf[] = INCGFX_U32("graphics/battle_anims/sprites/leaf.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Leaf[] = INCGFX_U32("graphics/battle_anims/sprites/leaf.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_MetronomeSmallHand[] = INCGFX_U32("graphics/battle_anims/unused/metronome_hand_small.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Clapping[] = INCGFX_U32("graphics/battle_anims/sprites/clapping.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_PoisonPowder[] = INCGFX_U32("graphics/battle_anims/sprites/poison_powder.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_PoisonPowder[] = INCGFX_U32("graphics/battle_anims/sprites/poison_powder.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_BrownTriangle[] = INCGFX_U32("graphics/battle_anims/sprites/brown_triangle.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_BrownTriangle[] = INCGFX_U32("graphics/battle_anims/sprites/brown_triangle.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Sparkle3[] = INCGFX_U32("graphics/battle_anims/sprites/sparkle_3.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Sparkle3[] = INCGFX_U32("graphics/battle_anims/sprites/sparkle_3.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Sparkle4[] = INCGFX_U32("graphics/battle_anims/sprites/sparkle_4.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_MusicNotes[] = INCGFX_U32("graphics/battle_anims/sprites/music_notes.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_MusicNotes[] = INCGFX_U32("graphics/battle_anims/sprites/music_notes.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Duck[] = INCGFX_U32("graphics/battle_anims/sprites/duck.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Duck[] = INCGFX_U32("graphics/battle_anims/sprites/duck.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Alert[] = INCGFX_U32("graphics/battle_anims/sprites/alert.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Alert[] = INCGFX_U32("graphics/battle_anims/sprites/alert.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Shock4[] = INCGFX_U32("graphics/battle_anims/sprites/shock_4.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Shock4[] = INCGFX_U32("graphics/battle_anims/sprites/shock_4.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Shock[] = INCGFX_U32("graphics/battle_anims/sprites/shock.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Bell2[] = INCGFX_U32("graphics/battle_anims/sprites/bell_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Bell2[] = INCGFX_U32("graphics/battle_anims/sprites/bell_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_PinkGlove[] = INCGFX_U32("graphics/battle_anims/sprites/pink_glove.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_PinkGlove[] = INCGFX_U32("graphics/battle_anims/sprites/pink_glove.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u16 gBattleAnimUnused_Unknown1[] = INCBIN_U16("graphics/battle_anims/unused/unknown_1.bin");
+
+BATTLE_ANIM_GRAPHICS const u16 gBattleAnimUnused_Unknown2[] = INCBIN_U16("graphics/battle_anims/unused/unknown_2.bin");
+
+BATTLE_ANIM_GRAPHICS const u16 gBattleAnimUnused_Unknown3[] = INCBIN_U16("graphics/battle_anims/unused/unknown_3.bin");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimUnusedGfx_LineSketch2[] = INCGFX_U32("graphics/battle_anims/unused/line_sketch_2.png", ".8bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimUnusedPal_LineSketch2[] = INCGFX_U32("graphics/battle_anims/unused/line_sketch_2.pal", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimUnusedTilemap_LineSketch2[] = INCGFX_U32("graphics/battle_anims/unused/line_sketch_2.bin", ".lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_BlueLines[] = INCGFX_U32("graphics/battle_anims/sprites/blue_lines.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_BlueLines[] = INCGFX_U32("graphics/battle_anims/sprites/blue_lines.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Impact3[] = INCGFX_U32("graphics/battle_anims/sprites/impact_3.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Impact2[] = INCGFX_U32("graphics/battle_anims/sprites/impact_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Reticle[] = INCGFX_U32("graphics/battle_anims/sprites/reticle.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Breath[] = INCGFX_U32("graphics/battle_anims/sprites/breath.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Snowball[] = INCGFX_U32("graphics/battle_anims/sprites/snowball.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Vine[] = INCGFX_U32("graphics/battle_anims/sprites/vine.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Sword2[] = INCGFX_U32("graphics/battle_anims/sprites/sword_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_RedTube[] = INCGFX_U32("graphics/battle_anims/sprites/red_tube.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Amnesia[] = INCGFX_U32("graphics/battle_anims/sprites/amnesia.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_String2[] = INCGFX_U32("graphics/battle_anims/sprites/string_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimUnused_Unknown4[] = INCGFX_U32("graphics/battle_anims/unused/unknown_4.bin", ".lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Pencil2[] = INCGFX_U32("graphics/battle_anims/sprites/pencil_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Petal[] = INCGFX_U32("graphics/battle_anims/sprites/petal.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_BentSpoon[] = INCGFX_U32("graphics/battle_anims/sprites/bent_spoon.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Coin[] = INCGFX_U32("graphics/battle_anims/sprites/coin.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_CrackedEgg[] = INCGFX_U32("graphics/battle_anims/sprites/cracked_egg.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_FreshEgg[] = INCGFX_U32("graphics/battle_anims/sprites/fresh_egg.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Impact3[] = INCGFX_U32("graphics/battle_anims/sprites/impact_3.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Impact2[] = INCGFX_U32("graphics/battle_anims/sprites/impact_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Reticle[] = INCGFX_U32("graphics/battle_anims/sprites/reticle.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Breath[] = INCGFX_U32("graphics/battle_anims/sprites/breath.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Snowball[] = INCGFX_U32("graphics/battle_anims/sprites/snowball.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Vine[] = INCGFX_U32("graphics/battle_anims/sprites/vine.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Sword2[] = INCGFX_U32("graphics/battle_anims/sprites/sword_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Clapping[] = INCGFX_U32("graphics/battle_anims/sprites/clapping.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_RedTube[] = INCGFX_U32("graphics/battle_anims/sprites/red_tube.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Amnesia[] = INCGFX_U32("graphics/battle_anims/sprites/amnesia.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_String2[] = INCGFX_U32("graphics/battle_anims/sprites/string_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Pencil2[] = INCGFX_U32("graphics/battle_anims/sprites/pencil_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Petal[] = INCGFX_U32("graphics/battle_anims/sprites/petal.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_BentSpoon[] = INCGFX_U32("graphics/battle_anims/sprites/bent_spoon.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Web[] = INCGFX_U32("graphics/battle_anims/sprites/web.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Coin[] = INCGFX_U32("graphics/battle_anims/sprites/coin.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_CrackedEgg[] = INCGFX_U32("graphics/battle_anims/sprites/cracked_egg.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_HatchedEgg[] = INCGFX_U32("graphics/battle_anims/sprites/hatched_egg.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_FreshEgg[] = INCGFX_U32("graphics/battle_anims/sprites/fresh_egg.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Fangs[] = INCGFX_U32("graphics/battle_anims/sprites/fangs.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Fangs[] = INCGFX_U32("graphics/battle_anims/sprites/fangs.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Explosion2[] = INCGFX_U32("graphics/battle_anims/sprites/explosion_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Explosion2[] = INCGFX_U32("graphics/battle_anims/sprites/explosion_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Explosion3[] = INCGFX_U32("graphics/battle_anims/sprites/explosion_3.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_WaterDroplet[] = INCGFX_U32("graphics/battle_anims/sprites/water_droplet.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_WaterDroplet[] = INCGFX_U32("graphics/battle_anims/sprites/water_droplet.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_WaterDroplet2[] = INCGFX_U32("graphics/battle_anims/sprites/water_droplet_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Seed2[] = INCGFX_U32("graphics/battle_anims/sprites/seed_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Seed2[] = INCGFX_U32("graphics/battle_anims/sprites/seed_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Sprout[] = INCGFX_U32("graphics/battle_anims/sprites/sprout.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_RedWand[] = INCGFX_U32("graphics/battle_anims/sprites/red_wand.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_RedWand[] = INCGFX_U32("graphics/battle_anims/sprites/red_wand.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_PurpleGreenUnk[] = INCGFX_U32("graphics/battle_anims/sprites/purple_green_unk.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_PurpleGreenUnk[] = INCGFX_U32("graphics/battle_anims/sprites/purple_green_unk.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_WaterColumn[] = INCGFX_U32("graphics/battle_anims/sprites/water_column.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_WaterColumn[] = INCGFX_U32("graphics/battle_anims/sprites/water_column.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_MudUnk[] = INCGFX_U32("graphics/battle_anims/sprites/mud_unk.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_MudUnk[] = INCGFX_U32("graphics/battle_anims/sprites/mud_unk.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gUnusedTilemap_BlueFrame[] = INCGFX_U32("graphics/unused/blue_frame.bin", ".lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gUnusedTilemap_RedYellowGreenFrame[] = INCGFX_U32("graphics/unused/redyellowgreen_frame.bin", ".lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gUnusedGfx_ColorFrames[] = INCGFX_U32("graphics/unused/color_frames.png", ".4bpp.lz", "-num_tiles 353 -Wnum_tiles");
+
+BATTLE_ANIM_GRAPHICS const u32 gUnusedPal_ColorFrames[] = INCGFX_U32("graphics/unused/color_frames.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_RainDrops[] = INCGFX_U32("graphics/battle_anims/sprites/rain_drops.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimUnusedGfx_WaterSplash[] = INCGFX_U32("graphics/battle_anims/unused/water_splash.png", ".8bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimUnusedTilemap_WaterSplash[] = INCGFX_U32("graphics/battle_anims/unused/water_splash.bin", ".lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimUnusedPal_WaterSplash[] = INCGFX_U32("graphics/battle_anims/unused/water_splash.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gUnusedGfx_BasicFrame[] = INCGFX_U32("graphics/unused/basic_frame.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gUnusedPal_BasicFrame[] = INCGFX_U32("graphics/unused/basic_frame.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gUnusedTilemap_BasicFrame[] = INCGFX_U32("graphics/unused/basic_frame.bin", ".lz");
+
+BATTLE_ANIM_GRAPHICS const u16 gBattleInterface_BallStatusBarPal[] = INCBIN_U16("graphics/battle_interface/ball_status_bar.gbapal");
+
+BATTLE_ANIM_GRAPHICS const u16 gBattleInterface_BallDisplayPal[] = INCBIN_U16("graphics/battle_interface/ball_display.gbapal");
+
+BATTLE_ANIM_GRAPHICS const u8 gHealthboxElementsGfxTable[][32] = INCBIN_U8(
+    "graphics/battle_interface/hpbar.4bpp",
+    "graphics/battle_interface/expbar.4bpp",
+    "graphics/battle_interface/status.4bpp",
+    "graphics/battle_interface/misc.4bpp",
+    "graphics/battle_interface/hpbar_anim.4bpp",
+    "graphics/battle_interface/misc_frameend.4bpp",
+    "graphics/battle_interface/ball_display.4bpp",
+    "graphics/battle_interface/ball_caught_indicator.4bpp",
+    "graphics/battle_interface/status2.4bpp",
+    "graphics/battle_interface/status3.4bpp",
+    "graphics/battle_interface/status4.4bpp",
+    "graphics/battle_interface/healthbox_doubles_frameend.4bpp",
+    "graphics/battle_interface/healthbox_doubles_frameend_bar.4bpp");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleInterfaceGfx_UnusedWindow3[] = INCGFX_U32("graphics/battle_interface/unused_window3.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleInterfaceGfx_UnusedWindow4[] = INCGFX_U32("graphics/battle_interface/unused_window4.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_FurySwipes[] = INCGFX_U32("graphics/battle_anims/sprites/fury_swipes.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_FurySwipes[] = INCGFX_U32("graphics/battle_anims/sprites/fury_swipes.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Vine2[] = INCGFX_U32("graphics/battle_anims/sprites/vine_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Vine2[] = INCGFX_U32("graphics/battle_anims/sprites/vine_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Teeth[] = INCGFX_U32("graphics/battle_anims/sprites/teeth.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Teeth[] = INCGFX_U32("graphics/battle_anims/sprites/teeth.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Bone2[] = INCGFX_U32("graphics/battle_anims/sprites/bone_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Bone2[] = INCGFX_U32("graphics/battle_anims/sprites/bone_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_WhiteBag[] = INCGFX_U32("graphics/battle_anims/sprites/white_bag.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_WhiteBag[] = INCGFX_U32("graphics/battle_anims/sprites/white_bag.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Unknown[] = INCGFX_U32("graphics/battle_anims/sprites/unknown.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Unknown[] = INCGFX_U32("graphics/battle_anims/sprites/unknown.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_PurpleCoral[] = INCGFX_U32("graphics/battle_anims/sprites/purple_coral.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_PurpleCoral[] = INCGFX_U32("graphics/battle_anims/sprites/purple_coral.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_PurpleDroplet[] = INCGFX_U32("graphics/battle_anims/sprites/purple_droplet.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Shock2[] = INCGFX_U32("graphics/battle_anims/sprites/shock_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Shock2[] = INCGFX_U32("graphics/battle_anims/sprites/shock_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_ClosingEye2[] = INCGFX_U32("graphics/battle_anims/sprites/closing_eye_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_ClosingEye2[] = INCGFX_U32("graphics/battle_anims/sprites/closing_eye_2.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_MetalBall[] = INCGFX_U32("graphics/battle_anims/sprites/metal_ball.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_MetalBall[] = INCGFX_U32("graphics/battle_anims/sprites/metal_ball.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_MonsterDoll[] = INCGFX_U32("graphics/battle_anims/sprites/monster_doll.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_MonsterDoll[] = INCGFX_U32("graphics/battle_anims/sprites/monster_doll.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Whirlwind[] = INCGFX_U32("graphics/battle_anims/sprites/whirlwind.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Whirlwind[] = INCGFX_U32("graphics/battle_anims/sprites/whirlwind.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Whirlwind2[] = INCGFX_U32("graphics/battle_anims/sprites/whirlwind_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Explosion4[] = INCGFX_U32("graphics/battle_anims/sprites/explosion_4.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Explosion4[] = INCGFX_U32("graphics/battle_anims/sprites/explosion_4.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Explosion5[] = INCGFX_U32("graphics/battle_anims/sprites/explosion_5.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Tongue[] = INCGFX_U32("graphics/battle_anims/sprites/tongue.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Tongue[] = INCGFX_U32("graphics/battle_anims/sprites/tongue.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Smoke[] = INCGFX_U32("graphics/battle_anims/sprites/smoke.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_Smoke[] = INCGFX_U32("graphics/battle_anims/sprites/smoke.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_Smoke2[] = INCGFX_U32("graphics/battle_anims/sprites/smoke_2.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_BlueFlames[] = INCGFX_U32("graphics/battle_anims/sprites/blue_flames.png", ".4bpp.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpritePal_BlueFlames[] = INCGFX_U32("graphics/battle_anims/sprites/blue_flames.png", ".gbapal.lz");
+
+BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_BlueFlames2[] = INCGFX_U32("graphics/battle_anims/sprites/blue_flames_2.png", ".4bpp.lz");
+
+#undef BATTLE_ANIM_GRAPHICS
+
 
 // Pokédex.  These custom sections retain the JP ROM order while assigning the
 // resources to pokeemerald's graphics owner and source hierarchy.
@@ -947,26 +1277,7 @@ BATTLE_ANIM_POST_CONTEST_GFX const u32 gBattleAnimBgTilemap_Dark[] = INCBIN_U32(
 
 #undef BATTLE_ANIM_POST_CONTEST_GFX
 
-#define BATTLE_INTERFACE_GFX __attribute__((section(".rodata.battle_interface_graphics")))
 
-BATTLE_INTERFACE_GFX const u16 gBattleInterface_BallStatusBarPal[] = INCBIN_U16("graphics/battle_interface/ball_status_bar.gbapal");
-BATTLE_INTERFACE_GFX const u16 gBattleInterface_BallDisplayPal[] = INCBIN_U16("graphics/battle_interface/ball_display.gbapal");
-BATTLE_INTERFACE_GFX const u8 gHealthboxElementsGfxTable[][32] = INCBIN_U8(
-    "graphics/battle_interface/hpbar.4bpp",
-    "graphics/battle_interface/expbar.4bpp",
-    "graphics/battle_interface/status.4bpp",
-    "graphics/battle_interface/misc.4bpp",
-    "graphics/battle_interface/hpbar_anim.4bpp",
-    "graphics/battle_interface/misc_frameend.4bpp",
-    "graphics/battle_interface/ball_display.4bpp",
-    "graphics/battle_interface/ball_caught_indicator.4bpp",
-    "graphics/battle_interface/status2.4bpp",
-    "graphics/battle_interface/status3.4bpp",
-    "graphics/battle_interface/status4.4bpp",
-    "graphics/battle_interface/healthbox_doubles_frameend.4bpp",
-    "graphics/battle_interface/healthbox_doubles_frameend_bar.4bpp");
-
-#undef BATTLE_INTERFACE_GFX
 
 #define BATTLE_ANIM_MASK_AND_BG_GFX __attribute__((section(".rodata.battle_anim_mask_and_bg_graphics")))
 

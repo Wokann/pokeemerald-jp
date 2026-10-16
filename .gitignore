@@ -159,3 +159,6 @@ __pycache__/
 .git_commit_template
 AGENTS.md
 .codegraph/
+
+# Rebuilt from the four editable unused frame tilemaps.
+graphics/unused/redyellowgreen_frame.bin
