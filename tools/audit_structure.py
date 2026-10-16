@@ -32,8 +32,10 @@ from pathlib import Path
 
 try:
     from jp_map_metadata import layout_symbol
+    from audit_resource_references import collect_resource_references
 except ModuleNotFoundError:
     from tools.jp_map_metadata import layout_symbol
+    from tools.audit_resource_references import collect_resource_references
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -56,7 +58,6 @@ TRANSITION_RE = {
 }
 PLACEHOLDER_RE = re.compile(r"(?:^nullsub_|Dummy|dummy|Nop|CallbackDummy)")
 NUMERIC_VARIANT_RE = re.compile(r"^(.*)_([2-9]\d*)$")
-INCBIN_RE = re.compile(r'(?:^|\s)(?:\.incbin\b|INCBIN_[A-Z0-9_]+\b)[^\n]*?"([^"]+)"')
 MAP_NAME_RE = re.compile(r'^\s*\.include\s+"data/maps/([^/]+)/scripts\.inc"\s*$')
 MAP_EVENTS_RE = re.compile(r'^\s*\.include\s+"data/maps/([^/]+)/events\.inc"\s*$')
 MAP_HEADER_RE = re.compile(r'^\s*@ (MAP_[A-Z0-9_]+) \(g(\d+) m(\d+)\)\s*$')
@@ -1604,14 +1605,25 @@ def named_asset_progress(blocks: dict[str, str], symbol: str | None) -> dict[str
     if block is None:
         return {"symbol": symbol, "defined": False, "source_count": 0,
                 "raw_baserom_source_count": 0, "status": "missing_label"}
-    sources = INCBIN_RE.findall(block)
+    # Blocks are isolated physical assembly owners, not preprocessed TUs.
+    # Use the same literal collector as the whole-source inventory. Unknown
+    # templates remain explicit diagnostics rather than "no incbin" success.
+    collected = collect_resource_references({"data/<asset-block>.s": block})
+    sources = [item["resource"] for item in collected["references"]]
     raw_sources = [source for source in sources if Path(source).name == "baserom_jp.gba"]
     return {
         "symbol": symbol,
         "defined": True,
         "source_count": len(sources),
         "raw_baserom_source_count": len(raw_sources),
-        "status": "contains_raw_baserom" if raw_sources else "named_source_or_no_incbin",
+        "unresolved_source_count": len(collected["unresolved"]),
+        "unresolved_sources": collected["unresolved"],
+        "incgfx_source_count": len(collected["incgfx"]),
+        "incgfx_sources": collected["incgfx"],
+        "incgfx_unresolved_sources": collected["incgfx_unresolved"],
+        "status": ("contains_raw_baserom" if raw_sources else
+                   "unresolved_source" if collected["unresolved"] or collected["incgfx_unresolved"]
+                   else "named_source_or_no_incbin"),
     }
 
 
@@ -2256,33 +2268,46 @@ def incbin_progress(root: Path) -> dict[str, object]:
     raw_baserom_ranges = []
     raw_baserom_unbounded_references = 0
     layout_resources = declared_layout_resources(root)
+    source_texts = {}
     for relpath in sorted(source_files(root)):
         path = root / relpath
         if path.suffix not in {".s", ".inc", ".c", ".h"}:
             continue
         text = path.read_text(encoding="utf-8", errors="replace")
-        visible_ranges = parse_baserom_incbin_ranges(text)
+        source_texts[relpath] = text
+    # Context headers discover possible resource templates but do not add
+    # counted occurrences outside the established src/asm/data denominator.
+    support = {path.relative_to(root).as_posix(): path.read_text(encoding="utf-8", errors="replace")
+               for path in sorted((root / "include").rglob("*.h"))}
+    collected = collect_resource_references(source_texts, support_sources=support)
+    # Range parsing is still the specialized offset/size parser, but its input
+    # occurrences must agree with the collector (no comments/template bodies).
+    direct_baserom_lines = defaultdict(set)
+    for item in collected["references"]:
+        if item["syntax"] == "asm_incbin" and item["resource"] == "baserom_jp.gba":
+            direct_baserom_lines[item["owner"]].add(item["line"])
+    for relpath, lines in sorted(direct_baserom_lines.items()):
+        visible_ranges = [item for item in parse_baserom_incbin_ranges(source_texts[relpath])
+                          if item["line"] in lines]
         for item in visible_ranges:
             item["owner"] = relpath
         raw_baserom_ranges.extend(visible_ranges)
-        raw_baserom_unbounded_references += (
-            len(BASEROM_INCBIN_RE.findall(text)) - len(visible_ranges))
-        for resource in INCBIN_RE.findall(text):
-            suffix = Path(resource).suffix or "[no suffix]"
-            classification, classification_reason = classify_incbin_resource(
-                resource, layout_resources)
-            references.append({
-                "owner": relpath,
-                "resource": resource,
-                "suffix": suffix,
-                "classification": classification,
-                "classification_reason": classification_reason,
-                "exists": (root / resource).is_file(),
-                "suggested_action": (
-                    "decode_or_split_into_named_asset" if classification == "raw_binary"
-                    else "retain_and_validate_source_asset"
-                ),
-            })
+        raw_baserom_unbounded_references += len(lines) - len(visible_ranges)
+    for item in collected["references"]:
+        resource = item["resource"]
+        suffix = Path(resource).suffix or "[no suffix]"
+        classification, classification_reason = classify_incbin_resource(resource, layout_resources)
+        references.append({
+            **item,
+            "suffix": suffix,
+            "classification": classification,
+            "classification_reason": classification_reason,
+            "exists": (root / resource).is_file(),
+            "suggested_action": (
+                "decode_or_split_into_named_asset" if classification == "raw_binary"
+                else "retain_and_validate_source_asset"
+            ),
+        })
     suffixes = Counter(item["suffix"] for item in references)
     raw_records = [item for item in references if item["classification"] == "raw_binary"]
     missing = [item for item in references if not item["exists"]]
@@ -2303,6 +2328,16 @@ def incbin_progress(root: Path) -> dict[str, object]:
         "raw_by_resource_directory": dict(sorted(raw_resource_dirs.items())),
         "raw_baserom_manifest": raw_baserom_ranges,
         "manifest": references,
+        "collection_mode": collected["mode"],
+        "unresolved_resource_references": len(collected["unresolved"]),
+        "unresolved_manifest": collected["unresolved"],
+        # Source assets and generated conversions are not INCBIN occurrences.
+        "incgfx_references": len(collected["incgfx"]),
+        "incgfx_unique_source_paths": len({item["source_asset"] for item in collected["incgfx"]}),
+        "incgfx_unique_generated_tails": len({item["generated_tail"] for item in collected["incgfx"]}),
+        "incgfx_manifest": collected["incgfx"],
+        "incgfx_unresolved_references": len(collected["incgfx_unresolved"]),
+        "incgfx_unresolved_manifest": collected["incgfx_unresolved"],
     }
 
 
@@ -2581,6 +2616,9 @@ def print_report(report: dict[str, object]) -> None:
         incbin["raw_baserom_visible_range_references"],
         incbin["raw_baserom_visible_bytes"],
         incbin["raw_baserom_unbounded_references"]))
+    print("resource-collection: physical-source-occurrences/all-branches unresolved=%d; INCGFX-separate=%d sources=%d generated-context-diagnostics=%d" % (
+        incbin["unresolved_resource_references"], incbin["incgfx_references"],
+        incbin["incgfx_unique_source_paths"], incbin["incgfx_unresolved_references"]))
     print("asset naming: referenced=%d exact-US=%d unique-candidates=%d ambiguous=%d no-match=%d" % (
         assets["referenced_graphics_or_sound_paths"], assets["exact_us_paths"],
         assets["unique_us_basename_candidates"], assets["ambiguous_us_basename_candidates"],
@@ -2662,6 +2700,10 @@ def render_markdown_report(report: dict[str, object]) -> str:
         f"{incbin['raw_baserom_visible_range_references']} 条/"
         f"0x{incbin['raw_baserom_visible_bytes']:X} 字节，未限定范围 "
         f"{incbin['raw_baserom_unbounded_references']} 条。",
+        f"- 资源采集口径：物理源码引用（含全部源码分支），非默认构建发射量；"
+        f"未解决/条件诊断 {incbin['unresolved_resource_references']} 条。"
+        f"INCGFX 单列 {incbin['incgfx_references']} 次、{incbin['incgfx_unique_source_paths']} 个源资产，"
+        f"生成上下文诊断 {incbin['incgfx_unresolved_references']} 条，不计入 incbin 分母。",
         f"- 资产命名：{assets['referenced_graphics_or_sound_paths']} 条 graphics/sound 引用中，"
         f"精确 US 路径 {assets['exact_us_paths']}、唯一 basename 候选 "
         f"{assets['unique_us_basename_candidates']}、歧义 "
@@ -2696,7 +2738,7 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "| 模块归位率 | 已证实 JP owner 的严格 C 地址中，funcmap US 标准名候选在 US 源树有定义的地址 / 严格 C 地址；不代表该候选已逐函数语义复核。 |",
         "| 路径对齐率 | 上述地址中 JP 相对 `src/` 路径也属于 US owner 的地址 / 严格 C 地址。 |",
         "| 过渡文件 | 文件名包含 tail、rest、mid、stub 或地址式片段；分类可重叠。 |",
-        "| incbin | `.incbin` 与 `INCBIN_*` 的引用数。裸 `.bin/.gba`、asset 根目录外的压缩流，以及 `gUnknown`/`unknown`/`unk` 命名的压缩资产记为原始；`graphics/`、`sound/` 内其余具名 `.lz/.rl/.huff` 记为已结构化编码资产。另列显式 `baserom_jp.gba, offset, size` 指令的可见字节和未限定范围数；该字节值不含无法判定范围的指令，不是总 ROM 转换率。 |",
+        "| incbin | 物理源码内 `.incbin`、`INCBIN_U8/U16/U32` 的文件实参引用数，含已证明的直接参数转发模板；宏定义本身不计引用，多文件实参逐个计数，重复路径另算唯一路径。源码分支均可见，条件/作用域/动态或未支持展开显式诊断，不宣称默认构建发射量。INCGFX 的源/生成路径元信息单列，不加入该分母。裸 `.bin/.gba`、asset 根目录外的压缩流及匿名命名压缩资产沿用原 raw 分类；显式 baserom 范围仍另列字节，不是总 ROM 转换率。 |",
         "| 资产命名 | 被引用的 `graphics/`、`sound/` 路径与 US 同名文件比较；仅生成候选，不自动改名。 |",
         "| 地图脚本 owner | `scripts.inc` 与 map-table 实际首 owner 名的交集 / 去重首 owner；共享表只属于首次出现地图。 |",
         "| 地图结构完整 | 同一地图具 `map.json`，且其 scripts/events 为本地图的物理文件与上层 include，或为 map.json 明示、header 精确指向且在 JP `data/` 有真实标签定义的共享 owner；只说明结构已拆分。 |",

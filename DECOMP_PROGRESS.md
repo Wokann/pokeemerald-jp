@@ -12,9 +12,9 @@
 - 模块归位：10080/10827 (93.10%)；路径对齐：9911/10827 (91.54%)；US 标准名仍为 funcmap 候选，并非语义复核结论。
 - JP 路径独有 C 清单：107；无 US 标准函数 owner 的语义缺口模块：118（两种口径，不沿用旧固定数）；同一源同名多地址未解析定义：0。
 - 过渡文件：tail=0、rest=3、mid=4、stub=0、address=0。
-- incbin：7673 引用、7229 条唯一路径、原始二进制 887、非原始 6786、缺失资源 0；可见 baserom 范围 443 条/0x49C53C 字节，未限定范围 0 条。
-- 资源库存覆盖限制：当前正则仍漏计自定义资源包装宏、多行/多文件 INCBIN 和 INCGFX 转换；上述数值不是完整资产总量，也不能作为资源完成率。已复现的采集器修正将另作工具批次。
-- 资产命名：5131 条 graphics/sound 引用中，精确 US 路径 44、唯一 basename 候选 24、歧义 0。
+- incbin：7933 引用、7475 条唯一路径、原始二进制 934、非原始 6999、缺失资源 0；可见 baserom 范围 443 条/0x49C53C 字节，未限定范围 0 条。
+- 资源采集口径：物理源码引用（含全部源码分支），非默认构建发射量；未解决/条件诊断 18 条。INCGFX 单列 279 次、270 个源资产，生成上下文诊断 279 条，不计入 incbin 分母。
+- 资产命名：5328 条 graphics/sound 引用中，精确 US 路径 63、唯一 basename 候选 24、歧义 0。
 - 地图脚本：468/469 (99.79%) 个首 owner 有 scripts.inc；非 owner scripts.inc：0；结构完整地图：518（直接物理文件满足者 468；合法共享 scripts/events owner 50/11；其中首 owner 469）；map.json 总数：518。
 - 地图语义复核：not_recorded。没有版本化复核清单前，任何 scripts.inc、map.json 或 events.inc 都不计入语义已审计。
 - 三流地图会合：scripts 流 468、events 流 518、共有 468、地图头 518；事件指针状态 direct=507、shared=11；地图内裸 baserom 范围（脚本/事件/资源）=0/0/0。
@@ -29,7 +29,7 @@
 | 模块归位率 | 已证实 JP owner 的严格 C 地址中，funcmap US 标准名候选在 US 源树有定义的地址 / 严格 C 地址；不代表该候选已逐函数语义复核。 |
 | 路径对齐率 | 上述地址中 JP 相对 `src/` 路径也属于 US owner 的地址 / 严格 C 地址。 |
 | 过渡文件 | 文件名包含 tail、rest、mid、stub 或地址式片段；分类可重叠。 |
-| incbin | `.incbin` 与 `INCBIN_*` 的引用数。裸 `.bin/.gba`、asset 根目录外的压缩流，以及 `gUnknown`/`unknown`/`unk` 命名的压缩资产记为原始；`graphics/`、`sound/` 内其余具名 `.lz/.rl/.huff` 记为已结构化编码资产。另列显式 `baserom_jp.gba, offset, size` 指令的可见字节和未限定范围数；该字节值不含无法判定范围的指令，不是总 ROM 转换率。 |
+| incbin | 物理源码内 `.incbin`、`INCBIN_U8/U16/U32` 的文件实参引用数，含已证明的直接参数转发模板；宏定义本身不计引用，多文件实参逐个计数，重复路径另算唯一路径。源码分支均可见，条件/作用域/动态或未支持展开显式诊断，不宣称默认构建发射量。INCGFX 的源/生成路径元信息单列，不加入该分母。裸 `.bin/.gba`、asset 根目录外的压缩流及匿名命名压缩资产沿用原 raw 分类；显式 baserom 范围仍另列字节，不是总 ROM 转换率。 |
 | 资产命名 | 被引用的 `graphics/`、`sound/` 路径与 US 同名文件比较；仅生成候选，不自动改名。 |
 | 地图脚本 owner | `scripts.inc` 与 map-table 实际首 owner 名的交集 / 去重首 owner；共享表只属于首次出现地图。 |
 | 地图结构完整 | 同一地图具 `map.json`，且其 scripts/events 为本地图的物理文件与上层 include，或为 map.json 明示、header 精确指向且在 JP `data/` 有真实标签定义的共享 owner；只说明结构已拆分。 |
