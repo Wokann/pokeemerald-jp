@@ -1,6 +1,7 @@
 #include "global.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "constants/pokemon_icon.h"
 #include "malloc.h"
 #include "bg.h"
 #include "data.h"
@@ -48,28 +49,25 @@ extern bool8 gUnknown_20399AC;
 extern u8 gUnknown_20399AE;
 extern const u8 gUnknown_8556618[];
 extern const u8 gUnknown_8556620[];
-extern const u16 gUnknown_854C754[];
-extern const u16 gUnknown_854C76C[];
+static const u16 sPartySlotFilled_Tilemap[];
+static const u16 sPartySlotEmpty_Tilemap[];
 extern const u8 gUnknown_85564E0[];
 extern const u8 gUnknown_85564F8[];
 extern const struct SpriteTemplate gUnknown_855654C;
 extern const struct SpriteTemplate gUnknown_8556564;
-extern const u32 gUnknown_854BBFC[];
-extern const u32 gUnknown_854BC94[];
-extern const u32 gUnknown_854BF9C[];
-extern const u32 gUnknown_854BDC0[];
-extern const struct BgTemplate gUnknown_854C9E4[];
-extern const u16 gUnknown_854BEFC[];
-extern const u16 gUnknown_854BF1C[];
-extern const u16 gUnknown_854BF5C[];
-extern const u16 gUnknown_854BF7C[];
-extern const u16 gUnknown_854C9A4[];
-extern const u16 gUnknown_854BF3C[];
-extern const u32 gUnknown_854C65C[];
-extern const u16 gUnknown_854C70C[];
-extern const struct SpriteSheet gUnknown_854C9FC;
-extern const struct SpriteTemplate gUnknown_854CB6C;
-extern const struct SpriteTemplate gUnknown_854CA04;
+static const u32 sScrollingBg_Gfx[];
+static const u32 sScrollingBg_Tilemap[];
+static const u32 sDisplayMenu_Tilemap[];
+static const struct BgTemplate sBgTemplates[];
+static const u16 sInterface_Pal[];
+static const u16 sPkmnDataGray_Pal[];
+static const u16 sScrollingBg_Pal[];
+static const u16 sScrollingBgMoveItems_Pal[];
+static const u16 sTextWindows_Pal[];
+static const u16 sCloseBoxButton_Tilemap[];
+static const struct SpriteSheet sSpriteSheet_Waveform;
+static const struct SpriteTemplate sSpriteTemplate_Waveform;
+static const struct SpriteTemplate sSpriteTemplate_DisplayMon;
 extern const struct Wallpaper gUnknown_8551868[];
 extern const struct Wallpaper gUnknown_8555A40[];
 extern const u8 *const gUnknown_8555B00[];
@@ -97,7 +95,7 @@ extern void sub_080C9B44(struct Sprite *sprite);
 extern void sub_080D1EE4(u8 id, u8 bg, const void *tilemap, u16 width, u16 height);
 extern void sub_080D2010(u8 id, u16 x, u16 y);
 extern void sub_080D1E3C(u8 count);
-extern const u8 gUnknown_854BEBC[];
+static const u16 sPkmnData_Tilemap[];
 static const union AnimCmd *const sAnims_ChooseBoxMenu[];
 static const u8 sText_OutOf30[];
 static const u16 sChooseBoxMenu_Pal[];
@@ -228,13 +226,98 @@ enum
     MSG_VAR_ITEM_NAME,
 };
 
+enum {
+    MSG_EXIT_BOX,
+    MSG_WHAT_YOU_DO,
+    MSG_PICK_A_THEME,
+    MSG_PICK_A_WALLPAPER,
+    MSG_IS_SELECTED,
+    MSG_JUMP_TO_WHICH_BOX,
+    MSG_DEPOSIT_IN_WHICH_BOX,
+    MSG_WAS_DEPOSITED,
+    MSG_BOX_IS_FULL,
+    MSG_RELEASE_POKE,
+    MSG_WAS_RELEASED,
+    MSG_BYE_BYE,
+    MSG_MARK_POKE,
+    MSG_LAST_POKE,
+    MSG_PARTY_FULL,
+    MSG_HOLDING_POKE,
+    MSG_WHICH_ONE_WILL_TAKE,
+    MSG_CANT_RELEASE_EGG,
+    MSG_CONTINUE_BOX,
+    MSG_CAME_BACK,
+    MSG_WORRIED,
+    MSG_SURPRISE,
+    MSG_PLEASE_REMOVE_MAIL,
+    MSG_IS_SELECTED2,
+    MSG_GIVE_TO_MON,
+    MSG_PLACED_IN_BAG,
+    MSG_BAG_FULL,
+    MSG_PUT_IN_BAG,
+    MSG_ITEM_IS_HELD,
+    MSG_CHANGED_TO_ITEM,
+    MSG_CANT_STORE_MAIL,
+};
+
+enum {
+    PALTAG_MON_ICON_0 = POKE_ICON_BASE_PAL_TAG,
+    PALTAG_MON_ICON_1, // Used implicitly in CreateMonIconSprite
+    PALTAG_MON_ICON_2, // Used implicitly in CreateMonIconSprite
+    PALTAG_3, // Unused
+    PALTAG_4, // Unused
+    PALTAG_5, // Unused
+    PALTAG_DISPLAY_MON,
+    PALTAG_MISC_1,
+    PALTAG_MARKING_COMBO,
+    PALTAG_BOX_TITLE,
+    PALTAG_MISC_2,
+    PALTAG_ITEM_ICON_0,
+    PALTAG_ITEM_ICON_1, // Used implicitly in CreateItemIconSprites
+    PALTAG_ITEM_ICON_2, // Used implicitly in CreateItemIconSprites
+    PALTAG_MARKING_MENU,
+};
+
+enum {
+    GFXTAG_CURSOR,
+    GFXTAG_CURSOR_SHADOW,
+    GFXTAG_DISPLAY_MON,
+    GFXTAG_BOX_TITLE,
+    GFXTAG_BOX_TITLE_ALT,
+    GFXTAG_WAVEFORM,
+    GFXTAG_ARROW,
+    GFXTAG_ITEM_ICON_0,
+    GFXTAG_ITEM_ICON_1, // Used implicitly in CreateItemIconSprites
+    GFXTAG_ITEM_ICON_2, // Used implicitly in CreateItemIconSprites
+    GFXTAG_CHOOSE_BOX_MENU,
+    GFXTAG_CHOOSE_BOX_MENU_SIDES, // Used implicitly in LoadChooseBoxMenuGfx
+    GFXTAG_12, // Unused
+    GFXTAG_MARKING_MENU,
+    GFXTAG_14, // Unused
+    GFXTAG_15, // Unused
+    GFXTAG_MARKING_COMBO,
+    GFXTAG_17, // Unused
+    GFXTAG_MON_ICON,
+};
+
+enum {
+    RELEASE_ANIM_RELEASE,
+    RELEASE_ANIM_CAME_BACK,
+};
+
+enum {
+    WIN_DISPLAY_INFO,
+    WIN_MESSAGE,
+    WIN_ITEM_DESC,
+};
+
 struct StorageMessage
 {
     const u8 *text;
     u8 format;
 };
 
-extern const struct StorageMessage gUnknown_854CA1C[];
+static const struct StorageMessage sMessages[];
 
 struct Wallpaper
 {
@@ -311,11 +394,6 @@ struct ItemIcon
 
 #define MAX_MON_ICONS max(IN_BOX_COUNT + PARTY_SIZE + 1, 40)
 #define MAX_ITEM_ICONS 3
-#define GFXTAG_ITEM_ICON_0 7
-#define PALTAG_ITEM_ICON_0 0xDACB
-#define GFXTAG_BOX_TITLE 3
-#define GFXTAG_BOX_TITLE_ALT 4
-#define PALTAG_BOX_TITLE 0xDAC9
 #define STORAGE_MON_NAME_LENGTH 11 // Fixed US-style display buffer; JP kana names are shorter.
 
 enum
@@ -705,8 +783,8 @@ extern void UpdateCloseBoxButtonTilemap(bool8 state);
 extern void UnkUtil_Run(void);
 extern void ScrollBackground(void);
 extern void Task_InitPokeStorage(u8 taskId);
-extern const struct WindowTemplate sPSSWindowTemplates[];
-extern const struct SpritePalette sWaveformSpritePalette;
+static const struct WindowTemplate sWindowTemplates[];
+static const struct SpritePalette sWaveformSpritePalette;
 extern void SetCursorMonData(const void *data, u8 mode);
 extern void LoadPSSMenuGfx(void);
 extern void LoadWaveformSpritePalette(void);
@@ -765,8 +843,8 @@ extern const void *GetItemIconPalette(u16 itemId);
 extern void DestroyBoxMonIconAtPosition(u8 boxPosition);
 extern void DestroyBoxMonIcon(struct Sprite *sprite);
 extern void SpriteCB_HeldMon(struct Sprite *sprite);
-extern const struct SpriteTemplate gUnknown_854CB84;
-extern const union AffineAnimCmd *const gUnknown_854CBCC[];
+static const struct SpriteTemplate sSpriteTemplate_MonIcon;
+static const union AffineAnimCmd *const sAffineAnims_ReleaseMon[];
 extern void LoadWallpaperGfx(u8 boxId, s8 direction);
 extern bool32 WaitForWallpaperGfxLoad(void);
 extern void sub_080CC3C4(u8 boxId);
@@ -856,7 +934,7 @@ extern void InitMenu(void);
 extern void SetMenuText(u8 textId);
 extern void AddMenu(void);
 extern bool32 IsWaldaWallpaperUnlocked(void);
-extern const struct WindowTemplate gUnknown_854CB14;
+static const struct WindowTemplate sYesNoWindowTemplate;
 extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
 extern void sub_080D204C(u8 id, u16 x, u16 y, u16 width, u16 height);
 extern void sub_080D2094(u8 id, u8 mode, s8 val);
@@ -1503,7 +1581,7 @@ void sub_080C7734(void)
     gKeyRepeatStartDelay = 20;
     ClearScheduledBgCopiesToVram();
     sub_080D1E3C(3);
-    sub_080D1EE4(0, 1, gUnknown_854BEBC, 8, 4);
+    sub_080D1EE4(0, 1, sPkmnData_Tilemap, 8, 4);
     sub_080D2010(0, 1, 0);
     sStorage->closeBoxFlashing = FALSE;
 }
@@ -3223,8 +3301,8 @@ void FreePSSData(void)
 void SetScrollingBackground(void)
 {
     SetGpuReg(REG_OFFSET_BG3CNT, BGCNT_PRIORITY(3) | BGCNT_CHARBASE(3) | BGCNT_16COLOR | BGCNT_SCREENBASE(31));
-    DecompressAndLoadBgGfxUsingHeap(3, gUnknown_854BBFC, 0, 0, 0);
-    LZ77UnCompVram(gUnknown_854BC94, (void *)BG_SCREEN_ADDR(31));
+    DecompressAndLoadBgGfxUsingHeap(3, sScrollingBg_Gfx, 0, 0, 0);
+    LZ77UnCompVram(sScrollingBg_Tilemap, (void *)BG_SCREEN_ADDR(31));
 }
 
 void ScrollBackground(void)
@@ -3235,9 +3313,9 @@ void ScrollBackground(void)
 
 void LoadPSSMenuGfx(void)
 {
-    InitBgsFromTemplates(0, gUnknown_854C9E4, 4);
-    DecompressAndLoadBgGfxUsingHeap(1, gUnknown_854BF9C, 0, 0, 0);
-    LZ77UnCompWram(gUnknown_854BDC0, sStorage->displayMenuTilemapBuffer);
+    InitBgsFromTemplates(0, sBgTemplates, 4);
+    DecompressAndLoadBgGfxUsingHeap(1, gStorageSystemMenu_Gfx, 0, 0, 0);
+    LZ77UnCompWram(sDisplayMenu_Tilemap, sStorage->displayMenuTilemapBuffer);
     SetBgTilemapBuffer(1, sStorage->displayMenuTilemapBuffer);
     ShowBg(1);
     ScheduleBgCopyTilemapToVram(1);
@@ -3245,7 +3323,7 @@ void LoadPSSMenuGfx(void)
 
 bool8 InitPokeStorageWindows(void)
 {
-    if (!InitWindows(sPSSWindowTemplates))
+    if (!InitWindows(sWindowTemplates))
         return FALSE;
     DeactivateAllTextPrinters();
     return TRUE;
@@ -3258,13 +3336,13 @@ void LoadWaveformSpritePalette(void)
 
 void sub_080C994C(void)
 {
-    LoadPalette(gUnknown_854BEFC, BG_PLTT_ID(0), 0x20);
-    LoadPalette(gUnknown_854BF1C, BG_PLTT_ID(2), 0x20);
-    LoadPalette(gUnknown_854C9A4, BG_PLTT_ID(15), 0x20);
+    LoadPalette(sInterface_Pal, BG_PLTT_ID(0), 0x20);
+    LoadPalette(sPkmnDataGray_Pal, BG_PLTT_ID(2), 0x20);
+    LoadPalette(sTextWindows_Pal, BG_PLTT_ID(15), 0x20);
     if (sStorage->boxOption != OPTION_MOVE_ITEMS)
-        LoadPalette(gUnknown_854BF5C, BG_PLTT_ID(3), 0x20);
+        LoadPalette(sScrollingBg_Pal, BG_PLTT_ID(3), 0x20);
     else
-        LoadPalette(gUnknown_854BF7C, BG_PLTT_ID(3), 0x20);
+        LoadPalette(sScrollingBgMoveItems_Pal, BG_PLTT_ID(3), 0x20);
 
     SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_16COLOR | BGCNT_SCREENBASE(30));
     LoadCursorMonSprite();
@@ -3286,12 +3364,12 @@ void sub_080C99C8(void)
 void sub_080C9A38(void)
 {
     u16 i;
-    struct SpriteSheet sheet = gUnknown_854C9FC;
+    struct SpriteSheet sheet = sSpriteSheet_Waveform;
 
     LoadSpriteSheet(&sheet);
     for (i = 0; i < 2; i++)
     {
-        u8 spriteId = CreateSprite(&gUnknown_854CB6C, i * 63 + 8, 9, 2);
+        u8 spriteId = CreateSprite(&sSpriteTemplate_Waveform, i * 63 + 8, 9, 2);
         sStorage->waveformSprites[i] = &gSprites[spriteId];
     }
 }
@@ -3343,7 +3421,7 @@ void LoadCursorMonSprite(void)
     u8 spriteId;
     struct SpriteSheet sheet = {sStorage->tileBuffer, MON_PIC_SIZE, 2};
     struct SpritePalette palette = {sStorage->displayMonPalBuffer, 0xDAC6};
-    struct SpriteTemplate template = gUnknown_854CA04;
+    struct SpriteTemplate template = sSpriteTemplate_DisplayMon;
 
     for (i = 0; i < MON_PIC_SIZE; i++)
         sStorage->tileBuffer[i] = 0;
@@ -3452,10 +3530,10 @@ void sub_080C9EC0(void)
 
 void sub_080C9F68(void)
 {
-    LZ77UnCompWram(gUnknown_854C65C, sStorage->partyMenuTilemapBuffer);
-    LoadPalette(gUnknown_854BF3C, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+    LZ77UnCompWram(gStorageSystemPartyMenu_Tilemap, sStorage->partyMenuTilemapBuffer);
+    LoadPalette(gStorageSystemPartyMenu_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
     sub_080D1EE4(1, 1, sStorage->partyMenuTilemapBuffer, 12, 22);
-    sub_080D1EE4(2, 1, gUnknown_854C70C, 9, 4);
+    sub_080D1EE4(2, 1, sCloseBoxButton_Tilemap, 9, 4);
     sub_080D2010(1, 10, 0);
     sub_080D2010(2, 21, 0);
     sub_080CA2D8();
@@ -3597,9 +3675,9 @@ void sub_080CA30C(u8 partyId, bool8 hasMon)
     const u16 *data;
 
     if (hasMon)
-        data = gUnknown_854C754;
+        data = sPartySlotFilled_Tilemap;
     else
-        data = gUnknown_854C76C;
+        data = sPartySlotEmpty_Tilemap;
 
     index = 3 * (3 * (partyId - 1) + 1);
     index *= 4;
@@ -3673,7 +3751,7 @@ void PrintStorageActionText(u8 id)
     u8 *txtPtr;
 
     DynamicPlaceholderTextUtil_Reset();
-    switch (gUnknown_854CA1C[id].format)
+    switch (sMessages[id].format)
     {
     case MSG_VAR_NONE:
         break;
@@ -3701,7 +3779,7 @@ void PrintStorageActionText(u8 id)
         break;
     }
 
-    DynamicPlaceholderTextUtil_ExpandPlaceholders(sStorage->messageText, gUnknown_854CA1C[id].text);
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(sStorage->messageText, sMessages[id].text);
     FillWindowPixelBuffer(1, PIXEL_FILL(1));
     AddTextPrinterParameterized(1, 1, sStorage->messageText, 0, 2, 0xff, NULL);
     DrawTextBorderOuter(1, 2, 14);
@@ -3712,7 +3790,7 @@ void PrintStorageActionText(u8 id)
 
 void ShowYesNoWindow(s8 cursorPos)
 {
-    CreateYesNoMenuAtPos(&gUnknown_854CB14, 1, 2, 2, 11, 14, 0);
+    CreateYesNoMenuAtPos(&sYesNoWindowTemplate, 1, 2, 2, 11, 14, 0);
     Menu_MoveCursorNoWrapAround(cursorPos);
 }
 void ClearBottomWindow(void)
@@ -4359,7 +4437,7 @@ void sub_080CB788(u8 mode, u8 cursorPosition)
     {
         InitSpriteAffineAnim(*sStorage->releaseMonSpritePtr);
         (*sStorage->releaseMonSpritePtr)->oam.affineMode = ST_OAM_AFFINE_NORMAL;
-        (*sStorage->releaseMonSpritePtr)->affineAnims = gUnknown_854CBCC;
+        (*sStorage->releaseMonSpritePtr)->affineAnims = sAffineAnims_ReleaseMon;
         StartSpriteAffineAnim(*sStorage->releaseMonSpritePtr, 0);
     }
 }
@@ -4466,7 +4544,7 @@ struct Sprite *sub_080CBAA4(u16 species, u32 personality, s16 x, s16 y, u8 oamPr
 {
     u16 tileNum;
     u8 spriteId;
-    struct SpriteTemplate template = gUnknown_854CB84;
+    struct SpriteTemplate template = sSpriteTemplate_MonIcon;
 
     species = GetIconSpecies(species, personality);
     template.paletteTag = 0xDAC0 + gMonIconPaletteIndices[species];
@@ -9049,3 +9127,339 @@ static const u8 sChooseBoxMenuCenter_Gfx[] STORAGE_MENUS = INCBIN_U8("graphics/p
 static const u8 sChooseBoxMenuSides_Gfx[] STORAGE_MENUS = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_sides.png.4bpp");
 
 #undef STORAGE_MENUS
+
+#define STORAGE_BACKGROUND __attribute__((section(".rodata.pokemon_storage_background"), aligned(4)))
+#define STORAGE_DISPLAY __attribute__((section(".rodata.pokemon_storage_display"), aligned(4)))
+#define STORAGE_SCROLLING_PALETTES __attribute__((section(".rodata.pokemon_storage_scrolling_palettes"), aligned(4)))
+#define STORAGE_INTERFACE __attribute__((section(".rodata.pokemon_storage_interface"), aligned(4)))
+
+static const u32 sScrollingBg_Gfx[] STORAGE_BACKGROUND = INCBIN_U32("graphics/pokemon_storage/scrolling_bg.png.4bpp.lz");
+
+static const u32 sScrollingBg_Tilemap[] STORAGE_BACKGROUND = INCBIN_U32("graphics/pokemon_storage/scrolling_bg.bin.lz");
+
+static const u16 sDisplayMenu_Pal[] STORAGE_DISPLAY = INCBIN_U16("graphics/pokemon_storage/display_menu.pal.gbapal");
+
+static const u32 sDisplayMenu_Tilemap[] STORAGE_DISPLAY = INCBIN_U32("graphics/pokemon_storage/display_menu.bin.lz");
+
+static const u16 sPkmnData_Tilemap[] STORAGE_DISPLAY =
+{
+    0x0101, 0x0102, 0x0103, 0x0104, 0x0105, 0x0106, 0x0107, 0x0108,
+    0x0111, 0x0112, 0x0113, 0x0114, 0x0115, 0x0116, 0x0117, 0x0118,
+    0x2101, 0x2102, 0x2103, 0x2104, 0x2105, 0x2106, 0x2107, 0x2108,
+    0x2111, 0x2112, 0x2113, 0x2114, 0x2115, 0x2116, 0x2117, 0x2118,
+};
+
+static const u16 sInterface_Pal[] STORAGE_DISPLAY = INCBIN_U16("graphics/pokemon_storage/interface.pal.gbapal");
+
+static const u16 sPkmnDataGray_Pal[] STORAGE_DISPLAY = INCBIN_U16("graphics/pokemon_storage/pkmn_data_gray.pal.gbapal");
+
+
+static const u16 sScrollingBg_Pal[] STORAGE_SCROLLING_PALETTES = INCBIN_U16("graphics/pokemon_storage/scrolling_bg.pal.gbapal");
+
+static const u16 sScrollingBgMoveItems_Pal[] STORAGE_SCROLLING_PALETTES = INCBIN_U16("graphics/pokemon_storage/scrolling_bg_move_items.pal.gbapal");
+
+
+
+static const u16 sCloseBoxButton_Tilemap[] STORAGE_INTERFACE =
+{
+    0x014C, 0x014D, 0x014E, 0x014F, 0x0170, 0x0171, 0x0172, 0x0173,
+    0x0174, 0x015C, 0x015D, 0x015E, 0x015F, 0x0180, 0x0181, 0x0182,
+    0x0183, 0x0184, 0x0175, 0x0176, 0x0177, 0x0178, 0x0179, 0x017A,
+    0x017B, 0x017C, 0x017D, 0x0185, 0x0186, 0x0187, 0x0188, 0x0189,
+    0x018A, 0x018B, 0x018C, 0x018D,
+};
+
+static const u16 sPartySlotFilled_Tilemap[] STORAGE_INTERFACE =
+{
+    0x1140, 0x1141, 0x1141, 0x1142, 0x1150, 0x1151, 0x1151, 0x1152,
+    0x1160, 0x1161, 0x1161, 0x1162,
+};
+
+static const u16 sPartySlotEmpty_Tilemap[] STORAGE_INTERFACE =
+{
+    0x1143, 0x1144, 0x1144, 0x1145, 0x1153, 0x1154, 0x1154, 0x1155,
+    0x1163, 0x1164, 0x1164, 0x1165,
+};
+
+static const u16 sWaveform_Pal[] STORAGE_INTERFACE = INCBIN_U16("graphics/pokemon_storage/waveform.png.gbapal");
+
+static const u32 sWaveform_Gfx[] STORAGE_INTERFACE = INCBIN_U32("graphics/pokemon_storage/waveform.png.4bpp");
+
+static const u16 sUnused_Pal[] STORAGE_INTERFACE = INCBIN_U16("graphics/pokemon_storage/unused.pal.gbapal");
+
+static const u16 sTextWindows_Pal[] STORAGE_INTERFACE = INCBIN_U16("graphics/pokemon_storage/text_windows.pal.gbapal");
+
+static const struct WindowTemplate sWindowTemplates[] STORAGE_INTERFACE =
+{
+    // The panel below the currently displayed Pokémon
+    [WIN_DISPLAY_INFO] = {
+        .bg = 1,
+        .tilemapLeft = 1,
+        .tilemapTop = 11,
+        .width = 8,
+        .height = 7,
+        .paletteNum = 3,
+        .baseBlock = 0xC0,
+    },
+    [WIN_MESSAGE] = {
+        .bg = 0,
+        .tilemapLeft = 11,
+        .tilemapTop = 17,
+        .width = 18,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x14,
+    },
+    [WIN_ITEM_DESC] = {
+        .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 13,
+        .width = 21,
+        .height = 7,
+        .paletteNum = 15,
+        .baseBlock = 0x14,
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+static const struct BgTemplate sBgTemplates[] STORAGE_INTERFACE =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 29,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0x100
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 27,
+        .screenSize = 1,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0
+    },
+};
+
+static const struct SpritePalette sWaveformSpritePalette STORAGE_INTERFACE =
+{
+    sWaveform_Pal, PALTAG_MISC_2
+};
+
+static const struct SpriteSheet sSpriteSheet_Waveform STORAGE_INTERFACE =
+{
+    sWaveform_Gfx, sizeof(sWaveform_Gfx), GFXTAG_WAVEFORM
+};
+
+static const struct OamData sOamData_DisplayMon;
+static const struct SpriteTemplate sSpriteTemplate_DisplayMon STORAGE_INTERFACE =
+{
+    .tileTag = GFXTAG_DISPLAY_MON,
+    .paletteTag = PALTAG_DISPLAY_MON,
+    .oam = &sOamData_DisplayMon,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct StorageMessage sMessages[] STORAGE_INTERFACE =
+{
+    [MSG_EXIT_BOX]             = {gText_ExitFromBox,             MSG_VAR_NONE},
+    [MSG_WHAT_YOU_DO]          = {gText_WhatDoYouWantToDo,       MSG_VAR_NONE},
+    [MSG_PICK_A_THEME]         = {gText_PleasePickATheme,        MSG_VAR_NONE},
+    [MSG_PICK_A_WALLPAPER]     = {gText_PickTheWallpaper,        MSG_VAR_NONE},
+    [MSG_IS_SELECTED]          = {gText_PkmnIsSelected,          MSG_VAR_MON_NAME_1},
+    [MSG_JUMP_TO_WHICH_BOX]    = {gText_JumpToWhichBox,          MSG_VAR_NONE},
+    [MSG_DEPOSIT_IN_WHICH_BOX] = {gText_DepositInWhichBox,       MSG_VAR_NONE},
+    [MSG_WAS_DEPOSITED]        = {gText_PkmnWasDeposited,        MSG_VAR_MON_NAME_1},
+    [MSG_BOX_IS_FULL]          = {gText_BoxIsFull2,              MSG_VAR_NONE},
+    [MSG_RELEASE_POKE]         = {gText_ReleaseThisPokemon,      MSG_VAR_NONE},
+    [MSG_WAS_RELEASED]         = {gText_PkmnWasReleased,         MSG_VAR_RELEASE_MON_1},
+    [MSG_BYE_BYE]              = {gText_ByeByePkmn,              MSG_VAR_RELEASE_MON_3},
+    [MSG_MARK_POKE]            = {gText_MarkYourPkmn,            MSG_VAR_NONE},
+    [MSG_LAST_POKE]            = {gText_ThatsYourLastPkmn,       MSG_VAR_NONE},
+    [MSG_PARTY_FULL]           = {gText_YourPartysFull,          MSG_VAR_NONE},
+    [MSG_HOLDING_POKE]         = {gText_YoureHoldingAPkmn,       MSG_VAR_NONE},
+    [MSG_WHICH_ONE_WILL_TAKE]  = {gText_WhichOneWillYouTake,     MSG_VAR_NONE},
+    [MSG_CANT_RELEASE_EGG]     = {gText_YouCantReleaseAnEgg,     MSG_VAR_NONE},
+    [MSG_CONTINUE_BOX]         = {gText_ContinueBoxOperations,   MSG_VAR_NONE},
+    [MSG_CAME_BACK]            = {gText_PkmnCameBack,            MSG_VAR_MON_NAME_1},
+    [MSG_WORRIED]              = {gText_WasItWorriedAboutYou,    MSG_VAR_NONE},
+    [MSG_SURPRISE]             = {gText_FourEllipsesExclamation, MSG_VAR_NONE},
+    [MSG_PLEASE_REMOVE_MAIL]   = {gText_PleaseRemoveTheMail,     MSG_VAR_NONE},
+    [MSG_IS_SELECTED2]         = {gText_PkmnIsSelected,          MSG_VAR_ITEM_NAME},
+    [MSG_GIVE_TO_MON]          = {gText_GiveToAPkmn,             MSG_VAR_NONE},
+    [MSG_PLACED_IN_BAG]        = {gText_PlacedItemInBag,         MSG_VAR_ITEM_NAME},
+    [MSG_BAG_FULL]             = {gText_BagIsFull2,              MSG_VAR_NONE},
+    [MSG_PUT_IN_BAG]           = {gText_PutItemInBag,            MSG_VAR_NONE},
+    [MSG_ITEM_IS_HELD]         = {gText_ItemIsNowHeld,           MSG_VAR_ITEM_NAME},
+    [MSG_CHANGED_TO_ITEM]      = {gText_ChangedToNewItem,        MSG_VAR_ITEM_NAME},
+    [MSG_CANT_STORE_MAIL]      = {gText_MailCantBeStored,        MSG_VAR_NONE},
+};
+
+static const struct WindowTemplate sYesNoWindowTemplate STORAGE_INTERFACE =
+{
+    .bg = 0,
+    .tilemapLeft = 24,
+    .tilemapTop = 11,
+    .width = 5,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 0x5C,
+};
+
+static const struct OamData sOamData_DisplayMon STORAGE_INTERFACE =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
+static const struct OamData sOamData_Waveform STORAGE_INTERFACE =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
+static const union AnimCmd sAnim_Waveform_LeftOff[] STORAGE_INTERFACE =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Waveform_LeftOn[] STORAGE_INTERFACE =
+{
+    ANIMCMD_FRAME(2, 8),
+    ANIMCMD_FRAME(4, 8),
+    ANIMCMD_FRAME(6, 8),
+    ANIMCMD_JUMP(0)
+};
+
+static const union AnimCmd sAnim_Waveform_RightOff[] STORAGE_INTERFACE =
+{
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Waveform_RightOn[] STORAGE_INTERFACE =
+{
+    ANIMCMD_FRAME(10, 8),
+    ANIMCMD_FRAME(4, 8),
+    ANIMCMD_FRAME(12, 8),
+    ANIMCMD_JUMP(0)
+};
+
+static const union AnimCmd *const sAnims_Waveform[] STORAGE_INTERFACE =
+{
+    sAnim_Waveform_LeftOff,
+    sAnim_Waveform_LeftOn,
+    sAnim_Waveform_RightOff,
+    sAnim_Waveform_RightOn
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Waveform STORAGE_INTERFACE =
+{
+    .tileTag = GFXTAG_WAVEFORM,
+    .paletteTag = PALTAG_MISC_2,
+    .oam = &sOamData_Waveform,
+    .anims = sAnims_Waveform,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct OamData sOamData_MonIcon;
+static const struct SpriteTemplate sSpriteTemplate_MonIcon STORAGE_INTERFACE =
+{
+    .tileTag = GFXTAG_MON_ICON,
+    .paletteTag = PALTAG_MON_ICON_0,
+    .oam = &sOamData_MonIcon,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct OamData sOamData_MonIcon STORAGE_INTERFACE =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
+static const union AffineAnimCmd sAffineAnim_ReleaseMon_Release[] STORAGE_INTERFACE =
+{
+    AFFINEANIMCMD_FRAME(-2, -2, 0, 120),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_ReleaseMon_CameBack[] STORAGE_INTERFACE =
+{
+    AFFINEANIMCMD_FRAME(16, 16, 0, 0),
+    AFFINEANIMCMD_FRAME(16, 16, 0, 15),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd *const sAffineAnims_ReleaseMon[] STORAGE_INTERFACE =
+{
+    [RELEASE_ANIM_RELEASE]   = sAffineAnim_ReleaseMon_Release,
+    [RELEASE_ANIM_CAME_BACK] = sAffineAnim_ReleaseMon_CameBack
+};
+
+#undef STORAGE_BACKGROUND
+#undef STORAGE_DISPLAY
+#undef STORAGE_SCROLLING_PALETTES
+#undef STORAGE_INTERFACE

@@ -1970,7 +1970,40 @@ $(C_BUILDDIR)/frontier_pass.o: src/frontier_pass.c charmap.txt $(JP_FRONTIER_PAS
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/frontier_pass.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/frontier_pass.gen.s
 
-$(C_BUILDDIR)/pokemon_storage_system.o: src/pokemon_storage_system.c charmap.txt \
+JP_STORAGE_INTERFACE_ASSETS := graphics/pokemon_storage/scrolling_bg.png.4bpp.lz \
+	graphics/pokemon_storage/scrolling_bg.bin.lz \
+	graphics/pokemon_storage/display_menu.pal.gbapal \
+	graphics/pokemon_storage/display_menu.bin.lz \
+	graphics/pokemon_storage/interface.pal.gbapal \
+	graphics/pokemon_storage/pkmn_data_gray.pal.gbapal \
+	graphics/pokemon_storage/party_menu.pal.gbapal \
+	graphics/pokemon_storage/scrolling_bg.pal.gbapal \
+	graphics/pokemon_storage/scrolling_bg_move_items.pal.gbapal \
+	graphics/pokemon_storage/waveform.png.gbapal \
+	graphics/pokemon_storage/waveform.png.4bpp \
+	graphics/pokemon_storage/unused.pal.gbapal \
+	graphics/pokemon_storage/text_windows.pal.gbapal \
+	graphics/pokemon_storage/menu.png.4bpp.lz \
+	graphics/pokemon_storage/party_menu.bin.lz
+
+graphics/pokemon_storage/menu.png.4bpp: graphics/pokemon_storage/menu.png | tools
+	$(GFX) $< $@
+
+graphics/pokemon_storage/menu.png.4bpp.lz: graphics/pokemon_storage/menu.png.4bpp | tools
+	$(GFX) $< $@
+
+graphics/pokemon_storage/party_menu.bin.lz: graphics/pokemon_storage/party_menu.bin | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/graphics.o: graphics/pokemon_storage/party_menu.pal.gbapal \
+	graphics/pokemon_storage/menu.png.4bpp.lz graphics/pokemon_storage/party_menu.bin.lz
+
+clean: clean-storage-interface-assets
+.PHONY: clean-storage-interface-assets
+clean-storage-interface-assets:
+	rm -f graphics/pokemon_storage/menu.png.4bpp graphics/pokemon_storage/menu.png.4bpp.lz graphics/pokemon_storage/party_menu.bin.lz
+
+$(C_BUILDDIR)/pokemon_storage_system.o: src/pokemon_storage_system.c charmap.txt $(JP_STORAGE_INTERFACE_ASSETS) \
 	graphics/pokemon_storage/box_selection_popup.pal.gbapal \
 	graphics/pokemon_storage/box_selection_popup_center.png.4bpp \
 	graphics/pokemon_storage/box_selection_popup_sides.png.4bpp

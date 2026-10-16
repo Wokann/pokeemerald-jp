@@ -9598,6 +9598,12 @@ SECTIONS {
         src/frontier_pass.o(.rodata.frontier_pass_ui);
         src/frontier_pass.o(.rodata.frontier_pass_text_tables);
         src/pokemon_storage_system.o(.rodata.pokemon_storage_menus);
+        src/pokemon_storage_system.o(.rodata.pokemon_storage_background);
+        src/pokemon_storage_system.o(.rodata.pokemon_storage_display);
+        src/graphics.o(.rodata.graphics_storage_party_palette);
+        src/pokemon_storage_system.o(.rodata.pokemon_storage_scrolling_palettes);
+        src/graphics.o(.rodata.graphics_storage_menu);
+        src/pokemon_storage_system.o(.rodata.pokemon_storage_interface);
         src/data/pokemon_storage_system.o(.rodata.pokemon_storage_mid57a);
         src/graphics.o(.rodata.mon_icon_palettes_mid57a);
         src/pokemon_icon.o(.rodata.pokemon_icon_mid57a);

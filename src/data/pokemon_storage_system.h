@@ -1,67 +1,13 @@
 #ifndef GUARD_DATA_POKEMON_STORAGE_SYSTEM_H
 #define GUARD_DATA_POKEMON_STORAGE_SYSTEM_H
 
-// Remaining JP Storage runtime, wallpaper and sprite resources.
-// The PC main menu and box chooser are defined in pokemon_storage_system.c.
+// Remaining JP Storage wallpaper and sprite resources.
+// Menus and main interface data are defined in pokemon_storage_system.c.
 #define POKEMON_STORAGE_MID57A_DATA __attribute__((section(".rodata.pokemon_storage_mid57a"), aligned(1)))
 #define POKEMON_STORAGE_MID57A_RESOURCE(symbol, size, path) \
     const u8 symbol[size] POKEMON_STORAGE_MID57A_DATA = INCBIN_U8(path)
 
-// 0x0854BBFC..0x085567A4: Storage runtime, wallpapers and tables.
-// gUnknown_854BBFC at 0x0854BBFC.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854BBFC, 0x98, "graphics/pokemon_storage/scrolling_bg.png.4bpp.lz");
-// gUnknown_854BC94 at 0x0854BC94.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854BC94, 0x10C, "graphics/pokemon_storage/scrolling_bg.bin.lz");
-POKEMON_STORAGE_MID57A_RESOURCE(sPokemonStorage_0854BDA0, 0x20, "graphics/pokemon_storage/display_menu.pal.gbapal");
-// gUnknown_854BDC0 at 0x0854BDC0.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854BDC0, 0xFC, "graphics/pokemon_storage/display_menu.bin.lz");
-// gUnknown_854BEBC at 0x0854BEBC.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854BEBC, 0x40, "data/pokemon_storage/jp/0854BEBC.bin");
-// gUnknown_854BEFC at 0x0854BEFC.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854BEFC, 0x20, "graphics/pokemon_storage/interface.pal.gbapal");
-// gUnknown_854BF1C at 0x0854BF1C.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854BF1C, 0x20, "graphics/pokemon_storage/pkmn_data_gray.pal.gbapal");
-// gUnknown_854BF3C at 0x0854BF3C.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854BF3C, 0x20, "graphics/pokemon_storage/party_menu.pal.gbapal");
-// gUnknown_854BF5C at 0x0854BF5C.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854BF5C, 0x20, "graphics/pokemon_storage/scrolling_bg.pal.gbapal");
-// gUnknown_854BF7C at 0x0854BF7C.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854BF7C, 0x20, "graphics/pokemon_storage/scrolling_bg_move_items.pal.gbapal");
-// gUnknown_854BF9C at 0x0854BF9C.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854BF9C, 0x6C0, "data/pokemon_storage/jp/0854BF9C.bin");
-// gUnknown_854C65C at 0x0854C65C.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854C65C, 0xB0, "data/pokemon_storage/jp/0854C65C.bin");
-// gUnknown_854C70C at 0x0854C70C.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854C70C, 0x48, "data/pokemon_storage/jp/0854C70C.bin");
-// gUnknown_854C754 at 0x0854C754.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854C754, 0x18, "data/pokemon_storage/jp/0854C754.bin");
-// gUnknown_854C76C at 0x0854C76C.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854C76C, 0x18, "data/pokemon_storage/jp/0854C76C.bin");
-POKEMON_STORAGE_MID57A_RESOURCE(sPokemonStorage_0854C784, 0x20, "graphics/pokemon_storage/waveform.png.gbapal");
-POKEMON_STORAGE_MID57A_RESOURCE(sPokemonStorage_0854C7A4, 0x1C0, "graphics/pokemon_storage/waveform.png.4bpp");
-POKEMON_STORAGE_MID57A_RESOURCE(sPokemonStorage_0854C964, 0x40, "graphics/pokemon_storage/unused.pal.gbapal");
-// gUnknown_854C9A4 at 0x0854C9A4.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854C9A4, 0x20, "graphics/pokemon_storage/text_windows.pal.gbapal");
-// sPSSWindowTemplates at 0x0854C9C4.
-POKEMON_STORAGE_MID57A_RESOURCE(sPSSWindowTemplates, 0x20, "data/pokemon_storage/jp/0854C9C4.bin");
-// gUnknown_854C9E4 at 0x0854C9E4.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854C9E4, 0x10, "data/pokemon_storage/jp/0854C9E4.bin");
-// sWaveformSpritePalette at 0x0854C9F4.
-POKEMON_STORAGE_MID57A_RESOURCE(sWaveformSpritePalette, 0x8, "data/pokemon_storage/jp/0854C9F4.bin");
-// gUnknown_854C9FC at 0x0854C9FC.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854C9FC, 0x8, "data/pokemon_storage/jp/0854C9FC.bin");
-// gUnknown_854CA04 at 0x0854CA04.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854CA04, 0x18, "data/pokemon_storage/jp/0854CA04.bin");
-// gUnknown_854CA1C at 0x0854CA1C.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854CA1C, 0xF8, "data/pokemon_storage/jp/0854CA1C.bin");
-// gUnknown_854CB14 at 0x0854CB14.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854CB14, 0x58, "data/pokemon_storage/jp/0854CB14.bin");
-// gUnknown_854CB6C at 0x0854CB6C.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854CB6C, 0x18, "data/pokemon_storage/jp/0854CB6C.bin");
-// gUnknown_854CB84 at 0x0854CB84.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854CB84, 0x48, "data/pokemon_storage/jp/0854CB84.bin");
-// gUnknown_854CBCC at 0x0854CBCC.
-POKEMON_STORAGE_MID57A_RESOURCE(gUnknown_854CBCC, 0x8, "data/pokemon_storage/jp/0854CBCC.bin");
+// 0x0854CBD4..0x085567A4: Storage wallpapers and remaining tables.
 POKEMON_STORAGE_MID57A_RESOURCE(sPokemonStorage_0854CBD4, 0x20, "graphics/pokemon_storage/wallpapers/forest/frame.png.gbapal");
 POKEMON_STORAGE_MID57A_RESOURCE(sPokemonStorage_0854CBF4, 0x20, "graphics/pokemon_storage/wallpapers/forest/bg.png.gbapal");
 POKEMON_STORAGE_MID57A_RESOURCE(sPokemonStorage_0854CC14, 0x484, "graphics/pokemon_storage/wallpapers/forest/tiles.4bpp.lz");

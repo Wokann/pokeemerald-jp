@@ -1637,3 +1637,16 @@ const u32 gFrontierPassBg_Tilemap[] __attribute__((section(".rodata.graphics_fro
 const u32 gFrontierPassCancelButton_Tilemap[] __attribute__((section(".rodata.graphics_frontier_pass_cancel_tilemaps"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/cancel.bin");
 const u32 gFrontierPassCancelButtonHighlighted_Tilemap[] __attribute__((section(".rodata.graphics_frontier_pass_cancel_tilemaps"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/cancel_highlighted.bin");
 const u32 gFrontierPassMapAndCard_Gfx[] __attribute__((section(".rodata.graphics_frontier_pass_zoom_graphics"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/map_and_card.8bpp.lz");
+
+#define STORAGE_PARTY_PALETTE __attribute__((section(".rodata.graphics_storage_party_palette"), aligned(4)))
+
+const u16 gStorageSystemPartyMenu_Pal[] STORAGE_PARTY_PALETTE = INCBIN_U16("graphics/pokemon_storage/party_menu.pal.gbapal");
+
+#undef STORAGE_PARTY_PALETTE
+
+#define STORAGE_MENU_GRAPHICS __attribute__((section(".rodata.graphics_storage_menu"), aligned(4)))
+
+const u32 gStorageSystemMenu_Gfx[] STORAGE_MENU_GRAPHICS = INCBIN_U32("graphics/pokemon_storage/menu.png.4bpp.lz");
+const u32 gStorageSystemPartyMenu_Tilemap[] STORAGE_MENU_GRAPHICS = INCBIN_U32("graphics/pokemon_storage/party_menu.bin.lz");
+
+#undef STORAGE_MENU_GRAPHICS
