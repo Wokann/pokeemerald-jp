@@ -36,16 +36,6 @@ gUnknown_82EC5FE: @ 0x82EC5FE
 gUnknown_8300A99: @ 0x8300A99
 	.incbin "baserom_jp.gba", 0x300A99, 0x2
 
-	.section .rodata.mid27
-
-	.globl sFishingReelTimeouts
-sFishingReelTimeouts: @ 0x846F9D6
-	.2byte 36, 33, 30
-
-	.globl sFishingMoreDotsChance
-sFishingMoreDotsChance: @ 0x846F9DC
-	.2byte 0, 0, 40, 10, 70, 30
-
 	.section .rodata.mid97_prefix
 
 	.globl gText_Red

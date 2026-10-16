@@ -9426,12 +9426,12 @@ SECTIONS {
         data/fieldmap.o(.rodata.after_tilesets);
         data/metatile_behavior.o(.rodata.after_tilesets);
         data/field_door.o(.rodata.after_tilesets);
-        data/field_player_avatar.o(.rodata.after_tilesets);
+        src/field_player_avatar_tail.o(.rodata.field_player_avatar_tables);
         src/field_player_avatar_tail.o(.rodata);
         src/strings.o(.rodata.strings_fishing_bite);
-        data/data_b2d.o(.rodata.mid27);
+        src/field_player_avatar_tail.o(.rodata.field_player_avatar_fishing);
         src/strings.o(.rodata.strings_fishing_messages);
-        data/field_player_avatar.o(.rodata.field_player_avatar_spin_directions);
+        src/field_player_avatar_tail.o(.rodata.field_player_avatar_spin_directions);
         src/event_object_movement.o(.rodata.event_object_movement_reflection_palette_data);
         gUnknown_846FA28 = .;
         src/event_object_movement.o(.rodata.event_object_movement_camera_data);

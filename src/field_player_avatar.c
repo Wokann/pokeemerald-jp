@@ -1,3 +1,6 @@
+#define NUM_FORCED_MOVEMENTS 18
+#define NUM_ACRO_BIKE_COLLISIONS 5
+
 #ifndef FIELD_PLAYER_AVATAR_TAIL
 #include "global.h"
 #include "bike.h"
@@ -15,19 +18,15 @@
 #include "constants/event_object_movement.h"
 #include "constants/songs.h"
 
-#define NUM_FORCED_MOVEMENTS 18
-#define NUM_ACRO_BIKE_COLLISIONS 5
-
 void DoPlayerAvatarTransition(void);
 
 // The separately compiled tail retains the existing JP linker names.
 void HideShowWarpArrow(struct ObjectEvent *objectEvent) asm("sub_0808BBE4");
 void MovePlayerNotOnBike(u8 direction, u16 heldKeys);
 
-// JP ROM tables: 18 forced-movement test funcs @ 0x0846F81C,
-// forced-movement funcs @ 0x0846F864; wired via ld_script_jp.txt
-extern bool8 (*const sForcedMovementTestFuncs[18])(u16 metatileBehavior);
-extern bool8 (*const sForcedMovementFuncs[18])(void);
+// Shared C tables are emitted with the separately compiled JP tail.
+extern bool8 (*const sForcedMovementTestFuncs[18])(u8 metatileBehavior);
+extern bool8 (*const sForcedMovementFuncs[NUM_FORCED_MOVEMENTS + 1])(void);
 
 // Global bindings preserve JP call sites across the main and tail objects.
 u8 ObjectEventCB2_NoMovement2(void);
@@ -340,7 +339,7 @@ u8 GetEventObjectIdByXY(s16 x, s16 y);
 // JP ROM tables: sPlayerNotOnBikeFuncs @ 0x0846F8B0,
 // sAcroBikeTrickMetatiles @ 0x0846F8BC, sAcroBikeTrickCollisionTypes @ 0x0846F8D0
 extern void (*const sPlayerNotOnBikeFuncs[3])(u8 direction, u16 heldKeys);
-extern bool8 (*const sAcroBikeTrickMetatiles[5])(u16 metatileBehavior);
+extern bool8 (*const sAcroBikeTrickMetatiles[5])(u8 metatileBehavior);
 extern const u8 sAcroBikeTrickCollisionTypes[5];
 
 void MovePlayerNotOnBike(u8 direction, u16 heldKeys)
@@ -810,7 +809,7 @@ u8 EventObjectExecSingleMovementAction(u32 direction);
 u8 GetAcroEndWheelieFaceDirectionMovementAction(u32 direction);
 
 // JP ROM table: sArrowWarpMetatileBehaviorChecks @ 0x0846F8F8
-extern bool8 (*const sArrowWarpMetatileBehaviorChecks[4])(u16 metatileBehavior);
+extern bool8 (*const sArrowWarpMetatileBehaviorChecks[4])(u8 metatileBehavior);
 
 void PlayerIdleWheelie(u8 direction)
 {
@@ -2124,5 +2123,8 @@ u8 TrySpinPlayerForWarp(struct ObjectEvent *object, s16 *delayTimer)
     *delayTimer = 0;
     return sSpinDirections[object->facingDirection];
 }
+
+// Emit shared data after the code so table initializers do not change codegen.
+#include "data/field_player_avatar.h"
 
 #endif // FIELD_PLAYER_AVATAR_TAIL
