@@ -79,11 +79,11 @@ extern EWRAM_DATA struct PokedexCryScreen *sDexCryScreen;
 extern EWRAM_DATA u8 *sCryWaveformWindowTiledata;
 extern EWRAM_DATA struct PokedexCryMeterNeedle *sCryMeterNeedle;
 
-static const u16 ALIGNED(4) sCryMeterNeedle_Pal[] POKEDEX_CRY_SCREEN_DATA = INCBIN_U16("graphics/pokedex/cry_meter_needle.gbapal");
-static const u8 sCryMeterNeedle_Gfx[] POKEDEX_CRY_SCREEN_DATA = INCBIN_U8("graphics/pokedex/cry_meter_needle.4bpp");
+static const u16 ALIGNED(4) sCryMeterNeedle_Pal[] POKEDEX_CRY_SCREEN_DATA = INCGFX_U16("graphics/pokedex/cry_meter_needle.png", ".gbapal");
+static const u8 sCryMeterNeedle_Gfx[] POKEDEX_CRY_SCREEN_DATA = INCGFX_U8("graphics/pokedex/cry_meter_needle.png", ".4bpp");
 static const u16 sCryMeter_Tilemap[] POKEDEX_CRY_SCREEN_DATA = INCBIN_U16("graphics/pokedex/cry_meter_map.bin"); // Unused
-static const u16 sCryMeter_Pal[] POKEDEX_CRY_SCREEN_DATA = INCBIN_U16("graphics/pokedex/cry_meter.gbapal");
-static const u8 sCryMeter_Gfx[] POKEDEX_CRY_SCREEN_DATA = INCBIN_U8("graphics/pokedex/cry_meter.4bpp.lz");
+static const u16 sCryMeter_Pal[] POKEDEX_CRY_SCREEN_DATA = INCGFX_U16("graphics/pokedex/cry_meter.png", ".gbapal");
+static const u8 sCryMeter_Gfx[] POKEDEX_CRY_SCREEN_DATA = INCGFX_U8("graphics/pokedex/cry_meter.png", ".4bpp.lz");
 
 static const u16 sWaveformOffsets[][72] POKEDEX_CRY_SCREEN_DATA =
 {
@@ -97,8 +97,8 @@ static const u16 sWaveformOffsets[][72] POKEDEX_CRY_SCREEN_DATA =
     { WAVEFORM_OFFSET_ROW(0x0003) },
 };
 
-static const u16 sCryScreenBg_Pal[] POKEDEX_CRY_SCREEN_DATA = INCBIN_U16("graphics/pokedex/cry_screen_bg.gbapal");
-static const u8 sCryScreenBg_Gfx[] POKEDEX_CRY_SCREEN_DATA = INCBIN_U8("graphics/pokedex/cry_screen_bg.4bpp");
+static const u16 sCryScreenBg_Pal[] POKEDEX_CRY_SCREEN_DATA = INCGFX_U16("graphics/pokedex/cry_screen_bg.png", ".gbapal");
+static const u8 sCryScreenBg_Gfx[] POKEDEX_CRY_SCREEN_DATA = INCGFX_U8("graphics/pokedex/cry_screen_bg.png", ".4bpp");
 
 static const u8 sWaveformTileDataNybbleMasks[] POKEDEX_CRY_SCREEN_DATA = {0xF0, 0x0F};
 

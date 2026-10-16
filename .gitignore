@@ -36,12 +36,6 @@ graphics/misc/evo_sparkle.png.4bpp.lz
 !graphics/field_effects/pics/deoxys_rock_fragment_bottom_left.4bpp
 !graphics/field_effects/pics/deoxys_rock_fragment_bottom_right.4bpp
 !graphics/battle_transitions/*.lz
-!graphics/pokedex/cry_meter_needle.4bpp
-!graphics/pokedex/cry_meter_needle.gbapal
-!graphics/pokedex/cry_meter.gbapal
-!graphics/pokedex/cry_meter.4bpp.lz
-!graphics/pokedex/cry_screen_bg.gbapal
-!graphics/pokedex/cry_screen_bg.4bpp
 !graphics/pokedex/bg_hoenn.gbapal
 !graphics/pokedex/search_results_bg.gbapal
 !graphics/pokedex/bg_national.gbapal
