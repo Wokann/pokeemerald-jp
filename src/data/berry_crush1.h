@@ -2,14 +2,13 @@
 #define POKEEMERALD_JP_BERRY_CRUSH1_H
 
 #include "global.h"
+#include "strings.h"
 #include "bg.h"
 #include "link.h"
 #include "window.h"
 #include "constants/characters.h"
 
 // Berry-crush data (0x82C5E74..0x82C5F84)
-
-extern const u8 gUnknown_85CC888[]; // JP text region; the sMessages pointers target it until the text region is converted to C
 
 // 0x82C5E74
 const u8 sBitTable[8] =
@@ -50,20 +49,18 @@ ALIGNED(4) const u8 sVibrationData[MAX_RFU_PLAYERS][4] =
     { 3, 5, 3, 0 },
 };
 
-// 0x82C5EBC - JP berry-crush messages.  The texts still live in the asm text
-// region at 0x85CC888 (gUnknown_85CC888 + offset); they will get gText_*
-// names when that region is converted to C.
+// 0x82C5EBC - Berry Crush messages.
 const u8 *const sMessages[] =
 {
-    gUnknown_85CC888 + 0x18,  // MSG_PICK_BERRY
-    gUnknown_85CC888 + 0x3C,  // MSG_WAIT_PICK
-    gUnknown_85CC888 + 0x5C,  // MSG_POWDER
-    gUnknown_85CC888 + 0x90,  // MSG_SAVING
-    gUnknown_85CC888 + 0xBC,  // MSG_PLAY_AGAIN
-    gUnknown_85CC888 + 0xD4,  // MSG_NO_BERRIES
-    gUnknown_85CC888 + 0xF4,  // MSG_DROPPED
-    gUnknown_85CC888 + 0x114, // MSG_TIMES_UP
-    gUnknown_85CC888 + 0x134, // MSG_COMM_STANDBY
+    gText_ReadyPickBerry,               // MSG_PICK_BERRY
+    gText_WaitForAllChooseBerry,        // MSG_WAIT_PICK
+    gText_EndedWithXUnitsPowder,        // MSG_POWDER
+    gText_RecordingGameResults,         // MSG_SAVING
+    gText_PlayBerryCrushAgain,          // MSG_PLAY_AGAIN
+    gText_YouHaveNoBerries,             // MSG_NO_BERRIES
+    gText_MemberDroppedOut,             // MSG_DROPPED
+    gText_TimesUpNoGoodPowder,          // MSG_TIMES_UP
+    gText_CommunicationStandby2,        // MSG_COMM_STANDBY
 };
 
 // 0x82C5EE0

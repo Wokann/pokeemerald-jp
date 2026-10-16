@@ -2,13 +2,13 @@
 #define POKEEMERALD_JP_DODRIO2_H
 
 #include "global.h"
+#include "strings.h"
 #include "dodrio_berry_picking.h"
 #include "link.h"
 #include "sprite.h"
 
 // Dodrio sprite/rank data (0x82CEA6C..0x82CECF0)
 
-extern const u8 gUnknown_85CCA7C[];        // JP text region (asm)
 extern const u16 sDodrioNormalPal[];       // 0x82CB6BC (Dodrio graphics section)
 extern const u16 sDodrioShinyPal[];        // 0x82CB6DC (Dodrio graphics section)
 extern const u16 sStatus_Pal[];             // 0x82CB6FC
@@ -318,14 +318,14 @@ const struct WinCoords *const sNameWindowCoords[] =
     sNameWindowCoords_5Players,
 };
 
-// 0x82CEC68 - JP ranking number labels "1:".."5:" (mid94 text region).
+// 0x82CEC68 - Ranking number labels.
 const u8 *const sRankingTexts[] =
 {
-    gUnknown_85CCA7C + 0x2FB,
-    gUnknown_85CCA7C + 0x2FE,
-    gUnknown_85CCA7C + 0x301,
-    gUnknown_85CCA7C + 0x304,
-    gUnknown_85CCA7C + 0x307,
+    gText_1Colon,
+    gText_2Colon,
+    gText_3Colon,
+    gText_4Colon,
+    gText_5Colon,
 };
 
 // 0x82CEC7C - JP values differ from US (last X coord 220 vs 212, Y coords differ).

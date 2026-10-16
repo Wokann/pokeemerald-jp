@@ -415,7 +415,6 @@ extern EWRAM_DATA struct StatusBar *sStatusBar;
 extern void sub_08028268(struct Sprite *sprite); // DoDodrioMissedAnim
 extern void sub_080282D8(struct Sprite *sprite); // DoDodrioIntroAnim
 extern const struct WindowTemplate sRecordsWindowTemplate;
-extern const u8 gUnknown_85CCA7C[];
 extern const u8 sRecordDigitCounts[];
 extern const u8 *const sRecordsLabels[];
 extern const u16 sRecordLabelYs[];
@@ -3963,7 +3962,7 @@ void sub_0802792C(u8 windowId)
     LoadUserWindowBorderGfx_(windowId, 0x21D, 0xD0);
     DrawTextBorderOuter(windowId, 0x21D, 13);
     FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
-    AddTextPrinterParameterized(windowId, FONT_NORMAL, gUnknown_85CCA7C + 0x279, 0, 2, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_BerryPickingRecords, 0, 2, TEXT_SKIP_DRAW, NULL);
     for (i = 0; i < 3; i++)
     {
         ConvertIntToDecimalStringN(gStringVar1, recordNums[i], STR_CONV_MODE_LEFT_ALIGN, sRecordDigitCounts[i]);

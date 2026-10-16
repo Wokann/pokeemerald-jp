@@ -1,4 +1,5 @@
 #include "global.h"
+#include "strings.h"
 #include "frontier_util.h"
 
 #define FRONTIER_UTIL_DATA __attribute__((section(".rodata.frontier_util_data")))
@@ -3265,11 +3266,11 @@ __attribute__((naked)) void PrintHallRecords(void)
         "_081A2F54: .4byte gRecordsWindowId\n\t"
         "_081A2F58: .4byte gUnknown_85DD2D8\n\t"
         "_081A2F5C: .4byte gStringVar4\n\t"
-        "_081A2F60: .4byte gUnknown_85CCA7C + 0x429\n\t"
-        "_081A2F64: .4byte gUnknown_85CCA7C + 0x43D\n\t"
-        "_081A2F68: .4byte gUnknown_85CCA7C + 0x440\n\t"
-        "_081A2F6C: .4byte gUnknown_85CCA7C + 0x443\n\t"
-        "_081A2F70: .4byte gUnknown_85CCA7C + 0x446\n\t"
+        "_081A2F60: .4byte gText_LinkContestResults\n\t"
+        "_081A2F64: .4byte gText_1st\n\t"
+        "_081A2F68: .4byte gText_2nd\n\t"
+        "_081A2F6C: .4byte gText_3rd\n\t"
+        "_081A2F70: .4byte gText_4th\n\t"
         "_081A2F74: .4byte gText_Cool\n\t"
         "_081A2F78: .4byte gText_Beauty\n\t"
         "_081A2F7C: .4byte gText_Cute\n\t"

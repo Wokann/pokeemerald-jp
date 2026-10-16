@@ -11,6 +11,8 @@
 #define STRINGS_BATTLE_FACTORY_SWAP_TEXT __attribute__((section(".rodata.strings_battle_factory_swap_text"), aligned(1)))
 #define STRINGS_POKENAV_SHARED_TEXT __attribute__((section(".rodata.strings_pokenav_shared_text"), aligned(1)))
 #define STRINGS_CHAT_PROFILE_TEXT __attribute__((section(".rodata.strings_chat_profile_text"), aligned(1)))
+#define STRINGS_EGG_HATCH_TEXT __attribute__((section(".rodata.strings_egg_hatch_text")))
+#define STRINGS_BERRY_CRUSH_TEXT __attribute__((section(".rodata.strings_berry_crush_text")))
 #define STRINGS_FRONTIER_PASS_TEXT __attribute__((section(".rodata.strings_frontier_pass_text"), aligned(1)))
 #define STRINGS_MYSTERY_EVENT_TEXT __attribute__((section(".rodata.strings_mystery_event_text"), aligned(1)))
 #define STRINGS_TRAINER_STATUS_TEXT __attribute__((section(".rodata.strings_trainer_status_text"), aligned(1)))
@@ -775,6 +777,65 @@ STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallMay_Strategy[] = _("しょう�
 STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallMay_Pokemon[] = _("どんな　ポケモンでも　つかうわ");
 STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallMay_Intro1[] = _("ポケモン　つれて　おとうさんの");
 STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallMay_Intro2[] = _("けんきゅうを　おてつだい！");
+
+STRINGS_EGG_HATCH_TEXT const u8 gText_HatchedFromEgg[] = _(
+    "タマゴが　かえって\n"
+    "{STR_VAR_1}が　うまれた！");
+STRINGS_EGG_HATCH_TEXT const u8 gText_NicknameHatchPrompt[] = _(
+    "うまれた　{STR_VAR_1}に\n"
+    "ニックネームを　つけますか？");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_ReadyPickBerry[] = _(
+    "きのみクラッシュを　はじめます\n"
+    "つかう　きのみを　えらんでください\p");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_WaitForAllChooseBerry[] = _(
+    "ほかの　メンバーが　きのみを\n"
+    "えらぶまで　おまちください");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_EndedWithXUnitsPowder[] = _(
+    "{PAUSE_MUSIC}{PLAY_BGM MUS_LEVEL_UP}サラサラな　こなが\n"
+    "{STR_VAR_1}　できた！{RESUME_MUSIC}\p"
+    "ごうけいで　こなの　りょうが\n"
+    "{STR_VAR_2}　になった！\p");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_RecordingGameResults[] = _(
+    "ゲームの　けっかを\n"
+    "ポケモンレポートに　かきこんでいます\l"
+    "しばらく　おまちください");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_PlayBerryCrushAgain[] = _(
+    "きのみクラッシュで　もういちど\n"
+    "あそびますか？");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_YouHaveNoBerries[] = _(
+    "つかう　きのみが　ありません\n"
+    "ゲームを　しゅうりょうします");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_MemberDroppedOut[] = _(
+    "ぬけた　メンバーが　いるので\n"
+    "ゲームを　しゅうりょうします");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_TimesUpNoGoodPowder[] = _(
+    "じかんぎれ　です\p"
+    "よいこな　が\n"
+    "できあがり　ませんでした\p");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_CommunicationStandby2[] = _("つうしんたいきちゅう");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_1DotBlueF700[] = _("1,{COLOR 8}{SHADOW 9}{DYNAMIC 0}");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_1DotF700[] = _("1,{DYNAMIC 0}");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_SpaceTimes2[] = _("かい");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_XDotY[] = _("{STR_VAR_1},{STR_VAR_2}");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_Var1Berry[] = _("{STR_VAR_1}のみ");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_TimeColon[] = _("じかん");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_PressingSpeed[] = _("おすはやさ");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_Silkiness[] = _("サラサラぐあい");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_StrVar1[] = _("{STR_VAR_1}");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_SpaceMin[] = _("ふん");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_XDotY2[] = _("{STR_VAR_1},{STR_VAR_2}");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_SpaceSec[] = _("びょう");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_XDotY3[] = _("{STR_VAR_1},{STR_VAR_2}");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_TimesPerSec[] = _("かい/びょう");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_Var1Percent[] = _("{STR_VAR_1}パーセント");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_PressesRankings[] = _("おした　かいすう　ランキング");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_CrushingResults[] = _("つぶした　けっか");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_NeatnessRankings[] = _("ていねいさ　ランキング");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_CoopRankings[] = _("たすけあい　ランキング");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_PressingPowerRankings[] = _("おすつよさ　ランキング");
+// JP also aligns the final two ranking labels; the last slot has three zero pad bytes.
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_BerryCrush2[] = _("きのみクラッシュ");
+ALIGNED(4) STRINGS_BERRY_CRUSH_TEXT const u8 gText_PressingSpeedRankings[16] = _("おすはやさ　ランキング！");
 
 STRINGS_FRONTIER_PASS_TEXT const u8 gText_Var1Players[] = _("{STR_VAR_1}にんよう");
 STRINGS_FRONTIER_PASS_TEXT const u8 gText_SymbolsEarned[] = _("てにいれた　シンボル");

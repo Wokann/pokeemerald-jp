@@ -2,15 +2,13 @@
 #define POKEEMERALD_JP_BERRY_CRUSH3_H
 
 #include "global.h"
+#include "strings.h"
 #include "berry_crush.h"
 #include "link.h"
 
 // Berry-crush results/commands/map data (0x82C7C40..0x82C7F24)
 
 struct BerryCrushGame;
-
-extern const u8 gUnknown_85CC9D4[];        // JP text region (asm)
-extern const u8 gText_CrushingResults[];   // JP text (asm)
 
 u32 Cmd_BeginNormalPaletteFade(struct BerryCrushGame *game, u8 *args);
 u32 Cmd_WaitPaletteFade(struct BerryCrushGame *game, u8 *args);
@@ -38,18 +36,15 @@ u32 Cmd_StopGame(struct BerryCrushGame *game, u8 *args);
 u32 Cmd_CloseLink(struct BerryCrushGame *game, u8 *args);
 u32 Cmd_Quit(struct BerryCrushGame *game, u8 *args);
 
-// 0x82C7C40 - JP results texts.  The first three live in the mid94 text
-// region (gUnknown_85CC9D4), the rankings labels are sub-strings of
-// gText_CrushingResults; they get gText_* names when that region is
-// converted to C.
+// 0x82C7C40 - Berry Crush results text labels.
 const u8 *const sResultsTexts[] =
 {
-    gUnknown_85CC9D4 + 0x8,       // "かい$"
-    gUnknown_85CC9D4 + 0xC,       // "{STR_VAR_1},{STR_VAR_2}$"
-    gUnknown_85CC9D4 + 0x14,      // "{STR_VAR_1}のみ$"
-    gText_CrushingResults + 0xC,  // "ていねいさ　ランキング$"
-    gText_CrushingResults + 0x18, // "たすけあい　ランキング$"
-    gText_CrushingResults + 0x24, // "おすつよさ　ランキング$"
+    gText_SpaceTimes2,
+    gText_XDotY,
+    gText_Var1Berry,
+    gText_NeatnessRankings,
+    gText_CoopRankings,
+    gText_PressingPowerRankings,
 };
 
 // 0x82C7C58

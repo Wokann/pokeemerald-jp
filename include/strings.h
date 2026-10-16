@@ -2924,6 +2924,10 @@ extern const u8 gText_JumpsInARow[];
 extern const u8 gText_BestScore2[];
 extern const u8 gText_ExcellentsInARow[];
 
+// Egg hatch
+extern const u8 gText_HatchedFromEgg[];
+extern const u8 gText_NicknameHatchPrompt[];
+
 // Berry crush
 extern const u8 gText_Var1Berry[];
 extern const u8 gText_XDotY[];

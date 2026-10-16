@@ -1,4 +1,5 @@
 #include "global.h"
+#include "strings.h"
 #include "battle.h"
 #include "egg_hatch.h"
 #include "bg.h"
@@ -97,8 +98,6 @@ extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId,
 extern const u16 gUnknown_8305D24[];
 extern const u16 gUnknown_8305D84[];
 extern const u16 gUnknown_8304D04[];
-extern const u8 gUnknown_85CC874[];
-extern const u8 gUnknown_85CC888[];
 
 static const u16 sEggPalette[] EGG_HATCH_GRAPHICS_DATA = INCGFX_U16("graphics/pokemon/egg/normal.pal", ".gbapal");
 static const u8 sEggHatchTiles[] EGG_HATCH_GRAPHICS_DATA = INCGFX_U8("graphics/pokemon/egg/hatch.png", ".4bpp");
@@ -659,7 +658,7 @@ static void CB2_EggHatch_1(void)
         break;
     case 5:
         GetBoxMonNick(&gPlayerParty[sEggHatchData->eggPartyId], gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gUnknown_85CC874);
+        StringExpandPlaceholders(gStringVar4, gText_HatchedFromEgg);
         EggHatchPrintMessage(sEggHatchData->windowId, gStringVar4, 0, 3, TEXT_SKIP_DRAW);
         PlayFanfare(MUS_EVOLVED);
         sEggHatchData->state++;
@@ -676,7 +675,7 @@ static void CB2_EggHatch_1(void)
         break;
     case 8:
         GetBoxMonNick(&gPlayerParty[sEggHatchData->eggPartyId], gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gUnknown_85CC888);
+        StringExpandPlaceholders(gStringVar4, gText_NicknameHatchPrompt);
         EggHatchPrintMessage(sEggHatchData->windowId, gStringVar4, 0, 2, 1);
         sEggHatchData->state++;
         break;

@@ -2,6 +2,7 @@
 #define POKEEMERALD_JP_DODRIO1_H
 
 #include "global.h"
+#include "strings.h"
 #include "bg.h"
 #include "dodrio_berry_picking.h"
 #include "link.h"
@@ -10,8 +11,6 @@
 // Dodrio berry-picking tables and window templates (0x82CB314..0x82CB67C)
 
 struct DodrioGame;
-
-extern const u8 gUnknown_85CCA7C[]; // JP text region (asm); sRecordsLabels point into it
 
 void DoGameIntro(void);
 void InitCountdown(void);
@@ -101,12 +100,12 @@ const struct WindowTemplate sRecordsWindowTemplate =
     .baseBlock = 1,
 };
 
-// 0x82CB3C0 - JP records labels; texts still live in the mid94 text region.
+// 0x82CB3C0 - Records labels.
 const u8 *const sRecordsLabels[] =
 {
-    gUnknown_85CCA7C + 0x28A, // "きのみをとった　かいすう$"
-    gUnknown_85CCA7C + 0x297, // "さいこう　とくてん$"
-    gUnknown_85CCA7C + 0x2A1, // "5にんで　きのみを\nつづけてとった　かいすう$"
+    gText_BerriesPicked,
+    gText_BestScore,
+    gText_BerriesInRowFivePlayers,
 };
 
 // 0x82CB3CC

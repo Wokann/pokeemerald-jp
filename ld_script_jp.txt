@@ -10266,7 +10266,8 @@ SECTIONS {
         src/strings.o(.rodata.strings_trainer_status_text);
         src/data/text/region_texts108.o(.rodata);
         src/strings.o(.rodata.strings_chat_profile_text);
-        data/data_b2d.o(.rodata.mid94);
+        src/strings.o(.rodata.strings_egg_hatch_text);
+        src/strings.o(.rodata.strings_berry_crush_text);
         src/strings.o(.rodata.strings_frontier_pass_text);
         src/strings.o(.rodata.strings_minigame_text);
         src/strings.o(.rodata.strings_ereader_text);

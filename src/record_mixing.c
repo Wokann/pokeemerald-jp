@@ -1,4 +1,5 @@
 #include "global.h"
+#include "strings.h"
 #include "record_mixing.h"
 
 #define NUM_SWAP_COMBOS 3
@@ -4053,8 +4054,8 @@ __attribute__((naked)) void SanitizeEmeraldBattleTowerRecord(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E8288: .4byte gUnknown_85CCA7C + 0x449\n\t"
-        "_080E828C: .4byte gUnknown_85CCA7C + 0x451\n\t"
+        "_080E8288: .4byte gText_Friend\n\t"
+        "_080E828C: .4byte gText_Pokemon3\n\t"
         ".syntax divided\n\t"
     );
 }

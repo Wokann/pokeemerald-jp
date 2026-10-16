@@ -2,13 +2,12 @@
 #define POKEEMERALD_JP_POKEJUMP4_H
 
 #include "global.h"
+#include "strings.h"
 #include "link.h"
 #include "pokemon_jump.h"
 #include "window.h"
 
 // Pokemon-jump name/mon coords, records data, static 321 countdown pal/gfx (0x82D1A88..0x82D1F54)
-
-extern const u8 gUnknown_85CCA7C[]; // JP text region (asm)
 
 extern const u16 s321Start_Static_Pal[];
 extern const u8 s321Start_Static_Gfx[];
@@ -55,12 +54,12 @@ const struct WindowTemplate sWindowTemplate_Records =
     .baseBlock = 1,
 };
 
-// 0x82D1B04 - JP records labels (mid94 text region).
+// 0x82D1B04 - Records labels.
 const u8 *const sRecordsTexts[3] =
 {
-    gUnknown_85CCA7C + 0x393, // "さいこう　ジャンプかいすう$"
-    gUnknown_85CCA7C + 0x3A1, // "さいこう　とくてん$"
-    gUnknown_85CCA7C + 0x3AB, // "れんぞく　EXCELLENT$"
+    gText_JumpsInARow,
+    gText_BestScore2,
+    gText_ExcellentsInARow,
 };
 
 // 0x82D1B10 - static 321-start countdown palette (16 colors).
