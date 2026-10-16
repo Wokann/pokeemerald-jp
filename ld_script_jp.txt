@@ -10469,6 +10469,7 @@ SECTIONS {
         src/graphics.o(.rodata.battle_anim_stat_change_graphics);
         src/graphics.o(.rodata.pokemon_graphics_prefix);
         data/data_b2d_gfx_pokemon_main.o(.rodata);
+        src/graphics.o(.rodata.pokemon_question_mark_graphics);
         data/data_rest2c.o(.rodata);
         src/graphics.o(.rodata.battle_environment_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_after_battle_environment_graphics);

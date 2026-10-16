@@ -596,9 +596,3 @@ gUnknown_82D961C_2_Pal: @ 0x8D77524
 	.globl gUnknown_82D961C_3_Pal
 gUnknown_82D961C_3_Pal: @ 0x8D7754C
 	.incbin "graphics/trainers/palettes/gUnknown_82D961C_3.gbapal.lz"
-	.globl gMonIcon_QuestionMark
-gMonIcon_QuestionMark: @ 0x8D77574
-	.incbin "graphics/pokemon/questionmark/icon.4bpp"
-	.globl gMonFootprint_QuestionMark
-gMonFootprint_QuestionMark: @ 0x8D77974
-	.incbin "graphics/pokemon/question_mark/footprint.1bpp"

@@ -511,7 +511,7 @@ BATTLE_INTERFACE_BALL_STATUS_BAR_GRAPHICS const u32 gBattleInterface_BallStatusB
 
 #define EGG_ICON_GRAPHICS __attribute__((section(".rodata.egg_icon_graphics"), aligned(1)))
 
-EGG_ICON_GRAPHICS const u8 gMonIcon_Egg[] = INCBIN_U8("graphics/pokemon/egg/icon.4bpp");
+EGG_ICON_GRAPHICS const u8 gMonIcon_Egg[] = INCGFX_U8("graphics/pokemon/egg/icon.png", ".4bpp");
 
 #undef EGG_ICON_GRAPHICS
 
@@ -653,10 +653,12 @@ __asm__(
 
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
-MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(
-    "graphics/pokemon/icon_palettes/icon_palette_0.pal.gbapal",
-    "graphics/pokemon/icon_palettes/icon_palette_1.pal.gbapal",
-    "graphics/pokemon/icon_palettes/icon_palette_2.pal.gbapal");
+MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] =
+{
+    INCGFX_U16("graphics/pokemon/icon_palettes/icon_palette_0.pal", ".gbapal"),
+    INCGFX_U16("graphics/pokemon/icon_palettes/icon_palette_1.pal", ".gbapal"),
+    INCGFX_U16("graphics/pokemon/icon_palettes/icon_palette_2.pal", ".gbapal"),
+};
 #undef MON_ICON_PALETTES_DATA
 
 #define POKEBLOCK_GRAPHICS __attribute__((section(".rodata.pokeblock_graphics")))
@@ -1223,6 +1225,13 @@ BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimUnusedPal_Unknown2[] = INCBIN_U
 #include "data/graphics/pokemon.h"
 
 #undef POKEMON_GRAPHICS_PREFIX
+
+#define QUESTION_MARK_GRAPHICS __attribute__((section(".rodata.pokemon_question_mark_graphics"), aligned(1)))
+
+QUESTION_MARK_GRAPHICS const u8 gMonIcon_QuestionMark[] = INCGFX_U8("graphics/pokemon/question_mark/icon.png", ".4bpp");
+QUESTION_MARK_GRAPHICS const u8 gMonFootprint_QuestionMark[] = INCGFX_U8("graphics/pokemon/question_mark/footprint.png", ".1bpp");
+
+#undef QUESTION_MARK_GRAPHICS
 
 #define SUMMARY_EFFECT_DATA __attribute__((section(".rodata.summary_screen_effect_data")))
 

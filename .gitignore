@@ -112,6 +112,8 @@ graphics/misc/evo_sparkle.png.4bpp.lz
 !graphics/diploma/tiles.4bpp.lz
 !graphics/trainers/**/*.4bpp
 !graphics/pokemon/**/*.4bpp
+# Pokemon icons rebuild from tracked PNG sources; other raw graphics stay visible.
+graphics/pokemon/**/icon*.png.4bpp
 # Egg Hatch now rebuilds these from tracked PNG/PAL sources via scaninc.
 graphics/pokemon/egg/hatch.png.4bpp
 graphics/pokemon/egg/shard.png.4bpp
