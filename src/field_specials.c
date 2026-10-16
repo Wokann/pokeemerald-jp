@@ -3232,7 +3232,7 @@ __attribute__((naked)) void warp0_in_pokecenter(void)
         "	b _08139F04\n\t"
         "	.align 2, 0\n\t"
         "_08139EEC: .4byte gUnknown_2031F7C\n\t"
-        "_08139EF0: .4byte sElevatorLightCycles + 0x9\n\t"
+        "_08139EF0: .4byte sPokemonCenters_UsedWarp\n\t"
         "_08139EF4: .4byte 0x0000FFFF\n\t"
         "_08139EF8:\n\t"
         "	adds r1, #2\n\t"
@@ -6611,7 +6611,7 @@ __attribute__((naked)) bool8 InPokemonCenter()
         "	b _0813BA40\n\t"
         "	.align 2, 0\n\t"
         "_0813BA28: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BA2C: .4byte gUnknown_8592E7C + 0x24\n\t"
+        "_0813BA2C: .4byte sPokemonCenters_CurrentMap\n\t"
         "_0813BA30: .4byte 0x0000FFFF\n\t"
         "_0813BA34:\n\t"
         "	adds r1, #2\n\t"
@@ -6923,3 +6923,52 @@ static const struct WindowTemplate sFrontierExchangeCorner_ItemIconWindowTemplat
 };
 
 #include "data/battle_frontier/battle_frontier_exchange_corner.h"
+
+static const u16 sPokemonCenters_UsedWarp[] __attribute__((section(".rodata.field_specials_pokemon_centers_used_warp"), aligned(2))) =
+{
+    MAP_OLDALE_TOWN_POKEMON_CENTER_1F,
+    MAP_DEWFORD_TOWN_POKEMON_CENTER_1F,
+    MAP_LAVARIDGE_TOWN_POKEMON_CENTER_1F,
+    MAP_FALLARBOR_TOWN_POKEMON_CENTER_1F,
+    MAP_VERDANTURF_TOWN_POKEMON_CENTER_1F,
+    MAP_PACIFIDLOG_TOWN_POKEMON_CENTER_1F,
+    MAP_PETALBURG_CITY_POKEMON_CENTER_1F,
+    MAP_SLATEPORT_CITY_POKEMON_CENTER_1F,
+    MAP_MAUVILLE_CITY_POKEMON_CENTER_1F,
+    MAP_RUSTBORO_CITY_POKEMON_CENTER_1F,
+    MAP_FORTREE_CITY_POKEMON_CENTER_1F,
+    MAP_LILYCOVE_CITY_POKEMON_CENTER_1F,
+    MAP_MOSSDEEP_CITY_POKEMON_CENTER_1F,
+    MAP_SOOTOPOLIS_CITY_POKEMON_CENTER_1F,
+    MAP_EVER_GRANDE_CITY_POKEMON_CENTER_1F,
+    MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F,
+    MAP_BATTLE_FRONTIER_POKEMON_CENTER_1F,
+    MAP_UNION_ROOM,
+    MAP_UNDEFINED,
+};
+
+static const u16 sPokemonCenters_CurrentMap[] __attribute__((section(".rodata.field_specials_pokemon_centers_current_map"), aligned(2))) =
+{
+    MAP_OLDALE_TOWN_POKEMON_CENTER_1F,
+    MAP_DEWFORD_TOWN_POKEMON_CENTER_1F,
+    MAP_LAVARIDGE_TOWN_POKEMON_CENTER_1F,
+    MAP_FALLARBOR_TOWN_POKEMON_CENTER_1F,
+    MAP_VERDANTURF_TOWN_POKEMON_CENTER_1F,
+    MAP_PACIFIDLOG_TOWN_POKEMON_CENTER_1F,
+    MAP_PETALBURG_CITY_POKEMON_CENTER_1F,
+    MAP_SLATEPORT_CITY_POKEMON_CENTER_1F,
+    MAP_MAUVILLE_CITY_POKEMON_CENTER_1F,
+    MAP_RUSTBORO_CITY_POKEMON_CENTER_1F,
+    MAP_FORTREE_CITY_POKEMON_CENTER_1F,
+    MAP_LILYCOVE_CITY_POKEMON_CENTER_1F,
+    MAP_MOSSDEEP_CITY_POKEMON_CENTER_1F,
+    MAP_SOOTOPOLIS_CITY_POKEMON_CENTER_1F,
+    MAP_EVER_GRANDE_CITY_POKEMON_CENTER_1F,
+    MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F,
+    MAP_BATTLE_FRONTIER_POKEMON_CENTER_1F,
+    MAP_BATTLE_COLOSSEUM_2P,
+    MAP_TRADE_CENTER,
+    MAP_RECORD_CORNER,
+    MAP_BATTLE_COLOSSEUM_4P,
+    MAP_UNDEFINED,
+};

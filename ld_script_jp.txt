@@ -10055,11 +10055,11 @@ SECTIONS {
         src/field_specials.o(.rodata.field_specials_slot_machine_selectors);
         src/field_specials.o(.rodata.field_specials_mystery_gift_assert_data);
         src/field_specials.o(.rodata.field_specials_elevator_data);
-        src/data/text/region_texts63.o(.rodata);
+        src/field_specials.o(.rodata.field_specials_pokemon_centers_used_warp);
         src/field_specials.o(.rodata.field_specials_data_early);
         src/field_specials.o(.rodata.field_specials_exchange_corner_data);
         src/field_specials.o(.rodata.field_specials_data);
-        src/data/text/region_texts64.o(.rodata);
+        src/field_specials.o(.rodata.field_specials_pokemon_centers_current_map);
         src/field_specials.o(.rodata.field_specials_fan_club_data);
         src/battle_records.o(.rodata.battle_records_data);
         src/strings.o(.rodata.strings_battle_records);
