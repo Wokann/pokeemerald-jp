@@ -1237,7 +1237,6 @@ DATA_OBJS += $(OBJ_DIR)/data/battle_transition_legendary_resources.o
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_frontier_resources.o
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_pre_regi_resources.o
 DATA_OBJS += $(OBJ_DIR)/data/graphics/pokedex_area_screen.o
-DATA_OBJS += $(OBJ_DIR)/src/data/roulette_data.o
 
 OBJFILE := $(AS_OBJS) $(C_ASM_OBJS) $(C_OBJECTS) $(SONG_OBJS) $(DATA_OBJS)
 OBJFILE_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJFILE))
@@ -1282,6 +1281,7 @@ clean: clean-tools
 	rm -f $(JP_BATTLE_ANIM_REMAINING_ASSETS) $(JP_BATTLE_ANIM_REMAINING_INTERMEDIATES)
 	rm -f $(JP_CONTEST_ASSETS) $(JP_CONTEST_INTERMEDIATES)
 	rm -f $(JP_ITEM_ICON_ASSETS) $(JP_ITEM_ICON_INTERMEDIATES)
+	rm -f $(JP_ROULETTE_ASSETS) $(JP_ROULETTE_INTERMEDIATES)
 	rm -f $(JP_CONTEST_RESULTS_ASSETS)
 	rm -f $(JP_FRONTIER_UI_ASSETS) $(JP_FRONTIER_UI_INTERMEDIATES)
 
@@ -2922,9 +2922,6 @@ $(OBJ_DIR)/data/graphics/pokedex_area_screen.o: data/graphics/pokedex_area_scree
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 
-$(OBJ_DIR)/src/data/roulette_data.o: src/data/roulette_data.s baserom_jp.gba
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(OBJ_DIR)/data/battle_transition_regis_resources.o: data/battle_transition_regis_resources.s graphics/battle_transitions/regis.4bpp graphics/battle_transitions/regice.gbapal graphics/battle_transitions/registeel.gbapal graphics/battle_transitions/regirock.gbapal graphics/battle_transitions/regice.bin graphics/battle_transitions/registeel.bin graphics/battle_transitions/regirock.bin graphics/battle_transitions/unused.gbapal
 	@mkdir -p $(dir $@)
@@ -6245,3 +6242,93 @@ $(JP_ITEM_ICON_ASSETS): %.lz: % Makefile | tools
 
 $(C_BUILDDIR)/graphics.o: src/data/graphics/items.h $(JP_ITEM_ICON_ASSETS)
 $(C_BUILDDIR)/item_icon.o: src/data/item_icon_table.h include/graphics.h
+
+JP_ROULETTE_ASSETS := graphics/roulette/azurill.png.gbapal \
+	graphics/roulette/ball.png.4bpp.lz \
+	graphics/roulette/ball.png.gbapal \
+	graphics/roulette/ball_counter.png.4bpp.lz \
+	graphics/roulette/ball_counter.png.gbapal \
+	graphics/roulette/center.png.4bpp.lz \
+	graphics/roulette/credit.png.4bpp.lz \
+	graphics/roulette/credit.png.gbapal \
+	graphics/roulette/cursor.png.4bpp.lz \
+	graphics/roulette/cursor.png.gbapal \
+	graphics/roulette/grid.bin.lz \
+	graphics/roulette/grid_icons.png.4bpp.lz \
+	graphics/roulette/grid_icons.png.gbapal \
+	graphics/roulette/headers.png.4bpp.lz \
+	graphics/roulette/makuhita.png.gbapal \
+	graphics/roulette/multiplier.png.4bpp.lz \
+	graphics/roulette/numbers.png.4bpp.lz \
+	graphics/roulette/roulette_tilt.4bpp.lz \
+	graphics/roulette/shadow.png.4bpp.lz \
+	graphics/roulette/shadow.png.gbapal \
+	graphics/roulette/shroomish.png.gbapal \
+	graphics/roulette/skitty.png.gbapal \
+	graphics/roulette/tailow.png.gbapal \
+	graphics/roulette/unused_1.pal.gbapal \
+	graphics/roulette/unused_2.pal.gbapal \
+	graphics/roulette/unused_3.pal.gbapal \
+	graphics/roulette/unused_4.pal.gbapal \
+	graphics/roulette/wheel.bin.lz \
+	graphics/roulette/wheel.png.8bpp.lz \
+	graphics/roulette/wheel.png.gbapal \
+	graphics/roulette/wheel_icons.4bpp.lz \
+	graphics/roulette/window.png.4bpp.lz \
+	graphics/roulette/wynaut.png.gbapal
+
+JP_ROULETTE_INTERMEDIATES := graphics/roulette/azurill.png.4bpp \
+	graphics/roulette/ball.png.4bpp \
+	graphics/roulette/ball_counter.png.4bpp \
+	graphics/roulette/center.png.4bpp \
+	graphics/roulette/credit.png.4bpp \
+	graphics/roulette/cursor.png.4bpp \
+	graphics/roulette/grid_icons.png.4bpp \
+	graphics/roulette/headers.png.4bpp \
+	graphics/roulette/makuhita.png.4bpp \
+	graphics/roulette/multiplier.png.4bpp \
+	graphics/roulette/numbers.png.4bpp \
+	graphics/roulette/roulette_tilt.4bpp \
+	graphics/roulette/shadow.png.4bpp \
+	graphics/roulette/shroomish.png.4bpp \
+	graphics/roulette/skitty.png.4bpp \
+	graphics/roulette/tailow.png.4bpp \
+	graphics/roulette/wheel.png.8bpp \
+	graphics/roulette/wheel_icons.4bpp \
+	graphics/roulette/window.png.4bpp \
+	graphics/roulette/wynaut.png.4bpp
+
+graphics/roulette/azurill.png.4bpp graphics/roulette/ball.png.4bpp graphics/roulette/ball_counter.png.4bpp graphics/roulette/center.png.4bpp graphics/roulette/credit.png.4bpp graphics/roulette/cursor.png.4bpp graphics/roulette/grid_icons.png.4bpp graphics/roulette/headers.png.4bpp graphics/roulette/makuhita.png.4bpp graphics/roulette/multiplier.png.4bpp graphics/roulette/numbers.png.4bpp graphics/roulette/shadow.png.4bpp graphics/roulette/shroomish.png.4bpp graphics/roulette/skitty.png.4bpp graphics/roulette/tailow.png.4bpp graphics/roulette/window.png.4bpp graphics/roulette/wynaut.png.4bpp: %.png.4bpp: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/roulette/wheel.png.8bpp: %.png.8bpp: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/roulette/azurill.png.gbapal graphics/roulette/ball.png.gbapal graphics/roulette/ball_counter.png.gbapal graphics/roulette/credit.png.gbapal graphics/roulette/cursor.png.gbapal graphics/roulette/grid_icons.png.gbapal graphics/roulette/makuhita.png.gbapal graphics/roulette/shadow.png.gbapal graphics/roulette/shroomish.png.gbapal graphics/roulette/skitty.png.gbapal graphics/roulette/tailow.png.gbapal graphics/roulette/wheel.png.gbapal graphics/roulette/wynaut.png.gbapal: %.png.gbapal: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/roulette/unused_1.pal.gbapal graphics/roulette/unused_2.pal.gbapal graphics/roulette/unused_3.pal.gbapal graphics/roulette/unused_4.pal.gbapal: %.pal.gbapal: %.pal Makefile | tools
+	$(GFX) $< $@
+
+graphics/roulette/roulette_tilt.4bpp: graphics/roulette/shroomish.png.4bpp graphics/roulette/tailow.png.4bpp Makefile
+	cat $(filter %.4bpp,$^) >$@
+
+graphics/roulette/wheel_icons.4bpp: graphics/roulette/wynaut.png.4bpp graphics/roulette/azurill.png.4bpp graphics/roulette/skitty.png.4bpp graphics/roulette/makuhita.png.4bpp Makefile
+	cat $(filter %.4bpp,$^) >$@
+
+$(filter %.lz,$(JP_ROULETTE_ASSETS)): %.lz: % Makefile | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/graphics.o: $(JP_ROULETTE_ASSETS)
+
+$(C_BUILDDIR)/roulette.d: src/roulette.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -I include -I "" $<
+
+-include $(C_BUILDDIR)/roulette.d
+
+$(C_BUILDDIR)/roulette.o: src/roulette.c charmap.txt $(JP_ROULETTE_ASSETS) include/global.h include/malloc.h include/bg.h include/coins.h include/decompress.h include/event_data.h include/field_screen_effect.h include/gpu_regs.h include/graphics.h include/m4a.h include/main.h include/menu.h include/menu_helpers.h include/overworld.h include/palette.h include/palette_util.h include/random.h include/roulette.h include/rtc.h include/scanline_effect.h include/script.h include/sound.h include/sprite.h include/string_util.h include/strings.h include/task.h include/trig.h include/tv.h include/window.h include/constants/coins.h include/constants/rgb.h include/constants/roulette.h include/constants/songs.h
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/roulette.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/roulette.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/roulette.gen.s

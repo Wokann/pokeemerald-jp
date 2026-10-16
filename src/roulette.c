@@ -1,5 +1,2060 @@
 #include "global.h"
+#include "malloc.h"
+#include "bg.h"
+#include "coins.h"
+#include "decompress.h"
+#include "event_data.h"
+#include "field_screen_effect.h"
+#include "gpu_regs.h"
+#include "graphics.h"
+#include "m4a.h"
+#include "main.h"
+#include "menu.h"
+#include "menu_helpers.h"
+#include "overworld.h"
+#include "palette.h"
+#include "palette_util.h"
+#include "random.h"
 #include "roulette.h"
+#include "rtc.h"
+#include "scanline_effect.h"
+#include "script.h"
+#include "sound.h"
+#include "sprite.h"
+#include "string_util.h"
+#include "strings.h"
+#include "task.h"
+#include "trig.h"
+#include "tv.h"
+#include "window.h"
+#include "constants/coins.h"
+#include "constants/rgb.h"
+#include "constants/roulette.h"
+#include "constants/songs.h"
+
+#define BALLS_PER_ROUND 6
+
+// "Board" is used in this file to refer to both the wheel and the bet selection grid
+#define NUM_BOARD_COLORS 3 // Rows on grid
+#define NUM_BOARD_POKES  4 // Columns on grid
+#define NUM_ROULETTE_SLOTS (NUM_BOARD_COLORS * NUM_BOARD_POKES)
+
+// The degree change between each slot on the roulette wheel
+#define DEGREES_PER_SLOT (360 / NUM_ROULETTE_SLOTS)
+
+// Where in the slot the ball will drop when landing
+#define SLOT_MIDPOINT (DEGREES_PER_SLOT / 2 - 1)
+
+// IDs for grid selections when betting
+#define SELECTION_NONE      0
+#define COL_WYNAUT          1
+#define COL_AZURILL         2
+#define COL_SKITTY          3
+#define COL_MAKUHITA        4
+#define ROW_ORANGE          (COL_MAKUHITA + 1)
+#define SQU_ORANGE_WYNAUT   (ROW_ORANGE + COL_WYNAUT)
+#define SQU_ORANGE_AZURILL  (ROW_ORANGE + COL_AZURILL)
+#define SQU_ORANGE_SKITTY   (ROW_ORANGE + COL_SKITTY)
+#define SQU_ORANGE_MAKUHITA (ROW_ORANGE + COL_MAKUHITA)
+#define ROW_GREEN           (SQU_ORANGE_MAKUHITA + 1)
+#define SQU_GREEN_WYNAUT    (ROW_GREEN + COL_WYNAUT)
+#define SQU_GREEN_AZURILL   (ROW_GREEN + COL_AZURILL)
+#define SQU_GREEN_SKITTY    (ROW_GREEN + COL_SKITTY)
+#define SQU_GREEN_MAKUHITA  (ROW_GREEN + COL_MAKUHITA)
+#define ROW_PURPLE          (SQU_GREEN_MAKUHITA + 1)
+#define SQU_PURPLE_WYNAUT   (ROW_PURPLE + COL_WYNAUT)
+#define SQU_PURPLE_AZURILL  (ROW_PURPLE + COL_AZURILL)
+#define SQU_PURPLE_SKITTY   (ROW_PURPLE + COL_SKITTY)
+#define SQU_PURPLE_MAKUHITA (ROW_PURPLE + COL_MAKUHITA)
+#define NUM_GRID_SELECTIONS SQU_PURPLE_MAKUHITA
+
+// Get the id of the col/row from the selection ID
+// e.g. GET_ROW(SQU_PURPLE_SKITTY) is ROW_PURPLE
+#define GET_COL(selectionId) ((selectionId) % (NUM_BOARD_POKES + 1))
+#define GET_ROW(selectionId) ((selectionId) / (NUM_BOARD_POKES + 1) * (NUM_BOARD_POKES + 1))
+
+// Get the col/row index from the selection ID
+// e.g. GET_ROW_IDX(SQU_PURPLE_SKITTY) is 2 (purple being the 3rd row)
+#define GET_COL_IDX(selectionId) (selectionId - 1)
+#define GET_ROW_IDX(selectionId) (selectionId / 5 - 1)
+
+// Flags for the above selections, used to set which spaces have been hit or bet on
+#define F_WYNAUT_COL      (1 << COL_WYNAUT)
+#define F_AZURILL_COL     (1 << COL_AZURILL)
+#define F_SKITTY_COL      (1 << COL_SKITTY)
+#define F_MAKUHITA_COL    (1 << COL_MAKUHITA)
+#define F_ORANGE_ROW      (1 << ROW_ORANGE)
+#define F_ORANGE_WYNAUT   (1 << SQU_ORANGE_WYNAUT)
+#define F_ORANGE_AZURILL  (1 << SQU_ORANGE_AZURILL)
+#define F_ORANGE_SKITTY   (1 << SQU_ORANGE_SKITTY)
+#define F_ORANGE_MAKUHITA (1 << SQU_ORANGE_MAKUHITA)
+#define F_GREEN_ROW       (1 << ROW_GREEN)
+#define F_GREEN_WYNAUT    (1 << SQU_GREEN_WYNAUT)
+#define F_GREEN_AZURILL   (1 << SQU_GREEN_AZURILL)
+#define F_GREEN_SKITTY    (1 << SQU_GREEN_SKITTY)
+#define F_GREEN_MAKUHITA  (1 << SQU_GREEN_MAKUHITA)
+#define F_PURPLE_ROW      (1 << ROW_PURPLE)
+#define F_PURPLE_WYNAUT   (1 << SQU_PURPLE_WYNAUT)
+#define F_PURPLE_AZURILL  (1 << SQU_PURPLE_AZURILL)
+#define F_PURPLE_SKITTY   (1 << SQU_PURPLE_SKITTY)
+#define F_PURPLE_MAKUHITA (1 << SQU_PURPLE_MAKUHITA)
+
+// Flags for flashing selections on the roulette wheel
+#define F_FLASH_COLOR_O_WYNAUT   (1 << 0)
+#define F_FLASH_COLOR_G_AZURILL  (1 << 1)
+#define F_FLASH_COLOR_P_SKITTY   (1 << 2)
+#define F_FLASH_COLOR_O_MAKUHITA (1 << 3)
+#define F_FLASH_COLOR_G_WYNAUT   (1 << 4)
+#define F_FLASH_COLOR_P_AZURILL  (1 << 5)
+#define F_FLASH_COLOR_O_SKITTY   (1 << 6)
+#define F_FLASH_COLOR_G_MAKUHITA (1 << 7)
+#define F_FLASH_COLOR_P_WYNAUT   (1 << 8)
+#define F_FLASH_COLOR_O_AZURILL  (1 << 9)
+#define F_FLASH_COLOR_G_SKITTY   (1 << 10)
+#define F_FLASH_COLOR_P_MAKUHITA (1 << 11)
+#define F_FLASH_OUTER_EDGES      (1 << 12) // when the player wins
+#define FLASH_ICON               (NUM_ROULETTE_SLOTS + 1)
+#define FLASH_ICON_2             (FLASH_ICON + 1)
+#define FLASH_ICON_3             (FLASH_ICON + 2)
+#define F_FLASH_ICON             (1 << FLASH_ICON)
+#define F_FLASH_COLUMN           (1 << FLASH_ICON | 1 << FLASH_ICON_2 | 1 << FLASH_ICON_3)
+
+#define MAX_MULTIPLIER 12
+
+#define PALTAG_SHADOW 1
+#define PALTAG_BALL 2
+#define PALTAG_BALL_COUNTER 3
+#define PALTAG_CURSOR 4
+#define PALTAG_INTERFACE 5
+#define PALTAG_SHROOMISH 6
+#define PALTAG_TAILLOW   7
+#define PALTAG_GRID_ICONS 8
+#define PALTAG_WYNAUT    9
+#define PALTAG_AZURILL   10
+#define PALTAG_SKITTY    11
+#define PALTAG_MAKUHITA  12
+
+#define GFXTAG_WHEEL_ICONS 0
+#define GFXTAG_HEADERS 4
+#define GFXTAG_GRID_ICONS 5
+#define GFXTAG_WHEEL_CENTER 6
+#define GFXTAG_CREDIT 7
+#define GFXTAG_CREDIT_DIGIT 8
+#define GFXTAG_MULTIPLIER 9
+#define GFXTAG_BALL_COUNTER 10
+#define GFXTAG_CURSOR 11
+#define GFXTAG_BALL 12
+#define GFXTAG_SHROOMISH_TAILLOW 13
+#define GFXTAG_SHADOW 14
+
+// 2 different Roulette tables with 2 different rates (normal vs service day special)
+// & 1 gets which table, >> 7 gets if ROULETTE_SPECIAL_RATE is set
+#define GET_MIN_BET_ID(var) (((var) & 1) + (((var) >> 7) * 2))
+
+// Having Shroomish or Taillow in the party can make rolls more consistent in length
+// It also increases the likelihood that, if they appear to unstick a ball, they'll move it to a slot the player bet on
+#define HAS_SHROOMISH  (1 << 0)
+#define HAS_TAILLOW    (1 << 1)
+
+#define NO_DELAY 0xFFFF
+
+enum {
+    BALL_STATE_ROLLING,
+    BALL_STATE_STUCK,
+    BALL_STATE_LANDED = 0xFF,
+};
+
+enum {
+    SELECT_STATE_WAIT,
+    SELECT_STATE_DRAW,
+    SELECT_STATE_UPDATE,
+    SELECT_STATE_ERASE = 0xFF,
+};
+
+// Roulette uses a large amount of sprites, and stores ids for these in a single array
+// Many are looped over rather than referenced directly
+enum {
+    SPR_WHEEL_BALL_1,
+    SPR_WHEEL_BALL_2,
+    SPR_WHEEL_BALL_3,
+    SPR_WHEEL_BALL_4,
+    SPR_WHEEL_BALL_5,
+    SPR_WHEEL_BALL_6,
+    SPR_WHEEL_CENTER,
+    SPR_WHEEL_ICON_ORANGE_WYNAUT,
+    SPR_WHEEL_ICON_GREEN_AZURILL,
+    SPR_WHEEL_ICON_PURPLE_SKITTY,
+    SPR_WHEEL_ICON_ORANGE_MAKUHITA,
+    SPR_WHEEL_ICON_GREEN_WYNAUT,
+    SPR_WHEEL_ICON_PURPLE_AZURILL,
+    SPR_WHEEL_ICON_ORANGE_SKITTY,
+    SPR_WHEEL_ICON_GREEN_MAKUHITA,
+    SPR_WHEEL_ICON_PURPLE_WYNAUT,
+    SPR_WHEEL_ICON_ORANGE_AZURILL,
+    SPR_WHEEL_ICON_GREEN_SKITTY,
+    SPR_WHEEL_ICON_PURPLE_MAKUHITA,
+    SPR_19, // Unused
+    SPR_CREDIT,
+    SPR_CREDIT_DIG_1,
+    SPR_CREDIT_DIG_10,
+    SPR_CREDIT_DIG_100,
+    SPR_CREDIT_DIG_1000,
+    SPR_MULTIPLIER,
+    SPR_BALL_COUNTER_1,
+    SPR_BALL_COUNTER_2,
+    SPR_BALL_COUNTER_3,
+    SPR_GRID_ICON_ORANGE_WYNAUT,
+    SPR_GRID_ICON_GREEN_AZURILL,
+    SPR_GRID_ICON_PURPLE_SKITTY,
+    SPR_GRID_ICON_ORANGE_MAKUHITA,
+    SPR_GRID_ICON_GREEN_WYNAUT,
+    SPR_GRID_ICON_PURPLE_AZURILL,
+    SPR_GRID_ICON_ORANGE_SKITTY,
+    SPR_GRID_ICON_GREEN_MAKUHITA,
+    SPR_GRID_ICON_PURPLE_WYNAUT,
+    SPR_GRID_ICON_ORANGE_AZURILL,
+    SPR_GRID_ICON_GREEN_SKITTY,
+    SPR_GRID_ICON_PURPLE_MAKUHITA,
+    SPR_POKE_HEADER_1,
+    SPR_POKE_HEADER_2,
+    SPR_POKE_HEADER_3,
+    SPR_POKE_HEADER_4,
+    SPR_COLOR_HEADER_1,
+    SPR_COLOR_HEADER_2,
+    SPR_COLOR_HEADER_3,
+    SPR_WIN_SLOT_CURSOR,
+    SPR_GRID_BALL_1,
+    SPR_GRID_BALL_2,
+    SPR_GRID_BALL_3,
+    SPR_GRID_BALL_4,
+    SPR_GRID_BALL_5,
+    SPR_GRID_BALL_6,
+    SPR_CLEAR_MON, // Shroomish/Taillow
+    SPR_CLEAR_MON_SHADOW_1,
+    SPR_CLEAR_MON_SHADOW_2,
+    SPR_58, // Here below unused
+    SPR_59,
+    SPR_60,
+    SPR_61,
+    SPR_62,
+    SPR_63,
+};
+
+// Start points for sprite IDs that are looped over
+#define SPR_WHEEL_BALLS SPR_WHEEL_BALL_1
+#define SPR_WHEEL_ICONS SPR_WHEEL_ICON_ORANGE_WYNAUT
+#define SPR_BALL_COUNTER SPR_BALL_COUNTER_1
+#define SPR_CREDIT_DIGITS SPR_CREDIT_DIG_1
+#define SPR_GRID_ICONS SPR_GRID_ICON_ORANGE_WYNAUT
+#define SPR_POKE_HEADERS SPR_POKE_HEADER_1
+#define SPR_COLOR_HEADERS SPR_COLOR_HEADER_1
+#define SPR_GRID_BALLS SPR_GRID_BALL_1
+
+struct Shroomish
+{
+    u16 startAngle;
+    u16 dropAngle;
+    u16 fallSlowdown;
+};
+
+struct Taillow
+{
+    u16 baseDropDelay;
+    u16 rightStartAngle;
+    u16 leftStartAngle;
+};
+
+struct RouletteTable
+{
+    u8 minBet; // Never read
+    u8 randDistanceHigh;
+    u8 randDistanceLow;
+    u8 wheelSpeed;
+    u8 wheelDelay;
+    struct Shroomish shroomish;
+    struct Taillow taillow;
+    u16 ballSpeed;
+    u16 baseTravelDist;
+    f32 var1C;
+};
+
+struct GridSelection
+{
+    u8 spriteIdOffset;
+    u8 baseMultiplier:4;
+    u8 column:4; // Never read
+    u8 row;      // Never read
+    u8 x;
+    u8 y;
+    u8 var05;    // Never read
+    u8 tilemapOffset;
+    u32 flag;
+    u32 inSelectionFlags;
+    u16 flashFlags;
+};
+
+struct RouletteSlot
+{
+    u8 id1; // Never read
+    u8 id2; // Never read
+    u8 gridSquare;
+    u32 flag;
+};
+
+void sub_08140A30(void);
+void sub_08140A5C(void);
+void sub_081429E0(void);
+void sub_08142A44(void);
+void sub_0814334C(void);
+void sub_081439D8(void);
+void sub_08143A68(void);
+void sub_08144F2C(void);
+void sub_08145360(void);
+
+#define ROULETTE_DATA __attribute__((section(".rodata.roulette_data"), aligned(1)))
+
+ROULETTE_DATA static const u16 sWheel_Pal[] = INCGFX_U16("graphics/roulette/wheel.png", ".gbapal");
+
+ROULETTE_DATA static const u32 sGrid_Tilemap[] = INCGFX_U32("graphics/roulette/grid.bin", ".lz");
+
+ROULETTE_DATA static const u32 sWheel_Tilemap[] = INCGFX_U32("graphics/roulette/wheel.bin", ".lz");
+
+ROULETTE_DATA static const struct BgTemplate sBgTemplates[] =
+{
+    // Text box
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    // Selection grid
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 4,
+        .screenSize = 1,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+    // Wheel
+    {
+        .bg = 2,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 6,
+        .screenSize = 1,
+        .paletteMode = 1,
+        .priority = 2,
+        .baseTile = 0
+    }
+};
+
+// JP keeps one window entry at native tile block 0xD6.
+ROULETTE_DATA static const struct WindowTemplate sWindowTemplates[] =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 3,
+        .tilemapTop = 15,
+        .width = 24,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0xD6
+    },
+};
+
+ROULETTE_DATA static const struct GridSelection sGridSelections[NUM_GRID_SELECTIONS + 1] =
+{
+    [SELECTION_NONE] = {
+        .spriteIdOffset = 0xFF,
+        .baseMultiplier = 0,
+        .column = 0,
+        .row = 0,
+        .x = 7,
+        .y = 7,
+        .var05 = 0,
+        .tilemapOffset = 0,
+        .flag = 0,
+        .inSelectionFlags = 0,
+        .flashFlags = 0,
+    },
+    [COL_WYNAUT] = {
+        .spriteIdOffset = 12,
+        .baseMultiplier = NUM_BOARD_POKES,
+        .column = 1,
+        .row = 0,
+        .x = 17,
+        .y = 7,
+        .var05 = 0,
+        .tilemapOffset = 0,
+        .flag = F_WYNAUT_COL,
+        .inSelectionFlags = F_WYNAUT_COL | F_ORANGE_WYNAUT | F_GREEN_WYNAUT | F_PURPLE_WYNAUT,
+        .flashFlags = F_FLASH_COLUMN,
+    },
+    [COL_AZURILL] = {
+        .spriteIdOffset = 13,
+        .baseMultiplier = NUM_BOARD_POKES,
+        .column = 2,
+        .row = 0,
+        .x = 20,
+        .y = 7,
+        .var05 = 0,
+        .tilemapOffset = 0,
+        .flag = F_AZURILL_COL,
+        .inSelectionFlags = F_AZURILL_COL | F_ORANGE_AZURILL | F_GREEN_AZURILL | F_PURPLE_AZURILL,
+        .flashFlags = F_FLASH_COLUMN,
+    },
+    [COL_SKITTY] = {
+        .spriteIdOffset = 14,
+        .baseMultiplier = NUM_BOARD_POKES,
+        .column = 3,
+        .row = 0,
+        .x = 23,
+        .y = 7,
+        .var05 = 0,
+        .tilemapOffset = 0,
+        .flag = F_SKITTY_COL,
+        .inSelectionFlags = F_SKITTY_COL | F_ORANGE_SKITTY | F_GREEN_SKITTY | F_PURPLE_SKITTY,
+        .flashFlags = F_FLASH_COLUMN,
+    },
+    [COL_MAKUHITA] = {
+        .spriteIdOffset = 15,
+        .baseMultiplier = NUM_BOARD_POKES,
+        .column = 4,
+        .row = 0,
+        .x = 26,
+        .y = 7,
+        .var05 = 0,
+        .tilemapOffset = 0,
+        .flag = F_MAKUHITA_COL,
+        .inSelectionFlags = F_MAKUHITA_COL | F_ORANGE_MAKUHITA | F_GREEN_MAKUHITA | F_PURPLE_MAKUHITA,
+        .flashFlags = F_FLASH_COLUMN,
+    },
+    [ROW_ORANGE] = {
+        .spriteIdOffset = 16,
+        .baseMultiplier = NUM_BOARD_COLORS,
+        .column = 0,
+        .row = 1,
+        .x = 14,
+        .y = 10,
+        .var05 = 0,
+        .tilemapOffset = 12,
+        .flag = F_ORANGE_ROW,
+        .inSelectionFlags = F_ORANGE_ROW | F_ORANGE_WYNAUT | F_ORANGE_AZURILL | F_ORANGE_SKITTY | F_ORANGE_MAKUHITA,
+        .flashFlags = F_FLASH_COLOR_O_WYNAUT | F_FLASH_COLOR_O_AZURILL | F_FLASH_COLOR_O_SKITTY | F_FLASH_COLOR_O_MAKUHITA,
+    },
+    [SQU_ORANGE_WYNAUT] = {
+        .spriteIdOffset = 0,
+        .baseMultiplier = NUM_ROULETTE_SLOTS,
+        .column = 1,
+        .row = 1,
+        .x = 17,
+        .y = 10,
+        .var05 = 3,
+        .tilemapOffset = 3,
+        .flag = F_ORANGE_WYNAUT,
+        .inSelectionFlags = F_ORANGE_WYNAUT,
+        .flashFlags = F_FLASH_ICON | F_FLASH_COLOR_O_WYNAUT,
+    },
+    [SQU_ORANGE_AZURILL] = {
+        .spriteIdOffset = 9,
+        .baseMultiplier = NUM_ROULETTE_SLOTS,
+        .column = 2,
+        .row = 1,
+        .x = 20,
+        .y = 10,
+        .var05 = 3,
+        .tilemapOffset = 3,
+        .flag = F_ORANGE_AZURILL,
+        .inSelectionFlags = F_ORANGE_AZURILL,
+        .flashFlags = F_FLASH_ICON | F_FLASH_COLOR_O_AZURILL,
+    },
+    [SQU_ORANGE_SKITTY] = {
+        .spriteIdOffset = 6,
+        .baseMultiplier = NUM_ROULETTE_SLOTS,
+        .column = 3,
+        .row = 1,
+        .x = 23,
+        .y = 10,
+        .var05 = 3,
+        .tilemapOffset = 3,
+        .flag = F_ORANGE_SKITTY,
+        .inSelectionFlags = F_ORANGE_SKITTY,
+        .flashFlags = F_FLASH_ICON | F_FLASH_COLOR_O_SKITTY,
+    },
+    [SQU_ORANGE_MAKUHITA] = {
+        .spriteIdOffset = 3,
+        .baseMultiplier = NUM_ROULETTE_SLOTS,
+        .column = 4,
+        .row = 1,
+        .x = 26,
+        .y = 10,
+        .var05 = 3,
+        .tilemapOffset = 3,
+        .flag = F_ORANGE_MAKUHITA,
+        .inSelectionFlags = F_ORANGE_MAKUHITA,
+        .flashFlags = F_FLASH_ICON | F_FLASH_COLOR_O_MAKUHITA,
+    },
+    [ROW_GREEN] = {
+        .spriteIdOffset = 17,
+        .baseMultiplier = NUM_BOARD_COLORS,
+        .column = 0,
+        .row = 2,
+        .x = 14,
+        .y = 13,
+        .var05 = 3,
+        .tilemapOffset = 15,
+        .flag = F_GREEN_ROW,
+        .inSelectionFlags = F_GREEN_ROW | F_GREEN_WYNAUT | F_GREEN_AZURILL | F_GREEN_SKITTY | F_GREEN_MAKUHITA,
+        .flashFlags = F_FLASH_COLOR_G_WYNAUT | F_FLASH_COLOR_G_AZURILL | F_FLASH_COLOR_G_SKITTY | F_FLASH_COLOR_G_MAKUHITA,
+    },
+    [SQU_GREEN_WYNAUT] = {
+        .spriteIdOffset = 4,
+        .baseMultiplier = NUM_ROULETTE_SLOTS,
+        .column = 1,
+        .row = 2,
+        .x = 17,
+        .y = 13,
+        .var05 = 6,
+        .tilemapOffset = 6,
+        .flag = F_GREEN_WYNAUT,
+        .inSelectionFlags = F_GREEN_WYNAUT,
+        .flashFlags = F_FLASH_ICON | F_FLASH_COLOR_G_WYNAUT,
+    },
+    [SQU_GREEN_AZURILL] = {
+        .spriteIdOffset = 1,
+        .baseMultiplier = NUM_ROULETTE_SLOTS,
+        .column = 2,
+        .row = 2,
+        .x = 20,
+        .y = 13,
+        .var05 = 6,
+        .tilemapOffset = 6,
+        .flag = F_GREEN_AZURILL,
+        .inSelectionFlags = F_GREEN_AZURILL,
+        .flashFlags = F_FLASH_ICON | F_FLASH_COLOR_G_AZURILL,
+    },
+    [SQU_GREEN_SKITTY] = {
+        .spriteIdOffset = 10,
+        .baseMultiplier = NUM_ROULETTE_SLOTS,
+        .column = 3,
+        .row = 2,
+        .x = 23,
+        .y = 13,
+        .var05 = 6,
+        .tilemapOffset = 6,
+        .flag = F_GREEN_SKITTY,
+        .inSelectionFlags = F_GREEN_SKITTY,
+        .flashFlags = F_FLASH_ICON | F_FLASH_COLOR_G_SKITTY,
+    },
+    [SQU_GREEN_MAKUHITA] = {
+        .spriteIdOffset = 7,
+        .baseMultiplier = NUM_ROULETTE_SLOTS,
+        .column = 4,
+        .row = 2,
+        .x = 26,
+        .y = 13,
+        .var05 = 6,
+        .tilemapOffset = 6,
+        .flag = F_GREEN_MAKUHITA,
+        .inSelectionFlags = F_GREEN_MAKUHITA,
+        .flashFlags = F_FLASH_ICON | F_FLASH_COLOR_G_MAKUHITA,
+    },
+    [ROW_PURPLE] = {
+        .spriteIdOffset = 18,
+        .baseMultiplier = NUM_BOARD_COLORS,
+        .column = 0,
+        .row = 3,
+        .x = 14,
+        .y = 16,
+        .var05 = 6,
+        .tilemapOffset = 18,
+        .flag = F_PURPLE_ROW,
+        .inSelectionFlags = F_PURPLE_ROW | F_PURPLE_WYNAUT | F_PURPLE_AZURILL | F_PURPLE_SKITTY | F_PURPLE_MAKUHITA,
+        .flashFlags = F_FLASH_COLOR_P_WYNAUT | F_FLASH_COLOR_P_AZURILL | F_FLASH_COLOR_P_SKITTY | F_FLASH_COLOR_P_MAKUHITA,
+    },
+    [SQU_PURPLE_WYNAUT] = {
+        .spriteIdOffset = 8,
+        .baseMultiplier = NUM_ROULETTE_SLOTS,
+        .column = 1,
+        .row = 3,
+        .x = 17,
+        .y = 16,
+        .var05 = 9,
+        .tilemapOffset = 9,
+        .flag = F_PURPLE_WYNAUT,
+        .inSelectionFlags = F_PURPLE_WYNAUT,
+        .flashFlags = F_FLASH_ICON | F_FLASH_COLOR_P_WYNAUT,
+    },
+    [SQU_PURPLE_AZURILL] = {
+        .spriteIdOffset = 5,
+        .baseMultiplier = NUM_ROULETTE_SLOTS,
+        .column = 2,
+        .row = 3,
+        .x = 20,
+        .y = 16,
+        .var05 = 9,
+        .tilemapOffset = 9,
+        .flag = F_PURPLE_AZURILL,
+        .inSelectionFlags = F_PURPLE_AZURILL,
+        .flashFlags = F_FLASH_ICON | F_FLASH_COLOR_P_AZURILL,
+    },
+    [SQU_PURPLE_SKITTY] = {
+        .spriteIdOffset = 2,
+        .baseMultiplier = NUM_ROULETTE_SLOTS,
+        .column = 3,
+        .row = 3,
+        .x = 23,
+        .y = 16,
+        .var05 = 9,
+        .tilemapOffset = 9,
+        .flag = F_PURPLE_SKITTY,
+        .inSelectionFlags = F_PURPLE_SKITTY,
+        .flashFlags = F_FLASH_ICON | F_FLASH_COLOR_P_SKITTY,
+    },
+    [SQU_PURPLE_MAKUHITA] = {
+        .spriteIdOffset = 11,
+        .baseMultiplier = NUM_ROULETTE_SLOTS,
+        .column = 4,
+        .row = 3,
+        .x = 26,
+        .y = 16,
+        .var05 = 9,
+        .tilemapOffset = 9,
+        .flag = F_PURPLE_MAKUHITA,
+        .inSelectionFlags = F_PURPLE_MAKUHITA,
+        .flashFlags = F_FLASH_ICON | F_FLASH_COLOR_P_MAKUHITA,
+    },
+};
+
+ROULETTE_DATA static const struct RouletteSlot sRouletteSlots[] =
+{
+    {
+        .id1 = 0,
+        .id2 = 1,
+        .gridSquare = SQU_ORANGE_WYNAUT,
+        .flag = F_ORANGE_WYNAUT,
+    },
+    {
+        .id1 = 1,
+        .id2 = 3,
+        .gridSquare = SQU_GREEN_AZURILL,
+        .flag = F_GREEN_AZURILL,
+    },
+    {
+        .id1 = 2,
+        .id2 = 5,
+        .gridSquare = SQU_PURPLE_SKITTY,
+        .flag = F_PURPLE_SKITTY,
+    },
+    {
+        .id1 = 3,
+        .id2 = 7,
+        .gridSquare = SQU_ORANGE_MAKUHITA,
+        .flag = F_ORANGE_MAKUHITA,
+    },
+    {
+        .id1 = 4,
+        .id2 = 9,
+        .gridSquare = SQU_GREEN_WYNAUT,
+        .flag = F_GREEN_WYNAUT,
+    },
+    {
+        .id1 = 5,
+        .id2 = 11,
+        .gridSquare = SQU_PURPLE_AZURILL,
+        .flag = F_PURPLE_AZURILL,
+    },
+    {
+        .id1 = 6,
+        .id2 = 13,
+        .gridSquare = SQU_ORANGE_SKITTY,
+        .flag = F_ORANGE_SKITTY,
+    },
+    {
+        .id1 = 7,
+        .id2 = 15,
+        .gridSquare = SQU_GREEN_MAKUHITA,
+        .flag = F_GREEN_MAKUHITA,
+    },
+    {
+        .id1 = 8,
+        .id2 = 17,
+        .gridSquare = SQU_PURPLE_WYNAUT,
+        .flag = F_PURPLE_WYNAUT,
+    },
+    {
+        .id1 = 9,
+        .id2 = 19,
+        .gridSquare = SQU_ORANGE_AZURILL,
+        .flag = F_ORANGE_AZURILL,
+    },
+    {
+        .id1 = 10,
+        .id2 = 21,
+        .gridSquare = SQU_GREEN_SKITTY,
+        .flag = F_GREEN_SKITTY,
+    },
+    {
+        .id1 = 11,
+        .id2 = 23,
+        .gridSquare = SQU_PURPLE_MAKUHITA,
+        .flag = F_PURPLE_MAKUHITA,
+    },
+};
+
+ROULETTE_DATA static const u8 sTableMinBets[] = {1, 3, 1, 6};
+
+ROULETTE_DATA static const struct RouletteTable sRouletteTables[] =
+{
+    // Left table
+    {
+        .minBet = 1,
+        .randDistanceHigh = DEGREES_PER_SLOT * 2,
+        .randDistanceLow = DEGREES_PER_SLOT,
+        .wheelSpeed = 1,
+        .wheelDelay = 1,
+        .shroomish = {
+            .startAngle = 45,
+            .dropAngle = 30,
+            .fallSlowdown = 1,
+        },
+        .taillow = {
+            .baseDropDelay = 75,
+            .rightStartAngle = 27,
+            .leftStartAngle = 24,
+        },
+        .ballSpeed = 10,
+        .baseTravelDist = 360,
+        .var1C = -0.5f
+    },
+    // Right table
+    {
+        .minBet = 3,
+        .randDistanceHigh = DEGREES_PER_SLOT,
+        .randDistanceLow = DEGREES_PER_SLOT / 2,
+        .wheelSpeed = 1,
+        .wheelDelay = 0,
+        .shroomish = {
+            .startAngle = 75,
+            .dropAngle = 60,
+            .fallSlowdown = 2,
+        },
+        .taillow = {
+            .baseDropDelay = 0,
+            .rightStartAngle = 54,
+            .leftStartAngle = 48,
+        },
+        .ballSpeed = 10,
+        .baseTravelDist = 270,
+        .var1C = -1.0f
+    }
+};
+
+ROULETTE_DATA static const struct RouletteFlashSettings sFlashData_Colors[NUM_ROULETTE_SLOTS + 1] =
+{
+    { // F_FLASH_COLOR_O_WYNAUT
+        .color = FLASHUTIL_USE_EXISTING_COLOR,
+        .paletteOffset = BG_PLTT_ID(0) + 5,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = -1,
+        .numFadeCycles = 8,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+    { // F_FLASH_COLOR_G_AZURILL
+        .color = FLASHUTIL_USE_EXISTING_COLOR,
+        .paletteOffset = BG_PLTT_ID(0) + 10,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = -1,
+        .numFadeCycles = 8,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+    { // F_FLASH_COLOR_P_SKITTY
+        .color = FLASHUTIL_USE_EXISTING_COLOR,
+        .paletteOffset = BG_PLTT_ID(1) + 5,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = -1,
+        .numFadeCycles = 8,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+    { // F_FLASH_COLOR_O_MAKUHITA
+        .color = FLASHUTIL_USE_EXISTING_COLOR,
+        .paletteOffset = BG_PLTT_ID(5) + 5,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = -1,
+        .numFadeCycles = 8,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+    { // F_FLASH_COLOR_G_WYNAUT
+        .color = FLASHUTIL_USE_EXISTING_COLOR,
+        .paletteOffset = BG_PLTT_ID(5) + 10,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = -1,
+        .numFadeCycles = 8,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+    { // F_FLASH_COLOR_P_AZURILL
+        .color = FLASHUTIL_USE_EXISTING_COLOR,
+        .paletteOffset = BG_PLTT_ID(6) + 5,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = -1,
+        .numFadeCycles = 8,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+    { // F_FLASH_COLOR_O_SKITTY
+        .color = FLASHUTIL_USE_EXISTING_COLOR,
+        .paletteOffset = BG_PLTT_ID(7) + 5,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = -1,
+        .numFadeCycles = 8,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+    { // F_FLASH_COLOR_G_MAKUHITA
+        .color = FLASHUTIL_USE_EXISTING_COLOR,
+        .paletteOffset = BG_PLTT_ID(7) + 10,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = -1,
+        .numFadeCycles = 8,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+    { // F_FLASH_COLOR_P_WYNAUT
+        .color = FLASHUTIL_USE_EXISTING_COLOR,
+        .paletteOffset = BG_PLTT_ID(8) + 5,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = -1,
+        .numFadeCycles = 8,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+    { // F_FLASH_COLOR_O_AZURILL
+        .color = FLASHUTIL_USE_EXISTING_COLOR,
+        .paletteOffset = BG_PLTT_ID(9) + 5,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = -1,
+        .numFadeCycles = 8,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+    { // F_FLASH_COLOR_G_SKITTY
+        .color = FLASHUTIL_USE_EXISTING_COLOR,
+        .paletteOffset = BG_PLTT_ID(9) + 10,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = -1,
+        .numFadeCycles = 8,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+    { // F_FLASH_COLOR_P_MAKUHITA
+        .color = FLASHUTIL_USE_EXISTING_COLOR,
+        .paletteOffset = BG_PLTT_ID(10) + 5,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = -1,
+        .numFadeCycles = 8,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+    { // F_FLASH_OUTER_EDGES
+        .color = RGB(22, 30, 29),
+        .paletteOffset = BG_PLTT_ID(2) + 8,
+        .numColors = 2,
+        .delay = 10,
+        .unk6 = -1,
+        .numFadeCycles = 14,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+};
+
+ROULETTE_DATA static const struct RouletteFlashSettings sFlashData_PokeIcons[NUM_BOARD_COLORS] =
+{
+    [GET_ROW_IDX(ROW_ORANGE)] = {
+        .color = RGB(31, 31, 20),
+        .paletteOffset = OBJ_PLTT_ID(0) + 1,
+        .numColors = 5,
+        .delay = 30,
+        .unk6 = -1,
+        .numFadeCycles = 14,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+    [GET_ROW_IDX(ROW_GREEN)] = {
+        .color = RGB(27, 31, 31),
+        .paletteOffset = OBJ_PLTT_ID(0) + 6,
+        .numColors = 5,
+        .delay = 30,
+        .unk6 = -1,
+        .numFadeCycles = 14,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    },
+    [GET_ROW_IDX(ROW_PURPLE)] = {
+        .color = RGB(31, 27, 31),
+        .paletteOffset = OBJ_PLTT_ID(0) + 11,
+        .numColors = 5,
+        .delay = 30,
+        .unk6 = -1,
+        .numFadeCycles = 14,
+        .unk7_5 = -2,
+        .colorDeltaDir = 0,
+    }
+};
+
+// Unused JP text retains EOS and three native zero padding bytes.
+ROULETTE_DATA static const u8 sUnusedText_NumberOfCoins[8] = _("{STR_VAR_1}まい");
+
+ROULETTE_DATA static const struct YesNoFuncTable sYesNoTable_AcceptMinBet =
+{
+    (TaskFunc)sub_081429E0,
+    (TaskFunc)sub_08142A44
+};
+
+ROULETTE_DATA static const struct YesNoFuncTable sYesNoTable_KeepPlaying =
+{
+    (TaskFunc)sub_08140A30,
+    (TaskFunc)sub_08140A5C
+};
+
+ROULETTE_DATA static const u16 sInitTableBgColors[3] = {RGB(24, 4, 10), RGB(10, 19, 6), RGB(24, 4, 10)};
+
+ROULETTE_DATA static const s8 sGridMoveOffsets[4] = {-5, 5, -1, 1};
+
+ROULETTE_DATA static const u16 sBallStartAngles[4] = {0, 180, 90, 270};
+
+ROULETTE_DATA static const u32 sBoardColumnFlags[NUM_BOARD_POKES] __attribute__((aligned(4))) =
+{
+    F_WYNAUT_COL | F_ORANGE_WYNAUT | F_GREEN_WYNAUT | F_PURPLE_WYNAUT,
+    F_AZURILL_COL | F_ORANGE_AZURILL | F_GREEN_AZURILL | F_PURPLE_AZURILL,
+    F_SKITTY_COL | F_ORANGE_SKITTY | F_GREEN_SKITTY | F_PURPLE_SKITTY,
+    F_MAKUHITA_COL | F_ORANGE_MAKUHITA | F_GREEN_MAKUHITA | F_PURPLE_MAKUHITA
+};
+
+ROULETTE_DATA static const u32 sBoardRowFlags[NUM_BOARD_COLORS] =
+{
+    F_ORANGE_ROW | F_ORANGE_WYNAUT | F_ORANGE_AZURILL | F_ORANGE_SKITTY | F_ORANGE_MAKUHITA,
+    F_GREEN_ROW | F_GREEN_WYNAUT | F_GREEN_AZURILL | F_GREEN_SKITTY | F_GREEN_MAKUHITA,
+    F_PURPLE_ROW | F_PURPLE_WYNAUT | F_PURPLE_AZURILL | F_PURPLE_SKITTY | F_PURPLE_MAKUHITA
+};
+
+ROULETTE_DATA static const u8 sSelectionMultipliers[5] = {0, 3, 4, 6, MAX_MULTIPLIER};
+
+ROULETTE_DATA static const u8 sFiller[3] = {};
+
+ROULETTE_DATA static const u16 sShadow_Pal[] = INCGFX_U16("graphics/roulette/shadow.png", ".gbapal");
+
+ROULETTE_DATA static const u16 sBall_Pal[] = INCGFX_U16("graphics/roulette/ball.png", ".gbapal");
+
+ROULETTE_DATA static const u16 sBallCounter_Pal[] = INCGFX_U16("graphics/roulette/ball_counter.png", ".gbapal");
+
+ROULETTE_DATA static const u16 sCursor_Pal[] = INCGFX_U16("graphics/roulette/cursor.png", ".gbapal");
+
+ROULETTE_DATA static const u16 sCredit_Pal[] = INCGFX_U16("graphics/roulette/credit.png", ".gbapal");
+
+ROULETTE_DATA static const u16 sShroomish_Pal[] = INCGFX_U16("graphics/roulette/shroomish.png", ".gbapal");
+
+ROULETTE_DATA static const u16 sTaillow_Pal[] = INCGFX_U16("graphics/roulette/tailow.png", ".gbapal");
+
+ROULETTE_DATA static const u16 sGridIcons_Pal[] = INCGFX_U16("graphics/roulette/grid_icons.png", ".gbapal");
+
+ROULETTE_DATA static const u16 sWynaut_Pal[] = INCGFX_U16("graphics/roulette/wynaut.png", ".gbapal");
+
+ROULETTE_DATA static const u16 sAzurill_Pal[] = INCGFX_U16("graphics/roulette/azurill.png", ".gbapal");
+
+ROULETTE_DATA static const u16 sSkitty_Pal[] = INCGFX_U16("graphics/roulette/skitty.png", ".gbapal");
+
+ROULETTE_DATA static const u16 sMakuhita_Pal[] = INCGFX_U16("graphics/roulette/makuhita.png", ".gbapal");
+
+ROULETTE_DATA static const u16 sUnused1_Pal[] = INCGFX_U16("graphics/roulette/unused_1.pal", ".gbapal");
+
+ROULETTE_DATA static const u16 sUnused2_Pal[] = INCGFX_U16("graphics/roulette/unused_2.pal", ".gbapal");
+
+ROULETTE_DATA static const u16 sUnused3_Pal[] = INCGFX_U16("graphics/roulette/unused_3.pal", ".gbapal");
+
+ROULETTE_DATA static const u16 sUnused4_Pal[] = INCGFX_U16("graphics/roulette/unused_4.pal", ".gbapal");
+
+ROULETTE_DATA static const u32 sBall_Gfx[] = INCGFX_U32("graphics/roulette/ball.png", ".4bpp.lz");
+
+ROULETTE_DATA static const u32 sBallCounter_Gfx[] = INCGFX_U32("graphics/roulette/ball_counter.png", ".4bpp.lz");
+
+ROULETTE_DATA static const u32 sShroomishTaillow_Gfx[] = INCGFX_U32("graphics/roulette/roulette_tilt.4bpp", ".lz");
+
+ROULETTE_DATA static const u32 sGridIcons_Gfx[] = INCGFX_U32("graphics/roulette/grid_icons.png", ".4bpp.lz");
+
+ROULETTE_DATA static const u32 sWheelIcons_Gfx[] = INCGFX_U32("graphics/roulette/wheel_icons.4bpp", ".lz");
+
+ROULETTE_DATA static const u32 sShadow_Gfx[] = INCGFX_U32("graphics/roulette/shadow.png", ".4bpp.lz");
+
+ROULETTE_DATA static const u32 sCursor_Gfx[] = INCGFX_U32("graphics/roulette/cursor.png", ".4bpp.lz");
+
+ROULETTE_DATA static const struct SpritePalette sSpritePalettes[] =
+{
+    { .data = sShadow_Pal,      .tag = PALTAG_SHADOW },
+    { .data = sBall_Pal,        .tag = PALTAG_BALL },
+    { .data = sBallCounter_Pal, .tag = PALTAG_BALL_COUNTER },
+    { .data = sCursor_Pal,      .tag = PALTAG_CURSOR },
+    { .data = sCredit_Pal,      .tag = PALTAG_INTERFACE },
+    { .data = sShroomish_Pal,   .tag = PALTAG_SHROOMISH },
+    { .data = sTaillow_Pal,     .tag = PALTAG_TAILLOW },
+    { .data = sGridIcons_Pal,   .tag = PALTAG_GRID_ICONS },
+    { .data = sWynaut_Pal,      .tag = PALTAG_WYNAUT },
+    { .data = sAzurill_Pal,     .tag = PALTAG_AZURILL },
+    { .data = sSkitty_Pal,      .tag = PALTAG_SKITTY },
+    { .data = sMakuhita_Pal,    .tag = PALTAG_MAKUHITA },
+    {}
+};
+
+ROULETTE_DATA static const struct OamData sOam_GridHeader =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(32x32),
+    .size = SPRITE_SIZE(32x32),
+    .priority = 1,
+};
+
+ROULETTE_DATA static const struct OamData sOam_GridIcon =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(16x16),
+    .size = SPRITE_SIZE(16x16),
+    .priority = 1,
+};
+
+ROULETTE_DATA static const struct OamData sOam_WheelIcon =
+{
+    .y = 60,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(16x32),
+    .size = SPRITE_SIZE(16x32),
+    .priority = 2,
+};
+
+ROULETTE_DATA static const union AnimCmd sAffineAnim_Unused1[] =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAffineAnims_Unused1[] =
+{
+    sAffineAnim_Unused1
+};
+
+ROULETTE_DATA static const union AffineAnimCmd sAffineAnim_Unused2[] =
+{
+    AFFINEANIMCMD_END
+};
+
+ROULETTE_DATA static const union AffineAnimCmd *const sAffineAnims_Unused2[] =
+{
+    sAffineAnim_Unused2
+};
+
+ROULETTE_DATA static const struct CompressedSpriteSheet sSpriteSheet_WheelIcons =
+{
+    .data = sWheelIcons_Gfx,
+    .size = 0xC00,
+    .tag = GFXTAG_WHEEL_ICONS
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_WheelIcons[] =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_FRAME(32, 0),
+    ANIMCMD_FRAME(64, 0),
+    ANIMCMD_FRAME(72, 0),
+    ANIMCMD_FRAME(8, 0),
+    ANIMCMD_FRAME(40, 0),
+    ANIMCMD_FRAME(48, 0),
+    ANIMCMD_FRAME(80, 0),
+    ANIMCMD_FRAME(16, 0),
+    ANIMCMD_FRAME(24, 0),
+    ANIMCMD_FRAME(56, 0),
+    ANIMCMD_FRAME(88, 0),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_WheelIcon_OrangeWynaut[] =
+{
+    &sAnim_WheelIcons[0]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_WheelIcon_GreenAzurill[] =
+{
+    &sAnim_WheelIcons[1]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_WheelIcon_PurpleSkitty[] =
+{
+    &sAnim_WheelIcons[2]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_WheelIcon_OrangeMakuhita[] =
+{
+    &sAnim_WheelIcons[3]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_WheelIcon_GreenWynaut[] =
+{
+    &sAnim_WheelIcons[4]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_WheelIcon_PurpleAzurill[] =
+{
+    &sAnim_WheelIcons[5]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_WheelIcon_OrangeSkitty[] =
+{
+    &sAnim_WheelIcons[6]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_WheelIcon_GreenMakuhita[] =
+{
+    &sAnim_WheelIcons[7]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_WheelIcon_PurpleWynaut[] =
+{
+    &sAnim_WheelIcons[8]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_WheelIcon_OrangeAzurill[] =
+{
+    &sAnim_WheelIcons[9]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_WheelIcon_GreenSkitty[] =
+{
+    &sAnim_WheelIcons[10]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_WheelIcon_PurpleMakuhita[] =
+{
+    &sAnim_WheelIcons[11]
+};
+
+ROULETTE_DATA static const struct CompressedSpriteSheet sSpriteSheet_Headers =
+{
+    .data = gRouletteHeaders_Gfx,
+    .size = 0x1600,
+    .tag = GFXTAG_HEADERS
+};
+
+ROULETTE_DATA static const struct CompressedSpriteSheet sSpriteSheet_GridIcons =
+{
+    .data = sGridIcons_Gfx,
+    .size = 0x400,
+    .tag = GFXTAG_GRID_ICONS
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Headers[] =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_FRAME(16, 0),
+    ANIMCMD_FRAME(32, 0),
+    ANIMCMD_FRAME(48, 0),
+    ANIMCMD_FRAME(64, 0),
+    ANIMCMD_FRAME(80, 0),
+    ANIMCMD_FRAME(96, 0),
+    ANIMCMD_FRAME(112, 0),
+    ANIMCMD_FRAME(128, 0),
+    ANIMCMD_FRAME(144, 0),
+    ANIMCMD_FRAME(160, 0),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_GridIcons[] =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_FRAME(4, 0),
+    ANIMCMD_FRAME(8, 0),
+    ANIMCMD_FRAME(12, 0),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_WynautHeader[] =
+{
+    &sAnim_Headers[0]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_AzurillHeader[] =
+{
+    &sAnim_Headers[2]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_SkittyHeader[] =
+{
+    &sAnim_Headers[4]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_MakuhitaHeader[] =
+{
+    &sAnim_Headers[6]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_OrangeHeader[] =
+{
+    &sAnim_Headers[8]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_GreenHeader[] =
+{
+    &sAnim_Headers[9]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_PurpleHeader[] =
+{
+    &sAnim_Headers[10]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_GridIcon_Wynaut[] =
+{
+    &sAnim_GridIcons[0]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_GridIcon_Azurill[] =
+{
+    &sAnim_GridIcons[1]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_GridIcon_Skitty[] =
+{
+    &sAnim_GridIcons[2]
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnim_GridIcon_Makuhita[] =
+{
+    &sAnim_GridIcons[3]
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplates_PokeHeaders[NUM_BOARD_POKES] =
+{
+    {
+        .tileTag = GFXTAG_HEADERS,
+        .paletteTag = PALTAG_GRID_ICONS,
+        .oam = &sOam_GridHeader,
+        .anims = sAnim_WynautHeader,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_081439D8
+    },
+    {
+        .tileTag = GFXTAG_HEADERS,
+        .paletteTag = PALTAG_GRID_ICONS,
+        .oam = &sOam_GridHeader,
+        .anims = sAnim_AzurillHeader,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_081439D8
+    },
+    {
+        .tileTag = GFXTAG_HEADERS,
+        .paletteTag = PALTAG_GRID_ICONS,
+        .oam = &sOam_GridHeader,
+        .anims = sAnim_SkittyHeader,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_081439D8
+    },
+    {
+        .tileTag = GFXTAG_HEADERS,
+        .paletteTag = PALTAG_GRID_ICONS,
+        .oam = &sOam_GridHeader,
+        .anims = sAnim_MakuhitaHeader,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_081439D8
+    }
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplates_ColorHeaders[NUM_BOARD_COLORS] =
+{
+    {
+        .tileTag = GFXTAG_HEADERS,
+        .paletteTag = PALTAG_GRID_ICONS,
+        .oam = &sOam_GridHeader,
+        .anims = sAnim_OrangeHeader,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_081439D8
+    },
+    {
+        .tileTag = GFXTAG_HEADERS,
+        .paletteTag = PALTAG_GRID_ICONS,
+        .oam = &sOam_GridHeader,
+        .anims = sAnim_GreenHeader,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_081439D8
+    },
+    {
+        .tileTag = GFXTAG_HEADERS,
+        .paletteTag = PALTAG_GRID_ICONS,
+        .oam = &sOam_GridHeader,
+        .anims = sAnim_PurpleHeader,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_081439D8
+    }
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplates_GridIcons[NUM_BOARD_POKES] =
+{
+    {
+        .tileTag = GFXTAG_GRID_ICONS,
+        .paletteTag = PALTAG_GRID_ICONS,
+        .oam = &sOam_GridIcon,
+        .anims = sAnim_GridIcon_Wynaut,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_081439D8
+    },
+    {
+        .tileTag = GFXTAG_GRID_ICONS,
+        .paletteTag = PALTAG_GRID_ICONS,
+        .oam = &sOam_GridIcon,
+        .anims = sAnim_GridIcon_Azurill,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_081439D8
+    },
+    {
+        .tileTag = GFXTAG_GRID_ICONS,
+        .paletteTag = PALTAG_GRID_ICONS,
+        .oam = &sOam_GridIcon,
+        .anims = sAnim_GridIcon_Skitty,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_081439D8
+    },
+    {
+        .tileTag = GFXTAG_GRID_ICONS,
+        .paletteTag = PALTAG_GRID_ICONS,
+        .oam = &sOam_GridIcon,
+        .anims = sAnim_GridIcon_Makuhita,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_081439D8
+    }
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplates_WheelIcons[NUM_ROULETTE_SLOTS] =
+{
+    {
+        .tileTag = GFXTAG_WHEEL_ICONS,
+        .paletteTag = PALTAG_WYNAUT,
+        .oam = &sOam_WheelIcon,
+        .anims = sAnim_WheelIcon_OrangeWynaut,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_0814334C
+    },
+    {
+        .tileTag = GFXTAG_WHEEL_ICONS,
+        .paletteTag = PALTAG_AZURILL,
+        .oam = &sOam_WheelIcon,
+        .anims = sAnim_WheelIcon_GreenAzurill,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_0814334C
+    },
+    {
+        .tileTag = GFXTAG_WHEEL_ICONS,
+        .paletteTag = PALTAG_SKITTY,
+        .oam = &sOam_WheelIcon,
+        .anims = sAnim_WheelIcon_PurpleSkitty,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_0814334C
+    },
+    {
+        .tileTag = GFXTAG_WHEEL_ICONS,
+        .paletteTag = PALTAG_MAKUHITA,
+        .oam = &sOam_WheelIcon,
+        .anims = sAnim_WheelIcon_OrangeMakuhita,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_0814334C
+    },
+    {
+        .tileTag = GFXTAG_WHEEL_ICONS,
+        .paletteTag = PALTAG_WYNAUT,
+        .oam = &sOam_WheelIcon,
+        .anims = sAnim_WheelIcon_GreenWynaut,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_0814334C
+    },
+    {
+        .tileTag = GFXTAG_WHEEL_ICONS,
+        .paletteTag = PALTAG_AZURILL,
+        .oam = &sOam_WheelIcon,
+        .anims = sAnim_WheelIcon_PurpleAzurill,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_0814334C
+    },
+    {
+        .tileTag = GFXTAG_WHEEL_ICONS,
+        .paletteTag = PALTAG_SKITTY,
+        .oam = &sOam_WheelIcon,
+        .anims = sAnim_WheelIcon_OrangeSkitty,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_0814334C
+    },
+    {
+        .tileTag = GFXTAG_WHEEL_ICONS,
+        .paletteTag = PALTAG_MAKUHITA,
+        .oam = &sOam_WheelIcon,
+        .anims = sAnim_WheelIcon_GreenMakuhita,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_0814334C
+    },
+    {
+        .tileTag = GFXTAG_WHEEL_ICONS,
+        .paletteTag = PALTAG_WYNAUT,
+        .oam = &sOam_WheelIcon,
+        .anims = sAnim_WheelIcon_PurpleWynaut,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_0814334C
+    },
+    {
+        .tileTag = GFXTAG_WHEEL_ICONS,
+        .paletteTag = PALTAG_AZURILL,
+        .oam = &sOam_WheelIcon,
+        .anims = sAnim_WheelIcon_OrangeAzurill,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_0814334C
+    },
+    {
+        .tileTag = GFXTAG_WHEEL_ICONS,
+        .paletteTag = PALTAG_SKITTY,
+        .oam = &sOam_WheelIcon,
+        .anims = sAnim_WheelIcon_GreenSkitty,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_0814334C
+    },
+    {
+        .tileTag = GFXTAG_WHEEL_ICONS,
+        .paletteTag = PALTAG_MAKUHITA,
+        .oam = &sOam_WheelIcon,
+        .anims = sAnim_WheelIcon_PurpleMakuhita,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_0814334C
+    }
+};
+
+ROULETTE_DATA static const struct OamData sOam_Credit =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(64x32),
+    .size = SPRITE_SIZE(64x32),
+    .priority = 1,
+};
+
+ROULETTE_DATA static const struct OamData sOam_CreditDigit =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(8x16),
+    .size = SPRITE_SIZE(8x16),
+    .priority = 1,
+};
+
+ROULETTE_DATA static const struct OamData sOam_Multiplier =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(32x16),
+    .size = SPRITE_SIZE(32x16),
+    .priority = 1,
+};
+
+ROULETTE_DATA static const struct OamData sOam_BallCounter =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(16x8),
+    .size = SPRITE_SIZE(16x8),
+    .priority = 1,
+};
+
+ROULETTE_DATA static const struct CompressedSpriteSheet sSpriteSheets_Interface[] =
+{
+    {
+        .data = gRouletteCredit_Gfx,
+        .size = 0x400,
+        .tag = GFXTAG_CREDIT
+    },
+    {
+        .data = gRouletteNumbers_Gfx,
+        .size = 0x280,
+        .tag = GFXTAG_CREDIT_DIGIT
+    },
+    {
+        .data = gRouletteMultiplier_Gfx,
+        .size = 0x500,
+        .tag = GFXTAG_MULTIPLIER
+    },
+    {
+        .data = sBallCounter_Gfx,
+        .size = 0x140,
+        .tag = GFXTAG_BALL_COUNTER
+    },
+    {
+        .data = sCursor_Gfx,
+        .size = 0x200,
+        .tag = GFXTAG_CURSOR
+    },
+    {}
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_CreditDigit[] =
+{
+    ANIMCMD_FRAME(0, 0),  // 0
+    ANIMCMD_FRAME(2, 0),  // 1
+    ANIMCMD_FRAME(4, 0),  // 2
+    ANIMCMD_FRAME(6, 0),  // 3
+    ANIMCMD_FRAME(8, 0),  // 4
+    ANIMCMD_FRAME(10, 0), // 5
+    ANIMCMD_FRAME(12, 0), // 6
+    ANIMCMD_FRAME(14, 0), // 7
+    ANIMCMD_FRAME(16, 0), // 8
+    ANIMCMD_FRAME(18, 0), // 9
+    // BUG: Animation not terminated properly
+    // Doesn't matter in practice, the frames are set directly and not looped
+#ifdef BUGFIX
+    ANIMCMD_END
+#endif
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnims_CreditDigit[] =
+{
+    sAnim_CreditDigit
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Multiplier[] =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_FRAME(8, 0),
+    ANIMCMD_FRAME(16, 0),
+    ANIMCMD_FRAME(24, 0),
+    ANIMCMD_FRAME(32, 0),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnims_Multiplier[] =
+{
+    sAnim_Multiplier
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_BallCounter[] =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_FRAME(2, 0),
+    ANIMCMD_FRAME(4, 0),
+    ANIMCMD_FRAME(6, 0),
+    ANIMCMD_FRAME(8, 0),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnims_BallCounter[] =
+{
+    sAnim_BallCounter
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplate_Credit =
+{
+    .tileTag = GFXTAG_CREDIT,
+    .paletteTag = PALTAG_INTERFACE,
+    .oam = &sOam_Credit,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplate_CreditDigit =
+{
+    .tileTag = GFXTAG_CREDIT_DIGIT,
+    .paletteTag = PALTAG_INTERFACE,
+    .oam = &sOam_CreditDigit,
+    .anims = sAnims_CreditDigit,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplate_Multiplier =
+{
+    .tileTag = GFXTAG_MULTIPLIER,
+    .paletteTag = PALTAG_INTERFACE,
+    .oam = &sOam_Multiplier,
+    .anims = sAnims_Multiplier,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)sub_081439D8
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplate_BallCounter =
+{
+    .tileTag = GFXTAG_BALL_COUNTER,
+    .paletteTag = PALTAG_BALL_COUNTER,
+    .oam = &sOam_BallCounter,
+    .anims = sAnims_BallCounter,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplate_Cursor =
+{
+    .tileTag = GFXTAG_CURSOR,
+    .paletteTag = PALTAG_INTERFACE,
+    .oam = &sOam_GridHeader,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+ROULETTE_DATA static const struct OamData sOam_Ball =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(16x16),
+    .size = SPRITE_SIZE(16x16),
+    .priority = 2,
+};
+
+ROULETTE_DATA static const struct CompressedSpriteSheet sSpriteSheet_Ball = {
+    .data = sBall_Gfx,
+    .size = 0x200,
+    .tag = GFXTAG_BALL
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Ball_RollFast[] =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_JUMP(0)
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Ball_RollMedium[] =
+{
+    ANIMCMD_FRAME(0, 10),
+    ANIMCMD_FRAME(4, 10),
+    ANIMCMD_FRAME(8, 10),
+    ANIMCMD_FRAME(4, 10),
+    ANIMCMD_JUMP(0)
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Ball_RollSlow[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(4, 15),
+    ANIMCMD_FRAME(8, 15),
+    ANIMCMD_FRAME(4, 15),
+    ANIMCMD_JUMP(0)
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Ball_StopOnFrame1[] =
+{
+    ANIMCMD_FRAME(4, 2),
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_FRAME(12, 5),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Ball_StopOnFrame3[] =
+{
+    ANIMCMD_FRAME(4, 2),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(4, 4),
+    ANIMCMD_FRAME(8, 4),
+    ANIMCMD_FRAME(12, 4),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Ball_StopOnFrame4[] =
+{
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_FRAME(12, 5),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Ball_Still[] =
+{
+    ANIMCMD_FRAME(12, 0),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Ball_StopOnFrame2[] =
+{
+    ANIMCMD_FRAME(8, 2),
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_FRAME(12, 5),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnims_Ball[] =
+{
+    sAnim_Ball_RollFast,
+    sAnim_Ball_RollMedium,
+    sAnim_Ball_RollSlow,
+    sAnim_Ball_StopOnFrame1,
+    sAnim_Ball_StopOnFrame2,
+    sAnim_Ball_StopOnFrame3,
+    sAnim_Ball_StopOnFrame4,
+    sAnim_Ball_StopOnFrame4,
+    sAnim_Ball_Still
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplate_Ball =
+{
+    .tileTag = GFXTAG_BALL,
+    .paletteTag = PALTAG_BALL,
+    .oam = &sOam_Ball,
+    .anims = sAnims_Ball,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+ROULETTE_DATA static const struct OamData sOam_WheelCenter =
+{
+    .y = 81,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(64x64),
+    .size = SPRITE_SIZE(64x64),
+    .priority = 2,
+};
+
+ROULETTE_DATA static const struct CompressedSpriteSheet sSpriteSheet_WheelCenter =
+{
+    .data = gRouletteCenter_Gfx,
+    .size = 0x800,
+    .tag = GFXTAG_WHEEL_CENTER
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplate_WheelCenter =
+{
+    .tileTag = GFXTAG_WHEEL_CENTER,
+    .paletteTag = PALTAG_BALL,
+    .oam = &sOam_WheelCenter,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)sub_08143A68
+};
+
+ROULETTE_DATA static const struct OamData sOam_Shroomish =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(32x32),
+    .size = SPRITE_SIZE(32x32),
+    .priority = 2,
+};
+
+ROULETTE_DATA static const struct OamData sOam_Taillow =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(32x32),
+    .size = SPRITE_SIZE(32x32),
+    .priority = 2,
+};
+
+ROULETTE_DATA static const struct CompressedSpriteSheet sSpriteSheet_ShroomishTaillow =
+{
+    .data = sShroomishTaillow_Gfx,
+    .size = 0xE00,
+    .tag = GFXTAG_SHROOMISH_TAILLOW
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Shroomish[] =
+{
+    ANIMCMD_FRAME(0, 6),
+    ANIMCMD_FRAME(16, 6),
+    ANIMCMD_FRAME(32, 6),
+    ANIMCMD_FRAME(48, 6),
+    ANIMCMD_FRAME(32, 6),
+    ANIMCMD_FRAME(64, 6),
+    ANIMCMD_JUMP(2)
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Taillow_WingDown_Left[] =
+{
+    ANIMCMD_FRAME(80, 10),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Taillow_WingDown_Right[] =
+{
+    ANIMCMD_FRAME(80, 10, .hFlip = TRUE),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Taillow_FlapSlow_Left[] =
+{
+    ANIMCMD_FRAME(80, 20),
+    ANIMCMD_FRAME(96, 20),
+    ANIMCMD_JUMP(0)
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Taillow_FlapSlow_Right[] =
+{
+    ANIMCMD_FRAME(80, 20, .hFlip = TRUE),
+    ANIMCMD_FRAME(96, 20, .hFlip = TRUE),
+    ANIMCMD_JUMP(0)
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Taillow_FlapFast_Left[] =
+{
+    ANIMCMD_FRAME(80, 10),
+    ANIMCMD_FRAME(96, 10),
+    ANIMCMD_JUMP(0)
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_Taillow_FlapFast_Right[] =
+{
+    ANIMCMD_FRAME(80, 10, .hFlip = TRUE),
+    ANIMCMD_FRAME(96, 10, .hFlip = TRUE),
+    ANIMCMD_JUMP(0)
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnims_Shroomish[] =
+{
+    sAnim_Shroomish
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnims_Taillow[] =
+{
+    sAnim_Taillow_WingDown_Left,   // While gliding in
+    sAnim_Taillow_WingDown_Right,
+    sAnim_Taillow_FlapSlow_Left,   // While carrying ball
+    sAnim_Taillow_FlapSlow_Right,
+    sAnim_Taillow_FlapFast_Left,   // While flying off
+    sAnim_Taillow_FlapFast_Right
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplate_Shroomish =
+{
+    .tileTag = GFXTAG_SHROOMISH_TAILLOW,
+    .paletteTag = PALTAG_SHROOMISH,
+    .oam = &sOam_Shroomish,
+    .anims = sAnims_Shroomish,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplate_Taillow =
+{
+    .tileTag = GFXTAG_SHROOMISH_TAILLOW,
+    .paletteTag = PALTAG_TAILLOW,
+    .oam = &sOam_Taillow,
+    .anims = sAnims_Taillow,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)sub_08145360
+};
+
+ROULETTE_DATA static const struct OamData sOam_ShroomishBallShadow =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(16x16),
+    .size = SPRITE_SIZE(16x16),
+    .priority = 2,
+};
+
+ROULETTE_DATA static const struct OamData sOam_ShroomishShadow =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(32x16),
+    .size = SPRITE_SIZE(32x16),
+    .priority = 2,
+};
+
+ROULETTE_DATA static const struct OamData sOam_TaillowShadow =
+{
+    .affineMode = ST_OAM_AFFINE_NORMAL,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(32x16),
+    .size = SPRITE_SIZE(32x16),
+    .priority = 2,
+};
+
+ROULETTE_DATA static const struct CompressedSpriteSheet sSpriteSheet_Shadow =
+{
+    .data = sShadow_Gfx,
+    .size = 0x180,
+    .tag = GFXTAG_SHADOW
+};
+
+ROULETTE_DATA static const union AffineAnimCmd sAffineAnim_Unused3[] =
+{
+    AFFINEANIMCMD_FRAME(0x80, 0x80, 0, 0),
+    AFFINEANIMCMD_FRAME(2,    2,    0, 60),
+    AFFINEANIMCMD_END
+};
+
+ROULETTE_DATA static const union AffineAnimCmd sAffineAnim_TaillowShadow[] =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(-2,    0x0,   0, 15),
+    AFFINEANIMCMD_FRAME(-1,    -2,    0, 15),
+    AFFINEANIMCMD_FRAME(-1,    -5,    0, 24),
+    AFFINEANIMCMD_END
+};
+
+ROULETTE_DATA static const union AffineAnimCmd *const sAffineAnims_Unused3[] =
+{
+    sAffineAnim_Unused3
+};
+
+ROULETTE_DATA static const union AffineAnimCmd *const sAffineAnims_TaillowShadow[] =
+{
+    sAffineAnim_TaillowShadow
+};
+
+ROULETTE_DATA static const union AffineAnimCmd sAffineAnim_Unused4[] =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_END
+};
+
+ROULETTE_DATA static const union AffineAnimCmd *const sAffineAnims_Unused4[] =
+{
+    sAffineAnim_Unused4
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_ShroomishBallShadow[] =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd sAnim_UnstickMonShadow[] =
+{
+    ANIMCMD_FRAME(4, 0),
+    ANIMCMD_END
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnims_ShroomishBallShadow[] =
+{
+    sAnim_ShroomishBallShadow
+};
+
+ROULETTE_DATA static const union AnimCmd *const sAnims_UnstickMonShadow[] =
+{
+    sAnim_UnstickMonShadow
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplate_ShroomishShadow[] =
+{
+    // Ball's shadow as it flies up
+    {
+        .tileTag = GFXTAG_SHADOW,
+        .paletteTag = PALTAG_SHADOW,
+        .oam = &sOam_ShroomishBallShadow,
+        .anims = sAnims_ShroomishBallShadow,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy
+    },
+    // Shroomish's Shadow
+    {
+        .tileTag = GFXTAG_SHADOW,
+        .paletteTag = PALTAG_SHADOW,
+        .oam = &sOam_ShroomishShadow,
+        .anims = sAnims_UnstickMonShadow,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = (SpriteCallback)sub_08144F2C
+    }
+};
+
+ROULETTE_DATA static const struct SpriteTemplate sSpriteTemplate_TaillowShadow =
+{
+    .tileTag = GFXTAG_SHADOW,
+    .paletteTag = PALTAG_SHADOW,
+    .oam = &sOam_TaillowShadow,
+    .anims = sAnims_UnstickMonShadow,
+    .images = NULL,
+    .affineAnims = sAffineAnims_TaillowShadow,
+    .callback = (SpriteCallback)sub_08145360
+};
+
+ROULETTE_DATA static const u8 sMultiplierAnimIds[5] = {0, 1, 2, 3, 4};
+
+ROULETTE_DATA static const s16 sShroomishShadowCoords[2][2] __attribute__((aligned(2))) = {{116, 44}, {116, 112}};
+
+ROULETTE_DATA static const s16 sTaillowStartCoords[2][2] = {{256, 84}, {-16, 84}};
+
+ROULETTE_DATA static const u16 sShroomishShadowAlphas[] = {
+    0x907,
+    0x808,
+    0x709,
+    0x60A,
+    0x50B,
+    0x40C,
+    0x30D,
+    0x20E,
+    0x10F,
+    0x010,
+};
+
+ROULETTE_DATA static const u16 sShroomishScreenShakeOffsets[3][4] = {{-1, 0, 1, 0}, {-2, 0, 2, 0}, {-3, 0, 3, 0}};
+
+ROULETTE_DATA static const s8 sTaillowXMoveOffsets[2] = {-1, 1};
+
+ROULETTE_DATA static const s8 sTaillowYMoveOffsets[8][2] = {{2, 0}, {2, 0}, {2, -1}, {2, -1}, {2, -1}, {2, -1}, {2, -2}, {2, -2}};
+
+#undef ROULETTE_DATA
 
 __attribute__((naked)) void sub_08140300(void)
 {
@@ -219,12 +2274,12 @@ __attribute__((naked)) void sub_08140450(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081404C0: .4byte gUnknown_203A854\n\t"
-        "_081404C4: .4byte gUnknown_8595CEC\n\t"
+        "_081404C4: .4byte sBgTemplates\n\t"
         "_081404C8: .4byte 0x0000117C\n\t"
         "_081404CC: .4byte 0x0000317C\n\t"
-        "_081404D0: .4byte gUnknown_8595CF8\n\t"
+        "_081404D0: .4byte sWindowTemplates\n\t"
         "_081404D4: .4byte gUnknown_203A858\n\t"
-        "_081404D8: .4byte gUnknown_85959A8\n\t"
+        "_081404D8: .4byte sGrid_Tilemap\n\t"
         "_081404DC: .4byte 0x0000397C\n\t"
         ".syntax divided\n\t"
     );
@@ -350,11 +2405,11 @@ __attribute__((naked)) void sub_08140538(void)
         "	ldrh r2, [r0]\n\t"
         "	b _081405F0\n\t"
         "	.align 2, 0\n\t"
-        "_081405CC: .4byte gUnknown_8595FCC\n\t"
+        "_081405CC: .4byte sInitTableBgColors\n\t"
         "_081405D0: .4byte gUnknown_203A854\n\t"
         "_081405D4: .4byte gSpecialVar_0x8004\n\t"
-        "_081405D8: .4byte gUnknown_8595EF4\n\t"
-        "_081405DC: .4byte gUnknown_8595EF0\n\t"
+        "_081405D8: .4byte sRouletteTables\n\t"
+        "_081405DC: .4byte sTableMinBets\n\t"
         "_081405E0: .4byte gPlttBufferUnfaded\n\t"
         "_081405E4: .4byte gPlttBufferFaded\n\t"
         "_081405E8:\n\t"
@@ -420,7 +2475,7 @@ __attribute__((naked)) void sub_08140538(void)
         "_08140660: .4byte gPlttBufferFaded\n\t"
         "_08140664: .4byte 0x0000FFFF\n\t"
         "_08140668: .4byte gUnknown_203A854\n\t"
-        "_0814066C: .4byte gUnknown_8595F34\n\t"
+        "_0814066C: .4byte sFlashData_Colors\n\t"
         "_08140670: .4byte gPlayerParty\n\t"
         "_08140674:\n\t"
         "	ldr r0, [r5]\n\t"
@@ -525,7 +2580,7 @@ __attribute__((naked)) void sub_08140694(void)
         "	bl DecompressAndCopyTileDataToVram\n\t"
         "	b _081408C0\n\t"
         "	.align 2, 0\n\t"
-        "_08140758: .4byte gUnknown_85957A8\n\t"
+        "_08140758: .4byte sWheel_Pal\n\t"
         "_0814075C: .4byte gRouletteMenu_Gfx\n\t"
         "_08140760: .4byte gRouletteWheel_Gfx\n\t"
         "_08140764:\n\t"
@@ -543,7 +2598,7 @@ __attribute__((naked)) void sub_08140694(void)
         "	bl CopyToBgTilemapBuffer\n\t"
         "	b _081408C0\n\t"
         "	.align 2, 0\n\t"
-        "_08140784: .4byte gUnknown_8595B4C\n\t"
+        "_08140784: .4byte sWheel_Tilemap\n\t"
         "_08140788:\n\t"
         "	movs r0, #0\n\t"
         "	bl sub_08142CD8\n\t"
@@ -855,7 +2910,7 @@ __attribute__((naked)) void sub_081409DC(void)
         "	.align 2, 0\n\t"
         "_08140A24: .4byte gUnknown_203A858\n\t"
         "_08140A28: .4byte Roulette_Text_KeepPlaying\n\t"
-        "_08140A2C: .4byte gUnknown_8595FC4\n\t"
+        "_08140A2C: .4byte sYesNoTable_KeepPlaying\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1222,7 +3277,7 @@ __attribute__((naked)) void sub_08140C98(void)
         "	b _08140D36\n\t"
         "	.align 2, 0\n\t"
         "_08140CEC: .4byte gUnknown_203A854\n\t"
-        "_08140CF0: .4byte gUnknown_8595D00\n\t"
+        "_08140CF0: .4byte sGridSelections\n\t"
         "_08140CF4: .4byte gTasks\n\t"
         "_08140CF8:\n\t"
         "	movs r3, #6\n\t"
@@ -1278,7 +3333,7 @@ __attribute__((naked)) void sub_08140C98(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08140D64: .4byte gUnknown_8595D00\n\t"
+        "_08140D64: .4byte sGridSelections\n\t"
         "_08140D68: .4byte gTasks\n\t"
         "_08140D6C: .4byte sub_08140C54 + 1\n\t"
         ".syntax divided\n\t"
@@ -1323,7 +3378,7 @@ __attribute__((naked)) void sub_08140D70(void)
         "	movs r6, #5\n\t"
         "	b _08140DE4\n\t"
         "	.align 2, 0\n\t"
-        "_08140DB8: .4byte gUnknown_8595FD2\n\t"
+        "_08140DB8: .4byte sGridMoveOffsets\n\t"
         "_08140DBC:\n\t"
         "	cmp r5, #3\n\t"
         "	bgt _08140DE4\n\t"
@@ -1642,7 +3697,7 @@ __attribute__((naked)) void sub_08140E34(void)
         "_08141024: .4byte gSprites\n\t"
         "_08141028: .4byte 0x000003FF\n\t"
         "_0814102C: .4byte 0xFFFFFC00\n\t"
-        "_08141030: .4byte gUnknown_8595D00\n\t"
+        "_08141030: .4byte sGridSelections\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1851,7 +3906,7 @@ __attribute__((naked)) void sub_08141108(void)
         "_081411A0: .4byte gTasks\n\t"
         "_081411A4: .4byte gMain\n\t"
         "_081411A8: .4byte gUnknown_203A854\n\t"
-        "_081411AC: .4byte gUnknown_8595D00\n\t"
+        "_081411AC: .4byte sGridSelections\n\t"
         "_081411B0:\n\t"
         "	movs r0, #0x5f\n\t"
         "	bl m4aSongNumStart\n\t"
@@ -1991,7 +4046,7 @@ __attribute__((naked)) void sub_08141254(void)
         "	b _08141402\n\t"
         "	.align 2, 0\n\t"
         "_081412A4: .4byte gLocalTime\n\t"
-        "_081412A8: .4byte gUnknown_8595EF4\n\t"
+        "_081412A8: .4byte sRouletteTables\n\t"
         "_081412AC:\n\t"
         "	movs r0, #3\n\t"
         "	ands r0, r1\n\t"
@@ -2006,7 +4061,7 @@ __attribute__((naked)) void sub_08141254(void)
         "	lsrs r0, r0, #1\n\t"
         "	b _08141402\n\t"
         "	.align 2, 0\n\t"
-        "_081412C4: .4byte gUnknown_8595EF4\n\t"
+        "_081412C4: .4byte sRouletteTables\n\t"
         "_081412C8:\n\t"
         "	ldr r0, _081412D8\n\t"
         "	ldrb r1, [r3, #4]\n\t"
@@ -2016,7 +4071,7 @@ __attribute__((naked)) void sub_08141254(void)
         "	ldrb r0, [r1, #2]\n\t"
         "	b _08141402\n\t"
         "	.align 2, 0\n\t"
-        "_081412D8: .4byte gUnknown_8595EF4\n\t"
+        "_081412D8: .4byte sRouletteTables\n\t"
         "_081412DC:\n\t"
         "	ldr r0, _08141308\n\t"
         "	ldrb r0, [r0, #2]\n\t"
@@ -2042,7 +4097,7 @@ __attribute__((naked)) void sub_08141254(void)
         "	b _08141402\n\t"
         "	.align 2, 0\n\t"
         "_08141308: .4byte gLocalTime\n\t"
-        "_0814130C: .4byte gUnknown_8595EF4\n\t"
+        "_0814130C: .4byte sRouletteTables\n\t"
         "_08141310:\n\t"
         "	movs r0, #1\n\t"
         "	ands r0, r1\n\t"
@@ -2059,7 +4114,7 @@ __attribute__((naked)) void sub_08141254(void)
         "	lsrs r0, r0, #2\n\t"
         "	b _08141402\n\t"
         "	.align 2, 0\n\t"
-        "_0814132C: .4byte gUnknown_8595EF4\n\t"
+        "_0814132C: .4byte sRouletteTables\n\t"
         "_08141330:\n\t"
         "	ldr r1, _08141344\n\t"
         "	ldr r0, [r5]\n\t"
@@ -2071,7 +4126,7 @@ __attribute__((naked)) void sub_08141254(void)
         "	lsrs r0, r0, #1\n\t"
         "	b _08141402\n\t"
         "	.align 2, 0\n\t"
-        "_08141344: .4byte gUnknown_8595EF4\n\t"
+        "_08141344: .4byte sRouletteTables\n\t"
         "_08141348:\n\t"
         "	ldr r0, _08141364\n\t"
         "	ldrb r0, [r0, #2]\n\t"
@@ -2100,7 +4155,7 @@ __attribute__((naked)) void sub_08141254(void)
         "	lsrs r0, r0, #1\n\t"
         "	b _08141402\n\t"
         "	.align 2, 0\n\t"
-        "_0814137C: .4byte gUnknown_8595EF4\n\t"
+        "_0814137C: .4byte sRouletteTables\n\t"
         "_08141380:\n\t"
         "	movs r0, #3\n\t"
         "	ands r0, r1\n\t"
@@ -2118,7 +4173,7 @@ __attribute__((naked)) void sub_08141254(void)
         "	lsrs r0, r0, #1\n\t"
         "	b _08141402\n\t"
         "	.align 2, 0\n\t"
-        "_081413A0: .4byte gUnknown_8595EF4\n\t"
+        "_081413A0: .4byte sRouletteTables\n\t"
         "_081413A4:\n\t"
         "	ldr r1, _081413B4\n\t"
         "	ldr r0, [r5]\n\t"
@@ -2129,7 +4184,7 @@ __attribute__((naked)) void sub_08141254(void)
         "	ldrb r0, [r0, #2]\n\t"
         "	b _08141402\n\t"
         "	.align 2, 0\n\t"
-        "_081413B4: .4byte gUnknown_8595EF4\n\t"
+        "_081413B4: .4byte sRouletteTables\n\t"
         "_081413B8:\n\t"
         "	movs r0, #0x80\n\t"
         "	lsls r0, r0, #8\n\t"
@@ -2147,7 +4202,7 @@ __attribute__((naked)) void sub_08141254(void)
         "	ldrb r0, [r0, #2]\n\t"
         "	b _08141402\n\t"
         "	.align 2, 0\n\t"
-        "_081413D8: .4byte gUnknown_8595EF4\n\t"
+        "_081413D8: .4byte sRouletteTables\n\t"
         "_081413DC:\n\t"
         "	ldr r1, _081413EC\n\t"
         "	ldr r0, [r5]\n\t"
@@ -2158,7 +4213,7 @@ __attribute__((naked)) void sub_08141254(void)
         "	ldrb r0, [r0, #1]\n\t"
         "	b _08141402\n\t"
         "	.align 2, 0\n\t"
-        "_081413EC: .4byte gUnknown_8595EF4\n\t"
+        "_081413EC: .4byte sRouletteTables\n\t"
         "_081413F0:\n\t"
         "	ldr r1, _08141408\n\t"
         "	ldr r0, [r5]\n\t"
@@ -2174,7 +4229,7 @@ __attribute__((naked)) void sub_08141254(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08141408: .4byte gUnknown_8595EF4\n\t"
+        "_08141408: .4byte sRouletteTables\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2250,7 +4305,7 @@ __attribute__((naked)) void sub_0814140C(void)
         "	lsls r0, r5, #0x19\n\t"
         "	b _081414B2\n\t"
         "	.align 2, 0\n\t"
-        "_08141498: .4byte gUnknown_8595FD6\n\t"
+        "_08141498: .4byte sBallStartAngles\n\t"
         "_0814149C: .4byte gUnknown_203A854\n\t"
         "_081414A0: .4byte gTasks\n\t"
         "_081414A4: .4byte gLocalTime\n\t"
@@ -2413,7 +4468,7 @@ __attribute__((naked)) void sub_0814140C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081415F8: .4byte gUnknown_203A854\n\t"
-        "_081415FC: .4byte gUnknown_8595EF4\n\t"
+        "_081415FC: .4byte sRouletteTables\n\t"
         "_08141600: .4byte 0x47800000\n\t"
         "_08141604: .4byte 0x40A00000\n\t"
         "_08141608: .4byte 0x3F000000\n\t"
@@ -3201,7 +5256,7 @@ __attribute__((naked)) void sub_08141B88(void)
         "_08141C08: .4byte gUnknown_203A854\n\t"
         "_08141C0C: .4byte 0x0000FFFF\n\t"
         "_08141C10: .4byte gSprites\n\t"
-        "_08141C14: .4byte gUnknown_8595D00\n\t"
+        "_08141C14: .4byte sGridSelections\n\t"
         "_08141C18: .4byte gTasks\n\t"
         "_08141C1C: .4byte sub_08141C20 + 1\n\t"
         ".syntax divided\n\t"
@@ -3940,8 +5995,8 @@ __attribute__((naked)) void sub_08142198(void)
         "	movs r0, #0\n\t"
         "	b _08142290\n\t"
         "	.align 2, 0\n\t"
-        "_081421CC: .4byte gUnknown_8595FE0\n\t"
-        "_081421D0: .4byte gUnknown_8595FF0\n\t"
+        "_081421CC: .4byte sBoardColumnFlags\n\t"
+        "_081421D0: .4byte sBoardRowFlags\n\t"
         "_081421D4:\n\t"
         "	ldr r6, _081422A0\n\t"
         "	ldr r3, [r6]\n\t"
@@ -4054,8 +6109,8 @@ __attribute__((naked)) void sub_08142198(void)
         "	.align 2, 0\n\t"
         "_081422A0: .4byte gUnknown_203A854\n\t"
         "_081422A4: .4byte gTasks\n\t"
-        "_081422A8: .4byte gUnknown_8595E90\n\t"
-        "_081422AC: .4byte gUnknown_8595E94\n\t"
+        "_081422A8: .4byte sRouletteSlots\n\t"
+        "_081422AC: .4byte sRouletteSlots + 4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4209,7 +6264,7 @@ __attribute__((naked)) void sub_0814234C(void)
         "	b _081425AA\n\t"
         "	.align 2, 0\n\t"
         "_081423C8: .4byte gUnknown_203A854\n\t"
-        "_081423CC: .4byte gUnknown_8595D00\n\t"
+        "_081423CC: .4byte sGridSelections\n\t"
         "_081423D0: .4byte 0x0000DFFF\n\t"
         "_081423D4:\n\t"
         "	mov r0, sp\n\t"
@@ -4252,7 +6307,7 @@ __attribute__((naked)) void sub_0814234C(void)
         "	mov ip, r4\n\t"
         "	b _0814249C\n\t"
         "	.align 2, 0\n\t"
-        "_08142424: .4byte gUnknown_8595F9C\n\t"
+        "_08142424: .4byte sFlashData_PokeIcons\n\t"
         "_08142428: .4byte 0xFFFF0000\n\t"
         "_0814242C: .4byte gUnknown_203A854\n\t"
         "_08142430:\n\t"
@@ -4350,7 +6405,7 @@ __attribute__((naked)) void sub_0814234C(void)
         "	.align 2, 0\n\t"
         "_081424EC: .4byte gSprites\n\t"
         "_081424F0: .4byte gUnknown_203A854\n\t"
-        "_081424F4: .4byte gUnknown_8595D00\n\t"
+        "_081424F4: .4byte sGridSelections\n\t"
         "_081424F8:\n\t"
         "	movs r4, #0\n\t"
         "	lsls r5, r7, #2\n\t"
@@ -4452,7 +6507,7 @@ __attribute__((naked)) void sub_0814234C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081425BC: .4byte gUnknown_8595D00\n\t"
+        "_081425BC: .4byte sGridSelections\n\t"
         "_081425C0: .4byte gUnknown_203A854\n\t"
         ".syntax divided\n\t"
     );
@@ -4747,7 +6802,7 @@ __attribute__((naked)) void sub_081425C4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08142810: .4byte gUnknown_8595D00\n\t"
+        "_08142810: .4byte sGridSelections\n\t"
         "_08142814: .4byte gUnknown_203A854\n\t"
         "_08142818: .4byte 0x0000117C\n\t"
         "_0814281C: .4byte 0x0000397C\n\t"
@@ -4787,8 +6842,8 @@ __attribute__((naked)) void sub_08142820(void)
         "	beq _08142866\n\t"
         "	b _081428D0\n\t"
         "	.align 2, 0\n\t"
-        "_08142858: .4byte gUnknown_8595FFC\n\t"
-        "_0814285C: .4byte gUnknown_8595D00\n\t"
+        "_08142858: .4byte sSelectionMultipliers\n\t"
+        "_0814285C: .4byte sGridSelections\n\t"
         "_08142860:\n\t"
         "	cmp r0, #0xc\n\t"
         "	beq _081428B0\n\t"
@@ -4959,7 +7014,7 @@ __attribute__((naked)) void sub_0814298C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081429A8: .4byte gUnknown_8595FBC\n\t"
+        "_081429A8: .4byte sYesNoTable_AcceptMinBet\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5172,7 +7227,7 @@ __attribute__((naked)) void sub_08142AB8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08142B30: .4byte gMain\n\t"
-        "_08142B34: .4byte gUnknown_8595EF0\n\t"
+        "_08142B34: .4byte sTableMinBets\n\t"
         "_08142B38: .4byte gSpecialVar_0x8004\n\t"
         "_08142B3C: .4byte gStringVar1\n\t"
         "_08142B40: .4byte gStringVar4\n\t"
@@ -5251,7 +7306,7 @@ __attribute__((naked)) void Task_Roulette_0(void)
         "	b _08142C7A\n\t"
         "	.align 2, 0\n\t"
         "_08142BD8: .4byte gTasks\n\t"
-        "_08142BDC: .4byte gUnknown_8595EF0\n\t"
+        "_08142BDC: .4byte sTableMinBets\n\t"
         "_08142BE0: .4byte gSpecialVar_0x8004\n\t"
         "_08142BE4: .4byte gStringVar1\n\t"
         "_08142BE8: .4byte Roulette_Text_SpecialRateTable\n\t"
@@ -5385,10 +7440,10 @@ __attribute__((naked)) void sub_08142CD8(void)
         "	bl LoadCompressedSpriteSheet\n\t"
         "	b _08142D26\n\t"
         "	.align 2, 0\n\t"
-        "_08142D00: .4byte gUnknown_8596F38\n\t"
-        "_08142D04: .4byte gUnknown_8597418\n\t"
-        "_08142D08: .4byte gUnknown_859752C\n\t"
-        "_08142D0C: .4byte gUnknown_85975F4\n\t"
+        "_08142D00: .4byte sSpritePalettes\n\t"
+        "_08142D04: .4byte sSpriteSheet_Ball\n\t"
+        "_08142D08: .4byte sSpriteSheet_ShroomishTaillow\n\t"
+        "_08142D0C: .4byte sSpriteSheet_Shadow\n\t"
         "_08142D10:\n\t"
         "	movs r0, #0xe\n\t"
         "	bl FreeSpriteTilesByTag\n\t"
@@ -5635,14 +7690,14 @@ __attribute__((naked)) void sub_08142D9C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08142EE8: .4byte gUnknown_859703C\n\t"
+        "_08142EE8: .4byte sSpriteSheet_Headers\n\t"
         "_08142EEC: .4byte gDecompressionBuffer\n\t"
-        "_08142EF0: .4byte gUnknown_8597044\n\t"
+        "_08142EF0: .4byte sSpriteSheet_GridIcons\n\t"
         "_08142EF4: .4byte gSprites\n\t"
-        "_08142EF8: .4byte gUnknown_8597164\n\t"
+        "_08142EF8: .4byte sSpriteTemplates_GridIcons\n\t"
         "_08142EFC: .4byte gUnknown_203A854\n\t"
-        "_08142F00: .4byte gUnknown_85970BC\n\t"
-        "_08142F04: .4byte gUnknown_859711C\n\t"
+        "_08142F00: .4byte sSpriteTemplates_PokeHeaders\n\t"
+        "_08142F04: .4byte sSpriteTemplates_ColorHeaders\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5763,7 +7818,7 @@ __attribute__((naked)) void sub_08142F3C(void)
         "	b _08142FF8\n\t"
         "	.align 2, 0\n\t"
         "_08142FD4: .4byte gUnknown_203A854\n\t"
-        "_08142FD8: .4byte gUnknown_8595E90\n\t"
+        "_08142FD8: .4byte sRouletteSlots\n\t"
         "_08142FDC: .4byte gSprites\n\t"
         "_08142FE0:\n\t"
         "	adds r0, r2, r4\n\t"
@@ -5915,7 +7970,7 @@ __attribute__((naked)) void sub_08143048(void)
         "	.align 2, 0\n\t"
         "_081430F4: .4byte gUnknown_203A854\n\t"
         "_081430F8: .4byte gSprites\n\t"
-        "_081430FC: .4byte gUnknown_85974DC\n\t"
+        "_081430FC: .4byte sSpriteTemplate_Ball\n\t"
         "_08143100: .4byte sub_081439D8 + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -5999,7 +8054,7 @@ __attribute__((naked)) void sub_08143104(void)
         "	.align 2, 0\n\t"
         "_08143190: .4byte gUnknown_203A854\n\t"
         "_08143194: .4byte gSprites\n\t"
-        "_08143198: .4byte gUnknown_8595D00\n\t"
+        "_08143198: .4byte sGridSelections\n\t"
         "_0814319C:\n\t"
         "	adds r5, r6, #0\n\t"
         "	adds r5, #0x31\n\t"
@@ -6146,7 +8201,7 @@ __attribute__((naked)) void sub_0814321C(void)
         "	.align 2, 0\n\t"
         "_081432A4: .4byte gSprites\n\t"
         "_081432A8: .4byte gUnknown_203A854\n\t"
-        "_081432AC: .4byte gUnknown_8595D00\n\t"
+        "_081432AC: .4byte sGridSelections\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6223,10 +8278,10 @@ __attribute__((naked)) void sub_081432B0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08143338: .4byte gUnknown_8596FD0\n\t"
+        "_08143338: .4byte sSpriteSheet_WheelIcons\n\t"
         "_0814333C: .4byte gDecompressionBuffer\n\t"
         "_08143340: .4byte gSprites\n\t"
-        "_08143344: .4byte gUnknown_85971C4\n\t"
+        "_08143344: .4byte sSpriteTemplates_WheelIcons\n\t"
         "_08143348: .4byte gUnknown_203A854\n\t"
         ".syntax divided\n\t"
     );
@@ -6548,16 +8603,16 @@ __attribute__((naked)) void sub_081433E0(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081435B4: .4byte gDecompressionBuffer\n\t"
-        "_081435B8: .4byte gUnknown_8597304\n\t"
+        "_081435B8: .4byte sSpriteSheets_Interface\n\t"
         "_081435BC: .4byte 0xFFFF0000\n\t"
         "_081435C0: .4byte 0x0000FFFF\n\t"
-        "_081435C4: .4byte gUnknown_8597398\n\t"
+        "_081435C4: .4byte sSpriteTemplate_Credit\n\t"
         "_081435C8: .4byte gUnknown_203A854\n\t"
         "_081435CC: .4byte gSprites\n\t"
-        "_081435D0: .4byte gUnknown_85973B0\n\t"
-        "_081435D4: .4byte gUnknown_85973C8\n\t"
-        "_081435D8: .4byte gUnknown_85973E0\n\t"
-        "_081435DC: .4byte gUnknown_85973F8\n\t"
+        "_081435D0: .4byte sSpriteTemplate_CreditDigit\n\t"
+        "_081435D4: .4byte sSpriteTemplate_Multiplier\n\t"
+        "_081435D8: .4byte sSpriteTemplate_BallCounter\n\t"
+        "_081435DC: .4byte sSpriteTemplate_Cursor\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6725,8 +8780,8 @@ __attribute__((naked)) void sub_081436E0(void)
         "	beq _08143726\n\t"
         "	b _08143790\n\t"
         "	.align 2, 0\n\t"
-        "_08143718: .4byte gUnknown_85976B8\n\t"
-        "_0814371C: .4byte gUnknown_8595D00\n\t"
+        "_08143718: .4byte sMultiplierAnimIds\n\t"
+        "_0814371C: .4byte sGridSelections\n\t"
         "_08143720:\n\t"
         "	cmp r0, #0xc\n\t"
         "	beq _08143770\n\t"
@@ -7162,9 +9217,9 @@ __attribute__((naked)) void sub_081439E8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08143A54: .4byte gUnknown_85974FC\n\t"
+        "_08143A54: .4byte sSpriteSheet_WheelCenter\n\t"
         "_08143A58: .4byte gDecompressionBuffer\n\t"
-        "_08143A5C: .4byte gUnknown_8597504\n\t"
+        "_08143A5C: .4byte sSpriteTemplate_WheelCenter\n\t"
         "_08143A60: .4byte gSprites\n\t"
         "_08143A64: .4byte gUnknown_203A854\n\t"
         ".syntax divided\n\t"
@@ -7261,7 +9316,7 @@ __attribute__((naked)) void sub_08143A94(void)
         "	.align 2, 0\n\t"
         "_08143B00: .4byte gUnknown_203A854\n\t"
         "_08143B04: .4byte gSprites\n\t"
-        "_08143B08: .4byte gUnknown_85974DC\n\t"
+        "_08143B08: .4byte sSpriteTemplate_Ball\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7836,7 +9891,7 @@ __attribute__((naked)) void sub_08143EE0(void)
         "	bl __divsf3\n\t"
         "	b _08143FC8\n\t"
         "	.align 2, 0\n\t"
-        "_08143F60: .4byte gUnknown_8595EF4\n\t"
+        "_08143F60: .4byte sRouletteTables\n\t"
         "_08143F64: .4byte gUnknown_203A854\n\t"
         "_08143F68:\n\t"
         "	movs r1, #0x2e\n\t"
@@ -7949,7 +10004,7 @@ __attribute__((naked)) void sub_08143EE0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0814405C: .4byte gUnknown_8595EF4\n\t"
+        "_0814405C: .4byte sRouletteTables\n\t"
         "_08144060: .4byte gUnknown_203A854\n\t"
         "_08144064: .4byte 0x40000000\n\t"
         "_08144068: .4byte 0x00000000\n\t"
@@ -8400,7 +10455,7 @@ __attribute__((naked)) void sub_08144330(void)
         "	bl m4aSongNumStartOrChange\n\t"
         "	b _081444C4\n\t"
         "	.align 2, 0\n\t"
-        "_081443BC: .4byte gUnknown_8595E90\n\t"
+        "_081443BC: .4byte sRouletteSlots\n\t"
         "_081443C0: .4byte gUnknown_203A854\n\t"
         "_081443C4: .4byte sub_08143D5C + 1\n\t"
         "_081443C8:\n\t"
@@ -8433,7 +10488,7 @@ __attribute__((naked)) void sub_08144330(void)
         "	b _08144444\n\t"
         "	.align 2, 0\n\t"
         "_08144404: .4byte 0x00000000\n\t"
-        "_08144408: .4byte gUnknown_8595EF4\n\t"
+        "_08144408: .4byte sRouletteTables\n\t"
         "_0814440C:\n\t"
         "	ldr r7, [r4]\n\t"
         "	adds r4, r7, #0\n\t"
@@ -8483,8 +10538,8 @@ __attribute__((naked)) void sub_08144330(void)
         "	strh r0, [r6, #0x32]\n\t"
         "	b _081444B4\n\t"
         "	.align 2, 0\n\t"
-        "_0814446C: .4byte gUnknown_8595EF4\n\t"
-        "_08144470: .4byte gUnknown_8595E90\n\t"
+        "_0814446C: .4byte sRouletteTables\n\t"
+        "_08144470: .4byte sRouletteSlots\n\t"
         "_08144474: .4byte gUnknown_203A854\n\t"
         "_08144478:\n\t"
         "	strh r1, [r6, #0x2e]\n\t"
@@ -8616,7 +10671,7 @@ __attribute__((naked)) void sub_081444DC(void)
         "_08144570: .4byte gUnknown_203A854\n\t"
         "_08144574: .4byte 0x3F000000\n\t"
         "_08144578: .4byte 0x00000000\n\t"
-        "_0814457C: .4byte gUnknown_8595EF4\n\t"
+        "_0814457C: .4byte sRouletteTables\n\t"
         "_08144580: .4byte 0x43800000\n\t"
         "_08144584: .4byte sub_08144330 + 1\n\t"
         "_08144588:\n\t"
@@ -9112,12 +11167,12 @@ __attribute__((naked)) void sub_081447A8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08144968: .4byte gUnknown_85976BE\n\t"
+        "_08144968: .4byte sShroomishShadowCoords\n\t"
         "_0814496C: .4byte gUnknown_203A854\n\t"
-        "_08144970: .4byte gUnknown_85975AC\n\t"
-        "_08144974: .4byte gUnknown_8597670\n\t"
+        "_08144970: .4byte sSpriteTemplate_Shroomish\n\t"
+        "_08144974: .4byte sSpriteTemplate_ShroomishShadow\n\t"
         "_08144978: .4byte gSprites\n\t"
-        "_0814497C: .4byte gUnknown_8595EF4\n\t"
+        "_0814497C: .4byte sRouletteTables\n\t"
         "_08144980: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
     );
@@ -9294,12 +11349,12 @@ __attribute__((naked)) void sub_08144984(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08144AD8: .4byte gUnknown_85976C6\n\t"
-        "_08144ADC: .4byte gUnknown_85975C4\n\t"
+        "_08144AD8: .4byte sTaillowStartCoords\n\t"
+        "_08144ADC: .4byte sSpriteTemplate_Taillow\n\t"
         "_08144AE0: .4byte gUnknown_203A854\n\t"
         "_08144AE4: .4byte gSprites\n\t"
-        "_08144AE8: .4byte gUnknown_85976A0\n\t"
-        "_08144AEC: .4byte gUnknown_8595EF4\n\t"
+        "_08144AE8: .4byte sSpriteTemplate_TaillowShadow\n\t"
+        "_08144AEC: .4byte sRouletteTables\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9428,7 +11483,7 @@ __attribute__((naked)) void sub_08144AF0(void)
         "	.align 2, 0\n\t"
         "_08144BDC: .4byte gUnknown_203A854\n\t"
         "_08144BE0: .4byte 0x00000000\n\t"
-        "_08144BE4: .4byte gUnknown_8595EF4\n\t"
+        "_08144BE4: .4byte sRouletteTables\n\t"
         "_08144BE8:\n\t"
         "	movs r0, #1\n\t"
         "	strh r0, [r7, #0x2e]\n\t"
@@ -9581,8 +11636,8 @@ __attribute__((naked)) void sub_08144AF0(void)
         "	ldrh r0, [r0, #0xc]\n\t"
         "	b _08144D20\n\t"
         "	.align 2, 0\n\t"
-        "_08144D0C: .4byte gUnknown_8595D0C\n\t"
-        "_08144D10: .4byte gUnknown_8595E94\n\t"
+        "_08144D0C: .4byte sGridSelections + 12\n\t"
+        "_08144D10: .4byte sRouletteSlots + 4\n\t"
         "_08144D14:\n\t"
         "	ldr r0, [sp, #0x10]\n\t"
         "	mov r1, sb\n\t"
@@ -9657,7 +11712,7 @@ __attribute__((naked)) void sub_08144D3C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08144D94: .4byte gUnknown_203A854\n\t"
-        "_08144D98: .4byte gUnknown_85976CE\n\t"
+        "_08144D98: .4byte sShroomishShadowAlphas\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9729,7 +11784,7 @@ __attribute__((naked)) void sub_08144D9C(void)
         "	strb r0, [r3]\n\t"
         "	b _08144E4A\n\t"
         "	.align 2, 0\n\t"
-        "_08144E18: .4byte gUnknown_85976E2\n\t"
+        "_08144E18: .4byte sShroomishScreenShakeOffsets\n\t"
         "_08144E1C: .4byte gSpriteCoordOffsetY\n\t"
         "_08144E20:\n\t"
         "	ldr r1, _08144E54\n\t"
@@ -9857,7 +11912,7 @@ __attribute__((naked)) void sub_08144E60(void)
         "	.align 2, 0\n\t"
         "_08144F10: .4byte 0x3D1FBE77\n\t"
         "_08144F14: .4byte gUnknown_203A854\n\t"
-        "_08144F18: .4byte gUnknown_85976CE\n\t"
+        "_08144F18: .4byte sShroomishShadowAlphas\n\t"
         "_08144F1C: .4byte sub_08144D3C + 1\n\t"
         "_08144F20: .4byte gSprites\n\t"
         "_08144F24: .4byte 0x0000FFFE\n\t"
@@ -9894,7 +11949,7 @@ __attribute__((naked)) void sub_08144F2C(void)
         "	b _08144F72\n\t"
         "	.align 2, 0\n\t"
         "_08144F58: .4byte gUnknown_203A854\n\t"
-        "_08144F5C: .4byte gUnknown_8595EF4\n\t"
+        "_08144F5C: .4byte sRouletteTables\n\t"
         "_08144F60:\n\t"
         "	movs r0, #0x34\n\t"
         "	ldrsh r2, [r1, r0]\n\t"
@@ -9930,9 +11985,9 @@ __attribute__((naked)) void sub_08144F2C(void)
         "	strh r0, [r1, #0x34]\n\t"
         "	b _08145048\n\t"
         "	.align 2, 0\n\t"
-        "_08144FA4: .4byte gUnknown_8595EF4\n\t"
+        "_08144FA4: .4byte sRouletteTables\n\t"
         "_08144FA8: .4byte gUnknown_203A854\n\t"
-        "_08144FAC: .4byte gUnknown_85976CE\n\t"
+        "_08144FAC: .4byte sShroomishShadowAlphas\n\t"
         "_08144FB0:\n\t"
         "	ldr r5, _08144FF0\n\t"
         "	ldr r3, [r5]\n\t"
@@ -9969,8 +12024,8 @@ __attribute__((naked)) void sub_08144F2C(void)
         "	b _0814500E\n\t"
         "	.align 2, 0\n\t"
         "_08144FF0: .4byte gUnknown_203A854\n\t"
-        "_08144FF4: .4byte gUnknown_85976CE\n\t"
-        "_08144FF8: .4byte gUnknown_8595EF4\n\t"
+        "_08144FF4: .4byte sShroomishShadowAlphas\n\t"
+        "_08144FF8: .4byte sRouletteTables\n\t"
         "_08144FFC:\n\t"
         "	movs r0, #0x34\n\t"
         "	ldrsh r2, [r1, r0]\n\t"
@@ -10016,7 +12071,7 @@ __attribute__((naked)) void sub_08144F2C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08145050: .4byte gUnknown_8595EF4\n\t"
+        "_08145050: .4byte sRouletteTables\n\t"
         "_08145054: .4byte gSprites\n\t"
         "_08145058: .4byte sub_08144E60 + 1\n\t"
         "_0814505C: .4byte SpriteCallbackDummy + 1\n\t"
@@ -10267,8 +12322,8 @@ __attribute__((naked)) void sub_081451A4(void)
         "	bl m4aMPlayPanpotControl\n\t"
         "	b _081452D4\n\t"
         "	.align 2, 0\n\t"
-        "_08145220: .4byte gUnknown_85976FA\n\t"
-        "_08145224: .4byte gUnknown_85976FC\n\t"
+        "_08145220: .4byte sTaillowXMoveOffsets\n\t"
+        "_08145224: .4byte sTaillowYMoveOffsets\n\t"
         "_08145228: .4byte gUnknown_203A854\n\t"
         "_0814522C: .4byte gMPlayInfo_SE1\n\t"
         "_08145230: .4byte 0x0000FFFF\n\t"
@@ -10414,7 +12469,7 @@ __attribute__((naked)) void sub_081452E4(void)
         "	strb r0, [r2]\n\t"
         "	b _08145354\n\t"
         "	.align 2, 0\n\t"
-        "_08145344: .4byte gUnknown_85976FA\n\t"
+        "_08145344: .4byte sTaillowXMoveOffsets\n\t"
         "_08145348: .4byte gUnknown_203A854\n\t"
         "_0814534C: .4byte gSprites\n\t"
         "_08145350:\n\t"
@@ -10466,7 +12521,7 @@ __attribute__((naked)) void sub_08145360(void)
         "	b _081453D2\n\t"
         "	.align 2, 0\n\t"
         "_0814539C: .4byte gUnknown_203A854\n\t"
-        "_081453A0: .4byte gUnknown_8595EF4\n\t"
+        "_081453A0: .4byte sRouletteTables\n\t"
         "_081453A4: .4byte gSprites\n\t"
         "_081453A8:\n\t"
         "	movs r0, #0x34\n\t"
@@ -10523,7 +12578,7 @@ __attribute__((naked)) void sub_08145360(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08145410: .4byte gUnknown_8595EF4\n\t"
+        "_08145410: .4byte sRouletteTables\n\t"
         "_08145414: .4byte gSprites\n\t"
         "_08145418: .4byte sub_081452E4 + 1\n\t"
         "_0814541C: .4byte sub_081451A4 + 1\n\t"

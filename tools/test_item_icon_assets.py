@@ -74,7 +74,9 @@ class ItemIconAssetTests(unittest.TestCase):
         self.assertNotRegex(source, r'0xdab300|0xdab378|0xdab38c|0xc9bc')
         self.assertIn('0xdab2fd, 0x3', source)
         self.assertIn('0xDBC236, 0x2', source)
-        self.assertIn('0xDBDD61, 0x24229F', source)
+        self.assertIn('0xDBEAC0, 0x241540', source)
+        self.assertIn('ROULETTE_GRAPHICS const u32 gRouletteWheel_Gfx[]',
+                      (ROOT / 'src/graphics.c').read_text())
 
     @unittest.skipUnless(GFX.is_file() and NM and (ROOT / 'pokeemerald_jp.elf').is_file()
                          and (ROOT / 'baserom_jp.gba').is_file(), 'requires native JP artifacts and gbagfx')

@@ -61,15 +61,5 @@
 	.section .rodata.data_rest2c_after_cable_car_bg_palette
 	.incbin "baserom_jp.gba", 0xDBC236, 0x2
 
-	.section .rodata.data_rest2c_after_cable_car_sprite_gfx
-
-
-	.globl gRouletteMenu_Gfx
-gRouletteMenu_Gfx: @ 0x8DBC590
-	.incbin "graphics/roulette/gRouletteMenu_Gfx.bin"
-
-
-	.globl gRouletteWheel_Gfx
-gRouletteWheel_Gfx: @ 0x8DBCCBC
-	.incbin "graphics/misc/gRouletteWheel_Gfx.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xDBDD61, 0x24229F
+	.section .rodata.data_rest2c_after_roulette_graphics
+	.incbin "baserom_jp.gba", 0xDBEAC0, 0x241540

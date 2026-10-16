@@ -2049,3 +2049,15 @@ CONTEST_RESULTS_TITLE_TILEMAPS const u16 gContestResultsTitle_Tilemap[] =
 #define ITEM_ICONS_GRAPHICS __attribute__((section(".rodata.item_icon_graphics"), aligned(4)))
 #include "data/graphics/items.h"
 #undef ITEM_ICONS_GRAPHICS
+
+#define ROULETTE_GRAPHICS __attribute__((section(".rodata.roulette_graphics"), aligned(4)))
+
+ROULETTE_GRAPHICS const u32 gRouletteMenu_Gfx[] = INCGFX_U32("graphics/roulette/window.png", ".4bpp.lz");
+ROULETTE_GRAPHICS const u32 gRouletteWheel_Gfx[] = INCGFX_U32("graphics/roulette/wheel.png", ".8bpp.lz");
+ROULETTE_GRAPHICS const u32 gRouletteCenter_Gfx[] = INCGFX_U32("graphics/roulette/center.png", ".4bpp.lz");
+ROULETTE_GRAPHICS const u32 gRouletteHeaders_Gfx[] = INCGFX_U32("graphics/roulette/headers.png", ".4bpp.lz");
+ROULETTE_GRAPHICS const u32 gRouletteCredit_Gfx[] = INCGFX_U32("graphics/roulette/credit.png", ".4bpp.lz");
+ROULETTE_GRAPHICS const u32 gRouletteNumbers_Gfx[] = INCGFX_U32("graphics/roulette/numbers.png", ".4bpp.lz");
+ROULETTE_GRAPHICS const u32 gRouletteMultiplier_Gfx[] = INCGFX_U32("graphics/roulette/multiplier.png", ".4bpp.lz");
+
+#undef ROULETTE_GRAPHICS
