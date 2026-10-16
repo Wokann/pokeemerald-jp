@@ -61,5 +61,5 @@
 	.section .rodata.data_rest2c_after_cable_car_bg_palette
 	.incbin "baserom_jp.gba", 0xDBC236, 0x2
 
-	.section .rodata.data_rest2c_after_roulette_graphics
-	.incbin "baserom_jp.gba", 0xDBEAC0, 0x241540
+	.section .rodata.data_rest2c_after_mail_graphics
+	.incbin "baserom_jp.gba", 0xDC09BC, 0x23F644

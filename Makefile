@@ -1282,6 +1282,7 @@ clean: clean-tools
 	rm -f $(JP_CONTEST_ASSETS) $(JP_CONTEST_INTERMEDIATES)
 	rm -f $(JP_ITEM_ICON_ASSETS) $(JP_ITEM_ICON_INTERMEDIATES)
 	rm -f $(JP_ROULETTE_ASSETS) $(JP_ROULETTE_INTERMEDIATES)
+	rm -f $(JP_MAIL_ASSETS) $(JP_MAIL_INTERMEDIATES)
 	rm -f $(JP_CONTEST_RESULTS_ASSETS)
 	rm -f $(JP_FRONTIER_UI_ASSETS) $(JP_FRONTIER_UI_INTERMEDIATES)
 
@@ -6332,3 +6333,76 @@ $(C_BUILDDIR)/roulette.o: src/roulette.c charmap.txt $(JP_ROULETTE_ASSETS) inclu
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/roulette.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/roulette.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/roulette.gen.s
+
+JP_MAIL_ASSETS := graphics/mail/bead/map.bin.lz \
+	graphics/mail/bead/palette.pal.gbapal \
+	graphics/mail/bead/tiles.png.4bpp.lz \
+	graphics/mail/dream/map.bin.lz \
+	graphics/mail/dream/palette.pal.gbapal \
+	graphics/mail/dream/tiles.png.4bpp.lz \
+	graphics/mail/fab/map.bin.lz \
+	graphics/mail/fab/palette.pal.gbapal \
+	graphics/mail/fab/tiles.png.4bpp.lz \
+	graphics/mail/glitter/map.bin.lz \
+	graphics/mail/glitter/palette.pal.gbapal \
+	graphics/mail/glitter/tiles.png.4bpp.lz \
+	graphics/mail/harbor/map.bin.lz \
+	graphics/mail/harbor/palette.pal.gbapal \
+	graphics/mail/harbor/tiles.png.4bpp.lz \
+	graphics/mail/mech/map.bin.lz \
+	graphics/mail/mech/palette.pal.gbapal \
+	graphics/mail/mech/tiles.png.4bpp.lz \
+	graphics/mail/orange/map.bin.lz \
+	graphics/mail/orange/palette.pal.gbapal \
+	graphics/mail/orange/tiles.png.4bpp.lz \
+	graphics/mail/retro/map.bin.lz \
+	graphics/mail/retro/palette.pal.gbapal \
+	graphics/mail/retro/tiles.png.4bpp.lz \
+	graphics/mail/shadow/map.bin.lz \
+	graphics/mail/shadow/palette.pal.gbapal \
+	graphics/mail/shadow/tiles.png.4bpp.lz \
+	graphics/mail/tropic/map.bin.lz \
+	graphics/mail/tropic/palette.pal.gbapal \
+	graphics/mail/tropic/tiles.png.4bpp.lz \
+	graphics/mail/wave/map.bin.lz \
+	graphics/mail/wave/palette.pal.gbapal \
+	graphics/mail/wave/tiles.png.4bpp.lz \
+	graphics/mail/wood/map.bin.lz \
+	graphics/mail/wood/palette.pal.gbapal \
+	graphics/mail/wood/tiles.png.4bpp.lz
+
+JP_MAIL_INTERMEDIATES := graphics/mail/bead/tiles.png.4bpp \
+	graphics/mail/dream/tiles.png.4bpp \
+	graphics/mail/fab/tiles.png.4bpp \
+	graphics/mail/glitter/tiles.png.4bpp \
+	graphics/mail/harbor/tiles.png.4bpp \
+	graphics/mail/mech/tiles.png.4bpp \
+	graphics/mail/orange/tiles.png.4bpp \
+	graphics/mail/retro/tiles.png.4bpp \
+	graphics/mail/shadow/tiles.png.4bpp \
+	graphics/mail/tropic/tiles.png.4bpp \
+	graphics/mail/wave/tiles.png.4bpp \
+	graphics/mail/wood/tiles.png.4bpp
+
+graphics/mail/bead/tiles.png.4bpp graphics/mail/dream/tiles.png.4bpp graphics/mail/fab/tiles.png.4bpp graphics/mail/glitter/tiles.png.4bpp graphics/mail/harbor/tiles.png.4bpp graphics/mail/mech/tiles.png.4bpp graphics/mail/orange/tiles.png.4bpp graphics/mail/retro/tiles.png.4bpp graphics/mail/shadow/tiles.png.4bpp graphics/mail/tropic/tiles.png.4bpp graphics/mail/wave/tiles.png.4bpp graphics/mail/wood/tiles.png.4bpp: %.png.4bpp: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/mail/bead/palette.pal.gbapal graphics/mail/dream/palette.pal.gbapal graphics/mail/fab/palette.pal.gbapal graphics/mail/glitter/palette.pal.gbapal graphics/mail/harbor/palette.pal.gbapal graphics/mail/mech/palette.pal.gbapal graphics/mail/orange/palette.pal.gbapal graphics/mail/retro/palette.pal.gbapal graphics/mail/shadow/palette.pal.gbapal graphics/mail/tropic/palette.pal.gbapal graphics/mail/wave/palette.pal.gbapal graphics/mail/wood/palette.pal.gbapal: %.pal.gbapal: %.pal Makefile | tools
+	$(GFX) $< $@
+
+$(filter %.lz,$(JP_MAIL_ASSETS)): %.lz: % Makefile | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/graphics.o: src/data/graphics/mail.h $(JP_MAIL_ASSETS)
+
+$(C_BUILDDIR)/mail.d: src/mail.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -I include -I "" $<
+
+-include $(C_BUILDDIR)/mail.d
+
+$(C_BUILDDIR)/mail.o: src/mail.c charmap.txt include/graphics.h
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/mail.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/mail.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/mail.gen.s

@@ -91,8 +91,11 @@ class RouletteDataTests(unittest.TestCase):
         self.assertNotIn('src/data/roulette_data.o', make + ld)
         self.assertIn('src/roulette.o(.rodata.roulette_data);', ld)
         self.assertIn('src/graphics.o(.rodata.roulette_graphics);', ld)
-        self.assertIn('data/data_rest2c.o(.rodata.data_rest2c_after_roulette_graphics);', ld)
-        self.assertIn('0xDBEAC0, 0x241540', rest)
+        self.assertIn('src/graphics.o(.rodata.mail_graphics);', ld)
+        self.assertLess(ld.index('src/graphics.o(.rodata.roulette_graphics);'),
+                        ld.index('src/graphics.o(.rodata.mail_graphics);'))
+        self.assertIn('data/data_rest2c.o(.rodata.data_rest2c_after_mail_graphics);', ld)
+        self.assertIn('0xDC09BC, 0x23F644', rest)
         self.assertNotIn('0xDBDD61', rest)
         self.assertNotIn('gRouletteMenu_Gfx:', rest)
         self.assertNotIn('gRouletteWheel_Gfx:', rest)

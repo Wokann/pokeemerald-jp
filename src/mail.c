@@ -86,49 +86,9 @@ struct MailGraphics
 // JP note: the EWRAM pointer is fixed by sym_ewram_jp.txt.
 extern struct MailRead *sMailRead;
 
-// JP mail-reader data at 0x0857AEB4-0x0857B0B8. Keep this in a dedicated
-// ordered section: the surrounding mid61 raw data and menu-helper data have
-// separate physical owners.
+// JP mail-reader data keeps its native 0x0857AEB4-0x0857B0B8 order.
 #define MAIL_DATA __attribute__((section(".rodata.mail_data"), aligned(1)))
 
-// The JP mail graphics are still raw assets, so retain their verified ROM
-// addresses rather than introducing unresolved US-only graphics symbols.
-#define MAIL_PALETTE_ORANGE ((const u16 *)0x08DBEAC0)
-#define MAIL_TILES_ORANGE   ((const u32 *)0x08DBEC40)
-#define MAIL_TILEMAP_ORANGE ((const u32 *)0x08DBFE4C)
-#define MAIL_PALETTE_HARBOR ((const u16 *)0x08DBEAE0)
-#define MAIL_TILES_HARBOR   ((const u32 *)0x08DBEDE0)
-#define MAIL_TILEMAP_HARBOR ((const u32 *)0x08DBFF24)
-#define MAIL_PALETTE_GLITTER ((const u16 *)0x08DBEB00)
-#define MAIL_TILES_GLITTER   ((const u32 *)0x08DBEF1C)
-#define MAIL_TILEMAP_GLITTER ((const u32 *)0x08DC0004)
-#define MAIL_PALETTE_MECH ((const u16 *)0x08DBEB20)
-#define MAIL_TILES_MECH   ((const u32 *)0x08DBF12C)
-#define MAIL_TILEMAP_MECH ((const u32 *)0x08DC0110)
-#define MAIL_PALETTE_WOOD ((const u16 *)0x08DBEB40)
-#define MAIL_TILES_WOOD   ((const u32 *)0x08DBF204)
-#define MAIL_TILEMAP_WOOD ((const u32 *)0x08DC01EC)
-#define MAIL_PALETTE_WAVE ((const u16 *)0x08DBEB60)
-#define MAIL_TILES_WAVE   ((const u32 *)0x08DBF3FC)
-#define MAIL_TILEMAP_WAVE ((const u32 *)0x08DC02DC)
-#define MAIL_PALETTE_BEAD ((const u16 *)0x08DBEB80)
-#define MAIL_TILES_BEAD   ((const u32 *)0x08DBF57C)
-#define MAIL_TILEMAP_BEAD ((const u32 *)0x08DC03BC)
-#define MAIL_PALETTE_SHADOW ((const u16 *)0x08DBEBA0)
-#define MAIL_TILES_SHADOW   ((const u32 *)0x08DBF624)
-#define MAIL_TILEMAP_SHADOW ((const u32 *)0x08DC049C)
-#define MAIL_PALETTE_TROPIC ((const u16 *)0x08DBEBC0)
-#define MAIL_TILES_TROPIC   ((const u32 *)0x08DBF7B4)
-#define MAIL_TILEMAP_TROPIC ((const u32 *)0x08DC05A8)
-#define MAIL_PALETTE_DREAM ((const u16 *)0x08DBEBE0)
-#define MAIL_TILES_DREAM   ((const u32 *)0x08DBF8F4)
-#define MAIL_TILEMAP_DREAM ((const u32 *)0x08DC0698)
-#define MAIL_PALETTE_FAB ((const u16 *)0x08DBEC00)
-#define MAIL_TILES_FAB   ((const u32 *)0x08DBFA5C)
-#define MAIL_TILEMAP_FAB ((const u32 *)0x08DC0790)
-#define MAIL_PALETTE_RETRO ((const u16 *)0x08DBEC20)
-#define MAIL_TILES_RETRO   ((const u32 *)0x08DBFBAC)
-#define MAIL_TILEMAP_RETRO ((const u32 *)0x08DC08A8)
 
 const struct BgTemplate sMailBgTemplates[] MAIL_DATA =
 {
@@ -196,97 +156,97 @@ const u16 sMailBgColors[][2] MAIL_DATA =
 const struct MailGraphics sMailGraphics[] MAIL_DATA =
 {
     {
-        .palette = MAIL_PALETTE_ORANGE,
-        .tiles = MAIL_TILES_ORANGE,
-        .tileMap = MAIL_TILEMAP_ORANGE,
+        .palette = gMailPalette_Orange,
+        .tiles = gMailTiles_Orange,
+        .tileMap = gMailTilemap_Orange,
         .unused = 0x2C0,
         .textColor = 0x294A,
         .textShadow = 0x6739,
     },
     {
-        .palette = MAIL_PALETTE_HARBOR,
-        .tiles = MAIL_TILES_HARBOR,
-        .tileMap = MAIL_TILEMAP_HARBOR,
+        .palette = gMailPalette_Harbor,
+        .tiles = gMailTiles_Harbor,
+        .tileMap = gMailTilemap_Harbor,
         .unused = 0x2E0,
         .textColor = 0x7FFF,
         .textShadow = 0x4631,
     },
     {
-        .palette = MAIL_PALETTE_GLITTER,
-        .tiles = MAIL_TILES_GLITTER,
-        .tileMap = MAIL_TILEMAP_GLITTER,
+        .palette = gMailPalette_Glitter,
+        .tiles = gMailTiles_Glitter,
+        .tileMap = gMailTilemap_Glitter,
         .unused = 0x400,
         .textColor = 0x294A,
         .textShadow = 0x6739,
     },
     {
-        .palette = MAIL_PALETTE_MECH,
-        .tiles = MAIL_TILES_MECH,
-        .tileMap = MAIL_TILEMAP_MECH,
+        .palette = gMailPalette_Mech,
+        .tiles = gMailTiles_Mech,
+        .tileMap = gMailTilemap_Mech,
         .unused = 0x1E0,
         .textColor = 0x7FFF,
         .textShadow = 0x4631,
     },
     {
-        .palette = MAIL_PALETTE_WOOD,
-        .tiles = MAIL_TILES_WOOD,
-        .tileMap = MAIL_TILEMAP_WOOD,
+        .palette = gMailPalette_Wood,
+        .tiles = gMailTiles_Wood,
+        .tileMap = gMailTilemap_Wood,
         .unused = 0x2E0,
         .textColor = 0x7FFF,
         .textShadow = 0x4631,
     },
     {
-        .palette = MAIL_PALETTE_WAVE,
-        .tiles = MAIL_TILES_WAVE,
-        .tileMap = MAIL_TILEMAP_WAVE,
+        .palette = gMailPalette_Wave,
+        .tiles = gMailTiles_Wave,
+        .tileMap = gMailTilemap_Wave,
         .unused = 0x300,
         .textColor = 0x294A,
         .textShadow = 0x6739,
     },
     {
-        .palette = MAIL_PALETTE_BEAD,
-        .tiles = MAIL_TILES_BEAD,
-        .tileMap = MAIL_TILEMAP_BEAD,
+        .palette = gMailPalette_Bead,
+        .tiles = gMailTiles_Bead,
+        .tileMap = gMailTilemap_Bead,
         .unused = 0x140,
         .textColor = 0x7FFF,
         .textShadow = 0x4631,
     },
     {
-        .palette = MAIL_PALETTE_SHADOW,
-        .tiles = MAIL_TILES_SHADOW,
-        .tileMap = MAIL_TILEMAP_SHADOW,
+        .palette = gMailPalette_Shadow,
+        .tiles = gMailTiles_Shadow,
+        .tileMap = gMailTilemap_Shadow,
         .unused = 0x300,
         .textColor = 0x7FFF,
         .textShadow = 0x4631,
     },
     {
-        .palette = MAIL_PALETTE_TROPIC,
-        .tiles = MAIL_TILES_TROPIC,
-        .tileMap = MAIL_TILEMAP_TROPIC,
+        .palette = gMailPalette_Tropic,
+        .tiles = gMailTiles_Tropic,
+        .tileMap = gMailTilemap_Tropic,
         .unused = 0x220,
         .textColor = 0x294A,
         .textShadow = 0x6739,
     },
     {
-        .palette = MAIL_PALETTE_DREAM,
-        .tiles = MAIL_TILES_DREAM,
-        .tileMap = MAIL_TILEMAP_DREAM,
+        .palette = gMailPalette_Dream,
+        .tiles = gMailTiles_Dream,
+        .tileMap = gMailTilemap_Dream,
         .unused = 0x340,
         .textColor = 0x294A,
         .textShadow = 0x6739,
     },
     {
-        .palette = MAIL_PALETTE_FAB,
-        .tiles = MAIL_TILES_FAB,
-        .tileMap = MAIL_TILEMAP_FAB,
+        .palette = gMailPalette_Fab,
+        .tiles = gMailTiles_Fab,
+        .tileMap = gMailTilemap_Fab,
         .unused = 0x2A0,
         .textColor = 0x294A,
         .textShadow = 0x6739,
     },
     {
-        .palette = MAIL_PALETTE_RETRO,
-        .tiles = MAIL_TILES_RETRO,
-        .tileMap = MAIL_TILEMAP_RETRO,
+        .palette = gMailPalette_Retro,
+        .tiles = gMailTiles_Retro,
+        .tileMap = gMailTilemap_Retro,
         .unused = 0x520,
         .textColor = 0x294A,
         .textShadow = 0x6739,
@@ -341,44 +301,8 @@ const struct MailLayout sMailLayouts_Tall[] MAIL_DATA =
     { .numLines = 5, .signatureYPos = 0, .signatureWidth = 0, .wordsYPos = 2, .wordsXPos = 0, .lines = sLineLayouts_Tall },
 };
 
-const u8 sMailFromText[] MAIL_DATA = { 0x00, 0x26, 0x28, 0xFF };
+const u8 sMailFromText[] MAIL_DATA = _("　より");
 
-#undef MAIL_PALETTE_ORANGE
-#undef MAIL_TILES_ORANGE
-#undef MAIL_TILEMAP_ORANGE
-#undef MAIL_PALETTE_HARBOR
-#undef MAIL_TILES_HARBOR
-#undef MAIL_TILEMAP_HARBOR
-#undef MAIL_PALETTE_GLITTER
-#undef MAIL_TILES_GLITTER
-#undef MAIL_TILEMAP_GLITTER
-#undef MAIL_PALETTE_MECH
-#undef MAIL_TILES_MECH
-#undef MAIL_TILEMAP_MECH
-#undef MAIL_PALETTE_WOOD
-#undef MAIL_TILES_WOOD
-#undef MAIL_TILEMAP_WOOD
-#undef MAIL_PALETTE_WAVE
-#undef MAIL_TILES_WAVE
-#undef MAIL_TILEMAP_WAVE
-#undef MAIL_PALETTE_BEAD
-#undef MAIL_TILES_BEAD
-#undef MAIL_TILEMAP_BEAD
-#undef MAIL_PALETTE_SHADOW
-#undef MAIL_TILES_SHADOW
-#undef MAIL_TILEMAP_SHADOW
-#undef MAIL_PALETTE_TROPIC
-#undef MAIL_TILES_TROPIC
-#undef MAIL_TILEMAP_TROPIC
-#undef MAIL_PALETTE_DREAM
-#undef MAIL_TILES_DREAM
-#undef MAIL_TILEMAP_DREAM
-#undef MAIL_PALETTE_FAB
-#undef MAIL_TILES_FAB
-#undef MAIL_TILEMAP_FAB
-#undef MAIL_PALETTE_RETRO
-#undef MAIL_TILES_RETRO
-#undef MAIL_TILEMAP_RETRO
 #undef MAIL_DATA
 
 static void CB2_InitMailRead(void);

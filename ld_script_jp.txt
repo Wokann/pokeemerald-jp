@@ -10504,7 +10504,8 @@ SECTIONS {
         src/graphics.o(.rodata.cable_car_door_gfx);
         src/graphics.o(.rodata.cable_car_cable_gfx);
         src/graphics.o(.rodata.roulette_graphics);
-        data/data_rest2c.o(.rodata.data_rest2c_after_roulette_graphics);
+        src/graphics.o(.rodata.mail_graphics);
+        data/data_rest2c.o(.rodata.data_rest2c_after_mail_graphics);
     } =0
     /* DWARF debug sections.
     Symbols in the DWARF debugging sections are relative to the beginning

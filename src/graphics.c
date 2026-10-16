@@ -2061,3 +2061,7 @@ ROULETTE_GRAPHICS const u32 gRouletteNumbers_Gfx[] = INCGFX_U32("graphics/roulet
 ROULETTE_GRAPHICS const u32 gRouletteMultiplier_Gfx[] = INCGFX_U32("graphics/roulette/multiplier.png", ".4bpp.lz");
 
 #undef ROULETTE_GRAPHICS
+
+#define MAIL_GRAPHICS __attribute__((section(".rodata.mail_graphics"), aligned(4)))
+#include "data/graphics/mail.h"
+#undef MAIL_GRAPHICS
