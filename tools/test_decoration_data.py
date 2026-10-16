@@ -103,9 +103,16 @@ class DecorationDataTests(unittest.TestCase):
         self.assertNotIn('.incbin "baserom_jp.gba", 0x57d884, 0x2580', mid)
         self.assertNotIn('.incbin "baserom_jp.gba", 0x582308, 0x20a0', mid)
         self.assertFalse((ROOT / 'data/slot_machine/jp').exists())
-        self.assertIn('gItemIcon_QuestionMark:: @ 0x08DAB300', rest)
-        self.assertIn('gItemIconPalette_QuestionMark:: @ 0x08DAB378', rest)
-        self.assertIn('.incbin "baserom_jp.gba", 0xdab38c, 0xc9bc', rest)
+        self.assertNotIn('gItemIcon_QuestionMark::', rest)
+        self.assertNotIn('gItemIconPalette_QuestionMark::', rest)
+        self.assertNotIn('.incbin "baserom_jp.gba", 0xdab38c, 0xc9bc', rest)
+        self.assertIn('.incbin "baserom_jp.gba", 0xdab2fd, 0x3', rest)
+        items = (ROOT / 'src/data/graphics/items.h').read_text()
+        self.assertIn('gItemIcon_QuestionMark[] = INCGFX_U32(', items)
+        self.assertIn('gItemIconPalette_QuestionMark[] = INCGFX_U32(', items)
+        self.assertEqual(linker.count('src/graphics.o(.rodata.item_icon_graphics);'), 1)
+        self.assertLess(linker.index('src/graphics.o(.rodata.item_icon_graphics);'),
+                        linker.index('src/graphics.o(.rodata.decoration_icons);'))
         self.assertNotIn('gBattleAnimSpritePal_Shock3: @ 0x08DBA3F4', rest)
         self.assertIn('BATTLE_ANIM_SHOCK_AND_FEATHER_RESOURCES const u32 gBattleAnimSpritePal_Shock3[]',
                       (ROOT / 'src/graphics.c').read_text())
@@ -226,7 +233,7 @@ class DecorationDataTests(unittest.TestCase):
             script.write_text('SECTIONS {\n'
                               '.text 0x08126950 : { *decoration.o(.text) }\n'
                               '.core 0x0857FE04 : { *decoration.o(.rodata.decoration_data) }\n'
-                              '.shared 0x08DAB2FD : { *rest.o(.rodata.data_rest2c_after_chases_away) }\n'
+                              '.padding 0x08DAB2FD : { *rest.o(.rodata.data_rest2c_after_chases_away) }\n'
                               '.icons 0x08DB7D48 : { *icons.o(.rodata.decoration_icons) }\n'
                               '/DISCARD/ : { *(*) }\n}\n')
             elf = temporary / 'module.elf'
@@ -235,7 +242,7 @@ class DecorationDataTests(unittest.TestCase):
             for name, start, end, digest in (
                 ('.text', 0x08126950, 0x0812A4EC, '853cd8dabe635105a60bad72e5fde6ae26ad944cbc54bc3fd04c152f8d51e3ec'),
                 ('.core', CORE_START, CORE_END, '2f6423e005047fb34fd42697e2e24130e042926ab75864d6bf3b0bb0f2b0d4d6'),
-                ('.shared', 0x08DAB2FD, ICONS_START, '083afa0a8b0467d00e70575ab58585ef141df883262c3427e3a0c199ce5c77e1'),
+                ('.padding', 0x08DAB2FD, 0x08DAB300, '709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c'),
                 ('.icons', ICONS_START, ICONS_END, 'ef451e716318be34baaf0375bcd72453a440b03fe37f8a0be42de2ff49afbaf9'),
             ):
                 binary = temporary / (name[1:] + '.bin')

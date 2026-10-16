@@ -2045,3 +2045,7 @@ CONTEST_RESULTS_TITLE_TILEMAPS const u16 gContestResultsTitle_Tilemap[] =
 };
 
 #undef CONTEST_RESULTS_TITLE_TILEMAPS
+
+#define ITEM_ICONS_GRAPHICS __attribute__((section(".rodata.item_icon_graphics"), aligned(4)))
+#include "data/graphics/items.h"
+#undef ITEM_ICONS_GRAPHICS

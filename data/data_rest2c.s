@@ -58,14 +58,6 @@
 	.section .rodata.data_rest2c_after_chases_away
 	.incbin "baserom_jp.gba", 0xdab2fd, 0x3
 
-gItemIcon_QuestionMark:: @ 0x08DAB300
-	.incbin "baserom_jp.gba", 0xdab300, 0x78
-
-gItemIconPalette_QuestionMark:: @ 0x08DAB378
-	.incbin "baserom_jp.gba", 0xdab378, 0x14
-
-	.incbin "baserom_jp.gba", 0xdab38c, 0xc9bc
-
 	.section .rodata.data_rest2c_after_cable_car_bg_palette
 	.incbin "baserom_jp.gba", 0xDBC236, 0x2
 

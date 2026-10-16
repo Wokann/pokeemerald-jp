@@ -10493,6 +10493,7 @@ SECTIONS {
         src/graphics.o(.rodata.rayquaza_scene_4_graphics);
         src/graphics.o(.rodata.rayquaza_scene_5_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_after_chases_away);
+        src/graphics.o(.rodata.item_icon_graphics);
         src/graphics.o(.rodata.decoration_icons);
         src/graphics.o(.rodata.battle_anim_shock_and_feather_resources);
         src/graphics.o(.rodata.cable_car_bg_palette);
