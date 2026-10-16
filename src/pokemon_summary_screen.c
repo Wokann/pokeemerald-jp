@@ -6740,7 +6740,7 @@ __attribute__((naked)) void sub_081C21CC(void)
         "_081C2378: .4byte gText_PkmnSkills\n\t"
         "_081C237C: .4byte gText_BattleMoves\n\t"
         "_081C2380: .4byte gText_ContestMoves\n\t"
-        "_081C2384: .4byte gText_Exit\n\t"
+        "_081C2384: .4byte gText_Cancel2\n\t"
         "_081C2388: .4byte gText_Info\n\t"
         "_081C238C: .4byte gText_Switch\n\t"
         "_081C2390: .4byte gText_Register + 0x26\n\t"

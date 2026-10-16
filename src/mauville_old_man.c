@@ -2335,7 +2335,7 @@ __attribute__((naked)) void PrintStoryList(void)
         "	.align 2, 0\n\t"
         "_081213E0: .4byte gUnknown_2039DFC\n\t"
         "_081213E4: .4byte gUnknown_2039DF8\n\t"
-        "_081213E8: .4byte gUnknown_85CB1B9\n\t"
+        "_081213E8: .4byte gText_Exit\n\t"
         ".syntax divided\n\t"
     );
 }

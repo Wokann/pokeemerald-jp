@@ -928,7 +928,7 @@ __attribute__((naked)) void BuyMenuBuildListMenuTemplate(void)
         "_080DF518: .4byte gUnknown_2039C14\n\t"
         "_080DF51C: .4byte gUnknown_2039C00\n\t"
         "_080DF520: .4byte gUnknown_2039C18\n\t"
-        "_080DF524: .4byte gText_Exit\n\t"
+        "_080DF524: .4byte gText_Cancel2\n\t"
         "_080DF528: .4byte gMultiuseListMenuTemplate\n\t"
         "_080DF52C: .4byte sShopBuyMenuListTemplate\n\t"
         "_080DF530:\n\t"

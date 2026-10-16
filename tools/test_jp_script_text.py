@@ -259,6 +259,67 @@ class NamingScreenTextCodecTests(unittest.TestCase):
             self.assertEqual(raw, BASEROM_PATH.read_bytes()[0x5658A0:0x5658C1])
 
 
+class PCStorageTextCodecTests(unittest.TestCase):
+    PADDED_MESSAGES = (
+        (0x5CB534, 0x5CB55C, "てもちポケモンが　1ひきしかいません！\\n" + "　" * 19 + "$"),
+        (0x5CB55C, 0x5CB584, "てもちポケモンが　いっぱいです！　　　\\n" + "　" * 19 + "$"),
+    )
+
+    def setUp(self):
+        self.codec = JapaneseScriptTextCodec()
+
+    @unittest.skipUnless(PREPROC_PATH.is_file(), "matching JP preproc is required")
+    def test_storage_error_messages_keep_full_padded_lines(self):
+        for start, end, source in self.PADDED_MESSAGES:
+            with self.subTest(address=f"0x{start:06X}"):
+                raw = self.codec.preproc_bytes(source)
+                self.assertEqual(len(raw), end - start)
+                self.assertEqual(raw.count(b"\xFE"), 1)
+                self.assertEqual(raw[-20:], b"\x00" * 19 + b"\xFF")
+                self.assertEqual(self.codec.verify_one(raw).source, source)
+                if BASEROM_PATH.is_file():
+                    self.assertEqual(raw, BASEROM_PATH.read_bytes()[start:end])
+
+    @unittest.skipUnless(PREPROC_PATH.is_file(), "matching JP preproc is required")
+    def test_jp_helpbar_clear_text_is_spaces_not_the_us_clear_control(self):
+        raw = self.codec.preproc_bytes("　" * 16 + "$")
+        self.assertEqual(raw, b"\x00" * 16 + b"\xFF")
+        self.assertNotEqual(raw, self.codec.preproc_bytes("{CLEAR 128}$"))
+        if BASEROM_PATH.is_file():
+            self.assertEqual(raw, BASEROM_PATH.read_bytes()[0x5CB703:0x5CB714])
+
+    @unittest.skipUnless(PREPROC_PATH.is_file(), "matching JP preproc is required")
+    def test_jp_put_item_in_bag_keeps_its_dynamic_item_name(self):
+        raw = self.codec.preproc_bytes("{DYNAMIC 0}を　バッグへいれた！$")
+        decoded = self.codec.verify_one(raw)
+        self.assertEqual(len(raw), 13)
+        self.assertTrue(raw.startswith(b"\xF7\x00"))
+        self.assertIn("{DYNAMIC 0x00}", decoded.source)
+        self.assertNotIn("{MUS_", decoded.source)
+        if BASEROM_PATH.is_file():
+            self.assertEqual(raw, BASEROM_PATH.read_bytes()[0x5CB31D:0x5CB32A])
+
+    @unittest.skipUnless(BASEROM_PATH.is_file() and PREPROC_PATH.is_file(), "matching JP ROM and preproc are required")
+    def test_same_spelling_exit_texts_remain_distinct_native_objects(self):
+        rom = BASEROM_PATH.read_bytes()
+        raw = self.codec.preproc_bytes("やめる$")
+        self.assertEqual(rom[0x5C93C8:0x5C93CC], raw)
+        self.assertEqual(rom[0x5CB1B9:0x5CB1BD], raw)
+        self.assertNotEqual(0x5C93C8, 0x5CB1B9)
+
+    @unittest.skipUnless(BASEROM_PATH.is_file() and PREPROC_PATH.is_file(), "matching JP ROM and preproc are required")
+    def test_complete_storage_and_pokenav_owner_has_120_exact_objects(self):
+        rom = BASEROM_PATH.read_bytes()
+        position, count = 0x5CB1B9, 0
+        while position < 0x5CB7A2:
+            decoded = self.codec.verify_one(rom[position:0x5CB7A2])
+            self.assertTrue(decoded.ended)
+            self.assertGreater(decoded.consumed, 0)
+            position += decoded.consumed
+            count += 1
+        self.assertEqual((position, count), (0x5CB7A2, 120))
+
+
 class UnionRoomKeyboardTextCodecTests(unittest.TestCase):
     LAST_EMOJI_ROW = "{EMOJI_HIGHBAR}{UNDERSCORE}{EMOJI_SEMICOLON}:　$"
 

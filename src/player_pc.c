@@ -2221,7 +2221,7 @@ __attribute__((naked)) void ItemStorage_RefreshListMenu(void)
         "_0816BBF0: .4byte gUnknown_203B984\n\t"
         "_0816BBF4: .4byte gUnknown_203B990\n\t"
         "_0816BBF8: .4byte gSaveBlock1Ptr\n\t"
-        "_0816BBFC: .4byte gText_Exit\n\t"
+        "_0816BBFC: .4byte gText_Cancel2\n\t"
         "_0816BC00: .4byte gMultiuseListMenuTemplate\n\t"
         "_0816BC04: .4byte sListMenuTemplate_ItemStorage\n\t"
         ".syntax divided\n\t"
@@ -4148,7 +4148,7 @@ PLAYER_PC_STATIC_DATA const struct MenuAction gMailboxMailOptions[] =
     {gText_Read,      {(void (*)(u8))Mailbox_DoMailRead}},
     {gText_MoveToBag, {(void (*)(u8))Mailbox_MoveToBag}},
     {gText_Give2,     {(void (*)(u8))Mailbox_Give}},
-    {gText_Exit,      {(void (*)(u8))Mailbox_Cancel}}, // JP uses やめる rather than the US Cancel2 alias.
+    {gText_Cancel2,   {(void (*)(u8))Mailbox_Cancel}}, // JP Cancel2 says やめる; retain the native text pointer.
 };
 
 static const struct WindowTemplate sWindowTemplates_MainMenus[] PLAYER_PC_STATIC_DATA =

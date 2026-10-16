@@ -114,7 +114,7 @@ extern const u8 gText_Third[];
 extern const u8 gText_NoDecorations[];
 extern const u8 gText_NoDecorationsInUse[];
 
-extern const u8 gText_Exit[];
+extern const u8 gText_Cancel2[];
 extern const u8 gText_Cancel[];
 
 extern const u8 gText_ThrowAwayVar1[];
@@ -643,7 +643,6 @@ extern const u8 gText_Son[];
 extern const u8 gText_Daughter[];
 
 // Multichoice strings
-extern const u8 gText_Exit[];
 extern const u8 gText_1F[];
 extern const u8 gText_2F[];
 extern const u8 gText_3F[];
@@ -1997,6 +1996,13 @@ extern const u8 BattlePyramid_Text_SixTrainersRemaining6[];
 extern const u8 BattlePyramid_Text_SevenTrainersRemaining6[];
 
 // PC strings
+extern const u8 gText_Exit[];
+extern const u8 gText_WhatWouldYouLikeToDo[];
+extern const u8 gText_NoTrainersRegistered[];
+extern const u8 gText_Detail[];
+extern const u8 gText_Call2[];
+extern const u8 gText_UnusedExit[];
+extern const u8 gText_CantCallOpponentHere[];
 extern const u8 gText_ExitFromBox[];
 extern const u8 gText_WhatDoYouWantToDo[];
 extern const u8 gText_PleasePickATheme[];
@@ -2040,7 +2046,6 @@ extern const u8 gPCText_Jump[];
 extern const u8 gPCText_Wallpaper[];
 extern const u8 gPCText_Name[];
 extern const u8 gPCText_Take[];
-extern const u8 gPCText_Give[];
 extern const u8 gPCText_Give[];
 extern const u8 gPCText_Switch[];
 extern const u8 gPCText_Bag[];
@@ -2112,7 +2117,6 @@ extern const u8 gText_NewLine2[];
 extern const u8 gText_Exit4[];
 extern const u8 gText_Lv[];
 extern const u8 gExpandedPlaceholder_Empty[];
-extern const u8 gText_Exit[];
 extern const u8 gDaycareText_GetAlongVeryWell[];
 extern const u8 gDaycareText_GetAlong[];
 extern const u8 gDaycareText_DontLikeOther[];

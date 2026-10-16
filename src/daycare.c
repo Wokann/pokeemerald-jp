@@ -30,7 +30,7 @@ DAYCARE_LEVEL_MENU_DATA static const struct ListMenuItem sLevelMenuItems[] =
 {
     {gText_ExpandedPlaceholder_Empty, 0},
     {gText_ExpandedPlaceholder_Empty, 1},
-    {gText_Exit, DAYCARE_LEVEL_MENU_EXIT},
+    {gText_Cancel2, DAYCARE_LEVEL_MENU_EXIT},
 };
 
 DAYCARE_LEVEL_MENU_DATA static const struct ListMenuTemplate sDaycareListMenuLevelTemplate =

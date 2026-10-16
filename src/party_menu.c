@@ -2226,7 +2226,7 @@ static void CreateCancelConfirmWindows(bool8 chooseHalf)
         }
         else
         {
-            AddTextPrinterParameterized3(cancelWindowId, FONT_NORMAL, offset, 2, sFontColorTable[0], TEXT_SKIP_DRAW, gText_Exit); // JP uses FONT_NORMAL
+            AddTextPrinterParameterized3(cancelWindowId, FONT_NORMAL, offset, 2, sFontColorTable[0], TEXT_SKIP_DRAW, gText_Cancel2); // JP uses FONT_NORMAL
         }
         PutWindowTilemap(cancelWindowId);
         CopyWindowToVram(cancelWindowId, COPYWIN_GFX);

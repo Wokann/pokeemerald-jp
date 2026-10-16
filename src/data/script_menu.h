@@ -5,14 +5,14 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BrineyOnD
 {
     {gText_Petalburg},
     {gText_Slateport},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_EnterInfo[] =
 {
     {gText_Enter2},
     {gText_Info2},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ContestInfo[] =
@@ -20,7 +20,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ContestIn
     {gText_WhatsAContest},
     {gText_TypesOfContests},
     {gText_Ranks},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ContestType[] =
@@ -30,7 +30,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ContestTy
     {gText_CutenessContest},
     {gText_SmartnessContest},
     {gText_ToughnessContest},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BasePCWithRegistry[] =
@@ -38,14 +38,14 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BasePCWit
     {gText_Decoration2},
     {gText_PackUp},
     {gText_Registry},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BasePCNoRegistry[] =
 {
     {gText_Decoration2},
     {gText_PackUp},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_RegisterMenu[] =
@@ -53,7 +53,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_RegisterM
     {gMenuText_Register},
     {gText_Registry},
     {gText_Information},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_Bike[] =
@@ -69,13 +69,13 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_StatusInf
     {gText_Slp},
     {gText_Brn},
     {gText_Frz},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BrineyOffDewford[] =
 {
     {gText_Dewford},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ViewedPaintings[] =
@@ -95,14 +95,14 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_Challenge
 {
     {gText_Challenge},
     {gText_Info3},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_LevelMode[] =
 {
     {gText_Lv50},
     {gText_OpenLevel},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_Mechadoll1_Q1[] =
@@ -215,7 +215,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_VendingMa
     {gText_FreshWaterAndPrice},
     {gText_SodaPopAndPrice},
     {gText_LemonadeAndPrice},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_MachBikeInfo[] =
@@ -223,7 +223,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_MachBikeI
     {gText_HowToRide},
     {gText_HowToTurn},
     {gText_SandySlopes},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_AcroBikeInfo[] =
@@ -231,7 +231,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_AcroBikeI
     {gText_Wheelies},
     {gText_BunnyHops},
     {gText_Jump},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_Satisfaction[] =
@@ -244,7 +244,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_SternDeep
 {
     {gText_DeepSeaTooth},
     {gText_DeepSeaScale},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_UnusedAshVendor[] =
@@ -256,7 +256,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_UnusedAsh
     {gText_BlackFlute2},
     {gText_GlassChair},
     {gText_GlassDesk},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_GameCornerDolls[] =
@@ -264,7 +264,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_GameCorne
     {gText_TreeckoDollAndPrice},
     {gText_TorchicDollAndPrice},
     {gText_MudkipDollAndPrice},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_GameCornerTMs[] =
@@ -274,14 +274,14 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_GameCorne
     {gText_TM35AndPrice},
     {gText_TM24AndPrice},
     {gText_TM13AndPrice},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_GameCornerCoins[] =
 {
     {gText_50CoinsAndPrice},
     {gText_500CoinsAndPrice},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_HowsFishing[] =
@@ -294,14 +294,14 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_SSTidalSl
 {
     {gText_LilycoveCity},
     {gText_BattleFrontier},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_SSTidalBattleFrontier[] =
 {
     {gText_SlateportCity},
     {gText_LilycoveCity},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_RightLeft[] =
@@ -313,7 +313,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_RightLeft
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_SSTidalSlateportNoBF[] =
 {
     {gText_LilycoveCity},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_Floors[] =
@@ -323,46 +323,46 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_Floors[] 
     {gText_3F},
     {gText_2F},
     {gText_1F},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsR[] =
 {
     {gText_RedShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsY[] =
 {
     {gText_YellowShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsRY[] =
 {
     {gText_RedShard},
     {gText_YellowShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsB[] =
 {
     {gText_BlueShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsRB[] =
 {
     {gText_RedShard},
     {gText_BlueShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsYB[] =
 {
     {gText_YellowShard},
     {gText_BlueShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsRYB[] =
@@ -370,27 +370,27 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsRYB
     {gText_RedShard},
     {gText_YellowShard},
     {gText_BlueShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsG[] =
 {
     {gText_GreenShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsRG[] =
 {
     {gText_RedShard},
     {gText_GreenShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsYG[] =
 {
     {gText_YellowShard},
     {gText_GreenShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsRYG[] =
@@ -398,14 +398,14 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsRYG
     {gText_RedShard},
     {gText_YellowShard},
     {gText_GreenShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsBG[] =
 {
     {gText_BlueShard},
     {gText_GreenShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsRBG[] =
@@ -413,7 +413,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsRBG
     {gText_RedShard},
     {gText_BlueShard},
     {gText_GreenShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsYBG[] =
@@ -421,7 +421,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsYBG
     {gText_YellowShard},
     {gText_BlueShard},
     {gText_GreenShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsRYBG[] =
@@ -430,7 +430,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ShardsRYB
     {gText_YellowShard},
     {gText_BlueShard},
     {gText_GreenShard},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_TourneyWithRecord[] =
@@ -463,7 +463,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_LinkServi
     {gText_TradeCenter},
     {gText_Colosseum},
     {gText_RecordCorner},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_YesNoInfo[] =
@@ -479,7 +479,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattleMod
     {gText_DoubleBattle},
     {gText_MultiBattle},
     {gText_Info2},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_LinkServicesNoRecord[] =
@@ -487,7 +487,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_LinkServi
     {gText_TradeCenter},
     {gText_Colosseum},
     {gText_BerryCrush3},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_LinkServicesAll[] =
@@ -496,28 +496,28 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_LinkServi
     {gText_Colosseum},
     {gText_RecordCorner},
     {gText_BerryCrush3},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_LinkServicesNoRecordBerry[] =
 {
     {gText_TradeCenter},
     {gText_Colosseum},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_WirelessMinigame[] =
 {
     {gText_PokemonJump},
     {gText_DodrioBerryPicking},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_LinkLeader[] =
 {
     {gText_JoinGroup},
     {gText_BecomeLeader},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ContestRank[] =
@@ -526,14 +526,14 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ContestRa
     {gText_SuperRank},
     {gText_HyperRank},
     {gText_MasterRank},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_FrontierItemChoose[] =
 {
     {gText_BattleBag},
     {gText_HeldItem},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_LinkContestInfo[] =
@@ -541,14 +541,14 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_LinkConte
     {gText_LinkContest},
     {gText_AboutE_Mode},
     {gText_AboutG_Mode},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_LinkContestMode[] =
 {
     {gText_E_Mode},
     {gText_G_Mode},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_ForcedStartMenu[] =
@@ -568,28 +568,28 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_FrontierG
     {gText_5BP},
     {gText_10BP},
     {gText_15BP},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_UnusedSSTidal1[] =
 {
     {gText_SouthernIsland},
     {gText_BirthIsland},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_UnusedSSTidal2[] =
 {
     {gText_SouthernIsland},
     {gText_FarawayIsland},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_UnusedSSTidal3[] =
 {
     {gText_BirthIsland},
     {gText_FarawayIsland},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_UnusedSSTidal4[] =
@@ -597,14 +597,14 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_UnusedSST
     {gText_SouthernIsland},
     {gText_BirthIsland},
     {gText_FarawayIsland},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_Fossil[] =
 {
     {gText_ClawFossil},
     {gText_RootFossil},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_YesNo[] =
@@ -620,7 +620,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_FrontierR
     {gText_OpenLevel2},
     {gText_MonTypeAndNo},
     {gText_HoldItems},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_FrontierPassInfo[] =
@@ -628,7 +628,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_FrontierP
     {gText_Symbols2},
     {gText_Record3},
     {gText_BattlePts},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattleArenaRules[] =
@@ -637,7 +637,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattleAre
     {gText_JudgeMind},
     {gText_JudgeSkill},
     {gText_JudgeBody},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattleTowerRules[] =
@@ -646,7 +646,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattleTow
     {gText_BattleMon},
     {gText_BattleSalon},
     {gText_MultiLink2},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattleDomeRules[] =
@@ -654,7 +654,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattleDom
     {gText_Matchup},
     {gText_TourneyTree},
     {gText_DoubleKO},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattleFactoryRules[] =
@@ -664,7 +664,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattleFac
     {gText_SwapNumber},
     {gText_SwapNotes},
     {gText_OpenLevel3},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattlePalaceRules[] =
@@ -674,7 +674,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattlePal
     {gText_PokemonMoves},
     {gText_Underpowered},
     {gText_WhenInDanger},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattlePyramidRules[] =
@@ -683,7 +683,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattlePyr
     {gText_PyramidTrainers},
     {gText_PyramidMaze},
     {gText_BattleBag2},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattlePikeRules[] =
@@ -691,7 +691,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_BattlePik
     {gText_PokenavAndBag},
     {gText_HeldItems},
     {gText_PokemonOrder},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_GoOnRecordRestRetire[] =
@@ -751,7 +751,7 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_Slateport
     {gText_SwapNumber},
     {gText_SwapNotes},
     {gText_BattlePokemon},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_FallarborTentRules[] =
@@ -761,13 +761,13 @@ SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_Fallarbor
     {gText_JudgeMind},
     {gText_JudgeSkill},
     {gText_JudgeBody},
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 
 SCRIPT_MENU_MULTICHOICE static const struct MenuAction MultichoiceList_Exit[] =
 {
-    {gText_Exit},
+    {gText_Cancel2},
 };
 
 struct MultichoiceListStruct
@@ -954,7 +954,7 @@ SCRIPT_MENU_LINK_SERVICES static const u8 *const sLilycoveSSTidalDestinations[SS
     [SSTIDAL_SELECTION_NAVEL_ROCK]      = gText_NavelRock,
     [SSTIDAL_SELECTION_BIRTH_ISLAND]    = gText_BirthIsland,
     [SSTIDAL_SELECTION_FARAWAY_ISLAND]  = gText_FarawayIsland,
-    [SSTIDAL_SELECTION_EXIT]            = gText_Exit,
+    [SSTIDAL_SELECTION_EXIT]            = gText_Cancel2,
 };
 
 SCRIPT_MENU_LINK_SERVICES static const u8 *const sCableClubOptions_WithRecordMix[] =

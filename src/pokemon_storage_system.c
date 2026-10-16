@@ -33,6 +33,7 @@
 #include "sound.h"
 #include "sprite.h"
 #include "string_util.h"
+#include "strings.h"
 #include "task.h"
 #include "text.h"
 #include "trig.h"
@@ -102,7 +103,6 @@ extern const u8 gUnknown_854B258[];
 extern const u16 gUnknown_854B25C[];
 extern const u8 gUnknown_854B27C[];
 extern const u8 gUnknown_854BA7C[];
-extern const u8 gUnknown_85CB584[];
 struct PokemonStorageMenuText
 {
     const u8 *text;
@@ -111,8 +111,6 @@ struct PokemonStorageMenuText
 
 extern const struct PokemonStorageMenuText gUnknown_854B1E4[];
 extern const struct WindowTemplate gUnknown_854B20C[];
-extern const u8 gUnknown_85CB534[];
-extern const u8 gUnknown_85CB55C[];
 extern void UnkUtil_Init(struct UnkUtil *util, struct UnkUtilData *data, u32 max);
 extern void sub_080D0A34(void);
 extern void Cb_MainPSS(void);
@@ -1036,13 +1034,13 @@ void Task_PokemonStorageSystemPC(u8 taskId)
             if (task->data[2] == 0 && CountPartyMons() == PARTY_SIZE)
             {
                 FillWindowPixelBuffer(0, PIXEL_FILL(1));
-                AddTextPrinterParameterized2(0, 1, gUnknown_85CB55C, 0, NULL, 2, 1, 3);
+                AddTextPrinterParameterized2(0, 1, gText_PartyFull, 0, NULL, 2, 1, 3);
                 task->data[0] = 3;
             }
             else if (task->data[2] == 1 && CountPartyMons() == 1)
             {
                 FillWindowPixelBuffer(0, PIXEL_FILL(1));
-                AddTextPrinterParameterized2(0, 1, gUnknown_85CB534, 0, NULL, 2, 1, 3);
+                AddTextPrinterParameterized2(0, 1, gText_JustOnePkmn, 0, NULL, 2, 1, 3);
                 task->data[0] = 3;
             }
             else
@@ -1177,7 +1175,7 @@ void ResetPokemonStorageSystem(void)
 
     for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)
     {
-        u8 *dest = StringCopy(GetBoxNamePtr(boxId), gUnknown_85CB584);
+        u8 *dest = StringCopy(GetBoxNamePtr(boxId), gText_Box);
 
         ConvertIntToDecimalStringN(dest, boxId + 1, 0, 2);
     }

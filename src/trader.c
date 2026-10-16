@@ -88,7 +88,7 @@ void CreateAvailableDecorationsMenu(u8 taskId)
         else
             AddTextPrinterParameterized(tWindowId, FONT_NORMAL, gDecorations[trader->decorations[i]].name, 8, 16 * i + 2, TEXT_SKIP_DRAW, NULL);
     }
-    AddTextPrinterParameterized(tWindowId, FONT_NORMAL, gText_Exit, 8, 16 * i + 2, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(tWindowId, FONT_NORMAL, gText_Cancel2, 8, 16 * i + 2, TEXT_SKIP_DRAW, NULL);
     sub_081984B0(tWindowId, 1, 0, 2, 16, NUM_TRADER_ITEMS + 1, 0);
     ScheduleBgCopyTilemapToVram(0);
 }

@@ -3625,7 +3625,7 @@ __attribute__((naked)) void sub_081679A4(void)
         "_08167A74: .4byte 0x00007B95\n\t"
         "_08167A78: .4byte gPlayerParty\n\t"
         "_08167A7C: .4byte 0x0000804A\n\t"
-        "_08167A80: .4byte gText_NumberOfBattles + 0xEA\n\t"
+        "_08167A80: .4byte gText_NatureSlash\n\t"
         "_08167A84: .4byte gNatureNamePointers\n\t"
         "_08167A88: .4byte sNatureTextColors\n\t"
         "_08167A8C:\n\t"

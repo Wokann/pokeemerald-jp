@@ -159,7 +159,7 @@ static const struct MenuAction sPokeblockMenuActions[] POKEBLOCK_MENU_ACTION_DAT
 {
     [PKBL_USE_ON_FIELD]  = {gMenuText_Use, {(void (*)(u8))sub_08136AC0}},
     [PKBL_TOSS]          = {gMenuText_Toss, {(void (*)(u8))sub_08136B24}},
-    [PKBL_CANCEL]        = {gText_Exit, {(void (*)(u8))sub_08136E58}},
+    [PKBL_CANCEL]        = {gText_Cancel2, {(void (*)(u8))sub_08136E58}},
     [PKBL_USE_IN_BATTLE] = {gMenuText_Use, {(void (*)(u8))sub_08136CFC}},
     [PKBL_USE_ON_FEEDER] = {gMenuText_Use, {(void (*)(u8))sub_08136D9C}},
     [PKBL_GIVE_TO_LADY]  = {gMenuText_Give2, {(void (*)(u8))sub_08136E00}},
