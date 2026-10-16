@@ -11,6 +11,9 @@
 #include "constants/trainers.h"
 #include "constants/union_room.h"
 
+// This JP-only unused text has no established runtime purpose.
+static const u8 sUnusedGameFreakName[6] __attribute__((section(".rodata.pokemon_unused_game_freak_name"), aligned(1))) = _("ゲーフリ");
+
 #define POKEDEX_ORDER_DATA __attribute__((section(".rodata.pokedex_order_data")))
 #define POKEMON_SPINDA_DATA __attribute__((section(".rodata.pokemon_spinda_data")))
 #define POKEMON_NATURE_STAT_DATA __attribute__((section(".rodata.pokemon_nature_stat_data")))
