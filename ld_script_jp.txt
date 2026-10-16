@@ -10440,7 +10440,7 @@ SECTIONS {
         src/graphics.o(.rodata.battle_anim_ice_resources);
         data/data_rest2c.o(.rodata.data_rest2c_after_battle_anim_ice_resources);
         src/graphics.o(.rodata.contest_next_turn_resources);
-        data/data_rest2c.o(.rodata.data_rest2c_after_contest_next_turn_resources);
+        src/graphics.o(.rodata.battle_anim_orb_and_powder_resources);
         src/graphics.o(.rodata.contest_applause_resources);
         data/data_rest2c.o(.rodata.data_rest2c_after_contest_applause_resources);
         src/graphics.o(.rodata.battle_anim_splash_through_protect_resources);
@@ -10492,7 +10492,7 @@ SECTIONS {
         src/graphics.o(.rodata.rayquaza_scene_5_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_after_chases_away);
         src/graphics.o(.rodata.decoration_icons);
-        data/data_rest2c.o(.rodata.data_rest2c_after_decoration_icons);
+        src/graphics.o(.rodata.battle_anim_shock_and_feather_resources);
         src/graphics.o(.rodata.cable_car_bg_palette);
         src/graphics.o(.rodata.cable_car_sprite_palette);
         src/graphics.o(.rodata.cable_car_bg_gfx);
@@ -10592,8 +10592,3 @@ gUnknown_8C1A048 = gContestResults_Interface_Tilemap;
 gUnknown_8C1A174 = gContestResults_Bg_Tilemap;
 gUnknown_8C1A2FC = gContestResults_Pal;
 gUnknown_8C1C700 = gContest2Pal;
-gUnknown_8C2CF60 = gSubstituteDollPal;
-gUnknown_8C2CF84 = gSubstituteDollFrontGfx;
-gUnknown_8C2D1C4 = gSubstituteDollBackGfx;
-gUnknown_8C2EAF4 = UnusedLevelupAnimationGfx;
-gUnknown_8C2EB40 = UnusedLevelupAnimationTilemap;

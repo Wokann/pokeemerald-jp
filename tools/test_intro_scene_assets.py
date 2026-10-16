@@ -29,7 +29,8 @@ class IntroSceneAssetTests(unittest.TestCase):
         raw=(ROOT/'data/data_rest2c.s').read_text()
         self.assertNotIn('gUnknown_8D85CB4',raw)
         self.assertNotIn('gUnknown_8D8CF26',raw)
-        self.assertIn('gBattleAnimSpriteGfx_GlowyRedOrb:',raw)
+        self.assertNotIn('gBattleAnimSpriteGfx_GlowyRedOrb:',raw)
+        self.assertIn('BATTLE_ANIM_ORB_AND_POWDER_RESOURCES const u32 gBattleAnimSpriteGfx_GlowyRedOrb[]',source)
 
     def test_background_palette_is_one_array_with_real_interior_references(self):
         self.assertIn('gIntro3Bg_Pal[16][16]',(ROOT/HEADER).read_text())

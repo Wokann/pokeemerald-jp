@@ -1279,6 +1279,7 @@ clean: clean-tools
 	rm -f $(JP_INTRO_SCENE_ASSETS) $(JP_INTRO_SCENE_INTERMEDIATES)
 	rm -f $(JP_INTRO_CREDITS_ASSETS) $(JP_INTRO_CREDITS_INTERMEDIATES)
 	rm -f $(JP_BATTLE_ENTRY_ASSETS) $(JP_BATTLE_ENTRY_INTERMEDIATES)
+	rm -f $(JP_BATTLE_ANIM_REMAINING_ASSETS) $(JP_BATTLE_ANIM_REMAINING_INTERMEDIATES)
 	rm -f $(JP_FRONTIER_UI_ASSETS) $(JP_FRONTIER_UI_INTERMEDIATES)
 
 # All build artifacts wait for the host-tool chain, so a fresh checkout can
@@ -1593,12 +1594,12 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/intro/scene_3/lightning.png.4bpp.lz graphics/intro/scene_3/lightning.png.gbapal \
 	graphics/intro/scene_3/bubbles.png.4bpp.lz graphics/intro/scene_3/bubbles.png.gbapal \
 	graphics/intro/scene_1/flygon.png.4bpp.lz graphics/intro/scene_1/sparkle.png.4bpp.lz \
-	graphics/battle_anims/sprites/flying_dirt.4bpp.lz graphics/battle_anims/sprites/flying_dirt.gbapal.lz \
-	graphics/battle_anims/backgrounds/sandstorm_brew.bin.lz graphics/battle_anims/backgrounds/sandstorm_brew.4bpp.lz \
-	graphics/battle_anims/sprites/metal_sound_waves.4bpp.lz graphics/battle_anims/sprites/metal_sound_waves.gbapal.lz \
-	graphics/battle_anims/backgrounds/ice.4bpp.lz graphics/battle_anims/backgrounds/ice.gbapal.lz \
-	graphics/battle_anims/backgrounds/ice.bin.lz graphics/battle_anims/sprites/icicle_spear.4bpp.lz \
-	graphics/battle_anims/sprites/icicle_spear.gbapal.lz \
+	graphics/battle_anims/sprites/flying_dirt.png.4bpp.lz graphics/battle_anims/sprites/flying_dirt.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/sandstorm_brew.bin.lz graphics/battle_anims/backgrounds/sandstorm_brew.png.4bpp.lz \
+	graphics/battle_anims/sprites/metal_sound_waves.png.4bpp.lz graphics/battle_anims/sprites/metal_sound_waves.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/ice.png.4bpp.lz graphics/battle_anims/backgrounds/ice.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/ice.bin.lz graphics/battle_anims/sprites/icicle_spear.png.4bpp.lz \
+	graphics/battle_anims/sprites/icicle_spear.png.gbapal.lz \
 	graphics/contest/nextturn.4bpp.lz graphics/contest/nextturn_numbers.4bpp \
 	graphics/contest/nextturn_random.4bpp \
 	graphics/contest/applause.4bpp.lz graphics/contest/applause_meter.4bpp \
@@ -1680,38 +1681,38 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	  \
 	 \
 	  \
-	graphics/battle_anims/sprites/splash.4bpp.lz graphics/battle_anims/sprites/splash.gbapal.lz \
-	graphics/battle_anims/sprites/sweat_bead.4bpp.lz graphics/battle_anims/sprites/pokeblock.4bpp.lz \
-	graphics/battle_anims/sprites/pokeblock.gbapal.lz graphics/battle_anims/sprites/gem_1.4bpp.lz \
-	graphics/battle_anims/sprites/gem_2.4bpp.lz graphics/battle_anims/sprites/gem_3.4bpp.lz \
-	graphics/battle_anims/sprites/gem_1.gbapal.lz graphics/battle_anims/backgrounds/in_air.4bpp.lz \
-	graphics/battle_anims/backgrounds/in_air.gbapal.lz graphics/battle_anims/backgrounds/in_air.bin.lz \
-	graphics/battle_anims/sprites/protect.4bpp.lz graphics/battle_anims/sprites/protect.gbapal.lz \
-	graphics/battle_anims/backgrounds/water_muddy.gbapal.lz graphics/battle_interface/ball_status_bar.4bpp.lz \
-	graphics/pokemon/egg/icon.png.4bpp graphics/battle_anims/backgrounds/ghost.4bpp.lz \
-	graphics/battle_anims/backgrounds/ghost.gbapal.lz graphics/battle_anims/backgrounds/ghost.bin.lz \
-	graphics/battle_anims/sprites/whip_hit.gbapal.lz graphics/battle_anims/backgrounds/solarbeam.gbapal.lz \
+	graphics/battle_anims/sprites/splash.png.4bpp.lz graphics/battle_anims/sprites/splash.png.gbapal.lz \
+	graphics/battle_anims/sprites/sweat_bead.png.4bpp.lz graphics/battle_anims/sprites/pokeblock.png.4bpp.lz \
+	graphics/battle_anims/sprites/pokeblock.png.gbapal.lz graphics/battle_anims/sprites/gem_1.png.4bpp.lz \
+	graphics/battle_anims/sprites/gem_2.png.4bpp.lz graphics/battle_anims/sprites/gem_3.png.4bpp.lz \
+	graphics/battle_anims/sprites/gem_1.png.gbapal.lz graphics/battle_anims/backgrounds/in_air.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/in_air.png.gbapal.lz graphics/battle_anims/backgrounds/in_air.bin.lz \
+	graphics/battle_anims/sprites/protect.png.4bpp.lz graphics/battle_anims/sprites/protect.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/water_muddy.pal.gbapal.lz graphics/battle_interface/ball_status_bar.4bpp.lz \
+	graphics/pokemon/egg/icon.png.4bpp graphics/battle_anims/backgrounds/ghost.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/ghost.png.gbapal.lz graphics/battle_anims/backgrounds/ghost.bin.lz \
+	graphics/battle_anims/sprites/whip_hit.pal.gbapal.lz graphics/battle_anims/backgrounds/solarbeam.pal.gbapal.lz \
 	graphics/battle_anims/backgrounds/solarbeam.bin.lz \
-	graphics/battle_anims/backgrounds/cosmic.gbapal.lz graphics/battle_anims/backgrounds/cosmic.4bpp.lz \
-	graphics/battle_anims/backgrounds/cosmic.bin.lz graphics/battle_anims/sprites/slam_hit_2.gbapal.lz \
-	graphics/battle_anims/sprites/slam_hit_2.4bpp.lz \
-	graphics/battle_anims/backgrounds/fog.bin.lz graphics/battle_anims/sprites/weather_ball.gbapal.lz \
-	graphics/battle_anims/sprites/weather_ball.4bpp.lz graphics/battle_anims/backgrounds/scary_face_player.bin.lz \
+	graphics/battle_anims/backgrounds/cosmic.png.gbapal.lz graphics/battle_anims/backgrounds/cosmic.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/cosmic.bin.lz graphics/battle_anims/sprites/slam_hit_2.png.gbapal.lz \
+	graphics/battle_anims/sprites/slam_hit_2.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/fog.bin.lz graphics/battle_anims/sprites/weather_ball.png.gbapal.lz \
+	graphics/battle_anims/sprites/weather_ball.png.4bpp.lz graphics/battle_anims/backgrounds/scary_face_player.bin.lz \
 	graphics/battle_anims/backgrounds/scary_face_opponent.bin.lz graphics/battle_anims/backgrounds/scary_face_contest.bin.lz \
-	graphics/battle_anims/sprites/hail.4bpp.lz graphics/battle_anims/sprites/hail.gbapal.lz \
-	graphics/battle_anims/sprites/green_spike.4bpp.lz graphics/battle_anims/sprites/green_spike.gbapal.lz \
-	graphics/battle_anims/sprites/white_circle_of_light.gbapal.lz graphics/battle_anims/sprites/glowy_blue_orb.gbapal.lz \
-	graphics/battle_anims/sprites/recycle.4bpp.lz graphics/battle_anims/sprites/recycle.gbapal.lz \
-	graphics/battle_anims/sprites/red_particles.4bpp.lz graphics/battle_anims/sprites/red_particles.gbapal.lz \
-	graphics/battle_anims/sprites/dirt_mound.4bpp.lz graphics/battle_anims/sprites/dirt_mound.gbapal.lz \
-	graphics/battle_anims/backgrounds/fissure.4bpp.lz graphics/battle_anims/backgrounds/fissure.gbapal.lz \
-	graphics/battle_anims/backgrounds/fissure.bin.lz graphics/battle_anims/sprites/bird.4bpp.lz \
-	graphics/battle_anims/sprites/bird.gbapal.lz graphics/battle_anims/sprites/cross_impact.4bpp.lz \
-	graphics/battle_anims/sprites/cross_impact.gbapal.lz \
-	graphics/battle_anims/backgrounds/water.4bpp.lz graphics/battle_anims/backgrounds/water.gbapal.lz \
+	graphics/battle_anims/sprites/hail.png.4bpp.lz graphics/battle_anims/sprites/hail.png.gbapal.lz \
+	graphics/battle_anims/sprites/green_spike.png.4bpp.lz graphics/battle_anims/sprites/green_spike.png.gbapal.lz \
+	graphics/battle_anims/sprites/white_circle_of_light.pal.gbapal.lz graphics/battle_anims/sprites/glowy_blue_orb.pal.gbapal.lz \
+	graphics/battle_anims/sprites/recycle.png.4bpp.lz graphics/battle_anims/sprites/recycle.png.gbapal.lz \
+	graphics/battle_anims/sprites/red_particles.png.4bpp.lz graphics/battle_anims/sprites/red_particles.png.gbapal.lz \
+	graphics/battle_anims/sprites/dirt_mound.png.4bpp.lz graphics/battle_anims/sprites/dirt_mound.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/fissure.png.4bpp.lz graphics/battle_anims/backgrounds/fissure.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/fissure.bin.lz graphics/battle_anims/sprites/bird.png.4bpp.lz \
+	graphics/battle_anims/sprites/bird.png.gbapal.lz graphics/battle_anims/sprites/cross_impact.png.4bpp.lz \
+	graphics/battle_anims/sprites/cross_impact.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/water.png.4bpp.lz graphics/battle_anims/backgrounds/water.png.gbapal.lz \
 	graphics/battle_anims/backgrounds/water_opponent.bin.lz graphics/battle_anims/backgrounds/water_player.bin.lz \
-	graphics/battle_anims/backgrounds/water_contest.bin.lz graphics/battle_anims/sprites/slash_2.gbapal.lz \
-	graphics/battle_anims/sprites/white_shadow.4bpp.lz graphics/battle_anims/sprites/white_shadow.gbapal.lz \
+	graphics/battle_anims/backgrounds/water_contest.bin.lz graphics/battle_anims/sprites/slash_2.pal.gbapal.lz \
+	graphics/battle_anims/sprites/white_shadow.png.4bpp.lz graphics/battle_anims/sprites/white_shadow.png.gbapal.lz \
 	graphics/party_menu/bg.4bpp.lz graphics/party_menu/bg.gbapal.lz graphics/party_menu/bg.bin.lz \
 	graphics/party_menu/pokeball.4bpp.lz graphics/party_menu/pokeball_small.4bpp.lz graphics/party_menu/pokeball.gbapal.lz \
 	graphics/interface/status_icons.4bpp.lz graphics/interface/status_icons.gbapal.lz \
@@ -4884,3 +4885,781 @@ $(JP_BATTLE_ENTRY_ASSETS): %.lz: % Makefile | tools
 	$(GFX) $< $@
 
 $(C_BUILDDIR)/graphics.o: src/data/graphics/battle_environment.h $(JP_BATTLE_ENTRY_ASSETS)
+
+JP_BATTLE_ANIM_REMAINING_ASSETS := graphics/battle_anims/backgrounds/attract.bin.lz \
+	graphics/battle_anims/backgrounds/attract.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/attract.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/aurora.bin.lz \
+	graphics/battle_anims/backgrounds/aurora.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/aurora.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/bug.pal.gbapal.lz \
+	graphics/battle_anims/backgrounds/cosmic.bin.lz \
+	graphics/battle_anims/backgrounds/cosmic.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/cosmic.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/dark.bin.lz \
+	graphics/battle_anims/backgrounds/dark.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/dark.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/drill.bin.lz \
+	graphics/battle_anims/backgrounds/drill.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/drill.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/drill_contests.bin.lz \
+	graphics/battle_anims/backgrounds/fissure.bin.lz \
+	graphics/battle_anims/backgrounds/fissure.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/fissure.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/fog.bin.lz \
+	graphics/battle_anims/backgrounds/ghost.bin.lz \
+	graphics/battle_anims/backgrounds/ghost.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/ghost.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/guillotine.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/guillotine.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/guillotine_contests.bin.lz \
+	graphics/battle_anims/backgrounds/guillotine_opponent.bin.lz \
+	graphics/battle_anims/backgrounds/guillotine_player.bin.lz \
+	graphics/battle_anims/backgrounds/highspeed.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/highspeed.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/highspeed_opponent.bin.lz \
+	graphics/battle_anims/backgrounds/highspeed_player.bin.lz \
+	graphics/battle_anims/backgrounds/ice.bin.lz \
+	graphics/battle_anims/backgrounds/ice.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/ice.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/impact.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/impact.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/impact_contests.bin.lz \
+	graphics/battle_anims/backgrounds/impact_opponent.bin.lz \
+	graphics/battle_anims/backgrounds/impact_player.bin.lz \
+	graphics/battle_anims/backgrounds/in_air.bin.lz \
+	graphics/battle_anims/backgrounds/in_air.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/in_air.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/psychic.bin.lz \
+	graphics/battle_anims/backgrounds/psychic.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/psychic.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/sandstorm_brew.bin.lz \
+	graphics/battle_anims/backgrounds/sandstorm_brew.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/scary_face.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/scary_face.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/scary_face_contest.bin.lz \
+	graphics/battle_anims/backgrounds/scary_face_opponent.bin.lz \
+	graphics/battle_anims/backgrounds/scary_face_player.bin.lz \
+	graphics/battle_anims/backgrounds/sky.pal.gbapal.lz \
+	graphics/battle_anims/backgrounds/solarbeam.bin.lz \
+	graphics/battle_anims/backgrounds/solarbeam.pal.gbapal.lz \
+	graphics/battle_anims/backgrounds/thunder.bin.lz \
+	graphics/battle_anims/backgrounds/thunder.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/thunder.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/water.png.4bpp.lz \
+	graphics/battle_anims/backgrounds/water.png.gbapal.lz \
+	graphics/battle_anims/backgrounds/water_contest.bin.lz \
+	graphics/battle_anims/backgrounds/water_muddy.pal.gbapal.lz \
+	graphics/battle_anims/backgrounds/water_opponent.bin.lz \
+	graphics/battle_anims/backgrounds/water_player.bin.lz \
+	graphics/battle_anims/masks/cure_bubbles.bin.lz \
+	graphics/battle_anims/masks/cure_bubbles.png.4bpp.lz \
+	graphics/battle_anims/masks/cure_bubbles.png.gbapal.lz \
+	graphics/battle_anims/masks/curse.bin.lz \
+	graphics/battle_anims/masks/curse.png.4bpp.lz \
+	graphics/battle_anims/masks/light_beam.bin.lz \
+	graphics/battle_anims/masks/light_beam.png.4bpp.lz \
+	graphics/battle_anims/masks/light_beam.png.gbapal.lz \
+	graphics/battle_anims/masks/metal_shine.bin.lz \
+	graphics/battle_anims/masks/metal_shine.png.4bpp.lz \
+	graphics/battle_anims/masks/metal_shine.png.gbapal.lz \
+	graphics/battle_anims/masks/unused_level_up.bin.lz \
+	graphics/battle_anims/masks/unused_level_up.png_num_tiles_14__Wnum_tiles.4bpp.lz \
+	graphics/battle_anims/sprites/air_wave_2.png.4bpp.lz \
+	graphics/battle_anims/sprites/air_wave_2.png.gbapal.lz \
+	graphics/battle_anims/sprites/angel.png.4bpp.lz \
+	graphics/battle_anims/sprites/angel.png.gbapal.lz \
+	graphics/battle_anims/sprites/anger.png.4bpp.lz \
+	graphics/battle_anims/sprites/anger.png.gbapal.lz \
+	graphics/battle_anims/sprites/bell.png.4bpp.lz \
+	graphics/battle_anims/sprites/bell.png.gbapal.lz \
+	graphics/battle_anims/sprites/bird.png.4bpp.lz \
+	graphics/battle_anims/sprites/bird.png.gbapal.lz \
+	graphics/battle_anims/sprites/black_ball_2.png.4bpp.lz \
+	graphics/battle_anims/sprites/black_ball_2.png.gbapal.lz \
+	graphics/battle_anims/sprites/blue_light_wall.pal.gbapal.lz \
+	graphics/battle_anims/sprites/blue_orb.pal.gbapal.lz \
+	graphics/battle_anims/sprites/blue_ring.pal.gbapal.lz \
+	graphics/battle_anims/sprites/blue_ring_2.pal.gbapal.lz \
+	graphics/battle_anims/sprites/bluegreen_orb.png.4bpp.lz \
+	graphics/battle_anims/sprites/bluegreen_orb.png.gbapal.lz \
+	graphics/battle_anims/sprites/breaking_egg.png.4bpp.lz \
+	graphics/battle_anims/sprites/breaking_egg.png.gbapal.lz \
+	graphics/battle_anims/sprites/brown_orb.pal.gbapal.lz \
+	graphics/battle_anims/sprites/circle_impact.png.4bpp.lz \
+	graphics/battle_anims/sprites/circle_impact.png.gbapal.lz \
+	graphics/battle_anims/sprites/circle_of_light.png.4bpp.lz \
+	graphics/battle_anims/sprites/clamp.png.4bpp.lz \
+	graphics/battle_anims/sprites/confetti.png.4bpp.lz \
+	graphics/battle_anims/sprites/confetti.png.gbapal.lz \
+	graphics/battle_anims/sprites/conversion.png.4bpp.lz \
+	graphics/battle_anims/sprites/conversion.png.gbapal.lz \
+	graphics/battle_anims/sprites/cross_impact.png.4bpp.lz \
+	graphics/battle_anims/sprites/cross_impact.png.gbapal.lz \
+	graphics/battle_anims/sprites/cut.png.4bpp.lz \
+	graphics/battle_anims/sprites/devil.png.4bpp.lz \
+	graphics/battle_anims/sprites/devil.png.gbapal.lz \
+	graphics/battle_anims/sprites/dirt_mound.png.4bpp.lz \
+	graphics/battle_anims/sprites/dirt_mound.png.gbapal.lz \
+	graphics/battle_anims/sprites/eclipsing_orb.png.4bpp.lz \
+	graphics/battle_anims/sprites/eclipsing_orb.png.gbapal.lz \
+	graphics/battle_anims/sprites/electric_orbs.png.4bpp.lz \
+	graphics/battle_anims/sprites/electric_orbs.png.gbapal.lz \
+	graphics/battle_anims/sprites/electricity.png.4bpp.lz \
+	graphics/battle_anims/sprites/explosion.png.4bpp.lz \
+	graphics/battle_anims/sprites/explosion.png.gbapal.lz \
+	graphics/battle_anims/sprites/eye.png.4bpp.lz \
+	graphics/battle_anims/sprites/eye.png.gbapal.lz \
+	graphics/battle_anims/sprites/eye_sparkle.png.4bpp.lz \
+	graphics/battle_anims/sprites/eye_sparkle.png.gbapal.lz \
+	graphics/battle_anims/sprites/fang_attack.png.4bpp.lz \
+	graphics/battle_anims/sprites/fang_attack.png.gbapal.lz \
+	graphics/battle_anims/sprites/finger.png.4bpp.lz \
+	graphics/battle_anims/sprites/finger.png.gbapal.lz \
+	graphics/battle_anims/sprites/finger_2.png.4bpp.lz \
+	graphics/battle_anims/sprites/flat_rock.png.4bpp.lz \
+	graphics/battle_anims/sprites/flat_rock.png.gbapal.lz \
+	graphics/battle_anims/sprites/flower.4bpp.lz \
+	graphics/battle_anims/sprites/flower.pal.gbapal.lz \
+	graphics/battle_anims/sprites/flying_dirt.png.4bpp.lz \
+	graphics/battle_anims/sprites/flying_dirt.png.gbapal.lz \
+	graphics/battle_anims/sprites/focus_energy.png.4bpp.lz \
+	graphics/battle_anims/sprites/focus_energy.png.gbapal.lz \
+	graphics/battle_anims/sprites/gem_1.png.4bpp.lz \
+	graphics/battle_anims/sprites/gem_1.png.gbapal.lz \
+	graphics/battle_anims/sprites/gem_2.png.4bpp.lz \
+	graphics/battle_anims/sprites/gem_3.png.4bpp.lz \
+	graphics/battle_anims/sprites/ghostly_spirit.png.4bpp.lz \
+	graphics/battle_anims/sprites/ghostly_spirit.png.gbapal.lz \
+	graphics/battle_anims/sprites/glowy_blue_orb.pal.gbapal.lz \
+	graphics/battle_anims/sprites/glowy_green_orb.pal.gbapal.lz \
+	graphics/battle_anims/sprites/glowy_red_orb.png.4bpp.lz \
+	graphics/battle_anims/sprites/glowy_red_orb.png.gbapal.lz \
+	graphics/battle_anims/sprites/gold_ring.png.4bpp.lz \
+	graphics/battle_anims/sprites/gold_ring.png.gbapal.lz \
+	graphics/battle_anims/sprites/gold_stars.png.4bpp.lz \
+	graphics/battle_anims/sprites/gold_stars.png.gbapal.lz \
+	graphics/battle_anims/sprites/gray_light_wall.pal.gbapal.lz \
+	graphics/battle_anims/sprites/gray_orb.png.4bpp.lz \
+	graphics/battle_anims/sprites/gray_orb.png.gbapal.lz \
+	graphics/battle_anims/sprites/green_light_wall.png.4bpp.lz \
+	graphics/battle_anims/sprites/green_light_wall.png.gbapal.lz \
+	graphics/battle_anims/sprites/green_sparkle.png.4bpp.lz \
+	graphics/battle_anims/sprites/green_sparkle.png.gbapal.lz \
+	graphics/battle_anims/sprites/green_spike.png.4bpp.lz \
+	graphics/battle_anims/sprites/green_spike.png.gbapal.lz \
+	graphics/battle_anims/sprites/green_star.png.4bpp.lz \
+	graphics/battle_anims/sprites/green_star.png.gbapal.lz \
+	graphics/battle_anims/sprites/guard_ring.png.4bpp.lz \
+	graphics/battle_anims/sprites/guard_ring.png.gbapal.lz \
+	graphics/battle_anims/sprites/hail.png.4bpp.lz \
+	graphics/battle_anims/sprites/hail.png.gbapal.lz \
+	graphics/battle_anims/sprites/hands_and_feet.png.4bpp.lz \
+	graphics/battle_anims/sprites/hands_and_feet.png.gbapal.lz \
+	graphics/battle_anims/sprites/hollow_orb.png.4bpp.lz \
+	graphics/battle_anims/sprites/hollow_orb.png.gbapal.lz \
+	graphics/battle_anims/sprites/horn_hit_2.png.4bpp.lz \
+	graphics/battle_anims/sprites/horn_hit_2.png.gbapal.lz \
+	graphics/battle_anims/sprites/ice_crystals.4bpp.lz \
+	graphics/battle_anims/sprites/ice_crystals.pal.gbapal.lz \
+	graphics/battle_anims/sprites/ice_spikes.png.4bpp.lz \
+	graphics/battle_anims/sprites/icicle_spear.png.4bpp.lz \
+	graphics/battle_anims/sprites/icicle_spear.png.gbapal.lz \
+	graphics/battle_anims/sprites/impact.png.4bpp.lz \
+	graphics/battle_anims/sprites/impact.png.gbapal.lz \
+	graphics/battle_anims/sprites/item_bag.png.4bpp.lz \
+	graphics/battle_anims/sprites/item_bag.png.gbapal.lz \
+	graphics/battle_anims/sprites/jagged_music_note.png.4bpp.lz \
+	graphics/battle_anims/sprites/jagged_music_note.png.gbapal.lz \
+	graphics/battle_anims/sprites/large_fresh_egg.png.4bpp.lz \
+	graphics/battle_anims/sprites/large_fresh_egg.png.gbapal.lz \
+	graphics/battle_anims/sprites/letter_z.png.4bpp.lz \
+	graphics/battle_anims/sprites/letter_z.png.gbapal.lz \
+	graphics/battle_anims/sprites/lick.png.4bpp.lz \
+	graphics/battle_anims/sprites/lick.png.gbapal.lz \
+	graphics/battle_anims/sprites/lightbulb.png.4bpp.lz \
+	graphics/battle_anims/sprites/lightbulb.png.gbapal.lz \
+	graphics/battle_anims/sprites/lock_on.png.4bpp.lz \
+	graphics/battle_anims/sprites/lock_on.png.gbapal.lz \
+	graphics/battle_anims/sprites/magenta_heart.png.4bpp.lz \
+	graphics/battle_anims/sprites/magenta_heart.png.gbapal.lz \
+	graphics/battle_anims/sprites/magnifying_glass.png.4bpp.lz \
+	graphics/battle_anims/sprites/magnifying_glass.png.gbapal.lz \
+	graphics/battle_anims/sprites/metal_sound_waves.png.4bpp.lz \
+	graphics/battle_anims/sprites/metal_sound_waves.png.gbapal.lz \
+	graphics/battle_anims/sprites/meteor.png.4bpp.lz \
+	graphics/battle_anims/sprites/meteor.png.gbapal.lz \
+	graphics/battle_anims/sprites/milk_bottle.png.4bpp.lz \
+	graphics/battle_anims/sprites/milk_bottle.png.gbapal.lz \
+	graphics/battle_anims/sprites/mist_cloud.png.4bpp.lz \
+	graphics/battle_anims/sprites/mist_cloud.png.gbapal.lz \
+	graphics/battle_anims/sprites/moon.png.4bpp.lz \
+	graphics/battle_anims/sprites/moon.png.gbapal.lz \
+	graphics/battle_anims/sprites/movement_waves.png.4bpp.lz \
+	graphics/battle_anims/sprites/movement_waves.png.gbapal.lz \
+	graphics/battle_anims/sprites/mud_sand.4bpp.lz \
+	graphics/battle_anims/sprites/mud_sand.pal.gbapal.lz \
+	graphics/battle_anims/sprites/music_notes_2.pal.gbapal.lz \
+	graphics/battle_anims/sprites/music_notes_2.png.4bpp.lz \
+	graphics/battle_anims/sprites/nail.png.4bpp.lz \
+	graphics/battle_anims/sprites/nail.png.gbapal.lz \
+	graphics/battle_anims/sprites/noise_line.png.4bpp.lz \
+	graphics/battle_anims/sprites/opening_eye.png.4bpp.lz \
+	graphics/battle_anims/sprites/opening_eye.png.gbapal.lz \
+	graphics/battle_anims/sprites/orange_light_wall.pal.gbapal.lz \
+	graphics/battle_anims/sprites/orbs.png.4bpp.lz \
+	graphics/battle_anims/sprites/orbs.png.gbapal.lz \
+	graphics/battle_anims/sprites/pain_split.png.4bpp.lz \
+	graphics/battle_anims/sprites/pain_split.png.gbapal.lz \
+	graphics/battle_anims/sprites/particles.png.4bpp.lz \
+	graphics/battle_anims/sprites/paw_print.png.4bpp.lz \
+	graphics/battle_anims/sprites/paw_print.png.gbapal.lz \
+	graphics/battle_anims/sprites/pencil.png.4bpp.lz \
+	graphics/battle_anims/sprites/pencil.png.gbapal.lz \
+	graphics/battle_anims/sprites/pink_cloud.png.4bpp.lz \
+	graphics/battle_anims/sprites/pink_cloud.png.gbapal.lz \
+	graphics/battle_anims/sprites/pink_heart.pal.gbapal.lz \
+	graphics/battle_anims/sprites/pink_petal.png.4bpp.lz \
+	graphics/battle_anims/sprites/pink_petal.png.gbapal.lz \
+	graphics/battle_anims/sprites/poison_bubble.png.4bpp.lz \
+	graphics/battle_anims/sprites/poison_bubble.png.gbapal.lz \
+	graphics/battle_anims/sprites/pokeball.png.4bpp.lz \
+	graphics/battle_anims/sprites/pokeball.png.gbapal.lz \
+	graphics/battle_anims/sprites/pokeblock.png.4bpp.lz \
+	graphics/battle_anims/sprites/pokeblock.png.gbapal.lz \
+	graphics/battle_anims/sprites/protect.png.4bpp.lz \
+	graphics/battle_anims/sprites/protect.png.gbapal.lz \
+	graphics/battle_anims/sprites/punch_impact.png.4bpp.lz \
+	graphics/battle_anims/sprites/punch_impact.png.gbapal.lz \
+	graphics/battle_anims/sprites/purple_flame.png.4bpp.lz \
+	graphics/battle_anims/sprites/purple_flame.png.gbapal.lz \
+	graphics/battle_anims/sprites/purple_gas_cloud.pal.gbapal.lz \
+	graphics/battle_anims/sprites/purple_hand_outline.png.4bpp.lz \
+	graphics/battle_anims/sprites/purple_hand_outline.png.gbapal.lz \
+	graphics/battle_anims/sprites/purple_ring.pal.gbapal.lz \
+	graphics/battle_anims/sprites/purple_scratch.png.4bpp.lz \
+	graphics/battle_anims/sprites/purple_scratch.png.gbapal.lz \
+	graphics/battle_anims/sprites/purple_swipe.png.4bpp.lz \
+	graphics/battle_anims/sprites/rainbow_rings.png.4bpp.lz \
+	graphics/battle_anims/sprites/rainbow_rings.png.gbapal.lz \
+	graphics/battle_anims/sprites/rapid_spin.png.4bpp.lz \
+	graphics/battle_anims/sprites/rapid_spin.png.gbapal.lz \
+	graphics/battle_anims/sprites/razor_leaf.png.4bpp.lz \
+	graphics/battle_anims/sprites/razor_leaf.png.gbapal.lz \
+	graphics/battle_anims/sprites/recycle.png.4bpp.lz \
+	graphics/battle_anims/sprites/recycle.png.gbapal.lz \
+	graphics/battle_anims/sprites/red_ball.png.4bpp.lz \
+	graphics/battle_anims/sprites/red_ball.png.gbapal.lz \
+	graphics/battle_anims/sprites/red_heart.pal.gbapal.lz \
+	graphics/battle_anims/sprites/red_light_wall.pal.gbapal.lz \
+	graphics/battle_anims/sprites/red_orb.png.4bpp.lz \
+	graphics/battle_anims/sprites/red_orb.png.gbapal.lz \
+	graphics/battle_anims/sprites/red_orb_2.pal.gbapal.lz \
+	graphics/battle_anims/sprites/red_particles.png.4bpp.lz \
+	graphics/battle_anims/sprites/red_particles.png.gbapal.lz \
+	graphics/battle_anims/sprites/roots.png.4bpp.lz \
+	graphics/battle_anims/sprites/roots.png.gbapal.lz \
+	graphics/battle_anims/sprites/round_shadow.png.4bpp.lz \
+	graphics/battle_anims/sprites/round_shadow.png.gbapal.lz \
+	graphics/battle_anims/sprites/round_white_halo.png.4bpp.lz \
+	graphics/battle_anims/sprites/round_white_halo.png.gbapal.lz \
+	graphics/battle_anims/sprites/scratch.png.4bpp.lz \
+	graphics/battle_anims/sprites/shadow_ball.png.4bpp.lz \
+	graphics/battle_anims/sprites/shadow_ball.png.gbapal.lz \
+	graphics/battle_anims/sprites/sharp_teeth.png.4bpp.lz \
+	graphics/battle_anims/sprites/sharp_teeth.png.gbapal.lz \
+	graphics/battle_anims/sprites/shock_3.png.4bpp.lz \
+	graphics/battle_anims/sprites/shock_3.png.gbapal.lz \
+	graphics/battle_anims/sprites/slam_hit_2.png.4bpp.lz \
+	graphics/battle_anims/sprites/slam_hit_2.png.gbapal.lz \
+	graphics/battle_anims/sprites/slash.png.4bpp.lz \
+	graphics/battle_anims/sprites/slash.png.gbapal.lz \
+	graphics/battle_anims/sprites/slash_2.pal.gbapal.lz \
+	graphics/battle_anims/sprites/sleep_powder.pal.gbapal.lz \
+	graphics/battle_anims/sprites/small_bubbles.png.4bpp.lz \
+	graphics/battle_anims/sprites/small_bubbles.png.gbapal.lz \
+	graphics/battle_anims/sprites/small_red_eye.png.4bpp.lz \
+	graphics/battle_anims/sprites/small_red_eye.png.gbapal.lz \
+	graphics/battle_anims/sprites/smellingsalt_effect.png.4bpp.lz \
+	graphics/battle_anims/sprites/smellingsalt_effect.png.gbapal.lz \
+	graphics/battle_anims/sprites/smokescreen_impact.png.4bpp.lz \
+	graphics/battle_anims/sprites/smokescreen_impact.png.gbapal.lz \
+	graphics/battle_anims/sprites/snore_z.png.4bpp.lz \
+	graphics/battle_anims/sprites/snore_z.png.gbapal.lz \
+	graphics/battle_anims/sprites/spark.4bpp.lz \
+	graphics/battle_anims/sprites/spark.pal.gbapal.lz \
+	graphics/battle_anims/sprites/spark_h.png.4bpp.lz \
+	graphics/battle_anims/sprites/sparkle_6.png.4bpp.lz \
+	graphics/battle_anims/sprites/sparkle_6.png.gbapal.lz \
+	graphics/battle_anims/sprites/speed_dust.png.4bpp.lz \
+	graphics/battle_anims/sprites/speed_dust.png.gbapal.lz \
+	graphics/battle_anims/sprites/sphere_to_cube.png.4bpp.lz \
+	graphics/battle_anims/sprites/sphere_to_cube.png.gbapal.lz \
+	graphics/battle_anims/sprites/spider_web.png.4bpp.lz \
+	graphics/battle_anims/sprites/spiral.png.4bpp.lz \
+	graphics/battle_anims/sprites/spiral.png.gbapal.lz \
+	graphics/battle_anims/sprites/splash.png.4bpp.lz \
+	graphics/battle_anims/sprites/splash.png.gbapal.lz \
+	graphics/battle_anims/sprites/spore.png.4bpp.lz \
+	graphics/battle_anims/sprites/spore.png.gbapal.lz \
+	graphics/battle_anims/sprites/spotlight.png.4bpp.lz \
+	graphics/battle_anims/sprites/string.png.4bpp.lz \
+	graphics/battle_anims/sprites/string.png.gbapal.lz \
+	graphics/battle_anims/sprites/stun_spore.pal.gbapal.lz \
+	graphics/battle_anims/sprites/substitute.png.4bpp.lz \
+	graphics/battle_anims/sprites/substitute.png.gbapal.lz \
+	graphics/battle_anims/sprites/substitute_back.png.4bpp.lz \
+	graphics/battle_anims/sprites/sunlight.png.4bpp.lz \
+	graphics/battle_anims/sprites/sunlight.png.gbapal.lz \
+	graphics/battle_anims/sprites/sweat_bead.png.4bpp.lz \
+	graphics/battle_anims/sprites/sweat_drop.png.4bpp.lz \
+	graphics/battle_anims/sprites/sweat_drop.png.gbapal.lz \
+	graphics/battle_anims/sprites/swipe.png.4bpp.lz \
+	graphics/battle_anims/sprites/swipe.png.gbapal.lz \
+	graphics/battle_anims/sprites/tag_hand.png.4bpp.lz \
+	graphics/battle_anims/sprites/teal_alert.png.4bpp.lz \
+	graphics/battle_anims/sprites/teal_alert.png.gbapal.lz \
+	graphics/battle_anims/sprites/tendrils.png.4bpp.lz \
+	graphics/battle_anims/sprites/tendrils.png.gbapal.lz \
+	graphics/battle_anims/sprites/thin_ring.png.4bpp.lz \
+	graphics/battle_anims/sprites/thin_ring.png.gbapal.lz \
+	graphics/battle_anims/sprites/thought_bubble.png.4bpp.lz \
+	graphics/battle_anims/sprites/thought_bubble.png.gbapal.lz \
+	graphics/battle_anims/sprites/torn_metal.png.4bpp.lz \
+	graphics/battle_anims/sprites/toxic_bubble.png.4bpp.lz \
+	graphics/battle_anims/sprites/tri_attack_triangle.png.4bpp.lz \
+	graphics/battle_anims/sprites/tri_attack_triangle.png.gbapal.lz \
+	graphics/battle_anims/sprites/void_lines.png.4bpp.lz \
+	graphics/battle_anims/sprites/void_lines.png.gbapal.lz \
+	graphics/battle_anims/sprites/warm_rock.png.4bpp.lz \
+	graphics/battle_anims/sprites/warm_rock.png.gbapal.lz \
+	graphics/battle_anims/sprites/water_impact.png.4bpp.lz \
+	graphics/battle_anims/sprites/water_impact.png.gbapal.lz \
+	graphics/battle_anims/sprites/water_orb.png.4bpp.lz \
+	graphics/battle_anims/sprites/weather_ball.png.4bpp.lz \
+	graphics/battle_anims/sprites/weather_ball.png.gbapal.lz \
+	graphics/battle_anims/sprites/web_thread.png.4bpp.lz \
+	graphics/battle_anims/sprites/whip_hit.pal.gbapal.lz \
+	graphics/battle_anims/sprites/whirlwind_lines.png.4bpp.lz \
+	graphics/battle_anims/sprites/whirlwind_lines.png.gbapal.lz \
+	graphics/battle_anims/sprites/white_circle_of_light.pal.gbapal.lz \
+	graphics/battle_anims/sprites/white_feather.png.4bpp.lz \
+	graphics/battle_anims/sprites/white_feather.png.gbapal.lz \
+	graphics/battle_anims/sprites/white_shadow.png.4bpp.lz \
+	graphics/battle_anims/sprites/white_shadow.png.gbapal.lz \
+	graphics/battle_anims/sprites/wisp_fire.png.4bpp.lz \
+	graphics/battle_anims/sprites/wisp_orb.png.4bpp.lz \
+	graphics/battle_anims/sprites/wisp_orb.png.gbapal.lz \
+	graphics/battle_anims/sprites/x_sign.png.4bpp.lz \
+	graphics/battle_anims/sprites/yellow_star.png.4bpp.lz \
+	graphics/battle_anims/sprites/yellow_star.png.gbapal.lz \
+	graphics/battle_anims/stat_change/accuracy.pal.gbapal.lz \
+	graphics/battle_anims/stat_change/attack.pal.gbapal.lz \
+	graphics/battle_anims/stat_change/decrease.bin.lz \
+	graphics/battle_anims/stat_change/defense.pal.gbapal.lz \
+	graphics/battle_anims/stat_change/evasion.pal.gbapal.lz \
+	graphics/battle_anims/stat_change/increase.bin.lz \
+	graphics/battle_anims/stat_change/multiple.pal.gbapal.lz \
+	graphics/battle_anims/stat_change/sp_attack.pal.gbapal.lz \
+	graphics/battle_anims/stat_change/sp_defense.pal.gbapal.lz \
+	graphics/battle_anims/stat_change/speed.pal.gbapal.lz \
+	graphics/battle_anims/stat_change/tiles.png.4bpp.lz \
+	graphics/battle_anims/unused/goosuto.bin.lz \
+	graphics/battle_anims/unused/goosuto.png.4bpp.lz \
+	graphics/battle_anims/unused/goosuto.png.gbapal.lz \
+	graphics/battle_anims/unused/lights.bin.lz \
+	graphics/battle_anims/unused/lights.png.4bpp.lz \
+	graphics/battle_anims/unused/lights.png.gbapal.lz \
+	graphics/battle_anims/unused/old_beatup.png.4bpp.lz \
+	graphics/battle_anims/unused/old_beatup.png.gbapal.lz \
+	graphics/battle_anims/unused/unknown_2.pal.gbapal.lz
+
+JP_BATTLE_ANIM_REMAINING_INTERMEDIATES := graphics/battle_anims/backgrounds/attract.png.4bpp \
+	graphics/battle_anims/backgrounds/attract.png.gbapal \
+	graphics/battle_anims/backgrounds/aurora.png.4bpp \
+	graphics/battle_anims/backgrounds/aurora.png.gbapal \
+	graphics/battle_anims/backgrounds/bug.pal.gbapal \
+	graphics/battle_anims/backgrounds/cosmic.png.4bpp \
+	graphics/battle_anims/backgrounds/cosmic.png.gbapal \
+	graphics/battle_anims/backgrounds/dark.png.4bpp \
+	graphics/battle_anims/backgrounds/dark.png.gbapal \
+	graphics/battle_anims/backgrounds/drill.png.4bpp \
+	graphics/battle_anims/backgrounds/drill.png.gbapal \
+	graphics/battle_anims/backgrounds/fissure.png.4bpp \
+	graphics/battle_anims/backgrounds/fissure.png.gbapal \
+	graphics/battle_anims/backgrounds/ghost.png.4bpp \
+	graphics/battle_anims/backgrounds/ghost.png.gbapal \
+	graphics/battle_anims/backgrounds/guillotine.png.4bpp \
+	graphics/battle_anims/backgrounds/guillotine.png.gbapal \
+	graphics/battle_anims/backgrounds/highspeed.png.4bpp \
+	graphics/battle_anims/backgrounds/highspeed.png.gbapal \
+	graphics/battle_anims/backgrounds/ice.png.4bpp \
+	graphics/battle_anims/backgrounds/ice.png.gbapal \
+	graphics/battle_anims/backgrounds/impact.png.4bpp \
+	graphics/battle_anims/backgrounds/impact.png.gbapal \
+	graphics/battle_anims/backgrounds/in_air.png.4bpp \
+	graphics/battle_anims/backgrounds/in_air.png.gbapal \
+	graphics/battle_anims/backgrounds/psychic.png.4bpp \
+	graphics/battle_anims/backgrounds/psychic.png.gbapal \
+	graphics/battle_anims/backgrounds/sandstorm_brew.png.4bpp \
+	graphics/battle_anims/backgrounds/scary_face.png.4bpp \
+	graphics/battle_anims/backgrounds/scary_face.png.gbapal \
+	graphics/battle_anims/backgrounds/sky.pal.gbapal \
+	graphics/battle_anims/backgrounds/solarbeam.pal.gbapal \
+	graphics/battle_anims/backgrounds/thunder.png.4bpp \
+	graphics/battle_anims/backgrounds/thunder.png.gbapal \
+	graphics/battle_anims/backgrounds/water.png.4bpp \
+	graphics/battle_anims/backgrounds/water.png.gbapal \
+	graphics/battle_anims/backgrounds/water_muddy.pal.gbapal \
+	graphics/battle_anims/masks/cure_bubbles.png.4bpp \
+	graphics/battle_anims/masks/cure_bubbles.png.gbapal \
+	graphics/battle_anims/masks/curse.png.4bpp \
+	graphics/battle_anims/masks/light_beam.png.4bpp \
+	graphics/battle_anims/masks/light_beam.png.gbapal \
+	graphics/battle_anims/masks/metal_shine.png.4bpp \
+	graphics/battle_anims/masks/metal_shine.png.gbapal \
+	graphics/battle_anims/masks/unused_level_up.png_num_tiles_14__Wnum_tiles.4bpp \
+	graphics/battle_anims/sprites/air_wave_2.png.4bpp \
+	graphics/battle_anims/sprites/air_wave_2.png.gbapal \
+	graphics/battle_anims/sprites/angel.png.4bpp \
+	graphics/battle_anims/sprites/angel.png.gbapal \
+	graphics/battle_anims/sprites/anger.png.4bpp \
+	graphics/battle_anims/sprites/anger.png.gbapal \
+	graphics/battle_anims/sprites/bell.png.4bpp \
+	graphics/battle_anims/sprites/bell.png.gbapal \
+	graphics/battle_anims/sprites/bird.png.4bpp \
+	graphics/battle_anims/sprites/bird.png.gbapal \
+	graphics/battle_anims/sprites/black_ball_2.png.4bpp \
+	graphics/battle_anims/sprites/black_ball_2.png.gbapal \
+	graphics/battle_anims/sprites/blue_light_wall.pal.gbapal \
+	graphics/battle_anims/sprites/blue_orb.pal.gbapal \
+	graphics/battle_anims/sprites/blue_ring.pal.gbapal \
+	graphics/battle_anims/sprites/blue_ring_2.pal.gbapal \
+	graphics/battle_anims/sprites/bluegreen_orb.png.4bpp \
+	graphics/battle_anims/sprites/bluegreen_orb.png.gbapal \
+	graphics/battle_anims/sprites/breaking_egg.png.4bpp \
+	graphics/battle_anims/sprites/breaking_egg.png.gbapal \
+	graphics/battle_anims/sprites/brown_orb.pal.gbapal \
+	graphics/battle_anims/sprites/circle_impact.png.4bpp \
+	graphics/battle_anims/sprites/circle_impact.png.gbapal \
+	graphics/battle_anims/sprites/circle_of_light.png.4bpp \
+	graphics/battle_anims/sprites/clamp.png.4bpp \
+	graphics/battle_anims/sprites/confetti.png.4bpp \
+	graphics/battle_anims/sprites/confetti.png.gbapal \
+	graphics/battle_anims/sprites/conversion.png.4bpp \
+	graphics/battle_anims/sprites/conversion.png.gbapal \
+	graphics/battle_anims/sprites/cross_impact.png.4bpp \
+	graphics/battle_anims/sprites/cross_impact.png.gbapal \
+	graphics/battle_anims/sprites/cut.png.4bpp \
+	graphics/battle_anims/sprites/devil.png.4bpp \
+	graphics/battle_anims/sprites/devil.png.gbapal \
+	graphics/battle_anims/sprites/dirt_mound.png.4bpp \
+	graphics/battle_anims/sprites/dirt_mound.png.gbapal \
+	graphics/battle_anims/sprites/eclipsing_orb.png.4bpp \
+	graphics/battle_anims/sprites/eclipsing_orb.png.gbapal \
+	graphics/battle_anims/sprites/electric_orbs.png.4bpp \
+	graphics/battle_anims/sprites/electric_orbs.png.gbapal \
+	graphics/battle_anims/sprites/electricity.png.4bpp \
+	graphics/battle_anims/sprites/explosion.png.4bpp \
+	graphics/battle_anims/sprites/explosion.png.gbapal \
+	graphics/battle_anims/sprites/eye.png.4bpp \
+	graphics/battle_anims/sprites/eye.png.gbapal \
+	graphics/battle_anims/sprites/eye_sparkle.png.4bpp \
+	graphics/battle_anims/sprites/eye_sparkle.png.gbapal \
+	graphics/battle_anims/sprites/fang_attack.png.4bpp \
+	graphics/battle_anims/sprites/fang_attack.png.gbapal \
+	graphics/battle_anims/sprites/finger.png.4bpp \
+	graphics/battle_anims/sprites/finger.png.gbapal \
+	graphics/battle_anims/sprites/finger_2.png.4bpp \
+	graphics/battle_anims/sprites/flat_rock.png.4bpp \
+	graphics/battle_anims/sprites/flat_rock.png.gbapal \
+	graphics/battle_anims/sprites/flower.4bpp \
+	graphics/battle_anims/sprites/flower.pal.gbapal \
+	graphics/battle_anims/sprites/flower_0.png.4bpp \
+	graphics/battle_anims/sprites/flower_1.png.4bpp \
+	graphics/battle_anims/sprites/flying_dirt.png.4bpp \
+	graphics/battle_anims/sprites/flying_dirt.png.gbapal \
+	graphics/battle_anims/sprites/focus_energy.png.4bpp \
+	graphics/battle_anims/sprites/focus_energy.png.gbapal \
+	graphics/battle_anims/sprites/gem_1.png.4bpp \
+	graphics/battle_anims/sprites/gem_1.png.gbapal \
+	graphics/battle_anims/sprites/gem_2.png.4bpp \
+	graphics/battle_anims/sprites/gem_3.png.4bpp \
+	graphics/battle_anims/sprites/ghostly_spirit.png.4bpp \
+	graphics/battle_anims/sprites/ghostly_spirit.png.gbapal \
+	graphics/battle_anims/sprites/glowy_blue_orb.pal.gbapal \
+	graphics/battle_anims/sprites/glowy_green_orb.pal.gbapal \
+	graphics/battle_anims/sprites/glowy_red_orb.png.4bpp \
+	graphics/battle_anims/sprites/glowy_red_orb.png.gbapal \
+	graphics/battle_anims/sprites/gold_ring.png.4bpp \
+	graphics/battle_anims/sprites/gold_ring.png.gbapal \
+	graphics/battle_anims/sprites/gold_stars.png.4bpp \
+	graphics/battle_anims/sprites/gold_stars.png.gbapal \
+	graphics/battle_anims/sprites/gray_light_wall.pal.gbapal \
+	graphics/battle_anims/sprites/gray_orb.png.4bpp \
+	graphics/battle_anims/sprites/gray_orb.png.gbapal \
+	graphics/battle_anims/sprites/green_light_wall.png.4bpp \
+	graphics/battle_anims/sprites/green_light_wall.png.gbapal \
+	graphics/battle_anims/sprites/green_sparkle.png.4bpp \
+	graphics/battle_anims/sprites/green_sparkle.png.gbapal \
+	graphics/battle_anims/sprites/green_spike.png.4bpp \
+	graphics/battle_anims/sprites/green_spike.png.gbapal \
+	graphics/battle_anims/sprites/green_star.png.4bpp \
+	graphics/battle_anims/sprites/green_star.png.gbapal \
+	graphics/battle_anims/sprites/guard_ring.png.4bpp \
+	graphics/battle_anims/sprites/guard_ring.png.gbapal \
+	graphics/battle_anims/sprites/hail.png.4bpp \
+	graphics/battle_anims/sprites/hail.png.gbapal \
+	graphics/battle_anims/sprites/hands_and_feet.png.4bpp \
+	graphics/battle_anims/sprites/hands_and_feet.png.gbapal \
+	graphics/battle_anims/sprites/hollow_orb.png.4bpp \
+	graphics/battle_anims/sprites/hollow_orb.png.gbapal \
+	graphics/battle_anims/sprites/horn_hit_2.png.4bpp \
+	graphics/battle_anims/sprites/horn_hit_2.png.gbapal \
+	graphics/battle_anims/sprites/ice_crystals.4bpp \
+	graphics/battle_anims/sprites/ice_crystals.pal.gbapal \
+	graphics/battle_anims/sprites/ice_crystals_0.png.4bpp \
+	graphics/battle_anims/sprites/ice_crystals_1.png.4bpp \
+	graphics/battle_anims/sprites/ice_crystals_2.png.4bpp \
+	graphics/battle_anims/sprites/ice_crystals_3.png.4bpp \
+	graphics/battle_anims/sprites/ice_crystals_4.png.4bpp \
+	graphics/battle_anims/sprites/ice_spikes.png.4bpp \
+	graphics/battle_anims/sprites/icicle_spear.png.4bpp \
+	graphics/battle_anims/sprites/icicle_spear.png.gbapal \
+	graphics/battle_anims/sprites/impact.png.4bpp \
+	graphics/battle_anims/sprites/impact.png.gbapal \
+	graphics/battle_anims/sprites/item_bag.png.4bpp \
+	graphics/battle_anims/sprites/item_bag.png.gbapal \
+	graphics/battle_anims/sprites/jagged_music_note.png.4bpp \
+	graphics/battle_anims/sprites/jagged_music_note.png.gbapal \
+	graphics/battle_anims/sprites/large_fresh_egg.png.4bpp \
+	graphics/battle_anims/sprites/large_fresh_egg.png.gbapal \
+	graphics/battle_anims/sprites/letter_z.png.4bpp \
+	graphics/battle_anims/sprites/letter_z.png.gbapal \
+	graphics/battle_anims/sprites/lick.png.4bpp \
+	graphics/battle_anims/sprites/lick.png.gbapal \
+	graphics/battle_anims/sprites/lightbulb.png.4bpp \
+	graphics/battle_anims/sprites/lightbulb.png.gbapal \
+	graphics/battle_anims/sprites/lock_on.png.4bpp \
+	graphics/battle_anims/sprites/lock_on.png.gbapal \
+	graphics/battle_anims/sprites/magenta_heart.png.4bpp \
+	graphics/battle_anims/sprites/magenta_heart.png.gbapal \
+	graphics/battle_anims/sprites/magnifying_glass.png.4bpp \
+	graphics/battle_anims/sprites/magnifying_glass.png.gbapal \
+	graphics/battle_anims/sprites/metal_sound_waves.png.4bpp \
+	graphics/battle_anims/sprites/metal_sound_waves.png.gbapal \
+	graphics/battle_anims/sprites/meteor.png.4bpp \
+	graphics/battle_anims/sprites/meteor.png.gbapal \
+	graphics/battle_anims/sprites/milk_bottle.png.4bpp \
+	graphics/battle_anims/sprites/milk_bottle.png.gbapal \
+	graphics/battle_anims/sprites/mist_cloud.png.4bpp \
+	graphics/battle_anims/sprites/mist_cloud.png.gbapal \
+	graphics/battle_anims/sprites/moon.png.4bpp \
+	graphics/battle_anims/sprites/moon.png.gbapal \
+	graphics/battle_anims/sprites/movement_waves.png.4bpp \
+	graphics/battle_anims/sprites/movement_waves.png.gbapal \
+	graphics/battle_anims/sprites/mud_sand.4bpp \
+	graphics/battle_anims/sprites/mud_sand.pal.gbapal \
+	graphics/battle_anims/sprites/mud_sand_0.png.4bpp \
+	graphics/battle_anims/sprites/mud_sand_1.png.4bpp \
+	graphics/battle_anims/sprites/music_notes_2.pal.gbapal \
+	graphics/battle_anims/sprites/music_notes_2.png.4bpp \
+	graphics/battle_anims/sprites/nail.png.4bpp \
+	graphics/battle_anims/sprites/nail.png.gbapal \
+	graphics/battle_anims/sprites/noise_line.png.4bpp \
+	graphics/battle_anims/sprites/opening_eye.png.4bpp \
+	graphics/battle_anims/sprites/opening_eye.png.gbapal \
+	graphics/battle_anims/sprites/orange_light_wall.pal.gbapal \
+	graphics/battle_anims/sprites/orbs.png.4bpp \
+	graphics/battle_anims/sprites/orbs.png.gbapal \
+	graphics/battle_anims/sprites/pain_split.png.4bpp \
+	graphics/battle_anims/sprites/pain_split.png.gbapal \
+	graphics/battle_anims/sprites/particles.png.4bpp \
+	graphics/battle_anims/sprites/paw_print.png.4bpp \
+	graphics/battle_anims/sprites/paw_print.png.gbapal \
+	graphics/battle_anims/sprites/pencil.png.4bpp \
+	graphics/battle_anims/sprites/pencil.png.gbapal \
+	graphics/battle_anims/sprites/pink_cloud.png.4bpp \
+	graphics/battle_anims/sprites/pink_cloud.png.gbapal \
+	graphics/battle_anims/sprites/pink_heart.pal.gbapal \
+	graphics/battle_anims/sprites/pink_petal.png.4bpp \
+	graphics/battle_anims/sprites/pink_petal.png.gbapal \
+	graphics/battle_anims/sprites/poison_bubble.png.4bpp \
+	graphics/battle_anims/sprites/poison_bubble.png.gbapal \
+	graphics/battle_anims/sprites/pokeball.png.4bpp \
+	graphics/battle_anims/sprites/pokeball.png.gbapal \
+	graphics/battle_anims/sprites/pokeblock.png.4bpp \
+	graphics/battle_anims/sprites/pokeblock.png.gbapal \
+	graphics/battle_anims/sprites/protect.png.4bpp \
+	graphics/battle_anims/sprites/protect.png.gbapal \
+	graphics/battle_anims/sprites/punch_impact.png.4bpp \
+	graphics/battle_anims/sprites/punch_impact.png.gbapal \
+	graphics/battle_anims/sprites/purple_flame.png.4bpp \
+	graphics/battle_anims/sprites/purple_flame.png.gbapal \
+	graphics/battle_anims/sprites/purple_gas_cloud.pal.gbapal \
+	graphics/battle_anims/sprites/purple_hand_outline.png.4bpp \
+	graphics/battle_anims/sprites/purple_hand_outline.png.gbapal \
+	graphics/battle_anims/sprites/purple_ring.pal.gbapal \
+	graphics/battle_anims/sprites/purple_scratch.png.4bpp \
+	graphics/battle_anims/sprites/purple_scratch.png.gbapal \
+	graphics/battle_anims/sprites/purple_swipe.png.4bpp \
+	graphics/battle_anims/sprites/rainbow_rings.png.4bpp \
+	graphics/battle_anims/sprites/rainbow_rings.png.gbapal \
+	graphics/battle_anims/sprites/rapid_spin.png.4bpp \
+	graphics/battle_anims/sprites/rapid_spin.png.gbapal \
+	graphics/battle_anims/sprites/razor_leaf.png.4bpp \
+	graphics/battle_anims/sprites/razor_leaf.png.gbapal \
+	graphics/battle_anims/sprites/recycle.png.4bpp \
+	graphics/battle_anims/sprites/recycle.png.gbapal \
+	graphics/battle_anims/sprites/red_ball.png.4bpp \
+	graphics/battle_anims/sprites/red_ball.png.gbapal \
+	graphics/battle_anims/sprites/red_heart.pal.gbapal \
+	graphics/battle_anims/sprites/red_light_wall.pal.gbapal \
+	graphics/battle_anims/sprites/red_orb.png.4bpp \
+	graphics/battle_anims/sprites/red_orb.png.gbapal \
+	graphics/battle_anims/sprites/red_orb_2.pal.gbapal \
+	graphics/battle_anims/sprites/red_particles.png.4bpp \
+	graphics/battle_anims/sprites/red_particles.png.gbapal \
+	graphics/battle_anims/sprites/roots.png.4bpp \
+	graphics/battle_anims/sprites/roots.png.gbapal \
+	graphics/battle_anims/sprites/round_shadow.png.4bpp \
+	graphics/battle_anims/sprites/round_shadow.png.gbapal \
+	graphics/battle_anims/sprites/round_white_halo.png.4bpp \
+	graphics/battle_anims/sprites/round_white_halo.png.gbapal \
+	graphics/battle_anims/sprites/scratch.png.4bpp \
+	graphics/battle_anims/sprites/shadow_ball.png.4bpp \
+	graphics/battle_anims/sprites/shadow_ball.png.gbapal \
+	graphics/battle_anims/sprites/sharp_teeth.png.4bpp \
+	graphics/battle_anims/sprites/sharp_teeth.png.gbapal \
+	graphics/battle_anims/sprites/shock_3.png.4bpp \
+	graphics/battle_anims/sprites/shock_3.png.gbapal \
+	graphics/battle_anims/sprites/slam_hit_2.png.4bpp \
+	graphics/battle_anims/sprites/slam_hit_2.png.gbapal \
+	graphics/battle_anims/sprites/slash.png.4bpp \
+	graphics/battle_anims/sprites/slash.png.gbapal \
+	graphics/battle_anims/sprites/slash_2.pal.gbapal \
+	graphics/battle_anims/sprites/sleep_powder.pal.gbapal \
+	graphics/battle_anims/sprites/small_bubbles.png.4bpp \
+	graphics/battle_anims/sprites/small_bubbles.png.gbapal \
+	graphics/battle_anims/sprites/small_red_eye.png.4bpp \
+	graphics/battle_anims/sprites/small_red_eye.png.gbapal \
+	graphics/battle_anims/sprites/smellingsalt_effect.png.4bpp \
+	graphics/battle_anims/sprites/smellingsalt_effect.png.gbapal \
+	graphics/battle_anims/sprites/smokescreen_impact.png.4bpp \
+	graphics/battle_anims/sprites/smokescreen_impact.png.gbapal \
+	graphics/battle_anims/sprites/snore_z.png.4bpp \
+	graphics/battle_anims/sprites/snore_z.png.gbapal \
+	graphics/battle_anims/sprites/spark.4bpp \
+	graphics/battle_anims/sprites/spark.pal.gbapal \
+	graphics/battle_anims/sprites/spark_0.png.4bpp \
+	graphics/battle_anims/sprites/spark_1.png.4bpp \
+	graphics/battle_anims/sprites/spark_h.png.4bpp \
+	graphics/battle_anims/sprites/sparkle_6.png.4bpp \
+	graphics/battle_anims/sprites/sparkle_6.png.gbapal \
+	graphics/battle_anims/sprites/speed_dust.png.4bpp \
+	graphics/battle_anims/sprites/speed_dust.png.gbapal \
+	graphics/battle_anims/sprites/sphere_to_cube.png.4bpp \
+	graphics/battle_anims/sprites/sphere_to_cube.png.gbapal \
+	graphics/battle_anims/sprites/spider_web.png.4bpp \
+	graphics/battle_anims/sprites/spiral.png.4bpp \
+	graphics/battle_anims/sprites/spiral.png.gbapal \
+	graphics/battle_anims/sprites/splash.png.4bpp \
+	graphics/battle_anims/sprites/splash.png.gbapal \
+	graphics/battle_anims/sprites/spore.png.4bpp \
+	graphics/battle_anims/sprites/spore.png.gbapal \
+	graphics/battle_anims/sprites/spotlight.png.4bpp \
+	graphics/battle_anims/sprites/string.png.4bpp \
+	graphics/battle_anims/sprites/string.png.gbapal \
+	graphics/battle_anims/sprites/stun_spore.pal.gbapal \
+	graphics/battle_anims/sprites/substitute.png.4bpp \
+	graphics/battle_anims/sprites/substitute.png.gbapal \
+	graphics/battle_anims/sprites/substitute_back.png.4bpp \
+	graphics/battle_anims/sprites/sunlight.png.4bpp \
+	graphics/battle_anims/sprites/sunlight.png.gbapal \
+	graphics/battle_anims/sprites/sweat_bead.png.4bpp \
+	graphics/battle_anims/sprites/sweat_drop.png.4bpp \
+	graphics/battle_anims/sprites/sweat_drop.png.gbapal \
+	graphics/battle_anims/sprites/swipe.png.4bpp \
+	graphics/battle_anims/sprites/swipe.png.gbapal \
+	graphics/battle_anims/sprites/tag_hand.png.4bpp \
+	graphics/battle_anims/sprites/teal_alert.png.4bpp \
+	graphics/battle_anims/sprites/teal_alert.png.gbapal \
+	graphics/battle_anims/sprites/tendrils.png.4bpp \
+	graphics/battle_anims/sprites/tendrils.png.gbapal \
+	graphics/battle_anims/sprites/thin_ring.png.4bpp \
+	graphics/battle_anims/sprites/thin_ring.png.gbapal \
+	graphics/battle_anims/sprites/thought_bubble.png.4bpp \
+	graphics/battle_anims/sprites/thought_bubble.png.gbapal \
+	graphics/battle_anims/sprites/torn_metal.png.4bpp \
+	graphics/battle_anims/sprites/toxic_bubble.png.4bpp \
+	graphics/battle_anims/sprites/tri_attack_triangle.png.4bpp \
+	graphics/battle_anims/sprites/tri_attack_triangle.png.gbapal \
+	graphics/battle_anims/sprites/void_lines.png.4bpp \
+	graphics/battle_anims/sprites/void_lines.png.gbapal \
+	graphics/battle_anims/sprites/warm_rock.png.4bpp \
+	graphics/battle_anims/sprites/warm_rock.png.gbapal \
+	graphics/battle_anims/sprites/water_impact.png.4bpp \
+	graphics/battle_anims/sprites/water_impact.png.gbapal \
+	graphics/battle_anims/sprites/water_orb.png.4bpp \
+	graphics/battle_anims/sprites/weather_ball.png.4bpp \
+	graphics/battle_anims/sprites/weather_ball.png.gbapal \
+	graphics/battle_anims/sprites/web_thread.png.4bpp \
+	graphics/battle_anims/sprites/whip_hit.pal.gbapal \
+	graphics/battle_anims/sprites/whirlwind_lines.png.4bpp \
+	graphics/battle_anims/sprites/whirlwind_lines.png.gbapal \
+	graphics/battle_anims/sprites/white_circle_of_light.pal.gbapal \
+	graphics/battle_anims/sprites/white_feather.png.4bpp \
+	graphics/battle_anims/sprites/white_feather.png.gbapal \
+	graphics/battle_anims/sprites/white_shadow.png.4bpp \
+	graphics/battle_anims/sprites/white_shadow.png.gbapal \
+	graphics/battle_anims/sprites/wisp_fire.png.4bpp \
+	graphics/battle_anims/sprites/wisp_orb.png.4bpp \
+	graphics/battle_anims/sprites/wisp_orb.png.gbapal \
+	graphics/battle_anims/sprites/x_sign.png.4bpp \
+	graphics/battle_anims/sprites/yellow_star.png.4bpp \
+	graphics/battle_anims/sprites/yellow_star.png.gbapal \
+	graphics/battle_anims/stat_change/accuracy.pal.gbapal \
+	graphics/battle_anims/stat_change/attack.pal.gbapal \
+	graphics/battle_anims/stat_change/defense.pal.gbapal \
+	graphics/battle_anims/stat_change/evasion.pal.gbapal \
+	graphics/battle_anims/stat_change/multiple.pal.gbapal \
+	graphics/battle_anims/stat_change/sp_attack.pal.gbapal \
+	graphics/battle_anims/stat_change/sp_defense.pal.gbapal \
+	graphics/battle_anims/stat_change/speed.pal.gbapal \
+	graphics/battle_anims/stat_change/tiles.png.4bpp \
+	graphics/battle_anims/unused/goosuto.png.4bpp \
+	graphics/battle_anims/unused/goosuto.png.gbapal \
+	graphics/battle_anims/unused/lights.png.4bpp \
+	graphics/battle_anims/unused/lights.png.gbapal \
+	graphics/battle_anims/unused/old_beatup.png.4bpp \
+	graphics/battle_anims/unused/old_beatup.png.gbapal \
+	graphics/battle_anims/unused/unknown_2.pal.gbapal
+
+$(filter %.png.4bpp,$(JP_BATTLE_ANIM_REMAINING_INTERMEDIATES)): %.png.4bpp: %.png Makefile | tools
+	$(GFX) $< $@
+
+$(filter %.png.gbapal,$(JP_BATTLE_ANIM_REMAINING_INTERMEDIATES)): %.png.gbapal: %.png Makefile | tools
+	$(GFX) $< $@
+
+$(filter %.pal.gbapal,$(JP_BATTLE_ANIM_REMAINING_INTERMEDIATES)): %.pal.gbapal: %.pal Makefile | tools
+	$(GFX) $< $@
+
+graphics/battle_anims/masks/unused_level_up.png_num_tiles_14__Wnum_tiles.4bpp: graphics/battle_anims/masks/unused_level_up.png Makefile | tools
+	$(GFX) $< $@ -num_tiles 14 -Wnum_tiles
+
+graphics/battle_anims/sprites/ice_crystals.4bpp: graphics/battle_anims/sprites/ice_crystals_0.png.4bpp graphics/battle_anims/sprites/ice_crystals_1.png.4bpp graphics/battle_anims/sprites/ice_crystals_2.png.4bpp graphics/battle_anims/sprites/ice_crystals_3.png.4bpp graphics/battle_anims/sprites/ice_crystals_4.png.4bpp Makefile
+	cat $(filter %.4bpp,$^) >$@
+
+graphics/battle_anims/sprites/mud_sand.4bpp: graphics/battle_anims/sprites/mud_sand_0.png.4bpp graphics/battle_anims/sprites/mud_sand_1.png.4bpp Makefile
+	cat $(filter %.4bpp,$^) >$@
+
+graphics/battle_anims/sprites/flower.4bpp: graphics/battle_anims/sprites/flower_0.png.4bpp graphics/battle_anims/sprites/flower_1.png.4bpp Makefile
+	cat $(filter %.4bpp,$^) >$@
+
+graphics/battle_anims/sprites/spark.4bpp: graphics/battle_anims/sprites/spark_0.png.4bpp graphics/battle_anims/sprites/spark_1.png.4bpp Makefile
+	cat $(filter %.4bpp,$^) >$@
+
+$(JP_BATTLE_ANIM_REMAINING_ASSETS): %.lz: % Makefile | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/graphics.o: $(JP_BATTLE_ANIM_REMAINING_ASSETS)

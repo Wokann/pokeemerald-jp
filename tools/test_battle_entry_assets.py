@@ -33,7 +33,7 @@ class BattleEntryAssetTests(unittest.TestCase):
         raw = (ROOT / 'data/data_rest2c.s').read_text()
         for name in ('gBattleVSFrame_Gfx:', 'gBattleVSFrame_Pal:', 'gBattleVSFrame_Tilemap:', 'gVsLettersGfx:'):
             self.assertNotIn(name, raw)
-        self.assertIn('gBattleAnimSpriteGfx_GlowyRedOrb:', raw)
+        self.assertNotIn('gBattleAnimSpriteGfx_GlowyRedOrb:', raw)
 
     def test_vs_frame_preserves_the_native_16_tile_crop(self):
         special = [(n, f) for n, p, e, f in resources() if f]

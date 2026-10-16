@@ -89,8 +89,12 @@ class DecorationDataTests(unittest.TestCase):
         for section in ('src/decoration.o(.rodata.decoration_data);',
                         'src/graphics.o(.rodata.decoration_icons);',
                         'src/graphics.o(.rodata.slot_machine_gfx.gSlotMachineReelSymbol1Tiles);',
-                        'data/data_rest2c.o(.rodata.data_rest2c_after_decoration_icons);'):
+                        'src/graphics.o(.rodata.battle_anim_shock_and_feather_resources);'):
             self.assertEqual(linker.count(section), 1)
+        self.assertLess(linker.index('src/graphics.o(.rodata.decoration_icons);'),
+                        linker.index('src/graphics.o(.rodata.battle_anim_shock_and_feather_resources);'))
+        self.assertLess(linker.index('src/graphics.o(.rodata.battle_anim_shock_and_feather_resources);'),
+                        linker.index('src/graphics.o(.rodata.cable_car_bg_palette);'))
         self.assertIn('src/image_processing_effects.o(.rodata.image_processing_effects);', linker)
         self.assertLess(linker.index('src/image_processing_effects.o(.rodata.image_processing_effects);'),
                         linker.index('src/decoration.o(.rodata.decoration_data);'))
@@ -102,7 +106,9 @@ class DecorationDataTests(unittest.TestCase):
         self.assertIn('gItemIcon_QuestionMark:: @ 0x08DAB300', rest)
         self.assertIn('gItemIconPalette_QuestionMark:: @ 0x08DAB378', rest)
         self.assertIn('.incbin "baserom_jp.gba", 0xdab38c, 0xc9bc', rest)
-        self.assertIn('gBattleAnimSpritePal_Shock3: @ 0x08DBA3F4', rest)
+        self.assertNotIn('gBattleAnimSpritePal_Shock3: @ 0x08DBA3F4', rest)
+        self.assertIn('BATTLE_ANIM_SHOCK_AND_FEATHER_RESOURCES const u32 gBattleAnimSpritePal_Shock3[]',
+                      (ROOT / 'src/graphics.c').read_text())
         self.assertIn('extern struct PlaceDecorationGraphicsDataBuffer gUnknown_2039E5C;', source)
         self.assertIn('extern struct OamData gUnknown_203A708;', source)
         self.assertIn('.upText_Y = 10,', source)

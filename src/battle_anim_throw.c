@@ -79,8 +79,6 @@ extern const struct SpriteTemplate gWishStarSpriteTemplate;
 extern const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate;
 extern void sub_080A4044(bool8 toBG2);
 extern void sub_080A63F8(struct BattleAnimBgData *out);
-extern const u32 gUnknown_8C2EAF4[];
-extern const u32 gUnknown_8C2EB40[];
 void sub_08171A90(struct Sprite *sprite);
 void sub_08171ACC(struct Sprite *sprite);
 void sub_08170618(u8 *paletteId1, u8 *paletteId2, u8 battler);
@@ -446,8 +444,8 @@ void unref_sub_8170478(u8 taskId)
     gSprites[spriteId4].callback = SpriteCallbackDummy;
 
     sub_080A63F8(&animBgData);
-    AnimLoadCompressedBgTilemap(animBgData.bgId, gUnknown_8C2EB40);
-    AnimLoadCompressedBgGfx(animBgData.bgId, gUnknown_8C2EAF4, animBgData.tilesOffset);
+    AnimLoadCompressedBgTilemap(animBgData.bgId, UnusedLevelupAnimationTilemap);
+    AnimLoadCompressedBgGfx(animBgData.bgId, UnusedLevelupAnimationGfx, animBgData.tilesOffset);
     LoadCompressedPalette(gCureBubblesPal, BG_PLTT_ID(animBgData.paletteId), PLTT_SIZE_4BPP);
 
     gBattle_BG1_X = -gSprites[spriteId3].x + 32;
