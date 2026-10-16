@@ -68,9 +68,9 @@ static const u16 sCloseBoxButton_Tilemap[];
 static const struct SpriteSheet sSpriteSheet_Waveform;
 static const struct SpriteTemplate sSpriteTemplate_Waveform;
 static const struct SpriteTemplate sSpriteTemplate_DisplayMon;
-extern const struct Wallpaper gUnknown_8551868[];
-extern const struct Wallpaper gUnknown_8555A40[];
-extern const u8 *const gUnknown_8555B00[];
+static const struct Wallpaper sWallpapers[];
+static const struct Wallpaper sWaldaWallpapers[];
+static const u32 *const sWaldaWallpaperIcons[];
 extern u8 gUnknown_3000F78[];
 extern u16 gUnknown_2037434[];
 extern const u8 gUnknown_855676C[];
@@ -861,7 +861,7 @@ extern void sub_080CCA24(bool8 animate);
 extern void sub_080CC828(void);
 extern void sub_080CC7BC(struct Sprite *sprite);
 extern void sub_080CC7F0(struct Sprite *sprite);
-extern const u16 gUnknown_8551824[][2];
+static const u16 sBoxTitleColors[][2];
 extern const struct SpriteTemplate gUnknown_8555BA4;
 extern const struct SpriteSheet gUnknown_8555B7C;
 extern const struct SpriteTemplate gUnknown_8555BDC;
@@ -4753,7 +4753,7 @@ void LoadWallpaperGfx(u8 boxId, s8 direction)
     wallpaperId = GetBoxWallpaper(sStorage->wallpaperLoadBoxId);
     if (wallpaperId != 16)
     {
-        wallpaper = &gUnknown_8551868[wallpaperId];
+        wallpaper = &sWallpapers[wallpaperId];
         LZ77UnCompWram(wallpaper->tilemap, sStorage->wallpaperTilemap);
         sub_080CC2B0(sStorage->wallpaperTilemap, sStorage->wallpaperLoadDir, sStorage->wallpaperOffset);
 
@@ -4767,7 +4767,7 @@ void LoadWallpaperGfx(u8 boxId, s8 direction)
     }
     else
     {
-        wallpaper = &gUnknown_8555A40[GetWaldaWallpaperPatternId()];
+        wallpaper = &sWaldaWallpapers[GetWaldaWallpaperPatternId()];
         LZ77UnCompWram(wallpaper->tilemap, sStorage->wallpaperTilemap);
         sub_080CC2B0(sStorage->wallpaperTilemap, sStorage->wallpaperLoadDir, sStorage->wallpaperOffset);
 
@@ -4781,7 +4781,7 @@ void LoadWallpaperGfx(u8 boxId, s8 direction)
             CpuCopy16(sStorage->wallpaperTilemap, gUnknown_2037434 + sStorage->wallpaperOffset * 32, 2 * PLTT_SIZE_4BPP);
 
         sStorage->wallpaperTiles = malloc_and_decompress(wallpaper->tiles, &tilesSize);
-        iconGfx = malloc_and_decompress(gUnknown_8555B00[GetWaldaWallpaperIconId()], &iconSize);
+        iconGfx = malloc_and_decompress(sWaldaWallpaperIcons[GetWaldaWallpaperIconId()], &iconSize);
         CpuCopy32(iconGfx, sStorage->wallpaperTiles + 0x800, iconSize);
         Free(iconGfx);
         LoadBgTiles(2, sStorage->wallpaperTiles, tilesSize, sStorage->wallpaperOffset << 8);
@@ -4854,8 +4854,8 @@ void sub_080CC3C4(u8 boxId)
 
     u16 wallpaperId = GetBoxWallpaper(boxId);
 
-    sStorage->boxTitlePal[14] = gUnknown_8551824[wallpaperId][0];
-    sStorage->boxTitlePal[15] = gUnknown_8551824[wallpaperId][1];
+    sStorage->boxTitlePal[14] = sBoxTitleColors[wallpaperId][0];
+    sStorage->boxTitlePal[15] = sBoxTitleColors[wallpaperId][1];
     LoadSpritePalettes(palettes);
     sStorage->wallpaperPalBits = 0x3f0;
 
@@ -4906,7 +4906,7 @@ void sub_080CC57C(u8 boxId, s8 direction)
     StringCopyPadded(sStorage->boxTitleText, GetBoxNamePtr(boxId), 0, BOX_NAME_LENGTH);
     sub_080C66A4(sStorage->boxTitleText, sStorage->boxTitleTiles, 0, 0, sStorage->boxTitleTiles + 0x200);
     LoadSpriteSheet(&spriteSheet);
-    LoadPalette(gUnknown_8551824[GetBoxWallpaper(boxId)], palOffset, sizeof(gUnknown_8551824[0]));
+    LoadPalette(sBoxTitleColors[GetBoxWallpaper(boxId)], palOffset, sizeof(sBoxTitleColors[0]));
     x = GetBoxTitleBaseX(StringLength(GetBoxNamePtr(boxId)));
     adjustedX = x;
     adjustedX += direction * 192;
@@ -4968,9 +4968,9 @@ void sub_080CC828(void)
     u8 wallpaperId = GetBoxWallpaper(boxId);
 
     if (sStorage->boxTitleCycleId == 0)
-        CpuCopy16(gUnknown_8551824[wallpaperId], &gPlttBufferUnfaded[sStorage->boxTitlePalOffset], PLTT_SIZEOF(2));
+        CpuCopy16(sBoxTitleColors[wallpaperId], &gPlttBufferUnfaded[sStorage->boxTitlePalOffset], PLTT_SIZEOF(2));
     else
-        CpuCopy16(gUnknown_8551824[wallpaperId], &gPlttBufferUnfaded[sStorage->boxTitleAltPalOffset], PLTT_SIZEOF(2));
+        CpuCopy16(sBoxTitleColors[wallpaperId], &gPlttBufferUnfaded[sStorage->boxTitleAltPalOffset], PLTT_SIZEOF(2));
 }
 
 s16 GetBoxTitleBaseX(u16 len)
@@ -9463,3 +9463,29 @@ static const union AffineAnimCmd *const sAffineAnims_ReleaseMon[] STORAGE_INTERF
 #undef STORAGE_DISPLAY
 #undef STORAGE_SCROLLING_PALETTES
 #undef STORAGE_INTERFACE
+
+#define DEFAULT_WALLPAPER_DATA __attribute__((section(".rodata.pokemon_storage_wallpapers"), aligned(4)))
+#define WALDA_ZIGZAGOON_SCREEN_DATA __attribute__((section(".rodata.pokemon_storage_walda_zigzagoon_screen"), aligned(4)))
+#define WALDA_DIAGONAL_BLOCK_DATA __attribute__((section(".rodata.pokemon_storage_walda_diagonal_block"), aligned(4)))
+#define WALDA_BACKGROUND_DATA __attribute__((section(".rodata.pokemon_storage_walda_backgrounds"), aligned(4)))
+#define WALDA_ICONS_AQUA_DOT_DATA __attribute__((section(".rodata.pokemon_storage_walda_icons_aqua_dot"), aligned(4)))
+#define WALDA_ICONS_LINE_CIRCLE_RIBBON_DATA __attribute__((section(".rodata.pokemon_storage_walda_icons_line_circle_ribbon"), aligned(4)))
+#define WALDA_ICONS_FOUR_CIRCLES_LATIS_DATA __attribute__((section(".rodata.pokemon_storage_walda_icons_four_circles_latis"), aligned(4)))
+#define WALDA_ICONS_MINUN_MAGMA_DATA __attribute__((section(".rodata.pokemon_storage_walda_icons_minun_magma"), aligned(4)))
+#define WALDA_WALLPAPER_TABLES_DATA __attribute__((section(".rodata.pokemon_storage_walda_tables"), aligned(4)))
+#define STORAGE_UNUSED_COLOR_DATA __attribute__((section(".rodata.pokemon_storage_unused_color"), aligned(4)))
+
+#include "data/wallpapers.h"
+
+static const u16 sUnusedColor STORAGE_UNUSED_COLOR_DATA = RGB(26, 29, 8);
+
+#undef DEFAULT_WALLPAPER_DATA
+#undef WALDA_ZIGZAGOON_SCREEN_DATA
+#undef WALDA_DIAGONAL_BLOCK_DATA
+#undef WALDA_BACKGROUND_DATA
+#undef WALDA_ICONS_AQUA_DOT_DATA
+#undef WALDA_ICONS_LINE_CIRCLE_RIBBON_DATA
+#undef WALDA_ICONS_FOUR_CIRCLES_LATIS_DATA
+#undef WALDA_ICONS_MINUN_MAGMA_DATA
+#undef WALDA_WALLPAPER_TABLES_DATA
+#undef STORAGE_UNUSED_COLOR_DATA
