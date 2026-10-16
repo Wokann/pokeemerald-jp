@@ -1426,7 +1426,7 @@ $(C_BUILDDIR)/pokedex.d: src/pokedex.c | tools
 
 -include $(C_BUILDDIR)/pokedex.d
 
-$(C_BUILDDIR)/pokedex.o: src/pokedex.c
+$(C_BUILDDIR)/pokedex.o: src/pokedex.c charmap.txt include/battle_main.h
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokedex.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokedex.gen.s | $(AS) $(ASFLAGS) -o $@ -
@@ -1923,9 +1923,8 @@ $(C_BUILDDIR)/reset_rtc_screen.o: src/reset_rtc_screen.c charmap.txt graphics/re
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/reset_rtc_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/reset_rtc_screen.gen.s
 
-$(C_BUILDDIR)/data/pokedex.o: src/data/pokedex.c src/data/pokedex.h include/pokedex.h src/data/pokemon/pokedex_orders.h \
-	src/data/pokemon/pokedex_text.h src/data/pokemon/pokedex_entries.h \
-	$(wildcard data/pokedex/jp/*)
+$(C_BUILDDIR)/data/pokedex.o: src/data/pokedex.c include/pokedex.h charmap.txt src/data/pokemon/pokedex_orders.h \
+	src/data/pokemon/pokedex_text.h src/data/pokemon/pokedex_entries.h
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -I include -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/pokedex.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/pokedex.gen.s | $(AS) $(ASFLAGS) -o $@ -

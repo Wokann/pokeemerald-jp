@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_main.h"
 #include "bg.h"
 #include "graphics.h"
 #include "pokedex.h"
@@ -48,6 +49,30 @@ enum
     NAME_STU,
     NAME_VWX,
     NAME_YZ,
+};
+
+enum
+{
+   ORDER_NUMERICAL,
+   ORDER_ALPHABETICAL,
+   ORDER_HEAVIEST,
+   ORDER_LIGHTEST,
+   ORDER_TALLEST,
+   ORDER_SMALLEST
+};
+
+struct SearchOptionText
+{
+    const u8 *description;
+    const u8 *title;
+};
+
+struct SearchOption
+{
+    const struct SearchOptionText *texts;
+    u8 taskDataCursorPos;
+    u8 taskDataScrollOffset;
+    u16 numOptions;
 };
 
 struct SearchMenuTopBarItem
@@ -4727,7 +4752,7 @@ __attribute__((naked)) void CreateMonDexNum(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BC924: .4byte sPokemonList_WindowTemplate + 0x10\n\t"
+        "_080BC924: .4byte sText_No000\n\t"
         "_080BC928: .4byte gUnknown_20397EC\n\t"
         "_080BC92C: .4byte 0x00000612\n\t"
         ".syntax divided\n\t"
@@ -12977,8 +13002,8 @@ __attribute__((naked)) void sub_080C0850(void)
         "_080C0938: .4byte gPaletteFade\n\t"
         "_080C093C: .4byte gUnknown_20397EC\n\t"
         "_080C0940: .4byte 0x0000064A\n\t"
-        "_080C0944: .4byte gUnknown_85443FC\n\t"
-        "_080C0948: .4byte gUnknown_854440C\n\t"
+        "_080C0944: .4byte sSearchMenu_BgTemplate\n\t"
+        "_080C0948: .4byte sSearchMenu_WindowTemplate\n\t"
         "_080C094C: .4byte gPokedexSearchMenu_Gfx\n\t"
         "_080C0950: .4byte gPokedexSearchMenuHoenn_Tilemap\n\t"
         "_080C0954:\n\t"
@@ -13401,8 +13426,8 @@ __attribute__((naked)) void sub_080C0C7C(void)
         "	b _080C0CBC\n\t"
         "	.align 2, 0\n\t"
         "_080C0CA4: .4byte gTasks\n\t"
-        "_080C0CA8: .4byte gUnknown_85441BC\n\t"
-        "_080C0CAC: .4byte gUnknown_85441F4\n\t"
+        "_080C0CA8: .4byte sSearchMovementMap_ShiftNatDex\n\t"
+        "_080C0CAC: .4byte sSearchMovementMap_ShiftHoennDex\n\t"
         "_080C0CB0:\n\t"
         "	bl IsNationalPokedexEnabled\n\t"
         "	ldr r6, _080C0CE8\n\t"
@@ -13431,8 +13456,8 @@ __attribute__((naked)) void sub_080C0C7C(void)
         "	str r0, [r1]\n\t"
         "	b _080C0F14\n\t"
         "	.align 2, 0\n\t"
-        "_080C0CE8: .4byte sSearchMenuItems + 0x54\n\t"
-        "_080C0CEC: .4byte gUnknown_85441D8\n\t"
+        "_080C0CE8: .4byte sSearchMovementMap_SearchNatDex\n\t"
+        "_080C0CEC: .4byte sSearchMovementMap_SearchHoennDex\n\t"
         "_080C0CF0: .4byte gMain\n\t"
         "_080C0CF4: .4byte gTasks\n\t"
         "_080C0CF8: .4byte sub_080C0AE0 + 1\n\t"
@@ -13976,7 +14001,7 @@ __attribute__((naked)) void sub_080C1104(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C116C: .4byte gTasks\n\t"
-        "_080C1170: .4byte gUnknown_85443CC\n\t"
+        "_080C1170: .4byte sSearchOptions\n\t"
         "_080C1174: .4byte gText_SelectorArrow\n\t"
         "_080C1178: .4byte sub_080C117C + 1\n\t"
         ".syntax divided\n\t"
@@ -14034,7 +14059,7 @@ __attribute__((naked)) void sub_080C117C(void)
         "	b _080C1210\n\t"
         "	.align 2, 0\n\t"
         "_080C11DC: .4byte gTasks\n\t"
-        "_080C11E0: .4byte gUnknown_85443CC\n\t"
+        "_080C11E0: .4byte sSearchOptions\n\t"
         "_080C11E4: .4byte gMain\n\t"
         "_080C11E8:\n\t"
         "	movs r0, #2\n\t"
@@ -14837,11 +14862,11 @@ __attribute__((naked)) void sub_080C175C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C1820: .4byte gTasks\n\t"
-        "_080C1824: .4byte gUnknown_8544260\n\t"
-        "_080C1828: .4byte gUnknown_85442B8\n\t"
-        "_080C182C: .4byte gUnknown_8544318\n\t"
-        "_080C1830: .4byte gUnknown_8544228\n\t"
-        "_080C1834: .4byte gUnknown_8544210\n\t"
+        "_080C1824: .4byte sDexSearchNameOptions\n\t"
+        "_080C1828: .4byte sDexSearchColorOptions\n\t"
+        "_080C182C: .4byte sDexSearchTypeOptions\n\t"
+        "_080C1830: .4byte sDexOrderOptions\n\t"
+        "_080C1834: .4byte sDexModeOptions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -15004,7 +15029,7 @@ __attribute__((naked)) void sub_080C1918(void)
         "	ldrh r4, [r7]\n\t"
         "	b _080C1986\n\t"
         "	.align 2, 0\n\t"
-        "_080C195C: .4byte gUnknown_85443CC\n\t"
+        "_080C195C: .4byte sSearchOptions\n\t"
         "_080C1960: .4byte gTasks\n\t"
         "_080C1964:\n\t"
         "	adds r0, r1, r6\n\t"
@@ -15091,7 +15116,7 @@ __attribute__((naked)) void sub_080C19BC(void)
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
         "_080C19FC: .4byte gUnknown_3005B68\n\t"
-        "_080C1A00: .4byte gUnknown_85443CC\n\t"
+        "_080C1A00: .4byte sSearchOptions\n\t"
         "_080C1A04: .4byte _080C1A08\n\t"
         "_080C1A08:\n\t"
         "	.4byte _080C1A34\n\t"
@@ -15107,12 +15132,12 @@ __attribute__((naked)) void sub_080C19BC(void)
         "	ldr r0, _080C1A28\n\t"
         "	b _080C1A50\n\t"
         "	.align 2, 0\n\t"
-        "_080C1A28: .4byte gUnknown_85443B0\n\t"
+        "_080C1A28: .4byte sPokedexModes\n\t"
         "_080C1A2C:\n\t"
         "	ldr r0, _080C1A30\n\t"
         "	b _080C1A50\n\t"
         "	.align 2, 0\n\t"
-        "_080C1A30: .4byte gUnknown_85443B2\n\t"
+        "_080C1A30: .4byte sOrderOptions\n\t"
         "_080C1A34:\n\t"
         "	cmp r2, #0\n\t"
         "	beq _080C1A42\n\t"
@@ -15262,7 +15287,7 @@ __attribute__((naked)) void sub_080C1AF0(void)
         "	b _080C1B32\n\t"
         "	.align 2, 0\n\t"
         "_080C1B28: .4byte gTasks\n\t"
-        "_080C1B2C: .4byte gUnknown_85443CC\n\t"
+        "_080C1B2C: .4byte sSearchOptions\n\t"
         "_080C1B30:\n\t"
         "	movs r0, #1\n\t"
         "_080C1B32:\n\t"
@@ -15308,7 +15333,7 @@ __attribute__((naked)) void sub_080C1B38(void)
         "	b _080C1B7E\n\t"
         "	.align 2, 0\n\t"
         "_080C1B74: .4byte gTasks\n\t"
-        "_080C1B78: .4byte gUnknown_85443CC\n\t"
+        "_080C1B78: .4byte sSearchOptions\n\t"
         "_080C1B7C:\n\t"
         "	movs r0, #1\n\t"
         "_080C1B7E:\n\t"
@@ -15487,3 +15512,395 @@ __attribute__((naked)) void sub_080C1C38(void)
         ".syntax divided\n\t"
     );
 }
+
+#define POKEDEX_SEARCH_OPTIONS __attribute__((section(".rodata.pokedex_search_options")))
+#define POKEDEX_NUMBER_TEXT __attribute__((section(".rodata.pokedex_number_text"), aligned(1)))
+
+static const u8 sText_No000[] POKEDEX_NUMBER_TEXT = _("{NO}000");
+
+static const u8 sSearchMovementMap_SearchNatDex[SEARCH_COUNT][4] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(1))) =
+{
+    [SEARCH_NAME] =
+    {
+        0xFF,
+        0xFF,
+        0xFF,
+        SEARCH_COLOR
+    },
+    [SEARCH_COLOR] =
+    {
+        0xFF,
+        0xFF,
+        SEARCH_NAME,
+        SEARCH_TYPE_LEFT
+    },
+    [SEARCH_TYPE_LEFT] =
+    {
+        0xFF,
+        SEARCH_TYPE_RIGHT,
+        SEARCH_COLOR,
+        SEARCH_ORDER
+    },
+    [SEARCH_TYPE_RIGHT] =
+    {   SEARCH_TYPE_LEFT,
+        0xFF,
+        SEARCH_COLOR,
+        SEARCH_ORDER
+    },
+    [SEARCH_ORDER] =
+    {
+        0xFF,
+        0xFF,
+        SEARCH_TYPE_LEFT,
+        SEARCH_MODE
+    },
+    [SEARCH_MODE] =
+    {
+        0xFF,
+        0xFF,
+        SEARCH_ORDER,
+        SEARCH_OK
+    },
+    [SEARCH_OK] =
+    {
+        0xFF,
+        0xFF,
+        SEARCH_MODE,
+        0xFF
+    },
+};
+
+// Left, Right, Up, Down
+static const u8 sSearchMovementMap_ShiftNatDex[SEARCH_COUNT][4] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(1))) =
+{
+    [SEARCH_NAME] =
+    {
+        0xFF,
+        0xFF,
+        0xFF,
+        0xFF
+    },
+    [SEARCH_COLOR] =
+    {
+        0xFF,
+        0xFF,
+        0xFF,
+        0xFF
+    },
+    [SEARCH_TYPE_LEFT] =
+    {
+        0xFF,
+        0xFF,
+        0xFF,
+        0xFF
+    },
+    [SEARCH_TYPE_RIGHT] =
+    {
+        0xFF,
+        0xFF,
+        0xFF,
+        0xFF
+    },
+    [SEARCH_ORDER] =
+    {
+        0xFF,
+        0xFF,
+        0xFF,
+        SEARCH_MODE
+    },
+    [SEARCH_MODE] =
+    {
+        0xFF,
+        0xFF,
+        SEARCH_ORDER,
+        SEARCH_OK
+    },
+    [SEARCH_OK] =
+    {
+        0xFF,
+        0xFF,
+        SEARCH_MODE,
+        0xFF
+    },
+};
+
+// Left, Right, Up, Down
+static const u8 sSearchMovementMap_SearchHoennDex[SEARCH_COUNT][4] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(1))) =
+{
+    [SEARCH_NAME] =
+    {
+        0xFF,
+        0xFF,
+        0xFF,
+        SEARCH_COLOR
+    },
+    [SEARCH_COLOR] =
+    {
+        0xFF,
+        0xFF,
+        SEARCH_NAME,
+        SEARCH_TYPE_LEFT
+    },
+    [SEARCH_TYPE_LEFT] =
+    {
+        0xFF,
+        SEARCH_TYPE_RIGHT,
+        SEARCH_COLOR,
+        SEARCH_ORDER
+    },
+    [SEARCH_TYPE_RIGHT] =
+    {   SEARCH_TYPE_LEFT,
+        0xFF,
+        SEARCH_COLOR,
+        SEARCH_ORDER
+    },
+    [SEARCH_ORDER] =
+    {
+        0xFF,
+        0xFF,
+        SEARCH_TYPE_LEFT,
+        SEARCH_OK
+    },
+    [SEARCH_MODE] =
+    {
+        0xFF,
+        0xFF,
+        0xFF,
+        0xFF
+    },
+    [SEARCH_OK] =
+    {
+        0xFF,
+        0xFF,
+        SEARCH_ORDER,
+        0xFF
+    },
+};
+
+// Left, Right, Up, Down
+static const u8 sSearchMovementMap_ShiftHoennDex[SEARCH_COUNT][4] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(1))) =
+{
+    [SEARCH_NAME] =
+    {
+        0xFF,
+        0xFF,
+        0xFF,
+        0xFF
+    },
+    [SEARCH_COLOR] =
+    {
+        0xFF,
+        0xFF,
+        0xFF,
+        0xFF
+    },
+    [SEARCH_TYPE_LEFT] =
+    {
+        0xFF,
+        0xFF,
+        0xFF,
+        0xFF
+    },
+    [SEARCH_TYPE_RIGHT] =
+    {
+        0xFF,
+        0xFF,
+        0xFF,
+        0xFF
+    },
+    [SEARCH_ORDER] =
+    {
+        0xFF,
+        0xFF,
+        0xFF,
+        SEARCH_OK
+    },
+    [SEARCH_MODE] =
+    {
+        0xFF,
+        0xFF,
+        0xFF,
+        0xFF
+    },
+    [SEARCH_OK] =
+    {
+        0xFF,
+        0xFF,
+        SEARCH_ORDER,
+        0xFF
+    },
+};
+
+static const struct SearchOptionText sDexModeOptions[] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(4))) =
+{
+    [DEX_MODE_HOENN]    = {gText_DexHoennDescription, gText_DexHoennTitle},
+    [DEX_MODE_NATIONAL] = {gText_DexNatDescription,   gText_DexNatTitle},
+    {},
+};
+
+static const struct SearchOptionText sDexOrderOptions[] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(4))) =
+{
+    [ORDER_NUMERICAL]    = {gText_DexSortNumericalDescription, gText_DexSortNumericalTitle},
+    [ORDER_ALPHABETICAL] = {gText_DexSortAtoZDescription,      gText_DexSortAtoZTitle},
+    [ORDER_HEAVIEST]     = {gText_DexSortHeaviestDescription,  gText_DexSortHeaviestTitle},
+    [ORDER_LIGHTEST]     = {gText_DexSortLightestDescription,  gText_DexSortLightestTitle},
+    [ORDER_TALLEST]      = {gText_DexSortTallestDescription,   gText_DexSortTallestTitle},
+    [ORDER_SMALLEST]     = {gText_DexSortSmallestDescription,  gText_DexSortSmallestTitle},
+    {},
+};
+
+static const struct SearchOptionText sDexSearchNameOptions[] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(4))) =
+{
+    {gText_DexEmptyString, gText_DexSearchDontSpecify},
+    [NAME_ABC] = {gText_DexEmptyString, gText_DexSearchAlphaABC},
+    [NAME_DEF] = {gText_DexEmptyString, gText_DexSearchAlphaDEF},
+    [NAME_GHI] = {gText_DexEmptyString, gText_DexSearchAlphaGHI},
+    [NAME_JKL] = {gText_DexEmptyString, gText_DexSearchAlphaJKL},
+    [NAME_MNO] = {gText_DexEmptyString, gText_DexSearchAlphaMNO},
+    [NAME_PQR] = {gText_DexEmptyString, gText_DexSearchAlphaPQR},
+    [NAME_STU] = {gText_DexEmptyString, gText_DexSearchAlphaSTU},
+    [NAME_VWX] = {gText_DexEmptyString, gText_DexSearchAlphaVWX},
+    [NAME_YZ]  = {gText_DexEmptyString, gText_DexSearchAlphaYZ},
+    {},
+};
+
+static const struct SearchOptionText sDexSearchColorOptions[] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(4))) =
+{
+    {gText_DexEmptyString, gText_DexSearchDontSpecify},
+    [BODY_COLOR_RED + 1]    = {gText_DexEmptyString, gText_DexSearchColorRed},
+    [BODY_COLOR_BLUE + 1]   = {gText_DexEmptyString, gText_DexSearchColorBlue},
+    [BODY_COLOR_YELLOW + 1] = {gText_DexEmptyString, gText_DexSearchColorYellow},
+    [BODY_COLOR_GREEN + 1]  = {gText_DexEmptyString, gText_DexSearchColorGreen},
+    [BODY_COLOR_BLACK + 1]  = {gText_DexEmptyString, gText_DexSearchColorBlack},
+    [BODY_COLOR_BROWN + 1]  = {gText_DexEmptyString, gText_DexSearchColorBrown},
+    [BODY_COLOR_PURPLE + 1] = {gText_DexEmptyString, gText_DexSearchColorPurple},
+    [BODY_COLOR_GRAY + 1]   = {gText_DexEmptyString, gText_DexSearchColorGray},
+    [BODY_COLOR_WHITE + 1]  = {gText_DexEmptyString, gText_DexSearchColorWhite},
+    [BODY_COLOR_PINK + 1]   = {gText_DexEmptyString, gText_DexSearchColorPink},
+    {},
+};
+
+static const struct SearchOptionText sDexSearchTypeOptions[NUMBER_OF_MON_TYPES + 1] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(4))) = // + 2 for "None" and terminator, - 1 for Mystery
+{
+    {gText_DexEmptyString, gText_DexSearchTypeNone},
+    {gText_DexEmptyString, gTypeNames[TYPE_NORMAL]},
+    {gText_DexEmptyString, gTypeNames[TYPE_FIGHTING]},
+    {gText_DexEmptyString, gTypeNames[TYPE_FLYING]},
+    {gText_DexEmptyString, gTypeNames[TYPE_POISON]},
+    {gText_DexEmptyString, gTypeNames[TYPE_GROUND]},
+    {gText_DexEmptyString, gTypeNames[TYPE_ROCK]},
+    {gText_DexEmptyString, gTypeNames[TYPE_BUG]},
+    {gText_DexEmptyString, gTypeNames[TYPE_GHOST]},
+    {gText_DexEmptyString, gTypeNames[TYPE_STEEL]},
+    {gText_DexEmptyString, gTypeNames[TYPE_FIRE]},
+    {gText_DexEmptyString, gTypeNames[TYPE_WATER]},
+    {gText_DexEmptyString, gTypeNames[TYPE_GRASS]},
+    {gText_DexEmptyString, gTypeNames[TYPE_ELECTRIC]},
+    {gText_DexEmptyString, gTypeNames[TYPE_PSYCHIC]},
+    {gText_DexEmptyString, gTypeNames[TYPE_ICE]},
+    {gText_DexEmptyString, gTypeNames[TYPE_DRAGON]},
+    {gText_DexEmptyString, gTypeNames[TYPE_DARK]},
+    {},
+};
+
+static const u8 sPokedexModes[] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(1))) = {DEX_MODE_HOENN, DEX_MODE_NATIONAL};
+static const u8 sOrderOptions[] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(1))) =
+{
+    ORDER_NUMERICAL,
+    ORDER_ALPHABETICAL,
+    ORDER_HEAVIEST,
+    ORDER_LIGHTEST,
+    ORDER_TALLEST,
+    ORDER_SMALLEST,
+};
+
+static const u8 sDexSearchTypeIds[NUMBER_OF_MON_TYPES] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(1))) =
+{
+    TYPE_NONE,
+    TYPE_NORMAL,
+    TYPE_FIGHTING,
+    TYPE_FLYING,
+    TYPE_POISON,
+    TYPE_GROUND,
+    TYPE_ROCK,
+    TYPE_BUG,
+    TYPE_GHOST,
+    TYPE_STEEL,
+    TYPE_FIRE,
+    TYPE_WATER,
+    TYPE_GRASS,
+    TYPE_ELECTRIC,
+    TYPE_PSYCHIC,
+    TYPE_ICE,
+    TYPE_DRAGON,
+    TYPE_DARK,
+};
+
+// Number pairs are the task data for tracking the cursor pos and scroll offset of each option list
+// See task data defines above Task_LoadSearchMenu
+static const struct SearchOption sSearchOptions[] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(4))) =
+{
+    [SEARCH_NAME]       = {sDexSearchNameOptions,  6,  7, ARRAY_COUNT(sDexSearchNameOptions) - 1},
+    [SEARCH_COLOR]      = {sDexSearchColorOptions, 8,  9, ARRAY_COUNT(sDexSearchColorOptions) - 1},
+    [SEARCH_TYPE_LEFT]  = {sDexSearchTypeOptions, 10, 11, ARRAY_COUNT(sDexSearchTypeOptions) - 1},
+    [SEARCH_TYPE_RIGHT] = {sDexSearchTypeOptions, 12, 13, ARRAY_COUNT(sDexSearchTypeOptions) - 1},
+    [SEARCH_ORDER]      = {sDexOrderOptions,       4,  5, ARRAY_COUNT(sDexOrderOptions) - 1},
+    [SEARCH_MODE]       = {sDexModeOptions,        2,  3, ARRAY_COUNT(sDexModeOptions) - 1},
+};
+
+static const struct BgTemplate sSearchMenu_BgTemplate[] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(4))) =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 12,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 13,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 14,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 15,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0
+    }
+};
+
+static const struct WindowTemplate sSearchMenu_WindowTemplate[] POKEDEX_SEARCH_OPTIONS __attribute__((aligned(4))) =
+{
+    {
+        .bg = 2,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = 32,
+        .height = 20,
+        .paletteNum = 0,
+        .baseBlock = 0x0001,
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+#undef POKEDEX_SEARCH_OPTIONS
+#undef POKEDEX_NUMBER_TEXT

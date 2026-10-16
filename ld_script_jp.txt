@@ -9568,7 +9568,7 @@ SECTIONS {
         src/graphics.o(.rodata.pokedex_graphics_menu_interface);
         src/data/pokedex.o(.rodata.pokedex_orders);
         src/pokedex.o(.rodata.pokedex_static_data);
-        src/data/text/region_texts54.o(.rodata);
+        src/pokedex.o(.rodata.pokedex_number_text);
         src/pokedex.o(.rodata.pokedex_prefix);
         src/data/pokedex.o(.rodata.pokedex_text);
         src/data/pokedex.o(.rodata.pokedex_entries);
@@ -9576,8 +9576,7 @@ SECTIONS {
         src/pokedex.o(.rodata.pokedex_footprint_table);
         src/graphics.o(.rodata.pokedex_search_menu_graphics);
         src/pokedex.o(.rodata.pokedex_search_menu_data);
-        src/data/text/region_texts55.o(.rodata);
-        src/data/pokedex.o(.rodata.pokedex_mid55);
+        src/pokedex.o(.rodata.pokedex_search_options);
         src/data/trainer_card.o(.rodata.trainer_card_mid55);
         src/data/text/region_texts56.o(.rodata);
         src/data/trainer_card.o(.rodata.trainer_card_mid56_text_colors);
