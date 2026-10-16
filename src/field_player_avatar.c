@@ -954,7 +954,6 @@ extern bool8 (*const sFishingStateFuncs[16])(struct Task *);
 extern const s16 sFishingMinRounds1[3], sFishingMinRounds2[3];
 extern const s16 sFishingReelTimeouts[3], sFishingMoreDotsChance[3][2];
 extern const u8 sSpinDirections[5];
-extern const u8 gText_FishingDot[];
 bool8 ForcedMovement_None(void);
 void DoPlayerAvatarTransition(void);
 void npc_clear_strange_bits(struct ObjectEvent *);
@@ -1712,9 +1711,7 @@ bool8 Fishing_InitDots(struct Task *task)
 
 bool8 Fishing_ShowDots(struct Task *task)
 {
-    u8 dot[2];
-
-    memcpy(dot, gText_FishingDot, sizeof(dot));
+    const u8 dot[] = _("·");
 
     AlignFishingAnimationFrames();
     task->tFrameCounter++;

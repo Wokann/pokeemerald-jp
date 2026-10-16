@@ -9427,9 +9427,10 @@ SECTIONS {
         data/metatile_behavior.o(.rodata.after_tilesets);
         data/field_door.o(.rodata.after_tilesets);
         data/field_player_avatar.o(.rodata.after_tilesets);
-        src/data/text/region_texts17.o(.rodata);
+        src/field_player_avatar_tail.o(.rodata);
+        src/strings.o(.rodata.strings_fishing_bite);
         data/data_b2d.o(.rodata.mid27);
-        src/data/text/region_texts18.o(.rodata);
+        src/strings.o(.rodata.strings_fishing_messages);
         data/field_player_avatar.o(.rodata.field_player_avatar_spin_directions);
         src/event_object_movement.o(.rodata.event_object_movement_reflection_palette_data);
         gUnknown_846FA28 = .;
@@ -9524,7 +9525,7 @@ SECTIONS {
         src/data/reset_rtc_screen.o(.rodata.reset_rtc_screen_data);
         src/data/text/region_texts31.o(.rodata);
         src/start_menu.o(.rodata.start_menu_resources);
-        src/data/text/region_texts24.o(.rodata);
+        src/strings.o(.rodata.strings_saving_status);
         src/tileset_anims.o(.rodata.tileset_anims_data);
         src/palette.o(.rodata.palette_static_data);
         src/sound.o(.rodata.sound_fanfare_data);
@@ -9650,7 +9651,7 @@ SECTIONS {
         data/tv.o(.rodata.tv_text_groups);
         data/contest_results.o(.rodata.contest_results_data);
         src/pokemon_size_record.o(.rodata.pokemon_size_record_data);
-        src/data/text/region_texts60.o(.rodata);
+        src/strings.o(.rodata.strings_decimal_point);
         data/data_b2d_mid60.o(.rodata);
         src/fldeff_misc.o(.rodata);
         data/data_b2d_mid60.o(.rodata.mid60_tail_prefix);
@@ -9736,7 +9737,7 @@ SECTIONS {
         src/easy_chat.o(.rodata.easy_chat_words_by_letter_data);
         src/easy_chat.o(.rodata.easy_chat_group_names_data);
         data/data_b2d_mid60.o(.rodata.mid60_tail_after_easy_chat_group_names_data);
-        src/data/text/region_texts61.o(.rodata);
+        src/strings.o(.rodata.strings_question_marks);
         src/easy_chat.o(.rodata.easy_chat_restricted_word_species_data);
         . = ALIGN(4);
         src/graphics.o(.rodata.mon_markings_menu_graphics);
@@ -10231,6 +10232,7 @@ SECTIONS {
         src/strings.o(.rodata.strings_easy_chat_messages);
         src/strings.o(.rodata.strings_shared_misc_text);
         src/strings.o(.rodata.strings_trainer_status_text);
+        src/strings.o(.rodata.strings_contest_results);
         src/data/text/region_texts108.o(.rodata);
         src/text_input_strings.o(.rodata);
         src/strings.o(.rodata.strings_chat_profile_text);

@@ -4,6 +4,13 @@
 #include "item_menu.h"
 #include "constants/songs.h"
 
+#define STRINGS_FISHING_BITE __attribute__((section(".rodata.strings_fishing_bite"), aligned(1)))
+#define STRINGS_FISHING_MESSAGES __attribute__((section(".rodata.strings_fishing_messages"), aligned(1)))
+#define STRINGS_SAVING_STATUS __attribute__((section(".rodata.strings_saving_status"), aligned(1)))
+#define STRINGS_DECIMAL_POINT __attribute__((section(".rodata.strings_decimal_point"), aligned(1)))
+#define STRINGS_QUESTION_MARKS __attribute__((section(".rodata.strings_question_marks"), aligned(1)))
+#define STRINGS_CONTEST_RESULTS __attribute__((section(".rodata.strings_contest_results"), aligned(1)))
+
 #define STRINGS_EREADER_TEXT __attribute__((section(".rodata.strings_ereader_text"), aligned(1)))
 #define STRINGS_MINIGAME_TEXT __attribute__((section(".rodata.strings_minigame_text"), aligned(1)))
 #define STRINGS_SHARED_MISC_TEXT __attribute__((section(".rodata.strings_shared_misc_text"), aligned(1)))
@@ -52,6 +59,26 @@
 #define STRINGS_DIPLOMA_TEXT __attribute__((section(".rodata.strings_diploma_text"), aligned(1), used))
 #define STRINGS_EXPANDED_PLACEHOLDER_TEXT __attribute__((section(".rodata.strings_expanded_placeholder_text"), aligned(1), used))
 #define STRINGS_POKEMON_NAMES_TEXT __attribute__((section(".rodata.strings_pokemon_names_text"), aligned(1), used))
+
+STRINGS_FISHING_BITE const u8 gText_OhABite[] = _("ひいてる　ひいてる！！");
+STRINGS_FISHING_MESSAGES const u8 gText_PokemonOnHook[] = _("ポケモンを　つりあげた！{PAUSE_UNTIL_PRESS}");
+STRINGS_FISHING_MESSAGES const u8 gText_NotEvenANibble[] = _("つれないなあ···{PAUSE_UNTIL_PRESS}");
+STRINGS_FISHING_MESSAGES const u8 gText_ItGotAway[] = _("にげられて　しまった···{PAUSE_UNTIL_PRESS}");
+STRINGS_SAVING_STATUS const u8 gText_SavingPlayer[] = _("しゅじんこう");
+STRINGS_SAVING_STATUS const u8 gText_SavingBadges[] = _("もっているバッジ");
+STRINGS_SAVING_STATUS const u8 gText_SavingPokedex[] = _("ポケモンずかん");
+STRINGS_SAVING_STATUS const u8 gText_SavingTime[8] = _("プレイじかん");
+STRINGS_DECIMAL_POINT const u8 gText_DecimalPoint[] = _(",");
+STRINGS_QUESTION_MARKS const u8 gText_ThreeQuestionMarks[] = _("？？？");
+STRINGS_CONTEST_RESULTS const u8 gText_CDot[] = _("C,");
+STRINGS_CONTEST_RESULTS const u8 gText_BDot[] = _("B,");
+STRINGS_CONTEST_RESULTS const u8 gText_AnnouncingResults[] = _("けっか　はっぴょう！");
+STRINGS_CONTEST_RESULTS const u8 gText_PreliminaryResults[] = _("1じしんさの　けっか！");
+STRINGS_CONTEST_RESULTS const u8 gText_Round2Results[] = _("2じしんさの　けっか！");
+STRINGS_CONTEST_RESULTS const u8 gText_ContestantsMonWon[] = _("ゆうしょう！　{STR_VAR_1}の　{STR_VAR_2}！");
+STRINGS_CONTEST_RESULTS const u8 gText_CommunicationStandby[] = _("つうしんたいきちゅう");
+STRINGS_CONTEST_RESULTS const u8 gText_ColorDarkGray[] = _("{COLOR 0x02}");
+STRINGS_CONTEST_RESULTS const u8 gText_ColorDynamic6WhiteDynamic5[] = _("{COLOR_HIGHLIGHT_SHADOW 0x0F 0x01 0x0E}");
 
 const u8 gText_ExpandedPlaceholder_Empty[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("");
 const u8 gText_ExpandedPlaceholder_Kun[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("くん");
@@ -2110,8 +2137,8 @@ STRINGS_MAIN_MENU const u8 gText_NextBack[] __attribute__((aligned(4))) = _("{A_
 STRINGS_MAIN_MENU const u8 gText_PickNextCancel[] __attribute__((aligned(4))) = _("{DPAD_UPDOWN}えらぶ　{A_BUTTON}つぎ　{B_BUTTON}おわる");
 STRINGS_MAIN_MENU const u8 gText_PickCancel[] __attribute__((aligned(4))) = _("{DPAD_UPDOWN}えらぶ　{A_BUTTON}{B_BUTTON}おわる");
 STRINGS_MAIN_MENU const u8 gText_AButtonExit[] __attribute__((aligned(4))) = _("{A_BUTTON}おわる");
-STRINGS_MAIN_MENU const u8 gText_BirchBoy[] = {0x05, 0x14, 0x0A, 0xFF};
-STRINGS_MAIN_MENU const u8 gText_BirchGirl[] = {0x05, 0x2E, 0x15, 0xFF};
+STRINGS_MAIN_MENU const u8 gText_BirchBoy[] = _("おとこ");
+STRINGS_MAIN_MENU const u8 gText_BirchGirl[] = _("おんな");
 STRINGS_MAIN_MENU const u8 gText_DefaultName_Itsuo[] = __("イツオ$$$");
 STRINGS_MAIN_MENU const u8 gText_DefaultName_Gyoku[] = __("ギョク$$$");
 STRINGS_MAIN_MENU const u8 gText_DefaultName_Kei[] = __("ケイ$$$$");
@@ -2425,8 +2452,12 @@ STRINGS_POKENAV_STORAGE const u8 gText_PokenavRibbons_MonListButtons[] = _("{A_B
 STRINGS_POKENAV_STORAGE const u8 gText_PokenavRibbons_RibbonListButtons[] = _("{A_BUTTON}しょうさい　{B_BUTTON}もどる");
 STRINGS_POKENAV_STORAGE const u8 gText_PokenavRibbons_RibbonCheckButtons[] = _("{B_BUTTON}もどる");
 
-STRINGS_CLEAR_SAVE const u8 gText_ClearAllSaveData[] = {0x0D, 0x49, 0x13, 0x19, 0x00, 0x5E, 0xAE, 0x98, 0x94, 0xAE, 0x60, 0x54, 0x78, 0x51, 0x2D, 0xFE, 0x58, 0x78, 0x51, 0x00, 0x0C, 0x1F, 0x0D, 0x06, 0xAC, 0xFF};
-STRINGS_CLEAR_SAVE const u8 gText_ClearingData[] = {0x58, 0x78, 0x51, 0x00, 0x0C, 0x13, 0x02, 0x1F, 0x0D, 0xFE, 0x05, 0x1F, 0x11, 0x00, 0x08, 0x41, 0x0B, 0x02, 0xFF, 0x00, 0x00, 0x00};
+STRINGS_CLEAR_SAVE const u8 gText_ClearAllSaveData[] = _(
+    "すべての　セーブデータエリアを\n"
+    "クリア　しますか？");
+STRINGS_CLEAR_SAVE const u8 gText_ClearingData[22] = _(
+    "クリア　しています\n"
+    "おまち　ください");
 
 #define STRINGS_SLOT_MACHINE __attribute__((section(".rodata.strings_slot_machine"), aligned(1)))
 
