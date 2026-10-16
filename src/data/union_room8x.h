@@ -6,7 +6,6 @@
 
 // Union-room chat windows/tasks data (0x82C55BC..0x82C588A)
 
-extern const u8 sKeyboardFunctionTexts[];
 extern bool32 Display_LoadGfx(u8 *), Display_ShowKeyboardSwapMenu(u8 *), Display_HideKeyboardSwapMenu(u8 *), Display_SwitchPages(u8 *), Display_MoveKeyboardCursor(u8 *), Display_AskQuitChatting(u8 *), Display_DestroyYesNoDialog(u8 *), Display_UpdateMessageBuffer(u8 *), Display_AskRegisterText(u8 *), Display_CancelRegister(u8 *), Display_ReturnToKeyboard(u8 *), Display_ScrollChat(u8 *), Display_AnimateKeyboardCursor(u8 *), Display_PrintInputText(u8 *), Display_PrintExitingChat(u8 *), Display_PrintLeaderLeft(u8 *), Display_AskSave(u8 *), Display_AskOverwriteSave(u8 *), Display_PrintSavingDontTurnOff(u8 *), Display_PrintSavedTheGame(u8 *), Display_AskConfirmLeaderLeave(u8 *);
 
 struct SubtaskInfo
@@ -82,10 +81,10 @@ const struct SubtaskInfo sDisplaySubtasks[] = {
 
 // Standard chat message window settings.
 const struct MessageWindowInfo sDisplayStdMessages[] = {
-    { sKeyboardFunctionTexts + 0x1B, 1, 0, 0, 1, 2, 0, 0 },
-    { sKeyboardFunctionTexts + 0x28, 1, 0, 0, 1, 2, 0, 0 },
-    { sKeyboardFunctionTexts + 0x36, 1, 0, 0, 1, 2, 0, 0 },
-    { sKeyboardFunctionTexts + 0x44, 1, 0, 0, 1, 2, 0, 0 },
+    { gText_QuitChatting, 1, 0, 0, 1, 2, 0, 0 },
+    { gText_RegisterTextWhere, 1, 0, 0, 1, 2, 0, 0 },
+    { gText_RegisterTextHere, 1, 0, 0, 1, 2, 0, 0 },
+    { gText_InputText, 1, 0, 0, 1, 2, 0, 0 },
     { gText_ExitingChat, 2, 0, 0, 1, 2, 0, 0 },
     { gText_LeaderLeftEndingChat, 2, 0, 0, 0, 2, 1, 0 },
     { gText_RegisteredTextChangedOKToSave, 2, 0, 0, 1, 2, 0, 1 },
@@ -95,13 +94,13 @@ const struct MessageWindowInfo sDisplayStdMessages[] = {
     { gText_IfLeaderLeavesChatEnds, 2, 0, 0, 1, 2, 0, 1 },
 };
 
-// 0x82C5858: page title texts inside sKeyboardFunctionTexts
+// 0x82C5858: keyboard page titles.
 const struct MenuAction sKeyboardPageTitleTexts[6] = {
-    { sKeyboardFunctionTexts + 0x00, NULL },
-    { sKeyboardFunctionTexts + 0x05, NULL },
-    { sKeyboardFunctionTexts + 0x0A, NULL },
-    { sKeyboardFunctionTexts + 0x0E, NULL },
-    { sKeyboardFunctionTexts + 0x12, NULL },
-    { sKeyboardFunctionTexts + 0x17, NULL },
+    { gText_Hiragana, NULL },
+    { gText_Katakana, NULL },
+    { gText_ABC, NULL },
+    { gText_Symbols, NULL },
+    { gText_Register2, NULL },
+    { gText_Exit2, NULL },
 };
 

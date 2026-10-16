@@ -728,6 +728,16 @@ STRINGS_TRAINER_STATUS_TEXT const u8 gText_ColorBlue[] = _("{COLOR 8}");
 // __() is required here so that charmap_jp does not append a second EOS.
 STRINGS_TRAINER_STATUS_TEXT const u8 gText_ColorTransparent[] = __("{HIGHLIGHT 0}{COLOR 255}");
 
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_Hiragana[] = _("ひらがな");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_Katakana[] = _("カタカナ");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_ABC[] = _("ABC");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_Symbols[] = _("きごう");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_Register2[] = _("とうろく");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_Exit2[] = _("とじる");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_QuitChatting[] = _("チャットを　やめますか？");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_RegisterTextWhere[] = _("どこに　とうろくしますか？");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_RegisterTextHere[] = _("ここに　とうろくしますか？");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_InputText[] = _("ことばを　いれて　ください！");
 STRINGS_CHAT_PROFILE_TEXT const u8 gText_F700JoinedChat[] = _("{DYNAMIC 0}さんが　さんかしました！");
 STRINGS_CHAT_PROFILE_TEXT const u8 gText_F700LeftChat[] = _("{DYNAMIC 0}さんが　ぬけました");
 STRINGS_CHAT_PROFILE_TEXT const u8 gJPText_PlayersXPokemon[] = _("{DYNAMIC 0}の{DYNAMIC 1}ひきめ:");

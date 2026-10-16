@@ -10265,6 +10265,7 @@ SECTIONS {
         src/strings.o(.rodata.strings_shared_misc_text);
         src/strings.o(.rodata.strings_trainer_status_text);
         src/data/text/region_texts108.o(.rodata);
+        src/text_input_strings.o(.rodata);
         src/strings.o(.rodata.strings_chat_profile_text);
         src/strings.o(.rodata.strings_egg_hatch_text);
         src/strings.o(.rodata.strings_berry_crush_text);

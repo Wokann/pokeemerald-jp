@@ -1,22 +1,59 @@
 #include "global.h"
+#include "strings.h"
 
 // Union-room chat keyboard data (0x82C5180..0x82C55BC)
 
-extern const u8 sKeyboardText_KanaUpper0[], sKeyboardText_KanaUpper1[], sKeyboardText_KanaUpper2[], sKeyboardText_KanaUpper3[], sKeyboardText_KanaUpper4[];
-extern const u8 sKeyboardText_KanaUpper5[], sKeyboardText_KanaUpper6[], sKeyboardText_KanaUpper7[], sKeyboardText_KanaUpper8[], sKeyboardText_KanaUpper9[];
-extern const u8 sKeyboardText_KanaLower0[], sKeyboardText_KanaLower1[], sKeyboardText_KanaLower2[], sKeyboardText_KanaLower3[], sKeyboardText_KanaLower4[];
-extern const u8 sKeyboardText_KanaLower5[], sKeyboardText_KanaLower6[], sKeyboardText_KanaLower7[], sKeyboardText_KanaLower8[], sKeyboardText_KanaLower9[];
-extern const u8 sKeyboardText_Alpha0[], sKeyboardText_Alpha1[], sKeyboardText_Alpha2[], sKeyboardText_Alpha3[], sKeyboardText_Alpha4[], sKeyboardText_Alpha5[];
-extern const u8 sKeyboardText_Digits0[], sKeyboardText_Digits1[];
-extern const u8 sKeyboardText_Emoji0[], sKeyboardText_Emoji1[], sKeyboardText_Emoji2[], sKeyboardText_Emoji3[], sKeyboardText_Emoji4[];
-extern const u8 sKeyboardText_Emoji5[], sKeyboardText_Emoji6[], sKeyboardText_Emoji7[], sKeyboardText_Emoji8[], sKeyboardText_Emoji9[];
-
 // 0x82C5180 (4 pages x UNION_ROOM_KB_ROW_COUNT rows)
-const u8 *const sUnionRoomKeyboardText[4][UNION_ROOM_KB_ROW_COUNT] = {
-    { sKeyboardText_KanaUpper0, sKeyboardText_KanaUpper1, sKeyboardText_KanaUpper2, sKeyboardText_KanaUpper3, sKeyboardText_KanaUpper4, sKeyboardText_KanaUpper5, sKeyboardText_KanaUpper6, sKeyboardText_KanaUpper7, sKeyboardText_KanaUpper8, sKeyboardText_KanaUpper9 },
-    { sKeyboardText_KanaLower0, sKeyboardText_KanaLower1, sKeyboardText_KanaLower2, sKeyboardText_KanaLower3, sKeyboardText_KanaLower4, sKeyboardText_KanaLower5, sKeyboardText_KanaLower6, sKeyboardText_KanaLower7, sKeyboardText_KanaLower8, sKeyboardText_KanaLower9 },
-    { sKeyboardText_Alpha0, sKeyboardText_Alpha1, sKeyboardText_Alpha2, sKeyboardText_Alpha3, sKeyboardText_Alpha4, sKeyboardText_Alpha5, sKeyboardText_Digits0, sKeyboardText_Digits1, NULL, NULL },
-    { sKeyboardText_Emoji0, sKeyboardText_Emoji1, sKeyboardText_Emoji2, sKeyboardText_Emoji3, sKeyboardText_Emoji4, sKeyboardText_Emoji5, sKeyboardText_Emoji6, sKeyboardText_Emoji7, sKeyboardText_Emoji8, sKeyboardText_Emoji9 },
+const u8 *const sUnionRoomKeyboardText[4][UNION_ROOM_KB_ROW_COUNT] =
+{
+    {
+        gText_UnionRoomChatKeyboard_Hiragana1,
+        gText_UnionRoomChatKeyboard_Hiragana2,
+        gText_UnionRoomChatKeyboard_Hiragana3,
+        gText_UnionRoomChatKeyboard_Hiragana4,
+        gText_UnionRoomChatKeyboard_Hiragana5,
+        gText_UnionRoomChatKeyboard_Hiragana6,
+        gText_UnionRoomChatKeyboard_Hiragana7,
+        gText_UnionRoomChatKeyboard_Hiragana8,
+        gText_UnionRoomChatKeyboard_Hiragana9,
+        gText_UnionRoomChatKeyboard_Hiragana10,
+    },
+    {
+        gText_UnionRoomChatKeyboard_Katakana1,
+        gText_UnionRoomChatKeyboard_Katakana2,
+        gText_UnionRoomChatKeyboard_Katakana3,
+        gText_UnionRoomChatKeyboard_Katakana4,
+        gText_UnionRoomChatKeyboard_Katakana5,
+        gText_UnionRoomChatKeyboard_Katakana6,
+        gText_UnionRoomChatKeyboard_Katakana7,
+        gText_UnionRoomChatKeyboard_Katakana8,
+        gText_UnionRoomChatKeyboard_Katakana9,
+        gText_UnionRoomChatKeyboard_Katakana10,
+    },
+    {
+        gText_UnionRoomChatKeyboard_ABCDE,
+        gText_UnionRoomChatKeyboard_FGHIJ,
+        gText_UnionRoomChatKeyboard_KLMNO,
+        gText_UnionRoomChatKeyboard_PQRST,
+        gText_UnionRoomChatKeyboard_UVWXY,
+        gText_UnionRoomChatKeyboard_Z,
+        gText_UnionRoomChatKeyboard_01234Upper,
+        gText_UnionRoomChatKeyboard_56789Upper,
+        NULL,
+        NULL,
+    },
+    {
+        gText_UnionRoomChatKeyboard_Emoji1,
+        gText_UnionRoomChatKeyboard_Emoji2,
+        gText_UnionRoomChatKeyboard_Emoji3,
+        gText_UnionRoomChatKeyboard_Emoji4,
+        gText_UnionRoomChatKeyboard_Emoji5,
+        gText_UnionRoomChatKeyboard_Emoji6,
+        gText_UnionRoomChatKeyboard_Emoji7,
+        gText_UnionRoomChatKeyboard_Emoji8,
+        gText_UnionRoomChatKeyboard_Emoji9,
+        gText_UnionRoomChatKeyboard_Emoji10,
+    },
 };
 
 // 0x82C5220

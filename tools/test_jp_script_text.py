@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regressions for native JP Summary/e-Reader glyphs and PokeNav controls.
+"""Regressions for native JP Summary/e-Reader/chat glyphs and PokeNav controls.
 
 These six fixtures are the actual LV_2-bearing objects inside ROM offsets
 [0x5CA4A6, 0x5CA5B6). The other two objects do not contain LV_2. Fixtures keep
@@ -95,7 +95,7 @@ class Lv2TextCodecTests(unittest.TestCase):
                 self.assertEqual(rom[start:end], bytes.fromhex(hex_bytes))
 
     def test_unverified_f9_selectors_remain_hard_errors(self):
-        verified_selectors = {4, 5} | {sequence[1] for sequence in self.codec.emoji}
+        verified_selectors = {sequence[1] for sequence in self.codec.extra_symbols} | {sequence[1] for sequence in self.codec.emoji}
         for selector in range(256):
             if selector not in verified_selectors:
                 with self.subTest(selector=f"0x{selector:02X}"):
@@ -200,6 +200,46 @@ class PokeNavTextCodecTests(unittest.TestCase):
             self.assertEqual((decoded.source, decoded.consumed), (source, size))
             position += decoded.consumed
         self.assertEqual(position, len(packed))
+
+
+class UnionRoomKeyboardTextCodecTests(unittest.TestCase):
+    LAST_EMOJI_ROW = "{EMOJI_HIGHBAR}{UNDERSCORE}{EMOJI_SEMICOLON}:　$"
+
+    def setUp(self):
+        self.codec = JapaneseScriptTextCodec()
+
+    def test_native_underscore_is_not_the_us_emoji_underscore(self):
+        self.assertEqual(self.codec.constants["UNDERSCORE"], b"\xF9\x09")
+        self.assertEqual(self.codec.constants["EMOJI_UNDERSCORE"], b"\xF9\xD0")
+        self.assertEqual(self.codec.decode(b"\xF9\x09\xFF"), "{UNDERSCORE}$")
+        self.assertEqual(self.codec.decode(b"\xF9\xD0\xFF"), "{EMOJI_UNDERSCORE}$")
+
+    @unittest.skipUnless(PREPROC_PATH.is_file(), "matching JP preproc is required")
+    def test_native_last_emoji_row_preserves_glyphs_and_eos(self):
+        raw = self.codec.preproc_bytes(self.LAST_EMOJI_ROW)
+        self.assertEqual(len(raw), 9)
+        self.assertIn(b"\xF9\x09", raw)
+        self.assertNotIn(b"\xF9\xD0", raw)
+        decoded = self.codec.verify_one(raw + b"\xF9")
+        self.assertEqual((decoded.source, decoded.consumed), (self.LAST_EMOJI_ROW, 9))
+        for mapping in (None, b"\xF9\xD0", b"\xF8\x09"):
+            with self.subTest(mapping=mapping):
+                self.codec.constants["UNDERSCORE"] = mapping
+                with self.assertRaisesRegex(TextDecodeError, "UNDERSCORE must be f909"):
+                    self.codec._validate_charmap_contract()
+
+    @unittest.skipUnless(BASEROM_PATH.is_file() and PREPROC_PATH.is_file(), "matching JP ROM and preproc are required")
+    def test_all_38_native_keyboard_rows_round_trip_at_exact_boundaries(self):
+        rom = BASEROM_PATH.read_bytes()
+        position, count = 0x5CC4FE, 0
+        while position < 0x5CC610:
+            decoded = self.codec.verify_one(rom[position:0x5CC610])
+            self.assertTrue(decoded.ended)
+            self.assertGreater(decoded.consumed, 0)
+            position += decoded.consumed
+            count += 1
+        self.assertEqual((position, count), (0x5CC610, 38))
+        self.assertEqual(self.codec.preproc_bytes(self.LAST_EMOJI_ROW), rom[0x5CC607:0x5CC610])
 
 
 if __name__ == "__main__":

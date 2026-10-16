@@ -1900,6 +1900,12 @@ $(C_BUILDDIR)/strings.o: src/strings.c charmap.txt
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/strings.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/strings.gen.s
 
+$(C_BUILDDIR)/text_input_strings.o: src/text_input_strings.c charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/text_input_strings.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/text_input_strings.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/text_input_strings.gen.s
+
 $(C_BUILDDIR)/data/reset_rtc_screen.o: src/data/reset_rtc_screen.c src/data/reset_rtc_screen.h $(wildcard graphics/reset_rtc_screen/* data/reset_rtc_screen/jp/*)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/reset_rtc_screen.gen.s
