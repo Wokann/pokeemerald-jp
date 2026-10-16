@@ -1,9 +1,103 @@
 #include "global.h"
 #include "berry_blender.h"
+#include "constants/berry.h"
 #include "window.h"
 
 #define BERRY_BLENDER_DATA __attribute__((section(".rodata.berry_blender_data")))
 #define BERRY_BLENDER_RECORD_WINDOW_DATA __attribute__((section(".rodata.berry_blender_record_window_data"), aligned(1)))
+
+#define BERRY_BLENDER_TEXT __attribute__((section(".rodata.berry_blender_text"), aligned(1), used))
+#define BERRY_BLENDER_AUXILIARY_DATA __attribute__((section(".rodata.berry_blender_auxiliary_data"), aligned(1), used))
+
+BERRY_BLENDER_TEXT static const u8 sText_BerryBlenderStart[] = _(
+    "きのみブレンダーを　きどうします\p"
+    "バッグから　きのみブレンダーに　いれる\n"
+    "きのみを　えらんでください\p");
+BERRY_BLENDER_TEXT static const u8 sJPText_Cool[] = _("カッコイ");
+BERRY_BLENDER_TEXT static const u8 sJPText_Cute[] = _("カワイイ");
+BERRY_BLENDER_TEXT static const u8 sJPText_Beautiful[] = _("ウツクシ");
+BERRY_BLENDER_TEXT static const u8 sJPText_Smart[] = _("カシコイ");
+BERRY_BLENDER_TEXT static const u8 sJPText_Tough[] = _("タクマシ");
+BERRY_BLENDER_TEXT static const u8 sText_NewParagraph[] = _("\p");
+BERRY_BLENDER_TEXT static const u8 sText_WasMade[] = _("　ができた！");
+BERRY_BLENDER_TEXT static const u8 sJPText_LegacyName1[10] = _("てつじ");
+BERRY_BLENDER_TEXT static const u8 sJPText_LegacyName2[10] = _("あきと");
+BERRY_BLENDER_TEXT static const u8 sJPText_LegacyName3[10] = _("シゲル");
+BERRY_BLENDER_TEXT static const u8 sJPText_LegacyName4[10] = _("ヨシノリ");
+BERRY_BLENDER_TEXT static const u8 sJPText_PokLabel2[6] = _("2Pok");
+BERRY_BLENDER_TEXT static const u8 sJPText_PokLabel3[6] = _("3Pok");
+BERRY_BLENDER_TEXT static const u8 sJPText_PokLabel4[6] = _("4Pok");
+BERRY_BLENDER_TEXT static const u8 sJPText_PlayerLabel1[4] = _("1P");
+BERRY_BLENDER_TEXT static const u8 sJPText_PlayerLabel2[4] = _("2P");
+BERRY_BLENDER_TEXT static const u8 sJPText_PlayerLabel3[4] = _("3P");
+BERRY_BLENDER_TEXT static const u8 sJPText_PlayerLabel4[4] = _("4P");
+BERRY_BLENDER_TEXT static const u8 sText_Mister[] = _("おじさん");
+BERRY_BLENDER_TEXT static const u8 sText_Laddie[] = _("　おとこのこ");
+BERRY_BLENDER_TEXT static const u8 sText_Lassie[] = _("おんなのこ");
+BERRY_BLENDER_TEXT static const u8 sText_Master[6] = _("めいじん");
+BERRY_BLENDER_TEXT static const u8 sText_Dude[] = _("おにいさん");
+BERRY_BLENDER_TEXT static const u8 sText_Miss[] = _("おばさん");
+BERRY_BLENDER_TEXT static const u8 sText_PressAToStart[] = _("　Aボタンで　スタートします");
+BERRY_BLENDER_TEXT static const u8 sText_PleaseWaitAWhile[] = _("しょうしょうおまちください");
+BERRY_BLENDER_TEXT static const u8 sText_CommunicationStandby[] = _("つうしんたいきちゅうです");
+BERRY_BLENDER_TEXT static const u8 sText_WouldLikeToBlendAnotherBerry[] = _(
+    "もういちど　きのみを　まぜますか？\n"
+    "　　　　");
+BERRY_BLENDER_TEXT static const u8 sText_RunOutOfBerriesForBlending[] = _(
+    "きのみブレンダーに　いれる　きのみが\n"
+    "ないので　これいじょう　できません\p");
+BERRY_BLENDER_TEXT static const u8 sText_YourPokeblockCaseIsFull[] = _("ポロックケースが　いっぱいの　ようです\p");
+BERRY_BLENDER_TEXT static const u8 sText_HasNoBerriesToPut[] = _(
+    "は　きのみブレンダーに\n"
+    "いれる　きのみがないようです");
+BERRY_BLENDER_TEXT static const u8 sText_ApostropheSPokeblockCaseIsFull[] = _(
+    "は　ポロックケースが\n"
+    "いっぱいの　ようです\p");
+BERRY_BLENDER_TEXT static const u8 sText_BlendingResults[] = _("まぜたけっか");
+BERRY_BLENDER_TEXT static const u8 sText_BerryUsed[] = _("いれた　たね");
+BERRY_BLENDER_TEXT static const u8 sText_SpaceBerry[] = _("のみ");
+BERRY_BLENDER_TEXT static const u8 sText_Time[] = _("じかん");
+BERRY_BLENDER_TEXT static const u8 sText_Min[] = _("ふん");
+BERRY_BLENDER_TEXT static const u8 sText_Sec[] = _("びょう");
+BERRY_BLENDER_TEXT static const u8 sText_MaximumSpeed[] = _("さいこうそくど");
+BERRY_BLENDER_TEXT static const u8 sText_RPM[] = _("rpm");
+BERRY_BLENDER_TEXT static const u8 sText_Dot[] = _(",");
+BERRY_BLENDER_TEXT static const u8 sText_NewLine[] = _("\n");
+BERRY_BLENDER_TEXT static const u8 sText_Space[] = _("　");
+BERRY_BLENDER_TEXT static const u8 sText_Ranking[] = _("ランキング");
+BERRY_BLENDER_TEXT static const u8 sText_TheLevelIs[] = _("レベル");
+BERRY_BLENDER_TEXT static const u8 sText_TheFeelIs[] = _("で　なめらかさは");
+BERRY_BLENDER_AUXILIARY_DATA static const u8 sBlackPokeblockFlavorFlags[] =
+{
+    (1 << FLAVOR_SOUR) | (1 << FLAVOR_BITTER) | (1 << FLAVOR_SWEET),
+    (1 << FLAVOR_SOUR) | (1 << FLAVOR_SWEET) | (1 << FLAVOR_DRY),
+    (1 << FLAVOR_SOUR) | (1 << FLAVOR_DRY) | (1 << FLAVOR_SPICY),
+    (1 << FLAVOR_SOUR) | (1 << FLAVOR_BITTER) | (1 << FLAVOR_DRY),
+    (1 << FLAVOR_SOUR) | (1 << FLAVOR_BITTER) | (1 << FLAVOR_SPICY),
+    (1 << FLAVOR_BITTER) | (1 << FLAVOR_SWEET) | (1 << FLAVOR_DRY),
+    (1 << FLAVOR_BITTER) | (1 << FLAVOR_SWEET) | (1 << FLAVOR_SPICY),
+    (1 << FLAVOR_BITTER) | (1 << FLAVOR_DRY) | (1 << FLAVOR_SPICY),
+    (1 << FLAVOR_SWEET) | (1 << FLAVOR_DRY) | (1 << FLAVOR_SPICY),
+    (1 << FLAVOR_SOUR) | (1 << FLAVOR_SWEET) | (1 << FLAVOR_SPICY),
+};
+// JP-only bytes after the ten masks; not consumed by the native modulo-10 reader.
+BERRY_BLENDER_AUXILIARY_DATA static const u8 sJPBlackPokeblockFlavorExtraData[] = {11, 10, 3, 15, 8, 255};
+BERRY_BLENDER_AUXILIARY_DATA static const u8 sJPText_SavingDontTurnOffPower[] = _(
+    "ポケモンレポートに　かきこんでいます　　　　\n"
+    "でんげんを　きらないで　ください　　　　　　");
+BERRY_BLENDER_AUXILIARY_DATA static const u8 sJPText_GoodTvReady[] = _(
+    "\n"
+    "いいTVができました　");
+BERRY_BLENDER_AUXILIARY_DATA static const u8 sJPText_BadTvReady[] = _(
+    "\n"
+    "ダメTVができました　");
+BERRY_BLENDER_AUXILIARY_DATA static const u8 sJPText_Flavors[][5] = {
+    _("からい"),
+    _("しぶい"),
+    _("あまい"),
+    _("にがい"),
+    _("すっぱい"),
+};
 
 __attribute__((naked)) void Blender_ControlHitPitch(void)
 {
@@ -641,7 +735,7 @@ __attribute__((naked)) void sub_0807F500(void)
         "	b _0807F6DC\n\t"
         "	.align 2, 0\n\t"
         "_0807F6C0: .4byte 0x000011B4\n\t"
-        "_0807F6C4: .4byte gUnknown_830F6AE\n\t"
+        "_0807F6C4: .4byte sText_BerryBlenderStart\n\t"
         "_0807F6C8:\n\t"
         "	movs r0, #1\n\t"
         "	rsbs r0, r0, #0\n\t"
@@ -946,7 +1040,7 @@ __attribute__((naked)) void Blender_SetPlayerNamesLocal(void)
         "_0807F8EC: .4byte gUnknown_2031F44\n\t"
         "_0807F8F0: .4byte gUnknown_20226A8\n\t"
         "_0807F8F4: .4byte gSaveBlock2Ptr\n\t"
-        "_0807F8F8: .4byte gUnknown_830F760\n\t"
+        "_0807F8F8: .4byte sText_Master\n\t"
         "_0807F8FC:\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r0, #0x1c\n\t"
@@ -954,7 +1048,7 @@ __attribute__((naked)) void Blender_SetPlayerNamesLocal(void)
         "	bl StringCopy\n\t"
         "	b _0807F992\n\t"
         "	.align 2, 0\n\t"
-        "_0807F908: .4byte gUnknown_830F74E\n\t"
+        "_0807F908: .4byte sText_Mister\n\t"
         "_0807F90C:\n\t"
         "	ldr r0, _0807F940\n\t"
         "	strb r1, [r0]\n\t"
@@ -984,7 +1078,7 @@ __attribute__((naked)) void Blender_SetPlayerNamesLocal(void)
         "_0807F944: .4byte gUnknown_2031F44\n\t"
         "_0807F948: .4byte gUnknown_20226A8\n\t"
         "_0807F94C: .4byte gSaveBlock2Ptr\n\t"
-        "_0807F950: .4byte gUnknown_830F766\n\t"
+        "_0807F950: .4byte sText_Dude\n\t"
         "_0807F954:\n\t"
         "	ldr r0, _0807F998\n\t"
         "	strb r1, [r0]\n\t"
@@ -1022,7 +1116,7 @@ __attribute__((naked)) void Blender_SetPlayerNamesLocal(void)
         "_0807F99C: .4byte gUnknown_2031F44\n\t"
         "_0807F9A0: .4byte gUnknown_20226A8\n\t"
         "_0807F9A4: .4byte gSaveBlock2Ptr\n\t"
-        "_0807F9A8: .4byte gUnknown_830F76C\n\t"
+        "_0807F9A8: .4byte sText_Miss\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1302,7 +1396,7 @@ __attribute__((naked)) void sub_0807FA20(void)
         "	.align 2, 0\n\t"
         "_0807FBF4: .4byte gUnknown_2031F44\n\t"
         "_0807FBF8: .4byte 0x000011B4\n\t"
-        "_0807FBFC: .4byte gUnknown_830F78E\n\t"
+        "_0807FBFC: .4byte sText_CommunicationStandby\n\t"
         "_0807FC00:\n\t"
         "	ldr r4, _0807FC44\n\t"
         "	ldr r1, [r4]\n\t"
@@ -4915,7 +5009,7 @@ __attribute__((naked)) void Blender_CalculatePokeblock(void)
         "_080817A8: .4byte SPECIAL_GetDaysUntilPacifidlogTMAvailable\n\t"
         "_080817AC: .4byte gUnknown_2031F70\n\t"
         "_080817B0: .4byte gUnknown_2031F5C\n\t"
-        "_080817B4: .4byte gUnknown_830FBB8\n\t"
+        "_080817B4: .4byte sBlackPokeblockFlavorFlags\n\t"
         "_080817B8:\n\t"
         "	strh r2, [r1]\n\t"
         "_080817BA:\n\t"
@@ -5604,7 +5698,7 @@ __attribute__((naked)) void CB2_HandleBlenderEndGame(void)
         "	.align 2, 0\n\t"
         "_08081CF4: .4byte gUnknown_2031F44\n\t"
         "_08081CF8: .4byte 0x000011B4\n\t"
-        "_08081CFC: .4byte gUnknown_830F79B\n\t"
+        "_08081CFC: .4byte sText_WouldLikeToBlendAnotherBerry\n\t"
         "_08081D00:\n\t"
         "	ldr r4, _08081D1C\n\t"
         "	ldr r0, [r4]\n\t"
@@ -5857,7 +5951,7 @@ __attribute__((naked)) void CB2_HandleBlenderEndGame(void)
         "	.align 2, 0\n\t"
         "_08081F08: .4byte gUnknown_2031F44\n\t"
         "_08081F0C: .4byte 0x000011B4\n\t"
-        "_08081F10: .4byte gUnknown_830F78E\n\t"
+        "_08081F10: .4byte sText_CommunicationStandby\n\t"
         "_08081F14: .4byte CB2_HandlePlayerLinkPlayAgainChoice + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -6127,7 +6221,7 @@ __attribute__((naked)) void CB2_HandlePlayerLinkPlayAgainChoice(void)
         "	.align 2, 0\n\t"
         "_0808212C: .4byte gStringVar4\n\t"
         "_08082130: .4byte gUnknown_20226A8\n\t"
-        "_08082134: .4byte gUnknown_830F808\n\t"
+        "_08082134: .4byte sText_ApostropheSPokeblockCaseIsFull\n\t"
         "_08082138:\n\t"
         "	ldr r1, [r6]\n\t"
         "	adds r1, #0x63\n\t"
@@ -6153,7 +6247,7 @@ __attribute__((naked)) void CB2_HandlePlayerLinkPlayAgainChoice(void)
         "	.align 2, 0\n\t"
         "_08082164: .4byte gStringVar4\n\t"
         "_08082168: .4byte gUnknown_20226A8\n\t"
-        "_0808216C: .4byte gUnknown_830F7ED\n\t"
+        "_0808216C: .4byte sText_HasNoBerriesToPut\n\t"
         "_08082170:\n\t"
         "	ldr r4, [r6]\n\t"
         "	ldr r0, _080821A0\n\t"
@@ -6209,7 +6303,7 @@ __attribute__((naked)) void CB2_HandlePlayerLinkPlayAgainChoice(void)
         "	b _080822D6\n\t"
         "	.align 2, 0\n\t"
         "_080821DC: .4byte 0x000011B4\n\t"
-        "_080821E0: .4byte gUnknown_830FBC8\n\t"
+        "_080821E0: .4byte sJPText_SavingDontTurnOffPower\n\t"
         "_080821E4:\n\t"
         "	bl IsLinkTaskFinished\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -6453,7 +6547,7 @@ __attribute__((naked)) void CB2_HandlePlayerPlayAgainChoice(void)
         "	.align 2, 0\n\t"
         "_080823E4: .4byte 0x000011B4\n\t"
         "_080823E8: .4byte gStringVar4\n\t"
-        "_080823EC: .4byte gUnknown_830F7D8\n\t"
+        "_080823EC: .4byte sText_YourPokeblockCaseIsFull\n\t"
         "_080823F0:\n\t"
         "	ldr r1, [r6]\n\t"
         "	adds r1, #0x63\n\t"
@@ -6472,7 +6566,7 @@ __attribute__((naked)) void CB2_HandlePlayerPlayAgainChoice(void)
         "	.align 2, 0\n\t"
         "_08082410: .4byte 0x000011B4\n\t"
         "_08082414: .4byte gStringVar4\n\t"
-        "_08082418: .4byte gUnknown_830F7B2\n\t"
+        "_08082418: .4byte sText_RunOutOfBerriesForBlending\n\t"
         "_0808241C:\n\t"
         "	ldr r4, [r6]\n\t"
         "	ldr r2, _08082444\n\t"
@@ -8292,18 +8386,18 @@ __attribute__((naked)) void Blender_PrintBlendingResults(void)
         "	bl CopyWindowToVram\n\t"
         "	b _0808328C\n\t"
         "	.align 2, 0\n\t"
-        "_08083154: .4byte gUnknown_830F81F\n\t"
+        "_08083154: .4byte sText_BlendingResults\n\t"
         "_08083158: .4byte gUnknown_2031F44\n\t"
         "_0808315C: .4byte sBerryBlenderRecordWindowUnused + 5\n\t"
-        "_08083160: .4byte gUnknown_830F847\n\t"
+        "_08083160: .4byte sText_Dot\n\t"
         "_08083164: .4byte gUnknown_20226A8\n\t"
         "_08083168: .4byte sBerryBlenderRecordWindowUnused\n\t"
-        "_0808316C: .4byte gUnknown_830F82D\n\t"
-        "_08083170: .4byte gUnknown_830F83B\n\t"
-        "_08083174: .4byte gUnknown_830F843\n\t"
-        "_08083178: .4byte gUnknown_830F830\n\t"
-        "_0808317C: .4byte gUnknown_830F834\n\t"
-        "_08083180: .4byte gUnknown_830F837\n\t"
+        "_0808316C: .4byte sText_SpaceBerry\n\t"
+        "_08083170: .4byte sText_MaximumSpeed\n\t"
+        "_08083174: .4byte sText_RPM\n\t"
+        "_08083178: .4byte sText_Time\n\t"
+        "_0808317C: .4byte sText_Min\n\t"
+        "_08083180: .4byte sText_Sec\n\t"
         "_08083184:\n\t"
         "	ldr r0, _08083198\n\t"
         "	ldrh r1, [r0, #0x2e]\n\t"
@@ -8508,12 +8602,12 @@ __attribute__((naked)) void Blender_PrintMadePokeblockString(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08083334: .4byte gPokeblockNames\n\t"
-        "_08083338: .4byte gUnknown_830F6FD\n\t"
-        "_0808333C: .4byte gUnknown_830F849\n\t"
-        "_08083340: .4byte gUnknown_830F853\n\t"
-        "_08083344: .4byte gUnknown_830F857\n\t"
-        "_08083348: .4byte gUnknown_830F860\n\t"
-        "_0808334C: .4byte gUnknown_830F6FB\n\t"
+        "_08083338: .4byte sText_WasMade\n\t"
+        "_0808333C: .4byte sText_NewLine\n\t"
+        "_08083340: .4byte sText_TheLevelIs\n\t"
+        "_08083344: .4byte sText_TheFeelIs\n\t"
+        "_08083348: .4byte sText_Dot2\n\t"
+        "_0808334C: .4byte sText_NewParagraph\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9045,13 +9139,13 @@ __attribute__((naked)) void Blender_PrintBlendingRanking(void)
         "	str r0, [r2]\n\t"
         "	b _0808379C\n\t"
         "	.align 2, 0\n\t"
-        "_0808374C: .4byte gUnknown_830F84D\n\t"
+        "_0808374C: .4byte sText_Ranking\n\t"
         "_08083750: .4byte gUnknown_830FA30\n\t"
         "_08083754: .4byte gUnknown_2031F44\n\t"
         "_08083758: .4byte gSprites\n\t"
         "_0808375C: .4byte SpriteCallbackDummy + 1\n\t"
         "_08083760: .4byte sBerryBlenderRecordWindowUnused + 10\n\t"
-        "_08083764: .4byte gUnknown_830F847\n\t"
+        "_08083764: .4byte sText_Dot\n\t"
         "_08083768: .4byte gUnknown_20226A8\n\t"
         "_0808376C:\n\t"
         "	ldr r2, [r2]\n\t"
@@ -9214,8 +9308,8 @@ __attribute__((naked)) void ShowBerryBlenderRecordWindow()
         "_080838B0: .4byte gText_234Players\n\t"
         "_080838B4: .4byte gSaveBlock1Ptr\n\t"
         "_080838B8: .4byte 0x000009BC\n\t"
-        "_080838BC: .4byte gUnknown_830F847\n\t"
-        "_080838C0: .4byte gUnknown_830F843\n\t"
+        "_080838BC: .4byte sText_Dot\n\t"
+        "_080838C0: .4byte sText_RPM\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9586,7 +9680,7 @@ __attribute__((naked)) void Blender_PrintText(void)
 }
 
 
-BERRY_BLENDER_DATA const u8 gUnknown_830F860[] = {0x41, 0xFF, 0x00, 0x00};
+BERRY_BLENDER_DATA static const u8 sText_Dot2[4] = _("だ");
 BERRY_BLENDER_DATA const u8 gUnknown_830F864[] = {0xFC, 0x01, 0x00, 0x00, 0xC9, 0x10, 0x00, 0x00, 0x82, 0x0A, 0x00, 0x00};
 BERRY_BLENDER_DATA const u8 gUnknown_830F870[] = {0x00, 0x01, 0x06, 0x07, 0x02, 0x0E, 0x28, 0x00, 0x00, 0x16, 0x06, 0x07, 0x02, 0x0E, 0x36, 0x00, 0x00, 0x01, 0x0C, 0x07, 0x02, 0x0E, 0x44, 0x00, 0x00, 0x16, 0x0C, 0x07, 0x02, 0x0E, 0x52, 0x00, 0x00, 0x04, 0x0F, 0x16, 0x04, 0x0E, 0x60, 0x00, 0x00, 0x05, 0x03, 0x15, 0x0E, 0x0E, 0x60, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 BERRY_BLENDER_DATA const u8 gUnknown_830F8A8[] = {0x00, 0x15, 0x09, 0x05, 0x04, 0x0E, 0xB8, 0x00};

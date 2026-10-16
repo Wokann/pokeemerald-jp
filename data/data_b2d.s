@@ -36,14 +36,6 @@ gUnknown_82EC5FE: @ 0x82EC5FE
 gUnknown_8300A99: @ 0x8300A99
 	.incbin "baserom_jp.gba", 0x300A99, 0x2
 
-	.section .rodata.mid53
-
-	.globl gUnknown_830F760
-gUnknown_830F760: @ 0x830F760
-	.incbin "baserom_jp.gba", 0x30f760, 0x6
-
-	.globl gUnknown_830F766
-
 	.section .rodata.mid35
 
 	.globl gUnknown_8566D64
@@ -59,12 +51,6 @@ sFishingReelTimeouts: @ 0x846F9D6
 	.globl sFishingMoreDotsChance
 sFishingMoreDotsChance: @ 0x846F9DC
 	.2byte 0, 0, 40, 10, 70, 30
-
-	.section .rodata.mid52
-
-	.globl gUnknown_830F6FD
-gUnknown_830F6FD: @ 0x830F6FD
-	.incbin "baserom_jp.gba", 0x30f6fd, 0x51
 
 	.section .rodata.mid34_suffix
 

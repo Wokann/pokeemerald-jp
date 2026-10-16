@@ -320,6 +320,72 @@ class PCStorageTextCodecTests(unittest.TestCase):
         self.assertEqual((position, count), (0x5CB7A2, 120))
 
 
+class BerryBlenderTextCodecTests(unittest.TestCase):
+    FIXED_FIELDS = (
+        (0x30F704, 10, "てつじ$"),
+        (0x30F70E, 10, "あきと$"),
+        (0x30F718, 10, "シゲル$"),
+        (0x30F722, 10, "ヨシノリ$"),
+        (0x30F72C, 6, "2Pok$"),
+        (0x30F732, 6, "3Pok$"),
+        (0x30F738, 6, "4Pok$"),
+        (0x30F73E, 4, "1P$"),
+        (0x30F742, 4, "2P$"),
+        (0x30F746, 4, "3P$"),
+        (0x30F74A, 4, "4P$"),
+        (0x30F760, 6, "めいじん$"),
+        (0x30F860, 4, "だ$"),
+    )
+
+    def setUp(self):
+        self.codec = JapaneseScriptTextCodec()
+
+    @unittest.skipUnless(PREPROC_PATH.is_file(), "matching JP preproc is required")
+    def test_fixed_fields_keep_eos_then_native_zero_padding(self):
+        rom = BASEROM_PATH.read_bytes() if BASEROM_PATH.is_file() else None
+        for start, width, source in self.FIXED_FIELDS:
+            with self.subTest(address=f"0x{start:06X}"):
+                text = self.codec.preproc_bytes(source)
+                self.assertLess(len(text), width)
+                field = text.ljust(width, b"\x00")
+                decoded = self.codec.verify_one(field)
+                self.assertEqual((decoded.source, decoded.consumed), (source, len(text)))
+                self.assertEqual(field[decoded.consumed:], bytes(width - len(text)))
+                if rom is not None:
+                    self.assertEqual(field, rom[start:start + width])
+
+    @unittest.skipUnless(PREPROC_PATH.is_file(), "matching JP preproc is required")
+    def test_flavor_rows_have_trailing_padding_not_leading_spaces(self):
+        sources = ("からい$", "しぶい$", "あまい$", "にがい$", "すっぱい$")
+        rows = [self.codec.preproc_bytes(source).ljust(5, b"\x00") for source in sources]
+        self.assertEqual([len(row) for row in rows], [5] * 5)
+        self.assertEqual([row[-2:] for row in rows[:4]], [b"\xFF\x00"] * 4)
+        self.assertTrue(all(row[0] != 0 for row in rows))
+        self.assertEqual(rows[-1][-1], 0xFF)
+        if BASEROM_PATH.is_file():
+            self.assertEqual(b"".join(rows), BASEROM_PATH.read_bytes()[0x30FC10:0x30FC29])
+
+    @unittest.skipUnless(BASEROM_PATH.is_file() and PREPROC_PATH.is_file(), "matching JP ROM and preproc are required")
+    def test_native_decimal_comma_and_sentence_suffix_are_not_us_periods(self):
+        rom = BASEROM_PATH.read_bytes()
+        self.assertEqual(self.codec.preproc_bytes(",$"), rom[0x30F847:0x30F849])
+        self.assertEqual(self.codec.preproc_bytes("だ$"), rom[0x30F860:0x30F862])
+        self.assertNotEqual(self.codec.preproc_bytes("だ$"), self.codec.preproc_bytes(".$"))
+
+    @unittest.skipUnless(BASEROM_PATH.is_file(), "matching JP ROM is required")
+    def test_black_pokeblock_table_is_ten_three_flavor_masks_not_kana(self):
+        combinations = ((4, 3, 2), (4, 2, 1), (4, 1, 0), (4, 3, 1), (4, 3, 0),
+                        (3, 2, 1), (3, 2, 0), (3, 1, 0), (2, 1, 0), (4, 2, 0))
+        masks = bytes(sum(1 << bit for bit in combination) for combination in combinations)
+        self.assertEqual(len(masks), 10)
+        self.assertTrue(all(bin(value).count("1") == 3 for value in masks))
+        self.assertEqual(masks, BASEROM_PATH.read_bytes()[0x30FBB8:0x30FBC2])
+
+    @unittest.skipUnless(BASEROM_PATH.is_file(), "matching JP ROM is required")
+    def test_jp_flavor_table_tail_remains_separate_exact_data(self):
+        self.assertEqual(BASEROM_PATH.read_bytes()[0x30FBC2:0x30FBC8], bytes((11, 10, 3, 15, 8, 255)))
+
+
 class UnionRoomKeyboardTextCodecTests(unittest.TestCase):
     LAST_EMOJI_ROW = "{EMOJI_HIGHBAR}{UNDERSCORE}{EMOJI_SEMICOLON}:　$"
 
