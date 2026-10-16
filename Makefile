@@ -1276,6 +1276,7 @@ clean: clean-tools
 	rm -f $(JP_FLDEFF_MISC_ASSETS)
 	rm -f $(JP_BATTLE_ANIM_FAMILY_ASSETS) $(JP_BATTLE_ANIM_FAMILY_INTERMEDIATES)
 	rm -f $(JP_EVOLUTION_SCENE_ASSETS) $(JP_EVOLUTION_SCENE_INTERMEDIATES)
+	rm -f $(JP_FRONTIER_UI_ASSETS) $(JP_FRONTIER_UI_INTERMEDIATES)
 
 # All build artifacts wait for the host-tool chain, so a fresh checkout can
 # safely use `make -j` without racing the C/asset rules against tool builds.
@@ -4562,3 +4563,54 @@ $(C_BUILDDIR)/pokemon.o: src/pokemon.c charmap.txt
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokemon.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokemon.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokemon.gen.s
+
+JP_FRONTIER_UI_ASSETS := graphics/battle_frontier/arena_judgment_symbols.png.4bpp.lz \
+	graphics/battle_frontier/arena_judgment_symbols.png.gbapal.lz \
+	graphics/battle_frontier/dome_anim1.pal.gbapal \
+	graphics/battle_frontier/dome_anim2.pal.gbapal \
+	graphics/battle_frontier/dome_anim3.pal.gbapal \
+	graphics/battle_frontier/dome_anim4.pal.gbapal \
+	graphics/battle_frontier/multi_battle_intro_bg_opponent.bin.lz \
+	graphics/battle_frontier/multi_battle_intro_bg_player.bin.lz \
+	graphics/battle_frontier/pyramid_floor.pal.gbapal \
+	graphics/battle_frontier/tourney_buttons.pal.gbapal.lz \
+	graphics/battle_frontier/tourney_buttons.png.4bpp.lz \
+	graphics/battle_frontier/tourney_info_card.png.4bpp.lz \
+	graphics/battle_frontier/tourney_info_card_bg.bin.lz \
+	graphics/battle_frontier/tourney_info_card_tilemap.bin.lz \
+	graphics/battle_frontier/tourney_line.png.4bpp.lz \
+	graphics/battle_frontier/tourney_line_down_map.bin.lz \
+	graphics/battle_frontier/tourney_line_up_map.bin.lz \
+	graphics/battle_frontier/tourney_match_card_bg.pal.gbapal.lz \
+	graphics/battle_frontier/tourney_tree.bin.lz \
+	graphics/battle_frontier/tourney_tree.png.4bpp.lz \
+	graphics/battle_frontier/tourney_tree.png.gbapal.lz \
+	graphics/battle_interface/text.pal.gbapal.lz \
+	graphics/battle_interface/text_pp.pal.gbapal \
+	graphics/intro/scene_1/text.pal.gbapal \
+	graphics/intro/scene_2/player.pal.gbapal
+
+JP_FRONTIER_UI_INTERMEDIATES := graphics/battle_frontier/arena_judgment_symbols.png.4bpp \
+	graphics/battle_frontier/arena_judgment_symbols.png.gbapal \
+	graphics/battle_frontier/tourney_buttons.pal.gbapal \
+	graphics/battle_frontier/tourney_buttons.png.4bpp \
+	graphics/battle_frontier/tourney_info_card.png.4bpp \
+	graphics/battle_frontier/tourney_line.png.4bpp \
+	graphics/battle_frontier/tourney_match_card_bg.pal.gbapal \
+	graphics/battle_frontier/tourney_tree.png.4bpp \
+	graphics/battle_frontier/tourney_tree.png.gbapal \
+	graphics/battle_interface/text.pal.gbapal
+
+graphics/battle_frontier/arena_judgment_symbols.png.4bpp graphics/battle_frontier/tourney_buttons.png.4bpp graphics/battle_frontier/tourney_info_card.png.4bpp graphics/battle_frontier/tourney_line.png.4bpp graphics/battle_frontier/tourney_tree.png.4bpp: %.png.4bpp: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/battle_frontier/arena_judgment_symbols.png.gbapal graphics/battle_frontier/tourney_tree.png.gbapal: %.png.gbapal: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/battle_frontier/dome_anim1.pal.gbapal graphics/battle_frontier/dome_anim2.pal.gbapal graphics/battle_frontier/dome_anim3.pal.gbapal graphics/battle_frontier/dome_anim4.pal.gbapal graphics/battle_frontier/pyramid_floor.pal.gbapal graphics/battle_frontier/tourney_buttons.pal.gbapal graphics/battle_frontier/tourney_match_card_bg.pal.gbapal graphics/battle_interface/text.pal.gbapal graphics/battle_interface/text_pp.pal.gbapal graphics/intro/scene_1/text.pal.gbapal graphics/intro/scene_2/player.pal.gbapal: %.pal.gbapal: %.pal Makefile | tools
+	$(GFX) $< $@
+
+$(filter %.lz,$(JP_FRONTIER_UI_ASSETS)): %.lz: % Makefile | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/graphics.o: $(JP_FRONTIER_UI_ASSETS)

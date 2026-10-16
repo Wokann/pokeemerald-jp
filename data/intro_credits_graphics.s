@@ -198,7 +198,16 @@ gSpriteSheet_IntroFlygon: @ 0x085D27CC
 
 	.globl gSpritePalettes_IntroPlayerFlygon
 gSpritePalettes_IntroPlayerFlygon: @ 0x085D27DC
-	.incbin "baserom_jp.gba", 0x5d27dc, 0x28
+	.4byte gIntroPlayer_Pal
+	.2byte 0x03EA, 0x0000
+	.4byte gIntroPlayer_Pal
+	.2byte 0x03EB, 0x0000
+	.4byte 0x08D85F14
+	.2byte 0x03EC, 0x0000
+	.4byte 0x08D85F14
+	.2byte 0x03ED, 0x0000
+	.4byte 0
+	.2byte 0x0000, 0x0000
 
 	.globl gSpriteSheet_CreditsBrendan
 gSpriteSheet_CreditsBrendan: @ 0x085D2804

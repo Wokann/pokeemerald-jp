@@ -10,6 +10,7 @@
 #include "event_data.h"
 #include "frontier_util.h"
 #include "gpu_regs.h"
+#include "graphics.h"
 #include "item.h"
 #include "m4a.h"
 #include "palette.h"
@@ -24,6 +25,7 @@
 #include "constants/vars.h"
 
 #define BATTLE_ARENA_DATA __attribute__((section(".rodata.battle_arena_data")))
+#define TAG_JUDGMENT_ICON 1000
 
 extern void (*const sArenaFunctions[])(void);
 asm("sArenaFunctions = gUnknown_85DD7BC");
@@ -35,10 +37,7 @@ extern const u16 sArenaLongStreakPrizeItems[];
 asm("sArenaLongStreakPrizeItems = gUnknown_85DD7E4");
 extern const struct SpriteTemplate sArenaJudgmentIconSpriteTemplate;
 asm("sArenaJudgmentIconSpriteTemplate = gUnknown_85DD794");
-extern const struct CompressedSpriteSheet sArenaJudgmentSymbolsSpriteSheet[];
-asm("sArenaJudgmentSymbolsSpriteSheet = gUnknown_85DD7AC");
-extern const u32 sArenaJudgmentSymbolsPalette[];
-asm("sArenaJudgmentSymbolsPalette = gUnknown_8D855CC");
+static const struct CompressedSpriteSheet sBattleArenaJudgmentSymbolsSpriteSheet[2];
 
 extern void TryGetStatusString(const u8 *text);
 extern void sub_0814FA04(const u8 *text, u8 windowId);
@@ -63,8 +62,8 @@ u8 BattleArena_ShowJudgmentWindow(u8 *state)
     case 0:
         BeginNormalPaletteFade(0x7FFFFF1C, 4, 0, 8, 0);
         SetGpuReg(0x48, 0x3F3E);
-        LoadCompressedSpriteSheet(sArenaJudgmentSymbolsSpriteSheet);
-        LoadCompressedPalette(sArenaJudgmentSymbolsPalette, 0x1F0, 0x20);
+        LoadCompressedSpriteSheet(sBattleArenaJudgmentSymbolsSpriteSheet);
+        LoadCompressedPalette(gBattleArenaJudgmentSymbolsPalette, 0x1F0, 0x20);
         gBattle_WIN0H = 0xFF;
         gBattle_WIN0V = 0x70;
         (*state)++;
@@ -561,8 +560,10 @@ BATTLE_ARENA_DATA const u8 gUnknown_85DD794[] = {
     0xE8, 0x03, 0xFF, 0xFF, 0x5C, 0xD7, 0x5D, 0x08, 0x84, 0xD7, 0x5D, 0x08, 0x00, 0x00, 0x00, 0x00,
     0x10, 0xF3, 0x2B, 0x08, 0x89, 0x52, 0x1A, 0x08,
 };
-BATTLE_ARENA_DATA const u8 gUnknown_85DD7AC[] = {
-    0xCC, 0x54, 0xD8, 0x08, 0x00, 0x02, 0xE8, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+static BATTLE_ARENA_DATA const struct CompressedSpriteSheet sBattleArenaJudgmentSymbolsSpriteSheet[2] =
+{
+    {gBattleArenaJudgmentSymbolsGfx, 0x200, TAG_JUDGMENT_ICON},
+    {0}
 };
 BATTLE_ARENA_DATA const u8 gUnknown_85DD7BC[] = {
     0xA5, 0x54, 0x1A, 0x08, 0x55, 0x55, 0x1A, 0x08, 0xED, 0x55, 0x1A, 0x08, 0xB5, 0x56, 0x1A, 0x08,

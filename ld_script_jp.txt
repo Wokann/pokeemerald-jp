@@ -10431,7 +10431,8 @@ SECTIONS {
         src/graphics.o(.rodata.pokemon_question_mark_graphics);
         data/data_rest2c.o(.rodata);
         src/graphics.o(.rodata.battle_environment_graphics);
-        data/data_rest2c.o(.rodata.data_rest2c_after_battle_environment_graphics);
+        src/graphics.o(.rodata.battle_frontier_graphics);
+        src/graphics.o(.rodata.intro_scene_1_text_fade_palette);
         src/graphics.o(.rodata.intro_scene_2_player_palette);
         data/data_rest2c.o(.rodata.data_rest2c_after_intro_scene_2_player_palette);
         src/graphics.o(.rodata.intro_scene_2_character_graphics);
@@ -10580,7 +10581,6 @@ gUnknown_830D774 = sBlenderOuter_Pal;
 gUnknown_8D9154C = gBerryBlenderCenter_Gfx;
 gUnknown_8D91D6C = gBerryBlenderOuter_Gfx;
 gUnknown_8D927A0 = gBerryBlenderOuter_Tilemap;
-gUnknown_8D85C54 = gIntroPlayer_Pal;
 gUnknown_8D85F14 = gIntroFlygon_Pal;
 gUnknown_8D87010 = gIntroFlygon_Gfx;
 gUnknown_8D88478 = gIntroGroudon_Gfx;

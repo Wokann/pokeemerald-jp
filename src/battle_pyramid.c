@@ -1311,7 +1311,7 @@ __attribute__((naked)) void Task_SetPyramidFloorPalette(void)
         "_081A958C: .4byte gPaletteFade\n\t"
         "_081A9590: .4byte gSaveBlock2Ptr\n\t"
         "_081A9594: .4byte 0x00000CB2\n\t"
-        "_081A9598: .4byte gUnknown_8D856AC\n\t"
+        "_081A9598: .4byte gBattlePyramidFloor_Pal\n\t"
         "_081A959C: .4byte gUnknown_2037474\n\t"
         ".syntax divided\n\t"
     );

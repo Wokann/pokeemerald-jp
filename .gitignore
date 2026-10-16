@@ -71,7 +71,6 @@ graphics/misc/evo_sparkle.png.4bpp.lz
 !graphics/intro/scene_2/volbeat.png.4bpp.lz
 !graphics/intro/scene_2/torchic.png.4bpp.lz
 !graphics/intro/scene_2/manectric.png.4bpp.lz
-!graphics/intro/scene_2/player.pal.gbapal
 !graphics/intro/scene_2/flygon.png.gbapal
 !graphics/intro/scene_2/flygon.png.4bpp.lz
 !graphics/intro/scene_2/brendan.png.4bpp.lz
@@ -162,3 +161,9 @@ AGENTS.md
 
 # Rebuilt from the four editable unused frame tilemaps.
 graphics/unused/redyellowgreen_frame.bin
+
+# Source-format Frontier graphics are rebuilt by JP_FRONTIER_UI_ASSETS.
+graphics/battle_frontier/*.png.*
+graphics/battle_frontier/*.pal.*
+graphics/battle_frontier/tourney_*.bin.lz
+graphics/battle_frontier/multi_battle_intro_bg_*.bin.lz

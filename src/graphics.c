@@ -681,10 +681,44 @@ INTRO_COPYRIGHT_GRAPHICS const u32 gIntroCopyright_Tilemap[] = INCBIN_U32("graph
 
 #undef INTRO_COPYRIGHT_GRAPHICS
 
+#define BATTLE_FRONTIER_GRAPHICS __attribute__((section(".rodata.battle_frontier_graphics")))
+
+BATTLE_FRONTIER_GRAPHICS const u32 gDomeTourneyTree_Gfx[] = INCGFX_U32("graphics/battle_frontier/tourney_tree.png", ".4bpp.lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gDomeTourneyLine_Gfx[] = INCGFX_U32("graphics/battle_frontier/tourney_line.png", ".4bpp.lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gDomeTourneyTree_Tilemap[] = INCGFX_U32("graphics/battle_frontier/tourney_tree.bin", ".lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gDomeTourneyLineDown_Tilemap[] = INCGFX_U32("graphics/battle_frontier/tourney_line_down_map.bin", ".lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gDomeTourneyLineUp_Tilemap[] = INCGFX_U32("graphics/battle_frontier/tourney_line_up_map.bin", ".lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gDomeTourneyInfoCard_Gfx[] = INCGFX_U32("graphics/battle_frontier/tourney_info_card.png", ".4bpp.lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gDomeTourneyInfoCard_Tilemap[] = INCGFX_U32("graphics/battle_frontier/tourney_info_card_tilemap.bin", ".lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gDomeTourneyInfoCardBg_Tilemap[] = INCGFX_U32("graphics/battle_frontier/tourney_info_card_bg.bin", ".lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gDomeTourneyTreeButtons_Gfx[] = INCGFX_U32("graphics/battle_frontier/tourney_buttons.png", ".4bpp.lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gDomeTourneyTree_Pal[] = INCGFX_U32("graphics/battle_frontier/tourney_tree.png", ".gbapal.lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gDomeTourneyTreeButtons_Pal[] = INCGFX_U32("graphics/battle_frontier/tourney_buttons.pal", ".gbapal.lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gDomeTourneyMatchCardBg_Pal[] = INCGFX_U32("graphics/battle_frontier/tourney_match_card_bg.pal", ".gbapal.lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gBattleArenaJudgmentSymbolsGfx[] = INCGFX_U32("graphics/battle_frontier/arena_judgment_symbols.png", ".4bpp.lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gBattleArenaJudgmentSymbolsPalette[] = INCGFX_U32("graphics/battle_frontier/arena_judgment_symbols.png", ".gbapal.lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gBattleWindowTextPalette[] = INCGFX_U32("graphics/battle_interface/text.pal", ".gbapal.lz");
+BATTLE_FRONTIER_GRAPHICS const u16 gPPTextPalette[] = INCGFX_U16("graphics/battle_interface/text_pp.pal", ".gbapal");
+BATTLE_FRONTIER_GRAPHICS const u16 gTilesetAnims_BattleDomePals0_0[] = INCGFX_U16("graphics/battle_frontier/dome_anim1.pal", ".gbapal");
+BATTLE_FRONTIER_GRAPHICS const u16 gTilesetAnims_BattleDomePals0_1[] = INCGFX_U16("graphics/battle_frontier/dome_anim2.pal", ".gbapal");
+BATTLE_FRONTIER_GRAPHICS const u16 gTilesetAnims_BattleDomePals0_2[] = INCGFX_U16("graphics/battle_frontier/dome_anim3.pal", ".gbapal");
+BATTLE_FRONTIER_GRAPHICS const u16 gTilesetAnims_BattleDomePals0_3[] = INCGFX_U16("graphics/battle_frontier/dome_anim4.pal", ".gbapal");
+static BATTLE_FRONTIER_GRAPHICS const u16 sUnused0[] = {0x13F, 0x119, 0x113, 0x10E};
+BATTLE_FRONTIER_GRAPHICS const u16 gBattlePyramidFloor_Pal[][16] = INCGFX_U16("graphics/battle_frontier/pyramid_floor.pal", ".gbapal");
+BATTLE_FRONTIER_GRAPHICS const u32 gMultiBattleIntroBg_Opponent_Tilemap[] = INCGFX_U32("graphics/battle_frontier/multi_battle_intro_bg_opponent.bin", ".lz");
+BATTLE_FRONTIER_GRAPHICS const u32 gMultiBattleIntroBg_Player_Tilemap[] = INCGFX_U32("graphics/battle_frontier/multi_battle_intro_bg_player.bin", ".lz");
+
+#undef BATTLE_FRONTIER_GRAPHICS
+
+#define INTRO_SCENE_1_TEXT_FADE_PALETTE __attribute__((section(".rodata.intro_scene_1_text_fade_palette")))
+
+INTRO_SCENE_1_TEXT_FADE_PALETTE const u16 gIntroGameFreakTextFade_Pal[] = INCGFX_U16("graphics/intro/scene_1/text.pal", ".gbapal");
+
+#undef INTRO_SCENE_1_TEXT_FADE_PALETTE
+
 #define INTRO_SCENE_2_PLAYER_PALETTE __attribute__((section(".rodata.intro_scene_2_player_palette")))
 
-// JP uses a different player palette from the current US source image.
-INTRO_SCENE_2_PLAYER_PALETTE const u16 gIntroPlayer_Pal[] = INCBIN_U16("graphics/intro/scene_2/player.pal.gbapal");
+INTRO_SCENE_2_PLAYER_PALETTE const u16 gIntroPlayer_Pal[] = INCGFX_U16("graphics/intro/scene_2/player.pal", ".gbapal");
 
 #undef INTRO_SCENE_2_PLAYER_PALETTE
 

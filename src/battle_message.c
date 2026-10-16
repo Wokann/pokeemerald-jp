@@ -6096,8 +6096,8 @@ __attribute__((naked, section(".text.battle_message_tail2"))) void SetPpNumbersP
         "_0814FBE4: .4byte 0x02022D0C\n\t"
         "_0814FBE8: .4byte 0x02024154\n\t"
         "_0814FBEC: .4byte 0x020373B4\n\t"
-        "_0814FBF0: .4byte gUnknown_8D85604\n\t"
-        "_0814FBF4: .4byte gUnknown_8D85606\n\t"
+        "_0814FBF0: .4byte gPPTextPalette\n\t"
+        "_0814FBF4: .4byte gPPTextPalette + 2\n\t"
         "_0814FBF8: .4byte 0x0203786C\n\t"
         ".syntax divided\n\t"
     );

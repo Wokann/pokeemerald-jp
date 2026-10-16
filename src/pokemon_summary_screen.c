@@ -1317,7 +1317,7 @@ __attribute__((naked)) void SummaryScreen_DecompressGraphics(void)
         "	b _081BF9AE\n\t"
         "	.align 2, 0\n\t"
         "_081BF940: .4byte gSummaryScreen_Pal\n\t"
-        "_081BF944: .4byte gUnknown_8D85604\n\t"
+        "_081BF944: .4byte gPPTextPalette\n\t"
         "_081BF948: .4byte gUnknown_203CBE8\n\t"
         "_081BF94C: .4byte 0x000040F0\n\t"
         "_081BF950:\n\t"
