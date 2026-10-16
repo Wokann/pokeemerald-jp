@@ -29,6 +29,9 @@
 #define STRINGS_TRADE_TEXT_BODY __attribute__((section(".rodata.strings_trade_text_body"), aligned(1)))
 #define STRINGS_SUMMARY_TEXT __attribute__((section(".rodata.strings_summary_text"), aligned(1)))
 #define STRINGS_MAIN_MENU __attribute__((section(".rodata.strings_main_menu")))
+#define STRINGS_NAMING_SCREEN_TEXT __attribute__((section(".rodata.strings_naming_screen_text"), aligned(1)))
+#define STRINGS_NAMING_SCREEN_LEGACY __attribute__((section(".rodata.strings_naming_screen_legacy"), aligned(1)))
+#define STRINGS_EASY_CHAT_MESSAGES __attribute__((section(".rodata.strings_easy_chat_messages"), aligned(1)))
 #define STRINGS_EASY_CHAT __attribute__((section(".rodata.strings_easy_chat")))
 #define STRINGS_SCRIPT_MENU_TEXT __attribute__((section(".rodata.strings_script_menu_text"), aligned(1)))
 #define STRINGS_ELEVATOR_TEXT __attribute__((section(".rodata.strings_elevator_text"), aligned(1)))
@@ -2050,6 +2053,14 @@ STRINGS_COMMON const u8 gText_BoxFull[] = _("ボックスが　いっぱい　�
 
 STRINGS_COMMON const u8 gText_PowderQty[] = _("こなの　りょう　{STR_VAR_1}{PAUSE_UNTIL_PRESS}");
 
+STRINGS_NAMING_SCREEN_TEXT const u8 gText_YourName[] = _("あなた　の　なまえは？");
+STRINGS_NAMING_SCREEN_TEXT const u8 gText_BoxName[] = _("ボックス　の　なまえは？");
+STRINGS_NAMING_SCREEN_TEXT const u8 gText_PkmnsNickname[] = _("{STR_VAR_1}　の　ニックネームは？");
+STRINGS_NAMING_SCREEN_TEXT const u8 gText_TellHimTheWords[] = _("おじさんに　ことばを　おしえよう");
+// Font 0 renders the JP character-transform hint as ゛゜大小.
+STRINGS_NAMING_SCREEN_TEXT const u8 gText_NamingScreenInstructions[] = _("{DPAD_NONE}いどう　　{R_BUTTON}{JP_DAKUTEN}{JP_HANDAKUTEN}{JP_BIG}{JP_SMALL}　　{A_BUTTON}けってい　{B_BUTTON}もどる　");
+STRINGS_NAMING_SCREEN_LEGACY const u8 gJPText_NamingScreenTransferredToPC[] = _("{STR_VAR_1}は　パソコンへ　てんそうされた！");
+
 STRINGS_MAIN_MENU const u8 gText_MainMenuNewGame[] = _("さいしょから　はじめる");
 STRINGS_MAIN_MENU const u8 gText_MainMenuContinue[] = _("つづきから　はじめる");
 STRINGS_MAIN_MENU const u8 gText_MainMenuOption[] = _("せっていを　かえる");
@@ -2233,33 +2244,28 @@ STRINGS_EASY_CHAT const u8 gText_FansQuestion[] = _("ファンのしつもん");
 STRINGS_EASY_CHAT const u8 gJPText_WhatIsTheQuizAnswer[] = _("クイズの　こたえは？"); // Unused
 STRINGS_EASY_CHAT const u8 gText_ApprenticesPhrase[] = _("でしの　きめゼリフ");
 STRINGS_EASY_CHAT const u8 gText_Questionnaire[] = _("アンケート");
-// JP kana keyboard rows; these have no one-string US counterpart.
-STRINGS_EASY_CHAT const u8 gJPText_EasyChatKanaRow1[] = _("あいうえお　なにぬねの　やゆよ　わ");
-STRINGS_EASY_CHAT const u8 gJPText_EasyChatKanaRow2[] = _("かきくけこ　はひふへほ　そのた");
-STRINGS_EASY_CHAT const u8 gJPText_EasyChatKanaRow3[] = _("さしすせそ　まみむめも");
-STRINGS_EASY_CHAT const u8 gJPText_EasyChatKanaRow4[] = _("たちつてと　らりるれろ");
 // The remaining Easy Chat prompts follow immediately in the JP ROM.
-STRINGS_EASY_CHAT const u8 gText_YouCannotQuitHere[] = _("ここでは　とちゅうで");
-STRINGS_EASY_CHAT const u8 gText_SectionMustBeCompleted[] = _("やめることは　できません！");
-STRINGS_EASY_CHAT const u8 gText_F700sQuiz[] = _("{DYNAMIC 0}さんの　クイズ");
-STRINGS_EASY_CHAT const u8 gText_Lady[] = _("おねえ");
-STRINGS_EASY_CHAT const u8 gText_AfterYouHaveReadTheQuiz[] = _("もんだいを　よんだら");
-STRINGS_EASY_CHAT const u8 gText_QuestionPressTheAButton[] = _("Aボタンを　おしてね！");
-STRINGS_EASY_CHAT const u8 gText_TheQuizAnswerIs[] = _("クイズの　こたえは？");
-STRINGS_EASY_CHAT const u8 gText_LikeToQuitQuiz[] = _("クイズの　チャレンジを");
-STRINGS_EASY_CHAT const u8 gText_ChallengeQuestionMark[] = _("あきらめますか？");
-STRINGS_EASY_CHAT const u8 gText_IsThisQuizOK[] = _("クイズは　これで　いいですか？");
-STRINGS_EASY_CHAT const u8 gText_CreateAQuiz[] = _("もんだいを　つくってください！");
-STRINGS_EASY_CHAT const u8 gText_SelectTheAnswer[] = _("こたえを　えらんでください！");
-STRINGS_EASY_CHAT const u8 gText_LyricsCantBeDeleted[] = _("かしを　けすことは　できません！");
-STRINGS_EASY_CHAT const u8 gText_PokemonLeague[] = _("ポケモン　リーグ");
-STRINGS_EASY_CHAT const u8 gText_PokemonCenter[] = _("ポケモンセンター");
-STRINGS_EASY_CHAT const u8 gText_GetsAPokeBlockQuestion[] = _("に　ポロックを　あげますか？");
-STRINGS_EASY_CHAT const u8 gText_Coolness[] = _("かっこよさ");
-STRINGS_EASY_CHAT const u8 gText_Beauty3[] = _("うつくしさ");
-STRINGS_EASY_CHAT const u8 gText_Cuteness[] = _("かわいさ");
-STRINGS_EASY_CHAT const u8 gText_Smartness[] = _("かしこさ");
-STRINGS_EASY_CHAT const u8 gText_Toughness[] = _("たくましさ");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_YouCannotQuitHere[] = _("ここでは　とちゅうで");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_SectionMustBeCompleted[] = _("やめることは　できません！");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_F700sQuiz[] = _("{DYNAMIC 0}さんの　クイズ");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_Lady[] = _("おねえ");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_AfterYouHaveReadTheQuiz[] = _("もんだいを　よんだら");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_QuestionPressTheAButton[] = _("Aボタンを　おしてね！");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_TheQuizAnswerIs[] = _("クイズの　こたえは？");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_LikeToQuitQuiz[] = _("クイズの　チャレンジを");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_ChallengeQuestionMark[] = _("あきらめますか？");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_IsThisQuizOK[] = _("クイズは　これで　いいですか？");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_CreateAQuiz[] = _("もんだいを　つくってください！");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_SelectTheAnswer[] = _("こたえを　えらんでください！");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_LyricsCantBeDeleted[] = _("かしを　けすことは　できません！");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_PokemonLeague[] = _("ポケモン　リーグ");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_PokemonCenter[] = _("ポケモンセンター");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_GetsAPokeBlockQuestion[] = _("に　ポロックを　あげますか？");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_Coolness[] = _("かっこよさ");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_Beauty3[] = _("うつくしさ");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_Cuteness[] = _("かわいさ");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_Smartness[] = _("かしこさ");
+STRINGS_EASY_CHAT_MESSAGES const u8 gText_Toughness[] = _("たくましさ");
 
 STRINGS_ELEVATOR_TEXT const u8 gText_ElevatorNowOn[] = _("げんざいのフロア");
 STRINGS_MENU_PRICE_TEXT const u8 gText_BP[] = _("BP");

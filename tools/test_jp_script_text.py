@@ -202,6 +202,63 @@ class PokeNavTextCodecTests(unittest.TestCase):
         self.assertEqual(position, len(packed))
 
 
+class NamingScreenTextCodecTests(unittest.TestCase):
+    DOUBLE_EOS_ROWS = (
+        (0x56590B, 0x56591F, "カキクケコ　ハヒフヘホ　ワヲン　$\\n　$"),
+        (0x56595B, 0x56596F, "かきくけこ　はひふへほ　わをん　$\\n　$"),
+    )
+    INSTRUCTIONS = "{DPAD_NONE}いどう　　{R_BUTTON}{JP_DAKUTEN}{JP_HANDAKUTEN}{JP_BIG}{JP_SMALL}　　{A_BUTTON}けってい　{B_BUTTON}もどる　$"
+
+    def setUp(self):
+        self.codec = JapaneseScriptTextCodec()
+
+    def test_font_zero_hint_names_keep_the_native_glyph_ids(self):
+        expected = {
+            "JP_DAKUTEN": b"\xF9\xCF",
+            "JP_HANDAKUTEN": b"\xF9\xD0",
+            "JP_BIG": b"\xF9\xCD",
+            "JP_SMALL": b"\xF9\xCE",
+        }
+        for name, raw in expected.items():
+            with self.subTest(name=name):
+                self.assertEqual(self.codec.constants[name], raw)
+
+    def test_generic_decoder_does_not_guess_font_zero_hint_names(self):
+        # A caller must establish font 0 before using the JP hint names.
+        # The generic decoder keeps its existing emoji interpretation.
+        for selector in (0xCD, 0xCE, 0xCF):
+            with self.subTest(selector=selector):
+                with self.assertRaisesRegex(TextDecodeError, "unknown extra-symbol"):
+                    self.codec.decode(bytes((0xF9, selector, 0xFF)))
+        self.assertEqual(self.codec.decode(b"\xF9\xD0\xFF"), "{EMOJI_UNDERSCORE}$")
+
+    @unittest.skipUnless(PREPROC_PATH.is_file(), "matching JP preproc is required")
+    def test_fixed_width_kana_rows_keep_both_eos_sequences(self):
+        for start, end, source in self.DOUBLE_EOS_ROWS:
+            with self.subTest(address=f"0x{start:06X}"):
+                raw = self.codec.preproc_bytes(source)
+                self.assertEqual(len(raw), end - start)
+                self.assertEqual(raw.count(b"\xFF"), 2)
+                first = self.codec.decode_one(raw)
+                self.assertEqual(first.consumed, 17)
+                self.assertEqual(raw[first.consumed:], b"\xFE\x00\xFF")
+
+    @unittest.skipUnless(BASEROM_PATH.is_file() and PREPROC_PATH.is_file(), "matching JP ROM and preproc are required")
+    def test_double_eos_rows_match_the_complete_native_storage(self):
+        rom = BASEROM_PATH.read_bytes()
+        for start, end, source in self.DOUBLE_EOS_ROWS:
+            with self.subTest(address=f"0x{start:06X}"):
+                self.assertEqual(self.codec.preproc_bytes(source), rom[start:end])
+
+    @unittest.skipUnless(PREPROC_PATH.is_file(), "matching JP preproc is required")
+    def test_native_instruction_hint_preserves_font_specific_ids(self):
+        raw = self.codec.preproc_bytes(self.INSTRUCTIONS)
+        self.assertEqual(len(raw), 33)
+        self.assertIn(bytes.fromhex("f9cff9d0f9cdf9ce"), raw)
+        if BASEROM_PATH.is_file():
+            self.assertEqual(raw, BASEROM_PATH.read_bytes()[0x5658A0:0x5658C1])
+
+
 class UnionRoomKeyboardTextCodecTests(unittest.TestCase):
     LAST_EMOJI_ROW = "{EMOJI_HIGHBAR}{UNDERSCORE}{EMOJI_SEMICOLON}:　$"
 

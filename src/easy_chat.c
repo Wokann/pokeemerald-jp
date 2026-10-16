@@ -606,10 +606,10 @@ static const struct WindowTemplate sEasyChatYesNoWindowTemplate EASY_CHAT_YES_NO
 
 static const u8 *const sEasyChatKeyboardAlphabet[NUM_ALPHABET_ROWS] EASY_CHAT_KEYBOARD_ALPHABET_DATA =
 {
-    gJPText_EasyChatKanaRow1,
-    gJPText_EasyChatKanaRow2,
-    gJPText_EasyChatKanaRow3,
-    gJPText_EasyChatKanaRow4,
+    gText_EasyChatKeyboard_Hiragana1,
+    gText_EasyChatKeyboard_Hiragana2,
+    gText_EasyChatKeyboard_Hiragana3,
+    gText_EasyChatKeyboard_Hiragana4,
 };
 
 static const struct SpriteSheet sSpriteSheets[] EASY_CHAT_SPRITE_SHEETS_DATA =

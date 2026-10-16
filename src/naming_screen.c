@@ -46,6 +46,19 @@ enum
     PAGE_MAPPING_COUNT,
 };
 
+#define NAMING_SCREEN_PC_TRANSFER_MESSAGES __attribute__((section(".rodata.naming_screen_pc_transfer_messages"), aligned(4), used))
+#define NAMING_SCREEN_ALPHABET_TEXT __attribute__((section(".rodata.naming_screen_alphabet_text"), aligned(1), used))
+
+static const u8 *const sTransferredToPCMessages[] NAMING_SCREEN_PC_TRANSFER_MESSAGES =
+{
+    gText_PkmnTransferredSomeonesPC,
+    gText_PkmnTransferredLanettesPC,
+    gText_PkmnTransferredSomeonesPCBoxFull,
+    gText_PkmnTransferredLanettesPCBoxFull,
+};
+
+NAMING_SCREEN_ALPHABET_TEXT static const u8 sText_AlphabetUpperLower[] = _("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!");
+
 __attribute__((naked)) void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 monSpecies, u16 monGender, u32 monPersonality, MainCallback returnCallback)
 {
     __asm__(".syntax unified\n\t"
@@ -1212,7 +1225,7 @@ __attribute__((naked)) void DisplaySentToPCMessage(void)
         "_080E2B84: .4byte gStringVar3\n\t"
         "_080E2B88: .4byte 0x000008AB\n\t"
         "_080E2B8C: .4byte gStringVar4\n\t"
-        "_080E2B90: .4byte gUnknown_8565858\n\t"
+        "_080E2B90: .4byte sTransferredToPCMessages\n\t"
         "_080E2B94: .4byte gTextFlags\n\t"
         ".syntax divided\n\t"
     );
@@ -5417,7 +5430,7 @@ __attribute__((naked)) void sub_080E4830(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080E4864: .4byte gNamingScreenValidCharacters\n\t"
+        "_080E4864: .4byte sText_AlphabetUpperLower\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5826,10 +5839,6 @@ NAMING_SCREEN_CHARACTER_TRANSFORM static const u8 sKeyboardPagePaletteIds[] =
 };
 
 // The JP page labels use both 16x8 and 24x8 subsprite layouts.
-extern const u8 gUnknown_8565858[];
-extern const u8 gUnknown_8565858_sub1[];
-extern const u8 gUnknown_8565858_sub2[];
-extern const u8 gUnknown_8565858_sub3[];
 struct NamingScreenTemplate
 {
     u8 copyExistingString;
@@ -5894,7 +5903,7 @@ NAMING_SCREEN_UI_LAYOUT static const struct NamingScreenTemplate sPlayerNamingSc
     .addGenderIcon = FALSE,
     .initialPage = 1,
     .unused = 0x23,
-    .title = gUnknown_8565858 + 0x10,
+    .title = gText_YourName,
 };
 
 NAMING_SCREEN_UI_LAYOUT static const struct NamingScreenTemplate sPCBoxNamingTemplate =
@@ -5905,7 +5914,7 @@ NAMING_SCREEN_UI_LAYOUT static const struct NamingScreenTemplate sPCBoxNamingTem
     .addGenderIcon = FALSE,
     .initialPage = 0,
     .unused = 0x13,
-    .title = gUnknown_8565858_sub1,
+    .title = gText_BoxName,
 };
 
 NAMING_SCREEN_UI_LAYOUT static const struct NamingScreenTemplate sMonNamingScreenTemplate =
@@ -5916,7 +5925,7 @@ NAMING_SCREEN_UI_LAYOUT static const struct NamingScreenTemplate sMonNamingScree
     .addGenderIcon = TRUE,
     .initialPage = 0,
     .unused = 0x23,
-    .title = gUnknown_8565858_sub2,
+    .title = gText_PkmnsNickname,
 };
 
 NAMING_SCREEN_UI_LAYOUT static const struct NamingScreenTemplate sWaldaWordsScreenTemplate =
@@ -5927,7 +5936,7 @@ NAMING_SCREEN_UI_LAYOUT static const struct NamingScreenTemplate sWaldaWordsScre
     .addGenderIcon = FALSE,
     .initialPage = 1,
     .unused = 0x0B,
-    .title = gUnknown_8565858_sub3,
+    .title = gText_TellHimTheWords,
 };
 
 NAMING_SCREEN_UI_LAYOUT static const struct NamingScreenTemplate *const sNamingScreenTemplates[] =

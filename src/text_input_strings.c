@@ -1,5 +1,32 @@
 #include "global.h"
 
+#define TEXT_INPUT_EASY_CHAT __attribute__((section(".rodata.text_input_easy_chat"), aligned(1)))
+#define TEXT_INPUT_NAMING_SCREEN __attribute__((section(".rodata.text_input_naming_screen"), aligned(1)))
+
+// Easy Chat keyboard
+TEXT_INPUT_EASY_CHAT const u8 gText_EasyChatKeyboard_Hiragana1[] = _("あいうえお　なにぬねの　やゆよ　わ");
+TEXT_INPUT_EASY_CHAT const u8 gText_EasyChatKeyboard_Hiragana2[] = _("かきくけこ　はひふへほ　そのた");
+TEXT_INPUT_EASY_CHAT const u8 gText_EasyChatKeyboard_Hiragana3[] = _("さしすせそ　まみむめも");
+TEXT_INPUT_EASY_CHAT const u8 gText_EasyChatKeyboard_Hiragana4[] = _("たちつてと　らりるれろ");
+
+// Naming Screen keyboard. JP second rows retain the native EOS/newline/space/EOS suffix.
+TEXT_INPUT_NAMING_SCREEN const u8 gText_NamingScreenKeyboard_Katakana1[20] = _("アイウエオ　ナニヌネノ　ヤユヨ！？　　");
+TEXT_INPUT_NAMING_SCREEN const u8 gText_NamingScreenKeyboard_Katakana2[20] = __(
+    "カキクケコ　ハヒフヘホ　ワヲン　$\n"
+    "　$");
+TEXT_INPUT_NAMING_SCREEN const u8 gText_NamingScreenKeyboard_Katakana3[20] = _("サシスセソ　マミムメモ　ャュョッー　　");
+TEXT_INPUT_NAMING_SCREEN const u8 gText_NamingScreenKeyboard_Katakana4[20] = _("タチツテト　ラリルレロ　ァィゥェォ　　");
+TEXT_INPUT_NAMING_SCREEN const u8 gText_NamingScreenKeyboard_Hiragana1[20] = _("あいうえお　なにぬねの　やゆよ！？　　");
+TEXT_INPUT_NAMING_SCREEN const u8 gText_NamingScreenKeyboard_Hiragana2[20] = __(
+    "かきくけこ　はひふへほ　わをん　$\n"
+    "　$");
+TEXT_INPUT_NAMING_SCREEN const u8 gText_NamingScreenKeyboard_Hiragana3[20] = _("さしすせそ　まみむめも　ゃゅょっー　　");
+TEXT_INPUT_NAMING_SCREEN const u8 gText_NamingScreenKeyboard_Hiragana4[20] = _("たちつてと　らりるれろ　ぁぃぅぇぉ　　");
+TEXT_INPUT_NAMING_SCREEN const u8 gText_NamingScreenKeyboard_LatinUpper1[20] = _("ABCDEFGHIJKLMNOPQRS");
+TEXT_INPUT_NAMING_SCREEN const u8 gText_NamingScreenKeyboard_LatinUpper2[20] = _("TUVWXYZ　0123456789　");
+TEXT_INPUT_NAMING_SCREEN const u8 gText_NamingScreenKeyboard_LatinLower1[20] = _("abcdefghijklmnopqrs");
+TEXT_INPUT_NAMING_SCREEN const u8 gText_NamingScreenKeyboard_LatinLower2[20] = _("tuvwxyz　.·…“”‘’/♂♀　");
+
 // Union Room Chat keyboard
 const u8 gText_UnionRoomChatKeyboard_Hiragana1[] = _("あいうえお");
 const u8 gText_UnionRoomChatKeyboard_Hiragana2[] = _("かきくけこ");

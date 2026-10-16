@@ -983,6 +983,13 @@ CIRCLE_DOT = F9 15
 TRIANGLE = F9 16
 BIG_MULT_X = F9 17
 
+@ Font 0 glyphs used by the JP Naming Screen hint: ゛゜大小.
+@ These names are font-specific; F9 D0 is not an underscore in font 0.
+JP_DAKUTEN = F9 CF
+JP_HANDAKUTEN = F9 D0
+JP_BIG = F9 CD
+JP_SMALL = F9 CE
+
 EMOJI_UNDERSCORE = F9 D0
 EMOJI_PIPE = F9 D1
 EMOJI_HIGHBAR = F9 D2

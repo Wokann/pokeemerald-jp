@@ -9650,7 +9650,11 @@ SECTIONS {
         src/graphics.o(.rodata.graphics_naming_screen_jp_pc_icons);
         src/graphics.o(.rodata.graphics_naming_screen_jp_palettes);
         src/graphics.o(.rodata.graphics_naming_screen_jp_resources);
-        src/data/text/region_texts59.o(.rodata);
+        src/naming_screen.o(.rodata.naming_screen_pc_transfer_messages);
+        src/strings.o(.rodata.strings_naming_screen_text);
+        src/naming_screen.o(.rodata.naming_screen_alphabet_text);
+        src/text_input_strings.o(.rodata.text_input_naming_screen);
+        src/strings.o(.rodata.strings_naming_screen_legacy);
         src/naming_screen.o(.rodata.naming_screen_mid59_pre_page_swap_anim);
         src/naming_screen.o(.rodata.naming_screen_mid59_page_swap_anim);
         src/naming_screen.o(.rodata.naming_screen_mid59_cursor_anim_offsets);
@@ -10262,6 +10266,8 @@ SECTIONS {
         src/strings.o(.rodata.strings_pokenav_storage);
         src/strings.o(.rodata.strings_pokenav_shared_text);
         src/strings.o(.rodata.strings_easy_chat);
+        src/text_input_strings.o(.rodata.text_input_easy_chat);
+        src/strings.o(.rodata.strings_easy_chat_messages);
         src/strings.o(.rodata.strings_shared_misc_text);
         src/strings.o(.rodata.strings_trainer_status_text);
         src/data/text/region_texts108.o(.rodata);
