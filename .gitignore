@@ -134,3 +134,10 @@ graphics/battle_frontier/*.png.*
 graphics/battle_frontier/*.pal.*
 graphics/battle_frontier/tourney_*.bin.lz
 graphics/battle_frontier/multi_battle_intro_bg_*.bin.lz
+
+# Battle-entry source-format conversions, including the 16-tile VS frame.
+graphics/battle_transitions/*.png*.4bpp
+graphics/battle_transitions/*.png*.4bpp.lz
+graphics/battle_transitions/*.png.gbapal
+graphics/battle_transitions/*.png.gbapal.lz
+graphics/battle_transitions/vs_frame.bin.lz

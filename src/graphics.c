@@ -36,6 +36,15 @@ TITLE_SCREEN_GRAPHICS_AFTER_TITLE_SCREEN_STATIC_GRAPHICS const u32 gTitleScreenC
 #undef POKEBALL_OPEN_GRAPHICS
 #undef POKEBALL_GRAPHICS
 
+#define BATTLE_VS_GRAPHICS __attribute__((section(".rodata.battle_vs_graphics")))
+
+BATTLE_VS_GRAPHICS const u32 gBattleVSFrame_Gfx[] = INCGFX_U32("graphics/battle_transitions/vs_frame.png", ".4bpp.lz", "-num_tiles 16 -Wnum_tiles");
+BATTLE_VS_GRAPHICS const u32 gBattleVSFrame_Tilemap[] = INCGFX_U32("graphics/battle_transitions/vs_frame.bin", ".lz");
+BATTLE_VS_GRAPHICS const u32 gBattleVSFrame_Pal[] = INCGFX_U32("graphics/battle_transitions/vs_frame.png", ".gbapal.lz");
+BATTLE_VS_GRAPHICS const u32 gVsLettersGfx[] = INCGFX_U32("graphics/battle_transitions/vs.png", ".4bpp.lz");
+
+#undef BATTLE_VS_GRAPHICS
+
 #define BATTLE_ENVIRONMENT_GRAPHICS __attribute__((section(".rodata.battle_environment_graphics"), aligned(1)))
 #include "data/graphics/battle_environment.h"
 #undef BATTLE_ENVIRONMENT_GRAPHICS

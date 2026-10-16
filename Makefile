@@ -1278,6 +1278,7 @@ clean: clean-tools
 	rm -f $(JP_EVOLUTION_SCENE_ASSETS) $(JP_EVOLUTION_SCENE_INTERMEDIATES)
 	rm -f $(JP_INTRO_SCENE_ASSETS) $(JP_INTRO_SCENE_INTERMEDIATES)
 	rm -f $(JP_INTRO_CREDITS_ASSETS) $(JP_INTRO_CREDITS_INTERMEDIATES)
+	rm -f $(JP_BATTLE_ENTRY_ASSETS) $(JP_BATTLE_ENTRY_INTERMEDIATES)
 	rm -f $(JP_FRONTIER_UI_ASSETS) $(JP_FRONTIER_UI_INTERMEDIATES)
 
 # All build artifacts wait for the host-tool chain, so a fresh checkout can
@@ -4748,3 +4749,138 @@ $(C_BUILDDIR)/intro_credits_graphics.o: src/intro_credits_graphics.c charmap.txt
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/intro_credits_graphics.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/intro_credits_graphics.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/intro_credits_graphics.gen.s
+
+JP_BATTLE_ENTRY_ASSETS := graphics/battle_environment/building/anim_map.bin.lz \
+	graphics/battle_environment/building/anim_tiles.png.4bpp.lz \
+	graphics/battle_environment/building/gym.pal.gbapal.lz \
+	graphics/battle_environment/building/leader.pal.gbapal.lz \
+	graphics/battle_environment/building/map.bin.lz \
+	graphics/battle_environment/building/palette.pal.gbapal.lz \
+	graphics/battle_environment/building/tiles.png.4bpp.lz \
+	graphics/battle_environment/cave/anim_map.bin.lz \
+	graphics/battle_environment/cave/anim_tiles.png.4bpp.lz \
+	graphics/battle_environment/cave/groudon.pal.gbapal.lz \
+	graphics/battle_environment/cave/map.bin.lz \
+	graphics/battle_environment/cave/palette.pal.gbapal.lz \
+	graphics/battle_environment/cave/tiles.png.4bpp.lz \
+	graphics/battle_environment/long_grass/anim_map.bin.lz \
+	graphics/battle_environment/long_grass/anim_tiles.png.4bpp.lz \
+	graphics/battle_environment/long_grass/map.bin.lz \
+	graphics/battle_environment/long_grass/palette.pal.gbapal.lz \
+	graphics/battle_environment/long_grass/tiles.png.4bpp.lz \
+	graphics/battle_environment/plain/palette.pal.gbapal.lz \
+	graphics/battle_environment/pond_water/anim_map.bin.lz \
+	graphics/battle_environment/pond_water/anim_tiles.png.4bpp.lz \
+	graphics/battle_environment/pond_water/map.bin.lz \
+	graphics/battle_environment/pond_water/palette.pal.gbapal.lz \
+	graphics/battle_environment/pond_water/tiles.png.4bpp.lz \
+	graphics/battle_environment/rock/anim_map.bin.lz \
+	graphics/battle_environment/rock/anim_tiles.png.4bpp.lz \
+	graphics/battle_environment/rock/map.bin.lz \
+	graphics/battle_environment/rock/palette.pal.gbapal.lz \
+	graphics/battle_environment/rock/tiles.png.4bpp.lz \
+	graphics/battle_environment/sand/anim_map.bin.lz \
+	graphics/battle_environment/sand/anim_tiles.png.4bpp.lz \
+	graphics/battle_environment/sand/map.bin.lz \
+	graphics/battle_environment/sand/palette.pal.gbapal.lz \
+	graphics/battle_environment/sand/tiles.png.4bpp.lz \
+	graphics/battle_environment/sky/anim_map.bin.lz \
+	graphics/battle_environment/sky/anim_tiles.png.4bpp.lz \
+	graphics/battle_environment/sky/map.bin.lz \
+	graphics/battle_environment/sky/palette.pal.gbapal.lz \
+	graphics/battle_environment/sky/tiles.png.4bpp.lz \
+	graphics/battle_environment/stadium/aqua.pal.gbapal.lz \
+	graphics/battle_environment/stadium/battle_frontier.pal.gbapal.lz \
+	graphics/battle_environment/stadium/drake.pal.gbapal.lz \
+	graphics/battle_environment/stadium/glacia.pal.gbapal.lz \
+	graphics/battle_environment/stadium/magma.pal.gbapal.lz \
+	graphics/battle_environment/stadium/map.bin.lz \
+	graphics/battle_environment/stadium/phoebe.pal.gbapal.lz \
+	graphics/battle_environment/stadium/sidney.pal.gbapal.lz \
+	graphics/battle_environment/stadium/tiles.png.4bpp.lz \
+	graphics/battle_environment/stadium/wallace.pal.gbapal.lz \
+	graphics/battle_environment/tall_grass/anim_map.bin.lz \
+	graphics/battle_environment/tall_grass/anim_tiles.png.4bpp.lz \
+	graphics/battle_environment/tall_grass/map.bin.lz \
+	graphics/battle_environment/tall_grass/palette.pal.gbapal.lz \
+	graphics/battle_environment/tall_grass/tiles.png.4bpp.lz \
+	graphics/battle_environment/underwater/anim_map.bin.lz \
+	graphics/battle_environment/underwater/anim_tiles.png.4bpp.lz \
+	graphics/battle_environment/underwater/map.bin.lz \
+	graphics/battle_environment/underwater/palette.pal.gbapal.lz \
+	graphics/battle_environment/underwater/tiles.png.4bpp.lz \
+	graphics/battle_environment/water/anim_map.bin.lz \
+	graphics/battle_environment/water/anim_tiles.png.4bpp.lz \
+	graphics/battle_environment/water/kyogre.pal.gbapal.lz \
+	graphics/battle_environment/water/map.bin.lz \
+	graphics/battle_environment/water/palette.pal.gbapal.lz \
+	graphics/battle_environment/water/tiles.png.4bpp.lz \
+	graphics/battle_transitions/vs.png.4bpp.lz \
+	graphics/battle_transitions/vs_frame.bin.lz \
+	graphics/battle_transitions/vs_frame.png.gbapal.lz \
+	graphics/battle_transitions/vs_frame.png_num_tiles_16__Wnum_tiles.4bpp.lz
+
+JP_BATTLE_ENTRY_INTERMEDIATES := graphics/battle_environment/building/anim_tiles.png.4bpp \
+	graphics/battle_environment/building/gym.pal.gbapal \
+	graphics/battle_environment/building/leader.pal.gbapal \
+	graphics/battle_environment/building/palette.pal.gbapal \
+	graphics/battle_environment/building/tiles.png.4bpp \
+	graphics/battle_environment/cave/anim_tiles.png.4bpp \
+	graphics/battle_environment/cave/groudon.pal.gbapal \
+	graphics/battle_environment/cave/palette.pal.gbapal \
+	graphics/battle_environment/cave/tiles.png.4bpp \
+	graphics/battle_environment/long_grass/anim_tiles.png.4bpp \
+	graphics/battle_environment/long_grass/palette.pal.gbapal \
+	graphics/battle_environment/long_grass/tiles.png.4bpp \
+	graphics/battle_environment/plain/palette.pal.gbapal \
+	graphics/battle_environment/pond_water/anim_tiles.png.4bpp \
+	graphics/battle_environment/pond_water/palette.pal.gbapal \
+	graphics/battle_environment/pond_water/tiles.png.4bpp \
+	graphics/battle_environment/rock/anim_tiles.png.4bpp \
+	graphics/battle_environment/rock/palette.pal.gbapal \
+	graphics/battle_environment/rock/tiles.png.4bpp \
+	graphics/battle_environment/sand/anim_tiles.png.4bpp \
+	graphics/battle_environment/sand/palette.pal.gbapal \
+	graphics/battle_environment/sand/tiles.png.4bpp \
+	graphics/battle_environment/sky/anim_tiles.png.4bpp \
+	graphics/battle_environment/sky/palette.pal.gbapal \
+	graphics/battle_environment/sky/tiles.png.4bpp \
+	graphics/battle_environment/stadium/aqua.pal.gbapal \
+	graphics/battle_environment/stadium/battle_frontier.pal.gbapal \
+	graphics/battle_environment/stadium/drake.pal.gbapal \
+	graphics/battle_environment/stadium/glacia.pal.gbapal \
+	graphics/battle_environment/stadium/magma.pal.gbapal \
+	graphics/battle_environment/stadium/phoebe.pal.gbapal \
+	graphics/battle_environment/stadium/sidney.pal.gbapal \
+	graphics/battle_environment/stadium/tiles.png.4bpp \
+	graphics/battle_environment/stadium/wallace.pal.gbapal \
+	graphics/battle_environment/tall_grass/anim_tiles.png.4bpp \
+	graphics/battle_environment/tall_grass/palette.pal.gbapal \
+	graphics/battle_environment/tall_grass/tiles.png.4bpp \
+	graphics/battle_environment/underwater/anim_tiles.png.4bpp \
+	graphics/battle_environment/underwater/palette.pal.gbapal \
+	graphics/battle_environment/underwater/tiles.png.4bpp \
+	graphics/battle_environment/water/anim_tiles.png.4bpp \
+	graphics/battle_environment/water/kyogre.pal.gbapal \
+	graphics/battle_environment/water/palette.pal.gbapal \
+	graphics/battle_environment/water/tiles.png.4bpp \
+	graphics/battle_transitions/vs.png.4bpp \
+	graphics/battle_transitions/vs_frame.png.gbapal \
+	graphics/battle_transitions/vs_frame.png_num_tiles_16__Wnum_tiles.4bpp
+
+graphics/battle_environment/building/anim_tiles.png.4bpp graphics/battle_environment/building/tiles.png.4bpp graphics/battle_environment/cave/anim_tiles.png.4bpp graphics/battle_environment/cave/tiles.png.4bpp graphics/battle_environment/long_grass/anim_tiles.png.4bpp graphics/battle_environment/long_grass/tiles.png.4bpp graphics/battle_environment/pond_water/anim_tiles.png.4bpp graphics/battle_environment/pond_water/tiles.png.4bpp graphics/battle_environment/rock/anim_tiles.png.4bpp graphics/battle_environment/rock/tiles.png.4bpp graphics/battle_environment/sand/anim_tiles.png.4bpp graphics/battle_environment/sand/tiles.png.4bpp graphics/battle_environment/sky/anim_tiles.png.4bpp graphics/battle_environment/sky/tiles.png.4bpp graphics/battle_environment/stadium/tiles.png.4bpp graphics/battle_environment/tall_grass/anim_tiles.png.4bpp graphics/battle_environment/tall_grass/tiles.png.4bpp graphics/battle_environment/underwater/anim_tiles.png.4bpp graphics/battle_environment/underwater/tiles.png.4bpp graphics/battle_environment/water/anim_tiles.png.4bpp graphics/battle_environment/water/tiles.png.4bpp graphics/battle_transitions/vs.png.4bpp: %.png.4bpp: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/battle_transitions/vs_frame.png.gbapal: %.png.gbapal: %.png Makefile | tools
+	$(GFX) $< $@
+
+graphics/battle_environment/building/gym.pal.gbapal graphics/battle_environment/building/leader.pal.gbapal graphics/battle_environment/building/palette.pal.gbapal graphics/battle_environment/cave/groudon.pal.gbapal graphics/battle_environment/cave/palette.pal.gbapal graphics/battle_environment/long_grass/palette.pal.gbapal graphics/battle_environment/plain/palette.pal.gbapal graphics/battle_environment/pond_water/palette.pal.gbapal graphics/battle_environment/rock/palette.pal.gbapal graphics/battle_environment/sand/palette.pal.gbapal graphics/battle_environment/sky/palette.pal.gbapal graphics/battle_environment/stadium/aqua.pal.gbapal graphics/battle_environment/stadium/battle_frontier.pal.gbapal graphics/battle_environment/stadium/drake.pal.gbapal graphics/battle_environment/stadium/glacia.pal.gbapal graphics/battle_environment/stadium/magma.pal.gbapal graphics/battle_environment/stadium/phoebe.pal.gbapal graphics/battle_environment/stadium/sidney.pal.gbapal graphics/battle_environment/stadium/wallace.pal.gbapal graphics/battle_environment/tall_grass/palette.pal.gbapal graphics/battle_environment/underwater/palette.pal.gbapal graphics/battle_environment/water/kyogre.pal.gbapal graphics/battle_environment/water/palette.pal.gbapal: %.pal.gbapal: %.pal Makefile | tools
+	$(GFX) $< $@
+
+graphics/battle_transitions/vs_frame.png_num_tiles_16__Wnum_tiles.4bpp: graphics/battle_transitions/vs_frame.png Makefile | tools
+	$(GFX) $< $@ -num_tiles 16 -Wnum_tiles
+
+$(JP_BATTLE_ENTRY_ASSETS): %.lz: % Makefile | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/graphics.o: src/data/graphics/battle_environment.h $(JP_BATTLE_ENTRY_ASSETS)

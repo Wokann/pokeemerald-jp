@@ -45,7 +45,7 @@ sVsLetter_S_SpriteTemplate: @ 0x82EB840
 
 	.globl sVsLettersSpriteSheet
 sVsLettersSpriteSheet: @ 0x82EB858
-	.4byte 0x08D77BB0
+	.4byte gVsLettersGfx
 	.hword 0x1000, 0x2710
 
 	.globl gBattleBgTemplates

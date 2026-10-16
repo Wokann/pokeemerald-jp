@@ -8,25 +8,6 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-	.globl gBattleVSFrame_Gfx
-gBattleVSFrame_Gfx: @ 0x8D77994
-	.incbin "graphics/misc/gBattleVSFrame_Gfx.bin"
-
-
-	.globl gBattleVSFrame_Tilemap
-gBattleVSFrame_Tilemap: @ 0x8D77A7C
-	.incbin "graphics/misc/gBattleVSFrame_Tilemap.bin"
-
-
-	.globl gBattleVSFrame_Pal
-gBattleVSFrame_Pal: @ 0x8D77B88
-	.incbin "graphics/misc/gBattleVSFrame_Pal.bin"
-
-
-	.globl gVsLettersGfx
-gVsLettersGfx: @ 0x8D77BB0
-	.incbin "graphics/battle_transitions/vs.4bpp.lz"
-
 	.section .rodata.data_rest2c_after_battle_anim_sandstorm_resources
 
 	.section .rodata.data_rest2c_after_battle_anim_metal_sound_resources
