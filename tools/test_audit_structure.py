@@ -1365,7 +1365,8 @@ class StructureAuditTests(unittest.TestCase):
         self.assertIn("同名 static 按 source owner 和地址保留", rendered)
         self.assertIn("| C 多对象编译 |", rendered)
         self.assertIn("CPP/CC/AS 配方", rendered)
-        self.assertIn("地图语义复核：not_recorded", rendered)
+        self.assertIn("地图静态语义复核：" + report["maps"]["semantic_review"]["status"], rendered)
+        self.assertIn("不代表运行时玩法验证", rendered)
         self.assertIn("transition-manifest", rendered)
         self.assertIn("script-data-manifest", rendered)
 

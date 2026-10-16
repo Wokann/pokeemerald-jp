@@ -33,9 +33,11 @@ from pathlib import Path
 try:
     from jp_map_metadata import layout_symbol
     from audit_resource_references import collect_resource_references
+    from map_semantic_review import map_review_progress
 except ModuleNotFoundError:
     from tools.jp_map_metadata import layout_symbol
     from tools.audit_resource_references import collect_resource_references
+    from tools.map_semantic_review import map_review_progress
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -1424,14 +1426,15 @@ def shared_map_target(metadata: dict[str, object], field: str) -> str | None:
     return value if isinstance(value, str) and value else None
 
 
-def map_artifact_progress(root: Path, convergence_records: list[dict[str, object]] | None = None) -> dict[str, object]:
+def map_artifact_progress(root: Path, convergence_records: list[dict[str, object]] | None = None,
+                          semantic_review: dict[str, object] | None = None) -> dict[str, object]:
     """Count map artifacts without treating their presence as semantic review.
 
     ``map.json`` and the two generated includes demonstrate that the map has
     been structurally split.  They do not demonstrate that its scripts,
     text, constants, or shared ROM boundaries have received a semantic audit.
-    No versioned semantic-review manifest exists yet, so this function keeps
-    that status explicitly unrecorded instead of deriving it from file names.
+    Only an explicit review with current source/native evidence contributes
+    to the separate semantic metric; file names never imply approval.
     """
     map_root = root / "data/maps"
     jp_json = {path.parent.name for path in map_root.glob("*/map.json")}
@@ -1478,11 +1481,8 @@ def map_artifact_progress(root: Path, convergence_records: list[dict[str, object
         "shared_scripts_map_names": sorted(shared_scripts),
         "shared_events_maps": len(shared_events),
         "shared_events_map_names": sorted(shared_events),
-        "semantic_review": {
-            "status": "not_recorded",
-            "reviewed_map_names": [],
-            "note": "No versioned semantic-review manifest exists; structural artifacts are not semantic-review evidence.",
-        },
+        "semantic_review": (semantic_review if semantic_review is not None
+                            else map_review_progress(root, jp_json)),
     }
 
 
@@ -2146,6 +2146,16 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
             "required_actions": actions,
         })
 
+    semantic_review = map_review_progress(root, {path.parent.name for path in
+                                               (root / "data/maps").glob("*/map.json")})
+    reviewed_names = set(semantic_review["reviewed_map_names"])
+    review_states = {name: batch["status"] for batch in semantic_review["batches"]
+                     for name in batch["maps"]}
+    for record in records:
+        record["semantic_review"] = review_states.get(record["name"], "not_recorded")
+        if record["name"] in reviewed_names:
+            record["required_actions"] = [action for action in record["required_actions"]
+                                           if action != "semantic_review_required"]
     event_statuses = Counter(record["events"]["status"] for record in records)
     script_statuses = Counter(record["scripts"]["status"] for record in records)
     resource_raw_maps = sum(bool(record["layout"]["resource_chain"]["raw_baserom_source_count"])
@@ -2175,10 +2185,7 @@ def map_convergence_progress(root: Path) -> dict[str, object]:
             events_stream_path: raw_baserom_directives(events_text),
             "data/maps.s": raw_baserom_directives(map_data_text),
         },
-        "semantic_review": {
-            "status": "not_recorded",
-            "note": "Map files and direct pointers are structural evidence only; every record still requires semantic review.",
-        },
+        "semantic_review": semantic_review,
         "records": records,
     }
 
@@ -2423,7 +2430,7 @@ def map_progress(root: Path, us_root: Path, convergence: dict[str, object]) -> d
             if match:
                 names.add(match.group(1))
     map_root = root / "data/maps"
-    artifacts = map_artifact_progress(root, convergence["records"])
+    artifacts = map_artifact_progress(root, convergence["records"], convergence.get("semantic_review"))
     jp_scripts = {path.parent.name for path in map_root.glob("*/scripts.inc")}
     owner_scripts = jp_scripts & owner_names
     non_owner_scripts = jp_scripts - owner_names
@@ -2625,17 +2632,18 @@ def print_report(report: dict[str, object]) -> None:
         assets["no_us_basename_match"]))
     print("map structure: owners=%d owner-scripts=%d (%.2f%%) non-owner=%d included=%d; "
           "map.json=%d events.inc=%d upper-events=%d structure-complete=%d "
-          "(direct=%d owner=%d shared-scripts/events=%d/%d); semantic-review=%s" % (
+          "(direct=%d owner=%d shared-scripts/events=%d/%d); semantic-review=%s current=%d/%d" % (
         maps["map_table_owners"], maps["first_owner_scripts_inc"], maps["jp_scripts_owner_rate"] * 100,
         maps["non_owner_scripts_inc"],
         maps["event_script_included_owners"], maps["jp_map_json"], maps["jp_events_inc"],
         maps["upper_event_includes"], maps["structure_complete_maps"],
         maps["direct_structure_complete_maps"], maps["structure_complete_owner_maps"],
-        maps["shared_scripts_maps"], maps["shared_events_maps"], maps["semantic_review"]["status"]))
+        maps["shared_scripts_maps"], maps["shared_events_maps"], maps["semantic_review"]["status"],
+        maps["semantic_review"].get("reviewed_maps", 0), maps["jp_map_json"]))
     raw_streams = convergence["top_level_raw_baserom_directives"]
     print("map convergence: script-stream=%d event-stream=%d shared=%d headers=%d; "
           "event-pointers=%s; map raw scripts/events/resources=%d/%d/%d; "
-          "top-level raw scripts/events/maps=%d/%d/%d; semantic-review=%s" % (
+          "top-level raw scripts/events/maps=%d/%d/%d; semantic-review=%s current=%d/%d" % (
               convergence["script_stream_maps"], convergence["event_stream_maps"],
               convergence["maps_in_both_streams"], convergence["header_records"],
               ",".join("%s=%d" % item for item in convergence["event_pointer_statuses"].items()),
@@ -2644,7 +2652,9 @@ def print_report(report: dict[str, object]) -> None:
               len(raw_streams["data/event_scripts.s"]),
               len(raw_streams[convergence["stream_files"]["events"]]),
               len(raw_streams["data/maps.s"]),
-              convergence["semantic_review"]["status"]))
+              convergence["semantic_review"]["status"],
+              convergence["semantic_review"].get("reviewed_maps", 0),
+              convergence["semantic_review"].get("total_maps", convergence["header_records"])))
     jp_section = script_data["linked_sections"]["jp"]["section"]
     print("script_data: JP owners=%d/%d US; JP section=%s; missing owners=%d; "
           "visible event-script raw ranges=%d; safe terminal candidates=%d" % (
@@ -2715,8 +2725,9 @@ def render_markdown_report(report: dict[str, object]) -> str:
         f"{maps['direct_structure_complete_maps']}；合法共享 scripts/events owner "
         f"{maps['shared_scripts_maps']}/{maps['shared_events_maps']}；其中首 owner "
         f"{maps['structure_complete_owner_maps']}）；map.json 总数：{maps['jp_map_json']}。",
-        f"- 地图语义复核：{maps['semantic_review']['status']}。没有版本化复核清单前，"
-        "任何 scripts.inc、map.json 或 events.inc 都不计入语义已审计。",
+        f"- 地图静态语义复核：{maps['semantic_review']['status']}；当前证据有效 "
+        f"{maps['semantic_review'].get('reviewed_maps', 0)}/{maps['jp_map_json']}。"
+        "仅计显式登记且源码/原生证据仍有效的地图，不代表运行时玩法验证。",
         f"- 三流地图会合：scripts 流 {convergence['script_stream_maps']}、events 流 "
         f"{convergence['event_stream_maps']}、共有 {convergence['maps_in_both_streams']}、"
         f"地图头 {convergence['header_records']}；事件指针状态 "
@@ -2742,7 +2753,7 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "| 资产命名 | 被引用的 `graphics/`、`sound/` 路径与 US 同名文件比较；仅生成候选，不自动改名。 |",
         "| 地图脚本 owner | `scripts.inc` 与 map-table 实际首 owner 名的交集 / 去重首 owner；共享表只属于首次出现地图。 |",
         "| 地图结构完整 | 同一地图具 `map.json`，且其 scripts/events 为本地图的物理文件与上层 include，或为 map.json 明示、header 精确指向且在 JP `data/` 有真实标签定义的共享 owner；只说明结构已拆分。 |",
-        "| 地图语义复核 | 仅接受未来版本化复核清单的显式记录；当前为 `not_recorded`，绝不从目录或 include 推断。 |",
+        "| 地图静态语义复核 | 只接受 tools/map_semantic_reviews.json 中显式复核决定；校验地图源码、生成规则、宏/常量、布局资源、共享调用和 JP ELF/map/ROM 区间。缺证或失效不计当前有效数；无登记仍为 not_recorded。只覆盖条目声明的静态字段/控制流范围，不代表运行时玩法或共享系统全生命周期已验证。 |",
         "| 三流地图会合 | 以 `data/event_scripts.s`、`data/map_events.s`（旧树回退 `data/data_b2d_mid26.s`）和 `data/maps.s` 的同图记录连接 scripts、events、地图头/布局/tileset。别名和 baserom 范围均为待办，不构成完成。 |",
         "| script_data 顶层分区 | US linker 提供 8 个对象的目标 owner 顺序；JP linker map 提供实际范围和锚点。只在 JP 起止标签、末尾位置与 ROM 比对均成立时，才允许拆出一个 owner。 |",
         "| JP 路径独有 C 清单 | JP src/**/*.c 路径与 US 的差集；包含零函数的文本/数据包装文件。独立于无 US 标准函数 owner 的语义缺口模块清单。 |",

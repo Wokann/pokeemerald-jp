@@ -1,0 +1,1288 @@
+{
+  "schema_version": 1,
+  "batches": [
+    {
+      "id": "underwater_routes_124_126_127_128_129",
+      "review_type": "direct_map_v1",
+      "decision": "reviewed",
+      "maps": [
+        "Underwater_Route124",
+        "Underwater_Route126",
+        "Underwater_Route127",
+        "Underwater_Route128",
+        "Underwater_Route129"
+      ],
+      "jp_commit": "b10960750cec976baf6b8257c7fcc6bca163aceb",
+      "rom_sha1": "d7cf8f156ba9c455d164e1ea780a6bf1945465c2",
+      "us_reference": {
+        "commit": "731ad5bfd6e6f265508d0efcca0ba42f9dcf5881",
+        "files": {
+          "data/maps/Underwater_Route124/map.json": "fff10274ccf738b881727873972da8aba83ee633a855f617e2b87ad6382b903d",
+          "data/maps/Underwater_Route124/scripts.inc": "df6e21ebe02ac8222ce41e818e75d06dba7d4c96359886a47d98aee09c8af910",
+          "data/layouts/Underwater_Route124/border.bin": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887",
+          "data/layouts/Underwater_Route124/map.bin": "a2c4197407d5813e8123f8ef1df28b14e29df36e9954128d1ea3acdd49c20156",
+          "data/maps/Underwater_Route126/map.json": "1941db48638f3ee7fe58e41e2637e9ed133936b2901bbc61ad98a1afd28846c2",
+          "data/maps/Underwater_Route126/scripts.inc": "0e4867f0f05c018127b0c56089cf8ea95ef1a991b986ced5763e5c07fc358d37",
+          "data/layouts/Underwater_Route126/border.bin": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887",
+          "data/layouts/Underwater_Route126/map.bin": "fcd09e9fb1304e0b6107b953da9e7812c70d27f09e932b875574c3105ccbf1b5",
+          "data/maps/Underwater_Route127/map.json": "fa22cee31403278ee1bded961d77646276ea32bc5e8779c97718ce0fa2bc8a09",
+          "data/maps/Underwater_Route127/scripts.inc": "0e90ac0766acef4fa0c499bf3f47b1d4a5a3642e4e30885e27fa3988bb21349b",
+          "data/layouts/Underwater_Route127/border.bin": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887",
+          "data/layouts/Underwater_Route127/map.bin": "a92002ce4d24f77df13e9146ea0d0097a57e36057661e780777ce48f60bcc745",
+          "data/maps/Underwater_Route128/map.json": "597775b990d3434f57c6799fdb1be32abcbc67a19e928715a84ef6670b126c38",
+          "data/maps/Underwater_Route128/scripts.inc": "8cc5e4ca364e141879cba067a2c8edf60fbdec0c8d738aff8dfc94b2f8982ee5",
+          "data/layouts/Underwater_Route128/border.bin": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887",
+          "data/layouts/Underwater_Route128/map.bin": "95aaf886005101d9f791e0667a88080533705e90e7ce88e516d4a4a5857d1bdc",
+          "data/maps/Underwater_Route129/map.json": "42508acbfde2cfe1fce91bbf14ad174b3858d4871f3ab2f028e5524354f41c3b",
+          "data/maps/Underwater_Route129/scripts.inc": "33dfaf785885a45ad4d98775048a7ab2c83645adc6b5f4db41c8a4c71a894b76",
+          "data/layouts/Underwater_Route129/border.bin": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887",
+          "data/layouts/Underwater_Route129/map.bin": "0b0174043c169cef2769e34a1c81e779b3445317471dcf5a5b61e52f48b2930c",
+          "data/scripts/abnormal_weather.inc": "52a2cb4d3378dade3e9c91a4dda240ae11af35d9840cd1a67a46653a75b73da7",
+          "data/layouts/layouts.json": "5ac58ee1072862c937f82121a931b3315ccca3b5ae807f2a28a0e273957c2e4f"
+        }
+      },
+      "sources": [
+        {
+          "path": "data/maps/Underwater_Route124/map.json",
+          "selector": "file",
+          "sha256": "fff10274ccf738b881727873972da8aba83ee633a855f617e2b87ad6382b903d"
+        },
+        {
+          "path": "data/maps/Underwater_Route124/scripts.inc",
+          "selector": "file",
+          "sha256": "df6e21ebe02ac8222ce41e818e75d06dba7d4c96359886a47d98aee09c8af910"
+        },
+        {
+          "path": "data/maps/Underwater_Route124/events.inc",
+          "selector": "file",
+          "sha256": "066b083eb07331c3fb5aca6fdd21819c2cfa900b63ce698e5951386e7bfc16f2"
+        },
+        {
+          "path": "data/maps/Underwater_Route124/header.inc",
+          "selector": "file",
+          "sha256": "f6a0c67e8f5a1e2b756db86bd2c7fd6bc9dd25baad375f59780b9e440f939611"
+        },
+        {
+          "path": "data/maps/Underwater_Route124/connections.inc",
+          "selector": "file",
+          "sha256": "f02350b3404a07178468506b8ac25531665b87075cd2cb71d3c490287ee073f9"
+        },
+        {
+          "path": "data/layouts/layouts.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Underwater_Route124_Layout_Border",
+            "Underwater_Route124_Layout_Blockdata",
+            "Underwater_Route124_Layout"
+          ],
+          "sha256": "a341fc07912783a0d35e3605f70ead29df6b69bcebdc4fbdfa4aa6d892a633c6"
+        },
+        {
+          "path": "data/layouts/layouts.json",
+          "selector": "json_layout",
+          "id": "LAYOUT_UNDERWATER_ROUTE124",
+          "sha256": "0c05e32775901ef60c106ac9eed97519a20de92cf48ea970969bc86a759ebc8e"
+        },
+        {
+          "path": "data/layouts/Underwater_Route124/border.bin",
+          "selector": "file",
+          "sha256": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887"
+        },
+        {
+          "path": "data/layouts/Underwater_Route124/map.bin",
+          "selector": "file",
+          "sha256": "a2c4197407d5813e8123f8ef1df28b14e29df36e9954128d1ea3acdd49c20156"
+        },
+        {
+          "path": "data/maps/Underwater_Route126/map.json",
+          "selector": "file",
+          "sha256": "1941db48638f3ee7fe58e41e2637e9ed133936b2901bbc61ad98a1afd28846c2"
+        },
+        {
+          "path": "data/maps/Underwater_Route126/scripts.inc",
+          "selector": "file",
+          "sha256": "0e4867f0f05c018127b0c56089cf8ea95ef1a991b986ced5763e5c07fc358d37"
+        },
+        {
+          "path": "data/maps/Underwater_Route126/events.inc",
+          "selector": "file",
+          "sha256": "1d461cf34eadf93aebc69192e0c79616e3a0f0aed0ab7064a2deb99ffcc29c13"
+        },
+        {
+          "path": "data/maps/Underwater_Route126/header.inc",
+          "selector": "file",
+          "sha256": "3bfca7de94f2ec1d833cb3738e8437c13243393bd3e611c57d1d53e732763f4c"
+        },
+        {
+          "path": "data/maps/Underwater_Route126/connections.inc",
+          "selector": "file",
+          "sha256": "ebec72baab18d1f0ea7d0289d13d0fb3aac235088d340f964220746bd366c3dd"
+        },
+        {
+          "path": "data/layouts/layouts.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Underwater_Route126_Layout_Border",
+            "Underwater_Route126_Layout_Blockdata",
+            "Underwater_Route126_Layout"
+          ],
+          "sha256": "e9055d7b3a735aca746f0619335a08007852417204b191388279b3ba40d8bfc8"
+        },
+        {
+          "path": "data/layouts/layouts.json",
+          "selector": "json_layout",
+          "id": "LAYOUT_UNDERWATER_ROUTE126",
+          "sha256": "b69d471ae45ceebc3d225c443ff74a3853d0f246aac681060efcb36a0cfd5d9c"
+        },
+        {
+          "path": "data/layouts/Underwater_Route126/border.bin",
+          "selector": "file",
+          "sha256": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887"
+        },
+        {
+          "path": "data/layouts/Underwater_Route126/map.bin",
+          "selector": "file",
+          "sha256": "fcd09e9fb1304e0b6107b953da9e7812c70d27f09e932b875574c3105ccbf1b5"
+        },
+        {
+          "path": "data/maps/Underwater_Route127/map.json",
+          "selector": "file",
+          "sha256": "fa22cee31403278ee1bded961d77646276ea32bc5e8779c97718ce0fa2bc8a09"
+        },
+        {
+          "path": "data/maps/Underwater_Route127/scripts.inc",
+          "selector": "file",
+          "sha256": "0e90ac0766acef4fa0c499bf3f47b1d4a5a3642e4e30885e27fa3988bb21349b"
+        },
+        {
+          "path": "data/maps/Underwater_Route127/events.inc",
+          "selector": "file",
+          "sha256": "d689572a902cfd1f6c0c3a73fd0aabbf96c166ab4d819e6c253b8e43c105e946"
+        },
+        {
+          "path": "data/maps/Underwater_Route127/header.inc",
+          "selector": "file",
+          "sha256": "027709778a6862600d2c813318ffe18057a9ef87e204225e862b2f133c3b3c78"
+        },
+        {
+          "path": "data/maps/Underwater_Route127/connections.inc",
+          "selector": "file",
+          "sha256": "0c1e27696ecf69143955de4b44fd926fca24f2a7f93150c934843b31e960ea49"
+        },
+        {
+          "path": "data/layouts/layouts.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Underwater_Route127_Layout_Border",
+            "Underwater_Route127_Layout_Blockdata",
+            "Underwater_Route127_Layout"
+          ],
+          "sha256": "f38078fa99e676a97c7f2eb41fcb1fdda94fc84648a31d6c26948045fb375de2"
+        },
+        {
+          "path": "data/layouts/layouts.json",
+          "selector": "json_layout",
+          "id": "LAYOUT_UNDERWATER_ROUTE127",
+          "sha256": "4a10a2b4c1a4cfac46bfa27e7b1c1d0a077bdaf41aaef36f559d62db1057a016"
+        },
+        {
+          "path": "data/layouts/Underwater_Route127/border.bin",
+          "selector": "file",
+          "sha256": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887"
+        },
+        {
+          "path": "data/layouts/Underwater_Route127/map.bin",
+          "selector": "file",
+          "sha256": "a92002ce4d24f77df13e9146ea0d0097a57e36057661e780777ce48f60bcc745"
+        },
+        {
+          "path": "data/maps/Underwater_Route128/map.json",
+          "selector": "file",
+          "sha256": "597775b990d3434f57c6799fdb1be32abcbc67a19e928715a84ef6670b126c38"
+        },
+        {
+          "path": "data/maps/Underwater_Route128/scripts.inc",
+          "selector": "file",
+          "sha256": "8cc5e4ca364e141879cba067a2c8edf60fbdec0c8d738aff8dfc94b2f8982ee5"
+        },
+        {
+          "path": "data/maps/Underwater_Route128/events.inc",
+          "selector": "file",
+          "sha256": "c01ca95a48f2564c6ea4c5f5843993fce7987405d0be0792694266d2e47d0af7"
+        },
+        {
+          "path": "data/maps/Underwater_Route128/header.inc",
+          "selector": "file",
+          "sha256": "73a9d9fcf48744cab081dd1806dd53a62df35292237ece3be455efb80d11ef8c"
+        },
+        {
+          "path": "data/maps/Underwater_Route128/connections.inc",
+          "selector": "file",
+          "sha256": "c91a5c840f0c43871e292bc2db8685d4b73d9fd6f53b292e5ff5e6a4e7dee90f"
+        },
+        {
+          "path": "data/layouts/layouts.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Underwater_Route128_Layout_Border",
+            "Underwater_Route128_Layout_Blockdata",
+            "Underwater_Route128_Layout"
+          ],
+          "sha256": "a236d142fcd25578aa969db73971710255b4d460c5777f2eec25443977065de4"
+        },
+        {
+          "path": "data/layouts/layouts.json",
+          "selector": "json_layout",
+          "id": "LAYOUT_UNDERWATER_ROUTE128",
+          "sha256": "64d08b60bae9d3be9c3f78a7c6a2fca4cce7e24b7f14e23e200dda0a54ce6b3d"
+        },
+        {
+          "path": "data/layouts/Underwater_Route128/border.bin",
+          "selector": "file",
+          "sha256": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887"
+        },
+        {
+          "path": "data/layouts/Underwater_Route128/map.bin",
+          "selector": "file",
+          "sha256": "95aaf886005101d9f791e0667a88080533705e90e7ce88e516d4a4a5857d1bdc"
+        },
+        {
+          "path": "data/maps/Underwater_Route129/map.json",
+          "selector": "file",
+          "sha256": "42508acbfde2cfe1fce91bbf14ad174b3858d4871f3ab2f028e5524354f41c3b"
+        },
+        {
+          "path": "data/maps/Underwater_Route129/scripts.inc",
+          "selector": "file",
+          "sha256": "33dfaf785885a45ad4d98775048a7ab2c83645adc6b5f4db41c8a4c71a894b76"
+        },
+        {
+          "path": "data/maps/Underwater_Route129/events.inc",
+          "selector": "file",
+          "sha256": "a291050205d35765b6978a18c2182ddf2ff3ba4ed4d5b6c1b5c53864c7d20b7b"
+        },
+        {
+          "path": "data/maps/Underwater_Route129/header.inc",
+          "selector": "file",
+          "sha256": "32c68f811309b394f6c627089700f836f295b1f90d4e9771f3eec266540d425d"
+        },
+        {
+          "path": "data/maps/Underwater_Route129/connections.inc",
+          "selector": "file",
+          "sha256": "644dfa54af08f582221f8454257fdbafac695e47951cc50c279bbdacf27ae5dd"
+        },
+        {
+          "path": "data/layouts/layouts.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Underwater_Route129_Layout_Border",
+            "Underwater_Route129_Layout_Blockdata",
+            "Underwater_Route129_Layout"
+          ],
+          "sha256": "3eda852741a4d768fe9863521dfa4178112a9f4854b33a079b8d1985af2ca478"
+        },
+        {
+          "path": "data/layouts/layouts.json",
+          "selector": "json_layout",
+          "id": "LAYOUT_UNDERWATER_ROUTE129",
+          "sha256": "4ca9a4b14ebfff206530ca2a6898b326b487ea68e5e6f888fd563f11a13d74d1"
+        },
+        {
+          "path": "data/layouts/Underwater_Route129/border.bin",
+          "selector": "file",
+          "sha256": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887"
+        },
+        {
+          "path": "data/layouts/Underwater_Route129/map.bin",
+          "selector": "file",
+          "sha256": "0b0174043c169cef2769e34a1c81e779b3445317471dcf5a5b61e52f48b2930c"
+        },
+        {
+          "path": "asm/macros.inc",
+          "selector": "file",
+          "sha256": "96f4fc94ef73e40aed3fdb908c56cc7e2c3d3eada6a19ad96d323f1258a9f888"
+        },
+        {
+          "path": "asm/macros/event.inc",
+          "selector": "file",
+          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+        },
+        {
+          "path": "asm/macros/map.inc",
+          "selector": "file",
+          "sha256": "bfbcd7827670ca8a75280092f516ec231157e75390d545e89dad99376cf6ffb7"
+        },
+        {
+          "path": "constants/map_constants.inc",
+          "selector": "file",
+          "sha256": "299edca64fb41c6c42880b4e1046405d99beee29eb9c2f3a416475b7ee51ad4e"
+        },
+        {
+          "path": "constants/map_header.inc",
+          "selector": "file",
+          "sha256": "5d3dc29873f7123a6a61661ce698f1dfb9919735bca81acc257a4008cb515580"
+        },
+        {
+          "path": "constants/songs.inc",
+          "selector": "file",
+          "sha256": "2777484d4fc8683370ff38b53f4540e349076f91b1e37c0739dbdf4a8929ae64"
+        },
+        {
+          "path": "data/event_scripts.s",
+          "selector": "file",
+          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+        },
+        {
+          "path": "data/layouts/layouts.json",
+          "selector": "file",
+          "sha256": "5ac58ee1072862c937f82121a931b3315ccca3b5ae807f2a28a0e273957c2e4f"
+        },
+        {
+          "path": "data/layouts/layouts_table.inc",
+          "selector": "file",
+          "sha256": "b83ab410ecc1106ed16217b811c915df0b1bf902775a4af78045ede9918141b5"
+        },
+        {
+          "path": "data/map_events.s",
+          "selector": "file",
+          "sha256": "ffa02b57817fff4567cabcdbec728f2f43545075885775fc69080e41b42211ee"
+        },
+        {
+          "path": "data/maps.s",
+          "selector": "file",
+          "sha256": "302c2c34c7f5a8fa6ae14ba00b89d5932507bd1338251b2a813a629d0e7e3668"
+        },
+        {
+          "path": "data/maps/connections.inc",
+          "selector": "file",
+          "sha256": "1652e4d3b1a5f36690c2f9309d8a73586dfb9cbd7b7ef7a6a2053166da038de7"
+        },
+        {
+          "path": "data/maps/events.inc",
+          "selector": "file",
+          "sha256": "b5aaf7374eb2c2a3df3d0da5c551baba367f447b275380616610e1702bda1508"
+        },
+        {
+          "path": "data/maps/groups.inc",
+          "selector": "file",
+          "sha256": "76b18c7b51cd027c8237b19607dfb314d4b70bbbcf3bb03f9b4d0a279aa8647f"
+        },
+        {
+          "path": "data/maps/headers.inc",
+          "selector": "file",
+          "sha256": "28384922c79171cb9708e2dcd35e649df1a9a40aaaac093af22a4a7ba322559b"
+        },
+        {
+          "path": "data/maps/map_groups.json",
+          "selector": "file",
+          "sha256": "e82b8e9149e73384e5f4eb5a2c120cc17b80e11530ea24b96c5f2b4e6972eee7"
+        },
+        {
+          "path": "data/script_cmd_table.inc",
+          "selector": "file",
+          "sha256": "6588e2b40759091efa802f8d9adccdeeac527297fc20171156e77b01345168d8"
+        },
+        {
+          "path": "include/constants/comparison_operators.h",
+          "selector": "file",
+          "sha256": "e4b2f484b192ae1ba040f9fc109397c3e348dc6f5425b4036ca8cd204e05ed83"
+        },
+        {
+          "path": "include/constants/event_bg.h",
+          "selector": "file",
+          "sha256": "80229bd57f21b411677d2487c39a4a5b435c357acf8d910fffdae2da642020f2"
+        },
+        {
+          "path": "include/constants/flags.h",
+          "selector": "file",
+          "sha256": "98aa1c819f1155673d7826a45f9a0d244e2a15b8f603fdfa661be3cef1b4de41"
+        },
+        {
+          "path": "include/constants/global.h",
+          "selector": "file",
+          "sha256": "565e116a37096548401c54df00a4fc4290911a3b90075d65094ac1ccdc6f1baf"
+        },
+        {
+          "path": "include/constants/items.h",
+          "selector": "file",
+          "sha256": "8e9aacc0ffbd41ce0092176a89f624b59be300df60c996d718d61119e747dbd4"
+        },
+        {
+          "path": "include/constants/layouts.h",
+          "selector": "file",
+          "sha256": "8402b8218e3fab3ee9db10203d503fecee6de5293e2e50beb1e8f41ea190b077"
+        },
+        {
+          "path": "include/constants/map_scripts.h",
+          "selector": "file",
+          "sha256": "dcf41b9a35bcf181d3264f0cc03d8a4f2d9dc85769e22db32a54921e04c61e7b"
+        },
+        {
+          "path": "include/constants/map_types.h",
+          "selector": "file",
+          "sha256": "e662d9aa72c1ad8a55d153bb8acb83bb9b8555c1413d4195db4b17534aa96a76"
+        },
+        {
+          "path": "include/constants/songs.h",
+          "selector": "file",
+          "sha256": "7f6a8dc6d99e7f2bfdbb1136ebba8286ec99bff30f3f9afe2df7868125154e14"
+        },
+        {
+          "path": "include/constants/vars.h",
+          "selector": "file",
+          "sha256": "e777facba3356ef3fdbfa5bf8a662367be2416160cee2e3a5df62f9769b26de5"
+        },
+        {
+          "path": "include/constants/weather.h",
+          "selector": "file",
+          "sha256": "7ca1cf3d7c77d4e2925ef6f339f78cdc84d4e0cdae841aefc334da07da6edb11"
+        },
+        {
+          "path": "tools/jp_generate_layouts.py",
+          "selector": "file",
+          "sha256": "f997a315e07d6775aff422f815151bbb5f477ddfe8f3361ada40d3ac69db33b3"
+        },
+        {
+          "path": "tools/jp_map_metadata.py",
+          "selector": "file",
+          "sha256": "6c202206761debd9f7adbc6375f7d3306f8354fc82c06da05a05acc409309f42"
+        },
+        {
+          "path": "tools/mapjson/json11.cpp",
+          "selector": "file",
+          "sha256": "58379deadaf7ddca4b91461b546a0193250af69258b2607fa839fc9282065655"
+        },
+        {
+          "path": "tools/mapjson/json11.h",
+          "selector": "file",
+          "sha256": "54b80082fe1580e37588bbf553eff54daacb82203be57f5fc8ec2e89d1d7bdfa"
+        },
+        {
+          "path": "tools/mapjson/mapjson.cpp",
+          "selector": "file",
+          "sha256": "1678bbc79eb3997f5d010a71037ebf4659d9c89c11f21db8544fd81cde854271"
+        },
+        {
+          "path": "tools/mapjson/mapjson.h",
+          "selector": "file",
+          "sha256": "ddcd590fd8abbffd207c8a78f6fac932e841391af4973fb26e625cfe11c38ec6"
+        },
+        {
+          "path": "asm/macros/asm.inc",
+          "selector": "file",
+          "sha256": "d4bd2b1878d95a1a415df9fa0e590bd2192fec0247cd993341ed611f103009bb"
+        },
+        {
+          "path": "asm/macros/battle_frontier/apprentice.inc",
+          "selector": "file",
+          "sha256": "9db2866268cd7178f6e4cb18dcaf537bc11ee465c3d8791da325348fae163994"
+        },
+        {
+          "path": "asm/macros/battle_frontier/battle_arena.inc",
+          "selector": "file",
+          "sha256": "8830d7d83c04df3685ae83bc06c2c2072eac1949bd9d4daed12aaca93f139efd"
+        },
+        {
+          "path": "asm/macros/battle_frontier/battle_dome.inc",
+          "selector": "file",
+          "sha256": "2f172705a8adedffb99f0f6ddca77b1f2209a7f22f9db6f34d80eb6eb862368f"
+        },
+        {
+          "path": "asm/macros/battle_frontier/battle_factory.inc",
+          "selector": "file",
+          "sha256": "cd0bcfbebc240552fff6d137724bf5fe0f899980326f6171a5ee284f2cb23bb6"
+        },
+        {
+          "path": "asm/macros/battle_frontier/battle_palace.inc",
+          "selector": "file",
+          "sha256": "05a64c75c56eec16f61c55b58652d69368376a7a25a7123de1f2168723dda6cc"
+        },
+        {
+          "path": "asm/macros/battle_frontier/battle_pike.inc",
+          "selector": "file",
+          "sha256": "ad7bb83b131eb30244e2d36a72e8247cbf51a55d78328637336073147b0f51d4"
+        },
+        {
+          "path": "asm/macros/battle_frontier/battle_pyramid.inc",
+          "selector": "file",
+          "sha256": "e17f9b1487d044b79f9e0678c4e7a1b47ee8776efbf54bf0c00f5773b8c55122"
+        },
+        {
+          "path": "asm/macros/battle_frontier/battle_tower.inc",
+          "selector": "file",
+          "sha256": "e2e976ea1b6154545c3e190ae4a0b5b67f5be70a48a4db3d80033d17c704a5ff"
+        },
+        {
+          "path": "asm/macros/battle_frontier/frontier_util.inc",
+          "selector": "file",
+          "sha256": "667d5539a7b3ad2057844199b23cdbd2d799410c503267cc8b15c444f3b1bf02"
+        },
+        {
+          "path": "asm/macros/battle_tent.inc",
+          "selector": "file",
+          "sha256": "7183e8ac5160eb38d839841930600539dab933411415c6b77f1a3f8ccfe7526a"
+        },
+        {
+          "path": "asm/macros/ec.inc",
+          "selector": "file",
+          "sha256": "94c11f874194168f7f62ac77175a33046cc42faf317e191d2e8e8eb56b065dc2"
+        },
+        {
+          "path": "asm/macros/field_effect_script.inc",
+          "selector": "file",
+          "sha256": "ab746f5f9fa1706c696ef7081d7688ca5543e18283834c2cdf226da6c36a863b"
+        },
+        {
+          "path": "asm/macros/function.inc",
+          "selector": "file",
+          "sha256": "0f633852778b73912535e1f1ccf9f77cb7dbbde58fa0345765cfaa31aa6868ef"
+        },
+        {
+          "path": "asm/macros/movement.inc",
+          "selector": "file",
+          "sha256": "e686a7249218fd6139f1fdc0c156322fe1ffefbe54c9dd2166eb87b827660e26"
+        },
+        {
+          "path": "asm/macros/pokemon_data.inc",
+          "selector": "file",
+          "sha256": "c178dcb0bb4a0c890fbd9f678822501e122ffcaaeb5904aceaf9319f4dcc8339"
+        },
+        {
+          "path": "asm/macros/trainer_hill.inc",
+          "selector": "file",
+          "sha256": "f94b1b7d596dd790191734382844e98a72cefa97fa0568bd200d1f3bb509e82b"
+        },
+        {
+          "path": "asm/macros/window.inc",
+          "selector": "file",
+          "sha256": "d1a87ab46158223382d8d9680f5a5fb54eba8deb5ee0ab8075d949216be83529"
+        },
+        {
+          "path": "constants/battle_string_ids.inc",
+          "selector": "file",
+          "sha256": "ba4b7bd15486d07ac4f53b52f6b440b0baa48182c9ece06eb9134092fe1b08cb"
+        },
+        {
+          "path": "constants/gba_constants.inc",
+          "selector": "file",
+          "sha256": "4ac64183e5c9c92667b3f37414cf3ddb0503d22e49bc52df1f1a9e1b1a6c2f40"
+        },
+        {
+          "path": "constants/global.inc",
+          "selector": "file",
+          "sha256": "8fbe789b22630bc08065770f0623e5229a869085364c625adc2512006a1f0567"
+        },
+        {
+          "path": "constants/moves.inc",
+          "selector": "file",
+          "sha256": "00d8c6efb6b07e203271392058dd6672c54b92722e072f77117a0f3927f4546f"
+        },
+        {
+          "path": "constants/ribbon_constants.inc",
+          "selector": "file",
+          "sha256": "a41aa0824ba7ed695037dbe6174218bf1528e28c840cb19e774c9e6ea75da21f"
+        },
+        {
+          "path": "constants/species.inc",
+          "selector": "file",
+          "sha256": "9cba14b5a6eafda71511e14cfce5362337629031e9746f09f528f367fa0a5b6e"
+        },
+        {
+          "path": "constants/tms_hms.inc",
+          "selector": "file",
+          "sha256": "83b08cab51222314af54cf67e3f55398c4e048fc38477c314aab75487de22904"
+        },
+        {
+          "path": "constants/trainers.inc",
+          "selector": "file",
+          "sha256": "662da8eed12139b0be2bc5a830adab2294e66c247876ca735c8aa0129f3bc6c6"
+        },
+        {
+          "path": "data/specials.inc",
+          "selector": "file",
+          "sha256": "463da35f008a6c1d4336d8fe3bd5f1510af6351b137f19f035cf86f68c772974"
+        },
+        {
+          "path": "include/config.h",
+          "selector": "file",
+          "sha256": "c1531faf80c3c15c05c5035964759d966068b042e8cbbe6e3247e0d12c05ef0d"
+        },
+        {
+          "path": "include/constants/apprentice.h",
+          "selector": "file",
+          "sha256": "4c970db4adafae2821b07bf8d1d4ab5b85d57dfbf095a9457361dda2eaa17526"
+        },
+        {
+          "path": "include/constants/battle.h",
+          "selector": "file",
+          "sha256": "bba2f9d9b3d98fa01b5f0a8f7dede9f2f0be5617c735242b741a7e0c8e4a5d1e"
+        },
+        {
+          "path": "include/constants/battle_arena.h",
+          "selector": "file",
+          "sha256": "5ef2eb58d1079b0e17f29ad5d9eeb711854c836beb10d2c195c8662a8f6b288c"
+        },
+        {
+          "path": "include/constants/battle_dome.h",
+          "selector": "file",
+          "sha256": "aa2fbed09a8af34551f276a33ec145a5db1b4bfa5c2d0f4a7d3e27abbcd46087"
+        },
+        {
+          "path": "include/constants/battle_factory.h",
+          "selector": "file",
+          "sha256": "faa40c17e00505f3e7518b866b1570d686a59a5625b993a37528d5a8234d2f09"
+        },
+        {
+          "path": "include/constants/battle_frontier.h",
+          "selector": "file",
+          "sha256": "67463eb9a278a5621d2c6fc1130925557e1466ca547e00bcf3b1b9ca8420db42"
+        },
+        {
+          "path": "include/constants/battle_frontier_trainers.h",
+          "selector": "file",
+          "sha256": "e913d7d50ab5c686f5bbf49ad69255d0a7c889d62cec7691423b1efead5d7c87"
+        },
+        {
+          "path": "include/constants/battle_palace.h",
+          "selector": "file",
+          "sha256": "f3b143578ce94775ed8d65e1791298f25e017f2f926b238c8a6cddf314487f46"
+        },
+        {
+          "path": "include/constants/battle_pike.h",
+          "selector": "file",
+          "sha256": "3cd64f68c180abff63b3e466428abff0c9ef426909f7a9820dd61edf2952270f"
+        },
+        {
+          "path": "include/constants/battle_pyramid.h",
+          "selector": "file",
+          "sha256": "683cefd61b59cbc8ac26d38a9d31c86159042fd93cccf114619f66c6931a8090"
+        },
+        {
+          "path": "include/constants/battle_setup.h",
+          "selector": "file",
+          "sha256": "b0f5304e321e928c728cb7a8e81fa2046b94d4639fea6f7c4e1ed59e5d38a150"
+        },
+        {
+          "path": "include/constants/battle_tent.h",
+          "selector": "file",
+          "sha256": "bcbecbccef5a5cab4795e0245b65464df4a29e64503ef0047af7229664468502"
+        },
+        {
+          "path": "include/constants/battle_tower.h",
+          "selector": "file",
+          "sha256": "003d472408bf97201cd3b6d53fe9b5279a2b13187ed91a8ceacedf8952ce28ed"
+        },
+        {
+          "path": "include/constants/berry.h",
+          "selector": "file",
+          "sha256": "5a5d914fdfee02f4ee33c9063a9073d5426c815240534a7728d10f53f824c6f8"
+        },
+        {
+          "path": "include/constants/cable_club.h",
+          "selector": "file",
+          "sha256": "b44d990602041c346d973a22245ef2d95af46135d5576c60aad8c6096912473f"
+        },
+        {
+          "path": "include/constants/coins.h",
+          "selector": "file",
+          "sha256": "6a2af9a6239c6fa52b6109af7eaed511d78d952c44a914e0f7b08643770a1ef5"
+        },
+        {
+          "path": "include/constants/contest.h",
+          "selector": "file",
+          "sha256": "cc023bb1af8ad45e2ea13b94903e7e36543addab8c69027492730e8227573b2b"
+        },
+        {
+          "path": "include/constants/daycare.h",
+          "selector": "file",
+          "sha256": "25c2f31cf0b5779b3caa0cca53ca892733748f0310cf3d9d51b4e3a6c20896ea"
+        },
+        {
+          "path": "include/constants/decorations.h",
+          "selector": "file",
+          "sha256": "d8df4380e7cda5b8e7ea10a767af5d19952a44a10c9f8945b735ab0de3673766"
+        },
+        {
+          "path": "include/constants/easy_chat.h",
+          "selector": "file",
+          "sha256": "fd4a6eed76a00b83a52154a4e9ea6308218c782ac2f437fe3c1f82e4e8647392"
+        },
+        {
+          "path": "include/constants/event_object_movement.h",
+          "selector": "file",
+          "sha256": "2ccef6e66cd249ed25d161ed0d1a6bc2d320e42ebe507030a55b1580f787a3d4"
+        },
+        {
+          "path": "include/constants/event_objects.h",
+          "selector": "file",
+          "sha256": "c8ae523d6dc4abb0a174beabc7a0e360e7cfff9fb93f1134cd85b971a6064381"
+        },
+        {
+          "path": "include/constants/field_effects.h",
+          "selector": "file",
+          "sha256": "c015e52b1e718cd7ce85dcddcde1ff23feb78815dbb00e195897e14b35bb4564"
+        },
+        {
+          "path": "include/constants/field_poison.h",
+          "selector": "file",
+          "sha256": "ca7a9e26572c53d0de617eb724eb05ce49751a61ba3e8c240eb0cbeeb8851fa0"
+        },
+        {
+          "path": "include/constants/field_specials.h",
+          "selector": "file",
+          "sha256": "aaf0efc817619b1236257de6186fe9f0a1dea600a18de7eebe7c3b9a7d78ded1"
+        },
+        {
+          "path": "include/constants/field_tasks.h",
+          "selector": "file",
+          "sha256": "f240f700687dff806ea54065471f6e93b34511766b7f523fb923af837de0cbca"
+        },
+        {
+          "path": "include/constants/field_weather.h",
+          "selector": "file",
+          "sha256": "319902b219649b0a27eaaa15cecece27698c5d5f697be9cd8f0f45429d18d0ec"
+        },
+        {
+          "path": "include/constants/frontier_util.h",
+          "selector": "file",
+          "sha256": "de0448c8dd333ddcb872a5ce2e49a8ea9355b178efe6209bb9200bf55260765c"
+        },
+        {
+          "path": "include/constants/game_stat.h",
+          "selector": "file",
+          "sha256": "29bc568383055b24dfb42a5029bad2aa00f36b28186b5e67d20a1b1687f8fef8"
+        },
+        {
+          "path": "include/constants/heal_locations.h",
+          "selector": "file",
+          "sha256": "4e24eef4246b42cd62cc8de445433ba1accdbf6d84e3ed27dd16daccbb485e7c"
+        },
+        {
+          "path": "include/constants/item.h",
+          "selector": "file",
+          "sha256": "c0217df9faf0d55e8ddd70ae748511875588b30bf222f6599c8bbdcb52f95862"
+        },
+        {
+          "path": "include/constants/lilycove_lady.h",
+          "selector": "file",
+          "sha256": "83a2710b3eed84a73e0a55851407ab3b9dc867fe4f13a2807b37597073c48ac8"
+        },
+        {
+          "path": "include/constants/map_event_ids.h",
+          "selector": "file",
+          "sha256": "24397a54f55d6b46194974336d9cc8466803ba8d9846190c90747370404e910a"
+        },
+        {
+          "path": "include/constants/map_groups.h",
+          "selector": "file",
+          "sha256": "1a6d5d40c8a85efdeb2f42cec38bd3b79d2a81063d89fdbc98d699fab5542073"
+        },
+        {
+          "path": "include/constants/maps.h",
+          "selector": "file",
+          "sha256": "66c0f056578ba31ca0519e55e2f500aaf79bf9abb8aed0f66bf16d7e149fbae6"
+        },
+        {
+          "path": "include/constants/mauville_old_man.h",
+          "selector": "file",
+          "sha256": "9f21cd820fbfcffb6e8a1d49451a791d98f8424148de20920aa8d001e0e117f6"
+        },
+        {
+          "path": "include/constants/metatile_labels.h",
+          "selector": "file",
+          "sha256": "6f53ac68b105d8d72c7daa3d57c4c669a828f68d3f8d84d1902e9f6309b818f2"
+        },
+        {
+          "path": "include/constants/moves.h",
+          "selector": "file",
+          "sha256": "d32746c9ad3ed1bbfbb93712f13e01ab1c43f48a78f3605ef9db5095e8d19d27"
+        },
+        {
+          "path": "include/constants/opponents.h",
+          "selector": "file",
+          "sha256": "f9c9426608519ef07450199879cce90d81df49c28c58ee871c697432ca2ca995"
+        },
+        {
+          "path": "include/constants/party_menu.h",
+          "selector": "file",
+          "sha256": "3191fb7e54556b29e3f282a0c26b68a221180ad077a3f96cb7b07586f0258a91"
+        },
+        {
+          "path": "include/constants/pokemon.h",
+          "selector": "file",
+          "sha256": "f2eceb49d9fc964dba67e16572e76e6166ca759dede6b7d80c7b66b0499c8579"
+        },
+        {
+          "path": "include/constants/pokemon_size_record.h",
+          "selector": "file",
+          "sha256": "40d0d92dad88fe0025b8a008315abecf62e961b1719bc326f7fd19e41bb3ea27"
+        },
+        {
+          "path": "include/constants/rematches.h",
+          "selector": "file",
+          "sha256": "df8e001db8c4ed0050659cc7765fdeef18d54742f939ba7659f75643cb44b6ab"
+        },
+        {
+          "path": "include/constants/roulette.h",
+          "selector": "file",
+          "sha256": "2e2a566edd67fe9f316534d9296f1a30a3ffe270c4f12b66a6048e42723f81db"
+        },
+        {
+          "path": "include/constants/script_menu.h",
+          "selector": "file",
+          "sha256": "96ad8a2c3022b67c23dfa35eedc84e59fb85f328ba2c12e106f702ed621c19b9"
+        },
+        {
+          "path": "include/constants/secret_bases.h",
+          "selector": "file",
+          "sha256": "3fe6fdb6d5117ec7b53e9fe5499b5b4a415a2e863093b168b51786c7370e3d89"
+        },
+        {
+          "path": "include/constants/sound.h",
+          "selector": "file",
+          "sha256": "c05fa451ca6ec2bea690b592e91271e4e1b90f694f138768f8486d75e6eab9dc"
+        },
+        {
+          "path": "include/constants/species.h",
+          "selector": "file",
+          "sha256": "a1867c83e78fb767b16a9c95c4c06d51d56c986fd48d713b98dbf01c8305089d"
+        },
+        {
+          "path": "include/constants/tms_hms.h",
+          "selector": "file",
+          "sha256": "649802a5a5fa8ce042d748e14770007a29f6a4fadc626f2bf8f2101436b0cb4a"
+        },
+        {
+          "path": "include/constants/trade.h",
+          "selector": "file",
+          "sha256": "f2a5878d0f4a7267410e963a45e91dda530e998bc8bf214cd6de4f99317d9ab1"
+        },
+        {
+          "path": "include/constants/trainer_hill.h",
+          "selector": "file",
+          "sha256": "417fea673c788a2f757c8d0d22c5dd805e3efc5e9b3e1b4018ee635fe007b858"
+        },
+        {
+          "path": "include/constants/trainer_types.h",
+          "selector": "file",
+          "sha256": "dd8fe17aea8f69a13c75f88e5ebe305dc39551cbe99a26f2d3e713a7bbf6f18b"
+        },
+        {
+          "path": "include/constants/trainers.h",
+          "selector": "file",
+          "sha256": "91d9b3b00e163ba4cc91d8832b9ec9499c2d13e1631548ea9ac2eef8ccc202d6"
+        },
+        {
+          "path": "include/constants/tv.h",
+          "selector": "file",
+          "sha256": "8ceba9c62cb30533859942c95ac9696f6c9ce28631755c910dabfa4cce1f6e80"
+        },
+        {
+          "path": "include/constants/union_room.h",
+          "selector": "file",
+          "sha256": "566e58ed2260b4a886263acdb37028d91ffbb1f795c82681f59fb14c9301da38"
+        },
+        {
+          "path": "Makefile",
+          "selector": "make_prefixes",
+          "prefixes": [
+            "JP_STRUCTURED_MAPS",
+            "JP_STRUCTURED_MAP_METADATA_MAPS",
+            "$(JP_STRUCTURED_MAP_EVENTS):",
+            "$(JP_MAP_GROUP_AGGREGATES) &:",
+            "data/maps/%/header.inc data/maps/%/connections.inc &:",
+            "data/layouts/layouts.inc data/layouts/layouts_table.inc include/constants/layouts.h &:",
+            "$(OBJ_DIR)/data/maps.o:",
+            "$(OBJ_DIR)/data/map_events.o:"
+          ],
+          "sha256": "b16534116ac9b7eda07080f7ab7f7ba9000d943e4ec52266f22fba940f470d35"
+        },
+        {
+          "path": "ld_script_jp.txt",
+          "selector": "linker_inputs",
+          "inputs": [
+            "data/event_scripts.o",
+            "data/map_events.o",
+            "data/maps.o"
+          ],
+          "sha256": "07e8100a59ead9b45b6c7246485b8e4c02d05c81fdfd923915108d24e3ac95ae"
+        },
+        {
+          "path": "data/scripts/abnormal_weather.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "AbnormalWeather_Underwater_SetupEscapeWarp",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute105North",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute105South",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute125West",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute125East",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute127North",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute127South",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute129West",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute129East"
+          ],
+          "sha256": "ca676f51d82eae78bfe3f405fb5b5a012a8436e35a7a649032f4cf2b82a0815d"
+        }
+      ],
+      "native_spans": [
+        {
+          "map": "Underwater_Route124",
+          "role": "scripts",
+          "symbol": "Underwater_Route124_MapScripts",
+          "address": "0x081EF752",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+        },
+        {
+          "map": "Underwater_Route124",
+          "role": "events",
+          "symbol": "Underwater_Route124_MapBGEvents",
+          "address": "0x085055E0",
+          "size": 104,
+          "sha256": "163d76068befe847d18a6415715d5dbf73d1d44e314b381f1c9bc1b7b2f924f2"
+        },
+        {
+          "map": "Underwater_Route124",
+          "role": "header",
+          "symbol": "Underwater_Route124",
+          "address": "0x0845AE50",
+          "size": 28,
+          "sha256": "b74129c1f3059de98f552b3b160ab82b6a536c6170f00d0b40de7509641b8e6b"
+        },
+        {
+          "map": "Underwater_Route124",
+          "role": "connections",
+          "symbol": "Underwater_Route124_MapConnectionsList",
+          "address": "0x0845F158",
+          "size": 32,
+          "sha256": "5ea86940637048fb752a11ffa280e4fa7a14bba08e577d4ecd792734750e3df6"
+        },
+        {
+          "map": "Underwater_Route124",
+          "role": "layout",
+          "symbol": "Underwater_Route124_Layout",
+          "address": "0x08429000",
+          "size": 24,
+          "sha256": "d7ee5c29c760fbdcd83295919c07c4879c22434620bc284f50015b98b485fa7a"
+        },
+        {
+          "map": "Underwater_Route124",
+          "role": "border",
+          "symbol": "Underwater_Route124_Layout_Border",
+          "address": "0x08425DF8",
+          "size": 8,
+          "sha256": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887"
+        },
+        {
+          "map": "Underwater_Route124",
+          "role": "blockdata",
+          "symbol": "Underwater_Route124_Layout_Blockdata",
+          "address": "0x08425E00",
+          "size": 12800,
+          "sha256": "a2c4197407d5813e8123f8ef1df28b14e29df36e9954128d1ea3acdd49c20156"
+        },
+        {
+          "map": "Underwater_Route126",
+          "role": "scripts",
+          "symbol": "Underwater_Route126_MapScripts",
+          "address": "0x081EF753",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+        },
+        {
+          "map": "Underwater_Route126",
+          "role": "events",
+          "symbol": "Underwater_Route126_MapWarps",
+          "address": "0x08505648",
+          "size": 124,
+          "sha256": "8f4d9f456136bb8b86f515d8bc2abde352f9e265339fec4857e1bf8ceea14921"
+        },
+        {
+          "map": "Underwater_Route126",
+          "role": "header",
+          "symbol": "Underwater_Route126",
+          "address": "0x0845AE6C",
+          "size": 28,
+          "sha256": "959dcfd031a2d60192b2ca7ace01b86e73735a9bee667cc7507ecadf08322637"
+        },
+        {
+          "map": "Underwater_Route126",
+          "role": "connections",
+          "symbol": "Underwater_Route126_MapConnectionsList",
+          "address": "0x0845F18C",
+          "size": 44,
+          "sha256": "e113484161f1bf144066da621cdd1bf6bfbb24411040ceca1a1c83074893ad00"
+        },
+        {
+          "map": "Underwater_Route126",
+          "role": "layout",
+          "symbol": "Underwater_Route126_Layout",
+          "address": "0x083F9444",
+          "size": 24,
+          "sha256": "738ebf6888852a901d787c2f4f5d2a6e90d1df29629e01a9bbc6033361b5ac1d"
+        },
+        {
+          "map": "Underwater_Route126",
+          "role": "border",
+          "symbol": "Underwater_Route126_Layout_Border",
+          "address": "0x083F623C",
+          "size": 8,
+          "sha256": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887"
+        },
+        {
+          "map": "Underwater_Route126",
+          "role": "blockdata",
+          "symbol": "Underwater_Route126_Layout_Blockdata",
+          "address": "0x083F6244",
+          "size": 12800,
+          "sha256": "fcd09e9fb1304e0b6107b953da9e7812c70d27f09e932b875574c3105ccbf1b5"
+        },
+        {
+          "map": "Underwater_Route127",
+          "role": "scripts",
+          "symbol": "Underwater_Route127_MapScripts",
+          "address": "0x081EF754",
+          "size": 12,
+          "sha256": "50e9c51f1a0ea0692973ddcff0ad3b8ef7ea148c886c18600d582e14d35fdcfb"
+        },
+        {
+          "map": "Underwater_Route127",
+          "role": "events",
+          "symbol": "Underwater_Route127_MapWarps",
+          "address": "0x085056C4",
+          "size": 84,
+          "sha256": "083ac7eb954efee19a45a1b0577a275de9c191342fbf5b3ac96a045177ba7a55"
+        },
+        {
+          "map": "Underwater_Route127",
+          "role": "header",
+          "symbol": "Underwater_Route127",
+          "address": "0x0845AE88",
+          "size": 28,
+          "sha256": "0697748c3c27d57fe1eb3713ec190b57280e0ae5cac9f6860098416e1555c9e0"
+        },
+        {
+          "map": "Underwater_Route127",
+          "role": "connections",
+          "symbol": "Underwater_Route127_MapConnectionsList",
+          "address": "0x0845F1B8",
+          "size": 44,
+          "sha256": "bce8f730df7c2615baf0c26b9eefc62ceaae5cf775243e4368f0fe8f287b674d"
+        },
+        {
+          "map": "Underwater_Route127",
+          "role": "layout",
+          "symbol": "Underwater_Route127_Layout",
+          "address": "0x083FC664",
+          "size": 24,
+          "sha256": "166e1bf0763e8d346ddee0e866874f93f19ef8ec895b43d390480b8fc4d4e1bd"
+        },
+        {
+          "map": "Underwater_Route127",
+          "role": "border",
+          "symbol": "Underwater_Route127_Layout_Border",
+          "address": "0x083F945C",
+          "size": 8,
+          "sha256": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887"
+        },
+        {
+          "map": "Underwater_Route127",
+          "role": "blockdata",
+          "symbol": "Underwater_Route127_Layout_Blockdata",
+          "address": "0x083F9464",
+          "size": 12800,
+          "sha256": "a92002ce4d24f77df13e9146ea0d0097a57e36057661e780777ce48f60bcc745"
+        },
+        {
+          "map": "Underwater_Route128",
+          "role": "scripts",
+          "symbol": "Underwater_Route128_MapScripts",
+          "address": "0x081EF760",
+          "size": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+        },
+        {
+          "map": "Underwater_Route128",
+          "role": "events",
+          "symbol": "Underwater_Route128_MapWarps",
+          "address": "0x08505718",
+          "size": 52,
+          "sha256": "1c31b0ab9a544fe06b0afbe6e44032fc7e5512d5c53d2fed18b99540a566ff5b"
+        },
+        {
+          "map": "Underwater_Route128",
+          "role": "header",
+          "symbol": "Underwater_Route128",
+          "address": "0x0845AEA4",
+          "size": 28,
+          "sha256": "c2e0a7cb4f9926f54eed535754a62cd07657dcbd116a2b0318a0b4c97c251d18"
+        },
+        {
+          "map": "Underwater_Route128",
+          "role": "connections",
+          "symbol": "Underwater_Route128_MapConnectionsList",
+          "address": "0x0845F1E4",
+          "size": 32,
+          "sha256": "00e96eea86bc1628d8f7a4479a395fbeb36c3741d18787bdcdd55e2fdd80fc2a"
+        },
+        {
+          "map": "Underwater_Route128",
+          "role": "layout",
+          "symbol": "Underwater_Route128_Layout",
+          "address": "0x083FEC04",
+          "size": 24,
+          "sha256": "07cdcfc012a0e0ec34a6e7a4c6a7e4712eb0cf8ae042313e0aa19339bda59eca"
+        },
+        {
+          "map": "Underwater_Route128",
+          "role": "border",
+          "symbol": "Underwater_Route128_Layout_Border",
+          "address": "0x083FC67C",
+          "size": 8,
+          "sha256": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887"
+        },
+        {
+          "map": "Underwater_Route128",
+          "role": "blockdata",
+          "symbol": "Underwater_Route128_Layout_Blockdata",
+          "address": "0x083FC684",
+          "size": 9600,
+          "sha256": "95aaf886005101d9f791e0667a88080533705e90e7ce88e516d4a4a5857d1bdc"
+        },
+        {
+          "map": "Underwater_Route129",
+          "role": "scripts",
+          "symbol": "Underwater_Route129_MapScripts",
+          "address": "0x081EF761",
+          "size": 12,
+          "sha256": "0fa642fa75d6cb71a1a251faeedb2f14940ae9675e4a592ff79fcdef6e58513d"
+        },
+        {
+          "map": "Underwater_Route129",
+          "role": "events",
+          "symbol": "Underwater_Route129_MapWarps",
+          "address": "0x0850574C",
+          "size": 36,
+          "sha256": "772b54e5260eeac510429e60edfa127eaf15f123f30b560bc59943235a1c2cd9"
+        },
+        {
+          "map": "Underwater_Route129",
+          "role": "header",
+          "symbol": "Underwater_Route129",
+          "address": "0x0845AEC0",
+          "size": 28,
+          "sha256": "5c6e5ff52d9302df35f8e54054edf8a841a09140ba69edfc93c20012cc3dda3e"
+        },
+        {
+          "map": "Underwater_Route129",
+          "role": "connections",
+          "symbol": "Underwater_Route129_MapConnectionsList",
+          "address": "0x0845F204",
+          "size": 20,
+          "sha256": "a56c0055838bffc2e1292e6b644d7bf54a43eb4b96958ad39996287a7d32cd71"
+        },
+        {
+          "map": "Underwater_Route129",
+          "role": "layout",
+          "symbol": "Underwater_Route129_Layout",
+          "address": "0x08454138",
+          "size": 24,
+          "sha256": "69d73d41031641594da1936576c314371bacd7229dc9927c3219a373a57386d3"
+        },
+        {
+          "map": "Underwater_Route129",
+          "role": "border",
+          "symbol": "Underwater_Route129_Layout_Border",
+          "address": "0x08452830",
+          "size": 8,
+          "sha256": "16cfea6072565627ae722a11fcf3677a3c5e9dd45b0e933db62fb6bb928d0887"
+        },
+        {
+          "map": "Underwater_Route129",
+          "role": "blockdata",
+          "symbol": "Underwater_Route129_Layout_Blockdata",
+          "address": "0x08452838",
+          "size": 6400,
+          "sha256": "0b0174043c169cef2769e34a1c81e779b3445317471dcf5a5b61e52f48b2930c"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "AbnormalWeather_Underwater_SetupEscapeWarp",
+          "address": "0x08244C4D",
+          "size": 166,
+          "sha256": "6ccffd908ee9cdd262cf7ef23b4f92c8702d58e43a57e709cf65b1fb7a0b9ce9"
+        }
+      ],
+      "checks": {
+        "Underwater_Route124": {
+          "script_control_flow": "One-byte 00 map-script terminator; no local event-script execution or unconverted script payload.",
+          "event_fields": "No object or coord events; 7 hidden items and 0 warps checked field-by-field against JP bytes. Hidden flags use the FLAG_HIDDEN_ITEMS_START offset, not the full flag value.",
+          "header_flags": "JP header fields and four pointers checked: MUS_UNDERWATER=411, weather=14, underwater type=5, flags=0x0D. Region section is resolved by name, not inferred sequentially (Route129 is 208).",
+          "connections": "Named directions, offsets and destination IDs match fixed-US JSON and JP connection records: [{\"direction\":\"down\",\"map\":\"MAP_UNDERWATER_ROUTE126\",\"offset\":0},{\"direction\":\"emerge\",\"map\":\"MAP_ROUTE124\",\"offset\":0}]",
+          "layout_resources": "Native 80x80 layout, border/map pointers and payloads verified; General/Underwater tileset links preserved in the centralized final owner. Layout metadata and ten payloads match fixed US.",
+          "shared_call_closure": "No local script calls. Shared weather dispatch is reviewed separately for the two OnResume callers, not attributed to this empty table.",
+          "localization": "No local text, movement or Special/wait instructions. Map JSON and script semantics match fixed US; no generic text/control-code inference is used."
+        },
+        "Underwater_Route126": {
+          "script_control_flow": "One-byte 00 map-script terminator; no local event-script execution or unconverted script payload.",
+          "event_fields": "No object or coord events; 8 hidden items and 1 warps checked field-by-field against JP bytes. Hidden flags use the FLAG_HIDDEN_ITEMS_START offset, not the full flag value.",
+          "header_flags": "JP header fields and four pointers checked: MUS_UNDERWATER=411, weather=14, underwater type=5, flags=0x0D. Region section is resolved by name, not inferred sequentially (Route129 is 208).",
+          "connections": "Named directions, offsets and destination IDs match fixed-US JSON and JP connection records: [{\"direction\":\"up\",\"map\":\"MAP_UNDERWATER_ROUTE124\",\"offset\":0},{\"direction\":\"right\",\"map\":\"MAP_UNDERWATER_ROUTE127\",\"offset\":0},{\"direction\":\"emerge\",\"map\":\"MAP_ROUTE126\",\"offset\":0}]",
+          "layout_resources": "Native 80x80 layout, border/map pointers and payloads verified; General/Underwater tileset links preserved in the centralized final owner. Layout metadata and ten payloads match fixed US.",
+          "shared_call_closure": "No local script calls. Shared weather dispatch is reviewed separately for the two OnResume callers, not attributed to this empty table.",
+          "localization": "No local text, movement or Special/wait instructions. Map JSON and script semantics match fixed US; no generic text/control-code inference is used."
+        },
+        "Underwater_Route127": {
+          "script_control_flow": "Tag 5 OnResume calls the real AbnormalWeather_Underwater_SetupEscapeWarp, then ends; JP script table and instruction bytes checked.",
+          "event_fields": "No object or coord events; 4 hidden items and 2 warps checked field-by-field against JP bytes. Hidden flags use the FLAG_HIDDEN_ITEMS_START offset, not the full flag value.",
+          "header_flags": "JP header fields and four pointers checked: MUS_UNDERWATER=411, weather=14, underwater type=5, flags=0x0D. Region section is resolved by name, not inferred sequentially (Route129 is 208).",
+          "connections": "Named directions, offsets and destination IDs match fixed-US JSON and JP connection records: [{\"direction\":\"emerge\",\"map\":\"MAP_ROUTE127\",\"offset\":0},{\"direction\":\"left\",\"map\":\"MAP_UNDERWATER_ROUTE126\",\"offset\":0},{\"direction\":\"down\",\"map\":\"MAP_UNDERWATER_ROUTE128\",\"offset\":0}]",
+          "layout_resources": "Native 80x80 layout, border/map pointers and payloads verified; General/Underwater tileset links preserved in the centralized final owner. Layout metadata and ten payloads match fixed US.",
+          "shared_call_closure": "The shared 166-byte dispatch and all eight return-point cases (Routes105/125/127/129) match JP native bytes and fixed-US meaning; default return retained. This does not review all global weather state writers.",
+          "localization": "No local text, movement or Special/wait instructions. Map JSON and script semantics match fixed US; no generic text/control-code inference is used."
+        },
+        "Underwater_Route128": {
+          "script_control_flow": "One-byte 00 map-script terminator; no local event-script execution or unconverted script payload.",
+          "event_fields": "No object or coord events; 2 hidden items and 1 warps checked field-by-field against JP bytes. Hidden flags use the FLAG_HIDDEN_ITEMS_START offset, not the full flag value.",
+          "header_flags": "JP header fields and four pointers checked: MUS_UNDERWATER=411, weather=14, underwater type=5, flags=0x0D. Region section is resolved by name, not inferred sequentially (Route129 is 208).",
+          "connections": "Named directions, offsets and destination IDs match fixed-US JSON and JP connection records: [{\"direction\":\"up\",\"map\":\"MAP_UNDERWATER_ROUTE127\",\"offset\":0},{\"direction\":\"emerge\",\"map\":\"MAP_ROUTE128\",\"offset\":0}]",
+          "layout_resources": "Native 120x40 layout, border/map pointers and payloads verified; General/Underwater tileset links preserved in the centralized final owner. Layout metadata and ten payloads match fixed US.",
+          "shared_call_closure": "No local script calls. Shared weather dispatch is reviewed separately for the two OnResume callers, not attributed to this empty table.",
+          "localization": "No local text, movement or Special/wait instructions. Map JSON and script semantics match fixed US; no generic text/control-code inference is used."
+        },
+        "Underwater_Route129": {
+          "script_control_flow": "Tag 5 OnResume calls the real AbnormalWeather_Underwater_SetupEscapeWarp, then ends; JP script table and instruction bytes checked.",
+          "event_fields": "No object or coord events; 0 hidden items and 2 warps checked field-by-field against JP bytes. Hidden flags use the FLAG_HIDDEN_ITEMS_START offset, not the full flag value.",
+          "header_flags": "JP header fields and four pointers checked: MUS_UNDERWATER=411, weather=14, underwater type=5, flags=0x0D. Region section is resolved by name, not inferred sequentially (Route129 is 208).",
+          "connections": "Named directions, offsets and destination IDs match fixed-US JSON and JP connection records: [{\"direction\":\"emerge\",\"map\":\"MAP_ROUTE129\",\"offset\":0}]",
+          "layout_resources": "Native 80x40 layout, border/map pointers and payloads verified; General/Underwater tileset links preserved in the centralized final owner. Layout metadata and ten payloads match fixed US.",
+          "shared_call_closure": "The shared 166-byte dispatch and all eight return-point cases (Routes105/125/127/129) match JP native bytes and fixed-US meaning; default return retained. This does not review all global weather state writers.",
+          "localization": "No local text, movement or Special/wait instructions. Map JSON and script semantics match fixed US; no generic text/control-code inference is used."
+        }
+      },
+      "limitations": [
+        "Static data/control-flow review only; not in-game or emulator playtesting.",
+        "Global abnormal-weather variable writers/lifecycle and the rest of abnormal_weather.inc are not reviewed by this batch.",
+        "Generated US includes are not Git source evidence; immutable US JSON/scripts/layout inputs are used instead."
+      ],
+      "shared_dependencies": [
+        {
+          "entry": "AbnormalWeather_Underwater_SetupEscapeWarp",
+          "path": "data/scripts/abnormal_weather.inc",
+          "labels": [
+            "AbnormalWeather_Underwater_SetupEscapeWarp",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute105North",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute105South",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute125West",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute125East",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute127North",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute127South",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute129West",
+            "AbnormalWeather_Underwater_SetupEscapeWarpRoute129East"
+          ]
+        }
+      ]
+    }
+  ]
+}
