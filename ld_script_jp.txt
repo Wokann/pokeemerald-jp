@@ -10264,8 +10264,7 @@ SECTIONS {
         src/strings.o(.rodata.strings_shared_misc_text);
         src/strings.o(.rodata.strings_trainer_status_text);
         src/data/text/region_texts108.o(.rodata);
-        data/data_b2d.o(.rodata.mid93);
-        src/data/text/region_texts104.o(.rodata);
+        src/strings.o(.rodata.strings_chat_profile_text);
         data/data_b2d.o(.rodata.mid94);
         src/data/text/region_texts105.o(.rodata);
         src/strings.o(.rodata.strings_minigame_text);

@@ -1,12 +1,12 @@
 #include "global.h"
 #include "bg.h"
 #include "menu.h"
+#include "strings.h"
 #include "window.h"
 
 // Union-room chat windows/tasks data (0x82C55BC..0x82C588A)
 
 extern const u8 sKeyboardFunctionTexts[];
-extern const u8 gUnknown_85CC663[];
 extern bool32 Display_LoadGfx(u8 *), Display_ShowKeyboardSwapMenu(u8 *), Display_HideKeyboardSwapMenu(u8 *), Display_SwitchPages(u8 *), Display_MoveKeyboardCursor(u8 *), Display_AskQuitChatting(u8 *), Display_DestroyYesNoDialog(u8 *), Display_UpdateMessageBuffer(u8 *), Display_AskRegisterText(u8 *), Display_CancelRegister(u8 *), Display_ReturnToKeyboard(u8 *), Display_ScrollChat(u8 *), Display_AnimateKeyboardCursor(u8 *), Display_PrintInputText(u8 *), Display_PrintExitingChat(u8 *), Display_PrintLeaderLeft(u8 *), Display_AskSave(u8 *), Display_AskOverwriteSave(u8 *), Display_PrintSavingDontTurnOff(u8 *), Display_PrintSavedTheGame(u8 *), Display_AskConfirmLeaderLeave(u8 *);
 
 struct SubtaskInfo
@@ -80,20 +80,19 @@ const struct SubtaskInfo sDisplaySubtasks[] = {
     { 20, Display_AskConfirmLeaderLeave },
 };
 
-// 0x82C57D4: standard chat messages; first four rows are inside
-// sKeyboardFunctionTexts, the rest inside gUnknown_85CC663.
+// Standard chat message window settings.
 const struct MessageWindowInfo sDisplayStdMessages[] = {
     { sKeyboardFunctionTexts + 0x1B, 1, 0, 0, 1, 2, 0, 0 },
     { sKeyboardFunctionTexts + 0x28, 1, 0, 0, 1, 2, 0, 0 },
     { sKeyboardFunctionTexts + 0x36, 1, 0, 0, 1, 2, 0, 0 },
     { sKeyboardFunctionTexts + 0x44, 1, 0, 0, 1, 2, 0, 0 },
-    { gUnknown_85CC663 + 0x34, 2, 0, 0, 1, 2, 0, 0 },
-    { gUnknown_85CC663 + 0x4F, 2, 0, 0, 0, 2, 1, 0 },
-    { gUnknown_85CC663 + 0x6A, 2, 0, 0, 1, 2, 0, 1 },
-    { gUnknown_85CC663 + 0x8A, 2, 0, 0, 1, 2, 0, 1 },
-    { gUnknown_85CC663 + 0xAA, 2, 0, 0, 1, 2, 0, 1 },
-    { gUnknown_85CC663 + 0xCE, 2, 0, 0, 1, 2, 1, 1 },
-    { gUnknown_85CC663 + 0xE6, 2, 0, 0, 1, 2, 0, 1 },
+    { gText_ExitingChat, 2, 0, 0, 1, 2, 0, 0 },
+    { gText_LeaderLeftEndingChat, 2, 0, 0, 0, 2, 1, 0 },
+    { gText_RegisteredTextChangedOKToSave, 2, 0, 0, 1, 2, 0, 1 },
+    { gText_AlreadySavedFile_Chat, 2, 0, 0, 1, 2, 0, 1 },
+    { gText_SavingDontTurnOff_Chat, 2, 0, 0, 1, 2, 0, 1 },
+    { gText_PlayerSavedGame_Chat, 2, 0, 0, 1, 2, 1, 1 },
+    { gText_IfLeaderLeavesChatEnds, 2, 0, 0, 1, 2, 0, 1 },
 };
 
 // 0x82C5858: page title texts inside sKeyboardFunctionTexts

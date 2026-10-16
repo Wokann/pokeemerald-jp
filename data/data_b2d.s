@@ -103,23 +103,6 @@ gText_Red: @ 0x85CD061
 gText_Blue: @ 0x85CD064
 	.string "あお$　"
 
-	.section .rodata.mid93
-
-	.globl gUnknown_85CC663
-gUnknown_85CC663: @ 0x85CC663
-	.string "{DYNAMIC 0}さんが　さんかしました！$"
-	.globl gUnknown_85CC672
-gUnknown_85CC672: @ 0x85CC672
-	.string "{DYNAMIC 0}さんが　ぬけました${DYNAMIC 0}の{DYNAMIC 1}ひきめ:${DYNAMIC 0}の{DYNAMIC 1}ひきめは　いません$さんかしゃが　いなくなったので\n"
-	.string "しゅうりょうします！$リーダーの　{DYNAMIC 0}さんが\n"
-	.string "ぬけたので　かいさんします！$とうろくが　かわりました\n"
-	.string "ポケモンレポートに　かきこみますか？$まえに　かかれた　レポートに\n"
-	.string "うえから　かいても　いいですか？$ポケモンレポートに　かきこんでいます\n"
-	.string "でんげんを　きらないで　ください${DYNAMIC 0}　は\n"
-	.string "レポートに　しっかり　かきのこした！$リーダーが　やめると　かいさん\n"
-	.string "になりますが　よろしいですか？$"
-	.globl gUnknown_85CC769
-
 	.section .rodata.mid94
 
 	.globl gUnknown_85CC874

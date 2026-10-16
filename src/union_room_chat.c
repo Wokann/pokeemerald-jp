@@ -206,21 +206,7 @@ extern EWRAM_DATA struct UnionRoomChat *sChat;
 
 extern void SetChatFunction(u16 funcId);
 
-// JP chat message templates (0x085CC663 / 0x085CC672).
-extern const u8 gUnknown_85CC663[];
-extern const u8 gUnknown_85CC672[];
 
-// JP default registered chat texts (0x085CC769+).
-extern const u8 gUnknown_85CC769[];
-extern const u8 gUnknown_85CC76F[];
-extern const u8 gUnknown_85CC774[];
-extern const u8 gUnknown_85CC779[];
-extern const u8 gUnknown_85CC77E[];
-extern const u8 gUnknown_85CC783[];
-extern const u8 gUnknown_85CC787[];
-extern const u8 gUnknown_85CC78C[];
-extern const u8 gUnknown_85CC792[];
-extern const u8 gUnknown_85CC798[];
 
 // JP "YES"/"NO" menu texts (0x085CAAD8 / 0x085CAADB).
 extern const u8 gText_Yes[];
@@ -1408,7 +1394,7 @@ bool32 ProcessReceivedChatMessage(u8 *dest, u8 *recvMessage)
         {
             DynamicPlaceholderTextUtil_Reset();
             DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, name);
-            DynamicPlaceholderTextUtil_ExpandPlaceholders(dest, gUnknown_85CC663);
+            DynamicPlaceholderTextUtil_ExpandPlaceholders(dest, gText_F700JoinedChat);
             return TRUE;
         }
         break;
@@ -1425,7 +1411,7 @@ bool32 ProcessReceivedChatMessage(u8 *dest, u8 *recvMessage)
         {
             DynamicPlaceholderTextUtil_Reset();
             DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, name);
-            DynamicPlaceholderTextUtil_ExpandPlaceholders(dest, gUnknown_85CC672);
+            DynamicPlaceholderTextUtil_ExpandPlaceholders(dest, gText_F700LeftChat);
             return TRUE;
         }
         break;
@@ -1539,16 +1525,16 @@ u8 *GetChatHostName(void)
 
 void InitUnionRoomChatRegisteredTexts(void)
 {
-    StringCopy(&gSaveBlock1Ptr->registeredTexts[0], gUnknown_85CC769);
-    StringCopy(&gSaveBlock1Ptr->registeredTexts[1], gUnknown_85CC76F);
-    StringCopy(&gSaveBlock1Ptr->registeredTexts[2], gUnknown_85CC774);
-    StringCopy(&gSaveBlock1Ptr->registeredTexts[3], gUnknown_85CC779);
-    StringCopy(&gSaveBlock1Ptr->registeredTexts[4], gUnknown_85CC77E);
-    StringCopy(&gSaveBlock1Ptr->registeredTexts[5], gUnknown_85CC783);
-    StringCopy(&gSaveBlock1Ptr->registeredTexts[6], gUnknown_85CC787);
-    StringCopy(&gSaveBlock1Ptr->registeredTexts[7], gUnknown_85CC78C);
-    StringCopy(&gSaveBlock1Ptr->registeredTexts[8], gUnknown_85CC792);
-    StringCopy(&gSaveBlock1Ptr->registeredTexts[9], gUnknown_85CC798);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[0], gText_Hello);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[1], gText_Pokemon2);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[2], gText_Trade);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[3], gText_Battle);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[4], gText_Lets);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[5], gText_Ok);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[6], gText_Sorry);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[7], gText_YaySmileEmoji);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[8], gText_ThankYou);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[9], gText_ByeBye);
 }
 
 #define tState               data[0]

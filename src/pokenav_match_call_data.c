@@ -674,10 +674,10 @@ static const struct MatchCallCheckPageOverride sCheckPageOverrides[] MATCH_CALL_
         .flag = 0x0000FFFF,
         .flavorTexts =
         {
-            (const u8 *)0x085CC79E,
-            (const u8 *)0x085CC7AE,
-            (const u8 *)0x085CC7BD,
-            (const u8 *)0x085CC7CC,
+            gText_MatchCallSteven_Strategy,
+            gText_MatchCallSteven_Pokemon,
+            gText_MatchCallSteven_Intro1_BeforeMeteorFallsBattle,
+            gText_MatchCallSteven_Intro2_BeforeMeteorFallsBattle,
         },
     },
     {
@@ -686,10 +686,10 @@ static const struct MatchCallCheckPageOverride sCheckPageOverrides[] MATCH_CALL_
         .flag = 0x000004F6,
         .flavorTexts =
         {
-            (const u8 *)0x085CC79E,
-            (const u8 *)0x085CC7AE,
-            (const u8 *)0x085CC7DB,
-            (const u8 *)0x085CC7EA,
+            gText_MatchCallSteven_Strategy,
+            gText_MatchCallSteven_Pokemon,
+            gText_MatchCallSteven_Intro1_AfterMeteorFallsBattle,
+            gText_MatchCallSteven_Intro2_AfterMeteorFallsBattle,
         },
     },
     {
@@ -698,10 +698,10 @@ static const struct MatchCallCheckPageOverride sCheckPageOverrides[] MATCH_CALL_
         .flag = 0x0000FFFF,
         .flavorTexts =
         {
-            (const u8 *)0x085CC7F7,
-            (const u8 *)0x085CC807,
-            (const u8 *)0x085CC817,
-            (const u8 *)0x085CC827,
+            gText_MatchCallBrendan_Strategy,
+            gText_MatchCallBrendan_Pokemon,
+            gText_MatchCallBrendan_Intro1,
+            gText_MatchCallBrendan_Intro2,
         },
     },
     {
@@ -710,10 +710,10 @@ static const struct MatchCallCheckPageOverride sCheckPageOverrides[] MATCH_CALL_
         .flag = 0x0000FFFF,
         .flavorTexts =
         {
-            (const u8 *)0x085CC836,
-            (const u8 *)0x085CC846,
-            (const u8 *)0x085CC856,
-            (const u8 *)0x085CC866,
+            gText_MatchCallMay_Strategy,
+            gText_MatchCallMay_Pokemon,
+            gText_MatchCallMay_Intro1,
+            gText_MatchCallMay_Intro2,
         },
     },
 };

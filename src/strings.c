@@ -10,6 +10,7 @@
 #define STRINGS_FRONTIER_RECORD_TEXT __attribute__((section(".rodata.strings_frontier_record_text"), aligned(1)))
 #define STRINGS_BATTLE_FACTORY_SWAP_TEXT __attribute__((section(".rodata.strings_battle_factory_swap_text"), aligned(1)))
 #define STRINGS_POKENAV_SHARED_TEXT __attribute__((section(".rodata.strings_pokenav_shared_text"), aligned(1)))
+#define STRINGS_CHAT_PROFILE_TEXT __attribute__((section(".rodata.strings_chat_profile_text"), aligned(1)))
 #define STRINGS_MYSTERY_EVENT_TEXT __attribute__((section(".rodata.strings_mystery_event_text"), aligned(1)))
 #define STRINGS_TRAINER_STATUS_TEXT __attribute__((section(".rodata.strings_trainer_status_text"), aligned(1)))
 #define STRINGS_INTERFACE_TEXT __attribute__((section(".rodata.strings_interface_text"), aligned(1)))
@@ -723,6 +724,56 @@ STRINGS_TRAINER_STATUS_TEXT const u8 gText_ColorBlue[] = _("{COLOR 8}");
 // The final 0xFF is the COLOR parameter and also the StringCopy terminator.
 // __() is required here so that charmap_jp does not append a second EOS.
 STRINGS_TRAINER_STATUS_TEXT const u8 gText_ColorTransparent[] = __("{HIGHLIGHT 0}{COLOR 255}");
+
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_F700JoinedChat[] = _("{DYNAMIC 0}さんが　さんかしました！");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_F700LeftChat[] = _("{DYNAMIC 0}さんが　ぬけました");
+STRINGS_CHAT_PROFILE_TEXT const u8 gJPText_PlayersXPokemon[] = _("{DYNAMIC 0}の{DYNAMIC 1}ひきめ:");
+STRINGS_CHAT_PROFILE_TEXT const u8 gJPText_PlayersXPokmonDoesNotExist[] = _("{DYNAMIC 0}の{DYNAMIC 1}ひきめは　いません");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_ExitingChat[] = _(
+    "さんかしゃが　いなくなったので\n"
+    "しゅうりょうします！");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_LeaderLeftEndingChat[] = _(
+    "リーダーの　{DYNAMIC 0}さんが\n"
+    "ぬけたので　かいさんします！");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_RegisteredTextChangedOKToSave[] = _(
+    "とうろくが　かわりました\n"
+    "ポケモンレポートに　かきこみますか？");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_AlreadySavedFile_Chat[] = _(
+    "まえに　かかれた　レポートに\n"
+    "うえから　かいても　いいですか？");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_SavingDontTurnOff_Chat[] = _(
+    "ポケモンレポートに　かきこんでいます\n"
+    "でんげんを　きらないで　ください");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_PlayerSavedGame_Chat[] = _(
+    "{DYNAMIC 0}　は\n"
+    "レポートに　しっかり　かきのこした！");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_IfLeaderLeavesChatEnds[] = _(
+    "リーダーが　やめると　かいさん\n"
+    "になりますが　よろしいですか？");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_Hello[] = _("こんにちは");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_Pokemon2[] = _("ポケモン");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_Trade[] = _("こうかん");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_Battle[] = _("たいせん");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_Lets[] = _("しよう！");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_Ok[] = _("OK！");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_Sorry[] = _("ごめん⋯");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_YaySmileEmoji[] = _("わーい{EMOJI_BIGSMILE}");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_ThankYou[] = _("サンキュー");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_ByeBye[] = _("バイバイ！");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallSteven_Strategy[] = _("あいての　じゃくてんを　つく！");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallSteven_Pokemon[] = _("さいきょうの　はがねポケモン");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallSteven_Intro1_BeforeMeteorFallsBattle[] = _("めずらしい　いしの　ためなら");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallSteven_Intro2_BeforeMeteorFallsBattle[] = _("たきだって　のぼって　いくよ");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallSteven_Intro1_AfterMeteorFallsBattle[] = _("けっきょく　ボクが　いちばん");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallSteven_Intro2_AfterMeteorFallsBattle[] = _("つよくて　すごいんだよね");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallBrendan_Strategy[] = _("ポケモンの　ちしきで　しょうぶ");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallBrendan_Pokemon[] = _("いろんな　ポケモンを　つかうぜ");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallBrendan_Intro1[] = _("とうさんより　すごい　ポケモン");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallBrendan_Intro2[] = _("はかせに　なって　みせるさ！");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallMay_Strategy[] = _("しょうぶは　とくいじゃないかも");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallMay_Pokemon[] = _("どんな　ポケモンでも　つかうわ");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallMay_Intro1[] = _("ポケモン　つれて　おとうさんの");
+STRINGS_CHAT_PROFILE_TEXT const u8 gText_MatchCallMay_Intro2[] = _("けんきゅうを　おてつだい！");
 
 STRINGS_MINIGAME_TEXT const u8 gText_ContinueMenuPlayer[] = _("しゅじんこう　{STR_VAR_1}");
 STRINGS_MINIGAME_TEXT const u8 gText_ContinueMenuTime[] = _("プレイじかん　{STR_VAR_1}:{STR_VAR_2}");
