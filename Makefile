@@ -1229,7 +1229,7 @@ DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_anim_scripts
 # Migrated data files now build from C or no longer contribute data.
 DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b_mid2b5.o $(OBJ_DIR)/data/data_b_mid2b6.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid62.o,$(DATA_OBJS))
 DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b2d_mid33.o,$(DATA_OBJS))
-DATA_OBJS += $(OBJ_DIR)/data/sound_check.o $(OBJ_DIR)/data/tv.o $(OBJ_DIR)/data/contest_results.o
+DATA_OBJS += $(OBJ_DIR)/data/tv.o $(OBJ_DIR)/data/contest_results.o
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_regis_resources.o
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_legendary_resources.o
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_frontier_resources.o
@@ -1762,6 +1762,12 @@ $(C_BUILDDIR)/berry_crush.o: src/berry_crush.c graphics/berry_crush/gBerryCrush_
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/berry_crush.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/berry_crush.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/berry_crush.gen.s
+
+$(C_BUILDDIR)/sound_check.o: src/sound_check.c src/data/sound_check.h charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/sound_check.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/sound_check.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/sound_check.gen.s
 
 $(C_BUILDDIR)/berry_blender.o: src/berry_blender.c charmap.txt
 	@mkdir -p $(dir $@)
@@ -2869,10 +2875,6 @@ $(OBJ_DIR)/data/battle_transition_frontier_resources.o: data/battle_transition_f
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(OBJ_DIR)/data/battle_transition_pre_regi_resources.o: data/battle_transition_pre_regi_resources.s graphics/battle_transitions/big_pokeball.4bpp graphics/battle_transitions/pokeball_trail.4bpp graphics/battle_transitions/pokeball.4bpp graphics/battle_transitions/elite_four_bg.4bpp graphics/battle_transitions/unused_brendan.4bpp graphics/battle_transitions/unused_lass.4bpp graphics/battle_transitions/shrinking_box.4bpp graphics/battle_transitions/evil_team.gbapal graphics/battle_transitions/team_aqua.4bpp.lz graphics/battle_transitions/team_aqua.bin.lz graphics/battle_transitions/team_magma.4bpp.lz graphics/battle_transitions/team_magma.bin.lz
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
-
-$(OBJ_DIR)/data/sound_check.o: data/sound_check.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 

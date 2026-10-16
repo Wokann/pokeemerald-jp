@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Validate the JP-only Sound Check module without extracting ROM data.
 
-The Sound Check UI occupies one fixed code slice.  A future source migration
-can use this read-only audit to prove that the linked candidate preserves the
-slice, exports the intended neutral symbols at their original addresses, keeps
-the fixed RAM allocations, and has removed the misleading legacy aliases.
+The Sound Check UI occupies fixed code and data slices.  This read-only audit
+checks native bytes, name-table boundaries, neutral code symbols, fixed RAM
+allocations, and removal of misleading legacy aliases.  Byte identity alone
+does not certify the behaviour of every debug-menu option.
 """
 
 from __future__ import annotations
@@ -13,6 +13,7 @@ import argparse
 import hashlib
 import json
 import re
+import struct
 import sys
 from pathlib import Path
 
@@ -22,6 +23,15 @@ ROM_BASE = 0x08000000
 CODE_START = 0x080E82DC
 CODE_END = 0x080E977C
 CODE_SHA256 = "030fdc725465e2ea9b852bd9404b327b547ff654b4768e9190c97b12581b7414"
+DATA_START = 0x08566D08
+DATA_END = 0x08568A78
+DATA_SHA256 = "a9bb9c6c2e836a233c9f5191207973405dbfc74c98115bc3bc653dd7ad99e2f5"
+NAME_POOL_START = 0x08566E69
+NAME_POOL_END = 0x085682F7
+NAME_TABLES = (
+    ("sound_effects", 0x085682F8, 270),
+    ("music", 0x08568730, 210),
+)
 
 CODE_SYMBOLS = {
     "CB2_SoundCheck": 0x080E82DC,
@@ -54,7 +64,10 @@ LEGACY_SOURCE_ALIASES = (
     "SPECIAL_CheckLeadMonTough",
     "SPECIAL_FoundAbandonedShipRoom1Key",
 )
-MAP_SYMBOL_RE = re.compile(r"^\s*0x([0-9A-Fa-f]+)\s+([A-Za-z_]\w*)\s*$", re.MULTILINE)
+MAP_SYMBOL_RE = re.compile(
+    r"^\s*0x([0-9A-Fa-f]+)\s+([A-Za-z_]\w*)(?:\s*=\s*\.)?\s*$",
+    re.MULTILINE,
+)
 
 
 class AuditError(ValueError):
@@ -81,16 +94,64 @@ def audit_baseline(data: bytes) -> dict[str, object]:
     if digest != CODE_SHA256:
         fail(f"Sound Check SHA-256 is {digest}, expected {CODE_SHA256}")
     return {
-        "format": 1,
+        "format": 2,
         "code": {
             "start": f"0x{CODE_START:08X}",
             "end": f"0x{CODE_END:08X}",
             "size": CODE_END - CODE_START,
             "sha256": digest,
         },
+        "data": audit_data(data),
         "symbols": {name: f"0x{address:08X}" for name, address in CODE_SYMBOLS.items()},
         "ewram": [symbol_dict(symbol) for symbol in EWRAM_SYMBOLS],
         "iwram": [symbol_dict(symbol) for symbol in IWRAM_SYMBOLS],
+    }
+
+
+def audit_name_tables(data: bytes) -> dict[str, object]:
+    """Require native EOS starts, not merely pointers somewhere in the pool."""
+    pool = rom_slice(data, NAME_POOL_START, NAME_POOL_END)
+    cursor = 0
+    starts: set[int] = set()
+    while cursor < len(pool):
+        starts.add(NAME_POOL_START + cursor)
+        end = pool.find(b"\xff", cursor)
+        if end < 0:
+            fail("unterminated Sound Check name")
+        cursor = end + 1
+    if len(starts) != 481:
+        fail(f"Sound Check name pool has {len(starts)} objects, expected 481")
+    if rom_slice(data, NAME_POOL_END, NAME_POOL_END + 1) != b"\0":
+        fail("Sound Check name-table alignment byte must remain zero")
+    result: dict[str, object] = {"name_objects": len(starts)}
+    targets: set[int] = set()
+    for name, address, count in NAME_TABLES:
+        raw = rom_slice(data, address, address + count * 4)
+        pointers = struct.unpack(f"<{count}I", raw)
+        for index, pointer in enumerate(pointers):
+            if pointer not in starts:
+                fail(f"{name}[{index}] targets non-object address 0x{pointer:08X}")
+        if pointers[0] != 0x08566E6E:
+            fail(f"{name}[0] must retain the shared STOP text")
+        targets.update(pointers)
+        result[name] = {"start": f"0x{address:08X}", "entries": count}
+    # RL and MUS-DUMMY are physical text objects, but not name-table targets.
+    if starts - targets != {0x08566E69, 0x08566E73}:
+        fail("Sound Check name-table target coverage changed")
+    return result
+
+
+def audit_data(data: bytes) -> dict[str, object]:
+    raw = rom_slice(data, DATA_START, DATA_END)
+    digest = sha256(raw)
+    if digest != DATA_SHA256:
+        fail(f"Sound Check data SHA-256 is {digest}, expected {DATA_SHA256}")
+    return {
+        "start": f"0x{DATA_START:08X}",
+        "end": f"0x{DATA_END:08X}",
+        "size": DATA_END - DATA_START,
+        "sha256": digest,
+        "names": audit_name_tables(data),
     }
 
 
@@ -168,11 +229,21 @@ def compare_candidate(baseline: bytes, candidate: bytes) -> dict[str, object]:
     return {"start": f"0x{CODE_START:08X}", "end": f"0x{CODE_END:08X}", "sha256": sha256(actual)}
 
 
+def compare_candidate_data(baseline: bytes, candidate: bytes) -> dict[str, object]:
+    expected = rom_slice(baseline, DATA_START, DATA_END)
+    actual = rom_slice(candidate, DATA_START, DATA_END)
+    if actual != expected:
+        fail(f"candidate differs in Sound Check data 0x{DATA_START:08X}..0x{DATA_END:08X}")
+    return audit_data(candidate)
+
+
 def render_human(manifest: dict[str, object]) -> str:
     code = manifest["code"]
+    data = manifest["data"]
     return "\n".join((
         f"Sound Check code: {code['start']}..{code['end']} ({code['size']:#x})",
         f"SHA-256: {code['sha256']}",
+        f"Sound Check data: {data['start']}..{data['end']} ({data['size']:#x}); 270 SE / 210 music names",
         f"Code symbols: {len(manifest['symbols'])}; EWRAM: {len(manifest['ewram'])}; IWRAM: {len(manifest['iwram'])}",
     ))
 
@@ -192,7 +263,9 @@ def main(argv: list[str] | None = None) -> int:
     baseline = args.rom.read_bytes()
     manifest = audit_baseline(baseline)
     if args.candidate_rom is not None:
-        manifest["candidate_code"] = compare_candidate(baseline, args.candidate_rom.read_bytes())
+        candidate = args.candidate_rom.read_bytes()
+        manifest["candidate_code"] = compare_candidate(baseline, candidate)
+        manifest["candidate_data"] = compare_candidate_data(baseline, candidate)
     if args.link_map is not None:
         manifest["link_map"] = check_map(args.link_map)
     if args.ewram_symbols is not None:
