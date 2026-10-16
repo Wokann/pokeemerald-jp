@@ -7,6 +7,7 @@
 #include "field_camera.h"
 #include "menu.h"
 #include "constants/items.h"
+#include "constants/decorations.h"
 #include "constants/heal_locations.h"
 #include "constants/field_specials.h"
 #include "constants/event_object_movement.h"
@@ -79,6 +80,7 @@ extern void GetEreaderTrainerName(u8 *dest);
 #include "constants/battle_frontier.h"
 
 #define FIELD_SPECIALS_DATA __attribute__((section(".rodata.field_specials_data")))
+#define FIELD_SPECIALS_DATA_EXCHANGE_CORNER __attribute__((section(".rodata.field_specials_exchange_corner_data")))
 #define FIELD_SPECIALS_DATA_EARLY __attribute__((section(".rodata.field_specials_data_early")))
 #define FIELD_SPECIALS_DATA_SLOT_MACHINE_SELECTORS __attribute__((section(".rodata.field_specials_slot_machine_selectors")))
 #define FIELD_SPECIALS_DATA_ELEVATOR __attribute__((section(".rodata.field_specials_elevator_data")))
@@ -4657,7 +4659,7 @@ __attribute__((naked)) void ShowFrontierExchangeCornerItemIconWindow(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0813AA88: .4byte gUnknown_203A83A\n\t"
-        "_0813AA8C: .4byte gUnknown_8592B80\n\t"
+        "_0813AA8C: .4byte sFrontierExchangeCorner_ItemIconWindowTemplate\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4734,8 +4736,8 @@ __attribute__((naked)) void sub_0813AAAC(void)
         "	beq _0813AB64\n\t"
         "	b _0813AB78\n\t"
         "	.align 2, 0\n\t"
-        "_0813AB28: .4byte gUnknown_8592BCC\n\t"
-        "_0813AB2C: .4byte gUnknown_8592B80 + 0x8\n\t"
+        "_0813AB28: .4byte sFrontierExchangeCorner_Decor1Descriptions\n\t"
+        "_0813AB2C: .4byte sFrontierExchangeCorner_Decor1\n\t"
         "_0813AB30: .4byte 0x0000FFFF\n\t"
         "_0813AB34:\n\t"
         "	ldr r1, _0813AB6C\n\t"
@@ -4766,8 +4768,8 @@ __attribute__((naked)) void sub_0813AAAC(void)
         "	bl sub_0813AC20\n\t"
         "	b _0813AC0E\n\t"
         "	.align 2, 0\n\t"
-        "_0813AB6C: .4byte gUnknown_8592BF8\n\t"
-        "_0813AB70: .4byte gUnknown_8592B80 + 0x1E\n\t"
+        "_0813AB6C: .4byte sFrontierExchangeCorner_Decor2Descriptions\n\t"
+        "_0813AB70: .4byte sFrontierExchangeCorner_Decor2\n\t"
         "_0813AB74: .4byte 0x0000FFFF\n\t"
         "_0813AB78:\n\t"
         "	ldr r4, _0813ABA0\n\t"
@@ -4813,8 +4815,8 @@ __attribute__((naked)) void sub_0813AAAC(void)
         "	bl sub_0813AC20\n\t"
         "	b _0813AC0E\n\t"
         "	.align 2, 0\n\t"
-        "_0813ABD8: .4byte gUnknown_8592C10\n\t"
-        "_0813ABDC: .4byte gUnknown_8592B80 + 0x2A\n\t"
+        "_0813ABD8: .4byte sFrontierExchangeCorner_VitaminsDescriptions\n\t"
+        "_0813ABDC: .4byte sFrontierExchangeCorner_Vitamins\n\t"
         "_0813ABE0:\n\t"
         "	ldr r1, _0813AC18\n\t"
         "	lsls r0, r5, #2\n\t"
@@ -4843,8 +4845,8 @@ __attribute__((naked)) void sub_0813AAAC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813AC18: .4byte gUnknown_8592C2C\n\t"
-        "_0813AC1C: .4byte gUnknown_8592B80 + 0x38\n\t"
+        "_0813AC18: .4byte sFrontierExchangeCorner_HoldItemsDescriptions\n\t"
+        "_0813AC1C: .4byte sFrontierExchangeCorner_HoldItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6886,10 +6888,6 @@ u8 Script_TryGainNewFanFromCounter(void)
 }
 
 
-FIELD_SPECIALS_DATA const u8 gUnknown_8592BCC[] = {0x01, 0x67, 0x23, 0x08, 0x1C, 0x67, 0x23, 0x08, 0x3C, 0x67, 0x23, 0x08, 0x5C, 0x67, 0x23, 0x08, 0x7B, 0x67, 0x23, 0x08, 0x9A, 0x67, 0x23, 0x08, 0xB8, 0x67, 0x23, 0x08, 0xD7, 0x67, 0x23, 0x08, 0xF7, 0x67, 0x23, 0x08, 0x17, 0x68, 0x23, 0x08, 0xC8, 0x93, 0x5C, 0x08};
-FIELD_SPECIALS_DATA const u8 gUnknown_8592BF8[] = {0x36, 0x68, 0x23, 0x08, 0x36, 0x68, 0x23, 0x08, 0x36, 0x68, 0x23, 0x08, 0x36, 0x68, 0x23, 0x08, 0x36, 0x68, 0x23, 0x08, 0xC8, 0x93, 0x5C, 0x08};
-FIELD_SPECIALS_DATA const u8 gUnknown_8592C10[] = {0x54, 0x68, 0x23, 0x08, 0x66, 0x68, 0x23, 0x08, 0x78, 0x68, 0x23, 0x08, 0x8A, 0x68, 0x23, 0x08, 0x9C, 0x68, 0x23, 0x08, 0xAE, 0x68, 0x23, 0x08, 0xC8, 0x93, 0x5C, 0x08};
-FIELD_SPECIALS_DATA const u8 gUnknown_8592C2C[] = {0xC1, 0x68, 0x23, 0x08, 0xE5, 0x68, 0x23, 0x08, 0x04, 0x69, 0x23, 0x08, 0x23, 0x69, 0x23, 0x08, 0x43, 0x69, 0x23, 0x08, 0x66, 0x69, 0x23, 0x08, 0x87, 0x69, 0x23, 0x08, 0xAA, 0x69, 0x23, 0x08, 0xCA, 0x69, 0x23, 0x08, 0xC8, 0x93, 0x5C, 0x08};
 FIELD_SPECIALS_DATA const u8 gUnknown_8592C54[] = {0x87, 0x00, 0x45, 0x00, 0x8A, 0x00, 0x05, 0x00, 0x19, 0x00, 0x22, 0x00, 0x9D, 0x00, 0x44, 0x00, 0x56, 0x00, 0x0E, 0x00};
 FIELD_SPECIALS_DATA const u8 gUnknown_8592C68[] = {0x6F, 0x00, 0xAD, 0x00, 0xBD, 0x00, 0x81, 0x00, 0xC4, 0x00, 0xCB, 0x00, 0xF4, 0x00, 0x08, 0x00, 0x09, 0x00, 0x07, 0x00};
 FIELD_SPECIALS_DATA const u8 gUnknown_8592C7C[] = {0x00, 0x01, 0x07, 0x0A, 0x06, 0x0F, 0x20, 0x00};
@@ -6912,4 +6910,16 @@ FIELD_SPECIALS_DATA_EARLY const u8 gUnknown_8592B00[] = {0xB5, 0x7A, 0x23, 0x08,
 FIELD_SPECIALS_DATA_EARLY const u8 gUnknown_8592B30[] = {0xD4, 0x7F, 0x23, 0x08, 0x2A, 0x80, 0x23, 0x08, 0x7F, 0x80, 0x23, 0x08, 0xD4, 0x80, 0x23, 0x08, 0x2D, 0x81, 0x23, 0x08, 0x85, 0x81, 0x23, 0x08, 0xDF, 0x81, 0x23, 0x08, 0x38, 0x82, 0x23, 0x08, 0x8E, 0x82, 0x23, 0x08, 0xE3, 0x82, 0x23, 0x08, 0x39, 0x83, 0x23, 0x08, 0x8B, 0x83, 0x23, 0x08};
 FIELD_SPECIALS_DATA_EARLY const u8 gUnknown_8592B60[] = {0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00, 0x04, 0x01, 0x04, 0x00, 0x02, 0x01, 0x02, 0x00, 0x03, 0x00, 0x05, 0x00, 0x06};
 FIELD_SPECIALS_DATA_EARLY const u8 gUnknown_8592B78[] = {0x00, 0x01, 0x01, 0x09, 0x02, 0x0F, 0x08, 0x00};
-FIELD_SPECIALS_DATA_EARLY const u8 gUnknown_8592B80[] = {0x00, 0x02, 0x09, 0x04, 0x04, 0x0F, 0x1A, 0x00};
+
+static const struct WindowTemplate sFrontierExchangeCorner_ItemIconWindowTemplate FIELD_SPECIALS_DATA_EXCHANGE_CORNER =
+{
+    .bg = 0,
+    .tilemapLeft = 2,
+    .tilemapTop = 9,
+    .width = 4,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 26,
+};
+
+#include "data/battle_frontier/battle_frontier_exchange_corner.h"

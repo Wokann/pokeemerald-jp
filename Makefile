@@ -1485,7 +1485,7 @@ $(C_BUILDDIR)/pokenav_region_map.o: src/pokenav_region_map.c src/data/region_map
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_region_map.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokenav_region_map.gen.s
 
-$(C_BUILDDIR)/field_specials.o: src/field_specials.c src/data/field_specials.h $(wildcard data/field_specials/jp/*)
+$(C_BUILDDIR)/field_specials.o: src/field_specials.c src/data/field_specials.h src/data/battle_frontier/battle_frontier_exchange_corner.h $(wildcard data/field_specials/jp/*)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/field_specials.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/field_specials.gen.s | $(AS) $(ASFLAGS) -o $@ -
