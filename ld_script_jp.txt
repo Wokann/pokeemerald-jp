@@ -9577,11 +9577,12 @@ SECTIONS {
         src/graphics.o(.rodata.pokedex_search_menu_graphics);
         src/pokedex.o(.rodata.pokedex_search_menu_data);
         src/pokedex.o(.rodata.pokedex_search_options);
-        src/data/trainer_card.o(.rodata.trainer_card_mid55);
-        src/data/text/region_texts56.o(.rodata);
-        src/data/trainer_card.o(.rodata.trainer_card_mid56_text_colors);
-        src/data/trainer_card.o(.rodata.trainer_card_mid56_link_texts);
-        src/data/trainer_card.o(.rodata.trainer_card_mid56_suffix);
+        src/graphics.o(.rodata.graphics_trainer_card_tiles);
+        src/trainer_card.o(.rodata.trainer_card_stickers);
+        src/graphics.o(.rodata.graphics_trainer_card_tilemaps);
+        src/trainer_card.o(.rodata.trainer_card_unused_palette);
+        src/graphics.o(.rodata.graphics_trainer_card_palettes);
+        src/trainer_card.o(.rodata.trainer_card_data);
         src/data/frontier_pass.o(.rodata.frontier_pass_mid56);
         src/frontier_pass.o(.rodata.frontier_pass_text_tables);
         src/data/pokemon_storage_system.o(.rodata.pokemon_storage_mid56);

@@ -1589,3 +1589,39 @@ USE_POKEBLOCK_NATURE_WINDOW const u16 gUsePokeblockNatureWin_Pal[] = INCGFX_U16(
 #undef USE_POKEBLOCK_GRAPH_PALETTE
 #undef USE_POKEBLOCK_GRAPH_GRAPHICS
 #undef USE_POKEBLOCK_NATURE_WINDOW
+
+#define GRAPHICS_TRAINER_CARD_TILES __attribute__((section(".rodata.graphics_trainer_card_tiles"), aligned(1)))
+
+#define GRAPHICS_TRAINER_CARD_TILEMAPS __attribute__((section(".rodata.graphics_trainer_card_tilemaps"), aligned(1)))
+
+#define GRAPHICS_TRAINER_CARD_PALETTES __attribute__((section(".rodata.graphics_trainer_card_palettes"), aligned(1)))
+
+const u32 gHoennTrainerCard_Gfx[] GRAPHICS_TRAINER_CARD_TILES = INCBIN_U32("graphics/trainer_card/tiles.4bpp.lz");
+
+const u32 gKantoTrainerCard_Gfx[] GRAPHICS_TRAINER_CARD_TILES = INCBIN_U32("graphics/trainer_card/frlg/tiles.4bpp.lz");
+
+const u32 gHoennTrainerCardFront_Tilemap[] GRAPHICS_TRAINER_CARD_TILEMAPS = INCBIN_U32("graphics/trainer_card/front.bin.lz");
+
+const u32 gKantoTrainerCardFront_Tilemap[] GRAPHICS_TRAINER_CARD_TILEMAPS = INCBIN_U32("graphics/trainer_card/frlg/front.bin.lz");
+
+const u32 gHoennTrainerCardBack_Tilemap[] GRAPHICS_TRAINER_CARD_TILEMAPS = INCBIN_U32("graphics/trainer_card/back.bin.lz");
+
+const u32 gKantoTrainerCardBack_Tilemap[] GRAPHICS_TRAINER_CARD_TILEMAPS = INCBIN_U32("graphics/trainer_card/frlg/back.bin.lz");
+
+const u32 gHoennTrainerCardFrontLink_Tilemap[] GRAPHICS_TRAINER_CARD_TILEMAPS = INCBIN_U32("graphics/trainer_card/front_link.bin.lz");
+
+const u32 gKantoTrainerCardFrontLink_Tilemap[] GRAPHICS_TRAINER_CARD_TILEMAPS = INCBIN_U32("graphics/trainer_card/frlg/front_link.bin.lz");
+
+const u32 gHoennTrainerCardBg_Tilemap[] GRAPHICS_TRAINER_CARD_TILEMAPS = INCBIN_U32("graphics/trainer_card/bg.bin.lz");
+
+const u32 gKantoTrainerCardBg_Tilemap[] GRAPHICS_TRAINER_CARD_TILEMAPS = INCBIN_U32("graphics/trainer_card/frlg/bg.bin.lz");
+
+const u16 gHoennTrainerCardGreen_Pal[] GRAPHICS_TRAINER_CARD_PALETTES = INCBIN_U16("graphics/trainer_card/green.pal.gbapal");
+
+const u16 gKantoTrainerCardBlue_Pal[] GRAPHICS_TRAINER_CARD_PALETTES = INCBIN_U16("graphics/trainer_card/frlg/blue.pal.gbapal");
+
+#undef GRAPHICS_TRAINER_CARD_TILES
+
+#undef GRAPHICS_TRAINER_CARD_TILEMAPS
+
+#undef GRAPHICS_TRAINER_CARD_PALETTES

@@ -1930,11 +1930,36 @@ $(C_BUILDDIR)/data/pokedex.o: src/data/pokedex.c include/pokedex.h charmap.txt s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/pokedex.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/data/pokedex.gen.s
 
-$(C_BUILDDIR)/data/trainer_card.o: src/data/trainer_card.c src/data/trainer_card.h $(wildcard graphics/trainer_card/jp/* data/trainer_card/jp/*)
+JP_TRAINER_CARD_ASSETS := graphics/trainer_card/bronze.pal.gbapal \
+	graphics/trainer_card/copper.pal.gbapal \
+	graphics/trainer_card/frlg/blue.pal.gbapal \
+	graphics/trainer_card/frlg/bronze.pal.gbapal \
+	graphics/trainer_card/frlg/gold.pal.gbapal \
+	graphics/trainer_card/frlg/green.pal.gbapal \
+	graphics/trainer_card/frlg/silver.pal.gbapal \
+	graphics/trainer_card/gold.pal.gbapal \
+	graphics/trainer_card/green.pal.gbapal \
+	graphics/trainer_card/silver.pal.gbapal \
+	graphics/trainer_card/unused.pal.gbapal \
+	graphics/trainer_card/frlg/bg.bin.lz
+
+graphics/trainer_card/%.pal.gbapal: graphics/trainer_card/%.pal | tools
+	$(GFX) $< $@
+
+JP_TRAINER_CARD_INPUTS := $(wildcard graphics/trainer_card/*.gbapal graphics/trainer_card/*.4bpp.lz graphics/trainer_card/*.bin.lz \
+	graphics/trainer_card/frlg/*.gbapal graphics/trainer_card/frlg/*.4bpp.lz graphics/trainer_card/frlg/*.bin.lz)
+
+$(C_BUILDDIR)/graphics.o: $(JP_TRAINER_CARD_ASSETS) $(JP_TRAINER_CARD_INPUTS)
+$(C_BUILDDIR)/trainer_card.o: src/trainer_card.c charmap.txt $(JP_TRAINER_CARD_ASSETS) $(JP_TRAINER_CARD_INPUTS)
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/trainer_card.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/trainer_card.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/data/trainer_card.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/trainer_card.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/trainer_card.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/trainer_card.gen.s
+
+clean: clean-trainer-card-assets
+.PHONY: clean-trainer-card-assets
+clean-trainer-card-assets:
+	rm -f $(JP_TRAINER_CARD_ASSETS)
 
 $(C_BUILDDIR)/data/frontier_pass.o: src/data/frontier_pass.c src/data/frontier_pass.h $(wildcard graphics/frontier_pass/* data/frontier_pass/jp/*)
 	@mkdir -p $(dir $@)

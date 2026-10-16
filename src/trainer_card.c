@@ -1,5 +1,13 @@
 #include "global.h"
 #include "trainer_card.h"
+#include "bg.h"
+#include "window.h"
+#include "task.h"
+#include "text.h"
+#include "graphics.h"
+#include "strings.h"
+#include "constants/trainers.h"
+#include "constants/characters.h"
 
 __attribute__((naked)) void VblankCb_TrainerCard(void)
 {
@@ -576,14 +584,14 @@ __attribute__((naked)) void LoadCardGfx(void)
         "	.align 2, 0\n\t"
         "_080C2150: .4byte gUnknown_2039988\n\t"
         "_080C2154: .4byte 0x00000516\n\t"
-        "_080C2158: .4byte gUnknown_8545BFC\n\t"
+        "_080C2158: .4byte gHoennTrainerCardBg_Tilemap\n\t"
         "_080C215C: .4byte 0x00000EE4\n\t"
         "_080C2160:\n\t"
         "	ldr r0, _080C2168\n\t"
         "	ldr r2, _080C216C\n\t"
         "	b _080C227E\n\t"
         "	.align 2, 0\n\t"
-        "_080C2168: .4byte gUnknown_8545C94\n\t"
+        "_080C2168: .4byte gKantoTrainerCardBg_Tilemap\n\t"
         "_080C216C: .4byte 0x00000EE4\n\t"
         "_080C2170:\n\t"
         "	ldr r0, _080C2184\n\t"
@@ -599,14 +607,14 @@ __attribute__((naked)) void LoadCardGfx(void)
         "	.align 2, 0\n\t"
         "_080C2184: .4byte gUnknown_2039988\n\t"
         "_080C2188: .4byte 0x00000516\n\t"
-        "_080C218C: .4byte gUnknown_85456E8\n\t"
+        "_080C218C: .4byte gHoennTrainerCardBack_Tilemap\n\t"
         "_080C2190: .4byte 0x00000A34\n\t"
         "_080C2194:\n\t"
         "	ldr r0, _080C219C\n\t"
         "	ldr r2, _080C21A0\n\t"
         "	b _080C227E\n\t"
         "	.align 2, 0\n\t"
-        "_080C219C: .4byte gUnknown_85457C4\n\t"
+        "_080C219C: .4byte gKantoTrainerCardBack_Tilemap\n\t"
         "_080C21A0: .4byte 0x00000A34\n\t"
         "_080C21A4:\n\t"
         "	ldr r0, _080C21C0\n\t"
@@ -625,13 +633,13 @@ __attribute__((naked)) void LoadCardGfx(void)
         "	.align 2, 0\n\t"
         "_080C21C0: .4byte gUnknown_2039988\n\t"
         "_080C21C4: .4byte 0x00000516\n\t"
-        "_080C21C8: .4byte gUnknown_8545390\n\t"
+        "_080C21C8: .4byte gHoennTrainerCardFront_Tilemap\n\t"
         "_080C21CC:\n\t"
         "	ldr r0, _080C21D4\n\t"
         "	ldr r2, _080C21D8\n\t"
         "	b _080C227E\n\t"
         "	.align 2, 0\n\t"
-        "_080C21D4: .4byte gUnknown_8545530\n\t"
+        "_080C21D4: .4byte gKantoTrainerCardFront_Tilemap\n\t"
         "_080C21D8: .4byte 0x00000584\n\t"
         "_080C21DC:\n\t"
         "	ldr r2, _080C21EC\n\t"
@@ -644,13 +652,13 @@ __attribute__((naked)) void LoadCardGfx(void)
         "	b _080C227E\n\t"
         "	.align 2, 0\n\t"
         "_080C21EC: .4byte 0x00000516\n\t"
-        "_080C21F0: .4byte gUnknown_85458F0\n\t"
+        "_080C21F0: .4byte gHoennTrainerCardFrontLink_Tilemap\n\t"
         "_080C21F4:\n\t"
         "	ldr r0, _080C21FC\n\t"
         "	ldr r2, _080C2200\n\t"
         "	b _080C227E\n\t"
         "	.align 2, 0\n\t"
-        "_080C21FC: .4byte gUnknown_8545A70\n\t"
+        "_080C21FC: .4byte gKantoTrainerCardFrontLink_Tilemap\n\t"
         "_080C2200: .4byte 0x00000584\n\t"
         "_080C2204:\n\t"
         "	ldr r0, _080C2218\n\t"
@@ -666,14 +674,14 @@ __attribute__((naked)) void LoadCardGfx(void)
         "	.align 2, 0\n\t"
         "_080C2218: .4byte gUnknown_2039988\n\t"
         "_080C221C: .4byte 0x00000516\n\t"
-        "_080C2220: .4byte gUnknown_854622C\n\t"
+        "_080C2220: .4byte sHoennTrainerCardBadges_Gfx\n\t"
         "_080C2224: .4byte 0x00001394\n\t"
         "_080C2228:\n\t"
         "	ldr r0, _080C2230\n\t"
         "	ldr r2, _080C2234\n\t"
         "	b _080C227E\n\t"
         "	.align 2, 0\n\t"
-        "_080C2230: .4byte gUnknown_8546474\n\t"
+        "_080C2230: .4byte sKantoTrainerCardBadges_Gfx\n\t"
         "_080C2234: .4byte 0x00001394\n\t"
         "_080C2238:\n\t"
         "	ldr r0, _080C224C\n\t"
@@ -689,14 +697,14 @@ __attribute__((naked)) void LoadCardGfx(void)
         "	.align 2, 0\n\t"
         "_080C224C: .4byte gUnknown_2039988\n\t"
         "_080C2250: .4byte 0x00000516\n\t"
-        "_080C2254: .4byte gUnknown_854441C\n\t"
+        "_080C2254: .4byte gHoennTrainerCard_Gfx\n\t"
         "_080C2258: .4byte 0x00001994\n\t"
         "_080C225C:\n\t"
         "	ldr r0, _080C2264\n\t"
         "	ldr r2, _080C2268\n\t"
         "	b _080C227E\n\t"
         "	.align 2, 0\n\t"
-        "_080C2264: .4byte gUnknown_8544B5C\n\t"
+        "_080C2264: .4byte gKantoTrainerCard_Gfx\n\t"
         "_080C2268: .4byte 0x00001994\n\t"
         "_080C226C:\n\t"
         "	ldr r0, _080C2288\n\t"
@@ -715,7 +723,7 @@ __attribute__((naked)) void LoadCardGfx(void)
         "	.align 2, 0\n\t"
         "_080C2288: .4byte gUnknown_2039988\n\t"
         "_080C228C: .4byte 0x00000516\n\t"
-        "_080C2290: .4byte gUnknown_854521C\n\t"
+        "_080C2290: .4byte sTrainerCardStickers_Gfx\n\t"
         "_080C2294: .4byte 0x00001794\n\t"
         "_080C2298:\n\t"
         "	movs r0, #0\n\t"
@@ -1738,8 +1746,8 @@ __attribute__((naked)) void InitBgsAndWindows(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C2A2C: .4byte gUnknown_8546714\n\t"
-        "_080C2A30: .4byte gUnknown_8546724\n\t"
+        "_080C2A2C: .4byte sTrainerCardBgTemplates\n\t"
+        "_080C2A30: .4byte sTrainerCardWindowTemplates\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1969,8 +1977,8 @@ __attribute__((naked)) void sub_080C2BA4(void)
         "	.align 2, 0\n\t"
         "_080C2BD4: .4byte gUnknown_2039988\n\t"
         "_080C2BD8: .4byte 0x00000516\n\t"
-        "_080C2BDC: .4byte gUnknown_8546775\n\t"
-        "_080C2BE0: .4byte gUnknown_854676C\n\t"
+        "_080C2BDC: .4byte sTrainerCardFonts\n\t"
+        "_080C2BE0: .4byte sTrainerCardTextColors\n\t"
         "_080C2BE4: .4byte gText_TrainerCardName\n\t"
         "_080C2BE8:\n\t"
         "	ldr r0, _080C2C40\n\t"
@@ -2016,13 +2024,13 @@ __attribute__((naked)) void sub_080C2BA4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C2C40: .4byte gUnknown_8546775\n\t"
-        "_080C2C44: .4byte gUnknown_854676C\n\t"
+        "_080C2C40: .4byte sTrainerCardFonts\n\t"
+        "_080C2C44: .4byte sTrainerCardTextColors\n\t"
         "_080C2C48: .4byte gText_TrainerCardName\n\t"
-        "_080C2C4C: .4byte gUnknown_85467A0\n\t"
+        "_080C2C4C: .4byte sNameXOffsets\n\t"
         "_080C2C50: .4byte gUnknown_2039988\n\t"
         "_080C2C54: .4byte 0x00000517\n\t"
-        "_080C2C58: .4byte gUnknown_85467A2\n\t"
+        "_080C2C58: .4byte sNameYOffsets\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2076,8 +2084,8 @@ __attribute__((naked)) void PrintNameOnCard(void)
         "_080C2CB4: .4byte gUnknown_2039988\n\t"
         "_080C2CB8: .4byte 0x0000052E\n\t"
         "_080C2CBC: .4byte 0x00000516\n\t"
-        "_080C2CC0: .4byte gUnknown_8546775\n\t"
-        "_080C2CC4: .4byte gUnknown_854676C\n\t"
+        "_080C2CC0: .4byte sTrainerCardFonts\n\t"
+        "_080C2CC4: .4byte sTrainerCardTextColors\n\t"
         "_080C2CC8: .4byte gText_TrainerCardIDNo\n\t"
         "_080C2CCC:\n\t"
         "	ldr r0, _080C2D08\n\t"
@@ -2109,8 +2117,8 @@ __attribute__((naked)) void PrintNameOnCard(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C2D08: .4byte gUnknown_8546775\n\t"
-        "_080C2D0C: .4byte gUnknown_854676C\n\t"
+        "_080C2D08: .4byte sTrainerCardFonts\n\t"
+        "_080C2D0C: .4byte sTrainerCardTextColors\n\t"
         "_080C2D10: .4byte gText_TrainerCardIDNo\n\t"
         ".syntax divided\n\t"
     );
@@ -2184,8 +2192,8 @@ __attribute__((naked)) void PrintProfilePhraseOnCard(void)
         "_080C2D98: .4byte gUnknown_2039988\n\t"
         "_080C2D9C: .4byte 0x00000544\n\t"
         "_080C2DA0: .4byte 0x00000517\n\t"
-        "_080C2DA4: .4byte gUnknown_8546775\n\t"
-        "_080C2DA8: .4byte gUnknown_854676C\n\t"
+        "_080C2DA4: .4byte sTrainerCardFonts\n\t"
+        "_080C2DA8: .4byte sTrainerCardTextColors\n\t"
         "_080C2DAC: .4byte gText_TrainerCardMoney\n\t"
         "_080C2DB0: .4byte gText_PokeDollar\n\t"
         "_080C2DB4:\n\t"
@@ -2233,8 +2241,8 @@ __attribute__((naked)) void PrintProfilePhraseOnCard(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C2E10: .4byte gUnknown_8546775\n\t"
-        "_080C2E14: .4byte gUnknown_854676C\n\t"
+        "_080C2E10: .4byte sTrainerCardFonts\n\t"
+        "_080C2E14: .4byte sTrainerCardTextColors\n\t"
         "_080C2E18: .4byte gText_TrainerCardMoney\n\t"
         "_080C2E1C: .4byte gText_PokeDollar\n\t"
         ".syntax divided\n\t"
@@ -2338,8 +2346,8 @@ __attribute__((naked)) void PrintPokedexOnCard(void)
         "_080C2ED4: .4byte gUnknown_2039988\n\t"
         "_080C2ED8: .4byte 0x0000052C\n\t"
         "_080C2EDC: .4byte 0x00000517\n\t"
-        "_080C2EE0: .4byte gUnknown_8546775\n\t"
-        "_080C2EE4: .4byte gUnknown_854676C\n\t"
+        "_080C2EE0: .4byte sTrainerCardFonts\n\t"
+        "_080C2EE4: .4byte sTrainerCardTextColors\n\t"
         "_080C2EE8: .4byte gText_TrainerCardPokedex\n\t"
         "_080C2EEC: .4byte gText_EmptyString6\n\t"
         "_080C2EF0:\n\t"
@@ -2387,8 +2395,8 @@ __attribute__((naked)) void PrintPokedexOnCard(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C2F4C: .4byte gUnknown_8546775\n\t"
-        "_080C2F50: .4byte gUnknown_854676C\n\t"
+        "_080C2F4C: .4byte sTrainerCardFonts\n\t"
+        "_080C2F50: .4byte sTrainerCardTextColors\n\t"
         "_080C2F54: .4byte gText_TrainerCardPokedex\n\t"
         "_080C2F58: .4byte gText_EmptyString6\n\t"
         ".syntax divided\n\t"
@@ -2478,11 +2486,11 @@ __attribute__((naked)) void PrintMoneyOnCard(void)
         "	.align 2, 0\n\t"
         "_080C2FF0: .4byte gSaveBlock2Ptr\n\t"
         "_080C2FF4: .4byte 0x000003E7\n\t"
-        "_080C2FF8: .4byte gUnknown_85467AC\n\t"
+        "_080C2FF8: .4byte sTimeHoursXOffsets\n\t"
         "_080C2FFC: .4byte 0x00000517\n\t"
-        "_080C3000: .4byte gUnknown_85467B2\n\t"
-        "_080C3004: .4byte gUnknown_8546775\n\t"
-        "_080C3008: .4byte gUnknown_854676C\n\t"
+        "_080C3000: .4byte sTimeYOffsets\n\t"
+        "_080C3004: .4byte sTrainerCardFonts\n\t"
+        "_080C3008: .4byte sTrainerCardTextColors\n\t"
         "_080C300C: .4byte gText_TrainerCardTime\n\t"
         "_080C3010:\n\t"
         "	ldr r0, _080C30DC\n\t"
@@ -2582,18 +2590,18 @@ __attribute__((naked)) void PrintMoneyOnCard(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C30DC: .4byte gUnknown_8546775\n\t"
-        "_080C30E0: .4byte gUnknown_854676C\n\t"
+        "_080C30DC: .4byte sTrainerCardFonts\n\t"
+        "_080C30E0: .4byte sTrainerCardTextColors\n\t"
         "_080C30E4: .4byte gText_TrainerCardTime\n\t"
         "_080C30E8: .4byte gStringVar4\n\t"
-        "_080C30EC: .4byte gUnknown_85467AC\n\t"
+        "_080C30EC: .4byte sTimeHoursXOffsets\n\t"
         "_080C30F0: .4byte gUnknown_2039988\n\t"
         "_080C30F4: .4byte 0x00000517\n\t"
-        "_080C30F8: .4byte gUnknown_85467B2\n\t"
-        "_080C30FC: .4byte gUnknown_85467AE\n\t"
-        "_080C3100: .4byte gUnknown_85467A4\n\t"
+        "_080C30F8: .4byte sTimeYOffsets\n\t"
+        "_080C30FC: .4byte sTimeColonXOffsets\n\t"
+        "_080C3100: .4byte sTimeColonTextColors\n\t"
         "_080C3104: .4byte gText_Colon2\n\t"
-        "_080C3108: .4byte gUnknown_85467B0\n\t"
+        "_080C3108: .4byte sTimeMinutesXOffsets\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2708,10 +2716,10 @@ __attribute__((naked)) void PrintString(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C31E8: .4byte gUnknown_2039988\n\t"
-        "_080C31EC: .4byte gUnknown_85467B4\n\t"
+        "_080C31EC: .4byte sProfileYOffsetsLine1\n\t"
         "_080C31F0: .4byte 0x00000517\n\t"
-        "_080C31F4: .4byte gUnknown_854676C\n\t"
-        "_080C31F8: .4byte gUnknown_85467B6\n\t"
+        "_080C31F4: .4byte sTrainerCardTextColors\n\t"
+        "_080C31F8: .4byte sProfileYOffsetsLine2\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2783,8 +2791,8 @@ __attribute__((naked)) void sub_080C323C(void)
         "	.align 2, 0\n\t"
         "_080C3270: .4byte gUnknown_2039988\n\t"
         "_080C3274: .4byte 0x00000517\n\t"
-        "_080C3278: .4byte gUnknown_8546775\n\t"
-        "_080C327C: .4byte gUnknown_854676C\n\t"
+        "_080C3278: .4byte sTrainerCardFonts\n\t"
+        "_080C327C: .4byte sTrainerCardTextColors\n\t"
         "_080C3280:\n\t"
         "	adds r1, r2, #0\n\t"
         "	adds r1, #0x39\n\t"
@@ -2814,8 +2822,8 @@ __attribute__((naked)) void sub_080C323C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C32B8: .4byte gUnknown_8546775\n\t"
-        "_080C32BC: .4byte gUnknown_854676C\n\t"
+        "_080C32B8: .4byte sTrainerCardFonts\n\t"
+        "_080C32BC: .4byte sTrainerCardTextColors\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2869,7 +2877,7 @@ __attribute__((naked)) void PrintHofTimeOnCard(void)
         "_080C3320: .4byte gStringVar2\n\t"
         "_080C3324: .4byte gStringVar3\n\t"
         "_080C3328: .4byte 0x0000052A\n\t"
-        "_080C332C: .4byte gUnknown_85467B6 + 0x2\n\t"
+        "_080C332C: .4byte sText_HofTime\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2921,12 +2929,12 @@ __attribute__((naked)) void PrintWinsLossesStringOnCard(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C3384: .4byte gUnknown_2039988\n\t"
-        "_080C3388: .4byte gUnknown_8546775\n\t"
-        "_080C338C: .4byte sTrainerCardTextColors\n\t"
+        "_080C3388: .4byte sTrainerCardFonts\n\t"
+        "_080C338C: .4byte sTrainerCardStatLabelColors\n\t"
         "_080C3390: .4byte 0x00000517\n\t"
-        "_080C3394: .4byte gUnknown_854676C\n\t"
+        "_080C3394: .4byte sTrainerCardTextColors\n\t"
         "_080C3398: .4byte gText_HallOfFameDebut\n\t"
-        "_080C339C: .4byte gUnknown_854676F\n\t"
+        "_080C339C: .4byte sTrainerCardStatColors\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3055,12 +3063,12 @@ __attribute__((naked)) void PrintIdOnCard(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C3494: .4byte gUnknown_2039988\n\t"
-        "_080C3498: .4byte gUnknown_8546775\n\t"
-        "_080C349C: .4byte sTrainerCardTextColors\n\t"
+        "_080C3498: .4byte sTrainerCardFonts\n\t"
+        "_080C349C: .4byte sTrainerCardStatLabelColors\n\t"
         "_080C34A0: .4byte 0x00000517\n\t"
-        "_080C34A4: .4byte gUnknown_854676C\n\t"
+        "_080C34A4: .4byte sTrainerCardTextColors\n\t"
         "_080C34A8: .4byte gText_WinsLosses\n\t"
-        "_080C34AC: .4byte gUnknown_854676F\n\t"
+        "_080C34AC: .4byte sTrainerCardStatColors\n\t"
         "_080C34B0: .4byte SPECIAL_TryHideBattleTowerReporter\n\t"
         "_080C34B4: .4byte SPECIAL_ShowMapNamePopup\n\t"
         ".syntax divided\n\t"
@@ -3144,12 +3152,12 @@ __attribute__((naked)) void PrintBattleFacilityStringOnCard(void)
         "	b _080C3574\n\t"
         "	.align 2, 0\n\t"
         "_080C353C: .4byte gUnknown_2039988\n\t"
-        "_080C3540: .4byte gUnknown_8546775\n\t"
-        "_080C3544: .4byte sTrainerCardTextColors\n\t"
+        "_080C3540: .4byte sTrainerCardFonts\n\t"
+        "_080C3544: .4byte sTrainerCardStatLabelColors\n\t"
         "_080C3548: .4byte 0x00000517\n\t"
-        "_080C354C: .4byte gUnknown_854676C\n\t"
+        "_080C354C: .4byte sTrainerCardTextColors\n\t"
         "_080C3550: .4byte gText_PokemonTrades\n\t"
-        "_080C3554: .4byte gUnknown_854676F\n\t"
+        "_080C3554: .4byte sTrainerCardStatColors\n\t"
         "_080C3558: .4byte 0x00000223\n\t"
         "_080C355C:\n\t"
         "	ldrb r1, [r6]\n\t"
@@ -3169,7 +3177,7 @@ __attribute__((naked)) void PrintBattleFacilityStringOnCard(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C357C: .4byte gUnknown_854676F\n\t"
+        "_080C357C: .4byte sTrainerCardStatColors\n\t"
         "_080C3580: .4byte 0x00000223\n\t"
         ".syntax divided\n\t"
     );
@@ -3266,12 +3274,12 @@ __attribute__((naked)) void PrintBerryCrushStringOnCard(void)
         "_080C3624: .4byte gUnknown_2039988\n\t"
         "_080C3628: .4byte 0x00000516\n\t"
         "_080C362C: .4byte 0x0000055C\n\t"
-        "_080C3630: .4byte gUnknown_8546775\n\t"
-        "_080C3634: .4byte sTrainerCardTextColors\n\t"
+        "_080C3630: .4byte sTrainerCardFonts\n\t"
+        "_080C3634: .4byte sTrainerCardStatLabelColors\n\t"
         "_080C3638: .4byte 0x00000517\n\t"
-        "_080C363C: .4byte gUnknown_854676C\n\t"
+        "_080C363C: .4byte sTrainerCardTextColors\n\t"
         "_080C3640: .4byte gText_BerryCrush\n\t"
-        "_080C3644: .4byte gUnknown_854676F\n\t"
+        "_080C3644: .4byte sTrainerCardStatColors\n\t"
         "_080C3648: .4byte 0x000002AF\n\t"
         ".syntax divided\n\t"
     );
@@ -3368,12 +3376,12 @@ __attribute__((naked)) void PrintUnionStringOnCard(void)
         "	.align 2, 0\n\t"
         "_080C36EC: .4byte gUnknown_2039988\n\t"
         "_080C36F0: .4byte 0x00000516\n\t"
-        "_080C36F4: .4byte gUnknown_8546775\n\t"
-        "_080C36F8: .4byte sTrainerCardTextColors\n\t"
+        "_080C36F4: .4byte sTrainerCardFonts\n\t"
+        "_080C36F8: .4byte sTrainerCardStatLabelColors\n\t"
         "_080C36FC: .4byte 0x00000517\n\t"
-        "_080C3700: .4byte gUnknown_854676C\n\t"
+        "_080C3700: .4byte sTrainerCardTextColors\n\t"
         "_080C3704: .4byte gText_UnionTradesAndBattles\n\t"
-        "_080C3708: .4byte gUnknown_854676F\n\t"
+        "_080C3708: .4byte sTrainerCardStatColors\n\t"
         "_080C370C: .4byte 0x0000033B\n\t"
         ".syntax divided\n\t"
     );
@@ -3478,12 +3486,12 @@ __attribute__((naked)) void PrintContestStringOnCard(void)
         "_080C37C4: .4byte gUnknown_2039988\n\t"
         "_080C37C8: .4byte 0x00000516\n\t"
         "_080C37CC: .4byte 0x0000053E\n\t"
-        "_080C37D0: .4byte gUnknown_8546775\n\t"
-        "_080C37D4: .4byte sTrainerCardTextColors\n\t"
+        "_080C37D0: .4byte sTrainerCardFonts\n\t"
+        "_080C37D4: .4byte sTrainerCardStatLabelColors\n\t"
         "_080C37D8: .4byte 0x00000517\n\t"
-        "_080C37DC: .4byte gUnknown_854676C\n\t"
+        "_080C37DC: .4byte sTrainerCardTextColors\n\t"
         "_080C37E0: .4byte gText_PokeblocksWithFriends\n\t"
-        "_080C37E4: .4byte gUnknown_854676F\n\t"
+        "_080C37E4: .4byte sTrainerCardStatColors\n\t"
         "_080C37E8: .4byte 0x00000381\n\t"
         ".syntax divided\n\t"
     );
@@ -3581,12 +3589,12 @@ __attribute__((naked)) void PrintPokeblockStringOnCard(void)
         "_080C388C: .4byte gUnknown_2039988\n\t"
         "_080C3890: .4byte 0x00000516\n\t"
         "_080C3894: .4byte 0x0000053C\n\t"
-        "_080C3898: .4byte gUnknown_8546775\n\t"
-        "_080C389C: .4byte sTrainerCardTextColors\n\t"
+        "_080C3898: .4byte sTrainerCardFonts\n\t"
+        "_080C389C: .4byte sTrainerCardStatLabelColors\n\t"
         "_080C38A0: .4byte 0x00000517\n\t"
-        "_080C38A4: .4byte gUnknown_854676C\n\t"
+        "_080C38A4: .4byte sTrainerCardTextColors\n\t"
         "_080C38A8: .4byte gText_WonContestsWFriends\n\t"
-        "_080C38AC: .4byte gUnknown_854676F\n\t"
+        "_080C38AC: .4byte sTrainerCardStatColors\n\t"
         "_080C38B0: .4byte 0x000003C7\n\t"
         ".syntax divided\n\t"
     );
@@ -3739,12 +3747,12 @@ __attribute__((naked)) void sub_080C395C(void)
         "	bl AddTextPrinterParameterized3\n\t"
         "	b _080C3A42\n\t"
         "	.align 2, 0\n\t"
-        "_080C39DC: .4byte gUnknown_8546775\n\t"
-        "_080C39E0: .4byte sTrainerCardTextColors\n\t"
+        "_080C39DC: .4byte sTrainerCardFonts\n\t"
+        "_080C39E0: .4byte sTrainerCardStatLabelColors\n\t"
         "_080C39E4: .4byte 0x00000517\n\t"
-        "_080C39E8: .4byte gUnknown_854676C\n\t"
+        "_080C39E8: .4byte sTrainerCardTextColors\n\t"
         "_080C39EC: .4byte gJPText_BattleTowerWinsStraightHeader\n\t"
-        "_080C39F0: .4byte gUnknown_854676F\n\t"
+        "_080C39F0: .4byte sTrainerCardStatColors\n\t"
         "_080C39F4: .4byte 0x0000040D\n\t"
         "_080C39F8:\n\t"
         "	ldr r1, _080C3A50\n\t"
@@ -3791,12 +3799,12 @@ __attribute__((naked)) void sub_080C395C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C3A50: .4byte 0x00000582\n\t"
-        "_080C3A54: .4byte gUnknown_8546775\n\t"
-        "_080C3A58: .4byte sTrainerCardTextColors\n\t"
+        "_080C3A54: .4byte sTrainerCardFonts\n\t"
+        "_080C3A58: .4byte sTrainerCardStatLabelColors\n\t"
         "_080C3A5C: .4byte 0x00000517\n\t"
-        "_080C3A60: .4byte gUnknown_854676C\n\t"
+        "_080C3A60: .4byte sTrainerCardTextColors\n\t"
         "_080C3A64: .4byte gText_BattlePtsWon\n\t"
-        "_080C3A68: .4byte gUnknown_854676F\n\t"
+        "_080C3A68: .4byte sTrainerCardStatColors\n\t"
         "_080C3A6C: .4byte 0x0000040D\n\t"
         ".syntax divided\n\t"
     );
@@ -4098,10 +4106,10 @@ __attribute__((naked)) void sub_080C3C6C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C3CB0: .4byte gUnknown_85461AC\n\t"
-        "_080C3CB4: .4byte gUnknown_85461CC\n\t"
-        "_080C3CB8: .4byte gUnknown_85461EC\n\t"
-        "_080C3CBC: .4byte gUnknown_854620C\n\t"
+        "_080C3CB0: .4byte sTrainerCardSticker1_Pal\n\t"
+        "_080C3CB4: .4byte sTrainerCardSticker2_Pal\n\t"
+        "_080C3CB8: .4byte sTrainerCardSticker3_Pal\n\t"
+        "_080C3CBC: .4byte sTrainerCardSticker4_Pal\n\t"
         "_080C3CC0: .4byte gUnknown_2039988\n\t"
         "_080C3CC4: .4byte 0x00001794\n\t"
         ".syntax divided\n\t"
@@ -4219,10 +4227,10 @@ __attribute__((naked)) void SetCardBgsAndPals(void)
         "	.align 2, 0\n\t"
         "_080C3D9C: .4byte gUnknown_2039988\n\t"
         "_080C3DA0: .4byte 0x00000516\n\t"
-        "_080C3DA4: .4byte gUnknown_8546744\n\t"
+        "_080C3DA4: .4byte sHoennTrainerCardPals\n\t"
         "_080C3DA8: .4byte 0x00000521\n\t"
-        "_080C3DAC: .4byte gUnknown_854614C\n\t"
-        "_080C3DB0: .4byte gUnknown_854610C\n\t"
+        "_080C3DAC: .4byte sHoennTrainerCardBadges_Pal\n\t"
+        "_080C3DB0: .4byte sHoennTrainerCardFemaleBg_Pal\n\t"
         "_080C3DB4:\n\t"
         "	ldr r1, _080C3DF8\n\t"
         "	ldr r3, _080C3DFC\n\t"
@@ -4256,11 +4264,11 @@ __attribute__((naked)) void SetCardBgsAndPals(void)
         "	bl LoadPalette\n\t"
         "	b _080C3E6A\n\t"
         "	.align 2, 0\n\t"
-        "_080C3DF8: .4byte gUnknown_8546758\n\t"
+        "_080C3DF8: .4byte sKantoTrainerCardPals\n\t"
         "_080C3DFC: .4byte 0x00000521\n\t"
-        "_080C3E00: .4byte gUnknown_854616C\n\t"
-        "_080C3E04: .4byte gUnknown_854612C\n\t"
-        "_080C3E08: .4byte gUnknown_854618C\n\t"
+        "_080C3E00: .4byte sKantoTrainerCardBadges_Pal\n\t"
+        "_080C3E04: .4byte sKantoTrainerCardFemaleBg_Pal\n\t"
+        "_080C3E08: .4byte sTrainerCardStar_Pal\n\t"
         "_080C3E0C:\n\t"
         "	ldr r4, _080C3E28\n\t"
         "	ldr r1, [r4]\n\t"
@@ -4913,13 +4921,13 @@ __attribute__((naked)) void sub_080C4294(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C42C4: .4byte gUnknown_8546788\n\t"
+        "_080C42C4: .4byte sTrainerCardFlipTasks\n\t"
         "_080C42C8: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_080C42CC(void)
+__attribute__((naked)) bool8 sub_080C42CC(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4956,7 +4964,7 @@ __attribute__((naked)) void sub_080C42CC(void)
     );
 }
 
-__attribute__((naked)) void sub_080C430C(void)
+__attribute__((naked)) bool8 sub_080C430C(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5118,7 +5126,7 @@ __attribute__((naked)) void sub_080C430C(void)
     );
 }
 
-__attribute__((naked)) void sub_080C443C(void)
+__attribute__((naked)) bool8 sub_080C443C(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5256,7 +5264,7 @@ __attribute__((naked)) void sub_080C443C(void)
     );
 }
 
-__attribute__((naked)) void sub_080C4550(void)
+__attribute__((naked)) bool8 sub_080C4550(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5309,7 +5317,7 @@ __attribute__((naked)) void sub_080C4550(void)
     );
 }
 
-__attribute__((naked)) void sub_080C45B8(void)
+__attribute__((naked)) bool8 sub_080C45B8(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5469,7 +5477,7 @@ __attribute__((naked)) void sub_080C45B8(void)
     );
 }
 
-__attribute__((naked)) void sub_080C46E4(void)
+__attribute__((naked)) bool8 sub_080C46E4(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5812,7 +5820,7 @@ __attribute__((naked)) void sub_080C48F4(void)
         "_080C494C: .4byte gReceivedRemoteLinkPlayers\n\t"
         "_080C4950: .4byte gUnknown_2039988\n\t"
         "_080C4954: .4byte 0x0000056F\n\t"
-        "_080C4958: .4byte gUnknown_8546778\n\t"
+        "_080C4958: .4byte sTrainerPicOffset\n\t"
         "_080C495C: .4byte 0x00000517\n\t"
         "_080C4960:\n\t"
         "	ldr r2, _080C49B8\n\t"
@@ -5859,11 +5867,156 @@ __attribute__((naked)) void sub_080C48F4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C49B8: .4byte gUnknown_8546780\n\t"
+        "_080C49B8: .4byte sTrainerPicFacilityClass\n\t"
         "_080C49BC: .4byte gUnknown_2039988\n\t"
         "_080C49C0: .4byte 0x00000516\n\t"
-        "_080C49C4: .4byte gUnknown_8546778\n\t"
+        "_080C49C4: .4byte sTrainerPicOffset\n\t"
         "_080C49C8: .4byte 0x00000517\n\t"
         ".syntax divided\n\t"
     );
 }
+
+// JP-only fonts and coordinates retain the original card geometry.
+#define TRAINER_CARD_STICKERS __attribute__((section(".rodata.trainer_card_stickers"), aligned(1)))
+
+#define TRAINER_CARD_UNUSED_PALETTE __attribute__((section(".rodata.trainer_card_unused_palette"), aligned(1)))
+
+#define TRAINER_CARD_DATA __attribute__((section(".rodata.trainer_card_data"), aligned(1)))
+
+static const u32 sTrainerCardStickers_Gfx[] TRAINER_CARD_STICKERS = INCBIN_U32("graphics/trainer_card/frlg/stickers.4bpp.lz");
+
+static const u16 sUnused_Pal[] TRAINER_CARD_UNUSED_PALETTE = INCBIN_U16("graphics/trainer_card/unused.pal.gbapal");
+
+static const u16 sHoennTrainerCardBronze_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/bronze.pal.gbapal");
+
+static const u16 sKantoTrainerCardGreen_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/green.pal.gbapal");
+
+static const u16 sHoennTrainerCardCopper_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/copper.pal.gbapal");
+
+static const u16 sKantoTrainerCardBronze_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/bronze.pal.gbapal");
+
+static const u16 sHoennTrainerCardSilver_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/silver.pal.gbapal");
+
+static const u16 sKantoTrainerCardSilver_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/silver.pal.gbapal");
+
+static const u16 sHoennTrainerCardGold_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/gold.pal.gbapal");
+
+static const u16 sKantoTrainerCardGold_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/gold.pal.gbapal");
+
+static const u16 sHoennTrainerCardFemaleBg_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/female_bg.gbapal");
+
+static const u16 sKantoTrainerCardFemaleBg_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/female_bg.gbapal");
+
+static const u16 sHoennTrainerCardBadges_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/badges.gbapal");
+
+static const u16 sKantoTrainerCardBadges_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/badges.gbapal");
+
+static const u16 sTrainerCardStar_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/star.gbapal");
+
+static const u16 sTrainerCardSticker1_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/stickers1.gbapal");
+
+static const u16 sTrainerCardSticker2_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/stickers2.gbapal");
+
+static const u16 sTrainerCardSticker3_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/stickers3.gbapal");
+
+static const u16 sTrainerCardSticker4_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/stickers4.gbapal");
+
+static const u32 sHoennTrainerCardBadges_Gfx[] TRAINER_CARD_DATA = INCBIN_U32("graphics/trainer_card/badges.4bpp.lz");
+
+static const u32 sKantoTrainerCardBadges_Gfx[] TRAINER_CARD_DATA = INCBIN_U32("graphics/trainer_card/frlg/badges.4bpp.lz");
+
+static const struct BgTemplate sTrainerCardBgTemplates[4] TRAINER_CARD_DATA __attribute__((aligned(4))) = {
+    { .bg = 0, .charBaseIndex = 0, .mapBaseIndex = 27, .screenSize = 2, .paletteMode = 0, .priority = 2, .baseTile = 0 },
+    { .bg = 1, .charBaseIndex = 2, .mapBaseIndex = 29, .screenSize = 0, .paletteMode = 0, .priority = 0, .baseTile = 0 },
+    { .bg = 2, .charBaseIndex = 0, .mapBaseIndex = 30, .screenSize = 0, .paletteMode = 0, .priority = 3, .baseTile = 0 },
+    { .bg = 3, .charBaseIndex = 0, .mapBaseIndex = 31, .screenSize = 0, .paletteMode = 0, .priority = 1, .baseTile = 192 },
+};
+
+static const struct WindowTemplate sTrainerCardWindowTemplates[4] TRAINER_CARD_DATA __attribute__((aligned(4))) = {
+    { .bg = 1, .tilemapLeft = 4, .tilemapTop = 15, .width = 22, .height = 4, .paletteNum = 15, .baseBlock = 577 },
+    { .bg = 1, .tilemapLeft = 1, .tilemapTop = 1, .width = 27, .height = 18, .paletteNum = 15, .baseBlock = 1 },
+    { .bg = 3, .tilemapLeft = 19, .tilemapTop = 5, .width = 9, .height = 10, .paletteNum = 8, .baseBlock = 336 },
+    DUMMY_WIN_TEMPLATE,
+};
+
+static const u16 *const sHoennTrainerCardPals[] TRAINER_CARD_DATA __attribute__((aligned(4))) = {
+    gHoennTrainerCardGreen_Pal,
+    sHoennTrainerCardBronze_Pal,
+    sHoennTrainerCardCopper_Pal,
+    sHoennTrainerCardSilver_Pal,
+    sHoennTrainerCardGold_Pal,
+};
+
+static const u16 *const sKantoTrainerCardPals[] TRAINER_CARD_DATA __attribute__((aligned(4))) = {
+    gKantoTrainerCardBlue_Pal,
+    sKantoTrainerCardGreen_Pal,
+    sKantoTrainerCardBronze_Pal,
+    sKantoTrainerCardSilver_Pal,
+    sKantoTrainerCardGold_Pal,
+};
+
+static const u8 sTrainerCardTextColors[] TRAINER_CARD_DATA = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
+
+static const u8 sTrainerCardStatColors[] TRAINER_CARD_DATA = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_RED, TEXT_COLOR_LIGHT_RED};
+
+static const u8 sTimeColonInvisibleTextColors[] TRAINER_CARD_DATA = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_TRANSPARENT, TEXT_COLOR_TRANSPARENT};
+
+static const u8 sTrainerCardFonts[] TRAINER_CARD_DATA = {FONT_SMALL, FONT_NORMAL};
+
+static const u8 sTrainerPicOffset[2][GENDER_COUNT][2] TRAINER_CARD_DATA __attribute__((aligned(4))) = {
+    {{13, 4}, {13, 4}},
+    {{1, 0}, {1, 0}},
+};
+
+static const u8 sTrainerPicFacilityClass[][GENDER_COUNT] TRAINER_CARD_DATA __attribute__((aligned(4))) = {
+    {FACILITY_CLASS_RED, FACILITY_CLASS_LEAF},
+    {FACILITY_CLASS_RS_BRENDAN, FACILITY_CLASS_RS_MAY},
+    {FACILITY_CLASS_BRENDAN, FACILITY_CLASS_MAY},
+};
+
+static bool8 (*const sTrainerCardFlipTasks[])(struct Task *) TRAINER_CARD_DATA __attribute__((aligned(4))) = {
+    sub_080C42CC,
+    sub_080C430C,
+    sub_080C443C,
+    sub_080C4550,
+    sub_080C45B8,
+    sub_080C46E4,
+};
+
+static const u8 sNameXOffsets[] TRAINER_CARD_DATA = {60, 45};
+
+static const u8 sNameYOffsets[] TRAINER_CARD_DATA = {30, 34};
+
+static const u8 *const sTimeColonTextColors[] TRAINER_CARD_DATA __attribute__((aligned(4))) = {sTrainerCardTextColors, sTimeColonInvisibleTextColors};
+
+static const u8 sTimeHoursXOffsets[] TRAINER_CARD_DATA = {96, 70};
+
+static const u8 sTimeColonXOffsets[] TRAINER_CARD_DATA = {120, 94};
+
+static const u8 sTimeMinutesXOffsets[] TRAINER_CARD_DATA = {128, 102};
+
+static const u8 sTimeYOffsets[] TRAINER_CARD_DATA = {88, 90};
+
+static const u8 sProfileYOffsetsLine1[] TRAINER_CARD_DATA = {115, 105};
+
+static const u8 sProfileYOffsetsLine2[] TRAINER_CARD_DATA = {130, 120};
+
+static const u8 sText_HofTime[] TRAINER_CARD_DATA = _("{STR_VAR_1}:{STR_VAR_2}:{STR_VAR_3}");
+
+static const u8 sTrainerCardStatLabelColors[] TRAINER_CARD_DATA = {0x0A, 0x10, 0x00};
+
+static const u8 *const sLinkBattleTexts[] TRAINER_CARD_DATA __attribute__((aligned(4))) = {gText_LinkBattles, gText_LinkCableBattles, gText_LinkBattles};
+
+static const u8 sTrainerCardIconPaletteSlots[] TRAINER_CARD_DATA = {5, 6, 7, 8, 9, 10};
+
+static const u8 sTrainerCardIconXOffsets[] TRAINER_CARD_DATA = {0, 4, 8, 12, 16, 20};
+
+static const u8 sTrainerCardStickerPaletteSlots[] TRAINER_CARD_DATA = {11, 12, 13, 14};
+
+static const u8 sTrainerCardStarYOffsets[] TRAINER_CARD_DATA = {7, 7, 0, 0};
+
+#undef TRAINER_CARD_STICKERS
+
+#undef TRAINER_CARD_UNUSED_PALETTE
+
+#undef TRAINER_CARD_DATA
