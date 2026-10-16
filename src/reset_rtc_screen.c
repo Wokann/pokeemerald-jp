@@ -75,19 +75,12 @@ static void VBlankCB(void);
 static void Task_ResetRtcScreen(u8 taskId);
 static void InitResetRtcScreenBgAndWindows(void);
 
-// JP data tables live in data/data.s (0x084E8A48..0x084E8B5C); the JP
-// BgTemplate is a packed bitfield (4 bytes) unlike the US byte struct.
-extern const struct BgTemplate gResetRtcBgTemplates[];
-extern const struct WindowTemplate gResetRtcWindowTemplates[];
-extern const struct WindowTemplate gResetRtcInputTimeWindow;
-// JP indexes sInputMap directly by selection (1..5); ld_script_jp.txt aliases
-// sInputMap to the same address as the "にち$"/":$" strings (index 0 unused).
-extern const struct ResetRtcInputMap sInputMap[];
-extern const u8 gUnknown_84E8A6C[]; // "にち$" (day suffix)
-extern const u8 gUnknown_84E8A6F[]; // ":$" (colon separator)
-extern const u8 gUnknown_84E8A71[]; // Confirm label
-extern const struct SpritePalette gResetRtcArrowPalette;
-extern const struct SpriteTemplate gResetRtcArrowSpriteTemplate;
+static const struct BgTemplate sBgTemplates[1];
+static const struct WindowTemplate sWindowTemplates[3];
+static const struct WindowTemplate sInputTimeWindow;
+static const struct ResetRtcInputMap sInputMap[5];
+static const struct SpritePalette sSpritePalette_Arrow;
+static const struct SpriteTemplate sSpriteTemplate_Arrow;
 
 #define sTaskId data[0]
 #define sState  data[1]
@@ -194,14 +187,14 @@ static void CreateCursor(u8 taskId)
 {
     u32 spriteId;
 
-    LoadSpritePalette(&gResetRtcArrowPalette);
+    LoadSpritePalette(&sSpritePalette_Arrow);
 
-    spriteId = CreateSpriteAtEnd(&gResetRtcArrowSpriteTemplate, 64, 68, 0);
+    spriteId = CreateSpriteAtEnd(&sSpriteTemplate_Arrow, 64, 68, 0);
     gSprites[spriteId].callback = SpriteCB_Cursor_UpOrRight;
     gSprites[spriteId].sTaskId = taskId;
     gSprites[spriteId].sState = -1;
 
-    spriteId = CreateSpriteAtEnd(&gResetRtcArrowSpriteTemplate, 64, 68, 0);
+    spriteId = CreateSpriteAtEnd(&sSpriteTemplate_Arrow, 64, 68, 0);
     gSprites[spriteId].callback = SpriteCB_Cursor_Down;
     gSprites[spriteId].sTaskId = taskId;
     gSprites[spriteId].sState = -1;
@@ -209,7 +202,7 @@ static void CreateCursor(u8 taskId)
 
 static void FreeCursorPalette(void)
 {
-    FreeSpritePaletteByTag(gResetRtcArrowPalette.tag);
+    FreeSpritePaletteByTag(sSpritePalette_Arrow.tag);
 }
 
 static void HideChooseTimeWindow(u8 windowId)
@@ -226,17 +219,17 @@ static void PrintTime(u8 windowId, u8 x, u8 y, u16 days, u8 hours, u8 minutes, u
     // Print days
     ConvertIntToDecimalStringN(gStringVar1, days, STR_CONV_MODE_RIGHT_ALIGN, 4);
     dest = StringCopy(dest, gStringVar1);
-    dest = StringCopy(dest, gUnknown_84E8A6C);
+    dest = StringCopy(dest, gText_Day);
 
     // Print hours
     ConvertIntToDecimalStringN(gStringVar1, hours, STR_CONV_MODE_RIGHT_ALIGN, 3);
     dest = StringCopy(dest, gStringVar1);
-    dest = StringCopy(dest, gUnknown_84E8A6F);
+    dest = StringCopy(dest, gText_Colon3);
 
     // Print minutes
     ConvertIntToDecimalStringN(gStringVar1, minutes, STR_CONV_MODE_LEADING_ZEROS, 2);
     dest = StringCopy(dest, gStringVar1);
-    dest = StringCopy(dest, gUnknown_84E8A6F);
+    dest = StringCopy(dest, gText_Colon3);
 
     // Print seconds
     ConvertIntToDecimalStringN(gStringVar1, seconds, STR_CONV_MODE_LEADING_ZEROS, 2);
@@ -249,7 +242,7 @@ static void ShowChooseTimeWindow(u8 windowId, u16 days, u8 hours, u8 minutes, u8
 {
     DrawStdFrameWithCustomTileAndPalette(windowId, FALSE, 0x214, 0xE);
     PrintTime(windowId, 0, 2, days, hours, minutes, seconds);
-    AddTextPrinterParameterized(windowId, FONT_NORMAL, gUnknown_84E8A71, 128, 2, 0, NULL);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_Confirm2, 128, 2, 0, NULL);
     ScheduleBgCopyTilemapToVram(0);
 }
 
@@ -305,8 +298,9 @@ static void Task_ResetRtc_HandleInput(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     u8 selection = tSelection;
-    // JP indexes the table directly by selection (index 0 is unused).
-    const struct ResetRtcInputMap *selectionInfo = &sInputMap[selection];
+    // Preserve the JP biased literal without inventing an unused array element.
+    const struct ResetRtcInputMap *selectionInfo = (const struct ResetRtcInputMap *)
+        ((const u8 *)&sInputMap + selection * sizeof(sInputMap[0]) - sizeof(sInputMap[0]));
 
     if (JOY_NEW(B_BUTTON))
     {
@@ -367,7 +361,7 @@ static void Task_ResetRtc_Init(u8 taskId)
     tHours = gLocalTime.hours;
     tMinutes = gLocalTime.minutes;
     tSeconds = gLocalTime.seconds;
-    tWindowId = AddWindow(&gResetRtcInputTimeWindow);
+    tWindowId = AddWindow(&sInputTimeWindow);
     ShowChooseTimeWindow(tWindowId, tDays, tHours, tMinutes, tSeconds);
     CreateCursor(taskId);
     tSelection = SELECTION_HOURS;
@@ -397,11 +391,11 @@ static void InitResetRtcScreenBgAndWindows(void)
 {
     ClearScheduledBgCopiesToVram();
     ResetBgsAndClearDma3BusyFlags(0);
-    InitBgsFromTemplates(0, gResetRtcBgTemplates, 1);
+    InitBgsFromTemplates(0, sBgTemplates, 1);
     ScheduleBgCopyTilemapToVram(0);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
     ShowBg(0);
-    InitWindows(gResetRtcWindowTemplates);
+    InitWindows(sWindowTemplates);
     DeactivateAllTextPrinters();
     LoadMessageBoxAndBorderGfx();
 }
@@ -598,3 +592,169 @@ static void Task_ResetRtcScreen(u8 taskId)
 
 #undef tState
 #undef tSubTaskId
+
+#define RESET_RTC_SCREEN_TEMPLATES __attribute__((section(".rodata.reset_rtc_screen_templates"), aligned(4)))
+#define RESET_RTC_SCREEN_DATA __attribute__((section(".rodata.reset_rtc_screen_data"), aligned(4)))
+
+static const struct BgTemplate sBgTemplates[] RESET_RTC_SCREEN_TEMPLATES =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+};
+
+static const struct WindowTemplate sWindowTemplates[] RESET_RTC_SCREEN_TEMPLATES =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 1,
+        .width = 19,
+        .height = 9,
+        .paletteNum = 15,
+        .baseBlock = 0x155,
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 4,
+        .tilemapTop = 15,
+        .width = 22,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0xFD,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+static const struct WindowTemplate sInputTimeWindow RESET_RTC_SCREEN_TEMPLATES =
+{
+    .bg = 0,
+    .tilemapLeft = 4,
+    .tilemapTop = 9,
+    .width = 21,
+    .height = 2,
+    .paletteNum = 15,
+    .baseBlock = 0xD3,
+};
+
+static const struct ResetRtcInputMap sInputMap[] RESET_RTC_SCREEN_DATA =
+{
+    [SELECTION_DAYS - 1] = {
+        .dataIndex = DATAIDX_DAYS,
+        .minVal = 1,
+        .maxVal = 9999,
+        .left = 0,
+        .right = 2,
+        .unk = 0,
+    },
+    [SELECTION_HOURS - 1] = {
+        .dataIndex = DATAIDX_HOURS,
+        .minVal = 0,
+        .maxVal = 23,
+        .left = 1,
+        .right = 3,
+        .unk = 0,
+    },
+    [SELECTION_MINS - 1] = {
+        .dataIndex = DATAIDX_MINS,
+        .minVal = 0,
+        .maxVal = 59,
+        .left = 2,
+        .right = 4,
+        .unk = 0,
+    },
+    [SELECTION_SECS - 1] = {
+        .dataIndex = DATAIDX_SECS,
+        .minVal = 0,
+        .maxVal = 59,
+        .left = 3,
+        .right = 5,
+        .unk = 0,
+    },
+    [SELECTION_CONFIRM - 1] = {
+        .dataIndex = DATAIDX_CONFIRM,
+        .minVal = 0,
+        .maxVal = 0,
+        .left = 4,
+        .right = 0,
+        .unk = 6,
+    },
+};
+
+static const struct OamData sOamData_Arrow RESET_RTC_SCREEN_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const u8 sArrowDown_Gfx[] RESET_RTC_SCREEN_DATA = INCBIN_U8("graphics/reset_rtc_screen/arrow_down.4bpp");
+static const u8 sArrowRight_Gfx[] RESET_RTC_SCREEN_DATA = INCBIN_U8("graphics/reset_rtc_screen/arrow_right.4bpp");
+static const u16 sArrow_Pal[] RESET_RTC_SCREEN_DATA = INCBIN_U16("graphics/reset_rtc_screen/arrow.gbapal");
+
+static const struct SpriteFrameImage sPicTable_Arrow[] RESET_RTC_SCREEN_DATA =
+{
+    obj_frame_tiles(sArrowDown_Gfx),
+    obj_frame_tiles(sArrowRight_Gfx)
+};
+
+static const struct SpritePalette sSpritePalette_Arrow RESET_RTC_SCREEN_DATA =
+{
+    sArrow_Pal, PALTAG_ARROW
+};
+
+static const union AnimCmd sAnim_Arrow_Down[] RESET_RTC_SCREEN_DATA =
+{
+    ANIMCMD_FRAME(0, 30),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_Arrow_Up[] RESET_RTC_SCREEN_DATA =
+{
+    ANIMCMD_FRAME(0, 30, .vFlip = TRUE),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_Arrow_Right[] RESET_RTC_SCREEN_DATA =
+{
+    ANIMCMD_FRAME(1, 30),
+    ANIMCMD_JUMP(0),
+};
+
+
+static const union AnimCmd *const sAnims_Arrow[] RESET_RTC_SCREEN_DATA =
+{
+    [ARROW_DOWN]  = sAnim_Arrow_Down,
+    [ARROW_UP]    = sAnim_Arrow_Up,
+    [ARROW_RIGHT] = sAnim_Arrow_Right,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Arrow RESET_RTC_SCREEN_DATA =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = PALTAG_ARROW,
+    .oam = &sOamData_Arrow,
+    .anims = sAnims_Arrow,
+    .images = sPicTable_Arrow,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+#undef RESET_RTC_SCREEN_TEMPLATES
+#undef RESET_RTC_SCREEN_DATA

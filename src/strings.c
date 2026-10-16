@@ -2499,3 +2499,33 @@ STRINGS_BATTLE_RECORDS const u8 gText_TotalRecordWLD[] = _("{STR_VAR_1}しょう
 STRINGS_BATTLE_RECORDS const u8 gText_WinLoseDraw[] = _("かち　　　　まけ　　　ひきわけ");
 
 #undef STRINGS_BATTLE_RECORDS
+
+__attribute__((section(".rodata.strings_reset_rtc"), aligned(1))) const u8 gText_Day[] = _("にち");
+
+__attribute__((section(".rodata.strings_reset_rtc"), aligned(1))) const u8 gText_Colon3[] = _(":");
+
+__attribute__((section(".rodata.strings_reset_rtc"), aligned(1))) const u8 gText_Confirm2[] = _("けってい");
+
+__attribute__((section(".rodata.strings_start_menu"), aligned(1))) const u8 gText_MenuPokedex[] = _("ずかん");
+
+__attribute__((section(".rodata.strings_start_menu"), aligned(1))) const u8 gText_MenuPokemon[] = _("ポケモン");
+
+__attribute__((section(".rodata.strings_start_menu"), aligned(1))) const u8 gText_MenuBag[] = _("バッグ");
+
+__attribute__((section(".rodata.strings_start_menu"), aligned(1))) const u8 gText_MenuPokenav[] = _("ポケナビ");
+
+__attribute__((section(".rodata.strings_start_menu"), aligned(1))) const u8 gText_MenuPlayer[] = _("{PLAYER}");
+
+__attribute__((section(".rodata.strings_start_menu"), aligned(1))) const u8 gText_MenuSave[] = _("レポート");
+
+__attribute__((section(".rodata.strings_start_menu"), aligned(1))) const u8 gText_MenuOption[] = _("せってい");
+
+__attribute__((section(".rodata.strings_start_menu"), aligned(1))) const u8 gText_MenuExit[] = _("とじる");
+
+__attribute__((section(".rodata.strings_start_menu"), aligned(1))) const u8 gText_MenuRetire[] = _("リタイア");
+
+__attribute__((section(".rodata.strings_start_menu"), aligned(1))) const u8 gText_MenuRest[] = _("やすむ");
+
+__attribute__((section(".rodata.strings_safari_ball_stock"), aligned(1))) const u8 gText_SafariBallStock[] = _(
+    "サファリボール\n"
+    "のこり　{STR_VAR_1}コ");

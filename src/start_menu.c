@@ -1,6 +1,8 @@
 #include "global.h"
 #include "constants/songs.h"
 #include "start_menu.h"
+#include "menu.h"
+#include "strings.h"
 #include "data/start_menu.h"
 
 enum
@@ -384,7 +386,7 @@ __attribute__((naked)) void ShowSafariBallsWindow(void)
         "_0809EF90: .4byte gStringVar1\n\t"
         "_0809EF94: .4byte gNumSafariBalls\n\t"
         "_0809EF98: .4byte gStringVar4\n\t"
-        "_0809EF9C: .4byte gUnknown_84E8B5C + 0x28\n\t"
+        "_0809EF9C: .4byte gText_SafariBallStock\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -554,7 +556,7 @@ __attribute__((naked)) void PrintStartMenuActions(void)
         "	bl PrintPlayerNameOnWindow\n\t"
         "	b _0809F130\n\t"
         "	.align 2, 0\n\t"
-        "_0809F0F0: .4byte gUnknown_84E8C2C\n\t"
+        "_0809F0F0: .4byte sStartMenuItems\n\t"
         "_0809F0F4: .4byte gStringVar4\n\t"
         "_0809F0F8: .4byte gUnknown_20372B0\n\t"
         "_0809F0FC: .4byte StartMenuPlayerNameCallback + 1\n\t"
@@ -1020,7 +1022,7 @@ __attribute__((naked)) void HandleStartMenuInput(void)
         "	.align 2, 0\n\t"
         "_0809F448: .4byte gMain\n\t"
         "_0809F44C: .4byte gUnknown_20372AE\n\t"
-        "_0809F450: .4byte gUnknown_84E8C2C\n\t"
+        "_0809F450: .4byte sStartMenuItems\n\t"
         "_0809F454: .4byte gUnknown_20372B0\n\t"
         "_0809F458: .4byte StartMenuPokedexCallback + 1\n\t"
         "_0809F45C: .4byte gUnknown_3005B54\n\t"
@@ -3027,3 +3029,21 @@ void AppendToList(u8 *list, u8 *pos, u8 newEntry)
     list[*pos] = newEntry;
     (*pos)++;
 }
+
+// The native callbacks still use naked declarations; preserve their menu ABI.
+static const struct MenuAction sStartMenuItems[] __attribute__((section(".rodata.start_menu_actions"), aligned(4))) =
+{
+    [MENU_ACTION_POKEDEX] = {gText_MenuPokedex, {.u8_void = (u8 (*)(void))StartMenuPokedexCallback}},
+    [MENU_ACTION_POKEMON] = {gText_MenuPokemon, {.u8_void = (u8 (*)(void))StartMenuPokemonCallback}},
+    [MENU_ACTION_BAG] = {gText_MenuBag, {.u8_void = (u8 (*)(void))StartMenuBagCallback}},
+    [MENU_ACTION_POKENAV] = {gText_MenuPokenav, {.u8_void = (u8 (*)(void))StartMenuPokeNavCallback}},
+    [MENU_ACTION_PLAYER] = {gText_MenuPlayer, {.u8_void = (u8 (*)(void))StartMenuPlayerNameCallback}},
+    [MENU_ACTION_SAVE] = {gText_MenuSave, {.u8_void = (u8 (*)(void))StartMenuSaveCallback}},
+    [MENU_ACTION_OPTION] = {gText_MenuOption, {.u8_void = (u8 (*)(void))StartMenuOptionCallback}},
+    [MENU_ACTION_EXIT] = {gText_MenuExit, {.u8_void = (u8 (*)(void))StartMenuExitCallback}},
+    [MENU_ACTION_RETIRE_SAFARI] = {gText_MenuRetire, {.u8_void = (u8 (*)(void))StartMenuSafariZoneRetireCallback}},
+    [MENU_ACTION_PLAYER_LINK] = {gText_MenuPlayer, {.u8_void = (u8 (*)(void))StartMenuLinkModePlayerNameCallback}},
+    [MENU_ACTION_REST_FRONTIER] = {gText_MenuRest, {.u8_void = (u8 (*)(void))StartMenuSaveCallback}},
+    [MENU_ACTION_RETIRE_FRONTIER] = {gText_MenuRetire, {.u8_void = (u8 (*)(void))StartMenuBattlePyramidRetireCallback}},
+    [MENU_ACTION_PYRAMID_BAG] = {gText_MenuBag, {.u8_void = (u8 (*)(void))StartMenuBattlePyramidBagCallback}},
+};

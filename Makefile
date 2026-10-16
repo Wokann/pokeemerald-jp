@@ -1917,11 +1917,11 @@ $(C_BUILDDIR)/naming_screen.o: src/naming_screen.c charmap.txt
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/naming_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/naming_screen.gen.s
 
-$(C_BUILDDIR)/data/reset_rtc_screen.o: src/data/reset_rtc_screen.c src/data/reset_rtc_screen.h $(wildcard graphics/reset_rtc_screen/* data/reset_rtc_screen/jp/*)
+$(C_BUILDDIR)/reset_rtc_screen.o: src/reset_rtc_screen.c charmap.txt graphics/reset_rtc_screen/arrow_down.4bpp graphics/reset_rtc_screen/arrow_right.4bpp graphics/reset_rtc_screen/arrow.gbapal
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/reset_rtc_screen.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/reset_rtc_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/data/reset_rtc_screen.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/reset_rtc_screen.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/reset_rtc_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/reset_rtc_screen.gen.s
 
 $(C_BUILDDIR)/data/pokedex.o: src/data/pokedex.c src/data/pokedex.h include/pokedex.h src/data/pokemon/pokedex_orders.h \
 	src/data/pokemon/pokedex_text.h src/data/pokemon/pokedex_entries.h \
