@@ -9641,7 +9641,7 @@ SECTIONS {
         src/naming_screen.o(.rodata.naming_screen_mid59_sprite_resources);
         src/money.o(.rodata.money_label_data);
         src/contest_effect.o(.rodata.contest_effect_data);
-        src/data/text/region_texts34.o(.rodata);
+        src/strings.o(.rodata.strings_record_mixing);
         src/record_mixing.o(.rodata.record_mixing_tables);
         . = ALIGN(4);
         src/sound_check.o(.rodata.sound_check_data);

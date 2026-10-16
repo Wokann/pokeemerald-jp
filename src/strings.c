@@ -2529,3 +2529,13 @@ __attribute__((section(".rodata.strings_start_menu"), aligned(1))) const u8 gTex
 __attribute__((section(".rodata.strings_safari_ball_stock"), aligned(1))) const u8 gText_SafariBallStock[] = _(
     "サファリボール\n"
     "のこり　{STR_VAR_1}コ");
+
+#define STRINGS_RECORD_MIXING __attribute__((section(".rodata.strings_record_mixing"), aligned(1)))
+
+STRINGS_RECORD_MIXING const u8 gText_MixingRecords[] = _("レコードを　まぜています");
+
+STRINGS_RECORD_MIXING const u8 gText_RecordMixingComplete[] = _(
+    "しゅうりょう　しました\n"
+    "おつかれさまでした");
+
+#undef STRINGS_RECORD_MIXING
