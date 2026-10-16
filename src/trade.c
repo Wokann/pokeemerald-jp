@@ -3,6 +3,7 @@
 #include "battle_anim.h"
 #include "cable_club.h"
 #include "trade.h"
+#include "strings.h"
 #include "evolution_scene.h"
 #include "data.h"
 
@@ -383,16 +384,16 @@ extern u8 *StringCopy10(u8 *dest, const u8 *src);
 extern u8 *StringCopy(u8 *dest, const u8 *src);
 extern u8 *StringAppend(u8 *dest, const u8 *src);
 extern const u8 gMoveNames[][MOVE_NAME_LENGTH + 1];
-extern const u8 gUnknown_8300A8A[];
-extern const u8 gUnknown_8300A9E[];
-extern const u8 gUnknown_8300AA9[];
-extern const u8 gUnknown_8300AAE[];
-extern const u8 gUnknown_8300AA0[];
-extern const u8 gUnknown_8300AA2[];
-extern const u8 gUnknown_8300AA5[];
+extern const u8 sTradeText_EmptyString[];
+extern const u8 sTradeText_NewLine[];
+extern const u8 sTradeText_FourQuestionMarks[];
+extern const u8 sJPText_TradeAnd[];
+extern const u8 sTradeText_Slash[];
+extern const u8 sTradeText_Lv[];
+extern const u8 sTradeText_ThreeDashes[];
 extern const u8 sText_IsThisTradeOkay[];
 extern const u8 sTradeTextColors[];
-extern const u8 gUnknown_8300A9B[];
+extern const u8 sTradeText_SpaceMove[];
 extern const u8 sTradeMonLevelCoords[][2];
 extern const u8 sTradeMonBoxCoords[][2];
 extern const u8 gUnknown_8300D40[][2];
@@ -403,9 +404,6 @@ extern const struct SpriteTemplate gUnknown_830D040;
 extern const struct SpriteTemplate gUnknown_830D0B8;
 extern const struct SpriteTemplate gUnknown_830D0D0;
 extern const union AffineAnimCmd *const gUnknown_830D110[];
-extern const u8 gUnknown_830D240[];
-extern const u8 gUnknown_830D24F[];
-extern const u8 gUnknown_830D258[];
 extern const u8 gUnknown_830D26A[];
 extern const struct MenuAction sSelectTradeMonActions[];
 extern const struct WindowTemplate sTradeYesNoWindowTemplate;
@@ -1286,7 +1284,7 @@ static void DrawTradeMonNicknames(void)
     GetMonData(&gEnemyParty[sTradeMenu->partnerCursorPosition % PARTY_SIZE], MON_DATA_NICKNAME, nickname);
     StringCopy10(str2, nickname);
     StringCopy(nickname, str1);
-    StringAppend(nickname, gUnknown_8300AAE);
+    StringAppend(nickname, sJPText_TradeAnd);
     StringAppend(nickname, str2);
     StringAppend(nickname, sText_IsThisTradeOkay);
     DrawBottomRowText(nickname, (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
@@ -2366,7 +2364,7 @@ __attribute__((naked)) void sub_080790C8(u8 side)
         "_0807940C: .4byte sTradeMenu\n\t"
         "_08079410: .4byte sTradeMonSpriteCoords\n\t"
         "_08079414: .4byte sTradeTextColors\n\t"
-        "_08079418: .4byte gUnknown_8300A9B\n\t"
+        "_08079418: .4byte sTradeText_SpaceMove\n\t"
         "_0807941C:\n\t"
         "	ldr r0, _08079464\n\t"
         "	lsls r1, r7, #1\n\t"
@@ -2441,17 +2439,17 @@ static u8 GetMonNicknameWidth(u8 *str, u8 whichParty, u8 partyIdx)
 
     if (!(*tradeMenuPtr)->isEgg[whichParty][partyIdx % PARTY_SIZE])
         AppendGenderSymbol(str, gender);
-    StringAppend(str, gUnknown_8300AA0);
+    StringAppend(str, sTradeText_Slash);
     tradeMenuPtr2 = tradeMenuPtr;
     if (!(*tradeMenuPtr2)->isEgg[whichParty][partyIdx % PARTY_SIZE])
     {
-        StringAppend(str, gUnknown_8300AA2);
+        StringAppend(str, sTradeText_Lv);
         ConvertIntToDecimalStringN(nickname, level, 0, 3);
         StringAppend(str, nickname);
     }
     else
     {
-        StringAppend(str, gUnknown_8300AA5);
+        StringAppend(str, sTradeText_ThreeDashes);
     }
     return StringLength(str);
 }
@@ -2471,18 +2469,18 @@ static void BufferMovesString(u8 *str, u8 whichParty, u8 partyIdx)
                 moves[i] = GetMonData3(&gEnemyParty[partyIdx], i + MON_DATA_MOVE1, NULL);
         }
 
-        StringCopy(str, gUnknown_8300A8A);
+        StringCopy(str, sTradeText_EmptyString);
         for (i = 0; i < MAX_MON_MOVES; i++)
         {
             if (moves[i] != MOVE_NONE)
                 StringAppend(str, gMoveNames[moves[i]]);
-            StringAppend(str, gUnknown_8300A9E);
+            StringAppend(str, sTradeText_NewLine);
         }
     }
     else
     {
-        StringCopy(str, gUnknown_8300A8A);
-        StringAppend(str, gUnknown_8300AA9);
+        StringCopy(str, sTradeText_EmptyString);
+        StringAppend(str, sTradeText_FourQuestionMarks);
     }
 }
 
@@ -3897,7 +3895,7 @@ static bool8 DoTradeAnim_Cable(void)
         }
         break;
     case STATE_SEND_MSG:
-        StringExpandPlaceholders(gStringVar4, gUnknown_830D240);
+        StringExpandPlaceholders(gStringVar4, gText_XWillBeSentToY);
         DrawTextOnTradeWindow(0, gStringVar4, 0);
 
         if (gUnknown_2031F40->monSpecies[TRADE_PLAYER] != SPECIES_EGG)
@@ -3911,7 +3909,7 @@ static bool8 DoTradeAnim_Cable(void)
         {
             gUnknown_2031F40->releasePokeballSpriteId = CreateTradePokeballSprite(gUnknown_2031F40->monSpriteIds[TRADE_PLAYER], gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].oam.paletteNum, 120, 32, 2, 1, 0x14, 0xfffff);
             gUnknown_2031F40->state++;
-            StringExpandPlaceholders(gStringVar4, gUnknown_830D24F);
+            StringExpandPlaceholders(gStringVar4, gText_ByeByeVar1);
             DrawTextOnTradeWindow(0, gStringVar4, 0);
         }
         break;
@@ -4260,7 +4258,7 @@ static bool8 DoTradeAnim_Cable(void)
                                       DISPCNT_BG0_ON |
                                       DISPCNT_BG2_ON |
                                       DISPCNT_OBJ_ON);
-        StringExpandPlaceholders(gStringVar4, gUnknown_830D258);
+        StringExpandPlaceholders(gStringVar4, gText_XSentOverY);
         DrawTextOnTradeWindow(0, gStringVar4, 0);
         gUnknown_2031F40->state = STATE_DELAY_FOR_MON_ANIM;
         gUnknown_2031F40->timer = 0;
@@ -4368,7 +4366,7 @@ static bool8 DoTradeAnim_Wireless(void)
         }
         break;
     case STATE_SEND_MSG:
-        StringExpandPlaceholders(gStringVar4, gUnknown_830D240);
+        StringExpandPlaceholders(gStringVar4, gText_XWillBeSentToY);
         DrawTextOnTradeWindow(0, gStringVar4, 0);
 
         if (gUnknown_2031F40->monSpecies[TRADE_PLAYER] != SPECIES_EGG)
@@ -4382,7 +4380,7 @@ static bool8 DoTradeAnim_Wireless(void)
         {
             gUnknown_2031F40->releasePokeballSpriteId = CreateTradePokeballSprite(gUnknown_2031F40->monSpriteIds[TRADE_PLAYER], gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].oam.paletteNum, 120, 32, 2, 1, 0x14, 0xfffff);
             gUnknown_2031F40->state++;
-            StringExpandPlaceholders(gStringVar4, gUnknown_830D24F);
+            StringExpandPlaceholders(gStringVar4, gText_ByeByeVar1);
             DrawTextOnTradeWindow(0, gStringVar4, 0);
         }
         break;
@@ -4757,7 +4755,7 @@ static bool8 DoTradeAnim_Wireless(void)
                                       DISPCNT_BG0_ON |
                                       DISPCNT_BG2_ON |
                                       DISPCNT_OBJ_ON);
-        StringExpandPlaceholders(gStringVar4, gUnknown_830D258);
+        StringExpandPlaceholders(gStringVar4, gText_XSentOverY);
         DrawTextOnTradeWindow(0, gStringVar4, 0);
         gUnknown_2031F40->state = STATE_DELAY_FOR_MON_ANIM;
         gUnknown_2031F40->timer = 0;

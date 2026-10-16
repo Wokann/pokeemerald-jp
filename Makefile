@@ -1868,7 +1868,7 @@ $(C_BUILDDIR)/data/trade.d: src/data/trade.h | tools
 
 -include $(C_BUILDDIR)/data/trade.d
 
-$(C_BUILDDIR)/data/trade.o: src/data/trade.c src/data/trade.h graphics/trade/cursor.png $(wildcard graphics/trade/jp/menu/* graphics/trade/jp/animation/*)
+$(C_BUILDDIR)/data/trade.o: src/data/trade.c src/data/trade.h charmap.txt graphics/trade/cursor.png $(wildcard graphics/trade/jp/menu/* graphics/trade/jp/animation/*)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/trade.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/trade.gen.s | $(AS) $(ASFLAGS) -o $@ -

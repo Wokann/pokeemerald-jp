@@ -11,6 +11,9 @@
 #define STRINGS_QUESTION_MARKS __attribute__((section(".rodata.strings_question_marks"), aligned(1)))
 #define STRINGS_CONTEST_RESULTS __attribute__((section(".rodata.strings_contest_results"), aligned(1)))
 
+#define STRINGS_TRADE_MESSAGES __attribute__((section(".rodata.strings_trade_messages"), aligned(1)))
+#define STRINGS_DAYCARE_MENU __attribute__((section(".rodata.strings_daycare_menu"), aligned(1)))
+
 #define STRINGS_EREADER_TEXT __attribute__((section(".rodata.strings_ereader_text"), aligned(1)))
 #define STRINGS_MINIGAME_TEXT __attribute__((section(".rodata.strings_minigame_text"), aligned(1)))
 #define STRINGS_SHARED_MISC_TEXT __attribute__((section(".rodata.strings_shared_misc_text"), aligned(1)))
@@ -79,6 +82,16 @@ STRINGS_CONTEST_RESULTS const u8 gText_ContestantsMonWon[] = _("ゆうしょう�
 STRINGS_CONTEST_RESULTS const u8 gText_CommunicationStandby[] = _("つうしんたいきちゅう");
 STRINGS_CONTEST_RESULTS const u8 gText_ColorDarkGray[] = _("{COLOR 0x02}");
 STRINGS_CONTEST_RESULTS const u8 gText_ColorDynamic6WhiteDynamic5[] = _("{COLOR_HIGHLIGHT_SHADOW 0x0F 0x01 0x0E}");
+
+STRINGS_TRADE_MESSAGES const u8 gText_XWillBeSentToY[] = _(
+    "{STR_VAR_1}に\n"
+    "{STR_VAR_2}を　おくります！");
+STRINGS_TRADE_MESSAGES const u8 gText_ByeByeVar1[] = _("ばいばい　{STR_VAR_2}！");
+STRINGS_TRADE_MESSAGES const u8 gText_XSentOverY[] = _(
+    "{STR_VAR_1}から\n"
+    "{STR_VAR_3}が　おくられてきた！");
+STRINGS_DAYCARE_MENU const u8 gText_NewLine2[] = _("\n");
+STRINGS_DAYCARE_MENU const u8 gText_Exit4[] = _("やめる");
 
 const u8 gText_ExpandedPlaceholder_Empty[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("");
 const u8 gText_ExpandedPlaceholder_Kun[] STRINGS_EXPANDED_PLACEHOLDER_TEXT = _("くん");

@@ -3038,7 +3038,7 @@ __attribute__((naked)) void AppendGenderSymbol(void)
         "	ldr r1, _0807098C\n\t"
         "	b _080709AE\n\t"
         "	.align 2, 0\n\t"
-        "_0807098C: .4byte gUnknown_8300A95\n\t"
+        "_0807098C: .4byte gText_MaleSymbol4\n\t"
         "_08070990:\n\t"
         "	cmp r1, #0xfe\n\t"
         "	bne _080709AC\n\t"
@@ -3051,7 +3051,7 @@ __attribute__((naked)) void AppendGenderSymbol(void)
         "	ldr r1, _080709A8\n\t"
         "	b _080709AE\n\t"
         "	.align 2, 0\n\t"
-        "_080709A8: .4byte gUnknown_8300A97\n\t"
+        "_080709A8: .4byte gText_FemaleSymbol4\n\t"
         "_080709AC:\n\t"
         "	ldr r1, _080709BC\n\t"
         "_080709AE:\n\t"
@@ -3061,7 +3061,7 @@ __attribute__((naked)) void AppendGenderSymbol(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080709BC: .4byte gUnknown_8300A99\n\t"
+        "_080709BC: .4byte gText_GenderlessSymbol\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3147,8 +3147,8 @@ __attribute__((naked)) void GetDaycareLevelMenuText(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070A58: .4byte 0x082FC0F8\n\t"
-        "_08070A5C: .4byte 0x082FC0FA\n\t"
+        "_08070A58: .4byte gText_NewLine2\n\t"
+        "_08070A5C: .4byte gText_Exit4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3201,7 +3201,7 @@ __attribute__((naked)) void GetDaycareLevelMenuLevelText(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08070ABC: .4byte gDaycareText_LevelSymbol\n\t"
-        "_08070AC0: .4byte 0x082FC0F8\n\t"
+        "_08070AC0: .4byte gText_NewLine2\n\t"
         ".syntax divided\n\t"
     );
 }

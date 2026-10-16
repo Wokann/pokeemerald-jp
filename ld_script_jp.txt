@@ -9390,7 +9390,7 @@ SECTIONS {
         src/strings.o(.rodata.strings_daycare);
         data/data_b2d_mid47.o(.rodata.data_b2d_mid47_between_daycare_text_and_compatibility_data);
         src/daycare.o(.rodata.daycare_compatibility_messages_data);
-        src/data/text/region_texts51.o(.rodata);
+        src/strings.o(.rodata.strings_daycare_menu);
         src/daycare.o(.rodata.daycare_level_symbol_data);
         src/egg_hatch.o(.rodata.egg_hatch_graphics);
         src/egg_hatch.o(.rodata.egg_hatch_static_data);
@@ -9404,12 +9404,9 @@ SECTIONS {
         src/data/trade.o(.rodata.trade_menu_resources);
         src/graphics.o(.rodata.trade_menu_mon_box_graphics);
         src/data/trade.o(.rodata.trade_menu_resources_after_mon_box);
-        src/data/text/region_texts48.o(.rodata);
-        data/data_b2d.o(.rodata.mid48);
-        src/data/text/region_texts50.o(.rodata);
-        src/data/trade.o(.rodata.trade_animation_text_resources);
+        src/data/trade.o(.rodata.trade_menu_text_resources);
         src/data/trade.o(.rodata.trade_animation_resources);
-        src/data/text/region_texts49.o(.rodata);
+        src/strings.o(.rodata.strings_trade_messages);
         src/data/trade.o(.rodata.trade_post_animation_resources);
         src/data/berry_blender.o(.rodata.berry_blender_background_data);
         src/data/berry_blender.o(.rodata.berry_blender_resources_after_background_data);

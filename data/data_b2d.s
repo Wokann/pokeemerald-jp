@@ -30,12 +30,6 @@ gUnknown_82EC5FE: @ 0x82EC5FE
 	.section .rodata.data_b2d_after_experience_tables
 
 
-	.section .rodata.mid48
-
-	.globl gUnknown_8300A99
-gUnknown_8300A99: @ 0x8300A99
-	.incbin "baserom_jp.gba", 0x300A99, 0x2
-
 	.section .rodata.mid97_prefix
 
 	.globl gText_Red

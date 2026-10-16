@@ -4,7 +4,7 @@
 #define TRADE_UNUSED_STRUCT_SIZES __attribute__((section(".rodata.trade_unused_struct_sizes"), aligned(1)))
 #define TRADE_MENU_RESOURCES __attribute__((section(".rodata.trade_menu_resources"), aligned(1)))
 #define TRADE_MENU_RESOURCES_AFTER_MON_BOX __attribute__((section(".rodata.trade_menu_resources_after_mon_box"), aligned(1)))
-#define TRADE_ANIMATION_TEXT_RESOURCES __attribute__((section(".rodata.trade_animation_text_resources"), aligned(1)))
+#define TRADE_MENU_TEXT_RESOURCES __attribute__((section(".rodata.trade_menu_text_resources"), aligned(1)))
 #define TRADE_ANIMATION_RESOURCES __attribute__((section(".rodata.trade_animation_resources"), aligned(1)))
 #define TRADE_POST_ANIMATION_RESOURCES __attribute__((section(".rodata.trade_post_animation_resources"), aligned(1)))
 
@@ -326,13 +326,28 @@ static const u8 sUnusedCoords[][2] TRADE_MENU_RESOURCES_AFTER_MON_BOX __attribut
     {23, 12},
 };
 
-const u8 sText_IsThisTradeOkay[] TRADE_ANIMATION_TEXT_RESOURCES = _("を　こうかんしますか？");
-static const u8 sText_Cancel[] TRADE_ANIMATION_TEXT_RESOURCES = _("やめる");
-static const u8 sText_ChooseAPkmn[] TRADE_ANIMATION_TEXT_RESOURCES = _("ポケモンを　えらんで　ください");
-static const u8 sText_Summary[] TRADE_ANIMATION_TEXT_RESOURCES = _("つよさをみる");
-static const u8 sText_Trade[] TRADE_ANIMATION_TEXT_RESOURCES = _("こうかんにだす");
-static const u8 sText_CancelTrade[] TRADE_ANIMATION_TEXT_RESOURCES = _("こうかん　を　やめますか？");
-static const u8 sJPText_PressBButtonToQuit[] TRADE_ANIMATION_TEXT_RESOURCES = _("Bボタン　で　もどります");
+// JP separate compilation requires module-qualified private exports.
+TRADE_MENU_TEXT_RESOURCES const u8 sTradeText_EmptyString[] = _("");
+TRADE_MENU_TEXT_RESOURCES static const u8 sText_UnusedTextFormat[] = _("{COLOR 0x01}{HIGHLIGHT 0x00}{SHADOW 0x02}");
+TRADE_MENU_TEXT_RESOURCES const u8 gText_MaleSymbol4[] = _("♂");
+TRADE_MENU_TEXT_RESOURCES const u8 gText_FemaleSymbol4[] = _("♀");
+TRADE_MENU_TEXT_RESOURCES const u8 gText_GenderlessSymbol[] = _("");
+TRADE_MENU_TEXT_RESOURCES static const u8 sJPText_EmptyString[] = _("");
+TRADE_MENU_TEXT_RESOURCES const u8 sTradeText_SpaceMove[] = _("わざ");
+TRADE_MENU_TEXT_RESOURCES const u8 sTradeText_NewLine[] = _("\n");
+TRADE_MENU_TEXT_RESOURCES const u8 sTradeText_Slash[] = _("/");
+TRADE_MENU_TEXT_RESOURCES const u8 sTradeText_Lv[] = _("Lv");
+TRADE_MENU_TEXT_RESOURCES const u8 sTradeText_ThreeDashes[] = _("ーーー");
+TRADE_MENU_TEXT_RESOURCES const u8 sTradeText_FourQuestionMarks[] = _("？？？？");
+TRADE_MENU_TEXT_RESOURCES const u8 sJPText_TradeAnd[] = _("と　");
+
+const u8 sText_IsThisTradeOkay[] TRADE_MENU_TEXT_RESOURCES = _("を　こうかんしますか？");
+static const u8 sText_Cancel[] TRADE_MENU_TEXT_RESOURCES = _("やめる");
+static const u8 sText_ChooseAPkmn[] TRADE_MENU_TEXT_RESOURCES = _("ポケモンを　えらんで　ください");
+static const u8 sText_Summary[] TRADE_MENU_TEXT_RESOURCES = _("つよさをみる");
+static const u8 sText_Trade[] TRADE_MENU_TEXT_RESOURCES = _("こうかんにだす");
+static const u8 sText_CancelTrade[] TRADE_MENU_TEXT_RESOURCES = _("こうかん　を　やめますか？");
+static const u8 sJPText_PressBButtonToQuit[] TRADE_MENU_TEXT_RESOURCES = _("Bボタン　で　もどります");
 
 const u8 *const sActionTexts[] TRADE_ANIMATION_RESOURCES =
 {
