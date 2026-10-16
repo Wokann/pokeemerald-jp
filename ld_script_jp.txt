@@ -9620,7 +9620,13 @@ SECTIONS {
         src/pokemon_storage_system.o(.rodata.pokemon_storage_walda_tables);
         src/pokemon_storage_system.o(.rodata.pokemon_storage_unused_color);
         . = ALIGN(4);
-        src/data/pokemon_storage_system.o(.rodata.pokemon_storage_mid57a);
+        src/pokemon_storage_system.o(.rodata.pokemon_storage_tail_common);
+        src/pokemon_storage_system.o(.rodata.pokemon_storage_move_funcs);
+        src/pokemon_storage_system.o(.rodata.pokemon_storage_release_moves);
+        src/pokemon_storage_system.o(.rodata.pokemon_storage_input_funcs);
+        src/pokemon_storage_system.o(.rodata);
+        src/pokemon_storage_system.o(.rodata.pokemon_storage_cursor_objects);
+        src/pokemon_storage_system.o(.rodata.pokemon_storage_tail_menus);
         src/graphics.o(.rodata.mon_icon_palettes_mid57a);
         src/pokemon_icon.o(.rodata.pokemon_icon_mid57a);
         src/fldeff_cut.o(.rodata.fldeff_cut_mid57a);

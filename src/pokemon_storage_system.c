@@ -2,6 +2,9 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/pokemon_icon.h"
+#include "constants/moves.h"
+#include "constants/maps.h"
+#include "constants/map_groups.h"
 #include "malloc.h"
 #include "bg.h"
 #include "data.h"
@@ -41,20 +44,30 @@
 #include "util.h"
 #include "window.h"
 
+static const u16 sHandCursor_Pal[];
+static const u8 sHandCursor_Gfx[2048];
+static const u8 sHandCursorShadow_Gfx[128];
+#define STORAGE_TAIL_COMMON __attribute__((section(".rodata.pokemon_storage_tail_common"), aligned(4)))
+#define STORAGE_MOVE_FUNCS __attribute__((section(".rodata.pokemon_storage_move_funcs"), aligned(4)))
+#define STORAGE_RELEASE_MOVES __attribute__((section(".rodata.pokemon_storage_release_moves"), aligned(4)))
+#define STORAGE_INPUT_FUNCS __attribute__((section(".rodata.pokemon_storage_input_funcs"), aligned(4)))
+#define STORAGE_CURSOR_OBJECTS __attribute__((section(".rodata.pokemon_storage_cursor_objects"), aligned(4)))
+#define STORAGE_TAIL_MENUS __attribute__((section(".rodata.pokemon_storage_tail_menus"), aligned(4)))
+
+bool8 MonPlaceChange_Grab(void);
+bool8 MonPlaceChange_Place(void);
+bool8 MonPlaceChange_Shift(void);
+
 extern u8 sCurrentBoxOption;
 extern u8 gUnknown_20399A0;
 u8 GetCurrentBoxOption(void);
 void EnterPokeStorage(u8 boxOption);
 extern bool8 gUnknown_20399AC;
 extern u8 gUnknown_20399AE;
-extern const u8 gUnknown_8556618[];
-extern const u8 gUnknown_8556620[];
+static const struct WindowTemplate sWindowTemplate_MultiMove;
+static const u32 sItemInfoFrame_Gfx[];
 static const u16 sPartySlotFilled_Tilemap[];
 static const u16 sPartySlotEmpty_Tilemap[];
-extern const u8 gUnknown_85564E0[];
-extern const u8 gUnknown_85564F8[];
-extern const struct SpriteTemplate gUnknown_855654C;
-extern const struct SpriteTemplate gUnknown_8556564;
 static const u32 sScrollingBg_Gfx[];
 static const u32 sScrollingBg_Tilemap[];
 static const u32 sDisplayMenu_Tilemap[];
@@ -73,9 +86,8 @@ static const struct Wallpaper sWaldaWallpapers[];
 static const u32 *const sWaldaWallpaperIcons[];
 extern u8 gUnknown_3000F78[];
 extern u16 gUnknown_2037434[];
-extern const u8 gUnknown_855676C[];
-extern const u8 *const gUnknown_855657C[];
-extern const struct InputFunc gUnknown_85564B8[] __attribute__((aligned(4)));
+static const struct SpriteTemplate sSpriteTemplate_ItemIcon;
+static const u8 *const sMenuTexts[];
 struct UnkUtil;
 struct UnkUtilData;
 extern const u8 *GetMovingItemName(void);
@@ -338,16 +350,6 @@ struct InputFunc
     s8 area;
 };
 
-struct CursorSpriteSheetData
-{
-    struct SpriteSheet sheets[3];
-};
-
-struct CursorSpritePaletteData
-{
-    struct SpritePalette palettes[2];
-};
-
 struct UnkUtilData
 {
     const u8 *src;
@@ -525,6 +527,19 @@ enum {
     OPTION_MOVE_ITEMS,
     OPTION_EXIT,
     OPTIONS_COUNT
+};
+
+enum {
+    CURSOR_ANIM_BOUNCE,
+    CURSOR_ANIM_STILL,
+    CURSOR_ANIM_OPEN,
+    CURSOR_ANIM_FIST,
+};
+
+enum {
+    CHANGE_GRAB,
+    CHANGE_PLACE,
+    CHANGE_SHIFT,
 };
 
 struct PokemonStorageSystemData
@@ -745,7 +760,6 @@ struct RestrictedReleaseMove
 
 extern struct PokemonStorageSystemData *sStorage;
 
-extern bool8 (*const sPlaceChangeFuncs[])(void);
 extern const u8 *ItemId_GetName(u16 itemId);
 extern const u8 gText_EggNickname[];
 extern void TilemapUtil_Free(void);
@@ -757,11 +771,10 @@ extern struct MultiMove *sMultiMove;
 extern struct TilemapUtil *sTilemapUtil;
 extern struct ChooseBoxMenu *gUnknown_20399A4;
 extern u16 gUnknown_2039A28;
-extern const struct TilemapDimensions gUnknown_8556784[][4];
-extern const struct RestrictedReleaseMove gUnknown_85564A0[];
+static const struct TilemapDimensions sTilemapDimensions[][4];
+static const struct RestrictedReleaseMove sRestrictedReleaseMoves[];
 
 #define sNumTilemapUtilIds gUnknown_2039A28
-#define sTilemapDimensions gUnknown_8556784
 extern struct UnkUtil *sUnkUtil;
 extern struct Pokemon sSavedMovingMon;
 extern s8 sCursorArea;
@@ -862,9 +875,9 @@ extern void sub_080CC828(void);
 extern void sub_080CC7BC(struct Sprite *sprite);
 extern void sub_080CC7F0(struct Sprite *sprite);
 static const u16 sBoxTitleColors[][2];
-extern const struct SpriteTemplate gUnknown_8555BA4;
-extern const struct SpriteSheet gUnknown_8555B7C;
-extern const struct SpriteTemplate gUnknown_8555BDC;
+static const struct SpriteTemplate sSpriteTemplate_BoxTitle;
+static const struct SpriteSheet sSpriteSheet_Arrow;
+static const struct SpriteTemplate sSpriteTemplate_Arrow;
 extern void sub_080C66A4(const u8 *str, u8 *buffer, u8 x, u8 y, void *decompBuffer);
 extern bool8 sub_080D0AB8(void);
 extern bool8 IsActiveItemMoving(void);
@@ -4874,7 +4887,7 @@ void sub_080CC3C4(u8 boxId)
 
     for (i = 0; i < 2; i++)
     {
-        u8 spriteId = CreateSprite(&gUnknown_8555BA4, x + i * 32, 28, 24);
+        u8 spriteId = CreateSprite(&sSpriteTemplate_BoxTitle, x + i * 32, 28, 24);
         sStorage->curBoxTitleSprites[i] = &gSprites[spriteId];
         StartSpriteAnim(sStorage->curBoxTitleSprites[i], i);
     }
@@ -4887,7 +4900,7 @@ void sub_080CC57C(u8 boxId, s8 direction)
     s16 x, adjustedX;
     u16 i;
     struct SpriteSheet spriteSheet = {sStorage->boxTitleTiles, 0x200, GFXTAG_BOX_TITLE};
-    struct SpriteTemplate template = gUnknown_8555BA4;
+    struct SpriteTemplate template = sSpriteTemplate_BoxTitle;
 
     sStorage->boxTitleCycleId = (sStorage->boxTitleCycleId == 0);
     if (sStorage->boxTitleCycleId == 0)
@@ -4982,10 +4995,10 @@ void sub_080CC8A8(void)
 {
     u16 i;
 
-    LoadSpriteSheet(&gUnknown_8555B7C);
+    LoadSpriteSheet(&sSpriteSheet_Arrow);
     for (i = 0; i < 2; i++)
     {
-        u8 spriteId = CreateSprite(&gUnknown_8555BDC, 92 + i * 136, 28, 22);
+        u8 spriteId = CreateSprite(&sSpriteTemplate_Arrow, 92 + i * 136, 28, 22);
         if (spriteId != MAX_SPRITES)
         {
             struct Sprite *sprite = &gSprites[spriteId];
@@ -5100,7 +5113,7 @@ void sub_080CCA8C(struct Sprite *sprite)
 
 struct Sprite *sub_080CCB64(u16 x, u16 y, u8 animId, u8 priority, u8 subpriority)
 {
-    u8 spriteId = CreateSprite(&gUnknown_8555BDC, x, y, subpriority);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_Arrow, x, y, subpriority);
 
     if (spriteId == MAX_SPRITES)
     {
@@ -5456,7 +5469,14 @@ u8 GetSavedCursorPos(void)
 
 void InitMonPlaceChange(u8 type)
 {
-    sStorage->monPlaceChangeFunc = sPlaceChangeFuncs[type];
+    static bool8 (*const placeChangeFuncs[])(void) STORAGE_MOVE_FUNCS =
+    {
+        [CHANGE_GRAB]  = MonPlaceChange_Grab,
+        [CHANGE_PLACE] = MonPlaceChange_Place,
+        [CHANGE_SHIFT] = MonPlaceChange_Shift,
+    };
+
+    sStorage->monPlaceChangeFunc = placeChangeFuncs[type];
     sStorage->monPlaceChangeState = 0;
 }
 
@@ -5799,11 +5819,11 @@ void sub_080CDBCC(u16 *moves)
 
     for (i = 0; i < (u32)6; i++)
     {
-        if (gUnknown_85564A0[i].mapGroup == MAP_GROUPS_COUNT
-         || (gUnknown_85564A0[i].mapGroup == gSaveBlock1Ptr->location.mapGroup
-          && gUnknown_85564A0[i].mapNum == gSaveBlock1Ptr->location.mapNum))
+        if (sRestrictedReleaseMoves[i].mapGroup == MAP_GROUPS_COUNT
+         || (sRestrictedReleaseMoves[i].mapGroup == gSaveBlock1Ptr->location.mapGroup
+          && sRestrictedReleaseMoves[i].mapNum == gSaveBlock1Ptr->location.mapNum))
         {
-            *moves = gUnknown_85564A0[i].move;
+            *moves = sRestrictedReleaseMoves[i].move;
             moves++;
         }
     }
@@ -6852,12 +6872,21 @@ bool8 HandleInput_OnButtons(void)
 
 u8 sub_080CF268(void)
 {
+    static const struct InputFunc inputFuncs[] STORAGE_INPUT_FUNCS =
+    {
+        {HandleInput_InBox,     CURSOR_AREA_IN_BOX},
+        {HandleInput_InParty,   CURSOR_AREA_IN_PARTY},
+        {HandleInput_OnBox,     CURSOR_AREA_BOX_TITLE},
+        {HandleInput_OnButtons, CURSOR_AREA_BUTTONS},
+        {},
+    };
+
     u16 i = 0;
 
-    while (gUnknown_85564B8[i].func != NULL)
+    while (inputFuncs[i].func != NULL)
     {
-        if (gUnknown_85564B8[i].area == gUnknown_2039A18)
-            return gUnknown_85564B8[i].func();
+        if (inputFuncs[i].area == gUnknown_2039A18)
+            return inputFuncs[i].func();
         i++;
     }
 
@@ -6992,18 +7021,95 @@ void sub_080CF490(void)
     u8 spriteId;
     u8 priority;
     u8 subpriority;
-    struct CursorSpriteSheetData spriteSheets;
-    struct CursorSpritePaletteData spritePalettes;
+    struct SpriteSheet spriteSheets[] =
+    {
+        {sHandCursor_Gfx, 0x800, GFXTAG_CURSOR},
+        {sHandCursorShadow_Gfx, 0x80, GFXTAG_CURSOR_SHADOW},
+        {}
+    };
 
-    spriteSheets = *(const struct CursorSpriteSheetData *)gUnknown_85564E0;
-    spritePalettes = *(const struct CursorSpritePaletteData *)gUnknown_85564F8;
-    LoadSpriteSheets(spriteSheets.sheets);
-    LoadSpritePalettes(spritePalettes.palettes);
+    struct SpritePalette spritePalettes[] =
+    {
+        {sHandCursor_Pal, PALTAG_MISC_1},
+        {}
+    };
+
+    static const struct OamData sOamData_Cursor STORAGE_CURSOR_OBJECTS =
+    {
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .priority = 1,
+    };
+
+    static const struct OamData sOamData_CursorShadow STORAGE_CURSOR_OBJECTS =
+    {
+        .shape = SPRITE_SHAPE(16x16),
+        .size = SPRITE_SIZE(16x16),
+        .priority = 1,
+    };
+
+    static const union AnimCmd sAnim_Cursor_Bouncing[] STORAGE_CURSOR_OBJECTS =
+    {
+        ANIMCMD_FRAME(0, 30),
+        ANIMCMD_FRAME(16, 30),
+        ANIMCMD_JUMP(0)
+    };
+
+    static const union AnimCmd sAnim_Cursor_Still[] STORAGE_CURSOR_OBJECTS =
+    {
+        ANIMCMD_FRAME(0, 5),
+        ANIMCMD_END
+    };
+
+    static const union AnimCmd sAnim_Cursor_Open[] STORAGE_CURSOR_OBJECTS =
+    {
+        ANIMCMD_FRAME(32, 5),
+        ANIMCMD_END
+    };
+
+    static const union AnimCmd sAnim_Cursor_Fist[] STORAGE_CURSOR_OBJECTS =
+    {
+        ANIMCMD_FRAME(48, 5),
+        ANIMCMD_END
+    };
+
+    static const union AnimCmd *const sAnims_Cursor[] STORAGE_CURSOR_OBJECTS =
+    {
+        [CURSOR_ANIM_BOUNCE] = sAnim_Cursor_Bouncing,
+        [CURSOR_ANIM_STILL]  = sAnim_Cursor_Still,
+        [CURSOR_ANIM_OPEN]   = sAnim_Cursor_Open,
+        [CURSOR_ANIM_FIST]   = sAnim_Cursor_Fist
+    };
+
+    static const struct SpriteTemplate sSpriteTemplate_Cursor STORAGE_CURSOR_OBJECTS =
+    {
+        .tileTag = GFXTAG_CURSOR,
+        .paletteTag = PALTAG_MISC_2,
+        .oam = &sOamData_Cursor,
+        .anims = sAnims_Cursor,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    };
+
+    static const struct SpriteTemplate sSpriteTemplate_CursorShadow STORAGE_CURSOR_OBJECTS =
+    {
+        .tileTag = GFXTAG_CURSOR_SHADOW,
+        .paletteTag = PALTAG_MISC_2,
+        .oam = &sOamData_CursorShadow,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = sub_080CF470,
+    };
+
+    LoadSpriteSheets(spriteSheets);
+    LoadSpritePalettes(spritePalettes);
     sStorage->cursorPalNums[0] = IndexOfSpritePaletteTag(0xDACA);
     sStorage->cursorPalNums[1] = IndexOfSpritePaletteTag(0xDAC7);
 
     sub_080CCCC0(gUnknown_2039A18, gUnknown_2039A19, &x, &y);
-    spriteId = CreateSprite(&gUnknown_855654C, x, y, 6);
+    spriteId = CreateSprite(&sSpriteTemplate_Cursor, x, y, 6);
     if (spriteId != MAX_SPRITES)
     {
         sStorage->cursorSprite = &gSprites[spriteId];
@@ -7028,7 +7134,7 @@ void sub_080CF490(void)
         priority = 2;
     }
 
-    spriteId = CreateSprite(&gUnknown_8556564, 0, 0, subpriority);
+    spriteId = CreateSprite(&sSpriteTemplate_CursorShadow, 0, 0, subpriority);
     if (spriteId != MAX_SPRITES)
     {
         sStorage->cursorShadowSprite = &gSprites[spriteId];
@@ -7110,7 +7216,7 @@ void SetMenuText(u8 textId)
         u8 len;
         struct StorageMenu *menu = &sStorage->menuItems[sStorage->menuItemsCount];
 
-        menu->text = gUnknown_855657C[textId];
+        menu->text = sMenuTexts[textId];
         menu->textId = textId;
         len = StringLength(menu->text);
         if (len > sStorage->menuWidth)
@@ -7197,7 +7303,7 @@ bool8 sub_080CFA04(void)
     sMultiMove = Alloc(sizeof(*sMultiMove));
     if (sMultiMove != NULL)
     {
-        sStorage->multiMoveWindowId = AddWindow8Bit((const struct WindowTemplate *)gUnknown_8556618);
+        sStorage->multiMoveWindowId = AddWindow8Bit(&sWindowTemplate_MultiMove);
         if (sStorage->multiMoveWindowId != WINDOW_NONE)
         {
             FillWindowPixelBuffer(sStorage->multiMoveWindowId, PIXEL_FILL(0));
@@ -7716,7 +7822,7 @@ void sub_080D0500(void)
     {
         spriteSheet.data = gUnknown_3000F78;
         spriteSheet.size = 0x200;
-        spriteTemplate = *(const struct SpriteTemplate *)gUnknown_855676C;
+        spriteTemplate = sSpriteTemplate_ItemIcon;
 
         for (i = 0; i < MAX_ITEM_ICONS; i++)
         {
@@ -8285,7 +8391,7 @@ void sub_080D1254(u32 x);
 void sub_080D10B8(void)
 {
     sStorage->itemInfoWindowOffset = 21;
-    LoadBgTiles(0, gUnknown_8556620, 0x80, 0x13A);
+    LoadBgTiles(0, sItemInfoFrame_Gfx, 0x80, 0x13A);
     sub_080D1254(0);
 }
 
@@ -9489,3 +9595,265 @@ static const u16 sUnusedColor STORAGE_UNUSED_COLOR_DATA = RGB(26, 29, 8);
 #undef WALDA_ICONS_MINUN_MAGMA_DATA
 #undef WALDA_WALLPAPER_TABLES_DATA
 #undef STORAGE_UNUSED_COLOR_DATA
+
+static const struct SpriteSheet sSpriteSheet_Arrow STORAGE_TAIL_COMMON =
+{sArrow_Gfx, 128, GFXTAG_ARROW};
+
+static const struct OamData sOamData_BoxTitle STORAGE_TAIL_COMMON =
+{
+    .shape = SPRITE_SHAPE(32x16),
+    .size = SPRITE_SIZE(32x16),
+    .priority = 2
+};
+
+static const union AnimCmd sAnim_BoxTitle_Left[] STORAGE_TAIL_COMMON =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_BoxTitle_Right[] STORAGE_TAIL_COMMON =
+{
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_BoxTitle[] STORAGE_TAIL_COMMON =
+{
+    sAnim_BoxTitle_Left,
+    sAnim_BoxTitle_Right
+};
+
+static const struct SpriteTemplate sSpriteTemplate_BoxTitle STORAGE_TAIL_COMMON =
+{
+    .tileTag = GFXTAG_BOX_TITLE,
+    .paletteTag = PALTAG_BOX_TITLE,
+    .oam = &sOamData_BoxTitle,
+    .anims = sAnims_BoxTitle,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+static const struct OamData sOamData_Arrow STORAGE_TAIL_COMMON =
+{
+    .shape = SPRITE_SHAPE(8x16),
+    .size = SPRITE_SIZE(8x16),
+    .priority = 2
+};
+
+static const union AnimCmd sAnim_Arrow_Left[] STORAGE_TAIL_COMMON =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Arrow_Right[] STORAGE_TAIL_COMMON =
+{
+    ANIMCMD_FRAME(2, 5),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_Arrow[] STORAGE_TAIL_COMMON =
+{
+    sAnim_Arrow_Left,
+    sAnim_Arrow_Right
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Arrow STORAGE_TAIL_COMMON =
+{
+    .tileTag = GFXTAG_ARROW,
+    .paletteTag = PALTAG_MISC_2,
+    .oam = &sOamData_Arrow,
+    .anims = sAnims_Arrow,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = sub_080CCA8C
+};
+
+static const u16 sHandCursor_Pal[] STORAGE_TAIL_COMMON =
+INCBIN_U16("graphics/pokemon_storage/hand_cursor.png.gbapal");
+
+static const u8 sHandCursor_Gfx[] STORAGE_TAIL_COMMON =
+INCBIN_U8("graphics/pokemon_storage/hand_cursor.png.4bpp");
+
+static const u8 sHandCursorShadow_Gfx[] STORAGE_TAIL_COMMON =
+INCBIN_U8("graphics/pokemon_storage/hand_cursor_shadow.png.4bpp");
+
+static const struct RestrictedReleaseMove sRestrictedReleaseMoves[] STORAGE_RELEASE_MOVES =
+{
+    {MAP_GROUPS_COUNT, 0, MOVE_SURF},
+    {MAP_GROUPS_COUNT, 0, MOVE_DIVE},
+    {MAP_GROUP(MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F), MAP_NUM(MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F), MOVE_STRENGTH},
+    {MAP_GROUP(MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F), MAP_NUM(MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F), MOVE_ROCK_SMASH},
+    {MAP_GROUP(MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F), MAP_NUM(MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F), MOVE_STRENGTH},
+    {MAP_GROUP(MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F), MAP_NUM(MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F), MOVE_ROCK_SMASH},
+};
+
+static const u8 *const sMenuTexts[] STORAGE_TAIL_MENUS =
+{
+    [MENU_CANCEL]     = gPCText_Cancel,
+    [MENU_STORE]      = gPCText_Store,
+    [MENU_WITHDRAW]   = gPCText_Withdraw,
+    [MENU_MOVE]       = gPCText_Move,
+    [MENU_SHIFT]      = gPCText_Shift,
+    [MENU_PLACE]      = gPCText_Place,
+    [MENU_SUMMARY]    = gPCText_Summary,
+    [MENU_RELEASE]    = gPCText_Release,
+    [MENU_MARK]       = gPCText_Mark,
+    [MENU_JUMP]       = gPCText_Jump,
+    [MENU_WALLPAPER]  = gPCText_Wallpaper,
+    [MENU_NAME]       = gPCText_Name,
+    [MENU_TAKE]       = gPCText_Take,
+    [MENU_GIVE]       = gPCText_Give,
+    [MENU_GIVE_2]     = gPCText_Give,
+    [MENU_SWITCH]     = gPCText_Switch,
+    [MENU_BAG]        = gPCText_Bag,
+    [MENU_INFO]       = gPCText_Info,
+    [MENU_SCENERY_1]  = gPCText_Scenery1,
+    [MENU_SCENERY_2]  = gPCText_Scenery2,
+    [MENU_SCENERY_3]  = gPCText_Scenery3,
+    [MENU_ETCETERA]   = gPCText_Etcetera,
+    [MENU_FRIENDS]    = gPCText_Friends,
+    [MENU_FOREST]     = gPCText_Forest,
+    [MENU_CITY]       = gPCText_City,
+    [MENU_DESERT]     = gPCText_Desert,
+    [MENU_SAVANNA]    = gPCText_Savanna,
+    [MENU_CRAG]       = gPCText_Crag,
+    [MENU_VOLCANO]    = gPCText_Volcano,
+    [MENU_SNOW]       = gPCText_Snow,
+    [MENU_CAVE]       = gPCText_Cave,
+    [MENU_BEACH]      = gPCText_Beach,
+    [MENU_SEAFLOOR]   = gPCText_Seafloor,
+    [MENU_RIVER]      = gPCText_River,
+    [MENU_SKY]        = gPCText_Sky,
+    [MENU_POLKADOT]   = gPCText_PolkaDot,
+    [MENU_POKECENTER] = gPCText_Pokecenter,
+    [MENU_MACHINE]    = gPCText_Machine,
+    [MENU_SIMPLE]     = gPCText_Simple,
+};
+
+static const struct WindowTemplate sWindowTemplate_MultiMove STORAGE_TAIL_MENUS =
+{
+    .bg = 0,
+    .tilemapLeft = 10,
+    .tilemapTop = 3,
+    .width = 20,
+    .height = 18,
+    .paletteNum = 9,
+    .baseBlock = 0xA,
+};
+
+static const u32 sItemInfoFrame_Gfx[] STORAGE_TAIL_MENUS =
+INCBIN_U32("graphics/pokemon_storage/item_info_frame.png.4bpp");
+
+static const struct OamData sOamData_ItemIcon STORAGE_TAIL_MENUS =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_NORMAL,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
+static const union AffineAnimCmd sAffineAnim_ItemIcon_Small[] STORAGE_TAIL_MENUS =
+{
+    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_ItemIcon_Appear[] STORAGE_TAIL_MENUS =
+{
+    AFFINEANIMCMD_FRAME(88, 88, 0, 0),
+    AFFINEANIMCMD_FRAME(5, 5, 0, 8),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_ItemIcon_Disappear[] STORAGE_TAIL_MENUS =
+{
+    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
+    AFFINEANIMCMD_FRAME(-5, -5, 0, 8),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_ItemIcon_PickUp[] STORAGE_TAIL_MENUS =
+{
+    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
+    AFFINEANIMCMD_FRAME(10, 10, 0, 12),
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_ItemIcon_PutDown[] STORAGE_TAIL_MENUS =
+{
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_FRAME(-10, -10, 0, 12),
+    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_ItemIcon_PutAway[] STORAGE_TAIL_MENUS =
+{
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_FRAME(-5, -5, 0, 16),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_ItemIcon_Large[] STORAGE_TAIL_MENUS =
+{
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd *const sAffineAnims_ItemIcon[] STORAGE_TAIL_MENUS =
+{
+    [ITEM_ANIM_NONE] = sAffineAnim_ItemIcon_Small,
+    [ITEM_ANIM_APPEAR] = sAffineAnim_ItemIcon_Appear,
+    [ITEM_ANIM_DISAPPEAR] = sAffineAnim_ItemIcon_Disappear,
+    [ITEM_ANIM_PICK_UP] = sAffineAnim_ItemIcon_PickUp,
+    [ITEM_ANIM_PUT_DOWN] = sAffineAnim_ItemIcon_PutDown,
+    [ITEM_ANIM_PUT_AWAY] = sAffineAnim_ItemIcon_PutAway,
+    [ITEM_ANIM_LARGE] = sAffineAnim_ItemIcon_Large
+};
+
+static const struct SpriteTemplate sSpriteTemplate_ItemIcon STORAGE_TAIL_MENUS =
+{
+    .tileTag = GFXTAG_ITEM_ICON_0,
+    .paletteTag = PALTAG_ITEM_ICON_0,
+    .oam = &sOamData_ItemIcon,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_ItemIcon,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct TilemapDimensions sTilemapDimensions[][4] STORAGE_TAIL_MENUS =
+{
+    [BG_TYPE_NORMAL] = {
+        { 256,  256},
+        { 512,  256},
+        { 256,  512},
+        { 512,  512},
+    },
+    [BG_TYPE_AFFINE] = {
+        { 128,  128},
+        { 256,  256},
+        { 512,  512},
+        {1024, 1024},
+    },
+};
+
+#undef STORAGE_TAIL_COMMON
+#undef STORAGE_MOVE_FUNCS
+#undef STORAGE_RELEASE_MOVES
+#undef STORAGE_INPUT_FUNCS
+#undef STORAGE_CURSOR_OBJECTS
+#undef STORAGE_TAIL_MENUS

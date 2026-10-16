@@ -2015,12 +2015,6 @@ $(C_BUILDDIR)/pokemon_storage_system.o: src/pokemon_storage_system.c charmap.txt
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokemon_storage_system.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokemon_storage_system.gen.s
 
-$(C_BUILDDIR)/data/pokemon_storage_system.o: src/data/pokemon_storage_system.c src/data/pokemon_storage_system.h $(shell find graphics/pokemon_storage data/pokemon_storage/jp -type f 2>/dev/null)
-	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/pokemon_storage_system.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/pokemon_storage_system.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/data/pokemon_storage_system.gen.s
-
 $(C_BUILDDIR)/pokedex_cry_screen.o: \
 	graphics/pokedex/cry_meter_needle.4bpp \
 	graphics/pokedex/cry_meter_needle.gbapal \
@@ -3448,3 +3442,22 @@ clean: clean-storage-wallpaper-assets
 .PHONY: clean-storage-wallpaper-assets
 clean-storage-wallpaper-assets:
 	rm -f $(JP_STORAGE_WALLPAPER_ASSETS) $(JP_STORAGE_WALLPAPER_INTERMEDIATES)
+
+JP_STORAGE_CURSOR_GFX := graphics/pokemon_storage/hand_cursor.png.4bpp \
+	graphics/pokemon_storage/hand_cursor_shadow.png.4bpp \
+	graphics/pokemon_storage/item_info_frame.png.4bpp
+JP_STORAGE_CURSOR_ASSETS := graphics/pokemon_storage/hand_cursor.png.gbapal $(JP_STORAGE_CURSOR_GFX)
+
+$(JP_STORAGE_CURSOR_GFX): %.png.4bpp: %.png | tools
+	$(GFX) $< $@
+
+graphics/pokemon_storage/hand_cursor.png.gbapal: graphics/pokemon_storage/hand_cursor.png | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/pokemon_storage_system.o: $(JP_STORAGE_CURSOR_ASSETS) \
+	include/constants/moves.h include/constants/maps.h include/constants/map_groups.h
+
+clean: clean-storage-cursor-assets
+.PHONY: clean-storage-cursor-assets
+clean-storage-cursor-assets:
+	rm -f $(JP_STORAGE_CURSOR_ASSETS)
