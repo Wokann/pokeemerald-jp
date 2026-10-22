@@ -18,7 +18,7 @@
 - 资源采集口径：物理源码引用（含全部源码分支），非默认构建发射量；未解决/条件诊断 17 条。INCGFX 单列 3412 次、3115 个源资产，生成上下文诊断 3412 条，不计入 incbin 分母。
 - 资产命名：4235 条 graphics/sound 引用中，精确 US 路径 50、唯一 basename 候选 0、歧义 0。
 - 地图脚本：468/469 (99.79%) 个首 owner 有 scripts.inc；非 owner scripts.inc：0；结构完整地图：518（直接物理文件满足者 468；合法共享 scripts/events owner 50/11；其中首 owner 469）；map.json 总数：518。
-- 地图静态语义复核：recorded；当前证据有效 44/518。仅计显式登记且源码/原生证据仍有效的地图，不代表运行时玩法验证。
+- 地图静态语义复核：recorded；当前证据有效 49/518。仅计显式登记且源码/原生证据仍有效的地图，不代表运行时玩法验证。
 - 三流地图会合：scripts 流 468、events 流 518、共有 468、地图头 518；事件指针状态 direct=507、shared=11；地图内裸 baserom 范围（脚本/事件/资源）=0/0/0。
 - script_data 顶层边界：JP linker 明确 owner 8/US 8；待补 JP owner 0；可见 event_scripts 原始 baserom 范围 0。US 只定义 owner 顺序，JP 范围必须由 JP map/ROM 锚点确认。
 

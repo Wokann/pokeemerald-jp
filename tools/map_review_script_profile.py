@@ -65,11 +65,12 @@ FIXED_V4 = FIXED | {'setobjectmovementtype': (4, 2), 'getplayerxy': (5, 2),
                    'buffertrainerclassname': (4, 2), 'buffertrainername': (4, 2),
                    'buffernumberstring': (4, 2), 'checkpartymove': (3, 1),
                    'bufferpartymonnick': (4, 2), 'buffermovename': (4, 2),
-                   'fadescreenswapbuffers': (2, 1), 'setorcopyvar': (5, 2)}
+                   'fadescreenswapbuffers': (2, 1), 'setorcopyvar': (5, 2), 'dowildbattle': (1, 0)}
 
 # These source blocks deliberately continue into the next physical label.
 # A native adjacency check is mandatory; a named target alone is not proof.
 FALLTHROUGHS = {
+    'Route117_EventScript_TryMoveDayCareMan': 'Route117_EventScript_StopMoveDayCareMan',
     'Route111_EventScript_CheckSetSandstorm': 'Route111_EventScript_SetSandstorm',
     'Route111_EventScript_SetSandstorm': 'Route111_EventScript_EndCheckSetSandstorm',
     'ProfBirch_EventScript_RatePokedexOrRegister': 'ProfBirch_EventScript_AskRatePokedex',
@@ -227,6 +228,13 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             if len(args) != 1 or not re.fullmatch(r'TRAINER_\w+', args[0]):
                 raise ValueError('unsupported_profile_cleartrainerflag')
             size = 3
+        elif version == 4 and op == 'setwildbattle':
+            if (len(args) not in (2, 3) or not re.fullmatch(r'SPECIES_\w+', args[0])
+                    or not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', args[1])
+                    or not 0 <= int(args[1], 16 if args[1].lower().startswith('0x') else 10) <= 255
+                    or len(args) == 3 and not re.fullmatch(r'ITEM_\w+', args[2])):
+                raise ValueError('unsupported_profile_setwildbattle')
+            size = 6
         elif version == 4 and op == 'trainerbattle_no_intro':
             if (len(args) != 2 or not re.fullmatch(r'TRAINER_\w+', args[0])
                     or not NAME.fullmatch(args[1]) or args[1] == 'NULL'):
