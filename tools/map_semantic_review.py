@@ -240,6 +240,73 @@ def extended_analysis(root: Path, text: str) -> tuple[int, set[str], dict[str, s
     return size, scripts, texts
 
 
+def dynamic_layout_contracts(root: Path, batch: dict) -> tuple[dict, dict, list]:
+    """Resolve only explicitly used layout IDs to their real generated owners."""
+    ids = batch.get('dynamic_layouts', [])
+    if (not isinstance(ids, list)
+            or any(not isinstance(v, str) or not re.fullmatch(r'LAYOUT_\w+', v) for v in ids)
+            or len(ids) != len(set(ids))):
+        raise ValueError('invalid_dynamic_layout_contracts')
+    if not ids:
+        return {}, {}, []
+    if batch.get('review_type') != 'direct_map_v4':
+        raise ValueError('unsupported_dynamic_layout_contracts')
+    files = {c['path'] for c in batch['sources'] if c.get('selector') == 'file'}
+    if not {'include/constants/layouts.h', 'src/overworld.c', 'src/scrcmd.c',
+            'data/layouts/layouts_table.inc'} <= files:
+        raise ValueError('missing_dynamic_layout_context')
+    data = json.loads(local_path(root, 'data/layouts/layouts.json').read_text())
+    layouts = data.get('layouts') if isinstance(data, dict) else None
+    if not isinstance(layouts, list) or any(not isinstance(row, dict) for row in layouts):
+        raise ValueError('invalid_dynamic_layout_metadata')
+    blocks = label_blocks(local_path(root, 'data/layouts/layouts.inc').read_text())
+    table_blocks = label_blocks(local_path(root, 'data/layouts/layouts_table.inc').read_text())
+    if 'gMapLayouts' not in table_blocks:
+        raise ValueError('missing_dynamic_layout_table')
+    table = []
+    for line in statements(table_blocks['gMapLayouts']):
+        match = re.fullmatch(r'\.4byte\s+([A-Za-z_]\w*)', line)
+        if not match:
+            raise ValueError('unsupported_dynamic_layout_table')
+        table.append(match[1])
+    roles, selected = {'gMapLayouts': 'dynamic_layout_table'}, {}
+    for layout_id in ids:
+        matches = [row for row in layouts if row.get('id') == layout_id]
+        if len(matches) != 1:
+            raise ValueError('missing_or_ambiguous_dynamic_layout')
+        row = matches[0]
+        name = row.get('name')
+        width, height = row.get('width'), row.get('height')
+        if (not isinstance(name, str) or not MAP_RE.fullmatch(name)
+                or type(width) is not int or type(height) is not int or min(width, height) <= 0):
+            raise ValueError('invalid_dynamic_layout_shape')
+        labels = [name + '_Border', name + '_Blockdata', name]
+        if (not any(c.get('path') == 'data/layouts/layouts.json' and c.get('selector') == 'json_layout'
+                    and c.get('id') == layout_id for c in batch['sources'])
+                or not any(c.get('path') == 'data/layouts/layouts.inc' and c.get('selector') == 'asm_labels'
+                           and c.get('labels') == labels for c in batch['sources'])):
+            raise ValueError('missing_dynamic_layout_source_binding')
+        for key, symbol, size, role in (('border_filepath', labels[0], 8, 'dynamic_border'),
+                                       ('blockdata_filepath', labels[1], width * height * 2, 'dynamic_blockdata')):
+            path = row.get(key)
+            if not isinstance(path, str) or path not in files or local_path(root, path).stat().st_size != size:
+                raise ValueError('missing_or_wrong_dynamic_layout_asset')
+            owned = statements(blocks[symbol]) if symbol in blocks else []
+            if not owned or owned[0] != '.incbin "' + path + '"':
+                raise ValueError('dynamic_layout_asset_owner_mismatch')
+            roles[symbol] = role
+        fields = [str(width), str(height), labels[0], labels[1], row.get('primary_tileset'), row.get('secondary_tileset')]
+        if (any(not isinstance(v, str) or not MAP_RE.fullmatch(v) for v in fields[2:])
+                or name not in blocks or statements(blocks[name]) != ['.4byte ' + v for v in fields]):
+            raise ValueError('dynamic_layout_structure_mismatch')
+        index = _literal_define(root, 'include/constants/layouts.h', layout_id)
+        if not 1 <= index <= len(table) or table[index - 1] != name:
+            raise ValueError('dynamic_layout_index_mismatch')
+        roles[name] = 'dynamic_layout'
+        selected[layout_id] = row
+    return roles, selected, table
+
+
 def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict, dict]:
     """Derive component identity/extent and actual shared-call closure from source."""
     contracts, external, external_text = {}, set(), {}
@@ -247,6 +314,7 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
     story = batch.get('review_type') in ('direct_map_v3', 'direct_map_v4')
     extended = batch.get('review_type') in ('direct_map_v2', 'direct_map_v3', 'direct_map_v4')
     expected_kinds, actual_kinds, used_standard, used_specials = {}, {}, {}, {}
+    used_layouts = set()
     trainer_battles, trainer_run, trainer_post = {}, False, False
     if story:
         # Lazy import: the typed profiler reuses this module's text encoder.
@@ -272,6 +340,7 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             targets.update(profile.targets)
             used_standard.update(profile.standard_scripts)
             used_specials.update(profile.specials)
+            used_layouts.update(profile.layouts)
             for battle in profile.trainer_battles:
                 if battle['address'] in trainer_battles and trainer_battles[battle['address']] != battle:
                     raise ValueError('conflicting_trainer_battle_site')
@@ -347,6 +416,9 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         contracts[(name, 'events')] = (first, 20 + sum(n * stride for n, stride in zip(counts, (24, 8, 16, 12))))
         contracts[(name, 'header')] = (name, 28)
         connections = metadata.get('connections', [])
+        unused_connections = metadata.get('has_unused_connection_table', False)
+        if type(unused_connections) is not bool or unused_connections and connections != []:
+            raise ValueError('invalid_unused_connection_metadata')
         if connections is None:
             if not extended or statements(local_path(root, f'data/maps/{name}/connections.inc').read_text()):
                 raise ValueError('unsupported_or_nonempty_null_connections')
@@ -414,6 +486,18 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         contracts[(None, entry)] = (entry, sum(size for label, size in sizes))
     if visited != entries.keys():
         raise ValueError('unreachable_shared_dependency')
+    if batch.get('dynamic_layouts', []) != sorted(used_layouts):
+        raise ValueError('missing_or_unreachable_dynamic_layout_contract')
+    layout_roles, layouts, layout_table = dynamic_layout_contracts(root, batch)
+    if layout_roles:
+        contracts[(None, 'gMapLayouts')] = ('gMapLayouts', 4 * len(layout_table))
+        for row in layouts.values():
+            name = row['name']
+            for symbol, size in ((name, 24), (name + '_Border', 8),
+                                 (name + '_Blockdata', row['width'] * row['height'] * 2)):
+                if (None, symbol) in contracts:
+                    raise ValueError('conflicting_dynamic_layout_contract')
+                contracts[(None, symbol)] = (symbol, size)
     dependencies = batch.get('text_dependencies', [])
     if not isinstance(dependencies, list) or (dependencies and not extended):
         raise ValueError('unsupported_text_dependencies')
@@ -843,9 +927,47 @@ def _reachable(root: Path, start: str, cache: dict) -> set[str]:
     return seen
 
 
+def _dynamic_layout_native(root: Path, batch: dict, native: dict, errors: list[str]) -> None:
+    roles, layouts, _ = dynamic_layout_contracts(root, batch)
+    if not roles:
+        return
+    def address(symbol):
+        values = native['symbols'].get(symbol, set())
+        if len(values) != 1:
+            errors.append('native_dynamic_layout_symbol_mismatch:' + symbol)
+            return None
+        return next(iter(values))
+    table = address('gMapLayouts')
+    for layout_id, row in layouts.items():
+        name = row['name']
+        expected_symbols = [name, name + '_Border', name + '_Blockdata',
+                            row['primary_tileset'], row['secondary_tileset']]
+        values = [address(symbol) for symbol in expected_symbols]
+        if table is None or any(value is None for value in values):
+            continue
+        index = _literal_define(root, 'include/constants/layouts.h', layout_id)
+        slot = table - 0x08000000 + 4 * (index - 1)
+        if int.from_bytes(native['rom'][slot:slot + 4], 'little') != values[0]:
+            errors.append('native_dynamic_layout_table_target_mismatch:' + layout_id)
+        start = values[0] - 0x08000000
+        expected = [row['width'], row['height']] + values[1:]
+        if native['rom'][start:start + 24] != struct.pack('<6I', *expected):
+            errors.append('native_dynamic_layout_structure_mismatch:' + layout_id)
+    for symbol, source in (('ScrCmd_setmaplayoutindex', 'src/scrcmd.o'),
+                           ('SetCurrentMapLayout', 'src/overworld.o'), ('GetMapLayout', 'src/overworld.o')):
+        value = address(symbol)
+        if value is None:
+            continue
+        value &= ~1
+        if not any(start <= value < start + length and (path == source or path.endswith('/' + source))
+                   for start, length, path in native['owners']):
+            errors.append('native_dynamic_layout_engine_owner_mismatch:' + symbol)
+
+
 def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], native: dict,
                   latest_source_ns: int) -> dict:
     contracts, shared = component_contracts(root, batch, maps)
+    layout_roles, layouts, layout_table = dynamic_layout_contracts(root, batch)
     spans = batch.get('native_spans')
     if not isinstance(spans, list) or not spans:
         raise ValueError('missing_native_spans')
@@ -856,16 +978,19 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
         if not isinstance(span, dict) or not SHA256_RE.fullmatch(str(span.get('sha256', ''))):
             raise ValueError('invalid_native_span')
         name, role, symbol = span.get('map'), span.get('role'), span.get('symbol')
-        if (name not in roles and not (name is None and role in ('shared_script', 'shared_text', 'standard_script_table'))):
+        if not isinstance(symbol, str) or not MAP_RE.fullmatch(symbol):
+            raise ValueError('invalid_native_symbol')
+        if (name not in roles and not (name is None and role in (
+                'shared_script', 'shared_text', 'standard_script_table',
+                'dynamic_layout_table', 'dynamic_layout', 'dynamic_border', 'dynamic_blockdata'))):
             raise ValueError('unattributed_native_span')
         if name is None:
-            expected_role = ('standard_script_table' if symbol == 'gStdScripts' and batch.get('standard_scripts')
+            expected_role = (layout_roles[symbol] if symbol in layout_roles
+                             else 'standard_script_table' if symbol == 'gStdScripts' and batch.get('standard_scripts')
                              else 'shared_text' if any(d['entry'] == symbol for d in batch.get('text_dependencies', []))
                              else 'shared_script' if any(d['entry'] == symbol for d in batch.get('shared_dependencies', [])) else None)
             if role != expected_role:
                 raise ValueError('shared_native_role_mismatch')
-        if not isinstance(symbol, str) or not MAP_RE.fullmatch(symbol):
-            raise ValueError('invalid_native_symbol')
         address, size = _integer(span.get('address')), _integer(span.get('size'))
         if size <= 0 or not 0x08000000 <= address < address + size <= 0x09000000:
             raise ValueError('invalid_native_bounds')
@@ -944,6 +1069,7 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                         errors.append('native_addressed_label_mismatch:' + label)
                     address += profile.size
             _trainer_native(root, batch, native, errors, parsed)
+            _dynamic_layout_native(root, batch, native, errors)
         for entry, pieces in shared.items():
             address = next(a for n, role, symbol, a, size, digest in parsed if n is None and symbol == entry)
             for label, size in pieces:
@@ -969,7 +1095,8 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                 if native['symbols'].get(standard['entry']) != {int.from_bytes(native['rom'][slot:slot + 4], 'little')}:
                     errors.append('native_standard_script_target_mismatch:' + standard['entry'])
             for name in maps:
-                if (name, 'connections') not in contracts:
+                metadata = json.loads(local_path(root, f'data/maps/{name}/map.json').read_text())
+                if (name, 'connections') not in contracts or metadata.get('has_unused_connection_table'):
                     address = next(a for n, role, symbol, a, size, digest in parsed if n == name and role == 'header') - 0x08000000
                     if native['rom'][address + 12:address + 16] != bytes(4):
                         errors.append('native_null_connection_pointer_mismatch:' + name)

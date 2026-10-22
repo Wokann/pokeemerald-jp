@@ -531,6 +531,33 @@ class MapSemanticReviewTests(unittest.TestCase):
         self.assert_not_approved(report)
         self.assertIn('native_null_connection_pointer_mismatch:First', report['batches'][0]['errors'])
 
+    def test_unused_physical_connection_table_does_not_make_header_pointer_nonnull(self):
+        self.add_story_fixture()
+        path = 'data/maps/First/map.json'
+        metadata = json.loads((self.root / path).read_text())
+        metadata.update(connections=[], has_unused_connection_table=True)
+        self.put(path, json.dumps(metadata))
+        self.put('data/maps/First/connections.inc', 'First_MapConnectionsList:\n'
+                 'First_MapConnections:\n.4byte 0\n.4byte First_MapConnectionsList\n')
+        batch = self.manifest['batches'][0]
+        connection = next(span for span in batch['native_spans'] if span['role'] == 'connections')
+        connection['size'] = 8
+        header = next(span for span in batch['native_spans'] if span['role'] == 'header')
+        offset = header['address'] - 0x08000000 + 12
+        image = bytearray(self.image)
+        image[offset:offset + 4] = bytes(4)
+        where = connection['address'] - 0x08000000
+        image[where:where + 8] = bytes(4) + connection['address'].to_bytes(4, 'little')
+        self.image = bytes(image)
+        self.refresh_story_fixture()
+        self.assertEqual(self.progress()['reviewed_maps'], 1, self.progress())
+        image[offset:offset + 4] = connection['address'].to_bytes(4, 'little')
+        self.image = bytes(image)
+        self.refresh_story_fixture()
+        report = self.progress()
+        self.assert_not_approved(report)
+        self.assertIn('native_null_connection_pointer_mismatch:First', report['batches'][0]['errors'])
+
     def test_object_event_contract_uses_the_actual_generator_label(self):
         metadata = json.loads((self.root / 'data/maps/First/map.json').read_text())
         metadata['object_events'] = [{}]

@@ -29,7 +29,10 @@ STANDARD_V4 = STANDARD | {'MSGBOX_YESNO': (5, 'Std_MsgboxYesNo')}
 MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'face_up', 'face_down', 'face_left', 'face_right', 'delay_4', 'reveal_trainer',
                            'walk_in_place_down', 'walk_faster_right', 'walk_fast_right', 'walk_fast_up',
-                           'set_visible'}
+                           'set_visible', 'walk_faster_up', 'walk_in_place_slow_left',
+                           'walk_in_place_slow_right', 'walk_slow_left', 'walk_slow_diag_northeast',
+                           'walk_slow_diag_southwest', 'walk_left_affine', 'init_affine_anim',
+                           'clear_affine_anim', 'levitate', 'destroy_extra_task'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -46,7 +49,8 @@ FIXED_V4 = FIXED | {'setobjectmovementtype': (4, 2), 'getplayerxy': (5, 2),
                    'playmoncry': (5, 2), 'waitmoncry': (1, 0),
                    'setmetatile': (9, 4), 'dotimebasedevents': (1, 0), 'random': (3, 1),
                    'setfieldeffectargument': (4, 2), 'dofieldeffect': (3, 1), 'waitfieldeffect': (3, 1),
-                   'setweather': (3, 1)}
+                   'setweather': (3, 1), 'doweather': (1, 0), 'fadenewbgm': (3, 1),
+                   'fadescreenspeed': (3, 2), 'turnobject': (4, 2)}
 
 
 @dataclass
@@ -57,6 +61,7 @@ class BlockProfile:
     texts: dict[str, str] = field(default_factory=dict)
     specials: dict[str, int] = field(default_factory=dict)
     standard_scripts: dict[int, str] = field(default_factory=dict)
+    layouts: set[str] = field(default_factory=set)
     trainer_battles: list[dict] = field(default_factory=list)
     trainer_run: bool = False
     trainer_post_return: bool = False
@@ -147,7 +152,8 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_arguments:' + op)
             if op == 'warp' and not re.fullmatch(r'MAP_\w+', args[0]):
                 raise ValueError('unsupported_profile_warp')
-        elif op in ('call', 'goto', 'call_if_eq', 'goto_if_eq', 'case'):
+        elif (op in ('call', 'goto', 'call_if_eq', 'goto_if_eq', 'case')
+              or version == 4 and op in ('goto_if_ge', 'goto_if_le', 'goto_if_ne')):
             count = 2 if op == 'case' else 3 if '_if_' in op else 1
             if len(args) != count:
                 raise ValueError('unsupported_profile_arguments:' + op)
@@ -193,6 +199,15 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             if len(args) != 1 or not re.fullmatch(r'STEP_CB_\w+', args[0]):
                 raise ValueError('unsupported_profile_step_callback')
             size = 2
+        elif version == 4 and op in ('setdivewarp', 'warpsilent', 'warpwhitefade'):
+            if len(args) != 3 or not re.fullmatch(r'MAP_\w+', args[0]):
+                raise ValueError('unsupported_profile_coordinate_warp')
+            size = 8
+        elif version == 4 and op == 'setmaplayoutindex':
+            if len(args) != 1 or not re.fullmatch(r'LAYOUT_\w+', args[0]):
+                raise ValueError('unsupported_profile_dynamic_layout')
+            result.layouts.add(args[0])
+            size = 3
         elif version == 4 and op in ('pokemart', 'pokemartdecoration'):
             if len(args) != 1:
                 raise ValueError('unsupported_profile_shop')
