@@ -1,5 +1,4 @@
 .include "sound/MPlayDef.s"
-	.section .rodata
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -8,11 +7,6 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-
-	.globl sGiftRibbonsMonDataIds
-sGiftRibbonsMonDataIds: @ 0x8569552
-	.byte 0x48, 0x49, 0x4A, 0x4B, 0x4C, 0x4D, 0x4E, 0x00, 0x00, 0x00
-
 
 	.section .rodata.mid60_tail_prefix
 

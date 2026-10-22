@@ -9691,7 +9691,8 @@ SECTIONS {
         src/contest_util.o(.rodata.contest_results_suffix);
         src/pokemon_size_record.o(.rodata.pokemon_size_record_data);
         src/strings.o(.rodata.strings_decimal_point);
-        data/data_b2d_mid60.o(.rodata);
+        src/give_gift_ribbon_to_party.o(.rodata.gift_ribbon_data);
+        . = ALIGN(4);
         src/fldeff_misc.o(.rodata.fldeff_misc_data);
         data/data_b2d_mid60.o(.rodata.mid60_tail_prefix);
         src/rotating_gate.o(.rodata.rotating_gate_data);

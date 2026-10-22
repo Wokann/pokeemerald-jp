@@ -66,7 +66,7 @@ class FldeffMiscAssetTests(unittest.TestCase):
 
     def test_linker_preserves_the_native_owner_order(self):
         linker = (ROOT / 'ld_script_jp.txt').read_text()
-        owners = ['data/data_b2d_mid60.o(.rodata)',
+        owners = ['src/give_gift_ribbon_to_party.o(.rodata.gift_ribbon_data)',
                   'src/fldeff_misc.o(.rodata.fldeff_misc_data)',
                   'data/data_b2d_mid60.o(.rodata.mid60_tail_prefix)',
                   'src/rotating_gate.o(.rodata.rotating_gate_data)']

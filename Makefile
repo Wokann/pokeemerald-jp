@@ -6427,3 +6427,11 @@ $(C_BUILDDIR)/pokedex_cry_screen.o: src/pokedex_cry_screen.c charmap.txt $(JP_CR
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokedex_cry_screen.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokedex_cry_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokedex_cry_screen.gen.s
+
+$(C_BUILDDIR)/give_gift_ribbon_to_party.d: src/give_gift_ribbon_to_party.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -I include -I "" $<
+
+-include $(C_BUILDDIR)/give_gift_ribbon_to_party.d
+
+$(C_BUILDDIR)/give_gift_ribbon_to_party.o: src/give_gift_ribbon_to_party.c Makefile
