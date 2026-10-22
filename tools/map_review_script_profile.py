@@ -36,7 +36,8 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'clear_affine_anim', 'levitate', 'destroy_extra_task',
                            'walk_fast_left', 'jump_right', 'jump_in_place_right',
                            'disable_jump_landing_ground_effect', 'walk_faster_left', 'walk_fast_down',
-                           'walk_in_place_fast_left', 'walk_in_place_fast_right', 'jump_2_down', 'cut_tree'}
+                           'walk_in_place_fast_left', 'walk_in_place_fast_right', 'jump_2_down', 'cut_tree',
+                           'walk_faster_down'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -62,7 +63,8 @@ FIXED_V4 = FIXED | {'setobjectmovementtype': (4, 2), 'getplayerxy': (5, 2),
                    'selectapproachingtrainer': (1, 0), 'lockfortrainer': (1, 0),
                    'buffertrainerclassname': (4, 2), 'buffertrainername': (4, 2),
                    'buffernumberstring': (4, 2), 'checkpartymove': (3, 1),
-                   'bufferpartymonnick': (4, 2), 'buffermovename': (4, 2)}
+                   'bufferpartymonnick': (4, 2), 'buffermovename': (4, 2),
+                   'fadescreenswapbuffers': (2, 1)}
 
 # These source blocks deliberately continue into the next physical label.
 # A native adjacency check is mandatory; a named target alone is not proof.

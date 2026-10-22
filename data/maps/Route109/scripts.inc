@@ -353,7 +353,6 @@ Route109_EventScript_Zigzagoon::
 	waitse
 	playmoncry SPECIES_ZIGZAGOON, CRY_MODE_NORMAL
 	msgbox Route109_Text_ZigzagoonCry, MSGBOX_DEFAULT
-	@ JP ROM uses SCR_OP_WAITDOORANIM (0xC5) at this US waitmoncry site.
 	waitmoncry
 	release
 	end
