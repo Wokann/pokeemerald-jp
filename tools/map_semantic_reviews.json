@@ -1985,7 +1985,7 @@
         {
           "path": "tools/map_semantic_review.py",
           "selector": "file",
-          "sha256": "a97baeabf56595d19dee2a6b1a54c195f58401e16def4fbd68547ece71080774"
+          "sha256": "f6261ad2c4d027e3379b07919c2c299206f2971ddd8ab441f0b6b7caca4de333"
         },
         {
           "path": "tools/mapjson/json11.cpp",
@@ -10545,6 +10545,2873 @@
         "The shared graphics.c source now also owns the complete three-object Battle Textbox data at [08C00000,08C00758), with all 1880 compressed bytes preserved. Its JP PNG, two sixteen-color PAL banks, structured 2048-halfword tilemap, palette aggregate rule and existing fixed link slot are fingerprinted. Twelve JP tiles and the JP tilemap differ from the pinned US assets. Five existing 08C00000 consumer constants are retained as JP instruction-generation exceptions; their source and native function bytes are unchanged. This owner migration does not approve battle/egg/trade runtime behavior, decompile functions or expand the existing fourteen static map decisions.",
         "The shared graphics.c source now also owns only the two global Area Unknown resources; eleven local Pokédex Area Screen resources/records belong to src/pokedex_area_screen.c. Their 1072 bytes plus the existing five C tables (52 bytes) retain the exact interleaved [0859381C,08593C80) span. Three PNG sources regenerate all six native graphics/palette payloads; eighteen JP Area Unknown tiles differ from the pinned US image. Seven typed sprite records use actual OAM, dummy animation and Thumb callback pointers. All twenty-one module functions retain their code and sizes. These source bindings do not add static map decisions or approve Pokédex runtime behavior."
       ]
+    },
+    {
+      "id": "PetalburgCity_story_review_20261022",
+      "maps": [
+        "PetalburgCity"
+      ],
+      "review_type": "direct_map_v3",
+      "decision": "reviewed",
+      "jp_commit": "94b900bfe7f73a6a08c4f424d500bd4d2cb1f92d",
+      "rom_sha1": "d7cf8f156ba9c455d164e1ea780a6bf1945465c2",
+      "shared_dependencies": [
+        {
+          "entry": "Common_EventScript_ShowPokemartSign",
+          "path": "data/event_scripts.s",
+          "labels": [
+            "Common_EventScript_ShowPokemartSign"
+          ]
+        },
+        {
+          "entry": "Common_EventScript_ShowPokemonCenterSign",
+          "path": "data/event_scripts.s",
+          "labels": [
+            "Common_EventScript_ShowPokemonCenterSign"
+          ]
+        },
+        {
+          "entry": "Common_Movement_Delay48",
+          "path": "data/scripts/movement.inc",
+          "labels": [
+            "Common_Movement_Delay48"
+          ]
+        },
+        {
+          "entry": "Common_Movement_ExclamationMark",
+          "path": "data/scripts/movement.inc",
+          "labels": [
+            "Common_Movement_ExclamationMark"
+          ]
+        },
+        {
+          "entry": "Common_Movement_FaceOriginalDirection",
+          "path": "data/scripts/movement.inc",
+          "labels": [
+            "Common_Movement_FaceOriginalDirection"
+          ]
+        },
+        {
+          "entry": "Common_Movement_FacePlayer",
+          "path": "data/scripts/movement.inc",
+          "labels": [
+            "Common_Movement_FacePlayer"
+          ]
+        },
+        {
+          "entry": "Common_Movement_WalkInPlaceFasterDown",
+          "path": "data/scripts/movement.inc",
+          "labels": [
+            "Common_Movement_WalkInPlaceFasterDown"
+          ]
+        },
+        {
+          "entry": "Common_Movement_WalkInPlaceFasterLeft",
+          "path": "data/scripts/movement.inc",
+          "labels": [
+            "Common_Movement_WalkInPlaceFasterLeft"
+          ]
+        },
+        {
+          "entry": "Common_Movement_WalkInPlaceFasterRight",
+          "path": "data/scripts/movement.inc",
+          "labels": [
+            "Common_Movement_WalkInPlaceFasterRight"
+          ]
+        },
+        {
+          "entry": "Common_Movement_WalkInPlaceFasterUp",
+          "path": "data/scripts/movement.inc",
+          "labels": [
+            "Common_Movement_WalkInPlaceFasterUp"
+          ]
+        },
+        {
+          "entry": "EventScript_HiddenItemScript",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_HiddenItemScript"
+          ]
+        },
+        {
+          "entry": "EventScript_BufferPocketNameAndTryFanfare",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_BufferPocketNameAndTryFanfare"
+          ]
+        },
+        {
+          "entry": "EventScript_BufferBerriesPocket",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_BufferBerriesPocket"
+          ]
+        },
+        {
+          "entry": "EventScript_BufferItemsPocket",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_BufferItemsPocket"
+          ]
+        },
+        {
+          "entry": "EventScript_BufferKeyItemsPocket",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_BufferKeyItemsPocket"
+          ]
+        },
+        {
+          "entry": "EventScript_BufferPokeballsPocket",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_BufferPokeballsPocket"
+          ]
+        },
+        {
+          "entry": "EventScript_BufferTMHMsPocket",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_BufferTMHMsPocket"
+          ]
+        },
+        {
+          "entry": "EventScript_NoRoomForHiddenItem",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_NoRoomForHiddenItem"
+          ]
+        },
+        {
+          "entry": "EventScript_PickUpHiddenItem",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_PickUpHiddenItem"
+          ]
+        },
+        {
+          "entry": "EventScript_FoundHiddenItem",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_FoundHiddenItem"
+          ]
+        },
+        {
+          "entry": "EventScript_FoundHiddenTMHM",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_FoundHiddenTMHM"
+          ]
+        },
+        {
+          "entry": "EventScript_PlayFanfareObtainedItem",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_PlayFanfareObtainedItem"
+          ]
+        },
+        {
+          "entry": "EventScript_PlayFanfareObtainedTMHM",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_PlayFanfareObtainedTMHM"
+          ]
+        },
+        {
+          "entry": "EventScript_PutHiddenItemInPocket",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_PutHiddenItemInPocket"
+          ]
+        },
+        {
+          "entry": "PetalburgCity_EventScript_ItemEther",
+          "path": "data/scripts/item_ball_scripts.inc",
+          "labels": [
+            "PetalburgCity_EventScript_ItemEther"
+          ]
+        },
+        {
+          "entry": "PetalburgCity_EventScript_ItemMaxRevive",
+          "path": "data/scripts/item_ball_scripts.inc",
+          "labels": [
+            "PetalburgCity_EventScript_ItemMaxRevive"
+          ]
+        },
+        {
+          "entry": "Std_FindItem",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "Std_FindItem"
+          ]
+        },
+        {
+          "entry": "EventScript_NoRoomToPickUpItem",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_NoRoomToPickUpItem"
+          ]
+        },
+        {
+          "entry": "EventScript_PickUpItem",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_PickUpItem"
+          ]
+        },
+        {
+          "entry": "EventScript_FoundItem",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_FoundItem"
+          ]
+        },
+        {
+          "entry": "EventScript_FoundTMHM",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_FoundTMHM"
+          ]
+        },
+        {
+          "entry": "EventScript_PutBattlePyramidItemInBag",
+          "path": "data/scripts/obtain_item.inc",
+          "labels": [
+            "EventScript_PutBattlePyramidItemInBag"
+          ]
+        },
+        {
+          "entry": "Std_MsgboxDefault",
+          "path": "data/scripts/std_msgbox.inc",
+          "labels": [
+            "Std_MsgboxDefault"
+          ]
+        },
+        {
+          "entry": "Std_MsgboxNPC",
+          "path": "data/scripts/std_msgbox.inc",
+          "labels": [
+            "Std_MsgboxNPC"
+          ]
+        },
+        {
+          "entry": "Std_MsgboxSign",
+          "path": "data/scripts/std_msgbox.inc",
+          "labels": [
+            "Std_MsgboxSign"
+          ]
+        }
+      ],
+      "text_dependencies": [
+        {
+          "entry": "Route102_Text_LetsGoBack",
+          "path": "data/maps/Route102/scripts.inc",
+          "kind": "string"
+        },
+        {
+          "entry": "Route102_Text_WallyIDidIt",
+          "path": "data/maps/Route102/scripts.inc",
+          "kind": "string"
+        },
+        {
+          "entry": "Route102_Text_WatchMeCatchPokemon",
+          "path": "data/maps/Route102/scripts.inc",
+          "kind": "string"
+        },
+        {
+          "entry": "gText_ObtainedTheItem",
+          "path": "data/text/obtain_item.inc",
+          "kind": "string"
+        },
+        {
+          "entry": "gText_PlayerFoundOneItem",
+          "path": "data/text/obtain_item.inc",
+          "kind": "string"
+        },
+        {
+          "entry": "gText_PlayerFoundOneTMHM",
+          "path": "data/event_scripts.s",
+          "kind": "string"
+        },
+        {
+          "entry": "gText_PlayerPutItemInBag",
+          "path": "data/text/obtain_item.inc",
+          "kind": "string"
+        },
+        {
+          "entry": "gText_PokemartSign",
+          "path": "data/event_scripts.s",
+          "kind": "string"
+        },
+        {
+          "entry": "gText_PokemonCenterSign",
+          "path": "data/event_scripts.s",
+          "kind": "string"
+        },
+        {
+          "entry": "gText_PutItemInPocket",
+          "path": "data/text/obtain_item.inc",
+          "kind": "string"
+        },
+        {
+          "entry": "gText_TooBadBagIsFull",
+          "path": "data/text/obtain_item.inc",
+          "kind": "string"
+        }
+      ],
+      "standard_scripts": [
+        {
+          "index": 1,
+          "entry": "Std_FindItem"
+        },
+        {
+          "index": 2,
+          "entry": "Std_MsgboxNPC"
+        },
+        {
+          "index": 3,
+          "entry": "Std_MsgboxSign"
+        },
+        {
+          "index": 4,
+          "entry": "Std_MsgboxDefault"
+        }
+      ],
+      "special_contracts": [
+        {
+          "entry": "BufferTMHMMoveName",
+          "waitstate": 0,
+          "source_path": "src/field_specials.c",
+          "source_symbol": "BufferTMHMMoveName"
+        },
+        {
+          "entry": "CallBattlePyramidFunction",
+          "waitstate": 0,
+          "source_path": "src/battle_pyramid.c",
+          "source_symbol": "CallBattlePyramidFunction"
+        },
+        {
+          "entry": "LoadPlayerParty",
+          "waitstate": 0,
+          "source_path": "src/load_save.c",
+          "source_symbol": "LoadPlayerParty"
+        },
+        {
+          "entry": "LoadWallyZigzagoon",
+          "waitstate": 0,
+          "source_path": "src/field_specials.c",
+          "source_symbol": "PutZigzagoonInPlayerParty"
+        },
+        {
+          "entry": "SavePlayerParty",
+          "waitstate": 0,
+          "source_path": "src/load_save.c",
+          "source_symbol": "SavePlayerParty"
+        },
+        {
+          "entry": "SetHiddenItemFlag",
+          "waitstate": 0,
+          "source_path": "src/field_specials.c",
+          "source_symbol": "SetHiddenItemFlag"
+        },
+        {
+          "entry": "StartWallyTutorialBattle",
+          "waitstate": 1,
+          "source_path": "src/battle_setup.c",
+          "source_symbol": "StartWallyTutorialBattle"
+        },
+        {
+          "entry": "TryPutTreasureInvestigatorsOnAir",
+          "waitstate": 0,
+          "source_path": "src/tv.c",
+          "source_symbol": "TryPutTreasureInvestigatorsOnAir"
+        }
+      ],
+      "sources": [
+        {
+          "path": "asm/macros.inc",
+          "selector": "file",
+          "sha256": "96f4fc94ef73e40aed3fdb908c56cc7e2c3d3eada6a19ad96d323f1258a9f888"
+        },
+        {
+          "path": "asm/macros/asm.inc",
+          "selector": "file",
+          "sha256": "d4bd2b1878d95a1a415df9fa0e590bd2192fec0247cd993341ed611f103009bb"
+        },
+        {
+          "path": "asm/macros/battle_frontier/apprentice.inc",
+          "selector": "file",
+          "sha256": "9db2866268cd7178f6e4cb18dcaf537bc11ee465c3d8791da325348fae163994"
+        },
+        {
+          "path": "asm/macros/battle_frontier/battle_arena.inc",
+          "selector": "file",
+          "sha256": "8830d7d83c04df3685ae83bc06c2c2072eac1949bd9d4daed12aaca93f139efd"
+        },
+        {
+          "path": "asm/macros/battle_frontier/battle_dome.inc",
+          "selector": "file",
+          "sha256": "2f172705a8adedffb99f0f6ddca77b1f2209a7f22f9db6f34d80eb6eb862368f"
+        },
+        {
+          "path": "asm/macros/battle_frontier/battle_factory.inc",
+          "selector": "file",
+          "sha256": "cd0bcfbebc240552fff6d137724bf5fe0f899980326f6171a5ee284f2cb23bb6"
+        },
+        {
+          "path": "asm/macros/battle_frontier/battle_palace.inc",
+          "selector": "file",
+          "sha256": "05a64c75c56eec16f61c55b58652d69368376a7a25a7123de1f2168723dda6cc"
+        },
+        {
+          "path": "asm/macros/battle_frontier/battle_pike.inc",
+          "selector": "file",
+          "sha256": "ad7bb83b131eb30244e2d36a72e8247cbf51a55d78328637336073147b0f51d4"
+        },
+        {
+          "path": "asm/macros/battle_frontier/battle_pyramid.inc",
+          "selector": "file",
+          "sha256": "e17f9b1487d044b79f9e0678c4e7a1b47ee8776efbf54bf0c00f5773b8c55122"
+        },
+        {
+          "path": "asm/macros/battle_frontier/battle_tower.inc",
+          "selector": "file",
+          "sha256": "e2e976ea1b6154545c3e190ae4a0b5b67f5be70a48a4db3d80033d17c704a5ff"
+        },
+        {
+          "path": "asm/macros/battle_frontier/frontier_util.inc",
+          "selector": "file",
+          "sha256": "667d5539a7b3ad2057844199b23cdbd2d799410c503267cc8b15c444f3b1bf02"
+        },
+        {
+          "path": "asm/macros/battle_tent.inc",
+          "selector": "file",
+          "sha256": "7183e8ac5160eb38d839841930600539dab933411415c6b77f1a3f8ccfe7526a"
+        },
+        {
+          "path": "asm/macros/ec.inc",
+          "selector": "file",
+          "sha256": "94c11f874194168f7f62ac77175a33046cc42faf317e191d2e8e8eb56b065dc2"
+        },
+        {
+          "path": "asm/macros/event.inc",
+          "selector": "file",
+          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+        },
+        {
+          "path": "asm/macros/field_effect_script.inc",
+          "selector": "file",
+          "sha256": "ab746f5f9fa1706c696ef7081d7688ca5543e18283834c2cdf226da6c36a863b"
+        },
+        {
+          "path": "asm/macros/function.inc",
+          "selector": "file",
+          "sha256": "0f633852778b73912535e1f1ccf9f77cb7dbbde58fa0345765cfaa31aa6868ef"
+        },
+        {
+          "path": "asm/macros/map.inc",
+          "selector": "file",
+          "sha256": "bfbcd7827670ca8a75280092f516ec231157e75390d545e89dad99376cf6ffb7"
+        },
+        {
+          "path": "asm/macros/movement.inc",
+          "selector": "file",
+          "sha256": "e686a7249218fd6139f1fdc0c156322fe1ffefbe54c9dd2166eb87b827660e26"
+        },
+        {
+          "path": "asm/macros/pokemon_data.inc",
+          "selector": "file",
+          "sha256": "c178dcb0bb4a0c890fbd9f678822501e122ffcaaeb5904aceaf9319f4dcc8339"
+        },
+        {
+          "path": "asm/macros/trainer_hill.inc",
+          "selector": "file",
+          "sha256": "f94b1b7d596dd790191734382844e98a72cefa97fa0568bd200d1f3bb509e82b"
+        },
+        {
+          "path": "asm/macros/window.inc",
+          "selector": "file",
+          "sha256": "d1a87ab46158223382d8d9680f5a5fb54eba8deb5ee0ab8075d949216be83529"
+        },
+        {
+          "path": "charmap.txt",
+          "selector": "file",
+          "sha256": "2e7d55c437386c23722a80bb8cc721378d1738fa60077b276fb96d3992980d3b"
+        },
+        {
+          "path": "constants/battle_string_ids.inc",
+          "selector": "file",
+          "sha256": "ba4b7bd15486d07ac4f53b52f6b440b0baa48182c9ece06eb9134092fe1b08cb"
+        },
+        {
+          "path": "constants/gba_constants.inc",
+          "selector": "file",
+          "sha256": "4ac64183e5c9c92667b3f37414cf3ddb0503d22e49bc52df1f1a9e1b1a6c2f40"
+        },
+        {
+          "path": "constants/global.inc",
+          "selector": "file",
+          "sha256": "8fbe789b22630bc08065770f0623e5229a869085364c625adc2512006a1f0567"
+        },
+        {
+          "path": "constants/map_constants.inc",
+          "selector": "file",
+          "sha256": "299edca64fb41c6c42880b4e1046405d99beee29eb9c2f3a416475b7ee51ad4e"
+        },
+        {
+          "path": "constants/map_header.inc",
+          "selector": "file",
+          "sha256": "5d3dc29873f7123a6a61661ce698f1dfb9919735bca81acc257a4008cb515580"
+        },
+        {
+          "path": "constants/moves.inc",
+          "selector": "file",
+          "sha256": "00d8c6efb6b07e203271392058dd6672c54b92722e072f77117a0f3927f4546f"
+        },
+        {
+          "path": "constants/ribbon_constants.inc",
+          "selector": "file",
+          "sha256": "a41aa0824ba7ed695037dbe6174218bf1528e28c840cb19e774c9e6ea75da21f"
+        },
+        {
+          "path": "constants/songs.inc",
+          "selector": "file",
+          "sha256": "2777484d4fc8683370ff38b53f4540e349076f91b1e37c0739dbdf4a8929ae64"
+        },
+        {
+          "path": "constants/species.inc",
+          "selector": "file",
+          "sha256": "9cba14b5a6eafda71511e14cfce5362337629031e9746f09f528f367fa0a5b6e"
+        },
+        {
+          "path": "constants/tms_hms.inc",
+          "selector": "file",
+          "sha256": "83b08cab51222314af54cf67e3f55398c4e048fc38477c314aab75487de22904"
+        },
+        {
+          "path": "constants/trainers.inc",
+          "selector": "file",
+          "sha256": "662da8eed12139b0be2bc5a830adab2294e66c247876ca735c8aa0129f3bc6c6"
+        },
+        {
+          "path": "data/event_scripts.s",
+          "selector": "file",
+          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+        },
+        {
+          "path": "data/layouts/layouts.json",
+          "selector": "file",
+          "sha256": "5ac58ee1072862c937f82121a931b3315ccca3b5ae807f2a28a0e273957c2e4f"
+        },
+        {
+          "path": "data/layouts/layouts_table.inc",
+          "selector": "file",
+          "sha256": "b83ab410ecc1106ed16217b811c915df0b1bf902775a4af78045ede9918141b5"
+        },
+        {
+          "path": "data/map_events.s",
+          "selector": "file",
+          "sha256": "ffa02b57817fff4567cabcdbec728f2f43545075885775fc69080e41b42211ee"
+        },
+        {
+          "path": "data/maps.s",
+          "selector": "file",
+          "sha256": "302c2c34c7f5a8fa6ae14ba00b89d5932507bd1338251b2a813a629d0e7e3668"
+        },
+        {
+          "path": "data/maps/PetalburgCity/connections.inc",
+          "selector": "file",
+          "sha256": "336c3196aca9b7b60ef630669e3c4e3e2d9d52b333ea33ff4e211d3ac5905bd0"
+        },
+        {
+          "path": "data/maps/PetalburgCity/events.inc",
+          "selector": "file",
+          "sha256": "060a7f3ed148a451eb4bad50a1f8d6df63b8179fabc5dfbeaa261e8a051aa985"
+        },
+        {
+          "path": "data/maps/PetalburgCity/header.inc",
+          "selector": "file",
+          "sha256": "245120f2e03b78d3dfdb08a74dd71f44b79db4709851bb0daac4fd05a7c973a1"
+        },
+        {
+          "path": "data/maps/PetalburgCity/map.json",
+          "selector": "file",
+          "sha256": "0018ee193173c55b295f46a11a82dad9db0f37e7717a18261efc587c71d7d20e"
+        },
+        {
+          "path": "data/maps/PetalburgCity/scripts.inc",
+          "selector": "file",
+          "sha256": "e8564b9027ca4fc86f72c97baaec608b2c6bf2e156318055d70d6f997037c487"
+        },
+        {
+          "path": "data/maps/connections.inc",
+          "selector": "file",
+          "sha256": "1652e4d3b1a5f36690c2f9309d8a73586dfb9cbd7b7ef7a6a2053166da038de7"
+        },
+        {
+          "path": "data/maps/events.inc",
+          "selector": "file",
+          "sha256": "b5aaf7374eb2c2a3df3d0da5c551baba367f447b275380616610e1702bda1508"
+        },
+        {
+          "path": "data/maps/groups.inc",
+          "selector": "file",
+          "sha256": "76b18c7b51cd027c8237b19607dfb314d4b70bbbcf3bb03f9b4d0a279aa8647f"
+        },
+        {
+          "path": "data/maps/headers.inc",
+          "selector": "file",
+          "sha256": "28384922c79171cb9708e2dcd35e649df1a9a40aaaac093af22a4a7ba322559b"
+        },
+        {
+          "path": "data/maps/map_groups.json",
+          "selector": "file",
+          "sha256": "e82b8e9149e73384e5f4eb5a2c120cc17b80e11530ea24b96c5f2b4e6972eee7"
+        },
+        {
+          "path": "data/script_cmd_table.inc",
+          "selector": "file",
+          "sha256": "6588e2b40759091efa802f8d9adccdeeac527297fc20171156e77b01345168d8"
+        },
+        {
+          "path": "data/specials.inc",
+          "selector": "file",
+          "sha256": "463da35f008a6c1d4336d8fe3bd5f1510af6351b137f19f035cf86f68c772974"
+        },
+        {
+          "path": "include/agb_flash.h",
+          "selector": "file",
+          "sha256": "034daa8b104d88086eeb29c3daafeed81663e7ee1253af1c9a0a971c436093f3"
+        },
+        {
+          "path": "include/battle.h",
+          "selector": "file",
+          "sha256": "3f849d272ab2e2d1ad8eb81c05b6f66c2687b1e09f646618de139e771bfcda52"
+        },
+        {
+          "path": "include/battle_ai_switch_items.h",
+          "selector": "file",
+          "sha256": "dc43e61873195256cda4d4f196ebcd69e15efb3736b370e22dd1bc41ceb1dedd"
+        },
+        {
+          "path": "include/battle_bg.h",
+          "selector": "file",
+          "sha256": "810739d15a6aa98d35ddbdf8abc4998d9b1384ec0806cf5d9836c97fb5c37276"
+        },
+        {
+          "path": "include/battle_gfx_sfx_util.h",
+          "selector": "file",
+          "sha256": "b2295f93a6fda94644df8199f2e9eb680029d54c43c4ac00019358c661cdfb9e"
+        },
+        {
+          "path": "include/battle_main.h",
+          "selector": "file",
+          "sha256": "2194bc1b386b713ff1c4fdee293cd6200f08f1b4c50a7c30d5c9ee4c8cde055e"
+        },
+        {
+          "path": "include/battle_message.h",
+          "selector": "file",
+          "sha256": "53095a779ff6a673f873ac8b7283e7d4a3aa14a48a872bbfd4a2e43f74b632e3"
+        },
+        {
+          "path": "include/battle_pike.h",
+          "selector": "file",
+          "sha256": "484da297fe23abd9136564fcfb162bf4b038ef3c4d1ba21048b02cb38be68b3d"
+        },
+        {
+          "path": "include/battle_pyramid.h",
+          "selector": "file",
+          "sha256": "ec8a729ca99dce98544267ca8fcad24b29c9524ab368be7346f14d3bb1940872"
+        },
+        {
+          "path": "include/battle_script_commands.h",
+          "selector": "file",
+          "sha256": "a7b902c3642e09aebc2b846ff621f801b60f9a5487bf70ad720427c6cf64d054"
+        },
+        {
+          "path": "include/battle_setup.h",
+          "selector": "file",
+          "sha256": "392f4cd36457d90587b059d346271a9aaaddcc1ae9d69d03f9a5b7eaf70817a6"
+        },
+        {
+          "path": "include/battle_tower.h",
+          "selector": "file",
+          "sha256": "9eed7ca70bc0b2cbf69b4a88efc255dd1f0aab57469e6b08acf08fd395f974f6"
+        },
+        {
+          "path": "include/battle_transition.h",
+          "selector": "file",
+          "sha256": "983835208730242dcd701d1ef47575a41c944c7730c2925bf5d0d6f3a4ab2091"
+        },
+        {
+          "path": "include/battle_util.h",
+          "selector": "file",
+          "sha256": "e0df6824026d8c4ae5d024be577638749fa5923bab6558ace74e4e5578a9e48a"
+        },
+        {
+          "path": "include/battle_util2.h",
+          "selector": "file",
+          "sha256": "b1c59a4ae692cc7775d9fc2772366b9b9e185ca1c7b076ffa4a756e146b2d878"
+        },
+        {
+          "path": "include/bg.h",
+          "selector": "file",
+          "sha256": "114b79d3a0fdd120275eb3659c0ad6a285c6aae451e02ea4bc0937285078c338"
+        },
+        {
+          "path": "include/bike.h",
+          "selector": "file",
+          "sha256": "3120178a57ef62632d0f9118e1ef98befdc1f05c69963bd67a32ec97cf02f00c"
+        },
+        {
+          "path": "include/config.h",
+          "selector": "file",
+          "sha256": "c1531faf80c3c15c05c5035964759d966068b042e8cbbe6e3247e0d12c05ef0d"
+        },
+        {
+          "path": "include/constants/abilities.h",
+          "selector": "file",
+          "sha256": "1c1b93de5d5ff65d8b3066e9b40229b5d30e02842e587e3851a1d708ece1292b"
+        },
+        {
+          "path": "include/constants/apprentice.h",
+          "selector": "file",
+          "sha256": "4c970db4adafae2821b07bf8d1d4ab5b85d57dfbf095a9457361dda2eaa17526"
+        },
+        {
+          "path": "include/constants/battle.h",
+          "selector": "file",
+          "sha256": "bba2f9d9b3d98fa01b5f0a8f7dede9f2f0be5617c735242b741a7e0c8e4a5d1e"
+        },
+        {
+          "path": "include/constants/battle_arena.h",
+          "selector": "file",
+          "sha256": "5ef2eb58d1079b0e17f29ad5d9eeb711854c836beb10d2c195c8662a8f6b288c"
+        },
+        {
+          "path": "include/constants/battle_dome.h",
+          "selector": "file",
+          "sha256": "aa2fbed09a8af34551f276a33ec145a5db1b4bfa5c2d0f4a7d3e27abbcd46087"
+        },
+        {
+          "path": "include/constants/battle_factory.h",
+          "selector": "file",
+          "sha256": "faa40c17e00505f3e7518b866b1570d686a59a5625b993a37528d5a8234d2f09"
+        },
+        {
+          "path": "include/constants/battle_frontier.h",
+          "selector": "file",
+          "sha256": "67463eb9a278a5621d2c6fc1130925557e1466ca547e00bcf3b1b9ca8420db42"
+        },
+        {
+          "path": "include/constants/battle_frontier_trainers.h",
+          "selector": "file",
+          "sha256": "e913d7d50ab5c686f5bbf49ad69255d0a7c889d62cec7691423b1efead5d7c87"
+        },
+        {
+          "path": "include/constants/battle_palace.h",
+          "selector": "file",
+          "sha256": "f3b143578ce94775ed8d65e1791298f25e017f2f926b238c8a6cddf314487f46"
+        },
+        {
+          "path": "include/constants/battle_pike.h",
+          "selector": "file",
+          "sha256": "3cd64f68c180abff63b3e466428abff0c9ef426909f7a9820dd61edf2952270f"
+        },
+        {
+          "path": "include/constants/battle_pyramid.h",
+          "selector": "file",
+          "sha256": "683cefd61b59cbc8ac26d38a9d31c86159042fd93cccf114619f66c6931a8090"
+        },
+        {
+          "path": "include/constants/battle_script_commands.h",
+          "selector": "file",
+          "sha256": "842cce6dd704b09b24a49abdca67ee7a8062a2e3a465e1b764fc63c0d230580f"
+        },
+        {
+          "path": "include/constants/battle_setup.h",
+          "selector": "file",
+          "sha256": "b0f5304e321e928c728cb7a8e81fa2046b94d4639fea6f7c4e1ed59e5d38a150"
+        },
+        {
+          "path": "include/constants/battle_tent.h",
+          "selector": "file",
+          "sha256": "bcbecbccef5a5cab4795e0245b65464df4a29e64503ef0047af7229664468502"
+        },
+        {
+          "path": "include/constants/battle_tower.h",
+          "selector": "file",
+          "sha256": "003d472408bf97201cd3b6d53fe9b5279a2b13187ed91a8ceacedf8952ce28ed"
+        },
+        {
+          "path": "include/constants/berry.h",
+          "selector": "file",
+          "sha256": "5a5d914fdfee02f4ee33c9063a9073d5426c815240534a7728d10f53f824c6f8"
+        },
+        {
+          "path": "include/constants/cable_club.h",
+          "selector": "file",
+          "sha256": "b44d990602041c346d973a22245ef2d95af46135d5576c60aad8c6096912473f"
+        },
+        {
+          "path": "include/constants/characters.h",
+          "selector": "file",
+          "sha256": "cd53b3ef6814772a2699de27c569e2a0fb061e5ca1df58cf45e326947face63b"
+        },
+        {
+          "path": "include/constants/coins.h",
+          "selector": "file",
+          "sha256": "6a2af9a6239c6fa52b6109af7eaed511d78d952c44a914e0f7b08643770a1ef5"
+        },
+        {
+          "path": "include/constants/comparison_operators.h",
+          "selector": "file",
+          "sha256": "e4b2f484b192ae1ba040f9fc109397c3e348dc6f5425b4036ca8cd204e05ed83"
+        },
+        {
+          "path": "include/constants/contest.h",
+          "selector": "file",
+          "sha256": "cc023bb1af8ad45e2ea13b94903e7e36543addab8c69027492730e8227573b2b"
+        },
+        {
+          "path": "include/constants/daycare.h",
+          "selector": "file",
+          "sha256": "25c2f31cf0b5779b3caa0cca53ca892733748f0310cf3d9d51b4e3a6c20896ea"
+        },
+        {
+          "path": "include/constants/decorations.h",
+          "selector": "file",
+          "sha256": "d8df4380e7cda5b8e7ea10a767af5d19952a44a10c9f8945b735ab0de3673766"
+        },
+        {
+          "path": "include/constants/easy_chat.h",
+          "selector": "file",
+          "sha256": "fd4a6eed76a00b83a52154a4e9ea6308218c782ac2f437fe3c1f82e4e8647392"
+        },
+        {
+          "path": "include/constants/event_bg.h",
+          "selector": "file",
+          "sha256": "80229bd57f21b411677d2487c39a4a5b435c357acf8d910fffdae2da642020f2"
+        },
+        {
+          "path": "include/constants/event_object_movement.h",
+          "selector": "file",
+          "sha256": "2ccef6e66cd249ed25d161ed0d1a6bc2d320e42ebe507030a55b1580f787a3d4"
+        },
+        {
+          "path": "include/constants/event_objects.h",
+          "selector": "file",
+          "sha256": "c8ae523d6dc4abb0a174beabc7a0e360e7cfff9fb93f1134cd85b971a6064381"
+        },
+        {
+          "path": "include/constants/field_effects.h",
+          "selector": "file",
+          "sha256": "c015e52b1e718cd7ce85dcddcde1ff23feb78815dbb00e195897e14b35bb4564"
+        },
+        {
+          "path": "include/constants/field_poison.h",
+          "selector": "file",
+          "sha256": "ca7a9e26572c53d0de617eb724eb05ce49751a61ba3e8c240eb0cbeeb8851fa0"
+        },
+        {
+          "path": "include/constants/field_specials.h",
+          "selector": "file",
+          "sha256": "aaf0efc817619b1236257de6186fe9f0a1dea600a18de7eebe7c3b9a7d78ded1"
+        },
+        {
+          "path": "include/constants/field_tasks.h",
+          "selector": "file",
+          "sha256": "f240f700687dff806ea54065471f6e93b34511766b7f523fb923af837de0cbca"
+        },
+        {
+          "path": "include/constants/field_weather.h",
+          "selector": "file",
+          "sha256": "319902b219649b0a27eaaa15cecece27698c5d5f697be9cd8f0f45429d18d0ec"
+        },
+        {
+          "path": "include/constants/flags.h",
+          "selector": "file",
+          "sha256": "98aa1c819f1155673d7826a45f9a0d244e2a15b8f603fdfa661be3cef1b4de41"
+        },
+        {
+          "path": "include/constants/frontier_util.h",
+          "selector": "file",
+          "sha256": "de0448c8dd333ddcb872a5ce2e49a8ea9355b178efe6209bb9200bf55260765c"
+        },
+        {
+          "path": "include/constants/game_stat.h",
+          "selector": "file",
+          "sha256": "29bc568383055b24dfb42a5029bad2aa00f36b28186b5e67d20a1b1687f8fef8"
+        },
+        {
+          "path": "include/constants/global.h",
+          "selector": "file",
+          "sha256": "565e116a37096548401c54df00a4fc4290911a3b90075d65094ac1ccdc6f1baf"
+        },
+        {
+          "path": "include/constants/heal_locations.h",
+          "selector": "file",
+          "sha256": "4e24eef4246b42cd62cc8de445433ba1accdbf6d84e3ed27dd16daccbb485e7c"
+        },
+        {
+          "path": "include/constants/item.h",
+          "selector": "file",
+          "sha256": "c0217df9faf0d55e8ddd70ae748511875588b30bf222f6599c8bbdcb52f95862"
+        },
+        {
+          "path": "include/constants/items.h",
+          "selector": "file",
+          "sha256": "8e9aacc0ffbd41ce0092176a89f624b59be300df60c996d718d61119e747dbd4"
+        },
+        {
+          "path": "include/constants/layouts.h",
+          "selector": "file",
+          "sha256": "8402b8218e3fab3ee9db10203d503fecee6de5293e2e50beb1e8f41ea190b077"
+        },
+        {
+          "path": "include/constants/lilycove_lady.h",
+          "selector": "file",
+          "sha256": "83a2710b3eed84a73e0a55851407ab3b9dc867fe4f13a2807b37597073c48ac8"
+        },
+        {
+          "path": "include/constants/map_event_ids.h",
+          "selector": "file",
+          "sha256": "24397a54f55d6b46194974336d9cc8466803ba8d9846190c90747370404e910a"
+        },
+        {
+          "path": "include/constants/map_groups.h",
+          "selector": "file",
+          "sha256": "1a6d5d40c8a85efdeb2f42cec38bd3b79d2a81063d89fdbc98d699fab5542073"
+        },
+        {
+          "path": "include/constants/map_scripts.h",
+          "selector": "file",
+          "sha256": "dcf41b9a35bcf181d3264f0cc03d8a4f2d9dc85769e22db32a54921e04c61e7b"
+        },
+        {
+          "path": "include/constants/map_types.h",
+          "selector": "file",
+          "sha256": "e662d9aa72c1ad8a55d153bb8acb83bb9b8555c1413d4195db4b17534aa96a76"
+        },
+        {
+          "path": "include/constants/maps.h",
+          "selector": "file",
+          "sha256": "66c0f056578ba31ca0519e55e2f500aaf79bf9abb8aed0f66bf16d7e149fbae6"
+        },
+        {
+          "path": "include/constants/mauville_old_man.h",
+          "selector": "file",
+          "sha256": "9f21cd820fbfcffb6e8a1d49451a791d98f8424148de20920aa8d001e0e117f6"
+        },
+        {
+          "path": "include/constants/metatile_labels.h",
+          "selector": "file",
+          "sha256": "6f53ac68b105d8d72c7daa3d57c4c669a828f68d3f8d84d1902e9f6309b818f2"
+        },
+        {
+          "path": "include/constants/moves.h",
+          "selector": "file",
+          "sha256": "d32746c9ad3ed1bbfbb93712f13e01ab1c43f48a78f3605ef9db5095e8d19d27"
+        },
+        {
+          "path": "include/constants/opponents.h",
+          "selector": "file",
+          "sha256": "f9c9426608519ef07450199879cce90d81df49c28c58ee871c697432ca2ca995"
+        },
+        {
+          "path": "include/constants/party_menu.h",
+          "selector": "file",
+          "sha256": "3191fb7e54556b29e3f282a0c26b68a221180ad077a3f96cb7b07586f0258a91"
+        },
+        {
+          "path": "include/constants/pokedex.h",
+          "selector": "file",
+          "sha256": "12152fa83b815c4f697cc597e2e07f1d001f97b55e280ce9e978ec043a83863e"
+        },
+        {
+          "path": "include/constants/pokemon.h",
+          "selector": "file",
+          "sha256": "f2eceb49d9fc964dba67e16572e76e6166ca759dede6b7d80c7b66b0499c8579"
+        },
+        {
+          "path": "include/constants/pokemon_size_record.h",
+          "selector": "file",
+          "sha256": "40d0d92dad88fe0025b8a008315abecf62e961b1719bc326f7fd19e41bb3ea27"
+        },
+        {
+          "path": "include/constants/rematches.h",
+          "selector": "file",
+          "sha256": "df8e001db8c4ed0050659cc7765fdeef18d54742f939ba7659f75643cb44b6ab"
+        },
+        {
+          "path": "include/constants/roulette.h",
+          "selector": "file",
+          "sha256": "2e2a566edd67fe9f316534d9296f1a30a3ffe270c4f12b66a6048e42723f81db"
+        },
+        {
+          "path": "include/constants/script_menu.h",
+          "selector": "file",
+          "sha256": "96ad8a2c3022b67c23dfa35eedc84e59fb85f328ba2c12e106f702ed621c19b9"
+        },
+        {
+          "path": "include/constants/secret_bases.h",
+          "selector": "file",
+          "sha256": "3fe6fdb6d5117ec7b53e9fe5499b5b4a415a2e863093b168b51786c7370e3d89"
+        },
+        {
+          "path": "include/constants/songs.h",
+          "selector": "file",
+          "sha256": "7f6a8dc6d99e7f2bfdbb1136ebba8286ec99bff30f3f9afe2df7868125154e14"
+        },
+        {
+          "path": "include/constants/sound.h",
+          "selector": "file",
+          "sha256": "c05fa451ca6ec2bea690b592e91271e4e1b90f694f138768f8486d75e6eab9dc"
+        },
+        {
+          "path": "include/constants/species.h",
+          "selector": "file",
+          "sha256": "a1867c83e78fb767b16a9c95c4c06d51d56c986fd48d713b98dbf01c8305089d"
+        },
+        {
+          "path": "include/constants/tms_hms.h",
+          "selector": "file",
+          "sha256": "649802a5a5fa8ce042d748e14770007a29f6a4fadc626f2bf8f2101436b0cb4a"
+        },
+        {
+          "path": "include/constants/trade.h",
+          "selector": "file",
+          "sha256": "f2a5878d0f4a7267410e963a45e91dda530e998bc8bf214cd6de4f99317d9ab1"
+        },
+        {
+          "path": "include/constants/trainer_hill.h",
+          "selector": "file",
+          "sha256": "417fea673c788a2f757c8d0d22c5dd805e3efc5e9b3e1b4018ee635fe007b858"
+        },
+        {
+          "path": "include/constants/trainer_types.h",
+          "selector": "file",
+          "sha256": "dd8fe17aea8f69a13c75f88e5ebe305dc39551cbe99a26f2d3e713a7bbf6f18b"
+        },
+        {
+          "path": "include/constants/trainers.h",
+          "selector": "file",
+          "sha256": "91d9b3b00e163ba4cc91d8832b9ec9499c2d13e1631548ea9ac2eef8ccc202d6"
+        },
+        {
+          "path": "include/constants/tv.h",
+          "selector": "file",
+          "sha256": "8ceba9c62cb30533859942c95ac9696f6c9ce28631755c910dabfa4cce1f6e80"
+        },
+        {
+          "path": "include/constants/union_room.h",
+          "selector": "file",
+          "sha256": "566e58ed2260b4a886263acdb37028d91ffbb1f795c82681f59fb14c9301da38"
+        },
+        {
+          "path": "include/constants/vars.h",
+          "selector": "file",
+          "sha256": "e777facba3356ef3fdbfa5bf8a662367be2416160cee2e3a5df62f9769b26de5"
+        },
+        {
+          "path": "include/constants/weather.h",
+          "selector": "file",
+          "sha256": "7ca1cf3d7c77d4e2925ef6f339f78cdc84d4e0cdae841aefc334da07da6edb11"
+        },
+        {
+          "path": "include/constants/wild_encounter.h",
+          "selector": "file",
+          "sha256": "9c90d1f5684129761ffd03ab7e548d899eeac4d5837891c9e8caa49898b13fd3"
+        },
+        {
+          "path": "include/coord_event_weather.h",
+          "selector": "file",
+          "sha256": "6eb7d772945bd3349975edc1acc21fa7c97dbf6da5825537606f8d7b77a5a358"
+        },
+        {
+          "path": "include/data.h",
+          "selector": "file",
+          "sha256": "5d102ebcc1c3bc695370eb37d02bc0b847a8c6423c6e6f02b1917db624c5c8ec"
+        },
+        {
+          "path": "include/daycare.h",
+          "selector": "file",
+          "sha256": "62de256c527dc841219648726bb3da4ace59dd5bcf841c4bc8bf7138014d8b2d"
+        },
+        {
+          "path": "include/event_data.h",
+          "selector": "file",
+          "sha256": "7ad2f6b0e079b05dadc0ae6a9628818989fe88813c30c0f17fbdab22406eac5e"
+        },
+        {
+          "path": "include/event_object_movement.h",
+          "selector": "file",
+          "sha256": "13d0e7c2a711886a0b96f9626c22603dfd60bbca0da291cc4a51ba5287363f17"
+        },
+        {
+          "path": "include/event_scripts.h",
+          "selector": "file",
+          "sha256": "93bf6764a3e5d0f36be5db8256b778ca45df37b71c557264eb4b174639372f70"
+        },
+        {
+          "path": "include/faraway_island.h",
+          "selector": "file",
+          "sha256": "55f13e807a03d63b8bccfcaa216f8efefc35a91a348c86688a565e023e076cda"
+        },
+        {
+          "path": "include/field_camera.h",
+          "selector": "file",
+          "sha256": "51815e16074c880cf83e708571d737b92ad2c18a2c897038da0af85c7a319f56"
+        },
+        {
+          "path": "include/field_control_avatar.h",
+          "selector": "file",
+          "sha256": "c2bc2f9f0a43e62257a851a72919ba4f7ce53dc055b718a905d700c4ad27052b"
+        },
+        {
+          "path": "include/field_message_box.h",
+          "selector": "file",
+          "sha256": "09f36b3024b05fb8d28352878f825a45de6a7c92b9e4d40d19056861848ee01d"
+        },
+        {
+          "path": "include/field_player_avatar.h",
+          "selector": "file",
+          "sha256": "d941e492890f6d14d11b268a583b8504dab228b8140b939affee9fdfb1c7637f"
+        },
+        {
+          "path": "include/field_poison.h",
+          "selector": "file",
+          "sha256": "6c42eab6b306e4d32e3cbd7e8aeca190101de4f7ded7de3f29a121e00a35e358"
+        },
+        {
+          "path": "include/field_screen_effect.h",
+          "selector": "file",
+          "sha256": "34c774cecdfe84bfabdc5dfaf4f047c87f1b9d3ca8f57233f04de671ebe996fd"
+        },
+        {
+          "path": "include/field_specials.h",
+          "selector": "file",
+          "sha256": "2aaa71d9de8d4995458c3e1c937a991cb5ed304914db1fe622857af350dafb79"
+        },
+        {
+          "path": "include/field_weather.h",
+          "selector": "file",
+          "sha256": "f026c74a73b08d83cdb215028a3a015ef3d9b34cde6525cfdfe3dd94f91d7c82"
+        },
+        {
+          "path": "include/fieldmap.h",
+          "selector": "file",
+          "sha256": "83af318f7e8b23ef66f4434d8624424525a70b8dc7c3bdabb82de0c4938b7b6b"
+        },
+        {
+          "path": "include/fldeff.h",
+          "selector": "file",
+          "sha256": "a59ea2451d4d287bc9774c1a3f8d810fa5ae6a591de85bf2133673e827ee13d2"
+        },
+        {
+          "path": "include/fldeff_misc.h",
+          "selector": "file",
+          "sha256": "93a48b0950f804f06566aaf19b80d3abaadae0c1131eaf90427a4deff2949246"
+        },
+        {
+          "path": "include/gametypes.h",
+          "selector": "file",
+          "sha256": "657ca36033861546ac88450a491a2978eaa713a611d7caed03963447cdf99da0"
+        },
+        {
+          "path": "include/gba/defines.h",
+          "selector": "file",
+          "sha256": "528c5983bf23f3b12036e9f7ed20e482b1dbe15e0198ec6bb10292d413f68644"
+        },
+        {
+          "path": "include/gba/gba.h",
+          "selector": "file",
+          "sha256": "c3f80c9bb8c51f6fbf71db5f38a942c079bb073e535807609265d13943c2c0af"
+        },
+        {
+          "path": "include/gba/io_reg.h",
+          "selector": "file",
+          "sha256": "a657a53322f354b898eefe85f15a32be5e229cbc335e200958d18b5f7f0da862"
+        },
+        {
+          "path": "include/gba/isagbprint.h",
+          "selector": "file",
+          "sha256": "63aaf18a9e6c108620e15a3a33e7412c368ba96b676bcc9ec5cbe29d15ac853c"
+        },
+        {
+          "path": "include/gba/macro.h",
+          "selector": "file",
+          "sha256": "5f15b843f963d8713eca0a9c47783fdc8891c654a6c43ac2876890eaab088c12"
+        },
+        {
+          "path": "include/gba/multiboot.h",
+          "selector": "file",
+          "sha256": "117f2e70fd838a650cb9d4b6d14b690f9e9a77191cb19572f3b6309a99e46080"
+        },
+        {
+          "path": "include/gba/syscall.h",
+          "selector": "file",
+          "sha256": "7362949e9581dee93eee42a80ca143edd31880b049617ae7d80fa97eeab4ed89"
+        },
+        {
+          "path": "include/gba/types.h",
+          "selector": "file",
+          "sha256": "5f98c90b5b6eccbe180474b485f0a4b4e84de466c0b9ef3d2cfa0a3ff6d1fd3a"
+        },
+        {
+          "path": "include/global.berry.h",
+          "selector": "file",
+          "sha256": "cb41fd31983dfe78be9b1c847a4d4332eb7a82f2a645fac3fadd93c315df690a"
+        },
+        {
+          "path": "include/global.fieldmap.h",
+          "selector": "file",
+          "sha256": "c455ccc2c0fc8d4ef073aa0b5f94ea15039735f090dfa707ea0541a250dbe96d"
+        },
+        {
+          "path": "include/global.h",
+          "selector": "file",
+          "sha256": "a20b83511538f474ad3cafe16a2f5271ba94c17227037139d41b025e12794934"
+        },
+        {
+          "path": "include/global.tv.h",
+          "selector": "file",
+          "sha256": "c731f365e0667f73ed1b8b6b177b445126334d2e50da9223fde309feccf4b099"
+        },
+        {
+          "path": "include/gym_leader_rematch.h",
+          "selector": "file",
+          "sha256": "1f69e471d66fbac373606e343bfbd1d48516419f67ce59eafb24bc4ab0a022f8"
+        },
+        {
+          "path": "include/item.h",
+          "selector": "file",
+          "sha256": "faafef11c665d003f04d82f12b47464b4803afbdb574399a7122f2f6b878561f"
+        },
+        {
+          "path": "include/item_menu.h",
+          "selector": "file",
+          "sha256": "a991ced1d7c225be9e16a10a222859b0ea546b8549c76288f6243764f46e66bd"
+        },
+        {
+          "path": "include/link.h",
+          "selector": "file",
+          "sha256": "aac4268e7577e96cc7e65e2cd300f69fa55c0e543fc45d131c19bc7bb4b83cdc"
+        },
+        {
+          "path": "include/load_save.h",
+          "selector": "file",
+          "sha256": "9e4432848dd5ef43a1d45b28c7fb432b360f812510b7b9121ce7fdfc5d7b2bd3"
+        },
+        {
+          "path": "include/main.h",
+          "selector": "file",
+          "sha256": "84e94a71c2216295e66d7f4b1f14127bc676f03956a20f087a5dc3703ef065a1"
+        },
+        {
+          "path": "include/malloc.h",
+          "selector": "file",
+          "sha256": "50353db3ec3390197085a3e278ac974f2047cc8905ecda6e7523a1ba74f20639"
+        },
+        {
+          "path": "include/match_call.h",
+          "selector": "file",
+          "sha256": "53513fafb91a33c213141f3a7c52b98a828aa589500491170dd9d69f79bf38d5"
+        },
+        {
+          "path": "include/menu.h",
+          "selector": "file",
+          "sha256": "ee6ba3e75e566124d43163c602517df99b9494ce29ec060fd88157c6dd6a48ab"
+        },
+        {
+          "path": "include/menu_helpers.h",
+          "selector": "file",
+          "sha256": "69288cce17daf5811e40a603e18296e73b0ee97021a33cab459f7d2b4abdd821"
+        },
+        {
+          "path": "include/metatile_behavior.h",
+          "selector": "file",
+          "sha256": "c1f0b23863eb09c9374738746679788f7d4bd14d58b4dfe3869fe8f378580e59"
+        },
+        {
+          "path": "include/mirage_tower.h",
+          "selector": "file",
+          "sha256": "3a847f66ab94bcb89b837f1213e2c10f448a08e51691797071ad94af4fb1661b"
+        },
+        {
+          "path": "include/overworld.h",
+          "selector": "file",
+          "sha256": "7b01c55f9d7370b79481e3148c76d62660266cab7f2c9145c7689e91cc39e92a"
+        },
+        {
+          "path": "include/palette.h",
+          "selector": "file",
+          "sha256": "68d848e53bb883826fd84f35fbd657ff9ba31c9a0ec481dc6e903d6d1f875fdc"
+        },
+        {
+          "path": "include/pokeball.h",
+          "selector": "file",
+          "sha256": "4be6dc85e9fe1e5445e53072b876a20f795cd1d568d7d60a488ed19acef59aa7"
+        },
+        {
+          "path": "include/pokemon.h",
+          "selector": "file",
+          "sha256": "1d6e3a29a24f2a910c642b99b56e58e78814b647600bf5c7e9e0cda21d97c396"
+        },
+        {
+          "path": "include/pokemon_storage_system.h",
+          "selector": "file",
+          "sha256": "4d73176f23b1f731936b8f9a4c928c16b8e5458e1ecf9f5a4e1828617a1c51ce"
+        },
+        {
+          "path": "include/random.h",
+          "selector": "file",
+          "sha256": "566ab9be0a0840b31465faf3df5c529445a9c6d08959fd4f7f1f0ec7e637c941"
+        },
+        {
+          "path": "include/region_map.h",
+          "selector": "file",
+          "sha256": "52239bd811a39f26a3467429ef91e17ad5d1b8e7dbe79f3700b25388da4643c8"
+        },
+        {
+          "path": "include/rtc.h",
+          "selector": "file",
+          "sha256": "89e6b8377598cd7ac98a4655bde2fcb4ae04afcd27e610c63415130136ade4a0"
+        },
+        {
+          "path": "include/safari_zone.h",
+          "selector": "file",
+          "sha256": "341dc4b0ea98363f9772b43efad76bafc89e020ebb9126d4b985f5ee35f1842b"
+        },
+        {
+          "path": "include/save_location.h",
+          "selector": "file",
+          "sha256": "1e92f4cd9f611fbb2e9b4c59cbac25328e7de436b34749495e7a4b1ad297f3b5"
+        },
+        {
+          "path": "include/script.h",
+          "selector": "file",
+          "sha256": "6a424401bc4ad97523203add62e7e5c04a02fdccf307a3f9059eb6c6b80a15ab"
+        },
+        {
+          "path": "include/script_pokemon_util.h",
+          "selector": "file",
+          "sha256": "b523b77a101ce6113ae9c7cd47acd23a620f81f7064505440cf422491678bbc9"
+        },
+        {
+          "path": "include/secret_base.h",
+          "selector": "file",
+          "sha256": "0e6008d38310ede0c5d69446a4d87bfc8da408b04243e8de4025d4d14488cd4c"
+        },
+        {
+          "path": "include/siirtc.h",
+          "selector": "file",
+          "sha256": "52880c14fcfb1d555948e7584355ca9388b2b2b982d9424efa5ddcfb156fd3d2"
+        },
+        {
+          "path": "include/sound.h",
+          "selector": "file",
+          "sha256": "b990791aa7de43f001e992c8ddc29291923c3d4195e80be91f32e1fcd39bb224"
+        },
+        {
+          "path": "include/sprite.h",
+          "selector": "file",
+          "sha256": "439b3fa61f93624d5f6938c82b39beb50b22a8bcab9ca433253cd791dc248f1d"
+        },
+        {
+          "path": "include/start_menu.h",
+          "selector": "file",
+          "sha256": "6cdd0a3a2abb2dbaeae1fe57fe56c4c0db132a398f3ba0133bd5abe5c72c4cfc"
+        },
+        {
+          "path": "include/starter_choose.h",
+          "selector": "file",
+          "sha256": "bfe480ab5650aa0d2cd670cdd655e09e4c03b616789ecbc9703793c8dc59706b"
+        },
+        {
+          "path": "include/string_util.h",
+          "selector": "file",
+          "sha256": "813b88bc86f2084993be613fc34fac0e6c0edf74793761eb8c67f3f6eddd2250"
+        },
+        {
+          "path": "include/strings.h",
+          "selector": "file",
+          "sha256": "1ef3d07100394020ec657cfcfb1df05d017f4018715805f4ccb7ff0a530f210a"
+        },
+        {
+          "path": "include/task.h",
+          "selector": "file",
+          "sha256": "ffa5c17d23b35ec324ad3986bc5f3bfc14f51b51617782a7f6f4cf56d28f3a7a"
+        },
+        {
+          "path": "include/text.h",
+          "selector": "file",
+          "sha256": "0b46cc0256a85ce2e252bf61ea9a44206225cf10d3ed8797b11e4ccff4cfacd9"
+        },
+        {
+          "path": "include/trainer_hill.h",
+          "selector": "file",
+          "sha256": "31113579b3846864a4a6449d6dbdfbf73b880aa67368224e65da648eb401f733"
+        },
+        {
+          "path": "include/trainer_see.h",
+          "selector": "file",
+          "sha256": "1b0f60e20a6ef409d0de0649d2f6d550d1f6fdb76639724f5d19e2bf45536535"
+        },
+        {
+          "path": "include/tv.h",
+          "selector": "file",
+          "sha256": "40a490a3aaae1f1d256cffe6ac87e9aef9d580ae1669a7a2b6bd01b20e718018"
+        },
+        {
+          "path": "include/wild_encounter.h",
+          "selector": "file",
+          "sha256": "a5254955b1b135337ba319da1c8e878c06eb26cfe89b53a412feb2289a9e5fcd"
+        },
+        {
+          "path": "include/window.h",
+          "selector": "file",
+          "sha256": "aca03d9cbab335c2d52b46cf35fd763285e75bc0c4758a931525476841f72a3c"
+        },
+        {
+          "path": "src/battle_pyramid.c",
+          "selector": "file",
+          "sha256": "df42dba7ed92d604ec62e314b83aef690e1e4bc71f624f09bab358989c0c6c82"
+        },
+        {
+          "path": "src/battle_setup.c",
+          "selector": "file",
+          "sha256": "2145fa892f9a20633b494b4813a61a510ddde4d47c7312ea2575e904ebeef56c"
+        },
+        {
+          "path": "src/field_control_avatar.c",
+          "selector": "file",
+          "sha256": "26949bd2481618853f5ed6c725280868b51669f5c91ba22c3d74a3aa52a32bc7"
+        },
+        {
+          "path": "src/field_specials.c",
+          "selector": "file",
+          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+        },
+        {
+          "path": "src/load_save.c",
+          "selector": "file",
+          "sha256": "a7762b91ecaf3ac64ac341ea7f1f07527dcf1f5a9b7162e622686917fa23680a"
+        },
+        {
+          "path": "src/tv.c",
+          "selector": "file",
+          "sha256": "e4484f1efbb5b011491157f17ce3d08b42988818344da3eb63b11079ae643d08"
+        },
+        {
+          "path": "tools/jp_generate_layouts.py",
+          "selector": "file",
+          "sha256": "f997a315e07d6775aff422f815151bbb5f477ddfe8f3361ada40d3ac69db33b3"
+        },
+        {
+          "path": "tools/jp_map_metadata.py",
+          "selector": "file",
+          "sha256": "6c202206761debd9f7adbc6375f7d3306f8354fc82c06da05a05acc409309f42"
+        },
+        {
+          "path": "tools/map_review_script_profile.py",
+          "selector": "file",
+          "sha256": "316557009e1a665338f538de00f183026bd0612317c0a759c6b9b463c68c2683"
+        },
+        {
+          "path": "tools/map_semantic_review.py",
+          "selector": "file",
+          "sha256": "f6261ad2c4d027e3379b07919c2c299206f2971ddd8ab441f0b6b7caca4de333"
+        },
+        {
+          "path": "tools/mapjson/json11.cpp",
+          "selector": "file",
+          "sha256": "58379deadaf7ddca4b91461b546a0193250af69258b2607fa839fc9282065655"
+        },
+        {
+          "path": "tools/mapjson/json11.h",
+          "selector": "file",
+          "sha256": "54b80082fe1580e37588bbf553eff54daacb82203be57f5fc8ec2e89d1d7bdfa"
+        },
+        {
+          "path": "tools/mapjson/mapjson.cpp",
+          "selector": "file",
+          "sha256": "1678bbc79eb3997f5d010a71037ebf4659d9c89c11f21db8544fd81cde854271"
+        },
+        {
+          "path": "tools/mapjson/mapjson.h",
+          "selector": "file",
+          "sha256": "ddcd590fd8abbffd207c8a78f6fac932e841391af4973fb26e625cfe11c38ec6"
+        },
+        {
+          "path": "tools/preproc/Makefile",
+          "selector": "file",
+          "sha256": "8dd899f6dc23b17b584fe59dae16d916f5d00e247fb7197fbd5699fa3ac8a0ba"
+        },
+        {
+          "path": "tools/preproc/asm_file.cpp",
+          "selector": "file",
+          "sha256": "96c040e735ad620676a2f78779431990b861bef8ca9c4b1ff24d56be58d832f1"
+        },
+        {
+          "path": "tools/preproc/asm_file.h",
+          "selector": "file",
+          "sha256": "2fc3737be976bbebd43f3029cc1bc385eb449b251b4a882aa2714cee534ee5bd"
+        },
+        {
+          "path": "tools/preproc/c_file.cpp",
+          "selector": "file",
+          "sha256": "31ee140216e75c8a022d2e2ecc62a65d514ab3d72ca24b77b9248c2e82dfa82e"
+        },
+        {
+          "path": "tools/preproc/c_file.h",
+          "selector": "file",
+          "sha256": "bc7e1f7b2048fafcbcc1c8db7c7d4fb5bccdb4c4671a30738aaf5bca9dc24b3c"
+        },
+        {
+          "path": "tools/preproc/char_util.h",
+          "selector": "file",
+          "sha256": "e6e64c999d9bea6ffea4a191de4c79ecbf94aa5b87372166658b794d2658d0a6"
+        },
+        {
+          "path": "tools/preproc/charmap.cpp",
+          "selector": "file",
+          "sha256": "dc143049cc06e00fa7b24faa0e9cf28ab68482b19af585fc3659601e5d55a061"
+        },
+        {
+          "path": "tools/preproc/charmap.h",
+          "selector": "file",
+          "sha256": "976aeeef3e1999e5162e3c0f2ab507d8d55e0904a7bd303d077c15222ae09e97"
+        },
+        {
+          "path": "tools/preproc/io.cpp",
+          "selector": "file",
+          "sha256": "5bd5e2064e774ec3c3f42049a74282f59171178e2c4dab11340c7074feb5d27d"
+        },
+        {
+          "path": "tools/preproc/io.h",
+          "selector": "file",
+          "sha256": "bd96fa61912381e799899f92f4bde6a15262a9562d6f60faf6aa3b4fbdaae8f1"
+        },
+        {
+          "path": "tools/preproc/preproc.cpp",
+          "selector": "file",
+          "sha256": "301cb6b253b9e7c65f458f97f02c85f9747b8c49677402cfcf6115322f8bdef5"
+        },
+        {
+          "path": "tools/preproc/preproc.h",
+          "selector": "file",
+          "sha256": "eacaf681de72531e3a9231eebd5d7d5a054e3478caa3259c31901cd6b29f3de4"
+        },
+        {
+          "path": "tools/preproc/string_parser.cpp",
+          "selector": "file",
+          "sha256": "2256750bc19d3e0a35076a71a53dc0b7303522224a4b4720ab17c14e8fc6d42d"
+        },
+        {
+          "path": "tools/preproc/string_parser.h",
+          "selector": "file",
+          "sha256": "9a537b13bf7e39f165b1fe85a42b67a00f4d1d56e32e03bced1ac94a84b56a50"
+        },
+        {
+          "path": "tools/preproc/utf8.cpp",
+          "selector": "file",
+          "sha256": "a33f47c3c49edcaf3fdee38330c0ce694375d00fd23f81273d31f411607bde5a"
+        },
+        {
+          "path": "tools/preproc/utf8.h",
+          "selector": "file",
+          "sha256": "f96af5fd634b54f7578903272b8c7a67630d214ffcae569b24f9b60574707ee0"
+        },
+        {
+          "path": "data/event_scripts.s",
+          "selector": "asm_labels",
+          "labels": [
+            "Common_EventScript_ShowPokemartSign"
+          ],
+          "sha256": "f880d0c35b575d02d7a7a614f76789a0cb406697fb9b42865a8aeda36485c103"
+        },
+        {
+          "path": "data/event_scripts.s",
+          "selector": "asm_labels",
+          "labels": [
+            "Common_EventScript_ShowPokemonCenterSign"
+          ],
+          "sha256": "d68df3a9a0a589cc46073c108064c4c36d6c7d9888506397e91aad8a85d9bfd1"
+        },
+        {
+          "path": "data/scripts/movement.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Common_Movement_Delay48"
+          ],
+          "sha256": "2f2e0a1b1dbe06471d75d86c6dc4eb62a1fb7a022f3cadd301ffe3db14371e30"
+        },
+        {
+          "path": "data/scripts/movement.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Common_Movement_ExclamationMark"
+          ],
+          "sha256": "ed117b24837038a74b9a58cf9e344e382bb3978048b12fe056ee8bdc536a6873"
+        },
+        {
+          "path": "data/scripts/movement.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Common_Movement_FaceOriginalDirection"
+          ],
+          "sha256": "1ee4b39a096048f56afe94b2a8417f524b89a988a0cad0494a2aa48e30a68e95"
+        },
+        {
+          "path": "data/scripts/movement.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Common_Movement_FacePlayer"
+          ],
+          "sha256": "9993b99190f2348458a4fc8e9fb71e23ad41bbbfb324b7bd1a1b32dd4b6cb177"
+        },
+        {
+          "path": "data/scripts/movement.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Common_Movement_WalkInPlaceFasterDown"
+          ],
+          "sha256": "dc710a76327722587934027c27867bea1f8ab4e6f872d5942a6e045b4dadd9ba"
+        },
+        {
+          "path": "data/scripts/movement.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Common_Movement_WalkInPlaceFasterLeft"
+          ],
+          "sha256": "553ed9a4637102c976cf05b491238fce869ee1b553f354043ecef1272e3aacf1"
+        },
+        {
+          "path": "data/scripts/movement.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Common_Movement_WalkInPlaceFasterRight"
+          ],
+          "sha256": "9aeaa9670d464cddc55bc471ce43e4047e0e0e73ecb793b4bff492a94e42d641"
+        },
+        {
+          "path": "data/scripts/movement.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Common_Movement_WalkInPlaceFasterUp"
+          ],
+          "sha256": "3a7d3dcff77ca9bcbe619f1495ab097e13432e5e94654e4a65d2bdefc25473cd"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_HiddenItemScript"
+          ],
+          "sha256": "01c68b90c35b5a44e73c9ddd76b3094a440427e35d6aec4cb97c6f558faf55cc"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_BufferPocketNameAndTryFanfare"
+          ],
+          "sha256": "e48a4095c433347c79f232fa6302efbaf3ee4119f7e6139e1608d21711d92dec"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_BufferBerriesPocket"
+          ],
+          "sha256": "19a24be94f1ed6e692ad14dfd475121d94891c3d4274fb93f9e0a9468e9351b0"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_BufferItemsPocket"
+          ],
+          "sha256": "ccec0b7ecaa6849dab5848b08dcaf9d0dabe8e8b4e9775911be32e86b9f6b5f7"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_BufferKeyItemsPocket"
+          ],
+          "sha256": "0f7a29620b483c410f63c2cf4bc740ce7efe45ed6b246ab7387d6f299aaf1dfe"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_BufferPokeballsPocket"
+          ],
+          "sha256": "fdf1a99b03520785646a8a1edd5f853d8c8e73dfeecaa47eedd63dfe86103a92"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_BufferTMHMsPocket"
+          ],
+          "sha256": "ec3133491dc35729a14b1f7976257f337ce6d868508e4c6dec41872f384246f0"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_NoRoomForHiddenItem"
+          ],
+          "sha256": "f318a3290c28e21b59249839fa66b8ee58f59f1a6d38c9b32ba479f8634286a6"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_PickUpHiddenItem"
+          ],
+          "sha256": "94a8618f59641116a0bb252007099a6365fbc9a72538e7468d600cb692018f03"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_FoundHiddenItem"
+          ],
+          "sha256": "fdd13e03acb144095cce5de8cd6902373f7b9f2e747724bb6a4924d3746721e4"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_FoundHiddenTMHM"
+          ],
+          "sha256": "c814cb06c06ba0a47c9f869f340fec949a8575cf727f221c5e2e4e7d2b38911e"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_PlayFanfareObtainedItem"
+          ],
+          "sha256": "b27fdb704ef1022c4a4c3cbfeada35c5be5686bf5f2191b95244b246c5e4ad6c"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_PlayFanfareObtainedTMHM"
+          ],
+          "sha256": "a4cac6789daa24af3ff3e603513d8cf99d3dce0d687029e68ea5760659db36d7"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_PutHiddenItemInPocket"
+          ],
+          "sha256": "1050732e6db024f10eed8ad6e60816f83bf9b1270725ed64000cad4ee2daddb0"
+        },
+        {
+          "path": "data/scripts/item_ball_scripts.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "PetalburgCity_EventScript_ItemEther"
+          ],
+          "sha256": "e85d2ce82b62943ea43d85c3c223198c962c3e0ed83808a2eaeb87815ac5e25e"
+        },
+        {
+          "path": "data/scripts/item_ball_scripts.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "PetalburgCity_EventScript_ItemMaxRevive"
+          ],
+          "sha256": "a121237760c3a4869384ff0c40d183adca533be840ea6e7493d388341ee5823c"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Std_FindItem"
+          ],
+          "sha256": "c3d31812aaa75803a4b20ee708fb1485e0563c86cf797f032ea0f1a5b4a03ec2"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_NoRoomToPickUpItem"
+          ],
+          "sha256": "cb76b913e1ec734bcf28fa281d31f395db1ea00c5a9b12de7a083efaf13b883b"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_PickUpItem"
+          ],
+          "sha256": "4c0732302bf22e9bcb9e626f3437f0025d1c09d8fe2feaf2fb63561f56151d4c"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_FoundItem"
+          ],
+          "sha256": "208d4c8d1564471b98e3327a5c16493d5e1ba46a1152798fb8435880a8fa91e9"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_FoundTMHM"
+          ],
+          "sha256": "bf65304e5ae04004eb1b0ccc4e51a492219f4042de3b6fa2b96ccccce4964d76"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "EventScript_PutBattlePyramidItemInBag"
+          ],
+          "sha256": "1dd3cba9b64708dea20ce3da41c535bac01e605e0c04489ae9d0f195ceb2cbbf"
+        },
+        {
+          "path": "data/scripts/std_msgbox.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Std_MsgboxDefault"
+          ],
+          "sha256": "739928bbb92a1b1ef9f093e1fa768acbb1b899ba06cfcd58ac180f5aeeb9f370"
+        },
+        {
+          "path": "data/scripts/std_msgbox.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Std_MsgboxNPC"
+          ],
+          "sha256": "d22952a5926d1367f261e36526877dc650069bb78e46987887ba65e4f8a91122"
+        },
+        {
+          "path": "data/scripts/std_msgbox.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Std_MsgboxSign"
+          ],
+          "sha256": "40f48b296f37d784fe0b54f49ff70fd4fa5a62caa7886119a674f7396a6ddbe2"
+        },
+        {
+          "path": "data/maps/Route102/scripts.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Route102_Text_LetsGoBack"
+          ],
+          "sha256": "006a0371f740c8c45a320b786e3407f783fe1f328837cc8dc73664577bd7accd"
+        },
+        {
+          "path": "data/maps/Route102/scripts.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Route102_Text_WallyIDidIt"
+          ],
+          "sha256": "1e8a9174699f78b8bc29f565b7a7c4ec9bfc2420ba8a5b6de9bf465fc164e521"
+        },
+        {
+          "path": "data/maps/Route102/scripts.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "Route102_Text_WatchMeCatchPokemon"
+          ],
+          "sha256": "88be3c3a6c6b1106753483d9f0daf042750696f4d71d19140d9136fa2b9ec30b"
+        },
+        {
+          "path": "data/text/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "gText_ObtainedTheItem"
+          ],
+          "sha256": "fe79523cdf27a726c53b7aa4bf69fc515064731590a45d349e76435cf42a8134"
+        },
+        {
+          "path": "data/text/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "gText_PlayerFoundOneItem"
+          ],
+          "sha256": "302a7b2f8bc09994ba1f37b47507890c67900ef69fd8c558b3091554e3c10c40"
+        },
+        {
+          "path": "data/event_scripts.s",
+          "selector": "asm_labels",
+          "labels": [
+            "gText_PlayerFoundOneTMHM"
+          ],
+          "sha256": "f958cbaf5e73861f7406f4b334aa3b97833fecf697ca55d57f712b8e85e8e717"
+        },
+        {
+          "path": "data/text/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "gText_PlayerPutItemInBag"
+          ],
+          "sha256": "8b2b531eb7befcc04c64c47bb019d2709b668c9c997502fa1d1413a3b92ec10e"
+        },
+        {
+          "path": "data/event_scripts.s",
+          "selector": "asm_labels",
+          "labels": [
+            "gText_PokemartSign"
+          ],
+          "sha256": "b0637dee04efc965202829311a59b8e246519671e72b2452f72f9763781aa203"
+        },
+        {
+          "path": "data/event_scripts.s",
+          "selector": "asm_labels",
+          "labels": [
+            "gText_PokemonCenterSign"
+          ],
+          "sha256": "6a64493f25e815cc148c6342b2eb28eeeaf75dcb567c2072b7bd0a3f08a6030f"
+        },
+        {
+          "path": "data/text/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "gText_PutItemInPocket"
+          ],
+          "sha256": "7599e0aadcc42e943a6501dcbd7524393d9617a849bee1b008dc6f270a96a95d"
+        },
+        {
+          "path": "data/text/obtain_item.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "gText_TooBadBagIsFull"
+          ],
+          "sha256": "6fab8e6980dfdde235b73438e7261fc490ead3c54bd580c2cb4fc12f98e19f9e"
+        },
+        {
+          "path": "data/event_scripts.s",
+          "selector": "asm_labels",
+          "labels": [
+            "gStdScripts"
+          ],
+          "sha256": "16cbc81af00bed6016a09eca01f4a4301ea41fe623adccf58b029ccb95d90aa2"
+        },
+        {
+          "path": "data/layouts/PetalburgCity/border.bin",
+          "selector": "file",
+          "sha256": "aa298641e3346d9c7ac51454222ff057768946e61980fd82e4db65912df412fe"
+        },
+        {
+          "path": "data/layouts/PetalburgCity/map.bin",
+          "selector": "file",
+          "sha256": "7650c43cd3a8a235c102e647f3937fd42c75cdb14fd264b3bc46b85f2385d3fd"
+        },
+        {
+          "path": "data/layouts/layouts.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "PetalburgCity_Layout_Border",
+            "PetalburgCity_Layout_Blockdata",
+            "PetalburgCity_Layout"
+          ],
+          "sha256": "1bd045e09276823499a882de98c705c151295b697e0d0b693142fe63222bea3f"
+        },
+        {
+          "path": "data/layouts/layouts.json",
+          "selector": "json_layout",
+          "id": "LAYOUT_PETALBURG_CITY",
+          "sha256": "b7a71d53169473d5b59374aa7d04af5c40859268371f9016031328c70f9f0fc6"
+        },
+        {
+          "path": "Makefile",
+          "selector": "make_prefixes",
+          "prefixes": [
+            "JP_STRUCTURED_MAPS",
+            "JP_STRUCTURED_MAP_METADATA_MAPS",
+            "$(JP_STRUCTURED_MAP_EVENTS):",
+            "$(JP_MAP_GROUP_AGGREGATES) &:",
+            "data/maps/%/header.inc data/maps/%/connections.inc &:",
+            "data/layouts/layouts.inc data/layouts/layouts_table.inc include/constants/layouts.h &:",
+            "$(OBJ_DIR)/data/maps.o:",
+            "$(OBJ_DIR)/data/map_events.o:"
+          ],
+          "sha256": "b16534116ac9b7eda07080f7ab7f7ba9000d943e4ec52266f22fba940f470d35"
+        },
+        {
+          "path": "ld_script_jp.txt",
+          "selector": "linker_inputs",
+          "inputs": [
+            "data/event_scripts.o",
+            "data/map_events.o",
+            "data/maps.o"
+          ],
+          "sha256": "07e8100a59ead9b45b6c7246485b8e4c02d05c81fdfd923915108d24e3ac95ae"
+        },
+        {
+          "path": "data/scripts/obtain_item.inc",
+          "selector": "file",
+          "sha256": "a590a80406c4591d71dd5b55f35d0be51c59ff6ccc45a2f04164c6f4ad1ec4dc"
+        },
+        {
+          "path": "ld_script_jp.txt",
+          "selector": "file",
+          "sha256": "a166277c6a799fbfbbdd45eb55baaa842981063f3de01649fc303c4b45baaf51"
+        },
+        {
+          "path": "data/maps/PetalburgCity_Gym/map.json",
+          "selector": "file",
+          "sha256": "a99a35b91e701a64e70f59a988a97816f57b6b4c4c6fd1705d67cfec37fb015e"
+        },
+        {
+          "path": "data/maps/PetalburgCity_Gym/scripts.inc",
+          "selector": "file",
+          "sha256": "987d22cd120e2d49d71602fd7511cb47c16c7feaaedc88af55367f255367eab9"
+        },
+        {
+          "path": "data/maps/PetalburgCity_Gym/header.inc",
+          "selector": "file",
+          "sha256": "fb84d6cc10e6d5a8ed94b8c593d33578588f85f3aea3121a5e0e36fe2f2b4955"
+        },
+        {
+          "path": "data/layouts/layouts.json",
+          "selector": "json_layout",
+          "id": "LAYOUT_PETALBURG_CITY_GYM",
+          "sha256": "fb9fc7475b4be1803ae5d15aff6f273d52154414689b987199363bb90eee4873"
+        },
+        {
+          "path": "data/maps/PetalburgCity_WallysHouse/map.json",
+          "selector": "file",
+          "sha256": "1484ddbc0ba383ee0228b5e1ed4b55fc2d08acd1bc251ccf760576e06baedd33"
+        },
+        {
+          "path": "data/maps/PetalburgCity_WallysHouse/scripts.inc",
+          "selector": "file",
+          "sha256": "3acef8130e8b5cfbc25f25bed2bb8a164bb589827910c9ecbd0149cc0914d849"
+        },
+        {
+          "path": "data/maps/PetalburgCity_WallysHouse/header.inc",
+          "selector": "file",
+          "sha256": "9f7cc698002a8778b94590781a354634fd8e3fbc7e894127dd90757e348ad752"
+        },
+        {
+          "path": "data/layouts/layouts.json",
+          "selector": "json_layout",
+          "id": "LAYOUT_HOUSE2",
+          "sha256": "20bcb4b4ad13ed1effcfa68da9381858358b687ebbd4cc95948824f99be2da7f"
+        },
+        {
+          "path": "src/data/tilesets/headers.h",
+          "selector": "file",
+          "sha256": "4d21c8d1ab7d6a88a40f2797b3543c7c86d1bd107266ec867d5e7ab3b8d79e21"
+        },
+        {
+          "path": "src/data/tilesets/graphics.h",
+          "selector": "file",
+          "sha256": "d4378b25b9de6d4a43f2f07e8b326d7d3cda8a4ed382c99357cd365b5bd6147d"
+        },
+        {
+          "path": "src/data/tilesets/metatiles.h",
+          "selector": "file",
+          "sha256": "1e2ddca5d97a34e7c56cc7a1d6fb727d558aa9cf0af26c87655477ed17c53cc0"
+        },
+        {
+          "path": "src/tilesets.c",
+          "selector": "file",
+          "sha256": "002d59e2bdb960273d53ba1ccc8c2417c57296b9a46cebba53e36d2c883e903b"
+        },
+        {
+          "path": "src/graphics.c",
+          "selector": "file",
+          "sha256": "dd3f34e07f55fc529f5eca25d5d5f7adc786a8d2c96c8809de0cfcf70a92a084"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/flower/0.png",
+          "selector": "file",
+          "sha256": "c033e523bb99488b27561957185cf0413a744ce4c994df9cec20f43367639143"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/flower/1.png",
+          "selector": "file",
+          "sha256": "3423723ca6d73e793c8c62bb6d500b21a22533dc5cadb769571f3aad8033c300"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/flower/2.png",
+          "selector": "file",
+          "sha256": "0bacd2807bd601c49a817090e40cef95ee0865b8be8c75712cc4422a8e194525"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/land_water_edge/0.png",
+          "selector": "file",
+          "sha256": "383e42baf2aba145ae459b238d15b3747fbea283accef89fc698d79ed69b0ddc"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/land_water_edge/1.png",
+          "selector": "file",
+          "sha256": "405241ce8c58ff1a8b9aa4713b071a6c8c7840308bc251ea125b42cc3044c8ba"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/land_water_edge/2.png",
+          "selector": "file",
+          "sha256": "5e39979a6ea36f95b3821f7e8dc4727146e16567f3403ed4d501c0283e8e1188"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/land_water_edge/3.png",
+          "selector": "file",
+          "sha256": "e102556af2f57da88e718a94124d19b8d7345c3974152860c743e5404cc6277b"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/sand_water_edge/0.png",
+          "selector": "file",
+          "sha256": "7ecf06c81c515f47a5afe765ee2364204af2fae3a34ed70274bb483d44021b7b"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/sand_water_edge/1.png",
+          "selector": "file",
+          "sha256": "a5d2b701edc733e79a9c2b6d40269633aeb02906a1aa97099cccd394ac784231"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/sand_water_edge/2.png",
+          "selector": "file",
+          "sha256": "a6bbd09708d3b024a2c5ca6d527892c4bb7c5ac90ab57f8c873f2cf9389c4253"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/sand_water_edge/3.png",
+          "selector": "file",
+          "sha256": "9d8583767550c917b537680de03d2b69d0239c9c3fb195f83933e458c70af59c"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/sand_water_edge/4.png",
+          "selector": "file",
+          "sha256": "3c6cce3b44aeb276cd9bc8f8df7f502dc3519b5d0556ad757369dc9cbb195812"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/sand_water_edge/5.png",
+          "selector": "file",
+          "sha256": "8f623a5e3fa1ff32e3b3782128aba926392f44e522b0d2fb777b87a2ca315d52"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/sand_water_edge/6.png",
+          "selector": "file",
+          "sha256": "9d81b6a78aa3a5fb33ec2f759e0c9a4c882564f0dc355b6e8595a9ebca299c88"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/water/0.png",
+          "selector": "file",
+          "sha256": "7d23d5c4d44119df9a8d248fcff6b9e49f86328329cb98eee7bd1cf3efb4574a"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/water/1.png",
+          "selector": "file",
+          "sha256": "3ed22a92529680b3811a3f43e5b72ed802b4f04ddf1faa60d7ed40c034a5de8a"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/water/2.png",
+          "selector": "file",
+          "sha256": "c43d46c8ce945d3ed6eebb4c83f488a4d72c0973437aa4835e113ba2a19d3050"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/water/3.png",
+          "selector": "file",
+          "sha256": "25421553a13ee038e4c558afa6efaa5c0cea2553ac5b927d7a931973fcc16312"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/water/4.png",
+          "selector": "file",
+          "sha256": "5c4ab93485037d92822ba90261daa500509d8e758422636a22032f47ef9506e0"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/water/5.png",
+          "selector": "file",
+          "sha256": "acba6be3824304d780403ab09272a44553ff3343dd9507a052355fdba84d2f39"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/water/6.png",
+          "selector": "file",
+          "sha256": "e5b6fe8a0dad6e6f384dcde8ddb1b5f8333205bac27dc0e97340741b917aa22d"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/water/7.png",
+          "selector": "file",
+          "sha256": "b0fee407e725786bc62c24b3d6ec97db2ead2b00451bcb2d91c59c2eec3f8d38"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/waterfall/0.png",
+          "selector": "file",
+          "sha256": "a16b6d7b104a15552d43b002486f53a14488a058577d58179411c6d55db7e5ab"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/waterfall/1.png",
+          "selector": "file",
+          "sha256": "dd492aed02b437f39eba0458045595b69d1fd1aa66f45224b5228e8a2557b05b"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/waterfall/2.png",
+          "selector": "file",
+          "sha256": "1feb817ca15b57fbac9cc1b8ed2ce86a2d82ce5f54a2ee7bf694d68482588172"
+        },
+        {
+          "path": "data/tilesets/primary/general/anim/waterfall/3.png",
+          "selector": "file",
+          "sha256": "7aa7255d79f5f2c9e4a1d6abb8d4830ef2df64bca738531110c1dcc294177379"
+        },
+        {
+          "path": "data/tilesets/primary/general/metatile_attributes.bin",
+          "selector": "file",
+          "sha256": "06c9548a6c70d133b6d47638090f5d36f3fec92aace3d90deca758a4404cfa9b"
+        },
+        {
+          "path": "data/tilesets/primary/general/metatiles.bin",
+          "selector": "file",
+          "sha256": "17974b0ba1bb9d105d5ba255c69a3b80d8484a26ea0b8ff22c6c6567c6c22910"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/00.pal",
+          "selector": "file",
+          "sha256": "424a32d1079a61b6b9b4f1e879dd68108708905e8312d18edd134af3918407fd"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/01.pal",
+          "selector": "file",
+          "sha256": "9b9d01878137cef9ea6006c3025a3ada5cdf37d9c251b25bc95f71963bd9a447"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/02.pal",
+          "selector": "file",
+          "sha256": "8a469b137e6fc97823ab46b903c0ab80c466212cd430340586ccde22afbee949"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/03.pal",
+          "selector": "file",
+          "sha256": "821f0a62f0ce995c96e9eaa0b4a32a1cd61e4db1f3216bfbe1fd588cf33b7583"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/04.pal",
+          "selector": "file",
+          "sha256": "f99602126046eed3f20545a34ddd46fa6e5fcb96f032b410fa8d5251c7450e22"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/05.pal",
+          "selector": "file",
+          "sha256": "53b599be1554c4e1a0684f2339409ee4032ac8507696dae1836a10152f925177"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/06.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/07.pal",
+          "selector": "file",
+          "sha256": "75869eaa61747c23984c7f76735cfa77e3950d663ad9cc9dc6ad751210442bd0"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/08.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/09.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/10.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/11.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/12.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/13.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/14.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/15.pal",
+          "selector": "file",
+          "sha256": "64b87ff3eb44caada2f27f7b1e3195db1935f86460ec78e4bc3b3cffcb0e3251"
+        },
+        {
+          "path": "data/tilesets/primary/general/tiles.png",
+          "selector": "file",
+          "sha256": "2ed2473bb500180f6f0ebd790cb31db45f7eec1a07ebaf85066db5ba81d6cfb5"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/metatile_attributes.bin",
+          "selector": "file",
+          "sha256": "045a3b309c661c87a7704a8ae90d01d24d4532d853b84c730460fe176702ccd7"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/metatiles.bin",
+          "selector": "file",
+          "sha256": "3f2e021f25bc0ed6130956d70de833e874191349bc761188dbb716f32d8d7bae"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/00.pal",
+          "selector": "file",
+          "sha256": "13f8977e61df1e7ee8f8e3abcf9525256bbf32834b521360418659133df2d2fa"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/01.pal",
+          "selector": "file",
+          "sha256": "9b9d01878137cef9ea6006c3025a3ada5cdf37d9c251b25bc95f71963bd9a447"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/02.pal",
+          "selector": "file",
+          "sha256": "8a469b137e6fc97823ab46b903c0ab80c466212cd430340586ccde22afbee949"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/03.pal",
+          "selector": "file",
+          "sha256": "40d2c14ba666d5ae8f46ae3c7486acd216805d6f16c7dcb87881d7d30833e13c"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/04.pal",
+          "selector": "file",
+          "sha256": "57274f87862513432500d0b28023cfe13a083019bd4fba2600fa5eae9a1d87fb"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/05.pal",
+          "selector": "file",
+          "sha256": "53b599be1554c4e1a0684f2339409ee4032ac8507696dae1836a10152f925177"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/06.pal",
+          "selector": "file",
+          "sha256": "d87b98739f316e00a302ce483e85fcab50564c7707f73a49832b5ecc00ceb92a"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/07.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/08.pal",
+          "selector": "file",
+          "sha256": "cbf1a17ec18cbdc3c1816dbf2597fef479ddd3d1abe5763b123d837d815e5305"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/09.pal",
+          "selector": "file",
+          "sha256": "27ca5a076a1d6695fddd3df9a6267c798d0092be3361c4d91d39e65246965dcb"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/10.pal",
+          "selector": "file",
+          "sha256": "4a5ee3fc3b30dacb8a43fb3f39d96bb9bf0b91a006d976e25bdd274f8e73da79"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/11.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/12.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/13.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/14.pal",
+          "selector": "file",
+          "sha256": "caaa42c4d5f484143bad618cd595e140dc5e3914e5dd8103d4f04e97a67d98b8"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/palettes/15.pal",
+          "selector": "file",
+          "sha256": "64b87ff3eb44caada2f27f7b1e3195db1935f86460ec78e4bc3b3cffcb0e3251"
+        },
+        {
+          "path": "data/tilesets/secondary/petalburg/tiles.png",
+          "selector": "file",
+          "sha256": "5f7427dfdd227f6f048b5ee9aa167144672a228dbc5bd25a84a6e348d62429d9"
+        }
+      ],
+      "native_spans": [
+        {
+          "map": null,
+          "role": "standard_script_table",
+          "symbol": "gStdScripts",
+          "address": "0x081DB7BC",
+          "size": 44,
+          "sha256": "783213f039b6d1d1771b2e218814588125a4798dd9fe6fc54e674f46b863a3b5"
+        },
+        {
+          "map": null,
+          "role": "shared_text",
+          "symbol": "Route102_Text_WatchMeCatchPokemon",
+          "address": "0x081E693C",
+          "size": 86,
+          "sha256": "576a1a53a723f9f2c212ef3e4fa1f88b8e6438816539166b68f9e3cf471a8a4a"
+        },
+        {
+          "map": null,
+          "role": "shared_text",
+          "symbol": "Route102_Text_WallyIDidIt",
+          "address": "0x081E6992",
+          "size": 30,
+          "sha256": "8bc3e4b9758037f17b3695a465776f4c158d2a946861ef5191556b350de7b113"
+        },
+        {
+          "map": null,
+          "role": "shared_text",
+          "symbol": "Route102_Text_LetsGoBack",
+          "address": "0x081E69B0",
+          "size": 23,
+          "sha256": "1c910a88b6fe3e2445f23112961e3a65b3bb42f8e6b2bf3699b1c3577eb33da1"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "Std_MsgboxNPC",
+          "address": "0x082423AF",
+          "size": 11,
+          "sha256": "57beef7c67d2c2c3781ab6550f370524b454d0f8d027830ac0b812bed0184256"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "Std_MsgboxSign",
+          "address": "0x082423BA",
+          "size": 10,
+          "sha256": "c661c631c1e93692be334710aca48f0c61a56f61df44afc365ce1da348abec6c"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "Std_MsgboxDefault",
+          "address": "0x082423C4",
+          "size": 8,
+          "sha256": "f740301a394637a38744ce56918c9b5334c317b0e3ac36424549fef8b66166db"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_BufferPocketNameAndTryFanfare",
+          "address": "0x08242BA0",
+          "size": 61,
+          "sha256": "8cc916fd621ff86ec98e61b8416276a04486aec732986a04053d1243f09e3b8b"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_BufferItemsPocket",
+          "address": "0x08242BDD",
+          "size": 16,
+          "sha256": "9b694b3e9f2d3e743b56b366662994184145a6c07800480d7da26f53bc57ff06"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_BufferKeyItemsPocket",
+          "address": "0x08242BED",
+          "size": 16,
+          "sha256": "be29f03a42a3c07d5c3abd9722e98e91f58d4f871e8b42257a799c00f3e4fc8f"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_BufferPokeballsPocket",
+          "address": "0x08242BFD",
+          "size": 16,
+          "sha256": "7102f82fb63b2461ed7bb4abf49aa69984b7b066bea2e3df5f188bb59b4d824e"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_BufferTMHMsPocket",
+          "address": "0x08242C0D",
+          "size": 16,
+          "sha256": "6bca166f6ede4ce36c533de3660d750e4607802f725442390c3f86ed5072b1b0"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_BufferBerriesPocket",
+          "address": "0x08242C1D",
+          "size": 16,
+          "sha256": "31279e54acf95e286a38f3adbceaa17e1b6f79a2113f56975133400b0f7669b4"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_PlayFanfareObtainedItem",
+          "address": "0x08242C47",
+          "size": 4,
+          "sha256": "ee3a4e7ad03878a8104334ab36aff4c6e628579eee9de075933fbf254ee99356"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_PlayFanfareObtainedTMHM",
+          "address": "0x08242C4B",
+          "size": 4,
+          "sha256": "a25e3ab834fb83dda7f91f94c5ef264558f2085820bc29b81164d6981cfb0372"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "Std_FindItem",
+          "address": "0x08242C95",
+          "size": 59,
+          "sha256": "1aea59f39e1f8ac8b15d8ba3143f76d8395fcf84cbaf2c8e5291ab3283bbc8d1"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_PickUpItem",
+          "address": "0x08242CD0",
+          "size": 74,
+          "sha256": "51952c5f376eff60ba0771be9536cde287a22797c28cb0bbf23013248c34a136"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_PutBattlePyramidItemInBag",
+          "address": "0x08242D1A",
+          "size": 9,
+          "sha256": "a5160240849b8ff399cd882ef71e8bbb01ebe86a868dbbb366424d4ca397ceb6"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_FoundTMHM",
+          "address": "0x08242D23",
+          "size": 10,
+          "sha256": "b2902538aae92795965931e86bf8636ef1981f828e120fe3a1804d434416d82e"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_FoundItem",
+          "address": "0x08242D2D",
+          "size": 6,
+          "sha256": "dca163cd8924d2c656f63bc698f839a8d498fa70700505b83bcc321af1874b4d"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_NoRoomToPickUpItem",
+          "address": "0x08242D33",
+          "size": 22,
+          "sha256": "29a315c351d44b08eee0df7cb32f05ef44d22172f7430d447b537925083ad0b1"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_HiddenItemScript",
+          "address": "0x08242D49",
+          "size": 47,
+          "sha256": "ab76ec453e06d48235e993d80253ca5cfc196bd90a86dee5e9826c4e10a22984"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_PickUpHiddenItem",
+          "address": "0x08242D78",
+          "size": 38,
+          "sha256": "a8173345894563dcdf3f98751943285b2a9ec829f92a043ca1629dc8f3af31e2"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_FoundHiddenTMHM",
+          "address": "0x08242D9E",
+          "size": 15,
+          "sha256": "08851807b3162171ecce3bc1a374bfe8ba92c11a6ec69f3096f6ea875a1e2a3e"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_FoundHiddenItem",
+          "address": "0x08242DAD",
+          "size": 11,
+          "sha256": "3a4d992949771e7471ee5db63cd1ad8a18dcaf263e2774392d58931dfbe0a952"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_PutHiddenItemInPocket",
+          "address": "0x08242DB8",
+          "size": 27,
+          "sha256": "50556d22787c21c897fedcdb26d23b8d0f3ffb9e4e4ca776ed6e4c9922c5a0fe"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "EventScript_NoRoomForHiddenItem",
+          "address": "0x08242DD3",
+          "size": 23,
+          "sha256": "e7a9d4d89561a04d038182103ccdc98a2cc4f3a74e9e75a1c42a1c59a6e11b6a"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "Common_EventScript_ShowPokemartSign",
+          "address": "0x08242EF6",
+          "size": 9,
+          "sha256": "714130363e8fa27c4128c443305e1a6dcdac98c1f279129bf667ab5a31839054"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "Common_EventScript_ShowPokemonCenterSign",
+          "address": "0x08242EFF",
+          "size": 9,
+          "sha256": "9eb0c1fb32d8aefee4921f632e6fcac57f2e8098ffcd1d101e2fbe3a699989f4"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "Common_Movement_ExclamationMark",
+          "address": "0x0824361B",
+          "size": 2,
+          "sha256": "06dfbf0ac463c69d2e036df623cac84473162ec8503a460b90e32f8bfad02d0a"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "Common_Movement_Delay48",
+          "address": "0x0824361D",
+          "size": 4,
+          "sha256": "f1438909c95cd74819072f6116b90c5fa776304ff52035103664d635d9e2aab6"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "Common_Movement_FacePlayer",
+          "address": "0x08243621",
+          "size": 2,
+          "sha256": "0beef9db6725d1c9ff1b7bdeaf6cf74e2394c6489c60d36024ddd8e451cf3c2f"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "Common_Movement_FaceOriginalDirection",
+          "address": "0x08243625",
+          "size": 2,
+          "sha256": "dc357d3848b3290c5dfd168a5f210929e9b07e118d58e733dde04d50dd6b75ae"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "Common_Movement_WalkInPlaceFasterLeft",
+          "address": "0x08243627",
+          "size": 2,
+          "sha256": "da8b9b772d0b0df6d1cc303e625b6d13af0177ba81ae0762d86b9b3012fa10b3"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "Common_Movement_WalkInPlaceFasterUp",
+          "address": "0x08243629",
+          "size": 2,
+          "sha256": "1220cb1f0532e6e8585da0a1b04cf9dc2843855ed2cf463701767a8e0e4fd71a"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "Common_Movement_WalkInPlaceFasterRight",
+          "address": "0x0824362B",
+          "size": 2,
+          "sha256": "43508c896131e2d683cf331ea6f831c94f8c0b73191de686bd635b6b62fe04f2"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "Common_Movement_WalkInPlaceFasterDown",
+          "address": "0x0824362D",
+          "size": 2,
+          "sha256": "135b939d97b5d29e9d42960bda860703f3038f2d8b856f8909ae3d033507ac9f"
+        },
+        {
+          "map": null,
+          "role": "shared_text",
+          "symbol": "gText_ObtainedTheItem",
+          "address": "0x0824393C",
+          "size": 11,
+          "sha256": "acb2ed04ecec734f2782ab77b1a6ce1b319150468249922dad0b3191432f1443"
+        },
+        {
+          "map": null,
+          "role": "shared_text",
+          "symbol": "gText_PutItemInPocket",
+          "address": "0x08243953",
+          "size": 22,
+          "sha256": "345e893ef21d0397cdfd8e5cb436ff7b18ebc2295d30193fffd61bb8d7d00ae2"
+        },
+        {
+          "map": null,
+          "role": "shared_text",
+          "symbol": "gText_PlayerFoundOneItem",
+          "address": "0x08243969",
+          "size": 14,
+          "sha256": "55d9d50ea7b00f1dde98b7add6e53627950532696f88807784dcf63acd2eb625"
+        },
+        {
+          "map": null,
+          "role": "shared_text",
+          "symbol": "gText_TooBadBagIsFull",
+          "address": "0x08243977",
+          "size": 19,
+          "sha256": "646621cf5d514f10f75223f1683e02df1a9e6fbf2a2eb2ecb44ce903a074ed42"
+        },
+        {
+          "map": null,
+          "role": "shared_text",
+          "symbol": "gText_PlayerPutItemInBag",
+          "address": "0x0824398A",
+          "size": 19,
+          "sha256": "51e3c09cd2867e66b3c45464d496b9585d1c17fdfbfad7d9ce32910f8c87bc6a"
+        },
+        {
+          "map": null,
+          "role": "shared_text",
+          "symbol": "gText_PokemartSign",
+          "address": "0x082439D6",
+          "size": 31,
+          "sha256": "804dda6f3c9b3fea31f63a2e09c1da088b2e833f3af0a11fd96a30aa4d2134b1"
+        },
+        {
+          "map": null,
+          "role": "shared_text",
+          "symbol": "gText_PokemonCenterSign",
+          "address": "0x082439F5",
+          "size": 29,
+          "sha256": "95dce1af90ffe8f4fececa0cc35fa37b22e75f7871023edf9961bdbce34e769f"
+        },
+        {
+          "map": null,
+          "role": "shared_text",
+          "symbol": "gText_PlayerFoundOneTMHM",
+          "address": "0x08243DB3",
+          "size": 19,
+          "sha256": "29c5ce6d3482bc438666682634f833077cb62af2f4ae3c21827970879bad18ba"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "PetalburgCity_EventScript_ItemMaxRevive",
+          "address": "0x08256E0B",
+          "size": 13,
+          "sha256": "dd94ffd14223da3ad6b6e4de328ebe0c8fe793692299354afeb054a7a8ab9194"
+        },
+        {
+          "map": null,
+          "role": "shared_script",
+          "symbol": "PetalburgCity_EventScript_ItemEther",
+          "address": "0x08256E18",
+          "size": 13,
+          "sha256": "52a8bdbf42688ec4fcedd3c2745d4cb568f6a6b6dd745f248863de58e5a7714c"
+        },
+        {
+          "map": "PetalburgCity",
+          "role": "scripts",
+          "symbol": "PetalburgCity_MapScripts",
+          "address": "0x081DB7E8",
+          "size": 2027,
+          "sha256": "8da76ae9c3b8b4612bd2db4dda042858584758be803ac215ffab696fdf6c9449"
+        },
+        {
+          "map": "PetalburgCity",
+          "role": "border",
+          "symbol": "PetalburgCity_Layout_Border",
+          "address": "0x083B8234",
+          "size": 8,
+          "sha256": "aa298641e3346d9c7ac51454222ff057768946e61980fd82e4db65912df412fe"
+        },
+        {
+          "map": "PetalburgCity",
+          "role": "blockdata",
+          "symbol": "PetalburgCity_Layout_Blockdata",
+          "address": "0x083B823C",
+          "size": 1800,
+          "sha256": "7650c43cd3a8a235c102e647f3937fd42c75cdb14fd264b3bc46b85f2385d3fd"
+        },
+        {
+          "map": "PetalburgCity",
+          "role": "layout",
+          "symbol": "PetalburgCity_Layout",
+          "address": "0x083B8944",
+          "size": 24,
+          "sha256": "68c141299e3505c7c18dca126268c3616a9eac5a4ded6ac5eefa48f8f99f092f"
+        },
+        {
+          "map": "PetalburgCity",
+          "role": "header",
+          "symbol": "PetalburgCity",
+          "address": "0x0845A8D8",
+          "size": 28,
+          "sha256": "a2dd2ad26f0c3a9d194924d4d94a82f5148b4b5586aaef9b594cf20a1c77a140"
+        },
+        {
+          "map": "PetalburgCity",
+          "role": "connections",
+          "symbol": "PetalburgCity_MapConnectionsList",
+          "address": "0x0845EAF4",
+          "size": 32,
+          "sha256": "1a81ac3a8eb4c76d3e51f1163dcc582fe085a6415ef158e08aa06294c094a023"
+        },
+        {
+          "map": "PetalburgCity",
+          "role": "events",
+          "symbol": "PetalburgCity_ObjectEvents",
+          "address": "0x084FE6DC",
+          "size": 508,
+          "sha256": "f437cd780b32ee9957d7e7fed40c0cd409ad5c94a7cf422887367cdc780fca4d"
+        }
+      ],
+      "us_reference": {
+        "commit": "731ad5bfd6e6f265508d0efcca0ba42f9dcf5881",
+        "files": {
+          "data/event_scripts.s": "0abcadf9b4dd0858593c303891fb4ba31fae0f99ea27669127fb2dc4cdc6de2c",
+          "data/layouts/layouts.json": "5ac58ee1072862c937f82121a931b3315ccca3b5ae807f2a28a0e273957c2e4f",
+          "data/maps/PetalburgCity/map.json": "0018ee193173c55b295f46a11a82dad9db0f37e7717a18261efc587c71d7d20e",
+          "data/maps/PetalburgCity/scripts.inc": "ed77dad581c779f22f7bcf0ea0dea565f1efcd188c2cc889cfffb1f9600913c8",
+          "data/maps/PetalburgCity_Gym/map.json": "a99a35b91e701a64e70f59a988a97816f57b6b4c4c6fd1705d67cfec37fb015e",
+          "data/maps/PetalburgCity_Gym/scripts.inc": "2f36d5d75cd62b63754fb176e2dc7f6a7406936852ac0e6d12b1cbb7d0884bfe",
+          "data/maps/PetalburgCity_WallysHouse/map.json": "1484ddbc0ba383ee0228b5e1ed4b55fc2d08acd1bc251ccf760576e06baedd33",
+          "data/maps/PetalburgCity_WallysHouse/scripts.inc": "00720505e83aeb13ec3f1d0ae7c2e0395a2da8802de6072a858db95bae09f79c",
+          "data/maps/Route102/scripts.inc": "efe5a40f52569ff61f91c2b2827694c941b50738aff45f6954b17d1307305aef",
+          "data/scripts/item_ball_scripts.inc": "266959f7086072bed5cd7d8c3ac4536d1c0cdeff04d1c8b948425c97082b4e1f",
+          "data/scripts/movement.inc": "0d78c1ff325b75cdb7c1189449e5bdf1d3ea9ab875cceae4981e9a6aaf734757",
+          "data/scripts/obtain_item.inc": "44bafbf27bedd42c5fd7f9a9be4fbe92e6bebc2e834498bd4495c8ad4b51fa5b",
+          "data/scripts/std_msgbox.inc": "4bc58c865d3d2241777bba7ee03d76fa820653fd50d737ed0c4f5b30a71627da",
+          "data/text/obtain_item.inc": "44ea40b206dc1de42e019449a6407f532b5d11527adc4f480aa6d19bde266357"
+        }
+      },
+      "checks": {
+        "PetalburgCity": {
+          "script_control_flow": "Complete JP owner [0x081DB7E8,0x081DBFD3), 2027 bytes / 79 labels: two map tables, 35 scripts, 30 movements and 12 texts. Label order and every non-text statement match immutable US source. Rechecked city-state 0/2/4, Gym-state 8->7 handoff, four Gym-boy/Scott approach-exit cases, actor visibility, music/name flags and release/wait boundaries. SavePlayerParty/LoadPlayerParty preserve the party around the linked PutZigzagoonInPlayerParty tutorial setup; StartWallyTutorialBattle has native waitstate=1, while both explicit warp waits remain. Removed only the obsolete comment misidentifying door wait AE as waitmoncry. Fresh AS/LD comparison passed for the complete local owner and every selected shared fragment; no gameplay or naked C conversion is claimed.",
+          "event_fields": "map.json deeply equals fixed US: 9 objects, 6 warps, 8 coordinate triggers and 8 background events in JP order. Reviewed IDs, graphics, coordinates, elevations, movement ranges, hide/item flags, state conditions and destinations. Null object scripts stay null. Object/coord/BG script roots are all included, including two item balls, public mart/center signs and the hidden Rare Candy dispatch through GetInteractedBackgroundEventScript. The 508-byte native events owner [0x084FE6DC,0x084FE8D8) is bound to data/map_events.o; generated events.inc is a JSON build product, not a manually edited owner.",
+          "header_flags": "All 28 native header bytes at 0x0845A8D8 and four pointer fields are bound. US-identical JSON specifies MUS_PETALBURG, sunny city, no flash, cycling/running/name enabled and escape disabled; map IDs/layout and generated flags use current JP constants. No raw address or temporary script alias was introduced.",
+          "connections": "Exactly two records, 32 bytes at 0x0845EAF4: Route104 left offset -50 and Route102 right offset +10, in matching US order. Native count=2 and pointer to PetalburgCity_MapConnectionsList are bound; the logical adjacency does not move centralized layout data into a map directory.",
+          "layout_resources": "Petalburg is 30x30. Border 0x083B8234/8 bytes, blockdata 0x083B823C/1800 and MapLayout 0x083B8944/24 are bound to data/maps.o. Header pointers resolve to real centralized General/Petalburg C tileset owners at 0x083B7B24/0x083B7B3C, with typed tiles/palette/metatile/attribute/callback chains and source assets fingerprinted. Tutorial warp Gym(4,108) is within 9x112 and Gym-state1 positions Wally/Norman and resumes the tutorial; WallysHouse(2,4) is within House2 11x8 and city-state4 hands off to its Surf sequence. These are scoped destination contracts, not approval of those maps.",
+          "shared_call_closure": "All 35 selected shared script/movement blocks, 11 borrowed text objects and Standard slots 1 FindItem, 2 NPC, 3 Sign, 4 Default are explicit source/native evidence. The closure includes bag-space success/full branches, item/TM pocket fanfares, hidden-item flag/TV callbacks and the Pyramid location branch; it is not truncated to calls visible in scripts.inc. Every JP/US non-text difference in this selected closure is the JP bufferitemname versus unsupported US bufferitemnameplural localization form. Eight actual Special contracts are selected by current JP name/table/wait metadata, not US indices. Runtime C boundaries and legacy LoadWallyZigzagoon linker mapping are fingerprinted; unrelated shared systems are not declared fully reviewed.",
+          "localization": "All 23 selected local/borrowed JP text objects were freshly preproc-encoded, assembled/linked and compared to exact ROM bytes. The 12 local texts preserve 16 newline, 2 scroll and 10 paragraph controls with no placeholder; the three Route102 tutorial texts use actual PLAYER controls and are not blanket approval of Route102. Public signs and item/TM texts keep their real STR_VAR/PLAYER contracts. US labels/context guide meaning only: Japanese text, wrapping, EOS and the singular-item opcode are not replaced by English forms. The complete 47-fragment closure is 2911 native bytes; this is static/source/native review, not an emulator playthrough."
+        }
+      }
     }
   ]
 }

@@ -47,6 +47,8 @@ TEXT_CONTEXT = {'charmap.txt', 'include/constants/characters.h', 'tools/preproc/
         'asm_file.cpp', 'asm_file.h', 'c_file.cpp', 'c_file.h', 'char_util.h',
         'charmap.cpp', 'charmap.h', 'io.cpp', 'io.h', 'preproc.cpp', 'preproc.h',
         'string_parser.cpp', 'string_parser.h', 'utf8.cpp', 'utf8.h')}
+STORY_CONTEXT = TEXT_CONTEXT | {'tools/map_review_script_profile.py', 'data/specials.inc',
+                               'asm/macros/movement.inc', 'src/field_control_avatar.c'}
 LABEL_RE = re.compile(r'(?m)^([A-Za-z_]\w*)::?\s*(?:@[^\n]*)?$')
 SYMBOL_RE = re.compile(r'^\s*0x([0-9a-fA-F]{8,16})\s+([A-Za-z_]\w*)\s*$')
 SHA256_RE = re.compile(r'^[0-9a-f]{64}$')
@@ -233,8 +235,36 @@ def extended_analysis(root: Path, text: str) -> tuple[int, set[str], dict[str, s
 def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict, dict]:
     """Derive component identity/extent and actual shared-call closure from source."""
     contracts, external, external_text = {}, set(), {}
-    extended = batch.get('review_type') == 'direct_map_v2'
+    story = batch.get('review_type') == 'direct_map_v3'
+    extended = batch.get('review_type') in ('direct_map_v2', 'direct_map_v3')
+    expected_kinds, actual_kinds, used_standard, used_specials = {}, {}, {}, {}
+    if story:
+        # Lazy import: the typed profiler reuses this module's text encoder.
+        try:
+            from map_review_script_profile import profile_owner, special_waits
+        except ModuleNotFoundError:
+            from tools.map_review_script_profile import profile_owner, special_waits
+        waits = special_waits(root)
+    def expect(target, kind):
+        if target in expected_kinds and expected_kinds[target] != kind:
+            raise ValueError('incompatible_reference_kinds:' + target)
+        expected_kinds[target] = kind
+    def typed_targets(profiles):
+        texts, targets = {}, set()
+        for label, profile in profiles.items():
+            if label in actual_kinds and actual_kinds[label] != profile.kind:
+                raise ValueError('incompatible_definition_kind:' + label)
+            actual_kinds[label] = profile.kind
+            for target, kind in list(profile.targets.items()) + list(profile.texts.items()):
+                expect(target, kind)
+            texts.update(profile.texts)
+            targets.update(profile.targets)
+            used_standard.update(profile.standard_scripts)
+            used_specials.update(profile.specials)
+        return sum(p.size for p in profiles.values()), targets, texts
     def analyze(text):
+        if story:
+            return typed_targets(profile_owner(root, text, waits))
         if extended:
             return extended_analysis(root, text)
         length, targets = script_analysis(text)
@@ -255,6 +285,29 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         if not blocks or next(iter(blocks)) != name + '_MapScripts':
             raise ValueError('noncanonical_map_script_owner')
         length, targets, texts = analyze(script)
+        if story:
+            expect(name + '_MapScripts', 'map_table')
+            for field in ('object_events', 'coord_events', 'bg_events'):
+                for event in metadata.get(field, []):
+                    if not isinstance(event, dict):
+                        raise ValueError('invalid_story_event_record')
+                    target = event.get('script')
+                    if field == 'bg_events':
+                        if event.get('type') == 'hidden_item':
+                            if 'script' in event or not all(isinstance(event.get(k), str) and MAP_RE.fullmatch(event[k])
+                                                          for k in ('item', 'flag')):
+                                raise ValueError('unsupported_story_hidden_item')
+                            target = 'EventScript_HiddenItemScript'
+                        elif event.get('type') != 'sign' or target in (None, 'NULL', '0', '0x0', 0):
+                            raise ValueError('unsupported_story_background_dispatch')
+                    elif field == 'coord_events' and event.get('type') != 'trigger':
+                        raise ValueError('unsupported_story_coordinate_dispatch')
+                    if target is None or target in ('NULL', '0', '0x0') or type(target) is int and target == 0:
+                        continue
+                    if not isinstance(target, str) or not MAP_RE.fullmatch(target):
+                        raise ValueError('nonsemantic_event_script_target')
+                    expect(target, 'script')
+                    targets.add(target)
         if extended:
             for target in targets & blocks.keys():
                 if text_kind(blocks[target]):
@@ -297,6 +350,10 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             raise ValueError('missing_shared_call_evidence:' + entry)
         dep = entries[entry]
         blocks = label_blocks(local_path(root, dep.get('path')).read_text())
+        scope = dep.get('labels') if story else blocks.keys()
+        if story and (not isinstance(scope, list) or not scope or len(scope) != len(set(scope))
+                      or any(not isinstance(label, str) or not MAP_RE.fullmatch(label) for label in scope)):
+            raise ValueError('invalid_shared_typed_scope')
         reachable, todo = set(), [entry]
         while todo:
             label = todo.pop()
@@ -306,9 +363,11 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
                 raise ValueError('missing_shared_script_label')
             reachable.add(label)
             _, targets, texts = analyze(blocks[label])
-            collect_text(texts, blocks)
-            todo.extend(targets & blocks.keys())
-            pending.extend(targets - blocks.keys())
+            # A selected shared-script claim does not cover other text blocks
+            # merely because they happen to be in the same aggregate file.
+            collect_text(texts, {} if story else blocks)
+            todo.extend(targets & set(scope))
+            pending.extend(targets - set(scope))
         ordered = [label for label in blocks if label in reachable]
         if not ordered or ordered[0] != entry or dep.get('labels') != ordered:
             raise ValueError('incomplete_or_reordered_shared_closure')
@@ -339,7 +398,8 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             raise ValueError('missing_text_source_binding')
         contracts[(None, entry)] = (entry, len(encoded_text(root, blocks[entry], dep.get('kind'))))
     standard = batch.get('standard_scripts', [])
-    expected = [dict(index=3, entry='Std_MsgboxSign')] if 'Std_MsgboxSign' in visited else []
+    expected = ([dict(index=index, entry=entry) for index, entry in sorted(used_standard.items())]
+                if story else [dict(index=3, entry='Std_MsgboxSign')] if 'Std_MsgboxSign' in visited else [])
     if standard != expected or (standard and not extended):
         raise ValueError('missing_or_unreachable_standard_script_evidence')
     if standard:
@@ -353,9 +413,27 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             if not match:
                 raise ValueError('unsupported_standard_table_source')
             entries.append(match.group(1))
-        if len(entries) <= 3 or entries[3] != 'Std_MsgboxSign':
+        if any(index >= len(entries) or entries[index] != entry
+               for index, entry in ((v['index'], v['entry']) for v in standard)):
             raise ValueError('standard_script_index_mismatch')
         contracts[(None, 'gStdScripts')] = ('gStdScripts', 4 * len(entries))
+    if story:
+        special_contracts = batch.get('special_contracts')
+        if (not isinstance(special_contracts, list) or any(not isinstance(c, dict) for c in special_contracts)
+                or len({c.get('entry') for c in special_contracts}) != len(special_contracts)
+                or {c.get('entry'): c.get('waitstate') for c in special_contracts} != used_specials):
+            raise ValueError('incomplete_or_changed_special_contracts')
+        for contract in special_contracts:
+            path = contract.get('source_path')
+            if (not isinstance(path, str) or not path.startswith('src/') or not path.endswith('.c')
+                    or not MAP_RE.fullmatch(str(contract.get('source_symbol', '')))
+                    or not any(c.get('path') == path and c.get('selector') == 'file' for c in batch['sources'])):
+                raise ValueError('missing_special_implementation_source')
+        for entry, dep in text_entries.items():
+            actual_kinds[entry] = dep['kind']
+        for target, expected_kind in expected_kinds.items():
+            if actual_kinds.get(target) != expected_kind:
+                raise ValueError('incompatible_or_missing_typed_target:' + target)
     return contracts, shared
 
 
@@ -570,7 +648,7 @@ def _review_batch(root: Path, batch: dict, maps: set[str], native: dict) -> dict
         raise ValueError('invalid_map_list')
     if not set(reviewed) <= maps:
         raise ValueError('unknown_map')
-    if batch.get('review_type') not in ('direct_map_v1', 'direct_map_v2') or batch.get('decision') != 'reviewed':
+    if batch.get('review_type') not in ('direct_map_v1', 'direct_map_v2', 'direct_map_v3') or batch.get('decision') != 'reviewed':
         raise ValueError('unsupported_or_unapproved_review')
     if not SHA1_RE.fullmatch(str(batch.get('jp_commit', ''))):
         raise ValueError('missing_jp_baseline')
@@ -608,13 +686,16 @@ def _review_batch(root: Path, batch: dict, maps: set[str], native: dict) -> dict
         if claim.get('selector') == 'file':
             file_claims.add(claim.get('path'))
     required = {f'data/maps/{n}/{part}' for n in reviewed for part in REQUIRED_COMPONENTS} | REQUIRED_CONTEXT
-    if batch['review_type'] == 'direct_map_v2':
+    if batch['review_type'] in ('direct_map_v2', 'direct_map_v3'):
         required |= TEXT_CONTEXT
+    if batch['review_type'] == 'direct_map_v3':
+        required |= STORY_CONTEXT
     if not required <= file_claims:
         raise ValueError('incomplete_map_or_generator_source_coverage')
-    context = compile_context(root, required & (REQUIRED_CONTEXT | TEXT_CONTEXT) | {
+    context = compile_context(root, required & (REQUIRED_CONTEXT | STORY_CONTEXT) | {
         f'data/maps/{n}/scripts.inc' for n in reviewed} | {
-        c['path'] for c in sources if c.get('selector') == 'asm_labels'})
+        c['path'] for c in sources if c.get('selector') == 'asm_labels'} | {
+        c['source_path'] for c in batch.get('special_contracts', [])})
     if not context <= file_claims:
         raise ValueError('incomplete_macro_constant_dependency_closure')
     if not {f'data/maps/{n}/map.json' for n in reviewed} <= us_files.keys():
@@ -765,7 +846,19 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                 if native['symbols'].get(label) != {address}:
                     errors.append('shared_closure_not_contiguous:' + label)
                 address += size
-        if batch['review_type'] == 'direct_map_v2':
+        if batch['review_type'] in ('direct_map_v2', 'direct_map_v3'):
+            for contract in batch.get('special_contracts', []):
+                entry, source = contract['entry'], contract['source_symbol']
+                values = {v & ~1 for v in native['symbols'].get(entry, set())}
+                if len(values) != 1 or values != {v & ~1 for v in native['symbols'].get(source, set())}:
+                    errors.append('native_special_implementation_mismatch:' + entry)
+                    continue
+                address = next(iter(values))
+                expected_owner = contract['source_path'][:-2] + '.o'
+                if not any(start <= address < start + length and
+                           (path == expected_owner or path.endswith('/' + expected_owner))
+                           for start, length, path in native['owners']):
+                    errors.append('native_special_input_owner_mismatch:' + entry)
             for standard in batch.get('standard_scripts', []):
                 table = next(a for n, role, symbol, a, size, digest in parsed if role == 'standard_script_table')
                 slot = table - 0x08000000 + 4 * standard['index']

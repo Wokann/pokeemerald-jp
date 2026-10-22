@@ -65,7 +65,6 @@ PetalburgCity_EventScript_WalkToWallyHouse::
 	setvar VAR_0x8004, 7
 	setvar VAR_0x8005, 5
 	opendoor VAR_0x8004, VAR_0x8005
-	@ JP uses SCR_OP_WAITMONCRY (0xAE) for this door-animation wait.
 	waitdooranim
 	applymovement LOCALID_PETALBURG_WALLYS_DAD, PetalburgCity_Movement_WalkInsideHouseWallysDad
 	applymovement LOCALID_PLAYER, PetalburgCity_Movement_WalkInsideHousePlayer

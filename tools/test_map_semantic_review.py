@@ -115,6 +115,10 @@ class MapSemanticReviewTests(unittest.TestCase):
             owner = ('data/event_scripts.o' if span['role'] in ('scripts', 'shared_script', 'shared_text', 'standard_script_table')
                      else 'data/map_events.o' if span['role'] == 'events' else 'data/maps.o')
             rows.append(' .rodata 0x%08X 0x%X %s' % (span['address'], span['size'], owner))
+        for contract in self.manifest['batches'][0].get('special_contracts', []):
+            values = [v for n, v in self.symbols if n == contract['source_symbol']]
+            if values:
+                rows.append(' .text 0x%08X 0x4 %s' % (values[0] & ~1, contract['source_path'][:-2] + '.o'))
         return '\n'.join(rows)
 
     def progress(self):
@@ -625,6 +629,132 @@ class MapSemanticReviewTests(unittest.TestCase):
         batch['sources'] = [c for c in batch['sources'] if not (c['path'] == 'data/event_scripts.s' and c['selector'] == 'asm_labels')]
         self.save_manifest()
         self.assert_not_approved(self.progress())
+
+    def add_story_fixture(self):
+        self.add_sign_fixture()
+        batch = self.manifest['batches'][0]
+        batch['review_type'] = 'direct_map_v3'
+        for path in review.STORY_CONTEXT - review.TEXT_CONTEXT:
+            self.put(path, 'fixture source\n')
+            batch['sources'].append(self.claim(path))
+        self.put('data/specials.inc', 'def_special StartBattle, waitstate=1\n')
+        self.put('src/fixture_battle.c', 'void StartBattle(void) {}\n')
+        batch['sources'].append(self.claim('src/fixture_battle.c'))
+        batch['special_contracts'] = [dict(entry='StartBattle', waitstate=1,
+                                          source_path='src/fixture_battle.c', source_symbol='StartBattle')]
+        scripts = (self.root / 'data/maps/First/scripts.inc').read_text()
+        self.put('data/maps/First/scripts.inc', scripts + 'First_Action::\n'
+                 '\tspecial StartBattle\n\tapplymovement LOCALID_PLAYER, SharedMove\n\tend\n')
+        metadata = json.loads((self.root / 'data/maps/First/map.json').read_text())
+        metadata['bg_events'] = [{'type': 'sign', 'script': 'OutsideSign'}]
+        self.put('data/maps/First/map.json', json.dumps(metadata))
+        self.put('data/outside.inc', 'OutsideSign::\n\tmsgbox OutsideText, MSGBOX_SIGN\n\tend\n'
+                 'OutsideText::\n\t.string "あ$"\n')
+        self.put('data/movement.inc', 'SharedMove::\n\twalk_up\n\tstep_end\n')
+        self.put('data/event_scripts.s', (self.root / 'data/event_scripts.s').read_text()
+                 + '.include "data/outside.inc"\n.include "data/movement.inc"\n')
+        batch['shared_dependencies'] += [dict(entry='OutsideSign', path='data/outside.inc', labels=['OutsideSign']),
+                                         dict(entry='SharedMove', path='data/movement.inc', labels=['SharedMove'])]
+        batch['text_dependencies'] = [dict(entry='OutsideText', path='data/outside.inc', kind='string')]
+        for path, labels in [('data/outside.inc', ['OutsideSign']), ('data/outside.inc', ['OutsideText']),
+                             ('data/movement.inc', ['SharedMove'])]:
+            batch['sources'].append(self.claim(path, selector='asm_labels', labels=labels))
+        spans = batch['native_spans']
+        positions = {'scripts': (0, 24), 'events': (64, 32), 'header': (96, 28),
+                     'connections': (124, 20), 'layout': (144, 24), 'border': (168, 2), 'blockdata': (170, 2)}
+        for span in spans:
+            if span['map'] is not None:
+                offset, size = positions[span['role']]
+                span.update(address=0x08000000 + offset, size=size)
+                if span['role'] == 'events':
+                    span['symbol'] = 'First_MapBGEvents'
+        for role, symbol, offset, size in [('shared_script', 'OutsideSign', 320, 9),
+                                         ('shared_script', 'SharedMove', 336, 2),
+                                         ('shared_text', 'OutsideText', 352, 2)]:
+            spans.append(dict(map=None, role=role, symbol=symbol, address=0x08000000 + offset, size=size))
+        image = bytearray(self.image)
+        image[352:354] = bytes([1, 255])
+        self.image = bytes(image)
+        self.symbols = [(s['symbol'], s['address']) for s in spans]
+        self.symbols += [('First_Inspect', 0x08000001), ('First_Text', 0x0800000A), ('First_Action', 0x0800000C)]
+        self.symbols += [('StartBattle', 0x08000171)]
+        self.refresh_story_fixture()
+        self.assertEqual(self.progress()['reviewed_maps'], 1, self.progress())
+
+    def refresh_story_fixture(self):
+        batch = self.manifest['batches'][0]
+        for claim in batch['sources']:
+            claim['sha256'] = review.sha256(review.source_payload(self.root, claim))
+        for span in batch['native_spans']:
+            offset = span['address'] - 0x08000000
+            span['sha256'] = review.sha256(self.image[offset:offset + span['size']])
+        batch['rom_sha1'] = hashlib.sha1(self.image).hexdigest()
+        self.save_manifest()
+        self.put('baserom_jp.gba', self.image)
+        self.put('pokeemerald_jp.gba', self.image)
+        self.put('pokeemerald_jp.elf', elf_image(self.image, self.symbols))
+        self.put('pokeemerald_jp.map', self.linker_map())
+
+    def test_v3_event_only_entry_and_same_file_text_require_explicit_closure(self):
+        self.add_story_fixture()
+        batch = self.manifest['batches'][0]
+        batch['shared_dependencies'] = [d for d in batch['shared_dependencies'] if d['entry'] != 'OutsideSign']
+        self.save_manifest()
+        self.assert_not_approved(self.progress())
+        batch['shared_dependencies'].append(dict(entry='OutsideSign', path='data/outside.inc', labels=['OutsideSign']))
+        batch['text_dependencies'] = []
+        self.save_manifest()
+        self.assert_not_approved(self.progress())
+
+    def test_v3_nonzero_event_addresses_are_rejected_and_hidden_items_add_a_real_root(self):
+        self.add_story_fixture()
+        metadata = json.loads((self.root / 'data/maps/First/map.json').read_text())
+        for event in ({'type': 'sign', 'script': '0x08123456'}, {'type': 'hidden_item', 'item': 'ITEM_POTION', 'flag': 'FLAG_ITEM'},
+                      {'type': 'sign', 'script': 'NULL'}, {'type': 'secret_base', 'secret_base_id': '1'}):
+            metadata['bg_events'] = [event]
+            self.put('data/maps/First/map.json', json.dumps(metadata))
+            self.refresh_story_fixture()
+            self.assert_not_approved(self.progress())
+
+    def test_v3_external_movement_cannot_impersonate_a_script(self):
+        self.add_story_fixture()
+        path = 'data/maps/First/scripts.inc'
+        self.put(path, (self.root / path).read_text().replace('LOCALID_PLAYER, SharedMove', 'LOCALID_PLAYER, OutsideSign'))
+        self.refresh_story_fixture()
+        self.assert_not_approved(self.progress())
+
+    def test_v3_special_contract_and_real_native_implementation_are_required(self):
+        self.add_story_fixture()
+        batch = self.manifest['batches'][0]
+        original = copy.deepcopy(batch['special_contracts'])
+        batch['special_contracts'] = []
+        self.save_manifest()
+        self.assert_not_approved(self.progress())
+        batch['special_contracts'] = original
+        batch['special_contracts'][0]['source_symbol'] = 'First_Action'
+        self.refresh_story_fixture()
+        report = self.progress()
+        self.assert_not_approved(report)
+        self.assertIn('native_special_implementation_mismatch:StartBattle', report['batches'][0]['errors'])
+
+    def test_v3_special_wait_change_revokes_even_refingerprinted_source(self):
+        self.add_story_fixture()
+        self.put('data/specials.inc', 'def_special StartBattle\n')
+        self.refresh_story_fixture()
+        self.assert_not_approved(self.progress())
+
+    def test_v3_standard_slot_and_text_encoding_cannot_be_refingerprinted_away(self):
+        self.add_story_fixture()
+        original = (self.root / 'data/event_scripts.s').read_text()
+        self.put('data/event_scripts.s', original.replace('.4byte Std_MsgboxSign', '.4byte NULL'))
+        self.refresh_story_fixture()
+        self.assert_not_approved(self.progress())
+        self.put('data/event_scripts.s', original)
+        self.put('data/outside.inc', (self.root / 'data/outside.inc').read_text().replace('あ$', 'い$'))
+        self.refresh_story_fixture()
+        report = self.progress()
+        self.assert_not_approved(report)
+        self.assertIn('native_text_encoding_mismatch:OutsideText', report['batches'][0]['errors'])
 
 
 if __name__ == '__main__':
