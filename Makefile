@@ -44,6 +44,7 @@ include make_tools.mk
 # get their own subdirectory under build/, like pokefirered's BUILD_NAME.
 BUILD_NAME ?= pokeemerald-jp
 OBJ_DIR := build/$(BUILD_NAME)
+JP_GRAPHICS_GFX_ROOT := $(OBJ_DIR)/incgfx/
 
 ASFILE := $(wildcard asm/*.s)
 AS_OBJS := $(patsubst asm/%.s,$(OBJ_DIR)/asm/%.o,$(ASFILE))
@@ -1725,11 +1726,17 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/summary_screen/page_battle_moves.bin.lz graphics/summary_screen/page_contest_moves.bin.lz \
 	graphics/summary_screen/page_info_egg.bin.lz \
 	graphics/shop/menu.4bpp.lz graphics/shop/menu.gbapal.lz graphics/shop/menu.bin.lz graphics/shop/money.4bpp.lz \
-	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal data/tilesets/primary/general/tiles.4bpp.lz data/tilesets/primary/general/palettes/*.gbapal)
+	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal) Makefile
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/graphics.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/graphics.gen.s
+
+$(C_BUILDDIR)/graphics.d: src/graphics.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/graphics.d
 
 $(C_BUILDDIR)/battle_factory_screen.o: src/battle_factory_screen.c
 	@mkdir -p $(dir $@)

@@ -1820,26 +1820,26 @@ MESSAGE_BOX_PAL const u16 gMessageBox_Pal[] =
 // order while keeping the US graphics.c ownership and symbol names.
 #define TILESET_GENERAL_DATA __attribute__((section(".rodata.tileset_general_data"), aligned(1)))
 
-TILESET_GENERAL_DATA const u32 gTilesetTiles_General[] = INCBIN_U32("data/tilesets/primary/general/tiles.4bpp.lz");
+TILESET_GENERAL_DATA const u32 gTilesetTiles_General[] = INCGFX_U32("data/tilesets/primary/general/tiles.png", ".4bpp.lz");
 
 TILESET_GENERAL_DATA const u16 gTilesetPalettes_General[][16] =
 {
-    INCBIN_U16("data/tilesets/primary/general/palettes/00.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/01.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/02.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/03.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/04.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/05.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/06.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/07.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/08.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/09.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/10.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/11.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/12.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/13.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/14.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general/palettes/15.gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/00.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/01.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/02.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/03.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/04.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/05.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/06.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/07.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/08.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/09.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/10.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/11.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/12.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/13.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/14.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general/palettes/15.pal", ".gbapal"),
 };
 
 #undef TILESET_GENERAL_DATA
@@ -1866,7 +1866,7 @@ USE_POKEBLOCK_UPDOWN_GRAPHICS const u16 gUsePokeblockUpDown_Pal[] = INCGFX_U16("
 USE_POKEBLOCK_UPDOWN_GRAPHICS const u8 gUsePokeblockUpDown_Gfx[] = INCGFX_U8("graphics/pokeblock/use_screen/updown.png", ".4bpp");
 
 USE_POKEBLOCK_GRAPH_PALETTE const u16 gUsePokeblockGraph_Pal[] = INCGFX_U16("graphics/pokeblock/use_screen/graph.png", ".gbapal");
-USE_POKEBLOCK_GRAPH_GRAPHICS const u32 gUsePokeblockGraph_Gfx[] = INCGFX_U32("graphics/pokeblock/use_screen/graph.png", ".4bpp.lz");
+USE_POKEBLOCK_GRAPH_GRAPHICS const u32 gUsePokeblockGraph_Gfx[] = INCGFX_U32("graphics/pokeblock/use_screen/graph.png", ".4bpp.lz", "-num_tiles 125");
 USE_POKEBLOCK_GRAPH_GRAPHICS const u32 gUsePokeblockGraph_Tilemap[] = INCGFX_U32("graphics/pokeblock/use_screen/graph.bin", ".lz");
 // JP uses an 11-column tilemap patch; the US owner retains this palette name.
 USE_POKEBLOCK_NATURE_WINDOW const u16 gUsePokeblockNatureWin_Pal[] = INCGFX_U16("graphics/pokeblock/use_screen/nature.pal", ".gbapal");

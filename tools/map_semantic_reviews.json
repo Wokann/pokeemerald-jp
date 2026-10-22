@@ -2543,9 +2543,13 @@
             "-include $(C_BUILDDIR)/tilesets.d",
             "$(C_BUILDDIR)/tilesets.o:",
             "$(C_BUILDDIR)/%.o:",
-            "JP_TILESET_GFX_ROOT :="
+            "JP_TILESET_GFX_ROOT :=",
+            "JP_GRAPHICS_GFX_ROOT :=",
+            "$(C_BUILDDIR)/graphics.d:",
+            "-include $(C_BUILDDIR)/graphics.d",
+            "$(C_BUILDDIR)/graphics.o:"
           ],
-          "sha256": "f7f2c71a2c0ac71bef2342ac5f57f9ee67dd005bbe8b2ba4754ae95900c65910"
+          "sha256": "ea41a36d2427cc49bcb471537359fbdf70756a80c747aff13624f906f23911d3"
         },
         {
           "path": "ld_script_jp.txt",
@@ -2675,7 +2679,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "4f4dda83e7c5774a30c93be213107514e5b9d3a9099a5f61aa88ee199f1f5189"
+          "sha256": "36bca54c6a9818d0a39fdf0b1f9b20b9bcecafb5ff7d22115d05cfd6259b0161"
         },
         {
           "path": "src/tilesets.c",
@@ -9691,6 +9695,91 @@
           "path": "data/tilesets/secondary/unused_2/tiles.png",
           "selector": "file",
           "sha256": "3116f45153fc4f1a72a44a6e847cdb3a4f084b317f4a63400601d9851bafe3d8"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/00.pal",
+          "selector": "file",
+          "sha256": "424a32d1079a61b6b9b4f1e879dd68108708905e8312d18edd134af3918407fd"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/01.pal",
+          "selector": "file",
+          "sha256": "9b9d01878137cef9ea6006c3025a3ada5cdf37d9c251b25bc95f71963bd9a447"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/02.pal",
+          "selector": "file",
+          "sha256": "8a469b137e6fc97823ab46b903c0ab80c466212cd430340586ccde22afbee949"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/03.pal",
+          "selector": "file",
+          "sha256": "821f0a62f0ce995c96e9eaa0b4a32a1cd61e4db1f3216bfbe1fd588cf33b7583"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/04.pal",
+          "selector": "file",
+          "sha256": "f99602126046eed3f20545a34ddd46fa6e5fcb96f032b410fa8d5251c7450e22"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/05.pal",
+          "selector": "file",
+          "sha256": "53b599be1554c4e1a0684f2339409ee4032ac8507696dae1836a10152f925177"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/06.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/07.pal",
+          "selector": "file",
+          "sha256": "75869eaa61747c23984c7f76735cfa77e3950d663ad9cc9dc6ad751210442bd0"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/08.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/09.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/10.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/11.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/12.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/13.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/14.pal",
+          "selector": "file",
+          "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+        },
+        {
+          "path": "data/tilesets/primary/general/palettes/15.pal",
+          "selector": "file",
+          "sha256": "64b87ff3eb44caada2f27f7b1e3195db1935f86460ec78e4bc3b3cffcb0e3251"
+        },
+        {
+          "path": "data/tilesets/primary/general/tiles.png",
+          "selector": "file",
+          "sha256": "2ed2473bb500180f6f0ebd790cb31db45f7eec1a07ebaf85066db5ba81d6cfb5"
         }
       ],
       "native_spans": [
@@ -10299,7 +10388,8 @@
         "Static source/native review only, not an emulator or gameplay test.",
         "Does not approve surface maps, the entire Abandoned Ship storyline, global abnormal-weather state writers or unrelated shared owners.",
         "The previously recorded initializer misnaming is resolved: InitTilesetAnim_Underwater is at 080A07BC and InitTilesetAnim_EliteFour at 080A0830. All 75 headers and two auxiliary pointers retain their actual JP bytes. The complete base tileset graphics/metatiles/header stream now belongs to src/tilesets.c and the matching three src/data/tilesets headers. All 1260 PNG/PAL sources and 140 structured metatile inputs, C include closure, native generation rules and link order are fingerprinted; the obsolete assembly owners are retired. The 296 resource objects, including six unused compressed objects and both previously hidden Unknown arrays, were independently byte-verified. These source bindings preserve the original 14-map static decisions; they do not approve all shared animation resources, renderer internals, runtime gameplay or additional maps.",
-        "US supplies immutable semantic names/structure; JP ROM alone supplies the physical addresses, lengths, text encoding and localization controls."
+        "US supplies immutable semantic names/structure; JP ROM alone supplies the physical addresses, lengths, text encoding and localization controls.",
+        "The separate primary General graphics owner remains in src/graphics.c, retaining its JP tiles-before-palettes order and aligned(1) section. Its complete 9428-byte native span [0830FD54,08312228) is now regenerated from one JP PNG and all sixteen JASC-PAL files. JP tile indices 329 and 330 differ from the pinned US PNG; the native JP pixels, 8916-byte compressed stream (including three padding bytes), and all 256 palette words were independently roundtripped. The whole graphics.o remains byte-identical, including the existing 125-tile Pokeblock graph profile made explicit for the build-local scaninc cache. These source bindings do not extend the existing 14-map static decisions to runtime rendering or additional maps."
       ]
     }
   ]
