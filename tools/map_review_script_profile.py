@@ -32,7 +32,9 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'set_visible', 'walk_faster_up', 'walk_in_place_slow_left',
                            'walk_in_place_slow_right', 'walk_slow_left', 'walk_slow_diag_northeast',
                            'walk_slow_diag_southwest', 'walk_left_affine', 'init_affine_anim',
-                           'clear_affine_anim', 'levitate', 'destroy_extra_task'}
+                           'clear_affine_anim', 'levitate', 'destroy_extra_task',
+                           'walk_fast_left', 'jump_right', 'jump_in_place_right',
+                           'disable_jump_landing_ground_effect'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -50,7 +52,7 @@ FIXED_V4 = FIXED | {'setobjectmovementtype': (4, 2), 'getplayerxy': (5, 2),
                    'setmetatile': (9, 4), 'dotimebasedevents': (1, 0), 'random': (3, 1),
                    'setfieldeffectargument': (4, 2), 'dofieldeffect': (3, 1), 'waitfieldeffect': (3, 1),
                    'setweather': (3, 1), 'doweather': (1, 0), 'fadenewbgm': (3, 1),
-                   'fadescreenspeed': (3, 2), 'turnobject': (4, 2)}
+                   'fadescreenspeed': (3, 2), 'turnobject': (4, 2), 'hideplayer': (5, 0)}
 
 
 @dataclass
