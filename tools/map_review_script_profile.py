@@ -38,7 +38,7 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'disable_jump_landing_ground_effect', 'walk_faster_left', 'walk_fast_down',
                            'walk_in_place_fast_left', 'walk_in_place_fast_right', 'jump_2_down', 'cut_tree',
                            'walk_faster_down', 'lock_anim', 'walk_in_place_left', 'walk_in_place_up',
-                           'rock_smash_break', 'walk_in_place_right'}
+                           'rock_smash_break', 'walk_in_place_right', 'walk_slow_up'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -206,12 +206,14 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_warp')
         elif (op in ('call', 'goto', 'call_if_eq', 'goto_if_eq', 'case')
               or version == 4 and op in ('goto_if_ge', 'goto_if_le', 'goto_if_ne', 'goto_if_lt',
-                                         'goto_if_gt', 'call_if_ne')):
+                                         'goto_if_gt', 'call_if_ne', 'call_if_ge')):
             count = 2 if op == 'case' else 3 if '_if_' in op else 1
             if len(args) != count:
                 raise ValueError('unsupported_profile_arguments:' + op)
             if count == 3 and not re.fullmatch(r'VAR_\w+', args[0]):
                 raise ValueError('unsupported_profile_compare')
+            if op == 'call_if_ge' and args[-1] == 'NULL':
+                raise ValueError('unsupported_profile_null_call')
             size = 11 if count in (2, 3) else 5
             target(args[-1], 'script')
         elif version == 4 and op in ('goto_if_set', 'goto_if_unset', 'call_if_set', 'call_if_unset'):
