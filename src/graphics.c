@@ -3,6 +3,13 @@
 #include "string_util.h"
 #include "constants/comparison_operators.h"
 
+#define POKEDEX_AREA_UNKNOWN_GRAPHICS __attribute__((section(".rodata.pokedex_area_unknown_graphics"), aligned(4)))
+
+POKEDEX_AREA_UNKNOWN_GRAPHICS const u16 gPokedexAreaScreenAreaUnknown_Pal[] = INCGFX_U16("graphics/pokedex/area_unknown.png", ".gbapal");
+POKEDEX_AREA_UNKNOWN_GRAPHICS const u32 gPokedexAreaScreenAreaUnknown_Gfx[] = INCGFX_U32("graphics/pokedex/area_unknown.png", ".4bpp.lz");
+
+#undef POKEDEX_AREA_UNKNOWN_GRAPHICS
+
 #define BATTLE_TEXTBOX_GRAPHICS __attribute__((section(".rodata.battle_textbox"), aligned(4)))
 
 BATTLE_TEXTBOX_GRAPHICS const u32 gBattleTextboxTiles[] = INCGFX_U32("graphics/battle_interface/textbox.png", ".4bpp.lz");

@@ -76,7 +76,7 @@ class BattleRecordsDataTests(unittest.TestCase):
         expected = ('src/battle_records.o(.rodata.battle_records_data)',
                     'src/strings.o(.rodata.strings_battle_records)',
                     'src/battle_records.o(.rodata.battle_records_text)',
-                    'data/graphics/pokedex_area_screen.o(.rodata.pokedex_area_screen_graphics_prefix)')
+                    'src/pokedex_area_screen.o(.rodata.pokedex_area_screen_graphics_prefix)')
         positions = []
         for owner in expected:
             self.assertEqual(linker.count(owner), 1)

@@ -10108,9 +10108,10 @@ SECTIONS {
         src/battle_records.o(.rodata.battle_records_data);
         src/strings.o(.rodata.strings_battle_records);
         src/battle_records.o(.rodata.battle_records_text);
-        data/graphics/pokedex_area_screen.o(.rodata.pokedex_area_screen_graphics_prefix);
+        src/pokedex_area_screen.o(.rodata.pokedex_area_screen_graphics_prefix);
         src/pokedex_area_screen.o(.rodata.pokedex_area_screen_data);
-        data/graphics/pokedex_area_screen.o(.rodata.pokedex_area_screen_graphics_suffix);
+        src/pokedex_area_screen.o(.rodata.pokedex_area_screen_graphics_suffix);
+        src/graphics.o(.rodata.pokedex_area_unknown_graphics);
         src/evolution_scene.o(.rodata.evolution_scene_graphics);
         src/strings.o(.rodata.strings_evolution_communication);
         src/evolution_scene.o(.rodata.evolution_scene_palette_tables);

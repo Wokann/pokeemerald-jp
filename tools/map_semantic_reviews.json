@@ -2551,9 +2551,12 @@
             "JP_BATTLE_TEXTBOX_PALETTE :=",
             "JP_BATTLE_TEXTBOX_PALETTE_BANKS :=",
             "$(JP_BATTLE_TEXTBOX_PALETTE_BANKS):",
-            "$(JP_BATTLE_TEXTBOX_PALETTE):"
+            "$(JP_BATTLE_TEXTBOX_PALETTE):",
+            "$(C_BUILDDIR)/pokedex_area_screen.d:",
+            "-include $(C_BUILDDIR)/pokedex_area_screen.d",
+            "$(C_BUILDDIR)/pokedex_area_screen.o:"
           ],
-          "sha256": "d4673dd060a6f219af13a78504d6e7514d205bbda6f40d459779d2238b0718bf"
+          "sha256": "414ce673c582bcd026ec12d50ad2a430cf12e70ff1bfdc8789989b9f66a22f90"
         },
         {
           "path": "ld_script_jp.txt",
@@ -2673,7 +2676,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "4c62fe01a4cdadf281daf99b1706884c2d4968b7157d82ba066e1501a7d15b70"
+          "sha256": "a166277c6a799fbfbbdd45eb55baaa842981063f3de01649fc303c4b45baaf51"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -2683,7 +2686,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "03b7f2044a9b92c27528e0c8deed851657852dcc5b505527f70106c4b1eda3df"
+          "sha256": "dd3f34e07f55fc529f5eca25d5d5f7adc786a8d2c96c8809de0cfcf70a92a084"
         },
         {
           "path": "src/tilesets.c",
@@ -9804,6 +9807,131 @@
           "path": "graphics/battle_interface/textbox_map.bin",
           "selector": "file",
           "sha256": "70fe79456f6a52cbd26202d60e15fa55637d4e7a2bc77a31482238ece02974a5"
+        },
+        {
+          "path": "graphics/pokedex/area_glow.png",
+          "selector": "file",
+          "sha256": "20eed714cceed3ca35507d572f69e5abf77a3f202afd12fd7d0f3a02d35b9b2f"
+        },
+        {
+          "path": "graphics/pokedex/area_marker.png",
+          "selector": "file",
+          "sha256": "ece8a361e42b96c76bee9dc1fb75f01c9fe576f3fd9e154ec50b5d0bd01265e8"
+        },
+        {
+          "path": "graphics/pokedex/area_unknown.png",
+          "selector": "file",
+          "sha256": "8fccc01d7040576ff007b5ebba4f7d3cbf8f8467be020e71dcf231165fc553ca"
+        },
+        {
+          "path": "include/bg.h",
+          "selector": "file",
+          "sha256": "114b79d3a0fdd120275eb3659c0ad6a285c6aae451e02ea4bc0937285078c338"
+        },
+        {
+          "path": "include/constants/region_map_sections.h",
+          "selector": "file",
+          "sha256": "72425e16f3e48f444b320a9aa778d027871fa3f2041c25a785b2f0edbf02d57e"
+        },
+        {
+          "path": "include/constants/rgb.h",
+          "selector": "file",
+          "sha256": "e4b500db58dceafbd1eaa196fad0670f485ab2283a49ab5a295e94535d0833eb"
+        },
+        {
+          "path": "include/constants/wild_encounter.h",
+          "selector": "file",
+          "sha256": "9c90d1f5684129761ffd03ab7e548d899eeac4d5837891c9e8caa49898b13fd3"
+        },
+        {
+          "path": "include/event_data.h",
+          "selector": "file",
+          "sha256": "7ad2f6b0e079b05dadc0ae6a9628818989fe88813c30c0f17fbdab22406eac5e"
+        },
+        {
+          "path": "include/gpu_regs.h",
+          "selector": "file",
+          "sha256": "a4eca1bafe66ddc4e22162e7735acbd729ff6f86ce91dda9002f94a414531fa4"
+        },
+        {
+          "path": "include/graphics.h",
+          "selector": "file",
+          "sha256": "fd937545aa451442cfbb9141988400b35629a4268961de7e5187cd9529d0ca7e"
+        },
+        {
+          "path": "include/main.h",
+          "selector": "file",
+          "sha256": "84e94a71c2216295e66d7f4b1f14127bc676f03956a20f087a5dc3703ef065a1"
+        },
+        {
+          "path": "include/malloc.h",
+          "selector": "file",
+          "sha256": "50353db3ec3390197085a3e278ac974f2047cc8905ecda6e7523a1ba74f20639"
+        },
+        {
+          "path": "include/menu.h",
+          "selector": "file",
+          "sha256": "ee6ba3e75e566124d43163c602517df99b9494ce29ec060fd88157c6dd6a48ab"
+        },
+        {
+          "path": "include/overworld.h",
+          "selector": "file",
+          "sha256": "7b01c55f9d7370b79481e3148c76d62660266cab7f2c9145c7689e91cc39e92a"
+        },
+        {
+          "path": "include/palette.h",
+          "selector": "file",
+          "sha256": "68d848e53bb883826fd84f35fbd657ff9ba31c9a0ec481dc6e903d6d1f875fdc"
+        },
+        {
+          "path": "include/pokedex_area_region_map.h",
+          "selector": "file",
+          "sha256": "d4a2133641a1666c4035692e7377dce17e26ab24e7aa2f48944ea7c943f56c4d"
+        },
+        {
+          "path": "include/pokedex_area_screen.h",
+          "selector": "file",
+          "sha256": "726d56293acccd7954217f03a3a4d129d51063ea6b913a0eab97be182fb5b789"
+        },
+        {
+          "path": "include/region_map.h",
+          "selector": "file",
+          "sha256": "52239bd811a39f26a3467429ef91e17ad5d1b8e7dbe79f3700b25388da4643c8"
+        },
+        {
+          "path": "include/roamer.h",
+          "selector": "file",
+          "sha256": "c8e26d3b345ab2198f492e00cf7af84848d2a45c73fccc484284981001d60fce"
+        },
+        {
+          "path": "include/sound.h",
+          "selector": "file",
+          "sha256": "b990791aa7de43f001e992c8ddc29291923c3d4195e80be91f32e1fcd39bb224"
+        },
+        {
+          "path": "include/task.h",
+          "selector": "file",
+          "sha256": "ffa5c17d23b35ec324ad3986bc5f3bfc14f51b51617782a7f6f4cf56d28f3a7a"
+        },
+        {
+          "path": "include/text.h",
+          "selector": "file",
+          "sha256": "0b46cc0256a85ce2e252bf61ea9a44206225cf10d3ed8797b11e4ccff4cfacd9"
+        },
+        {
+          "path": "include/trig.h",
+          "selector": "file",
+          "sha256": "9366b15ef6b27908abc0a1a2a07b0cfe75689902f2b0eef95787b9f59db5406f"
+        },
+        {
+          "path": "include/wild_encounter.h",
+          "selector": "file",
+          "sha256": "a5254955b1b135337ba319da1c8e878c06eb26cfe89b53a412feb2289a9e5fcd"
+        },
+        {
+          "path": "include/window.h",
+          "selector": "file",
+          "sha256": "aca03d9cbab335c2d52b46cf35fd763285e75bc0c4758a931525476841f72a3c"
         }
       ],
       "native_spans": [
@@ -10413,8 +10541,9 @@
         "Does not approve surface maps, the entire Abandoned Ship storyline, global abnormal-weather state writers or unrelated shared owners.",
         "The previously recorded initializer misnaming is resolved: InitTilesetAnim_Underwater is at 080A07BC and InitTilesetAnim_EliteFour at 080A0830. All 75 headers and two auxiliary pointers retain their actual JP bytes. The complete base tileset graphics/metatiles/header stream now belongs to src/tilesets.c and the matching three src/data/tilesets headers. All 1260 PNG/PAL sources and 140 structured metatile inputs, C include closure, native generation rules and link order are fingerprinted; the obsolete assembly owners are retired. The 296 resource objects, including six unused compressed objects and both previously hidden Unknown arrays, were independently byte-verified. These source bindings preserve the original 14-map static decisions; they do not approve all shared animation resources, renderer internals, runtime gameplay or additional maps.",
         "US supplies immutable semantic names/structure; JP ROM alone supplies the physical addresses, lengths, text encoding and localization controls.",
-        "The separate primary General graphics owner remains in src/graphics.c, retaining its JP tiles-before-palettes order and aligned(1) section. Its complete 9428-byte native span [0830FD54,08312228) is now regenerated from one JP PNG and all sixteen JASC-PAL files. JP tile indices 329 and 330 differ from the pinned US PNG; the native JP pixels, 8916-byte compressed stream (including three padding bytes), and all 256 palette words were independently roundtripped. The whole graphics.o remains byte-identical, including the existing 125-tile Pokeblock graph profile made explicit for the build-local scaninc cache. These source bindings do not extend the existing 14-map static decisions to runtime rendering or additional maps.",
-        "The shared graphics.c source now also owns the complete three-object Battle Textbox data at [08C00000,08C00758), with all 1880 compressed bytes preserved. Its JP PNG, two sixteen-color PAL banks, structured 2048-halfword tilemap, palette aggregate rule and existing fixed link slot are fingerprinted. Twelve JP tiles and the JP tilemap differ from the pinned US assets. Five existing 08C00000 consumer constants are retained as JP instruction-generation exceptions; their source and native function bytes are unchanged. This owner migration does not approve battle/egg/trade runtime behavior, decompile functions or expand the existing fourteen static map decisions."
+        "The separate primary General graphics owner remains in src/graphics.c, retaining its JP tiles-before-palettes order and aligned(1) section. Its complete 9428-byte native span [0830FD54,08312228) is now regenerated from one JP PNG and all sixteen JASC-PAL files. JP tile indices 329 and 330 differ from the pinned US PNG; the native JP pixels, 8916-byte compressed stream (including three padding bytes), and all 256 palette words were independently roundtripped. The General-only source migration at b3640ef9 preserved the whole graphics.o byte-for-byte, including the existing 125-tile Pokeblock graph profile made explicit for the build-local scaninc cache. These source bindings do not extend the existing 14-map static decisions to runtime rendering or additional maps.",
+        "The shared graphics.c source now also owns the complete three-object Battle Textbox data at [08C00000,08C00758), with all 1880 compressed bytes preserved. Its JP PNG, two sixteen-color PAL banks, structured 2048-halfword tilemap, palette aggregate rule and existing fixed link slot are fingerprinted. Twelve JP tiles and the JP tilemap differ from the pinned US assets. Five existing 08C00000 consumer constants are retained as JP instruction-generation exceptions; their source and native function bytes are unchanged. This owner migration does not approve battle/egg/trade runtime behavior, decompile functions or expand the existing fourteen static map decisions.",
+        "The shared graphics.c source now also owns only the two global Area Unknown resources; eleven local Pokédex Area Screen resources/records belong to src/pokedex_area_screen.c. Their 1072 bytes plus the existing five C tables (52 bytes) retain the exact interleaved [0859381C,08593C80) span. Three PNG sources regenerate all six native graphics/palette payloads; eighteen JP Area Unknown tiles differ from the pinned US image. Seven typed sprite records use actual OAM, dummy animation and Thumb callback pointers. All twenty-one module functions retain their code and sizes. These source bindings do not add static map decisions or approve Pokédex runtime behavior."
       ]
     }
   ]

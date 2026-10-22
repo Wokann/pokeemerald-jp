@@ -20,14 +20,19 @@ class EvolutionSceneAssetTests(unittest.TestCase):
         for path in ('data/data_b2d_mid32.s', 'data/graphics/evolution_scene.s', 'data/text/trade.inc'):
             self.assertFalse((ROOT / path).exists())
         linker = (ROOT / 'ld_script_jp.txt').read_text()
-        owners = ['data/graphics/pokedex_area_screen.o(.rodata.pokedex_area_screen_graphics_suffix)',
+        owners = ['src/pokedex_area_screen.o(.rodata.pokedex_area_screen_graphics_suffix)',
+                  'src/graphics.o(.rodata.pokedex_area_unknown_graphics)',
                   'src/evolution_scene.o(.rodata.evolution_scene_graphics)',
                   'src/strings.o(.rodata.strings_evolution_communication)',
                   'src/evolution_scene.o(.rodata.evolution_scene_palette_tables)']
         self.assertEqual([linker.index(p) for p in owners], sorted(linker.index(p) for p in owners))
         self.assertNotIn('data/data_b2d_mid32.o(', linker)
         self.assertNotIn('data/graphics/evolution_scene.o(', linker)
-        self.assertIn('.incbin "baserom_jp.gba", 0x593abc, 0x1c4', (ROOT / 'data/graphics/pokedex_area_screen.s').read_text())
+        self.assertFalse((ROOT / 'data/graphics/pokedex_area_screen.s').exists())
+        self.assertNotIn('data/graphics/pokedex_area_screen.o(', linker)
+        self.assertIn('POKEDEX_AREA_UNKNOWN_GRAPHICS const u32 gPokedexAreaScreenAreaUnknown_Gfx[] = '
+                      'INCGFX_U32("graphics/pokedex/area_unknown.png", ".4bpp.lz");',
+                      (ROOT / 'src/graphics.c').read_text())
 
     @unittest.skipUnless(PREPROC.is_file() and (ROOT / 'baserom_jp.gba').is_file(), 'requires preproc and JP ROM')
     def test_jp_controls_eos_leading_spaces_and_slot_padding(self):

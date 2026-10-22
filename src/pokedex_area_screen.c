@@ -13,6 +13,7 @@
 #include "region_map.h"
 #include "roamer.h"
 #include "sound.h"
+#include "sprite.h"
 #include "string_util.h"
 #include "task.h"
 #include "trig.h"
@@ -88,18 +89,17 @@ struct PokedexAreaScreen
 
 extern struct PokedexAreaScreen *gUnknown_203A848;
 extern u32 gUnknown_20374F4[];
-extern const u32 sAreaGlow_Pal[];
-extern const u32 sAreaGlow_Gfx[];
-extern const struct SpriteSheet sAreaMarkerSpriteSheet;
-extern const struct SpritePalette sAreaMarkerSpritePalette;
-extern const struct SpriteTemplate sAreaMarkerSpriteTemplate;
-extern const struct SpritePalette sAreaUnknownSpritePalette;
-extern const struct SpriteTemplate sAreaUnknownSpriteTemplate;
 extern s16 gUnknown_30011FC;
 extern s16 gUnknown_30011FE;
 extern s16 gUnknown_3001200;
 extern s16 gUnknown_3001202;
 extern s16 gUnknown_3001204;
+
+#define POKEDEX_AREA_SCREEN_GRAPHICS_PREFIX __attribute__((section(".rodata.pokedex_area_screen_graphics_prefix"), aligned(4)))
+#define POKEDEX_AREA_SCREEN_GRAPHICS_SUFFIX __attribute__((section(".rodata.pokedex_area_screen_graphics_suffix"), aligned(4)))
+
+static const u32 sAreaGlow_Pal[] POKEDEX_AREA_SCREEN_GRAPHICS_PREFIX = INCGFX_U32("graphics/pokedex/area_glow.png", ".gbapal");
+static const u32 sAreaGlow_Gfx[] POKEDEX_AREA_SCREEN_GRAPHICS_PREFIX = INCGFX_U32("graphics/pokedex/area_glow.png", ".4bpp.lz");
 
 static const u16 sSpeciesHiddenFromAreaScreen[] POKEDEX_AREA_SCREEN_DATA =
 {
@@ -137,6 +137,65 @@ static const struct PokedexAreaMapTemplate sPokedexAreaMapTemplate POKEDEX_AREA_
     .mode = 0,
     .unk = 2,
 };
+
+static const u8 sAreaMarkerTiles[];
+static const struct SpriteSheet sAreaMarkerSpriteSheet POKEDEX_AREA_SCREEN_GRAPHICS_SUFFIX =
+{
+    .data = sAreaMarkerTiles, .size = 0x80, .tag = TAG_AREA_MARKER
+};
+
+static const u16 sAreaMarkerPalette[];
+static const struct SpritePalette sAreaMarkerSpritePalette POKEDEX_AREA_SCREEN_GRAPHICS_SUFFIX =
+{
+    .data = sAreaMarkerPalette, .tag = TAG_AREA_MARKER
+};
+
+static const struct OamData sAreaMarkerOamData POKEDEX_AREA_SCREEN_GRAPHICS_SUFFIX =
+{
+    .shape = SPRITE_SHAPE(16x16),
+    .size = SPRITE_SIZE(16x16),
+    .priority = 1
+};
+
+static const struct SpriteTemplate sAreaMarkerSpriteTemplate POKEDEX_AREA_SCREEN_GRAPHICS_SUFFIX =
+{
+    .tileTag = TAG_AREA_MARKER,
+    .paletteTag = TAG_AREA_MARKER,
+    .oam = &sAreaMarkerOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+static const u16 sAreaMarkerPalette[] POKEDEX_AREA_SCREEN_GRAPHICS_SUFFIX = INCGFX_U16("graphics/pokedex/area_marker.png", ".gbapal");
+static const u8 sAreaMarkerTiles[] POKEDEX_AREA_SCREEN_GRAPHICS_SUFFIX = INCGFX_U8("graphics/pokedex/area_marker.png", ".4bpp");
+
+static const struct SpritePalette sAreaUnknownSpritePalette POKEDEX_AREA_SCREEN_GRAPHICS_SUFFIX =
+{
+    .data = gPokedexAreaScreenAreaUnknown_Pal, .tag = TAG_AREA_UNKNOWN
+};
+
+static const struct OamData sAreaUnknownOamData POKEDEX_AREA_SCREEN_GRAPHICS_SUFFIX =
+{
+    .shape = SPRITE_SHAPE(32x32),
+    .size = SPRITE_SIZE(32x32),
+    .priority = 1
+};
+
+static const struct SpriteTemplate sAreaUnknownSpriteTemplate POKEDEX_AREA_SCREEN_GRAPHICS_SUFFIX =
+{
+    .tileTag = TAG_AREA_UNKNOWN,
+    .paletteTag = TAG_AREA_UNKNOWN,
+    .oam = &sAreaUnknownOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+#undef POKEDEX_AREA_SCREEN_GRAPHICS_PREFIX
+#undef POKEDEX_AREA_SCREEN_GRAPHICS_SUFFIX
 
 bool8 DrawAreaGlow(void);
 void FindMapsWithMon(u16 species);

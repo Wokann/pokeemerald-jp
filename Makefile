@@ -1234,7 +1234,6 @@ DATA_OBJS += $(OBJ_DIR)/data/battle_transition_regis_resources.o
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_legendary_resources.o
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_frontier_resources.o
 DATA_OBJS += $(OBJ_DIR)/data/battle_transition_pre_regi_resources.o
-DATA_OBJS += $(OBJ_DIR)/data/graphics/pokedex_area_screen.o
 
 OBJFILE := $(AS_OBJS) $(C_ASM_OBJS) $(C_OBJECTS) $(SONG_OBJS) $(DATA_OBJS)
 OBJFILE_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJFILE))
@@ -2910,12 +2909,6 @@ $(OBJ_DIR)/data/metatile_behavior.o: data/metatile_behavior.s baserom_jp.gba
 $(OBJ_DIR)/data/field_door.o: data/field_door.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
-
-
-$(OBJ_DIR)/data/graphics/pokedex_area_screen.o: data/graphics/pokedex_area_screen.s baserom_jp.gba
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
-
 
 
 $(OBJ_DIR)/data/battle_transition_regis_resources.o: data/battle_transition_regis_resources.s graphics/battle_transitions/regis.4bpp graphics/battle_transitions/regice.gbapal graphics/battle_transitions/registeel.gbapal graphics/battle_transitions/regirock.gbapal graphics/battle_transitions/regice.bin graphics/battle_transitions/registeel.bin graphics/battle_transitions/regirock.bin graphics/battle_transitions/unused.gbapal
@@ -6442,6 +6435,18 @@ $(C_BUILDDIR)/field_special_scene.d: src/field_special_scene.c Makefile | tools
 $(C_BUILDDIR)/field_special_scene.o: src/field_special_scene.c Makefile
 
 JP_TILESET_GFX_ROOT := $(OBJ_DIR)/incgfx/
+
+$(C_BUILDDIR)/pokedex_area_screen.d: src/pokedex_area_screen.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/pokedex_area_screen.d
+
+$(C_BUILDDIR)/pokedex_area_screen.o: src/pokedex_area_screen.c Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokedex_area_screen.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokedex_area_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/pokedex_area_screen.gen.s
 
 # Match the US two-bank textbox palette source chain. Only the aggregate
 # keeps its canonical source pathname; encoded banks live in the build cache.
