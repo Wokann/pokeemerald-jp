@@ -15587,14 +15587,10 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
 })
 
 MAP_MOVEMENT_SCRIPT_LABELS.update({
-    # Route101 retains four unreferenced movement records between the Birch
-    # rescue scene and its local NPC scripts.  JP ROM bytes and boundaries are
-    # 0x081E65B8 (FE), 0x081E65EA (FE), 0x081E65F0 (09 09 FE), and
-    # 0x081E65F3 (09 0A 09 FE); expose them so the generator does not hide
-    # byte-exact data behind raw spans.
+    # Keep the two unused movement streams, as in the US source. The two
+    # extra terminators belong to the preceding source blocks, not JP-only
+    # records; their exact physical padding is accounted for separately.
     'Route101': {
-        0x081E65B8: 'Route101_Movement_UnusedStepEnd1',
-        0x081E65EA: 'Route101_Movement_UnusedStepEnd2',
         0x081E65F0: 'Route101_Movement_Unused1',
         0x081E65F3: 'Route101_Movement_Unused2',
     },
@@ -15848,6 +15844,8 @@ def build_movement_action_names():
     return names
 
 
+MAP_MOVEMENT_TERMINATOR_PADDING = {'Route101': {0x081E65B8, 0x081E65EA}}
+
 MOVEMENT_ACTION_NAMES = build_movement_action_names()
 if MOVEMENT_ACTION_NAMES.get(0xFE) != 'step_end':
     raise RuntimeError('movement macro table does not define step_end as 0xFE')
@@ -15867,6 +15865,27 @@ def decode_movement_script(addr, region_end):
         if action == 0xFE:
             return actions, pos
     return None
+
+
+def decode_map_movements(mname, movement_labels, region_end):
+    """Keep proved trailing terminators in their existing source owner."""
+    movements = {}
+    remaining_padding = set(MAP_MOVEMENT_TERMINATOR_PADDING.get(mname, ()))
+    for addr, label in movement_labels.items():
+        decoded = decode_movement_script(addr, region_end)
+        if decoded is None:
+            raise RuntimeError('cannot prove movement script %s at 0x%08X' % (label, addr))
+        actions, end = decoded
+        if end in remaining_padding:
+            if end >= region_end or end in movement_labels or ROM[end - 0x08000000] != 0xFE:
+                raise RuntimeError('unproved trailing movement terminator in %s' % mname)
+            remaining_padding.remove(end)
+            actions.append('step_end')
+            end += 1
+        movements[addr] = (label, actions, end)
+    if remaining_padding:
+        raise RuntimeError('unaccounted movement terminator padding in %s' % mname)
+    return movements
 
 
 def referenced_movement_addresses(scripts, region_start, region_end):
@@ -17319,14 +17338,7 @@ def _emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             | auto_movement_targets
         )
     }
-    movements = {}
-    for addr, label in movement_labels.items():
-        decoded = decode_movement_script(addr, region_end)
-        if decoded is None:
-            raise RuntimeError(
-                'cannot prove movement script %s at 0x%08X' % (label, addr))
-        actions, end = decoded
-        movements[addr] = (label, actions, end)
+    movements = decode_map_movements(mname, movement_labels, region_end)
     interior_movement_labels = {}
     for base, labels in MAP_MOVEMENT_INTERIOR_LABELS.get(mname, {}).items():
         if base not in movements:

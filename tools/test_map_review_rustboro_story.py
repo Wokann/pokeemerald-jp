@@ -31,7 +31,7 @@ class RustboroStoryProfileTests(unittest.TestCase):
                      'call_if_unset VAR_RESULT, RivalMusic',
                      'call_if_unset FLAG_MET_RIVAL_RUSTBORO, 0x08123456',
                      'walk_fast_right 2\nstep_end', 'walk_fast_up\nend',
-                     'walk_faster_right\nstep_end\nstep_end'):
+                     'walk_faster_right\nstep_end\nstep_end\nstep_end'):
             with self.assertRaises(ValueError):
                 profile.profile_block(ROOT, 'Owner::\n' + body, {}, version=4, address=0x081DE6F6)
 

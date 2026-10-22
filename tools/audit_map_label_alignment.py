@@ -11,6 +11,10 @@ import argparse
 import json
 import re
 from pathlib import Path
+try:
+    from audit_us_reference import us_reference
+except ModuleNotFoundError:
+    from tools.audit_us_reference import us_reference
 
 
 JP_ROOT = Path(__file__).resolve().parents[1]
@@ -23,11 +27,6 @@ KNOWN_DIFFERENCES = {
         "jp_only": {"FallarborTown_BattleTentBattleRoom_EventScript_UnreachableWaitstate"},
         "us_only": set(),
         "reason": "JP has an extra unreachable waitstate byte at 0x081F5B73.",
-    },
-    "Route101": {
-        "jp_only": {"Route101_Movement_UnusedStepEnd1", "Route101_Movement_UnusedStepEnd2"},
-        "us_only": set(),
-        "reason": "JP names the two extra step_end bytes that US leaves inside preceding movements.",
     },
     "SlateportCity_OceanicMuseum_2F": {
         "jp_only": {"SlateportCity_OceanicMuseum_2F_Text_SubmersibleReplica"},
@@ -89,7 +88,7 @@ def compare_lists(name: str, jp: list[str], us: list[str], known=None) -> dict:
     }
 
 
-def report(jp_root: Path, us_root: Path, known=None) -> dict:
+def _source_report(jp_root: Path, us_root: Path, known=None) -> dict:
     jp_maps = jp_root / "data/maps"
     us_maps = us_root / "data/maps"
     jp_names = {path.parent.name for path in jp_maps.glob("*/scripts.inc")}
@@ -114,13 +113,21 @@ def report(jp_root: Path, us_root: Path, known=None) -> dict:
     }
 
 
+def report(jp_root: Path, us_root: Path, known=None, *, us_ref='HEAD') -> dict:
+    with us_reference(jp_root, us_root, us_ref) as (snapshot, metadata):
+        result = _source_report(jp_root, snapshot, known)
+        result['us_reference'] = metadata
+        return result
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--jp-root", type=Path, default=JP_ROOT)
     parser.add_argument("--us-root", type=Path, default=US_ROOT)
+    parser.add_argument("--us-ref", default='HEAD', help='immutable Git revision (default: HEAD)')
     parser.add_argument("--json", action="store_true", help="emit deterministic JSON")
     args = parser.parse_args()
-    result = report(args.jp_root, args.us_root)
+    result = report(args.jp_root, args.us_root, us_ref=args.us_ref)
     if args.json:
         print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     else:

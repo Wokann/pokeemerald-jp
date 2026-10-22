@@ -114,15 +114,15 @@ Route103_EventScript_RivalExitFacingNorth::
 
 Route103_EventScript_RivalExitFacingEastOrWest::
 	applymovement LOCALID_PLAYER, Route103_Movement_WatchRivalExitFacingEastOrWest
-	applywaitmovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExit1
+	applymovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExit1
+	waitmovement 0
 	playse SE_LEDGE
 	applywaitmovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExit2
 	goto Route103_EventScript_RivalEnd
 	end
 
 Route103_EventScript_RivalExitFacingSouth::
-	applymovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExit1
-	waitmovement 0
+	applywaitmovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExit1
 	playse SE_LEDGE
 	applywaitmovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExit2
 	goto Route103_EventScript_RivalEnd

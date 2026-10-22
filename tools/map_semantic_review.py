@@ -57,6 +57,15 @@ TRAINER_ENGINE_SYMBOLS = {
     'BattleSetup_StartTrainerBattle': 'src/battle_setup.c',
     'BattleSetup_GetScriptAddrAfterBattle': 'src/battle_setup.c',
 }
+TRAINER_EXTENDED_SYMBOLS = {
+    'ScrCmd_gotobeatenscript': 'src/scrcmd.c',
+    'BattleSetup_GetTrainerPostBattleScript': 'src/battle_setup.c',
+    'TrainerBattleLoadArgs': 'src/battle_setup.c',
+    'BattleSetup_StartRematchBattle': 'src/battle_setup.c',
+    'CB2_EndTrainerBattle': 'src/battle_setup.c',
+    'CB2_EndRematchBattle': 'src/battle_setup.c',
+    'IsPlayerDefeated': 'src/battle_setup.c',
+}
 LABEL_RE = re.compile(r'(?m)^([A-Za-z_]\w*)::?\s*(?:@[^\n]*)?$')
 SYMBOL_RE = re.compile(r'^\s*0x([0-9a-fA-F]{8,16})\s+([A-Za-z_]\w*)\s*$')
 SHA256_RE = re.compile(r'^[0-9a-f]{64}$')
@@ -380,7 +389,7 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
     extended = batch.get('review_type') in ('direct_map_v2', 'direct_map_v3', 'direct_map_v4')
     expected_kinds, actual_kinds, used_standard, used_specials = {}, {}, {}, {}
     used_layouts = set()
-    trainer_battles, trainer_run, trainer_post = {}, False, False
+    trainer_battles, trainer_run, trainer_post, trainer_beaten = {}, False, False, False
     if story:
         # Lazy import: the typed profiler reuses this module's text encoder.
         try:
@@ -393,12 +402,14 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             raise ValueError('incompatible_reference_kinds:' + target)
         expected_kinds[target] = kind
     def typed_targets(profiles):
-        nonlocal trainer_run, trainer_post
+        nonlocal trainer_run, trainer_post, trainer_beaten
         texts, targets = {}, set()
         for label, profile in profiles.items():
             if label in actual_kinds and actual_kinds[label] != profile.kind:
                 raise ValueError('incompatible_definition_kind:' + label)
             actual_kinds[label] = profile.kind
+            if addressed and profile.may_fall_through and not profile.fallthrough:
+                raise ValueError('unmodeled_script_fallthrough:' + label)
             for target, kind in list(profile.targets.items()) + list(profile.texts.items()):
                 expect(target, kind)
             texts.update(profile.texts)
@@ -412,6 +423,7 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
                 trainer_battles[battle['address']] = battle
             trainer_run |= profile.trainer_run
             trainer_post |= profile.trainer_post_return
+            trainer_beaten |= profile.trainer_beaten_return
         return sum(p.size for p in profiles.values()), targets, texts
     def source_address(owner, symbol):
         spans = batch.get('native_spans')
@@ -612,6 +624,8 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             raise ValueError('missing_or_changed_trainer_battle_contract')
         if (bool(expected_battles), trainer_run, trainer_post) not in ((False, False, False), (True, True, True)):
             raise ValueError('incomplete_trainer_battle_handoff')
+        if any('mode' in b for b in expected_battles) and not trainer_beaten:
+            raise ValueError('missing_trainer_beaten_script_handoff')
         if expected_battles and not TRAINER_ENGINE_CONTEXT <= {c['path'] for c in batch['sources'] if c.get('selector') == 'file'}:
             raise ValueError('missing_trainer_engine_source')
         special_contracts = batch.get('special_contracts')
@@ -794,7 +808,7 @@ def _integer(value: object) -> int:
     raise ValueError('invalid_integer')
 
 
-def native_elf(data: bytes) -> tuple[dict[str, set[int]], list[tuple[int, bytes]]]:
+def native_elf(data: bytes, *, include_ram=False) -> tuple[dict[str, set[int]], list[tuple[int, bytes]]]:
     """Read defined global/local symbols and allocated ROM bytes from ELF32/ARM."""
     if len(data) < 52 or data[:7] != b'\x7fELF\x01\x01\x01':
         raise ValueError('unsupported_native_elf')
@@ -822,7 +836,8 @@ def native_elf(data: bytes) -> tuple[dict[str, set[int]], list[tuple[int, bytes]
         entries = payload(section)
         for at in range(0, len(entries), 16):
             name, value, size, info, other, owner = struct.unpack_from('<IIIBBH', entries, at)
-            if not owner or not 0x08000000 <= value < 0x09000000:
+            if not owner or not (0x08000000 <= value < 0x09000000
+                                 or include_ram and 0x02000000 <= value < 0x04000000):
                 continue
             if name >= len(strings):
                 raise ValueError('invalid_native_symbol_name')
@@ -854,9 +869,13 @@ def _trainer_native(root: Path, batch: dict, native: dict, errors: list[str], pa
     if handlers.count('ScrCmd_trainerbattle') != 1:
         raise ValueError('missing_trainer_command_identity')
     opcode = handlers.index('ScrCmd_trainerbattle')
-    mode = _literal_define(root, 'include/constants/battle_setup.h', 'TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT')
+    try:
+        from map_review_script_profile import TRAINER_FORMS
+    except ModuleNotFoundError:
+        from tools.map_review_script_profile import TRAINER_FORMS
+    extended = any('mode' in b for b in batch['trainer_battles'])
     local_id = _literal_define(root, 'include/constants/event_objects.h', 'LOCALID_NONE')
-    for symbol, path in TRAINER_ENGINE_SYMBOLS.items():
+    for symbol, path in (TRAINER_ENGINE_SYMBOLS | (TRAINER_EXTENDED_SYMBOLS if extended else {})).items():
         values = {v & ~1 for v in native['symbols'].get(symbol, set())}
         if len(values) != 1:
             errors.append('native_trainer_engine_symbol_mismatch:' + symbol)
@@ -871,17 +890,77 @@ def _trainer_native(root: Path, batch: dict, native: dict, errors: list[str], pa
     for battle in batch['trainer_battles']:
         address, resume = _integer(battle['address']), _integer(battle['resume'])
         trainer = _literal_define(root, 'include/constants/opponents.h', battle['trainer'])
-        text = native['symbols'].get(battle['defeat_text'], set())
+        mode_name = battle.get('mode', 'TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT')
+        mode = _literal_define(root, 'include/constants/battle_setup.h', mode_name)
+        fields = ['intro_text', 'defeat_text'] if 'mode' in battle else ['defeat_text']
+        fields += [key for key in ('cannot_battle_text', 'post_script') if key in battle]
+        values = [native['symbols'].get(battle[key], set()) for key in fields]
+        size = 6 + 4 * len(fields)
         owner = native['symbols'].get(battle['owner'], set())
-        if (len(text) != 1 or len(owner) != 1 or next(iter(owner)) > address or resume != address + 10
+        if (any(len(v) != 1 for v in values) or len(owner) != 1
+                or next(iter(owner)) > address or resume != address + size
                 or not any(role in ('scripts', 'shared_script') and start <= address < resume < start + size
                            for name, role, symbol, start, size, digest in parsed)):
             errors.append('native_trainer_continuation_mismatch:' + battle['owner'])
             continue
-        expected = struct.pack('<BBHHI', opcode, mode, trainer, local_id, next(iter(text)))
+        expected = struct.pack('<BBHH', opcode, mode, trainer, local_id)
+        expected += b''.join(struct.pack('<I', next(iter(v))) for v in values)
         at = address - 0x08000000
-        if native['rom'][at:at + 10] != expected:
+        if native['rom'][at:at + size] != expected:
             errors.append('native_trainer_parameter_header_mismatch:' + battle['owner'])
+    if extended:
+        tables = {table for mode, _, table in TRAINER_FORMS.values()
+                  if mode in {b.get('mode') for b in batch['trainer_battles']}}
+        if any('mode' not in b for b in batch['trainer_battles']):
+            tables.add('sOrdinaryNoIntroBattleParams')
+        tables |= {'sTrainerBOrdinaryBattleParams', 'sTrainerBContinueScriptBattleParams'}
+        _trainer_parameter_tables(root, native, tables, errors)
+
+
+def _trainer_parameter_tables(root: Path, native: dict, tables: set[str], errors: list[str]) -> None:
+    """Tie the C argument schema to actual ROM rows, RAM pointers and input owner."""
+    source = local_path(root, 'src/battle_setup.c').read_text()
+    types = ('TRAINER_PARAM_LOAD_VAL_8BIT', 'TRAINER_PARAM_LOAD_VAL_16BIT',
+             'TRAINER_PARAM_LOAD_VAL_32BIT', 'TRAINER_PARAM_CLEAR_VAL_8BIT',
+             'TRAINER_PARAM_CLEAR_VAL_16BIT', 'TRAINER_PARAM_CLEAR_VAL_32BIT',
+             'TRAINER_PARAM_LOAD_SCRIPT_RET_ADDR')
+    enums = re.findall(r'enum\s*\{([^}]*TRAINER_PARAM_LOAD_SCRIPT_RET_ADDR[^}]*)\}', source, re.S)
+    if len(enums) != 1 or re.findall(r'TRAINER_PARAM_\w+', enums[0]) != list(types):
+        raise ValueError('unsupported_trainer_parameter_enum')
+    if 'trainer_data_symbols' not in native:
+        native['trainer_data_symbols'], _ = native_elf((root / 'pokeemerald_jp.elf').read_bytes(), include_ram=True)
+    symbols = native['trainer_data_symbols']
+    for table in sorted(tables):
+        has_intro = table != 'sOrdinaryNoIntroBattleParams'
+        double = 'Double' in table
+        callback = 'ContinueScript' in table
+        trainer_b = table.startswith('sTrainerB')
+        rows = [('sTrainerBattleMode', 0), ('gTrainerBattleOpponent_A', 1),
+                ('sTrainerObjectEventLocalId', 1), ('sTrainerAIntroSpeech', 2 if has_intro else 5),
+                ('sTrainerADefeatSpeech', 2), ('sTrainerVictorySpeech', 5),
+                ('sTrainerCannotBattleSpeech', 2 if double else 5),
+                ('sTrainerABattleScriptRetAddr', 2 if callback else 5), ('sTrainerBattleEndScript', 6)]
+        if trainer_b:
+            rows = [(symbol.replace('Opponent_A', 'Opponent_B').replace('sTrainerA', 'sTrainerB'), kind)
+                    for symbol, kind in rows]
+        body = re.findall(r'\b' + re.escape(table) + r'\[\][^=;]*=\s*\{(.*?)\};', source, re.S)
+        actual = re.findall(r'\{\s*&([A-Za-z_]\w*)\s*,\s*(TRAINER_PARAM_\w+)\s*\}', body[0]) if len(body) == 1 else []
+        if actual != [(symbol, types[kind]) for symbol, kind in rows]:
+            raise ValueError('unsupported_trainer_parameter_source:' + table)
+        values = [symbols.get(symbol, set()) for symbol in [table] + [s for s, _ in rows]]
+        if any(len(v) != 1 for v in values):
+            errors.append('native_trainer_parameter_symbol_mismatch:' + table)
+            continue
+        address = next(iter(values[0]))
+        expected = b''.join(struct.pack('<IB3x', next(iter(value)), kind)
+                            for value, (_, kind) in zip(values[1:], rows))
+        if not any(start <= address and address + len(expected) <= start + size
+                   and (path == 'src/battle_setup.o' or path.endswith('/src/battle_setup.o'))
+                   for start, size, path in native['owners']):
+            errors.append('native_trainer_parameter_owner_mismatch:' + table)
+        at = address - 0x08000000
+        if native['rom'][at:at + len(expected)] != expected:
+            errors.append('native_trainer_parameter_table_mismatch:' + table)
 
 
 def _review_batch(root: Path, batch: dict, maps: set[str], native: dict) -> dict:
@@ -1152,6 +1231,16 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                 for label, profile in profiles.items():
                     if native['symbols'].get(label) != {address}:
                         errors.append('native_addressed_label_mismatch:' + label)
+                    address += profile.size
+            for dep in batch.get('shared_dependencies', []):
+                block = shared_script_blocks(root, dep)
+                address = next(a for n, role, symbol, a, size, digest in parsed
+                               if n is None and symbol == dep['entry'])
+                profiles = profile_owner(root, '\n'.join(block[label] for label in dep['labels']),
+                                         version=4, address=address)
+                for label, profile in profiles.items():
+                    if profile.fallthrough and native['symbols'].get(profile.fallthrough) != {address + profile.size}:
+                        errors.append('native_script_fallthrough_mismatch:' + label)
                     address += profile.size
             _trainer_native(root, batch, native, errors, parsed)
             _dynamic_layout_native(root, batch, native, errors)

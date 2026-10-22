@@ -27,7 +27,7 @@ class LittlerootStoryTests(unittest.TestCase):
                     profile.profile_block(ROOT, 'Owner::\n' + source, {})
         for source in ('hideplayer 1', 'hideplayer\nstep_end', 'jump_right',
                        'jump_right 1\nstep_end', 'walk_fast_left\nend',
-                       'disable_jump_landing_ground_effect\nstep_end\nstep_end'):
+                       'disable_jump_landing_ground_effect\nstep_end\nstep_end\nstep_end'):
             with self.subTest(source=source), self.assertRaises(ValueError):
                 profile.profile_block(ROOT, 'Owner::\n' + source, {}, version=4, address=0x081E39F5)
 

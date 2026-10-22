@@ -119,9 +119,6 @@ Route101_Movement_ZigzagoonChase1:
 	walk_fast_right
 	walk_fast_up
 	step_end
-
-@ JP-only unused one-byte movement record.
-Route101_Movement_UnusedStepEnd1:
 	step_end
 
 Route101_Movement_ZigzagoonFaceBirch:
@@ -180,9 +177,6 @@ Route101_Movement_BirchRunAway1:
 	walk_fast_up
 	walk_fast_up
 	step_end
-
-@ JP-only unused one-byte movement record.
-Route101_Movement_UnusedStepEnd2:
 	step_end
 
 Route101_Movement_BirchFaceZigzagoon:

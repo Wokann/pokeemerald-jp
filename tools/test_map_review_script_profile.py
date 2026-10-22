@@ -185,7 +185,7 @@ class StoryProfileTests(unittest.TestCase):
                 else:
                     movements = profile.MOVEMENTS_V4 if version == 4 else profile.MOVEMENTS
                     tail = '\nstep_end' if op in movements and op != 'step_end' else ''
-                    if version == 4 and op == 'trainerbattle_no_intro':
+                    if version == 4 and op.startswith('trainerbattle_'):
                         tail = '\nend'
                     predicted = profile.profile_block(ROOT, 'Entry::\n' + line + tail, waits, **options).size - bool(tail)
                 self.assertEqual(symbols['ProfileEnd_%d' % i] - symbols['ProfileStart_%d' % i], predicted, line)

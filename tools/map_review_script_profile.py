@@ -25,7 +25,8 @@ MOVEMENTS = frozenset(('walk_up', 'walk_down', 'walk_left', 'walk_right',
     'delay_8', 'delay_16', 'step_end', 'emote_exclamation_mark', 'emote_question_mark'))
 STANDARD = {'MSGBOX_NPC': (2, 'Std_MsgboxNPC'), 'MSGBOX_SIGN': (3, 'Std_MsgboxSign'),
             'MSGBOX_DEFAULT': (4, 'Std_MsgboxDefault')}
-STANDARD_V4 = STANDARD | {'MSGBOX_YESNO': (5, 'Std_MsgboxYesNo')}
+STANDARD_V4 = STANDARD | {'MSGBOX_YESNO': (5, 'Std_MsgboxYesNo'),
+                          'MSGBOX_AUTOCLOSE': (6, 'Std_MsgboxAutoclose')}
 MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'face_up', 'face_down', 'face_left', 'face_right', 'delay_4', 'reveal_trainer',
                            'walk_in_place_down', 'walk_faster_right', 'walk_fast_right', 'walk_fast_up',
@@ -34,7 +35,8 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'walk_slow_diag_southwest', 'walk_left_affine', 'init_affine_anim',
                            'clear_affine_anim', 'levitate', 'destroy_extra_task',
                            'walk_fast_left', 'jump_right', 'jump_in_place_right',
-                           'disable_jump_landing_ground_effect', 'walk_faster_left', 'walk_fast_down'}
+                           'disable_jump_landing_ground_effect', 'walk_faster_left', 'walk_fast_down',
+                           'walk_in_place_fast_left', 'walk_in_place_fast_right', 'jump_2_down', 'cut_tree'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -56,7 +58,40 @@ FIXED_V4 = FIXED | {'setobjectmovementtype': (4, 2), 'getplayerxy': (5, 2),
                    'multichoice': (5, 4), 'multichoicedefault': (6, 5),
                    'setobjectsubpriority': (6, 3), 'resetobjectsubpriority': (5, 2),
                    'showobjectat': (5, 2), 'incrementgamestat': (2, 1),
-                   'getpartysize': (1, 0), 'giveegg': (3, 1), 'fadescreen': (2, 1)}
+                   'getpartysize': (1, 0), 'giveegg': (3, 1), 'fadescreen': (2, 1),
+                   'selectapproachingtrainer': (1, 0), 'lockfortrainer': (1, 0),
+                   'buffertrainerclassname': (4, 2), 'buffertrainername': (4, 2),
+                   'buffernumberstring': (4, 2), 'checkpartymove': (3, 1),
+                   'bufferpartymonnick': (4, 2), 'buffermovename': (4, 2)}
+
+# These source blocks deliberately continue into the next physical label.
+# A native adjacency check is mandatory; a named target alone is not proof.
+FALLTHROUGHS = {
+    'ProfBirch_EventScript_RatePokedexOrRegister': 'ProfBirch_EventScript_AskRatePokedex',
+    'EventScript_StartTrainerApproach': 'EventScript_TrainerApproach',
+    'EventScript_DoTrainerBattle': 'EventScript_EndTrainerBattle',
+    'BerryTree_EventScript_ChooseBerryToPlant': 'BerryTree_EventScript_CancelPlanting',
+    'BerryTree_EventScript_CheckBerryFullyGrown': 'BerryTree_EventScript_PickBerry',
+    'BerryTree_EventScript_WantToWater': 'BerryTree_EventScript_DontWater',
+    'BerryTree_EventScript_ItemUseWailmerPail': 'BerryTree_EventScript_WaterBerry',
+}
+
+# Only the explicitly measured forms are supported. Optional no-music forms
+# are intentionally absent until independently reviewed.
+TRAINER_FORMS = {
+    ('trainerbattle_single', 3): ('TRAINER_BATTLE_SINGLE', 'EventScript_TryDoNormalTrainerBattle',
+                                'sOrdinaryBattleParams'),
+    ('trainerbattle_single', 4): ('TRAINER_BATTLE_CONTINUE_SCRIPT', 'EventScript_TryDoNormalTrainerBattle',
+                                'sContinueScriptBattleParams'),
+    ('trainerbattle_double', 4): ('TRAINER_BATTLE_DOUBLE', 'EventScript_TryDoDoubleTrainerBattle',
+                                'sDoubleBattleParams'),
+    ('trainerbattle_double', 5): ('TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE', 'EventScript_TryDoDoubleTrainerBattle',
+                                'sContinueScriptDoubleBattleParams'),
+    ('trainerbattle_rematch', 3): ('TRAINER_BATTLE_REMATCH', 'EventScript_TryDoRematchBattle',
+                                 'sOrdinaryBattleParams'),
+    ('trainerbattle_rematch_double', 4): ('TRAINER_BATTLE_REMATCH_DOUBLE', 'EventScript_TryDoDoubleRematchBattle',
+                                        'sDoubleBattleParams'),
+}
 
 
 @dataclass
@@ -71,6 +106,9 @@ class BlockProfile:
     trainer_battles: list[dict] = field(default_factory=list)
     trainer_run: bool = False
     trainer_post_return: bool = False
+    trainer_beaten_return: bool = False
+    fallthrough: str | None = None
+    may_fall_through: bool = False
 
 
 def special_waits(root: Path) -> dict[str, int]:
@@ -121,8 +159,10 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
         return BlockProfile(size=2 * len(entries) + 4,
                             kind='mart_items' if entries[0][2] == 'ITEM' else 'mart_decorations')
     if any(op in movements for op in operations):
+        ends = operations.count('step_end')
         if (any(op not in movements for op in operations) or operations[-1] != 'step_end'
-                or operations.count('step_end') != 1):
+                or ends not in ((1, 2) if version == 4 else (1,))
+                or operations[-ends:] != ['step_end'] * ends):
             raise ValueError('mixed_or_unterminated_movement')
         if any(len(line.split()) != 1 for line in lines):
             raise ValueError('unsupported_movement_arguments')
@@ -186,12 +226,53 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             result.trainer_battles.append(dict(owner=owner[1], trainer=args[0], defeat_text=args[1],
                 address=f'0x{address + result.size:08X}', resume=f'0x{address + result.size + 10:08X}'))
             size = 10
-        elif version == 4 and op in ('dotrainerbattle', 'gotopostbattlescript'):
+        elif version == 4 and op.startswith('trainerbattle_'):
+            form = TRAINER_FORMS.get((op, len(args)))
+            if (form is None or not re.fullmatch(r'TRAINER_\w+', args[0])
+                    or any(not NAME.fullmatch(arg) or arg == 'NULL' for arg in args[1:])):
+                raise ValueError('unsupported_trainer_battle_form')
+            if position == len(lines) - 1:
+                raise ValueError('missing_inline_trainer_battle_continuation')
+            owner = re.search(r'(?m)^([A-Za-z_]\w*)::?', block)
+            if owner is None:
+                raise ValueError('missing_trainer_battle_owner')
+            mode, entry, _ = form
+            target(entry, 'script')
+            target('EventScript_StartTrainerApproach', 'script')
+            text_fields = ['intro_text', 'defeat_text']
+            if op in ('trainerbattle_double', 'trainerbattle_rematch_double'):
+                text_fields.append('cannot_battle_text')
+            battle = dict(owner=owner[1], trainer=args[0], mode=mode)
+            for key, value in zip(text_fields, args[1:]):
+                battle[key] = value
+                result.texts[value] = 'string'
+            if len(args) > len(text_fields) + 1:
+                battle['post_script'] = args[-1]
+                target(args[-1], 'script')
+            size = 6 + 4 * (len(args) - 1)
+            battle.update(address=f'0x{address + result.size:08X}',
+                          resume=f'0x{address + result.size + size:08X}')
+            result.trainer_battles.append(battle)
+        elif version == 4 and op in ('dotrainerbattle', 'gotopostbattlescript', 'gotobeatenscript'):
             if args:
                 raise ValueError('unsupported_trainer_battle_primitive')
             result.trainer_run |= op == 'dotrainerbattle'
             result.trainer_post_return |= op == 'gotopostbattlescript'
+            result.trainer_beaten_return |= op == 'gotobeatenscript'
+            if op == 'gotobeatenscript':
+                target('EventScript_TryGetTrainerScript', 'script')
             size = 1
+        elif version == 4 and op == 'register_matchcall':
+            if len(args) != 1 or not re.fullmatch(r'TRAINER_\w+', args[0]):
+                raise ValueError('unsupported_match_call_registration')
+            waits = special_waits(root) if waits is None else waits
+            function = 'SetMatchCallRegisteredFlag'
+            if waits.get(function) not in (0, 1):
+                raise ValueError('missing_match_call_registration_special')
+            result.specials[function] = waits[function]
+            result.standard_scripts[8] = 'Std_RegisteredInMatchCall'
+            target('Std_RegisteredInMatchCall', 'script')
+            size = 15 + waits[function]
         elif version == 4 and op == 'pokenavcall':
             if len(args) != 1 or not NAME.fullmatch(args[0]) or args[0] == 'NULL':
                 raise ValueError('unsupported_pokenav_call')
@@ -255,10 +336,16 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             target(entry, 'script')
             result.standard_scripts[index] = entry
             size = 12
-        elif op == 'additem':
+        elif op == 'additem' or version == 4 and op == 'removeitem':
             if len(args) not in (1, 2):
                 raise ValueError('unsupported_profile_additem')
             size = 5
+        elif version == 4 and op == 'bufferstring':
+            if (len(args) != 2 or not re.fullmatch(r'STR_VAR_[123]', args[0])
+                    or not NAME.fullmatch(args[1]) or args[1] == 'NULL'):
+                raise ValueError('unsupported_profile_bufferstring')
+            result.texts[args[1]] = 'string'
+            size = 6
         elif op == 'msgbox':
             if len(args) != 2 or args[1] not in standard or not NAME.fullmatch(args[0]):
                 raise ValueError('unsupported_profile_message')
@@ -285,6 +372,13 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
         else:
             raise ValueError('unsupported_story_review_statement:' + op)
         result.size += size
+    owner = re.search(r'(?m)^([A-Za-z_]\w*)::?', block)
+    tail = operations[-2] if operations[-1] == '.align' else operations[-1]
+    result.may_fall_through = result.kind == 'script' and tail not in (
+        'end', 'return', 'goto', 'gotopostbattlescript', 'gotobeatenscript')
+    if version == 4 and owner and owner[1] in FALLTHROUGHS:
+        result.fallthrough = FALLTHROUGHS[owner[1]]
+        target(result.fallthrough, 'script')
     return result
 
 

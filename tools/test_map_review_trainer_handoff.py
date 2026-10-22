@@ -149,6 +149,14 @@ class TrainerHandoffReviewTests(unittest.TestCase):
     def test_complete_implicit_engine_entry_and_return_frame_are_accepted(self):
         self.assertEqual(self.f.progress()['reviewed_maps'], 1)
 
+    def test_unmodeled_tail_cannot_fall_into_following_text(self):
+        f = self.f
+        source = (f.root / 'data/maps/First/scripts.inc').read_text()
+        f.put('data/maps/First/scripts.inc', source.replace('msgbox First_Text, MSGBOX_DEFAULT\nend\n',
+                                                         'msgbox First_Text, MSGBOX_DEFAULT\n'))
+        with self.assertRaisesRegex(ValueError, 'unmodeled_script_fallthrough:First_Entry'):
+            fixtures.review.component_contracts(f.root, f.manifest['batches'][0], ['First'])
+
     def test_implicit_entry_and_explicit_frame_cannot_be_omitted(self):
         batch = self.f.manifest['batches'][0]
         original = batch['shared_dependencies']
