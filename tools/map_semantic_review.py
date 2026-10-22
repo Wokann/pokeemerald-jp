@@ -12,6 +12,7 @@ import hashlib
 import json
 import re
 import struct
+import subprocess
 from pathlib import Path, PurePosixPath
 
 MANIFEST_PATH = 'tools/map_semantic_reviews.json'
@@ -40,6 +41,12 @@ MAKE_PREFIXES = (
     '$(OBJ_DIR)/data/maps.o:', '$(OBJ_DIR)/data/map_events.o:',
 )
 LINKER_INPUTS = ('data/event_scripts.o', 'data/map_events.o', 'data/maps.o')
+TEXT_CONTEXT = {'charmap.txt', 'include/constants/characters.h', 'tools/preproc/Makefile',
+                'tools/map_semantic_review.py'} | {
+    'tools/preproc/' + name for name in (
+        'asm_file.cpp', 'asm_file.h', 'c_file.cpp', 'c_file.h', 'char_util.h',
+        'charmap.cpp', 'charmap.h', 'io.cpp', 'io.h', 'preproc.cpp', 'preproc.h',
+        'string_parser.cpp', 'string_parser.h', 'utf8.cpp', 'utf8.h')}
 LABEL_RE = re.compile(r'(?m)^([A-Za-z_]\w*)::?\s*(?:@[^\n]*)?$')
 SYMBOL_RE = re.compile(r'^\s*0x([0-9a-fA-F]{8,16})\s+([A-Za-z_]\w*)\s*$')
 SHA256_RE = re.compile(r'^[0-9a-f]{64}$')
@@ -91,25 +98,184 @@ def label_blocks(text: str) -> dict[str, str]:
     return result
 
 
+def statements(text: str) -> list[str]:
+    """Ignore comments, but never treat an @ inside a quoted JP string as one."""
+    result = []
+    for raw in text.splitlines():
+        for match in re.finditer(r'"(?:\\.|[^"\\])*"|(@.*$)', raw):
+            if match.group(1):
+                raw = raw[:match.start()]
+                break
+        line = raw.strip()
+        if line and not re.fullmatch(r'[A-Za-z_]\w*::?', line):
+            if re.fullmatch(r'\.globl\s+[A-Za-z_]\w*', line):
+                continue
+            result.append(line)
+    return result
+
+
+def text_kind(text: str) -> str | None:
+    operations = {line.split(None, 1)[0] for line in statements(text)}
+    if '.string' in operations:
+        if operations != {'.string'}:
+            raise ValueError('mixed_script_text_block')
+        return 'string'
+    if '.braille' in operations or 'brailleformat' in operations:
+        if operations != {'.braille', 'brailleformat'}:
+            raise ValueError('mixed_braille_text_block')
+        return 'braille'
+    return None
+
+
+def encoded_text(root: Path, text: str, kind: str) -> bytes:
+    """Use the real JP preprocessor via stdin, with no external temporary files."""
+    if kind not in ('string', 'braille') or text_kind(text) != kind:
+        raise ValueError('invalid_text_dependency_kind')
+    lines = statements(text)
+    header = b''
+    if kind == 'braille':
+        formats = [line for line in lines if line.startswith('brailleformat ')]
+        strings = [line for line in lines if line.startswith('.braille ')]
+        if len(formats) != 1 or len(strings) != 1 or lines != formats + strings:
+            raise ValueError('invalid_braille_object_format')
+        values = [v.strip() for v in formats[0].split(None, 1)[1].split(',')]
+        if len(values) != 6 or any(not re.fullmatch(r'(?:0x[0-9A-Fa-f]+|[0-9]+)', v) for v in values):
+            raise ValueError('invalid_braille_format_fields')
+        numbers = [int(v, 16 if v.startswith('0x') else 10) for v in values]
+        if any(n > 255 for n in numbers):
+            raise ValueError('invalid_braille_format_fields')
+        header = bytes(numbers)
+        lines = strings
+    for line in lines:
+        if not re.fullmatch(r'\.(?:string|braille)\s+"(?:\\.|[^"\\])*"', line):
+            raise ValueError('invalid_text_source_literal')
+    binary = local_path(root, 'tools/preproc/preproc')
+    charmap = local_path(root, 'charmap.txt')
+    try:
+        result = subprocess.run([str(binary), '-i', 'map-review.s', str(charmap)],
+                                input='\n'.join(lines) + '\n', text=True, capture_output=True,
+                                cwd=root, check=False, timeout=10)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise ValueError('text_preprocessor_unavailable') from exc
+    if result.returncode:
+        raise ValueError('text_preprocessor_rejected_source')
+    payload = bytearray()
+    for line in result.stdout.splitlines():
+        if not line.strip() or line.startswith('# '):
+            continue
+        match = re.fullmatch(r'\s*\.byte\s+(0x[0-9A-Fa-f]{2}(?:\s*,\s*0x[0-9A-Fa-f]{2})*)\s*', line)
+        if not match:
+            raise ValueError('unexpected_text_preprocessor_output')
+        payload.extend(int(v.strip(), 16) for v in match.group(1).split(','))
+    if not payload or payload[-1] != 255 or (kind == 'braille' and payload.count(255) != 1):
+        raise ValueError('unterminated_review_text')
+    return header + payload
+
+
+def extended_analysis(root: Path, text: str) -> tuple[int, set[str], dict[str, str]]:
+    """Explicit v2 grammar for dive hooks, flags, metatiles and JP text.
+
+    Fixed-size forms below correspond to reviewed event.inc expansions. In
+    particular goto_if_ne accepts only the three-argument variable/immediate
+    form, and msgbox only an explicit MSGBOX_SIGN; no polymorphic defaults or
+    table-dependent Special waits are guessed.
+    """
+    size, scripts, texts = 0, set(), {}
+    blocks = label_blocks(text)
+    if not blocks:
+        raise ValueError('missing_review_script_labels')
+    sizes = {'setdivewarp': (8, 3), 'setflag': (3, 1), 'setmetatile': (9, 4),
+             'getplayerxy': (5, 2), 'goto_if_set': (9, 2), 'call_if_set': (9, 2),
+             'goto_if_ne': (11, 3), 'lockall': (1, 0), 'releaseall': (1, 0),
+             'msgbox': (8, 2), 'braillemsgbox': (7, 1), 'message': (5, 1),
+             'waitmessage': (1, 0), 'waitbuttonpress': (1, 0)}
+    for block in blocks.values():
+        kind = text_kind(block)
+        if kind:
+            size += len(encoded_text(root, block, kind))
+            continue
+        for line in statements(block):
+            tokens = line.split(None, 1)
+            op = tokens[0]
+            if op not in sizes:
+                length, targets = script_analysis(line)
+                size += length
+                scripts.update(targets)
+                continue
+            length, count = sizes[op]
+            args = [v.strip() for v in tokens[1].split(',')] if len(tokens) == 2 else []
+            if len(args) != count or any(not v for v in args):
+                raise ValueError('unsupported_direct_review_arguments:' + op)
+            if op == 'goto_if_ne' and (not re.fullmatch(r'VAR_[A-Za-z0-9_]+', args[0])
+                                       or not re.fullmatch(r'(?:0x[0-9A-Fa-f]+|[0-9]+)', args[1])):
+                raise ValueError('unsupported_compare_operand')
+            if op == 'msgbox' and args[1] != 'MSGBOX_SIGN':
+                raise ValueError('unsupported_message_type')
+            if op == 'message' and args != ['NULL']:
+                raise ValueError('unsupported_buffered_message_argument')
+            if op == 'msgbox':
+                scripts.add('Std_MsgboxSign')
+            if op in ('goto_if_set', 'call_if_set', 'goto_if_ne', 'msgbox', 'braillemsgbox'):
+                target = args[0] if op in ('msgbox', 'braillemsgbox') else args[-1]
+                if not MAP_RE.fullmatch(target):
+                    raise ValueError('nonsemantic_script_target')
+                if op in ('msgbox', 'braillemsgbox'):
+                    kind = 'string' if op == 'msgbox' else 'braille'
+                    if target in texts and texts[target] != kind:
+                        raise ValueError('conflicting_text_usage:' + target)
+                    texts[target] = kind
+                else:
+                    scripts.add(target)
+            size += length
+    return size, scripts, texts
+
+
 def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict, dict]:
     """Derive component identity/extent and actual shared-call closure from source."""
-    contracts, external = {}, set()
+    contracts, external, external_text = {}, set(), {}
+    extended = batch.get('review_type') == 'direct_map_v2'
+    def analyze(text):
+        if extended:
+            return extended_analysis(root, text)
+        length, targets = script_analysis(text)
+        return length, targets, {}
+    def collect_text(texts, blocks):
+        for target, kind in texts.items():
+            if target in blocks:
+                if text_kind(blocks[target]) != kind:
+                    raise ValueError('incompatible_message_target:' + target)
+            elif target in external_text and external_text[target] != kind:
+                raise ValueError('conflicting_text_usage:' + target)
+            else:
+                external_text[target] = kind
     for name in maps:
         metadata = json.loads(local_path(root, f'data/maps/{name}/map.json').read_text())
         script = local_path(root, f'data/maps/{name}/scripts.inc').read_text()
         blocks = label_blocks(script)
         if not blocks or next(iter(blocks)) != name + '_MapScripts':
             raise ValueError('noncanonical_map_script_owner')
-        length, targets = script_analysis(script)
+        length, targets, texts = analyze(script)
+        if extended:
+            for target in targets & blocks.keys():
+                if text_kind(blocks[target]):
+                    raise ValueError('script_target_is_text:' + target)
         external.update(targets - blocks.keys())
+        collect_text(texts, blocks)
         contracts[(name, 'scripts')] = (name + '_MapScripts', length)
         counts = [len(metadata.get(key, [])) for key in
                   ('object_events', 'warp_events', 'coord_events', 'bg_events')]
-        suffixes = ('_MapObjectEvents', '_MapWarps', '_MapCoordEvents', '_MapBGEvents')
+        suffixes = ('_ObjectEvents', '_MapWarps', '_MapCoordEvents', '_MapBGEvents')
         first = next((name + suffix for count, suffix in zip(counts, suffixes) if count), name + '_MapEvents')
         contracts[(name, 'events')] = (first, 20 + sum(n * stride for n, stride in zip(counts, (24, 8, 16, 12))))
         contracts[(name, 'header')] = (name, 28)
-        contracts[(name, 'connections')] = (name + '_MapConnectionsList', 12 * len(metadata.get('connections', [])) + 8)
+        connections = metadata.get('connections', [])
+        if connections is None:
+            if not extended or statements(local_path(root, f'data/maps/{name}/connections.inc').read_text()):
+                raise ValueError('unsupported_or_nonempty_null_connections')
+        else:
+            if not isinstance(connections, list):
+                raise ValueError('invalid_connection_metadata')
+            contracts[(name, 'connections')] = (name + '_MapConnectionsList', 12 * len(connections) + 8)
         contracts[(name, 'layout')] = (name + '_Layout', 24)
         for filename, role, suffix in (('border.bin', 'border', '_Layout_Border'), ('map.bin', 'blockdata', '_Layout_Blockdata')):
             contracts[(name, role)] = (name + suffix, local_path(root, f'data/layouts/{name}/{filename}').stat().st_size)
@@ -139,7 +305,8 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             if label not in blocks:
                 raise ValueError('missing_shared_script_label')
             reachable.add(label)
-            _, targets = script_analysis(blocks[label])
+            _, targets, texts = analyze(blocks[label])
+            collect_text(texts, blocks)
             todo.extend(targets & blocks.keys())
             pending.extend(targets - blocks.keys())
         ordered = [label for label in blocks if label in reachable]
@@ -148,11 +315,47 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         if not any(c.get('path') == dep['path'] and c.get('selector') == 'asm_labels'
                    and c.get('labels') == ordered for c in batch['sources']):
             raise ValueError('missing_shared_source_binding')
-        sizes = [(label, script_analysis(blocks[label])[0]) for label in ordered]
+        sizes = [(label, analyze(blocks[label])[0]) for label in ordered]
         shared[entry] = sizes
         contracts[(None, entry)] = (entry, sum(size for label, size in sizes))
     if visited != entries.keys():
         raise ValueError('unreachable_shared_dependency')
+    dependencies = batch.get('text_dependencies', [])
+    if not isinstance(dependencies, list) or (dependencies and not extended):
+        raise ValueError('unsupported_text_dependencies')
+    text_entries = {}
+    for dep in dependencies:
+        if not isinstance(dep, dict) or not MAP_RE.fullmatch(str(dep.get('entry', ''))) or dep['entry'] in text_entries:
+            raise ValueError('invalid_or_duplicate_text_dependency')
+        text_entries[dep['entry']] = dep
+    if set(text_entries) != set(external_text):
+        raise ValueError('incomplete_or_unreachable_text_dependencies')
+    for entry, dep in text_entries.items():
+        if dep.get('kind') != external_text[entry]:
+            raise ValueError('incompatible_message_dependency:' + entry)
+        blocks = label_blocks(local_path(root, dep.get('path')).read_text())
+        if entry not in blocks or not any(c.get('path') == dep['path'] and c.get('selector') == 'asm_labels'
+                                          and c.get('labels') == [entry] for c in batch['sources']):
+            raise ValueError('missing_text_source_binding')
+        contracts[(None, entry)] = (entry, len(encoded_text(root, blocks[entry], dep.get('kind'))))
+    standard = batch.get('standard_scripts', [])
+    expected = [dict(index=3, entry='Std_MsgboxSign')] if 'Std_MsgboxSign' in visited else []
+    if standard != expected or (standard and not extended):
+        raise ValueError('missing_or_unreachable_standard_script_evidence')
+    if standard:
+        blocks = label_blocks(local_path(root, 'data/event_scripts.s').read_text())
+        if 'gStdScripts' not in blocks or not any(c.get('path') == 'data/event_scripts.s'
+                and c.get('selector') == 'asm_labels' and c.get('labels') == ['gStdScripts'] for c in batch['sources']):
+            raise ValueError('missing_standard_table_source_binding')
+        entries = []
+        for line in statements(blocks['gStdScripts']):
+            match = re.fullmatch(r'\.4byte\s+([A-Za-z_]\w*)', line)
+            if not match:
+                raise ValueError('unsupported_standard_table_source')
+            entries.append(match.group(1))
+        if len(entries) <= 3 or entries[3] != 'Std_MsgboxSign':
+            raise ValueError('standard_script_index_mismatch')
+        contracts[(None, 'gStdScripts')] = ('gStdScripts', 4 * len(entries))
     return contracts, shared
 
 
@@ -185,6 +388,10 @@ def compile_context(root: Path, seeds: set[str]) -> set[str]:
             relative = next((p for p in candidates if (root / p).is_file()), None)
             if relative is None:
                 raise ValueError('missing_compile_include:' + name)
+            try:
+                relative = (root / relative).resolve().relative_to(root.resolve()).as_posix()
+            except ValueError as exc:
+                raise ValueError('external_compile_include:' + name) from exc
             selected = (context or relative.startswith(('asm/', 'include/', 'constants/', 'tools/'))
                         or relative == 'data/script_cmd_table.inc')
             if selected:
@@ -363,7 +570,7 @@ def _review_batch(root: Path, batch: dict, maps: set[str], native: dict) -> dict
         raise ValueError('invalid_map_list')
     if not set(reviewed) <= maps:
         raise ValueError('unknown_map')
-    if batch.get('review_type') != 'direct_map_v1' or batch.get('decision') != 'reviewed':
+    if batch.get('review_type') not in ('direct_map_v1', 'direct_map_v2') or batch.get('decision') != 'reviewed':
         raise ValueError('unsupported_or_unapproved_review')
     if not SHA1_RE.fullmatch(str(batch.get('jp_commit', ''))):
         raise ValueError('missing_jp_baseline')
@@ -401,9 +608,11 @@ def _review_batch(root: Path, batch: dict, maps: set[str], native: dict) -> dict
         if claim.get('selector') == 'file':
             file_claims.add(claim.get('path'))
     required = {f'data/maps/{n}/{part}' for n in reviewed for part in REQUIRED_COMPONENTS} | REQUIRED_CONTEXT
+    if batch['review_type'] == 'direct_map_v2':
+        required |= TEXT_CONTEXT
     if not required <= file_claims:
         raise ValueError('incomplete_map_or_generator_source_coverage')
-    context = compile_context(root, REQUIRED_CONTEXT | {
+    context = compile_context(root, required & (REQUIRED_CONTEXT | TEXT_CONTEXT) | {
         f'data/maps/{n}/scripts.inc' for n in reviewed} | {
         c['path'] for c in sources if c.get('selector') == 'asm_labels'})
     if not context <= file_claims:
@@ -476,8 +685,14 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
         if not isinstance(span, dict) or not SHA256_RE.fullmatch(str(span.get('sha256', ''))):
             raise ValueError('invalid_native_span')
         name, role, symbol = span.get('map'), span.get('role'), span.get('symbol')
-        if (name not in roles and not (name is None and role == 'shared_script')):
+        if (name not in roles and not (name is None and role in ('shared_script', 'shared_text', 'standard_script_table'))):
             raise ValueError('unattributed_native_span')
+        if name is None:
+            expected_role = ('standard_script_table' if symbol == 'gStdScripts' and batch.get('standard_scripts')
+                             else 'shared_text' if any(d['entry'] == symbol for d in batch.get('text_dependencies', []))
+                             else 'shared_script' if any(d['entry'] == symbol for d in batch.get('shared_dependencies', [])) else None)
+            if role != expected_role:
+                raise ValueError('shared_native_role_mismatch')
         if not isinstance(symbol, str) or not MAP_RE.fullmatch(symbol):
             raise ValueError('invalid_native_symbol')
         address, size = _integer(span.get('address')), _integer(span.get('size'))
@@ -495,7 +710,8 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                 raise ValueError('unsupported_native_role')
             roles[name].add(role)
         parsed.append((name, role, symbol, address, size, span['sha256']))
-    if any(value != REQUIRED_NATIVE_ROLES for value in roles.values()):
+    expected_roles = {name: {role for owner, role in contracts if owner == name} for name in maps}
+    if any(value != expected_roles[name] for name, value in roles.items()):
         raise ValueError('incomplete_native_component_coverage')
     if {(name, symbol if name is None else role) for name, role, symbol, *rest in parsed} != contracts.keys():
         raise ValueError('incomplete_shared_native_coverage')
@@ -529,7 +745,7 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                 errors.append('native_symbol_mismatch:' + symbol)
             if symbol in native['map_symbols'] and native['map_symbols'][symbol] != {address}:
                 errors.append('linker_symbol_mismatch:' + symbol)
-            expected_owner = ('data/event_scripts.o' if role in ('scripts', 'shared_script')
+            expected_owner = ('data/event_scripts.o' if role in ('scripts', 'shared_script', 'shared_text', 'standard_script_table')
                               else 'data/map_events.o' if role == 'events' else 'data/maps.o')
             if not any(start <= address and address + size <= start + length
                        and (path == expected_owner or path.endswith('/' + expected_owner))
@@ -549,12 +765,43 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                 if native['symbols'].get(label) != {address}:
                     errors.append('shared_closure_not_contiguous:' + label)
                 address += size
+        if batch['review_type'] == 'direct_map_v2':
+            for standard in batch.get('standard_scripts', []):
+                table = next(a for n, role, symbol, a, size, digest in parsed if role == 'standard_script_table')
+                slot = table - 0x08000000 + 4 * standard['index']
+                if native['symbols'].get(standard['entry']) != {int.from_bytes(native['rom'][slot:slot + 4], 'little')}:
+                    errors.append('native_standard_script_target_mismatch:' + standard['entry'])
+            for name in maps:
+                if (name, 'connections') not in contracts:
+                    address = next(a for n, role, symbol, a, size, digest in parsed if n == name and role == 'header') - 0x08000000
+                    if native['rom'][address + 12:address + 16] != bytes(4):
+                        errors.append('native_null_connection_pointer_mismatch:' + name)
+            text_sources = [(f'data/maps/{name}/scripts.inc', None) for name in maps]
+            text_sources += [(dep['path'], dep['entry']) for dep in batch.get('text_dependencies', [])]
+            for path, selected in text_sources:
+                for label, block in label_blocks(local_path(root, path).read_text()).items():
+                    if selected is not None and selected != label:
+                        continue
+                    kind = text_kind(block)
+                    if not kind:
+                        continue
+                    values = native['symbols'].get(label, set())
+                    if len(values) != 1:
+                        errors.append('native_text_symbol_mismatch:' + label)
+                        continue
+                    address = next(iter(values)) - 0x08000000
+                    encoded = encoded_text(root, block, kind)
+                    if native['rom'][address:address + len(encoded)] != encoded:
+                        errors.append('native_text_encoding_mismatch:' + label)
     for name in maps:
         for start, part in (('data/event_scripts.s', 'scripts.inc'),
                             ('data/map_events.s', 'events.inc'),
                             ('data/maps.s', 'header.inc'), ('data/maps.s', 'connections.inc')):
             if f'data/maps/{name}/{part}' not in _reachable(root, start, native.setdefault('include_graph', {})):
                 errors.append('unreachable_map_component:' + name + '/' + part)
+    for dep in batch.get('shared_dependencies', []) + batch.get('text_dependencies', []):
+        if dep['path'] not in _reachable(root, 'data/event_scripts.s', native.setdefault('include_graph', {})):
+            errors.append('unreachable_shared_owner:' + dep['path'])
     return {
         'id': batch['id'], 'maps': sorted(maps),
         'status': 'stale' if errors else 'current' if available else 'native_artifacts_unavailable',

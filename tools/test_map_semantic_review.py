@@ -8,6 +8,7 @@ import struct
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 try:
     import map_semantic_review as review
@@ -111,7 +112,7 @@ class MapSemanticReviewTests(unittest.TestCase):
     def linker_map(self):
         rows = ['0x%08X %s' % (v, n) for n, v in self.symbols]
         for span in self.manifest['batches'][0]['native_spans']:
-            owner = ('data/event_scripts.o' if span['role'] in ('scripts', 'shared_script')
+            owner = ('data/event_scripts.o' if span['role'] in ('scripts', 'shared_script', 'shared_text', 'standard_script_table')
                      else 'data/map_events.o' if span['role'] == 'events' else 'data/maps.o')
             rows.append(' .rodata 0x%08X 0x%X %s' % (span['address'], span['size'], owner))
         return '\n'.join(rows)
@@ -265,7 +266,8 @@ class MapSemanticReviewTests(unittest.TestCase):
         self.put('pokeemerald_jp.gba', self.image)
         self.put('pokeemerald_jp.elf', elf_image(self.image, self.symbols))
         self.put('pokeemerald_jp.map', self.linker_map())
-        self.assertEqual(self.progress()['reviewed_maps'], 1)
+        result = self.progress()
+        self.assertEqual(result['reviewed_maps'], 1, result)
 
     def test_full_shared_dependency_closure_is_required(self):
         self.add_shared_fixture()
@@ -338,6 +340,290 @@ class MapSemanticReviewTests(unittest.TestCase):
     def test_linker_input_source_changes_revoke_review(self):
         self.put('ld_script_jp.txt', 'data/event_scripts.o(other_section);\n'
                  'data/map_events.o(.rodata);\ndata/maps.o(.rodata);\n')
+        self.assert_not_approved(self.progress())
+
+    def add_braille_fixture(self):
+        project = Path(__file__).resolve().parents[1]
+        binary = project / 'tools/preproc/preproc'
+        if not binary.is_file():
+            self.skipTest('requires the built real JP preprocessor')
+        self.put('tools/preproc/preproc', binary.read_bytes())
+        (self.root / 'tools/preproc/preproc').chmod(0o700)
+        for path in review.TEXT_CONTEXT:
+            self.put(path, (project / path).read_bytes() if path == 'charmap.txt' else 'fixture source\n')
+        self.put('data/maps/First/scripts.inc', 'First_MapScripts::\n\t.byte 0\n'
+                 'First_Inspect::\n\tlockall\n\tbraillemsgbox SharedBraille\n\treleaseall\n\tend\n')
+        self.put('data/braille.inc', 'SharedBraille::\n\tbrailleformat 4, 6, 26, 13, 7, 9\n'
+                 '\t@ Visual cells are comments, not encoding inputs.\n\t.braille "ココデ アガレ$"\n')
+        self.put('data/event_scripts.s', '.include "data/maps/First/scripts.inc"\n.include "data/braille.inc"\n')
+        batch = self.manifest['batches'][0]
+        batch['review_type'] = 'direct_map_v2'
+        batch['text_dependencies'] = [dict(entry='SharedBraille', path='data/braille.inc', kind='braille')]
+        for path in sorted(review.TEXT_CONTEXT):
+            batch['sources'].append(self.claim(path))
+        batch['sources'].append(self.claim('data/braille.inc', selector='asm_labels', labels=['SharedBraille']))
+        for claim in batch['sources']:
+            claim['sha256'] = review.sha256(review.source_payload(self.root, claim))
+        image = bytearray(i % 256 for i in range(512))
+        payload = review.encoded_text(self.root, (self.root / 'data/braille.inc').read_text(), 'braille')
+        self.assertEqual(len(payload), 16)
+        image[256:272] = payload
+        self.image = bytes(image)
+        self.symbols = []
+        for span in batch['native_spans']:
+            if span['role'] == 'scripts':
+                span['size'] = 11
+            else:
+                span['address'] += 16
+            offset = span['address'] - 0x08000000
+            span['sha256'] = review.sha256(self.image[offset:offset + span['size']])
+            self.symbols.append((span['symbol'], span['address']))
+        batch['native_spans'].append(dict(map=None, role='shared_text', symbol='SharedBraille',
+                                         address=0x08000100, size=16, sha256=review.sha256(payload)))
+        batch['rom_sha1'] = hashlib.sha1(self.image).hexdigest()
+        self.symbols += [('First_Inspect', 0x08000001), ('SharedBraille', 0x08000100)]
+        self.save_manifest()
+        self.put('baserom_jp.gba', self.image)
+        self.put('pokeemerald_jp.gba', self.image)
+        self.put('pokeemerald_jp.elf', elf_image(self.image, self.symbols))
+        self.put('pokeemerald_jp.map', self.linker_map())
+        self.assertEqual(self.progress()['reviewed_maps'], 1)
+
+    def test_v1_is_not_silently_broadened(self):
+        with self.assertRaisesRegex(ValueError, 'unsupported_direct_review_statement'):
+            review.script_analysis('First::\n\tsetdivewarp MAP_FIRST, 1, 2\n\tend\n')
+
+    def test_v2_dive_flag_tile_and_conditional_sizes_are_explicit(self):
+        text = ('First::\n\tsetdivewarp MAP_FIRST, 1, 2\n\tsetflag FLAG_FIRST\n'
+                '\tgetplayerxy VAR_X, VAR_Y\n\tgoto_if_ne VAR_X, 12, Other\n'
+                '\tgoto_if_set FLAG_FIRST, Other\n\tcall_if_set FLAG_FIRST, Other\n'
+                '\tsetmetatile 1, 2, METATILE_FIRST, TRUE\n\tend\n')
+        self.assertEqual(review.extended_analysis(self.root, text), (55, {'Other'}, {}))
+        for unsupported in ('goto_if_ne Other', 'goto_if_ne VAR_X, VAR_Y, Other',
+                            'setdivewarp MAP_FIRST, 1', 'msgbox Text, MSGBOX_DEFAULT',
+                            'special Unknown', '.incbin "raw.bin"', '.set Alias, 0x08000000'):
+            with self.subTest(unsupported=unsupported), self.assertRaises(ValueError):
+                review.extended_analysis(self.root, 'First::\n\t' + unsupported + '\n')
+
+    def test_complete_v2_braille_is_real_preproc_encoded_and_native_bound(self):
+        self.add_braille_fixture()
+        self.assertEqual(self.progress()['reviewed_maps'], 1)
+
+    def test_v2_text_dependency_cannot_be_omitted_or_assigned_the_wrong_kind(self):
+        self.add_braille_fixture()
+        batch = self.manifest['batches'][0]
+        original = copy.deepcopy(batch['text_dependencies'])
+        batch['text_dependencies'] = []
+        self.save_manifest()
+        self.assert_not_approved(self.progress())
+        batch['text_dependencies'] = original
+        batch['text_dependencies'][0]['kind'] = 'string'
+        self.save_manifest()
+        self.assert_not_approved(self.progress())
+
+    def test_v2_text_native_span_cannot_be_truncated_to_a_true_prefix(self):
+        self.add_braille_fixture()
+        span = self.manifest['batches'][0]['native_spans'][-1]
+        span['size'] = 15
+        span['sha256'] = review.sha256(self.image[256:271])
+        self.save_manifest()
+        self.assert_not_approved(self.progress())
+
+    def test_v2_text_reencoding_must_match_rom_even_with_refreshed_source_hashes(self):
+        self.add_braille_fixture()
+        path = self.root / 'data/braille.inc'
+        path.write_text(path.read_text().replace('ココデ', 'ソコデ'))
+        for claim in self.manifest['batches'][0]['sources']:
+            claim['sha256'] = review.sha256(review.source_payload(self.root, claim))
+        self.save_manifest()
+        for name in ('pokeemerald_jp.gba', 'pokeemerald_jp.elf', 'pokeemerald_jp.map'):
+            self.put(name, (self.root / name).read_bytes())
+        report = self.progress()
+        self.assert_not_approved(report)
+        self.assertIn('native_text_encoding_mismatch:SharedBraille', report['batches'][0]['errors'])
+
+    def test_v2_text_source_and_compiler_closure_are_required(self):
+        self.add_braille_fixture()
+        batch = self.manifest['batches'][0]
+        for path in ('data/braille.inc', 'tools/preproc/utf8.cpp'):
+            original = batch['sources']
+            batch['sources'] = [claim for claim in original if claim['path'] != path]
+            self.save_manifest()
+            self.assert_not_approved(self.progress())
+            batch['sources'] = original
+
+    def test_v2_incompatible_local_message_kinds_and_script_targets_are_rejected(self):
+        self.add_braille_fixture()
+        source = 'First_MapScripts::\n\tmsgbox Text, MSGBOX_SIGN\nText::\n\tbrailleformat 1, 2, 3, 4, 5, 6\n\t.braille "ア$"\n'
+        self.put('data/maps/First/scripts.inc', source)
+        with self.assertRaisesRegex(ValueError, 'incompatible_message_target'):
+            review.component_contracts(self.root, self.manifest['batches'][0], ['First'])
+        self.put('data/maps/First/scripts.inc', source.replace('msgbox Text, MSGBOX_SIGN', 'goto Text'))
+        with self.assertRaisesRegex(ValueError, 'script_target_is_text'):
+            review.component_contracts(self.root, self.manifest['batches'][0], ['First'])
+
+    def test_v2_japanese_strings_preserve_at_signs_and_control_sequences(self):
+        self.add_braille_fixture()
+        self.assertEqual(review.statements('Text::\n\t.string "あ@\\n" @ comment\n'), ['.string "あ@\\n"'])
+        text = 'Text::\n\t.string "あ\\n"\n\t.string "い$"\n'
+        encoded = review.encoded_text(self.root, text, 'string')
+        self.assertEqual(encoded[-3:], bytes([0xFE, 0x02, 0xFF]))
+        self.assertEqual(len(encoded), 4)
+
+    def test_v2_preprocessor_rejection_unknown_output_and_unterminated_text_fail_closed(self):
+        self.add_braille_fixture()
+        for text in ('Text::\n\t.string "あ"\n', 'Text::\n\t.string "{UNKNOWN_REVIEW_CONTROL}$"\n',
+                     'Text::\n\tbrailleformat 1, 2, 3, 4, 5\n\t.braille "ア$"\n'):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                review.encoded_text(self.root, text, 'braille' if 'brailleformat' in text else 'string')
+        with patch.object(review.subprocess, 'run') as process:
+            process.return_value.returncode = 0
+            process.return_value.stdout = '\t.byte 0xFF\n.incbin "unknown"\n'
+            with self.assertRaisesRegex(ValueError, 'unexpected_text_preprocessor_output'):
+                review.encoded_text(self.root, 'Text::\n\t.string "あ$"\n', 'string')
+
+    def test_internal_parent_includes_are_canonical_but_escapes_are_not(self):
+        self.put('tools/preproc/sample.cpp', '#include "../../include/constants/characters.h"\n')
+        self.put('include/constants/characters.h', '#define TEXT_END 255\n')
+        closure = review.compile_context(self.root, {'tools/preproc/sample.cpp'})
+        self.assertEqual(closure, {'tools/preproc/sample.cpp', 'include/constants/characters.h'})
+
+    def test_v2_null_connections_require_an_empty_generated_file_and_native_zero_pointer(self):
+        self.add_braille_fixture()
+        metadata = json.loads((self.root / 'data/maps/First/map.json').read_text())
+        metadata['connections'] = None
+        self.put('data/maps/First/map.json', json.dumps(metadata))
+        self.put('data/maps/First/connections.inc', '\n')
+        batch = self.manifest['batches'][0]
+        batch['native_spans'] = [span for span in batch['native_spans'] if span['role'] != 'connections']
+        image = bytearray(self.image)
+        header = next(span for span in batch['native_spans'] if span['role'] == 'header')
+        offset = header['address'] - 0x08000000
+        image[offset + 12:offset + 16] = bytes(4)
+        self.image = bytes(image)
+        batch['rom_sha1'] = hashlib.sha1(self.image).hexdigest()
+        header['sha256'] = review.sha256(self.image[offset:offset + 28])
+        for claim in batch['sources']:
+            claim['sha256'] = review.sha256(review.source_payload(self.root, claim))
+        self.save_manifest()
+        self.put('baserom_jp.gba', self.image)
+        self.put('pokeemerald_jp.gba', self.image)
+        self.put('pokeemerald_jp.elf', elf_image(self.image, self.symbols))
+        self.put('pokeemerald_jp.map', self.linker_map())
+        self.assertEqual(self.progress()['reviewed_maps'], 1)
+        self.put('data/maps/First/connections.inc', 'First_MapConnectionsList::\n\t.byte 0\n')
+        self.assert_not_approved(self.progress())
+        self.put('data/maps/First/connections.inc', '\n')
+        image[offset + 12] = 1
+        self.image = bytes(image)
+        batch['rom_sha1'] = hashlib.sha1(self.image).hexdigest()
+        header['sha256'] = review.sha256(self.image[offset:offset + 28])
+        self.save_manifest()
+        self.put('baserom_jp.gba', self.image)
+        self.put('pokeemerald_jp.gba', self.image)
+        self.put('pokeemerald_jp.elf', elf_image(self.image, self.symbols))
+        self.put('pokeemerald_jp.map', self.linker_map())
+        report = self.progress()
+        self.assert_not_approved(report)
+        self.assertIn('native_null_connection_pointer_mismatch:First', report['batches'][0]['errors'])
+
+    def test_object_event_contract_uses_the_actual_generator_label(self):
+        metadata = json.loads((self.root / 'data/maps/First/map.json').read_text())
+        metadata['object_events'] = [{}]
+        self.put('data/maps/First/map.json', json.dumps(metadata))
+        contracts, shared = review.component_contracts(self.root, self.manifest['batches'][0], ['First'])
+        self.assertEqual(contracts[('First', 'events')], ('First_ObjectEvents', 44))
+
+    def test_external_text_must_remain_reachable_from_the_actual_script_owner(self):
+        self.add_braille_fixture()
+        self.put('data/event_scripts.s', '.include "data/maps/First/scripts.inc"\n')
+        for claim in self.manifest['batches'][0]['sources']:
+            claim['sha256'] = review.sha256(review.source_payload(self.root, claim))
+        self.save_manifest()
+        for name in ('pokeemerald_jp.gba', 'pokeemerald_jp.elf', 'pokeemerald_jp.map'):
+            self.put(name, (self.root / name).read_bytes())
+        report = self.progress()
+        self.assert_not_approved(report)
+        self.assertIn('unreachable_shared_owner:data/braille.inc', report['batches'][0]['errors'])
+
+    def add_sign_fixture(self):
+        self.add_braille_fixture()
+        self.put('data/maps/First/scripts.inc', 'First_MapScripts::\n\t.byte 0\n'
+                 'First_Inspect::\n\tmsgbox First_Text, MSGBOX_SIGN\n\tend\n'
+                 'First_Text::\n\t.string "あ$"\n')
+        self.put('data/std.inc', 'Std_MsgboxSign::\n\tlockall\n\tmessage NULL\n'
+                 '\twaitmessage\n\twaitbuttonpress\n\treleaseall\n\treturn\n')
+        self.put('data/event_scripts.s', 'gStdScripts::\n\t.4byte NULL\n\t.4byte NULL\n'
+                 '\t.4byte NULL\n\t.4byte Std_MsgboxSign\ngStdScripts_End::\n'
+                 '.include "data/maps/First/scripts.inc"\n.include "data/std.inc"\n')
+        batch = self.manifest['batches'][0]
+        batch['text_dependencies'] = []
+        batch['shared_dependencies'] = [dict(entry='Std_MsgboxSign', path='data/std.inc', labels=['Std_MsgboxSign'])]
+        batch['standard_scripts'] = [dict(index=3, entry='Std_MsgboxSign')]
+        batch['sources'] = [c for c in batch['sources'] if c['path'] != 'data/braille.inc']
+        batch['sources'] += [self.claim('data/std.inc', selector='asm_labels', labels=['Std_MsgboxSign']),
+                             self.claim('data/event_scripts.s', selector='asm_labels', labels=['gStdScripts'])]
+        for claim in batch['sources']:
+            claim['sha256'] = review.sha256(review.source_payload(self.root, claim))
+        image = bytearray(self.image)
+        image[10:12] = bytes([1, 255])
+        image[288:298] = bytes.fromhex('696700000000666d6b03')
+        image[384:400] = bytes(12) + struct.pack('<I', 0x08000120)
+        self.image = bytes(image)
+        batch['rom_sha1'] = hashlib.sha1(self.image).hexdigest()
+        batch['native_spans'] = [s for s in batch['native_spans'] if s['role'] != 'shared_text']
+        batch['native_spans'][0]['size'] = 12
+        batch['native_spans'][0]['sha256'] = review.sha256(self.image[:12])
+        for role, symbol, offset, size in [('shared_script', 'Std_MsgboxSign', 288, 10),
+                                           ('standard_script_table', 'gStdScripts', 384, 16)]:
+            batch['native_spans'].append(dict(map=None, role=role, symbol=symbol, address=0x08000000 + offset,
+                                             size=size, sha256=review.sha256(self.image[offset:offset + size])))
+        self.symbols = [(name, value) for name, value in self.symbols if name != 'SharedBraille']
+        self.symbols += [('First_Text', 0x0800000A), ('Std_MsgboxSign', 0x08000120), ('gStdScripts', 0x08000180)]
+        self.save_manifest()
+        self.put('baserom_jp.gba', self.image)
+        self.put('pokeemerald_jp.gba', self.image)
+        self.put('pokeemerald_jp.elf', elf_image(self.image, self.symbols))
+        self.put('pokeemerald_jp.map', self.linker_map())
+        report = self.progress()
+        self.assertEqual(report['reviewed_maps'], 1, report)
+
+    def test_sign_message_requires_the_standard_table_and_the_actual_standard_script(self):
+        self.add_sign_fixture()
+        batch = self.manifest['batches'][0]
+        for field in ('standard_scripts', 'shared_dependencies'):
+            original = batch[field]
+            batch[field] = []
+            self.save_manifest()
+            self.assert_not_approved(self.progress())
+            batch[field] = original
+
+    def test_sign_table_pointer_must_bind_the_real_native_entry(self):
+        self.add_sign_fixture()
+        image = bytearray(self.image)
+        image[396:400] = struct.pack('<I', 0x08000121)
+        self.image = bytes(image)
+        batch = self.manifest['batches'][0]
+        batch['rom_sha1'] = hashlib.sha1(self.image).hexdigest()
+        batch['native_spans'][-1]['sha256'] = review.sha256(self.image[384:400])
+        self.save_manifest()
+        self.put('baserom_jp.gba', self.image)
+        self.put('pokeemerald_jp.gba', self.image)
+        self.put('pokeemerald_jp.elf', elf_image(self.image, self.symbols))
+        self.put('pokeemerald_jp.map', self.linker_map())
+        report = self.progress()
+        self.assert_not_approved(report)
+        self.assertIn('native_standard_script_target_mismatch:Std_MsgboxSign', report['batches'][0]['errors'])
+
+    def test_standard_table_source_and_native_role_cannot_be_substituted(self):
+        self.add_sign_fixture()
+        batch = self.manifest['batches'][0]
+        batch['native_spans'][-1]['role'] = 'shared_script'
+        self.save_manifest()
+        self.assert_not_approved(self.progress())
+        batch['native_spans'][-1]['role'] = 'standard_script_table'
+        batch['sources'] = [c for c in batch['sources'] if not (c['path'] == 'data/event_scripts.s' and c['selector'] == 'asm_labels')]
+        self.save_manifest()
         self.assert_not_approved(self.progress())
 
 
