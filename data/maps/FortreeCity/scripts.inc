@@ -76,7 +76,6 @@ FortreeCity_EventScript_UseDevonScope::
 	waitse
 	playmoncry SPECIES_KECLEON, CRY_MODE_ENCOUNTER
 	delay 40
-	@ JP uses SCR_OP_WAITDOORANIM (0xC5) for this Pokémon-cry wait.
 	waitmoncry
 	applywaitmovement VAR_LAST_TALKED, FortreeCity_Movement_KecleonFlee
 	removeobject VAR_LAST_TALKED

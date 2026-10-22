@@ -28,7 +28,8 @@ STANDARD = {'MSGBOX_NPC': (2, 'Std_MsgboxNPC'), 'MSGBOX_SIGN': (3, 'Std_MsgboxSi
 STANDARD_V4 = STANDARD | {'MSGBOX_YESNO': (5, 'Std_MsgboxYesNo')}
 MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'face_up', 'face_down', 'face_left', 'face_right', 'delay_4', 'reveal_trainer',
-                           'walk_in_place_down', 'walk_faster_right', 'walk_fast_right', 'walk_fast_up'}
+                           'walk_in_place_down', 'walk_faster_right', 'walk_fast_right', 'walk_fast_up',
+                           'set_visible'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -41,7 +42,11 @@ FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1,
     'bufferstdstring': (4, 2), 'playfanfare': (3, 1), 'switch': (5, 1)}
 FIXED_V4 = FIXED | {'setobjectmovementtype': (4, 2), 'getplayerxy': (5, 2),
                    'bufferleadmonspeciesname': (2, 1), 'addvar': (5, 2), 'yesnobox': (3, 2),
-                   'copyobjectxytoperm': (3, 1), 'checkplayergender': (1, 0)}
+                   'copyobjectxytoperm': (3, 1), 'checkplayergender': (1, 0),
+                   'playmoncry': (5, 2), 'waitmoncry': (1, 0),
+                   'setmetatile': (9, 4), 'dotimebasedevents': (1, 0), 'random': (3, 1),
+                   'setfieldeffectargument': (4, 2), 'dofieldeffect': (3, 1), 'waitfieldeffect': (3, 1),
+                   'setweather': (3, 1)}
 
 
 @dataclass
@@ -180,6 +185,14 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_pokenav_call')
             result.texts[args[0]] = 'string'
             size = 5
+        elif version == 4 and op == 'checkitem':
+            if len(args) not in (1, 2) or not re.fullmatch(r'(?:ITEM|VAR)_\w+', args[0]):
+                raise ValueError('unsupported_profile_checkitem')
+            size = 5
+        elif version == 4 and op == 'setstepcallback':
+            if len(args) != 1 or not re.fullmatch(r'STEP_CB_\w+', args[0]):
+                raise ValueError('unsupported_profile_step_callback')
+            size = 2
         elif version == 4 and op in ('pokemart', 'pokemartdecoration'):
             if len(args) != 1:
                 raise ValueError('unsupported_profile_shop')
