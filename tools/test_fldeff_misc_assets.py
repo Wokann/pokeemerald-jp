@@ -42,8 +42,8 @@ class FldeffMiscAssetTests(unittest.TestCase):
         self.assertIn('sSecretPowerCave_Filler[32] FLDEFF_MISC_DATA = {0}', data)
         self.assertEqual(data.count('overworld_frame(sSecretPowerTree_Gfx,'), 5)
         self.assertIn('{gTilesetPalettes_SecretBase[5], FLDEFF_PAL_TAG_SAND_PILLAR}', data)
-        tilesets = (ROOT / 'data/tilesets/graphics.inc').read_text()
-        self.assertEqual(tilesets.count('gTilesetPalettes_SecretBase::'), 1)
+        tilesets = (ROOT / 'src/data/tilesets/graphics.h').read_text()
+        self.assertEqual(tilesets.count('const u16 gTilesetPalettes_SecretBase[][16] TILESET_GRAPHICS_DATA ='), 1)
         self.assertNotIn('.set gTilesetPalettes_SecretBase', tilesets)
         assembly = (ROOT / 'data/data_b2d_mid60.s').read_text()
         for name in ('secret_power.inc', 'secret_power_descriptors.inc', 'record_mix_lights.inc'):

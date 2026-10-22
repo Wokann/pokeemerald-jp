@@ -72,7 +72,7 @@ class TilesetHeaderTests(unittest.TestCase):
     def test_real_resource_definitions_are_exported_without_aliases_or_duplicate_c_storage(self):
         source = (ROOT / 'src/tilesets.c').read_text()
         assets = '\n'.join((ROOT / path).read_text() for path in
-                           ('data/tilesets.s', 'data/tilesets/graphics.inc', 'data/tilesets/metatiles.inc'))
+                           ('src/data/tilesets/graphics.h', 'src/data/tilesets/metatiles.h'))
         resources = {fields[field] for name, fields in headers() for field in FIELDS[2:6]}
         self.assertEqual(len(resources), 290)
         # General graphics already have a real C owner; do not duplicate them
@@ -82,33 +82,33 @@ class TilesetHeaderTests(unittest.TestCase):
         for name in general:
             self.assertRegex(graphics, r'TILESET_GENERAL_DATA const u(?:16|32) ' + name + r'\[')
         for name in resources - general:
-            pattern = r'(?m)^(?:\s*\.globl ' + name + r'\s*\n' + name + r':|' + name + r'::)'
+            pattern = r'(?m)^const u(?:16|32) ' + name + r'\[\](?:\[16\])? TILESET_(?:GRAPHICS|METATILES)_DATA\s*='
             self.assertIsNotNone(re.search(pattern, assets), name)
-        declarations = source + (ROOT / 'include/tilesets.h').read_text()
+        declarations = assets + '\n' + (ROOT / 'include/tilesets.h').read_text()
         for name, fields in headers():
-            self.assertRegex(declarations, r'extern const u32 ' + fields['tiles'] + r'\[\];')
-            self.assertRegex(declarations, r'extern const u16 ' + fields['palettes'] + r'\[\]\[16\];')
+            self.assertRegex(declarations, r'(?:extern )?const u32 ' + fields['tiles'] + r'\[\]')
+            self.assertRegex(declarations, r'(?:extern )?const u16 ' + fields['palettes'] + r'\[\]\[16\]')
             for field in ('metatiles', 'metatileAttributes'):
-                self.assertRegex(declarations, r'extern const u16 ' + fields[field] + r'\[\];')
+                self.assertRegex(declarations, r'const u16 ' + fields[field] + r'\[\]')
         self.assertNotIn('INCBIN', source)
         self.assertNotIn('INCGFX', source)
         self.assertNotRegex(source, r'\.set|asm\s*\(')
 
-    def test_all_forty_eight_new_resource_labels_retain_exact_bounded_raw_spans(self):
+    def test_all_forty_eight_former_raw_resources_have_real_typed_source_definitions(self):
         source = '\n'.join((ROOT / path).read_text() for path in
-                           ('data/tilesets/graphics.inc', 'data/tilesets/metatiles.inc'))
+                           ('src/data/tilesets/graphics.h', 'src/data/tilesets/metatiles.h'))
         total = 0
         for row in RAW_RESOURCES:
             owner, *ranges = row
             for prefix, address, size in zip(('gTilesetTiles_', 'gTilesetPalettes_', 'gMetatiles_', 'gMetatileAttributes_'),
                                              ranges[::2], ranges[1::2]):
                 name = prefix + owner
-                match = re.search(r'(?m)^' + name + r':[^\n]*\n\s*\.incbin "baserom_jp.gba", (0x\w+), (0x\w+)', source)
+                match = re.search(r'(?m)^const u(?:16|32) ' + name + r'\[\](?:\[16\])? TILESET_(?:GRAPHICS|METATILES)_DATA\s*=', source)
                 self.assertIsNotNone(match, name)
-                self.assertEqual(tuple(int(v, 16) for v in match.groups()), (address - BASE, size), name)
                 total += size
         self.assertEqual(total, 124636)
-        self.assertNotIn('.align', source[source.index('gMetatiles_BattlePalace:'):source.index('gMetatiles_BattleDome:')])
+        self.assertNotIn('baserom_jp.gba', source)
+        self.assertIn('aligned(2)', (ROOT / 'src/tilesets.c').read_text())
 
     def test_make_include_closure_and_native_linker_order_retire_the_old_header_owner(self):
         source = (ROOT / 'src/tilesets.c').read_text()
@@ -117,10 +117,13 @@ class TilesetHeaderTests(unittest.TestCase):
         make = (ROOT / 'Makefile').read_text()
         self.assertIn('$(C_BUILDDIR)/tilesets.d: src/tilesets.c Makefile | tools', make)
         self.assertIn('-include $(C_BUILDDIR)/tilesets.d', make)
-        self.assertIn('$(C_BUILDDIR)/tilesets.o: src/tilesets.c src/data/tilesets/headers.h Makefile', make)
+        self.assertIn('$(C_BUILDDIR)/tilesets.o: src/tilesets.c src/data/tilesets/graphics.h src/data/tilesets/metatiles.h src/data/tilesets/headers.h Makefile', make)
+        self.assertIn('$(SCANINC) -M $@ -g $(JP_TILESET_GFX_ROOT)', make)
+        self.assertIn('$(PREPROC) -i -g $(JP_TILESET_GFX_ROOT)', make)
         self.assertNotIn('data/tilesets/headers.inc', make)
-        self.assertNotIn('headers.inc', (ROOT / 'data/tilesets.s').read_text())
-        self.assertIn('data/tilesets.o(.rodata.tilesets);\n        src/tilesets.o(.rodata.tileset_headers);\n'
+        self.assertNotIn('data/tilesets.o', make)
+        self.assertFalse((ROOT / 'data/tilesets.s').exists())
+        self.assertIn('src/tilesets.o(.rodata.tileset_graphics);\n        src/tilesets.o(.rodata.tileset_metatiles);\n        src/tilesets.o(.rodata.tileset_headers);\n'
                       '        data/maps.o(.rodata.after_tilesets);', (ROOT / 'ld_script_jp.txt').read_text())
 
     @unittest.skipUnless((ROOT / 'pokeemerald_jp.elf').is_file() and (ROOT / 'baserom_jp.gba').is_file(),
@@ -174,6 +177,8 @@ class TilesetHeaderTests(unittest.TestCase):
             cpp = run(['cpp', '-iquote', 'include', '-iquote', 'src', '-Wno-trigraphs',
                        '-I', 'tools/agbcc/include', '-I', 'tools/agbcc', '-nostdinc', '-undef',
                        '-std=gnu89', '-P', '-x', 'c', '-'], input=source, text=True)
+            cpp = run(['tools/preproc/preproc', '-i', '-g', 'build/pokeemerald-jp/incgfx/',
+                       'src/tilesets.c', 'charmap.txt'], input=cpp, text=True)
             assembly = run(['tools/agbcc/bin/agbcc', '-mthumb-interwork', '-O2', '-fhex-asm', '-o', '-', '-'], input=cpp, text=True)
             module = temporary / 'module.o'
             run(['tools/binutils/bin/arm-none-eabi-as', '-mcpu=arm7tdmi', '-o', module, '-'], input=assembly, text=True)
