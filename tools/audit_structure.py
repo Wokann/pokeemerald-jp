@@ -34,10 +34,12 @@ try:
     from jp_map_metadata import layout_symbol
     from audit_resource_references import collect_resource_references
     from map_semantic_review import map_review_progress
+    from audit_us_reference import us_reference
 except ModuleNotFoundError:
     from tools.jp_map_metadata import layout_symbol
     from tools.audit_resource_references import collect_resource_references
     from tools.map_semantic_review import map_review_progress
+    from tools.audit_us_reference import us_reference
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -2452,7 +2454,7 @@ def map_progress(root: Path, us_root: Path, convergence: dict[str, object]) -> d
     }
 
 
-def build_report(root: Path, us_root: Path) -> dict[str, object]:
+def _build_report(root: Path, us_root: Path) -> dict[str, object]:
     if not (us_root / "src").is_dir():
         raise ValueError("US source root is missing src/: %s" % us_root)
     jp_files = source_files(root)
@@ -2528,7 +2530,7 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
     script_data = script_data_progress(root, us_root)
 
     return {
-        "schema": 5,
+        "schema": 6,
         "roots": {"jp": str(root), "us": str(us_root)},
         "files": {
             "jp": {"directories": directory_counts(jp_files), "suffixes": extension_counts(jp_files)},
@@ -2575,6 +2577,34 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
     }
 
 
+def build_report(root: Path, us_root: Path, *, us_ref: str | None = 'HEAD') -> dict[str, object]:
+    """Pin US-derived candidates to one committed tree by default."""
+    with us_reference(root, us_root, us_ref) as (reference, provenance):
+        report = _build_report(root, reference)
+        # Keep JSON deterministic and identify the logical repository, not a
+        # random ephemeral directory that has already been cleaned on return.
+        report['roots']['us'] = str(us_root.resolve())
+        report['us_reference'] = provenance
+        if 'functions' in report:
+            symbol_input = reference / 'pokeemerald.sym'
+            available = symbol_input.is_file()
+            report['functions']['us_binary_symbol_evidence'] = {
+                'status': 'provided_unvalidated_artifact' if available else 'unavailable',
+                'sha256': hashlib.sha256(symbol_input.read_bytes()).hexdigest() if available else None,
+                'role': 'symbol_name_candidates_only; no_US_build_or_ROM_equivalence_claim',
+            }
+            if not available:
+                # No supplied US symbols is not evidence of zero binary-only
+                # functions, nor a negative lookup for every individual name.
+                report['functions']['us_binary_only_addresses'] = None
+                for owner in report['functions'].get('ownership', []):
+                    owner['us_binary_symbol'] = None
+        if 'script_data' in report:
+            report['script_data']['linked_sections']['us']['evidence_status'] = (
+                'provided_unvalidated_artifact' if (reference / 'pokeemerald.map').is_file() else 'unavailable')
+        return report
+
+
 def percentage(value: float | None) -> str:
     return "unavailable" if value is None else "%.2f%%" % (value * 100)
 
@@ -2589,6 +2619,10 @@ def print_report(report: dict[str, object]) -> None:
     incbin = report["incbin"]
     assets = report["asset_naming"]
     print("Structural audit (source inventory + evidence-bound JP function addresses)")
+    reference = report.get('us_reference', {})
+    print('US reference: ' + (reference['commit'] + ' (committed Git blobs only; live WIP excluded)'
+                             if reference.get('mode') == 'git_snapshot'
+                             else 'unverified live worktree; not a fixed pret source reference'))
     print("file paths: JP=%d US=%d same=%d JP-only=%d US-only=%d" % (
         sum(files["jp"]["directories"].values()), sum(files["us"]["directories"].values()),
         files["same_path"], files["jp_only"], files["us_only"]))
@@ -2603,10 +2637,10 @@ def print_report(report: dict[str, object]) -> None:
     print("source inline definitions=%d; proved inline_not_emitted=%d; other unresolved=%d (source units, not ROM addresses)" % (
         functions["source_inline_definitions"], len(functions["inline_not_emitted_definitions"]),
         len(functions["unresolved_emitted_or_unknown_bindings"])))
-    print("module home (funcmap US-name candidates): %d strict addresses = %s; path alignment: %d = %s; US binary-only: %d" % (
+    print("module home (funcmap US-name candidates): %d strict addresses = %s; path alignment: %d = %s; US binary-only: %s" % (
         functions["standard_owned_addresses"], percentage(functions["module_home_rate"]),
         functions["module_aligned_addresses"], percentage(functions["path_alignment_rate"]),
-        functions["us_binary_only_addresses"]))
+        'unavailable' if functions["us_binary_only_addresses"] is None else functions["us_binary_only_addresses"]))
     print("JP-exclusive .c paths: %d; non-US-function semantic-gap modules: %d (different scopes)" % (
         len(report["jp_path_only_c_manifest"]), len(report["jp_only_c_manifest"])))
     binding = functions["binding_audit"]
@@ -2675,11 +2709,18 @@ def render_markdown_report(report: dict[str, object]) -> str:
     convergence = report["map_convergence"]
     script_data = report["script_data"]
     transitions = report["transition_files"]
+    reference = report.get('us_reference', {})
+    reference_note = (
+        '> US 统计参照：Git `' + reference['commit'] + '`；仅使用该提交的真实文件，不混入工作区或未登记的 US 编译产物。'
+        if reference.get('mode') == 'git_snapshot' else
+        '> US 统计参照：显式使用未验证的工作区，US 衍生指标不代表固定 pret Git 版本。')
     return "\n".join([
         "# 可复现结构审计进度",
         "",
         "> 此文件由 `python3 tools/audit_structure.py --markdown-output DECOMP_PROGRESS.md` 生成。",
         "> `--output` 只写 JSON，且会拒绝 Markdown 路径，避免误覆盖本报告。",
+        reference_note,
+        '> US 二进制辅助证据缺失时输出 unavailable/null，而非真实零值；源码归属候选不依赖这些未登记的符号或链接产物。',
         "",
         "## 当前快照",
         "",
@@ -2770,6 +2811,8 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "python3 tools/audit_structure.py --map-convergence-manifest build/map-convergence-manifest.json",
         "python3 tools/audit_structure.py --script-data-manifest build/script-data-manifest.json",
         "python3 tools/audit_structure.py --markdown-output DECOMP_PROGRESS.md",
+        "# 固定 US 提交重放（默认 HEAD 会在 JSON 中记录解析后的完整 commit/tree）",
+        "python3 tools/audit_structure.py --us-ref " + reference.get('commit', 'COMMIT') + " --markdown-output DECOMP_PROGRESS.md",
         "# 比较另一份 US 工程时显式指定其根目录",
         "python3 tools/audit_structure.py --us-root /path/to/pokeemerald --markdown-output DECOMP_PROGRESS.md",
         "```",
@@ -2778,8 +2821,10 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "`pokeemerald_jp.elf` 与 `pokeemerald_jp.map`；输入 section 补证还读取对应 JP 对象的 STT_FUNC，"
         "libc 宏名称展开读取真实 include 链。JSON 记录这些输入 SHA-256、未解析原因和旧/新绑定诊断；"
         "缺失证据不按名字猜测。采样这些生成文件时须持有共享构建锁，避免 make clean 窗口。完整报告仍需要匹配的 "
-        "`baserom_jp.gba` 来解析地图 owner；US 二进制符号统计使用指定 US 树的 "
-        "`pokeemerald.sym`（若存在），资源存在性检查也依赖本地提取资源。",
+        "`baserom_jp.gba` 来解析地图 owner。US 默认从指定 Git 提交的真实 blob 读取，"
+        "不读取该目录的移植 WIP 或未跟踪生成物；资产命名候选只比较该提交实际包含的路径，"
+        "缺少生成输出不等于 JP 命名错误。未登记的 US `.sym/.map` 不混入快照；"
+        "缺少辅助证据明确标记 unavailable/null。只有显式 `--us-worktree` 才使用未验证的活目录。",
         "",
         "涉及源码或链接输入的变更须执行：",
         "",
@@ -2817,6 +2862,9 @@ def write_output(path: Path, content: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--us-root", type=Path, default=DEFAULT_US_ROOT)
+    reference_group = parser.add_mutually_exclusive_group()
+    reference_group.add_argument('--us-ref', default='HEAD', help='US Git commit/ref (default HEAD; ignores worktree WIP)')
+    reference_group.add_argument('--us-worktree', action='store_true', help='explicitly use unverified live US sources/artifacts')
     parser.add_argument("--json", action="store_true", help="print stable JSON")
     parser.add_argument("--output", type=Path, help="write the full JSON report (never Markdown)")
     parser.add_argument("--manifest", type=Path,
@@ -2848,7 +2896,10 @@ def main() -> None:
         require_destination_kind(args.markdown_output, "markdown")
     if not (args.us_root / "src").is_dir():
         raise SystemExit("US source root is missing src/: %s" % args.us_root)
-    report = build_report(ROOT, args.us_root.resolve())
+    try:
+        report = build_report(ROOT, args.us_root.resolve(), us_ref=None if args.us_worktree else args.us_ref)
+    except ValueError as exc:
+        raise SystemExit('US reference error: ' + str(exc)) from exc
     encoded = json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
     if args.output:
         write_output(args.output, encoded)

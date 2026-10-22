@@ -2,6 +2,8 @@
 
 > 此文件由 `python3 tools/audit_structure.py --markdown-output DECOMP_PROGRESS.md` 生成。
 > `--output` 只写 JSON，且会拒绝 Markdown 路径，避免误覆盖本报告。
+> US 统计参照：Git `731ad5bfd6e6f265508d0efcca0ba42f9dcf5881`；仅使用该提交的真实文件，不混入工作区或未登记的 US 编译产物。
+> US 二进制辅助证据缺失时输出 unavailable/null，而非真实零值；源码归属候选不依赖这些未登记的符号或链接产物。
 
 ## 当前快照
 
@@ -14,7 +16,7 @@
 - 过渡文件：tail=0、rest=3、mid=2、stub=0、address=0。
 - incbin：6516 引用、6342 条唯一路径、原始二进制 589、非原始 5927、缺失资源 0；可见 baserom 范围 159 条/0x4790D3 字节，未限定范围 0 条。
 - 资源采集口径：物理源码引用（含全部源码分支），非默认构建发射量；未解决/条件诊断 17 条。INCGFX 单列 2120 次、1832 个源资产，生成上下文诊断 2120 条，不计入 incbin 分母。
-- 资产命名：4237 条 graphics/sound 引用中，精确 US 路径 64、唯一 basename 候选 22、歧义 0。
+- 资产命名：4237 条 graphics/sound 引用中，精确 US 路径 50、唯一 basename 候选 0、歧义 0。
 - 地图脚本：468/469 (99.79%) 个首 owner 有 scripts.inc；非 owner scripts.inc：0；结构完整地图：518（直接物理文件满足者 468；合法共享 scripts/events owner 50/11；其中首 owner 469）；map.json 总数：518。
 - 地图静态语义复核：recorded；当前证据有效 14/518。仅计显式登记且源码/原生证据仍有效的地图，不代表运行时玩法验证。
 - 三流地图会合：scripts 流 468、events 流 518、共有 468、地图头 518；事件指针状态 direct=507、shared=11；地图内裸 baserom 范围（脚本/事件/资源）=0/0/0。
@@ -50,11 +52,13 @@ python3 tools/audit_structure.py --jp-path-manifest build/jp-exclusive-c-paths.j
 python3 tools/audit_structure.py --map-convergence-manifest build/map-convergence-manifest.json
 python3 tools/audit_structure.py --script-data-manifest build/script-data-manifest.json
 python3 tools/audit_structure.py --markdown-output DECOMP_PROGRESS.md
+# 固定 US 提交重放（默认 HEAD 会在 JSON 中记录解析后的完整 commit/tree）
+python3 tools/audit_structure.py --us-ref 731ad5bfd6e6f265508d0efcca0ba42f9dcf5881 --markdown-output DECOMP_PROGRESS.md
 # 比较另一份 US 工程时显式指定其根目录
 python3 tools/audit_structure.py --us-root /path/to/pokeemerald --markdown-output DECOMP_PROGRESS.md
 ```
 
-源码库存、funcmap 和 incbin 清单不需要构建。函数地址指标读取匹配的 `pokeemerald_jp.elf` 与 `pokeemerald_jp.map`；输入 section 补证还读取对应 JP 对象的 STT_FUNC，libc 宏名称展开读取真实 include 链。JSON 记录这些输入 SHA-256、未解析原因和旧/新绑定诊断；缺失证据不按名字猜测。采样这些生成文件时须持有共享构建锁，避免 make clean 窗口。完整报告仍需要匹配的 `baserom_jp.gba` 来解析地图 owner；US 二进制符号统计使用指定 US 树的 `pokeemerald.sym`（若存在），资源存在性检查也依赖本地提取资源。
+源码库存、funcmap 和 incbin 清单不需要构建。函数地址指标读取匹配的 `pokeemerald_jp.elf` 与 `pokeemerald_jp.map`；输入 section 补证还读取对应 JP 对象的 STT_FUNC，libc 宏名称展开读取真实 include 链。JSON 记录这些输入 SHA-256、未解析原因和旧/新绑定诊断；缺失证据不按名字猜测。采样这些生成文件时须持有共享构建锁，避免 make clean 窗口。完整报告仍需要匹配的 `baserom_jp.gba` 来解析地图 owner。US 默认从指定 Git 提交的真实 blob 读取，不读取该目录的移植 WIP 或未跟踪生成物；资产命名候选只比较该提交实际包含的路径，缺少生成输出不等于 JP 命名错误。未登记的 US `.sym/.map` 不混入快照；缺少辅助证据明确标记 unavailable/null。只有显式 `--us-worktree` 才使用未验证的活目录。
 
 涉及源码或链接输入的变更须执行：
 
