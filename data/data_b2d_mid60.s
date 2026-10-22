@@ -8,11 +8,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.section .rodata.mid60_tail_prefix
-
-
-	.include "data/field_special_scene/truck_and_ss_tidal.inc"
-
 	.section .rodata.easy_chat_unreferenced_palette_data
 
 	.globl gUnknown_85733B0

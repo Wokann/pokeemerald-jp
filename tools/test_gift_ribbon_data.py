@@ -32,7 +32,7 @@ class GiftRibbonDataTests(unittest.TestCase):
         self.assertIn('memcpy(array, sGiftRibbonsMonDataIds, sizeof(sGiftRibbonsMonDataIds));', source)
         self.assertIn('if (index < GIFT_RIBBONS_COUNT && ribbonId <= MAX_GIFT_RIBBON)', source)
 
-    def test_linker_padding_dependencies_and_unrelated_mid60_owners_are_preserved(self):
+    def test_linker_padding_dependencies_and_unknown_mid60_raw_are_preserved(self):
         linker = (ROOT / 'ld_script_jp.txt').read_text()
         make = (ROOT / 'Makefile').read_text()
         self.assertIn('src/give_gift_ribbon_to_party.o(.rodata.gift_ribbon_data);\n        . = ALIGN(4);\n        src/fldeff_misc.o(.rodata.fldeff_misc_data);', linker)
@@ -41,7 +41,6 @@ class GiftRibbonDataTests(unittest.TestCase):
         self.assertIn('-include $(C_BUILDDIR)/give_gift_ribbon_to_party.d', make)
         self.assertIn('$(C_BUILDDIR)/give_gift_ribbon_to_party.o: src/give_gift_ribbon_to_party.c Makefile', make)
         remainder = (ROOT / 'data/data_b2d_mid60.s').read_text()
-        self.assertIn('.include "data/field_special_scene/truck_and_ss_tidal.inc"', remainder)
         self.assertIn('.incbin "baserom_jp.gba", 0x5733b0, 0x20', remainder)
 
     @unittest.skipUnless((ROOT / 'pokeemerald_jp.elf').is_file() and (ROOT / 'baserom_jp.gba').is_file(),

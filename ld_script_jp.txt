@@ -9694,7 +9694,8 @@ SECTIONS {
         src/give_gift_ribbon_to_party.o(.rodata.gift_ribbon_data);
         . = ALIGN(4);
         src/fldeff_misc.o(.rodata.fldeff_misc_data);
-        data/data_b2d_mid60.o(.rodata.mid60_tail_prefix);
+        src/field_special_scene.o(.rodata.field_special_scene_data);
+        . = ALIGN(4);
         src/rotating_gate.o(.rodata.rotating_gate_data);
         src/item_use.o(.rodata.item_use_mid60_tail_data);
         src/battle_anim_effects_1.o(.rodata);

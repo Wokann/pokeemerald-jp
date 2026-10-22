@@ -43,9 +43,19 @@ enum
 };
 
 // JP: these tables live in the JP data section; wired via ld_script_jp.txt
-extern const s8 sTruckCamera_HorizontalTable[19];
-extern const u8 sSSTidalSailEastMovementScript[2];
-extern const u8 sSSTidalSailWestMovementScript[2];
+static const s8 sTruckCamera_HorizontalTable[] __attribute__((section(".rodata.field_special_scene_data"), aligned(1))) = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, -1, -1, -1, 0};
+
+static const u8 sSSTidalSailEastMovementScript[] __attribute__((section(".rodata.field_special_scene_data"), aligned(1))) =
+{
+    MOVEMENT_ACTION_WALK_FAST_RIGHT,
+    MOVEMENT_ACTION_STEP_END
+};
+
+static const u8 sSSTidalSailWestMovementScript[] __attribute__((section(".rodata.field_special_scene_data"), aligned(1))) =
+{
+    MOVEMENT_ACTION_WALK_FAST_LEFT,
+    MOVEMENT_ACTION_STEP_END
+};
 
 static void Task_Truck3(u8);
 

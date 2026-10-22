@@ -6435,3 +6435,11 @@ $(C_BUILDDIR)/give_gift_ribbon_to_party.d: src/give_gift_ribbon_to_party.c Makef
 -include $(C_BUILDDIR)/give_gift_ribbon_to_party.d
 
 $(C_BUILDDIR)/give_gift_ribbon_to_party.o: src/give_gift_ribbon_to_party.c Makefile
+
+$(C_BUILDDIR)/field_special_scene.d: src/field_special_scene.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -I include -I "" $<
+
+-include $(C_BUILDDIR)/field_special_scene.d
+
+$(C_BUILDDIR)/field_special_scene.o: src/field_special_scene.c Makefile

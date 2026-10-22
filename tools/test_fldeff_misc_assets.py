@@ -68,7 +68,7 @@ class FldeffMiscAssetTests(unittest.TestCase):
         linker = (ROOT / 'ld_script_jp.txt').read_text()
         owners = ['src/give_gift_ribbon_to_party.o(.rodata.gift_ribbon_data)',
                   'src/fldeff_misc.o(.rodata.fldeff_misc_data)',
-                  'data/data_b2d_mid60.o(.rodata.mid60_tail_prefix)',
+                  'src/field_special_scene.o(.rodata.field_special_scene_data)',
                   'src/rotating_gate.o(.rodata.rotating_gate_data)']
         for owner in owners:
             self.assertEqual(linker.count(owner), 1)
