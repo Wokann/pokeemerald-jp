@@ -27,7 +27,7 @@ STANDARD = {'MSGBOX_NPC': (2, 'Std_MsgboxNPC'), 'MSGBOX_SIGN': (3, 'Std_MsgboxSi
             'MSGBOX_DEFAULT': (4, 'Std_MsgboxDefault')}
 STANDARD_V4 = STANDARD | {'MSGBOX_YESNO': (5, 'Std_MsgboxYesNo')}
 MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
-                           'face_up', 'face_down', 'face_left', 'face_right'}
+                           'face_up', 'face_down', 'face_left', 'face_right', 'delay_4', 'reveal_trainer'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -50,6 +50,9 @@ class BlockProfile:
     texts: dict[str, str] = field(default_factory=dict)
     specials: dict[str, int] = field(default_factory=dict)
     standard_scripts: dict[int, str] = field(default_factory=dict)
+    trainer_battles: list[dict] = field(default_factory=list)
+    trainer_run: bool = False
+    trainer_post_return: bool = False
 
 
 def special_waits(root: Path) -> dict[str, int]:
@@ -145,11 +148,36 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_compare')
             size = 11 if count in (2, 3) else 5
             target(args[-1], 'script')
-        elif version == 4 and op in ('goto_if_set', 'goto_if_unset'):
+        elif version == 4 and op in ('goto_if_set', 'goto_if_unset', 'call_if_set'):
             if len(args) != 2 or not re.fullmatch(r'FLAG_\w+', args[0]):
                 raise ValueError('unsupported_profile_flag_branch')
             target(args[-1], 'script')
             size = 9
+        elif version == 4 and op == 'trainerbattle_no_intro':
+            if (len(args) != 2 or not re.fullmatch(r'TRAINER_\w+', args[0])
+                    or not NAME.fullmatch(args[1]) or args[1] == 'NULL'):
+                raise ValueError('unsupported_no_intro_trainer_battle')
+            if position == len(lines) - 1:
+                raise ValueError('missing_inline_trainer_battle_continuation')
+            owner = re.search(r'(?m)^([A-Za-z_]\w*)::?', block)
+            if owner is None:
+                raise ValueError('missing_trainer_battle_owner')
+            target('EventScript_DoNoIntroTrainerBattle', 'script')
+            result.texts[args[1]] = 'string'
+            result.trainer_battles.append(dict(owner=owner[1], trainer=args[0], defeat_text=args[1],
+                address=f'0x{address + result.size:08X}', resume=f'0x{address + result.size + 10:08X}'))
+            size = 10
+        elif version == 4 and op in ('dotrainerbattle', 'gotopostbattlescript'):
+            if args:
+                raise ValueError('unsupported_trainer_battle_primitive')
+            result.trainer_run |= op == 'dotrainerbattle'
+            result.trainer_post_return |= op == 'gotopostbattlescript'
+            size = 1
+        elif version == 4 and op == 'pokenavcall':
+            if len(args) != 1 or not NAME.fullmatch(args[0]) or args[0] == 'NULL':
+                raise ValueError('unsupported_pokenav_call')
+            result.texts[args[0]] = 'string'
+            size = 5
         elif version == 4 and op in ('pokemart', 'pokemartdecoration'):
             if len(args) != 1:
                 raise ValueError('unsupported_profile_shop')

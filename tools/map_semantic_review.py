@@ -49,6 +49,14 @@ TEXT_CONTEXT = {'charmap.txt', 'include/constants/characters.h', 'tools/preproc/
         'string_parser.cpp', 'string_parser.h', 'utf8.cpp', 'utf8.h')}
 STORY_CONTEXT = TEXT_CONTEXT | {'tools/map_review_script_profile.py', 'data/specials.inc',
                                'asm/macros/movement.inc', 'src/field_control_avatar.c'}
+TRAINER_ENGINE_CONTEXT = {'src/scrcmd.c', 'src/battle_setup.c', 'src/overworld.c', 'src/field_screen_effect.c'}
+TRAINER_ENGINE_SYMBOLS = {
+    'ScrCmd_trainerbattle': 'src/scrcmd.c', 'ScrCmd_dotrainerbattle': 'src/scrcmd.c',
+    'ScrCmd_gotopostbattlescript': 'src/scrcmd.c',
+    'BattleSetup_ConfigureTrainerBattle': 'src/battle_setup.c',
+    'BattleSetup_StartTrainerBattle': 'src/battle_setup.c',
+    'BattleSetup_GetScriptAddrAfterBattle': 'src/battle_setup.c',
+}
 LABEL_RE = re.compile(r'(?m)^([A-Za-z_]\w*)::?\s*(?:@[^\n]*)?$')
 SYMBOL_RE = re.compile(r'^\s*0x([0-9a-fA-F]{8,16})\s+([A-Za-z_]\w*)\s*$')
 SHA256_RE = re.compile(r'^[0-9a-f]{64}$')
@@ -239,6 +247,7 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
     story = batch.get('review_type') in ('direct_map_v3', 'direct_map_v4')
     extended = batch.get('review_type') in ('direct_map_v2', 'direct_map_v3', 'direct_map_v4')
     expected_kinds, actual_kinds, used_standard, used_specials = {}, {}, {}, {}
+    trainer_battles, trainer_run, trainer_post = {}, False, False
     if story:
         # Lazy import: the typed profiler reuses this module's text encoder.
         try:
@@ -251,6 +260,7 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             raise ValueError('incompatible_reference_kinds:' + target)
         expected_kinds[target] = kind
     def typed_targets(profiles):
+        nonlocal trainer_run, trainer_post
         texts, targets = {}, set()
         for label, profile in profiles.items():
             if label in actual_kinds and actual_kinds[label] != profile.kind:
@@ -262,6 +272,12 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             targets.update(profile.targets)
             used_standard.update(profile.standard_scripts)
             used_specials.update(profile.specials)
+            for battle in profile.trainer_battles:
+                if battle['address'] in trainer_battles and trainer_battles[battle['address']] != battle:
+                    raise ValueError('conflicting_trainer_battle_site')
+                trainer_battles[battle['address']] = battle
+            trainer_run |= profile.trainer_run
+            trainer_post |= profile.trainer_post_return
         return sum(p.size for p in profiles.values()), targets, texts
     def source_address(owner, symbol):
         spans = batch.get('native_spans')
@@ -437,6 +453,13 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             raise ValueError('standard_script_index_mismatch')
         contracts[(None, 'gStdScripts')] = ('gStdScripts', 4 * len(entries))
     if story:
+        expected_battles = [trainer_battles[key] for key in sorted(trainer_battles)]
+        if batch.get('trainer_battles', []) != expected_battles:
+            raise ValueError('missing_or_changed_trainer_battle_contract')
+        if (bool(expected_battles), trainer_run, trainer_post) not in ((False, False, False), (True, True, True)):
+            raise ValueError('incomplete_trainer_battle_handoff')
+        if expected_battles and not TRAINER_ENGINE_CONTEXT <= {c['path'] for c in batch['sources'] if c.get('selector') == 'file'}:
+            raise ValueError('missing_trainer_engine_source')
         special_contracts = batch.get('special_contracts')
         if (not isinstance(special_contracts, list) or any(not isinstance(c, dict) for c in special_contracts)
                 or len({c.get('entry') for c in special_contracts}) != len(special_contracts)
@@ -655,6 +678,53 @@ def native_elf(data: bytes) -> tuple[dict[str, set[int]], list[tuple[int, bytes]
     return symbols, memory
 
 
+def _literal_define(root: Path, path: str, name: str) -> int:
+    values = re.findall(r'(?m)^\s*#define\s+' + re.escape(name)
+                        + r'\s+(0x[0-9a-fA-F]+|[0-9]+)\s*(?://[^\n]*)?$', local_path(root, path).read_text())
+    if len(values) != 1:
+        raise ValueError('unsupported_trainer_engine_constant:' + name)
+    return int(values[0], 16 if values[0].startswith('0x') else 10)
+
+
+def _trainer_native(root: Path, batch: dict, native: dict, errors: list[str], parsed: list) -> None:
+    """Bind the supported mode's real JP parameter header and C interface."""
+    if not batch.get('trainer_battles'):
+        return
+    handlers = re.findall(r'(?m)^\s*script_cmd_table_entry\s+\w+\s+(\w+)\s*(?:@[^\n]*)?$',
+                          local_path(root, 'data/script_cmd_table.inc').read_text())
+    if handlers.count('ScrCmd_trainerbattle') != 1:
+        raise ValueError('missing_trainer_command_identity')
+    opcode = handlers.index('ScrCmd_trainerbattle')
+    mode = _literal_define(root, 'include/constants/battle_setup.h', 'TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT')
+    local_id = _literal_define(root, 'include/constants/event_objects.h', 'LOCALID_NONE')
+    for symbol, path in TRAINER_ENGINE_SYMBOLS.items():
+        values = {v & ~1 for v in native['symbols'].get(symbol, set())}
+        if len(values) != 1:
+            errors.append('native_trainer_engine_symbol_mismatch:' + symbol)
+            continue
+        address = next(iter(values))
+        expected_owner = path[:-2] + '.o'
+        if (not any(base <= address < base + len(data) for base, data in native['memory'])
+                or not any(start <= address < start + length and
+                           (owner == expected_owner or owner.endswith('/' + expected_owner))
+                           for start, length, owner in native['owners'])):
+            errors.append('native_trainer_engine_owner_mismatch:' + symbol)
+    for battle in batch['trainer_battles']:
+        address, resume = _integer(battle['address']), _integer(battle['resume'])
+        trainer = _literal_define(root, 'include/constants/opponents.h', battle['trainer'])
+        text = native['symbols'].get(battle['defeat_text'], set())
+        owner = native['symbols'].get(battle['owner'], set())
+        if (len(text) != 1 or len(owner) != 1 or next(iter(owner)) > address or resume != address + 10
+                or not any(role in ('scripts', 'shared_script') and start <= address < resume < start + size
+                           for name, role, symbol, start, size, digest in parsed)):
+            errors.append('native_trainer_continuation_mismatch:' + battle['owner'])
+            continue
+        expected = struct.pack('<BBHHI', opcode, mode, trainer, local_id, next(iter(text)))
+        at = address - 0x08000000
+        if native['rom'][at:at + 10] != expected:
+            errors.append('native_trainer_parameter_header_mismatch:' + battle['owner'])
+
+
 def _review_batch(root: Path, batch: dict, maps: set[str], native: dict) -> dict:
     """Validate one explicit direct-owner batch; unsupported cases fail closed."""
     name = batch.get('id')
@@ -714,7 +784,8 @@ def _review_batch(root: Path, batch: dict, maps: set[str], native: dict) -> dict
     context = compile_context(root, required & (REQUIRED_CONTEXT | STORY_CONTEXT) | {
         f'data/maps/{n}/scripts.inc' for n in reviewed} | {
         c['path'] for c in sources if c.get('selector') == 'asm_labels'} | {
-        c['source_path'] for c in batch.get('special_contracts', [])})
+        c['source_path'] for c in batch.get('special_contracts', [])} | (
+        TRAINER_ENGINE_CONTEXT if batch.get('trainer_battles') else set()))
     if not context <= file_claims:
         raise ValueError('incomplete_macro_constant_dependency_closure')
     if not {f'data/maps/{n}/map.json' for n in reviewed} <= us_files.keys():
@@ -872,6 +943,7 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                     if native['symbols'].get(label) != {address}:
                         errors.append('native_addressed_label_mismatch:' + label)
                     address += profile.size
+            _trainer_native(root, batch, native, errors, parsed)
         for entry, pieces in shared.items():
             address = next(a for n, role, symbol, a, size, digest in parsed if n is None and symbol == entry)
             for label, size in pieces:
