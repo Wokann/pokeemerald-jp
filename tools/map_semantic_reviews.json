@@ -2547,9 +2547,13 @@
             "JP_GRAPHICS_GFX_ROOT :=",
             "$(C_BUILDDIR)/graphics.d:",
             "-include $(C_BUILDDIR)/graphics.d",
-            "$(C_BUILDDIR)/graphics.o:"
+            "$(C_BUILDDIR)/graphics.o:",
+            "JP_BATTLE_TEXTBOX_PALETTE :=",
+            "JP_BATTLE_TEXTBOX_PALETTE_BANKS :=",
+            "$(JP_BATTLE_TEXTBOX_PALETTE_BANKS):",
+            "$(JP_BATTLE_TEXTBOX_PALETTE):"
           ],
-          "sha256": "ea41a36d2427cc49bcb471537359fbdf70756a80c747aff13624f906f23911d3"
+          "sha256": "d4673dd060a6f219af13a78504d6e7514d205bbda6f40d459779d2238b0718bf"
         },
         {
           "path": "ld_script_jp.txt",
@@ -2669,7 +2673,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "a730a52b6a355c58fc0f58714e0b93362e08c04db6ad4cab82c30a9b1b196da7"
+          "sha256": "4c62fe01a4cdadf281daf99b1706884c2d4968b7157d82ba066e1501a7d15b70"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -2679,7 +2683,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "36bca54c6a9818d0a39fdf0b1f9b20b9bcecafb5ff7d22115d05cfd6259b0161"
+          "sha256": "03b7f2044a9b92c27528e0c8deed851657852dcc5b505527f70106c4b1eda3df"
         },
         {
           "path": "src/tilesets.c",
@@ -9780,6 +9784,26 @@
           "path": "data/tilesets/primary/general/tiles.png",
           "selector": "file",
           "sha256": "2ed2473bb500180f6f0ebd790cb31db45f7eec1a07ebaf85066db5ba81d6cfb5"
+        },
+        {
+          "path": "graphics/battle_interface/textbox.png",
+          "selector": "file",
+          "sha256": "2718bf5805534ff761b30b735c9b2fd8109614286c48f6c3bbec957e0aa22f71"
+        },
+        {
+          "path": "graphics/battle_interface/textbox_0.pal",
+          "selector": "file",
+          "sha256": "e54b8c47edc9fd8adf603e871f4e19eda9b7353428c9e6faa724309529756808"
+        },
+        {
+          "path": "graphics/battle_interface/textbox_1.pal",
+          "selector": "file",
+          "sha256": "a7ec97d07daa3a0f8e6745e8bbb320127fdb3940bfa8ec54f32dcf5869bd53bc"
+        },
+        {
+          "path": "graphics/battle_interface/textbox_map.bin",
+          "selector": "file",
+          "sha256": "70fe79456f6a52cbd26202d60e15fa55637d4e7a2bc77a31482238ece02974a5"
         }
       ],
       "native_spans": [
@@ -10389,7 +10413,8 @@
         "Does not approve surface maps, the entire Abandoned Ship storyline, global abnormal-weather state writers or unrelated shared owners.",
         "The previously recorded initializer misnaming is resolved: InitTilesetAnim_Underwater is at 080A07BC and InitTilesetAnim_EliteFour at 080A0830. All 75 headers and two auxiliary pointers retain their actual JP bytes. The complete base tileset graphics/metatiles/header stream now belongs to src/tilesets.c and the matching three src/data/tilesets headers. All 1260 PNG/PAL sources and 140 structured metatile inputs, C include closure, native generation rules and link order are fingerprinted; the obsolete assembly owners are retired. The 296 resource objects, including six unused compressed objects and both previously hidden Unknown arrays, were independently byte-verified. These source bindings preserve the original 14-map static decisions; they do not approve all shared animation resources, renderer internals, runtime gameplay or additional maps.",
         "US supplies immutable semantic names/structure; JP ROM alone supplies the physical addresses, lengths, text encoding and localization controls.",
-        "The separate primary General graphics owner remains in src/graphics.c, retaining its JP tiles-before-palettes order and aligned(1) section. Its complete 9428-byte native span [0830FD54,08312228) is now regenerated from one JP PNG and all sixteen JASC-PAL files. JP tile indices 329 and 330 differ from the pinned US PNG; the native JP pixels, 8916-byte compressed stream (including three padding bytes), and all 256 palette words were independently roundtripped. The whole graphics.o remains byte-identical, including the existing 125-tile Pokeblock graph profile made explicit for the build-local scaninc cache. These source bindings do not extend the existing 14-map static decisions to runtime rendering or additional maps."
+        "The separate primary General graphics owner remains in src/graphics.c, retaining its JP tiles-before-palettes order and aligned(1) section. Its complete 9428-byte native span [0830FD54,08312228) is now regenerated from one JP PNG and all sixteen JASC-PAL files. JP tile indices 329 and 330 differ from the pinned US PNG; the native JP pixels, 8916-byte compressed stream (including three padding bytes), and all 256 palette words were independently roundtripped. The whole graphics.o remains byte-identical, including the existing 125-tile Pokeblock graph profile made explicit for the build-local scaninc cache. These source bindings do not extend the existing 14-map static decisions to runtime rendering or additional maps.",
+        "The shared graphics.c source now also owns the complete three-object Battle Textbox data at [08C00000,08C00758), with all 1880 compressed bytes preserved. Its JP PNG, two sixteen-color PAL banks, structured 2048-halfword tilemap, palette aggregate rule and existing fixed link slot are fingerprinted. Twelve JP tiles and the JP tilemap differ from the pinned US assets. Five existing 08C00000 consumer constants are retained as JP instruction-generation exceptions; their source and native function bytes are unchanged. This owner migration does not approve battle/egg/trade runtime behavior, decompile functions or expand the existing fourteen static map decisions."
       ]
     }
   ]

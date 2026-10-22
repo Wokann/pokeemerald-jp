@@ -3,6 +3,14 @@
 #include "string_util.h"
 #include "constants/comparison_operators.h"
 
+#define BATTLE_TEXTBOX_GRAPHICS __attribute__((section(".rodata.battle_textbox"), aligned(4)))
+
+BATTLE_TEXTBOX_GRAPHICS const u32 gBattleTextboxTiles[] = INCGFX_U32("graphics/battle_interface/textbox.png", ".4bpp.lz");
+BATTLE_TEXTBOX_GRAPHICS const u32 gBattleTextboxPalette[] = INCGFX_U32("graphics/battle_interface/textbox.gbapal", ".lz");
+BATTLE_TEXTBOX_GRAPHICS const u32 gBattleTextboxTilemap[] = INCGFX_U32("graphics/battle_interface/textbox_map.bin", ".lz");
+
+#undef BATTLE_TEXTBOX_GRAPHICS
+
 #define DECORATION_ICONS_GRAPHICS __attribute__((section(".rodata.decoration_icons"), aligned(4)))
 #include "data/graphics/decorations.h"
 #undef DECORATION_ICONS_GRAPHICS

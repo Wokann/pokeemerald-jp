@@ -1225,7 +1225,7 @@ $(C_BUILDDIR)/link_rfu_2.o: src/link_rfu_2.c
 include sound/song_order.mk
 SONG_OBJS := $(patsubst sound/songs/midi/%.s,$(OBJ_DIR)/sound/songs/midi/%.o,$(SONG_SRCS))
 
-DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_anim_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o $(OBJ_DIR)/data/field_effect_scripts.o $(OBJ_DIR)/data/battle_scripts_2.o $(OBJ_DIR)/data/battle_ai_scripts.o $(OBJ_DIR)/data/contest_ai_scripts.o $(OBJ_DIR)/data/mystery_event_script_cmd_table.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_b.o $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b2.o $(OBJ_DIR)/data/data_b2b.o $(OBJ_DIR)/data/data_b2d.o $(OBJ_DIR)/data/maps.o $(OBJ_DIR)/data/fieldmap.o $(OBJ_DIR)/data/metatile_behavior.o $(OBJ_DIR)/data/field_door.o $(OBJ_DIR)/data/map_events.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid60.o $(OBJ_DIR)/data/data_b2d_mid62.o $(OBJ_DIR)/data/data_b2d_mid33.o $(OBJ_DIR)/data/battle_transition_tilemaps.o $(OBJ_DIR)/data/data_b2d_mid70.o $(OBJ_DIR)/data/mystery_gift.o $(OBJ_DIR)/data/sound_data.o $(OBJ_DIR)/data/rom_padding.o $(OBJ_DIR)/data/battle_textbox.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_none.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_main.o $(OBJ_DIR)/data/data_rest2c.o $(OBJ_DIR)/data/data_b2d_gfx_front.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
+DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_anim_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o $(OBJ_DIR)/data/field_effect_scripts.o $(OBJ_DIR)/data/battle_scripts_2.o $(OBJ_DIR)/data/battle_ai_scripts.o $(OBJ_DIR)/data/contest_ai_scripts.o $(OBJ_DIR)/data/mystery_event_script_cmd_table.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_b.o $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b2.o $(OBJ_DIR)/data/data_b2b.o $(OBJ_DIR)/data/data_b2d.o $(OBJ_DIR)/data/maps.o $(OBJ_DIR)/data/fieldmap.o $(OBJ_DIR)/data/metatile_behavior.o $(OBJ_DIR)/data/field_door.o $(OBJ_DIR)/data/map_events.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid60.o $(OBJ_DIR)/data/data_b2d_mid62.o $(OBJ_DIR)/data/data_b2d_mid33.o $(OBJ_DIR)/data/battle_transition_tilemaps.o $(OBJ_DIR)/data/data_b2d_mid70.o $(OBJ_DIR)/data/mystery_gift.o $(OBJ_DIR)/data/sound_data.o $(OBJ_DIR)/data/rom_padding.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_none.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_main.o $(OBJ_DIR)/data/data_rest2c.o $(OBJ_DIR)/data/data_b2d_gfx_front.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
 # Migrated data files now build from C or no longer contribute data.
 DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b_mid2b5.o $(OBJ_DIR)/data/data_b_mid2b6.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid62.o,$(DATA_OBJS))
 DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b2d_mid33.o,$(DATA_OBJS))
@@ -1282,6 +1282,7 @@ clean: clean-tools
 	rm -f $(JP_ROULETTE_ASSETS) $(JP_ROULETTE_INTERMEDIATES)
 	rm -f $(JP_MAIL_ASSETS) $(JP_MAIL_INTERMEDIATES)
 	rm -f $(JP_CRY_SCREEN_ASSETS) $(JP_CRY_SCREEN_INTERMEDIATES)
+	rm -f $(JP_BATTLE_TEXTBOX_PALETTE)
 	rm -f $(JP_CONTEST_RESULTS_ASSETS)
 	rm -f $(JP_FRONTIER_UI_ASSETS) $(JP_FRONTIER_UI_INTERMEDIATES)
 
@@ -2981,12 +2982,6 @@ $(OBJ_DIR)/data/sound_data.o: data/sound_data.s baserom_jp.gba
 $(OBJ_DIR)/data/rom_padding.o: data/rom_padding.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	$(AS) $(ASFLAGS) -o $@ $<
-
-$(OBJ_DIR)/data/battle_textbox.o: data/battle_textbox.s baserom_jp.gba
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
-
-
 
 $(OBJ_DIR)/data/data_rest2c.o: data/data_rest2c.s baserom_jp.gba
 	@mkdir -p $(dir $@)
@@ -6447,6 +6442,18 @@ $(C_BUILDDIR)/field_special_scene.d: src/field_special_scene.c Makefile | tools
 $(C_BUILDDIR)/field_special_scene.o: src/field_special_scene.c Makefile
 
 JP_TILESET_GFX_ROOT := $(OBJ_DIR)/incgfx/
+
+# Match the US two-bank textbox palette source chain. Only the aggregate
+# keeps its canonical source pathname; encoded banks live in the build cache.
+JP_BATTLE_TEXTBOX_PALETTE := graphics/battle_interface/textbox.gbapal
+JP_BATTLE_TEXTBOX_PALETTE_BANKS := $(addprefix $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox_,0.pal.gbapal 1.pal.gbapal)
+
+$(JP_BATTLE_TEXTBOX_PALETTE_BANKS): $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox_%.pal.gbapal: graphics/battle_interface/textbox_%.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_BATTLE_TEXTBOX_PALETTE): $(JP_BATTLE_TEXTBOX_PALETTE_BANKS) | tools
+	@cat $^ >$@
 
 $(C_BUILDDIR)/tilesets.d: src/tilesets.c Makefile | tools
 	@mkdir -p $(dir $@)
