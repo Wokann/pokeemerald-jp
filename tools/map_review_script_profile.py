@@ -25,6 +25,9 @@ MOVEMENTS = frozenset(('walk_up', 'walk_down', 'walk_left', 'walk_right',
     'delay_8', 'delay_16', 'step_end', 'emote_exclamation_mark', 'emote_question_mark'))
 STANDARD = {'MSGBOX_NPC': (2, 'Std_MsgboxNPC'), 'MSGBOX_SIGN': (3, 'Std_MsgboxSign'),
             'MSGBOX_DEFAULT': (4, 'Std_MsgboxDefault')}
+STANDARD_V4 = STANDARD | {'MSGBOX_YESNO': (5, 'Std_MsgboxYesNo')}
+MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
+                           'face_up', 'face_down', 'face_left', 'face_right'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -35,6 +38,8 @@ FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1,
     'waitse': (1, 0), 'waitfanfare': (1, 0), 'copyvar': (5, 2),
     'checkitemspace': (5, 2), 'checkitemtype': (3, 1), 'bufferitemname': (4, 2),
     'bufferstdstring': (4, 2), 'playfanfare': (3, 1), 'switch': (5, 1)}
+FIXED_V4 = FIXED | {'setobjectmovementtype': (4, 2), 'getplayerxy': (5, 2),
+                   'bufferleadmonspeciesname': (2, 1), 'addvar': (5, 2), 'yesnobox': (3, 2)}
 
 
 @dataclass
@@ -67,7 +72,11 @@ def special_waits(root: Path) -> dict[str, int]:
     return result
 
 
-def profile_block(root: Path, block: str, waits=None) -> BlockProfile:
+def profile_block(root: Path, block: str, waits=None, *, version=3, address=None) -> BlockProfile:
+    if version not in (3, 4):
+        raise ValueError('unsupported_story_profile_version')
+    if version == 4 and (type(address) is not int or not 0x08000000 <= address < 0x09000000):
+        raise ValueError('missing_or_invalid_story_native_address')
     kind = text_kind(block)
     if kind:
         return BlockProfile(size=len(encoded_text(root, block, kind)), kind=kind)
@@ -77,8 +86,21 @@ def profile_block(root: Path, block: str, waits=None) -> BlockProfile:
     if any(';' in line for line in lines):
         raise ValueError('unmodeled_statement_separator')
     operations = [line.split(None, 1)[0] for line in lines]
-    if any(op in MOVEMENTS for op in operations):
-        if (any(op not in MOVEMENTS for op in operations) or operations[-1] != 'step_end'
+    movements = MOVEMENTS_V4 if version == 4 else MOVEMENTS
+    fixed = FIXED_V4 if version == 4 else FIXED
+    standard = STANDARD_V4 if version == 4 else STANDARD
+    if version == 4 and 'pokemartlistend' in operations:
+        if (operations[-1] != 'pokemartlistend' or operations.count('pokemartlistend') != 1
+                or len(lines) < 2 or address % 4 or lines[-1] != 'pokemartlistend'):
+            raise ValueError('invalid_shop_table_termination_or_alignment')
+        entries = [re.fullmatch(r'\.2byte\s+((ITEM|DECOR)_\w+)', line) for line in lines[:-1]]
+        if (not all(entries) or len({e[2] for e in entries}) != 1
+                or any(e[1] in ('ITEM_NONE', 'DECOR_NONE') for e in entries)):
+            raise ValueError('mixed_or_unmodeled_shop_table')
+        return BlockProfile(size=2 * len(entries) + 4,
+                            kind='mart_items' if entries[0][2] == 'ITEM' else 'mart_decorations')
+    if any(op in movements for op in operations):
+        if (any(op not in movements for op in operations) or operations[-1] != 'step_end'
                 or operations.count('step_end') != 1):
             raise ValueError('mixed_or_unterminated_movement')
         if any(len(line.split()) != 1 for line in lines):
@@ -103,14 +125,14 @@ def profile_block(root: Path, block: str, waits=None) -> BlockProfile:
         if value in result.targets and result.targets[value] != expected:
             raise ValueError('incompatible_profile_target:' + value)
         result.targets[value] = expected
-    for line in lines:
+    for position, line in enumerate(lines):
         parts = line.split(None, 1)
         op = parts[0]
         args = [v.strip() for v in parts[1].split(',')] if len(parts) == 2 else []
         if any(not ATOM.fullmatch(arg) for arg in args):
             raise ValueError('unsupported_profile_argument_expression:' + op)
-        if op in FIXED:
-            size, count = FIXED[op]
+        if op in fixed:
+            size, count = fixed[op]
             if len(args) != count:
                 raise ValueError('unsupported_profile_arguments:' + op)
             if op == 'warp' and not re.fullmatch(r'MAP_\w+', args[0]):
@@ -123,6 +145,21 @@ def profile_block(root: Path, block: str, waits=None) -> BlockProfile:
                 raise ValueError('unsupported_profile_compare')
             size = 11 if count in (2, 3) else 5
             target(args[-1], 'script')
+        elif version == 4 and op in ('goto_if_set', 'goto_if_unset'):
+            if len(args) != 2 or not re.fullmatch(r'FLAG_\w+', args[0]):
+                raise ValueError('unsupported_profile_flag_branch')
+            target(args[-1], 'script')
+            size = 9
+        elif version == 4 and op in ('pokemart', 'pokemartdecoration'):
+            if len(args) != 1:
+                raise ValueError('unsupported_profile_shop')
+            target(args[0], 'mart_items' if op == 'pokemart' else 'mart_decorations')
+            size = 5
+        elif version == 4 and op == '.align':
+            if (args != ['2'] or table_ops or position != len(lines) - 1
+                    or len(lines) < 2 or lines[-2] not in ('end', 'return')):
+                raise ValueError('unsupported_profile_alignment')
+            size = -(address + result.size) % 4
         elif op in ('applymovement', 'applywaitmovement'):
             if len(args) not in (2, 3) or (len(args) == 3 and not re.fullmatch(r'MAP_\w+', args[2])):
                 raise ValueError('unsupported_profile_movement')
@@ -146,20 +183,22 @@ def profile_block(root: Path, block: str, waits=None) -> BlockProfile:
                 raise ValueError('invalid_profile_special_wait:' + function)
             result.specials[function] = waits[function]
             size = {'special': 3, 'specialvar': 5, 'pyramid_getlocation': 8}[op] + waits[function]
-        elif op == 'finditem':
-            if len(args) not in (1, 2) or not re.fullmatch(r'ITEM_\w+', args[0]):
+        elif op == 'finditem' or version == 4 and op == 'giveitem':
+            if (len(args) not in (1, 2) or not re.fullmatch(
+                    r'ITEM_\w+' if op == 'finditem' else r'(?:ITEM|VAR)_\w+', args[0])):
                 raise ValueError('unsupported_profile_finditem')
-            target('Std_FindItem', 'script')
-            result.standard_scripts[1] = 'Std_FindItem'
+            index, entry = (1, 'Std_FindItem') if op == 'finditem' else (0, 'Std_ObtainItem')
+            target(entry, 'script')
+            result.standard_scripts[index] = entry
             size = 12
         elif op == 'additem':
             if len(args) not in (1, 2):
                 raise ValueError('unsupported_profile_additem')
             size = 5
         elif op == 'msgbox':
-            if len(args) != 2 or args[1] not in STANDARD or not NAME.fullmatch(args[0]):
+            if len(args) != 2 or args[1] not in standard or not NAME.fullmatch(args[0]):
                 raise ValueError('unsupported_profile_message')
-            index, entry = STANDARD[args[1]]
+            index, entry = standard[args[1]]
             target(entry, 'script')
             result.texts[args[0]] = 'string'
             result.standard_scripts[index] = entry
@@ -185,7 +224,7 @@ def profile_block(root: Path, block: str, waits=None) -> BlockProfile:
     return result
 
 
-def profile_owner(root: Path, text: str, waits=None) -> dict[str, BlockProfile]:
+def profile_owner(root: Path, text: str, waits=None, *, version=3, address=None) -> dict[str, BlockProfile]:
     waits = special_waits(root) if waits is None else waits
     blocks = label_blocks(text)
     if not blocks:
@@ -193,7 +232,11 @@ def profile_owner(root: Path, text: str, waits=None) -> dict[str, BlockProfile]:
     first = re.search(r'(?m)^' + re.escape(next(iter(blocks))) + r'::?', text)
     if statements(text[:first.start()]):
         raise ValueError('unmodeled_owner_prefix')
-    result = {name: profile_block(root, block, waits) for name, block in blocks.items()}
+    result = {}
+    for name, block in blocks.items():
+        result[name] = profile_block(root, block, waits, version=version, address=address)
+        if address is not None:
+            address += result[name].size
     expected_kinds = {}
     for profile in result.values():
         for name, expected in list(profile.targets.items()) + list(profile.texts.items()):

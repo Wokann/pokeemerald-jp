@@ -235,8 +235,9 @@ def extended_analysis(root: Path, text: str) -> tuple[int, set[str], dict[str, s
 def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict, dict]:
     """Derive component identity/extent and actual shared-call closure from source."""
     contracts, external, external_text = {}, set(), {}
-    story = batch.get('review_type') == 'direct_map_v3'
-    extended = batch.get('review_type') in ('direct_map_v2', 'direct_map_v3')
+    addressed = batch.get('review_type') == 'direct_map_v4'
+    story = batch.get('review_type') in ('direct_map_v3', 'direct_map_v4')
+    extended = batch.get('review_type') in ('direct_map_v2', 'direct_map_v3', 'direct_map_v4')
     expected_kinds, actual_kinds, used_standard, used_specials = {}, {}, {}, {}
     if story:
         # Lazy import: the typed profiler reuses this module's text encoder.
@@ -262,9 +263,17 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             used_standard.update(profile.standard_scripts)
             used_specials.update(profile.specials)
         return sum(p.size for p in profiles.values()), targets, texts
-    def analyze(text):
+    def source_address(owner, symbol):
+        spans = batch.get('native_spans')
+        if not isinstance(spans, list):
+            raise ValueError('missing_addressed_native_spans')
+        matches = [s for s in spans if isinstance(s, dict) and s.get('map') == owner and s.get('symbol') == symbol]
+        if len(matches) != 1:
+            raise ValueError('missing_or_ambiguous_source_address:' + symbol)
+        return _integer(matches[0].get('address'))
+    def analyze(text, address=None):
         if story:
-            return typed_targets(profile_owner(root, text, waits))
+            return typed_targets(profile_owner(root, text, waits, version=4 if addressed else 3, address=address))
         if extended:
             return extended_analysis(root, text)
         length, targets = script_analysis(text)
@@ -284,7 +293,7 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         blocks = label_blocks(script)
         if not blocks or next(iter(blocks)) != name + '_MapScripts':
             raise ValueError('noncanonical_map_script_owner')
-        length, targets, texts = analyze(script)
+        length, targets, texts = analyze(script, source_address(name, name + '_MapScripts') if addressed else None)
         if story:
             expect(name + '_MapScripts', 'map_table')
             for field in ('object_events', 'coord_events', 'bg_events'):
@@ -354,6 +363,13 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         if story and (not isinstance(scope, list) or not scope or len(scope) != len(set(scope))
                       or any(not isinstance(label, str) or not MAP_RE.fullmatch(label) for label in scope)):
             raise ValueError('invalid_shared_typed_scope')
+        prepared = None
+        if addressed:
+            if any(label not in blocks for label in scope):
+                raise ValueError('missing_shared_script_label')
+            prepared = profile_owner(root, '\n'.join(blocks[label] for label in scope), waits,
+                                     version=4, address=source_address(None, entry))
+            typed_targets(prepared)
         reachable, todo = set(), [entry]
         while todo:
             label = todo.pop()
@@ -362,7 +378,10 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             if label not in blocks:
                 raise ValueError('missing_shared_script_label')
             reachable.add(label)
-            _, targets, texts = analyze(blocks[label])
+            if prepared is not None:
+                targets, texts = set(prepared[label].targets), prepared[label].texts
+            else:
+                _, targets, texts = analyze(blocks[label])
             # A selected shared-script claim does not cover other text blocks
             # merely because they happen to be in the same aggregate file.
             collect_text(texts, {} if story else blocks)
@@ -374,7 +393,7 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         if not any(c.get('path') == dep['path'] and c.get('selector') == 'asm_labels'
                    and c.get('labels') == ordered for c in batch['sources']):
             raise ValueError('missing_shared_source_binding')
-        sizes = [(label, analyze(blocks[label])[0]) for label in ordered]
+        sizes = [(label, prepared[label].size if prepared is not None else analyze(blocks[label])[0]) for label in ordered]
         shared[entry] = sizes
         contracts[(None, entry)] = (entry, sum(size for label, size in sizes))
     if visited != entries.keys():
@@ -648,7 +667,7 @@ def _review_batch(root: Path, batch: dict, maps: set[str], native: dict) -> dict
         raise ValueError('invalid_map_list')
     if not set(reviewed) <= maps:
         raise ValueError('unknown_map')
-    if batch.get('review_type') not in ('direct_map_v1', 'direct_map_v2', 'direct_map_v3') or batch.get('decision') != 'reviewed':
+    if batch.get('review_type') not in ('direct_map_v1', 'direct_map_v2', 'direct_map_v3', 'direct_map_v4') or batch.get('decision') != 'reviewed':
         raise ValueError('unsupported_or_unapproved_review')
     if not SHA1_RE.fullmatch(str(batch.get('jp_commit', ''))):
         raise ValueError('missing_jp_baseline')
@@ -686,9 +705,9 @@ def _review_batch(root: Path, batch: dict, maps: set[str], native: dict) -> dict
         if claim.get('selector') == 'file':
             file_claims.add(claim.get('path'))
     required = {f'data/maps/{n}/{part}' for n in reviewed for part in REQUIRED_COMPONENTS} | REQUIRED_CONTEXT
-    if batch['review_type'] in ('direct_map_v2', 'direct_map_v3'):
+    if batch['review_type'] in ('direct_map_v2', 'direct_map_v3', 'direct_map_v4'):
         required |= TEXT_CONTEXT
-    if batch['review_type'] == 'direct_map_v3':
+    if batch['review_type'] in ('direct_map_v3', 'direct_map_v4'):
         required |= STORY_CONTEXT
     if not required <= file_claims:
         raise ValueError('incomplete_map_or_generator_source_coverage')
@@ -840,13 +859,26 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                      if base <= address and address + size <= base + len(payload)]
             if len(image) != 1 or image[0] != data:
                 errors.append('native_elf_bytes_mismatch:' + symbol)
+        if batch['review_type'] == 'direct_map_v4':
+            try:
+                from map_review_script_profile import profile_owner
+            except ModuleNotFoundError:
+                from tools.map_review_script_profile import profile_owner
+            for name in maps:
+                address = next(a for n, role, symbol, a, size, digest in parsed if n == name and role == 'scripts')
+                profiles = profile_owner(root, local_path(root, f'data/maps/{name}/scripts.inc').read_text(),
+                                         version=4, address=address)
+                for label, profile in profiles.items():
+                    if native['symbols'].get(label) != {address}:
+                        errors.append('native_addressed_label_mismatch:' + label)
+                    address += profile.size
         for entry, pieces in shared.items():
             address = next(a for n, role, symbol, a, size, digest in parsed if n is None and symbol == entry)
             for label, size in pieces:
                 if native['symbols'].get(label) != {address}:
                     errors.append('shared_closure_not_contiguous:' + label)
                 address += size
-        if batch['review_type'] in ('direct_map_v2', 'direct_map_v3'):
+        if batch['review_type'] in ('direct_map_v2', 'direct_map_v3', 'direct_map_v4'):
             for contract in batch.get('special_contracts', []):
                 entry, source = contract['entry'], contract['source_symbol']
                 values = {v & ~1 for v in native['symbols'].get(entry, set())}

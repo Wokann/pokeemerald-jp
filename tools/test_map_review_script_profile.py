@@ -146,7 +146,7 @@ class StoryProfileTests(unittest.TestCase):
         self.assertEqual(len(samples), 144)
         self.check_native_forms(samples)
 
-    def check_native_forms(self, samples, forced_waits=None):
+    def check_native_forms(self, samples, forced_waits=None, *, version=3):
         source = (ROOT / 'data/event_scripts.s').read_text()
         prefix = source[:source.index('\t.include "data/maps/PetalburgCity/scripts.inc"')]
         item_owner = (ROOT / 'data/scripts/obtain_item.inc').read_text()
@@ -169,14 +169,23 @@ class StoryProfileTests(unittest.TestCase):
             waits.update(forced_waits or {})
             for i, line in enumerate(samples):
                 op = line.split(None, 1)[0]
+                address = 0x08000000 + symbols['ProfileStart_%d' % i] if version == 4 else None
+                options = dict(version=version, address=address)
                 if op in ('.byte', '.2byte'):
                     predicted = 1 if op == '.byte' else 2
                 elif op in ('map_script', 'map_script_2'):
                     tail, size = ('\n.byte 0', 1) if op == 'map_script' else ('\n.2byte 0', 2)
-                    predicted = self.parse(line + tail).size - size
+                    predicted = profile.profile_block(ROOT, 'Entry::\n' + line + tail, waits, **options).size - size
+                elif version == 4 and op == '.align':
+                    predicted = profile.profile_block(ROOT, 'Entry::\nend\n' + line, waits,
+                                                      version=4, address=address - 1).size - 1
+                elif version == 4 and op == 'pokemartlistend':
+                    predicted = profile.profile_block(ROOT, 'Stock::\n.2byte ITEM_ETHER\n' + line, waits,
+                                                      version=4, address=0x08000000).size - 2
                 else:
-                    tail = '\nstep_end' if op in profile.MOVEMENTS and op != 'step_end' else ''
-                    predicted = profile.profile_block(ROOT, 'Entry::\n' + line + tail, waits).size - bool(tail)
+                    movements = profile.MOVEMENTS_V4 if version == 4 else profile.MOVEMENTS
+                    tail = '\nstep_end' if op in movements and op != 'step_end' else ''
+                    predicted = profile.profile_block(ROOT, 'Entry::\n' + line + tail, waits, **options).size - bool(tail)
                 self.assertEqual(symbols['ProfileEnd_%d' % i] - symbols['ProfileStart_%d' % i], predicted, line)
 
     @unittest.skipUnless((ROOT / 'tools/preproc/preproc').is_file(), 'requires native build tools')
