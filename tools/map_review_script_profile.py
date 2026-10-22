@@ -27,7 +27,8 @@ STANDARD = {'MSGBOX_NPC': (2, 'Std_MsgboxNPC'), 'MSGBOX_SIGN': (3, 'Std_MsgboxSi
             'MSGBOX_DEFAULT': (4, 'Std_MsgboxDefault')}
 STANDARD_V4 = STANDARD | {'MSGBOX_YESNO': (5, 'Std_MsgboxYesNo')}
 MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
-                           'face_up', 'face_down', 'face_left', 'face_right', 'delay_4', 'reveal_trainer'}
+                           'face_up', 'face_down', 'face_left', 'face_right', 'delay_4', 'reveal_trainer',
+                           'walk_in_place_down', 'walk_faster_right', 'walk_fast_right', 'walk_fast_up'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -39,7 +40,8 @@ FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1,
     'checkitemspace': (5, 2), 'checkitemtype': (3, 1), 'bufferitemname': (4, 2),
     'bufferstdstring': (4, 2), 'playfanfare': (3, 1), 'switch': (5, 1)}
 FIXED_V4 = FIXED | {'setobjectmovementtype': (4, 2), 'getplayerxy': (5, 2),
-                   'bufferleadmonspeciesname': (2, 1), 'addvar': (5, 2), 'yesnobox': (3, 2)}
+                   'bufferleadmonspeciesname': (2, 1), 'addvar': (5, 2), 'yesnobox': (3, 2),
+                   'copyobjectxytoperm': (3, 1), 'checkplayergender': (1, 0)}
 
 
 @dataclass
@@ -148,7 +150,7 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_compare')
             size = 11 if count in (2, 3) else 5
             target(args[-1], 'script')
-        elif version == 4 and op in ('goto_if_set', 'goto_if_unset', 'call_if_set'):
+        elif version == 4 and op in ('goto_if_set', 'goto_if_unset', 'call_if_set', 'call_if_unset'):
             if len(args) != 2 or not re.fullmatch(r'FLAG_\w+', args[0]):
                 raise ValueError('unsupported_profile_flag_branch')
             target(args[-1], 'script')
