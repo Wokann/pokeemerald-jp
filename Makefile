@@ -891,7 +891,7 @@ $(OBJ_DIR)/data/maps.o: data/layouts/layouts.inc data/layouts/layouts_table.inc 
 	data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin
 
 JP_TILESET_ASM_RESOURCES := $(shell find data/tilesets -type f \( -name '*.4bpp.lz' -o -name '*.gbapal' -o -name '*.bin' \) -print)
-$(OBJ_DIR)/data/tilesets.o: data/tilesets.s data/tilesets/graphics.inc data/tilesets/metatiles.inc data/tilesets/headers.inc baserom_jp.gba $(JP_TILESET_ASM_RESOURCES)
+$(OBJ_DIR)/data/tilesets.o: data/tilesets.s data/tilesets/graphics.inc data/tilesets/metatiles.inc baserom_jp.gba $(JP_TILESET_ASM_RESOURCES)
 
 # Match the official flash library builds: agb_flash uses -O (not -O2).
 $(C_BUILDDIR)/agb_flash.o: CFLAGS := -O -mthumb-interwork -fhex-asm
@@ -6443,3 +6443,11 @@ $(C_BUILDDIR)/field_special_scene.d: src/field_special_scene.c Makefile | tools
 -include $(C_BUILDDIR)/field_special_scene.d
 
 $(C_BUILDDIR)/field_special_scene.o: src/field_special_scene.c Makefile
+
+$(C_BUILDDIR)/tilesets.d: src/tilesets.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -I include -I "" $<
+
+-include $(C_BUILDDIR)/tilesets.d
+
+$(C_BUILDDIR)/tilesets.o: src/tilesets.c src/data/tilesets/headers.h Makefile

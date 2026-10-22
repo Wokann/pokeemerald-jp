@@ -28,8 +28,8 @@ NULL_CALLBACKS = {'Petalburg', 'Fallarbor', 'Fortree', 'Lilycove', 'Mossdeep'}
 
 
 def headers():
-    source = (ROOT / 'data/tilesets/headers.inc').read_text()
-    labels = list(re.finditer(r'(?m)^(gTileset_\w+)::?[^\n]*$', source))
+    source = (ROOT / 'src/data/tilesets/headers.h').read_text()
+    labels = list(re.finditer(r'(?m)^const struct Tileset (gTileset_\w+) TILESET_HEADER_DATA =', source))
     return {label[1]: source[label.start():labels[i + 1].start() if i + 1 < len(labels) else len(source)]
             for i, label in enumerate(labels)}
 
@@ -61,19 +61,14 @@ class TilesetInitializerNameTests(unittest.TestCase):
         self.assertEqual({name: int(address, 16) for address, name in funcmap}, expected)
         self.assertEqual({name: int(address, 16) for address, name in config}, expected)
 
-    def test_twenty_three_visible_consumers_use_real_names_and_two_raw_headers_stay_explicit(self):
+    def test_all_twenty_five_consumers_use_the_real_c_header_fields(self):
         blocks = headers()
         self.assertEqual(len(blocks), 75)
         for name, address in ENTRIES:
             block = blocks['gTileset_' + name]
-            if name in ('BattlePyramid', 'BattleDome'):
-                offset = '3B8144' if name == 'BattlePyramid' else '3B80E4'
-                self.assertIn('.incbin "baserom_jp.gba", 0x' + offset + ', 0x18', block)
-            else:
-                pointers = re.findall(r'(?m)^\s*\.4byte\s+([^@\n]+)', block)
-                self.assertEqual(len(pointers), 5, name)
-                self.assertEqual(pointers[-1].strip(), PREFIX + name)
-                self.assertNotIn('.set ', block)
+            callback = re.findall(r'(?m)^\s*\.callback = (\w+),', block)
+            self.assertEqual(callback, [PREFIX + name])
+            self.assertNotIn('.incbin', block)
 
     @unittest.skipUnless((ROOT / 'pokeemerald_jp.elf').is_file() and (ROOT / 'baserom_jp.gba').is_file(),
                          'requires native JP artifacts')

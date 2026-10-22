@@ -9417,6 +9417,7 @@ SECTIONS {
         src/overworld.o(.rodata.overworld_movement_tables);
         src/graphics.o(.rodata.tileset_general_data);
         data/tilesets.o(.rodata.tilesets);
+        src/tilesets.o(.rodata.tileset_headers);
         data/maps.o(.rodata.after_tilesets);
         data/fieldmap.o(.rodata.after_tilesets);
         data/metatile_behavior.o(.rodata.after_tilesets);

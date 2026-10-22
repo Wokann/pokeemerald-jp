@@ -2538,9 +2538,14 @@
             "data/maps/%/header.inc data/maps/%/connections.inc &:",
             "data/layouts/layouts.inc data/layouts/layouts_table.inc include/constants/layouts.h &:",
             "$(OBJ_DIR)/data/maps.o:",
-            "$(OBJ_DIR)/data/map_events.o:"
+            "$(OBJ_DIR)/data/map_events.o:",
+            "$(OBJ_DIR)/data/tilesets.o:",
+            "$(C_BUILDDIR)/tilesets.d:",
+            "-include $(C_BUILDDIR)/tilesets.d",
+            "$(C_BUILDDIR)/tilesets.o:",
+            "$(C_BUILDDIR)/%.o:"
           ],
-          "sha256": "b16534116ac9b7eda07080f7ab7f7ba9000d943e4ec52266f22fba940f470d35"
+          "sha256": "8d05174a253dceac0e314e90be686a7fa2180dda89df5b6648219771c189e518"
         },
         {
           "path": "ld_script_jp.txt",
@@ -2558,13 +2563,139 @@
           "sha256": "0a0b043aae16c7f3beb510ee247f92433130bba32189481118043b3923fabc45"
         },
         {
-          "path": "data/tilesets/headers.inc",
-          "selector": "asm_labels",
-          "labels": [
-            "gTileset_Underwater",
-            "gTileset_EliteFour"
-          ],
-          "sha256": "3e0c40e30a4b4d9bcbf1999bf5abb27abe28fc2804e68df2f482cf5881793e23"
+          "path": "data/tilesets.s",
+          "selector": "file",
+          "sha256": "4e32080fd8d153c367adeac7d9d1b386139670bff351c58c1558f7fd66e35ec7"
+        },
+        {
+          "path": "data/tilesets/graphics.inc",
+          "selector": "file",
+          "sha256": "cbe723766949e9ef3be53ca2b54f5cb89d284a71840218dc0dbcc8e8c41a955e"
+        },
+        {
+          "path": "data/tilesets/metatiles.inc",
+          "selector": "file",
+          "sha256": "a365f94d6527826ff63e70cdbefb87861d1917b1c563ad290b1af4961791c831"
+        },
+        {
+          "path": "include/constants/pokedex.h",
+          "selector": "file",
+          "sha256": "12152fa83b815c4f697cc597e2e07f1d001f97b55e280ce9e978ec043a83863e"
+        },
+        {
+          "path": "include/gametypes.h",
+          "selector": "file",
+          "sha256": "657ca36033861546ac88450a491a2978eaa713a611d7caed03963447cdf99da0"
+        },
+        {
+          "path": "include/gba/defines.h",
+          "selector": "file",
+          "sha256": "528c5983bf23f3b12036e9f7ed20e482b1dbe15e0198ec6bb10292d413f68644"
+        },
+        {
+          "path": "include/gba/gba.h",
+          "selector": "file",
+          "sha256": "c3f80c9bb8c51f6fbf71db5f38a942c079bb073e535807609265d13943c2c0af"
+        },
+        {
+          "path": "include/gba/io_reg.h",
+          "selector": "file",
+          "sha256": "a657a53322f354b898eefe85f15a32be5e229cbc335e200958d18b5f7f0da862"
+        },
+        {
+          "path": "include/gba/isagbprint.h",
+          "selector": "file",
+          "sha256": "63aaf18a9e6c108620e15a3a33e7412c368ba96b676bcc9ec5cbe29d15ac853c"
+        },
+        {
+          "path": "include/gba/macro.h",
+          "selector": "file",
+          "sha256": "5f15b843f963d8713eca0a9c47783fdc8891c654a6c43ac2876890eaab088c12"
+        },
+        {
+          "path": "include/gba/multiboot.h",
+          "selector": "file",
+          "sha256": "117f2e70fd838a650cb9d4b6d14b690f9e9a77191cb19572f3b6309a99e46080"
+        },
+        {
+          "path": "include/gba/syscall.h",
+          "selector": "file",
+          "sha256": "7362949e9581dee93eee42a80ca143edd31880b049617ae7d80fa97eeab4ed89"
+        },
+        {
+          "path": "include/gba/types.h",
+          "selector": "file",
+          "sha256": "5f98c90b5b6eccbe180474b485f0a4b4e84de466c0b9ef3d2cfa0a3ff6d1fd3a"
+        },
+        {
+          "path": "include/global.berry.h",
+          "selector": "file",
+          "sha256": "cb41fd31983dfe78be9b1c847a4d4332eb7a82f2a645fac3fadd93c315df690a"
+        },
+        {
+          "path": "include/global.fieldmap.h",
+          "selector": "file",
+          "sha256": "c455ccc2c0fc8d4ef073aa0b5f94ea15039735f090dfa707ea0541a250dbe96d"
+        },
+        {
+          "path": "include/global.h",
+          "selector": "file",
+          "sha256": "a20b83511538f474ad3cafe16a2f5271ba94c17227037139d41b025e12794934"
+        },
+        {
+          "path": "include/global.tv.h",
+          "selector": "file",
+          "sha256": "c731f365e0667f73ed1b8b6b177b445126334d2e50da9223fde309feccf4b099"
+        },
+        {
+          "path": "include/pokemon.h",
+          "selector": "file",
+          "sha256": "1d6e3a29a24f2a910c642b99b56e58e78814b647600bf5c7e9e0cda21d97c396"
+        },
+        {
+          "path": "include/sprite.h",
+          "selector": "file",
+          "sha256": "439b3fa61f93624d5f6938c82b39beb50b22a8bcab9ca433253cd791dc248f1d"
+        },
+        {
+          "path": "include/string_util.h",
+          "selector": "file",
+          "sha256": "813b88bc86f2084993be613fc34fac0e6c0edf74793761eb8c67f3f6eddd2250"
+        },
+        {
+          "path": "include/text_window.h",
+          "selector": "file",
+          "sha256": "8263f0e2a4569347ac18739967c4c691ab869c7ace2bd56be28d24366770241b"
+        },
+        {
+          "path": "include/tileset_anims.h",
+          "selector": "file",
+          "sha256": "bf24f0cd42df95114c0ee7796ef817e3a69841a43699ddcc7f16f8fc95ade460"
+        },
+        {
+          "path": "include/tilesets.h",
+          "selector": "file",
+          "sha256": "c67df3e041e29250d0a4aa88ebabe320ef91b3ae1d0bd09a57e6b7febd7979a9"
+        },
+        {
+          "path": "ld_script_jp.txt",
+          "selector": "file",
+          "sha256": "3d8ef3ea692d3f530cf43b61c62d43554726ce26a4477b6f8494a5eeee40bb82"
+        },
+        {
+          "path": "src/data/tilesets/headers.h",
+          "selector": "file",
+          "sha256": "8b10c4c596e4835186cbb23215f550582b190cce4dce69313e4346e25fd6796b"
+        },
+        {
+          "path": "src/graphics.c",
+          "selector": "file",
+          "sha256": "4f4dda83e7c5774a30c93be213107514e5b9d3a9099a5f61aa88ee199f1f5189"
+        },
+        {
+          "path": "src/tilesets.c",
+          "selector": "file",
+          "sha256": "e575ad5ac6644b25d7dfc447adcfd898b1e938ba62d31edc8d3de3da14d367f2"
         }
       ],
       "native_spans": [
@@ -3172,7 +3303,7 @@
       "limitations": [
         "Static source/native review only, not an emulator or gameplay test.",
         "Does not approve surface maps, the entire Abandoned Ship storyline, global abnormal-weather state writers or unrelated shared owners.",
-        "The previously recorded initializer misnaming is resolved by an atomic whole-family rename: InitTilesetAnim_Underwater is now at 080A07BC and InitTilesetAnim_EliteFour at 080A0830. All original code and callback pointer bytes remain unchanged. The full C owner and the two tileset source blocks are fingerprinted with this record. This does not approve all shared animation resources or renderer internals.",
+        "The previously recorded initializer misnaming is resolved by an atomic whole-family rename: InitTilesetAnim_Underwater is now at 080A07BC and InitTilesetAnim_EliteFour at 080A0830. All original code and callback pointer bytes remain unchanged. All 75 tileset headers and the two auxiliary constant pointers now have a typed C owner in src/tilesets.c and src/data/tilesets/headers.h. The real assembly resources, C include closure, Make rules and linker placement are fingerprinted here; the obsolete assembly-header source claim is retired. This does not approve all shared animation resources or renderer internals, and does not add any new map-semantic approvals.",
         "US supplies immutable semantic names/structure; JP ROM alone supplies the physical addresses, lengths, text encoding and localization controls."
       ]
     }
