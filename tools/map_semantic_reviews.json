@@ -2551,6 +2551,20 @@
             "data/maps.o"
           ],
           "sha256": "07e8100a59ead9b45b6c7246485b8e4c02d05c81fdfd923915108d24e3ac95ae"
+        },
+        {
+          "path": "src/tileset_anims.c",
+          "selector": "file",
+          "sha256": "0a0b043aae16c7f3beb510ee247f92433130bba32189481118043b3923fabc45"
+        },
+        {
+          "path": "data/tilesets/headers.inc",
+          "selector": "asm_labels",
+          "labels": [
+            "gTileset_Underwater",
+            "gTileset_EliteFour"
+          ],
+          "sha256": "3e0c40e30a4b4d9bcbf1999bf5abb27abe28fc2804e68df2f482cf5881793e23"
         }
       ],
       "native_spans": [
@@ -3158,7 +3172,7 @@
       "limitations": [
         "Static source/native review only, not an emulator or gameplay test.",
         "Does not approve surface maps, the entire Abandoned Ship storyline, global abnormal-weather state writers or unrelated shared owners.",
-        "Known shared-module follow-up: the JP InitTilesetAnim_EliteFour at 080A07BC actually initializes Underwater, while InitTilesetAnim_Underwater at 080A0830 initializes EliteFour. The Underwater tileset retains the correct raw callback 080A07BD; do not substitute the current wrong semantic name. This batch does not approve tileset-animation initializer naming or internals.",
+        "The previously recorded initializer misnaming is resolved by an atomic whole-family rename: InitTilesetAnim_Underwater is now at 080A07BC and InitTilesetAnim_EliteFour at 080A0830. All original code and callback pointer bytes remain unchanged. The full C owner and the two tileset source blocks are fingerprinted with this record. This does not approve all shared animation resources or renderer internals.",
         "US supplies immutable semantic names/structure; JP ROM alone supplies the physical addresses, lengths, text encoding and localization controls."
       ]
     }

@@ -5,7 +5,7 @@ gTileset_General: @ 0x083B7B24
 	.4byte gTilesetPalettes_General  @ palettes
 	.4byte gTileset_General_Metatiles  @ metatiles
 	.4byte gTileset_General_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A03E9  @ callback
+	.4byte InitTilesetAnim_General  @ callback
 	.globl gTileset_Petalburg
 gTileset_Petalburg: @ 0x083B7B3C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -13,7 +13,7 @@ gTileset_Petalburg: @ 0x083B7B3C
 	.4byte gTileset_Petalburg_Palettes  @ palettes
 	.4byte gTileset_Petalburg_Metatiles  @ metatiles
 	.4byte gTileset_Petalburg_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A0535  @ callback
+	.4byte InitTilesetAnim_Petalburg  @ callback
 	.globl gTileset_Rustboro
 gTileset_Rustboro: @ 0x083B7B54
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -21,7 +21,7 @@ gTileset_Rustboro: @ 0x083B7B54
 	.4byte gTileset_Rustboro_Palettes  @ palettes
 	.4byte gTileset_Rustboro_Metatiles  @ metatiles
 	.4byte gTileset_Rustboro_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A055D  @ callback
+	.4byte InitTilesetAnim_Rustboro  @ callback
 	.globl gTileset_Dewford
 gTileset_Dewford: @ 0x083B7B6C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -29,7 +29,7 @@ gTileset_Dewford: @ 0x083B7B6C
 	.4byte gTileset_Dewford_Palettes  @ palettes
 	.4byte gTileset_Dewford_Metatiles  @ metatiles
 	.4byte gTileset_Dewford_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A0589  @ callback
+	.4byte InitTilesetAnim_Dewford  @ callback
 	.globl gTileset_Slateport
 gTileset_Slateport: @ 0x083B7B84
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -37,7 +37,7 @@ gTileset_Slateport: @ 0x083B7B84
 	.4byte gTileset_Slateport_Palettes  @ palettes
 	.4byte gTileset_Slateport_Metatiles  @ metatiles
 	.4byte gTileset_Slateport_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A05B5  @ callback
+	.4byte InitTilesetAnim_Slateport  @ callback
 	.globl gTileset_Mauville
 gTileset_Mauville: @ 0x083B7B9C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -45,7 +45,7 @@ gTileset_Mauville: @ 0x083B7B9C
 	.4byte gTileset_Mauville_Palettes  @ palettes
 	.4byte gTileset_Mauville_Metatiles  @ metatiles
 	.4byte gTileset_Mauville_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A05E1  @ callback
+	.4byte InitTilesetAnim_Mauville  @ callback
 	.globl gTileset_Lavaridge
 gTileset_Lavaridge: @ 0x083B7BB4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -53,7 +53,7 @@ gTileset_Lavaridge: @ 0x083B7BB4
 	.4byte gTileset_Lavaridge_Palettes  @ palettes
 	.4byte gTileset_Lavaridge_Metatiles  @ metatiles
 	.4byte gTileset_Lavaridge_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A0611  @ callback
+	.4byte InitTilesetAnim_Lavaridge  @ callback
 	.globl gTileset_Fallarbor
 gTileset_Fallarbor: @ 0x083B7BCC
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -61,7 +61,7 @@ gTileset_Fallarbor: @ 0x083B7BCC
 	.4byte gTileset_Fallarbor_Palettes  @ palettes
 	.4byte gTileset_Fallarbor_Metatiles  @ metatiles
 	.4byte gTileset_Fallarbor_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A063D  @ callback
+	.4byte InitTilesetAnim_Fallarbor  @ callback
 	.globl gTileset_Fortree
 gTileset_Fortree: @ 0x083B7BE4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -69,7 +69,7 @@ gTileset_Fortree: @ 0x083B7BE4
 	.4byte gTileset_Fortree_Palettes  @ palettes
 	.4byte gTileset_Fortree_Metatiles  @ metatiles
 	.4byte gTileset_Fortree_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A0665  @ callback
+	.4byte InitTilesetAnim_Fortree  @ callback
 	.globl gTileset_Lilycove
 gTileset_Lilycove: @ 0x083B7BFC
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -77,7 +77,7 @@ gTileset_Lilycove: @ 0x083B7BFC
 	.4byte gTileset_Lilycove_Palettes  @ palettes
 	.4byte gTileset_Lilycove_Metatiles  @ metatiles
 	.4byte gTileset_Lilycove_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A068D  @ callback
+	.4byte InitTilesetAnim_Lilycove  @ callback
 	.globl gTileset_Mossdeep
 gTileset_Mossdeep: @ 0x083B7C14
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -85,7 +85,7 @@ gTileset_Mossdeep: @ 0x083B7C14
 	.4byte gTileset_Mossdeep_Palettes  @ palettes
 	.4byte gTileset_Mossdeep_Metatiles  @ metatiles
 	.4byte gTileset_Mossdeep_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A06B5  @ callback
+	.4byte InitTilesetAnim_Mossdeep  @ callback
 	.globl gTileset_EverGrande
 gTileset_EverGrande: @ 0x083B7C2C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -93,7 +93,7 @@ gTileset_EverGrande: @ 0x083B7C2C
 	.4byte gTileset_EverGrande_Palettes  @ palettes
 	.4byte gTileset_EverGrande_Metatiles  @ metatiles
 	.4byte gTileset_EverGrande_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A06DD  @ callback
+	.4byte InitTilesetAnim_EverGrande  @ callback
 	.globl gTileset_Pacifidlog
 gTileset_Pacifidlog: @ 0x083B7C44
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -101,7 +101,7 @@ gTileset_Pacifidlog: @ 0x083B7C44
 	.4byte gTileset_Pacifidlog_Palettes  @ palettes
 	.4byte gTileset_Pacifidlog_Metatiles  @ metatiles
 	.4byte gTileset_Pacifidlog_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A0709  @ callback
+	.4byte InitTilesetAnim_Pacifidlog  @ callback
 	.globl gTileset_Sootopolis
 gTileset_Sootopolis: @ 0x083B7C5C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -109,7 +109,7 @@ gTileset_Sootopolis: @ 0x083B7C5C
 	.4byte gTileset_Sootopolis_Palettes  @ palettes
 	.4byte gTileset_Sootopolis_Metatiles  @ metatiles
 	.4byte gTileset_Sootopolis_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A0739  @ callback
+	.4byte InitTilesetAnim_Sootopolis  @ callback
 	.globl gTileset_BattleFrontierOutsideWest
 gTileset_BattleFrontierOutsideWest: @ 0x083B7C74
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -117,7 +117,7 @@ gTileset_BattleFrontierOutsideWest: @ 0x083B7C74
 	.4byte gTileset_BattleFrontierOutsideWest_Palettes  @ palettes
 	.4byte gTileset_BattleFrontierOutsideWest_Metatiles  @ metatiles
 	.4byte gTileset_BattleFrontierOutsideWest_MetatileAttributes  @ metatileAttributes
-	.4byte InitTilesetAnim_EverGrande + 1  @ callback
+	.4byte InitTilesetAnim_BattleFrontierOutsideWest  @ callback
 	.globl gTileset_BattleFrontierOutsideEast
 gTileset_BattleFrontierOutsideEast: @ 0x083B7C8C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -125,7 +125,7 @@ gTileset_BattleFrontierOutsideEast: @ 0x083B7C8C
 	.4byte gTileset_BattleFrontierOutsideEast_Palettes  @ palettes
 	.4byte gTileset_BattleFrontierOutsideEast_Metatiles  @ metatiles
 	.4byte gTileset_BattleFrontierOutsideEast_MetatileAttributes  @ metatileAttributes
-	.4byte InitTilesetAnim_Lavaridge + 1  @ callback
+	.4byte InitTilesetAnim_BattleFrontierOutsideEast  @ callback
 	.globl gTileset_Building
 gTileset_Building: @ 0x083B7CA4
 	.byte 0x01, 0x00, 0x00, 0x00  @ isCompressed, isSecondary
@@ -133,7 +133,7 @@ gTileset_Building: @ 0x083B7CA4
 	.4byte gTileset_Building_Palettes  @ palettes
 	.4byte gTileset_Building_Metatiles  @ metatiles
 	.4byte gTileset_Building_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A0411  @ callback
+	.4byte InitTilesetAnim_Building  @ callback
 	.globl gTileset_Shop
 gTileset_Shop: @ 0x083B7CBC
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -157,7 +157,7 @@ gTileset_Cave: @ 0x083B7CEC
 	.4byte gTileset_Cave_Palettes  @ palettes
 	.4byte gTileset_Cave_Metatiles  @ metatiles
 	.4byte gTileset_Cave_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A0805  @ callback
+	.4byte InitTilesetAnim_Cave  @ callback
 	.globl gTileset_PokemonSchool
 gTileset_PokemonSchool: @ 0x083B7D04
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -245,7 +245,7 @@ gTileset_BikeShop: @ 0x083B7DF4
 	.4byte gTileset_BikeShop_Palettes  @ palettes
 	.4byte gTileset_BikeShop_Metatiles  @ metatiles
 	.4byte gTileset_BikeShop_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A0881  @ callback
+	.4byte InitTilesetAnim_BikeShop  @ callback
 	.globl gTileset_RusturfTunnel
 gTileset_RusturfTunnel: @ 0x083B7E0C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -357,7 +357,7 @@ gTileset_Underwater: @ 0x083B7F44
 	.4byte gTileset_Underwater_Palettes  @ palettes
 	.4byte gTileset_Underwater_Metatiles  @ metatiles
 	.4byte gTileset_Underwater_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A07BD  @ callback
+	.4byte InitTilesetAnim_Underwater  @ callback
 	.globl gTileset_PetalburgGym
 gTileset_PetalburgGym: @ 0x083B7F5C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -373,7 +373,7 @@ gTileset_SootopolisGym: @ 0x083B7F74
 	.4byte gTileset_SootopolisGym_Palettes  @ palettes
 	.4byte gTileset_SootopolisGym_Metatiles  @ metatiles
 	.4byte gTileset_SootopolisGym_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A07E1  @ callback
+	.4byte InitTilesetAnim_SootopolisGym  @ callback
 	.globl gTileset_GenericBuilding
 gTileset_GenericBuilding: @ 0x083B7F8C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -413,7 +413,7 @@ gTileset_MauvilleGym: @ 0x083B7FEC
 	.4byte gTileset_MauvilleGym_Palettes  @ palettes
 	.4byte gTileset_MauvilleGym_Metatiles  @ metatiles
 	.4byte gTileset_MauvilleGym_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A0855  @ callback
+	.4byte InitTilesetAnim_MauvilleGym  @ callback
 	.globl gTileset_LavaridgeGym
 gTileset_LavaridgeGym: @ 0x083B8004
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
@@ -477,7 +477,7 @@ gTileset_EliteFour: @ 0x083B809C
 	.4byte gTileset_EliteFour_Palettes  @ palettes
 	.4byte gTileset_EliteFour_Metatiles  @ metatiles
 	.4byte gTileset_EliteFour_MetatileAttributes  @ metatileAttributes
-	.4byte 0x080A0831  @ callback
+	.4byte InitTilesetAnim_EliteFour  @ callback
 	.globl gTileset_BattleFrontier
 gTileset_BattleFrontier: @ 0x083B80B4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
