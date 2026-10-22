@@ -134,6 +134,31 @@ class MapSemanticReviewTests(unittest.TestCase):
         self.assertEqual(report['reviewed_map_names'], ['First'])
         self.assertEqual(report['batches'][0]['status'], 'current')
 
+    def test_review_type_summary_counts_only_current_records(self):
+        kinds = ('direct_map_v1', 'direct_map_v2', 'direct_map_v4', 'direct_map_v4')
+        records = [dict(id='a', maps=['First', 'Second'], status='current'),
+                   dict(id='b', maps=['Third'], status='stale'),
+                   dict(id='c', maps=['Fourth'], status='current'),
+                   dict(id='d', maps=['Fifth'], status='native_artifacts_unavailable')]
+        self.manifest['batches'] = [dict(review_type=kind) for kind in kinds]
+        self.save_manifest()
+        # This isolates aggregation, not validation or approval of real maps.
+        with patch.object(review, '_review_batch', side_effect=records):
+            result = review.map_review_progress(self.root, {'First','Second','Third','Fourth','Fifth'})
+        self.assertEqual(result['status'], 'recorded')
+        self.assertEqual(result['reviewed_maps'], 3)
+        self.assertEqual(result['current_maps_by_review_type'], {'direct_map_v1': 2, 'direct_map_v4': 1})
+        self.assertEqual(sum(result['current_maps_by_review_type'].values()), result['reviewed_maps'])
+
+    def test_invalid_duplicate_manifest_cannot_keep_partial_version_counts(self):
+        self.manifest['batches'] = [dict(review_type='direct_map_v4')] * 2
+        self.save_manifest()
+        records = [dict(id='a', maps=['First'], status='current'), dict(id='b', maps=['First'], status='current')]
+        with patch.object(review, '_review_batch', side_effect=records):
+            result = review.map_review_progress(self.root, {'First'})
+        self.assertEqual((result['status'], result['reviewed_maps']), ('invalid_manifest', 0))
+        self.assertEqual(result['current_maps_by_review_type'], {})
+
     def test_structural_files_without_a_manifest_are_not_review(self):
         (self.root / review.MANIFEST_PATH).unlink()
         report = self.progress()

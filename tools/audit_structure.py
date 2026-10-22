@@ -2769,6 +2769,10 @@ def render_markdown_report(report: dict[str, object]) -> str:
         f"- 地图静态语义复核：{maps['semantic_review']['status']}；当前证据有效 "
         f"{maps['semantic_review'].get('reviewed_maps', 0)}/{maps['jp_map_json']}。"
         "仅计显式登记且源码/原生证据仍有效的地图，不代表运行时玩法验证。",
+        "- 有效复核证据版本（同一地图仅计一次）："
+        + ("、".join(f"{kind}={count}" for kind, count in sorted(
+            maps['semantic_review'].get('current_maps_by_review_type', {}).items())) or "未记录")
+        + "。v4 包含按实际地址核对的类型化脚本、事件入口与共享调用闭包；版本统计不代表玩法完成度。",
         f"- 三流地图会合：scripts 流 {convergence['script_stream_maps']}、events 流 "
         f"{convergence['event_stream_maps']}、共有 {convergence['maps_in_both_streams']}、"
         f"地图头 {convergence['header_records']}；事件指针状态 "

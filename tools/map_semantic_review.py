@@ -1398,7 +1398,7 @@ def map_review_progress(root: Path, known_maps: set[str]) -> dict:
     """Return deterministic review status; malformed manifests never approve maps."""
     result = {'status': 'not_recorded', 'manifest': MANIFEST_PATH, 'scope': SCOPE,
               'reviewed_map_names': [], 'reviewed_maps': 0, 'total_maps': len(known_maps),
-              'batches': [], 'errors': []}
+              'current_maps_by_review_type': {}, 'batches': [], 'errors': []}
     path = root / MANIFEST_PATH
     if not path.is_file():
         return result
@@ -1409,7 +1409,7 @@ def map_review_progress(root: Path, known_maps: set[str]) -> dict:
         batches = manifest.get('batches')
         if not isinstance(batches, list) or not batches:
             raise ValueError('empty_or_invalid_review_batches')
-        names, ids, native = set(), set(), {}
+        names, ids, native, current_types = set(), set(), {}, {}
         for batch in batches:
             if not isinstance(batch, dict):
                 raise ValueError('invalid_review_batch')
@@ -1418,10 +1418,14 @@ def map_review_progress(root: Path, known_maps: set[str]) -> dict:
                 raise ValueError('duplicate_batch_or_map_review')
             ids.add(record['id']); names.update(record['maps'])
             result['batches'].append(record)
+            if record['status'] == 'current':
+                kind = batch['review_type']
+                current_types[kind] = current_types.get(kind, 0) + len(record['maps'])
         current = sorted(name for b in result['batches'] if b['status'] == 'current' for name in b['maps'])
-        result.update(status='recorded', reviewed_map_names=current, reviewed_maps=len(current))
+        result.update(status='recorded', reviewed_map_names=current, reviewed_maps=len(current),
+                      current_maps_by_review_type=dict(sorted(current_types.items())))
     except (OSError, UnicodeError, ValueError, TypeError, KeyError) as exc:
-        result.update(status='invalid_manifest', reviewed_map_names=[], reviewed_maps=0,
+        result.update(status='invalid_manifest', reviewed_map_names=[], reviewed_maps=0, current_maps_by_review_type={},
                       batches=[], errors=[str(exc)])
     return result
 

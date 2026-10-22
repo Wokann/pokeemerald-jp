@@ -311,7 +311,7 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             if len(args) != 1 or not re.fullmatch(r'STEP_CB_\w+', args[0]):
                 raise ValueError('unsupported_profile_step_callback')
             size = 2
-        elif version == 4 and op in ('setdivewarp', 'warpsilent', 'warpwhitefade'):
+        elif version == 4 and op in ('setdivewarp', 'setescapewarp', 'warpsilent', 'warpwhitefade'):
             if len(args) != 3 or not re.fullmatch(r'MAP_\w+', args[0]):
                 raise ValueError('unsupported_profile_coordinate_warp')
             size = 8
