@@ -37,7 +37,8 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'walk_fast_left', 'jump_right', 'jump_in_place_right',
                            'disable_jump_landing_ground_effect', 'walk_faster_left', 'walk_fast_down',
                            'walk_in_place_fast_left', 'walk_in_place_fast_right', 'jump_2_down', 'cut_tree',
-                           'walk_faster_down'}
+                           'walk_faster_down', 'lock_anim', 'walk_in_place_left', 'walk_in_place_up',
+                           'rock_smash_break'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -64,11 +65,13 @@ FIXED_V4 = FIXED | {'setobjectmovementtype': (4, 2), 'getplayerxy': (5, 2),
                    'buffertrainerclassname': (4, 2), 'buffertrainername': (4, 2),
                    'buffernumberstring': (4, 2), 'checkpartymove': (3, 1),
                    'bufferpartymonnick': (4, 2), 'buffermovename': (4, 2),
-                   'fadescreenswapbuffers': (2, 1)}
+                   'fadescreenswapbuffers': (2, 1), 'setorcopyvar': (5, 2)}
 
 # These source blocks deliberately continue into the next physical label.
 # A native adjacency check is mandatory; a named target alone is not proof.
 FALLTHROUGHS = {
+    'Route111_EventScript_CheckSetSandstorm': 'Route111_EventScript_SetSandstorm',
+    'Route111_EventScript_SetSandstorm': 'Route111_EventScript_EndCheckSetSandstorm',
     'ProfBirch_EventScript_RatePokedexOrRegister': 'ProfBirch_EventScript_AskRatePokedex',
     'EventScript_StartTrainerApproach': 'EventScript_TrainerApproach',
     'EventScript_DoTrainerBattle': 'EventScript_EndTrainerBattle',
@@ -201,7 +204,8 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             if op == 'warp' and not re.fullmatch(r'MAP_\w+', args[0]):
                 raise ValueError('unsupported_profile_warp')
         elif (op in ('call', 'goto', 'call_if_eq', 'goto_if_eq', 'case')
-              or version == 4 and op in ('goto_if_ge', 'goto_if_le', 'goto_if_ne', 'call_if_ne')):
+              or version == 4 and op in ('goto_if_ge', 'goto_if_le', 'goto_if_ne', 'goto_if_lt',
+                                         'goto_if_gt', 'call_if_ne')):
             count = 2 if op == 'case' else 3 if '_if_' in op else 1
             if len(args) != count:
                 raise ValueError('unsupported_profile_arguments:' + op)
@@ -214,6 +218,15 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_flag_branch')
             target(args[-1], 'script')
             size = 9
+        elif version == 4 and op in ('goto_if_defeated', 'goto_if_not_defeated'):
+            if len(args) != 2 or not re.fullmatch(r'TRAINER_\w+', args[0]):
+                raise ValueError('unsupported_profile_trainer_flag_branch')
+            target(args[1], 'script')
+            size = 9
+        elif version == 4 and op == 'cleartrainerflag':
+            if len(args) != 1 or not re.fullmatch(r'TRAINER_\w+', args[0]):
+                raise ValueError('unsupported_profile_cleartrainerflag')
+            size = 3
         elif version == 4 and op == 'trainerbattle_no_intro':
             if (len(args) != 2 or not re.fullmatch(r'TRAINER_\w+', args[0])
                     or not NAME.fullmatch(args[1]) or args[1] == 'NULL'):

@@ -9,7 +9,7 @@ Route111_MapScripts::
 
 Route111_OnLoad:: @ 0x081EA162
 	call_if_unset FLAG_REGI_DOORS_OPENED, Route111_EventScript_CloseDesertRuins
-	call_if_eq VAR_MIRAGE_TOWER_STATE, TRUE, Route111_EventScript_ShowTemporaryMirageTower
+	call_if_eq VAR_MIRAGE_TOWER_STATE, 1, Route111_EventScript_ShowTemporaryMirageTower
 	end
 
 Route111_EventScript_CloseDesertRuins:: @ 0x081EA177
@@ -39,10 +39,10 @@ Route111_EventScript_ShowTemporaryMirageTower:: @ 0x081EA18A
 	return
 
 Route111_OnTransition:: @ 0x081EA22D
-	setvar VAR_TRAINER_HILL_IS_ACTIVE, FALSE
+	setvar VAR_TRAINER_HILL_IS_ACTIVE, 0
 	special SetMirageTowerVisibility
 	call_if_unset FLAG_MIRAGE_TOWER_VISIBLE, Route111_EventScript_SetLayoutNoMirageTower
-	call_if_eq VAR_MIRAGE_TOWER_STATE, TRUE, Route111_EventScript_SetFallingPlayerGfx
+	call_if_eq VAR_MIRAGE_TOWER_STATE, 1, Route111_EventScript_SetFallingPlayerGfx
 	call_if_eq VAR_MIRAGE_TOWER_STATE, 2, Route111_EventScript_SetMirageTowerGone
 	call Route111_EventScript_CheckSetSandstorm
 	call GabbyAndTy_EventScript_UpdateLocation
@@ -96,7 +96,7 @@ Route111_EventScript_SetMirageTowerGone:: @ 0x081EA2E6
 	return
 
 Route111_OnWarp:: @ 0x081EA2EC
-	map_script_2 VAR_MIRAGE_TOWER_STATE, TRUE, Route111_EventScript_HidePlayerForMirageTower
+	map_script_2 VAR_MIRAGE_TOWER_STATE, 1, Route111_EventScript_HidePlayerForMirageTower
 	.2byte 0
 
 Route111_EventScript_HidePlayerForMirageTower:: @ 0x081EA2F6
@@ -104,7 +104,7 @@ Route111_EventScript_HidePlayerForMirageTower:: @ 0x081EA2F6
 	end
 
 Route111_OnFrame:: @ 0x081EA2FC
-	map_script_2 VAR_MIRAGE_TOWER_STATE, TRUE, Route111_EventScript_MirageTowerDisappear
+	map_script_2 VAR_MIRAGE_TOWER_STATE, 1, Route111_EventScript_MirageTowerDisappear
 	.2byte 0
 
 Route111_EventScript_MirageTowerDisappear:: @ 0x081EA306
@@ -164,13 +164,13 @@ Route111_EventScript_ReceivedBerry:: @ 0x081EA39A
 
 Route111_EventScript_ViciousSandstormTriggerUp:: @ 0x081EA3A4
 	lockall
-	setvar VAR_0x8004, FALSE
+	setvar VAR_0x8004, 0
 	goto Route111_EventScript_ViciousSandstormTrigger
 	end
 
 Route111_EventScript_ViciousSandstormTriggerDown:: @ 0x081EA3B0
 	lockall
-	setvar VAR_0x8004, TRUE
+	setvar VAR_0x8004, 1
 	goto Route111_EventScript_ViciousSandstormTrigger
 	end
 
@@ -189,15 +189,15 @@ Route111_EventScript_ViciousSandstormTriggerRight:: @ 0x081EA3C8
 Route111_EventScript_ViciousSandstormTrigger:: @ 0x081EA3D4
 	checkitem ITEM_GO_GOGGLES
 	goto_if_eq VAR_RESULT, FALSE, Route111_EventScript_PreventRouteAccess
-	setvar VAR_TEMP_3, TRUE
+	setvar VAR_TEMP_3, 1
 	releaseall
 	end
 
 Route111_EventScript_PreventRouteAccess:: @ 0x081EA3EB
 	msgbox gText_SandstormIsVicious, MSGBOX_DEFAULT
 	closemessage
-	call_if_eq VAR_0x8004, FALSE, Route111_EventScript_PushUpFromRoute
-	call_if_eq VAR_0x8004, TRUE, Route111_EventScript_PushDownFromRoute
+	call_if_eq VAR_0x8004, 0, Route111_EventScript_PushUpFromRoute
+	call_if_eq VAR_0x8004, 1, Route111_EventScript_PushDownFromRoute
 	call_if_eq VAR_0x8004, 2, Route111_EventScript_PushLeftFromRoute
 	call_if_eq VAR_0x8004, 3, Route111_EventScript_PushRightFromRoute
 	releaseall
@@ -239,7 +239,7 @@ Route111_EventScript_SunTrigger:: @ 0x081EA456
 	setweather WEATHER_SUNNY
 	fadenewbgm MUS_ROUTE110
 	doweather
-	setvar VAR_TEMP_3, FALSE
+	setvar VAR_TEMP_3, 0
 	end
 
 Route111_EventScript_SandstormTrigger:: @ 0x081EA463

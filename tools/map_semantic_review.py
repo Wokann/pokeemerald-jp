@@ -138,9 +138,12 @@ def shared_include_entry(root: Path, dep: dict) -> str | None:
     boundaries = dep.get('end_before_includes')
     if boundaries is None:
         return None
-    if (dep.get('path') != 'data/event_scripts.s' or not isinstance(boundaries, list)
+    text_owner = (dep.get('kind') in ('string', 'braille')
+                  and isinstance(dep.get('path'), str)
+                  and re.fullmatch(r'data/scripts/[A-Za-z0-9_/]+\.inc', dep['path']))
+    if ((dep.get('path') != 'data/event_scripts.s' and not text_owner) or not isinstance(boundaries, list)
             or not boundaries or any(not isinstance(p, str) or not re.fullmatch(
-                r'data/scripts/[A-Za-z0-9_/]+\.inc', p) for p in boundaries)
+                r'data/(?:scripts|text)/[A-Za-z0-9_/]+\.inc', p) for p in boundaries)
             or len(set(boundaries)) != len(boundaries)):
         raise ValueError('invalid_shared_include_boundary')
     source = local_path(root, boundaries[0]).read_text()
@@ -161,7 +164,7 @@ def shared_script_blocks(root: Path, dep: dict) -> dict[str, str]:
     blocks = label_blocks(local_path(root, dep.get('path')).read_text())
     if following is None:
         return blocks
-    scope = dep.get('labels')
+    scope = dep.get('labels', [dep.get('entry')])
     if (not isinstance(scope, list) or not scope or any(
             not isinstance(label, str) or not MAP_RE.fullmatch(label) for label in scope)
             or len(set(scope)) != len(scope) or scope[-1] not in blocks):
@@ -173,7 +176,10 @@ def shared_script_blocks(root: Path, dep: dict) -> dict[str, str]:
         raise ValueError('missing_shared_include_boundary')
     cut = cuts[0]
     body = ''.join(lines[:cut])
-    if (not statements(body) or statements(body)[-1] not in ('return', 'end')
+    text_owner = dep.get('kind') in ('string', 'braille')
+    terminal = (bool(encoded_text(root, body, dep['kind'])) if text_owner
+                else bool(statements(body)) and statements(body)[-1] in ('return', 'end'))
+    if (not terminal
             or statements(''.join(lines[cut:])) != ['.include "' + p + '"' for p in dep['end_before_includes']]):
         raise ValueError('nonterminal_or_mixed_shared_include_boundary')
     blocks[label] = body
@@ -381,6 +387,46 @@ def dynamic_layout_contracts(root: Path, batch: dict) -> tuple[dict, dict, list]
     return roles, selected, table
 
 
+def story_event_target(event: dict, field: str, *, version=3):
+    """Separate tagged data payloads from actual script pointers, fail closed."""
+    if not isinstance(event, dict):
+        raise ValueError('invalid_story_event_record')
+    target = event.get('script')
+    if field == 'bg_events':
+        kind = event.get('type')
+        if kind == 'hidden_item':
+            if 'script' in event or not all(isinstance(event.get(k), str) and MAP_RE.fullmatch(event[k])
+                                           for k in ('item', 'flag')):
+                raise ValueError('unsupported_story_hidden_item')
+            target = 'EventScript_HiddenItemScript'
+        elif version == 4 and kind == 'secret_base':
+            if ('script' in event or not isinstance(event.get('secret_base_id'), str)
+                    or not re.fullmatch(r'SECRET_BASE_[A-Z0-9_]+', event['secret_base_id'])):
+                raise ValueError('unsupported_story_secret_base')
+            # The BG union stores a base ID, not this pointer. The C dispatcher
+            # selects this root only when facing north and TrySetCurSecretBase succeeds.
+            target = 'SecretBase_EventScript_CheckEntrance'
+        elif kind != 'sign' or target in (None, 'NULL', '0', '0x0', 0):
+            raise ValueError('unsupported_story_background_dispatch')
+    elif field == 'coord_events':
+        if version == 4 and event.get('type') == 'weather':
+            if ('script' in event or 'var' in event or 'var_value' in event
+                    or not isinstance(event.get('weather'), str)
+                    or not re.fullmatch(r'COORD_EVENT_WEATHER_[A-Z0-9_]+', event['weather'])):
+                raise ValueError('unsupported_story_weather_coordinate')
+            # mapjson emits script=NULL,index=0; C passes trigger to DoCoordEventWeather.
+            return None
+        if event.get('type') != 'trigger':
+            raise ValueError('unsupported_story_coordinate_dispatch')
+    elif field != 'object_events':
+        raise ValueError('unsupported_story_event_field')
+    if target is None or target in ('NULL', '0', '0x0') or type(target) is int and target == 0:
+        return None
+    if not isinstance(target, str) or not MAP_RE.fullmatch(target):
+        raise ValueError('nonsemantic_event_script_target')
+    return target
+
+
 def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict, dict]:
     """Derive component identity/extent and actual shared-call closure from source."""
     contracts, external, external_text = {}, set(), {}
@@ -460,23 +506,20 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             expect(name + '_MapScripts', 'map_table')
             for field in ('object_events', 'coord_events', 'bg_events'):
                 for event in metadata.get(field, []):
-                    if not isinstance(event, dict):
-                        raise ValueError('invalid_story_event_record')
-                    target = event.get('script')
-                    if field == 'bg_events':
-                        if event.get('type') == 'hidden_item':
-                            if 'script' in event or not all(isinstance(event.get(k), str) and MAP_RE.fullmatch(event[k])
-                                                          for k in ('item', 'flag')):
-                                raise ValueError('unsupported_story_hidden_item')
-                            target = 'EventScript_HiddenItemScript'
-                        elif event.get('type') != 'sign' or target in (None, 'NULL', '0', '0x0', 0):
-                            raise ValueError('unsupported_story_background_dispatch')
-                    elif field == 'coord_events' and event.get('type') != 'trigger':
-                        raise ValueError('unsupported_story_coordinate_dispatch')
-                    if target is None or target in ('NULL', '0', '0x0') or type(target) is int and target == 0:
+                    target = story_event_target(event, field, version=4 if addressed else 3)
+                    event_context = set()
+                    if addressed and field == 'bg_events' and event.get('type') == 'secret_base':
+                        event_context = {'src/field_control_avatar.c', 'src/secret_base.c', 'src/fldeff_misc.c',
+                                         'include/constants/secret_bases.h'}
+                    elif addressed and field == 'coord_events' and event.get('type') == 'weather':
+                        event_context = {'src/field_control_avatar.c', 'src/coord_event_weather.c',
+                                         'include/constants/weather.h'}
+                    bound = {s.get('path') for s in batch.get('sources', [])
+                             if isinstance(s, dict) and s.get('selector') == 'file'}
+                    if not event_context <= bound:
+                        raise ValueError('missing_story_event_dispatch_context')
+                    if target is None:
                         continue
-                    if not isinstance(target, str) or not MAP_RE.fullmatch(target):
-                        raise ValueError('nonsemantic_event_script_target')
                     expect(target, 'script')
                     targets.add(target)
         if extended:
@@ -593,7 +636,13 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
     for entry, dep in text_entries.items():
         if dep.get('kind') != external_text[entry]:
             raise ValueError('incompatible_message_dependency:' + entry)
-        blocks = label_blocks(local_path(root, dep.get('path')).read_text())
+        if dep.get('end_before_includes') is not None:
+            if not addressed:
+                raise ValueError('unsupported_shared_include_review_version')
+            if not set(dep['end_before_includes']) <= {
+                    c.get('path') for c in batch['sources'] if c.get('selector') == 'file'}:
+                raise ValueError('missing_shared_include_boundary_source')
+        blocks = shared_script_blocks(root, dep)
         if entry not in blocks or not any(c.get('path') == dep['path'] and c.get('selector') == 'asm_labels'
                                           and c.get('labels') == [entry] for c in batch['sources']):
             raise ValueError('missing_text_source_binding')
@@ -1209,15 +1258,19 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                      if base <= address and address + size <= base + len(payload)]
             if len(image) != 1 or image[0] != data:
                 errors.append('native_elf_bytes_mismatch:' + symbol)
-        for dep in batch.get('shared_dependencies', []):
+        for dep in batch.get('shared_dependencies', []) + batch.get('text_dependencies', []):
             following = shared_include_entry(root, dep)
             if following is not None:
-                last = dep['labels'][-1]
-                sizes = dict(shared[dep['entry']])
+                last = dep.get('labels', [dep['entry']])[-1]
+                sizes = (dict(shared[dep['entry']]) if dep['entry'] in shared
+                         else {dep['entry']: contracts[(None, dep['entry'])][1]})
                 addresses = native['symbols'].get(last, set())
                 expected = {a + sizes[last] for a in addresses}
+                linker = native['map_symbols'].get(following)
+                linker_mismatch = (linker != expected if dep.get('kind') not in ('string', 'braille')
+                                   else linker is not None and linker != expected)
                 if (len(expected) != 1 or native['symbols'].get(following) != expected
-                        or native['map_symbols'].get(following) != expected):
+                        or linker_mismatch):
                     errors.append('native_shared_include_boundary_mismatch:' + last)
         if batch['review_type'] == 'direct_map_v4':
             try:
@@ -1231,6 +1284,8 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                 for label, profile in profiles.items():
                     if native['symbols'].get(label) != {address}:
                         errors.append('native_addressed_label_mismatch:' + label)
+                    if profile.fallthrough and native['symbols'].get(profile.fallthrough) != {address + profile.size}:
+                        errors.append('native_script_fallthrough_mismatch:' + label)
                     address += profile.size
             for dep in batch.get('shared_dependencies', []):
                 block = shared_script_blocks(root, dep)
@@ -1304,10 +1359,10 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                     address = next(a for n, role, symbol, a, size, digest in parsed if n == name and role == 'header') - 0x08000000
                     if native['rom'][address + 12:address + 16] != bytes(4):
                         errors.append('native_null_connection_pointer_mismatch:' + name)
-            text_sources = [(f'data/maps/{name}/scripts.inc', None) for name in maps]
-            text_sources += [(dep['path'], dep['entry']) for dep in batch.get('text_dependencies', [])]
-            for path, selected in text_sources:
-                for label, block in label_blocks(local_path(root, path).read_text()).items():
+            text_sources = [(dict(path=f'data/maps/{name}/scripts.inc'), None) for name in maps]
+            text_sources += [(dep, dep['entry']) for dep in batch.get('text_dependencies', [])]
+            for dep, selected in text_sources:
+                for label, block in shared_script_blocks(root, dep).items():
                     if selected is not None and selected != label:
                         continue
                     kind = text_kind(block)
