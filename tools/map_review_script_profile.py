@@ -38,7 +38,7 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'disable_jump_landing_ground_effect', 'walk_faster_left', 'walk_fast_down',
                            'walk_in_place_fast_left', 'walk_in_place_fast_right', 'jump_2_down', 'cut_tree',
                            'walk_faster_down', 'lock_anim', 'walk_in_place_left', 'walk_in_place_up',
-                           'rock_smash_break'}
+                           'rock_smash_break', 'walk_in_place_right'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
