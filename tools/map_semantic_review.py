@@ -124,6 +124,53 @@ def statements(text: str) -> list[str]:
     return result
 
 
+def shared_include_entry(root: Path, dep: dict) -> str | None:
+    """An explicitly declared sibling include is not part of a shared script."""
+    boundaries = dep.get('end_before_includes')
+    if boundaries is None:
+        return None
+    if (dep.get('path') != 'data/event_scripts.s' or not isinstance(boundaries, list)
+            or not boundaries or any(not isinstance(p, str) or not re.fullmatch(
+                r'data/scripts/[A-Za-z0-9_/]+\.inc', p) for p in boundaries)
+            or len(set(boundaries)) != len(boundaries)):
+        raise ValueError('invalid_shared_include_boundary')
+    source = local_path(root, boundaries[0]).read_text()
+    first = LABEL_RE.search(source)
+    if first is None or statements(source[:first.start()]):
+        raise ValueError('nonempty_shared_include_prefix')
+    return first[1]
+
+
+def shared_script_blocks(root: Path, dep: dict) -> dict[str, str]:
+    """Keep local profiles strict; trim only a declared, terminal sibling tail.
+
+    The full untrimmed asm-label source claim is still hashed. The boundary
+    file is separately bound and its first native label must immediately
+    follow this script; no included bytes are silently treated as reviewed.
+    """
+    following = shared_include_entry(root, dep)
+    blocks = label_blocks(local_path(root, dep.get('path')).read_text())
+    if following is None:
+        return blocks
+    scope = dep.get('labels')
+    if (not isinstance(scope, list) or not scope or any(
+            not isinstance(label, str) or not MAP_RE.fullmatch(label) for label in scope)
+            or len(set(scope)) != len(scope) or scope[-1] not in blocks):
+        raise ValueError('invalid_shared_include_scope')
+    label = scope[-1]
+    lines = blocks[label].splitlines(True)
+    cuts = [i for i, line in enumerate(lines) if re.match(r'^\s*\.include\b', line)]
+    if not cuts:
+        raise ValueError('missing_shared_include_boundary')
+    cut = cuts[0]
+    body = ''.join(lines[:cut])
+    if (not statements(body) or statements(body)[-1] not in ('return', 'end')
+            or statements(''.join(lines[cut:])) != ['.include "' + p + '"' for p in dep['end_before_includes']]):
+        raise ValueError('nonterminal_or_mixed_shared_include_boundary')
+    blocks[label] = body
+    return blocks
+
+
 def text_kind(text: str) -> str | None:
     operations = {line.split(None, 1)[0] for line in statements(text)}
     if '.string' in operations:
@@ -135,6 +182,24 @@ def text_kind(text: str) -> str | None:
             raise ValueError('mixed_braille_text_block')
         return 'braille'
     return None
+
+
+def special_input_object(root: Path, contract: dict) -> str:
+    """Accept alternate C owners only from the existing conservative Make parser."""
+    variant = contract.get('compile_variant')
+    if variant is None:
+        return contract['source_path'][:-2] + '.o'
+    try:
+        from audit_structure import c_compile_variants, function_definitions
+    except ModuleNotFoundError:
+        from tools.audit_structure import c_compile_variants, function_definitions
+    if (not isinstance(variant, dict) or variant not in c_compile_variants(root)
+            or 'src/' + variant['source_owner'] != contract['source_path']):
+        raise ValueError('invalid_special_compile_variant')
+    definitions = function_definitions(local_path(root, contract['source_path']), root, defines=variant['defines'])
+    if contract['source_symbol'] not in {d.name for d in definitions}:
+        raise ValueError('unselected_special_compile_variant_function')
+    return variant['input_object']
 
 
 def encoded_text(root: Path, text: str, kind: str) -> bytes:
@@ -446,7 +511,12 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         if entry not in entries:
             raise ValueError('missing_shared_call_evidence:' + entry)
         dep = entries[entry]
-        blocks = label_blocks(local_path(root, dep.get('path')).read_text())
+        if dep.get('end_before_includes') is not None and batch['review_type'] != 'direct_map_v4':
+            raise ValueError('unsupported_shared_include_review_version')
+        blocks = shared_script_blocks(root, dep)
+        if not set(dep.get('end_before_includes', [])) <= {
+                c.get('path') for c in batch['sources'] if c.get('selector') == 'file'}:
+            raise ValueError('missing_shared_include_boundary_source')
         scope = dep.get('labels') if story else blocks.keys()
         if story and (not isinstance(scope, list) or not scope or len(scope) != len(set(scope))
                       or any(not isinstance(label, str) or not MAP_RE.fullmatch(label) for label in scope)):
@@ -555,6 +625,11 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
                     or not MAP_RE.fullmatch(str(contract.get('source_symbol', '')))
                     or not any(c.get('path') == path and c.get('selector') == 'file' for c in batch['sources'])):
                 raise ValueError('missing_special_implementation_source')
+            if contract.get('compile_variant') is not None:
+                if batch['review_type'] != 'direct_map_v4' or not {'Makefile', 'tools/audit_structure.py'} <= {
+                        c['path'] for c in batch['sources'] if c.get('selector') == 'file'}:
+                    raise ValueError('missing_special_compile_variant_source')
+                special_input_object(root, contract)
         for entry, dep in text_entries.items():
             actual_kinds[entry] = dep['kind']
         for target, expected_kind in expected_kinds.items():
@@ -1055,6 +1130,16 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                      if base <= address and address + size <= base + len(payload)]
             if len(image) != 1 or image[0] != data:
                 errors.append('native_elf_bytes_mismatch:' + symbol)
+        for dep in batch.get('shared_dependencies', []):
+            following = shared_include_entry(root, dep)
+            if following is not None:
+                last = dep['labels'][-1]
+                sizes = dict(shared[dep['entry']])
+                addresses = native['symbols'].get(last, set())
+                expected = {a + sizes[last] for a in addresses}
+                if (len(expected) != 1 or native['symbols'].get(following) != expected
+                        or native['map_symbols'].get(following) != expected):
+                    errors.append('native_shared_include_boundary_mismatch:' + last)
         if batch['review_type'] == 'direct_map_v4':
             try:
                 from map_review_script_profile import profile_owner
@@ -1084,11 +1169,41 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                     errors.append('native_special_implementation_mismatch:' + entry)
                     continue
                 address = next(iter(values))
-                expected_owner = contract['source_path'][:-2] + '.o'
-                if not any(start <= address < start + length and
-                           (path == expected_owner or path.endswith('/' + expected_owner))
-                           for start, length, path in native['owners']):
+                expected_owner = special_input_object(root, contract)
+                owners = [path for start, length, path in native['owners'] if start <= address < start + length
+                          and (path == expected_owner or path.endswith('/' + expected_owner))]
+                if not owners:
                     errors.append('native_special_input_owner_mismatch:' + entry)
+                if contract.get('compile_variant') is not None:
+                    try:
+                        try:
+                            from audit_structure import elf_object_functions, linker_code_inputs
+                        except ModuleNotFoundError:
+                            from tools.audit_structure import elf_object_functions, linker_code_inputs
+                        if len(set(owners)) != 1:
+                            raise ValueError('ambiguous_special_variant_object')
+                        paths = [p for p in (owners[0], 'build/pokeemerald-jp/' + owners[0])
+                                 if (root / p).is_file()]
+                        if len(paths) != 1:
+                            raise ValueError('missing_or_ambiguous_special_variant_artifact')
+                        obj = local_path(root, paths[0])
+                        if obj.stat().st_mtime_ns > (root / 'pokeemerald_jp.elf').stat().st_mtime_ns:
+                            raise ValueError('special_variant_object_newer_than_elf')
+                        functions = elf_object_functions(obj.read_bytes())
+                        selected = [f for f in functions if f[0] == source and f[3] > 0]
+                        if len(selected) != 1:
+                            raise ValueError('missing_special_variant_object_function')
+                        if 'code_inputs' not in native:
+                            native['code_inputs'] = linker_code_inputs((root / 'pokeemerald_jp.map').read_text())
+                        _, section, offset, size, section_size = selected[0]
+                        tied = [(start, end) for start, end, _, sec, path in native['code_inputs']
+                                if sec == section and (path == expected_owner or path.endswith('/' + expected_owner))
+                                and end - start == section_size and start + offset == address
+                                and address + size <= end]
+                        if len(tied) != 1:
+                            raise ValueError('special_variant_object_offset_mismatch')
+                    except (OSError, ValueError):
+                        errors.append('native_special_variant_object_mismatch:' + entry)
             for standard in batch.get('standard_scripts', []):
                 table = next(a for n, role, symbol, a, size, digest in parsed if role == 'standard_script_table')
                 slot = table - 0x08000000 + 4 * standard['index']

@@ -34,7 +34,7 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'walk_slow_diag_southwest', 'walk_left_affine', 'init_affine_anim',
                            'clear_affine_anim', 'levitate', 'destroy_extra_task',
                            'walk_fast_left', 'jump_right', 'jump_in_place_right',
-                           'disable_jump_landing_ground_effect'}
+                           'disable_jump_landing_ground_effect', 'walk_faster_left', 'walk_fast_down'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -52,7 +52,11 @@ FIXED_V4 = FIXED | {'setobjectmovementtype': (4, 2), 'getplayerxy': (5, 2),
                    'setmetatile': (9, 4), 'dotimebasedevents': (1, 0), 'random': (3, 1),
                    'setfieldeffectargument': (4, 2), 'dofieldeffect': (3, 1), 'waitfieldeffect': (3, 1),
                    'setweather': (3, 1), 'doweather': (1, 0), 'fadenewbgm': (3, 1),
-                   'fadescreenspeed': (3, 2), 'turnobject': (4, 2), 'hideplayer': (5, 0)}
+                   'fadescreenspeed': (3, 2), 'turnobject': (4, 2), 'hideplayer': (5, 0),
+                   'multichoice': (5, 4), 'multichoicedefault': (6, 5),
+                   'setobjectsubpriority': (6, 3), 'resetobjectsubpriority': (5, 2),
+                   'showobjectat': (5, 2), 'incrementgamestat': (2, 1),
+                   'getpartysize': (1, 0), 'giveegg': (3, 1), 'fadescreen': (2, 1)}
 
 
 @dataclass
@@ -155,7 +159,7 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             if op == 'warp' and not re.fullmatch(r'MAP_\w+', args[0]):
                 raise ValueError('unsupported_profile_warp')
         elif (op in ('call', 'goto', 'call_if_eq', 'goto_if_eq', 'case')
-              or version == 4 and op in ('goto_if_ge', 'goto_if_le', 'goto_if_ne')):
+              or version == 4 and op in ('goto_if_ge', 'goto_if_le', 'goto_if_ne', 'call_if_ne')):
             count = 2 if op == 'case' else 3 if '_if_' in op else 1
             if len(args) != count:
                 raise ValueError('unsupported_profile_arguments:' + op)
