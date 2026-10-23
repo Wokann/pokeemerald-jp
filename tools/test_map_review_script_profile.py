@@ -182,6 +182,13 @@ class StoryProfileTests(unittest.TestCase):
                 elif version == 4 and op == 'pokemartlistend':
                     predicted = profile.profile_block(ROOT, 'Stock::\n.2byte ITEM_ETHER\n' + line, waits,
                                                       version=4, address=0x08000000).size - 2
+                elif version == 4 and line == 'msgbox gStringVar4, MSGBOX_DEFAULT':
+                    # The real form still assembles alone above; only the
+                    # causal prediction needs its actual buffer producer.
+                    producer = 'battletent_getopponentintro'
+                    context = profile.profile_block(ROOT, 'Entry::\n' + producer, waits, **options).size
+                    predicted = profile.profile_block(ROOT, 'Entry::\n' + producer + '\n' + line,
+                                                      waits, **options).size - context
                 else:
                     movements = profile.MOVEMENTS_V4 if version == 4 else profile.MOVEMENTS
                     tail = '\nstep_end' if op in movements and op != 'step_end' else ''

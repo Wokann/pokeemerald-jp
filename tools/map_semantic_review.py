@@ -507,6 +507,13 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
                 if (profile.runtime_scripts != {'saved_wonder_card'}
                         or not {'src/script.c', 'src/scrcmd.c', 'src/mystery_gift.c', 'src/util.c'} <= bound):
                     raise ValueError('missing_runtime_script_interface_context')
+            if profile.runtime_texts:
+                bound = {c.get('path') for c in batch['sources'] if c.get('selector') == 'file'}
+                if (profile.runtime_texts != {'gStringVar4': 'battletent_getopponentintro'}
+                        or not {'src/battle_tent.c', 'src/battle_tower.c', 'include/battle_tower.h',
+                                'src/frontier_util.c', 'src/scrcmd.c', 'src/string_util.c',
+                                'include/string_util.h'} <= bound):
+                    raise ValueError('missing_runtime_text_interface_context')
             if label in actual_kinds and actual_kinds[label] != profile.kind:
                 raise ValueError('incompatible_definition_kind:' + label)
             actual_kinds[label] = profile.kind
@@ -991,6 +998,18 @@ def native_elf(data: bytes, *, include_ram=False) -> tuple[dict[str, set[int]], 
     return symbols, memory
 
 
+def _runtime_text_native(root: Path, profile, native: dict, errors: list):
+    """A produced message buffer is a unique RAM symbol, never a ROM text span."""
+    if not profile.runtime_texts:
+        return
+    if 'runtime_text_symbols' not in native:
+        native['runtime_text_symbols'], _ = native_elf((root / 'pokeemerald_jp.elf').read_bytes(), include_ram=True)
+    for symbol in profile.runtime_texts:
+        values = native['runtime_text_symbols'].get(symbol, set())
+        if len(values) != 1 or not all(0x02000000 <= value < 0x02040000 for value in values):
+            errors.append('native_runtime_text_buffer_mismatch:' + symbol)
+
+
 def _literal_define(root: Path, path: str, name: str) -> int:
     values = re.findall(r'(?m)^\s*#define\s+' + re.escape(name)
                         + r'\s+(0x[0-9a-fA-F]+|[0-9]+)\s*(?://[^\n]*)?$', local_path(root, path).read_text())
@@ -1429,6 +1448,7 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                         errors.append('native_addressed_label_mismatch:' + label)
                     if profile.fallthrough and native['symbols'].get(profile.fallthrough) != {address + profile.size}:
                         errors.append('native_script_fallthrough_mismatch:' + label)
+                    _runtime_text_native(root, profile, native, errors)
                     address += profile.size
             for dep in batch.get('shared_dependencies', []):
                 block = shared_script_blocks(root, dep)
@@ -1439,6 +1459,7 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                 for label, profile in profiles.items():
                     if profile.fallthrough and native['symbols'].get(profile.fallthrough) != {address + profile.size}:
                         errors.append('native_script_fallthrough_mismatch:' + label)
+                    _runtime_text_native(root, profile, native, errors)
                     address += profile.size
             _trainer_native(root, batch, native, errors, parsed)
             _dynamic_layout_native(root, batch, native, errors)

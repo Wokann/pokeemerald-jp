@@ -38,7 +38,8 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'disable_jump_landing_ground_effect', 'walk_faster_left', 'walk_fast_down',
                            'walk_in_place_fast_left', 'walk_in_place_fast_right', 'jump_2_down', 'cut_tree',
                            'walk_faster_down', 'lock_anim', 'walk_in_place_left', 'walk_in_place_up',
-                           'rock_smash_break', 'walk_in_place_right', 'walk_slow_up', 'nurse_joy_bow'}
+                           'rock_smash_break', 'walk_in_place_right', 'walk_slow_up', 'nurse_joy_bow',
+                           'jump_in_place_down'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -107,6 +108,54 @@ FALLTHROUGHS = {
     'LavaridgeTown_Gym_B1F_EventScript_CheckBuryJace': 'LavaridgeTown_Gym_B1F_EventScript_CheckBuryJeff',
     'LavaridgeTown_Gym_B1F_EventScript_CheckBuryJeff': 'LavaridgeTown_Gym_B1F_EventScript_CheckBuryEli',
     'LavaridgeTown_Gym_B1F_EventScript_CheckBuryEli': 'LavaridgeTown_Gym_B1F_EventScript_EndCheckBuryTrainers',
+    'FallarborTown_BattleTentLobby_EventScript_WonChallenge': 'FallarborTown_BattleTentLobby_EventScript_GivePrize',
+    'FallarborTown_BattleTentLobby_EventScript_Attendant': 'FallarborTown_BattleTentLobby_EventScript_AskEnterChallenge',
+    'FallarborTown_BattleTentLobby_EventScript_AskEnterChallenge': 'FallarborTown_BattleTentLobby_EventScript_TryEnterChallenge',
+    'FallarborTown_BattleTentLobby_EventScript_TryEnterChallenge': 'FallarborTown_BattleTentLobby_EventScript_SaveBeforeChallenge',
+    'FallarborTown_BattleTentLobby_EventScript_SaveBeforeChallenge': 'FallarborTown_BattleTentLobby_EventScript_EnterChallenge',
+    'FallarborTown_BattleTentLobby_EventScript_NotEnoughValidMons': 'FallarborTown_BattleTentLobby_EventScript_NotEnoughValidMonsLv50',
+    'FallarborTown_BattleTentLobby_EventScript_LoadPartyCancelChallenge': 'FallarborTown_BattleTentLobby_EventScript_CancelChallenge',
+    'FallarborTown_BattleTentLobby_EventScript_CancelChallenge': 'FallarborTown_BattleTentLobby_EventScript_EndCancelChallenge',
+    'FallarborTown_BattleTentBattleRoom_EventScript_EnterRoom': 'FallarborTown_BattleTentBattleRoom_EventScript_NextOpponentEnter',
+    'FallarborTown_BattleTentBattleRoom_EventScript_NextOpponentEnter': 'FallarborTown_BattleTentBattleRoom_EventScript_WarpToLobbyLost',
+    # Physical adjacency, not a claim that the old context resumes after warp.
+    'FallarborTown_BattleTentBattleRoom_EventScript_WarpToLobbyLost': 'FallarborTown_BattleTentBattleRoom_EventScript_DefeatedOpponent',
+    'FallarborTown_BattleTentBattleRoom_EventScript_DefeatedOpponent': 'FallarborTown_BattleTentBattleRoom_EventScript_IncrementBattleNum',
+    'FallarborTown_BattleTentBattleRoom_EventScript_IncrementBattleNum': 'FallarborTown_BattleTentBattleRoom_EventScript_AskContinueChallenge',
+    'FallarborTown_BattleTentBattleRoom_EventScript_AskContinueChallenge': 'FallarborTown_BattleTentBattleRoom_EventScript_AskPauseChallenge',
+    'FallarborTown_BattleTentBattleRoom_EventScript_AskPauseChallenge': 'FallarborTown_BattleTentBattleRoom_EventScript_AskRetireChallenge',
+    'FallarborTown_BattleTentBattleRoom_EventScript_AskRetireChallenge': 'FallarborTown_BattleTentBattleRoom_EventScript_ContinueChallenge',
+    'FallarborTown_BattleTentBattleRoom_EventScript_UnreachableWaitstate': 'FallarborTown_BattleTentBattleRoom_EventScript_WarpToLobbyWon',
+    'FallarborTown_BattleTentBattleRoom_EventScript_WarpToLobbyWon': 'FallarborTown_BattleTentBattleRoom_EventScript_ReadyFor2ndOpponent',
+}
+
+# This one-byte movement prefix deliberately shares the following movement's
+# terminator. Never insert a step_end or accept arbitrary unterminated paths.
+MOVEMENT_PREFIXES = {
+    'FallarborTown_BattleTentCorridor_Movement_PlayerEnterDoor':
+        'FallarborTown_BattleTentCorridor_Movement_AttendantEnterDoor',
+}
+
+# Selector macros measured against the current JP assembler. Handler identity
+# and waitstate are taken from the real Special table, not a US table index.
+FACILITY_FORMS = {
+    'frontier_getstatus': ('CallFrontierUtilFunc', 8, ()),
+    'frontier_get': ('CallFrontierUtilFunc', 13, (r'FRONTIER_DATA_\w+',)),
+    'frontier_checkineligible': ('CallFrontierUtilFunc', 8, ()),
+    'frontier_setpartyorder': ('CallFrontierUtilFunc', 13, (r'(?:[1-6]|FRONTIER_PARTY_SIZE)',)),
+    'frontier_reset': ('CallFrontierUtilFunc', 8, ()),
+    'frontier_restorehelditems': ('CallFrontierUtilFunc', 8, ()),
+    'frontier_resetsketch': ('CallFrontierUtilFunc', 8, ()),
+    'tower_setopponent': ('CallBattleTowerFunc', 8, ()),
+    'arena_get': ('CallBattleArenaFunction', 13, (r'ARENA_DATA_\w+',)),
+    'arena_set': ('CallBattleArenaFunction', 18, (r'ARENA_DATA_\w+', r'(?:VAR_\w+|\d+)')),
+    'fallarbortent_init': ('CallFallarborTentFunction', 8, ()),
+    'fallarbortent_getprize': ('CallFallarborTentFunction', 8, ()),
+    'fallarbortent_save': ('CallFallarborTentFunction', 13, (r'(?:CHALLENGE_STATUS_\w+|0)',)),
+    'fallarbortent_setrandomprize': ('CallFallarborTentFunction', 8, ()),
+    'fallarbortent_giveprize': ('CallFallarborTentFunction', 8, ()),
+    'fallarbortent_getopponentname': ('CallFallarborTentFunction', 8, ()),
+    'battletent_getopponentintro': ('CallVerdanturfTentFunction', 8, ()),
 }
 
 # Only explicitly measured forms are supported. A five-argument single is
@@ -139,6 +188,7 @@ class BlockProfile:
     texts: dict[str, str] = field(default_factory=dict)
     specials: dict[str, int] = field(default_factory=dict)
     runtime_scripts: set[str] = field(default_factory=set)
+    runtime_texts: dict[str, str] = field(default_factory=dict)
     standard_scripts: dict[int, str] = field(default_factory=dict)
     layouts: set[str] = field(default_factory=set)
     trainer_battles: list[dict] = field(default_factory=list)
@@ -198,6 +248,13 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                             kind='mart_items' if entries[0][2] == 'ITEM' else 'mart_decorations')
     if any(op in movements for op in operations):
         ends = operations.count('step_end')
+        owner = re.search(r'(?m)^([A-Za-z_]\w*)::?', block)
+        prefix = (MOVEMENT_PREFIXES.get(owner[1]) if version == 4 and owner else None)
+        if prefix and not ends:
+            if lines != ['walk_up']:
+                raise ValueError('unsupported_movement_prefix')
+            return BlockProfile(size=len(lines), kind='movement', targets={prefix: 'movement'},
+                                fallthrough=prefix, may_fall_through=True)
         if (any(op not in movements for op in operations) or operations[-1] != 'step_end'
                 or ends not in ((1, 2) if version == 4 else (1,))
                 or operations[-ends:] != ['step_end'] * ends):
@@ -281,6 +338,22 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_arguments:trywondercardscript')
             result.runtime_scripts.add('saved_wonder_card')
             size = 1
+        elif version == 4 and (op in FACILITY_FORMS or op == 'frontier_set'):
+            if op == 'frontier_set':
+                if (len(args) not in (1, 2) or not re.fullmatch(r'FRONTIER_DATA_\w+', args[0])
+                        or len(args) == 2 and not re.fullmatch(r'(?:[A-Z][A-Z0-9_]*|0x[0-9A-Fa-f]+|\d+)', args[1])):
+                    raise ValueError('unsupported_profile_facility_macro:' + op)
+                omitted = len(args) == 1 or args[1].lower() in ('0xffff', '65535')
+                function, size = 'CallFrontierUtilFunc', 13 if omitted else 18
+            else:
+                function, size, patterns = FACILITY_FORMS[op]
+                if len(args) != len(patterns) or any(not re.fullmatch(p, a) for p, a in zip(patterns, args)):
+                    raise ValueError('unsupported_profile_facility_macro:' + op)
+            waits = special_waits(root) if waits is None else waits
+            if waits.get(function) not in (0, 1):
+                raise ValueError('missing_facility_macro_special:' + function)
+            result.specials[function] = waits[function]
+            size += waits[function]
         elif version == 4 and op == 'erasebox':
             if (len(args) != 4 or any(not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', value)
                                      or not 0 <= int(value, 16 if value.lower().startswith('0x') else 10) <= 255
@@ -493,7 +566,13 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_message')
             index, entry = standard[args[1]]
             target(entry, 'script')
-            result.texts[args[0]] = 'string'
+            if args[0] == 'gStringVar4':
+                if (version != 4 or position == 0
+                        or lines[position - 1] != 'battletent_getopponentintro'):
+                    raise ValueError('unproven_runtime_message_producer')
+                result.runtime_texts['gStringVar4'] = 'battletent_getopponentintro'
+            else:
+                result.texts[args[0]] = 'string'
             result.standard_scripts[index] = entry
             size = 8
         elif version == 4 and op == 'messageautoscroll':
