@@ -18,8 +18,9 @@ END = 0x082772F0
 REGION_SHA256 = '249735fde24062971345fa30011f7cdd99785f625f9ca51f5438b686adada9d4'
 ORDER_SHA256 = 'a0b40bfcc02fcaa56907998f92339bcd54c911a06f2af7c71b6a99c4393b902d'
 # ContestPainting's context-verified STR_VAR names encode the same FD 02/03/04 bytes.
+# Fan Club's seven reporter texts use STR_VAR_1/2, still the same FD 02/03 bytes.
 # The caption regression and whole-tail ROM comparison also guard emitted bytes.
-LITERAL_SHA256 = '373df1aff5d2b4ece9ed2edef6d5304160e1ab19cb77930771fa45797ed9efe3'
+LITERAL_SHA256 = '1117a4c9f8f59c840e0b43b87a046ba89b5950cc36959b14781aef7e99d2b31b'
 MARKER = '.include "data/scripts/std_msgbox.inc"'
 TOP = (ROOT / 'data/event_scripts.s').read_text(encoding='utf-8')
 TAIL = TOP[TOP.index(MARKER):]

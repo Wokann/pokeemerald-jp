@@ -1,8 +1,8 @@
 SlateportCity_PokemonFanClub_Text_InterviewRequestHasName:
 	.string "わあ！\p"
-	.string "きみ　その　{B_COPY_VAR_1}を　とても\n"
+	.string "きみ　その　{STR_VAR_1}を　とても\n"
 	.string "だいじに　している　みたいね！\p"
-	.string "{B_COPY_VAR_2}　って　いうんだ⋯⋯\p"
+	.string "{STR_VAR_2}　って　いうんだ⋯⋯\p"
 	.string "そうだ！\p"
 	.string "いま　わたし　テレビの　しゅざいで\n"
 	.string "ポケモンの　アンケートを　してるんだけど\p"
@@ -15,19 +15,19 @@ SlateportCity_PokemonFanClub_Text_HereGoesQuickAnswers:
 	.string "ずばり　ひとことで　こたえて！$"
 
 SlateportCity_PokemonFanClub_Text_DescribeFeelingsFirstMetMon:
-	.string "きみが　{B_COPY_VAR_1}と\n"
+	.string "きみが　{STR_VAR_1}と\n"
 	.string "であったときって\p"
 	.string "なにか　かんじた？\n"
 	.string "どう　おもったか　おしえて！$"
 
 SlateportCity_PokemonFanClub_Text_LikenMonToSomethingYouLike:
-	.string "きみの　かわいがってる　{B_COPY_VAR_1}！\p"
+	.string "きみの　かわいがってる　{STR_VAR_1}！\p"
 	.string "もし　なにか　すきなものに　たとえると\n"
 	.string "すれば　なんだと　おもう？$"
 
 SlateportCity_PokemonFanClub_Text_WhatAttractedYouAboutMon:
-	.string "きみの　かわいがってる　{B_COPY_VAR_1}！\p"
-	.string "きみは　{B_COPY_VAR_1}の　どこに\n"
+	.string "きみの　かわいがってる　{STR_VAR_1}！\p"
+	.string "きみは　{STR_VAR_1}の　どこに\n"
 	.string "ひかれたの？$"
 
 SlateportCity_PokemonFanClub_Text_WhatDoPokemonMeanToYou:
@@ -60,25 +60,25 @@ SlateportCity_PokemonFanClub_Text_EnjoyDoingInterviews:
 	.string "はなしが　きけるから　おもしろいわ$"
 
 SlateportCity_PokemonFanClub_Text_InterviewRequest:
-	.string "きみの　その　{B_COPY_VAR_1}と\n"
+	.string "きみの　その　{STR_VAR_1}と\n"
 	.string "とても　なかが　よさそうね\p"
 	.string "そうだ！　いま　わたし\n"
 	.string "テレビの　しゅざいで\p"
 	.string "いろんな　ポケモンの　はなしを\n"
 	.string "きいて　まわってるんだけど\p"
-	.string "よかったら　きみの　{B_COPY_VAR_1}の\n"
+	.string "よかったら　きみの　{STR_VAR_1}の\n"
 	.string "はなしを　きかせて　くれないかな？$"
 
 SlateportCity_PokemonFanClub_Text_TellMeAnythingAboutYourMon:
 	.string "わあ！\n"
 	.string "ありがとう！\p"
-	.string "じゃあ　{B_COPY_VAR_1}の　はなし\n"
+	.string "じゃあ　{STR_VAR_1}の　はなし\n"
 	.string "なんでも　いいので　きかせてよ！$"
 
 SlateportCity_PokemonFanClub_Text_ThatsAllForInterview2:
 	.string "へー⋯⋯\n"
 	.string "おもしろい　はなし　だね！\p"
-	.string "きみは　ほんとうに　{B_COPY_VAR_1}と\n"
+	.string "きみは　ほんとうに　{STR_VAR_1}と\n"
 	.string "なかが　いいんだね\p"
 	.string "うーん　なんか　このはなしで\n"
 	.string "いい　ばんぐみが　できそうな　よかん！\p"

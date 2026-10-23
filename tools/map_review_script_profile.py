@@ -39,7 +39,7 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'walk_in_place_fast_left', 'walk_in_place_fast_right', 'jump_2_down', 'cut_tree',
                            'walk_faster_down', 'lock_anim', 'walk_in_place_left', 'walk_in_place_up',
                            'rock_smash_break', 'walk_in_place_right', 'walk_slow_up', 'nurse_joy_bow',
-                           'jump_in_place_down'}
+                           'jump_in_place_down', 'jump_up', 'walk_slow_right'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -50,7 +50,8 @@ FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1,
     'waitse': (1, 0), 'waitfanfare': (1, 0), 'copyvar': (5, 2),
     'checkitemspace': (5, 2), 'checkitemtype': (3, 1), 'bufferitemname': (4, 2),
     'bufferstdstring': (4, 2), 'playfanfare': (3, 1), 'switch': (5, 1)}
-FIXED_V4 = FIXED | {'setobjectmovementtype': (4, 2), 'getplayerxy': (5, 2),
+FIXED_V4 = {op: form for op, form in FIXED.items() if op != 'checkitemspace'} | {
+                   'setobjectmovementtype': (4, 2), 'getplayerxy': (5, 2),
                    'bufferleadmonspeciesname': (2, 1), 'addvar': (5, 2), 'yesnobox': (3, 2),
                    'copyobjectxytoperm': (3, 1), 'checkplayergender': (1, 0),
                    'playmoncry': (5, 2), 'waitmoncry': (1, 0),
@@ -144,6 +145,21 @@ FALLTHROUGHS = {
     'VerdanturfTown_BattleTentBattleRoom_EventScript_AskPauseChallenge': 'VerdanturfTown_BattleTentBattleRoom_EventScript_AskRetireChallenge',
     'VerdanturfTown_BattleTentBattleRoom_EventScript_AskRetireChallenge': 'VerdanturfTown_BattleTentBattleRoom_EventScript_ContinueChallenge',
     'VerdanturfTown_BattleTentBattleRoom_EventScript_WarpToLobbyWon': 'VerdanturfTown_BattleTentBattleRoom_EventScript_PauseChallenge',
+    'SlateportCity_BattleTentLobby_EventScript_WonChallenge': 'SlateportCity_BattleTentLobby_EventScript_GivePrize',
+    'SlateportCity_BattleTentLobby_EventScript_LostChallenge': 'SlateportCity_BattleTentLobby_EventScript_EndGivePrize',
+    'SlateportCity_BattleTentLobby_EventScript_Attendant': 'SlateportCity_BattleTentLobby_EventScript_AskEnterChallenge',
+    'SlateportCity_BattleTentLobby_EventScript_AskEnterChallenge': 'SlateportCity_BattleTentLobby_EventScript_TryEnterChallenge',
+    'SlateportCity_BattleTentLobby_EventScript_TryEnterChallenge': 'SlateportCity_BattleTentLobby_EventScript_SaveBeforeChallenge',
+    'SlateportCity_BattleTentLobby_EventScript_SaveBeforeChallenge': 'SlateportCity_BattleTentLobby_EventScript_EnterChallenge',
+    'SlateportCity_BattleTentLobby_EventScript_LoadPartyCancelChallenge': 'SlateportCity_BattleTentLobby_EventScript_CancelChallenge',
+    'SlateportCity_BattleTentCorridor_EventScript_SetUpObjects': 'SlateportCity_BattleTentCorridor_EventScript_TurnPlayerNorth',
+    'SlateportCity_BattleTentCorridor_EventScript_EnterCorridor': 'SlateportCity_BattleTentCorridor_EventScript_EnterBattleRoom',
+    'SlateportCity_BattleTentCorridor_EventScript_ReturnToRoomFromBattle': 'SlateportCity_BattleTentCorridor_EventScript_AskReadyForOpponent',
+    'SlateportCity_BattleTentCorridor_EventScript_AskReadyForOpponent': 'SlateportCity_BattleTentCorridor_EventScript_AskPauseChallenge',
+    'SlateportCity_BattleTentCorridor_EventScript_AskPauseChallenge': 'SlateportCity_BattleTentCorridor_EventScript_AskRetireChallenge',
+    'SlateportCity_BattleTentCorridor_EventScript_AskRetireChallenge': 'SlateportCity_BattleTentCorridor_EventScript_AskSwapMon',
+    'SlateportCity_BattleTentCorridor_EventScript_AskSwapMon': 'SlateportCity_BattleTentCorridor_EventScript_SwapMons',
+    'SlateportCity_BattleTentBattleRoom_EventScript_EnterRoom': 'SlateportCity_BattleTent_EventScript_WarpToLobbyLost',
 }
 
 # These one-byte movement prefixes deliberately share the next movement's
@@ -153,6 +169,17 @@ MOVEMENT_PREFIXES = {
         'FallarborTown_BattleTentCorridor_Movement_AttendantEnterDoor',
     'VerdanturfTown_BattleTentCorridor_Movement_PlayerEnterDoor':
         'VerdanturfTown_BattleTentCorridor_Movement_AttendantEnterDoor',
+}
+
+# This audited warp replaces the old script context before the following
+# movement bytes. It is not a bytecode edge into that movement definition.
+CONTEXT_WARP_EXITS = {
+    'SlateportCity_BattleTentBattleRoom_EventScript_WarpToLobbyWon':
+        ('MAP_SLATEPORT_CITY_BATTLE_TENT_LOBBY', 6, 6),
+    'SlateportCity_BattleTent_EventScript_WarpToLobbyLost':
+        ('MAP_SLATEPORT_CITY_BATTLE_TENT_LOBBY', 6, 6),
+    'SlateportCity_BattleTentBattleRoom_EventScript_DefeatedOpponent':
+        ('MAP_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR', 2, 3),
 }
 
 # Selector macros measured against the current JP assembler. Handler identity
@@ -180,6 +207,19 @@ FACILITY_FORMS = {
     'verdanturftent_save': ('CallVerdanturfTentFunction', 13, (r'(?:CHALLENGE_STATUS_\w+|0)',)),
     'verdanturftent_setrandomprize': ('CallVerdanturfTentFunction', 8, ()),
     'verdanturftent_giveprize': ('CallVerdanturfTentFunction', 8, ()),
+    'slateporttent_init': ('CallSlateportTentFunction', 8, ()),
+    'slateporttent_getprize': ('CallSlateportTentFunction', 8, ()),
+    'slateporttent_save': ('CallSlateportTentFunction', 13, (r'(?:CHALLENGE_STATUS_\w+|0)',)),
+    'slateporttent_setrandomprize': ('CallSlateportTentFunction', 8, ()),
+    'slateporttent_giveprize': ('CallSlateportTentFunction', 8, ()),
+    'slateporttent_rentmons': ('CallSlateportTentFunction', 8, ()),
+    'slateporttent_swapmons': ('CallSlateportTentFunction', 8, ()),
+    'slateporttent_generateopponentmons': ('CallSlateportTentFunction', 8, ()),
+    'slateporttent_generaterentalmons': ('CallSlateportTentFunction', 8, ()),
+    'factory_setopponentmons': ('CallBattleFactoryFunction', 8, ()),
+    'factory_resethelditems': ('CallBattleFactoryFunction', 8, ()),
+    'factory_setparties': ('CallBattleFactoryFunction', 13, (r'[01]',)),
+    'factory_setopponentgfx': ('CallBattleFactoryFunction', 8, ()),
 }
 
 # Only explicitly measured forms are supported. A five-argument single is
@@ -221,6 +261,7 @@ class BlockProfile:
     trainer_beaten_return: bool = False
     fallthrough: str | None = None
     may_fall_through: bool = False
+    context_warp: str | None = None
 
 
 def special_waits(root: Path) -> dict[str, int]:
@@ -525,6 +566,27 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                     and not re.fullmatch(r'(?:VAR_\w+|0[xX][0-9A-Fa-f]+|[0-9]+)', args[1])):
                 raise ValueError('unsupported_profile_checkpcitem_quantity')
             size = 5
+        elif version == 4 and op == 'checkitemspace':
+            if (len(args) not in (1, 2) or len(args) == 1
+                    and not re.fullmatch(r'(?:ITEM|VAR)_\w+', args[0])):
+                raise ValueError('unsupported_profile_checkitemspace')
+            # Preserve the existing two-operand ITEMID/AMOUNT macro form.
+            size = 5
+        elif version == 4 and op in ('checkmoney', 'removemoney'):
+            if (len(args) not in (1, 2) or not re.fullmatch(r'(?:0x[0-9A-Fa-f]+|[0-9]+)', args[0])
+                    or int(args[0], 16 if args[0].startswith('0x') else 10) > 0xFFFFFFFF
+                    or len(args) == 2 and args[1] not in ('0', '1')):
+                raise ValueError('unsupported_profile_money_command')
+            size = 6
+        elif version == 4 and op == 'showmoneybox':
+            if (len(args) not in (2, 3) or any(not a.isdecimal() or int(a) > 255 for a in args[:2])
+                    or len(args) == 3 and args[2] not in ('0', '1')):
+                raise ValueError('unsupported_profile_money_window')
+            size = 4
+        elif version == 4 and op in ('hidemoneybox', 'updatemoneybox'):
+            if args and not (op == 'updatemoneybox' and args in (['0'], ['1'])):
+                raise ValueError('unsupported_profile_money_window')
+            size = 3 if op == 'hidemoneybox' else 4
         elif version == 4 and op == 'setstepcallback':
             if len(args) != 1 or not re.fullmatch(r'STEP_CB_\w+', args[0]):
                 raise ValueError('unsupported_profile_step_callback')
@@ -598,8 +660,10 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             index, entry = standard[args[1]]
             target(entry, 'script')
             if args[0] == 'gStringVar4':
-                if (version != 4 or position == 0
-                        or lines[position - 1] != 'battletent_getopponentintro'):
+                produced = position > 0 and lines[position - 1] == 'battletent_getopponentintro'
+                produced |= (position > 1 and lines[position - 2:position]
+                             == ['battletent_getopponentintro', 'lockall'])
+                if version != 4 or not produced:
                     raise ValueError('unproven_runtime_message_producer')
                 result.runtime_texts['gStringVar4'] = 'battletent_getopponentintro'
             else:
@@ -636,6 +700,12 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
     if version == 4 and owner and owner[1] in FALLTHROUGHS:
         result.fallthrough = FALLTHROUGHS[owner[1]]
         target(result.fallthrough, 'script')
+    if version == 4 and owner and owner[1] in CONTEXT_WARP_EXITS:
+        destination, x, y = CONTEXT_WARP_EXITS[owner[1]]
+        if lines[-2:] != [f'warp {destination}, {x}, {y}', 'waitstate']:
+            raise ValueError('changed_context_replacing_warp')
+        result.context_warp = destination
+        result.may_fall_through = False
     return result
 
 

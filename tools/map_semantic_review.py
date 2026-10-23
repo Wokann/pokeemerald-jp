@@ -50,6 +50,9 @@ TEXT_CONTEXT = {'charmap.txt', 'include/constants/characters.h', 'tools/preproc/
 STORY_CONTEXT = TEXT_CONTEXT | {'tools/map_review_script_profile.py', 'data/specials.inc',
                                'asm/macros/movement.inc', 'src/field_control_avatar.c'}
 TRAINER_ENGINE_CONTEXT = {'src/scrcmd.c', 'src/battle_setup.c', 'src/overworld.c', 'src/field_screen_effect.c'}
+WARP_CONTEXT_SYMBOLS = {'ScrCmd_warp': 'src/scrcmd.c', 'DoWarp': 'src/field_screen_effect.c',
+    'Task_WarpAndLoadMap': 'src/field_screen_effect.c', 'CB2_LoadMap': 'src/overworld.c',
+    'ScriptContext_Init': 'src/script.c', 'InitScriptContext': 'src/script.c'}
 TRAINER_ENGINE_SYMBOLS = {
     'ScrCmd_trainerbattle': 'src/scrcmd.c', 'ScrCmd_dotrainerbattle': 'src/scrcmd.c',
     'ScrCmd_gotopostbattlescript': 'src/scrcmd.c',
@@ -487,6 +490,7 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
     expected_kinds, actual_kinds, used_standard, used_specials = {}, {}, {}, {}
     used_layouts = set()
     trainer_battles, trainer_run, trainer_post, trainer_beaten = {}, False, False, False
+    context_exits = {}
     if story:
         # Lazy import: the typed profiler reuses this module's text encoder.
         try:
@@ -502,6 +506,8 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         nonlocal trainer_run, trainer_post, trainer_beaten
         texts, targets = {}, set()
         for label, profile in profiles.items():
+            if profile.context_warp:
+                context_exits[label] = profile.context_warp
             if profile.runtime_scripts:
                 bound = {c.get('path') for c in batch['sources'] if c.get('selector') == 'file'}
                 if (profile.runtime_scripts != {'saved_wonder_card'}
@@ -762,6 +768,13 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             raise ValueError('standard_script_index_mismatch')
         contracts[(None, 'gStdScripts')] = ('gStdScripts', 4 * len(entries))
     if story:
+        expected_exits = [dict(entry=entry, destination=destination)
+                          for entry, destination in sorted(context_exits.items())]
+        if batch.get('context_exits', []) != expected_exits:
+            raise ValueError('missing_or_changed_context_warp_contract')
+        if (expected_exits and not (set(WARP_CONTEXT_SYMBOLS.values()) | {'ld_script_jp.txt'}) <= {
+                c['path'] for c in batch['sources'] if c.get('selector') == 'file'}):
+            raise ValueError('missing_context_warp_source')
         expected_battles = [trainer_battles[key] for key in sorted(trainer_battles)]
         if batch.get('trainer_battles', []) != expected_battles:
             raise ValueError('missing_or_changed_trainer_battle_contract')
@@ -1040,6 +1053,44 @@ def _trainer_local_id(root: Path, battle: dict, sources: list) -> int:
     if (not 1 <= value <= 255 or matches != [(value, battle['owner'])]):
         raise ValueError('trainer_local_id_object_mismatch:' + label)
     return value
+
+
+def _context_warp_native(batch: dict, native: dict, errors: list[str]) -> None:
+    """Bind the native callback/init chain, not an invented movement edge."""
+    if not batch.get('context_exits'):
+        return
+    addresses = {}
+    for symbol, path in WARP_CONTEXT_SYMBOLS.items():
+        values = {value & ~1 for value in native['symbols'].get(symbol, set())}
+        if len(values) != 1:
+            errors.append('native_context_warp_symbol_mismatch:' + symbol)
+            continue
+        address = addresses[symbol] = next(iter(values))
+        owner = path[:-2] + '.o'
+        if not any(start <= address < start + size and (actual == owner or actual.endswith('/' + owner))
+                   for start, size, actual in native['owners']):
+            errors.append('native_context_warp_owner_mismatch:' + symbol)
+    if len(addresses) != len(WARP_CONTEXT_SYMBOLS):
+        return
+    aliases = {value & ~1 for value in native['symbols'].get('ScriptContext1_Init', set())}
+    # Do not require retaining the old JP spelling during future cleanup.
+    if aliases and aliases != {addresses['ScriptContext_Init']}:
+        errors.append('native_context_warp_init_alias_mismatch')
+    start = addresses['CB2_LoadMap']
+    if not 0x08000000 <= start <= 0x08000000 + len(native['rom']) - 16:
+        errors.append('native_context_warp_loader_not_in_rom')
+        return
+    code = native['rom'][start - 0x08000000:start - 0x08000000 + 16]
+    calls = set()
+    for offset in range(0, len(code) - 3, 2):
+        high, low = struct.unpack_from('<HH', code, offset)
+        if high & 0xF800 == 0xF000 and low & 0xF800 == 0xF800:
+            delta = ((high & 0x7FF) << 12) | ((low & 0x7FF) << 1)
+            if delta & 0x400000:
+                delta -= 0x800000
+            calls.add(start + offset + 4 + delta)
+    if addresses['ScriptContext_Init'] not in calls:
+        errors.append('native_context_warp_missing_init_call')
 
 
 def _trainer_native(root: Path, batch: dict, native: dict, errors: list[str], parsed: list) -> None:
@@ -1462,6 +1513,7 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                     _runtime_text_native(root, profile, native, errors)
                     address += profile.size
             _trainer_native(root, batch, native, errors, parsed)
+            _context_warp_native(batch, native, errors)
             _dynamic_layout_native(root, batch, native, errors)
         for entry, pieces in shared.items():
             address = next(a for n, role, symbol, a, size, digest in parsed if n is None and symbol == entry)
