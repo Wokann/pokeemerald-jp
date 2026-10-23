@@ -1,43 +1,43 @@
 LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer::
 	.string "やあ！\p"
-	.string "ボク　{B_COPY_VAR_1}の　ファン　なんだけど\n"
-	.string "{B_COPY_VAR_1}　って　どう　おもう？$"
+	.string "ボク　{STR_VAR_1}の　ファン　なんだけど\n"
+	.string "{STR_VAR_1}　って　どう　おもう？$"
 
 LilycoveCity_PokemonTrainerFanClub_Text_ThatsWhatYouThink::
 	.string "なるほどねー\n"
 	.string "そんな　ふうに　おもっているんだね！$"
 
 LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer::
-	.string "{B_COPY_VAR_1}の　こと\n"
+	.string "{STR_VAR_1}の　こと\n"
 	.string "わすれちゃったの⋯⋯？$"
 
 LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer2::
-	.string "ボク　{B_COPY_VAR_1}の　ファン　なんだけど\n"
-	.string "{B_COPY_VAR_1}　って　どうおもう？$"
+	.string "ボク　{STR_VAR_1}の　ファン　なんだけど\n"
+	.string "{STR_VAR_1}　って　どうおもう？$"
 
 LilycoveCity_PokemonTrainerFanClub_Text_HowStrongRateTrainer::
 	.string "じゃあ　こんどは\n"
-	.string "{B_COPY_VAR_1}の　つよさを\l"
+	.string "{STR_VAR_1}の　つよさを\l"
 	.string "てんすうで　おしえてくれる？$"
 
 LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer2::
-	.string "{B_COPY_VAR_1}の　こと\n"
+	.string "{STR_VAR_1}の　こと\n"
 	.string "わすれちゃったの⋯⋯？$"
 
 LilycoveCity_PokemonTrainerFanClub_Text_YouShouldMeetTrainer::
 	.string "そっか！\n"
-	.string "こんど　{B_COPY_VAR_1}に　あってみてよ！\l"
+	.string "こんど　{STR_VAR_1}に　あってみてよ！\l"
 	.string "きみも　きっと　ファンに　なっちゃうよ！$"
 
 LilycoveCity_PokemonTrainerFanClub_Text_ThankYouIllShareThisInfo::
 	.string "そうなんだー！\p"
 	.string "ありがとう！\n"
 	.string "とっても　さんこうに　なったよ！\p"
-	.string "さっそく　{B_COPY_VAR_1}の　ファン　みんなで\n"
+	.string "さっそく　{STR_VAR_1}の　ファン　みんなで\n"
 	.string "この　ことに　ついて　はなしあって　みるよ！$"
 
 LilycoveCity_PokemonTrainerFanClub_HopeYouCatchTVSpecial::
-	.string "もうすぐ　{B_COPY_VAR_1}に　ついての\n"
+	.string "もうすぐ　{STR_VAR_1}に　ついての\n"
 	.string "テレビ　ばんぐみが　ほうそう　されるんだ！\p"
 	.string "きみも　ぜひ　みてね！$"
 

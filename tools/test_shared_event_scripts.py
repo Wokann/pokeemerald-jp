@@ -20,7 +20,9 @@ ORDER_SHA256 = 'a0b40bfcc02fcaa56907998f92339bcd54c911a06f2af7c71b6a99c4393b902d
 # ContestPainting's context-verified STR_VAR names encode the same FD 02/03/04 bytes.
 # Fan Club's seven reporter texts use STR_VAR_1/2, still the same FD 02/03 bytes.
 # The caption regression and whole-tail ROM comparison also guard emitted bytes.
-LITERAL_SHA256 = '1117a4c9f8f59c840e0b43b87a046ba89b5950cc36959b14781aef7e99d2b31b'
+# Lilycove's 10 reviewed interview texts use 12 equivalent STR_VAR_1/2 names.
+# Their original FD bytes and exact native text spans have separate regressions.
+LITERAL_SHA256 = 'bdde64cfb771cba85f0b4e3b159d36fcd8659f12df95a90fa4aeb0e108ed1277'
 MARKER = '.include "data/scripts/std_msgbox.inc"'
 TOP = (ROOT / 'data/event_scripts.s').read_text(encoding='utf-8')
 TAIL = TOP[TOP.index(MARKER):]

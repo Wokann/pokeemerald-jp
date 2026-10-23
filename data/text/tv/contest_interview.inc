@@ -19,13 +19,13 @@ LilycoveCity_ContestLobby_Text_WhatImageWhenYouHearX:
 	.string "よくわかる　ひとこと　ですね！\p"
 	.string "⋯⋯さいごに\n"
 	.string "ちょっと　おききしたいの　ですが\p"
-	.string "あなたが　イメージする　{B_COPY_VAR_2}って\n"
+	.string "あなたが　イメージする　{STR_VAR_2}って\n"
 	.string "いったい　どんなもの　ですかね？$"
 
 LilycoveCity_ContestLobby_Text_ThatsAllForInterview:
 	.string "なるほど！\p"
 	.string "それが　あなたの　イメージする\n"
-	.string "{B_COPY_VAR_2}　なんですね！\p"
+	.string "{STR_VAR_2}　なんですね！\p"
 	.string "いろいろ　さんこうに　なりました！\p"
 	.string "コンテストに　ついて\n"
 	.string "いい　きじが　かけそう　ですよ\p"

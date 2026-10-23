@@ -18,6 +18,10 @@ GAME_CORNER_PRICES = {'TM_DOUBLE_TEAM_COINS': 1500, 'TM_PSYCHIC_COINS': 3500,
     'TM_FLAMETHROWER_COINS': 4000, 'TM_THUNDERBOLT_COINS': 4000, 'TM_ICE_BEAM_COINS': 4000,
     'DOLL_COINS': 1000, 'COINS_PRICE_50': 1000, 'COINS_PRICE_500': 10000}
 COIN_CAPACITY_EXPRESSIONS = {'(MAX_COINS + 1 - 50)', '(MAX_COINS + 1 - 500)'}
+FAN_CLUB_NONFAN_EXPRESSION = '(NUM_TRAINER_FAN_CLUB_MEMBERS - 1)'
+CONTEST_PAINTING_SELECTORS = frozenset(['CONTEST_WINNER_ARTIST']
+    + [f'CONTEST_WINNER_HALL_{i}' for i in range(1, 7)]
+    + ['CONTEST_WINNER_MUSEUM_' + category for category in ('COOL', 'BEAUTY', 'CUTE', 'SMART', 'TOUGH')])
 MAP_TYPES = {name: ('condition_table' if name in ('MAP_SCRIPT_ON_FRAME_TABLE',
     'MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE') else 'script') for name in (
     'MAP_SCRIPT_ON_LOAD', 'MAP_SCRIPT_ON_FRAME_TABLE', 'MAP_SCRIPT_ON_TRANSITION',
@@ -43,7 +47,7 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'walk_in_place_fast_left', 'walk_in_place_fast_right', 'jump_2_down', 'cut_tree',
                            'walk_faster_down', 'lock_anim', 'walk_in_place_left', 'walk_in_place_up',
                            'rock_smash_break', 'walk_in_place_right', 'walk_slow_up', 'nurse_joy_bow',
-                           'jump_in_place_down', 'jump_up', 'walk_slow_right'}
+                           'jump_in_place_down', 'jump_in_place_left', 'jump_up', 'walk_slow_right'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -72,7 +76,7 @@ FIXED_V4 = {op: form for op, form in FIXED.items() if op != 'checkitemspace'} | 
                    'buffernumberstring': (4, 2), 'checkpartymove': (3, 1),
                    'bufferpartymonnick': (4, 2), 'buffermovename': (4, 2),
                    'fadescreenswapbuffers': (2, 1), 'setorcopyvar': (5, 2), 'dowildbattle': (1, 0),
-                   'nop1': (1, 0)}
+                   'choosecontestmon': (1, 0), 'contestlinktransfer': (1, 0), 'nop1': (1, 0)}
 
 # These source blocks deliberately continue into the next physical label.
 # A native adjacency check is mandatory; a named target alone is not proof.
@@ -166,6 +170,10 @@ FALLTHROUGHS = {
     'SlateportCity_BattleTentCorridor_EventScript_AskRetireChallenge': 'SlateportCity_BattleTentCorridor_EventScript_AskSwapMon',
     'SlateportCity_BattleTentCorridor_EventScript_AskSwapMon': 'SlateportCity_BattleTentCorridor_EventScript_SwapMons',
     'SlateportCity_BattleTentBattleRoom_EventScript_EnterRoom': 'SlateportCity_BattleTent_EventScript_WarpToLobbyLost',
+    'LilycoveCity_PokemonCenter_1F_EventScript_MonEnjoyPokeblock': 'LilycoveCity_PokemonCenter_1F_EventScript_FinishFeedPokeblock',
+    'LilycoveCity_PokemonCenter_1F_EventScript_MakeQuiz': 'LilycoveCity_PokemonCenter_1F_EventScript_PickPrize',
+    'LilycoveCity_PokemonCenter_1F_EventScript_TakeQuiz': 'LilycoveCity_PokemonCenter_1F_EventScript_CheckQuizTakingState',
+    'LilycoveCity_PokemonCenter_1F_EventScript_WriteQuiz': 'LilycoveCity_PokemonCenter_1F_EventScript_WriteQuizQuestion',
 }
 
 # These one-byte movement prefixes deliberately share the next movement's
@@ -191,6 +199,7 @@ CONTEXT_WARP_EXITS = {
 # Selector macros measured against the current JP assembler. Handler identity
 # and waitstate are taken from the real Special table, not a US table index.
 FACILITY_FORMS = {
+    'frontier_results': ('CallFrontierUtilFunc', 13, (r'FACILITY_LINK_CONTEST',)),
     'frontier_getstatus': ('CallFrontierUtilFunc', 8, ()),
     'frontier_get': ('CallFrontierUtilFunc', 13, (r'FRONTIER_DATA_\w+',)),
     'frontier_checkineligible': ('CallFrontierUtilFunc', 8, ()),
@@ -363,10 +372,17 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
         parts = line.split(None, 1)
         op = parts[0]
         args = [v.strip() for v in parts[1].split(',')] if len(parts) == 2 else []
-        if any(not ATOM.fullmatch(arg) and not (version == 4 and op == 'goto_if_ge'
-               and index == 1 and arg in COIN_CAPACITY_EXPRESSIONS) for index, arg in enumerate(args)):
+        if any(not ATOM.fullmatch(arg) and not (version == 4 and (
+               op == 'goto_if_ge' and index == 1 and arg in COIN_CAPACITY_EXPRESSIONS
+               or op == 'goto_if_eq' and index == 1 and args[0] == 'VAR_RESULT' and arg == FAN_CLUB_NONFAN_EXPRESSION
+               or op == 'copyvar' and index == 2 and arg == 'warn=FALSE')) for index, arg in enumerate(args)):
             raise ValueError('unsupported_profile_argument_expression:' + op)
-        if op in fixed:
+        if version == 4 and op == 'copyvar' and len(args) == 3:
+            if args != ['VAR_LILYCOVE_MUSEUM_2F_STATE', '1', 'warn=FALSE']:
+                raise ValueError('unsupported_profile_warn_suppressed_copy')
+            # Warning suppression emits nothing; preserve the JP COPYVAR opcode.
+            size = 5
+        elif op in fixed:
             size, count = fixed[op]
             if len(args) != count:
                 raise ValueError('unsupported_profile_arguments:' + op)
@@ -406,7 +422,7 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                     or len(args) == 3 and not re.fullmatch(r'ITEM_\w+', args[2])):
                 raise ValueError('unsupported_profile_setwildbattle')
             size = 6
-        elif version == 4 and op in ('setwarp', 'warpspinenter'):
+        elif version == 4 and op in ('setwarp', 'warpspinenter', 'setdynamicwarp'):
             if (len(args) != 3 or not re.fullmatch(r'MAP_\w+', args[0])
                     or any(not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', value)
                            or not 0 <= int(value, 16 if value.lower().startswith('0x') else 10) <= 65535
@@ -480,6 +496,10 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             if args:
                 raise ValueError('unsupported_profile_arguments:hidemonpic')
             size = 1
+        elif version == 4 and op == 'showcontestpainting':
+            if len(args) != 1 or args[0] not in CONTEST_PAINTING_SELECTORS:
+                raise ValueError('unsupported_profile_contest_painting')
+            size = 2
         elif version == 4 and op == 'bufferspeciesname':
             if (len(args) != 2 or not re.fullmatch(r'STR_VAR_[123]', args[0])
                     or not re.fullmatch(r'(?:SPECIES|VAR)_\w+', args[1])):
@@ -655,7 +675,7 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_dynamic_layout')
             result.layouts.add(args[0])
             size = 3
-        elif version == 4 and op in ('pokemart', 'pokemartdecoration'):
+        elif version == 4 and op in ('pokemart', 'pokemartdecoration', 'pokemartdecoration2'):
             if len(args) != 1:
                 raise ValueError('unsupported_profile_shop')
             target(args[0], 'mart_items' if op == 'pokemart' else 'mart_decorations')
@@ -725,6 +745,11 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
         elif version == 4 and op == 'messageautoscroll':
             if len(args) != 1 or not NAME.fullmatch(args[0]) or args[0] == 'NULL':
                 raise ValueError('unsupported_profile_autoscroll_message')
+            result.texts[args[0]] = 'string'
+            size = 5
+        elif version == 4 and op == 'messageinstant':
+            if len(args) != 1 or not NAME.fullmatch(args[0]) or args[0] in ('NULL', 'gStringVar4'):
+                raise ValueError('unsupported_profile_instant_message')
             result.texts[args[0]] = 'string'
             size = 5
         elif op == 'message':
