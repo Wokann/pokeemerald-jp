@@ -127,13 +127,32 @@ FALLTHROUGHS = {
     'FallarborTown_BattleTentBattleRoom_EventScript_AskRetireChallenge': 'FallarborTown_BattleTentBattleRoom_EventScript_ContinueChallenge',
     'FallarborTown_BattleTentBattleRoom_EventScript_UnreachableWaitstate': 'FallarborTown_BattleTentBattleRoom_EventScript_WarpToLobbyWon',
     'FallarborTown_BattleTentBattleRoom_EventScript_WarpToLobbyWon': 'FallarborTown_BattleTentBattleRoom_EventScript_ReadyFor2ndOpponent',
+    'VerdanturfTown_BattleTentLobby_EventScript_WonChallenge': 'VerdanturfTown_BattleTentLobby_EventScript_GivePrize',
+    'VerdanturfTown_BattleTentLobby_EventScript_Attendant': 'VerdanturfTown_BattleTentLobby_EventScript_AskEnterChallenge',
+    'VerdanturfTown_BattleTentLobby_EventScript_AskEnterChallenge': 'VerdanturfTown_BattleTentLobby_EventScript_TryEnterChallenge',
+    'VerdanturfTown_BattleTentLobby_EventScript_TryEnterChallenge': 'VerdanturfTown_BattleTentLobby_EventScript_SaveBeforeChallenge',
+    'VerdanturfTown_BattleTentLobby_EventScript_SaveBeforeChallenge': 'VerdanturfTown_BattleTentLobby_EventScript_EnterChallenge',
+    'VerdanturfTown_BattleTentLobby_EventScript_NotEnoughValidMons': 'VerdanturfTown_BattleTentLobby_EventScript_NotEnoughValidMonsLv50',
+    'VerdanturfTown_BattleTentLobby_EventScript_LoadPartyCancelChallenge': 'VerdanturfTown_BattleTentLobby_EventScript_CancelChallenge',
+    'VerdanturfTown_BattleTentLobby_EventScript_CancelChallenge': 'VerdanturfTown_BattleTentLobby_EventScript_EndCancelChallenge',
+    'VerdanturfTown_BattleTentBattleRoom_EventScript_EnterRoom': 'VerdanturfTown_BattleTentBattleRoom_EventScript_NextOpponentEnter',
+    'VerdanturfTown_BattleTentBattleRoom_EventScript_NextOpponentEnter': 'VerdanturfTown_BattleTentBattleRoom_EventScript_WarpToLobbyLost',
+    # Warp continuations describe physical bytes, not normal runtime resumption.
+    'VerdanturfTown_BattleTentBattleRoom_EventScript_WarpToLobbyLost': 'VerdanturfTown_BattleTentBattleRoom_EventScript_DefeatedOpponent',
+    'VerdanturfTown_BattleTentBattleRoom_EventScript_DefeatedOpponent': 'VerdanturfTown_BattleTentBattleRoom_EventScript_AskContinueChallenge',
+    'VerdanturfTown_BattleTentBattleRoom_EventScript_AskContinueChallenge': 'VerdanturfTown_BattleTentBattleRoom_EventScript_AskPauseChallenge',
+    'VerdanturfTown_BattleTentBattleRoom_EventScript_AskPauseChallenge': 'VerdanturfTown_BattleTentBattleRoom_EventScript_AskRetireChallenge',
+    'VerdanturfTown_BattleTentBattleRoom_EventScript_AskRetireChallenge': 'VerdanturfTown_BattleTentBattleRoom_EventScript_ContinueChallenge',
+    'VerdanturfTown_BattleTentBattleRoom_EventScript_WarpToLobbyWon': 'VerdanturfTown_BattleTentBattleRoom_EventScript_PauseChallenge',
 }
 
-# This one-byte movement prefix deliberately shares the following movement's
+# These one-byte movement prefixes deliberately share the next movement's
 # terminator. Never insert a step_end or accept arbitrary unterminated paths.
 MOVEMENT_PREFIXES = {
     'FallarborTown_BattleTentCorridor_Movement_PlayerEnterDoor':
         'FallarborTown_BattleTentCorridor_Movement_AttendantEnterDoor',
+    'VerdanturfTown_BattleTentCorridor_Movement_PlayerEnterDoor':
+        'VerdanturfTown_BattleTentCorridor_Movement_AttendantEnterDoor',
 }
 
 # Selector macros measured against the current JP assembler. Handler identity
@@ -156,6 +175,11 @@ FACILITY_FORMS = {
     'fallarbortent_giveprize': ('CallFallarborTentFunction', 8, ()),
     'fallarbortent_getopponentname': ('CallFallarborTentFunction', 8, ()),
     'battletent_getopponentintro': ('CallVerdanturfTentFunction', 8, ()),
+    'verdanturftent_init': ('CallVerdanturfTentFunction', 8, ()),
+    'verdanturftent_getprize': ('CallVerdanturfTentFunction', 8, ()),
+    'verdanturftent_save': ('CallVerdanturfTentFunction', 13, (r'(?:CHALLENGE_STATUS_\w+|0)',)),
+    'verdanturftent_setrandomprize': ('CallVerdanturfTentFunction', 8, ()),
+    'verdanturftent_giveprize': ('CallVerdanturfTentFunction', 8, ()),
 }
 
 # Only explicitly measured forms are supported. A five-argument single is
