@@ -758,6 +758,9 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         expected_battles = [trainer_battles[key] for key in sorted(trainer_battles)]
         if batch.get('trainer_battles', []) != expected_battles:
             raise ValueError('missing_or_changed_trainer_battle_contract')
+        for battle in expected_battles:
+            if 'local_id' in battle:
+                _trainer_local_id(root, battle, batch['sources'])
         if (bool(expected_battles), trainer_run, trainer_post) not in ((False, False, False), (True, True, True)):
             raise ValueError('incomplete_trainer_battle_handoff')
         if any('mode' in b for b in expected_battles) and not trainer_beaten:
@@ -996,6 +999,30 @@ def _literal_define(root: Path, path: str, name: str) -> int:
     return int(values[0], 16 if values[0].startswith('0x') else 10)
 
 
+def _trainer_local_id(root: Path, battle: dict, sources: list) -> int:
+    """Resolve an explicit nonzero ID through its generated define and JSON object."""
+    label = battle.get('local_id')
+    if label is None:
+        return _literal_define(root, 'include/constants/event_objects.h', 'LOCALID_NONE')
+    if not isinstance(label, str) or not re.fullmatch(r'LOCALID_\w+', label) or label == 'LOCALID_NONE':
+        raise ValueError('invalid_explicit_trainer_local_id')
+    paths = {claim['path'] for claim in sources if claim.get('selector') == 'file'}
+    if 'include/constants/map_event_ids.h' not in paths:
+        raise ValueError('missing_trainer_local_id_source')
+    value = _literal_define(root, 'include/constants/map_event_ids.h', label)
+    matches = []
+    for path in sorted(paths):
+        if not re.fullmatch(r'data/maps/[A-Za-z_]\w*/map\.json', path):
+            continue
+        data = json.loads(local_path(root, path).read_text())
+        for index, event in enumerate(data.get('object_events', []), 1):
+            if event.get('local_id') == label:
+                matches.append((index, event.get('script')))
+    if (not 1 <= value <= 255 or matches != [(value, battle['owner'])]):
+        raise ValueError('trainer_local_id_object_mismatch:' + label)
+    return value
+
+
 def _trainer_native(root: Path, batch: dict, native: dict, errors: list[str], parsed: list) -> None:
     """Bind the supported mode's real JP parameter header and C interface."""
     if not batch.get('trainer_battles'):
@@ -1010,7 +1037,6 @@ def _trainer_native(root: Path, batch: dict, native: dict, errors: list[str], pa
     except ModuleNotFoundError:
         from tools.map_review_script_profile import TRAINER_FORMS
     extended = any('mode' in b for b in batch['trainer_battles'])
-    local_id = _literal_define(root, 'include/constants/event_objects.h', 'LOCALID_NONE')
     for symbol, path in (TRAINER_ENGINE_SYMBOLS | (TRAINER_EXTENDED_SYMBOLS if extended else {})).items():
         values = {v & ~1 for v in native['symbols'].get(symbol, set())}
         if len(values) != 1:
@@ -1024,6 +1050,7 @@ def _trainer_native(root: Path, batch: dict, native: dict, errors: list[str], pa
                            for start, length, owner in native['owners'])):
             errors.append('native_trainer_engine_owner_mismatch:' + symbol)
     for battle in batch['trainer_battles']:
+        local_id = _trainer_local_id(root, battle, batch.get('sources', []))
         address, resume = _integer(battle['address']), _integer(battle['resume'])
         trainer = _literal_define(root, 'include/constants/opponents.h', battle['trainer'])
         mode_name = battle.get('mode', 'TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT')

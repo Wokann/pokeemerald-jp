@@ -91,6 +91,22 @@ FALLTHROUGHS = {
     'DewfordTown_Gym_EventScript_CheckBrenden': 'DewfordTown_Gym_EventScript_CheckCristian',
     'DewfordTown_Gym_EventScript_CheckCristian': 'DewfordTown_Gym_EventScript_CheckLilith',
     'DewfordTown_Gym_EventScript_CheckLilith': 'DewfordTown_Gym_EventScript_StopCountingTrainers',
+    'LavaridgeTown_Gym_1F_EventScript_SetTrainerTempVars': 'LavaridgeTown_Gym_1F_EventScript_SetGeraldTempVar',
+    'LavaridgeTown_Gym_1F_EventScript_SetGeraldTempVar': 'LavaridgeTown_Gym_1F_EventScript_SetAxleTempVar',
+    'LavaridgeTown_Gym_1F_EventScript_SetAxleTempVar': 'LavaridgeTown_Gym_1F_EventScript_SetDanielleTempVar',
+    'LavaridgeTown_Gym_1F_EventScript_SetDanielleTempVar': 'LavaridgeTown_Gym_1F_EventScript_EndSetTrainerTempVars',
+    'LavaridgeTown_Gym_1F_EventScript_CheckBuryTrainers': 'LavaridgeTown_Gym_1F_EventScript_CheckBuryGerald',
+    'LavaridgeTown_Gym_1F_EventScript_CheckBuryGerald': 'LavaridgeTown_Gym_1F_EventScript_CheckBuryAxle',
+    'LavaridgeTown_Gym_1F_EventScript_CheckBuryAxle': 'LavaridgeTown_Gym_1F_EventScript_CheckBuryDanielle',
+    'LavaridgeTown_Gym_1F_EventScript_CheckBuryDanielle': 'LavaridgeTown_Gym_1F_EventScript_EndCheckBuryTrainers',
+    'LavaridgeTown_Gym_B1F_EventScript_SetTrainerTempVars': 'LavaridgeTown_Gym_B1F_EventScript_SetJaceTempVar',
+    'LavaridgeTown_Gym_B1F_EventScript_SetJaceTempVar': 'LavaridgeTown_Gym_B1F_EventScript_SetJeffTempVar',
+    'LavaridgeTown_Gym_B1F_EventScript_SetJeffTempVar': 'LavaridgeTown_Gym_B1F_EventScript_SetEliTempVar',
+    'LavaridgeTown_Gym_B1F_EventScript_SetEliTempVar': 'LavaridgeTown_Gym_B1F_EventScript_EndSetTrainerTempVars',
+    'LavaridgeTown_Gym_B1F_EventScript_CheckBuryTrainers': 'LavaridgeTown_Gym_B1F_EventScript_CheckBuryJace',
+    'LavaridgeTown_Gym_B1F_EventScript_CheckBuryJace': 'LavaridgeTown_Gym_B1F_EventScript_CheckBuryJeff',
+    'LavaridgeTown_Gym_B1F_EventScript_CheckBuryJeff': 'LavaridgeTown_Gym_B1F_EventScript_CheckBuryEli',
+    'LavaridgeTown_Gym_B1F_EventScript_CheckBuryEli': 'LavaridgeTown_Gym_B1F_EventScript_EndCheckBuryTrainers',
 }
 
 # Only explicitly measured forms are supported. A five-argument single is
@@ -102,6 +118,8 @@ TRAINER_FORMS = {
                                 'sContinueScriptBattleParams'),
     ('trainerbattle_single', 5): ('TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC', 'EventScript_TryDoNormalTrainerBattle',
                                 'sContinueScriptBattleParams'),
+    ('trainerbattle', 6): ('TRAINER_BATTLE_CONTINUE_SCRIPT', 'EventScript_TryDoNormalTrainerBattle',
+                         'sContinueScriptBattleParams'),
     ('trainerbattle_double', 4): ('TRAINER_BATTLE_DOUBLE', 'EventScript_TryDoDoubleTrainerBattle',
                                 'sDoubleBattleParams'),
     ('trainerbattle_double', 5): ('TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE', 'EventScript_TryDoDoubleTrainerBattle',
@@ -326,6 +344,26 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             result.trainer_battles.append(dict(owner=owner[1], trainer=args[0], defeat_text=args[1],
                 address=f'0x{address + result.size:08X}', resume=f'0x{address + result.size + 10:08X}'))
             size = 10
+        elif version == 4 and op == 'trainerbattle':
+            if (len(args) != 6 or args[0] != 'TRAINER_BATTLE_CONTINUE_SCRIPT'
+                    or not re.fullmatch(r'TRAINER_\w+', args[1])
+                    or not re.fullmatch(r'LOCALID_\w+', args[2]) or args[2] == 'LOCALID_NONE'
+                    or any(not NAME.fullmatch(value) or value == 'NULL' for value in args[3:])):
+                raise ValueError('unsupported_explicit_trainer_battle_form')
+            if position == len(lines) - 1:
+                raise ValueError('missing_inline_trainer_battle_continuation')
+            owner = re.search(r'(?m)^([A-Za-z_]\w*)::?', block)
+            if owner is None:
+                raise ValueError('missing_trainer_battle_owner')
+            mode, entry, _ = TRAINER_FORMS[(op, len(args))]
+            target(entry, 'script')
+            target('EventScript_StartTrainerApproach', 'script')
+            target(args[5], 'script')
+            result.texts.update({value: 'string' for value in args[3:5]})
+            size = 18
+            result.trainer_battles.append(dict(owner=owner[1], mode=mode, trainer=args[1],
+                local_id=args[2], intro_text=args[3], defeat_text=args[4], post_script=args[5],
+                address=f'0x{address + result.size:08X}', resume=f'0x{address + result.size + size:08X}'))
         elif version == 4 and op.startswith('trainerbattle_'):
             form = TRAINER_FORMS.get((op, len(args)))
             if op == 'trainerbattle_single' and len(args) == 5:
