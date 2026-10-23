@@ -22,7 +22,7 @@ PacifidlogTown_House2_EventScript_FanClubYoungerBrother:: @ 0x081F7A00
 PacifidlogTown_House2_EventScript_UpdateFanClubTMFlag:: @ 0x081F7A4C
 	goto_if_unset FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK, Common_EventScript_NopReturn
 	specialvar VAR_RESULT, GetDaysUntilPacifidlogTMAvailable
-	call_if_eq VAR_RESULT, 0x0, PacifidlogTown_House2_EventScript_ClearReceivedFanClubTM
+	call_if_eq VAR_RESULT, 0, PacifidlogTown_House2_EventScript_ClearReceivedFanClubTM
 	return
 
 PacifidlogTown_House2_EventScript_MonAssessment:: @ 0x081F7A66
