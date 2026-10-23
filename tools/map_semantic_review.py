@@ -17,7 +17,7 @@ from pathlib import Path, PurePosixPath
 
 MANIFEST_PATH = 'tools/map_semantic_reviews.json'
 REQUIRED_COMPONENTS = ('map.json', 'scripts.inc', 'events.inc', 'header.inc', 'connections.inc')
-REQUIRED_NATIVE_ROLES = {'scripts', 'events', 'header', 'connections', 'layout', 'border', 'blockdata'}
+REQUIRED_NATIVE_ROLES = {'scripts', 'events', 'header', 'connections', 'layout', 'border', 'blockdata', 'default_layout_table'}
 REQUIRED_CONTEXT = {
     'asm/macros/map.inc', 'asm/macros/event.inc',
     'tools/jp_map_metadata.py', 'tools/jp_generate_layouts.py',
@@ -320,6 +320,42 @@ def extended_analysis(root: Path, text: str) -> tuple[int, set[str], dict[str, s
     return size, scripts, texts
 
 
+def default_layout_owner(root: Path, name: str, *, allow_shared=False) -> dict:
+    """Resolve the JSON's real default owner, not a map-directory convention."""
+    metadata = json.loads(local_path(root, f'data/maps/{name}/map.json').read_text())
+    data = json.loads(local_path(root, 'data/layouts/layouts.json').read_text())
+    rows = data.get('layouts') if isinstance(data, dict) else None
+    if not isinstance(rows, list) or any(not isinstance(row, dict) for row in rows):
+        raise ValueError('invalid_default_layout_metadata')
+    selected = [row for row in rows if row.get('id') == metadata.get('layout')]
+    if not isinstance(metadata.get('layout'), str) or not re.fullmatch(r'LAYOUT_\w+', metadata['layout']):
+        raise ValueError('invalid_default_layout_id')
+    if len(selected) != 1:
+        raise ValueError('missing_or_ambiguous_default_layout')
+    row = selected[0].copy()
+    owner = row.get('name')
+    if not isinstance(owner, str) or not MAP_RE.fullmatch(owner):
+        raise ValueError('invalid_default_layout_owner')
+    shared = owner != name + '_Layout'
+    if shared and not allow_shared:
+        raise ValueError('unsupported_shared_default_layout_version')
+    for field, filename in (('border_filepath', 'border.bin'), ('blockdata_filepath', 'map.bin')):
+        # Preserve older canonical-layout records; a shared owner must always
+        # name its actual assets explicitly rather than guessing a directory.
+        if field not in row and not shared:
+            row[field] = f'data/layouts/{name}/{filename}'
+        path = row.get(field)
+        if (not isinstance(path, str) or not path.startswith('data/layouts/')
+                or not path.endswith('/' + filename) or '..' in Path(path).parts):
+            raise ValueError('invalid_default_layout_asset_path')
+        local_path(root, path)
+    if shared and (any(type(row.get(field)) is not int or row[field] <= 0 for field in ('width', 'height'))
+                   or any(not isinstance(row.get(field), str) or not MAP_RE.fullmatch(row[field])
+                          for field in ('primary_tileset', 'secondary_tileset'))):
+        raise ValueError('invalid_shared_default_layout_shape')
+    return row
+
+
 def _dynamic_blockdata_size(root: Path, row: dict) -> int:
     """Keep an asset's optional zero-filled word-alignment tail in its extent."""
     data = local_path(root, row['blockdata_filepath']).read_bytes()
@@ -466,6 +502,11 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         nonlocal trainer_run, trainer_post, trainer_beaten
         texts, targets = {}, set()
         for label, profile in profiles.items():
+            if profile.runtime_scripts:
+                bound = {c.get('path') for c in batch['sources'] if c.get('selector') == 'file'}
+                if (profile.runtime_scripts != {'saved_wonder_card'}
+                        or not {'src/script.c', 'src/scrcmd.c', 'src/mystery_gift.c', 'src/util.c'} <= bound):
+                    raise ValueError('missing_runtime_script_interface_context')
             if label in actual_kinds and actual_kinds[label] != profile.kind:
                 raise ValueError('incompatible_definition_kind:' + label)
             actual_kinds[label] = profile.kind
@@ -562,9 +603,34 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
             if not isinstance(connections, list):
                 raise ValueError('invalid_connection_metadata')
             contracts[(name, 'connections')] = (name + '_MapConnectionsList', 12 * len(connections) + 8)
-        contracts[(name, 'layout')] = (name + '_Layout', 24)
-        for filename, role, suffix in (('border.bin', 'border', '_Layout_Border'), ('map.bin', 'blockdata', '_Layout_Blockdata')):
-            contracts[(name, role)] = (name + suffix, local_path(root, f'data/layouts/{name}/{filename}').stat().st_size)
+        layout = default_layout_owner(root, name, allow_shared=addressed)
+        contracts[(name, 'layout')] = (layout['name'], 24)
+        for field, role, suffix in (('border_filepath', 'border', '_Border'), ('blockdata_filepath', 'blockdata', '_Blockdata')):
+            contracts[(name, role)] = (layout['name'] + suffix, local_path(root, layout[field]).stat().st_size)
+        if layout['name'] != name + '_Layout':
+            if not {'include/constants/layouts.h', 'data/layouts/layouts_table.inc'} <= {
+                    c.get('path') for c in batch['sources'] if c.get('selector') == 'file'}:
+                raise ValueError('missing_shared_default_layout_context')
+            layout_blocks = label_blocks(local_path(root, 'data/layouts/layouts.inc').read_text())
+            expected = [str(layout['width']), str(layout['height']), layout['name'] + '_Border',
+                        layout['name'] + '_Blockdata', layout['primary_tileset'], layout['secondary_tileset']]
+            if (layout['name'] not in layout_blocks
+                    or statements(layout_blocks[layout['name']]) != ['.4byte ' + value for value in expected]):
+                raise ValueError('shared_default_layout_structure_mismatch')
+            for field, suffix in (('border_filepath', '_Border'), ('blockdata_filepath', '_Blockdata')):
+                owned = statements(layout_blocks.get(layout['name'] + suffix, ''))
+                if not owned or owned[0] != '.incbin "' + layout[field] + '"':
+                    raise ValueError('shared_default_layout_asset_owner_mismatch')
+            if local_path(root, layout['border_filepath']).stat().st_size != 8:
+                raise ValueError('invalid_shared_default_layout_border')
+            _dynamic_blockdata_size(root, layout)
+            table = label_blocks(local_path(root, 'data/layouts/layouts_table.inc').read_text()).get('gMapLayouts', '')
+            entries = [re.fullmatch(r'\.4byte\s+([A-Za-z_]\w*)', line) for line in statements(table)]
+            index = _literal_define(root, 'include/constants/layouts.h', layout['id'])
+            if (not entries or not all(entries) or not 1 <= index <= len(entries)
+                    or entries[index - 1][1] != layout['name']):
+                raise ValueError('shared_default_layout_table_mismatch')
+            contracts[(name, 'default_layout_table')] = ('gMapLayouts', 4 * len(entries))
     dependencies = batch.get('shared_dependencies', [])
     if not isinstance(dependencies, list):
         raise ValueError('invalid_shared_dependencies')
@@ -1099,10 +1165,11 @@ def _review_batch(root: Path, batch: dict, maps: set[str], native: dict) -> dict
     if not {f'data/maps/{n}/map.json' for n in reviewed} <= us_files.keys():
         raise ValueError('incomplete_us_map_reference')
     for n in reviewed:
-        layout_sources = {f'data/layouts/{n}/{part}' for part in ('border.bin', 'map.bin')}
+        layout = default_layout_owner(root, n, allow_shared=batch['review_type'] == 'direct_map_v4')
+        layout_sources = {layout['border_filepath'], layout['blockdata_filepath']}
         if not layout_sources <= file_claims:
             raise ValueError('incomplete_layout_resource_coverage')
-        expected_labels = {n + suffix for suffix in ('_Layout_Border', '_Layout_Blockdata', '_Layout')}
+        expected_labels = {layout['name'] + suffix for suffix in ('_Border', '_Blockdata', '')}
         labels = {label for c in sources if c.get('path') == 'data/layouts/layouts.inc'
                   and c.get('selector') == 'asm_labels' for label in c.get('labels', [])}
         if not expected_labels <= labels:
@@ -1149,6 +1216,33 @@ def _reachable(root: Path, start: str, cache: dict) -> set[str]:
         pending += re.findall(r'(?m)^\s*\.include\s+"([^"]+)"\s*(?:@[^\n]*)?$', source)
     cache[start] = seen
     return seen
+
+
+def _shared_default_layout_native(root: Path, maps: list[str], native: dict, errors: list[str]) -> None:
+    """Check shared defaults through the real header, layout and indexed table."""
+    for name in maps:
+        row = default_layout_owner(root, name, allow_shared=True)
+        if row['name'] == name + '_Layout':
+            continue
+        wanted = [name, row['name'], row['name'] + '_Border', row['name'] + '_Blockdata',
+                  row['primary_tileset'], row['secondary_tileset'], 'gMapLayouts']
+        values = [native['symbols'].get(symbol, set()) for symbol in wanted]
+        if any(len(value) != 1 for value in values):
+            errors.append('native_shared_default_layout_symbol_mismatch:' + name)
+            continue
+        header, layout, border, blockdata, primary, secondary, table = [next(iter(value)) for value in values]
+        index = _literal_define(root, 'include/constants/layouts.h', row['id'])
+        at = header - 0x08000000
+        if (native['rom'][at:at + 4] != struct.pack('<I', layout)
+                or native['rom'][at + 18:at + 20] != struct.pack('<H', index)):
+            errors.append('native_shared_default_layout_header_mismatch:' + name)
+        at = layout - 0x08000000
+        expected = struct.pack('<6I', row['width'], row['height'], border, blockdata, primary, secondary)
+        if native['rom'][at:at + 24] != expected:
+            errors.append('native_shared_default_layout_structure_mismatch:' + name)
+        at = table - 0x08000000 + 4 * (index - 1)
+        if native['rom'][at:at + 4] != struct.pack('<I', layout):
+            errors.append('native_shared_default_layout_table_mismatch:' + name)
 
 
 def _dynamic_layout_native(root: Path, batch: dict, native: dict, errors: list[str]) -> None:
@@ -1294,6 +1388,7 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                         or linker_mismatch):
                     errors.append('native_shared_include_boundary_mismatch:' + last)
         if batch['review_type'] == 'direct_map_v4':
+            _shared_default_layout_native(root, maps, native, errors)
             try:
                 from map_review_script_profile import profile_owner
             except ModuleNotFoundError:

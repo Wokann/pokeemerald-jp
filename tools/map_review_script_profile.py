@@ -38,7 +38,7 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'disable_jump_landing_ground_effect', 'walk_faster_left', 'walk_fast_down',
                            'walk_in_place_fast_left', 'walk_in_place_fast_right', 'jump_2_down', 'cut_tree',
                            'walk_faster_down', 'lock_anim', 'walk_in_place_left', 'walk_in_place_up',
-                           'rock_smash_break', 'walk_in_place_right', 'walk_slow_up'}
+                           'rock_smash_break', 'walk_in_place_right', 'walk_slow_up', 'nurse_joy_bow'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -80,6 +80,9 @@ FALLTHROUGHS = {
     'BerryTree_EventScript_CheckBerryFullyGrown': 'BerryTree_EventScript_PickBerry',
     'BerryTree_EventScript_WantToWater': 'BerryTree_EventScript_DontWater',
     'BerryTree_EventScript_ItemUseWailmerPail': 'BerryTree_EventScript_WaterBerry',
+    'CableClub_EventScript_CheckTurnAttendant': 'CableClub_EventScript_DontTurnAttendant',
+    'CableClub_EventScript_PlayerExitRecordCorner': 'CableClub_EventScript_ExitRecordCornerRet',
+    'CableClub_EventScript_TryWonderCardScript': 'CableClub_EventScript_MysteryGiftThankYou',
 }
 
 # Only the explicitly measured forms are supported. Optional no-music forms
@@ -107,6 +110,7 @@ class BlockProfile:
     targets: dict[str, str] = field(default_factory=dict)
     texts: dict[str, str] = field(default_factory=dict)
     specials: dict[str, int] = field(default_factory=dict)
+    runtime_scripts: set[str] = field(default_factory=set)
     standard_scripts: dict[int, str] = field(default_factory=dict)
     layouts: set[str] = field(default_factory=set)
     trainer_battles: list[dict] = field(default_factory=list)
@@ -237,6 +241,28 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                     or len(args) == 3 and not re.fullmatch(r'ITEM_\w+', args[2])):
                 raise ValueError('unsupported_profile_setwildbattle')
             size = 6
+        elif version == 4 and op in ('setwarp', 'warpspinenter'):
+            if (len(args) != 3 or not re.fullmatch(r'MAP_\w+', args[0])
+                    or any(not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', value)
+                           or not 0 <= int(value, 16 if value.lower().startswith('0x') else 10) <= 65535
+                           for value in args[1:])):
+                raise ValueError('unsupported_profile_setwarp')
+            size = 8
+        elif version == 4 and op == 'trywondercardscript':
+            if args:
+                raise ValueError('unsupported_profile_arguments:trywondercardscript')
+            result.runtime_scripts.add('saved_wonder_card')
+            size = 1
+        elif version == 4 and op == 'erasebox':
+            if (len(args) != 4 or any(not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', value)
+                                     or not 0 <= int(value, 16 if value.lower().startswith('0x') else 10) <= 255
+                                     for value in args)):
+                raise ValueError('unsupported_profile_erasebox')
+            size = 5
+        elif version == 4 and op == 'setrespawn':
+            if len(args) != 1 or not re.fullmatch(r'HEAL_LOCATION_\w+', args[0]):
+                raise ValueError('unsupported_profile_setrespawn')
+            size = 3
         elif version == 4 and op == 'givemon':
             if (len(args) not in (2, 3) or not re.fullmatch(r'SPECIES_\w+', args[0])
                     or not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', args[1])
@@ -413,6 +439,11 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             result.texts[args[0]] = 'string'
             result.standard_scripts[index] = entry
             size = 8
+        elif version == 4 and op == 'messageautoscroll':
+            if len(args) != 1 or not NAME.fullmatch(args[0]) or args[0] == 'NULL':
+                raise ValueError('unsupported_profile_autoscroll_message')
+            result.texts[args[0]] = 'string'
+            size = 5
         elif op == 'message':
             if len(args) != 1 or not NAME.fullmatch(args[0]):
                 raise ValueError('unsupported_profile_buffered_message')
